@@ -1,0 +1,300 @@
+[
+ {
+  "id": "07-M1",
+  "name": "The learner's own material becomes a skill outline",
+  "does": "An uploaded PDF, Word file, text or paste is cut into passages; a model plans the course window by window, in the material's own order, as units of skills (one skill per 350 characters at most, 30 at most). Topics the material only names (a syllabus line) are marked and taught from general knowledge, labelled as such.",
+  "where": "services/course-builder.js:86-118 (chunk), 185-205 (cleanOutline), 320-332 (outlineWindows), 424-530 (build, outline stage); services/materials.js:48-66, 113-128 (extraction, upload, paste)",
+  "claim_topics": [
+   "automatic extraction of concepts or topics from instructional text",
+   "course or concept maps generated from learning materials",
+   "learning from one's own notes or materials versus provided materials"
+  ],
+  "seeds": [
+   "A Systematic Review of Automatic Question Generation for Educational Purposes",
+   "Prerequisite Relation Learning for Concepts in MOOCs",
+   "Concept maps as a tool for learning: a meta-analysis (Nesbit and Adesope, Learning with concept and knowledge maps)"
+  ],
+  "queries": [
+   "automatic concept extraction textbook learning",
+   "concept map generation from educational text",
+   "course structure extraction lecture notes",
+   "learning with concept and knowledge maps meta-analysis"
+  ]
+ },
+ {
+  "id": "07-M2",
+  "name": "A prerequisite graph orders the levels",
+  "does": "Each skill lists the skills that must come first; the path puts prerequisites first and otherwise keeps the material's order, numbers the skills as levels, and opens a skill only when its prerequisites are mastered.",
+  "where": "services/course-builder.js:207-254 (orderSkills, layout); services/material-study.js:134-138 (unlocked), 147-157 (nextStep)",
+  "claim_topics": [
+   "learning hierarchies: mastering prerequisite skills before dependent ones",
+   "prerequisite relations between concepts can be identified automatically",
+   "sequencing instruction by prerequisite structure improves learning"
+  ],
+  "seeds": [
+   "The acquisition of knowledge (Gagne 1962)",
+   "Measuring Prerequisite Relations Among Concepts",
+   "Prerequisite Relation Learning for Concepts in MOOCs",
+   "Knowledge Spaces (Doignon and Falmagne)"
+  ],
+  "queries": [
+   "learning hierarchies prerequisite skills Gagne",
+   "prerequisite relation extraction concepts",
+   "curriculum sequencing prerequisite graph adaptive learning",
+   "knowledge space theory learning paths"
+  ]
+ },
+ {
+  "id": "07-M3",
+  "name": "Placement over the skill graph skips what the learner already knows",
+  "does": "One question at a time, the placement keeps a belief over which skills are known (each answer read with the built-in placement model: 10% slips, guessing plus 15 points of luck; knowing a skill makes its prerequisites likely known; a shared rate of right answers), sampled by Gibbs; it asks the question expected to shrink total uncertainty most, then gives every skill it would skip a quick check (a miss earns a second question). Known skills are skipped and come back for review.",
+  "where": "services/material-path.js:66-195 (answerModel, belief, nextPlacement, placementResult); services/material-study.js:183-275 (placementNext, placementAnswer, finishPlacement); services/adaptive-placement.js:66-71 (assumed)",
+  "claim_topics": [
+   "adaptive testing reaches the same precision with fewer questions",
+   "knowledge space theory assessment of what a learner knows",
+   "skipping already-known material saves time without hurting learning",
+   "Bayesian models of learner knowledge"
+  ],
+  "seeds": [
+   "Spaces for the assessment of knowledge",
+   "The assessment of knowledge, in theory and in practice",
+   "Computerized Adaptive Testing: A Primer",
+   "Knowledge tracing: Modeling the acquisition of procedural knowledge",
+   "A review of recent advances in learner and skill modeling in intelligent learning environments"
+  ],
+  "queries": [
+   "computerized adaptive testing efficiency number of items",
+   "knowledge space theory adaptive assessment ALEKS",
+   "Bayesian network student model prerequisite",
+   "placement test skip known material learning time",
+   "information gain item selection adaptive assessment"
+  ]
+ },
+ {
+  "id": "07-M4",
+  "name": "Difficulty tiers inside a skill, harder after mastery",
+  "does": "Every question has a tier (1 recall, 2 use, 3 combine or transfer). A skill starts at tier 1, or tier 2 if placement found it half known; a perfect check moves it up a tier, a failed one down; reviews ask tier 2 or above. A running Elo-style pace gives a fast learner fewer practice questions.",
+  "where": "services/material-path.js:196-237 (updatePace, startTier, practiceCount, tierAfter, pickForTier); services/material-study.js:278-305, 323-344, 374-466 (lesson, pickQuestions, submit)",
+  "claim_topics": [
+   "adapting task difficulty to the learner's level improves learning",
+   "the expertise reversal effect: less guidance for more knowledgeable learners",
+   "Elo-style ratings for learners and items in adaptive systems",
+   "desirable difficulties"
+  ],
+  "seeds": [
+   "The Expertise Reversal Effect",
+   "Applications of the Elo rating system in adaptive educational systems",
+   "Making things hard on yourself, but in a good way: Creating desirable difficulties to enhance learning",
+   "Revised Bloom's taxonomy (A Taxonomy for Learning, Teaching, and Assessing)"
+  ],
+  "queries": [
+   "adaptive difficulty learning outcomes meta-analysis",
+   "expertise reversal effect guidance",
+   "Elo rating adaptive learning system difficulty",
+   "desirable difficulties learning"
+  ]
+ },
+ {
+  "id": "07-M5",
+  "name": "Mastery before moving on (75%)",
+  "does": "A skill is mastered by scoring 75% or more on a check of about five questions with no feedback until the end; the next skill opens only after its prerequisites are mastered; a failed check sends the learner back through remediation before trying again.",
+  "where": "services/material-path.js:34 (PASS); services/material-study.js:346-466 (startQuiz, submit)",
+  "claim_topics": [
+   "mastery learning raises achievement (meta-analyses)",
+   "mastery criteria and their thresholds",
+   "the cost in time of mastery learning"
+  ],
+  "seeds": [
+   "Learning for Mastery",
+   "Effectiveness of mastery learning programs: A meta-analysis",
+   "Closing Achievement Gaps: Revisiting Benjamin S. Bloom's Learning for Mastery",
+   "The 2 Sigma Problem"
+  ],
+  "queries": [
+   "mastery learning meta-analysis achievement",
+   "mastery criterion threshold learning",
+   "mastery learning time cost students"
+  ]
+ },
+ {
+  "id": "07-M6",
+  "name": "Remediation at the misconception behind a wrong answer",
+  "does": "Every wrong choice of a multiple-choice question carries the misunderstanding that leads to it. After a miss the learner sees the right answer, why, that misunderstanding, and the passage from their own material; the misconception is kept and shown again in the remediation lesson, and missed questions come first in the next check.",
+  "where": "services/course-builder.js:142-171 (SKILL_SCHEMA misconceptions), 279-318 (cleanQuestion); services/material-study.js:85-90 (misconceptionOf), 278-305 (lesson remediation), 420-462 (submit)",
+  "claim_topics": [
+   "diagnosing misconceptions from wrong answers (distractor analysis)",
+   "elaborated feedback versus right/wrong feedback",
+   "refutation texts and addressing misconceptions directly"
+  ],
+  "seeds": [
+   "Psychometric models of student conceptions in science: Reconciling qualitative studies and distractor-driven assessment instruments",
+   "Diagnostic models for procedural bugs in basic mathematical skills",
+   "Developing, Analyzing, and Using Distractors for Multiple-Choice Tests in Education: A Comprehensive Review",
+   "The Power of Feedback",
+   "Focus on Formative Feedback"
+  ],
+  "queries": [
+   "distractor-driven assessment misconceptions",
+   "elaborated feedback meta-analysis learning",
+   "refutation text misconception change",
+   "diagnostic multiple-choice items misconceptions"
+  ]
+ },
+ {
+  "id": "07-M7",
+  "name": "Retrieval practice with feedback",
+  "does": "Lessons are followed by practice questions answered one at a time with the explanation and the quote; checks and reviews are tests, not re-reading.",
+  "where": "services/material-study.js:278-321 (lesson, practice), 346-466 (startQuiz, submit)",
+  "claim_topics": [
+   "the testing effect: retrieval practice beats restudy",
+   "feedback after retrieval practice",
+   "practice testing in classroom settings (meta-analyses)"
+  ],
+  "seeds": [
+   "Test-Enhanced Learning: Taking Memory Tests Improves Long-Term Retention",
+   "Rethinking the Use of Tests: A Meta-Analysis of Practice Testing",
+   "Improving Students' Learning With Effective Learning Techniques: Promising Directions From Cognitive and Educational Psychology"
+  ],
+  "queries": [
+   "testing effect retrieval practice meta-analysis",
+   "practice testing feedback retention",
+   "retrieval practice classroom learning"
+  ]
+ },
+ {
+  "id": "07-M8",
+  "name": "Interleaving earlier skills into new checks and mixing reviews",
+  "does": "Each check on a new skill mixes in one question from an earlier mastered skill (the one closest to falling due); a miss brings that skill's review forward. Reviews mix the due skills together and shuffle them.",
+  "where": "services/material-study.js:323-344 (pickQuestions), 440-450 (interleaved result handling)",
+  "claim_topics": [
+   "interleaved practice improves later performance compared with blocked practice",
+   "when interleaving helps: similarity of the interleaved material",
+   "mixed review in mathematics"
+  ],
+  "seeds": [
+   "The shuffling of mathematics problems improves learning",
+   "Similarity matters: A meta-analysis of interleaved learning and its moderators",
+   "Interleaved practice improves mathematics learning"
+  ],
+  "queries": [
+   "interleaved practice meta-analysis",
+   "interleaving versus blocked practice mathematics",
+   "mixed review classroom retention"
+  ]
+ },
+ {
+  "id": "07-M9",
+  "name": "Spaced review timed to this learner's forgetting",
+  "does": "A mastered skill falls due when its predicted recall drops to 75% on a half-life forgetting curve (the app's scorecard curve) that grows with each right answer; each review moves the learner's own half-life multiplier by how far the prediction missed, so a fast forgetter gets shorter intervals. 2 of 2 right stretches the interval, 1 of 2 brings it back tomorrow, 0 of 2 reopens the skill.",
+  "where": "services/material-path.js:238-256 (recall, intervalDays, updateForgetting); services/scorecard/forgetting.js:88-110, 308-314 (predict, recallAt); services/material-study.js:139-145 (scheduleReview), 413-432 (review grading)",
+  "claim_topics": [
+   "the spacing effect and optimal review intervals",
+   "half-life regression and trainable spaced repetition",
+   "personalised review schedules versus fixed schedules",
+   "the forgetting curve"
+  ],
+  "seeds": [
+   "Distributed practice in verbal recall tasks: A review and quantitative synthesis",
+   "A Trainable Spaced Repetition Model for Language Learning",
+   "Enhancing human learning via spaced repetition optimization",
+   "Improving students' long-term knowledge retention through personalized review",
+   "Memory: A Contribution to Experimental Psychology"
+  ],
+  "queries": [
+   "spacing effect meta-analysis review intervals",
+   "personalized spaced repetition model learner",
+   "half-life regression forgetting",
+   "optimal review scheduling memory model"
+  ]
+ },
+ {
+  "id": "07-M10",
+  "name": "Questions and lessons generated from the learner's text by a language model",
+  "does": "For each skill a model writes a short lesson and 6 to 9 questions (mostly multiple choice, some short answer) from the skill's passages only, with an instruction to treat the material as untrusted data; choices are shuffled because models put the right answer first.",
+  "where": "services/course-builder.js:354-413 (buildSkill), 272-277 (shuffleChoices)",
+  "claim_topics": [
+   "quality of automatically generated questions for education",
+   "large language models generating educational questions",
+   "position bias of correct answers in generated multiple-choice items"
+  ],
+  "seeds": [
+   "A Systematic Review of Automatic Question Generation for Educational Purposes",
+   "How Useful are Educational Questions Generated by Large Language Models?",
+   "Towards Human-Like Educational Question Generation with Large Language Models",
+   "Developing, Analyzing, and Using Distractors for Multiple-Choice Tests in Education: A Comprehensive Review"
+  ],
+  "queries": [
+   "automatic question generation education evaluation",
+   "large language model generated multiple choice questions quality",
+   "LLM question generation textbook teachers evaluation",
+   "answer position bias multiple choice generation"
+  ]
+ },
+ {
+  "id": "07-M11",
+  "name": "Every question is tied to a quote from the source",
+  "does": "Each question must carry a quote of at least 20 characters found (letters and digits) in its own passage, or it is dropped with no model asked; a topic the material only names is tied to the line that names it. The quote is shown with every explanation and remediation.",
+  "where": "services/course-builder.js:255-318 (namingLine, cleanQuestion)",
+  "claim_topics": [
+   "hallucination in language model generation",
+   "grounding generation in retrieved source text reduces unsupported content",
+   "attribution and citation of sources by language models"
+  ],
+  "seeds": [
+   "Survey of Hallucination in Natural Language Generation",
+   "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+   "Attributed Question Answering: Evaluation and Modeling for Attributed Large Language Models",
+   "Enabling Large Language Models to Generate Text with Citations"
+  ],
+  "queries": [
+   "hallucination natural language generation survey",
+   "retrieval augmented generation factuality",
+   "attribution citations large language models evaluation",
+   "grounded generation source quotes"
+  ]
+ },
+ {
+  "id": "07-M12",
+  "name": "A second model checks every item before a learner sees it, and independent checkers audit the result",
+  "does": "In the app, a second model pass sees only the passage and the items and keeps an item only on an explicit 'supported: true' (fail closed); a skill with fewer than 3 surviving items is regenerated once, then dropped. For the proof, two further models from other families judge items and lessons with planted wrong answers mixed in to measure their catch rate, and a third judges the skill map against the source.",
+  "where": "services/course-builder.js:390-413 (support check), 483-500 (retry of a dropped skill); scripts/material-proof-check.js (independent checkers, planted errors)",
+  "claim_topics": [
+   "language models as judges of generated content: agreement and bias",
+   "panels of diverse model judges versus a single judge",
+   "self-verification reduces errors in model output"
+  ],
+  "seeds": [
+   "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+   "Replacing Judges with Juries: Evaluating LLM Generations with a Panel of Diverse Models",
+   "Chain-of-Verification Reduces Hallucination in Large Language Models",
+   "SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative Large Language Models"
+  ],
+  "queries": [
+   "LLM as a judge agreement human evaluation",
+   "panel of LLM judges evaluation",
+   "verification reduces hallucination language models",
+   "automatic fact checking generated text"
+  ]
+ },
+ {
+  "id": "07-M13",
+  "name": "Privacy and deletion of uploaded material",
+  "does": "Only the extracted text is kept, tied to one account, never shown to other learners; deleting the material deletes its course and progress at once; outside AI sees it only when the account's consent covers outside AI (children without that consent get no outside model); answer keys never reach the browser before an answer.",
+  "where": "services/materials.js:96-140 (add, remove); services/course-builder.js:554-557 (removeForMaterial); services/typed-grading.js:579-592 (outsideAllowed); routes/materials.js (owner checks, child upload gate)",
+  "claim_topics": [
+   "student data privacy in learning analytics",
+   "data minimisation and deletion in educational technology",
+   "privacy of minors' data with AI services"
+  ],
+  "seeds": [
+   "Privacy and analytics: it's a DELICATE issue. A checklist for trusted learning analytics",
+   "Student privacy self-management: implications for learning analytics",
+   "Ethics and privacy in learning analytics (Slade and Prinsloo, Learning analytics: ethical issues and dilemmas)"
+  ],
+  "queries": [
+   "student data privacy learning analytics",
+   "educational technology data minimisation deletion",
+   "children privacy artificial intelligence education"
+  ]
+ }
+]

@@ -127,7 +127,7 @@ function runAdaptive(profile, seed, days, perDay) {
         for (const k of res.report) {
           if (k.passed === false) L.feedback(idx.get(k.skill), now, 0.3);
           if (k.next_in_days) out.intervals.push(k.next_in_days);
-          if (n.kind === 'mastery' && k.tier != null) { if (k.score >= 1 && k.tier > (quiz.tier || 1)) out.tier_ups++; if (k.score < 0.75 && k.tier < (quiz.tier || 1)) out.tier_downs++; }
+          if (n.kind === 'quiz' && k.tier != null) { if (k.score >= 1 && k.tier > (quiz.tier || 1)) out.tier_ups++; if (k.score < 0.75 && k.tier < (quiz.tier || 1)) out.tier_downs++; }
         }
       }
     }
