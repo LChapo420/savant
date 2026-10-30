@@ -68,6 +68,9 @@ function mockLlm(mode = 'good') {
   check('three or more passages', ps.length >= 3, ps.length);
   check('each passage within the cap and ids run p1..', ps.every((p, i) => p.id === `p${i + 1}` && p.text.length <= 2600), ps.map((p) => p.text.length));
   check('offsets point at the passage in the text', ps.every((p) => TEXT.slice(p.start, p.start + 30) === p.text.slice(0, 30)));
+  const messy = `TITLE\n\n\n${'A line of a list\n  indented item\n'.repeat(30)}\n\n\n\n${para(S2)}\n   \n\n${para(S3)}`;
+  const mp = cb.chunk(messy);
+  check('offsets are exact even with odd blank lines: each passage spans its own text in the original', mp.every((p) => messy.slice(p.start, p.end).replace(/\s+/g, ' ') === p.text.replace(/\s+/g, ' ')), mp.map((p) => [p.start, p.end]));
   const long = cb.chunk('Word one. '.repeat(1000));
   check('one huge paragraph is cut', long.length > 3 && long.every((p) => p.text.length <= 2500), long.length);
 
@@ -137,13 +140,134 @@ function mockLlm(mode = 'good') {
   console.log('budget and resume');
   const m8 = materials.addPaste(u.id, 'Eighth', `${TEXT} eight`).value;
   const l8 = mockLlm();
-  out = await cb.build(u.id, m8.id, { llm: l8, tokenBudget: 9000 });
+  out = await cb.build(u.id, m8.id, { llm: l8, tokenBudget: 15000, concurrency: 1 });
   check('a small budget stops the build and keeps what it has', out.partial === true && out.course.status === 'partial' && out.course.skills.length === 1, out.course && [out.course.status, out.course.skills.length]);
   const before = l8.calls.length;
   out = await cb.build(u.id, m8.id, { llm: l8 });
   check('asking again resumes: only the missing skill is built', out.course.status === 'ready' && out.course.skills.length === 2 && l8.calls.length - before === 2, [l8.calls.length - before]);
   const rows = db.find('material_courses', (r) => r.material_id === m8.id);
   check('one row per material', rows.length === 1);
+
+  console.log('version 2: units, levels, tiers, misconceptions, outline-only topics');
+  const v2 = async (args) => {
+    if (args.task === 'material_outline') {
+      return { model: 'mock', data: { skills: [
+        { id: 'cells', title: 'Inside the cell', unit: 'Cells', prerequisites: [], passage_ids: ['p1'] },
+        { id: 'nucleus', title: 'The nucleus', unit: 'Cells', prerequisites: ['cells'], passage_ids: ['p1'], taught: false },
+        { id: 'photo', title: 'Photosynthesis', unit: 'Plants', prerequisites: ['nucleus'], passage_ids: ['p2'] },
+        { id: 'dropme', title: 'Dropped', unit: 'Plants', prerequisites: ['photo'], passage_ids: ['p2'] },
+        { id: 'last', title: 'Last', unit: 'Plants', prerequisites: ['dropme'], passage_ids: ['p2'] },
+      ] } };
+    }
+    if (args.task === 'material_lesson') {
+      const pid = /\[(p\d+)\]/.exec(args.user)[1];
+      const quote = { p1: S1, p2: S2, p3: S3 }[pid];
+      if (/Skill: Dropped/.test(args.user)) return { model: 'mock', data: { lesson: { paragraphs: ['x'] }, questions: [] } };
+      const q = (n, over = {}) => ({ type: 'multiple_choice', prompt: `Q${n} ${pid}?`, choices: ['one', 'two', 'three'], answer_index: 1, tier: (n % 3) + 1, misconceptions: ['m0', 'should be blanked', 'm2'], explanation: 'Why.', passage_id: pid, quote, ...over });
+      return { model: 'mock', data: { lesson: { paragraphs: ['L.'] }, questions: [q(1), q(2), q(3), q(4, { tier: 7, misconceptions: ['only one'] })], general: /NAMES but does not explain/.test(args.system) } };
+    }
+    const n = (args.user.match(/^\d+\./gm) || []).length;
+    return { model: 'mock', data: { verdicts: Array.from({ length: n }, (_, i) => ({ n: i + 1, supported: true })), general: /by standard knowledge/.test(args.system) } };
+  };
+  const seen = [];
+  const mv = materials.addPaste(u.id, 'Version two', [TEXT, `${TEXT} v2`].join('\n\n')).value;
+  out = await cb.build(u.id, mv.id, { llm: async (a) => { seen.push(a); return v2(a); } });
+  const cv = out.course;
+  check('units in path order, skills numbered as levels in dependency order', cv.units.map((x) => x.title).join() === 'Cells,Plants' && cv.skills.map((x) => `${x.level}:${x.id}`).join() === '1:cells,2:nucleus,3:photo,4:last', [cv.units, cv.skills.map((x) => [x.level, x.id])]);
+  check('a dropped skill passes its prerequisites on to its dependents', cv.skills.find((x) => x.id === 'last').prerequisites.join() === 'photo', cv.skills.find((x) => x.id === 'last').prerequisites);
+  const qs = cv.skills[0].questions;
+  check('every question has a tier (1-3; a bad one becomes 2)', qs.every((q) => [1, 2, 3].includes(q.tier)) && qs[3].tier === 2, qs.map((q) => q.tier));
+  const misOf = (q, text) => q.misconceptions[q.choices.indexOf(text)];
+  check('misconceptions stay with their choices, blank on the right one; a list that does not line up is dropped',
+    qs.slice(0, 3).every((q) => q.choices[q.answer_index] === 'two' && misOf(q, 'one') === 'm0' && misOf(q, 'three') === 'm2' && misOf(q, 'two') === '') && qs[3].misconceptions.length === 0, qs.map((q) => [q.choices, q.misconceptions]));
+  const pos = new Set(cv.skills.flatMap((k) => k.questions).map((q) => q.answer_index));
+  check('choices are shuffled (models put the right answer first), the same way every time', pos.size > 1 && JSON.stringify(cb.shuffleChoices('same prompt', ['a', 'b', 'c'], 0, [])) === JSON.stringify(cb.shuffleChoices('same prompt', ['a', 'b', 'c'], 0, [])), [...pos]);
+  const named = cb.namingLine('Chain rule and higher derivatives', new Map([['p1', { text: 'L4 | Chain rule, higher derivatives\nL5 | Implicit differentiation, inverses' }]]), new Set(['p1']));
+  check('a general-knowledge item is tied to the line that names its topic', named && /Chain rule, higher derivatives/.test(named.quote), named);
+  const nucleus = cv.skills.find((x) => x.id === 'nucleus');
+  check('a topic the material only names is built from general knowledge and labelled so', nucleus.source === 'general' && nucleus.questions.every((q) => q.source === 'general') && cv.skills[0].source === 'material');
+  check('its prompts say so: teach the topic as named, check by standard knowledge', seen.some((a) => a.task === 'material_lesson' && /NAMES but does not explain/.test(a.system) && /The nucleus/.test(a.user)) && seen.some((a) => a.task === 'material_verify' && /by standard knowledge/.test(a.system)));
+  check('the outline is asked for units, taught and no logistics', /grouped into units/.test(seen[0].system) && /taught: false/.test(seen[0].system) && /logistics/.test(seen[0].system));
+  const sumv = cb.summary(cb.get(u.id, mv.id));
+  check('the summary carries units, levels and source, never answers', sumv.units.length === 2 && sumv.skills[1].source === 'general' && sumv.skills[0].level === 1 && !/answer_index|misconceptions|quote/.test(JSON.stringify(sumv)));
+
+  const shortM = materials.addPaste(u.id, 'Short note', para(S1)).value;
+  const shortSeen = [];
+  const six = async (a) => {
+    shortSeen.push(a);
+    if (a.task === 'material_outline') return { model: 'mock', data: { skills: Array.from({ length: 8 }, (_, i) => ({ id: `k${i}`, title: `Topic ${i}`, unit: 'One', prerequisites: [], passage_ids: ['p1'] })) } };
+    return v2(a);
+  };
+  out = await cb.build(u.id, shortM.id, { llm: six });
+  check('a short note is a short course: the outline is told how many skills it may have (one per 250 characters), and extra ones are cut', /at most 6;/.test(shortSeen[0].system) && /merge neighbouring topics/.test(shortSeen[0].system) && cb.get(u.id, shortM.id).outline.length === 6, [shortSeen[0].system.match(/at most \d+/), cb.get(u.id, shortM.id).outline.length]);
+  const longText = Array.from({ length: 40 }, (_, i) => para(`Topic number ${i} is described in this paragraph of the long text.`)).join('\n\n');
+  const wins = cb.outlineWindows(cb.chunk(longText));
+  check('a long text is outlined in windows, each under the window size, covering every passage in order', wins.length > 1 && wins.every((w) => w.text.length <= 14000 + 1300) && wins.map((w) => w.text).join('\n').match(/^\[p\d+\]/gm).length === cb.chunk(longText).length, wins.map((w) => w.text.length));
+  const longM = materials.addPaste(u.id, 'Long', longText).value;
+  const winSeen = [];
+  await cb.build(u.id, longM.id, { llm: async (a) => { winSeen.push(a); if (a.task === 'material_outline') { const pid = /\[(p\d+)\]/.exec(a.user)[1]; return { model: 'mock', data: { skills: [{ id: 'same', title: `From ${pid}`, unit: 'U', prerequisites: winSeen.filter((x) => x.task === 'material_outline').length > 1 ? ['same'] : [], passage_ids: [pid] }] } }; } return v2(a); } });
+  const outl = cb.get(u.id, longM.id).outline;
+  const later = winSeen.filter((a) => a.task === 'material_outline');
+  check('later windows see the skills planned so far; a repeated id is renamed, not lost, and can name an earlier skill as a prerequisite',
+    later.length === wins.length && /Skills already planned/.test(later[1].user) && outl.length === wins.length && new Set(outl.map((k) => k.id)).size === outl.length && outl[1].prerequisites.includes('same'), outl.map((k) => [k.id, k.prerequisites]));
+
+  let lessonCalls = 0;
+  const flaky = async (a) => {
+    if (a.task === 'material_lesson') {
+      lessonCalls++;
+      if (lessonCalls === 1) return { model: 'mock', data: { lesson: { paragraphs: ['x'] }, questions: [{ type: 'short_answer', prompt: 'q?', answer: 'a', explanation: 'e', passage_id: 'p1', quote: 'not in the passage at all, nowhere' }] } };
+      if (lessonCalls === 2) return null; // busy model: retried once
+    }
+    if (a.task === 'material_outline') return { model: 'mock', data: { skills: [{ id: 'cells', title: 'Inside the cell', unit: 'Cells', prerequisites: [], passage_ids: ['p1'] }] } };
+    return v2(a);
+  };
+  const mf = materials.addPaste(u.id, 'Flaky', `${para(S1)} flaky`).value;
+  out = await cb.build(u.id, mf.id, { llm: flaky });
+  check('a skill whose items fail the checks, or whose model is busy, is tried again before it is dropped', out.course && out.course.skills.length === 1 && lessonCalls === 3 && out.course.dropped.retried === 1 && out.course.dropped.skills === 0, [lessonCalls, out.course && out.course.dropped]);
+
+  console.log('the material\'s own order');
+  const so = cb.orderSkills(cb.sourceOrder([
+    { id: 'derivative', prerequisites: [], passage_ids: ['p1', 'p9'] },
+    { id: 'limits', prerequisites: ['rules', 'derivative'], passage_ids: ['p1', 'p2'] },
+    { id: 'rules', prerequisites: ['limits'], passage_ids: ['p3'] },
+  ]));
+  check('skills keep the outline\'s (the material\'s) order; a prerequisite that only comes later is dropped, an earlier one kept',
+    so.map((k) => k.id).join() === 'derivative,limits,rules' && so[1].prerequisites.join() === 'derivative' && so[2].prerequisites.join() === 'limits', so.map((k) => [k.id, k.prerequisites]));
+  const lay = [{ id: 'a', unit: 'One', prerequisites: [] }, { id: 'b', unit: 'Two', prerequisites: [] }, { id: 'c', unit: 'One', prerequisites: [] }];
+  const units = cb.layout(lay);
+  check('units are runs of consecutive skills, so they read in path order', units.map((x) => `${x.title}:${x.skills.join('+')}`).join() === 'One:a,Two:b,One:c', units);
+
+  console.log('near-verbatim quotes (formulas from a PDF)');
+  const pdfText = "Notice that f \uFFFD(x0) is negative \u2014 as is the slope of the tangent line on the graph above. Hence the derivative of 1/x is -1/x0^2 at x0.";
+  const nq = cb.nearQuote(pdfText, "Notice that f'(x0) is negative, as is the slope of the tangent line on the graph above.");
+  check('a quote whose formula notation differs from the extracted PDF is accepted, and the learner sees the source\'s own words', nq && /slope of the tangent line on the graph above/.test(nq) && pdfText.includes(nq.slice(0, 20)), nq);
+  check('a quote that only shares a few words with the passage is still refused', cb.nearQuote(pdfText, 'The second derivative tells you whether the graph is concave up or down.') === null);
+
+  console.log('any script, and resuming keeps every edge');
+  const ru = 'Митохондрии высвобождают энергию из пищи внутри клетки, а хлоропласты строят сахар из света.';
+  const ruPassage = new Map([['p1', { id: 'p1', text: `${ru} ${'Клетка состоит из частей. '.repeat(30)}` }]]);
+  const ruQ = cb.cleanQuestion({ type: 'short_answer', prompt: 'Что делают митохондрии?', answer: 'высвобождают энергию', explanation: 'Так сказано в тексте.', passage_id: 'p1', quote: 'Митохондрии высвобождают энергию из пищи' }, ruPassage, new Set(['p1']));
+  const ruBad = cb.cleanQuestion({ type: 'short_answer', prompt: 'Что?', answer: 'x', explanation: 'y', passage_id: 'p1', quote: 'Этой фразы нет в тексте совсем нигде' }, ruPassage, new Set(['p1']));
+  check('a quote in another script (Cyrillic) is found in its passage; a made-up one is still dropped', ruQ.item && ruBad.drop === 'ungrounded', [ruQ, ruBad]);
+  check('a general topic named in another script is tied to its line', !!cb.namingLine('Энергия клетки и митохондрии', ruPassage, new Set(['p1'])));
+  let aCalls = 0;
+  const twoStep = async (a) => {
+    if (a.task === 'material_outline') return { model: 'mock', data: { skills: [
+      { id: 'a', title: 'Inside the cell', unit: 'U', prerequisites: [], passage_ids: ['p1'] },
+      { id: 'b', title: 'Photosynthesis', unit: 'U', prerequisites: ['a'], passage_ids: ['p2'] },
+    ] } };
+    if (a.task === 'material_lesson' && /Skill: Inside the cell/.test(a.user)) { aCalls++; if (aCalls <= 2) return null; }
+    return v2(a);
+  };
+  const mr = materials.addPaste(u.id, 'Resume edges', [para(S1), para(S2)].join('\n\n')).value;
+  out = await cb.build(u.id, mr.id, { llm: twoStep, concurrency: 1 });
+  check('a skill whose model never answered leaves the course partial', out.course && out.course.status === 'partial' && out.course.skills.map((k) => k.id).join() === 'b', out.course && [out.course.status, out.course.skills.map((k) => k.id)]);
+  out = await cb.build(u.id, mr.id, { llm: twoStep, concurrency: 1 });
+  check('resuming builds the missing skill and keeps the edge to it (b still needs a)', out.course && out.course.status === 'ready' && out.course.skills.find((k) => k.id === 'b').prerequisites.join() === 'a', out.course && out.course.skills.map((k) => [k.id, k.prerequisites]));
+
+  const staleRow = cb.get(u.id, mf.id);
+  const stale = cb.summary({ ...staleRow, status: 'building', started_at: new Date(Date.now() - 60 * 60 * 1000).toISOString() });
+  check('a build that died with skills built shows as partial (studyable, and Make a course finishes it), not failed', stale.status === 'partial', stale.status);
 
   console.log('safety');
   check('someone else\'s material is refused', (await cb.build(other.id, m.id, { llm: mockLlm() })).code === 'not_found');

@@ -67,6 +67,10 @@ const COLLECTIONS = [
   'spanish_study_tests',     // pre/post scores on the sealed external tests
   'material_courses',        // courses built from a learner's material (services/course-builder.js), private to them
   'material_progress',       // study progress on a built course: skill status, spaced-review due times, open quiz (services/material-study.js)
+  'material_packs',          // study packs built from a learner's material: summary, flashcards, quiz, practice test (services/material-pack.js), private to them
+  'material_podcasts',       // two-voice podcast scripts built from a learner's material, overview or weak spots (services/material-podcast.js), private to them
+  'material_cards',          // flashcard deck per material: pack cards, the learner's misses and their own cards, with spaced-review due times (services/material-cards.js), private to them
+  'material_audio_jobs',     // audio transcription jobs: progress and outcome, no audio kept (services/material-audio.js), private to them
   'materials',               // learn from your own material: the extracted text of a learner's upload or paste, private to them (services/materials.js)
   'es_review',               // main-path Spanish: the item-level review queue, one per learner per phrase: box, due time, right/wrong (services/spanish/path.js)
 ];

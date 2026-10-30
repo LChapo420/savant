@@ -32,6 +32,7 @@ function cleanTitle(t, fallback) {
 function sniff(buf) {
   if (!Buffer.isBuffer(buf) || buf.length < 4) return null;
   if (buf.slice(0, 5).toString('latin1') === '%PDF-') return 'pdf';
+  if (buf.slice(0, 5).toString('latin1') === '{\\rtf') return 'rtf';
   if (buf[0] === 0x50 && buf[1] === 0x4b && buf[2] === 0x03 && buf[3] === 0x04) return 'zip';
   // Text: no NUL bytes in the first 8 KB and valid UTF-8 (a BOM is fine).
   const head = buf.slice(0, 8192);
@@ -52,9 +53,18 @@ async function extract(buf) {
   let out;
   let kind;
   if (type === 'pdf') { kind = 'pdf'; out = await parseInChild('pdf', buf); }
-  else if (type === 'zip') { kind = 'docx'; out = await parseInChild('docx', buf); }
+  else if (type === 'zip') {
+    const listing = zipEntries(buf);
+    const has = (re) => !!listing && listing.entries.some((e) => re.test(e.name));
+    const mime = listing && listing.entries.length && listing.entries[0].name === 'mimetype' ? buf.slice(38, 38 + 60).toString('latin1') : '';
+    kind = has(/^ppt\/slides\/slide\d+\.xml$/) ? 'pptx' : has(/^xl\/workbook\.xml$/) ? 'xlsx' : /opendocument\.text/.test(mime) ? 'odt'
+      : /epub\+zip/.test(mime) || has(/^META-INF\/container\.xml$/) ? 'epub' : 'docx';
+    out = await parseInChild(kind, buf);
+  }
+  else if (type === 'rtf') { kind = 'rtf'; out = await parseInChild('rtf', buf); }
+  else if (type === 'text' && /^\s*(<!doctype html|<html)/i.test(buf.slice(0, 512).toString('utf8'))) { kind = 'html'; out = await parseInChild('html', buf); }
   else if (type === 'text') { kind = 'text'; out = { text: normalise(buf.toString('utf8')), pages: null }; }
-  else return fail('Only PDF, Word (.docx), text and Markdown files are supported.', 'bad_type');
+  else return fail('Only PDF, Word, PowerPoint, Excel, OpenDocument text, EPUB, RTF, HTML, text, Markdown, CSV and source files are supported.', 'bad_type');
   if (out.error) return out;
   if (out.text.length < MIN_CHARS) {
     return fail(kind === 'pdf'
@@ -126,11 +136,68 @@ function addPaste(userId, title, text) {
   return add(userId, { title, text: t, kind: 'paste', pages: null });
 }
 
+/** A public web page the learner names: the server fetches it and keeps the article text only. */
+async function addLink(userId, link, title) {
+  const got = await require('./material-web').fetchPage(link); // eslint-disable-line global-require
+  if (got.error) return got;
+  if (got.text.length < MIN_CHARS) return fail('There is hardly any readable text on that page.', 'too_little');
+  if (got.text.length > MAX_CHARS) return fail('That page is too long. Paste the part you want instead.', 'too_long');
+  return add(userId, { title: title || got.title, text: got.text, kind: 'link', pages: null, sourceName: got.url });
+}
+
+const YOUTUBE_HOST = /^(www\.|m\.|music\.)?(youtube\.com|youtu\.be)$/i;
+/** Drop caption timestamps (0:05, 01:02:03, [00:12]) and join caption lines into running text. */
+function cleanTranscript(text) {
+  return normalise(String(text)
+    .replace(/^\s*\[?\(?\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d{1,3})?\)?\]?\s*$/gm, ' ')
+    .replace(/\[?\(?\b\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d{1,3})?\b\)?\]?\s*(?=\S)/g, ' ')
+    .replace(/\s*\n\s*/g, ' ')).replace(/ {2,}/g, ' ');
+}
+/**
+ * A transcript the learner copied out of a video page and pasted. The server never contacts YouTube: the
+ * link is kept as a label only, and must look like a YouTube address.
+ */
+function addTranscript(userId, title, text, link) {
+  let label = null;
+  if (link) {
+    let u;
+    try { u = new URL(String(link).trim()); } catch { return fail('That does not look like a video link.', 'bad_url'); }
+    if (!/^https?:$/.test(u.protocol) || u.username || u.password || !YOUTUBE_HOST.test(u.hostname)) return fail('The video link should be a youtube.com or youtu.be address (or leave it empty).', 'bad_url');
+    label = u.href.slice(0, 200);
+  }
+  if (typeof text !== 'string') return fail('Paste the transcript first.', 'empty');
+  if (text.length > MAX_CHARS * 2) return fail('That transcript is too long. Paste a part of it.', 'too_long');
+  const t = cleanTranscript(text);
+  if (t.length < MIN_CHARS) return fail('There is too little text there to build a course from.', 'too_little');
+  if (t.length > MAX_CHARS) return fail('That transcript is over the limit. Paste a part of it.', 'too_long');
+  return add(userId, { title: title || 'Video transcript', text: t, kind: 'transcript', pages: null, sourceName: label });
+}
+
+function transcriptRow(userId, title, text, sourceName) {
+  if (text.length < MIN_CHARS) return fail('There is too little spoken text there to build a course from.', 'too_little');
+  if (text.length > MAX_CHARS) return fail('That transcript is over the limit. Use a shorter part.', 'too_long');
+  return add(userId, { title: title || 'Video transcript', text, kind: 'transcript', pages: null, sourceName });
+}
+
+/** A YouTube link: read its caption track (never the video) and keep the text. */
+async function addYoutube(userId, link, title, opts) {
+  const got = await require('./material-youtube').fetchCaptions(link, opts); // eslint-disable-line global-require
+  if (got.error) return got;
+  const text = cleanTranscript(got.text);
+  const out = transcriptRow(userId, title || got.title, text, got.url);
+  if (out.error) return out;
+  out.value.captions = { language: got.language, auto: got.auto };
+  return out;
+}
+
 /** Delete for real: the row leaves the store and the store is written to disk now. */
 function remove(userId, id) {
   const n = db.remove('materials', (m) => m.id === Number(id) && m.user_id === userId);
   if (n) {
     require('./course-builder').removeForMaterial(userId, id); // eslint-disable-line global-require
+    require('./material-pack').removeForMaterial(userId, id); // eslint-disable-line global-require
+    require('./material-cards').removeForMaterial(userId, id); // eslint-disable-line global-require
+    require('./material-podcast').removeForMaterial(userId, id); // eslint-disable-line global-require
     db.flush();
   }
   return n > 0;
@@ -138,5 +205,5 @@ function remove(userId, id) {
 
 module.exports = {
   MAX_BYTES, MAX_PAGES, MAX_CHARS, MIN_CHARS, MAX_ITEMS, MAX_TOTAL_CHARS,
-  sniff, extract, list, get, textOf, addFile, addPaste, remove, zipEntries,
+  sniff, extract, add, list, get, textOf, addFile, addPaste, addLink, addYoutube, addTranscript, cleanTranscript, remove, zipEntries,
 };
