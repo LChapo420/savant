@@ -44,7 +44,7 @@ mechanisms are the spec).
 
 ## Queue
 
-C1. [claimed 2026-10-30 06:15Z] **Subject-agnostic engine.** Move the Spanish catch-up logic into a shared module: target grade → the
+C1. [done ed7f227] **Subject-agnostic engine.** Move the Spanish catch-up logic into a shared module: target grade → the
     prerequisite skills below it → a skill-by-skill check that stops early per skill → only missed skills are
     taught, in prerequisite order, in the Duolingo-style player → spaced review → a final re-check. Spanish keeps
     working exactly as now (its tests must still pass).
@@ -63,3 +63,6 @@ C5. **Real UI.** The page shows the target, what was found missing, progress, an
 ## Blocked
 
 ## Done
+
+C1 (ed7f227): `services/catchup-engine.js` is the adapter-driven state machine (check with early stop per skill, gaps only as blocks in grade order, spaced-review hook, final re-check with per-skill send-back). `services/spanish/catch-up.js` delegates to it; storage, questions, player and review seeding stay in the subject adapter. Checked: `scripts/catchup-engine-test.js` (toy subject, in the suite), `spanish-catchup-test.js` unchanged and passing, full `npm test` passing. Not yet done: the Spanish route/view/persistence layer (`ensure`, `view`, `routeShape`) is still Spanish-only; C2 needs a generic persistence/route layer per subject (adapter for rows, player URL, review seeding).
+
