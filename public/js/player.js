@@ -95,6 +95,33 @@
       host.appendChild(App.el('div', { class: 'passage' }, App.escapeHtml(item.passage)));
     }
 
+    // ACT-format Science figures (services/act-science-passage.js): every figure is drawn as a table of its values
+    // (readable on a phone and by a screen reader); a chart's series become columns.
+    if (Array.isArray(item.figures)) {
+      item.figures.forEach((fig) => {
+        const wrap = document.createElement('figure');
+        wrap.className = 'act-figure';
+        wrap.style.cssText = 'margin:12px 0;overflow-x:auto' + (fig.id === item.focus_figure ? ';outline:2px solid var(--accent, #888);padding:4px' : '');
+        const cap = document.createElement('figcaption');
+        cap.textContent = fig.title + (fig.type === 'table' ? '' : ` (${fig.type} chart: ${fig.y_label} by ${fig.x_label})`);
+        cap.style.fontWeight = '700';
+        const table = document.createElement('table');
+        table.style.cssText = 'border-collapse:collapse;width:100%';
+        let head; let rows;
+        if (fig.type === 'table') { head = fig.columns; rows = fig.rows; } else {
+          const xs = [];
+          fig.series.forEach((s) => s.points.forEach((p) => { if (!xs.includes(String(p.x))) xs.push(String(p.x)); }));
+          head = [fig.x_label].concat(fig.series.map((s) => s.name));
+          rows = xs.map((x) => [x].concat(fig.series.map((s) => { const p = s.points.find((q) => String(q.x) === x); return p ? p.y : '\u2013'; })));
+        }
+        const tr = (cells, tag) => { const r = document.createElement('tr'); cells.forEach((c) => { const d = document.createElement(tag); d.textContent = String(c); d.style.cssText = 'border:1px solid var(--border, #ccc);padding:4px 8px;text-align:left'; r.appendChild(d); }); table.appendChild(r); };
+        tr(head, 'th'); rows.forEach((r) => tr(r, 'td'));
+        wrap.appendChild(cap); wrap.appendChild(table);
+        if (fig.caption) { const n = document.createElement('p'); n.textContent = fig.caption; wrap.appendChild(n); }
+        host.appendChild(wrap);
+      });
+    }
+
     const promptNode = App.el('div', { class: 'prompt', id: promptId, tabindex: '-1' }, App.escapeHtml(item.prompt));
     host.appendChild(promptNode);
 
