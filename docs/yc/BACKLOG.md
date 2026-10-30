@@ -73,7 +73,7 @@ S3. **DONE on `studley-parity` (57a2e15), see Done. Leftover: S3b.** **Practice 
    - Written answers go through `services/typed-grading.js`.
    - Results feed the learner model.
 S3b. **Practice test leftovers.** (1) Written items of the study pack (`material-pack.js` `test`) are not drawn into the on-demand test; only the course's questions are. (2) Look at `/my-material-test` at 375 px in a real browser, timed and untimed. (3) Run one short answer through the live typed-grading cascade on the owner's machine. Reason: this run had no keys or browser.
-S4. **A tutor grounded in the material.** Retrieve the relevant source passages for the page or skill into `services/tutor-context.js`; today it sees only titles and counts.
+S4. [claimed 2026-10-30T12:00Z] **A tutor grounded in the material.** Retrieve the relevant source passages for the page or skill into `services/tutor-context.js`; today it sees only titles and counts.
    - Keep the context budget.
    - Keep the hint-ladder rule (`MODE_NOTE.full`).
 S5. **More inputs, no new vendor:**
