@@ -67,9 +67,10 @@ C2e. [done, item 1 only; rest is C2f] **Review queue, lookback, browser.** (1) P
     `next_review_due_at` on the page is the catch-up row's own +1/3/7/21 schedule and the page should say so.
     (2) Owner decision: lookback (default 2 grades below the target). (3) Drive the whole flow through HTTP in a browser at
     375 px and look at the page (the owner's local agent has the browser).
-C2f. [claimed 2026-10-30T22:00Z] **Lookback and browser.** (2) Owner decision: lookback (default 2 grades below the target). (3) Drive the whole flow through HTTP in a browser at
+C2f. [done, HTTP route-layer part only; rest is C2g] **Lookback and browser.** (2) Owner decision: lookback (default 2 grades below the target). (3) Drive the whole flow through HTTP in a browser at
     375 px and look at the page (owner's local agent). Also: a played-session HTTP run showing a caught-up objective in `dailyReview` through the route layer.
     Done in C2e: `scripts/catchup-review-queue-test.js` (in the suite) shows answers on a real enrollment are not due right after and due after a 120-day gap in `adaptation.dailyReview`; the page's review line now says it is the catch-up plan's own schedule and that the daily review also brings fading skills back.
+C2g. [local only] **Lookback decision and browser.** Owner decision: lookback (default 2 grades below the target). Drive the flow in a browser at 375 px (owner's local agent). Still unproven: a played learn-session through `routes/learn.js` showing a caught-up objective in `dailyReview`. Done in C2f: `scripts/catchup-http-test.js` (in the suite) drives `/api/catchup` over real HTTP: auth required, check finds planted gaps, `/next` opens the block level, other learners see nothing.
 C3. [done d0dedb9, math/english/reading; Spanish is covered by its own sealed test] **Proof per subject.** `scripts/catchup-sim.js`: simulated learners with planted gaps (a few, many, none, all)
     for each wired subject. Catch-up must find at least 95% of planted gaps, teach no skill the learner already
     knew more than 5% of the time, and use fewer items than the linear path. Write the table to
