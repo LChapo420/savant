@@ -129,7 +129,7 @@ function skillState(r, id) {
 function save(r) {
   return db.update('material_progress', r.id, {
     skills: r.skills, placed: r.placed, placement: r.placement, pending: r.pending, pace: r.pace || 0, forget_m: r.forget_m || 0, fresh: r.fresh || null,
-    steps: r.steps, updated_at: new Date().toISOString(),
+    test: r.test || null, tests: r.tests || [], steps: r.steps, updated_at: new Date().toISOString(),
   });
 }
 
@@ -378,6 +378,28 @@ function startQuiz(userId, materialId, mode, skillId, opts = {}) {
   };
 }
 
+/**
+ * Every answer: the missed question comes first next time, its misconception is kept until it is answered right.
+ * results: [{ q, sid, ok, given, role }]. Shared by the checks and reviews (submit) and the practice test.
+ */
+function noteAnswers(r, results, now) {
+  for (const x of results) {
+    const st = skillState(r, x.sid);
+    const wrongSet = new Set(st.wrong);
+    if (x.ok) wrongSet.delete(x.q.id); else wrongSet.add(x.q.id);
+    st.wrong = [...wrongSet].slice(0, 20);
+    // A misconception is kept with the question it came from, and dropped once that question is answered right.
+    const mis = misconceptionOf(x.q, x.given);
+    if (x.ok) st.misconceptions = st.misconceptions.filter((m) => typeof m !== 'object' || m.q !== x.q.id);
+    else if (mis) st.misconceptions = [...st.misconceptions.filter((m) => (typeof m === 'object' ? m.text : m) !== mis), { q: x.q.id, text: mis }].slice(-6);
+    if (x.role === 'mix') {
+      // The interleaved question is a memory test of an earlier skill: a miss brings that skill's review forward.
+      // A right answer is a successful retrieval of that skill, so it counts as its review: the clock restarts from now.
+      if (x.ok) { st.right++; if (st.status === 'mastered') { st.last_tested = new Date(now).toISOString(); scheduleReview(r, st, now); } } else { st.wrong_n++; if (st.status === 'mastered') st.due = new Date(now).toISOString(); }
+    }
+  }
+}
+
 /** Grade and apply a quiz. answers: { [question id]: choice index | text }. */
 function submit(userId, materialId, quizId, answers, opts = {}) {
   const now = opts.now || Date.now();
@@ -449,22 +471,7 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
     }
     report.push(entry);
   }
-  // Every answer: the missed question comes first next time, its misconception is kept until it is answered right.
-  for (const x of results) {
-    const st = skillState(r, x.sid);
-    const wrongSet = new Set(st.wrong);
-    if (x.ok) wrongSet.delete(x.q.id); else wrongSet.add(x.q.id);
-    st.wrong = [...wrongSet].slice(0, 20);
-    // A misconception is kept with the question it came from, and dropped once that question is answered right.
-    const mis = misconceptionOf(x.q, x.given);
-    if (x.ok) st.misconceptions = st.misconceptions.filter((m) => typeof m !== 'object' || m.q !== x.q.id);
-    else if (mis) st.misconceptions = [...st.misconceptions.filter((m) => (typeof m === 'object' ? m.text : m) !== mis), { q: x.q.id, text: mis }].slice(-6);
-    if (x.role === 'mix') {
-      // The interleaved question is a memory test of an earlier skill: a miss brings that skill's review forward.
-      // A right answer is a successful retrieval of that skill, so it counts as its review: the clock restarts from now.
-      if (x.ok) { st.right++; if (st.status === 'mastered') { st.last_tested = new Date(now).toISOString(); scheduleReview(r, st, now); } } else { st.wrong_n++; if (st.status === 'mastered') st.due = new Date(now).toISOString(); }
-    }
-  }
+  noteAnswers(r, results, now);
   save(r);
   db.flush();
 
@@ -520,6 +527,7 @@ function dueSummary(userId, now = Date.now()) {
 }
 
 module.exports = {
+  internals: { row, skillState, save, loadCourse, scheduleReview, noteAnswers, publicQ, correctText, misconceptionOf, shuffle },
   dueSummary, PASS, QUIZ_SIZE, gradeShort, isCorrect, misconceptionOf, state, nextStep, lesson, practice,
   placementNext, placementAnswer, startQuiz, submit, removeForMaterial,
 };

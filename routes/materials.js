@@ -20,6 +20,9 @@
  *   POST   /api/materials/:id/pack     start building the study pack (summary, flashcards, quiz, practice test; 202)
  *   GET    /api/materials/:id/pack     the pack's status and content (no answer keys)
  *   POST   /api/materials/:id/pack/grade   { section: quiz|test, answers } marked on the server
+ *   GET    /api/materials/:id/test         what a practice test can be made of (skills, lengths) and the last results
+ *   POST   /api/materials/:id/test         { skills, length, timed } start a practice test (questions without keys)
+ *   POST   /api/materials/:id/test/submit  { test_id, answers } graded on the server; feeds the learner model
  *   GET    /api/materials/:id/cards        the flashcard deck (pack cards, your misses, your own) with what is due
  *   GET    /api/materials/:id/cards/due    the cards due now
  *   POST   /api/materials/:id/cards        { front, back } write a card
@@ -38,6 +41,7 @@ const courses = require('../services/course-builder');
 const extend = require('../services/course-extend');
 const study = require('../services/material-study');
 const packs = require('../services/material-pack');
+const practiceTest = require('../services/material-test');
 const cards = require('../services/material-cards');
 
 const router = express.Router();
@@ -165,7 +169,7 @@ router.post('/:id/cards', requireAuth, ownMaterial, limit('materials-cards-write
 router.patch('/:id/cards/:card', requireAuth, ownMaterial, limit('materials-cards-write', 120, 60 * 60 * 1000), cardBody, (req, res) => cardReply(res, cards.edit(req.user.id, req.params.id, req.params.card, req.body)));
 router.delete('/:id/cards/:card', requireAuth, ownMaterial, limit('materials-cards-write', 120, 60 * 60 * 1000), (req, res) => cardReply(res, cards.remove(req.user.id, req.params.id, req.params.card)));
 
-const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, already_placed: 409, nothing_due: 409, use_placement: 409, not_practice: 409 };
+const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, no_test: 409, empty: 400, already_placed: 409, nothing_due: 409, use_placement: 409, not_practice: 409 };
 function studyReply(res, out, key) {
   if (out.error) return res.status(STUDY_STATUS[out.code] || 400).json({ error: out.error, code: out.code });
   return res.json(key ? { [key]: out[key] } : out);
@@ -190,6 +194,16 @@ router.post('/:id/study/quiz', requireAuth, ownMaterial, limit('materials-quiz',
 router.post('/:id/study/submit', requireAuth, ownMaterial, limit('materials-submit', 60, 60 * 60 * 1000), studyBody, (req, res) => {
   const b = req.body || {};
   studyReply(res, study.submit(req.user.id, req.params.id, b.quiz_id, b.answers));
+});
+
+router.get('/:id/test', requireAuth, ownMaterial, (req, res) => studyReply(res, practiceTest.options(req.user.id, req.params.id)));
+router.post('/:id/test', requireAuth, ownMaterial, limit('materials-test', 30, 60 * 60 * 1000), studyBody, (req, res) => {
+  const b = req.body || {};
+  studyReply(res, practiceTest.start(req.user.id, req.params.id, { skills: b.skills, length: b.length, timed: b.timed === true }));
+});
+router.post('/:id/test/submit', requireAuth, ownMaterial, limit('materials-test-submit', 30, 60 * 60 * 1000), studyBody, async (req, res) => {
+  const b = req.body || {};
+  try { studyReply(res, await practiceTest.submit(req.user.id, req.params.id, b.test_id, b.answers)); } catch (err) { console.error('material-test:', err.message); res.status(500).json({ error: 'The test could not be marked.' }); }
 });
 
 router.get('/:id', requireAuth, (req, res) => {

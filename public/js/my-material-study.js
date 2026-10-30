@@ -46,7 +46,8 @@ App.mount(async () => {
       <p class="small"><a href="/my-material">&larr; My material</a></p>
       <h1>${esc(s.course.title)}</h1>
       <p class="muted">${s.mastered} of ${s.total} skills mastered. Your path skips what you know and comes back to things just before you would forget them.</p>
-      ${nextCard(s)}${units}`;
+      ${nextCard(s)}
+      <p class="small" style="margin-top:12px"><a href="/my-material-test?id=${encodeURIComponent(id)}">Take a practice test</a> on the skills you pick, timed or not.</p>${units}`;
     root.querySelectorAll('[data-skill]').forEach((b) => b.addEventListener('click', () => lesson(b.dataset.skill)));
     const go = document.getElementById('go');
     if (go) {
