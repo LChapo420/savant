@@ -285,7 +285,7 @@ function genUser(trackId, gradeId, units, wanted, have) {
     return `${mark} U${n}${wanted[n] ? ` [write ${wanted[n]} new]` : ''}:\n      ${lessons}${existing}`;
   }).join('\n');
   return `GRADE: ${grade.name}\n\nUNITS IN ORDER (write for the ones marked >>; the rest are context):\n${lines}\n\n`
-    + `Write the number of NEW questions shown for each of ${Object.keys(wanted).map((n) => `U${n}`).join(', ')}.`;
+    + `Write the number of NEW questions shown for each of ${Object.keys(wanted).map((n) => `U${n}`).join(', ')}. ${process.env.GEN_NUDGE || ""}`;
 }
 
 function loadCand(t) { return readJson(candFile(t), { track_id: t, items: [], counts: { generated: 0, passed_first: 0, rewritten_passed: 0, dropped: 0 } }); }
@@ -307,7 +307,9 @@ async function catchupGen(trackId) {
   const have = haveByUnit(bank, cand);
   const trackName = (curriculum.getTrack(trackId) || {}).name || trackId;
   const jobs = [];
+  const gmax = Number(process.env.GRADE_MAX || 999);
   for (const gradeId of rules.gradesFor(trackId)) {
+    if (rules.gradesFor(trackId).indexOf(gradeId) >= gmax) continue;
     const g = bank.grades[gradeId];
     if (!g) continue;
     const units = testers.unitsOf(trackId, gradeId);

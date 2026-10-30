@@ -50,6 +50,23 @@ ok('a miss ends that skill at once; only gaps become blocks, in grade order', ()
   assert.ok(asked < 12 * 3);
   assert.ok(st.skills.filter((s) => s.status === 'learn').every((s) => gaps.has(s.key)));
 });
+ok('slip-tolerant: with minAnswersToLearn 2 one miss does not decide a skill; a second miss does, and a slip then a run of rights is known', () => {
+  const tol = createEngine({ gradeOrder: () => GRADES, skillByKey: (k) => SKILLS[k], questionsFor: (s) => Array.from({ length: 8 }, (_, i) => ({ qid: `${s.key}:${i}` })), maxPerSkill: 5, minAnswersToLearn: 2, mastery: 0.75, recheckPerSkill: 2, recheckKnownSample: 4 });
+  const one = [{ key: 'g1|1', grade_id: 'g1' }];
+  const run = (pattern) => {
+    const st = tol.begin(tol.newState(one, NOW, { id: 'tol' + pattern.join('') }), NOW);
+    let i = 0;
+    while (st.check.current) tol.recordCheck(st, st.check.current, pattern[i++], 4, NOW);
+    return { status: st.skills[0].status, asked: st.skills[0].answers.length, unchecked: !!st.skills[0].unchecked };
+  };
+  assert.deepStrictEqual(run([false, false]), { status: 'learn', asked: 2, unchecked: false }); // two misses: a gap
+  assert.strictEqual(run([false, true, true, true, true]).status, 'known'); // one slip then rights: known
+  assert.strictEqual(run([true, true, true]).asked, 3); // no change for a clean run
+  // The plain engine (default 1) still sends a skill to learn after one miss.
+  const plain = engine.begin(engine.newState(one, NOW, { id: 'plain' }), NOW);
+  engine.recordCheck(plain, plain.check.current, false, 4, NOW);
+  assert.strictEqual(plain.skills[0].status, 'learn');
+});
 ok('a skill with no questions is a gap, never a skip', () => {
   const e2 = createEngine({ gradeOrder: () => GRADES, skillByKey: (k) => SKILLS[k], questionsFor: () => [], maxPerSkill: 3, mastery: 0.75, recheckPerSkill: 2, recheckKnownSample: 4 });
   const st = e2.begin(e2.newState(all(), NOW, { id: 'c' }), NOW);

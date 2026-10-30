@@ -75,7 +75,7 @@ C3. [done d0dedb9, math/english/reading; Spanish is covered by its own sealed te
     for each wired subject. Catch-up must find at least 95% of planted gaps, teach no skill the learner already
     knew more than 5% of the time, and use fewer items than the linear path. Write the table to
     `docs/CATCHUP-PROOF.md`. Add the sim to the suite with a fixed seed.
-C3b. [local only] **Slip-tolerant check.** (30 Oct night: the engine change is gated on 7+ question banks, which need the owner's models; nothing buildable here without them.) `scripts/catchup-sim.js` measures that with a 3% slip about 9% of known skills are still
+C3b. [done, first coverage slice; rest is C3c] **Slip-tolerant check.** (30 Oct night: the engine change is gated on 7+ question banks, which need the owner's models; nothing buildable here without them.) `scripts/catchup-sim.js` measures that with a 3% slip about 9% of known skills are still
     taught (one miss sends a skill to learn; every unit bank has exactly 5 questions, 2 kept for the re-check). Gaps found are
     98%+ either way. To meet "teach a known skill <= 5%" at 3% slip, banks need >= 7 questions per unit
     (`scripts/generate-unit-placement.js`, owner's models, so `[local only]` for the generation) and the check then asks a
@@ -92,6 +92,9 @@ C5. [local only] **Real UI.** (needs the owner's browser; see status below.) The
 ## Blocked
 
 ## Done
+
+C3b (night-content branch): the engine takes a per-skill `minAnswersToLearn` / `maxPerSkill` (`services/catchup-engine.js`); `services/catchup-units.js` turns the slip-tolerant check on for every skill whose unit bank has 7+ questions (first miss never sends a skill to learn; up to 5 check questions, 2 kept for the re-check) and leaves a shorter bank on the plain check. Banks extended 5 -> 7 questions a unit for math grades 1-12 and english and reading grades 1-8, written by Standard Compute (DeepSeek V4.1) and blind-checked by MiniMax M3.1 Flash (counts per subject in `curriculum-build/content-gap/catchup-*-report.json`). `scripts/catchup-sim.js` now gates the 5% bar at slip 0 and 3%: known skills taught at a 3% slip fell from about 9% to 1.1% (math), 0.6% (english), 0.7% (reading); gaps found 97.8-98.1%. `scripts/catchup-units-test.js` fails if a covered unit drops below 7 questions; `scripts/catchup-engine-test.js` covers the engine rule. One English question (unit developing|2) was written by hand because the writer returned nothing usable for it, then passed the same check.
+C3c. [local only] **Finish the banks.** Math grades 13-49, english grades 9-16 and reading grades 9-16 still have 5 questions a unit (candidates for most were already written but not checked; the Standard Compute ledger reached $15.57 of its $16 cap for this run, so no more writing). Run `node scripts/content-gap-tools.js catchup-check <track>` then `catchup-apply <track>` with the owner's keys; the tolerant check turns on unit by unit and the sim and tests stay green. Free NVIDIA checking ran about 5 to 6 questions a minute at best (MiniMax reasoning; Mistral Large 4 timed out), so budget hours, not minutes.
 
 C2 slice (da1cf8a): `services/catchup-units.js` (unit-bank adapter on the shared engine) for math, english, reading: readiness check (49/16/16 grades all have complete unit banks, 5 questions each), `catchup_units` collection (exported/deleted via profile and consent lists, privacy page updated), `/api/catchup/*` routes. Checked: `scripts/catchup-units-test.js` (in suite): planted gaps found exactly, only gaps become blocks, reviews dated at +1 day, re-check closes it; `npm test` passing.
 

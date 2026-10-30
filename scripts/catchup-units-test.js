@@ -115,5 +115,35 @@ check('page: catch-up page, its script, the route mount and the subject-page lin
   for (const needle of ['next_review_due_at', 'found missing', 'blocks done', 'Catch me up to']) assert.ok(js.includes(needle), needle);
 });
 
+// C3b: the slip-tolerant check. The banks of the early grades were extended to 7 questions a unit
+// (scripts/content-gap-tools.js; counts and checks in curriculum-build/content-gap/catchup-*-report.json). A skill with a
+// bank of 7 is checked slip-tolerantly: a first miss never sends it to learn. The sim (scripts/catchup-sim.js) holds the
+// resulting false-teach rate under 5% at a 3% slip, and fails if the banks or the engine regress.
+const TOLERANT_GRADES = { math: 12, english: 8, reading: 8 }; // the first N grades have every unit at 7+ questions
+for (const trackId of cu.TRACKS) {
+  check(`${trackId}: the first ${TOLERANT_GRADES[trackId]} grades have 7+ checked questions in every unit, so every skill there is tolerant`, () => {
+    const grades = curriculum.getTrack(trackId).grades.slice(0, TOLERANT_GRADES[trackId]).map((g) => g.id);
+    for (const g of grades) {
+      for (const s of cu.skillsOfGrade(trackId, g)) {
+        assert.ok(cu.questionsFor(s).length >= cu.TOLERANT_BANK, `${s.key}: ${cu.questionsFor(s).length} questions`);
+        assert.ok(cu.tolerant(s), s.key);
+      }
+    }
+  });
+}
+check('slip-tolerant check through the service: a first miss on a skill with a 7-question bank is asked again', () => {
+  const trackId = 'math';
+  const target = targetOf(trackId);
+  const u = db.insert('users', { email: 'tolerant@t.test', display_name: 'L', xp: 0, streak: 0 });
+  assert.ok(cu.start(u.id, trackId, target).state);
+  const first = cu.view(u.id, trackId, target).question;
+  assert.ok(cu.tolerant(cu.skillByKey(trackId, first.key)));
+  cu.answer(u.id, trackId, target, { key: first.key, qid: first.qid, answer: wrongOf(trackId, first) });
+  const state = db.findOne('catchup_units', (r) => r.user_id === u.id && r.track_id === trackId && r.target_grade_id === target);
+  const sk = state.skills.find((s) => s.key === first.key);
+  assert.strictEqual(sk.status, 'open', 'one miss leaves the skill open');
+  assert.ok(cu.view(u.id, trackId, target).question, 'still checking');
+});
+
 if (failed) { console.log(`\n${failed} failed`); process.exit(1); }
 console.log('\nall passed');

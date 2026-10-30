@@ -70,6 +70,28 @@
         "9",
         "4"
        ]
+      },
+      {
+       "skill": "Keeping track while counting scattered objects",
+       "prompt": "A child counts 8 toy cars that are spread out on a rug. What should the child do to be sure each car is counted exactly once?",
+       "answer": "Move each counted car to a new pile.",
+       "choices": [
+        "Move each counted car to a new pile.",
+        "Count the cars that look the same first.",
+        "Say the numbers fast without touching the cars.",
+        "Start over every time a car is hard to see."
+       ]
+      },
+      {
+       "skill": "Counting aloud from a number near 30",
+       "prompt": "Count aloud: 24, 25, 26, 27. Which number do you say next?",
+       "answer": "28",
+       "choices": [
+        "28",
+        "26",
+        "29",
+        "30"
+       ]
       }
      ]
     },
@@ -138,6 +160,28 @@
         "5",
         "4",
         "10"
+       ]
+      },
+      {
+       "skill": "Seeing a full row of five in a ten frame",
+       "prompt": "A ten frame has a full top row of 5 counters. How many empty spots are in that top row?",
+       "answer": "0",
+       "choices": [
+        "0",
+        "1",
+        "4",
+        "5"
+       ]
+      },
+      {
+       "skill": "Reading 10 as five and five more",
+       "prompt": "A ten frame is full: 5 counters on top and 5 counters on the bottom. Which way shows 10 as 'five and some more'?",
+       "answer": "5 and 5 more",
+       "choices": [
+        "5 and 5 more",
+        "5 and 4 more",
+        "5 and 6 more",
+        "4 and 4 more"
        ]
       }
      ]
@@ -208,6 +252,28 @@
         "2 groups of 5 and 1 single tally",
         "1 group of 5 and 3 single tallies",
         "0 groups of 5 and 7 single tallies"
+       ]
+      },
+      {
+       "skill": "Placing a number between its neighbors on a number line",
+       "prompt": "On a number line from 0 to 10, where does 7 belong?",
+       "answer": "between 6 and 8",
+       "choices": [
+        "between 6 and 8",
+        "between 5 and 6",
+        "between 8 and 9",
+        "between 0 and 1"
+       ]
+      },
+      {
+       "skill": "Showing 10 with tally marks",
+       "prompt": "Which tally marks show the number 10?",
+       "answer": "two groups of five tallies",
+       "choices": [
+        "two groups of five tallies",
+        "one group of five and four more tallies",
+        "one group of five and two more tallies",
+        "one group of four and four more tallies"
        ]
       }
      ]
@@ -281,6 +347,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U2, 2 units before U4. It must need what U4 teaches.",
        "replaced": "Which numeral is less, 3 or 7?"
+      },
+      {
+       "skill": "Comparing equal numerals",
+       "prompt": "Which sentence about the numerals 3 and 3 is true?",
+       "answer": "3 is equal to 3.",
+       "choices": [
+        "3 is equal to 3.",
+        "3 is greater than 3.",
+        "3 is less than 3.",
+        "3 is not the same as 3."
+       ]
+      },
+      {
+       "skill": "Choosing the lesser of two numerals",
+       "prompt": "Which numeral is less than 8?",
+       "answer": "6",
+       "choices": [
+        "6",
+        "8",
+        "9",
+        "10"
+       ]
       }
      ]
     },
@@ -355,6 +443,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Least is 2, then 4, then 7, greatest 9. Check on a 0-10 number line reading left to right: 2, 4, 7, 9. Others: reversed order, 9 before 7, unchanged order.",
        "replaced": "Put 6 cubes in a line. Add 1 more cube to the end of the line. Now how many cubes are there in all?"
+      },
+      {
+       "skill": "Finding one less than a number",
+       "prompt": "What number is one less than 9?",
+       "answer": "8",
+       "choices": [
+        "8",
+        "10",
+        "7",
+        "9"
+       ]
+      },
+      {
+       "skill": "Solving a put-together addition story",
+       "prompt": "There are 4 red apples and 3 green apples in a basket. How many apples are in all?",
+       "answer": "7",
+       "choices": [
+        "7",
+        "1",
+        "6",
+        "8"
+       ]
       }
      ]
     },
@@ -420,6 +530,28 @@
         "7 + 2 = 9",
         "7 − 5 = 2",
         "2 + 5 = 7"
+       ]
+      },
+      {
+       "skill": "Drawing a picture for a subtraction sentence",
+       "prompt": "Which picture would show the number sentence 6 - 2 = 4?",
+       "answer": "6 balls with 2 crossed out",
+       "choices": [
+        "6 balls with 2 crossed out",
+        "6 balls with 4 crossed out",
+        "8 balls with 2 crossed out",
+        "4 balls with 2 crossed out"
+       ]
+      },
+      {
+       "skill": "Matching a subtraction sentence to a story",
+       "prompt": "Which story matches 9 - 4 = 5?",
+       "answer": "9 birds sit on a fence. 4 fly away. 5 are left.",
+       "choices": [
+        "9 birds sit on a fence. 4 fly away. 5 are left.",
+        "9 birds sit on a fence. 5 fly away. 4 are left.",
+        "4 birds sit on a fence. 9 fly away. 5 are left.",
+        "5 birds sit on a fence. 4 fly away. 9 are left."
        ]
       }
      ]
@@ -493,6 +625,28 @@
         "No, because 4 is bigger than 2, so the left side is heavier.",
         "Yes, because 4 + 1 is the same as 5, and the other side does not matter."
        ]
+      },
+      {
+       "skill": "Find the missing number that makes both sides of the equal sign the same",
+       "prompt": "Which number goes in the box to make this sentence true?\n2 + 3 = 1 + ☐",
+       "answer": "4",
+       "choices": [
+        "4",
+        "5",
+        "2",
+        "3"
+       ]
+      },
+      {
+       "skill": "Decide what to add or take away to make a pan balance level",
+       "prompt": "A pan balance has 2 cubes on the left pan and 5 cubes on the right pan. What can you do to make the pans balance?",
+       "answer": "Add 3 cubes to the left pan.",
+       "choices": [
+        "Add 3 cubes to the left pan.",
+        "Add 2 cubes to the left pan.",
+        "Add 3 cubes to the right pan.",
+        "Take 2 cubes off the right pan."
+       ]
       }
      ]
     },
@@ -562,6 +716,28 @@
         "No, because 3 is bigger than 2, so they do not fit.",
         "No, because the parts must always be the same size.",
         "Yes, because any two numbers always join to make 5."
+       ]
+      },
+      {
+       "skill": "Break apart 4 when one part is 0",
+       "prompt": "Tam splits 4 cubes into two groups. One group has 0 cubes. How many cubes are in the other group?",
+       "answer": "4",
+       "choices": [
+        "4",
+        "0",
+        "3",
+        "1"
+       ]
+      },
+      {
+       "skill": "Name another pair of parts that makes 5",
+       "prompt": "A number bond for 5 has the parts 2 and 3. Which other pair of parts can also make 5?",
+       "answer": "4 and 1",
+       "choices": [
+        "4 and 1",
+        "2 and 2",
+        "3 and 3",
+        "4 and 2"
        ]
       }
      ]
@@ -634,6 +810,28 @@
         "3 and 5",
         "4 and 5",
         "2 and 6"
+       ]
+      },
+      {
+       "skill": "Find how many more cubes make 8",
+       "prompt": "How many cubes must you add to 6 cubes to make 8 cubes?",
+       "answer": "2",
+       "choices": [
+        "2",
+        "3",
+        "4",
+        "1"
+       ]
+      },
+      {
+       "skill": "Pick a pair of parts that makes 8, not 7",
+       "prompt": "Rab has 8 cubes. He breaks them into two parts. Which of these could be the two parts?",
+       "answer": "5 and 3",
+       "choices": [
+        "5 and 3",
+        "3 and 4",
+        "2 and 5",
+        "6 and 1"
        ]
       }
      ]
@@ -709,6 +907,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 4 + 5 = 9 (count on from 5: 6, 7, 8, 9). 4 + 6 and 5 + 5 both make 10, and 3 + 5 makes 8.",
        "replaced": "Which shows all the ways to break 9 into two parts?"
+      },
+      {
+       "skill": "Match a picture of two groups to an addition sentence within 5",
+       "prompt": "These counters are on the table: 🔴🔴🔴 🔵🔵. Which number sentence matches the counters?",
+       "answer": "3 + 2 = 5",
+       "choices": [
+        "3 + 2 = 5",
+        "3 + 2 = 6",
+        "3 + 3 = 6",
+        "2 + 2 = 4"
+       ]
+      },
+      {
+       "skill": "Use a ten frame with one empty space to tell how many counters make 9",
+       "prompt": "A ten frame is full except for one space. How many counters are in the ten frame?",
+       "answer": "9",
+       "choices": [
+        "9",
+        "1",
+        "10",
+        "8"
+       ]
       }
      ]
     },
@@ -791,6 +1011,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Hops from 7: 8, 9, 10, so 7 + 3 = 10. Check: 7 and 3 make 10 (a ten-frame bond). '9' counts 7 as a hop; '11' overcounts; '4' subtracts.",
        "replaced": "Sam wants to find 8 + 2. He starts at 8 and counts on: 9, 10. What is 8 + 2?"
+      },
+      {
+       "skill": "Match a take-away picture to a subtraction sentence within 5",
+       "prompt": "Mia draws 5 balloons. Then she crosses out 2 of them. Which number sentence matches her picture?",
+       "answer": "5 − 2 = 3",
+       "choices": [
+        "5 − 2 = 3",
+        "5 + 2 = 7",
+        "5 − 2 = 2",
+        "5 + 3 = 8"
+       ]
+      },
+      {
+       "skill": "Turn counting on from a number into an addition sentence",
+       "prompt": "Ravi counts on from 4. He says 5, 6, 7. Which number sentence did Ravi solve?",
+       "answer": "4 + 3 = 7",
+       "choices": [
+        "4 + 3 = 7",
+        "4 + 2 = 6",
+        "4 + 4 = 8",
+        "7 + 4 = 11"
+       ]
       }
      ]
     },
@@ -868,6 +1110,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U6, 6 units before U12. It must need what U12 teaches.",
        "replaced": "There are 9 birds on a fence. 4 birds fly away. How many birds are left? Which number sentence matches?"
+      },
+      {
+       "skill": "Find the whole when both parts of a number bond are given",
+       "prompt": "A number bond has two parts, 5 and 3. What is the whole?",
+       "answer": "8",
+       "choices": [
+        "8",
+        "2",
+        "7",
+        "9"
+       ]
+      },
+      {
+       "skill": "Match a subtraction equation to a number bond showing whole and parts",
+       "prompt": "Which number bond shows 7 − 4 = 3?",
+       "answer": "whole 7, parts 4 and 3",
+       "choices": [
+        "whole 7, parts 4 and 3",
+        "whole 7, parts 3 and 3",
+        "whole 4, parts 7 and 3",
+        "whole 10, parts 7 and 3"
+       ]
       }
      ]
     },
@@ -945,6 +1209,28 @@
         "4",
         "0"
        ]
+      },
+      {
+       "skill": "Making 10 with a rekenrek",
+       "prompt": "A rekenrek has 10 beads in a row. 6 beads are pushed to one side. How many more beads are needed to make 10?",
+       "answer": "4",
+       "choices": [
+        "4",
+        "3",
+        "5",
+        "6"
+       ]
+      },
+      {
+       "skill": "Recognizing doubles facts to 10",
+       "prompt": "Which equation is a doubles fact?",
+       "answer": "4 + 4 = 8",
+       "choices": [
+        "4 + 4 = 8",
+        "3 + 2 = 5",
+        "5 + 1 = 6",
+        "2 + 0 = 2"
+       ]
       }
      ]
     },
@@ -1010,6 +1296,28 @@
         "4",
         "6",
         "10"
+       ]
+      },
+      {
+       "skill": "Finding a missing part in a story",
+       "prompt": "A bag has 8 marbles in all. 5 marbles are red. The rest are blue. How many blue marbles are in the bag?",
+       "answer": "3",
+       "choices": [
+        "3",
+        "2",
+        "4",
+        "6"
+       ]
+      },
+      {
+       "skill": "Ordinal words to tenth",
+       "prompt": "Ten children stand in a line. Which word tells the place of the child at the very end of the line?",
+       "answer": "tenth",
+       "choices": [
+        "tenth",
+        "first",
+        "ninth",
+        "sixth"
        ]
       }
      ]
@@ -1088,6 +1396,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U7.5, 7.5 units before U15. It must need what U15 teaches.",
        "replaced": "Which shape can roll and has no flat faces?"
+      },
+      {
+       "skill": "Naming flat shapes by sides",
+       "prompt": "Which flat shape has no straight sides?",
+       "answer": "circle",
+       "choices": [
+        "circle",
+        "square",
+        "triangle",
+        "rectangle"
+       ]
+      },
+      {
+       "skill": "Composing a hexagon from smaller shapes",
+       "prompt": "Mia makes a hexagon using 6 identical small shapes. Which shape could she use?",
+       "answer": "triangle",
+       "choices": [
+        "triangle",
+        "square",
+        "circle",
+        "rectangle"
+       ]
       }
      ]
     },
@@ -1169,6 +1499,28 @@
         "How tall is each blue block?",
         "Why does Sara like blue?"
        ]
+      },
+      {
+       "skill": "Comparing counts on a picture graph",
+       "prompt": "A picture graph uses one ⭐ for each sticker. The red row has 4 ⭐. The blue row has 6 ⭐. The green row has 2 ⭐. How many more blue stickers than green stickers are shown?",
+       "answer": "4",
+       "choices": [
+        "4",
+        "2",
+        "6",
+        "8"
+       ]
+      },
+      {
+       "skill": "Choosing a way to check a number to 10",
+       "prompt": "You have 9 counters. Which way best helps you check there are 9 without counting one by one?",
+       "answer": "Put them in a ten frame and see that 1 space is empty.",
+       "choices": [
+        "Put them in a ten frame and see that 1 space is empty.",
+        "Make a big pile and look at how tall it is.",
+        "Line them up and stop when the line looks long.",
+        "Count only the counters you can see first."
+       ]
       }
      ]
     }
@@ -1239,6 +1591,28 @@
         "Both towers are tall",
         "Both towers are the same height"
        ]
+      },
+      {
+       "skill": "Sorting by one attribute: shape",
+       "prompt": "A tin holds 5 round buttons and 5 square buttons. You put the round buttons in one pile and the square buttons in another pile. What rule did you use?",
+       "answer": "Sorting by shape",
+       "choices": [
+        "Sorting by shape",
+        "Sorting by color",
+        "Sorting by size",
+        "Sorting by how many"
+       ]
+      },
+      {
+       "skill": "Comparing short and tall objects",
+       "prompt": "A green chair and a yellow chair are side by side. The green chair is tall. The yellow chair is short. Which chair is shorter?",
+       "answer": "The yellow chair",
+       "choices": [
+        "The yellow chair",
+        "The green chair",
+        "Both chairs",
+        "Neither chair"
+       ]
       }
      ]
     },
@@ -1303,6 +1677,28 @@
         "One bear is brown and one bear is not",
         "One bear is big and one bear is small",
         "One bear has ears and one bear has no ears"
+       ]
+      },
+      {
+       "skill": "Spotting the object that is different",
+       "prompt": "Two red cars and one blue car are on the rug. Which car is not the same as the others?",
+       "answer": "The blue car",
+       "choices": [
+        "The blue car",
+        "A red car",
+        "Both red cars",
+        "All three cars"
+       ]
+      },
+      {
+       "skill": "Explaining what makes two things different",
+       "prompt": "Two plates are both big and both round. One plate has stripes. One plate has dots. What makes the plates different?",
+       "answer": "Their pattern",
+       "choices": [
+        "Their pattern",
+        "Their size",
+        "Their shape",
+        "Their color"
        ]
       }
      ]
@@ -1369,6 +1765,28 @@
         "The square",
         "Both shapes have 3 corners",
         "Neither shape has 3 corners"
+       ]
+      },
+      {
+       "skill": "Naming a rectangle by its sides and corners",
+       "prompt": "This shape has 4 sides and 4 corners. Two sides are long and two sides are short. What is it called?",
+       "answer": "A rectangle",
+       "choices": [
+        "A rectangle",
+        "A square",
+        "A triangle",
+        "A circle"
+       ]
+      },
+      {
+       "skill": "Seeing one object at a glance",
+       "prompt": "Look at the plate. 🍪 How many cookies do you see? Say it right away without counting.",
+       "answer": "One",
+       "choices": [
+        "One",
+        "Two",
+        "Three",
+        "Zero"
        ]
       }
      ]
@@ -1440,6 +1858,28 @@
         "9, 8",
         "10, 9"
        ]
+      },
+      {
+       "skill": "Seeing three in a line at a glance",
+       "prompt": "A card shows three dots in a line: ⚫⚫⚫ The card is shown fast and then hidden. How many dots did it show?",
+       "answer": "Three",
+       "choices": [
+        "Three",
+        "Two",
+        "Four",
+        "One"
+       ]
+      },
+      {
+       "skill": "Saying counting words in order after 5",
+       "prompt": "Sing the counting words. Which words come next? 4, 5, ___, ___",
+       "answer": "6, 7",
+       "choices": [
+        "6, 7",
+        "7, 8",
+        "3, 4",
+        "5, 6"
+       ]
       }
      ]
     },
@@ -1510,6 +1950,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Moving teddies one at a time, the words go one, two for the first two and then three for the last of the 3 teddies. Two repeats the word for the second teddy, four is a count past the last teddy, and one starts over.",
        "replaced": "There is one ball on the mat. ⚽ Say the number that tells how many balls there are."
+      },
+      {
+       "skill": "Matching one counting word to one object",
+       "prompt": "Sam counts two ducks. He touches the first duck and says 'one.' Then he touches the same duck again and says 'two.' Did he count right?",
+       "answer": "No, he touched one duck twice",
+       "choices": [
+        "No, he touched one duck twice",
+        "Yes, he counted two ducks",
+        "No, he said the words backward",
+        "Yes, he counted one duck"
+       ]
+      },
+      {
+       "skill": "Counting up to 3 objects and saying how many",
+       "prompt": "Count the hats. 🎩🎩 How many hats are there?",
+       "answer": "Two",
+       "choices": [
+        "Two",
+        "One",
+        "Three",
+        "Four"
+       ]
       }
      ]
     },
@@ -1574,6 +2036,28 @@
         "3",
         "5",
         "2"
+       ]
+      },
+      {
+       "skill": "Showing a number up to 5 on fingers",
+       "prompt": "Hold up fingers to show 3. How many fingers do you hold up?",
+       "answer": "Three",
+       "choices": [
+        "Three",
+        "Two",
+        "Four",
+        "Five"
+       ]
+      },
+      {
+       "skill": "Recognizing a group of 4 objects",
+       "prompt": "Which group has 4 stars?",
+       "answer": "⭐⭐⭐⭐",
+       "choices": [
+        "⭐⭐⭐⭐",
+        "⭐⭐⭐",
+        "⭐⭐⭐⭐⭐",
+        "⭐⭐"
        ]
       }
      ]
@@ -1640,6 +2124,28 @@
         "The second pile with 5 balls",
         "Both piles have the same",
         "Neither pile has balls"
+       ]
+      },
+      {
+       "skill": "Handing over exactly the number asked for",
+       "prompt": "A teacher says, \"Give me 5 stickers!\" Which group of stickers should you hand to the teacher?",
+       "answer": "⭐⭐⭐⭐⭐",
+       "choices": [
+        "⭐⭐⭐⭐⭐",
+        "⭐⭐⭐⭐",
+        "⭐⭐⭐⭐⭐⭐",
+        "⭐⭐⭐"
+       ]
+      },
+      {
+       "skill": "More by looking at two groups",
+       "prompt": "Look at the two baskets of apples. The first basket has 4 apples: 🍎🍎🍎🍎. The second basket has 2 apples: 🍎🍎. Which basket has MORE apples?",
+       "answer": "The first basket has more.",
+       "choices": [
+        "The first basket has more.",
+        "The second basket has more.",
+        "Both baskets have the same number.",
+        "The first basket has fewer."
        ]
       }
      ]
@@ -1711,6 +2217,28 @@
         "Fewer balls of yarn",
         "There are more kittens than balls of yarn"
        ]
+      },
+      {
+       "skill": "Same number when matching leaves nothing over",
+       "prompt": "There are 4 kids 😀😀😀😀 and 4 chairs 🪑🪑🪑🪑. We draw a line from each kid to one chair. Nothing is left over. What does this tell us?",
+       "answer": "The kids and the chairs have the same number.",
+       "choices": [
+        "The kids and the chairs have the same number.",
+        "There are more kids than chairs.",
+        "There are more chairs than kids.",
+        "There are fewer chairs than kids."
+       ]
+      },
+      {
+       "skill": "Using one-to-one matching to find how many more are needed",
+       "prompt": "There are 3 rabbits 🐇🐇🐇 and 2 carrots 🥕🥕. We give one carrot to each rabbit. One rabbit has no carrot. How many more carrots do we need so every rabbit gets one carrot?",
+       "answer": "1 more carrot",
+       "choices": [
+        "1 more carrot",
+        "2 more carrots",
+        "3 more carrots",
+        "0 more carrots"
+       ]
       }
      ]
     },
@@ -1776,6 +2304,28 @@
         "Nina has more blocks",
         "Sam has more blocks",
         "Sam has fewer blocks now that they are spread out"
+       ]
+      },
+      {
+       "skill": "One more added to a group of five",
+       "prompt": "There are 5 frogs 🐸🐸🐸🐸🐸 sitting on a log. One more frog hops onto the log. How many frogs are on the log now?",
+       "answer": "6",
+       "choices": [
+        "6",
+        "5",
+        "4",
+        "7"
+       ]
+      },
+      {
+       "skill": "Number stays the same when a row is bunched up",
+       "prompt": "Ben has 5 blocks in a long row. Then he pushes them all together into a small bunch. How many blocks does Ben have now?",
+       "answer": "5",
+       "choices": [
+        "5",
+        "2",
+        "4",
+        "6"
        ]
       }
      ]
@@ -1848,6 +2398,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U6, 4 units before U10. It must need what U10 teaches.",
        "replaced": "Look at the picture in your mind: a shelf holds 🧸🧸🧸 on the top and 🧸🧸 on the bottom. How many bears are on the shelf all together?"
+      },
+      {
+       "skill": "Counting scattered objects in a picture",
+       "prompt": "In the picture, some birds are flying in different spots: 🐦 🐦🐦 🐦 🐦. How many birds are in the picture?",
+       "answer": "5",
+       "choices": [
+        "5",
+        "4",
+        "6",
+        "3"
+       ]
+      },
+      {
+       "skill": "Counting sounds you hear",
+       "prompt": "Sam stomps his feet on the floor. Listen: stomp, stomp, stomp, stomp, stomp, stomp. How many stomps did you hear?",
+       "answer": "6",
+       "choices": [
+        "6",
+        "5",
+        "7",
+        "4"
+       ]
       }
      ]
     },
@@ -1914,6 +2486,28 @@
         "4",
         "5"
        ]
+      },
+      {
+       "skill": "Matching a group to its numeral",
+       "prompt": "A card shows a group of bees: 🐝🐝🐝🐝. Which numeral goes with this group?",
+       "answer": "4",
+       "choices": [
+        "4",
+        "3",
+        "5",
+        "2"
+       ]
+      },
+      {
+       "skill": "Matching a numeral to fingers held up",
+       "prompt": "A card shows the numeral 5. Which hand shows the same number of fingers held up?",
+       "answer": "A hand with 5 fingers up",
+       "choices": [
+        "A hand with 5 fingers up",
+        "A hand with 3 fingers up",
+        "A hand with 4 fingers up",
+        "A hand with 2 fingers up"
+       ]
       }
      ]
     },
@@ -1979,6 +2573,28 @@
         "4, then blast off!",
         "1, 2, then blast off!",
         "0, then blast off!"
+       ]
+      },
+      {
+       "skill": "Counting a set of seven objects",
+       "prompt": "There are ladybugs on a leaf: 🐞🐞🐞🐞🐞🐞🐞. Touch each ladybug one time and say one number word as you touch. How many ladybugs are there?",
+       "answer": "7",
+       "choices": [
+        "7",
+        "6",
+        "8",
+        "5"
+       ]
+      },
+      {
+       "skill": "Saying the whole countdown from five to one",
+       "prompt": "A rocket counts down from 5 all the way to 1 before it blasts off. Which words does the rocket say?",
+       "answer": "5, 4, 3, 2, 1",
+       "choices": [
+        "5, 4, 3, 2, 1",
+        "1, 2, 3, 4, 5",
+        "5, 4, 3, 2",
+        "4, 3, 2, 1"
        ]
       }
      ]
@@ -2052,6 +2668,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U9, 4 units before U13. It must need what U13 teaches.",
        "replaced": "Three blocks are on a table. Add one more block to the group. Now how many blocks are on the table?"
+      },
+      {
+       "skill": "Recognizing a group with zero objects",
+       "prompt": "Four plates sit on a table. Plate A has two cookies. Plate B has nothing on it. Plate C has one cookie. Plate D has three cookies. Which plate has zero cookies?",
+       "answer": "Plate B",
+       "choices": [
+        "Plate B",
+        "Plate A",
+        "Plate C",
+        "Plate D"
+       ]
+      },
+      {
+       "skill": "Finding the number after when one more is added",
+       "prompt": "A row of blocks is numbered 1, 2, 3, 4. One more block is added at the end. Which number comes next?",
+       "answer": "5",
+       "choices": [
+        "5",
+        "4",
+        "6",
+        "1"
+       ]
       }
      ]
     },
@@ -2116,6 +2754,28 @@
         "big, middle, small",
         "small, big, middle",
         "middle, small, big"
+       ]
+      },
+      {
+       "skill": "Ordering four objects by length",
+       "prompt": "Four toy cars sit in a row. The red car is longer than the blue car. The blue car is longer than the green car. The green car is longer than the yellow car. Which car is the longest?",
+       "answer": "the red car",
+       "choices": [
+        "the red car",
+        "the blue car",
+        "the green car",
+        "the yellow car"
+       ]
+      },
+      {
+       "skill": "Putting everyday things in size order",
+       "prompt": "Which list puts the things in order from smallest to biggest?",
+       "answer": "ant, cat, house",
+       "choices": [
+        "ant, cat, house",
+        "house, cat, ant",
+        "cat, ant, house",
+        "ant, house, cat"
        ]
       }
      ]
@@ -2186,6 +2846,28 @@
         "inside the box",
         "on top of the box",
         "under the box"
+       ]
+      },
+      {
+       "skill": "Identifying the lightest object",
+       "prompt": "Which thing is the lightest?",
+       "answer": "a balloon",
+       "choices": [
+        "a balloon",
+        "a book",
+        "a chair",
+        "a table"
+       ]
+      },
+      {
+       "skill": "Using the position word behind",
+       "prompt": "A toy car sits behind a chair. Which word tells where the toy car is?",
+       "answer": "behind",
+       "choices": [
+        "behind",
+        "in front of",
+        "on",
+        "under"
        ]
       }
      ]
@@ -2260,6 +2942,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Two equal squares joined along a side make a long shape with 4 corners and 2 long sides, which is a rectangle (2 wide by 1 tall, so not a square). A triangle has 3 corners and a circle has no corners.",
        "replaced": "Liam fills a big outline of a house with flat shapes. Which shape fits in the triangle space on top of the house?"
+      },
+      {
+       "skill": "Recognizing a repeating color pattern",
+       "prompt": "Which list is a repeating pattern?",
+       "answer": "red, blue, red, blue",
+       "choices": [
+        "red, blue, red, blue",
+        "red, blue, green, yellow",
+        "red, red, blue, green",
+        "red, blue, blue, green"
+       ]
+      },
+      {
+       "skill": "Using shapes to make a picture",
+       "prompt": "A picture of a house has a square for the wall and a triangle on top for the roof. Which shape is the roof?",
+       "answer": "triangle",
+       "choices": [
+        "triangle",
+        "square",
+        "circle",
+        "rectangle"
+       ]
       }
      ]
     }
@@ -2330,6 +3034,28 @@
         "11, 13",
         "12, 13"
        ]
+      },
+      {
+       "skill": "Counting words to 20 near the end",
+       "prompt": "We are saying the counting words. Which number word comes just before 20?",
+       "answer": "nineteen",
+       "choices": [
+        "nineteen",
+        "eighteen",
+        "twenty",
+        "seventeen"
+       ]
+      },
+      {
+       "skill": "Careful touching when counting to 10",
+       "prompt": "You are counting a group of 7 toy cars. You notice you touched one car two times. What is the best way to fix your count?",
+       "answer": "Count the cars again and touch each car once.",
+       "choices": [
+        "Count the cars again and touch each car once.",
+        "Keep 8 because one car was touched twice.",
+        "Stop counting because every car was touched.",
+        "Count only the cars you did not touch."
+       ]
       }
      ]
     },
@@ -2394,6 +3120,28 @@
         "3",
         "2",
         "4",
+        "5"
+       ]
+      },
+      {
+       "skill": "Last number names the whole group",
+       "prompt": "Leo counts toy boats: 1, 2, 3, 4, 5, 6. He says, \"There are 6 boats.\" Why does Leo say 6?",
+       "answer": "6 is the last number he said.",
+       "choices": [
+        "6 is the last number he said.",
+        "6 is the first number he said.",
+        "6 is the number of boat colors.",
+        "6 is the number before 1."
+       ]
+      },
+      {
+       "skill": "Quick-look dot card to 4 in two rows",
+       "prompt": "You see a dot card for a quick moment. It shows 🔴🔴 in one row and 🔴🔴 in the row below. How many dots do you see?",
+       "answer": "4",
+       "choices": [
+        "4",
+        "2",
+        "3",
         "5"
        ]
       }
@@ -2467,6 +3215,28 @@
         "5",
         "7"
        ]
+      },
+      {
+       "skill": "Quick-look finger pattern to 6",
+       "prompt": "You see a hand pattern for a quick moment. One hand has all 5 fingers up. The other hand has 1 finger up. How many fingers are up in all?",
+       "answer": "6",
+       "choices": [
+        "6",
+        "4",
+        "5",
+        "7"
+       ]
+      },
+      {
+       "skill": "Counting out exactly a requested number",
+       "prompt": "You need exactly 5 toy animals. You count them out: 1, 2, 3, 4, 5, 6. What did you do wrong?",
+       "answer": "You counted out one too many.",
+       "choices": [
+        "You counted out one too many.",
+        "You counted out one too few.",
+        "You counted the animals in the wrong order.",
+        "You counted one animal two times."
+       ]
       }
      ]
     },
@@ -2532,6 +3302,28 @@
         "The puppet skipped a toy.",
         "The puppet said the numbers out of order.",
         "The puppet stopped too early."
+       ]
+      },
+      {
+       "skill": "Counting a circle by moving counted objects",
+       "prompt": "There are 14 cups in a circle. You count each cup and move it to the side. When no cups are left in the circle, how many cups did you count?",
+       "answer": "14",
+       "choices": [
+        "14",
+        "13",
+        "15",
+        "0"
+       ]
+      },
+      {
+       "skill": "Finding counting words out of order",
+       "prompt": "A puppet counts toy cars: 1, 2, 4, 3, 5. What mistake did the puppet make?",
+       "answer": "It said 4 and 3 in the wrong order.",
+       "choices": [
+        "It said 4 and 3 in the wrong order.",
+        "It skipped the number 3.",
+        "It counted one car two times.",
+        "It started counting at 2."
        ]
       }
      ]
@@ -2601,6 +3393,28 @@
         "Make a straight line down, then make a little curve at the bottom.",
         "Make a straight line down, then make another straight line next to it.",
         "Make a circle, then make a little line down from the top."
+       ]
+      },
+      {
+       "skill": "Matching a group to a numeral",
+       "prompt": "Which numeral card matches this group? 🐟🐟🐟🐟🐟🐟",
+       "answer": "6",
+       "choices": [
+        "6",
+        "5",
+        "7",
+        "9"
+       ]
+      },
+      {
+       "skill": "Writing numeral 4",
+       "prompt": "You want to write the numeral 4. Which strokes make a 4?",
+       "answer": "A line down, a line across, then a line down.",
+       "choices": [
+        "A line down, a line across, then a line down.",
+        "A circle and a line down.",
+        "A line down and a curve at the top.",
+        "Two circles, one above the other."
        ]
       }
      ]
@@ -2674,6 +3488,28 @@
         "6",
         "8"
        ]
+      },
+      {
+       "skill": "Counting on to add a small group",
+       "prompt": "There are 7 apples in a basket. You put in 2 more apples. Start at 7 and count on two numbers. What number do you land on?",
+       "answer": "9",
+       "choices": [
+        "9",
+        "8",
+        "10",
+        "6"
+       ]
+      },
+      {
+       "skill": "Number right after on a number path",
+       "prompt": "On the number path, which number comes right after 9?",
+       "answer": "10",
+       "choices": [
+        "10",
+        "8",
+        "11",
+        "0"
+       ]
       }
      ]
     },
@@ -2739,6 +3575,28 @@
         "3 fewer",
         "2 fewer",
         "4 fewer"
+       ]
+      },
+      {
+       "skill": "Recognizing a backward counting sequence",
+       "prompt": "Which row counts backward from 10?",
+       "answer": "10, 9, 8, 7",
+       "choices": [
+        "10, 9, 8, 7",
+        "10, 8, 9, 7",
+        "9, 10, 8, 7",
+        "10, 9, 11, 12"
+       ]
+      },
+      {
+       "skill": "Comparing two groups with the same number",
+       "prompt": "Group A has 6 stars: ⭐⭐⭐⭐⭐⭐. Group B has 6 stars spread out: ⭐ ⭐ ⭐ ⭐ ⭐ ⭐. Which sentence is true?",
+       "answer": "The groups have the same number of stars.",
+       "choices": [
+        "The groups have the same number of stars.",
+        "Group A has more stars.",
+        "Group B has more stars.",
+        "Group A has fewer stars."
        ]
       }
      ]
@@ -2812,6 +3670,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U6, 2 units before U8. It must need what U8 teaches.",
        "replaced": "These number cards are missing one: 3, 4, __, 6. Which numeral goes in the empty spot?"
+      },
+      {
+       "skill": "Filling a missing number in an ordered path",
+       "prompt": "These number cards are in order from first to last: 1, 2, __, 4, 5. Which number card is missing?",
+       "answer": "3",
+       "choices": [
+        "3",
+        "6",
+        "0",
+        "2"
+       ]
+      },
+      {
+       "skill": "Comparing a numeral to a given number",
+       "prompt": "Which numeral is greater than 6?",
+       "answer": "8",
+       "choices": [
+        "8",
+        "6",
+        "4",
+        "2"
+       ]
       }
      ]
     },
@@ -2882,6 +3762,28 @@
        "revised": 1,
        "why": "Too hard: a learner only reliably answers it by U12.5, 3.5 units after U9. It must need only what U9 and earlier teach.",
        "replaced": "Some children are on the rug. 2 more children come and join them. Now there are 6 children. How many children were on the rug at the start?"
+      },
+      {
+       "skill": "Finding one less than a number",
+       "prompt": "Which number is one less than 9?",
+       "answer": "8",
+       "choices": [
+        "8",
+        "10",
+        "7",
+        "9"
+       ]
+      },
+      {
+       "skill": "Hopping forward by two on a number path",
+       "prompt": "Start at 3 on the number path. Hop forward by 2. Which number do you land on?",
+       "answer": "5",
+       "choices": [
+        "5",
+        "4",
+        "6",
+        "1"
+       ]
       }
      ]
     },
@@ -2954,6 +3856,28 @@
         "3 small leaves",
         "6 small leaves",
         "4 small leaves"
+       ]
+      },
+      {
+       "skill": "Finding two numbers that make 5",
+       "prompt": "Which pair of numbers makes 5?",
+       "answer": "2 and 3",
+       "choices": [
+        "2 and 3",
+        "1 and 3",
+        "2 and 2",
+        "4 and 2"
+       ]
+      },
+      {
+       "skill": "Sorting by color and finding the largest group",
+       "prompt": "Here are some color tiles: 🔴🔴🔴 🔵🔵 🟢🟢🟢🟢 🟡. Sort them by color. Which color group has the most?",
+       "answer": "The green group",
+       "choices": [
+        "The green group",
+        "The red group",
+        "The blue group",
+        "The yellow group"
        ]
       }
      ]
@@ -3028,6 +3952,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: A hexagon is the flat shape with 6 sides and 6 corners. A triangle has 3 sides, a rectangle has 4 sides, and an oval has no straight sides or corners.",
        "replaced": "A flat shape has 5 straight sides. What is this flat shape?"
+      },
+      {
+       "skill": "Identifying a triangle by sides and corners",
+       "prompt": "Which flat shape has 3 sides and 3 corners?",
+       "answer": "triangle",
+       "choices": [
+        "triangle",
+        "square",
+        "circle",
+        "rectangle"
+       ]
+      },
+      {
+       "skill": "Identifying a rectangle by four sides not all equal",
+       "prompt": "Which flat shape has 4 sides and 4 corners, but the sides are not all the same length?",
+       "answer": "rectangle",
+       "choices": [
+        "rectangle",
+        "square",
+        "triangle",
+        "circle"
+       ]
       }
      ]
     },
@@ -3096,6 +4042,28 @@
         "square",
         "rectangle",
         "triangle"
+       ]
+      },
+      {
+       "skill": "Identifying a cube by flat square faces",
+       "prompt": "Which solid shape can stack and has 6 flat square faces?",
+       "answer": "cube",
+       "choices": [
+        "cube",
+        "sphere",
+        "cylinder",
+        "cone"
+       ]
+      },
+      {
+       "skill": "Fitting two squares together to make a rectangle",
+       "prompt": "Two same-size pattern block squares are fitted together along one side. What shape do they make?",
+       "answer": "a rectangle",
+       "choices": [
+        "a rectangle",
+        "a larger square",
+        "a triangle",
+        "a circle"
        ]
       }
      ]
@@ -3173,6 +4141,28 @@
         "The two bowls hold the same amount",
         "Ben's bowl, because 3 is a big number"
        ]
+      },
+      {
+       "skill": "Comparing lengths by order",
+       "prompt": "A pencil is shorter than a crayon. A crayon is shorter than a ruler. A ruler is shorter than a broom. Which object is longest?",
+       "answer": "the broom",
+       "choices": [
+        "the broom",
+        "the pencil",
+        "the crayon",
+        "the ruler"
+       ]
+      },
+      {
+       "skill": "Using a balance to compare weight",
+       "prompt": "On a balance, the side with the red ball goes down. The side with the blue ball goes up. Which ball is lighter?",
+       "answer": "the blue ball",
+       "choices": [
+        "the blue ball",
+        "the red ball",
+        "both balls",
+        "neither ball"
+       ]
       }
      ]
     },
@@ -3246,6 +4236,28 @@
         "Red",
         "Green",
         "Yellow"
+       ]
+      },
+      {
+       "skill": "Measuring length with footsteps",
+       "prompt": "Lina walks heel to toe along a mat. She takes 7 footsteps. Each footstep is the same length and they touch with no spaces. How long is the mat in footsteps?",
+       "answer": "7 footsteps",
+       "choices": [
+        "7 footsteps",
+        "6 footsteps",
+        "8 footsteps",
+        "9 footsteps"
+       ]
+      },
+      {
+       "skill": "Extending an AB action pattern",
+       "prompt": "A pattern goes: clap, stomp, clap, stomp, clap, ___. What comes next?",
+       "answer": "stomp",
+       "choices": [
+        "stomp",
+        "clap",
+        "jump",
+        "rest"
        ]
       }
      ]
@@ -3327,6 +4339,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U7.5, 7.5 units before U15. It must need what U15 teaches.",
        "replaced": "Sam eats breakfast in the morning. Then he goes to school. After school, he plays. What happens right after school?"
+      },
+      {
+       "skill": "Using left and right",
+       "prompt": "A cup is on the left side of a plate. A spoon is on the right side of the plate. A napkin is under the plate. Which object is on the right?",
+       "answer": "the spoon",
+       "choices": [
+        "the spoon",
+        "the cup",
+        "the plate",
+        "the napkin"
+       ]
+      },
+      {
+       "skill": "Ordering daily routines",
+       "prompt": "Ana eats breakfast. Then she goes to school. Then she eats dinner. Which thing happens last?",
+       "answer": "eating dinner",
+       "choices": [
+        "eating dinner",
+        "eating breakfast",
+        "going to school",
+        "waking up"
+       ]
       }
      ]
     },
@@ -3412,6 +4446,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 6 < 9 so Tom has fewer blocks; same-size blocks stacked, fewer blocks makes a shorter tower. Only the first pair has both words right; each other option has at least one false sentence.",
        "replaced": "Sam has 7 blocks. Lee has 4 blocks. Which sentence explains it correctly using the math words 'more' and 'fewer'?"
+      },
+      {
+       "skill": "Counting out to make a needed number",
+       "prompt": "In the game shop, Leo needs 6 tokens to buy a car. He has counted out 5 tokens. How many more tokens does he need?",
+       "answer": "1 token",
+       "choices": [
+        "1 token",
+        "2 tokens",
+        "5 tokens",
+        "6 tokens"
+       ]
+      },
+      {
+       "skill": "Using the word same to compare groups",
+       "prompt": "Two plates each have 4 cookies. Which word tells about the number of cookies on the plates?",
+       "answer": "the same",
+       "choices": [
+        "the same",
+        "more",
+        "fewer",
+        "bigger"
+       ]
       }
      ]
     }
@@ -3482,6 +4538,28 @@
         "61, 62",
         "70, 71"
        ]
+      },
+      {
+       "skill": "Counting a collection to 20 in rows",
+       "prompt": "A shelf has 5 red blocks in the first row, 5 blue blocks in the second row, and 4 green blocks in the last row. How many blocks are on the shelf?",
+       "answer": "14 blocks",
+       "choices": [
+        "14 blocks",
+        "13 blocks",
+        "15 blocks",
+        "10 blocks"
+       ]
+      },
+      {
+       "skill": "Counting by ones across a decade on a hundred chart",
+       "prompt": "On a hundred chart, what number comes right after 89 when you count by ones?",
+       "answer": "90",
+       "choices": [
+        "90",
+        "80",
+        "88",
+        "91"
+       ]
       }
      ]
     },
@@ -3548,6 +4626,28 @@
         "eleven, twelve",
         "three, four"
        ]
+      },
+      {
+       "skill": "Ordering teen number words",
+       "prompt": "Which group of number words is in counting order from smallest to largest?",
+       "answer": "eleven, twelve, thirteen",
+       "choices": [
+        "eleven, twelve, thirteen",
+        "twelve, eleven, thirteen",
+        "eleven, thirteen, twelve",
+        "thirteen, twelve, eleven"
+       ]
+      },
+      {
+       "skill": "Finding how many more to make a teen number from ten",
+       "prompt": "A ten frame is full of 🟠. How many more 🟠 must you add to have 14 🟠 in all?",
+       "answer": "4 more",
+       "choices": [
+        "4 more",
+        "3 more",
+        "5 more",
+        "10 more"
+       ]
       }
      ]
     },
@@ -3613,6 +4713,28 @@
         "31",
         "3",
         "11"
+       ]
+      },
+      {
+       "skill": "Meaning of the tens digit in a teen numeral",
+       "prompt": "In the number 16, what does the digit 1 mean?",
+       "answer": "one ten",
+       "choices": [
+        "one ten",
+        "one one",
+        "six tens",
+        "six ones"
+       ]
+      },
+      {
+       "skill": "Writing a teen numeral from a ten-and-ones equation",
+       "prompt": "Which numeral is the same as 10 + 5?",
+       "answer": "15",
+       "choices": [
+        "15",
+        "5",
+        "10",
+        "51"
        ]
       }
      ]
@@ -3687,6 +4809,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: From 16 say 17, 18, 19, so the last is 19. Check: 16 + 3 = 19. '18' counts 16 as one of the three; '20' and '17' miscount.",
        "replaced": "Count on from 19: 19, 20. What number comes just BEFORE 20?"
+      },
+      {
+       "skill": "Counting on to 20 from 19",
+       "prompt": "What number comes right after 19 when you count on by ones?",
+       "answer": "20",
+       "choices": [
+        "20",
+        "18",
+        "21",
+        "90"
+       ]
+      },
+      {
+       "skill": "Writing 20 as two tens",
+       "prompt": "Which number sentence shows 20 as two groups of ten?",
+       "answer": "10 + 10 = 20",
+       "choices": [
+        "10 + 10 = 20",
+        "10 + 2 = 20",
+        "20 + 10 = 20",
+        "2 + 10 = 20"
+       ]
       }
      ]
     },
@@ -3752,6 +4896,28 @@
         "8 > 14",
         "14 < 8",
         "14 = 8"
+       ]
+      },
+      {
+       "skill": "Counting backward with a missing middle number",
+       "prompt": "Count backward: 14, 13, ___, 11. What number is missing?",
+       "answer": "12",
+       "choices": [
+        "12",
+        "15",
+        "10",
+        "13"
+       ]
+      },
+      {
+       "skill": "Comparing numbers to 20 with greater than",
+       "prompt": "Which number is greater than 14?",
+       "answer": "19",
+       "choices": [
+        "19",
+        "13",
+        "10",
+        "12"
        ]
       }
      ]
@@ -3829,6 +4995,28 @@
         "5",
         "20"
        ]
+      },
+      {
+       "skill": "Skip counting by 2s from a teen number",
+       "prompt": "Count by 2s from 14 to 20. Which list is correct?",
+       "answer": "14, 16, 18, 20",
+       "choices": [
+        "14, 16, 18, 20",
+        "14, 15, 16, 17",
+        "14, 15, 17, 19",
+        "14, 16, 17, 20"
+       ]
+      },
+      {
+       "skill": "Finding a missing number in a count-by-5s sequence",
+       "prompt": "Count by 5s: 5, 10, ___, 20. What number is missing?",
+       "answer": "15",
+       "choices": [
+        "15",
+        "12",
+        "14",
+        "16"
+       ]
       }
      ]
     },
@@ -3905,6 +5093,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U3.5, 3.5 units before U7. It must need what U7 teaches.",
        "replaced": "What is 6 + 4?"
+      },
+      {
+       "skill": "Making tally marks in groups of five",
+       "prompt": "When you make tally marks for 12, how should you group them?",
+       "answer": "2 groups of five and 2 single marks",
+       "choices": [
+        "2 groups of five and 2 single marks",
+        "1 group of five and 2 single marks",
+        "2 groups of five and 1 single mark",
+        "0 groups of five and 12 single marks"
+       ]
+      },
+      {
+       "skill": "Addition facts within 10",
+       "prompt": "What is 4 + 4?",
+       "answer": "8",
+       "choices": [
+        "8",
+        "6",
+        "7",
+        "9"
+       ]
       }
      ]
     },
@@ -3985,6 +5195,28 @@
         "7",
         "14"
        ]
+      },
+      {
+       "skill": "Subtraction facts within 10",
+       "prompt": "Which number sentence has the same answer as 10 − 6?",
+       "answer": "8 − 4",
+       "choices": [
+        "8 − 4",
+        "8 − 3",
+        "9 − 4",
+        "7 − 2"
+       ]
+      },
+      {
+       "skill": "Decomposing teen numbers into ten and ones",
+       "prompt": "Which equation shows 14 as one ten and some ones?",
+       "answer": "10 + 4 = 14",
+       "choices": [
+        "10 + 4 = 14",
+        "10 + 3 = 14",
+        "10 + 5 = 14",
+        "1 + 4 = 14"
+       ]
       }
      ]
     },
@@ -4053,6 +5285,28 @@
         "12",
         "14",
         "3"
+       ]
+      },
+      {
+       "skill": "Making ten with number pairs",
+       "prompt": "Which equation is true and makes 10?",
+       "answer": "3 + 7 = 10",
+       "choices": [
+        "3 + 7 = 10",
+        "3 + 6 = 10",
+        "4 + 7 = 10",
+        "2 + 7 = 10"
+       ]
+      },
+      {
+       "skill": "Adding within 20 by counting on",
+       "prompt": "What is 7 + 6?",
+       "answer": "13",
+       "choices": [
+        "13",
+        "12",
+        "14",
+        "11"
        ]
       }
      ]
@@ -4138,6 +5392,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Hopping away is take-from: 9 - 3 = 6. Check: 6 + 3 = 9. Others add, give a false difference, or use the wrong number.",
        "replaced": "Lila has 6 stickers. Her friend gives her 2 more stickers. How many stickers does Lila have now?"
+      },
+      {
+       "skill": "Adding a single digit to ten",
+       "prompt": "Ten and five more make which teen number?",
+       "answer": "15",
+       "choices": [
+        "15",
+        "14",
+        "16",
+        "20"
+       ]
+      },
+      {
+       "skill": "Take-from story problems within 10",
+       "prompt": "There are 7 birds on a wire. 2 birds fly away. How many birds are left?",
+       "answer": "5",
+       "choices": [
+        "5",
+        "9",
+        "6",
+        "4"
+       ]
       }
      ]
     },
@@ -4218,6 +5494,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Difference 8 - 3 = 5. Check: 3 + 5 = 8 (count on 4, 5, 6, 7, 8 = 5 counts). '11' adds the towers; '3' and '8' repeat a tower.",
        "replaced": "There are 7 crayons in all. 3 crayons are red and the rest are blue. How many crayons are blue?"
+      },
+      {
+       "skill": "Take-apart story problems within 10",
+       "prompt": "A basket has 10 fruits. 4 are apples and the rest are pears. How many pears are in the basket?",
+       "answer": "6",
+       "choices": [
+        "6",
+        "5",
+        "7",
+        "14"
+       ]
+      },
+      {
+       "skill": "Comparing with bar models: how many more",
+       "prompt": "A red bar has 8 squares. A blue bar has 5 squares. Which sentence is true?",
+       "answer": "The red bar has 3 more squares than the blue bar.",
+       "choices": [
+        "The red bar has 3 more squares than the blue bar.",
+        "The blue bar has 3 more squares than the red bar.",
+        "The red bar has 2 more squares than the blue bar.",
+        "The blue bar has 2 more squares than the red bar."
+       ]
       }
      ]
     },
@@ -4286,6 +5584,28 @@
         "3",
         "5",
         "14"
+       ]
+      },
+      {
+       "skill": "Spending coins in a simple money choice",
+       "prompt": "Kai has 6 coins. He spends 3 coins on a snack. How many coins does he have left?",
+       "answer": "3",
+       "choices": [
+        "3",
+        "9",
+        "4",
+        "2"
+       ]
+      },
+      {
+       "skill": "Missing number puzzles within 10",
+       "prompt": "What number goes in the box? □ + 3 = 8",
+       "answer": "5",
+       "choices": [
+        "5",
+        "4",
+        "6",
+        "11"
        ]
       }
      ]
@@ -4361,6 +5681,28 @@
         "About 30 dots",
         "About 8 dots"
        ]
+      },
+      {
+       "skill": "Counting scattered objects of two kinds",
+       "prompt": "A picture shows 8 red leaves 🍁 and 6 yellow leaves 🍂 scattered on the grass. You mark every leaf once. How many marks do you make?",
+       "answer": "14",
+       "choices": [
+        "14",
+        "8",
+        "6",
+        "15"
+       ]
+      },
+      {
+       "skill": "Estimating with a group of 10",
+       "prompt": "A row of 10 cubes is on the table. A pile of cubes looks like about the same as the row and 4 more cubes. About how many cubes are in the pile?",
+       "answer": "14",
+       "choices": [
+        "14",
+        "4",
+        "10",
+        "20"
+       ]
       }
      ]
     },
@@ -4426,6 +5768,28 @@
         "4 beads",
         "7 beads",
         "10 beads"
+       ]
+      },
+      {
+       "skill": "Counting the missing category",
+       "prompt": "A box has 16 crayons sorted by color. 7 are red and 5 are blue. The rest are green. How many crayons are green?",
+       "answer": "4",
+       "choices": [
+        "4",
+        "9",
+        "11",
+        "12"
+       ]
+      },
+      {
+       "skill": "Sorting by color and shape together",
+       "prompt": "A box has 3 red stars, 2 blue stars, 4 red hearts, and 1 blue heart. How many are red stars?",
+       "answer": "3",
+       "choices": [
+        "3",
+        "7",
+        "5",
+        "4"
        ]
       }
      ]
@@ -4500,6 +5864,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Overlapping hides part of a clip, so the row covers less than 6 full clip lengths and the shoe is shorter than 6 clips. Longer, exactly 6, and 8 all ignore that the overlapped part is shared by two clips.",
        "replaced": "Ana measures her shoe with paper clips in one row. She uses 6 clips, but two of the clips overlap each other like this: one lies partly on top of the next. Which sentence is true?"
+      },
+      {
+       "skill": "Comparing three lengths",
+       "prompt": "A green ribbon is longer than a red ribbon. The red ribbon is the same length as a blue ribbon. Which ribbon is longest?",
+       "answer": "the green ribbon",
+       "choices": [
+        "the green ribbon",
+        "the red ribbon",
+        "the blue ribbon",
+        "the red and blue ribbons"
+       ]
+      },
+      {
+       "skill": "Measuring with equal nonstandard units",
+       "prompt": "Maya measures a ribbon with paper clips. She places 8 paper clips end to end with no gaps or overlaps. How long is the ribbon?",
+       "answer": "8 paper clips long",
+       "choices": [
+        "8 paper clips long",
+        "7 paper clips long",
+        "9 paper clips long",
+        "16 paper clips long"
+       ]
       }
      ]
     },
@@ -4572,6 +5958,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U8, 8 units before U16. It must need what U16 teaches.",
        "replaced": "Which shape is a cylinder?"
+      },
+      {
+       "skill": "Comparing weight on a level balance",
+       "prompt": "On a balance scale, a ball is on one side and 4 cubes are on the other side. The scale is level. What is true?",
+       "answer": "The ball is as heavy as 4 cubes.",
+       "choices": [
+        "The ball is as heavy as 4 cubes.",
+        "The ball is heavier than 4 cubes.",
+        "The ball is lighter than 4 cubes.",
+        "The ball is as heavy as 1 cube."
+       ]
+      },
+      {
+       "skill": "Naming a solid by its faces",
+       "prompt": "Which shape has 6 square faces?",
+       "answer": "cube",
+       "choices": [
+        "cube",
+        "cone",
+        "cylinder",
+        "sphere"
+       ]
       }
      ]
     },
@@ -4641,6 +6049,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U8.5, 8.5 units before U17. It must need what U17 teaches.",
        "replaced": "Tom draws a rectangle. Which sentence tells about his drawing?"
+      },
+      {
+       "skill": "Describing a solid by flat faces and a point",
+       "prompt": "A solid has one round flat face and a point. Which shape is it?",
+       "answer": "cone",
+       "choices": [
+        "cone",
+        "cube",
+        "cylinder",
+        "sphere"
+       ]
+      },
+      {
+       "skill": "Building a square from sticks",
+       "prompt": "Mia makes a triangle with 3 equal sticks. She wants to make a square with sticks of the same length. How many more sticks does she need?",
+       "answer": "1",
+       "choices": [
+        "1",
+        "2",
+        "3",
+        "4"
+       ]
       }
      ]
     },
@@ -4718,6 +6148,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Turning right rotates the robot clockwise, so what was in front is now on its left (facing north and turning right to face east leaves north on the left). Right would need a left turn, in front means no turn, and behind needs a half turn.",
        "replaced": "A rabbit starts on a path and takes these steps: forward 2 steps, then left 1 step. Which way is the rabbit facing at the end?"
+      },
+      {
+       "skill": "Using above and below in order",
+       "prompt": "A bird is above the nest. The nest is above the cat. Which sentence is true?",
+       "answer": "The bird is above the cat.",
+       "choices": [
+        "The bird is above the cat.",
+        "The cat is above the bird.",
+        "The bird is below the cat.",
+        "The bird is beside the cat."
+       ]
+      },
+      {
+       "skill": "Following two step directions on a map",
+       "prompt": "On a map, the star is 1 step right of the bear. The honey is 2 steps right of the star. How do you go from the bear to the honey?",
+       "answer": "right 3 steps",
+       "choices": [
+        "right 3 steps",
+        "right 1 step",
+        "left 3 steps",
+        "right 2 steps"
+       ]
       }
      ]
     },
@@ -4794,6 +6246,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U9.5, 9.5 units before U19. It must need what U19 teaches.",
        "replaced": "Rosa wakes up, then gets dressed, then eats breakfast, then goes to school. What does Rosa do LAST?"
+      },
+      {
+       "skill": "Day and night",
+       "prompt": "The sun has set. The sky is dark and the stars are out. What part of the day is it?",
+       "answer": "Night",
+       "choices": [
+        "Night",
+        "Morning",
+        "Afternoon",
+        "Noon"
+       ]
+      },
+      {
+       "skill": "Comparing coin values",
+       "prompt": "A penny is worth 1 cent. A nickel is worth 5 cents. A dime is worth 10 cents. A quarter is worth 25 cents. Which coin is worth more than a penny but less than a dime?",
+       "answer": "A nickel",
+       "choices": [
+        "A nickel",
+        "A penny",
+        "A dime",
+        "A quarter"
+       ]
       }
      ]
     },
@@ -4867,6 +6341,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Each tower has 2 more cubes: 1, 3, 5, 7, 9. Check: 7 + 2 = 9. '8' adds only 1; '7' repeats; '1' treats it as a repeating pattern starting over.",
        "replaced": "Look at the pattern of blocks: 🔴🔵🔴🔵🔴🔵 What color block comes NEXT in the pattern?"
+      },
+      {
+       "skill": "Telling a growing pattern from repeating patterns",
+       "prompt": "Which list of numbers is a growing pattern?",
+       "answer": "3, 6, 9, 12",
+       "choices": [
+        "3, 6, 9, 12",
+        "1, 2, 1, 2",
+        "4, 4, 4, 4",
+        "5, 4, 5, 4"
+       ]
+      },
+      {
+       "skill": "Finding the rule of a growing pattern",
+       "prompt": "A growing pattern goes: 2, 4, 6, 8. What is the rule?",
+       "answer": "Add 2 each time",
+       "choices": [
+        "Add 2 each time",
+        "Add 1 each time",
+        "Add 3 each time",
+        "Take away 2 each time"
+       ]
       }
      ]
     }
@@ -4943,6 +6439,28 @@
        "revised": 1,
        "why": "Too hard: a learner only reliably answers it by U3, 2 units after U1. It must need only what U1 and earlier teach.",
        "replaced": "Tom has some stickers. His mom gives him 3 more stickers. Now Tom has 8 stickers. Which addition sentence matches this story?"
+      },
+      {
+       "skill": "Recognize a comparing story",
+       "prompt": "Which story is about comparing two groups?",
+       "answer": "Sam has 5 cars. Jo has 8 cars. How many more cars does Jo have?",
+       "choices": [
+        "Sam has 5 cars. Jo has 8 cars. How many more cars does Jo have?",
+        "Sam has 5 cars. He gets 3 more cars. How many cars does Sam have now?",
+        "Sam has 5 cars. He gives 3 cars away. How many cars does Sam have left?",
+        "Sam has 5 cars. He lines them up. How many cars are in the line?"
+       ]
+      },
+      {
+       "skill": "Add to with result unknown",
+       "prompt": "There are 8 ducks in a pond. 6 more ducks swim in. How many ducks are in the pond now?",
+       "answer": "14",
+       "choices": [
+        "14",
+        "2",
+        "13",
+        "15"
+       ]
       }
      ]
     },
@@ -5012,6 +6530,28 @@
         "12 + 5 = 17 and 17 - 5 = 12",
         "5 + 7 = 12 and 12 + 5 = 17",
         "12 - 5 = 7 and 7 - 5 = 2"
+       ]
+      },
+      {
+       "skill": "Compare with how many fewer",
+       "prompt": "A red bar has 13 cubes. A blue bar has 8 cubes. How many fewer cubes are in the blue bar?",
+       "answer": "5",
+       "choices": [
+        "5",
+        "21",
+        "3",
+        "6"
+       ]
+      },
+      {
+       "skill": "Find two parts that make a whole",
+       "prompt": "Which pair of numbers makes 13?",
+       "answer": "8 and 5",
+       "choices": [
+        "8 and 5",
+        "6 and 8",
+        "9 and 3",
+        "7 and 5"
        ]
       }
      ]
@@ -5084,6 +6624,28 @@
         "7",
         "12"
        ]
+      },
+      {
+       "skill": "Change unknown story",
+       "prompt": "Lena has 9 marbles. She gets some more marbles. Now she has 15 marbles. How many marbles did she get?",
+       "answer": "6",
+       "choices": [
+        "6",
+        "24",
+        "7",
+        "5"
+       ]
+      },
+      {
+       "skill": "Related addition and subtraction sentence",
+       "prompt": "Which number sentence is related to 6 + 3 = 9?",
+       "answer": "9 - 3 = 6",
+       "choices": [
+        "9 - 3 = 6",
+        "9 - 6 = 2",
+        "6 - 3 = 3",
+        "9 + 3 = 12"
+       ]
       }
      ]
     },
@@ -5149,6 +6711,28 @@
         "4 + 8 = 12, then 12 + 6 = 18",
         "8 + 6 = 14, then 14 + 4 = 18",
         "4 + 6 = 10, then 10 + 6 = 16"
+       ]
+      },
+      {
+       "skill": "Balance equations on both sides",
+       "prompt": "Which number makes this equation true? 9 + 4 = 8 + □",
+       "answer": "5",
+       "choices": [
+        "5",
+        "4",
+        "13",
+        "6"
+       ]
+      },
+      {
+       "skill": "Add zero with three numbers",
+       "prompt": "What is 6 + 0 + 8?",
+       "answer": "14",
+       "choices": [
+        "14",
+        "8",
+        "6",
+        "15"
        ]
       }
      ]
@@ -5216,6 +6800,28 @@
         "7 + 7 = 14, so 7 + 8 = 14.",
         "7 + 8 = 8 + 8 = 16."
        ]
+      },
+      {
+       "skill": "Choose counting back as efficient",
+       "prompt": "Which problem is easier to solve by counting back than by counting on?",
+       "answer": "13 - 2",
+       "choices": [
+        "13 - 2",
+        "4 + 9",
+        "8 + 7",
+        "6 + 6"
+       ]
+      },
+      {
+       "skill": "Recognize a near double",
+       "prompt": "Which fact is a near double?",
+       "answer": "7 + 8",
+       "choices": [
+        "7 + 8",
+        "7 + 7",
+        "6 + 4",
+        "9 + 1"
+       ]
       }
      ]
     },
@@ -5281,6 +6887,28 @@
         "Move 2 white beads next to the 9 red beads to make 10, then add the 3 left over. 10 + 3 = 13.",
         "Count on from 9: say 10, 11, 12, 13, 14 to land on 14.",
         "Use doubles: split 5 into 4 and 1, then add 9 + 4 + 1 to get 14."
+       ]
+      },
+      {
+       "skill": "Make ten steps for 9 plus a number",
+       "prompt": "Which pair of steps makes ten to solve 9 + 8?",
+       "answer": "9 + 1 = 10, then 10 + 7 = 17",
+       "choices": [
+        "9 + 1 = 10, then 10 + 7 = 17",
+        "9 + 2 = 11, then 11 + 6 = 17",
+        "9 + 3 = 12, then 12 + 5 = 17",
+        "9 + 1 = 10, then 10 + 8 = 18"
+       ]
+      },
+      {
+       "skill": "Number path make-ten leftover hops",
+       "prompt": "On a number path, to add 9 + 7, you hop from 9 to 10 and then hop the rest. How many hops after 10?",
+       "answer": "6",
+       "choices": [
+        "6",
+        "7",
+        "1",
+        "8"
        ]
       }
      ]
@@ -5353,6 +6981,28 @@
         "6, because 8 + 6 = 13",
         "5, because 8 + 5 = 12"
        ]
+      },
+      {
+       "skill": "Subtracting as thinking addition",
+       "prompt": "Which equation can help you find 15 − 7 by thinking addition?",
+       "answer": "7 + □ = 15",
+       "choices": [
+        "7 + □ = 15",
+        "15 + □ = 7",
+        "7 + 15 = □",
+        "15 − □ = 7"
+       ]
+      },
+      {
+       "skill": "Using doubles to choose a strategy",
+       "prompt": "Which sum can you find by starting with 8 + 8 and then subtracting 1?",
+       "answer": "8 + 7",
+       "choices": [
+        "8 + 7",
+        "7 + 7",
+        "8 + 9",
+        "9 + 8"
+       ]
       }
      ]
     },
@@ -5418,6 +7068,28 @@
         "7 + 4 = 12",
         "11 + 4 = 7",
         "11 − 7 = 4 and 11 − 4 = 8"
+       ]
+      },
+      {
+       "skill": "Subtracting within 20 by going down through ten (breaking the number subtracted into two p",
+       "prompt": "Which way shows 15 − 7 solved by going down through 10?",
+       "answer": "15 − 5 = 10, then 10 − 2 = 8",
+       "choices": [
+        "15 − 5 = 10, then 10 − 2 = 8",
+        "15 − 3 = 12, then 12 − 4 = 8",
+        "15 − 6 = 9, then 9 − 1 = 8",
+        "15 − 2 = 13, then 13 − 5 = 8"
+       ]
+      },
+      {
+       "skill": "Recognizing related facts in a fact family",
+       "prompt": "Which fact does NOT belong with the numbers 6, 8, and 14?",
+       "answer": "6 + 9 = 15",
+       "choices": [
+        "6 + 9 = 15",
+        "6 + 8 = 14",
+        "14 − 8 = 6",
+        "14 − 6 = 8"
        ]
       }
      ]
@@ -5488,6 +7160,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U5, 4 units before U9. It must need what U9 teaches.",
        "replaced": "Find the number that makes this equation true.\n□ + 6 = 13"
+      },
+      {
+       "skill": "Missing first addend in an addition equation",
+       "prompt": "Find the number that makes this equation true. ? + 9 = 17",
+       "answer": "8",
+       "choices": [
+        "8",
+        "7",
+        "9",
+        "10"
+       ]
+      },
+      {
+       "skill": "Addition facts within 20 with the same sum",
+       "prompt": "Which addition fact has the same sum as 9 + 7?",
+       "answer": "8 + 8",
+       "choices": [
+        "8 + 8",
+        "8 + 7",
+        "9 + 6",
+        "7 + 7"
+       ]
       }
      ]
     },
@@ -5574,6 +7268,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Make ten: 4 + 6 = 10, 10 + 9 = 19. Check in order: 4 + 9 = 13, 13 + 6 = 19. '4 + 9' and '9 + 6' leave out a group; '18' is a wrong total.",
        "replaced": "Ken picks 6 apples, then 5 apples, then 4 apples. Which equation shows how many apples he picks in all, and what is the total?"
+      },
+      {
+       "skill": "Subtraction facts with a given answer",
+       "prompt": "Which subtraction fact has an answer of 6?",
+       "answer": "13 − 7 = 6",
+       "choices": [
+        "13 − 7 = 6",
+        "14 − 9 = 5",
+        "12 − 5 = 7",
+        "16 − 8 = 8"
+       ]
+      },
+      {
+       "skill": "Solving a three-addend word problem",
+       "prompt": "Sam sees 3 red birds, 8 blue birds, and 7 green birds. How many birds does Sam see in all?",
+       "answer": "18",
+       "choices": [
+        "18",
+        "17",
+        "19",
+        "11"
+       ]
       }
      ]
     },
@@ -5650,6 +7366,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U0.5, 10.5 units before U11. It must need what U11 teaches.",
        "replaced": "There are 9 birds in a tree. Then 3 birds fly away. Which number story step matches this problem, and why?"
+      },
+      {
+       "skill": "Matching a two-step story to an expression with two operations",
+       "prompt": "Which story can be solved with 8 + 6 − 3?",
+       "answer": "Lee has 8 stickers. He gets 6 more stickers. Then he gives 3 stickers away.",
+       "choices": [
+        "Lee has 8 stickers. He gets 6 more stickers. Then he gives 3 stickers away.",
+        "Lee has 8 stickers. He gives 6 stickers away. Then he gets 3 more stickers.",
+        "Lee has 8 stickers. He gets 6 more stickers. Then he gets 3 more stickers.",
+        "Lee has 8 stickers. He gives 6 stickers away. Then he gives 3 stickers away."
+       ]
+      },
+      {
+       "skill": "Solving a two-step story with subtraction then addition",
+       "prompt": "There are 12 birds on a wire. 5 birds fly away. Then 7 birds fly onto the wire. How many birds are on the wire now?",
+       "answer": "14",
+       "choices": [
+        "14",
+        "10",
+        "0",
+        "24"
+       ]
       }
      ]
     },
@@ -5728,6 +7466,28 @@
         "52, because it is one row straight up",
         "62, because it is one space to the left"
        ]
+      },
+      {
+       "skill": "Finding an error in a make-ten addition",
+       "prompt": "Maya finds 9 + 4. She writes: 9 + 1 = 10, then 10 + 4 = 14. What mistake did Maya make?",
+       "answer": "She added the 4 again instead of adding the 3 left.",
+       "choices": [
+        "She added the 4 again instead of adding the 3 left.",
+        "She should have made ten with 6, not 1.",
+        "She should have counted back from 9 instead of making ten.",
+        "She should have added 9 and 4 to get 12."
+       ]
+      },
+      {
+       "skill": "Counting to 120 across a decade",
+       "prompt": "Count from 116: 116, 117, __, __, 120. Which two numbers are missing?",
+       "answer": "118 and 119",
+       "choices": [
+        "118 and 119",
+        "115 and 116",
+        "118 and 120",
+        "117 and 118"
+       ]
       }
      ]
     },
@@ -5797,6 +7557,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U6, 7 units before U13. It must need what U13 teaches.",
        "replaced": "Ben counts: 95, 96, 97, 98, 99, ___. Which number does he say next?"
+      },
+      {
+       "skill": "Writing the number word for a numeral to 120",
+       "prompt": "Which number word names 118?",
+       "answer": "one hundred eighteen",
+       "choices": [
+        "one hundred eighteen",
+        "one hundred eighty",
+        "one hundred eight",
+        "one hundred eighty-one"
+       ]
+      },
+      {
+       "skill": "Skip count by 10s from a two-digit number",
+       "prompt": "Kai counts by 10s: 23, 33, 43, ___. What number comes next?",
+       "answer": "53",
+       "choices": [
+        "53",
+        "44",
+        "50",
+        "63"
+       ]
       }
      ]
     },
@@ -5871,6 +7653,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 7 x 2 = 14, 15 - 14 = 1 left over, so 15 is odd. Check: 15 ends in 5, an odd ones digit. 8 pairs would be 16.",
        "replaced": "Nia draws an open number line to solve 15 - 6. She starts at 15. Which jumps show the subtraction correctly?"
+      },
+      {
+       "skill": "Identify even numbers in a row on a number line",
+       "prompt": "A number line shows 14, 15, 16, 17, and 18. Which numbers in this row are even?",
+       "answer": "14, 16, 18",
+       "choices": [
+        "14, 16, 18",
+        "15, 17",
+        "14, 15, 16",
+        "16, 17, 18"
+       ]
+      },
+      {
+       "skill": "Show subtraction as jumps back on an open number line",
+       "prompt": "Nia shows 15 - 8 on an open number line. She starts at 15, jumps back to 10, then jumps back to 8. Which jumps did she make?",
+       "answer": "back 5, then back 2",
+       "choices": [
+        "back 5, then back 2",
+        "back 8, then back 0",
+        "back 5, then back 3",
+        "back 2, then back 5"
+       ]
       }
      ]
     },
@@ -5952,6 +7756,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U7.5, 7.5 units before U15. It must need what U15 teaches.",
        "replaced": "Which shape has 4 sides and 4 corners?"
+      },
+      {
+       "skill": "Order events of a day by time",
+       "prompt": "Which of these happens first in the day?",
+       "answer": "wake up at 7:00 in the morning",
+       "choices": [
+        "wake up at 7:00 in the morning",
+        "eat lunch at 12:00",
+        "eat dinner at 6:00 in the evening",
+        "go to bed at 8:00 at night"
+       ]
+      },
+      {
+       "skill": "Tell defining attributes from non-defining ones",
+       "prompt": "Which attribute do all rectangles have?",
+       "answer": "4 straight sides and 4 corners",
+       "choices": [
+        "4 straight sides and 4 corners",
+        "4 sides that are all the same length",
+        "3 straight sides and 3 corners",
+        "0 straight sides and 0 corners"
+       ]
       }
      ]
     },
@@ -6029,6 +7855,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 3 children ahead of Ana, Ana, 5 behind her: 3 + 1 + 5 = 9. Check: 4 + 6 - 1 = 9 (Ana counted twice in 4 + 6). '10' counts Ana twice.",
        "replaced": "Ben draws a picture to solve a problem. He draws 12 stars in a row and crosses out some of them. There are 4 stars left that are not crossed out. How many stars did he cross out?"
+      },
+      {
+       "skill": "Use tally marks to add two categories",
+       "prompt": "A tally chart shows favorite sports. Soccer has one group of 5 marks and 2 more marks. Basketball has 6 marks. Tennis has one group of 5 marks. How many children chose soccer or tennis?",
+       "answer": "12",
+       "choices": [
+        "12",
+        "13",
+        "7",
+        "18"
+       ]
+      },
+      {
+       "skill": "Draw a picture to solve a position story",
+       "prompt": "There are 8 chairs in a row. Maya sits in the 3rd chair from the left. How many chairs are to the right of Maya?",
+       "answer": "5",
+       "choices": [
+        "5",
+        "4",
+        "6",
+        "3"
+       ]
       }
      ]
     }
@@ -6098,6 +7946,28 @@
         "5 tens and 5 ones",
         "8 tens and 5 ones",
         "4 tens and 18 ones"
+       ]
+      },
+      {
+       "skill": "Making a full bundle of ten from leftovers",
+       "prompt": "Lena has 8 loose straws. How many more straws does she need to make one bundle of ten?",
+       "answer": "2",
+       "choices": [
+        "2",
+        "8",
+        "10",
+        "18"
+       ]
+      },
+      {
+       "skill": "Two-digit number with zero ones as tens",
+       "prompt": "A number has 9 tens and 0 ones. Which number is it?",
+       "answer": "90",
+       "choices": [
+        "90",
+        "9",
+        "19",
+        "99"
        ]
       }
      ]
@@ -6169,6 +8039,28 @@
         "67 < 62",
         "67 = 62",
         "62 > 67"
+       ]
+      },
+      {
+       "skill": "Number name to numeral",
+       "prompt": "Which number is the same as eighty-four?",
+       "answer": "84",
+       "choices": [
+        "84",
+        "48",
+        "80",
+        "94"
+       ]
+      },
+      {
+       "skill": "Expanded form to number name",
+       "prompt": "Which number name is the same as 70 + 2?",
+       "answer": "seventy-two",
+       "choices": [
+        "seventy-two",
+        "twenty-seven",
+        "seventy",
+        "twelve"
        ]
       }
      ]
@@ -6243,6 +8135,28 @@
         "57",
         "76"
        ]
+      },
+      {
+       "skill": "Ordering numbers greatest to least",
+       "prompt": "Which list shows the numbers in order from greatest to least? 36, 63, 56, 65",
+       "answer": "65, 63, 56, 36",
+       "choices": [
+        "65, 63, 56, 36",
+        "36, 56, 63, 65",
+        "65, 56, 63, 36",
+        "63, 65, 56, 36"
+       ]
+      },
+      {
+       "skill": "Ten more and ten less combined",
+       "prompt": "A number is 10 more than 73 and 10 less than 93. What is the number?",
+       "answer": "83",
+       "choices": [
+        "83",
+        "63",
+        "103",
+        "73"
+       ]
       }
      ]
     },
@@ -6316,6 +8230,28 @@
         "30",
         "22"
        ]
+      },
+      {
+       "skill": "Skip counting backward by tens",
+       "prompt": "Count backward by tens from 83: 83, 73, 63, ___. What number comes next?",
+       "answer": "53",
+       "choices": [
+        "53",
+        "52",
+        "54",
+        "43"
+       ]
+      },
+      {
+       "skill": "Adding multiples of ten to make 100",
+       "prompt": "What is 50 + 50?",
+       "answer": "100",
+       "choices": [
+        "100",
+        "90",
+        "55",
+        "10"
+       ]
       }
      ]
     },
@@ -6381,6 +8317,28 @@
         "43",
         "52",
         "63"
+       ]
+      },
+      {
+       "skill": "Adding tens changes only the tens digit",
+       "prompt": "When you add 30 to 46, which digit of 46 changes?",
+       "answer": "the tens digit",
+       "choices": [
+        "the tens digit",
+        "the ones digit",
+        "both digits",
+        "no digit"
+       ]
+      },
+      {
+       "skill": "Adding a multiple of ten in a story",
+       "prompt": "Leo has 27 stickers. His sister gives him 40 more stickers. How many stickers does Leo have now?",
+       "answer": "67",
+       "choices": [
+        "67",
+        "31",
+        "47",
+        "77"
        ]
       }
      ]
@@ -6448,6 +8406,28 @@
         "He jumps 4 more and lands on 58.",
         "He jumps 30 more and lands on 62.",
         "He jumps 4 more and lands on 72."
+       ]
+      },
+      {
+       "skill": "Regrouping ones into a ten with tens and ones",
+       "prompt": "You have 4 tens and 8 ones. You add 5 ones. How many tens and ones do you have now?",
+       "answer": "5 tens and 3 ones",
+       "choices": [
+        "5 tens and 3 ones",
+        "4 tens and 13 ones",
+        "5 tens and 13 ones",
+        "4 tens and 3 ones"
+       ]
+      },
+      {
+       "skill": "Subtracting tens in a story",
+       "prompt": "A jar has 72 beads. 40 beads are red. The rest are blue. How many blue beads are there?",
+       "answer": "32",
+       "choices": [
+        "32",
+        "42",
+        "68",
+        "112"
        ]
       }
      ]
@@ -6526,6 +8506,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 43 + 26: tens 40 + 20 = 60, ones 3 + 6 = 9, total 69. Check: 69 - 26 = 43. '17' subtracts; '66' adds 3 + 3 ones; '79' adds an extra ten.",
        "replaced": "There are 43 birds in a tree. Then 26 more birds fly to the tree. How many birds are in the tree now?"
+      },
+      {
+       "skill": "Matching a story to an equation",
+       "prompt": "Lily has 38 shells. She finds 25 more shells. Which equation matches the story?",
+       "answer": "38 + 25 = □",
+       "choices": [
+        "38 + 25 = □",
+        "38 − 25 = □",
+        "25 + □ = 38",
+        "38 + □ = 25"
+       ]
+      },
+      {
+       "skill": "Choosing a strategy for subtracting ones",
+       "prompt": "Jill wants to solve 76 − 4. Which way is a good choice?",
+       "answer": "Count back 4 ones from 76.",
+       "choices": [
+        "Count back 4 ones from 76.",
+        "Change only the tens digit in 76.",
+        "Add 4 ones to 76.",
+        "Count by tens from 76."
+       ]
       }
      ]
     },
@@ -6601,6 +8603,28 @@
        "revised": 2,
        "why": "Too easy: a learner reliably answers it by U6, 2 units before U8. It must need what U8 teaches.",
        "replaced": "Sara says 46 + 38 = 84. Which explanation correctly shows, with tens and ones, how to get her answer?"
+      },
+      {
+       "skill": "Explaining place value reasoning for a sum",
+       "prompt": "Which sentence explains why 43 + 20 = 63 is true?",
+       "answer": "43 has 4 tens and 3 ones; adding 2 tens gives 6 tens and 3 ones.",
+       "choices": [
+        "43 has 4 tens and 3 ones; adding 2 tens gives 6 tens and 3 ones.",
+        "43 has 4 tens and 3 ones; adding 2 ones gives 4 tens and 5 ones.",
+        "43 has 4 tens and 3 ones; adding 2 tens gives 4 tens and 5 ones.",
+        "43 has 4 tens and 3 ones; adding 2 tens gives 2 tens and 3 ones."
+       ]
+      },
+      {
+       "skill": "Estimating a sum in a story",
+       "prompt": "A box has 62 red beads and 19 blue beads. About how many beads are in the box?",
+       "answer": "About 80 beads",
+       "choices": [
+        "About 80 beads",
+        "About 70 beads",
+        "About 90 beads",
+        "About 100 beads"
+       ]
       }
      ]
     },
@@ -6667,6 +8691,28 @@
         "The pencil, because the shortest thing in a group is always named first.",
         "The crayon, because it is in the middle of the other two.",
         "You cannot tell, because the pencil and the marker were never compared."
+       ]
+      },
+      {
+       "skill": "Measuring with different-sized units",
+       "prompt": "Mia measures a desk with big paper clips and gets 8. She measures the same desk with small paper clips. What will she get?",
+       "answer": "More than 8, because the small clips are shorter.",
+       "choices": [
+        "More than 8, because the small clips are shorter.",
+        "Fewer than 8, because the small clips are shorter.",
+        "Exactly 8, because the desk is the same.",
+        "More than 8, because the desk gets longer."
+       ]
+      },
+      {
+       "skill": "Measuring with different unit sizes",
+       "prompt": "A ribbon is 9 short beads long. The same ribbon is measured with long beads. Each long bead is longer than a short bead. How many long beads long is the ribbon?",
+       "answer": "fewer than 9 long beads",
+       "choices": [
+        "fewer than 9 long beads",
+        "more than 9 long beads",
+        "exactly 9 long beads",
+        "exactly 18 long beads"
        ]
       }
      ]
@@ -6737,6 +8783,28 @@
         "Crayon, pencil, marker",
         "Pencil, marker, crayon"
        ]
+      },
+      {
+       "skill": "Telling time to the hour",
+       "prompt": "The short hand points to 8. The long hand points to 12. What time is it?",
+       "answer": "8:00",
+       "choices": [
+        "8:00",
+        "8:30",
+        "12:08",
+        "12:00"
+       ]
+      },
+      {
+       "skill": "Where the long hand points at half past the hour",
+       "prompt": "A clock shows 7:30. Where does the long hand point?",
+       "answer": "At the 6",
+       "choices": [
+        "At the 6",
+        "At the 12",
+        "At the 7",
+        "At the 3"
+       ]
       }
      ]
     },
@@ -6804,6 +8872,28 @@
         "Spring, because these months come right before summer.",
         "Summer, because summer is the longest season."
        ]
+      },
+      {
+       "skill": "Months of the year in order",
+       "prompt": "Which month comes right before December?",
+       "answer": "November",
+       "choices": [
+        "November",
+        "October",
+        "January",
+        "July"
+       ]
+      },
+      {
+       "skill": "Counting a quarter and pennies",
+       "prompt": "Lia has 1 quarter and 2 pennies. How many cents does she have?",
+       "answer": "27 cents",
+       "choices": [
+        "27 cents",
+        "30 cents",
+        "21 cents",
+        "12 cents"
+       ]
       }
      ]
     },
@@ -6869,6 +8959,28 @@
         "Which book is the longest, and how many pages each book has.",
         "What each book is about, and who finished first.",
         "How many pages Cam read, and how many kids are in Cam's family."
+       ]
+      },
+      {
+       "skill": "Reading which bar is tallest",
+       "prompt": "A chart shows sticker colors: Red 4, Blue 7, Green 2. Which color bar should be the tallest on a bar graph?",
+       "answer": "Blue",
+       "choices": [
+        "Blue",
+        "Red",
+        "Green",
+        "Red and Blue"
+       ]
+      },
+      {
+       "skill": "Non-defining attributes of a square",
+       "prompt": "Which clue does not help you know a shape is a square?",
+       "answer": "It is colored blue.",
+       "choices": [
+        "It is colored blue.",
+        "It has 4 equal sides.",
+        "It has 4 square corners.",
+        "It has 4 straight sides."
        ]
       }
      ]
@@ -6947,6 +9059,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Two right isosceles triangles joined on the hypotenuse form a quadrilateral with four equal sides (the legs) and four square corners: a square. Joining on a short side would make a bigger triangle, so 'a triangle' is wrong for the longest-side join. No hexagon or circle (curved) is possible.",
        "replaced": "Kai joins two triangles along one whole side of each triangle, matching the sides exactly. Which new shape can Kai make?"
+      },
+      {
+       "skill": "Halves of shapes and fair sharing",
+       "prompt": "Ben folds a square piece of paper exactly in half. Then he opens it flat. What does he see on the paper?",
+       "answer": "two equal halves",
+       "choices": [
+        "two equal halves",
+        "two unequal halves",
+        "four equal parts",
+        "three equal parts"
+       ]
+      },
+      {
+       "skill": "Drawing a square from attributes",
+       "prompt": "Ava draws a shape with 4 straight sides that are all the same length and 4 square corners. Which shape did Ava draw?",
+       "answer": "a square",
+       "choices": [
+        "a square",
+        "a rectangle",
+        "a trapezoid",
+        "a hexagon"
+       ]
       }
      ]
     },
@@ -7012,6 +9146,28 @@
         "A fourth is bigger than a half.",
         "A half and a fourth are the same size.",
         "A half is bigger than two fourths."
+       ]
+      },
+      {
+       "skill": "Finding how many fourths complete a whole",
+       "prompt": "Ben colors 2 fourths of a rectangle. How many more fourths must he color to make the whole rectangle colored?",
+       "answer": "2 fourths",
+       "choices": [
+        "2 fourths",
+        "1 fourth",
+        "3 fourths",
+        "4 fourths"
+       ]
+      },
+      {
+       "skill": "Two fourths make one half",
+       "prompt": "A circle is cut into 4 equal shares. Leo puts 2 of the shares together. What part of the whole circle does he have?",
+       "answer": "one half",
+       "choices": [
+        "one half",
+        "one fourth",
+        "three fourths",
+        "the whole circle"
        ]
       }
      ]
@@ -7083,6 +9239,28 @@
         "Count up by 2s.",
         "Count up by 5s.",
         "Count up by 4s."
+       ]
+      },
+      {
+       "skill": "Deciding if four shares are equal fourths",
+       "prompt": "A rectangle is cut into 4 shares. The two end shares are large and the two middle shares are small. Which sentence is true?",
+       "answer": "The shares are not equal, so they are not fourths.",
+       "choices": [
+        "The shares are not equal, so they are not fourths.",
+        "The shares are equal, so each is a fourth.",
+        "The shares are equal, so each is a half.",
+        "The shares are not equal, so each is a half."
+       ]
+      },
+      {
+       "skill": "Unknown number in a subtraction sentence",
+       "prompt": "What number makes this true? 42 − ___ = 20",
+       "answer": "22",
+       "choices": [
+        "22",
+        "20",
+        "62",
+        "12"
        ]
       }
      ]
@@ -7167,6 +9345,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Table: Day1 12, Day2 16, Day3 20, Day4 24, Day5 28. Check: 28 - 12 = 16 = 4 days of growth after Day 1 -> Day 5. 'Day 4' forgets it starts on Day 1; 'Day 7' counts 4s from 0 to 28.",
        "replaced": "Sam makes a table to track his trading cards. The table shows he starts with 12 cards. He wins 4 cards on each of 2 days, and then he loses 5 cards on the third day. How many cards does Sam have now?"
+      },
+      {
+       "skill": "Using a table for a multi-step story",
+       "prompt": "A table shows these facts about Leo's stickers: Start: 60 stickers; Gives away: 25 stickers; Gets more: 15 stickers. How many stickers does Leo have now?",
+       "answer": "50 stickers",
+       "choices": [
+        "50 stickers",
+        "70 stickers",
+        "20 stickers",
+        "100 stickers"
+       ]
+      },
+      {
+       "skill": "Reviewing length comparison and subtraction",
+       "prompt": "A pencil is 12 centimeters long. A crayon is 8 centimeters long. How much longer is the pencil than the crayon?",
+       "answer": "4 centimeters",
+       "choices": [
+        "4 centimeters",
+        "20 centimeters",
+        "6 centimeters",
+        "12 centimeters"
+       ]
       }
      ]
     }
@@ -7236,6 +9436,28 @@
         "12 − 7 = 6",
         "12 − 5 = 5",
         "7 − 5 = 2"
+       ]
+      },
+      {
+       "skill": "Total from tens bundles and ones",
+       "prompt": "Lia has 2 bundles of ten pencils and 7 single pencils. How many pencils does she have in all?",
+       "answer": "27 pencils",
+       "choices": [
+        "27 pencils",
+        "9 pencils",
+        "72 pencils",
+        "20 pencils"
+       ]
+      },
+      {
+       "skill": "Recall addition facts within 20",
+       "prompt": "What is 9 + 6?",
+       "answer": "15",
+       "choices": [
+        "15",
+        "14",
+        "16",
+        "13"
        ]
       }
      ]
@@ -7308,6 +9530,28 @@
         "7 hundreds flats, 4 tens rods, and 3 ones cubes",
         "4 hundreds flats, 3 tens rods, and 7 ones cubes"
        ]
+      },
+      {
+       "skill": "Skip count forward by 10s",
+       "prompt": "Mia skip counts by 10s: 230, 240, 250, ___. What number comes next?",
+       "answer": "260",
+       "choices": [
+        "260",
+        "251",
+        "255",
+        "300"
+       ]
+      },
+      {
+       "skill": "Ten tens make one hundred",
+       "prompt": "A large square flat is made of 10 rows with 10 small squares in each row. How many small squares are on the flat?",
+       "answer": "100",
+       "choices": [
+        "100",
+        "10",
+        "20",
+        "1000"
+       ]
       }
      ]
     },
@@ -7373,6 +9617,28 @@
         "402",
         "420",
         "4012"
+       ]
+      },
+      {
+       "skill": "Write number names for three-digit numbers",
+       "prompt": "Which number name is 304?",
+       "answer": "three hundred four",
+       "choices": [
+        "three hundred four",
+        "three hundred forty",
+        "thirty-four",
+        "three hundred fourteen"
+       ]
+      },
+      {
+       "skill": "Expanded form to standard form",
+       "prompt": "What is 800 + 40 + 2 written as one number?",
+       "answer": "842",
+       "choices": [
+        "842",
+        "824",
+        "8042",
+        "482"
        ]
       }
      ]
@@ -7440,6 +9706,28 @@
         "623",
         "2063"
        ]
+      },
+      {
+       "skill": "Trade ten tens for one hundred",
+       "prompt": "Maya has 12 tens rods. She trades 10 tens rods for 1 hundred flat. How many hundreds and tens does she have now?",
+       "answer": "1 hundred and 2 tens",
+       "choices": [
+        "1 hundred and 2 tens",
+        "12 hundreds and 0 tens",
+        "2 hundreds and 1 ten",
+        "1 hundred and 12 tens"
+       ]
+      },
+      {
+       "skill": "Place value riddle with digit clues",
+       "prompt": "My hundreds digit is 5. My tens digit is 2 less than my hundreds digit. My ones digit is 4 more than my tens digit. What number am I?",
+       "answer": "537",
+       "choices": [
+        "537",
+        "573",
+        "527",
+        "534"
+       ]
       }
      ]
     },
@@ -7506,6 +9794,28 @@
         "805, 815, 851",
         "815, 851, 805",
         "851, 805, 815"
+       ]
+      },
+      {
+       "skill": "Locate numbers using hundred jumps on a number line",
+       "prompt": "On a number line, 600 is marked. Each jump to the right is 100. What number is 3 jumps to the right of 600?",
+       "answer": "900",
+       "choices": [
+        "900",
+        "603",
+        "630",
+        "700"
+       ]
+      },
+      {
+       "skill": "Compare numbers within a range",
+       "prompt": "Which number is greater than 698 and less than 715?",
+       "answer": "704",
+       "choices": [
+        "704",
+        "692",
+        "721",
+        "690"
        ]
       }
      ]
@@ -7576,6 +9886,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U4, 2 units before U6. It must need what U6 teaches.",
        "replaced": "What is the rule for the pattern 230, 220, 210, 200?"
+      },
+      {
+       "skill": "Find 10 more than a number",
+       "prompt": "What number is 10 more than 487?",
+       "answer": "497",
+       "choices": [
+        "497",
+        "587",
+        "488",
+        "477"
+       ]
+      },
+      {
+       "skill": "Complete a +5 number pattern",
+       "prompt": "What number is missing? 615, 620, 625, ___, 635",
+       "answer": "630",
+       "choices": [
+        "630",
+        "626",
+        "640",
+        "635"
+       ]
       }
      ]
     },
@@ -7650,6 +9982,28 @@
         "Add 6 ones and 3 ones first to make 9, then stop.",
         "Add 4 tens and 6 ones to make 46, then add 23."
        ]
+      },
+      {
+       "skill": "Adding two-digit numbers with tens and ones blocks",
+       "prompt": "Jill builds 46 with blocks: 4 tens rods and 6 ones cubes. Next to it she builds 23: 2 tens rods and 3 ones cubes. Which number sentence matches the blocks she built?",
+       "answer": "46 + 23 = 69",
+       "choices": [
+        "46 + 23 = 69",
+        "46 + 23 = 96",
+        "64 + 32 = 96",
+        "46 + 32 = 78"
+       ]
+      },
+      {
+       "skill": "Breaking two-digit numbers into tens and ones to add",
+       "prompt": "Which choice shows both 43 and 25 broken into tens and ones to help add them?",
+       "answer": "43 = 40 + 3, and 25 = 20 + 5",
+       "choices": [
+        "43 = 40 + 3, and 25 = 20 + 5",
+        "43 = 4 + 3, and 25 = 2 + 5",
+        "43 = 40 + 3, and 25 = 5 + 2",
+        "43 = 30 + 4, and 25 = 20 + 5"
+       ]
       }
      ]
     },
@@ -7715,6 +10069,28 @@
         "83",
         "103",
         "90"
+       ]
+      },
+      {
+       "skill": "Adding tens changes only the tens digit",
+       "prompt": "When you add 40 to 53, which digit of 53 changes?",
+       "answer": "the tens digit",
+       "choices": [
+        "the tens digit",
+        "the ones digit",
+        "both digits",
+        "neither digit"
+       ]
+      },
+      {
+       "skill": "Recording jumps on an open number line",
+       "prompt": "Tomas starts at 46 on an open number line. He adds 27 by jumping forward 20 first, then jumping forward 7 more. Where does he land after each jump?",
+       "answer": "66, then 73",
+       "choices": [
+        "66, then 73",
+        "56, then 63",
+        "66, then 83",
+        "76, then 83"
        ]
       }
      ]
@@ -7782,6 +10158,28 @@
         "71",
         "711",
         "79"
+       ]
+      },
+      {
+       "skill": "Breaking apart an addend to make ten",
+       "prompt": "Ann wants to add 57 + 8. She makes the next ten first. How should she break apart the 8?",
+       "answer": "3 + 5",
+       "choices": [
+        "3 + 5",
+        "2 + 6",
+        "4 + 4",
+        "1 + 7"
+       ]
+      },
+      {
+       "skill": "Trading ten ones for a new ten",
+       "prompt": "Keisha adds 28 + 45 with blocks. When she puts the ones together, she gets 13 ones. What should she do next?",
+       "answer": "Trade 10 ones for 1 ten and keep 3 ones.",
+       "choices": [
+        "Trade 10 ones for 1 ten and keep 3 ones.",
+        "Trade 10 ones for 1 hundred and keep 3 ones.",
+        "Keep all 13 ones and write 13 in the ones place.",
+        "Trade 3 ones for 1 ten and keep 10 ones."
        ]
       }
      ]
@@ -7851,6 +10249,28 @@
         "53",
         "15",
         "57"
+       ]
+      },
+      {
+       "skill": "Matching a put-together problem to a number sentence",
+       "prompt": "A basket holds 24 green apples, 19 red apples and 32 yellow apples. Which number sentence shows how many apples are in the basket in all?",
+       "answer": "24 + 19 + 32 = ☐",
+       "choices": [
+        "24 + 19 + 32 = ☐",
+        "24 + 19 − 32 = ☐",
+        "32 − 24 − 19 = ☐",
+        "24 − 19 + 32 = ☐"
+       ]
+      },
+      {
+       "skill": "Adding four two-digit numbers",
+       "prompt": "What is 12 + 23 + 34 + 21?",
+       "answer": "90",
+       "choices": [
+        "90",
+        "69",
+        "79",
+        "100"
        ]
       }
      ]
@@ -7928,6 +10348,28 @@
         "32",
         "28"
        ]
+      },
+      {
+       "skill": "Subtracting with tens rods and ones cubes",
+       "prompt": "Dana starts with 6 tens rods and 7 ones cubes. She takes away 2 tens rods and 4 ones cubes. Which number sentence shows what she did?",
+       "answer": "67 − 24 = 43",
+       "choices": [
+        "67 − 24 = 43",
+        "76 − 42 = 34",
+        "67 − 24 = 91",
+        "67 − 42 = 25"
+       ]
+      },
+      {
+       "skill": "Counting back two jumps on a number line",
+       "prompt": "Ravi starts at 92 on an open number line. He jumps back 40, then jumps back 5 more. Where does he land after each jump?",
+       "answer": "52, then 47",
+       "choices": [
+        "52, then 47",
+        "52, then 57",
+        "57, then 52",
+        "42, then 37"
+       ]
       }
      ]
     },
@@ -7995,6 +10437,28 @@
         "56",
         "34"
        ]
+      },
+      {
+       "skill": "Writing a missing-part sentence",
+       "prompt": "Nan has 62 beads. She needs 90 beads for a project. Which number sentence finds how many more beads Nan needs?",
+       "answer": "62 + ☐ = 90",
+       "choices": [
+        "62 + ☐ = 90",
+        "90 + ☐ = 62",
+        "62 − ☐ = 90",
+        "☐ − 62 = 90"
+       ]
+      },
+      {
+       "skill": "Trading a ten before subtracting",
+       "prompt": "Rosa wants to take 27 away from 53 using blocks. She has 5 tens rods and 3 ones cubes. What should she do first?",
+       "answer": "Trade 1 ten rod for 10 ones cubes, so she has 4 tens and 13 ones.",
+       "choices": [
+        "Trade 1 ten rod for 10 ones cubes, so she has 4 tens and 13 ones.",
+        "Trade 1 ten rod for 10 ones cubes, so she has 5 tens and 13 ones.",
+        "Trade 10 ones cubes for 1 ten rod, so she has 6 tens and 3 ones.",
+        "Add 10 ones cubes, so she has 5 tens and 13 ones."
+       ]
       }
      ]
     },
@@ -8060,6 +10524,28 @@
         "83 rounds to 90, 46 rounds to 50, and 90 − 50 = 40.",
         "83 rounds to 80, 46 rounds to 40, and 80 − 40 = 40.",
         "83 rounds to 90, 46 rounds to 40, and 90 − 40 = 50."
+       ]
+      },
+      {
+       "skill": "Missing part in a word problem",
+       "prompt": "There are 52 children at the art show. 27 are girls. How many are boys?",
+       "answer": "25 children",
+       "choices": [
+        "25 children",
+        "79 children",
+        "35 children",
+        "24 children"
+       ]
+      },
+      {
+       "skill": "Estimating to check reasonableness",
+       "prompt": "Ana says 64 − 29 = 45. Which estimate shows whether her answer is reasonable?",
+       "answer": "60 − 30 = 30, so 45 is not reasonable.",
+       "choices": [
+        "60 − 30 = 30, so 45 is not reasonable.",
+        "60 − 30 = 30, so 45 is a reasonable answer.",
+        "70 − 30 = 40, so 45 is a reasonable answer.",
+        "70 − 20 = 50, so 45 is not a reasonable answer."
        ]
       }
      ]
@@ -8134,6 +10620,28 @@
         "29 + 24 = 53 and 53 − 17 = m, so m = 36 books.",
         "29 + 17 = 46 and 24 − 46 = m, so m = 22 books."
        ]
+      },
+      {
+       "skill": "Spotting a missing regroup in addition",
+       "prompt": "Dev solved 48 + 35 and wrote 73. He wrote 8 + 5 = 13, put down 3, and carried nothing. He wrote 4 + 3 = 7. Which sentence tells his mistake and the right answer?",
+       "answer": "He forgot to add the carried ten, so the answer is 83.",
+       "choices": [
+        "He forgot to add the carried ten, so the answer is 83.",
+        "He added the tens digits wrong, so the answer is 73.",
+        "He carried the ten but added it twice, so the answer is 93.",
+        "He should not carry because 8 + 5 = 13, so the answer is 73."
+       ]
+      },
+      {
+       "skill": "Two-step word problem with a letter",
+       "prompt": "Sam has 35 crayons. His sister gives him 18 more. Then he gives 27 crayons to a friend. How many crayons does Sam have now? Which equation with a letter and answer are right?",
+       "answer": "35 + 18 − 27 = c; c = 26",
+       "choices": [
+        "35 + 18 − 27 = c; c = 26",
+        "35 + 18 + 27 = c; c = 80",
+        "35 + 18 − 27 = c; c = 53",
+        "35 + 27 − 18 = c; c = 44"
+       ]
       }
      ]
     },
@@ -8203,6 +10711,28 @@
         "Take away 20 to get 52, then take away 9 more to get 41.",
         "Take away 30 to get 43, then take away 1 more to get 42.",
         "Take away 29 ones by counting back to get 53."
+       ]
+      },
+      {
+       "skill": "Find an unknown on the left side",
+       "prompt": "Which number makes this equation true?  □ − 28 = 45",
+       "answer": "73",
+       "choices": [
+        "73",
+        "17",
+        "27",
+        "63"
+       ]
+      },
+      {
+       "skill": "Explaining subtraction steps",
+       "prompt": "Jin solved 54 − 27. She first did 54 − 20 = 34, then 34 − 7 = 27. Which sentence best explains her steps?",
+       "answer": "She subtracted the tens, then subtracted the ones.",
+       "choices": [
+        "She subtracted the tens, then subtracted the ones.",
+        "She subtracted the ones, then subtracted the tens.",
+        "She added the tens, then subtracted the ones.",
+        "She made a ten, then subtracted 4 more."
        ]
       }
      ]
@@ -8290,6 +10820,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Ken = 83, Lee = 81, Ana = 85. 85 > 83 > 81 -> Ana, Ken, Lee. Check: 83 - 47 = 36; 81 + 19 = 100; 65 + 20 = 85.",
        "replaced": "Ken has 428 stickers. Lee has 10 more than Ken. Ana has 415 stickers. Ben has 20 more than Ana. Which list shows the sticker counts from greatest to least?"
+      },
+      {
+       "skill": "Mixed subtraction fluency within 100",
+       "prompt": "Which number is 25 less than 81?",
+       "answer": "56",
+       "choices": [
+        "56",
+        "106",
+        "66",
+        "57"
+       ]
+      },
+      {
+       "skill": "Comparing three-digit numbers between limits",
+       "prompt": "Which number is greater than 638 but less than 683?",
+       "answer": "648",
+       "choices": [
+        "648",
+        "628",
+        "693",
+        "638"
+       ]
       }
      ]
     }
@@ -8360,6 +10912,28 @@
         "213 + 342 = 655",
         "231 + 324 = 555",
         "213 + 342 = 545"
+       ]
+      },
+      {
+       "skill": "Regrouping ones when adding with blocks",
+       "prompt": "When adding 465 + 278 with base-ten blocks, you combine the ones and get 13 ones. What should you do next?",
+       "answer": "Trade 10 ones for 1 ten, leaving 3 ones.",
+       "choices": [
+        "Trade 10 ones for 1 ten, leaving 3 ones.",
+        "Leave 13 ones in the ones place.",
+        "Trade 3 ones for 1 ten, leaving 10 ones.",
+        "Trade 10 ones for 1 hundred, leaving 3 ones."
+       ]
+      },
+      {
+       "skill": "Using compensation to add mentally",
+       "prompt": "Which expression is equal to 597 + 286 and uses compensation to make the addition easier?",
+       "answer": "600 + 286 − 3",
+       "choices": [
+        "600 + 286 − 3",
+        "600 + 286 + 3",
+        "600 + 300 − 3",
+        "597 + 300 + 14"
        ]
       }
      ]
@@ -8435,6 +11009,28 @@
         "356 − 213 = 153",
         "256 − 213 = 43"
        ]
+      },
+      {
+       "skill": "Using the standard algorithm to add with regrouping",
+       "prompt": "Use the standard algorithm to add 487 + 156. What is the sum?",
+       "answer": "643",
+       "choices": [
+        "643",
+        "533",
+        "543",
+        "653"
+       ]
+      },
+      {
+       "skill": "Subtracting three-digit numbers with base-ten blocks",
+       "prompt": "Use base-ten blocks to subtract 784 − 352. What is the difference?",
+       "answer": "432",
+       "choices": [
+        "432",
+        "422",
+        "442",
+        "532"
+       ]
       }
      ]
     },
@@ -8501,6 +11097,28 @@
         "324",
         "414",
         "306"
+       ]
+      },
+      {
+       "skill": "Using compensation to subtract mentally",
+       "prompt": "Which expression is equal to 803 − 496 and uses compensation to make the subtraction easier?",
+       "answer": "803 − 500 + 4",
+       "choices": [
+        "803 − 500 + 4",
+        "803 − 500 − 4",
+        "803 − 500 + 6",
+        "800 − 500 + 4"
+       ]
+      },
+      {
+       "skill": "Subtracting across zeros with regrouping",
+       "prompt": "What is 706 − 349? Regroup as needed.",
+       "answer": "357",
+       "choices": [
+        "357",
+        "443",
+        "457",
+        "347"
        ]
       }
      ]
@@ -8575,6 +11193,28 @@
         "614 + 238 = 852",
         "238 + 376 = 614",
         "614 − 376 = 238"
+       ]
+      },
+      {
+       "skill": "Estimating a difference by rounding to the nearest ten",
+       "prompt": "Round each number to the nearest ten to estimate 647 − 382. Which is the best estimate?",
+       "answer": "270",
+       "choices": [
+        "270",
+        "260",
+        "280",
+        "300"
+       ]
+      },
+      {
+       "skill": "Writing an equation for a two-step subtraction word problem",
+       "prompt": "A jar has 350 beads. Maya uses 128 red beads and 97 blue beads. How many beads are left? Which equation and answer match?",
+       "answer": "350 − 128 − 97 = 125 beads",
+       "choices": [
+        "350 − 128 − 97 = 125 beads",
+        "350 + 128 − 97 = 381 beads",
+        "350 − 128 + 97 = 319 beads",
+        "350 + 128 + 97 = 575 beads"
        ]
       }
      ]
@@ -8651,6 +11291,28 @@
         "$3.84",
         "$2.34"
        ]
+      },
+      {
+       "skill": "Comparing two money amounts",
+       "prompt": "Kim has 1 quarter, 2 dimes, and 1 nickel. Joe has 3 dimes and 3 nickels. Who has more money, and by how much?",
+       "answer": "Kim has 5¢ more.",
+       "choices": [
+        "Kim has 5¢ more.",
+        "Joe has 5¢ more.",
+        "They have the same amount.",
+        "Kim has 10¢ more."
+       ]
+      },
+      {
+       "skill": "Writing money amounts with dollar and cent notation",
+       "prompt": "A sticker costs 4 dollars and 7 cents. Which is another way to write the price?",
+       "answer": "$4.07",
+       "choices": [
+        "$4.07",
+        "$4.70",
+        "$0.47",
+        "$47.00"
+       ]
       }
      ]
     },
@@ -8726,6 +11388,28 @@
         "20 inches",
         "2 inches"
        ]
+      },
+      {
+       "skill": "Solving a two-step money word problem with change",
+       "prompt": "Mia buys a juice for $1.45 and a snack for $2.25. She pays with a $5 bill. How much change should she get?",
+       "answer": "$1.30",
+       "choices": [
+        "$1.30",
+        "$1.20",
+        "$1.40",
+        "$2.30"
+       ]
+      },
+      {
+       "skill": "Choosing a sensible unit of length",
+       "prompt": "Which object is about 1 centimeter long?",
+       "answer": "the width of a fingernail",
+       "choices": [
+        "the width of a fingernail",
+        "the length of a shoe",
+        "the height of a door",
+        "the length of a school bus"
+       ]
       }
      ]
     },
@@ -8795,6 +11479,28 @@
         "18 centimeters",
         "73 centimeters"
        ]
+      },
+      {
+       "skill": "Adding lengths in a word problem",
+       "prompt": "A garden path is 36 feet long. A second path is 27 feet long. How many feet long are the two paths altogether?",
+       "answer": "63 feet",
+       "choices": [
+        "63 feet",
+        "53 feet",
+        "62 feet",
+        "73 feet"
+       ]
+      },
+      {
+       "skill": "Estimating length using a known reference",
+       "prompt": "A new pencil is about 7 inches long. About how long is a classroom door?",
+       "answer": "about 7 feet",
+       "choices": [
+        "about 7 feet",
+        "about 7 inches",
+        "about 7 centimeters",
+        "about 70 feet"
+       ]
       }
      ]
     },
@@ -8862,6 +11568,28 @@
         "5",
         "10"
        ]
+      },
+      {
+       "skill": "Showing a sum on a number line",
+       "prompt": "A number line starts at 35. An arrow jumps 20 to the right and lands on ☐. What number belongs in the box?",
+       "answer": "55",
+       "choices": [
+        "55",
+        "15",
+        "45",
+        "65"
+       ]
+      },
+      {
+       "skill": "Telling time with a.m. and p.m. and quarter past",
+       "prompt": "The minute hand is on the 3 and the hour hand is just past 8. It is evening. Which time is it?",
+       "answer": "8:15 p.m.",
+       "choices": [
+        "8:15 p.m.",
+        "8:45 p.m.",
+        "3:40 p.m.",
+        "8:15 a.m."
+       ]
       }
      ]
     },
@@ -8928,6 +11656,28 @@
         "18",
         "20",
         "24"
+       ]
+      },
+      {
+       "skill": "Comparing temperatures on a thermometer",
+       "prompt": "On Monday the thermometer showed 52°F. On Tuesday it showed 67°F. How many degrees warmer was Tuesday than Monday?",
+       "answer": "15°F",
+       "choices": [
+        "15°F",
+        "5°F",
+        "25°F",
+        "119°F"
+       ]
+      },
+      {
+       "skill": "Extending a growing pattern in a table",
+       "prompt": "Leo saves money each week. In week 1 he saves $4. Each week he saves $3 more than the week before. How much does he save in week 4?",
+       "answer": "$13",
+       "choices": [
+        "$13",
+        "$10",
+        "$16",
+        "$7"
        ]
       }
      ]
@@ -9007,6 +11757,28 @@
         "6 + 6 = 12",
         "9 + 6 = 6"
        ]
+      },
+      {
+       "skill": "Recognizing a complete fact family",
+       "prompt": "Which set of facts is a fact family?",
+       "answer": "6 + 7 = 13, 7 + 6 = 13, 13 − 6 = 7, 13 − 7 = 6",
+       "choices": [
+        "6 + 7 = 13, 7 + 6 = 13, 13 − 6 = 7, 13 − 7 = 6",
+        "6 + 7 = 13, 7 + 6 = 13, 13 − 5 = 8, 13 − 8 = 5",
+        "5 + 8 = 13, 8 + 5 = 13, 13 − 6 = 7, 13 − 7 = 6",
+        "6 + 7 = 13, 8 + 5 = 13, 13 − 6 = 7, 13 − 7 = 6"
+       ]
+      },
+      {
+       "skill": "Showing an odd number as equal addends plus one",
+       "prompt": "Which sentence shows 11 as two equal addends plus 1?",
+       "answer": "5 + 5 + 1 = 11",
+       "choices": [
+        "5 + 5 + 1 = 11",
+        "6 + 6 = 12",
+        "4 + 4 + 1 = 9",
+        "5 + 5 = 10"
+       ]
       }
      ]
     },
@@ -9078,6 +11850,28 @@
         "2 + 2 + 2 + 2 = 8",
         "5 + 5 + 5 = 15"
        ]
+      },
+      {
+       "skill": "Finding a total from equal groups",
+       "prompt": "There are 6 baskets. Each basket has 4 balls. How many balls are there in all?",
+       "answer": "24",
+       "choices": [
+        "24",
+        "10",
+        "20",
+        "28"
+       ]
+      },
+      {
+       "skill": "Finding the number of squares in each row of a rectangle",
+       "prompt": "A rectangle is covered with 12 unit squares. It has 3 equal rows. How many unit squares are in each row?",
+       "answer": "4",
+       "choices": [
+        "4",
+        "2",
+        "6",
+        "9"
+       ]
       }
      ]
     },
@@ -9148,6 +11942,28 @@
         "4 more flowers",
         "12 more flowers"
        ]
+      },
+      {
+       "skill": "Adding an array by columns",
+       "prompt": "An array has 3 rows with 5 counters in each row. Which addition sentence adds the counters by columns?",
+       "answer": "3 + 3 + 3 + 3 + 3",
+       "choices": [
+        "3 + 3 + 3 + 3 + 3",
+        "5 + 5 + 5",
+        "3 + 5",
+        "5 + 5 + 5 + 5 + 5"
+       ]
+      },
+      {
+       "skill": "Reading a bar graph with a scale of 5",
+       "prompt": "A bar graph shows cans collected. The scale goes up by 5. Team A's bar is 3 spaces high. Team B's bar is 2 spaces high. How many cans did the teams collect altogether?",
+       "answer": "25",
+       "choices": [
+        "25",
+        "5",
+        "11",
+        "30"
+       ]
       }
      ]
     },
@@ -9208,6 +12024,28 @@
       {
        "skill": "Halving shares of partitioned shapes",
        "prompt": "A circle is cut into 3 equal shares. Then each share is cut in half. How many equal shares does the circle have now?",
+       "answer": "6",
+       "choices": [
+        "6",
+        "4",
+        "5",
+        "8"
+       ]
+      },
+      {
+       "skill": "Reading the most common length on a line plot",
+       "prompt": "A line plot shows the lengths of 7 ribbons in centimeters. The marks are at 2 cm, 3 cm, 3 cm, 4 cm, 4 cm, 4 cm, and 5 cm. Which length has the most marks?",
+       "answer": "4 cm",
+       "choices": [
+        "4 cm",
+        "2 cm",
+        "3 cm",
+        "5 cm"
+       ]
+      },
+      {
+       "skill": "Naming a cube by its flat faces",
+       "prompt": "A cube has how many flat faces?",
        "answer": "6",
        "choices": [
         "6",
@@ -9293,6 +12131,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 3, 6, 9, 12, 15, 18, 21, 24 is 8 numbers, and 8 x 3 = 24. 9 counts the 0, 7 is one too few, and 12 is how many numbers a count by 2s would say.",
        "replaced": "Rosa skip counts by 5s on a hundred chart and lands on 30. How many times did she say a number to get to 30, counting 5 as her first number?"
+      },
+      {
+       "skill": "Skip counting by 5s and recognizing multiples",
+       "prompt": "When skip counting by 5s starting at 0, which number will NOT be said?",
+       "answer": "32",
+       "choices": [
+        "32",
+        "10",
+        "20",
+        "35"
+       ]
+      },
+      {
+       "skill": "Explaining why equal shares can look different",
+       "prompt": "Ana says, 'Every equal share of a rectangle must be a square.' Which sentence tells why Ana is wrong?",
+       "answer": "Equal shares can have different shapes if they are the same size.",
+       "choices": [
+        "Equal shares can have different shapes if they are the same size.",
+        "Equal shares must always be squares in a rectangle.",
+        "Equal shares must all be the same shape as the whole.",
+        "Equal shares can have different sizes if they are the same shape."
+       ]
       }
      ]
     },
@@ -9375,6 +12235,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: True total: 3 x 25 + 2 x 10 + 4 = 75 + 20 + 4 = 99 cents. Quarters as 15: 45 + 20 + 4 = 69, matches Sam. Dimes as 5: 75 + 10 + 4 = 89, not 69. Forgetting pennies gives 95, not 69, and the real total is 99.",
        "replaced": "Sam counts 3 quarters, 2 dimes, and 4 pennies and says he has 59 cents. What mistake did Sam make?"
+      },
+      {
+       "skill": "Finding a missing part in a three-part bar model",
+       "prompt": "A bar model shows a whole bar of 85 split into three parts. One part is 37, one part is 28, and the last part is blank. What is the last part?",
+       "answer": "20",
+       "choices": [
+        "20",
+        "30",
+        "48",
+        "57"
+       ]
+      },
+      {
+       "skill": "Correcting a measurement unit mistake",
+       "prompt": "Leo says, 'Our classroom is about 8 centimeters wide.' What is the best correction?",
+       "answer": "Our classroom is about 8 meters wide.",
+       "choices": [
+        "Our classroom is about 8 meters wide.",
+        "Our classroom is about 8 inches wide.",
+        "Our classroom is about 8 feet wide.",
+        "Our classroom is about 8 kilometers wide."
+       ]
       }
      ]
     },
@@ -9462,6 +12344,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 5 hundreds and 15 tens = 500 + 150 = 650. 6 hundreds and 4 tens = 640. 63 tens and 9 ones = 630 + 9 = 639. 6 hundreds and 9 ones = 609. Greatest is 650; check order 609 < 639 < 640 < 650. A learner reading only the hundreds digit picks a 6-hundreds option.",
        "replaced": "Which statement about the number 638 is true?"
+      },
+      {
+       "skill": "Ordering numbers to 1,000 from least to greatest",
+       "prompt": "Which list shows the numbers in order from least to greatest?",
+       "answer": "467, 476, 649, 694",
+       "choices": [
+        "467, 476, 649, 694",
+        "476, 467, 649, 694",
+        "467, 649, 476, 694",
+        "694, 649, 476, 467"
+       ]
+      },
+      {
+       "skill": "Converting feet to inches in a measurement review",
+       "prompt": "A rope is 4 feet long. How many inches long is the rope?",
+       "answer": "48 inches",
+       "choices": [
+        "48 inches",
+        "16 inches",
+        "40 inches",
+        "44 inches"
+       ]
       }
      ]
     }
@@ -9533,6 +12437,28 @@
         "4 rows of 4 tiles make 16 tiles",
         "6 rows of 6 tiles make 36 tiles"
        ]
+      },
+      {
+       "skill": "Skip counting by 5s to find 3 × 5",
+       "prompt": "Which numbers do you say when you skip count by 5s to find 3 × 5?",
+       "answer": "5, 10, 15",
+       "choices": [
+        "5, 10, 15",
+        "3, 6, 9",
+        "5, 10, 15, 20",
+        "5, 6, 7"
+       ]
+      },
+      {
+       "skill": "Columns in an array and multiplication sentence",
+       "prompt": "A rectangle of tiles has 9 columns. Each column has 4 tiles. Which multiplication sentence gives the total number of tiles?",
+       "answer": "9 × 4 = 36",
+       "choices": [
+        "9 × 4 = 36",
+        "9 + 4 = 13",
+        "9 × 9 = 81",
+        "4 × 4 = 16"
+       ]
       }
      ]
     },
@@ -9602,6 +12528,28 @@
         "20 ÷ 4 = 5",
         "5 ÷ 20 = 4",
         "20 − 5 = 15"
+       ]
+      },
+      {
+       "skill": "Reading equal jumps on a number line as multiplication",
+       "prompt": "A number line starts at 0. Equal jumps land at 6, 12, 18, and 24. Which multiplication sentence shows these jumps?",
+       "answer": "4 × 6 = 24",
+       "choices": [
+        "4 × 6 = 24",
+        "6 × 6 = 36",
+        "6 + 4 = 10",
+        "4 × 4 = 16"
+       ]
+      },
+      {
+       "skill": "Meaning of the quotient in equal sharing",
+       "prompt": "In 28 ÷ 7 = 4, what does the 4 tell about sharing 28 counters equally among 7 groups?",
+       "answer": "The number of counters in each group.",
+       "choices": [
+        "The number of counters in each group.",
+        "The number of groups.",
+        "The total number of counters.",
+        "The number of counters left over."
        ]
       }
      ]
@@ -9674,6 +12622,28 @@
         "18 ÷ 6 = 6",
         "18 − 3 = 15"
        ]
+      },
+      {
+       "skill": "Telling a sharing problem from a grouping problem",
+       "prompt": "Which question asks how many are in each group?",
+       "answer": "15 apples are shared equally on 3 plates. How many apples are on each plate?",
+       "choices": [
+        "15 apples are shared equally on 3 plates. How many apples are on each plate?",
+        "15 apples are put 3 on each plate. How many plates are used?",
+        "15 apples are shared equally on 3 plates. How many apples are there in all?",
+        "15 apples are put 3 on each plate. How many apples are left over?"
+       ]
+      },
+      {
+       "skill": "Division with an array to find row size",
+       "prompt": "A rectangle is made of 54 tiles in 6 equal rows. How many tiles are in each row?",
+       "answer": "9",
+       "choices": [
+        "9",
+        "8",
+        "48",
+        "60"
+       ]
       }
      ]
     },
@@ -9745,6 +12715,28 @@
         "7 × 4 = 21",
         "4 × 7 = 21"
        ]
+      },
+      {
+       "skill": "Using doubles for facts of 2",
+       "prompt": "Which double helps you find 2 × 9?",
+       "answer": "9 + 9 = 18",
+       "choices": [
+        "9 + 9 = 18",
+        "9 + 2 = 11",
+        "10 + 2 = 12",
+        "9 × 9 = 81"
+       ]
+      },
+      {
+       "skill": "Multiples of 10 as tens",
+       "prompt": "Which number sentence shows 6 × 10 as tens?",
+       "answer": "6 tens = 60",
+       "choices": [
+        "6 tens = 60",
+        "6 ones = 6",
+        "10 + 6 = 16",
+        "10 − 6 = 4"
+       ]
       }
      ]
     },
@@ -9814,6 +12806,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U1, 4 units before U5. It must need what U5 teaches.",
        "replaced": "Ben breaks an array of 3 rows of 8 into two parts to find the total. Which break-apart fact shows the same total?"
+      },
+      {
+       "skill": "Choosing the fact to double for facts of 4",
+       "prompt": "Which fact can you double to find 4 × 8?",
+       "answer": "2 × 8 = 16",
+       "choices": [
+        "2 × 8 = 16",
+        "2 × 4 = 8",
+        "4 + 4 = 8",
+        "8 × 8 = 64"
+       ]
+      },
+      {
+       "skill": "Building facts of 3 from facts of 2",
+       "prompt": "To find 3 × 7, you can use 2 × 7 and one more group of 7. What is 3 × 7?",
+       "answer": "21",
+       "choices": [
+        "21",
+        "14",
+        "28",
+        "10"
+       ]
       }
      ]
     },
@@ -9880,6 +12894,28 @@
         "10 × 8 + 8 = 88",
         "9 × 8 − 9 = 63",
         "10 × 9 − 8 = 82"
+       ]
+      },
+      {
+       "skill": "Digit pattern in the 9 times table",
+       "prompt": "Which is true about the products in the 9 times table from 9 × 1 to 9 × 10?",
+       "answer": "The digits in each product add to 9.",
+       "choices": [
+        "The digits in each product add to 9.",
+        "Every product is even.",
+        "Every product ends in 9.",
+        "Every product ends in 0."
+       ]
+      },
+      {
+       "skill": "Mixed fact fluency equation check",
+       "prompt": "Which equation is true?",
+       "answer": "6 × 4 = 24",
+       "choices": [
+        "6 × 4 = 24",
+        "5 × 10 = 15",
+        "3 × 9 = 12",
+        "4 × 4 = 12"
        ]
       }
      ]
@@ -9952,6 +12988,28 @@
         "54",
         "63"
        ]
+      },
+      {
+       "skill": "Facts of 8 built as double the 4s",
+       "prompt": "What is 8 × 8?",
+       "answer": "64",
+       "choices": [
+        "64",
+        "56",
+        "72",
+        "48"
+       ]
+      },
+      {
+       "skill": "Recalling facts of 7 in a mixed question",
+       "prompt": "Which multiplication fact has a product of 42?",
+       "answer": "6 × 7",
+       "choices": [
+        "6 × 7",
+        "7 × 7",
+        "6 × 8",
+        "5 × 8"
+       ]
       }
      ]
     },
@@ -10021,6 +13079,28 @@
         "25",
         "60"
        ]
+      },
+      {
+       "skill": "Explaining the one property with groups",
+       "prompt": "Which explanation shows why 4 × 1 = 4?",
+       "answer": "4 groups with 1 in each group makes 4.",
+       "choices": [
+        "4 groups with 1 in each group makes 4.",
+        "1 group with 4 in it makes 1.",
+        "4 groups with 0 in each group makes 0.",
+        "4 groups with 4 in each group makes 16."
+       ]
+      },
+      {
+       "skill": "Regrouping three factors with the associative property",
+       "prompt": "Which expression has the same value as 4 × 2 × 5?",
+       "answer": "4 × (2 × 5)",
+       "choices": [
+        "4 × (2 × 5)",
+        "4 + 2 + 5",
+        "4 × 2 + 5",
+        "(4 + 2) × 5"
+       ]
       }
      ]
     },
@@ -10088,6 +13168,28 @@
         "24",
         "36"
        ]
+      },
+      {
+       "skill": "Finding the rule of a function machine and predicting",
+       "prompt": "A function machine follows one rule. When 5 goes in, 15 comes out. When 8 goes in, 24 comes out. What comes out when 10 goes in?",
+       "answer": "30",
+       "choices": [
+        "30",
+        "20",
+        "25",
+        "40"
+       ]
+      },
+      {
+       "skill": "Recognising the three numbers of a fact family",
+       "prompt": "Which set of three numbers makes a fact family?",
+       "answer": "4, 6, 24",
+       "choices": [
+        "4, 6, 24",
+        "4, 6, 10",
+        "4, 6, 20",
+        "4, 6, 28"
+       ]
       }
      ]
     },
@@ -10154,6 +13256,28 @@
         "12 ÷ 12 = 0",
         "12 ÷ 12 = 12",
         "12 ÷ 12 = 2"
+       ]
+      },
+      {
+       "skill": "Dividing a number by itself",
+       "prompt": "What is 6 ÷ 6?",
+       "answer": "1",
+       "choices": [
+        "1",
+        "0",
+        "6",
+        "36"
+       ]
+      },
+      {
+       "skill": "Using a multiplication fact to divide",
+       "prompt": "Which multiplication fact helps you find 48 ÷ 6?",
+       "answer": "6 × 8 = 48",
+       "choices": [
+        "6 × 8 = 48",
+        "7 × 8 = 56",
+        "6 × 6 = 36",
+        "8 × 8 = 64"
        ]
       }
      ]
@@ -10226,6 +13350,28 @@
         "35",
         "700"
        ]
+      },
+      {
+       "skill": "Multiplying a one-digit number by a multiple of ten",
+       "prompt": "What is 9 × 70?",
+       "answer": "630",
+       "choices": [
+        "630",
+        "63",
+        "6300",
+        "560"
+       ]
+      },
+      {
+       "skill": "Writing an equation with a letter for the unknown",
+       "prompt": "Rosa has 45 stickers. She puts 5 stickers on each page. Which equation can be used to find p, the number of pages she fills?",
+       "answer": "45 ÷ 5 = p",
+       "choices": [
+        "45 ÷ 5 = p",
+        "45 × 5 = p",
+        "5 ÷ 45 = p",
+        "45 + 5 = p"
+       ]
       }
      ]
     },
@@ -10294,6 +13440,28 @@
         "6",
         "11",
         "24"
+       ]
+      },
+      {
+       "skill": "Finding the smaller amount in a times-as-many comparison",
+       "prompt": "Ben has 21 marbles. That is 3 times as many marbles as Ana has. How many marbles does Ana have?",
+       "answer": "7",
+       "choices": [
+        "7",
+        "63",
+        "24",
+        "18"
+       ]
+      },
+      {
+       "skill": "Solving a two-step word problem with multiplication and subtraction",
+       "prompt": "A teacher has 36 stickers. She gives 4 stickers to each of 7 students. How many stickers does she have left?",
+       "answer": "8",
+       "choices": [
+        "8",
+        "28",
+        "9",
+        "32"
        ]
       }
      ]
@@ -10366,6 +13534,28 @@
         "About 60 crayons, because 50 + 8 = 58",
         "About 62 crayons, because 54 + 8 = 62"
        ]
+      },
+      {
+       "skill": "Reading Roman numerals to 24",
+       "prompt": "Which Roman numeral shows the same number as 24?",
+       "answer": "XXIV",
+       "choices": [
+        "XXIV",
+        "XXIIII",
+        "XXV",
+        "XIV"
+       ]
+      },
+      {
+       "skill": "Rounding a midpoint to the nearest ten",
+       "prompt": "What is 45 rounded to the nearest ten?",
+       "answer": "50",
+       "choices": [
+        "50",
+        "40",
+        "45",
+        "60"
+       ]
       }
      ]
     },
@@ -10436,6 +13626,28 @@
         "2 more flowers",
         "8 more flowers",
         "12 more flowers"
+       ]
+      },
+      {
+       "skill": "Reading a scaled picture graph for a total",
+       "prompt": "Each 🚗 stands for 5 cars. Lot A has 3 🚗. Lot B has 4 🚗. How many cars are in the two lots altogether?",
+       "answer": "35",
+       "choices": [
+        "35",
+        "7",
+        "15",
+        "20"
+       ]
+      },
+      {
+       "skill": "Improving a guess in a guess-and-check problem",
+       "prompt": "A student is guessing a number. The clue is: 4 times the number is 36. The student first guesses 6 and finds 4 × 6 = 24, which is too low. Which guess should the student try next?",
+       "answer": "9",
+       "choices": [
+        "9",
+        "8",
+        "10",
+        "12"
        ]
       }
      ]
@@ -10515,6 +13727,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U7.5, 7.5 units before U15. It must need what U15 teaches.",
        "replaced": "Which tool would you choose to find the mass of a watermelon?"
+      },
+      {
+       "skill": "Estimating mass in grams",
+       "prompt": "Which is the best estimate for the mass of a paper clip?",
+       "answer": "about 1 gram",
+       "choices": [
+        "about 1 gram",
+        "about 1 kilogram",
+        "about 10 kilograms",
+        "about 100 grams"
+       ]
+      },
+      {
+       "skill": "Estimating liquid volume",
+       "prompt": "A small juice box holds about how much?",
+       "answer": "200 milliliters",
+       "choices": [
+        "200 milliliters",
+        "2 liters",
+        "20 liters",
+        "200 liters"
+       ]
       }
      ]
     },
@@ -10602,6 +13836,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Farm A: 8 × 6 = 48 kg → 48 × $2 = $96. Farm B: 5 × 6 = 30 kg → $60. Difference $96 − $60 = $36. Check: 3 more symbols × 6 kg = 18 kg more, 18 × $2 = $36. Wrong: $6 = 3 symbols × $2 (ignored the scale); $18 = the extra kilograms, not dollars; $96 = Farm A's total only.",
        "replaced": "A bar graph shows that 24 students picked soccer and 8 students picked basketball. Dee says, \"Soccer has 16 more students than basketball, and soccer is 2 times as many as basketball.\" What is wrong w"
+      },
+      {
+       "skill": "Error analysis with the zero property",
+       "prompt": "Liam says 0 × 7 = 7 because adding 0 does not change a number. What is the correct way to think about 0 × 7?",
+       "answer": "It means 0 groups of 7, so the product is 0.",
+       "choices": [
+        "It means 0 groups of 7, so the product is 0.",
+        "It means 1 group of 7, so the product is 7.",
+        "It means 7 groups of 7, so the product is 49.",
+        "It means 7 + 0, so the product is 7."
+       ]
+      },
+      {
+       "skill": "Explaining division with equal groups",
+       "prompt": "Which explanation correctly shows 18 ÷ 3 = 6 with equal groups, so a friend could follow it?",
+       "answer": "Make 3 equal groups with 18 counters; each group gets 6 counters.",
+       "choices": [
+        "Make 3 equal groups with 18 counters; each group gets 6 counters.",
+        "Make 6 equal groups with 18 counters; each group gets 3 counters.",
+        "Add 18 counters and 3 counters; the total is 21 counters.",
+        "Make 3 equal groups with 6 counters; each group gets 18 counters."
+       ]
       }
      ]
     }
@@ -10672,6 +13928,28 @@
         "454",
         "444",
         "526"
+       ]
+      },
+      {
+       "skill": "Adding within 1,000 with regrouping in a word problem",
+       "prompt": "A box holds 236 crayons. Another box holds 148 crayons. How many crayons are in the two boxes in all?",
+       "answer": "384",
+       "choices": [
+        "384",
+        "374",
+        "394",
+        "484"
+       ]
+      },
+      {
+       "skill": "Equal parts of a whole: naming one part of four",
+       "prompt": "A square sheet of paper is folded so it makes 4 equal parts that cover the whole sheet. What fraction of the sheet is one part?",
+       "answer": "1/4",
+       "choices": [
+        "1/4",
+        "4/1",
+        "1/8",
+        "1/2"
        ]
       }
      ]
@@ -10745,6 +14023,28 @@
         "6 of the equal parts are shaded.",
         "The whole is cut into 4 equal parts."
        ]
+      },
+      {
+       "skill": "Unit fraction for a whole cut into three equal parts",
+       "prompt": "A piece of yarn is cut into 3 equal pieces. What fraction of the whole piece of yarn is one piece?",
+       "answer": "1/3",
+       "choices": [
+        "1/3",
+        "3/1",
+        "1/6",
+        "3/3"
+       ]
+      },
+      {
+       "skill": "Naming a fraction of a set",
+       "prompt": "There are 6 birds sitting on a fence. 2 of the birds are blue. What fraction of the birds are blue?",
+       "answer": "2/6",
+       "choices": [
+        "2/6",
+        "6/2",
+        "2/4",
+        "4/6"
+       ]
       }
      ]
     },
@@ -10811,6 +14111,28 @@
         "1 whole and 1/4 more",
         "2 wholes exactly",
         "6 wholes exactly"
+       ]
+      },
+      {
+       "skill": "Placing a fraction greater than one on a number line",
+       "prompt": "A number line shows the whole numbers 0, 1, 2 and 3, and each whole-number space is split into 2 equal parts. Which fraction is at the point halfway between 2 and 3?",
+       "answer": "5/2",
+       "choices": [
+        "5/2",
+        "2/5",
+        "3/2",
+        "1/2"
+       ]
+      },
+      {
+       "skill": "Counting unit-fraction lengths from 0 to reach 1",
+       "prompt": "On a number line, each hop of 1/4 starts at 0 and lands on the next mark. How many hops of 1/4 does it take to go from 0 to 1?",
+       "answer": "4",
+       "choices": [
+        "4",
+        "1",
+        "2",
+        "8"
        ]
       }
      ]
@@ -10882,6 +14204,28 @@
         "1/8",
         "4/8"
        ]
+      },
+      {
+       "skill": "Writing a whole number as a fraction",
+       "prompt": "Which fraction names 3 wholes?",
+       "answer": "3/1",
+       "choices": [
+        "3/1",
+        "1/3",
+        "3/3",
+        "4/3"
+       ]
+      },
+      {
+       "skill": "Finding an equivalent fraction with fraction strips",
+       "prompt": "A fraction strip for 1/3 is the same length as a strip for 2/6. Using strips like these, which fraction is the same length as 2/3?",
+       "answer": "4/6",
+       "choices": [
+        "4/6",
+        "3/6",
+        "2/6",
+        "2/4"
+       ]
       }
      ]
     },
@@ -10948,6 +14292,28 @@
         "Lia ate more.",
         "They ate the same amount.",
         "There is not enough information to tell."
+       ]
+      },
+      {
+       "skill": "Comparing a fraction to the benchmark 1/2",
+       "prompt": "Which fraction is less than 1/2?",
+       "answer": "3/8",
+       "choices": [
+        "3/8",
+        "5/6",
+        "4/6",
+        "7/8"
+       ]
+      },
+      {
+       "skill": "Ordering fractions with the same denominator",
+       "prompt": "Which list shows the fractions in order from least to greatest?",
+       "answer": "2/8, 5/8, 7/8",
+       "choices": [
+        "2/8, 5/8, 7/8",
+        "7/8, 5/8, 2/8",
+        "2/8, 7/8, 5/8",
+        "5/8, 2/8, 7/8"
        ]
       }
      ]
@@ -11016,6 +14382,28 @@
         "5 1/4 inches",
         "5 1/2 inches",
         "5 3/4 inches",
+        "5 inches"
+       ]
+      },
+      {
+       "skill": "Using a fraction bar to find a fraction of a group",
+       "prompt": "There are 18 pencils on a desk. 2/3 of the pencils are sharpened. How many pencils are sharpened?",
+       "answer": "12",
+       "choices": [
+        "12",
+        "6",
+        "9",
+        "15"
+       ]
+      },
+      {
+       "skill": "Measuring length to the nearest quarter inch",
+       "prompt": "A leaf lines up so that its end is exactly on the mark that is 2 quarter-inch marks past the 3-inch mark on a ruler. How long is the leaf?",
+       "answer": "3 1/2 inches",
+       "choices": [
+        "3 1/2 inches",
+        "3 1/4 inches",
+        "3 3/4 inches",
         "5 inches"
        ]
       }
@@ -11091,6 +14479,28 @@
         "A calculator, so he can type 2/3 and 3/5 and see which number looks bigger.",
         "A ruler, so he can measure the numerators 2 and 3 and see which number is larger."
        ]
+      },
+      {
+       "skill": "Precise fraction vocabulary for equal parts",
+       "prompt": "Which sentence uses math words correctly to describe 3/4 of one whole pizza?",
+       "answer": "The pizza is cut into 4 equal parts, and 3 of the parts are taken.",
+       "choices": [
+        "The pizza is cut into 4 equal parts, and 3 of the parts are taken.",
+        "The pizza is cut into 3 equal parts, and 3 of the parts are taken.",
+        "The pizza is cut into 4 equal parts, and 4 of the parts are taken.",
+        "The pizza is cut into 4 equal parts, and each part is 3/4 of the pizza."
+       ]
+      },
+      {
+       "skill": "Explaining a fraction comparison with the benchmark 1/2",
+       "prompt": "Which sentence BEST explains why 4/6 is greater than 2/5?",
+       "answer": "4/6 is more than 1/2, and 2/5 is less than 1/2, so 4/6 is greater.",
+       "choices": [
+        "4/6 is more than 1/2, and 2/5 is less than 1/2, so 4/6 is greater.",
+        "4/6 is greater because 6 is larger than 5, so sixths are larger parts than fifths.",
+        "4/6 is greater because 4 is larger than 2, so it must be the greater fraction.",
+        "4/6 is greater because 4 + 6 is greater than 2 + 5."
+       ]
       }
      ]
     },
@@ -11162,6 +14572,28 @@
         "8:47 a.m.",
         "7:37 a.m."
        ]
+      },
+      {
+       "skill": "Reading time to the minute from an analog clock described in words",
+       "prompt": "On an analog clock, the hour hand is between 4 and 5 and is closer to 5. The minute hand points to 8. What time is shown?",
+       "answer": "4:40",
+       "choices": [
+        "4:40",
+        "5:40",
+        "4:08",
+        "8:20"
+       ]
+      },
+      {
+       "skill": "Multiplication and division facts in a two-step word problem",
+       "prompt": "A baker bakes 4 trays with 8 muffins on each tray. He sells 9 muffins. How many muffins are left?",
+       "answer": "23",
+       "choices": [
+        "23",
+        "32",
+        "41",
+        "13"
+       ]
       }
      ]
     },
@@ -11232,6 +14664,28 @@
         "Each one has 4 right angles.",
         "Each one has 4 sides and no parallel sides."
        ]
+      },
+      {
+       "skill": "Categories and subcategories: rhombuses and squares",
+       "prompt": "Dana says, “Every rhombus is a square.” Which sentence explains why Dana is wrong?",
+       "answer": "A rhombus can have no right angles, but a square must have 4 right angles.",
+       "choices": [
+        "A rhombus can have no right angles, but a square must have 4 right angles.",
+        "A rhombus has only 3 sides, but a square has 4 sides.",
+        "A rhombus has 2 pairs of parallel sides, but a square has only 1 pair.",
+        "A rhombus has 4 right angles, but a square can have no right angles."
+       ]
+      },
+      {
+       "skill": "Partitioning a shape into equal areas and naming one part",
+       "prompt": "A square is divided into 4 parts that have equal area. What fraction of the whole square is the area of each part?",
+       "answer": "1/4",
+       "choices": [
+        "1/4",
+        "1/2",
+        "1/3",
+        "1/8"
+       ]
       }
      ]
     },
@@ -11297,6 +14751,28 @@
         "20 squares fit around the edge of the top, so the perimeter of the top is 20 centimeters.",
         "20 is the number of centimeters on one side of the top, so each side is 20 centimeters long.",
         "20 is the size of one square, so each square centimeter is 20 units wide."
+       ]
+      },
+      {
+       "skill": "Covering a shape with unit squares with no gaps or overlaps",
+       "prompt": "Maya covers a shape with 1-inch squares. Two squares overlap, and there is a gap between two other squares. What should Maya do to find the area correctly?",
+       "answer": "Move the squares so there are no gaps or overlaps, then count them.",
+       "choices": [
+        "Move the squares so there are no gaps or overlaps, then count them.",
+        "Count all the squares and add 2 for the gap.",
+        "Count only the squares around the outside of the shape.",
+        "Measure around the shape with a ruler and add the lengths."
+       ]
+      },
+      {
+       "skill": "Counting unit squares in rows to find area",
+       "prompt": "A shape is covered with 1-centimeter squares and no gaps or overlaps. There are 4 squares in the first row, 3 in the second row, 4 in the third row, and 2 in the fourth row. What is the area of the shape?",
+       "answer": "13 square centimeters",
+       "choices": [
+        "13 square centimeters",
+        "12 square centimeters",
+        "14 square centimeters",
+        "9 square centimeters"
        ]
       }
      ]
@@ -11365,6 +14841,28 @@
         "63 meters",
         "16 square meters"
        ]
+      },
+      {
+       "skill": "Area of a square from multiplication",
+       "prompt": "A square has a side length of 7 inches. Which multiplication sentence gives its area?",
+       "answer": "7 × 7 = 49 square inches",
+       "choices": [
+        "7 × 7 = 49 square inches",
+        "4 × 7 = 28 square inches",
+        "7 + 7 = 14 square inches",
+        "2 × 7 = 14 square inches"
+       ]
+      },
+      {
+       "skill": "Distributive property with an area model",
+       "prompt": "A rectangle is 8 feet by 5 feet. It is split into an 8-foot by 3-foot rectangle and an 8-foot by 2-foot rectangle. Which equation shows the total area?",
+       "answer": "8 × 5 = 8 × 3 + 8 × 2",
+       "choices": [
+        "8 × 5 = 8 × 3 + 8 × 2",
+        "8 × 5 = 8 + 3 + 8 + 2",
+        "8 × 5 = (8 + 3) × (8 + 2)",
+        "8 × 5 = 8 × 3 + 5 × 2"
+       ]
       }
      ]
     },
@@ -11431,6 +14929,28 @@
         "17 meters",
         "60 meters",
         "34 square meters"
+       ]
+      },
+      {
+       "skill": "Area of a composite figure made by joining rectangles",
+       "prompt": "A shape is made by joining a 4 cm by 3 cm rectangle and a 6 cm by 2 cm rectangle with no overlap. What is the area of the shape?",
+       "answer": "24 square centimeters",
+       "choices": [
+        "24 square centimeters",
+        "12 square centimeters",
+        "30 square centimeters",
+        "20 square centimeters"
+       ]
+      },
+      {
+       "skill": "Perimeter with an unknown side length",
+       "prompt": "A triangle has a perimeter of 26 inches. Two of its sides are 8 inches and 7 inches long. How long is the third side?",
+       "answer": "11 inches",
+       "choices": [
+        "11 inches",
+        "15 inches",
+        "41 inches",
+        "10 inches"
        ]
       }
      ]
@@ -11506,6 +15026,28 @@
         "Area is always bigger than perimeter, so the area of this rectangle must be more than 20 square units.",
         "The two 20s do mean the same thing, because area and perimeter both come from the side lengths of the rectangle."
        ]
+      },
+      {
+       "skill": "Same perimeter, different areas",
+       "prompt": "Two rectangles each have a perimeter of 18 units. Rectangle A is 6 units by 3 units. Rectangle B is 5 units by 4 units. Which statement is true?",
+       "answer": "Rectangle B has the greater area.",
+       "choices": [
+        "Rectangle B has the greater area.",
+        "Rectangle A has the greater area.",
+        "Both rectangles have the same area.",
+        "Rectangle A has twice the area of Rectangle B."
+       ]
+      },
+      {
+       "skill": "Error analysis: comparing fractions by denominator alone",
+       "prompt": "Mia says 1/8 is greater than 1/4 because 8 is greater than 4. What is the best correction?",
+       "answer": "1/8 is less than 1/4 because eighths are smaller than fourths.",
+       "choices": [
+        "1/8 is less than 1/4 because eighths are smaller than fourths.",
+        "1/8 is greater than 1/4 because 8 is greater than 4.",
+        "1/8 is equal to 1/4 because both have numerator 1.",
+        "1/4 is less than 1/8 because 4 is less than 8."
+       ]
       }
      ]
     },
@@ -11577,6 +15119,28 @@
         "A solid with 6 flat triangle faces that meet at one point, with 12 edges and 8 vertices",
         "A round solid with 2 flat circle faces, 12 curved edges, and 8 vertices",
         "A box-shaped solid with 6 flat rectangle faces, 8 straight edges, and 12 corner vertices"
+       ]
+      },
+      {
+       "skill": "Two-step estimation with multiplication and subtraction",
+       "prompt": "A school buys 6 packs of pencils. Each pack has 19 pencils. The school gives away 28 pencils. Using rounding to the nearest ten, about how many pencils are left?",
+       "answer": "About 90 pencils",
+       "choices": [
+        "About 90 pencils",
+        "About 100 pencils",
+        "About 80 pencils",
+        "About 120 pencils"
+       ]
+      },
+      {
+       "skill": "Identifying solids from faces, edges, and vertices",
+       "prompt": "A solid has 4 triangular faces, 6 edges, and 4 vertices. Which solid is it?",
+       "answer": "Triangular pyramid",
+       "choices": [
+        "Triangular pyramid",
+        "Triangular prism",
+        "Square pyramid",
+        "Cube"
        ]
       }
      ]
@@ -11658,6 +15222,28 @@
        "revised": 2,
        "why": "Too easy: a learner reliably answers it by U3, 12 units before U15. It must need what U15 teaches.",
        "replaced": "A number line from 0 to 2 has equal marks every 1/4. Where is the point for 7/4?"
+      },
+      {
+       "skill": "Adding fractions with the same denominator",
+       "prompt": "Lia paints 3/10 of a fence in the morning and 4/10 of the same fence in the afternoon. How much of the fence does she paint in all?",
+       "answer": "7/10",
+       "choices": [
+        "7/10",
+        "7/20",
+        "1/10",
+        "12/10"
+       ]
+      },
+      {
+       "skill": "Matching a net to a rectangular prism",
+       "prompt": "A flat net has 6 rectangles: two are 4 inches by 2 inches, two are 4 inches by 3 inches, and two are 2 inches by 3 inches. Which solid will it fold into?",
+       "answer": "A rectangular prism",
+       "choices": [
+        "A rectangular prism",
+        "A cube",
+        "A square pyramid",
+        "A triangular prism"
+       ]
       }
      ]
     },
@@ -11745,6 +15331,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: Length = 32 ÷ 4 = 8 ft. Fence = 8 + 4 + 8 + 4 = 24 ft. Eighths of 32 sq ft are 4 sq ft each, so 3/8 = 12 sq ft. Check: 8 × 4 = 32 and 12 × 8 / 3 = 32. Wrong: 36 = 32 + 4 (adding area and width); 3 sq ft uses the numerator as a count; 12 ft = only one length plus one width.",
        "replaced": "A classroom garden is 6 feet long and 4 feet wide. The class wants to put a low fence all the way around it, and also cover the whole inside with soil. How many feet of fence and how many square feet "
+      },
+      {
+       "skill": "Fact fluency across all four operations",
+       "prompt": "Which number sentence is true?",
+       "answer": "63 ÷ 7 = 9",
+       "choices": [
+        "63 ÷ 7 = 9",
+        "8 × 7 = 54",
+        "45 + 38 = 73",
+        "92 − 47 = 55"
+       ]
+      },
+      {
+       "skill": "Using perimeter, area, and a fraction in a design problem",
+       "prompt": "A rectangular garden has a perimeter of 26 feet and a length of 8 feet. One fourth of the garden is planted with corn. How many square feet are planted with corn?",
+       "answer": "10 square feet",
+       "choices": [
+        "10 square feet",
+        "20 square feet",
+        "40 square feet",
+        "5 square feet"
+       ]
       }
      ]
     }
@@ -11823,6 +15431,28 @@
         "450,203",
         "45,203"
        ]
+      },
+      {
+       "skill": "Writing word form as standard form",
+       "prompt": "Which number is six hundred four thousand, seventy-two written in standard form?",
+       "answer": "604,072",
+       "choices": [
+        "604,072",
+        "640,072",
+        "604,720",
+        "640,720"
+       ]
+      },
+      {
+       "skill": "Rounding to the nearest hundred thousand",
+       "prompt": "What is 749,850 rounded to the nearest hundred thousand?",
+       "answer": "700,000",
+       "choices": [
+        "700,000",
+        "800,000",
+        "750,000",
+        "740,000"
+       ]
       }
      ]
     },
@@ -11894,6 +15524,28 @@
         "32,844",
         "23,156"
        ]
+      },
+      {
+       "skill": "Multiplication fact fluency through 10 x 10",
+       "prompt": "Which multiplication fact has a product of 42?",
+       "answer": "6 × 7",
+       "choices": [
+        "6 × 7",
+        "6 × 8",
+        "7 × 7",
+        "5 × 8"
+       ]
+      },
+      {
+       "skill": "Subtracting to find a missing addend",
+       "prompt": "What number makes 28,746 + ___ = 64,000 true?",
+       "answer": "35,254",
+       "choices": [
+        "35,254",
+        "36,254",
+        "35,354",
+        "45,254"
+       ]
       }
      ]
     },
@@ -11963,6 +15615,28 @@
         "45 + 12 − 30 = p",
         "45 × 12 + 30 = p",
         "45 × 12 − 12 = p"
+       ]
+      },
+      {
+       "skill": "Estimating sums by rounding each number to the nearest thousand",
+       "prompt": "A theater sold 5,237 tickets on Friday and 3,648 tickets on Saturday. To estimate the total, round each number to the nearest thousand, then add the rounded numbers. What is the estimated total?",
+       "answer": "9,000",
+       "choices": [
+        "9,000",
+        "8,000",
+        "10,000",
+        "8,900"
+       ]
+      },
+      {
+       "skill": "Multiplicative comparison and finding the difference",
+       "prompt": "Ben has 7 marbles. Ana has 4 times as many marbles as Ben. How many more marbles does Ana have than Ben?",
+       "answer": "21",
+       "choices": [
+        "21",
+        "28",
+        "35",
+        "11"
        ]
       }
      ]
@@ -12036,6 +15710,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: An odd number plus 4 (an even number) is always odd, so every term is odd. 3 is not even, 7 is not a multiple of 3, and 11 ends in 1, so the other three statements are false.",
        "replaced": "A rule says: start at 2 and add 4 each time. Which number is NOT in the pattern?"
+      },
+      {
+       "skill": "Divisibility rule for 3",
+       "prompt": "Which number is divisible by 3?",
+       "answer": "4,251",
+       "choices": [
+        "4,251",
+        "4,153",
+        "4,135",
+        "4,513"
+       ]
+      },
+      {
+       "skill": "Extending a number pattern with a rule",
+       "prompt": "A pattern starts with 6 and follows the rule add 9: 6, 15, 24, 33, ... Which number will be in the pattern?",
+       "answer": "60",
+       "choices": [
+        "60",
+        "57",
+        "63",
+        "54"
+       ]
       }
      ]
     },
@@ -12106,6 +15802,28 @@
        "revised": 1,
        "why": "Too hard: a learner only reliably answers it by U7.5, 2.5 units after U5. It must need only what U5 and earlier teach.",
        "replaced": "Without multiplying, which expression has the same product as 25 × 34?"
+      },
+      {
+       "skill": "Prime factorization from a factor tree",
+       "prompt": "A factor tree for 72 splits 72 into 8 × 9. What prime factorization does this give?",
+       "answer": "2 × 2 × 2 × 3 × 3",
+       "choices": [
+        "2 × 2 × 2 × 3 × 3",
+        "2 × 2 × 3 × 3 × 3",
+        "2 × 3 × 3 × 3 × 3",
+        "2 × 2 × 2 × 2 × 3 × 3"
+       ]
+      },
+      {
+       "skill": "Multiplying by 100 with a missing factor",
+       "prompt": "Which number makes the equation true? ___ × 100 = 5,800",
+       "answer": "58",
+       "choices": [
+        "58",
+        "580",
+        "5,800",
+        "68"
+       ]
       }
      ]
     },
@@ -12183,6 +15901,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 47 = 40 + 7, so the parts are 5 × 40 = 200 and 5 × 7 = 35, and 200 + 35 = 235 = 5 × 47 (also 47 × 10 / 2 = 235). The others use 4 for 40 (total 55), multiply the 40 by the 7 (480), or add instead of multiply (212).",
        "replaced": "When you multiply 6 × 24 using partial products, which product is added last before you get 144?"
+      },
+      {
+       "skill": "Area of the tens part in an area model",
+       "prompt": "An area model for 7 × 84 is split into a tens part and a ones part. What is the area of the tens part?",
+       "answer": "560",
+       "choices": [
+        "560",
+        "56",
+        "588",
+        "84"
+       ]
+      },
+      {
+       "skill": "Breaking apart a multiplication by place value",
+       "prompt": "Which expression is equal to 8 × 136?",
+       "answer": "8 × 100 + 8 × 30 + 8 × 6",
+       "choices": [
+        "8 × 100 + 8 × 30 + 8 × 6",
+        "8 × 100 + 30 + 6",
+        "8 × 100 + 8 × 3 + 8 × 6",
+        "8 × 1 + 8 × 3 + 8 × 6"
+       ]
       }
      ]
     },
@@ -12249,6 +15989,28 @@
         "42 × 3 = 126",
         "42 × 35 = 1,470",
         "35 × 30 = 1,050"
+       ]
+      },
+      {
+       "skill": "Regrouping in one-digit standard algorithm",
+       "prompt": "In the standard algorithm for 236 × 7, after multiplying the ones there is a regrouped 4. What do you write in the tens place, and what do you carry to the hundreds place?",
+       "answer": "Write 5 and carry 2.",
+       "choices": [
+        "Write 5 and carry 2.",
+        "Write 2 and carry 5.",
+        "Write 5 and carry 4.",
+        "Write 1 and carry 2."
+       ]
+      },
+      {
+       "skill": "Standard algorithm for two-digit by two-digit multiplication: adding the two partial produ",
+       "prompt": "A student uses the standard algorithm to work out 63 × 47. The student writes two partial products, one under the other, and then adds them. Which two numbers does the student add?",
+       "answer": "441 and 2,520",
+       "choices": [
+        "441 and 2,520",
+        "441 and 252",
+        "4,410 and 2,520",
+        "441 and 2,502"
        ]
       }
      ]
@@ -12323,6 +16085,28 @@
         "30 and 15",
         "40 and 5"
        ]
+      },
+      {
+       "skill": "Estimating quotients with nearby multiples",
+       "prompt": "Which is the best estimate for 812 ÷ 9?",
+       "answer": "90",
+       "choices": [
+        "90",
+        "80",
+        "800",
+        "9"
+       ]
+      },
+      {
+       "skill": "Subtracting a partial quotient in division",
+       "prompt": "Mia uses partial quotients to find 856 ÷ 4. Her first partial quotient is 200. What is left to divide after she subtracts 4 × 200?",
+       "answer": "56",
+       "choices": [
+        "56",
+        "656",
+        "800",
+        "456"
+       ]
       }
      ]
     },
@@ -12393,6 +16177,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U5.5, 3.5 units before U9. It must need what U9 teaches.",
        "replaced": "A florist has 27 roses. She uses 4 roses for each small bouquet. How many full bouquets can she make?"
+      },
+      {
+       "skill": "Finding dividend from quotient and remainder",
+       "prompt": "A division problem has quotient 14, remainder 5, and divisor 6. What is the dividend?",
+       "answer": "89",
+       "choices": [
+        "89",
+        "84",
+        "90",
+        "75"
+       ]
+      },
+      {
+       "skill": "Using remainder as leftover length",
+       "prompt": "A rope 53 feet long is cut into 8-foot pieces. How many full pieces are made, and how many feet are left?",
+       "answer": "6 pieces, 5 feet left.",
+       "choices": [
+        "6 pieces, 5 feet left.",
+        "7 pieces, 3 feet left.",
+        "6 pieces, 3 feet left.",
+        "5 pieces, 13 feet left."
+       ]
       }
      ]
     },
@@ -12474,6 +16280,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 4 × 18 = 72; 72 − 5 = 67; 67 ÷ 9 = 7 R 4. Check: 9 × 7 + 4 = 63 + 4 = 67 and 4 < 9. Wrong: 8 R 0 forgets to take out 5 (72 ÷ 9); 8 R 5 adds the 5 (77 ÷ 9); 6 R 13 has a remainder larger than the divisor.",
        "replaced": "A box holds 3 rows of 18 oranges. Ms. Cruz takes 6 oranges out of the box and gives the rest to 6 students equally. How many oranges does each student get?"
+      },
+      {
+       "skill": "Equivalent fractions by cutting parts",
+       "prompt": "A rectangle is divided into 4 equal parts, and 3 parts are shaded. Each part is then cut into 3 equal parts. Which fraction names the same shaded amount?",
+       "answer": "9/12",
+       "choices": [
+        "9/12",
+        "7/12",
+        "6/9",
+        "3/7"
+       ]
+      },
+      {
+       "skill": "Mixed multiplication and division computation",
+       "prompt": "What is the value of 9 × 6 − 48 ÷ 8?",
+       "answer": "48",
+       "choices": [
+        "48",
+        "54",
+        "6",
+        "42"
+       ]
       }
      ]
     },
@@ -12542,6 +16370,28 @@
         "4/6",
         "12/9"
        ]
+      },
+      {
+       "skill": "Missing numerator in equivalent fractions",
+       "prompt": "Find the number that makes the equation true: 3/5 = ?/20",
+       "answer": "12",
+       "choices": [
+        "12",
+        "15",
+        "10",
+        "8"
+       ]
+      },
+      {
+       "skill": "Comparing fractions using benchmarks",
+       "prompt": "Which fraction is greater than 1/2 and less than 3/4?",
+       "answer": "7/10",
+       "choices": [
+        "7/10",
+        "9/10",
+        "3/10",
+        "4/5"
+       ]
       }
      ]
     },
@@ -12608,6 +16458,28 @@
         "2 3/5",
         "3 3/5",
         "2 2/5"
+       ]
+      },
+      {
+       "skill": "Adding like denominators to a mixed number",
+       "prompt": "A recipe uses 5/8 cup of flour and another recipe uses 7/8 cup of flour. How much flour is used in all? Write your answer as a mixed number.",
+       "answer": "1 1/2 cups",
+       "choices": [
+        "1 1/2 cups",
+        "1 2/8 cups",
+        "2 1/2 cups",
+        "1 1/8 cups"
+       ]
+      },
+      {
+       "skill": "Locating improper fractions between whole numbers",
+       "prompt": "Which improper fraction has a value between 2 and 3?",
+       "answer": "12/5",
+       "choices": [
+        "12/5",
+        "8/5",
+        "15/5",
+        "18/5"
        ]
       }
      ]
@@ -12679,6 +16551,28 @@
        "revised": 1,
        "why": "Too easy: a learner reliably answers it by U11, 2 units before U13. It must need what U13 teaches.",
        "replaced": "Which equation shows 4 as a sum of fractions with denominator 6?"
+      },
+      {
+       "skill": "Subtracting mixed numbers with regrouping",
+       "prompt": "What is 5 1/6 − 2 5/6? Write your answer as a mixed number in simplest form.",
+       "answer": "2 1/3",
+       "choices": [
+        "2 1/3",
+        "3 2/3",
+        "2 2/3",
+        "3 1/3"
+       ]
+      },
+      {
+       "skill": "Multiplying a fraction by a whole number as repeated addition",
+       "prompt": "Which sum is equal to 4 × 3/8?",
+       "answer": "3/8 + 3/8 + 3/8 + 3/8",
+       "choices": [
+        "3/8 + 3/8 + 3/8 + 3/8",
+        "4/8 + 4/8 + 4/8 + 4/8",
+        "3/8 + 3/8 + 3/8",
+        "8/3 + 8/3 + 8/3 + 8/3"
+       ]
       }
      ]
     },
@@ -12752,6 +16646,28 @@
         "7/100 = 0.7",
         "7/10 = 0.07"
        ]
+      },
+      {
+       "skill": "Word problem multiplying a mixed number by a whole number",
+       "prompt": "A recipe uses 1 1/3 cups of oats for one batch. How many cups of oats are needed for 3 batches?",
+       "answer": "4 cups",
+       "choices": [
+        "4 cups",
+        "3 1/3 cups",
+        "4 1/3 cups",
+        "1 1/3 cups"
+       ]
+      },
+      {
+       "skill": "Adding tenths and hundredths and writing the decimal",
+       "prompt": "Which decimal is equal to 7/10 + 8/100?",
+       "answer": "0.78",
+       "choices": [
+        "0.78",
+        "0.15",
+        "0.708",
+        "0.87"
+       ]
       }
      ]
     },
@@ -12821,6 +16737,28 @@
         "2.0 meters",
         "0.02 meters",
         "20.00 meters"
+       ]
+      },
+      {
+       "skill": "Ordering decimals to hundredths",
+       "prompt": "Which list shows 0.5, 0.45, and 0.54 in order from least to greatest?",
+       "answer": "0.45, 0.5, 0.54",
+       "choices": [
+        "0.45, 0.5, 0.54",
+        "0.5, 0.45, 0.54",
+        "0.45, 0.54, 0.5",
+        "0.54, 0.5, 0.45"
+       ]
+      },
+      {
+       "skill": "Converting meters to centimeters with a decimal",
+       "prompt": "A ribbon is 1.5 meters long. How many centimeters long is it? (1 meter = 100 centimeters)",
+       "answer": "150 centimeters",
+       "choices": [
+        "150 centimeters",
+        "15 centimeters",
+        "1,500 centimeters",
+        "105 centimeters"
        ]
       }
      ]
@@ -12900,6 +16838,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 2/8 + 6/8 + 15/8 = 23/8 = 2 7/8 (check in decimals: 0.25 + 0.75 + 1.875 = 2.875). 1 1/8 counts each length only once (1/8+3/8+5/8), 2 3/8 uses the counts 3, 2, 2 in the wrong order, and 2 1/4 counts only 2 Xs above 5/8.",
        "replaced": "A line plot shows how far 5 students jumped, in feet: one jumped 3 1/2, two jumped 3 3/4, and two jumped 4 1/4. What is the total of all five jump lengths?"
+      },
+      {
+       "skill": "Reading change over time on a line graph",
+       "prompt": "A line graph shows the temperature at noon each day: Monday 12°C, Tuesday 15°C, Wednesday 14°C, Thursday 18°C. From one day to the next, on which day did the temperature rise the most?",
+       "answer": "Thursday",
+       "choices": [
+        "Thursday",
+        "Tuesday",
+        "Wednesday",
+        "Monday"
+       ]
+      },
+      {
+       "skill": "Measurement word problem with decimals and a unit conversion",
+       "prompt": "A recipe needs 1.5 liters of milk. Maya has 750 milliliters. How many more milliliters of milk does she need? (1 liter = 1,000 milliliters)",
+       "answer": "750 milliliters",
+       "choices": [
+        "750 milliliters",
+        "500 milliliters",
+        "2,250 milliliters",
+        "75 milliliters"
+       ]
       }
      ]
     },
@@ -12981,6 +16941,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: A 3 is 1 of 6 equally likely outcomes, so about 1/6 of 60 = 10 rolls (6 x 10 = 60). 6 divides 60 by 10, 20 divides by the number 3, and 30 treats it as half of the rolls.",
        "replaced": "A bag holds 2 red marbles and 6 blue marbles. In 8 pulls, the number of blue marbles pulled was recorded in a tally chart: 4 blue pulls. How does the 4 out of 8 result compare with what the possible o"
+      },
+      {
+       "skill": "Experimental probability as a fraction of trials",
+       "prompt": "Nia spins a spinner 50 times. It lands on blue 15 times. What fraction of the spins landed on blue?",
+       "answer": "15/50",
+       "choices": [
+        "15/50",
+        "35/50",
+        "15/35",
+        "50/15"
+       ]
+      },
+      {
+       "skill": "Area formula with an unknown side length",
+       "prompt": "A rectangle has an area of 36 square centimeters and a length of 9 centimeters. What is its width?",
+       "answer": "4 centimeters",
+       "choices": [
+        "4 centimeters",
+        "27 centimeters",
+        "6 centimeters",
+        "45 centimeters"
+       ]
       }
      ]
     },
@@ -13053,6 +17035,28 @@
         "35 degrees",
         "55 degrees",
         "215 degrees"
+       ]
+      },
+      {
+       "skill": "Identifying parallel lines",
+       "prompt": "Which word names two lines that never meet and are always the same distance apart?",
+       "answer": "parallel",
+       "choices": [
+        "parallel",
+        "perpendicular",
+        "intersecting",
+        "crossing"
+       ]
+      },
+      {
+       "skill": "Angles as fractions of a full turn",
+       "prompt": "How many degrees are in 1/8 of a full turn?",
+       "answer": "45°",
+       "choices": [
+        "45°",
+        "90°",
+        "60°",
+        "30°"
        ]
       }
      ]
@@ -13129,6 +17133,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: The angles add to 180°, so the third angle is 180 - 40 - 50 = 90° (check: 40 + 50 + 90 = 180), a right triangle. 130° and 140° subtract only one of the two angles, and a triangle with a 90° angle is not acute.",
        "replaced": "A rectangle has two long sides that never meet and two short sides that never meet. The long sides also meet the short sides at right angles. Which name fits this shape?"
+      },
+      {
+       "skill": "Finding an unknown angle on a straight line",
+       "prompt": "Two angles together make a straight line. One angle measures 125°. What is the measure of the other angle?",
+       "answer": "55°",
+       "choices": [
+        "55°",
+        "65°",
+        "75°",
+        "235°"
+       ]
+      },
+      {
+       "skill": "Lines of symmetry in an equilateral triangle",
+       "prompt": "An equilateral triangle has three sides the same length. How many lines of symmetry does it have?",
+       "answer": "3",
+       "choices": [
+        "3",
+        "1",
+        "2",
+        "6"
+       ]
       }
      ]
     },
@@ -13195,6 +17221,28 @@
         "The line of rotation",
         "The line of symmetry of the new figure only",
         "The line of translation"
+       ]
+      },
+      {
+       "skill": "Matching side lengths of congruent triangles",
+       "prompt": "Two triangles are congruent. One triangle has side lengths 3 cm, 4 cm, and 5 cm. What must be true about the other triangle?",
+       "answer": "Its side lengths are 3 cm, 4 cm, and 5 cm.",
+       "choices": [
+        "Its side lengths are 3 cm, 4 cm, and 5 cm.",
+        "Its side lengths are 6 cm, 8 cm, and 10 cm.",
+        "Its side lengths are 3 cm, 4 cm, and 6 cm.",
+        "Its side lengths are 4 cm, 5 cm, and 6 cm."
+       ]
+      },
+      {
+       "skill": "Transformations keep a shape congruent",
+       "prompt": "A shape is flipped over a line and then slid to a new place. How does the final shape compare with the original shape?",
+       "answer": "It is the same size and shape.",
+       "choices": [
+        "It is the same size and shape.",
+        "It is larger but has the same shape.",
+        "It is smaller but has the same shape.",
+        "It has the same size but a different shape."
        ]
       }
      ]
@@ -13266,6 +17314,28 @@
         "74",
         "0.74",
         "7,400"
+       ]
+      },
+      {
+       "skill": "Value of a decimal digit after moving one place left",
+       "prompt": "In 6.408, the digit 8 is in the thousandths place and has a value of 0.008. If that same digit moved one place to the left, what would its new value be?",
+       "answer": "0.08",
+       "choices": [
+        "0.08",
+        "0.0008",
+        "0.8",
+        "0.008"
+       ]
+      },
+      {
+       "skill": "Dividing a whole number by a power of 10",
+       "prompt": "What is 4,600 ÷ 100?",
+       "answer": "46",
+       "choices": [
+        "46",
+        "460",
+        "4.6",
+        "460,000"
        ]
       }
      ]
@@ -13341,6 +17411,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 1,368 / 24 = 57 because 24 x 50 = 1,200 and 24 x 7 = 168, and 1,200 + 168 = 1,368 (also 57 x 24 = 1,140 + 228 = 1,368). 507 misplaces a digit, 47 gives 24 x 47 = 1,128, and 67 gives 24 x 67 = 1,608.",
        "replaced": "A theater has 1,245 seats arranged in 35 rows. If every row has the same number of seats, how many seats are in each row?"
+      },
+      {
+       "skill": "Partial products in an area model",
+       "prompt": "An area model for 214 × 35 splits the rectangle into 214 × 30 and 214 × 5. What is the value of 214 × 5?",
+       "answer": "1,070",
+       "choices": [
+        "1,070",
+        "642",
+        "10,700",
+        "1,050"
+       ]
+      },
+      {
+       "skill": "Partial quotients with a two-digit divisor",
+       "prompt": "A partial-quotient model for 936 ÷ 24 begins by subtracting 24 × 30 = 720 from 936. How much is left to divide?",
+       "answer": "216",
+       "choices": [
+        "216",
+        "696",
+        "206",
+        "240"
+       ]
       }
      ]
     },
@@ -13411,6 +17503,28 @@
         "five and three hundred eight thousandths",
         "five and eight hundredths"
        ]
+      },
+      {
+       "skill": "Decimal place value to thousandths",
+       "prompt": "In the number 8.472, what is the value of the digit 2?",
+       "answer": "0.002",
+       "choices": [
+        "0.002",
+        "0.02",
+        "0.2",
+        "2"
+       ]
+      },
+      {
+       "skill": "Ordering decimals to thousandths",
+       "prompt": "Which list shows the decimals in order from least to greatest?",
+       "answer": "0.076, 0.607, 0.67",
+       "choices": [
+        "0.076, 0.607, 0.67",
+        "0.607, 0.67, 0.076",
+        "0.076, 0.67, 0.607",
+        "0.67, 0.607, 0.076"
+       ]
       }
      ]
     },
@@ -13477,6 +17591,28 @@
         "5.24",
         "4.86",
         "5.74"
+       ]
+      },
+      {
+       "skill": "Estimating decimal sums by rounding",
+       "prompt": "Which is the best estimate for 12.8 + 4.6 by rounding each number to the nearest whole number?",
+       "answer": "13 + 5 = 18",
+       "choices": [
+        "13 + 5 = 18",
+        "12 + 4 = 16",
+        "13 + 4 = 17",
+        "12 + 5 = 17"
+       ]
+      },
+      {
+       "skill": "Checking decimal subtraction with addition",
+       "prompt": "Which addition sentence checks 9.13 − 4.58 = 4.55?",
+       "answer": "4.55 + 4.58 = 9.13",
+       "choices": [
+        "4.55 + 4.58 = 9.13",
+        "9.13 + 4.58 = 13.71",
+        "9.13 − 4.55 = 4.58",
+        "4.58 − 4.55 = 0.03"
        ]
       }
      ]
@@ -13548,6 +17684,28 @@
         "0.75 hour",
         "7.15 hours"
        ]
+      },
+      {
+       "skill": "Decimal times whole number as repeated addition",
+       "prompt": "Which addition expression has the same value as 1.6 × 4?",
+       "answer": "1.6 + 1.6 + 1.6 + 1.6",
+       "choices": [
+        "1.6 + 1.6 + 1.6 + 1.6",
+        "1.6 + 4",
+        "1.6 + 1.6 + 1.6",
+        "4 + 4 + 4 + 4"
+       ]
+      },
+      {
+       "skill": "Reasoning about the size of a decimal product",
+       "prompt": "Which statement about the product 0.7 × 0.9 is true?",
+       "answer": "It is less than 0.7.",
+       "choices": [
+        "It is less than 0.7.",
+        "It is greater than 0.9.",
+        "It is equal to 1.6.",
+        "It is greater than 1."
+       ]
       }
      ]
     },
@@ -13613,6 +17771,28 @@
         "$2.48",
         "$2.33",
         "$2.13"
+       ]
+      },
+      {
+       "skill": "Placing the decimal point in a decimal product",
+       "prompt": "To find 4.6 × 2.3, first multiply 46 × 23 = 1,058. Where should the decimal point go in the product?",
+       "answer": "10.58",
+       "choices": [
+        "10.58",
+        "105.8",
+        "1.058",
+        "0.1058"
+       ]
+      },
+      {
+       "skill": "Checking decimal division by multiplication",
+       "prompt": "Which multiplication sentence checks 15.6 ÷ 4 = 3.9?",
+       "answer": "3.9 × 4 = 15.6",
+       "choices": [
+        "3.9 × 4 = 15.6",
+        "4 × 15.6 = 62.4",
+        "3.9 × 15.6 = 60.84",
+        "4 × 3.9 = 1.56"
        ]
       }
      ]
@@ -13687,6 +17867,28 @@
         "0.5 ÷ 3.5 = m",
         "3.5 + 0.5 = m"
        ]
+      },
+      {
+       "skill": "Dividing a decimal by a decimal",
+       "prompt": "What is 7.2 ÷ 0.08?",
+       "answer": "90",
+       "choices": [
+        "90",
+        "9",
+        "0.9",
+        "900"
+       ]
+      },
+      {
+       "skill": "Multi-step decimal word problem with money",
+       "prompt": "Mia buys 2.5 pounds of nuts at $4.20 per pound. She pays with a $20 bill. How much change should she get?",
+       "answer": "$9.50",
+       "choices": [
+        "$9.50",
+        "$10.50",
+        "$18.95",
+        "$9.05"
+       ]
       }
      ]
     },
@@ -13754,6 +17956,28 @@
         "3/11",
         "11/3"
        ]
+      },
+      {
+       "skill": "Organized list with no repeated digits",
+       "prompt": "How many different two-digit numbers can you make using the digits 2, 5, and 7 if you do not repeat a digit?",
+       "answer": "6",
+       "choices": [
+        "6",
+        "3",
+        "9",
+        "12"
+       ]
+      },
+      {
+       "skill": "Fractions as division in a measurement context",
+       "prompt": "A 9-foot board is cut into 5 equal pieces. How long is each piece?",
+       "answer": "1 4/5 feet",
+       "choices": [
+        "1 4/5 feet",
+        "5/9 foot",
+        "1 5/9 feet",
+        "4/5 foot"
+       ]
       }
      ]
     },
@@ -13820,6 +18044,28 @@
         "4/14",
         "13/12",
         "1/2"
+       ]
+      },
+      {
+       "skill": "Least common multiple of two numbers",
+       "prompt": "What is the least common multiple of 9 and 12?",
+       "answer": "36",
+       "choices": [
+        "36",
+        "3",
+        "72",
+        "108"
+       ]
+      },
+      {
+       "skill": "Subtracting fractions with unlike denominators",
+       "prompt": "What is 5/6 − 3/10 in simplest form?",
+       "answer": "8/15",
+       "choices": [
+        "8/15",
+        "1/2",
+        "2/15",
+        "11/15"
        ]
       }
      ]
@@ -13890,6 +18136,28 @@
         "3 1/8",
         "2 7/8",
         "3 5/8"
+       ]
+      },
+      {
+       "skill": "Comparing sums of mixed numbers with unlike denominators",
+       "prompt": "Which sum is greater than 8?",
+       "answer": "3 3/4 + 4 1/2",
+       "choices": [
+        "3 3/4 + 4 1/2",
+        "2 5/6 + 4 3/4",
+        "5 1/5 + 2 2/3",
+        "4 1/8 + 3 3/4"
+       ]
+      },
+      {
+       "skill": "Estimating a mixed-number difference with benchmarks",
+       "prompt": "Which is the best estimate of 9 5/6 − 3 1/8?",
+       "answer": "about 7",
+       "choices": [
+        "about 7",
+        "about 6",
+        "about 12",
+        "about 13"
        ]
       }
      ]
@@ -13968,6 +18236,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: As decimals the numbers are 0.72, 0.625, 0.75 and 0.7, and 0.75 = 3/4 is the largest. The decimals can look larger than the fractions if only the digits are compared, but 5/8 = 0.625 is the smallest.",
        "replaced": "Which number is the greatest?"
+      },
+      {
+       "skill": "Converting a fraction to a decimal to solve a length difference",
+       "prompt": "A rope is 3/4 meter long. A second rope is 0.8 meter long. How much longer is the second rope?",
+       "answer": "0.05 meter",
+       "choices": [
+        "0.05 meter",
+        "0.2 meter",
+        "0.55 meter",
+        "0.8 meter"
+       ]
+      },
+      {
+       "skill": "Writing a fraction with denominator 100 as a percent and decimal",
+       "prompt": "Which shows 7/100 as a percent and as a decimal?",
+       "answer": "7% and 0.07",
+       "choices": [
+        "7% and 0.07",
+        "70% and 0.7",
+        "7% and 0.7",
+        "0.7% and 0.07"
+       ]
       }
      ]
     },
@@ -14039,6 +18329,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 3/4 x 2/5 = 6/20 = 3/10 (decimals: 0.75 x 0.4 = 0.3). 5/9 adds the numerators and the denominators, 15/8 multiplies by the reciprocal (divides), and 23/20 adds the fractions.",
        "replaced": "What is 3/5 × 2/3?"
+      },
+      {
+       "skill": "Finding the part of a quantity that is not in a fraction",
+       "prompt": "There are 20 cars in a lot. One fourth of the cars are blue. How many cars are not blue?",
+       "answer": "15",
+       "choices": [
+        "15",
+        "5",
+        "16",
+        "4"
+       ]
+      },
+      {
+       "skill": "Multiplying mixed numbers using the algorithm",
+       "prompt": "What is 1 3/4 × 2 2/5?",
+       "answer": "4 1/5",
+       "choices": [
+        "4 1/5",
+        "2 3/10",
+        "3 1/10",
+        "4 1/10"
+       ]
       }
      ]
     },
@@ -14106,6 +18418,28 @@
         "3/4 mile",
         "5 miles"
        ]
+      },
+      {
+       "skill": "Matching a whole-number divided by unit fraction equation to a story",
+       "prompt": "A 2-meter ribbon is cut into pieces that are each 1/3 meter long. Which equation finds the number of pieces?",
+       "answer": "2 ÷ 1/3 = 6",
+       "choices": [
+        "2 ÷ 1/3 = 6",
+        "1/3 ÷ 2 = 1/6",
+        "2 × 1/3 = 2/3",
+        "2 ÷ 3 = 2/3"
+       ]
+      },
+      {
+       "skill": "Fraction of a fraction in a word problem",
+       "prompt": "A garden is 2/3 of an acre. Tom uses 3/4 of the garden for vegetables. What fraction of an acre does he use for vegetables?",
+       "answer": "1/2",
+       "choices": [
+        "1/2",
+        "5/7",
+        "3/4",
+        "2/3"
+       ]
       }
      ]
     },
@@ -14171,6 +18505,28 @@
         "3",
         "1/8",
         "6"
+       ]
+      },
+      {
+       "skill": "Find a unit fraction dividend from a quotient and whole divisor",
+       "prompt": "A unit fraction is divided by 4. The quotient is 1/24. What is the unit fraction?",
+       "answer": "1/6",
+       "choices": [
+        "1/6",
+        "1/8",
+        "1/20",
+        "1/96"
+       ]
+      },
+      {
+       "skill": "Compare quotients of unit fractions divided by whole numbers",
+       "prompt": "Which expression has the GREATEST value?",
+       "answer": "1/3 ÷ 2",
+       "choices": [
+        "1/3 ÷ 2",
+        "1/3 ÷ 3",
+        "1/3 ÷ 5",
+        "1/3 ÷ 8"
        ]
       }
      ]
@@ -14249,6 +18605,28 @@
        "revised": 2,
        "why": "Too easy: a learner reliably answers it by U1, 14 units before U15. It must need what U15 teaches.",
        "replaced": "Which expression equals 25 × 36 and gives a quick way to compute it in your head?"
+      },
+      {
+       "skill": "Subtract line-plot measurements to find the range",
+       "prompt": "A line plot shows five pencil lengths in inches: 1/8, 3/8, 5/8, 5/8, and 7/8. What is the difference between the longest and shortest pencil lengths?",
+       "answer": "3/4 inch",
+       "choices": [
+        "3/4 inch",
+        "5/8 inch",
+        "7/8 inch",
+        "1/8 inch"
+       ]
+      },
+      {
+       "skill": "Convert yards and feet to feet",
+       "prompt": "A rope is 4 yards 2 feet long. How many feet long is the rope? (1 yard = 3 feet)",
+       "answer": "14 feet",
+       "choices": [
+        "14 feet",
+        "6 feet",
+        "12 feet",
+        "42 feet"
+       ]
       }
      ]
     },
@@ -14331,6 +18709,28 @@
        "writer": "claude",
        "why": "Key doubted; rewritten by Claude with a worked check: 18 ÷ 12 = 3/2, so scale by 1 1/2: 7/4 × 3/2 = 21/8 = 2 5/8 cups. Check: 1 3/4 + half of 1 3/4 = 1 3/4 + 7/8 = 14/8 + 7/8 = 21/8. Wrong: 1 3/8 = 1 × 1 + 3/4 × 1/2 (multiplying wholes and fractions separately); 7 3/4 adds 6 (the extra muffins) as cups; 1 1/6 = 7/4 × 2/3 (scale factor upside down).",
        "replaced": "A pancake recipe uses 2 1/2 cups of flour to make 10 pancakes. Tom wants to make 25 pancakes. He says, \"I multiply 2 1/2 by 2 1/2, because 25 is 2 1/2 times as many pancakes as 10.\" Which response bes"
+      },
+      {
+       "skill": "Critique decimal multiplication place-value reasoning",
+       "prompt": "Jin says 0.6 × 0.4 = 2.4 because 6 × 4 = 24 and there is one decimal place. Which response correctly critiques his reasoning?",
+       "answer": "It should be 0.24 because 0.6 and 0.4 have two decimal places in all.",
+       "choices": [
+        "It should be 0.24 because 0.6 and 0.4 have two decimal places in all.",
+        "It should be 24 because 6 × 4 = 24.",
+        "It should be 0.024 because three decimal places are needed.",
+        "He is correct because 0.6 has one decimal place."
+       ]
+      },
+      {
+       "skill": "Scale a recipe down by a fraction",
+       "prompt": "A recipe for 8 servings uses 3/4 cup of sugar. How much sugar is needed for 6 servings?",
+       "answer": "9/16 cup",
+       "choices": [
+        "9/16 cup",
+        "1/2 cup",
+        "5/8 cup",
+        "3/8 cup"
+       ]
       }
      ]
     }
