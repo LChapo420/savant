@@ -95,6 +95,19 @@
       host.appendChild(App.el('div', { class: 'passage' }, App.escapeHtml(item.passage)));
     }
 
+    // ACT-format Reading passages (services/act-reading-passage.js): numbered paragraphs, the one in focus marked.
+    if (Array.isArray(item.paragraphs)) {
+      const box = document.createElement('div');
+      box.className = 'passage act-reading';
+      item.paragraphs.forEach((text, i) => {
+        const p = document.createElement('p');
+        p.textContent = `${i + 1}. ${text}`;
+        if (i + 1 === item.focus_paragraph) p.style.cssText = 'background:var(--accent-soft, rgba(255,200,0,.25))';
+        box.appendChild(p);
+      });
+      host.appendChild(box);
+    }
+
     // ACT-format Science figures (services/act-science-passage.js): every figure is drawn as a table of its values
     // (readable on a phone and by a screen reader); a chart's series become columns.
     if (Array.isArray(item.figures)) {

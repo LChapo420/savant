@@ -187,7 +187,8 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 14. **First slice DONE, see Done. Remaining: 14b.** **ACT Science passages with figures** (item 8): the player and schema for passage sets with a table or
     chart.
 14b. **Science passage leftovers.** (1) No route serves a Science set yet and no set ships: the owner's pipeline writes sets (format in `services/act-science-passage.js`), then a route plus a level type must draw them and call `check`. (2) Charts are drawn as tables of their values, not as pictures; decide with the owner if a drawn chart is worth it. (3) Look at the figures at 375 px in a real browser. Reason: this run only built the schema, validator, grading and player markup.
-15. [claimed 2026-10-30T16:40Z] **ACT Reading passage sets** (item 9), the player and schema.
+15. **First slice DONE, see Done. Remaining: 15b.** **ACT Reading passage sets** (item 9), the player and schema.
+15b. **ACT Reading passage leftovers.** (1) No route serves a Reading set yet and no set ships: the owner's pipeline writes sets (format in `services/act-reading-passage.js`), then a route plus a level type must draw them and call `check`. (2) Questions cite a whole paragraph, not a line range; real ACT items cite line numbers, decide with the owner whether that matters. (3) Look at the passage at 375 px in a real browser. Reason: this run only built the schema, validator, grading and player markup.
 16. **ACT Writing** (item 10), reusing the English track's essay marking.
 
 ### Local only (a cloud run can't do these: they need `data/`, `.env` or the live server)
@@ -206,6 +207,8 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- **Item 15 first slice** (2026-10-30, `yc-next`): `services/act-reading-passage.js` (set format with numbered paragraphs, 4 choices, optional paragraph in focus, genre check; `validate`, `toLearnerItems` without answer key, server-side `check`) and `Player.render` draws numbered paragraphs with the focused one highlighted (textContent only). Checked: new `scripts/act-reading-passage-test.js` (5 checks, in the suite) and full `npm test`: All steps passed. Remaining: 15b.
 
 - **Item 14 first slice** (2026-10-30, `yc-next`): `services/act-science-passage.js` (set format with table, bar and line figures, 4 choices, `validate`, `toLearnerItems` without answer key, server-side `check`) and `Player.render` draws each figure as a table of values with the focused one outlined. Checked: new `scripts/act-science-passage-test.js` (in the suite; 5 checks incl. the player markup in a stub DOM) and full `npm test` exit 0.
 
