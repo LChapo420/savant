@@ -48,7 +48,7 @@ C1. [done ed7f227] **Subject-agnostic engine.** Move the Spanish catch-up logic 
     prerequisite skills below it → a skill-by-skill check that stops early per skill → only missed skills are
     taught, in prerequisite order, in the Duolingo-style player → spaced review → a final re-check. Spanish keeps
     working exactly as now (its tests must still pass).
-C2. **Every digital subject.** List the app's subjects and which have the skill graph and items catch-up needs (for
+C2. [claimed 2026-10-30 06:24Z] **Every digital subject.** List the app's subjects and which have the skill graph and items catch-up needs (for
     example math, reading, English, ACT sections, science, Spanish). Wire "Catch me up to grade N" on each ready
     subject's page. Subjects that lack content get a `[local only]` item naming exactly what is missing.
 C3. **Proof per subject.** `scripts/catchup-sim.js`: simulated learners with planted gaps (a few, many, none, all)
