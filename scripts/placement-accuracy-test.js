@@ -2,8 +2,8 @@
  * P4: the placement walk is accurate at every ability level, proven on simulated learners (scripts/placement-sim.js,
  * fixed seed). Each level's learners have abilities spread across the level's grade. The claim: at least 95% of
  * learners are placed within one grade, at every level from "knows nothing" to "knows everything".
- * IQ and ACT cannot meet it at the top because their top grades have too few calibrated items (docs/night/PLACEMENT.md
- * P5a); they are held to the levels below the gap, so a regression there still fails.
+ * IQ and ACT used to be held only to the levels below their top (too few calibrated items there, P5a/P5b). Their top end now has
+ * extra calibrated items (content/placement-extra, scripts/content-gap-tools.js), so every level is held for every subject.
  */
 const sim = require('./placement-sim');
 const adaptive = require('../services/adaptive-placement');
@@ -51,7 +51,7 @@ console.log('\nlucky top answers do not overrule a long record of misses');
 }
 
 console.log('\n95% within one grade at every level');
-const GAP = { iq: ['nothing', '2%', '10%', '25%', '40%', '50%', '60%'], act: ['nothing', '2%', '10%', '25%', '40%', '50%', '60%', 'everything'] };
+const GAP = {};
 for (const [subject, modes] of [['math', ['quick']], ['english', ['quick', 'balanced']], ['reading', ['quick', 'balanced']], ['iq', ['quick']], ['act', ['quick']]]) {
   for (const mode of modes) {
     const res = sim.measureSpread(subject, mode, { seeds: 40 });

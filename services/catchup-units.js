@@ -26,8 +26,17 @@ const { createEngine, UNDECIDED } = require('./catchup-engine');
 const COLL = 'catchup_units';
 const VERSION = 1;
 const TRACKS = ['math', 'english', 'reading'];
-const MAX_PER_SKILL = 3;
-const MIN_QUESTIONS = 5; // 3 for the check, 2 fresh ones for the re-check
+// A skill whose bank has TOLERANT_BANK or more questions gets the slip-tolerant check: a first miss never sends it to
+// learn (a learner who knows a skill still slips, about 3% of answers in the sim), it is asked again, up to 5 questions
+// for the check and 2 fresh ones for the re-check. A skill with a smaller bank (at least MIN_QUESTIONS) keeps the plain
+// check: up to 3 questions, one miss decides. Banks are being extended to TOLERANT_BANK unit by unit
+// (docs/CATCHUP-PROOF.md, scripts/content-gap-tools.js), so the tolerant share grows with the content, never ahead of it.
+const MAX_PER_SKILL = 5;
+const PLAIN_MAX_PER_SKILL = 3;
+const MIN_ANSWERS_TO_LEARN = 2;
+const TOLERANT_BANK = MAX_PER_SKILL + 2;
+const MIN_QUESTIONS = PLAIN_MAX_PER_SKILL + 2;
+const tolerant = (skill) => !!skill && questionsFor(skill).length >= TOLERANT_BANK;
 const MASTERY = 0.75;
 const RECHECK_PER_SKILL = 2;
 const RECHECK_KNOWN_SAMPLE = 4;
@@ -114,7 +123,8 @@ function engineFor(trackId) {
     gradeOrder: () => gradeIds(trackId),
     skillByKey: (k) => skillByKey(trackId, k),
     questionsFor,
-    maxPerSkill: MAX_PER_SKILL,
+    maxPerSkill: (skill) => (tolerant(skill) ? MAX_PER_SKILL : PLAIN_MAX_PER_SKILL),
+    minAnswersToLearn: (skill) => (tolerant(skill) ? MIN_ANSWERS_TO_LEARN : 1),
     mastery: MASTERY,
     recheckPerSkill: RECHECK_PER_SKILL,
     recheckKnownSample: RECHECK_KNOWN_SAMPLE,
@@ -240,4 +250,4 @@ function view(userId, trackId, targetGradeId, now = Date.now()) {
   return out;
 }
 
-module.exports = { TRACKS, VERSION, MAX_PER_SKILL, MIN_QUESTIONS, MASTERY, REVIEW_DAYS, gradesBelow, skillsOfGrade, skillByKey, questionsFor, readiness, subjectsReport, allowsLevel, start, answer, nextLevel, onLevelPassed, view, engineFor };
+module.exports = { TRACKS, VERSION, MAX_PER_SKILL, PLAIN_MAX_PER_SKILL, MIN_ANSWERS_TO_LEARN, TOLERANT_BANK, MIN_QUESTIONS, tolerant, MASTERY, REVIEW_DAYS, gradesBelow, skillsOfGrade, skillByKey, questionsFor, readiness, subjectsReport, allowsLevel, start, answer, nextLevel, onLevelPassed, view, engineFor };

@@ -23,31 +23,31 @@ Every design choice that claims to help learning, with the mechanism it rests on
 | Subject | Slip | Scenario | Skills | Gaps found | Known skills taught | Work (catch-up) | Work (linear) |
 |---|---|---|---|---|---|---|---|
 | math | 0.0% | none | 52 | n/a (0/0) | 0.0% | 156 | 1231 |
-| math | 0.0% | few | 52 | 100.0% (58/58) | 0.0% | 265 | 1231 |
-| math | 0.0% | many | 52 | 98.1% (303/309) | 0.0% | 719 | 1231 |
-| math | 0.0% | all | 52 | 98.4% (614/624) | n/a | 1288 | 1231 |
-| math | 3.0% | none | 52 | n/a (0/0) | 6.9% | 238 | 1231 |
-| math | 3.0% | few | 52 | 98.3% (58/59) | 8.5% | 355 | 1231 |
-| math | 3.0% | many | 52 | 98.4% (302/307) | 9.5% | 769 | 1231 |
-| math | 3.0% | all | 52 | 97.8% (610/624) | n/a | 1284 | 1231 |
+| math | 0.0% | few | 52 | 98.6% (70/71) | 0.0% | 293 | 1231 |
+| math | 0.0% | many | 52 | 98.0% (300/306) | 0.0% | 745 | 1231 |
+| math | 0.0% | all | 52 | 98.2% (613/624) | n/a | 1350 | 1231 |
+| math | 3.0% | none | 52 | n/a (0/0) | 0.8% | 173 | 1231 |
+| math | 3.0% | few | 52 | 98.0% (49/50) | 1.0% | 273 | 1231 |
+| math | 3.0% | many | 52 | 98.1% (317/323) | 1.7% | 781 | 1231 |
+| math | 3.0% | all | 52 | 98.1% (612/624) | n/a | 1346 | 1231 |
 | english | 0.0% | none | 60 | n/a (0/0) | 0.0% | 180 | 1777 |
-| english | 0.0% | few | 60 | 98.7% (78/79) | 0.0% | 362 | 1777 |
-| english | 0.0% | many | 60 | 97.5% (348/357) | 0.0% | 993 | 1777 |
-| english | 0.0% | all | 60 | 98.5% (709/720) | n/a | 1840 | 1777 |
-| english | 3.0% | none | 60 | n/a (0/0) | 8.5% | 330 | 1777 |
-| english | 3.0% | few | 60 | 100.0% (73/73) | 7.9% | 468 | 1777 |
-| english | 3.0% | many | 60 | 99.0% (380/384) | 7.7% | 1138 | 1777 |
-| english | 3.0% | all | 60 | 98.5% (709/720) | n/a | 1842 | 1777 |
+| english | 0.0% | few | 60 | 97.6% (83/85) | 0.0% | 386 | 1777 |
+| english | 0.0% | many | 60 | 98.0% (345/352) | 0.0% | 1029 | 1777 |
+| english | 0.0% | all | 60 | 98.2% (707/720) | n/a | 1912 | 1777 |
+| english | 3.0% | none | 60 | n/a (0/0) | 0.7% | 204 | 1777 |
+| english | 3.0% | few | 60 | 100.0% (81/81) | 0.2% | 388 | 1777 |
+| english | 3.0% | many | 60 | 97.9% (372/380) | 1.2% | 1104 | 1777 |
+| english | 3.0% | all | 60 | 96.9% (698/720) | n/a | 1886 | 1777 |
 | reading | 0.0% | none | 36 | n/a (0/0) | 0.0% | 108 | 1089 |
-| reading | 0.0% | few | 36 | 100.0% (45/45) | 0.0% | 213 | 1089 |
-| reading | 0.0% | many | 36 | 97.2% (209/215) | 0.0% | 603 | 1089 |
-| reading | 0.0% | all | 36 | 99.3% (429/432) | n/a | 1136 | 1089 |
-| reading | 3.0% | none | 36 | n/a (0/0) | 9.0% | 204 | 1089 |
-| reading | 3.0% | few | 36 | 95.2% (40/42) | 7.4% | 275 | 1089 |
-| reading | 3.0% | many | 36 | 99.0% (207/209) | 13.9% | 676 | 1089 |
-| reading | 3.0% | all | 36 | 97.5% (421/432) | n/a | 1115 | 1089 |
+| reading | 0.0% | few | 36 | 100.0% (50/50) | 0.0% | 233 | 1089 |
+| reading | 0.0% | many | 36 | 97.9% (228/233) | 0.0% | 681 | 1089 |
+| reading | 0.0% | all | 36 | 97.9% (423/432) | n/a | 1163 | 1089 |
+| reading | 3.0% | none | 36 | n/a (0/0) | 0.5% | 119 | 1089 |
+| reading | 3.0% | few | 36 | 95.6% (43/45) | 0.3% | 227 | 1089 |
+| reading | 3.0% | many | 36 | 98.2% (216/220) | 1.9% | 660 | 1089 |
+| reading | 3.0% | all | 36 | 98.4% (425/432) | n/a | 1167 | 1089 |
 
 Work = check questions + levels taught; linear = every level below the target. A check question counts as a whole level (overstates catch-up cost). In the "all" scenario the check is pure overhead, so no saving is claimed there.
 
-**Open, measured, not hidden:** at slip 3% about 9% of the skills a learner knew are still taught. The shared belief (services/learner-path.js unitBelief, SLIP 0.15) sends a skill to learn after one miss, and every unit bank has exactly 5 questions (2 kept for the re-check), so the check cannot ask a second chance question. The 5% bar is enforced in the suite at slip 0 only. Fixing the 3% row needs more questions per unit in the banks (queue item C3b). Cost of the extra teaching is time, not a skipped gap: gaps found stay at or above 95%.
+**Slip-tolerant check (C3b):** before it, at a 3% slip about 9% of the skills a learner knew were still taught (the shared belief sends a skill to learn after one miss). A skill whose unit bank has 7 or more questions is now checked slip-tolerantly (services/catchup-units.js tolerant): a first miss never sends it to learn, it is asked again (up to 5 questions for the check, 2 kept fresh for the re-check). Banks were extended from 5 to 7 questions a unit for math grades 1-12 and english and reading grades 1-8 (all three subjects' skills in this sim's lookback window; counts and the second-model checks in curriculum-build/content-gap/catchup-*-report.json); a skill with a shorter bank keeps the plain check, so the tolerant share grows with the content and never ahead of it. The suite holds the 5% bar at both slips (GATED_SLIPS), and scripts/catchup-units-test.js fails if a covered unit loses its seventh question. Gaps found stay at 95% or above. The cost is a few more check questions for a learner who slips once.
 <!-- sim:end -->

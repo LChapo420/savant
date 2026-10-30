@@ -96,7 +96,7 @@ router.post('/:track/start', requireAuth, limit('subject-placement-start', 20, 6
 router.get('/:track/grade/:gradeId', requireAuth, (req, res) => {
   const trackId = trackOf(req);
   if (!trackId) return res.status(404).json({ error: 'No such subject.' });
-  const questions = subjectPlacement.questionsFor(trackId, req.params.gradeId);
+  const questions = subjectPlacement.questionsFor(trackId, req.params.gradeId, { core: true });
   if (!questions) return res.status(404).json({ error: 'No questions for that grade.' });
   res.json({
     grade_id: req.params.gradeId,
@@ -183,7 +183,7 @@ router.post('/:track/skip', requireAuth, (req, res) => {
   if (!trackId) return res.status(404).json({ error: 'No such subject.' });
   const outcome = subjectPlacement.skip(req.user.id, trackId, req.body.count);
   if (outcome.error) return res.status(400).json({ error: outcome.error });
-  const nextQuestions = outcome.next_grade_id ? subjectPlacement.questionsFor(trackId, outcome.next_grade_id) : null;
+  const nextQuestions = outcome.next_grade_id ? subjectPlacement.questionsFor(trackId, outcome.next_grade_id, { core: true }) : null;
   res.json({
     skipped: outcome.skipped,
     stopped: !nextQuestions,

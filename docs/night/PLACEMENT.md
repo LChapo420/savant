@@ -57,7 +57,7 @@ P3. [done 585854c] **Ceiling.** A learner who knows everything places at the top
     "knows everything" exactly and 98% within 1 grade of the top >= 95%). Mechanism: ceiling gate in
     `services/adaptive-placement.js` (06-M3: the end of the scale is measured too). Not fixed: IQ has 2 items in its
     top two grades, so the top cannot be proven; see P5a.
-P5a. [local only] **IQ top end.** `content/placement-calibration/iq.json` has 2 items at positions >= 10 (grade 11 has none,
+P5a. [done, night-content branch] **IQ top end.** `content/placement-calibration/iq.json` has 2 items at positions >= 10 (grade 11 has none,
     grade 12 two). The ceiling proof needs at least 3 answered in the top two grades, so at least 6 calibrated items
     there (about 3 per grade) are needed for the sim to show "knows everything" placed at the top. Generate and calibrate
     with the content pipeline. Also ACT grades 13 and 15 have no calibrated items (indexes 12 and 14).
@@ -82,7 +82,7 @@ P6. [done d0a5977] **Honest result screen.** After placement, show the placed le
     how sure), and a one-tap "this is too easy / too hard" that moves the learner and is recorded.
     Checked: `scripts/placement-result-test.js` (basis = question count and measured sure share; too easy/hard moves one grade, clamps at both ends, keeps the walk's own grade and every tap on the placement record, which export and delete already cover); `npm test` passes. Not checked in a browser at 375 px (owner's agent). Moving the grade does not reset an already-started catch-up check for the old grade. One `round3-consolidation-test` run aborted once with a V8 regexp crash and passed on rerun.
 
-P5b. [local only] **IQ and ACT top end, measured.** With abilities spread across the grade, Quick IQ places 90% / 93% / 80% within one
+P5b. [done, night-content branch] **IQ and ACT top end, measured.** With abilities spread across the grade, Quick IQ places 90% / 93% / 80% within one
     grade at the 75% / 90% / 98% levels (IQ has 0 items in grade 11, 2 in grade 12, 3 in grade 10, 2 in grade 9); ACT Quick 93% / 85% at
     90% / 98% (grades 13 and 15 have no calibrated items, grade 14 has few). Needed: about 3 calibrated items per grade for IQ grades 9-12
     (so >= 8 new, 6 of them in grades 11-12) and 3+ per grade for ACT grades 13-16 (indexes 12-15). Then re-run
@@ -101,3 +101,6 @@ P1c. Baseline findings to fix in P2-P4 (from `docs/PLACEMENT-ACCURACY.md`, 15 se
 ## Blocked
 
 ## Done
+
+P5a/P5b (night-content branch): extra calibrated top-end items live in `content/placement-extra/<track>.json` (IQ 10, ACT 23), appended after a grade's seven stored questions by `withExtras` in `services/subject-placement.js` (flagged `extra`; the full climb still asks exactly seven, `questionsFor(..., {core: true})`), each with its point in `content/placement-calibration/<track>.json`. Written by Standard Compute (DeepSeek V4.1), blind-checked by MiniMax M3.1 Flash (key, one defensible answer, distractors, fit); the point is DeepSeek's reading of the curriculum outline (the method the earlier points used), with a second reading against reference items kept as a sanity figure. Counts, rejections and each item's point: `curriculum-build/content-gap/place-*-report.json`. Sim (Quick, 40 learners per level): IQ lowest share within one grade 80% -> 98%, ACT 85% -> 98%; `scripts/placement-accuracy-test.js` no longer exempts the IQ and ACT top levels, `scripts/placement-extra-test.js` checks the items and the wiring, and the ceiling test now covers IQ. Caveat: the IQ ladder's top grades teach judgment practices rather than facts, and generated puzzles mostly read as grades 7 to 10 on it; the 10 IQ items sit at points 7.6 to 11.7 and only 4 are at 11 or above, so the top of IQ is proven on few items (a regression in any of them is caught by the sim, but more judgment-style items would make it sturdier).
+

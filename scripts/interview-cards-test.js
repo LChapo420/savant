@@ -30,7 +30,7 @@ const levels = grades.reduce((s, g) => s + g.levels.length, 0);
 check('16 grades', grades.length === 16 && doc.includes('16 ACT grades'));
 check('9,807 levels', levels === 9807 && doc.includes('9,807'));
 const cal = require('../content/placement-calibration/act.json');
-check('84 calibration points', Object.keys(cal.points).length === 84 && doc.includes('84 calibration points'));
+check('107 calibration points (84 on the stored set + 23 extra top-end items)', Object.keys(cal.points).length === 107 && doc.includes('107 calibration points'));
 const consent = fs.readFileSync(path.join(ROOT, 'scripts/consent-test.js'), 'utf8');
 check('consent test file present for the 187-check claim', consent.length > 0 && doc.includes('187'));
 const lineup = fs.readFileSync(path.join(ROOT, 'curriculum-build/MODEL-LINEUP.md'), 'utf8');

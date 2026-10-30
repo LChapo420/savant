@@ -18,7 +18,11 @@
  *   gradeOrder()            -> grade ids, lowest first
  *   skillByKey(key)         -> { key, grade_id, levels: [] } or null
  *   questionsFor(skill)     -> [{ qid, ... }] in the order they should be asked
- *   maxPerSkill, mastery, recheckPerSkill, recheckKnownSample   (numbers)
+ *   maxPerSkill, mastery, recheckPerSkill, recheckKnownSample   (numbers; maxPerSkill may be a function of the skill)
+ *   minAnswersToLearn       (optional, default 1; a number or a function of the skill) a skill is sent to learn only after this many answers.
+ *                           With 2, one miss never decides it: a learner who knows the skill and slips once
+ *                           is asked again (slip-tolerant check, docs/CATCHUP-PROOF.md C3b). It needs
+ *                           maxPerSkill + recheckPerSkill questions per skill, so the subject's banks must have them.
  */
 const crypto = require('crypto');
 const learnerPath = require('./learner-path');
@@ -33,8 +37,12 @@ function createEngine(adapter) {
   function decideSkill(sk) {
     const b = learnerPath.unitBelief(sk.answers.map((a) => ({ correct: a.correct, choices: a.choices })), { prior: 'past' });
     sk.p = Math.round(b.p * 10000) / 10000;
-    if (b.decision === 'known' || b.decision === 'learn') sk.status = b.decision;
-    else if (sk.answers.length >= A.maxPerSkill) { sk.status = 'learn'; sk.unchecked = true; } // never skipped on a guess
+    const per = (v) => (typeof v === 'function' ? v(A.skillByKey(sk.key), sk) : v);
+    const minToLearn = Math.max(1, Number(per(A.minAnswersToLearn)) || 1);
+    const maxAnswers = Number(per(A.maxPerSkill));
+    if (b.decision === 'known') sk.status = 'known';
+    else if (b.decision === 'learn' && sk.answers.length >= minToLearn) sk.status = 'learn';
+    else if (sk.answers.length >= maxAnswers) { sk.status = 'learn'; sk.unchecked = true; } // never skipped on a guess
     else sk.status = 'open';
   }
 

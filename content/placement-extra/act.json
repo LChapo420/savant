@@ -1,0 +1,322 @@
+{
+ "track_id": "act",
+ "note": "Extra calibrated top-end items, appended after a grade's seven stored questions (services/subject-placement.js withExtras). Written by Standard Compute (DeepSeek V4.1), each blind-checked and located by two other families (MiniMax M3.1 Flash, Mistral Large 4); the point is the mean of the two judges. Grade = the grade the point falls in.",
+ "grades": {
+  "act_grade_15": [
+   {
+    "topic": "Trigonometry, radian mode, and inverse trig ranges",
+    "prompt": "A calculator is set to radian mode, and a student enters the expression tan⁻¹(tan(3π/4)), where tan⁻¹ denotes the inverse tangent function. The calculator returns a single value. Which value does it display?",
+    "answer": "-π/4",
+    "choices": [
+     "-π/4",
+     "3π/4",
+     "π/4",
+     "-3π/4"
+    ],
+    "rationale": "tan(3π/4) = -1, and the inverse tangent returns the unique angle in (-π/2, π/2) with tangent -1, which is -π/4.",
+    "band": "hard"
+   },
+   {
+    "topic": "Complex Numbers and Matrices on Hard Items — complex powers and division",
+    "prompt": "Let i be the imaginary unit, with i² = −1. What is the value of (1 + i)^8 ÷ (1 − i)^6?",
+    "answer": "−2i",
+    "choices": [
+     "−2i",
+     "2i",
+     "−2",
+     "2"
+    ],
+    "rationale": "(1+i)^2 = 2i so (1+i)^8 = 16, and (1−i)^2 = −2i so (1−i)^6 = 8i; then 16/(8i) = 2/i = −2i.",
+    "band": "capstone"
+   },
+   {
+    "topic": "Geometry and Trigonometry Combined Problems",
+    "prompt": "Triangle ABC has a right angle at C, with AC = 8 and BC = 6. Point D lies on hypotenuse AB such that CD is perpendicular to AB. The incircle of triangle ACD has radius r. What is r?",
+    "answer": "8/5",
+    "choices": [
+     "8/5",
+     "6/5",
+     "12/5",
+     "3/2"
+    ],
+    "rationale": "The altitude to the hypotenuse gives AD = AC^2/AB = 32/5 and CD = AC·BC/AB = 24/5, so the right triangle ACD has inradius (32/5 + 24/5 − 8)/2 = 8/5.",
+    "band": "hard"
+   },
+   {
+    "topic": "Trigonometry, Radian, and Calculator Mode Mistakes",
+    "prompt": "A calculator is in radian mode. For the principal inverse cosine, what value is returned for cos⁻¹(cos(7π/6))? Here cos⁻¹ denotes the principal inverse cosine, not the reciprocal.",
+    "answer": "5π/6",
+    "choices": [
+     "5π/6",
+     "7π/6",
+     "π/6",
+     "−π/6"
+    ],
+    "rationale": "cos(7π/6) = −√3/2, and the principal arccosine has range [0, π], so the returned angle is 5π/6.",
+    "band": "hard"
+   },
+   {
+    "topic": "Hardest Geometry and Coordinate Problems Re-Solved: using a tangent line to a circle and c",
+    "prompt": "In the xy-plane, circle C has center (5, 7) and passes through the point A(1, 10). The line tangent to the circle at A meets the x-axis at B. What is the area of triangle ABC?",
+    "answer": "125/4",
+    "choices": [
+     "125/4",
+     "125/2",
+     "25/2",
+     "25"
+    ],
+    "rationale": "The radius CA has length 5, the tangent slope is 4/3, so B is (-13/2, 0), AB = 25/2, and the right angle at A gives area (1/2)(5)(25/2) = 125/4.",
+    "band": "hard"
+   }
+  ],
+  "act_grade_9": [
+   {
+    "topic": "Geometry Diagram Assumptions That Mislead",
+    "prompt": "In triangle XYZ, XY = 10, YZ = 7, and angle XZY = 30°. The accompanying diagram, which is expressly not drawn to scale, draws angle XYZ as obtuse and side XZ as nearly equal to XY. What is the exact length XZ?",
+    "answer": "(7√3 + 3√39)/2",
+    "choices": [
+     "(7√3 + 3√39)/2",
+     "√79",
+     "√149",
+     "(3√39 − 7√3)/2"
+    ],
+    "rationale": "Using the stated angle at Z and the law of cosines gives x² − 7√3x − 51 = 0, whose positive root is (7√3 + 3√39)/2; the diagram's apparent angles must be ignored.",
+    "band": "capstone"
+   },
+   {
+    "topic": "Revising an Essay for Depth and Precision — adding implications and removing filler",
+    "prompt": "Draft: “The new library should extend weekend hours. Weekend hours would help working adults. Working adults pay taxes. Therefore, weekend hours are fair.” Which revision best follows the unit's practice of revising for depth and precision?",
+    "answer": "Extending weekend hours would let working adults use the library when they are free; because they fund it through taxes, access at those times is a matter of equitable service, not merely convenience.",
+    "choices": [
+     "Extending weekend hours would let working adults use the library when they are free; because they fund it through taxes, access at those times is a matter of equitable service, not merely convenience.",
+     "The new library should extend weekend hours because many working adults pay taxes, and many people work on weekdays, and fairness matters to everyone in town.",
+     "The new library should undoubtedly implement an expanded weekend-hours initiative, as such a program would be beneficial to numerous working adults in the community.",
+     "The new library should extend weekend hours. This would help working adults. Working adults pay taxes. Therefore, weekend hours are fair and should be implemented."
+    ],
+    "rationale": "The unit's revision practice adds analysis of the implication while removing filler and sharpening vague words, rather than padding or inflating the draft.",
+    "band": "capstone"
+   }
+  ],
+  "act_grade_16": [
+   {
+    "topic": "Maintaining Science data-interpretation skills for a retake",
+    "prompt": "A student scored 34 on ACT Science and will retake in six weeks, but is spending most study time on English and Math. She wants to keep figure-reading and experiment-design skill fresh without crowding out other sections. Which weekly plan best follows the unit's practice?",
+    "answer": "Do one 25-minute Science set weekly with an unfamiliar figure and an experiment-design item, then log each miss.",
+    "choices": [
+     "Do one 25-minute Science set weekly with an unfamiliar figure and an experiment-design item, then log each miss.",
+     "Do a full 40-minute Science section daily and review only the total score, not the item types.",
+     "Reread old Science notes weekly and skip timed sets until the final week before the retake.",
+     "Repeat only data tables already mastered so each weekly set produces a high score."
+    ],
+    "rationale": "The unit calls for brief weekly Science sets that keep figure-reading and experiment-design skills fresh, with error review rather than full-length daily work.",
+    "band": "hard"
+   },
+   {
+    "topic": "Building Your Pre-Test Review Sheet — retrieval practice from the error log",
+    "prompt": "The day before the ACT, a student has a one-page review sheet built from the error log. She has 40 minutes. Which use of the sheet best follows the unit's practice?",
+    "answer": "Cover the right side and retrieve each formula, rule, and personal trap from memory, then check and mark misses for a second pass.",
+    "choices": [
+     "Cover the right side and retrieve each formula, rule, and personal trap from memory, then check and mark misses for a second pass.",
+     "Reread the sheet silently from top to bottom twice, since familiarity will reduce anxiety.",
+     "Copy the sheet onto a fresh page in neat handwriting so that the act of writing reinforces it.",
+     "Spend the time reading textbook chapters for the hardest topics, even if they are not on the sheet."
+    ],
+    "rationale": "The unit calls for one page of formulas, rules, and personal traps rehearsed by retrieval rather than by rereading or copying.",
+    "band": "hard"
+   },
+   {
+    "topic": "Mixed hard math set after a break: judging faded skills",
+    "prompt": "A student returns from a two-week break and takes a timed hard mixed math set. She scores about the same as before the break; her misses are scattered across topics, and when she reviews them untimed she solves most after one hint. What is the best use of this result?",
+    "answer": "Treat the hint-dependent misses as faded retrieval targets, schedule short focused review, and keep mixed sets in the rotation.",
+    "choices": [
+     "Treat the hint-dependent misses as faded retrieval targets, schedule short focused review, and keep mixed sets in the rotation.",
+     "She should assume the break caused broad decay and restart from the first math unit before doing mixed sets.",
+     "She should treat the scattered misses as careless and move on, since her total score matched her earlier score.",
+     "She should switch to open-note review until every missed item can be solved without a hint."
+    ],
+    "rationale": "The mixed set is for locating retrieval gaps after a break, so scattered hint-dependent misses get targeted retrieval rather than a full restart or no action.",
+    "band": "hard"
+   },
+   {
+    "topic": "Spiral review cycle for hardest math topics",
+    "prompt": "A student has five hardest math topics and one weekly review block. A new unit is demanding most of her attention, and she wonders whether to keep her spiral review. Which plan best follows the spiral-review practice?",
+    "answer": "Keep a fixed multiweek rotation that revisits each hard topic at least once, even while the new unit is demanding.",
+    "choices": [
+     "Keep a fixed multiweek rotation that revisits each hard topic at least once, even while the new unit is demanding.",
+     "Review only the topic from the most recent test, since that is the one most likely to be fresh in memory.",
+     "Skip the weekly block whenever the current unit is difficult and resume the rotation after the unit ends.",
+     "Choose the weekly topic by whichever feels weakest that day, without keeping a record of past reviews."
+    ],
+    "rationale": "A spiral cycle uses a fixed rotation so no hardest topic goes more than about a month without practice, regardless of what currently feels urgent.",
+    "band": "hard"
+   },
+   {
+    "topic": "Mixed timed English without notes: validating unaided retention",
+    "prompt": "A student wants to check whether her English rules survived a month without practice. She takes a timed English section without notes but keeps a rule sheet on the desk and glances at it twice during the section; she scores 74 of 75. How should she judge this run?",
+    "answer": "It does not confirm unaided retention; repeat a comparable timed section with no rule sheet or glances.",
+    "choices": [
+     "It does not confirm unaided retention; repeat a comparable timed section with no rule sheet or glances.",
+     "It confirms retention, because the score is near perfect and the glances were brief.",
+     "It confirms retention only if she reviews the two glances afterward and fixes the rules she saw.",
+     "It does not confirm retention, so she should switch permanently to open-note English practice."
+    ],
+    "rationale": "The no-notes timed section is meant to test rules recalled from memory, so any glancing at a rule sheet invalidates the confirmation.",
+    "band": "hard"
+   },
+   {
+    "topic": "Mixed timed English without notes: interpreting misses as recall gaps",
+    "prompt": "On a timed English section taken without notes, a student misses several punctuation items. During review she recalls each rule before looking at notes and corrects every miss. What is the best next step?",
+    "answer": "Log those rules as recall gaps and schedule short no-notes retrieval checks on them during later mixed sections.",
+    "choices": [
+     "Log those rules as recall gaps and schedule short no-notes retrieval checks on them during later mixed sections.",
+     "Reread the entire grammar guide from the beginning, because any miss shows a broad rule-knowledge gap.",
+     "Ignore the misses because she corrected them in review and the original score was still high.",
+     "Stop doing mixed timed sections and drill only punctuation until she never misses one again."
+    ],
+    "rationale": "The unit treats a miss that is fixable once the rule is cued as a retrieval gap to target, not as proof that all English rules need relearning.",
+    "band": "hard"
+   },
+   {
+    "topic": "Mixed timed Reading with a planned reset: after a difficult passage",
+    "prompt": "A student takes a full Reading section that includes a deliberately hard passage. Her planned reset is a breath and a restated line-evidence goal. After the hard passage, her accuracy on the next passage drops, and she realizes she skipped the reset to save time. What should she change?",
+    "answer": "Rehearse the reset at the exact transition after the hard passage and keep practicing a passage order that allows it.",
+    "choices": [
+     "Rehearse the reset at the exact transition after the hard passage and keep practicing a passage order that allows it.",
+     "Drop the hard passage from practice, since it is the source of the accuracy drop.",
+     "Spend extra time on the hard passage and skip the reset whenever time is tight.",
+     "Abandon the reset routine and push straight into the next passage to regain time."
+    ],
+    "rationale": "The planned reset is meant to be practiced at the difficult transition, not skipped, so it prevents one hard passage from spilling into the next.",
+    "band": "capstone"
+   },
+   {
+    "topic": "Recovering from a bad section without losing the next",
+    "prompt": "After a rough English section, a student spends the break replaying missed questions. She begins Math tense and makes careless errors on the first few items. What response best follows the between-section reset practice?",
+    "answer": "Use a brief breath, stretch, and restated goal for Math before opening the Math booklet.",
+    "choices": [
+     "Use a brief breath, stretch, and restated goal for Math before opening the Math booklet.",
+     "Keep reviewing the English misses during the break so the same mistakes do not repeat in Math.",
+     "Start Math immediately and promise to make up the lost points by working faster than planned.",
+     "Decide during the break that the day is ruined and treat the remaining sections as practice."
+    ],
+    "rationale": "The unit's reset is a quick mental break that restates the next section's goal so a bad section does not spread.",
+    "band": "capstone"
+   },
+   {
+    "topic": "Scoring variation between sittings and what to do about it",
+    "prompt": "A student's last three practice tests score 34, 35, and 33. She is about to overhaul every strategy before the next sitting. What is the best decision?",
+    "answer": "Treat the small variation as normal, check whether misses repeat by section, then decide whether to review, retest, or rest.",
+    "choices": [
+     "Treat the small variation as normal, check whether misses repeat by section, then decide whether to review, retest, or rest.",
+     "Overhaul all strategies now, because any score drop proves the current approach has stopped working.",
+     "Retest repeatedly without review until a practice score returns to the highest previous score.",
+     "Ignore the variation and skip review, since superscoring means only the best section matters."
+    ],
+    "rationale": "The unit treats modest score variation as normal and uses repeated miss patterns, not one score, to decide the next action.",
+    "band": "hard"
+   }
+  ],
+  "act_grade_13": [
+   {
+    "topic": "Function Analysis Problems Combining Several Skills — verifying inverse composition and do",
+    "prompt": "A student proposes that for f with domain x ≥ 1, the inverse of g(x)=2f(x−3)+1 is g⁻¹(y)=f⁻¹((y−1)/2)+3. Which check best follows the unit's practice of combining transformation, inverse, composition, and domain and verifying by testing a point?",
+    "answer": "Test a domain value x in f, push it through g, then through the proposed g⁻¹, and confirm the recovered x lies in the stated domain.",
+    "choices": [
+     "Test a domain value x in f, push it through g, then through the proposed g⁻¹, and confirm the recovered x lies in the stated domain.",
+     "Check only that the graphs of g and the proposed inverse look symmetric about y=x on a graphing calculator.",
+     "Substitute x=0 into both g and the proposed inverse because zero is the easiest value to compute.",
+     "Compose the formulas symbolically and accept the result if the x-terms cancel, without checking domain endpoints."
+    ],
+    "rationale": "The unit's combined-skills practice is to verify a proposed inverse numerically through composition and to include the domain restriction, not merely to trust algebra or a graph.",
+    "band": "capstone"
+   },
+   {
+    "topic": "Mixed Hardest English Items Under Time — reviewing eliminated choices",
+    "prompt": "On a timed hardest-English set, a student has eliminated two choices on an item and is unsure between the remaining two. What should her review routine be?",
+    "answer": "Name the specific flaw in each eliminated choice and the exact rule or idiom that favors the survivor; if she cannot, flag the item and move on.",
+    "choices": [
+     "Name the specific flaw in each eliminated choice and the exact rule or idiom that favors the survivor; if she cannot, flag the item and move on.",
+     "Switch to the choice that looks less familiar, because the test often rewards unusual phrasing.",
+     "Keep the first remaining choice and avoid rereading, since changing answers usually lowers scores.",
+     "Review only items she answered correctly, because eliminated choices on hard items cannot be rechecked."
+    ],
+    "rationale": "The unit's mixed-hardest practice is to justify every eliminated choice and the survivor by a specific rule, flagging when that justification is unavailable.",
+    "band": "capstone"
+   },
+   {
+    "topic": "Mixed timed Science under test conditions: reviewing misses for patterns",
+    "prompt": "After a full timed Science section taken with no calculator and a strict clock, a student has only 20 minutes to review. What review best follows the unit's practice?",
+    "answer": "Review only the missed items, group them by cause, and look for repeated patterns across passages.",
+    "choices": [
+     "Review only the missed items, group them by cause, and look for repeated patterns across passages.",
+     "Review every item in order so that the correct ones reinforce the same skills equally.",
+     "Redo the entire section untimed and count the new score as the more accurate measure.",
+     "Spend the time memorizing the scientific facts from passages that felt unfamiliar."
+    ],
+    "rationale": "The unit's post-section review focuses only on missed items and their patterns, because the purpose is diagnosis rather than a second full run.",
+    "band": "capstone"
+   },
+   {
+    "topic": "Mixed timed Science under test conditions: validity of the check",
+    "prompt": "A student takes a Science practice section but uses a calculator for two items and pauses the clock during a dense passage to calm down. She scores well and wants to count the result as her test-condition check. What is the best judgment?",
+    "answer": "The run is not a valid test-condition check; redo a comparable section with the strict clock and no calculator.",
+    "choices": [
+     "The run is not a valid test-condition check; redo a comparable section with the strict clock and no calculator.",
+     "The run is valid because the calculator and pause affected only a few items and the score was high.",
+     "The run is valid if she later reworks the two calculator items without the calculator.",
+     "The run is invalid, so she should stop using timed Science sections until content review is complete."
+    ],
+    "rationale": "The practice specifies a full Science section under real constraints, so using a calculator and stopping the clock undermines the check.",
+    "band": "hard"
+   },
+   {
+    "topic": "Full Math section at 36 pace with checking",
+    "prompt": "A student finishes a full 45-question Math section with five minutes left and six flagged items still unchecked. She is tempted to recalculate every flagged item from scratch. What best follows the unit's 36-pace checking practice?",
+    "answer": "Use the remaining time to recheck flagged items in a planned priority order, then review any miss by cause.",
+    "choices": [
+     "Use the remaining time to recheck flagged items in a planned priority order, then review any miss by cause.",
+     "Spend all remaining time on the hardest flagged item so at least one difficult item is secured.",
+     "Skip the flagged items and review the whole section after scoring to find the cause of misses.",
+     "Change answers on unflagged items that felt uncertain, since fresh eyes often improve accuracy."
+    ],
+    "rationale": "The unit's checking plan reserves limited time to recheck flagged items and then diagnose misses by cause, not to recalculate everything or guess.",
+    "band": "capstone"
+   }
+  ],
+  "act_grade_14": [
+   {
+    "topic": "Maintaining 36-level English when content feels familiar",
+    "prompt": "On a timed English section, a student recognizes the passage topic and speeds up, choosing NO CHANGE whenever a sentence sounds fine. Review shows several NO CHANGE items were wrong. Which practice best guards against this?",
+    "answer": "Read every NO CHANGE choice as carefully as the others and track when she assumes a rule without checking.",
+    "choices": [
+     "Read every NO CHANGE choice as carefully as the others and track when she assumes a rule without checking.",
+     "Never choose NO CHANGE unless the sentence has no commas and no transition words.",
+     "Slow down only on unfamiliar passages, since familiar topics are where speed is safe.",
+     "Trust her ear on familiar topics and reserve careful rule-checking for hard passages."
+    ],
+    "rationale": "The unit warns that familiarity breeds overconfidence, so NO CHANGE must be checked like any other choice and assumed rules must be noticed.",
+    "band": "hard"
+   }
+  ],
+  "act_grade_8": [
+   {
+    "topic": "Keeping essay structure stable on an unfamiliar prompt",
+    "prompt": "A student receives a timed essay prompt on a topic she knows little about. She considers abandoning her usual plan and writing a personal narrative because the prompt feels abstract. What is the best choice?",
+    "answer": "Apply the same plan, thesis, and paragraph structure, using the prompt's terms and evidence from the assigned perspective.",
+    "choices": [
+     "Apply the same plan, thesis, and paragraph structure, using the prompt's terms and evidence from the assigned perspective.",
+     "Switch to a personal narrative, because a familiar story will be clearer than an abstract argument.",
+     "Spend most of the planning time searching memory for facts about the topic before choosing a structure.",
+     "Invent specific statistics to make the argument sound authoritative even though the topic is unfamiliar."
+    ],
+    "rationale": "The unit's practice is to keep essay structure stable across prompts so the process, not topic familiarity, carries the essay.",
+    "band": "capstone"
+   }
+  ]
+ },
+ "made_at": "2026-10-30T19:12:13.888Z",
+ "judges": [
+  "minimaxai/minimax-m3.1-flash (blind solve, key, ambiguity, distractors, fit)",
+  "deepseek-v4.1 via Standard Compute: position read from the curriculum outline, sanity-checked against reference items (placement only; never asked about a key)"
+ ]
+}

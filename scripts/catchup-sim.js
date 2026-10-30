@@ -8,8 +8,8 @@
  * only by guessing, 1 / number of choices). Scenarios: a few gaps, many, none, all.
  * Fails if, over all trials of a subject:
  *   - fewer than 95% of planted gaps are found,
- *   - at slip 0, more than 5% of the skills the learner knew are taught (with a 3% slip the
- *     check, which sends a skill to learn after one miss, teaches about 9%: reported, not hidden),
+ *   - at slip 0 or at a 3% slip, more than 5% of the skills the learner knew are taught (before the slip-tolerant
+ *     check, C3b, which sent a skill to learn after one miss, 3% slip taught about 9%),
  *   - a mixed scenario (few / many / none) does not use less work than the linear path.
  * Work = check questions + levels taught; the linear path = every level of every skill below
  * the target. A check question is counted as a whole level, which overstates the catch-up cost.
@@ -31,7 +31,7 @@ const cu = require('../services/catchup-units');
 const SEED = 20261030;
 const TRIALS = 12;
 const SLIPS = [0, 0.03]; // the share of known-skill questions a learner who knows the skill still misses
-const GATED_SLIP = 0; // the 5% bar is enforced here; the 3% row is reported as measured, see CATCHUP-PROOF.md
+const GATED_SLIPS = [0, 0.03]; // the 5% bar is enforced at both: the slip-tolerant check (C3b) holds it at 3%
 const LOOKBACK = 3;
 const MIN_FOUND = 0.95;
 const MAX_FALSE_TAUGHT = 0.05;
@@ -97,17 +97,22 @@ if (require.main === module) {
   const check = (name, ok) => { console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}`); if (!ok) failed++; };
   for (const trackId of cu.TRACKS) {
     const rs = rows.filter((r) => r.trackId === trackId);
-    const g = rs.filter((r) => r.slip === GATED_SLIP);
+    const g = rs.filter((r) => GATED_SLIPS.includes(r.slip));
     const planted = rs.reduce((n, r) => n + r.planted, 0); const found = rs.reduce((n, r) => n + (r.found || 0) * r.planted, 0);
     const knew = g.reduce((n, r) => n + r.knew, 0); const ft = g.reduce((n, r) => n + (r.falseTaught || 0) * r.knew, 0);
     check(`${trackId}: finds >= ${MIN_FOUND * 100}% of planted gaps (slip 0 and 3%) (${pct(found / planted)})`, found / planted >= MIN_FOUND);
-    check(`${trackId}: teaches <= ${MAX_FALSE_TAUGHT * 100}% of known skills at slip 0 (${pct(ft / knew)})`, ft / knew <= MAX_FALSE_TAUGHT);
+    check(`${trackId}: teaches <= ${MAX_FALSE_TAUGHT * 100}% of known skills at slip 0 and at 3% (${pct(ft / knew)})`, ft / knew <= MAX_FALSE_TAUGHT);
+    for (const slip of GATED_SLIPS) {
+      const rr = rs.filter((r) => r.slip === slip);
+      const k = rr.reduce((n, r) => n + r.knew, 0); const t = rr.reduce((n, r) => n + (r.falseTaught || 0) * r.knew, 0);
+      check(`${trackId}: teaches <= ${MAX_FALSE_TAUGHT * 100}% of known skills at slip ${pct(slip)} (${pct(t / k)})`, t / k <= MAX_FALSE_TAUGHT);
+    }
     for (const r of rs.filter((x) => ['none', 'few', 'many'].includes(x.scenario))) check(`${trackId}/${r.scenario}/slip ${pct(r.slip)}: less work than the linear path (${r.work.toFixed(0)} < ${r.linear})`, r.work < r.linear);
   }
   if (process.argv.includes('--write')) {
     const file = path.join(__dirname, '..', 'docs', 'CATCHUP-PROOF.md');
     const head = fs.existsSync(file) ? fs.readFileSync(file, 'utf8').split('<!-- sim:start -->')[0].trimEnd() + '\n\n' : '# Catch-up proof\n\n';
-    fs.writeFileSync(file, `${head}<!-- sim:start -->\n## Simulation (scripts/catchup-sim.js, seed ${SEED}, ${TRIALS} learners per row, lookback ${LOOKBACK})\n\n${table(rows)}\n\nWork = check questions + levels taught; linear = every level below the target. A check question counts as a whole level (overstates catch-up cost). In the "all" scenario the check is pure overhead, so no saving is claimed there.\n\n**Open, measured, not hidden:** at slip 3% about 9% of the skills a learner knew are still taught. The shared belief (services/learner-path.js unitBelief, SLIP 0.15) sends a skill to learn after one miss, and every unit bank has exactly 5 questions (2 kept for the re-check), so the check cannot ask a second chance question. The 5% bar is enforced in the suite at slip 0 only. Fixing the 3% row needs more questions per unit in the banks (queue item C3b). Cost of the extra teaching is time, not a skipped gap: gaps found stay at or above 95%.\n<!-- sim:end -->\n`);
+    fs.writeFileSync(file, `${head}<!-- sim:start -->\n## Simulation (scripts/catchup-sim.js, seed ${SEED}, ${TRIALS} learners per row, lookback ${LOOKBACK})\n\n${table(rows)}\n\nWork = check questions + levels taught; linear = every level below the target. A check question counts as a whole level (overstates catch-up cost). In the "all" scenario the check is pure overhead, so no saving is claimed there.\n\n**Slip-tolerant check (C3b):** before it, at a 3% slip about 9% of the skills a learner knew were still taught (the shared belief sends a skill to learn after one miss). A skill whose unit bank has 7 or more questions is now checked slip-tolerantly (services/catchup-units.js tolerant): a first miss never sends it to learn, it is asked again (up to 5 questions for the check, 2 kept fresh for the re-check). Banks were extended from 5 to 7 questions a unit for math grades 1-12 and english and reading grades 1-8 (all three subjects' skills in this sim's lookback window; counts and the second-model checks in curriculum-build/content-gap/catchup-*-report.json); a skill with a shorter bank keeps the plain check, so the tolerant share grows with the content and never ahead of it. The suite holds the 5% bar at both slips (GATED_SLIPS), and scripts/catchup-units-test.js fails if a covered unit loses its seventh question. Gaps found stay at 95% or above. The cost is a few more check questions for a learner who slips once.\n<!-- sim:end -->\n`);
   }
   if (failed) process.exit(1);
   console.log('\nall passed');
