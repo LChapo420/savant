@@ -46,7 +46,7 @@ Read first: `services/tutor.js`, `services/tutor-context.js`, `services/tutor-sc
 T1. [done eda97b6] **Memory map.** Write `docs/TUTOR-MEMORY.md`: everything the tutor is given today per learner (running summary,
     turns, learner record, scorecard, goals, mastery), where each comes from, what is lost (for example: turns cut
     off, facts never extracted), and the gap list against the 06 mechanisms, by id. No code beyond small fixes.
-T2. **Long-term learner memory.** A per-learner store of durable facts:
+T2. [claimed 06:36Z] **Long-term learner memory.** A per-learner store of durable facts:
     - goals and deadlines; misconceptions (with the skill, the wrong answer and how often); what explanation worked
       (the style the learner got right right after); what they find hard; interests and context they chose to share.
     - Extracted after a tutor turn by a learner-class model through `services/ai.js` (mocked in tests). Deduplicated,
