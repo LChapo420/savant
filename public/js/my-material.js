@@ -89,6 +89,21 @@ App.mount(async () => {
         btn.textContent = 'Study';
         btn.dataset.study = '1';
         n.textContent = `${c.skills.length} skills in ${(c.units || []).length || 1} unit${(c.units || []).length > 1 ? 's' : ''}${c.status === 'partial' ? ' so far (the rest can be built later; press Learning path again)' : ''}.`;
+        const gone = (c.missed || []).filter((m) => m.note);
+        if (gone.length) {
+          n.textContent += ` ${c.coverage ? `${c.coverage.covered}% of the text is in this course. ` : ''}${gone.map((m) => m.note).join(' ')}`;
+          if (gone.some((m) => m.retryable)) {
+            const b = document.createElement('button');
+            b.type = 'button'; b.className = 'btn btn-sm'; b.textContent = 'Try these parts again';
+            b.addEventListener('click', async () => {
+              b.disabled = true;
+              try { await App.api.post(`/api/materials/${id}/course/retry`, {}); courseUi(id, { ...c, status: 'building', skills: c.skills, planned: c.skills.length }); poll(id, 0, true); } catch (err) { b.disabled = false; App.toast(err.message, 'error'); }
+            });
+            n.appendChild(document.createTextNode(' '));
+            n.appendChild(b);
+          }
+        }
+        if (c.last_retry && !c.last_retry.ok && !c.extending) n.appendChild(document.createTextNode(' The last try did not work; try again later.'));
       } else { btn.textContent = 'Try again'; n.textContent = 'The course could not be built from this text. Try a clearer or longer one.'; }
     };
     // Extend a path: more practice on the same skills, or join another of your materials onto it.

@@ -8,6 +8,7 @@
  *   DELETE /api/materials/:id      gone from the store and the disk copy, and its course with it
  *   POST   /api/materials/:id/course   start building the course (202; resumes a partial one)
  *   GET    /api/materials/:id/course   the course's status and skill list (no answers)
+ *   POST   /api/materials/:id/course/retry  try the parts that were left out again (202; the result shows in GET .../course as last_retry)
  *   POST   /api/materials/:id/course/more   more practice on the same skills (202; the outcome shows in GET .../course as last_extend)
  *   POST   /api/materials/:id/course/add    { material_id } join another of the learner's materials onto this path (202)
  *   GET    /api/materials/:id/study               the map: skills, status, what is due
@@ -91,6 +92,15 @@ router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1
 router.get('/:id/course', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
   res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)) });
+});
+
+router.post('/:id/course/retry', requireAuth, limit('materials-course-retry', 6, 60 * 60 * 1000), (req, res) => {
+  const c = courses.get(req.user.id, req.params.id);
+  if (!materials.get(req.user.id, req.params.id, false) || !c) return res.status(404).json({ error: 'No such course.' });
+  if (!(c.missed || []).some((m) => m.reason !== 'too_long')) return res.status(409).json({ error: 'Nothing was left out of this course.', code: 'nothing_missed' });
+  if (courses.inflight.has(`${req.user.id}:${c.material_id}`)) return res.status(409).json({ error: 'This course is being changed right now.', code: 'busy' });
+  courses.retryMissed(req.user.id, c.material_id).catch((err) => console.warn(`course-builder: ${err.message}`));
+  res.status(202).json({ started: true });
 });
 
 const ownMaterial = (req, res, next) => (materials.get(req.user.id, req.params.id, false) ? next() : res.status(404).json({ error: 'No such material.' }));

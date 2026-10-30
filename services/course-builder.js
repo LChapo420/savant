@@ -375,9 +375,11 @@ function outlineWindows(passages) {
   let cur = null;
   for (const p of passages) {
     const line = `[${p.id}] ${clean(p.text, glanceAt)}`;
-    if (!cur || cur.text.length + line.length > OUTLINE_WINDOW) { cur = { n: wins.length + 1, text: '', chars: 0 }; wins.push(cur); }
+    if (!cur || cur.text.length + line.length > OUTLINE_WINDOW) { cur = { n: wins.length + 1, text: '', chars: 0, passage_ids: [], from: p.start, to: p.end }; wins.push(cur); }
     cur.text += (cur.text ? '\n' : '') + line;
     cur.chars += p.text.length;
+    cur.passage_ids.push(p.id);
+    cur.to = p.end;
   }
   return wins;
 }
@@ -464,6 +466,51 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
     },
   };
 }
+/** One outline call for one window, up to three tries. Resolves { stopped } or { data } (data null when every try failed). */
+async function planWindow(ctx, mat, windows, win, planned, share) {
+  const earlier = planned.length ? `Skills already planned from earlier parts (use their ids as prerequisites when they really are; do not repeat them):\n${planned.map((k) => `${k.id}: ${k.title}`).join('\n')}\n\n` : '';
+  let out = null;
+  for (let attempt = 0; attempt < 3 && !(out && out.res && out.res.data); attempt++) {
+    // eslint-disable-next-line no-await-in-loop
+    out = await ask(ctx.llm, ctx.budget, ctx.userId, {
+      role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 4000, dataClass: 'learner',
+      system: `You plan a course from a student's study material. ${UNTRUSTED} Split ${windows.length > 1 ? 'this part of it' : 'it'} into skills a student can learn one at a time (as many as it really covers, at most ${share}; a skill is a topic worth a short lesson and a few questions, not a single fact), grouped into units, both in the material's own order. Cover it from start to end: if it has more topics than that, merge neighbouring topics into one skill rather than stopping early. `
+        + 'Use only topics the material itself covers or names; leave out course logistics (grading, dates, office hours, exams as events). '
+        + 'For each skill: a short id, a title, a one-sentence summary, its unit (a short title shared by the skills of one unit), the ids of skills that must be learned first (prerequisites: only real dependencies), the passage ids that teach it (1 to 6), and taught: false when the material only names the topic (a syllabus or list line) without explaining it, otherwise true.',
+      user: `Title: ${mat.title}\n${earlier}Passages${windows.length > 1 ? ` (part ${win.n} of ${windows.length})` : ''}:\n${win.text}`,
+    });
+    if (out.stopped) break;
+  }
+  if (out.stopped) return { stopped: true };
+  if (out.res && out.res.model) ctx.models.add(out.res.model);
+  const data = out.res && out.res.data;
+  return { data: data && Array.isArray(data.skills) ? data : null };
+}
+
+/** Take a window's skills into the raw list with ids no earlier skill has. */
+function takeSkills(raw, data, share) {
+  const taken = new Set(raw.map((k) => slug(k.id) || slug(k.title)));
+  for (const k of data.skills.slice(0, share)) {
+    let id = slug(k && k.id) || slug(k && k.title);
+    while (id && taken.has(id)) id = `${id.slice(0, 36)}_${raw.length + 1}`;
+    if (id) { taken.add(id); raw.push({ ...k, id }); }
+  }
+}
+
+/** The part of the source a window covers, in the learner's words: no page numbers are stored, so a share of the text. */
+function describeRange(from, to, total) {
+  const pct = (n) => Math.max(0, Math.min(100, Math.round((n / Math.max(1, total)) * 100)));
+  const a = pct(from);
+  const b = Math.max(a + 1, pct(to));
+  return `the part of your material from about ${a}% to ${b}% of the way through`;
+}
+/** Coverage: how much of the source text the course was planned from. */
+function coverageOf(total, missed) {
+  const lost = Math.min(total, (missed || []).reduce((n, m) => n + Math.max(0, m.to - m.from), 0));
+  return { total_chars: total, missed_chars: lost, covered: total ? Math.round(((total - lost) / total) * 1000) / 10 : 100 };
+}
+const missedEntry = (win, windows, total, reason) => ({ part: win.n, of: windows.length, from: win.from, to: win.to, passage_ids: win.passage_ids, reason, note: `Could not be read into this course yet: ${describeRange(win.from, win.to, total)}.` });
+
 function res_stopped(r) { return !!(r && r.stopped); }
 
 function row(userId, materialId) {
@@ -493,9 +540,9 @@ async function build(userId, materialId, opts = {}) {
     const passageById = new Map(passages.map((p) => [p.id, p]));
     const ctx = { unanswered: 0, llm, userId, budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
     const base = {
-      user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, status: 'building', started_at: new Date().toISOString(),
+      user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, total_chars: mat.text.length, status: 'building', started_at: new Date().toISOString(),
       passages: passages.map(({ id, start, end }) => ({ id, start, end })), truncated: all.length > passages.length,
-      outline: resume ? resume.outline : null, skills: resume ? resume.skills : [], dropped: ctx.dropped, tokens_used: resume ? resume.tokens_used : 0, models: [],
+      outline: resume ? resume.outline : null, missed: resume ? (resume.missed || []) : [], skills: resume ? resume.skills : [], dropped: ctx.dropped, tokens_used: resume ? resume.tokens_used : 0, models: [],
     };
     let saved = prev ? db.update('material_courses', prev.id, { ...base, error: null, finished_at: null }) : db.insert('material_courses', base);
     const persist = (patch) => { saved = db.update('material_courses', saved.id, patch); return saved; };
@@ -506,33 +553,29 @@ async function build(userId, materialId, opts = {}) {
       const raw = [];
       let stoppedOutline = false;
       let gaps = 0;
+      let missed = [];
       const windows = outlineWindows(passages);
+      const failed = [];
+      const shareOf = (win) => Math.max(1, Math.round((most * win.chars) / Math.max(1, mat.text.length)));
       for (const win of windows) {
-        const share = Math.max(1, Math.round((most * win.chars) / Math.max(1, mat.text.length)));
-        const earlier = raw.length ? `Skills already planned from earlier parts (use their ids as prerequisites when they really are; do not repeat them):\n${raw.map((k) => `${k.id}: ${k.title}`).join('\n')}\n\n` : '';
-        let out = null;
-        for (let attempt = 0; attempt < 3 && !(out && out.res && out.res.data); attempt++) {
-          // eslint-disable-next-line no-await-in-loop
-          out = await ask(llm, ctx.budget, userId, {
-            role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 4000, dataClass: 'learner',
-            system: `You plan a course from a student's study material. ${UNTRUSTED} Split ${windows.length > 1 ? 'this part of it' : 'it'} into skills a student can learn one at a time (as many as it really covers, at most ${share}; a skill is a topic worth a short lesson and a few questions, not a single fact), grouped into units, both in the material's own order. Cover it from start to end: if it has more topics than that, merge neighbouring topics into one skill rather than stopping early. `
-              + 'Use only topics the material itself covers or names; leave out course logistics (grading, dates, office hours, exams as events). '
-              + 'For each skill: a short id, a title, a one-sentence summary, its unit (a short title shared by the skills of one unit), the ids of skills that must be learned first (prerequisites: only real dependencies), the passage ids that teach it (1 to 6), and taught: false when the material only names the topic (a syllabus or list line) without explaining it, otherwise true.',
-            user: `Title: ${mat.title}\n${earlier}Passages${windows.length > 1 ? ` (part ${win.n} of ${windows.length})` : ''}:\n${win.text}`,
-          });
-          if (out.stopped) break;
-        }
-        if (out.stopped) { stoppedOutline = true; break; }
-        const data = out.res && out.res.data;
-        if (out.res && out.res.model) ctx.models.add(out.res.model);
-        if (!data || !Array.isArray(data.skills)) { gaps++; continue; }
-        const taken = new Set(raw.map((k) => slug(k.id) || slug(k.title)));
-        for (const k of data.skills.slice(0, share)) {
-          let id = slug(k && k.id) || slug(k && k.title);
-          while (id && taken.has(id)) id = `${id.slice(0, 36)}_${raw.length + 1}`;
-          if (id) { taken.add(id); raw.push({ ...k, id }); }
-        }
+        // eslint-disable-next-line no-await-in-loop
+        const r = await planWindow(ctx, mat, windows, win, raw, shareOf(win));
+        if (r.stopped) { stoppedOutline = true; break; }
+        if (!r.data) { failed.push(win); continue; }
+        takeSkills(raw, r.data, shareOf(win));
       }
+      // A window that failed all three tries is tried once more after the others, so the skills planned from the rest can be named as prerequisites.
+      const lost = [];
+      for (const win of failed) {
+        if (stoppedOutline) { lost.push({ win, reason: 'budget' }); continue; }
+        // eslint-disable-next-line no-await-in-loop
+        const r = await planWindow(ctx, mat, windows, win, raw, shareOf(win));
+        if (r.stopped) { stoppedOutline = true; lost.push({ win, reason: 'budget' }); continue; }
+        if (!r.data) { lost.push({ win, reason: 'unreadable' }); continue; }
+        takeSkills(raw, r.data, shareOf(win));
+      }
+      gaps = lost.length;
+      missed = lost.map((l) => missedEntry(l.win, windows, mat.text.length, l.reason));
       outline = orderSkills(sourceOrder(cleanOutline({ skills: raw }, passages).slice(0, most)));
       layout(outline);
       if (!outline.length) {
@@ -540,7 +583,12 @@ async function build(userId, materialId, opts = {}) {
         return { error: 'The material could not be turned into a course. Try a clearer or longer text.', code: 'outline_failed' };
       }
       if (gaps) ctx.dropped.outline_parts = gaps;
-      persist({ outline });
+      if (all.length > passages.length) {
+        // Text past the passage cap is never planned: say so the same way.
+        const tail = passages.length ? passages[passages.length - 1].end : 0;
+        missed.push({ part: null, of: null, from: tail, to: mat.text.length, passage_ids: [], reason: 'too_long', note: `Not included: ${describeRange(tail, mat.text.length, mat.text.length)} (the material is longer than one course can hold).` });
+      }
+      persist({ outline, missed });
     }
 
     const built = new Map((base.skills || []).map((s) => [s.id, s]));
@@ -572,7 +620,8 @@ async function build(userId, materialId, opts = {}) {
     for (const s of skills) { s.prerequisites = [...new Set(lift(outlineById.has(s.id) ? outlineById.get(s.id).prerequisites : s.prerequisites))]; delete s.depth; }
     const units = layout(skills);
     // Skills that got no model answer at all (busy or timed out) leave the course partial, so asking again builds them.
-    const status = !skills.length ? 'failed' : (stopped || ctx.unanswered ? 'partial' : 'ready');
+    const missedNow = (saved && saved.missed) || [];
+    const status = !skills.length ? 'failed' : (stopped || ctx.unanswered || missedNow.some((m) => m.reason !== 'too_long') ? 'partial' : 'ready');
     const done = persist({
       skills, units, status, dropped: ctx.dropped, tokens_used: (base.tokens_used || 0) + ctx.budget.used, models: [...ctx.models],
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
@@ -583,6 +632,91 @@ async function build(userId, materialId, opts = {}) {
   } catch (err) {
     console.error('course-builder:', err.message);
     return { error: 'The course could not be built.', code: 'failed' };
+  } finally {
+    inflight.delete(key);
+  }
+}
+
+/**
+ * Try again for the parts of the material that were left out (opts: { llm, tokenBudget }). Only those windows are planned;
+ * their skills come after the ones already on the path (existing ids, levels and progress never change) and are built
+ * with the usual checks. Resolves { added, remaining, course } or { error, code }. Never throws.
+ */
+async function retryMissed(userId, materialId, opts = {}) {
+  const llm = opts.llm || ((a) => require('./ai').structuredDetail(a)); // eslint-disable-line global-require
+  const key = `${userId}:${Number(materialId)}`;
+  if (inflight.has(key)) return { error: 'This course is being changed right now.', code: 'busy' };
+  const mat = materials.get(userId, materialId, true);
+  const course = row(userId, materialId);
+  if (!mat || !course) return { error: 'No such course.', code: 'not_found' };
+  if (course.text_hash !== hash(mat.text)) return { error: 'The material changed since the course was built. Build the learning path again.', code: 'stale' };
+  const todoParts = (course.missed || []).filter((m) => m.reason !== 'too_long' && m.passage_ids && m.passage_ids.length);
+  if (!todoParts.length) return { error: 'Nothing was left out of this course.', code: 'nothing_missed' };
+  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  inflight.add(key);
+  try {
+    const passages = chunk(mat.text).slice(0, MAX_PASSAGES);
+    const passageById = new Map(passages.map((p) => [p.id, p]));
+    const ctx = { unanswered: 0, llm, userId, budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
+    const most = Math.max(1, Math.min(MAX_SKILLS, Math.ceil(mat.text.length / CHARS_PER_SKILL)));
+    const raw = (course.outline || []).map((k) => ({ id: k.id, title: k.title }));
+    const fresh = [];
+    const remaining = [];
+    const wins = todoParts.map((m, i) => ({ n: i + 1, from: m.from, to: m.to, passage_ids: m.passage_ids, chars: m.to - m.from, text: m.passage_ids.filter((id) => passageById.has(id)).map((id) => `[${id}] ${clean(passageById.get(id).text, GLANCE_MAX)}`).join('\n'), part: m }));
+    let budgetOut = false;
+    for (const win of wins) {
+      if (budgetOut) { remaining.push(win.part); continue; }
+      const share = Math.max(1, Math.round((most * win.chars) / Math.max(1, mat.text.length)));
+      // eslint-disable-next-line no-await-in-loop
+      const r = await planWindow(ctx, mat, [win], win, raw, share);
+      if (r.stopped) { budgetOut = true; remaining.push(win.part); continue; }
+      if (!r.data) { remaining.push(win.part); continue; }
+      const before = raw.length;
+      takeSkills(raw, r.data, share);
+      fresh.push(...raw.slice(before));
+    }
+    const planned = cleanOutline({ skills: fresh }, passages).slice(0, Math.max(0, MAX_SKILLS * 2 - (course.skills || []).length));
+    const have = new Set((course.skills || []).map((x) => x.id));
+    for (const k of planned) k.prerequisites = k.prerequisites.filter((q) => have.has(q) || planned.some((o) => o.id === q));
+    const built = [];
+    const todo = planned.slice();
+    const worker = async () => {
+      while (todo.length && !budgetOut) {
+        const sk = todo.shift();
+        let r = await buildSkill(sk, passageById, ctx);
+        if (r.skipped) { ctx.dropped.skills--; r = await buildSkill(sk, passageById, ctx); }
+        if (r.stopped) { budgetOut = true; return; }
+        if (r.value) built.push(r.value);
+      }
+    };
+    await Promise.all(Array.from({ length: Math.max(1, opts.concurrency || BUILD_CONCURRENCY) }, worker));
+    // An unbuilt skill means its part is still not (fully) in the course.
+    const stillMissed = remaining.slice();
+    for (const m of todoParts) {
+      if (remaining.includes(m)) continue;
+      const cites = planned.filter((k) => k.passage_ids.some((id) => m.passage_ids.includes(id)));
+      if (cites.length && !cites.some((k) => built.some((b) => b.id === k.id))) stillMissed.push({ ...m, reason: budgetOut ? 'budget' : 'unreadable' });
+    }
+    const live = row(userId, materialId);
+    const ids = new Set(live.skills.map((x) => x.id));
+    const kept = new Set([...ids, ...built.map((b) => b.id)]);
+    const add = built.filter((b) => !ids.has(b.id)).map((b) => ({ ...b, prerequisites: (b.prerequisites || []).filter((q) => kept.has(q)) }));
+    const skills = [...live.skills.map((x) => { const c = { ...x }; delete c.depth; return c; }), ...add];
+    const units = layout(skills);
+    const tooLong = (live.missed || []).filter((m) => m.reason === 'too_long');
+    const nextMissed = [...stillMissed, ...tooLong];
+    const done = db.update('material_courses', live.id, {
+      skills, units, outline: [...(live.outline || []), ...planned.filter((k) => add.some((b) => b.id === k.id))], missed: nextMissed,
+      status: stillMissed.length ? 'partial' : (live.status === 'partial' && !ctx.unanswered ? 'ready' : live.status),
+      tokens_used: (live.tokens_used || 0) + ctx.budget.used, models: [...new Set([...(live.models || []), ...ctx.models])],
+      last_retry: { at: new Date().toISOString(), ok: add.length > 0, skills: add.length, remaining: stillMissed.length },
+    });
+    db.flush();
+    if (!add.length) return { error: 'Those parts still could not be read into the course. Try again later.', code: 'still_missed', added: 0, remaining: stillMissed.length };
+    return { added: add.length, remaining: stillMissed.length, course: done };
+  } catch (err) {
+    console.error('course-builder retry:', err.message);
+    return { error: 'The missing parts could not be built.', code: 'failed' };
   } finally {
     inflight.delete(key);
   }
@@ -601,6 +735,9 @@ function summary(c) {
       prerequisites: s.prerequisites, questions: s.questions.length,
     })),
     dropped: c.dropped, built_at: c.finished_at || null,
+    missed: (c.missed || []).map((m) => ({ part: m.part, of: m.of, reason: m.reason, note: m.note, retryable: m.reason !== 'too_long' })),
+    coverage: c.total_chars ? coverageOf(c.total_chars, c.missed) : null,
+    last_retry: c.last_retry || null,
     extending: inflight.has(`${c.user_id}:${c.material_id}`),
     added: (c.added || []).map((a) => ({ material_id: a.material_id, title: a.title, skills: a.skill_ids.length })),
     extended: c.extended ? { rounds: c.extended.rounds, questions_added: c.extended.questions_added } : null,
@@ -617,5 +754,5 @@ function removeForMaterial(userId, materialId) {
 module.exports = {
   VERSION, TOKEN_BUDGET, MIN_QUESTIONS, MAX_SKILLS,
   EXTRA_MIN, MAX_PASSAGES, Budget, buildSkill, hash, slug, inflight,
-  chunk, cleanOutline, sourceOrder, orderSkills, layout, outlineWindows, shuffleChoices, namingLine, nearQuote, cleanQuestion, build, summary, get, removeForMaterial,
+  chunk, cleanOutline, sourceOrder, orderSkills, layout, outlineWindows, shuffleChoices, namingLine, nearQuote, cleanQuestion, build, retryMissed, coverageOf, summary, get, removeForMaterial,
 };
