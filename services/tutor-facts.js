@@ -219,6 +219,11 @@ function inferSkill(text) {
 
 /** How much a fact matters to this skill and text: 0 means leave it out. */
 function relevance(f, skillId, queryTokens) {
+  if (f.from_record) {
+    if (RECORD_ALWAYS.has(f.kind)) return 1;
+    const n = overlap(tokens(`${f.text} ${f.shape || ''}`), queryTokens);
+    return n >= 2 ? 2 : n === 1 ? 1.5 : 0;
+  }
   if (f.kind === 'goal' || f.kind === 'worked') return 1;
   if (skillId && f.skill_id === skillId) return 3;
   const sk = f.skill_id ? skillTokens().get(f.skill_id) : null;
@@ -227,7 +232,35 @@ function relevance(f, skillId, queryTokens) {
   return n >= 2 ? 2 : n === 1 ? 1.5 : 0;
 }
 
+/**
+ * The learner record's facts as candidates beside the tutor's own (T3b): what the after-level reads are
+ * sure of and the struggles seen on several levels. Read only; they are not deleted here. A struggle
+ * carries the hint idea the reads wrote (an idea for how to help, not an answer).
+ */
+function recordCandidates(userId) {
+  try {
+    // eslint-disable-next-line global-require
+    return require('./learner-record').tutorFacts(userId).map((r) => ({
+      from_record: true,
+      kind: r.kind,
+      text: clip(`${r.topic ? `${r.topic}: ` : ''}${r.text}`, TEXT_MAX),
+      hint: clip(r.hint, 100),
+      shape: r.shape,
+      strength: r.support,
+      first_at: r.last_at,
+      last_confirmed_at: r.last_at,
+    }));
+  } catch { return []; }
+}
+
+// Record facts about how they like to be taught apply anywhere; the rest only when they match.
+const RECORD_ALWAYS = new Set(['preference', 'dislike']);
+
 function factLine(f) {
+  if (f.from_record) {
+    const label = { struggle: 'Struggles with (seen on several levels)', strength: 'Strong at', preference: 'Prefers', dislike: 'Dislikes', opinion: 'Thinks', emotion: 'Feels', interest: 'Interest', note: 'Note' }[f.kind] || 'Note';
+    return `${label}: ${f.text}${f.hint ? `; a hint idea that fits: ${f.hint}` : ''}`;
+  }
   const label = { goal: 'Goal', misconception: 'Mix-up', worked: 'What has worked', hard: 'Finds hard', interest: 'Interest' }[f.kind];
   const sk = f.skill_id ? ` [${curriculum.skillName(f.skill_id)}]` : '';
   const seen = f.strength > 1 ? `, seen ${f.strength}x` : '';
@@ -244,7 +277,9 @@ function relevant(userId, { skillId = null, text = '' } = {}, { budget = FACTS_B
   // A skill id comes from the browser on the dock: only a known one counts.
   const skill = typeof skillId === 'string' && skillTokens().has(skillId) ? skillId : inferSkill(text);
   const query = tokens(`${text} ${skill ? `${curriculum.skillName(skill)} ${skill.replace(/_/g, ' ')}` : ''}`);
-  const scored = list(userId, now)
+  const own = list(userId, now);
+  const fromRecord = recordCandidates(userId).map((f) => ({ ...f, weight: weight(f, now) })).filter((f) => f.weight >= MIN_WEIGHT);
+  const scored = [...own, ...fromRecord]
     .map((f) => ({ f, score: relevance(f, skill, query) * (0.5 + Math.min(f.weight, 3) / 6) }))
     .filter((x) => x.score > 0)
     .sort((a, b) => b.score - a.score);

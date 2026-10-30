@@ -41,7 +41,7 @@ Also stored per learner: `tutor_modes` (voice or text; only the word).
   ACT, materials.
 - The **learner record** (`services/learner-record.js`: solid and tentative facts about what they struggle with, like,
   dislike and feel, with hint ideas; conclusions; conflicts) is **not read by the tutor**. Only the scorecard it
-  updates reaches the tutor. This is the largest unused source.
+  updates reaches the tutor. This is the largest unused source. *(Update 30 Oct, T3b: sure facts and struggles seen on two or more levels now reach the tutor through `tutor-facts.relevant`; conclusions, stats and recommendations do not.)*
 
 ## 3. What is lost
 

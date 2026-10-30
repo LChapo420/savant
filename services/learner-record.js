@@ -905,6 +905,22 @@ function briefLines(userId, where = {}, { recent: withRecent = true } = {}) {
   return [...lines, ...recentConclusionLines(userId, where, record)];
 }
 
+/**
+ * The part of the record the tutor may use, as plain rows: facts the app is sure of (not struggles) and
+ * struggles seen on two or more levels, each with its topic, support and last time seen. No stat values,
+ * no conclusions, no recommendations: those stay with the level writer.
+ */
+function tutorFacts(userId) {
+  const record = db.findOne('learner_records', (r) => r.user_id === userId);
+  if (!record) return [];
+  return record.facts
+    .filter((f) => f.status !== 'superseded' && (f.kind === 'struggle' ? f.support >= 2 : f.status === 'solid'))
+    .map((f) => ({
+      kind: f.kind, topic: f.topic || '', text: f.text, hint: f.hint || '', shape: f.shape || '',
+      support: f.support || 1, last_at: f.last_at || f.first_at || null,
+    }));
+}
+
 /** What the after-level reads concluded about the last few levels: the part of the record that changes every level. */
 function recentConclusionLines(userId, where = {}, known = null) {
   const record = known || db.findOne('learner_records', (r) => r.user_id === userId);
@@ -920,6 +936,7 @@ function recentConclusionLines(userId, where = {}, known = null) {
 }
 
 module.exports = {
+  tutorFacts,
   recentConclusionLines,
   get,
   scheduleDebrief,

@@ -103,6 +103,35 @@ db.insert('skill_states', { user_id: u.id, skill_id: 'word_problems', mastery: 0
     assert.ok(sys2.includes('volume of a cylinder') && !sys2.includes('Adds the denominators'));
   });
 
+  await check('the learner record reaches the tutor: sure facts and repeated struggles, matched to the question, never tentative ones or scores', () => {
+    const r = db.insert('users', { email: 'rel3@example.com', display_name: 'R3', account_type: 'standard', age_check: { adult: true } });
+    const at = new Date(Date.now() - 2 * DAY).toISOString();
+    const f = (o) => ({ id: `f${Math.random()}`, status: 'tentative', support: 1, contradict: 0, first_at: at, last_at: at, levels: [], ...o });
+    db.insert('learner_records', {
+      user_id: r.id, recommendations: [], suggestions: { speed: [1] }, big: {}, next_id: 9,
+      conclusions: [{ level: 3, text: 'CONCLUSION-SECRET', at }],
+      facts: [
+        f({ kind: 'struggle', topic: 'common denominators', text: 'loses track when finding a common denominator', hint: 'list multiples side by side', support: 3, status: 'solid' }),
+        f({ kind: 'struggle', topic: 'long division', text: 'drops a remainder', support: 1 }),
+        f({ kind: 'preference', topic: '', text: 'likes short step-by-step explanations', support: 4, status: 'solid' }),
+        f({ kind: 'dislike', topic: '', text: 'dislikes long paragraphs', support: 2 }),
+        f({ kind: 'interest', topic: 'music', text: 'likes drumming', support: 4, status: 'solid' }),
+        f({ kind: 'struggle', topic: 'old idea', text: 'old struggle with ratios', support: 5, status: 'superseded' }),
+      ],
+    });
+    const on = tutor.contextText(r.id, { about: 'How do I find a common denominator for 1/4 and 1/6?' });
+    assert.ok(on.includes('loses track when finding a common denominator') && on.includes('list multiples side by side'), 'repeated struggle with its hint idea');
+    assert.ok(on.includes('likes short step-by-step explanations'), 'a sure preference applies anywhere');
+    assert.ok(!on.includes('dislikes long paragraphs'), 'a tentative dislike (2 supports, not solid) is held back');
+    assert.ok(!on.includes('drops a remainder'), 'a one-off struggle is held back');
+    assert.ok(!on.includes('drumming'), 'an unrelated sure fact is held back');
+    assert.ok(!on.includes('old struggle'), 'superseded facts are gone');
+    assert.ok(!on.includes('CONCLUSION-SECRET'), 'conclusions stay with the level writer');
+    assert.ok(tutor.contextText(r.id, { about: 'Can we use drumming to explain rhythm and fractions?' }).includes('drumming'));
+    const off = tutor.contextText(r.id, { about: 'What is the capital of France?' });
+    assert.ok(!off.includes('common denominator'));
+  });
+
   console.log(failed ? `\n${failed} failed` : '\nall passed');
   process.exit(failed ? 1 : 0);
 })();
