@@ -78,7 +78,7 @@ S2c. **DONE on `studley-parity` (c5b159b), see Done.**
 S3. **DONE on `studley-parity` (57a2e15), see Done. Leftover: S3b.** **Practice test on demand:** pick skills and a length, timed or untimed.
    - Written answers go through `services/typed-grading.js`.
    - Results feed the learner model.
-S3b. [claimed 2026-10-30 UTC, part (1) only] **Practice test leftovers.** (1) Written items of the study pack (`material-pack.js` `test`) are not drawn into the on-demand test; only the course's questions are. (2) Look at `/my-material-test` at 375 px in a real browser, timed and untimed. (3) Run one short answer through the live typed-grading cascade on the owner's machine. Reason: this run had no keys or browser.
+S3b. **Practice test leftovers.** (1) DONE on `studley-parity` (98c87af), see Done. (2) Look at `/my-material-test` at 375 px in a real browser, timed and untimed. (3) Run one short answer through the live typed-grading cascade on the owner's machine. Reason: this run had no keys or browser.
 S4. **DONE on `studley-parity` (e22f626), see Done. Leftover: S4b.** **A tutor grounded in the material.** Retrieve the relevant source passages for the page or skill into `services/tutor-context.js`; today it sees only titles and counts.
    - Keep the context budget.
    - Keep the hint-ladder rule (`MODE_NOTE.full`).
@@ -208,6 +208,8 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- **S3b(1)** (2026-10-30, `studley-parity` 98c87af): `material-test.js` draws the pack's fill-in and written items into the on-demand test under the first skill citing their passage (marked by free checks then typed-grading; feed the learner model; pack MC items and uncited items stay out). Checked: new `scripts/material-test-pack-items-test.js` (9 checks, in the suite) and full `npm test`: All steps passed. Not seen in a browser.
 
 - **Item 6b(2) first slice** (2026-10-30, `yc-next`): `GET /api/act/plan` adds `practice_href` (the learner's own ACT path, null without an ACT enrollment); learn and review rows on the plan card show a Practise link. Checked: 2 new checks in `scripts/act-plan-test.js` and full `npm test`: All steps passed. Not seen in a browser. Remaining: a per-skill ACT drill.
 
