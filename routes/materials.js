@@ -22,7 +22,8 @@
  *   POST   /api/materials/:id/study/placement      { question, answer } then the next question or the result
  *   POST   /api/materials/:id/study/quiz           { mode: mastery|review, skill? } one-shot quiz, no answers
  *   POST   /api/materials/:id/pack     start building the study pack (summary, flashcards, quiz, practice test; 202)
- *   GET    /api/materials/:id/pack     the pack's status and content (no answer keys)
+ *   GET    /api/materials/:id/pack     the pack's status and content (no answer keys); ?adapt=1 leaves out quiz/test items on skills you already know
+ *   POST   /api/materials/:id/notes        start making whole-material notes (202); GET returns them with quotes and coverage
  *   GET    /api/materials/:id/podcast      the overview and weak-spots episodes (script only) and which weak spots there are
  *   POST   /api/materials/:id/podcast      { kind: overview|weak } start writing an episode script (202)
  *   POST   /api/materials/:id/pack/grade   { section: quiz|test, answers } marked on the server
@@ -30,6 +31,7 @@
  *   POST   /api/materials/:id/test         { skills, length, timed, adapt } start a practice test (questions without keys); adapt: only what the learner does not know, is due or missed
  *   POST   /api/materials/:id/test/submit  { test_id, answers } graded on the server; feeds the learner model
  *   GET    /api/materials/:id/cards        the flashcard deck (pack cards, your misses, your own) with what is due
+ *   GET    /api/materials/:id/cards/pick   the cards worth your time now (due ones, new ones except for skills you already know)
  *   GET    /api/materials/:id/cards/due    the cards due now
  *   POST   /api/materials/:id/cards        { front, back } write a card
  *   POST   /api/materials/:id/cards/review { card, rating: again|hard|good|easy }
@@ -50,6 +52,7 @@ const packs = require('../services/material-pack');
 const practiceTest = require('../services/material-test');
 const cards = require('../services/material-cards');
 const podcast = require('../services/material-podcast');
+const notes = require('../services/material-notes');
 
 const router = express.Router();
 
@@ -228,16 +231,27 @@ router.post('/:id/pack', requireAuth, limit('materials-pack', 6, 60 * 60 * 1000)
 
 router.get('/:id/pack', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
+  if (req.query.adapt === '1') {
+    const mine = packs.forLearner(req.user.id, req.params.id);
+    return res.json(mine ? { pack: mine.pack, shown: mine.ids, skipped_known: mine.skipped_known } : { pack: null });
+  }
   res.json({ pack: packs.view(packs.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `pack:${Number(req.params.id)}`, packs.activity(req.user.id, req.params.id)) });
 });
 
 router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-grade', 120, 60 * 60 * 1000), express.json({ limit: '64kb' }), (req, res) => {
   const b = req.body || {};
-  const out = packs.grade(req.user.id, req.params.id, String(b.section || ''), b.answers);
+  const out = packs.grade(req.user.id, req.params.id, String(b.section || ''), b.answers, Array.isArray(b.only) ? b.only.slice(0, 200).map(String) : undefined);
   if (out.error) return res.status(out.code === 'no_pack' ? 404 : 400).json({ error: out.error, code: out.code });
   res.json(out);
 });
 
+router.get('/:id/notes', requireAuth, ownMaterial, (req, res) => res.json({ notes: notes.view(notes.get(req.user.id, req.params.id)) }));
+router.post('/:id/notes', requireAuth, ownMaterial, limit('materials-notes', 6, 60 * 60 * 1000), (req, res) => {
+  const existing = notes.get(req.user.id, req.params.id);
+  if (existing && existing.status === 'ready' && existing.version === notes.VERSION) return res.json({ notes: notes.view(existing), cached: true });
+  notes.build(req.user.id, req.params.id, {}).then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-notes: ${out.code}`); });
+  res.status(202).json({ started: true });
+});
 router.get('/:id/podcast', requireAuth, ownMaterial, (req, res) => res.json({ ...podcast.options(req.user.id, req.params.id), activity: ['overview', 'weak'].reduce((a, k) => ({ ...a, ...activityOf(req.user.id, `podcast:${Number(req.params.id)}:${k}`) }), {}) }));
 router.post('/:id/podcast', requireAuth, ownMaterial, limit('materials-podcast', 6, 60 * 60 * 1000), express.json({ limit: '4kb' }), (req, res) => {
   const kind = String((req.body || {}).kind || 'overview');
@@ -254,6 +268,7 @@ function cardReply(res, out) {
 }
 const cardBody = express.json({ limit: '16kb' });
 router.get('/:id/cards', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.deck(req.user.id, req.params.id)));
+router.get('/:id/cards/pick', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.pick(req.user.id, req.params.id, Number(req.query.limit) || 20)));
 router.get('/:id/cards/due', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.due(req.user.id, req.params.id, Number(req.query.limit) || 20)));
 router.post('/:id/cards/review', requireAuth, ownMaterial, limit('materials-cards-review', 600, 60 * 60 * 1000), cardBody, (req, res) => {
   const b = req.body || {};

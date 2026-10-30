@@ -15,6 +15,7 @@ App.mount(async () => {
   let shown = false;        // is the back showing
   let editing = null;       // card id being edited, or 'new'
   let reviewed = 0;
+  let pickNote = '';        // what "Pick for me" left out
 
   const fail = (err) => { root.innerHTML = `<div class="notice notice-error">${esc(err.message)}</div><p><a href="/my-material">Back to my material</a></p>`; };
   const byId = (k) => deck.cards.find((c) => c.id === k);
@@ -65,10 +66,21 @@ App.mount(async () => {
       <div role="tablist" style="display:flex;gap:8px;margin:12px 0">
         <button class="btn btn-sm${mode === 'review' ? ' btn-primary' : ''}" type="button" data-mode="review">Review</button>
         <button class="btn btn-sm${mode === 'deck' ? ' btn-primary' : ''}" type="button" data-mode="deck">All cards</button>
-        <button class="btn btn-sm" type="button" data-edit="new">Add a card</button></div>
+        <button class="btn btn-sm" type="button" data-edit="new">Add a card</button>
+        <button class="btn btn-sm" type="button" id="pick">Pick for me</button></div>
+      ${pickNote ? `<p class="small muted">${esc(pickNote)}</p>` : ''}
       ${editing ? cardForm(editing === 'new' ? null : byId(editing)) : (mode === 'review' ? reviewHtml() : deckHtml())}`;
     root.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => { mode = b.dataset.mode; editing = null; render(); }));
     root.querySelectorAll('[data-edit]').forEach((b) => b.addEventListener('click', () => { editing = b.dataset.edit; render(); }));
+    const pickBtn = document.getElementById('pick');
+    if (pickBtn) pickBtn.addEventListener('click', async () => {
+      try {
+        const out = await App.api.get(`${base}/pick`);
+        queue = out.cards.map((c) => c.id); shown = false; mode = 'review'; editing = null; reviewed = 0;
+        pickNote = out.skipped_known ? `Picked ${out.cards.length} cards. ${out.skipped_known} cards on skills you already know were left out.` : `Picked ${out.cards.length} cards.`;
+        render();
+      } catch (err) { App.toast(err.message, 'error'); }
+    });
     const cancel = document.getElementById('cancel-edit');
     if (cancel) cancel.addEventListener('click', () => { editing = null; render(); });
     const show = document.getElementById('show');

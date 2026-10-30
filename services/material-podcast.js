@@ -57,6 +57,7 @@ const SCRIPT_SCHEMA = {
   required: ['title', 'turns'],
 };
 
+const adapt = require('./material-adapt');
 const dueOf = (st, now) => st && st.status === 'mastered' && st.due && Date.parse(st.due) <= now;
 
 /**
@@ -69,9 +70,10 @@ function weakSkills(userId, materialId, now = Date.now()) {
   const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
   if (!prog) return [];
   const rows = [];
+  const known = new Set(adapt.plan(course, prog, now).skipped); // 07-M3/M9: known and not due is never a weak spot
   for (const s of course.skills) {
     const st = (prog.skills || {})[s.id];
-    if (!st) continue;
+    if (!st || known.has(s.id)) continue;
     const wrong = Number(st.wrong_n) || 0;
     const mis = (st.misconceptions || []).map((m) => (typeof m === 'object' ? m.text : m)).map((t) => clean(t, 240)).filter(Boolean);
     const due = !!dueOf(st, now);

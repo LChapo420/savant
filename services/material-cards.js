@@ -22,6 +22,7 @@ const db = require('../config/db');
 const path = require('./material-path');
 const courses = require('./course-builder');
 const materials = require('./materials');
+const adapt = require('./material-adapt');
 
 const DAY = 24 * 60 * 60 * 1000;
 const MAX_CARDS = 400;
@@ -133,6 +134,32 @@ function due(userId, materialId, limit = 20, now = Date.now()) {
   return { cards, due_count: d.due_count, total: d.total };
 }
 
+/**
+ * "Pick for me" (S12b): the cards worth this learner's time now. A card that has been reviewed is picked when its own
+ * clock says due. A card never reviewed is picked unless its skill is `known` (mastered, not due, nothing missed, see
+ * material-adapt.js), so a learner who already knows half the material is not shown half the deck. Cards from the
+ * learner's own misses come first, then cards of skills being fixed, due ones, learning, new; own cards (no skill) always count.
+ */
+function pick(userId, materialId, limit = 20, now = Date.now()) {
+  const d = deck(userId, materialId, now);
+  if (d.error) return d;
+  const course = courses.get(userId, materialId);
+  const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
+  const plan = course ? adapt.plan(course, prog, now) : { skills: [], skipped: [] };
+  const known = new Set(plan.skipped);
+  const need = new Map(plan.skills.map((x) => [x.id, x.need]));
+  const rank = (c) => (c.misconception ? 0 : 1 + Math.max(0, ['fix', 'due', 'learning', 'new'].indexOf(need.get(c.skill))));
+  let skipped = 0;
+  const chosen = [];
+  for (const c of d.cards) {
+    if (!c.due) continue;
+    if (c.reviews === 0 && c.skill && known.has(c.skill)) { skipped++; continue; }
+    chosen.push(c);
+  }
+  chosen.sort((a, b) => rank(a) - rank(b) || (Date.parse(a.due_at) || 0) - (Date.parse(b.due_at) || 0));
+  return { cards: chosen.slice(0, Math.max(1, Math.min(50, limit))), picked: chosen.length, skipped_known: skipped, total: d.total };
+}
+
 /** Record one review. rating: again | hard | good | easy. */
 function review(userId, materialId, cardId, rating, now = Date.now()) {
   if (!Object.prototype.hasOwnProperty.call(RATINGS, rating)) return { error: 'Choose again, hard, good or easy.', code: 'bad_rating' };
@@ -211,4 +238,4 @@ function removeForMaterial(userId, materialId) {
   return db.remove('material_cards', (c) => c.user_id === userId && c.material_id === Number(materialId));
 }
 
-module.exports = { RATINGS, sync, deck, due, review, add, edit, remove, removeForMaterial };
+module.exports = { pick, RATINGS, sync, deck, due, review, add, edit, remove, removeForMaterial };
