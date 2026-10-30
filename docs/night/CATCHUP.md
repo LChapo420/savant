@@ -55,7 +55,7 @@ C2b. [done a7f7e42, items 1-2; rest is C2d] **Wire math, english, reading into t
     level of a catch-up block (`catchupUnits.allowsLevel`) and, when a finished session scores at or above the master bar
     (0.75), calls `onLevelPassed` for the levels it covered. Checked: `scripts/catchup-units-test.js` (allowsLevel true in
     the block, false outside it and for another subject) and the full `npm test`. Not exercised end to end through HTTP.
-C2d. **Pages and the real review queue.** (1) "Catch me up to grade N" button on the math, english and reading pages plus the
+C2d. [claimed 2026-10-30 06:40Z] **Pages and the real review queue.** (1) "Catch me up to grade N" button on the math, english and reading pages plus the
     catch-up page itself (shared with C5, which says what the page shows). (2) Put each finished block's reviews
     (`block.reviews`, +1/3/7/21 days) into the real review queue (`services/review-session.js` / `retention-schedule.js`)
     instead of only on the row. (3) Owner decision: lookback (default 2 grades below the target). (4) Drive the whole flow
