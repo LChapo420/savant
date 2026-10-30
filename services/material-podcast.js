@@ -30,6 +30,10 @@ const MIN_TURNS = 6;
 const TURN_CHARS = 420;
 const LOOSE_CHARS = 160;             // an ungrounded turn longer than this is dropped
 const MAX_WEAK = 5;
+const WORDS_PER_MINUTE = 150;        // a spoken pace, used only to place the check-ins
+const CHECKIN_MINUTES = 3;           // a quick check-in every three minutes of speech
+const CHECKIN_WORDS = WORDS_PER_MINUTE * CHECKIN_MINUTES;
+const MAX_CHECKINS = 8;
 const TOKEN_BUDGET = Number(process.env.MATERIAL_PODCAST_TOKEN_BUDGET || 40000);
 const STALE_BUILD_MS = 30 * 60 * 1000;
 
@@ -51,6 +55,15 @@ const SCRIPT_SCHEMA = {
         type: 'object',
         properties: { host: { type: 'string', enum: ['A', 'B'] }, text: { type: 'string' }, passage_id: { type: 'string' }, quote: { type: 'string' } },
         required: ['host', 'text'],
+      },
+    },
+    // A short question about one of the material's skills; the server decides where on the script it goes.
+    checkins: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: { skill_id: { type: 'string' }, prompt: { type: 'string' }, choices: { type: 'array', items: { type: 'string' } }, answer_index: { type: 'integer' } },
+        required: ['skill_id', 'prompt', 'choices', 'answer_index'],
       },
     },
   },
@@ -116,6 +129,96 @@ function cleanTurns(raw, byId) {
   return out;
 }
 
+/** Words in a turn, as a speech estimate. */
+const wordsIn = (s) => String(s || '').trim().split(/\s+/).filter(Boolean).length;
+
+/**
+ * Where the check-ins go: after a turn once three minutes of speech have passed since the last one (150 words a
+ * minute), never on the last two turns and never more than MAX_CHECKINS. Pure. [{ after, words }]
+ */
+function checkinSlots(turns) {
+  const out = [];
+  let since = 0;
+  for (let i = 0; i < (turns || []).length; i++) {
+    since += wordsIn(turns[i].text);
+    if (since < CHECKIN_WORDS || i >= turns.length - 2) continue;
+    out.push({ after: i, words: since });
+    since = 0;
+    if (out.length >= MAX_CHECKINS) break;
+  }
+  return out;
+}
+
+/** The skill each slot is about: the one that owns the nearest quoted passage the turns just spoken came from. */
+function slotSkills(turns, slots, skills) {
+  const owner = new Map();
+  for (const s of skills || []) for (const p of s.passage_ids || []) if (!owner.has(p)) owner.set(p, s.id);
+  const out = [];
+  let last = null;
+  let at = 0;
+  for (let i = 0; i < (turns || []).length && at < slots.length; i++) {
+    if (turns[i].passage_id && owner.has(turns[i].passage_id)) last = owner.get(turns[i].passage_id);
+    while (at < slots.length && slots[at].after === i) { out.push(last); at++; }
+  }
+  return out;
+}
+
+/**
+ * A question the course already has: its first multiple-choice item with three or four choices, one per skill.
+ * `qid` is that item's id, so a miss marks the real question (services/material-study.js noteAnswers).
+ */
+function courseChecks(skills, limit) {
+  const out = [];
+  for (const s of skills || []) {
+    const q = (s.questions || []).find((x) => x && x.type === 'multiple_choice' && Array.isArray(x.choices) && x.choices.length >= 3 && x.choices.length <= 4 && Number.isInteger(x.answer_index));
+    if (q) out.push({ skill: s.id, skill_title: s.title, qid: q.id, prompt: clean(q.prompt, 240), choices: q.choices.slice(0, 4), answer_index: q.answer_index, source: 'course' });
+    if (out.length >= limit) break;
+  }
+  return out;
+}
+
+/** The questions the model wrote for the call: on a skill of this material, three or four distinct choices, a right one. */
+function cleanChecks(raw, skills) {
+  const bySkill = new Map((skills || []).map((s) => [s.id, s]));
+  const out = [];
+  for (const c of Array.isArray(raw) ? raw : []) {
+    const skill = bySkill.get(String(c && c.skill_id));
+    const prompt = clean(c && c.prompt, 240);
+    const choices = (Array.isArray(c && c.choices) ? c.choices : []).map((x) => clean(x, 120)).filter(Boolean).slice(0, 4);
+    const at = Number(c && c.answer_index);
+    if (!skill || !prompt || choices.length < 3 || !Number.isInteger(at) || at < 0 || at >= choices.length) continue;
+    if (new Set(choices.map((x) => x.toLowerCase())).size !== choices.length) continue;
+    out.push({ skill: skill.id, skill_title: skill.title, qid: null, pack_qid: null, prompt, choices, answer_index: at, source: 'model' });
+  }
+  return out;
+}
+
+/**
+ * Put the questions on the script, one per slot: the question on the skill the slot just covered when there is one,
+ * otherwise the next question on a skill not yet asked about. Each carries its skill and its key, which stays here.
+ * [{ id, after, skill, skill_title, qid, pack_qid, prompt, choices, answer_index, source }]
+ */
+function placeCheckins(turns, pool, slots, skillHints) {
+  const place = slots || checkinSlots(turns);
+  const hints = skillHints || [];
+  const questions = pool || [];
+  const out = [];
+  const usedSkills = new Set();
+  const used = new Set();
+  for (let i = 0; i < place.length; i++) {
+    const free = (k) => !used.has(k) && !usedSkills.has(questions[k].skill);
+    let pick = questions.findIndex((q, k) => free(k) && q.skill === hints[i]);
+    if (pick < 0) pick = questions.findIndex((q, k) => free(k));
+    if (pick < 0) pick = questions.findIndex((q, k) => !used.has(k));
+    if (pick < 0) break;
+    const q = questions[pick];
+    used.add(pick);
+    usedSkills.add(q.skill);
+    out.push({ id: `q${out.length + 1}`, after: place[i].after, skill: q.skill, skill_title: q.skill_title || '', qid: q.qid || null, pack_qid: q.pack_qid || null, prompt: q.prompt, choices: q.choices, answer_index: q.answer_index, source: q.source || 'course' });
+  }
+  return out;
+}
+
 /**
  * A question the study pack already made on one of this material's skills. The pack keeps its items by passage, not by
  * skill, so the passage the course's skill cites is the link (the same one services/material-pack.js forLearner uses):
@@ -141,6 +244,18 @@ function packChecks(userId, materialId, course, limit) {
 
 const row = (userId, materialId, kind) => db.findOne('material_podcasts', (c) => c.user_id === userId && c.material_id === Number(materialId) && c.kind === kind);
 
+/** A check-in of one of the learner's episodes, with its key, for grading on the server. Null when there is none. */
+function checkinOf(userId, materialId, qid) {
+  const id = String(qid || '');
+  if (!id) return null;
+  for (const kind of KINDS) {
+    const p = row(userId, materialId, kind);
+    const c = p && (p.checkins || []).find((x) => x.id === id);
+    if (c) return c;
+  }
+  return null;
+}
+
 /**
  * Build (or return the cached) episode. opts: { kind, llm, tokenBudget, force, now }.
  * Resolves { episode } or { error, code }. Never throws.
@@ -157,8 +272,13 @@ async function build(userId, materialId, opts = {}) {
   const now = opts.now || Date.now();
   const weak = kind === 'weak' ? weakSkills(userId, mat.id, now) : null;
   if (kind === 'weak' && !weak.length) return { error: 'There are no weak spots to talk about yet. Study some of the learning path first, then come back.', code: 'no_weak_spots' };
-  // The signature changes when the text or the weak spots change, so an unchanged state is never paid for twice.
-  const sig = hash(JSON.stringify([mat.text.length, hash(mat.text), weak && weak.map((w) => [w.skill.id, w.due, w.wrong, w.mis])]));
+  // Check-ins are on the material's skills, so they need a learning path; without one the episode is a script only.
+  const course = courses.get(userId, mat.id);
+  const skills = course && Array.isArray(course.skills) ? course.skills : [];
+  const packQuiz = packChecks(userId, mat.id, course, MAX_CHECKINS);
+  // The signature changes when the text, the skills, the pack's questions or the weak spots change, so an unchanged
+  // state is never paid for twice. A pack built after the episode adds its questions on the next build.
+  const sig = hash(JSON.stringify([mat.text.length, hash(mat.text), skills.map((s) => [s.id, (s.questions || []).length]), packQuiz.map((q) => q.pack_qid), weak && weak.map((w) => [w.skill.id, w.due, w.wrong, w.mis])]));
   const prev = row(userId, mat.id, kind);
   if (prev && prev.version === VERSION && prev.sig === sig && prev.status === 'ready' && !opts.force) return { episode: prev, cached: true };
   if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The podcast maker is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
@@ -171,7 +291,7 @@ async function build(userId, materialId, opts = {}) {
     const shown = sourcePassages(passages, only && only.size ? only : null);
     const byId = new Map(shown.map((p) => [p.id, p]));
     const base = { user_id: userId, material_id: mat.id, kind, title: mat.title, version: VERSION, sig, status: 'building', started_at: new Date().toISOString(), error: null };
-    if (!prev) { base.turns = []; base.skills = []; base.finished_at = null; }
+    if (!prev) { base.turns = []; base.skills = []; base.checkins = []; base.finished_at = null; }
     saved = prev ? db.update('material_podcasts', prev.id, base) : db.insert('material_podcasts', base);
 
     const focus = weak
@@ -183,7 +303,8 @@ async function build(userId, materialId, opts = {}) {
       system: `You write a short podcast script for a student: two friendly hosts, A and B, talking about the student's own study material. ${UNTRUSTED} `
         + 'Host A explains; host B asks the questions a student would ask, checks understanding and gives small examples that are in the text. '
         + `Write ${MIN_TURNS * 2} to ${MAX_TURNS - 8} turns of one to three plain spoken sentences each: no markdown, no stage directions, no sound effects, nothing a speech voice would read badly. Start with a one-line welcome and end with a one-line recap. `
-        + 'Every turn that states a fact needs passage_id (one of the ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows it. Short linking turns need no quote. Leave out anything you cannot back with a quote.' + focus,
+        + 'Every turn that states a fact needs passage_id (one of the ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows it. Short linking turns need no quote. Leave out anything you cannot back with a quote.' + focus
+        + (skills.length ? `\n\nAlso write check-in questions for the listener, one about each of these skills, using its id: ${skills.map((s) => `${s.id} (${clean(s.title, 60)})`).join(', ')}. Each is a short question about a fact the script states, with three or four answer choices and answer_index counting the right one from 0. No hints in the prompt, and no "all of the above".` : ''),
       user: `Title: ${mat.title}\n\nPassages:\n${text}`,
     };
     const cost = estTokens(args.system, args.user) + args.maxTokens;
@@ -197,7 +318,7 @@ async function build(userId, materialId, opts = {}) {
       let res = null;
       try { res = await llm(args); } catch { res = null; } // eslint-disable-line no-await-in-loop
       const turns = res && res.data && cleanTurns(res.data.turns, byId);
-      if (turns && turns.length >= MIN_TURNS) { data = { title: clean(res.data.title, 120), turns }; model = res.model || null; }
+      if (turns && turns.length >= MIN_TURNS) { data = { title: clean(res.data.title, 120), turns, checkins: cleanChecks(res.data.checkins, skills) }; model = res.model || null; }
     }
     if (!data) {
       // A failed rebuild leaves the last good episode as it was.
@@ -205,8 +326,10 @@ async function build(userId, materialId, opts = {}) {
       db.flush();
       return { error: 'An episode could not be made from that material. Try a longer or clearer text.', code: 'nothing_verified' };
     }
+    const slots = checkinSlots(data.turns);
+    const checkins = placeCheckins(data.turns, [...packQuiz, ...courseChecks(skills, slots.length), ...data.checkins], slots, slotSkills(data.turns, slots, skills));
     saved = db.update('material_podcasts', saved.id, {
-      title: data.title || mat.title, turns: data.turns, skills: weak ? weak.map((w) => ({ id: w.skill.id, title: w.skill.title })) : [], status: 'ready', models: model ? [model] : [], tokens_used: used, error: null, finished_at: new Date().toISOString(),
+      title: data.title || mat.title, turns: data.turns, skills: weak ? weak.map((w) => ({ id: w.skill.id, title: w.skill.title })) : [], checkins, status: 'ready', models: model ? [model] : [], tokens_used: used, error: null, finished_at: new Date().toISOString(),
     });
     db.flush();
     return { episode: saved };
@@ -226,6 +349,7 @@ function view(p) {
   return {
     material_id: p.material_id, kind: p.kind, title: p.title, status: stale ? 'failed' : p.status,
     skills: p.skills || [], turns: (p.turns || []).map((t) => ({ host: t.host, text: t.text, quote: t.quote || null })),
+    checkins: (p.checkins || []).map((c) => ({ id: c.id, after: c.after, skill: c.skill, skill_title: c.skill_title, prompt: c.prompt, choices: c.choices, source: c.source })),
     built_at: p.finished_at || null,
   };
 }
@@ -243,4 +367,7 @@ function removeForMaterial(userId, materialId) {
   return db.remove('material_podcasts', (c) => c.user_id === userId && c.material_id === Number(materialId));
 }
 
-module.exports = { VERSION, KINDS, TOKEN_BUDGET, weakSkills, cleanTurns, build, view, options, removeForMaterial };
+module.exports = {
+  VERSION, KINDS, TOKEN_BUDGET, CHECKIN_WORDS, MAX_CHECKINS, weakSkills, cleanTurns, checkinSlots, slotSkills, packChecks, courseChecks, cleanChecks, placeCheckins,
+  build, view, options, checkinOf, removeForMaterial,
+};
