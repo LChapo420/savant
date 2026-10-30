@@ -68,7 +68,7 @@ S2. **First slice DONE on `studley-parity` (355d450), see Done. Remaining: S2b.*
    - Learners can edit cards.
    - Also cards made from the learner's own recorded mistakes and misconceptions.
 S2b. **DONE on `studley-parity` (9fade45), see Done.**
-S2c. **Never drop part of an upload silently (found by the own-material proof, 30 Oct).** In `services/course-builder.js`, an outline window that fails all three tries is left out of the course without telling the learner.
+S2c. [claimed 2026-10-30T02:33Z] **Never drop part of an upload silently (found by the own-material proof, 30 Oct).** In `services/course-builder.js`, an outline window that fails all three tries is left out of the course without telling the learner.
    - Record which parts of the source were not turned into skills (page or character ranges).
    - Retry them once more in the background.
    - If they still fail, show the learner a plain note on the course page ("Pages 41-58 could not be read into this course yet. Try again"), with a retry button.
