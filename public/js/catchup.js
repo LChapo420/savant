@@ -60,7 +60,7 @@ App.mount(async () => {
         <div class="cu__count"><b>${v.counts.known}</b><span>known</span></div>
         <div class="cu__count"><b>${v.counts.missing}</b><span>found missing</span></div>
         <div class="cu__count"><b>${r.blocks.filter((b) => b.status === 'done').length}/${r.n}</b><span>blocks done</span></div></div>
-      ${v.next_review_due_at ? `<p class="cu__meta" data-review>Next review ${esc(when(v.next_review_due_at))}.</p>` : ''}
+      ${v.next_review_due_at ? `<p class="cu__meta" data-review>Next review ${esc(when(v.next_review_due_at))} (the catch-up plan's own schedule; your daily review also brings these skills back when your record says they are fading).</p>` : ''}
       ${done ? '' : v.phase === 'recheck' ? '<button class="btn btn-primary btn-lg" id="recheck">Take the final check</button>' : '<button class="btn btn-primary btn-lg" id="play">Continue</button>'}
       <ul class="cu__blocks">${r.blocks.map((b) => `<li class="cu__block" data-status="${esc(b.status)}" data-current="${r.k === b.k && !done}"><span class="cu__meta">Catch-up ${b.k} of ${r.n} · about ${b.minutes} min · ${b.levels_done}/${b.levels} lessons</span><h3>${esc(b.title)}</h3></li>`).join('')}</ul>`);
     const play = w.querySelector('#play');
