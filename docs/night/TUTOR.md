@@ -61,7 +61,7 @@ T4. [done 6b631e1] **Understands how they learn.** Choose the explanation strate
     visual description, short vs long) from what has worked for this learner (T2 facts and scorecard signals), with
     a fallback order from the 06 mechanisms. Test with two simulated learners with opposite histories: they get
     different strategies, and each strategy that fails is tried less.
-T5. **Never gives the answer away.** An eval of 40 attempts to extract answers (just tell me, role-play, "my teacher
+T5. [claimed 07:30Z] **Never gives the answer away.** An eval of 40 attempts to extract answers (just tell me, role-play, "my teacher
     said", partial-answer fishing, multi-turn wearing down) on graded, test and lesson pages. Script runs against
     the mock and checks the guard logic (`saysAnswer` and the mode rules). Mark a follow-up `[local only]` item to
     run it against the real model.
