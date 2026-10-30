@@ -126,7 +126,10 @@ const OKPLAYER = (t) => ({ playabilityStatus: { status: 'OK' }, videoDetails: { 
   console.log('video files');
   const ffmpeg = video.ffmpegPath();
   const probe = spawnSync(ffmpeg, ['-version']);
-  if (probe.error) { check('ffmpeg is available (skipping the file checks)', true); } else {
+  let haveStatic = true; try { require.resolve('ffmpeg-static'); } catch { haveStatic = false; }
+  if (probe.error) { check('ffmpeg is available (skipping the file checks)', true); } else if (!haveStatic) {
+    console.log('  skipped: ffmpeg-static not installed (the transcript hand-off checks need its audio decoder)');
+  } else {
     const mk = (args, ext) => {
       const f = path.join(os.tmpdir(), `material-video-fixture-${process.pid}.${ext}`);
       const r = spawnSync(ffmpeg, ['-v', 'error', ...args, '-y', f]);
