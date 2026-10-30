@@ -6,7 +6,8 @@
  * Builds one small fixture per type in memory (ODT, EPUB, XLSX, RTF, HTML, CSV, Markdown, LaTeX, source code)
  * and runs it through materials.extract (the real parser child process). PDF, DOCX and PPTX are proven by
  * materials-test.js and material-inputs-test.js; audio, video and YouTube by material-audio-test.js and
- * material-video-test.js. The result per type is written up in docs/MATERIAL-MATRIX.md.
+ * material-video-test.js. Pictures go through fromImage with a stubbed recognizer (tesseract.js is optional
+ * and must not be run here). The result per type is written up in docs/MATERIAL-MATRIX.md.
  */
 const os = require('os');
 const path = require('path');
@@ -24,6 +25,27 @@ function check(label, ok, detail) {
 }
 
 const FACT = 'Mitochondria make ATP by oxidative phosphorylation across the inner membrane, and the electron transport chain pumps protons into the intermembrane space. ';
+
+/** A one-page PDF with no text on it at all: what a scan looks like to a text extractor. */
+function blankPdf() {
+  const objs = [
+    '<</Type/Catalog/Pages 2 0 R>>',
+    '<</Type/Pages/Kids[3 0 R]/Count 1>>',
+    '<</Type/Page/Parent 2 0 R/MediaBox[0 0 200 200]/Contents 4 0 R/Resources<<>>>>',
+    '<</Length 0>>\nstream\n\nendstream',
+  ];
+  let out = '%PDF-1.4\n';
+  const offsets = objs.map((body, i) => {
+    const at = out.length;
+    out += `${i + 1} 0 obj\n${body}\nendobj\n`;
+    return at;
+  });
+  const xref = out.length;
+  out += `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n`;
+  for (const at of offsets) out += `${String(at).padStart(10, '0')} 00000 n \n`;
+  out += `trailer\n<</Size ${objs.length + 1}/Root 1 0 R>>\nstartxref\n${xref}\n%%EOF\n`;
+  return Buffer.from(out, 'latin1');
+}
 const P = FACT.repeat(3);
 
 async function zip(files, first) {
@@ -90,13 +112,30 @@ async function zip(files, first) {
   }
   check('LaTeX keeps the math source', (await materials.extract(fx.latex)).text.includes('\\frac{1}{3}'));
 
+  // OCR (pictures and scans): a stubbed recognizer, so no real OCR runs here.
+  const parsers = require('../services/material-parsers');
+  const pngBuf = Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), Buffer.alloc(300, 1)]);
+  parsers.setOcr(async () => ({ text: `${FACT}${FACT}` }));
+  const ocr = await parsers.fromImage(pngBuf);
+  check('PNG becomes text through OCR', !ocr.error && ocr.text.includes('oxidative phosphorylation') && ocr.pages === 1, ocr);
+  parsers.setOcr(async () => ({ text: 'Only a handful of words' }));
+  check('a picture with under 20 readable words says there is too little text', (await parsers.fromImage(pngBuf)).code === 'too_little');
+  parsers.setOcr(async () => ({ missing: true }));
+  const noLibrary = await parsers.fromImage(pngBuf);
+  check('without tesseract.js a picture says so plainly', noLibrary.code === 'no_ocr' && /tesseract\.js is not installed/.test(noLibrary.error), noLibrary);
+  parsers.setOcr(null);
+  const scanned = await materials.extract(blankPdf());
+  check('a PDF with no text layer says it looks scanned', scanned.code === 'scanned' && /scanned/.test(scanned.error), scanned);
+
   // Honest failures
   const empty = await materials.extract(await zip({ 'content.xml': '<office:text><text:p>hi</text:p></office:text>' }, ['mimetype', 'application/vnd.oasis.opendocument.text']));
   check('a nearly empty document says there is too little text', empty.code === 'too_little', empty);
   const badEpub = await materials.extract(await zip({ 'x.txt': 'nothing' }, ['mimetype', 'application/epub+zip']));
   check('a broken EPUB is a plain error', !!badEpub.error && ['bad_type', 'unreadable'].includes(badEpub.code), badEpub);
-  const png = await materials.extract(Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), Buffer.alloc(300, 1)]));
-  check('an image is refused plainly (OCR is a later slice)', png.code === 'bad_type', png);
+  parsers.setOcr(async () => ({ text: `${FACT}${FACT}` }));
+  const picture = await materials.extract(pngBuf);
+  check('a picture with text is stored as an image material', !picture.error && picture.kind === 'image', picture);
+  parsers.setOcr(null);
   const rtfBad = await materials.extract(Buffer.from('{\\rtf1 '.concat('\\par ', 'x'.repeat(50), '}')));
   check('a tiny RTF says there is too little text', rtfBad.code === 'too_little', rtfBad);
 

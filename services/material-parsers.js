@@ -6,6 +6,10 @@ const MAX_PAGES = 300;
 const MAX_ZIP_ENTRIES = 5000;
 const MAX_ZIP_UNPACKED = 200 * 1024 * 1024;
 
+// OCR of pictures (tesseract.js is optional). Its language data is cached under data/models/tesseract.
+const TESSERACT_CACHE = require('path').join(__dirname, '..', 'data', 'models', 'tesseract');
+const MIN_OCR_WORDS = 20;
+
 function fail(error, code) { return { error, code }; }
 
 /** Read a zip's central directory: entry names and declared sizes, without unpacking anything. */
@@ -42,6 +46,11 @@ function normalise(text) {
     .trim();
 }
 
+/** Words with a letter or digit in them; lone punctuation and page furniture do not count. */
+function countWords(text) {
+  return (String(text || '').match(/[A-Za-z0-9][A-Za-z0-9'’-]*/g) || []).length;
+}
+
 async function fromPdf(buf) {
   const { getDocumentProxy, extractText } = await import('unpdf');
   let pdf;
@@ -54,7 +63,12 @@ async function fromPdf(buf) {
   try {
     if (pdf.numPages > MAX_PAGES) return fail(`That PDF has ${pdf.numPages} pages. The limit is ${MAX_PAGES}. Upload a part of it.`, 'too_many_pages');
     const { text } = await extractText(pdf, { mergePages: false });
-    return { text: normalise(text.join('\n\n')), pages: pdf.numPages };
+    const joined = normalise(text.join('\n\n'));
+    // A PDF with no text layer is a scan; page images are not rendered here, so say so plainly.
+    if (countWords(joined) < MIN_OCR_WORDS) {
+      return fail('That PDF looks scanned: it has no copyable text, only pictures of pages. Upload each page as a PNG or JPG picture, or paste the text.', 'scanned');
+    }
+    return { text: joined, pages: pdf.numPages };
   } catch {
     return fail('That PDF could not be read. It may be damaged.', 'unreadable');
   } finally {
@@ -290,4 +304,35 @@ async function fromHtmlFile(buf) {
   return { text: htmlText(buf.toString('utf8')), pages: null };
 }
 
-module.exports = { MAX_PAGES, fail, normalise, zipEntries, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, htmlText };
+/** The real recognizer. tesseract.js is an optional dependency: without it the learner is told so. */
+async function tesseractOcr(buf) {
+  let Tesseract;
+  try { Tesseract = require('tesseract.js'); } catch { return { missing: true }; }
+  let worker;
+  try {
+    require('fs').mkdirSync(TESSERACT_CACHE, { recursive: true });
+    worker = await Tesseract.createWorker('eng', 1, { cachePath: TESSERACT_CACHE });
+    const out = await worker.recognize(buf);
+    return { text: (out && out.data && out.data.text) || '' };
+  } catch {
+    return { failed: true };
+  } finally {
+    if (worker) { try { await worker.terminate(); } catch { /* nothing to do */ } }
+  }
+}
+
+// Tests swap the recognizer so no real OCR runs; null means the real one.
+let recognizer = null;
+function setOcr(fn) { recognizer = typeof fn === 'function' ? fn : null; }
+
+/** A PNG or JPG: the words in the picture, read in English. */
+async function fromImage(buf) {
+  const out = await (recognizer || tesseractOcr)(buf);
+  if (out && out.missing) return fail('This server cannot read text from images yet (tesseract.js is not installed). Paste the text instead.', 'no_ocr');
+  if (!out || out.failed) return fail('That picture could not be read. Try a clearer or larger one.', 'unreadable');
+  const text = normalise(out.text);
+  if (countWords(text) < MIN_OCR_WORDS) return fail('There is too little text in that picture to work with. Try a clearer one, or paste the text.', 'too_little');
+  return { text, pages: 1 };
+}
+
+module.exports = { MAX_PAGES, MIN_OCR_WORDS, fail, normalise, countWords, zipEntries, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, fromImage, setOcr, htmlText };

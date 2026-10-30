@@ -109,6 +109,8 @@ function serve(router) {
   console.log('sniffing and extraction');
   check('PDF magic', materials.sniff(Buffer.from('%PDF-1.7 ...')) === 'pdf');
   check('zip magic', materials.sniff(zip([{ name: 'a', data: 'b' }])) === 'zip');
+  check('PNG magic', materials.sniff(Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47]), Buffer.alloc(8, 1)])) === 'png');
+  check('JPG magic', materials.sniff(Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe0]), Buffer.alloc(8, 1)])) === 'jpeg');
   check('binary junk refused', materials.sniff(Buffer.from([1, 2, 0, 3, 4, 5, 6])) === null);
   check('invalid UTF-8 refused', materials.sniff(Buffer.from([0xff, 0xfe, 0xfd, 0xfc, 0x41])) === null);
   check('text with a BOM accepted', materials.sniff(Buffer.from('﻿hello there')) === 'text');

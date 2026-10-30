@@ -2,7 +2,7 @@
  * Learn from your own material, slice (a) (services/materials.js).
  *
  *   GET    /api/materials          the learner's materials (no full text)
- *   POST   /api/materials?name=x   the file as the raw body (PDF, DOCX, PPTX, TXT, MD), up to 20 MB
+ *   POST   /api/materials?name=x   the file as the raw body (PDF, DOCX, PPTX, TXT, MD, PNG, JPG), up to 20 MB
  *   POST   /api/materials/paste    { title?, text }
  *   POST   /api/materials/link     { url, title? } a public web page, fetched by the server (SSRF-guarded), article text kept
  *   POST   /api/materials/youtube     { url, title? } captions of a YouTube video (never the video)
@@ -61,7 +61,7 @@ const rawBody = express.raw({ type: (req) => !/json/i.test(req.headers['content-
 const videoBody = express.raw({ type: (req) => !/json/i.test(req.headers['content-type'] || ''), limit: require('../services/material-video').MAX_VIDEO_BYTES });
 const pasteBody = express.json({ limit: '3mb', inflate: false });
 
-const STATUS = { limit: 409, too_big: 413, too_long: 413, too_many_pages: 413, no_transcriber: 503, no_ffmpeg: 503, busy: 409, no_captions: 422, unavailable: 422 };
+const STATUS = { limit: 409, too_big: 413, too_long: 413, too_many_pages: 413, no_transcriber: 503, no_ffmpeg: 503, no_ocr: 503, busy: 409, no_captions: 422, scanned: 422, unavailable: 422 };
 function refuse(res, out) {
   return res.status(STATUS[out.code] || 400).json({ error: out.error, code: out.code });
 }

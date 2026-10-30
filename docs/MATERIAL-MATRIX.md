@@ -7,7 +7,7 @@ model, a real speech model or a browser (that is S13, on the owner's machine).
 | Type | Extracts text? | How | Proven by | Honest failure |
 |---|---|---|---|---|
 | PDF with a text layer | yes | pdfjs in a child process | `materials-test.js` | "hardly any text in that PDF" |
-| PDF of scans | **no (OCR not built)** | none | `materials-test.js` (the error) | says scans are not readable yet |
+| PDF of scans | **no page rendering** | none; the text layer is checked for words | `material-matrix-test.js` (a blank page) | says the PDF looks scanned: upload page pictures or paste the text |
 | DOCX | yes | mammoth | `materials-test.js` | damaged / too little text |
 | PPTX | yes | slides plus speaker notes | `material-inputs-test.js` | no slides / damaged |
 | XLSX | yes | every sheet, one row per line, tab-joined | `material-matrix-test.js` | no sheets / too many rows |
@@ -16,7 +16,7 @@ model, a real speech model or a browser (that is S13, on the owner's machine).
 | EPUB | yes | spine order, XHTML chapters | `material-matrix-test.js` | not a usable EPUB |
 | RTF | yes | control words and font tables dropped | `material-matrix-test.js` | too little text |
 | ODT | yes | `content.xml` paragraphs | `material-matrix-test.js` | no document text |
-| PNG, JPG (photos of notes) | **no (OCR not built)** | none | `material-matrix-test.js` (refused plainly) | "only ... files are supported" |
+| PNG, JPG (photos of notes) | yes, if tesseract.js is installed | tesseract.js in English; its language data is cached in `data/models/tesseract` | `material-matrix-test.js` (stubbed recognizer) | says the library is missing, or under 20 readable words |
 | Audio (mp3, m4a, wav, webm, ogg) | yes, if the Whisper model is installed | S8 background job | `material-audio-test.js` | says the model is missing |
 | Video (mp4, mov, webm, mkv) | yes, same condition | ffmpeg audio, then the S8 job | `material-video-test.js` | no sound track / no model / no ffmpeg |
 | YouTube link | yes, if the video has captions | caption track, never the video | `material-video-test.js` | no captions: upload or paste |
@@ -25,7 +25,8 @@ model, a real speech model or a browser (that is S13, on the owner's machine).
 
 ## Not yet proven (S10 remainder)
 
-- OCR (`tesseract.js`) for scans and photos. Not installed.
+- Real OCR output: the picture checks use a stubbed recognizer, so no real picture has been read on this machine yet.
+  Turning scanned PDF pages into pictures is out of scope; the learner uploads the pages as PNG or JPG.
 - Building a study pack **and** a learning path (mocked models) from every type above; this slice proves extraction only.
   Once text is a material, the pack and path builders treat all kinds alike, but that is not yet shown per type.
 - Real files from real software (Word, Google Docs export, Kindle-style EPUBs, Excel with dates and formulas): the fixtures
