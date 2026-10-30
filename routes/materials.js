@@ -2,8 +2,10 @@
  * Learn from your own material, slice (a) (services/materials.js).
  *
  *   GET    /api/materials          the learner's materials (no full text)
- *   POST   /api/materials?name=x   the file as the raw body (PDF, DOCX, TXT, MD), up to 20 MB
+ *   POST   /api/materials?name=x   the file as the raw body (PDF, DOCX, PPTX, TXT, MD), up to 20 MB
  *   POST   /api/materials/paste    { title?, text }
+ *   POST   /api/materials/link     { url, title? } a public web page, fetched by the server (SSRF-guarded), article text kept
+ *   POST   /api/materials/transcript  { title?, text, link? } a pasted video transcript (YouTube is never contacted)
  *   GET    /api/materials/:id      one material with its full text
  *   DELETE /api/materials/:id      gone from the store and the disk copy, and its course with it
  *   POST   /api/materials/:id/course   start building the course (202; resumes a partial one)
@@ -68,6 +70,24 @@ router.get('/review-due', requireAuth, (req, res) => res.json(study.dueSummary(r
 router.post('/paste', requireAuth, limit('materials-paste', 20, 60 * 60 * 1000), pasteBody, (req, res) => {
   const b = req.body || {};
   const out = materials.addPaste(req.user.id, b.title, b.text);
+  if (out.error) return refuse(res, out);
+  res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
+});
+
+router.post('/link', requireAuth, limit('materials-link', 10, 60 * 60 * 1000), pasteBody, async (req, res) => {
+  const b = req.body || {};
+  let out;
+  try { out = await materials.addLink(req.user.id, b.url, b.title); } catch (err) {
+    console.error('materials link:', err.message);
+    return res.status(400).json({ error: 'That page could not be read.', code: 'unreadable' });
+  }
+  if (out.error) return refuse(res, out);
+  res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
+});
+
+router.post('/transcript', requireAuth, limit('materials-transcript', 20, 60 * 60 * 1000), pasteBody, (req, res) => {
+  const b = req.body || {};
+  const out = materials.addTranscript(req.user.id, b.title, b.text, b.link);
   if (out.error) return refuse(res, out);
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
 });

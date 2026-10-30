@@ -15,7 +15,7 @@ App.mount(async () => {
     return;
   }
 
-  const KIND = { pdf: 'PDF', docx: 'Word', text: 'Text', paste: 'Pasted' };
+  const KIND = { pdf: 'PDF', docx: 'Word', text: 'Text', paste: 'Pasted', pptx: 'Slides', link: 'Web page', transcript: 'Transcript' };
 
   function render() {
     const lim = data.limits;
@@ -24,12 +24,12 @@ App.mount(async () => {
       <p class="muted">Add notes, a chapter or a handout, then choose: a <strong>study pack</strong> (a summary, flashcards, a quiz and a practice test, made in a few minutes) or a <strong>learning path</strong> (a course that turns it into lessons and practice, checks you before moving on, and brings things back for review when you are about to forget them).</p>
       <div class="card">
         <h2>Where it goes</h2>
-        <p class="small">We read the text out of your file and keep only that text, on Savant's server, tied to your account. The file itself is not kept. Nobody else can see it and it is never shared with other learners. When a course is built from it, the text is sent to the AI services Savant uses for learners. When you ask the tutor about it, the few matching passages go along with your question; on graded or timed pages the tutor is not given your text. Delete it here and it is removed for real, right away. Only upload material you may use for your own study.</p>
+        <p class="small">We read the text out of your file and keep only that text, on Savant's server, tied to your account. The file itself is not kept. Nobody else can see it and it is never shared with other learners. When a course is built from it, the text is sent to the AI services Savant uses for learners. When you ask the tutor about it, the few matching passages go along with your question; on graded or timed pages the tutor is not given your text. Delete it here and it is removed for real, right away. If you add a web link, our server opens that page once, keeps only its article text, and does not keep the page. Only upload material you may use for your own study.</p>
       </div>
       <div class="card" style="margin-top:18px">
         <h2>Upload a file</h2>
-        <label class="field"><span>PDF, Word (.docx), .txt or .md. Up to ${lim.max_mb} MB and about ${lim.max_pages} pages.</span>
-          <input type="file" id="file" accept=".pdf,.docx,.txt,.md,.markdown,application/pdf,text/plain,text/markdown"></label>
+        <label class="field"><span>PDF, Word (.docx), PowerPoint (.pptx), .txt or .md. For Google Slides, use File, Download, PowerPoint. Up to ${lim.max_mb} MB and about ${lim.max_pages} pages.</span>
+          <input type="file" id="file" accept=".pdf,.docx,.pptx,.txt,.md,.markdown,application/pdf,text/plain,text/markdown"></label>
         <button class="btn btn-primary" type="button" id="upload">Upload</button>
         <p class="small" id="upload-note" role="status"></p>
       </div>
@@ -39,6 +39,21 @@ App.mount(async () => {
         <label class="field"><span>Text</span><textarea id="paste-text" rows="8"></textarea></label>
         <button class="btn btn-primary" type="button" id="paste">Save pasted text</button>
         <p class="small" id="paste-note" role="status"></p>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h2>Or add a web page</h2>
+        <label class="field"><span>A public web address (https://…). Pages that need a sign-in will not work: paste the text instead.</span><input type="url" id="link-url" maxlength="2000" placeholder="https://"></label>
+        <button class="btn btn-primary" type="button" id="link-add">Read this page</button>
+        <p class="small" id="link-note" role="status"></p>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h2>Or paste a video transcript</h2>
+        <p class="small">Savant never contacts YouTube. Open the video, choose "Show transcript", copy it and paste it here. The timestamps are removed.</p>
+        <label class="field"><span>Title (optional)</span><input type="text" id="tr-title" maxlength="120"></label>
+        <label class="field"><span>Video link (optional, kept only as a label)</span><input type="url" id="tr-link" maxlength="200" placeholder="https://www.youtube.com/watch?v=…"></label>
+        <label class="field"><span>Transcript</span><textarea id="tr-text" rows="6"></textarea></label>
+        <button class="btn btn-primary" type="button" id="tr-add">Save transcript</button>
+        <p class="small" id="tr-note" role="status"></p>
       </div>
       <div class="card" style="margin-top:18px"><h2>Your material (${data.materials.length} of ${lim.max_items})</h2>
         ${data.materials.length ? `<ul style="list-style:none;padding:0;margin:0">${data.materials.map((m) => `
@@ -69,6 +84,17 @@ App.mount(async () => {
         App.toast('Saved.', 'ok');
       } catch (err) { note('upload-note', 'The upload did not go through. Check your connection and try again.'); }
     });
+    const addVia = (btnId, noteId, path, body, busy) => document.getElementById(btnId).addEventListener('click', async () => {
+      note(noteId, busy);
+      try {
+        const out = await App.api.post(path, body());
+        data.materials = out.materials;
+        render();
+        App.toast('Saved.', 'ok');
+      } catch (err) { note(noteId, err.message); }
+    });
+    addVia('link-add', 'link-note', '/api/materials/link', () => ({ url: document.getElementById('link-url').value }), 'Opening the page…');
+    addVia('tr-add', 'tr-note', '/api/materials/transcript', () => ({ title: document.getElementById('tr-title').value, link: document.getElementById('tr-link').value, text: document.getElementById('tr-text').value }), 'Saving…');
     document.getElementById('paste').addEventListener('click', async () => {
       try {
         const out = await App.api.post('/api/materials/paste', { title: document.getElementById('paste-title').value, text: document.getElementById('paste-text').value });

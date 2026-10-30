@@ -52,9 +52,14 @@ async function extract(buf) {
   let out;
   let kind;
   if (type === 'pdf') { kind = 'pdf'; out = await parseInChild('pdf', buf); }
-  else if (type === 'zip') { kind = 'docx'; out = await parseInChild('docx', buf); }
+  else if (type === 'zip') {
+    const listing = zipEntries(buf);
+    const pptx = !!listing && listing.entries.some((e) => /^ppt\/slides\/slide\d+\.xml$/.test(e.name));
+    kind = pptx ? 'pptx' : 'docx';
+    out = await parseInChild(kind, buf);
+  }
   else if (type === 'text') { kind = 'text'; out = { text: normalise(buf.toString('utf8')), pages: null }; }
-  else return fail('Only PDF, Word (.docx), text and Markdown files are supported.', 'bad_type');
+  else return fail('Only PDF, Word (.docx), PowerPoint (.pptx), text and Markdown files are supported.', 'bad_type');
   if (out.error) return out;
   if (out.text.length < MIN_CHARS) {
     return fail(kind === 'pdf'
@@ -126,6 +131,43 @@ function addPaste(userId, title, text) {
   return add(userId, { title, text: t, kind: 'paste', pages: null });
 }
 
+/** A public web page the learner names: the server fetches it and keeps the article text only. */
+async function addLink(userId, link, title) {
+  const got = await require('./material-web').fetchPage(link); // eslint-disable-line global-require
+  if (got.error) return got;
+  if (got.text.length < MIN_CHARS) return fail('There is hardly any readable text on that page.', 'too_little');
+  if (got.text.length > MAX_CHARS) return fail('That page is too long. Paste the part you want instead.', 'too_long');
+  return add(userId, { title: title || got.title, text: got.text, kind: 'link', pages: null, sourceName: got.url });
+}
+
+const YOUTUBE_HOST = /^(www\.|m\.|music\.)?(youtube\.com|youtu\.be)$/i;
+/** Drop caption timestamps (0:05, 01:02:03, [00:12]) and join caption lines into running text. */
+function cleanTranscript(text) {
+  return normalise(String(text)
+    .replace(/^\s*\[?\(?\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d{1,3})?\)?\]?\s*$/gm, ' ')
+    .replace(/\[?\(?\b\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d{1,3})?\b\)?\]?\s*(?=\S)/g, ' ')
+    .replace(/\s*\n\s*/g, ' ')).replace(/ {2,}/g, ' ');
+}
+/**
+ * A transcript the learner copied out of a video page and pasted. The server never contacts YouTube: the
+ * link is kept as a label only, and must look like a YouTube address.
+ */
+function addTranscript(userId, title, text, link) {
+  let label = null;
+  if (link) {
+    let u;
+    try { u = new URL(String(link).trim()); } catch { return fail('That does not look like a video link.', 'bad_url'); }
+    if (!/^https?:$/.test(u.protocol) || u.username || u.password || !YOUTUBE_HOST.test(u.hostname)) return fail('The video link should be a youtube.com or youtu.be address (or leave it empty).', 'bad_url');
+    label = u.href.slice(0, 200);
+  }
+  if (typeof text !== 'string') return fail('Paste the transcript first.', 'empty');
+  if (text.length > MAX_CHARS * 2) return fail('That transcript is too long. Paste a part of it.', 'too_long');
+  const t = cleanTranscript(text);
+  if (t.length < MIN_CHARS) return fail('There is too little text there to build a course from.', 'too_little');
+  if (t.length > MAX_CHARS) return fail('That transcript is over the limit. Paste a part of it.', 'too_long');
+  return add(userId, { title: title || 'Video transcript', text: t, kind: 'transcript', pages: null, sourceName: label });
+}
+
 /** Delete for real: the row leaves the store and the store is written to disk now. */
 function remove(userId, id) {
   const n = db.remove('materials', (m) => m.id === Number(id) && m.user_id === userId);
@@ -140,5 +182,5 @@ function remove(userId, id) {
 
 module.exports = {
   MAX_BYTES, MAX_PAGES, MAX_CHARS, MIN_CHARS, MAX_ITEMS, MAX_TOTAL_CHARS,
-  sniff, extract, list, get, textOf, addFile, addPaste, remove, zipEntries,
+  sniff, extract, list, get, textOf, addFile, addPaste, addLink, addTranscript, cleanTranscript, remove, zipEntries,
 };
