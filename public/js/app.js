@@ -886,6 +886,20 @@
     scale, checkpointTicks, tmeter, unitStrip, retakePlacement, bindRetake, noDash,
   };
 
+  // Installable on a phone: the manifest link, and the service worker that keeps the offline shell
+  // (public/sw.js; static files only, never /api). Skipped on the sealed Spanish tests.
+  if (!/^\/spanish-(check|listening)/i.test(location.pathname)) {
+    if (!document.querySelector('link[rel="manifest"]')) {
+      const link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = '/manifest.webmanifest';
+      document.head.appendChild(link);
+    }
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {}); });
+    }
+  }
+
   // The tutor dock goes on every page except the sealed Spanish tests (js/tutor-dock.js checks again).
   if (!/^\/spanish-(check|listening)/i.test(location.pathname)) {
     const dockScript = document.createElement('script');

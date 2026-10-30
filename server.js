@@ -202,6 +202,9 @@ app.use(express.static(path.join(__dirname, 'public'), {
     // The typefaces are also read by the sandboxed lesson frames (routes/base-lessons.js),
     // whose opaque origin makes a font load a cross-origin request. Public files only.
     if (/\.woff2?$/i.test(file)) res.setHeader('Access-Control-Allow-Origin', '*');
+    // The service worker and manifest are re-checked on every visit so a deploy reaches phones at once.
+    if (/[\\/]sw\.js$/.test(file)) { res.setHeader('Cache-Control', 'no-cache'); res.setHeader('Service-Worker-Allowed', '/'); }
+    if (/\.webmanifest$/.test(file)) { res.setHeader('Content-Type', 'application/manifest+json'); res.setHeader('Cache-Control', 'no-cache'); }
   },
 }));
 
