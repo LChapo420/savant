@@ -69,7 +69,7 @@ S2. **First slice DONE on `studley-parity` (355d450), see Done. Remaining: S2b.*
    - Also cards made from the learner's own recorded mistakes and misconceptions.
 S2b. **DONE on `studley-parity` (9fade45), see Done.**
 S2c. **DONE on `studley-parity` (c5b159b), see Done.**
-S3. **Practice test on demand:** pick skills and a length, timed or untimed.
+S3. [claimed 2026-10-30T0Z cloud run] **Practice test on demand:** pick skills and a length, timed or untimed.
    - Written answers go through `services/typed-grading.js`.
    - Results feed the learner model.
 S4. **A tutor grounded in the material.** Retrieve the relevant source passages for the page or skill into `services/tutor-context.js`; today it sees only titles and counts.
