@@ -59,8 +59,12 @@ C2d. [done f4f2ecf, item 1 only; rest is C2e] **Pages.** `public/catchup.html` +
     progress, next review due, 375 px width cap, existing CSS variables) and a "Catch me up to this grade" link on the math,
     english and reading path page. Checked by a static test in `scripts/catchup-units-test.js` and `npm test`; NOT opened in
     a browser (no login in this run).
-C2e. [claimed 2026-10-30 06:56Z] **Review queue, lookback, browser.** (1) Put each finished block's reviews (`block.reviews`, +1/3/7/21 days) into the real
+C2e. **Review queue, lookback, browser.** (1) Put each finished block's reviews (`block.reviews`, +1/3/7/21 days) into the real
     review queue (`services/review-session.js` / `retention-schedule.js`); today they live only on the catch-up row.
+    Finding (30 Oct night): `adaptation.dailyReview` builds the queue from the learner's per-objective record, not a seeded
+    list, and catch-up levels are played on a real enrollment, so their answers already feed it. Unproven: needs a played
+    session (HTTP) showing a caught-up objective appear in `dailyReview` after its forgetting-curve gap; until then
+    `next_review_due_at` on the page is the catch-up row's own +1/3/7/21 schedule and the page should say so.
     (2) Owner decision: lookback (default 2 grades below the target). (3) Drive the whole flow through HTTP in a browser at
     375 px and look at the page (the owner's local agent has the browser).
 C3. [done d0dedb9, math/english/reading; Spanish is covered by its own sealed test] **Proof per subject.** `scripts/catchup-sim.js`: simulated learners with planted gaps (a few, many, none, all)
@@ -72,7 +76,7 @@ C3b. **Slip-tolerant check.** `scripts/catchup-sim.js` measures that with a 3% s
     98%+ either way. To meet "teach a known skill <= 5%" at 3% slip, banks need >= 7 questions per unit
     (`scripts/generate-unit-placement.js`, owner's models, so `[local only]` for the generation) and the check then asks a
     second question after a first miss. Then move the sim's gated slip from 0 to 3%.
-C4. **Evidence map.** In `docs/CATCHUP-PROOF.md`, each design choice (diagnostic first, skip mastered skills,
+C4. [claimed 2026-10-30 06:58Z] **Evidence map.** In `docs/CATCHUP-PROOF.md`, each design choice (diagnostic first, skip mastered skills,
     prerequisite order, retrieval practice, spacing, final re-check) cites its mechanism id.
 C5. **Real UI.** The page shows the target, what was found missing, progress, and when the next review is due;
     works at 375 px with the existing CSS variables.
