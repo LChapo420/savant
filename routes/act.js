@@ -5,15 +5,21 @@
  *   POST   /api/act/profile       { test_date?, target? }  null clears one
  *   POST   /api/act/scores        { kind?, taken_on, form?, english, math, reading, science? }
  *   DELETE /api/act/scores/:id    one of the learner's own scores
+ *   GET    /api/act/plan          the session-by-session plan to the test date (services/act-plan.js)
  */
 const express = require('express');
 const { requireAuth } = require('../middleware/auth');
 const act = require('../services/act-scores');
+const plan = require('../services/act-plan');
 
 const router = express.Router();
 
 router.get('/scores', requireAuth, (req, res) => {
   res.json(act.summary(req.user.id));
+});
+
+router.get('/plan', requireAuth, (req, res) => {
+  res.json(plan.forUser(req.user.id));
 });
 
 router.post('/profile', requireAuth, (req, res) => {

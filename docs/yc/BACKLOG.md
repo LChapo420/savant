@@ -44,6 +44,46 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
+   **TOP PRIORITY (owner, 2026-10-30 ~01:00Z): studley.ai parity, items S1-S7, in order, one per run. The owner wants it by the morning of 30 Oct.**
+   **These items do NOT build on `yc-next`.** For an S item:
+   1. `git fetch origin`. If `origin/studley-parity` exists, check it out; otherwise create it from `origin/own-material-paths`.
+   2. Build the item there, run `npm test`, and push `origin/studley-parity` only.
+   3. On `yc-next`, commit only the claim line and the Done note in this backlog.
+   Never merge `studley-parity` or `own-material-paths` into `yc-next` or `main`: the owner's local agent verifies with real models and a browser, then merges.
+   - **Read first:** `git show origin/yc-next:docs/yc/STUDLEY-RECON.md` (the feature matrix, gaps with file:line, specs in our own words) and `docs/OWN-MATERIAL-MECHANISMS.json` on that branch.
+   - **The material code:** `services/course-builder.js`, `material-path.js`, `material-study.js`, `materials.js`, `material-parsers.js`, `routes/materials.js`, `public/my-material*.html`.
+   - **Rules:**
+     - Model calls go only through `services/ai.js` / `services/pool.js`, with learner-class providers for anything carrying learner data. You have no keys, so tests use the existing mocks.
+     - No new outside AI or speech vendor.
+     - Per-learner, never shared, deleted for real; update `public/privacy.html` and the /my-material "where it goes" text for any new data flow.
+     - Use the CSS variables; it must work at 375 px.
+     - Add each new test to `scripts/test-steps.json`.
+     - Don't touch `docs/OWN-MATERIAL-PROOF.md`.
+S1. **First slice DONE on `studley-parity`, see Done. Remaining: S1b.** **Pack or path choice on upload.**
+   - "Study pack" generates a summary, flashcards, a quiz, and a practice test (multiple choice, fill-in-the-blank, written).
+   - "Learning path" is the existing course builder.
+   - A path can be extended by adding more material (new skills merged into the same graph and schedule) or by "continue" (more practice and levels on the same skills).
+S1b. **DONE on `studley-parity`, see Done.** (Extend a path.)
+S2. [claimed 2026-10-30T01:18:40Z] **Flashcards** generated from the material, tied to its skills, and scheduled by the SAME per-learner spaced-review model as path skills (`material-path.js`).
+   - Learners can edit cards.
+   - Also cards made from the learner's own recorded mistakes and misconceptions.
+S3. **Practice test on demand:** pick skills and a length, timed or untimed.
+   - Written answers go through `services/typed-grading.js`.
+   - Results feed the learner model.
+S4. **A tutor grounded in the material.** Retrieve the relevant source passages for the page or skill into `services/tutor-context.js`; today it sees only titles and counts.
+   - Keep the context budget.
+   - Keep the hint-ladder rule (`MODE_NOTE.full`).
+S5. **More inputs, no new vendor:**
+   - PPTX (slide XML text; `material-parsers.js` has zip handling);
+   - several files merged into one course;
+   - web links (server fetch with strict SSRF protection: http/https only, block private and loopback IPs after DNS resolution, size and time caps, HTML to text);
+   - pasted YouTube transcripts (the learner pastes them; never scrape YouTube).
+S6. **Podcast from the material, and a version built from the learner's weak spots.**
+   - A two-voice script generated as text.
+   - Played with the browser's speech synthesis only (play/pause, speed, skip).
+   - No paid voice vendor.
+S7. **PWA:** a manifest and an offline shell, so it installs on a phone. Then write `docs/STUDLEY-PARITY.md` on the branch: what was built, file:line, the tests, and what is deferred (lecture audio speech-to-text and premium voices need an owner budget; share links need an owner decision).
+
    **Order update (2026-10-29 ~10:00Z, owner's local agent): the tutor is live on every page with six context slices, voice and listening; the rest of 0c and 0d-b is polish or needs the owner. Next take, in this order: item 5 (activation funnel numbers), 10 (invite a friend), 13 (privacy gaps), 12 (demo script), 11 (interview prep), then 0b(c2), 0a, 0c leftovers, 0d-b. Claim the item itself by its number as usual.**
 
    **Overnight order (owner, 2026-10-29 03:30Z, going to sleep: "I need every single thing fully built"). Take these first, in order. 0-fix1 and 0-fix2 are small; do them first. Then the tutor (0c, 0d) is the top feature: the owner said there is no AI to help anywhere on the site.**
@@ -100,9 +140,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    real browser, signed in (a cloud run has no session; do it on the owner's machine or with a seeded demo login).
 4. **Link the ACT page.** Add `/act` to the home page and header once the owner approves the wording (the track blurb in `config/curriculum.js` still says "under the timing the real test imposes", which the app does not do; fix with item 1).
 5b. **DONE, see Done.** (Funnel on the admin metrics page.)
-6. **Test-date plan** (item 4): from the test date and section scores, choose the skills with the most points
-   available in the weakest sections and lay out a fixed number of sessions that fits the weeks left, with
-   review timed to peak at the test date. Reuse placement, mastery and the retention scheduler.
+6. **Test-date plan: DONE, see Done.** (Leftovers 6b below.)
+6b. **Test-date plan, leftovers.** (1) Look at the Your plan card at 375 px signed in (cloud run has no session). (2) Link each plan session to a real practice session (today it names the skills; opening the skill from the card is not built). (3) Re-plan from fresh mastery after each session and show "today's session" on the home page once the owner approves the wording. (4) Session counts (4 a week, 30 min) are one config object in `services/act-plan.js` with no evidence behind them yet; the owner should confirm them.
 7. **Real section timer** (item 5) for Timed Tasks and Finals, with pacing feedback. Section lengths are
    UNVERIFIED until checked on act.org: make them one config object and flag them.
 8. **ACT-format English player** (item 6): passages with numbered underlined portions and "NO CHANGE"
@@ -137,6 +176,11 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+- 2026-10-30: **S1b extend a path** (on branch `studley-parity`, commit ae9c8c2; not merged into `yc-next` or `main`). New `services/course-extend.js`: `more()` ("continue": more grounded questions on the same skills, deduped against existing prompts, ids continue the numbering, pool capped at 24 per skill, optional skill picks) and `addMaterial()` (builds or reuses another of the learner's materials' course and appends its skills after the existing ones: own ids, skills whose title is already on the path left out, prerequisites kept only inside the added set, up to 4 added materials and 60 skills). Existing ids, levels and units never change, so the learner's progress and review schedule carry on. New questions pass the same quote-in-passage check and second model pass, against the text of the material the skill came from (a changed source text skips the skill). `buildSkill` in `course-builder.js` takes an `extra` argument; `summary()` shows `added`, `extended`, `extending`, `last_extend`. Routes `POST /api/materials/:id/course/more` and `/course/add` (202, rate limited, outcome in `GET .../course`). `/my-material` shows More practice and Add to this path once a path exists. Checked: new `scripts/course-extend-test.js` (about 45 checks with a mock model) in `test-steps.json`; full `npm test` passed. Not checked: a real model, a browser at 375 px. Known limit: a forced rebuild of the base material drops added skills and extra questions.
+
+- 2026-10-30: **S1 first slice, study pack beside the learning path** (on branch `studley-parity`, commits 2156c26, b36a194 and the demo-script fix after it; not merged into `yc-next` or `main`). `services/material-pack.js`: per material, a summary, flashcards, a multiple-choice quiz and a practice test (multiple choice, fill-in-the-blank, written), every item with a quote that must be in the learner's text (same near-quote check as the course builder) and a second model pass that must say supported for multiple-choice and fill-in items; written items are shown with the model answer and key points for self-check (no model reads the learner's answer yet; S3 adds `typed-grading`). Goes through `services/ai.js` with learner-class data and its own token budget (120k). Routes `POST/GET /api/materials/:id/pack`, `POST .../pack/grade` (marked on the server, keys never sent early); new collection `material_packs` (db, account export, child deletion, deleted with the material). UI: `/my-material` now offers **Study pack** or **Learning path** per material; new `/my-material-pack` page (tabs, flip cards, quiz, test). `public/privacy.html` retention row added. Checked: new `scripts/material-pack-test.js` (about 45 checks with a mock model: grounding, dropped items, no keys in the view, grading, routes, isolation between learners, delete cascade, wiring) in `test-steps.json`; two existing checks that looked for the old button name updated; full `npm test` passed (All steps passed). Not checked: a real model, a browser at 375 px.
+
+- 2026-10-30: **Test-date plan** (item 6; commit in this push). `services/act-plan.js` (pure; config object at the top): from the test date, target, latest section scores and `skill_states` mastery it ranks the 37 ACT skills by section gap times what is not yet mastered (Science half weight, its composite role is UNVERIFIED), orders them so weak sections are worked in turn, and lays out about 4 sessions a week to the test: learn, then spaced reviews (1, 3, 7, 14 days), review only in the last 7 days, a rest day before the test. `GET /api/act/plan` (`routes/act.js`) and a "Your plan" card on `/act-scores` (`public/js/act-scores.js`). It suggests an order, it predicts no score. Checked: new `scripts/act-plan-test.js` (26 checks, in `npm test`: ordering, no repeats, reviews follow teaching, mastered skills skipped, short and long runways, route isolation per learner, page wiring); full `npm test` passed (All steps passed). Not looked at in a real browser.
 
 - 2026-10-29: **Tutor sees the Spanish quick-game, story, dictation and talk boards** (item 0c(c), seventh slice; commit in this push). `ES.board.set()` in `public/spanish/js/core/session.js`; `play.js` and `learn.js` set the level's kind and title, quick games add their rule and live score/right/missed, talk adds goals reached. Falls back only when no session exercise is on screen. Sends no item text, no answers (listening games and dictation can't leak). Checked: 3 new checks in `scripts/tutor-dock-test.js` (script run in a stub: empty before set, title/rule/progress after, wiring) and full `npm test` ("All steps passed"). Not looked at in a real browser.
 
