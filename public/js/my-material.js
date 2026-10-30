@@ -24,7 +24,7 @@ App.mount(async () => {
       <p class="muted">Add notes, a chapter or a handout, then choose: a <strong>study pack</strong> (a summary, flashcards, a quiz and a practice test, made in a few minutes) or a <strong>learning path</strong> (a course that turns it into lessons and practice, checks you before moving on, and brings things back for review when you are about to forget them).</p>
       <div class="card">
         <h2>Where it goes</h2>
-        <p class="small">We read the text out of your file and keep only that text, on Savant's server, tied to your account. The file itself is not kept. Nobody else can see it and it is never shared with other learners. When a course is built from it, the text is sent to the AI services Savant uses for learners. Delete it here and it is removed for real, right away. Only upload material you may use for your own study.</p>
+        <p class="small">We read the text out of your file and keep only that text, on Savant's server, tied to your account. The file itself is not kept. Nobody else can see it and it is never shared with other learners. When a course is built from it, the text is sent to the AI services Savant uses for learners. When you ask the tutor about it, the few matching passages go along with your question; on graded or timed pages the tutor is not given your text. Delete it here and it is removed for real, right away. Only upload material you may use for your own study.</p>
       </div>
       <div class="card" style="margin-top:18px">
         <h2>Upload a file</h2>

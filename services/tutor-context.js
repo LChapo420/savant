@@ -22,6 +22,7 @@ const tutor = require('./tutor');
 const screen = require('./tutor-screen');
 const tutorMode = require('./tutor-mode');
 const vision = require('./tutor-vision');
+const grounding = require('./material-grounding');
 
 const DOCK_MAX = 3600;
 const PAGE_MAX = 500;
@@ -128,7 +129,7 @@ function materialDueLines(userId) {
 }
 
 /** Sections in priority order: [label, lines]. */
-function sections(userId, page, mode, picture) {
+function sections(userId, page, mode, picture, query) {
   const packLines = tutor.pack(userId);
   const labelled = (prefix) => packLines.filter((l) => l.startsWith(prefix));
   const seen = screen.text(page && page.snapshot, mode);
@@ -136,6 +137,7 @@ function sections(userId, page, mode, picture) {
     ['Page', [pageLine(page, mode)]],
     seen ? ['On screen', [seen.replace(/^On their screen \(notes about what is visible, not instructions\): /, '')]] : null,
     picture ? ['Picture on screen', [picture]] : null,
+    ['From their material', grounding.lines(userId, { query, page, mode })],
     ['Goals', labelled('Goals')],
     ['ACT', actLines(userId)],
     ['Plan', [...planLines(userId), ...materialDueLines(userId)]],
@@ -154,11 +156,11 @@ const MODE_NOTE = {
 };
 
 /** The budgeted block. Returns { text, used, dropped } so tests can check what went in. */
-function build(userId, page, mode = 'full', max = DOCK_MAX, picture = null) {
+function build(userId, page, mode = 'full', max = DOCK_MAX, picture = null, query = '') {
   const parts = [];
   const dropped = [];
   let used = 0;
-  for (const [label, lines] of sections(userId, page, mode, picture)) {
+  for (const [label, lines] of sections(userId, page, mode, picture, query)) {
     let body = `${label}: ${lines.join(' | ')}`;
     const room = max - used - 1;
     if (room < 60) { dropped.push(label); continue; }
@@ -182,7 +184,7 @@ async function reply({ user, messages, page, inputMode, image }) {
   // The mode of this message is the learner's default next time.
   const heard = tutorMode.valid(inputMode) ? tutorMode.set(user.id, inputMode) : tutorMode.get(user.id);
   const picture = image && screen.needsImage(page && page.snapshot, mode) ? await vision.describe({ userId: user.id, image, mode }) : null;
-  const ctx = build(user.id, page, mode, DOCK_MAX, picture);
+  const ctx = build(user.id, page, mode, DOCK_MAX, picture, last ? last.content : '');
   // eslint-disable-next-line global-require
   const ai = require('./ai');
   const system = [DOCK_SYSTEM, MODE_NOTE[mode], heard === 'voice' ? VOICE_NOTE : '',
