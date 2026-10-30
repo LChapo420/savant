@@ -111,3 +111,5 @@ an application goes out.
 | ACT curriculum test: 4 pass; the coverage-map check fails without `data/` | `node scripts/act-curriculum-test.js` |
 | About 74,000 lines in `routes/`, `services/`, `config/`, `public/js/` | `git ls-files` with `wc -l` |
 | The beta invite gate is not referenced in `server.js` | `grep` |
+
+**UNVERIFIED (added 2026-10-30):** | ACT Writing is scored on four domains (Ideas and Analysis, Development and Support, Organization, Language Use and Conventions), each reported on a 2 to 12 scale. **UNVERIFIED** (from memory; used in `services/act-writing.js`) | open act.org's Writing scoring page and compare the names and the scale |
