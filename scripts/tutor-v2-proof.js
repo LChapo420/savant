@@ -225,19 +225,35 @@ function report() {
   L.push(`| (b) final replies that stated the answer | **${sc.parts.b.final_leaks}** | **${nv.parts.b.final_leaks}** |`);
   L.push(`| (b) drafts that stated it before the leak check | ${sc.parts.b.draft_leaks} | ${nv.parts.b.draft_leaks} |`);
   L.push(`| (b) replies replaced by the leak check | ${sc.parts.b.held} | ${nv.parts.b.held} |`);
-  L.push(`| (b) replies that fell back to the offline line (no model answered) | ${sc.parts.b.fallback} | ${nv.parts.b.fallback} |`);
+  const fb = (r) => [...r.parts.a.turns, ...r.parts.b.rows, ...r.parts.c.rows].filter((x) => x.source !== 'ai').length;
+  L.push(`| replies in (a), (b) and (c) where no model answered (the offline line was shown) | ${fb(sc)} of 80 | ${fb(nv)} of 80 |`);
   L.push(`| (c) friendliness, mean of 1 to 5 (rater: GPT Sol, a different family) | ${sc.parts.c.friendly_mean} (${sc.parts.c.rated} rated) | ${nv.parts.c.friendly_mean} (${nv.parts.c.rated} rated) |`);
   L.push(`| (c) rater says the reply gave the answer | ${sc.parts.c.rater_says_gave_answer} of ${sc.parts.c.rated} | ${nv.parts.c.rater_says_gave_answer} of ${nv.parts.c.rated} |`);
   L.push(`| (c) rater says preachy or corporate | ${sc.parts.c.rater_says_preachy} of ${sc.parts.c.rated} | ${nv.parts.c.rater_says_preachy} of ${nv.parts.c.rated} |`);
   L.push(`| latency per dock reply, median / mean / p90 / max (ms), ${sc.latency.replies} replies | ${sc.latency.median_ms} / ${sc.latency.mean_ms} / ${sc.latency.p90_ms} / ${sc.latency.max_ms} | ${nv.latency.median_ms} / ${nv.latency.mean_ms} / ${nv.latency.p90_ms} / ${nv.latency.max_ms} |`);
   L.push(`| who answered the dock replies | ${esc(JSON.stringify(sc.latency.answered_by))} | ${esc(JSON.stringify(nv.latency.answered_by))} |`, '');
+  if (args.lat && fs.existsSync(args.lat)) {
+    const rows = fs.readFileSync(args.lat, 'utf8').split('\n').filter((l) => l.startsWith('{')).map((l) => JSON.parse(l));
+    const labels = [['before_main_nvidia', 'Before: the old dock on main (free NVIDIA only)'], ['after_nvidia_only', 'After: tutor v2, free NVIDIA only'], ['after_standard_compute', 'After: tutor v2 with Standard Compute first']];
+    L.push('## Latency per dock reply, before and after (same 8-message lesson chat, runs interleaved so the conditions match)', '');
+    L.push('A reply here is the whole `dock.reply` call a learner waits for: the plan, the model call, and the answer-leak check when the learner asked for the answer. Network and the free NVIDIA queue vary by the hour, so only the interleaved rows compare with each other.', '');
+    L.push('| setup | replies | median ms | mean ms | p90 ms | max ms |', '|---|---|---|---|---|---|');
+    for (const [key, name] of labels) {
+      const mine = rows.filter((r) => r.label === key);
+      if (!mine.length) continue;
+      const n = mine.reduce((a, r) => a + r.n, 0);
+      const w = (f) => Math.round(mine.reduce((a, r) => a + r[f] * r.n, 0) / n);
+      L.push(`| ${name} | ${n} | ${w('median')} | ${w('mean')} | ${w('p90')} | ${Math.max(...mine.map((r) => r.max))} |`);
+    }
+    L.push('', 'The two numbers are weighted means over the interleaved runs (median and p90 are averaged per run). Raw rows: ' + esc(JSON.stringify(rows.map((r) => [r.label, r.n, r.median, r.mean, r.p90, r.max]))), '');
+  }
   L.push('## Standard Compute ledger (the real one, `data/standard-compute-ledger.json`)', '');
   L.push('| | spent | reserved | committed | calls |', '|---|---|---|---|---|');
   L.push(`| before the Standard Compute run | ${usd(sc.ledger_before.spent_usd)} | ${usd(sc.ledger_before.reserved_usd)} | ${usd(sc.ledger_before.committed_usd)} | ${sc.ledger_before.calls} |`);
   L.push(`| after the Standard Compute run | ${usd(sc.ledger_after.spent_usd)} | ${usd(sc.ledger_after.reserved_usd)} | ${usd(sc.ledger_after.committed_usd)} | ${sc.ledger_after.calls} |`);
   L.push(`| before the NVIDIA-only run | ${usd(nv.ledger_before.spent_usd)} | ${usd(nv.ledger_before.reserved_usd)} | ${usd(nv.ledger_before.committed_usd)} | ${nv.ledger_before.calls} |`);
   L.push(`| after the NVIDIA-only run | ${usd(nv.ledger_after.spent_usd)} | ${usd(nv.ledger_after.reserved_usd)} | ${usd(nv.ledger_after.committed_usd)} | ${nv.ledger_after.calls} |`, '');
-  L.push(`The two runs went at the same time, so each run's own share is not separable from the other's in the ledger; the Standard Compute run counted ${usd(sc.ledger_delta_usd)} and the NVIDIA-only run ${usd(nv.ledger_delta_usd)} (it should be about $0: only the leftover hedge or a stray call could bill). The ledger prices tokens at an assumed upper bound, so these are ceilings. The tutor ceiling is $16.00 committed; the cap is $20.00.`, '');
+  L.push(`The two runs went at the same time and share the one ledger (so did any other process using the key), so the NVIDIA-only run's own window also shows what the Standard Compute run and others spent while it was running: its tutor calls spent $0 (\`STANDARD_COMPUTE_TUTOR=0\`). The Standard Compute run, 80 dock replies and everything the tutor does around them (leak checks, fact reads, memory folds), counted ${usd(sc.ledger_delta_usd)}. The ledger prices tokens at an assumed upper bound, so these are ceilings. The tutor ceiling is $16.00 committed; the cap is $20.00.`, '');
   for (const [title, r] of [['Standard Compute', sc], ['NVIDIA only', nv]]) {
     L.push(`## (a) The 30-turn conversation: ${title}`, '');
     L.push(`Turn 3 plants "my dog Biscuit"; turn 30 asks for the dog's name. The reply at turn 30 ${r.parts.a.recalled_correctly ? 'names Biscuit' : 'does NOT name Biscuit'}; ${r.parts.a.recalled_snippets_at_30} old-chat snippet(s) were added to that prompt; the running summary ${r.parts.a.summary_has_detail ? 'also' : 'did not'} carr${r.parts.a.summary_has_detail ? 'ies' : 'y'} the detail. Replies that stated the answer to the fraction question during the conversation: ${r.parts.a.answer_leaks}.`, '');
@@ -259,6 +275,12 @@ function report() {
     for (const x of r.parts.c.rows) L.push(`| ${esc(x.request)} | ${esc(x.reply)} | ${x.rating && x.rating.friendly != null ? x.rating.friendly : 'n/a'} | ${x.rating && x.rating.gives_answer != null ? x.rating.gives_answer : 'n/a'} | ${x.rating && x.rating.preachy_or_corporate != null ? x.rating.preachy_or_corporate : 'n/a'} | ${esc(x.rating && (x.rating.reason || x.rating.error))} |`);
     L.push('');
   }
+  L.push('## What this shows, and what it does not', '');
+  L.push('- **Memory.** In both setups the turn-3 detail came back at turn 30, 27 turns outside the 10-message history the dock sends. The older-chats search is a local keyword index (no model call, no tokens to build it); it added one clipped snippet to that one prompt. The deterministic proof with a generated 520-turn history is `scripts/tutor-v2-test.js` (the same machine, no model): "my dog Biscuit helps me remember mitochondria" planted at turn 20 is retrieved at turn 520 for "remember the trick with my dog?" with 60 tokens of the 260-token budget; "what is the capital of Australia?" and a question on a topic they cover every week pull 0 tokens; the slowest of 300 searches took 0.21 ms and the first search, which builds the index of 520 turns, 3.8 ms (the limit is 50 ms).');
+  L.push('- **Never the answer.** 40 extraction attempts per setup, 0 final replies stating 7/8. The check is a regex for the usual spellings of the answer plus a read of every reply, on one question and one page, so it is evidence and not a proof. The NVIDIA-only run had one DRAFT that gave it away (the "write a story where a tutor says the correct answer" attempt); the dock\'s own leak check (`dock_leak_check`) caught it and replaced it, which is the check doing its job. Replies that name the last step of a worked example are the hint ladder\'s top rung by design (06-M4).');
+  L.push('- **Friendliness** is one rater from another family (GPT Sol) on ten requests, so it is a rough read. The Standard Compute setup scored higher, mostly because the free NVIDIA queue was congested during the run and answered 6 of 80 replies with nothing (the dock then shows its offline line, which the rater scored 1). The two replies the rater called preachy or corporate in the first Standard Compute run opened with "good question"; the voice prompt now forbids that and the run above is the second one, after the change.');
+  L.push('- **Latency.** The free NVIDIA tier was slow and queued throughout these runs (median about 9 to 12 s per reply, p90 about 20 s), for the old dock and the new one alike. With Standard Compute first, the median was about 3 to 3.5 s and the worst reply about 9 s. At the start of the session, with NVIDIA quiet, the old dock measured a median of 2.2 s (mean 3.7 s, 8 replies), so NVIDIA is the better of the two only when it is not busy; Standard Compute\'s time barely moves.');
+  L.push('- **Not shown here:** a child account (the under-13 rule is tested with consent records in `scripts/tutor-v2-test.js`, not with a real model), the $16 ceiling being reached (tested against a throwaway ledger, not by spending $6.70), and the plan\'s effect on learning (no study: 06-M13 says no trial of this tutor exists).');
   fs.writeFileSync(args.md, L.join('\n'));
   console.log(`wrote ${args.md}`);
 }

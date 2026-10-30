@@ -297,9 +297,9 @@ function offlineReply(userId) {
   const weak = weakSkillLines(userId);
   const { upcoming } = topicLines(userId);
   const bits = [];
-  if (weak.length) bits.push(`The skill that looks weakest so far is ${weak[0].replace(/ \(.*$/, '')}, so that is a good one to practise.`);
+  if (weak.length) bits.push(`From my notes, ${weak[0].replace(/ \(.*$/, '')} looks like your shakiest skill so far, so it is a good one to practise.`);
   if (upcoming.length) bits.push(`Next on your path: ${upcoming[0]}.`);
-  return `${bits.join(' ') || 'Tell me what you are working on and I will help you plan it.'} The live tutor is not connected right now, so this is all I can say from my notes.`;
+  return `${bits.join(' ') || 'Tell me what you are working on and I will help you plan it.'} Sorry, the live tutor is not connected right now, so that is all I can say from my notes. Ask me again in a minute.`;
 }
 
 async function chat({ user, messages, where = 'home' }) {

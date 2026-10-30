@@ -201,12 +201,14 @@ function child({ consent = null, ai: aiOn = false }) {
   let worst = 0;
   for (let i = 0; i < 300; i++) worst = Math.max(worst, archive.recall(user.id, i % 2 ? q : `how do I do ${TOPICS[i % TOPICS.length]} again please`, { now }).ms);
   check('retrieval stays under 50 ms over 300 searches of a 520-turn history', worst < 50, worst);
+  console.log(`     measured: slowest of 300 searches ${worst} ms; planted detail recalled with ${got.tokens} tokens (budget ${archive.PAST_TOKEN_BUDGET}); unrelated question ${plain.tokens} tokens`);
   const fresh = adult('Cold');
   for (let i = 1; i <= TURNS; i++) archive.append(fresh.id, { where: 'q', learnerSaid: `${pick(ASKS).replace('{t}', pick(TOPICS))} ${i % 97 === 0 ? 'biscuit' : ''}`, tutorSaid: pick(REPLIES).replace('{t}', pick(TOPICS)), at: new Date(now - (TURNS - i) * 0.17 * DAY).toISOString() });
   const t1 = process.hrtime.bigint();
   archive.recall(fresh.id, q, { now });
   const coldMs = Number(process.hrtime.bigint() - t1) / 1e6;
   check('even the first search, which builds the index of 520 turns, is under 50 ms', coldMs < 50, coldMs);
+  console.log(`     measured: first search incl. building a ${TURNS}-turn index ${coldMs.toFixed(1)} ms`);
   const t2 = process.hrtime.bigint();
   archive.append(user.id, { where: 'home', learnerSaid: 'a brand new message about volcano drawings', tutorSaid: 'Nice.', at: new Date(now).toISOString() });
   archive.recall(user.id, 'volcano drawings', { now });
