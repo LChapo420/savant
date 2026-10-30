@@ -48,7 +48,7 @@
     const text = (c) => (typeof c === 'string' ? c : (c && (c.text || c.label)) || '');
     return {
       question: String(it.prompt || it.question || ''),
-      passage: String(it.passage || ''),
+      passage: Array.isArray(it.passage_segments) ? it.passage_segments.map((g) => g.text).join('') : String(it.passage || ''),
       choices: Array.isArray(it.choices) ? it.choices.map(text) : [],
     };
   }
@@ -76,7 +76,22 @@
          ${item.level ? `<span class="chip">level ${item.level}</span>` : ''}` : ''}`));
     }
 
-    if (item.passage) {
+    // An ACT-format passage (services/act-english-passage.js): numbered underlined portions, the one in focus marked.
+    if (Array.isArray(item.passage_segments)) {
+      const box = App.el('div', { class: 'passage act-passage' }, '');
+      item.passage_segments.forEach((seg) => {
+        if (!seg.n) { box.appendChild(document.createTextNode(seg.text)); return; }
+        const u = document.createElement('u');
+        u.textContent = seg.text;
+        if (seg.n === item.focus) u.style.cssText = 'background:var(--accent-soft, rgba(255,200,0,.25));font-weight:700';
+        const num = document.createElement('sup');
+        num.textContent = String(seg.n);
+        num.style.cssText = 'margin-left:2px;font-weight:700';
+        box.appendChild(u);
+        box.appendChild(num);
+      });
+      host.appendChild(box);
+    } else if (item.passage) {
       host.appendChild(App.el('div', { class: 'passage' }, App.escapeHtml(item.passage)));
     }
 
