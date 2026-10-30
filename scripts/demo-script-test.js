@@ -21,9 +21,11 @@ check('home page exists', fs.existsSync(path.join(ROOT, 'public/index.html')));
 console.log('quoted labels are in the code');
 const js = (f) => read(`public/js/${f}`);
 const dash = js('dashboard.js');
-for (const label of ['Your subjects', 'Recent sessions', 'skills due']) {
+for (const label of ['Your subjects', 'Recent sessions']) {
   check(`dashboard has "${label}"`, doc.includes(`**${label}**`) && dash.includes(label));
 }
+// The dashboard writes "skill${plural} due", so the plural is built at run time.
+check('dashboard has "skills due"', doc.includes('skills due**') && /skill(s|\$\{[^}]*\}) due/.test(dash));
 check('dashboard has "Start level"', dash.includes('Start level') && doc.includes('Start level N'));
 const dock = js('tutor-dock.js');
 for (const label of ['Ask tutor', 'Type', 'Talk', 'Speak', 'Send']) {
