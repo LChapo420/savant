@@ -788,6 +788,8 @@ App.mount(async () => {
 
       ${bannerHtml}
 
+      ${['math', 'english', 'reading'].includes(track.id) ? `<p class="tiny" data-catchup-link><a href="/catchup?track=${encodeURIComponent(track.id)}&grade=${encodeURIComponent(grade.id)}">Catch me up to this grade</a>: find what you are missing just below it and learn only that.</p>` : ''}
+
       ${track.id === 'chess' ? `<nav class="row-wrap tiny" aria-label="Chess practice" style="gap:var(--s-3)">
         <a href="/engine/chess/puzzles.html">Rated puzzles</a>
         <a href="/engine/chess/drills.html">Move trainer</a>

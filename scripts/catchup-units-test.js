@@ -103,5 +103,17 @@ check('not ready: unknown subject and the first grade give an error, never a gue
   assert.ok(cu.answer(u.id, 'math', 'nope', {}).error);
 });
 
+check('page: catch-up page, its script, the route mount and the subject-page link exist', () => {
+  const root = path.join(__dirname, '..');
+  const html = fs.readFileSync(path.join(root, 'public', 'catchup.html'), 'utf8');
+  assert.ok(/name="viewport"/.test(html) && html.includes('/js/catchup.js'));
+  assert.ok(/@media|max-width: 640px/.test(html), 'a width limit for 375 px');
+  assert.ok(fs.readFileSync(path.join(root, 'server.js'), 'utf8').includes("'/api/catchup', require('./routes/catchup')"));
+  const pathJs = fs.readFileSync(path.join(root, 'public', 'js', 'path.js'), 'utf8');
+  assert.ok(pathJs.includes("['math', 'english', 'reading'].includes(track.id)") && pathJs.includes('/catchup?track='));
+  const js = fs.readFileSync(path.join(root, 'public', 'js', 'catchup.js'), 'utf8');
+  for (const needle of ['next_review_due_at', 'found missing', 'blocks done', 'Catch me up to']) assert.ok(js.includes(needle), needle);
+});
+
 if (failed) { console.log(`\n${failed} failed`); process.exit(1); }
 console.log('\nall passed');
