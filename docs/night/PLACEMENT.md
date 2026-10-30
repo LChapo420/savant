@@ -80,6 +80,7 @@ P5. [done cdd574a] **Content gaps.** Subjects whose item sets can't meet P4: wri
     pipeline.
 P6. [done d0a5977] **Honest result screen.** After placement, show the placed level and what it is based on (how many questions,
     how sure), and a one-tap "this is too easy / too hard" that moves the learner and is recorded.
+    Checked: `scripts/placement-result-test.js` (basis = question count and measured sure share; too easy/hard moves one grade, clamps at both ends, keeps the walk's own grade and every tap on the placement record, which export and delete already cover); `npm test` passes. Not checked in a browser at 375 px (owner's agent). Moving the grade does not reset an already-started catch-up check for the old grade. One `round3-consolidation-test` run aborted once with a V8 regexp crash and passed on rerun.
 
 P5b. [local only] **IQ and ACT top end, measured.** With abilities spread across the grade, Quick IQ places 90% / 93% / 80% within one
     grade at the 75% / 90% / 98% levels (IQ has 0 items in grade 11, 2 in grade 12, 3 in grade 10, 2 in grade 9); ACT Quick 93% / 85% at
