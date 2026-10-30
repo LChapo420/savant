@@ -379,7 +379,7 @@ const JUDGES = {
 const DEFAULT_POLICY = {
   stages: [
     { name: 'fast', judges: ['ultra-any', 'lightning'] },
-    { name: 'escalate', judges: ['glm-max'] },
+    { name: 'escalate', judges: ['glm-flash'] }, // glm-max (GLM 5.3) retired by NVIDIA on 30 Oct 2026
     { name: 'free_fallback', judges: ['or-gemma', 'qwen-local'], when: 'unresolved' },
     { name: 'claude', judges: ['claude'], when: 'unresolved' },
   ],

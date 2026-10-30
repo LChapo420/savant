@@ -122,7 +122,7 @@ const DEFAULT_TIERS = {
   instant: [{ model: 'nvidia/nemotron-3.5-lightning-30b-a3b', effort: 'off' }, { model: 'nvidia/nemotron-3-ultra-550b-a55b', effort: 'off' }],
   light: [{ model: 'nvidia/nemotron-3-ultra-550b-a55b', effort: 'medium' }, { model: 'nvidia/nemotron-3.5-lightning-30b-a3b', effort: 'high' }],
   fast_thinking: [{ model: 'z-ai/glm-5.3-flash', effort: 'high' }, { model: 'deepseek-ai/deepseek-v4.1-flash', effort: 'high' }],
-  hard: [{ model: 'z-ai/glm-5.3', effort: 'max' }, { model: 'deepseek-ai/deepseek-v4.1-flash', effort: 'max' }],
+  hard: [{ model: 'deepseek-ai/deepseek-v4.1-flash', effort: 'max' }, { model: 'z-ai/glm-5.3-flash', effort: 'high' }], // glm-5.3 retired by NVIDIA (410) on 30 Oct 2026
 };
 const DEFAULT_SPILL = { instant: ['light', 'fast_thinking'], light: ['fast_thinking'], fast_thinking: ['hard'], hard: [] };
 const DEFAULT_ROLES = {
