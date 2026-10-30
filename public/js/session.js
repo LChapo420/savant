@@ -157,6 +157,7 @@ App.mount(async () => {
         <div class="player-chips">
           <span class="chip" id="covered"></span>
           <span class="chip counter" id="counter"></span>
+          <span class="chip hidden" id="exam-clock" role="timer" style="font-variant-numeric:tabular-nums"></span>
         </div>
         <div class="player-meter">
           <div class="segments" id="segments" aria-hidden="true"></div>
@@ -173,6 +174,42 @@ App.mount(async () => {
       </div>`;
     host.setAttribute('data-subject', session.track_id || '');
     refreshHeader();
+    startClock();
+  }
+
+  // The ACT exam clock. The server sends the allowance and its own start time,
+  // so a reload carries on from where the clock was. At zero the sitting is
+  // scored on what is answered. The section lengths are UNVERIFIED (see
+  // services/act-timing.js), and the page says so.
+  let clockTimer = null;
+  let timedOut = false;
+  function startClock() {
+    const t = session.timing;
+    if (!t || clockTimer) return;
+    const skew = Date.parse(t.server_now) - Date.now();
+    const endsAt = Date.parse(t.started_at) + t.total_seconds * 1000 - skew;
+    const slot = document.getElementById('exam-clock');
+    if (!slot) return;
+    slot.classList.remove('hidden');
+    const tick = () => {
+      const left = Math.max(0, Math.round((endsAt - Date.now()) / 1000));
+      const m = Math.floor(left / 60);
+      slot.textContent = `${m}:${String(left % 60).padStart(2, '0')} left`;
+      slot.style.color = left <= 300 ? 'var(--warn)' : '';
+      slot.setAttribute('aria-label', `${m} minutes ${left % 60} seconds left`);
+      if (left <= 0) {
+        stopClock();
+        timedOut = true;
+        App.toast('Time is up. Scoring what you answered.');
+        finish();
+      }
+    };
+    tick();
+    if (!timedOut) clockTimer = setInterval(tick, 1000);
+  }
+  function stopClock() {
+    if (clockTimer) clearInterval(clockTimer);
+    clockTimer = null;
   }
 
   function refreshHeader() {
@@ -182,7 +219,7 @@ App.mount(async () => {
       : isEssay()
       ? `Level ${currentLevel}. ${items.length} quick questions, then one piece of writing; pass mark ${Math.round((session.pass_mark || 0.75) * 100)}%.`
       : isExam()
-        ? `Level ${currentLevel}. No feedback until the end; pass mark ${Math.round((session.pass_mark || 0.8) * 100)}%.`
+        ? `Level ${currentLevel}. No feedback until the end; pass mark ${Math.round((session.pass_mark || 0.8) * 100)}%.${session.timing ? ` Timed: about ${session.timing.per_question_seconds} seconds a question.` : ''}`
         : blockKind === 'lesson'
           ? `Level ${currentLevel}, lesson. Read it, then ${items.length} question${items.length === 1 ? '' : 's'}.`
           : `${items.length} questions: review, your level, and one stretch above it.`;
@@ -785,6 +822,12 @@ function renderRubricResult(result) {
             changes: meta.changes || 0,
           });
         } catch (err) {
+          if (err.payload && err.payload.time_up) {
+            timedOut = true;
+            App.toast(err.message);
+            finish();
+            return;
+          }
           App.toast(err.message, 'error');
           return;
         }
@@ -1125,9 +1168,10 @@ function renderRubricResult(result) {
 
   async function finish() {
     host.innerHTML = '<div class="loading"><span class="spinner"></span>Analyzing your session</div>';
+    stopClock();
     let outcome;
     try {
-      outcome = await App.api.post(`/api/sessions/${session.session_id}/finish`, {});
+      outcome = await App.api.post(`/api/sessions/${session.session_id}/finish`, timedOut ? { timed_out: true } : {});
     } catch (err) {
       host.innerHTML = `<div class="notice notice-error">${App.escapeHtml(err.message)}</div>`;
       return;
@@ -1231,6 +1275,7 @@ function renderRubricResult(result) {
           ${outcome.streak ? `<div><dt>Days in a row</dt><dd>${outcome.streak}</dd></div>` : ''}
           <div><dt>Level${levels.length === 1 ? '' : 's'}</dt><dd>${levels.length > 1 ? `${levels[0]}&ndash;${levels[levels.length - 1]}` : levels[0]}</dd></div>
         </dl>
+        ${outcome.pacing ? `<p class="small" style="margin:16px 0 0" data-slot="pacing"><strong>Pacing.</strong> ${App.escapeHtml(outcome.pacing.verdict)} <span class="tiny muted">The section lengths behind this allowance are not yet checked against act.org.</span></p>` : ''}
         <p style="margin:16px 0 0" data-slot="summary">${App.escapeHtml(a.summary || '')}</p>
         <div data-slot="lists">${list('Solid', a.learned, 'chip-success')}${list('Fragile', a.fragile, 'chip-warn')}${list('Needs work', a.gaps, 'chip-danger')}</div>
         ${a.next_session && a.next_session.note ? `<p class="small muted" style="margin-top:12px">Next session: ${App.escapeHtml(a.next_session.note)}</p>` : ''}

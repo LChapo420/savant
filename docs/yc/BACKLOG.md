@@ -157,8 +157,9 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 5b. **DONE, see Done.** (Funnel on the admin metrics page.)
 6. **Test-date plan: DONE, see Done.** (Leftovers 6b below.)
 6b. **Test-date plan, leftovers.** (1) Look at the Your plan card at 375 px signed in (cloud run has no session). (2) Link each plan session to a real practice session (today it names the skills; opening the skill from the card is not built). (3) Re-plan from fresh mastery after each session and show "today's session" on the home page once the owner approves the wording. (4) Session counts (4 a week, 30 min) are one config object in `services/act-plan.js` with no evidence behind them yet; the owner should confirm them.
-7. [claimed 2026-10-30T08:30Z] **Real section timer** (item 5) for Timed Tasks and Finals, with pacing feedback. Section lengths are
+7. **DONE, see Done. Leftover: 7b.** **Real section timer** (item 5) for Timed Tasks and Finals, with pacing feedback. Section lengths are
    UNVERIFIED until checked on act.org: make them one config object and flag them.
+7b. **Exam clock leftovers.** (1) Look at the clock chip and the pacing line at 375 px in a real browser, signed in. (2) Confirm the section lengths on act.org (`services/act-timing.js` SECTIONS, flagged UNVERIFIED) and add them to `docs/yc/SOURCES-TO-VERIFY.md`. (3) The allowance is one blend for mixed exams; per-section clocks need the ACT-format players (items 8, 14, 15). (4) Timed Task level descriptions in `content/act-grades.js` still promise scoring on the 1-36 scale. Reason: this run had no browser.
 8. **ACT-format English player** (item 6): passages with numbered underlined portions and "NO CHANGE"
    choices, the schema, and a validator. Content is written later by the owner's local pipeline.
 9. **Fix the skill tagging** (item 7): the `act_rhetoric` fallback at `scripts/build-act-grades.js` should tag
@@ -193,6 +194,8 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-30: **Item 7 Real section timer (first slice)** (branch `yc-next`). `services/act-timing.js` gives ACT Master/Grand/Graduation exams a clock (blended allowance from the 35/50/40-minute English/Math/Reading lengths, UNVERIFIED); `routes/learn.js` sends `timing` with the session, refuses answers after time (409 `time_up`, 15 s grace) and returns `pacing` on finish; `public/js/session.js` shows a countdown, scores what is answered at zero, and shows pacing on the recap. Checked: `scripts/act-timing-test.js` (pure plus real routes: clock sent, late answer refused, reload keeps start, other tracks and lessons untimed; in `npm test`); full `npm test` passed. Not checked: browser at 375 px.
 
 - 2026-10-30: **S12 Optimal for each learner (first slice)** (branch `studley-parity`, commit 623f36c; claim on yc-next). `services/material-adapt.js` classifies each skill from the learner's row (known/skipped, due, fix, learning, new); the practice test's new "Pick for me" (`adapt`) asks only about those, sized by need, missed questions first, tier-aware (07-M3, M4, M6, M9). Checked: `scripts/material-adapt-test.js` (200 simulated learners: no unknown skill skipped, no known not-due skill asked, half-known learner gets half the items; in `npm test`); full `npm test` passed. Not checked: browser at 375 px.
 

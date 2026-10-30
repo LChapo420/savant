@@ -169,7 +169,21 @@ function sessionShape(session) {
     track_id: session.track_id || null,
     grade_id: session.grade_id || null,
     enrollment_id: session.enrollment_id || null,
+    // The ACT exam clock (null for every other sitting). `started_at` is the
+    // server's, so a reload does not restart the clock.
+    timing: examTiming(session),
   };
+}
+
+const EXAM_GRACE_SECONDS = 15;
+
+function examTiming(session) {
+  const t = require('../services/act-timing').timingFor({ // eslint-disable-line global-require
+    trackId: session.track_id,
+    kind: session.kind,
+    questionCount: sessions.itemsFor(session.id).length,
+  });
+  return t ? { ...t, started_at: session.started_at, server_now: new Date().toISOString() } : null;
 }
 
 /**
@@ -462,6 +476,12 @@ router.post('/sessions/:id/answer', requireAuth, async (req, res) => {
   if (session.ended_at && item.role !== 'retention') {
     return res.status(409).json({ error: 'This session is already finished.' });
   }
+  // A timed ACT exam stops taking answers when the clock runs out (a short
+  // grace covers the request in flight); what is answered is scored.
+  const clock = examTiming(session);
+  if (clock && item.role === 'exam' && Date.parse(clock.server_now) > Date.parse(clock.started_at) + (clock.total_seconds + EXAM_GRACE_SECONDS) * 1000) {
+    return res.status(409).json({ error: 'Time is up for this exam. Finish it to see what you answered.', time_up: true });
+  }
 
   // Effort monitoring on a checkpoint or the Final (ADAPT_EFFORT=on; off by
   // default): an answer too fast to have been read is not scored. It is set
@@ -751,7 +771,10 @@ router.post('/sessions/:id/finish', requireAuth, async (req, res) => {
   }));
 
   if (session.enrollment_id && !session.preview) aheadFor(req.user, session.enrollment_id, 'session finished');
+  const clock = examTiming(session);
   res.json({
+    // Pacing against the exam clock; null when the sitting was not timed.
+    pacing: clock ? require('../services/act-timing').pacing(clock, sessions.itemsFor(session.id).filter((i) => i.role === 'exam').map((i) => i.ms), { timedOut: !!(req.body && req.body.timed_out) }) : null, // eslint-disable-line global-require
     accuracy: outcome.accuracy,
     xp: outcome.xp,
     streak: outcome.streak,
