@@ -116,6 +116,29 @@ function cleanTurns(raw, byId) {
   return out;
 }
 
+/**
+ * A question the study pack already made on one of this material's skills. The pack keeps its items by passage, not by
+ * skill, so the passage the course's skill cites is the link (the same one services/material-pack.js forLearner uses):
+ * an item on a passage no skill cites is not offered. One question per skill, `pack_qid` is that item's id.
+ */
+function packChecks(userId, materialId, course, limit) {
+  const p = pack.get(userId, materialId);
+  const skills = course && Array.isArray(course.skills) ? course.skills : [];
+  if (!p || !p.status || !['ready', 'partial'].includes(p.status) || !skills.length) return [];
+  const out = [];
+  const seen = new Set();
+  for (const q of p.quiz || []) {
+    if (!q || q.type !== 'multiple_choice' || !Array.isArray(q.choices) || q.choices.length < 3 || q.choices.length > 4 || !Number.isInteger(q.answer_index)) continue;
+    if (new Set(q.choices.map((x) => String(x).toLowerCase())).size !== q.choices.length) continue;
+    const skill = skills.find((s) => (s.passage_ids || []).includes(q.passage_id));
+    if (!skill || seen.has(skill.id)) continue;
+    seen.add(skill.id);
+    out.push({ skill: skill.id, skill_title: skill.title, pack_qid: q.id, prompt: clean(q.prompt, 240), choices: q.choices.slice(0, 4), answer_index: q.answer_index, source: 'pack' });
+    if (out.length >= limit) break;
+  }
+  return out;
+}
+
 const row = (userId, materialId, kind) => db.findOne('material_podcasts', (c) => c.user_id === userId && c.material_id === Number(materialId) && c.kind === kind);
 
 /**
