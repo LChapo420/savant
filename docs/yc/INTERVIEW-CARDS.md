@@ -17,7 +17,7 @@ Repo numbers used below, and how to re-check each (run it before the call, in ca
 | Number | Check |
 |---|---|
 | 16 ACT grades, 9,807 levels | `node -e "const g=require('./content/act-grades.js').GRADES;console.log(g.length,g.reduce((s,x)=>s+x.levels.length,0))"` |
-| 112 placement questions (16 grades x 7), 84 calibration points | the 112 live in your `data/db.json` (`placement_question_sets`, see `curriculum-build/LIVE-CHANGES-2026-10-24.md`); the 84 points are `content/placement-calibration/act.json` |
+| 112 placement questions (16 grades x 7) plus 23 extra top-end items, 107 calibration points | the 112 live in your `data/db.json` (`placement_question_sets`, see `curriculum-build/LIVE-CHANGES-2026-10-24.md`); the 107 points are `content/placement-calibration/act.json`, the 23 extra items `content/placement-extra/act.json` |
 | 187 parental-consent checks | `node scripts/consent-test.js \| grep -c "^  ok"` |
 | $24 hard AI stop, $11.20 spent before the ledger | `curriculum-build/MODEL-LINEUP.md`, `services/anthropic-ledger.js` |
 | Quiz pass mark 75% | `README.md` |
@@ -134,7 +134,7 @@ Repo numbers used below, and how to re-check each (run it before the call, in ca
 
 **21. How does placement work?**
 - Say: "Seven stored questions per grade across 16 grades. Positions were set by model judges, and answer keys were checked blind by models from a different family than the writer."
-- Backs it: `curriculum-build/LIVE-CHANGES-2026-10-24.md` ACT placement row; `content/placement-calibration/act.json` (84 points). Trap: it was not calibrated on real students.
+- Backs it: `curriculum-build/LIVE-CHANGES-2026-10-24.md` ACT placement row; `content/placement-calibration/act.json` (107 points: 84 on the stored set, 23 on extra top-end items added 30 Oct). Trap: it was not calibrated on real students.
 - YOU FILL IN: nothing.
 
 **22. What is actually adaptive?**
