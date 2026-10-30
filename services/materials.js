@@ -131,6 +131,7 @@ function remove(userId, id) {
   const n = db.remove('materials', (m) => m.id === Number(id) && m.user_id === userId);
   if (n) {
     require('./course-builder').removeForMaterial(userId, id); // eslint-disable-line global-require
+    require('./material-pack').removeForMaterial(userId, id); // eslint-disable-line global-require
     db.flush();
   }
   return n > 0;

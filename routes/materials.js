@@ -14,6 +14,9 @@
  *   GET    /api/materials/:id/study/placement      the next starting-check question (no answer), or the result
  *   POST   /api/materials/:id/study/placement      { question, answer } then the next question or the result
  *   POST   /api/materials/:id/study/quiz           { mode: mastery|review, skill? } one-shot quiz, no answers
+ *   POST   /api/materials/:id/pack     start building the study pack (summary, flashcards, quiz, practice test; 202)
+ *   GET    /api/materials/:id/pack     the pack's status and content (no answer keys)
+ *   POST   /api/materials/:id/pack/grade   { section: quiz|test, answers } marked on the server
  *   POST   /api/materials/:id/study/submit         { quiz_id, answers } graded on the server
  *
  * Child accounts cannot upload or paste (routes/consent.js CHILD_MEDIA_UPLOAD); they can still delete.
@@ -24,6 +27,7 @@ const { limit } = require('../utils/rate-limit');
 const materials = require('../services/materials');
 const courses = require('../services/course-builder');
 const study = require('../services/material-study');
+const packs = require('../services/material-pack');
 
 const router = express.Router();
 
@@ -79,12 +83,34 @@ router.get('/:id/course', requireAuth, (req, res) => {
   res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)) });
 });
 
+const ownMaterial = (req, res, next) => (materials.get(req.user.id, req.params.id, false) ? next() : res.status(404).json({ error: 'No such material.' }));
+
+router.post('/:id/pack', requireAuth, limit('materials-pack', 6, 60 * 60 * 1000), (req, res) => {
+  const m = materials.get(req.user.id, req.params.id, false);
+  if (!m) return res.status(404).json({ error: 'No such material.' });
+  const existing = packs.get(req.user.id, m.id);
+  if (existing && existing.status === 'ready' && existing.version === packs.VERSION) return res.json({ pack: packs.view(existing), cached: true });
+  packs.build(req.user.id, m.id, {}).then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-pack: ${out.code}`); });
+  res.status(202).json({ started: true });
+});
+
+router.get('/:id/pack', requireAuth, (req, res) => {
+  if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
+  res.json({ pack: packs.view(packs.get(req.user.id, req.params.id)) });
+});
+
+router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-grade', 120, 60 * 60 * 1000), express.json({ limit: '64kb' }), (req, res) => {
+  const b = req.body || {};
+  const out = packs.grade(req.user.id, req.params.id, String(b.section || ''), b.answers);
+  if (out.error) return res.status(out.code === 'no_pack' ? 404 : 400).json({ error: out.error, code: out.code });
+  res.json(out);
+});
+
 const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, already_placed: 409, nothing_due: 409, use_placement: 409, not_practice: 409 };
 function studyReply(res, out, key) {
   if (out.error) return res.status(STUDY_STATUS[out.code] || 400).json({ error: out.error, code: out.code });
   return res.json(key ? { [key]: out[key] } : out);
 }
-const ownMaterial = (req, res, next) => (materials.get(req.user.id, req.params.id, false) ? next() : res.status(404).json({ error: 'No such material.' }));
 const studyBody = express.json({ limit: '64kb' });
 
 router.get('/:id/study', requireAuth, ownMaterial, (req, res) => studyReply(res, study.state(req.user.id, req.params.id)));
