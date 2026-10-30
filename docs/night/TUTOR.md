@@ -61,17 +61,19 @@ T4. [done 6b631e1] **Understands how they learn.** Choose the explanation strate
     visual description, short vs long) from what has worked for this learner (T2 facts and scorecard signals), with
     a fallback order from the 06 mechanisms. Test with two simulated learners with opposite histories: they get
     different strategies, and each strategy that fails is tried less.
-T5. [claimed 07:30Z] **Never gives the answer away.** An eval of 40 attempts to extract answers (just tell me, role-play, "my teacher
+T5. [done 923ba9a] **Never gives the answer away.** An eval of 40 attempts to extract answers (just tell me, role-play, "my teacher
     said", partial-answer fishing, multi-turn wearing down) on graded, test and lesson pages. Script runs against
     the mock and checks the guard logic (`saysAnswer` and the mode rules). Mark a follow-up `[local only]` item to
     run it against the real model.
 T6. [claimed 07:37Z] **Fast.** Context building stays under 30 ms for a learner with 5,000 events (test with a generated history);
     the reply path makes one model call.
-T7. `[local only]` Real-model run of T5 and a 20-turn memory conversation on NVIDIA; the owner's agent does this.
+T7. `[local only]` Real-model run of T5 (send each attempt in `scripts/tutor-never-answers-test.js` to the real dock model and check replies with `saysAnswer`) and a 20-turn memory conversation on NVIDIA; the owner's agent does this.
 
 ## Blocked
 
 ## Done
+
+- T5 `923ba9a`: `scripts/tutor-never-answers-test.js`: 40 attempts (5 families of 8) on a graded, a lesson and a sealed-test page against the mock: the mode comes from the server's path, the rule is last in the prompt, the attempt never enters the system prompt, an answer key on the page never reaches it, and the coach's leak guard replaces all 428 caving replies (open-ended and multiple-choice) and a 12-push wearing-down. **Found and fixed a real hole:** `cleanPath` let `//spanish-check`, `/./spanish-check`, `/x/../spanish-check` and `/%73panish-check` through as `full` mode; it now collapses slashes, decodes and normalises. Full `npm test` passed. Discovery: by design `choiceLeak` lets a reply confirm a key's place when the learner named it first, which sits slightly against the dock's "do not just say right or wrong" rule; the dock itself has no code-level leak guard, only the prompt rule (the coach has both). Real-model run is T7.
 
 - T3b `2fe3f6a`: `learner-record.tutorFacts` (solid facts, struggles seen on 2+ levels with their hint idea) feed `tutor-facts.relevant` beside the tutor's own facts; preferences/dislikes that are solid apply anywhere, the rest only on a match. Conclusions, stats and recommendations are not sent. Checked by a new case in `scripts/tutor-relevance-test.js` and full `npm test` (all steps passed). Privacy page and `docs/TUTOR-MEMORY.md` updated.
 - T4 `6b631e1`: `services/tutor-strategy.js` (6 styles, per-learner tried/worked counts in `tutor_strategies`, score (worked+2*prior)/(tried+2), fallback order and a mastery nudge), wired into `tutor.contextText` as a "HOW TO HELP THEM" block; `tutor-facts` extraction credits `worked` facts with a style and counts the model's worked/failed judgement of the previous turn's style. Exported and deleted with the account; privacy page updated. Checked by `scripts/tutor-strategy-test.js` (9 checks incl. two opposite-history learners and a 30-turn simulation where failing styles fall to <=2 uses) and full `npm test` (all steps passed). Fallback order and thresholds listed UNVERIFIED. Not done: scorecard pace/accuracy signals are not used; whether the real model judges outcomes reliably is for T7.
