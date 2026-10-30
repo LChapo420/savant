@@ -48,7 +48,7 @@ P1. [done e9900ef] **Simulation harness.** `scripts/placement-sim.js`: simulated
     slip rate), plus learners who press "I don't know". Measure placement error (placed minus true level), questions
     asked, and floor and ceiling cases. Write the table to `docs/PLACEMENT-ACCURACY.md` (baseline, before fixes).
     Checked: `npm test` passes with `scripts/placement-sim-test.js` (fixed seed, floor and ceiling within 1 grade).
-P2. [done 5f2fa6f] **Floor.** A learner who knows nothing places at the very start, not in the middle because of lucky guesses:
+P2. [done bd54139] **Floor.** A learner who knows nothing places at the very start, not in the middle because of lucky guesses:
     an "I don't know" choice on every item, correction for guessing, and an early stop at the floor.
     Checked: `npm test`; sim floor tests (guessers placed at grade 1 in <=25 questions, "I don't know" learners in <=8, 6 on English; was 21) in `scripts/placement-sim-test.js`; empty answer stored as idk (`scripts/adaptive-placement-test.js`, now in test-steps). The UI already had an "I don't know" button on every item (sends an empty answer). Unverified reading of the idk likelihood: `docs/night/PLACEMENT-UNVERIFIED.md`. Not done: baseline table not regenerated (kept as the before-fixes record); P4 will write the after table.
 P3. [claimed 2026-10-30T06:58Z] **Ceiling.** A learner who knows everything places at the top or tests out, confirmed by top-level items,
