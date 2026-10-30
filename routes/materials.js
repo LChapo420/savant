@@ -23,6 +23,7 @@
  *   POST   /api/materials/:id/study/quiz           { mode: mastery|review, skill? } one-shot quiz, no answers
  *   POST   /api/materials/:id/pack     start building the study pack (summary, flashcards, quiz, practice test; 202)
  *   GET    /api/materials/:id/pack     the pack's status and content (no answer keys)
+ *   POST   /api/materials/:id/notes        start making whole-material notes (202); GET returns them with quotes and coverage
  *   GET    /api/materials/:id/podcast      the overview and weak-spots episodes (script only) and which weak spots there are
  *   POST   /api/materials/:id/podcast      { kind: overview|weak } start writing an episode script (202)
  *   POST   /api/materials/:id/pack/grade   { section: quiz|test, answers } marked on the server
@@ -50,6 +51,7 @@ const packs = require('../services/material-pack');
 const practiceTest = require('../services/material-test');
 const cards = require('../services/material-cards');
 const podcast = require('../services/material-podcast');
+const notes = require('../services/material-notes');
 
 const router = express.Router();
 
@@ -215,6 +217,14 @@ router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-g
   const out = packs.grade(req.user.id, req.params.id, String(b.section || ''), b.answers);
   if (out.error) return res.status(out.code === 'no_pack' ? 404 : 400).json({ error: out.error, code: out.code });
   res.json(out);
+});
+
+router.get('/:id/notes', requireAuth, ownMaterial, (req, res) => res.json({ notes: notes.view(notes.get(req.user.id, req.params.id)) }));
+router.post('/:id/notes', requireAuth, ownMaterial, limit('materials-notes', 6, 60 * 60 * 1000), (req, res) => {
+  const existing = notes.get(req.user.id, req.params.id);
+  if (existing && existing.status === 'ready' && existing.version === notes.VERSION) return res.json({ notes: notes.view(existing), cached: true });
+  notes.build(req.user.id, req.params.id, {}).then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-notes: ${out.code}`); });
+  res.status(202).json({ started: true });
 });
 
 router.get('/:id/podcast', requireAuth, ownMaterial, (req, res) => res.json(podcast.options(req.user.id, req.params.id)));
