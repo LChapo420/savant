@@ -24,6 +24,7 @@ const study = require('./material-study');
 const path = require('./material-path');
 const typed = require('./typed-grading');
 const adapt = require('./material-adapt');
+const pack = require('./material-pack');
 
 const I = study.internals;
 const MIN_LEN = 3;
@@ -37,13 +38,37 @@ const KEEP = 10;
 
 const isBlank = (a) => a == null || (typeof a === 'string' && !a.trim());
 
+/**
+ * The study pack's fill-in-the-blank and written items (S3b), tied to the first course skill that cites their passage,
+ * as questions the test can draw next to the course's own. Items no skill cites are left out (no skill to feed).
+ * Both kinds are marked as short answers (free checks, then the typed-grading cascade against the model answer).
+ */
+function packExtras(userId, materialId, course) {
+  const p = pack.get(userId, materialId);
+  const out = new Map();
+  if (!p || !['ready', 'partial'].includes(p.status)) return out;
+  for (const q of p.test || []) {
+    if (q.type !== 'written' && q.type !== 'fill_blank') continue;
+    const skill = course.skills.find((s) => (s.passage_ids || []).includes(q.passage_id));
+    if (!skill || !q.prompt || !q.answer) continue;
+    const list = out.get(skill.id) || [];
+    list.push({ id: `pk-${q.id}`, type: 'short_answer', prompt: q.prompt, answer: q.answer, quote: q.quote, explanation: q.explanation, tier: q.tier || 3, from_pack: true });
+    out.set(skill.id, list);
+  }
+  return out;
+}
+
+/** The skill's own questions plus its pack items. */
+const poolOf = (skill, extras) => (skill.questions || []).concat(extras.get(skill.id) || []);
+
 /** What the test page needs to offer its choices: the skills, how many questions each has, the last results. */
 function options(userId, materialId) {
   const course = I.loadCourse(userId, materialId);
   if (!course) return { error: 'There is no course to test yet.', code: 'no_course' };
   const r = I.row(userId, materialId);
+  const extras = packExtras(userId, materialId, course);
   return {
-    skills: course.skills.map((s) => ({ id: s.id, title: s.title, unit: s.unit || null, questions: (s.questions || []).length, status: (r.skills[s.id] || {}).status || 'new' })),
+    skills: course.skills.map((s) => ({ id: s.id, title: s.title, unit: s.unit || null, questions: poolOf(s, extras).length, status: (r.skills[s.id] || {}).status || 'new' })),
     min: MIN_LEN, max: MAX_LEN, default: DEFAULT_LEN, seconds_per_question: SECONDS_PER_QUESTION,
     open: !!r.test, history: (r.tests || []).slice(-KEEP).reverse(),
   };
@@ -58,7 +83,8 @@ function start(userId, materialId, opts = {}) {
   const r = I.row(userId, materialId);
 
   const asked = Array.isArray(opts.skills) ? [...new Set(opts.skills.map(String))] : [];
-  let skills = course.skills.filter((s) => (s.questions || []).length);
+  const extras = packExtras(userId, materialId, course);
+  let skills = course.skills.filter((s) => poolOf(s, extras).length);
   if (asked.length) {
     if (asked.length > course.skills.length || asked.some((id) => !course.skills.some((s) => s.id === id))) return { error: 'No such skill.', code: 'not_found' };
     skills = skills.filter((s) => asked.includes(s.id));
@@ -81,8 +107,8 @@ function start(userId, materialId, opts = {}) {
   // Per skill: missed questions first, then the rest in a random order. Then take one from each skill in turn.
   const queues = I.shuffle(skills, rnd).map((s) => {
     const wrong = new Set((r.skills[s.id] || {}).wrong || []);
-    if (planned) return adapt.pickFor(s, planned.get(s.id), [...wrong], rnd).map((q) => [s.id, q.id]);
-    const qs = I.shuffle(s.questions, rnd);
+    if (planned) return adapt.pickFor({ ...s, questions: poolOf(s, extras) }, planned.get(s.id), [...wrong], rnd).map((q) => [s.id, q.id]);
+    const qs = I.shuffle(poolOf(s, extras), rnd);
     return qs.filter((q) => wrong.has(q.id)).concat(qs.filter((q) => !wrong.has(q.id))).map((q) => [s.id, q.id]);
   });
   const picked = [];
@@ -98,7 +124,7 @@ function start(userId, materialId, opts = {}) {
   const byId = new Map(course.skills.map((s) => [s.id, s]));
   return {
     test_id: id, timed, seconds, ends_at: timed ? new Date(now + seconds * 1000).toISOString() : null,
-    questions: order.map(([sid, qid]) => I.publicQ(byId.get(sid).questions.find((x) => x.id === qid), sid)),
+    questions: order.map(([sid, qid]) => I.publicQ(poolOf(byId.get(sid), extras).find((x) => x.id === qid), sid)),
   };
 }
 
@@ -139,11 +165,12 @@ async function submit(userId, materialId, testId, answers, opts = {}) {
   const late = !!test.timed && now > Date.parse(test.issued_at) + test.seconds * 1000 + GRACE_MS;
   const used = Math.max(0, Math.round((now - Date.parse(test.issued_at)) / 1000));
 
+  const extras = packExtras(userId, materialId, course);
   const budget = { judged: 0 };
   const items = [];
   for (const [sid, qid] of test.qids) {
     const skill = course.skills.find((s) => s.id === sid);
-    const q = skill && skill.questions.find((x) => x.id === qid);
+    const q = skill && poolOf(skill, extras).find((x) => x.id === qid);
     if (!q) continue;
     const a = Object.prototype.hasOwnProperty.call(given, qid) ? given[qid] : null;
     const answered = !isBlank(a);
