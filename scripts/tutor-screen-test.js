@@ -27,7 +27,7 @@ function check(label, ok, detail) {
 
 const ai = require('../services/ai');
 const calls = [];
-ai.talk = async (opts) => { calls.push(opts); return 'Look at the denominators first. What do you notice?'; };
+ai.talk = async (opts) => { if (!/long-term notes on one learner/.test(opts.system || '')) calls.push(opts); return 'Look at the denominators first. What do you notice?'; };
 
 const mode = require('../services/tutor-mode');
 const screen = require('../services/tutor-screen');

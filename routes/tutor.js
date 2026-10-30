@@ -3,6 +3,8 @@
  *
  *   POST   /api/tutor/chat      a turn of the home/subject chat: { messages, where }
  *   GET    /api/tutor/memory    what the tutor knows and remembers, as the learner can read it
+ *   GET    /api/tutor/facts     the durable facts the tutor keeps, each with what it is and when it was last confirmed
+ *   DELETE /api/tutor/facts/:id one fact;  DELETE /api/tutor/facts  all of them
  *   DELETE /api/tutor/memory    forget the earlier conversations (the pack is rebuilt from the
  *                               learner's own records, so it is not deleted here)
  *
@@ -12,6 +14,7 @@
 const express = require('express');
 const tutor = require('../services/tutor');
 const dock = require('../services/tutor-context');
+const facts = require('../services/tutor-facts');
 const tutorMode = require('../services/tutor-mode');
 const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
@@ -81,6 +84,21 @@ router.post('/tutor/transcribe', requireAuth, limit('tutor-transcribe', 60, 60 *
 router.get('/tutor/memory', requireAuth, (req, res) => {
   const memory = tutor.view(req.user.id);
   res.json({ know: tutor.pack(req.user.id), summary: memory.summary, recent: memory.turns.slice(-6), turn_count: memory.turn_count });
+});
+
+// The durable facts, one by one: the learner reads each and deletes any.
+router.get('/tutor/facts', requireAuth, (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.json({ facts: facts.view(req.user.id) });
+});
+
+router.delete('/tutor/facts', requireAuth, (req, res) => {
+  res.json({ ok: true, removed: facts.forgetAll(req.user.id) });
+});
+
+router.delete('/tutor/facts/:id', requireAuth, (req, res) => {
+  if (!facts.remove(req.user.id, String(req.params.id))) return res.status(404).json({ error: 'No such fact.' });
+  res.json({ ok: true });
 });
 
 router.delete('/tutor/memory', requireAuth, (req, res) => {

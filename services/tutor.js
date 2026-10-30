@@ -153,6 +153,7 @@ function view(userId) {
 }
 
 function forget(userId) {
+  // The facts are kept: the learner deletes those one by one, or all together, in their own list.
   db.remove('tutor_memory', (m) => m.user_id === userId);
 }
 
@@ -206,9 +207,15 @@ function note(userId, { where = '', learnerSaid = '', tutorSaid = '' }) {
   if (learnerSaid) add.push({ role: 'user', content: clip(learnerSaid, TURN_CHARS), where: clip(where, 60), at });
   if (tutorSaid) add.push({ role: 'assistant', content: clip(tutorSaid, TURN_CHARS), where: clip(where, 60), at });
   const m = memoryOf(userId);
+  const before = m ? [...(m.turns || [])].reverse().find((t) => t.role === 'assistant') : null;
   if (m) db.update('tutor_memory', m.id, { turns: [...(m.turns || []), ...add], turn_count: (m.turn_count || 0) + 1, updated_at: at });
   else db.insert('tutor_memory', { user_id: userId, summary: '', turns: add, turn_count: 1, folded: 0, updated_at: at });
   if ((memoryOf(userId).turns || []).length > MAX_TURNS) fold(userId).catch(() => {});
+  // Durable facts are read from the exchange after the reply is on its way (never on the reply path).
+  if (learnerSaid) {
+    // eslint-disable-next-line global-require
+    require('./tutor-facts').extract(userId, { learnerSaid, tutorSaid, before: before ? before.content : '', where }).catch(() => {});
+  }
 }
 
 // ── what goes into a prompt ────────────────────────────────────────────────

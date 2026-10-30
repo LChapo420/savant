@@ -448,6 +448,12 @@ App.mount(async () => {
 
     <div id="invite-host"></div>
 
+    <h2 class="section-title">${window.icon('brain')}What your tutor remembers</h2>
+    <div class="card" id="tutor-facts">
+      <p class="small muted" style="margin-top:0">Short notes your tutor keeps from your chats so it can help you better next time: goals, ideas you mix up, what explanations worked, what is hard, what you like. Delete any you do not want kept. Notes you do not come back to fade on their own.</p>
+      <div id="tutor-facts-list" class="small muted">Loading…</div>
+    </div>
+
     <h2 class="section-title">${window.icon('user')}Your data</h2>
     <div class="card">
       <p class="small muted">Everything the app holds on you, as one JSON file: your profile, every session, every answer, and every event.</p>
@@ -465,6 +471,8 @@ App.mount(async () => {
       </form>
     </div>`}
     </div>`;
+
+  mountTutorFacts(document.getElementById('tutor-facts-list'));
 
   // Focus history and subject focus (public/js/focus.js).
   if (window.FocusHistory) window.FocusHistory.mount(document.getElementById('focus-root'));
@@ -620,3 +628,33 @@ App.mount(async () => {
       </tbody></table>`));
   }
 });
+
+
+/** The tutor's durable notes, each with a delete button (GET/DELETE /api/tutor/facts). */
+async function mountTutorFacts(host) {
+  if (!host) return;
+  const FACT_KIND = { goal: 'Goal', misconception: 'Mix-up', worked: 'What worked', hard: 'Hard for you', interest: 'Interest' };
+  async function draw() {
+    let facts = [];
+    try { facts = (await App.api.get('/api/tutor/facts')).facts; } catch (err) { host.textContent = err.message || 'That did not load.'; return; }
+    if (!facts.length) { host.textContent = 'Nothing yet. It fills in as you talk with your tutor.'; return; }
+    host.className = 'small';
+    host.innerHTML = `<ul style="margin:0; padding-left:0; list-style:none">${facts.map((f) => `
+      <li style="display:flex; gap:8px; align-items:flex-start; padding:6px 0; border-top:1px solid var(--border, #e5e5e5)">
+        <span style="flex:1"><strong>${App.escapeHtml(FACT_KIND[f.kind] || f.kind)}:</strong> ${App.escapeHtml(f.text)}${f.skill ? ` <span class="tiny muted">(${App.escapeHtml(f.skill)})</span>` : ''}${f.wrong_answer ? ` <span class="tiny muted">you said "${App.escapeHtml(f.wrong_answer)}"</span>` : ''}
+          <span class="tiny muted">${f.times > 1 ? `seen ${f.times} times, ` : ''}last ${App.escapeHtml(String(f.last_confirmed_at || '').slice(0, 10))}</span></span>
+        <button type="button" class="btn btn-ghost btn-sm" data-fact="${App.escapeHtml(f.id)}" aria-label="Delete this note">Delete</button>
+      </li>`).join('')}</ul>
+      <p style="margin:10px 0 0"><button type="button" class="btn btn-ghost btn-sm" id="facts-clear">Delete all notes</button></p>`;
+    host.querySelectorAll('[data-fact]').forEach((b) => b.addEventListener('click', async () => {
+      b.disabled = true;
+      try { await App.api.del(`/api/tutor/facts/${encodeURIComponent(b.dataset.fact)}`); } catch (err) { App.toast(err.message, 'error'); }
+      draw();
+    }));
+    host.querySelector('#facts-clear').addEventListener('click', async () => {
+      try { await App.api.del('/api/tutor/facts'); App.toast('Notes deleted.', 'info'); } catch (err) { App.toast(err.message, 'error'); }
+      draw();
+    });
+  }
+  draw();
+}

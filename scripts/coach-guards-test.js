@@ -40,8 +40,9 @@ function check(label, ok, detail) {
 let modelCalls = 0;
 nvidia._setFetch(async (url, opts) => {
   if (/\/models$/.test(url)) return new Response(JSON.stringify({ data: [] }), { status: 200, headers: { 'content-type': 'application/json' } });
-  modelCalls++;
   const body = JSON.parse(opts.body || '{}');
+  // The tutor's after-the-reply note-taking (services/tutor-facts.js) is not a coach call.
+  if (!/long-term notes on one learner/.test(JSON.stringify(body.messages || []))) modelCalls++;
   const content = 'What is the question asking you to find first?';
   if (body.stream) {
     const enc = new TextEncoder();
