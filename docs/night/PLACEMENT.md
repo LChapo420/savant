@@ -61,7 +61,7 @@ P5a. [local only] **IQ top end.** `content/placement-calibration/iq.json` has 2 
     grade 12 two). The ceiling proof needs at least 3 answered in the top two grades, so at least 6 calibrated items
     there (about 3 per grade) are needed for the sim to show "knows everything" placed at the top. Generate and calibrate
     with the content pipeline. Also ACT grades 13 and 15 have no calibrated items (indexes 12 and 14).
-P4. [done COMMIT] **Adaptive stopping.** Stop when the level estimate is precise enough (standard error under a threshold),
+P4. [done cdd574a] **Adaptive stopping.** Stop when the level estimate is precise enough (standard error under a threshold),
     with confirmation items near the boundary. Target, proven by P1 for every subject: at most one level off for
     95% of simulated learners at every ability level, with the question count reported. Add the sim to
     `scripts/test-steps.json` with a fixed seed so a regression fails the suite.
@@ -75,7 +75,7 @@ P4. [done COMMIT] **Adaptive stopping.** Stop when the level estimate is precise
     walk centres the belief 0.3 grade below an item's point (RELIABLE: the point is where answers are reliable). With abilities spread
     inside the grade, 70% are exact and ~28% are -1 (those in the first 0.3 grade); within-one is the claim. Not done: IQ and ACT
     top levels (P5/P5a); Spanish, chess, piano, basketball (P1b).
-P5. [done COMMIT] **Content gaps.** Subjects whose item sets can't meet P4: write each as a `[local only]` item naming the
+P5. [done cdd574a] **Content gaps.** Subjects whose item sets can't meet P4: write each as a `[local only]` item naming the
     levels and how many items are needed, so the owner's agent can generate and check them with the content
     pipeline.
 P6. **Honest result screen.** After placement, show the placed level and what it is based on (how many questions,
