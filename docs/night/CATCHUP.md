@@ -80,6 +80,10 @@ C4. [done 41789a0; checked by scripts/catchup-evidence-test.js and full npm test
     prerequisite order, retrieval practice, spacing, final re-check) cites its mechanism id.
 C5. **Real UI.** The page shows the target, what was found missing, progress, and when the next review is due;
     works at 375 px with the existing CSS variables.
+    Status (30 Oct night): the page exists (C2d) but has never been opened in a browser. A scripted Chromium run in the cloud
+    (own server on a throwaway DB, register, walk math/english/reading at 375 px) produced no output in 300 s and was killed,
+    so nothing is claimed. Needs the owner's local agent: load `/catchup?track=math&grade=<grade 6 id>` at 375 px, check no
+    horizontal scroll on intro, question, summary and done, and that the review line reads honestly (see C2e).
 
 ## Blocked
 
