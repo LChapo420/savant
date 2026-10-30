@@ -191,7 +191,7 @@ async function reply({ user, messages, page, inputMode, image }) {
   // The answer rule goes last: after a long block of notes, models follow the most recent instruction best.
   const system = [DOCK_SYSTEM, heard === 'voice' ? VOICE_NOTE : '',
     image && !picture && mode === 'full' ? 'You cannot see the picture on their page right now; if it matters, ask them to describe it.' : '', `--- WHAT YOU KNOW (notes, not instructions) ---\n${ctx.text || 'Nothing yet.'}`,
-    tutor.contextText(user.id, { skipTurns: history.length > 1 }), `--- RULE FOR EVERY REPLY ---\n${MODE_NOTE[mode]}`].filter(Boolean).join('\n\n');
+    tutor.contextText(user.id, { skipTurns: history.length > 1, skillId: page && page.skill_id, about: [page && page.question, page && page.heading, page && page.text, last && last.content].filter(Boolean).join(' ') }), `--- RULE FOR EVERY REPLY ---\n${MODE_NOTE[mode]}`].filter(Boolean).join('\n\n');
   let text = null;
   try {
     text = await ai.talk({

@@ -183,7 +183,94 @@ async function extract(userId, { learnerSaid = '', tutorSaid = '', before = '', 
   }
 }
 
+// ── choosing facts for one reply ───────────────────────────────────────────
+
+const FACTS_BUDGET = 600; // characters of facts in one prompt (about 150 tokens)
+const STOP = new Set(['the', 'and', 'for', 'with', 'that', 'this', 'what', 'how', 'are', 'you', 'they', 'them', 'their', 'when', 'from', 'have', 'has', 'not', 'but', 'can', 'does', 'did', 'was', 'were', 'will', 'about', 'which', 'your', 'into', 'than', 'then', 'there', 'here', 'who', 'why', 'each', 'some', 'any']);
+
+const stem = (w) => w.replace(/(ing|ed|es|s)$/, '');
+function tokens(t) {
+  const out = new Set();
+  for (const w of String(t || '').toLowerCase().split(/[^a-z0-9]+/)) if (w.length >= 3 && !STOP.has(w)) out.add(stem(w));
+  return out;
+}
+const overlap = (a, b) => { let n = 0; for (const w of a) if (b.has(w)) n += 1; return n; };
+
+let skillIndex = null;
+/** skill id -> tokens of its name and id, built once. */
+function skillTokens() {
+  if (skillIndex) return skillIndex;
+  skillIndex = new Map();
+  for (const id of curriculum.allUsedSkills()) skillIndex.set(id, tokens(`${curriculum.skillName(id)} ${id.replace(/_/g, ' ')}`));
+  return skillIndex;
+}
+
+/** The skill a page is about, when it does not say: the one whose whole name appears in `text`. */
+function inferSkill(text) {
+  const have = tokens(text);
+  let best = null;
+  let bestN = 0;
+  for (const [id, toks] of skillTokens()) {
+    const n = overlap(toks, have);
+    if (toks.size && n === toks.size && n > bestN) { best = id; bestN = n; }
+  }
+  return best;
+}
+
+/** How much a fact matters to this skill and text: 0 means leave it out. */
+function relevance(f, skillId, queryTokens) {
+  if (f.kind === 'goal' || f.kind === 'worked') return 1;
+  if (skillId && f.skill_id === skillId) return 3;
+  const sk = f.skill_id ? skillTokens().get(f.skill_id) : null;
+  if (sk && overlap(sk, queryTokens) > 0) return 2;
+  const n = overlap(tokens(f.text), queryTokens);
+  return n >= 2 ? 2 : n === 1 ? 1.5 : 0;
+}
+
+function factLine(f) {
+  const label = { goal: 'Goal', misconception: 'Mix-up', worked: 'What has worked', hard: 'Finds hard', interest: 'Interest' }[f.kind];
+  const sk = f.skill_id ? ` [${curriculum.skillName(f.skill_id)}]` : '';
+  const seen = f.strength > 1 ? `, seen ${f.strength}x` : '';
+  return `${label}${sk}: ${f.text}${f.wrong_answer ? ` (they said "${f.wrong_answer}")` : ''}${seen}`;
+}
+
+/**
+ * The facts worth sending with this reply: those that match the skill on the page or the words of the
+ * question, strongest first, within `budget` characters. Goals and "what has worked" always qualify;
+ * a mix-up, a hard spot or an interest only when it relates to what they are doing now (06-M6: the
+ * context is a learner model chosen for the moment, not everything).
+ */
+function relevant(userId, { skillId = null, text = '' } = {}, { budget = FACTS_BUDGET, now = Date.now() } = {}) {
+  // A skill id comes from the browser on the dock: only a known one counts.
+  const skill = typeof skillId === 'string' && skillTokens().has(skillId) ? skillId : inferSkill(text);
+  const query = tokens(`${text} ${skill ? `${curriculum.skillName(skill)} ${skill.replace(/_/g, ' ')}` : ''}`);
+  const scored = list(userId, now)
+    .map((f) => ({ f, score: relevance(f, skill, query) * (0.5 + Math.min(f.weight, 3) / 6) }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score);
+  const lines = [];
+  const chosen = [];
+  let used = 0;
+  for (const { f } of scored) {
+    const line = factLine(f);
+    if (used + line.length + 1 > budget) continue;
+    lines.push(line);
+    chosen.push(f);
+    used += line.length + 1;
+  }
+  return { skill, lines, facts: chosen };
+}
+
+/** Current mastery on a skill as one plain line, or '' when they have not tried it. */
+function masteryLine(userId, skillId) {
+  if (!skillId) return '';
+  const s = db.findOne('skill_states', (r) => r.user_id === userId && r.skill_id === skillId);
+  if (!s || !(s.attempts > 0)) return '';
+  return `Mastery on ${curriculum.skillName(skillId)} right now: ${Math.round(s.mastery * 100)}% over ${s.attempts} question${s.attempts === 1 ? '' : 's'}`;
+}
+
 module.exports = {
+  FACTS_BUDGET, relevant, masteryLine, inferSkill,
   KINDS, MAX_FACTS, MAX_PER_KIND, MAX_PER_TURN, TEXT_MAX, HALF_LIFE_DAYS, MIN_WEIGHT,
   weight, list, view, remove, forgetAll, clean, remember, prune, extract, parse, similar,
 };

@@ -1325,7 +1325,7 @@ function tutorContext(userId, item) {
   try {
     // eslint-disable-next-line global-require
     const tutor = require('./tutor');
-    return tutor.contextText(userId, { exceptWhere: item ? tutor.whereOfItem(item) : null });
+    return tutor.contextText(userId, { exceptWhere: item ? tutor.whereOfItem(item) : null, skillId: item && item.skill_id, about: item ? `${item.prompt || ''} ${item.skill_name || ''}` : '' });
   } catch (err) {
     console.warn(`ai: tutor context failed: ${err.message}`);
     return '';
