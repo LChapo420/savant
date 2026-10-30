@@ -247,7 +247,7 @@ function questionSet(trackId) {
   const set = trackId === 'english'
     ? englishPlacement.questionSet()
     : db.findOne(SETS, (s) => s.track_id === trackId) || null;
-  return withRevisions(trackId, set);
+  return withExtras(trackId, withRevisions(trackId, set));
 }
 
 /**
@@ -284,6 +284,42 @@ function withRevisions(trackId, set) {
           return r ? { ...q, topic: r.topic || q.topic, prompt: r.prompt, answer: r.answer, choices: r.choices, revised: r.round || true } : q;
         }),
       };
+    }),
+  };
+}
+
+/**
+ * Extra calibrated items for a subject's top end, in content/placement-extra/<track>.json, by grade.
+ * They are appended after the grade's seven stored questions (so every stored question keeps its
+ * index, and drafts and scores by index stay valid) and flagged `extra`: the adaptive walk uses them
+ * (each has its calibrated point in content/placement-calibration/<track>.json); the full climb,
+ * which counts on exactly seven a grade, does not (`questionsFor(..., {core: true})`).
+ * Why: a ladder whose top grades hold two or three items cannot tell the top three grades apart
+ * (docs/night/PLACEMENT.md P5a/P5b).
+ */
+const extraCache = new Map();
+function extrasFor(trackId) {
+  const file = path.join(__dirname, '..', 'content', 'placement-extra', `${trackId}.json`);
+  let stamp = 0;
+  try { stamp = fs.statSync(file).mtimeMs; } catch { return null; }
+  const hit = extraCache.get(trackId);
+  if (hit && hit.stamp === stamp) return hit.data;
+  let data = null;
+  try { data = JSON.parse(fs.readFileSync(file, 'utf8')).grades || null; } catch { data = null; }
+  extraCache.set(trackId, { stamp, data });
+  return data;
+}
+
+function withExtras(trackId, set) {
+  const extras = set && extrasFor(trackId);
+  if (!extras) return set;
+  return {
+    ...set,
+    grades: (set.grades || []).map((g) => {
+      const mine = extras[g.grade_id];
+      if (!Array.isArray(mine) || !mine.length) return g;
+      const have = new Set((g.questions || []).map((q) => q.prompt));
+      return { ...g, questions: [...(g.questions || []), ...mine.filter((q) => !have.has(q.prompt)).map((q) => ({ ...q, extra: true }))] };
     }),
   };
 }
@@ -699,7 +735,7 @@ function currentQuestions(placement) {
   if (!all) return null;
   const idx = isAdaptive(placement) && placement.current_block && placement.current_block.grade === placement.position
     ? placement.current_block.idx
-    : all.map((_, i) => i);
+    : all.map((q, i) => i).filter((i) => !all[i].extra);
   return { grade_id: gradeId, questions: idx.map((i) => sanitize(all[i], i)) };
 }
 
@@ -988,13 +1024,14 @@ function spreadChoices(question, index, questions) {
 }
 
 /** The seven questions for one grade, with the answers stripped for the browser. */
-function questionsFor(trackId, gradeId) {
+function questionsFor(trackId, gradeId, { core = false } = {}) {
   const set = questionSet(trackId);
   if (!set) return null;
   const row = (set.grades || []).find((g) => g.grade_id === gradeId);
   if (!row) return null;
   const calibration = calibrationFor(trackId);
-  return row.questions.map(usable).map((question, index, questions) => {
+  // `core`: the seven stored questions only (extras are appended after them, so indexes agree).
+  return (core ? row.questions.filter((q) => !q.extra) : row.questions).map(usable).map((question, index, questions) => {
     const spread = spreadChoices(question, index, questions);
     const pos = calibration ? calibration[adaptive.questionKey(spread)] : undefined;
     return Number.isFinite(pos) ? { ...spread, pos } : spread;
@@ -1084,7 +1121,7 @@ function recordAnswer(userId, trackId, gradeId, index, answer) {
 function submitGrade(userId, trackId, gradeId, answers, { partial = false } = {}) {
   const placement = placementFor(userId, trackId);
   if (!placement) return { error: 'no placement running' };
-  const questions = questionsFor(trackId, gradeId);
+  const questions = questionsFor(trackId, gradeId, { core: true });
   if (!questions) return { error: 'no questions for that grade' };
 
   // What was saved as it was given, then anything this request carries on top.

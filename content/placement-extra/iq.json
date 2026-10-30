@@ -1,0 +1,149 @@
+{
+ "track_id": "iq",
+ "note": "Extra calibrated top-end items, appended after a grade's seven stored questions (services/subject-placement.js withExtras). Written by Standard Compute (DeepSeek V4.1), each blind-checked and located by two other families (MiniMax M3.1 Flash, Mistral Large 4); the point is the mean of the two judges. Grade = the grade the point falls in.",
+ "grades": {
+  "frontier_reasoning": [
+   {
+    "topic": "Selection diagrams and formal transport of causal effects",
+    "prompt": "Convention: P_s and P_t are distributions in source and target populations. do(X=x) sets X to x. Sums run over all values of the indexed variable. In a selection diagram the variables are Z, X, M, Y plus a selection node S. The arrows are exactly S→Z, Z→X, Z→Y, X→M, M→Y. No other arrows leave S. Assume consistency, positivity, no unmeasured confounding, and that every mechanism not pointed to by S is invariant between source and target. Which formula correctly gives P_t(Y=y|do(X=x)) using only source outcome data and the target distribution of Z?",
+    "answer": "Σ_z P_s(Y=y|X=x,Z=z) P_t(Z=z)",
+    "choices": [
+     "Σ_z P_s(Y=y|X=x,Z=z) P_t(Z=z)",
+     "Σ_z P_s(Y=y|X=x,Z=z) P_s(Z=z)",
+     "Σ_m P_s(Y=y|X=x,M=m) P_t(M=m)",
+     "Σ_z P_s(Y=y|X=x,Z=z) P_t(Z=z|X=x)"
+    ],
+    "rationale": "The selection node points only into the pre-treatment covariate Z, so the source conditional outcome mechanism can be kept fixed and reweighted by the target distribution of Z.",
+    "band": "hard"
+   },
+   {
+    "topic": "Information-Theoretic Lower Bounds for Puzzles — Prove that no strategy can solve a search",
+    "prompt": "Convention: A yes/no question puzzle asks you to identify an integer secret s in {1,...,100}. Each question is of the form 'Is s in A?' for a subset A you choose; the answer is yes or no. Exactly one of the answers you receive may be false (a lie); you are not told which, and at most one lie occurs. A strategy is a decision tree whose questions may depend on previous answers. Use the Hamming-ball counting lower bound: for q questions, each secret is compatible with at most 1+q answer strings (the truthful string plus q strings with one flipped answer), and the sets of compatible strings for different secrets must be disjoint. What is the smallest q for which this counting bound does not rule out a q-question strategy?",
+    "answer": "11",
+    "choices": [
+     "11",
+     "10",
+     "7",
+     "12"
+    ],
+    "rationale": "For q=10, 100(10+1)=1100 > 2^10=1024, so 10 questions are ruled out; for q=11, 100(11+1)=1200 ≤ 2^11=2048, so 11 is the smallest not ruled out.",
+    "band": "hard"
+   },
+   {
+    "topic": "Selection diagrams and formal transport of causal effects",
+    "prompt": "A source population has a randomized trial of training X on employment Y, with prior skill Z. The target population has a different distribution of Z. The selection diagram has an arrow S→Z and no other arrows out of S. Assume positivity, no interference, and that all conditional mechanisms other than the distribution of Z are invariant. The analyst wants the target average effect of X on Y. Which action is warranted?",
+    "answer": "Reweight the source sample to the target distribution of Z and compute the effect; only the Z mechanism differs.",
+    "choices": [
+     "Reweight the source sample to the target distribution of Z and compute the effect; only the Z mechanism differs.",
+     "Do not transport: because Z distributions differ, at least one causal mechanism differs, so reweighting cannot identify the target effect.",
+     "Use the source effect unchanged: because X was randomized, the distribution of Z cannot affect transport.",
+     "Reweight by X rather than Z: matching the treatment distribution is what makes the source sample resemble the target."
+    ],
+    "rationale": "With a selection node only into Z, covariate reweighting is licensed; other mechanisms are invariant, so source conditional effects can be averaged over the target Z distribution.",
+    "band": "hard"
+   },
+   {
+    "topic": "Reading control loops: gain, delay, and edge of stability",
+    "prompt": "A kiln's temperature controller adjusts heater power every 5 minutes. A step change in heater power produces almost no temperature change for 20 minutes, after which the temperature approaches its new value with a dominant lag of about 40 minutes. With the current proportional gain K=6, the kiln temperature shows oscillations whose amplitude grows from cycle to cycle, with a period near 110 minutes; the heater is not saturating and the setpoint is constant. The operators want stable settling without adding sensors or changing the setpoint. Which change is best supported by the loop's gain-and-delay behavior?",
+    "answer": "Reduce the proportional gain K enough that the loop gain at the oscillation frequency falls below one; the growing oscillation indicates too much gain where the dead time and lag together supply the half-cycle phase shift.",
+    "choices": [
+     "Reduce the proportional gain K enough that the loop gain at the oscillation frequency falls below one; the growing oscillation indicates too much gain where the dead time and lag together supply the half-cycle phase shift.",
+     "Raise K to make the controller react faster to the kiln's thermal lag; the growing oscillation shows that correction is too weak.",
+     "Keep K and shorten the control interval to one minute; faster updates remove the effective dead time and therefore restore phase margin.",
+     "Keep K and add integral action; the growing oscillation is an offset artifact that integral action will damp out."
+    ],
+    "rationale": "The growing oscillation is the delay-loop instability signature: too much gain at the frequency where lag supplies 180° phase shift, so lowering gain restores stability.",
+    "band": "hard"
+   }
+  ],
+  "expert_reasoning": [
+   {
+    "topic": "Lambda calculus: evaluating Church-numeral exponentiation by application and substitution",
+    "prompt": "The Church numeral for a nonnegative integer k is c_k = λf. λx. f(f(…f(x)…)), with k applications of f; thus c_0 = λf. λx. x and c_1 = λf. λx. f x. Application is left-associative, an abstraction extends as far right as possible, and substitution is capture-avoiding. Define POW = λm. λn. n m, where n m means n applied to m. Compute the normal form of the term POW c_3 c_2 and express it as a Church numeral c_k. Which Church numeral is it?",
+    "answer": "c_9",
+    "choices": [
+     "c_9",
+     "c_6",
+     "c_8",
+     "c_27"
+    ],
+    "rationale": "POW c_3 c_2 reduces to c_2 c_3 = λf. c_3(c_3 f), and applying the function c_3 twice to f composes f three times with itself three times, giving f^9, so the normal form is c_9.",
+    "band": "hard"
+   }
+  ],
+  "mastery_frontier": [
+   {
+    "topic": "Designing Scoring Rules and Peer Prediction for Honest Reports",
+    "prompt": "Two agents each receive a private binary signal about a binary state S. Before signals, P(S=1)=2/3 and P(S=0)=1/3. Conditional on S, the two signals are independent and each equals S with probability 3/4. The agents report 1 or 0. A peer-prediction payment rule pays each agent 1 if both reports are 1, pays each agent a if both reports are 0, and pays each agent 0 if the reports differ. Agent 2 reports honestly. Which value of a makes truthful reporting strictly better than misreporting for Agent 1 whether Agent 1 observed signal 1 or signal 0?",
+    "answer": "1.5",
+    "choices": [
+     "1.5",
+     "0.5",
+     "2.5",
+     "0.8"
+    ],
+    "rationale": "Signal 1 gives the condition a <= 19/9, signal 0 gives a >= 9/11, and only 1.5 lies strictly inside both bounds.",
+    "band": "hard"
+   },
+   {
+    "topic": "Sprague-Grundy values and sums of games",
+    "prompt": "In a normal-play game (the player who makes the last move wins, and a player with no legal move loses), a position consists of two piles of counters. A move is to remove 1, 2, or 3 counters from exactly one pile. Consider the position whose piles have sizes 4 and 5. Using Sprague-Grundy theory, what is the Grundy value of this two-pile position, and who wins with best play?",
+    "answer": "Grundy value 1; the first player wins.",
+    "choices": [
+     "Grundy value 1; the first player wins.",
+     "Grundy value 9; the first player wins.",
+     "Grundy value 3; the first player wins.",
+     "Grundy value 1; the second player wins."
+    ],
+    "rationale": "For a single pile the Grundy value is n mod 4 (moves remove 1, 2 or 3), so g(4)=0 and g(5)=1; a sum's value is the XOR, 0 XOR 1 = 1, and a nonzero value means the player to move wins.",
+    "band": "hard"
+   },
+   {
+    "topic": "Designing Scoring Rules and Peer Prediction for Honest Reports",
+    "prompt": "A funding agency will pay investigators a bonus after audited outcomes are known for their forecasts that their own projects will finish on time. Each investigator privately knows more about the project than the agency does and reports a probability q in [0,1]; the outcome o is 1 if on time and 0 otherwise. The agency wants each investigator's expected bonus to be maximized by reporting the true probability, with no incentive to round toward 0, 1, or the crowd. Which payment rule should it adopt?",
+    "answer": "Pay 100[1 − (q − o)²], where o is 1 if the project is on time and 0 otherwise.",
+    "choices": [
+     "Pay 100[1 − (q − o)²], where o is 1 if the project is on time and 0 otherwise.",
+     "Pay 100q if o=1 and 0 if o=0, so the bonus rises with the probability assigned to success.",
+     "Pay a fixed 100 if q>0.5 and o=1, and 0 otherwise, so correct directional forecasts are rewarded.",
+     "Pay 100 if q is within 0.1 of the investigator's peer-group average forecast, and 0 otherwise."
+    ],
+    "rationale": "Only a strictly proper scoring rule such as the Brier score makes truthful reporting maximize expected reward; the other rules reward confidence, threshold direction, or conformity.",
+    "band": "hard"
+   },
+   {
+    "topic": "Charging post hoc vocabulary to description length before comparing two explanations",
+    "prompt": "Two modelling groups explain the same data set equally well: both rules reproduce every measurement exactly, so the only remaining difference between them is description length. The base vocabulary V was fixed before the data were collected. In V, each primitive predicate costs 1 unit, each real-valued constant costs 8 units, and a compound predicate costs the full cost of its definition written in V. Group P's rule is written directly in V and uses 6 primitive predicates and 2 constants. Group Q, after seeing the data, introduced a new predicate s, defined in V as a formula containing 12 primitive predicates, and then wrote its rule using s, 1 further primitive predicate, and 2 constants. Charging all new vocabulary to description length, what does the comparison give?",
+    "answer": "Q's rule costs (12 + 1) + 2·8 = 29 units against P's 6 + 2·8 = 22 units, so P's rule is the shorter description.",
+    "choices": [
+     "Q's rule costs (12 + 1) + 2·8 = 29 units against P's 6 + 2·8 = 22 units, so P's rule is the shorter description.",
+     "Q's rule costs 1 + 2·8 = 17 units against P's 22 units, so Q's rule is the shorter description.",
+     "Q's rule costs 29 units against P's 22 units, so Q's rule is the shorter description because its rule body names only one primitive predicate.",
+     "Q's rule cost cannot be placed on the same scale as P's, so description length gives no verdict here and the two rules must be judged equal in length."
+    ],
+    "rationale": "Once s's 12-predicate definition is charged as part of Q's description in the fixed vocabulary V, Q totals 13 + 16 = 29 units against P's 22, so the apparent economy of Q's shorter rule body disappears.",
+    "band": "capstone"
+   }
+  ],
+  "formal_and_original_thinking": [
+   {
+    "topic": "Repairing a Structure Map When an Analogy Partly Fails",
+    "prompt": "Engineers model evacuation along corridors as an electrical network: people are current, corridor capacity is conductance, and corridor travel time is resistance. The fixed-route throughput predictions match trials, but people reroute toward less congested corridors while electrons do not. Which repair of the structure map is strongest?",
+    "answer": "Keep the flow-conservation and series/parallel throughput correspondences for fixed routes, mark route choice as an unmapped relation, and add a separate equilibrium rule for rerouting.",
+    "choices": [
+     "Keep the flow-conservation and series/parallel throughput correspondences for fixed routes, mark route choice as an unmapped relation, and add a separate equilibrium rule for rerouting.",
+     "Abandon the electrical analogy entirely because one relation fails; use only the raw trial data and build no structural model of corridor flow.",
+     "Keep the full electrical map and treat the observed rerouting as noise or measurement error, since the fixed-route predictions were accurate in trials.",
+     "Add a variable conductance to each corridor and tune it until the electrical model reproduces the rerouting data, keeping Ohm's law as the explanation."
+    ],
+    "rationale": "A partly failing analogy licenses retaining the relations that survive and patching or marking the one that does not, rather than discarding all or forcing the failed relation.",
+    "band": "capstone"
+   }
+  ]
+ },
+ "made_at": "2026-10-30T19:12:12.509Z",
+ "judges": [
+  "minimaxai/minimax-m3.1-flash (blind solve, key, ambiguity, distractors, fit)",
+  "deepseek-v4.1 via Standard Compute: position read from the curriculum outline, sanity-checked against reference items (placement only; never asked about a key)"
+ ]
+}

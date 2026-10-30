@@ -1,0 +1,112 @@
+{
+ "track_id": "iq",
+ "made_at": "2026-10-30T19:12:12.513Z",
+ "writer": "standard-compute deepseek v4.1 flash",
+ "checkers": [
+  "minimaxai/minimax-m3.1-flash"
+ ],
+ "placement": "DeepSeek V4.1 reading of the curriculum outline (the method of the earlier points); a second reading against reference items is kept as a sanity figure (candidates.verdicts) but does not reject",
+ "applied_detail": [
+  {
+   "grade": "frontier_reasoning",
+   "unit": 10,
+   "point": 10.288,
+   "anchor_reading": 8.9,
+   "rewritten": false,
+   "prompt": "Convention: P_s and P_t are distributions in source and target populations. do(X=x) sets X"
+  },
+  {
+   "grade": "frontier_reasoning",
+   "unit": 28,
+   "point": 7.583,
+   "anchor_reading": 8,
+   "rewritten": false,
+   "prompt": "The Church numeral for a nonnegative integer k is c_k = λf. λx. f(f(…f(x)…)), with k appli"
+  },
+  {
+   "grade": "mastery_frontier",
+   "unit": 15,
+   "point": 11.537,
+   "anchor_reading": 8.6,
+   "rewritten": false,
+   "prompt": "Two agents each receive a private binary signal about a binary state S. Before signals, P("
+  },
+  {
+   "grade": "mastery_frontier",
+   "unit": 18,
+   "point": 10.258,
+   "anchor_reading": 7.3,
+   "rewritten": false,
+   "prompt": "Convention: A yes/no question puzzle asks you to identify an integer secret s in {1,...,10"
+  },
+  {
+   "grade": "frontier_reasoning",
+   "unit": 10,
+   "point": 10.288,
+   "anchor_reading": 8.8,
+   "rewritten": false,
+   "prompt": "A source population has a randomized trial of training X on employment Y, with prior skill"
+  },
+  {
+   "grade": "frontier_reasoning",
+   "unit": 16,
+   "point": 10.47,
+   "anchor_reading": 8,
+   "rewritten": false,
+   "prompt": "A kiln's temperature controller adjusts heater power every 5 minutes. A step change in hea"
+  },
+  {
+   "grade": "frontier_reasoning",
+   "unit": 22,
+   "point": 11.426,
+   "anchor_reading": 7.1,
+   "rewritten": true,
+   "prompt": "In a normal-play game (the player who makes the last move wins, and a player with no legal"
+  },
+  {
+   "grade": "frontier_reasoning",
+   "unit": 23,
+   "point": 8.931,
+   "anchor_reading": 5.5,
+   "rewritten": false,
+   "prompt": "Engineers model evacuation along corridors as an electrical network: people are current, c"
+  },
+  {
+   "grade": "mastery_frontier",
+   "unit": 15,
+   "point": 11.537,
+   "anchor_reading": 8,
+   "rewritten": false,
+   "prompt": "A funding agency will pay investigators a bonus after audited outcomes are known for their"
+  },
+  {
+   "grade": "mastery_frontier",
+   "unit": 20,
+   "point": 11.722,
+   "anchor_reading": 4,
+   "rewritten": true,
+   "prompt": "Two modelling groups explain the same data set equally well: both rules reproduce every me"
+  }
+ ],
+ "checked": 11,
+ "not_checked_left_out": 158,
+ "generated": 169,
+ "passed_first_time": 8,
+ "rewritten_then_passed": 2,
+ "dropped": 1,
+ "applied": 10,
+ "extra_items_per_grade": {
+  "frontier_reasoning": 4,
+  "expert_reasoning": 1,
+  "mastery_frontier": 4,
+  "formal_and_original_thinking": 1
+ },
+ "dropped_notes": [
+  {
+   "grade": "extreme_difficulty_reasoning",
+   "unit": 5,
+   "prompt": "Let f: R -> R be continuous and satisfy f(x+y)+f(x-y)=2f(x)+2f(y) for all real x and y. In the optio",
+   "why": "MiniMax: level does not fit. The correct option is unambiguous, but this is a routine textbook quadratic-functional-equation exercise (f(0)=0 forces f even, then continuity forces f(x)=cx^2), not a ha"
+  }
+ ]
+}
