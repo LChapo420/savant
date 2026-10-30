@@ -347,13 +347,34 @@ function modelFor(role = 'fast', task = null) {
 }
 
 // ── pacing: one limiter for the whole key ───────────────────────────────────
-const limiter = { stamps: [], active: 0, queue: [], timer: null, perModel: new Map() };
+const limiter = { stamps: [], active: 0, queue: [], timer: null, perModel: new Map(), learnerActive: 0 };
 const RPM = () => Math.max(1, Number(process.env.NVIDIA_RPM || 36));
 const CONCURRENCY = () => Math.max(1, Number(process.env.NVIDIA_CONCURRENCY || 8));
 // Per model, in flight at once. DeepSeek V4.1 Flash answered 429 with about ten
 // requests in flight (the lineup eval, 2026-10-22), well under the key's RPM.
 const MODEL_CONCURRENCY = () => Math.max(1, Number(process.env.NVIDIA_MODEL_CONCURRENCY || 4));
+// Learner-facing work (the dock, a study pack or path being built, fact extraction) shares this many
+// calls in flight; a real-model run (30 Oct) showed free NVIDIA starving all of it when they ran together.
+// Everything else (authoring pipelines, grading, probes) is not counted against it.
+const LEARNER_CAP = () => Math.max(1, Number(process.env.NVIDIA_LEARNER_CAP || 2));
+const DOCK_TASKS = new Set(['dock_help', 'dock_leak_check', 'tutor_explain', 'coach_turn', 'assist_help', 'remediation_teach']);
+const FACT_TASKS = new Set(['tutor_facts']);
+/** 'dock' | 'facts' | 'build' for learner-facing tasks, null for the rest. */
+function learnerClass(task) {
+  if (!task) return null;
+  if (DOCK_TASKS.has(task)) return 'dock';
+  if (FACT_TASKS.has(task)) return 'facts';
+  if (/^material_/.test(task)) return 'build';
+  return null;
+}
+// Lower runs first: a dock reply is ahead of a material build, which is ahead of fact extraction.
+const RANK = { dock: 0, build: 2, facts: 3 };
 let pausedUntil = 0;
+
+/** True when learner-facing work is at its cap or waiting: optional work (fact extraction) should drop out. */
+function learnerBusy() {
+  return limiter.learnerActive >= LEARNER_CAP() || limiter.queue.some((q) => q.cls);
+}
 
 function pump() {
   if (limiter.timer) { clearTimeout(limiter.timer); limiter.timer = null; }
@@ -362,13 +383,16 @@ function pump() {
   while (limiter.queue.length && limiter.active < CONCURRENCY() && limiter.stamps.length < RPM() && pausedUntil <= t) {
     // Interactive work (someone is waiting) goes ahead of background authoring,
     // and a model already at its own in-flight cap waits while others go.
-    const free = (q) => (limiter.perModel.get(q.model) || 0) < MODEL_CONCURRENCY();
-    let idx = limiter.queue.findIndex((q) => q.priority === 'interactive' && free(q));
-    if (idx === -1) idx = limiter.queue.findIndex(free);
+    const free = (q) => (limiter.perModel.get(q.model) || 0) < MODEL_CONCURRENCY()
+      && (!q.cls || limiter.learnerActive < LEARNER_CAP());
+    const rank = (q) => (q.cls ? RANK[q.cls] : (q.priority === 'interactive' ? 1 : 4));
+    let idx = -1;
+    limiter.queue.forEach((q, i) => { if (free(q) && (idx === -1 || rank(q) < rank(limiter.queue[idx]))) idx = i; });
     if (idx === -1) break;
     const [next] = limiter.queue.splice(idx, 1);
     limiter.stamps.push(t);
     limiter.active++;
+    if (next.cls) limiter.learnerActive++;
     limiter.perModel.set(next.model, (limiter.perModel.get(next.model) || 0) + 1);
     next.resolve();
   }
@@ -380,15 +404,16 @@ function pump() {
   }
 }
 
-function acquire(priority = 'background', model = '') {
+function acquire(priority = 'background', model = '', cls = null) {
   return new Promise((resolve) => {
-    limiter.queue.push({ priority, resolve, model });
+    limiter.queue.push({ priority, resolve, model, cls });
     pump();
   });
 }
 
-function release(model = '') {
+function release(model = '', cls = null) {
   limiter.active = Math.max(0, limiter.active - 1);
+  if (cls) limiter.learnerActive = Math.max(0, limiter.learnerActive - 1);
   limiter.perModel.set(model, Math.max(0, (limiter.perModel.get(model) || 0) - 1));
   pump();
 }
@@ -402,7 +427,7 @@ function _reset() {
   cooldown.clear(); noTools.clear(); noReasoningParams.clear();
   stoodDownUntil = 0; stoodDownWhy = null; pausedUntil = 0;
   Object.assign(health, { lastOk: 0, failingSince: 0, failures: [], down: false, downSince: 0, lastProbe: 0, probing: false, lastProbeResult: null });
-  limiter.stamps = []; limiter.active = 0; limiter.queue = []; limiter.perModel = new Map();
+  limiter.stamps = []; limiter.active = 0; limiter.learnerActive = 0; limiter.queue = []; limiter.perModel = new Map();
   if (limiter.timer) clearTimeout(limiter.timer);
   limiter.timer = null;
   lineupCache = null; lineupStamp = null;
@@ -544,14 +569,15 @@ process.on('exit', flushUsage);
  * Send one body to one model with retries. Returns the payload or throws the last
  * error (with .moveOn = true when the next model should be tried).
  */
-async function sendWithRetries(entry, buildBody, { interactive, timeoutMs, attempts, signal = null }) {
+async function sendWithRetries(entry, buildBody, { interactive, timeoutMs, attempts, signal = null, task = null }) {
+  const cls = learnerClass(task);
   const tries = attempts || (interactive ? 2 : 4);
   let lastErr = null;
   let effort = entry.effort;
   for (let attempt = 0; attempt < tries; attempt++) {
     if (signal && signal.aborted) throw Object.assign(new Error('nvidia: aborted by the caller'), { status: 0, aborted: true, moveOn: false });
     const body = buildBody({ ...entry, effort });
-    await acquire(interactive ? 'interactive' : 'background', entry.model);
+    await acquire(interactive ? 'interactive' : 'background', entry.model, cls);
     try {
       const payload = await post(body, timeoutFor(effort, timeoutMs), false, signal);
       return payload;
@@ -593,7 +619,7 @@ async function sendWithRetries(entry, buildBody, { interactive, timeoutMs, attem
       if (effort === 'max' && (err.status === 504 || err.timeout)) effort = 'high';
       if (attempt < tries - 1) await sleepImpl(backoffMs(err, attempt));
     } finally {
-      release(entry.model);
+      release(entry.model, cls);
     }
   }
   // Retryable failures used up: rest this model briefly so the next calls go
@@ -666,7 +692,7 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
     });
     let payload;
     try {
-      payload = await sendWithRetries(entry, build(null), { interactive, timeoutMs, attempts, signal });
+      payload = await sendWithRetries(entry, build(null), { interactive, timeoutMs, attempts, signal, task });
     } catch (err) {
       lastErr = err;
       if (err.moveOn === false) throw err;
@@ -688,7 +714,7 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
       { role: 'user', content: `That answer could not be used: ${problems}${finish === 'length' ? ' (it was cut off: be more concise)' : ''}. Send the complete corrected answer now${toolMode() ? ` by calling ${schemaName}` : ' as one JSON object'}.` },
     ];
     try {
-      payload = await sendWithRetries(entry, build(repairMessages), { interactive, timeoutMs, attempts: 1, signal });
+      payload = await sendWithRetries(entry, build(repairMessages), { interactive, timeoutMs, attempts: 1, signal, task });
       const u2 = usageOf(payload);
       usage.input_tokens += u2.input_tokens;
       usage.output_tokens += u2.output_tokens;
@@ -726,7 +752,7 @@ async function chat({ role = 'fast', task = null, system, messages, maxTokens = 
   for (const raw of entries) {
     const entry = { ...raw, effort: effectiveEffort(raw.effort, effort) };
     try {
-      const payload = await sendWithRetries(entry, (e) => baseBody(e, { messages: messagesFor(system, messages), maxTokens }), { interactive, timeoutMs, attempts, signal });
+      const payload = await sendWithRetries(entry, (e) => baseBody(e, { messages: messagesFor(system, messages), maxTokens }), { interactive, timeoutMs, attempts, signal, task });
       const msg = payload && payload.choices && payload.choices[0] && payload.choices[0].message;
       const text = sj.stripThinking(msg && msg.content);
       if (text) return { text, usage: usageOf(payload), model: payload.model || entry.model, effort: entry.effort, tier: chosen.tier };
@@ -755,7 +781,8 @@ async function chatStream({ role = 'fast', task = null, system, messages, maxTok
   for (const raw of entries) {
     const entry = { ...raw, effort: effectiveEffort(raw.effort, effort) };
     let emitted = false;
-    await acquire('interactive', entry.model);
+    const cls = learnerClass(task);
+    await acquire('interactive', entry.model, cls);
     try {
       const body = { ...baseBody(entry, { messages: messagesFor(system, messages), maxTokens }), stream: true, stream_options: { include_usage: true } };
       const { res, done } = await post(body, timeoutFor(entry.effort, timeoutMs), true);
@@ -812,7 +839,7 @@ async function chatStream({ role = 'fast', task = null, system, messages, maxTok
       if (emitted) throw err;
       if (err.status === 429 || err.status === 0 || (err.status >= 500)) coolDown(entry.model, 30000, err.message.slice(0, 80));
     } finally {
-      release(entry.model);
+      release(entry.model, cls);
     }
   }
   if (lastErr) throw lastErr;
@@ -856,6 +883,8 @@ module.exports = {
   tierForRole,
   outage,
   probe,
+  learnerBusy,
+  learnerClass,
   PROFILES,
   TIERS,
   EFFORTS,

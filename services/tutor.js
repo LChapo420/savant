@@ -214,7 +214,7 @@ function note(userId, { where = '', learnerSaid = '', tutorSaid = '' }) {
   // Durable facts are read from the exchange after the reply is on its way (never on the reply path).
   if (learnerSaid) {
     // eslint-disable-next-line global-require
-    require('./tutor-facts').extract(userId, { learnerSaid, tutorSaid, before: before ? before.content : '', where }).catch(() => {});
+    require('./tutor-facts').offer(userId, { learnerSaid, tutorSaid, before: before ? before.content : '', where }).catch(() => {});
   }
 }
 

@@ -176,11 +176,10 @@ async function extract(userId, { learnerSaid = '', tutorSaid = '', before = '', 
     const prevStyle = strategy.takePrevious(userId);
     const text = await ai.talk({
       role: 'fast',
-      task: 'assist_help',
+      task: 'tutor_facts',
       system: SYSTEM,
       messages: [{ role: 'user', content: `Where: ${clip(where, 60) || 'the app'}\n${prevStyle ? `Tutor was leaning on: ${prevStyle}\n` : ''}${before ? `Tutor before: ${clip(before, 400)}\n` : ''}Learner: ${clip(learnerSaid, 400)}\nTutor reply: ${clip(tutorSaid, 400)}` }],
       maxTokens: 300,
-      effort: 'low',
       userId,
     });
     if (!text) return none;
@@ -195,6 +194,66 @@ async function extract(userId, { learnerSaid = '', tutorSaid = '', before = '', 
     return none;
   }
 }
+
+// ── when to extract ────────────────────────────────────────────────────────
+//
+// A real-model run (30 Oct) showed the extraction competing with the dock's own replies (119 of 160 replies
+// fell back to the offline line). So it is batched and optional: at most once per EVERY_TURNS learner turns
+// or when the dock closes (`flush`), never while a dock reply for that learner is in flight, and dropped
+// (not queued) when learner-facing model calls are already at their cap.
+
+const EVERY_TURNS = 3;
+const MAX_PENDING_CHARS = 1600;
+const pending = new Map(); // userId -> { turns: [{ learnerSaid, tutorSaid, before, where }], count }
+const dockCalls = new Map(); // userId -> dock replies in flight
+
+function dockStarted(userId) { dockCalls.set(userId, (dockCalls.get(userId) || 0) + 1); }
+function dockEnded(userId) {
+  const n = (dockCalls.get(userId) || 0) - 1;
+  if (n > 0) dockCalls.set(userId, n); else dockCalls.delete(userId);
+}
+const dockInFlight = (userId) => (dockCalls.get(userId) || 0) > 0;
+
+/** True when the provider says learner-facing calls are at their cap (always false for a provider with no such notion). */
+function modelsBusy() {
+  try {
+    // eslint-disable-next-line global-require
+    const nv = require('./providers').ALL.nvidia;
+    return !!(nv && typeof nv.learnerBusy === 'function' && nv.learnerBusy());
+  } catch { return false; }
+}
+
+const stats = { run: 0, dropped_busy: 0, deferred_dock: 0 };
+
+/** Join the waiting turns into one exchange for a single model call. */
+function joined(turns) {
+  const last = turns[turns.length - 1];
+  const learnerSaid = turns.map((t) => t.learnerSaid).filter(Boolean).join('\n').slice(-MAX_PENDING_CHARS);
+  const tutorSaid = turns.map((t) => t.tutorSaid).filter(Boolean).join('\n').slice(-MAX_PENDING_CHARS);
+  return { learnerSaid, tutorSaid, before: turns[0].before, where: last.where };
+}
+
+/**
+ * One finished tutor turn. Extracts when EVERY_TURNS have gathered (or `force`), unless a dock reply for this
+ * learner is in flight (kept for later) or the models are busy (dropped). Never throws.
+ */
+async function offer(userId, turn, { force = false } = {}) {
+  const none = { added: 0, confirmed: 0, skipped: null };
+  if (!userId) return none;
+  const p = pending.get(userId) || { turns: [], count: 0 };
+  if (turn && String(turn.learnerSaid || '').trim()) { p.turns.push(turn); p.count += 1; }
+  pending.set(userId, p);
+  if (!p.turns.length) return none;
+  if (!force && p.count < EVERY_TURNS) return { ...none, skipped: 'batching' };
+  if (dockInFlight(userId)) { stats.deferred_dock += 1; return { ...none, skipped: 'dock_in_flight' }; }
+  if (modelsBusy()) { pending.delete(userId); stats.dropped_busy += 1; return { ...none, skipped: 'busy' }; }
+  pending.delete(userId);
+  stats.run += 1;
+  return { ...(await extract(userId, joined(p.turns))), skipped: null };
+}
+
+/** The dock closed (or the learner left the page): read what is waiting, if the models are free. */
+const flush = (userId) => offer(userId, null, { force: true });
 
 // ── choosing facts for one reply ───────────────────────────────────────────
 
@@ -321,4 +380,5 @@ module.exports = {
   FACTS_BUDGET, relevant, masteryLine, inferSkill,
   KINDS, MAX_FACTS, MAX_PER_KIND, MAX_PER_TURN, TEXT_MAX, HALF_LIFE_DAYS, MIN_WEIGHT,
   weight, list, view, remove, forgetAll, clean, remember, prune, extract, parse, similar,
+  EVERY_TURNS, offer, flush, dockStarted, dockEnded, stats,
 };

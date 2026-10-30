@@ -168,11 +168,19 @@
       } finally { busy = false; }
     }
 
+    // Tell the server the conversation paused, so it can read what the tutor should remember (off the reply path).
+    let toldAt = 0;
+    function closed() {
+      if (messages.length <= toldAt) return;
+      toldAt = messages.length;
+      try { fetch('/api/tutor/dock/closed', { method: 'POST', credentials: 'same-origin', keepalive: true }).catch(() => {}); } catch (e) { /* best effort */ }
+    }
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') closed(); });
     btn.addEventListener('click', () => {
       const open = panel.dataset.open !== 'true';
       panel.dataset.open = String(open);
       btn.setAttribute('aria-expanded', String(open));
-      if (open) input.focus(); else if (canSpeak) stopSpeech();
+      if (open) input.focus(); else { if (canSpeak) stopSpeech(); closed(); }
     });
     panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { panel.dataset.open = 'false'; btn.setAttribute('aria-expanded', 'false'); btn.focus(); } });
     panel.querySelector('form').addEventListener('submit', (e) => { e.preventDefault(); const t = input.value.trim(); input.value = ''; ask(t, 'text'); });

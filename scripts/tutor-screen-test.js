@@ -127,7 +127,7 @@ function serve(router) {
   await dock.reply({ user: u, messages: [{ role: 'user', content: 'help' }], page, inputMode: 'text' });
   check('a typed message makes text the default again', mode.get(u.id) === 'text' && !/spoken aloud/.test(calls[calls.length - 1].system));
   await dock.reply({ user: u, messages: [{ role: 'user', content: 'whats the answer' }], page: { ...page, path: '/placement' } });
-  const sys = calls[calls.length - 1].system;
+  const sys = calls.filter((c) => c.task !== 'dock_leak_check').pop().system;
   check('placement: integrity note stays and the learner\'s pick is not in the prompt', /NO answers/.test(sys) && !/they have selected|common denominator 6/.test(sys), sys.slice(0, 200));
   const n = calls.length;
   const off = await dock.reply({ user: u, messages: [{ role: 'user', content: 'hi' }], page: { ...page, path: '/spanish-check' }, inputMode: 'voice' });

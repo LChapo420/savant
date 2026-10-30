@@ -147,19 +147,34 @@ router.post('/', requireAuth, limit('materials-upload', 12, 60 * 60 * 1000), raw
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
 });
 
+// One build at a time per learner (services/build-gate.js): a second one waits and the page says "queued".
+const gate = require('../services/build-gate');
+const queueBuild = (userId, label, fn) => {
+  if (gate.queuedFor(userId, label)) return false;
+  gate.run(userId, label, fn).catch((err) => console.warn(`${label}: ${err.message}`));
+  return true;
+};
+/** What the page shows besides the row: waiting for the learner's other build, or for a retry. */
+const activityOf = (userId, label, extra = {}) => {
+  const st = gate.state(userId);
+  const queued = gate.queuedFor(userId, label);
+  return { ...extra, ...(queued ? { queued: { behind: st.running || null, ahead: st.waiting.indexOf(label) } } : {}) };
+};
+
 router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1000), (req, res) => {
   const m = materials.get(req.user.id, req.params.id, false);
   if (!m) return res.status(404).json({ error: 'No such material.' });
   const userId = req.user.id;
   const existing = courses.get(userId, m.id);
   if (existing && existing.status === 'ready' && existing.version === courses.VERSION) return res.json({ course: courses.summary(existing), cached: true });
-  courses.build(userId, m.id, {}).then((out) => { if (out.error && out.code !== 'busy') console.warn(`course-builder: ${out.code}`); });
+  if (courses.inflight.has(`${userId}:${m.id}`)) return res.status(202).json({ started: true, busy: true });
+  queueBuild(userId, `course:${m.id}`, () => courses.build(userId, m.id, {}).then((out) => { if (out.error && out.code !== 'busy') console.warn(`course-builder: ${out.code}`); }));
   res.status(202).json({ started: true });
 });
 
 router.get('/:id/course', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
-  res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)) });
+  res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `course:${Number(req.params.id)}`) });
 });
 
 router.post('/:id/course/retry', requireAuth, limit('materials-course-retry', 6, 60 * 60 * 1000), (req, res) => {
@@ -167,7 +182,7 @@ router.post('/:id/course/retry', requireAuth, limit('materials-course-retry', 6,
   if (!materials.get(req.user.id, req.params.id, false) || !c) return res.status(404).json({ error: 'No such course.' });
   if (!(c.missed || []).some((m) => m.reason !== 'too_long')) return res.status(409).json({ error: 'Nothing was left out of this course.', code: 'nothing_missed' });
   if (courses.inflight.has(`${req.user.id}:${c.material_id}`)) return res.status(409).json({ error: 'This course is being changed right now.', code: 'busy' });
-  courses.retryMissed(req.user.id, c.material_id).catch((err) => console.warn(`course-builder: ${err.message}`));
+  queueBuild(req.user.id, `course:${c.material_id}`, () => courses.retryMissed(req.user.id, c.material_id).catch((err) => console.warn(`course-builder: ${err.message}`)));
   res.status(202).json({ started: true });
 });
 
@@ -188,7 +203,7 @@ function extendRoute(kind) {
       if ((c.added || []).some((a) => a.material_id === sourceId)) return res.status(EXTEND_STATUS.already_added).json({ error: 'That material is already on this path.', code: 'already_added' });
       args.sourceId = sourceId;
     } else if (Array.isArray((req.body || {}).skills)) args.skillIds = req.body.skills.slice(0, 60).map(String);
-    extend.start(kind, userId, c.material_id, args).catch((err) => console.warn(`course-extend: ${err.message}`));
+    queueBuild(userId, `course:${c.material_id}`, () => extend.start(kind, userId, c.material_id, args).catch((err) => console.warn(`course-extend: ${err.message}`)));
     return res.status(202).json({ started: true });
   };
 }
@@ -201,13 +216,19 @@ router.post('/:id/pack', requireAuth, limit('materials-pack', 6, 60 * 60 * 1000)
   if (!m) return res.status(404).json({ error: 'No such material.' });
   const existing = packs.get(req.user.id, m.id);
   if (existing && existing.status === 'ready' && existing.version === packs.VERSION) return res.json({ pack: packs.view(existing), cached: true });
-  packs.build(req.user.id, m.id, {}).then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-pack: ${out.code}`); });
+  const label = `pack:${m.id}`;
+  if (!gate.queuedFor(req.user.id, label)) {
+    // Each attempt takes its turn in the learner's line; the wait between attempts does not hold it.
+    packs.buildWithRetry(req.user.id, m.id, { between: (fn) => gate.run(req.user.id, label, fn) })
+      .then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-pack: ${out.code}`); })
+      .catch((err) => console.warn(`material-pack: ${err.message}`));
+  }
   res.status(202).json({ started: true });
 });
 
 router.get('/:id/pack', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
-  res.json({ pack: packs.view(packs.get(req.user.id, req.params.id)) });
+  res.json({ pack: packs.view(packs.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `pack:${Number(req.params.id)}`, packs.activity(req.user.id, req.params.id)) });
 });
 
 router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-grade', 120, 60 * 60 * 1000), express.json({ limit: '64kb' }), (req, res) => {
@@ -217,12 +238,12 @@ router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-g
   res.json(out);
 });
 
-router.get('/:id/podcast', requireAuth, ownMaterial, (req, res) => res.json(podcast.options(req.user.id, req.params.id)));
+router.get('/:id/podcast', requireAuth, ownMaterial, (req, res) => res.json({ ...podcast.options(req.user.id, req.params.id), activity: ['overview', 'weak'].reduce((a, k) => ({ ...a, ...activityOf(req.user.id, `podcast:${Number(req.params.id)}:${k}`) }), {}) }));
 router.post('/:id/podcast', requireAuth, ownMaterial, limit('materials-podcast', 6, 60 * 60 * 1000), express.json({ limit: '4kb' }), (req, res) => {
   const kind = String((req.body || {}).kind || 'overview');
   if (!podcast.KINDS.includes(kind)) return res.status(400).json({ error: 'Choose an overview or a weak-spots episode.', code: 'bad_kind' });
   if (kind === 'weak' && !podcast.weakSkills(req.user.id, req.params.id).length) return res.status(409).json({ error: 'There are no weak spots to talk about yet. Study some of the learning path first, then come back.', code: 'no_weak_spots' });
-  podcast.build(req.user.id, req.params.id, { kind }).then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-podcast: ${out.code}`); });
+  queueBuild(req.user.id, `podcast:${Number(req.params.id)}:${kind}`, () => podcast.build(req.user.id, req.params.id, { kind }).then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-podcast: ${out.code}`); }));
   res.status(202).json({ started: true });
 });
 

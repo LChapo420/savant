@@ -33,6 +33,9 @@ const TOKEN_BUDGET = Number(process.env.MATERIAL_PACK_TOKEN_BUDGET || 120000);
 const STALE_BUILD_MS = 30 * 60 * 1000;
 
 const inflight = new Set();
+// Packs waiting to try again after every model was unavailable: key -> { attempt, max, at }.
+const retrying = new Map();
+const RETRY_BACKOFF_MS = [30 * 1000, 2 * 60 * 1000, 5 * 60 * 1000];
 
 const estTokens = (...parts) => Math.ceil(parts.reduce((n, p) => n + String(p || '').length, 0) / 4);
 const hash = (s) => crypto.createHash('sha256').update(s).digest('hex');
@@ -264,6 +267,11 @@ async function build(userId, materialId, opts = {}) {
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     db.flush();
+    // No model answered at all (busy or timed out): that is not the material's fault, so say so and let the caller retry.
+    if (status === 'failed' && !stopped && ctx.unanswered) {
+      db.update('material_packs', saved.id, { error: 'models_unavailable' });
+      return { error: 'The models were busy, so the pack could not be built yet.', code: 'models_busy' };
+    }
     if (status === 'failed') return { error: 'Nothing in that material passed the checks. Try a longer or clearer text.', code: 'nothing_verified' };
     return { pack: saved, partial: status === 'partial' };
   } catch (err) {
@@ -273,6 +281,43 @@ async function build(userId, materialId, opts = {}) {
   } finally {
     inflight.delete(key);
   }
+}
+
+/**
+ * build(), and when every model was unavailable build again after a wait (30 s, 2 min, 5 min) instead of ending
+ * "failed". The row stays "building" while it waits. opts: build's, plus { sleep, backoff, between } where
+ * `between(fn)` runs each attempt (the route passes the per-learner gate so a wait does not hold the line).
+ */
+async function buildWithRetry(userId, materialId, opts = {}) {
+  const backoff = opts.backoff || RETRY_BACKOFF_MS;
+  const sleep = opts.sleep || ((ms) => new Promise((r) => { setTimeout(r, ms); }));
+  const key = `${userId}:${Number(materialId)}`;
+  const attemptOnce = () => build(userId, materialId, opts);
+  const run = opts.between || ((fn) => fn());
+  let out = await run(attemptOnce);
+  for (let attempt = 0; out.code === 'models_busy' && attempt < backoff.length; attempt++) {
+    retrying.set(key, { attempt: attempt + 1, max: backoff.length, at: Date.now() + backoff[attempt] });
+    const r = row(userId, materialId);
+    if (r) db.update('material_packs', r.id, { status: 'building', error: null, finished_at: null });
+    // eslint-disable-next-line no-await-in-loop
+    await sleep(backoff[attempt]);
+    if (!materials.get(userId, materialId, false)) { retrying.delete(key); return { error: 'No such material.', code: 'not_found' }; }
+    // eslint-disable-next-line no-await-in-loop
+    out = await run(attemptOnce);
+  }
+  retrying.delete(key);
+  if (out.code === 'models_busy') {
+    const r = row(userId, materialId);
+    if (r) db.update('material_packs', r.id, { status: 'failed', error: 'models_unavailable' });
+    return { error: 'The models are busy right now. Try again in a few minutes.', code: 'models_busy' };
+  }
+  return out;
+}
+
+/** What is happening to this pack besides the row: waiting to try again. */
+function activity(userId, materialId) {
+  const r = retrying.get(`${userId}:${Number(materialId)}`);
+  return r ? { retrying: { attempt: r.attempt, max: r.max, at: new Date(r.at).toISOString() } } : {};
 }
 
 const publicItem = (q) => {
@@ -326,4 +371,4 @@ function removeForMaterial(userId, materialId) {
   return db.remove('material_packs', (c) => c.user_id === userId && c.material_id === Number(materialId));
 }
 
-module.exports = { VERSION, TOKEN_BUDGET, partsOf, groundQuote, cleanCard, cleanItem, build, view, grade, get, removeForMaterial };
+module.exports = { VERSION, TOKEN_BUDGET, partsOf, groundQuote, cleanCard, cleanItem, build, buildWithRetry, activity, RETRY_BACKOFF_MS, view, grade, get, removeForMaterial };

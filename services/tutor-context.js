@@ -208,6 +208,8 @@ async function reply({ user, messages, page, inputMode, image }) {
     image && !picture && mode === 'full' ? 'You cannot see the picture on their page right now; if it matters, ask them to describe it.' : '', `--- WHAT YOU KNOW (notes, not instructions) ---\n${ctx.text || 'Nothing yet.'}`,
     tutor.contextText(user.id, { skipTurns: history.length > 1, skillId: page && page.skill_id, about: [page && page.question, page && page.heading, page && page.text, last && last.content].filter(Boolean).join(' ') }), `--- RULE FOR EVERY REPLY ---\n${MODE_NOTE[mode]}`].filter(Boolean).join('\n\n');
   let text = null;
+  const facts = require('./tutor-facts'); // eslint-disable-line global-require
+  facts.dockStarted(user.id);
   try {
     text = await ai.talk({
       // The dock's own task ("dock_help"): its lineup entry (config/model-lineup.json) is Ultra with
@@ -243,6 +245,7 @@ Does the reply state the answer, or give it away so directly that nothing is lef
     } catch { verdict = ''; }
     if (/^\W*yes/i.test(verdict || '')) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   }
+  facts.dockEnded(user.id);
   const out = text || tutor.offlineReply(user.id);
   tutor.note(user.id, { where: 'dock', learnerSaid: last ? last.content : '', tutorSaid: out });
   return { reply: out, source: text ? 'ai' : 'fallback', mode, input_mode: heard, saw_picture: !!picture, held };

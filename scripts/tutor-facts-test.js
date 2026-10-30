@@ -106,7 +106,7 @@ const DAY = 86400000;
     tutor.note(t.id, { where: 'home', tutorSaid: 'Welcome!' });
     await new Promise((r) => setImmediate(r));
     assert.strictEqual(calls.length, before, 'no learner words, no extraction');
-    tutor.note(t.id, { where: 'home', learnerSaid: 'I love basketball, use it in examples', tutorSaid: 'Great.' });
+    for (let i = 0; i < facts.EVERY_TURNS; i++) tutor.note(t.id, { where: 'home', learnerSaid: 'I love basketball, use it in examples', tutorSaid: 'Great.' });
     assert.strictEqual(facts.view(t.id).length, 0, 'note() returns before the model has answered');
     await new Promise((r) => setTimeout(r, 50));
     assert.strictEqual(facts.view(t.id).length, 1);

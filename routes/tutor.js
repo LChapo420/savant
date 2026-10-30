@@ -57,6 +57,12 @@ router.post('/tutor/dock', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
   }
 });
 
+// The learner closed the dock or left the page: read the turns that are waiting (services/tutor-facts.js), if the models are free.
+router.post('/tutor/dock/closed', requireAuth, limit('tutor-closed', 60, 60 * 60 * 1000), (req, res) => {
+  require('../services/tutor-facts').flush(req.user.id).catch(() => {}); // eslint-disable-line global-require
+  res.status(204).end();
+});
+
 // Better voice for a reply. Any failure is a 503 with no audio: the dock then uses the browser voice (the free default).
 router.post('/tutor/speak', requireAuth, limit('tutor-speak', 60, 60 * 60 * 1000), async (req, res) => {
   const body = req.body || {};

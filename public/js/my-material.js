@@ -191,13 +191,19 @@ App.mount(async () => {
         App.toast('Saved.', 'ok');
       } catch (err) { note('paste-note', err.message); }
     });
+    // What is happening to a build besides its row: waiting for the learner's other build, or for a retry.
+    const activityText = (a, what) => {
+      if (a && a.queued) return `Queued. Your ${a.queued.behind ? a.queued.behind.split(':')[0] : 'other'} build is running first because they use the same free models. This one starts by itself; you can leave this page.`;
+      if (a && a.retrying) return `The models were busy, so Savant is trying your ${what} again by itself (try ${a.retrying.attempt} of ${a.retrying.max}). You can leave this page.`;
+      return '';
+    };
     // Course: start the build, poll its status, then link to the study page.
     const courseUi = (id, c) => {
       const btn = document.getElementById(`course-${id}`);
       const n = document.getElementById(`course-note-${id}`);
       if (!btn || !n) return;
       if (!c) { btn.textContent = 'Learning path'; return; }
-      if (c.status === 'building') { btn.disabled = true; btn.textContent = 'Building…'; n.textContent = c.planned ? `Building your course: ${c.skills.length} of ${c.planned} skills ready. You can leave this page.` : 'Planning your course from the text. This can take a few minutes; you can leave this page.'; return; }
+      if (c.status === 'building') { btn.disabled = true; btn.textContent = c.activity && c.activity.queued ? 'Queued…' : 'Building…'; n.textContent = activityText(c.activity, 'learning path') || (c.planned ? `Building your course: ${c.skills.length} of ${c.planned} skills ready. You can leave this page.` : 'Planning your course from the text. This can take a few minutes; you can leave this page.'); return; }
       btn.disabled = false;
       if (c.status === 'ready' || c.status === 'partial') {
         btn.textContent = 'Study';
@@ -255,8 +261,10 @@ App.mount(async () => {
     const poll = async (id, tries, extending) => {
       try {
         const out = await App.api.get(`/api/materials/${id}/course`);
-        courseUi(id, out.course);
-        const c = out.course;
+        // A queued build has no row yet: show it as waiting and keep looking.
+        const c = out.course || (out.activity && out.activity.queued ? { status: 'building', skills: [] } : out.course);
+        if (c && out.activity) c.activity = out.activity;
+        courseUi(id, c);
         // Right after a start the server may not have flagged it yet: show it busy for the first looks.
         if (extending && c && tries < 2 && !c.extending) c.extending = true;
         extendUi(id, c);
@@ -279,7 +287,7 @@ App.mount(async () => {
       const n = document.getElementById(`pack-note-${id}`);
       if (!btn || !n) return;
       if (!p) { btn.textContent = 'Study pack'; return; }
-      if (p.status === 'building') { btn.disabled = true; btn.textContent = 'Building…'; n.textContent = 'Building your study pack. You can leave this page.'; return; }
+      if (p.status === 'building') { btn.disabled = true; btn.textContent = p.activity && p.activity.queued ? 'Queued…' : 'Building…'; n.textContent = activityText(p.activity, 'study pack') || 'Building your study pack. You can leave this page.'; return; }
       btn.disabled = false;
       if (p.status === 'ready' || p.status === 'partial') { btn.textContent = 'Open pack'; btn.dataset.open = '1'; n.textContent = `${p.cards.length} flashcards, ${p.quiz.length} quiz questions, ${p.test.length} test questions.`; }
       else { btn.textContent = 'Try again'; n.textContent = 'The pack could not be built from this text. Try a clearer or longer one.'; }
@@ -287,8 +295,10 @@ App.mount(async () => {
     const pollPack = async (id, tries) => {
       try {
         const out = await App.api.get(`/api/materials/${id}/pack`);
-        packUi(id, out.pack);
-        if (out.pack && out.pack.status === 'building' && tries < 200) setTimeout(() => pollPack(id, tries + 1), 4000);
+        const p = out.pack || (out.activity && out.activity.queued ? { status: 'building' } : out.pack);
+        if (p && out.activity) p.activity = out.activity;
+        packUi(id, p);
+        if (p && p.status === 'building' && tries < 200) setTimeout(() => pollPack(id, tries + 1), 4000);
       } catch (err) { /* leave the note as it is */ }
     };
     root.querySelectorAll('[data-pack]').forEach((b) => {
