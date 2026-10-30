@@ -9,6 +9,33 @@
  */
 
 const SCALE = { min: 2, max: 12 };
+// UNVERIFIED until checked on act.org (docs/yc/SOURCES-TO-VERIFY.md); also in services/act-timing.js SECTIONS.writing.
+const MINUTES = 40;
+
+// Practice prompts in the shape of an ACT issue prompt: a short situation, then a question to take a position on.
+// Written for Savant, not copied from any test. Each attempt draws the next one, so a rewrite gets a new topic.
+const PROMPTS = [
+  'Many schools are moving some lessons online so students can learn at their own pace. Some people say this lets every student reach their best. Others say students learn more from being in a room together. Write an essay that states your position on how far schools should rely on online lessons. You may take one of the views above or give your own. Explain your reasoning and give examples.',
+  'Cities are adding more bike lanes and fewer car lanes to cut traffic and pollution. Supporters say it makes cities healthier and safer. Critics say it makes life harder for people who have no choice but to drive. Write an essay that states your position on whether cities should give up road space for bikes. Explain your reasoning and give examples.',
+  'Some employers now let people work from home most of the week. One view is that people do better work with the freedom to arrange their own day. Another is that teams build ideas and trust only when they work side by side. Write an essay that states your position on whether most jobs should be done from home. Explain your reasoning and give examples.',
+  'Public libraries are changing, with fewer shelves of books and more rooms for computers, classes and meetings. Some people see this as a loss of what a library is for. Others see it as a library finally serving what a community needs. Write an essay that states your position on how libraries should spend their space. Explain your reasoning and give examples.',
+];
+
+/** The practice prompt for the nth attempt (1-based), wrapping round the bank. */
+function promptFor(attempt) {
+  const n = Math.max(1, Math.floor(Number(attempt)) || 1);
+  return PROMPTS[(n - 1) % PROMPTS.length];
+}
+
+/** The payload of an essays row for a timed ACT Writing attempt. */
+function payloadFor(attempt) {
+  return {
+    prompt: promptFor(attempt),
+    guidance: `Planning and writing: ${MINUTES} minutes on the real test. Take a position, deal with at least one other view, and support each claim with a reason or example. You are marked on four domains.`,
+    criteria: buildRubric(),
+    source: 'act_writing',
+  };
+}
 
 const DOMAINS = [
   { id: 'ideas_analysis', name: 'Ideas and Analysis', skill_id: 'act_writing_ideas',
@@ -86,4 +113,4 @@ function domainReport(marked) {
   };
 }
 
-module.exports = { SCALE, DOMAINS, buildRubric, toDomainScale, domainReport };
+module.exports = { SCALE, MINUTES, PROMPTS, DOMAINS, promptFor, payloadFor, buildRubric, toDomainScale, domainReport };

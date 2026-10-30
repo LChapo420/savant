@@ -32,6 +32,7 @@ const curriculum = require('../config/curriculum');
 const { stripTags, toPlainText } = require('./grading');
 const ai = require('./ai');
 const LAYOUT = require('../config/level-layout');
+const actWriting = require('./act-writing');
 
 /** Essays being written right now, so a prefetch and a request do not collide. */
 const inFlight = new Map();
@@ -375,6 +376,21 @@ function ensure({ userId, enrollment, grade, level, attempt, urgent }) {
   return task;
 }
 
+/** ACT Writing practice is not a path level: its essays rows sit at this level number. */
+const ACT_WRITING_LEVEL = 0;
+
+/**
+ * Open a timed ACT Writing practice for a learner on the ACT track: the unmarked attempt they already have, or a
+ * fresh one with the next prompt. Marking, drafts and the owner check go through the usual /essays/:id routes.
+ */
+function startActWriting({ userId, enrollment }) {
+  const rows = db.find('essays', (e) => e.user_id === userId && e.track_id === enrollment.track_id
+    && e.grade_id === enrollment.grade_id && e.level === ACT_WRITING_LEVEL);
+  const open = rows.filter((e) => !(e.attempts || []).length).sort((a, b) => b.attempt - a.attempt)[0];
+  if (open) return open;
+  return store(userId, enrollment, ACT_WRITING_LEVEL, attemptFor(userId, enrollment, ACT_WRITING_LEVEL), actWriting.payloadFor(rows.length + 1));
+}
+
 /**
  * Prepare the essay for a level nobody is waiting on yet.
  *
@@ -638,6 +654,8 @@ function sanitize(essay) {
     // A revision shows the feedback it is being revised against: that is the
     // whole point of revising, unlike a fresh topic.
     revising: essay.revising || null,
+    minutes: essay.source === 'act_writing' ? actWriting.MINUTES : null,
+    domain_report: essay.source === 'act_writing' && last ? actWriting.domainReport(last) : null,
     // The most recent mark, so a reload after grading shows the result rather
     // than an empty editor.
     result: last ? {
@@ -655,6 +673,6 @@ function sanitize(essay) {
 }
 
 module.exports = {
-  find, attemptFor, ensure, prefetch, forLevel, forSession, attach,
+  find, attemptFor, ensure, startActWriting, ACT_WRITING_LEVEL, prefetch, forLevel, forSession, attach,
   saveDraft, grade, oralSubmit, oralKindFor, buildOral, sanitize, buildFallback, wordCount, toPlainText, MAX_DRAFT_CHARS, baseEssay, writeBase,
 };

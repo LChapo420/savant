@@ -16,6 +16,7 @@ const SECTIONS = {
   math: { questions: 45, minutes: 50 },
   reading: { questions: 36, minutes: 40 },
   science: { questions: 40, minutes: 40 },
+  writing: { questions: 1, minutes: 40 },
 };
 const SCORED = ['english', 'math', 'reading'];
 const UNVERIFIED = true;

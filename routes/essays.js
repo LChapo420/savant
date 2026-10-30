@@ -41,6 +41,19 @@ function load(req) {
   return row;
 }
 
+/**
+ * Start (or resume) a timed ACT Writing practice. Only for the learner's own ACT enrollment; the brief, drafts and
+ * marking then use the routes below. Creates a row, never spends a model.
+ */
+router.post('/essays/act-writing', requireAuth, limit('essay-act-writing', 30, 60 * 60 * 1000), (req, res) => {
+  const enrollment = db.byId('enrollments', req.body && req.body.enrollment_id);
+  if (!enrollment || enrollment.user_id !== req.user.id || enrollment.track_id !== 'act') {
+    return res.status(404).json({ error: 'ACT enrollment not found.' });
+  }
+  const row = essays.startActWriting({ userId: req.user.id, enrollment });
+  res.json({ essay: essays.sanitize(row), ai: ai.isEnabled() });
+});
+
 /** The brief: what to write, what it is marked against, and the last mark. */
 router.get('/essays/:id', requireAuth, (req, res) => {
   const row = load(req);

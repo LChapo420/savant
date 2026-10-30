@@ -1,5 +1,10 @@
 /** ACT Writing: the four-domain rubric fits the essay marking's shape, and a marked attempt reports by domain. */
 const assert = require('assert');
+const os = require('os');
+const path = require('path');
+
+process.env.NODE_ENV = 'test';
+process.env.DB_FILE = path.join(os.tmpdir(), `act-writing-test-${process.pid}.json`);
 const W = require('../services/act-writing');
 const essays = require('../services/essays');
 
@@ -44,4 +49,54 @@ check('unmarked criteria (rule fallback) give null, never zero', () => {
   assert.strictEqual(W.domainReport(null).estimate, null);
   const half = W.domainReport({ criteria: [{ index: 1, score: 4 }] });
   assert.strictEqual(half.estimate, 12);
+});
+
+const db = require('../config/db');
+const user = db.insert('users', { email: 'aw@example.test', name: 'AW' });
+const enrollment = db.insert('enrollments', { user_id: user.id, track_id: 'act', grade_id: 'act_1' });
+
+check('a timed ACT Writing practice opens with a prompt, the rubric and 40 minutes', () => {
+  const row = essays.startActWriting({ userId: user.id, enrollment });
+  const out = essays.sanitize(row);
+  assert.strictEqual(out.minutes, 40);
+  assert.strictEqual(out.criteria.length, 4);
+  assert.strictEqual(out.prompt, W.PROMPTS[0]);
+  assert.strictEqual(out.domain_report, null);
+  assert.strictEqual(row.level, essays.ACT_WRITING_LEVEL);
+});
+
+check('starting again resumes the unmarked attempt instead of adding rows', () => {
+  const a = essays.startActWriting({ userId: user.id, enrollment });
+  const b = essays.startActWriting({ userId: user.id, enrollment });
+  assert.strictEqual(a.id, b.id);
+  assert.strictEqual(db.find('essays', (e) => e.user_id === user.id).length, 1);
+});
+
+check('after a marked attempt the next start is a new prompt, and the result carries the domain report', () => {
+  const first = essays.startActWriting({ userId: user.id, enrollment });
+  db.update('essays', first.id, { attempts: [{ overall: 3, source: 'ai', words: 300, criteria: [
+    { index: 0, score: 3 }, { index: 1, score: 2 }, { index: 2, score: 4 }, { index: 3, score: null }] }] });
+  const report = essays.sanitize(db.byId('essays', first.id)).domain_report;
+  assert.strictEqual(report.domains.length, 4);
+  assert.strictEqual(report.domains[3].score, null);
+  const next = essays.startActWriting({ userId: user.id, enrollment });
+  assert.notStrictEqual(next.id, first.id);
+  assert.strictEqual(next.prompt, W.PROMPTS[1]);
+});
+
+check('an ordinary essay row carries no minutes or domain report', () => {
+  const out = essays.sanitize({ id: 9, level: 25, prompt: 'p', source: 'ai', criteria: [], attempts: [{ overall: 3, criteria: [] }] });
+  assert.strictEqual(out.minutes, null);
+  assert.strictEqual(out.domain_report, null);
+});
+
+check('the prompt bank wraps and every prompt asks for a position', () => {
+  assert.strictEqual(W.promptFor(W.PROMPTS.length + 1), W.PROMPTS[0]);
+  W.PROMPTS.forEach((p) => assert.ok(/position/.test(p)));
+});
+
+check('ACT timing lists the 40-minute writing section without changing the scored blend', () => {
+  const t = require('../services/act-timing');
+  assert.strictEqual(t.SECTIONS.writing.minutes, 40);
+  assert.ok(!t.SCORED.includes('writing'));
 });
