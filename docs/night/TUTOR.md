@@ -46,7 +46,7 @@ Read first: `services/tutor.js`, `services/tutor-context.js`, `services/tutor-sc
 T1. [done eda97b6] **Memory map.** Write `docs/TUTOR-MEMORY.md`: everything the tutor is given today per learner (running summary,
     turns, learner record, scorecard, goals, mastery), where each comes from, what is lost (for example: turns cut
     off, facts never extracted), and the gap list against the 06 mechanisms, by id. No code beyond small fixes.
-T2. [done COMMIT] **Long-term learner memory.** A per-learner store of durable facts:
+T2. [done 668b952] **Long-term learner memory.** A per-learner store of durable facts:
     - goals and deadlines; misconceptions (with the skill, the wrong answer and how often); what explanation worked
       (the style the learner got right right after); what they find hard; interests and context they chose to share.
     - Extracted after a tutor turn by a learner-class model through `services/ai.js` (mocked in tests). Deduplicated,
@@ -72,6 +72,6 @@ T7. `[local only]` Real-model run of T5 and a 20-turn memory conversation on NVI
 
 ## Done
 
-- T2 `COMMIT`: `services/tutor-facts.js` (kinds goal/misconception/worked/hard/interest; extracted after a tutor turn via `ai.talk`, off the reply path; deduplicated into confirmations; 60-day half-life fade; caps 12 per kind, 40 total), routes `GET/DELETE /api/tutor/facts[/:id]`, Profile section "What your tutor remembers", export + account deletion (`tutor_facts`, and `tutor_modes` now exported too), privacy page paragraph. Checked by `scripts/tutor-facts-test.js` (10 checks) and the full `npm test` (all steps passed). Four existing tests that count model calls now ignore the note-taking call. Half-life and extraction accuracy listed UNVERIFIED in `docs/yc/SOURCES-TO-VERIFY.md`. Not done: the learner record is still not read by the tutor (T3); a browser check of the Profile section is for the owner's agent.
+- T2 `668b952`: `services/tutor-facts.js` (kinds goal/misconception/worked/hard/interest; extracted after a tutor turn via `ai.talk`, off the reply path; deduplicated into confirmations; 60-day half-life fade; caps 12 per kind, 40 total), routes `GET/DELETE /api/tutor/facts[/:id]`, Profile section "What your tutor remembers", export + account deletion (`tutor_facts`, and `tutor_modes` now exported too), privacy page paragraph. Checked by `scripts/tutor-facts-test.js` (10 checks) and the full `npm test` (all steps passed). Four existing tests that count model calls now ignore the note-taking call. Half-life and extraction accuracy listed UNVERIFIED in `docs/yc/SOURCES-TO-VERIFY.md`. Not done: the learner record is still not read by the tutor (T3); a browser check of the Profile section is for the owner's agent.
 
 - T1 `eda97b6`: `docs/TUTOR-MEMORY.md` written from the code (no code changes). Checked by reading every cited file and `npm test` (all steps passed). Discovery: the learner record (`services/learner-record.js` facts) is never read by the tutor; folded into T2/T3 scope. `tutor_modes` is deleted on account deletion but not exported (mode word only).
