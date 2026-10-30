@@ -68,6 +68,12 @@ S2. **First slice DONE on `studley-parity` (355d450), see Done. Remaining: S2b.*
    - Learners can edit cards.
    - Also cards made from the learner's own recorded mistakes and misconceptions.
 S2b. Flashcard leftovers: count due cards on the home page and daily review page (`dueSummary` covers skills only), and fold the cards' multiplier back into the path's. Reason: S2 keeps the two schedules separate.
+S2c. **Never drop part of an upload silently (found by the own-material proof, 30 Oct).** In `services/course-builder.js`, an outline window that fails all three tries is left out of the course without telling the learner.
+   - Record which parts of the source were not turned into skills (page or character ranges).
+   - Retry them once more in the background.
+   - If they still fail, show the learner a plain note on the course page ("Pages 41-58 could not be read into this course yet. Try again"), with a retry button.
+   - Count them in the coverage the course reports.
+   - Add tests for a window that fails every time.
 S3. **Practice test on demand:** pick skills and a length, timed or untimed.
    - Written answers go through `services/typed-grading.js`.
    - Results feed the learner model.
