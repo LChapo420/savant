@@ -1,0 +1,103 @@
+{
+ "unit": "Unit 3.1",
+ "rejected": {
+  "P6": [
+   {
+    "checker": "mistral",
+    "problem": "The accepted alternatives include both 'amigo' and 'amiga', but the English 'You're my friend.' does not specify gender, so the Spanish should not either. The base phrase should be gender-neutral or all accepted alternatives should match the English.",
+    "fix": "Remove gender-specific alternatives or ensure the English matches the Spanish gender. For example, keep only 'Tú eres mi amigo.' and 'Eres mi amigo.' or add 'You're my male friend.' for those."
+   }
+  ],
+  "P13": [
+   {
+    "checker": "mistral",
+    "problem": "The verb form 'sois' is correct for 'vosotros', but the English 'You are friends.' does not specify the region where 'vosotros' is used. This could confuse beginners who may not be familiar with regional variations.",
+    "fix": "Either specify the region in the English or use a more universally understood form like 'Ustedes son amigos.' for beginners."
+   }
+  ],
+  "P14": [
+   {
+    "checker": "mistral",
+    "problem": "Same issue as P13: 'vosotros sois' is region-specific and may not be suitable for beginners without context.",
+    "fix": "Use 'Ustedes son de España.' for broader applicability."
+   }
+  ],
+  "S7": [
+   {
+    "checker": "mistral",
+    "problem": "The phrase 'Ustedes son mis amigos nuevos.' implies the speaker is male or the group is mixed-gender. For a female speaker (Mara), it should be 'mis amigas nuevas' or gender-neutral if the group includes males.",
+    "fix": "Change to 'Ustedes son mis amigas nuevas.' or 'Ustedes son mis amigos nuevos.' depending on the context of the group's gender."
+   }
+  ],
+  "C1": [
+   {
+    "checker": "mistral",
+    "problem": "The reply choice 'Son Ana.' is grammatically incorrect. 'Son' requires a plural subject, but 'Ana' is singular.",
+    "fix": "Replace 'Son Ana.' with a grammatically correct alternative like 'Ella es Ana.' (though this is already an option) or remove it."
+   }
+  ],
+  "C2": [
+   {
+    "checker": "mistral",
+    "problem": "The reply choice 'Sí, eres de México.' is incorrect because 'eres' is singular and does not agree with 'ustedes' (plural).",
+    "fix": "Replace 'Sí, eres de México.' with 'Sí, somos de México.' (though this is the KEY) or another correct plural form."
+   }
+  ],
+  "C3": [
+   {
+    "checker": "mistral",
+    "problem": "The reply choice 'Sí, tú eres mi amiga.' is incorrect because it changes the subject from 'ella' to 'tú', which does not answer the question about 'ella'.",
+    "fix": "Replace 'Sí, tú eres mi amiga.' with a correct response like 'Sí, ella es mi amiga.' (though this is the KEY) or another correct form."
+   }
+  ]
+ },
+ "rewritten": {
+  "P13": {
+   "es": "Ustedes son amigos.",
+   "en": [
+    "You are friends.",
+    "You all are friends."
+   ],
+   "tier": 2,
+   "skill": "es_ser_estar",
+   "topic": "ustedes_and_vosotros_across_"
+  },
+  "P14": {
+   "es": "Ustedes son de España.",
+   "en": [
+    "You are from Spain.",
+    "You all are from Spain."
+   ],
+   "tier": 3,
+   "skill": "es_ser_estar",
+   "topic": "ustedes_and_vosotros_across_"
+  },
+  "C1": {
+   "who": "rosa",
+   "es": "¡Hola! Yo soy Rosa. ¿Y tú?",
+   "choices": [
+    "Soy Ana.",
+    "Ella es Ana.",
+    "Eres Ana."
+   ],
+   "answer": 0
+  },
+  "C2": {
+   "who": "diego",
+   "es": "¿Ustedes son de México?",
+   "choices": [
+    "Sí, somos de México.",
+    "Sí, ellos son de México.",
+    "Sí, soy de México."
+   ],
+   "answer": 0
+  }
+ },
+ "dropped": [
+  "P6",
+  "S7",
+  "C3"
+ ],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:06:00.061Z"
+}

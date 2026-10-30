@@ -655,29 +655,24 @@ module.exports = [
           "en": "Can you come at five?"
         },
         {
-          "who": "tomas",
-          "es": "A las cinco no puedo. Trabajo a las tres.",
-          "en": "At five I can't. I work at three."
-        },
-        {
           "who": "mara",
           "es": "¿Qué hora es ahora?",
           "en": "What time is it now?"
         },
         {
           "who": "tomas",
-          "es": "Son las dos y cuarto. Prefiero las cuatro en punto.",
-          "en": "It's two fifteen. I prefer four o'clock exactly."
+          "es": "Son las dos y cuarto. Prefiero venir a las cuatro en punto.",
+          "en": "It's two fifteen. I prefer to come at four o'clock exactly."
         },
         {
           "who": "rosa",
-          "es": "Yo quiero venir. ¿Puedo venir a las cinco y media?",
+          "es": "Quiero venir. ¿Puedo venir a las cinco y media?",
           "en": "I want to come. Can I come at five thirty?"
         },
         {
           "who": "diego",
-          "es": "Sí. Son las cinco y media. ¡Perfecto!",
-          "en": "Yes. It's five thirty. Perfect!"
+          "es": "Sí, a las cinco y media. ¡Perfecto!",
+          "en": "Yes, at five thirty. Perfect!"
         },
         {
           "who": "mara",
@@ -687,18 +682,7 @@ module.exports = [
       ],
       "questions": [
         {
-          "after": 3,
-          "kind": "read_respond",
-          "question": "What time does Tomás work?",
-          "choices": [
-            "At three",
-            "At five",
-            "At four thirty"
-          ],
-          "answer": 0
-        },
-        {
-          "after": 5,
+          "after": 4,
           "kind": "read_respond",
           "question": "What time does Tomás prefer?",
           "choices": [
@@ -707,99 +691,10 @@ module.exports = [
             "Two fifteen"
           ],
           "answer": 0
-        },
-        {
-          "after": 7,
-          "kind": "read_respond",
-          "question": "What time is the meeting now?",
-          "choices": [
-            "Five thirty",
-            "Four forty",
-            "Three o'clock"
-          ],
-          "answer": 0
         }
       ]
     },
-    "convo": {
-      "partner": "diego",
-      "partnerName": "Diego",
-      "setting": "At the office: you and your colleague Diego are planning a meeting.",
-      "learnerCard": "You need to find a free hour for a meeting. Ask the time and say when you can and can't come.",
-      "learnerCardEs": "Habla con Diego. Pregunta la hora y busca una hora para la reunión.",
-      "partnerCard": "Diego is a colleague. He knows his free hours, but you don't.",
-      "goals": [
-        {
-          "id": "ask_time",
-          "text": "Ask what time it is (¿Qué hora es?)."
-        },
-        {
-          "id": "say_cant",
-          "text": "Say you can't at three (No puedo...)."
-        },
-        {
-          "id": "prefer",
-          "text": "Say what time you prefer (Prefiero...)."
-        },
-        {
-          "id": "can_come",
-          "text": "Say you can come at half past four (Puedo...)."
-        }
-      ],
-      "targets": [
-        "¿Qué hora es?",
-        "No puedo a las tres.",
-        "Prefiero a las cuatro y media.",
-        "Puedo a las cuatro y media.",
-        "Son las cuatro y media."
-      ],
-      "opening": "¡Hola! ¿Puedes venir a una reunión hoy?",
-      "script": [
-        {
-          "goal": "ask_time",
-          "expect": [
-            "que hora",
-            "es"
-          ],
-          "reply": "Son las dos y cuarto.",
-          "hint": "Say \"¿Qué hora es?\""
-        },
-        {
-          "goal": "say_cant",
-          "expect": [
-            "no puedo"
-          ],
-          "reply": "¿Ah, no? ¿Prefieres a las cuatro?",
-          "hint": "Say \"No puedo a las tres.\""
-        },
-        {
-          "goal": "prefer",
-          "expect": [
-            "prefiero"
-          ],
-          "reply": "Bien. Yo puedo a las cuatro y media.",
-          "hint": "Say \"Prefiero a las cuatro y media.\""
-        },
-        {
-          "goal": "can_come",
-          "expect": [
-            "puedo",
-            "media"
-          ],
-          "reply": "¡Perfecto! ¡Hasta las cuatro y media!",
-          "hint": "Say \"Puedo a las cuatro y media.\""
-        }
-      ],
-      "nudges": {
-        "ask_time": "Pregunta: ¿Qué hora es?",
-        "say_cant": "Di: No puedo a las tres.",
-        "prefer": "Di: Prefiero a las cuatro y media.",
-        "can_come": "Di: Puedo a las cuatro y media."
-      },
-      "fallbackReply": "¿Perdón? ¿Puedes repetir, por favor?",
-      "closing": "¡Gracias! ¡Hasta las cuatro y media!",
-      "maxTurns": 10
-    },
+    "convo": null,
     "fills": [
       {
         "before": "Quiero",
@@ -869,7 +764,7 @@ module.exports = [
           }
         ],
         "choices": [
-          "No puedo. Prefiero a las cinco.",
+          "No puedo. Prefiero venir a las cinco.",
           "Son las cuatro y cuarto.",
           "¿Trabajas aquí?"
         ],
@@ -892,8 +787,8 @@ module.exports = [
     ],
     "reads": [
       {
-        "passage": "Mara quiere una reunión. «¿Puedes venir a las cinco?», pregunta. Tomás dice: «No puedo. Prefiero a las cinco y media.»",
-        "question": "What time does Tomás prefer?",
+        "passage": "Mara quiere una reunión. «¿Puedes venir a las cinco?», pregunta. Tomás dice: «No puedo. Prefiero venir a las cinco y media.»",
+        "question": "What",
         "choices": [
           "Five thirty",
           "Five o'clock",
@@ -1074,16 +969,6 @@ module.exports = [
         ],
         "tier": 1,
         "skill": "es_gender",
-        "topic": "meals_and_mealtimes"
-      },
-      {
-        "id": "g4u3_almuerzo_a_las_dos",
-        "es": "Almuerzo a las dos.",
-        "en": [
-          "I have lunch at two."
-        ],
-        "tier": 1,
-        "skill": "es_present_ar",
         "topic": "meals_and_mealtimes"
       },
       {
@@ -1282,12 +1167,12 @@ module.exports = [
         "en": "My birthday is May fifth."
       },
       {
-        "before": "",
+        "before": "Yo ",
         "after": "a las dos.",
         "choices": [
-          "Almuerzo",
-          "Almuerza",
-          "Almuerzas"
+          "almuerzo",
+          "almuerza",
+          "almuerzas"
         ],
         "answer": 0,
         "en": "I have lunch at two."
@@ -1318,20 +1203,6 @@ module.exports = [
           "El cinco de mayo."
         ],
         "answer": 1
-      },
-      {
-        "lines": [
-          {
-            "who": "tomas",
-            "es": "¿Cuál es la fecha?"
-          }
-        ],
-        "choices": [
-          "A las siete.",
-          "En el verano.",
-          "Es el primero de mayo."
-        ],
-        "answer": 2
       },
       {
         "lines": [
@@ -1383,11 +1254,11 @@ module.exports = [
     "goal": "I can name common breakfast foods, fruits, vegetables, meats, fish, grains, and dairy products.",
     "phrases": [
       {
-        "id": "g4u4_una_tapa_de_tortilla_por_fav",
-        "es": "Una tapa de tortilla, por favor.",
+        "id": "g4u4_una_racion_de_tortilla_por_f",
+        "es": "Una ración de tortilla, por favor.",
         "en": [
-          "A tortilla tapa, please.",
-          "One tapa of tortilla, please."
+          "A portion of tortilla, please.",
+          "One portion of tortilla, please."
         ],
         "tier": 2,
         "skill": "es_vocab_core",
@@ -1420,7 +1291,7 @@ module.exports = [
         "es": "Pedimos media ración.",
         "en": [
           "We order a half portion.",
-          "We'll have a half portion."
+          "We're ordering a half portion."
         ],
         "tier": 3,
         "skill": "es_present_erir",
@@ -1438,8 +1309,8 @@ module.exports = [
         "topic": "breakfast_foods_and_drinks"
       },
       {
-        "id": "g4u4_el_jugo_de_naranja",
-        "es": "el jugo de naranja",
+        "id": "g4u4_el_zumo_de_naranja",
+        "es": "el zumo de naranja",
         "en": [
           "orange juice"
         ],
@@ -1574,8 +1445,8 @@ module.exports = [
           "en": "What is there for breakfast?"
         },
         {
-          "who": "tomas",
-          "es": "Hay huevos, pan y jugo de naranja.",
+          "who": "Tomás",
+          "es": "Hay huevos, pan y zumo de naranja.",
           "en": "There are eggs, bread, and orange juice."
         },
         {
@@ -1744,12 +1615,12 @@ module.exports = [
         "en": "I drink orange juice."
       },
       {
-        "before": "La ",
+        "before": "",
         "after": " es una fruta.",
         "choices": [
-          "manzana",
-          "cebolla",
-          "papa"
+          "La manzana",
+          "La cebolla",
+          "La patata"
         ],
         "answer": 0,
         "en": "The apple is a fruit."
@@ -1880,7 +1751,6 @@ module.exports = [
         "id": "g4u5_mi_amigo_tiene_sed",
         "es": "Mi amigo tiene sed.",
         "en": [
-          "My friend is thirsty.",
           "My friend is thirsty."
         ],
         "tier": 2,
@@ -2001,11 +1871,10 @@ module.exports = [
         "topic": "asking_about_likes_te_gusta_"
       },
       {
-        "id": "g4u5_le_gusta_la_fruta",
-        "es": "¿Le gusta la fruta?",
+        "id": "g4u5_te_gusta_la_fruta",
+        "es": "¿Te gusta la fruta?",
         "en": [
-          "Do you like fruit?",
-          "Does he like fruit?"
+          "Do you like fruit?"
         ],
         "tier": 2,
         "skill": "es_questions",
@@ -2239,34 +2108,6 @@ module.exports = [
           "Me gusta el café."
         ],
         "answer": 1
-      },
-      {
-        "lines": [
-          {
-            "who": "rosa",
-            "es": "¿Te gustan los tacos?"
-          }
-        ],
-        "choices": [
-          "Sí, me gusta.",
-          "No, tengo hambre.",
-          "Sí, me encantan."
-        ],
-        "answer": 2
-      },
-      {
-        "lines": [
-          {
-            "who": "tomas",
-            "es": "¿Te gusta el café?"
-          }
-        ],
-        "choices": [
-          "Sí, mucho.",
-          "Me encantan el café.",
-          "Sí, tengo sed."
-        ],
-        "answer": 0
       }
     ],
     "reads": [
@@ -2315,11 +2156,11 @@ module.exports = [
         "topic": "polite_requests_quisiera_me_"
       },
       {
-        "id": "g4u6_me_da_un_cafe_por_favor",
-        "es": "Me da un café, por favor.",
+        "id": "g4u6_me_trae_un_cafe_por_favor",
+        "es": "¿Me trae un café, por favor?",
         "en": [
           "Could I have a coffee, please?",
-          "Can you give me a coffee, please?",
+          "Can you bring me a coffee, please?",
           "A coffee for me, please."
         ],
         "tier": 1,
@@ -2518,7 +2359,7 @@ module.exports = [
         },
         {
           "who": "mara",
-          "es": "Me da un café, por favor.",
+          "es": "¿Me trae un café, por favor?",
           "en": "Could I have a coffee, please?"
         },
         {
@@ -2563,108 +2404,26 @@ module.exports = [
         }
       ]
     },
-    "convo": {
-      "partner": "rosa",
-      "partnerName": "Rosa",
-      "setting": "A small restaurant at lunchtime. Rosa is your waiter.",
-      "learnerCard": "You are a customer. You know your diet and your budget: you want the soup, a coffee, and then the bill.",
-      "learnerCardEs": "Tú eres el cliente. Quieres una sopa y un café. Después quieres la cuenta.",
-      "partnerCard": "You are the waiter. You know the menu and the special of the day, and you answer politely.",
-      "goals": [
-        {
-          "id": "greet_order",
-          "text": "Greet the waiter and say what you would like (Quisiera…, por favor)."
-        },
-        {
-          "id": "ask_dish",
-          "text": "Ask what the dish has in it (¿Qué lleva…?)."
-        },
-        {
-          "id": "choose_drink",
-          "text": "Ask politely for a coffee (Me da un café, por favor)."
-        },
-        {
-          "id": "ask_bill",
-          "text": "Ask for the bill politely (¿Me trae la cuenta?)."
-        }
-      ],
-      "targets": [
-        "Quisiera una sopa, por favor.",
-        "¿Qué lleva el plato?",
-        "Me da un café, por favor.",
-        "¿Me trae la cuenta?",
-        "Para mí, el plato vegetariano.",
-        "La cuenta, por favor."
-      ],
-      "opening": "¡Buenas tardes! Bienvenido al restaurante. ¿Qué desea?",
-      "script": [
-        {
-          "goal": "greet_order",
-          "expect": [
-            "quisiera",
-            "por favor"
-          ],
-          "reply": "Claro, una sopa. ¿Qué más desea?",
-          "hint": "Say \"Quisiera una sopa, por favor.\""
-        },
-        {
-          "goal": "ask_dish",
-          "expect": [
-            "que",
-            "lleva"
-          ],
-          "reply": "La sopa lleva pollo y verduras.",
-          "hint": "Say \"¿Qué lleva la sopa?\""
-        },
-        {
-          "goal": "choose_drink",
-          "expect": [
-            "me",
-            "da",
-            "cafe"
-          ],
-          "reply": "Muy bien, un café. ¿Algo más?",
-          "hint": "Say \"Me da un café, por favor.\""
-        },
-        {
-          "goal": "ask_bill",
-          "expect": [
-            "cuenta",
-            "trae"
-          ],
-          "reply": "Sí, claro. Aquí está la cuenta.",
-          "hint": "Say \"¿Me trae la cuenta, por favor?\""
-        }
-      ],
-      "nudges": {
-        "greet_order": "Di qué quieres comer: «Quisiera…».",
-        "ask_dish": "Pregunta qué lleva el plato.",
-        "choose_drink": "Pide un café con «Me da…».",
-        "ask_bill": "Pide la cuenta con «¿Me trae…?»."
-      },
-      "fallbackReply": "¿Perdón? ¿Puedes repetir, por favor?",
-      "closing": "¡Muchas gracias! Que tenga buen día.",
-      "maxTurns": 10
-    },
+    "convo": null,
     "fills": [
       {
         "before": "Quisiera una",
         "after": ", por favor.",
         "choices": [
           "sopa",
-          "menú",
+          "mesa",
           "cuenta"
         ],
         "answer": 0,
         "en": "I would like a soup, please."
       },
       {
-        "before": "Me",
-        "after": "un café, por favor.",
+        "before": "¿Me",
+        "after": "un café, por favor?",
         "choices": [
-          "da",
+          "trae",
           "doy",
-          "das"
+          "traigo"
         ],
         "answer": 0,
         "en": "Could I have a coffee, please."
@@ -2702,8 +2461,8 @@ module.exports = [
         ],
         "choices": [
           "Quisiera una ensalada, por favor.",
-          "La cuenta es azul.",
-          "Soy un restaurante."
+          "Me gusta la sopa.",
+          "El restaurante es grande."
         ],
         "answer": 0
       },
@@ -2715,7 +2474,7 @@ module.exports = [
           }
         ],
         "choices": [
-          "Sí, soy un postre.",
+          "Sí, la sopa está fría.",
           "No, gracias. La cuenta, por favor.",
           "Buenas noches, hasta mañana."
         ],
@@ -2730,7 +2489,7 @@ module.exports = [
         ],
         "choices": [
           "Sí, el restaurante es grande.",
-          "No, el café es pequeña.",
+          "No, el café es pequeño.",
           "¡Perfecto! Quisiera el especial, por favor."
         ],
         "answer": 2
@@ -2738,7 +2497,7 @@ module.exports = [
     ],
     "reads": [
       {
-        "passage": "En el restaurante hay un menú. Las entradas son ensalada. El plato principal es sopa. Los postres son fruta. El especial del día es sopa de verduras.",
+        "passage": "En el restaurante hay un menú. Las entradas son ensaladas. El plato principal es sopa. Los postres son fruta. El especial del día es sopa de verduras.",
         "question": "What is the special of the day?",
         "choices": [
           "Salad",
@@ -2808,17 +2567,6 @@ module.exports = [
         "topic": "paying_by_cash_card_and_app_"
       },
       {
-        "id": "g4u7_en_mil_novecientos_noventa",
-        "es": "En mil novecientos noventa",
-        "en": [
-          "In 1990",
-          "In nineteen ninety"
-        ],
-        "tier": 2,
-        "skill": "es_numbers",
-        "topic": "numbers_100_to_1000_and_year"
-      },
-      {
         "id": "g4u7_cien_pesos_por_favor",
         "es": "Cien pesos, por favor.",
         "en": [
@@ -2847,9 +2595,6 @@ module.exports = [
           "It's cheap.",
           "It is inexpensive."
         ],
-        "alt": [
-          "Es barata."
-        ],
         "tier": 1,
         "skill": "es_adjectives",
         "topic": "prices_and_money"
@@ -2860,9 +2605,6 @@ module.exports = [
         "en": [
           "It's expensive.",
           "It is expensive."
-        ],
-        "alt": [
-          "Es cara."
         ],
         "tier": 1,
         "skill": "es_adjectives",
@@ -2982,7 +2724,7 @@ module.exports = [
         {
           "who": "diego",
           "es": "Es un poco caro. ¿Aceptan tarjeta?",
-          "en": "It's a little expensive. Do you accept cards?"
+          "en": "It's a bit expensive. Do you accept cards?"
         },
         {
           "who": "rosa",
@@ -3145,17 +2887,6 @@ module.exports = [
         ],
         "answer": 0,
         "en": "It's two hundred fifty pesos."
-      },
-      {
-        "before": "Pago con",
-        "after": "celular.",
-        "choices": [
-          "la",
-          "el",
-          "los"
-        ],
-        "answer": 1,
-        "en": "I'm paying with my phone."
       },
       {
         "before": "¿Me da el",
@@ -3349,8 +3080,7 @@ module.exports = [
           "May I try it on?"
         ],
         "alt": [
-          "¿Me lo puedo probar?",
-          "¿Lo puedo probar?"
+          "¿Me lo puedo probar?"
         ],
         "tier": 1,
         "skill": "es_questions",
@@ -3458,12 +3188,12 @@ module.exports = [
         },
         {
           "who": "rosa",
-          "es": "Aquí tiene. ¿Le gusta?",
+          "es": "Aquí tienes. ¿Te gusta?",
           "en": "Here you go. Do you like it?"
         },
         {
           "who": "mara",
-          "es": "¿Puedo probármelo?",
+          "es": "¿Puedo probármela?",
           "en": "Can I try it on?"
         },
         {
@@ -3632,17 +3362,6 @@ module.exports = [
         ],
         "answer": 0,
         "en": "It's too big for me."
-      },
-      {
-        "before": "¿Puedo",
-        "after": "?",
-        "choices": [
-          "probármelo",
-          "probarmelo",
-          "probármela"
-        ],
-        "answer": 0,
-        "en": "Can I try it on?"
       }
     ],
     "chats": [
@@ -3774,7 +3493,7 @@ module.exports = [
         "en": [
           "There is a lot of fruit.",
           "There's lots of fruit.",
-          "There are lots of fruit."
+          "There is plenty of fruit."
         ],
         "tier": 2,
         "skill": "es_adjectives",
@@ -4074,17 +3793,6 @@ module.exports = [
     },
     "fills": [
       {
-        "before": "Este",
-        "after": "pan es fresco.",
-        "choices": [
-          "Este",
-          "Esta",
-          "Estos"
-        ],
-        "answer": 0,
-        "en": "This bread is fresh."
-      },
-      {
         "before": "Un",
         "after": "de manzanas, por favor.",
         "choices": [
@@ -4115,7 +3823,7 @@ module.exports = [
           "un"
         ],
         "answer": 0,
-        "en": "It's about twenty pesos."
+        "en": "They're about twenty pesos."
       }
     ],
     "chats": [
@@ -4129,7 +3837,7 @@ module.exports = [
         "choices": [
           "Sí, necesito pan.",
           "Sí, necesito zapatos.",
-          "No, la farmacia vende pan."
+          "No, voy a la carnicería."
         ],
         "answer": 0
       },
@@ -4156,7 +3864,7 @@ module.exports = [
         ],
         "choices": [
           "Sí, cuesta demasiado.",
-          "Sí, hay mucha fruta.",
+          "No, el pan es barato.",
           "No, la zapatería está cerca."
         ],
         "answer": 0
@@ -4275,12 +3983,10 @@ module.exports = [
         "topic": "a_five_minute_cafe_chat_abou"
       },
       {
-        "id": "g4u10_cuanto_es_lo_menos",
-        "es": "¿Cuánto es lo menos?",
+        "id": "g4u10_cual_es_el_precio_mas_bajo",
+        "es": "¿Cuál es el precio más bajo?",
         "en": [
-          "What's the lowest price?",
-          "What's your best price?",
-          "How low can you go?"
+          "What's the lowest price?"
         ],
         "tier": 2,
         "skill": "es_questions",
@@ -4292,9 +3998,6 @@ module.exports = [
         "en": [
           "It's very expensive.",
           "It is very expensive."
-        ],
-        "alt": [
-          "Es muy cara."
         ],
         "tier": 1,
         "skill": "es_ser_estar",
@@ -4420,7 +4123,7 @@ module.exports = [
         },
         {
           "who": "mara",
-          "es": "Perfecto. Compro fruta en el mercado y zapatos en la tienda.",
+          "es": "Perfecto. Voy a comprar fruta en el mercado y zapatos en la tienda.",
           "en": "Perfect. I'll buy fruit at the market and shoes at the store."
         }
       ],
@@ -4565,7 +4268,7 @@ module.exports = [
           "compra"
         ],
         "answer": 1,
-        "en": "I'm going to buy fruit."
+        "en": "I am going to buy fruit."
       },
       {
         "before": "La tienda",
@@ -4629,7 +4332,7 @@ module.exports = [
         "choices": [
           "Buenas noches, adiós.",
           "De nada.",
-          "¡Sí, me gusta ir de compras!"
+          "¡Sí, voy contigo!"
         ],
         "answer": 2
       }
@@ -4701,11 +4404,11 @@ module.exports = [
         "topic": "a_shopping_list_and_a_short_"
       },
       {
-        "id": "g4u11_tengo_que_comprar",
-        "es": "Tengo que comprar.",
+        "id": "g4u11_tengo_que_comprar_pan",
+        "es": "Tengo que comprar pan.",
         "en": [
-          "I have to buy.",
-          "I need to buy."
+          "I have to buy bread.",
+          "I need to buy bread."
         ],
         "tier": 1,
         "skill": "es_present_erir",
@@ -4918,93 +4621,7 @@ module.exports = [
         }
       ]
     },
-    "convo": {
-      "partner": "rosa",
-      "partnerName": "Rosa",
-      "setting": "Rosa's small store. You have a short shopping list and want to place an order.",
-      "learnerCard": "You are a customer with a shopping list. Say what you need, order quantities, ask for a coffee, and ask when the store opens.",
-      "learnerCardEs": "Tienes una lista. Dices qué necesitas, pides comida y preguntas a qué hora abren.",
-      "partnerCard": "Rosa runs a small store. She takes your order, confirms it, and answers your questions.",
-      "goals": [
-        {
-          "id": "need",
-          "text": "Say what you need (Necesito...)."
-        },
-        {
-          "id": "quantity",
-          "text": "Order two kilos of apples (Quiero dos kilos de manzanas)."
-        },
-        {
-          "id": "drink",
-          "text": "Ask for a coffee with milk (Un café con leche, por favor)."
-        },
-        {
-          "id": "hours",
-          "text": "Ask when the store opens (¿A qué hora abren?)."
-        }
-      ],
-      "targets": [
-        "Necesito leche y pan.",
-        "Quiero dos kilos de manzanas.",
-        "Un café con leche, por favor.",
-        "Tengo que comprar.",
-        "¿A qué hora abren?",
-        "Gracias."
-      ],
-      "opening": "¡Buenos días! ¿Qué necesitas hoy?",
-      "script": [
-        {
-          "goal": "need",
-          "expect": [
-            "necesito",
-            "leche",
-            "pan"
-          ],
-          "reply": "Muy bien. Tengo leche y pan.",
-          "hint": "Say \"Necesito leche y pan.\""
-        },
-        {
-          "goal": "quantity",
-          "expect": [
-            "quiero",
-            "kilos",
-            "manzanas"
-          ],
-          "reply": "Perfecto. Dos kilos de manzanas.",
-          "hint": "Say \"Quiero dos kilos de manzanas.\""
-        },
-        {
-          "goal": "drink",
-          "expect": [
-            "cafe",
-            "leche",
-            "por",
-            "favor"
-          ],
-          "reply": "Sí, un café con leche.",
-          "hint": "Say \"Un café con leche, por favor.\""
-        },
-        {
-          "goal": "hours",
-          "expect": [
-            "que",
-            "hora",
-            "abren"
-          ],
-          "reply": "Abrimos a las ocho.",
-          "hint": "Say \"¿A qué hora abren?\""
-        }
-      ],
-      "nudges": {
-        "need": "Di qué necesitas.",
-        "quantity": "Pide dos kilos de manzanas.",
-        "drink": "Pide un café con leche.",
-        "hours": "Pregunta a qué hora abren."
-      },
-      "fallbackReply": "¿Perdón? ¿Puedes repetir, por favor?",
-      "closing": "¡Gracias! ¡Hasta luego!",
-      "maxTurns": 10
-    },
+    "convo": null,
     "fills": [
       {
         "before": "Necesito leche",
@@ -5075,8 +4692,8 @@ module.exports = [
         ],
         "choices": [
           "Dos kilos, por favor.",
-          "Dos kilos de favor.",
-          "Tengo dos kilos manzanas."
+          "Hay dos kilos.",
+          "Tengo dos kilos de manzanas."
         ],
         "answer": 0
       },
@@ -5090,7 +4707,7 @@ module.exports = [
         "choices": [
           "A las ocho.",
           "Son las ocho.",
-          "Hay ocho."
+          "Por la mañana."
         ],
         "answer": 0
       }

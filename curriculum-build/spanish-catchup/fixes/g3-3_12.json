@@ -1,0 +1,122 @@
+{
+ "unit": "Unit 3.12",
+ "rejected": {
+  "P10": [
+   {
+    "checker": "mistral",
+    "problem": "The English 'I have two siblings' does not match the Spanish 'Tengo dos hermanos' (which means 'I have two brothers').",
+    "fix": "Change the English to 'I have two brothers.' or add 'brothers' as an accepted alternative."
+   }
+  ],
+  "S6": [
+   {
+    "checker": "mistral",
+    "problem": "The English 'I have two siblings' does not match the Spanish 'Tengo dos hermanos' (which means 'I have two brothers').",
+    "fix": "Change the English to 'I have two brothers.' or adjust the Spanish to 'Tengo dos hermanos y una hermana.' if 'siblings' is intended."
+   }
+  ],
+  "F3": [
+   {
+    "checker": "mistral",
+    "problem": "The choice 'anos' is incorrect; it should be 'años' (with an accent).",
+    "fix": "Replace 'anos' with 'años' in the choices."
+   }
+  ],
+  "R2": [
+   {
+    "checker": "mistral",
+    "problem": "The Spanish 'profesora' means 'teacher' (feminine), but the English choice 'Teacher' is correct. However, the Spanish text implies Rosa is female, so the answer is correct, but the issue is the lack of accent in 'profesora' if it were misspelled (but it isn't here). No actual error found in this item.",
+    "fix": ""
+   }
+  ],
+  "C2": [
+   {
+    "checker": "mistral",
+    "problem": "The [KEY] reply 'Soy de México. ¿Y tú?' does not directly answer the question '¿De dónde eres?' with a full response. While it is a valid reply, it is not the most direct answer, and the other options are unrelated.",
+    "fix": "No fix needed as the [KEY] is technically correct, but consider if the task expects a direct answer without a follow-up question."
+   }
+  ],
+  "S7": [
+   {
+    "checker": "qwen",
+    "problem": "A teenage host asking a 20-year-old guest '¿Tienes hijos?' at a party is unnatural; native speakers would not ask this in this context.",
+    "fix": "Change the question to something natural for teenagers meeting, e.g., '¡Hola! ¿De dónde eres, Tomás?'"
+   }
+  ],
+  "Q3": [
+   {
+    "checker": "qwen",
+    "problem": "The comprehension question relies on S7, which contains an unnatural exchange (asking a 20-year-old at a party if he has children).",
+    "fix": "Update after fixing S7."
+   }
+  ]
+ },
+ "rewritten": {
+  "P10": {
+   "es": "Tengo dos hermanos.",
+   "en": [
+    "I have two brothers."
+   ],
+   "alt": [
+    "Yo tengo dos hermanos."
+   ],
+   "tier": 1,
+   "skill": "es_present_erir",
+   "topic": "talking_about_your_family"
+  },
+  "S6": {
+   "who": "mara",
+   "es": "Tengo diecinueve años. Tengo dos hermanos. Mi hermana se llama Ana.",
+   "en": "I'm nineteen years old. I have two brothers. My sister's name is Ana."
+  },
+  "F3": {
+   "before": "Tengo veinte",
+   "after": ".",
+   "choices": [
+    "años",
+    "año",
+    "días"
+   ],
+   "answer": 0,
+   "en": "I'm twenty years old."
+  },
+  "R2": {
+   "passage": "Tomás tiene un hermano y una hermana. Su hermana se llama Rosa. Rosa es profesora.",
+   "question": "What is Rosa's job?",
+   "choices": [
+    "Teacher",
+    "Student",
+    "Doctor"
+   ],
+   "answer": 0
+  },
+  "C2": {
+   "who": "rosa",
+   "es": "¿De dónde eres?",
+   "choices": [
+    "Soy de México. ¿Y tú?",
+    "Tengo veinte años.",
+    "Mi hermana se llama Rosa."
+   ],
+   "answer": 0
+  },
+  "S7": {
+   "who": "rosa",
+   "es": "¡Hola! ¿Tienes hermanos, Tomás?",
+   "en": "Hi! Do you have siblings, Tomás?"
+  },
+  "Q3": {
+   "after": 8,
+   "question": "Does Tomás have siblings?",
+   "choices": [
+    "No, he doesn't.",
+    "Yes, he has two.",
+    "Yes, he has one."
+   ],
+   "answer": 0
+  }
+ },
+ "dropped": [],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:28:02.113Z"
+}

@@ -1,0 +1,62 @@
+{
+ "unit": "Unit 3.6",
+ "rejected": {
+  "P8": [
+   {
+    "checker": "mistral",
+    "problem": "Missing article 'un' before 'coche'.",
+    "fix": "¿Tienes un coche?"
+   }
+  ],
+  "C2": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect option 'Sí, tengo dos hermana.' (missing plural 's').",
+    "fix": "Sí, tengo dos hermanas."
+   }
+  ],
+  "C3": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect options 'Mis amigos es simpáticos.' (wrong verb form) and 'Mis amigo son simpático.' (wrong gender/number).",
+    "fix": "Remove incorrect options or correct them to 'Mis amigos son simpáticos.'"
+   }
+  ],
+  "F4": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect options 'pesas' and 'peso' (wrong verb form for 'el perro').",
+    "fix": "Correct options to 'pesa' only or add 'el perro pesa' as the full correct form."
+   }
+  ]
+ },
+ "rewritten": {
+  "P8": {
+   "es": "¿Tienes un coche?",
+   "en": [
+    "Do you have a car?",
+    "Have you got a car?"
+   ],
+   "tier": 2,
+   "skill": "es_present_erir",
+   "topic": "tener_for_everyday_possessio"
+  },
+  "F4": {
+   "before": "El perro",
+   "after": "cinco kilos.",
+   "choices": [
+    "pesa",
+    "tiene",
+    "come"
+   ],
+   "answer": 0,
+   "en": "The dog weighs five kilos."
+  }
+ },
+ "dropped": [
+  "C2",
+  "C3"
+ ],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:10:59.993Z"
+}

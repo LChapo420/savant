@@ -49,6 +49,9 @@ function check(name, fn) {
 
 const G1 = curriculum.getGrade('spanish', 'entry');
 const G2 = curriculum.getGrade('spanish', 'intermediate');
+// Grades 3 and 4 (units-g3.js, units-g4.js: the skill catch-up's content) are built and checked the same way.
+const G3 = curriculum.getGrade('spanish', 'advanced');
+const G4 = curriculum.getGrade('spanish', 'spanish_grade_04_time_food_shopping_and_core_verbs');
 const user = db.insert('users', { email: 'learner@example.com', display_name: 'L', xp: 0, streak: 0 });
 
 function enroll(u, gradeId, level) {
@@ -86,7 +89,13 @@ check('content: every unit names a real unit of its grade, with a scene and a ro
     const g = curriculum.getGrade('spanish', u.grade);
     assert.ok(g.levels.some((l) => l.unit === u.unit), `${u.unit} is in ${u.grade}`);
     assert.ok(u.scene.lines.length >= 5, `${u.unit}: scene`);
-    assert.ok(u.convo.goals.length >= 3 && u.convo.script.length === u.convo.goals.length, `${u.unit}: one script step per goal`);
+    if (u.convo) assert.ok(u.convo.goals.length >= 3 && u.convo.script.length === u.convo.goals.length, `${u.unit}: one script step per goal`);
+    else {
+      // Grades 3-4 ship without a role-play a checker rejected; its Conversation Lab then goes to the ordinary session.
+      assert.ok(!['entry', 'intermediate'].includes(u.grade), `${u.unit}: Grades 1-2 keep their role-plays`);
+      const lab = g.levels.find((l) => l.unit === u.unit && l.activity === 'Conversation Lab');
+      assert.ok(!lab || !esPath.supports(u.grade, lab.level), `${u.unit}: no role-play card, so its Conversation Lab is not played here`);
+    }
     for (const q of u.scene.questions) assert.ok(q.answer >= 0 && q.answer < q.choices.length && q.after <= u.scene.lines.length, `${u.unit}: scene question`);
   }
 });
@@ -139,8 +148,8 @@ check('slots: each level type maps to its activities', () => {
 
 const ENGINE = { intro: 'unit_intro', story: 'story', input: 'story', listening_lab: 'listening_lab', dictation: 'dictation', conversation: 'conversation_lab', sprint: 'fluency_sprint' };
 const built = [];
-check('build: every Grade 1-2 level the player takes builds, with the right engine and enough to do', () => {
-  for (const g of [G1, G2]) {
+check('build: every Grade 1-4 level the player takes builds, with the right engine and enough to do', () => {
+  for (const g of [G1, G2, G3, G4]) {
     for (const row of g.levels) {
       if (!esPath.supports(g.id, row.level)) continue;
       const lvl = esPath.buildLevel({ userId: user.id, gradeId: g.id, level: row.level, seed: `t${row.level}` });

@@ -1,0 +1,79 @@
+{
+ "unit": "Unit 4.11",
+ "rejected": {
+  "P4": [
+   {
+    "checker": "mistral",
+    "problem": "Incomplete sentence, missing the object of 'comprar'.",
+    "fix": "Tengo que comprar algo."
+   },
+   {
+    "checker": "qwen",
+    "problem": "The Spanish sentence 'Tengo que comprar.' is incomplete and unnatural without a direct object; native speakers would not say this in isolation to mean 'I have to buy' or 'I need to buy'.",
+    "fix": "Change to 'Tengo que comprar algo.' or provide an object, e.g., 'Tengo que comprar pan.'"
+   }
+  ],
+  "C2": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect option 'Dos kilos de favor.' is not valid Spanish, and 'Tengo dos kilos manzanas.' is ungrammatical.",
+    "fix": "Remove incorrect options or correct them to 'Dos kilos, por favor.' and 'Tengo dos kilos de manzanas.'"
+   }
+  ],
+  "C3": [
+   {
+    "checker": "mistral",
+    "problem": "'Hay ocho.' is incorrect in this context.",
+    "fix": "Remove 'Hay ocho.' or replace with a valid time-related phrase."
+   }
+  ],
+  "V1": [
+   {
+    "checker": "qwen",
+    "problem": "The target phrase 'Tengo que comprar.' is incomplete and unnatural in Spanish without a direct object, repeating the error from P4.",
+    "fix": "Replace with 'Tengo que comprar algo.' or 'Tengo que comprar pan.'"
+   }
+  ]
+ },
+ "rewritten": {
+  "P4": {
+   "es": "Tengo que comprar pan.",
+   "en": [
+    "I have to buy bread.",
+    "I need to buy bread."
+   ],
+   "tier": 1,
+   "skill": "es_present_erir",
+   "topic": "a_shopping_list_and_a_short_"
+  },
+  "C2": {
+   "who": "tomas",
+   "es": "¿Cuántos kilos de manzanas quieres?",
+   "choices": [
+    "Dos kilos, por favor.",
+    "Hay dos kilos.",
+    "Tengo dos kilos de manzanas."
+   ],
+   "answer": 0
+  },
+  "C3": {
+   "who": "diego",
+   "es": "¿A qué hora abren?",
+   "choices": [
+    "A las ocho.",
+    "Son las ocho.",
+    "Por la mañana."
+   ],
+   "answer": 0
+  }
+ },
+ "dropped": [],
+ "convo_flagged": [
+  {
+   "checker": "qwen",
+   "problem": "The target phrase 'Tengo que comprar.' is incomplete and unnatural in Spanish without a direct object, repeating the error from P4.",
+   "fix": "Replace with 'Tengo que comprar algo.' or 'Tengo que comprar pan.'"
+  }
+ ],
+ "at": "2026-10-30T01:29:13.689Z"
+}

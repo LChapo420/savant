@@ -1,0 +1,73 @@
+{
+ "unit": "Unit 3.11",
+ "rejected": {
+  "S7": [
+   {
+    "checker": "mistral",
+    "problem": "The Spanish sentence 'El dos de mayo. Actualmente vivo en la calle Sol.' is unnatural. Native speakers would typically say 'El dos de mayo. Actualmente vivo en la calle Sol.' as two separate sentences, but the first part should be 'Nací el dos de mayo.' to clarify it's a birth date.",
+    "fix": "Nací el dos de mayo. Actualmente vivo en la calle Sol."
+   }
+  ],
+  "R2": [
+   {
+    "checker": "mistral",
+    "problem": "The correct answer 'In the theater at the school' does not match the Spanish 'en el teatro de la escuela' which means 'in the school's theater' (a specific place), not necessarily 'at the school'. The English implies she teaches in a theater located at the school, which may not be the intended meaning.",
+    "fix": "In the school's theater"
+   }
+  ],
+  "P12": [
+   {
+    "checker": "qwen",
+    "problem": "The accepted alternative 'Mi hermana es muy sensible' means 'My sister is very sensitive,' but the English given is only 'My sister is sensitive.' The word 'muy' changes the meaning, so the alternative does not match the English.",
+    "fix": "Remove the accepted alternative or change the English to include 'very sensitive' as an option."
+   }
+  ],
+  "P16": [
+   {
+    "checker": "qwen",
+    "problem": "'la fotografía' with the definite article means 'the photograph' or 'the photo,' but it does not mean 'photography' in general. The abstract discipline or art form 'photography' is expressed without the article ('fotografía').",
+    "fix": "Remove '/ photography' from the English translation."
+   }
+  ]
+ },
+ "rewritten": {
+  "S7": {
+   "who": "Tomás",
+   "es": "Nací el dos de mayo. Actualmente vivo en la calle Sol.",
+   "en": "I was born on the second of May. Currently I live on Calle Sol."
+  },
+  "R2": {
+   "passage": "La profesora de física es la señora Gómez. Actualmente enseña en el teatro de la escuela. Su hija asiste a la escuela también.",
+   "question": "Where does Señora Gómez teach now?",
+   "choices": [
+    "In the school's theater",
+    "In the hospital",
+    "In the office of Rosa"
+   ],
+   "answer": 0
+  },
+  "P12": {
+   "es": "Mi hermana es sensible.",
+   "en": [
+    "My sister is sensitive."
+   ],
+   "alt": [],
+   "tier": 3,
+   "skill": "es_adjectives",
+   "topic": "false_friends_set_one"
+  },
+  "P16": {
+   "es": "la fotografía",
+   "en": [
+    "the photograph",
+    "the photo"
+   ],
+   "tier": 2,
+   "skill": "es_vocab_core",
+   "topic": "spelling_cognate_patterns_ph"
+  }
+ },
+ "dropped": [],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:27:12.622Z"
+}

@@ -1,0 +1,157 @@
+{
+ "unit": "Unit 4.6",
+ "rejected": {
+  "P2": [
+   {
+    "checker": "mistral",
+    "problem": "Unnatural Spanish for a customer ordering; 'Me da' is too direct (imperative) for polite requests. Native speakers would use 'Me trae' or 'Quisiera' instead.",
+    "fix": "Me trae un café, por favor."
+   }
+  ],
+  "S7": [
+   {
+    "checker": "mistral",
+    "problem": "Same as P2: 'Me da un café' is unnatural for a customer's polite request.",
+    "fix": "Me trae un café, por favor."
+   }
+  ],
+  "F2": [
+   {
+    "checker": "mistral",
+    "problem": "The [KEY] 'da' produces 'Me da un café, por favor.' which is unnatural for a customer's polite request.",
+    "fix": "Change [KEY] to 'trae' or rephrase the sentence to 'Quisiera un café, por favor.'"
+   }
+  ],
+  "R1": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect article/gender agreement: 'Las entradas son ensalada' should be 'La entrada es ensalada' or 'Las entradas son ensaladas'.",
+    "fix": "Las entradas son ensaladas."
+   }
+  ],
+  "C1": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect option: 'La cuenta es azul.' is nonsensical in this context (though grammatically correct).",
+    "fix": "Replace with a plausible but incorrect option like 'Quisiera agua, por favor.'"
+   }
+  ],
+  "C2": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect option: 'Sí, soy un postre.' is grammatically wrong (should be 'Sí, quiero un postre.') and nonsensical.",
+    "fix": "Replace with 'Sí, quiero un postre.'"
+   }
+  ],
+  "C3": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect option: 'No, el café es pequeña.' has wrong gender agreement ('pequeña' should be 'pequeño' for 'café').",
+    "fix": "No, el café es pequeño."
+   }
+  ],
+  "V1": [
+   {
+    "checker": "mistral",
+    "problem": "Target 'Para mí, el plato vegetariano.' is not used in the role-play scenario described (learner is asked to order soup and coffee, then ask for the bill).",
+    "fix": "Remove 'Para mí, el plato vegetariano.' from targets or adjust the task to include it."
+   }
+  ],
+  "F1": [
+   {
+    "checker": "qwen",
+    "problem": "The distractor 'menú' is masculine, so 'una menú' is grammatically incorrect. A1 learners are taught to use article-noun gender agreement as a strategy to eliminate wrong choices, which makes this item flawed.",
+    "fix": "Replace the distractor 'menú' with a feminine noun such as 'agua' (which takes 'un', not 'una') or another clearly incorrect feminine noun like 'mesa'."
+   }
+  ]
+ },
+ "rewritten": {
+  "P2": {
+   "es": "¿Me trae un café, por favor?",
+   "en": [
+    "Could I have a coffee, please?",
+    "Can you bring me a coffee, please?",
+    "A coffee for me, please."
+   ],
+   "tier": 1,
+   "skill": "es_present_ar",
+   "topic": "polite_requests_quisiera_me_"
+  },
+  "S7": {
+   "who": "mara",
+   "es": "¿Me trae un café, por favor?",
+   "en": "Could I have a coffee, please?"
+  },
+  "F2": {
+   "before": "¿Me",
+   "after": "un café, por favor?",
+   "choices": [
+    "trae",
+    "doy",
+    "traigo"
+   ],
+   "answer": 0,
+   "en": "Could I have a coffee, please."
+  },
+  "R1": {
+   "passage": "En el restaurante hay un menú. Las entradas son ensaladas. El plato principal es sopa. Los postres son fruta. El especial del día es sopa de verduras.",
+   "question": "What is the special of the day?",
+   "choices": [
+    "Salad",
+    "Vegetable soup",
+    "Fruit"
+   ],
+   "answer": 1
+  },
+  "C1": {
+   "who": "rosa",
+   "es": "¿Qué desea?",
+   "choices": [
+    "Quisiera una ensalada, por favor.",
+    "Me gusta la sopa.",
+    "El restaurante es grande."
+   ],
+   "answer": 0
+  },
+  "C2": {
+   "who": "tomas",
+   "es": "¿Algo más?",
+   "choices": [
+    "Sí, la sopa está fría.",
+    "No, gracias. La cuenta, por favor.",
+    "Buenas noches, hasta mañana."
+   ],
+   "answer": 1
+  },
+  "C3": {
+   "who": "mara",
+   "es": "El especial del día es sopa de verduras.",
+   "choices": [
+    "Sí, el restaurante es grande.",
+    "No, el café es pequeño.",
+    "¡Perfecto! Quisiera el especial, por favor."
+   ],
+   "answer": 2
+  },
+  "F1": {
+   "before": "Quisiera una",
+   "after": ", por favor.",
+   "choices": [
+    "sopa",
+    "mesa",
+    "cuenta"
+   ],
+   "answer": 0,
+   "en": "I would like a soup, please."
+  }
+ },
+ "dropped": [],
+ "convo_flagged": [
+  {
+   "checker": "mistral",
+   "problem": "Target 'Para mí, el plato vegetariano.' is not used in the role-play scenario described (learner is asked to order soup and coffee, then ask for the bill).",
+   "fix": "Remove 'Para mí, el plato vegetariano.' from targets or adjust the task to include it."
+  }
+ ],
+ "at": "2026-10-30T01:20:19.660Z"
+}

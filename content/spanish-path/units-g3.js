@@ -88,22 +88,6 @@ module.exports = [
         "topic": "ser_present_singular_soy_ere"
       },
       {
-        "id": "g3u1_tu_eres_mi_amigo",
-        "es": "Tú eres mi amigo.",
-        "en": [
-          "You're my friend.",
-          "You are my friend."
-        ],
-        "alt": [
-          "Eres mi amigo.",
-          "Tú eres mi amiga.",
-          "Eres mi amiga."
-        ],
-        "tier": 1,
-        "skill": "es_ser_estar",
-        "topic": "ser_present_singular_soy_ere"
-      },
-      {
         "id": "g3u1_es_un_libro",
         "es": "Es un libro.",
         "en": [
@@ -180,8 +164,8 @@ module.exports = [
         "topic": "ser_plural_forms_and_ustedes"
       },
       {
-        "id": "g3u1_vosotros_sois_amigos",
-        "es": "Vosotros sois amigos.",
+        "id": "g3u1_ustedes_son_amigos",
+        "es": "Ustedes son amigos.",
         "en": [
           "You are friends.",
           "You all are friends."
@@ -191,8 +175,8 @@ module.exports = [
         "topic": "ustedes_and_vosotros_across_"
       },
       {
-        "id": "g3u1_vosotros_sois_de_espana",
-        "es": "Vosotros sois de España.",
+        "id": "g3u1_ustedes_son_de_espana",
+        "es": "Ustedes son de España.",
         "en": [
           "You are from Spain.",
           "You all are from Spain."
@@ -247,11 +231,6 @@ module.exports = [
           "who": "mara",
           "es": "Ellas son Ana y Lucía. Son de México.",
           "en": "They're Ana and Lucía. They're from Mexico."
-        },
-        {
-          "who": "tomas",
-          "es": "Ustedes son mis amigos nuevos.",
-          "en": "You are my new friends."
         }
       ],
       "questions": [
@@ -433,7 +412,7 @@ module.exports = [
         "choices": [
           "Soy Ana.",
           "Ella es Ana.",
-          "Son Ana."
+          "Eres Ana."
         ],
         "answer": 0
       },
@@ -446,22 +425,8 @@ module.exports = [
         ],
         "choices": [
           "Sí, somos de México.",
-          "Sí, eres de México.",
+          "Sí, ellos son de México.",
           "Sí, soy de México."
-        ],
-        "answer": 0
-      },
-      {
-        "lines": [
-          {
-            "who": "tomas",
-            "es": "¿Ella es tu amiga?"
-          }
-        ],
-        "choices": [
-          "Sí, ella es mi amiga.",
-          "Sí, ellas son mis amigas.",
-          "Sí, tú eres mi amiga."
         ],
         "answer": 0
       }
@@ -526,8 +491,7 @@ module.exports = [
         "id": "g3u2_el_amigo",
         "es": "el amigo",
         "en": [
-          "the friend",
-          "the male friend"
+          "the friend"
         ],
         "alt": [
           "la amiga"
@@ -540,8 +504,7 @@ module.exports = [
         "id": "g3u2_la_amiga",
         "es": "la amiga",
         "en": [
-          "the friend",
-          "the female friend"
+          "the friend"
         ],
         "alt": [
           "el amigo"
@@ -695,7 +658,7 @@ module.exports = [
         {
           "who": "rosa",
           "es": "¡Qué bien! Una lista en singular.",
-          "en": "How nice! One list in singular."
+          "en": "How nice! A list with singular nouns."
         },
         {
           "who": "diego",
@@ -714,8 +677,8 @@ module.exports = [
         },
         {
           "who": "rosa",
-          "es": "¡Muy bien! El problema es pequeño: las dos listas son correctas.",
-          "en": "Very good! The problem is small: both lists are correct."
+          "es": "¡Muy bien! Hay un pequeño problema: las dos listas son correctas.",
+          "en": "Very good! There is a small problem: both lists are correct."
         }
       ],
       "questions": [
@@ -724,7 +687,7 @@ module.exports = [
           "kind": "read_respond",
           "question": "What is on Mara's list?",
           "choices": [
-            "A book, a house and a day",
+            "The book, the house and the day",
             "Books, houses and days",
             "Only pencils"
           ],
@@ -862,28 +825,6 @@ module.exports = [
         ],
         "answer": 1,
         "en": "The hand is feminine."
-      },
-      {
-        "before": "Tengo tres ",
-        "after": ".",
-        "choices": [
-          "lápizes",
-          "lápices",
-          "lápiz"
-        ],
-        "answer": 1,
-        "en": "I have three pencils."
-      },
-      {
-        "before": "Dos ",
-        "after": " son bonitas.",
-        "choices": [
-          "cancions",
-          "canciones",
-          "canciónes"
-        ],
-        "answer": 1,
-        "en": "Two songs are nice."
       }
     ],
     "chats": [
@@ -898,20 +839,6 @@ module.exports = [
           "Es masculino.",
           "Es femenina.",
           "Son masculinos."
-        ],
-        "answer": 0
-      },
-      {
-        "lines": [
-          {
-            "who": "mara",
-            "es": "Tengo dos casas."
-          }
-        ],
-        "choices": [
-          "¡Dos casas! ¡Qué bien!",
-          "Dos casa.",
-          "Las casa."
         ],
         "answer": 0
       },
@@ -1034,10 +961,7 @@ module.exports = [
         "id": "g3u3_unas_amigas",
         "es": "unas amigas",
         "en": [
-          "some friends"
-        ],
-        "alt": [
-          "unos amigos"
+          "some female friends"
         ],
         "tier": 2,
         "skill": "es_gender",
@@ -1171,11 +1095,6 @@ module.exports = [
           "en": "That's a lot of books."
         },
         {
-          "who": "tomas",
-          "es": "Sí. Hay sesenta libros y también setenta cuadernos.",
-          "en": "Yes. There are sixty books and also seventy notebooks."
-        },
-        {
           "who": "mara",
           "es": "Perfecto. ¡Gracias!",
           "en": "Perfect. Thanks!"
@@ -1201,17 +1120,6 @@ module.exports = [
             "Some notebooks",
             "Some chairs",
             "Some pens"
-          ],
-          "answer": 1
-        },
-        {
-          "after": 7,
-          "kind": "read_respond",
-          "question": "How many notebooks does Tomás mention?",
-          "choices": [
-            "Sixty",
-            "Seventy",
-            "Ninety-nine"
           ],
           "answer": 1
         }
@@ -1352,34 +1260,6 @@ module.exports = [
       {
         "lines": [
           {
-            "who": "rosa",
-            "es": "¿Cuántas mesas hay?"
-          }
-        ],
-        "choices": [
-          "Hay un mesa.",
-          "Hay una mesa.",
-          "Hay unas mesa."
-        ],
-        "answer": 1
-      },
-      {
-        "lines": [
-          {
-            "who": "diego",
-            "es": "¿Cuántos libros necesitas?"
-          }
-        ],
-        "choices": [
-          "Necesito treinta y cinco libros.",
-          "Necesito treinta y cinco libro.",
-          "Necesito un treinta y cinco libros."
-        ],
-        "answer": 0
-      },
-      {
-        "lines": [
-          {
             "who": "mara",
             "es": "¿Es un profesor?"
           }
@@ -1454,17 +1334,6 @@ module.exports = [
         "en": [
           "The h is silent.",
           "The letter h is silent."
-        ],
-        "tier": 3,
-        "skill": "es_vocab_core",
-        "topic": "the_spanish_alphabet_names_a"
-      },
-      {
-        "id": "g3u4_la_de_como_en_diego",
-        "es": "La de, como en Diego.",
-        "en": [
-          "D, as in Diego.",
-          "D as in Diego."
         ],
         "tier": 3,
         "skill": "es_vocab_core",
@@ -1548,11 +1417,11 @@ module.exports = [
         "topic": "u_k_and_w_dieresis_and_forei"
       },
       {
-        "id": "g3u4_el_whisky_con_hielo",
-        "es": "El whisky con hielo.",
+        "id": "g3u4_el_kiwi_es_una_fruta",
+        "es": "El kiwi es una fruta.",
         "en": [
-          "Whiskey on the rocks.",
-          "Whisky with ice."
+          "The kiwi is a fruit.",
+          "Kiwi is a fruit."
         ],
         "tier": 3,
         "skill": "es_vocab_core",
@@ -1619,11 +1488,6 @@ module.exports = [
           "en": "M, a, r, a. Mara."
         },
         {
-          "who": "diego",
-          "es": "Yo soy Diego: la de, la i, la e, la ge, la o.",
-          "en": "I'm Diego: d, i, e, g, o."
-        },
-        {
           "who": "mara",
           "es": "¡Muy bien! ¿Y la equis?",
           "en": "Very good! And the x?"
@@ -1640,8 +1504,8 @@ module.exports = [
         },
         {
           "who": "rosa",
-          "es": "En Xochimilco hay un xilófono.",
-          "en": "In Xochimilco there is a xylophone."
+          "es": "En México hay muchos taxis.",
+          "en": "In Mexico there are many taxis."
         },
         {
           "who": "tomas",
@@ -1662,7 +1526,7 @@ module.exports = [
           "answer": 1
         },
         {
-          "after": 5,
+          "after": 4,
           "kind": "read_respond",
           "question": "How is Mexico spelled, according to Diego?",
           "choices": [
@@ -1673,7 +1537,7 @@ module.exports = [
           "answer": 0
         },
         {
-          "after": 8,
+          "after": 7,
           "kind": "read_respond",
           "question": "What does Tomás say the penguin has?",
           "choices": [
@@ -1785,7 +1649,7 @@ module.exports = [
         "choices": [
           "kilo",
           "pingüino",
-          "whisky"
+          "koala"
         ],
         "answer": 1,
         "en": "The penguin swims in the water."
@@ -1823,7 +1687,7 @@ module.exports = [
         ],
         "choices": [
           "Son las tres.",
-          "Se escribe con be y con equis.",
+          "Se escribe con erre, o, ese y a.",
           "Tengo doce años."
         ],
         "answer": 1
@@ -1939,8 +1803,7 @@ module.exports = [
         "id": "g3u5_pepe_es_jose",
         "es": "Pepe es José.",
         "en": [
-          "Pepe is José.",
-          "Pepe means José."
+          "Pepe is José."
         ],
         "tier": 2,
         "skill": "es_ser_estar",
@@ -1950,8 +1813,7 @@ module.exports = [
         "id": "g3u5_paco_es_francisco",
         "es": "Paco es Francisco.",
         "en": [
-          "Paco is Francisco.",
-          "Paco means Francisco."
+          "Paco is Francisco."
         ],
         "tier": 2,
         "skill": "es_ser_estar",
@@ -1961,8 +1823,7 @@ module.exports = [
         "id": "g3u5_lupita_es_guadalupe",
         "es": "Lupita es Guadalupe.",
         "en": [
-          "Lupita is Guadalupe.",
-          "Lupita means Guadalupe."
+          "Lupita is Guadalupe."
         ],
         "tier": 3,
         "skill": "es_ser_estar",
@@ -1972,8 +1833,7 @@ module.exports = [
         "id": "g3u5_chuy_es_jesus",
         "es": "Chuy es Jesús.",
         "en": [
-          "Chuy is Jesús.",
-          "Chuy means Jesús."
+          "Chuy is Jesús."
         ],
         "tier": 3,
         "skill": "es_ser_estar",
@@ -2052,8 +1912,7 @@ module.exports = [
         "id": "g3u5_veintidos",
         "es": "Veintidós.",
         "en": [
-          "Twenty-two.",
-          "Twenty two."
+          "Twenty-two."
         ],
         "tier": 3,
         "skill": "es_numbers",
@@ -2109,11 +1968,6 @@ module.exports = [
           "who": "mara",
           "es": "Gracias. ¿Y tu dirección?",
           "en": "Thanks. And your address?"
-        },
-        {
-          "who": "tomas",
-          "es": "Mi dirección es calle Sol, veintidós.",
-          "en": "My address is Calle Sol, twenty-two."
         }
       ],
       "questions": [
@@ -2136,17 +1990,6 @@ module.exports = [
             "A as in Antonio, R as in Roma.",
             "B as in Barcelona, C as in casa.",
             "A as in Antonio, R as in Rosa."
-          ],
-          "answer": 0
-        },
-        {
-          "after": 8,
-          "kind": "read_respond",
-          "question": "What is Tomás's address?",
-          "choices": [
-            "Calle Sol, veintidós.",
-            "Calle Luna, veintiuno.",
-            "Calle Sol, treinta y uno."
           ],
           "answer": 0
         }
@@ -2444,8 +2287,8 @@ module.exports = [
         "topic": "tener_for_everyday_possessio"
       },
       {
-        "id": "g3u6_tienes_coche",
-        "es": "¿Tienes coche?",
+        "id": "g3u6_tienes_un_coche",
+        "es": "¿Tienes un coche?",
         "en": [
           "Do you have a car?",
           "Have you got a car?"
@@ -2751,11 +2594,11 @@ module.exports = [
         "before": "El perro",
         "after": "cinco kilos.",
         "choices": [
-          "pesas",
-          "peso",
-          "pesa"
+          "pesa",
+          "tiene",
+          "come"
         ],
-        "answer": 2,
+        "answer": 0,
         "en": "The dog weighs five kilos."
       }
     ],
@@ -2771,34 +2614,6 @@ module.exports = [
           "Tengo catorce años.",
           "Tienes catorce años.",
           "Tiene catorce años."
-        ],
-        "answer": 0
-      },
-      {
-        "lines": [
-          {
-            "who": "mara",
-            "es": "¿Tienes hermanos?"
-          }
-        ],
-        "choices": [
-          "Sí, tienes dos hermanas.",
-          "Sí, tengo dos hermanas.",
-          "Sí, tengo dos hermana."
-        ],
-        "answer": 1
-      },
-      {
-        "lines": [
-          {
-            "who": "tomas",
-            "es": "¿Cómo son tus amigos?"
-          }
-        ],
-        "choices": [
-          "Mis amigos son simpáticos.",
-          "Mis amigos es simpáticos.",
-          "Mis amigo son simpático."
         ],
         "answer": 0
       }
@@ -3048,8 +2863,8 @@ module.exports = [
         },
         {
           "who": "tomas",
-          "es": "Mucho gusto, Rosa. ¿De dónde eres, Diego?",
-          "en": "Nice to meet you, Rosa. Where are you from, Diego?"
+          "es": "Mucho gusto, Rosa. ¿De dónde eres?",
+          "en": "Nice to meet you, Rosa. Where are you from?"
         },
         {
           "who": "diego",
@@ -3241,7 +3056,7 @@ module.exports = [
           }
         ],
         "choices": [
-          "Es estadounidense.",
+          "Eres estadounidense.",
           "Soy estadounidense.",
           "Son estadounidenses."
         ],
@@ -3449,8 +3264,7 @@ module.exports = [
         "es": "Nuestros hijos",
         "en": [
           "Our children",
-          "Our kids",
-          "Our sons"
+          "Our kids"
         ],
         "tier": 2,
         "skill": "es_adjectives",
@@ -3506,8 +3320,8 @@ module.exports = [
           "en": "This is my brother and this is my mother."
         },
         {
-          "who": "tomas",
-          "es": "¿Tu hermana está casada?",
+          "who": "Tomás",
+          "es": "¿Está casada tu hermana?",
           "en": "Is your sister married?"
         },
         {
@@ -3656,17 +3470,6 @@ module.exports = [
     },
     "fills": [
       {
-        "before": "Mi ",
-        "after": " es la madre de mi padre.",
-        "choices": [
-          "abuela",
-          "hermano",
-          "perro"
-        ],
-        "answer": 0,
-        "en": "My grandmother is my father's mother."
-      },
-      {
         "before": "",
         "after": " padres son Ana y Luis.",
         "choices": [
@@ -3784,7 +3587,10 @@ module.exports = [
         "en": [
           "He's tall and slim.",
           "He is tall and thin.",
-          "He's tall and skinny."
+          "He's tall and skinny.",
+          "She's tall and slim.",
+          "She is tall and thin.",
+          "She's tall and skinny."
         ],
         "alt": [
           "Es alta y delgada."
@@ -3827,7 +3633,9 @@ module.exports = [
         "en": [
           "She has dark hair.",
           "She is dark-haired.",
-          "She's a brunette."
+          "She's a brunette.",
+          "He has dark hair.",
+          "He is dark-haired."
         ],
         "alt": [
           "Es moreno."
@@ -3868,7 +3676,9 @@ module.exports = [
         "es": "Es un buen amigo.",
         "en": [
           "He's a good friend.",
-          "He is a good friend."
+          "He is a good friend.",
+          "She's a good friend.",
+          "She is a good friend."
         ],
         "alt": [
           "Es una buena amiga."
@@ -3883,7 +3693,10 @@ module.exports = [
         "en": [
           "He's very hard-working.",
           "He is very hardworking.",
-          "He works very hard."
+          "He works very hard.",
+          "She's very hard-working.",
+          "She is very hardworking.",
+          "She works very hard."
         ],
         "alt": [
           "Es muy trabajadora."
@@ -3897,24 +3710,12 @@ module.exports = [
         "es": "Es un poco callado.",
         "en": [
           "He's a bit quiet.",
-          "He is a little quiet."
+          "He is a little quiet.",
+          "She's a bit quiet.",
+          "She is a little quiet."
         ],
         "alt": [
           "Es un poco callada."
-        ],
-        "tier": 2,
-        "skill": "es_adjectives",
-        "topic": "describing_people_personalit"
-      },
-      {
-        "id": "g3u9_es_inteligente_y_divertida",
-        "es": "Es inteligente y divertida.",
-        "en": [
-          "She's smart and fun.",
-          "She is intelligent and funny."
-        ],
-        "alt": [
-          "Es inteligente y divertido."
         ],
         "tier": 2,
         "skill": "es_adjectives",
@@ -3932,11 +3733,11 @@ module.exports = [
         "topic": "adjective_position_and_muy"
       },
       {
-        "id": "g3u9_es_un_coche_pequeno",
-        "es": "Es un coche pequeño.",
+        "id": "g3u9_es_un_nino_pequeno",
+        "es": "Es un niño pequeño.",
         "en": [
-          "It's a small car.",
-          "It is a small car."
+          "He's a small boy.",
+          "He is a small boy."
         ],
         "tier": 2,
         "skill": "es_adjectives",
@@ -4029,8 +3830,8 @@ module.exports = [
         },
         {
           "who": "tomas",
-          "es": "Perfecto. Rosa y Diego van al café a las seis.",
-          "en": "Perfect. Rosa and Diego are going to the cafe at six."
+          "es": "Perfecto. Rosa y Diego van al parque a las seis.",
+          "en": "Perfect. Rosa and Diego are going to the park at six."
         }
       ],
       "questions": [
@@ -4069,91 +3870,7 @@ module.exports = [
         }
       ]
     },
-    "convo": {
-      "partner": "tomas",
-      "partnerName": "Tomás",
-      "setting": "A cafe in the afternoon. Tomás wants a blind date for Saturday and asks you about your friend Rosa.",
-      "learnerCard": "Your friend Tomás is looking for a blind date. Describe Rosa to him: her looks and her personality.",
-      "learnerCardEs": "Describe a Rosa: su aspecto y su personalidad.",
-      "partnerCard": "Tomás wants a blind date and asks you about Rosa.",
-      "goals": [
-        {
-          "id": "looks",
-          "text": "Describe how Rosa looks (es alta, es delgada)"
-        },
-        {
-          "id": "hair_eyes",
-          "text": "Say what hair and eyes she has (tiene pelo largo, tiene ojos negros)"
-        },
-        {
-          "id": "personality",
-          "text": "Describe her personality with muy or un poco (es muy simpática, es un poco callada)"
-        },
-        {
-          "id": "opposites",
-          "text": "Use an opposite pair (es joven, no es viejo)"
-        }
-      ],
-      "targets": [
-        "Es alta y delgada.",
-        "Tiene ojos azules.",
-        "Es muy simpática.",
-        "Es un poco callada.",
-        "Es joven, no es viejo.",
-        "Es un buen amigo."
-      ],
-      "opening": "¡Hola! Busco una cita para el sábado. ¿Cómo es tu amiga Rosa?",
-      "script": [
-        {
-          "goal": "looks",
-          "expect": [
-            "alta",
-            "delgada",
-            "es"
-          ],
-          "reply": "¡Qué bien! ¿Y tiene ojos azules?",
-          "hint": "Say \"Es alta y delgada.\""
-        },
-        {
-          "goal": "hair_eyes",
-          "expect": [
-            "tiene",
-            "pelo",
-            "ojos"
-          ],
-          "reply": "Me gusta mucho. ¿Es simpática?",
-          "hint": "Say \"Tiene pelo largo y ojos negros.\""
-        },
-        {
-          "goal": "personality",
-          "expect": [
-            "muy",
-            "simpatic",
-            "poco"
-          ],
-          "reply": "¡Es perfecta! ¿Es joven?",
-          "hint": "Say \"Es muy simpática y un poco callada.\""
-        },
-        {
-          "goal": "opposites",
-          "expect": [
-            "joven",
-            "viejo"
-          ],
-          "reply": "¡Genial! La cita es el sábado a las seis.",
-          "hint": "Say \"Es joven, no es viejo.\""
-        }
-      ],
-      "nudges": {
-        "looks": "Di: «Es alta y delgada.»",
-        "hair_eyes": "Di: «Tiene pelo largo y ojos negros.»",
-        "personality": "Di: «Es muy simpática y un poco callada.»",
-        "opposites": "Di: «Es joven, no es viejo.»"
-      },
-      "fallbackReply": "¿Perdón? ¿Puedes repetir, por favor?",
-      "closing": "¡Muchas gracias! Hasta el sábado.",
-      "maxTurns": 10
-    },
+    "convo": null,
     "fills": [
       {
         "before": "Es alto",
@@ -4282,8 +3999,7 @@ module.exports = [
         "id": "g3u10_como",
         "es": "¿Cómo?",
         "en": [
-          "How?",
-          "What?"
+          "How?"
         ],
         "tier": 2,
         "skill": "es_questions",
@@ -4494,8 +4210,8 @@ module.exports = [
         },
         {
           "who": "diego",
-          "es": "Yo tampoco. Bueno, tengo catorce años.",
-          "en": "Me neither. Well, I'm fourteen."
+          "es": "Yo también. Bueno, tengo catorce años.",
+          "en": "Me too. Well, I'm fourteen."
         }
       ],
       "questions": [
@@ -4652,9 +4368,7 @@ module.exports = [
         "before": "El",
         "after": " es bueno.",
         "choices": [
-          "lápiz",
-          "lapiz",
-          "lápíz"
+          "lápiz"
         ],
         "answer": 0,
         "en": "The pencil is good."
@@ -4670,7 +4384,7 @@ module.exports = [
         ],
         "choices": [
           "Yo tampoco.",
-          "Yo también.",
+          "Yo sí.",
           "No, no es verdad."
         ],
         "answer": 0
@@ -4684,7 +4398,6 @@ module.exports = [
         ],
         "choices": [
           "Tengo quince años.",
-          "No, tampoco.",
           "Es un lápiz."
         ],
         "answer": 0
@@ -4698,7 +4411,6 @@ module.exports = [
         ],
         "choices": [
           "Es mi amiga.",
-          "Yo también.",
           "Bueno."
         ],
         "answer": 0
@@ -4866,9 +4578,6 @@ module.exports = [
         "en": [
           "My sister is sensitive."
         ],
-        "alt": [
-          "Mi hermana es muy sensible."
-        ],
         "tier": 3,
         "skill": "es_adjectives",
         "topic": "false_friends_set_one"
@@ -4912,8 +4621,7 @@ module.exports = [
         "es": "la fotografía",
         "en": [
           "the photograph",
-          "the photo",
-          "photography"
+          "the photo"
         ],
         "tier": 2,
         "skill": "es_vocab_core",
@@ -4956,9 +4664,9 @@ module.exports = [
           "en": "Very good. And the date of birth?"
         },
         {
-          "who": "tomas",
-          "es": "El dos de mayo. Actualmente vivo en la calle Sol.",
-          "en": "The second of May. Currently I live on Calle Sol."
+          "who": "Tomás",
+          "es": "Nací el dos de mayo. Actualmente vivo en la calle Sol.",
+          "en": "I was born on the second of May. Currently I live on Calle Sol."
         },
         {
           "who": "rosa",
@@ -5190,7 +4898,7 @@ module.exports = [
         "passage": "La profesora de física es la señora Gómez. Actualmente enseña en el teatro de la escuela. Su hija asiste a la escuela también.",
         "question": "Where does Señora Gómez teach now?",
         "choices": [
-          "In the theater at the school",
+          "In the school's theater",
           "In the hospital",
           "In the office of Rosa"
         ],
@@ -5324,8 +5032,7 @@ module.exports = [
         "id": "g3u12_tengo_dos_hermanos",
         "es": "Tengo dos hermanos.",
         "en": [
-          "I have two brothers.",
-          "I have two siblings."
+          "I have two brothers."
         ],
         "alt": [
           "Yo tengo dos hermanos."
@@ -5430,12 +5137,12 @@ module.exports = [
         {
           "who": "mara",
           "es": "Tengo diecinueve años. Tengo dos hermanos. Mi hermana se llama Ana.",
-          "en": "I'm nineteen years old. I have two siblings. My sister's name is Ana."
+          "en": "I'm nineteen years old. I have two brothers. My sister's name is Ana."
         },
         {
           "who": "rosa",
-          "es": "¡Hola! ¿Tienes hijos, Tomás?",
-          "en": "Hi! Do you have children, Tomás?"
+          "es": "¡Hola! ¿Tienes hermanos, Tomás?",
+          "en": "Hi! Do you have siblings, Tomás?"
         },
         {
           "who": "tomas",
@@ -5469,7 +5176,7 @@ module.exports = [
         {
           "after": 8,
           "kind": "read_respond",
-          "question": "Does Tomás have children?",
+          "question": "Does Tomás have siblings?",
           "choices": [
             "No, he doesn't.",
             "Yes, he has two.",
@@ -5597,7 +5304,7 @@ module.exports = [
         "choices": [
           "años",
           "año",
-          "anos"
+          "días"
         ],
         "answer": 0,
         "en": "I'm twenty years old."
@@ -5850,8 +5557,8 @@ module.exports = [
         "topic": "famous_hispanic_figures"
       },
       {
-        "id": "g3u13_rafael_nadal_es_tenista_espa",
-        "es": "Rafael Nadal es tenista español.",
+        "id": "g3u13_rafael_nadal_es_un_tenista_e",
+        "es": "Rafael Nadal es un tenista español.",
         "en": [
           "Rafael Nadal is a Spanish tennis player.",
           "Rafael Nadal is a tennis player from Spain."
@@ -5876,15 +5583,10 @@ module.exports = [
       "art": "libro",
       "lines": [
         {
-          "who": "narrator",
-          "es": "Mara y Tomás completan el perfil de una familia.",
-          "en": "Mara and Tomás are completing a family's profile.",
-          "art": "libro"
-        },
-        {
           "who": "mara",
           "es": "Me llamo Mara y soy de Chicago.",
-          "en": "My name is Mara and I'm from Chicago."
+          "en": "My name is Mara and I'm from Chicago.",
+          "art": "libro"
         },
         {
           "who": "tomas",
@@ -5908,7 +5610,7 @@ module.exports = [
         },
         {
           "who": "tomas",
-          "es": "Mi madre es de Colombia y es cantante.",
+          "es": "Mi madre es de Colombia y es una cantante.",
           "en": "My mother is from Colombia and she is a singer."
         },
         {
@@ -5919,7 +5621,7 @@ module.exports = [
       ],
       "questions": [
         {
-          "after": 3,
+          "after": 2,
           "kind": "read_respond",
           "question": "Where is Mara from?",
           "choices": [
@@ -5930,7 +5632,7 @@ module.exports = [
           "answer": 1
         },
         {
-          "after": 4,
+          "after": 3,
           "kind": "read_respond",
           "question": "What does Mara's mother do?",
           "choices": [
@@ -5941,7 +5643,7 @@ module.exports = [
           "answer": 1
         },
         {
-          "after": 5,
+          "after": 4,
           "kind": "read_respond",
           "question": "How many siblings does Tomás have?",
           "choices": [
@@ -6051,7 +5753,8 @@ module.exports = [
         "choices": [
           "hermano",
           "hermanos",
-          "hermana"
+          "hermana",
+          "hermanas"
         ],
         "answer": 1,
         "en": "I have two brothers."

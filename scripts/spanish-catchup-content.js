@@ -553,11 +553,14 @@ function finalUnit(spec) {
   const drop = new Set([...((f && f.dropped) || []), ...[...rejects.keys()].filter((id) => !rewritten[id] && id !== 'V1')]);
   for (const [id, obj] of Object.entries(rewritten)) { const r = itemRef(draft, id); if (r && r.list[r.i]) r.list[r.i] = { ...r.list[r.i], ...obj }; }
   const keep = (prefix, list) => list.filter((_, i) => !drop.has(`${prefix}${i + 1}`));
-  // Scene lines are a story: a dropped line drops the questions after it.
-  const lineDrops = draft.scene.lines.map((_, i) => drop.has(`S${i + 1}`));
-  const firstDrop = lineDrops.indexOf(true);
-  const lines = firstDrop < 0 ? draft.scene.lines : draft.scene.lines.slice(0, firstDrop);
-  const questions = keep('Q', draft.scene.questions).filter((q) => q.after <= lines.length);
+  // A dropped scene line is left out; each question keeps its place after the lines it follows,
+  // and a question about a dropped line goes with it.
+  const kept = draft.scene.lines.map((l, i) => ({ l, i })).filter(({ i }) => !drop.has(`S${i + 1}`));
+  const lines = kept.map((k) => k.l);
+  const questions = keep('Q', draft.scene.questions)
+    .filter((q) => !drop.has(`S${q.after}`))
+    .map((q) => ({ ...q, after: kept.filter((k) => k.i < q.after).length }))
+    .filter((q) => q.after >= 1);
   const prefix = `g${spec.gradeNo}u${spec.unit.replace(/^Unit\s+\d+\./, '')}_`;
   const ids = new Set();
   const phrases = keep('P', draft.phrases).map((p) => {
@@ -616,7 +619,11 @@ module.exports = [
 
 function build() {
   for (const gradeKey of Object.keys(GRADES)) {
-    const units = unitSpecs(gradeKey).map(finalUnit).filter(Boolean).filter((u) => u.phrases.length >= 8 && u.convo && u.scene.lines.length >= 5);
+    // A unit whose role-play card or scene a checker rejected still ships its checked
+    // phrases and items: its Conversation Lab (convo: null) or story levels (a scene cut
+    // short at a rejected line) are then not played here (services/spanish/path.js
+    // supports) and go to the ordinary session.
+    const units = unitSpecs(gradeKey).map(finalUnit).filter(Boolean).filter((u) => u.phrases.length >= 8);
     const file = path.join(ROOT, 'content', 'spanish-path', GRADES[gradeKey].file);
     fs.writeFileSync(file, toJs(units, gradeKey));
     console.log(`wrote ${path.relative(ROOT, file)}: ${units.length} units, ${units.reduce((n, u) => n + u.phrases.length, 0)} phrases`);

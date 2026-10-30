@@ -1,0 +1,96 @@
+{
+ "unit": "Unit 3.4",
+ "rejected": {
+  "P4": [
+   {
+    "checker": "mistral",
+    "problem": "Missing article before 'de' (should be 'la de' for consistency with other letters).",
+    "fix": "La de, como en Diego."
+   }
+  ],
+  "P12": [
+   {
+    "checker": "mistral",
+    "problem": "Content unsuitable for a teenage learner (alcohol reference).",
+    "fix": "Remove or replace with a non-alcoholic example."
+   },
+   {
+    "checker": "qwen",
+    "problem": "Content unsuitable for a teenage learner (alcohol reference).",
+    "fix": "Replace with a non-alcoholic item, e.g., 'El kiwi con hielo.' = en: 'The kiwi with ice.'"
+   }
+  ],
+  "S3": [
+   {
+    "checker": "mistral",
+    "problem": "Missing article before 'de' (should be 'la de' for consistency).",
+    "fix": "Yo soy Diego: la de, la i, la e, la ge, la o."
+   }
+  ],
+  "S7": [
+   {
+    "checker": "mistral",
+    "problem": "Unnatural phrasing ('hay un xilófono' is correct but 'xilófono' is not a common word for beginners).",
+    "fix": "Replace with a more common word or phrase."
+   }
+  ],
+  "F2": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect verb form ('nada' should be 'nada' for 'swims' but 'pingüino' does not swim; better to use 'vive' or another verb).",
+    "fix": "El pingüino vive en el agua."
+   }
+  ],
+  "C1": [
+   {
+    "checker": "mistral",
+    "problem": "The [KEY] reply 'Se escribe con be y con equis' does not match the question '¿Cómo se escribe tu nombre?' (implies the name contains 'be' and 'equis').",
+    "fix": "Replace [KEY] with a correct spelling of the name or a generic reply like 'Se escribe con letras.'"
+   }
+  ]
+ },
+ "rewritten": {
+  "P12": {
+   "es": "El kiwi es una fruta.",
+   "en": [
+    "The kiwi is a fruit.",
+    "Kiwi is a fruit."
+   ],
+   "tier": 3,
+   "skill": "es_vocab_core",
+   "topic": "u_k_and_w_dieresis_and_forei"
+  },
+  "S7": {
+   "who": "rosa",
+   "es": "En México hay muchos taxis.",
+   "en": "In Mexico there are many taxis."
+  },
+  "F2": {
+   "before": "El",
+   "after": "nada en el agua.",
+   "choices": [
+    "kilo",
+    "pingüino",
+    "koala"
+   ],
+   "answer": 1,
+   "en": "The penguin swims in the water."
+  },
+  "C1": {
+   "who": "rosa",
+   "es": "¿Cómo se escribe tu nombre?",
+   "choices": [
+    "Son las tres.",
+    "Se escribe con erre, o, ese y a.",
+    "Tengo doce años."
+   ],
+   "answer": 1
+  }
+ },
+ "dropped": [
+  "P4",
+  "S3"
+ ],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:08:26.085Z"
+}

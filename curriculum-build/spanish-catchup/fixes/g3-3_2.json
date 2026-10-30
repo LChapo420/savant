@@ -1,0 +1,114 @@
+{
+ "unit": "Unit 3.2",
+ "rejected": {
+  "S3": [
+   {
+    "checker": "mistral",
+    "problem": "The English translation does not match the Spanish. 'Una lista en singular' refers to the list containing singular nouns, not 'one list in singular'.",
+    "fix": "How nice! A list with singular nouns."
+   }
+  ],
+  "S7": [
+   {
+    "checker": "mistral",
+    "problem": "The English translation does not match the Spanish. 'El problema es pequeño' means 'The problem is small', but the context implies 'There is a small problem'.",
+    "fix": "Very good! There is a small problem: both lists are correct."
+   }
+  ],
+  "F3": [
+   {
+    "checker": "mistral",
+    "problem": "The full sentence with the KEY 'lápices' is 'Tengo tres lápices.', which is correct, but the English given is 'I have three pencils.' The Spanish sentence is missing the period at the end.",
+    "fix": "Tengo tres lápices."
+   }
+  ],
+  "F4": [
+   {
+    "checker": "mistral",
+    "problem": "The full sentence with the KEY 'canciones' is 'Dos canciones son bonitas.', which is correct, but the English given is 'Two songs are nice.' The Spanish sentence is missing the period at the end.",
+    "fix": "Dos canciones son bonitas."
+   }
+  ],
+  "C2": [
+   {
+    "checker": "mistral",
+    "problem": "The reply choice 'Dos casa.' is incorrect due to missing 's' for plural and missing period. The other incorrect choices are also unnatural or incorrect, but the KEY is correct.",
+    "fix": "Dos casas."
+   }
+  ],
+  "P3": [
+   {
+    "checker": "qwen",
+    "problem": "The English includes 'the male friend', which only matches 'el amigo' and not the accepted alternative 'la amiga'. An accepted alternative must mean the same thing as the English.",
+    "fix": "Change the English to just \"the friend\" or remove \"la amiga\" from the accepted alternatives."
+   }
+  ],
+  "P4": [
+   {
+    "checker": "qwen",
+    "problem": "The English includes 'the female friend', which only matches 'la amiga' and not the accepted alternative 'el amigo'. An accepted alternative must mean the same thing as the English.",
+    "fix": "Change the English to just \"the friend\" or remove \"el amigo\" from the accepted alternatives."
+   }
+  ],
+  "Q1": [
+   {
+    "checker": "qwen",
+    "problem": "The Spanish line says 'el libro, la casa y el día' (the book, the house and the day), but the keyed answer uses indefinite articles ('A book, a house and a day'). The English does not mean what the Spanish says.",
+    "fix": "Change the keyed answer to \"The book, the house and the day\"."
+   }
+  ]
+ },
+ "rewritten": {
+  "S3": {
+   "who": "rosa",
+   "es": "¡Qué bien! Una lista en singular.",
+   "en": "How nice! A list with singular nouns."
+  },
+  "S7": {
+   "who": "rosa",
+   "es": "¡Muy bien! Hay un pequeño problema: las dos listas son correctas.",
+   "en": "Very good! There is a small problem: both lists are correct."
+  },
+  "P3": {
+   "es": "el amigo",
+   "en": [
+    "the friend"
+   ],
+   "alt": [
+    "la amiga"
+   ],
+   "tier": 2,
+   "skill": "es_gender",
+   "topic": "noun_gender_with_o_and_a"
+  },
+  "P4": {
+   "es": "la amiga",
+   "en": [
+    "the friend"
+   ],
+   "alt": [
+    "el amigo"
+   ],
+   "tier": 2,
+   "skill": "es_gender",
+   "topic": "noun_gender_with_o_and_a"
+  },
+  "Q1": {
+   "after": 1,
+   "question": "What is on Mara's list?",
+   "choices": [
+    "The book, the house and the day",
+    "Books, houses and days",
+    "Only pencils"
+   ],
+   "answer": 0
+  }
+ },
+ "dropped": [
+  "F3",
+  "F4",
+  "C2"
+ ],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:06:45.628Z"
+}

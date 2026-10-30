@@ -1,0 +1,57 @@
+{
+ "unit": "Unit 3.7",
+ "rejected": {
+  "S3": [
+   {
+    "checker": "mistral",
+    "problem": "The name 'Diego' is used instead of 'Rosa' in the question, which does not match the context (Rosa is the one speaking in S2).",
+    "fix": "¿De dónde eres, Rosa?"
+   }
+  ],
+  "F1": [
+   {
+    "checker": "mistral",
+    "problem": "The [KEY] 'estadounidense' is correct, but the full sentence 'Soy estadounidense.' (from P1) is a better match for 'I'm American.' The fill should align with the phrase list.",
+    "fix": "Soy ___ . [KEY] estadounidense"
+   }
+  ],
+  "C1": [
+   {
+    "checker": "mistral",
+    "problem": "The [KEY] 'Soy estadounidense.' is correct, but 'Es estadounidense.' is also a grammatically correct reply (though less natural in this context). The task should ensure only one correct answer.",
+    "fix": "Remove 'Es estadounidense.' from choices or clarify context to exclude it."
+   }
+  ]
+ },
+ "rewritten": {
+  "S3": {
+   "who": "tomas",
+   "es": "Mucho gusto, Rosa. ¿De dónde eres?",
+   "en": "Nice to meet you, Rosa. Where are you from?"
+  },
+  "F1": {
+   "before": "Soy ",
+   "after": ".",
+   "choices": [
+    "estadounidense",
+    "estadounidenses",
+    "estadounidensas"
+   ],
+   "answer": 0,
+   "en": "I'm American."
+  },
+  "C1": {
+   "who": "rosa",
+   "es": "¡Hola! ¿De dónde eres?",
+   "choices": [
+    "Eres estadounidense.",
+    "Soy estadounidense.",
+    "Son estadounidenses."
+   ],
+   "answer": 1
+  }
+ },
+ "dropped": [],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:11:59.382Z"
+}

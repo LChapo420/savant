@@ -172,7 +172,13 @@ function supports(gradeId, level) {
   const slot = slotOf(row);
   if (!slot) return false;
   if (slot === 'checkpoint') return checkpointUnits(row, gradeId).length > 0;
-  return UNIT_BY_KEY.has(unitKey(gradeId, row.unit));
+  const unit = UNIT_BY_KEY.get(unitKey(gradeId, row.unit));
+  if (!unit) return false;
+  // A unit can ship without a role-play card, or with a short scene, when a checker
+  // rejected them (scripts/spanish-catchup-content.js): those levels go to the ordinary session.
+  if (slot === 'conversation') return !!unit.convo;
+  if (['story', 'input', 'listening_lab', 'dictation'].includes(slot)) return !!(unit.scene && unit.scene.lines.length >= 4);
+  return true;
 }
 
 // ── the review queue (item level) ──────────────────────────────────────────

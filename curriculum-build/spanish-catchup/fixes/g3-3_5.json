@@ -1,0 +1,116 @@
+{
+ "unit": "Unit 3.5",
+ "rejected": {
+  "P15": [
+   {
+    "checker": "mistral",
+    "problem": "Spelling error: 'Veintidós' should be 'Veintidós' is correct, but the English 'Twenty-two' is fine. However, the Spanish should be 'Veintidós' (no error here). Wait, no—'Veintidós' is correct. No error in P15.",
+    "fix": ""
+   }
+  ],
+  "S8": [
+   {
+    "checker": "mistral",
+    "problem": "Missing capitalization: 'calle Sol' should be 'Calle Sol' (street names are capitalized in Spanish).",
+    "fix": "Mi dirección es Calle Sol, veintidós."
+   }
+  ],
+  "R2": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect key: The first letter of 'Arévalo' is 'A', but the question asks for the first letter of the last name, which is 'A' (correct). However, the last name is 'Arévalo', so the first letter is 'A' (as in Antonio). The key is correct, but the problem is that the last name starts with 'A', not 'R'. The question is about the first letter, so the key is correct. No error.",
+    "fix": ""
+   }
+  ],
+  "P5": [
+   {
+    "checker": "qwen",
+    "problem": "The English 'Pepe means José' is not a correct translation of 'Pepe es José'. 'Es' translates to 'is', not 'means' (which would be 'significa'). Pepe is a nickname for José, but the verb used does not mean 'means'.",
+    "fix": "Remove '/ \"Pepe means José.\"' from the English translations."
+   }
+  ],
+  "P6": [
+   {
+    "checker": "qwen",
+    "problem": "The English 'Paco means Francisco' is incorrect. 'Es' means 'is', not 'means'.",
+    "fix": "Remove '/ \"Paco means Francisco.\"' from the English translations."
+   }
+  ],
+  "P7": [
+   {
+    "checker": "qwen",
+    "problem": "The English 'Lupita means Guadalupe' is incorrect. 'Es' means 'is', not 'means'.",
+    "fix": "Remove '/ \"Lupita means Guadalupe.\"' from the English translations."
+   }
+  ],
+  "P8": [
+   {
+    "checker": "qwen",
+    "problem": "The English 'Chuy means Jesús' is incorrect. 'Es' means 'is', not 'means'.",
+    "fix": "Remove '/ \"Chuy means Jesús.\"' from the English translations."
+   }
+  ]
+ },
+ "rewritten": {
+  "P15": {
+   "es": "Veintidós.",
+   "en": [
+    "Twenty-two."
+   ],
+   "tier": 3,
+   "skill": "es_numbers",
+   "topic": "spelling_numbers_in_words_ve"
+  },
+  "R2": {
+   "passage": "Tomás dice su apellido por teléfono: «A de Antonio, R de Roma.» Su apellido es Arévalo.",
+   "question": "How does Tomás spell the first letter of his last name?",
+   "choices": [
+    "A as in Antonio.",
+    "R as in Roma.",
+    "C as in casa."
+   ],
+   "answer": 0
+  },
+  "P5": {
+   "es": "Pepe es José.",
+   "en": [
+    "Pepe is José."
+   ],
+   "tier": 2,
+   "skill": "es_ser_estar",
+   "topic": "nicknames_and_pet_forms_of_n"
+  },
+  "P6": {
+   "es": "Paco es Francisco.",
+   "en": [
+    "Paco is Francisco."
+   ],
+   "tier": 2,
+   "skill": "es_ser_estar",
+   "topic": "nicknames_and_pet_forms_of_n"
+  },
+  "P7": {
+   "es": "Lupita es Guadalupe.",
+   "en": [
+    "Lupita is Guadalupe."
+   ],
+   "tier": 3,
+   "skill": "es_ser_estar",
+   "topic": "nicknames_and_pet_forms_of_n"
+  },
+  "P8": {
+   "es": "Chuy es Jesús.",
+   "en": [
+    "Chuy is Jesús."
+   ],
+   "tier": 3,
+   "skill": "es_ser_estar",
+   "topic": "nicknames_and_pet_forms_of_n"
+  }
+ },
+ "dropped": [
+  "S8"
+ ],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:09:31.412Z"
+}
