@@ -127,7 +127,9 @@ function worksheetRows(xml, strings) {
   return rows;
 }
 
-function skillFor(text) {
+// The keyword rules only. Returns null when no rule matches, so a caller can tell a
+// level that was tagged from one that was not.
+function matchSkill(text) {
   const value = String(text).toLowerCase();
   const rules = [
     [/trig|sine|cosine|tangent|right triangle|unit circle/, 'trig_basics'],
@@ -169,6 +171,12 @@ function skillFor(text) {
     [/detail|according to|line reference|evidence|support|explicit|information|sequence|cause and effect|compare|contrast/, 'detail_support'],
   ];
   for (const [pattern, skill] of rules) if (pattern.test(value)) return skill;
+  return null;
+}
+
+function skillFor(text) {
+  const matched = matchSkill(text);
+  if (matched) return matched;
   // The ACT workbook intentionally mixes strategy and test-management levels
   // with content. Rhetorical reasoning is the closest bank family for those
   // levels and keeps every authored row executable.
@@ -245,4 +253,6 @@ function write(grades) {
   for (const grade of grades) console.log(`  ${grade.id}: ${grade.levels.length} levels, ${grade.teachingLevelCount} teaching`);
 }
 
-write(readGrades());
+if (require.main === module) write(readGrades());
+
+module.exports = { matchSkill, skillFor };

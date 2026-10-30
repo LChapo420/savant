@@ -171,8 +171,9 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 7b. **Exam clock leftovers.** (1) Look at the clock chip and the pacing line at 375 px in a real browser, signed in. (2) Confirm the section lengths on act.org (`services/act-timing.js` SECTIONS, flagged UNVERIFIED) and add them to `docs/yc/SOURCES-TO-VERIFY.md`. (3) The allowance is one blend for mixed exams; per-section clocks need the ACT-format players (items 8, 14, 15). (4) Timed Task level descriptions in `content/act-grades.js` still promise scoring on the 1-36 scale. Reason: this run had no browser.
 8. **ACT-format English player** (item 6): passages with numbered underlined portions and "NO CHANGE"
    choices, the schema, and a validator. Content is written later by the owner's local pipeline.
-9. `[claimed 2026-10-30 14:00Z]` **Fix the skill tagging** (item 7): the `act_rhetoric` fallback at `scripts/build-act-grades.js` should tag
+9. **First slice DONE, see Done. Remaining: 9b.** **Fix the skill tagging** (item 7): the `act_rhetoric` fallback at `scripts/build-act-grades.js` should tag
    no levels.
+9b. **Stop tagging unmatched ACT levels** [needs the owner's workbook `data/ACT_Grades_Topics.xlsx`]. 1,643 of 9,807 generated levels (about 17%) are `act_rhetoric` only because no keyword rule matched (strategy and test-management levels). Make the fallback tag nothing: `config/curriculum.js` `sheetGrades` then falls back to the track skills, and `scripts/act-curriculum-test.js` ("every ACT authored level has a usable skill") must accept an untagged level; regenerate with `npm run build:act`; update the count in `scripts/act-skill-tagging-test.js`. Reason: the workbook is not in the cloud container, and changing the generator without regenerating would be inert.
 10. **Invite a friend: DONE, see Done.** (Leftover 10b below.)
 10b. **DONE with 5b, see Done.**
 11. **Interview prep, deepened: DONE, see Done.** (Leftover 11b below.)
@@ -203,6 +204,8 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- **Item 9 first slice** (2026-10-30, `yc-next`): `scripts/build-act-grades.js` now has `matchSkill` (null when no keyword rule matches) beside `skillFor`, and no longer runs when required. New `scripts/act-skill-tagging-test.js` (in the suite) checks that every generated level agrees with the tagger and pins the fallback count at 1,643 of 9,807. Behaviour of the app is unchanged. Remaining: 9b. Checked: that test plus `npm test`.
 
 - **S12c** (2026-10-30, `studley-parity` 6f2dc0e): pack quiz/test `?adapt=1` leaves out items on known skills (grade marks only the items shown), podcast weak spots skip known skills via `material-adapt`, "Pick for me" button on the cards page, day-by-day sim (half-known learner needs under half the items of a novice). Checked: `scripts/material-adapt-rest-test.js` (in the suite) plus the pack, podcast and cards tests pass. Full `npm test` had one failure in `self-test.js` (random "repeats less than 1 in 4", 25.3%); it passed on 3 reruns, with and without this change, so it is flaky and unrelated.
 
