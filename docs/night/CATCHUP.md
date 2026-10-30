@@ -48,9 +48,20 @@ C1. [done ed7f227] **Subject-agnostic engine.** Move the Spanish catch-up logic 
     prerequisite skills below it → a skill-by-skill check that stops early per skill → only missed skills are
     taught, in prerequisite order, in the Duolingo-style player → spaced review → a final re-check. Spanish keeps
     working exactly as now (its tests must still pass).
-C2. [claimed 2026-10-30 06:24Z] **Every digital subject.** List the app's subjects and which have the skill graph and items catch-up needs (for
+C2. [done da1cf8a, first slice; rest split into C2b, C2c] **Every digital subject.** List the app's subjects and which have the skill graph and items catch-up needs (for
     example math, reading, English, ACT sections, science, Spanish). Wire "Catch me up to grade N" on each ready
     subject's page. Subjects that lack content get a `[local only]` item naming exactly what is missing.
+C2b. **Wire math, english, reading into the pages.** The service and API exist (`services/catchup-units.js`,
+    `/api/catchup/:track/:grade`, tested). Still to do: (1) call `catchupUnits.onLevelPassed({userId, trackId, gradeId, level})`
+    from the lesson-level completion path in `routes/learn.js` so a played level ticks its block; (2) let the player open a
+    catch-up level that is behind the enrollment's `current_level` (see `mayOpenLevel`, as Spanish's `allowsLevel` does);
+    (3) "Catch me up to grade N" button on each of those subjects' pages and a catch-up page (that is C5's UI, shared).
+    (4) Date the block reviews into the real review queue (`services/review-session.js` / `retention-schedule.js`) instead of
+    only `block.reviews`. (5) Decide lookback (default 2 grades below the target) with the owner; deeper sweeps are a parameter.
+C2c. **[local only] Subjects without a unit bank.** Missing, exactly: ACT (no `content/unit-placement/act.json`; sections would
+    need one bank per section skill), IQ, chess, piano, basketball (no unit banks; chess/piano/basketball are skill tracks, not
+    grade-ladder subjects), science (no track at all). Each needs a complete unit bank with at least 5 checked multiple-choice
+    questions per unit (`scripts/generate-unit-placement.js` makes them, using models the owner runs). `subjectsReport()` lists this.
 C3. **Proof per subject.** `scripts/catchup-sim.js`: simulated learners with planted gaps (a few, many, none, all)
     for each wired subject. Catch-up must find at least 95% of planted gaps, teach no skill the learner already
     knew more than 5% of the time, and use fewer items than the linear path. Write the table to
@@ -63,6 +74,8 @@ C5. **Real UI.** The page shows the target, what was found missing, progress, an
 ## Blocked
 
 ## Done
+
+C2 slice (da1cf8a): `services/catchup-units.js` (unit-bank adapter on the shared engine) for math, english, reading: readiness check (49/16/16 grades all have complete unit banks, 5 questions each), `catchup_units` collection (exported/deleted via profile and consent lists, privacy page updated), `/api/catchup/*` routes. Checked: `scripts/catchup-units-test.js` (in suite): planted gaps found exactly, only gaps become blocks, reviews dated at +1 day, re-check closes it; `npm test` passing.
 
 C1 (ed7f227): `services/catchup-engine.js` is the adapter-driven state machine (check with early stop per skill, gaps only as blocks in grade order, spaced-review hook, final re-check with per-skill send-back). `services/spanish/catch-up.js` delegates to it; storage, questions, player and review seeding stay in the subject adapter. Checked: `scripts/catchup-engine-test.js` (toy subject, in the suite), `spanish-catchup-test.js` unchanged and passing, full `npm test` passing. Not yet done: the Spanish route/view/persistence layer (`ensure`, `view`, `routeShape`) is still Spanish-only; C2 needs a generic persistence/route layer per subject (adapter for rows, player URL, review seeding).
 
