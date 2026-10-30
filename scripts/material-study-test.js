@@ -243,7 +243,7 @@ function answerFrom(course, quiz, wrongN = 0) {
   check('routes are wired and owner-checked', /\/:id\/study'/.test(routes) && /study\/submit/.test(routes) && /study\/placement/.test(routes) && /ownMaterial/.test(routes));
   check('progress is in export and deletion lists and the db', /material_progress/.test(read('routes/profile.js')) && /material_progress/.test(read('routes/consent.js')) && /material_progress/.test(read('config/db.js')));
   check('the study page keeps the tutor to method hints', /my-material-study/.test(read('services/tutor-context.js')));
-  check('the page and script exist; the list page has the course button', fs.existsSync(path.join(__dirname, '..', 'public/my-material-study.html')) && /Make a course/.test(read('public/js/my-material.js')) && /my-material-study/.test(read('public/js/my-material.js')));
+  check('the page and script exist; the list page has the course button', fs.existsSync(path.join(__dirname, '..', 'public/my-material-study.html')) && /Learning path/.test(read('public/js/my-material.js')) && /my-material-study/.test(read('public/js/my-material.js')));
   check('home wiring: route before /:id, dashboard card', routes.indexOf("'/review-due'") > 0 && routes.indexOf("'/review-due'") < routes.indexOf("router.get('/:id'") && /review-due/.test(read('public/js/dashboard.js')));
   check('the study script has no answer key logic', !/answer_index|misconceptions\[/.test(read('public/js/my-material-study.js')));
   check('the study page shows the next step, units, levels and the general-knowledge label', /next-card/.test(read('public/js/my-material-study.js')) && /Level \$\{k\.level\}/.test(read('public/js/my-material-study.js')) && /general knowledge/.test(read('public/js/my-material-study.js')));
