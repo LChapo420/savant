@@ -169,7 +169,7 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 7. **DONE, see Done. Leftover: 7b.** **Real section timer** (item 5) for Timed Tasks and Finals, with pacing feedback. Section lengths are
    UNVERIFIED until checked on act.org: make them one config object and flag them.
 7b. **Exam clock leftovers.** (1) Look at the clock chip and the pacing line at 375 px in a real browser, signed in. (2) Confirm the section lengths on act.org (`services/act-timing.js` SECTIONS, flagged UNVERIFIED) and add them to `docs/yc/SOURCES-TO-VERIFY.md`. (3) The allowance is one blend for mixed exams; per-section clocks need the ACT-format players (items 8, 14, 15). (4) Timed Task level descriptions in `content/act-grades.js` still promise scoring on the 1-36 scale. Reason: this run had no browser.
-8. **ACT-format English player** (item 6): passages with numbered underlined portions and "NO CHANGE"
+8. `[claimed 2026-10-30T15:03Z]` **ACT-format English player** (item 6): passages with numbered underlined portions and "NO CHANGE"
    choices, the schema, and a validator. Content is written later by the owner's local pipeline.
 9. **First slice DONE, see Done. Remaining: 9b.** **Fix the skill tagging** (item 7): the `act_rhetoric` fallback at `scripts/build-act-grades.js` should tag
    no levels.
