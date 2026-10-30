@@ -42,7 +42,7 @@ Goal: show that it finds the learner's level, teaches from there, and has a tuto
 | 0:40 | Sign in as Riley. `/dashboard`: **Your subjects**, **Recent sessions**, **Due for review**. | "Everything here comes from what Riley actually answered." |
 | 1:00 | Open the ACT Prep session (**Continue**). Answer two questions, one wrong. | Level, 75% to master a skill, what happens on a miss. |
 | 1:40 | Tap **Ask tutor**. Ask something about the question on screen. Optionally switch **Type** to **Talk** and use **Hold to talk**. | "The tutor sees the page and the learner's goal. On timed or graded pages it only gives hints about method." |
-| 2:00 | `/my-material`: paste a paragraph of notes, tap **Make a course**, then **Study** once it is ready. | "A learner can turn their own notes into a course taught with the same engine. Their file is private to them and deletable. Needs a live model key to build." |
+| 2:00 | `/my-material`: paste a paragraph of notes, tap **Learning path**, then **Study** once it is ready. | "A learner can turn their own notes into a course taught with the same engine. Their file is private to them and deletable. Needs a live model key to build." |
 | 2:30 | `/act-scores`: show the test date, target and chart. | "Real scores go in here, so we can measure gains honestly. That study is designed (`/act-study`) but has no participants yet." |
 | 2:50 | Back to `/dashboard`. | Ask: "If you know an ACT student, send them the link." Stop. |
 

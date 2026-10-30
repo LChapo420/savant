@@ -30,7 +30,7 @@ for (const label of ['Ask tutor', 'Type', 'Talk', 'Hold to talk']) {
   check(`tutor dock has "${label}"`, doc.includes(`**${label}**`) && dock.includes(label));
 }
 const mat = js('my-material.js');
-check('my-material has "Make a course" and "Study"', mat.includes('Make a course') && mat.includes('Study') && doc.includes('**Make a course**'));
+check('my-material has "Learning path" and "Study"', mat.includes('Learning path') && mat.includes('Study') && doc.includes('**Learning path**'));
 
 console.log('honesty');
 const prose = doc.replace(/`[^`]*`/g, '');
