@@ -184,7 +184,7 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 13. [slices DONE: gap 4 adult deletion, gap 3 vendor list, gap 8 Spanish upload deletion, gap 5 written security programme and retention schedule, see Done; rest needs the owner (gaps 1, 2, 6, 7, 9, 10) or is open] **Privacy gaps** from `docs/yc/PRIVACY.md` that code can close (deletion, export, parental notice, what
     goes to which provider), one gap per run.
 13b. **DONE, see Done.** (Spanish uploads tied to the account.)
-14. **ACT Science passages with figures** (item 8): the player and schema for passage sets with a table or
+14. [claimed 2026-10-30T16:12Z] **ACT Science passages with figures** (item 8): the player and schema for passage sets with a table or
     chart.
 15. **ACT Reading passage sets** (item 9), the player and schema.
 16. **ACT Writing** (item 10), reusing the English track's essay marking.
