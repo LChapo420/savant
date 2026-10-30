@@ -507,12 +507,12 @@ App.mount(async () => {
   // Reviews due in the learner's own courses (services/material-study.js). Quiet if none or on any error.
   fetch('/api/materials/review-due', { credentials: 'same-origin' }).then((r) => (r.ok ? r.json() : null)).then((d) => {
     const aside = root.querySelector('.dash-aside');
-    if (!aside || !d || !d.total) return;
+    if (!aside || !d || !(d.total || d.cards_total)) return;
     const sec = document.createElement('section');
     sec.setAttribute('data-material-due', '');
     sec.innerHTML = `<h2>Your own material</h2>
-      <p><span class="num">${d.total}</span> skill${d.total === 1 ? ' is' : 's are'} due for review.</p>
-      <ul class="due-list">${d.materials.map((m) => `<li><a href="/my-material-study?id=${encodeURIComponent(m.material_id)}">${esc(m.title)}</a><span class="num">${m.due_count}</span></li>`).join('')}</ul>`;
+      <p>${[d.total ? `<span class="num">${d.total}</span> skill${d.total === 1 ? ' is' : 's are'}` : '', d.cards_total ? `<span class="num">${d.cards_total}</span> flashcard${d.cards_total === 1 ? ' is' : 's are'}` : ''].filter(Boolean).join(' and ')} due for review.</p>
+      <ul class="due-list">${d.materials.map((m) => `<li><a href="/my-material-${m.due_count || !m.cards_due ? 'study' : 'cards'}?id=${encodeURIComponent(m.material_id)}">${esc(m.title)}</a><span class="num">${m.due_count + (m.cards_due || 0)}</span></li>`).join('')}</ul>`;
     aside.insertBefore(sec, aside.firstChild);
   }).catch(() => {});
 

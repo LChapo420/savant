@@ -171,14 +171,25 @@ function answerFrom(course, quiz, wrongN = 0) {
   const day1 = Date.now() + DAY + 1000;
   check('both skills are due after a day', ms.state(u.id, m.id, day1).due_count === 2);
   const ds0 = ms.dueSummary(u.id); const ds1 = ms.dueSummary(u.id, day1);
-  check('home summary: none due today, two due tomorrow, titles and counts only', ds0.total === 0 && ds1.total === 2 && ds1.materials.length === 1 && ds1.materials[0].material_id === m.id && Object.keys(ds1.materials[0]).sort().join() === 'due_count,material_id,title', ds1);
+  check('home summary: none due today, two due tomorrow, titles and counts only', ds0.total === 0 && ds1.total === 2 && ds1.materials.length === 1 && ds1.materials[0].material_id === m.id && Object.keys(ds1.materials[0]).sort().join() === 'cards_due,due_count,material_id,title', ds1);
+  // Flashcards due count beside the skills (a deck built by services/material-cards.js).
+  db.insert('material_cards', { user_id: u.id, material_id: m.id, cards: [
+    { id: 'k1', front: 'a', back: 'b', source: 'own', right: 0, wrong: 0, due: new Date(day1 - 1000).toISOString() },
+    { id: 'k2', front: 'c', back: 'd', source: 'own', right: 1, wrong: 0, due: new Date(day1 + 30 * DAY).toISOString() },
+  ], forget_m: 0, seq: 2, dismissed: [] });
+  const dsc = ms.dueSummary(u.id, day1);
+  check('home summary counts flashcards due beside skills; none due today, other learners see none',
+    dsc.cards_total === 1 && dsc.materials[0].cards_due === 1 && dsc.total === 2 && ms.dueSummary(u.id, day1 - DAY * 2).cards_total === 0 && ms.dueSummary(other.id, day1).cards_total === 0, dsc);
+  check('home page and review page show the flashcard count and link to the deck',
+    /cards_total/.test(read('public/js/dashboard.js')) && /cards_total/.test(read('public/js/review.js')) && /'study' : 'cards'/.test(read('public/js/dashboard.js')) && /'study' : 'cards'/.test(read('public/js/review.js')));
+  db.remove('material_cards', (c) => c.user_id === u.id);
   check('home summary is private to the learner', ms.dueSummary(other.id, day1).total === 0);
   const rs = require('../services/review-session');
   const om = rs.ownMaterial(u.id, day1);
   check('daily review lists own-material skills due (counts and titles only), private per learner',
     om.total === 2 && om.materials[0].material_id === m.id && rs.ownMaterial(other.id, day1).total === 0 && rs.ownMaterial(u.id).total === 0, om);
   check('review page shows it with a link to the study page and keeps it out of the graded sitting',
-    /own_material/.test(read('services/review-session.js')) && /data-material-due/.test(read('public/js/review.js')) && /my-material-study/.test(read('public/js/review.js')) && !/material/.test(read('services/review-session.js').split('function start(')[1].split('function finish(')[0]));
+    /own_material/.test(read('services/review-session.js')) && /data-material-due/.test(read('public/js/review.js')) && /my-material-\$\{[^}]*'study'/.test(read('public/js/review.js')) && !/material/.test(read('services/review-session.js').split('function start(')[1].split('function finish(')[0]));
   let rv = ms.startQuiz(u.id, m.id, 'review', null, { now: day1 });
   check('review interleaves the due skills, two questions each at tier 2 or above', new Set(rv.questions.map((x) => x.skill)).size === 2 && rv.questions.length === 4 && rv.questions.filter((x) => x.tier >= 2).length >= 3, rv.questions.map((x) => [x.skill, x.tier]));
   check('the next step is the review', ms.state(u.id, m.id, day1).next.kind === 'review');

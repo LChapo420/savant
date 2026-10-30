@@ -14,8 +14,8 @@
  *
  * Scheduling is the path's: services/material-path.js intervalDays (the forgetting curve at 75% recall, with the right
  * and wrong counts of the card) and updateForgetting (this learner's half-life multiplier, moved by how far the curve
- * missed). The multiplier starts from the one the course's own reviews have learned (material_progress.forget_m), then
- * moves on card reviews only; the two are not merged back. Again = a miss (due in 10 minutes), Hard = a pass with the
+ * missed). The multiplier is shared with the course: it is read from material_progress.forget_m whenever the course
+ * has one, and every card review writes its move back there, so a card and a skill learn the same half-life. Again = a miss (due in 10 minutes), Hard = a pass with the
  * interval halved, Good = a pass, Easy = a pass with the interval stretched by half.
  */
 const db = require('../config/db');
@@ -37,8 +37,8 @@ function row(userId, materialId) {
   if (!r) {
     const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === mid);
     r = db.insert('material_cards', { user_id: userId, material_id: mid, cards: [], forget_m: (prog && prog.forget_m) || 0, seq: 0, created_at: new Date().toISOString() });
-  } else if (!r.cards.some((c) => c.last)) {
-    // Nothing reviewed yet: pick up whatever the course's own reviews have learned since.
+  } else {
+    // The course's multiplier is the shared one: pick up whatever its reviews have learned since.
     const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === mid);
     if (prog && prog.forget_m != null) r.forget_m = prog.forget_m;
   }
@@ -157,6 +157,8 @@ function review(userId, materialId, cardId, rating, now = Date.now()) {
   c.interval_days = days;
   c.last = new Date(now).toISOString();
   save(r);
+  const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
+  if (prog) db.update('material_progress', prog.id, { forget_m: r.forget_m || 0 });
   db.flush();
   return { card: c.id, rating, next_in_days: days, due_at: c.due };
 }

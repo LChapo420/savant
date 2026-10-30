@@ -74,6 +74,11 @@ const T0 = Date.UTC(2026, 9, 30, 12, 0, 0);
   const again = cards.review(u.id, m.id, c1, 'again', t);
   check('again is due in minutes and counts as a miss', Date.parse(again.due_at) === t + 600000 && again.next_in_days === 0);
   check('a miss moves the half-life multiplier down', db.findOne('material_cards', (c) => c.user_id === u.id).forget_m < mBefore2);
+  check('the course shares the multiplier: a card review writes it back to the progress row',
+    db.findOne('material_progress', (p) => p.user_id === u.id).forget_m === db.findOne('material_cards', (c) => c.user_id === u.id).forget_m);
+  db.update('material_progress', db.findOne('material_progress', (p) => p.user_id === u.id).id, { forget_m: 0.9 });
+  cards.deck(u.id, m.id, t);
+  check('a move the course made after card reviews is picked up by the deck', db.findOne('material_cards', (c) => c.user_id === u.id).forget_m === 0.9);
   check('due lists only due cards, oldest first', cards.due(u.id, m.id, 20, t + 400 * DAY).cards.length === 3 && cards.due(u.id, m.id, 20, T0).cards.length === 0);
 
   console.log('edit, add, delete');

@@ -487,18 +487,36 @@ function removeForMaterial(userId, materialId) {
 
 /**
  * What is due for review across all of a learner's courses (for the home page).
- * Titles and counts only: no questions, answers or quotes.
+ * Titles and counts only: no questions, answers or quotes. `due_count` is skills, `cards_due` is flashcards
+ * (services/material-cards.js; only cards already in the learner's deck, counted without writing anything).
  */
 function dueSummary(userId, now = Date.now()) {
   const items = [];
+  const seen = new Set();
+  const cardsDue = (materialId) => {
+    const deck = db.findOne('material_cards', (c) => c.user_id === userId && c.material_id === materialId);
+    return deck ? deck.cards.filter((c) => !c.due || Date.parse(c.due) <= now).length : 0;
+  };
   for (const r of db.find('material_progress', (p) => p.user_id === userId)) {
     const course = loadCourse(userId, r.material_id);
     if (!course) continue;
+    seen.add(r.material_id);
     const due = course.skills.filter((s) => isDue(r.skills[s.id] || {}, now)).length;
-    if (due) items.push({ material_id: r.material_id, title: course.title, due_count: due });
+    const cards = cardsDue(r.material_id);
+    if (due || cards) items.push({ material_id: r.material_id, title: course.title, due_count: due, cards_due: cards });
   }
-  items.sort((a, b) => b.due_count - a.due_count);
-  return { total: items.reduce((n, i) => n + i.due_count, 0), materials: items };
+  // A deck for a material the learner has not started the path of (study pack only).
+  for (const d of db.find('material_cards', (c) => c.user_id === userId && !seen.has(c.material_id))) {
+    const m = db.findOne('materials', (x) => x.user_id === userId && x.id === d.material_id);
+    const cards = m ? cardsDue(d.material_id) : 0;
+    if (cards) items.push({ material_id: d.material_id, title: m.title, due_count: 0, cards_due: cards });
+  }
+  items.sort((a, b) => (b.due_count + b.cards_due) - (a.due_count + a.cards_due));
+  return {
+    total: items.reduce((n, i) => n + i.due_count, 0),
+    cards_total: items.reduce((n, i) => n + i.cards_due, 0),
+    materials: items,
+  };
 }
 
 module.exports = {
