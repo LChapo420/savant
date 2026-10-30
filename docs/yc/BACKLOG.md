@@ -187,7 +187,7 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 14. **First slice DONE, see Done. Remaining: 14b.** **ACT Science passages with figures** (item 8): the player and schema for passage sets with a table or
     chart.
 14b. **Science passage leftovers.** (1) No route serves a Science set yet and no set ships: the owner's pipeline writes sets (format in `services/act-science-passage.js`), then a route plus a level type must draw them and call `check`. (2) Charts are drawn as tables of their values, not as pictures; decide with the owner if a drawn chart is worth it. (3) Look at the figures at 375 px in a real browser. Reason: this run only built the schema, validator, grading and player markup.
-15. **ACT Reading passage sets** (item 9), the player and schema.
+15. [claimed 2026-10-30T16:40Z] **ACT Reading passage sets** (item 9), the player and schema.
 16. **ACT Writing** (item 10), reusing the English track's essay marking.
 
 ### Local only (a cloud run can't do these: they need `data/`, `.env` or the live server)
