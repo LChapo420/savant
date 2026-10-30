@@ -26,6 +26,13 @@ const writeAhead = require('../services/write-ahead');
 
 const router = express.Router();
 
+// Minutes studied per day and subject, for the profile's focus calendar and subject pie.
+// The owner's account gets generated sample stats (labelled on the page); see services/focus-history.js.
+router.get('/profile/focus', requireAuth, (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.json(require('../services/focus-history').forUser(req.user));
+});
+
 router.get('/profile', requireAuth, (req, res) => {
   const profile = learner.getProfile(req.user.id);
   const params = learner.sessionParams(profile);

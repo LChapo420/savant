@@ -165,6 +165,9 @@ App.mount(async () => {
       <div><dt>Sessions analyzed</dt><dd>${profile.evidence_count}</dd></div>
     </dl>
 
+    <h2 class="section-title">${window.icon('calendar')}Focus</h2>
+    <div id="focus-root"></div>
+
     <h2 class="section-title">${window.icon('settings')}What this changes in your sessions</h2>
     <div class="card">
       <table class="data"><tbody>
@@ -319,6 +322,9 @@ App.mount(async () => {
         <button class="btn btn-sm" type="submit">Delete my account</button>
       </form>
     </div>`}`;
+
+  // Focus history and subject focus (public/js/focus.js).
+  if (window.FocusHistory) window.FocusHistory.mount(document.getElementById('focus-root'));
 
   const deleteForm = document.getElementById('delete-form');
   if (deleteForm) deleteForm.addEventListener('submit', async (e) => {

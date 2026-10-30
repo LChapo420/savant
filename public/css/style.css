@@ -2175,3 +2175,37 @@ dialog.modal .modal-actions { display: flex; justify-content: flex-end; gap: 10p
 .planner-form input[type="date"], .planner-form input[type="time"] { width: 100%; min-height: 44px; }
 .planner-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-4); flex-basis: 100%; }
 .planner-set { margin: 0; font-size: var(--t-read); }
+
+/* Focus history and subject focus (profile; public/js/focus.js). White for no study, then five greens by hours. */
+:root { --f0: #ffffff; --f1: #dcf5e1; --f2: #a6e3b4; --f3: #5cc47a; --f4: #2e9a52; --f5: #176a35; --fx: transparent; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --f0: #2a2d33; --f1: #1f4a2c; --f2: #2a6b3d; --f3: #3a9652; --f4: #58bf72; --f5: #8fe3a4; } }
+:root[data-theme="dark"] { --f0: #2a2d33; --f1: #1f4a2c; --f2: #2a6b3d; --f3: #3a9652; --f4: #58bf72; --f5: #8fe3a4; }
+.focus-grid { margin-top: 12px; }
+.focus-head { gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.focus-chip { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); vertical-align: middle; margin-left: 6px; }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.seg button { border: 0; background: transparent; color: var(--text); padding: 6px 10px; font: inherit; font-size: 13px; cursor: pointer; min-height: 36px; }
+.seg button + button { border-left: 1px solid var(--border); }
+.seg button[aria-pressed="true"] { background: var(--surface-2); font-weight: 700; }
+.focus-nav { margin: 4px 0 8px; }
+.fmonth { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.fmonth.sm { gap: 2px; }
+.fwd { text-align: center; font-size: 11px; color: var(--muted); }
+.fcell { aspect-ratio: 1; border-radius: 6px; display: grid; place-items: center; font-size: 12px; color: var(--text); border: 1px solid var(--border); }
+.fcell.sm { border-radius: 2px; border-width: 0; font-size: 0; }
+.fcell.f0 { background: var(--f0); } .fcell.f1 { background: var(--f1); } .fcell.f2 { background: var(--f2); }
+.fcell.f3 { background: var(--f3); color: #fff; } .fcell.f4 { background: var(--f4); color: #fff; } .fcell.f5 { background: var(--f5); color: #fff; }
+:root:not([data-theme="light"]) .fcell.f4, :root:not([data-theme="light"]) .fcell.f5 { color: inherit; }
+.fcell.fx { background: transparent; border-style: dashed; opacity: .4; }
+.fyear { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 480px) { .fyear { grid-template-columns: repeat(3, 1fr); } }
+.focus-sum { margin-top: 8px; }
+.focus-legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+.focus-legend span { display: inline-flex; align-items: center; gap: 4px; }
+.focus-legend .fcell { width: 14px; height: 14px; aspect-ratio: auto; border-radius: 3px; }
+.focus-pie-wrap { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.focus-pie { width: 180px; height: 180px; flex: none; }
+.focus-keys { list-style: none; margin: 0; padding: 0; flex: 1; min-width: 160px; display: grid; gap: 8px; }
+.focus-keys li { display: grid; grid-template-columns: 14px 1fr auto auto; align-items: center; gap: 8px; }
+.focus-keys i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+.focus-pie-sum { margin-top: 10px; }
