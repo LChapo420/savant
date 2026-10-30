@@ -43,7 +43,7 @@ Read first: `services/tutor.js`, `services/tutor-context.js`, `services/tutor-sc
 
 ## Queue
 
-T1. [claimed 2026-10-30T06:06Z] **Memory map.** Write `docs/TUTOR-MEMORY.md`: everything the tutor is given today per learner (running summary,
+T1. [done eda97b6] **Memory map.** Write `docs/TUTOR-MEMORY.md`: everything the tutor is given today per learner (running summary,
     turns, learner record, scorecard, goals, mastery), where each comes from, what is lost (for example: turns cut
     off, facts never extracted), and the gap list against the 06 mechanisms, by id. No code beyond small fixes.
 T2. **Long-term learner memory.** A per-learner store of durable facts:
@@ -71,3 +71,5 @@ T7. `[local only]` Real-model run of T5 and a 20-turn memory conversation on NVI
 ## Blocked
 
 ## Done
+
+- T1 `eda97b6`: `docs/TUTOR-MEMORY.md` written from the code (no code changes). Checked by reading every cited file and `npm test` (all steps passed). Discovery: the learner record (`services/learner-record.js` facts) is never read by the tutor; folded into T2/T3 scope. `tutor_modes` is deleted on account deletion but not exported (mode word only).
