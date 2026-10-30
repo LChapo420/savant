@@ -68,12 +68,7 @@ S2. **First slice DONE on `studley-parity` (355d450), see Done. Remaining: S2b.*
    - Learners can edit cards.
    - Also cards made from the learner's own recorded mistakes and misconceptions.
 S2b. **DONE on `studley-parity` (9fade45), see Done.**
-S2c. [claimed 2026-10-30T02:33Z] **Never drop part of an upload silently (found by the own-material proof, 30 Oct).** In `services/course-builder.js`, an outline window that fails all three tries is left out of the course without telling the learner.
-   - Record which parts of the source were not turned into skills (page or character ranges).
-   - Retry them once more in the background.
-   - If they still fail, show the learner a plain note on the course page ("Pages 41-58 could not be read into this course yet. Try again"), with a retry button.
-   - Count them in the coverage the course reports.
-   - Add tests for a window that fails every time.
+S2c. **DONE on `studley-parity` (c5b159b), see Done.**
 S3. **Practice test on demand:** pick skills and a length, timed or untimed.
    - Written answers go through `services/typed-grading.js`.
    - Results feed the learner model.
@@ -183,6 +178,8 @@ S7. **PWA:** a manifest and an offline shell, so it installs on a phone. Then wr
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-30 S2c never drop part of an upload silently (branch `studley-parity`, commit c5b159b): `services/course-builder.js` outline windows now carry their passage ids and character range; a window that fails all three tries is retried once after the others, and if it still fails it is stored on the course as `missed` (part, range, reason `unreadable` or `budget`) and the course is `partial`; text past the 120-passage cap is recorded as `too_long` (not retryable). `summary()` gives `missed` (plain note, no source text) and `coverage` (% of characters planned). New `retryMissed()` plans only the missed windows and appends their skills after the existing ones (ids, levels, progress unchanged); `POST /api/materials/:id/course/retry` (202, rate limited); `/my-material` shows the note, the coverage and a Try these parts again button. Checked: new `scripts/course-missed-test.js` (about 40 checks with a mock model: always-failing window, six tries, recorded range, coverage, retry that fails then recovers, tail past the cap, isolation, stale source, wiring; in test-steps) and full `npm test` passed (All steps passed). Not checked: a real model, a browser at 375 px. Limit: no page numbers are stored, so the note gives a share of the text ("about 37% to 73% of the way through") rather than pages.
 
 - 2026-10-30 S2b flashcard leftovers (branch `studley-parity`, commit 9fade45): `dueSummary` now returns `cards_due` per material and `cards_total` (read-only count of decks already built; study-pack-only materials appear too), shown on the home page and daily review with a link to the deck when only cards are due. Cards and path now share one half-life multiplier (`material_progress.forget_m` is read by the deck and written by every card review). Checked: `scripts/material-study-test.js` and `material-cards-test.js` extended and passing; full `npm test` ran, only `round3-consolidation-test.js` aborted with a V8 crash in the full run and passes alone, with and without this change. Not checked in a browser at 375 px. Leftover: pack cards only count once the deck has been opened once (sync is lazy).
 - 2026-10-30 S2 flashcards (branch `studley-parity`, commit 355d450): `services/material-cards.js`, routes under `/api/materials/:id/cards`, page `my-material-cards`. Deck = pack cards (tied to the skill citing their passage) + cards from missed course questions (with the misconception) + the learner's own; edit/add/delete; Again/Hard/Good/Easy scheduled with `material-path.js` intervalDays/updateForgetting. No model calls; private, deleted with the material, in export and privacy text. Checked: `scripts/material-cards-test.js` (added to test-steps) and full `npm test` passed. Not yet checked in a real browser at 375 px.
