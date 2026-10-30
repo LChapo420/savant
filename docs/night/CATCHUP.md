@@ -55,15 +55,14 @@ C2b. [done a7f7e42, items 1-2; rest is C2d] **Wire math, english, reading into t
     level of a catch-up block (`catchupUnits.allowsLevel`) and, when a finished session scores at or above the master bar
     (0.75), calls `onLevelPassed` for the levels it covered. Checked: `scripts/catchup-units-test.js` (allowsLevel true in
     the block, false outside it and for another subject) and the full `npm test`. Not exercised end to end through HTTP.
-C2d. [claimed 2026-10-30 06:40Z] **Pages and the real review queue.** (1) "Catch me up to grade N" button on the math, english and reading pages plus the
-    catch-up page itself (shared with C5, which says what the page shows). (2) Put each finished block's reviews
-    (`block.reviews`, +1/3/7/21 days) into the real review queue (`services/review-session.js` / `retention-schedule.js`)
-    instead of only on the row. (3) Owner decision: lookback (default 2 grades below the target). (4) Drive the whole flow
-    through HTTP in a browser test (the owner's local agent has the browser).
-C2c. **[local only] Subjects without a unit bank.** Missing, exactly: ACT (no `content/unit-placement/act.json`; sections would
-    need one bank per section skill), IQ, chess, piano, basketball (no unit banks; chess/piano/basketball are skill tracks, not
-    grade-ladder subjects), science (no track at all). Each needs a complete unit bank with at least 5 checked multiple-choice
-    questions per unit (`scripts/generate-unit-placement.js` makes them, using models the owner runs). `subjectsReport()` lists this.
+C2d. [done f4f2ecf, item 1 only; rest is C2e] **Pages.** `public/catchup.html` + `public/js/catchup.js` (target, found missing,
+    progress, next review due, 375 px width cap, existing CSS variables) and a "Catch me up to this grade" link on the math,
+    english and reading path page. Checked by a static test in `scripts/catchup-units-test.js` and `npm test`; NOT opened in
+    a browser (no login in this run).
+C2e. **Review queue, lookback, browser.** (1) Put each finished block's reviews (`block.reviews`, +1/3/7/21 days) into the real
+    review queue (`services/review-session.js` / `retention-schedule.js`); today they live only on the catch-up row.
+    (2) Owner decision: lookback (default 2 grades below the target). (3) Drive the whole flow through HTTP in a browser at
+    375 px and look at the page (the owner's local agent has the browser).
 C3. [claimed 2026-10-30 06:42Z] **Proof per subject.** `scripts/catchup-sim.js`: simulated learners with planted gaps (a few, many, none, all)
     for each wired subject. Catch-up must find at least 95% of planted gaps, teach no skill the learner already
     knew more than 5% of the time, and use fewer items than the linear path. Write the table to
