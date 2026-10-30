@@ -117,14 +117,29 @@ const store = load();
 let dirty = false;
 let flushTimer = null;
 
+let flushFailures = 0;
+
 function flush() {
   flushTimer = null;
   if (!dirty) return;
   dirty = false;
   // Write beside the target and rename, so a crash mid-write cannot leave a
   // half-written db.json behind.
-  fs.writeFileSync(TMP_PATH, JSON.stringify(store, null, 2), 'utf8');
-  fs.renameSync(TMP_PATH, DB_PATH);
+  try {
+    fs.writeFileSync(TMP_PATH, JSON.stringify(store, null, 2), 'utf8');
+    fs.renameSync(TMP_PATH, DB_PATH);
+    if (flushFailures) console.warn(`db: saved after ${flushFailures} failed attempt(s)`);
+    flushFailures = 0;
+  } catch (err) {
+    // On Windows the rename fails for a moment (EPERM, EBUSY, EACCES) while another
+    // program holds db.json open: a backup, an antivirus scan, a script copying it.
+    // Thrown from this timer it used to crash the server. The changes are still in
+    // memory, so keep them dirty and try again shortly, backing off to 5 s.
+    dirty = true;
+    flushFailures++;
+    if (flushFailures === 1 || flushFailures % 20 === 0) console.warn(`db: save failed (${err.code || err.message}); retrying`);
+    if (!flushTimer) flushTimer = setTimeout(flush, Math.min(5000, 250 * 2 ** Math.min(flushFailures, 5)));
+  }
 }
 
 // Scripts that only read set DB_READONLY=1: the store is a copy held in this
