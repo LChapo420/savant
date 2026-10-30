@@ -67,7 +67,7 @@ S1b. **DONE on `studley-parity`, see Done.** (Extend a path.)
 S2. **First slice DONE on `studley-parity` (355d450), see Done. Remaining: S2b.** **Flashcards** generated from the material, tied to its skills, and scheduled by the SAME per-learner spaced-review model as path skills (`material-path.js`).
    - Learners can edit cards.
    - Also cards made from the learner's own recorded mistakes and misconceptions.
-S2b. Flashcard leftovers: count due cards on the home page and daily review page (`dueSummary` covers skills only), and fold the cards' multiplier back into the path's. Reason: S2 keeps the two schedules separate.
+S2b. [claimed 2026-10-30T02:16Z] Flashcard leftovers: count due cards on the home page and daily review page (`dueSummary` covers skills only), and fold the cards' multiplier back into the path's. Reason: S2 keeps the two schedules separate.
 S2c. **Never drop part of an upload silently (found by the own-material proof, 30 Oct).** In `services/course-builder.js`, an outline window that fails all three tries is left out of the course without telling the learner.
    - Record which parts of the source were not turned into skills (page or character ranges).
    - Retry them once more in the background.
