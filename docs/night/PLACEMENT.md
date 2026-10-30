@@ -42,7 +42,7 @@ Read first: `services/subject-placement.js`, `services/adaptive-placement.js`, `
 
 ## Queue
 
-P1. **Simulation harness.** `scripts/placement-sim.js`: simulated learners whose true level runs from "knows
+P1. [claimed 2026-10-30T06:28Z] **Simulation harness.** `scripts/placement-sim.js`: simulated learners whose true level runs from "knows
     nothing" to "knows everything" in every subject that has a placement. Each answers by an item-response model
     (chance of a right answer from item difficulty vs ability, guessing at 1/choices for multiple choice, a small
     slip rate), plus learners who press "I don't know". Measure placement error (placed minus true level), questions
