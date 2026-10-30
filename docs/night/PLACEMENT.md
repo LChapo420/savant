@@ -61,7 +61,7 @@ P5a. [local only] **IQ top end.** `content/placement-calibration/iq.json` has 2 
     grade 12 two). The ceiling proof needs at least 3 answered in the top two grades, so at least 6 calibrated items
     there (about 3 per grade) are needed for the sim to show "knows everything" placed at the top. Generate and calibrate
     with the content pipeline. Also ACT grades 13 and 15 have no calibrated items (indexes 12 and 14).
-P4. **Adaptive stopping.** Stop when the level estimate is precise enough (standard error under a threshold),
+P4. [claimed 07:26Z] **Adaptive stopping.** Stop when the level estimate is precise enough (standard error under a threshold),
     with confirmation items near the boundary. Target, proven by P1 for every subject: at most one level off for
     95% of simulated learners at every ability level, with the question count reported. Add the sim to
     `scripts/test-steps.json` with a fixed seed so a regression fails the suite.
