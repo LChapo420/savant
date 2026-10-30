@@ -31,6 +31,7 @@
  *   POST   /api/materials/:id/test         { skills, length, timed, adapt } start a practice test (questions without keys); adapt: only what the learner does not know, is due or missed
  *   POST   /api/materials/:id/test/submit  { test_id, answers } graded on the server; feeds the learner model
  *   GET    /api/materials/:id/cards        the flashcard deck (pack cards, your misses, your own) with what is due
+ *   GET    /api/materials/:id/cards/pick   the cards worth your time now (due ones, new ones except for skills you already know)
  *   GET    /api/materials/:id/cards/due    the cards due now
  *   POST   /api/materials/:id/cards        { front, back } write a card
  *   POST   /api/materials/:id/cards/review { card, rating: again|hard|good|easy }
@@ -243,6 +244,7 @@ function cardReply(res, out) {
 }
 const cardBody = express.json({ limit: '16kb' });
 router.get('/:id/cards', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.deck(req.user.id, req.params.id)));
+router.get('/:id/cards/pick', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.pick(req.user.id, req.params.id, Number(req.query.limit) || 20)));
 router.get('/:id/cards/due', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.due(req.user.id, req.params.id, Number(req.query.limit) || 20)));
 router.post('/:id/cards/review', requireAuth, ownMaterial, limit('materials-cards-review', 600, 60 * 60 * 1000), cardBody, (req, res) => {
   const b = req.body || {};
