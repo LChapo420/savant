@@ -100,9 +100,11 @@ check('every named skill exists in the curriculum', six.sessions.every((s) => s.
   check("route: another learner's date is not shared", none.status === 200 && none.body.status === 'no_date');
   const anon = await get(0);
   check('route: signed-out is refused', anon.status === 401 || anon.status === 403, anon.status);
+  check('route: the plan names no practice link when the learner has no ACT enrollment', none.body.practice_href === null);
   server.close();
 
   const js = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'act-scores.js'), 'utf8');
+  check('page: learn and review rows link to practice', js.includes('practice_href') && js.includes('Practise'));
   check('page: the scores page fetches /api/act/plan and shows it', js.includes('/api/act/plan') && js.includes('Your plan'));
 
   try { fs.unlinkSync(tmp); } catch (_) { /* ignore */ }

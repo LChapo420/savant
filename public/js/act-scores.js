@@ -54,7 +54,7 @@ App.mount(async () => {
     const pl = planData;
     if (!pl) return '';
     if (pl.status !== 'ok') return `<div class="card" style="margin-top:18px"><h2>Your plan</h2><p class="muted">${esc(pl.reason || '')}</p></div>`;
-    const rows = pl.sessions.map((s) => `<li class="row-between row-wrap" style="padding:6px 0"><span><strong>${esc(s.date.slice(5))}</strong> · ${KIND[s.kind]}${s.skills.length ? `: ${s.skills.map((k) => esc(k.name)).join(', ')}` : ''}</span>${s.minutes ? `<span class="tiny muted">${s.minutes} min</span>` : ''}</li>`).join('');
+    const rows = pl.sessions.map((s) => `<li class="row-between row-wrap" style="padding:6px 0"><span><strong>${esc(s.date.slice(5))}</strong> · ${KIND[s.kind]}${s.skills.length ? `: ${s.skills.map((k) => esc(k.name)).join(', ')}` : ''}</span>${s.minutes ? `<span class="tiny muted">${s.minutes} min</span>` : ''}${pl.practice_href && (s.kind === 'learn' || s.kind === 'review') ? ` <a class="tiny" href="${esc(pl.practice_href)}">Practise</a>` : ''}</li>`).join('');
     return `<div class="card" style="margin-top:18px"><h2>Your plan</h2>
       <p class="muted">${pl.session_count} sessions of about ${pl.sessions.find((s) => s.minutes)?.minutes || 30} minutes in ${pl.weeks_left} weeks: new skills first, reviews spaced out, only review in the last week, and a rest day before the test. Skills go to your weakest sections first. It is a suggested order, not a predicted score.${pl.unreached ? ` ${pl.unreached} more skills will not fit before your test.` : ''}</p>
       <ul style="list-style:none;padding:0;margin:0">${rows}</ul></div>`;
