@@ -187,7 +187,7 @@ function serve(router) {
   check('a proposed answer gets "why?", not right or wrong', /is it B\?/.test(dock.MODE_NOTE.full));
   const nvPlan = require('../services/providers/nvidia').plan;
   const plan = nvPlan('fast', 'dock_help');
-  check('the dock plan is the 550B model with reasoning off, nothing weaker behind it', /task: 'dock_help'/.test(src) && plan.entries.length === 1 && /ultra-550b/.test(plan.entries[0].model) && plan.entries[0].effort === 'off', plan);
+  check('the dock plan is the 550B model with reasoning off, with GLM 5.3 Flash behind it for when it is busy', /task: 'dock_help'/.test(src) && plan.entries.length === 2 && /ultra-550b/.test(plan.entries[0].model) && plan.entries[0].effort === 'off' && /glm-5\.3-flash/.test(plan.entries[1].model), plan);
   check('the other assist_help callers keep the full light tier', nvPlan('fast', 'assist_help').entries.length > 1);
 
   // Talk mode (owner, 29 Oct 2026: the words were sent before they had finished talking): tap Speak to start and

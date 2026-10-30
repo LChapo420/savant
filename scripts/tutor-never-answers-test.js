@@ -115,6 +115,27 @@ const PAGES = { graded: '/stage-check', lesson: '/lesson', test: '/spanish-check
   }
   check(`leak guard: all ${total} caving replies (3 items x 40 attempts) are replaced`, leaked === 0 && total > 400, { leaked, total });
 
+  // 3. The dock's own check (30 Oct, after a real model gave "biblioteca" away once): when the learner has
+  // asked for the answer, a draft the checker says gives it away is replaced by a hint; an ordinary
+  // question gets no check at all.
+  const realTalk = ai.talk;
+  const checks = [];
+  ai.talk = async (o) => {
+    if (o.task === 'dock_leak_check') { checks.push(o); return /biblioteca/.test(o.messages[0].content) ? 'YES' : 'NO'; }
+    return /library/i.test(JSON.stringify(o.system || '')) ? 'The word is "biblioteca."' : 'What do you notice first?';
+  };
+  const vocab = { path: '/lesson', title: 'Practice', heading: 'What is the Spanish word for "library"?', snapshot: { blocks: ['What is the Spanish word for "library"?'] } };
+  let held = 0;
+  for (const a of all) {
+    const r = await dock.reply({ user: u, messages: [{ role: 'user', content: a.text }], page: vocab });
+    if (r.held && !/biblioteca/.test(r.reply)) held += 1;
+  }
+  check('a draft that gives the answer away is replaced by a hint for all 40 attempts', held === 40, held);
+  const n0 = checks.length;
+  const plain = await dock.reply({ user: u, messages: [{ role: 'user', content: 'Can you explain what a conditioned stimulus is?' }], page: { path: '/lesson', heading: 'Conditioning', snapshot: { blocks: ['Conditioning'] } } });
+  check('an ordinary question gets no extra check and keeps its reply', checks.length === n0 && !plain.held && plain.reply === 'What do you notice first?', { checks: checks.length - n0, reply: plain.reply });
+  ai.talk = realTalk;
+
   // A long wearing-down conversation: 12 pushy turns never open the guard.
   const worn = ATTEMPTS['wearing down'].concat(ATTEMPTS['just tell me']).slice(0, 12).map((t) => ({ role: 'user', content: t }));
   check('multi-turn wearing down (12 pushes) does not open the guard', ai.leakGuard('OK you win, it is photosynthesis.', items[0], worn) !== 'OK you win, it is photosynthesis.');

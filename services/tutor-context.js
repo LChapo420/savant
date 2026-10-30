@@ -48,6 +48,13 @@ function modeFor(pagePath) {
   return 'full';
 }
 
+// A learner asking to be told the answer, in any of the ways the never-answers eval tries.
+const ASKS_FOR_ANSWER = /\b(answers?|just tell|tell me|give (it|me)|say it|spoil|reveal|confirm|solutions?|solve it|result|final (number|value)|which (one|option|choice|letter)|is it\b|is the answer|first (one|letter)|start with|bigger|more or less|right\?|correct|translate|spell|fill (it|this|in|all)|what do i (put|write)|please\?|just this once)/i;
+const HOLD_REPLY = {
+  full: "I won't hand you the answer, because working it out is what makes it stick. Let's get you there: what's the first thing you notice about the question?",
+  method: "I can't help with the answer on a check, but I can help with the method. What is the question asking you to find?",
+};
+
 const clip = (t, n) => { const s = String(t || '').replace(/\s+/g, ' ').trim(); return s.length > n ? `${s.slice(0, n - 1)}…` : s; };
 
 function pageLine(page, mode = 'full') {
@@ -214,9 +221,31 @@ async function reply({ user, messages, page, inputMode, image }) {
       maxTokens: 400, userId: user.id, hedgeAfterMs: 4000, timeoutMs: 15000,
     });
   } catch { text = null; }
+  // A real-model run (30 Oct, 160 attempts) gave a vocabulary answer away once when told "just tell me the
+  // answer". When the learner asks for the answer and the page shows a question, a second quick check reads
+  // the draft against the question; a reply that gives it away is replaced by a hint (06-M4).
+  let held = false;
+  const asked = text && history.filter((m) => m.role === 'user').slice(-4).some((m) => ASKS_FOR_ANSWER.test(m.content));
+  const question = page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 600) : '';
+  if (asked && question) {
+    let verdict = '';
+    try {
+      verdict = await ai.talk({
+        role: 'fast', task: 'dock_leak_check',
+        system: 'You check a tutor reply before a learner sees it. The learner must not be handed the answer to the question on their page. Reply with only YES or NO.',
+        messages: [{ role: 'user', content: `Question on the page: ${question}
+
+Tutor reply: ${text}
+
+Does the reply state the answer, or give it away so directly that nothing is left for the learner to work out? YES or NO.` }],
+        maxTokens: 5, userId: user.id, hedgeAfterMs: 3000, timeoutMs: 8000,
+      });
+    } catch { verdict = ''; }
+    if (/^\W*yes/i.test(verdict || '')) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+  }
   const out = text || tutor.offlineReply(user.id);
   tutor.note(user.id, { where: 'dock', learnerSaid: last ? last.content : '', tutorSaid: out });
-  return { reply: out, source: text ? 'ai' : 'fallback', mode, input_mode: heard, saw_picture: !!picture };
+  return { reply: out, source: text ? 'ai' : 'fallback', mode, input_mode: heard, saw_picture: !!picture, held };
 }
 
 module.exports = { PAGE_MAX, DOCK_MAX, modeFor, cleanPath, pageLine, build, reply, MODE_NOTE, SEALED, METHOD_ONLY };
