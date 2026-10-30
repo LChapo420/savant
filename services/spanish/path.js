@@ -33,10 +33,17 @@ const curriculum = require('../../config/curriculum');
 const mastery = require('../mastery');
 const fit = require('./goal-fit');
 
-const UNITS = [...require('../../content/spanish-path/units-g1'), ...require('../../content/spanish-path/units-g2')];
+// Grades 3 and 4 (units-g3.js, units-g4.js) were written for the skill catch-up
+// (services/spanish/catch-up.js, scripts/spanish-catchup-content.js); a grade whose
+// file is not there yet simply has no units, and its levels go to the ordinary session.
+const optionalUnits = (name) => { try { return require(`../../content/spanish-path/${name}`); } catch (err) { if (err.code !== 'MODULE_NOT_FOUND') throw err; return []; } };
+const UNITS = [...require('../../content/spanish-path/units-g1'), ...require('../../content/spanish-path/units-g2'), ...optionalUnits('units-g3'), ...optionalUnits('units-g4')];
 const GLOSS = require('../../content/spanish-path/gloss');
 // Read only. SPANISH_PREWRITTEN_DIR points elsewhere (the test uses a temporary folder).
 const PREWRITTEN_DIR = () => process.env.SPANISH_PREWRITTEN_DIR || path.join(__dirname, '..', '..', 'content', 'spanish-prewritten');
+
+// eslint-disable-next-line global-require
+const catchUp = () => require('./catch-up');
 
 const unitKey = (gradeId, unit) => `${gradeId}|${unit}`;
 const UNIT_BY_KEY = new Map(UNITS.map((u) => [unitKey(u.grade, u.unit), u]));
@@ -165,7 +172,13 @@ function supports(gradeId, level) {
   const slot = slotOf(row);
   if (!slot) return false;
   if (slot === 'checkpoint') return checkpointUnits(row, gradeId).length > 0;
-  return UNIT_BY_KEY.has(unitKey(gradeId, row.unit));
+  const unit = UNIT_BY_KEY.get(unitKey(gradeId, row.unit));
+  if (!unit) return false;
+  // A unit can ship without a role-play card, or with a short scene, when a checker
+  // rejected them (scripts/spanish-catchup-content.js): those levels go to the ordinary session.
+  if (slot === 'conversation') return !!unit.convo;
+  if (['story', 'input', 'listening_lab', 'dictation'].includes(slot)) return !!(unit.scene && unit.scene.lines.length >= 4);
+  return true;
 }
 
 // ── the review queue (item level) ──────────────────────────────────────────
@@ -445,7 +458,7 @@ function matchPairs(phrases, rand) {
  * matching the level's own topic first, ordered by the profile. Old: due
  * reviews first, then weak spots, then phrases met most recently.
  */
-function choosePhrases({ userId, units, row, profileId, slot, now }) {
+function choosePhrases({ userId, units, row, profileId, slot, now, mixIn = [] }) {
   const reviewed = new Map(reviewRows(userId).map((r) => [r.pid, r]));
   const unitPhrases = units.flatMap((u) => u.phrases.map((p) => PHRASES.get(p.id)));
   const topic = units.flatMap((u) => u.topics || []).find((t) => t.match.test(row.title));
@@ -460,15 +473,16 @@ function choosePhrases({ userId, units, row, profileId, slot, now }) {
   const recent = [...reviewed.values()].sort((a, b) => Date.parse(b.last_at) - Date.parse(a.last_at)).map((r) => r.pid);
   const inGrade = (pid) => { const p = PHRASES.get(pid); return p && units.some((u) => u.grade === p.grade); };
   const oldIds = [...new Set([...q.due, ...q.weak, ...unitPhrases.filter((p) => reviewed.has(p.id)).map((p) => p.id), ...recent.filter(inGrade)])];
-  let old = oldIds.map((id) => PHRASES.get(id)).filter(Boolean).filter((p) => !fresh.includes(p));
+  // Phrases from skills the catch-up has already taught come first among the old ones (interleaving).
+  let old = [...new Set([...mixIn, ...oldIds])].map((id) => PHRASES.get(id)).filter(Boolean).filter((p) => !fresh.includes(p));
   if (!fresh.length && !old.length) fresh = fit.orderPhrases(unitPhrases, profileId).slice(0, Math.max(nNew, 4));
   if (!old.length && ['review', 'checkpoint'].includes(slot)) old = fit.orderPhrases(unitPhrases, profileId);
   return { fresh, old: old.slice(0, 10), unitPhrases, due: new Set(q.due), weak: new Set(q.weak) };
 }
 
-function buildLessonItems({ userId, units, row, profileId, slot, seed, now }) {
+function buildLessonItems({ userId, units, row, profileId, slot, seed, now, mixIn = [] }) {
   const rand = rng(seed);
-  const { fresh, old, unitPhrases, due, weak } = choosePhrases({ userId, units, row, profileId, slot, now });
+  const { fresh, old, unitPhrases, due, weak } = choosePhrases({ userId, units, row, profileId, slot, now, mixIn });
   // Distractors come from this grade's units so far plus everything in this unit.
   const pool = [...new Map([...unitPhrases, ...old, ...fresh].map((p) => [p.id, p])).values()];
   const gradeUnits = UNITS.filter((u) => u.grade === units[0].grade);
@@ -609,7 +623,7 @@ function conversationLevel(unit) {
  * Build the level for this learner. Returns the full level (answers in it);
  * routes send publicLevel() of it.
  */
-function buildLevel({ userId, gradeId, level, seed, now = Date.now() }) {
+function buildLevel({ userId, gradeId, level, seed, now = Date.now(), mixIn = [] }) {
   const grade = gradeOf(gradeId);
   const row = rowAt(grade, level);
   if (!row) return null;
@@ -635,7 +649,7 @@ function buildLevel({ userId, gradeId, level, seed, now = Date.now() }) {
     case 'conversation': body = conversationLevel(unit); break;
     case 'sprint': body = sprintLevel(unit, userId, profile.id); break;
     default: {
-      const built = buildLessonItems({ userId, units, row, profileId: profile.id, slot, seed, now });
+      const built = buildLessonItems({ userId, units, row, profileId: profile.id, slot, seed, now, mixIn });
       const reviewish = slot === 'review' || slot === 'checkpoint';
       body = {
         engine: 'lesson',
@@ -669,7 +683,9 @@ function pruneRuns(userId) {
 function startRun({ user, enrollment, level }) {
   const attempt = db.find('es_path_runs', (r) => r.user_id === user.id && r.enrollment_id === enrollment.id && r.level === level).length + 1;
   const runId = `${RUN_PREFIX}${crypto.randomBytes(9).toString('hex')}`;
-  const built = buildLevel({ userId: user.id, gradeId: enrollment.grade_id, level, seed: `${user.id}|${enrollment.grade_id}|${level}|${attempt}` });
+  // A catch-up block's lesson recycles phrases from the skills already caught up (services/spanish/catch-up.js).
+  const mixIn = catchUp().mixInFor(user.id, enrollment.grade_id, level);
+  const built = buildLevel({ userId: user.id, gradeId: enrollment.grade_id, level, seed: `${user.id}|${enrollment.grade_id}|${level}|${attempt}`, mixIn });
   if (!built) return null;
   const lvl = { ...built, id: runId };
   pruneRuns(user.id);
@@ -829,6 +845,11 @@ function finishRun({ user, runId, client = {} }) {
     queue: queueFor(user.id),
     session_id: session.id,
   };
+  // A level of a catch-up block: ticked off there, and the finish card says where the catch-up stands.
+  try {
+    const cu = catchUp().onRunFinished({ userId: user.id, gradeId: r.grade_id, level: r.level, passed });
+    if (cu) outcome.catch_up = cu;
+  } catch (err) { console.warn(`spanish path: catch-up update failed: ${err.message}`); }
   db.update('es_path_runs', r.id, { finished_at: new Date().toISOString(), outcome, client: { hits: client.hits, total: client.total } });
   return outcome;
 }

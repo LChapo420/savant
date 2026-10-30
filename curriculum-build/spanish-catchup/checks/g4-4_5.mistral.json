@@ -1,0 +1,25 @@
+{
+ "unit": "Unit 4.5",
+ "grade": "spanish_grade_04_time_food_shopping_and_core_verbs",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "P16",
+   "problem": "Ambiguous pronoun 'Le' in '¿Le gusta la fruta?' does not match the English 'Do you like fruit?' (should be '¿Te gusta la fruta?').",
+   "fix": "¿Te gusta la fruta?"
+  },
+  {
+   "id": "C2",
+   "problem": "Incorrect reply choice 'Sí, me gusta.' for '¿Te gustan los tacos?' (should be 'Sí, me gustan.').",
+   "fix": "Sí, me gustan."
+  },
+  {
+   "id": "C3",
+   "problem": "Incorrect reply choice 'Me encantan el café.' (wrong gender/number agreement: 'el café' is singular, should be 'Me encanta el café.').",
+   "fix": "Me encanta el café."
+  }
+ ],
+ "at": "2026-10-30T00:01:38.574Z"
+}

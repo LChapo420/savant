@@ -632,6 +632,12 @@ App.mount(async () => {
 
   async function startCatchUp(result) {
     host.innerHTML = '<div class="loading"><span class="spinner"></span>Picking the questions</div>';
+    // Spanish checks each skill of each grade on its own page (services/spanish/catch-up.js).
+    if (trackId === 'spanish') {
+      try { await chooseMain(result); } catch (err) { App.toast(err.message, 'error'); }
+      location.href = '/spanish/catch-up';
+      return;
+    }
     let reply;
     try {
       await chooseMain(result);
@@ -805,6 +811,8 @@ App.mount(async () => {
    */
 
   async function showPlan(result, route0, known0) {
+    // Spanish's catch-up plan is its own page, skill by skill.
+    if (trackId === 'spanish') { location.href = '/spanish/catch-up'; return; }
     setStep('plan');
     host.setAttribute('data-subject', trackId);
     let route = route0;

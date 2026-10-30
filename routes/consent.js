@@ -402,6 +402,7 @@ const KNOWN_COLLECTIONS = [
   'skill_records', 'study_sessions', 'enforcers', 'learner_goals', 'tutor_memory', 'tutor_modes', 'es_path_runs', 'es_review',
   'act_profiles', 'act_scores', 'act_study', 'spanish_study', 'spanish_study_checkins', 'spanish_study_tests', 'materials', 'material_courses', 'material_progress', 'material_packs', 'material_cards', 'material_podcasts', 'material_audio_jobs',
   'tutor_facts', 'tutor_strategies',
+  'es_catch_up', 'catchup_units',
 ];
 function collectionNames() {
   return KNOWN_COLLECTIONS.filter((name) => {

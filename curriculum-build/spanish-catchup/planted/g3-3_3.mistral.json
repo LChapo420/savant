@@ -1,0 +1,58 @@
+{
+ "unit": "Unit 3.3",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "planted": [
+  {
+   "id": "P1",
+   "kind": "gender",
+   "before": "el libro",
+   "after": "la libro",
+   "caught": true
+  },
+  {
+   "id": "P4",
+   "kind": "conjugation",
+   "before": "las mesas",
+   "after": "lamos mesas",
+   "caught": true
+  },
+  {
+   "id": "P2",
+   "kind": "meaning",
+   "before": "the table",
+   "after": "a table",
+   "caught": true
+  },
+  {
+   "id": "F1",
+   "kind": "key",
+   "before": "un",
+   "after": "una",
+   "caught": true
+  }
+ ],
+ "other_rejects": [
+  {
+   "id": "P7",
+   "problem": "'unas amigas' and 'unos amigos' are not interchangeable for the same meaning (gender mismatch)",
+   "fix": "unos amigos / unas amigas (separate options)"
+  },
+  {
+   "id": "C1",
+   "problem": "incorrect options: 'un mesa' (wrong gender) and 'unas mesa' (wrong number)",
+   "fix": "Hay una mesa."
+  },
+  {
+   "id": "C2",
+   "problem": "incorrect options: 'treinta y cinco libro' (missing plural) and 'un treinta y cinco libros' (wrong article usage)",
+   "fix": "Necesito treinta y cinco libros."
+  },
+  {
+   "id": "C3",
+   "problem": "incorrect options: 'una profesor' (wrong gender) and 'son un profesor' (wrong verb form)",
+   "fix": "Sí, es un profesor."
+  }
+ ],
+ "at": "2026-10-30T00:12:53.138Z"
+}

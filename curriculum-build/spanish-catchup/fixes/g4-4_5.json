@@ -1,0 +1,59 @@
+{
+ "unit": "Unit 4.5",
+ "rejected": {
+  "P16": [
+   {
+    "checker": "mistral",
+    "problem": "Ambiguous pronoun 'Le' in '¿Le gusta la fruta?' does not match the English 'Do you like fruit?' (should be '¿Te gusta la fruta?').",
+    "fix": "¿Te gusta la fruta?"
+   }
+  ],
+  "C2": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect reply choice 'Sí, me gusta.' for '¿Te gustan los tacos?' (should be 'Sí, me gustan.').",
+    "fix": "Sí, me gustan."
+   }
+  ],
+  "C3": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect reply choice 'Me encantan el café.' (wrong gender/number agreement: 'el café' is singular, should be 'Me encanta el café.').",
+    "fix": "Me encanta el café."
+   }
+  ],
+  "P4": [
+   {
+    "checker": "qwen",
+    "problem": "The English alternative is duplicated ('My friend is thirsty.' / 'My friend is thirsty.').",
+    "fix": "'My friend is thirsty.'"
+   }
+  ]
+ },
+ "rewritten": {
+  "P16": {
+   "es": "¿Te gusta la fruta?",
+   "en": [
+    "Do you like fruit?"
+   ],
+   "tier": 2,
+   "skill": "es_questions",
+   "topic": "asking_about_likes_te_gusta_"
+  },
+  "P4": {
+   "es": "Mi amigo tiene sed.",
+   "en": [
+    "My friend is thirsty."
+   ],
+   "tier": 2,
+   "skill": "es_present_erir",
+   "topic": "hunger_and_thirst_tener_hamb"
+  }
+ },
+ "dropped": [
+  "C2",
+  "C3"
+ ],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:17:50.070Z"
+}

@@ -1,0 +1,60 @@
+{
+ "unit": "Unit 4.2",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "planted": [
+  {
+   "id": "P5",
+   "kind": "accent",
+   "before": "¿Trabajas aquí?",
+   "after": "¿Trabajas aqui?",
+   "caught": true
+  },
+  {
+   "id": "P10",
+   "kind": "gender",
+   "before": "Son las tres.",
+   "after": "Son los tres.",
+   "caught": false
+  },
+  {
+   "id": "P1",
+   "kind": "conjugation",
+   "before": "Quiero comer.",
+   "after": "Quieras comer.",
+   "caught": true
+  },
+  {
+   "id": "P2",
+   "kind": "meaning",
+   "before": "Can you come?",
+   "after": "I don't eat meat.",
+   "caught": true
+  },
+  {
+   "id": "F1",
+   "kind": "key",
+   "before": "comer",
+   "after": "come",
+   "caught": true
+  }
+ ],
+ "other_rejects": [
+  {
+   "id": "S3",
+   "problem": "Unnatural phrasing ('a las tres' should be 'a las tres' or 'a la tres' is incorrect; 'Trabajo a las tres' is correct but 'A las cinco no puedo' is unnatural without context)",
+   "fix": "A las cinco no puedo. Trabajo a las tres."
+  },
+  {
+   "id": "F3",
+   "problem": "Missing 'y' before 'media' in the sentence",
+   "fix": "Son las tres y media."
+  },
+  {
+   "id": "C2",
+   "problem": "Incorrect key choice ('Prefiero a las cinco' should be 'Prefiero las cinco' or 'Prefiero ir a las cinco')",
+   "fix": "No puedo. Prefiero las cinco."
+  }
+ ],
+ "at": "2026-10-30T00:13:11.227Z"
+}

@@ -1,0 +1,35 @@
+{
+ "unit": "Unit 3.10",
+ "grade": "advanced",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 36,
+ "rejects": [
+  {
+   "id": "P1",
+   "problem": "The English translation 'What?' is incorrect for '¿Cómo?'.",
+   "fix": "Remove 'What?' from the English translations."
+  },
+  {
+   "id": "F4",
+   "problem": "The option 'lapiz' is missing an accent, and 'lápíz' has an incorrect accent placement.",
+   "fix": "Remove 'lapiz' and 'lápíz' from the choices."
+  },
+  {
+   "id": "C1",
+   "problem": "The reply 'Yo también.' is incorrect as a response to 'No tengo teléfono.' in this context.",
+   "fix": "Remove 'Yo también.' from the choices."
+  },
+  {
+   "id": "C2",
+   "problem": "The reply 'No, tampoco.' is incorrect as a response to '¿Cuántos años tienes?'.",
+   "fix": "Remove 'No, tampoco.' from the choices."
+  },
+  {
+   "id": "C3",
+   "problem": "The reply 'Yo también.' is incorrect as a response to '¿Quién es ella?'.",
+   "fix": "Remove 'Yo también.' from the choices."
+  }
+ ],
+ "at": "2026-10-30T00:01:01.272Z"
+}

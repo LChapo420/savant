@@ -1,0 +1,30 @@
+{
+ "unit": "Unit 3.6",
+ "grade": "advanced",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 36,
+ "rejects": [
+  {
+   "id": "P8",
+   "problem": "Missing article 'un' before 'coche'.",
+   "fix": "¿Tienes un coche?"
+  },
+  {
+   "id": "C2",
+   "problem": "Incorrect option 'Sí, tengo dos hermana.' (missing plural 's').",
+   "fix": "Sí, tengo dos hermanas."
+  },
+  {
+   "id": "C3",
+   "problem": "Incorrect options 'Mis amigos es simpáticos.' (wrong verb form) and 'Mis amigo son simpático.' (wrong gender/number).",
+   "fix": "Remove incorrect options or correct them to 'Mis amigos son simpáticos.'"
+  },
+  {
+   "id": "F4",
+   "problem": "Incorrect options 'pesas' and 'peso' (wrong verb form for 'el perro').",
+   "fix": "Correct options to 'pesa' only or add 'el perro pesa' as the full correct form."
+  }
+ ],
+ "at": "2026-10-30T00:00:52.197Z"
+}

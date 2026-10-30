@@ -1,0 +1,25 @@
+{
+ "unit": "Unit 3.7",
+ "grade": "advanced",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 36,
+ "rejects": [
+  {
+   "id": "S3",
+   "problem": "The name 'Diego' is used instead of 'Rosa' in the question, which does not match the context (Rosa is the one speaking in S2).",
+   "fix": "¿De dónde eres, Rosa?"
+  },
+  {
+   "id": "F1",
+   "problem": "The [KEY] 'estadounidense' is correct, but the full sentence 'Soy estadounidense.' (from P1) is a better match for 'I'm American.' The fill should align with the phrase list.",
+   "fix": "Soy ___ . [KEY] estadounidense"
+  },
+  {
+   "id": "C1",
+   "problem": "The [KEY] 'Soy estadounidense.' is correct, but 'Es estadounidense.' is also a grammatically correct reply (though less natural in this context). The task should ensure only one correct answer.",
+   "fix": "Remove 'Es estadounidense.' from choices or clarify context to exclude it."
+  }
+ ],
+ "at": "2026-10-30T00:00:52.846Z"
+}

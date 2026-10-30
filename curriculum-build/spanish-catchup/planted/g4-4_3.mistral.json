@@ -1,0 +1,55 @@
+{
+ "unit": "Unit 4.3",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "planted": [
+  {
+   "id": "P1",
+   "kind": "accent",
+   "before": "A las ocho de la mañana.",
+   "after": "A las ocho de la manana.",
+   "caught": false
+  },
+  {
+   "id": "P3",
+   "kind": "gender",
+   "before": "La clase empieza a las nueve.",
+   "after": "La clase empieza a los nueve.",
+   "caught": false
+  },
+  {
+   "id": "P4",
+   "kind": "conjugation",
+   "before": "Son las dos de la tarde.",
+   "after": "Son lamos dos de la tarde.",
+   "caught": true
+  },
+  {
+   "id": "P2",
+   "kind": "meaning",
+   "before": "What time does it start?",
+   "after": "On Monday I have class.",
+   "caught": true
+  },
+  {
+   "id": "F1",
+   "kind": "key",
+   "before": "empieza",
+   "after": "empiezan",
+   "caught": true
+  }
+ ],
+ "other_rejects": [
+  {
+   "id": "F4",
+   "problem": "Wrong article: 'Son las dos' requires 'las', but the sentence should start with 'Son las' for time, not 'Son ___'.",
+   "fix": "Change [KEY] to 'las' and ensure the full sentence is 'Son las dos de la tarde.' (or remove the fill and use the full phrase)."
+  },
+  {
+   "id": "C2",
+   "problem": "Incorrect reply choice: 'Es el primero de mayo' should not include 'Es' in this context (natural reply would be 'El primero de mayo').",
+   "fix": "Change [KEY] to 'El primero de mayo.'"
+  }
+ ],
+ "at": "2026-10-30T00:13:18.892Z"
+}

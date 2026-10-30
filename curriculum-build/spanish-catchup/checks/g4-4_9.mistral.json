@@ -1,0 +1,30 @@
+{
+ "unit": "Unit 4.9",
+ "grade": "spanish_grade_04_time_food_shopping_and_core_verbs",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "F1",
+   "problem": "The KEY 'Este' is incorrect because 'pan' is masculine, but the sentence already starts with 'Este', making the fill redundant. The correct fill should be empty or the sentence should be adjusted.",
+   "fix": "Remove the fill or change the sentence to '___ pan es fresco.' with KEY 'Este'."
+  },
+  {
+   "id": "F4",
+   "problem": "The KEY 'unos' is correct, but the English meaning 'It's about twenty pesos.' does not match the Spanish 'Son unos veinte pesos.' which means 'They are about twenty pesos.'",
+   "fix": "Change the English meaning to 'They are about twenty pesos.' or adjust the Spanish to 'Es unos veinte pesos.' (though 'Es' is not idiomatic with 'unos')."
+  },
+  {
+   "id": "C1",
+   "problem": "The option 'No, la farmacia vende pan.' is incorrect because pharmacies do not sell bread, but the KEY is correct. However, the distractor is unrealistic and could mislead learners.",
+   "fix": "Replace the distractor with a plausible but incorrect option like 'No, voy a la carnicería.'"
+  },
+  {
+   "id": "C3",
+   "problem": "The KEY 'Sí, cuesta demasiado.' is correct, but the option 'Sí, hay mucha fruta.' is also a plausible response to the statement about the price of apples, making it ambiguous.",
+   "fix": "Replace 'Sí, hay mucha fruta.' with a clearly incorrect option like 'No, el pan es barato.'"
+  }
+ ],
+ "at": "2026-10-30T00:01:54.288Z"
+}

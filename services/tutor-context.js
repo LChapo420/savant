@@ -28,7 +28,9 @@ const DOCK_MAX = 3600;
 const PAGE_MAX = 500;
 
 const SEALED = [/^\/spanish-check/, /^\/spanish-listening/];
-const METHOD_ONLY = [/^\/placement/, /^\/subject-placement/, /^\/stage-check/, /^\/skip/, /^\/enforcer/, /^\/review/, /^\/my-material-study/, /^\/my-material-test/];
+const METHOD_ONLY = [/^\/placement/, /^\/subject-placement/, /^\/stage-check/, /^\/skip/, /^\/enforcer/, /^\/review/, /^\/my-material-study/, /^\/my-material-test/,
+  // The Spanish catch-up's skill check and final check are checks (services/spanish/catch-up.js).
+  /^\/spanish\/catch-up/, /^\/catchup/];
 
 function cleanPath(p) {
   let path = String(p || '').split(/[?#]/)[0];

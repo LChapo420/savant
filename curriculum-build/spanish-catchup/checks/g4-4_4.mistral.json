@@ -1,0 +1,35 @@
+{
+ "unit": "Unit 4.4",
+ "grade": "spanish_grade_04_time_food_shopping_and_core_verbs",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 36,
+ "rejects": [
+  {
+   "id": "P1",
+   "problem": "Unnatural Spanish: 'tapa de tortilla' is not a common way to refer to a tortilla tapa. 'Una tortilla, por favor' or 'Una ración de tortilla, por favor' would be more natural.",
+   "fix": "Una tortilla, por favor."
+  },
+  {
+   "id": "P4",
+   "problem": "Verb form error: 'Pedimos' is present tense, but the English suggests future ('We'll have').",
+   "fix": "Vamos a pedir media ración."
+  },
+  {
+   "id": "P6",
+   "problem": "Regional variation: 'jugo de naranja' is more common in Latin America, but 'zumo de naranja' is the standard in Spain. However, since regional variation is allowed, this is not a rejection. But 'el jugo' should be 'el zumo' for consistency with Spain Spanish.",
+   "fix": "el zumo de naranja"
+  },
+  {
+   "id": "S3",
+   "problem": "Missing article: 'jugo de naranja' should be 'el jugo de naranja' for consistency with the rest of the scene.",
+   "fix": "Hay huevos, pan y el jugo de naranja."
+  },
+  {
+   "id": "F3",
+   "problem": "Incorrect article: 'La manzana es una fruta' is correct, but the fill should not require 'La' as it is part of the sentence structure. The fill should be just the noun.",
+   "fix": "___ es una fruta."
+  }
+ ],
+ "at": "2026-10-30T00:01:35.431Z"
+}

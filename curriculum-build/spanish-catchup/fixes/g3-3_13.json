@@ -1,0 +1,67 @@
+{
+ "unit": "Unit 3.13",
+ "rejected": {
+  "P15": [
+   {
+    "checker": "mistral",
+    "problem": "Missing article before 'tenista español'.",
+    "fix": "Rafael Nadal es un tenista español."
+   }
+  ],
+  "S7": [
+   {
+    "checker": "mistral",
+    "problem": "Missing article before 'cantante'.",
+    "fix": "Mi madre es de Colombia y es una cantante."
+   }
+  ],
+  "F2": [
+   {
+    "checker": "mistral",
+    "problem": "The full sentence 'Tengo dos hermanos.' can mean 'I have two brothers.' or 'I have two siblings.' but the choices do not include 'hermanas' for 'sisters' as a possible correct answer, though the English only specifies 'brothers'.",
+    "fix": "Add 'hermanas' as a correct choice or clarify the English to strictly mean 'brothers'."
+   }
+  ],
+  "S1": [
+   {
+    "checker": "qwen",
+    "problem": "The English translation 'a family's profile' implies the profile belongs to a specific family, whereas the Spanish 'el perfil de una familia' means a profile about/describing a family (an indefinite one).",
+    "fix": "Mara and Tomás are completing a family profile."
+   }
+  ]
+ },
+ "rewritten": {
+  "P15": {
+   "es": "Rafael Nadal es un tenista español.",
+   "en": [
+    "Rafael Nadal is a Spanish tennis player.",
+    "Rafael Nadal is a tennis player from Spain."
+   ],
+   "tier": 3,
+   "skill": "es_ser_estar",
+   "topic": "famous_hispanic_figures"
+  },
+  "S7": {
+   "who": "tomas",
+   "es": "Mi madre es de Colombia y es una cantante.",
+   "en": "My mother is from Colombia and she is a singer."
+  },
+  "F2": {
+   "before": "Tengo dos ",
+   "after": ".",
+   "choices": [
+    "hermano",
+    "hermanos",
+    "hermana",
+    "hermanas"
+   ],
+   "answer": 1,
+   "en": "I have two brothers."
+  }
+ },
+ "dropped": [
+  "S1"
+ ],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:16:08.963Z"
+}

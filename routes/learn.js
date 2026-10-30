@@ -8,6 +8,7 @@ const db = require('../config/db');
 const curriculum = require('../config/curriculum');
 const sessions = require('../services/sessions');
 const lessons = require('../services/lessons');
+const catchupUnits = require('../services/catchup-units');
 const essays = require('../services/essays');
 const mastery = require('../services/mastery');
 const learnerPath = require('../services/learner-path');
@@ -274,7 +275,9 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
     if (!Number.isInteger(atLevel) || atLevel < 1 || atLevel > grade.pathLength) {
       return res.status(400).json({ error: 'No such level.' });
     }
-    const known = (learnerPath.unitAt(enrollment, atLevel, grade) || {}).status === 'known';
+    // A level of a catch-up block (services/catchup-units.js) is the learner's to open.
+    const known = (learnerPath.unitAt(enrollment, atLevel, grade) || {}).status === 'known'
+      || catchupUnits.allowsLevel(req.user.id, enrollment, atLevel);
     if (!mayOpenLevel(atLevel, enrollment.current_level, canSkip(req.user), known)) {
       return res.status(403).json({ error: 'That level is not open yet.' });
     }
@@ -750,6 +753,10 @@ router.post('/sessions/:id/finish', requireAuth, async (req, res) => {
     coach_used: false,
   }));
 
+  // A level played for a catch-up block ticks it off when it is passed (the master bar).
+  if (session.track_id && session.grade_id && outcome.accuracy >= curriculum.PASS_MARKS.master) {
+    for (const lv of sessions.workedLevels(session)) catchupUnits.onLevelPassed({ userId: req.user.id, trackId: session.track_id, gradeId: session.grade_id, level: Number(lv) });
+  }
   if (session.enrollment_id && !session.preview) aheadFor(req.user, session.enrollment_id, 'session finished');
   res.json({
     accuracy: outcome.accuracy,

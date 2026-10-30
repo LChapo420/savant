@@ -1,0 +1,35 @@
+{
+ "unit": "Unit 3.2",
+ "grade": "advanced",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 36,
+ "rejects": [
+  {
+   "id": "S3",
+   "problem": "The English translation does not match the Spanish. 'Una lista en singular' refers to the list containing singular nouns, not 'one list in singular'.",
+   "fix": "How nice! A list with singular nouns."
+  },
+  {
+   "id": "S7",
+   "problem": "The English translation does not match the Spanish. 'El problema es pequeño' means 'The problem is small', but the context implies 'There is a small problem'.",
+   "fix": "Very good! There is a small problem: both lists are correct."
+  },
+  {
+   "id": "F3",
+   "problem": "The full sentence with the KEY 'lápices' is 'Tengo tres lápices.', which is correct, but the English given is 'I have three pencils.' The Spanish sentence is missing the period at the end.",
+   "fix": "Tengo tres lápices."
+  },
+  {
+   "id": "F4",
+   "problem": "The full sentence with the KEY 'canciones' is 'Dos canciones son bonitas.', which is correct, but the English given is 'Two songs are nice.' The Spanish sentence is missing the period at the end.",
+   "fix": "Dos canciones son bonitas."
+  },
+  {
+   "id": "C2",
+   "problem": "The reply choice 'Dos casa.' is incorrect due to missing 's' for plural and missing period. The other incorrect choices are also unnatural or incorrect, but the KEY is correct.",
+   "fix": "Dos casas."
+  }
+ ],
+ "at": "2026-10-30T00:00:34.878Z"
+}

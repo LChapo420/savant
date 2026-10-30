@@ -1,0 +1,50 @@
+{
+ "unit": "Unit 4.6",
+ "grade": "spanish_grade_04_time_food_shopping_and_core_verbs",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "P2",
+   "problem": "Unnatural Spanish for a customer ordering; 'Me da' is too direct (imperative) for polite requests. Native speakers would use 'Me trae' or 'Quisiera' instead.",
+   "fix": "Me trae un café, por favor."
+  },
+  {
+   "id": "S7",
+   "problem": "Same as P2: 'Me da un café' is unnatural for a customer's polite request.",
+   "fix": "Me trae un café, por favor."
+  },
+  {
+   "id": "F2",
+   "problem": "The [KEY] 'da' produces 'Me da un café, por favor.' which is unnatural for a customer's polite request.",
+   "fix": "Change [KEY] to 'trae' or rephrase the sentence to 'Quisiera un café, por favor.'"
+  },
+  {
+   "id": "R1",
+   "problem": "Incorrect article/gender agreement: 'Las entradas son ensalada' should be 'La entrada es ensalada' or 'Las entradas son ensaladas'.",
+   "fix": "Las entradas son ensaladas."
+  },
+  {
+   "id": "C1",
+   "problem": "Incorrect option: 'La cuenta es azul.' is nonsensical in this context (though grammatically correct).",
+   "fix": "Replace with a plausible but incorrect option like 'Quisiera agua, por favor.'"
+  },
+  {
+   "id": "C2",
+   "problem": "Incorrect option: 'Sí, soy un postre.' is grammatically wrong (should be 'Sí, quiero un postre.') and nonsensical.",
+   "fix": "Replace with 'Sí, quiero un postre.'"
+  },
+  {
+   "id": "C3",
+   "problem": "Incorrect option: 'No, el café es pequeña.' has wrong gender agreement ('pequeña' should be 'pequeño' for 'café').",
+   "fix": "No, el café es pequeño."
+  },
+  {
+   "id": "V1",
+   "problem": "Target 'Para mí, el plato vegetariano.' is not used in the role-play scenario described (learner is asked to order soup and coffee, then ask for the bill).",
+   "fix": "Remove 'Para mí, el plato vegetariano.' from targets or adjust the task to include it."
+  }
+ ],
+ "at": "2026-10-30T00:01:40.603Z"
+}

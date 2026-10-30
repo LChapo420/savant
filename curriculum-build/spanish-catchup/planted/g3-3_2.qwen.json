@@ -1,0 +1,50 @@
+{
+ "unit": "Unit 3.2",
+ "checker": "qwen",
+ "model": "qwen/qwen3.8-max:free",
+ "planted": [
+  {
+   "id": "P6",
+   "kind": "accent",
+   "before": "la canción",
+   "after": "la cancion",
+   "caught": true
+  },
+  {
+   "id": "P1",
+   "kind": "gender",
+   "before": "el libro",
+   "after": "la libro",
+   "caught": true
+  },
+  {
+   "id": "P3",
+   "kind": "conjugation",
+   "before": "el amigo",
+   "after": "el amigas",
+   "caught": true
+  },
+  {
+   "id": "P2",
+   "kind": "meaning",
+   "before": "the house",
+   "after": "the city",
+   "caught": true
+  },
+  {
+   "id": "F1",
+   "kind": "key",
+   "before": "libro",
+   "after": "casa",
+   "caught": true
+  }
+ ],
+ "other_rejects": [
+  {
+   "id": "Q1",
+   "problem": "The [KEY] option says 'A book, a house and a day' but the Spanish line uses definite articles ('el libro, la casa y el día'), meaning 'the book, the house and the day'.",
+   "fix": "[KEY] \"The book, the house and the day\""
+  }
+ ],
+ "at": "2026-10-30T00:12:50.367Z"
+}

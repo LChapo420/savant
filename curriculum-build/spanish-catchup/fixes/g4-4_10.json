@@ -1,0 +1,96 @@
+{
+ "unit": "Unit 4.10",
+ "rejected": {
+  "P8": [
+   {
+    "checker": "mistral",
+    "problem": "Unnatural Spanish no native speaker would say.",
+    "fix": "¿Cuál es el precio más bajo?"
+   },
+   {
+    "checker": "qwen",
+    "problem": "The Spanish phrase '¿Cuánto es lo menos?' is unnatural; native speakers say '¿Cuánto es lo mínimo?', '¿Cuál es el precio más bajo?' or simply '¿Cuánto cuesta?'. No native speaker would use this wording.",
+    "fix": "Replace with a natural expression such as '¿Cuál es el precio más bajo?' or remove the item."
+   }
+  ],
+  "P9": [
+   {
+    "checker": "mistral",
+    "problem": "Wrong gender agreement in accepted alternative.",
+    "fix": "Remove 'Es muy cara.' as an accepted alternative."
+   }
+  ],
+  "S8": [
+   {
+    "checker": "mistral",
+    "problem": "Wrong verb form (present instead of future).",
+    "fix": "Voy a comprar fruta en el mercado y zapatos en la tienda."
+   }
+  ],
+  "F2": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect full sentence meaning in the task description (missing 'going to').",
+    "fix": "full sentence means 'I am going to buy fruit.'"
+   }
+  ],
+  "C3": [
+   {
+    "checker": "mistral",
+    "problem": "Unnatural reply choice (should match the question's context).",
+    "fix": "¡Sí, voy contigo!"
+   }
+  ]
+ },
+ "rewritten": {
+  "P8": {
+   "es": "¿Cuál es el precio más bajo?",
+   "en": [
+    "What's the lowest price?"
+   ],
+   "tier": 2,
+   "skill": "es_questions",
+   "topic": "markets_bargaining_and_shopp"
+  },
+  "P9": {
+   "es": "Es muy caro.",
+   "en": [
+    "It's very expensive.",
+    "It is very expensive."
+   ],
+   "alt": [],
+   "tier": 1,
+   "skill": "es_ser_estar",
+   "topic": "markets_bargaining_and_shopp"
+  },
+  "S8": {
+   "who": "mara",
+   "es": "Perfecto. Voy a comprar fruta en el mercado y zapatos en la tienda.",
+   "en": "Perfect. I'll buy fruit at the market and shoes at the store."
+  },
+  "F2": {
+   "before": "Voy a",
+   "after": "fruta.",
+   "choices": [
+    "compro",
+    "comprar",
+    "compra"
+   ],
+   "answer": 1,
+   "en": "I am going to buy fruit."
+  },
+  "C3": {
+   "who": "mara",
+   "es": "Voy a ir de compras el sábado. ¿Vienes?",
+   "choices": [
+    "Buenas noches, adiós.",
+    "De nada.",
+    "¡Sí, voy contigo!"
+   ],
+   "answer": 2
+  }
+ },
+ "dropped": [],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:23:25.133Z"
+}

@@ -1,0 +1,30 @@
+{
+ "unit": "Unit 3.8",
+ "grade": "advanced",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "P13",
+   "problem": "The English 'Our sons' does not mean the same as the Spanish 'Nuestros hijos' (which can include daughters).",
+   "fix": "Remove 'Our sons' from the English options."
+  },
+  {
+   "id": "S3",
+   "problem": "The Spanish '¿Tu hermana está casada?' is unnatural; native speakers would use '¿Tu hermana es casada?' or '¿Tu hermana está casada?' is less common but not incorrect, but the more natural form is '¿Tu hermana es casada?' or '¿Está casada tu hermana?'",
+   "fix": "Change to '¿Tu hermana es casada?'"
+  },
+  {
+   "id": "F1",
+   "problem": "The full sentence 'Mi abuela es la madre de mi padre.' means 'My grandmother is my father's mother,' but 'abuela' could also refer to the mother's mother. The English given is correct, but the Spanish could be ambiguous.",
+   "fix": "No fix needed as the English is correct, but note potential ambiguity."
+  },
+  {
+   "id": "R1",
+   "problem": "The Spanish 'Su prima Ana está casada.' implies 'Ana' is a cousin, but the question 'Who is married?' could be misinterpreted if 'Su prima' is not clear in context. However, the answer 'Ana' is correct.",
+   "fix": "No fix needed as the answer is correct."
+  }
+ ],
+ "at": "2026-10-30T00:00:56.632Z"
+}

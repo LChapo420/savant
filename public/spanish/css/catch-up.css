@@ -1,0 +1,35 @@
+/* /spanish/catch-up: the skill check, the route of blocks, the final check. */
+.cu { display: grid; gap: var(--es-space-4); width: 100%; max-width: 640px; margin: 0 auto; padding: var(--es-space-6) var(--es-space-4) calc(var(--es-space-8) + env(safe-area-inset-bottom)); box-sizing: border-box; }
+.cu h1, .cu h2 { margin: 0; overflow-wrap: anywhere; }
+.cu p { margin: 0; }
+.cu__lead { color: var(--es-text-muted); }
+.cu__top { display: flex; align-items: center; justify-content: space-between; gap: var(--es-space-2); }
+.cu__top a { color: var(--es-text-muted); font-weight: 700; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; gap: 6px; }
+.cu__q { display: grid; gap: var(--es-space-3); }
+.cu__prompt { font-size: 20px; line-height: 28px; font-weight: 700; white-space: pre-line; overflow-wrap: anywhere; }
+.cu__meta { color: var(--es-text-muted); font-size: 14px; }
+.cu__choices { display: grid; gap: var(--es-space-2); }
+.cu__choices .es-choice { width: 100%; }
+.cu__feedback { min-height: 24px; font-weight: 700; }
+.cu__feedback[data-ok="true"] { color: var(--es-success-text); }
+.cu__feedback[data-ok="false"] { color: var(--es-danger-text); }
+.cu__counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--es-space-2); }
+.cu__count { padding: var(--es-space-3); border-radius: var(--es-radius-lg, 16px); border: 2px solid var(--es-border); text-align: center; }
+.cu__count b { display: block; font-size: 22px; line-height: 28px; }
+.cu__count span { color: var(--es-text-muted); font-size: 13px; }
+.cu__blocks { display: grid; gap: var(--es-space-3); list-style: none; margin: 0; padding: 0; }
+.cu__block { border: 2px solid var(--es-border); border-radius: var(--es-radius-lg, 16px); padding: var(--es-space-3) var(--es-space-4); display: grid; gap: 6px; background: var(--es-surface); }
+.cu__block[data-status="done"] { border-color: var(--es-success); }
+.cu__block[data-current="true"] { border-color: var(--es-accent); }
+.cu__block h3 { margin: 0; font-size: 17px; line-height: 22px; overflow-wrap: anywhere; }
+.cu__block .cu__steps { margin: 0; padding-left: 18px; color: var(--es-text-muted); font-size: 14px; }
+.cu__block .cu__steps li[data-done="true"] { text-decoration: line-through; }
+.cu__review { font-size: 14px; color: var(--es-success-text); }
+.cu__grades { display: grid; gap: var(--es-space-2); }
+.cu__grade { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.cu__dot { display: inline-block; min-width: 54px; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; text-align: center; border: 2px solid var(--es-border); }
+.cu__dot[data-s="known"], .cu__dot[data-s="worked"] { border-color: var(--es-success); color: var(--es-success-text); }
+.cu__dot[data-s="learn"] { border-color: var(--es-danger); color: var(--es-danger-text); }
+.cu__actions { display: grid; gap: var(--es-space-2); }
+.cu__actions .es-btn { width: 100%; min-height: 52px; text-decoration: none; }
+.cu__note { font-size: 14px; color: var(--es-text-muted); }

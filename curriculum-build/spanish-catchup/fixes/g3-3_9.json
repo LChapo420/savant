@@ -1,0 +1,196 @@
+{
+ "unit": "Unit 3.9",
+ "rejected": {
+  "P12": [
+   {
+    "checker": "mistral",
+    "problem": "Content unsuitable for a teenage learner (describing a car is off-topic for describing people's appearance/personality).",
+    "fix": "Replace with a person-related phrase, e.g., 'Es un niño pequeño.'"
+   }
+  ],
+  "S8": [
+   {
+    "checker": "mistral",
+    "problem": "Content unsuitable for a teenage learner (mention of a date/cita may imply romantic context).",
+    "fix": "Replace with a neutral context, e.g., 'Rosa y Diego van al parque a las seis.'"
+   }
+  ],
+  "V1": [
+   {
+    "checker": "mistral",
+    "problem": "Content unsuitable for a teenage learner (mention of a date/cita may imply romantic context).",
+    "fix": "Replace with a neutral context, e.g., 'Busco un compañero para el proyecto.'"
+   },
+   {
+    "checker": "mistral",
+    "problem": "Target phrase 'Es un buen amigo.' does not match the role-play context (Rosa is female).",
+    "fix": "Replace with 'Es una buena amiga.' or remove gender-specific phrases."
+   },
+   {
+    "checker": "qwen",
+    "problem": "The role-play targets include 'Es joven, no es viejo.' and 'Es un buen amigo.', which use masculine adjectives and nouns for Rosa, a female character.",
+    "fix": "Change the targets to 'Es joven, no es vieja.' and 'Es una buena amiga.'"
+   }
+  ],
+  "P1": [
+   {
+    "checker": "qwen",
+    "problem": "The accepted alternative 'Es alta y delgada' is feminine, but all English translations use the masculine pronoun 'He'.",
+    "fix": "Change the English to include feminine options like 'She's tall and slim.' or remove the feminine Spanish alternative."
+   }
+  ],
+  "P4": [
+   {
+    "checker": "qwen",
+    "problem": "The accepted alternative 'Es moreno' is masculine, but all English translations use the feminine pronoun 'She'.",
+    "fix": "Change the English to include masculine options like 'He has dark hair.' or remove the masculine Spanish alternative."
+   }
+  ],
+  "P7": [
+   {
+    "checker": "qwen",
+    "problem": "The accepted alternative 'Es una buena amiga' is feminine, but both English translations use the masculine pronoun 'He'.",
+    "fix": "Add a feminine English translation such as 'She's a good friend.'"
+   }
+  ],
+  "P8": [
+   {
+    "checker": "qwen",
+    "problem": "The accepted alternative 'Es muy trabajadora' is feminine, but both English translations use the masculine pronoun 'He'.",
+    "fix": "Add feminine English translations such as 'She's very hard-working.' / 'She works very hard.'"
+   }
+  ],
+  "P9": [
+   {
+    "checker": "qwen",
+    "problem": "The accepted alternative 'Es un poco callada' is feminine, but both English translations use the masculine pronoun 'He'.",
+    "fix": "Add feminine English translations such as 'She's a bit quiet.' / 'She is a little quiet.'"
+   }
+  ],
+  "P10": [
+   {
+    "checker": "qwen",
+    "problem": "The accepted alternative 'Es inteligente y divertido' is masculine, but both English translations use the feminine pronoun 'She'.",
+    "fix": "Add masculine English translations such as 'He's smart and fun.' / 'He is intelligent and funny.'"
+   }
+  ]
+ },
+ "rewritten": {
+  "P12": {
+   "es": "Es un niño pequeño.",
+   "en": [
+    "He's a small boy.",
+    "He is a small boy."
+   ],
+   "tier": 2,
+   "skill": "es_adjectives",
+   "topic": "adjective_position_and_muy"
+  },
+  "S8": {
+   "who": "tomas",
+   "es": "Perfecto. Rosa y Diego van al parque a las seis.",
+   "en": "Perfect. Rosa and Diego are going to the park at six."
+  },
+  "P1": {
+   "es": "Es alto y delgado.",
+   "en": [
+    "He's tall and slim.",
+    "He is tall and thin.",
+    "He's tall and skinny.",
+    "She's tall and slim.",
+    "She is tall and thin.",
+    "She's tall and skinny."
+   ],
+   "alt": [
+    "Es alta y delgada."
+   ],
+   "tier": 1,
+   "skill": "es_adjectives",
+   "topic": "describing_people_appearance"
+  },
+  "P4": {
+   "es": "Es morena.",
+   "en": [
+    "She has dark hair.",
+    "She is dark-haired.",
+    "She's a brunette.",
+    "He has dark hair.",
+    "He is dark-haired."
+   ],
+   "alt": [
+    "Es moreno."
+   ],
+   "tier": 2,
+   "skill": "es_adjectives",
+   "topic": "describing_people_appearance"
+  },
+  "P7": {
+   "es": "Es un buen amigo.",
+   "en": [
+    "He's a good friend.",
+    "He is a good friend.",
+    "She's a good friend.",
+    "She is a good friend."
+   ],
+   "alt": [
+    "Es una buena amiga."
+   ],
+   "tier": 1,
+   "skill": "es_vocab_core",
+   "topic": "describing_people_personalit"
+  },
+  "P8": {
+   "es": "Es muy trabajador.",
+   "en": [
+    "He's very hard-working.",
+    "He is very hardworking.",
+    "He works very hard.",
+    "She's very hard-working.",
+    "She is very hardworking.",
+    "She works very hard."
+   ],
+   "alt": [
+    "Es muy trabajadora."
+   ],
+   "tier": 2,
+   "skill": "es_adjectives",
+   "topic": "describing_people_personalit"
+  },
+  "P9": {
+   "es": "Es un poco callado.",
+   "en": [
+    "He's a bit quiet.",
+    "He is a little quiet.",
+    "She's a bit quiet.",
+    "She is a little quiet."
+   ],
+   "alt": [
+    "Es un poco callada."
+   ],
+   "tier": 2,
+   "skill": "es_adjectives",
+   "topic": "describing_people_personalit"
+  }
+ },
+ "dropped": [
+  "P10"
+ ],
+ "convo_flagged": [
+  {
+   "checker": "mistral",
+   "problem": "Content unsuitable for a teenage learner (mention of a date/cita may imply romantic context).",
+   "fix": "Replace with a neutral context, e.g., 'Busco un compañero para el proyecto.'"
+  },
+  {
+   "checker": "mistral",
+   "problem": "Target phrase 'Es un buen amigo.' does not match the role-play context (Rosa is female).",
+   "fix": "Replace with 'Es una buena amiga.' or remove gender-specific phrases."
+  },
+  {
+   "checker": "qwen",
+   "problem": "The role-play targets include 'Es joven, no es viejo.' and 'Es un buen amigo.', which use masculine adjectives and nouns for Rosa, a female character.",
+   "fix": "Change the targets to 'Es joven, no es vieja.' and 'Es una buena amiga.'"
+  }
+ ],
+ "at": "2026-10-30T00:17:55.773Z"
+}

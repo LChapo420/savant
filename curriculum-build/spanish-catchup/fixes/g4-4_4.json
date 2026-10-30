@@ -1,0 +1,90 @@
+{
+ "unit": "Unit 4.4",
+ "rejected": {
+  "P1": [
+   {
+    "checker": "mistral",
+    "problem": "Unnatural Spanish: 'tapa de tortilla' is not a common way to refer to a tortilla tapa. 'Una tortilla, por favor' or 'Una ración de tortilla, por favor' would be more natural.",
+    "fix": "Una tortilla, por favor."
+   }
+  ],
+  "P4": [
+   {
+    "checker": "mistral",
+    "problem": "Verb form error: 'Pedimos' is present tense, but the English suggests future ('We'll have').",
+    "fix": "Vamos a pedir media ración."
+   }
+  ],
+  "P6": [
+   {
+    "checker": "mistral",
+    "problem": "Regional variation: 'jugo de naranja' is more common in Latin America, but 'zumo de naranja' is the standard in Spain. However, since regional variation is allowed, this is not a rejection. But 'el jugo' should be 'el zumo' for consistency with Spain Spanish.",
+    "fix": "el zumo de naranja"
+   }
+  ],
+  "S3": [
+   {
+    "checker": "mistral",
+    "problem": "Missing article: 'jugo de naranja' should be 'el jugo de naranja' for consistency with the rest of the scene.",
+    "fix": "Hay huevos, pan y el jugo de naranja."
+   }
+  ],
+  "F3": [
+   {
+    "checker": "mistral",
+    "problem": "Incorrect article: 'La manzana es una fruta' is correct, but the fill should not require 'La' as it is part of the sentence structure. The fill should be just the noun.",
+    "fix": "___ es una fruta."
+   }
+  ]
+ },
+ "rewritten": {
+  "P1": {
+   "es": "Una ración de tortilla, por favor.",
+   "en": [
+    "A portion of tortilla, please.",
+    "One portion of tortilla, please."
+   ],
+   "tier": 2,
+   "skill": "es_vocab_core",
+   "topic": "tapas_raciones_and_ordering_"
+  },
+  "P4": {
+   "es": "Pedimos media ración.",
+   "en": [
+    "We order a half portion.",
+    "We're ordering a half portion."
+   ],
+   "tier": 3,
+   "skill": "es_present_erir",
+   "topic": "tapas_raciones_and_ordering_"
+  },
+  "P6": {
+   "es": "el zumo de naranja",
+   "en": [
+    "orange juice"
+   ],
+   "tier": 1,
+   "skill": "es_gender",
+   "topic": "breakfast_foods_and_drinks"
+  },
+  "S3": {
+   "who": "Tomás",
+   "es": "Hay huevos, pan y zumo de naranja.",
+   "en": "There are eggs, bread, and orange juice."
+  },
+  "F3": {
+   "before": "",
+   "after": " es una fruta.",
+   "choices": [
+    "La manzana",
+    "La cebolla",
+    "La patata"
+   ],
+   "answer": 0,
+   "en": "The apple is a fruit."
+  }
+ },
+ "dropped": [],
+ "convo_flagged": null,
+ "at": "2026-10-30T01:17:23.776Z"
+}

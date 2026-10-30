@@ -1,0 +1,30 @@
+{
+ "unit": "Unit 3.3",
+ "grade": "advanced",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "P7",
+   "problem": "The English 'some friends' does not match the Spanish 'unas amigas' (feminine only). The accepted alternative 'unos amigos' is also not equivalent to 'some friends' (it's masculine).",
+   "fix": "Remove the accepted alternative or change the English to 'some female friends'."
+  },
+  {
+   "id": "S7",
+   "problem": "The Spanish 'Hay sesenta libros y también setenta cuadernos.' is unnatural. Native speakers would not use 'también' in this context.",
+   "fix": "Change to 'Hay sesenta libros y setenta cuadernos.'"
+  },
+  {
+   "id": "C1",
+   "problem": "The [KEY] option 'Hay una mesa.' is correct, but 'Hay un mesa.' is also a distractor with a wrong article (should be 'una'). However, the issue is that 'Hay un mesa.' is not a valid option (incorrect gender).",
+   "fix": "Change the distractor to 'Hay una mesa.' or another incorrect but plausible option like 'Hay unos mesa.'"
+  },
+  {
+   "id": "C2",
+   "problem": "The distractor 'Necesito treinta y cinco libro.' is incorrect (missing plural 'libros'), but the [KEY] is correct. However, the issue is that the distractor is not a plausible mistake (should be 'libros').",
+   "fix": "Change the distractor to 'Necesito treinta y cinco libro.' → 'Necesito treinta y cinco libro.' is already incorrect, but the problem is that it's not a realistic mistake. Consider 'Necesito treinta y cinco libro.' → 'Necesito treinta y cinco libros.' (but this is the correct answer). Alternatively, use 'Necesito treinta y cinco libro.' as is, but it's not a realistic error."
+  }
+ ],
+ "at": "2026-10-30T00:00:40.446Z"
+}

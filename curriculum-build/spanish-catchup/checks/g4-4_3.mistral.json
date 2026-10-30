@@ -1,0 +1,25 @@
+{
+ "unit": "Unit 4.3",
+ "grade": "spanish_grade_04_time_food_shopping_and_core_verbs",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 36,
+ "rejects": [
+  {
+   "id": "P15",
+   "problem": "Missing subject pronoun or incorrect verb form for 'I have lunch'.",
+   "fix": "Almuerzo a las dos."
+  },
+  {
+   "id": "F3",
+   "problem": "The [KEY] 'Almuerzo' is correct, but the full sentence 'Almuerzo a las dos.' is unnatural without context (e.g., 'Yo almuerzo a las dos.'). However, the error is in the FILL item's structure, not the [KEY] itself. The [KEY] is correct, but the 'before + [KEY] + after' is incomplete.",
+   "fix": "Yo almuerzo a las dos."
+  },
+  {
+   "id": "C2",
+   "problem": "The [KEY] 'Es el primero de mayo.' is correct, but the other options are clearly incorrect, so no issue. However, the [KEY] should be 'El primero de mayo.' (without 'Es') to match the question '¿Cuál es la fecha?'.",
+   "fix": "El primero de mayo."
+  }
+ ],
+ "at": "2026-10-30T00:01:31.861Z"
+}

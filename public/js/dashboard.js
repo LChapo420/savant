@@ -153,7 +153,9 @@ App.mount(async () => {
       try {
         const st = await App.api.get(`/api/gap-scan/state/${encodeURIComponent(trackId)}`);
         const q = st && st.catch_up_quiz;
-        if (q && q.available && (q.status === 'not_started' || q.status === 'running') && !(st.route && st.route.status)) catchChecks.set(trackId, q);
+        // Spanish's skill catch-up has its own page (route.url): a link to where it stands.
+        if (st && st.route && st.route.url && st.route.phase !== 'done') catchChecks.set(trackId, { v3: st.route });
+        else if (q && q.available && (q.status === 'not_started' || q.status === 'running') && !(st.route && st.route.status)) catchChecks.set(trackId, q);
       } catch { /* drawn without it */ }
     }));
   const catchCheckLink = (e) => {
@@ -161,6 +163,11 @@ App.mount(async () => {
     // Once per subject: on its first active grade, whichever grade that is.
     const first = data.enrollments.find((x) => x.status === 'active' && x.track.id === e.track.id);
     if (!q || !first || first.id !== e.id) return '';
+    if (q.v3) {
+      const r = q.v3;
+      const label = r.phase === 'check' ? 'Finish your Spanish skill check' : r.phase === 'recheck' ? 'Catch-up: take the final check' : `Catch-up ${r.k} of ${r.n}: about ${r.total_minutes} minutes left`;
+      return `<span class="plan-item"><a href="${esc(r.url)}">${esc(label)}</a></span>`;
+    }
     const href = `/subject-placement?track=${encodeURIComponent(e.track.id)}${q.status === 'running' ? '&step=catchup' : ''}`;
     const num = String(q.grade_id || '').match(/grade_0*(\d+)/);
     const below = num ? ` below Grade ${num[1]}` : ' below your placement';

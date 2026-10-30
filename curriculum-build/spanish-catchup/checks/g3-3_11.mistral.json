@@ -1,0 +1,20 @@
+{
+ "unit": "Unit 3.11",
+ "grade": "advanced",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "S7",
+   "problem": "The Spanish sentence 'El dos de mayo. Actualmente vivo en la calle Sol.' is unnatural. Native speakers would typically say 'El dos de mayo. Actualmente vivo en la calle Sol.' as two separate sentences, but the first part should be 'Nací el dos de mayo.' to clarify it's a birth date.",
+   "fix": "Nací el dos de mayo. Actualmente vivo en la calle Sol."
+  },
+  {
+   "id": "R2",
+   "problem": "The correct answer 'In the theater at the school' does not match the Spanish 'en el teatro de la escuela' which means 'in the school's theater' (a specific place), not necessarily 'at the school'. The English implies she teaches in a theater located at the school, which may not be the intended meaning.",
+   "fix": "In the school's theater"
+  }
+ ],
+ "at": "2026-10-30T00:01:09.371Z"
+}
