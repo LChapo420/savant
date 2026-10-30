@@ -401,6 +401,7 @@ const KNOWN_COLLECTIONS = [
   'chess_rush_runs', 'chess_drill_cards', 'chess_drill_runs', 'fact_pools', 'piano_song_results', 'parents', 'parental_consents',
   'skill_records', 'study_sessions', 'enforcers', 'learner_goals', 'tutor_memory', 'tutor_modes', 'es_path_runs', 'es_review',
   'act_profiles', 'act_scores', 'act_study', 'spanish_study', 'spanish_study_checkins', 'spanish_study_tests', 'materials', 'material_courses', 'material_progress', 'material_packs', 'material_cards', 'material_podcasts', 'material_audio_jobs',
+  'tutor_facts', 'tutor_strategies',
 ];
 function collectionNames() {
   return KNOWN_COLLECTIONS.filter((name) => {

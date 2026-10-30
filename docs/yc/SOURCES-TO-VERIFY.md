@@ -111,3 +111,10 @@ an application goes out.
 | ACT curriculum test: 4 pass; the coverage-map check fails without `data/` | `node scripts/act-curriculum-test.js` |
 | About 74,000 lines in `routes/`, `services/`, `config/`, `public/js/` | `git ls-files` with `wc -l` |
 | The beta invite gate is not referenced in `server.js` | `grep` |
+
+## Tutor fact memory (T2, 30 Oct 2026)
+
+- **UNVERIFIED**: the 60-day half-life and 0.2 floor in `services/tutor-facts.js` for fading unconfirmed facts are engineering choices, not taken from a source. Mechanism 06-M11 (memory across sessions) supports keeping memory; it gives no decay rate. Search terms: "forgetting curve spaced repetition half-life", "memory decay personalization tutoring". Tune or cite once checked.
+- **UNVERIFIED**: that a model reading one exchange can tell "an explanation the learner then understood" (`worked` facts). 06-M8 supports using measured behaviour over style labels; accuracy of this extraction is untested with a real model (queue T7).
+
+- **UNVERIFIED (T4, `services/tutor-strategy.js`)**: the fallback order of explanation styles (small questions, worked example, analogy, picture in words, short, long) and the mastery nudge (worked example first below 40%, small questions or short replies from 70%). The learning-style claim is refuted by 06-M8, so the choice follows measured outcomes per learner; the starting order and thresholds are design choices. Search terms: "worked example effect novices expertise reversal", "guided questioning vs worked examples tutoring", "adaptive tutoring strategy selection bandit".

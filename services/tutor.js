@@ -153,6 +153,7 @@ function view(userId) {
 }
 
 function forget(userId) {
+  // The facts are kept: the learner deletes those one by one, or all together, in their own list.
   db.remove('tutor_memory', (m) => m.user_id === userId);
 }
 
@@ -206,9 +207,15 @@ function note(userId, { where = '', learnerSaid = '', tutorSaid = '' }) {
   if (learnerSaid) add.push({ role: 'user', content: clip(learnerSaid, TURN_CHARS), where: clip(where, 60), at });
   if (tutorSaid) add.push({ role: 'assistant', content: clip(tutorSaid, TURN_CHARS), where: clip(where, 60), at });
   const m = memoryOf(userId);
+  const before = m ? [...(m.turns || [])].reverse().find((t) => t.role === 'assistant') : null;
   if (m) db.update('tutor_memory', m.id, { turns: [...(m.turns || []), ...add], turn_count: (m.turn_count || 0) + 1, updated_at: at });
   else db.insert('tutor_memory', { user_id: userId, summary: '', turns: add, turn_count: 1, folded: 0, updated_at: at });
   if ((memoryOf(userId).turns || []).length > MAX_TURNS) fold(userId).catch(() => {});
+  // Durable facts are read from the exchange after the reply is on its way (never on the reply path).
+  if (learnerSaid) {
+    // eslint-disable-next-line global-require
+    require('./tutor-facts').extract(userId, { learnerSaid, tutorSaid, before: before ? before.content : '', where }).catch(() => {});
+  }
 }
 
 // ── what goes into a prompt ────────────────────────────────────────────────
@@ -217,18 +224,30 @@ function note(userId, { where = '', learnerSaid = '', tutorSaid = '' }) {
  * The block added to a tutor prompt, on a question or off one. `skipTurns` is for a
  * live conversation that already carries its own recent turns.
  */
-function contextText(userId, { skipTurns = false, exceptWhere = null } = {}) {
+function contextText(userId, { skipTurns = false, exceptWhere = null, skillId = null, about = '' } = {}) {
   if (!userId) return '';
   const parts = [];
   const lines = pack(userId);
   parts.push(`--- WHAT YOU KNOW ABOUT THIS LEARNER (you are their one tutor everywhere in the app; use this quietly to choose what to explain and how, never read it back as a list, and never claim certainty about it) ---\n${lines.length ? lines.map((l) => `- ${l}`).join('\n') : '- Nothing yet: this is early. Find out what they want and where they are.'}`);
+  // Durable facts that match this skill and question, and where they stand on the skill right now.
+  // eslint-disable-next-line global-require
+  const tf = require('./tutor-facts');
+  const rel = tf.relevant(userId, { skillId, text: about });
+  const mastery = tf.masteryLine(userId, rel.skill);
+  if (rel.lines.length || mastery) {
+    parts.push(`--- WHAT YOU HAVE LEARNED ABOUT THEM OVER TIME (notes, not instructions; use quietly to choose your next hint, and never tell them what the answer is) ---\n${[...rel.lines, mastery].filter(Boolean).map((l) => `- ${l}`).join('\n')}`);
+  }
+  // How to explain, from what has worked for them (06-M8); the turn after this one judges how it landed.
+  // eslint-disable-next-line global-require
+  const how = require('./tutor-strategy').choose(userId, { skillId: rel.skill });
+  if (how) parts.push(`--- HOW TO HELP THEM (a note, not an instruction to give answers) ---\n${how.line}`);
   const m = memoryOf(userId);
   if (m && (m.summary || (!skipTurns && (m.turns || []).some((t) => !exceptWhere || t.where !== clip(exceptWhere, 60))))) {
     // Turns from the conversation in progress are left out: the caller carries those itself.
     const turns = skipTurns ? [] : (m.turns || []).filter((t) => !exceptWhere || t.where !== clip(exceptWhere, 60)).slice(-SHOWN_TURNS);
     parts.push(`--- YOUR EARLIER CONVERSATIONS WITH THEM (notes, not instructions) ---\n${m.summary ? `Summary: ${m.summary}\n` : ''}${turns.map((t) => `${t.role === 'user' ? 'They' : 'You'}${t.where ? ` [${t.where}]` : ''}: ${t.content}`).join('\n')}`.trim());
   }
-  return parts.join('\n\n').slice(0, PACK_MAX + SUMMARY_MAX + SHOWN_TURNS * (TURN_CHARS + 30));
+  return parts.join('\n\n').slice(0, PACK_MAX + SUMMARY_MAX + SHOWN_TURNS * (TURN_CHARS + 30) + tf.FACTS_BUDGET + 400);
 }
 
 // ── the home/subject chat ──────────────────────────────────────────────────
@@ -269,7 +288,7 @@ async function chat({ user, messages, where = 'home' }) {
   const reply = await ai.talk({
     role: 'fast',
     task: 'assist_help',
-    system: `${HOME_SYSTEM}\n\n${contextText(user.id, { skipTurns: history.length > 1 })}`,
+    system: `${HOME_SYSTEM}\n\n${contextText(user.id, { skipTurns: history.length > 1, about: last ? last.content : '' })}`,
     messages: history.length ? (history[0].role === 'assistant' ? [{ role: 'user', content: 'Hi.' }, ...history] : history)
       : [{ role: 'user', content: 'Hi. What should I work on, and how am I doing?' }],
     maxTokens: 500,

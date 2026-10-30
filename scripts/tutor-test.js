@@ -33,7 +33,8 @@ const fake = {
   isConfigured: () => true,
   modelFor: () => 'fake',
   costCents: () => 0,
-  async chat(args) { calls.push(args); return { text: say, model: 'fake', usage: null }; },
+  async chat(args) { if (!/long-term notes on one learner/.test(args.system || '')) calls.push(args); // the facts note-taker is not a tutor reply
+    return { text: say, model: 'fake', usage: null }; },
 };
 providers.ALL.nvidia = fake;
 

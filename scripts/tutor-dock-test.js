@@ -28,7 +28,7 @@ function check(label, ok, detail) {
 // Mock the provider chain before the dock requires it.
 const ai = require('../services/ai');
 const calls = [];
-ai.talk = async (opts) => { calls.push(opts); return 'Try splitting it into two steps. What is the first one?'; };
+ai.talk = async (opts) => { if (!/long-term notes on one learner/.test(opts.system || '')) calls.push(opts); return 'Try splitting it into two steps. What is the first one?'; };
 
 const dock = require('../services/tutor-context');
 const root = path.join(__dirname, '..');
