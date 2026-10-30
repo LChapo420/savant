@@ -253,6 +253,18 @@ function questionById(key, qid) {
   return skill ? questionsFor(skill).find((q) => q.qid === qid) || null : null;
 }
 
+const engine = require('../catchup-engine').createEngine({
+  gradeOrder: gradeIds,
+  skillByKey,
+  questionsFor,
+  maxPerSkill: MAX_PER_SKILL,
+  mastery: MASTERY,
+  recheckPerSkill: RECHECK_PER_SKILL,
+  recheckKnownSample: RECHECK_KNOWN_SAMPLE,
+});
+const { UNDECIDED } = require('../catchup-engine');
+const { decideSkill, nextCheck, finishCheck, startRecheck, openBlocks, position } = engine;
+
 // ── the row ────────────────────────────────────────────────────────────────
 
 function placementRow(userId) {
@@ -344,146 +356,11 @@ function save(state) {
 
 // ── the check ──────────────────────────────────────────────────────────────
 
-const UNDECIDED = ['pending', 'open'];
-
-function decideSkill(sk) {
-  const b = learnerPath.unitBelief(sk.answers.map((a) => ({ correct: a.correct, choices: a.choices })), { prior: 'past' });
-  sk.p = Math.round(b.p * 10000) / 10000;
-  if (b.decision === 'known' || b.decision === 'learn') sk.status = b.decision;
-  else if (sk.answers.length >= MAX_PER_SKILL) { sk.status = 'learn'; sk.unchecked = true; } // never skipped on a guess
-  else sk.status = 'open';
-}
-
-function askedSet(state) {
-  const out = new Set(state.check.asked.map((a) => `${a.key}#${a.qid}`));
-  for (const r of [state.recheck, ...(state.rechecks || [])]) for (const it of (r && r.items) || []) out.add(`${it.key}#${it.qid}`);
-  return out;
-}
-
-function freshQuestion(state, key) {
-  const skill = skillByKey(key);
-  if (!skill) return null;
-  const asked = askedSet(state);
-  return questionsFor(skill).find((q) => !asked.has(`${key}#${q.qid}`)) || null;
-}
-
-/** The next check question: one per skill a round, lowest grade first. Null when every skill is decided. */
-function nextCheck(state) {
-  const order = gradeIds();
-  const live = state.skills
-    .map((sk, i) => ({ sk, i }))
-    .filter(({ sk }) => UNDECIDED.includes(sk.status));
-  live.sort((a, b) => a.sk.answers.length - b.sk.answers.length || order.indexOf(a.sk.grade_id) - order.indexOf(b.sk.grade_id) || a.i - b.i);
-  for (const { sk } of live) {
-    const q = freshQuestion(state, sk.key);
-    if (q) return { key: sk.key, qid: q.qid };
-    // Nothing left to ask it: a gap, never a skip.
-    sk.status = 'learn';
-    sk.unchecked = true;
-    sk.no_questions = !sk.answers.length;
-  }
-  return null;
-}
-
-function finishCheck(state, now) {
-  state.check.current = null;
-  state.check.finished_at = new Date(now).toISOString();
-  state.blocks = state.skills.filter((sk) => sk.status === 'learn').map((sk) => blockFor(sk.key));
-  state.phase = state.blocks.length ? 'route' : 'recheck';
-  if (state.phase === 'recheck') startRecheck(state, now);
-}
-
-function blockFor(key, extra = {}) {
-  const skill = skillByKey(key);
-  return { key, levels: skill ? skill.levels.slice() : [], done: [], status: 'todo', started_at: null, done_at: null, reopened: 0, review_seeded: 0, ...extra };
-}
-
 function grade(q, given) {
   return nfc(given) === q.answer;
 }
 
 // ── the re-check ───────────────────────────────────────────────────────────
-
-/** Known skills to sample: spread over the grades, the least certain first. */
-function knownSample(state) {
-  const pool = state.skills.filter((sk) => sk.status === 'known' || sk.status === 'worked');
-  const byGrade = new Map();
-  for (const sk of pool) {
-    if (!byGrade.has(sk.grade_id)) byGrade.set(sk.grade_id, []);
-    byGrade.get(sk.grade_id).push(sk);
-  }
-  for (const list of byGrade.values()) list.sort((a, b) => (a.p ?? 1) - (b.p ?? 1) || hashOf(`${state.id}|${a.key}`) - hashOf(`${state.id}|${b.key}`));
-  const out = [];
-  const lists = [...byGrade.values()];
-  for (let i = 0; out.length < RECHECK_KNOWN_SAMPLE && lists.some((l) => l[i]); i++) {
-    for (const l of lists) if (l[i] && out.length < RECHECK_KNOWN_SAMPLE) out.push(l[i]);
-  }
-  return out;
-}
-
-function startRecheck(state, now) {
-  const round = (state.rechecks || []).length + 1;
-  const items = [];
-  const taken = askedSet(state);
-  const take = (key, n, role) => {
-    const skill = skillByKey(key);
-    if (!skill) return;
-    let got = 0;
-    for (const q of questionsFor(skill)) {
-      if (got >= n) break;
-      if (taken.has(`${key}#${q.qid}`)) continue;
-      taken.add(`${key}#${q.qid}`);
-      items.push({ key, qid: q.qid, role });
-      got++;
-    }
-  };
-  // The first re-check: every caught-up skill and a sample of known ones. A later
-  // one: only the skills sent back.
-  const caught = round === 1 ? state.blocks.map((b) => b.key) : state.blocks.filter((b) => b.reopened && b.status === 'done' && b.recheck_round === round - 1).map((b) => b.key);
-  for (const key of new Set(caught)) take(key, RECHECK_PER_SKILL, 'caught_up');
-  if (round === 1) for (const sk of knownSample(state)) take(sk.key, 1, 'known');
-  // Interleaved: skills mixed, not in blocks.
-  items.sort((a, b) => hashOf(`${state.id}|${round}|${a.key}|${a.qid}`) - hashOf(`${state.id}|${round}|${b.key}|${b.qid}`));
-  state.phase = 'recheck';
-  state.recheck = { round, items, answers: [], started_at: new Date(now).toISOString(), finished_at: null, result: null };
-}
-
-function scoreRecheck(state, now) {
-  const r = state.recheck;
-  const bySkill = new Map();
-  for (const a of r.answers) {
-    if (!bySkill.has(a.key)) bySkill.set(a.key, { right: 0, total: 0, role: a.role });
-    const s = bySkill.get(a.key);
-    s.total++; if (a.correct) s.right++;
-  }
-  const right = r.answers.filter((a) => a.correct).length;
-  const score = r.answers.length ? right / r.answers.length : 1;
-  const failed = [...bySkill.entries()].filter(([, s]) => s.right / s.total < MASTERY).map(([key, s]) => ({ key, ...s }));
-  const passed = score >= MASTERY && !failed.length;
-  r.result = { score: Math.round(score * 100), right, total: r.answers.length, passed, failed: failed.map((f) => f.key), by_skill: Object.fromEntries(bySkill) };
-  r.finished_at = new Date(now).toISOString();
-  state.rechecks = [...(state.rechecks || []), r];
-  if (passed) {
-    state.phase = 'done';
-    state.finished_at = new Date(now).toISOString();
-    state.recheck = null;
-    return;
-  }
-  // A miss sends the learner back to that skill only.
-  for (const f of failed) {
-    const b = state.blocks.find((x) => x.key === f.key);
-    if (b) Object.assign(b, { status: 'todo', done: [], done_at: null, reopened: (b.reopened || 0) + 1, recheck_round: r.round });
-    else {
-      state.blocks.push(blockFor(f.key, { reopened: 1, recheck_round: r.round, from: 'recheck' }));
-      const sk = state.skills.find((x) => x.key === f.key);
-      if (sk) sk.status = 'learn';
-    }
-  }
-  // Below the bar overall with no single skill below it cannot happen (every miss is in a skill), but stay safe.
-  if (!failed.length) { startRecheck(state, now); return; }
-  state.recheck = null;
-  state.phase = 'route';
-}
 
 // ── blocks: where the learner plays ────────────────────────────────────────
 
@@ -500,20 +377,6 @@ function blockEnrollment(userId, gradeId, now = Date.now()) {
     current_level: 1, level_items: 0, levels_completed: 0, xp: 0, status: 'active', pending_checkpoint: null,
     placed_at: new Date(now).toISOString(), placed_by: 'catch_up',
   });
-}
-
-function openBlocks(state) {
-  return (state.blocks || []).filter((b) => b.status !== 'done');
-}
-
-/** The block under way and the next level in it, with "k of N". */
-function position(state) {
-  const blocks = state.blocks || [];
-  const i = blocks.findIndex((b) => b.status !== 'done');
-  if (i < 0) return { k: blocks.length, n: blocks.length, block: null, level: null };
-  const b = blocks[i];
-  const level = b.levels.find((l) => !b.done.includes(l)) ?? null;
-  return { k: i + 1, n: blocks.length, block: b, level };
 }
 
 function levelUrl(enrollmentId, level) {
@@ -599,15 +462,10 @@ function onRunFinished({ userId, gradeId, level, passed, now = Date.now() }) {
   const b = (state.blocks || []).find((x) => x.status !== 'done' && skillByKey(x.key).grade_id === gradeId && x.levels.includes(Number(level)));
   if (!b) return null;
   const skill = skillByKey(b.key);
-  if (passed && !b.done.includes(Number(level))) b.done.push(Number(level));
   let blockDone = false;
-  if (b.levels.every((l) => b.done.includes(l))) {
-    b.status = 'done';
-    b.done_at = new Date(now).toISOString();
-    b.review_seeded = (b.review_seeded || 0) + seedReview(userId, skill, now);
-    blockDone = true;
-  }
-  if (!openBlocks(state).length) startRecheck(state, now);
+  if (passed) blockDone = engine.levelPassed(b, level, now).blockDone;
+  if (blockDone) b.review_seeded = (b.review_seeded || 0) + seedReview(userId, skill, now);
+  engine.afterBlock(state, now);
   save(state);
   const pos = position(state);
   let next = null;
@@ -654,13 +512,7 @@ function answer(userId, given, now = Date.now()) {
     if (!cur || cur.key !== given.key || cur.qid !== given.qid) return { error: 'That is not the question being asked.', status: 409, stale: true };
     const q = questionById(cur.key, cur.qid);
     const correct = q ? grade(q, given.answer) : false;
-    const sk = state.skills.find((s) => s.key === cur.key);
-    sk.answers.push({ qid: cur.qid, correct, choices: q ? q.choices.length : 4, at: new Date(now).toISOString() });
-    decideSkill(sk);
-    state.check.asked.push({ key: cur.key, qid: cur.qid, correct, at: new Date(now).toISOString() });
-    const next = nextCheck(state);
-    state.check.current = next;
-    if (!next) finishCheck(state, now);
+    engine.recordCheck(state, cur, correct, q ? q.choices.length : 4, now);
     save(state);
     return { correct, state };
   }
@@ -670,8 +522,7 @@ function answer(userId, given, now = Date.now()) {
     if (!item || item.key !== given.key || item.qid !== given.qid) return { error: 'That is not the question being asked.', status: 409, stale: true };
     const q = questionById(item.key, item.qid);
     const correct = q ? grade(q, given.answer) : false;
-    r.answers.push({ key: item.key, qid: item.qid, role: item.role, correct, at: new Date(now).toISOString() });
-    if (r.answers.length >= r.items.length) scoreRecheck(state, now);
+    engine.recordRecheck(state, item, correct, now);
     save(state);
     return { correct, state };
   }
