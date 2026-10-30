@@ -39,18 +39,26 @@ App.mount(async () => {
   const next = rawNext && rawNext.startsWith('/') ? rawNext : '/profile';
   const fromSignup = !!rawNext;
 
-  root.innerHTML = `
-    <h1>${fromSignup ? 'A bit about you' : 'About you'}</h1>
-    <p class="muted">
-      ${fromSignup
-    ? 'Two minutes, and all of it is optional. This is what your lessons are '
-      + 'written around — the tutor already knows how you answer questions, and '
-      + 'this is the part it cannot work out on its own.'
-    : 'What your lessons are written around. Change anything, or leave it as it is — '
-      + 'none of it is required.'}
-    </p>
+  // In the sign-up chain this is step 2 of 4 (quiz, about you, subjects, placement).
+  const total = fromSignup && next.startsWith('/onboarding') ? (ObSteps.total() || 4) : 0;
+  if (total) document.body.classList.add('ob-focus');
 
-    <div class="card">
+  root.innerHTML = `
+    <div class="ob-head">
+      ${total ? `<div class="ob-progress" role="progressbar" aria-valuemin="1" aria-valuemax="${total}" aria-valuenow="2" aria-label="Step 2 of ${total}">${ObSteps.html(2, total)}</div>
+      <p class="ob-step">Step 2 of ${total}</p>` : ''}
+      <h1>${fromSignup ? 'A bit about you' : 'About you'}</h1>
+      <p class="lede">
+        ${fromSignup
+    ? 'Two minutes, and all of it is optional. This is what your lessons are '
+      + 'written around: the tutor already knows how you answer questions, and '
+      + 'this is the part it cannot work out on its own.'
+    : 'What your lessons are written around. Change anything, or leave it as it is. '
+      + 'None of it is required.'}
+      </p>
+    </div>
+
+    <div class="survey-card" style="margin-top:var(--s-5)">
       ${Object.entries(fields).map(([key, spec]) => `
         <label class="field">
           <span>${App.escapeHtml(spec.label)}</span>
@@ -63,14 +71,12 @@ App.mount(async () => {
         </label>`).join('')}
     </div>
 
-    <div class="card" style="position:sticky; bottom:16px; margin-top:18px">
-      <div class="row-between row-wrap">
-        <span class="small muted" id="status">
-          ${fromSignup ? 'Answer any of them, or none.' : ''}
-        </span>
-        <div class="row">
+    <div class="ob-foot">
+      <div class="ob-foot-row">
+        <span class="ob-foot-text" id="status">${fromSignup ? 'Answer any of them, or none.' : ''}</span>
+        <div class="ob-actions">
           ${fromSignup ? `<a class="btn btn-ghost" href="${next}">Skip</a>` : ''}
-          <button class="btn btn-primary" id="save">${fromSignup ? 'Save and continue' : 'Save'}</button>
+          <button class="btn btn-primary btn-lg" id="save">${fromSignup ? 'Save and continue' : 'Save'}</button>
         </div>
       </div>
     </div>`;

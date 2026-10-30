@@ -1,0 +1,210 @@
+/* Style: desk  (mockup design-options/03-study-desk, "calm, warm focus")
+ *
+ * Light. Cream paper, a forest-green brand, soft 14px cards with very light
+ * shadows. Forest carries everything neutral (selection, progress, the active
+ * tab); terracotta appears only on the next action (Start, Continue, Check), so
+ * that button is always the obvious "what next". DM Serif Display for headings
+ * and questions, Figtree for the interface.
+ *
+ * Tokens (plus this style's @font-face and a few small refinements at the end);
+ * see css/styles/README.md.
+ */
+
+/* DM Serif Display (400, roman and italic) and Figtree (variable 400-700), Latin
+   subset, self-hosted. Downloaded only when this style is active. */
+@font-face {
+  font-family: 'DM Serif Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/dm-serif-display-400i.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'DM Serif Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/dm-serif-display-400.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(/fonts/figtree-400-700.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root[data-style="desk"] {
+  color-scheme: light;
+
+  /* surfaces */
+  --page: #F6F1E7;
+  --well: #EDE6D6;
+  --well-2: #E3EBDC;
+  --card-bg: #FFFCF5;
+  --card-line: #E8E0CD;
+  --field-bg: #FFFCF5;
+  --nav-bg: #FFFCF5;
+  --line: #E8E0CD;
+  --line-strong: #D3C9AE;
+  --control: #8A8068;            /* input outlines: 3.8:1 on the card */
+
+  /* ink (on --page: 13.5, 5.6, 5.2) */
+  --ink: #26261F;
+  --ink-2: #665F4E;
+  --ink-3: #6B6452;
+
+  /* terracotta is the action; forest is the brand and everything quiet */
+  --action: #B9552F;
+  --action-hover: #A84A27;
+  --action-edge: #8E3E1F;
+  --on-action: #FFFFFF;
+  --action-tint: #E3EBDC;
+  --action-mid: #C9D9C2;
+  --action-ink: #1E4D3A;
+
+  /* reward: a warm sand */
+  --reward: #EBD9A6;
+  --reward-edge: #D3BC7C;
+  --reward-tint: #E3EBDC;
+  --reward-line: #C9D9C2;
+  --on-reward: #3F2D0A;
+  --reward-ink: #1E4D3A;
+  --flame: #B9552F;
+  --flame-core: #F2E7CC;
+
+  --correct: #2F6A52;
+  --correct-wash: #E3EBDC;
+  --correct-edge: #2F6A52;
+  --incorrect: #A8432A;
+  --incorrect-wash: #FAEBDF;
+  --incorrect-edge: #A8432A;
+  --warn: #8A5A00;
+
+  --off-bg: #EDE6D6;
+  --off-ink: #766E5A;
+  --off-edge: #D3C9AE;
+
+  --focus: #1E4D3A;
+  --focus-ring: rgba(30, 77, 58, 0.25);
+  --field-focus: #1E4D3A;
+  --focus-ring-w: 3px;
+  --chip-bg: #FFFCF5;
+  --chip-ink: #665F4E;
+  --chip-line: #D3C9AE;
+  --chip2-bg: #FAEBDF; --chip2-ink: #8E3E1F; --chip2-line: transparent;
+  --chip2-case: uppercase; --chip2-tracking: 0.09em; --chip2-weight: 700;
+  --shadow-lg: 0 1px 2px rgba(70, 50, 20, 0.06), 0 12px 28px -8px rgba(70, 50, 20, 0.22);
+
+  /* type */
+  --font: 'Figtree', ui-sans-serif, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+  --display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --num: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+  --read-font: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+  --w-body: 500;
+  --w-strong: 700;
+  --w-head: 400;
+  --w-btn: 700;
+  --w-label: 600;
+  --tracking-head: -0.005em;
+  --t-meta: 0.8125rem;
+  --t-ui-s: 0.9375rem;
+  --t-ui: 1rem;
+  --t-read: 1.125rem;
+  --t-stem: clamp(1.625rem, 1.4rem + 1vw, 2rem);
+  --t-h3: 1.25rem;
+  --t-h2: clamp(1.5rem, 1.3rem + 0.8vw, 1.875rem);
+  --t-h1: clamp(1.875rem, 1.55rem + 1.4vw, 2.5rem);
+  --t-disp: clamp(2.5rem, 1.6rem + 3.6vw, 3.5rem);
+  --eyebrow-size: 0.75rem;
+  --eyebrow-weight: 700;
+  --eyebrow-case: uppercase;
+  --eyebrow-tracking: 0.09em;
+  --eyebrow-font: var(--font);
+  --icon-sw: 1.8;
+
+  /* shape: soft 14px */
+  --r-xs: 6px; --r-sm: 10px; --r-md: 12px; --r-lg: 14px; --r-pill: 999px;
+  --r-card: 14px;
+  --r-btn: 14px;
+  --r-input: 12px;
+  --r-choice: 14px;
+  --r-chip: 999px;
+  --r-bar: 4px;
+  --r-icon: 12px;
+
+  /* borders: a light outline, and the button's 2px pressed edge */
+  --bw-card: 1px;
+  --bw-card-edge: 1px;
+  --bw-control: 1.5px;
+  --bw-nav: 1px;
+  --btn1-bw: 0px;
+  --btn1-edge-w: 2px;
+  --btn2-bw: 1.5px;
+  --btn2-edge-w: 1.5px;
+  --btn2-bg: #FFFCF5;
+  --btn2-line: #D3C9AE;
+  --btn2-ink: #1E4D3A;
+  --press: 2px;
+
+  /* sizes: large targets */
+  --btn-h: 50px;
+  --btn-h-lg: 56px;
+  --btn-h-sm: 40px;
+  --btn-px: 22px;
+  --btn-size: 1rem;
+  --btn-size-lg: 1.0625rem;
+  --input-h: 52px;
+  --choice-h: 68px;
+  --key-size: 34px;
+  --choice-line: #E8E0CD;
+  --key-bw: 0px;
+
+  /* selection: forest outline with a faint halo on a pale green */
+  --sel-bg: #F0F5EA;
+  --sel-line: #1E4D3A;
+  --sel-edge: #1E4D3A;
+  --sel-ink: #26261F;
+  --sel-key-bg: #1E4D3A;
+  --sel-key-ink: #FFFFFF;
+  --sel-ring: 1px;
+  --hl-line: #E6BFA6;
+
+  --bar-h: 8px;
+  --bar-h-sm: 6px;
+  --bar-bg: #E3EBDC;
+  --bar-fill: #1E4D3A;
+  --bar-fill-2: #2F6A52;
+  --bar-shine: transparent;
+
+  /* shell */
+  --side-w: 256px;
+  --tab-h: 72px;
+  --tab-pad: 8px;
+  --tab-item-h: 54px;
+  --tab-item-r: 16px;
+  --tab-item-bw: 0px;
+  --tab-on-bg: #E3EBDC;
+  --tab-on-ink: #1E4D3A;
+  --tab-on-line: transparent;
+  --tab-on-edge: 0px;
+  --brand-color: #1E4D3A;
+  --brand-size: 1.4375rem;
+  --brand-weight: 400;
+  /* brand mark: a forest tile with cream bars */
+  --bm-tile: #1E4D3A; --bm-bars: #F6F1E7; --bm-hi: #EBD9A6; --bm-ring-display: none; --bm-bars-display: inline;
+  /* home "this week" panel: forest, with a sand ring */
+  --hero-bg: #1E4D3A; --hero-ink: #F6F1E7; --hero-line: #1E4D3A; --hero-edge: #163A2B;
+  --ring-track: rgba(246, 241, 231, 0.22); --ring-fill: #EBD9A6; --hero-pill-bg: rgba(246, 241, 231, 0.14); --hero-diamond: #EBD9A6;
+}
+:root[data-style="desk"] body { font-weight: var(--w-body); }
+
+/* Refinements the tokens cannot express. */
+:root[data-style="desk"] .btn { font-family: var(--font); }
+:root[data-style="desk"] .card:not(.card-flat):not(.modal) { box-shadow: 0 1px 2px rgba(70, 50, 20, 0.05), 0 8px 20px rgba(70, 50, 20, 0.07); }
+/* a question is set in the serif, the way the mockup shows it */
+:root[data-style="desk"] .prompt { font-family: var(--display); font-weight: 400; }
+:root[data-style="desk"] .card#item { box-shadow: none; }

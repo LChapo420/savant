@@ -919,30 +919,33 @@ App.mount(async () => {
   function chooseMode(opening) {
     return new Promise((resolve) => {
       const modes = opening.modes || {};
-      const card = (key, title, blurb) => `
-        <button class="card mode-card" type="button" data-mode="${key}" style="text-align:left;cursor:pointer;width:100%">
-          <span class="row-between"><strong>${title}</strong>
-            <span class="chip">${opening.suggested_mode === key ? 'Suggested for your goal · ' : ''}${modes[key] ? `up to ${modes[key].total_minutes || modes[key].minutes} min` : ''}</span></span>
-          <span class="small muted" style="display:block;margin-top:4px">${blurb}</span>
+      const card = (key, title, blurb, icon) => `
+        <button class="option-card mode-card${opening.suggested_mode === key ? ' is-suggested' : ''}" type="button" data-mode="${key}">
+          <span class="opt-ic" aria-hidden="true">${window.icon(icon)}</span>
+          <span class="opt-body">
+            <span class="opt-title">${title}${modes[key] ? ` <span class="opt-time">up to ${modes[key].total_minutes || modes[key].minutes} min</span>` : ''}</span>
+            <span class="opt-sub">${blurb}</span>
+            ${opening.suggested_mode === key ? '<span class="opt-suggest">Suggested for your goal</span>' : ''}
+          </span>
         </button>`;
       const options = (opening.grades || []).map((g) => `<option value="${App.escapeHtml(g.grade_id)}">${App.escapeHtml(g.name)}</option>`).join('');
       host.innerHTML = `
-        <div class="card" style="text-align:center">
+        <div class="sp-intro">
           <span class="chip chip-accent">${App.escapeHtml(opening.track_name || '')}</span>
-          <h1 style="margin:12px 0 4px">Find your grade</h1>
-          <p class="muted">Optional. Pick how long to spend: the longer modes ask more, and land closer.</p>
+          <h1>Find your grade</h1>
+          <p>Optional. Pick how long to spend: the longer modes ask more, and land closer.</p>
         </div>
-        <div class="card" style="margin-top:12px">
-          <label class="small" for="hint">Have a rough idea where you are? The search starts there. (Optional)</label>
-          <select id="hint" style="width:100%;margin-top:6px"><option value="">Not sure</option>${options}</select>
+        <div class="sp-panel">
+          <label class="small" for="hint" style="font-weight:var(--w-strong)">Have a rough idea where you are? The search starts there. (Optional)</label>
+          <select id="hint" style="width:100%;margin-top:8px"><option value="">Not sure</option>${options}</select>
         </div>
         <h2 class="visually-hidden" id="mode-heading">Pick how long to spend</h2>
-        <div role="group" aria-labelledby="mode-heading" style="display:grid;gap:10px;margin-top:12px">
-          ${card('quick', 'Quick', 'A short check that lands within about a grade.')}
-          ${card('balanced', 'Balanced', 'More questions near where you are, so it lands closer.')}
-          ${card('accurate', 'Accurate', 'The most questions, for the closest placement.')}
+        <div role="group" aria-labelledby="mode-heading" class="mode-grid">
+          ${card('quick', 'Quick', 'A short check that lands within about a grade.', 'zap')}
+          ${card('balanced', 'Balanced', 'More questions near where you are, so it lands closer.', 'target')}
+          ${card('accurate', 'Accurate', 'The most questions, for the closest placement.', 'search')}
         </div>
-        <p class="small muted" style="margin-top:12px">Already know where you belong?
+        <p class="small muted skip-quiz">Already know where you belong?
           <a href="/onboarding?track=${encodeURIComponent(trackId)}">Skip the quiz and pick a grade</a>.</p>`;
       host.querySelectorAll('.mode-card').forEach((button) => button.addEventListener('click', () => {
         resolve({ mode: button.dataset.mode, start_grade_id: document.getElementById('hint').value || null });

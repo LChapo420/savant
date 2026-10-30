@@ -8,13 +8,21 @@
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script src="/js/style-boot.js"></script>
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/screens/onboarding.css">
 </head>
-<body>
+<body class="ob ob-register">
   <header class="site-header" id="header"></header>
   <main class="auth">
     <div class="card auth-card">
+      <div class="ob-progress" id="reg-progress" role="progressbar" aria-valuemin="1" aria-valuemax="2" aria-valuenow="1" aria-label="Step 1 of 2">
+        <div class="meter"><span style="width:50%"></span></div>
+        <div class="segments" aria-hidden="true"><i class="on"></i><i></i></div>
+        <span class="ob-count" aria-hidden="true">1 / 2</span>
+      </div>
+      <p class="ob-step" id="reg-step">Step 1 of 2</p>
       <h1 id="title">Create your account</h1>
       <div id="error" class="notice notice-error hidden" role="alert"></div>
 

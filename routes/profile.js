@@ -195,6 +195,14 @@ router.get('/progress', requireAuth, (req, res) => {
       summary: s.analysis ? s.analysis.summary || null : null,
     }));
 
+  // The last eight days of sittings that had answers, for the dashboard's "this
+  // week" panel: when each ended and how many questions it held. The browser bins
+  // them by the learner's own calendar day.
+  const weekAgo = Date.now() - 8 * 86400000;
+  const week = ended
+    .filter((s) => Date.parse(s.ended_at) >= weekAgo && (work.get(s.id) || {}).answered > 0)
+    .map((s) => ({ ended_at: s.ended_at, answered: work.get(s.id).answered }));
+
   // Reviews that have come due, across every track, weakest first: this is the
   // list the email reminders in Phase 4 are built from.
   const now = Date.now();
@@ -230,6 +238,7 @@ router.get('/progress', requireAuth, (req, res) => {
       }, {})
       : {},
     recent,
+    week,
     due,
     profile: {
       took_style_quiz: !!profile.took_style_quiz,

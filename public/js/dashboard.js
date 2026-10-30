@@ -1,9 +1,12 @@
-/* The dashboard: what to do next, in priority order — finish a placement, clear a
- * checkpoint, or continue the track that is due.
+/* The dashboard (Home): what to do next, in priority order — finish a placement,
+ * clear a checkpoint, or continue the track that is due.
  *
- * Laid out as "Measured and marked": the page opens on the one next action
- * (with its scale and the only primary button), then each subject is a row
- * with its own scale. See V2-NOTES.md.
+ * Laid out like the redesign mockups' home: a greeting, this week's activity,
+ * today's plan with the next session highlighted (the only big primary button),
+ * a review prompt, and the subjects with how far along each is. Only data the
+ * app really has is drawn: there is no weekly-minutes goal, so the "this week"
+ * panel counts the days studied and the questions answered from the learner's
+ * own sittings. See css/styles/README.md for the classes used.
  *
  * A catch-up (the earlier grades a learner took on before the grade they were
  * placed at) is listed under the grade it leads to, in route order, instead of
@@ -228,10 +231,11 @@ App.mount(async () => {
       : '';
   }
 
-  function leadBlock(e) {
+  /** The next-step heading and detail for one subject (unchanged decisions; see nextStep). */
+  function leadText(e) {
     const step = nextStep(e);
-    const [grade, gradeSub] = App.gradeParts(e.grade.name);
-    const node = leadPath && (leadPath.nodes || []).find((n) => n.level === e.current_level);
+    const [grade] = App.gradeParts(e.grade.name);
+    const node = leadPath && e.id === lead.id && (leadPath.nodes || []).find((n) => n.level === e.current_level);
     const parts = node ? App.levelParts(node) : null;
     const progress = e.progress;
     const child = childOf.get(e.id);
@@ -254,28 +258,66 @@ App.mount(async () => {
       // Spanish Grades 1-2 play as Duolingo-style activities (/spanish/learn,
       // services/spanish/path.js), so a question count says nothing there.
       if (e.track.id === 'spanish' && ['entry', 'intermediate'].includes(e.grade.id)) detail = 'Listening, speaking and word activities with audio.';
-      else if (progress) detail = `${progress.items} of ${progress.required.minItems} questions answered at this level.`;
+      else if (progress) {
+        // The count keeps climbing past the minimum, so say it plainly once the minimum is met
+        // rather than "50 of 12". Moving on also needs the skills to be strong enough.
+        const n = Number(progress.items) || 0;
+        const need = Number(progress.required && progress.required.minItems) || 0;
+        detail = n >= need
+          ? `${n} question${n === 1 ? '' : 's'} answered at this level.`
+          : `${n} of ${need} questions answered at this level.`;
+      }
     }
     // A catch-up grade says where it sits in the route.
     if (child) {
       const where = `Catch-up ${child.index} of ${child.total}, then ${esc(App.gradeParts(child.main.grade.name)[0])}.`;
       detail = detail ? `${where} ${detail}` : where;
     }
+    return { step, heading, detail };
+  }
+
+  /** The highlighted "Up next" card of today's plan. */
+  function leadBlock(e) {
+    const { step, heading, detail } = leadText(e);
+    const [grade, gradeSub] = App.gradeParts(e.grade.name);
     return `
-      <section class="dash-next" data-subject="${esc(e.track.id)}" aria-labelledby="next-heading">
-        <div class="next-meta">${App.symbol(e.track)}<span><b>${esc(e.track.name)}</b>, ${esc(grade)}${gradeSub ? `, ${esc(gradeSub)}` : ''}</span></div>
-        <h1 id="next-heading">${heading}</h1>
+      <div class="card card-hl plan-next" data-subject="${esc(e.track.id)}" aria-labelledby="next-heading">
+        <div class="row-between plan-next-top">
+          <span class="chip chip-accent">Up next</span>
+          <span class="next-meta">${App.symbol(e.track, { size: 'sm' })}<span><b>${esc(e.track.name)}</b>, ${esc(grade)}${gradeSub ? `, ${esc(gradeSub)}` : ''}</span></span>
+        </div>
+        <h2 id="next-heading">${heading}</h2>
         ${detail ? `<p class="next-detail">${detail}</p>` : ''}
         ${step.pending ? '' : rowScale(e, false)}
-        <div class="next-actions">
-          <a class="btn ${step.cooling || step.graduated ? '' : 'btn-primary '}btn-lg" href="${step.href}">${esc(step.label)}${forName(e)}</a>
+        <a class="btn ${step.cooling || step.graduated ? '' : 'btn-primary '}btn-lg btn-block" href="${step.href}">${esc(step.label)}${forName(e)}</a>
+        <div class="next-links">
           <a class="btn btn-text" href="/path?enrollment=${e.id}">See the whole path${forName(e)}</a>
           ${retakeBtn(e)}
         </div>
-      </section>`;
+      </div>`;
   }
 
-  // One subject, as a row with its own scale (kept under its old name).
+  /** The rest of today's plan: one quiet row per other subject. */
+  function laterRow(e, n) {
+    const { step } = leadText(e);
+    const [grade] = App.gradeParts(e.grade.name);
+    return `
+      <a class="plan-later-row" href="${step.href}" data-subject="${esc(e.track.id)}">
+        <span class="plan-num num" aria-hidden="true">${n}</span>
+        <span class="plan-later-text"><b>${esc(e.track.name)}</b><span>${esc(grade)}</span></span>
+        <span class="plan-later-go">${esc(step.short)}${forName(e)}</span>
+      </a>`;
+  }
+
+  /** How far along a subject is: its level on the path, as a share of the path. */
+  function levelShare(e, step) {
+    if (step.graduated) return 100;
+    if (step.pending) return 0;
+    const total = Number(e.grade.pathLength) || 0;
+    return total ? Math.max(2, Math.min(100, Math.round(((e.current_level - 1) / total) * 100))) : 0;
+  }
+
+  // One subject, as a card with its level bar (kept under its old name).
   function enrollmentCard(e) {
     const step = nextStep(e);
     const [grade, gradeSub] = App.gradeParts(e.grade.name);
@@ -283,18 +325,23 @@ App.mount(async () => {
       : step.checkpoint && !step.cooling
         ? `Level ${e.current_level} is the ${esc(App.levelName(step.checkpoint))}. Pass it to continue.`
         : '';
+    const share = levelShare(e, step);
+    const total = e.grade.pathLength;
     return `
-      <div class="subject-row${step.pending ? ' is-pending' : ''}" data-subject="${esc(e.track.id)}">
-        ${App.symbol(e.track)}
-        <div class="who">
-          <b><a href="/path?enrollment=${e.id}">${esc(e.track.name)}</a></b>
-          <span>${esc(grade)}${gradeSub ? `, ${esc(gradeSub)}` : ''}</span>
+      <div class="card subject-card${step.pending ? ' is-pending' : ''}" data-subject="${esc(e.track.id)}">
+        <div class="subject-card-top">
+          ${App.symbol(e.track)}
+          <div class="who">
+            <b><a href="/path?enrollment=${e.id}">${esc(e.track.name)}</a></b>
+            <span>${esc(grade)}${gradeSub ? `, ${esc(gradeSub)}` : ''}</span>
+          </div>
         </div>
         ${step.pending
           ? '<span class="scale-placeholder">Not placed yet</span>'
-          : rowScale(e, true)}
-        <div class="row-act">
-          <a class="btn btn-text" href="${step.href}">${esc(step.short)}${forName(e)}</a>
+          : `<div class="meter" role="img" aria-label="Level ${e.current_level} of ${total}"><span style="width:${share}%"></span></div>
+             <div class="subject-card-level num">${step.graduated ? 'Graduated' : `Level ${e.current_level} of ${total}`}</div>`}
+        <div class="subject-card-act">
+          <a class="btn btn-sm" href="${step.href}">${esc(step.short)}${forName(e)}</a>
           ${retakeBtn(e)}
         </div>
         ${note ? `<div class="row-note">${note}</div>` : ''}
@@ -330,16 +377,14 @@ App.mount(async () => {
       </div>`;
   }
 
-  /** A subject's row, with its catch-up grades listed beneath it in route order. */
+  /** A subject's card, with its catch-up grades listed beneath it in route order. */
   function subjectGroup(e) {
     const kids = childrenOf(e);
     if (!kids.length) return enrollmentCard(e);
     const [main] = App.gradeParts(e.grade.name);
-    return `
-      <div class="subject-group has-catchup" data-subject="${esc(e.track.id)}">
-        ${enrollmentCard(e)}
+    return enrollmentCard(e).replace(/<\/div>\s*$/, `
         <div class="catchup-rows" role="group" aria-label="Catch-up before ${esc(main)}, in order">${kids.map(catchUpRow).join('')}</div>
-      </div>`;
+      </div>`);
   }
 
   // Track names for the recent-sessions table, from the learner's own subjects.
@@ -408,7 +453,7 @@ App.mount(async () => {
   }
   function plannerSection() {
     if (!App.ux.next_study_planner) return '';
-    return `<section id="planner"><h2>When will you study next?</h2><div data-planner-body>${plannerBody()}</div></section>`;
+    return `<section id="planner" class="card"><h2>When will you study next?</h2><div data-planner-body>${plannerBody()}</div></section>`;
   }
   function icsFile(p) {
     const start = planAt(p);
@@ -419,60 +464,100 @@ App.mount(async () => {
       'SUMMARY:Study session', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
   }
 
-  root.innerHTML = `
-    <div class="dash">
-      ${leadBlock(lead)}
-
-      <div class="dash-main">
-        <h2>Your subjects</h2>
-        <div class="subject-rows">${ordered.map((e) => subjectGroup(e)).join('')}</div>
-        <a class="btn btn-text add-subject" href="/onboarding">Add a subject</a>
-        <div id="tutor-host"></div>
-
-        ${data.recent.length ? `
-          <h2 class="section-title">Recent sessions</h2>
-          <div class="table-scroll" tabindex="0" role="region" aria-label="Recent sessions"><table class="data recent-table">
-            <thead><tr><th>When</th><th>Subject</th><th>Type</th><th class="n">Score</th>${hideStats ? '' : '<th class="n">XP</th>'}</tr></thead>
-            <tbody>
-              ${data.recent.map((s) => `
-                <tr>
-                  <td class="nowrap">${when(s.ended_at)}</td>
-                  <td>${esc(trackName(s.track_id))}${s.kind === 'placement' ? '' : recentLevels(s)}</td>
-                  <td>${esc(KIND_NAME[s.kind] || String(s.kind || '').replace(/^./, (c) => c.toUpperCase()))}</td>
-                  <td class="n nowrap">${score(s)}</td>
-                  ${hideStats ? '' : `<td class="n">${s.xp || 0}</td>`}
-                </tr>`).join('')}
-            </tbody>
-          </table></div>` : ''}
+  // ── this week, from the learner's own sittings (GET /api/progress `week`) ──
+  const dayKey = (d) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+  const weekDays = new Set();
+  let weekAnswered = 0;
+  {
+    const since = new Date(); since.setHours(0, 0, 0, 0); since.setDate(since.getDate() - 6);
+    for (const w of data.week || []) {
+      const t = new Date(w.ended_at);
+      if (t >= since) { weekDays.add(dayKey(t)); weekAnswered += Number(w.answered) || 0; }
+    }
+  }
+  const ringDash = (weekDays.size / 7) * 213.6;
+  const heroBlock = hideStats ? '' : `
+    <section class="home-hero" aria-label="This week">
+      <div class="home-ring" role="img" aria-label="${weekDays.size} of the last 7 days studied">
+        <svg viewBox="0 0 84 84" aria-hidden="true"><circle class="ring-track" cx="42" cy="42" r="34"/><circle class="ring-fill" cx="42" cy="42" r="34" stroke-dasharray="${ringDash.toFixed(1)} 213.6"/></svg>
+        <b class="num">${weekDays.size}<small>of 7</small></b>
       </div>
+      <div class="home-hero-text">
+        <div class="home-hero-title">This week</div>
+        <div class="home-hero-meta">${weekDays.size ? `${weekDays.size} day${weekDays.size === 1 ? '' : 's'} studied in the last 7` : 'No sessions in the last 7 days yet'}</div>
+        ${weekAnswered ? `<div class="home-hero-pill"><i aria-hidden="true"></i><span class="num">${weekAnswered}</span> question${weekAnswered === 1 ? '' : 's'} answered</div>` : ''}
+        ${streak ? `<div class="home-hero-pill">${window.icon('flame')}<span class="num">${streak}</span> day${streak === 1 ? '' : 's'} in a row</div>` : ''}
+      </div>
+    </section>`;
 
-      <aside class="dash-aside" aria-label="More">
-        ${data.due.length ? `
-          <section>
-            <h2>Due for review</h2>
-            <p>Weakest first. They are mixed into your next session.</p>
-            <ul class="due-list">
-              ${data.due.map((d) => `<li><span>${esc(d.name)}</span><span class="num">${App.pct(d.mastery)}</span></li>`).join('')}
-            </ul>
-          </section>` : ''}
+  const firstName = String(user.display_name || '').trim().split(/\s+/)[0];
+  const today = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+  const others = ordered.filter((e) => e.id !== lead.id && e.status !== 'graduated');
+  const reviewHref = `/review?enrollment=${lead.id}`;
+  const dueNames = data.due.slice(0, 3).map((d) => esc(d.name)).join(', ');
 
-        ${streak ? `
-          <section>
-            <h2>${streak} day${streak === 1 ? '' : 's'} in a row</h2>
-            <div class="streak-marks" aria-hidden="true">${Array.from({ length: Math.min(7, streak) }, () => window.mark('tick', 'mark-plain')).join('')}</div>
-          </section>` : ''}
+  root.innerHTML = `
+    <div class="home">
+      <header class="home-hello">
+        <h1>${firstName ? `Hi, ${esc(firstName)}` : 'Welcome back'}</h1>
+        <p class="muted">${esc(today)}</p>
+      </header>
 
+      ${heroBlock}
+
+      <section class="home-plan" aria-labelledby="plan-heading">
+        <div class="sec-head"><h2 id="plan-heading">Today's plan</h2><span>${ordered.length} subject${ordered.length === 1 ? '' : 's'}</span></div>
+        ${leadBlock(lead)}
+        ${others.length ? `<div class="plan-later" aria-label="Then">${others.map((e, i) => laterRow(e, i + 2)).join('')}</div>` : ''}
+      </section>
+
+      ${data.due.length ? `
+      <section class="home-review">
+        <div class="card card-reward review-card">
+          <span class="review-ic" aria-hidden="true">${window.icon('cards')}</span>
+          <div class="review-text"><b>Review: <span class="num">${data.due.length}</span> skill${data.due.length === 1 ? '' : 's'} due</b><small>${dueNames}. Weakest first; they are mixed into your next session.</small></div>
+          <a class="btn btn-reward btn-sm" href="${reviewHref}">Review</a>
+        </div>
+      </section>` : ''}
+
+      <section class="home-subjects">
+        <div class="sec-head"><h2>Your subjects</h2><span>level on the path</span></div>
+        <div class="subject-cards">${ordered.map((e) => subjectGroup(e)).join('')}</div>
+        <div class="home-actions" aria-label="More ways to learn">
+          <a class="btn btn-sm" href="/onboarding">Add a subject</a>
+          <div id="tutor-host" class="home-tutor"></div>
+        </div>
+      </section>
+
+      ${data.recent.length ? `
+      <section class="home-recent">
+        <div class="sec-head"><h2>Recent sessions</h2></div>
+        <div class="card card-tight recent-card">
+          <div class="recent-head" aria-hidden="true"><span>When</span><span>Subject</span><span>Type</span><span class="n">Score</span>${hideStats ? '' : '<span class="n">XP</span>'}</div>
+          <ul class="recent-list${hideStats ? ' no-xp' : ''}" aria-label="Recent sessions">
+            ${data.recent.map((s) => `
+              <li class="recent-row">
+                <span class="r-subject"><b>${esc(trackName(s.track_id))}</b>${s.kind === 'placement' ? '' : `<small>${recentLevels(s).replace(/^, l/, 'L')}</small>`}</span>
+                <span class="r-meta"><span class="r-when">${when(s.ended_at)}</span><span class="r-type">${esc(KIND_NAME[s.kind] || String(s.kind || '').replace(/^./, (c) => c.toUpperCase()))}</span></span>
+                <span class="r-score num">${score(s)}</span>
+                ${hideStats ? '' : `<span class="r-xp num">${s.xp || 0}<small> XP</small></span>`}
+              </li>`).join('')}
+          </ul>
+        </div>
+      </section>` : ''}
+
+      <aside class="home-aside" aria-label="More">
         ${plannerSection()}
 
         ${!data.profile.took_style_quiz ? `
-          <section>
+          <section class="card">
             <h2>Your preferences</h2>
             <p>${styleCopy()}</p>
             <a class="btn btn-text" href="/style-quiz?next=/dashboard">Take the learning-style quiz</a>
           </section>` : ''}
 
         ${data.profile.traits.length ? `
-          <section>
+          <section class="card">
             <h2>What the tutor has noticed</h2>
             <ul class="small" style="margin:0; padding-left:18px">
               ${data.profile.traits.map((t) => `<li>${esc(t)}</li>`).join('')}
@@ -481,7 +566,7 @@ App.mount(async () => {
           </section>` : ''}
 
         ${user.id === 6689 ? `
-          <section>
+          <section class="card">
             <h2>Spanish progress</h2>
             <p class="small muted">The daily, timed Spanish check and its progress chart.</p>
             <a class="btn btn-text" href="/spanish-check">Open Spanish progress</a>
@@ -496,6 +581,9 @@ App.mount(async () => {
           </section>` : ''}
       </aside>
     </div>`;
+
+  // Learn and Review in the navigation follow the subject this page leads with.
+  App.setLead(lead.id);
 
   // Retake placement asks first (App.retakePlacement), then opens the placement page.
   App.bindRetake(root);

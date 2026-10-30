@@ -24,6 +24,22 @@ App.mount(async () => {
   ]);
   const percentFor = placement || {};
 
+  // A new account arrives here from the sign-up steps; the quiz and survey leave
+  // the length of that chain in sessionStorage so this screen can say where it is.
+  const flowTotal = ObSteps.total();
+  if (flowTotal >= 3 && !enrollments.length) {
+    const step = flowTotal - 1;
+    document.body.classList.add('ob-focus');
+    const bar = document.getElementById('ob-progress');
+    bar.innerHTML = ObSteps.html(step, flowTotal);
+    bar.setAttribute('aria-valuenow', String(step));
+    bar.setAttribute('aria-valuemax', String(flowTotal));
+    bar.setAttribute('aria-label', `Step ${step} of ${flowTotal}`);
+    bar.classList.remove('hidden');
+    document.getElementById('ob-step').textContent = `Step ${step} of ${flowTotal}`;
+    document.getElementById('ob-step').classList.remove('hidden');
+  }
+
   const enrolled = new Set(enrollments.map((e) => `${e.track.id}:${e.grade.id}`));
   const selected = new Map(); // "track:grade" -> { track_id, grade_id, name, placement }
 
@@ -52,7 +68,7 @@ App.mount(async () => {
     const rec = percentFor[track.id];
     const recName = rec ? (track.grades.find((g) => g.id === rec.recommended_grade_id) || {}).name : null;
     return `
-    <div class="track-card">
+    <div class="track-card" data-subject="${App.escapeHtml(track.id)}">
       <div class="track-head">
         ${App.symbol(track)}
         <div>
@@ -80,18 +96,19 @@ App.mount(async () => {
           const pct = percentOf(track.id, grade.id);
           const pick = rec && rec.recommended_grade_id === grade.id;
           return `
-            <label class="grade-option${done ? ' selected' : ''}${pick ? ' recommended' : ''}" data-key="${key}">
+            <label class="grade-option option-card${done ? ' selected' : ''}${pick ? ' recommended' : ''}" data-key="${key}">
               <input type="checkbox" data-track="${track.id}" data-grade="${grade.id}"
                      data-name="${App.escapeHtml(`${track.name}, ${App.gradeLabel(grade.name)}`)}"
                      data-placement="${grade.placementLength}"
                      ${done ? 'checked disabled' : ''}>
-              <span>
-                <span class="name">${App.escapeHtml(App.gradeLabel(grade.name))}</span>
-                ${pick ? '<span class="chip chip-accent" style="margin-left:6px">we suggest this</span>' : ''}
-                ${pct !== null ? `<span class="chip${pct >= 40 ? ' chip-accent' : ''}" style="margin-left:6px" title="How strongly this grade fits what you showed in the placement quiz">${pct}% fit</span>` : ''}
-                <span class="chip" style="margin-left:6px">${done ? 'enrolled' : `${grade.placementLength} placement questions`}</span>
-                <span class="tiny muted" style="display:block">${App.escapeHtml(grade.blurb)}</span>
+              <span class="opt-body">
+                <span class="opt-title name">${App.escapeHtml(App.gradeLabel(grade.name))}</span>
+                <span class="opt-sub">
+                  ${pick ? '<span class="chip chip-accent">we suggest this</span> ' : ''}${pct !== null ? `<span class="chip${pct >= 40 ? ' chip-accent' : ''}" title="How strongly this grade fits what you showed in the placement quiz">${pct}% fit</span> ` : ''}<span class="chip">${done ? 'enrolled' : `${grade.placementLength} placement questions`}</span>
+                </span>
+                <span class="opt-sub">${App.escapeHtml(grade.blurb)}</span>
               </span>
+              <span class="opt-radio" aria-hidden="true"></span>
             </label>`;
         }).join('')}
       </div>
@@ -145,6 +162,7 @@ App.mount(async () => {
   startBtn.addEventListener('click', async () => {
     startBtn.disabled = true;
     try {
+      ObSteps.clear();
       const body = { selections: [...selected.values()].map(({ track_id, grade_id }) => ({ track_id, grade_id })) };
       const { created } = await App.api.post('/api/enrollments', body);
       const first = created[0];

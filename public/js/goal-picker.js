@@ -13,6 +13,9 @@
   const esc = (t) => (window.App ? App.escapeHtml(t) : String(t));
   const api = () => App.api;
 
+  // One icon per goal, from the app's own set (js/icons.js).
+  const GOAL_ICON = { next_grade: 'flag', deep: 'brain', test: 'target', essentials: 'zap', conversation: 'globe', specific: 'edit' };
+
   function qs(trackId, gradeId) {
     return `track_id=${encodeURIComponent(trackId)}${gradeId ? `&grade_id=${encodeURIComponent(gradeId)}` : ''}`;
   }
@@ -32,21 +35,23 @@
   }
 
   /** The choices and the free-text box, drawn into `node`. onSave(choice, text), onSkip? */
-  function form(node, state, { onSave, onSkip, saveLabel = 'Save goal', skipLabel = 'Skip for now' }) {
+  function form(node, state, { onSave, onSkip, saveLabel = 'Save goal', skipLabel = 'Skip for now', sticky = false }) {
     const current = state.goal && !state.goal.inherited ? state.goal : (state.goal || {});
     const uid = `goal-${Math.random().toString(36).slice(2, 8)}`;
     node.innerHTML = `
-      <fieldset style="border:0;padding:0;margin:0;display:grid;gap:8px">
+      <fieldset class="goal-fieldset">
         <legend class="visually-hidden">Your goal</legend>
         ${state.choices.map((c) => `
-          <label class="card card-tight" style="display:flex;gap:10px;align-items:center;cursor:pointer">
+          <label class="option-card goal-opt">
             <input type="radio" name="${uid}" value="${esc(c.id)}"${current.choice === c.id ? ' checked' : ''}>
-            <span>${esc(c.label)}</span>
+            ${window.icon ? `<span class="opt-ic" aria-hidden="true">${window.icon(GOAL_ICON[c.id] || 'target')}</span>` : ''}
+            <span class="opt-body"><span class="opt-title">${esc(c.label)}</span></span>
+            <span class="opt-radio" aria-hidden="true"></span>
           </label>`).join('')}
       </fieldset>
       <div class="goal-text" style="margin-top:10px;display:none">
         <label class="small" for="${uid}-t">In your own words (a few words is enough)</label>
-        <input id="${uid}-t" type="text" class="input" style="width:100%;margin-top:4px" maxlength="${state.text_max}"
+        <input id="${uid}-t" type="text" class="input" style="width:100%;margin-top:6px" maxlength="${state.text_max}"
           placeholder="For example: finish fractions before my exam on 12 Nov" value="${esc(current.text || '')}">
       </div>
       <div class="goal-date" style="margin-top:10px;display:none">
@@ -55,10 +60,10 @@
         <p class="tiny muted" style="margin:4px 0 0">A date within 14 days puts Spanish into a sprint: review first, then the most-used phrases.</p>
       </div>
       <p class="small muted goal-error" role="alert" style="color:var(--danger,#b91c1c);min-height:1.2em;margin:8px 0 0"></p>
-      <div class="row" style="gap:8px;margin-top:8px;flex-wrap:wrap">
-        <button type="button" class="btn btn-primary goal-save">${esc(saveLabel)}</button>
+      <div class="${sticky ? 'ob-foot' : ''}"><div class="row goal-save-row" style="gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button type="button" class="btn btn-primary btn-lg goal-save">${esc(saveLabel)}</button>
         ${onSkip ? `<button type="button" class="btn btn-ghost goal-skip">${esc(skipLabel)}</button>` : ''}
-      </div>`;
+      </div></div>`;
     const textBox = node.querySelector('.goal-text');
     const dateBox = node.querySelector('.goal-date');
     const dateInput = node.querySelector(`#${uid}-d`);
@@ -96,14 +101,15 @@
     if (state.asked) return state.goal || null;
     return new Promise((resolve) => {
       host.innerHTML = `
-        <div class="card" style="text-align:center">
+        <div class="sp-intro">
           ${title ? `<span class="chip chip-accent">${esc(title)}</span>` : ''}
-          <h1 style="margin:12px 0 4px">What do you want out of this?</h1>
-          <p class="muted">Optional. It sets how long the check is and how your lessons and practice are shaped. As you work, how you actually do keeps adjusting it, and you can change it any time.</p>
+          <h1>What do you want out of this?</h1>
+          <p>Optional. It sets how long the check is and how your lessons and practice are shaped. As you work, how you actually do keeps adjusting it, and you can change it any time.</p>
         </div>
-        <div class="card" style="margin-top:12px" id="goal-form"></div>`;
+        <div id="goal-form"></div>`;
       form(host.querySelector('#goal-form'), state, {
         saveLabel: 'Continue',
+        sticky: true,
         onSave: async (choice, text, target_date) => { const out = await save(trackId, gradeId, { choice, text, target_date }); resolve(out.goal); },
         onSkip: async () => { await save(trackId, gradeId, { choice: null, skipped: true }); resolve(null); },
       });

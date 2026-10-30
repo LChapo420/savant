@@ -1,0 +1,408 @@
+/* Study screens: the session player (lessons, practice, mastery quizzes), the
+ * levels path, review, calendar, retention enforcer, stage checks, skill
+ * practice, base lessons, curriculum.
+ *
+ * Tokens only (css/styles/<id>.css); a few layout differences between the
+ * styles are written as :root[data-style="night"] / [data-style="bento"]
+ * overrides, and chunky (and any style without its own block) is the base.
+ * Matches design-options 06-chunky-habit, 04-night-focus and 10-bento-pastel
+ * (the "test" and "lesson" screens). Loaded after css/style.css.
+ */
+
+/* ── the question player ────────────────────────────────────────────────── */
+
+.session-player { max-width: var(--readw); }
+.session-player .loading { padding-top: var(--s-16); }
+
+/* Top bar: close, progress, timer; then what is being worked and where you are.
+   Not sticky: the Check button is what stays on screen. */
+.session-player .player-head {
+  position: static; z-index: auto;
+  display: grid; align-items: center; gap: 10px 12px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "close meter chips" "titles titles count" "sub sub sub";
+  margin: 0 0 var(--s-6) !important; padding: var(--s-3) 0 0;
+  min-height: 0; background: none; border: 0;
+}
+.session-player .player-close { grid-area: close; margin: 0 0 0 -10px; width: 44px; height: 44px; color: var(--ink-2); }
+.session-player .player-close svg { width: 26px; height: 26px; stroke-width: 2.6; }
+.session-player .player-titles { grid-area: titles; min-width: 0; display: flex; align-items: center; }
+.session-player .player-head h1#title {
+  position: absolute; width: 1px; height: 1px; margin: -1px !important; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.session-player .player-chips { grid-area: chips; display: flex; align-items: center; gap: var(--s-3); }
+.session-player .player-meter { grid-area: meter; display: block; padding: 0; min-width: 0; }
+.session-player .q-count { grid-area: count; justify-self: end; text-align: right; white-space: nowrap; font-size: var(--t-ui-s); font-weight: var(--w-strong); color: var(--ink-2); }
+.session-player .player-head #subtitle { grid-area: sub; display: block; white-space: normal; overflow: visible; font-size: var(--t-ui-s); font-weight: var(--w-body); line-height: 1.4; color: var(--ink-2); }
+.session-player .player-head #subtitle:empty { display: none; }
+.session-player .player-head #covered { font-family: var(--font); font-size: var(--t-meta); color: var(--ink-3); }
+
+/* The generic line under the chip is only worth its room on an exam or a lesson. */
+.session-player[data-kind="practice"] .player-head #subtitle { display: none; }
+
+/* The chip: subject and kind of level. */
+.session-player .q-chip {
+  display: inline-flex; align-items: center; flex-wrap: wrap; margin: 0; padding: 5px 10px; max-width: 100%;
+  background: var(--chip-bg); color: var(--chip-ink); border: 1px solid var(--chip-line); border-radius: var(--r-chip);
+  font-family: var(--font); font-size: 0.72rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.2;
+}
+.session-player .q-subject:not(:empty) + .q-kind::before { content: "\00b7"; margin: 0 0.5em; }
+.session-player .q-kind:empty { display: none; }
+
+/* The timer: a small card with a clock. */
+.session-player .player-head .chip.timer {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 4px 12px 4px 9px;
+  background: var(--card-bg); border: var(--bw-card) solid var(--card-line); border-bottom-width: var(--bw-card-edge);
+  border-radius: 14px; color: var(--ink);
+  font-family: var(--num); font-size: 1.0625rem; font-weight: var(--w-head); font-variant-numeric: tabular-nums;
+}
+.session-player .player-head .chip.timer svg { width: 20px; height: 20px; color: var(--action); }
+
+/* Progress: chunky is one thick bar, the others a segment per question. */
+.session-player .segments { display: none; }
+.session-player .meter.is-segmented { display: block !important; height: var(--bar-h); }
+.session-player .meter.is-segmented > span { transition: width 0.3s var(--ease, ease); }
+
+/* The question. */
+.session-player .item-label { margin-bottom: var(--s-3); }
+.session-player .prompt {
+  max-width: none; margin: var(--s-2) 0 var(--s-8);
+  font-family: var(--read-font); font-weight: var(--w-head); letter-spacing: var(--tracking-head);
+  font-size: clamp(1.75rem, 1.3rem + 1.7vw, 2.125rem); line-height: 1.2; text-wrap: pretty;
+}
+.session-player .prompt:has(.mono-block) { max-width: none; }
+.session-player .passage { margin-bottom: var(--s-5); font-size: 1.0625rem; }
+.session-player .chess-slot { margin-bottom: var(--s-5); }
+
+/* Answer cards. */
+.session-player .choices { gap: 14px; }
+.session-player .choice {
+  min-height: 78px; padding: 12px 16px; gap: 14px;
+  font-size: 1.1875rem; font-weight: var(--w-strong); line-height: 1.3;
+}
+.session-player .choices-short .choice { font-size: clamp(1.375rem, 1.2rem + 1vw, 1.625rem); }
+.session-player .choice .key { width: var(--key-size); height: var(--key-size); font-weight: var(--w-head); }
+.session-player .choice.selected { color: var(--sel-ink); }
+.session-player .choice:focus-visible { outline: var(--focus-ring-w) solid var(--focus-ring); outline-offset: 2px; }
+/* Right and wrong: the whole card, the letter box and a clear word for a screen reader. */
+.session-player .choice.correct .key { background: var(--correct); border-color: var(--correct); }
+.session-player .choice.wrong .key { background: var(--incorrect); border-color: var(--incorrect); }
+.session-player .choice.correct .key .mark, .session-player .choice.wrong .key .mark { color: #fff; }
+.session-player .choice.selected.correct, .session-player .choice.selected.wrong { box-shadow: none; }
+
+/* Typed answers. */
+.session-player .answer-row { flex-direction: column; }
+.session-player #answer-input {
+  min-height: 64px; padding: 0 18px; font-size: 1.375rem; font-weight: var(--w-strong);
+  border-radius: var(--r-choice); border-width: var(--bw-card); border-bottom-width: var(--bw-card-edge);
+}
+.session-player .answer-mark { top: 32px; right: 16px; }
+.session-player .answer-mark .mark { width: 32px; height: 32px; }
+.session-player textarea#answer-input { min-height: 140px; padding: 14px 18px; line-height: 1.45; }
+
+/* "How sure are you?" */
+.session-player .confidence-row { margin: calc(-1 * var(--s-3)) 0 var(--s-5); }
+.session-player .confidence-row > .tiny { font-weight: var(--w-label); }
+.session-player .confidence-row .chip-btn { min-height: 40px; padding: 0 16px; font-weight: var(--w-label); }
+
+/* The sticky Check bar (also "Check what stuck" on a lesson, and Next after an answer). */
+.session-player .check-bar { margin-top: var(--s-6); }
+.session-player .check-bar .btn { min-width: 220px; }
+.session-player .check-bar .btn:disabled { cursor: not-allowed; }
+.session-player .check-bar,
+.session-player #item > .verdict .verdict-actions:has([data-act="next"]) {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; margin: 0;
+  display: flex; justify-content: flex-end; gap: 10px;
+  padding: 12px max(var(--s-4), calc((100vw - var(--readw)) / 2)) calc(12px + env(safe-area-inset-bottom, 0px));
+  background: var(--page); border-top: 1px solid var(--line); box-shadow: none;
+}
+.session-player .check-bar .btn, .session-player #item > .verdict .verdict-actions [data-act="next"] {
+  min-height: var(--btn-h-lg); font-size: var(--btn-size-lg); padding-inline: 32px;
+}
+.session-player :has(> .verdict) > .check-bar { display: none; }
+body:has(.session-player .check-bar) main.page, body:has(.session-player #item > .verdict .verdict-actions [data-act="next"]) main.page { padding-bottom: 132px; }
+@media (max-width: 640px) {
+  .session-player .check-bar .btn, .session-player #item > .verdict .verdict-actions [data-act="next"] { width: 100%; min-width: 0; flex: 1 1 100%; }
+  .session-player .player-head { grid-template-columns: auto minmax(0, 1fr) auto; }
+}
+
+/* The coach: a quiet text button, never louder than Check. */
+.session-player .coach-bar { border-top: 0; margin-top: var(--s-5); padding-top: 0; gap: 6px 12px; }
+.session-player .coach-bar .btn { min-height: 44px; padding: 0 16px; border-radius: var(--r-btn); border-width: var(--btn2-bw); }
+.session-player .coach-bar .tiny { color: var(--ink-3); font-size: var(--t-meta); flex: 1 1 200px; }
+.session-player .coach-panel { margin-top: var(--s-4); background: var(--card-bg); border: var(--bw-card) solid var(--card-line); border-bottom-width: var(--bw-card-edge); border-radius: var(--r-card); padding: var(--s-4) var(--s-5); }
+.session-player .coach-head { font-size: var(--t-ui); }
+.session-player .coach-msg { font-size: 1rem; max-width: 92%; border-radius: var(--r-choice); }
+.session-player .coach-tutor { background: var(--well); border: 0; }
+.session-player .coach-learner { background: var(--action); color: var(--on-action); }
+.session-player .coach-panel .answer-row { flex-direction: row; }
+.session-player .coach-panel .answer-row input { min-height: 48px; }
+
+/* The feedback after an answer: a panel in the mark's colour, the word first. */
+.session-player .verdict {
+  margin-top: var(--s-6); padding: var(--s-5) var(--s-5) var(--s-4);
+  border: var(--bw-card) solid var(--card-line); border-bottom-width: var(--bw-card-edge); border-radius: var(--r-card);
+  background: var(--card-bg);
+}
+.session-player .verdict-correct { background: var(--correct-wash); border-color: var(--correct); border-bottom-color: var(--correct-edge); }
+.session-player .verdict-wrong { background: var(--incorrect-wash); border-color: var(--incorrect); border-bottom-color: var(--incorrect-edge); }
+
+.session-player .verdict h4 { display: block; font-size: 1.3125rem; line-height: 1.3; font-weight: var(--w-head); margin-bottom: var(--s-2); }
+.session-player .verdict-word { font-weight: var(--w-head); }
+.session-player .verdict-word::before {
+  content: "\2713"; display: inline-grid; place-items: center; width: 26px; height: 26px; margin-right: 10px; border-radius: 50%;
+  background: var(--correct); color: #fff; font-size: 0.95rem; line-height: 1; vertical-align: 2px;
+}
+.session-player .verdict-wrong .verdict-word::before { content: "\2715"; background: var(--incorrect); font-size: 0.8rem; }
+.session-player .verdict-checking .verdict-word::before { display: none; }
+.session-player .verdict .rationale { font-size: 1.0625rem; line-height: 1.55; color: var(--ink); margin-top: var(--s-2); }
+.session-player .verdict > .small { color: var(--ink); font-size: var(--t-ui-s); }
+.session-player .verdict-actions { margin-top: var(--s-4); }
+.session-player .verdict .effort-note { border: 0; background: transparent; padding: 0; }
+.session-player .ask-box .answer-row { flex-direction: row; }
+.session-player .ask-box input { min-height: 48px; }
+.session-player .effort-note.notice { margin-bottom: var(--s-5); }
+.session-player .session-controls { border-top: 0; margin-top: var(--s-6); padding-top: 0; }
+.session-player > .row { margin-top: var(--s-4) !important; }
+.session-player #hint-line { font-size: var(--t-ui-s); color: var(--ink-3); }
+
+/* ── lessons: the rule, the example, the trap, the quick check ─────────── */
+.session-player .lesson { max-width: none; font-family: var(--read-font); }
+.session-player .lesson-meta {
+  margin: 0 0 var(--s-2); font-family: var(--eyebrow-font, var(--font)); font-size: var(--eyebrow-size, var(--t-meta));
+  font-weight: var(--eyebrow-weight, 800); letter-spacing: var(--eyebrow-tracking, 0); text-transform: var(--eyebrow-case, none); color: var(--ink-3);
+}
+.session-player .lesson h2 { font-size: clamp(1.75rem, 1.35rem + 1.5vw, 2.125rem); font-weight: var(--w-head); line-height: 1.12; letter-spacing: var(--tracking-head); margin-bottom: var(--s-3); }
+.session-player .lesson-intro { font-size: 1.1875rem; font-weight: var(--w-strong); line-height: 1.45; color: var(--ink); margin: 0 0 var(--s-5); }
+.session-player .lesson-section { margin-top: var(--s-4); font-size: 1.0625rem; line-height: 1.6; }
+.session-player .lesson-label {
+  margin: 0 0 var(--s-2); font-family: var(--eyebrow-font, var(--font)); font-size: 0.8125rem; font-weight: var(--w-head);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+.session-player .lesson-section.card { padding: var(--s-4) var(--s-5) var(--s-5); }
+.session-player .lesson-section p { margin: 0; white-space: pre-wrap; font-weight: var(--w-strong); }
+.session-player .lesson-rule.lesson-idea { background: var(--action-tint); border-color: var(--hl-line); border-bottom-color: var(--hl-line); }
+.session-player .lesson-idea p { font-size: 1.25rem; font-weight: var(--w-head); line-height: 1.35; letter-spacing: var(--tracking-head); color: var(--ink); }
+.session-player .lesson-example {
+  margin: var(--s-3) 0 0; padding: var(--s-3) var(--s-4); background: var(--well); border: 0; border-radius: var(--r-md);
+  font-family: var(--num); font-size: 1.125rem; font-weight: var(--w-strong); line-height: 1.6; color: var(--ink);
+}
+.session-player .lesson-steps { margin-top: var(--s-4); gap: 10px; }
+.session-player .lesson-steps li { font-weight: var(--w-body); }
+.session-player .lesson-steps li::before {
+  display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--action-tint); color: var(--action-ink); font-weight: var(--w-head); font-size: 0.8125rem; text-align: center;
+}
+.session-player .lesson-worked p.small { margin-top: var(--s-4); font-size: 1rem; }
+.session-player .lesson-trap {
+  display: flex; gap: 12px; align-items: flex-start; padding: var(--s-3) var(--s-4);
+  background: var(--reward-tint); border: var(--bw-card) solid var(--reward-line); border-bottom-width: var(--bw-card-edge); border-radius: var(--r-card);
+}
+.session-player .lesson-trap-ic {
+  display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: var(--r-icon);
+  background: var(--reward); color: var(--on-reward); border-bottom: 3px solid var(--reward-edge);
+}
+.session-player .lesson-trap .lesson-label { color: var(--reward-ink); font-size: 0.875rem; letter-spacing: 0.02em; text-transform: none; margin-bottom: 2px; }
+.session-player .lesson-trap ul { margin: 0; padding-left: 18px; font-size: 1rem; font-weight: var(--w-strong); line-height: 1.45; color: var(--reward-ink); }
+.session-player .lesson-trap li + li { margin-top: 4px; }
+.session-player .lesson-summary { padding: var(--s-5) 0 0; border-top: 0; margin-top: var(--s-6); }
+.session-player .lesson-summary p { font-size: 1.125rem; font-weight: var(--w-strong); color: var(--ink); }
+.session-player .lesson-bar { margin-top: var(--s-8); }
+
+/* ── the end of a level, and the session summary ───────────────────────── */
+.session-player .level-close { padding: var(--s-5) 0 0; }
+.session-player .level-close h2 { font-weight: var(--w-head); letter-spacing: var(--tracking-head); }
+.session-player .level-close .meter { height: var(--bar-h); }
+.session-player .level-close > .small { margin-bottom: var(--s-4); }
+.session-player #level-actions { gap: 12px; }
+.session-player #level-actions .btn { min-height: var(--btn-h-lg); font-size: var(--btn-size-lg); }
+.session-player #level-actions .btn:not(.btn-primary) { min-height: var(--btn-h); }
+.session-player #level-retention .card { margin-top: var(--s-2); }
+.session-player #level-retention .card-tight, .session-player #retention .card-tight { padding: var(--s-5); }
+.session-player .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: var(--s-3); margin: 0; }
+.session-player .facts > div {
+  padding: var(--s-3) var(--s-4); background: var(--well); border-radius: var(--r-md);
+}
+.session-player .facts dt { font-size: var(--t-meta); font-weight: var(--w-label); color: var(--ink-2); }
+.session-player .facts dd { margin: 2px 0 0; font-family: var(--num); font-size: 1.75rem; font-weight: var(--w-head); line-height: 1.1; letter-spacing: var(--tracking-head); }
+.session-player .card-title { font-weight: var(--w-head); }
+.session-player .held-review .held-item { padding: var(--s-4) 0; }
+
+/* ── Night: a hairline card around the question, segments, mono eyebrows ── */
+:root[data-style="night"] .session-player .player-head {
+  grid-template-areas: "close titles chips" "count count count" "meter meter meter" "sub sub sub"; row-gap: 14px;
+}
+:root[data-style="night"] .session-player .player-close {
+  margin: 0; border: 1px solid var(--line); border-radius: var(--r-btn); background: var(--card-bg); width: 44px; height: 44px; color: var(--ink);
+}
+:root[data-style="night"] .session-player .player-titles { justify-content: center; text-align: center; }
+:root[data-style="night"] .session-player .q-chip {
+  display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 0; background: none; border: 0; border-radius: 0; text-transform: none; letter-spacing: 0;
+}
+:root[data-style="night"] .session-player .q-subject { font-family: var(--font); font-size: 1.0625rem; font-weight: 600; color: var(--ink); }
+:root[data-style="night"] .session-player .q-kind { font-family: var(--num); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
+:root[data-style="night"] .session-player .q-subject:not(:empty) + .q-kind::before { content: none; }
+:root[data-style="night"] .session-player .player-head .chip.timer { border-radius: var(--r-btn); border-bottom-width: 1px; font-weight: 500; font-size: 1rem; min-height: 44px; }
+:root[data-style="night"] .session-player .player-head .chip.timer svg { color: var(--ink-2); width: 16px; height: 16px; }
+:root[data-style="night"] .session-player .q-count {
+  justify-self: stretch; display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--num); font-size: 0.8125rem; font-weight: 400; color: var(--ink-2);
+}
+:root[data-style="night"] .session-player .q-count-l { font-size: 0.75rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3); }
+:root[data-style="night"] .session-player .q-count-n { color: var(--ink); font-weight: 500; }
+:root[data-style="night"] .session-player .segments { display: flex; gap: 4px; }
+:root[data-style="night"] .session-player .meter.is-segmented { display: none !important; }
+:root[data-style="night"] .session-player .prompt {
+  font-weight: 500; font-size: clamp(1.4rem, 1.2rem + 0.9vw, 1.6rem); line-height: 1.3; margin: 0 0 var(--s-4);
+  padding: 22px 20px 24px; background: var(--card-bg); border: 1px solid var(--card-line); border-radius: var(--r-card);
+}
+:root[data-style="night"] .session-player .choices { gap: 12px; }
+:root[data-style="night"] .session-player .choice { min-height: 70px; font-weight: 500; font-size: 1.125rem; }
+:root[data-style="night"] .session-player .choices-short .choice { font-family: var(--num); font-size: 1.25rem; }
+:root[data-style="night"] .session-player .choice.selected::after {
+  content: "\2713"; margin-left: auto; color: var(--action); font-size: 1.25rem; line-height: 1;
+}
+:root[data-style="night"] .session-player .choice.selected.correct::after, :root[data-style="night"] .session-player .choice.selected.wrong::after { content: none; }
+:root[data-style="night"] .session-player #answer-input { font-weight: 500; border-bottom-width: 1px; }
+:root[data-style="night"] .session-player .check-bar .btn, :root[data-style="night"] .session-player #item > .verdict .verdict-actions [data-act="next"] { font-weight: 600; }
+:root[data-style="night"] .session-player .verdict { border-bottom-width: 1px; }
+:root[data-style="night"] .session-player .lesson-trap { background: transparent; border: 1px dashed var(--line-strong); }
+:root[data-style="night"] .session-player .lesson-trap-ic { background: transparent; border: 0; color: var(--ink); width: 24px; height: 24px; }
+:root[data-style="night"] .session-player .lesson-trap .lesson-label { color: var(--ink); text-transform: uppercase; letter-spacing: 0.09em; font-size: 0.6875rem; font-weight: 500; font-family: var(--num); }
+:root[data-style="night"] .session-player .lesson-trap ul { color: #C5CAD3; font-weight: 400; }
+:root[data-style="night"] .session-player .lesson-rule.lesson-idea { background: var(--card-bg); border-color: var(--card-line); }
+:root[data-style="night"] .session-player .lesson h2 { font-weight: 600; }
+:root[data-style="night"] .session-player .lesson-intro { font-weight: 400; color: var(--ink-2); font-size: 1.0625rem; }
+:root[data-style="night"] .session-player .lesson-section p { font-weight: 400; }
+:root[data-style="night"] .session-player .lesson-idea p { font-weight: 500; }
+
+/* ── Bento: soft cards, a pastel question block, an ink pill button ────── */
+:root[data-style="bento"] .session-player .player-head {
+  grid-template-areas: "close titles chips" "meter meter count" "sub sub sub"; row-gap: 16px;
+}
+:root[data-style="bento"] .session-player .player-close { margin: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--card-line); color: var(--ink); }
+:root[data-style="bento"] .session-player .player-titles { align-items: center; }
+:root[data-style="bento"] .session-player .q-chip {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: 0; background: none; border: 0; border-radius: 0; text-transform: none; letter-spacing: 0;
+}
+:root[data-style="bento"] .session-player .q-subject { order: 0; font-size: 0.78rem; font-weight: 500; color: var(--ink-2); }
+:root[data-style="bento"] .session-player .q-kind { order: 1; font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+:root[data-style="bento"] .session-player .q-subject:not(:empty) + .q-kind::before { content: none; }
+:root[data-style="bento"] .session-player .player-head .chip.timer { border-radius: 19px; border-bottom-width: var(--bw-card); min-height: 40px; font-weight: 700; font-size: 0.9375rem; }
+:root[data-style="bento"] .session-player .player-head .chip.timer svg { color: var(--ink); width: 18px; height: 18px; }
+:root[data-style="bento"] .session-player .segments { display: flex; gap: 6px; }
+:root[data-style="bento"] .session-player .meter.is-segmented { display: none !important; }
+:root[data-style="bento"] .session-player .q-count { font-weight: 700; color: var(--ink); }
+:root[data-style="bento"] .session-player .q-count-l { display: none; }
+:root[data-style="bento"] .session-player .prompt {
+  font-weight: 800; font-size: clamp(1.625rem, 1.3rem + 1.4vw, 1.875rem); line-height: 1.18; letter-spacing: -0.03em;
+  margin: 0 0 var(--s-4); padding: 24px 22px 26px; min-height: 180px; display: flex; flex-direction: column; justify-content: flex-end;
+  background: var(--subj-wash, var(--action-tint)); border-radius: var(--r-card);
+}
+:root[data-style="bento"] .session-player .choices { gap: 10px; }
+:root[data-style="bento"] .session-player .choice { min-height: 64px; font-weight: 600; font-size: 1.0625rem; }
+:root[data-style="bento"] .session-player .choice.selected::after {
+  content: "\2713"; margin-left: auto; display: grid; place-items: center; width: 24px; height: 24px; flex: none; border-radius: 50%;
+  background: var(--ink); color: var(--page); font-size: 0.8rem; line-height: 1;
+}
+:root[data-style="bento"] .session-player .choice.selected.correct::after, :root[data-style="bento"] .session-player .choice.selected.wrong::after { content: none; }
+:root[data-style="bento"] .session-player .lesson-rule.lesson-idea { background: var(--subj-wash, var(--action-tint)); border-color: transparent; }
+:root[data-style="bento"] .session-player .lesson-idea p { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.2; }
+:root[data-style="bento"] .session-player .lesson-trap { background: var(--reward-tint); border-color: var(--reward-line); border-width: 1px; }
+:root[data-style="bento"] .session-player .lesson-trap-ic { background: rgba(255, 255, 255, 0.75); border: 0; color: var(--ink); }
+:root[data-style="bento"] .session-player .lesson-trap .lesson-label { color: var(--ink-2); font-weight: 600; }
+:root[data-style="bento"] .session-player .lesson-trap ul { color: var(--ink); font-weight: 600; }
+:root[data-style="bento"] .session-player .lesson-label { text-transform: none; letter-spacing: 0.01em; font-size: 0.8125rem; font-weight: 600; }
+:root[data-style="bento"] .session-player .verdict { border-bottom-width: var(--bw-card); }
+
+/* ── desktop: the same column, a little more air ───────────────────────── */
+@media (min-width: 1025px) {
+  .session-player { padding-top: var(--s-4); }
+  .session-player .player-head { margin-bottom: var(--s-8) !important; }
+  .session-player .prompt { margin-bottom: var(--s-10); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .session-player .meter.is-segmented > span { transition: none; }
+}
+
+/* ── the levels path ───────────────────────────────────────────────────── */
+.path-top { gap: var(--s-5); }
+.path-top .track-heading h1 { font-size: var(--t-h1); }
+/* "Up next": the hero card, like the one on Home. */
+.path-top .path-hero {
+  padding: var(--s-5); gap: var(--s-5) var(--s-8);
+  background: var(--card-bg); border: var(--bw-card) solid var(--hl-line); border-bottom-width: var(--bw-card-edge); border-radius: var(--r-card);
+}
+.path-hero .now-kind {
+  display: inline-block; margin: 0 0 var(--s-2); padding: 4px 10px; border-radius: var(--r-chip);
+  background: var(--chip2-bg); color: var(--chip2-ink); border: 1px solid var(--chip2-line);
+  font-family: var(--eyebrow-font, var(--font)); font-size: 0.72rem; font-weight: var(--chip2-weight, 900); letter-spacing: var(--chip2-tracking, 0.08em); text-transform: var(--chip2-case, uppercase);
+}
+.path-hero h2 { font-size: var(--t-h2); font-weight: var(--w-head); letter-spacing: var(--tracking-head); margin: 0 0 var(--s-2); }
+.path-hero .path-actions { margin-top: var(--s-4); }
+.path-hero .path-actions .btn-lg { min-height: var(--btn-h-lg); }
+.path-hero .hero-body { padding-top: 2px; }
+.path-hero .tmeters { display: grid; gap: var(--s-3); }
+.path-hero .path-done-line { color: var(--correct); }
+
+/* Units as cards; the one you are in stands out. */
+.units { gap: 10px; border-top: 0; }
+.unit-group {
+  padding: 0 var(--s-4); background: var(--card-bg); overflow: hidden;
+  border: var(--bw-card) solid var(--card-line); border-bottom-width: var(--bw-card-edge); border-radius: var(--r-card);
+}
+.unit-group.is-current { border-color: var(--hl-line); background: var(--subj-card-bg, var(--card-bg)); }
+.unit-group.is-current .unit-head-title { color: var(--ink); }
+.unit-group:not(.is-current) .unit-head-title { font-weight: var(--w-strong); }
+.unit-head { min-height: 56px; }
+.unit-head-title { font-weight: var(--w-head); }
+.unit-body { padding: 0 0 var(--s-3); border-top: 1px solid var(--line); }
+.unit-group .node:first-child { margin-top: var(--s-2); }
+.node-current { background: var(--action-tint); border: 1px solid var(--hl-line); border-radius: var(--r-md); }
+.node-current .badge { color: var(--action-ink); border-right-color: var(--action); }
+.node-current .btn-primary { min-height: var(--btn-h-sm); }
+.unit-group.is-skipped { background: var(--well); border-bottom-width: var(--bw-card); }
+
+@media (max-width: 640px) {
+  .path-top .path-hero { padding: var(--s-4); }
+  .unit-group { padding: 0 var(--s-3); }
+  .node-current { margin: 0 calc(-1 * var(--s-3)); padding-inline: var(--s-3); border-radius: 0; border-inline: 0; }
+}
+
+/* ── the session summary ───────────────────────────────────────────────── */
+.session-player .recap-title { font-size: var(--t-h1); font-weight: var(--w-head); letter-spacing: var(--tracking-head); margin: var(--s-4) 0 var(--s-5); }
+.session-player > .row-wrap { gap: 10px; }
+.session-player > .row-wrap > .btn-primary { min-height: var(--btn-h-lg); font-size: var(--btn-size-lg); }
+.session-player > .notice { margin-bottom: var(--s-4); }
+@media (max-width: 640px) {
+  .session-player > .row-wrap > .btn { flex: 1 1 100%; }
+  .session-player > .row-wrap > .btn-ghost { flex-basis: auto; }
+}
+
+/* ── retention enforcer, calendar, review ──────────────────────────────── */
+.enf-option {
+  min-height: 68px; padding: 14px 16px; background: var(--card-bg);
+  border: var(--bw-card) solid var(--choice-line); border-bottom-width: var(--bw-card-edge); border-radius: var(--r-choice);
+}
+.enf-option:has(input:checked) { background: var(--sel-bg); border-color: var(--sel-line); border-bottom-color: var(--sel-edge); box-shadow: none; }
+.enf-option input { width: 22px; height: 22px; accent-color: var(--action); }
+.enf-name { font-size: 1.0625rem; font-weight: var(--w-strong); }
+.enf-choose legend { font-weight: var(--w-head); }
+.enf-foot .btn-primary { min-height: var(--btn-h-lg); }
+.enf-lede { font-weight: var(--w-body); }
+
+.cal-bar .btn { min-width: 44px; }
+.cal-month { font-weight: var(--w-head); font-size: var(--t-h3); }
+.cal-grid th { font-weight: var(--w-label); }
+.cal-day.is-today { background: var(--action-tint); box-shadow: inset 0 3px 0 var(--action); }
+.cal-day.is-today .cal-n { color: var(--action-ink); }
+.cal-tag { border-radius: var(--r-chip); font-weight: var(--w-label); }
+.cal-ev.is-due .cal-tag, .cal-ev.is-today .cal-tag { background: var(--action); border-color: var(--action); color: var(--on-action); }
+.cal-legend { padding: var(--s-3) var(--s-4); background: var(--card-bg); border: var(--bw-card) solid var(--card-line); border-radius: var(--r-card); }
+
+.review-now .path-actions .btn-lg { min-height: var(--btn-h-lg); }
+.review-row { padding: 14px var(--s-4); margin-top: 8px; background: var(--card-bg); border: var(--bw-card) solid var(--card-line); border-bottom-width: var(--bw-card-edge); border-radius: var(--r-card); }
+.review-list { display: grid; }
+.review-title { font-weight: var(--w-strong); }

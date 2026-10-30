@@ -9,45 +9,61 @@
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script src="/js/style-boot.js"></script>
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/screens/onboarding.css">
 </head>
-<body>
+<body class="ob ob-act">
   <header class="site-header" id="header"></header>
   <main class="page">
-    <div class="wrap wrap-narrow act-page">
-      <h1>ACT prep that starts at your level</h1>
-      <p class="lede">Savant measures what you already know across the ACT subjects, then teaches and reviews from there, so you spend your time on what you are missing.</p>
-      <p><a class="btn btn-primary btn-lg" id="start-free" href="/register?track=act">Start free</a></p>
-      <p class="small">Free while Savant is in preview. No card.</p>
+    <div class="wrap act-page">
+      <section class="act-hero">
+        <span class="chip chip-accent">ACT prep</span>
+        <h1>ACT prep that starts at your level</h1>
+        <p class="lede">Savant measures what you already know across the ACT subjects, then teaches and reviews from there, so you spend your time on what you are missing.</p>
+        <p class="act-cta"><a class="btn btn-primary btn-lg" id="start-free" href="/register?track=act">Start free</a></p>
+        <p class="small">Free while Savant is in preview. No card.</p>
+      </section>
 
-      <h2>What it does today</h2>
-      <ul>
+      <div class="act-grid">
+        <section class="card act-card act-wide">
+          <h2>What it does today</h2>
+          <ul class="act-list">
         <li><strong>Finds your grade.</strong> An adaptive placement quiz puts you in one of 16 ACT grades, each named for a target composite band. You choose how long it runs: from about 20 to about 90 minutes. Or pick a grade yourself.</li>
         <li><strong>Teaches and practises from there.</strong> The grades cover Math, English, Reading, Science, Writing and test strategy. Each level is a lesson, a practice session or a checkpoint.</li>
         <li><strong>Checks you have it.</strong> Checkpoint quizzes have a 75% pass mark. If you miss, the app looks at your wrong answers, works out what you misunderstood, and teaches that before you retry.</li>
         <li><strong>Brings skills back before you forget them.</strong> Earlier skills return on a spaced-review schedule, and there is a daily review session.</li>
         <li><strong>Keeps your real scores.</strong> On <a href="/act-scores">your ACT scores page</a> you can enter your test date, your target, and the section scores from official practice tests or the real ACT, and see them charted against your target. The composite there is the average of English, Math and Reading. Science is shown but is not counted in it.</li>
       </ul>
+        </section>
 
-      <h2>How it adapts</h2>
-      <p>Your placement sets where you start. After that, each session mixes skills that are due for review, work at your level, and questions on the things you got wrong. Each skill has its own review schedule, so something you nearly lost returns sooner than something solid.</p>
+        <div class="act-cols">
+        <section class="card act-card">
+          <h2>How it adapts</h2>
+          <p>Your placement sets where you start. After that, each session mixes skills that are due for review, work at your level, and questions on the things you got wrong. Each skill has its own review schedule, so something you nearly lost returns sooner than something solid.</p>
+        </section>
 
-      <h2>What it does not do yet</h2>
-      <p>We would rather you know before you start.</p>
-      <ul>
+        <section class="card act-card card-reward">
+          <h2>What it does not do yet</h2>
+          <p>We would rather you know before you start.</p>
+      <ul class="act-list">
         <li>It does not time you by section, and it does not yet give a section-by-section pacing report.</li>
         <li>Questions are not yet in the real test's format. English items are single sentences, not passages with underlined portions and a "NO CHANGE" choice. Science does not yet use figures and tables, and Reading is not yet in multi-question passage sets.</li>
         <li>It does not predict your ACT score. The only scores it shows are ones you enter from official tests.</li>
         <li>Some level descriptions on the path still describe timed, scaled practice that the app does not deliver yet. We are correcting them.</li>
         <li>It does not build a plan around your test date yet. Your date is stored and counted down, but it does not change your path.</li>
       </ul>
+        </section>
 
-      <h2>Does it raise scores?</h2>
-      <p>We do not know yet, and we will not guess. We are setting up a careful before-and-after study using ACT's own free practice tests, with the order of the tests balanced between students and a group that waits to start, and we will report everyone, including results that are zero or negative. There are no results yet. You can join it from <a href="/act-study">the study page</a> once you have an account.</p>
+        <section class="card act-card">
+          <h2>Does it raise scores?</h2>
+          <p>We do not know yet, and we will not guess. We are setting up a careful before-and-after study using ACT's own free practice tests, with the order of the tests balanced between students and a group that waits to start, and we will report everyone, including results that are zero or negative. There are no results yet. You can join it from <a href="/act-study">the study page</a> once you have an account.</p>
+        </section>
 
-      <h2>Your data, in plain words</h2>
-      <ul>
+        <section class="card act-card">
+          <h2>Your data, in plain words</h2>
+          <ul class="act-list">
         <li>We keep your account, your answers and your progress, so we can teach you.</li>
         <li>We never sell your data, never use it for ads, and show no ads.</li>
         <li>Some features send what you write, with the question, to outside AI companies to answer or mark it. The <a href="/privacy">privacy policy</a> lists them.</li>
@@ -55,8 +71,11 @@
         <li>You can download your data from your profile and ask us to delete it.</li>
       </ul>
       <p class="small">The privacy policy is still a draft for legal review. <a href="/privacy">Read it in full</a>.</p>
+        </section>
+        </div>
+      </div>
 
-      <p><a class="btn btn-primary btn-lg" id="start-free-2" href="/register?track=act">Start free</a></p>
+      <p class="act-cta act-cta-end"><a class="btn btn-primary btn-lg" id="start-free-2" href="/register?track=act">Start free</a></p>
     </div>
   </main>
   <script src="/js/icons.js"></script>

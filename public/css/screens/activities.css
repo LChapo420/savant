@@ -1,0 +1,357 @@
+/* Activities: the Spanish course player and every activity type it plays
+ * (lessons, listening, speaking, dictation, stories, conversation lab, quick
+ * games, exams, the feedback sheet), plus the Spanish test lab.
+ *
+ * The Spanish pages keep their own component sheets (spanish/css/components.css
+ * and player.css, written against --es-* tokens). This file does two things:
+ *
+ *   1. TOKEN BRIDGE. Every --es-* token is re-pointed at the app's style tokens
+ *      (css/styles/<id>.css), so the player is chunky, night or bento with the
+ *      rest of the app and a new style needs no change here.
+ *   2. FEEL. Refinements to the moments that should feel physical: answer
+ *      cards, word-tile keys, the check bar and the right/wrong sheet. They
+ *      read the same tokens, so chunky gets press edges, night gets hairlines,
+ *      bento gets soft tiles and ink pills without a per-style copy.
+ *
+ * Load it AFTER spanish/css/*.css. Every rule is prefixed :root[data-style] so
+ * a page that never ran style-boot.js keeps the old look. The sealed
+ * spanish-check / spanish-listening pages do not load this.
+ */
+
+/* ── 1. token bridge ──────────────────────────────────────────────────── */
+:root[data-style] {
+  --es-bg: var(--card-bg);                 /* a surface that sits on the page */
+  --es-surface: var(--well);
+  --es-surface-2: var(--well-2);
+  --es-border: var(--card-line);
+  --es-border-strong: var(--control);
+  --es-text: var(--ink);
+  --es-text-muted: var(--ink-2);
+
+  --es-accent: var(--action);
+  --es-accent-lip: var(--action-edge);
+  --es-on-accent: var(--on-action);
+  --es-secondary: var(--action);
+  --es-secondary-lip: var(--action-edge);
+  --es-on-secondary: var(--on-action);
+  --es-secondary-text: var(--action-ink);
+
+  --es-success: var(--correct);
+  --es-success-lip: var(--correct-edge);
+  --es-on-success: var(--card-bg);
+  --es-success-text: var(--correct);
+  --es-success-bg: var(--correct-wash);
+  --es-danger: var(--incorrect);
+  --es-danger-lip: var(--incorrect-edge);
+  --es-on-danger: var(--card-bg);
+  --es-danger-text: var(--incorrect);
+  --es-danger-bg: var(--incorrect-wash);
+  --es-gold: var(--reward);
+  --es-gold-lip: var(--reward-edge);
+  --es-on-gold: var(--on-reward);
+  --es-gold-text: var(--reward-ink);
+  --es-locked: var(--off-bg);
+  --es-locked-lip: var(--off-edge);
+  --es-on-locked: var(--off-ink);
+  --es-focus: var(--focus);
+
+  --es-font: var(--font);
+  --es-mono: var(--num);
+  --es-weight-base: var(--w-body);
+  --es-weight-xs: var(--w-strong);
+  --es-weight-sm: var(--w-strong);
+  --es-weight-lg: var(--w-strong);
+  --es-weight-xl: var(--w-head);
+  --es-weight-2xl: var(--w-head);
+  --es-weight-display: var(--w-head);
+
+  --es-radius-sm: var(--r-icon);
+  --es-radius-md: var(--r-input);
+  --es-radius-lg: var(--r-choice);
+  --es-radius-xl: var(--r-card);
+  --es-border-width: var(--bw-card);
+  --es-border-lip: var(--bw-card-edge);
+  --es-shadow-pop: var(--shadow-lg);
+  --es-button-sm: var(--btn-h-sm);
+  --es-button-md: var(--btn-h);
+  --es-button-lg: var(--btn-h-lg);
+}
+/* the text on a solid correct / wrong face is the surface colour, so it reads
+   on the light styles (white) and on night (near black) */
+:root[data-style="night"] {
+  --es-on-success: var(--page);
+  --es-on-danger: var(--page);
+}
+
+/* page ground: cards and tiles (--es-bg) sit on it */
+:root[data-style] body.es { background: var(--page); color: var(--ink); }
+
+/* ── 2. frame: top bar, progress, footer ──────────────────────────────── */
+:root[data-style] .es-lesson__top { background: var(--page); }
+:root[data-style] .es-lesson__top .es-iconbtn { color: var(--ink-2); border-radius: var(--r-btn); }
+:root[data-style] .es-lesson__top .es-iconbtn:hover { color: var(--ink); background: var(--well); }
+:root[data-style] .es-progress {
+  height: var(--bar-h); border-radius: var(--r-bar); background: var(--bar-bg);
+}
+:root[data-style] .es-progress__fill { background: var(--bar-fill); border-radius: inherit; }
+:root[data-style] .es-progress__fill::after { background: var(--bar-shine); }
+:root[data-style] .es-progress[data-combo="true"] .es-progress__fill { background: var(--bar-fill-2); }
+:root[data-style] .es-progress--accent .es-progress__fill { background: var(--bar-fill); }
+:root[data-style] .es-sprint__time .es-progress__fill { background: var(--bar-fill-2); }
+:root[data-style] .es-combo { color: var(--reward-ink); font-family: var(--num); }
+:root[data-style] .es-stat { color: var(--ink-2); font-family: var(--num); font-weight: var(--w-strong); }
+:root[data-style] .es-stat--hearts { color: var(--incorrect); }
+:root[data-style] .es-timer { color: var(--ink); }
+
+/* the check bar */
+:root[data-style] .es-footer {
+  background: var(--nav-bg); border-top: var(--bw-nav) solid var(--line);
+}
+:root[data-style] .es-footer[data-result="correct"] { background: var(--correct-wash); border-top-color: var(--correct); }
+:root[data-style] .es-footer[data-result="wrong"] { background: var(--incorrect-wash); border-top-color: var(--incorrect); }
+
+/* ── 3. buttons: the app's press-edge / flat / pill, from tokens ─────── */
+:root[data-style] .es-btn {
+  --face: var(--btn2-bg); --ink: var(--btn2-ink); --edge: var(--btn2-line); --lip: var(--btn2-line);
+  --bw: var(--btn2-bw); --edge-w: var(--btn2-edge-w);
+  min-height: var(--btn-h); padding: 0 var(--btn-px);
+  margin-bottom: 0; box-shadow: none;
+  border-style: solid; border-color: var(--edge); border-bottom-color: var(--lip);
+  border-width: var(--bw) var(--bw) var(--edge-w);
+  border-radius: var(--r-btn);
+  background: var(--face); color: var(--ink);
+  font-family: var(--display); font-size: var(--btn-size); font-weight: var(--w-btn);
+  line-height: 1.2; letter-spacing: 0.01em; text-transform: none;
+  transition: background-color .15s, border-color .15s, color .15s, transform .08s;
+}
+:root[data-style] .es-btn:hover { filter: none; }
+:root[data-style] .es-btn:not(.es-btn--primary, .es-btn--success, .es-btn--secondary, .es-btn--gold, .es-btn--danger, .es-btn--plain):not(:disabled):hover { --face: var(--well); }
+:root[data-style] .es-btn:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(var(--press)); box-shadow: none;
+  border-bottom-width: max(0px, calc(var(--edge-w) - var(--press)));
+}
+:root[data-style] .es-btn--lg { min-height: var(--btn-h-lg); font-size: var(--btn-size-lg); }
+:root[data-style] .es-btn--sm { min-height: var(--btn-h-sm); padding: 0 14px; font-size: .875rem; border-radius: calc(var(--r-btn) - 2px); }
+:root[data-style] .es-btn--ghost { --face: var(--btn2-bg); --ink: var(--ink-2); }
+:root[data-style] .es-btn--plain { --face: transparent; --edge: transparent; --lip: transparent; --ink: var(--action-ink); --bw: 0px; --edge-w: 0px; min-height: 44px; }
+:root[data-style] .es-btn--plain:hover { --face: transparent; text-decoration: underline; }
+:root[data-style] .es-btn--primary,
+:root[data-style] .es-btn--secondary,
+:root[data-style] .es-btn--success {
+  --face: var(--action); --ink: var(--on-action); --edge: var(--action); --lip: var(--action-edge);
+  --bw: var(--btn1-bw); --edge-w: var(--btn1-edge-w);
+}
+:root[data-style] .es-btn--primary:hover,
+:root[data-style] .es-btn--secondary:hover,
+:root[data-style] .es-btn--success:hover { --face: var(--action-hover); --edge: var(--action-hover); }
+:root[data-style] .es-btn--gold {
+  --face: var(--reward); --ink: var(--on-reward); --edge: var(--reward); --lip: var(--reward-edge);
+  --bw: var(--btn1-bw); --edge-w: var(--btn1-edge-w);
+}
+:root[data-style] .es-btn--danger {
+  --face: var(--incorrect); --ink: var(--es-on-danger); --edge: var(--incorrect); --lip: var(--incorrect-edge);
+  --bw: var(--btn1-bw); --edge-w: var(--btn1-edge-w);
+}
+/* once the answer is marked, Continue takes the colour of the verdict */
+:root[data-style] .es-footer[data-result="correct"] .es-btn--success {
+  --face: var(--correct); --edge: var(--correct); --lip: var(--correct-edge); --ink: var(--es-on-success);
+}
+:root[data-style] .es-btn:disabled,
+:root[data-style] .es-btn[aria-disabled="true"] {
+  --face: var(--off-bg); --edge: var(--off-bg); --lip: var(--off-edge); --ink: var(--off-ink);
+  --bw: var(--btn1-bw); --edge-w: var(--btn1-edge-w);
+}
+:root[data-style] .es-btn[aria-busy="true"] { color: transparent; }
+:root[data-style] .es-iconbtn { border-radius: var(--r-input); }
+
+/* ── 4. answer cards ──────────────────────────────────────────────────── */
+:root[data-style] .es-choice {
+  --edge: var(--choice-line); --ink: var(--es-text); --face: var(--card-bg);
+  min-height: var(--choice-h); margin-bottom: 0;
+  border-width: var(--bw-card); border-bottom-width: var(--bw-card-edge);
+  border-radius: var(--r-choice);
+  font-family: var(--read-font); font-weight: var(--w-strong); font-size: 1.0625rem; line-height: 1.35;
+  background: var(--face); color: var(--ink);
+  transition: transform .08s, background-color .15s, border-color .15s;
+}
+:root[data-style] .es-choice:hover:not(:disabled):not([aria-disabled="true"]) { --edge: var(--hl-line); --face: var(--well); }
+:root[data-style] .es-choice:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(var(--press)); margin-bottom: 0;
+  border-bottom-width: max(var(--bw-card), calc(var(--bw-card-edge) - var(--press)));
+}
+:root[data-style] .es-choice__key {
+  width: var(--key-size); height: var(--key-size);
+  border: var(--key-bw) solid var(--line-strong); border-radius: var(--r-icon);
+  font-family: var(--num); font-size: .9375rem; font-weight: var(--w-strong); color: var(--ink-2);
+}
+/* selected: bold. A tint, a coloured outline and edge, and the key fills in. */
+:root[data-style] .es-choice[aria-pressed="true"],
+:root[data-style] .es-choice[aria-checked="true"] {
+  --edge: var(--sel-line); --face: var(--sel-bg); --ink: var(--sel-ink);
+  border-bottom-color: var(--sel-edge);
+  box-shadow: inset 0 0 0 var(--sel-ring, 0px) var(--sel-line);
+}
+:root[data-style] .es-choice[aria-pressed="true"] .es-choice__key,
+:root[data-style] .es-choice[aria-checked="true"] .es-choice__key {
+  background: var(--sel-key-bg); border-color: var(--sel-line); color: var(--sel-key-ink);
+}
+:root[data-style] .es-choice[data-result="correct"] {
+  --edge: var(--correct); --face: var(--correct-wash); --ink: var(--es-text);
+  border-bottom-color: var(--correct-edge); box-shadow: none;
+}
+:root[data-style] .es-choice[data-result="wrong"] {
+  --edge: var(--incorrect); --face: var(--incorrect-wash); --ink: var(--es-text);
+  border-bottom-color: var(--incorrect-edge); box-shadow: none;
+}
+:root[data-style] .es-choice[data-result="correct"] .es-choice__key { background: var(--correct); border-color: var(--correct); color: var(--es-on-success); }
+:root[data-style] .es-choice[data-result="wrong"] .es-choice__key { background: var(--incorrect); border-color: var(--incorrect); color: var(--es-on-danger); }
+:root[data-style] .es-choice[data-result="done"] { opacity: .5; }
+
+/* ── 5. word tiles: chunky keys ───────────────────────────────────────── */
+:root[data-style] .es-tile {
+  min-height: 48px; padding: 0 16px;
+  border-width: var(--bw-card); border-bottom-width: var(--bw-card-edge);
+  border-color: var(--choice-line);
+  border-radius: var(--r-input);
+  background: var(--card-bg); color: var(--ink);
+  font-family: var(--read-font); font-weight: var(--w-strong); font-size: 1.0625rem;
+}
+:root[data-style] .es-tile:hover { background: var(--well); border-color: var(--hl-line); }
+:root[data-style] .es-tile:active { transform: translateY(var(--press)); }
+:root[data-style] .es-tile[data-state="ghost"] { background: var(--well-2); border-color: var(--well-2); }
+:root[data-style] .es-tile[data-state="dragging"] { box-shadow: var(--shadow-lg); }
+:root[data-style] .es-tile[data-result="correct"] { border-color: var(--correct); border-bottom-color: var(--correct-edge); background: var(--correct-wash); color: var(--ink); }
+:root[data-style] .es-tile[data-result="wrong"] { border-color: var(--incorrect); border-bottom-color: var(--incorrect-edge); background: var(--incorrect-wash); color: var(--ink); }
+:root[data-style] .es-answer {
+  background: repeating-linear-gradient(to bottom, transparent 0 calc(60px - var(--bw-card)), var(--line) calc(60px - var(--bw-card)) 60px);
+}
+:root[data-style] .es-fix-word[aria-pressed="true"] { border-color: var(--sel-line); border-bottom-color: var(--sel-edge); background: var(--sel-bg); color: var(--sel-ink); }
+
+/* ── 6. the question: tag, prompt, input ──────────────────────────────── */
+:root[data-style] .es-tag {
+  width: fit-content; padding: 3px 10px; border-radius: var(--r-chip);
+  background: var(--chip-bg); color: var(--chip-ink); border: 1px solid var(--chip-line);
+  font-family: var(--eyebrow-font); font-size: var(--eyebrow-size); font-weight: var(--eyebrow-weight);
+  letter-spacing: var(--eyebrow-tracking); text-transform: var(--eyebrow-case); line-height: 1.4;
+}
+:root[data-style] .es-tag--mistake { background: var(--reward-tint); color: var(--reward-ink); border-color: var(--reward-line); }
+:root[data-style] .es-tag--due { color: var(--chip-ink); }
+:root[data-style] .es-tag svg { width: 16px; height: 16px; }
+:root[data-style] .es-prompt {
+  font-family: var(--display); font-size: var(--t-stem); font-weight: var(--w-head);
+  letter-spacing: var(--tracking-head); line-height: 1.2;
+}
+@media (max-width: 639px) { :root[data-style] .es-prompt { font-size: calc(var(--t-stem) - .125rem); line-height: 1.2; } }
+:root[data-style] .es-stack > .es-choice .es-choice__text,
+:root[data-style] .es-choices.es-stack .es-choice__text { text-align: left; }
+
+:root[data-style] .es-input {
+  min-height: var(--input-h); background: var(--field-bg);
+  border: var(--bw-control) solid var(--control); border-radius: var(--r-input);
+  font-family: var(--read-font); font-weight: var(--w-body);
+}
+:root[data-style] .es-input:focus { border-color: var(--field-focus); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+:root[data-style] .es-input[data-result="correct"] { border-color: var(--correct); background: var(--correct-wash); }
+:root[data-style] .es-input[data-result="wrong"] { border-color: var(--incorrect); background: var(--incorrect-wash); }
+:root[data-style] textarea.es-input { min-height: 160px; }
+:root[data-style] .es-accents .es-btn { min-height: 40px; min-width: 40px; padding: 0 10px; font-size: 1.0625rem; }
+:root[data-style] .es-blank { border-bottom-color: var(--control); color: var(--action-ink); }
+:root[data-style] .es-inline-input { border-bottom-color: var(--action); color: var(--action-ink); }
+
+/* ── 7. the verdict sheet: right and wrong ────────────────────────────── */
+:root[data-style] .es-footer { padding: 14px 16px max(16px, env(safe-area-inset-bottom)); }
+:root[data-style] .es-footer__inner { max-width: 720px; }
+:root[data-style] .es-lesson__top { max-width: 720px; }
+:root[data-style] .es-verdict { gap: 14px; align-items: center; }
+:root[data-style] .es-verdict__badge {
+  display: grid; width: 44px; height: 44px; flex: none; border-radius: 50%;
+  background: var(--correct); color: var(--es-on-success);
+}
+:root[data-style] .es-verdict__badge svg { width: 26px; height: 26px; }
+:root[data-style] .es-footer[data-result="wrong"] .es-verdict__badge { background: var(--incorrect); color: var(--es-on-danger); }
+:root[data-style] .es-verdict__title {
+  font-family: var(--display); font-size: var(--t-h3); line-height: 1.25; font-weight: var(--w-head); letter-spacing: var(--tracking-head);
+}
+:root[data-style] .es-verdict__sol { font-weight: var(--w-strong); font-size: 1rem; }
+:root[data-style] .es-verdict__label { font-weight: var(--w-strong); }
+:root[data-style] .es-verdict__links .es-btn--plain { font-size: .8125rem; min-height: 32px; --ink: currentColor; }
+:root[data-style] .es-footer .es-btn { min-width: 150px; }
+@media (max-width: 639px) {
+  :root[data-style] .es-verdict__badge { display: grid; }
+  :root[data-style] .es-footer .es-btn { min-width: 0; }
+  :root[data-style] .es-footer__left { gap: 8px; }
+}
+/* Skip is a quiet action beside the loud one */
+:root[data-style] .es-footer__left .es-btn--ghost { --face: transparent; --edge: transparent; --lip: transparent; --bw: 0px; --edge-w: 0px; min-height: 44px; }
+:root[data-style] .es-footer__left .es-btn--ghost:hover { --face: var(--well); }
+
+/* ── 8. sound, speech, characters ─────────────────────────────────────── */
+:root[data-style] .es-audio {
+  margin-bottom: 0; border-radius: var(--r-btn);
+  background: var(--action); color: var(--on-action);
+  border-bottom: var(--btn1-edge-w) solid var(--action-edge); box-shadow: none;
+}
+:root[data-style] .es-audio:active { transform: translateY(var(--press)); border-bottom-width: max(0px, calc(var(--btn1-edge-w) - var(--press))); box-shadow: none; }
+:root[data-style] .es-audio--slow { background: var(--action-tint); color: var(--action-ink); border-bottom-color: var(--action-mid); }
+:root[data-style] .es-mic {
+  margin-bottom: 0; border: var(--btn2-bw) solid var(--btn2-line); border-bottom-width: var(--btn2-edge-w);
+  border-radius: var(--r-btn); background: var(--btn2-bg); color: var(--action-ink); box-shadow: none;
+  font-family: var(--display); font-weight: var(--w-btn); letter-spacing: .01em; text-transform: none; font-size: var(--btn-size-lg);
+}
+:root[data-style] .es-mic:active { transform: translateY(var(--press)); }
+:root[data-style] .es-mic[data-state="listening"] { border-color: var(--action); background: var(--action-tint); }
+:root[data-style] .es-bubble { border-radius: var(--r-card); }
+:root[data-style] .es-bubble__play { color: var(--action-ink); }
+:root[data-style] .es-card,
+:root[data-style] .es-prompt-card,
+:root[data-style] .es-details { border-radius: var(--r-card); border-bottom-width: var(--bw-card-edge); }
+:root[data-style] .es-modal { border-radius: var(--r-card); border-bottom-width: var(--bw-card-edge); }
+:root[data-style] .es-passage { border-left-color: var(--action); border-radius: var(--r-input); }
+:root[data-style] .es-chat__row--me .es-chat__bubble { background: var(--action-tint); border-color: var(--action-mid); }
+
+/* ── 9. per-style character ───────────────────────────────────────────── */
+/* chunky: loud caps labels, like the mockup's "ACT MATH . MASTERY CHECK" chip */
+:root[data-style="chunky"] .es-tag { text-transform: uppercase; letter-spacing: .06em; font-size: .75rem; font-weight: 800; padding: 4px 11px; }
+:root[data-style="chunky"] .es-label { letter-spacing: .06em; }
+/* night: the question sits in a hairline card, labels are mono caps */
+:root[data-style="night"] .es-challenge-head {
+  padding: 18px; border: 1px solid var(--line); border-radius: var(--r-card); background: var(--card-bg);
+}
+:root[data-style="night"] .es-label { font-family: var(--num); letter-spacing: .09em; font-weight: 500; }
+:root[data-style="night"] .es-prompt { font-weight: 600; }
+/* bento: the question is a pastel tile in the subject's tint */
+:root[data-style="bento"] .es-challenge-head {
+  padding: 20px; border: 1px solid var(--subj-card-line, var(--line)); border-radius: var(--r-card);
+  background: var(--subj-card-bg, var(--card-bg));
+}
+:root[data-style="bento"] .es-challenge-head .es-tag { background: var(--card-bg); border-color: transparent; }
+
+/* story question cards: a card, not a dashed box */
+:root[data-style] .es-story__q {
+  border: var(--bw-card) solid var(--card-line); border-bottom-width: var(--bw-card-edge);
+  border-radius: var(--r-card); background: var(--card-bg);
+}
+
+/* ── 10. Spanish audio unavailable (no server voice, no Spanish browser voice) ── */
+.es-audio-notice {
+  display: block; width: 100%; margin: 0 0 var(--es-space-3, 12px); padding: 10px 14px; text-align: left;
+  border: var(--es-border-width, 2px) solid var(--es-gold, #c90); border-radius: var(--es-radius-md, 12px);
+  background: color-mix(in srgb, var(--es-gold, #fc0) 16%, var(--es-bg, #fff)); color: var(--es-text, #111);
+  font: inherit; font-size: var(--es-text-sm, 15px); font-weight: var(--es-weight-sm, 700); cursor: pointer;
+}
+.es-audio-notice:hover { filter: brightness(.97); }
+
+/* long unbreakable content (file pickers, URLs) must not widen the lesson column */
+:root[data-style] .es-lesson { grid-template-columns: minmax(0, 1fr); }
+:root[data-style] .es-lesson__body { min-width: 0; }
+:root[data-style] .es-ex, :root[data-style] .es-upload { min-width: 0; max-width: 100%; }
+:root[data-style] .es-file { max-width: 100%; }
+:root[data-style="night"] .es-endscreen__title,
+:root[data-style="bento"] .es-endscreen__title { color: var(--ink); }
+
+/* memory pairs: face-down cards are solid only in chunky; night and bento keep the accent for the next action */
+:root[data-style="night"] .es-mcard:not([data-state]) { background: var(--well); color: var(--action); border-color: var(--line-strong); }
+:root[data-style="bento"] .es-mcard:not([data-state]) { background: var(--subj-card-bg, var(--well)); color: var(--ink); border-color: var(--subj-card-line, var(--line)); }
+:root[data-style] .es-mcard { border-radius: var(--r-choice); }
+:root[data-style] .es-mcard[data-state] { border-color: var(--choice-line); }
+:root[data-style] .es-mcard[data-state="done"] { border-color: var(--correct); background: var(--correct-wash); color: var(--correct); }

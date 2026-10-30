@@ -1,0 +1,207 @@
+/* Style: bento  (mockup design-options/10-bento-pastel, "Everything at a glance")
+ *
+ * Light. A soft grey canvas, white cards with 1px hairlines (no shadows), 20px
+ * radii, and each subject tinted a muted pastel that carries through the app.
+ * The one strong target is the dark ink pill button. Plus Jakarta Sans only.
+ *
+ * Tokens only (plus this style's @font-face and the subject tints); see
+ * css/styles/README.md. Specificity :root[data-style] beats style.css.
+ */
+
+/* Plus Jakarta Sans, Latin subset, variable weight 400-800, self-hosted. */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(/fonts/plus-jakarta-sans-400-800.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root[data-style="bento"] {
+  color-scheme: light;
+
+  /* the four pastels: a tint (card fill), a line (its hairline) and a strong tone (bars, dots) */
+  --sage: #E0EADC;  --sage-l: #C9DBC3;  --sage-t: #8FB08A;
+  --lilac: #E8E2F2; --lilac-l: #D5CCE8; --lilac-t: #A99BCB;
+  --peach: #F7E4D8; --peach-l: #F0CDB6; --peach-t: #E0A27C;
+  --sky: #DEEAF2;   --sky-l: #C4D9E8;   --sky-t: #86B1CF;
+
+  /* surfaces */
+  --page: #F3F3F1;
+  --well: #E9E9E5;
+  --well-2: #E4E4DF;
+  --card-bg: #FFFFFF;
+  --card-line: #E2E2DC;
+  --field-bg: #FFFFFF;
+  --nav-bg: #FFFFFF;
+  --line: #E2E2DC;
+  --line-strong: #D4D4CE;
+  --control: #8C918D;
+
+  /* ink (on --page: 14.6, 5.9, 5.1) */
+  --ink: #1E2321;
+  --ink-2: #565B58;
+  --ink-3: #636864;
+
+  /* the dark pill is the one action; lilac is its tint */
+  --action: #1E2321;
+  --action-hover: #343A37;
+  --action-edge: #1E2321;
+  --on-action: #FFFFFF;
+  --action-tint: #E8E2F2;
+  --action-mid: #D5CCE8;
+  --action-ink: #1E2321;
+
+  /* reward: lilac tile for the review icon, white chips for the streak */
+  --reward: #E8E2F2;
+  --reward-edge: #E8E2F2;
+  --reward-tint: #FFFFFF;
+  --reward-line: #E2E2DC;
+  --on-reward: #1E2321;
+  --reward-ink: #3D4441;
+  --flame: #E0A27C;
+  --flame-core: #F7E4D8;
+
+  --correct: #2B7342;
+  --correct-wash: #E0EADC;
+  --correct-edge: #8FB08A;
+  --incorrect: #B03A2A;
+  --incorrect-wash: #F7E4D8;
+  --incorrect-edge: #E0A27C;
+  --warn: #8A5A00;
+
+  --off-bg: #E4E4DF;
+  --off-ink: #555A57;
+  --off-edge: #E4E4DF;
+
+  --focus: #1E2321;
+  --focus-ring: rgba(30, 35, 33, 0.18);
+  --field-focus: #1E2321;
+  --focus-ring-w: 3px;
+  --chip-bg: #FFFFFF;
+  --chip-ink: #1E2321;
+  --chip-line: #E2E2DC;
+  --chip2-bg: #E8E2F2; --chip2-ink: #1E2321; --chip2-line: transparent;
+  --chip2-case: none; --chip2-tracking: 0; --chip2-weight: 700;
+  --shadow-lg: 0 1px 2px rgba(30, 35, 33, 0.06), 0 12px 28px -8px rgba(30, 35, 33, 0.2);
+
+  /* type */
+  --font: 'Plus Jakarta Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+  --display: var(--font);
+  --num: var(--font);
+  --read-font: var(--font);
+  --w-body: 500;
+  --w-strong: 700;
+  --w-head: 800;
+  --w-btn: 700;
+  --w-label: 600;
+  --tracking-head: -0.03em;
+  --t-meta: 0.8125rem;
+  --t-ui-s: 0.9375rem;
+  --t-ui: 1rem;
+  --t-read: 1.125rem;
+  --t-stem: 1.625rem;
+  --t-h3: 1.1875rem;
+  --t-h2: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --t-h1: clamp(1.625rem, 1.3rem + 1.3vw, 2.125rem);
+  --t-disp: clamp(2.5rem, 1.6rem + 3.6vw, 3.5rem);
+  --eyebrow-size: 0.75rem;
+  --eyebrow-weight: 600;
+  --eyebrow-case: none;
+  --eyebrow-tracking: 0.01em;
+  --eyebrow-font: var(--font);
+  --icon-sw: 1.6;
+
+  /* shape: 20px cards, 16px buttons */
+  --r-xs: 8px; --r-sm: 12px; --r-md: 14px; --r-lg: 20px; --r-pill: 999px;
+  --r-card: 20px;
+  --r-btn: 16px;
+  --r-input: 14px;
+  --r-choice: 20px;
+  --r-chip: 999px;
+  --r-bar: 4px;
+  --r-icon: 12px;
+
+  /* borders: hairlines everywhere, no edges */
+  --bw-card: 1px;
+  --bw-card-edge: 1px;
+  --bw-control: 1px;
+  --bw-nav: 1px;
+  --btn1-bw: 0px;
+  --btn1-edge-w: 0px;
+  --btn2-bw: 1px;
+  --btn2-edge-w: 1px;
+  --btn2-bg: #FFFFFF;
+  --btn2-line: #D4D4CE;
+  --btn2-ink: #1E2321;
+  --press: 0px;
+
+  /* sizes */
+  --btn-h: 48px;
+  --btn-h-lg: 56px;
+  --btn-h-sm: 38px;
+  --btn-px: 22px;
+  --btn-size: 1rem;
+  --btn-size-lg: 1.0625rem;
+  --input-h: 52px;
+  --choice-h: 64px;
+  --key-size: 30px;
+  --choice-line: #E2E2DC;
+  --key-bw: 1px;
+
+  /* selection: a 2px ink outline on a sky tint */
+  --sel-bg: #DEEAF2;
+  --sel-line: #1E2321;
+  --sel-edge: #1E2321;
+  --sel-ink: #1E2321;
+  --sel-key-bg: #1E2321;
+  --sel-key-ink: #FFFFFF;
+  --sel-ring: 1px;
+  --hl-line: #C4D9E8;
+
+  --bar-h: 8px;
+  --bar-h-sm: 6px;
+  --bar-bg: #E4E4DF;
+  --bar-fill: #1E2321;
+  --bar-fill-2: #86B1CF;
+  --bar-shine: transparent;
+
+  /* home "this week" panel: a lilac tile with an ink ring */
+  --hero-bg: #E8E2F2; --hero-ink: #1E2321; --hero-line: #D5CCE8; --hero-edge: #D5CCE8;
+  --ring-track: rgba(255, 255, 255, 0.85); --ring-fill: #1E2321; --hero-pill-bg: rgba(255, 255, 255, 0.75); --hero-diamond: #A99BCB;
+
+  /* shell */
+  --side-w: 256px;
+  --tab-h: 70px;
+  --tab-pad: 9px;
+  --tab-item-h: 54px;
+  --tab-item-r: 18px;
+  --tab-item-bw: 0px;
+  --tab-on-bg: #E8E2F2;
+  --tab-on-ink: #1E2321;
+  --tab-on-line: transparent;
+  --tab-on-edge: 0px;
+  --brand-color: #1E2321;
+  --brand-size: 1.1875rem;
+  --brand-weight: 800;
+  /* brand mark: an ink tile with white bars */
+  --bm-tile: #1E2321; --bm-bars: #FFFFFF; --bm-hi: #A99BCB;
+  --bm-ring-display: none; --bm-bars-display: inline;
+}
+:root[data-style="bento"] body { font-weight: var(--w-body); }
+
+/* Each subject carries one pastel through the app: its card fill, hairline and bar. */
+:root[data-style="bento"] [data-subject] { --subj-card-bg: var(--sky); --subj-card-line: var(--sky-l); --subj-bar: var(--sky-t); }
+:root[data-style="bento"] [data-subject="math"],
+:root[data-style="bento"] [data-subject="basketball-x"] { --subj-card-bg: var(--sky); --subj-card-line: var(--sky-l); --subj-bar: var(--sky-t); }
+:root[data-style="bento"] [data-subject="english"],
+:root[data-style="bento"] [data-subject="act"],
+:root[data-style="bento"] [data-subject="piano"] { --subj-card-bg: var(--lilac); --subj-card-line: var(--lilac-l); --subj-bar: var(--lilac-t); }
+:root[data-style="bento"] [data-subject="reading"],
+:root[data-style="bento"] [data-subject="iq"],
+:root[data-style="bento"] [data-subject="basketball"] { --subj-card-bg: var(--peach); --subj-card-line: var(--peach-l); --subj-bar: var(--peach-t); }
+:root[data-style="bento"] [data-subject="spanish"],
+:root[data-style="bento"] [data-subject="chess"] { --subj-card-bg: var(--sage); --subj-card-line: var(--sage-l); --subj-bar: var(--sage-t); }
+:root[data-style="bento"] .subject-card,
+:root[data-style="bento"] .plan-next { --bar-bg: rgba(255, 255, 255, 0.75); --subj-bar-bg: rgba(255, 255, 255, 0.75); }

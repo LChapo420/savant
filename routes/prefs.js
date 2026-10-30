@@ -43,12 +43,19 @@ function cleanPlan(plan, user, now = Date.now()) {
   return { date, time, set_at: new Date(now).toISOString() };
 }
 
+const STYLE_IDS = ['auto', 'chunky', 'night', 'bento', 'editorial', 'desk', 'notebook'];
+
 router.post('/prefs', requireAuth, (req, res) => {
   const body = req.body || {};
   const patch = {};
   if (body.hide_stats !== undefined) {
     if (typeof body.hide_stats !== 'boolean') return res.status(400).json({ error: 'hide_stats must be true or false.' });
     patch.hide_stats = body.hide_stats;
+  }
+  if (body.style !== undefined) {
+    // The visual style (public/css/styles): "auto" or one of the ids js/style-boot.js knows.
+    if (typeof body.style !== 'string' || !STYLE_IDS.includes(body.style)) return res.status(400).json({ error: 'That style does not exist.' });
+    patch.style_pref = body.style;
   }
   if (body.break_nudge !== undefined) {
     if (typeof body.break_nudge !== 'boolean') return res.status(400).json({ error: 'break_nudge must be true or false.' });

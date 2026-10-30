@@ -1,0 +1,193 @@
+/* Style: night  (mockup design-options/04-night-focus, "Deep work mode")
+ *
+ * Dark. The default for dark mode. Charcoal surfaces, hairline borders instead
+ * of shadows, one mint accent reserved for the next action and progress, mono
+ * numerals. Flat buttons (no press edge); the pressed state is a darker fill.
+ *
+ * This file is ONLY tokens (plus this style's @font-face). Components live in
+ * css/style.css and read these tokens; see css/styles/README.md.
+ */
+
+/* Inter (variable, 400-600) and JetBrains Mono (variable, 400-600), Latin
+   subset, self-hosted. Downloaded only when this style is active. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(/fonts/inter-400-600.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(/fonts/jetbrains-mono-400-600.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root[data-style="night"] {
+  color-scheme: dark;
+
+  /* surfaces */
+  --page: #0F1115;
+  --well: #1D212A;
+  --well-2: #262B35;
+  --card-bg: #171A21;
+  --card-line: #262B35;
+  --field-bg: #171A21;
+  --nav-bg: #0F1115;
+  --line: #262B35;
+  --line-strong: #343B49;
+  --control: #5E6779;            /* input outlines: 3.1:1 on --card-bg */
+
+  /* ink (on --page: 16.0, 7.9, 4.9) */
+  --ink: #E9EBEF;
+  --ink-2: #9BA3AF;
+  --ink-3: #8A92A0;
+
+  /* the one accent: mint */
+  --action: #3DDBB4;
+  --action-hover: #5BE6C3;
+  --action-edge: #3DDBB4;
+  --on-action: #06241D;
+  --action-tint: rgba(61, 219, 180, 0.09);
+  --action-mid: rgba(61, 219, 180, 0.42);
+  --action-ink: #3DDBB4;
+
+  /* reward: night keeps the accent reserved, so "reward" is a quiet neutral */
+  --reward: #8A93A3;
+  --reward-edge: #8A93A3;
+  --reward-tint: #1D212A;
+  --reward-line: #343B49;
+  --on-reward: #0F1115;
+  --reward-ink: #E9EBEF;
+  --flame: #E9EBEF;
+  --flame-core: #3DDBB4;
+
+  --correct: #5DD6A0;
+  --correct-wash: #12261E;
+  --correct-edge: #5DD6A0;
+  --incorrect: #FF8B80;
+  --incorrect-wash: #2B1816;
+  --incorrect-edge: #FF8B80;
+  --warn: #F0B35A;
+
+  --off-bg: #1D212A;
+  --off-ink: #7A8290;
+  --off-edge: #343B49;
+
+  --focus: #3DDBB4;
+  --focus-ring: rgba(61, 219, 180, 0.35);
+  --chip-bg: transparent;
+  --chip-ink: #9BA3AF;
+  --chip-line: #343B49;
+  --shadow-lg: 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px -8px rgba(0, 0, 0, 0.75);
+
+  /* type */
+  --font: 'Inter', ui-sans-serif, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+  --display: var(--font);
+  --num: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --read-font: var(--font);
+  --w-body: 400;
+  --w-strong: 600;
+  --w-head: 600;
+  --w-btn: 600;
+  --w-label: 500;
+  --tracking-head: -0.025em;
+  --num-feature: 'tnum';
+  --t-meta: 0.8125rem;
+  --t-ui-s: 0.9375rem;
+  --t-ui: 1rem;
+  --t-read: 1.125rem;
+  --t-stem: 1.5rem;
+  --t-h3: 1.125rem;
+  --t-h2: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --t-h1: clamp(1.5rem, 1.25rem + 1vw, 1.875rem);
+  --t-disp: clamp(2.25rem, 1.5rem + 3.2vw, 3.25rem);
+  --eyebrow-size: 0.6875rem;
+  --eyebrow-weight: 500;
+  --eyebrow-case: uppercase;
+  --eyebrow-tracking: 0.09em;
+  --eyebrow-font: var(--num);
+  --icon-sw: 1.6;
+
+  /* shape */
+  --r-xs: 5px; --r-sm: 8px; --r-md: 10px; --r-lg: 10px; --r-pill: 999px;
+  --r-card: 10px;
+  --r-btn: 10px;
+  --r-input: 10px;
+  --r-choice: 10px;
+  --r-chip: 999px;
+  --r-bar: 2px;
+  --r-icon: 8px;
+
+  /* borders: hairlines, no edges */
+  --bw-card: 1px;
+  --bw-card-edge: 1px;
+  --bw-control: 1px;
+  --bw-nav: 1px;
+  --btn1-bw: 0px;
+  --btn1-edge-w: 0px;
+  --btn2-bw: 1px;
+  --btn2-edge-w: 1px;
+  --btn2-bg: #171A21;
+  --btn2-line: #343B49;
+  --btn2-ink: #E9EBEF;
+  --press: 0px;
+
+  /* sizes */
+  --btn-h: 46px;
+  --btn-h-lg: 54px;
+  --btn-h-sm: 40px;
+  --btn-px: 20px;
+  --btn-size: 0.9375rem;
+  --btn-size-lg: 1rem;
+  --input-h: 48px;
+  --choice-h: 64px;
+  --key-size: 30px;
+
+  --sel-bg: rgba(61, 219, 180, 0.09);
+  --sel-line: #3DDBB4;
+  --sel-edge: #3DDBB4;
+  --sel-ink: #E9EBEF;
+  --sel-key-bg: #3DDBB4;
+  --sel-key-ink: #06241D;
+  --hl-line: rgba(61, 219, 180, 0.42);
+
+  --bar-h: 4px;
+  --bar-h-sm: 4px;
+  --bar-bg: #343B49;
+  --bar-fill: #3DDBB4;
+  --bar-fill-2: #8A93A3;
+  --bar-shine: transparent;
+
+  /* shell */
+  --side-w: 248px;
+  --tab-h: 66px;
+  --tab-pad: 8px;
+  --tab-item-h: 52px;
+  --tab-item-r: 10px;
+  --tab-item-bw: 0px;
+  --tab-on-bg: transparent;
+  --tab-on-ink: #3DDBB4;
+  --tab-on-line: transparent;
+  --tab-on-edge: 0px;
+  --brand-color: #E9EBEF;
+  --brand-size: 1rem;
+  --brand-weight: 600;
+
+  --choice-line: #343B49;
+  --key-bw: 1px;
+  --field-focus: #3DDBB4;
+  --focus-ring-w: 3px;
+  --chip2-bg: rgba(61, 219, 180, 0.09); --chip2-ink: #3DDBB4; --chip2-line: rgba(61, 219, 180, 0.42);
+  --chip2-case: none; --chip2-tracking: 0; --chip2-weight: 500;
+  /* brand mark: a ring with a mint dot */
+  --bm-tile: none; --bm-ring-display: inline; --bm-bars-display: none;
+  /* home "this week" panel: a plain card with a mint ring */
+  --hero-bg: #171A21; --hero-ink: #E9EBEF; --hero-line: #262B35; --hero-edge: #262B35;
+  --ring-track: #343B49; --ring-fill: #3DDBB4; --hero-pill-bg: #1D212A; --hero-diamond: #3DDBB4;
+}
+:root[data-style="night"] body { font-weight: var(--w-body); }

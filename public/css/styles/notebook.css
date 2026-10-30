@@ -1,0 +1,219 @@
+/* Style: notebook  (mockup design-options/07-notebook, "Your smartest notebook.")
+ *
+ * Light. A well-kept study notebook: a faint dot-grid paper, content on index
+ * cards with a stacked paper edge, one saturated ink-blue for the next action,
+ * and a yellow highlighter that marks only the thing that matters (the day's
+ * session, your answer). IBM Plex Sans for everything; handwriting is for the
+ * occasional margin note only.
+ *
+ * Tokens (plus this style's @font-face and a few small refinements at the end);
+ * see css/styles/README.md.
+ */
+
+/* IBM Plex Sans (variable 400-600) and Caveat (500, margin notes only), Latin
+   subset, self-hosted. Downloaded only when this style is active. */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(/fonts/ibm-plex-sans-400-600.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/caveat-500.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root[data-style="notebook"] {
+  color-scheme: light;
+
+  /* surfaces */
+  --page: #FBFAF5;
+  --well: #F1EFE4;
+  --well-2: #E9E6D8;
+  --card-bg: #FFFEFB;
+  --card-line: #DDD8C8;
+  --field-bg: #FFFEFB;
+  --nav-bg: #FBFAF5;
+  --line: #E3DFCF;
+  --line-strong: #CFCAB8;
+  --control: #8A90A6;            /* input outlines: 3.1:1 on the card */
+
+  /* ink (on --page: 15.0, 6.2, 5.5) */
+  --ink: #1C2238;
+  --ink-2: #575D73;
+  --ink-3: #5F657B;
+
+  /* ink blue is the action */
+  --action: #2445A8;
+  --action-hover: #1D3A92;
+  --action-edge: #162E7C;
+  --on-action: #FFFFFF;
+  --action-tint: #E7ECFA;
+  --action-mid: #CBD5F0;
+  --action-ink: #2445A8;
+
+  /* reward: the yellow highlighter */
+  --reward: #FFE45C;
+  --reward-edge: #E3C400;
+  --reward-tint: #FFF6C2;
+  --reward-line: #E8D56E;
+  --on-reward: #1C2238;
+  --reward-ink: #4A4220;
+  --flame: #E0745F;
+  --flame-core: #FFE45C;
+
+  --correct: #1F6B3A;
+  --correct-wash: #E2F0DE;
+  --correct-edge: #1F6B3A;
+  --incorrect: #B03A2A;
+  --incorrect-wash: #FBE6E1;
+  --incorrect-edge: #B03A2A;
+  --warn: #8A5A00;
+
+  --off-bg: #DDE3F5;
+  --off-ink: #4F5C8C;
+  --off-edge: #DDE3F5;
+
+  --focus: #2445A8;
+  --focus-ring: rgba(36, 69, 168, 0.28);
+  --field-focus: #2445A8;
+  --focus-ring-w: 3px;
+  --chip-bg: #FFFEFB;
+  --chip-ink: #1C2238;
+  --chip-line: #DDD8C8;
+  --chip2-bg: #FFE45C; --chip2-ink: #1C2238; --chip2-line: transparent;
+  --chip2-case: none; --chip2-tracking: 0; --chip2-weight: 600;
+  --shadow-lg: 0 1px 2px rgba(36, 45, 90, 0.1), 0 12px 28px -8px rgba(36, 45, 90, 0.3);
+
+  /* type */
+  --font: 'IBM Plex Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+  --display: var(--font);
+  --num: var(--font);
+  --read-font: var(--font);
+  --hand: 'Caveat', 'Segoe Print', cursive;
+  --w-body: 400;
+  --w-strong: 600;
+  --w-head: 600;
+  --w-btn: 600;
+  --w-label: 500;
+  --tracking-head: -0.02em;
+  --t-meta: 0.8125rem;
+  --t-ui-s: 0.9375rem;
+  --t-ui: 1rem;
+  --t-read: 1.125rem;
+  --t-stem: clamp(1.5rem, 1.3rem + 0.9vw, 1.875rem);
+  --t-h3: 1.1875rem;
+  --t-h2: clamp(1.3125rem, 1.15rem + 0.7vw, 1.625rem);
+  --t-h1: clamp(1.625rem, 1.35rem + 1.2vw, 2.125rem);
+  --t-disp: clamp(2.25rem, 1.5rem + 3.2vw, 3.25rem);
+  --eyebrow-size: 0.75rem;
+  --eyebrow-weight: 600;
+  --eyebrow-case: uppercase;
+  --eyebrow-tracking: 0.05em;
+  --eyebrow-font: var(--font);
+  --icon-sw: 1.7;
+
+  /* shape: index cards, slightly rounded */
+  --r-xs: 3px; --r-sm: 4px; --r-md: 6px; --r-lg: 6px; --r-pill: 999px;
+  --r-card: 3px;
+  --r-btn: 6px;
+  --r-input: 4px;
+  --r-choice: 4px;
+  --r-chip: 999px;
+  --r-bar: 3px;
+  --r-icon: 50%;
+
+  /* borders */
+  --bw-card: 1px;
+  --bw-card-edge: 1px;
+  --bw-control: 1.5px;
+  --bw-nav: 1px;
+  --btn1-bw: 0px;
+  --btn1-edge-w: 2px;
+  --btn2-bw: 1.5px;
+  --btn2-edge-w: 1.5px;
+  --btn2-bg: #FFFEFB;
+  --btn2-line: #2445A8;
+  --btn2-ink: #2445A8;
+  --press: 2px;
+
+  /* sizes */
+  --btn-h: 50px;
+  --btn-h-lg: 56px;
+  --btn-h-sm: 40px;
+  --btn-px: 22px;
+  --btn-size: 1rem;
+  --btn-size-lg: 1.0625rem;
+  --input-h: 52px;
+  --choice-h: 66px;
+  --key-size: 30px;
+  --choice-line: #DDD8C8;
+  --key-bw: 1.5px;
+
+  /* selection: the highlighter, outlined in ink blue */
+  --sel-bg: #FFF1A8;
+  --sel-line: #2445A8;
+  --sel-edge: #2445A8;
+  --sel-ink: #1C2238;
+  --sel-key-bg: #2445A8;
+  --sel-key-ink: #FFFFFF;
+  --sel-ring: 0px;
+  --hl-line: #2445A8;
+
+  /* progress: a blue-ink bar on a pale rule */
+  --bar-h: 7px;
+  --bar-h-sm: 6px;
+  --bar-bg: #CBD5F0;
+  --bar-fill: #2445A8;
+  --bar-fill-2: #6D86D4;
+  --bar-shine: transparent;
+
+  /* shell */
+  --side-w: 248px;
+  --tab-h: 70px;
+  --tab-pad: 8px;
+  --tab-item-h: 52px;
+  --tab-item-r: 6px;
+  --tab-item-bw: 0px;
+  --tab-on-bg: #FFF1A8;
+  --tab-on-ink: #2445A8;
+  --tab-on-line: transparent;
+  --tab-on-edge: 0px;
+  --brand-color: #2445A8;
+  --brand-size: 1.1875rem;
+  --brand-weight: 600;
+  /* brand mark: an ink-blue tile with white bars */
+  --bm-tile: #2445A8; --bm-bars: #FFFFFF; --bm-hi: #FFE45C; --bm-ring-display: none; --bm-bars-display: inline;
+  /* home "this week" panel: an index card with a blue ring */
+  --hero-bg: #E7ECFA; --hero-ink: #1C2238; --hero-line: #CBD5F0; --hero-edge: #CBD5F0;
+  --ring-track: #FFFFFF; --ring-fill: #2445A8; --hero-pill-bg: #FFFEFB; --hero-diamond: #E3C400;
+}
+:root[data-style="notebook"] body {
+  font-weight: var(--w-body);
+  background-color: var(--page);
+  background-image: radial-gradient(circle, #D2CEC0 1px, transparent 1.2px);
+  background-size: 18px 18px;
+  background-position: 9px 9px;
+}
+
+/* Refinements the tokens cannot express. */
+/* an index card: a stacked paper edge */
+:root[data-style="notebook"] .card:not(.card-flat):not(.modal) {
+  box-shadow: 0 2px 0 -0.5px #EFEBDD, 0 3px 0 -0.5px #DDD8C8, 0 8px 14px -8px rgba(36, 45, 90, 0.28);
+}
+/* the header and the tab bar sit on plain paper, not on the dots */
+:root[data-style="notebook"] .site-header,
+:root[data-style="notebook"] #tabbar { background-color: var(--page); }
+/* a margin note, in handwriting, on the day's next session */
+:root[data-style="notebook"] .plan-next { position: relative; }
+:root[data-style="notebook"] .plan-next::after {
+  content: "start here"; position: absolute; right: 36%; top: -17px; transform: rotate(-3deg);
+  font-family: var(--hand); font-weight: 500; font-size: 1.375rem; line-height: 1; color: var(--action); pointer-events: none;
+}
+:root[data-style="notebook"] .card#item { box-shadow: none; }

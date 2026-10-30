@@ -115,6 +115,26 @@ App.mount(async () => {
       ? (lesson && lesson.topic ? App.cleanTitle(lesson.topic) : `Lesson ${currentLevel}`)
       : `Level ${currentLevel}`);
 
+  // The subject's name for the chip over the question (best effort: the chip shows without it).
+  let subjectName = '';
+  App.api.get('/api/enrollments').then((data) => {
+    const e = ((data && data.enrollments) || []).find((x) => x.id === enrollmentId);
+    subjectName = e && e.track ? e.track.name : '';
+    const subj = document.getElementById('q-subject');
+    if (subj) subj.textContent = subjectName;
+  }).catch(() => { /* the chip just reads the level */ });
+
+  // The clock in the top bar: time spent in this sitting, counted while the page is in view.
+  let clockMs = 0;
+  const clockTimer = setInterval(() => {
+    const t = document.getElementById('clock-t');
+    if (!t) return;
+    if (document.visibilityState === 'visible') clockMs += 1000;
+    const sec = Math.floor(clockMs / 1000);
+    t.textContent = `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`;
+  }, 1000);
+  window.addEventListener('pagehide', () => clearInterval(clockTimer));
+
   function shell() {
     // Whether this session is a step back or a look ahead decides the wording.
     // Both are previews — neither moves the learner — but "you are on level 40
@@ -152,17 +172,19 @@ App.mount(async () => {
         <a class="icon-btn player-close" href="/path?enrollment=${enrollmentId}" title="Leave and go back to your path" aria-label="Leave and go back to your path">${window.icon('x')}</a>
         <div class="player-titles">
           <h1 id="title">${App.escapeHtml(titleFor())}</h1>
-          <div id="subtitle"></div>
+          <p class="q-chip" aria-hidden="true"><span class="q-subject" id="q-subject"></span><span class="q-kind" id="q-kind"></span></p>
         </div>
         <div class="player-chips">
           <span class="chip" id="covered"></span>
-          <span class="chip counter" id="counter"></span>
+          <span class="chip timer" id="clock" role="timer" aria-label="Time on this session">${window.icon('clock')}<span id="clock-t">0:00</span></span>
         </div>
         <div class="player-meter">
           <div class="segments" id="segments" aria-hidden="true"></div>
           <div class="meter is-segmented"><span id="bar" style="width:0%"></span></div>
           <span class="visually-hidden" id="pct">0%</span>
         </div>
+        <span class="q-count" id="counter"></span>
+        <div class="q-sub" id="subtitle"></div>
       </div>
       ${previewNote}
       <div class="card" id="item"></div>
@@ -193,6 +215,13 @@ App.mount(async () => {
       : heldFeedback
         ? 'Your answers are saved as you go. You see how they went, all together, when this level ends.'
         : '';
+    // The chip over the question: what is being worked, and which kind of level.
+    const kindText = isExam() ? labelFor(blockKind) : blockKind === 'lesson' ? 'Lesson' : `Level ${currentLevel}`;
+    const subj = document.getElementById('q-subject');
+    const kind = document.getElementById('q-kind');
+    if (subj) subj.textContent = subjectName || '';
+    if (kind) kind.textContent = kindText;
+    host.setAttribute('data-kind', isExam() ? 'exam' : blockKind === 'lesson' ? 'lesson' : 'practice');
     const covered = document.getElementById('covered');
     if (levelsCovered.length > 1) {
       covered.classList.remove('hidden');
@@ -204,7 +233,10 @@ App.mount(async () => {
 
   function progress() {
     const answered = items.filter((i) => i.answered).length;
-    document.getElementById('counter').textContent = `${Math.min(index + 1, items.length)} / ${items.length}`;
+    const counter = document.getElementById('counter');
+    counter.innerHTML = host.getAttribute('data-view') === 'lesson'
+      ? `<span class="q-count-n">${items.length} question${items.length === 1 ? '' : 's'} after</span>`
+      : `<span class="q-count-l">Question</span> <span class="q-count-n">${Math.min(index + 1, items.length)} of ${items.length}</span>`;
     // A block can be the writing on its own, with no questions at all, and a
     // progress bar reading NaN% is worse than no bar.
     const share = items.length ? answered / items.length : 0;
@@ -258,18 +290,22 @@ App.mount(async () => {
 
   function renderLesson() {
     const itemHost = document.getElementById('item');
+    host.setAttribute('data-view', 'lesson');
+    progress();
     if (lessonTelemetry && lessonTelemetry.scroll) lessonTelemetry.scroll.stop();
     lessonTelemetry = { block, openedAt: Date.now(), scroll: scrollBackCounter() };
-    const sections = (lesson.sections || []).map((s) => `
-      <section class="lesson-section">
-        <h3>${App.escapeHtml(App.cleanTitle(s.heading) === App.cleanTitle(lesson.title) ? 'The idea' : App.cleanTitle(s.heading))}</h3>
+    // The lesson reads as cards: the rule (each section), the worked example, the trap
+    // (where this usually goes wrong), then a short summary and the quick check.
+    const sections = (lesson.sections || []).map((s, i) => `
+      <section class="lesson-section lesson-rule card${i === 0 ? ' lesson-idea' : ''}">
+        <h3 class="lesson-label">${App.escapeHtml(App.cleanTitle(s.heading) === App.cleanTitle(lesson.title) ? 'The idea' : App.cleanTitle(s.heading))}</h3>
         <p>${App.escapeHtml(s.body)}</p>
         ${s.example ? `<pre class="lesson-example">${App.escapeHtml(s.example)}</pre>` : ''}
       </section>`).join('');
 
     const worked = lesson.worked_example ? `
-      <section class="lesson-section">
-        <h3>Worked example</h3>
+      <section class="lesson-section lesson-worked card">
+        <h3 class="lesson-label">Worked example</h3>
         <pre class="lesson-example">${App.escapeHtml(lesson.worked_example.problem)}</pre>
         <ol class="lesson-steps">
           ${lesson.worked_example.steps.map((step) => `<li>${App.escapeHtml(step)}</li>`).join('')}
@@ -278,9 +314,12 @@ App.mount(async () => {
       </section>` : '';
 
     const mistakes = (lesson.common_mistakes || []).length ? `
-      <section class="lesson-section">
-        <h3>Where this usually goes wrong</h3>
-        <ul class="small">${lesson.common_mistakes.map((m) => `<li>${App.escapeHtml(m)}</li>`).join('')}</ul>
+      <section class="lesson-section lesson-trap">
+        <span class="lesson-trap-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l9 15.5H3z"/><path d="M12 10v4.5M12 17.4v.1"/></svg></span>
+        <div class="lesson-trap-body">
+          <h3 class="lesson-label">Where this usually goes wrong</h3>
+          <ul>${lesson.common_mistakes.map((m) => `<li>${App.escapeHtml(m)}</li>`).join('')}</ul>
+        </div>
       </section>` : '';
 
     itemHost.innerHTML = `
@@ -292,12 +331,14 @@ App.mount(async () => {
         ${worked}
         ${mistakes}
         <section class="lesson-section lesson-summary">
-          <h3>In short</h3>
+          <h3 class="lesson-label">In short</h3>
           <p>${App.escapeHtml(lesson.summary)}</p>
         </section>
-        <button class="btn btn-primary btn-lg" id="start-checks" type="button">
-          Check what stuck (${items.length} question${items.length === 1 ? '' : 's'})
-        </button>
+        <div class="check-bar lesson-bar">
+          <button class="btn btn-primary btn-lg btn-block" id="start-checks" type="button">
+            Check what stuck (${items.length} question${items.length === 1 ? '' : 's'})
+          </button>
+        </div>
       </article>`;
 
     document.getElementById('start-checks').addEventListener('click', () => {
@@ -765,7 +806,11 @@ function renderRubricResult(result) {
     const itemHost = document.getElementById('item');
     const roleLabel = { review: 'Review', stretch: 'Stretch', support: 'Foundation', focus: 'Focus', exam: 'Exam', check: 'Check' }[item.role] || 'Question';
 
+    host.setAttribute('data-view', 'question');
+    progress();
     Player.render(itemHost, item, {
+      // Choose, then Check; the Check button is sticky at the bottom on a phone.
+      check: isExam() || heldFeedback ? 'Next' : 'Check',
       // The role ("Focus", "Review", "Stretch") and the item's metadata are for
       // checking the content, not for the learner: shown only with ?debug=1.
       label: App.query('debug') ? roleLabel : null,
@@ -933,6 +978,9 @@ function renderRubricResult(result) {
 
   function renderLevelClose(outcome) {
     const itemHost = document.getElementById('item');
+    host.setAttribute('data-view', 'close');
+    const counter = document.getElementById('counter');
+    if (counter) counter.textContent = '';
     const advanced = !!outcome.level_up;
     const wasLesson = outcome.kind === 'lesson';
     const nextKind = outcome.next_kind;
@@ -1205,7 +1253,7 @@ function renderRubricResult(result) {
     }
 
     host.innerHTML = `
-      <h1 class="visually-hidden">Session summary</h1>
+      <h1 class="recap-title">Session summary</h1>
       ${banner}
       ${outcome.skip && outcome.skip.offered ? `
       <div class="card" style="border-color:var(--accent)">

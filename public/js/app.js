@@ -299,11 +299,18 @@
   function stored(key) {
     try { return window.localStorage.getItem(key); } catch { return null; }
   }
+  // js/style-boot.js (loaded in every page's <head>) already resolved the style
+  // and the mode before first paint; window.SavantStyle is its API. A page that
+  // does not load it (the sealed Spanish evidence pages) keeps the older
+  // behaviour: data-theme forced from localStorage, otherwise the system's.
+  const Style = window.SavantStyle || null;
   function applyTheme(theme) {
+    if (Style) return;
     if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
     else delete document.documentElement.dataset.theme;
   }
   function currentTheme() {
+    if (Style) return Style.state().mode;
     const forced = document.documentElement.dataset.theme;
     if (forced) return forced;
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -324,9 +331,51 @@
 
   // The phone's tab bar, and the icon each nav entry gets there.
   const TAB_ICON = {
-    dashboard: 'home', subjects: 'compass', calendar: 'calendar', curriculum: 'list', profile: 'user', games: 'target', admin: 'settings',
+    dashboard: 'home', learn: 'book-open', review: 'cards', profile: 'user',
+    subjects: 'compass', calendar: 'calendar', curriculum: 'list', games: 'target', admin: 'settings',
   };
-  const TAB_LABEL = { dashboard: 'Home' };
+
+  /*
+   * The signed-in navigation: four core destinations (the phone's tab bar and
+   * the top of the desktop sidebar) and a few extras (the sidebar only).
+   * Learn and Review need an enrollment; the dashboard remembers the subject it
+   * is leading with (localStorage "savant.lead") and these follow it, falling
+   * back to the subject chooser and the retention calendar.
+   */
+  const LEAD_KEY = 'savant.lead';
+  function setLead(enrollmentId) { store(LEAD_KEY, enrollmentId ? String(enrollmentId) : null); }
+  function navFor(user) {
+    const lead = Number(stored(LEAD_KEY)) || 0;
+    return {
+      core: [
+        ['dashboard', 'Home', '/dashboard'],
+        ['learn', 'Learn', lead ? `/path?enrollment=${lead}` : '/onboarding'],
+        ['review', 'Review', lead ? `/review?enrollment=${lead}` : (user.retention ? '/calendar' : '/dashboard')],
+        ['profile', 'Profile', '/profile'],
+      ],
+      extra: [
+        ['subjects', 'Add a subject', '/onboarding'],
+        ...(user.retention ? [['calendar', 'Calendar', '/calendar']] : []),
+        // Read-only: every subject, every grade, every level. Offered only to an
+        // account that can browse, and the route asks again, so hiding the link
+        // here is a courtesy rather than the thing that holds.
+        ...(user.can_browse ? [['curriculum', 'Curriculum', '/curriculum']] : []),
+        ...(user.is_admin ? [['games', 'Game lab', '/game-lab']] : []),
+        ...(user.is_admin ? [['admin', 'Admin', '/admin']] : []),
+      ],
+    };
+  }
+  /** Which core tab a page belongs to; most pages say 'dashboard', so the path decides. */
+  function coreKey(active) {
+    const path = window.location.pathname;
+    if (active === 'subjects') return 'learn';
+    if (active === 'calendar') return 'review';
+    if (active === 'dashboard' || active == null) {
+      if (/^\/(path|session|base-lesson|placement|skip|skill-practice|stage-|help|subject-placement)/.test(path)) return 'learn';
+      if (/^\/(review|enforcer|held)/.test(path)) return 'review';
+    }
+    return active;
+  }
 
   /*
    * Engagement and UX settings from the server (config/ux.js, `user.ux`), kept on
@@ -352,6 +401,8 @@
     const hide = !!(user && user.hide_stats);
     window.App.hideStats = hide;
     window.App.breakOff = !!(user && user.break_nudge_off);
+    // The style saved to the account wins over this device's copy (js/style-boot.js).
+    if (user && user.style_pref && Style) Style.adopt(user.style_pref);
     const root = document.documentElement;
     if (ux.touch44 === false) root.dataset.touch44 = 'off'; else delete root.dataset.touch44;
     if (hide) root.dataset.hideStats = 'on'; else delete root.dataset.hideStats;
@@ -374,21 +425,9 @@
     applyAudience(user);
     applyUx(user);
     consentLine(user);
-    const nav = user
-      ? [
-        ['dashboard', 'Dashboard', '/dashboard'],
-        ['subjects', 'Subjects', '/onboarding'],
-        // Which day each retention enforcer falls on (RETENTION_ENFORCERS).
-        ...(user.retention ? [['calendar', 'Calendar', '/calendar']] : []),
-        // Read-only: every subject, every grade, every level. Offered only to an
-        // account that can browse, and the route asks again, so hiding the link
-        // here is a courtesy rather than the thing that holds.
-        ...(user.can_browse ? [['curriculum', 'Curriculum', '/curriculum']] : []),
-        ['profile', 'Profile', '/profile'],
-        ...(user.is_admin ? [['games', 'Game lab', '/game-lab']] : []),
-        ...(user.is_admin ? [['admin', 'Admin', '/admin']] : []),
-      ]
-      : [['how', 'How it works', '/#how'], ['subjects', 'Subjects', '/#subjects']];
+    const navs = user ? navFor(user) : null;
+    const guestNav = [['how', 'How it works', '/#how'], ['subjects', 'Subjects', '/#subjects']];
+    const tabKey = coreKey(active);
 
     // A streak or XP of zero is not an achievement, so it is not shown.
     // Nothing is drawn at all when the learner (or their parent) hid them.
@@ -396,44 +435,57 @@
     const xp = user && user.hide_stats ? 0 : (Number(user && user.xp) || 0);
     const streakTip = user && user.ux && user.ux.streak_local_grace
       ? 'Day streak. Your own calendar day counts, and one missed day a week is forgiven.' : 'Day streak';
+    // The sun/moon button flips light and dark, which is "Auto" (chunky by day,
+    // night by dark). A style picked in Profile is a whole look, so the button
+    // steps aside until Auto is chosen again.
+    const autoStyle = !Style || Style.state().pref === 'auto';
+    const toggleBtn = autoStyle
+      ? `<button class="icon-btn" id="theme-toggle" type="button" title="${themeLabel()}" aria-label="${themeLabel()}">${window.icon(currentTheme() === 'dark' ? 'sun' : 'moon')}</button>`
+      : '';
+    const link = ([key, label, href], current, cls) =>
+      `<a href="${href}" class="${cls || ''}${key === current ? ' active' : ''}"${key === current ? ' aria-current="page"' : ''}>`
+      + `<span class="nav-ic">${window.icon(TAB_ICON[key] || 'chevron-right')}</span><span class="nav-label">${label}</span></a>`;
     host.innerHTML = `
       <div class="wrap">
         <a class="brand" href="${user ? '/dashboard' : '/'}">${brandMark()}<span class="brand-name">${escapeHtml(BRAND.name)}</span></a>
         <nav class="nav${user ? ' has-tabbar' : ''}" aria-label="Main">
-          ${nav.map(([key, label, href]) =>
-            `<a href="${href}" class="${key === active ? 'active' : ''}"${key === active ? ' aria-current="page"' : ''}>${label}</a>`).join('')}
+          ${user
+            ? navs.core.map((n) => link(n, tabKey)).join('')
+              + (navs.extra.length ? `<span class="nav-group-label" aria-hidden="true">More</span>` + navs.extra.map((n) => link(n, active, 'is-extra')).join('') : '')
+            : guestNav.map(([key, label, href]) =>
+              `<a href="${href}" class="${key === active ? 'active' : ''}"${key === active ? ' aria-current="page"' : ''}>${label}</a>`).join('')}
         </nav>
         <span class="spacer"></span>
         ${user ? `
           <div class="header-stats">
-            ${streak ? `<span class="stat-pill is-streak" title="${streakTip}">${streak}<span class="unit"> day${streak === 1 ? '' : 's'} in a row</span></span>` : ''}
+            ${streak ? `<span class="stat-pill is-streak" title="${streakTip}">${window.icon('flame')}<span class="num">${streak}</span><span class="unit">day${streak === 1 ? '' : 's'} in a row</span></span>` : ''}
             ${xp ? `<span class="stat-pill is-xp" title="Total XP">${xp}<span class="unit"> XP</span></span>` : ''}
           </div>
           <div class="header-actions">
-            <button class="icon-btn" id="theme-toggle" type="button" title="${themeLabel()}" aria-label="${themeLabel()}">${window.icon(currentTheme() === 'dark' ? 'sun' : 'moon')}</button>
+            ${toggleBtn}
             <button class="btn btn-ghost btn-sm keep-icon" id="logout" type="button" aria-label="Sign out">${window.icon('log-out')}<span class="btn-label">Sign out</span></button>
           </div>
         ` : `
           <div class="header-actions">
-            <button class="icon-btn" id="theme-toggle" type="button" title="${themeLabel()}" aria-label="${themeLabel()}">${window.icon(currentTheme() === 'dark' ? 'sun' : 'moon')}</button>
+            ${toggleBtn}
             <a class="btn btn-ghost btn-sm" href="/login">Sign in</a>
-            <a class="btn btn-sm" href="/register">Find your level</a>
+            <a class="btn btn-primary btn-sm" href="/register">Find your level</a>
           </div>
         `}
       </div>`;
 
     // The tab bar lives outside the header so it can sit at the bottom of the
     // screen; it is drawn on every page that has a signed-in header and shown
-    // only on narrow screens (and never inside a question player — see the CSS).
+    // only at 1024px and below (and never inside a question player; see the CSS).
     let tabbar = document.getElementById('tabbar');
     if (user) {
       if (!tabbar) {
         tabbar = el('nav', { id: 'tabbar', class: 'tabbar', 'aria-label': 'Main' });
         document.body.appendChild(tabbar);
       }
-      tabbar.innerHTML = nav.slice(0, 5).map(([key, label, href]) => `
-        <a href="${href}" class="${key === active ? 'active' : ''}"${key === active ? ' aria-current="page"' : ''}>
-          <span class="tab-ic">${window.icon(TAB_ICON[key] || 'chevron-right')}</span>${TAB_LABEL[key] || label}
+      tabbar.innerHTML = navs.core.map(([key, label, href]) => `
+        <a href="${href}" class="${key === tabKey ? 'active' : ''}"${key === tabKey ? ' aria-current="page"' : ''}>
+          <span class="tab-ic">${window.icon(TAB_ICON[key] || 'chevron-right')}</span>${label}
         </a>`).join('');
       document.body.classList.add('has-tabbar');
     } else if (tabbar) {
@@ -451,8 +503,7 @@
     if (toggle) {
       toggle.addEventListener('click', () => {
         const next = currentTheme() === 'dark' ? 'light' : 'dark';
-        applyTheme(next);
-        store(THEME_KEY, next);
+        if (Style) Style.setTheme(next); else { applyTheme(next); store(THEME_KEY, next); }
         toggle.innerHTML = window.icon(next === 'dark' ? 'sun' : 'moon');
         toggle.setAttribute('aria-label', themeLabel());
         toggle.title = themeLabel();
@@ -533,9 +584,12 @@
    * ruler ticks of rising height on a baseline, in ink. */
   const BRAND = { name: 'Savant' };
   function brandMark() {
+    // The Savant logo, the same mark as savantedu.com: three bars on a baseline, in the
+    // navbar's text colour (black on a light navbar, white on a dark one).
     return '<span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 18 20" focusable="false">'
       + '<rect x="0" y="18.5" width="18" height="1.5"/><rect x="1" y="12" width="2.4" height="7"/>'
-      + '<rect x="7.8" y="7" width="2.4" height="12"/><rect x="14.6" y="1" width="2.4" height="18"/></svg></span>';
+      + '<rect x="7.8" y="7" width="2.4" height="12"/><rect x="14.6" y="1" width="2.4" height="18"/>'
+      + '</svg></span>';
   }
 
   /* ── subjects ────────────────────────────────────────────────────────────
@@ -879,7 +933,12 @@
 
   window.App = {
     ux: {}, hideStats: false, breakOff: false, askText,
-    api, el, escapeHtml, toast, announce, pct, timeAgo, header, currentUser, query, mount,
+    api, el, escapeHtml, toast, announce, pct, timeAgo, header, currentUser, query, mount, setLead,
+    /** Pick a style ('auto' or an id) now, on this device, and save it to the account. */
+    async setStyle(pref) {
+      if (Style) Style.set(pref);
+      try { await api.post('/api/prefs', { style: pref }); } catch { /* kept on this device */ }
+    },
     CHECKPOINT_LABEL, LEVEL_LABEL, LEVEL_ICON,
     levelName, levelIcon, layoutSentence, isCheckpointLevel,
     BRAND, brandMark, symbol, subjectId, gradeParts, gradeLabel, cleanTitle, levelParts,

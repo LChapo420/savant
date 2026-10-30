@@ -1,0 +1,136 @@
+/* Profile (public/profile.html, js/profile.js): the parts that are only on this screen.
+ * Components (.card, .btn, .meter, .sec-head) and every colour come from css/style.css and
+ * the style tokens. The one exception is the Look swatches, which draw a small picture of
+ * each style, so they carry that style's own colours. */
+
+.pf > * { min-width: 0; }
+.pf-sec { margin-top: var(--s-8); }
+
+/* ── who ───────────────────────────────────────────────────────────────── */
+.pf-head { display: flex; align-items: center; gap: 16px; margin-bottom: var(--s-5); }
+.pf-avatar {
+  display: grid; place-items: center; flex: none; width: 64px; height: 64px; border-radius: 50%;
+  background: var(--bar-fill); color: var(--on-action); font-family: var(--display); font-weight: var(--w-strong); font-size: 1.75rem;
+}
+.pf-who { min-width: 0; }
+.pf-who h1 { margin: 0; overflow-wrap: anywhere; }
+.pf-who p { margin: 2px 0 0; font-size: var(--t-ui-s); overflow-wrap: anywhere; }
+.pf-who p b { color: var(--action-ink); font-weight: var(--w-strong); }
+
+/* ── the numbers ───────────────────────────────────────────────────────── */
+.pf-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 0 var(--s-5); }
+.pf-stats > div {
+  display: grid; justify-items: center; gap: 2px; padding: 14px 8px 12px; text-align: center;
+  background: var(--card-bg); border: var(--bw-card) solid var(--card-line); border-bottom-width: var(--bw-card-edge); border-radius: var(--r-card);
+}
+.pf-stats > div.hidden { display: none; }
+.pf-stats svg { width: 24px; height: 24px; color: var(--action-ink); }
+.pf-stats dd { margin: 0; font-family: var(--num); font-size: 1.75rem; font-weight: var(--w-head); line-height: 1.1; }
+.pf-stats dt { font-size: var(--t-meta); color: var(--ink-2); font-weight: var(--w-label); }
+@media (min-width: 641px) { .pf-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* ── chart, ACT, subjects ──────────────────────────────────────────────── */
+.pf-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.pf-grid .card { margin: 0; }
+.pf-grid .sec-head { margin: 0 0 12px; }
+@media (min-width: 900px) {
+  .pf-grid { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); grid-template-areas: "week act" "week subjects"; align-items: start; }
+  .pf-week { grid-area: week; align-self: stretch; }
+  .pf-act { grid-area: act; }
+  .pf-subjects { grid-area: subjects; }
+}
+.pf-bars { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; align-items: end; height: 190px; }
+.pf-bar { position: relative; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-end; height: 100%; min-width: 0; text-align: center; }
+.pf-bar i { display: block; border-radius: var(--r-card) var(--r-card) 2px 2px; background: var(--action-mid); min-height: 0; }
+.pf-bar.today i { background: var(--reward); border-bottom: 3px solid var(--reward-edge); }
+.pf-bar.none i { border-radius: 0; border-top: 2px solid var(--line-strong); height: 0 !important; }
+.pf-bar b { display: block; margin-top: 8px; font-size: var(--t-meta); color: var(--ink-2); font-weight: var(--w-label); }
+.pf-bar.today b { color: var(--ink); }
+.pf-bar-n { font-size: var(--t-meta); font-weight: var(--w-strong); color: var(--ink-2); margin-bottom: 3px; min-height: 1.1em; }
+.pf-bars .pf-bar { padding-top: 0; }
+/* the bar fills the space left under its number and above its weekday */
+.pf-bar { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+.pf-bar i { align-self: end; }
+.pf-empty { margin: 0 0 12px; }
+.pf-scores { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 2px; }
+.pf-scores li { display: flex; align-items: baseline; gap: 10px; }
+.pf-scores b { font-family: var(--num); font-size: 2rem; font-weight: var(--w-head); line-height: 1.15; }
+.pf-scores span { font-size: var(--t-meta); color: var(--ink-2); font-weight: var(--w-label); }
+.pf-note { margin: 0 0 12px; }
+.pf-mastery { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.pf-mastery li { display: grid; grid-template-columns: minmax(5rem, 8rem) minmax(0, 1fr) 3rem; align-items: center; gap: 12px; }
+.pf-mastery .meter { display: block; }
+.pf-m-name { font-weight: var(--w-strong); overflow-wrap: anywhere; line-height: 1.2; }
+.pf-m-pct { text-align: right; font-weight: var(--w-strong); }
+.pf-m-none { grid-column: 2 / -1; font-size: var(--t-meta); color: var(--ink-2); }
+
+/* ── Look: the style picker ────────────────────────────────────────────── */
+.pf-look { display: grid; gap: var(--s-5); }
+.look-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 560px) { .look-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .look-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.look-card {
+  display: grid; gap: 3px; align-content: start; min-height: 44px; padding: 8px 8px 10px; text-align: left; font: inherit; color: var(--ink);
+  background: var(--card-bg); border: 2px solid var(--line); border-radius: var(--r-input); cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.look-card:hover { border-color: var(--line-strong); background: var(--well); }
+.look-card.on { border-color: var(--sel-line); background: var(--sel-bg); box-shadow: 0 0 0 var(--sel-ring) var(--sel-line); }
+.look-card:disabled { opacity: 0.5; cursor: not-allowed; }
+.look-name { font-weight: var(--w-strong); font-size: var(--t-ui-s); padding: 2px 2px 0; }
+.look-note { font-size: var(--t-meta); color: var(--ink-2); line-height: 1.25; padding: 0 2px; }
+.look-card.on .look-note { color: var(--sel-ink); }
+
+/* The swatch: a small drawing of a screen in that style. */
+.look-swatch {
+  --sw-page: #F7F6F2; --sw-card: #FFFFFF; --sw-ink: #172036; --sw-line: #E2E5EE; --sw-accent: #1F4FD8; --sw-r: 8px; --sw-pill-r: 8px;
+  position: relative; display: block; height: 64px; overflow: hidden; border-radius: 8px;
+  background: var(--sw-page); border: 1px solid var(--sw-line);
+}
+.look-swatch i { position: absolute; display: block; }
+.look-swatch .sw-bar { left: 8px; top: 8px; width: 38%; height: 8px; border-radius: var(--sw-pill-r); background: var(--sw-ink); }
+.look-swatch .sw-line { left: 8px; top: 24px; right: 30%; height: 18px; border-radius: var(--sw-r); background: var(--sw-card); border: 1px solid var(--sw-line); }
+.look-swatch .sw-line.s { top: 24px; left: auto; right: 8px; width: 22%; background: var(--sw-ink); opacity: 0.12; border: 0; }
+.look-swatch .sw-pill { left: 8px; right: 8px; bottom: 7px; height: 12px; border-radius: var(--sw-pill-r); background: var(--sw-accent); }
+.look-swatch[data-swatch="chunky"] { --sw-page: #F7F6F2; --sw-card: #FFFFFF; --sw-ink: #172036; --sw-line: #CDD2E0; --sw-accent: #1F4FD8; --sw-r: 7px; --sw-pill-r: 7px; }
+.look-swatch[data-swatch="chunky"] .sw-pill { border-bottom: 3px solid #153A9E; height: 14px; }
+.look-swatch[data-swatch="night"] { --sw-page: #0F1115; --sw-card: #181B21; --sw-ink: #E8EAEE; --sw-line: #2A2F38; --sw-accent: #5EEAB4; --sw-r: 5px; --sw-pill-r: 5px; }
+.look-swatch[data-swatch="bento"] { --sw-page: #F3F3F1; --sw-card: #E8E2F2; --sw-ink: #1E2321; --sw-line: #D5CCE8; --sw-accent: #1E2321; --sw-r: 9px; --sw-pill-r: 99px; }
+.look-swatch[data-swatch="editorial"] { --sw-page: #FAF8F3; --sw-card: #FAF8F3; --sw-ink: #1C1A17; --sw-line: #D8D1C2; --sw-accent: #BF2F17; --sw-r: 0px; --sw-pill-r: 2px; }
+.look-swatch[data-swatch="editorial"] .sw-line { border-width: 0 0 1px; }
+.look-swatch[data-swatch="desk"] { --sw-page: #F6F1E7; --sw-card: #FFFCF5; --sw-ink: #1E4D3A; --sw-line: #E3DCC8; --sw-accent: #B9552F; --sw-r: 6px; --sw-pill-r: 8px; }
+.look-swatch[data-swatch="notebook"] { --sw-page: #FBFAF5; --sw-card: #FFFEFB; --sw-ink: #1C2238; --sw-line: #DDD8C8; --sw-accent: #2445A8; --sw-r: 2px; --sw-pill-r: 3px; background-image: radial-gradient(#D2CEC0 1px, transparent 1px); background-size: 8px 8px; }
+.look-swatch[data-swatch="notebook"] .sw-bar { background: #FFE45C; }
+.look-swatch[data-swatch="auto"] { background: linear-gradient(115deg, #F7F6F2 0 50%, #0F1115 50% 100%); border-color: var(--line-strong); }
+.look-swatch[data-swatch="auto"] .sw-bar { left: 8px; background: #172036; width: 30%; }
+.look-swatch[data-swatch="auto"] .sw-line { left: 8px; right: auto; width: 34%; background: #FFFFFF; border-color: #CDD2E0; }
+.look-swatch[data-swatch="auto"] .sw-line.s { left: auto; right: 8px; width: 30%; background: #5EEAB4; opacity: 0.55; }
+.look-swatch[data-swatch="auto"] .sw-pill { background: linear-gradient(90deg, #1F4FD8 50%, #5EEAB4 50%); }
+
+.pf-appearance { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding-top: var(--s-4); border-top: 1px solid var(--line); }
+.pf-appearance > div:first-child { display: grid; gap: 2px; min-width: 0; flex: 1 1 14rem; }
+.pf-segs { display: inline-flex; gap: 0; border: var(--bw-control) solid var(--control); border-radius: var(--r-btn); overflow: hidden; }
+.pf-seg {
+  min-height: 44px; padding: 0 14px; border: 0; background: transparent; color: var(--ink); font: inherit; font-weight: var(--w-label); font-size: var(--t-ui-s); cursor: pointer;
+}
+.pf-seg + .pf-seg { border-left: var(--bw-control) solid var(--control); }
+.pf-seg:hover { background: var(--well); }
+.pf-seg.on { background: var(--action); color: var(--on-action); }
+
+/* ── settings rows ─────────────────────────────────────────────────────── */
+.pf-rows { padding: 0 16px; }
+.pf-row { display: flex; align-items: center; gap: 12px; min-height: 56px; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+.pf-row:first-child { border-top: 0; }
+.pf-row:hover .pf-row-label { text-decoration: underline; }
+.pf-row-label { font-weight: var(--w-strong); font-size: 1.0625rem; }
+.pf-row-value { margin-left: auto; color: var(--ink-2); font-size: var(--t-ui-s); text-align: right; }
+.pf-row svg { flex: none; width: 18px; height: 18px; color: var(--ink-2); }
+.pf-display .section-title { border-top: 0; margin-top: var(--s-6); padding-top: 0; font-size: 1.0625rem; }
+
+/* The long explanatory sections below are quieter than the top of the page. */
+.pf .section-title { font-size: 1.125rem; }
+@media (max-width: 640px) {
+  .pf table.data td { font-size: var(--t-meta); }
+  .pf .card { overflow-wrap: break-word; }
+}
+@media (min-width: 900px) { .pf-bars { height: 250px; } }

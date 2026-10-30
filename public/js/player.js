@@ -33,6 +33,9 @@
    * @param {string}  [opts.label]    small line above the prompt
    * @param {boolean} [opts.coach]    offer the coach (default true)
    * @param {boolean} [opts.askConfidence]  show the optional "how sure are you?" row
+   * @param {string}  [opts.check]    a label ("Check"): choosing an option only selects it and a
+   *                                  sticky Check button submits it; a typed answer's Submit button
+   *                                  takes the label and moves to the same bar. Off by default.
    * @param {string}  [opts.savedAnswer]    an answer already given, shown on the question
    *
    * onSubmit receives (answer, meta) where meta carries the learner's stated
@@ -110,10 +113,14 @@
     }
 
     let handles;
+    let checkBar = null;
+    let checkBtn = null;
     if (item.format === 'multiple_choice' && item.choices) {
       // A group named by the question, so a screen reader hears what the
       // options answer; each option is a button that submits at once.
       const choices = App.el('div', { class: 'choices', role: 'group', 'aria-labelledby': promptId });
+      // Short answers (numbers, single words) are set large; sentences stay readable.
+      if (item.choices.every((c) => String(c).length <= 14)) choices.classList.add('choices-short');
       item.choices.forEach((choice, i) => {
         const btn = App.el('button', { class: 'choice', type: 'button', 'data-choice': choice },
           `<span class="key">${KEYS[i] || i + 1}</span><span>${App.escapeHtml(choice)}</span>`);
@@ -124,16 +131,44 @@
           markChoice(btn, 'your answer so far');
         }
         btn.addEventListener('click', () => {
+          if (opts.check) {
+            // Choose, then Check: tapping another option moves the choice.
+            [...choices.children].forEach((c) => {
+              const on = c === btn;
+              c.classList.toggle('selected', on);
+              c.setAttribute('aria-pressed', String(on));
+              markChoice(c, on ? 'selected' : '');
+            });
+            if (checkBtn) checkBtn.disabled = false;
+            return;
+          }
           [...choices.children].forEach((c) => { c.disabled = true; markChoice(c, ''); });
           btn.classList.add('selected');
           markChoice(btn, 'your answer');
           closeCoach(host);
           onSubmit(choice, { node: btn, container: choices, confidence, changes: 0 });
         });
+        if (opts.check) btn.setAttribute('aria-pressed', String(btn.classList.contains('selected')));
         choices.appendChild(btn);
       });
       host.appendChild(choices);
       handles = { container: host, choices };
+      if (opts.check) {
+        checkBar = App.el('div', { class: 'check-bar' });
+        checkBtn = App.el('button', { class: 'btn btn-primary btn-lg btn-block', type: 'button', 'data-act': 'check' }, App.escapeHtml(opts.check));
+        checkBtn.disabled = !choices.querySelector('.choice.selected');
+        checkBtn.addEventListener('click', () => {
+          const picked = choices.querySelector('.choice.selected');
+          if (!picked) return;
+          [...choices.children].forEach((c) => { c.disabled = true; markChoice(c, ''); });
+          markChoice(picked, 'your answer');
+          checkBtn.disabled = true;
+          closeCoach(host);
+          onSubmit(picked.dataset.choice, { node: picked, container: choices, confidence, changes: 0 });
+        });
+        checkBar.appendChild(checkBtn);
+        host.appendChild(checkBar);
+      }
     } else {
       // type_in and short_answer differ only in the size of the box.
       const long = item.format === 'short_answer';
@@ -150,11 +185,23 @@
       // Coming back to a question shows what was typed there before, ready to
       // be kept or changed.
       if (opts.savedAnswer != null) input.value = String(opts.savedAnswer);
-      const button = App.el('button', { class: 'btn btn-primary', type: 'button' }, 'Submit');
+      const button = App.el('button', { class: 'btn btn-primary', type: 'button' }, opts.check ? App.escapeHtml(opts.check) : 'Submit');
       const row = App.el('div', { class: 'answer-row' });
       row.appendChild(input);
-      row.appendChild(button);
-      host.appendChild(row);
+      if (opts.check) {
+        // The button moves to the sticky bar, and stays off until there is something to check.
+        checkBar = App.el('div', { class: 'check-bar' });
+        button.classList.add('btn-lg', 'btn-block');
+        button.setAttribute('data-act', 'check');
+        button.disabled = !input.value.trim();
+        checkBar.appendChild(button);
+        input.addEventListener('input', () => { if (!input.disabled) button.disabled = !input.value.trim(); });
+        host.appendChild(row);
+        host.appendChild(checkBar);
+      } else {
+        row.appendChild(button);
+        host.appendChild(row);
+      }
 
       // A revision is a run of edits that removes text: typing on is not a change
       // of mind, and holding backspace through one word is one revision, not ten.
@@ -271,7 +318,7 @@
     }, PRIME_AFTER_MS);
     // Answering or leaving the question cancels it.
     host.addEventListener('click', function cancel(event) {
-      if (event.target.closest('.choice') || event.target.closest('.answer-row button')) {
+      if ((event.target.closest('.choice') && !host.querySelector('.check-bar')) || event.target.closest('.answer-row button') || event.target.closest('.check-bar button')) {
         clearTimeout(timer);
         host.removeEventListener('click', cancel);
       }

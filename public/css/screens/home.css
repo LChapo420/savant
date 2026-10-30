@@ -1,0 +1,83 @@
+/* Home (public/dashboard.html, js/dashboard.js): the parts that are only on this screen.
+ * Tokens only; the component look comes from css/style.css and the style files. */
+
+/* ── Recent sessions: a list of rows, not a table ───────────────────────── */
+.recent-card { padding: 0; overflow: hidden; }
+.recent-head { display: none; }
+.recent-list { list-style: none; margin: 0; padding: 0; }
+.recent-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 14px; align-items: baseline;
+  padding: 12px 16px; border-top: 1px solid var(--line); min-width: 0;
+}
+.recent-row:first-child { border-top: 0; }
+.recent-row > * { min-width: 0; }
+.r-subject { grid-column: 1; grid-row: 1; }
+.r-meta { grid-column: 1; grid-row: 2; }
+.r-score { grid-column: 2; grid-row: 1; }
+.r-xp { grid-column: 2; grid-row: 2; }
+.r-subject b { display: block; font-weight: var(--w-strong); line-height: 1.25; overflow-wrap: anywhere; }
+.r-subject small { display: block; font-size: var(--t-meta); color: var(--ink-2); }
+.r-score { text-align: right; font-weight: var(--w-strong); white-space: nowrap; font-size: var(--t-ui-s); }
+.r-meta { font-size: var(--t-meta); color: var(--ink-2); }
+.r-type::before { content: "\2022"; margin: 0 0.45em; }
+.r-xp { text-align: right; font-size: var(--t-meta); color: var(--ink-2); white-space: nowrap; }
+.r-xp small { font-size: inherit; }
+
+@media (min-width: 641px) {
+  .recent-head, .recent-row {
+    display: grid; grid-template-columns: 9.5rem minmax(0, 1.6fr) minmax(0, 1fr) 6rem 5rem; gap: 0 16px; align-items: center;
+  }
+  .recent-card:has(.no-xp) .recent-head, .recent-list.no-xp .recent-row { grid-template-columns: 9.5rem minmax(0, 1.6fr) minmax(0, 1fr) 6rem; }
+  .recent-head { padding: 12px 16px 8px; font-size: var(--t-meta); font-weight: var(--w-label); color: var(--ink-2); border-bottom: 1px solid var(--line); }
+  .recent-head .n { text-align: right; }
+  .recent-row { padding: 10px 16px; }
+  .r-subject, .r-meta, .r-score, .r-xp { grid-column: auto; grid-row: auto; }
+  .r-meta { display: contents; }
+  .r-when { order: 1; font-size: var(--t-ui-s); color: var(--ink-2); }
+  .r-subject { order: 2; }
+  .r-subject b, .r-subject small { display: inline; }
+  .r-subject small::before { content: ", "; }
+  .r-type { order: 3; font-size: var(--t-ui-s); color: var(--ink); }
+  .r-type::before { content: none; }
+  .r-score { order: 4; }
+  .r-xp { order: 5; font-size: var(--t-ui-s); color: var(--ink); }
+}
+
+/* ── The row of secondary actions under the subjects ────────────────────── */
+.home-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: var(--s-4); }
+.home-tutor, .home-tutor .tutor-chat, .home-tutor .tutor-slot, .home-tutor .assist-chat, .home-tutor .tutor-know { display: contents; }
+.home-tutor .tutor-chat { margin: 0 !important; }
+.home-tutor .assist-chat { margin: 0 !important; }
+.home-tutor .tutor-know { margin: 0 !important; }
+/* "What does my tutor know?" is a button like the other two. */
+.home-tutor .tutor-know > .btn-text {
+  min-height: var(--btn-h-sm); padding: 0 14px; border: var(--btn2-bw) solid var(--btn2-line); border-bottom-width: var(--btn2-edge-w);
+  border-radius: calc(var(--r-btn) - 2px); background: var(--btn2-bg); color: var(--btn2-ink); text-decoration: none;
+  font-family: var(--display); font-weight: var(--w-btn); font-size: 0.875rem;
+}
+.home-tutor .tutor-know > .btn-text:hover { background: var(--well); }
+.home-tutor .assist-chat > .btn svg { display: none; }
+/* The panels these two open take a full row under the buttons. */
+.home-tutor .assist-chat > div, .home-tutor .tutor-know > div { flex: 1 0 100%; order: 9; margin-top: 0 !important; }
+.home-actions .btn { white-space: normal; }
+@media (max-width: 420px) {
+  .home-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .home-actions > .btn:first-child { grid-column: 1 / -1; }
+  .home-tutor { display: contents; }
+  .home-tutor .assist-chat > .btn, .home-tutor .tutor-know > .btn { width: 100%; }
+  .home-tutor .assist-chat, .home-tutor .tutor-know { display: block; }
+  .home-tutor .assist-chat > div, .home-tutor .tutor-know > div { grid-column: 1 / -1; }
+}
+
+/* ── This week and today's plan on a phone ─────────────────────────────── */
+@media (max-width: 480px) {
+  .home-hero { padding: 14px; gap: 14px; }
+  .home-hero-text { min-width: 0; }
+  .home-hero-pill { white-space: normal; }
+  .plan-next { padding: var(--s-4); }
+  .plan-next h2 { font-size: 1.25rem; max-width: none; }
+  .plan-next .next-meta { font-size: var(--t-meta); }
+  .next-links { gap: 0 var(--s-4); }
+  .plan-later-row { padding: 8px 12px; }
+  .plan-later-go { max-width: 7rem; text-align: right; }
+}
