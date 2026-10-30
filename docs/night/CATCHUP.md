@@ -75,14 +75,14 @@ C3. [done d0dedb9, math/english/reading; Spanish is covered by its own sealed te
     for each wired subject. Catch-up must find at least 95% of planted gaps, teach no skill the learner already
     knew more than 5% of the time, and use fewer items than the linear path. Write the table to
     `docs/CATCHUP-PROOF.md`. Add the sim to the suite with a fixed seed.
-C3b. **Slip-tolerant check.** `scripts/catchup-sim.js` measures that with a 3% slip about 9% of known skills are still
+C3b. [local only] **Slip-tolerant check.** (30 Oct night: the engine change is gated on 7+ question banks, which need the owner's models; nothing buildable here without them.) `scripts/catchup-sim.js` measures that with a 3% slip about 9% of known skills are still
     taught (one miss sends a skill to learn; every unit bank has exactly 5 questions, 2 kept for the re-check). Gaps found are
     98%+ either way. To meet "teach a known skill <= 5%" at 3% slip, banks need >= 7 questions per unit
     (`scripts/generate-unit-placement.js`, owner's models, so `[local only]` for the generation) and the check then asks a
     second question after a first miss. Then move the sim's gated slip from 0 to 3%.
 C4. [done 41789a0; checked by scripts/catchup-evidence-test.js and full npm test] **Evidence map.** In `docs/CATCHUP-PROOF.md`, each design choice (diagnostic first, skip mastered skills,
     prerequisite order, retrieval practice, spacing, final re-check) cites its mechanism id.
-C5. **Real UI.** The page shows the target, what was found missing, progress, and when the next review is due;
+C5. [local only] **Real UI.** (needs the owner's browser; see status below.) The page shows the target, what was found missing, progress, and when the next review is due;
     works at 375 px with the existing CSS variables.
     Status (30 Oct night): the page exists (C2d) but has never been opened in a browser. A scripted Chromium run in the cloud
     (own server on a throwaway DB, register, walk math/english/reading at 375 px) produced no output in 300 s and was killed,
