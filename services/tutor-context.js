@@ -30,7 +30,11 @@ const SEALED = [/^\/spanish-check/, /^\/spanish-listening/];
 const METHOD_ONLY = [/^\/placement/, /^\/subject-placement/, /^\/stage-check/, /^\/skip/, /^\/enforcer/, /^\/review/, /^\/my-material-study/];
 
 function cleanPath(p) {
-  const path = String(p || '').split(/[?#]/)[0];
+  let path = String(p || '').split(/[?#]/)[0];
+  try { path = decodeURIComponent(path); } catch { /* keep it as sent */ }
+  // The server decides the mode from this path, so spellings of one page must meet the same rule:
+  // "//spanish-check", "/./spanish-check" and "/x/../spanish-check" are the sealed test (06-M3).
+  path = require('path').posix.normalize(path.replace(/\/{2,}/g, '/'));
   return path.startsWith('/') ? path.toLowerCase().replace(/\.html$/, '').replace(/\/+$/, '') || '/' : '/';
 }
 
