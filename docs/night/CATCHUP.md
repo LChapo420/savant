@@ -64,7 +64,7 @@ C2c. **[local only] Subjects without a unit bank.** Missing, exactly: ACT (no `c
     need one bank per section skill), IQ, chess, piano, basketball (no unit banks; chess/piano/basketball are skill tracks, not
     grade-ladder subjects), science (no track at all). Each needs a complete unit bank with at least 5 checked multiple-choice
     questions per unit (`scripts/generate-unit-placement.js` makes them, using models the owner runs). `subjectsReport()` lists this.
-C3. **Proof per subject.** `scripts/catchup-sim.js`: simulated learners with planted gaps (a few, many, none, all)
+C3. [claimed 2026-10-30 06:42Z] **Proof per subject.** `scripts/catchup-sim.js`: simulated learners with planted gaps (a few, many, none, all)
     for each wired subject. Catch-up must find at least 95% of planted gaps, teach no skill the learner already
     knew more than 5% of the time, and use fewer items than the linear path. Write the table to
     `docs/CATCHUP-PROOF.md`. Add the sim to the suite with a fixed seed.
