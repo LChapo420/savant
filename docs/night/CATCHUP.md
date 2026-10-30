@@ -44,7 +44,7 @@ mechanisms are the spec).
 
 ## Queue
 
-C1. **Subject-agnostic engine.** Move the Spanish catch-up logic into a shared module: target grade → the
+C1. [claimed 2026-10-30 06:15Z] **Subject-agnostic engine.** Move the Spanish catch-up logic into a shared module: target grade → the
     prerequisite skills below it → a skill-by-skill check that stops early per skill → only missed skills are
     taught, in prerequisite order, in the Duolingo-style player → spaced review → a final re-check. Spanish keeps
     working exactly as now (its tests must still pass).
