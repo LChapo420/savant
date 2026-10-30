@@ -123,4 +123,104 @@ async function fromPptx(buf) {
   return { text: normalise(parts.join('\n\n')), pages: slides.length };
 }
 
-module.exports = { MAX_PAGES, fail, normalise, zipEntries, fromPdf, fromDocx, fromPptx };
+async function openZip(buf, label) {
+  const listing = zipEntries(buf);
+  if (!listing || listing.tooMany) return fail(`That file is not a usable ${label} file.`, 'bad_type');
+  if (listing.entries.reduce((s, e) => s + e.size, 0) > MAX_ZIP_UNPACKED) return fail('That file unpacks to far more than the size limit.', 'too_big');
+  try { return { zip: await require('jszip').loadAsync(buf), listing }; } catch { return fail(`That ${label} file could not be read. It may be damaged.`, 'unreadable'); }
+}
+
+/** OpenDocument text (.odt): paragraphs and headings of content.xml, one per line. */
+async function fromOdt(buf) {
+  const z = await openZip(buf, 'OpenDocument');
+  if (z.error) return z;
+  const f = z.zip.file('content.xml');
+  if (!f) return fail('That file has no document text in it.', 'bad_type');
+  const xml = (await f.async('string')).replace(/<text:(?:tab|s)\b[^>]*\/>/g, ' ').replace(/<text:line-break\s*\/>/g, '\n');
+  const lines = (xml.match(/<text:(?:p|h)\b[^>]*>[\s\S]*?<\/text:(?:p|h)>/g) || []).map((p) => unxml(p.replace(/<[^>]+>/g, '')).trim()).filter(Boolean);
+  return { text: normalise(lines.join('\n\n')), pages: null };
+}
+
+/** HTML to plain text: scripts, styles and navigation removed, block tags become line breaks. */
+function htmlText(html) {
+  const h = String(html).replace(/<!--[\s\S]*?-->/g, ' ').replace(/<(script|style|noscript|svg|nav|head)\b[\s\S]*?<\/\1>/gi, ' ');
+  const text = h.replace(/<\/?(p|div|section|article|br|li|ul|ol|tr|table|blockquote|pre|h[1-6])\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '');
+  return normalise(unxml(text.replace(/&nbsp;/g, ' ')).replace(/[ \t ]+/g, ' ').split('\n').map((l) => l.trim()).join('\n'));
+}
+
+/** EPUB: the spine's XHTML chapters in reading order. */
+async function fromEpub(buf) {
+  const z = await openZip(buf, 'EPUB');
+  if (z.error) return z;
+  const opfPath = ((await (z.zip.file('META-INF/container.xml') || { async: async () => '' }).async('string')).match(/full-path="([^"]+)"/) || [])[1];
+  const opf = opfPath && z.zip.file(opfPath);
+  if (!opf) return fail('That file is not a usable EPUB book.', 'bad_type');
+  const xml = await opf.async('string');
+  const base = opfPath.includes('/') ? opfPath.replace(/[^/]+$/, '') : '';
+  const manifest = {};
+  for (const m of xml.match(/<item\b[^>]*>/g) || []) {
+    const id = (m.match(/\bid="([^"]+)"/) || [])[1]; const href = (m.match(/\bhref="([^"]+)"/) || [])[1];
+    if (id && href) manifest[id] = href;
+  }
+  const order = (xml.match(/<itemref\b[^>]*>/g) || []).map((m) => manifest[(m.match(/\bidref="([^"]+)"/) || [])[1]]).filter(Boolean);
+  if (order.length > MAX_PAGES * 2) return fail('That book has too many sections. Upload a part of it.', 'too_many_pages');
+  const parts = [];
+  for (const href of order) {
+    const f = z.zip.file(decodeURIComponent(base + href.split('#')[0]));
+    if (f) { const t = htmlText(await f.async('string')); if (t) parts.push(t); }
+  }
+  if (!parts.length) return fail('That book has no readable text in it.', 'bad_type');
+  return { text: normalise(parts.join('\n\n')), pages: order.length };
+}
+
+/** XLSX: every sheet as "Sheet name" then one tab-joined row per line (shared strings resolved). */
+async function fromXlsx(buf) {
+  const z = await openZip(buf, 'spreadsheet');
+  if (z.error) return z;
+  const shared = [];
+  const ss = z.zip.file('xl/sharedStrings.xml');
+  if (ss) for (const si of (await ss.async('string')).match(/<si\b[\s\S]*?<\/si>/g) || []) shared.push(unxml((si.match(/<t\b[^>]*>[^<]*<\/t>/g) || []).map((t) => t.replace(/<[^>]+>/g, '')).join('')));
+  const wb = z.zip.file('xl/workbook.xml');
+  if (!wb) return fail('That file is not a usable spreadsheet.', 'bad_type');
+  const names = (await wb.async('string')).match(/<sheet\b[^>]*>/g) || [];
+  const sheets = z.listing.entries.filter((e) => /^xl\/worksheets\/sheet\d+\.xml$/.test(e.name)).sort((a, b) => Number(a.name.match(/(\d+)\.xml/)[1]) - Number(b.name.match(/(\d+)\.xml/)[1]));
+  const parts = [];
+  let rows = 0;
+  for (let i = 0; i < sheets.length; i++) {
+    const xml = await z.zip.file(sheets[i].name).async('string');
+    const lines = [];
+    for (const row of xml.match(/<row\b[\s\S]*?<\/row>/g) || []) {
+      const cells = [];
+      for (const c of row.match(/<c\b[^>]*?(?:\/>|>[\s\S]*?<\/c>)/g) || []) {
+        const t = (c.match(/\bt="([^"]+)"/) || [])[1];
+        const v = (c.match(/<v>([^<]*)<\/v>/) || [])[1];
+        const inl = (c.match(/<is>[\s\S]*?<\/is>/) || [])[0];
+        const val = inl ? unxml(inl.replace(/<[^>]+>/g, '')) : v === undefined ? '' : t === 's' ? (shared[Number(v)] || '') : unxml(v);
+        if (val !== '') cells.push(val);
+      }
+      if (cells.length) lines.push(cells.join('\t'));
+      if (++rows > 200000) return fail('That spreadsheet has too many rows. Upload a part of it.', 'too_big');
+    }
+    if (lines.length) parts.push(`${unxml((names[i] || '').match(/\bname="([^"]*)"/) ? names[i].match(/\bname="([^"]*)"/)[1] : `Sheet ${i + 1}`)}\n${lines.join('\n')}`);
+  }
+  return { text: normalise(parts.join('\n\n')), pages: sheets.length || null };
+}
+
+/** RTF to plain text: control words dropped, \par and \line become line breaks, \'hh and \uN decoded. */
+function fromRtf(buf) {
+  let s = buf.toString('latin1');
+  if (!s.startsWith('{\\rtf')) return fail('That file is not a usable RTF document.', 'bad_type');
+  // Drop destinations that are not body text (fonts, colours, styles, pictures, headers) with their groups.
+  for (let i = 0; i < 6; i++) s = s.replace(/\{(?:\\\*)?\\(?:fonttbl|colortbl|stylesheet|info|pict|header|footer|themedata|colorschememapping|latentstyles|datastore)[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g, '');
+  s = s.replace(/\\par[d]?(?![a-z])/g, '\n').replace(/\\(?:line|row)(?![a-z])/g, '\n').replace(/\\tab(?![a-z])/g, '\t')
+    .replace(/\\'([0-9a-f]{2})/gi, (m, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/\\u(-?\d+)\??/g, (m, n) => String.fromCharCode(Number(n) < 0 ? Number(n) + 65536 : Number(n)))
+    .replace(/\\\*?[a-z]+-?\d* ?/gi, '').replace(/\\([\\{}])/g, '$1').replace(/[{}]/g, '');
+  return { text: normalise(s.split('\n').map((l) => l.trim()).join('\n')), pages: null };
+}
+
+async function fromHtmlFile(buf) {
+  return { text: htmlText(buf.toString('utf8')), pages: null };
+}
+
+module.exports = { MAX_PAGES, fail, normalise, zipEntries, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, htmlText };

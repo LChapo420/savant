@@ -32,6 +32,7 @@ function cleanTitle(t, fallback) {
 function sniff(buf) {
   if (!Buffer.isBuffer(buf) || buf.length < 4) return null;
   if (buf.slice(0, 5).toString('latin1') === '%PDF-') return 'pdf';
+  if (buf.slice(0, 5).toString('latin1') === '{\\rtf') return 'rtf';
   if (buf[0] === 0x50 && buf[1] === 0x4b && buf[2] === 0x03 && buf[3] === 0x04) return 'zip';
   // Text: no NUL bytes in the first 8 KB and valid UTF-8 (a BOM is fine).
   const head = buf.slice(0, 8192);
@@ -54,12 +55,16 @@ async function extract(buf) {
   if (type === 'pdf') { kind = 'pdf'; out = await parseInChild('pdf', buf); }
   else if (type === 'zip') {
     const listing = zipEntries(buf);
-    const pptx = !!listing && listing.entries.some((e) => /^ppt\/slides\/slide\d+\.xml$/.test(e.name));
-    kind = pptx ? 'pptx' : 'docx';
+    const has = (re) => !!listing && listing.entries.some((e) => re.test(e.name));
+    const mime = listing && listing.entries.length && listing.entries[0].name === 'mimetype' ? buf.slice(38, 38 + 60).toString('latin1') : '';
+    kind = has(/^ppt\/slides\/slide\d+\.xml$/) ? 'pptx' : has(/^xl\/workbook\.xml$/) ? 'xlsx' : /opendocument\.text/.test(mime) ? 'odt'
+      : /epub\+zip/.test(mime) || has(/^META-INF\/container\.xml$/) ? 'epub' : 'docx';
     out = await parseInChild(kind, buf);
   }
+  else if (type === 'rtf') { kind = 'rtf'; out = await parseInChild('rtf', buf); }
+  else if (type === 'text' && /^\s*(<!doctype html|<html)/i.test(buf.slice(0, 512).toString('utf8'))) { kind = 'html'; out = await parseInChild('html', buf); }
   else if (type === 'text') { kind = 'text'; out = { text: normalise(buf.toString('utf8')), pages: null }; }
-  else return fail('Only PDF, Word (.docx), PowerPoint (.pptx), text and Markdown files are supported.', 'bad_type');
+  else return fail('Only PDF, Word, PowerPoint, Excel, OpenDocument text, EPUB, RTF, HTML, text, Markdown, CSV and source files are supported.', 'bad_type');
   if (out.error) return out;
   if (out.text.length < MIN_CHARS) {
     return fail(kind === 'pdf'
