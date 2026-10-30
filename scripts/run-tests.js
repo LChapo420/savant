@@ -39,6 +39,7 @@ const NEEDS = {
   'scorecard-contract-test': [DB],
   'model-lineup-test': [DB],
   'subject-placement-test': [DB],
+  'placement-result-test': [DB],
   'game-lab-integration-test': [DB],
 };
 

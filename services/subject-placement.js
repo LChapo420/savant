@@ -736,7 +736,8 @@ function submitBlock(userId, trackId, answers, { partial = false } = {}) {
     band.asked++;
     if (right) { band.correct++; correct++; }
     detail.push({ band: q.band, correct: right, prompt: String(q.prompt).slice(0, 220), given: String(said).slice(0, 100), answer: String(q.answer).slice(0, 100) });
-    answered.push({ pos: adaptive.positionOf(q, block.grade), guess: q.choices ? 1 / q.choices.length : 0.02, correct: right });
+    // An empty answer is the "I don't know" button: not a guess, so the belief allows no luck for it.
+    answered.push({ pos: adaptive.positionOf(q, block.grade), guess: q.choices ? 1 / q.choices.length : 0.02, correct: right, ...(!String(said).trim() ? { idk: true } : {}) });
   }
   if (!detail.length && !partial) return { error: 'Answer at least one question first.' };
 
@@ -749,9 +750,11 @@ function submitBlock(userId, trackId, answers, { partial = false } = {}) {
   // after 4 answers and placed three grades up on them (owner, 2026-10-29).
   const late = placement.deadline_at && Date.now() >= Date.parse(placement.deadline_at)
     && answered.length >= adaptive.limits(placement.mode, placement.grade_ids.length).min;
-  const next = adaptive.done(placement.mode, answered, post) || late || partial
+  const allBlocks = blocksOf(trackId);
+  const ctx = { topLeft: adaptive.topLeft(placement.grade_ids.length, allBlocks, asked) };
+  const next = adaptive.done(placement.mode, answered, post, ctx) || late || partial
     ? null
-    : adaptive.nextBlock(blocksOf(trackId), asked, adaptive.nextTarget(answered, post));
+    : adaptive.nextBlock(allBlocks, asked, adaptive.nextTarget(answered, post, ctx));
 
   const updated = db.update(PLACEMENTS, placement.id, {
     scores,
@@ -813,7 +816,7 @@ function probabilitiesFor(trackId, placement) {
   const evidence = evidenceOf(trackId, placement);
   if (!gradeIds.length || !evidence.length) return null;
   const post = adaptive.posterior(gradeIds.length, evidence);
-  const rec = adaptive.recommend(gradeIds.length, post);
+  const rec = adaptive.recommend(gradeIds.length, post, evidence);
   return {
     model: 'posterior-v1',
     most_likely_grade_id: gradeIds[rec.index],
@@ -830,7 +833,7 @@ function probabilitiesFor(trackId, placement) {
 function recommendAdaptive(trackId, placement) {
   const gradeIds = placement.grade_ids || rules.gradesFor(trackId);
   const post = adaptive.posterior(gradeIds.length, placement.answered || []);
-  const rec = adaptive.recommend(gradeIds.length, post);
+  const rec = adaptive.recommend(gradeIds.length, post, placement.answered || []);
   const name = rules.gradeName(trackId, gradeIds[rec.index]);
   return {
     recommendation: gradeIds.map((id, i) => ({
@@ -1647,6 +1650,25 @@ async function recommend(userId, trackId, options = {}) {
  * are worked out from its answers. The learner may start at any grade
  * (chooseGrade); the recommended one is the most probable.
  */
+/**
+ * What a placement rests on, in plain terms for the result screen: how many questions were answered and how sure the
+ * walk is (the share of its belief within one grade of the placed grade, services/adaptive-placement.js). Nothing is
+ * claimed that was not measured: with no usable answers the basis is null (06-M3: a placement is a measurement and
+ * reports its precision).
+ */
+function basisOf(trackId, placement) {
+  const evidence = evidenceOf(trackId, placement);
+  if (!evidence.length) return null;
+  const gradeIds = placement.grade_ids || rules.gradesFor(trackId);
+  const post = adaptive.posterior(gradeIds.length, evidence);
+  const sure = adaptive.massWithin(post, adaptive.median(post) - 1, adaptive.median(post) + 1);
+  return {
+    questions: evidence.length,
+    sure_percent: Math.round(sure * 100),
+    certainty: sure >= 0.95 ? 'clear' : sure >= 0.8 ? 'fair' : 'rough',
+  };
+}
+
 function resultFor(trackId, placement) {
   if (!placement) return null;
   const probabilities = placement.probabilities || probabilitiesFor(trackId, placement);
@@ -1665,9 +1687,34 @@ function resultFor(trackId, placement) {
     probability_model: probabilities ? probabilities.model : null,
     most_likely_grade_id: probabilities ? probabilities.most_likely_grade_id : null,
     chosen_grade_id: placement.chosen_grade_id || null,
+    basis: basisOf(trackId, placement),
+    walk_grade_id: placement.walk_grade_id || placement.recommended_grade_id || null,
+    adjustments: (placement.adjustments || []).map((a) => ({ said: a.said, from: a.from, to: a.to, at: a.at })),
     grades: (placement.grade_ids || []).map((id) => ({ grade_id: id, name: rules.gradeName(trackId, id) })),
     scores: placement.scores || [],
   };
+}
+
+/**
+ * "This is too easy" / "this is too hard" on the result: moves the recommendation one grade up or down (clamped to
+ * the subject) and records what the learner said and where the walk had put them, so the correction is never lost
+ * and the walk's own placement stays on the record (`walk_grade_id`). Returns {placement} or {error, status}.
+ */
+function adjust(userId, trackId, said) {
+  if (!['too_easy', 'too_hard'].includes(said)) return { error: 'Say whether it was too easy or too hard.', status: 400 };
+  const placement = placementFor(userId, trackId);
+  if (!placement || !placement.recommended_grade_id) return { error: 'Finish the quiz first.', status: 400 };
+  const gradeIds = placement.grade_ids || rules.gradesFor(trackId);
+  const at = gradeIds.indexOf(placement.recommended_grade_id);
+  if (at < 0) return { error: 'That placement has no grade to move from.', status: 400 };
+  const to = Math.max(0, Math.min(gradeIds.length - 1, at + (said === 'too_easy' ? 1 : -1)));
+  const now = new Date().toISOString();
+  const updated = db.update(PLACEMENTS, placement.id, {
+    walk_grade_id: placement.walk_grade_id || placement.recommended_grade_id,
+    recommended_grade_id: gradeIds[to],
+    adjustments: [...(placement.adjustments || []), { said, from: gradeIds[at], to: gradeIds[to], at: now }],
+  });
+  return { placement: updated, moved: to !== at };
 }
 
 /**
@@ -1706,6 +1753,8 @@ function chooseGrade(userId, trackId, gradeId) {
 }
 
 module.exports = {
+  basisOf,
+  adjust,
   QUESTION_SCHEMA,
   RECOMMEND_SCHEMA,
   questionSystemPrompt,

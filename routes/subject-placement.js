@@ -223,6 +223,18 @@ router.post('/:track/finish', requireAuth, limit('subject-placement-finish', 30,
 });
 
 /**
+ * "This is too easy" / "this is too hard": `{said: 'too_easy' | 'too_hard'}`. Moves the recommendation one grade and
+ * records it (subjectPlacement.adjust). Hands back the updated result.
+ */
+router.post('/:track/adjust', requireAuth, limit('subject-placement-adjust', 60, 60 * 60 * 1000), (req, res) => {
+  const trackId = trackOf(req);
+  if (!trackId) return res.status(404).json({ error: 'No such subject.' });
+  const outcome = subjectPlacement.adjust(req.user.id, trackId, String((req.body && req.body.said) || ''));
+  if (outcome.error) return res.status(outcome.status || 400).json({ error: outcome.error });
+  res.json({ moved: outcome.moved, ...subjectPlacement.resultFor(trackId, outcome.placement) });
+});
+
+/**
  * Start at any grade: `{grade_id}`. The result recommends the most probable
  * grade, but the learner may pick any of them. This enrolls them in that grade
  * the way choosing it on the catalog does (its in-grade placement comes next),

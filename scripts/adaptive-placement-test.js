@@ -97,6 +97,13 @@ console.log('\nthe walk in the app (English)');
   const late = subjectPlacement.submitBlock(user.id, 'english', [{ index: 0, answer: 'x' }]);
   check('a block handed in after the clock, with the minimum answered, ends the walk', late.stopped && subjectPlacement.placementFor(user.id, 'english').stop_reason === 'the clock ran out');
 
+  // "I don't know" is stored as such, so the belief allows no lucky guess for it.
+  p = subjectPlacement.start(user.id, 'english', { restart: true, mode: 'quick' });
+  subjectPlacement.submitBlock(user.id, 'english', [{ index: subjectPlacement.currentQuestions(p).questions[0].index, answer: '' }]);
+  p = subjectPlacement.placementFor(user.id, 'english');
+  check('an empty answer is recorded as "I don\'t know"', p.answered.length === 1 && p.answered[0].idk === true && p.answered[0].correct === false, p.answered);
+  check('and says more about not knowing than a wrong answer', adaptive.assumed(3, 0.2, 0.25, {}, true) < adaptive.assumed(3, 0.2, 0.25, {}, false));
+
   // Quitting scores only what was answered.
   p = subjectPlacement.start(user.id, 'english', { restart: true, mode: 'accurate' });
   const q0 = subjectPlacement.currentQuestions(p);

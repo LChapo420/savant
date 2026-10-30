@@ -67,10 +67,13 @@ const MODES = {
 };
 
 /** The chance the walk assumes of a right answer from someone at `x`, on a question written for `pos`. */
-function assumed(x, pos, guess, shape = {}) {
+function assumed(x, pos, guess, shape = {}, idk = false) {
   const width = shape.width ?? WIDTH;
   const reliable = shape.reliable ?? RELIABLE;
-  const luck = Math.min(0.6, guess + LUCK);
+  // Someone who presses "I don't know" has not guessed, so there is no luck to allow for: the press says more about
+  // not knowing than a wrong answer does. It is M7's guessing floor taken to zero for an answer that cannot be a lucky
+  // guess (01-M7); that reading is UNVERIFIED (docs/yc/SOURCES-TO-VERIFY.md) and proven only on simulated learners.
+  const luck = idk ? 0 : Math.min(0.6, guess + LUCK);
   return luck + (1 - SLIP - luck) / (1 + Math.exp(-(x - pos + reliable) / width));
 }
 
@@ -84,7 +87,7 @@ function posterior(span, answered, shape) {
   const grid = [];
   for (let x = 0; x <= span + 1e-9; x += STEP) grid.push(Math.round(x * 100) / 100);
   const logp = grid.map((x) => answered.reduce((sum, a) => {
-    const p = assumed(x, a.pos, a.guess, shape);
+    const p = assumed(x, a.pos, a.guess, shape, a.idk);
     return sum + Math.log(a.correct ? p : 1 - p);
   }, 0));
   const top = Math.max(...logp);
@@ -110,6 +113,13 @@ function quantile(post, p) {
     if (acc >= p) return post.grid[i];
   }
   return post.grid[post.grid.length - 1];
+}
+
+/** The belief restricted to positions at or above `lo`, renormalised. */
+function atLeast(post, lo) {
+  const w = post.w.map((v, i) => (post.grid[i] >= lo ? v : 0));
+  const total = w.reduce((a, b) => a + b, 0) || 1;
+  return { grid: post.grid, w: w.map((v) => v / total) };
 }
 
 function massWithin(post, lo, hi) {
@@ -201,8 +211,10 @@ function firstTarget(span, startHint) {
  * reaches the top of a 57-grade subject in about six right answers. Moving down is never limited.
  * ADAPTIVE_GALLOP=0 restores the plain median.
  */
-function nextTarget(answered, post) {
+function nextTarget(answered, post, ctx = {}) {
   const m = median(post);
+  const span = post.grid[post.grid.length - 1];
+  if (ctx.topLeft > 0 && ceilingCandidate(span, answered, post)) return span - 1;
   if (process.env.ADAPTIVE_GALLOP === '0') return m;
   const right = answered.filter((a) => a.correct);
   if (!right.length) return Math.min(m, 0);
@@ -225,12 +237,92 @@ function limits(mode, span) {
   return { ...cfg, min: cfg.min + Math.floor((span * scale) / 8), max: cfg.max + Math.floor((span * scale) / 12) };
 }
 
-/** Should the walk stop here? */
-function done(mode, answered, post) {
+// A learner who knows nothing gets nothing right on the easiest questions of the subject. After this many answers,
+// with nearly all the belief inside the first grade, the walk stops: there is no more to learn by asking a beginner
+// twenty questions. ADAPTIVE_FLOOR=0 turns it off.
+const FLOOR_MIN = Number(process.env.ADAPTIVE_FLOOR ?? 6);
+const FLOOR_SURE = 0.95;
+
+/** Is the learner at the very start of the subject, sure enough to stop early? */
+function atFloor(answered, post) {
+  if (!FLOOR_MIN || answered.length < FLOOR_MIN) return false;
+  return massWithin(post, 0, 1) >= FLOOR_SURE;
+}
+
+/**
+ * The ceiling: a learner who knows everything has to be placed at the top, not left mid-way by one slip or a run
+ * of misses on a thin top end (06-M3: placement is a measurement, so the end of the scale is measured too, with
+ * enough items to tell). The top region is the last two grades. A learner is a ceiling candidate once the middle
+ * of the belief is within three grades of the end; a candidate is not placed or stopped until the region's items
+ * have been asked, and is placed at the top when at least three of them were answered and no more than a quarter
+ * missed (one slip allowed from four). Guessing three of three on four choices is under 2%. Where the region has
+ * fewer than three items nothing can be proven, and the subject is listed as a content gap (docs/night/PLACEMENT.md).
+ * ADAPTIVE_CEILING=0 restores the plain belief.
+ */
+const CEILING = { region: 2, near: 3, min: 3 };
+
+function ceilingProof(span, answered) {
+  const top = answered.filter((a) => a.pos >= span - CEILING.region);
+  const wrong = top.filter((a) => !a.correct).length;
+  const proven = process.env.ADAPTIVE_CEILING !== '0' && top.length >= CEILING.min && wrong <= Math.floor(top.length / 4);
+  return { asked: top.length, wrong, proven };
+}
+
+/**
+ * Is the top proven for this belief? The count of top-region answers alone is not enough: a learner far below the
+ * top who runs out of questions in Accurate mode reaches the top items last and can pass 3 of 4 by luck (about 5%),
+ * which used to place a grade-6 learner at the last grade. The proof only stands when the belief itself puts the
+ * learner near the end (the same "candidate" window), so lucky top answers cannot overrule a long record of misses.
+ */
+function topProven(span, answered, post) {
+  return ceilingProof(span, answered).proven && median(post) >= span - CEILING.near;
+}
+
+/** True when the belief's middle is near the end and the top has not been proven yet. */
+function ceilingCandidate(span, answered, post) {
+  return process.env.ADAPTIVE_CEILING !== '0' && median(post) >= span - CEILING.near && !ceilingProof(span, answered).proven;
+}
+
+/** How many of the top region's items are still unasked (`blocks`, `asked` as in nextBlock). */
+function topLeft(span, blocks, asked) {
+  const seen = new Set(asked.map((b) => `${b.grade}:${b.part}`));
+  return blocks.filter((b) => b.pos >= span - CEILING.region && !seen.has(`${b.grade}:${b.part}`)).reduce((n, b) => n + b.idx.length, 0);
+}
+
+/**
+ * Precision stop (06-M3: a placement is a measurement with a stated error, so the walk stops on that error, not on a
+ * count). The standard error is the spread of the belief; the walk may stop once it is under SE_MAX grades and at least
+ * CONFIRM answers sit within CONFIRM_NEAR grades of the belief's middle, so the boundary itself has been tested and
+ * not only inferred from items far above and below it. ADAPTIVE_SE_MAX=0 turns the extra stop condition off.
+ */
+const SE_MAX = Number(process.env.ADAPTIVE_SE_MAX ?? 0.6);
+const CONFIRM = 2;
+const CONFIRM_NEAR = 0.75;
+
+function standardError(post) {
+  const mean = post.grid.reduce((s, x, i) => s + x * post.w[i], 0);
+  return Math.sqrt(post.grid.reduce((s, x, i) => s + post.w[i] * (x - mean) ** 2, 0));
+}
+
+function confirmed(answered, post) {
+  const m = median(post);
+  return answered.filter((a) => Math.abs(a.pos - m) <= CONFIRM_NEAR).length >= CONFIRM;
+}
+
+/**
+ * Should the walk stop here? `ctx.topLeft` is the count of unasked top-region items (see topLeft); when given, a
+ * ceiling candidate keeps going until the top is proven or its items run out, and a proven top may stop at the minimum.
+ */
+function done(mode, answered, post, ctx = {}) {
   const cfg = limits(mode, post.grid[post.grid.length - 1]);
   if (answered.length >= cfg.max) return true;
+  if (atFloor(answered, post)) return true;
   if (answered.length < cfg.min) return false;
+  const span = post.grid[post.grid.length - 1];
+  if (topProven(span, answered, post)) return true;
+  if (ctx.topLeft > 0 && ceilingCandidate(span, answered, post)) return false;
   const m = median(post);
+  if (SE_MAX && (standardError(post) > SE_MAX || !confirmed(answered, post))) return false;
   return massWithin(post, m - 1, m + 1) >= cfg.sure;
 }
 
@@ -274,9 +366,11 @@ function wholePercents(mass) {
  * `percents` is kept for older pages: each grade's share scaled so the
  * strongest reads 100.
  */
-function recommend(span, post) {
+function recommend(span, post, answered) {
   const x = median(post);
-  const mass = gradeMass(span, post);
+  // A proven top conditions the belief on the evidence: the learner is in the upper grade and a half.
+  const proven = !!answered && topProven(span, answered, post);
+  const mass = gradeMass(span, proven ? atLeast(post, span - 1.5) : post);
   const best = mass.reduce((b, m, i) => (m > mass[b] ? i : b), 0);
   const middle = Math.max(0, Math.min(span - 1, Math.floor(x)));
   const index = process.env.ADAPTIVE_PICK === 'median' ? middle : best;
@@ -295,5 +389,5 @@ function recommend(span, post) {
 
 module.exports = {
   questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, firstTarget, nextTarget, done, limits,
-  gradeMass, wholePercents, recommend,
+  gradeMass, wholePercents, recommend, CEILING, ceilingProof, topProven, standardError, confirmed, SE_MAX, ceilingCandidate, topLeft,
 };

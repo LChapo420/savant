@@ -418,6 +418,23 @@ App.mount(async () => {
       </li>`;
   }
 
+  /* What the placement is based on, and a one-tap correction. Only what was measured is shown. */
+  function basisHtml(result) {
+    const b = result.basis;
+    if (!b) return '';
+    const sure = { clear: 'The answers point here clearly', fair: 'The answers point here fairly well', rough: 'This is a rough placement; the grades either side are close' }[b.certainty] || '';
+    const last = (result.adjustments || []).slice(-1)[0];
+    const moved = last ? ` You said it was ${last.said === 'too_easy' ? 'too easy' : 'too hard'}, so this moved one grade${last.said === 'too_easy' ? ' up' : ' down'}.` : '';
+    return `<section class="basis" aria-label="What this is based on">
+        <p class="small muted" id="basis-text">Based on ${plural(b.questions, 'question')}. ${App.escapeHtml(sure)} (${b.sure_percent}% of the evidence is within one grade).${App.escapeHtml(moved)}</p>
+        <div class="row-wrap basis-actions">
+          <span class="small">Does ${App.escapeHtml(App.gradeParts(result.recommended_grade_name)[0] || App.gradeLabel(result.recommended_grade_name))} feel right?</span>
+          <button class="btn btn-text" type="button" data-said="too_easy">This is too easy</button>
+          <button class="btn btn-text" type="button" data-said="too_hard">This is too hard</button>
+        </div>
+      </section>`;
+  }
+
   async function renderResult(result) {
     state.result = result;
     host.setAttribute('data-subject', trackId);
@@ -462,6 +479,7 @@ App.mount(async () => {
         <p class="lesson-meta">${App.escapeHtml(state.trackName || '')}, ${plural((result.grades || []).length, 'grade')}</p>
         <h1>Start at ${App.escapeHtml(recName)}</h1>
         <p class="lead">${App.escapeHtml(String(result.headline || '').replace(/\s+[—–]\s+/g, ', '))}</p>
+        ${basisHtml(result)}
         ${gradeScale(result)}
 
         <section class="odds" aria-labelledby="odds-h">
@@ -515,6 +533,12 @@ App.mount(async () => {
         lock(false);
       }
     };
+
+    host.querySelectorAll('.basis-actions [data-said]').forEach((btn) => btn.addEventListener('click', () => attempt(async () => {
+      const next = await App.api.post(`/api/subject-placement/${encodeURIComponent(trackId)}/adjust`, { said: btn.getAttribute('data-said') });
+      await renderResult(next);
+      App.announce(next.moved ? `Moved to ${App.gradeLabel(next.recommended_grade_name)}.` : 'You are already at the end of the subject, so there is nowhere further to move.');
+    })));
 
     const list = document.getElementById('odds-list');
     const more = document.getElementById('odds-more');
