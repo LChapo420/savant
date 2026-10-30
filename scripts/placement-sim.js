@@ -86,9 +86,10 @@ function sit(bank, mode, ability, random, { dontKnow = false } = {}) {
       const q = sets[block.grade][i];
       const guess = 1 / q.choices.length;
       let correct;
-      if (dontKnow && q.pos > ability && random() < IDK_RATE) correct = false;
+      let idk = false;
+      if (dontKnow && q.pos > ability && random() < IDK_RATE) { correct = false; idk = true; }
       else correct = random() < chanceRight(ability, q.pos, guess);
-      answered.push({ pos: q.pos, guess, correct });
+      answered.push({ pos: q.pos, guess, correct, ...(idk ? { idk: true } : {}) });
     }
     asked.push({ grade: block.grade, part: block.part });
     post = adaptive.posterior(span, answered);

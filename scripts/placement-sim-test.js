@@ -31,5 +31,16 @@ for (const subject of ['english', 'reading', 'iq', 'act']) {
   check(`${subject}: knows everything is placed within one grade of the end`, ceiling.within1 >= 0.95, ceiling);
 }
 
+console.log('\nthe floor');
+for (const subject of ['english', 'iq', 'act', 'math']) {
+  for (const mode of subject === 'math' ? ['accurate'] : ['quick', 'balanced', 'accurate']) {
+    const guessers = sim.measure(subject, mode, { seeds: 8 }).rows[0];
+    const decliners = sim.measure(subject, mode, { seeds: 8, dontKnow: true }).rows[0];
+    check(`${subject} ${mode}: a learner who knows nothing and guesses is placed at the start`, guessers.within1 >= 0.95 && guessers.exact >= 0.9, guessers);
+    check(`${subject} ${mode}: ...in at most 25 questions on average (a full walk is 21 to 130)`, guessers.questions <= 25, guessers.questions);
+    check(`${subject} ${mode}: one who presses "I don't know" is placed at the start in at most 8`, decliners.exact >= 0.95 && decliners.questions <= 8, decliners);
+  }
+}
+
 if (failures) { console.log(`\n${failures} failed`); process.exit(1); }
 console.log('\nall passed');

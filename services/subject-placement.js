@@ -736,7 +736,8 @@ function submitBlock(userId, trackId, answers, { partial = false } = {}) {
     band.asked++;
     if (right) { band.correct++; correct++; }
     detail.push({ band: q.band, correct: right, prompt: String(q.prompt).slice(0, 220), given: String(said).slice(0, 100), answer: String(q.answer).slice(0, 100) });
-    answered.push({ pos: adaptive.positionOf(q, block.grade), guess: q.choices ? 1 / q.choices.length : 0.02, correct: right });
+    // An empty answer is the "I don't know" button: not a guess, so the belief allows no luck for it.
+    answered.push({ pos: adaptive.positionOf(q, block.grade), guess: q.choices ? 1 / q.choices.length : 0.02, correct: right, ...(!String(said).trim() ? { idk: true } : {}) });
   }
   if (!detail.length && !partial) return { error: 'Answer at least one question first.' };
 
