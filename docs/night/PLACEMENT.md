@@ -61,16 +61,32 @@ P5a. [local only] **IQ top end.** `content/placement-calibration/iq.json` has 2 
     grade 12 two). The ceiling proof needs at least 3 answered in the top two grades, so at least 6 calibrated items
     there (about 3 per grade) are needed for the sim to show "knows everything" placed at the top. Generate and calibrate
     with the content pipeline. Also ACT grades 13 and 15 have no calibrated items (indexes 12 and 14).
-P4. [claimed 07:26Z] **Adaptive stopping.** Stop when the level estimate is precise enough (standard error under a threshold),
+P4. [done COMMIT] **Adaptive stopping.** Stop when the level estimate is precise enough (standard error under a threshold),
     with confirmation items near the boundary. Target, proven by P1 for every subject: at most one level off for
     95% of simulated learners at every ability level, with the question count reported. Add the sim to
     `scripts/test-steps.json` with a fixed seed so a regression fails the suite.
-P5. **Content gaps.** Subjects whose item sets can't meet P4: write each as a `[local only]` item naming the
+    Checked: `scripts/placement-accuracy-test.js` (in test-steps): 40 learners per level, abilities spread across the grade, fixed
+    seed; math, English, Reading (quick, and balanced for English/Reading) are >= 95% within one grade at every level, 22 to 29
+    questions on average (`docs/PLACEMENT-ACCURACY-AFTER.md`). Changes in `services/adaptive-placement.js`: (1) a standard-error
+    stop (belief spread <= 0.6 grade, ADAPTIVE_SE_MAX) and two confirmation answers within 0.75 grade of the middle before stopping
+    (06-M3); (2) a real bug fixed: Accurate-mode learners who ran out of questions reached the top items last and passed 3 of 4 by
+    luck, which "proved" the ceiling and placed a grade-6 learner at grade 16; the proof now also needs the belief near the top.
+    P1c answer: the -1 mean error is a convention, not a bug. A learner exactly on a grade boundary is half in each grade, and the
+    walk centres the belief 0.3 grade below an item's point (RELIABLE: the point is where answers are reliable). With abilities spread
+    inside the grade, 70% are exact and ~28% are -1 (those in the first 0.3 grade); within-one is the claim. Not done: IQ and ACT
+    top levels (P5/P5a); Spanish, chess, piano, basketball (P1b).
+P5. [done COMMIT] **Content gaps.** Subjects whose item sets can't meet P4: write each as a `[local only]` item naming the
     levels and how many items are needed, so the owner's agent can generate and check them with the content
     pipeline.
 P6. **Honest result screen.** After placement, show the placed level and what it is based on (how many questions,
     how sure), and a one-tap "this is too easy / too hard" that moves the learner and is recorded.
 
+P5b. [local only] **IQ and ACT top end, measured.** With abilities spread across the grade, Quick IQ places 90% / 93% / 80% within one
+    grade at the 75% / 90% / 98% levels (IQ has 0 items in grade 11, 2 in grade 12, 3 in grade 10, 2 in grade 9); ACT Quick 93% / 85% at
+    90% / 98% (grades 13 and 15 have no calibrated items, grade 14 has few). Needed: about 3 calibrated items per grade for IQ grades 9-12
+    (so >= 8 new, 6 of them in grades 11-12) and 3+ per grade for ACT grades 13-16 (indexes 12-15). Then re-run
+    `node scripts/placement-sim.js --after` and extend `scripts/placement-accuracy-test.js` (remove the GAP entries for iq and act).
+    The Spanish/chess/piano/basketball sets cannot be checked until P1b.
 P1b. [local only] **Spanish, chess, piano, basketball have no calibrated items in source control**
     (`content/placement-calibration/<subject>.json` has no points), so the sim cannot cover them. The owner's agent
     should run `scripts/placement-second-judge.js calibrate` for each, commit the points, then

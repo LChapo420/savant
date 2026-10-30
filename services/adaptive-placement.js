@@ -268,6 +268,16 @@ function ceilingProof(span, answered) {
   return { asked: top.length, wrong, proven };
 }
 
+/**
+ * Is the top proven for this belief? The count of top-region answers alone is not enough: a learner far below the
+ * top who runs out of questions in Accurate mode reaches the top items last and can pass 3 of 4 by luck (about 5%),
+ * which used to place a grade-6 learner at the last grade. The proof only stands when the belief itself puts the
+ * learner near the end (the same "candidate" window), so lucky top answers cannot overrule a long record of misses.
+ */
+function topProven(span, answered, post) {
+  return ceilingProof(span, answered).proven && median(post) >= span - CEILING.near;
+}
+
 /** True when the belief's middle is near the end and the top has not been proven yet. */
 function ceilingCandidate(span, answered, post) {
   return process.env.ADAPTIVE_CEILING !== '0' && median(post) >= span - CEILING.near && !ceilingProof(span, answered).proven;
@@ -280,6 +290,26 @@ function topLeft(span, blocks, asked) {
 }
 
 /**
+ * Precision stop (06-M3: a placement is a measurement with a stated error, so the walk stops on that error, not on a
+ * count). The standard error is the spread of the belief; the walk may stop once it is under SE_MAX grades and at least
+ * CONFIRM answers sit within CONFIRM_NEAR grades of the belief's middle, so the boundary itself has been tested and
+ * not only inferred from items far above and below it. ADAPTIVE_SE_MAX=0 turns the extra stop condition off.
+ */
+const SE_MAX = Number(process.env.ADAPTIVE_SE_MAX ?? 0.6);
+const CONFIRM = 2;
+const CONFIRM_NEAR = 0.75;
+
+function standardError(post) {
+  const mean = post.grid.reduce((s, x, i) => s + x * post.w[i], 0);
+  return Math.sqrt(post.grid.reduce((s, x, i) => s + post.w[i] * (x - mean) ** 2, 0));
+}
+
+function confirmed(answered, post) {
+  const m = median(post);
+  return answered.filter((a) => Math.abs(a.pos - m) <= CONFIRM_NEAR).length >= CONFIRM;
+}
+
+/**
  * Should the walk stop here? `ctx.topLeft` is the count of unasked top-region items (see topLeft); when given, a
  * ceiling candidate keeps going until the top is proven or its items run out, and a proven top may stop at the minimum.
  */
@@ -289,9 +319,10 @@ function done(mode, answered, post, ctx = {}) {
   if (atFloor(answered, post)) return true;
   if (answered.length < cfg.min) return false;
   const span = post.grid[post.grid.length - 1];
-  if (ceilingProof(span, answered).proven) return true;
+  if (topProven(span, answered, post)) return true;
   if (ctx.topLeft > 0 && ceilingCandidate(span, answered, post)) return false;
   const m = median(post);
+  if (SE_MAX && (standardError(post) > SE_MAX || !confirmed(answered, post))) return false;
   return massWithin(post, m - 1, m + 1) >= cfg.sure;
 }
 
@@ -338,8 +369,8 @@ function wholePercents(mass) {
 function recommend(span, post, answered) {
   const x = median(post);
   // A proven top conditions the belief on the evidence: the learner is in the upper grade and a half.
-  const topProven = !!answered && ceilingProof(span, answered).proven;
-  const mass = gradeMass(span, topProven ? atLeast(post, span - 1.5) : post);
+  const proven = !!answered && topProven(span, answered, post);
+  const mass = gradeMass(span, proven ? atLeast(post, span - 1.5) : post);
   const best = mass.reduce((b, m, i) => (m > mass[b] ? i : b), 0);
   const middle = Math.max(0, Math.min(span - 1, Math.floor(x)));
   const index = process.env.ADAPTIVE_PICK === 'median' ? middle : best;
@@ -358,5 +389,5 @@ function recommend(span, post, answered) {
 
 module.exports = {
   questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, firstTarget, nextTarget, done, limits,
-  gradeMass, wholePercents, recommend, CEILING, ceilingProof, ceilingCandidate, topLeft,
+  gradeMass, wholePercents, recommend, CEILING, ceilingProof, topProven, standardError, confirmed, SE_MAX, ceilingCandidate, topLeft,
 };
