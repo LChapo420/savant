@@ -12,6 +12,41 @@
     content: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/>',
   };
   var svg = function (k) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ICON[k] + '</svg>'; };
+
+  // Small illustrated icons for the sidebar: each tool drawn as an object with its own colours and a little
+  // depth (a lighter top face, a darker edge), not a line icon on a coloured square.
+  var g = function (id, a, b) { return '<linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + a + '"/><stop offset="1" stop-color="' + b + '"/></linearGradient>'; };
+  var ILL = {
+    overview: '<defs>' + g('ov1', '#ffb36b', '#f57a2c') + g('ov2', '#7fb8ff', '#3d7fe6') + g('ov3', '#8ee3b0', '#2fb36b') + g('ov4', '#ffd36b', '#f2a91c') + '</defs>'
+      + '<rect x="3" y="3" width="12" height="12" rx="3.5" fill="url(#ov1)"/><rect x="17" y="3" width="12" height="12" rx="3.5" fill="url(#ov2)"/><rect x="3" y="17" width="12" height="12" rx="3.5" fill="url(#ov3)"/><rect x="17" y="17" width="12" height="12" rx="3.5" fill="url(#ov4)"/>',
+    flashcards: '<defs>' + g('fc1', '#ffd36b', '#f2a91c') + g('fc2', '#ff9a5c', '#f2552c') + '</defs>'
+      + '<rect x="9" y="3" width="19" height="14" rx="3" transform="rotate(10 18.5 10)" fill="url(#fc1)"/><rect x="4" y="9" width="20" height="15" rx="3.2" fill="url(#fc2)"/><rect x="4" y="9" width="20" height="4" rx="2" fill="#fff" opacity=".22"/><rect x="8" y="16" width="12" height="2.2" rx="1.1" fill="#fff" opacity=".9"/><rect x="8" y="19.6" width="7" height="2.2" rx="1.1" fill="#fff" opacity=".7"/>',
+    quiz: '<defs>' + g('qz', '#7ab6ff', '#2f6fe8') + '</defs>'
+      + '<path d="M6 4h20a3 3 0 0 1 3 3v13a3 3 0 0 1-3 3H14l-6 5v-5H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z" fill="url(#qz)"/><path d="M6 4h20a3 3 0 0 1 3 3v3H3V7a3 3 0 0 1 3-3z" fill="#fff" opacity=".18"/>'
+      + '<path d="M13 10.5a3 3 0 1 1 4.2 2.8c-.8.4-1.2 1-1.2 1.8v.6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="19" r="1.4" fill="#fff"/>',
+    blanks: '<defs>' + g('fb', '#ffe08a', '#f5b623') + '</defs>'
+      + '<rect x="3" y="5" width="26" height="22" rx="3.5" fill="url(#fb)"/><rect x="3" y="5" width="26" height="5" rx="2.5" fill="#fff" opacity=".25"/>'
+      + '<rect x="7" y="12" width="7" height="2.4" rx="1.2" fill="#8a5a00" opacity=".55"/><rect x="16" y="12" width="9" height="2.4" rx="1.2" fill="#fff"/><rect x="7" y="17" width="10" height="2.4" rx="1.2" fill="#fff"/><rect x="19" y="17" width="6" height="2.4" rx="1.2" fill="#8a5a00" opacity=".55"/><rect x="7" y="22" width="13" height="2.4" rx="1.2" fill="#8a5a00" opacity=".55"/>',
+    written: '<defs>' + g('wt', '#b9a3ff', '#7a5cf0') + g('pn', '#ffcf66', '#f2a01c') + '</defs>'
+      + '<rect x="4" y="3" width="19" height="25" rx="3" fill="url(#wt)"/><rect x="8" y="9" width="11" height="2.2" rx="1.1" fill="#fff" opacity=".9"/><rect x="8" y="13.5" width="11" height="2.2" rx="1.1" fill="#fff" opacity=".75"/><rect x="8" y="18" width="7" height="2.2" rx="1.1" fill="#fff" opacity=".6"/>'
+      + '<path d="M26.5 11.5l2.5 2.5-9 9-3.6 1.1 1.1-3.6z" fill="url(#pn)"/><path d="M16.4 24.1l1.1-3.6 2.5 2.5z" fill="#3a2a10"/>',
+    tutor: '<defs>' + g('tu1', '#8ee3b0', '#22a35e') + g('tu2', '#ffffff', '#e6efe9') + '</defs>'
+      + '<path d="M5 3h16a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H11l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z" fill="url(#tu1)"/>'
+      + '<path d="M14 14h13a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-1v3l-4-3h-8a3 3 0 0 1-3-3v-6a3 3 0 0 1 3-3z" fill="url(#tu2)" stroke="#cfe3d6"/>'
+      + '<circle cx="9" cy="10.5" r="1.4" fill="#fff"/><circle cx="13" cy="10.5" r="1.4" fill="#fff"/><circle cx="17" cy="10.5" r="1.4" fill="#fff"/>',
+    notes: '<defs>' + g('nt', '#8fb0ff', '#3b5bdb') + '</defs>'
+      + '<rect x="5" y="5" width="22" height="24" rx="3.5" fill="url(#nt)"/><rect x="5" y="5" width="22" height="6" rx="3" fill="#fff" opacity=".2"/>'
+      + '<circle cx="10" cy="5" r="1.6" fill="#e8eeff" stroke="#2a46b8"/><circle cx="16" cy="5" r="1.6" fill="#e8eeff" stroke="#2a46b8"/><circle cx="22" cy="5" r="1.6" fill="#e8eeff" stroke="#2a46b8"/>'
+      + '<rect x="9" y="14" width="14" height="2.2" rx="1.1" fill="#fff"/><rect x="9" y="18.5" width="14" height="2.2" rx="1.1" fill="#fff" opacity=".8"/><rect x="9" y="23" width="9" height="2.2" rx="1.1" fill="#fff" opacity=".65"/>',
+    podcast: '<defs>' + g('pc', '#ff8fbf', '#e03478') + g('pc2', '#ff6fa3', '#b81f5c') + '</defs>'
+      + '<path d="M5 18v-3a11 11 0 0 1 22 0v3" fill="none" stroke="url(#pc)" stroke-width="3.2" stroke-linecap="round"/>'
+      + '<rect x="3" y="16" width="7.5" height="12" rx="3.2" fill="url(#pc2)"/><rect x="21.5" y="16" width="7.5" height="12" rx="3.2" fill="url(#pc2)"/>'
+      + '<rect x="4.6" y="17.6" width="2.4" height="5" rx="1.2" fill="#fff" opacity=".45"/><rect x="23.1" y="17.6" width="2.4" height="5" rx="1.2" fill="#fff" opacity=".45"/>',
+    content: '<defs>' + g('ct', '#6fd8e6', '#0f9fb0') + '</defs>'
+      + '<path d="M4 6a3 3 0 0 1 3-3h7a2 2 0 0 1 2 2v23a3 3 0 0 0-3-2H4z" fill="url(#ct)"/><path d="M28 6a3 3 0 0 0-3-3h-7a2 2 0 0 0-2 2v23a3 3 0 0 1 3-2h9z" fill="url(#ct)" opacity=".85"/>'
+      + '<rect x="7" y="9" width="6" height="1.8" rx=".9" fill="#fff" opacity=".85"/><rect x="7" y="13" width="6" height="1.8" rx=".9" fill="#fff" opacity=".7"/><rect x="19" y="9" width="6" height="1.8" rx=".9" fill="#fff" opacity=".85"/><rect x="19" y="13" width="6" height="1.8" rx=".9" fill="#fff" opacity=".7"/>',
+  };
+  var ill = function (k) { return '<svg class="ill" viewBox="0 0 32 32" aria-hidden="true">' + ILL[k] + '</svg>'; };
   var PAGES = [['overview', 'Overview'], ['flashcards', 'Flashcards'], ['quiz', 'Quiz'], ['blanks', 'Fill in the blanks'], ['written', 'Written test'], ['tutor', 'Tutor lesson'], ['notes', 'Notes'], ['podcast', 'Podcast'], ['content', 'Content']];
 
   // Intro psychology: learning and conditioning. Shown as card 41-45 of 133 and question 7-11 of 20.
@@ -48,7 +83,7 @@
   var timer = null;
   var speed = 1;
 
-  nav.innerHTML = PAGES.map(function (p) { return '<button type="button" data-page="' + p[0] + '">' + svg(p[0]) + p[1] + '</button>'; }).join('');
+  nav.innerHTML = PAGES.map(function (p) { return '<button type="button" data-page="' + p[0] + '">' + ill(p[0]) + '<span>' + p[1] + '</span></button>'; }).join('');
   nav.addEventListener('click', function (e) { var b = e.target.closest('[data-page]'); if (b) show(b.getAttribute('data-page')); });
 
   function show(page) {
@@ -58,7 +93,7 @@
     if (page === 'quiz') return quiz();
     if (page === 'podcast') return podcast();
     var label = PAGES.filter(function (p) { return p[0] === page; })[0][1];
-    main.innerHTML = '<div class="placeholder"><div class="ic">' + svg(page) + '</div><h3>' + label + '</h3><p>This part of your study set is being prepared. It will be ready in a moment.</p></div>';
+    main.innerHTML = '<div class="placeholder"><div class="ic">' + ill(page) + '</div><h3>' + label + '</h3><p>This part of your study set is being prepared. It will be ready in a moment.</p></div>';
   }
 
   function flashcards() {
@@ -155,6 +190,21 @@
       setTimeout(tick, 850);
     }());
   }
+  // Light or dark: the system's choice until the sun/moon button picks one (remembered on this device).
+  var THEME_KEY = 'savant.demoTheme';
+  var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  var isDark = function () { var t = document.documentElement.getAttribute('data-theme'); return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; };
+  var drawTheme = function () { $('#theme').innerHTML = isDark() ? SUN : MOON; };
+  try { var saved = window.localStorage.getItem(THEME_KEY); if (saved === 'light' || saved === 'dark') document.documentElement.setAttribute('data-theme', saved); } catch (e) { /* private mode */ }
+  $('#theme').addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { window.localStorage.setItem(THEME_KEY, next); } catch (e) { /* private mode */ }
+    drawTheme();
+  });
+  drawTheme();
+
   $('#go').addEventListener('click', function () { if (!$('#link').value.trim()) { $('#link').value = 'https://www.youtube.com/watch?v=intro-psych-lecture-9'; } build(); });
   $('#link').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('#go').click(); } });
 }());
