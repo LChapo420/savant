@@ -1,5 +1,22 @@
 # Catch-up proof
 
+## Evidence map (C4)
+
+Every design choice that claims to help learning, with the mechanism it rests on in `curriculum-build/evidence-article/`
+(ids are `<article number>-M<mechanism>`; article 02 numbers its mechanisms in the "at a glance" table).
+`scripts/catchup-evidence-test.js` fails if a cited id stops existing.
+
+| Design choice | Where | Mechanism | Verdict there |
+|---|---|---|---|
+| Diagnostic first: the learner is checked before anything is taught | `services/catchup-engine.js` `nextCheck` | 01-M7 (Bayesian belief with guess floor and slip ceiling), 01-M11 (in-grade unit placement) | see article |
+| Skip mastered skills, only on the unit's own evidence; never on a guess | `decideSkill` (`unitBelief`), an undecided skill after 3 questions is taught | 01-M13, 01-M14 | see article |
+| Earlier-grade scan below the target, offered not forced | `services/catchup-units.js` lookback | 01-M15 | see article |
+| Prerequisite order: lowest grade first | `newState` sorts by grade | **UNVERIFIED**: no mechanism covers ordering across grades (01-M32 is ordering inside one lesson). Listed in `docs/yc/SOURCES-TO-VERIFY.md` | none |
+| Retrieval practice: the re-check asks fresh questions, never ones already asked | `startRecheck`, `askedSet` | 02-M1 (retrieval with feedback), 02-M27 (a new question instance each time) | strong, moderate |
+| Interleaving in the re-check: caught-up and known skills mixed | `startRecheck` sort | 01-M43 | see article |
+| Spacing: reviews after 1, 3, 7, 21 days | `REVIEW_DAYS` | 01-M51 (expanding intervals; its own steps are 1, 3, 7, 16, 35, so the 21 is a design choice) and 02-M30 (daily review queue) | moderate |
+| Final re-check; a miss sends only that skill back | `scoreRecheck` | 01-M12 (a unit missed twice is reopened) | see article |
+
 <!-- sim:start -->
 ## Simulation (scripts/catchup-sim.js, seed 20261030, 12 learners per row, lookback 3)
 

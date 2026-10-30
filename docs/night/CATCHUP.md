@@ -76,7 +76,7 @@ C3b. **Slip-tolerant check.** `scripts/catchup-sim.js` measures that with a 3% s
     98%+ either way. To meet "teach a known skill <= 5%" at 3% slip, banks need >= 7 questions per unit
     (`scripts/generate-unit-placement.js`, owner's models, so `[local only]` for the generation) and the check then asks a
     second question after a first miss. Then move the sim's gated slip from 0 to 3%.
-C4. [claimed 2026-10-30 06:58Z] **Evidence map.** In `docs/CATCHUP-PROOF.md`, each design choice (diagnostic first, skip mastered skills,
+C4. [done PENDING_SHA; checked by scripts/catchup-evidence-test.js and full npm test] **Evidence map.** In `docs/CATCHUP-PROOF.md`, each design choice (diagnostic first, skip mastered skills,
     prerequisite order, retrieval practice, spacing, final re-check) cites its mechanism id.
 C5. **Real UI.** The page shows the target, what was found missing, progress, and when the next review is due;
     works at 375 px with the existing CSS variables.
@@ -90,3 +90,5 @@ C2 slice (da1cf8a): `services/catchup-units.js` (unit-bank adapter on the shared
 C1 (ed7f227): `services/catchup-engine.js` is the adapter-driven state machine (check with early stop per skill, gaps only as blocks in grade order, spaced-review hook, final re-check with per-skill send-back). `services/spanish/catch-up.js` delegates to it; storage, questions, player and review seeding stay in the subject adapter. Checked: `scripts/catchup-engine-test.js` (toy subject, in the suite), `spanish-catchup-test.js` unchanged and passing, full `npm test` passing. Not yet done: the Spanish route/view/persistence layer (`ensure`, `view`, `routeShape`) is still Spanish-only; C2 needs a generic persistence/route layer per subject (adapter for rows, player URL, review seeding).
 
 C3 (d0dedb9): `scripts/catchup-sim.js` (in the suite, seed 20261030): 12 simulated learners per row for math, english, reading, scenarios none/few/many/all at slip 0 and 3%; gaps found 98%+, known skills taught 0% at slip 0 (9% at slip 3%, see C3b), less work than the linear path in none/few/many. Table in `docs/CATCHUP-PROOF.md`. `npm test` passing.
+
+C4 (PENDING_SHA): evidence map in `docs/CATCHUP-PROOF.md` (01-M7/11/12/13/14/15/43/51, 02-M1/27/30); `scripts/catchup-evidence-test.js` (in the suite) fails if a cited id disappears. Prerequisite order has no mechanism: UNVERIFIED in `docs/yc/SOURCES-TO-VERIFY.md` section 7, with search terms, as is the 21-day review step.

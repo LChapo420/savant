@@ -111,3 +111,10 @@ an application goes out.
 | ACT curriculum test: 4 pass; the coverage-map check fails without `data/` | `node scripts/act-curriculum-test.js` |
 | About 74,000 lines in `routes/`, `services/`, `config/`, `public/js/` | `git ls-files` with `wc -l` |
 | The beta invite gate is not referenced in `server.js` | `grep` |
+
+## 7. Catch-up claims with no mechanism yet
+
+| Claim | Status | Search terms to check |
+|---|---|---|
+| Teaching the missing skills lowest grade first (prerequisite order) beats teaching them in another order | **UNVERIFIED** (cited nowhere in `curriculum-build/evidence-article/`; 01-M32 only orders prerequisites inside one lesson) | "prerequisite ordering" "learning hierarchy" Gagne; "knowledge space theory" prerequisite; "mastery learning" sequencing meta-analysis |
+| Catch-up reviews at +1, 3, 7, 21 days (the 21 is not in 01-M51's 1, 3, 7, 16, 35) | design choice, **UNVERIFIED** as the best fourth step | "expanding retrieval" interval Kang 2014; Cepeda 2008 optimal gap |
