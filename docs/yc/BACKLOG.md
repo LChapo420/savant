@@ -59,7 +59,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
      - Use the CSS variables; it must work at 375 px.
      - Add each new test to `scripts/test-steps.json`.
      - Don't touch `docs/OWN-MATERIAL-PROOF.md`.
-S1. **Pack or path choice on upload.**
+S1. [claimed 2026-10-30T00:38Z] **Pack or path choice on upload.**
    - "Study pack" generates a summary, flashcards, a quiz, and a practice test (multiple choice, fill-in-the-blank, written).
    - "Learning path" is the existing course builder.
    - A path can be extended by adding more material (new skills merged into the same graph and schedule) or by "continue" (more practice and levels on the same skills).
