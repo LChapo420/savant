@@ -59,7 +59,7 @@ C2d. [done f4f2ecf, item 1 only; rest is C2e] **Pages.** `public/catchup.html` +
     progress, next review due, 375 px width cap, existing CSS variables) and a "Catch me up to this grade" link on the math,
     english and reading path page. Checked by a static test in `scripts/catchup-units-test.js` and `npm test`; NOT opened in
     a browser (no login in this run).
-C2e. **Review queue, lookback, browser.** (1) Put each finished block's reviews (`block.reviews`, +1/3/7/21 days) into the real
+C2e. [claimed 2026-10-30T07:15Z] **Review queue, lookback, browser.** (1) Put each finished block's reviews (`block.reviews`, +1/3/7/21 days) into the real
     review queue (`services/review-session.js` / `retention-schedule.js`); today they live only on the catch-up row.
     Finding (30 Oct night): `adaptation.dailyReview` builds the queue from the learner's per-objective record, not a seeded
     list, and catch-up levels are played on a real enrollment, so their answers already feed it. Unproven: needs a played
