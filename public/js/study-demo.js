@@ -65,12 +65,19 @@
     { q: 'Pigeons choose between keys on concurrent VI 30-s and VI 60-s schedules. Herrnstein\'s matching law predicts they will:', c: ['Respond only on the VI 30-s key', 'Split responses roughly 2:1 toward the VI 30-s key', 'Split responses evenly', 'Respond more on the VI 60-s key'], a: 1, why: 'Relative response rate matches relative reinforcement rate. The VI 30-s key pays off about twice as often, so about two-thirds of responses go there (Herrnstein, 1961).' },
   ];
   var TRANSCRIPT = [
+    ['5:24', 'Sam', 'Okay, so we\'ve covered acquisition and extinction. But there\'s a deeper question underneath all of it: what exactly does the animal learn when it is conditioned?'],
+    ['5:47', 'Maya', 'Pavlov\'s own answer was stimulus substitution. He thought the CS simply comes to stand in for the US, so the dog treats the bell a bit like food.'],
+    ['6:09', 'Sam', 'And for a long time nobody questioned the timing part. If the bell always comes right before the food, of course the dog connects them. Simple.'],
     ['6:31', 'Maya', 'For decades the textbook story was contiguity: pair a tone with food often enough and the association forms. Rescorla\'s 1968 study broke that.'],
     ['6:52', 'Sam', 'He kept the number of tone–shock pairings the same, but added extra shocks when no tone was playing. The animals stopped fearing the tone.'],
     ['7:12', 'Maya', 'Because the tone no longer told them anything. Conditioning tracks contingency, how much the CS changes the probability of the US, not just how often the two co-occur.'],
     ['7:34', 'Sam', 'And Kamin\'s blocking result points the same way. If the tone already predicts the shock, adding a light gives no new information, so the light barely gets conditioned.'],
     ['7:55', 'Maya', 'Which is exactly what Rescorla–Wagner formalizes: learning is driven by prediction error, lambda minus the summed V. No surprise, no learning.'],
     ['8:16', 'Sam', 'Pause here, listener: in a blocking design, what is the prediction error on the compound trials, and why?'],
+    ['8:34', 'Maya', 'Zero, or close to it. The tone already predicts the shock fully, so the summed V is near lambda and there is nothing left for the light to pick up.'],
+    ['8:58', 'Sam', 'Now flip it. What happens if you add the light, but make the shock stronger on the compound trials?'],
+    ['9:15', 'Maya', 'Then lambda goes up, there is new prediction error, and the light does gain strength. That is called unblocking, and it is one of the cleanest tests of the model.'],
+    ['9:41', 'Sam', 'Which is also where the model struggles: latent inhibition. Pre-exposing a CS on its own slows later conditioning, even though there was never a US to predict.'],
   ];
   // The two podcast hosts, drawn as small cartoon portraits. Each has a colour that their name uses too.
   var HOSTS = {
@@ -106,7 +113,7 @@
     if (page !== 'podcast') stop();
     if (page !== 'written') clearInterval(clock);
     current = page;
-    if (panel.classList.contains('open') && !busy) drawChat(false);
+    if (setEl.classList.contains('ask-open') && !busy) drawChat(false);
     window.scrollTo(0, 0);
     if (page === 'notes') return notes();
     if (page === 'written') return written();
@@ -166,7 +173,7 @@
       + '<div class="controls"><button type="button" class="speed" id="speed">1×</button><button type="button" id="back" aria-label="Back 15 seconds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>'
       + '<button type="button" class="play" id="play" aria-label="Play"></button>'
       + '<button type="button" id="fwd" aria-label="Forward 15 seconds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button><span style="width:44px"></span></div></div>'
-      + '<div class="transcript" id="tx">' + TRANSCRIPT.map(function (l) { return '<div class="line" data-t="' + l[0] + '">' + host(l[1]) + '<div><div class="who-line"><b class="name-' + l[1].toLowerCase() + '">' + l[1] + '</b><span class="ts">' + l[0] + '</span></div><span>' + l[2] + '</span></div></div>'; }).join('') + '</div></div>';
+      + '<div class="transcript"><div class="tx-head"><b>Transcript</b><span>Newest first</span></div><div id="tx"></div></div></div>';
     $('#play').addEventListener('click', function () { if (playing) stop(); else start(); });
     $('#back').addEventListener('click', function () { podT -= 15; draw(); });
     $('#fwd').addEventListener('click', function () { podT += 15; draw(); });
@@ -182,10 +189,15 @@
     $('#play').innerHTML = playing
       ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>'
       : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l11-7z"/></svg>';
-    var lines = document.querySelectorAll('#tx .line');
-    var current = 0;
-    Array.prototype.forEach.call(lines, function (l, i) { var p = l.getAttribute('data-t').split(':'); if (podT >= Number(p[0]) * 60 + Number(p[1])) current = i; });
-    Array.prototype.forEach.call(lines, function (l, i) { l.classList.toggle('now', i === current); });
+    // Only what has been said so far, newest at the top; a line slides in when it is spoken.
+    var said = TRANSCRIPT.filter(function (l) { var p = l[0].split(':'); return podT >= Number(p[0]) * 60 + Number(p[1]); });
+    var tx = $('#tx');
+    if (Number(tx.getAttribute('data-n')) === said.length) return;
+    var grew = tx.hasAttribute('data-n') && said.length > Number(tx.getAttribute('data-n'));
+    tx.setAttribute('data-n', said.length);
+    tx.innerHTML = said.slice().reverse().map(function (l, i) {
+      return '<div class="line' + (i === 0 ? ' now' + (grew ? ' fresh' : '') : '') + '">' + host(l[1]) + '<div><div class="who-line"><b class="name-' + l[1].toLowerCase() + '">' + l[1] + '</b><span class="ts">' + l[0] + '</span></div><span>' + l[2] + '</span></div></div>';
+    }).join('');
   }
   function start() { playing = true; timer = setInterval(function () { podT += speed; draw(); }, 1000); draw(); }
   function stop() { playing = false; if (timer) clearInterval(timer); timer = null; draw(); }
@@ -375,9 +387,25 @@
   panel.setAttribute('aria-label', 'Ask AI');
   panel.innerHTML = '<div class="ask-head"><div class="ask-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.4L19 9l-5.2 1.6L12 16l-1.8-5.4L5 9l5.2-1.6z"/></svg></div><div><b>Ask AI</b><span>Sees what\'s on your screen</span></div><button type="button" class="ask-x" aria-label="Close">×</button></div>'
     + '<div class="ask-log" id="asklog"></div><form class="ask-form" id="askform"><input id="askin" autocomplete="off" placeholder="Ask about what\'s on screen…" aria-label="Ask AI"><button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>';
+  // The panel is the study set's third column: opening it narrows the middle, it never covers it.
+  var setEl = $('#set');
   document.body.appendChild(fab);
-  document.body.appendChild(panel);
+  setEl.appendChild(panel);
   var log = panel.querySelector('#asklog');
+  var askIn = panel.querySelector('#askin');
+  // The conversation, the unsent draft and whether the panel was open are kept on this device, so closing
+  // the panel (or the tab) loses nothing.
+  var ASK_KEY = 'savant.demoAsk';
+  var save = function () { try { window.localStorage.setItem(ASK_KEY, JSON.stringify({ chat: chat.slice(-40), draft: askIn.value, open: setEl.classList.contains('ask-open') })); } catch (e) { /* private mode */ } };
+  var askSaved = null;
+  try { askSaved = JSON.parse(window.localStorage.getItem(ASK_KEY) || 'null'); } catch (e) { /* private mode */ }
+  if (askSaved) { chat = Array.isArray(askSaved.chat) ? askSaved.chat : []; askIn.value = askSaved.draft || ''; }
+  var openAsk = function (open) {
+    setEl.classList.toggle('ask-open', open);
+    fab.classList.toggle('hide', open);
+    if (open) { drawChat(busy); askIn.focus(); }
+    save();
+  };
   function drawChat(busy) {
     var chips = CHIPS[current] || ['What is on this page?'];
     log.innerHTML = (chat.length ? '' : '<div class="ask-hello"><b>Hi! I can see your ' + PAGES.filter(function (p) { return p[0] === current; })[0][1].toLowerCase() + '.</b> Ask me anything about what\'s on your screen.</div>')
@@ -402,11 +430,13 @@
         chat.push({ role: 'assistant', content: reply });
       })
       .catch(function () { chat.push({ role: 'assistant', content: 'I could not reach Savant. Check your connection and try again.' }); })
-      .then(function () { busy = false; drawChat(false); });
+      .then(function () { busy = false; drawChat(false); save(); });
+    save();
   }
-  fab.addEventListener('click', function () { var open = !panel.classList.contains('open'); panel.classList.toggle('open', open); fab.classList.toggle('hide', open); if (open) { drawChat(busy); panel.querySelector('#askin').focus(); } });
-  panel.querySelector('.ask-x').addEventListener('click', function () { panel.classList.remove('open'); fab.classList.remove('hide'); });
-  panel.querySelector('#askform').addEventListener('submit', function (e) { e.preventDefault(); var i = panel.querySelector('#askin'); var v = i.value; i.value = ''; ask(v); });
+  fab.addEventListener('click', function () { openAsk(true); });
+  panel.querySelector('.ask-x').addEventListener('click', function () { openAsk(false); });
+  panel.querySelector('#askform').addEventListener('submit', function (e) { e.preventDefault(); var v = askIn.value; askIn.value = ''; ask(v); });
+  askIn.addEventListener('input', save);
   log.addEventListener('click', function (e) { var b = e.target.closest('.ask-chips button'); if (b) ask(b.textContent); });
 
   // Upload screen: choosing "Paste link" opens the box; any link runs the build steps, then opens Flashcards.
@@ -426,7 +456,7 @@
     var i = 0;
     (function tick() {
       if (i > 0) { steps[i - 1].classList.remove('run'); steps[i - 1].classList.add('done'); }
-      if (i === steps.length) { setTimeout(function () { $('#upload').style.display = 'none'; $('#set').classList.add('show'); document.body.classList.add('in-set'); show('flashcards'); window.scrollTo(0, 0); }, 500); return; }
+      if (i === steps.length) { setTimeout(function () { $('#upload').style.display = 'none'; $('#set').classList.add('show'); document.body.classList.add('in-set'); show('flashcards'); if (askSaved && askSaved.open) openAsk(true); window.scrollTo(0, 0); }, 500); return; }
       steps[i].classList.add('run');
       i++;
       setTimeout(tick, 850);
