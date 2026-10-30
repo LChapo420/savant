@@ -11,6 +11,15 @@
     { max: 419.99, cls: 'f4', label: '5-6 h' },
     { max: Infinity, cls: 'f5', label: '7 h or more' },
   ];
+  // Colour styles for the calendar (CSS in style.css, [data-palette]); remembered on this device only.
+  const PALETTES = [
+    { id: 'green', name: 'Green', swatch: '#2e9a52' }, { id: 'blue', name: 'Blue', swatch: '#2f6fd1' },
+    { id: 'purple', name: 'Purple', swatch: '#7650d3' }, { id: 'orange', name: 'Orange', swatch: '#d9782a' },
+    { id: 'pink', name: 'Pink', swatch: '#d14a82' },
+  ];
+  const PALETTE_KEY = 'savant.focusPalette';
+  const savedPalette = () => { try { return window.localStorage.getItem(PALETTE_KEY); } catch { return null; } };
+  const savePalette = (p) => { try { window.localStorage.setItem(PALETTE_KEY, p); } catch { /* private mode */ } };
   const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   const hours = (min) => {
@@ -36,6 +45,7 @@
           <div class="focus-cal"></div>
           <div class="focus-sum small muted"></div>
           <div class="focus-legend">${BANDS.map((b) => `<span><i class="fcell ${b.cls}"></i>${b.label}</span>`).join('')}</div>
+          <div class="row-between" style="margin-top:10px"><span class="tiny muted">Colour</span><span class="focus-swatches" role="group" aria-label="Calendar colour">${PALETTES.map((p) => `<button type="button" data-palette-pick="${p.id}" aria-label="${p.name}" title="${p.name}" style="background:${p.swatch}"></button>`).join('')}</span></div>
         </div>
         <div class="card">
           <div class="row-between focus-head"><div class="card-title" style="margin:0">Subject focus${sampleChip}</div>
@@ -122,6 +132,7 @@
     host.addEventListener('click', (e) => {
       const b = e.target.closest('button');
       if (!b) return;
+      if (b.dataset.palettePick) { setPalette(b.dataset.palettePick); savePalette(b.dataset.palettePick); }
       if (b.dataset.cal) { calView = b.dataset.cal; drawCal(); }
       if (b.dataset.pie) { pieView = b.dataset.pie; drawPie(); }
       if (b.dataset.step) {
@@ -130,6 +141,12 @@
         drawCal();
       }
     });
+    function setPalette(p) {
+      const id = PALETTES.some((x) => x.id === p) ? p : 'green';
+      host.dataset.palette = id;
+      host.querySelectorAll('[data-palette-pick]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.palettePick === id)));
+    }
+    setPalette(savedPalette());
     drawCal();
     drawPie();
   }

@@ -2209,3 +2209,21 @@ dialog.modal .modal-actions { display: flex; justify-content: flex-end; gap: 10p
 .focus-keys li { display: grid; grid-template-columns: 14px 1fr auto auto; align-items: center; gap: 8px; }
 .focus-keys i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
 .focus-pie-sum { margin-top: 10px; }
+/* Focus history colour styles (swatches in the card; green is the default). Light first, then dark. */
+.focus-swatches { display: inline-flex; gap: 6px; align-items: center; }
+.focus-swatches button { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--border); cursor: pointer; padding: 0; }
+.focus-swatches button[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--text); }
+[data-palette="blue"] { --f1: #dbeafe; --f2: #a9cbfa; --f3: #5b9bf0; --f4: #2f6fd1; --f5: #1b4a96; }
+[data-palette="purple"] { --f1: #ece4fd; --f2: #cdb8f7; --f3: #a181ec; --f4: #7650d3; --f5: #52309e; }
+[data-palette="orange"] { --f1: #fdecd8; --f2: #f9cd9b; --f3: #f2a352; --f4: #d9782a; --f5: #a3521a; }
+[data-palette="pink"] { --f1: #fde1ec; --f2: #f7b4cf; --f3: #ee7aa8; --f4: #d14a82; --f5: #9c2a5c; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [data-palette="blue"] { --f1: #1c3254; --f2: #234b80; --f3: #3368b3; --f4: #5b93e0; --f5: #9cc2f7; }
+  :root:not([data-theme="light"]) [data-palette="purple"] { --f1: #2e2350; --f2: #46337c; --f3: #6449b0; --f4: #8f71de; --f5: #c3aef7; }
+  :root:not([data-theme="light"]) [data-palette="orange"] { --f1: #45290f; --f2: #6e4216; --f3: #a1601f; --f4: #db8a3c; --f5: #f6c088; }
+  :root:not([data-theme="light"]) [data-palette="pink"] { --f1: #47182c; --f2: #722644; --f3: #a63b67; --f4: #d9689a; --f5: #f5aecb; }
+}
+:root[data-theme="dark"] [data-palette="blue"] { --f1: #1c3254; --f2: #234b80; --f3: #3368b3; --f4: #5b93e0; --f5: #9cc2f7; }
+:root[data-theme="dark"] [data-palette="purple"] { --f1: #2e2350; --f2: #46337c; --f3: #6449b0; --f4: #8f71de; --f5: #c3aef7; }
+:root[data-theme="dark"] [data-palette="orange"] { --f1: #45290f; --f2: #6e4216; --f3: #a1601f; --f4: #db8a3c; --f5: #f6c088; }
+:root[data-theme="dark"] [data-palette="pink"] { --f1: #47182c; --f2: #722644; --f3: #a63b67; --f4: #d9689a; --f5: #f5aecb; }
