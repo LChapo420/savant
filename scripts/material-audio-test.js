@@ -14,6 +14,8 @@ process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(os.tmpdir(), `material-audio-test-${process.pid}.json`);
 
 const db = require('../config/db');
+// An empty model folder, so the "no model" check holds on a machine that has the model installed.
+process.env.WHISPER_MODEL_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'no-whisper-'));
 const audio = require('../services/material-audio');
 const materials = require('../services/materials');
 
@@ -89,7 +91,7 @@ function wav({ seconds, rate = 16000, channels = 1 }) {
   // silence and failures
   const quiet = audio.submit(9, wav({ seconds: 5 }), 'q.wav', { transcribe: async () => '' });
   await quiet.finished;
-  check('a recording with no speech fails honestly', /Hardly any speech/.test(audio.listJobs(9)[0].error || ''), audio.listJobs(9));
+  check('a recording with no speech fails honestly', /No speech could be made out|too short to study from/.test(audio.listJobs(9)[0].error || ''), audio.listJobs(9));
   const boom = audio.submit(10, wav({ seconds: 40 }), 'b.wav', { transcribe: async () => { throw new Error('x'); } });
   await boom.finished;
   check('a transcriber error names where it stopped', /Transcription failed at 0:00/.test(audio.listJobs(10)[0].error || ''), audio.listJobs(10));

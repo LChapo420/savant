@@ -233,7 +233,8 @@ async function work(userId, jobId, buf, type, deps) {
     set({ done: i + 1 });
   }
   const text = lines.join('\n');
-  if (text.length < materials.MIN_CHARS) return set({ status: 'failed', error: 'Hardly any speech could be made out in that recording.' });
+  if (!text) return set({ status: 'failed', error: 'No speech could be made out in that recording.' });
+  if (text.length < materials.MIN_CHARS) return set({ status: 'failed', error: `That recording is too short to study from: its transcript has ${text.split(/\s+/).length} words. Record or upload a longer part (a minute or more of speech).` });
   if (text.length > materials.MAX_CHARS) return set({ status: 'failed', error: 'The transcript is longer than the limit. Upload a shorter part.' });
   const job = db.byId(JOBS, jobId);
   if (!job) return undefined; // the learner deleted the job (or the account) meanwhile: keep nothing
