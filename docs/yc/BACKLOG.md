@@ -63,7 +63,7 @@ S1. **First slice DONE on `studley-parity`, see Done. Remaining: S1b.** **Pack o
    - "Study pack" generates a summary, flashcards, a quiz, and a practice test (multiple choice, fill-in-the-blank, written).
    - "Learning path" is the existing course builder.
    - A path can be extended by adding more material (new skills merged into the same graph and schedule) or by "continue" (more practice and levels on the same skills).
-S1b. **Extend a path** (S1 leftover): add more material to a path (new skills merged into the same graph and schedule) and "continue" (more practice and levels on the same skills). Build on `studley-parity`; touches `course-builder.js` and `material-path.js`. Also: edit/save flashcards in the pack belongs to S2.
+S1b. [claimed 2026-10-30T01:16:21Z] **Extend a path** (S1 leftover): add more material to a path (new skills merged into the same graph and schedule) and "continue" (more practice and levels on the same skills). Build on `studley-parity`; touches `course-builder.js` and `material-path.js`. Also: edit/save flashcards in the pack belongs to S2.
 S2. **Flashcards** generated from the material, tied to its skills, and scheduled by the SAME per-learner spaced-review model as path skills (`material-path.js`).
    - Learners can edit cards.
    - Also cards made from the learner's own recorded mistakes and misconceptions.
