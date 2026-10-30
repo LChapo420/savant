@@ -48,6 +48,7 @@ App.mount(async () => {
             <button class="btn btn-sm btn-primary" type="button" data-course="${m.id}" id="course-${m.id}">Learning path</button>
             <button class="btn btn-sm" type="button" data-del="${m.id}" aria-label="Delete ${esc(m.title)}">Delete</button></span></div>
             <p class="tiny muted" id="course-note-${m.id}" role="status" style="margin:4px 0 0"></p>
+            <div class="row-wrap" id="extend-${m.id}" style="margin:4px 0 0" hidden></div>
             <p class="tiny muted" id="pack-note-${m.id}" role="status" style="margin:4px 0 0"></p>
             <p class="tiny muted" style="margin:4px 0 0">${esc(m.preview)}…</p>
           </li>`).join('')}</ul>` : '<p class="muted">Nothing yet.</p>'}
@@ -90,11 +91,47 @@ App.mount(async () => {
         n.textContent = `${c.skills.length} skills in ${(c.units || []).length || 1} unit${(c.units || []).length > 1 ? 's' : ''}${c.status === 'partial' ? ' so far (the rest can be built later; press Learning path again)' : ''}.`;
       } else { btn.textContent = 'Try again'; n.textContent = 'The course could not be built from this text. Try a clearer or longer one.'; }
     };
-    const poll = async (id, tries) => {
+    // Extend a path: more practice on the same skills, or join another of your materials onto it.
+    const extendUi = (id, c) => {
+      const box = document.getElementById(`extend-${id}`);
+      if (!box) return;
+      const ready = c && (c.status === 'ready' || c.status === 'partial');
+      box.hidden = !ready;
+      if (!ready) return;
+      const others = data.materials.filter((m) => String(m.id) !== String(id) && !(c.added || []).some((a) => a.material_id === m.id));
+      const busy = !!c.extending;
+      box.innerHTML = `<button class="btn btn-sm" type="button" data-more="${id}"${busy ? ' disabled' : ''}>More practice</button>
+        ${others.length && (c.added || []).length < 4 ? `<select data-addsel="${id}" aria-label="Material to add to this path"${busy ? ' disabled' : ''}>${others.map((m) => `<option value="${m.id}">${esc(m.title)}</option>`).join('')}</select> <button class="btn btn-sm" type="button" data-add="${id}"${busy ? ' disabled' : ''}>Add to this path</button>` : ''}
+        <span class="tiny muted" role="status">${busy ? 'Working on it. You can leave this page.' : extendNote(c)}</span>`;
+      box.querySelector('[data-more]').addEventListener('click', () => startExtend(id, 'more', {}));
+      const add = box.querySelector('[data-add]');
+      if (add) add.addEventListener('click', () => startExtend(id, 'add', { material_id: Number(box.querySelector('[data-addsel]').value) }));
+    };
+    const extendNote = (c) => {
+      const l = c.last_extend;
+      const parts = [];
+      if ((c.added || []).length) parts.push(`Added: ${c.added.map((a) => esc(a.title)).join(', ')}.`);
+      if (!l) return parts.join(' ');
+      if (!l.ok) parts.push(esc(l.error || 'That did not work.'));
+      else if (l.kind === 'more') parts.push(`Last round: ${l.added} new questions on ${l.skills} skills.`);
+      else parts.push(`Last add: ${l.added} new skills${l.duplicates ? ` (${l.duplicates} you already had were left out)` : ''}.`);
+      return parts.join(' ');
+    };
+    const startExtend = async (id, kind, body) => {
+      try {
+        await App.api.post(`/api/materials/${id}/course/${kind === 'add' ? 'add' : 'more'}`, body);
+        poll(id, 0, true);
+      } catch (err) { App.toast(err.message, 'error'); }
+    };
+    const poll = async (id, tries, extending) => {
       try {
         const out = await App.api.get(`/api/materials/${id}/course`);
         courseUi(id, out.course);
-        if (out.course && out.course.status === 'building' && tries < 200) setTimeout(() => poll(id, tries + 1), 4000);
+        const c = out.course;
+        // Right after a start the server may not have flagged it yet: show it busy for the first looks.
+        if (extending && c && tries < 2 && !c.extending) c.extending = true;
+        extendUi(id, c);
+        if (c && (c.status === 'building' || c.extending) && tries < 200) setTimeout(() => poll(id, tries + 1, extending), 4000);
       } catch (err) { /* leave the note as it is */ }
     };
     root.querySelectorAll('[data-course]').forEach((b) => {

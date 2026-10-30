@@ -46,6 +46,7 @@ const GLANCE_MAX = 1200;
 const MAX_SKILLS = 30;
 const SKILL_TEXT_MAX = 7000;         // characters of passage text shown for one skill
 const MIN_QUESTIONS = 3;
+const EXTRA_MIN = 2;                 // a "more practice" round keeps a skill's new items only if at least this many pass
 const MAX_QUESTIONS = 9;
 const MIN_QUOTE = 20;
 const TOKEN_BUDGET = Number(process.env.MATERIAL_COURSE_TOKEN_BUDGET || 360000);
@@ -402,7 +403,7 @@ async function ask(llm, budget, userId, args) {
   return { res };
 }
 
-async function buildSkill(skill, passageById, ctx) {
+async function buildSkill(skill, passageById, ctx, extra = null) {
   const text = skill.passage_ids.map((id) => `[${id}]\n${passageById.get(id).text}`).join('\n\n').slice(0, SKILL_TEXT_MAX);
   const allowed = new Set(skill.passage_ids);
   const general = skill.taught === false;
@@ -418,7 +419,7 @@ async function buildSkill(skill, passageById, ctx) {
       : `You write one short lesson and practice questions for a student, from their own study material. ${UNTRUSTED} `
         + `Write 2 to 5 short lesson paragraphs in plain words. ${QUESTION_RULES} `
         + 'Every question needs passage_id (one of the passage ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows the answer is right. A question you cannot back with such a quote must be left out.',
-    user: `Skill: ${skill.title}\n${skill.summary ? `About: ${skill.summary}\n` : ''}\nPassages:\n${text}`,
+    user: `Skill: ${skill.title}\n${skill.summary ? `About: ${skill.summary}\n` : ''}${extra ? `\nThe student already has these questions. Write different ones that test other parts of the passages, or the same ideas in a new way; do not repeat them:\n${extra.have.slice(0, 40).map((h) => `- ${clean(h, 160)}`).join('\n')}\n` : ''}\nPassages:\n${text}`,
   };
   // One retry: a free model that is busy or times out often answers the second time.
   let gen = await ask(ctx.llm, ctx.budget, ctx.userId, genArgs);
@@ -435,10 +436,11 @@ async function buildSkill(skill, passageById, ctx) {
   for (const q of (data.questions || []).slice(0, MAX_QUESTIONS + 4)) {
     const out = cleanQuestion(q, passageById, allowed, { generalTitle: general ? skill.title : null });
     if (out.drop) ctx.dropped[out.drop]++;
-    else if (!items.some((i) => norm(i.prompt) === norm(out.item.prompt))) items.push(out.item);
+    else if (!items.some((i) => norm(i.prompt) === norm(out.item.prompt)) && !(extra && extra.haveNorm.has(norm(out.item.prompt)))) items.push(out.item);
   }
-  items = items.slice(0, MAX_QUESTIONS);
-  if (items.length < MIN_QUESTIONS) { ctx.dropped.skills++; return { skipped: true }; }
+  items = items.slice(0, extra ? extra.room : MAX_QUESTIONS);
+  const min = extra ? EXTRA_MIN : MIN_QUESTIONS;
+  if (items.length < min) { ctx.dropped.skills++; return { skipped: true }; }
 
   const ver = await ask(ctx.llm, ctx.budget, ctx.userId, {
     role: 'fast', task: 'material_verify', schema: VERIFY_SCHEMA, schemaName: 'material_verify', maxTokens: 800, dataClass: 'learner',
@@ -453,8 +455,8 @@ async function buildSkill(skill, passageById, ctx) {
   const ok = new Set(verdicts.filter((v) => v && v.supported === true).map((v) => Number(v.n)));
   const kept = items.filter((_, i) => ok.has(i + 1));
   ctx.dropped.unsupported += items.length - kept.length;
-  if (kept.length < MIN_QUESTIONS) { ctx.dropped.skills++; return { skipped: true }; }
-  kept.forEach((q, i) => { q.id = `${skill.id}_q${i + 1}`; if (general) q.source = 'general'; });
+  if (kept.length < min) { ctx.dropped.skills++; return { skipped: true }; }
+  kept.forEach((q, i) => { q.id = `${skill.id}_q${(extra ? extra.offset : 0) + i + 1}`; if (general) q.source = 'general'; });
   return {
     value: {
       id: skill.id, title: skill.title, summary: skill.summary, unit: skill.unit, prerequisites: skill.prerequisites, passage_ids: skill.passage_ids,
@@ -599,6 +601,10 @@ function summary(c) {
       prerequisites: s.prerequisites, questions: s.questions.length,
     })),
     dropped: c.dropped, built_at: c.finished_at || null,
+    extending: inflight.has(`${c.user_id}:${c.material_id}`),
+    added: (c.added || []).map((a) => ({ material_id: a.material_id, title: a.title, skills: a.skill_ids.length })),
+    extended: c.extended ? { rounds: c.extended.rounds, questions_added: c.extended.questions_added } : null,
+    last_extend: c.last_extend || null,
   };
 }
 
@@ -610,5 +616,6 @@ function removeForMaterial(userId, materialId) {
 
 module.exports = {
   VERSION, TOKEN_BUDGET, MIN_QUESTIONS, MAX_SKILLS,
+  EXTRA_MIN, MAX_PASSAGES, Budget, buildSkill, hash, slug, inflight,
   chunk, cleanOutline, sourceOrder, orderSkills, layout, outlineWindows, shuffleChoices, namingLine, nearQuote, cleanQuestion, build, summary, get, removeForMaterial,
 };

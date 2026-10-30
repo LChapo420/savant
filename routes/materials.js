@@ -8,6 +8,8 @@
  *   DELETE /api/materials/:id      gone from the store and the disk copy, and its course with it
  *   POST   /api/materials/:id/course   start building the course (202; resumes a partial one)
  *   GET    /api/materials/:id/course   the course's status and skill list (no answers)
+ *   POST   /api/materials/:id/course/more   more practice on the same skills (202; the outcome shows in GET .../course as last_extend)
+ *   POST   /api/materials/:id/course/add    { material_id } join another of the learner's materials onto this path (202)
  *   GET    /api/materials/:id/study               the map: skills, status, what is due
  *   GET    /api/materials/:id/study/lesson/:skill  lesson and practice questions (no answers)
  *   POST   /api/materials/:id/study/practice       { skill, question, answer } checked at once, not counted
@@ -26,6 +28,7 @@ const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
 const materials = require('../services/materials');
 const courses = require('../services/course-builder');
+const extend = require('../services/course-extend');
 const study = require('../services/material-study');
 const packs = require('../services/material-pack');
 
@@ -84,6 +87,29 @@ router.get('/:id/course', requireAuth, (req, res) => {
 });
 
 const ownMaterial = (req, res, next) => (materials.get(req.user.id, req.params.id, false) ? next() : res.status(404).json({ error: 'No such material.' }));
+
+const EXTEND_STATUS = { no_course: 409, busy: 409, not_found: 404, already_added: 409, too_many: 409, too_long: 409, same_material: 400 };
+function extendRoute(kind) {
+  return (req, res) => {
+    const userId = req.user.id;
+    const c = courses.get(userId, req.params.id);
+    if (!c || !['ready', 'partial'].includes(c.status) || !(c.skills || []).length) return res.status(409).json({ error: 'Build the learning path first.', code: 'no_course' });
+    if (courses.inflight.has(`${userId}:${c.material_id}`)) return res.status(409).json({ error: 'This course is being changed right now.', code: 'busy' });
+    const args = {};
+    if (kind === 'add') {
+      const sourceId = Number((req.body || {}).material_id);
+      if (!Number.isInteger(sourceId) || sourceId === c.material_id) return res.status(400).json({ error: 'Pick a different material to add.', code: 'same_material' });
+      if (!materials.get(userId, sourceId, false)) return res.status(404).json({ error: 'No such material.', code: 'not_found' });
+      if ((c.added || []).some((a) => a.material_id === sourceId)) return res.status(EXTEND_STATUS.already_added).json({ error: 'That material is already on this path.', code: 'already_added' });
+      args.sourceId = sourceId;
+    } else if (Array.isArray((req.body || {}).skills)) args.skillIds = req.body.skills.slice(0, 60).map(String);
+    extend.start(kind, userId, c.material_id, args).catch((err) => console.warn(`course-extend: ${err.message}`));
+    return res.status(202).json({ started: true });
+  };
+}
+router.post('/:id/course/more', requireAuth, ownMaterial, limit('materials-course-more', 6, 60 * 60 * 1000), express.json({ limit: '8kb' }), extendRoute('more'));
+router.post('/:id/course/add', requireAuth, ownMaterial, limit('materials-course-add', 6, 60 * 60 * 1000), express.json({ limit: '8kb' }), extendRoute('add'));
+
 
 router.post('/:id/pack', requireAuth, limit('materials-pack', 6, 60 * 60 * 1000), (req, res) => {
   const m = materials.get(req.user.id, req.params.id, false);
