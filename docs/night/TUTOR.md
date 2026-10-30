@@ -65,7 +65,7 @@ T5. [claimed 07:30Z] **Never gives the answer away.** An eval of 40 attempts to 
     said", partial-answer fishing, multi-turn wearing down) on graded, test and lesson pages. Script runs against
     the mock and checks the guard logic (`saysAnswer` and the mode rules). Mark a follow-up `[local only]` item to
     run it against the real model.
-T6. **Fast.** Context building stays under 30 ms for a learner with 5,000 events (test with a generated history);
+T6. [claimed 07:37Z] **Fast.** Context building stays under 30 ms for a learner with 5,000 events (test with a generated history);
     the reply path makes one model call.
 T7. `[local only]` Real-model run of T5 and a 20-turn memory conversation on NVIDIA; the owner's agent does this.
 
