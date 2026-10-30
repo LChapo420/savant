@@ -100,3 +100,18 @@ check('ACT timing lists the 40-minute writing section without changing the score
   assert.strictEqual(t.SECTIONS.writing.minutes, 40);
   assert.ok(!t.SCORED.includes('writing'));
 });
+
+const fs = require('fs');
+const root = path.join(__dirname, '..');
+check('the ACT Writing page exists, loads its script, and posts only to the essay routes', () => {
+  const html = fs.readFileSync(path.join(root, 'public', 'act-writing.html'), 'utf8');
+  const js = fs.readFileSync(path.join(root, 'public', 'js', 'act-writing.js'), 'utf8');
+  assert.ok(html.includes('/js/act-writing.js') && html.includes('width=device-width'));
+  assert.ok(js.includes('/api/essays/act-writing') && js.includes('/draft') && js.includes('/submit'));
+  assert.ok(!/innerHTML\s*=\s*[^;]*box\.value/.test(js), 'the learner text never goes into innerHTML');
+});
+
+check('the start route finds the learner\'s own ACT enrollment when none is named', () => {
+  const src = fs.readFileSync(path.join(root, 'routes', 'essays.js'), 'utf8');
+  assert.ok(/track_id === 'act'/.test(src) && /enrollment\.user_id !== req\.user\.id/.test(src));
+});

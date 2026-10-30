@@ -46,7 +46,9 @@ function load(req) {
  * marking then use the routes below. Creates a row, never spends a model.
  */
 router.post('/essays/act-writing', requireAuth, limit('essay-act-writing', 30, 60 * 60 * 1000), (req, res) => {
-  const enrollment = db.byId('enrollments', req.body && req.body.enrollment_id);
+  const asked = req.body && req.body.enrollment_id;
+  const enrollment = asked ? db.byId('enrollments', asked)
+    : db.findOne('enrollments', (e) => e.user_id === req.user.id && e.track_id === 'act');
   if (!enrollment || enrollment.user_id !== req.user.id || enrollment.track_id !== 'act') {
     return res.status(404).json({ error: 'ACT enrollment not found.' });
   }
