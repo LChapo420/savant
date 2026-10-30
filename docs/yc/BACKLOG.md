@@ -156,7 +156,7 @@ S13. `[local only]` Real-model proof across the S10 matrix on the owner's machin
 5b. **DONE, see Done.** (Funnel on the admin metrics page.)
 6. **Test-date plan: DONE, see Done.** (Leftovers 6b below.)
 6b. **Test-date plan, leftovers.** (1) Look at the Your plan card at 375 px signed in (cloud run has no session). (2) Link each plan session to a real practice session (today it names the skills; opening the skill from the card is not built). (3) Re-plan from fresh mastery after each session and show "today's session" on the home page once the owner approves the wording. (4) Session counts (4 a week, 30 min) are one config object in `services/act-plan.js` with no evidence behind them yet; the owner should confirm them.
-7. **Real section timer** (item 5) for Timed Tasks and Finals, with pacing feedback. Section lengths are
+7. [claimed 2026-10-30T08:30Z] **Real section timer** (item 5) for Timed Tasks and Finals, with pacing feedback. Section lengths are
    UNVERIFIED until checked on act.org: make them one config object and flag them.
 8. **ACT-format English player** (item 6): passages with numbered underlined portions and "NO CHANGE"
    choices, the schema, and a validator. Content is written later by the owner's local pipeline.
