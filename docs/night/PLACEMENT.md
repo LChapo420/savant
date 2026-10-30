@@ -42,7 +42,7 @@ Read first: `services/subject-placement.js`, `services/adaptive-placement.js`, `
 
 ## Queue
 
-P1. [claimed 2026-10-30T06:28Z] **Simulation harness.** `scripts/placement-sim.js`: simulated learners whose true level runs from "knows
+P1. [done COMMIT] **Simulation harness.** `scripts/placement-sim.js`: simulated learners whose true level runs from "knows
     nothing" to "knows everything" in every subject that has a placement. Each answers by an item-response model
     (chance of a right answer from item difficulty vs ability, guessing at 1/choices for multiple choice, a small
     slip rate), plus learners who press "I don't know". Measure placement error (placed minus true level), questions
@@ -60,6 +60,16 @@ P5. **Content gaps.** Subjects whose item sets can't meet P4: write each as a `[
     pipeline.
 P6. **Honest result screen.** After placement, show the placed level and what it is based on (how many questions,
     how sure), and a one-tap "this is too easy / too hard" that moves the learner and is recorded.
+
+P1b. [local only] **Spanish, chess, piano, basketball have no calibrated items in source control**
+    (`content/placement-calibration/<subject>.json` has no points), so the sim cannot cover them. The owner's agent
+    should run `scripts/placement-second-judge.js calibrate` for each, commit the points, then
+    `node scripts/placement-sim.js --write` to add them to the table. (Spanish tests are sealed: read only.)
+P1c. Baseline findings to fix in P2-P4 (from `docs/PLACEMENT-ACCURACY.md`, 15 seeds per level): mid-level
+    learners are placed one grade *below* their true grade almost every time in English/Reading (mean error -1.0 at
+    25%/50%/75%; check whether this is the "reliable point" shift or a convention, and say which in the result);
+    "I don't know" learners are worse (86.7% within 1 grade vs 93.3%); IQ and English ceiling "everything" placed
+    within 1 grade only 93% (some -1 or -2). Only 15 seeds, so treat rates as coarse; P4 needs more seeds for 95%.
 
 ## Blocked
 
