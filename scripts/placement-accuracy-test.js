@@ -63,5 +63,14 @@ for (const [subject, modes] of [['math', ['quick']], ['english', ['quick', 'bala
   }
 }
 
+console.log('\nlearners who press "I don\'t know" are as accurate (P1c; was 86.7% against 93.3% in the baseline)');
+for (const [subject, modes] of [['math', ['quick']], ['english', ['quick', 'balanced']], ['reading', ['quick', 'balanced']]]) {
+  for (const mode of modes) {
+    const res = sim.measureSpread(subject, mode, { seeds: 40, dontKnow: true });
+    const low = res.rows.reduce((a, r) => (r.within1 < a.within1 ? r : a));
+    check(`${subject} ${mode}: every level >= 95% within one grade (lowest ${Math.round(low.within1 * 100)}% at ${low.label})`, low.within1 >= 0.95, low);
+  }
+}
+
 if (failures) { console.log(`\n${failures} failed`); process.exit(1); }
 console.log('\nall passed');

@@ -92,11 +92,12 @@ P1b. [local only] **Spanish, chess, piano, basketball have no calibrated items i
     (`content/placement-calibration/<subject>.json` has no points), so the sim cannot cover them. The owner's agent
     should run `scripts/placement-second-judge.js calibrate` for each, commit the points, then
     `node scripts/placement-sim.js --write` to add them to the table. (Spanish tests are sealed: read only.)
-P1c. [claimed 09:26Z] Baseline findings to fix in P2-P4 (from `docs/PLACEMENT-ACCURACY.md`, 15 seeds per level): mid-level
+P1c. [done] Baseline findings to fix in P2-P4 (from `docs/PLACEMENT-ACCURACY.md`, 15 seeds per level): mid-level
     learners are placed one grade *below* their true grade almost every time in English/Reading (mean error -1.0 at
     25%/50%/75%; check whether this is the "reliable point" shift or a convention, and say which in the result);
     "I don't know" learners are worse (86.7% within 1 grade vs 93.3%); IQ and English ceiling "everything" placed
     within 1 grade only 93% (some -1 or -2). Only 15 seeds, so treat rates as coarse; P4 needs more seeds for 95%.
+    Checked: the -1 error is a convention (see P4). "I don't know" learners at 40 seeds per level are >= 98% within one grade at every level for math, English, Reading (`scripts/placement-accuracy-test.js`, in test-steps); `npm test` passes. IQ/English ceiling covered by P3/P4.
 
 ## Blocked
 
