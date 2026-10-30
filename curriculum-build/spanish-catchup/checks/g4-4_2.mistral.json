@@ -1,0 +1,50 @@
+{
+ "unit": "Unit 4.2",
+ "grade": "spanish_grade_04_time_food_shopping_and_core_verbs",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "S3",
+   "problem": "Unnatural Spanish: 'A las cinco no puedo. Trabajo a las tres.' should use 'No puedo a las cinco.' for consistency with the expected structure.",
+   "fix": "No puedo a las cinco. Trabajo a las tres."
+  },
+  {
+   "id": "S5",
+   "problem": "Unnatural Spanish: 'Prefiero las cuatro en punto.' should be 'Prefiero a las cuatro en punto.' when referring to a time.",
+   "fix": "Prefiero a las cuatro en punto."
+  },
+  {
+   "id": "S6",
+   "problem": "Unnatural Spanish: 'Yo quiero venir.' is redundant with 'quiero' already implying 'yo'.",
+   "fix": "Quiero venir."
+  },
+  {
+   "id": "S7",
+   "problem": "Incorrect context: 'Son las cinco y media.' is a statement of fact, but Diego is confirming the meeting time, not stating the current time.",
+   "fix": "Sí, a las cinco y media. ¡Perfecto!"
+  },
+  {
+   "id": "Q3",
+   "problem": "Incorrect key: The meeting time is not explicitly stated as 'Five thirty' in the scene. The correct answer should be inferred from context, but the key is misleading.",
+   "fix": "Five thirty"
+  },
+  {
+   "id": "C2",
+   "problem": "Incorrect key: 'No puedo. Prefiero a las cinco.' is correct, but the other options are not plausible replies to the question '¿Puedes venir a las cuatro?'.",
+   "fix": "No puedo. Prefiero a las cinco."
+  },
+  {
+   "id": "R1",
+   "problem": "Incorrect key: The text says 'Prefiero a las cinco y media', but the key is 'Five thirty' which is correct, but the other options are not plausible.",
+   "fix": "Five thirty"
+  },
+  {
+   "id": "V1",
+   "problem": "Incorrect target: 'No puedo a las tres.' should be 'No puedo a las tres.' (no issue), but the partner reply '¿Ah, no? ¿Prefieres a las cuatro?' implies the learner should have said 'No puedo a las tres.' first.",
+   "fix": "No change needed, but ensure the learner's first response is 'No puedo a las tres.'"
+  }
+ ],
+ "at": "2026-10-30T00:12:27.145Z"
+}

@@ -1,0 +1,25 @@
+{
+ "unit": "Unit 3.5",
+ "grade": "advanced",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "P15",
+   "problem": "Spelling error: 'Veintidós' should be 'Veintidós' is correct, but the English 'Twenty-two' is fine. However, the Spanish should be 'Veintidós' (no error here). Wait, no—'Veintidós' is correct. No error in P15.",
+   "fix": ""
+  },
+  {
+   "id": "S8",
+   "problem": "Missing capitalization: 'calle Sol' should be 'Calle Sol' (street names are capitalized in Spanish).",
+   "fix": "Mi dirección es Calle Sol, veintidós."
+  },
+  {
+   "id": "R2",
+   "problem": "Incorrect key: The first letter of 'Arévalo' is 'A', but the question asks for the first letter of the last name, which is 'A' (correct). However, the last name is 'Arévalo', so the first letter is 'A' (as in Antonio). The key is correct, but the problem is that the last name starts with 'A', not 'R'. The question is about the first letter, so the key is correct. No error.",
+   "fix": ""
+  }
+ ],
+ "at": "2026-10-30T00:00:44.499Z"
+}

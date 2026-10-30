@@ -1,0 +1,55 @@
+{
+ "unit": "Unit 3.1",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "planted": [
+  {
+   "id": "P2",
+   "kind": "accent",
+   "before": "Yo soy de México.",
+   "after": "Yo soy de Mexico.",
+   "caught": false
+  },
+  {
+   "id": "P7",
+   "kind": "gender",
+   "before": "Es un libro.",
+   "after": "Es una libro.",
+   "caught": true
+  },
+  {
+   "id": "P6",
+   "kind": "conjugation",
+   "before": "Tú eres mi amigo.",
+   "after": "Tú eres mi amigas.",
+   "caught": true
+  },
+  {
+   "id": "P1",
+   "kind": "meaning",
+   "before": "I'm Ana.",
+   "after": "I'm a student.",
+   "caught": true
+  },
+  {
+   "id": "F1",
+   "kind": "key",
+   "before": "soy",
+   "after": "eres",
+   "caught": true
+  }
+ ],
+ "other_rejects": [
+  {
+   "id": "F2",
+   "problem": "The [KEY] 'son' is correct, but the full sentence 'Ellas son de Chile.' means 'They are from Chile,' which matches the English. No error here.",
+   "fix": ""
+  },
+  {
+   "id": "F3",
+   "problem": "The [KEY] 'eres' is correct, but the full sentence 'Tú eres mi amigo.' means 'You are my friend,' which matches the English. No error here.",
+   "fix": ""
+  }
+ ],
+ "at": "2026-10-30T00:12:31.411Z"
+}

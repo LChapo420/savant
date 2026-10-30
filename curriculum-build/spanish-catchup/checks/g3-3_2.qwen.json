@@ -1,0 +1,25 @@
+{
+ "unit": "Unit 3.2",
+ "grade": "advanced",
+ "checker": "qwen",
+ "model": "qwen/qwen3.8-max:free",
+ "items": 36,
+ "rejects": [
+  {
+   "id": "P3",
+   "problem": "The English includes 'the male friend', which only matches 'el amigo' and not the accepted alternative 'la amiga'. An accepted alternative must mean the same thing as the English.",
+   "fix": "Change the English to just \"the friend\" or remove \"la amiga\" from the accepted alternatives."
+  },
+  {
+   "id": "P4",
+   "problem": "The English includes 'the female friend', which only matches 'la amiga' and not the accepted alternative 'el amigo'. An accepted alternative must mean the same thing as the English.",
+   "fix": "Change the English to just \"the friend\" or remove \"el amigo\" from the accepted alternatives."
+  },
+  {
+   "id": "Q1",
+   "problem": "The Spanish line says 'el libro, la casa y el día' (the book, the house and the day), but the keyed answer uses indefinite articles ('A book, a house and a day'). The English does not mean what the Spanish says.",
+   "fix": "Change the keyed answer to \"The book, the house and the day\"."
+  }
+ ],
+ "at": "2026-10-30T00:00:41.307Z"
+}

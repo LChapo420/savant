@@ -1,0 +1,34 @@
+{
+ "unit": "Unit 3.12",
+ "grade": "advanced",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 36,
+ "rejects": [
+  {
+   "id": "P10",
+   "problem": "The English 'I have two siblings' does not match the Spanish 'Tengo dos hermanos' (which means 'I have two brothers').",
+   "fix": "Change the English to 'I have two brothers.' or add 'brothers' as an accepted alternative."
+  },
+  {
+   "id": "S6",
+   "problem": "The English 'I have two siblings' does not match the Spanish 'Tengo dos hermanos' (which means 'I have two brothers').",
+   "fix": "Change the English to 'I have two brothers.' or adjust the Spanish to 'Tengo dos hermanos y una hermana.' if 'siblings' is intended."
+  },
+  {
+   "id": "F3",
+   "problem": "The choice 'anos' is incorrect; it should be 'años' (with an accent).",
+   "fix": "Replace 'anos' with 'años' in the choices."
+  },
+  {
+   "id": "R2",
+   "problem": "The Spanish 'profesora' means 'teacher' (feminine), but the English choice 'Teacher' is correct. However, the Spanish text implies Rosa is female, so the answer is correct, but the issue is the lack of accent in 'profesora' if it were misspelled (but it isn't here). No actual error found in this item."
+  },
+  {
+   "id": "C2",
+   "problem": "The [KEY] reply 'Soy de México. ¿Y tú?' does not directly answer the question '¿De dónde eres?' with a full response. While it is a valid reply, it is not the most direct answer, and the other options are unrelated.",
+   "fix": "No fix needed as the [KEY] is technically correct, but consider if the task expects a direct answer without a follow-up question."
+  }
+ ],
+ "at": "2026-10-30T00:01:13.254Z"
+}

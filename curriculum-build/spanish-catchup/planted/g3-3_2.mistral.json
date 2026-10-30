@@ -1,0 +1,75 @@
+{
+ "unit": "Unit 3.2",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "planted": [
+  {
+   "id": "P6",
+   "kind": "accent",
+   "before": "la canción",
+   "after": "la cancion",
+   "caught": true
+  },
+  {
+   "id": "P1",
+   "kind": "gender",
+   "before": "el libro",
+   "after": "la libro",
+   "caught": true
+  },
+  {
+   "id": "P3",
+   "kind": "conjugation",
+   "before": "el amigo",
+   "after": "el amigas",
+   "caught": true
+  },
+  {
+   "id": "P2",
+   "kind": "meaning",
+   "before": "the house",
+   "after": "the city",
+   "caught": true
+  },
+  {
+   "id": "F1",
+   "kind": "key",
+   "before": "libro",
+   "after": "casa",
+   "caught": true
+  }
+ ],
+ "other_rejects": [
+  {
+   "id": "P4",
+   "problem": "Accepted alternative 'el amigo' does not mean 'the female friend'",
+   "fix": "la amiga"
+  },
+  {
+   "id": "F2",
+   "problem": "KEY 'mano' does not make the sentence mean 'The hand is feminine.' (it does, but 'día' is incorrect as a choice)",
+   "fix": "Remove 'día' from choices or change KEY to 'día' if intended"
+  },
+  {
+   "id": "F3",
+   "problem": "Incorrect choice 'lápizes' (should be 'lápices')",
+   "fix": "lápices"
+  },
+  {
+   "id": "F4",
+   "problem": "Incorrect choices 'cancions' and 'canciónes' (should be 'canciones')",
+   "fix": "canciones"
+  },
+  {
+   "id": "S3",
+   "problem": "Incorrect statement: Mara's list contains multiple items, not 'one list in singular'",
+   "fix": "¡Qué bien! Una lista con palabras en singular."
+  },
+  {
+   "id": "S7",
+   "problem": "Incorrect logic: 'El problema es pequeño' implies the problem is small, but the context suggests no problem exists",
+   "fix": "¡Muy bien! No hay problema: las dos listas son correctas."
+  }
+ ],
+ "at": "2026-10-30T00:12:40.240Z"
+}

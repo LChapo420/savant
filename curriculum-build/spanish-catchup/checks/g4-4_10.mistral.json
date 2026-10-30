@@ -1,0 +1,35 @@
+{
+ "unit": "Unit 4.10",
+ "grade": "spanish_grade_04_time_food_shopping_and_core_verbs",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "P8",
+   "problem": "Unnatural Spanish no native speaker would say.",
+   "fix": "¿Cuál es el precio más bajo?"
+  },
+  {
+   "id": "P9",
+   "problem": "Wrong gender agreement in accepted alternative.",
+   "fix": "Remove 'Es muy cara.' as an accepted alternative."
+  },
+  {
+   "id": "S8",
+   "problem": "Wrong verb form (present instead of future).",
+   "fix": "Voy a comprar fruta en el mercado y zapatos en la tienda."
+  },
+  {
+   "id": "F2",
+   "problem": "Incorrect full sentence meaning in the task description (missing 'going to').",
+   "fix": "full sentence means 'I am going to buy fruit.'"
+  },
+  {
+   "id": "C3",
+   "problem": "Unnatural reply choice (should match the question's context).",
+   "fix": "¡Sí, voy contigo!"
+  }
+ ],
+ "at": "2026-10-30T00:01:54.191Z"
+}

@@ -1,0 +1,50 @@
+{
+ "unit": "Unit 4.1",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "planted": [
+  {
+   "id": "P1",
+   "kind": "accent",
+   "before": "Hablo español.",
+   "after": "Hablo espanol.",
+   "caught": true
+  },
+  {
+   "id": "P9",
+   "kind": "gender",
+   "before": "Vivo en la ciudad.",
+   "after": "Vivo en el ciudad.",
+   "caught": true
+  },
+  {
+   "id": "P2",
+   "kind": "conjugation",
+   "before": "Ellos trabajan.",
+   "after": "Ellos trabajamos.",
+   "caught": true
+  },
+  {
+   "id": "P3",
+   "kind": "meaning",
+   "before": "I buy bread.",
+   "after": "We learn Spanish.",
+   "caught": true
+  },
+  {
+   "id": "F1",
+   "kind": "key",
+   "before": "trabajo",
+   "after": "trabajan",
+   "caught": true
+  }
+ ],
+ "other_rejects": [
+  {
+   "id": "F3",
+   "problem": "Incorrect full sentence meaning: '¿Vives tú en la ciudad?' means 'Do you live in the city?', but the [KEY] 'Vives' alone does not form a complete sentence with the given context.",
+   "fix": "Vives"
+  }
+ ],
+ "at": "2026-10-30T00:13:00.430Z"
+}

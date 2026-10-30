@@ -1,0 +1,35 @@
+{
+ "unit": "Unit 4.7",
+ "grade": "spanish_grade_04_time_food_shopping_and_core_verbs",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "P7",
+   "problem": "Missing accent on 'barato' (should be 'barato' for masculine, but 'barata' is also accepted for feminine). However, the issue is that the accepted alternative 'Es barata' implies a feminine noun, but the English 'It's cheap' does not specify gender. The phrase itself is correct, but the acceptance of 'Es barata' without context is misleading.",
+   "fix": "Remove the accepted alternative 'Es barata' or specify context for gender agreement."
+  },
+  {
+   "id": "P8",
+   "problem": "Same as P7: 'Es caro' is correct for masculine, but 'Es cara' is accepted without context for feminine.",
+   "fix": "Remove the accepted alternative 'Es cara' or specify context for gender agreement."
+  },
+  {
+   "id": "P12",
+   "problem": "Unnatural phrasing: 'Pago con el celular' is correct but less common than 'Pago con el móvil' in many Spanish-speaking regions. However, 'celular' is widely understood, so this may not be a strict error.",
+   "fix": "Consider using 'Pago con el móvil' as the primary option, but 'celular' is acceptable."
+  },
+  {
+   "id": "S4",
+   "problem": "'Es un poco caro' is correct, but the English translation 'It's a little expensive' is slightly off. 'A little' can imply 'a bit' (positive) or 'somewhat' (negative), but 'un poco' in this context clearly means 'a bit' (negative connotation).",
+   "fix": "Clarify the English translation to 'It's a bit expensive.'"
+  },
+  {
+   "id": "F3",
+   "problem": "The full sentence 'Pago con el celular' means 'I pay with the phone' (general), but the English given is 'I'm paying with my phone' (present continuous). The verb form 'Pago' is present simple, not present continuous.",
+   "fix": "Change the English to 'I pay with my phone.' or adjust the Spanish to 'Estoy pagando con el celular.'"
+  }
+ ],
+ "at": "2026-10-30T00:01:44.786Z"
+}

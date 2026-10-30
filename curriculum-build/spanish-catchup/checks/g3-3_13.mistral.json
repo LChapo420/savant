@@ -1,0 +1,25 @@
+{
+ "unit": "Unit 3.13",
+ "grade": "advanced",
+ "checker": "mistral",
+ "model": "mistralai/mistral-large-2512",
+ "items": 37,
+ "rejects": [
+  {
+   "id": "P15",
+   "problem": "Missing article before 'tenista español'.",
+   "fix": "Rafael Nadal es un tenista español."
+  },
+  {
+   "id": "S7",
+   "problem": "Missing article before 'cantante'.",
+   "fix": "Mi madre es de Colombia y es una cantante."
+  },
+  {
+   "id": "F2",
+   "problem": "The full sentence 'Tengo dos hermanos.' can mean 'I have two brothers.' or 'I have two siblings.' but the choices do not include 'hermanas' for 'sisters' as a possible correct answer, though the English only specifies 'brothers'.",
+   "fix": "Add 'hermanas' as a correct choice or clarify the English to strictly mean 'brothers'."
+  }
+ ],
+ "at": "2026-10-30T00:01:18.529Z"
+}

@@ -1,0 +1,108 @@
+{
+ "unit": "Unit 3.10",
+ "rejected": {
+  "P1": [
+   {
+    "checker": "mistral",
+    "problem": "The English translation 'What?' is incorrect for '¿Cómo?'.",
+    "fix": "Remove 'What?' from the English translations."
+   }
+  ],
+  "F4": [
+   {
+    "checker": "mistral",
+    "problem": "The option 'lapiz' is missing an accent, and 'lápíz' has an incorrect accent placement.",
+    "fix": "Remove 'lapiz' and 'lápíz' from the choices."
+   }
+  ],
+  "C1": [
+   {
+    "checker": "mistral",
+    "problem": "The reply 'Yo también.' is incorrect as a response to 'No tengo teléfono.' in this context.",
+    "fix": "Remove 'Yo también.' from the choices."
+   },
+   {
+    "checker": "qwen",
+    "problem": "'Yo también.' is also a correct and natural reply to 'No tengo teléfono.' (meaning 'I don't have one either'), so the multiple-choice item has two correct answers.",
+    "fix": "Replace the distractor 'Yo también.' with an incorrect option such as 'Yo sí.'"
+   }
+  ],
+  "C2": [
+   {
+    "checker": "mistral",
+    "problem": "The reply 'No, tampoco.' is incorrect as a response to '¿Cuántos años tienes?'.",
+    "fix": "Remove 'No, tampoco.' from the choices."
+   }
+  ],
+  "C3": [
+   {
+    "checker": "mistral",
+    "problem": "The reply 'Yo también.' is incorrect as a response to '¿Quién es ella?'.",
+    "fix": "Remove 'Yo también.' from the choices."
+   }
+  ],
+  "S7": [
+   {
+    "checker": "qwen",
+    "problem": "'Yo tampoco' is pragmatically unnatural as a response to Rosa saying 'Tengo catorce' (a positive statement). 'Tampoco' only agrees with negative statements; here Diego should say 'Yo también'.",
+    "fix": "Change S7 to: \"Yo también. Bueno, tengo catorce años.\""
+   }
+  ]
+ },
+ "rewritten": {
+  "P1": {
+   "es": "¿Cómo?",
+   "en": [
+    "How?"
+   ],
+   "tier": 2,
+   "skill": "es_questions",
+   "topic": "asking_questions_question_wo"
+  },
+  "F4": {
+   "before": "El",
+   "after": " es bueno.",
+   "choices": [
+    "lápiz"
+   ],
+   "answer": 0,
+   "en": "The pencil is good."
+  },
+  "C1": {
+   "who": "tomas",
+   "es": "No tengo teléfono.",
+   "choices": [
+    "Yo tampoco.",
+    "Yo sí.",
+    "No, no es verdad."
+   ],
+   "answer": 0
+  },
+  "C2": {
+   "who": "rosa",
+   "es": "¿Cuántos años tienes?",
+   "choices": [
+    "Tengo quince años.",
+    "Es un lápiz."
+   ],
+   "answer": 0
+  },
+  "C3": {
+   "who": "diego",
+   "es": "¿Quién es ella?",
+   "choices": [
+    "Es mi amiga.",
+    "Bueno."
+   ],
+   "answer": 0
+  },
+  "S7": {
+   "who": "diego",
+   "es": "Yo también. Bueno, tengo catorce años.",
+   "en": "Me too. Well, I'm fourteen."
+  }
+ },
+ "dropped": [],
+ "convo_flagged": null,
+ "at": "2026-10-30T00:18:18.775Z"
+}

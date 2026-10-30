@@ -353,7 +353,18 @@ Reply with {"rejects":[{"id":"…","problem":"…","fix":"…"}]} listing only t
 
 async function runCheck(name, spec, items) {
   const { system, user } = checkPrompt(spec, items);
-  const out = await checker(name, { system, user, schema: VERDICT_SCHEMA, maxTokens: 1500 });
+  // A model "temporarily unavailable" (503) or an unusable reply is tried again, twice, after a pause.
+  let out = null;
+  for (let attempt = 0; !out; attempt++) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      out = await checker(name, { system, user, schema: VERDICT_SCHEMA, maxTokens: 1500 });
+    } catch (err) {
+      if (attempt >= 2 || err.daily || !(err.status === 503 || err.status === 422 || err.status === 502 || err.status === 0)) throw err;
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise((r) => setTimeout(r, 20000 * (attempt + 1)));
+    }
+  }
   const ids = new Set(items.map((i) => i.id));
   return { model: out.model, rejects: (out.data.rejects || []).filter((r) => ids.has(String(r.id).trim())).map((r) => ({ ...r, id: String(r.id).trim() })) };
 }
@@ -476,17 +487,21 @@ async function fix() {
     const targets = [...rejects.keys()].filter((id) => id !== 'V1' && itemRef(d.draft, id));
     const objects = targets.map((id) => { const r = itemRef(d.draft, id); return { id, item: r.list[r.i], problems: rejects.get(id) }; });
     let rewritten = {};
-    try {
-      const schema = { type: 'object', properties: { items: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, item: { type: 'object' } }, required: ['id', 'item'] } } }, required: ['items'] };
-      // eslint-disable-next-line no-await-in-loop
-      const out = await generator(`fix_${spec.key}`, {
-        system: 'You correct beginner Spanish course items. Keep each item\'s JSON shape and keys exactly; change only what is needed to make it correct (accents, agreement, conjugation, the English meaning, or which option is the key).',
-        user: `${spec.unit} (Grade ${spec.gradeNo}: ${spec.goal}). Reviewers rejected these items. Return every item corrected, same ids.\n${JSON.stringify(objects, null, 1)}`,
-        schema,
-        maxTokens: 3000,
-      });
-      for (const x of out.items || []) if (targets.includes(x.id) && x.item && typeof x.item === 'object') rewritten[x.id] = x.item;
-    } catch (err) { console.log(`fix ${spec.key}: ${err.message}`); rewritten = {}; }
+    let incomplete = false;
+    for (let attempt = 0; attempt < 2 && !Object.keys(rewritten).length; attempt++) {
+      try {
+        const schema = { type: 'object', properties: { items: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, item: { type: 'object' } }, required: ['id', 'item'] } } }, required: ['items'] };
+        // eslint-disable-next-line no-await-in-loop
+        const out = await generator(`fix_${spec.key}`, {
+          system: 'You correct beginner Spanish course items. Keep each item\'s JSON shape and keys exactly; change only what is needed to make it correct (accents, agreement, conjugation, the English meaning, or which option is the key). Content must suit a teenage learner.',
+          user: `${spec.unit} (Grade ${spec.gradeNo}: ${spec.goal}). Reviewers rejected these items. Return every item corrected, same ids.\n${JSON.stringify(objects, null, 1)}`,
+          schema,
+          maxTokens: 9000,
+        });
+        for (const x of out.items || []) if (targets.includes(x.id) && x.item && typeof x.item === 'object') rewritten[x.id] = x.item;
+      } catch (err) { console.log(`fix ${spec.key}: ${err.message}`); rewritten = {}; }
+    }
+    if (targets.length && !Object.keys(rewritten).length) incomplete = true;
     // Re-check the rewritten items with both checkers; any reject drops the item.
     const candidate = JSON.parse(JSON.stringify(d.draft));
     for (const [id, obj] of Object.entries(rewritten)) { const r = itemRef(candidate, id); r.list[r.i] = { ...r.list[r.i], ...obj }; }
@@ -502,10 +517,13 @@ async function fix() {
         } catch (err) {
           console.log(`recheck ${spec.key} ${name}: ${err.message}`);
           for (const it of recheck) stillBad.add(it.id); // unchecked is not passed
+          incomplete = true;
           if (err.daily) break;
         }
       }
     }
+    // A provider that did not answer is not a verdict: leave the unit for the next run (it is not shipped meanwhile).
+    if (incomplete && !args.accept_incomplete) { console.log(`fix ${spec.key}: incomplete (provider), not written; run fix again`); continue; }
     const kept = Object.keys(rewritten).filter((id) => !stillBad.has(id));
     writeJson(ffile, {
       unit: spec.unit,
