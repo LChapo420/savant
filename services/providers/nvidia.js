@@ -358,7 +358,7 @@ const MODEL_CONCURRENCY = () => Math.max(1, Number(process.env.NVIDIA_MODEL_CONC
 // Everything else (authoring pipelines, grading, probes) is not counted against it.
 const LEARNER_CAP = () => Math.max(1, Number(process.env.NVIDIA_LEARNER_CAP || 2));
 const DOCK_TASKS = new Set(['dock_help', 'dock_leak_check', 'tutor_explain', 'coach_turn', 'assist_help', 'remediation_teach']);
-const FACT_TASKS = new Set(['tutor_facts']);
+const FACT_TASKS = new Set(['tutor_facts', 'tutor_memory_fold']);
 /** 'dock' | 'facts' | 'build' for learner-facing tasks, null for the rest. */
 function learnerClass(task) {
   if (!task) return null;
@@ -742,7 +742,7 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
 const structuredStream = (args) => structured(args);
 
 /** One plain-text exchange. Returns { text, usage, model } or null; throws when nothing answered. */
-async function chat({ role = 'fast', task = null, system, messages, maxTokens = 1024, effort = null, lane, model: wanted = null, timeoutMs = null, attempts = null, signal = null }) {
+async function chat({ role = 'fast', task = null, system, messages, maxTokens = 1024, effort = null, lane, model: wanted = null, timeoutMs = null, attempts = null, signal = null, temperature = null }) {
   if (!isConfigured()) return null;
   const chosen = wanted ? { tier: 'explicit', entries: normalizeEntries([wanted]) } : plan(role, task);
   const entries = chosen.entries.filter((e) => wanted || !coolingDown(e.model));
@@ -752,7 +752,7 @@ async function chat({ role = 'fast', task = null, system, messages, maxTokens = 
   for (const raw of entries) {
     const entry = { ...raw, effort: effectiveEffort(raw.effort, effort) };
     try {
-      const payload = await sendWithRetries(entry, (e) => baseBody(e, { messages: messagesFor(system, messages), maxTokens }), { interactive, timeoutMs, attempts, signal, task });
+      const payload = await sendWithRetries(entry, (e) => baseBody(e, { messages: messagesFor(system, messages), maxTokens, temperature: temperature !== null && temperature !== undefined && Number.isFinite(Number(temperature)) ? Math.min(1, Math.max(0, Number(temperature))) : null }), { interactive, timeoutMs, attempts, signal, task });
       const msg = payload && payload.choices && payload.choices[0] && payload.choices[0].message;
       const text = sj.stripThinking(msg && msg.content);
       if (text) return { text, usage: usageOf(payload), model: payload.model || entry.model, effort: entry.effort, tier: chosen.tier };

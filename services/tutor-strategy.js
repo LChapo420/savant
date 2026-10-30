@@ -47,14 +47,18 @@ function masteryOf(userId, skillId) {
   return s && s.attempts > 0 ? s.mastery : null;
 }
 
-/** Every style with its score, best first. */
-function ranked(userId, skillId = null) {
+/**
+ * Every style with its score, best first. `shift` (optional, style -> number) moves a style's PRIOR, which is how the
+ * scorecard leans the choice (services/tutor-plan.js); it is worth two observations at most, so what was measured
+ * for this learner (worked / tried) overrules it as soon as there is any.
+ */
+function ranked(userId, skillId = null, shift = null) {
   const m = masteryOf(userId, skillId);
   return ORDER.map((style) => {
     const r = rowFor(userId, style);
     const worked = r ? r.worked || 0 : 0;
     const tried = r ? r.tried || 0 : 0;
-    return { style, tried, worked, score: (worked + 2 * prior(style, m)) / (tried + 2) };
+    return { style, tried, worked, score: (worked + 2 * (prior(style, m) + ((shift && shift[style]) || 0))) / (tried + 2) };
   }).sort((a, b) => b.score - a.score || ORDER.indexOf(a.style) - ORDER.indexOf(b.style));
 }
 
@@ -77,9 +81,9 @@ function meta(userId) {
  * The way to lean on in this reply, as one line for the prompt. `commit` remembers it so the next turn's
  * note-taking can judge how it landed (`previous`).
  */
-function choose(userId, { skillId = null, commit = true } = {}) {
+function choose(userId, { skillId = null, commit = true, shift = null } = {}) {
   if (!userId) return null;
-  const top = ranked(userId, skillId)[0];
+  const top = ranked(userId, skillId, shift)[0];
   if (commit) {
     const m = meta(userId);
     const last = m ? m.last || null : null;

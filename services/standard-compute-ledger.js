@@ -166,24 +166,33 @@ function status() {
   }
 }
 
-function canSpend(usd = 0) {
+/**
+ * `ceilingUsd` (optional) holds one kind of caller to a lower limit than the cap (the tutor, $16:
+ * services/tutor-standard-compute.js): committed + usd must stay within it. It can only lower the limit.
+ */
+function canSpend(usd = 0, ceilingUsd = null) {
   const s = status();
-  return s.ok && s.headroom_usd >= usd;
+  if (!s.ok) return false;
+  const limit = ceilingUsd == null ? s.cap_usd : Math.min(s.cap_usd, Number(ceilingUsd));
+  return limit - s.committed_usd >= usd;
 }
 
-/** Reserve `usd`; throws a LEDGER_STOP error (status 402) past the cap or when unreadable. */
-function reserve({ usd, task = null, model = null }) {
+/** Reserve `usd`; throws a LEDGER_STOP error (status 402) past the cap (or the caller's lower ceiling) or when unreadable. */
+function reserve({ usd, task = null, model = null, ceilingUsd = null }) {
   const amount = Math.max(0, Number(usd) || 0);
   return withLock(() => {
     const data = read();
     expireStale(data);
     const t = totals(data);
-    if (t.committed_usd + amount > capUsd() + 1e-9) {
+    // A caller may hold itself to a lower ceiling than the cap (the tutor, services/tutor-standard-compute.js), never a higher one.
+    const limit = ceilingUsd == null ? capUsd() : Math.min(capUsd(), Number(ceilingUsd));
+    const what = limit < capUsd() ? 'ceiling' : 'cap';
+    if (t.committed_usd + amount > limit + 1e-9) {
       data.refused_calls = (data.refused_calls || 0) + 1;
-      data.log.push({ at: new Date().toISOString(), task, model, usd: amount, outcome: `refused: would reach $${(t.committed_usd + amount).toFixed(4)} of the $${capUsd().toFixed(2)} cap` });
+      data.log.push({ at: new Date().toISOString(), task, model, usd: amount, outcome: `refused: would reach $${(t.committed_usd + amount).toFixed(4)} of the $${limit.toFixed(2)} ${what}` });
       if (data.log.length > 1000) data.log = data.log.slice(-1000);
       write(data);
-      throw Object.assign(new Error(`standard compute ledger: refused (committed $${t.committed_usd.toFixed(4)} + this call up to $${amount.toFixed(4)} would pass the $${capUsd().toFixed(2)} cap)`), { code: 'LEDGER_STOP', status: 402 });
+      throw Object.assign(new Error(`standard compute ledger: refused (committed $${t.committed_usd.toFixed(4)} + this call up to $${amount.toFixed(4)} would pass the $${limit.toFixed(2)} ${what})`), { code: 'LEDGER_STOP', status: 402 });
     }
     const id = `r${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
     data.reservations[id] = { usd: Number(amount.toFixed(6)), task, model, at: new Date().toISOString(), pid: process.pid };

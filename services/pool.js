@@ -136,6 +136,7 @@ class Slot {
     this.supports = spec.supports || ['structured', 'chat'];
     this.hedgeable = spec.hedgeable !== false; // a paid last resort (Claude) is not a hedge
     this.extra = !!spec.extra; // not part of the app's chain: needs a config allowlist
+    this.preferred = !!spec.preferred; // goes first, paid or not (the tutor's Standard Compute slot)
     this.call = spec.call; // async (req, ctx) -> result
     this.estimateUsd = spec.estimateUsd || null; // (req) -> usd, paid slots
     this.canSpend = spec.canSpend || null; // (usd) -> bool, paid slots
@@ -311,7 +312,7 @@ function effortHint(effort) {
 
 function chainArgs(req, kind, ctx, extra = {}) {
   const base = kind === 'chat'
-    ? { role: req.role, task: req.task, system: req.system, messages: req.messages, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane }
+    ? { role: req.role, task: req.task, system: req.system, messages: req.messages, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, ...(req.temperature != null ? { temperature: req.temperature } : {}) }
     : { role: req.role, task: req.task, system: req.system, user: req.user, schema: req.schema, schemaName: req.schemaName, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, think: req.think };
   return { ...base, timeoutMs: ctx.timeoutMs, signal: ctx.signal, ...extra };
 }
@@ -471,7 +472,34 @@ function refusal(slot, req, kind) {
   return null;
 }
 
-/** All slots that may serve this request, free ones first in the app's order, then paid ones cheapest first. */
+/**
+ * The tutor's Standard Compute slot (owner, 30 Oct 2026; policy in services/tutor-standard-compute.js): a PAID slot that
+ * carries LEARNER data and goes FIRST, for the tutor's own chat tasks only, when this learner is cleared (not an under-13
+ * without verified parental consent, outside AI allowed), the key is there and the ledger's tutor ceiling ($16 committed)
+ * has room. The free NVIDIA slots stay behind it: the pool's hedge starts one after hedgeAfterMs (the dock: 4 s), and
+ * takes over when it fails. Returns null when the tutor may not use it, which leaves the free chain exactly as it was.
+ */
+function tutorStandardCompute(req) {
+  if (reqKind(req) !== 'chat' || !req.userId || req.outside === false) return null;
+  const tsc = require('./tutor-standard-compute'); // eslint-disable-line global-require
+  if (!tsc.TASKS.has(req.task)) return null;
+  const ledger = require('./standard-compute-ledger'); // eslint-disable-line global-require
+  const model = tsc.modelName();
+  if (tsc.refusal({ userId: req.userId, task: req.task, estimateUsd: ledger.estimate({ model, inputChars: reqChars(req), maxTokens: req.maxTokens || 1024 }) })) return null;
+  const price = ledger.priceOf(model);
+  return registerSlot({
+    id: `standard_compute:${model}:tutor`, provider: 'standard_compute', model, label: `Standard Compute ${model} (tutor, paid)`, family: familyOfModel(model),
+    supports: ['chat'], dataClass: 'learner', maxConcurrent: 6, rpm: 60, latencyHintMs: 5000, priceIn: price.input, priceOut: price.output,
+    preferred: true, hedgeable: true,
+    enabled: () => tsc.switchedOn() && tsc.keyPresent(),
+    estimateUsd: (rq) => ledger.estimate({ model, inputChars: reqChars(rq), maxTokens: rq.maxTokens || 1024 }),
+    canSpend: (usd) => ledger.canSpend(usd, tsc.ceilingUsd()),
+    costOf: (res) => ledger.costOf((res && res.model) || model, res && res.usage),
+    call: (rq, ctx) => require('./providers/standard-compute').standardCompute.chat({ ...chainArgs(rq, 'chat', ctx), tutor: { userId: rq.userId } }), // eslint-disable-line global-require
+  });
+}
+
+/** All slots that may serve this request, free ones first in the app's order, then paid ones cheapest first. The tutor's Standard Compute slot, when allowed, goes before them. */
 function candidatesFor(req, opts = {}) {
   const providers = providersLib();
   const kind = reqKind(req);
@@ -483,15 +511,17 @@ function candidatesFor(req, opts = {}) {
     slots.push(...expandProvider(p, req));
   }
   if (reqClass(req) === 'pipeline' && req.outside !== false && opts.extras !== false) slots.push(...extraSlots());
+  if (opts.tutorStandardCompute !== false) { const sc = tutorStandardCompute(req); if (sc) slots.unshift(sc); }
   const seen = new Set();
   const ok = slots.filter((s) => {
     if (seen.has(s.id)) return false;
     seen.add(s.id);
     return !refusal(s, req, kind);
   });
-  const free = ok.filter((s) => !s.paid);
-  const paid = ok.filter((s) => s.paid).sort((a, b) => (a.hedgeable === b.hedgeable ? (a.priceOut - b.priceOut) : (a.hedgeable ? -1 : 1)));
-  return [...free, ...paid];
+  const first = ok.filter((s) => s.preferred);
+  const free = ok.filter((s) => !s.paid && !s.preferred);
+  const paid = ok.filter((s) => s.paid && !s.preferred).sort((a, b) => (a.hedgeable === b.hedgeable ? (a.priceOut - b.priceOut) : (a.hedgeable ? -1 : 1)));
+  return [...first, ...free, ...paid];
 }
 
 function timeoutFor(slot, req, opts) {
@@ -659,7 +689,8 @@ async function callHedged(req, opts = {}) {
         if (tried.has(s.id)) continue;
         if (s.paid) {
           if (opts.allowPaid === false) continue;
-          if (asHedge) { if (!s.hedgeable) continue; } else if (anyFreeRunning() || untriedFree()) continue; // last resort: only when every free one has failed
+          // A preferred paid slot (the tutor's Standard Compute) starts first, as the primary, not as a last resort.
+          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable) continue; } else if (anyFreeRunning() || untriedFree()) continue; // last resort: only when every free one has failed
           if (!budgetOk(s, req, opts, spent)) continue;
         }
         const b = blocked(s, req);

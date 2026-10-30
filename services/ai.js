@@ -172,7 +172,8 @@ async function viaPool(userId, req, role, task, outside) {
   if (res.pool.hedged) {
     console.log(`ai: ${role}${task ? `/${task}` : ''} answered by ${res.pool.slot} after ${Math.round(res.pool.elapsedMs / 1000)}s (${res.pool.attempts.length} attempt${res.pool.attempts.length === 1 ? '' : 's'})`);
   }
-  recordSpend(userId, res.model, res.usage, providers.ALL[res.pool.provider]);
+  // Standard Compute is not in providers.ALL (it must never enter a chain); the tutor's calls to it are still recorded.
+  recordSpend(userId, res.model, res.usage, providers.ALL[res.pool.provider] || (res.pool.provider === 'standard_compute' ? require('./providers/standard-compute').standardCompute : null));
   return res;
 }
 
@@ -256,10 +257,10 @@ async function talk(args) {
  *
  * @returns {Promise<{text: string, model: string}|null>}
  */
-async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant }) {
+async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature }) {
   const result = await withProviders(userId, (p) => p.chat({
-    role, task, system, messages, maxTokens, effort, lane,
-  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant });
+    role, task, system, messages, maxTokens, effort, lane, temperature,
+  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature });
   return result ? { text: result.text, model: result.model } : null;
 }
 

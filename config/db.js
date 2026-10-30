@@ -59,6 +59,7 @@ const COLLECTIONS = [
   'tutor_facts',             // what the tutor durably knows about a learner, one fact per row, each readable and deletable by them (services/tutor-facts.js)
   'tutor_strategies',        // which ways of explaining have worked for a learner: tried and worked counts per style (services/tutor-strategy.js)
   'tutor_memory',            // the one persistent tutor per learner: running summary + last turns (services/tutor.js)
+  'tutor_archive',           // every tutor exchange per learner, searchable by a local keyword index so old chats can be recalled cheaply (services/tutor-archive.js)
   'enforcers',               // retention enforcers: end of session/day and scheduled ones, tier, window, questions, results (services/enforcers.js)
   'es_path_runs',            // main-path Spanish: one per level played with the Duolingo-style activities, its built level and first answers (services/spanish/path.js)
   'act_profiles',            // ACT prep: one per learner, test date and target score (services/act-scores.js)

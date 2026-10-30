@@ -51,7 +51,8 @@
           <p class="muted" style="margin:0 0 6px">Early impressions from your goals, answers and chats. They keep changing as you learn.</p>
           ${m.know.length ? `<ul style="margin:0;padding-left:18px">${m.know.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>` : '<p style="margin:0">Not much yet. It fills in as you work.</p>'}
           ${m.summary ? `<p style="margin:8px 0 0"><strong>From earlier chats:</strong> ${esc(m.summary)}</p>` : ''}
-          ${m.turn_count ? `<p style="margin:8px 0 0"><button type="button" class="btn btn-ghost btn-sm tutor-forget">Forget our past chats</button></p>` : ''}`;
+          ${m.archive && m.archive.exchanges ? `<p class="muted" style="margin:8px 0 0">I keep all ${m.archive.exchanges} of our earlier exchanges and can look back through them when you mention something from a while ago.</p>` : ''}
+          ${m.turn_count || (m.archive && m.archive.exchanges) ? `<p style="margin:8px 0 0"><button type="button" class="btn btn-ghost btn-sm tutor-forget">Forget our past chats</button></p>` : ''}`;
         const forget = panel.querySelector('.tutor-forget');
         if (forget) forget.addEventListener('click', async () => {
           forget.disabled = true;

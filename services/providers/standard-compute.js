@@ -11,7 +11,12 @@
  *           spent) and is refused past the cap. The ledger's prices are an assumed upper
  *           bound (the API reports no cost).
  *
- * Why pipeline only: prompts go to a third-party gateway whose retention and training
+ * ONE EXCEPTION (owner, 30 Oct 2026): the tutor (the dock and its memory) may use it for learners, through
+ * services/tutor-standard-compute.js: only its own tasks, only under a $16 committed-ledger ceiling, never
+ * for a learner under 13 without verified parental consent, and every call still reserves in the ledger.
+ * That path is `chat({ tutor: { userId } })` below; nothing else gets past the pipeline gate.
+ *
+ * Why pipeline only otherwise: prompts go to a third-party gateway whose retention and training
  * terms for children's data are unknown. No learner's words (answers, profile, survey,
  * interests, name) are ever sent. A process must opt in with STANDARD_COMPUTE_PIPELINE=1
  * (scripts set it; the app server never does), and services/providers/index.js does not
@@ -37,12 +42,22 @@ let fetchImpl = (...args) => fetch(...args);
 function _setFetch(fn) { fetchImpl = fn || ((...args) => fetch(...args)); }
 
 /** One request inside the ledger: reserve, send, settle. `signal` aborts the request. */
-async function post(body, timeoutMs, { signal = null, task = null } = {}) {
-  if (!pipelineOptIn()) throw Object.assign(new Error('standard_compute: pipeline use only (STANDARD_COMPUTE_PIPELINE=1 not set)'), { status: 403 });
+async function post(body, timeoutMs, { signal = null, task = null, tutor = null } = {}) {
   if (!KEY()) throw Object.assign(new Error('standard_compute: no key'), { status: 403 });
   const inputChars = (body.messages || []).reduce((n, m) => n + String(m.content || '').length, 0);
-  // Throws LEDGER_STOP (402) past the cap: nothing is sent.
-  const id = ledger.reserve({ usd: ledger.estimate({ model: body.model, inputChars, maxTokens: body.max_tokens }), task, model: body.model });
+  const estimate = ledger.estimate({ model: body.model, inputChars, maxTokens: body.max_tokens });
+  let ceilingUsd = null;
+  if (tutor) {
+    // The tutor's exception to "pipeline only": its own tasks, a cleared learner, and the $16 ceiling (checked again, atomically, in the ledger).
+    const tutorPolicy = require('../tutor-standard-compute'); // eslint-disable-line global-require
+    const why = tutorPolicy.refusal({ userId: tutor.userId, task, estimateUsd: estimate });
+    if (why) throw Object.assign(new Error(`standard_compute: tutor use refused (${why})`), { status: 403, policy: true });
+    ceilingUsd = tutorPolicy.ceilingUsd();
+  } else if (!pipelineOptIn()) {
+    throw Object.assign(new Error('standard_compute: pipeline use only (STANDARD_COMPUTE_PIPELINE=1 not set)'), { status: 403 });
+  }
+  // Throws LEDGER_STOP (402) past the cap (or the tutor's lower ceiling): nothing is sent.
+  const id = ledger.reserve({ usd: estimate, task, model: body.model, ceilingUsd });
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
   const onAbort = () => ctrl.abort();
@@ -120,11 +135,15 @@ const standardCompute = {
     throw Object.assign(new Error(`standard_compute: ${model} gave an unusable ${schemaName}`), { status: 422, unusable: true, usage });
   },
 
-  async chat({ task = null, system, messages, maxTokens = 1024, effort = null, timeoutMs = null, signal = null }) {
-    const model = MODEL();
+  /**
+   * `tutor: { userId }` is the tutor's exception (see the header): it picks the tutor's model, allows a warmer
+   * `temperature`, and goes through services/tutor-standard-compute.js. Without it this is pipeline-only, as before.
+   */
+  async chat({ task = null, system, messages, maxTokens = 1024, effort = null, timeoutMs = null, signal = null, tutor = null, temperature = 0 }) {
+    const model = tutor ? require('../tutor-standard-compute').modelName() : MODEL(); // eslint-disable-line global-require
     const { payload, usage } = await post(
-      { model, messages: [...(system ? [{ role: 'system', content: String(system) }] : []), ...(messages || []).map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content || '') }))], max_tokens: Number(maxTokens) || 1024, temperature: 0, ...reasoning(effort) },
-      timeoutMs || Number(process.env.STANDARD_COMPUTE_TIMEOUT_MS) || 180000, { signal, task },
+      { model, messages: [...(system ? [{ role: 'system', content: String(system) }] : []), ...(messages || []).map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content || '') }))], max_tokens: Number(maxTokens) || 1024, temperature: Math.min(1, Math.max(0, Number(temperature) || 0)), ...(tutor && !effort ? { reasoning_effort: 'none' } : reasoning(effort)) }, // a live chat: no hidden thinking (measured 30 Oct: about 0.6 s faster, same answers)
+      timeoutMs || Number(process.env.STANDARD_COMPUTE_TIMEOUT_MS) || 180000, { signal, task, tutor },
     );
     const text = sj.stripThinking(payload.choices && payload.choices[0] && payload.choices[0].message && payload.choices[0].message.content);
     if (!text) throw Object.assign(new Error(`standard_compute: ${model} returned no text`), { status: 422, unusable: true, usage });

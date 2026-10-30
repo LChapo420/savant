@@ -89,7 +89,8 @@ router.post('/tutor/transcribe', requireAuth, limit('tutor-transcribe', 60, 60 *
 
 router.get('/tutor/memory', requireAuth, (req, res) => {
   const memory = tutor.view(req.user.id);
-  res.json({ know: tutor.pack(req.user.id), summary: memory.summary, recent: memory.turns.slice(-6), turn_count: memory.turn_count });
+  // `archive`: how many exchanges the tutor can search when they bring up something from long ago (services/tutor-archive.js).
+  res.json({ know: tutor.pack(req.user.id), summary: memory.summary, recent: memory.turns.slice(-6), turn_count: memory.turn_count, archive: require('../services/tutor-archive').summary(req.user.id) }); // eslint-disable-line global-require
 });
 
 // The durable facts, one by one: the learner reads each and deletes any.
