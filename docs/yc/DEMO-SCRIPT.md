@@ -30,7 +30,7 @@ Goal: show that it finds the learner's level, teaches from there, and has a tuto
 | 0:10 | Tap **Continue** on the ACT Prep card (it reads "Start level N"). | "It already placed Riley with a short adaptive quiz, so this isn't level 1 for everyone." |
 | 0:20 | Answer one question in the session. Get one wrong on purpose if you can. | "Wrong answers aren't just marked wrong: the app works out the misunderstanding behind them and brings that skill back." |
 | 0:35 | Tap **Ask tutor** (bottom corner). Type "why is that the answer?" and send. | "The tutor is on every page. It knows the goal, the subject, recent mistakes and what is on the screen. On quizzes and placement it gives method hints only, never the answer." |
-| 0:50 | Back on `/dashboard`, point at **Due for review**. | "Then it schedules review so it sticks. I'm looking for ACT students to try it; there are no results to show yet and I won't pretend there are." |
+| 0:50 | Back on `/dashboard`, point at **Review: N skills due**. | "Then it schedules review so it sticks. I'm looking for ACT students to try it; there are no results to show yet and I won't pretend there are." |
 | 1:00 | Stop. | |
 
 ## The 3-minute version
@@ -39,7 +39,7 @@ Goal: show that it finds the learner's level, teaches from there, and has a tuto
 |---|---|---|
 | 0:00 | `/` (home page), scroll once. | One sentence: what it is, who it's for (ACT students), who built it (a 16-year-old, solo). |
 | 0:20 | `/act`. | "This is what ACT prep does today and, in plain words, what it doesn't do yet: no timing, no real-format questions, no score prediction. No results yet." |
-| 0:40 | Sign in as Riley. `/dashboard`: **Your subjects**, **Recent sessions**, **Due for review**. | "Everything here comes from what Riley actually answered." |
+| 0:40 | Sign in as Riley. `/dashboard`: **Your subjects**, **Recent sessions**, **Review: N skills due**. | "Everything here comes from what Riley actually answered." |
 | 1:00 | Open the ACT Prep session (**Continue**). Answer two questions, one wrong. | Level, 75% to master a skill, what happens on a miss. |
 | 1:40 | Tap **Ask tutor**. Ask something about the question on screen. Optionally switch **Type** to **Talk**, tap **Speak**, talk (pauses are fine), then tap **Send**. | "The tutor sees the page and the learner's goal. On timed or graded pages it only gives hints about method." |
 | 2:00 | `/my-material`: paste a paragraph of notes, tap **Make a course**, then **Study** once it is ready. | "A learner can turn their own notes into a course taught with the same engine. Their file is private to them and deletable. Needs a live model key to build." |

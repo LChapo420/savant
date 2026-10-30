@@ -21,7 +21,7 @@ check('home page exists', fs.existsSync(path.join(ROOT, 'public/index.html')));
 console.log('quoted labels are in the code');
 const js = (f) => read(`public/js/${f}`);
 const dash = js('dashboard.js');
-for (const label of ['Your subjects', 'Recent sessions', 'Due for review']) {
+for (const label of ['Your subjects', 'Recent sessions', 'skills due']) {
   check(`dashboard has "${label}"`, doc.includes(`**${label}**`) && dash.includes(label));
 }
 check('dashboard has "Start level"', dash.includes('Start level') && doc.includes('Start level N'));
