@@ -13,13 +13,17 @@ App.mount(async () => {
   let tab = 'summary';
   const flipped = new Set();
   const marked = {}; // section -> graded result
+  let mine = false;  // only what I still need (quiz and test)
+  let skipped = 0;
+  let shown = null;
 
   const fail = (err) => { root.innerHTML = `<div class="notice notice-error">${esc(err.message)}</div><p><a href="/my-material">Back to my material</a></p>`; };
 
   async function load() {
     let out;
-    try { out = await App.api.get(base); } catch (err) { return fail(err); }
+    try { out = await App.api.get(mine ? `${base}?adapt=1` : base); } catch (err) { return fail(err); }
     pack = out.pack;
+    shown = out.shown || null; skipped = out.skipped_known || 0;
     if (!pack || pack.status === 'building') {
       root.innerHTML = `<p class="small"><a href="/my-material">&larr; My material</a></p><h1>Study pack</h1><div class="loading"><span class="spinner"></span>${pack ? 'Building your study pack. You can leave this page.' : 'No pack yet.'}</div>`;
       if (pack) setTimeout(load, 4000);
@@ -50,9 +54,10 @@ App.mount(async () => {
 
   function section(name) {
     const items = pack[name];
-    if (!items.length) return '<p class="muted">Nothing in this part passed the checks for this material.</p>';
+    const pick = `<p class="small"><label><input type="checkbox" id="mine"${mine ? ' checked' : ''}> Only what I still need${mine && skipped ? ` (${skipped} on skills you already know left out)` : ''}</label></p>`;
+    if (!items.length) return `${pick}<p class="muted">${mine ? 'Nothing left here: you already know the skills these questions cover. Untick the box to see them all.' : 'Nothing in this part passed the checks for this material.'}</p>`;
     const res = marked[name];
-    return `<form id="sec-form" class="card"><ol style="padding-left:18px;margin:0">${items.map((q, i) => questionHtml(name, q, i)).join('')}</ol>
+    return `${pick}<form id="sec-form" class="card"><ol style="padding-left:18px;margin:0">${items.map((q, i) => questionHtml(name, q, i)).join('')}</ol>
       ${res ? `<p><strong>${res.right} of ${res.marked} marked answers right.</strong> Written answers are for you to check.</p><button class="btn" type="button" id="again">Try again</button>`
     : `<button class="btn btn-primary" type="submit">Check my answers</button>`}</form>`;
   }
@@ -80,6 +85,8 @@ App.mount(async () => {
       <div id="tab-body">${body()}</div>`;
     root.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => { tab = b.dataset.tab; render(); }));
     root.querySelectorAll('[data-card]').forEach((b) => b.addEventListener('click', () => { const k = b.dataset.card; if (flipped.has(k)) flipped.delete(k); else flipped.add(k); render(); }));
+    const mineBox = document.getElementById('mine');
+    if (mineBox) mineBox.addEventListener('change', () => { mine = mineBox.checked; delete marked.quiz; delete marked.test; load(); });
     const form = document.getElementById('sec-form');
     if (form) {
       const again = document.getElementById('again');
@@ -91,7 +98,7 @@ App.mount(async () => {
           if (q.type === 'multiple_choice') { const c = form.querySelector(`input[name="${q.id}"]:checked`); if (c) answers[q.id] = Number(c.value); }
           else { const f = form.querySelector(`[name="${q.id}"]`); if (f && f.value.trim()) answers[q.id] = f.value; }
         });
-        try { marked[tab] = await App.api.post(`${base}/grade`, { section: tab, answers }); render(); } catch (err) { App.toast(err.message, 'error'); }
+        try { marked[tab] = await App.api.post(`${base}/grade`, { section: tab, answers, only: shown || undefined }); render(); } catch (err) { App.toast(err.message, 'error'); }
       });
     }
     return null;

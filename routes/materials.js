@@ -22,7 +22,7 @@
  *   POST   /api/materials/:id/study/placement      { question, answer } then the next question or the result
  *   POST   /api/materials/:id/study/quiz           { mode: mastery|review, skill? } one-shot quiz, no answers
  *   POST   /api/materials/:id/pack     start building the study pack (summary, flashcards, quiz, practice test; 202)
- *   GET    /api/materials/:id/pack     the pack's status and content (no answer keys)
+ *   GET    /api/materials/:id/pack     the pack's status and content (no answer keys); ?adapt=1 leaves out quiz/test items on skills you already know
  *   POST   /api/materials/:id/notes        start making whole-material notes (202); GET returns them with quotes and coverage
  *   GET    /api/materials/:id/podcast      the overview and weak-spots episodes (script only) and which weak spots there are
  *   POST   /api/materials/:id/podcast      { kind: overview|weak } start writing an episode script (202)
@@ -210,12 +210,16 @@ router.post('/:id/pack', requireAuth, limit('materials-pack', 6, 60 * 60 * 1000)
 
 router.get('/:id/pack', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
+  if (req.query.adapt === '1') {
+    const mine = packs.forLearner(req.user.id, req.params.id);
+    return res.json(mine ? { pack: mine.pack, shown: mine.ids, skipped_known: mine.skipped_known } : { pack: null });
+  }
   res.json({ pack: packs.view(packs.get(req.user.id, req.params.id)) });
 });
 
 router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-grade', 120, 60 * 60 * 1000), express.json({ limit: '64kb' }), (req, res) => {
   const b = req.body || {};
-  const out = packs.grade(req.user.id, req.params.id, String(b.section || ''), b.answers);
+  const out = packs.grade(req.user.id, req.params.id, String(b.section || ''), b.answers, Array.isArray(b.only) ? b.only.slice(0, 200).map(String) : undefined);
   if (out.error) return res.status(out.code === 'no_pack' ? 404 : 400).json({ error: out.error, code: out.code });
   res.json(out);
 });

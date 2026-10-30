@@ -21,6 +21,7 @@ const db = require('../config/db');
 const materials = require('./materials');
 const courses = require('./course-builder');
 const study = require('./material-study');
+const adapt = require('./material-adapt');
 
 const VERSION = 1;
 const PART_CHARS = 9000;             // characters of passage text shown to one call
@@ -282,17 +283,40 @@ const publicItem = (q) => {
 };
 
 /** What the learner may see: the summary and the cards in full (they are the study aids), the questions without keys. */
-function view(p) {
+function view(p, only) {
   if (!p) return null;
+  const keep = (list) => (only ? list.filter((q) => only.has(q.id)) : list);
   const stale = p.status === 'building' && Date.now() - Date.parse(p.started_at) > STALE_BUILD_MS && !inflight.has(`${p.user_id}:${p.material_id}`);
   return {
     material_id: p.material_id, title: p.title, status: stale ? ((p.cards || []).length ? 'partial' : 'failed') : p.status,
     summary: p.summary || [],
     cards: (p.cards || []).map((c) => ({ id: c.id, front: c.front, back: c.back, quote: c.quote })),
-    quiz: (p.quiz || []).map(publicItem),
-    test: (p.test || []).map(publicItem),
+    quiz: keep(p.quiz || []).map(publicItem),
+    test: keep(p.test || []).map(publicItem),
     built_at: p.finished_at || null,
   };
+}
+
+/**
+ * The pack for THIS learner (S12c): quiz and test items whose skill the learner already knows (mastered, not due, nothing
+ * missed, see material-adapt.js) are left out; an item is tied to the first course skill that cites its passage, and an
+ * item no skill cites is always kept. A skill the learner does not know is never left without its items. Returns
+ * { pack, ids, skipped_known } where ids is the list of item ids shown (pass it to grade).
+ */
+function forLearner(userId, materialId, now = Date.now()) {
+  const p = row(userId, materialId);
+  if (!p) return null;
+  const course = courses.get(userId, materialId);
+  const prog = db.findOne('material_progress', (r) => r.user_id === userId && r.material_id === Number(materialId));
+  const known = new Set(course ? adapt.plan(course, prog, now).skipped : []);
+  const skillOf = (pid) => { const s = ((course && course.skills) || []).find((x) => (x.passage_ids || []).includes(pid)); return s ? s.id : null; };
+  const ids = new Set();
+  let skipped = 0;
+  for (const q of [...(p.quiz || []), ...(p.test || [])]) {
+    const sk = skillOf(q.passage_id);
+    if (sk && known.has(sk)) skipped++; else ids.add(q.id);
+  }
+  return { pack: view(p, ids), ids: [...ids], skipped_known: skipped };
 }
 
 /**
@@ -300,14 +324,16 @@ function view(p) {
  * Multiple choice and fill-in are marked; a written item is not marked, it comes back with the model answer and the
  * key points for the learner to check against. Nothing here changes the learner model.
  */
-function grade(userId, materialId, section, answers) {
+function grade(userId, materialId, section, answers, only) {
   const p = row(userId, materialId);
   if (!p || !['ready', 'partial'].includes(p.status)) return { error: 'There is no study pack for this material yet.', code: 'no_pack' };
   if (section !== 'quiz' && section !== 'test') return { error: 'Choose the quiz or the practice test.', code: 'bad_section' };
   const given = answers && typeof answers === 'object' ? answers : {};
   const results = [];
   let right = 0; let marked = 0;
+  const shown = Array.isArray(only) ? new Set(only) : null; // the adapted pack: items not shown are not marked
   for (const q of p[section] || []) {
+    if (shown && !shown.has(q.id)) continue;
     const a = Object.prototype.hasOwnProperty.call(given, q.id) ? given[q.id] : null;
     if (q.type === 'written') {
       results.push({ id: q.id, type: 'written', answered: typeof a === 'string' && !!a.trim(), model_answer: q.answer, key_points: q.key_points, quote: q.quote, explanation: q.explanation });
@@ -326,4 +352,4 @@ function removeForMaterial(userId, materialId) {
   return db.remove('material_packs', (c) => c.user_id === userId && c.material_id === Number(materialId));
 }
 
-module.exports = { VERSION, TOKEN_BUDGET, partsOf, groundQuote, cleanCard, cleanItem, build, view, grade, get, removeForMaterial };
+module.exports = { VERSION, TOKEN_BUDGET, partsOf, groundQuote, cleanCard, cleanItem, build, view, forLearner, grade, get, removeForMaterial };
