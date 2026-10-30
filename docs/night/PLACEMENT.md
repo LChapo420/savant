@@ -78,7 +78,7 @@ P4. [done cdd574a] **Adaptive stopping.** Stop when the level estimate is precis
 P5. [done cdd574a] **Content gaps.** Subjects whose item sets can't meet P4: write each as a `[local only]` item naming the
     levels and how many items are needed, so the owner's agent can generate and check them with the content
     pipeline.
-P6. **Honest result screen.** After placement, show the placed level and what it is based on (how many questions,
+P6. [claimed 07:54Z] **Honest result screen.** After placement, show the placed level and what it is based on (how many questions,
     how sure), and a one-tap "this is too easy / too hard" that moves the learner and is recorded.
 
 P5b. [local only] **IQ and ACT top end, measured.** With abilities spread across the grade, Quick IQ places 90% / 93% / 80% within one
