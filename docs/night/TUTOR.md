@@ -1,0 +1,73 @@
+# Night build: the site-wide tutor that remembers and understands each learner
+
+Branch: `tutor-memory` (created from `main`). Owner's ask (30 Oct): the tutor on every page must remember
+everything about the learner and understand how they learn, so it can help with any problem without giving the
+answer away, backed by evidence.
+
+Read first: `services/tutor.js`, `services/tutor-context.js`, `services/tutor-screen.js`, `services/learner-record.js`,
+`services/learner.js`, `services/scorecard*.js`, `routes/tutor.js`, `public/js/tutor-dock.js`,
+`curriculum-build/evidence-article/06-always-on-tutor.md` (its mechanisms are the spec), and
+`03-scorecard-adaptation.md`.
+
+## How a run works (every night builder)
+
+1. `git fetch origin`, check out this file's branch, `git pull --rebase`. Then `npm ci` (or `npm install`).
+2. Read this whole file. Take the first item under **Queue** that is not `[claimed …]`, `[done]` or `[local only]`.
+   Mark it `[claimed <UTC time>]`, commit and push that one line first, so two runs never take the same item.
+3. Read every file the item names before changing anything. Build it fully, with tests. Add each new test to
+   `scripts/test-steps.json`.
+4. Run `npm test`. It must pass before you push. If an unrelated test breaks, fix it only if the fix is small and
+   obviously right; otherwise write it under **Blocked** and stop.
+5. Mark the item `[done <commit>]` with one line on how it was checked. Put leftovers back in the Queue as their
+   own item. Add anything you discovered, with a reason. Commit and push this branch only.
+6. If an item is too big for one run, finish a working, tested first slice and split the rest.
+
+## Rules that never bend
+
+- Push only to this file's branch. Never push to, merge into, or open a PR against `main`, `yc-next` or another
+  branch. The owner's local agent verifies with real models and a browser, then merges.
+- The rules in `git show origin/yc-next:docs/yc/BACKLOG.md` ("Rules that never bend") apply in full: sealed
+  Spanish test files are never edited; no secrets, `.env` or `data/`; no paid provider outside the existing
+  ledgers and never OpenRouter; honesty (no invented numbers, users or quotes).
+- Model calls only through `services/ai.js` / `services/pool.js`, learner-class providers for anything that
+  carries learner data. You have no keys: tests use the existing mocks. No new outside AI or speech vendor.
+  Local open-source libraries that run on the owner's machine are fine.
+- Evidence: every design choice that claims to help learning cites a mechanism id from
+  `curriculum-build/evidence-article/*.md` (for example `06-M3`). A claim with no mechanism there goes to
+  `docs/yc/SOURCES-TO-VERIFY.md` marked **UNVERIFIED**, with the search terms to check it. The owner's local agent
+  verifies those with the article pipeline.
+- Learner data is per learner, private, exported and deleted for real (`routes/profile.js` export and delete
+  paths). Update `public/privacy.html` for any new data flow.
+- Match the code around you (Node/Express, vanilla JS, existing CSS variables). Every page works at 375 px.
+- "Proven" means a test or simulation in `scripts/` that fails if the claim stops being true, not prose.
+
+## Queue
+
+T1. **Memory map.** Write `docs/TUTOR-MEMORY.md`: everything the tutor is given today per learner (running summary,
+    turns, learner record, scorecard, goals, mastery), where each comes from, what is lost (for example: turns cut
+    off, facts never extracted), and the gap list against the 06 mechanisms, by id. No code beyond small fixes.
+T2. **Long-term learner memory.** A per-learner store of durable facts:
+    - goals and deadlines; misconceptions (with the skill, the wrong answer and how often); what explanation worked
+      (the style the learner got right right after); what they find hard; interests and context they chose to share.
+    - Extracted after a tutor turn by a learner-class model through `services/ai.js` (mocked in tests). Deduplicated,
+      capped, each fact with its source turn and date; facts not confirmed for a long time fade.
+    - The learner can see and delete each fact on the Profile ("What your tutor remembers"). Export and account
+      deletion include it. Update the privacy page.
+T3. **Use it in every reply.** In `tutor-context.js`, pick the facts relevant to this page and question (skill
+    match, recency, strength) within a fixed token budget, plus current mastery on the page's skill. Test: a
+    misconception recorded on day 1 shapes the hint on day 5 on a related skill; an unrelated fact is not sent.
+T4. **Understands how they learn.** Choose the explanation strategy (worked example, analogy, step questions,
+    visual description, short vs long) from what has worked for this learner (T2 facts and scorecard signals), with
+    a fallback order from the 06 mechanisms. Test with two simulated learners with opposite histories: they get
+    different strategies, and each strategy that fails is tried less.
+T5. **Never gives the answer away.** An eval of 40 attempts to extract answers (just tell me, role-play, "my teacher
+    said", partial-answer fishing, multi-turn wearing down) on graded, test and lesson pages. Script runs against
+    the mock and checks the guard logic (`saysAnswer` and the mode rules). Mark a follow-up `[local only]` item to
+    run it against the real model.
+T6. **Fast.** Context building stays under 30 ms for a learner with 5,000 events (test with a generated history);
+    the reply path makes one model call.
+T7. `[local only]` Real-model run of T5 and a 20-turn memory conversation on NVIDIA; the owner's agent does this.
+
+## Blocked
+
+## Done
