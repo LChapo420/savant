@@ -50,7 +50,7 @@ P1. [done e9900ef] **Simulation harness.** `scripts/placement-sim.js`: simulated
     Checked: `npm test` passes with `scripts/placement-sim-test.js` (fixed seed, floor and ceiling within 1 grade).
 P2. [claimed 2026-10-30T06:43Z] **Floor.** A learner who knows nothing places at the very start, not in the middle because of lucky guesses:
     an "I don't know" choice on every item, correction for guessing, and an early stop at the floor.
-P3. **Ceiling.** A learner who knows everything places at the top or tests out, confirmed by top-level items,
+P3. [claimed 2026-10-30T06:58Z] **Ceiling.** A learner who knows everything places at the top or tests out, confirmed by top-level items,
     never stuck mid-way. Where a ladder has too few hard items to tell, list it in P5.
 P4. **Adaptive stopping.** Stop when the level estimate is precise enough (standard error under a threshold),
     with confirmation items near the boundary. Target, proven by P1 for every subject: at most one level off for
