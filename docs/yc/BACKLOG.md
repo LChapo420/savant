@@ -100,9 +100,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    real browser, signed in (a cloud run has no session; do it on the owner's machine or with a seeded demo login).
 4. **Link the ACT page.** Add `/act` to the home page and header once the owner approves the wording (the track blurb in `config/curriculum.js` still says "under the timing the real test imposes", which the app does not do; fix with item 1).
 5b. **DONE, see Done.** (Funnel on the admin metrics page.)
-6. **[claimed 2026-10-30 00:16Z]** **Test-date plan** (item 4): from the test date and section scores, choose the skills with the most points
-   available in the weakest sections and lay out a fixed number of sessions that fits the weeks left, with
-   review timed to peak at the test date. Reuse placement, mastery and the retention scheduler.
+6. **Test-date plan: DONE, see Done.** (Leftovers 6b below.)
+6b. **Test-date plan, leftovers.** (1) Look at the Your plan card at 375 px signed in (cloud run has no session). (2) Link each plan session to a real practice session (today it names the skills; opening the skill from the card is not built). (3) Re-plan from fresh mastery after each session and show "today's session" on the home page once the owner approves the wording. (4) Session counts (4 a week, 30 min) are one config object in `services/act-plan.js` with no evidence behind them yet; the owner should confirm them.
 7. **Real section timer** (item 5) for Timed Tasks and Finals, with pacing feedback. Section lengths are
    UNVERIFIED until checked on act.org: make them one config object and flag them.
 8. **ACT-format English player** (item 6): passages with numbered underlined portions and "NO CHANGE"
@@ -137,6 +136,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-30: **Test-date plan** (item 6; commit in this push). `services/act-plan.js` (pure; config object at the top): from the test date, target, latest section scores and `skill_states` mastery it ranks the 37 ACT skills by section gap times what is not yet mastered (Science half weight, its composite role is UNVERIFIED), orders them so weak sections are worked in turn, and lays out about 4 sessions a week to the test: learn, then spaced reviews (1, 3, 7, 14 days), review only in the last 7 days, a rest day before the test. `GET /api/act/plan` (`routes/act.js`) and a "Your plan" card on `/act-scores` (`public/js/act-scores.js`). It suggests an order, it predicts no score. Checked: new `scripts/act-plan-test.js` (26 checks, in `npm test`: ordering, no repeats, reviews follow teaching, mastered skills skipped, short and long runways, route isolation per learner, page wiring); full `npm test` passed (All steps passed). Not looked at in a real browser.
 
 - 2026-10-29: **Tutor sees the Spanish quick-game, story, dictation and talk boards** (item 0c(c), seventh slice; commit in this push). `ES.board.set()` in `public/spanish/js/core/session.js`; `play.js` and `learn.js` set the level's kind and title, quick games add their rule and live score/right/missed, talk adds goals reached. Falls back only when no session exercise is on screen. Sends no item text, no answers (listening games and dictation can't leak). Checked: 3 new checks in `scripts/tutor-dock-test.js` (script run in a stub: empty before set, title/rule/progress after, wiring) and full `npm test` ("All steps passed"). Not looked at in a real browser.
 

@@ -46,6 +46,20 @@ App.mount(async () => {
     return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(label)}" style="color:var(--ink-2);max-width:560px">${g}</svg><div>${legend}</div>`;
   }
 
+  let planData = null;
+  try { planData = await App.api.get('/api/act/plan'); } catch (_) { planData = null; }
+
+  const KIND = { learn: 'Learn', review: 'Review', rest: 'Rest', test: 'Test day' };
+  function planCard() {
+    const pl = planData;
+    if (!pl) return '';
+    if (pl.status !== 'ok') return `<div class="card" style="margin-top:18px"><h2>Your plan</h2><p class="muted">${esc(pl.reason || '')}</p></div>`;
+    const rows = pl.sessions.map((s) => `<li class="row-between row-wrap" style="padding:6px 0"><span><strong>${esc(s.date.slice(5))}</strong> · ${KIND[s.kind]}${s.skills.length ? `: ${s.skills.map((k) => esc(k.name)).join(', ')}` : ''}</span>${s.minutes ? `<span class="tiny muted">${s.minutes} min</span>` : ''}</li>`).join('');
+    return `<div class="card" style="margin-top:18px"><h2>Your plan</h2>
+      <p class="muted">${pl.session_count} sessions of about ${pl.sessions.find((s) => s.minutes)?.minutes || 30} minutes in ${pl.weeks_left} weeks: new skills first, reviews spaced out, only review in the last week, and a rest day before the test. Skills go to your weakest sections first. It is a suggested order, not a predicted score.${pl.unreached ? ` ${pl.unreached} more skills will not fit before your test.` : ''}</p>
+      <ul style="list-style:none;padding:0;margin:0">${rows}</ul></div>`;
+  }
+
   function render() {
     const p = data.profile;
     const days = data.days_to_test;
@@ -62,6 +76,7 @@ App.mount(async () => {
         <button class="btn btn-primary" type="button" id="save-profile">Save</button>
         <p class="small muted" id="profile-note">${esc([countdown, gap].filter(Boolean).join(' '))}</p>
       </div>
+      ${planCard()}
       <div class="card" style="margin-top:18px"><h2>Your scores</h2>${chart(data.scores)}</div>
       <div class="card" style="margin-top:18px">
         <h2>Add a test</h2>
@@ -80,6 +95,7 @@ App.mount(async () => {
     document.getElementById('save-profile').addEventListener('click', async () => {
       try {
         data = await App.api.post('/api/act/profile', { test_date: document.getElementById('test-date').value.trim() || null, target: num('target') });
+        try { planData = await App.api.get('/api/act/plan'); } catch (_) { planData = null; }
         render();
         App.toast('Saved.', 'ok');
       } catch (err) { App.toast(err.message, 'error'); }
@@ -89,6 +105,7 @@ App.mount(async () => {
         english: num('s-english'), math: num('s-math'), reading: num('s-reading'), science: num('s-science') };
       try {
         data = await App.api.post('/api/act/scores', body);
+        try { planData = await App.api.get('/api/act/plan'); } catch (_) { planData = null; }
         render();
         App.toast('Added.', 'ok');
       } catch (err) { document.getElementById('add-note').textContent = err.message; }
