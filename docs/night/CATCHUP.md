@@ -51,7 +51,7 @@ C1. [done ed7f227] **Subject-agnostic engine.** Move the Spanish catch-up logic 
 C2. [done da1cf8a, first slice; rest split into C2b, C2c] **Every digital subject.** List the app's subjects and which have the skill graph and items catch-up needs (for
     example math, reading, English, ACT sections, science, Spanish). Wire "Catch me up to grade N" on each ready
     subject's page. Subjects that lack content get a `[local only]` item naming exactly what is missing.
-C2b. **Wire math, english, reading into the pages.** The service and API exist (`services/catchup-units.js`,
+C2b. [claimed 2026-10-30 06:33Z] **Wire math, english, reading into the pages.** The service and API exist (`services/catchup-units.js`,
     `/api/catchup/:track/:grade`, tested). Still to do: (1) call `catchupUnits.onLevelPassed({userId, trackId, gradeId, level})`
     from the lesson-level completion path in `routes/learn.js` so a played level ticks its block; (2) let the player open a
     catch-up level that is behind the enrollment's `current_level` (see `mayOpenLevel`, as Spanish's `allowsLevel` does);
