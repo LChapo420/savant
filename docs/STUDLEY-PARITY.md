@@ -48,3 +48,7 @@ local agent verifies with real models and a browser (backlog S3b, S4b, S5b, S6b,
 - **Real-model and real-browser checks:** S3b, S4b, S5b, S6b leftovers in `docs/yc/BACKLOG.md`.
 - **S7 on a phone:** install it from Chrome on Android and Safari on iPhone ("Add to Home Screen"), check the icon,
   the standalone window, and that an offline reload shows the offline page. Not done here (no device).
+
+## Optimal for each learner (S12, first slice)
+
+`services/material-adapt.js` reads the learner's progress row and says what each skill needs: known (mastered, not due: skipped), due (the learner's own review clock), fix (missed questions or remediation, first), learning, or new. The practice test's "Pick for me" option (`adapt: true`) uses it: it asks only about skills that are not known, sizes the test by need, puts missed questions first and asks at or above the skill's tier. Mechanisms: 07-M3 (placement skip), 07-M4 (tiers), 07-M6 (wrong answers return), 07-M9 (spacing). Proof: `scripts/material-adapt-test.js` (200 simulated learners: no unknown skill is skipped, no known, not-due skill is asked, a learner who knows half is asked half as much). No new data is stored, so the privacy text is unchanged. Not yet wired into: flashcard picks beyond their own schedule, the study pack's quiz section, the podcast "weak spots" cut (S12b).

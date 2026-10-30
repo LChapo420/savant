@@ -27,7 +27,7 @@
  *   POST   /api/materials/:id/podcast      { kind: overview|weak } start writing an episode script (202)
  *   POST   /api/materials/:id/pack/grade   { section: quiz|test, answers } marked on the server
  *   GET    /api/materials/:id/test         what a practice test can be made of (skills, lengths) and the last results
- *   POST   /api/materials/:id/test         { skills, length, timed } start a practice test (questions without keys)
+ *   POST   /api/materials/:id/test         { skills, length, timed, adapt } start a practice test (questions without keys); adapt: only what the learner does not know, is due or missed
  *   POST   /api/materials/:id/test/submit  { test_id, answers } graded on the server; feeds the learner model
  *   GET    /api/materials/:id/cards        the flashcard deck (pack cards, your misses, your own) with what is due
  *   GET    /api/materials/:id/cards/due    the cards due now
@@ -272,7 +272,7 @@ router.post('/:id/study/submit', requireAuth, ownMaterial, limit('materials-subm
 router.get('/:id/test', requireAuth, ownMaterial, (req, res) => studyReply(res, practiceTest.options(req.user.id, req.params.id)));
 router.post('/:id/test', requireAuth, ownMaterial, limit('materials-test', 30, 60 * 60 * 1000), studyBody, (req, res) => {
   const b = req.body || {};
-  studyReply(res, practiceTest.start(req.user.id, req.params.id, { skills: b.skills, length: b.length, timed: b.timed === true }));
+  studyReply(res, practiceTest.start(req.user.id, req.params.id, { skills: b.skills, length: b.length, timed: b.timed === true, adapt: b.adapt === true }));
 });
 router.post('/:id/test/submit', requireAuth, ownMaterial, limit('materials-test-submit', 30, 60 * 60 * 1000), studyBody, async (req, res) => {
   const b = req.body || {};

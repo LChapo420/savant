@@ -23,6 +23,7 @@ const crypto = require('crypto');
 const study = require('./material-study');
 const path = require('./material-path');
 const typed = require('./typed-grading');
+const adapt = require('./material-adapt');
 
 const I = study.internals;
 const MIN_LEN = 3;
@@ -65,10 +66,22 @@ function start(userId, materialId, opts = {}) {
   if (!skills.length) return { error: 'The skills you picked have no questions.', code: 'empty' };
 
   const n = Number.isFinite(Number(opts.length)) ? Math.round(Number(opts.length)) : DEFAULT_LEN;
-  const want = Math.min(MAX_LEN, Math.max(MIN_LEN, n));
+  let want = Math.min(MAX_LEN, Math.max(MIN_LEN, n));
+  // "Pick for me" (S12): only what this learner does not know yet, due, or missed, sized by how much that is.
+  let planned = null;
+  if (opts.adapt) {
+    const pl = adapt.plan(course, r, now);
+    const allowed = new Set(skills.map((s) => s.id));
+    const mine = pl.skills.filter((e) => allowed.has(e.id));
+    if (!mine.length) return { error: 'Nothing needs practice right now. You know these skills and none is due for review.', code: 'nothing_due', next_due: pl.next_due };
+    planned = new Map(mine.map((e) => [e.id, e]));
+    skills = skills.filter((s) => planned.has(s.id));
+    if (!Number.isFinite(Number(opts.length))) want = Math.min(MAX_LEN, Math.max(MIN_LEN, mine.reduce((t, e) => t + e.items, 0)));
+  }
   // Per skill: missed questions first, then the rest in a random order. Then take one from each skill in turn.
   const queues = I.shuffle(skills, rnd).map((s) => {
     const wrong = new Set((r.skills[s.id] || {}).wrong || []);
+    if (planned) return adapt.pickFor(s, planned.get(s.id), [...wrong], rnd).map((q) => [s.id, q.id]);
     const qs = I.shuffle(s.questions, rnd);
     return qs.filter((q) => wrong.has(q.id)).concat(qs.filter((q) => !wrong.has(q.id))).map((q) => [s.id, q.id]);
   });

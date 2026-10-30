@@ -29,6 +29,7 @@ App.mount(async () => {
           ${usable.map((s) => `<label class="field" style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="skill" value="${esc(s.id)}" checked> <span>${esc(s.title)} <span class="tiny muted">${s.questions} questions</span></span></label>`).join('')}
         </fieldset>
         <label class="field"><strong>Length</strong> <input type="number" name="length" min="${o.min}" max="${o.max}" value="${o.default}" inputmode="numeric" style="width:5em"> questions</label>
+        <label class="field" style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="adapt"> <span>Pick for me: skip skills I know, add ones that are due or I missed (sets the length)</span></label>
         <label class="field" style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="timed"> <span>Timed (about ${o.seconds_per_question} seconds a question)</span></label>
         <button class="btn btn-primary" type="submit">${o.open ? 'Start a new test' : 'Start the test'}</button>
       </form>${hist}`;
@@ -38,7 +39,7 @@ App.mount(async () => {
       const skills = [...f.querySelectorAll('input[name="skill"]:checked')].map((c) => c.value);
       if (!skills.length) { App.toast('Pick at least one skill.', 'error'); return; }
       try {
-        const t = await App.api.post(base, { skills, length: Number(f.length.value), timed: f.timed.checked });
+        const t = await App.api.post(base, f.adapt.checked ? { skills, adapt: true, timed: f.timed.checked } : { skills, length: Number(f.length.value), timed: f.timed.checked });
         run(t);
       } catch (err) { App.toast(err.message, 'error'); }
     });
