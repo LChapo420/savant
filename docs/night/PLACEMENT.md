@@ -51,7 +51,7 @@ P1. [done e9900ef] **Simulation harness.** `scripts/placement-sim.js`: simulated
 P2. [done bd54139] **Floor.** A learner who knows nothing places at the very start, not in the middle because of lucky guesses:
     an "I don't know" choice on every item, correction for guessing, and an early stop at the floor.
     Checked: `npm test`; sim floor tests (guessers placed at grade 1 in <=25 questions, "I don't know" learners in <=8, 6 on English; was 21) in `scripts/placement-sim-test.js`; empty answer stored as idk (`scripts/adaptive-placement-test.js`, now in test-steps). The UI already had an "I don't know" button on every item (sends an empty answer). Unverified reading of the idk likelihood: `docs/night/PLACEMENT-UNVERIFIED.md`. Not done: baseline table not regenerated (kept as the before-fixes record); P4 will write the after table.
-P3. [done 9c461f7] **Ceiling.** A learner who knows everything places at the top or tests out, confirmed by top-level items,
+P3. [done 585854c] **Ceiling.** A learner who knows everything places at the top or tests out, confirmed by top-level items,
     never stuck mid-way. Where a ladder has too few hard items to tell, list it in P5.
     Checked: `scripts/placement-ceiling-test.js` (proof, stop gate, sim at 30 seeds: math, English, Reading, ACT place
     "knows everything" exactly and 98% within 1 grade of the top >= 95%). Mechanism: ceiling gate in
