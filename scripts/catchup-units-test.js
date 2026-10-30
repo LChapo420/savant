@@ -64,6 +64,10 @@ for (const trackId of cu.TRACKS) {
       const sk = cu.skillByKey(trackId, b.key);
       const nxt = cu.nextLevel(u.id, trackId, target);
       assert.ok(!nxt.error && nxt.level === sk.levels[0], nxt.error);
+      const enr = db.byId('enrollments', nxt.enrollment_id);
+      assert.ok(cu.allowsLevel(u.id, enr, sk.levels[0]), 'the block level opens');
+      assert.ok(!cu.allowsLevel(u.id, enr, sk.levels[sk.levels.length - 1] + 1), 'a level outside the block does not');
+      assert.ok(!cu.allowsLevel(u.id, { ...enr, track_id: 'chess' }, sk.levels[0]), 'another subject does not');
       for (const l of sk.levels) assert.ok(cu.onLevelPassed({ userId: u.id, trackId, gradeId: sk.grade_id, level: l, now: Date.parse('2026-11-01T00:00:00Z') }));
     }
     v = cu.view(u.id, trackId, target);

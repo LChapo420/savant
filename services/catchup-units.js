@@ -185,6 +185,13 @@ function nextLevel(userId, trackId, targetGradeId, now = Date.now()) {
   return { enrollment_id: e.id, level: pos.level, k: pos.k, n: pos.n, skill: skill.title, grade: gradeLabel(trackId, skill.grade_id) };
 }
 
+/** May the learner open this level? Yes when it is in a catch-up block (math/english/reading) not yet done. */
+function allowsLevel(userId, enrollment, level) {
+  if (!enrollment || !TRACKS.includes(enrollment.track_id)) return false;
+  return db.find(COLL, (r) => r.user_id === userId && r.track_id === enrollment.track_id && r.phase === 'route' && r.version === VERSION)
+    .some((r) => r.blocks.some((b) => b.status !== 'done' && b.key.split('|')[0] === enrollment.grade_id && b.levels.includes(Number(level))));
+}
+
 /** The subject's player passed a level. Ticks it in the block it belongs to; a finished block dates its reviews. */
 function onLevelPassed({ userId, trackId, gradeId, level, now = Date.now() }) {
   const rows = db.find(COLL, (r) => r.user_id === userId && r.track_id === trackId && r.phase === 'route' && r.version === VERSION);
@@ -233,4 +240,4 @@ function view(userId, trackId, targetGradeId, now = Date.now()) {
   return out;
 }
 
-module.exports = { TRACKS, VERSION, MAX_PER_SKILL, MIN_QUESTIONS, MASTERY, REVIEW_DAYS, gradesBelow, skillsOfGrade, skillByKey, questionsFor, readiness, subjectsReport, start, answer, nextLevel, onLevelPassed, view, engineFor };
+module.exports = { TRACKS, VERSION, MAX_PER_SKILL, MIN_QUESTIONS, MASTERY, REVIEW_DAYS, gradesBelow, skillsOfGrade, skillByKey, questionsFor, readiness, subjectsReport, allowsLevel, start, answer, nextLevel, onLevelPassed, view, engineFor };
