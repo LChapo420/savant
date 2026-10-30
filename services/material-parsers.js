@@ -173,7 +173,69 @@ async function fromEpub(buf) {
   return { text: normalise(parts.join('\n\n')), pages: order.length };
 }
 
-/** XLSX: every sheet as "Sheet name" then one tab-joined row per line (shared strings resolved). */
+/** What a number format shows, so date-formatted cells can be written as dates: { kind, seconds } or null. */
+const BUILTIN_DATE_FORMATS = {
+  14: { kind: 'date' }, 15: { kind: 'date' }, 16: { kind: 'date' }, 17: { kind: 'date' },
+  18: { kind: 'time' }, 19: { kind: 'time', seconds: true }, 20: { kind: 'time' }, 21: { kind: 'time', seconds: true },
+  22: { kind: 'datetime' },
+  45: { kind: 'time', seconds: true }, 46: { kind: 'time', seconds: true }, 47: { kind: 'time', seconds: true },
+};
+
+function formatKind(code) {
+  const plain = String(code)
+    .replace(/"[^"]*"/g, ' ')
+    .replace(/\[[^\]]*\]/g, (m) => (/^\[(?:h+|m+|s+)\]$/i.test(m) ? m.slice(1, -1) : ' '))
+    .replace(/\\./g, ' ')
+    .replace(/am\/pm|a\/p/gi, ' ')
+    .toLowerCase();
+  const hasDate = /[yd]/.test(plain) || (/m/.test(plain) && !/[hs]/.test(plain));
+  const hasTime = /[hs]/.test(plain);
+  if (!hasDate && !hasTime) return null;
+  return { kind: hasDate && hasTime ? 'datetime' : hasDate ? 'date' : 'time', seconds: /s/.test(plain) };
+}
+
+/** The date format of each cellXfs style, by cell "s" index; null for ordinary cells. */
+async function xlsxDateStyles(zip) {
+  const f = zip.file('xl/styles.xml');
+  if (!f) return [];
+  const xml = await f.async('string');
+  const custom = {};
+  for (const m of xml.match(/<numFmt\b[^>]*>/g) || []) {
+    const id = Number((m.match(/\bnumFmtId="(\d+)"/) || [])[1]);
+    const code = (m.match(/\bformatCode="([^"]*)"/) || [])[1];
+    if (id && code !== undefined) custom[id] = formatKind(unxml(code));
+  }
+  const xfs = ((xml.match(/<cellXfs\b[\s\S]*?<\/cellXfs>/) || [''])[0].match(/<xf\b[^>]*>/g) || []);
+  return xfs.map((xf) => {
+    const id = Number((xf.match(/\bnumFmtId="(\d+)"/) || [])[1] || 0);
+    return custom[id] !== undefined ? custom[id] : BUILTIN_DATE_FORMATS[id] || null;
+  });
+}
+
+const DAY_MS = 86400000;
+
+/** Excel's day number to a real date; 1900 had no leap day, so serials past 59 are one day out. */
+function serialDate(serial, date1904) {
+  let days = Math.floor(serial);
+  let secs = Math.round((serial - days) * 86400);
+  if (secs >= 86400) { secs -= 86400; days += 1; }
+  const epoch = date1904 ? Date.UTC(1904, 0, 1) : days < 60 ? Date.UTC(1899, 11, 31) : Date.UTC(1899, 11, 30);
+  return new Date(epoch + days * DAY_MS + secs * 1000);
+}
+
+/** A date-formatted cell as text: YYYY-MM-DD, and HH:MM[:SS] when the format shows a time. */
+function dateCell(value, format, date1904) {
+  const d = serialDate(Number(value), date1904);
+  if (Number.isNaN(d.getTime())) return String(value);
+  const p = (n) => String(n).padStart(2, '0');
+  const date = `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}`;
+  const time = `${p(d.getUTCHours())}:${p(d.getUTCMinutes())}${format.seconds ? `:${p(d.getUTCSeconds())}` : ''}`;
+  if (format.kind === 'date') return date;
+  if (format.kind === 'time') return time;
+  return `${date} ${time}`;
+}
+
+/** XLSX: every sheet as "Sheet name" then one tab-joined row per line (shared strings resolved, dates as ISO). */
 async function fromXlsx(buf) {
   const z = await openZip(buf, 'spreadsheet');
   if (z.error) return z;
@@ -182,7 +244,10 @@ async function fromXlsx(buf) {
   if (ss) for (const si of (await ss.async('string')).match(/<si\b[\s\S]*?<\/si>/g) || []) shared.push(unxml((si.match(/<t\b[^>]*>[^<]*<\/t>/g) || []).map((t) => t.replace(/<[^>]+>/g, '')).join('')));
   const wb = z.zip.file('xl/workbook.xml');
   if (!wb) return fail('That file is not a usable spreadsheet.', 'bad_type');
-  const names = (await wb.async('string')).match(/<sheet\b[^>]*>/g) || [];
+  const book = await wb.async('string');
+  const names = book.match(/<sheet\b[^>]*>/g) || [];
+  const date1904 = /\bdate1904="(?:1|true)"/.test(book);
+  const dateStyles = await xlsxDateStyles(z.zip);
   const sheets = z.listing.entries.filter((e) => /^xl\/worksheets\/sheet\d+\.xml$/.test(e.name)).sort((a, b) => Number(a.name.match(/(\d+)\.xml/)[1]) - Number(b.name.match(/(\d+)\.xml/)[1]));
   const parts = [];
   let rows = 0;
@@ -195,7 +260,9 @@ async function fromXlsx(buf) {
         const t = (c.match(/\bt="([^"]+)"/) || [])[1];
         const v = (c.match(/<v>([^<]*)<\/v>/) || [])[1];
         const inl = (c.match(/<is>[\s\S]*?<\/is>/) || [])[0];
-        const val = inl ? unxml(inl.replace(/<[^>]+>/g, '')) : v === undefined ? '' : t === 's' ? (shared[Number(v)] || '') : unxml(v);
+        const format = dateStyles[Number((c.match(/\bs="(\d+)"/) || [])[1])];
+        let val = inl ? unxml(inl.replace(/<[^>]+>/g, '')) : v === undefined ? '' : t === 's' ? (shared[Number(v)] || '') : unxml(v);
+        if (format && t !== 's' && v !== undefined && val !== '' && Number.isFinite(Number(val))) val = dateCell(val, format, date1904);
         if (val !== '') cells.push(val);
       }
       if (cells.length) lines.push(cells.join('\t'));

@@ -55,6 +55,14 @@ async function zip(files, first) {
   fx.md = Buffer.from(`# Cell energy\n\n- **ATP**: ${P}\n\n> note\n`);
   fx.latex = Buffer.from(`\\section{Energy}\n$E = mc^2$ and \\begin{equation} \\int_0^1 x^2\\,dx = \\frac{1}{3} \\end{equation}\n${P}`);
   fx.code = Buffer.from(`// ${P}\nfunction atp(n) { return n * 32; }\nmodule.exports = { atp };\n`.repeat(2));
+  // 45231 is 2023-11-01 in Excel's day numbers.
+  fx.dates = await zip({
+    '[Content_Types].xml': '<Types/>',
+    'xl/workbook.xml': '<workbook><sheets><sheet name="Dates" sheetId="1" r:id="rId1"/></sheets></workbook>',
+    'xl/styles.xml': '<styleSheet><numFmts count="1"><numFmt numFmtId="164" formatCode="yyyy\\-mm\\-dd hh:mm:ss"/></numFmts><cellXfs count="5"><xf numFmtId="0"/><xf numFmtId="14"/><xf numFmtId="22"/><xf numFmtId="164"/><xf numFmtId="21"/></cellXfs></styleSheet>',
+    'xl/sharedStrings.xml': '<sst><si><t>Not a date</t></si></sst>',
+    'xl/worksheets/sheet1.xml': '<worksheet><sheetData><row r="1"><c r="A1"><v>45231</v></c><c r="B1" s="1"><v>45231</v></c><c r="C1" s="2"><v>45231.5</v></c><c r="D1" s="4"><v>0.75</v></c></row><row r="2"><c r="A2" s="3"><v>45231.25</v></c><c r="B2" s="1" t="s"><v>0</v></c></row></sheetData></worksheet>',
+  });
 
   const want = { odt: ['odt', 'Cell energy', 'Second&third part\nnext'], epub: ['epub', 'Chapter Zero', 'Chapter One'], xlsx: ['xlsx', 'Cell parts', 'Mitochondrion\tmakes ATP'], rtf: ['rtf', 'Cell energy', 'Café and — dash'], html: ['html', 'Cell energy', 'A & B'] };
   for (const [k, [kind, a, b]] of Object.entries(want)) {
@@ -66,6 +74,12 @@ async function zip(files, first) {
   check('EPUB follows the spine order', ep.text.indexOf('Chapter Zero') < ep.text.indexOf('Chapter One') && ep.pages === 2, ep.text);
   const xl = await materials.extract(fx.xlsx);
   check('XLSX cells keep numbers beside text, shared strings resolved', /Lysosome\tdigests/.test(xl.text) && /\t4$/m.test(xl.text), xl.text);
+  const xd = await materials.extract(fx.dates);
+  check('XLSX date-formatted cells are written as ISO dates', !xd.error && xd.text.includes('45231\t2023-11-01\t2023-11-01 12:00'), xd.text);
+  check('XLSX date-formatted cells are not left as serial numbers', !xd.text.includes('\t45231'), xd.text);
+  check('XLSX time-of-day cells show the time', xd.text.includes('\t18:00:00'), xd.text);
+  check('XLSX custom date formats keep their seconds', xd.text.includes('2023-11-01 06:00:00'), xd.text);
+  check('XLSX text in a date-formatted cell is left alone', xd.text.includes('Not a date'), xd.text);
   const ht = await materials.extract(fx.html);
   check('HTML drops scripts, styles and navigation', !/alert|Login|p\{\}/.test(ht.text), ht.text);
   const rt = await materials.extract(fx.rtf);
