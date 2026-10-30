@@ -51,13 +51,15 @@ C1. [done ed7f227] **Subject-agnostic engine.** Move the Spanish catch-up logic 
 C2. [done da1cf8a, first slice; rest split into C2b, C2c] **Every digital subject.** List the app's subjects and which have the skill graph and items catch-up needs (for
     example math, reading, English, ACT sections, science, Spanish). Wire "Catch me up to grade N" on each ready
     subject's page. Subjects that lack content get a `[local only]` item naming exactly what is missing.
-C2b. [claimed 2026-10-30 06:33Z] **Wire math, english, reading into the pages.** The service and API exist (`services/catchup-units.js`,
-    `/api/catchup/:track/:grade`, tested). Still to do: (1) call `catchupUnits.onLevelPassed({userId, trackId, gradeId, level})`
-    from the lesson-level completion path in `routes/learn.js` so a played level ticks its block; (2) let the player open a
-    catch-up level that is behind the enrollment's `current_level` (see `mayOpenLevel`, as Spanish's `allowsLevel` does);
-    (3) "Catch me up to grade N" button on each of those subjects' pages and a catch-up page (that is C5's UI, shared).
-    (4) Date the block reviews into the real review queue (`services/review-session.js` / `retention-schedule.js`) instead of
-    only `block.reviews`. (5) Decide lookback (default 2 grades below the target) with the owner; deeper sweeps are a parameter.
+C2b. [done a7f7e42, items 1-2; rest is C2d] **Wire math, english, reading into the player.** `routes/learn.js` now lets a learner open a
+    level of a catch-up block (`catchupUnits.allowsLevel`) and, when a finished session scores at or above the master bar
+    (0.75), calls `onLevelPassed` for the levels it covered. Checked: `scripts/catchup-units-test.js` (allowsLevel true in
+    the block, false outside it and for another subject) and the full `npm test`. Not exercised end to end through HTTP.
+C2d. **Pages and the real review queue.** (1) "Catch me up to grade N" button on the math, english and reading pages plus the
+    catch-up page itself (shared with C5, which says what the page shows). (2) Put each finished block's reviews
+    (`block.reviews`, +1/3/7/21 days) into the real review queue (`services/review-session.js` / `retention-schedule.js`)
+    instead of only on the row. (3) Owner decision: lookback (default 2 grades below the target). (4) Drive the whole flow
+    through HTTP in a browser test (the owner's local agent has the browser).
 C2c. **[local only] Subjects without a unit bank.** Missing, exactly: ACT (no `content/unit-placement/act.json`; sections would
     need one bank per section skill), IQ, chess, piano, basketball (no unit banks; chess/piano/basketball are skill tracks, not
     grade-ladder subjects), science (no track at all). Each needs a complete unit bank with at least 5 checked multiple-choice
