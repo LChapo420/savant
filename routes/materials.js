@@ -5,6 +5,8 @@
  *   POST   /api/materials?name=x   the file as the raw body (PDF, DOCX, PPTX, TXT, MD), up to 20 MB
  *   POST   /api/materials/paste    { title?, text }
  *   POST   /api/materials/link     { url, title? } a public web page, fetched by the server (SSRF-guarded), article text kept
+ *   POST   /api/materials/youtube     { url, title? } captions of a YouTube video (never the video)
+ *   POST   /api/materials/video       raw mp4/mov/webm/mkv body, ?name= audio is pulled out, the video is deleted, S8's job transcribes it
  *   POST   /api/materials/transcript  { title?, text, link? } a pasted video transcript (YouTube is never contacted)
  *   GET    /api/materials/:id      one material with its full text
  *   DELETE /api/materials/:id      gone from the store and the disk copy, and its course with it
@@ -53,9 +55,10 @@ const router = express.Router();
 
 // Any content type that is not JSON is read as raw bytes; the type is decided from the bytes.
 const rawBody = express.raw({ type: (req) => !/json/i.test(req.headers['content-type'] || ''), limit: materials.MAX_BYTES });
+const videoBody = express.raw({ type: (req) => !/json/i.test(req.headers['content-type'] || ''), limit: require('../services/material-video').MAX_VIDEO_BYTES });
 const pasteBody = express.json({ limit: '3mb', inflate: false });
 
-const STATUS = { limit: 409, too_big: 413, too_long: 413, too_many_pages: 413 };
+const STATUS = { limit: 409, too_big: 413, too_long: 413, too_many_pages: 413, no_transcriber: 503, no_ffmpeg: 503, busy: 409, no_captions: 422, unavailable: 422 };
 function refuse(res, out) {
   return res.status(STATUS[out.code] || 400).json({ error: out.error, code: out.code });
 }
@@ -86,6 +89,30 @@ router.post('/link', requireAuth, limit('materials-link', 10, 60 * 60 * 1000), p
   }
   if (out.error) return refuse(res, out);
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
+});
+
+// A YouTube link: only its caption text is read; the video is never downloaded.
+router.post('/youtube', requireAuth, limit('materials-youtube', 10, 60 * 60 * 1000), pasteBody, async (req, res) => {
+  const b = req.body || {};
+  let out;
+  try { out = await materials.addYoutube(req.user.id, b.url, b.title); } catch (err) {
+    console.error('materials youtube:', err.message);
+    return res.status(400).json({ error: 'That video could not be read.', code: 'unreadable' });
+  }
+  if (out.error) return refuse(res, out);
+  res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
+});
+
+// A video file: the audio is pulled out here, the video is deleted, and S8's background job transcribes it.
+router.post('/video', requireAuth, limit('materials-video', 6, 60 * 60 * 1000), videoBody, async (req, res) => {
+  if (!Buffer.isBuffer(req.body) || !req.body.length) return res.status(400).json({ error: 'Choose a video to upload.', code: 'empty' });
+  let out;
+  try { out = await require('../services/material-video').submitVideo(req.user.id, req.body, String(req.query.name || '')); } catch (err) { // eslint-disable-line global-require
+    console.error('materials video:', err.message);
+    return res.status(400).json({ error: 'That video could not be read.', code: 'unreadable' });
+  }
+  if (out.error) return refuse(res, out);
+  res.status(202).json({ job: out.job, jobs: require('../services/material-audio').listJobs(req.user.id) }); // eslint-disable-line global-require
 });
 
 router.post('/transcript', requireAuth, limit('materials-transcript', 20, 60 * 60 * 1000), pasteBody, (req, res) => {

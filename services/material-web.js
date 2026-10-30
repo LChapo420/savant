@@ -67,7 +67,7 @@ async function resolvePublic(hostname, lookup) {
 }
 
 /** One request to a vetted address. Resolves { status, headers, body } or an error object. */
-function requestOnce(u, target, requester) {
+function requestOnce(u, target, requester, okType, extraHeaders) {
   return new Promise((resolve) => {
     const lib = requester || (u.protocol === 'https:' ? https : http);
     let done = false;
@@ -77,13 +77,13 @@ function requestOnce(u, target, requester) {
       path: `${u.pathname}${u.search}`, method: 'GET', servername: net.isIP(u.hostname) ? undefined : u.hostname,
       // The connection goes to the address that was just checked, whatever DNS says now.
       lookup: (_h, _o, cb) => (_o && _o.all ? cb(null, [{ address: target.address, family: target.family }]) : cb(null, target.address, target.family)),
-      headers: { 'user-agent': 'SavantStudyBot/1.0 (+personal study use)', accept: 'text/html,text/plain;q=0.9', 'accept-encoding': 'identity' },
+      headers: { 'user-agent': 'SavantStudyBot/1.0 (+personal study use)', accept: okType ? '*/*' : 'text/html,text/plain;q=0.9', 'accept-encoding': 'identity', ...(extraHeaders || {}) },
     }, (res) => {
       const chunks = []; let size = 0;
       const type = String(res.headers['content-type'] || '').toLowerCase();
       if (res.statusCode >= 300 && res.statusCode < 400) { res.resume(); return finish({ status: res.statusCode, headers: res.headers }); }
       if (res.statusCode !== 200) { res.resume(); return finish(fail(`That site answered with an error (${res.statusCode}).`, 'unreachable')); }
-      if (!/^(text\/html|text\/plain|application\/xhtml\+xml)/.test(type)) { res.resume(); return finish(fail('That link is not a web page or plain text. Upload files as files.', 'bad_type')); }
+      if (!(okType || /^(text\/html|text\/plain|application\/xhtml\+xml)/).test(type)) { res.resume(); return finish(fail('That link is not a web page or plain text. Upload files as files.', 'bad_type')); }
       res.on('data', (c) => {
         size += c.length;
         if (size > MAX_HTML) { finish(fail('That page is too large to read.', 'too_big')); req.destroy(); return; }
@@ -123,17 +123,20 @@ function htmlToText(html) {
 }
 
 /**
- * Fetch a public page. opts: { lookup, requester } for tests. Returns { text, title, url } or { error, code }.
+ * Fetch a public text resource through the guard. opts: { lookup, requester } for tests, `types` (a RegExp
+ * on the content type, default HTML or plain text), `hostOk(hostname)` to confine redirects, `headers`.
+ * Returns { body, type, url } or { error, code }.
  */
-async function fetchPage(raw, opts = {}) {
+async function fetchText(raw, opts = {}) {
   const lookup = opts.lookup || ((h, o) => dns.promises.lookup(h, o));
   let current = checkUrl(raw);
   if (current.error) return current;
   for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
     const u = current.url;
+    if (opts.hostOk && !opts.hostOk(u.hostname)) return fail('That link goes somewhere this feature does not read.', 'bad_url');
     const target = await resolvePublic(u.hostname, lookup);
     if (target.error) return target;
-    const res = await requestOnce(u, target, opts.requester);
+    const res = await requestOnce(u, target, opts.requester, opts.types, opts.headers);
     if (res.error) return res;
     if (res.status >= 300) {
       if (hop === MAX_REDIRECTS || !res.headers.location) return fail('That link redirects too many times.', 'unreachable');
@@ -143,12 +146,17 @@ async function fetchPage(raw, opts = {}) {
       if (current.error) return current;
       continue;
     }
-    const isText = /^text\/plain/i.test(String(res.headers['content-type'] || ''));
-    const body = res.body.toString('utf8');
-    const out = isText ? { title: '', text: normalise(body) } : htmlToText(body);
-    return { text: out.text, title: out.title, url: u.href };
+    return { body: res.body.toString('utf8'), type: String(res.headers['content-type'] || '').toLowerCase(), url: u.href };
   }
   return fail('That link redirects too many times.', 'unreachable');
 }
 
-module.exports = { isPublicIp, checkUrl, resolvePublic, htmlToText, fetchPage, MAX_HTML, TIMEOUT_MS };
+/** Fetch a public page. Returns { text, title, url } or { error, code }. */
+async function fetchPage(raw, opts = {}) {
+  const got = await fetchText(raw, opts);
+  if (got.error) return got;
+  const out = /^text\/plain/.test(got.type) ? { title: '', text: normalise(got.body) } : htmlToText(got.body);
+  return { text: out.text, title: out.title, url: got.url };
+}
+
+module.exports = { isPublicIp, checkUrl, resolvePublic, htmlToText, fetchPage, fetchText, MAX_HTML, TIMEOUT_MS };

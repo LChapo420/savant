@@ -168,6 +168,23 @@ function addTranscript(userId, title, text, link) {
   return add(userId, { title: title || 'Video transcript', text: t, kind: 'transcript', pages: null, sourceName: label });
 }
 
+function transcriptRow(userId, title, text, sourceName) {
+  if (text.length < MIN_CHARS) return fail('There is too little spoken text there to build a course from.', 'too_little');
+  if (text.length > MAX_CHARS) return fail('That transcript is over the limit. Use a shorter part.', 'too_long');
+  return add(userId, { title: title || 'Video transcript', text, kind: 'transcript', pages: null, sourceName });
+}
+
+/** A YouTube link: read its caption track (never the video) and keep the text. */
+async function addYoutube(userId, link, title, opts) {
+  const got = await require('./material-youtube').fetchCaptions(link, opts); // eslint-disable-line global-require
+  if (got.error) return got;
+  const text = cleanTranscript(got.text);
+  const out = transcriptRow(userId, title || got.title, text, got.url);
+  if (out.error) return out;
+  out.value.captions = { language: got.language, auto: got.auto };
+  return out;
+}
+
 /** Delete for real: the row leaves the store and the store is written to disk now. */
 function remove(userId, id) {
   const n = db.remove('materials', (m) => m.id === Number(id) && m.user_id === userId);
@@ -183,5 +200,5 @@ function remove(userId, id) {
 
 module.exports = {
   MAX_BYTES, MAX_PAGES, MAX_CHARS, MIN_CHARS, MAX_ITEMS, MAX_TOTAL_CHARS,
-  sniff, extract, add, list, get, textOf, addFile, addPaste, addLink, addTranscript, cleanTranscript, remove, zipEntries,
+  sniff, extract, add, list, get, textOf, addFile, addPaste, addLink, addYoutube, addTranscript, cleanTranscript, remove, zipEntries,
 };

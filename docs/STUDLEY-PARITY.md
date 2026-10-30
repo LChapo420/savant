@@ -15,6 +15,7 @@ local agent verifies with real models and a browser (backlog S3b, S4b, S5b, S6b,
 | S5 | PPTX, web links (SSRF guard) and pasted transcripts as inputs | `services/material-web.js`, `services/material-parsers.js` | `material-inputs-test.js` |
 | S6 | Podcast: two-host script, overview and weak-spots episodes, browser voices only | `services/material-podcast.js`, `public/my-material-podcast.html` | `material-podcast-test.js` |
 | S7 | Installable app and offline shell | `public/manifest.webmanifest`, `public/sw.js`, `public/offline.html`, `public/icons/`, `public/js/app.js` (registration), `server.js` (headers for `sw.js` and the manifest) | `pwa-test.js` |
+| S9 | YouTube links (caption text only) and video files (mp4, mov, webm, mkv: ffmpeg pulls the audio, the S8 transcriber makes the text) | `services/material-youtube.js`, `services/material-video.js`, `services/material-web.js` (`fetchText`), `routes/materials.js` (`/youtube`, `/video`) | `material-video-test.js` |
 
 ## S7 details
 
@@ -25,6 +26,19 @@ local agent verifies with real models and a browser (backlog S3b, S4b, S5b, S6b,
   A page opened offline shows `/offline.html`.
 - `sw.js` and the manifest are served `no-cache`. Registration is skipped on the sealed Spanish test pages.
 - Icons are PNG renders of `public/favicon.svg` (192, 512, maskable 512).
+
+## S9 details
+
+- YouTube: the watch page is fetched through the SSRF-guarded fetch (youtube.com hosts only, redirects included), the caption
+  track list is read from the page, a hand-written track is preferred over an auto-generated one, and the text is kept.
+  The video and its audio are never downloaded. This reads data the watch page shows but YouTube does not offer as an
+  API, which is the terms risk named in `docs/yc/STUDLEY-RECON.md` section 6; the owner accepted it on 30 Oct. If a video has
+  no captions the learner is told to upload the file or paste a transcript. YouTube can change its page at any time; the
+  parser fails with a plain message, not a wrong text.
+- Video files: sniffed by bytes, up to 200 MB. ffmpeg (`ffmpeg-static`, optional dependency, else `ffmpeg` on the PATH)
+  writes 16 kHz mono wav into a private temp folder, the transcriber (`services/material-transcribe.js`, built by S8, exports
+  `transcribeFile(wavPath, { seconds, onProgress })`) returns the text, and the folder is deleted in a `finally`. Without S8's
+  module the upload answers 503 "not installed" and nothing is kept. Cap: 3 hours of sound.
 
 ## Deferred, and why
 

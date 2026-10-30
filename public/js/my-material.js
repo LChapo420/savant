@@ -16,6 +16,7 @@ App.mount(async () => {
   }
 
   const KIND = { pdf: 'PDF', docx: 'Word', text: 'Text', paste: 'Pasted', pptx: 'Slides', link: 'Web page', transcript: 'Transcript', audio: 'Recording' };
+  const VIDEO_EXT = /\.(mp4|m4v|mov|webm|mkv)$/i;
 
   function render() {
     const lim = data.limits;
@@ -24,12 +25,12 @@ App.mount(async () => {
       <p class="muted">Add notes, a chapter or a handout, then choose: a <strong>study pack</strong> (a summary, flashcards, a quiz and a practice test, made in a few minutes) or a <strong>learning path</strong> (a course that turns it into lessons and practice, checks you before moving on, and brings things back for review when you are about to forget them).</p>
       <div class="card">
         <h2>Where it goes</h2>
-        <p class="small">We read the text out of your file and keep only that text, on Savant's server, tied to your account. The file itself is not kept. Nobody else can see it and it is never shared with other learners. When a course, study pack or podcast script is built from it, the text is sent to the AI services Savant uses for learners. When you ask the tutor about it, the few matching passages go along with your question; on graded or timed pages the tutor is not given your text. A podcast is only a script: your browser reads it aloud with its own voice, and no audio is made or kept. Delete it here and it is removed for real, right away, with its script. If you add a recording, our own server turns it into text with an open speech model and then throws the audio away; no outside speech service hears it. If you add a web link, our server opens that page once, keeps only its article text, and does not keep the page. Only upload material you may use for your own study.</p>
+        <p class="small">We read the text out of your file and keep only that text, on Savant's server, tied to your account. The file itself is not kept. Nobody else can see it and it is never shared with other learners. When a course, study pack or podcast script is built from it, the text is sent to the AI services Savant uses for learners. When you ask the tutor about it, the few matching passages go along with your question; on graded or timed pages the tutor is not given your text. A podcast is only a script: your browser reads it aloud with its own voice, and no audio is made or kept. Delete it here and it is removed for real, right away, with its script. If you add a recording, our own server turns it into text with an open speech model and then throws the audio away; no outside speech service hears it. If you add a web link, our server opens that page once, keeps only its article text, and does not keep the page. If you add a video file, the audio is pulled out and turned into text on Savant's own server, and the video and audio are deleted when that finishes; only the text is kept. If you add a YouTube link, our server reads that video's caption text from YouTube (never the video itself) and keeps only the text. Only upload material you may use for your own study.</p>
       </div>
       <div class="card" style="margin-top:18px">
         <h2>Upload a file</h2>
         <label class="field"><span>PDF, Word (.docx), PowerPoint (.pptx), .txt or .md. For Google Slides, use File, Download, PowerPoint. Up to ${lim.max_mb} MB and about ${lim.max_pages} pages.</span>
-          <input type="file" id="file" accept=".pdf,.docx,.pptx,.txt,.md,.markdown,application/pdf,text/plain,text/markdown"></label>
+          <input type="file" id="file" accept=".pdf,.docx,.pptx,.txt,.md,.markdown,.mp4,.mov,.webm,.mkv,application/pdf,text/plain,text/markdown,video/mp4,video/quicktime,video/webm,video/x-matroska"></label>
         <button class="btn btn-primary" type="button" id="upload">Upload</button>
         <p class="small" id="upload-note" role="status"></p>
       </div>
@@ -47,8 +48,15 @@ App.mount(async () => {
         <p class="small" id="link-note" role="status"></p>
       </div>
       <div class="card" style="margin-top:18px">
+        <h2>Or add a YouTube video</h2>
+        <p class="small">Savant reads the video's captions (the ones the uploader wrote, else the automatic ones). It does not download the video. If a video has no captions, upload the video file or paste its transcript below.</p>
+        <label class="field"><span>YouTube link</span><input type="url" id="yt-url" maxlength="300" placeholder="https://www.youtube.com/watch?v=…"></label>
+        <button class="btn btn-primary" type="button" id="yt-add">Read the captions</button>
+        <p class="small" id="yt-note" role="status"></p>
+      </div>
+      <div class="card" style="margin-top:18px">
         <h2>Or paste a video transcript</h2>
-        <p class="small">Savant never contacts YouTube. Open the video, choose "Show transcript", copy it and paste it here. The timestamps are removed.</p>
+        <p class="small">Open the video, choose "Show transcript", copy it and paste it here. The timestamps are removed.</p>
         <label class="field"><span>Title (optional)</span><input type="text" id="tr-title" maxlength="120"></label>
         <label class="field"><span>Video link (optional, kept only as a label)</span><input type="url" id="tr-link" maxlength="200" placeholder="https://www.youtube.com/watch?v=…"></label>
         <label class="field"><span>Transcript</span><textarea id="tr-text" rows="6"></textarea></label>
@@ -86,12 +94,15 @@ App.mount(async () => {
     document.getElementById('upload').addEventListener('click', async () => {
       const f = document.getElementById('file').files[0];
       if (!f) return note('upload-note', 'Choose a file first.');
-      if (f.size > lim.max_mb * 1024 * 1024) return note('upload-note', `That file is over ${lim.max_mb} MB.`);
-      note('upload-note', 'Uploading and reading it…');
+      const video = VIDEO_EXT.test(f.name);
+      if (!video && f.size > lim.max_mb * 1024 * 1024) return note('upload-note', `That file is over ${lim.max_mb} MB.`);
+      if (video && f.size > 200 * 1024 * 1024) return note('upload-note', 'That video is over 200 MB. Upload just the audio or a shorter part.');
+      note('upload-note', video ? 'Uploading the video and pulling out its sound…' : 'Uploading and reading it…');
       try {
-        const res = await fetch(`/api/materials?name=${encodeURIComponent(f.name)}`, { method: 'POST', body: f, credentials: 'same-origin', headers: { 'Content-Type': 'application/octet-stream' } });
+        const res = await fetch(`/api/materials${video ? '/video' : ''}?name=${encodeURIComponent(f.name)}`, { method: 'POST', body: f, credentials: 'same-origin', headers: { 'Content-Type': 'application/octet-stream' } });
         const payload = await res.json().catch(() => ({}));
         if (!res.ok) return note('upload-note', payload.error || `Upload failed (${res.status}).`);
+        if (video) { note('upload-note', 'Uploaded. The sound is being turned into text; you can leave this page and it will be in your list when it is done.'); return audioPoll(0); }
         data.materials = payload.materials;
         render();
         App.toast('Saved.', 'ok');
@@ -170,6 +181,7 @@ App.mount(async () => {
     });
     audioPoll(0);
     addVia('link-add', 'link-note', '/api/materials/link', () => ({ url: document.getElementById('link-url').value }), 'Opening the page…');
+    addVia('yt-add', 'yt-note', '/api/materials/youtube', () => ({ url: document.getElementById('yt-url').value }), 'Reading the captions…');
     addVia('tr-add', 'tr-note', '/api/materials/transcript', () => ({ title: document.getElementById('tr-title').value, link: document.getElementById('tr-link').value, text: document.getElementById('tr-text').value }), 'Saving…');
     document.getElementById('paste').addEventListener('click', async () => {
       try {
