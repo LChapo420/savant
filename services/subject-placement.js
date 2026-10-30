@@ -750,9 +750,11 @@ function submitBlock(userId, trackId, answers, { partial = false } = {}) {
   // after 4 answers and placed three grades up on them (owner, 2026-10-29).
   const late = placement.deadline_at && Date.now() >= Date.parse(placement.deadline_at)
     && answered.length >= adaptive.limits(placement.mode, placement.grade_ids.length).min;
-  const next = adaptive.done(placement.mode, answered, post) || late || partial
+  const allBlocks = blocksOf(trackId);
+  const ctx = { topLeft: adaptive.topLeft(placement.grade_ids.length, allBlocks, asked) };
+  const next = adaptive.done(placement.mode, answered, post, ctx) || late || partial
     ? null
-    : adaptive.nextBlock(blocksOf(trackId), asked, adaptive.nextTarget(answered, post));
+    : adaptive.nextBlock(allBlocks, asked, adaptive.nextTarget(answered, post, ctx));
 
   const updated = db.update(PLACEMENTS, placement.id, {
     scores,
@@ -814,7 +816,7 @@ function probabilitiesFor(trackId, placement) {
   const evidence = evidenceOf(trackId, placement);
   if (!gradeIds.length || !evidence.length) return null;
   const post = adaptive.posterior(gradeIds.length, evidence);
-  const rec = adaptive.recommend(gradeIds.length, post);
+  const rec = adaptive.recommend(gradeIds.length, post, evidence);
   return {
     model: 'posterior-v1',
     most_likely_grade_id: gradeIds[rec.index],
@@ -831,7 +833,7 @@ function probabilitiesFor(trackId, placement) {
 function recommendAdaptive(trackId, placement) {
   const gradeIds = placement.grade_ids || rules.gradesFor(trackId);
   const post = adaptive.posterior(gradeIds.length, placement.answered || []);
-  const rec = adaptive.recommend(gradeIds.length, post);
+  const rec = adaptive.recommend(gradeIds.length, post, placement.answered || []);
   const name = rules.gradeName(trackId, gradeIds[rec.index]);
   return {
     recommendation: gradeIds.map((id, i) => ({

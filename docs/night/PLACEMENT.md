@@ -51,8 +51,16 @@ P1. [done e9900ef] **Simulation harness.** `scripts/placement-sim.js`: simulated
 P2. [done bd54139] **Floor.** A learner who knows nothing places at the very start, not in the middle because of lucky guesses:
     an "I don't know" choice on every item, correction for guessing, and an early stop at the floor.
     Checked: `npm test`; sim floor tests (guessers placed at grade 1 in <=25 questions, "I don't know" learners in <=8, 6 on English; was 21) in `scripts/placement-sim-test.js`; empty answer stored as idk (`scripts/adaptive-placement-test.js`, now in test-steps). The UI already had an "I don't know" button on every item (sends an empty answer). Unverified reading of the idk likelihood: `docs/night/PLACEMENT-UNVERIFIED.md`. Not done: baseline table not regenerated (kept as the before-fixes record); P4 will write the after table.
-P3. [claimed 2026-10-30T06:58Z] **Ceiling.** A learner who knows everything places at the top or tests out, confirmed by top-level items,
+P3. [done PENDING-SHA] **Ceiling.** A learner who knows everything places at the top or tests out, confirmed by top-level items,
     never stuck mid-way. Where a ladder has too few hard items to tell, list it in P5.
+    Checked: `scripts/placement-ceiling-test.js` (proof, stop gate, sim at 30 seeds: math, English, Reading, ACT place
+    "knows everything" exactly and 98% within 1 grade of the top >= 95%). Mechanism: ceiling gate in
+    `services/adaptive-placement.js` (06-M3: the end of the scale is measured too). Not fixed: IQ has 2 items in its
+    top two grades, so the top cannot be proven; see P5a.
+P5a. [local only] **IQ top end.** `content/placement-calibration/iq.json` has 2 items at positions >= 10 (grade 11 has none,
+    grade 12 two). The ceiling proof needs at least 3 answered in the top two grades, so at least 6 calibrated items
+    there (about 3 per grade) are needed for the sim to show "knows everything" placed at the top. Generate and calibrate
+    with the content pipeline. Also ACT grades 13 and 15 have no calibrated items (indexes 12 and 14).
 P4. **Adaptive stopping.** Stop when the level estimate is precise enough (standard error under a threshold),
     with confirmation items near the boundary. Target, proven by P1 for every subject: at most one level off for
     95% of simulated learners at every ability level, with the question count reported. Add the sim to

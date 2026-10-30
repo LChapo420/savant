@@ -115,6 +115,13 @@ function quantile(post, p) {
   return post.grid[post.grid.length - 1];
 }
 
+/** The belief restricted to positions at or above `lo`, renormalised. */
+function atLeast(post, lo) {
+  const w = post.w.map((v, i) => (post.grid[i] >= lo ? v : 0));
+  const total = w.reduce((a, b) => a + b, 0) || 1;
+  return { grid: post.grid, w: w.map((v) => v / total) };
+}
+
 function massWithin(post, lo, hi) {
   return post.grid.reduce((sum, x, i) => (x >= lo && x <= hi ? sum + post.w[i] : sum), 0);
 }
@@ -204,8 +211,10 @@ function firstTarget(span, startHint) {
  * reaches the top of a 57-grade subject in about six right answers. Moving down is never limited.
  * ADAPTIVE_GALLOP=0 restores the plain median.
  */
-function nextTarget(answered, post) {
+function nextTarget(answered, post, ctx = {}) {
   const m = median(post);
+  const span = post.grid[post.grid.length - 1];
+  if (ctx.topLeft > 0 && ceilingCandidate(span, answered, post)) return span - 1;
   if (process.env.ADAPTIVE_GALLOP === '0') return m;
   const right = answered.filter((a) => a.correct);
   if (!right.length) return Math.min(m, 0);
@@ -240,12 +249,48 @@ function atFloor(answered, post) {
   return massWithin(post, 0, 1) >= FLOOR_SURE;
 }
 
-/** Should the walk stop here? */
-function done(mode, answered, post) {
+/**
+ * The ceiling: a learner who knows everything has to be placed at the top, not left mid-way by one slip or a run
+ * of misses on a thin top end (06-M3: placement is a measurement, so the end of the scale is measured too, with
+ * enough items to tell). The top region is the last two grades. A learner is a ceiling candidate once the middle
+ * of the belief is within three grades of the end; a candidate is not placed or stopped until the region's items
+ * have been asked, and is placed at the top when at least three of them were answered and no more than a quarter
+ * missed (one slip allowed from four). Guessing three of three on four choices is under 2%. Where the region has
+ * fewer than three items nothing can be proven, and the subject is listed as a content gap (docs/night/PLACEMENT.md).
+ * ADAPTIVE_CEILING=0 restores the plain belief.
+ */
+const CEILING = { region: 2, near: 3, min: 3 };
+
+function ceilingProof(span, answered) {
+  const top = answered.filter((a) => a.pos >= span - CEILING.region);
+  const wrong = top.filter((a) => !a.correct).length;
+  const proven = process.env.ADAPTIVE_CEILING !== '0' && top.length >= CEILING.min && wrong <= Math.floor(top.length / 4);
+  return { asked: top.length, wrong, proven };
+}
+
+/** True when the belief's middle is near the end and the top has not been proven yet. */
+function ceilingCandidate(span, answered, post) {
+  return process.env.ADAPTIVE_CEILING !== '0' && median(post) >= span - CEILING.near && !ceilingProof(span, answered).proven;
+}
+
+/** How many of the top region's items are still unasked (`blocks`, `asked` as in nextBlock). */
+function topLeft(span, blocks, asked) {
+  const seen = new Set(asked.map((b) => `${b.grade}:${b.part}`));
+  return blocks.filter((b) => b.pos >= span - CEILING.region && !seen.has(`${b.grade}:${b.part}`)).reduce((n, b) => n + b.idx.length, 0);
+}
+
+/**
+ * Should the walk stop here? `ctx.topLeft` is the count of unasked top-region items (see topLeft); when given, a
+ * ceiling candidate keeps going until the top is proven or its items run out, and a proven top may stop at the minimum.
+ */
+function done(mode, answered, post, ctx = {}) {
   const cfg = limits(mode, post.grid[post.grid.length - 1]);
   if (answered.length >= cfg.max) return true;
   if (atFloor(answered, post)) return true;
   if (answered.length < cfg.min) return false;
+  const span = post.grid[post.grid.length - 1];
+  if (ceilingProof(span, answered).proven) return true;
+  if (ctx.topLeft > 0 && ceilingCandidate(span, answered, post)) return false;
   const m = median(post);
   return massWithin(post, m - 1, m + 1) >= cfg.sure;
 }
@@ -290,9 +335,11 @@ function wholePercents(mass) {
  * `percents` is kept for older pages: each grade's share scaled so the
  * strongest reads 100.
  */
-function recommend(span, post) {
+function recommend(span, post, answered) {
   const x = median(post);
-  const mass = gradeMass(span, post);
+  // A proven top conditions the belief on the evidence: the learner is in the upper grade and a half.
+  const topProven = !!answered && ceilingProof(span, answered).proven;
+  const mass = gradeMass(span, topProven ? atLeast(post, span - 1.5) : post);
   const best = mass.reduce((b, m, i) => (m > mass[b] ? i : b), 0);
   const middle = Math.max(0, Math.min(span - 1, Math.floor(x)));
   const index = process.env.ADAPTIVE_PICK === 'median' ? middle : best;
@@ -311,5 +358,5 @@ function recommend(span, post) {
 
 module.exports = {
   questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, firstTarget, nextTarget, done, limits,
-  gradeMass, wholePercents, recommend,
+  gradeMass, wholePercents, recommend, CEILING, ceilingProof, ceilingCandidate, topLeft,
 };

@@ -81,6 +81,7 @@ function sit(bank, mode, ability, random, { dontKnow = false } = {}) {
   const asked = [];
   let post = adaptive.posterior(span, answered);
   let block = adaptive.nextBlock(blocks, asked, adaptive.firstTarget(span, NaN));
+  const ctxOf = () => ({ topLeft: adaptive.topLeft(span, blocks, asked) });
   while (block) {
     for (const i of block.idx) {
       const q = sets[block.grade][i];
@@ -93,9 +94,9 @@ function sit(bank, mode, ability, random, { dontKnow = false } = {}) {
     }
     asked.push({ grade: block.grade, part: block.part });
     post = adaptive.posterior(span, answered);
-    block = adaptive.done(mode, answered, post) ? null : adaptive.nextBlock(blocks, asked, adaptive.nextTarget(answered, post));
+    block = adaptive.done(mode, answered, post, ctxOf()) ? null : adaptive.nextBlock(blocks, asked, adaptive.nextTarget(answered, post, ctxOf()));
   }
-  return { placed: adaptive.recommend(span, post).index, asked: answered.length };
+  return { placed: adaptive.recommend(span, post, answered).index, asked: answered.length };
 }
 
 /** Abilities from knows-nothing to knows-everything, as fractions of the subject plus both extremes. */
