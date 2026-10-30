@@ -100,7 +100,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    real browser, signed in (a cloud run has no session; do it on the owner's machine or with a seeded demo login).
 4. **Link the ACT page.** Add `/act` to the home page and header once the owner approves the wording (the track blurb in `config/curriculum.js` still says "under the timing the real test imposes", which the app does not do; fix with item 1).
 5b. **DONE, see Done.** (Funnel on the admin metrics page.)
-6. **Test-date plan** (item 4): from the test date and section scores, choose the skills with the most points
+6. **[claimed 2026-10-30 00:16Z]** **Test-date plan** (item 4): from the test date and section scores, choose the skills with the most points
    available in the weakest sections and lay out a fixed number of sessions that fits the weeks left, with
    review timed to peak at the test date. Reuse placement, mastery and the retention scheduler.
 7. **Real section timer** (item 5) for Timed Tasks and Finals, with pacing feedback. Section lengths are
