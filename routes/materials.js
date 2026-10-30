@@ -95,6 +95,20 @@ router.post('/transcript', requireAuth, limit('materials-transcript', 20, 60 * 6
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
 });
 
+// Audio recordings (S8): transcribed on this server with an open Whisper model, in the background.
+const audio = require('../services/material-audio');
+router.get('/audio', requireAuth, (req, res) => res.json({ available: audio.availability(), jobs: audio.listJobs(req.user.id) }));
+router.post('/audio', requireAuth, limit('materials-audio', 6, 60 * 60 * 1000), rawBody, (req, res) => {
+  const out = audio.submit(req.user.id, req.body, String(req.query.name || ''));
+  if (out.error) return refuse(res, out);
+  out.finished.catch(() => {});
+  res.status(202).json({ job: out.job, jobs: audio.listJobs(req.user.id) });
+});
+router.delete('/audio/:id', requireAuth, (req, res) => {
+  if (!audio.removeJob(req.user.id, req.params.id)) return res.status(404).json({ error: 'No such finished job.' });
+  res.json({ jobs: audio.listJobs(req.user.id) });
+});
+
 router.post('/', requireAuth, limit('materials-upload', 12, 60 * 60 * 1000), rawBody, async (req, res) => {
   if (!Buffer.isBuffer(req.body) || !req.body.length) return res.status(400).json({ error: 'Choose a file to upload.', code: 'empty' });
   let out;

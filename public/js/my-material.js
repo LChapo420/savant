@@ -15,7 +15,7 @@ App.mount(async () => {
     return;
   }
 
-  const KIND = { pdf: 'PDF', docx: 'Word', text: 'Text', paste: 'Pasted', pptx: 'Slides', link: 'Web page', transcript: 'Transcript' };
+  const KIND = { pdf: 'PDF', docx: 'Word', text: 'Text', paste: 'Pasted', pptx: 'Slides', link: 'Web page', transcript: 'Transcript', audio: 'Recording' };
 
   function render() {
     const lim = data.limits;
@@ -24,7 +24,7 @@ App.mount(async () => {
       <p class="muted">Add notes, a chapter or a handout, then choose: a <strong>study pack</strong> (a summary, flashcards, a quiz and a practice test, made in a few minutes) or a <strong>learning path</strong> (a course that turns it into lessons and practice, checks you before moving on, and brings things back for review when you are about to forget them).</p>
       <div class="card">
         <h2>Where it goes</h2>
-        <p class="small">We read the text out of your file and keep only that text, on Savant's server, tied to your account. The file itself is not kept. Nobody else can see it and it is never shared with other learners. When a course, study pack or podcast script is built from it, the text is sent to the AI services Savant uses for learners. When you ask the tutor about it, the few matching passages go along with your question; on graded or timed pages the tutor is not given your text. A podcast is only a script: your browser reads it aloud with its own voice, and no audio is made or kept. Delete it here and it is removed for real, right away, with its script. If you add a web link, our server opens that page once, keeps only its article text, and does not keep the page. Only upload material you may use for your own study.</p>
+        <p class="small">We read the text out of your file and keep only that text, on Savant's server, tied to your account. The file itself is not kept. Nobody else can see it and it is never shared with other learners. When a course, study pack or podcast script is built from it, the text is sent to the AI services Savant uses for learners. When you ask the tutor about it, the few matching passages go along with your question; on graded or timed pages the tutor is not given your text. A podcast is only a script: your browser reads it aloud with its own voice, and no audio is made or kept. Delete it here and it is removed for real, right away, with its script. If you add a recording, our own server turns it into text with an open speech model and then throws the audio away; no outside speech service hears it. If you add a web link, our server opens that page once, keeps only its article text, and does not keep the page. Only upload material you may use for your own study.</p>
       </div>
       <div class="card" style="margin-top:18px">
         <h2>Upload a file</h2>
@@ -54,6 +54,18 @@ App.mount(async () => {
         <label class="field"><span>Transcript</span><textarea id="tr-text" rows="6"></textarea></label>
         <button class="btn btn-primary" type="button" id="tr-add">Save transcript</button>
         <p class="small" id="tr-note" role="status"></p>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h2>Or add a recording</h2>
+        <p class="small">A lecture, a voice memo, a meeting: mp3, m4a, wav, webm or ogg, up to ${lim.max_mb} MB. It is turned into text on Savant's own server with an open speech model (no outside speech service), a few minutes for every ten minutes of audio. The recording is not kept, only the text with its time marks.</p>
+        <p class="small" id="audio-avail" role="status"></p>
+        <input type="file" id="audio-file" accept="audio/*,.mp3,.m4a,.wav,.webm,.ogg" aria-label="Audio file">
+        <div class="row-wrap" style="margin-top:8px">
+          <button class="btn btn-primary" type="button" id="audio-upload">Transcribe this file</button>
+          <button class="btn" type="button" id="audio-rec">Record</button>
+        </div>
+        <p class="small" id="audio-note" role="status"></p>
+        <ul style="list-style:none;padding:0;margin:8px 0 0" id="audio-jobs"></ul>
       </div>
       <div class="card" style="margin-top:18px"><h2>Your material (${data.materials.length} of ${lim.max_items})</h2>
         ${data.materials.length ? `<ul style="list-style:none;padding:0;margin:0">${data.materials.map((m) => `
@@ -94,6 +106,69 @@ App.mount(async () => {
         App.toast('Saved.', 'ok');
       } catch (err) { note(noteId, err.message); }
     });
+    // Recordings: upload or record, then follow the background transcription.
+    const audioUi = (state) => {
+      const av = document.getElementById('audio-avail');
+      const ul = document.getElementById('audio-jobs');
+      if (!av || !ul) return;
+      av.textContent = state.available.ready ? '' : state.available.reason;
+      ul.innerHTML = state.jobs.map((j) => `<li class="small" style="padding:4px 0"><strong>${esc(j.title)}</strong>: ${
+        j.status === 'done' ? 'done, it is in your list' : j.status === 'failed' ? esc(j.error || 'failed') : j.chunks ? `transcribing, ${j.percent}%` : 'getting ready…'
+      } ${j.status === 'running' || j.status === 'queued' ? '' : `<button class="btn btn-sm" type="button" data-audio-del="${j.id}">Dismiss</button>`}</li>`).join('');
+      ul.querySelectorAll('[data-audio-del]').forEach((b) => b.addEventListener('click', async () => {
+        const out = await App.api.del(`/api/materials/audio/${b.dataset.audioDel}`).catch(() => null);
+        if (out) audioUi({ available: state.available, jobs: out.jobs });
+      }));
+    };
+    const audioPoll = async (tries) => {
+      let st;
+      try { st = await App.api.get('/api/materials/audio'); } catch { return; }
+      audioUi(st);
+      const active = st.jobs.some((j) => j.status === 'running' || j.status === 'queued');
+      if (active && tries < 900) return setTimeout(() => audioPoll(tries + 1), 4000);
+      if (!active && st.jobs.some((j) => j.status === 'done') && !data.materials.some((m) => m.kind === 'audio' && st.jobs.some((j) => j.material_id === m.id))) {
+        try { data = await App.api.get('/api/materials'); render(); } catch { /* the list refreshes on reload */ }
+      }
+      return undefined;
+    };
+    const sendAudio = async (blob, name) => {
+      note('audio-note', 'Uploading…');
+      try {
+        const res = await fetch(`/api/materials/audio?name=${encodeURIComponent(name)}`, { method: 'POST', body: blob, credentials: 'same-origin', headers: { 'Content-Type': 'application/octet-stream' } });
+        const payload = await res.json().catch(() => ({}));
+        if (!res.ok) return note('audio-note', payload.error || `Upload failed (${res.status}).`);
+        note('audio-note', 'Uploaded. You can leave this page; the text will be in your list when it is done.');
+        return audioPoll(0);
+      } catch { return note('audio-note', 'The upload did not go through. Check your connection and try again.'); }
+    };
+    document.getElementById('audio-upload').addEventListener('click', () => {
+      const f = document.getElementById('audio-file').files[0];
+      if (!f) return note('audio-note', 'Choose an audio file first.');
+      if (f.size > lim.max_mb * 1024 * 1024) return note('audio-note', `That file is over ${lim.max_mb} MB.`);
+      return sendAudio(f, f.name);
+    });
+    let recorder = null;
+    document.getElementById('audio-rec').addEventListener('click', async (ev) => {
+      const btn = ev.currentTarget;
+      if (recorder) { recorder.stop(); return; }
+      if (!navigator.mediaDevices || !window.MediaRecorder) return note('audio-note', 'This browser cannot record. Upload a file instead.');
+      let stream;
+      try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch { return note('audio-note', 'The microphone is not available or was not allowed.'); }
+      const chunks = [];
+      recorder = new MediaRecorder(stream);
+      recorder.addEventListener('dataavailable', (e) => { if (e.data.size) chunks.push(e.data); });
+      recorder.addEventListener('stop', () => {
+        stream.getTracks().forEach((t) => t.stop());
+        recorder = null; btn.textContent = 'Record';
+        const blob = new Blob(chunks, { type: 'application/octet-stream' });
+        if (blob.size > lim.max_mb * 1024 * 1024) return note('audio-note', `That recording is over ${lim.max_mb} MB. Record a shorter part.`);
+        return sendAudio(blob, `Recording ${new Date().toISOString().slice(0, 16).replace('T', ' ')}.webm`);
+      });
+      recorder.start();
+      btn.textContent = 'Stop and transcribe';
+      note('audio-note', 'Recording…');
+    });
+    audioPoll(0);
     addVia('link-add', 'link-note', '/api/materials/link', () => ({ url: document.getElementById('link-url').value }), 'Opening the page…');
     addVia('tr-add', 'tr-note', '/api/materials/transcript', () => ({ title: document.getElementById('tr-title').value, link: document.getElementById('tr-link').value, text: document.getElementById('tr-text').value }), 'Saving…');
     document.getElementById('paste').addEventListener('click', async () => {

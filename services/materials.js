@@ -183,5 +183,5 @@ function remove(userId, id) {
 
 module.exports = {
   MAX_BYTES, MAX_PAGES, MAX_CHARS, MIN_CHARS, MAX_ITEMS, MAX_TOTAL_CHARS,
-  sniff, extract, list, get, textOf, addFile, addPaste, addLink, addTranscript, cleanTranscript, remove, zipEntries,
+  sniff, extract, add, list, get, textOf, addFile, addPaste, addLink, addTranscript, cleanTranscript, remove, zipEntries,
 };
