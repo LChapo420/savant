@@ -1650,6 +1650,25 @@ async function recommend(userId, trackId, options = {}) {
  * are worked out from its answers. The learner may start at any grade
  * (chooseGrade); the recommended one is the most probable.
  */
+/**
+ * What a placement rests on, in plain terms for the result screen: how many questions were answered and how sure the
+ * walk is (the share of its belief within one grade of the placed grade, services/adaptive-placement.js). Nothing is
+ * claimed that was not measured: with no usable answers the basis is null (06-M3: a placement is a measurement and
+ * reports its precision).
+ */
+function basisOf(trackId, placement) {
+  const evidence = evidenceOf(trackId, placement);
+  if (!evidence.length) return null;
+  const gradeIds = placement.grade_ids || rules.gradesFor(trackId);
+  const post = adaptive.posterior(gradeIds.length, evidence);
+  const sure = adaptive.massWithin(post, adaptive.median(post) - 1, adaptive.median(post) + 1);
+  return {
+    questions: evidence.length,
+    sure_percent: Math.round(sure * 100),
+    certainty: sure >= 0.95 ? 'clear' : sure >= 0.8 ? 'fair' : 'rough',
+  };
+}
+
 function resultFor(trackId, placement) {
   if (!placement) return null;
   const probabilities = placement.probabilities || probabilitiesFor(trackId, placement);
@@ -1668,9 +1687,34 @@ function resultFor(trackId, placement) {
     probability_model: probabilities ? probabilities.model : null,
     most_likely_grade_id: probabilities ? probabilities.most_likely_grade_id : null,
     chosen_grade_id: placement.chosen_grade_id || null,
+    basis: basisOf(trackId, placement),
+    walk_grade_id: placement.walk_grade_id || placement.recommended_grade_id || null,
+    adjustments: (placement.adjustments || []).map((a) => ({ said: a.said, from: a.from, to: a.to, at: a.at })),
     grades: (placement.grade_ids || []).map((id) => ({ grade_id: id, name: rules.gradeName(trackId, id) })),
     scores: placement.scores || [],
   };
+}
+
+/**
+ * "This is too easy" / "this is too hard" on the result: moves the recommendation one grade up or down (clamped to
+ * the subject) and records what the learner said and where the walk had put them, so the correction is never lost
+ * and the walk's own placement stays on the record (`walk_grade_id`). Returns {placement} or {error, status}.
+ */
+function adjust(userId, trackId, said) {
+  if (!['too_easy', 'too_hard'].includes(said)) return { error: 'Say whether it was too easy or too hard.', status: 400 };
+  const placement = placementFor(userId, trackId);
+  if (!placement || !placement.recommended_grade_id) return { error: 'Finish the quiz first.', status: 400 };
+  const gradeIds = placement.grade_ids || rules.gradesFor(trackId);
+  const at = gradeIds.indexOf(placement.recommended_grade_id);
+  if (at < 0) return { error: 'That placement has no grade to move from.', status: 400 };
+  const to = Math.max(0, Math.min(gradeIds.length - 1, at + (said === 'too_easy' ? 1 : -1)));
+  const now = new Date().toISOString();
+  const updated = db.update(PLACEMENTS, placement.id, {
+    walk_grade_id: placement.walk_grade_id || placement.recommended_grade_id,
+    recommended_grade_id: gradeIds[to],
+    adjustments: [...(placement.adjustments || []), { said, from: gradeIds[at], to: gradeIds[to], at: now }],
+  });
+  return { placement: updated, moved: to !== at };
 }
 
 /**
@@ -1709,6 +1753,8 @@ function chooseGrade(userId, trackId, gradeId) {
 }
 
 module.exports = {
+  basisOf,
+  adjust,
   QUESTION_SCHEMA,
   RECOMMEND_SCHEMA,
   questionSystemPrompt,
