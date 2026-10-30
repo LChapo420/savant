@@ -77,7 +77,7 @@ S4. **DONE on `studley-parity` (e22f626), see Done. Leftover: S4b.** **A tutor g
    - Keep the context budget.
    - Keep the hint-ladder rule (`MODE_NOTE.full`).
 S4b. **Grounded tutor leftovers.** (1) Try it with a live model and a real upload on the owner's machine: does it answer from the passages and say so when the material does not cover it? (2) Retrieval is word overlap only (no stemming, no synonyms); look at misses on real questions before adding anything heavier. (3) Method-only pages get no source text; a lesson view that is separate from the check could get passages later. Reason: this run had no keys or browser.
-S5. **More inputs, no new vendor:**
+S5. **[claimed 2026-10-30T04:16Z]** **More inputs, no new vendor:**
    - PPTX (slide XML text; `material-parsers.js` has zip handling);
    - several files merged into one course;
    - web links (server fetch with strict SSRF protection: http/https only, block private and loopback IPs after DNS resolution, size and time caps, HTML to text);
