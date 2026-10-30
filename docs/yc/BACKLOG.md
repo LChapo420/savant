@@ -44,6 +44,45 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
+   **TOP PRIORITY (owner, 2026-10-30 ~01:00Z): studley.ai parity, items S1-S7, in order, one per run. The owner wants it by the morning of 30 Oct.**
+   **These items do NOT build on `yc-next`.** For an S item:
+   1. `git fetch origin`. If `origin/studley-parity` exists, check it out; otherwise create it from `origin/own-material-paths`.
+   2. Build the item there, run `npm test`, and push `origin/studley-parity` only.
+   3. On `yc-next`, commit only the claim line and the Done note in this backlog.
+   Never merge `studley-parity` or `own-material-paths` into `yc-next` or `main`: the owner's local agent verifies with real models and a browser, then merges.
+   - **Read first:** `git show origin/yc-next:docs/yc/STUDLEY-RECON.md` (the feature matrix, gaps with file:line, specs in our own words) and `docs/OWN-MATERIAL-MECHANISMS.json` on that branch.
+   - **The material code:** `services/course-builder.js`, `material-path.js`, `material-study.js`, `materials.js`, `material-parsers.js`, `routes/materials.js`, `public/my-material*.html`.
+   - **Rules:**
+     - Model calls go only through `services/ai.js` / `services/pool.js`, with learner-class providers for anything carrying learner data. You have no keys, so tests use the existing mocks.
+     - No new outside AI or speech vendor.
+     - Per-learner, never shared, deleted for real; update `public/privacy.html` and the /my-material "where it goes" text for any new data flow.
+     - Use the CSS variables; it must work at 375 px.
+     - Add each new test to `scripts/test-steps.json`.
+     - Don't touch `docs/OWN-MATERIAL-PROOF.md`.
+S1. **Pack or path choice on upload.**
+   - "Study pack" generates a summary, flashcards, a quiz, and a practice test (multiple choice, fill-in-the-blank, written).
+   - "Learning path" is the existing course builder.
+   - A path can be extended by adding more material (new skills merged into the same graph and schedule) or by "continue" (more practice and levels on the same skills).
+S2. **Flashcards** generated from the material, tied to its skills, and scheduled by the SAME per-learner spaced-review model as path skills (`material-path.js`).
+   - Learners can edit cards.
+   - Also cards made from the learner's own recorded mistakes and misconceptions.
+S3. **Practice test on demand:** pick skills and a length, timed or untimed.
+   - Written answers go through `services/typed-grading.js`.
+   - Results feed the learner model.
+S4. **A tutor grounded in the material.** Retrieve the relevant source passages for the page or skill into `services/tutor-context.js`; today it sees only titles and counts.
+   - Keep the context budget.
+   - Keep the hint-ladder rule (`MODE_NOTE.full`).
+S5. **More inputs, no new vendor:**
+   - PPTX (slide XML text; `material-parsers.js` has zip handling);
+   - several files merged into one course;
+   - web links (server fetch with strict SSRF protection: http/https only, block private and loopback IPs after DNS resolution, size and time caps, HTML to text);
+   - pasted YouTube transcripts (the learner pastes them; never scrape YouTube).
+S6. **Podcast from the material, and a version built from the learner's weak spots.**
+   - A two-voice script generated as text.
+   - Played with the browser's speech synthesis only (play/pause, speed, skip).
+   - No paid voice vendor.
+S7. **PWA:** a manifest and an offline shell, so it installs on a phone. Then write `docs/STUDLEY-PARITY.md` on the branch: what was built, file:line, the tests, and what is deferred (lecture audio speech-to-text and premium voices need an owner budget; share links need an owner decision).
+
    **Order update (2026-10-29 ~10:00Z, owner's local agent): the tutor is live on every page with six context slices, voice and listening; the rest of 0c and 0d-b is polish or needs the owner. Next take, in this order: item 5 (activation funnel numbers), 10 (invite a friend), 13 (privacy gaps), 12 (demo script), 11 (interview prep), then 0b(c2), 0a, 0c leftovers, 0d-b. Claim the item itself by its number as usual.**
 
    **Overnight order (owner, 2026-10-29 03:30Z, going to sleep: "I need every single thing fully built"). Take these first, in order. 0-fix1 and 0-fix2 are small; do them first. Then the tutor (0c, 0d) is the top feature: the owner said there is no AI to help anywhere on the site.**
