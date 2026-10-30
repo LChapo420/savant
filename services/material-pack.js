@@ -326,4 +326,4 @@ function removeForMaterial(userId, materialId) {
   return db.remove('material_packs', (c) => c.user_id === userId && c.material_id === Number(materialId));
 }
 
-module.exports = { VERSION, TOKEN_BUDGET, partsOf, cleanCard, cleanItem, build, view, grade, get, removeForMaterial };
+module.exports = { VERSION, TOKEN_BUDGET, partsOf, groundQuote, cleanCard, cleanItem, build, view, grade, get, removeForMaterial };

@@ -24,7 +24,7 @@ App.mount(async () => {
       <p class="muted">Add notes, a chapter or a handout, then choose: a <strong>study pack</strong> (a summary, flashcards, a quiz and a practice test, made in a few minutes) or a <strong>learning path</strong> (a course that turns it into lessons and practice, checks you before moving on, and brings things back for review when you are about to forget them).</p>
       <div class="card">
         <h2>Where it goes</h2>
-        <p class="small">We read the text out of your file and keep only that text, on Savant's server, tied to your account. The file itself is not kept. Nobody else can see it and it is never shared with other learners. When a course is built from it, the text is sent to the AI services Savant uses for learners. When you ask the tutor about it, the few matching passages go along with your question; on graded or timed pages the tutor is not given your text. Delete it here and it is removed for real, right away. If you add a web link, our server opens that page once, keeps only its article text, and does not keep the page. Only upload material you may use for your own study.</p>
+        <p class="small">We read the text out of your file and keep only that text, on Savant's server, tied to your account. The file itself is not kept. Nobody else can see it and it is never shared with other learners. When a course, study pack or podcast script is built from it, the text is sent to the AI services Savant uses for learners. When you ask the tutor about it, the few matching passages go along with your question; on graded or timed pages the tutor is not given your text. A podcast is only a script: your browser reads it aloud with its own voice, and no audio is made or kept. Delete it here and it is removed for real, right away, with its script. If you add a web link, our server opens that page once, keeps only its article text, and does not keep the page. Only upload material you may use for your own study.</p>
       </div>
       <div class="card" style="margin-top:18px">
         <h2>Upload a file</h2>
@@ -60,6 +60,7 @@ App.mount(async () => {
           <li style="padding:8px 0">
             <div class="row-between row-wrap"><span><strong>${esc(m.title)}</strong> <span class="tiny muted">${KIND[m.kind] || ''} · ${m.words.toLocaleString()} words${m.pages ? ` · ${m.pages} pages` : ''} · ${esc(String(m.added_at).slice(0, 10))}</span></span>
             <span><button class="btn btn-sm" type="button" data-pack="${m.id}" id="pack-${m.id}">Study pack</button>
+            <a class="btn btn-sm" href="/my-material-podcast?id=${m.id}">Podcast</a>
             <button class="btn btn-sm btn-primary" type="button" data-course="${m.id}" id="course-${m.id}">Learning path</button>
             <button class="btn btn-sm" type="button" data-del="${m.id}" aria-label="Delete ${esc(m.title)}">Delete</button></span></div>
             <p class="tiny muted" id="course-note-${m.id}" role="status" style="margin:4px 0 0"></p>

@@ -21,6 +21,8 @@
  *   POST   /api/materials/:id/study/quiz           { mode: mastery|review, skill? } one-shot quiz, no answers
  *   POST   /api/materials/:id/pack     start building the study pack (summary, flashcards, quiz, practice test; 202)
  *   GET    /api/materials/:id/pack     the pack's status and content (no answer keys)
+ *   GET    /api/materials/:id/podcast      the overview and weak-spots episodes (script only) and which weak spots there are
+ *   POST   /api/materials/:id/podcast      { kind: overview|weak } start writing an episode script (202)
  *   POST   /api/materials/:id/pack/grade   { section: quiz|test, answers } marked on the server
  *   GET    /api/materials/:id/test         what a practice test can be made of (skills, lengths) and the last results
  *   POST   /api/materials/:id/test         { skills, length, timed } start a practice test (questions without keys)
@@ -45,6 +47,7 @@ const study = require('../services/material-study');
 const packs = require('../services/material-pack');
 const practiceTest = require('../services/material-test');
 const cards = require('../services/material-cards');
+const podcast = require('../services/material-podcast');
 
 const router = express.Router();
 
@@ -171,6 +174,15 @@ router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-g
   const out = packs.grade(req.user.id, req.params.id, String(b.section || ''), b.answers);
   if (out.error) return res.status(out.code === 'no_pack' ? 404 : 400).json({ error: out.error, code: out.code });
   res.json(out);
+});
+
+router.get('/:id/podcast', requireAuth, ownMaterial, (req, res) => res.json(podcast.options(req.user.id, req.params.id)));
+router.post('/:id/podcast', requireAuth, ownMaterial, limit('materials-podcast', 6, 60 * 60 * 1000), express.json({ limit: '4kb' }), (req, res) => {
+  const kind = String((req.body || {}).kind || 'overview');
+  if (!podcast.KINDS.includes(kind)) return res.status(400).json({ error: 'Choose an overview or a weak-spots episode.', code: 'bad_kind' });
+  if (kind === 'weak' && !podcast.weakSkills(req.user.id, req.params.id).length) return res.status(409).json({ error: 'There are no weak spots to talk about yet. Study some of the learning path first, then come back.', code: 'no_weak_spots' });
+  podcast.build(req.user.id, req.params.id, { kind }).then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-podcast: ${out.code}`); });
+  res.status(202).json({ started: true });
 });
 
 const CARD_STATUS = { not_found: 404, no_card: 404, full: 409 };
