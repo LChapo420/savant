@@ -1,0 +1,93 @@
+{
+ "07-M1": {
+  "name": "The learner's own material becomes a skill outline",
+  "where": "`services/course-builder.js:86-118` (chunk), 185-205 (cleanOutline), 320-332 (outlineWindows), 424-530 (build, outline stage); `services/materials.js:48-66, 113-128` (extraction, upload, paste)",
+  "verdict": "design choice",
+  "note": "Concept and knowledge maps help learning (Nesbit 2006; Anastasiou 2024), and indexing material by hand is costly and error-prone (Chau 2021). Fully automatic concept maps tend to be generic (Pinandito 2021), which is why the outline is checked against the source (07-M12). No study tests this outline method. Gap: a part of the upload that fails all tries is left out without telling the learner (07-P1).",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M2": {
+  "name": "A prerequisite graph orders the levels",
+  "where": "`services/course-builder.js:207-254` (orderSkills, layout); `services/material-study.js:134-138` (unlocked), 147-157 (nextStep)",
+  "verdict": "moderate",
+  "note": "Learners did not acquire higher skills without the subordinate skills in Gagne-style hierarchies (White 1973), though the strong form holds for intellectual skills, not facts. Prerequisites can be inferred automatically but imperfectly (Pan 2017; Manrique 2019), and curriculum structure affects completion (Molontay 2020). Code matches: an inferred graph orders the levels.",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M3": {
+  "name": "Placement over the skill graph skips what the learner already knows",
+  "where": "`services/material-path.js:66-195` (answerModel, belief, nextPlacement, placementResult); `services/material-study.js:183-275` (placementNext, placementAnswer, finishPlacement); `services/adaptive-placement.js:66-71` (assumed)",
+  "verdict": "moderate",
+  "note": "Adaptive testing estimates a level from few answers (Cheng 2000), Bayesian learner models support it (Tadlaoui 2015; Eryilmaz 2020), and knowledge-space placement was examined at scale (Doble 2019). Against: testing is itself practice, so skipping what is judged known removes some retrieval (Polack 2022). Code matches; the skip threshold is a design choice.",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M4": {
+  "name": "Difficulty tiers inside a skill, harder after mastery",
+  "where": "`services/material-path.js:196-237` (updatePace, startTier, practiceCount, tierAfter, pickForTier); `services/material-study.js:278-305, 323-344, 374-466` (lesson, pickQuestions, submit)",
+  "verdict": "moderate",
+  "note": "The expertise reversal effect is supported by a meta-analysis (Tetzlaff 2025; Kalyuga 2003; Leppink 2011): support that helps novices can hinder learners who know more, which is what harder tiers after mastery do. Guidance generally helps (Lazonder 2016), and not every added difficulty pays off (Dobson 2011). Code matches.",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M5": {
+  "name": "Mastery before moving on (75%)",
+  "where": "`services/material-path.js:34` (PASS); `services/material-study.js:346-466` (startQuiz, submit)",
+  "verdict": "mixed",
+  "note": "Mastery learning raised exam performance in a meta-analysis (Kulik 1990), but a synthesis of longer school studies found little effect (Slavin 1990), and the mastery criterion itself matters (Pelanek 2018). The 75% bar is a design choice (07-P2).",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M6": {
+  "name": "Remediation at the misconception behind a wrong answer",
+  "where": "`services/course-builder.js:142-171` (SKILL_SCHEMA misconceptions), 279-318 (cleanQuestion); `services/material-study.js:85-90` (misconceptionOf), 278-305 (lesson remediation), 420-462 (submit)",
+  "verdict": "moderate",
+  "note": "Elaborated feedback beats knowledge of results (van der Kleij 2015; Swart 2019), multiple-choice distractors can diagnose conceptions (Tamir 1990), and refutation texts reduce misconceptions (Broughton 2010). Mixed results (Palmer 2003) and a critique of the misconception frame (Maskiewicz 2013) argue for building on what the learner already thinks. Code matches.",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M7": {
+  "name": "Retrieval practice with feedback",
+  "where": "`services/material-study.js:278-321` (lesson, practice), 346-466 (startQuiz, submit)",
+  "verdict": "strong",
+  "note": "Practice tests beat restudy across many experiments (Adesope 2017) and in real classrooms (Agarwal 2021; Schwieren 2017). Exceptions exist (Goossens 2016; Racsmany 2020). Code matches.",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M8": {
+  "name": "Interleaving earlier skills into new checks and mixing reviews",
+  "where": "`services/material-study.js:323-344` (pickQuestions), 440-450 (interleaved result handling)",
+  "verdict": "moderate",
+  "note": "Interleaving beat blocking in a preregistered classroom trial in mathematics (Rohrer 2020; Rohrer 2015) and helps most when items are similar (Brunmair 2019; Firth 2021). It did not help critical-thinking practice (van Peppen 2021). Code matches.",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M9": {
+  "name": "Spaced review timed to this learner's forgetting",
+  "where": "`services/material-path.js:238-256` (recall, intervalDays, updateForgetting); `services/scorecard/forgetting.js:88-110, 308-314` (predict, recallAt); `services/material-study.js:139-145` (scheduleReview), 413-432 (review grading)",
+  "verdict": "moderate",
+  "note": "Spacing improves retention, with the best gap depending on the retention interval (Cepeda 2006; 2008). Per-learner review timing from a memory model beat massed study in a school language course (Lindsey 2014), and half-life models predict recall (Settles 2016). This exact forgetting update is a design choice. Code matches.",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M10": {
+  "name": "Questions and lessons generated from the learner's text by a language model",
+  "where": "`services/course-builder.js:354-413` (buildSkill), 272-277 (shuffleChoices)",
+  "verdict": "mixed",
+  "note": "Hand-written items are costly and automatic generation is an established field (Kurdi 2020). Expert reviewers rated LLM-generated questions highly in two studies (Wang 2024; Mistry 2024), but one found problems with some items (Ahmed 2024). That is why every item is tied to a quote (07-M11) and checked (07-M12).",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M11": {
+  "name": "Every question is tied to a quote from the source",
+  "where": "`services/course-builder.js:255-318` (namingLine, cleanQuestion)",
+  "verdict": "design choice",
+  "note": "Language models produce unsupported text (Ji 2023) and invent references (Mugaanyi 2024); grounding in retrieved text is the standard remedy (Neha 2025), but even citation systems often cite text that does not fully support the claim (Gao 2023). Requiring a quote found verbatim in the source is a stricter version of that remedy. No study tests it in a learning app.",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M12": {
+  "name": "A second model checks every item before a learner sees it, and independent checkers audit the result",
+  "where": "`services/course-builder.js:390-413` (support check), 483-500 (retry of a dropped skill); `scripts/material-proof-check.js` (independent checkers, planted errors)",
+  "verdict": "design choice",
+  "note": "Strong language-model judges can approach human agreement (Zheng 2023), self-verification reduces errors (Dhuliawala 2024), and inconsistency between samples flags invention (Manakul 2023). Judging is not automatic: juries helped on only one criterion in one setting (Williams 2026), and judges track experts best on factual criteria (Genovese 2026). The two-family panel with planted errors is a design choice.",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ },
+ "07-M13": {
+  "name": "Privacy and deletion of uploaded material",
+  "where": "`services/materials.js:96-140` (add, remove); `services/course-builder.js:554-557` (removeForMaterial); `services/typed-grading.js:579-592` (outsideAllowed); `routes/materials.js` (owner checks, child upload gate)",
+  "verdict": "design choice",
+  "note": "Learning analytics needs explicit, checkable privacy safeguards (Drachsler 2016); students want to know what is collected and to control it (Jones 2020; Mutimukwe 2022); and children's data needs particular care (Gray 2020; Adams 2023). Technical controls alone are not enough (Prinsloo 2022). Code matches: per-learner storage, the file kept only until its text is extracted, real deletion.",
+  "status": "Built on branch `own-material-paths`, 29-30 October 2026; not yet merged into the live app."
+ }
+}
