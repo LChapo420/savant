@@ -19,6 +19,12 @@
  *   POST   /api/materials/:id/pack     start building the study pack (summary, flashcards, quiz, practice test; 202)
  *   GET    /api/materials/:id/pack     the pack's status and content (no answer keys)
  *   POST   /api/materials/:id/pack/grade   { section: quiz|test, answers } marked on the server
+ *   GET    /api/materials/:id/cards        the flashcard deck (pack cards, your misses, your own) with what is due
+ *   GET    /api/materials/:id/cards/due    the cards due now
+ *   POST   /api/materials/:id/cards        { front, back } write a card
+ *   POST   /api/materials/:id/cards/review { card, rating: again|hard|good|easy }
+ *   PATCH  /api/materials/:id/cards/:card  { front?, back? } edit a card
+ *   DELETE /api/materials/:id/cards/:card
  *   POST   /api/materials/:id/study/submit         { quiz_id, answers } graded on the server
  *
  * Child accounts cannot upload or paste (routes/consent.js CHILD_MEDIA_UPLOAD); they can still delete.
@@ -31,6 +37,7 @@ const courses = require('../services/course-builder');
 const extend = require('../services/course-extend');
 const study = require('../services/material-study');
 const packs = require('../services/material-pack');
+const cards = require('../services/material-cards');
 
 const router = express.Router();
 
@@ -131,6 +138,22 @@ router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-g
   if (out.error) return res.status(out.code === 'no_pack' ? 404 : 400).json({ error: out.error, code: out.code });
   res.json(out);
 });
+
+const CARD_STATUS = { not_found: 404, no_card: 404, full: 409 };
+function cardReply(res, out) {
+  if (out.error) return res.status(CARD_STATUS[out.code] || 400).json({ error: out.error, code: out.code });
+  return res.json(out);
+}
+const cardBody = express.json({ limit: '16kb' });
+router.get('/:id/cards', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.deck(req.user.id, req.params.id)));
+router.get('/:id/cards/due', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.due(req.user.id, req.params.id, Number(req.query.limit) || 20)));
+router.post('/:id/cards/review', requireAuth, ownMaterial, limit('materials-cards-review', 600, 60 * 60 * 1000), cardBody, (req, res) => {
+  const b = req.body || {};
+  cardReply(res, cards.review(req.user.id, req.params.id, String(b.card || ''), String(b.rating || '')));
+});
+router.post('/:id/cards', requireAuth, ownMaterial, limit('materials-cards-write', 120, 60 * 60 * 1000), cardBody, (req, res) => cardReply(res, cards.add(req.user.id, req.params.id, req.body)));
+router.patch('/:id/cards/:card', requireAuth, ownMaterial, limit('materials-cards-write', 120, 60 * 60 * 1000), cardBody, (req, res) => cardReply(res, cards.edit(req.user.id, req.params.id, req.params.card, req.body)));
+router.delete('/:id/cards/:card', requireAuth, ownMaterial, limit('materials-cards-write', 120, 60 * 60 * 1000), (req, res) => cardReply(res, cards.remove(req.user.id, req.params.id, req.params.card)));
 
 const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, already_placed: 409, nothing_due: 409, use_placement: 409, not_practice: 409 };
 function studyReply(res, out, key) {

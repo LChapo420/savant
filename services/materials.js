@@ -132,6 +132,7 @@ function remove(userId, id) {
   if (n) {
     require('./course-builder').removeForMaterial(userId, id); // eslint-disable-line global-require
     require('./material-pack').removeForMaterial(userId, id); // eslint-disable-line global-require
+    require('./material-cards').removeForMaterial(userId, id); // eslint-disable-line global-require
     db.flush();
   }
   return n > 0;

@@ -63,7 +63,7 @@ App.mount(async () => {
     }
     if (tab === 'cards') {
       if (!pack.cards.length) return '<p class="muted">No flashcards passed the checks for this material.</p>';
-      return `<p class="small muted">${pack.cards.length} cards. Tap a card to flip it.</p><div>${pack.cards.map((c) => {
+      return `<p class="small muted">${pack.cards.length} cards. Tap a card to flip it. <a href="/my-material-cards?id=${encodeURIComponent(id)}">Review, edit and add cards (spaced)</a></p><div>${pack.cards.map((c) => {
         const open = flipped.has(c.id);
         return `<button type="button" class="card" data-card="${esc(c.id)}" aria-expanded="${open}" style="display:block;width:100%;text-align:left;margin-bottom:10px"><strong>${esc(c.front)}</strong>${open ? `<p style="margin:8px 0 0">${esc(c.back)}</p><p class="tiny muted" style="margin:6px 0 0">From your material: “${esc(c.quote)}”</p>` : ''}</button>`;
       }).join('')}</div>`;
