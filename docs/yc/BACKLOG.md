@@ -79,7 +79,7 @@ S4. **DONE on `studley-parity` (e22f626), see Done. Leftover: S4b.** **A tutor g
 S4b. **Grounded tutor leftovers.** (1) Try it with a live model and a real upload on the owner's machine: does it answer from the passages and say so when the material does not cover it? (2) Retrieval is word overlap only (no stemming, no synonyms); look at misses on real questions before adding anything heavier. (3) Method-only pages get no source text; a lesson view that is separate from the check could get passages later. Reason: this run had no keys or browser.
 S5. **First slice DONE on `studley-parity` (e6b3e43), see Done. Remaining: S5b.** More inputs, no new vendor.
 S5b. **Input leftovers.** (1) Several files merged into one course at upload time (today: add a second material to a path with `course/add`, which already merges skills). (2) Try a real PPTX exported from PowerPoint and Google Slides, and a few real web pages (news, Wikipedia, a blog), on the owner's machine: check the article extraction keeps the right text. (3) Pages that need JavaScript to show text give "hardly any readable text"; decide whether that is enough. (4) Look at the two new cards on /my-material at 375 px in a real browser. Reason: this run had no browser or network.
-S6. **Podcast from the material, and a version built from the learner's weak spots.**
+S6. [claimed 2026-10-30T05:17Z] **Podcast from the material, and a version built from the learner's weak spots.**
    - A two-voice script generated as text.
    - Played with the browser's speech synthesis only (play/pause, speed, skip).
    - No paid voice vendor.
