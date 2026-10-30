@@ -56,8 +56,8 @@ T2. [done 668b952] **Long-term learner memory.** A per-learner store of durable 
 T3. [done 73c4862] **Use it in every reply.** In `tutor-context.js`, pick the facts relevant to this page and question (skill
     match, recency, strength) within a fixed token budget, plus current mastery on the page's skill. Test: a
     misconception recorded on day 1 shapes the hint on day 5 on a related skill; an unrelated fact is not sent.
-T4. [claimed 07:09Z] **Understands how they learn.** Choose the explanation strategy (worked example, analogy, step questions,
 T3b. [done 2fe3f6a] **Read the learner record.** Feed `services/learner-record.js` solid facts (struggles, hint ideas) into the same relevance choice as `tutor-facts` for the page's skill, so the biggest unused source reaches the tutor (06-M6, 06-M8).
+T4. [claimed 07:09Z] **Understands how they learn.** Choose the explanation strategy (worked example, analogy, step questions,
     visual description, short vs long) from what has worked for this learner (T2 facts and scorecard signals), with
     a fallback order from the 06 mechanisms. Test with two simulated learners with opposite histories: they get
     different strategies, and each strategy that fails is tried less.
