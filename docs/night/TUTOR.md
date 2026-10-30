@@ -53,7 +53,7 @@ T2. [done 668b952] **Long-term learner memory.** A per-learner store of durable 
       capped, each fact with its source turn and date; facts not confirmed for a long time fade.
     - The learner can see and delete each fact on the Profile ("What your tutor remembers"). Export and account
       deletion include it. Update the privacy page.
-T3. **Use it in every reply.** In `tutor-context.js`, pick the facts relevant to this page and question (skill
+T3. [claimed 06:58Z] **Use it in every reply.** In `tutor-context.js`, pick the facts relevant to this page and question (skill
     match, recency, strength) within a fixed token budget, plus current mastery on the page's skill. Test: a
     misconception recorded on day 1 shapes the hint on day 5 on a related skill; an unrelated fact is not sent.
 T4. **Understands how they learn.** Choose the explanation strategy (worked example, analogy, step questions,
