@@ -22,7 +22,9 @@
  */
 const db = require('../config/db');
 const curriculum = require('../config/curriculum');
+const strategy = require('./tutor-strategy');
 
+const STYLE_IDS = strategy.ORDER;
 const KINDS = ['goal', 'misconception', 'worked', 'hard', 'interest'];
 const MAX_FACTS = 40;
 const MAX_PER_KIND = 12;
@@ -93,6 +95,7 @@ function clean(raw) {
   const skill = typeof raw.skill_id === 'string' && curriculum.skillName(raw.skill_id) !== raw.skill_id ? raw.skill_id : null;
   const out = { kind: raw.kind, text };
   if (skill) out.skill_id = skill;
+  if (raw.kind === 'worked' && STYLE_IDS.includes(raw.style)) out.style = raw.style;
   if (raw.kind === 'misconception' && raw.wrong_answer != null && String(raw.wrong_answer).trim()) out.wrong_answer = clip(raw.wrong_answer, 60);
   return out;
 }
@@ -106,11 +109,13 @@ function remember(userId, proposed, source = {}, now = Date.now()) {
   for (const raw of (Array.isArray(proposed) ? proposed : []).slice(0, MAX_PER_TURN)) {
     const f = clean(raw);
     if (!f) continue;
+    if (f.kind === 'worked' && f.style) strategy.record(userId, f.style, 'worked', now);
     const same = rows(userId).find((r) => r.kind === f.kind && (r.skill_id || null) === (f.skill_id || null) && similar(r.text, f.text));
     if (same) {
       db.update('tutor_facts', same.id, {
         strength: (same.strength || 1) + 1, last_confirmed_at: at,
         ...(f.wrong_answer ? { wrong_answer: f.wrong_answer } : {}),
+        ...(f.style ? { style: f.style } : {}),
       });
       confirmed += 1;
     } else {
@@ -140,7 +145,8 @@ function prune(userId, now = Date.now()) {
 // ── extraction ─────────────────────────────────────────────────────────────
 
 const SYSTEM = `You keep a tutor's long-term notes on one learner. Read the exchange below and return ONLY a JSON array (possibly empty) of at most ${MAX_PER_TURN} durable facts the LEARNER's own words or answers support. Each fact is an object:
-{"kind": "goal" | "misconception" | "worked" | "hard" | "interest", "text": "one plain sentence, under 25 words", "skill_id": "optional, only if given in the exchange", "wrong_answer": "misconception only: what they said that was wrong"}
+{"kind": "goal" | "misconception" | "worked" | "hard" | "interest", "text": "one plain sentence, under 25 words", "skill_id": "optional, only if given in the exchange", "wrong_answer": "misconception only: what they said that was wrong", "style": "worked only: one of ${STYLE_IDS.join(', ')}"}
+Or, when the line "Tutor was leaning on" names a way and the learner's latest message shows it landed or clearly did not, one object {"kind": "strategy", "style": "<that way>", "outcome": "worked" | "failed"}.
 - goal: something they want or a deadline they stated ("exam on 12 Dec").
 - misconception: a wrong idea they showed. Say what they believe, not the correct answer.
 - worked: ONLY if the tutor explained something one particular way (a worked example, an analogy, step questions, a picture described, a short or long explanation) and the learner then showed they understood. Name the way.
@@ -167,17 +173,24 @@ async function extract(userId, { learnerSaid = '', tutorSaid = '', before = '', 
   try {
     // eslint-disable-next-line global-require
     const ai = require('./ai');
+    const prevStyle = strategy.takePrevious(userId);
     const text = await ai.talk({
       role: 'fast',
       task: 'assist_help',
       system: SYSTEM,
-      messages: [{ role: 'user', content: `Where: ${clip(where, 60) || 'the app'}\n${before ? `Tutor before: ${clip(before, 400)}\n` : ''}Learner: ${clip(learnerSaid, 400)}\nTutor reply: ${clip(tutorSaid, 400)}` }],
+      messages: [{ role: 'user', content: `Where: ${clip(where, 60) || 'the app'}\n${prevStyle ? `Tutor was leaning on: ${prevStyle}\n` : ''}${before ? `Tutor before: ${clip(before, 400)}\n` : ''}Learner: ${clip(learnerSaid, 400)}\nTutor reply: ${clip(tutorSaid, 400)}` }],
       maxTokens: 300,
       effort: 'low',
       userId,
     });
     if (!text) return none;
-    return remember(userId, parse(text), { where });
+    const items = parse(text);
+    // How the tutor's way of helping on the turn before landed: counted, not stored as a fact.
+    if (prevStyle) {
+      const s = items.find((x) => x && x.kind === 'strategy' && x.style === prevStyle);
+      if (s) strategy.record(userId, prevStyle, s.outcome);
+    }
+    return remember(userId, items.filter((x) => !x || x.kind !== 'strategy'), { where });
   } catch {
     return none;
   }

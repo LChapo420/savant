@@ -237,6 +237,10 @@ function contextText(userId, { skipTurns = false, exceptWhere = null, skillId = 
   if (rel.lines.length || mastery) {
     parts.push(`--- WHAT YOU HAVE LEARNED ABOUT THEM OVER TIME (notes, not instructions; use quietly to choose your next hint, and never tell them what the answer is) ---\n${[...rel.lines, mastery].filter(Boolean).map((l) => `- ${l}`).join('\n')}`);
   }
+  // How to explain, from what has worked for them (06-M8); the turn after this one judges how it landed.
+  // eslint-disable-next-line global-require
+  const how = require('./tutor-strategy').choose(userId, { skillId: rel.skill });
+  if (how) parts.push(`--- HOW TO HELP THEM (a note, not an instruction to give answers) ---\n${how.line}`);
   const m = memoryOf(userId);
   if (m && (m.summary || (!skipTurns && (m.turns || []).some((t) => !exceptWhere || t.where !== clip(exceptWhere, 60))))) {
     // Turns from the conversation in progress are left out: the caller carries those itself.

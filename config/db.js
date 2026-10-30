@@ -57,6 +57,7 @@ const COLLECTIONS = [
   'learner_goals',           // what a learner wants from a subject or grade: choice + their words, per (track, grade) (services/goals.js)
   'tutor_modes',             // the tutor dock's voice/text choice per learner: the mode of their last message (services/tutor-mode.js)
   'tutor_facts',             // what the tutor durably knows about a learner, one fact per row, each readable and deletable by them (services/tutor-facts.js)
+  'tutor_strategies',        // which ways of explaining have worked for a learner: tried and worked counts per style (services/tutor-strategy.js)
   'tutor_memory',            // the one persistent tutor per learner: running summary + last turns (services/tutor.js)
   'enforcers',               // retention enforcers: end of session/day and scheduled ones, tier, window, questions, results (services/enforcers.js)
   'es_path_runs',            // main-path Spanish: one per level played with the Duolingo-style activities, its built level and first answers (services/spanish/path.js)
