@@ -245,11 +245,13 @@ router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-g
   res.json(out);
 });
 
-router.get('/:id/notes', requireAuth, ownMaterial, (req, res) => res.json({ notes: notes.view(notes.get(req.user.id, req.params.id)) }));
+router.get('/:id/notes', requireAuth, ownMaterial, (req, res) => res.json({ notes: notes.view(notes.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `notes:${Number(req.params.id)}`) }));
 router.post('/:id/notes', requireAuth, ownMaterial, limit('materials-notes', 6, 60 * 60 * 1000), (req, res) => {
   const existing = notes.get(req.user.id, req.params.id);
   if (existing && existing.status === 'ready' && existing.version === notes.VERSION) return res.json({ notes: notes.view(existing), cached: true });
-  notes.build(req.user.id, req.params.id, {}).then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-notes: ${out.code}`); });
+  const userId = req.user.id;
+  const id = Number(req.params.id);
+  queueBuild(userId, `notes:${id}`, () => notes.build(userId, id, {}).then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-notes: ${out.code}`); }));
   res.status(202).json({ started: true });
 });
 router.get('/:id/podcast', requireAuth, ownMaterial, (req, res) => res.json({ ...podcast.options(req.user.id, req.params.id), activity: ['overview', 'weak'].reduce((a, k) => ({ ...a, ...activityOf(req.user.id, `podcast:${Number(req.params.id)}:${k}`) }), {}) }));
