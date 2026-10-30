@@ -152,8 +152,9 @@ function plan(userId, { skillId = null, history = [], mode = 'full', commit = tr
   if (l.productive_struggle > 0 && rec.streak < 3) { start = Math.max(1, start - 1); reasons.push('benefits from struggling a little first'); }
   if (l.self_efficacy < 0) reasons.push('doubts they can learn this: make the first step clearly achievable and say they did it');
   let rung = start;
-  // This chat: climb one rung for each reply they have already had and are still stuck after (06-M4); an attempt gets a reply at the same size.
-  if (chat.replies > 0 && !chat.attempt) rung = start + Math.min(chat.replies, chat.stuck ? 3 : 2);
+  // This chat: climb one rung for each reply they have already had and are still stuck after (06-M4); an attempt gets a reply at the same size,
+  // and a message that is not about being stuck (small talk, a thank you) climbs at most one.
+  if (chat.replies > 0 && !chat.attempt) rung = start + Math.min(chat.replies, chat.stuck ? 3 : 1);
   rung = clampRung(Math.min(rung, max));
   // A method-only page: approach only, never past naming the idea (06-M3).
   const methodOnly = mode === 'method';

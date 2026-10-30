@@ -142,7 +142,7 @@ const standardCompute = {
   async chat({ task = null, system, messages, maxTokens = 1024, effort = null, timeoutMs = null, signal = null, tutor = null, temperature = 0 }) {
     const model = tutor ? require('../tutor-standard-compute').modelName() : MODEL(); // eslint-disable-line global-require
     const { payload, usage } = await post(
-      { model, messages: [...(system ? [{ role: 'system', content: String(system) }] : []), ...(messages || []).map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content || '') }))], max_tokens: Number(maxTokens) || 1024, temperature: Math.min(1, Math.max(0, Number(temperature) || 0)), ...(tutor && !effort ? { reasoning_effort: 'none' } : reasoning(effort)) }, // a live chat: no hidden thinking (measured 30 Oct: about 0.6 s faster, same answers)
+      { model, messages: [...(system ? [{ role: 'system', content: String(system) }] : []), ...(messages || []).map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content || '') }))], max_tokens: Number(maxTokens) || 1024, temperature: Math.min(1, Math.max(0, Number(temperature) || 0)), ...(tutor && !['medium', 'high', 'max'].includes(effort) ? { reasoning_effort: 'none' } : reasoning(effort)) }, // a live chat: no hidden thinking (measured 30 Oct: about 0.6 s faster, same answers)
       timeoutMs || Number(process.env.STANDARD_COMPUTE_TIMEOUT_MS) || 180000, { signal, task, tutor },
     );
     const text = sj.stripThinking(payload.choices && payload.choices[0] && payload.choices[0].message && payload.choices[0].message.content);

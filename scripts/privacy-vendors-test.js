@@ -12,6 +12,8 @@ const vendors = [
   ['modelflare', 'modelflare'], ['openrouter', 'openrouter'], ['anthropic', 'anthropic'],
   ['gemini', 'generativelanguage.googleapis.com'], ['mimo', 'xiaomimimo'], ['nvidia', 'nvidia'],
   ['llm gateway', 'llmgateway.io'],
+  // The tutor may use it for learners (owner, 30 Oct 2026; services/tutor-standard-compute.js).
+  ['standard compute', 'stdcmpt'],
 ];
 for (const [name] of vendors) check(`policy names ${name}`, policy.includes(name));
 check('voice.js still uses the LLM Gateway (so the policy line is needed)', voice.includes('llmgateway.io'));
