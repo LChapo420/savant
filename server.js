@@ -131,6 +131,7 @@ app.use('/api/placement', require('./routes/placement'));
 // percentage per grade for the learner who does not know where to start.
 app.use('/api/subject-placement', require('./routes/subject-placement'));
 app.use('/api/gap-scan', require('./routes/gap-scan')); // earlier-grade gaps after the subject placement, offered as a catch-up
+app.use('/api/catchup', require('./routes/catchup')); // Catch me up to grade N for math, english, reading (services/catchup-units.js)
 app.use('/api', require('./routes/learn'));
 app.use('/api', require('./routes/essays'));
 app.use('/api', require('./routes/remediation'));
