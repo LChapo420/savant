@@ -143,9 +143,18 @@ function recordAttempt({ userId, skillId, correct, difficulty, levelDifficulty, 
 /** Skills whose review is due now, weakest and most overdue first. */
 function dueReviews(userId, skillIds, limit = 3) {
   const now = Date.now();
+  // The learner's own spacing (services/learning-spec.js review.spacingScale): the gap between the last answer
+  // and the review is stretched or shortened, within 0.6x to 1.25x. 1x for a learner with no spec.
+  // eslint-disable-next-line global-require
+  const scale = require('./learning-spec').reviewFor(userId).spacingScale;
+  const dueAt = (s) => {
+    const due = Date.parse(s.next_due_at);
+    const last = Date.parse(s.last_seen_at);
+    return scale === 1 || !Number.isFinite(last) || due <= last ? due : last + (due - last) * scale;
+  };
   return skillIds
     .map((id) => stateFor(userId, id))
-    .filter((s) => s.attempts > 0 && s.next_due_at && Date.parse(s.next_due_at) <= now)
+    .filter((s) => s.attempts > 0 && s.next_due_at && dueAt(s) <= now)
     .sort((a, b) => (a.mastery - b.mastery) || (Date.parse(a.next_due_at) - Date.parse(b.next_due_at)))
     .slice(0, limit);
 }

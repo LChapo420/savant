@@ -510,6 +510,22 @@ npm run scorecard:prompt -- someone@example.com english/proficient/105 --full   
 The same section, on its own, is available to any one-prompt generator (lessons,
 true/false, tic-tac-toe, connect four...) at `GET /api/scorecard/prompt-block`.
 
+## The learning spec: every metric shapes every build
+
+The founder's rule (31 Oct 2026): every metric of a learner's scorecard, with their interests, hobbies, dislikes and any other context, must shape how any material, curriculum, lesson, level or test is rebuilt for them. It still teaches the same topic and the same ideas; only how they are delivered changes.
+
+`services/learning-spec.js` is the one place that decides it. `buildSpec(userId, { skillIds, topic, trackId, gradeId })` returns a spec, and `specToPrompt(spec)` turns it into the block a writer is given.
+
+- **Every metric has a rule.** `METRIC_RULES` maps each of the 100 metrics to one or more levers (chunk size, pace, hint size, worked-example ratio, review spacing, tone, ...), with a direction, a weight, a one-line rule and an evidence id where one exists (`03-M17` is mechanism 17 of the evidence article's section 03). A metric with no rule fails `scripts/learning-spec-test.js`. A rule with no mechanism behind it says so (`ev: null`): it follows the metric's own definition, not a finding.
+- **Confidence weights it.** A metric moves a lever by `direction x weight x z x confidence`, where z is the measured score's distance from 50 and confidence is how sure the app is. Nothing the app is not sure of moves anything; a reading it is half sure of moves half as far. The sum goes through `tanh`, so the result is bounded and monotonic: more of a metric never moves a lever against its documented direction (the test checks this on 400 random raises).
+- **Context joins the same sums.** Age, English as a second language, the topic's mastery, the learner's goal, a disliked subject, the device and session length add to the same levers (`CONTEXT_RULES`), so the scorecard and the context cannot contradict each other.
+- **Interests and dislikes.** Interests (the survey, tutor facts, solid record facts) become example domains. Dislikes (the record, the survey notes, a dislikes field) become avoided domains; an interest that is also disliked is dropped; a dislike of the subject itself becomes an aversion that lowers the stakes and shrinks the first step.
+- **Same content.** Every block opens with the content contract (same topic, skills and key facts). After a lesson is written, `checkFollowed` checks the avoided domains, interests, sentence length, vocabulary, the profile showing through, and that the key facts are still taught; one problem or more means one revision with the problems named, and a revision that loses a key fact is thrown away.
+- **Nothing changes for a learner we know nothing about, or for the owner.** The default spec writes no block and every generator behaves as before.
+- **No learner number reaches a model.** The block holds instructions (sentence length, number of checks), not scores.
+
+Who reads it: the lesson writer (`services/lessons.js`, `ai.generateLesson`), the level editor and block levels (through `details.brief`), adaptation's plan and review queue, the SM-2 review (`mastery.dueReviews`), the tutor plan and the coach brief, the study pack, notes, podcast and course builder, the practice test, the own-material schedule and practice size, the passages shown to the tutor, the quick-check clock and skill practice. `docs/SCORECARD-MAP.md` lists every metric, who reads it and whether it changes anything (written by `scripts/scorecard-usage-audit.js`); `docs/SCORECARD-PROOF.md` is the measured result on 16 synthetic learners.
+
 ## What is checked before a rewrite is served
 
 The existing page contract (`inspect` and `truncated` in

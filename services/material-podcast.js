@@ -21,6 +21,7 @@ const db = require('../config/db');
 const materials = require('./materials');
 const courses = require('./course-builder');
 const pack = require('./material-pack');
+const learningSpec = require('./learning-spec');
 
 const VERSION = 1;
 const KINDS = ['overview', 'weak'];
@@ -136,12 +137,15 @@ const wordsIn = (s) => String(s || '').trim().split(/\s+/).filter(Boolean).lengt
  * Where the check-ins go: after a turn once three minutes of speech have passed since the last one (150 words a
  * minute), never on the last two turns and never more than MAX_CHECKINS. Pure. [{ after, words }]
  */
-function checkinSlots(turns) {
+function checkinSlots(turns, spec = null) {
   const out = [];
   let since = 0;
+  // A check-in every three minutes of speech; a learner who needs a check after every small piece (spec.lesson.checkEveryChunks
+  // 1) gets one about every two minutes, one who prefers a long stretch (3) about every four.
+  const every = spec && !spec.isDefault ? CHECKIN_WORDS * ({ 1: 0.67, 2: 1, 3: 1.33 }[spec.lesson.checkEveryChunks] || 1) : CHECKIN_WORDS;
   for (let i = 0; i < (turns || []).length; i++) {
     since += wordsIn(turns[i].text);
-    if (since < CHECKIN_WORDS || i >= turns.length - 2) continue;
+    if (since < every || i >= turns.length - 2) continue;
     out.push({ after: i, words: since });
     since = 0;
     if (out.length >= MAX_CHECKINS) break;
@@ -298,13 +302,17 @@ async function build(userId, materialId, opts = {}) {
       ? `\n\nThis episode is only about the listener's weak spots:\n${weak.map((w, i) => `${i + 1}. ${w.skill.title}${w.due ? ' (due for review: they are about to forget it)' : ''}${w.wrong ? ` (missed ${w.wrong} time${w.wrong > 1 ? 's' : ''})` : ''}. Key points: ${((w.skill.lesson && w.skill.lesson.key_points) || []).slice(0, 4).map((k) => clean(k, 160)).join('; ') || clean(w.skill.summary, 200)}${w.mis.length ? `. Mix-ups they had: ${w.mis.join(' | ')}` : ''}`).join('\n')}\nSpend most time on the mix-ups: name the wrong idea gently, then give the right one.`
       : '\n\nTalk through the main ideas of the whole material in the order it teaches them.';
     const text = shown.map((p) => `[${p.id}]\n${p.text}`).join('\n\n');
+    // The listener's own spec (services/learning-spec.js): wording, pace and tone; the script is still only the material's.
+    const spec = learningSpec.buildSpec(userId, {});
+    const block = learningSpec.specToLines(spec, { surface: 'podcast' }).join('\n');
     const args = {
       role: 'fast', task: 'material_podcast', schema: SCRIPT_SCHEMA, schemaName: 'material_podcast', maxTokens: 5000, dataClass: 'learner', userId,
       system: `You write a short podcast script for a student: two friendly hosts, A and B, talking about the student's own study material. ${UNTRUSTED} `
         + 'Host A explains; host B asks the questions a student would ask, checks understanding and gives small examples that are in the text. '
         + `Write ${MIN_TURNS * 2} to ${MAX_TURNS - 8} turns of one to three plain spoken sentences each: no markdown, no stage directions, no sound effects, nothing a speech voice would read badly. Start with a one-line welcome and end with a one-line recap. `
         + 'Every turn that states a fact needs passage_id (one of the ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows it. Short linking turns need no quote. Leave out anything you cannot back with a quote.' + focus
-        + (skills.length ? `\n\nAlso write check-in questions for the listener, one about each of these skills, using its id: ${skills.map((s) => `${s.id} (${clean(s.title, 60)})`).join(', ')}. Each is a short question about a fact the script states, with three or four answer choices and answer_index counting the right one from 0. No hints in the prompt, and no "all of the above".` : ''),
+        + (skills.length ? `\n\nAlso write check-in questions for the listener, one about each of these skills, using its id: ${skills.map((s) => `${s.id} (${clean(s.title, 60)})`).join(', ')}. Each is a short question about a fact the script states, with three or four answer choices and answer_index counting the right one from 0. No hints in the prompt, and no "all of the above".` : '')
+        + (block ? `\n\n${block}` : ''),
       user: `Title: ${mat.title}\n\nPassages:\n${text}`,
     };
     const cost = estTokens(args.system, args.user) + args.maxTokens;
@@ -326,7 +334,7 @@ async function build(userId, materialId, opts = {}) {
       db.flush();
       return { error: 'An episode could not be made from that material. Try a longer or clearer text.', code: 'nothing_verified' };
     }
-    const slots = checkinSlots(data.turns);
+    const slots = checkinSlots(data.turns, spec);
     const checkins = placeCheckins(data.turns, [...packQuiz, ...courseChecks(skills, slots.length), ...data.checkins], slots, slotSkills(data.turns, slots, skills));
     saved = db.update('material_podcasts', saved.id, {
       title: data.title || mat.title, turns: data.turns, skills: weak ? weak.map((w) => ({ id: w.skill.id, title: w.skill.title })) : [], checkins, status: 'ready', models: model ? [model] : [], tokens_used: used, error: null, finished_at: new Date().toISOString(),

@@ -22,6 +22,7 @@ const topics = require('../content/topics');
 const learner = require('./learner');
 const goals = require('./goals');
 const ai = require('./ai');
+const learningSpec = require('./learning-spec');
 
 /** Lessons being written right now, so a prefetch and a request do not collide. */
 const inFlight = new Map();
@@ -234,7 +235,7 @@ function buildFallback({ userId, enrollment, grade, level, skillId }) {
  * for the owner, who gets the base lesson (config/owner.js ownerBase), and on
  * any failure.
  */
-function adaptLines(userId, enrollment, level) {
+function adaptLines(userId, enrollment, level, spec = null) {
   try {
     /* eslint-disable global-require */
     const contract = require('./scorecard/contract');
@@ -242,6 +243,9 @@ function adaptLines(userId, enrollment, level) {
     /* eslint-enable global-require */
     const lines = contract.forPrompt(contract.read(userId, { trackId: enrollment.track_id, gradeId: enrollment.grade_id, memory: false }));
     if (adaptation.mode() === 'on') lines.push(...adaptation.promptLines(adaptation.planForLevel({ userId, enrollment, level })));
+    // The learning spec (services/learning-spec.js): every scorecard metric, interests, dislikes and context,
+    // as one block. Empty for the owner and for a learner we know nothing about.
+    if (spec) lines.push(...learningSpec.specToLines(spec, { surface: 'lesson' }));
     return lines;
   } catch (err) {
     console.warn(`lessons: adaptation lines failed: ${err.message}`);
@@ -275,6 +279,8 @@ async function write({ userId, enrollment, grade, level, urgent }) {
     .slice(-4)
     .map((l) => ({ level: l.level, title: l.title, summary: String(l.summary || '').slice(0, 200) }));
 
+  // How this learner is taught (services/learning-spec.js), for this topic and its skill's mastery.
+  const spec = learningSpec.buildSpec(userId, { skillIds: [skillId], topic: topic ? topic.topic : null, trackId: enrollment.track_id, gradeId: enrollment.grade_id });
   let payload = null;
   if (aiLessonsAllowed()) {
     payload = await ai.generateLesson({
@@ -292,10 +298,13 @@ async function write({ userId, enrollment, grade, level, urgent }) {
       taught,
       urgent,
       userId,
-      extraLines: [...adaptLines(userId, enrollment, level), ...goals.promptLines(userId, enrollment.track_id, enrollment.grade_id)],
+      extraLines: [...adaptLines(userId, enrollment, level, spec), ...goals.promptLines(userId, enrollment.track_id, enrollment.grade_id)],
+      spec,
+      keyFacts: topic && topic.covers ? [topic.covers] : [],
     });
   }
   if (!payload) payload = buildFallback({ userId, enrollment, grade, level, skillId });
+  else if (!spec.isDefault) payload.spec_hash = learningSpec.specHash(spec); // so a later change to the spec can be told from a stale page
   return store(userId, enrollment, level, payload, skillId);
 }
 

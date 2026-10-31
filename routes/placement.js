@@ -409,7 +409,7 @@ function ownedById(req, id) {
  */
 function checkQuestion(enrollment, { clock = true } = {}) {
   const planned = !!learnerPath.planFor(enrollment);
-  if (clock && planned && !learnerPath.checkTimeLeft(enrollment.quick_check_deadline_at)) return null;
+  if (clock && planned && !learnerPath.checkTimeLeft(enrollment.quick_check_deadline_at, Date.now(), enrollment)) return null;
   const next = unitPlacement.nextCheck(enrollment.quick_checks);
   if (!next) return null;
   const item = unitPlacement.itemFor(enrollment.track_id, enrollment.grade_id, next.unit, next.slot);
@@ -419,7 +419,7 @@ function checkQuestion(enrollment, { clock = true } = {}) {
 function checkSummary(enrollment) {
   const checks = enrollment.quick_checks || [];
   const planned = !!learnerPath.planFor(enrollment);
-  const timeLeft = !planned || learnerPath.checkTimeLeft(enrollment.quick_check_deadline_at);
+  const timeLeft = !planned || learnerPath.checkTimeLeft(enrollment.quick_check_deadline_at, Date.now(), enrollment);
   const deadline = planned && enrollment.quick_check_deadline_at ? Date.parse(enrollment.quick_check_deadline_at) : null;
   return {
     total: checks.length,

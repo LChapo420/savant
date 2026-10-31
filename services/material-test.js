@@ -35,6 +35,10 @@ const MAX_JUDGED = 8;
 const JUDGE_WAIT_MS = 20 * 1000;
 const KEEP = 10;
 
+/** This learner's spec (services/learning-spec.js): the time a question gets and how long a test is by default. */
+function specOf(userId) { try { return require('./learning-spec').buildSpec(userId, {}); } catch { return null; } } // eslint-disable-line global-require
+const secondsPer = (spec) => (spec && !spec.isDefault ? Math.round(SECONDS_PER_QUESTION * (spec.lesson.pace === 'slow' ? 1.3 : spec.lesson.pace === 'brisk' ? 0.9 : 1) * (spec.feedback.timers === 'none' ? 1.5 : 1)) : SECONDS_PER_QUESTION);
+const defaultLen = (spec) => (spec && !spec.isDefault ? Math.max(MIN_LEN, Math.min(20, Math.round(DEFAULT_LEN * spec.session.items / 8))) : DEFAULT_LEN);
 const isBlank = (a) => a == null || (typeof a === 'string' && !a.trim());
 
 /** What the test page needs to offer its choices: the skills, how many questions each has, the last results. */
@@ -42,9 +46,12 @@ function options(userId, materialId) {
   const course = I.loadCourse(userId, materialId);
   if (!course) return { error: 'There is no course to test yet.', code: 'no_course' };
   const r = I.row(userId, materialId);
+  const spec = specOf(userId);
   return {
     skills: course.skills.map((s) => ({ id: s.id, title: s.title, unit: s.unit || null, questions: (s.questions || []).length, status: (r.skills[s.id] || {}).status || 'new' })),
-    min: MIN_LEN, max: MAX_LEN, default: DEFAULT_LEN, seconds_per_question: SECONDS_PER_QUESTION,
+    min: MIN_LEN, max: MAX_LEN, default: defaultLen(spec), seconds_per_question: secondsPer(spec),
+    // A learner who does worse when they feel tested is offered the untimed test first.
+    suggest_timed: !(spec && !spec.isDefault && spec.feedback.timers === 'none'),
     open: !!r.test, history: (r.tests || []).slice(-KEEP).reverse(),
   };
 }
@@ -65,12 +72,13 @@ function start(userId, materialId, opts = {}) {
   }
   if (!skills.length) return { error: 'The skills you picked have no questions.', code: 'empty' };
 
-  const n = Number.isFinite(Number(opts.length)) ? Math.round(Number(opts.length)) : DEFAULT_LEN;
+  const spec = specOf(userId);
+  const n = Number.isFinite(Number(opts.length)) ? Math.round(Number(opts.length)) : defaultLen(spec);
   let want = Math.min(MAX_LEN, Math.max(MIN_LEN, n));
   // "Pick for me" (S12): only what this learner does not know yet, due, or missed, sized by how much that is.
   let planned = null;
   if (opts.adapt) {
-    const pl = adapt.plan(course, r, now);
+    const pl = adapt.plan(course, r, now, spec);
     const allowed = new Set(skills.map((s) => s.id));
     const mine = pl.skills.filter((e) => allowed.has(e.id));
     if (!mine.length) return { error: 'Nothing needs practice right now. You know these skills and none is due for review.', code: 'nothing_due', next_due: pl.next_due };
@@ -91,7 +99,7 @@ function start(userId, materialId, opts = {}) {
   }
   const order = I.shuffle(picked, rnd);
   const timed = !!opts.timed;
-  const seconds = timed ? order.length * SECONDS_PER_QUESTION : null;
+  const seconds = timed ? order.length * secondsPer(spec) : null;
   const id = crypto.randomBytes(8).toString('hex');
   r.test = { id, skills: skills.map((s) => s.id), qids: order, timed, seconds, issued_at: new Date(now).toISOString() };
   I.save(r);

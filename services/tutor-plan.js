@@ -36,6 +36,7 @@
 const db = require('../config/db');
 const curriculum = require('../config/curriculum');
 const strategy = require('./tutor-strategy');
+const learningSpec = require('./learning-spec');
 
 const RUNGS = {
   1: 'ask what they tried or where exactly they are stuck',
@@ -96,6 +97,21 @@ function styleShift(l) {
   return shift;
 }
 
+/**
+ * The prior shift the learning spec (services/learning-spec.js explain.modes, ranked from every metric) puts on a way of
+ * explaining. The same size as the scorecard's own, so measured outcomes (tutor-strategy) still overrule it.
+ */
+function specShift(spec) {
+  const out = {};
+  if (!spec || spec.isDefault) return out;
+  const style = { 'analogy': 'analogy', 'visual-spatial': 'visual', 'worked-examples': 'worked_example', 'dialogue': 'step_questions', 'step-by-step': 'step_questions', 'compact': 'brief', 'why-first': 'detailed', 'big-picture': 'detailed', 'concrete-first': 'worked_example', 'story': 'analogy' };
+  spec.explain.modes.forEach((mode, rank) => {
+    const s = style[mode];
+    if (s) out[s] = (out[s] || 0) + [0.12, 0.08, 0.04, 0.02][rank];
+  });
+  return out;
+}
+
 /** This learner's recent record on the skill: mastery, attempts, the miss streak and the most common mix-up. */
 function recordOn(userId, skillId) {
   const out = { mastery: null, attempts: 0, streak: 0, recentMisses: 0, topError: null };
@@ -138,6 +154,9 @@ function plan(userId, { skillId = null, history = [], mode = 'full', commit = tr
   const chat = chatState(history);
   const l = scorecardLeans(userId, lean);
   const reasons = [];
+  // The learner's whole spec (every metric, weighted by confidence). A test that overrides the leans keeps only those.
+  const spec = lean ? null : learningSpec.buildSpec(userId, { skillIds: skill ? [skill] : [] });
+  const live = !!(spec && !spec.isDefault);
 
   // ── hint size: where the ladder starts and the most this reply may climb to ──
   let start = 1;
@@ -151,6 +170,11 @@ function plan(userId, { skillId = null, history = [], mode = 'full', commit = tr
   if (l.hint_dependency > 0 && rec.streak < 3) { start = Math.max(1, start - 1); max = Math.min(max, 4); reasons.push('leans on hints: make them think first'); }
   if (l.productive_struggle > 0 && rec.streak < 3) { start = Math.max(1, start - 1); reasons.push('benefits from struggling a little first'); }
   if (l.self_efficacy < 0) reasons.push('doubts they can learn this: make the first step clearly achievable and say they did it');
+  // The spec's hint size: small nudges for a learner who gains from working it out, generous ones for one who needs support.
+  if (live && rec.streak < 3) {
+    if (spec.scaffolding.hintLevel === 1 && start > 1) { start -= 1; reasons.push('works things out best from a small nudge'); }
+    else if (spec.scaffolding.hintLevel === 3 && start < 3) { start += 1; reasons.push('does best with a clearer first hint'); }
+  }
   let rung = start;
   // This chat: climb one rung for each reply they have already had and are still stuck after (06-M4); an attempt gets a reply at the same size,
   // and a message that is not about being stuck (small talk, a thank you) climbs at most one.
@@ -162,6 +186,7 @@ function plan(userId, { skillId = null, history = [], mode = 'full', commit = tr
 
   // ── the way of explaining: measured first, the scorecard as a prior ──
   const shift = styleShift(l);
+  for (const [style, v] of Object.entries(specShift(spec))) shift[style] = (shift[style] || 0) + v;
   const ranked = strategy.ranked(userId, skill, shift);
   const picked = strategy.choose(userId, { skillId: skill, commit, shift });
   const style = picked ? picked.style : ranked[0].style;
@@ -171,7 +196,7 @@ function plan(userId, { skillId = null, history = [], mode = 'full', commit = tr
   if (winning) reasons.push(`${winning.style.replace(/_/g, ' ')} has worked ${winning.worked} of ${winning.tried} times`);
 
   // ── pace, checking, tone ──
-  const slow = l.processing_velocity < 0 || l.attention_runway < 0 || l.cycle_architecture < 0 || l.chunk_granularity < 0;
+  const slow = l.processing_velocity < 0 || l.attention_runway < 0 || l.cycle_architecture < 0 || l.chunk_granularity < 0 || (live && (spec.lesson.pace === 'slow' || spec.lesson.chunkSentences <= 3));
   const pace = l.brevity_preference > 0 || slow ? 'short: one idea, at most two sentences' : l.brevity_preference < 0 ? 'fuller: three or four sentences, step by step' : 'normal: two or three sentences';
   if (slow) reasons.push('takes things in small pieces');
   const strong = rec.mastery !== null && rec.mastery >= STRONG;
@@ -179,6 +204,10 @@ function plan(userId, { skillId = null, history = [], mode = 'full', commit = tr
     ? 'end by asking them to say the next step in their own words before you add more'
     : strong ? 'only check understanding if they hesitate; otherwise ask them to try the next step' : 'end with one question that makes them do the next small step';
   const tone = [];
+  if (live && spec.feedback.tone.correction === 'gentle' && rec.streak < 3 && !(l.frustration_threshold < 0 || l.feedback_tone_sensitivity > 0)) tone.push('gentle, no blunt "wrong"; name one thing they got right');
+  if (live && spec.feedback.lowStakes) tone.push('keep the stakes low: no "test" language, no countdowns');
+  if (live && spec.feedback.tone.humor === 'light' && l.humor_receptivity === 0) tone.push('a light joke is welcome');
+  if (live && spec.language.plainLanguage) tone.push(`plain words and short sentences (about reading grade ${spec.language.vocabularyGrade})`);
   if (l.frustration_threshold < 0 || l.feedback_tone_sensitivity > 0 || rec.streak >= 3) tone.push('gentle, no blunt "wrong"; name one thing they got right');
   if (l.self_efficacy < 0) tone.push('point out what they already did right');
   if (l.praise_sensitivity > 0) tone.push('praise the effort and the specific move, not the person');
@@ -195,7 +224,7 @@ function plan(userId, { skillId = null, history = [], mode = 'full', commit = tr
     tone.length ? `Tone: ${tone.join('; ')}.` : '',
     rec.topError ? `Their usual mix-up on this skill: ${rec.topError.tag.replace(/_/g, ' ')} (${rec.topError.times} times); aim the hint at it without telling them the answer.` : '',
   ].filter(Boolean);
-  return { rung, start, max, style, avoid, pace, check, tone, reasons, leans: l, record: rec, line: `${parts.join(' ')} This sets the size and style of help only; the rule below about answers still wins.` };
+  return { rung, start, max, style, avoid, pace, check, tone, reasons, leans: l, record: rec, spec: live ? learningSpec.specHash(spec) : null, line: `${parts.join(' ')} This sets the size and style of help only; the rule below about answers still wins.` };
 }
 
 module.exports = { RUNGS, STAT_IDS, LEAN_CONFIDENCE, LEAN_EDGE, plan, leanOf, scorecardLeans, styleShift, recordOn, chatState };

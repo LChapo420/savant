@@ -405,6 +405,12 @@ async function ask(llm, budget, userId, args) {
   return { res };
 }
 
+/** The learner's own spec as a prompt block (services/learning-spec.js): empty for the owner and for a learner we know nothing about. */
+function specBlockFor(userId) {
+  // eslint-disable-next-line global-require
+  return require('./learning-spec').linesFor(userId, {}, 'material').join('\n');
+}
+
 async function buildSkill(skill, passageById, ctx, extra = null) {
   const text = skill.passage_ids.map((id) => `[${id}]\n${passageById.get(id).text}`).join('\n\n').slice(0, SKILL_TEXT_MAX);
   const allowed = new Set(skill.passage_ids);
@@ -423,6 +429,9 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
         + 'Every question needs passage_id (one of the passage ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows the answer is right. A question you cannot back with such a quote must be left out.',
     user: `Skill: ${skill.title}\n${skill.summary ? `About: ${skill.summary}\n` : ''}${extra ? `\nThe student already has these questions. Write different ones that test other parts of the passages, or the same ideas in a new way; do not repeat them:\n${extra.have.slice(0, 40).map((h) => `- ${clean(h, 160)}`).join('\n')}\n` : ''}\nPassages:\n${text}`,
   };
+  // The learner's own spec (services/learning-spec.js): the lesson text is rebuilt for them; the questions, their
+  // quotes and the support check below are unchanged, so the skill still covers the same passages.
+  if (ctx.block) genArgs.system += `\n\n${ctx.block}`;
   // One retry: a free model that is busy or times out often answers the second time.
   let gen = await ask(ctx.llm, ctx.budget, ctx.userId, genArgs);
   if (!res_stopped(gen) && !(gen.res && gen.res.data && gen.res.data.lesson)) gen = await ask(ctx.llm, ctx.budget, ctx.userId, genArgs);
@@ -538,7 +547,7 @@ async function build(userId, materialId, opts = {}) {
     const all = chunk(mat.text);
     const passages = all.slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
+    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
     const base = {
       user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, total_chars: mat.text.length, status: 'building', started_at: new Date().toISOString(),
       passages: passages.map(({ id, start, end }) => ({ id, start, end })), truncated: all.length > passages.length,
@@ -657,7 +666,7 @@ async function retryMissed(userId, materialId, opts = {}) {
   try {
     const passages = chunk(mat.text).slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
+    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
     const most = Math.max(1, Math.min(MAX_SKILLS, Math.ceil(mat.text.length / CHARS_PER_SKILL)));
     const raw = (course.outline || []).map((k) => ({ id: k.id, title: k.title }));
     const fresh = [];
