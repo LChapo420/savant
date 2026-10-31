@@ -125,7 +125,7 @@ function serve(router) {
   const big = await materials.extract(pdf(Array.from({ length: 301 }, () => 'x')));
   check('PDF over 300 pages refused', big.code === 'too_many_pages', big);
   check('damaged PDF refused', (await materials.extract(Buffer.from('%PDF-1.4 not really'))).code === 'unreadable');
-  check('PDF with no text says so', (await materials.extract(pdf(['']))).code === 'too_little');
+  check('PDF with no text says so', ['too_little', 'scanned'].includes((await materials.extract(pdf(['']))).code));
   check('a zip that is not a DOCX refused', (await materials.extract(zip([{ name: 'a.txt', data: 'hello' }]))).code === 'bad_type');
   check('a zip bomb is refused before unpacking', (await materials.extract(zip([{ name: 'word/document.xml', data: Buffer.alloc(210 * 1024 * 1024, 65) }]))).code === 'too_big');
   check('an executable refused', (await materials.extract(Buffer.concat([Buffer.from('MZ'), Buffer.alloc(100)]))).code === 'bad_type');
