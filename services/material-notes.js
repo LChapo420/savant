@@ -16,6 +16,7 @@ const db = require('../config/db');
 const materials = require('./materials');
 const courses = require('./course-builder');
 const pack = require('./material-pack');
+const learningSpec = require('./learning-spec');
 
 const VERSION = 1;
 const MAX_SECTIONS_PART = 5;
@@ -94,6 +95,11 @@ async function build(userId, materialId, opts = {}) {
     const base = { user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, status: 'building', started_at: new Date().toISOString(), sections: [], dropped: 0, coverage: 0, error: null, finished_at: null };
     saved = prev ? db.update('material_notes', prev.id, base) : db.insert('material_notes', base);
     const limit = opts.tokenBudget || TOKEN_BUDGET;
+    // This learner's notes (services/learning-spec.js): bullet size and density follow how they take things in;
+    // every bullet still needs its quote, and the coverage figure below is unchanged.
+    const spec = learningSpec.buildSpec(userId, {});
+    const block = learningSpec.specToLines(spec, { surface: 'notes' }).join('\n');
+    const maxBullets = spec.isDefault ? MAX_BULLETS : Math.max(3, Math.min(MAX_BULLETS, spec.lesson.chunkSentences + 2));
     let used = 0; let stopped = false; let unanswered = 0; let dropped = 0;
     const sections = [];
     const touched = new Set();
@@ -103,8 +109,9 @@ async function build(userId, materialId, opts = {}) {
       const args = {
         role: 'fast', task: 'material_notes', schema: NOTES_SCHEMA, schemaName: 'material_notes', maxTokens: 5000, dataClass: 'learner', userId,
         system: `You write study notes for a student from their own material. ${UNTRUSTED} `
-          + `Write up to ${MAX_SECTIONS_PART} sections in the order the text teaches them. Each has a short heading and 2 to ${MAX_BULLETS} bullets: one plain sentence each that keeps the text's own terms, numbers, names and definitions. Do not leave out a definition, formula or step the text gives. `
-          + 'Every bullet needs passage_id (one of the ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows it. Leave out anything you cannot back with such a quote.',
+          + `Write up to ${MAX_SECTIONS_PART} sections in the order the text teaches them. Each has a short heading and 2 to ${maxBullets} bullets: one plain sentence each that keeps the text's own terms, numbers, names and definitions. Do not leave out a definition, formula or step the text gives. `
+          + 'Every bullet needs passage_id (one of the ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows it. Leave out anything you cannot back with such a quote.'
+          + (block ? `\n\n${block}` : ''),
         user: `Title: ${mat.title}\n\nPassages:\n${text}`,
       };
       const cost = estTokens(args.system, args.user) + args.maxTokens;
@@ -127,7 +134,7 @@ async function build(userId, materialId, opts = {}) {
     const coverage = passages.length ? Math.round((touched.size / passages.length) * 100) : 0;
     const status = !sections.length ? 'failed' : (stopped || unanswered ? 'partial' : 'ready');
     saved = db.update('material_notes', saved.id, {
-      sections, dropped, coverage, status, tokens_used: used,
+      sections, dropped, coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     db.flush();

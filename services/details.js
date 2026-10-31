@@ -196,6 +196,12 @@ function brief(userId, where) {
   // (nothing at all when nothing is confident).
   const measured = personalize.scorecardSection(userId, where || {}, { recent: false });
   if (measured.length) lines.push(...measured, '');
+  // The learning spec (services/learning-spec.js): every metric, interests, dislikes and context as one block, so a level
+  // writer rebuilds the level for this learner and keeps what it covers. A change in it changes this brief's hash, so a
+  // written page is rewritten. Empty for a learner we know nothing about, and for the owner.
+  // eslint-disable-next-line global-require
+  const specLines = require('./learning-spec').linesFor(userId, { trackId: (where && where.trackId) || null, gradeId: (where && where.gradeId) || null }, 'level');
+  if (specLines.length) lines.push(...specLines, '');
   // What the after-level reads have established for sure, and where they
   // struggle (with the hints to add).
   lines.push(...learnerRecord.briefLines(userId, where || {}, { recent: false }));

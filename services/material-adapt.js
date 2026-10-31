@@ -37,7 +37,10 @@ function needOf(st, placed, now) {
  * The plan: { skills: [{ id, need, items, tier, missed }], total, skipped: [ids], next_due }, most urgent first.
  * `r` may be null (no progress yet): every skill is new.
  */
-function plan(course, r, now = Date.now()) {
+function plan(course, r, now = Date.now(), spec = null) {
+  // The learner's own number of retrieval checks (services/learning-spec.js lesson.retrievalChecks, 3 by default)
+  // scales the questions per skill; every skill that is not known still gets at least one.
+  const scale = spec && !spec.isDefault ? spec.lesson.retrievalChecks / 3 : 1;
   const progress = (r && r.skills) || {};
   const placed = !!(r && r.placed);
   const skills = [];
@@ -49,7 +52,7 @@ function plan(course, r, now = Date.now()) {
     const need = needOf(st, placed, now);
     if (need === 'known') { skipped.push(s.id); continue; }
     const tier = need === 'due' ? Math.max(2, (st && st.tier) || 2) : ((st && st.tier) || 1);
-    skills.push({ id: s.id, need, items: Math.min(ITEMS[need], qs), tier, missed: ((st && st.wrong) || []).length });
+    skills.push({ id: s.id, need, items: Math.min(Math.max(1, Math.round(ITEMS[need] * scale)), qs), tier, missed: ((st && st.wrong) || []).length });
   }
   skills.sort((a, b) => ORDER.indexOf(a.need) - ORDER.indexOf(b.need) || b.missed - a.missed);
   const upcoming = skipped.map((id) => progress[id] && progress[id].due).filter(Boolean).sort()[0] || null;

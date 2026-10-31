@@ -247,7 +247,12 @@ function planFor(userId, enrollment, now = Date.now()) {
   let cached = enrollment.skill_practice_plan;
   if (!cached || cached.day !== today || cached.stage !== stage.id) {
     const rec = record.recordFor(userId, enrollment.track_id);
-    const minutes = sessionMinutes(stage);
+    // The stage's own session length, scaled to how long this learner works well at a stretch (services/learning-spec.js
+    // session.minutes against the usual 20): 0.75x to 1.3x, so a short-focus learner is not asked for more than they have
+    // and every unproven metric still gets its set (checkPlan below proves it).
+    // eslint-disable-next-line global-require
+    const learnerSpec = require('./learning-spec').buildSpec(userId, { trackId: enrollment.track_id, gradeId: enrollment.grade_id });
+    const minutes = learnerSpec.isDefault ? sessionMinutes(stage) : Math.max(8, Math.round(sessionMinutes(stage) * Math.min(1.3, Math.max(0.75, learnerSpec.session.minutes / 20))));
     const knowledgeOpen = !atFinal(enrollment);
     const plan = sa.planSession({ stage, rec, now, minutes, knowledgeOpen, lessonShare: 0.3 });
     let problems = sa.checkPlan(stage, rec, plan);

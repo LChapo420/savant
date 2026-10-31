@@ -45,7 +45,13 @@ const squeeze = (s) => String(s).replace(/\s+/g, ' ').trim();
  * Best passages for a query. Returns [{ course, title, passage_id, text }] best first, at most MAX_PASSAGES and
  * TOTAL_MAX characters. `query` is the learner's last message; `pageText` is what the page says it is about.
  */
-function retrieve(userId, { query = '', pageText = '', page = null } = {}) {
+function retrieve(userId, { query = '', pageText = '', page = null, spec = null } = {}) {
+  // How much source text the tutor is shown for this learner (services/learning-spec.js explain.textDensity): shorter
+  // passages for a learner who loses focus in paragraphs, fuller ones for one who is fine with dense prose. The same passages
+  // are found and still quoted as notes; only the length of each is cut.
+  const density = spec && !spec.isDefault ? ({ sparse: 0.7, normal: 1, dense: 1.2 }[spec.explain.textDensity] || 1) : 1;
+  const passageMax = Math.round(PASSAGE_MAX * density);
+  const totalMax = Math.round(TOTAL_MAX * density);
   const q = new Map();
   for (const w of terms(pageText)) q.set(w, 1);
   for (const w of terms(query)) q.set(w, 2);   // what they asked outweighs the page
@@ -72,7 +78,7 @@ function retrieve(userId, { query = '', pageText = '', page = null } = {}) {
   let used = 0;
   for (const s of scored) {
     if (out.length >= MAX_PASSAGES) break;
-    const room = Math.min(PASSAGE_MAX, TOTAL_MAX - used);
+    const room = Math.min(passageMax, totalMax - used);
     if (room < 80) break;
     const text = s.text.length > room ? `${s.text.slice(0, room - 1)}…` : s.text;
     out.push({ course: s.course, passage_id: s.passage_id, text });
@@ -85,7 +91,8 @@ function retrieve(userId, { query = '', pageText = '', page = null } = {}) {
 function lines(userId, { query, page, mode }) {
   try {
     const pageText = page ? [page.heading, page.title, page.question, page.passage, page.text].filter(Boolean).join(' ') : '';
-    const hits = retrieve(userId, { query, pageText, page });
+    // eslint-disable-next-line global-require
+    const hits = retrieve(userId, { query, pageText, page, spec: require('./learning-spec').buildSpec(userId, {}) });
     if (!hits.length) return [];
     if (mode === 'method') {
       const titles = [...new Set(hits.map((h) => h.course))];

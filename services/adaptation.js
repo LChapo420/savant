@@ -41,6 +41,7 @@
  * computes and records; `on` applies.
  */
 const coverage = require('./coverage');
+const learningSpec = require('./learning-spec');
 
 const DAY = coverage.DAY;
 
@@ -300,9 +301,13 @@ function memoryAdjust(states) {
  *
  * @returns {Array<{i, id, reason: 'memory_check'|'fading', recall: number}>}
  */
-function reviewQueue(model, states, now, { limit = 12, curve = null, durable = null, reteach: maxReteach = 0 } = {}) {
+function reviewQueue(model, states, now, { limit = 12, curve = null, durable = null, reteach: maxReteach = 0, spec = null } = {}) {
   const k = knobs();
   const ck = coverage.knobs();
+  // The learner's own recall target and spacing (services/learning-spec.js review.*): a learner who forgets fast
+  // is reviewed sooner and to a higher target, one who keeps things is left longer. 0.9 and 1 for the default spec.
+  const reviewAt = spec && !spec.isDefault ? spec.review.targetRecall : k.REVIEW_AT;
+  const spacing = spec && !spec.isDefault ? spec.review.spacingScale : 1;
   const { m } = memoryAdjust(states);
   const due = [];
   // Round 2 (`durable`: {at, horizon, gap}): a kept objective whose predicted
@@ -311,14 +316,14 @@ function reviewQueue(model, states, now, { limit = 12, curve = null, durable = n
   // the forgetting curve each spaced success adds the same doublings of
   // half-life whenever it comes, so the cheapest way to a durable memory is a
   // short retrieval on more days, not more items on one day.
-  const gapMs = (durable && Number.isFinite(durable.gap) ? durable.gap : ck.RETAIN_DAYS) * DAY;
+  const gapMs = (durable && Number.isFinite(durable.gap) ? durable.gap : ck.RETAIN_DAYS) * DAY * spacing;
   const reteach = [];
   states.forEach((s, i) => {
     if (maxReteach > 0 && s.status === 'lapsed') {
       // Round 2: a lapsed objective is taught again at the next session, not
       // left until the gate (relearning soon after a lapse is cheaper).
       reteach.push({ i, id: model.objectives[i].id, reason: 'reteach', recall: 0, skill: model.objectives[i].skill });
-    } else if (s.status === 'proven' && s.proven_at !== null && now - s.proven_at >= ck.RETAIN_DAYS * DAY && now - (s.last_at || 0) >= ck.RETAIN_DAYS * DAY * 0.5
+    } else if (s.status === 'proven' && s.proven_at !== null && now - s.proven_at >= ck.RETAIN_DAYS * DAY && now - (s.last_at || 0) >= ck.RETAIN_DAYS * DAY * 0.5 * spacing
       // Already believed kept (R >= RETAIN_AT): what "retained" still waits on is
       // a check at least RETAIN_SPAN_DAYS after proof, so an earlier one is not
       // listed again (it would come back every half day until then).
@@ -326,8 +331,8 @@ function reviewQueue(model, states, now, { limit = 12, curve = null, durable = n
       due.push({ i, id: model.objectives[i].id, reason: 'memory_check', recall: predictedRecall(s, now, curve, m), skill: model.objectives[i].skill });
     } else if (s.status === 'retained' || s.status === 'proven') {
       const recall = predictedRecall(s, now, curve, m);
-      const rested = now - (s.last_at || 0) >= ck.RETAIN_DAYS * DAY * 0.5;
-      if (recall < k.REVIEW_AT && rested) {
+      const rested = now - (s.last_at || 0) >= ck.RETAIN_DAYS * DAY * 0.5 * spacing;
+      if (recall < reviewAt && rested) {
         due.push({ i, id: model.objectives[i].id, reason: 'fading', recall, skill: model.objectives[i].skill });
       } else if (durable && now - (s.last_at || 0) >= gapMs) {
         const later = durableRecall(s, now, curve, m, durable.horizon || k.DURABLE_DAYS);
@@ -456,7 +461,7 @@ function interleave(list) {
  * @param {number} [args.now]
  * @returns {object} the plan: {objective, what, knobs, reasons, review, practice}
  */
-function decide({ model, states, level, sides = {}, base = {}, now = Date.now(), curve = null, durable = null }) {
+function decide({ model, states, level, sides = {}, base = {}, now = Date.now(), curve = null, durable = null, spec = null }) {
   const k = knobs();
   const entry = model.levelMap[level] || null;
   const i = entry && entry.direct !== undefined ? entry.direct : null;
@@ -556,10 +561,14 @@ function decide({ model, states, level, sides = {}, base = {}, now = Date.now(),
 
   const baseCount = Number(base.itemCount) || 10;
   let itemCount = Math.round(baseCount * (1 + items));
+  // The learning spec adds the soft, all-metric part on top of the confident directives: half strength, so a
+  // directive that already moved a number is not counted twice (spec.session.items is 8 for the default learner).
+  const live = !!(spec && !spec.isDefault);
+  if (live) itemCount = Math.round(itemCount * (1 + 0.5 * (spec.session.items / 8 - 1)));
   if (practice === 'compress') itemCount = Math.min(itemCount, k.MIN_ITEMS + 2);
   itemCount = Math.max(k.MIN_ITEMS, Math.min(k.MAX_ITEMS, itemCount));
 
-  const review = reviewQueue(model, states, now, { limit: Math.max(1, Math.round(itemCount * k.REVIEW_SHARE)), curve, durable, reteach: durable ? k.RETEACH : 0 });
+  const review = reviewQueue(model, states, now, { limit: Math.max(1, Math.round(itemCount * (live ? spec.review.reviewShare : k.REVIEW_SHARE))), curve, durable, reteach: durable ? k.RETEACH : 0, spec });
   const order = s && s.status !== 'proven' && s.status !== 'retained' && g === 2 ? 'blocked' : 'interleaved';
 
   return {
@@ -572,14 +581,15 @@ function decide({ model, states, level, sides = {}, base = {}, now = Date.now(),
       length: LENGTH[len],
       practice,
       item_count: itemCount,
-      stretch_share: clamp((Number(base.stretchShare) || 0.15) + stretch, 0.05, contract.stretchMax()),
-      support_share: clamp((Number(base.supportShare) || 0.15) + support, 0, 0.35),
-      prefer_type_in: typed === null ? !!base.preferTypeIn : typed,
+      stretch_share: clamp((Number(base.stretchShare) || 0.15) + stretch + (live ? 0.5 * (spec.difficulty.stretchShare - 0.12) : 0), 0.05, contract.stretchMax()),
+      support_share: clamp((Number(base.supportShare) || 0.15) + support + (live ? 0.5 * (spec.difficulty.supportShare - 0.15) : 0), 0, 0.35),
+      prefer_type_in: typed === null ? (!!base.preferTypeIn || (live && spec.practice.typedAnswers >= 0.65)) : typed,
       order,
       proof_check: proofCheck,
       context,
       recap,
       effort_feedback: eff.flagged,
+      spec: live ? learningSpec.specHash(spec) : null,
     },
     review: review.map((r) => ({ objective: r.id, reason: r.reason, recall: Number(r.recall.toFixed(2)) })),
     reasons,
@@ -694,7 +704,11 @@ function planForLevel({ userId, enrollment, level, base = {}, force = false }) {
     // there is one) and durability reviews; ADAPT_DURABLE=0 gives round 1.
     const r2 = process.env.ADAPT_DURABLE !== '0';
     const curve = r2 ? curveFor({ userId, trackId: enrollment.track_id }) : null;
-    return decide({ model: report.model, states: report.states, level: Number(level), sides, base, curve, durable: r2 ? {} : null });
+    // How this learner is taught (services/learning-spec.js), for this level's own objective.
+    const entry = report.model.levelMap[Number(level)] || null;
+    const obj = entry && entry.direct !== undefined && entry.direct !== null ? report.model.objectives[entry.direct] : null;
+    const spec = learningSpec.buildSpec(userId, { skillIds: obj && obj.skill ? [obj.skill] : [], topic: obj ? obj.title : null, trackId: enrollment.track_id, gradeId: enrollment.grade_id });
+    return decide({ model: report.model, states: report.states, level: Number(level), sides, base, curve, durable: r2 ? {} : null, spec });
   } catch (err) {
     console.warn(`adaptation: plan failed: ${err.message}`);
     return null;
@@ -752,18 +766,23 @@ function recordFor(userId, enrollment) {
  * Never throws: null when there is no objective model, the learner is the
  * owner, or anything fails.
  */
-function dailyReview({ userId, enrollment, now = Date.now(), minutes = knobs().REVIEW_MINUTES, record = null } = {}) {
+function dailyReview({ userId, enrollment, now = Date.now(), minutes: asked, record = null } = {}) {
   try {
     if (ownerSkips(userId)) return null;
     const rec = record || recordFor(userId, enrollment);
     if (!rec) return null;
     const { model, states } = rec.report;
     const k = knobs();
+    // Review timing is the learner's own (services/learning-spec.js): the recall target and spacing in the queue,
+    // and a time budget that follows how long they can work at a stretch.
+    const spec = learningSpec.buildSpec(userId, { trackId: enrollment ? enrollment.track_id : null, gradeId: enrollment ? enrollment.grade_id : null });
+    const minutes = asked === undefined ? (spec.isDefault ? k.REVIEW_MINUTES : Math.max(4, Math.round(k.REVIEW_MINUTES * Math.min(1.5, Math.max(0.6, spec.session.minutes / 20))))) : asked;
     const queue = reviewQueue(model, states, now, {
       limit: model.objectives.length,
       curve: rec.curve,
       durable: rec.r2 ? {} : null,
       reteach: rec.r2 ? k.RETEACH : 0,
+      spec,
     });
     const reteach = [];
     const retrieve = [];

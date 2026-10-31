@@ -208,10 +208,12 @@ function startTier(placementP, pace) {
 }
 
 /** How many practice questions to offer before a check: fewer for a fast learner or a half-known skill. */
-function practiceCount(tier, pace, remediating) {
-  if (remediating) return 3;
-  if (tier >= 2 && (pace || 0) >= 0.5) return 1;
-  return tier >= 2 ? 2 : 3;
+function practiceCount(tier, pace, remediating, spec = null) {
+  const base = remediating ? 3 : (tier >= 2 && (pace || 0) >= 0.5) ? 1 : tier >= 2 ? 2 : 3;
+  // The learner's own need for support (services/learning-spec.js scaffolding.level): one more practice question
+  // when they need plenty of support, one fewer when they need little, never fewer than one.
+  if (!spec || spec.isDefault) return base;
+  return Math.max(1, Math.min(4, base + (spec.scaffolding.level >= 0.7 ? 1 : spec.scaffolding.level <= 0.3 ? -1 : 0)));
 }
 
 /** After a check on a skill: the tier it moves to. */
@@ -252,10 +254,14 @@ function freshAccuracy(fresh) {
 }
 
 /** Days until the next review: the last whole day predicted recall is still at or above TARGET_RECALL. */
-function intervalDays(right, wrong, m) {
+function intervalDays(right, wrong, m, spec = null) {
+  // The learner's own recall target and spacing (services/learning-spec.js review.*): +-0.05 on the target and a
+  // 0.6x to 1.25x stretch of the result. Unchanged for a learner with no spec.
+  const live = spec && !spec.isDefault;
+  const target = live ? TARGET_RECALL + (spec.review.targetRecall - 0.9) : TARGET_RECALL;
   let d = 1;
-  while (d < MAX_INTERVAL && recall(d + 1, right, wrong, m) >= TARGET_RECALL) d++;
-  return d;
+  while (d < MAX_INTERVAL && recall(d + 1, right, wrong, m) >= target) d++;
+  return live ? Math.max(1, Math.min(MAX_INTERVAL, Math.round(d * spec.review.spacingScale))) : d;
 }
 
 /** Move the learner's half-life multiplier after a review: by how far the curve's prediction missed. */

@@ -447,7 +447,7 @@ function hasStatedInterests(userId) {
  *   - what they actually know about this skill right now
  *   - how they have gone wrong on it before
  */
-function teachingBrief(userId, { skillId, skillName, level, trackName } = {}) {
+function teachingBrief(userId, { skillId, skillName, level, trackName, noSpec = false } = {}) {
   // Required lazily: mastery has no dependency on this module, but keeping the
   // import local documents that this is the only place the two meet.
   // eslint-disable-next-line global-require
@@ -511,6 +511,11 @@ function teachingBrief(userId, { skillId, skillName, level, trackName } = {}) {
   if (coachDirectives.length) {
     lines.push(`FROM THIS LEARNER'S MEASURED SCORECARD\n${coachDirectives.map((d) => `- ${d.text}`).join('\n')}`);
   }
+  // The learning spec for the tutor (services/learning-spec.js): the language level, the examples that suit them and
+  // the ones to avoid, the tone. Nothing for a learner we know nothing about.
+  // `noSpec`: the lesson writer, which is given the spec's own lesson block beside this brief and must not get two.
+  const specLines = noSpec ? [] : require('./learning-spec').linesFor(userId, { skillIds: skillId ? [skillId] : [] }, 'tutor'); // eslint-disable-line global-require
+  if (specLines.length) lines.push(specLines.join('\n'));
   // What the after-level reads have established: confirmed facts, the topics and
   // question shapes they struggle with (with the hint idea for each), and what
   // their recent levels and feedback concluded. The coach is the moment those

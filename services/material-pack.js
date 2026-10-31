@@ -22,6 +22,7 @@ const materials = require('./materials');
 const courses = require('./course-builder');
 const study = require('./material-study');
 const adapt = require('./material-adapt');
+const learningSpec = require('./learning-spec');
 
 const VERSION = 1;
 const PART_CHARS = 9000;             // characters of passage text shown to one call
@@ -90,6 +91,21 @@ const VERIFY_SCHEMA = {
   },
   required: ['verdicts'],
 };
+
+/**
+ * How much of each aid this learner's pack has, and the block that rebuilds it for them (services/learning-spec.js).
+ * The default spec (a learner we know nothing about, or the owner) gives exactly the numbers above and no block.
+ */
+function packSpec(userId) {
+  const spec = learningSpec.buildSpec(userId, {});
+  const k = spec.isDefault ? 1 : spec.lesson.retrievalChecks / 3;
+  const n = (base, lo, hi) => Math.max(lo, Math.min(hi, Math.round(base * k)));
+  return {
+    spec,
+    block: learningSpec.specToLines(spec, { surface: 'material' }).join('\n'),
+    limits: { cards: n(MAX_CARDS_PART, 4, 12), quiz: n(MAX_QUIZ_PART, 2, 6), test: n(MAX_TEST_PART, 3, 8), paragraphs: spec.isDefault ? '2 to 4' : spec.lesson.chunkSentences <= 3 ? '3 to 5' : '2 to 3' },
+  };
+}
 
 /** The parts of the material to show a call each: whole passages up to PART_CHARS, sampled evenly past MAX_PARTS. */
 function partsOf(passages) {
@@ -174,11 +190,12 @@ async function buildPart(part, ctx) {
   const args = {
     role: 'fast', task: 'material_pack', schema: PART_SCHEMA, schemaName: 'material_pack', maxTokens: 6000, dataClass: 'learner',
     system: `You make study aids for a student from their own material. ${UNTRUSTED} `
-      + 'Write: summary (2 to 4 short paragraphs in plain words covering this part), '
-      + `flashcards (up to ${MAX_CARDS_PART}: front is a term or question, back is a short answer of one or two sentences), `
-      + `and questions: up to ${MAX_QUIZ_PART} with for "quiz" (multiple_choice, 3 to 5 choices, answer_index is the correct one) and up to ${MAX_TEST_PART} with for "test", `
+      + `Write: summary (${ctx.limits.paragraphs} short paragraphs in plain words covering this part), `
+      + `flashcards (up to ${ctx.limits.cards}: front is a term or question, back is a short answer of one or two sentences), `
+      + `and questions: up to ${ctx.limits.quiz} with for "quiz" (multiple_choice, 3 to 5 choices, answer_index is the correct one) and up to ${ctx.limits.test} with for "test", `
       + 'mixing multiple_choice, short_answer (a fill-in-the-blank: the prompt must contain a gap written as ___ and answer is the one to four words that fill it) and written (an open question; answer is a model answer in two or three sentences and key_points lists the 2 to 4 ideas a good answer must contain). '
-      + 'Every flashcard and question needs passage_id (one of the passage ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows the answer. Leave out anything you cannot back with such a quote.',
+      + 'Every flashcard and question needs passage_id (one of the passage ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows the answer. Leave out anything you cannot back with such a quote.'
+      + (ctx.block ? `\n\n${ctx.block}` : ''),
     user: `Title: ${ctx.title}\n\nPassages:\n${text}`,
   };
   let gen = await ask(ctx.llm, ctx.budget, ctx.userId, args);
@@ -190,13 +207,13 @@ async function buildPart(part, ctx) {
 
   const summary = (Array.isArray(data.summary) ? data.summary : []).map((p) => clean(p, 700)).filter(Boolean).slice(0, 4);
   const cards = [];
-  for (const c of data.flashcards.slice(0, MAX_CARDS_PART + 4)) {
+  for (const c of data.flashcards.slice(0, ctx.limits.cards + 4)) {
     const k = cleanCard(c, byId, allowed);
     if (!k) ctx.dropped.cards++;
     else if (!cards.some((x) => norm(x.front) === norm(k.front))) cards.push(k);
   }
   const items = [];
-  for (const q of (Array.isArray(data.questions) ? data.questions : []).slice(0, MAX_QUIZ_PART + MAX_TEST_PART + 4)) {
+  for (const q of (Array.isArray(data.questions) ? data.questions : []).slice(0, ctx.limits.quiz + ctx.limits.test + 4)) {
     const k = cleanItem(q, byId, allowed);
     if (!k) ctx.dropped.ungrounded++;
     else if (!items.some((x) => norm(x.item.prompt) === norm(k.item.prompt))) items.push(k);
@@ -245,7 +262,8 @@ async function build(userId, materialId, opts = {}) {
     const passages = courses.chunk(mat.text);
     const base = { user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, status: 'building', started_at: new Date().toISOString(), summary: [], cards: [], quiz: [], test: [], dropped: {}, models: [], error: null, finished_at: null };
     saved = prev ? db.update('material_packs', prev.id, base) : db.insert('material_packs', base);
-    const ctx = { llm, userId, title: mat.title, budget: { used: 0, limit: opts.tokenBudget || TOKEN_BUDGET }, unanswered: 0, models: new Set(), dropped: { ungrounded: 0, unsupported: 0, cards: 0 } };
+    const ps = packSpec(userId);
+    const ctx = { llm, userId, title: mat.title, block: ps.block, limits: ps.limits, budget: { used: 0, limit: opts.tokenBudget || TOKEN_BUDGET }, unanswered: 0, models: new Set(), dropped: { ungrounded: 0, unsupported: 0, cards: 0 } };
     const all = { summary: [], cards: [], quiz: [], test: [] };
     let stopped = false;
     for (const part of partsOf(passages)) {
@@ -264,7 +282,7 @@ async function build(userId, materialId, opts = {}) {
     const useful = all.cards.length || all.quiz.length || all.test.length;
     const status = !useful ? 'failed' : (stopped || ctx.unanswered ? 'partial' : 'ready');
     saved = db.update('material_packs', saved.id, {
-      ...all, status, dropped: ctx.dropped, models: [...ctx.models], tokens_used: ctx.budget.used,
+      ...all, status, spec_hash: ps.spec.isDefault ? null : learningSpec.specHash(ps.spec), dropped: ctx.dropped, models: [...ctx.models], tokens_used: ctx.budget.used,
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     db.flush();

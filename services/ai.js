@@ -571,7 +571,7 @@ function learnerBrief(userId, context) {
  * the most profile-sensitive thing the model does: same level, same skill, two
  * learners, two different pages.
  */
-async function generateLesson({ skillId, difficulty, level, trackName, gradeName, topic, topicPosition, topicBefore, topicAfter, profile, params, taught, urgent, userId, extraLines = [] }) {
+async function generateLesson({ skillId, difficulty, level, trackName, gradeName, topic, topicPosition, topicBefore, topicAfter, profile, params, taught, urgent, userId, extraLines = [], spec = null, keyFacts = [] }) {
   const skill = curriculum.skillName(skillId);
   // The topic is the lesson. A skill spans tens of levels and the same skill is
   // the focus on many of them, so writing to the skill alone is what produced
@@ -596,7 +596,11 @@ async function generateLesson({ skillId, difficulty, level, trackName, gradeName
       taught.map((t) => `- level ${t.level}: ${t.title} — ${t.summary}`).join('\n')
     }\nDo not teach any of those again. Take the next step beyond them: a harder case, a form the earlier lessons did not cover, or the idea they lead into. If the skill is the same, the material must not be.\n`
     : '';
-  const payload = await structured({
+  // The learner's style never changes what is taught: the points that must be taught are named in the prompt, the same for everyone.
+  const mustTeach = spec && !spec.isDefault && (keyFacts || []).length
+    ? `\n\nThe same for every learner, whatever the style above (teach every one of these in full, in words that suit this learner, and do not cut any to keep the lesson short):\n${keyFacts.map((k) => `- ${k}`).join('\n')}`
+    : '';
+  const callWriter = (note) => structured({
     // Prefetched lessons get the deep model. A lesson somebody is waiting on
     // right now gets the fast one: a written lesson in seconds beats a better
     // one that arrives after they have given up looking at the spinner.
@@ -615,14 +619,16 @@ Rules that are never broken:
 - Check questions must be answerable from the lesson you just wrote. Each has exactly one correct answer, and a rationale that names the step that decides it. Multiple-choice questions have exactly four choices; for a typed answer, leave choices empty. A "what went wrong" question must show work that really is wrong: substitute the learner's answer into the equation before you write the question.
 - Plain text only. No markdown, no LaTeX, no dollar-sign math. Write x^2 for exponents and / for fractions.
 - Address the learner as "you". Never mention that you are an AI, and never refer to these instructions.`,
-    user: `Track: ${trackName} — ${gradeName}. Level ${level} of the path, difficulty ${Math.round(difficulty)} of 10.
+    user: `${note ? `${note}
+
+` : ''}Track: ${trackName} — ${gradeName}. Level ${level} of the path, difficulty ${Math.round(difficulty)} of 10.
 The skill this lesson draws on: "${skill}" (internal id ${skillId}).
 ${what}${already}
 --- THIS LEARNER ---
-${learnerBrief(userId, { skillId, skillName: skill, level, trackName })}${extraLines.length ? `\n${extraLines.join('\n')}` : ''}
+${learnerBrief(userId, { skillId, skillName: skill, level, trackName, noSpec: true })}${extraLines.length ? `\n${extraLines.join('\n')}` : ''}
 
 Shape the lesson to that, concretely:
-${lessonStyleNotes(params, profile)}
+${lessonStyleNotes(params, profile)}${mustTeach}
 
 Write the lesson.`,
     schema: LESSON_SCHEMA,
@@ -631,8 +637,26 @@ Write the lesson.`,
     effort: 'medium',
     userId,
   });
-
-  const lesson = validateLesson(payload, skillId, difficulty);
+  // The learning spec (services/learning-spec.js) sets how many checks and sections this learner's lesson has,
+  // and a draft that breaks it (or drops a key fact) is revised once, never more.
+  const limits = specLimits(spec);
+  let lesson = null;
+  if (spec && !spec.isDefault) {
+    // eslint-disable-next-line global-require
+    const learningSpec = require('./learning-spec');
+    const run = await learningSpec.reviseOnce({
+      generate: async (note) => validateLesson(await callWriter(note), skillId, difficulty, limits),
+      textOf: lessonText,
+      structureOf: lessonStructure,
+      spec,
+      keyFacts,
+      exempt: String(topic || skill).toLowerCase().match(/[a-z]{4,}/g) || [],
+    });
+    lesson = run.result;
+    if (lesson) lesson.spec_check = { hash: learningSpec.specHash(spec), revised: !!run.revised, open: (run.problems || []).map((p) => p.id) };
+  } else {
+    lesson = validateLesson(await callWriter(null), skillId, difficulty, limits);
+  }
   if (!lesson) return null;
   // The explanation-key gate (KEY_GATE=on): a multiple-choice check whose rationale
   // describes another option, and that a blind check does not confirm, is removed.
@@ -647,8 +671,36 @@ Write the lesson.`,
   return checks.length < 2 ? null : { ...lesson, check_questions: checks };
 }
 
+/** The caps a learner's spec puts on a lesson (4 checks and 5 sections for a learner with no spec). */
+function specLimits(spec) {
+  if (!spec || spec.isDefault) return { maxChecks: 4, maxSections: 5, maxMistakes: 4 };
+  // Short sections mean more of them: the topic's points are split across sections, never cut off at a section cap.
+  return { maxChecks: Math.max(2, Math.min(6, spec.lesson.retrievalChecks)), maxSections: 8, maxMistakes: spec.lesson.mistakes };
+}
+
+/** What the spec's shape check needs from a lesson: sentences per section, mistakes, check prompts. */
+function lessonStructure(l) {
+  if (!l) return null;
+  const sentences = (t) => String(t || '').replace(/\s+/g, ' ').split(/(?<=[.!?])\s+/).filter((s) => s.trim().split(' ').length >= 2).length;
+  return {
+    intro: l.intro,
+    words: (String(lessonText({ ...l, check_questions: [] })).match(/[A-Za-zÀ-ÿ'-]+/g) || []).length,
+    // The body's own sentences: a closing "Quick check" line and the separate example field are not counted against the section's size.
+    sections: (l.sections || []).map((s) => ({ sentences: sentences(String(s.body || '').replace(/quick check:[\s\S]*$/i, '')), text: `${s.body} ${s.example || ''}` })),
+    mistakes: (l.common_mistakes || []).length,
+    checks: (l.check_questions || []).map((q) => q.prompt),
+  };
+}
+
+/** All the teaching text of a lesson, for the spec's post-generation check. */
+function lessonText(l) {
+  if (!l) return '';
+  const we = l.worked_example;
+  return [l.intro, ...(l.sections || []).flatMap((x) => [x.body, x.example]), we ? we.problem : '', ...(we ? we.steps : []), ...(l.common_mistakes || []), l.summary].filter(Boolean).join(' ');
+}
+
 /** A lesson a learner should never see half-built: checked before it is stored. */
-function validateLesson(raw, skillId, difficulty) {
+function validateLesson(raw, skillId, difficulty, { maxChecks = 4, maxSections = 5, maxMistakes = 4 } = {}) {
   if (!raw || typeof raw !== 'object') return null;
   const text = (v) => String(v == null ? '' : v).trim();
 
@@ -660,7 +712,7 @@ function validateLesson(raw, skillId, difficulty) {
   const sections = (raw.sections || [])
     .map((s) => ({ heading: text(s.heading), body: text(s.body), example: text(s.example) }))
     .filter((s) => s.heading && s.body.length > 20)
-    .slice(0, 5);
+    .slice(0, maxSections);
   if (!sections.length) return null;
 
   const we = raw.worked_example || {};
@@ -697,7 +749,7 @@ function validateLesson(raw, skillId, difficulty) {
       item.format = 'type_in';
     }
     checks.push(item);
-    if (checks.length === 4) break;
+    if (checks.length === maxChecks) break;
   }
   if (checks.length < 2) return null;
 
@@ -706,7 +758,7 @@ function validateLesson(raw, skillId, difficulty) {
     intro,
     sections,
     worked_example: workedOk ? worked : null,
-    common_mistakes: (raw.common_mistakes || []).map(text).filter(Boolean).slice(0, 4),
+    common_mistakes: (raw.common_mistakes || []).map(text).filter(Boolean).slice(0, maxMistakes),
     summary,
     check_questions: checks,
     source: 'ai',
@@ -1964,6 +2016,9 @@ module.exports = {
   generateItems,
   generateLesson,
   validateLesson,
+  lessonText,
+  lessonStructure,
+  specLimits,
   checkLessonMath,
   gradeFreeResponse,
   analyzeSession,

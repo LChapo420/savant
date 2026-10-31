@@ -314,9 +314,21 @@ function quickChecks(enrollment) {
 }
 
 /** How long one quick-check question takes, for deciding whether another fits the clock. */
-function checkSeconds() {
+function checkSeconds(spec = null) {
   const v = Number(process.env.QUICK_CHECK_SECONDS);
-  return Number.isFinite(v) && v > 0 ? v : 26;
+  const base = Number.isFinite(v) && v > 0 ? v : 26;
+  // How long a learner is given for one question (services/learning-spec.js lesson.pace): more for one who needs room,
+  // less for one who works fast. Only the clock changes: which units are checked, and what proves one, never do (never a skip).
+  if (!spec || spec.isDefault) return base;
+  return Math.round(base * (spec.lesson.pace === 'slow' ? 1.3 : spec.lesson.pace === 'brisk' ? 0.85 : 1));
+}
+
+/** The learner's spec for the quick check's clock; null on any failure. */
+function specFor(enrollment) {
+  try {
+    // eslint-disable-next-line global-require
+    return enrollment && enrollment.user_id ? require('./learning-spec').buildSpec(enrollment.user_id, { trackId: enrollment.track_id, gradeId: enrollment.grade_id }) : null;
+  } catch { return null; }
 }
 
 /**
@@ -351,9 +363,9 @@ function checkDeadline(enrollment, session, now = Date.now()) {
 }
 
 /** Is there time for one more quick-check question before the deadline? */
-function checkTimeLeft(deadline, now = Date.now()) {
+function checkTimeLeft(deadline, now = Date.now(), enrollment = null) {
   if (!deadline) return true;
-  return Date.parse(deadline) - now >= checkSeconds() * 1000;
+  return Date.parse(deadline) - now >= checkSeconds(specFor(enrollment)) * 1000;
 }
 
 /**
@@ -816,6 +828,7 @@ module.exports = {
   quickChecks,
   checkDeadline,
   checkTimeLeft,
+  checkSeconds,
   betweenCovers,
   finishLevel,
   skippedCheckpoints,

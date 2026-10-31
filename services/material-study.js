@@ -136,10 +136,12 @@ function save(r) {
 function unlocked(course, r, skill) {
   return skill.prerequisites.every((p) => (r.skills[p] && r.skills[p].status === 'mastered') || !course.skills.some((s) => s.id === p));
 }
+/** The learner's spec (services/learning-spec.js), for scheduling and practice sizes. Null on any failure. */
+const specOf = (userId) => { try { return require('./learning-spec').buildSpec(userId, {}); } catch { return null; } }; // eslint-disable-line global-require
 const isDue = (st, now) => st.status === 'mastered' && st.due && Date.parse(st.due) <= now;
 const dueAt = (now, days) => new Date(now + days * DAY).toISOString();
 function scheduleReview(r, st, now) {
-  const days = path.intervalDays(st.right, st.wrong_n, r.forget_m || 0);
+  const days = path.intervalDays(st.right, st.wrong_n, r.forget_m || 0, specOf(r.user_id));
   st.due = dueAt(now, days);
   st.interval_days = days;
   return days;
@@ -288,7 +290,7 @@ function lesson(userId, materialId, skillId, opts = {}) {
   const st = skillState(r, skill.id);
   if (st.status === 'new') st.status = 'learning';
   const remediating = !!st.remediate;
-  const n = path.practiceCount(st.tier, r.pace, remediating);
+  const n = path.practiceCount(st.tier, r.pace, remediating, specOf(userId));
   // Practice at the skill's tier and below, the ones missed before first.
   const practiceQs = path.pickForTier(skill, Math.max(1, st.tier - 1), n, st.wrong, [], rnd);
   st.read = true;

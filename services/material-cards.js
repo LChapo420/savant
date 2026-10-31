@@ -176,7 +176,7 @@ function review(userId, materialId, cardId, rating, now = Date.now()) {
     c.due = new Date(now + 10 * 60 * 1000).toISOString();
     days = 0;
   } else {
-    days = path.intervalDays(c.right, c.wrong, r.forget_m || 0);
+    days = path.intervalDays(c.right, c.wrong, r.forget_m || 0, require('./learning-spec').buildSpec(userId, {})); // eslint-disable-line global-require
     if (rating === 'hard') days = Math.max(1, Math.floor(days / 2));
     if (rating === 'easy') days = Math.min(MAX_INTERVAL, Math.ceil(days * 1.5));
     c.due = new Date(now + days * DAY).toISOString();
