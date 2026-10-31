@@ -85,12 +85,51 @@ async function judgeMap(course, text) {
       + 'score: 5 = faithful and complete, 4 = minor issues, 3 = noticeable gaps or errors, 2 = poor, 1 = unrelated. Be strict and specific.',
     user: `SOURCE (${note}):\n${view}\n\nOUTLINE (levels in path order):\n${map}`,
   };
-  // The judge is xKiro Qwen by default; PROOF_JUDGE=sol uses Modelflare GPT 6.1 Sol (when xKiro's daily allowance is spent).
+  // The judge is xKiro Qwen by default; PROOF_JUDGE=sol uses Modelflare's placement model (GPT 6.1 Sol, or Terra with
+  // MODELFLARE_MODEL_PLACEMENT=gpt-6.1-terra); PROOF_JUDGE=nvidia:<model> an NVIDIA model.
   const res = JUDGE === 'sol'
     ? await modelflare.structured({ role: 'placement', ...args, maxTokens: 4000 })
-    : await xkiro.structured({ models: [JUDGE], ...args });
+    : (JUDGE.startsWith('nvidia:')
+      ? await nvidia.structured({ models: [JUDGE.slice(7)], role: 'fast', task: 'material_proof_check', ...args, timeoutMs: 240000 })
+      : await xkiro.structured({ models: [JUDGE], ...args }));
   if (!res || !res.data) throw new Error('the judge gave no usable answer');
   return { model: res.model, usage: res.usage, source_view: note, ...res.data };
+}
+
+const VERIFY_INVENTED_SCHEMA = {
+  type: 'object',
+  properties: { in_source: { type: 'boolean' }, evidence: { type: 'string' } },
+  required: ['in_source'],
+};
+
+/**
+ * Second stage: the judge sees only the opening of each passage of a long text, so a topic it calls "invented" may sit
+ * further into a passage. Each such claim naming a skill ([id]) is asked again with the FULL text of that skill's own
+ * passages. Returns [{ claim, skill, in_source, evidence }]; a claim with no skill id stays unverified.
+ */
+async function verifyInvented(course, text, claims) {
+  const passageText = new Map(chunk(text).map((p) => [p.id, p.text]));
+  const out = [];
+  for (const claim of claims || []) {
+    const m = /\[([a-z0-9_]+)\]/.exec(claim);
+    const skill = m && course.skills.find((k) => k.id === m[1]);
+    if (!skill) { out.push({ claim, skill: null, in_source: null }); continue; }
+    const passages = skill.passage_ids.map((id) => `[${id}]\n${passageText.get(id) || ''}`).join('\n\n');
+    const args = {
+      schema: VERIFY_INVENTED_SCHEMA, schemaName: 'invented_check', maxTokens: 1500,
+      system: 'A reviewer said a course skill contains a topic its source does not. You see the FULL source passages the skill was built from. in_source is true if these passages do teach or name what the reviewer says is missing, false if they do not. Quote the words that decide it in evidence.',
+      user: `Skill: ${skill.title} (${skill.summary || ''})\nReviewer's claim: ${claim}\n\nSOURCE PASSAGES (full):\n${passages}`,
+    };
+    try {
+      const res = JUDGE === 'sol'
+        ? await modelflare.structured({ role: 'placement', ...args, maxTokens: 3000 })
+        : (JUDGE.startsWith('nvidia:')
+          ? await nvidia.structured({ models: [JUDGE.slice(7)], role: 'fast', task: 'material_proof_check', ...args, timeoutMs: 240000 })
+          : await xkiro.structured({ models: [JUDGE], ...args }));
+      out.push({ claim, skill: skill.id, in_source: res && res.data ? !!res.data.in_source : null, evidence: res && res.data ? res.data.evidence || '' : '' });
+    } catch (err) { out.push({ claim, skill: skill.id, in_source: null, error: err.message }); }
+  }
+  return out;
 }
 
 function plantItem(q, rand) {
@@ -171,6 +210,11 @@ async function checkSkill(checker, skill, passagesText, items, lesson) {
   if (only !== 'items') {
     console.log(`${name}: judging the skill map (${course.skills.length} skills)`);
     try { result.judge = await judgeMap(course, text); } catch (err) { result.judge = { error: err.message }; }
+    if (result.judge && (result.judge.invented_topics || []).length) {
+      result.judge.invented_checked = await verifyInvented(course, text, result.judge.invented_topics);
+      result.judge.invented_confirmed = result.judge.invented_checked.filter((x) => x.in_source === false).length;
+      console.log(`  invented claims checked against the full passages: ${result.judge.invented_confirmed} of ${result.judge.invented_topics.length} confirmed`);
+    }
     console.log(`  judge: score ${result.judge.score}, order ok ${result.judge.order_matches_source}, invented ${(result.judge.invented_topics || []).length}, missing ${(result.judge.missing_important_topics || []).length}`);
   } else result.judge = prev.judge;
 
