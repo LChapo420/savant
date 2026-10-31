@@ -36,7 +36,62 @@ const JUDGE_WAIT_MS = 20 * 1000;
 const KEEP = 10;
 
 /** This learner's spec (services/learning-spec.js): the time a question gets and how long a test is by default. */
-function specOf(userId) { try { return require('./learning-spec').buildSpec(userId, {}); } catch { return null; } } // eslint-disable-line global-require
+function specOf(userId, topic = null) { try { return require('./learning-spec').buildSpec(userId, { topic }); } catch { return null; } } // eslint-disable-line global-require
+
+/**
+ * The tiers a test of `n` questions should have for this learner, easy first: how many tier-1 recall questions (more for a
+ * learner who needs easy wins or warm-up items), and how many tier-3 (a third on a steep ramp, none to one on a gradual one).
+ */
+function tierPlan(n, spec) {
+  if (!spec || spec.isDefault) return null;
+  const d = spec.difficulty;
+  const warm = spec.lesson.warmupItems >= 2 ? spec.lesson.warmupItems : 0;
+  const n3 = d.rampLabel === 'steep' ? Math.round(n / 3) : d.rampLabel === 'gradual' ? (n >= 6 ? 1 : 0) : Math.round(n / 4);
+  const n1 = Math.min(n - n3, d.startOffset <= -0.5 ? Math.max(warm, Math.ceil(n / 3)) : d.startOffset >= 0.5 ? Math.floor(n / 6) : Math.max(warm, Math.floor(n / 4)));
+  return [...Array(n1).fill(1), ...Array(Math.max(0, n - n1 - n3)).fill(2), ...Array(n3).fill(3)];
+}
+
+/**
+ * Draw `want` questions across the skills' queues (each already missed-first) to fit a tier plan: for each wanted tier, the
+ * first queue from the rotating start that has a question of that tier, else the nearest tier anywhere. Mutates the queues.
+ */
+function pickByPlan(queues, want, plan, tierOf) {
+  const out = [];
+  let at = 0;
+  for (const t of plan.slice(0, want)) {
+    let hit = null;
+    for (let k = 0; k < queues.length && !hit; k++) {
+      const qi = (at + k) % queues.length;
+      const i = queues[qi].findIndex((p) => tierOf(p) === t);
+      if (i >= 0) hit = [qi, i];
+    }
+    if (!hit) {
+      let best = Infinity;
+      queues.forEach((q, qi) => q.forEach((p, i) => { const gap = Math.abs(tierOf(p) - t); if (gap < best) { best = gap; hit = [qi, i]; } }));
+    }
+    if (!hit) break;
+    out.push(queues[hit[0]].splice(hit[1], 1)[0]);
+    at = (hit[0] + 1) % queues.length;
+  }
+  return out;
+}
+
+/**
+ * The order the questions are asked in. A learner with no spec gets them shuffled, as before. A learner with a spec gets
+ * them by tier (1 recall, 2 use, 3 combine or transfer): easy first and climbing, ties random; one whose difficulty starts
+ * at the level or above begins with the lowest tier-2-or-higher question instead of bare recall. `picked` is [[skillId, qid]].
+ */
+function orderQuestions(picked, byId, spec, rnd) {
+  const shuffled = I.shuffle(picked, rnd);
+  if (!spec || spec.isDefault) return shuffled;
+  const tierOf = ([sid, qid]) => { const q = (byId.get(sid).questions || []).find((x) => x.id === qid); return (q && q.tier) || 2; };
+  const sorted = shuffled.map((p, i) => ({ p, t: tierOf(p), i })).sort((a, b) => a.t - b.t || a.i - b.i).map((x) => x.p);
+  if (spec.difficulty.startOffset >= 0.5 && sorted.length > 1 && tierOf(sorted[0]) === 1) {
+    const k = sorted.findIndex((p) => tierOf(p) >= 2);
+    if (k > 0) sorted.unshift(sorted.splice(k, 1)[0]);
+  }
+  return sorted;
+}
 const secondsPer = (spec) => (spec && !spec.isDefault ? Math.round(SECONDS_PER_QUESTION * (spec.lesson.pace === 'slow' ? 1.3 : spec.lesson.pace === 'brisk' ? 0.9 : 1) * (spec.feedback.timers === 'none' ? 1.5 : 1)) : SECONDS_PER_QUESTION);
 const defaultLen = (spec) => (spec && !spec.isDefault ? Math.max(MIN_LEN, Math.min(20, Math.round(DEFAULT_LEN * spec.session.items / 8))) : DEFAULT_LEN);
 const isBlank = (a) => a == null || (typeof a === 'string' && !a.trim());
@@ -46,7 +101,7 @@ function options(userId, materialId) {
   const course = I.loadCourse(userId, materialId);
   if (!course) return { error: 'There is no course to test yet.', code: 'no_course' };
   const r = I.row(userId, materialId);
-  const spec = specOf(userId);
+  const spec = specOf(userId, course.title);
   return {
     skills: course.skills.map((s) => ({ id: s.id, title: s.title, unit: s.unit || null, questions: (s.questions || []).length, status: (r.skills[s.id] || {}).status || 'new' })),
     min: MIN_LEN, max: MAX_LEN, default: defaultLen(spec), seconds_per_question: secondsPer(spec),
@@ -72,7 +127,7 @@ function start(userId, materialId, opts = {}) {
   }
   if (!skills.length) return { error: 'The skills you picked have no questions.', code: 'empty' };
 
-  const spec = specOf(userId);
+  const spec = specOf(userId, course.title);
   const n = Number.isFinite(Number(opts.length)) ? Math.round(Number(opts.length)) : defaultLen(spec);
   let want = Math.min(MAX_LEN, Math.max(MIN_LEN, n));
   // "Pick for me" (S12): only what this learner does not know yet, due, or missed, sized by how much that is.
@@ -93,17 +148,19 @@ function start(userId, materialId, opts = {}) {
     const qs = I.shuffle(s.questions, rnd);
     return qs.filter((q) => wrong.has(q.id)).concat(qs.filter((q) => !wrong.has(q.id))).map((q) => [s.id, q.id]);
   });
-  const picked = [];
+  const byId = new Map(course.skills.map((s) => [s.id, s]));
+  const tierOf = ([sid, qid]) => { const q = (byId.get(sid).questions || []).find((x) => x.id === qid); return (q && q.tier) || 2; };
+  const plan = planned ? null : tierPlan(Math.min(want, queues.reduce((n, q) => n + q.length, 0)), spec);
+  const picked = plan ? pickByPlan(queues, want, plan, tierOf) : [];
   while (picked.length < want && queues.some((q) => q.length)) {
     for (const q of queues) { if (q.length && picked.length < want) picked.push(q.shift()); }
   }
-  const order = I.shuffle(picked, rnd);
+  const order = orderQuestions(picked, byId, spec, rnd);
   const timed = !!opts.timed;
   const seconds = timed ? order.length * secondsPer(spec) : null;
   const id = crypto.randomBytes(8).toString('hex');
   r.test = { id, skills: skills.map((s) => s.id), qids: order, timed, seconds, issued_at: new Date(now).toISOString() };
   I.save(r);
-  const byId = new Map(course.skills.map((s) => [s.id, s]));
   return {
     test_id: id, timed, seconds, ends_at: timed ? new Date(now + seconds * 1000).toISOString() : null,
     questions: order.map(([sid, qid]) => I.publicQ(byId.get(sid).questions.find((x) => x.id === qid), sid)),
@@ -206,4 +263,4 @@ async function submit(userId, materialId, testId, answers, opts = {}) {
   };
 }
 
-module.exports = { MIN_LEN, MAX_LEN, DEFAULT_LEN, SECONDS_PER_QUESTION, GRACE_MS, MAX_JUDGED, options, start, submit };
+module.exports = { MIN_LEN, MAX_LEN, DEFAULT_LEN, SECONDS_PER_QUESTION, GRACE_MS, MAX_JUDGED, tierPlan, pickByPlan, orderQuestions, options, start, submit };

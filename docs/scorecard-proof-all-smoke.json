@@ -1,0 +1,5955 @@
+{
+ "tag": "smoke",
+ "live": true,
+ "writerPath": "Standard Compute DeepSeek V4.1 Flash through the ledger (the free NVIDIA lineup was not answering)",
+ "generated_at": "2026-10-31T22:04:03.910Z",
+ "kinds": [
+  "lesson",
+  "notes",
+  "podcast",
+  "test",
+  "pack",
+  "path"
+ ],
+ "learners": 2,
+ "cells": 2,
+ "judges": [
+  "google/gemini-3.8-flash",
+  "anthropic/claude-sonnet-5.5"
+ ],
+ "agg": {
+  "lesson": {
+   "cells": 2,
+   "built": 2,
+   "errors": [],
+   "judges": {
+    "gemini": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "length_chunking": {
+       "n": 2,
+       "spec": 9,
+       "generic": 3.5
+      },
+      "pacing": {
+       "n": 2,
+       "spec": 9,
+       "generic": 6.5
+      },
+      "retrieval_checks": {
+       "n": 2,
+       "spec": 10,
+       "generic": 3.5
+      },
+      "difficulty": {
+       "n": 2,
+       "spec": 9,
+       "generic": 7
+      },
+      "scaffolding_hints": {
+       "n": 2,
+       "spec": 10,
+       "generic": 4
+      },
+      "worked_vs_practice": {
+       "n": 2,
+       "spec": 9,
+       "generic": 3
+      },
+      "explanation_modes": {
+       "n": 2,
+       "spec": 9,
+       "generic": 4.5
+      },
+      "vocabulary": {
+       "n": 2,
+       "spec": 9,
+       "generic": 3.5
+      },
+      "sentence_length": {
+       "n": 2,
+       "spec": 8,
+       "generic": 2
+      },
+      "examples_interests": {
+       "n": 2,
+       "spec": 9.5,
+       "generic": 0
+      },
+      "avoided_domains": {
+       "n": 2,
+       "spec": 10,
+       "generic": 10
+      },
+      "tone_feedback": {
+       "n": 2,
+       "spec": 9.5,
+       "generic": 3
+      },
+      "structure_format": {
+       "n": 2,
+       "spec": 9,
+       "generic": 4.5
+      },
+      "engagement_challenge": {
+       "n": 2,
+       "spec": 9,
+       "generic": 2.5
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 10,
+       "generic": 10
+      },
+      "accuracy": {
+       "spec": 10,
+       "generic": 10
+      },
+      "interests_used": {
+       "spec": 10,
+       "generic": 0
+      },
+      "dislikes_avoided": {
+       "spec": 10,
+       "generic": 10
+      },
+      "reading_level": {
+       "spec": 9.5,
+       "generic": 3
+      }
+     },
+     "fit": {
+      "spec": 9.214285714285715,
+      "generic": 4.107142857142858
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    },
+    "sonnet": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "length_chunking": {
+       "n": 2,
+       "spec": 6,
+       "generic": 2
+      },
+      "pacing": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 4
+      },
+      "retrieval_checks": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 2.5
+      },
+      "difficulty": {
+       "n": 2,
+       "spec": 7,
+       "generic": 4.5
+      },
+      "scaffolding_hints": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 3
+      },
+      "worked_vs_practice": {
+       "n": 2,
+       "spec": 7,
+       "generic": 1.5
+      },
+      "explanation_modes": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 3.5
+      },
+      "vocabulary": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 2.5
+      },
+      "sentence_length": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 3.5
+      },
+      "examples_interests": {
+       "n": 2,
+       "spec": 9.5,
+       "generic": 0
+      },
+      "avoided_domains": {
+       "n": 2,
+       "spec": 10,
+       "generic": 10
+      },
+      "tone_feedback": {
+       "n": 2,
+       "spec": 7,
+       "generic": 3
+      },
+      "structure_format": {
+       "n": 2,
+       "spec": 7,
+       "generic": 4
+      },
+      "engagement_challenge": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 2
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 10,
+       "generic": 9
+      },
+      "accuracy": {
+       "spec": 9.5,
+       "generic": 9
+      },
+      "interests_used": {
+       "spec": 9.5,
+       "generic": 0
+      },
+      "dislikes_avoided": {
+       "spec": 9.5,
+       "generic": 6.5
+      },
+      "reading_level": {
+       "spec": 8.5,
+       "generic": 2.5
+      }
+     },
+     "fit": {
+      "spec": 7.642857142857143,
+      "generic": 3.2857142857142856
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    }
+   },
+   "agreement": {
+    "n": 2,
+    "sameVerdict": 2,
+    "bothSpecBetter": 2,
+    "opposite": 0,
+    "rDelta": null,
+    "rLevels": 0.9991433337142006,
+    "meanAbsLevelGap": 1.1964285714285714
+   },
+   "learners": [
+    {
+     "name": "Leo",
+     "fit": 8.392857142857142
+    },
+    {
+     "name": "Maya",
+     "fit": 8.464285714285715
+    }
+   ],
+   "measures": {
+    "words": {
+     "spec": 368,
+     "generic": 384.5
+    },
+    "sentences": {
+     "spec": 50.5,
+     "generic": 35.5
+    },
+    "meanSentenceWords": {
+     "spec": 9.399999999999999,
+     "generic": 13.85
+    },
+    "longWordShare": {
+     "spec": 0.0025,
+     "generic": 0.0195
+    },
+    "interestsUsed": {
+     "spec": 2,
+     "generic": 0.5
+    },
+    "interestsAvailable": {
+     "spec": 3,
+     "generic": 3
+    },
+    "keyFactsMissing": {
+     "spec": 0,
+     "generic": 2,
+     "of": 10
+    },
+    "keyFacts": {
+     "spec": 5,
+     "generic": 5
+    },
+    "sections": {
+     "spec": 4,
+     "generic": 3
+    },
+    "checks": {
+     "spec": 3,
+     "generic": 4
+    },
+    "avoidViolations": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestCells": {
+     "spec": 2,
+     "generic": 1,
+     "of": 2
+    }
+   },
+   "missing": {
+    "generic/photosynthesis: Mainly in leaves is only implied": 1
+   }
+  },
+  "notes": {
+   "cells": 2,
+   "built": 2,
+   "errors": [],
+   "judges": {
+    "gemini": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "bullet_size": {
+       "n": 2,
+       "spec": 8,
+       "generic": 6.5
+      },
+      "brevity": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 7.5
+      },
+      "density_layout": {
+       "n": 2,
+       "spec": 7,
+       "generic": 6
+      },
+      "vocabulary": {
+       "n": 2,
+       "spec": 7,
+       "generic": 6.5
+      },
+      "sentence_length": {
+       "n": 2,
+       "spec": 5.5,
+       "generic": 3.5
+      },
+      "register": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 7.5
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 9.5,
+       "generic": 10
+      },
+      "accuracy": {
+       "spec": 10,
+       "generic": 10
+      },
+      "interests_used": {
+       "spec": 0,
+       "generic": 0
+      },
+      "dislikes_avoided": {
+       "spec": 8,
+       "generic": 7.5
+      },
+      "reading_level": {
+       "spec": 7,
+       "generic": 6
+      }
+     },
+     "fit": {
+      "spec": 7.416666666666666,
+      "generic": 6.25
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    },
+    "sonnet": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "bullet_size": {
+       "n": 2,
+       "spec": 7,
+       "generic": 5.5
+      },
+      "brevity": {
+       "n": 2,
+       "spec": 7,
+       "generic": 6
+      },
+      "density_layout": {
+       "n": 2,
+       "spec": 5.5,
+       "generic": 4.5
+      },
+      "vocabulary": {
+       "n": 2,
+       "spec": 5.5,
+       "generic": 5
+      },
+      "sentence_length": {
+       "n": 2,
+       "spec": 5,
+       "generic": 3
+      },
+      "register": {
+       "n": 2,
+       "spec": 6.5,
+       "generic": 4.5
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 9,
+       "generic": 10
+      },
+      "accuracy": {
+       "spec": 10,
+       "generic": 10
+      },
+      "interests_used": {
+       "spec": 0,
+       "generic": 0
+      },
+      "dislikes_avoided": {
+       "spec": 7,
+       "generic": 6
+      },
+      "reading_level": {
+       "spec": 6,
+       "generic": 5
+      }
+     },
+     "fit": {
+      "spec": 6.083333333333333,
+      "generic": 4.75
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    }
+   },
+   "agreement": {
+    "n": 2,
+    "sameVerdict": 2,
+    "bothSpecBetter": 2,
+    "opposite": 0,
+    "rDelta": null,
+    "rLevels": 0.9977753031397177,
+    "meanAbsLevelGap": 1.416666666666667
+   },
+   "learners": [
+    {
+     "name": "Maya",
+     "fit": 6
+    },
+    {
+     "name": "Leo",
+     "fit": 7.5
+    }
+   ],
+   "measures": {
+    "words": {
+     "spec": 202,
+     "generic": 232.5
+    },
+    "sentences": {
+     "spec": 17.5,
+     "generic": 14.5
+    },
+    "meanSentenceWords": {
+     "spec": 13.75,
+     "generic": 18.75
+    },
+    "longWordShare": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestsUsed": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestsAvailable": {
+     "spec": 3,
+     "generic": 3
+    },
+    "keyFactsMissing": {
+     "spec": 1,
+     "generic": 0,
+     "of": 10
+    },
+    "keyFacts": {
+     "spec": 5,
+     "generic": 5
+    },
+    "sections": {
+     "spec": 5,
+     "generic": 4.5
+    },
+    "bullets": {
+     "spec": 14.5,
+     "generic": 14.5
+    },
+    "bulletsPerSection": {
+     "spec": 2.9000000000000004,
+     "generic": 3.3
+    },
+    "maxBulletsInSection": {
+     "spec": 4,
+     "generic": 4
+    },
+    "meanBulletWords": {
+     "spec": 13.45,
+     "generic": 15.85
+    },
+    "avoidViolations": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestCells": {
+     "spec": 0,
+     "generic": 0,
+     "of": 2
+    }
+   },
+   "missing": {
+    "spec/two-step equations: Intermediate step 2x = 8 and explicit x = 4 omitted in body": 1,
+    "spec/two-step equations: Intermediate results 2x = 8 and x = 4 not shown in steps": 1
+   }
+  },
+  "podcast": {
+   "cells": 2,
+   "built": 2,
+   "errors": [],
+   "judges": {
+    "gemini": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "pacing_length": {
+       "n": 2,
+       "spec": 6.5,
+       "generic": 8
+      },
+      "vocabulary_spoken": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 5.5
+      },
+      "sentence_length": {
+       "n": 2,
+       "spec": 7,
+       "generic": 3
+      },
+      "check_in_frequency": {
+       "n": 1,
+       "spec": 0,
+       "generic": 0
+      },
+      "dialogue_style": {
+       "n": 2,
+       "spec": 8,
+       "generic": 8
+      },
+      "tone": {
+       "n": 2,
+       "spec": 7,
+       "generic": 4
+      },
+      "explanation_order": {
+       "n": 2,
+       "spec": 5,
+       "generic": 5
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 8,
+       "generic": 10
+      },
+      "accuracy": {
+       "spec": 9.5,
+       "generic": 10
+      },
+      "interests_used": {
+       "spec": 0,
+       "generic": 0
+      },
+      "dislikes_avoided": {
+       "spec": 8,
+       "generic": 5.5
+      },
+      "reading_level": {
+       "spec": 7,
+       "generic": 5
+      }
+     },
+     "fit": {
+      "spec": 6.4523809523809526,
+      "generic": 5.285714285714286
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    },
+    "sonnet": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "pacing_length": {
+       "n": 2,
+       "spec": 5.5,
+       "generic": 5
+      },
+      "vocabulary_spoken": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 4.5
+      },
+      "sentence_length": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 2.5
+      },
+      "check_in_frequency": {
+       "n": 1,
+       "spec": 0,
+       "generic": 0
+      },
+      "dialogue_style": {
+       "n": 2,
+       "spec": 4.5,
+       "generic": 5
+      },
+      "tone": {
+       "n": 2,
+       "spec": 6.5,
+       "generic": 4
+      },
+      "explanation_order": {
+       "n": 2,
+       "spec": 4,
+       "generic": 4.5
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 5.5,
+       "generic": 10
+      },
+      "accuracy": {
+       "spec": 8.5,
+       "generic": 10
+      },
+      "interests_used": {
+       "spec": 0,
+       "generic": 0
+      },
+      "dislikes_avoided": {
+       "spec": 9,
+       "generic": 6.5
+      },
+      "reading_level": {
+       "spec": 7.5,
+       "generic": 4.5
+      }
+     },
+     "fit": {
+      "spec": 5.535714285714286,
+      "generic": 4.0476190476190474
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    }
+   },
+   "agreement": {
+    "n": 2,
+    "sameVerdict": 2,
+    "bothSpecBetter": 2,
+    "opposite": 0,
+    "rDelta": null,
+    "rLevels": 0.9451241212826084,
+    "meanAbsLevelGap": 1.0773809523809526
+   },
+   "learners": [
+    {
+     "name": "Maya",
+     "fit": 4.571428571428571
+    },
+    {
+     "name": "Leo",
+     "fit": 7.416666666666667
+    }
+   ],
+   "measures": {
+    "words": {
+     "spec": 279,
+     "generic": 328.5
+    },
+    "sentences": {
+     "spec": 39,
+     "generic": 25
+    },
+    "meanSentenceWords": {
+     "spec": 7.3,
+     "generic": 14
+    },
+    "longWordShare": {
+     "spec": 0.0085,
+     "generic": 0.0015
+    },
+    "interestsUsed": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestsAvailable": {
+     "spec": 3,
+     "generic": 3
+    },
+    "keyFactsMissing": {
+     "spec": 2,
+     "generic": 1,
+     "of": 10
+    },
+    "keyFacts": {
+     "spec": 5,
+     "generic": 5
+    },
+    "turns": {
+     "spec": 24.5,
+     "generic": 24
+    },
+    "wordsPerTurn": {
+     "spec": 11.65,
+     "generic": 14.7
+    },
+    "bQuestions": {
+     "spec": 12,
+     "generic": 10
+    },
+    "checkIns": {
+     "spec": 0,
+     "generic": 0.5
+    },
+    "spokenMinutes": {
+     "spec": 1.8499999999999999,
+     "generic": 2.1500000000000004
+    },
+    "avoidViolations": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestCells": {
+     "spec": 0,
+     "generic": 0,
+     "of": 2
+    }
+   },
+   "missing": {
+    "spec/photosynthesis: Oxygen is released as a by-product": 1,
+    "spec/photosynthesis: Chlorophyll absorbing light not stated": 1,
+    "spec/photosynthesis: Oxygen by-product missing": 1,
+    "spec/photosynthesis: Script ends before oxygen and equation": 1,
+    "spec/photosynthesis: Word equation and dark cupboard case missing": 1,
+    "spec/two-step equations: 2x=8 result never stated": 1,
+    "spec/two-step equations: x=4 for 2x+3=11 only implied": 1
+   }
+  },
+  "test": {
+   "cells": 2,
+   "built": 2,
+   "errors": [],
+   "judges": {
+    "gemini": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "difficulty_start": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 5.5
+      },
+      "difficulty_ramp": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 3
+      },
+      "question_format": {
+       "n": 2,
+       "spec": 10,
+       "generic": 9
+      },
+      "feedback_detail": {
+       "n": 2,
+       "spec": 10,
+       "generic": 7.5
+      },
+      "stakes_tone": {
+       "n": 2,
+       "spec": 4.5,
+       "generic": 3
+      },
+      "wording": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 5.5
+      },
+      "warmup": {
+       "n": 1,
+       "spec": 1,
+       "generic": 0
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 8,
+       "generic": 9
+      },
+      "accuracy": {
+       "spec": 9.5,
+       "generic": 10
+      },
+      "interests_used": {
+       "spec": 0,
+       "generic": 0
+      },
+      "dislikes_avoided": {
+       "spec": 7.5,
+       "generic": 5
+      },
+      "reading_level": {
+       "spec": 8.5,
+       "generic": 5.5
+      }
+     },
+     "fit": {
+      "spec": 7.821428571428571,
+      "generic": 5.226190476190476
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    },
+    "sonnet": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "difficulty_start": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 5.5
+      },
+      "difficulty_ramp": {
+       "n": 2,
+       "spec": 7,
+       "generic": 2.5
+      },
+      "question_format": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 7.5
+      },
+      "feedback_detail": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 6
+      },
+      "stakes_tone": {
+       "n": 2,
+       "spec": 4.5,
+       "generic": 4
+      },
+      "wording": {
+       "n": 2,
+       "spec": 7,
+       "generic": 4
+      },
+      "warmup": {
+       "n": 1,
+       "spec": 2,
+       "generic": 1
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 6.5,
+       "generic": 8
+      },
+      "accuracy": {
+       "spec": 9,
+       "generic": 9
+      },
+      "interests_used": {
+       "spec": 0,
+       "generic": 0
+      },
+      "dislikes_avoided": {
+       "spec": 7.5,
+       "generic": 4.5
+      },
+      "reading_level": {
+       "spec": 8,
+       "generic": 4.5
+      }
+     },
+     "fit": {
+      "spec": 6.964285714285714,
+      "generic": 4.666666666666666
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    }
+   },
+   "agreement": {
+    "n": 2,
+    "sameVerdict": 2,
+    "bothSpecBetter": 2,
+    "opposite": 0,
+    "rDelta": null,
+    "rLevels": 0.9965431061193527,
+    "meanAbsLevelGap": 0.7083333333333335
+   },
+   "learners": [
+    {
+     "name": "Maya",
+     "fit": 6.7857142857142865
+    },
+    {
+     "name": "Leo",
+     "fit": 8
+    }
+   ],
+   "measures": {
+    "words": {
+     "spec": 115,
+     "generic": 243
+    },
+    "sentences": {
+     "spec": 13.5,
+     "generic": 21.5
+    },
+    "meanSentenceWords": {
+     "spec": 9.95,
+     "generic": 12.55
+    },
+    "longWordShare": {
+     "spec": 0.0075,
+     "generic": 0.006
+    },
+    "interestsUsed": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestsAvailable": {
+     "spec": 3,
+     "generic": 3
+    },
+    "keyFactsMissing": {
+     "spec": 4,
+     "generic": 3,
+     "of": 10
+    },
+    "keyFacts": {
+     "spec": 5,
+     "generic": 5
+    },
+    "questions": {
+     "spec": 5,
+     "generic": 10
+    },
+    "firstTier": {
+     "spec": 1.5,
+     "generic": 2
+    },
+    "typedShare": {
+     "spec": 0.30000000000000004,
+     "generic": 0.25
+    },
+    "meanExplanationWords": {
+     "spec": 15.8,
+     "generic": 14
+    },
+    "testWordHits": {
+     "spec": 0,
+     "generic": 0
+    },
+    "secondsPerQuestion": {
+     "spec": 94,
+     "generic": 75
+    },
+    "avoidViolations": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestCells": {
+     "spec": 0,
+     "generic": 0,
+     "of": 2
+    }
+   },
+   "missing": {
+    "spec/photosynthesis: Chloroplasts are not mentioned": 1,
+    "spec/photosynthesis: Glucose made from CO2 and water only via equation": 1,
+    "spec/photosynthesis: Photosynthesis mainly in leaves not stated": 1,
+    "spec/photosynthesis: Sun/light role thin": 1,
+    "generic/photosynthesis: Sun as light source only implied": 1,
+    "spec/two-step equations: Checking the answer by substitution": 1,
+    "generic/two-step equations: Checking answer by putting it back into original equation": 1,
+    "spec/two-step equations: check by substituting into original equation absent": 1,
+    "generic/two-step equations: check by substituting into original equation absent": 1,
+    "generic/two-step equations: divide step only in Q8/9": 1
+   }
+  },
+  "pack": {
+   "cells": 2,
+   "built": 2,
+   "errors": [],
+   "judges": {
+    "gemini": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "summary_style": {
+       "n": 2,
+       "spec": 8,
+       "generic": 3
+      },
+      "aid_amounts": {
+       "n": 2,
+       "spec": 9,
+       "generic": 8.5
+      },
+      "vocabulary": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 5
+      },
+      "sentence_length": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 3
+      },
+      "question_ramp": {
+       "n": 2,
+       "spec": 9,
+       "generic": 4
+      },
+      "question_format": {
+       "n": 2,
+       "spec": 9.5,
+       "generic": 9.5
+      },
+      "explanations": {
+       "n": 2,
+       "spec": 9.5,
+       "generic": 7
+      },
+      "stakes_tone": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 4.5
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 9.5,
+       "generic": 10
+      },
+      "accuracy": {
+       "spec": 10,
+       "generic": 10
+      },
+      "interests_used": {
+       "spec": 0,
+       "generic": 0
+      },
+      "dislikes_avoided": {
+       "spec": 8.5,
+       "generic": 5
+      },
+      "reading_level": {
+       "spec": 8.5,
+       "generic": 4
+      }
+     },
+     "fit": {
+      "spec": 8.6875,
+      "generic": 5.5625
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    },
+    "sonnet": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "summary_style": {
+       "n": 2,
+       "spec": 8,
+       "generic": 3
+      },
+      "aid_amounts": {
+       "n": 2,
+       "spec": 7,
+       "generic": 8
+      },
+      "vocabulary": {
+       "n": 2,
+       "spec": 7,
+       "generic": 4
+      },
+      "sentence_length": {
+       "n": 2,
+       "spec": 9,
+       "generic": 3
+      },
+      "question_ramp": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 3.5
+      },
+      "question_format": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 8
+      },
+      "explanations": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 5
+      },
+      "stakes_tone": {
+       "n": 2,
+       "spec": 6,
+       "generic": 3
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 8.5,
+       "generic": 9.5
+      },
+      "accuracy": {
+       "spec": 9.5,
+       "generic": 10
+      },
+      "interests_used": {
+       "spec": 1,
+       "generic": 0.5
+      },
+      "dislikes_avoided": {
+       "spec": 8,
+       "generic": 4.5
+      },
+      "reading_level": {
+       "spec": 8.5,
+       "generic": 3.5
+      }
+     },
+     "fit": {
+      "spec": 7.8125,
+      "generic": 4.6875
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    }
+   },
+   "agreement": {
+    "n": 2,
+    "sameVerdict": 2,
+    "bothSpecBetter": 2,
+    "opposite": 0,
+    "rDelta": null,
+    "rLevels": 0.9972849427227746,
+    "meanAbsLevelGap": 0.875
+   },
+   "learners": [
+    {
+     "name": "Maya",
+     "fit": 8
+    },
+    {
+     "name": "Leo",
+     "fit": 8.5
+    }
+   ],
+   "measures": {
+    "words": {
+     "spec": 592.5,
+     "generic": 655.5
+    },
+    "sentences": {
+     "spec": 73,
+     "generic": 47.5
+    },
+    "meanSentenceWords": {
+     "spec": 9.350000000000001,
+     "generic": 16.05
+    },
+    "longWordShare": {
+     "spec": 0.017,
+     "generic": 0.017
+    },
+    "interestsUsed": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestsAvailable": {
+     "spec": 3,
+     "generic": 3
+    },
+    "keyFactsMissing": {
+     "spec": 0,
+     "generic": 0,
+     "of": 10
+    },
+    "keyFacts": {
+     "spec": 5,
+     "generic": 5
+    },
+    "summaryParagraphs": {
+     "spec": 4,
+     "generic": 3.5
+    },
+    "cards": {
+     "spec": 8,
+     "generic": 8
+    },
+    "quiz": {
+     "spec": 3.5,
+     "generic": 4
+    },
+    "testItems": {
+     "spec": 5.5,
+     "generic": 5
+    },
+    "typedShare": {
+     "spec": 0.33,
+     "generic": 0.39
+    },
+    "meanExplanationWords": {
+     "spec": 13.2,
+     "generic": 14.149999999999999
+    },
+    "testWordHits": {
+     "spec": 0,
+     "generic": 0
+    },
+    "avoidViolations": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestCells": {
+     "spec": 0,
+     "generic": 0,
+     "of": 2
+    }
+   },
+   "missing": {
+    "spec/photosynthesis: Oxygen as by-product only in the IN/OUT list and cards": 1,
+    "spec/two-step equations: checking answer missing from summary": 1,
+    "spec/two-step equations: check step only lightly shown in summary": 1
+   }
+  },
+  "path": {
+   "cells": 2,
+   "built": 2,
+   "errors": [],
+   "judges": {
+    "gemini": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "lesson_chunking": {
+       "n": 2,
+       "spec": 6,
+       "generic": 1
+      },
+      "vocabulary": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 5
+      },
+      "sentence_length": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 2
+      },
+      "density_layout": {
+       "n": 2,
+       "spec": 7,
+       "generic": 1.5
+      },
+      "explanation_order": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 3.5
+      },
+      "pace_repetition": {
+       "n": 2,
+       "spec": 7,
+       "generic": 2
+      },
+      "tone": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 3
+      },
+      "explanation_modes": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 2.5
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 10,
+       "generic": 10
+      },
+      "accuracy": {
+       "spec": 10,
+       "generic": 10
+      },
+      "interests_used": {
+       "spec": 0,
+       "generic": 0
+      },
+      "dislikes_avoided": {
+       "spec": 6,
+       "generic": 3.5
+      },
+      "reading_level": {
+       "spec": 8.5,
+       "generic": 4
+      }
+     },
+     "fit": {
+      "spec": 7.3125,
+      "generic": 2.5625
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    },
+    "sonnet": {
+     "n": 2,
+     "failed": 0,
+     "perField": {
+      "lesson_chunking": {
+       "n": 2,
+       "spec": 6,
+       "generic": 1.5
+      },
+      "vocabulary": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 3.5
+      },
+      "sentence_length": {
+       "n": 2,
+       "spec": 8.5,
+       "generic": 1.5
+      },
+      "density_layout": {
+       "n": 2,
+       "spec": 6.5,
+       "generic": 1.5
+      },
+      "explanation_order": {
+       "n": 2,
+       "spec": 7.5,
+       "generic": 3
+      },
+      "pace_repetition": {
+       "n": 2,
+       "spec": 7,
+       "generic": 2.5
+      },
+      "tone": {
+       "n": 2,
+       "spec": 7,
+       "generic": 3.5
+      },
+      "explanation_modes": {
+       "n": 2,
+       "spec": 8,
+       "generic": 3
+      }
+     },
+     "extras": {
+      "coverage": {
+       "spec": 10,
+       "generic": 9.5
+      },
+      "accuracy": {
+       "spec": 9.5,
+       "generic": 10
+      },
+      "interests_used": {
+       "spec": 1,
+       "generic": 0.5
+      },
+      "dislikes_avoided": {
+       "spec": 7,
+       "generic": 4.5
+      },
+      "reading_level": {
+       "spec": 8.5,
+       "generic": 2.5
+      }
+     },
+     "fit": {
+      "spec": 7.25,
+      "generic": 2.5
+     },
+     "wins": 2,
+     "ties": 0,
+     "losses": 0,
+     "lost": []
+    }
+   },
+   "agreement": {
+    "n": 2,
+    "sameVerdict": 2,
+    "bothSpecBetter": 2,
+    "opposite": 0,
+    "rDelta": null,
+    "rLevels": 0.9875285778435748,
+    "meanAbsLevelGap": 0.3125
+   },
+   "learners": [
+    {
+     "name": "Maya",
+     "fit": 6.875
+    },
+    {
+     "name": "Leo",
+     "fit": 7.6875
+    }
+   ],
+   "measures": {
+    "words": {
+     "spec": 800,
+     "generic": 1004
+    },
+    "sentences": {
+     "spec": 98.5,
+     "generic": 69.5
+    },
+    "meanSentenceWords": {
+     "spec": 9.9,
+     "generic": 15.5
+    },
+    "longWordShare": {
+     "spec": 0.0055,
+     "generic": 0.0005
+    },
+    "interestsUsed": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestsAvailable": {
+     "spec": 3,
+     "generic": 3
+    },
+    "keyFactsMissing": {
+     "spec": 1,
+     "generic": 0,
+     "of": 10
+    },
+    "keyFacts": {
+     "spec": 5,
+     "generic": 5
+    },
+    "skills": {
+     "spec": 2.5,
+     "generic": 4
+    },
+    "paragraphsPerSkill": {
+     "spec": 5.5,
+     "generic": 4
+    },
+    "wordsPerParagraph": {
+     "spec": 48.95,
+     "generic": 51.45
+    },
+    "sentencesPerParagraph": {
+     "spec": 5.5,
+     "generic": 3.2
+    },
+    "questionsPerSkill": {
+     "spec": 8.15,
+     "generic": 8.25
+    },
+    "avoidViolations": {
+     "spec": 0,
+     "generic": 0
+    },
+    "interestCells": {
+     "spec": 0,
+     "generic": 0,
+     "of": 2
+    }
+   },
+   "missing": {}
+  }
+ },
+ "recs": [
+  {
+   "kind": "lesson",
+   "learner": "Maya",
+   "topic": "photosynthesis",
+   "ok": true,
+   "fields": [
+    [
+     "length_chunking",
+     "Lesson length and chunk size: about 4 sections whose body is at most 2 sentences, one new idea per section, at most about 290 words in all, at most 1 common mistake"
+    ],
+    [
+     "pacing",
+     "Pacing: steady"
+    ],
+    [
+     "retrieval_checks",
+     "Retrieval checks: 3 check questions, plus a \"Quick check: question, Answer: answer\" line at the end of every section"
+    ],
+    [
+     "difficulty",
+     "Difficulty: the check questions start at the lesson level and ramp steady"
+    ],
+    [
+     "scaffolding_hints",
+     "Scaffolding and hints: moderate support; no hints in the check questions"
+    ],
+    [
+     "worked_vs_practice",
+     "Worked examples to practice: 1 worked example, then 2 \"Try it: question, Answer: answer\" lines inside the lesson (ratio about 0.5; balanced)"
+    ],
+    [
+     "explanation_modes",
+     "Explanation modes, ranked: compact > visual-spatial > story > concrete-first; order cases-first; analogy prefer"
+    ],
+    [
+     "vocabulary",
+     "Vocabulary at about reading grade 2; terms defined first-use"
+    ],
+    [
+     "sentence_length",
+     "Sentences up to about 9 words"
+    ],
+    [
+     "examples_interests",
+     "Examples drawn from their interests (minecraft, drawing, building): the worked example and nearly every example"
+    ],
+    [
+     "avoided_domains",
+     "No examples, comparisons or settings from what they dislike (none)"
+    ],
+    [
+     "tone_feedback",
+     "Tone: warmth 0.69, formality 0, humour light, praise normal, correction normal; feedback standard"
+    ],
+    [
+     "structure_format",
+     "Structure and format: text density sparse, paragraphs of up to 2 sentences, structure laid out in plain-text tables, lists or trees; notation words-first"
+    ],
+    [
+     "engagement_challenge",
+     "Engagement: challenge 0.5, novelty 0.75, light game framing, story framing"
+    ]
+   ],
+   "specSummary": {
+    "hash": "17dfee2f1feb",
+    "isDefault": false,
+    "vocabularyGrade": 2,
+    "maxSentenceWords": 9,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 1,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": false,
+    "typedAnswers": 0.5,
+    "interests": [
+     "minecraft",
+     "drawing",
+     "building"
+    ],
+    "avoid": [],
+    "modes": [
+     "compact",
+     "visual-spatial",
+     "story",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 307,
+     "sentences": 39,
+     "meanSentenceWords": 8.1,
+     "longWordShare": 0.003,
+     "interestsUsed": 3,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "sections": 4,
+     "checks": 3,
+     "revised": false,
+     "openProblems": []
+    },
+    "generic": {
+     "words": 432,
+     "sentences": 35,
+     "meanSentenceWords": 12.6,
+     "longWordShare": 0.021,
+     "interestsUsed": 1,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "sections": 3,
+     "checks": 4,
+     "revised": false,
+     "openProblems": []
+    }
+   },
+   "models": {
+    "spec": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "generic": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ]
+   },
+   "meta": {
+    "spec": null,
+    "generic": null
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "length_chunking": {
+        "score": 9,
+        "reason": "4 sections, 2 sentences per section body, 1 common mistake."
+       },
+       "pacing": {
+        "score": 9,
+        "reason": "Brisk, manageable progression for short attention."
+       },
+       "retrieval_checks": {
+        "score": 10,
+        "reason": "Has 3 check questions and Quick check in every section."
+       },
+       "difficulty": {
+        "score": 9,
+        "reason": "Appropriately leveled and steadily ramping."
+       },
+       "scaffolding_hints": {
+        "score": 10,
+        "reason": "Moderate support without hints in final checks."
+       },
+       "worked_vs_practice": {
+        "score": 10,
+        "reason": "1 worked example and exactly 2 Try it lines included."
+       },
+       "explanation_modes": {
+        "score": 9,
+        "reason": "Great use of craft/fuel analogies and concrete cases."
+       },
+       "vocabulary": {
+        "score": 9,
+        "reason": "Grade 2 appropriate; new terms defined on first use."
+       },
+       "sentence_length": {
+        "score": 8,
+        "reason": "Most sentences are around 9 words or fewer."
+       },
+       "examples_interests": {
+        "score": 10,
+        "reason": "Superb integration of Minecraft, drawing, and building."
+       },
+       "avoided_domains": {
+        "score": 10,
+        "reason": "No avoided domains violated."
+       },
+       "tone_feedback": {
+        "score": 9,
+        "reason": "Warm, light, gamified, and perfectly informal."
+       },
+       "structure_format": {
+        "score": 9,
+        "reason": "Sparse text density, short punchy lines and lists."
+       },
+       "engagement_challenge": {
+        "score": 9,
+        "reason": "Strong crafting/game framing keeps an 8-year-old engaged."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 10,
+       "used": [
+        "Minecraft crafting table",
+        "Minecraft furnace fuel",
+        "Drawing green pencil",
+        "Building blocks"
+       ]
+      },
+      "dislikes_avoided": {
+       "score": 10,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 9,
+       "reason": "Perfect fit for an 8-year-old who dislikes reading."
+      }
+     },
+     "generic": {
+      "fit": {
+       "length_chunking": {
+        "score": 2,
+        "reason": "Too long, over word limit, 3 common mistakes instead of 1."
+       },
+       "pacing": {
+        "score": 5,
+        "reason": "Text heavy and dense for an 8-year-old."
+       },
+       "retrieval_checks": {
+        "score": 1,
+        "reason": "Missing section Quick checks; has 4 questions instead of 3."
+       },
+       "difficulty": {
+        "score": 6,
+        "reason": "Ramp is moderate but questions are too dense."
+       },
+       "scaffolding_hints": {
+        "score": 7,
+        "reason": "No hints provided in check questions as requested."
+       },
+       "worked_vs_practice": {
+        "score": 2,
+        "reason": "Lacks the required 2 Try it lines."
+       },
+       "explanation_modes": {
+        "score": 3,
+        "reason": "Abstract rule-first explanations; no visual analogies."
+       },
+       "vocabulary": {
+        "score": 2,
+        "reason": "Far too advanced; includes stomata, variegated, mitochondrion."
+       },
+       "sentence_length": {
+        "score": 1,
+        "reason": "Sentences are extremely long, often 15 to 25 words."
+       },
+       "examples_interests": {
+        "score": 0,
+        "reason": "Zero mention of Minecraft, drawing, or building."
+       },
+       "avoided_domains": {
+        "score": 10,
+        "reason": "No avoided domains violated."
+       },
+       "tone_feedback": {
+        "score": 2,
+        "reason": "Dry, highly formal textbook tone."
+       },
+       "structure_format": {
+        "score": 3,
+        "reason": "Dense paragraphs, lacks visual/tree structure."
+       },
+       "engagement_challenge": {
+        "score": 1,
+        "reason": "No game framing, story, or novelty."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 10,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 1,
+       "reason": "Written at middle/high school level; completely inappropriate for age 8."
+      }
+     },
+     "order": "generic-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "length_chunking": {
+        "score": 6,
+        "reason": "4 sections, short bodies, one idea each; total likely slightly over 290."
+       },
+       "pacing": {
+        "score": 8,
+        "reason": "Steady, bite-sized steps."
+       },
+       "retrieval_checks": {
+        "score": 6,
+        "reason": "Quick check in every section and 3 questions, though the Try it lines add extra."
+       },
+       "difficulty": {
+        "score": 7,
+        "reason": "Questions ramp from recall to a reasoning case."
+       },
+       "scaffolding_hints": {
+        "score": 8,
+        "reason": "Moderate support, no hints in the questions."
+       },
+       "worked_vs_practice": {
+        "score": 8,
+        "reason": "1 worked example, 2 Try it lines."
+       },
+       "explanation_modes": {
+        "score": 7,
+        "reason": "Compact, with analogies; little visual layout."
+       },
+       "vocabulary": {
+        "score": 8,
+        "reason": "Simple, with terms defined at first use."
+       },
+       "sentence_length": {
+        "score": 8,
+        "reason": "Short sentences; a few slightly over 9 words."
+       },
+       "examples_interests": {
+        "score": 10,
+        "reason": "Minecraft, drawing and building in nearly every example."
+       },
+       "avoided_domains": {
+        "score": 10,
+        "reason": "No dislikes were specified, so nothing is violated."
+       },
+       "tone_feedback": {
+        "score": 7,
+        "reason": "Light and friendly; little explicit praise."
+       },
+       "structure_format": {
+        "score": 6,
+        "reason": "Sparse and chunked; no tables; the worked-example numbering is doubled."
+       },
+       "engagement_challenge": {
+        "score": 8,
+        "reason": "Crafting-table framing and a game feel."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": [
+        "Minecraft leaf block making sugar is a loose analogy"
+       ]
+      },
+      "interests_used": {
+       "score": 10,
+       "used": [
+        "Minecraft",
+        "drawing",
+        "building"
+       ]
+      },
+      "dislikes_avoided": {
+       "score": 9,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 9,
+       "reason": "Short, simple and playful; right for an 8-year-old."
+      }
+     },
+     "generic": {
+      "fit": {
+       "length_chunking": {
+        "score": 1,
+        "reason": "Only 3 sections, long bodies, far over 290 words, 3 mistakes."
+       },
+       "pacing": {
+        "score": 3,
+        "reason": "Dense, many ideas per section; not steady for an 8-year-old."
+       },
+       "retrieval_checks": {
+        "score": 1,
+        "reason": "4 questions, no Quick check lines in sections."
+       },
+       "difficulty": {
+        "score": 4,
+        "reason": "Ramp is unclear; question 4 is a mistake-spotting item."
+       },
+       "scaffolding_hints": {
+        "score": 6,
+        "reason": "No hints in questions, but support is heavy and wordy."
+       },
+       "worked_vs_practice": {
+        "score": 1,
+        "reason": "One worked example, no Try it lines."
+       },
+       "explanation_modes": {
+        "score": 2,
+        "reason": "Rule-first prose, no visual, story or analogy."
+       },
+       "vocabulary": {
+        "score": 1,
+        "reason": "Stomata, palisade, variegated, pigment, respiration: far above grade 2."
+       },
+       "sentence_length": {
+        "score": 1,
+        "reason": "Many sentences run 20+ words."
+       },
+       "examples_interests": {
+        "score": 0,
+        "reason": "No Minecraft, drawing or building examples."
+       },
+       "avoided_domains": {
+        "score": 10,
+        "reason": "No dislikes were specified, so nothing is violated."
+       },
+       "tone_feedback": {
+        "score": 3,
+        "reason": "Flat, formal textbook tone, no warmth."
+       },
+       "structure_format": {
+        "score": 3,
+        "reason": "Dense paragraphs, no tables or lists; a numbered list in the worked example."
+       },
+       "engagement_challenge": {
+        "score": 1,
+        "reason": "No game or story framing."
+       }
+      },
+      "coverage": {
+       "score": 9,
+       "missing": [
+        "Mainly in leaves is only implied"
+       ]
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 3,
+       "violations": [
+        "Long dense reading, which the learner said they hate"
+       ]
+      },
+      "reading_level": {
+       "score": 1,
+       "reason": "Far too hard and long for an 8-year-old who dislikes reading."
+      }
+     },
+     "order": "generic-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "lesson",
+   "learner": "Leo",
+   "topic": "two-step equations",
+   "ok": true,
+   "fields": [
+    [
+     "length_chunking",
+     "Lesson length and chunk size: about 4 sections whose body is at most 2 sentences, one new idea per section, at most about 580 words in all, at most 2 common mistakes"
+    ],
+    [
+     "pacing",
+     "Pacing: steady"
+    ],
+    [
+     "retrieval_checks",
+     "Retrieval checks: 3 check questions, none inside the lesson body (teach a full stretch first)"
+    ],
+    [
+     "difficulty",
+     "Difficulty: the check questions start at the lesson level and ramp steady"
+    ],
+    [
+     "scaffolding_hints",
+     "Scaffolding and hints: plenty of support; each check question carries a one-line hint (the idea to use, never the answer)"
+    ],
+    [
+     "worked_vs_practice",
+     "Worked examples to practice: 2 worked examples, then 1 \"Try it: question, Answer: answer\" line inside the lesson (ratio about 1.43; worked examples lead)"
+    ],
+    [
+     "explanation_modes",
+     "Explanation modes, ranked: step-by-step > worked-examples > visual-spatial > concrete-first; order cases-first; analogy prefer"
+    ],
+    [
+     "vocabulary",
+     "Vocabulary at about reading grade 4; terms defined first-use"
+    ],
+    [
+     "sentence_length",
+     "Sentences up to about 14 words"
+    ],
+    [
+     "examples_interests",
+     "Examples drawn from their interests (soccer, fifa, plays striker): the worked example and nearly every example"
+    ],
+    [
+     "avoided_domains",
+     "No examples, comparisons or settings from what they dislike (none)"
+    ],
+    [
+     "tone_feedback",
+     "Tone: warmth 0.89, formality 0.11, humour light, praise normal, correction gentle, low stakes with no test language or timers; feedback standard"
+    ],
+    [
+     "structure_format",
+     "Structure and format: text density sparse, paragraphs of up to 2 sentences, numbered steps, structure laid out in plain-text tables, lists or trees; notation words-first"
+    ],
+    [
+     "engagement_challenge",
+     "Engagement: challenge 0.33, novelty 0.5"
+    ]
+   ],
+   "specSummary": {
+    "hash": "27d5acbe02af",
+    "isDefault": false,
+    "vocabularyGrade": 4,
+    "maxSentenceWords": 14,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 2,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": true,
+    "typedAnswers": 0.5,
+    "interests": [
+     "soccer",
+     "fifa",
+     "plays striker"
+    ],
+    "avoid": [],
+    "modes": [
+     "step-by-step",
+     "worked-examples",
+     "visual-spatial",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 429,
+     "sentences": 62,
+     "meanSentenceWords": 10.7,
+     "longWordShare": 0.002,
+     "interestsUsed": 1,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "sections": 4,
+     "checks": 3,
+     "revised": true,
+     "openProblems": [
+      "sentence_length"
+     ]
+    },
+    "generic": {
+     "words": 337,
+     "sentences": 36,
+     "meanSentenceWords": 15.1,
+     "longWordShare": 0.018,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 2,
+     "keyFacts": 5,
+     "sections": 3,
+     "checks": 4,
+     "revised": false,
+     "openProblems": []
+    }
+   },
+   "models": {
+    "spec": [
+     "deepseek/deepseek-v4.1-flash-1017",
+     "deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "generic": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ]
+   },
+   "meta": {
+    "spec": null,
+    "generic": null
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "length_chunking": {
+        "score": 9,
+        "reason": "Has 4 sections, 2 sentences each body, and 2 common mistakes."
+       },
+       "pacing": {
+        "score": 9,
+        "reason": "Smooth, steady progression across concepts."
+       },
+       "retrieval_checks": {
+        "score": 10,
+        "reason": "Exactly 3 check questions placed at the end."
+       },
+       "difficulty": {
+        "score": 9,
+        "reason": "Starts accessible and ramps up steadily."
+       },
+       "scaffolding_hints": {
+        "score": 10,
+        "reason": "Every check question carries an appropriate one-line hint."
+       },
+       "worked_vs_practice": {
+        "score": 8,
+        "reason": "Includes Try-it format and worked examples, very close to spec ratio."
+       },
+       "explanation_modes": {
+        "score": 9,
+        "reason": "Uses step-by-step, balance scale analogy, and concrete striker scenarios."
+       },
+       "vocabulary": {
+        "score": 9,
+        "reason": "Simple, grade 4 appropriate phrasing with clear definitions."
+       },
+       "sentence_length": {
+        "score": 8,
+        "reason": "Mostly short, bite-sized sentences close to the target."
+       },
+       "examples_interests": {
+        "score": 9,
+        "reason": "Striker goals and match tallies heavily integrated throughout."
+       },
+       "avoided_domains": {
+        "score": 10,
+        "reason": "No avoided domains violated."
+       },
+       "tone_feedback": {
+        "score": 10,
+        "reason": "Warm, encouraging, low-stakes tone tailored for math-averse learner."
+       },
+       "structure_format": {
+        "score": 9,
+        "reason": "Sparse chunking, numbered steps, plain-text alignment used effectively."
+       },
+       "engagement_challenge": {
+        "score": 9,
+        "reason": "Engaging soccer themes matched to specified low-to-moderate challenge."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 10,
+       "used": [
+        "striker goal tally",
+        "league matches and cup games",
+        "scoring goals"
+       ]
+      },
+      "dislikes_avoided": {
+       "score": 10,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 10,
+       "reason": "Perfect accessibility and warmth for an 11-year-old."
+      }
+     },
+     "generic": {
+      "fit": {
+       "length_chunking": {
+        "score": 5,
+        "reason": "Had 3 sections instead of 4; 3 common mistakes instead of 2."
+       },
+       "pacing": {
+        "score": 8,
+        "reason": "Steady pacing maintained throughout."
+       },
+       "retrieval_checks": {
+        "score": 6,
+        "reason": "Provided 4 check questions instead of requested 3."
+       },
+       "difficulty": {
+        "score": 8,
+        "reason": "Ramps reasonably well from identification to fractions."
+       },
+       "scaffolding_hints": {
+        "score": 1,
+        "reason": "No one-line hints provided for the check questions."
+       },
+       "worked_vs_practice": {
+        "score": 4,
+        "reason": "Lacks the specific 2 worked examples and Try-it line format."
+       },
+       "explanation_modes": {
+        "score": 6,
+        "reason": "Follows step-by-step well, but lacks visual-spatial and analogy elements."
+       },
+       "vocabulary": {
+        "score": 5,
+        "reason": "Uses dense formal math terms like coefficient without clear kid-friendly framing."
+       },
+       "sentence_length": {
+        "score": 3,
+        "reason": "Many sentences exceed 25 words, far over 14 words."
+       },
+       "examples_interests": {
+        "score": 0,
+        "reason": "Completely ignores soccer, FIFA, and striker interests."
+       },
+       "avoided_domains": {
+        "score": 10,
+        "reason": "No avoided domains violated."
+       },
+       "tone_feedback": {
+        "score": 4,
+        "reason": "Cold, formal academic tone; lacks warmth for math-averse child."
+       },
+       "structure_format": {
+        "score": 6,
+        "reason": "Dense text blocks, lacks plain-text tables or sparse chunking."
+       },
+       "engagement_challenge": {
+        "score": 4,
+        "reason": "Very dry presentation offers minimal engagement for reluctant learner."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 10,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 5,
+       "reason": "Too dense and grammatically complex for an 11-year-old math hater."
+      }
+     },
+     "order": "generic-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "length_chunking": {
+        "score": 6,
+        "reason": "4 sections and 2 mistakes, but some bodies are long and the lesson is wordy"
+       },
+       "pacing": {
+        "score": 7,
+        "reason": "Steady, one idea per section"
+       },
+       "retrieval_checks": {
+        "score": 9,
+        "reason": "3 checks placed after the lesson"
+       },
+       "difficulty": {
+        "score": 7,
+        "reason": "Starts at lesson level and ramps gently"
+       },
+       "scaffolding_hints": {
+        "score": 9,
+        "reason": "Every question has a one-line hint that does not give the answer"
+       },
+       "worked_vs_practice": {
+        "score": 6,
+        "reason": "Has a Try it line, but the example count is off"
+       },
+       "explanation_modes": {
+        "score": 8,
+        "reason": "Step-by-step with tables and a scales analogy"
+       },
+       "vocabulary": {
+        "score": 7,
+        "reason": "Simple words, with unknown and opposite explained"
+       },
+       "sentence_length": {
+        "score": 7,
+        "reason": "Mostly short, a few long ones in the worked example"
+       },
+       "examples_interests": {
+        "score": 9,
+        "reason": "Goals and striker examples throughout"
+       },
+       "avoided_domains": {
+        "score": 10,
+        "reason": "Nothing disliked appears"
+       },
+       "tone_feedback": {
+        "score": 7,
+        "reason": "Friendly welcome, no test language"
+       },
+       "structure_format": {
+        "score": 8,
+        "reason": "Numbered steps and a plain-text layout"
+       },
+       "engagement_challenge": {
+        "score": 7,
+        "reason": "Soccer puzzle framing at a gentle challenge level"
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 9,
+       "used": [
+        "soccer",
+        "plays striker",
+        "goals"
+       ]
+      },
+      "dislikes_avoided": {
+       "score": 10,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 8,
+       "reason": "Plain wording that suits an 11-year-old"
+      }
+     },
+     "generic": {
+      "fit": {
+       "length_chunking": {
+        "score": 3,
+        "reason": "3 sections, long bodies, 3 mistakes, likely over word cap"
+       },
+       "pacing": {
+        "score": 5,
+        "reason": "Steady but dense, with extra fraction content added"
+       },
+       "retrieval_checks": {
+        "score": 4,
+        "reason": "Checks come at the end, but there are 4 instead of 3"
+       },
+       "difficulty": {
+        "score": 5,
+        "reason": "Ramps up, but the fraction question jumps ahead of the level"
+       },
+       "scaffolding_hints": {
+        "score": 0,
+        "reason": "No hints on any check question"
+       },
+       "worked_vs_practice": {
+        "score": 2,
+        "reason": "Several examples, no Try it line inside the lesson"
+       },
+       "explanation_modes": {
+        "score": 5,
+        "reason": "Has steps and worked examples, but no visuals or analogy"
+       },
+       "vocabulary": {
+        "score": 4,
+        "reason": "Uses coefficient and constant, which are above grade 4"
+       },
+       "sentence_length": {
+        "score": 6,
+        "reason": "Mostly short, but a few sentences run long"
+       },
+       "examples_interests": {
+        "score": 0,
+        "reason": "No soccer or FIFA anywhere"
+       },
+       "avoided_domains": {
+        "score": 10,
+        "reason": "Nothing disliked appears"
+       },
+       "tone_feedback": {
+        "score": 3,
+        "reason": "Dry and formal, not warm"
+       },
+       "structure_format": {
+        "score": 5,
+        "reason": "Numbered steps in the worked example, but dense paragraphs"
+       },
+       "engagement_challenge": {
+        "score": 3,
+        "reason": "Dull, with no novelty and fractions that raise the challenge"
+       }
+      },
+      "coverage": {
+       "score": 9,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": [
+        "Third common mistake's Why line is confusingly worded"
+       ]
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 10,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 4,
+       "reason": "Terms like coefficient and constant are too hard for a 4th-grade level"
+      }
+     },
+     "order": "generic-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "notes",
+   "learner": "Maya",
+   "topic": "photosynthesis",
+   "ok": true,
+   "fields": [
+    [
+     "bullet_size",
+     "Bullet size and number: 2 to 4 bullets a section, each one plain sentence; small chunks: short bullets, one idea each, more and smaller sections"
+    ],
+    [
+     "brevity",
+     "Notes are as short as possible while keeping every definition, formula and step the text gives"
+    ],
+    [
+     "density_layout",
+     "Layout: text density sparse, paragraphs of up to 2 sentences, structure laid out so it can be scanned (aligned lists, before/after pairs)"
+    ],
+    [
+     "vocabulary",
+     "Vocabulary at about reading grade 2; terms defined first-use"
+    ],
+    [
+     "sentence_length",
+     "Bullet sentences up to about 9 words"
+    ],
+    [
+     "register",
+     "Register: casual and plain"
+    ]
+   ],
+   "specSummary": {
+    "hash": "17dfee2f1feb",
+    "isDefault": false,
+    "vocabularyGrade": 2,
+    "maxSentenceWords": 9,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 1,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": false,
+    "typedAnswers": 0.5,
+    "interests": [
+     "minecraft",
+     "drawing",
+     "building"
+    ],
+    "avoid": [],
+    "modes": [
+     "compact",
+     "visual-spatial",
+     "story",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 206,
+     "sentences": 16,
+     "meanSentenceWords": 14.2,
+     "longWordShare": 0,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "sections": 5,
+     "bullets": 16,
+     "bulletsPerSection": 3.2,
+     "maxBulletsInSection": 5,
+     "meanBulletWords": 11.3
+    },
+    "generic": {
+     "words": 247,
+     "sentences": 16,
+     "meanSentenceWords": 16.7,
+     "longWordShare": 0,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "sections": 4,
+     "bullets": 16,
+     "bulletsPerSection": 4,
+     "maxBulletsInSection": 5,
+     "meanBulletWords": 14.3
+    }
+   },
+   "models": {
+    "spec": [],
+    "generic": []
+   },
+   "meta": {
+    "spec": {
+     "spec_hash": "17dfee2f1feb",
+     "coverage": 100,
+     "dropped": 0
+    },
+    "generic": {
+     "spec_hash": null,
+     "coverage": 100,
+     "dropped": 0
+    }
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "bullet_size": {
+        "score": 7,
+        "reason": "One section has 5 bullets; mostly 2-4 bullets per section."
+       },
+       "brevity": {
+        "score": 8,
+        "reason": "Concise and retains essential definitions and steps."
+       },
+       "density_layout": {
+        "score": 7,
+        "reason": "Clean bulleted lists, but lacks scannable before/after pairs."
+       },
+       "vocabulary": {
+        "score": 6,
+        "reason": "Includes complex words like photosynthesis without simple grade 2 simplifications."
+       },
+       "sentence_length": {
+        "score": 4,
+        "reason": "Many bullets far exceed the 9-word limit."
+       },
+       "register": {
+        "score": 8,
+        "reason": "Plain and relatively casual tone."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 6,
+       "reason": "Still feels like a standard reading text, though broken into bullets.",
+       "violations": []
+      },
+      "reading_level": {
+       "score": 5,
+       "reason": "Sentences are too long and dense for an 8-year-old struggling reader."
+      }
+     },
+     "generic": {
+      "fit": {
+       "bullet_size": {
+        "score": 5,
+        "reason": "Two sections have 5 bullets; chunks are too large."
+       },
+       "brevity": {
+        "score": 6,
+        "reason": "Contains extra details like people breathing oxygen, less concise."
+       },
+       "density_layout": {
+        "score": 6,
+        "reason": "Standard lists without specialized scannable structures."
+       },
+       "vocabulary": {
+        "score": 5,
+        "reason": "Unsimplified vocabulary above grade 2 level."
+       },
+       "sentence_length": {
+        "score": 3,
+        "reason": "Almost every bullet significantly exceeds 9 words."
+       },
+       "register": {
+        "score": 7,
+        "reason": "Formal textbook register rather than casual."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 5,
+       "reason": "Dense text violates hatred of long reading.",
+       "violations": []
+      },
+      "reading_level": {
+       "score": 4,
+       "reason": "Too complex and lengthy for an 8-year-old who dislikes reading."
+      }
+     },
+     "order": "spec-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "bullet_size": {
+        "score": 6,
+        "reason": "Mostly one idea per bullet, 2-5 per section, some bullets long"
+       },
+       "brevity": {
+        "score": 6,
+        "reason": "Trimmed the animals line; still keeps all definitions and formula"
+       },
+       "density_layout": {
+        "score": 6,
+        "reason": "Sparse, scannable headings; no paragraphs; several dense bullets"
+       },
+       "vocabulary": {
+        "score": 5,
+        "reason": "Terms defined, but pigment, by-product, reflects remain hard for grade 2"
+       },
+       "sentence_length": {
+        "score": 3,
+        "reason": "Many bullets exceed 9 words; a few are around 20"
+       },
+       "register": {
+        "score": 6,
+        "reason": "Plain, fairly casual, slightly textbook"
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 6,
+       "violations": [
+        "Still fairly reading-heavy with long bullets"
+       ]
+      },
+      "reading_level": {
+       "score": 5,
+       "reason": "Somewhat simplified but still above a short-attention 8-year-old's comfort"
+      }
+     },
+     "generic": {
+      "fit": {
+       "bullet_size": {
+        "score": 4,
+        "reason": "Up to 5 bullets per section; some bullets pack two ideas"
+       },
+       "brevity": {
+        "score": 4,
+        "reason": "Near-verbatim copy of base text; includes extra detail, not trimmed"
+       },
+       "density_layout": {
+        "score": 4,
+        "reason": "Scannable headings but long, dense bullets"
+       },
+       "vocabulary": {
+        "score": 4,
+        "reason": "Hard words kept as in the original, like pigment and by-product"
+       },
+       "sentence_length": {
+        "score": 2,
+        "reason": "Most bullets well beyond 9 words, some about 25"
+       },
+       "register": {
+        "score": 4,
+        "reason": "Textbook tone copied from source, not casual"
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 4,
+       "violations": [
+        "Long reading-heavy bullets, nearly the whole text repeated"
+       ]
+      },
+      "reading_level": {
+       "score": 4,
+       "reason": "Too complex and long for this learner; copies the source language"
+      }
+     },
+     "order": "spec-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "notes",
+   "learner": "Leo",
+   "topic": "two-step equations",
+   "ok": true,
+   "fields": [
+    [
+     "bullet_size",
+     "Bullet size and number: 2 to 4 bullets a section, each one plain sentence; small chunks: short bullets, one idea each, more and smaller sections"
+    ],
+    [
+     "brevity",
+     "Notes are of standard length"
+    ],
+    [
+     "density_layout",
+     "Layout: text density sparse, paragraphs of up to 2 sentences, structure laid out so it can be scanned (aligned lists, before/after pairs), numbered steps where the text has steps"
+    ],
+    [
+     "vocabulary",
+     "Vocabulary at about reading grade 4; terms defined first-use"
+    ],
+    [
+     "sentence_length",
+     "Bullet sentences up to about 14 words"
+    ],
+    [
+     "register",
+     "Register: casual and plain"
+    ]
+   ],
+   "specSummary": {
+    "hash": "27d5acbe02af",
+    "isDefault": false,
+    "vocabularyGrade": 4,
+    "maxSentenceWords": 14,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 2,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": true,
+    "typedAnswers": 0.5,
+    "interests": [
+     "soccer",
+     "fifa",
+     "plays striker"
+    ],
+    "avoid": [],
+    "modes": [
+     "step-by-step",
+     "worked-examples",
+     "visual-spatial",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 198,
+     "sentences": 19,
+     "meanSentenceWords": 13.3,
+     "longWordShare": 0,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 1,
+     "keyFacts": 5,
+     "sections": 5,
+     "bullets": 13,
+     "bulletsPerSection": 2.6,
+     "maxBulletsInSection": 3,
+     "meanBulletWords": 15.6
+    },
+    "generic": {
+     "words": 218,
+     "sentences": 13,
+     "meanSentenceWords": 20.8,
+     "longWordShare": 0,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "sections": 5,
+     "bullets": 13,
+     "bulletsPerSection": 2.6,
+     "maxBulletsInSection": 3,
+     "meanBulletWords": 17.4
+    }
+   },
+   "models": {
+    "spec": [],
+    "generic": []
+   },
+   "meta": {
+    "spec": {
+     "spec_hash": "27d5acbe02af",
+     "coverage": 100,
+     "dropped": 2
+    },
+    "generic": {
+     "spec_hash": null,
+     "coverage": 100,
+     "dropped": 0
+    }
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "bullet_size": {
+        "score": 9,
+        "reason": "Follows 2 to 4 one-sentence bullets per section well."
+       },
+       "brevity": {
+        "score": 9,
+        "reason": "Standard length maintained neatly."
+       },
+       "density_layout": {
+        "score": 7,
+        "reason": "Numbered headers used, but lacks aligned lists or before/after pairs."
+       },
+       "vocabulary": {
+        "score": 8,
+        "reason": "Accessible vocabulary, though variable is not explicitly defined."
+       },
+       "sentence_length": {
+        "score": 7,
+        "reason": "Several bullets exceed the 14-word limit."
+       },
+       "register": {
+        "score": 9,
+        "reason": "Casual and plain tone appropriate for learner."
+       }
+      },
+      "coverage": {
+       "score": 9,
+       "reason": "",
+       "missing": [
+        "Intermediate step 2x = 8 and explicit x = 4 omitted in body"
+       ]
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 10,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 9,
+       "reason": "Clear and accessible phrasing suitable for an 11-year-old."
+      }
+     },
+     "generic": {
+      "fit": {
+       "bullet_size": {
+        "score": 8,
+        "reason": "2 to 3 bullets per section, but some bullets hold multiple clauses."
+       },
+       "brevity": {
+        "score": 9,
+        "reason": "Appropriate standard length."
+       },
+       "density_layout": {
+        "score": 6,
+        "reason": "No numbered steps or scannable before/after layout pairs."
+       },
+       "vocabulary": {
+        "score": 8,
+        "reason": "Simple grade 4 reading level, variable not defined."
+       },
+       "sentence_length": {
+        "score": 4,
+        "reason": "Multiple bullets significantly exceed 14 words (up to 24 words)."
+       },
+       "register": {
+        "score": 8,
+        "reason": "Plain and direct register."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 10,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 8,
+       "reason": "Sentences are quite long and run-on for this reading level."
+      }
+     },
+     "order": "spec-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "bullet_size": {
+        "score": 8,
+        "reason": "2-3 bullets per section, plain sentences, one idea each, small sections"
+       },
+       "brevity": {
+        "score": 8,
+        "reason": "Standard length, covers the text without padding"
+       },
+       "density_layout": {
+        "score": 5,
+        "reason": "Sparse, but no numbered steps or aligned before/after pairs"
+       },
+       "vocabulary": {
+        "score": 6,
+        "reason": "'variable' and 'operation' not defined; otherwise simple words"
+       },
+       "sentence_length": {
+        "score": 7,
+        "reason": "Most bullets near 14 words; a few run over"
+       },
+       "register": {
+        "score": 7,
+        "reason": "Plain and uses 'you'; mildly casual"
+       }
+      },
+      "coverage": {
+       "score": 8,
+       "missing": [
+        "Intermediate results 2x = 8 and x = 4 not shown in steps"
+       ]
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "Math-heavy, but no extra math added"
+       ]
+      },
+      "reading_level": {
+       "score": 7,
+       "reason": "Mostly fine for 11; undefined terms and little scaffolding"
+      }
+     },
+     "generic": {
+      "fit": {
+       "bullet_size": {
+        "score": 7,
+        "reason": "2-3 bullets per section, but some bullets are long"
+       },
+       "brevity": {
+        "score": 8,
+        "reason": "Standard length, covers the text faithfully"
+       },
+       "density_layout": {
+        "score": 5,
+        "reason": "Sparse, but no numbered steps or before/after pairs"
+       },
+       "vocabulary": {
+        "score": 6,
+        "reason": "'variable' and 'operation' undefined, copied from the text"
+       },
+       "sentence_length": {
+        "score": 4,
+        "reason": "Several bullets exceed 14 words, up to about 28"
+       },
+       "register": {
+        "score": 5,
+        "reason": "Plain but more formal and textbook-like"
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "Math-heavy, but no extra math added"
+       ]
+      },
+      "reading_level": {
+       "score": 6,
+       "reason": "Long sentences and formal wording are harder for an 11-year-old who dislikes math"
+      }
+     },
+     "order": "spec-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "podcast",
+   "learner": "Maya",
+   "topic": "photosynthesis",
+   "ok": true,
+   "fields": [
+    [
+     "pacing_length",
+     "Pacing and length: steady pace (steady); the script is as short as possible while keeping every definition, formula and step the text gives"
+    ],
+    [
+     "vocabulary_spoken",
+     "Vocabulary at about reading grade 2; terms defined first-use"
+    ],
+    [
+     "sentence_length",
+     "Spoken sentences up to about 9 words"
+    ],
+    [
+     "check_in_frequency",
+     "Check-in frequency: a quick question for the listener after every small piece (about every 2 minutes of speech); the marks [CHECK-IN QUESTION] show where they fall"
+    ],
+    [
+     "dialogue_style",
+     "Dialogue: host A explains directly, with little quizzing mid-explanation"
+    ],
+    [
+     "tone",
+     "Tone: warmth 0.69, formality 0, humour light, praise normal, correction normal"
+    ],
+    [
+     "explanation_order",
+     "Order of explanation: cases-first; balanced"
+    ]
+   ],
+   "specSummary": {
+    "hash": "17dfee2f1feb",
+    "isDefault": false,
+    "vocabularyGrade": 2,
+    "maxSentenceWords": 9,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 1,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": false,
+    "typedAnswers": 0.5,
+    "interests": [
+     "minecraft",
+     "drawing",
+     "building"
+    ],
+    "avoid": [],
+    "modes": [
+     "compact",
+     "visual-spatial",
+     "story",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 206,
+     "sentences": 32,
+     "meanSentenceWords": 6.4,
+     "longWordShare": 0,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 1,
+     "keyFacts": 5,
+     "turns": 19,
+     "wordsPerTurn": 10.8,
+     "bQuestions": 9,
+     "checkIns": 0,
+     "spokenMinutes": 1.4
+    },
+    "generic": {
+     "words": 336,
+     "sentences": 29,
+     "meanSentenceWords": 11.6,
+     "longWordShare": 0,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "turns": 28,
+     "wordsPerTurn": 12,
+     "bQuestions": 13,
+     "checkIns": 1,
+     "spokenMinutes": 2.2
+    }
+   },
+   "models": {
+    "spec": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "generic": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ]
+   },
+   "meta": {
+    "spec": null,
+    "generic": null
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "pacing_length": {
+        "score": 4,
+        "reason": "Cuts off prematurely, missing entire second half and formulas"
+       },
+       "vocabulary_spoken": {
+        "score": 6,
+        "reason": "Defines pigment well, but copies dense source text sentences directly"
+       },
+       "sentence_length": {
+        "score": 5,
+        "reason": "Mixes short lines with long 15+ word sentences"
+       },
+       "check_in_frequency": {
+        "score": 0,
+        "reason": "Completely omitted [CHECK-IN QUESTION] markers"
+       },
+       "dialogue_style": {
+        "score": 8,
+        "reason": "Host A explains directly with minimal quizzing"
+       },
+       "tone": {
+        "score": 6,
+        "reason": "Warm and simple, but lacks planned light humour"
+       },
+       "explanation_order": {
+        "score": 3,
+        "reason": "Follows standard text sequence rather than cases-first structure"
+       }
+      },
+      "coverage": {
+       "score": 6,
+       "missing": [
+        "Oxygen is released as a by-product"
+       ]
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 7,
+       "violations": [
+        "Repetitive robotic question-answer pairs feel dry"
+       ]
+      },
+      "reading_level": {
+       "score": 5,
+       "reason": "Direct text lifts are too difficult for grade 2 listener"
+      }
+     },
+     "generic": {
+      "fit": {
+       "pacing_length": {
+        "score": 7,
+        "reason": "Includes all definitions and steps, but retains full source length"
+       },
+       "vocabulary_spoken": {
+        "score": 3,
+        "reason": "Uses complex adult phrasing like inputs, essential, and by-product"
+       },
+       "sentence_length": {
+        "score": 2,
+        "reason": "Nearly every sentence far exceeds 9 words limit"
+       },
+       "check_in_frequency": {
+        "score": 0,
+        "reason": "Completely missing [CHECK-IN QUESTION] pauses"
+       },
+       "dialogue_style": {
+        "score": 8,
+        "reason": "Host A directly answers Host B's questions"
+       },
+       "tone": {
+        "score": 2,
+        "reason": "Too formal, zero warmth or humour for an 8-year-old"
+       },
+       "explanation_order": {
+        "score": 3,
+        "reason": "Follows base text order instead of cases-first"
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 3,
+       "violations": [
+        "Dense, boring reading transcript style"
+       ]
+      },
+      "reading_level": {
+       "score": 2,
+       "reason": "Far too advanced vocabulary and syntax for an 8-year-old"
+      }
+     },
+     "order": "spec-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "pacing_length": {
+        "score": 5,
+        "reason": "Short, but it stops early and drops several definitions and steps."
+       },
+       "vocabulary_spoken": {
+        "score": 7,
+        "reason": "Mostly simple; pigment defined at first use; glucose, chloroplasts only partly."
+       },
+       "sentence_length": {
+        "score": 7,
+        "reason": "Mostly short; a few sentences run over nine words."
+       },
+       "check_in_frequency": {
+        "score": 0,
+        "reason": "No [CHECK-IN QUESTION] marks anywhere in the script."
+       },
+       "dialogue_style": {
+        "score": 4,
+        "reason": "A explains directly, but B asks a question after every line."
+       },
+       "tone": {
+        "score": 6,
+        "reason": "Casual and warm, light humour ('I promise'); no praise."
+       },
+       "explanation_order": {
+        "score": 3,
+        "reason": "Definition first; no cases-first ordering."
+       }
+      },
+      "coverage": {
+       "score": 4,
+       "missing": [
+        "Chlorophyll absorbing light not stated",
+        "Oxygen by-product missing",
+        "Script ends before oxygen and equation",
+        "Word equation and dark cupboard case missing"
+       ]
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "Reasonably short, but cut off mid-topic"
+       ]
+      },
+      "reading_level": {
+       "score": 7,
+       "reason": "Simple wording and short lines, mostly suitable for an 8-year-old."
+      }
+     },
+     "generic": {
+      "fit": {
+       "pacing_length": {
+        "score": 3,
+        "reason": "Long and copies the text, which the short-attention learner dislikes."
+       },
+       "vocabulary_spoken": {
+        "score": 3,
+        "reason": "Text copied verbatim; 'by-product', 'pigment', 'absorbs' left undefined."
+       },
+       "sentence_length": {
+        "score": 1,
+        "reason": "Many sentences run well over nine words."
+       },
+       "check_in_frequency": {
+        "score": 0,
+        "reason": "No [CHECK-IN QUESTION] marks anywhere in the script."
+       },
+       "dialogue_style": {
+        "score": 4,
+        "reason": "A explains directly, but B asks a question every turn."
+       },
+       "tone": {
+        "score": 3,
+        "reason": "Formal, flat and textbook-like; little warmth or humour."
+       },
+       "explanation_order": {
+        "score": 3,
+        "reason": "Follows text order; the dark cupboard case comes last, not first."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 3,
+       "violations": [
+        "Long, dense, read-aloud text copied from the base text"
+       ]
+      },
+      "reading_level": {
+       "score": 3,
+       "reason": "Dense, long sentences and hard words; too hard for this learner."
+      }
+     },
+     "order": "spec-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "podcast",
+   "learner": "Leo",
+   "topic": "two-step equations",
+   "ok": true,
+   "fields": [
+    [
+     "pacing_length",
+     "Pacing and length: steady pace (steady); the script is of standard length"
+    ],
+    [
+     "vocabulary_spoken",
+     "Vocabulary at about reading grade 4; terms defined first-use"
+    ],
+    [
+     "sentence_length",
+     "Spoken sentences up to about 14 words"
+    ],
+    [
+     "dialogue_style",
+     "Dialogue: host A explains directly, with little quizzing mid-explanation"
+    ],
+    [
+     "tone",
+     "Tone: warmth 0.89, formality 0.11, humour light, praise normal, correction gentle, low stakes with no test language or timers"
+    ],
+    [
+     "explanation_order",
+     "Order of explanation: cases-first; balanced"
+    ]
+   ],
+   "specSummary": {
+    "hash": "27d5acbe02af",
+    "isDefault": false,
+    "vocabularyGrade": 4,
+    "maxSentenceWords": 14,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 2,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": true,
+    "typedAnswers": 0.5,
+    "interests": [
+     "soccer",
+     "fifa",
+     "plays striker"
+    ],
+    "avoid": [],
+    "modes": [
+     "step-by-step",
+     "worked-examples",
+     "visual-spatial",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 352,
+     "sentences": 46,
+     "meanSentenceWords": 8.2,
+     "longWordShare": 0.017,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 1,
+     "keyFacts": 5,
+     "turns": 30,
+     "wordsPerTurn": 12.5,
+     "bQuestions": 15,
+     "checkIns": 0,
+     "spokenMinutes": 2.3
+    },
+    "generic": {
+     "words": 321,
+     "sentences": 21,
+     "meanSentenceWords": 16.4,
+     "longWordShare": 0.003,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 1,
+     "keyFacts": 5,
+     "turns": 20,
+     "wordsPerTurn": 17.4,
+     "bQuestions": 7,
+     "checkIns": 0,
+     "spokenMinutes": 2.1
+    }
+   },
+   "models": {
+    "spec": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "generic": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ]
+   },
+   "meta": {
+    "spec": null,
+    "generic": null
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "pacing_length": {
+        "score": 9,
+        "reason": "Nice, steady progression across dialogue turns."
+       },
+       "vocabulary_spoken": {
+        "score": 9,
+        "reason": "Simple, grade 4 appropriate vocabulary used throughout."
+       },
+       "sentence_length": {
+        "score": 9,
+        "reason": "Sentences are almost entirely under 14 words."
+       },
+       "dialogue_style": {
+        "score": 8,
+        "reason": "Host A explains well, though B has consecutive turns."
+       },
+       "tone": {
+        "score": 8,
+        "reason": "Gentle, low-stakes, and friendly tone throughout."
+       },
+       "explanation_order": {
+        "score": 7,
+        "reason": "Follows standard text order rather than cases-first."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": [
+        "Host A's response omitting step 1 outcome before B speaks"
+       ]
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 9,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 9,
+       "reason": "Very accessible, short sentences suitable for age 11."
+      }
+     },
+     "generic": {
+      "fit": {
+       "pacing_length": {
+        "score": 9,
+        "reason": "Standard length, steady and clear pace throughout."
+       },
+       "vocabulary_spoken": {
+        "score": 8,
+        "reason": "Accessible words, though some terms like 'substituting' appear late."
+       },
+       "sentence_length": {
+        "score": 4,
+        "reason": "Sentences frequently exceed 14 words significantly."
+       },
+       "dialogue_style": {
+        "score": 8,
+        "reason": "Host A explains directly with very little quizzing."
+       },
+       "tone": {
+        "score": 6,
+        "reason": "Formal and neutral, lacks the high warmth requested."
+       },
+       "explanation_order": {
+        "score": 7,
+        "reason": "Follows base text, but not strictly cases-first."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "Standard dry math framing despite intense dislike of math"
+       ]
+      },
+      "reading_level": {
+       "score": 8,
+       "reason": "Clear spoken tone, suitable for age 11."
+      }
+     },
+     "order": "generic-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "pacing_length": {
+        "score": 6,
+        "reason": "Slow, steady pace, but a script glitch breaks the flow."
+       },
+       "vocabulary_spoken": {
+        "score": 8,
+        "reason": "Plain words; 'opposite operation' is explained through undoing."
+       },
+       "sentence_length": {
+        "score": 8,
+        "reason": "Nearly all lines are short; only the recap runs long."
+       },
+       "dialogue_style": {
+        "score": 5,
+        "reason": "A explains directly, but B prompts constantly and the exchange is choppy."
+       },
+       "tone": {
+        "score": 7,
+        "reason": "Friendly and gentle ('nice and slow'); humour is minimal."
+       },
+       "explanation_order": {
+        "score": 5,
+        "reason": "Goal and steps come first, rule and scale next, second example last."
+       }
+      },
+      "coverage": {
+       "score": 7,
+       "missing": [
+        "2x=8 result never stated",
+        "x=4 for 2x+3=11 only implied"
+       ]
+      },
+      "accuracy": {
+       "score": 8,
+       "errors": [
+        "B answers its own question ('nice halfway point'), leaving the subtract-3 step unstated"
+       ]
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 10,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 8,
+       "reason": "Short, plain sentences and a balanced-scale picture suit an 11-year-old visual learner."
+      }
+     },
+     "generic": {
+      "fit": {
+       "pacing_length": {
+        "score": 7,
+        "reason": "Steady, standard length, moves through all points without rushing."
+       },
+       "vocabulary_spoken": {
+        "score": 6,
+        "reason": "Mostly simple, but 'substituting' and 'operation' go undefined."
+       },
+       "sentence_length": {
+        "score": 4,
+        "reason": "Several lines run 19 to 25 words, well over 14."
+       },
+       "dialogue_style": {
+        "score": 6,
+        "reason": "A explains directly; B's questions are fairly frequent but not quiz-like."
+       },
+       "tone": {
+        "score": 5,
+        "reason": "Polite and neutral, 'study session' feels formal; little warmth."
+       },
+       "explanation_order": {
+        "score": 6,
+        "reason": "Worked example comes early, then rule and check; roughly cases-first."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 10,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 6,
+       "reason": "Understandable, but long sentences and abstract wording strain an 11-year-old who dislikes maths."
+      }
+     },
+     "order": "generic-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "test",
+   "learner": "Maya",
+   "topic": "photosynthesis",
+   "ok": true,
+   "fields": [
+    [
+     "difficulty_start",
+     "Difficulty: the questions start at the level (recall or use first)"
+    ],
+    [
+     "difficulty_ramp",
+     "Difficulty ramp: steady; tiers climb in the order the questions are asked, hardest last"
+    ],
+    [
+     "question_format",
+     "Answer format: a mix of multiple choice and typed answers"
+    ],
+    [
+     "feedback_detail",
+     "Explanation after each question: one or two sentences"
+    ],
+    [
+     "stakes_tone",
+     "Stakes: ordinary; test language is fine; Tone: warmth 0.69, formality 0, humour light, praise normal, correction normal"
+    ],
+    [
+     "wording",
+     "Vocabulary at about reading grade 2; terms defined first-use; question prompts of 13 words or fewer where the idea allows"
+    ],
+    [
+     "warmup",
+     "Opens with 2 easy warm-up questions"
+    ]
+   ],
+   "specSummary": {
+    "hash": "17dfee2f1feb",
+    "isDefault": false,
+    "vocabularyGrade": 2,
+    "maxSentenceWords": 9,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 1,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": false,
+    "typedAnswers": 0.5,
+    "interests": [
+     "minecraft",
+     "drawing",
+     "building"
+    ],
+    "avoid": [],
+    "modes": [
+     "compact",
+     "visual-spatial",
+     "story",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 94,
+     "sentences": 11,
+     "meanSentenceWords": 8.5,
+     "longWordShare": 0,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 1,
+     "keyFacts": 5,
+     "questions": 5,
+     "tierSeq": "22233",
+     "tierMonotone": true,
+     "firstTier": 2,
+     "typedShare": 0.2,
+     "meanExplanationWords": 12.6,
+     "testWordHits": 0,
+     "secondsPerQuestion": 75,
+     "offeredUntimedFirst": false
+    },
+    "generic": {
+     "words": 231,
+     "sentences": 22,
+     "meanSentenceWords": 10.5,
+     "longWordShare": 0,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "questions": 10,
+     "tierSeq": "3211321331",
+     "tierMonotone": false,
+     "firstTier": 3,
+     "typedShare": 0.3,
+     "meanExplanationWords": 12.2,
+     "testWordHits": 0,
+     "secondsPerQuestion": 75,
+     "offeredUntimedFirst": false
+    }
+   },
+   "models": {
+    "spec": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "generic": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ]
+   },
+   "meta": {
+    "spec": null,
+    "generic": null
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "difficulty_start": {
+        "score": 8,
+        "reason": "Starts at tier 2, which satisfies use first."
+       },
+       "difficulty_ramp": {
+        "score": 8,
+        "reason": "Tiers climb steadily from tier 2 up to tier 3."
+       },
+       "question_format": {
+        "score": 10,
+        "reason": "Includes both multiple choice and typed answers."
+       },
+       "feedback_detail": {
+        "score": 10,
+        "reason": "Each explanation is one or two sentences."
+       },
+       "stakes_tone": {
+        "score": 5,
+        "reason": "Plain and neutral; misses warmth and light humor."
+       },
+       "wording": {
+        "score": 8,
+        "reason": "Short prompts under 13 words with simpler phrasing."
+       },
+       "warmup": {
+        "score": 1,
+        "reason": "Opens with tier 2 questions rather than explicit easy warm-ups."
+       }
+      },
+      "coverage": {
+       "score": 8,
+       "missing": [
+        "Chloroplasts are not mentioned"
+       ]
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": [
+        "Accidentally repeated identical leaf-color question in Q1 and Q3"
+       ]
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 7,
+       "violations": [
+        "Repetitive questions increase reading burden needlessly."
+       ]
+      },
+      "reading_level": {
+       "score": 7,
+       "reason": "Language is substantially closer to grade 2 reading ability."
+      }
+     },
+     "generic": {
+      "fit": {
+       "difficulty_start": {
+        "score": 1,
+        "reason": "Starts on tier 3 instead of recall or use."
+       },
+       "difficulty_ramp": {
+        "score": 2,
+        "reason": "Tiers are scattered randomly, ending on tier 1 instead of hardest."
+       },
+       "question_format": {
+        "score": 10,
+        "reason": "Includes a good mix of multiple choice and typed answers."
+       },
+       "feedback_detail": {
+        "score": 10,
+        "reason": "Explanations are concise at one to two sentences."
+       },
+       "stakes_tone": {
+        "score": 4,
+        "reason": "Very formal and clinical; completely lacks warmth, light humor, or encouragement."
+       },
+       "wording": {
+        "score": 3,
+        "reason": "Too complex for grade 2; prompts exceed 13 words without definitions."
+       },
+       "warmup": {
+        "score": 0,
+        "reason": "Does not open with two easy warm-up questions."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 3,
+       "violations": [
+        "Ten text-heavy questions overwhelm an 8-year-old who hates long reading."
+       ]
+      },
+      "reading_level": {
+       "score": 3,
+       "reason": "Vocabulary and sentence structures are far too advanced for an 8-year-old."
+      }
+     },
+     "order": "generic-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "difficulty_start": {
+        "score": 8,
+        "reason": "Starts with tier 2 use questions, allowed."
+       },
+       "difficulty_ramp": {
+        "score": 8,
+        "reason": "Tiers 2,2,2,3,3 climb steadily, hardest last."
+       },
+       "question_format": {
+        "score": 8,
+        "reason": "Mix of choices and one typed answer."
+       },
+       "feedback_detail": {
+        "score": 8,
+        "reason": "One or two sentences each, clear."
+       },
+       "stakes_tone": {
+        "score": 5,
+        "reason": "Plain test language; little warmth or humour."
+       },
+       "wording": {
+        "score": 6,
+        "reason": "Prompts short; some terms like by-product not defined."
+       },
+       "warmup": {
+        "score": 2,
+        "reason": "No easy warm-ups; the first questions are tier 2."
+       }
+      },
+      "coverage": {
+       "score": 5,
+       "missing": [
+        "Glucose made from CO2 and water only via equation",
+        "Photosynthesis mainly in leaves not stated",
+        "Sun/light role thin"
+       ]
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "Question 1 and 3 duplicate, wasting reading"
+       ]
+      },
+      "reading_level": {
+       "score": 7,
+       "reason": "Short prompts and simple options suit the learner, mostly."
+      }
+     },
+     "generic": {
+      "fit": {
+       "difficulty_start": {
+        "score": 2,
+        "reason": "Starts with a tier 3 question, not recall or use."
+       },
+       "difficulty_ramp": {
+        "score": 1,
+        "reason": "Tiers jump around: 3,2,1,1,3,2,1,3,3,1; hardest not last."
+       },
+       "question_format": {
+        "score": 8,
+        "reason": "Mix of multiple choice and typed answers, mostly choices."
+       },
+       "feedback_detail": {
+        "score": 8,
+        "reason": "Each explanation is one sentence, brief and fitting."
+       },
+       "stakes_tone": {
+        "score": 5,
+        "reason": "Test language fine, but no warmth or light humour."
+       },
+       "wording": {
+        "score": 3,
+        "reason": "Several prompts over 13 words; words like pigment, by-product, chloroplasts."
+       },
+       "warmup": {
+        "score": 1,
+        "reason": "No easy warm-ups; opens with a hard tier 3 question."
+       }
+      },
+      "coverage": {
+       "score": 9,
+       "missing": [
+        "Sun as light source only implied"
+       ]
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 3,
+       "violations": [
+        "10 questions with long, dense reading load",
+        "Long wordy prompts and options"
+       ]
+      },
+      "reading_level": {
+       "score": 3,
+       "reason": "Too complex for an 8-year-old who hates reading; long, abstract wording."
+      }
+     },
+     "order": "generic-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "test",
+   "learner": "Leo",
+   "topic": "two-step equations",
+   "ok": true,
+   "fields": [
+    [
+     "difficulty_start",
+     "Difficulty: the questions start at the level (recall or use first)"
+    ],
+    [
+     "difficulty_ramp",
+     "Difficulty ramp: steady; tiers climb in the order the questions are asked, hardest last"
+    ],
+    [
+     "question_format",
+     "Answer format: a mix of multiple choice and typed answers"
+    ],
+    [
+     "feedback_detail",
+     "Explanation after each question: one or two sentences; worded gently, saying what is right first"
+    ],
+    [
+     "stakes_tone",
+     "Stakes: low; no test, exam, quiz, timed, score or graded language, framed as practice; Tone: warmth 0.89, formality 0.11, humour light, praise normal, correction gentle, low stakes with no test language or timers"
+    ],
+    [
+     "wording",
+     "Vocabulary at about reading grade 4; terms defined first-use; question prompts of 18 words or fewer where the idea allows"
+    ]
+   ],
+   "specSummary": {
+    "hash": "27d5acbe02af",
+    "isDefault": false,
+    "vocabularyGrade": 4,
+    "maxSentenceWords": 14,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 2,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": true,
+    "typedAnswers": 0.5,
+    "interests": [
+     "soccer",
+     "fifa",
+     "plays striker"
+    ],
+    "avoid": [],
+    "modes": [
+     "step-by-step",
+     "worked-examples",
+     "visual-spatial",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 136,
+     "sentences": 16,
+     "meanSentenceWords": 11.4,
+     "longWordShare": 0.015,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 3,
+     "keyFacts": 5,
+     "questions": 5,
+     "tierSeq": "12223",
+     "tierMonotone": true,
+     "firstTier": 1,
+     "typedShare": 0.4,
+     "meanExplanationWords": 19,
+     "testWordHits": 0,
+     "secondsPerQuestion": 113,
+     "offeredUntimedFirst": true
+    },
+    "generic": {
+     "words": 255,
+     "sentences": 21,
+     "meanSentenceWords": 14.6,
+     "longWordShare": 0.012,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 3,
+     "keyFacts": 5,
+     "questions": 10,
+     "tierSeq": "1211233233",
+     "tierMonotone": false,
+     "firstTier": 1,
+     "typedShare": 0.2,
+     "meanExplanationWords": 15.8,
+     "testWordHits": 0,
+     "secondsPerQuestion": 75,
+     "offeredUntimedFirst": false
+    }
+   },
+   "models": {
+    "spec": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "generic": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ]
+   },
+   "meta": {
+    "spec": null,
+    "generic": null
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "difficulty_start": {
+        "score": 9,
+        "reason": "Starts cleanly at tier 1 recall/use as required."
+       },
+       "difficulty_ramp": {
+        "score": 9,
+        "reason": "Steady climb from tier 1 through tier 2 to tier 3."
+       },
+       "question_format": {
+        "score": 10,
+        "reason": "Good balance of typed answers and multiple choice options."
+       },
+       "feedback_detail": {
+        "score": 10,
+        "reason": "One to two gentle sentences stating what is right first."
+       },
+       "stakes_tone": {
+        "score": 4,
+        "reason": "Explicitly mentions timed test and seconds despite low stakes rule."
+       },
+       "wording": {
+        "score": 9,
+        "reason": "Prompts are short, clear, and age-appropriate."
+       }
+      },
+      "coverage": {
+       "score": 8,
+       "missing": [
+        "Checking the answer by substitution"
+       ]
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "Math is presented very dryly without engagement hooks"
+       ]
+      },
+      "reading_level": {
+       "score": 10,
+       "reason": "Simple vocabulary and brief sentence structure ideal for an 11-year-old."
+      }
+     },
+     "generic": {
+      "fit": {
+       "difficulty_start": {
+        "score": 10,
+        "reason": "Starts at tier 1 recall."
+       },
+       "difficulty_ramp": {
+        "score": 4,
+        "reason": "Tiers jump around erratically instead of climbing steadily."
+       },
+       "question_format": {
+        "score": 8,
+        "reason": "Mix present, but heavily skewed toward multiple choice."
+       },
+       "feedback_detail": {
+        "score": 5,
+        "reason": "Dry, does not gently state what is right first."
+       },
+       "stakes_tone": {
+        "score": 2,
+        "reason": "Includes timed test language; untimed test offered first: no."
+       },
+       "wording": {
+        "score": 8,
+        "reason": "Prompts generally concise, though question 9 is wordy."
+       }
+      },
+      "coverage": {
+       "score": 8,
+       "missing": [
+        "Checking answer by putting it back into original equation"
+       ]
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 7,
+       "violations": [
+        "Dry textbook math framing without accommodation for math dislike"
+       ]
+      },
+      "reading_level": {
+       "score": 8,
+       "reason": "Appropriate vocabulary though somewhat formal and dry."
+      }
+     },
+     "order": "spec-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "difficulty_start": {
+        "score": 9,
+        "reason": "Starts with tier 1 recall-style solve question."
+       },
+       "difficulty_ramp": {
+        "score": 6,
+        "reason": "Tiers 1,2,2,2,3: climbs, hardest last, though Q1 is a full solve."
+       },
+       "question_format": {
+        "score": 9,
+        "reason": "Mix of typed and multiple choice."
+       },
+       "feedback_detail": {
+        "score": 9,
+        "reason": "Short, gentle, says what is right first."
+       },
+       "stakes_tone": {
+        "score": 4,
+        "reason": "Mentions timed test and seconds per question; otherwise warm."
+       },
+       "wording": {
+        "score": 8,
+        "reason": "Simple words, short prompts; terms like 'both sides' not defined."
+       }
+      },
+      "coverage": {
+       "score": 8,
+       "missing": [
+        "check by substituting into original equation absent"
+       ]
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 7,
+       "violations": [
+        "Heavy math, hints with division; no softening",
+        "timed framing adds pressure"
+       ]
+      },
+      "reading_level": {
+       "score": 9,
+       "reason": "Short, plain sentences suitable for an 11-year-old."
+      }
+     },
+     "generic": {
+      "fit": {
+       "difficulty_start": {
+        "score": 9,
+        "reason": "Starts with tier 1 first-step question."
+       },
+       "difficulty_ramp": {
+        "score": 4,
+        "reason": "Tiers jump around: 1,2,1,1,2,3,3,2,3,3; not steady."
+       },
+       "question_format": {
+        "score": 7,
+        "reason": "Mix, but only two typed answers; mostly multiple choice."
+       },
+       "feedback_detail": {
+        "score": 4,
+        "reason": "Short, but not gentle; doesn't praise first; passage references."
+       },
+       "stakes_tone": {
+        "score": 3,
+        "reason": "Timed 75 seconds, untimed not offered; neutral tone."
+       },
+       "wording": {
+        "score": 5,
+        "reason": "Prompts long, 'According to the passage', dense options."
+       }
+      },
+      "coverage": {
+       "score": 7,
+       "missing": [
+        "check by substituting into original equation absent",
+        "divide step only in Q8/9"
+       ]
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 6,
+       "violations": [
+        "Math-heavy, no softening, timer pressure"
+       ]
+      },
+      "reading_level": {
+       "score": 6,
+       "reason": "Some long prompts and abstract phrasing; Q9 and Q10 harder."
+      }
+     },
+     "order": "spec-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "pack",
+   "learner": "Maya",
+   "topic": "photosynthesis",
+   "ok": true,
+   "fields": [
+    [
+     "summary_style",
+     "Summary: 3 to 5 short paragraphs in plain words; Layout: text density sparse, paragraphs of up to 2 sentences, structure laid out so it can be scanned (aligned lists, before/after pairs)"
+    ],
+    [
+     "aid_amounts",
+     "How much: about 8 flashcards, 4 quiz questions and 6 test questions for this short text (a learner who needs more checks gets more)"
+    ],
+    [
+     "vocabulary",
+     "Vocabulary at about reading grade 2; terms defined first-use"
+    ],
+    [
+     "sentence_length",
+     "Sentences up to about 9 words"
+    ],
+    [
+     "question_ramp",
+     "Difficulty: the questions start at the level (recall or use first) and ramp steady (a steady climb in tiers, hardest last)"
+    ],
+    [
+     "question_format",
+     "Answer format: a mix of multiple choice and typed answers"
+    ],
+    [
+     "explanations",
+     "Explanation after each question: one or two sentences"
+    ],
+    [
+     "stakes_tone",
+     "Stakes: ordinary; test language is fine; Tone: warmth 0.69, formality 0, humour light, praise normal, correction normal"
+    ]
+   ],
+   "specSummary": {
+    "hash": "17dfee2f1feb",
+    "isDefault": false,
+    "vocabularyGrade": 2,
+    "maxSentenceWords": 9,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 1,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": false,
+    "typedAnswers": 0.5,
+    "interests": [
+     "minecraft",
+     "drawing",
+     "building"
+    ],
+    "avoid": [],
+    "modes": [
+     "compact",
+     "visual-spatial",
+     "story",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 563,
+     "sentences": 65,
+     "meanSentenceWords": 9.4,
+     "longWordShare": 0.016,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "summaryParagraphs": 4,
+     "cards": 8,
+     "quiz": 4,
+     "testItems": 5,
+     "tierSeq": "11223",
+     "tierMonotone": true,
+     "typedShare": 0.22,
+     "meanExplanationWords": 12.6,
+     "testWordHits": 0
+    },
+    "generic": {
+     "words": 608,
+     "sentences": 48,
+     "meanSentenceWords": 13.5,
+     "longWordShare": 0.013,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "summaryParagraphs": 4,
+     "cards": 8,
+     "quiz": 4,
+     "testItems": 4,
+     "tierSeq": "1121",
+     "tierMonotone": false,
+     "typedShare": 0.38,
+     "meanExplanationWords": 13.6,
+     "testWordHits": 0
+    }
+   },
+   "models": {
+    "spec": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "generic": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ]
+   },
+   "meta": {
+    "spec": {
+     "spec_hash": "17dfee2f1feb",
+     "dropped": {
+      "ungrounded": 1,
+      "unsupported": 0,
+      "cards": 0
+     }
+    },
+    "generic": {
+     "spec_hash": null,
+     "dropped": {
+      "ungrounded": 2,
+      "unsupported": 0,
+      "cards": 0
+     }
+    }
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "summary_style": {
+        "score": 8,
+        "reason": "Sparse layout, scannable IN/OUT list, though paragraph 1 has 4 sentences."
+       },
+       "aid_amounts": {
+        "score": 9,
+        "reason": "Has 8 cards, 4 quiz, and 5 test questions (close to 6)."
+       },
+       "vocabulary": {
+        "score": 8,
+        "reason": "Simpler vocabulary closer to grade 2 with terms defined."
+       },
+       "sentence_length": {
+        "score": 8,
+        "reason": "Most sentences are around 6 to 9 words."
+       },
+       "question_ramp": {
+        "score": 9,
+        "reason": "Steady ramp from tier 1 through tier 3."
+       },
+       "question_format": {
+        "score": 9,
+        "reason": "Good mix of multiple choice and typed answers."
+       },
+       "explanations": {
+        "score": 9,
+        "reason": "One to two sentences per explanation, warm tone."
+       },
+       "stakes_tone": {
+        "score": 8,
+        "reason": "Warm, encouraging tone with normal praise."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "No Minecraft integration, but avoids long intimidating blocks of text."
+       ]
+      },
+      "reading_level": {
+       "score": 8,
+       "reason": "Short sentences and simplified phrasing suit an 8-year-old reader well."
+      }
+     },
+     "generic": {
+      "fit": {
+       "summary_style": {
+        "score": 2,
+        "reason": "Dense paragraphs, copied base text, exceeds two sentences per paragraph."
+       },
+       "aid_amounts": {
+        "score": 7,
+        "reason": "Has 8 cards, 4 quiz, but only 4 test questions instead of 6."
+       },
+       "vocabulary": {
+        "score": 3,
+        "reason": "Base text copied verbatim, far above grade 2 level."
+       },
+       "sentence_length": {
+        "score": 2,
+        "reason": "Sentences are much longer than 9 words."
+       },
+       "question_ramp": {
+        "score": 3,
+        "reason": "Almost all questions are tier 1, flat progression."
+       },
+       "question_format": {
+        "score": 9,
+        "reason": "Good mix of multiple choice and typed answers."
+       },
+       "explanations": {
+        "score": 9,
+        "reason": "One clear sentence explanation provided for each question."
+       },
+       "stakes_tone": {
+        "score": 5,
+        "reason": "Neutral and dry; lacks warmth and light humour."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 2,
+       "violations": [
+        "Long, dense reading blocks that the learner explicitly dislikes."
+       ]
+      },
+      "reading_level": {
+       "score": 2,
+       "reason": "Far too advanced and dense for an 8-year-old struggling reader."
+      }
+     },
+     "order": "generic-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "summary_style": {
+        "score": 7,
+        "reason": "Short paragraphs, IN/OUT list scannable; paragraph 3 layout is messy."
+       },
+       "aid_amounts": {
+        "score": 8,
+        "reason": "8 flashcards, 4 quiz, 5 test; one test question short."
+       },
+       "vocabulary": {
+        "score": 6,
+        "reason": "Mostly simple; terms defined at first use; pigment and by-product linger."
+       },
+       "sentence_length": {
+        "score": 9,
+        "reason": "Nearly all sentences are 9 words or fewer."
+       },
+       "question_ramp": {
+        "score": 8,
+        "reason": "Climbs from tier 1 to 3; the quiz starts with tier 2 items."
+       },
+       "question_format": {
+        "score": 8,
+        "reason": "Mix of multiple choice and typed answers across test."
+       },
+       "explanations": {
+        "score": 8,
+        "reason": "Two short sentences each, clear and warm-ish."
+       },
+       "stakes_tone": {
+        "score": 6,
+        "reason": "Friendly 'Right,' openers; little humour or personality."
+       }
+      },
+      "coverage": {
+       "score": 8,
+       "missing": [
+        "Oxygen as by-product only in the IN/OUT list and cards"
+       ]
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 1,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 8,
+       "reason": "Short, plain sentences suit an 8-year-old with short attention."
+      }
+     },
+     "generic": {
+      "fit": {
+       "summary_style": {
+        "score": 2,
+        "reason": "Long dense paragraphs, near copy of base text, no scannable layout."
+       },
+       "aid_amounts": {
+        "score": 6,
+        "reason": "8 flashcards and 4 quiz, but only 4 test questions, not 6."
+       },
+       "vocabulary": {
+        "score": 3,
+        "reason": "Words like pigment, by-product, absorbs, structures; far above grade 2."
+       },
+       "sentence_length": {
+        "score": 2,
+        "reason": "Many sentences run 20-plus words, far past 9."
+       },
+       "question_ramp": {
+        "score": 3,
+        "reason": "Almost all tier 1; flat, with no real climb."
+       },
+       "question_format": {
+        "score": 8,
+        "reason": "Quiz is all multiple choice; test mixes typed and choice."
+       },
+       "explanations": {
+        "score": 5,
+        "reason": "Present and short, but just repeat 'the passage says'."
+       },
+       "stakes_tone": {
+        "score": 3,
+        "reason": "Flat and formal; no warmth or light humour."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 2,
+       "violations": [
+        "Long dense reading blocks, which the learner hates"
+       ]
+      },
+      "reading_level": {
+       "score": 2,
+       "reason": "Too hard and too wordy for an 8-year-old who dislikes reading."
+      }
+     },
+     "order": "generic-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "pack",
+   "learner": "Leo",
+   "topic": "two-step equations",
+   "ok": true,
+   "fields": [
+    [
+     "summary_style",
+     "Summary: 3 to 5 short paragraphs in plain words; Layout: text density sparse, paragraphs of up to 2 sentences, structure laid out so it can be scanned (aligned lists, before/after pairs), numbered steps where the text has steps"
+    ],
+    [
+     "aid_amounts",
+     "How much: about 8 flashcards, 4 quiz questions and 6 test questions for this short text (a learner who needs more checks gets more)"
+    ],
+    [
+     "vocabulary",
+     "Vocabulary at about reading grade 4; terms defined first-use"
+    ],
+    [
+     "sentence_length",
+     "Sentences up to about 14 words"
+    ],
+    [
+     "question_ramp",
+     "Difficulty: the questions start at the level (recall or use first) and ramp steady (a steady climb in tiers, hardest last)"
+    ],
+    [
+     "question_format",
+     "Answer format: a mix of multiple choice and typed answers"
+    ],
+    [
+     "explanations",
+     "Explanation after each question: one or two sentences; worded gently, saying what is right first"
+    ],
+    [
+     "stakes_tone",
+     "Stakes: low; no test, exam, quiz, timed, score or graded language, framed as practice; Tone: warmth 0.89, formality 0.11, humour light, praise normal, correction gentle, low stakes with no test language or timers"
+    ]
+   ],
+   "specSummary": {
+    "hash": "27d5acbe02af",
+    "isDefault": false,
+    "vocabularyGrade": 4,
+    "maxSentenceWords": 14,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 2,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": true,
+    "typedAnswers": 0.5,
+    "interests": [
+     "soccer",
+     "fifa",
+     "plays striker"
+    ],
+    "avoid": [],
+    "modes": [
+     "step-by-step",
+     "worked-examples",
+     "visual-spatial",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 622,
+     "sentences": 81,
+     "meanSentenceWords": 9.3,
+     "longWordShare": 0.018,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "summaryParagraphs": 4,
+     "cards": 8,
+     "quiz": 3,
+     "testItems": 6,
+     "tierSeq": "112233",
+     "tierMonotone": true,
+     "typedShare": 0.44,
+     "meanExplanationWords": 13.8,
+     "testWordHits": 0
+    },
+    "generic": {
+     "words": 703,
+     "sentences": 47,
+     "meanSentenceWords": 18.6,
+     "longWordShare": 0.021,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "summaryParagraphs": 3,
+     "cards": 8,
+     "quiz": 4,
+     "testItems": 6,
+     "tierSeq": "222332",
+     "tierMonotone": false,
+     "typedShare": 0.4,
+     "meanExplanationWords": 14.7,
+     "testWordHits": 0
+    }
+   },
+   "models": {
+    "spec": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "generic": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ]
+   },
+   "meta": {
+    "spec": {
+     "spec_hash": "27d5acbe02af",
+     "dropped": {
+      "ungrounded": 1,
+      "unsupported": 0,
+      "cards": 0
+     }
+    },
+    "generic": {
+     "spec_hash": null,
+     "dropped": {
+      "ungrounded": 0,
+      "unsupported": 0,
+      "cards": 0
+     }
+    }
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "summary_style": {
+        "score": 8,
+        "reason": "Sparse, numbered steps included, but has four sentences in third paragraph."
+       },
+       "aid_amounts": {
+        "score": 9,
+        "reason": "Has 8 flashcards, 3 quiz (asked 4), and 6 test questions."
+       },
+       "vocabulary": {
+        "score": 9,
+        "reason": "Simple 4th grade vocabulary, clear terms used."
+       },
+       "sentence_length": {
+        "score": 9,
+        "reason": "Nearly all sentences are under 14 words."
+       },
+       "question_ramp": {
+        "score": 9,
+        "reason": "Smooth ramp from tier 1 up to tier 3."
+       },
+       "question_format": {
+        "score": 10,
+        "reason": "Good mix of multiple choice and typed answers."
+       },
+       "explanations": {
+        "score": 10,
+        "reason": "Short, gentle explanations leading with what is right."
+       },
+       "stakes_tone": {
+        "score": 7,
+        "reason": "Retains labels 'QUIZ' and 'PRACTICE TEST' despite spec prohibition."
+       }
+      },
+      "coverage": {
+       "score": 9,
+       "missing": [
+        "checking answer missing from summary"
+       ]
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 9,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 9,
+       "reason": "Accessible, friendly language suitable for an 11-year-old."
+      }
+     },
+     "generic": {
+      "fit": {
+       "summary_style": {
+        "score": 4,
+        "reason": "Dense long paragraphs, lacks numbered steps and scannable visual layout."
+       },
+       "aid_amounts": {
+        "score": 10,
+        "reason": "Exactly 8 flashcards, 4 quiz, and 6 test questions."
+       },
+       "vocabulary": {
+        "score": 7,
+        "reason": "Formal phrasing like 'substituting' rather than simple grade 4 vocabulary."
+       },
+       "sentence_length": {
+        "score": 4,
+        "reason": "Many sentences exceed 20 to 25 words."
+       },
+       "question_ramp": {
+        "score": 5,
+        "reason": "Flat ramp; quiz is entirely tier 2, test ends on tier 2."
+       },
+       "question_format": {
+        "score": 10,
+        "reason": "Balanced mix of multiple choice and typed questions."
+       },
+       "explanations": {
+        "score": 5,
+        "reason": "Dry, mechanical explanations citing 'the passage' repeatedly."
+       },
+       "stakes_tone": {
+        "score": 4,
+        "reason": "Uses QUIZ and TEST headers; tone is clinical and formal."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": []
+      },
+      "reading_level": {
+       "score": 6,
+       "reason": "Too academic and dry for an 11-year-old who dislikes math."
+      }
+     },
+     "order": "spec-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "summary_style": {
+        "score": 9,
+        "reason": "Four short, scannable paragraphs, numbered steps, short sentences, takeaways."
+       },
+       "aid_amounts": {
+        "score": 6,
+        "reason": "8 flashcards and 6 test questions, but only 3 quiz questions."
+       },
+       "vocabulary": {
+        "score": 8,
+        "reason": "Plain words; 'variable' and 'operation' mostly explained simply."
+       },
+       "sentence_length": {
+        "score": 9,
+        "reason": "Sentences are short, well under 14 words."
+       },
+       "question_ramp": {
+        "score": 9,
+        "reason": "Tiers climb 1 to 3, hardest last, in both sets."
+       },
+       "question_format": {
+        "score": 9,
+        "reason": "Mix of multiple choice and typed answers in the test."
+       },
+       "explanations": {
+        "score": 9,
+        "reason": "Short, gentle, say what is right first."
+       },
+       "stakes_tone": {
+        "score": 6,
+        "reason": "Warm and gentle, but labeled QUIZ and PRACTICE TEST."
+       }
+      },
+      "coverage": {
+       "score": 9,
+       "missing": [
+        "check step only lightly shown in summary"
+       ]
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 1,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "maths content is unavoidable; no extra maths stress"
+       ]
+      },
+      "reading_level": {
+       "score": 9,
+       "reason": "Short, plain, fits an 11-year-old who dislikes maths."
+      }
+     },
+     "generic": {
+      "fit": {
+       "summary_style": {
+        "score": 4,
+        "reason": "Three dense paragraphs, long sentences, no numbered steps or lists."
+       },
+       "aid_amounts": {
+        "score": 10,
+        "reason": "Exactly 8 flashcards, 4 quiz, 6 test questions."
+       },
+       "vocabulary": {
+        "score": 5,
+        "reason": "Terms like 'variable' and 'substitute' are used without definitions."
+       },
+       "sentence_length": {
+        "score": 4,
+        "reason": "Several sentences exceed 14 words, some about 30."
+       },
+       "question_ramp": {
+        "score": 4,
+        "reason": "Mostly tier 2, flat; a tier 2 question comes after tier 3."
+       },
+       "question_format": {
+        "score": 8,
+        "reason": "Mix of multiple choice and typed answers."
+       },
+       "explanations": {
+        "score": 5,
+        "reason": "Short, but don't affirm first; they cite 'the passage'."
+       },
+       "stakes_tone": {
+        "score": 3,
+        "reason": "Flat, formal tone; labeled QUIZ and PRACTICE TEST."
+       }
+      },
+      "coverage": {
+       "score": 9,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 1,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 7,
+       "violations": [
+        "dense maths language, no softening"
+       ]
+      },
+      "reading_level": {
+       "score": 5,
+       "reason": "Wordier and more formal than grade 4 level."
+      }
+     },
+     "order": "spec-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "path",
+   "learner": "Maya",
+   "topic": "photosynthesis",
+   "ok": true,
+   "fields": [
+    [
+     "lesson_chunking",
+     "Lesson text per skill: paragraphs of at most 2 sentences; many short paragraphs, one idea each; the lesson text is as short as possible while keeping every definition, formula and step the text gives"
+    ],
+    [
+     "vocabulary",
+     "Vocabulary at about reading grade 2; terms defined first-use"
+    ],
+    [
+     "sentence_length",
+     "Sentences up to about 9 words"
+    ],
+    [
+     "density_layout",
+     "Layout: text density sparse, paragraphs of up to 2 sentences, structure laid out so it can be scanned (aligned lists, before/after pairs)"
+    ],
+    [
+     "explanation_order",
+     "Order of explanation: cases-first; balanced"
+    ],
+    [
+     "pace_repetition",
+     "Pace: steady"
+    ],
+    [
+     "tone",
+     "Tone: warmth 0.69, formality 0, humour light, praise normal, correction normal"
+    ],
+    [
+     "explanation_modes",
+     "Explanation modes, ranked: compact > visual-spatial > story > concrete-first"
+    ]
+   ],
+   "specSummary": {
+    "hash": "17dfee2f1feb",
+    "isDefault": false,
+    "vocabularyGrade": 2,
+    "maxSentenceWords": 9,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 1,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": false,
+    "typedAnswers": 0.5,
+    "interests": [
+     "minecraft",
+     "drawing",
+     "building"
+    ],
+    "avoid": [],
+    "modes": [
+     "compact",
+     "visual-spatial",
+     "story",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 1338,
+     "sentences": 168,
+     "meanSentenceWords": 8.4,
+     "longWordShare": 0.003,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "skills": 4,
+     "paragraphsPerSkill": 5,
+     "wordsPerParagraph": 55.9,
+     "sentencesPerParagraph": 7.2,
+     "questionsPerSkill": 8.3
+    },
+    "generic": {
+     "words": 1321,
+     "sentences": 87,
+     "meanSentenceWords": 15.5,
+     "longWordShare": 0,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "skills": 5,
+     "paragraphsPerSkill": 4,
+     "wordsPerParagraph": 49.1,
+     "sentencesPerParagraph": 3.1,
+     "questionsPerSkill": 8.2
+    }
+   },
+   "models": {
+    "spec": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "generic": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ]
+   },
+   "meta": {
+    "spec": null,
+    "generic": null
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "lesson_chunking": {
+        "score": 6,
+        "reason": "Shorter chunks and takeaways, but some paragraphs exceed two sentences"
+       },
+       "vocabulary": {
+        "score": 8,
+        "reason": "Approachable grade 2 style with pronunciation guides and simple definitions"
+       },
+       "sentence_length": {
+        "score": 7,
+        "reason": "Mostly short sentences close to 9 words, occasionally longer"
+       },
+       "density_layout": {
+        "score": 7,
+        "reason": "Uses tables, lists, and before/after pairs for scannability"
+       },
+       "explanation_order": {
+        "score": 6,
+        "reason": "Features concrete examples, takeaways, and before/after cases"
+       },
+       "pace_repetition": {
+        "score": 6,
+        "reason": "Steady pace, though repeats full sequence across skills"
+       },
+       "tone": {
+        "score": 8,
+        "reason": "Warm, informal, and encouraging for a young child"
+       },
+       "explanation_modes": {
+        "score": 7,
+        "reason": "Good use of compact tables, visual color breakdowns, and concrete cases"
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 4,
+       "violations": [
+        "Text remains quite long and repetitive across multiple skills"
+       ]
+      },
+      "reading_level": {
+       "score": 8,
+       "reason": "Well-tailored language and phonetic pronunciation for an 8-year-old"
+      }
+     },
+     "generic": {
+      "fit": {
+       "lesson_chunking": {
+        "score": 0,
+        "reason": "Huge paragraphs with 4-5 sentences, repeats full text repeatedly"
+       },
+       "vocabulary": {
+        "score": 2,
+        "reason": "Adult reading level; terms are not defined on first use"
+       },
+       "sentence_length": {
+        "score": 1,
+        "reason": "Sentences are extremely long, averaging 15 to 25 words"
+       },
+       "density_layout": {
+        "score": 1,
+        "reason": "Dense text walls with no scan-friendly layouts or lists"
+       },
+       "explanation_order": {
+        "score": 3,
+        "reason": "Standard deductive textbook order rather than cases-first"
+       },
+       "pace_repetition": {
+        "score": 2,
+        "reason": "Rote repetition of whole passage across all skills"
+       },
+       "tone": {
+        "score": 2,
+        "reason": "Dry, formal, and lacking warmth or kid-friendly engagement"
+       },
+       "explanation_modes": {
+        "score": 1,
+        "reason": "Abstract and purely textual, completely lacking visual or compact formats"
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 0,
+       "violations": [
+        "Extremely long, dense reading walls directly violating dislike of reading"
+       ]
+      },
+      "reading_level": {
+       "score": 2,
+       "reason": "Far too advanced and dense for an 8-year-old reader"
+      }
+     },
+     "order": "generic-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "lesson_chunking": {
+        "score": 6,
+        "reason": "Short idea blocks with takeaways, though some run past 2 sentences."
+       },
+       "vocabulary": {
+        "score": 7,
+        "reason": "Simple words, terms defined, pronunciations given; a few harder ones."
+       },
+       "sentence_length": {
+        "score": 8,
+        "reason": "Mostly short sentences; the equation line runs longer."
+       },
+       "density_layout": {
+        "score": 7,
+        "reason": "Tables, lists, before/after; paragraphs still bunched together."
+       },
+       "explanation_order": {
+        "score": 6,
+        "reason": "Question-led cases, what goes in and out; fairly balanced."
+       },
+       "pace_repetition": {
+        "score": 7,
+        "reason": "Steady; takeaways reinforce, some repeated intro."
+       },
+       "tone": {
+        "score": 7,
+        "reason": "Warm, informal, light 'superpower'; no heavy humour."
+       },
+       "explanation_modes": {
+        "score": 7,
+        "reason": "Compact takeaways and tables; visual-spatial layouts used well."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 9,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 1,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 6,
+       "violations": [
+        "Still quite a lot of text overall"
+       ]
+      },
+      "reading_level": {
+       "score": 8,
+       "reason": "Simple short sentences, well suited to a young reader."
+      }
+     },
+     "generic": {
+      "fit": {
+       "lesson_chunking": {
+        "score": 1,
+        "reason": "Long dense paragraphs of 3-4 sentences; same text repeated across skills."
+       },
+       "vocabulary": {
+        "score": 2,
+        "reason": "Adult wording like pigment, by-product, absorbs; terms not simply defined."
+       },
+       "sentence_length": {
+        "score": 1,
+        "reason": "Many sentences run 20-30 words, far over 9."
+       },
+       "density_layout": {
+        "score": 1,
+        "reason": "Dense walls of text; no lists, tables or before/after pairs."
+       },
+       "explanation_order": {
+        "score": 3,
+        "reason": "Definition first, then details; not cases-first."
+       },
+       "pace_repetition": {
+        "score": 3,
+        "reason": "Heavy verbatim repetition across skills; skills barely distinct."
+       },
+       "tone": {
+        "score": 3,
+        "reason": "Flat and formal; no warmth or light humour."
+       },
+       "explanation_modes": {
+        "score": 2,
+        "reason": "Plain prose; not compact or visual-spatial."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 1,
+       "violations": [
+        "Long dense reading repeated in every skill"
+       ]
+      },
+      "reading_level": {
+       "score": 1,
+       "reason": "Far too hard and long for a reluctant 8-year-old reader."
+      }
+     },
+     "order": "generic-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  },
+  {
+   "kind": "path",
+   "learner": "Leo",
+   "topic": "two-step equations",
+   "ok": true,
+   "fields": [
+    [
+     "lesson_chunking",
+     "Lesson text per skill: paragraphs of at most 2 sentences; many short paragraphs, one idea each; the lesson text is of standard length"
+    ],
+    [
+     "vocabulary",
+     "Vocabulary at about reading grade 4; terms defined first-use"
+    ],
+    [
+     "sentence_length",
+     "Sentences up to about 14 words"
+    ],
+    [
+     "density_layout",
+     "Layout: text density sparse, paragraphs of up to 2 sentences, structure laid out so it can be scanned (aligned lists, before/after pairs), numbered steps where the text has steps"
+    ],
+    [
+     "explanation_order",
+     "Order of explanation: cases-first; balanced"
+    ],
+    [
+     "pace_repetition",
+     "Pace: steady"
+    ],
+    [
+     "tone",
+     "Tone: warmth 0.89, formality 0.11, humour light, praise normal, correction gentle, low stakes with no test language or timers"
+    ],
+    [
+     "explanation_modes",
+     "Explanation modes, ranked: step-by-step > worked-examples > visual-spatial > concrete-first"
+    ]
+   ],
+   "specSummary": {
+    "hash": "27d5acbe02af",
+    "isDefault": false,
+    "vocabularyGrade": 4,
+    "maxSentenceWords": 14,
+    "chunkSentences": 2,
+    "retrievalChecks": 3,
+    "checkEveryChunks": 2,
+    "rampLabel": "steady",
+    "startOffset": 0,
+    "granularity": "standard",
+    "lowStakes": true,
+    "typedAnswers": 0.5,
+    "interests": [
+     "soccer",
+     "fifa",
+     "plays striker"
+    ],
+    "avoid": [],
+    "modes": [
+     "step-by-step",
+     "worked-examples",
+     "visual-spatial",
+     "concrete-first"
+    ]
+   },
+   "measures": {
+    "spec": {
+     "words": 262,
+     "sentences": 29,
+     "meanSentenceWords": 11.4,
+     "longWordShare": 0.008,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 1,
+     "keyFacts": 5,
+     "skills": 1,
+     "paragraphsPerSkill": 6,
+     "wordsPerParagraph": 42,
+     "sentencesPerParagraph": 3.8,
+     "questionsPerSkill": 8
+    },
+    "generic": {
+     "words": 687,
+     "sentences": 52,
+     "meanSentenceWords": 15.5,
+     "longWordShare": 0.001,
+     "interestsUsed": 0,
+     "interestsAvailable": 3,
+     "avoidHits": [],
+     "keyFactsMissing": 0,
+     "keyFacts": 5,
+     "skills": 3,
+     "paragraphsPerSkill": 4,
+     "wordsPerParagraph": 53.8,
+     "sentencesPerParagraph": 3.3,
+     "questionsPerSkill": 8.3
+    }
+   },
+   "models": {
+    "spec": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "generic": [
+     "deepseek/deepseek-v4.1-flash-1017"
+    ]
+   },
+   "meta": {
+    "spec": null,
+    "generic": null
+   },
+   "verdicts": {
+    "gemini": {
+     "spec": {
+      "fit": {
+       "lesson_chunking": {
+        "score": 6,
+        "reason": "Chunks contain three or more sentences despite some short segments."
+       },
+       "vocabulary": {
+        "score": 9,
+        "reason": "Accessible vocabulary, well suited for fourth grade reading."
+       },
+       "sentence_length": {
+        "score": 8,
+        "reason": "Sentences are largely short and well under 14 words."
+       },
+       "density_layout": {
+        "score": 7,
+        "reason": "Has numbered steps and lists, but visual density remains somewhat packed."
+       },
+       "explanation_order": {
+        "score": 9,
+        "reason": "Starts directly with a specific case as required."
+       },
+       "pace_repetition": {
+        "score": 8,
+        "reason": "Pacing is steady with clear takeaway repetitions."
+       },
+       "tone": {
+        "score": 7,
+        "reason": "Warm and low stakes, but lacks distinctive warmth and praise."
+       },
+       "explanation_modes": {
+        "score": 8,
+        "reason": "Step-by-step and worked examples are prioritized clearly."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "Uses standard math framing without mitigating learner's math dislike."
+       ]
+      },
+      "reading_level": {
+       "score": 9,
+       "reason": "Clear, accessible, and appropriate for an 11-year-old."
+      }
+     },
+     "generic": {
+      "fit": {
+       "lesson_chunking": {
+        "score": 2,
+        "reason": "Long multi-sentence blocks repeated across skills; violates 2-sentence max."
+       },
+       "vocabulary": {
+        "score": 8,
+        "reason": "Words are simple but lack friendly definitions on first use."
+       },
+       "sentence_length": {
+        "score": 3,
+        "reason": "Many long compound sentences far exceeding 14 words."
+       },
+       "density_layout": {
+        "score": 2,
+        "reason": "Dense walls of text repeated across all three skills."
+       },
+       "explanation_order": {
+        "score": 4,
+        "reason": "Starts with abstract definitions rather than cases first."
+       },
+       "pace_repetition": {
+        "score": 2,
+        "reason": "Repeats the entire text verbatim across three skills."
+       },
+       "tone": {
+        "score": 4,
+        "reason": "Dry textbook style lacking warm tone and encouragement."
+       },
+       "explanation_modes": {
+        "score": 4,
+        "reason": "Lacks visual-spatial layout or clearly separated step-by-step styling."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 0,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 7,
+       "violations": [
+        "Repetitive dense math textbook prose triggers math aversion."
+       ]
+      },
+      "reading_level": {
+       "score": 6,
+       "reason": "Dense sentence structure is challenging for a math-averse 11-year-old."
+      }
+     },
+     "order": "spec-first",
+     "judge": "google/gemini-3.8-flash"
+    },
+    "sonnet": {
+     "spec": {
+      "fit": {
+       "lesson_chunking": {
+        "score": 6,
+        "reason": "Short paragraphs, one idea each, though some run three sentences."
+       },
+       "vocabulary": {
+        "score": 8,
+        "reason": "Plain words; balance scale explained simply."
+       },
+       "sentence_length": {
+        "score": 9,
+        "reason": "Nearly all sentences are short, under 14 words."
+       },
+       "density_layout": {
+        "score": 6,
+        "reason": "Sparse and labeled steps, but equations run inline, not aligned."
+       },
+       "explanation_order": {
+        "score": 9,
+        "reason": "Starts with the real case, then rule, then check."
+       },
+       "pace_repetition": {
+        "score": 7,
+        "reason": "Steady flow with takeaways; one skill only."
+       },
+       "tone": {
+        "score": 7,
+        "reason": "Friendly and gentle; 'You finish' invites; light warmth."
+       },
+       "explanation_modes": {
+        "score": 9,
+        "reason": "Step-by-step led, worked examples, balance image."
+       }
+      },
+      "coverage": {
+       "score": 10,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 1,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "mentions '8 practice questions' slightly test-like"
+       ]
+      },
+      "reading_level": {
+       "score": 9,
+       "reason": "Simple, short, suited to an 11-year-old who dislikes maths."
+      }
+     },
+     "generic": {
+      "fit": {
+       "lesson_chunking": {
+        "score": 2,
+        "reason": "Paragraphs run three or four long sentences."
+       },
+       "vocabulary": {
+        "score": 5,
+        "reason": "Terms like 'variable' and 'substituting' are not simply defined."
+       },
+       "sentence_length": {
+        "score": 2,
+        "reason": "Many sentences exceed 14 words, some over 30."
+       },
+       "density_layout": {
+        "score": 2,
+        "reason": "Dense paragraphs, no lists or aligned steps."
+       },
+       "explanation_order": {
+        "score": 3,
+        "reason": "Rule-first definition, example only later."
+       },
+       "pace_repetition": {
+        "score": 2,
+        "reason": "Same text is repeated across three skills."
+       },
+       "tone": {
+        "score": 4,
+        "reason": "Neutral, textbook-like; little warmth."
+       },
+       "explanation_modes": {
+        "score": 4,
+        "reason": "Steps are in prose; no step layout or visuals."
+       }
+      },
+      "coverage": {
+       "score": 9,
+       "missing": []
+      },
+      "accuracy": {
+       "score": 10,
+       "errors": []
+      },
+      "interests_used": {
+       "score": 1,
+       "used": []
+      },
+      "dislikes_avoided": {
+       "score": 8,
+       "violations": [
+        "practice question counts feel test-like"
+       ]
+      },
+      "reading_level": {
+       "score": 4,
+       "reason": "Long dense sentences are too heavy for this learner."
+      }
+     },
+     "order": "spec-first",
+     "judge": "anthropic/claude-sonnet-5.5"
+    }
+   }
+  }
+ ],
+ "spend": {
+  "appUsd": 0,
+  "calls": 0,
+  "models": {},
+  "judgeCalls": 0,
+  "judgeModels": {},
+  "scUsd": 0
+ },
+ "writers": {},
+ "ledgers": {
+  "ledgerBefore": {
+   "ok": true,
+   "spent_usd": 17.260975,
+   "reserved_usd": 0,
+   "committed_usd": 17.260975,
+   "cap_usd": 30,
+   "headroom_usd": 12.739025,
+   "calls": 2767,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/standard-compute-ledger.json"
+  },
+  "ledgerAfter": {
+   "ok": true,
+   "spent_usd": 17.260975,
+   "reserved_usd": 0,
+   "committed_usd": 17.260975,
+   "cap_usd": 30,
+   "headroom_usd": 12.739025,
+   "calls": 2767,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/standard-compute-ledger.json"
+  }
+ }
+}

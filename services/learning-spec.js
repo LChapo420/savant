@@ -869,6 +869,13 @@ const PHRASES = {
   notation: ['Keep to words; introduce a symbol only at the end, read out in words.', 'Use symbols and notation freely.'],
 };
 
+// Surfaces that rebuild the learner's own text: "the lesson" and "practice" are not theirs to cut, so the length sentence
+// says what may go (padding) and what may not (any definition, formula, step or fact the material gives).
+const MATERIAL_SURFACE = new Set(['material', 'notes', 'podcast']);
+const MATERIAL_PHRASES = {
+  length: ['Keep it short: cut repetition, padding and asides, but keep every definition, formula, step, number and fact the material gives.', 'A fuller treatment is fine: give the reasoning the material gives.'],
+};
+
 // What each surface may carry. A surface not listed gets everything.
 const MATERIAL_BLOCKED = new Set(['interestUse', 'application', 'story', 'social', 'identity', 'emotion', 'creative', 'curiosity', 'systems', 'integration', 'relevance', 'analogy', 'competition', 'gamification', 'extrinsic', 'transfer', 'depth']);
 const SURFACES = {
@@ -889,6 +896,27 @@ function checkOrder(spec) {
   return `${start}, ${step}`;
 }
 
+/**
+ * The shape of the questions a writer sets for this learner (a practice test, a quiz, a course's check questions): the
+ * tier mix and order (difficulty start and ramp), the answer format, the explanation after a miss, the wording and the
+ * stakes. A tier is 1 recall, 2 use on a case, 3 combine or a new setting. Fixed sentences chosen by the spec fields.
+ */
+function questionShape(spec) {
+  const d = spec.difficulty; const f = spec.feedback; const lang = spec.language;
+  const parts = [];
+  const start = d.startOffset <= -0.5 ? 'start with tier 1 recall questions that are easy wins' : d.startOffset >= 0.5 ? 'start at tier 2 (using the idea on a case), not with bare recall' : 'start with a tier 1 or tier 2 question';
+  const mix = d.rampLabel === 'steep' ? 'then climb quickly: about a third of the questions at tier 3, the last ones the hardest' : d.rampLabel === 'gradual' ? 'then climb very slowly: mostly tier 1 and 2, at most one tier 3 question, placed last' : 'then climb steadily: about a quarter at tier 3, placed last';
+  parts.push(`Give every question a tier (1 recall, 2 use on a case, 3 combine or a new setting): ${start}, ${mix}; the order they are written in is the order of difficulty.`);
+  const typed = spec.practice.typedAnswers;
+  parts.push(typed >= 0.7 ? 'Prefer questions answered by typing a short exact answer over multiple choice.' : typed <= 0.3 ? 'Prefer multiple choice with three or four plausible choices; use few typed answers.' : 'Mix multiple choice with short typed answers.');
+  parts.push(f.granularity === 'detailed' ? 'The explanation of each question is two or three sentences, step by step: why the right answer is right and why the tempting wrong one fails.' : f.granularity === 'brief' ? 'The explanation of each question is one short sentence: the right answer and the single fix.' : 'The explanation of each question is one or two sentences.');
+  if (f.tone.correction === 'gentle') parts.push('Word every explanation gently: say what is right first and never call an answer plainly wrong.');
+  if (f.lowStakes) parts.push('Low stakes: do not use the words test, exam, quiz, timed, score or graded in any question or explanation; call them practice questions.');
+  if (spec.lesson.warmupItems >= 2) parts.push(`Open with ${spec.lesson.warmupItems} easy warm-up questions before the real ones.`);
+  parts.push(`Wording: reading grade ${lang.vocabularyGrade}; question prompts of ${lang.maxSentenceWords + 4} words or fewer where the idea allows.`);
+  return `Questions: ${parts.join(' ')}`;
+}
+
 const CONTRACT_LINE = 'Content contract: teach exactly the same topic, skills and key facts. Do not drop, add or change a fact, definition, rule, step or answer; only HOW it is delivered changes.';
 const PRECEDENCE = 'Where this block conflicts with any earlier style note (length, sections, check questions, rule-first or example-first, tone), this block wins: it comes from the full learning profile.';
 const NO_LEAK = 'Never mention this profile, "your learning style", scores, a diagnosis or why you chose a style; just write it that way.';
@@ -898,7 +926,7 @@ const NO_LEAK = 'Never mention this profile, "your learning style", scores, a di
  * Empty ('') for the default spec: a learner we know nothing about is written for exactly as before.
  * No learner scores appear: the numbers in it are limits on the page (sentence length, checks).
  */
-function specToLines(spec, { surface = 'lesson' } = {}) {
+function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
   if (!spec || spec.isDefault) return [];
   const allow = SURFACES[surface] === undefined ? null : SURFACES[surface];
   const ranked = [];
@@ -906,7 +934,7 @@ function specToLines(spec, { surface = 'lesson' } = {}) {
     const lean = spec.levers ? spec.levers[l] : 0;
     if (Math.abs(lean) < SHOW_AT) continue;
     if (allow && !allow(l)) continue;
-    const pair = PHRASES[l];
+    const pair = (MATERIAL_SURFACE.has(surface) && MATERIAL_PHRASES[l]) || PHRASES[l];
     const text = pair && pair[lean > 0 ? 1 : 0];
     if (!text) continue;
     ranked.push({ lever: l, text, score: Math.abs(lean) * (1 + LEVERS[l].imp) });
@@ -922,6 +950,7 @@ function specToLines(spec, { surface = 'lesson' } = {}) {
     const les = spec.lesson;
     lines.push(`Shape: about ${les.sections} short sections; the body of each section is at most ${les.chunkSentences} sentences (count them, and split a longer one into another section), ${les.newIdeasPerChunk === 1 ? 'one new idea' : `at most ${les.newIdeasPerChunk} new ideas`} per section, ${les.retrievalChecks} check question${les.retrievalChecks === 1 ? '' : 's'} in all (${checkOrder(spec)})${les.quickCheckEvery ? `, a line "Quick check: <question> Answer: <answer>" at the end of ${les.quickCheckEvery === 1 ? 'every section' : 'every second section'}` : ''}${spec.scaffolding.hintInChecks ? `, each with a one-line hint after the question (${spec.scaffolding.hintSize === 'nudge' ? 'a nudge' : spec.scaffolding.hintSize === 'partial' ? 'the idea to use' : 'the first step'}, never the answer)` : ''}, at most ${les.mistakes} common mistake${les.mistakes === 1 ? '' : 's'}. At most about ${les.wordBudget} words in all (not counting the check questions); a shorter lesson that teaches every point is better. ${spec.practice.workedExamples} worked example${spec.practice.workedExamples === 1 ? '' : 's'} (the worked example and the sections' example fields), then ${spec.practice.tryItems === 0 ? 'no extra try-it items' : `${spec.practice.tryItems} try-it line${spec.practice.tryItems === 1 ? '' : 's'} inside the sections, each written "Try it: <question> Answer: <answer>" and placed after the worked examples`}.${les.hook === 'question' ? ' Open with a question the lesson then answers.' : les.hook === 'scenario' ? ' Open with a one-line scenario.' : ''} This is the shape, not a cap on content: if the topic needs more, add sections or words; never drop a point to fit.`);
   }
+  if (surface === 'test') lines.push(questionShape(spec));
   const own = ranked.filter((r) => !(surfaceHasText && r.lever === 'sentence'));
   for (const r of own.slice(0, MAX_PHRASES)) lines.push(r.text);
   const ex = spec.interests;
@@ -934,6 +963,7 @@ function specToLines(spec, { surface = 'lesson' } = {}) {
   if (ex.avoidDomains.length) lines.push(`Never use examples, comparisons or settings from: ${ex.avoidDomains.slice(0, 6).join(', ')}.`);
   if (surface !== 'notes') for (const note of (spec.aversionNotes || []).slice(0, 2)) lines.push(note);
   if (!lines.length) return [];
+  if (bare) return lines; // just the sentences, for a writer that already has the block head (see questionLinesFor)
   const head = 'HOW TO BUILD THIS FOR THIS LEARNER (from their full learning profile; the topic and facts stay the same, the delivery is theirs)';
   const material = surface === 'material' || surface === 'notes' || surface === 'podcast'
     ? ['Use only what the material says; delivery changes wording, order of emphasis, density and pace, never the facts or the quotes.']
@@ -945,6 +975,28 @@ function specToLines(spec, { surface = 'lesson' } = {}) {
 /** The block for one learner, as lines: build, then write. [] when there is nothing to say. Never throws. */
 function linesFor(userId, opts = {}, surface = 'lesson') {
   try { return specToLines(buildSpec(userId, opts), { surface }); } catch { return []; }
+}
+
+/**
+ * The shape of a written lesson text that is not a Lesson (a course skill's paragraphs): how long a paragraph may be and
+ * that more paragraphs are the way to keep them short. Null for the default spec.
+ */
+function textShapeFor(userId, opts = {}) {
+  try {
+    const spec = buildSpec(userId, opts);
+    if (spec.isDefault) return null;
+    const n = Math.max(2, Math.min(spec.explain.paragraphSentences, spec.lesson.chunkSentences));
+    return { maxParagraphs: 10, line: `Lesson paragraphs: each carries one idea in at most ${n} sentences; write as many paragraphs as that takes (up to 10) rather than fewer long ones, and drop no point of the passage to fit.` };
+  } catch { return null; }
+}
+
+/**
+ * What a writer of questions (a course's check questions, a study pack's quiz and practice test) is told about this
+ * learner's tests: the question shape and the test levers (difficulty start and ramp, answer format, explanation detail,
+ * stakes, wording), as bare sentences to append to the writer's own prompt. [] for the default spec. Never throws.
+ */
+function questionLinesFor(userId, opts = {}) {
+  try { return specToLines(buildSpec(userId, opts), { surface: 'test', bare: true }); } catch { return []; }
 }
 
 function specToPrompt(spec, opts = {}) {
@@ -1128,8 +1180,8 @@ module.exports = {
   VERSION, K, SHOW_AT, MAX_PHRASES,
   LEVERS, LEVER_IDS, METRIC_RULES, RULE_OF, CONTEXT_RULES, PHRASES, SURFACES, CONTRACT_LINE,
   buildSpec, buildSpecFrom, defaultSpec, gather, pulls, contextOf,
-  specToPrompt, specToLines, specHash, linesFor,
-  checkFollowed, revisionNote, reviseOnce, keyTerms, mentions,
+  specToPrompt, specToLines, specHash, linesFor, questionLinesFor, questionShape,
+  checkFollowed, revisionNote, reviseOnce, keyTerms, mentions, textShapeFor,
   interestsFromText: splitDomains, dislikesFromText, splitDislikes, topicDomainOf,
   reviewScale, scaleMinutes, reviewFor,
 };

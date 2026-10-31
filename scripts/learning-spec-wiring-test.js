@@ -313,6 +313,22 @@ const goodLesson = (extra = {}) => ({
     check('the own-material course builder\'s lesson prompt carries the block, the verifier\'s does not, and the default learner gets none', lessonCalls('course-kid').includes(HEAD) && !lessonCalls('course-fresh').includes(HEAD) && !(seen['course-kid'] || []).filter((c) => c.task === 'material_verify').some((c) => c.system.includes(HEAD)));
     const built = cb.get(kid.id, mKid.id);
     check('and its questions are still grounded in the passages', built && built.skills.every((s) => s.questions.every((q) => TEXT.includes(q.quote))));
+    const QSHAPE = 'Questions: Give every question a tier';
+    check('the same learner\'s question shape (tiers, answer format, explanations, stakes) reaches the course builder\'s question writer, and a learner with no scorecard gets none', lessonCalls('course-kid').includes(QSHAPE) && !lessonCalls('course-fresh').includes(QSHAPE) && /For the practice questions only/.test(lessonCalls('course-kid')));
+    check('and the study pack\'s quiz and practice test writer, which may now tier its questions', sys('pack-kid').includes(QSHAPE) && !sys('pack-fresh').includes(QSHAPE) && !sys('pack-owner').includes(QSHAPE) && /For the quiz and test questions only/.test(sys('pack-kid')));
+    // The extra questions of "more practice" are written for the same learner too (course-extend had no block at all).
+    const extend = require('../services/course-extend');
+    await extend.more(kid.id, mKid.id, { llm: llm('extend-kid') });
+    await extend.more(fresh.id, mFresh.id, { llm: llm('extend-fresh') });
+    check('"more practice" questions carry the block and the question shape for the kid, and neither for a learner with no scorecard', lessonCalls('extend-kid').includes(HEAD) && lessonCalls('extend-kid').includes(QSHAPE) && !lessonCalls('extend-fresh').includes(HEAD) && (seen['extend-kid'] || []).some((c) => c.task === 'material_lesson'), [(seen['extend-kid'] || []).length, (seen['extend-fresh'] || []).length]);
+    // The topic is the material's title: a learner who dislikes maths is eased into material that IS maths, and only then.
+    const mathy = makeLearner('mathy', { stats: SHORT, survey: { interests: 'chess', notes: 'I really dislike math.' } });
+    const mMath = materials.addPaste(mathy.id, 'Solving two-step equations', TEXT).value;
+    const mCells = materials.addPaste(mathy.id, 'Cells and their parts', TEXT).value;
+    await packs.build(mathy.id, mMath.id, { llm: llm('pack-mathy-math') });
+    await packs.build(mathy.id, mCells.id, { llm: llm('pack-mathy-cells') });
+    check('a maths-averse learner\'s pack on a maths material gets the gentle-start note, the same learner\'s pack on a biology material does not', /off-putting: keep the first step small/.test(sys('pack-mathy-math')) && !/off-putting: keep the first step small/.test(sys('pack-mathy-cells')));
+    check('the spec the notes and the podcast read is topic-aware too (the aversion moves the same levers as in a lesson)', ls.buildSpec(mathy.id, { topic: 'Solving two-step equations' }).aversions.includes('math') && ls.buildSpec(mathy.id, { topic: 'Solving two-step equations' }).provenance.pressure.some((p) => p.source === 'context:aversion_math') && !(ls.buildSpec(mathy.id, { topic: 'Cells' }).provenance.pressure || []).some((p) => p.source === 'context:aversion_math'));
 
     // Scheduling and practice size.
     const specKid = ls.buildSpec(kid.id, {}); const specAdult = ls.buildSpec(adult.id, {});
@@ -327,6 +343,33 @@ const goodLesson = (extra = {}) => ({
     check('questions per skill follow the spec but every unknown skill keeps at least one', planKid.skills.length === planDefault.skills.length && planKid.skills.every((s) => s.items >= 1));
     const optK = test.options(kid.id, mKid.id);
     const optF = test.options(fresh.id, mFresh.id);
+    // The order of the practice test: a learner with a spec climbs by tier, ties random; the base learner is shuffled as before.
+    const tierCourse = new Map([['s1', { questions: [3, 1, 2, 1, 3, 2, 2, 1].map((t, i) => ({ id: `q${i}`, tier: t })) }]]);
+    const picked = [...tierCourse.get('s1').questions.keys()].map((i) => ['s1', `q${i}`]);
+    const tierOf = (p) => tierCourse.get('s1').questions.find((q) => q.id === p[1]).tier;
+    const rnd = (() => { let a = 5; return () => { a = (a * 48271) % 2147483647; return a / 2147483647; }; })();
+    const climbs = test.orderQuestions(picked, tierCourse, { isDefault: false, difficulty: { startOffset: 0 } }, rnd).map(tierOf);
+    check('a learner with a spec is asked the practice test in tier order, easy to hard', climbs.join('') === '11122233', climbs);
+    const high = test.orderQuestions(picked, tierCourse, { isDefault: false, difficulty: { startOffset: 0.8 } }, rnd).map(tierOf);
+    check('one whose difficulty starts at the level opens with a tier-2-or-higher question, then climbs', high[0] >= 2 && high.slice(1).join('') === [...high.slice(1)].sort().join('') && [...high].sort().join('') === '11122233', high);
+    const base = test.orderQuestions(picked, tierCourse, ls.defaultSpec(), rnd);
+    check('a default spec keeps the old shuffle (the same questions, not sorted)', base.length === picked.length && new Set(base.map((p) => p[1])).size === picked.length && base.map(tierOf).join('') !== '11122233');
+    // Which questions are drawn: to the learner's tier plan, not at random.
+    const steepSpec = { isDefault: false, lesson: { warmupItems: 0 }, difficulty: { rampLabel: 'steep', startOffset: 0 } };
+    const gentleSpec = { isDefault: false, lesson: { warmupItems: 3 }, difficulty: { rampLabel: 'gradual', startOffset: -0.8 } };
+    const planSteep = test.tierPlan(9, steepSpec); const planGentle = test.tierPlan(9, gentleSpec);
+    check('the tier plan: a steep ramp has a third at tier 3; a gradual one at most one, and easy wins first (warm-up items); the base learner has no plan', planSteep.filter((t) => t === 3).length === 3 && planGentle.filter((t) => t === 3).length === 1 && planGentle.filter((t) => t === 1).length >= 3 && test.tierPlan(9, ls.defaultSpec()) === null && planSteep.length === 9 && planGentle.length === 9, [planSteep, planGentle]);
+    const mkQ = (tiers, tag) => tiers.map((t, i) => [tag, `${tag}${i}`, t]);
+    const qs = [...mkQ([3, 3, 2, 2, 1], 'a'), ...mkQ([2, 1, 1, 3, 2], 'b'), ...mkQ([1, 2, 3, 3, 2], 'c')];
+    const queues = ['a', 'b', 'c'].map((tag) => qs.filter((q) => q[0] === tag).map((q) => [q[0], q[1]]));
+    const tierById = new Map(qs.map((q) => [q[1], q[2]]));
+    const drawn = test.pickByPlan(queues, 9, planGentle, (p) => tierById.get(p[1]));
+    check('questions are drawn to the plan from across the skills (the plan\'s tiers, every skill represented)', drawn.map((p) => tierById.get(p[1])).join('') === planGentle.join('') && new Set(drawn.map((p) => p[0])).size === 3, drawn.map((p) => tierById.get(p[1])));
+    const material = ls.specToPrompt(ls.buildSpec(kid.id, {}), { surface: 'material' });
+    const lessonBlock = ls.specToPrompt(ls.buildSpec(kid.id, {}), { surface: 'lesson' });
+    check('own-material blocks never tell a writer to cut to "the key idea, one example, then practice" (a content loss): they keep every definition, step and fact; the lesson block is unchanged', /keep every definition, formula, step, number and fact/.test(material) && !/then practice/.test(material) && /then practice/.test(lessonBlock), material.slice(0, 600));
+    const shape = ls.textShapeFor(kid.id, {});
+    check('a spec learner\'s course text is shaped in paragraphs of their size (up to ten), a learner with no scorecard\'s is not', shape && shape.maxParagraphs === 10 && /at most \d sentences/.test(shape.line) && ls.textShapeFor(fresh.id, {}) === null && lessonCalls('course-kid').includes('Lesson paragraphs:') && !lessonCalls('course-fresh').includes('Lesson paragraphs:'), shape);
     check('the practice test: a test-anxious kid is given more time per question and the untimed test first; the base learner keeps 75 s', optK.seconds_per_question > 75 && optK.suggest_timed === false && optF.seconds_per_question === 75 && optF.suggest_timed === true, [optK.seconds_per_question, optK.suggest_timed, optF.seconds_per_question]);
 
     // Source passages shown to the tutor: shorter for a learner who loses focus in paragraphs.

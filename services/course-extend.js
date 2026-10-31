@@ -74,7 +74,8 @@ async function more(userId, materialId, opts = {}) {
   cb.inflight.add(key);
   try {
     const want = Array.isArray(opts.skillIds) && opts.skillIds.length ? new Set(opts.skillIds.map(String)) : null;
-    const ctx = { unanswered: 0, llm: llmOf(opts), userId, budget: new cb.Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
+    // The extra questions are written for the same learner as the first ones: the spec's block and its question shape.
+    const ctx = { unanswered: 0, llm: llmOf(opts), userId, block: cb.specBlockFor(userId, course.title), questionBlock: cb.questionBlockFor(userId, course.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: course.title }), budget: new cb.Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
     const cache = new Map();
     const added = new Map(); // skill id -> new questions
     let skipped = 0;

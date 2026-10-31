@@ -207,14 +207,14 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `lesson.restate` | prompt only | 2 |
 | `lesson.retrievalChecks` | ai.js, material-adapt.js, material-pack.js | 5 |
 | `lesson.checkEveryChunks` | material-podcast.js | 2 |
-| `lesson.warmupItems` | prompt only | 2 |
+| `lesson.warmupItems` | material-test.js | 2 |
 | `lesson.recapAtStart` | prompt only | 2 |
 | `lesson.recapAtEnd` | prompt only | 1 |
 | `lesson.hook` | prompt only | 3 |
 | `lesson.storyFrame` | prompt only | 1 |
 | `lesson.whyItMatters` | prompt only | 2 |
 | `lesson.bigPictureFirst` | prompt only | 1 |
-| `difficulty.startOffset` | prompt only | 3 |
+| `difficulty.startOffset` | material-test.js | 3 |
 | `difficulty.ramp` | prompt only | 3 |
 | `difficulty.rampLabel` | prompt only | 2 |
 | `difficulty.stretchShare` | adaptation.js | 4 |
