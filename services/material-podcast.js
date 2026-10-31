@@ -113,15 +113,17 @@ function sourcePassages(passages, only) {
 }
 
 /** The cleaned script: hosts A/B only, quotes grounded, long ungrounded turns dropped. */
-function cleanTurns(raw, byId) {
+function cleanTurns(raw, byId, guard = null) {
   const out = [];
   for (const t of Array.isArray(raw) ? raw : []) {
     if (!t || typeof t !== 'object') continue;
     const host = t.host === 'B' ? 'B' : t.host === 'A' ? 'A' : null;
-    const text = clean(t.text, TURN_CHARS);
+    let text = clean(t.text, TURN_CHARS);
     if (!host || !text) continue;
     const pid = String(t.passage_id || '');
     const quote = byId.has(pid) && t.quote ? pack.groundQuote(byId.get(pid), t.quote) : null;
+    // An interest analogy may not bring a claim the material lacks: a quoted turn becomes the material's own words, an unquoted one is dropped.
+    if (guard && !guard(text)) { if (quote) text = clean(quote, TURN_CHARS); else continue; }
     if (quote) out.push({ host, text, passage_id: pid, quote });
     else if (t.quote) continue; // it claimed a source that does not say that
     else if (text.length <= LOOSE_CHARS) out.push({ host, text, passage_id: null, quote: null });
@@ -321,7 +323,7 @@ async function build(userId, materialId, opts = {}) {
     const args = {
       role: 'fast', task: 'material_podcast', schema: SCRIPT_SCHEMA, schemaName: 'material_podcast', maxTokens: 5000, dataClass: 'learner', userId,
       system: `You write a short podcast script for a student: two friendly hosts, A and B, talking about the student's own study material. ${UNTRUSTED} `
-        + 'Host A explains; host B asks the questions a student would ask, checks understanding and gives small examples that are in the text. '
+        + 'Host A explains; host B asks the questions a student would ask, checks understanding and gives small examples that are in the text (and, where the block below asks for them, short framed analogies from the interests of the listener, never as facts). '
         + `Write ${MIN_TURNS * 2} to ${MAX_TURNS - 8} turns of one to three plain spoken sentences each: no markdown, no stage directions, no sound effects, nothing a speech voice would read badly. Start with a one-line welcome and end with a one-line recap. `
         + 'Every turn that states a fact needs passage_id (one of the ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows it. Short linking turns need no quote. Leave out anything you cannot back with a quote.' + focus
         + (skills.length ? `\n\nAlso write check-in questions for the listener, one about each of these skills, using its id: ${skills.map((s) => `${s.id} (${clean(s.title, 60)})`).join(', ')}. Each is a short question about a fact the script states, with three or four answer choices and answer_index counting the right one from 0. No hints in the prompt, and no "all of the above".` : '')
@@ -338,7 +340,7 @@ async function build(userId, materialId, opts = {}) {
       used += cost;
       let res = null;
       try { res = await llm(args); } catch { res = null; } // eslint-disable-line no-await-in-loop
-      const turns = res && res.data && cleanTurns(res.data.turns, byId);
+      const turns = res && res.data && cleanTurns(res.data.turns, byId, learningSpec.analogyGuard(spec, mat.text));
       if (turns && turns.length >= MIN_TURNS) { data = { title: clean(res.data.title, 120), turns, checkins: cleanChecks(res.data.checkins, skills) }; model = res.model || null; }
     }
     if (!data) {

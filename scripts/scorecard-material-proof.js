@@ -109,16 +109,20 @@ function mockTask(req) {
   const explain = (s) => (hasQ && /one short sentence/.test(sys) ? 'Right.' : hasQ && /two or three sentences/.test(sys) ? `Because the text says: ${s.slice(0, 80)}. The tempting choice leaves that out, so it fails.` : `${/Low stakes/.test(sys) ? 'Practice answer' : 'Test answer'}: ${s.slice(0, 60)}.`);
   const tierAt = (i, n) => (hasQ ? Math.min(3, Math.floor((i * 3) / Math.max(1, n)) + 1) : [2, 3, 1, 3, 2, 1, 2, 3][i % 8]);
   const mcFrom = (x, i, n, forWhere) => ({
-    ...(forWhere ? { for: forWhere } : {}), type: 'multiple_choice', prompt: `What does the text say about "${x.s.split(' ').slice(0, 5).join(' ')}"? (${i + 1})`,
+    ...(forWhere ? { for: forWhere } : {}), type: 'multiple_choice', prompt: `${doms.length && i % 2 === 0 ? `In ${doms[i % doms.length]}, what` : 'What'} does the text say about "${x.s.split(' ').slice(0, 5).join(' ')}"? (${i + 1})`,
     choices: [x.s.slice(0, 70), 'The text does not mention it.', 'It says the opposite.'], answer_index: 0, misconceptions: ['', 'a guess', 'a mix-up'], explanation: explain(x.s), tier: tierAt(i, n), passage_id: x.pid, quote: x.s,
   });
   const typedFrom = (x, i, n, forWhere) => ({
     ...(forWhere ? { for: forWhere } : {}), type: 'short_answer', prompt: `Fill in: ${x.s.split(' ').slice(0, 4).join(' ')} ___ (${i + 1})`, answer: x.s.split(' ')[4] || 'idea', explanation: explain(x.s), tier: tierAt(i, n), passage_id: x.pid, quote: x.s,
   });
   const typedPref = /Prefer questions answered by typing/.test(sys);
+  // The interests the block asks for (the "Interests:" line, or the setting a question may use): framed analogies that point back at a point of the text.
+  const doms = (((/ on ([^\n]*?), at least \w+ in all/.exec(sys) || [])[1] || (/use ([^\n]*?) as the context/.exec(sys) || [])[1] || '')).split(',').map((d) => d.trim()).filter(Boolean);
+  const longest = (s) => s.split(/[^A-Za-zà-ÿ-]+/).sort((a, b) => b.length - a.length)[0];
+  const analogy = (x, i) => (doms.length ? `Think of ${doms[i % doms.length]}, like ${longest(x.s)}.` : '');
   if (task === 'material_notes') {
     const maxB = num(/2 to (\d+) bullets/, sys, 8);
-    const bullets = flat.flatMap((x) => splitAt(x.s, cap).map((t) => ({ text: t, passage_id: x.pid, quote: x.s })));
+    const bullets = flat.flatMap((x, i) => splitAt(x.s, cap).map((t, k) => ({ text: k === 0 && i % 2 === 0 && doms.length ? `${t.replace(/[,;:]$/, '').replace(/([^.!?])$/, '$1.')} ${analogy(x, i)}` : t, passage_id: x.pid, quote: x.s })));
     const sections = [];
     for (let i = 0; i < bullets.length && sections.length < 5; i += maxB) sections.push({ heading: `Part ${sections.length + 1}`, bullets: bullets.slice(i, i + maxB) });
     return { sections };
@@ -128,6 +132,7 @@ function mockTask(req) {
     const turns = [{ host: 'A', text: 'Welcome. Today we go through your material.' }];
     flat.forEach((x, i) => {
       for (const part of splitAt(x.s, cap)) turns.push({ host: 'A', text: part, passage_id: x.pid, quote: x.s });
+      if (doms.length && i % 2 === 0) turns.push({ host: 'A', text: analogy(x, i) });
       if (dialogic || i % 3 === 2) turns.push({ host: 'B', text: 'Can you say more about that?' });
     });
     turns.push({ host: 'A', text: 'So, to recap: that was the main idea.' });
@@ -139,10 +144,10 @@ function mockTask(req) {
     const nCards = num(/flashcards \(up to (\d+)/, sys, 8);
     const nQuiz = num(/up to (\d+) with for "quiz"/, sys, 4);
     const nTest = num(/up to (\d+) with for "test"/, sys, 6);
-    const paras = Array.from({ length: Math.min(maxPara, Math.max(1, Math.ceil(flat.length / 2))) }, (_, i) => flat.slice(i * 2, i * 2 + 2).map((x) => x.s).join(' ') || flat[0].s);
+    const paras = Array.from({ length: Math.min(maxPara, Math.max(1, Math.ceil(flat.length / 2))) }, (_, i) => `${flat.slice(i * 2, i * 2 + 2).map((x) => x.s).join(' ') || flat[0].s}${doms.length ? ` ${analogy(flat[i * 2] || flat[0], i)}` : ''}`);
     const quiz = flat.slice(0, nQuiz).map((x, i, a) => mcFrom(x, i, a.length, 'quiz'));
     const test = flat.slice(0, nTest).map((x, i, a) => (typedPref || (i % 2 && /Mix multiple/.test(sys)) ? typedFrom(x, i, a.length, 'test') : mcFrom(x, i, a.length, 'test')));
-    return { summary: paras, flashcards: flat.slice(0, nCards).map((x) => ({ front: x.s.split(' ').slice(0, 3).join(' '), back: x.s.slice(0, 120), passage_id: x.pid, quote: x.s })), questions: [...quiz, ...test] };
+    return { summary: paras, flashcards: flat.slice(0, nCards).map((x, i) => ({ front: x.s.split(' ').slice(0, 3).join(' '), back: `${x.s.slice(0, 120)}${doms.length && i % 3 === 0 ? ` ${analogy(x, i)}` : ''}`, passage_id: x.pid, quote: x.s })), questions: [...quiz, ...test] };
   }
   if (task === 'material_verify') {
     const n = (String(req.user).match(/^\d+\./gm) || []).length;
@@ -157,7 +162,7 @@ function mockTask(req) {
     const per = sparse ? 2 : 4;
     const paragraphs = [];
     const lim = hasBlock ? flat.slice(0, 6) : flat;
-    for (let i = 0; i < lim.length; i += per) paragraphs.push(lim.slice(i, i + per).map((x) => x.s).join(' '));
+    for (let i = 0; i < lim.length; i += per) paragraphs.push(`${lim.slice(i, i + per).map((x) => x.s).join(' ')}${doms.length && i === 0 ? ` ${analogy(lim[0], 0)}` : ''}`);
     const qs = flat.slice(0, 7).map((x, i, a) => (typedPref && i % 2 ? typedFrom(x, i, a.length) : mcFrom(x, i, a.length)));
     return { lesson: { paragraphs: paragraphs.slice(0, 5), key_points: flat.slice(0, 2).map((x) => x.s.slice(0, 90)) }, questions: qs };
   }
@@ -221,21 +226,22 @@ async function buildKind(kind, arm, lrn, user, topicId) {
       const r = await notesSvc.build(user.id, mat.id, { llm, force: true });
       if (!r.notes) return { error: r.error || r.code };
       const text = K.renderNotes(r.notes);
-      return { text, parts: { sections: r.notes.sections }, models: [], spec, meta: { spec_hash: r.notes.spec_hash || null, coverage: r.notes.coverage, dropped: r.notes.dropped } };
+      return { text, units: r.notes.sections.flatMap((s) => s.bullets.map((b) => b.text)), parts: { sections: r.notes.sections }, models: [], spec, meta: { spec_hash: r.notes.spec_hash || null, coverage: r.notes.coverage, dropped: r.notes.dropped } };
     }
     if (kind === 'podcast') {
       const r = await podcastSvc.build(user.id, mat.id, { kind: 'overview', llm, force: true });
       if (!r.episode) return { error: r.error || r.code };
-      return { text: K.renderPodcast(r.episode, spec), measureText: r.episode.turns.map((t) => t.text).join(' '), parts: { turns: r.episode.turns }, models: r.episode.models || [], spec };
+      return { text: K.renderPodcast(r.episode, spec), units: r.episode.turns.map((t) => t.text), measureText: r.episode.turns.map((t) => t.text).join(' '), parts: { turns: r.episode.turns }, models: r.episode.models || [], spec };
     }
     if (kind === 'pack') {
       const r = await packSvc.build(user.id, mat.id, { llm, force: true });
       if (!r.pack) return { error: r.error || r.code };
-      return { text: K.renderPack(r.pack), parts: { summary: r.pack.summary, cards: r.pack.cards, quiz: r.pack.quiz, test: r.pack.test }, models: r.pack.models || [], spec, meta: { spec_hash: r.pack.spec_hash || null, dropped: r.pack.dropped } };
+      const qText = (q) => `${q.prompt} ${(q.choices || []).join(' ')} ${q.explanation || ''}`;
+      return { text: K.renderPack(r.pack), units: [...(r.pack.summary || []), ...(r.pack.cards || []).map((c) => `${c.front} ${c.back}`), ...(r.pack.quiz || []).map(qText), ...(r.pack.test || []).map(qText)], parts: { summary: r.pack.summary, cards: r.pack.cards, quiz: r.pack.quiz, test: r.pack.test }, models: r.pack.models || [], spec, meta: { spec_hash: r.pack.spec_hash || null, dropped: r.pack.dropped } };
     }
     const course = await courseFor(user, topicId);
     if (course.error) return { error: course.error };
-    if (kind === 'path') return { text: K.renderPath(course), parts: { skills: course.skills }, models: course.models || [], spec };
+    if (kind === 'path') return { text: K.renderPath(course), units: course.skills.flatMap((s) => [...(s.lesson.paragraphs || []), ...(s.lesson.key_points || []), ...(s.questions || []).map((q) => `${q.prompt} ${(q.choices || []).join(' ')} ${q.explanation || ''}`)]), parts: { skills: course.skills }, models: course.models || [], spec };
     if (kind === 'test') {
       const opts = testSvc.options(user.id, mat.id);
       if (opts.error) return { error: opts.error };
@@ -244,7 +250,7 @@ async function buildKind(kind, arm, lrn, user, topicId) {
       const byQ = new Map(course.skills.flatMap((s) => s.questions.map((q) => [q.id, q])));
       const questions = t.questions.map((q) => { const full = byQ.get(q.id) || {}; return { ...full, id: q.id, tier: q.tier, type: q.type, prompt: q.prompt, choices: q.choices || full.choices }; });
       const view = { questions, timed_seconds: opts.seconds_per_question, suggest_timed: opts.suggest_timed };
-      return { text: K.renderTest(view), measureText: questions.map((q) => `${q.prompt} ${q.explanation || ''}`).join(' '), parts: { questions, secondsPer: opts.seconds_per_question, suggestTimed: opts.suggest_timed }, models: course.models || [], spec };
+      return { text: K.renderTest(view), units: questions.map((q) => `${q.prompt} ${(q.choices || []).join(' ')} ${q.explanation || ''}`), measureText: questions.map((q) => `${q.prompt} ${q.explanation || ''}`).join(' '), parts: { questions, secondsPer: opts.seconds_per_question, suggestTimed: opts.suggest_timed }, models: course.models || [], spec };
     }
     return { error: `unknown kind ${kind}` };
   } catch (e) {
@@ -335,6 +341,8 @@ function mockVerdict(kind, fieldList, m, spec, lrn, judgeIndex) {
     else if (id === 'question_format') s = near(m.typedShare, spec.practice.typedAnswers, 0.5);
     else if (id === 'check_in_frequency') s = m.checkIns !== undefined ? near(m.checkIns, Math.max(1, Math.round(m.spokenMinutes / (spec.lesson.checkEveryChunks === 1 ? 2 : spec.lesson.checkEveryChunks === 3 ? 4 : 3))), 3) : 7;
     else if (id === 'dialogue_style') s = spec.engagement.dialogue ? (m.bQuestions >= m.turns / 3 ? 9 : 5) : 7;
+    else if (id === 'interest_analogies') s = m.interestsUsed ? (m.analogyProblems ? 5 : 9.5) : 2;
+    else if (id === 'avoided_domains') s = m.avoidHits.length ? 1 : 10;
     else if (kind === 'lesson') s = 7;
     return Number(clamp10(s + jit(id)).toFixed(1));
   };
@@ -395,11 +403,12 @@ async function runCell({ l, topicId }, record) {
       if (sa.error || ga.error) { rec.error = `${sa.error ? `spec: ${sa.error}` : ''} ${ga.error ? `generic: ${ga.error}` : ''}`.trim(); out.push(rec); continue; }
       const spec = kind === 'lesson' ? ls.buildSpec(l.user.id, { topic: topicId, trackId: null }) : specFor(l.user.id, topicId);
       const topic = TOPICS[topicId];
-      const ms = { spec: K.measureArtifact(kind, sa, spec, topic), generic: K.measureArtifact(kind, ga, spec, topic) };
+      const topicWithSource = { ...topic, source: kind === 'lesson' ? null : K.BASE_TEXTS[topicId] };
+      const ms = { spec: K.measureArtifact(kind, sa, spec, topicWithSource), generic: K.measureArtifact(kind, ga, spec, topicWithSource) };
       rec.fields = kind === 'lesson' ? base.dimensions(spec) : K.fields(kind, spec);
       // A script too short to reach its first check-in (about 450 spoken words by default) has nothing to judge for check-in spacing: the field is left out, and the code counts stay in the measures.
       if (kind === 'podcast' && !ms.spec.checkIns && !ms.generic.checkIns) rec.fields = rec.fields.filter(([id]) => id !== 'check_in_frequency');
-      rec.specSummary = { hash: ls.specHash(spec), isDefault: spec.isDefault, vocabularyGrade: spec.language.vocabularyGrade, maxSentenceWords: spec.language.maxSentenceWords, chunkSentences: spec.lesson.chunkSentences, retrievalChecks: spec.lesson.retrievalChecks, checkEveryChunks: spec.lesson.checkEveryChunks, rampLabel: spec.difficulty.rampLabel, startOffset: spec.difficulty.startOffset, granularity: spec.feedback.granularity, lowStakes: spec.feedback.lowStakes, typedAnswers: spec.practice.typedAnswers, interests: spec.interests.exampleDomains, avoid: spec.interests.avoidDomains, modes: spec.explain.modes };
+      rec.specSummary = { hash: ls.specHash(spec), isDefault: spec.isDefault, vocabularyGrade: spec.language.vocabularyGrade, maxSentenceWords: spec.language.maxSentenceWords, chunkSentences: spec.lesson.chunkSentences, retrievalChecks: spec.lesson.retrievalChecks, checkEveryChunks: spec.lesson.checkEveryChunks, rampLabel: spec.difficulty.rampLabel, startOffset: spec.difficulty.startOffset, granularity: spec.feedback.granularity, interestShare: spec.interests.share, lowStakes: spec.feedback.lowStakes, typedAnswers: spec.practice.typedAnswers, interests: spec.interests.exampleDomains, avoid: spec.interests.avoidDomains, modes: spec.explain.modes };
       rec.measures = ms;
       rec.models = { spec: sa.models, generic: ga.models };
       rec.text = { spec: sa.text, generic: ga.text };
@@ -593,7 +602,7 @@ function renderMarkdown(data) {
   if (lw.length) L.push(`- Learners the spec fitted least well across all kinds: ${lw.slice(0, 3).map((x) => `${x.name} ${f1(x.fit)}`).join(', ')}.`);
   const interestKinds = KINDS.filter((k) => agg[k].built && agg[k].measures.interestCells.of);
   const own = interestKinds.filter((k) => k !== 'lesson');
-  if (own.length) L.push(`- **Interests are deliberately withheld from own-material kinds.** The spec's \`material\`, \`notes\` and \`podcast\` surfaces block the interest, story, analogy and application levers (\`MATERIAL_BLOCKED\` in \`services/learning-spec.js\`) because the learner's own text is the only source. The code count shows it: ${own.map((k) => `${K.KIND_INFO[k].label.toLowerCase()} ${agg[k].measures.interestCells.spec} of ${agg[k].measures.interestCells.of} cells used a stated interest (generic ${agg[k].measures.interestCells.generic})`).join('; ')}; the lesson, which is the one kind allowed to, ${agg.lesson && agg.lesson.built ? `${agg.lesson.measures.interestCells.spec} of ${agg.lesson.measures.interestCells.of} (generic ${agg.lesson.measures.interestCells.generic})` : 'was not run'}. Whether own-material kinds should add clearly-labelled interest analogies is a product decision, not something this proof can settle.`);
+  if (own.length) L.push(`- **Interests in own-material kinds.** The learner's interests, hobbies and dislikes shape their own material too, with the text as the only source of facts: interests appear only as clearly framed analogies, examples or practice contexts that map back to a point of the text (\`analogyProblems\` in \`services/learning-spec.js\` checks that one adds no number, name or point the text lacks, and each generator falls back to the text's own words when it does). Cells where the spec version used a stated interest, of those with interests: ${interestKinds.map((k) => `${K.KIND_INFO[k].label.toLowerCase()} ${agg[k].measures.interestCells.spec} of ${agg[k].measures.interestCells.of} (generic ${agg[k].measures.interestCells.generic})`).join('; ')}. Spec versions that used a disliked domain: ${KINDS.filter((k) => agg[k].built).map((k) => `${k} ${agg[k].measures.avoidViolations.spec}`).join(', ')}. Analogies the check would flag in the spec version: ${KINDS.filter((k) => agg[k].built && agg[k].measures.analogyProblems).map((k) => `${k} ${f1(agg[k].measures.analogyProblems.spec)} per cell`).join(', ') || 'none measured'}. The one lever own material still withholds is \`depth\` (one deeper why or edge case), which would bring facts the text lacks.`);
   const fails = KINDS.flatMap((k) => agg[k].errors.map((e) => `${k} ${e}`));
   L.push(`- Cells that did not complete: ${fails.length ? fails.slice(0, 8).join('; ') : 'none'}.`);
   L.push('');
@@ -638,6 +647,17 @@ function assertMock(data, capture) {
       need(r.text.spec.length > 40 && r.text.generic.length > 40, `${kind}/${r.learner}/${r.topic}: both versions have text`);
       need(r.fields.length >= 4, `${kind}/${r.learner}/${r.topic}: at least four spec fields apply (${r.fields.length})`);
     }
+  }
+  // Interests and dislikes drive every kind, own material included: used as framed analogies, never as new facts, and dislikes avoided.
+  for (const kind of KINDS) {
+    const rs = data.recs.filter((r) => r.kind === kind && r.ok);
+    const withInterests = rs.filter((r) => r.specSummary.interests.length && r.specSummary.interestShare >= 0.3);
+    need(withInterests.length >= 12, `${kind}: enough learners with interests to test (${withInterests.length})`);
+    need(withInterests.every((r) => r.measures.spec.interestsUsed > 0), `${kind}: every spec version with interests uses them (${withInterests.filter((r) => !r.measures.spec.interestsUsed).map((r) => r.learner).join(', ')} did not)`);
+    need(withInterests.filter((r) => r.measures.generic.interestsUsed > 0).length < withInterests.length / 2, `${kind}: the generic version rarely mentions a learner's interests, and then only by chance`);
+    need(rs.every((r) => r.measures.spec.avoidHits.length === 0), `${kind}: no spec version uses a disliked domain`);
+    if (kind !== 'lesson') need(rs.every((r) => r.measures.spec.analogyProblems === 0), `${kind}: no interest analogy in a spec version adds a claim the base text lacks or points at nothing`);
+    if (kind !== 'lesson') need(withInterests.every((r) => r.fields.some(([id]) => id === 'interest_analogies')), `${kind}: the judge scores the interest analogies`);
   }
   // Every generator got the spec block for the learner and none for the generic user, through the real generator path.
   const seen = capture;

@@ -331,7 +331,7 @@ function mockWriter(req) {
   const nSections = Number((/about (\d+) short sections/.exec(user) || [])[1]) || 3;
   const perSec = Number((/at most (\d+) sentences \(count/.exec(user) || [])[1]) || 4;
   const nChecks = Number((/(\d+) check questions? in all/.exec(user) || [])[1]) || 4;
-  const domains = ((/draw them from ([^\n]*?) wherever/.exec(user) || [])[1] || '').split(',').map((s) => s.trim()).filter(Boolean);
+  const domains = ((/draw them from ([^\n]*?) wherever/.exec(user) || [])[1] || (/Examples: build [^\n]*? on ([^\n]*?), at least \w+ in all/.exec(user) || [])[1] || '').split(',').map((s) => s.trim()).filter(Boolean);
   const avoid = ((/Never use examples, comparisons or settings from: ([^\n]*?)\./.exec(user) || [])[1] || '').split(',').map((s) => s.trim()).filter(Boolean);
   const note = /broke these requirements/.test(user);
   const facts = bank.map((b) => b[level]);

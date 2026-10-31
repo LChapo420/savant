@@ -414,6 +414,14 @@ function specBlockFor(userId, topic = null) {
   return require('./learning-spec').linesFor(userId, { topic }, 'material').join('\n');
 }
 
+/** For a learner with interests: a function from a skill's passage text to a check that an interest analogy adds no claim (else null). */
+function guardMaker(userId, topic = null) {
+  // eslint-disable-next-line global-require
+  const ls = require('./learning-spec');
+  const spec = ls.buildSpec(userId, { topic });
+  return (source) => ls.analogyGuard(spec, source);
+}
+
 /** What the writer of this learner's check questions is told about their tests: tier order, answer format, explanations, stakes. */
 function questionBlockFor(userId, topic = null) {
   // eslint-disable-next-line global-require
@@ -452,13 +460,18 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
   const data = gen.res && gen.res.data;
   if (!data || !data.lesson) { ctx.unanswered++; return { failed: true }; }
   if (gen.res.model) ctx.models.add(gen.res.model);
-  const paragraphs = ((data.lesson && data.lesson.paragraphs) || []).map((p) => clean(p, 700)).filter(Boolean).slice(0, ctx.textShape ? ctx.textShape.maxParagraphs : 6);
+  // An interest analogy may not bring a claim the passages lack: such a paragraph goes (unless it would leave none), such a question is dropped.
+  const guard = ctx.makeGuard ? ctx.makeGuard(text) : null;
+  const allParas = ((data.lesson && data.lesson.paragraphs) || []).map((p) => clean(p, 700)).filter(Boolean);
+  const okParas = guard ? allParas.filter((p) => guard(p)) : allParas;
+  const paragraphs = (okParas.length ? okParas : allParas).slice(0, ctx.textShape ? ctx.textShape.maxParagraphs : 6);
   if (!paragraphs.length) return { failed: true };
-  const keyPoints = ((data.lesson && data.lesson.key_points) || []).map((p) => clean(p, 200)).filter(Boolean).slice(0, 6);
+  const keyPoints = ((data.lesson && data.lesson.key_points) || []).map((p) => clean(p, 200)).filter(Boolean).filter((p) => !guard || guard(p)).slice(0, 6);
 
   let items = [];
   for (const q of (data.questions || []).slice(0, MAX_QUESTIONS + 4)) {
     const out = cleanQuestion(q, passageById, allowed, { generalTitle: general ? skill.title : null });
+    if (!out.drop && guard && !guard(`${out.item.prompt} ${(out.item.choices || []).join(' ')} ${out.item.explanation || ''}`)) { ctx.dropped.analogies = (ctx.dropped.analogies || 0) + 1; continue; }
     if (out.drop) ctx.dropped[out.drop]++;
     else if (!items.some((i) => norm(i.prompt) === norm(out.item.prompt)) && !(extra && extra.haveNorm.has(norm(out.item.prompt)))) items.push(out.item);
   }
@@ -560,7 +573,7 @@ async function build(userId, materialId, opts = {}) {
     const all = chunk(mat.text);
     const passages = all.slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId, mat.title), questionBlock: questionBlockFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title }), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
+    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId, mat.title), questionBlock: questionBlockFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title }), makeGuard: guardMaker(userId, mat.title), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
     const base = {
       user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, total_chars: mat.text.length, status: 'building', started_at: new Date().toISOString(),
       passages: passages.map(({ id, start, end }) => ({ id, start, end })), truncated: all.length > passages.length,
@@ -679,7 +692,7 @@ async function retryMissed(userId, materialId, opts = {}) {
   try {
     const passages = chunk(mat.text).slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId, mat.title), questionBlock: questionBlockFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title }), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
+    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId, mat.title), questionBlock: questionBlockFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title }), makeGuard: guardMaker(userId, mat.title), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
     const most = Math.max(1, Math.min(MAX_SKILLS, Math.ceil(mat.text.length / CHARS_PER_SKILL)));
     const raw = (course.outline || []).map((k) => ({ id: k.id, title: k.title }));
     const fresh = [];
@@ -775,6 +788,6 @@ function removeForMaterial(userId, materialId) {
 
 module.exports = {
   VERSION, TOKEN_BUDGET, MIN_QUESTIONS, MAX_SKILLS,
-  EXTRA_MIN, MAX_PASSAGES, Budget, buildSkill, specBlockFor, questionBlockFor, hash, slug, inflight,
+  EXTRA_MIN, MAX_PASSAGES, Budget, buildSkill, specBlockFor, questionBlockFor, guardMaker, hash, slug, inflight,
   chunk, cleanOutline, sourceOrder, orderSkills, layout, outlineWindows, shuffleChoices, namingLine, nearQuote, cleanQuestion, build, retryMissed, coverageOf, summary, get, removeForMaterial,
 };

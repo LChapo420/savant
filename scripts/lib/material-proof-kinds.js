@@ -158,6 +158,11 @@ function fields(kind, spec) {
     if (s.lesson.warmupItems >= 2) add('warmup', `Opens with ${s.lesson.warmupItems} easy warm-up questions`);
     if (s.explain.misconception) add('misconception', 'Explanations name the likely wrong idea and why it fails');
   }
+  // Own material is shaped by the learner's interests and dislikes too, with the base text as the only source of facts.
+  if (kind !== 'lesson') {
+    if (s.interests.exampleDomains.length && s.interests.share >= 0.3) add('interest_analogies', `Interests (${s.interests.exampleDomains.slice(0, 4).join(', ')}): ${s.interests.share >= 0.7 ? 'several' : 'a few'} short analogies, examples or practice contexts built on them, each clearly framed and mapped back to a point of the base text; they add no fact, number, name or claim that the base text lacks`);
+    if (s.interests.avoidDomains.length) add('avoided_domains', `No examples, analogies or settings from what they dislike (${s.interests.avoidDomains.slice(0, 6).join(', ')})`);
+  }
   return f;
 }
 
@@ -180,7 +185,7 @@ function measureArtifact(kind, art, spec, topic) {
     words: ws.length, sentences: sents.length, meanSentenceWords: Number(mean(lens).toFixed(1)),
     longWordShare: Number((ws.length ? ws.filter((w) => w.length >= 11 && !own.has(w)).length / ws.length : 0).toFixed(3)),
     interestsUsed: doms.filter((d) => ls.mentions(text, d)).length, interestsAvailable: doms.length,
-    avoidHits: avoid.filter((d) => ls.mentions(text, d)), keyFactsMissing: cov ? cov.keyFactsMissing : null, keyFacts: topic.keyFacts.length,
+    avoidHits: avoid.filter((d) => ls.mentions(text, d)), analogyProblems: topic.source && spec ? (art.units || [text]).reduce((n, u) => n + ls.analogyProblems(u, spec, topic.source).length, 0) : 0, keyFactsMissing: cov ? cov.keyFactsMissing : null, keyFacts: topic.keyFacts.length,
   };
   const x = art.parts || {};
   if (kind === 'notes') {

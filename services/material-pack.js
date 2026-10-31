@@ -209,16 +209,22 @@ async function buildPart(part, ctx) {
   if (!data || !Array.isArray(data.flashcards)) { ctx.unanswered++; return { failed: true }; }
   if (gen.res.model) ctx.models.add(gen.res.model);
 
-  const summary = (Array.isArray(data.summary) ? data.summary : []).map((p) => clean(p, 700)).filter(Boolean).slice(0, 4);
+  const guard = ctx.guard;
+  const paras = (Array.isArray(data.summary) ? data.summary : []).map((p) => clean(p, 700)).filter(Boolean);
+  // An interest analogy may not bring a claim the material lacks: such a paragraph goes (unless it would leave none), a card falls back to its quote.
+  const okParas = guard ? paras.filter((p) => guard(p)) : paras;
+  const summary = (okParas.length ? okParas : paras).slice(0, 4);
   const cards = [];
   for (const c of data.flashcards.slice(0, ctx.limits.cards + 4)) {
     const k = cleanCard(c, byId, allowed);
+    if (k && guard && !guard(`${k.front} ${k.back}`)) { k.back = clean(k.quote, 400); ctx.dropped.analogies++; }
     if (!k) ctx.dropped.cards++;
     else if (!cards.some((x) => norm(x.front) === norm(k.front))) cards.push(k);
   }
   const items = [];
   for (const q of (Array.isArray(data.questions) ? data.questions : []).slice(0, ctx.limits.quiz + ctx.limits.test + 4)) {
     const k = cleanItem(q, byId, allowed);
+    if (k && guard && !guard(`${k.item.prompt} ${(k.item.choices || []).join(' ')} ${k.item.explanation || ''}`)) { ctx.dropped.analogies++; continue; }
     if (!k) ctx.dropped.ungrounded++;
     else if (!items.some((x) => norm(x.item.prompt) === norm(k.item.prompt))) items.push(k);
   }
@@ -267,7 +273,7 @@ async function build(userId, materialId, opts = {}) {
     const base = { user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, status: 'building', started_at: new Date().toISOString(), summary: [], cards: [], quiz: [], test: [], dropped: {}, models: [], error: null, finished_at: null };
     saved = prev ? db.update('material_packs', prev.id, base) : db.insert('material_packs', base);
     const ps = packSpec(userId, mat.title);
-    const ctx = { llm, userId, title: mat.title, block: ps.block, questionBlock: ps.questionBlock, limits: ps.limits, budget: { used: 0, limit: opts.tokenBudget || TOKEN_BUDGET }, unanswered: 0, models: new Set(), dropped: { ungrounded: 0, unsupported: 0, cards: 0 } };
+    const ctx = { llm, userId, title: mat.title, block: ps.block, questionBlock: ps.questionBlock, limits: ps.limits, budget: { used: 0, limit: opts.tokenBudget || TOKEN_BUDGET }, unanswered: 0, models: new Set(), dropped: { ungrounded: 0, unsupported: 0, cards: 0, analogies: 0 }, guard: learningSpec.analogyGuard(ps.spec, mat.text) };
     const all = { summary: [], cards: [], quiz: [], test: [] };
     let stopped = false;
     for (const part of partsOf(passages)) {

@@ -286,7 +286,7 @@ const goodLesson = (extra = {}) => ({
     check('the study pack\'s prompt carries the block, and says to use only what the material says', sys('pack-kid').includes(HEAD) && /Use only what the material says/.test(sys('pack-kid')));
     check('two learners get different pack prompts and different sizes', sys('pack-kid') !== sys('pack-adult') && /up to \d+/.exec(sys('pack-kid'))[0] !== undefined);
     check('a learner with no scorecard, and the owner, get the old prompt: no block, the old numbers', !sys('pack-fresh').includes(HEAD) && !sys('pack-owner').includes(HEAD) && /summary \(2 to 4 short paragraphs/.test(sys('pack-fresh')) && /flashcards \(up to 8:/.test(sys('pack-fresh')));
-    check('the pack block never offers interest examples (the learner\'s own text is the only source)', !/draw them from/.test(sys('pack-kid')));
+    check('the pack block uses the learner\'s interests as framed analogies (the facts stay the material\'s) and avoids what they dislike; a learner with no scorecard gets none', /Interests: [^\n]*minecraft/.test(sys('pack-kid')) && /Never use[^\n]*spiders/.test(sys('pack-kid')) && !/Interests:/.test(sys('pack-fresh')));
     check('grounding still runs: a card with an invented quote is dropped', out.pack && out.pack.cards.every((c) => TEXT.includes(c.quote)) && !out.pack.cards.some((c) => c.front === 'Invented'));
     check('the pack records which spec built it', out.pack.spec_hash && out.pack.spec_hash !== 'default');
 
@@ -295,12 +295,35 @@ const goodLesson = (extra = {}) => ({
     await notes.build(fresh.id, mFresh.id, { llm: llm('notes-fresh') });
     const ns = (tag) => seen[tag].map((c) => c.system).join('\n');
     check('the notes prompt carries the block for the kid and not for the learner with no scorecard', ns('notes-kid').includes(HEAD) && !ns('notes-fresh').includes(HEAD) && ns('notes-kid') !== ns('notes-adult'));
+    check('the notes and the podcast prompts use the interests and avoid the dislikes too', /minecraft/.test(ns('notes-kid')) && /Never use[^\n]*spiders/.test(ns('notes-kid')) && !/minecraft/.test(ns('notes-fresh')));
     check('coverage still runs, and a bullet with an invented quote is still dropped', nk.notes && nk.notes.coverage > 0 && nk.notes.dropped >= 1 && nk.notes.sections.every((s) => s.bullets.every((b) => TEXT.includes(b.quote))), nk.notes && { c: nk.notes.coverage, d: nk.notes.dropped });
 
     await podcast.build(kid.id, mKid.id, { kind: 'overview', llm: llm('pod-kid') }).catch(() => {});
     await podcast.build(fresh.id, mFresh.id, { kind: 'overview', llm: llm('pod-fresh') }).catch(() => {});
     const ps = (tag) => (seen[tag] || []).map((c) => c.system).join('\n');
     check('the podcast prompt carries the block for the kid and not for the learner with no scorecard', ps('pod-kid').includes(HEAD) && !ps('pod-fresh').includes(HEAD) && /Use only what the material says/.test(ps('pod-kid')));
+    check('and the podcast\'s', /minecraft/.test(ps('pod-kid')) && /Never use[^\n]*spiders/.test(ps('pod-kid')) && !/minecraft/.test(ps('pod-fresh')));
+    // An interest analogy may not bring a claim the material lacks: the bullet, the turn and the card fall back to the material's own words.
+    const analogyLlm = (analogy) => async (args) => {
+      const pid = (/\[(p\d+)\]/.exec(args.user) || [])[1] || 'p1';
+      const quote = pid === 'p2' ? S2 : S1;
+      if (args.task === 'material_notes') return { model: 'mock', data: { sections: [{ heading: 'Cells', bullets: [{ text: `Mitochondria release usable energy from food. ${analogy}`, passage_id: pid, quote }] }] } };
+      if (args.task === 'material_podcast') return { model: 'mock', data: { title: 'Ep', turns: [...Array.from({ length: 6 }, (_, i) => ({ host: i % 2 ? 'B' : 'A', text: i === 2 ? `Mitochondria release usable energy. ${analogy}` : 'Go on.', ...(i === 2 ? { passage_id: pid, quote } : {}) })), { host: 'A', text: analogy }] } };
+      if (args.task === 'material_pack') return { model: 'mock', data: { summary: [`Cells have parts. ${analogy}`, 'Mitochondria release usable energy from food.'], flashcards: [{ front: 'Mitochondria', back: `Release usable energy. ${analogy}`, passage_id: pid, quote }], questions: [] } };
+      return null;
+    };
+    const BAD = 'Think of Minecraft, where Steve farms 12 wheat every day.';
+    const GOOD = 'Think of Minecraft: a furnace turns coal into heat, like mitochondria release usable energy from food.';
+    const nBad = await notes.build(kid.id, mKid.id, { llm: analogyLlm(BAD), force: true });
+    const badBullet = nBad.notes && nBad.notes.sections[0].bullets[0].text; const badFixed = nBad.notes && nBad.notes.analogies_fixed;
+    const nGood = await notes.build(kid.id, mKid.id, { llm: analogyLlm(GOOD), force: true });
+    check('a notes bullet whose interest analogy brings a name and a number falls back to the text\'s own words; a good analogy stays', badBullet === S1 && badFixed === 1 && nGood.notes && /furnace/.test(nGood.notes.sections[0].bullets[0].text) && nGood.notes.analogies_fixed === 0, [badBullet, nGood.notes && nGood.notes.sections[0].bullets[0].text]);
+    const pBad = await podcast.build(kid.id, mKid.id, { kind: 'overview', llm: analogyLlm(BAD), force: true });
+    check('a podcast turn with such an analogy becomes the quoted words, and an unquoted analogy turn is dropped', pBad.episode && !pBad.episode.turns.some((t) => /Steve/.test(t.text)) && pBad.episode.turns.some((t) => t.text === S1), pBad.episode && pBad.episode.turns.map((t) => t.text));
+    const kBad = await packs.build(kid.id, mKid.id, { llm: analogyLlm(BAD), force: true });
+    check('a pack card falls back to its quote and a summary paragraph with it is dropped (the clean one stays)', kBad.pack && kBad.pack.cards[0].back === S1 && !kBad.pack.summary.some((p) => /Steve/.test(p)) && kBad.pack.summary.length === 1 && kBad.pack.dropped.analogies >= 1, kBad.pack && [kBad.pack.cards, kBad.pack.summary]);
+    const nFresh = await notes.build(fresh.id, mFresh.id, { llm: analogyLlm(BAD), force: true });
+    check('a learner with no interests has no guard: nothing is rewritten', nFresh.notes && /Steve/.test(nFresh.notes.sections[0].bullets[0].text));
     const turns = Array.from({ length: 60 }, (_, i) => ({ host: i % 2 ? 'B' : 'A', text: 'word '.repeat(40) }));
     const slotsDefault = podcast.checkinSlots(turns).length;
     const everySmall = podcast.checkinSlots(turns, { isDefault: false, lesson: { checkEveryChunks: 1 } }).length;
