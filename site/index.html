@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Savant | From zero to Savant</title>
-  <meta name="description" content="From zero to Savant. Savant tunes every part of learning to how you learn and what interests you: where you start, what comes next, how each lesson is explained and when each skill comes back. Nine subjects in testing now.">
+  <title>Savant | The same material, rebuilt for how you learn</title>
+  <meta name="description" content="Savant is an adaptive learning app, starting with ACT prep. It builds a detailed picture of each learner (how they study, think, learn and remember, and what they like) and rebuilds any lesson, level or test around it, so the same content can be understood better and kept longer, in much less time. Now in a small beta.">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
-  <meta property="og:title" content="Savant">
-  <meta property="og:description" content="From zero to Savant: every part of learning tuned to how you learn and what interests you. Now in a small beta.">
+  <meta property="og:title" content="Savant: the same material, rebuilt for how you learn">
+  <meta property="og:description" content="Savant rebuilds any lesson, level or test around each learner, so the same content can be understood better and kept longer, in much less time. Starting with ACT prep. Now in a small beta.">
   <meta property="og:type" content="website">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/dm-serif-display-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/atkinson-hyperlegible-next.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/site.css?v=2026-10-25v">
+  <link rel="stylesheet" href="assets/site.css?v=2026-10-31a">
   <script src="assets/theme.js"></script>
 </head>
 <body>
@@ -33,7 +34,7 @@
         <a href="#investors">Investors</a>
       </nav>
       <div class="header-actions">
-        <a class="btn btn-sm" href="#beta">Apply for the beta</a>
+        <a class="btn btn-primary btn-sm" href="#beta">Apply for the beta</a>
         <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch theme">
           <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
           <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
@@ -44,126 +45,170 @@
 
   <main id="main">
     <section class="wrap hero" id="top">
-      <div>
-        <h1>From zero to <span class="hero-brand">Savant</span></h1>
-        <p class="lede">
-          Savant takes every small part of learning, from where you start and what comes next
-          to how each lesson is explained, the examples it uses and when each skill comes back
-          for review, and tunes it to how you learn and what you are interested in. The result
-          is the most efficient path from knowing nothing to mastering it.
-        </p>
-        <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" href="#beta">Apply for the beta</a>
-          <a href="#updates">Get updates instead</a>
+      <h1>The same material, rebuilt for how you learn.</h1>
+      <div class="hero-grid">
+        <div class="hero-text">
+          <p class="lead"><strong>Savant is an adaptive learning app, starting with ACT prep.</strong> It learns how you study, think and remember, and what you like, then rebuilds any lesson, level or test around you, aiming for better understanding and longer memory in much less time.</p>
+          <p class="goal"><span class="label">The goal</span> Learning at least 3x as efficient, on average. A goal we are testing, not a result we have.</p>
         </div>
-        <p class="hero-note">In a small beta now. Approved beta testers use it completely free.</p>
-        <p class="hero-note">Built on decades of learning research. <a href="evidence.html">See the evidence</a></p>
+        <div class="hero-act">
+          <a class="btn btn-primary btn-lg" href="#beta">Apply for the beta</a>
+          <p class="hero-note">In a small beta now. Approved testers use it completely free.</p>
+          <p class="hero-note">The ideas behind it come from published research: <a href="evidence.html">see the evidence</a>. Not ready to apply? <a href="#updates">Get updates instead</a>.</p>
+        </div>
       </div>
 
-      <figure class="twin" data-subject="math" aria-labelledby="twin-caption">
-        <div class="twin-head"><strong>Same lesson. Two learners.</strong><p>Math, 3rd grade</p></div>
-        <div class="twin-cards">
-          <article class="lesson-card" aria-label="Maya's version of the lesson">
-            <div class="who"><span class="avatar" aria-hidden="true">M</span><div><b>Maya</b><span>likes soccer · moves fast</span></div></div>
-            <p class="topic">Lesson: what 3/4 means</p>
-            <p class="explain">Your team takes <b>4 penalty kicks</b> and scores <b>3</b>. Three out of four is <b>3/4</b>.</p>
-            <div class="viz" aria-hidden="true"><span class="ball is-in"></span><span class="ball is-in"></span><span class="ball is-in"></span><span class="ball"></span><span class="frac">3/4</span></div>
-            <p class="next">Up next: a quick game <i>2 min</i></p>
+      <figure class="fig" aria-labelledby="fig-title">
+        <figcaption class="fig-head"><span class="label">Fig. 1</span><span class="fig-title" id="fig-title">One ACT math idea, rebuilt for two learners</span><span class="label fig-tag">Illustration</span></figcaption>
+        <div class="fig-source">
+          <p class="label">Source material</p>
+          <p class="source-q">A price rises from $40 to $50. What is the percent increase?</p>
+          <p class="source-a">Percent change = change &divide; starting value</p>
+        </div>
+        <div class="fig-cols">
+          <article class="fig-col" aria-label="Learner A">
+            <p class="col-name">Learner A</p>
+            <p class="label">Savant's model of them</p>
+            <dl class="ledger">
+              <div><dt>Slips on</dt><dd>dividing by the new value</dd></div>
+              <div><dt>Likes</dt><dd>basketball</dd></div>
+              <div><dt>Prefers</dt><dd>short steps, little reading</dd></div>
+              <div><dt>Remembers</dt><dd>steadily, over a few days</dd></div>
+            </dl>
+            <p class="label">The lesson it rebuilds</p>
+            <div class="rebuilt">
+              <p><mark>Free throws made:</mark> 40 last month, 50 this month.</p>
+              <ol>
+                <li>Change: 50 &minus; 40 = 10</li>
+                <li>Divide by <mark>where you started (40), not where you ended</mark>: 10 &divide; 40 = 0.25</li>
+                <li>So the increase is 25%.</li>
+              </ol>
+              <p><mark>Check:</mark> why would dividing by 50 give the wrong answer?</p>
+            </div>
+            <p class="next"><span class="label">Then</span> two quick items. Back in a few days.</p>
           </article>
-          <article class="lesson-card" aria-label="Leo's version of the lesson">
-            <div class="who"><span class="avatar" aria-hidden="true">L</span><div><b>Leo</b><span>likes music · step by step</span></div></div>
-            <p class="topic">Lesson: what 3/4 means</p>
-            <p class="explain">A bar of music has <b>4 beats</b>. Clap on <b>3</b> of them. You clapped <b>3/4</b> of the bar.</p>
-            <div class="viz" aria-hidden="true"><span class="beat is-on"></span><span class="beat is-on"></span><span class="beat is-on"></span><span class="beat"></span><span class="frac">3/4</span></div>
-            <p class="next">Up next: a worked example <i>4 min</i></p>
+          <article class="fig-col" aria-label="Learner B">
+            <p class="col-name">Learner B</p>
+            <p class="label">Savant's model of them</p>
+            <dl class="ledger">
+              <div><dt>Slips on</dt><dd>setting up the fraction</dd></div>
+              <div><dt>Likes</dt><dd>music</dd></div>
+              <div><dt>Prefers</dt><dd>reasoning in words</dd></div>
+              <div><dt>Remembers</dt><dd>less after a day</dd></div>
+            </dl>
+            <p class="label">The lesson it rebuilds</p>
+            <div class="rebuilt">
+              <p>Percent change asks one question: how big is the change next to <mark>where you began</mark>?</p>
+              <p><mark>A playlist grows from 40 songs to 50.</mark> It gained 10. Ten out of the 40 you began with is <mark>one quarter</mark>, so the increase is 25%.</p>
+              <p><mark>In your own words:</mark> why does the starting number go on the bottom?</p>
+            </div>
+            <p class="next"><span class="label">Then</span> a mixed set with earlier topics. Back tomorrow.</p>
           </article>
         </div>
-        <figcaption id="twin-caption">The same idea, taught two ways: each learner gets examples from what they care about, at their own pace, with the next step chosen from how they are doing.</figcaption>
+        <p class="fig-note"><mark>Highlighted</mark> parts changed because of what Savant has learned about that learner. The learners and details are invented for this example: it shows the idea, not a screenshot or a result.</p>
       </figure>
     </section>
 
     <section class="section" id="how" aria-labelledby="how-title">
       <div class="wrap">
-        <div class="section-head">
-          <h2 id="how-title">Measured first, then taught.</h2>
-          <p>Most study apps start everyone at lesson one, or take your word for where you are.
-            Savant checks, so you do not grind through what you already know or get lost in what
-            you are not ready for.</p>
-        </div>
-        <dl class="points">
-          <div>
-            <dt><span class="num">A short adaptive quiz</span>It finds your level</dt>
-            <dd>Questions adjust to your answers until they find where you are. You start at that
-              level, and units you have already shown you know are skipped. An optional subject quiz
-              can pick the right grade first.</dd>
-          </div>
-          <div>
-            <dt><span class="num">Per learner</span>It builds the path for you</dt>
-            <dd>The order and mix of lessons, games, quizzes and activities is chosen for each
-              learner. One person may need one activity for a topic; another may need twenty.</dd>
-          </div>
-          <div>
-            <dt><span class="num">Timed to your memory</span>It brings skills back before they fade</dt>
-            <dd>Savant tracks how well you remember each skill and brings it back just before you
-              would forget it. Something that is starting to slip comes back sooner; something solid
-              waits longer.</dd>
-          </div>
-          <div>
-            <dt><span class="num">Before a learner reads it</span>It checks what it teaches</dt>
-            <dd>Lessons are checked claim by claim against sources before they are served. Where
-              research is mixed, or a point is opinion, the lesson says so.</dd>
-          </div>
-        </dl>
+        <h2 id="how-title">Learn the learner first. Then rebuild everything around them.</h2>
+        <p class="plain">Savant changes more than the next question. It changes the explanation, the examples, the practice and when each skill comes back.</p>
+        <ol class="steps">
+          <li>
+            <span class="step-n" aria-hidden="true">1</span>
+            <h3>It learns the learner.</h3>
+            <p>An adaptive check finds where you really are. Then every answer and every miss adds to a private model of how you study, think, learn and remember, plus what you like and dislike.</p>
+          </li>
+          <li>
+            <span class="step-n" aria-hidden="true">2</span>
+            <h3>It writes a spec for you.</h3>
+            <p>The model becomes a personal learning spec: where to start, what to skip, which mistakes to fix first, which examples to use and what pace to keep.</p>
+          </li>
+          <li>
+            <span class="step-n" aria-hidden="true">3</span>
+            <h3>It rebuilds the material and checks it.</h3>
+            <p>Any lesson, level or test is rebuilt to your spec. Each claim goes through a source check before you see it, and where research is mixed or a point is opinion, the lesson says so.</p>
+          </li>
+          <li>
+            <span class="step-n" aria-hidden="true">4</span>
+            <h3>It times review to your memory.</h3>
+            <p>Savant tracks how well you remember each skill and schedules it back for when you are likely to start forgetting. A skill that is slipping returns sooner; a solid one waits longer.</p>
+          </li>
+        </ol>
+        <p class="loop" aria-hidden="true"><span>Every answer you give updates the model</span></p>
+        <p class="more"><a href="evidence.html">See the research behind each step</a></p>
+      </div>
+    </section>
 
-        <div class="evidence-cta">
-          <p><strong>Built on research, not guesswork.</strong>Each of Savant's main ideas comes from decades of learning science. See the studies behind them; the full review, with over 500 verified sources, stays private until launch.</p>
-          <a class="btn" href="evidence.html">See the evidence</a>
+    <section class="section" id="start" aria-labelledby="start-title">
+      <div class="wrap">
+        <h2 id="start-title">Start with the test in front of you.</h2>
+        <div class="start">
+          <article class="start-main">
+            <h3>ACT prep</h3>
+            <p>Sixteen ACT grades, section by section, under the real test's timing. A placement finds your starting point, and the lessons, practice and checkpoints are rebuilt around what you actually miss.</p>
+            <p>When you miss a checkpoint, Savant works out what you misunderstood and teaches that before you try again.</p>
+          </article>
+          <div class="start-side">
+            <article>
+              <h3>Your own material</h3>
+              <p>Upload a file, paste a link, add a video or record a lecture. Savant turns it into study material built for you.</p>
+            </article>
+            <article>
+              <h3>Catch up to grade level</h3>
+              <p>Find the gaps under the grade you are in, and close them in order.</p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="subjects" aria-labelledby="subjects-title">
+    <section class="section band" id="status" aria-labelledby="status-title">
       <div class="wrap">
-        <div class="section-head">
-          <h2 id="subjects-title">Any subject, built for you.</h2>
-          <p>When Savant is released, it will be able to build an optimal curriculum for any
-            subject you want to learn, with every lesson 100% fact-checked against credible sources.
-            The nine subjects below are the ones already fully built and now in testing. Each is a
-            ladder of grades, from a first look to research level; a grade here is a band of
-            knowledge, not a school year.</p>
+        <h2 id="status-title">Our goal is 3x more efficient learning. We have not measured it yet.</h2>
+        <p class="plain">At least 3x, on average, is a goal. The beta is how we find out whether it is true, and for whom.</p>
+        <dl class="facts facts-3">
+          <div><dt>Built</dt><dd>Nine subjects with 219 grades between them, adaptive placement, per-learner paths, review timed to memory, and a source-checking step for lessons. In testing with a small group.</dd></div>
+          <div><dt>How we will measure it</dt><dd>In the beta: scores before and after, retention against learners on a path that is not tailored, and the time it takes.</dd></div>
+          <div><dt>Not built yet</dt><dd>Coding, art, and emotional intelligence and confidence are next. Later: a voice tutor, study groups, iPhone and Android apps, and the app itself in other languages.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" id="subjects" aria-labelledby="subjects-title">
+      <div class="wrap subjects-wrap">
+        <div class="prose">
+          <h2 id="subjects-title">Nine subjects built so far.</h2>
+          <p>ACT prep comes first. Eight more subjects are built and in testing alongside it. When Savant is released, it is meant to build a curriculum for any subject you want to learn, with each lesson checked against credible sources.</p>
+          <p>Each subject is a ladder of grades, from a first look to research level; a grade here is a band of knowledge, not a school year.</p>
+          <p class="after-note"><b>Newest.</b> Chess, piano and basketball were added most recently, and some of their hands-on activities are still being finished.</p>
         </div>
-        <div class="table-scroll">
+        <details class="all-subjects">
+          <summary>See all nine subjects</summary>
+          <div class="table-scroll">
           <table class="catalogue">
             <caption class="visually-hidden">Subjects in Savant and how many grades each has</caption>
-            <thead>
-              <tr><th scope="col"><span class="visually-hidden">Symbol</span></th><th scope="col">Subject</th><th scope="col" class="cat-strip">Grades</th><th scope="col" class="count">Count</th></tr>
-            </thead>
+            <thead><tr><th scope="col">Subject</th><th scope="col" class="count">Grades</th></tr></thead>
             <tbody>
-              <tr data-subject="math"><td><span class="symbol" aria-hidden="true">Ma</span></td><td><span class="cat-name">Mathematics</span><span class="cat-range">Counting blocks to a doctoral qualifying exam</span></td><td class="cat-strip"><span class="grade-strip" data-grades="49" aria-hidden="true"></span></td><td class="count"><span class="num">49</span> grades</td></tr>
-              <tr data-subject="english"><td><span class="symbol" aria-hidden="true">En</span></td><td><span class="cat-name">English</span><span class="cat-range">Preschool foundations to field authority</span></td><td class="cat-strip"><span class="grade-strip" data-grades="16" aria-hidden="true"></span></td><td class="count"><span class="num">16</span> grades</td></tr>
-              <tr data-subject="reading"><td><span class="symbol" aria-hidden="true">Rd</span></td><td><span class="cat-name">Reading</span><span class="cat-range">Decoding to literary studies</span></td><td class="cat-strip"><span class="grade-strip" data-grades="16" aria-hidden="true"></span></td><td class="count"><span class="num">16</span> grades</td></tr>
-              <tr data-subject="spanish"><td><span class="symbol" aria-hidden="true">Es</span></td><td><span class="cat-name">Spanish</span><span class="cat-range">First greetings to the subjunctive, and on to advanced Hispanic studies</span></td><td class="cat-strip"><span class="grade-strip" data-grades="57" aria-hidden="true"></span></td><td class="count"><span class="num">57</span> grades</td></tr>
-              <tr data-subject="iq"><td><span class="symbol" aria-hidden="true">Iq</span></td><td><span class="cat-name">Reasoning (IQ training)</span><span class="cat-range">Patterns and puzzles, from concrete thinking upward</span></td><td class="cat-strip"><span class="grade-strip" data-grades="12" aria-hidden="true"></span></td><td class="count"><span class="num">12</span> grades</td></tr>
-              <tr data-subject="act"><td><span class="symbol" aria-hidden="true">Ac</span></td><td><span class="cat-name">ACT prep</span><span class="cat-range">Section by section, under the real test's timing</span></td><td class="cat-strip"><span class="grade-strip" data-grades="16" aria-hidden="true"></span></td><td class="count"><span class="num">16</span> grades</td></tr>
-              <tr data-subject="chess"><td><span class="symbol" aria-hidden="true">Ch</span></td><td><span class="cat-name">Chess</span><span class="cat-range">A first look at the board to grandmaster play, coaching and engine research</span></td><td class="cat-strip"><span class="grade-strip" data-grades="19" aria-hidden="true"></span></td><td class="count"><span class="num">19</span> grades</td></tr>
-              <tr data-subject="piano"><td><span class="symbol" aria-hidden="true">Pi</span></td><td><span class="cat-name">Piano</span><span class="cat-range">A first touch of the keys to concert artistry and music science</span></td><td class="cat-strip"><span class="grade-strip" data-grades="19" aria-hidden="true"></span></td><td class="count"><span class="num">19</span> grades</td></tr>
-              <tr data-subject="basketball"><td><span class="symbol" aria-hidden="true">Bb</span></td><td><span class="cat-name">Basketball</span><span class="cat-range">A first bounce to elite play, coaching, officiating and analytics</span></td><td class="cat-strip"><span class="grade-strip" data-grades="15" aria-hidden="true"></span></td><td class="count"><span class="num">15</span> grades</td></tr>
+              <tr data-subject="math"><td><span class="cat-name">Mathematics</span><span class="cat-range">Counting blocks to a doctoral qualifying exam</span></td><td class="count"><span class="num">49</span></td></tr>
+              <tr data-subject="english"><td><span class="cat-name">English</span><span class="cat-range">Preschool foundations to field authority</span></td><td class="count"><span class="num">16</span></td></tr>
+              <tr data-subject="reading"><td><span class="cat-name">Reading</span><span class="cat-range">Decoding to literary studies</span></td><td class="count"><span class="num">16</span></td></tr>
+              <tr data-subject="spanish"><td><span class="cat-name">Spanish</span><span class="cat-range">First greetings to the subjunctive, and on to advanced Hispanic studies</span></td><td class="count"><span class="num">57</span></td></tr>
+              <tr data-subject="iq"><td><span class="cat-name">Reasoning</span><span class="cat-range">Patterns and puzzles, from concrete thinking upward</span></td><td class="count"><span class="num">12</span></td></tr>
+              <tr data-subject="act"><td><span class="cat-name">ACT prep</span><span class="cat-range">Section by section, under the real test's timing</span></td><td class="count"><span class="num">16</span></td></tr>
+              <tr data-subject="chess"><td><span class="cat-name">Chess</span><span class="cat-range">A first look at the board to grandmaster play, coaching and engine research</span></td><td class="count"><span class="num">19</span></td></tr>
+              <tr data-subject="piano"><td><span class="cat-name">Piano</span><span class="cat-range">A first touch of the keys to concert artistry and music science</span></td><td class="count"><span class="num">19</span></td></tr>
+              <tr data-subject="basketball"><td><span class="cat-name">Basketball</span><span class="cat-range">A first bounce to elite play, coaching, officiating and analytics</span></td><td class="count"><span class="num">15</span></td></tr>
             </tbody>
           </table>
         </div>
-        <div class="after-table">
-          <p><b>Newest.</b> Chess, piano and basketball were added most recently, and some of their
-            hands-on activities are still being finished.</p>
-          <p><b>In the works, not finished yet.</b> Coding, art, and emotional intelligence and
-            confidence are being built next. Later: a voice tutor, study groups, iPhone and Android apps, and the app
-            itself in languages other than English, starting with Spanish.</p>
-        </div>
+        </details>
       </div>
     </section>
 
     <section class="section" id="beta" aria-labelledby="beta-title">
       <div class="wrap split">
-        <div class="prose">
+        <div class="prose is-sticky">
           <h2 id="beta-title">Apply for the beta.</h2>
           <p>The beta is small: friends, family, and people who apply here. Every application is
             read by hand. If there is a place, you will get an email with how to start.</p>
@@ -178,7 +223,8 @@
             child's account is set up later, inside the app, with a parent's consent.</p>
         </div>
 
-        <form class="form form-panel" id="beta-form" data-form="beta" action="/api/beta" method="post" aria-labelledby="beta-form-title">
+        <div class="beta-col">
+          <form class="form form-panel" id="beta-form" data-form="beta" action="/api/beta" method="post" aria-labelledby="beta-form-title">
           <h3 id="beta-form-title">Beta application</h3>
           <p class="form-intro">Five questions. A few minutes.</p>
           <div class="hp" aria-hidden="true"><label for="beta-website">Leave this empty</label><input id="beta-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
@@ -227,16 +273,10 @@
           <p class="form-status" role="status" aria-live="polite"></p>
           <p class="form-note" data-mode-note></p>
         </form>
-      </div>
-    </section>
-
-    <section class="section" id="updates" aria-labelledby="updates-title">
-      <div class="wrap updates">
-        <div class="section-head">
-          <h2 id="updates-title">Or just hear when it opens.</h2>
-          <p>Occasional emails about Savant: the beta opening wider, new subjects, the launch.</p>
-        </div>
-        <form class="form inline-form" id="updates-form" data-form="updates" action="/api/updates" method="post" aria-labelledby="updates-title">
+          <div class="updates-inline" id="updates">
+            <h3 id="updates-title">Not ready to apply? Hear when it opens.</h3>
+            <p>Occasional emails about Savant: the beta opening wider, new subjects, the launch.</p>
+            <form class="form inline-form" id="updates-form" data-form="updates" action="/api/updates" method="post" aria-labelledby="updates-title">
           <div class="hp" aria-hidden="true"><label for="updates-website">Leave this empty</label><input id="updates-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
           <div class="field">
             <label for="updates-email">Email</label>
@@ -255,19 +295,18 @@
           <p class="form-status" role="status" aria-live="polite"></p>
           <p class="form-note" data-mode-note></p>
         </form>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="section" id="investors" aria-labelledby="investors-title">
       <div class="wrap split">
         <div class="prose">
-          <h2 id="investors-title">For investors.</h2>
-          <p>Savant is built by one founder. Hiring starts after investment.
-            This is where it stands today, and what is still a plan.</p>
+          <h2 id="investors-title">One founder. Here is the plan.</h2>
+          <p>Savant is built by one founder, <a href="https://www.linkedin.com/in/landon-davidshofer-aba26a377/" rel="noopener" target="_blank">Landon Davidshofer</a>. Hiring starts after investment.
+            What is built is described above; this is the plan and what is still open.</p>
           <dl class="facts">
-            <div><dt>Built</dt><dd>Nine subjects with 219 grades between them, adaptive placement,
-              per-learner paths, spaced review, and a fact-checking pipeline for every lesson.
-              In testing with a small group.</dd></div>
             <div><dt>Next</dt><dd>A beta with friends, family and applicants, measuring scores before
               and after, retention against learners on a path that is not tailored, and engagement.</dd></div>
             <div><dt>Revenue, planned</dt><dd>A free tier and two paid tiers, plus plans for schools
@@ -321,7 +360,7 @@
             <svg viewBox="0 0 18 20" aria-hidden="true" focusable="false"><rect x="0" y="18.5" width="18" height="1.5"/><rect x="1" y="12" width="2.4" height="7"/><rect x="7.8" y="7" width="2.4" height="12"/><rect x="14.6" y="1" width="2.4" height="18"/></svg>
             <span>Savant</span>
           </a>
-          <p>From zero to Savant.</p>
+          <p>Study material rebuilt for how you learn.</p>
         </div>
         <div>
           <h2>Follow Savant</h2>

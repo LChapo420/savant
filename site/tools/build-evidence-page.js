@@ -54,8 +54,8 @@ const PILLARS = [
   { title: 'You learn by remembering, not rereading',
     text: 'Lessons and practice ask you to recall answers, with feedback, instead of reading them again. Retrieving knowledge makes it last far longer than restudying it.',
     refs: ['roediger2006', 'karpicke2008', 'rowland2014', 'adesope2017'] },
-  { title: 'Skills come back just before you would forget them',
-    text: 'Savant tracks each skill and brings it back for review on a schedule set for you, sooner when it starts to slip. Spacing practice out, timed to the person, is one of the most reliable findings in learning research.',
+  { title: 'Review is timed to your memory',
+    text: 'Savant tracks each skill and schedules it to come back for review on a timetable set for you, sooner when it starts to slip. Spacing practice out is one of the most reliable findings in learning research.',
     refs: ['cepeda2006', 'cepeda2008', 'latimier2021', 'lindsey2014'] },
   { title: 'Practice mixes topics together',
     text: 'Once a topic has been taught, practice mixes it with earlier ones, so you learn to tell problems apart and choose the right method.',
@@ -87,8 +87,38 @@ const foot = privacy.slice(privacy.indexOf('</main>') + '</main>'.length).replac
 const body = `<main id="main" class="wrap">
   <article class="doc evidence">
     <h1>The evidence behind Savant</h1>
-    <p class="lede">Every part of Savant is built on learning research. Here are the main ideas, in plain words, with some of the best-known studies behind each one.</p>
-    <p class="ev-behind"><strong>This is only a small part of our research.</strong> Behind this page is a full review of every one of the hundreds of mechanisms in Savant, backed by over 500 verified studies and official standards: more than 20 times the sources shown here. We are keeping that work private until Savant launches, so it cannot be copied before release.</p>
+    <p class="lede">Savant's main ideas draw on learning research. Here they are in plain words, with some of the best-known studies behind each one. This is published research that informs Savant, not results from Savant itself.</p>
+    <p class="ev-behind"><strong>This is only a small part of our research.</strong> Behind this page is a fuller review of the mechanisms in Savant, with many more sources than are shown here. That fuller review stays private until Savant launches.</p>
+
+    <section class="ev-how" id="how-it-works" aria-labelledby="how-it-works-title">
+      <h2 id="how-it-works-title">How it works</h2>
+      <p>Savant does not teach everyone the same lesson. It learns the learner, then rebuilds the material around them. At a high level:</p>
+      <ol class="steps">
+        <li>
+          <span class="step-n" aria-hidden="true">1</span>
+          <h3>A model of the learner</h3>
+          <p>Savant measures where you are and keeps learning from your answers: how you study, think, learn and remember, plus what you like and dislike.</p>
+        </li>
+        <li>
+          <span class="step-n" aria-hidden="true">2</span>
+          <h3>A personal learning spec</h3>
+          <p>That model is turned into a spec for you: where to start, what to skip, which mistakes to fix first, which examples to use and what pace to keep.</p>
+        </li>
+        <li>
+          <span class="step-n" aria-hidden="true">3</span>
+          <h3>Material rebuilt, then checked</h3>
+          <p>Lessons, levels and tests are rebuilt to your spec, and each claim goes through an accuracy check against sources before you see it.</p>
+        </li>
+        <li>
+          <span class="step-n" aria-hidden="true">4</span>
+          <h3>Review timed to memory</h3>
+          <p>Each skill is scheduled to come back when you are likely to start forgetting it, sooner if it is slipping, later if it is solid.</p>
+        </li>
+      </ol>
+      <p class="ev-private">This is the idea at a high level, not the full method.</p>
+    </section>
+
+    <h2 class="ev-h-pillars" id="research">The research behind it</h2>
 
     <ol class="ev-pillars">
 ${PILLARS.map((p) => `      <li class="ev-pillar">

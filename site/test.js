@@ -61,7 +61,7 @@ test('pages are served with security headers', async () => {
   assert.ok(csp.includes("default-src 'self'") && csp.includes("frame-ancestors 'none'"));
   assert.strictEqual(r.headers.get('x-content-type-options'), 'nosniff');
   assert.strictEqual(r.headers.get('set-cookie'), null, 'no cookies');
-  assert.ok((await r.text()).includes('From zero to <span class="hero-brand">Savant</span>'));
+  assert.ok((await r.text()).includes('<h1>The same material, rebuilt for how you learn.</h1>'));
   for (const p of ['/privacy', '/privacy.html', '/config.js', '/assets/site.css', '/assets/site.js', '/fonts/atkinson-hyperlegible-next.woff2', '/favicon.svg', '/thanks.html']) {
     assert.strictEqual((await fetch(base + p)).status, 200, p);
   }
