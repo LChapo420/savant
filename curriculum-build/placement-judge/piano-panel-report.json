@@ -1,0 +1,44 @@
+{
+ "track": "piano",
+ "judges": [
+  "nemotron",
+  "gemini",
+  "sonnet"
+ ],
+ "calibrated": 133,
+ "missing": 0,
+ "median_spread_grades": 0,
+ "over_two_grades_apart": 14,
+ "key_doubts": [
+  {
+   "key": "06173ccd06b4a86a",
+   "grade_id": "piano_lower_intermediate",
+   "prompt": "In the melodic minor scale, the sixth and seventh degrees are raised on the way up and lowered on the way down. Which pattern of whole and half steps represents",
+   "answer": "W‑W‑H‑W‑W‑W‑H",
+   "verdicts": [
+    "gemini: wrong (The keyed answer is the major scale pattern; the ascending melodic minor is W-H-W-W-W-W-H.)",
+    "sonnet: wrong (Ascending melodic minor is W-H-W-W-W-W-H, which is the second option. The keyed pattern W-W-H-W-W-W-H is not a minor scale.)"
+   ]
+  },
+  {
+   "key": "d30756fc90bafcec",
+   "grade_id": "piano_intermediate",
+   "prompt": "In the standard right‑hand fingering for any major scale, which scale degree is always played by finger 4?",
+   "answer": "7th",
+   "verdicts": [
+    "gemini: wrong (Finger 4 plays the 7th degree only in sharp scales starting on white keys; in F major it plays degree 4, and in flat scales it falls on other degrees.)",
+    "sonnet: wrong (Finger 4 is not always on the 7th degree; in F major it falls on B-flat (4th), and flat-key fingerings differ.)"
+   ]
+  },
+  {
+   "key": "258da1f5ba1d4665",
+   "grade_id": "piano_advanced",
+   "prompt": "When harmonizing a melody with secondary dominants at the Advanced level, the voice‑leading rule for a V⁷/vi resolving to vi requires which interval between the",
+   "answer": "A descending minor second",
+   "verdicts": [
+    "gemini: wrong (The chordal seventh resolves down by step to the third of vi, which is a descending major second (e.g. D to C in C major), not a minor second.)",
+    "sonnet: wrong (In V7/vi the seventh (e.g. D in E7) resolves down a major second to the third of vi (C), not a minor second.)"
+   ]
+  }
+ ]
+}
