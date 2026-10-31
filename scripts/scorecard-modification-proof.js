@@ -270,12 +270,12 @@ function dimensions(spec) {
   const listAvoid = s.interests.avoidDomains.length ? s.interests.avoidDomains.join(', ') : 'none';
   const listInterests = s.interests.exampleDomains.length ? s.interests.exampleDomains.join(', ') : 'none stated';
   return [
-    ['length_chunking', `Lesson length and chunk size: about ${s.lesson.sections} sections whose body is at most ${s.lesson.chunkSentences} sentences, ${s.lesson.newIdeasPerChunk === 1 ? 'one new idea' : `at most ${s.lesson.newIdeasPerChunk} new ideas`} per section, about ${s.lesson.wordBudget} words in all, at most ${s.lesson.mistakes} common mistake${s.lesson.mistakes === 1 ? '' : 's'}`],
+    ['length_chunking', `Lesson length and chunk size: about ${s.lesson.sections} sections whose body is at most ${s.lesson.chunkSentences} sentences, ${s.lesson.newIdeasPerChunk === 1 ? 'one new idea' : `at most ${s.lesson.newIdeasPerChunk} new ideas`} per section, at most about ${s.lesson.wordBudget} words in all, at most ${s.lesson.mistakes} common mistake${s.lesson.mistakes === 1 ? '' : 's'}`],
     ['pacing', `Pacing: ${s.lesson.pace}${s.lesson.restate ? ', restating the key point once' : ''}${s.lesson.recapAtStart ? ', opening with a recap' : ''}${s.lesson.recapAtEnd ? ', ending with a recap they answer from memory' : ''}`],
     ['retrieval_checks', `Retrieval checks: ${s.lesson.retrievalChecks} check questions${s.lesson.quickCheckEvery ? `, plus a "Quick check: question, Answer: answer" line at the end of ${s.lesson.quickCheckEvery === 1 ? 'every section' : 'every second section'}` : ', none inside the lesson body (teach a full stretch first)'}`],
     ['difficulty', `Difficulty: the check questions start ${s.difficulty.startOffset <= -0.5 ? 'clearly below' : s.difficulty.startOffset >= 0.5 ? 'at or above' : 'at'} the lesson level and ramp ${s.difficulty.rampLabel}`],
     ['scaffolding_hints', `Scaffolding and hints: ${s.scaffolding.level >= 0.7 ? 'plenty of support' : s.scaffolding.level <= 0.3 ? 'little support' : 'moderate support'}; ${s.scaffolding.hintInChecks ? `each check question carries a one-line hint (${s.scaffolding.hintSize === 'nudge' ? 'a nudge' : s.scaffolding.hintSize === 'partial' ? 'the idea to use' : 'the first step'}, never the answer)` : 'no hints in the check questions'}`],
-    ['worked_vs_practice', `Worked examples to practice: ${s.practice.workedExamples} worked example${s.practice.workedExamples === 1 ? '' : 's'}, then ${s.practice.tryItems} try-it item${s.practice.tryItems === 1 ? '' : 's'} inside the lesson (ratio about ${s.practice.workedToPractice}; ${s.practice.workedToPractice >= 0.9 ? 'worked examples lead' : s.practice.workedToPractice <= 0.3 ? 'practice leads' : 'balanced'})${s.practice.predictBeforeReveal ? '; asks the learner to predict before a reveal' : ''}`],
+    ['worked_vs_practice', `Worked examples to practice: ${s.practice.workedExamples} worked example${s.practice.workedExamples === 1 ? '' : 's'}, then ${s.practice.tryItems} "Try it: question, Answer: answer" line${s.practice.tryItems === 1 ? '' : 's'} inside the lesson (ratio about ${s.practice.workedToPractice}; ${s.practice.workedToPractice >= 0.9 ? 'worked examples lead' : s.practice.workedToPractice <= 0.3 ? 'practice leads' : 'balanced'})${s.practice.predictBeforeReveal ? '; asks the learner to predict before a reveal' : ''}`],
     ['explanation_modes', `Explanation modes, ranked: ${s.explain.modes.join(' > ') || 'balanced default'}; order ${s.explain.order}; analogy ${s.explain.analogy}`],
     ['vocabulary', `Vocabulary at about reading grade ${s.language.vocabularyGrade}; terms defined ${s.language.defineTerms}${s.learner.esl ? '; English is not their first language' : ''}`],
     ['sentence_length', `Sentences up to about ${s.language.maxSentenceWords} words`],
@@ -730,6 +730,35 @@ ${l.name}/${topicId}/${arm}: judge failed: ${e.message}`); continue; }
   if (cache.flush) cache.flush();
 
   const report = buildReport(learners, results.filter((r) => r && !r.error), topicCover, { ledgerBefore, ledgerAfter: ledger ? ledger.status() : null, writerPath });
+  // --carry FILE: arms this run did not write (legacy and generic do not depend on the spec) come from an earlier run's results.
+  if (opt('carry')) {
+    const carry = JSON.parse(fs.readFileSync(opt('carry'), 'utf8'));
+    const missing = Object.keys(carry.byArm).filter((a) => !report.data.byArm[a]);
+    for (const a of missing) {
+      report.data.byArm[a] = carry.byArm[a];
+      report.data.metrics[a] = carry.metrics[a];
+      for (const p of report.data.perLearner) { const c = carry.perLearner.find((x) => x.name === p.name); if (c) p.arms[a] = c.arms[a]; }
+    }
+    // Cell by cell: this run's spec lesson against the carried arm's lesson for the same learner and topic.
+    const carried = new Map(carry.raw.map((r) => [`${r.learner}|${r.topic}`, r]));
+    const meanFit = (v) => (v && v.fit ? avg(DIM_IDS.map((x) => v.fit[x].score)) : null);
+    const wins = { spec_over_generic: 0, spec_over_legacy: 0, ties: 0, cells: 0 };
+    const losses = [];
+    for (const c of report.cells) {
+      const s = fitMean(c, 'spec');
+      const old = carried.get(`${c.learner}|${c.topic}`);
+      if (s === null || !old) continue;
+      wins.cells += 1;
+      const g = meanFit(old.arms.generic && old.arms.generic.verdict);
+      const lg = meanFit(old.arms.legacy && old.arms.legacy.verdict);
+      if (g !== null && s > g + 0.25) wins.spec_over_generic += 1;
+      if (lg !== null && s > lg + 0.25) wins.spec_over_legacy += 1;
+      if (g !== null && s < g - 0.25) losses.push({ learner: c.learner, topic: c.topic, spec: s, generic: g });
+    }
+    report.data.wins = wins;
+    report.data.losses = losses;
+    report.data.carried = { from: carry.tag, arms: missing };
+  }
   const baseline = opt('baseline') ? JSON.parse(fs.readFileSync(opt('baseline'), 'utf8')) : null;
   fs.writeFileSync(JSON_OUT, JSON.stringify(report.data, null, 1));
   fs.writeFileSync(OUT, renderMarkdown(report, baseline));
@@ -842,7 +871,8 @@ function renderMarkdown(report, baseline) {
   L.push('');
   L.push('## Averages: spec against generic and legacy');
   L.push('');
-  const arms = ARMS;
+  const arms = ['spec', 'legacy', 'generic'].filter((a) => d.byArm[a]);
+  if (d.carried) L.push(`The ${d.carried.arms.join(' and ')} rows are carried from run \`${d.carried.from}\`: those lessons do not depend on the spec, so they were not written again. Each was judged there against the learner's spec of that run (the spec's shape lines have been refined since, so the judge's per-dimension text differs a little); read the spec column of this run against them as a comparison, not as a paired test.`, '');
   const rows = ALL_DIMS.map((dim) => {
     const cells = [DIM_LABEL[dim]];
     for (const a of arms) cells.push(f1(d.byArm[a][dim]));
@@ -908,7 +938,20 @@ function renderMarkdown(report, baseline) {
   const miss = Object.entries(d.missing).sort((a, b) => b[1] - a[1]).slice(0, 8);
   L.push(`- Key facts the judge found missing: ${miss.length ? miss.map(([k, v]) => `${k}${v > 1 ? ` (x${v})` : ''}`).join('; ') : 'none reported'}.`);
   L.push('');
-  if (baseline) {
+  const history = (opt('history') || '').split(',').filter(Boolean).map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));
+  if (history.length) {
+    L.push('## Hardening history: what the live runs found and what changed');
+    L.push('');
+    L.push(`Spec arm, mean over all lessons, 0 to 10, in the order the runs were made (${[...history.map((h) => h.tag), d.tag].join(', ')}). Each hardening round below fixed the general mechanism, then the whole proof was run again on the same sixteen learners and four topics.`);
+    L.push('');
+    const runs = [...history, d];
+    L.push(table(['Dimension', ...runs.map((r) => r.tag)], [...ALL_DIMS.map((dim) => [DIM_LABEL[dim], ...runs.map((r) => f1(r.byArm.spec[dim]))]), ['**Fit (mean)**', ...runs.map((r) => `**${f1(r.byArm.spec.fit)}**`)],
+      ['Lessons written and judged', ...runs.map((r) => r.metrics.spec.n)], ['Key facts missing (term overlap)', ...runs.map((r) => `${r.metrics.spec.keyFactsMissing} of ${r.metrics.spec.keyFacts}`)], ['Lessons that left a spec problem open', ...runs.map((r) => r.metrics.spec.openProblems)]]));
+    L.push('');
+  }
+  const findings = path.join(ROOT, 'docs', 'scorecard-proof-findings.md');
+  if (d.live && history.length && fs.existsSync(findings)) L.push(fs.readFileSync(findings, 'utf8').replace(/\r\n/g, '\n'), '');
+  if (baseline && !history.length) {
     L.push('## Before and after hardening');
     L.push('');
     L.push(`Baseline run \`${baseline.tag}\` against this run \`${d.tag}\` (spec arm, mean over all lessons, 0 to 10).`);
@@ -923,6 +966,11 @@ function renderMarkdown(report, baseline) {
   const lb = d.ledgers.ledgerBefore; const la = d.ledgers.ledgerAfter;
   L.push(`- App-path generations: ${d.spend.calls} calls, $${d.spend.appUsd.toFixed(4)} by the pool's own accounting (free NVIDIA lineup; paid slots switched off).`);
   L.push(`- Judges: ${d.spend.judgeCalls} calls (${Object.entries(d.spend.judgeModels).map(([k, v]) => `${k} x${v}`).join(', ') || 'none'}); Standard Compute spend this run $${d.spend.scUsd.toFixed(4)} through the ledger with ceilingUsd 26.`);
+  if (history.length) {
+    const runs = [...history, d];
+    const total = runs.reduce((n, r) => n + r.spend.scUsd, 0);
+    L.push(`- Across the ${runs.length} live runs: ${runs.map((r) => `${r.tag} $${r.spend.scUsd.toFixed(2)}`).join(', ')}; **$${total.toFixed(2)} in all** at the ledger's deliberately high assumed prices (an upper bound on the bill), against a $4 limit. Standard Compute ledger at the start of run 1: spent $${history[0].ledgers.ledgerBefore.spent_usd} (${history[0].ledgers.ledgerBefore.calls} calls); at the end of the last run: spent $${d.ledgers.ledgerAfter.spent_usd} (${d.ledgers.ledgerAfter.calls} calls). Small probe runs that debugged the harness before run 1 cost under $0.30 more. The ledger moved by more than this work's spend because other jobs share the key.`);
+  }
   if (lb && la) L.push(`- Standard Compute ledger: before spent $${lb.spent_usd} (${lb.calls} calls, headroom $${lb.headroom_usd}); after spent $${la.spent_usd} (${la.calls} calls, headroom $${la.headroom_usd}).`);
   L.push('');
   return L.join('\n');
@@ -958,4 +1006,11 @@ function assertMock(report, learners, cells) {
   console.log('scorecard-modification-proof --mock: all checks passed');
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+if (opt('render')) {
+  // Re-render a saved run: node scripts/scorecard-modification-proof.js --render docs/scorecard-proof-run3.json --history run1.json,run2.json --out FILE.md
+  const data = JSON.parse(fs.readFileSync(opt('render'), 'utf8'));
+  fs.writeFileSync(OUT, renderMarkdown({ data }, opt('baseline') ? JSON.parse(fs.readFileSync(opt('baseline'), 'utf8')) : null));
+  console.log(`wrote ${OUT}`);
+} else {
+  main().catch((e) => { console.error(e); process.exit(1); });
+}

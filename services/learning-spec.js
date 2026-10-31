@@ -607,7 +607,9 @@ function derive(L, ctx, input, interestsUsed, avoid) {
       quickCheckEverySection: L.checkFreq >= 0.4,
       quickCheckEvery: L.checkFreq >= 0.4 ? 1 : L.checkFreq >= SHOW_AT ? 2 : 0,
       // About what the learner reads in the lesson's time (not counting the check questions): a target, checked at one and a half times.
-      wordBudget: Math.round(clamp(span(L.length, 4, 8, 14) * span(L.pace, 1.15, 1, 0.85) * (ctx.device === 'phone' ? 0.8 : 1), 3, 18) * (ctx.age !== null && ctx.age <= 11 ? 70 : 110) / 10) * 10,
+      // A ceiling, not a target: the words the learner has time to read (never more than a page, 1000), so a short lesson that teaches
+      // everything is never faulted for being short.
+      wordBudget: Math.min(1000, Math.round(clamp(span(L.length, 4, 8, 14) * span(L.pace, 1.15, 1, 0.85) * (ctx.device === 'phone' ? 0.8 : 1), 3, 18) * (ctx.age !== null && ctx.age <= 11 ? 70 : 110) / 10) * 10),
       newIdeasPerChunk: L.chunk >= 0.4 ? 3 : L.chunk <= -0.3 ? 1 : 2,
       maxNewTerms: Math.round(clamp(span(-L.defineTerms * 0.5 + L.chunk * 0.5, 1, 3, 5), 1, 5)),
       pace: L.pace >= 0.3 ? 'brisk' : L.pace <= -0.3 ? 'slow' : 'steady',
@@ -641,7 +643,7 @@ function derive(L, ctx, input, interestsUsed, avoid) {
       workedToPractice: round(WORKED_DEFAULT * (4 ** clamp(L.worked, -1, 1))),
       workedExamples: Math.round(clamp(1 + 1.2 * L.worked + 0.8 * L.exampleCount, 1, 4)),
       // "Try it" items inside the lesson (a question, then its answer): the worked-to-practice ratio as counts the page can show.
-      tryItems: Math.round(clamp(Math.round(clamp(1 + 1.2 * L.worked + 0.8 * L.exampleCount, 1, 4)) / (WORKED_DEFAULT * (4 ** clamp(L.worked, -1, 1))), 0, 6)),
+      tryItems: Math.round(clamp(Math.round(clamp(1 + 1.2 * L.worked + 0.8 * L.exampleCount, 1, 4)) / (WORKED_DEFAULT * (4 ** clamp(L.worked, -1, 1))), 0, 3)),
       examplesPerIdea: Math.round(clamp(span(L.exampleCount, 1, 2, 3), 1, 3)),
       typedAnswers: round(clamp(0.5 + 0.5 * L.typed, 0, 1)),
       predictBeforeReveal: L.generation >= 0.3,
@@ -918,7 +920,7 @@ function specToLines(spec, { surface = 'lesson' } = {}) {
   }
   if (surface === 'lesson' || surface === 'level') {
     const les = spec.lesson;
-    lines.push(`Shape: about ${les.sections} short sections; the body of each section is at most ${les.chunkSentences} sentences (count them, and split a longer one into another section), ${les.newIdeasPerChunk === 1 ? 'one new idea' : `at most ${les.newIdeasPerChunk} new ideas`} per section, ${les.retrievalChecks} check question${les.retrievalChecks === 1 ? '' : 's'} in all (${checkOrder(spec)})${les.quickCheckEvery ? `, a line "Quick check: <question> Answer: <answer>" at the end of ${les.quickCheckEvery === 1 ? 'every section' : 'every second section'}` : ''}${spec.scaffolding.hintInChecks ? `, each with a one-line hint after the question (${spec.scaffolding.hintSize === 'nudge' ? 'a nudge' : spec.scaffolding.hintSize === 'partial' ? 'the idea to use' : 'the first step'}, never the answer)` : ''}, at most ${les.mistakes} common mistake${les.mistakes === 1 ? '' : 's'}. About ${les.wordBudget} words in all (not counting the check questions). ${spec.practice.workedExamples} worked example${spec.practice.workedExamples === 1 ? '' : 's'} (the worked example and the sections' example fields), then ${spec.practice.tryItems === 0 ? 'no extra try-it items' : `${spec.practice.tryItems} try-it item${spec.practice.tryItems === 1 ? '' : 's'} inside the sections (a question, then its answer)`}.${les.hook === 'question' ? ' Open with a question the lesson then answers.' : les.hook === 'scenario' ? ' Open with a one-line scenario.' : ''} This is the shape, not a cap on content: if the topic needs more, add sections or words; never drop a point to fit.`);
+    lines.push(`Shape: about ${les.sections} short sections; the body of each section is at most ${les.chunkSentences} sentences (count them, and split a longer one into another section), ${les.newIdeasPerChunk === 1 ? 'one new idea' : `at most ${les.newIdeasPerChunk} new ideas`} per section, ${les.retrievalChecks} check question${les.retrievalChecks === 1 ? '' : 's'} in all (${checkOrder(spec)})${les.quickCheckEvery ? `, a line "Quick check: <question> Answer: <answer>" at the end of ${les.quickCheckEvery === 1 ? 'every section' : 'every second section'}` : ''}${spec.scaffolding.hintInChecks ? `, each with a one-line hint after the question (${spec.scaffolding.hintSize === 'nudge' ? 'a nudge' : spec.scaffolding.hintSize === 'partial' ? 'the idea to use' : 'the first step'}, never the answer)` : ''}, at most ${les.mistakes} common mistake${les.mistakes === 1 ? '' : 's'}. At most about ${les.wordBudget} words in all (not counting the check questions); a shorter lesson that teaches every point is better. ${spec.practice.workedExamples} worked example${spec.practice.workedExamples === 1 ? '' : 's'} (the worked example and the sections' example fields), then ${spec.practice.tryItems === 0 ? 'no extra try-it items' : `${spec.practice.tryItems} try-it line${spec.practice.tryItems === 1 ? '' : 's'} inside the sections, each written "Try it: <question> Answer: <answer>" and placed after the worked examples`}.${les.hook === 'question' ? ' Open with a question the lesson then answers.' : les.hook === 'scenario' ? ' Open with a one-line scenario.' : ''} This is the shape, not a cap on content: if the topic needs more, add sections or words; never drop a point to fit.`);
   }
   const own = ranked.filter((r) => !(surfaceHasText && r.lever === 'sentence'));
   for (const r of own.slice(0, MAX_PHRASES)) lines.push(r.text);
@@ -1032,13 +1034,13 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
     const cap = spec.language.maxSentenceWords;
     const longShare = lens.filter((n) => n > cap + 6).length / lens.length;
     stats.longSentenceShare = round(longShare, 2);
-    if (mean > cap * 1.2 || longShare > 0.12) problems.push({ id: 'sentence_length', detail: `sentences are too long (average ${Math.round(mean)} words, ${Math.round(longShare * 100)}% over ${cap + 6}; keep most to ${cap} words or fewer and split any longer one)` });
+    if (mean > cap * 1.2 || longShare > 0.08) problems.push({ id: 'sentence_length', detail: `sentences are too long (average ${Math.round(mean)} words, ${Math.round(longShare * 100)}% over ${cap + 6}; keep most to ${cap} words or fewer and split any longer one)` });
   }
   // 5b. The shape: how long each section is, how many mistakes, hints, a quick check per section (only what the lesson's structure shows).
   // 5a. Not far over the time the learner has (the budget is a target; a lesson 50% over it is flagged, never at the cost of a key point).
   if (structure && Number.isFinite(structure.words) && spec.lesson.wordBudget) {
     stats.words = structure.words;
-    if (structure.words > spec.lesson.wordBudget * 1.5) problems.push({ id: 'too_long', detail: `the lesson is ${structure.words} words; aim for about ${spec.lesson.wordBudget}: cut repeats, extra examples and padding, but not any key point` });
+    if (structure.words > spec.lesson.wordBudget * 1.3) problems.push({ id: 'too_long', detail: `the lesson is ${structure.words} words; keep it to at most about ${spec.lesson.wordBudget}: cut repeats, extra examples and padding, but not any key point` });
   }
   if (structure && structure.intro !== undefined && spec.lesson.hook === 'question' && !/[?]/.test(String(structure.intro))) problems.push({ id: 'hook_missing', detail: 'open with a question that the lesson then answers' });
   if (structure && Array.isArray(structure.sections) && structure.sections.length) {
@@ -1052,6 +1054,11 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
       const withHint = structure.checks.filter((c) => /hint\s*[:\-]|\(hint|think about|remember (that|the)|start (by|with)/i.test(c)).length;
       stats.checksWithHint = withHint;
       if (withHint < Math.ceil(structure.checks.length / 2)) problems.push({ id: 'hints_missing', detail: 'most check questions have no hint; add a one-line "Hint:" after each question (never the answer)' });
+    }
+    if (spec.practice.tryItems >= 1) {
+      const tries = structure.sections.reduce((n, s) => n + (String(s.text).match(/try it/gi) || []).length, 0);
+      stats.tryIts = tries;
+      if (tries < spec.practice.tryItems) problems.push({ id: 'try_its_missing', detail: `add ${spec.practice.tryItems - tries} more line${spec.practice.tryItems - tries === 1 ? '' : 's'} written "Try it: <question> Answer: <answer>" inside the sections, after the worked examples` });
     }
     if (spec.lesson.quickCheckEvery && structure.sections.length >= 2) {
       const quick = structure.sections.filter((s) => /quick check/i.test(s.text)).length;
