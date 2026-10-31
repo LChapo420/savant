@@ -1,0 +1,44 @@
+{
+ "track": "chess",
+ "judges": [
+  "nemotron",
+  "gemini",
+  "sonnet"
+ ],
+ "calibrated": 133,
+ "missing": 0,
+ "median_spread_grades": 0,
+ "over_two_grades_apart": 22,
+ "key_doubts": [
+  {
+   "key": "565b7df19c252df8",
+   "grade_id": "chess_intermediate",
+   "prompt": "White has a queen on d4, a knight on f3, and a bishop on c4. Black’s king sits on g8 with pawns on f7, g7, h7, and a rook on f8. White to move. Which move initi",
+   "answer": "Bxf7+",
+   "verdicts": [
+    "gemini: wrong (Bxf7+ does not initiate a windmill; no windmill exists in the given position.)",
+    "sonnet: wrong (Bxf7+ Rxf7 just loses a bishop for a pawn. No windmill or discovered check exists, and no listed move works.)"
+   ]
+  },
+  {
+   "key": "01a005e12a6b418c",
+   "grade_id": "chess_elite_and_world_class",
+   "prompt": "In Game 12 of the 2018 World Championship, Fabiano Caruana held a draw against Magnus Carlsen in a rook‑and‑pawn versus rook endgame. Which defensive set‑up did",
+   "answer": "He placed his rook on the third rank, keeping his king in front of the pawn (the Philidor defence).",
+   "verdicts": [
+    "gemini: wrong (Game 12 was drawn on move 31 in a Sveshnikov; no R+P vs R ending occurred.)",
+    "sonnet: wrong (Game 12 of the 2018 match was a short Rossolimo draw, not a rook endgame; the premise is false)"
+   ]
+  },
+  {
+   "key": "cac2147f8ad1f7b6",
+   "grade_id": "chess_frontier_research",
+   "prompt": "When an engine probes a Syzygy WDL table during search, what information does it obtain?",
+   "answer": "The win/draw/loss result and the distance to zero for the current position.",
+   "verdicts": [
+    "gemini: wrong (Syzygy WDL tables provide only win/draw/loss outcomes, while DTZ is stored in separate tables.)",
+    "sonnet: wrong (Syzygy WDL tables give only win/draw/loss (incl. cursed/blessed); distance to zero is in the separate DTZ tables.)"
+   ]
+  }
+ ]
+}

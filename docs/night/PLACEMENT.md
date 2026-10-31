@@ -88,7 +88,9 @@ P5b. [done, night-content branch] **IQ and ACT top end, measured.** With abiliti
     (so >= 8 new, 6 of them in grades 11-12) and 3+ per grade for ACT grades 13-16 (indexes 12-15). Then re-run
     `node scripts/placement-sim.js --after` and extend `scripts/placement-accuracy-test.js` (remove the GAP entries for iq and act).
     The Spanish/chess/piano/basketball sets cannot be checked until P1b.
-P1b. [local only] **Spanish, chess, piano, basketball have no calibrated items in source control**
+P1b. [done, placement-p1b branch] **Spanish, chess, piano, basketball calibrated.** They had readings from one judge only (Nemotron), so calibration wrote no points. `scripts/placement-panel-judge.js` adds two blind judges on Standard Compute (Claude Sonnet 5.5, Gemini 3.8 Flash) and calibrates each question on the mean of every judge that read it (at least two): Spanish 379 of 399, chess 133, piano 133, basketball 105. Sim (quick, 40 learners per level): Spanish, chess and piano >= 95% within one grade at every level; basketball 92.5% at the 40% level (grade 7, see P1c-b), >= 95% elsewhere. Key doubts (two judges call the key wrong or ambiguous) are listed in `curriculum-build/placement-judge/<track>-panel-report.json` (basketball 1, chess 3, piano 3); the questions were not edited. Cost about $1.5 on the ledger.
+P1c-b. [open] **Basketball grade 7** needs about 3 more calibrated items so the 40% level reaches 95%; until then `scripts/placement-accuracy-test.js` holds basketball to every other level.
+P1b-old. [superseded] **Spanish, chess, piano, basketball have no calibrated items in source control**
     (`content/placement-calibration/<subject>.json` has no points), so the sim cannot cover them. The owner's agent
     should run `scripts/placement-second-judge.js calibrate` for each, commit the points, then
     `node scripts/placement-sim.js --write` to add them to the table. (Spanish tests are sealed: read only.)
