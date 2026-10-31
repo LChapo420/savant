@@ -17,7 +17,8 @@ console.log('\nthe harness');
   const a = sim.measure('english', 'quick', { seeds: 3 });
   const b = sim.measure('english', 'quick', { seeds: 3 });
   check('the same seed gives the same table', JSON.stringify(a) === JSON.stringify(b));
-  check('subjects with no calibrated items are not simulated', sim.measure('chess', 'quick', { seeds: 1 }) === null);
+  check('subjects with no calibrated items are not simulated', sim.measure('no-such-track', 'quick', { seeds: 1 }) === null);
+  check('chess, calibrated by the judge panel (P1b), is simulated', sim.measure('chess', 'quick', { seeds: 1 }) !== null);
   check('the grid runs from knows-nothing to knows-everything', a.rows[0].label === 'nothing' && a.rows[a.rows.length - 1].label === 'everything');
   check('truth is clamped to the subject', a.rows[0].truth === 0 && a.rows[a.rows.length - 1].truth === a.span - 1);
 }
