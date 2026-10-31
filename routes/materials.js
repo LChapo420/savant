@@ -2,7 +2,7 @@
  * Learn from your own material, slice (a) (services/materials.js).
  *
  *   GET    /api/materials          the learner's materials (no full text)
- *   POST   /api/materials?name=x   the file as the raw body (PDF, DOCX, PPTX, TXT, MD), up to 20 MB
+ *   POST   /api/materials?name=x   the file as the raw body (PDF, DOCX, PPTX, TXT, MD, PNG, JPG), up to 20 MB
  *   POST   /api/materials/paste    { title?, text }
  *   POST   /api/materials/link     { url, title? } a public web page, fetched by the server (SSRF-guarded), article text kept
  *   POST   /api/materials/youtube     { url, title? } captions of a YouTube video (never the video)
@@ -26,6 +26,7 @@
  *   POST   /api/materials/:id/notes        start making whole-material notes (202); GET returns them with quotes and coverage
  *   GET    /api/materials/:id/podcast      the overview and weak-spots episodes (script only) and which weak spots there are
  *   POST   /api/materials/:id/podcast      { kind: overview|weak } start writing an episode script (202)
+ *   POST   /api/materials/:id/podcast/checkin  { question, answer } one check-in from an episode, marked and recorded as a review of its skill
  *   POST   /api/materials/:id/pack/grade   { section: quiz|test, answers } marked on the server
  *   GET    /api/materials/:id/test         what a practice test can be made of (skills, lengths) and the last results
  *   POST   /api/materials/:id/test         { skills, length, timed, adapt } start a practice test (questions without keys); adapt: only what the learner does not know, is due or missed
@@ -61,7 +62,7 @@ const rawBody = express.raw({ type: (req) => !/json/i.test(req.headers['content-
 const videoBody = express.raw({ type: (req) => !/json/i.test(req.headers['content-type'] || ''), limit: require('../services/material-video').MAX_VIDEO_BYTES });
 const pasteBody = express.json({ limit: '3mb', inflate: false });
 
-const STATUS = { limit: 409, too_big: 413, too_long: 413, too_many_pages: 413, no_transcriber: 503, no_ffmpeg: 503, busy: 409, no_captions: 422, unavailable: 422 };
+const STATUS = { limit: 409, too_big: 413, too_long: 413, too_many_pages: 413, no_transcriber: 503, no_ffmpeg: 503, no_ocr: 503, busy: 409, no_captions: 422, scanned: 422, unavailable: 422 };
 function refuse(res, out) {
   return res.status(STATUS[out.code] || 400).json({ error: out.error, code: out.code });
 }
@@ -261,6 +262,17 @@ router.post('/:id/podcast', requireAuth, ownMaterial, limit('materials-podcast',
   if (kind === 'weak' && !podcast.weakSkills(req.user.id, req.params.id).length) return res.status(409).json({ error: 'There are no weak spots to talk about yet. Study some of the learning path first, then come back.', code: 'no_weak_spots' });
   queueBuild(req.user.id, `podcast:${Number(req.params.id)}:${kind}`, () => podcast.build(req.user.id, req.params.id, { kind }).then((out) => { if (out.error && out.code !== 'busy') console.warn(`material-podcast: ${out.code}`); }));
   res.status(202).json({ started: true });
+});
+
+// A check-in answered while listening: the key never left the server, and the answer moves the same review clock the
+// practice test does (services/material-study.js checkin, then noteAnswers).
+router.post('/:id/podcast/checkin', requireAuth, ownMaterial, limit('materials-podcast-checkin', 300, 60 * 60 * 1000), express.json({ limit: '4kb' }), (req, res) => {
+  const b = req.body || {};
+  const c = podcast.checkinOf(req.user.id, req.params.id, b.question);
+  if (!c) return res.status(404).json({ error: 'That question is not on your episodes any more.', code: 'not_found' });
+  const out = study.checkin(req.user.id, req.params.id, c, b.answer);
+  if (out.error) return res.status(out.code === 'no_course' ? 409 : 400).json({ error: out.error, code: out.code });
+  res.json(out);
 });
 
 const CARD_STATUS = { not_found: 404, no_card: 404, full: 409 };

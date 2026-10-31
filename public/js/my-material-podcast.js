@@ -34,6 +34,8 @@
     let rate = 1;
     let token = 0;         // bumps on every seek so a late "end" event from an old utterance is ignored
     let voices = null;
+    let asking = null;     // the check-in being asked right now, if any
+    const doneChecks = new Set(); // check-ins already answered or skipped in this sitting
 
     const NAMES = { overview: 'Overview of the whole material', weak: 'Your weak spots' };
     const fail = (err) => { rootEl.innerHTML = `<div class="notice notice-error">${esc(err.message)}</div><p><a href="/my-material">Back to my material</a></p>`; };
@@ -63,8 +65,12 @@
 
     function stop() { token++; if (synth) synth.cancel(); }
 
+    const checkins = () => ((episode() && episode().checkins) || []);
+    const checkinAfter = (after) => checkins().find((c) => c.after === after && !doneChecks.has(c.id)) || null;
+
     function speak() {
       const ep = episode();
+      if (asking) return;
       if (!synth || !ep || pos >= ep.turns.length) { playing = false; if (ep && pos >= ep.turns.length) pos = 0; paint(); return; }
       const t = ep.turns[pos];
       const my = ++token;
@@ -74,16 +80,98 @@
       const voice = v[t.host];
       if (voice) u.voice = voice;
       if (!v.split) u.pitch = t.host === 'A' ? 0.9 : 1.2;
-      u.onend = () => { if (my !== token || !playing) return; pos++; speak(); };
+      // A check-in waits at the end of the turn it was placed after: the voice stops there and the question takes over.
+      u.onend = () => {
+        if (my !== token || !playing) return;
+        const c = checkinAfter(pos);
+        if (c) { askCheck(c); return; }
+        pos++;
+        speak();
+      };
       u.onerror = () => { if (my === token) { playing = false; paint(); } };
       paint();
       synth.speak(u);
     }
 
-    function play() { if (!synth) return; playing = true; stop(); speak(); }
-    function pause() { playing = false; stop(); paint(); }
+    /** Read a line with the same browser voice, without taking a turn: the question and its choices. */
+    function speakLine(text) {
+      if (!synth) return;
+      const v = pickVoices();
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = rate;
+      if (v.A) u.voice = v.A;
+      synth.speak(u);
+    }
+
+    function clearCheck() {
+      asking = null;
+      const box = document.getElementById('checkin');
+      if (box) { box.style.display = 'none'; box.innerHTML = ''; }
+    }
+
+    function askCheck(c) {
+      asking = c;
+      playing = false;
+      stop();
+      speakLine(`${c.prompt} ${c.choices.map((x, i) => `${'ABCD'[i]}: ${x}.`).join(' ')}`);
+      paint();
+      showCheck(c);
+    }
+
+    function showCheck(c) {
+      const box = document.getElementById('checkin');
+      if (!box) return;
+      box.style.display = '';
+      box.innerHTML = `<p class="small" style="margin:0 0 4px"><strong>Quick check${c.skill_title ? ` · ${esc(c.skill_title)}` : ''}</strong></p>
+        <p style="margin:0 0 8px">${esc(c.prompt)}</p>
+        <div class="row-wrap" style="gap:8px;margin:0 0 8px" role="group" aria-label="Answer choices">
+          ${c.choices.map((x, i) => `<button type="button" class="btn btn-sm" data-choice="${i}" style="max-width:100%;text-align:left">${esc(x)}</button>`).join('')}
+        </div>
+        <div id="check-foot"><button type="button" class="btn btn-sm" id="skip-q">Skip</button></div>
+        <p class="small" id="check-msg" role="status" style="margin:8px 0 0"></p>`;
+      box.querySelectorAll('[data-choice]').forEach((b) => b.addEventListener('click', () => answerCheck(Number(b.dataset.choice))));
+      document.getElementById('skip-q').addEventListener('click', finishCheck);
+    }
+
+    async function answerCheck(i) {
+      const c = asking;
+      const box = document.getElementById('checkin');
+      if (!c || !box) return;
+      box.querySelectorAll('[data-choice]').forEach((b) => { b.disabled = true; });
+      let out = null;
+      try { out = await App.api.post(`${base}/checkin`, { question: c.id, answer: i }); } catch (err) { out = null; }
+      const right = !!(out && out.correct);
+      doneChecks.add(c.id);
+      box.querySelectorAll('[data-choice]').forEach((b) => {
+        const k = Number(b.dataset.choice);
+        if (out && k === out.correct_index) b.classList.add('btn-primary');
+        if (k === i && !right) b.style.textDecoration = 'line-through';
+      });
+      const msg = document.getElementById('check-msg');
+      if (msg) msg.textContent = out ? `${right ? 'Right.' : 'Not quite.'} That goes into your review.` : 'Your answer could not be saved just now.';
+      const foot = document.getElementById('check-foot');
+      if (foot) foot.innerHTML = '<button type="button" class="btn btn-sm btn-primary" id="continue-q">Continue</button>';
+      const go = document.getElementById('continue-q');
+      if (go) go.addEventListener('click', finishCheck);
+    }
+
+    function finishCheck() {
+      const c = asking;
+      if (c) doneChecks.add(c.id);
+      clearCheck();
+      const ep = episode();
+      if (!ep) return;
+      pos++;
+      if (pos >= ep.turns.length) { playing = false; pos = 0; paint(); return; }
+      playing = true;
+      speak();
+    }
+
+    function play() { if (asking) return finishCheck(); if (!synth) return; playing = true; stop(); speak(); }
+    function pause() { if (asking) { stop(); return; } playing = false; stop(); paint(); }
     function seek(to) {
       const ep = episode();
+      if (asking) clearCheck();
       pos = Math.max(0, Math.min(ep.turns.length - 1, to));
       if (playing) { stop(); speak(); } else paint();
     }
@@ -92,7 +180,7 @@
       const ep = episode();
       if (!ep || !ep.turns) return;
       const btn = document.getElementById('pp');
-      if (btn) { btn.textContent = playing ? 'Pause' : 'Play'; btn.setAttribute('aria-pressed', String(playing)); }
+      if (btn) { btn.textContent = asking ? 'Continue' : playing ? 'Pause' : 'Play'; btn.setAttribute('aria-pressed', String(!!asking || playing)); }
       const info = document.getElementById('pos');
       if (info) info.textContent = `Part ${pos + 1} of ${ep.turns.length}`;
       document.querySelectorAll('[data-turn]').forEach((el) => {
@@ -123,6 +211,7 @@
             </div>
             <p class="tiny muted" id="pos" role="status" style="margin:6px 0 0"></p>
           </div>
+          <div class="card" id="checkin" role="group" aria-live="polite" style="display:none"></div>
           <h2 style="margin-top:16px">Script</h2>
           <ol style="list-style:none;padding:0;margin:0">${ep.turns.map((turn, i) => `<li data-turn="${i}" style="padding:6px 0"><strong>${turn.host === 'A' ? 'Alex' : 'Sam'}:</strong> ${esc(turn.text)}${turn.quote ? ` <details style="display:inline"><summary class="tiny muted">From your material</summary><span class="tiny muted">“${esc(turn.quote)}”</span></details>` : ''}</li>`).join('')}</ol>
           <p class="tiny muted">The voices are your browser's own. Nothing is recorded, and no voice service is used.</p>`;
@@ -136,7 +225,7 @@
       rootEl.innerHTML = `<p class="small"><a href="/my-material">&larr; My material</a></p><h1>Podcast</h1>
         <p class="muted">A short two-host talk made only from your own text. It is read aloud by your browser's voice.</p>
         <div class="row-wrap" style="gap:8px;margin:12px 0">${tabs}</div>${body}`;
-      rootEl.querySelectorAll('[data-kind]').forEach((b) => b.addEventListener('click', () => { pause(); kind = b.dataset.kind; pos = 0; render(); }));
+      rootEl.querySelectorAll('[data-kind]').forEach((b) => b.addEventListener('click', () => { pause(); clearCheck(); kind = b.dataset.kind; pos = 0; doneChecks.clear(); render(); }));
       const make = document.getElementById('make');
       if (make) make.addEventListener('click', start);
       const pp = document.getElementById('pp');

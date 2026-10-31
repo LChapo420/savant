@@ -20,7 +20,7 @@ const MAX_ITEMS = 20;                    // materials per learner
 const MAX_TOTAL_CHARS = 3000000;         // stored text per learner
 const MAX_TITLE = 120;
 
-const { fail, normalise, zipEntries } = require('./material-parsers');
+const { fail, normalise, zipEntries, fromImage } = require('./material-parsers');
 const { parseInChild } = require('./material-runner');
 
 function cleanTitle(t, fallback) {
@@ -28,11 +28,13 @@ function cleanTitle(t, fallback) {
   return s || fallback;
 }
 
-/** The kind of file from its first bytes: 'pdf', 'docx', 'text' or null. */
+/** The kind of file from its first bytes: 'pdf', 'docx', 'png', 'jpeg', 'text' or null. */
 function sniff(buf) {
   if (!Buffer.isBuffer(buf) || buf.length < 4) return null;
   if (buf.slice(0, 5).toString('latin1') === '%PDF-') return 'pdf';
   if (buf.slice(0, 5).toString('latin1') === '{\\rtf') return 'rtf';
+  if (buf[0] === 0x89 && buf.slice(1, 4).toString('latin1') === 'PNG') return 'png';
+  if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'jpeg';
   if (buf[0] === 0x50 && buf[1] === 0x4b && buf[2] === 0x03 && buf[3] === 0x04) return 'zip';
   // Text: no NUL bytes in the first 8 KB and valid UTF-8 (a BOM is fine).
   const head = buf.slice(0, 8192);
@@ -52,7 +54,12 @@ async function extract(buf) {
   const type = sniff(buf);
   let out;
   let kind;
-  if (type === 'pdf') { kind = 'pdf'; out = await parseInChild('pdf', buf); }
+  if (type === 'png' || type === 'jpeg') {
+    // OCR runs in this process so a test can swap the recognizer; tesseract.js is optional.
+    kind = 'image';
+    out = await fromImage(buf);
+  }
+  else if (type === 'pdf') { kind = 'pdf'; out = await parseInChild('pdf', buf); }
   else if (type === 'zip') {
     const listing = zipEntries(buf);
     const has = (re) => !!listing && listing.entries.some((e) => re.test(e.name));
@@ -64,9 +71,10 @@ async function extract(buf) {
   else if (type === 'rtf') { kind = 'rtf'; out = await parseInChild('rtf', buf); }
   else if (type === 'text' && /^\s*(<!doctype html|<html)/i.test(buf.slice(0, 512).toString('utf8'))) { kind = 'html'; out = await parseInChild('html', buf); }
   else if (type === 'text') { kind = 'text'; out = { text: normalise(buf.toString('utf8')), pages: null }; }
-  else return fail('Only PDF, Word, PowerPoint, Excel, OpenDocument text, EPUB, RTF, HTML, text, Markdown, CSV and source files are supported.', 'bad_type');
+  else return fail('Only PDF, Word, PowerPoint, Excel, OpenDocument text, EPUB, RTF, HTML, text, Markdown, CSV, pictures (PNG, JPG) and source files are supported.', 'bad_type');
   if (out.error) return out;
-  if (out.text.length < MIN_CHARS) {
+  // A picture's reader has already applied its own 20-word rule.
+  if (kind !== 'image' && out.text.length < MIN_CHARS) {
     return fail(kind === 'pdf'
       ? 'There is hardly any text in that PDF. If it is scans or photos, text extraction cannot read it yet.'
       : 'There is too little text there to build a course from.', 'too_little');

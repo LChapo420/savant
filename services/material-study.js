@@ -488,6 +488,43 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
   return out;
 }
 
+/**
+ * One check-in question from the podcast, answered while listening. The practice test's rule (services/material-test.js
+ * submit) for a single question: graded on the server from the key kept with the episode, the miss is filed against
+ * the skill by noteAnswers (first next time, with the mix-up the course recorded for that pick, when the item is the
+ * course's own), and the skill's counts move. A mastered skill comes back for review on this learner's curve when the
+ * answer was right, and is due now when it was wrong. A check-in never masters a skill or moves its tier: the mastery
+ * check does that. A skipped question is never sent here, so it never reaches the model.
+ */
+function checkin(userId, materialId, check, answer, opts = {}) {
+  const now = opts.now || Date.now();
+  const course = loadCourse(userId, materialId);
+  if (!course) return { error: 'There is no course to study yet.', code: 'no_course' };
+  const skill = course.skills.find((s) => s.id === (check && check.skill));
+  if (!skill) return { error: 'That question is not on this material any more.', code: 'not_found' };
+  const given = Number(answer);
+  const ok = Number.isInteger(given) && given === check.answer_index;
+  // The question as the learner met it: the course's own item when the script took it from there (its misconceptions
+  // too), else the copy the episode kept. The verdict is the episode's key, the one the choices were shown against.
+  const own = (check.qid && (skill.questions || []).find((x) => x.id === check.qid)) || null;
+  const q = own || { id: check.pack_qid || `podcast:${check.id}`, type: 'multiple_choice', choices: check.choices || [], answer_index: check.answer_index };
+  const r = row(userId, materialId);
+  const st = skillState(r, skill.id);
+  r.pace = path.updatePace(r.pace, 2, ok);
+  r.steps.questions++;
+  noteAnswers(r, [{ q, sid: skill.id, ok, given: Number.isInteger(given) ? given : null, role: 'main' }], now);
+  st.right += ok ? 1 : 0;
+  st.wrong_n += ok ? 0 : 1;
+  const out = { correct: ok, correct_index: check.answer_index, skill: skill.id, skill_title: skill.title, status: st.status };
+  if (st.status === 'mastered') {
+    if (ok) { st.last_tested = new Date(now).toISOString(); out.next_in_days = scheduleReview(r, st, now); } else { st.due = new Date(now).toISOString(); out.review_now = true; }
+  }
+  out.due = st.due || null;
+  save(r);
+  db.flush();
+  return out;
+}
+
 function removeForMaterial(userId, materialId) {
   return db.remove('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
 }
@@ -529,5 +566,5 @@ function dueSummary(userId, now = Date.now()) {
 module.exports = {
   internals: { row, skillState, save, loadCourse, scheduleReview, noteAnswers, publicQ, correctText, misconceptionOf, shuffle },
   dueSummary, PASS, QUIZ_SIZE, gradeShort, isCorrect, misconceptionOf, state, nextStep, lesson, practice,
-  placementNext, placementAnswer, startQuiz, submit, removeForMaterial,
+  placementNext, placementAnswer, startQuiz, submit, checkin, removeForMaterial,
 };

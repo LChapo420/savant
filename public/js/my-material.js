@@ -15,7 +15,7 @@ App.mount(async () => {
     return;
   }
 
-  const KIND = { pdf: 'PDF', docx: 'Word', text: 'Text', paste: 'Pasted', pptx: 'Slides', link: 'Web page', transcript: 'Transcript', audio: 'Recording', odt: 'OpenDocument', epub: 'Book', xlsx: 'Spreadsheet', rtf: 'RTF', html: 'HTML' };
+  const KIND = { pdf: 'PDF', docx: 'Word', text: 'Text', paste: 'Pasted', pptx: 'Slides', link: 'Web page', transcript: 'Transcript', audio: 'Recording', odt: 'OpenDocument', epub: 'Book', xlsx: 'Spreadsheet', rtf: 'RTF', html: 'HTML', image: 'Picture' };
   const VIDEO_EXT = /\.(mp4|m4v|mov|webm|mkv)$/i;
 
   function render() {
@@ -29,8 +29,8 @@ App.mount(async () => {
       </div>
       <div class="card" style="margin-top:18px">
         <h2>Upload a file</h2>
-        <label class="field"><span>PDF, Word (.docx), PowerPoint (.pptx), .txt or .md. For Google Slides, use File, Download, PowerPoint. Up to ${lim.max_mb} MB and about ${lim.max_pages} pages.</span>
-          <input type="file" id="file" accept=".pdf,.docx,.pptx,.xlsx,.odt,.epub,.rtf,.html,.htm,.csv,.tex,.txt,.md,.markdown,.mp4,.mov,.webm,.mkv,application/pdf,text/plain,text/markdown,video/mp4,video/quicktime,video/webm,video/x-matroska"></label>
+        <label class="field"><span>PDF, Word (.docx), PowerPoint (.pptx), .txt, .md or a picture (.png, .jpg). For Google Slides, use File, Download, PowerPoint. Up to ${lim.max_mb} MB and about ${lim.max_pages} pages.</span>
+          <input type="file" id="file" accept=".pdf,.docx,.pptx,.xlsx,.odt,.epub,.rtf,.html,.htm,.csv,.tex,.txt,.md,.markdown,.png,.jpg,.jpeg,.mp4,.mov,.webm,.mkv,application/pdf,image/png,image/jpeg,text/plain,text/markdown,video/mp4,video/quicktime,video/webm,video/x-matroska"></label>
         <button class="btn btn-primary" type="button" id="upload">Upload</button>
         <p class="small" id="upload-note" role="status"></p>
       </div>

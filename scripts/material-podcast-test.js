@@ -95,6 +95,49 @@ const llm = (opts = {}) => async (args) => {
   const redo = await podcast.build(u.id, m.id, { kind: 'weak', llm: llm(), now: NOW });
   check('a changed learner state makes a fresh episode', !redo.cached && !!redo.episode);
 
+  console.log('check-in placement');
+  const talk = (n, words = 100) => Array.from({ length: n }, () => ({ host: 'A', text: Array(words).fill('word').join(' ') }));
+  const slots = podcast.checkinSlots(talk(40, 100));
+  check('a check-in about every three minutes of speech', slots.length >= 4 && slots.length <= podcast.MAX_CHECKINS, slots.length);
+  check('the check-ins are at least three minutes apart', slots.every((s, i) => i === 0 || s.words >= podcast.CHECKIN_WORDS), slots.map((s) => s.words));
+  check('no check-in on the last turns of the script', slots.every((s) => s.after < 38), slots.map((s) => s.after));
+  check('a short script has no check-ins', podcast.checkinSlots(talk(10, 20)).length === 0);
+  const pool = [
+    { skill: 's-energy', skill_title: 'Energy', qid: 'cq0', prompt: 'Where does a cell get usable energy?', choices: ['Mitochondria', 'Nucleus', 'Ribosomes'], answer_index: 0, source: 'course' },
+    { skill: 's-sun', skill_title: 'Sunlight', qid: 'cq1', prompt: 'What captures sunlight?', choices: ['Chloroplasts', 'Mitochondria', 'Vacuoles'], answer_index: 0, source: 'course' },
+  ];
+  const placed = podcast.placeCheckins(talk(40, 100), pool, slots, slots.map((s, i) => (i % 2 ? 's-sun' : 's-energy')));
+  check('every slot gets a question', placed.length === slots.length, [placed.length, slots.length]);
+  check('each question names its skill and keeps its key here', placed.every((c) => c.skill && Number.isInteger(c.answer_index) && c.choices.length >= 3 && c.choices.length <= 4));
+  check("a question on the course item keeps that item's id", placed[0].qid === 'cq0' && placed[1].qid === 'cq1', placed.map((c) => c.qid));
+  check('the question goes on the skill the slot just covered', placed[0].skill === 's-energy' && placed[1].skill === 's-sun', placed.map((c) => c.skill));
+  check('no two questions share an id', new Set(placed.map((c) => c.id)).size === placed.length);
+  check('a question with no right choice, or two equal choices, is thrown out', podcast.cleanChecks([
+    { skill_id: 's-energy', prompt: 'x', choices: ['a', 'b'], answer_index: 0 },
+    { skill_id: 's-energy', prompt: 'y', choices: ['a', 'b', 'c'], answer_index: 7 },
+    { skill_id: 's-energy', prompt: 'z', choices: ['a', 'a', 'c'], answer_index: 0 },
+  ], [{ id: 's-energy', title: 'Energy' }]).length === 0);
+
+  // The course's own quiz items come first, so they are what the pack shows for the same skills.
+  const courseRow = db.findOne('material_courses', (c) => c.user_id === u.id && c.material_id === m.id);
+  db.update('material_courses', courseRow.id, { skills: courseRow.skills.map((s, i) => ({ ...s, questions: [{ id: `cq${i}`, type: 'multiple_choice', tier: 2, prompt: `What is ${s.title} about?`, choices: ['The energy a cell uses', 'The cell wall', 'The colour green'], answer_index: 0 }] })) });
+  const longLlm = () => async (args) => {
+    calls.push(args);
+    const pid = /\[(p\d+)\]/.exec(args.user)[1];
+    const turns = [{ host: 'A', text: 'Welcome back to the show.' }];
+    for (let i = 0; i < 30; i++) turns.push({ host: i % 2 ? 'A' : 'B', text: `Mitochondria release usable energy from the food a cell takes in. ${'Cells use that energy for every job they do. '.repeat(6)}`, passage_id: pid, quote: S1 });
+    turns.push({ host: 'B', text: 'So that is the recap.' });
+    return { model: 'mock', data: { title: 'Cells in ten minutes', turns, checkins: [{ skill_id: 's-energy', prompt: 'From the script: where does the energy come from?', choices: ['Food', 'Sunlight', 'Water'], answer_index: 0 }] } };
+  };
+  const long = await podcast.build(u.id, m.id, { llm: longLlm(), force: true });
+  check('an episode with check-ins is built', !!long.episode && long.episode.checkins.length >= 2, long.error);
+  const cs = (long.episode && long.episode.checkins) || [];
+  check('each check-in is tied to a skill of the material', cs.length > 0 && cs.every((c) => ['s-energy', 's-sun'].includes(c.skill)), cs.map((c) => c.skill));
+  check('each check-in has three or four choices and one key', cs.every((c) => c.choices.length >= 3 && c.choices.length <= 4 && c.answer_index >= 0 && c.answer_index < c.choices.length));
+  check("the course's own quiz items are used first", cs.some((c) => c.source === 'course'), cs.map((c) => c.source));
+  check('the check-ins sit inside the script, never at its end', cs.every((c) => c.after > 0 && c.after < long.episode.turns.length - 2), cs.map((c) => c.after));
+  check('the page gets the questions and choices but never the key', (() => { const v = podcast.view(long.episode); return !!v && v.checkins.length >= 2 && v.checkins.every((c) => c.prompt && c.choices.length >= 3) && !/answer_index|qid/.test(JSON.stringify(v)); })());
+
   console.log('routes');
   const app = express();
   app.use((req, res, next) => { req.user = db.byId('users', Number(req.headers['x-user']) || u.id) || null; next(); });
@@ -118,6 +161,48 @@ const llm = (opts = {}) => async (args) => {
   check("POST for another learner's material is not found", (await call('POST', `/api/materials/${m.id}/podcast`, { kind: 'overview' }, other.id)).status === 404);
   const m2 = materials.addPaste(u.id, 'No course', TEXT).value;
   check('POST weak with no weak spots is refused', (await call('POST', `/api/materials/${m2.id}/podcast`, { kind: 'weak' })).status === 409);
+
+  console.log('answering a check-in');
+  const progNow = () => (db.findOne('material_progress', (p) => p.user_id === u.id && p.material_id === m.id) || { skills: {} });
+  const shut = cs.find((c) => (progNow().skills[c.skill] || {}).status === 'mastered') || cs[0];
+  const snap = { ...(progNow().skills[shut.skill] || {}) };
+  const rightOne = await call('POST', `/api/materials/${m.id}/podcast/checkin`, { question: shut.id, answer: shut.answer_index });
+  check('an answer is taken and marked right', rightOne.status === 200 && rightOne.body.correct === true, rightOne.body);
+  check('the reply says which choice was right and which skill it was on', Number.isInteger(rightOne.body.correct_index) && rightOne.body.skill === shut.skill, rightOne.body);
+  const after = progNow().skills[shut.skill] || {};
+  check('a right answer is counted on that skill', after.right === (snap.right || 0) + 1, after);
+  check('a right answer never masters a skill', after.status === snap.status, after.status);
+  if (snap.status === 'mastered') check('a right answer on a mastered skill restarts its review clock', Date.parse(after.last_tested) > 0 && Date.parse(after.due) > Date.now(), { after, snap });
+  const miss = (shut.answer_index + 1) % shut.choices.length;
+  const wrongOne = await call('POST', `/api/materials/${m.id}/podcast/checkin`, { question: shut.id, answer: miss });
+  check('a wrong answer is marked wrong', wrongOne.status === 200 && wrongOne.body.correct === false, wrongOne.body);
+  const missed = progNow().skills[shut.skill] || {};
+  check('a miss is counted against the skill', missed.wrong_n >= (snap.wrong_n || 0) + 1, missed);
+  check('a miss on a mastered skill brings its review to now', snap.status !== 'mastered' || (!!missed.due && Date.parse(missed.due) <= Date.now() + 1000), missed.due);
+  check("the answer went into the learner's own record, not a new one", db.find('material_progress', (p) => p.user_id === u.id && p.material_id === m.id).length === 1);
+  check('an unknown question is not found', (await call('POST', `/api/materials/${m.id}/podcast/checkin`, { question: 'q99', answer: 0 })).status === 404);
+  check("another learner cannot answer on this material", (await call('POST', `/api/materials/${m.id}/podcast/checkin`, { question: shut.id, answer: 0 }, other.id)).status === 404);
+
+  console.log('check-ins from the study pack');
+  // The pack keeps its own quiz items, keyed by passage: the passage a skill cites is what ties one to the skill.
+  db.insert('material_packs', { user_id: u.id, material_id: m.id, title: 'Cell biology', version: 1, status: 'ready', summary: [], cards: [], test: [], quiz: [
+    { id: 'z1', type: 'multiple_choice', prompt: 'From the pack: what releases usable energy?', choices: ['Mitochondria', 'The nucleus', 'The cell wall'], answer_index: 0, passage_id: 'p1' },
+    { id: 'z2', type: 'multiple_choice', prompt: 'On a passage no skill cites', choices: ['a', 'b', 'c'], answer_index: 0, passage_id: 'pX' },
+    { id: 'z3', type: 'multiple_choice', prompt: 'Two equal choices', choices: ['a', 'a', 'b'], answer_index: 0, passage_id: 'p2' },
+    { id: 'z4', type: 'written', prompt: 'Explain it.', answer: 'x', key_points: ['y'], passage_id: 'p1' },
+  ] });
+  const packPool = podcast.packChecks(u.id, m.id, db.findOne('material_courses', (c) => c.user_id === u.id && c.material_id === m.id), podcast.MAX_CHECKINS);
+  check('a pack item on a passage a skill cites is offered for that skill', packPool.length === 1 && packPool[0].skill === 's-energy' && packPool[0].pack_qid === 'z1', packPool);
+  check('a written pack item is not offered', !packPool.some((c) => c.pack_qid === 'z4'));
+  check('an item with two equal choices is not offered', !packPool.some((c) => c.pack_qid === 'z3'));
+  const packed = await podcast.build(u.id, m.id, { llm: longLlm(), force: true });
+  const pcs = (packed.episode && packed.episode.checkins) || [];
+  const onEnergy = pcs.find((c) => c.skill === 's-energy');
+  check("the pack's own item on that skill is used first", !!onEnergy && onEnergy.source === 'pack' && onEnergy.pack_qid === 'z1', onEnergy);
+  check('the other check-ins still have a question on a skill', pcs.length >= 2 && pcs.every((c) => c.skill && Array.isArray(c.choices)), pcs.map((c) => [c.skill, c.source]));
+  check('the key of a pack item stays on the server', !/answer_index|pack_qid/.test(JSON.stringify(podcast.view(packed.episode))));
+  const packAns = await call('POST', `/api/materials/${m.id}/podcast/checkin`, { question: onEnergy.id, answer: onEnergy.answer_index });
+  check('a pack question is marked from the key the episode kept', packAns.status === 200 && packAns.body.correct === true, packAns.body);
   srv.close();
 
   console.log('player');
@@ -135,6 +220,11 @@ const llm = (opts = {}) => async (args) => {
   const js = read('public/js/my-material-podcast.js');
   check('the page uses only the browser voice: no audio file, no voice endpoint', js.includes('SpeechSynthesisUtterance') && !/\/api\/tutor|new Audio|createObjectURL|fetch\(/.test(js));
   check('the page has play/pause, back 15s, skip and speed', ['id="pp"', 'back15', 'id="skip"', 'id="rate"'].every((s) => js.includes(s)));
+  check('the player stops at a check-in, shows the choices and posts the answer', js.includes('/checkin') && js.includes('data-choice') && js.includes('askCheck'));
+  check('the question is read with the same browser voice', js.includes('function speakLine') && !/new Audio|createObjectURL/.test(js));
+  check('the choices wrap on a narrow screen', js.includes('row-wrap') && js.includes('max-width:100%'));
+  check('the script shows where the check-ins are', js.includes('Check-in'));
+  check('the route and the grading are wired', read('routes/materials.js').includes("'/:id/podcast/checkin'") && read('services/material-study.js').includes('function checkin('));
   check('the upload list links to the podcast and says it is only a script', read('public/js/my-material.js').includes('/my-material-podcast?id=') && read('public/js/my-material.js').includes('no audio is made or kept'));
   check('privacy.html covers the podcast script', read('public/privacy.html').includes('podcast script'));
 
