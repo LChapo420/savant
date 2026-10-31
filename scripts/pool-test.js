@@ -268,7 +268,7 @@ async function staticSplit(slots, its) {
       return { ok: true, status: 200, statusText: 'OK', text: async () => body };
     });
     assert.strictEqual(led.status().spent_usd, 0.5, 'seeded at $0.50');
-    assert.strictEqual(led.CAP_USD, 20);
+    assert.strictEqual(led.CAP_USD, 30); // $20, raised by $10 by the owner on 2026-10-31
     const schema = { type: 'object', properties: { n: { type: 'number' } }, required: ['n'] };
     const slots = pool.extraSlots().filter((s) => s.id.startsWith('standard_compute:'));
     assert.strictEqual(slots.length, 1);

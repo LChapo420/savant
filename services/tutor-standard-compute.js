@@ -9,7 +9,7 @@
  *   tasks     only the tutor's own: TASKS below (the dock reply, its answer-leak check, the memory fold and the
  *             fact reader). Every other learner task stays on the approved free chain; pipeline use elsewhere
  *             is unchanged.
- *   budget    TUTOR_CAP_USD = $16.00, a CODE constant: 80% of the $20 Standard Compute cap (owner, 30 Oct).
+ *   budget    TUTOR_CAP_USD = $26.00, a CODE constant (owner, 30 Oct: 80% of the $20 Standard Compute cap; raised by $10 on 31 Oct).
  *             The ledger refuses a call whose reservation would take the COMMITTED total (settled + open
  *             reservations + the $0.50 seed) past it, atomically (services/standard-compute-ledger.js
  *             `ceilingUsd`). Above it the dock falls back to the free NVIDIA lineup without an error. The
@@ -30,7 +30,7 @@
 const ledger = require('./standard-compute-ledger');
 
 /** 80% of the $20 Standard Compute cap (owner, 30 Oct 2026): above this committed total the tutor uses NVIDIA only. */
-const TUTOR_CAP_USD = 16.0;
+const TUTOR_CAP_USD = 26.0; // owner 2026-10-31: the Standard Compute budget raised by $10 (was $16)
 /** The tutor's tasks that may use the model (the dock and its memory). */
 const TASKS = new Set(['dock_help', 'dock_leak_check', 'tutor_memory_fold', 'tutor_facts']);
 /** Strongest priced chat model on the gateway (DeepSeek V4.1). The ledger knows its price; an unpriced model would be under-counted. */

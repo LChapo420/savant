@@ -323,8 +323,8 @@ async function main() {
   // ── the key's TOTAL ledger replaces the old $1/day cap ────────────────────
   const ledgerMod = require('../services/anthropic-ledger');
   let ls = ledgerMod.status();
-  check('the key ledger starts from the $11.20 spent before it existed, with a $24.00 stop', ls.ok && ls.spent_usd === 11.2 && ls.stop_usd === 24 && ledgerMod.HARD_STOP_USD === 24, ls);
-  check('the environment can lower the stop, never raise it', (() => { process.env.ANTHROPIC_LEDGER_STOP_USD = '99'; const a = ledgerMod.status().stop_usd; process.env.ANTHROPIC_LEDGER_STOP_USD = '20'; const b = ledgerMod.status().stop_usd; delete process.env.ANTHROPIC_LEDGER_STOP_USD; return a === 24 && b === 20; })());
+  check('the key ledger starts from the $11.20 spent before it existed, with a $34.00 stop (raised by $10 on 31 Oct)', ls.ok && ls.spent_usd === 11.2 && ls.stop_usd === 34 && ledgerMod.HARD_STOP_USD === 34, ls);
+  check('the environment can lower the stop, never raise it', (() => { process.env.ANTHROPIC_LEDGER_STOP_USD = '99'; const a = ledgerMod.status().stop_usd; process.env.ANTHROPIC_LEDGER_STOP_USD = '20'; const b = ledgerMod.status().stop_usd; delete process.env.ANTHROPIC_LEDGER_STOP_USD; return a === 34 && b === 20; })());
   nvidia._reset();
   process.env.AI_ANTHROPIC_DAILY_CENTS = '1'; // the old daily cap: no longer read
   anthropic.structured = realAnthropic; // the real provider, so the ledger guard runs
@@ -337,22 +337,22 @@ async function main() {
   const haiku = (2000 * 1 + 500 * 5) / 1e6;
   check('the old $1/day cap is gone: Claude answers past it, recorded in the total ledger at its real cost', got && got.score === 7 && sdkCalls.length === 1 && Math.abs(ls.spent_usd - (11.2 + haiku)) < 1e-6 && ls.reserved_usd === 0, { got, ls });
   delete process.env.AI_ANTHROPIC_DAILY_CENTS;
-  // Near the stop: a call whose reservation could pass $24 is refused before any request.
+  // Near the stop: a call whose reservation could pass $34 is refused before any request.
   let lj = JSON.parse(fs.readFileSync(anthropicLedgerFile, 'utf8'));
-  lj.settled_usd = 24 - 11.2 - 0.01;
+  lj.settled_usd = 34 - 11.2 - 0.01;
   fs.writeFileSync(anthropicLedgerFile, JSON.stringify(lj));
   nvidia._reset();
   m = mockFetch([json(503, {})]);
   nvidia._setFetch(m.fn);
   got = await ai.structured({ role: 'fast', system: 's', user: 'u', schema: SCHEMA, schemaName: 'submit' });
-  check('at the $24 stop Claude is skipped (the caller gets null, its floor)', got === null && sdkCalls.length === 1, { got, calls: sdkCalls.length });
+  check('at the $34 stop Claude is skipped (the caller gets null, its floor)', got === null && sdkCalls.length === 1, { got, calls: sdkCalls.length });
   let ledgerThrew = null;
   try { await anthropic.structured({ role: 'fast', system: 's', user: 'u', schema: SCHEMA, schemaName: 'submit', maxTokens: 4096 }); } catch (err) { ledgerThrew = err; }
   check('the provider itself refuses a call whose reservation would pass the stop', ledgerThrew && ledgerThrew.code === 'LEDGER_STOP' && sdkCalls.length === 1, ledgerThrew && ledgerThrew.message);
   // Open reservations (another process, or a crash) count against the stop.
   lj = JSON.parse(fs.readFileSync(anthropicLedgerFile, 'utf8'));
   lj.settled_usd = 5;
-  lj.reservations = { other: { usd: 24 - 11.2 - 5 - 0.001, at: new Date().toISOString(), task: 'other process' } };
+  lj.reservations = { other: { usd: 34 - 11.2 - 5 - 0.001, at: new Date().toISOString(), task: 'other process' } };
   fs.writeFileSync(anthropicLedgerFile, JSON.stringify(lj));
   check('open reservations count toward the stop', !ledgerMod.canSpend(0.01) && ledgerMod.status().committed_usd > 23.99);
   // A reservation left by a dead process for over 2 hours is counted as spent, not forgotten.

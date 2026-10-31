@@ -26,9 +26,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const HARD_STOP_USD = 24.0;
+const HARD_STOP_USD = 34.0; // raised by $10 by the owner on 2026-10-31 (was $24)
 const SEED_USD = 11.2;
-const OWNER_CAP_USD = 25.0;
+const OWNER_CAP_USD = 35.0; // raised by $10 by the owner on 2026-10-31 (was $25)
 const STALE_RESERVATION_MS = 2 * 60 * 60 * 1000;
 const FILE = () => process.env.ANTHROPIC_LEDGER_FILE || path.join(__dirname, '..', 'data', 'anthropic-ledger.json');
 

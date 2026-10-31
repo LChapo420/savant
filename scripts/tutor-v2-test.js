@@ -50,11 +50,11 @@ function child({ consent = null, ai: aiOn = false }) {
 (async () => {
   // ═══ 1. Standard Compute for the tutor ═══
   console.log('-- Standard Compute');
-  check('the tutor ceiling is a code constant of $16.00 with the owner, 30 Oct, in a comment', tsc.TUTOR_CAP_USD === 16 && /80% of the \$20/.test(read('services/tutor-standard-compute.js')) && /owner/i.test(read('services/tutor-standard-compute.js')));
+  check('the tutor ceiling is a code constant of $26.00 with the owner, 30 Oct, in a comment', tsc.TUTOR_CAP_USD === 26 && /80% of the \$20/.test(read('services/tutor-standard-compute.js')) && /owner/i.test(read('services/tutor-standard-compute.js')));
   process.env.STANDARD_COMPUTE_TUTOR_CAP_USD = '5';
   check('the environment can lower the ceiling', tsc.ceilingUsd() === 5);
   process.env.STANDARD_COMPUTE_TUTOR_CAP_USD = '50';
-  check('...and can never raise it', tsc.ceilingUsd() === 16);
+  check('...and can never raise it', tsc.ceilingUsd() === 26);
   delete process.env.STANDARD_COMPUTE_TUTOR_CAP_USD;
   check('only the tutor tasks may use it', ['dock_help', 'dock_leak_check', 'tutor_memory_fold', 'tutor_facts'].every((t) => tsc.TASKS.has(t)) && !tsc.TASKS.has('assist_help') && !tsc.TASKS.has('lesson_write'));
 
@@ -106,22 +106,22 @@ function child({ consent = null, ai: aiOn = false }) {
   try { await scProvider.standardCompute.chat({ task: 'dock_help', system: 's', messages: [{ role: 'user', content: 'x' }] }); } catch (e) { refused = e; }
   check('with no tutor flag it is pipeline only, as before', refused && /pipeline use only/.test(refused.message) && calls.length === 1);
 
-  // The $16 ceiling, atomic in the ledger: committed + this call must stay under it.
+  // The $26 ceiling, atomic in the ledger: committed + this call must stay under it.
   const L = JSON.parse(fs.readFileSync(process.env.STANDARD_COMPUTE_LEDGER_FILE, 'utf8'));
-  L.settled_usd = 15.99 - L.seed_usd; // committed total $15.99
+  L.settled_usd = 25.99 - L.seed_usd; // committed total $15.99
   fs.writeFileSync(process.env.STANDARD_COMPUTE_LEDGER_FILE, JSON.stringify(L));
-  check('at $15.99 committed a dock call still fits under the $16 ceiling and the slot is offered', pool.candidatesFor(req(a.id)).some((s) => s.provider === 'standard_compute'));
-  L.settled_usd = 15.9999 - L.seed_usd;
+  check('at $25.99 committed a dock call still fits under the $26 ceiling and the slot is offered', pool.candidatesFor(req(a.id)).some((s) => s.provider === 'standard_compute'));
+  L.settled_usd = 25.9999 - L.seed_usd;
   fs.writeFileSync(process.env.STANDARD_COMPUTE_LEDGER_FILE, JSON.stringify(L));
-  check('at $15.9999 committed a call that could take it past $16 is not offered', !pool.candidatesFor(req(a.id)).some((s) => s.provider === 'standard_compute'));
-  L.settled_usd = 16.0 - L.seed_usd;
+  check('at $25.9999 committed a call that could take it past $26 is not offered', !pool.candidatesFor(req(a.id)).some((s) => s.provider === 'standard_compute'));
+  L.settled_usd = 26.0 - L.seed_usd;
   fs.writeFileSync(process.env.STANDARD_COMPUTE_LEDGER_FILE, JSON.stringify(L));
-  check('at $16 committed the tutor slot is no longer offered: the free lineup answers, no error', !pool.candidatesFor(req(a.id)).some((s) => s.provider === 'standard_compute'));
+  check('at $26 committed the tutor slot is no longer offered: the free lineup answers, no error', !pool.candidatesFor(req(a.id)).some((s) => s.provider === 'standard_compute'));
   refused = null;
   const nCalls = calls.length;
   try { await scProvider.standardCompute.chat({ task: 'dock_help', system: 's', messages: [{ role: 'user', content: 'x' }], tutor: { userId: a.id } }); } catch (e) { refused = e; }
-  check('...and the provider itself is refused by the ledger past $16 (nothing sent)', refused && calls.length === nCalls, refused && refused.message);
-  check('...while the pipeline (no ceiling) still has its room up to the $20 cap', ledger.canSpend(0.01) && !ledger.canSpend(0.01, 16));
+  check('...and the provider itself is refused by the ledger past $26 (nothing sent)', refused && calls.length === nCalls, refused && refused.message);
+  check('...while the pipeline (no ceiling) still has its room up to the $30 cap', ledger.canSpend(0.01) && !ledger.canSpend(0.01, 26));
   L.settled_usd = 3 - L.seed_usd;
   fs.writeFileSync(process.env.STANDARD_COMPUTE_LEDGER_FILE, JSON.stringify(L));
   check('the ledger ceiling can only lower the limit (a ceiling above the cap changes nothing)', ledger.canSpend(5, 100) === ledger.canSpend(5) && ledger.canSpend(5, 100) === (ledger.status().headroom_usd >= 5));

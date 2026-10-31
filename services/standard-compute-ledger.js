@@ -26,7 +26,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const CAP_USD = 20.0; // raised from $15 by the owner on 2026-10-28
+const CAP_USD = 30.0; // raised from $15 to $20 by the owner on 2026-10-28, and by $10 more on 2026-10-31
 const SEED_USD = 0.5;
 const STALE_RESERVATION_MS = 2 * 60 * 60 * 1000;
 const FILE = () => process.env.STANDARD_COMPUTE_LEDGER_FILE || path.join(__dirname, '..', 'data', 'standard-compute-ledger.json');
