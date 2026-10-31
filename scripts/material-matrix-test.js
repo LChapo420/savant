@@ -82,8 +82,8 @@ async function zip(files, first) {
     '[Content_Types].xml': '<Types/>',
     'xl/workbook.xml': '<workbook><sheets><sheet name="Dates" sheetId="1" r:id="rId1"/></sheets></workbook>',
     'xl/styles.xml': '<styleSheet><numFmts count="1"><numFmt numFmtId="164" formatCode="yyyy\\-mm\\-dd hh:mm:ss"/></numFmts><cellXfs count="5"><xf numFmtId="0"/><xf numFmtId="14"/><xf numFmtId="22"/><xf numFmtId="164"/><xf numFmtId="21"/></cellXfs></styleSheet>',
-    'xl/sharedStrings.xml': '<sst><si><t>Not a date</t></si></sst>',
-    'xl/worksheets/sheet1.xml': '<worksheet><sheetData><row r="1"><c r="A1"><v>45231</v></c><c r="B1" s="1"><v>45231</v></c><c r="C1" s="2"><v>45231.5</v></c><c r="D1" s="4"><v>0.75</v></c></row><row r="2"><c r="A2" s="3"><v>45231.25</v></c><c r="B2" s="1" t="s"><v>0</v></c></row></sheetData></worksheet>',
+    'xl/sharedStrings.xml': `<sst><si><t>Not a date</t></si><si><t>${P}</t></si></sst>`,
+    'xl/worksheets/sheet1.xml': '<worksheet><sheetData><row r="1"><c r="A1"><v>45231</v></c><c r="B1" s="1"><v>45231</v></c><c r="C1" s="2"><v>45231.5</v></c><c r="D1" s="4"><v>0.75</v></c></row><row r="2"><c r="A2" s="3"><v>45231.25</v></c><c r="B2" s="1" t="s"><v>0</v></c></row><row r="3"><c r="A3" t="s"><v>1</v></c></row></sheetData></worksheet>',
   });
 
   const want = { odt: ['odt', 'Cell energy', 'Second&third part\nnext'], epub: ['epub', 'Chapter Zero', 'Chapter One'], xlsx: ['xlsx', 'Cell parts', 'Mitochondrion\tmakes ATP'], rtf: ['rtf', 'Cell energy', 'Café and — dash'], html: ['html', 'Cell energy', 'A & B'] };

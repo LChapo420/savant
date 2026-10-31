@@ -205,13 +205,26 @@ function placeCheckins(turns, pool, slots, skillHints) {
   const out = [];
   const usedSkills = new Set();
   const used = new Set();
+  const times = questions.map(() => 0);
+  let last = -1;
   for (let i = 0; i < place.length; i++) {
     const free = (k) => !used.has(k) && !usedSkills.has(questions[k].skill);
     let pick = questions.findIndex((q, k) => free(k) && q.skill === hints[i]);
     if (pick < 0) pick = questions.findIndex((q, k) => free(k));
     if (pick < 0) pick = questions.findIndex((q, k) => !used.has(k));
-    if (pick < 0) break;
+    if (pick < 0) {
+      // Fewer questions than slots: ask the least-asked ones again (repeating is good for memory) rather than leave a
+      // stretch of the episode with no check-in. Prefer the slot's skill, and never the same question twice in a row.
+      if (!questions.length) break;
+      const fewest = Math.min(...times);
+      const again = questions.map((q, k) => k).filter((k) => times[k] === fewest);
+      pick = again.find((k) => questions[k].skill === hints[i] && k !== last);
+      if (pick === undefined) pick = again.find((k) => k !== last);
+      if (pick === undefined) pick = again[0];
+    }
     const q = questions[pick];
+    times[pick]++;
+    last = pick;
     used.add(pick);
     usedSkills.add(q.skill);
     out.push({ id: `q${out.length + 1}`, after: place[i].after, skill: q.skill, skill_title: q.skill_title || '', qid: q.qid || null, pack_qid: q.pack_qid || null, prompt: q.prompt, choices: q.choices, answer_index: q.answer_index, source: q.source || 'course' });
