@@ -1,0 +1,368 @@
+{
+ "Koedinger": {
+  "claim": "Learning of knowledge components can be measured from student performance data, and the framework links kinds of knowledge to the instructional principles that work for them.",
+  "planted": false,
+  "quote": "",
+  "pickError": "nvidia timeout after 300s",
+  "verbatim": false,
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source describes coordinated analyses of knowledge, learning, and instruction, but it neither says that knowledge-component learning is measured from student performance data nor establishes that particular instructional principles “work for” each kind of knowledge.",
+   "smallest_fix": "Replace the claim with: “The KLI framework analyzes knowledge, learning, and instructional events, links learning-event types to different knowledge changes, and identifies constraints on optimal instructional choices.”"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source describes the KLI framework and its taxonomies but does not explicitly state that learning of knowledge components *can be measured* from student performance data or that the framework *links* kinds of knowledge to instructional principles that *work* for them.",
+   "smallest_fix": "Replace the claim with: 'The KLI framework provides taxonomies for knowledge, learning, and instruction, and illustrates how different learning events may lead to different knowledge changes and instructional choices.'"
+  },
+  "doi": "10.1111/j.1551-6709.2012.01245.x",
+  "title": "The Knowledge‐Learning‐Instruction Framework: Bridging the Science‐Practice Chasm to Enhance Robust Student Learning",
+  "year": 2012,
+  "venue": "Cognitive Science",
+  "doc": "SPEED-RETENTION",
+  "abstract_from": "openalex"
+ },
+ "Aleven": {
+  "claim": "Help-seeking behaviour in an intelligent tutor, including help abuse such as clicking through hints to the answer, can be modelled from the logs and is often unproductive.",
+  "planted": false,
+  "quote": "We created a preliminary model, implemented by 57 production rules that capture both effective and ineffective help-seeking behavior.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports a preliminary model that captures effective and ineffective help-seeking and its evaluation using an existing student–tutor interaction dataset, but it does not mention clicking through hints to the answer or establish that such behaviour is often unproductive.",
+   "smallest_fix": "Change the claim to: “Help-seeking behaviour in an intelligent tutor, including ineffective help-seeking, can be modelled with preliminary production rules and evaluated using logs of student–tutor interactions.”"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source describes modeling help-seeking behavior (including ineffective behavior) but does not explicitly state that help abuse (e.g., clicking through hints to the answer) is 'often unproductive' or that the modeling is based on logs.",
+   "smallest_fix": "Replace 'can be modelled from the logs and is often unproductive' with 'can be modeled, including ineffective strategies'."
+  },
+  "doi": "10.3233/irg-2006-16(2)02",
+  "title": "Toward Meta-cognitive Tutoring: A Model of Help Seeking with a Cognitive Tutor",
+  "year": 2006,
+  "venue": "International Journal of Artificial Intelligence in Education",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "openalex"
+ },
+ "Baker": {
+  "claim": "Off-task behaviour of students in an intelligent tutoring system can be detected from interaction logs, and it is associated with poorer learning.",
+  "planted": false,
+  "quote": "",
+  "pickError": "nvidia timeout after 300s",
+  "verbatim": false,
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports detecting students’ off-task behavior from system-usage logs, but it does not report that off-task behavior is associated with poorer learning.",
+   "smallest_fix": "Remove “and it is associated with poorer learning,” leaving the claim focused on detection from system-usage logs."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source shows detection of off-task behavior and its association with attitudes/motivations, but does not explicitly state it is associated with poorer learning.",
+   "smallest_fix": "Remove 'and it is associated with poorer learning' or replace with 'and it is associated with certain attitudes and motivations'."
+  },
+  "doi": "10.1145/1240624.1240785",
+  "title": "Modeling and understanding students' off-task behavior in intelligent tutoring systems",
+  "year": 2007,
+  "venue": "CHI Conference on Human Factors in Computing Systems",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "openalex"
+ },
+ "Graesser": {
+  "claim": "The questions students ask during one-to-one tutoring can be classified by depth, and the rate of deep questions is related to comprehension or achievement.",
+  "planted": false,
+  "quote": "Student achievement was positively correlated with the quality of student questions after students had some experience with tutoring, but the frequency of questions was not correlated with achievement.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source classifies question quality by degree of specification, content, and question-generation mechanism—not specifically “depth”—and links quality (not the rate of deep questions) only to achievement, not comprehension.",
+   "smallest_fix": "Change the claim to: “Student questions during one-to-one tutoring can be classified by degree of specification, content, and question-generation mechanism, and question quality was positively correlated with achievement after students had some tutoring experience.”"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not explicitly classify questions by 'depth' (only by specification, content, and mechanism) and only shows a correlation with 'quality' (not 'deep questions' or 'rate of deep questions').",
+   "smallest_fix": "Replace 'depth' with 'quality' and 'rate of deep questions' with 'quality of questions'."
+  },
+  "doi": "10.2307/1163269",
+  "title": "Question Asking During Tutoring",
+  "year": 1994,
+  "venue": "American Educational Research Journal",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "openalex"
+ },
+ "Epp": {
+  "claim": "A user's emotional state can be identified above chance from keystroke dynamics such as typing timing.",
+  "planted": false,
+  "quote": "Our solution is to determine user emotion by analyzing the rhythm of their typing patterns on a standard keyboard.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "supported",
+   "problem": "No material mismatch: the field study reports classifying emotional states from typing rhythms with accuracies of 77–88% for several two-class states and 84% for anger and excitement, supporting identification above chance.",
+   "smallest_fix": "No change needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "doi": "10.1145/1978942.1979046",
+  "title": "Identifying emotional states using keystroke dynamics",
+  "year": 2011,
+  "venue": "CHI Conference on Human Factors in Computing Systems",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "openalex"
+ },
+ "Niederhoffer": {
+  "claim": "People in conversation tend to match each other's linguistic style.",
+  "planted": false,
+  "quote": "The results of the three studies offer substantial evidence that individuals in dyadic interactions exhibit linguistic style matching (LSM) on both the conversation level as well as on a turn-by-turn level.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly reports substantial evidence across three experiments that individuals in dyadic interactions exhibit linguistic style matching at the conversation and turn-by-turn levels, which matches the claim's hedged, general wording without overstating causation or universality.",
+   "smallest_fix": "No change needed; optionally narrow \"People in conversation\" to \"People in dyadic conversations\" to mirror the studied interactions."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "doi": "10.1177/026192702237953",
+  "title": "Linguistic Style Matching in Social Interaction",
+  "year": 2002,
+  "venue": "Journal of Language and Social Psychology",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "openalex"
+ },
+ "Park": {
+  "claim": "Personality traits can be assessed automatically from the language of social media posts, with accuracy that correlates with self-reports.",
+  "planted": false,
+  "quote": "Results indicated that language-based assessments can constitute valid personality measures: they agreed with self-reports and informant reports of personality, added incremental validity over informant reports, adequately discriminated between traits, exhibited patterns of correlations with external criteria similar to those found with self-reported personality, and were stable over 6-month intervals.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly supports that Big Five personality traits can be assessed from the written language of Facebook users via an automated open-vocabulary predictive model, and that these language-based assessments agreed (showed convergence with) self-reported personality, so the claim's topic, direction, and modal strength match the source.",
+   "smallest_fix": "None required; optionally sharpen to \"the Big Five in Facebook users, with agreement (convergence) with self-reports\" to match the source's precise framing."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "doi": "10.1037/pspp0000020",
+  "title": "Automatic personality assessment through social media language.",
+  "year": 2014,
+  "venue": "Journal of Personality and Social Psychology",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "openalex"
+ },
+ "Pennebaker": {
+  "claim": "Use of word categories is reliable within a person over time and across settings, and relates to personality.",
+  "planted": false,
+  "quote": "Daily diaries from 15 substance abuse inpatients, daily writing assignments from 35 students, and journal abstracts from 40 social psychologists demonstrated good internal consistency for over 36 language dimensions.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source reports good internal consistency and factor replication across written samples, not within-person test–retest reliability over time or across settings, and it characterizes the personality association as modest and suggestive rather than established.",
+   "smallest_fix": "Change the claim to: “Word-based linguistic measures show good internal consistency and replicated factors across written samples, and modestly relate to personality.”"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source shows reliability within a person over time and across settings for specific groups (students, inpatients, psychologists) and suggests a modest relation to personality, but the claim generalizes to all people and settings and omits the modest effect size.",
+   "smallest_fix": "Use of word categories is reliable within a person over time and across settings in specific groups (e.g., students, inpatients), and may modestly relate to personality."
+  },
+  "doi": "10.1037//0022-3514.77.6.1296",
+  "title": "Linguistic styles: Language use as an individual difference.",
+  "year": 1999,
+  "venue": "Journal of Personality and Social Psychology",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "openalex"
+ },
+ "Peters": {
+  "claim": "Large language models can infer the Big Five personality traits of social media users from their posts, zero-shot, with modest correlations to self-reports.",
+  "planted": false,
+  "quote": "Our results show an average correlation of r=0.29 (range=[0.22,0.33]) between LLM-inferred and self-reported trait scores—a level of accuracy that is similar to that of supervised machine learning models specifically trained to infer personality.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "supported",
+   "problem": "No material problem: the source directly reports zero-shot Big Five inference from Facebook status updates and an average LLM-inferred versus self-reported correlation of r=0.29, which supports the wording “modest correlations.”",
+   "smallest_fix": "No fix is needed; for greater specificity, say “GPT-3.5 and GPT-4 inferred the Big Five from Facebook users’ status updates zero-shot, with an average correlation of r=0.29 with self-reports.”"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "doi": "10.1093/pnasnexus/pgae231",
+  "title": "Large language models can infer psychological dispositions of social media users",
+  "year": 2024,
+  "venue": "PNAS Nexus",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "openalex"
+ },
+ "Crossley": {
+  "claim": "Lexical indices computed from learners' writing predict their language proficiency level.",
+  "planted": false,
+  "quote": "The strongest predictors of an individual’s proficiency level were word imagability, word frequency, lexical diversity, and word familiarity.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly supports the claim: a discriminant function analysis used lexical indices from L2 learners' writing to predict their beginning, intermediate, or advanced proficiency-level group, with 70% correct classification in both training and test sets.",
+   "smallest_fix": "No fix is needed; optionally specify that the prediction targets proficiency-level group membership."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states a general predictive relationship without specifying the population (L2 learners), the setting (written samples), or the strength of the prediction (70% accuracy).",
+   "smallest_fix": "Lexical indices computed from L2 learners' writing predict their language proficiency level with 70% accuracy in a study of 100 learners."
+  },
+  "doi": "10.1177/0265532211419331",
+  "title": "Predicting the proficiency level of language learners using lexical indices",
+  "year": 2011,
+  "venue": "Language Testing",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "openalex"
+ },
+ "Tausczik": {
+  "claim": "Counts of words in psychologically meaningful categories (LIWC) reveal attention, emotion, social relationships, thinking styles and individual differences.",
+  "planted": false,
+  "quote": "Empirical results using LIWC demonstrate its ability to detect meaning in a wide variety of experimental settings, including to show attentional focus, emotionality, social relationships, thinking styles, and individual differences.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "supported",
+   "problem": "No material mismatch: the source states that LIWC counts words in psychologically meaningful categories and that empirical results show it can detect attentional focus, emotionality, social relationships, thinking styles, and individual differences across experimental settings.",
+   "smallest_fix": "None needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "doi": "10.1177/0261927x09351676",
+  "title": "The Psychological Meaning of Words: LIWC and Computerized Text Analysis Methods",
+  "year": 2009,
+  "venue": "Journal of Language and Social Psychology",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "openalex"
+ },
+ "Yarkoni": {
+  "claim": "Personality traits correlate with the words people use in their blogs, in a large sample.",
+  "planted": false,
+  "quote": "The size of the dataset enabled pervasive correlations with personality to be identified for a broad range of lexical variables, including both aggregate word categories and individual English words.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly reports pervasive correlations between personality and lexical variables, including individual words, in a large sample of 694 blogs.",
+   "smallest_fix": "No change needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "doi": "10.1016/j.jrp.2010.04.001",
+  "title": "Personality in 100,000 Words: A large-scale analysis of personality and word use among bloggers",
+  "year": 2010,
+  "venue": "Journal of Research in Personality",
+  "doc": "SCORECARD-EVERYTHING",
+  "abstract_from": "semanticscholar"
+ },
+ "Johari": {
+  "claim": "Always-valid p-values and confidence intervals allow A/B test results to be monitored continuously with the error rate controlled, where repeatedly checking a fixed-sample test inflates false positives.",
+  "planted": false,
+  "quote": "We provide always valid p-values and confidence intervals that are provably robust to this effect.",
+  "verbatim": true,
+  "minimax": {
+   "rating": "supported",
+   "problem": "No material mismatch: the source describes always-valid p-values and confidence intervals as robust and safe for continuous monitoring of A/B tests, in contrast to the unreliable inference from continuously monitoring traditional fixed-sample methods.",
+   "smallest_fix": "None needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "doi": "10.1145/3097983.3097992",
+  "title": "Peeking at A/B Tests",
+  "year": 2017,
+  "venue": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)",
+  "doc": "BETA-COMPARISON",
+  "abstract_from": "openalex"
+ },
+ "Robbins": {
+  "claim": "Sequential tests and confidence sequences based on the law of the iterated logarithm allow statistical inference that stays valid under continuous monitoring.",
+  "planted": false,
+  "quote": "",
+  "verbatim": false,
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source only states that it develops probability inequalities and limit theorems for an entire sequence of random variables; it does not mention the law of the iterated logarithm, sequential tests, confidence sequences, or validity of statistical inference under continuous monitoring.",
+   "smallest_fix": "Replace the claim with: “The paper develops probability inequalities and related limit theorems concerning the behavior of an entire sequence of random variables.”"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source does not mention sequential tests, confidence sequences, or the law of the iterated logarithm in the context of continuous monitoring.",
+   "smallest_fix": "Remove the claim or provide a source that explicitly supports the use of sequential tests and confidence sequences based on the law of the iterated logarithm for continuous monitoring."
+  },
+  "doi": "10.1214/aoms/1177696786",
+  "title": "Statistical Methods Related to the Law of the Iterated Logarithm",
+  "year": 1970,
+  "venue": "The Annals of Mathematical Statistics",
+  "doc": "BETA-COMPARISON",
+  "abstract_from": "openalex"
+ },
+ "PLANT-1": {
+  "claim": "Learning of knowledge components can be measured from student performance data, and the framework links kinds of knowledge to the instructional principles that work for them.",
+  "planted": true,
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source concerns computerized analysis of linguistic style as an indicator of personality, not learning knowledge components or a framework linking knowledge types to instructional principles.",
+   "smallest_fix": "Replace the claim with: “Computerized analysis of written language may provide an independent and meaningful way to explore personality, though observed effect sizes were modest.”"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text discusses linguistic style and personality, not knowledge components, student performance data, or instructional principles.",
+   "smallest_fix": "Replace the claim with one about linguistic style reflecting personality as shown in the source."
+  }
+ },
+ "PLANT-2": {
+  "claim": "The questions students ask during one-to-one tutoring can be classified by depth, and the rate of deep questions is related to comprehension or achievement.",
+  "planted": true,
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source concerns LIWC's classification of word use into psychologically meaningful categories, but it does not mention students, one-to-one tutoring, question depth, comprehension, or achievement.",
+   "smallest_fix": "Replace the claim with: \"Computerized text analysis can classify word use into psychologically meaningful categories and detect attentional focus, emotionality, social relationships, thinking styles, and individual differences.\""
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not mention student questions, tutoring, depth classification, or any relationship to comprehension or achievement.",
+   "smallest_fix": "Remove the claim or provide a source that directly addresses student questions in tutoring and their relation to comprehension or achievement."
+  }
+ },
+ "PLANT-3": {
+  "claim": "Personality traits can be assessed automatically from the language of social media posts, with accuracy that correlates with self-reports.",
+  "planted": true,
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source concerns probability inequalities and limit theorems for sequences of random variables, not personality assessment from social media language or accuracy relative to self-reports.",
+   "smallest_fix": "Replace the claim with: “The source presents a method for obtaining probability inequalities and related limit theorems for sequences of random variables with a specified joint probability distribution.”"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text is unrelated to personality traits, social media, or assessment accuracy.",
+   "smallest_fix": "Replace the source with a study on automatic personality assessment from social media language."
+  }
+ },
+ "PLANT-4": {
+  "claim": "Lexical indices computed from learners' writing predict their language proficiency level.",
+  "planted": true,
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source concerns probability inequalities and limit theorems for sequences of random variables and says nothing about learners’ writing, lexical indices, language proficiency, or prediction.",
+   "smallest_fix": "Replace the claim with: “The text presents a method for obtaining probability inequalities and related limit theorems for sequences of random variables with a specified joint probability distribution.”"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text is unrelated to lexical indices, language proficiency, or learners' writing.",
+   "smallest_fix": "Replace the claim with one supported by relevant linguistic or educational research."
+  }
+ }
+}
