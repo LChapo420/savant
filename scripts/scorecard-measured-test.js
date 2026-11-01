@@ -26,6 +26,8 @@ process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(TMP, 'db.json');
 process.env.HOLDOUT_DIR = TMP;
 process.env.ITEM_TAGS_FILE = path.join(TMP, 'tags.json');
+// Section 8 tests the round-11 readings, which follow the stop rule (services/efficiency.js followsStop): on for this file.
+process.env.SR_STOP = 'on';
 process.on('exit', () => { try { fs.rmSync(TMP, { recursive: true, force: true }); } catch { /* temp dir */ } });
 
 const db = require('../config/db');
@@ -512,6 +514,21 @@ const choose = (u, stat, pick, times = 1) => { for (let i = 0; i < times; i++) h
     const mine = lists[0];
     assert.deepStrictEqual(forgetting.estimate(mine, pop, 30), forgetting.estimate(mine, { ...pop.read }, 30), 'the stat is read with the read curve');
     assert.ok(forgetting.recallCurve(pop, mine, 30).curve.d === undefined, 'the schedule keeps the curve it was tuned on');
+  });
+  await check('the three round-11 readings follow the stop rule: off with it off (scorecard as before), on with SR_STOP=on, and their own switches override', () => {
+    const probe = (env) => {
+      const clean = { ...process.env }; for (const k of ['SR_ALL', 'SR_STOP', 'SCORECARD_MIXED_SHIFT', 'SCORECARD_STUCK_MEMORY', 'SCORECARD_READ_FEATURES']) delete clean[k];
+      const code = "const s=require('./services/scorecard/signals');const f=require('./services/scorecard/forgetting');"
+        + "const c={expected:0.8,delayed:true,interval_days:1.2,prior_attempts:12,prior_correct:12,prior_spaced_right:0,prior_spaced_wrong:0,prev_wrong:false,rapid:false,guess:0.1};"
+        + "const o=s.fromAnswer({prompt:'x',difficulty:4,ms:9000,correct:true,role:'review',format:'typed',coach_used:true},c);"
+        + "const p=f.population(Array.from({length:25},(_,l)=>Array.from({length:24},(_,i)=>f.row({dt:1+i,nc:3,nw:1,pk:0.9,g:0.1,y:(i+l)%3>0,day:i,ns:i%4}))),30);"
+        + "console.log(JSON.stringify([!!s.SHIFTS.interleaving_tolerance,o.some((x)=>x.stat==='help_seeking'),!!(p&&p.read)]))";
+      return JSON.parse(spawnSync(process.execPath, ['-e', code], { cwd: ROOT, env: { ...clean, ...env, NODE_ENV: 'test', DB_FILE: path.join(TMP, 'probe.json') }, encoding: 'utf8' }).stdout.trim());
+    };
+    assert.deepStrictEqual(probe({}), [false, true, false], 'defaults: stop rule off, so the old readings');
+    assert.deepStrictEqual(probe({ SR_STOP: 'on' }), [true, false, true], 'SR_STOP=on: the new readings');
+    assert.deepStrictEqual(probe({ SR_STOP: 'on', SCORECARD_MIXED_SHIFT: 'off', SCORECARD_STUCK_MEMORY: 'off', SCORECARD_READ_FEATURES: 'basic' }), [false, true, false], 'own switches override');
+    assert.deepStrictEqual(probe({ SCORECARD_MIXED_SHIFT: 'on', SCORECARD_STUCK_MEMORY: 'on', SCORECARD_READ_FEATURES: 'spaced' }), [true, false, true], 'own switches force on');
   });
   console.log(failed ? `\n${failed} failed` : '\nall passed');
   process.exitCode = failed ? 1 : 0;

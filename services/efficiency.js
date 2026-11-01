@@ -3,7 +3,7 @@
  * is still recalled a month later, per hour spent. All six are off by default. SR_STOP=on (its extra due reviews) carries the simulated gain
  * (docs/SPEED-RETENTION.md) and, since round 11 (section 7: the skip half off by default, two scorecard rules reading reviews as reviews), costs the
  * 200-learner accuracy gate nothing; it stays off only because the 30-learner quick gate check of npm test, cut from the old answer stream, trips on
- * ANY change of that stream (section 7.5), and the owner has said the baseline is not to be re-cut. The other five are built, tested and switchable, and off. One module, six levers, each with its own off switch, read by the
+ * ANY change of that stream (section 7.3), and the owner has said the baseline is not to be re-cut. The other five are built, tested and switchable, and off. One module, six levers, each with its own off switch, read by the
  * scheduler (services/mastery.js), the level planner (services/sessions.js) and the recovery simulation
  * (scripts/scorecard-recovery-sim.js) so the simulation exercises the code the app runs.
  *
@@ -24,7 +24,9 @@
  * choices, not fitted to the simulation's truth, except the stop rule's two numbers and its six extra review slots, which
  * were chosen on 60-learner simulation runs (docs/SPEED-RETENTION.md, "Tuning, honestly"). All gains are simulated.
  */
-const db = require('../config/db');
+// (config/db is required on first use, so the scorecard can ask enabled() without opening the database.)
+let dbModule = null;
+const db = new Proxy({}, { get: (_, k) => { dbModule = dbModule || require('../config/db'); return dbModule[k]; } }); // eslint-disable-line global-require
 
 const SWITCH = {
   personal: 'SR_PERSONAL_TIMING',
@@ -43,6 +45,16 @@ function enabled(lever) {
   if (all === 'off') return false;
   if (all === 'on') return String(process.env[SWITCH[lever]] || 'on').toLowerCase() !== 'off';
   return String(process.env[SWITCH[lever]] || DEFAULT[lever]).toLowerCase() !== 'off';
+}
+
+/**
+ * Should a scorecard reading that exists for the stop rule's sake (docs/SPEED-RETENTION.md section 7) be on? Its own switch, when set to 'on' or
+ * 'off', decides; otherwise it follows the stop rule: with SR_STOP off the scorecard reads exactly as it did before round 11.
+ */
+function followsStop(envValue) {
+  const v = String(envValue || '').toLowerCase();
+  if (v === 'on' || v === 'off') return v === 'on';
+  return enabled('stop');
 }
 
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
@@ -214,7 +226,7 @@ module.exports = {
   SWITCH, DEFAULT, enabled,
   PERSONAL, RELEARN, STOP, INTERLEAVE, PRETEST, DIFFICULTY,
   reviewTarget, relearnDone, dueBelow,
-  worthAsking, skipOn, reviewSlots, displacedReviews,
+  worthAsking, skipOn, followsStop, reviewSlots, displacedReviews,
   interleavePool, interleaveEvery,
   pretestPosterior, pretestSkips, pretestOffered, recordPretest, pretestPassed, focusCount,
   difficultyShift,

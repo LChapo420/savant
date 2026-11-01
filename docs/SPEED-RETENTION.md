@@ -319,3 +319,16 @@ The owner's instruction is that `gate-baseline.json` is not re-cut to hide a cos
 - The session player still does not act on `skippable`; the skip half is off anyway.
 - The read curve was fitted and tested only on the simulation's exponential memory; on real memory tests `scorecard.forgettingCurve` and `SCORECARD_FORGET_SHAPE=fit` are the first things to check.
 - All of it is simulated.
+
+### 7.5 The three scorecard readings follow the stop rule
+
+With the stop rule off they gave no gain and moved main's week-4 gate (all extras 44/13 -> 43/14, none 32/13 -> 32/14), so the help_seeking fix, the interleaving_tolerance shift and the decay read curve are on only when  is on (). Their own switches (, ,  = on/off, spaced/basic) override; the shift and the read curve are read when the scorecard loads. With every default off the scorecard reads exactly as on main (7.2 numbers below the table).
+
+### 7.5 The three scorecard readings follow the stop rule
+
+With the stop rule off they gave no gain and moved main's week-4 gate (all extras 44/13 -> 43/14, none 32/13 -> 32/14). So the help_seeking fix, the interleaving_tolerance shift and the decay read curve are on only when `SR_STOP` is on (`efficiency.followsStop`). Their own switches override: `SCORECARD_STUCK_MEMORY`, `SCORECARD_MIXED_SHIFT` (on/off) and `SCORECARD_READ_FEATURES` (spaced/basic); the shift and the read curve are read when the scorecard loads. Proof, seed 20261022, 200 learners, every status at weeks 1 to 4 compared:
+
+- defaults (everything off) against main's numbers: no extras 32 / 13 / 55 and all extras 44 / 13 / 43 at week 4, identical to main's (no measure changes status at any week);
+- `SR_STOP=on`: no extras 35 / 13 / 52 and all extras 45 / 15 / 40, identical to the 7.2 numbers.
+
+The 7.2 rows "levers off, this round's rules" and the sentence about the scorecard changes alone describe the rules forced on with the stop rule off; they are no longer the default.

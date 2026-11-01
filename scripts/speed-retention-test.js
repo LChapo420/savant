@@ -52,7 +52,7 @@ for (let l = 1; l <= GRADE0.pathLength; l++) if (curriculum.levelKind(l, GRADE0.
     withEnv({ SR_ALL: null, SR_STOP: 'off' }, () => { assert.strictEqual(efficiency.enabled('stop'), false); assert.strictEqual(efficiency.enabled('personal'), false); });
     withEnv({ SR_ALL: 'on', SR_DIFFICULTY: null }, () => assert.strictEqual(efficiency.enabled('difficulty'), true));
   });
-  await check('with no SR_ALL, each lever takes its shipped default (all off: the 30-learner quick gate check blocks turning the stop rule on, docs/SPEED-RETENTION.md 7.5); the skip half is off even with the stop rule on', () => {
+  await check('with no SR_ALL, each lever takes its shipped default (all off: the 30-learner quick gate check blocks turning the stop rule on, docs/SPEED-RETENTION.md 7.3); the skip half is off even with the stop rule on', () => {
     withEnv({ SR_ALL: null, SR_STOP: null, SR_STOP_SKIP: null }, () => {
       for (const [lever, d] of Object.entries(efficiency.DEFAULT)) assert.strictEqual(efficiency.enabled(lever), d === 'on', lever);
       assert.strictEqual(efficiency.enabled('stop'), false);

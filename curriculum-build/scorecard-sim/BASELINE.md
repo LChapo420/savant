@@ -469,3 +469,5 @@ All runs: 200 learners, 100 levels, `--modes=off`, population 60, legacy learnin
 | audited model (v2), off / extras only / extras + skipping | not gated | 0.335 / 0.727 / 0.723 |
 
 Kept: the skip half of the stop rule off by default (`SR_STOP_SKIP`); help_seeking reads a memory test as a stuck moment only when the forgetting curve says it is more likely missed than not (`SCORECARD_STUCK_MEMORY=off` restores); interleaving_tolerance as a shift of reviews against focus items with forgetting counted (`SCORECARD_MIXED_SHIFT=off`); the decay stat read with a curve that has the spaced terms while the review schedule keeps the basic one (`SCORECARD_READ_FEATURES=basic`). The stop rule stays off by default: the 30-learner quick gate check of `npm test` fails on any change of the answer stream (docs/SPEED-RETENTION.md 7.3) and the baseline is not re-cut.
+
+The three scorecard changes of this round follow `SR_STOP` (docs/SPEED-RETENTION.md 7.5): with every default off, week 4 at seed 20261022 is main's exactly (no extras 32 / 13 / 55, all extras 44 / 13 / 43); with `SR_STOP=on` it is the improved numbers above (35 / 13 / 52 and 45 / 15 / 40).

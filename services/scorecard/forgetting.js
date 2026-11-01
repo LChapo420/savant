@@ -49,7 +49,8 @@ const KEYS = ['a', 'b', 'c', 'd', 'e'].slice(0, NP);
 // every extra measurement channel on, bias -1.4 -> -4.4). The 'spaced' terms (ns, nsw) separate the two. The SCHEDULE keeps its own curve
 // ('basic', FEATURES above): fitting 'spaced' for the schedule too cost 4-5% of the retention gain (BASELINE round 5; docs/SPEED-RETENTION.md
 // section 7). SCORECARD_READ_FEATURES=basic reads with the schedule's curve, as before.
-const READ_NP = (process.env.SCORECARD_READ_FEATURES || 'spaced') === 'basic' ? 3 : 5;
+// It follows the stop rule (SR_STOP) unless SCORECARD_READ_FEATURES=spaced|basic says otherwise; read at load.
+const READ_NP = ({ spaced: 5, basic: 3 })[process.env.SCORECARD_READ_FEATURES] || (require('../efficiency').enabled('stop') ? 5 : 3); // eslint-disable-line global-require
 // Round 5: the curve's SHAPE. 'exp' is 2^(-dt/h) (rounds 2-4). 'fit' also lets
 // the population choose a power-law tail, R = (1 + F dt / h)^-k with
 // F = 2^(1/k) - 1 (so h is still the half-life), k from SHAPES by likelihood:

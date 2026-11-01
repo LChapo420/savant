@@ -30,6 +30,7 @@
 const db = require('../../config/db');
 const itemTags = require('./item-tags');
 const forgetting = require('./forgetting');
+const efficiency = require('../efficiency');
 
 const EXPERIMENT_WEIGHT = 0.45;
 const DELAYED_WEIGHT = 0.3;
@@ -118,8 +119,8 @@ const SHIFTS = {
   // reviews due does not read forgetting as a difficulty with mixed practice. How well the default curve fits is the population's
   // (needsPopulation). Its old rule compared raw accuracy of the reviews and the focus items within each level, which fell with every review
   // that was due, and which a level with fewer than two reviews or three focus items did not read at all.
-  // SCORECARD_MIXED_SHIFT=off restores the raw per-level difference.
-  ...(process.env.SCORECARD_MIXED_SHIFT === 'off' ? {} : {
+  // Follows the stop rule (SR_STOP); SCORECARD_MIXED_SHIFT=on|off overrides. Off: the raw per-level difference. Read at load.
+  ...(!efficiency.followsStop(process.env.SCORECARD_MIXED_SHIFT) ? {} : {
     interleaving_tolerance: { high: 'res_review', low: 'res_focus', scale: 60, tau: 0.3, norm: 0, needsPopulation: true },
   }),
   // Momentum: after two misses to open a level, the rest of it, against the
@@ -377,8 +378,8 @@ function fromAnswer(item, ctx = null) {
       // should still be remembered is not a moment of being stuck (counting it as one
       // diluted the rate with every extra review the stop rule adds), and it is not
       // a clear case of an unaided answer either: it feeds neither rate, as before.
-      // SCORECARD_STUCK_MEMORY=off restores every memory test as a stuck moment.
-      const memoryStuck = ctx.delayed && (process.env.SCORECARD_STUCK_MEMORY === 'off' || memoryExpected(ctx) < 0.5);
+      // These three round-11 readings follow the stop rule (SR_STOP) unless SCORECARD_STUCK_MEMORY=on|off says otherwise: with it off, every memory test is a stuck moment.
+      const memoryStuck = ctx.delayed && (!efficiency.followsStop(process.env.SCORECARD_STUCK_MEMORY) || memoryExpected(ctx) < 0.5);
       const stuck = ctx.prev_wrong || ctx.expected < 0.5 || memoryStuck;
       // A rapid answer when stuck is giving up (frustration), not a moment
       // they weighed asking for help, so it is not a chance for help seeking.
