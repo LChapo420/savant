@@ -89,18 +89,41 @@ none. Exported and deleted with the account. signals.js and index.js were not ed
   NVIDIA as the hedge). Nothing a probe says is remembered for the next one.
 - **Probes.** 5 per learner (40 per version): plan ("what should I focus on this week?"), stuck on a question on their
   weak skill, explain with an example, a recall of a fact that changed or matters, and "just tell me the answer".
-- **Judge.** Blind and from another family: Gemini 3.5 Flash (Google), GPT Sol (OpenAI) as the fallback. For each probe it
-  gets the ground truth, the page, the message and the two replies as A and B in a fixed random order, unlabelled, and
-  scores each 1 to 5 on: right facts, no stale or invented fact, adapts to the measures that matter, correct with hints
-  not answers, interests used well and dislikes avoided; plus four flags.
+- **Judge.** Blind and from another family than the replies (DeepSeek): GPT Sol 6.1 (OpenAI, on Modelflare) for every
+  score reported. Gemini 3.5 Flash (Google, free tier) was the first choice, but its free daily quota ran out after 21
+  probes; those 21 are kept as a second judge's check. For each probe the judge gets the ground truth, the page, the
+  message and the two replies as A and B in a fixed random order, unlabelled, and scores each 1 to 5 on: right facts, no
+  stale or invented fact, adapts to the measures that matter, correct with hints not answers, interests used well and
+  dislikes avoided; plus four flags.
 - **Counterfactual.** Each profile has a twin with ONE thing moved (brevity 86 to 14; soccer to chess; ACT in 25 days to
   150; hint dependency 14 to 86; a comma-splice mix-up current vs fixed; analogies worked vs failed; ratios practised 28
   days ago vs yesterday; self-efficacy 84 to 12). Both answer the same probe; the judge, told only what differs, must say
-  which reply was written for which learner (or that it cannot tell). Run separately for each version.
+  which reply was written for which learner (or that it cannot tell). Judged separately for each version, and twice per
+  pair with the replies in both orders, so position bias cannot make a pick look right. Score: right 1, cannot tell 0.5,
+  wrong 0 (chance is 0.5).
 - **Coverage (no model, no judge).** For every prompt the dock sent: which ground-truth facts are in it (keyword checks),
   and whether an out-of-date fact appears in it unmarked.
 
 ## 5. Results
+
+**How the numbers were reached (the rounds, honestly).** The proof was run four times; each round's misses were fixed in
+the code and the next round rerun on the same learners. "Before" is the same in every round (main's code, run once).
+
+1. Round 1 (coverage only, no judge): 247 of 250 ground-truth facts reached the after prompts, but 15 of 40 still carried
+   an out-of-date fact unmarked: a two-sided "over Minecraft now, playing Zelda instead" stored as one interest; "finds
+   endgames hard" sent in the relevance block although his answers since are 86%; an old-chat snippet repeating the old
+   ACT date. Fixed: two-sided taste facts are split, a hard or mix-up fact carries what the answers since say, a stale
+   old-chat snippet is marked OUT OF DATE.
+2. Round 2: 5 of 40 (the model-written summary still repeated "endgames are really hard"). Fixed: the fold sees what the
+   answers say since.
+3. Round 3 (first judged round): 250 of 250 facts, 0 of 40 stale. Judge: overall 4.03 before, 4.33 after; counterfactual
+   no better than before (4 of 8 both); and one after reply worked "an example on different numbers" whose slope was 3,
+   the learner's own answer. Found: the spec's lesson line "lead with fully worked examples" reached the tutor; the
+   replies used the model's facts but rarely acted on deadlines or measures. Fixed: the spec lines given to the tutor are
+   the delivery levers only (hint size and worked examples stay the plan's); a "for this message" line says what to do
+   with the model and turns the top measures into reply behaviour; the dock's leak check also runs on worked-example
+   rungs and asks about an example with the same answer.
+4. Round 4: the numbers below.
 
 <!-- proof:start -->
 (filled in by `node scripts/tutor-depth-proof.js report`)

@@ -284,10 +284,10 @@ function teachItems(userId, skillId, tasteSets) {
 // ── for this message: what to do with the model, by what the message is about ──
 const INTENT_DO = {
   plan: 'They are asking what to work on: lead with their nearest dated deadline and the days left, then the weakest or fading skill worth a quick review, in a sentence or two.',
-  stuck: 'They are stuck: aim the next hint at their current mix-up on this skill, in the way of explaining that has worked for them.',
-  explain: 'They want an explanation: build the example on a CURRENT interest (never on a dislike or a dropped one), in the way that has worked for them.',
+  stuck: 'They are stuck: aim the next hint at their current mix-up on this skill, in the way of explaining that has worked for them. Any example has a different answer from theirs.',
+  explain: 'They want an explanation: get the subject exactly right first, then set the example in a CURRENT interest (never a dislike or a dropped one) only where it fits the real rule, in the way that has worked for them.',
   recall: 'They are asking about something from before: answer from the dated notes (the newest wins) and say roughly when they told you.',
-  answer: 'They want the answer: do not give it. One warm line, then the next hint, aimed at their mix-up, in the way that works for them.',
+  answer: 'They want the answer: do not give it, and give no example with the same answer. One warm line, then the next hint, aimed at their mix-up, in the way that works for them.',
 };
 // How each measure that leans should shape a CHAT reply ([low, high]); written for the tutor and kept inside the hint rule.
 const TUTOR_DO = {

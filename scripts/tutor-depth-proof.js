@@ -301,10 +301,18 @@ function learners() {
 const PAGES = {
   home: { path: '/home', title: 'Home', heading: 'Your path' },
 };
-function probesFor(s) {
+function probesFor(s, set = 'main') {
   const q = s.question;
   const qpage = { path: '/lesson', title: s.topic, heading: `Practice: ${s.topic}`, question: q.text, skill_id: q.skill, snapshot: { blocks: [q.text] } };
   const lpage = { path: '/lesson', title: s.topic, heading: `Lesson: ${s.topic}`, skill_id: q.skill, text: `This lesson is about ${s.subject}.` };
+  // Held out: written after round 3 and never used to tune the code (the main five were the development set).
+  if (set === 'heldout') {
+    return [
+      { id: 'h_minutes', page: PAGES.home, msg: 'I only have 20 minutes today, what is the best use of it?', calls: ['their nearest deadline and the days left', 'the weakest or fading skill worth the time', 'a short plan that fits 20 minutes'], integrity: 'no question on screen' },
+      { id: 'h_why', page: qpage, msg: 'why do I keep getting these wrong?', calls: ['their current mix-up on this skill, named plainly', 'a hint in the way that worked for them'], integrity: `a question is on screen: the reply must NOT state the answer (${q.answer})` },
+      { id: 'h_practice', page: lpage, msg: 'can you make me a practice question about something I am into?', calls: ['a practice question set in a CURRENT interest (never a dislike or a dropped one)', 'at their level, aimed at their mix-up'], integrity: 'a lesson page: a new practice question is fine; it should not come with its answer worked out' },
+    ];
+  }
   return [
     { id: 'plan', page: PAGES.home, msg: 'what should I focus on this week?', calls: ['their nearest current deadline', 'weak or fading skills worth reviewing', 'their current mix-up if relevant'], integrity: 'no question on screen' },
     { id: 'stuck', page: qpage, msg: 'I don\'t get this one, can you help?', calls: ['their mix-up on this skill', 'the way of explaining that worked for them', 'the measures that matter when stuck'], integrity: `a question is on screen: the reply must NOT state the answer (${q.answer}); hints and method are fine` },
@@ -501,7 +509,8 @@ async function replies() {
     for (const key of [base.key, `${base.key}_cf`]) {
       const user = db.findOne('users', (u) => u.email === `${key}@sim.example`);
       if (!user) throw new Error(`no learner ${key} in ${args.db}`);
-      const probes = probesFor(base).filter((p) => (key === base.key ? true : p.id === base.twin.probe));
+      const set = args.set || 'main';
+      const probes = probesFor(base, set).filter((p) => (key === base.key ? true : set === 'main' && p.id === base.twin.probe));
       for (const p of probes) {
         if (only && !only.has(`${key}:${p.id}`)) continue;
         const n = calls.length;
@@ -578,7 +587,8 @@ Return ONLY JSON: {"A": {"right_facts": n, "no_stale": n, "adapts": n, "correct_
 
 function profileText(s) {
   const t = s.truth;
-  return `TRUE NOW:\n${t.current.map((x) => `- ${x}`).join('\n')}\nOUT OF DATE (must not be stated as current):\n${t.stale.length ? t.stale.map((x) => `- ${x}`).join('\n') : '- (none)'}\nMEASURED TRAITS THAT SHOULD SHAPE REPLIES:\n${t.measures.map((x) => `- ${x}`).join('\n')}\nCURRENT INTERESTS: ${t.use.join('; ') || '(none)'}\nAVOID: ${t.avoid.join('; ') || '(nothing)'}`;
+  // The name is part of the truth: both tutors are told the learner's first name (a reply using it invents nothing).
+  return `NAME: ${s.name} (the tutor is told their first name; using it is correct)\nTRUE NOW:\n${t.current.map((x) => `- ${x}`).join('\n')}\nOUT OF DATE (must not be stated as current):\n${t.stale.length ? t.stale.map((x) => `- ${x}`).join('\n') : '- (none)'}\nMEASURED TRAITS THAT SHOULD SHAPE REPLIES:\n${t.measures.map((x) => `- ${x}`).join('\n')}\nCURRENT INTERESTS: ${t.use.join('; ') || '(none)'}\nAVOID: ${t.avoid.join('; ') || '(nothing)'}`;
 }
 
 async function judge() {
@@ -593,8 +603,8 @@ async function judge() {
   const all = learners();
   const save = () => fs.writeFileSync(args.out, JSON.stringify(out, null, 1));
   for (const s of all) {
-    for (const p of probesFor(s)) {
-      if (done.has(`${s.key}:${p.id}`)) continue;
+    for (const p of probesFor(s, args.set || 'main')) {
+      if (args.cfOnly || done.has(`${s.key}:${p.id}`)) continue;
       const b = B.rows.find((r) => r.learner === s.key && r.probe === p.id);
       const a = A.rows.find((r) => r.learner === s.key && r.probe === p.id);
       if (!a || !b) continue;
@@ -611,18 +621,20 @@ async function judge() {
   }
   // Counterfactual: which reply was written for which learner?
   const CF_SYSTEM = 'You are a blind evaluator. Two simulated learners are identical except for ONE thing, described below. A tutor replied to the same message from each of them; you get the two replies in random order. Decide which reply was written for learner X. If the replies give no way to tell, say so. Return ONLY JSON: {"x_is": 1 | 2 | 0, "confidence": 1 to 5, "reason": "<one short sentence>"} where 0 means cannot tell.';
+  // Each pair is judged twice, the replies in both orders, so a judge's position bias cannot make a pick look right.
   for (const s of all) {
-    for (const [label, R] of [['before', B], ['after', A]]) {
+    for (const [label, R] of (args.set === 'heldout' ? [] : [['before', B], ['after', A]])) for (const order of [0, 1]) {
       const x = R.rows.find((r) => r.learner === s.key && r.probe === s.twin.probe);
       const y = R.rows.find((r) => r.learner === `${s.key}_cf` && r.probe === s.twin.probe);
       if (!x || !y) continue;
-      if (prev && (prev.counterfactual || []).some((c) => c.learner === s.key && c.version === label && c.result)) { out.counterfactual.push(prev.counterfactual.find((c) => c.learner === s.key && c.version === label)); continue; }
-      const flip = seed(`${s.key}:${label}:cf`) === 1;
+      const had = prev && (prev.counterfactual || []).find((c) => c.learner === s.key && c.version === label && (c.order || 0) === order && c.result);
+      if (had) { out.counterfactual.push(had); continue; }
+      const flip = (seed(`${s.key}:${label}:cf`) === 1) !== (order === 1);
       const p = probesFor(s).find((q) => q.id === s.twin.probe);
       const user = `WHAT DIFFERS: ${s.twin.what}\nLearner X: ${s.twin.x}\nLearner Y: ${s.twin.y}\n\nPAGE: ${p.page.path}${p.page.question ? `, question on screen: ${p.page.question}` : ''}\nTHE MESSAGE BOTH SENT: ${p.msg}\n\nREPLY 1:\n${(flip ? y : x).reply}\n\nREPLY 2:\n${(flip ? x : y).reply}`;
       const j = await ask(CF_SYSTEM, user);
       const xIs = flip ? 2 : 1;
-      out.counterfactual.push({ learner: s.key, version: label, what: s.twin.what, flip, result: j, correct: j ? (j.x_is === xIs ? 1 : j.x_is === 0 ? 0.5 : 0) : null, cannot_tell: j ? j.x_is === 0 : null, judge: j && j._judge });
+      out.counterfactual.push({ learner: s.key, version: label, order, what: s.twin.what, flip, result: j, correct: j ? (j.x_is === xIs ? 1 : j.x_is === 0 ? 0.5 : 0) : null, cannot_tell: j ? j.x_is === 0 : null, judge: j && j._judge });
       save();
       process.stdout.write(`cf:${s.key}:${label} `);
     }
@@ -668,22 +680,21 @@ function report() {
   for (const fl of FLAGS) L.push(`| ${fl.replace(/_/g, ' ')} | ${ok.filter((p) => p.scores.before[fl] === true).length} of ${ok.length} | ${ok.filter((p) => p.scores.after[fl] === true).length} of ${ok.length} |`);
   L.push('');
   L.push('| probe | n | before (mean of 5 criteria) | after | |', '|---|---|---|---|---|');
-  for (const id of ['plan', 'stuck', 'explain', 'recall', 'answer']) {
+  for (const id of [...new Set(ok.map((p) => p.probe))]) {
     const ps = ok.filter((p) => p.probe === id);
     const m = (side) => mean(ps.map((p) => mean(CRIT.map((c) => Number(p.scores[side][c])))));
     L.push(`| ${id} | ${ps.length} | ${f2(m('before'))} | ${f2(m('after'))} | |`);
   }
   L.push('');
-  const cf = J.counterfactual.filter((c) => c.result);
-  L.push('| counterfactual pair (one thing moved) | before: judge picked the right learner | after |', '|---|---|---|');
+  const cf = (args.cf && fs.existsSync(args.cf) ? JSON.parse(fs.readFileSync(args.cf, 'utf8')).counterfactual : J.counterfactual).filter((c) => c.result);
+  L.push('| counterfactual pair (one thing moved) | before: the judge\'s picks (each order) | after |', '|---|---|---|');
+  const word = (c) => (c.correct === 1 ? 'right' : c.correct === 0.5 ? 'cannot tell' : 'WRONG');
   for (const s of learners()) {
-    const b = cf.find((c) => c.learner === s.key && c.version === 'before');
-    const a = cf.find((c) => c.learner === s.key && c.version === 'after');
-    const show = (c) => (!c ? 'n/a' : c.correct === 1 ? `right (${c.result.confidence})` : c.correct === 0.5 ? 'cannot tell' : `WRONG (${c.result.confidence})`);
-    L.push(`| ${s.key}: ${s.twin.what} | ${show(b)} | ${show(a)} |`);
+    const show = (v) => { const xs = cf.filter((c) => c.learner === s.key && c.version === v); return xs.length ? `${xs.map(word).join(', ')} (score ${f2(mean(xs.map((c) => c.correct)))})` : 'n/a'; };
+    L.push(`| ${s.key}: ${s.twin.what} | ${show('before')} | ${show('after')} |`);
   }
-  const acc = (v) => { const xs = cf.filter((c) => c.version === v); return xs.length ? `${xs.filter((c) => c.correct === 1).length} right, ${xs.filter((c) => c.correct === 0.5).length} cannot tell, ${xs.filter((c) => c.correct === 0).length} wrong (of ${xs.length})` : 'n/a'; };
-  L.push(`| **total** | ${acc('before')} | ${acc('after')} |`, '');
+  const acc = (v) => { const xs = cf.filter((c) => c.version === v); return xs.length ? `score ${f2(mean(xs.map((c) => c.correct)))}: ${xs.filter((c) => c.correct === 1).length} right, ${xs.filter((c) => c.correct === 0.5).length} cannot tell, ${xs.filter((c) => c.correct === 0).length} wrong (of ${xs.length} judgements)` : 'n/a'; };
+  L.push(`| **total** (right 1, cannot tell 0.5, wrong 0; chance 0.5) | ${acc('before')} | ${acc('after')} |`, '');
   if (A && B) {
     const sys = (R) => R.rows.map((r) => r.system_chars).filter(Number.isFinite);
     const ms = (R) => R.rows.map((r) => r.ms).sort((x, y) => x - y);
