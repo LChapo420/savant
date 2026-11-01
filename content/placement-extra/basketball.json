@@ -1,0 +1,108 @@
+{
+ "track_id": "basketball",
+ "note": "Extra calibrated items for basketball around grade 7 (P1c-b), appended after a grade's seven stored questions (services/subject-placement.js withExtras). Written by Standard Compute (DeepSeek V4.1, scripts/content-gap-tools.js place-gen, PLACE_MID=1); each read blind by Claude Sonnet 5.5 and Gemini 3.8 Flash (scripts/placement-panel-judge.js), kept only when both call the key correct and their positions are at most two grades apart; the point is their mean. Grade = the grade the point falls in.",
+ "grades": {
+  "basketball_varsity": [
+   {
+    "topic": "Post and Rebound Contact: Forearms and Displacement",
+    "prompt": "NBA rules. A5 catches in the post with his back to the basket inside the lower defensive box. B5 is defending from behind, also inside the box, and legally has one forearm on A5's back. A5 turns to face the basket and starts a baseline drive. B5 keeps the forearm on A5's back and straightens the arm, clearly pushing A5 sideways so A5 loses balance and dribbles the ball out of bounds. What is the correct ruling?",
+    "answer": "Personal foul on B5: the forearm was allowed inside the lower defensive box only while tracking, and straightening it to displace A5 is a push.",
+    "choices": [
+     "Personal foul on B5: the forearm was allowed inside the lower defensive box only while tracking, and straightening it to displace A5 is a push.",
+     "No foul: a defender inside the lower defensive box may keep a forearm on the post player through any turn or drive.",
+     "No foul: the contact was on A5's back, and back contact in the post is never a foul in the NBA.",
+     "Personal foul on A5: turning into a defender's legal forearm makes A5 responsible for the displacement."
+    ],
+    "rationale": "The legal NBA forearm in the lower defensive box does not permit extending the arm to push and displace the post player.",
+    "band": "hard"
+   },
+   {
+    "topic": "Euro Step: A Legal Sideways Gather",
+    "prompt": "Use this convention for both NBA and FIBA: after a player ends the dribble while airborne, the first foot to touch the floor is step 1 and the next foot is step 2; the player may then pass or shoot before a third foot contact. A right-handed guard ends his last dribble by catching the ball in the air. He lands on his left foot outside the defender's hip, then plants his right foot sideways across the defender's path, then jumps off that right foot for a layup. What is the correct ruling on the Euro step?",
+    "answer": "Legal: the left foot is step 1 and the right foot is step 2, so the shot may come next.",
+    "choices": [
+     "Legal: the left foot is step 1 and the right foot is step 2, so the shot may come next.",
+     "Travel: the left-foot landing is the gather, so the right-foot plant and the jump are two more steps.",
+     "Travel: the sideways right-foot plant is an extra step because steps must go toward the basket.",
+     "Legal only if he shoots left-handed, because the right foot is the pivot after two steps."
+    ],
+    "rationale": "With an airborne gather, the first two floor contacts are the two allowed steps, and neither rule requires the steps to go toward the basket.",
+    "band": "hard"
+   },
+   {
+    "topic": "Odd and Even Fronts Against Zones",
+    "prompt": "Your team will attack a 1-3-1 zone that puts one defender at the top, three across the free-throw line area, and one on the baseline. Which front should you use, and what is the specific corner attack against this zone?",
+    "answer": "A two-guard front, sending a baseline runner through the corner to catch behind the wing.",
+    "choices": [
+     "A two-guard front, sending a baseline runner through the corner to catch behind the wing.",
+     "A one-guard front, posting the center at the high post to catch at the free-throw line.",
+     "A two-guard front, reversing the ball over the top to the weak-side guard for a three.",
+     "A one-guard front, dribbling the point guard at the top defender to collapse the middle."
+    ],
+    "rationale": "The unit uses a two-guard front against a 1-3-1 and attacks its corners with a baseline runner, so that is the correct front and action.",
+    "band": "hard"
+   },
+   {
+    "topic": "End-of-Quarter Two-for-One and Late Time-Outs",
+    "prompt": "Team A trails 74-76 with 36.0 seconds left in the fourth quarter and has the ball with a full 24-second shot clock and no time-outs left. The coach wants a two-for-one: Team A takes a shot now and gets a second shot before the horn, while Team B gets only one possession. Assume Team B will hold for the last shot and use its full 24-second shot clock on that single possession, and that Team A needs about 5 seconds of its next possession to get a shot away. Which timing for Team A's first shot produces the two-for-one?",
+    "answer": "Shoot with about 31 seconds left on the game clock",
+    "choices": [
+     "Shoot with about 31 seconds left on the game clock",
+     "Shoot with about 22 seconds left on the game clock",
+     "Shoot with about 12 seconds left on the game clock",
+     "Shoot with about 6 seconds left on the game clock"
+    ],
+    "rationale": "Shooting with 31 seconds left leaves Team B 31 seconds, so its full 24-second possession ends with about 7 seconds left, enough for Team A's second shot (31 - 24 = 7, which is at least 5), while any later first shot lets Team B's one posses",
+    "band": "hard"
+   },
+   {
+    "topic": "Per-Game, Per-36 and Per-100 Numbers Compared",
+    "prompt": "A bench guard averages 12.0 points in 20.0 minutes per game for a team that plays at a pace of 112 team possessions per 48 minutes. A starter at the same position averages 18.0 points in 34.0 minutes per game for a team that plays at a pace of 88 team possessions per 48 minutes. Points per 100 are scaled to the team possessions his team had while he was on the floor. Which comparison of the two scorers is correct?",
+    "answer": "Per 36: guard 21.6, starter 19.1. Per 100: starter 28.9, guard 25.7.",
+    "choices": [
+     "Per 36: guard 21.6, starter 19.1. Per 100: starter 28.9, guard 25.7.",
+     "Per 36: guard 21.6, starter 19.1. Per 100: guard 28.8, starter 25.4.",
+     "Per 36: starter 19.1, guard 18.0. Per 100: starter 28.9, guard 21.4.",
+     "Per 36: guard 21.6, starter 19.1. Per 100: guard 32.7, starter 28.9."
+    ],
+    "rationale": "Per 36 minutes the guard scores 21.6 to 19.1, but the starter's 18 points came in only about 62.3 team possessions at his team's slow pace (28.9 per 100) while the guard's 12 came in about 46.7 possessions at his team's fast pace (25.7 per ",
+    "band": "capstone"
+   }
+  ],
+  "basketball_collegiate": [
+   {
+    "topic": "Hit the Roller, Throw the Lob or Find the Shooter",
+    "prompt": "NBA half-court. A1 comes off A5's ball screen on the right wing. B5, A5's defender, jumps into A5's roll path to tag the roller; B5 faces A5 with his back to A1. A5 is directly behind B5, rolling toward the rim. The weak-side low defender B3 has left A3 in the left corner and is now standing in the lane at the front of the rim. A3 is unguarded. Which pass should A1 make?",
+    "answer": "A pass to A3 in the left corner, into his shooting pocket.",
+    "choices": [
+     "A pass to A3 in the left corner, into his shooting pocket.",
+     "A bounce pass to A5's stride behind B5, because the roller is behind the tag.",
+     "A lob to A5 over B5, because B5 has turned his back to the ball.",
+     "A pass back to A4 at the top of the key, because the corner skip is too long."
+    ],
+    "rationale": "B5's tag and B3's rim help leave A3 unguarded, so the correct read is the corner skip delivered into the shooter's pocket.",
+    "band": "hard"
+   }
+  ],
+  "basketball_youth_advanced": [
+   {
+    "topic": "Rebound Out of a Zone: Find a Body",
+    "prompt": "Your team is in a 2-3 zone: two top guards, plus left, middle and right defenders on the back line. The offense's left corner attacker shoots and the ball misses long to the right side. Which defender takes the weak-side rebounding spot, and what does he do first?",
+    "answer": "The right back-line defender finds the nearest attacker on the right side and boxes him out before chasing the ball.",
+    "choices": [
+     "The right back-line defender finds the nearest attacker on the right side and boxes him out before chasing the ball.",
+     "The left back-line defender leaves the left corner area and chases the ball from the strong side.",
+     "The middle back-line defender leaves the middle spot and chases the ball to the right baseline.",
+     "The right top guard drops from the top of the zone to box out the first attacker on the right side."
+    ],
+    "rationale": "In a 2-3 zone the back-line defender on the weak side owns the weak-side rebound, so he boxes out the nearest attacker in his area before pursuing the ball.",
+    "band": "capstone"
+   }
+  ]
+ },
+ "made_at": "2026-11-01T04:45:30.840Z",
+ "judges": [
+  "claude-sonnet-5.5 via standard compute (blind key + position)",
+  "gemini-3.8-flash via standard compute (blind key + position)"
+ ]
+}

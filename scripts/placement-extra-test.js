@@ -101,7 +101,7 @@ for (const trackId of TRACKS) {
   const topTwo = points.filter((p) => p >= span - adaptive.CEILING.region).length;
   check(`${topTwo} calibrated items in the top ${adaptive.CEILING.region} grades (a ceiling needs at least ${adaptive.CEILING.min}, and the sim wants about 2x that)`, topTwo >= 2 * adaptive.CEILING.min, topTwo);
   const perGrade = Array.from({ length: span }, (_, g) => points.filter((p) => Math.floor(p) === g).length);
-  const top = trackId === 'iq' ? [8, 9, 10, 11] : [12, 13, 14, 15];
+  const top = [span - 4, span - 3, span - 2, span - 1]; // the top four grades of this ladder
   check(`each of the top four grades holds at least 3 calibrated items (${top.map((g) => perGrade[g]).join(', ')})`, top.every((g) => perGrade[g] >= 3), perGrade);
 }
 

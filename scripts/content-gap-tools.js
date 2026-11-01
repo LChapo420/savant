@@ -7,7 +7,7 @@
  *   node scripts/content-gap-tools.js catchup-check <track>   blind-check the candidates, rewrite a rejected one once, drop it on a second rejection
  *   node scripts/content-gap-tools.js catchup-apply <track>   append the passed ones to content/unit-placement/<track>.json
  *   node scripts/content-gap-tools.js catchup-count <track>   questions per unit now
- *   node scripts/content-gap-tools.js place-gen <iq|act>      candidate top-end placement items (content/placement-extra)
+ *   node scripts/content-gap-tools.js place-gen <track>       candidate placement items (content/placement-extra); --grades=7 --per_grade=8, PLACE_MID=1 below the top
  *   node scripts/content-gap-tools.js place-check <iq|act>    blind solve + position judge by two NVIDIA models
  *   node scripts/content-gap-tools.js place-apply <iq|act>    write the passed items and their calibrated points
  *
@@ -513,7 +513,8 @@ function placeSystem(trackId) {
   if (process.env.PLACE_STYLE === 'judgment') return judgmentSystem(trackId);
   const track = (curriculum.getTrack(trackId) || {}).name || trackId;
   return [
-    `You write placement questions for the TOP of a ${track} ladder. A learner who already knows nearly everything in the subject sits them,`,
+    // PLACE_MID=1: items for a grade in the middle of the ladder (basketball grade 7, P1c-b), not its top.
+    process.env.PLACE_MID ? `You write placement questions for a grade in the MIDDLE of a ${track} ladder. Learners at every level sit them,` : `You write placement questions for the TOP of a ${track} ladder. A learner who already knows nearly everything in the subject sits them,`,
     'and they must tell a learner who has finished grade N apart from one who has finished grade N-1. They are original (never copy a',
     'published test item), multiple choice with the answer plus exactly three wrong options, and every one must be right.',
     '',
