@@ -633,7 +633,7 @@ App.mount(async () => {
 /** The tutor's durable notes, each with a delete button (GET/DELETE /api/tutor/facts). */
 async function mountTutorFacts(host) {
   if (!host) return;
-  const FACT_KIND = { goal: 'Goal', misconception: 'Mix-up', worked: 'What worked', hard: 'Hard for you', interest: 'Interest' };
+  const FACT_KIND = { goal: 'Goal', misconception: 'Mix-up', worked: 'What worked', hard: 'Hard for you', interest: 'Interest', dislike: 'Not into' };
   async function draw() {
     let facts = [];
     try { facts = (await App.api.get('/api/tutor/facts')).facts; } catch (err) { host.textContent = err.message || 'That did not load.'; return; }

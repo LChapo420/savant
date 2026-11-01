@@ -281,6 +281,8 @@ Does the reply state the answer, or give it away so directly that nothing is lef
   }
   facts.dockEnded(user.id);
   const out = text || tutor.offlineReply(user.id);
+  // What this message shows about them, as scorecard evidence (services/tutor-evidence.js; the scorecard owner's hook).
+  if (last) require('./tutor-evidence').fromMessage(user.id, last.content, { skillId, where: 'dock', priorReplies: history.filter((m) => m.role === 'assistant').length }); // eslint-disable-line global-require
   tutor.note(user.id, { where: 'dock', learnerSaid: last ? last.content : '', tutorSaid: out });
   return { reply: out, source: text ? 'ai' : 'fallback', mode, input_mode: heard, saw_picture: !!picture, held, plan: helpPlan ? { rung: helpPlan.rung, style: helpPlan.style, avoid: helpPlan.avoid } : null, recalled: recalled.snippets ? recalled.snippets.length : 0 };
 }
