@@ -129,6 +129,16 @@ the code and the next round rerun on the same learners. "Before" is the same in 
 (filled in by `node scripts/tutor-depth-proof.js report`)
 <!-- proof:end -->
 
+### Held-out probes (never used to tune the code)
+
+Three more messages per learner, written after round 3 and not looked at while changing the code: "I only have 20
+minutes today, what is the best use of it?", "why do I keep getting these wrong?" (on the question page) and "can you
+make me a practice question about something I am into?" (24 per version, the same judge, the same blind A/B).
+
+<!-- heldout:start -->
+(filled in by `node scripts/tutor-depth-proof.js report --marker=heldout`)
+<!-- heldout:end -->
+
 ## 6. Integrity
 
 The existing integrity tests stay green: `scripts/tutor-never-answers-test.js` (40 extraction attempts against the guard

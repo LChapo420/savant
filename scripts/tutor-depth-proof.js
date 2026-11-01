@@ -704,7 +704,7 @@ function report() {
     for (const [name, R] of [['before', B], ['after', A]]) L.push(`| ${name} | ${R.rows.length} | ${Math.round(mean(sys(R)))} (~${Math.round(mean(sys(R)) / 4)}) | ${med(ms(R))} | ${models(R).replace(/\|/g, '/')} | $${R.ledger_delta_usd} |`);
     L.push('');
     // Coverage: the ground truth in the prompt, and out-of-date facts in it unmarked (no model, no judge).
-    L.push('| run | ground-truth facts found in the prompt (keyword checks, 40 prompts) | prompts carrying an out-of-date fact unmarked | prompts with an answer key |', '|---|---|---|---|');
+    L.push('| run | ground-truth facts found in the prompt (keyword checks) | prompts carrying an out-of-date fact unmarked | prompts with an answer key |', '|---|---|---|---|');
     for (const [name, R] of [['before', B], ['after', A]]) {
       const rows = coverageOf({ rows: R.rows.filter((r) => !/_cf$/.test(r.learner)) });
       L.push(`| ${name} | ${rows.reduce((n, r) => n + r.have, 0)} of ${rows.reduce((n, r) => n + r.of, 0)} | ${rows.filter((r) => r.stale_live.length).length} of ${rows.length} | ${rows.filter((r) => r.key_leak).length} |`);
@@ -731,8 +731,8 @@ function report() {
   if (args.md) {
     const file = args.md;
     const doc = fs.readFileSync(file, 'utf8');
-    const start = '<!-- proof:start -->';
-    const end = '<!-- proof:end -->';
+    const start = `<!-- ${args.marker || 'proof'}:start -->`;
+    const end = `<!-- ${args.marker || 'proof'}:end -->`;
     const next = doc.includes(start) ? `${doc.slice(0, doc.indexOf(start) + start.length)}\n${md}\n${doc.slice(doc.indexOf(end))}` : `${doc}\n${start}\n${md}\n${end}\n`;
     fs.writeFileSync(file, next);
     console.log(`wrote the numbers into ${file}`);
