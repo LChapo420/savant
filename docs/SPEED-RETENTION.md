@@ -4,6 +4,8 @@ Branch `speed-retention`, 1 to 2 November 2026. Code: `services/efficiency.js` (
 
 **Everything in this document is simulated. None of it is evidence about real learners.** The simulated learners are the 200 of the recovery simulation (seed 20261022, 100 levels, 60 other learners as the population; `--modes=off`, because the model-read modes change what the scorecard is told, not what a learner learns); a second seed (11) and two robustness runs are reported beside it.
 
+**Shipped default (merge, 1 Nov): every lever is off, the stop rule included.** With the stop rule on, the scorecard gate at week 4 (200 learners, no extras) goes from 32 pass / 13 fail to 29 / 14 (help_seeking fails; four measures lose their signal), and the gate baseline may not be re-cut to hide a regression. The rule turns on (`SR_STOP=on`, then the default) once the measurement cost is fixed. The numbers below are for the stop rule switched on.
+
 ## Summary
 
 - **The owner's measure** is skills still recalled 30 days after the last session, per hour of practice (answering plus lesson-page reading). "Base" is the old fixed review ladder, "live" is the model-based schedule already shipped (step 38).

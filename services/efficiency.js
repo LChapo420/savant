@@ -1,7 +1,8 @@
 /**
  * Speed and retention levers: how the app spends a learner's practice minutes so that more of what they practise
- * is still recalled a month later, per hour spent. Only SR_STOP is on by default (the one the simulation showed
- * carries the gain: docs/SPEED-RETENTION.md); the other five are built, tested and switchable, and off. One module, six levers, each with its own off switch, read by the
+ * is still recalled a month later, per hour spent. All six are off by default. SR_STOP=on carries the simulated gain
+ * (docs/SPEED-RETENTION.md) but costs scorecard measurement at week 4 (gate: 32 -> 29 pass), so it stays off until that is
+ * fixed; the other five are built, tested and switchable, and off. One module, six levers, each with its own off switch, read by the
  * scheduler (services/mastery.js), the level planner (services/sessions.js) and the recovery simulation
  * (scripts/scorecard-recovery-sim.js) so the simulation exercises the code the app runs.
  *
@@ -32,7 +33,7 @@ const SWITCH = {
   difficulty: 'SR_DIFFICULTY',
 };
 // Default for a lever when its env switch is unset. Set from the measured results (docs/SPEED-RETENTION.md).
-const DEFAULT = { personal: 'off', relearn: 'off', interleave: 'off', stop: 'on', pretest: 'off', difficulty: 'off' };
+const DEFAULT = { personal: 'off', relearn: 'off', interleave: 'off', stop: 'off', pretest: 'off', difficulty: 'off' };
 
 /** Is this lever on? SR_ALL=off beats everything; SR_ALL=on forces all on; else the lever's own switch, else its default. */
 function enabled(lever) {

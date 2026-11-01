@@ -52,10 +52,10 @@ for (let l = 1; l <= GRADE0.pathLength; l++) if (curriculum.levelKind(l, GRADE0.
     withEnv({ SR_ALL: null, SR_STOP: 'off' }, () => { assert.strictEqual(efficiency.enabled('stop'), false); assert.strictEqual(efficiency.enabled('personal'), false); });
     withEnv({ SR_ALL: 'on', SR_DIFFICULTY: null }, () => assert.strictEqual(efficiency.enabled('difficulty'), true));
   });
-  await check('with no SR_ALL, each lever takes its shipped default (the ones the simulation proved on; the rest off)', () => {
+  await check('with no SR_ALL, each lever takes its shipped default (all off until the stop rule no longer costs measurement)', () => {
     withEnv({ SR_ALL: null }, () => {
       for (const [lever, d] of Object.entries(efficiency.DEFAULT)) assert.strictEqual(efficiency.enabled(lever), d === 'on', lever);
-      assert.strictEqual(efficiency.enabled('stop'), true);
+      assert.strictEqual(efficiency.enabled('stop'), false);
       assert.strictEqual(efficiency.enabled('interleave'), false);
       assert.strictEqual(efficiency.enabled('difficulty'), false);
     });
