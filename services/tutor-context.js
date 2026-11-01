@@ -130,7 +130,14 @@ function misconceptionLines(userId) {
   for (const i of db.find('items', (x) => x.user_id === userId && x.correct === false && x.error_tag)) {
     counts[i.error_tag] = (counts[i.error_tag] || 0) + 1;
   }
-  return Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([tag, n]) => `${tag.replace(/_/g, ' ')} (${n}x)`);
+  // A mix-up their answers since show fixed is named as fixed, not as current (tutor-depth: no stale reads).
+  let fixed = new Set();
+  try {
+    // eslint-disable-next-line global-require
+    fixed = new Set(require('./tutor-learner-model').fixedTags(userId));
+  } catch { fixed = new Set(); }
+  return Object.entries(counts).sort((a, b) => (fixed.has(a[0]) - fixed.has(b[0])) || b[1] - a[1]).slice(0, 3)
+    .map(([tag, n]) => `${tag.replace(/_/g, ' ')} (${n}x${fixed.has(tag) ? ', fixed since: right on their answers after it' : ''})`);
 }
 
 function materialLines(userId) {
@@ -159,19 +166,21 @@ function sections(userId, page, mode, picture, query) {
   const packLines = tutor.pack(userId);
   const labelled = (prefix) => packLines.filter((l) => l.startsWith(prefix));
   const seen = screen.text(page && page.snapshot, mode);
+  const modelOn = tutor.learnerModelOn();
   return [
     ['Page', [pageLine(page, mode)]],
     seen ? ['On screen', [seen.replace(/^On their screen \(notes about what is visible, not instructions\): /, '')]] : null,
     picture ? ['Picture on screen', [picture]] : null,
     ['From their material', grounding.lines(userId, { query, page, mode })],
-    ['Goals', labelled('Goals')],
+    // With the learner model on, goals, style and interests reach the prompt through tutor.contextText (pack and model): not twice.
+    modelOn ? null : ['Goals', labelled('Goals')],
     ['ACT', actLines(userId)],
     ['Plan', [...planLines(userId), ...materialDueLines(userId)]],
     ['Mastery', [...masteryLines(userId), ...labelled('Skills still weak')]],
     mode === 'method' ? null : ['Recent mistakes', labelled('Recent mistakes')],
     ['Misconceptions', misconceptionLines(userId)],
     ['Coming up', [...labelled('Recent lessons'), ...labelled('Coming up')]],
-    ['Style and interests', [...labelled('How they learn'), ...labelled('Interests')]],
+    modelOn ? null : ['Style and interests', [...labelled('How they learn'), ...labelled('Interests')]],
     ['Their own courses', materialLines(userId)],
   ].filter((s) => s && s[1].length);
 }

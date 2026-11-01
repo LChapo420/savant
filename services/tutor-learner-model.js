@@ -313,7 +313,7 @@ function memoryItems(states, skillId, intent) {
   const pb = intent === 'plan' ? 2 : intent === 'recall' ? 1.5 : 1;
   for (const s of states) {
     if (s.skill_id === skillId) continue; // in "now"
-    const ago = s.days === null ? '' : `, last practised ${Math.round(s.days)} days ago`;
+    const ago = s.days === null ? '' : `, last practised ${Math.round(s.days) === 1 ? '1 day' : `${Math.round(s.days)} days`} ago`;
     if (s.mastery >= 0.6 && s.recall !== null && s.recall < 0.7) out.push({ text: `fading: ${s.name} (was ${pct(s.mastery)}; predicted recall now ${pct(s.recall)}${ago}; review before building on it)`, score: 1.2 * pb * (1 + (0.7 - s.recall)), short: s.name });
     else if (s.mastery >= 0.75 && (s.recall === null || s.recall >= 0.8)) out.push({ text: `solid: ${s.name} (${pct(s.mastery)} over ${s.attempts}${s.recall !== null ? `, recall ${pct(s.recall)}` : ''})`, score: 0.45 * (intent === 'plan' ? 1.5 : 1), short: s.name });
     else if (s.mastery < 0.5 && s.attempts >= 3) out.push({ text: `still weak: ${s.name} (${pct(s.mastery)} over ${s.attempts})`, score: 1.0 * (intent === 'plan' ? 1.6 : 1), short: s.name });
@@ -327,7 +327,8 @@ function tasteItems(tasteSets, intent, now) {
   if (use.length) out.push({ text: `use for examples when it fits: ${use.map((x) => `${clip(x.text, 50)}${x.from === 'chat' ? ` (said ${dayOf(x.at)})` : ''}`).join('; ')}`, score: 2.0 * (intent === 'explain' ? 1.4 : 1), short: 'interests' });
   const avoid = tasteSets.dislikes.slice(0, 6);
   if (avoid.length) out.push({ text: `never build examples on: ${avoid.map((x) => `${clip(x.text, 50)}${x.at ? ` (${dayOf(x.at)})` : ''}`).join('; ')}`, score: 2.8, short: 'dislikes' });
-  for (const d of tasteSets.dropped.slice(0, 3)) out.push({ text: `no longer: ${clip(d.text, 40)} (${d.from === 'survey' ? 'on their sign-up form' : `said ${dayOf(d.at)}`}; overruled ${dayOf(d.by.at)} by "${clip(d.by.text, 60)}")`, score: 2.3, short: clip(d.text, 20) });
+  const seenDrop = new Set();
+  for (const d of tasteSets.dropped.filter((x) => { const k = x.text.toLowerCase(); if (seenDrop.has(k)) return false; seenDrop.add(k); return true; }).slice(0, 3)) out.push({ text: `no longer: ${clip(d.text, 40)} (${d.from === 'survey' ? 'on their sign-up form' : `said ${dayOf(d.at)}`}; overruled ${dayOf(d.by.at)} by "${clip(d.by.text, 60)}")`, score: 2.3, short: clip(d.text, 20) });
   return out;
 }
 
@@ -349,7 +350,7 @@ function nowItems(states, skillId, tags, now) {
   const name = curriculum.skillName(skillId);
   if (!s) return [{ text: `${name}: new to them (no answers on it yet)`, score: 3.5, short: name }];
   const recall = s.recall !== null ? `, predicted recall now ${pct(s.recall)}` : '';
-  const ago = s.days !== null ? ` (last practised ${Math.round(s.days)} days ago)` : '';
+  const ago = s.days !== null ? ` (last practised ${Math.round(s.days) === 1 ? '1 day' : `${Math.round(s.days)} days`} ago)` : '';
   const cur = tags.filter((t) => t.skill === skillId && !t.fixed).map((t) => t.tag.replace(/_/g, ' '));
   return [{ text: `${name}: mastery ${pct(s.mastery)} over ${s.attempts} answers${recall}${ago}${cur.length ? `; their mix-up here: ${cur.slice(0, 2).join(', ')}` : ''}`, score: 3.5, short: name }];
 }
@@ -453,4 +454,11 @@ function block(userId, opts = {}) {
   };
 }
 
-module.exports = { MODEL_BUDGET, SECTION_ORDER, compile, block, intentOf, tastes, fit, domainWords };
+/** Error tags on their answers that their answers since show fixed (for the dock's own misconception line). */
+function fixedTags(userId) {
+  const states = db.find('skill_states', (s) => s.user_id === userId);
+  const byId = Object.fromEntries(states.map((s) => [s.skill_id, s]));
+  return errorTags(userId, byId).filter((t) => t.fixed).map((t) => t.tag);
+}
+
+module.exports = { MODEL_BUDGET, SECTION_ORDER, compile, block, intentOf, tastes, fit, domainWords, fixedTags };
