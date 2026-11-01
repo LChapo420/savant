@@ -8,6 +8,8 @@
  *   POST /api/boosters/silent               { on } switch the silent behaviour signals     POST .../silent/batch { batch }
  *   POST /api/boosters/max-accuracy         { on }
  *   POST /api/boosters/import               { act_composite, sat_total, psat_total, gpa, history_csv }
+ *   GET  /api/boosters/choice?track=&grade=&level=   "which is clearer?" after a lesson ({ offer: null } when there is nothing to ask)
+ *   POST /api/boosters/choice               { offer_id, pick: a | b | same | skip }   POST .../choice/setting { on }
  *
  * Every route needs a signed-in account the channels are open to (an account under its consent age is not offered them without a parent's
  * agreement). Nothing here writes a value into the scorecard: each channel's result goes through its evidence path.
@@ -34,6 +36,13 @@ router.post('/games/:game', limit('boosters-g', 30, 60 * 1000), (req, res) => re
 router.post('/silent', (req, res) => reply(res, boosters.silent.set(req.user, !!(req.body && req.body.on))));
 router.post('/silent/batch', limit('boosters-s', 120, 60 * 1000), (req, res) => reply(res, boosters.silent.ingest(req.user, req.body && req.body.batch)));
 router.post('/max-accuracy', (req, res) => reply(res, boosters.maxAccuracy.set(req.user, !!(req.body && req.body.on))));
+router.get('/choice', (req, res) => {
+  const where = { trackId: String(req.query.track || ''), gradeId: String(req.query.grade || ''), level: Number(req.query.level) };
+  if (!where.trackId || !where.gradeId || !Number.isInteger(where.level)) return res.status(400).json({ error: 'Which lesson?', code: 'bad_request' });
+  return res.json({ offer: boosters.choice.offer(req.user, where) });
+});
+router.post('/choice', limit('boosters-c', 30, 60 * 1000), (req, res) => reply(res, boosters.choice.answer(req.user, req.body && req.body.offer_id, req.body && String(req.body.pick || ''))));
+router.post('/choice/setting', (req, res) => reply(res, boosters.choice.set(req.user, !!(req.body && req.body.on))));
 router.post('/import', limit('boosters-i', 10, 60 * 1000), express.json({ limit: '600kb' }), (req, res) => reply(res, imports.importResults(req.user, req.body)));
 
 module.exports = router;

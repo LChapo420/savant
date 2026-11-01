@@ -277,7 +277,11 @@ function contrastEvidence(statId, sides) {
 function modelEvidence(statId, sides, isTap) {
   if (isTap) return { kind: 'tap', count: (sides[`taps:${statId}`] || {}).n || 0 };
   const model = shiftModelOf(statId);
-  return { kind: model.experiment ? 'experiment' : 'shift', count: Math.min((sides[model.high] || {}).n || 0, (sides[model.low] || {}).n || 0) };
+  const count = Math.min((sides[model.high] || {}).n || 0, (sides[model.low] || {}).n || 0);
+  // An experiment stat read mostly from pairwise choices is gated on its choices (translate.js MIN_EVIDENCE.choice).
+  const ch = model.experiment && CHOICES_ON ? sides[`choice:${statId}`] : null;
+  if (ch && ch.n > 0 && count < 6) return { kind: 'choice', count: round2((ch.hi || 0) + (ch.lo || 0) + (ch.same || 0)) };
+  return { kind: model.experiment ? 'experiment' : 'shift', count };
 }
 
 /**
@@ -649,7 +653,11 @@ function standing(card, statId, { trackId } = {}) {
     }
   }
   const model = shiftModelOf(statId);
-  if ((SHIFTS[statId] || sides[model.high]) && sides[model.high] && sides[model.low]) {
+  if (model.experiment && hasChoices(sides, statId)) {
+    // Choices are read on the standing scale itself (the ordered probit above), so they need no population; arm outcomes join them.
+    const post = experimentPosterior(sides, statId);
+    parts.push({ z: post.z, sd: post.sd });
+  } else if ((SHIFTS[statId] || sides[model.high]) && sides[model.high] && sides[model.low]) {
     const p = populationOf('shifts', statId);
     const hi = sides[model.high];
     const lo = sides[model.low];
@@ -856,6 +864,102 @@ function applyContrast(record, statId, sides) {
   return fromModel(record, score, CONTRASTS[statId].needsPopulation && !pop ? 0 : mass);
 }
 
+// ── pairwise choices ("which is clearer?", services/boosters.js choice) ───
+// After a lesson page the learner may be shown two short versions of the same explanation that differ on ONE experiment's dimension (its
+// high and low instruction) and asked which helped more. A choice is a noisy reading of where they stand on that stat: the model is an
+// ordered probit on their standing z (0 = the typical learner, 1 = one between-learner SD above). Their felt difference is
+// u = v z + sqrt(1 - v^2) e, e ~ N(0, 1); they pick the high version when u > c, the low one when u < -c, and "no difference" otherwise.
+// v is the choice's VALIDITY, its correlation with the trait per choice. It is an assumption, set conservatively (0.3): what people say
+// helped them is a weak guide to what does (fluency is mistaken for learning: Deslauriers et al. 2019; stated preferences rarely predict
+// benefit: Pashler et al. 2008), so a choice reads the stat only as far as preference and benefit agree. The beta should re-estimate v by
+// checking choices against the same learners' arm outcomes (docs/SCORECARD-MEASURED.md). c sets how often people say "no difference"
+// (0.4: about a third of the time for a typical learner). SCORECARD_CHOICES=off ignores every choice.
+const CHOICE_VALIDITY = clamp(Number(process.env.SCORECARD_CHOICE_VALIDITY || 0.3), 0.01, 0.95);
+const CHOICE_CUT = Math.max(0, Number(process.env.SCORECARD_CHOICE_CUT || 0.4));
+const CHOICES_ON = process.env.SCORECARD_CHOICES !== 'off';
+const Z_GRID = Array.from({ length: 161 }, (_, i) => -4 + i * 0.05);
+/** The standard normal CDF (Abramowitz-Stegun 7.1.26, error under 1.5e-7). */
+function normalCdf(x) {
+  const t = 1 / (1 + (0.3275911 * Math.abs(x)) / Math.SQRT2);
+  const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-(x * x) / 2);
+  return x >= 0 ? 0.5 * (1 + y) : 0.5 * (1 - y);
+}
+/** P(high), P(low), P(no difference) for a learner at standing z. */
+function choiceProbs(z, v = CHOICE_VALIDITY, c = CHOICE_CUT) {
+  const sd = Math.sqrt(1 - v * v);
+  const hi = Math.max(1e-9, normalCdf((v * z - c) / sd));
+  const lo = Math.max(1e-9, normalCdf((-v * z - c) / sd));
+  return { hi, lo, same: Math.max(1e-9, 1 - hi - lo) };
+}
+/** Fold one choice ('hi', 'lo' or 'same') into a faded side record { hi, lo, same, n }. */
+function addChoice(prior, pick, nowIso) {
+  const was = prior || { hi: 0, lo: 0, same: 0, n: 0, at: nowIso };
+  const f = fade((Date.parse(nowIso) - Date.parse(was.at)) / 86400000);
+  const out = { hi: round4((was.hi || 0) * f), lo: round4((was.lo || 0) * f), same: round4((was.same || 0) * f), n: round4((was.n || 0) * f + 1), at: nowIso };
+  out[pick] = round4(out[pick] + 1);
+  return out;
+}
+function hasChoices(sides, statId) {
+  const c = CHOICES_ON && sides && sides[`choice:${statId}`];
+  return !!(c && c.n > 0);
+}
+/** The Fisher information about z of one more choice, at z (services/personalize.js uses it to pick which choice to ask next). */
+function choiceInfo(z = 0) {
+  const h = 1e-3;
+  const p0 = choiceProbs(z);
+  const p1 = choiceProbs(z + h);
+  return ['hi', 'lo', 'same'].reduce((a, k) => a + ((p1[k] - p0[k]) / h) ** 2 / p0[k], 0);
+}
+/**
+ * One posterior for an experiment stat's standing z, from everything measured about it: the arm outcomes (residual sums per arm, read as
+ * d ~ N(norm + tau z, 1/v_high + 1/v_low) with the shift model's norm and spread, the population's once there is one) and the pairwise
+ * choices (choiceProbs), on a grid from a N(0, 1) prior. Returns { z, sd, choices, armN }.
+ */
+function experimentPosterior(sides, statId, pop = undefined) {
+  const model = shiftModelOf(statId);
+  const p = pop === undefined ? populationOf('shifts', statId) : pop;
+  const norm = p ? p.norm : model.norm;
+  const tau = p ? p.tau : model.tau;
+  const hi = sides && sides[model.high];
+  const lo = sides && sides[model.low];
+  const arms = hi && lo && hi.v >= 0.5 && lo.v >= 0.5 ? { d: hi.r / hi.v - lo.r / lo.v, s2: 1 / hi.v + 1 / lo.v } : null;
+  const ch = CHOICES_ON && sides ? sides[`choice:${statId}`] : null;
+  const lp = Z_GRID.map((z) => {
+    let l = -(z * z) / 2;
+    if (arms) l -= (arms.d - norm - tau * z) ** 2 / (2 * arms.s2);
+    if (ch && ch.n > 0) {
+      const q = choiceProbs(z);
+      l += (ch.hi || 0) * Math.log(q.hi) + (ch.lo || 0) * Math.log(q.lo) + (ch.same || 0) * Math.log(q.same);
+    }
+    return l;
+  });
+  const top = Math.max(...lp);
+  const w = lp.map((x) => Math.exp(x - top));
+  const total = w.reduce((a, x) => a + x, 0);
+  const z = Z_GRID.reduce((a, g, i) => a + g * w[i], 0) / total;
+  const sd = Math.sqrt(Z_GRID.reduce((a, g, i) => a + (g - z) ** 2 * w[i], 0) / total);
+  return {
+    z, sd: Math.min(0.999, Math.max(0.05, sd)),
+    choices: ch ? (ch.hi || 0) + (ch.lo || 0) + (ch.same || 0) : 0,
+    armN: Math.min((hi && hi.n) || 0, (lo && lo.n) || 0),
+  };
+}
+/**
+ * What is known about one experiment stat, for services/personalize.js's allocator: the information held on each arm (the sum of
+ * p(1 - p) over the outcome answers), the choices, the arm spread planned with, and the posterior of the learner's standing.
+ */
+function experimentState(card, statId) {
+  if (!populationCache.values) populationPriors();
+  const model = shiftModelOf(statId);
+  const sides = (card && card.sides) || {};
+  const post = experimentPosterior(sides, statId);
+  const pop = populationOf('shifts', statId);
+  return {
+    vHigh: (sides[model.high] && sides[model.high].v) || 0, vLow: (sides[model.low] && sides[model.low].v) || 0,
+    choices: post.choices, z: post.z, sd: post.sd, tau: Math.max(model.tau, (pop && pop.tau) || 0),
+  };
+}
+
 // ── shifts (signals.js SHIFTS) ─────────────────────────────────────────────
 /** Fold residual sums into a faded side record { r, v, n }. */
 function addResid(prior, r, v, n, nowIso) {
@@ -926,6 +1030,13 @@ function fromModel(record, score, mass, cls = 'beh') {
 function applyShift(record, statId, sides) {
   const model = shiftModelOf(statId);
   const pop = populationOf('shifts', statId);
+  if (model.experiment && hasChoices(sides, statId)) {
+    // Pairwise choices as well as arm outcomes: one posterior for the learner's standing (experimentPosterior), 17 points per SD.
+    const post = experimentPosterior(sides, statId, pop);
+    const score = clamp(50 + POP_SD * post.z, 0, 100);
+    const mass = clamp((REF_SD / (POP_SD * post.sd)) ** 2 - (REF_SD / POP_SD) ** 2, 0, MAX_MASS);
+    return fromModel(record, score, mass, 'exp');
+  }
   const { score, mass } = shiftScore(sides, model, pop);
   // A shift whose typical value is unknown until there is a population is
   // shown but never trusted before then.
@@ -1115,6 +1226,7 @@ function observe(userId, observations, { source = 'unknown', trackId = null } = 
   const contrastNotes = {};
   for (const o of observations || []) if (o && (o.contrast || o.shift || o.tap) && o.note) contrastNotes[o.stat] = o.note;
   const residObs = (observations || []).filter((o) => o && o.resid && Number(o.n) > 0);
+  const choiceObs = (observations || []).filter((o) => o && o.choice && BY_ID[o.stat] && ['hi', 'lo', 'same'].includes(o.choice));
   const shiftIds = [...new Set((observations || []).filter((o) => o && o.shift && BY_ID[o.stat] && (SHIFTS[o.stat] || o.kind === 'experiment')).map((o) => o.stat))];
   const tapObs = (observations || []).filter((o) => o && o.tap && TAPS[o.stat] && Number.isFinite(Number(o.acc)));
   const memoryObs = (observations || []).filter((o) => o && o.memory && o.stat === 'decay_rate');
@@ -1124,11 +1236,12 @@ function observe(userId, observations, { source = 'unknown', trackId = null } = 
   const valid = (observations || []).filter((o) => o && BY_ID[o.stat] && !o.contrast
     && (isRateObservation(o) || (o.trials === undefined && Number.isFinite(Number(o.value)) && Number(o.weight) > 0)));
   const card = get(userId);
-  if (!valid.length && !sideObs.length && !contrastIds.length && !residObs.length && !shiftIds.length && !tapObs.length && !memoryObs.length && !velocityObs.length && !paceObs.length && !reachObs.length) return card;
+  if (!valid.length && !sideObs.length && !contrastIds.length && !residObs.length && !choiceObs.length && !shiftIds.length && !tapObs.length && !memoryObs.length && !velocityObs.length && !paceObs.length && !reachObs.length) return card;
   const sides = { ...(card.sides || {}) };
   const nowSides = new Date().toISOString();
   for (const o of sideObs) sides[o.side] = addCounts(sides[o.side], Math.min(Number(o.hits) || 0, Number(o.trials)), Number(o.trials), nowSides);
   for (const o of residObs) sides[o.resid] = addResid(sides[o.resid], Number(o.r) || 0, Number(o.v) || 0, Number(o.n), nowSides);
+  for (const o of choiceObs) sides[`choice:${o.stat}`] = addChoice(sides[`choice:${o.stat}`], o.choice, nowSides);
   const tapIds = [];
   for (const o of tapObs) {
     const key = `taps:${o.stat}`;
@@ -1527,6 +1640,12 @@ module.exports = {
   confidenceOf,
   refreshPopulation,
   forgettingCurve,
+  experimentState,
+  experimentPosterior,
+  choiceProbs,
+  choiceInfo,
+  CHOICE_VALIDITY,
+  CHOICE_CUT,
   STATS,
   BY_ID,
   CATEGORIES,

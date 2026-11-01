@@ -201,6 +201,8 @@ function onBlockResolved(userId, { session, kind, level, items, trackId, experim
       creditPendingLesson(userId, { ...where, accuracy, items: graded, ctx });
     }
 
+    const gap = returnGapDays(userId, session, kind);
+    if (gap !== null) obs.push(...signals.fromReturn(gap, graded, ctx));
     if (obs.length) scorecard.observe(userId, obs, { source: `level:${kind}`, trackId });
     return upsertLevelRow(userId, where, {
       kind,
@@ -270,6 +272,21 @@ function onSessionAbandoned(userId, session, items) {
   });
 }
 
+/**
+ * The days since the learner's last sitting, when this level is the first one closed in its sitting (re-entry: signals.fromReturn), else
+ * null. Read before this level's row is written.
+ */
+function returnGapDays(userId, session, kind) {
+  if (!session || session.id === undefined || session.kind === 'placement' || ['lesson', 'block_lesson'].includes(kind)) return null;
+  const earlier = db.find('level_signals', (r) => r.user_id === userId && r.session_id === session.id && r.kind !== 'session');
+  if (earlier.length) return null;
+  const started = Date.parse(session.started_at || 0);
+  if (!started) return null;
+  const last = db.find('sessions', (s) => s.user_id === userId && s.id !== session.id && s.ended_at && s.kind !== 'placement'
+    && Date.parse(s.ended_at) <= started).reduce((m, s) => Math.max(m, Date.parse(s.ended_at)), 0);
+  return last ? (started - last) / 86400000 : null;
+}
+
 function onPlacement(userId, { trackId, placedLevel, pathLength }) {
   return safely('placement', () => scorecard.observe(userId, signals.fromPlacement(placedLevel, pathLength),
     { source: 'placement', trackId }));
@@ -295,6 +312,12 @@ function onSilentSignals(userId, summary) {
 function onImportedResults(userId, results, memoryTests) {
   const obs = [...signals.fromImportedResults(results || {}), ...signals.fromDelayedCheck(memoryTests || [])];
   return obs.length ? scorecard.observe(userId, obs, { source: 'imported results' }) : null;
+}
+
+/** A pairwise choice ("which is clearer?", services/boosters.js choice): pick 'high' | 'low' | 'same'. Throws if the card is not updated. */
+function onChoice(userId, stat, pick, note) {
+  const obs = signals.fromChoice(stat, pick, note);
+  return obs.length ? scorecard.observe(userId, obs, { source: 'pairwise choice' }) : null;
 }
 
 /** The reading check (services/reading-check.js) ended: its measure of language level, as a designed test. Throws if the card is not updated. */
@@ -329,6 +352,7 @@ module.exports = {
   onSilentSignals,
   onImportedResults,
   onReadingCheck,
+  onChoice,
   onAnswer,
   onLessonRead,
   onBaseLessonFinished,

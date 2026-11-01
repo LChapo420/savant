@@ -741,7 +741,10 @@ App.mount(async () => {
               ${window.icon('layers')}Your path</a>
           </div>
           <div id="base-lesson-feedback" style="margin-top:12px"></div>
+          <div id="base-lesson-choice"></div>
         </div>`;
+      // "Which is clearer?" (public/js/boosters-choice.js): asked now and then, only when its two versions are ready.
+      if (window.ChoiceCard) window.ChoiceCard.mount(document.getElementById('base-lesson-choice'), { track, grade, level: at });
 
       // "Give Input" beside the button that moves the learner on — the same control
       // the adaptive session offers at the end of a level. It sits inside the finish

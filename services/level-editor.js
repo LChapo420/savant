@@ -395,6 +395,56 @@ function prefetchNext(userId, enrollment, level) {
   ensure({ userId, enrollment, grade, level: target }).catch(() => {});
 }
 
+/**
+ * The two short versions a "which is clearer?" choice shows (services/boosters.js choice): one explanation of this level's topic, written
+ * for this learner, once following the experiment's high instruction and once its low one, identical otherwise. The same model and brief
+ * as a rewrite (the `personalize` route, background lane), a much smaller ask, and only for an account whose levels are written for it;
+ * anything else, or any failure, gives null and nothing is asked. Never awaited by a page.
+ *
+ * @returns {Promise<{high: string, low: string, model: string}|null>}
+ */
+async function writeChoicePair(userId, where, experiment) {
+  if (!experiment || !experiment.high || !experiment.low) return null;
+  const profile = learner.getProfile(userId);
+  const user = db.byId('users', userId);
+  if (!subscriptions.canEditLevels(user, profile)) return null;
+  const grade = curriculum.getGrade(where.trackId, where.gradeId);
+  if (!grade) return null;
+  const plan = curriculum.levelPlan(grade, where.level);
+  const entry = LAYOUT.entryFor(grade, where.level) || {};
+  const prompt = [
+    'Write two versions of ONE short explanation for the learner described below. They will be shown side by side and asked which helped more.',
+    '',
+    `- SUBJECT: ${curriculum.getTrack(where.trackId).name}`,
+    `- TOPIC: ${entry.title || plan.focus || '(the level they just read)'}`,
+    `- WHAT IT COVERS: ${entry.covers || ''}`,
+    '',
+    details.brief(userId, where),
+    '',
+    'Both versions explain the same single idea from this topic, correctly, in 60 to 120 words of plain text (no markdown, no headings).',
+    'They must be identical in content, accuracy and length (within 20 words) and differ in exactly one way:',
+    `- Version A: ${experiment.high}`,
+    `- Version B: ${experiment.low}`,
+    'Do not mention that there are two versions, or what differs.',
+    '',
+    'Reply with only a JSON object: {"a": "<version A>", "b": "<version B>"}',
+  ].join('\n');
+  // eslint-disable-next-line global-require
+  const ai = require('./ai');
+  const raw = await ai.talkDetail({
+    role: 'personalize', task: 'choice_pair', userId, lane: 'background', maxTokens: 1500,
+    system: 'You write short teaching explanations. You return only the JSON asked for.',
+    messages: [{ role: 'user', content: prompt }],
+  });
+  if (!raw || !raw.text) return null;
+  const m = /\{[\s\S]*\}/.exec(raw.text);
+  if (!m) return null;
+  let out;
+  try { out = JSON.parse(m[0]); } catch { return null; }
+  const ok = (t) => typeof t === 'string' && t.trim().split(/\s+/).length >= 25 && t.length <= 2000;
+  return ok(out.a) && ok(out.b) ? { high: out.a.trim(), low: out.b.trim(), model: raw.model } : null;
+}
+
 /** Forget every tailored page for one learner on one course. */
 function invalidate(userId, trackId, gradeId) {
   return db.remove('level_edits', (e) => e.user_id === userId
@@ -403,5 +453,6 @@ function invalidate(userId, trackId, gradeId) {
 }
 
 module.exports = {
+  writeChoicePair,
   ensure, forLevel, pendingFor, stale, invalidate, buildEditorPrompt, prefetchNext,
 };

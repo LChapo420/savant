@@ -411,6 +411,7 @@ const KNOWN_COLLECTIONS = [
   'es_catch_up', 'catchup_units',
   'material_notes',
   'reading_checks',
+  'experiment_arms', 'choice_pairs',
 ];
 function collectionNames() {
   return KNOWN_COLLECTIONS.filter((name) => {

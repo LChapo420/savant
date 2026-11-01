@@ -28,6 +28,7 @@
  * as the events lets a learner who almost never does it read as low.
  */
 const db = require('../../config/db');
+const itemTags = require('./item-tags');
 
 const EXPERIMENT_WEIGHT = 0.45;
 const DELAYED_WEIGHT = 0.3;
@@ -66,6 +67,13 @@ const RATES = {
   // ways: needing to consolidate, and (inverted) tolerating dense text.
   consolidation_need: { norm: 0.25, chance: 'a lesson whose reading was recorded', event: 'scrolled back over it twice or more' },
   text_density_tolerance: { norm: 0.25, invert: true, chance: 'a lesson whose reading was recorded', event: 'scrolled back over it twice or more' },
+  // Reading what the lesson asks to be read (round 8): out of the lesson pages whose reading time was recorded, the share finished in
+  // under a fifth of the time their length needs. The same pages are part of rush_tendency's chances, so as a reading of adherence it
+  // leaks a general hurry: held to validity 0.8 (a learner who rushes everything skims too). Its old rule read lesson telemetry that only
+  // AI-lesson levels have, and only ever pushed down.
+  ...(process.env.SCORECARD_ADHERENCE === 'off' ? {} : {
+    instruction_adherence: { norm: 0.1, invert: true, chance: 'a lesson page whose reading time was recorded', event: 'finished it in under a fifth of the time its length needs', validity: 0.8 },
+  }),
   // Quitting after a run of misses, out of the moments it could have happened.
   persistence: { norm: 0.15, invert: true, chance: 'three or more misses in a row with questions left', event: 'stopped there' },
   // Round 5: confidence as a trait, out of the "how sure are you?" taps. How
@@ -120,7 +128,21 @@ const SHIFTS = {
   ...(process.env.SCORECARD_TEXT_LOAD === 'off' ? {} : {
     vocabulary_ceiling: { high: 'res_text_heavy', low: 'res_text_light', scale: 60, tau: 0.3, norm: 0, needsPopulation: true, validity: Number(process.env.SCORECARD_TEXT_VALIDITY || 0.9) },
   }),
+  // Round 8: coming back after a break. The first level of a sitting that starts three or more days after the last one, against the
+  // first levels of sittings after shorter gaps, each answer read against what the ability model expected: a learner whose return costs
+  // them does worse than their level predicts right after a break. How much a break costs people in general is the population's
+  // (needsPopulation). Its old rule compared raw accuracy of the sitting's first block with earlier sittings' scores, which a practice
+  // sitting (no blocks) read as the whole sitting, and it had only two values.
+  ...(process.env.SCORECARD_REENTRY === 'off' ? {} : {
+    reentry_cost: { high: 'res_return_steady', low: 'res_return_after_break', scale: 60, tau: 0.3, norm: 0, needsPopulation: true },
+  }),
+  // Round 8: ability-like stats read from tagged questions (scorecard/item-tags.js): the answers on questions that need the skill against
+  // the answers on questions known not to, each against the ability model's expectation. The tags are a model's labels, so validity 0.8.
+  ...(process.env.SCORECARD_ITEM_TAGS === 'off' ? {} : Object.fromEntries(itemTags.TAG_STATS.map((stat) => [stat,
+    { high: `tag_on:${stat}`, low: `tag_off:${stat}`, scale: 60, tau: 0.3, norm: 0, needsPopulation: true, validity: Number(process.env.SCORECARD_TAG_VALIDITY || 0.8), tagged: true }]))),
 };
+/** The tag stats with a shift rule (SHIFTS above). */
+const TAGGED = Object.keys(SHIFTS).filter((id) => SHIFTS[id].tagged);
 
 /** An item's text load: its prompt's words, long words (7+ letters) counted twice. */
 function textLoad(item) {
@@ -448,6 +470,8 @@ function fromBlock(items, { priorErrorTags = {}, ctx = {} } = {}) {
       if (long) add(i < half ? 'res_first_half' : 'res_second_half', it, p);
       if (answered.length >= 5 && i >= 2) add(badStart ? 'res_rest_after_bad_start' : 'res_rest_after_good_start', it, p);
       if (loads.length >= 4 && loads[i] !== midLoad) add(loads[i] > midLoad ? 'res_text_heavy' : 'res_text_light', it, p);
+      const tags = TAGGED.length ? itemTags.tagsOf(it) : null;
+      if (tags) for (const stat of TAGGED) if (tags.known.has(stat)) add(`${tags.on.has(stat) ? 'tag_on' : 'tag_off'}:${stat}`, it, p);
     }
     for (const [name, s] of Object.entries(sides)) if (s.n) obs.push({ resid: name, ...s });
     if (sides.res_after_miss) {
@@ -458,6 +482,10 @@ function fromBlock(items, { priorErrorTags = {}, ctx = {} } = {}) {
     if (sides.res_opening && sides.res_after_opening) obs.push({ stat: 'warmup_latency', shift: true, note: `first three answers ${sides.res_opening.r >= 0 ? 'above' : 'below'} what was expected` });
     if (sides.res_first_half && sides.res_second_half) obs.push({ stat: 'fatigue_curve', shift: true, note: `second half ${sides.res_second_half.r >= 0 ? 'above' : 'below'} what was expected` });
     if (sides.res_text_heavy && sides.res_text_light) obs.push({ stat: 'vocabulary_ceiling', shift: true, note: `wordier questions ${sides.res_text_heavy.r >= sides.res_text_light.r ? 'no harder' : 'harder'} than expected` });
+    for (const stat of TAGGED) {
+      const on = sides[`tag_on:${stat}`];
+      if (on || sides[`tag_off:${stat}`]) obs.push({ stat, shift: true, note: on ? `questions that need it ${on.r >= 0 ? 'above' : 'below'} what was expected` : undefined });
+    }
     if (sides.res_rest_after_bad_start) obs.push({ stat: 'momentum_dependence', shift: true, note: 'two misses to open the level' });
     else if (sides.res_rest_after_good_start) obs.push({ stat: 'momentum_dependence', shift: true });
   } else if (afterError.length >= 2 && otherwise.length >= 2) {
@@ -578,10 +606,11 @@ function fromLesson(lesson, { telemetry = {}, checks = [], baseline = 0.7, ctx =
   const ratio = readMs ? readMs / expected : null;
 
   if (ratio !== null) {
+    if (RATES.instruction_adherence) obs.push(rate('instruction_adherence', ratio < 0.2, 'skimmed the lesson'));
     if (ratio >= 0.25) obs.push(rate('rush_tendency', false));
     if (ratio < 0.25) {
       obs.push(rate('rush_tendency', true, 'skimmed the lesson'));
-      if (acc < baseline) obs.push({ stat: 'instruction_adherence', value: 30, weight: 0.1 });
+      if (!RATES.instruction_adherence && acc < baseline) obs.push({ stat: 'instruction_adherence', value: 30, weight: 0.1 });
     } else if (ratio < 0.6 && acc >= 0.75) {
       obs.push({ stat: 'processing_velocity', value: 75, weight: 0.2, note: 'read quickly and the checks held' });
     } else if (ratio > 1.8 && acc >= 0.75) {
@@ -633,6 +662,7 @@ function fromBaseLesson({ readMs = 0, words: length = 0, nextAccuracy = null, ba
   const ratio = readMs ? readMs / expected : null;
   if (ratio !== null) {
     obs.push(rate('rush_tendency', ratio < 0.2, 'finished the lesson page very quickly'));
+    if (RATES.instruction_adherence) obs.push(rate('instruction_adherence', ratio < 0.2, 'finished the lesson page very quickly'));
     if (ratio > 0.6 && readMs > 8 * 60000) obs.push({ stat: 'attention_runway', value: 72, weight: 0.15, note: `${Math.round(readMs / 60000)} minutes on the lesson page` });
     if (ratio < 0.5 && nextAccuracy !== null && nextAccuracy >= 0.8) {
       obs.push({ stat: 'processing_velocity', value: 75, weight: 0.2, note: 'read quickly and the next level held up' });
@@ -668,6 +698,8 @@ function fromFeedback(fb) {
   if (fb.length === 'long') {
     obs.push({ stat: 'brevity_preference', value: 75, weight: 0.25, note: 'said the level was too long' });
     obs.push({ stat: 'attention_runway', value: 35, weight: 0.15 });
+    // (Round 8: depth was read only from "too short", so it could only ever rise; "too long" is the other half of the same evidence.)
+    if (process.env.SCORECARD_DEPTH_TAPS !== 'off') obs.push({ stat: 'depth_breadth', value: 40, weight: 0.06 });
   } else if (fb.length === 'short') {
     obs.push({ stat: 'brevity_preference', value: 25, weight: 0.25, note: 'said the level was too short' });
     obs.push({ stat: 'depth_breadth', value: 65, weight: 0.1 });
@@ -797,7 +829,8 @@ function fromSession(userId, session, items, { abandoned = false } = {}) {
     const gapDays = (started - Date.parse(earlier[0].ended_at)) / 86400000;
     const usual = earlier.slice(0, 6).reduce((a, s) => a + (s.score || 0), 0) / Math.min(6, earlier.length);
     const firstBlock = accuracy(answered.filter((i) => (i.block || 0) === 0));
-    if (gapDays >= 3 && firstBlock !== null) {
+    // (Round 8: with the re-entry shift on, the first level of a sitting is read when it closes, fromReturn below.)
+    if (!SHIFTS.reentry_cost && gapDays >= 3 && firstBlock !== null) {
       obs.push({
         stat: 'reentry_cost',
         value: usual - firstBlock > 0.2 ? 75 : 30,
@@ -902,6 +935,30 @@ function fromImportedResults(r) {
   return obs;
 }
 
+/**
+ * A pairwise choice ("which is clearer?", services/boosters.js choice): two short versions of one explanation that differ on one experiment
+ * stat, and which the learner said helped more. pick: 'high' (the version following the stat's high instruction), 'low', or 'same' ("no
+ * difference"); a skip is not evidence and gives nothing. Scored with the arm outcomes by scorecard/index.js experimentPosterior.
+ */
+function fromChoice(stat, pick, note) {
+  const side = { high: 'hi', low: 'lo', same: 'same' }[pick];
+  if (!stat || !side) return [];
+  return [{ stat, choice: side }, { stat, shift: true, kind: 'experiment', note: note || `said which version helped more: ${pick === 'same' ? 'no difference' : pick}` }];
+}
+
+/**
+ * The first level of a sitting closed (round 8, SHIFTS reentry_cost): its answers against what the ability model expected, to the side
+ * for its gap since the last sitting (three days or more: after a break). Rapid answers, coach use and memory tests are left out.
+ */
+function fromReturn(gapDays, items, ctx = {}) {
+  if (!SHIFTS.reentry_cost || !Number.isFinite(gapDays)) return [];
+  const res = residuals(items, ctx);
+  if (!res.n) return [];
+  const away = gapDays >= 3;
+  return [{ resid: away ? 'res_return_after_break' : 'res_return_steady', r: res.r, v: res.v, n: res.n },
+    { stat: 'reentry_cost', shift: true, note: away ? `${Math.round(gapDays)} days away, first level ${res.r >= 0 ? 'above' : 'below'} what was expected` : undefined }];
+}
+
 /** This learner's usual check accuracy on a lesson: the bar an experiment is measured against. */
 function lessonBaseline(userId) {
   const rows = db.find('level_signals', (r) => r.user_id === userId
@@ -915,6 +972,8 @@ function lessonBaseline(userId) {
 module.exports = {
   experimentModel,
   residuals,
+  fromChoice,
+  fromReturn,
   experimentOutcome,
   RATES,
   CONTRASTS,

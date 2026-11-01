@@ -41,6 +41,7 @@ const MIN_EVIDENCE = {
   contrast: 15,     // answers on the thinner side
   shift: 10,        // answers on the thinner side
   experiment: 6,    // outcome answers on the thinner arm
+  choice: 4,        // pairwise "which is clearer?" answers (round 8; a skip is not one)
   tap: 8,           // taps
   memory: 20,       // memory tests
   velocity: 300,    // fresh answers behind the slope of ability over practice

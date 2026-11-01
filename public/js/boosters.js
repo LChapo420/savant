@@ -61,6 +61,12 @@ App.mount(async () => {
         <label class="check-row"><input type="checkbox" id="silent-on" ${s.silent.on ? 'checked' : ''}> <span>Collect these quiet signals</span></label>
       </section>
 
+      <section class="card boost" aria-labelledby="b-c">
+        <h2 id="b-c">Which is clearer? <span class="chip">a few seconds, now and then</span></h2>
+        <p class="small">After some lessons, two short versions of one explanation, written a little differently, and which helped you more. At most one a lesson and a few a day, never in a test, and you can always skip.${s.choice && s.choice.answered ? ` <span class="muted">You have answered ${s.choice.answered}.</span>` : ''}</p>
+        <label class="check-row"><input type="checkbox" id="choice-on" ${s.choice && s.choice.on ? 'checked' : ''}> <span>Ask me now and then</span></label>
+      </section>
+
       <section class="card boost" aria-labelledby="b-m">
         <h2 id="b-m">Maximum accuracy <span class="chip">optional</span></h2>
         <p class="small">A “how sure are you?” tap on every question, and a small teaching experiment on every tailored lesson. It learns how you learn sooner, and asks a little more of you.</p>
@@ -75,6 +81,9 @@ App.mount(async () => {
     root.querySelector('[data-act="import"]')?.addEventListener('click', importForm);
     document.getElementById('silent-on').addEventListener('change', async (e) => {
       try { await App.api.post('/api/boosters/silent', { on: e.target.checked }); App.toast(e.target.checked ? 'Quiet signals are on.' : 'Quiet signals are off.'); } catch (err) { App.toast(err.message, 'error'); e.target.checked = !e.target.checked; }
+    });
+    document.getElementById('choice-on').addEventListener('change', async (e) => {
+      try { await App.api.post('/api/boosters/choice/setting', { on: e.target.checked }); App.toast(e.target.checked ? 'You will be asked now and then.' : 'You will not be asked.'); } catch (err) { App.toast(err.message, 'error'); e.target.checked = !e.target.checked; }
     });
     document.getElementById('max-on').addEventListener('change', async (e) => {
       try { await App.api.post('/api/boosters/max-accuracy', { on: e.target.checked }); App.toast(e.target.checked ? 'Maximum accuracy mode is on.' : 'Maximum accuracy mode is off.'); } catch (err) { App.toast(err.message, 'error'); e.target.checked = !e.target.checked; }

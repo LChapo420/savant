@@ -286,6 +286,7 @@ const EXPORT_MORE = [
   'tutor_facts', 'tutor_strategies', 'tutor_modes', 'tutor_archive',
   'es_catch_up', 'catchup_units',
   'material_notes',
+  'experiment_arms', 'choice_pairs',
 ];
 
 router.get('/account/export', requireAuth, (req, res) => {

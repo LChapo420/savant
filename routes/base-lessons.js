@@ -394,6 +394,13 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
   const gradeRow = curriculum.getGrade(track, grade);
   if (!gradeRow) return res.status(404).json({ error: 'No such lesson.' });
 
+  // "Which is clearer?" (services/boosters.js choice): its two versions are written now, in the background, while the page is read, and
+  // asked only if they are ready when it is finished. Not awaited; it does nothing for an account it is not for.
+  try {
+    // eslint-disable-next-line global-require
+    require('../services/boosters').choice.prepare(req.user, { trackId: track, gradeId: grade, level }, { kind: curriculum.levelKind(level, gradeRow.pathLength, gradeRow) });
+  } catch { /* never in the way of the page */ }
+
   // A game level comes first: when the pairing says this level is a game, the
   // game is what plays — the assignment is a deliberate choice, not a fallback.
   // Its questions are written once and kept, so this is usually a database read;

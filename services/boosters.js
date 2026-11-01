@@ -9,6 +9,9 @@
  *   silent signals  hesitation before the first move, typing rhythm, corrections: summaries only, never the keys; opt-in with a notice
  *   imported        ACT, SAT/PSAT and grade-average figures typed in, and a review-history CSV (Anki-style) for the forgetting model
  *   max accuracy    a confidence tap on every question and an experiment on every tailored page
+ *   which is clearer  (round 8) now and then after a lesson page, two short versions of one explanation that differ on ONE way of teaching
+ *                   (an experiment's high and low instruction, services/personalize.js EXPERIMENTS), and which helped more: preference evidence
+ *                   for that stat (scorecard/index.js experimentPosterior, at a stated, conservative validity)
  *   (the reading check, services/reading-check.js, is the seventh and was built first)
  *
  * Who may use them. A learner under their country's consent age gets NO new data collection beyond what they already have unless a parent has
@@ -42,11 +45,11 @@ function ageOf(user, now = new Date()) {
 }
 
 // ── what is kept ─────────────────────────────────────────────────────────────
-const blank = () => ({ questionnaire: null, delayed: { taken: [], open: null }, games: {}, silent: { on: false, acc: null }, imports: null, max_accuracy: false });
+const blank = () => ({ questionnaire: null, delayed: { taken: [], open: null }, games: {}, silent: { on: false, acc: null }, imports: null, max_accuracy: false, choice: { on: true, log: [], open: null } });
 function get(userId) {
   const p = learner.getProfile(userId);
   const b = p && p.boosters ? p.boosters : {};
-  return { ...blank(), ...b, delayed: { ...blank().delayed, ...(b.delayed || {}) }, silent: { ...blank().silent, ...(b.silent || {}) } };
+  return { ...blank(), ...b, delayed: { ...blank().delayed, ...(b.delayed || {}) }, silent: { ...blank().silent, ...(b.silent || {}) }, choice: { ...blank().choice, ...(b.choice || {}) } };
 }
 function put(userId, patch) {
   const next = { ...get(userId), ...patch };
@@ -238,6 +241,98 @@ const maxAccuracy = {
   },
 };
 
+// ── "which is clearer?" pairwise choices ─────────────────────────────────────
+// Now and then, after a lesson page (never in a test, a quiz or a checkpoint: only the lesson-finished screen asks), the learner sees two
+// short versions of the same explanation of what they just read, written for them, that differ on ONE way of teaching, and says which
+// helped more, that there was no difference, or skips. At most CHOICE_PER_LESSON a lesson and CHOICE_PER_DAY a day. The two versions are
+// written in the background when the lesson page is opened (prepare, never awaited, only for accounts whose levels are written for them),
+// so the page never waits on a model; if they are not ready when the lesson ends, nothing is asked. Which way of teaching is asked about is
+// services/personalize.js choiceDimension: where one more choice teaches the app most. On by default for an account the extras are open
+// to (a learner under the consent age needs a parent's agreement, as for every extra), and switched off on the Extras page.
+const CHOICE_PER_LESSON = 1;
+const CHOICE_PER_DAY = Number(process.env.BOOSTER_CHOICE_PER_DAY || 3);
+const CHOICE_TTL = 2 * DAY;          // a prepared pair is offered within two days or not at all
+const choiceInFlight = new Map();
+const PICKS = new Set(['a', 'b', 'same', 'skip']);
+const dayOf = (t) => new Date(t).toISOString().slice(0, 10);
+const choiceOn = () => process.env.BOOSTER_CHOICE !== 'off';
+const pairFor = (userId, where) => db.findOne('choice_pairs', (r) => r.user_id === userId && r.track_id === where.trackId && r.grade_id === where.gradeId && r.level === where.level);
+
+const choice = {
+  /** May this account be asked now? Rate limits included. */
+  mayAsk(user, where, now = Date.now()) {
+    if (!choiceOn() || !allowed(user)) return false;
+    const c = get(user.id).choice;
+    if (!c.on) return false;
+    const log = c.log || [];
+    if (log.filter((x) => dayOf(Date.parse(x.at)) === dayOf(now)).length >= CHOICE_PER_DAY) return false;
+    return log.filter((x) => x.track === where.trackId && x.grade === where.gradeId && x.level === where.level).length < CHOICE_PER_LESSON;
+  },
+  /**
+   * Write the two versions for this lesson in the background (the lesson page was just opened). Returns a promise that never rejects;
+   * callers do not await it. `write` is services/level-editor.js writeChoicePair (injectable for tests).
+   */
+  prepare(user, where, { kind = 'lesson', write = null } = {}) {
+    try {
+      if (kind !== 'lesson' || !choice.mayAsk(user, where)) return Promise.resolve(null);
+      if (pairFor(user.id, where)) return Promise.resolve(null);
+      const key = `${user.id}:${where.trackId}:${where.gradeId}:${where.level}`;
+      if (choiceInFlight.has(key)) return choiceInFlight.get(key);
+      const personalize = require('./personalize'); // eslint-disable-line global-require
+      const e = personalize.choiceDimension(user.id);
+      if (!e) return Promise.resolve(null);
+      const writer = write || require('./level-editor').writeChoicePair; // eslint-disable-line global-require
+      const job = Promise.resolve().then(() => writer(user.id, where, e)).then((out) => {
+        if (!out || !out.high || !out.low) return null;
+        return db.insert('choice_pairs', { user_id: user.id, track_id: where.trackId, grade_id: where.gradeId, level: where.level, stat: e.stat, label: e.label, high: String(out.high).slice(0, 2000), low: String(out.low).slice(0, 2000), model: out.model || null, at: new Date().toISOString() });
+      }).catch((err) => { console.warn(`boosters: choice pair not written: ${err.message}`); return null; }).finally(() => choiceInFlight.delete(key));
+      choiceInFlight.set(key, job);
+      return job;
+    } catch (err) {
+      console.warn(`boosters: choice not prepared: ${err.message}`);
+      return Promise.resolve(null);
+    }
+  },
+  /** The question for a lesson just finished, if its two versions are ready and the learner may be asked: { offer_id, versions: [a, b] } or null. */
+  offer(user, where, now = Date.now()) {
+    if (!choice.mayAsk(user, where, now)) return null;
+    const pair = pairFor(user.id, where);
+    if (!pair || now - Date.parse(pair.at) > CHOICE_TTL) return null;
+    const b = get(user.id);
+    if (b.choice.open && b.choice.open.pair === pair.id) return choice.view(b.choice.open, pair);
+    const id = crypto.randomBytes(6).toString('hex');
+    // Which version is shown first is decided per offer, so a learner who always picks the first one reads as noise, not as a preference.
+    const highFirst = crypto.createHash('sha1').update(`${id}:${pair.id}`).digest()[0] < 128;
+    const open = { id, pair: pair.id, stat: pair.stat, at: new Date(now).toISOString(), high: highFirst ? 'a' : 'b', track: where.trackId, grade: where.gradeId, level: where.level };
+    put(user.id, { choice: { ...b.choice, open } });
+    return choice.view(open, pair);
+  },
+  view: (open, pair) => {
+    const high = { text: pair.high }; const low = { text: pair.low };
+    const [a, c] = open.high === 'a' ? [high, low] : [low, high];
+    return { offer_id: open.id, question: 'Which explanation helped you more?', versions: [{ key: 'a', text: a.text }, { key: 'b', text: c.text }] };
+  },
+  /** pick: 'a' | 'b' | 'same' ("no difference") | 'skip'. A skip is kept (it counts toward the limits) but is not evidence. */
+  answer(user, offerId, pick, now = Date.now()) {
+    if (!allowed(user)) return { error: 'Not available for this account.', code: 'not_allowed' };
+    if (!PICKS.has(pick)) return { error: 'Choose a, b, no difference, or skip.', code: 'bad_pick' };
+    const b = get(user.id);
+    const open = b.choice.open;
+    if (!open || open.id !== String(offerId || '')) return { error: 'That question is not open any more.', code: 'not_found' };
+    const side = pick === 'skip' ? null : pick === 'same' ? 'same' : pick === open.high ? 'high' : 'low';
+    const log = [...(b.choice.log || []), { at: new Date(now).toISOString(), stat: open.stat, track: open.track, grade: open.grade, level: open.level, pick: side || 'skip' }].slice(-200);
+    put(user.id, { choice: { ...b.choice, log, open: null } });
+    if (side) { try { hooks().onChoice(user.id, open.stat, side); } catch (err) { console.warn(`boosters: choice not applied: ${err.message}`); return { error: 'Your answer could not be saved.', code: 'failed' }; } }
+    return { ok: true, counted: !!side };
+  },
+  set(user, on) {
+    if (!allowed(user)) return { error: 'Not available for this account.', code: 'not_allowed' };
+    const b = get(user.id);
+    put(user.id, { choice: { ...b.choice, on: !!on, open: on ? b.choice.open : null } });
+    return { ok: true, on: !!on };
+  },
+};
+
 // ── status, for the screens ──────────────────────────────────────────────────
 function status(user) {
   const ok = allowed(user);
@@ -254,7 +349,8 @@ function status(user) {
     silent: { on: !!b.silent.on },
     max_accuracy: { on: !!b.max_accuracy },
     imports: b.imports ? { at: b.imports.at, kinds: b.imports.kinds } : null,
+    choice: { on: !!b.choice.on, answered: (b.choice.log || []).filter((x) => x.pick !== 'skip').length },
   };
 }
 
-module.exports = { allowed, ageOf, get, put, status, questionnaire, delayed, delayedCandidates, games, gameScore, silent, maxAccuracy, GAMES, CHECK_ITEMS };
+module.exports = { allowed, ageOf, get, put, status, questionnaire, delayed, delayedCandidates, games, gameScore, silent, maxAccuracy, choice, GAMES, CHECK_ITEMS, CHOICE_PER_DAY, CHOICE_PER_LESSON };
