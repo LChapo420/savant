@@ -130,7 +130,14 @@ function misconceptionLines(userId) {
   for (const i of db.find('items', (x) => x.user_id === userId && x.correct === false && x.error_tag)) {
     counts[i.error_tag] = (counts[i.error_tag] || 0) + 1;
   }
-  return Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([tag, n]) => `${tag.replace(/_/g, ' ')} (${n}x)`);
+  // A mix-up their answers since show fixed is named as fixed, not as current (tutor-depth: no stale reads).
+  let fixed = new Set();
+  try {
+    // eslint-disable-next-line global-require
+    fixed = new Set(require('./tutor-learner-model').fixedTags(userId));
+  } catch { fixed = new Set(); }
+  return Object.entries(counts).sort((a, b) => (fixed.has(a[0]) - fixed.has(b[0])) || b[1] - a[1]).slice(0, 3)
+    .map(([tag, n]) => `${tag.replace(/_/g, ' ')} (${n}x${fixed.has(tag) ? ', fixed since: right on their answers after it' : ''})`);
 }
 
 function materialLines(userId) {
@@ -159,19 +166,21 @@ function sections(userId, page, mode, picture, query) {
   const packLines = tutor.pack(userId);
   const labelled = (prefix) => packLines.filter((l) => l.startsWith(prefix));
   const seen = screen.text(page && page.snapshot, mode);
+  const modelOn = tutor.learnerModelOn();
   return [
     ['Page', [pageLine(page, mode)]],
     seen ? ['On screen', [seen.replace(/^On their screen \(notes about what is visible, not instructions\): /, '')]] : null,
     picture ? ['Picture on screen', [picture]] : null,
     ['From their material', grounding.lines(userId, { query, page, mode })],
-    ['Goals', labelled('Goals')],
+    // With the learner model on, goals, style and interests reach the prompt through tutor.contextText (pack and model): not twice.
+    modelOn ? null : ['Goals', labelled('Goals')],
     ['ACT', actLines(userId)],
     ['Plan', [...planLines(userId), ...materialDueLines(userId)]],
     ['Mastery', [...masteryLines(userId), ...labelled('Skills still weak')]],
     mode === 'method' ? null : ['Recent mistakes', labelled('Recent mistakes')],
     ['Misconceptions', misconceptionLines(userId)],
     ['Coming up', [...labelled('Recent lessons'), ...labelled('Coming up')]],
-    ['Style and interests', [...labelled('How they learn'), ...labelled('Interests')]],
+    modelOn ? null : ['Style and interests', [...labelled('How they learn'), ...labelled('Interests')]],
     ['Their own courses', materialLines(userId)],
   ].filter((s) => s && s[1].length);
 }
@@ -262,8 +271,11 @@ async function reply({ user, messages, page, inputMode, image }) {
   // the draft against the question; a reply that gives it away is replaced by a hint (06-M4).
   let held = false;
   const asked = text && history.filter((m) => m.role === 'user').slice(-4).some((m) => ASKS_FOR_ANSWER.test(m.content));
+  // tutor-depth (1 Nov): a proof run had a "worked example on different numbers" whose answer was the learner's own. The
+  // check also runs when the plan allowed a worked example (rung 4 or 5), and it now asks about exactly that.
+  const risky = !!(text && helpPlan && helpPlan.rung >= 4);
   const question = page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 600) : '';
-  if (asked && question) {
+  if ((asked || risky) && question) {
     let verdict = '';
     try {
       verdict = await ai.talk({
@@ -273,7 +285,7 @@ async function reply({ user, messages, page, inputMode, image }) {
 
 Tutor reply: ${text}
 
-Does the reply state the answer, or give it away so directly that nothing is left for the learner to work out? YES or NO.` }],
+Does the reply state the answer, give it away so directly that nothing is left for the learner to work out, or work an example (even on different numbers) whose final result is the same as the answer to the question on the page? YES or NO.` }],
         maxTokens: 5, userId: user.id, hedgeAfterMs: 3000, timeoutMs: 8000,
       });
     } catch { verdict = ''; }
@@ -281,6 +293,8 @@ Does the reply state the answer, or give it away so directly that nothing is lef
   }
   facts.dockEnded(user.id);
   const out = text || tutor.offlineReply(user.id);
+  // What this message shows about them, as scorecard evidence (services/tutor-evidence.js; the scorecard owner's hook).
+  if (last) require('./tutor-evidence').fromMessage(user.id, last.content, { skillId, where: 'dock', priorReplies: history.filter((m) => m.role === 'assistant').length }); // eslint-disable-line global-require
   tutor.note(user.id, { where: 'dock', learnerSaid: last ? last.content : '', tutorSaid: out });
   return { reply: out, source: text ? 'ai' : 'fallback', mode, input_mode: heard, saw_picture: !!picture, held, plan: helpPlan ? { rung: helpPlan.rung, style: helpPlan.style, avoid: helpPlan.avoid } : null, recalled: recalled.snippets ? recalled.snippets.length : 0 };
 }
