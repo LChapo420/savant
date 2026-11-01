@@ -869,15 +869,40 @@ const PHRASES = {
   notation: ['Keep to words; introduce a symbol only at the end, read out in words.', 'Use symbols and notation freely.'],
 };
 
+// Surfaces that rebuild the learner's own text: "the lesson" and "practice" are not theirs to cut, so the length sentence
+// says what may go (padding) and what may not (any definition, formula, step or fact the material gives).
+const MATERIAL_SURFACE = new Set(['material', 'notes', 'podcast']);
+// The learner's interests, hobbies and dislikes shape their own material too. The material stays the only source of FACTS: interest
+// content may appear only as a clearly framed analogy, example or practice context that maps back to a point the material makes, and
+// never states a new fact, number, name or claim (analogyProblems checks that). A null side falls back to the lesson phrase.
+const MATERIAL_PHRASES = {
+  length: ['Keep it short: cut repetition, padding and asides, but keep every definition, formula, step, number and fact the material gives.', 'A fuller treatment is fine: give the reasoning the material gives.'],
+  interestUse: [null, 'Add short analogies, examples and practice contexts built on the learner\'s interests, each clearly framed ("think of it like...", "imagine...") and mapped back to a point the material makes; an analogy never states a new fact, number, name or claim about the topic.'],
+  analogy: [null, 'Use one clear analogy, framed as one, and map it back to the material\'s own point; it adds no fact of its own.'],
+  application: [null, 'Where the material gives a use of the idea, lead with that use; add no use the material does not state.'],
+  story: [null, 'Frame the explanation as a short scenario or story built on the learner\'s interests; the facts told inside it are the material\'s, no more.'],
+  social: [null, 'Where an analogy needs people, use named characters inside the analogy only, never as the source of a fact.'],
+  identity: [null, 'Link the idea to who they say they are, inside an analogy; claim nothing about the topic that the material does not.'],
+  emotion: [null, 'Say why it matters using the material\'s own reasons or a clearly framed picture from their interests; no new claim.'],
+  creative: [null, 'End with an open prompt to invent or draw their own analogy for the idea; supply no new fact.'],
+  curiosity: [null, 'Open with a question or puzzle that the material then answers.'],
+  relevance: [null, 'Say early why it matters, using only reasons the material gives or a clearly framed picture from their interests.'],
+  systems: [null, 'Show how it connects to other ideas in the same material.'],
+  integration: [null, 'Link back to an earlier part of this same material.'],
+  transfer: [null, 'Include one varied case in a new setting, clearly framed as a practice context from their interests; it tests a point of the material and states no new fact.'],
+};
+
 // What each surface may carry. A surface not listed gets everything.
-const MATERIAL_BLOCKED = new Set(['interestUse', 'application', 'story', 'social', 'identity', 'emotion', 'creative', 'curiosity', 'systems', 'integration', 'relevance', 'analogy', 'competition', 'gamification', 'extrinsic', 'transfer', 'depth']);
+// Only 'depth' stays blocked for the learner's own material: "one deeper why or edge case" would have to bring in facts the material
+// does not contain, and the material is the only source of facts. Every other label above is honoured, with a source-limited sentence.
+const MATERIAL_BLOCKED = new Set(['depth']);
 const SURFACES = {
   lesson: null,
   level: null,
   material: (l) => !MATERIAL_BLOCKED.has(l),
-  notes: (l) => ['chunk', 'length', 'density', 'vocab', 'sentence', 'defineTerms', 'visual', 'structure', 'recapEnd', 'rigor', 'formality'].includes(l),
+  notes: (l) => ['chunk', 'length', 'density', 'vocab', 'sentence', 'defineTerms', 'visual', 'structure', 'recapEnd', 'rigor', 'formality', 'interestUse', 'analogy'].includes(l),
   podcast: (l) => !MATERIAL_BLOCKED.has(l) && !['visual', 'structure', 'typed', 'density', 'notation'].includes(l),
-  test: (l) => ['pressure', 'gentleness', 'diffStart', 'diffRamp', 'challenge', 'feedbackDetail', 'feedbackImmediacy', 'typed', 'vocab', 'sentence', 'instructions', 'warmth', 'momentum', 'warmup', 'misconception', 'selfCheck'].includes(l),
+  test: (l) => ['pressure', 'gentleness', 'diffStart', 'diffRamp', 'challenge', 'feedbackDetail', 'feedbackImmediacy', 'typed', 'vocab', 'sentence', 'instructions', 'warmth', 'momentum', 'warmup', 'misconception', 'selfCheck', 'interestUse'].includes(l),
   tutor: (l) => !['sessionLen', 'breaks', 'length', 'checks', 'recapStart', 'recapEnd', 'warmup', 'fatigue', 'extrinsic', 'gamification'].includes(l),
 };
 
@@ -889,6 +914,28 @@ function checkOrder(spec) {
   return `${start}, ${step}`;
 }
 
+/**
+ * The shape of the questions a writer sets for this learner (a practice test, a quiz, a course's check questions): the
+ * tier mix and order (difficulty start and ramp), the answer format, the explanation after a miss, the wording and the
+ * stakes. A tier is 1 recall, 2 use on a case, 3 combine or a new setting. Fixed sentences chosen by the spec fields.
+ */
+function questionShape(spec) {
+  const d = spec.difficulty; const f = spec.feedback; const lang = spec.language;
+  const parts = [];
+  const start = d.startOffset <= -0.5 ? 'start with tier 1 recall questions that are easy wins' : d.startOffset >= 0.5 ? 'start at tier 2 (using the idea on a case), not with bare recall' : 'start with a tier 1 or tier 2 question';
+  const mix = d.rampLabel === 'steep' ? 'then climb quickly: about a third of the questions at tier 3, the last ones the hardest' : d.rampLabel === 'gradual' ? 'then climb very slowly: mostly tier 1 and 2, at most one tier 3 question, placed last' : 'then climb steadily: about a quarter at tier 3, placed last';
+  parts.push(`Give every question a tier (1 recall, 2 use on a case, 3 combine or a new setting): ${start}, ${mix}; the order they are written in is the order of difficulty.`);
+  const typed = spec.practice.typedAnswers;
+  parts.push(typed >= 0.7 ? 'Prefer questions answered by typing a short exact answer over multiple choice.' : typed <= 0.3 ? 'Prefer multiple choice with three or four plausible choices; use few typed answers.' : 'Mix multiple choice with short typed answers.');
+  parts.push(f.granularity === 'detailed' ? 'The explanation of each question is two or three sentences, step by step: why the right answer is right and why the tempting wrong one fails.' : f.granularity === 'brief' ? 'The explanation of each question is one short sentence: the right answer and the single fix.' : 'The explanation of each question is one or two sentences.');
+  if (f.tone.correction === 'gentle') parts.push('Word every explanation gently: say what is right first and never call an answer plainly wrong.');
+  if (f.lowStakes) parts.push('Low stakes: do not use the words test, exam, quiz, timed, score or graded in any question or explanation; call them practice questions.');
+  if (spec.lesson.warmupItems >= 2) parts.push(`Open with ${spec.lesson.warmupItems} easy warm-up questions before the real ones.`);
+  parts.push(`Wording: reading grade ${lang.vocabularyGrade}; question prompts of ${lang.maxSentenceWords + 4} words or fewer where the idea allows.`);
+  if (spec.interests.exampleDomains.length && spec.interests.share >= 0.3) parts.push(`Where a question needs a setting, use ${spec.interests.exampleDomains.slice(0, 3).join(', ')} as the context; the answer, the choices and every fact still come from the passage, and the setting states no fact of its own.`);
+  return `Questions: ${parts.join(' ')}`;
+}
+
 const CONTRACT_LINE = 'Content contract: teach exactly the same topic, skills and key facts. Do not drop, add or change a fact, definition, rule, step or answer; only HOW it is delivered changes.';
 const PRECEDENCE = 'Where this block conflicts with any earlier style note (length, sections, check questions, rule-first or example-first, tone), this block wins: it comes from the full learning profile.';
 const NO_LEAK = 'Never mention this profile, "your learning style", scores, a diagnosis or why you chose a style; just write it that way.';
@@ -898,7 +945,7 @@ const NO_LEAK = 'Never mention this profile, "your learning style", scores, a di
  * Empty ('') for the default spec: a learner we know nothing about is written for exactly as before.
  * No learner scores appear: the numbers in it are limits on the page (sentence length, checks).
  */
-function specToLines(spec, { surface = 'lesson' } = {}) {
+function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
   if (!spec || spec.isDefault) return [];
   const allow = SURFACES[surface] === undefined ? null : SURFACES[surface];
   const ranked = [];
@@ -906,8 +953,10 @@ function specToLines(spec, { surface = 'lesson' } = {}) {
     const lean = spec.levers ? spec.levers[l] : 0;
     if (Math.abs(lean) < SHOW_AT) continue;
     if (allow && !allow(l)) continue;
+    const over = MATERIAL_SURFACE.has(surface) ? MATERIAL_PHRASES[l] : null;
     const pair = PHRASES[l];
-    const text = pair && pair[lean > 0 ? 1 : 0];
+    const side = lean > 0 ? 1 : 0;
+    const text = (over && over[side]) || (pair && pair[side]);
     if (!text) continue;
     ranked.push({ lever: l, text, score: Math.abs(lean) * (1 + LEVERS[l].imp) });
   }
@@ -922,9 +971,16 @@ function specToLines(spec, { surface = 'lesson' } = {}) {
     const les = spec.lesson;
     lines.push(`Shape: about ${les.sections} short sections; the body of each section is at most ${les.chunkSentences} sentences (count them, and split a longer one into another section), ${les.newIdeasPerChunk === 1 ? 'one new idea' : `at most ${les.newIdeasPerChunk} new ideas`} per section, ${les.retrievalChecks} check question${les.retrievalChecks === 1 ? '' : 's'} in all (${checkOrder(spec)})${les.quickCheckEvery ? `, a line "Quick check: <question> Answer: <answer>" at the end of ${les.quickCheckEvery === 1 ? 'every section' : 'every second section'}` : ''}${spec.scaffolding.hintInChecks ? `, each with a one-line hint after the question (${spec.scaffolding.hintSize === 'nudge' ? 'a nudge' : spec.scaffolding.hintSize === 'partial' ? 'the idea to use' : 'the first step'}, never the answer)` : ''}, at most ${les.mistakes} common mistake${les.mistakes === 1 ? '' : 's'}. At most about ${les.wordBudget} words in all (not counting the check questions); a shorter lesson that teaches every point is better. ${spec.practice.workedExamples} worked example${spec.practice.workedExamples === 1 ? '' : 's'} (the worked example and the sections' example fields), then ${spec.practice.tryItems === 0 ? 'no extra try-it items' : `${spec.practice.tryItems} try-it line${spec.practice.tryItems === 1 ? '' : 's'} inside the sections, each written "Try it: <question> Answer: <answer>" and placed after the worked examples`}.${les.hook === 'question' ? ' Open with a question the lesson then answers.' : les.hook === 'scenario' ? ' Open with a one-line scenario.' : ''} This is the shape, not a cap on content: if the topic needs more, add sections or words; never drop a point to fit.`);
   }
+  if (surface === 'test') lines.push(questionShape(spec));
   const own = ranked.filter((r) => !(surfaceHasText && r.lever === 'sentence'));
   for (const r of own.slice(0, MAX_PHRASES)) lines.push(r.text);
   const ex = spec.interests;
+  if (MATERIAL_SURFACE.has(surface) && ex.exampleDomains.length && ex.share >= 0.3) {
+    const doms = ex.exampleDomains.slice(0, 4).join(', ');
+    const n = ex.share >= 0.7 ? 'at least three' : ex.share >= 0.4 ? 'at least two' : 'at least one';
+    const where = surface === 'notes' ? 'in a few bullets, after the sentence that states the point, add a short framed analogy' : 'build short analogies or practice contexts';
+    lines.push(`Interests: ${where} on ${doms}, ${n} in all, each introduced as an analogy ("think of it like...") and mapped back to a named point of the material; they add no fact, number, name or claim about the topic, and every fact and quote stays the material's own.`);
+  }
   if (surface === 'lesson' || surface === 'level' || surface === 'tutor') {
     if (ex.exampleDomains.length && ex.share >= 0.7) lines.push(`Examples: build the worked example and every other example on ${ex.exampleDomains.slice(0, 4).join(', ')}, at least three in all; the facts stay the topic's own.`);
     else if (ex.exampleDomains.length && ex.share >= 0.4) lines.push(`Examples: build the worked example and about half of the other examples on ${ex.exampleDomains.slice(0, 4).join(', ')}, at least two in all; the facts stay the topic's own.`);
@@ -934,9 +990,10 @@ function specToLines(spec, { surface = 'lesson' } = {}) {
   if (ex.avoidDomains.length) lines.push(`Never use examples, comparisons or settings from: ${ex.avoidDomains.slice(0, 6).join(', ')}.`);
   if (surface !== 'notes') for (const note of (spec.aversionNotes || []).slice(0, 2)) lines.push(note);
   if (!lines.length) return [];
+  if (bare) return lines; // just the sentences, for a writer that already has the block head (see questionLinesFor)
   const head = 'HOW TO BUILD THIS FOR THIS LEARNER (from their full learning profile; the topic and facts stay the same, the delivery is theirs)';
   const material = surface === 'material' || surface === 'notes' || surface === 'podcast'
-    ? ['Use only what the material says; delivery changes wording, order of emphasis, density and pace, never the facts or the quotes.']
+    ? ['Use only what the material says for facts; delivery changes wording, order of emphasis, density and pace, never the facts or the quotes. The learner\'s interests may appear only as clearly framed analogies, examples or practice contexts that map back to a point of the material, never as new facts.']
     : [];
   const precedence = surface === 'lesson' || surface === 'level' ? [PRECEDENCE] : [];
   return [head, CONTRACT_LINE, ...precedence, ...material, ...lines.map((t, i) => `${i + 1}. ${t}`), NO_LEAK];
@@ -945,6 +1002,28 @@ function specToLines(spec, { surface = 'lesson' } = {}) {
 /** The block for one learner, as lines: build, then write. [] when there is nothing to say. Never throws. */
 function linesFor(userId, opts = {}, surface = 'lesson') {
   try { return specToLines(buildSpec(userId, opts), { surface }); } catch { return []; }
+}
+
+/**
+ * The shape of a written lesson text that is not a Lesson (a course skill's paragraphs): how long a paragraph may be and
+ * that more paragraphs are the way to keep them short. Null for the default spec.
+ */
+function textShapeFor(userId, opts = {}) {
+  try {
+    const spec = buildSpec(userId, opts);
+    if (spec.isDefault) return null;
+    const n = Math.max(2, Math.min(spec.explain.paragraphSentences, spec.lesson.chunkSentences));
+    return { maxParagraphs: 10, line: `Lesson paragraphs: each carries one idea in at most ${n} sentences; write as many paragraphs as that takes (up to 10) rather than fewer long ones, and drop no point of the passage to fit.` };
+  } catch { return null; }
+}
+
+/**
+ * What a writer of questions (a course's check questions, a study pack's quiz and practice test) is told about this
+ * learner's tests: the question shape and the test levers (difficulty start and ramp, answer format, explanation detail,
+ * stakes, wording), as bare sentences to append to the writer's own prompt. [] for the default spec. Never throws.
+ */
+function questionLinesFor(userId, opts = {}) {
+  try { return specToLines(buildSpec(userId, opts), { surface: 'test', bare: true }); } catch { return []; }
 }
 
 function specToPrompt(spec, opts = {}) {
@@ -979,12 +1058,49 @@ function keyTerms(fact) {
 }
 
 /**
+ * An interest analogy must not bring a claim the source does not make. For each sentence of `text` that mentions one of the
+ * learner's interests: (1) a number, or a capitalised name in mid-sentence, that is not in `source` and is not the interest
+ * itself is a new claim ("analogy_new_claim"); (2) the sentence and its neighbours must share a content term with `source`,
+ * otherwise the analogy maps back to nothing ("analogy_unmapped"). Lexical, deterministic, no model: it catches an invented
+ * number or name and an analogy that floats free of the text, not a subtly false comparison (the judges read for that).
+ * Returns [{ id, detail, sentence }]; [] when the spec has no interests or there is no source.
+ */
+function analogyProblems(text, spec, source) {
+  const doms = (spec && spec.interests && spec.interests.exampleDomains) || [];
+  if (!doms.length || !source) return [];
+  const src = String(source);
+  const srcTerms = new Set(wordList(src).map(keyOf));
+  // A number inside the interest's own name ("formula 1") is the interest, not a claim.
+  const srcNums = new Set([...(src.match(/\d+(?:[.,]\d+)?/g) || []), ...doms.flatMap((d) => String(d).match(/\d+(?:[.,]\d+)?/g) || [])]);
+  const domTerms = new Set(doms.flatMap((d) => wordsOf(d)));
+  const sents = sentencesOf(text);
+  const out = [];
+  sents.forEach((s, i) => {
+    if (!doms.some((d) => mentions(s, d))) return;
+    const bad = [
+      ...(s.match(/\d+(?:[.,]\d+)?/g) || []).filter((n) => !srcNums.has(n)),
+      ...(s.match(/(?<=[a-z0-9,;:)] )[A-Z][a-zA-Z]{2,}/g) || []).filter((w) => !srcTerms.has(keyOf(w.toLowerCase())) && !domTerms.has(keyOf(w.toLowerCase()))),
+    ];
+    if (bad.length) out.push({ id: 'analogy_new_claim', detail: `the interest analogy "${s.slice(0, 80)}" brings in ${bad.slice(0, 3).join(', ')}, which the material does not have; keep the analogy free of numbers and names the material does not give`, sentence: s });
+    const near = [sents[i - 1], s, sents[i + 1]].filter(Boolean).join(' ');
+    if (!keyTerms(near).some((t) => t.length >= 5 && srcTerms.has(t))) out.push({ id: 'analogy_unmapped', detail: `the interest analogy "${s.slice(0, 80)}" does not point back to any point of the material; say which point it illustrates`, sentence: s });
+  });
+  return out;
+}
+
+/** A function text -> boolean (true: no analogy in it brings a new claim) for a spec with interests, else null. */
+function analogyGuard(spec, source) {
+  if (!spec || spec.isDefault || !spec.interests.exampleDomains.length || spec.interests.share < 0.3 || !source) return null;
+  return (t) => analogyProblems(t, spec, source).length === 0;
+}
+
+/**
  * Did the writer follow the spec, and keep every key fact? Pure, deterministic, no model.
  * `keyFacts`: strings (a fact each) that must still be taught; a fact counts as kept when half of its
  * content words appear. `exempt` lists words that are the topic's own and may exceed the vocabulary cap.
  * Returns { ok, problems: [{ id, detail }], stats }.
  */
-function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = null } = {}) {
+function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = null, source = null } = {}) {
   const problems = [];
   const body = String(text || '');
   const stats = {};
@@ -1023,6 +1139,8 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
       if (uses < need) problems.push({ id: 'interest_unused', detail: `their interests (${doms.slice(0, 3).join(', ')}) appear only ${uses} time${uses === 1 ? '' : 's'}; build the worked example and at least ${need} examples in all on them` });
     }
   }
+  // 4b. An interest analogy adds no claim of its own (when the source text is given).
+  if (source) for (const p of analogyProblems(body, spec, source)) problems.push(p);
   // 5. Sentence length.
   const sents = sentencesOf(body);
   if (sents.length >= 3) {
@@ -1128,8 +1246,8 @@ module.exports = {
   VERSION, K, SHOW_AT, MAX_PHRASES,
   LEVERS, LEVER_IDS, METRIC_RULES, RULE_OF, CONTEXT_RULES, PHRASES, SURFACES, CONTRACT_LINE,
   buildSpec, buildSpecFrom, defaultSpec, gather, pulls, contextOf,
-  specToPrompt, specToLines, specHash, linesFor,
-  checkFollowed, revisionNote, reviseOnce, keyTerms, mentions,
+  specToPrompt, specToLines, specHash, linesFor, questionLinesFor, questionShape,
+  checkFollowed, analogyProblems, analogyGuard, revisionNote, reviseOnce, keyTerms, mentions, textShapeFor,
   interestsFromText: splitDomains, dislikesFromText, splitDislikes, topicDomainOf,
   reviewScale, scaleMinutes, reviewFor,
 };

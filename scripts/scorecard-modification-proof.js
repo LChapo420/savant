@@ -331,7 +331,7 @@ function mockWriter(req) {
   const nSections = Number((/about (\d+) short sections/.exec(user) || [])[1]) || 3;
   const perSec = Number((/at most (\d+) sentences \(count/.exec(user) || [])[1]) || 4;
   const nChecks = Number((/(\d+) check questions? in all/.exec(user) || [])[1]) || 4;
-  const domains = ((/draw them from ([^\n]*?) wherever/.exec(user) || [])[1] || '').split(',').map((s) => s.trim()).filter(Boolean);
+  const domains = ((/draw them from ([^\n]*?) wherever/.exec(user) || [])[1] || (/Examples: build [^\n]*? on ([^\n]*?), at least \w+ in all/.exec(user) || [])[1] || '').split(',').map((s) => s.trim()).filter(Boolean);
   const avoid = ((/Never use examples, comparisons or settings from: ([^\n]*?)\./.exec(user) || [])[1] || '').split(',').map((s) => s.trim()).filter(Boolean);
   const note = /broke these requirements/.test(user);
   const facts = bank.map((b) => b[level]);
@@ -431,26 +431,37 @@ async function chatAihubmix(model, system, user) {
   return r.json.choices[0].message.content || '';
 }
 
-async function chatStandardCompute(model, system, user) {
+/**
+ * One Standard Compute chat call through the ledger (reserve, then settle at the cost of the reported usage).
+ * opts: { maxTokens (6000), task ('scorecard_proof_judge'), json (true: ask for a JSON object, fall back if refused),
+ * extra (more body fields, e.g. { reasoning_effort: 'low' }), onSpend (called with the dollars the ledger booked) }.
+ * Reasoning models spend tokens thinking before they answer: give them 16000 or more or the reply comes back empty.
+ */
+async function chatStandardCompute(model, system, user, opts = {}) {
+  const maxTokens = opts.maxTokens || 6000;
+  const task = opts.task || 'scorecard_proof_judge';
   const ledger = require('../services/standard-compute-ledger'); // eslint-disable-line global-require
   const key = String(process.env.STANDARD_COMPUTE_API_KEY || '').trim();
   if (!key) throw new Error('no Standard Compute key');
   const base = (/^https?:\/\//.test(String(process.env.STANDARD_COMPUTE_BASE_URL || '')) ? process.env.STANDARD_COMPUTE_BASE_URL : 'https://api.stdcmpt.com/v1').replace(/\/chat\/completions\/?$/, '').replace(/\/$/, '');
-  const est = ledger.estimate({ model, inputChars: system.length + user.length, maxTokens: 6000 });
-  const id = ledger.reserve({ usd: est, task: 'scorecard_proof_judge', model, ceilingUsd: 26 }); // every call through the ledger, held to $26
+  const est = ledger.estimate({ model, inputChars: system.length + user.length, maxTokens });
+  const id = ledger.reserve({ usd: est, task, model, ceilingUsd: 26 }); // every call through the ledger, held to $26
   let settled = false;
   const settleOnce = (a) => { if (!settled) { settled = true; ledger.settle(id, a); } };
   try {
-    const mk = (json) => ({ model, messages: [{ role: 'system', content: system }, { role: 'user', content: user }], temperature: 0, max_tokens: 6000, ...(json ? { response_format: { type: 'json_object' } } : {}) });
-    let r = await postJson(`${base}/chat/completions`, key, mk(true), 300000);
-    if ((r.status === 400 || r.status === 422) && !(r.json && r.json.choices)) r = await postJson(`${base}/chat/completions`, key, mk(false), 300000); // some models refuse json mode
+    const mk = (json) => ({ model, messages: [{ role: 'system', content: system }, { role: 'user', content: user }], temperature: 0, max_tokens: maxTokens, ...(opts.extra || {}), ...(json ? { response_format: { type: 'json_object' } } : {}) });
+    let r = await postJson(`${base}/chat/completions`, key, mk(opts.json !== false), 480000);
+    if ((r.status === 400 || r.status === 422) && !(r.json && r.json.choices)) r = await postJson(`${base}/chat/completions`, key, mk(false), 480000); // some models refuse json mode
     if (r.status !== 200 || !r.json || !r.json.choices) { settleOnce({ outcome: 'not_billed' }); throw new Error(`standard_compute ${model} ${r.status}: ${String(r.text).slice(0, 120)}`); }
     const u = r.json.usage || {};
     const usage = { input_tokens: u.prompt_tokens || 0, output_tokens: u.completion_tokens || 0 };
     const usd = ledger.costOf(model, usage);
     spend.scUsd += usd;
+    if (opts.onSpend) opts.onSpend(usd);
     settleOnce({ usd, outcome: 'ok', usage });
-    return r.json.choices[0].message.content || '';
+    const content = r.json.choices[0].message.content || '';
+    if (!content.trim()) throw new Error(`standard_compute ${model}: empty reply (finish ${r.json.choices[0].finish_reason}; reasoning models need max_tokens of 16000 or more)`);
+    return content;
   } catch (e) { settleOnce({ outcome: 'unknown' }); throw e; }
 }
 
@@ -520,18 +531,23 @@ function parseJsonLoose(text) {
 
 const JUDGE_SYSTEM = `You are a strict, fair evaluator of teaching material. You are shown one learner's profile, the requirements that were set for how a lesson should be written for that learner (the spec), the topic's key facts, and one lesson. Score the lesson only on the evidence in its text. Use the whole 0 to 10 range: 10 is exact, 5 is half-followed, 0 is the opposite or absent. Do not reward length. Do not guess who or what wrote it. Reply with one JSON object only, no prose.`;
 
-function judgePrompt(lrn, topicId, spec, lesson) {
-  const topic = TOPICS[topicId];
-  const dims = dimensions(spec);
+/** A lesson as the judge reads it (also used by scripts/scorecard-material-proof.js). */
+function lessonDisplay(lesson) {
   const checks = (lesson.check_questions || []).map((q, i) => `${i + 1}. ${q.prompt}${q.choices && q.choices.length ? ` [choices: ${q.choices.join(' | ')}]` : ' [typed answer]'} -> ${q.answer}`).join('\n');
   const we = lesson.worked_example;
-  const text = [
+  return [
     `TITLE: ${lesson.title}`, `INTRO: ${lesson.intro}`,
     ...(lesson.sections || []).map((s, i) => `SECTION ${i + 1} - ${s.heading}\n${s.body}${s.example ? `\nEXAMPLE: ${s.example}` : ''}`),
     we ? `WORKED EXAMPLE: ${we.problem}\n${we.steps.map((x, i) => `  ${i + 1}. ${x}`).join('\n')}\n  ANSWER: ${we.answer}` : '',
     (lesson.common_mistakes || []).length ? `COMMON MISTAKES:\n${lesson.common_mistakes.join('\n')}` : '',
     `SUMMARY: ${lesson.summary}`, `CHECK QUESTIONS:\n${checks}`,
   ].filter(Boolean).join('\n\n');
+}
+
+function judgePrompt(lrn, topicId, spec, lesson) {
+  const topic = TOPICS[topicId];
+  const dims = dimensions(spec);
+  const text = lessonDisplay(lesson);
   return `LEARNER: ${lrn.blurb}. Age ${lrn.age}. Interests and what they said: ${JSON.stringify(lrn.survey || {})}${lrn.esl ? '. English is not their first language' : ''}${lrn.device === 'phone' ? '. Uses a phone only, short sessions' : ''}${lrn.device === 'desk' ? '. Long desk sessions' : ''}.
 
 TOPIC: ${topic.title}
@@ -1006,7 +1022,15 @@ function assertMock(report, learners, cells) {
   console.log('scorecard-modification-proof --mock: all checks passed');
 }
 
-if (opt('render')) {
+if (require.main !== module) {
+  // Required by scripts/scorecard-material-proof.js, which reuses the learners, topics, writers, transports and judge plumbing.
+  module.exports = {
+    LIVE, MOCK, flag, opt, ROOT, db, ai, ls, learner, scorecard, providers, pool, STATS,
+    TOPICS, TOPIC_IDS, LEARNERS, DIM_IDS, DIM_LABEL, dimensions, measure, makeUser, ym, lessonText, wordsOf, sentencesOf, mean,
+    generate, legacyLines, lessonDisplay, heuristicJudge, setGeneric: (u) => { GENERIC = u; }, installMockProvider, mockWriter, installPoolTap, makeScWriter, appPathHealthy,
+    chatStandardCompute, chatAihubmix, postJson, JUDGES, familyOf, parseJsonLoose, cache, sha, limited, spend, als, avg, f1, table,
+  };
+} else if (opt('render')) {
   // Re-render a saved run: node scripts/scorecard-modification-proof.js --render docs/scorecard-proof-run3.json --history run1.json,run2.json --out FILE.md
   const data = JSON.parse(fs.readFileSync(opt('render'), 'utf8'));
   fs.writeFileSync(OUT, renderMarkdown({ data }, opt('baseline') ? JSON.parse(fs.readFileSync(opt('baseline'), 'utf8')) : null));

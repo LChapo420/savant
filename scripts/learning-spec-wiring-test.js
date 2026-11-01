@@ -286,7 +286,7 @@ const goodLesson = (extra = {}) => ({
     check('the study pack\'s prompt carries the block, and says to use only what the material says', sys('pack-kid').includes(HEAD) && /Use only what the material says/.test(sys('pack-kid')));
     check('two learners get different pack prompts and different sizes', sys('pack-kid') !== sys('pack-adult') && /up to \d+/.exec(sys('pack-kid'))[0] !== undefined);
     check('a learner with no scorecard, and the owner, get the old prompt: no block, the old numbers', !sys('pack-fresh').includes(HEAD) && !sys('pack-owner').includes(HEAD) && /summary \(2 to 4 short paragraphs/.test(sys('pack-fresh')) && /flashcards \(up to 8:/.test(sys('pack-fresh')));
-    check('the pack block never offers interest examples (the learner\'s own text is the only source)', !/draw them from/.test(sys('pack-kid')));
+    check('the pack block uses the learner\'s interests as framed analogies (the facts stay the material\'s) and avoids what they dislike; a learner with no scorecard gets none', /Interests: [^\n]*minecraft/.test(sys('pack-kid')) && /Never use[^\n]*spiders/.test(sys('pack-kid')) && !/Interests:/.test(sys('pack-fresh')));
     check('grounding still runs: a card with an invented quote is dropped', out.pack && out.pack.cards.every((c) => TEXT.includes(c.quote)) && !out.pack.cards.some((c) => c.front === 'Invented'));
     check('the pack records which spec built it', out.pack.spec_hash && out.pack.spec_hash !== 'default');
 
@@ -295,12 +295,35 @@ const goodLesson = (extra = {}) => ({
     await notes.build(fresh.id, mFresh.id, { llm: llm('notes-fresh') });
     const ns = (tag) => seen[tag].map((c) => c.system).join('\n');
     check('the notes prompt carries the block for the kid and not for the learner with no scorecard', ns('notes-kid').includes(HEAD) && !ns('notes-fresh').includes(HEAD) && ns('notes-kid') !== ns('notes-adult'));
+    check('the notes and the podcast prompts use the interests and avoid the dislikes too', /minecraft/.test(ns('notes-kid')) && /Never use[^\n]*spiders/.test(ns('notes-kid')) && !/minecraft/.test(ns('notes-fresh')));
     check('coverage still runs, and a bullet with an invented quote is still dropped', nk.notes && nk.notes.coverage > 0 && nk.notes.dropped >= 1 && nk.notes.sections.every((s) => s.bullets.every((b) => TEXT.includes(b.quote))), nk.notes && { c: nk.notes.coverage, d: nk.notes.dropped });
 
     await podcast.build(kid.id, mKid.id, { kind: 'overview', llm: llm('pod-kid') }).catch(() => {});
     await podcast.build(fresh.id, mFresh.id, { kind: 'overview', llm: llm('pod-fresh') }).catch(() => {});
     const ps = (tag) => (seen[tag] || []).map((c) => c.system).join('\n');
     check('the podcast prompt carries the block for the kid and not for the learner with no scorecard', ps('pod-kid').includes(HEAD) && !ps('pod-fresh').includes(HEAD) && /Use only what the material says/.test(ps('pod-kid')));
+    check('and the podcast\'s', /minecraft/.test(ps('pod-kid')) && /Never use[^\n]*spiders/.test(ps('pod-kid')) && !/minecraft/.test(ps('pod-fresh')));
+    // An interest analogy may not bring a claim the material lacks: the bullet, the turn and the card fall back to the material's own words.
+    const analogyLlm = (analogy) => async (args) => {
+      const pid = (/\[(p\d+)\]/.exec(args.user) || [])[1] || 'p1';
+      const quote = pid === 'p2' ? S2 : S1;
+      if (args.task === 'material_notes') return { model: 'mock', data: { sections: [{ heading: 'Cells', bullets: [{ text: `Mitochondria release usable energy from food. ${analogy}`, passage_id: pid, quote }] }] } };
+      if (args.task === 'material_podcast') return { model: 'mock', data: { title: 'Ep', turns: [...Array.from({ length: 6 }, (_, i) => ({ host: i % 2 ? 'B' : 'A', text: i === 2 ? `Mitochondria release usable energy. ${analogy}` : 'Go on.', ...(i === 2 ? { passage_id: pid, quote } : {}) })), { host: 'A', text: analogy }] } };
+      if (args.task === 'material_pack') return { model: 'mock', data: { summary: [`Cells have parts. ${analogy}`, 'Mitochondria release usable energy from food.'], flashcards: [{ front: 'Mitochondria', back: `Release usable energy. ${analogy}`, passage_id: pid, quote }], questions: [] } };
+      return null;
+    };
+    const BAD = 'Think of Minecraft, where Steve farms 12 wheat every day.';
+    const GOOD = 'Think of Minecraft: a furnace turns coal into heat, like mitochondria release usable energy from food.';
+    const nBad = await notes.build(kid.id, mKid.id, { llm: analogyLlm(BAD), force: true });
+    const badBullet = nBad.notes && nBad.notes.sections[0].bullets[0].text; const badFixed = nBad.notes && nBad.notes.analogies_fixed;
+    const nGood = await notes.build(kid.id, mKid.id, { llm: analogyLlm(GOOD), force: true });
+    check('a notes bullet whose interest analogy brings a name and a number falls back to the text\'s own words; a good analogy stays', badBullet === S1 && badFixed === 1 && nGood.notes && /furnace/.test(nGood.notes.sections[0].bullets[0].text) && nGood.notes.analogies_fixed === 0, [badBullet, nGood.notes && nGood.notes.sections[0].bullets[0].text]);
+    const pBad = await podcast.build(kid.id, mKid.id, { kind: 'overview', llm: analogyLlm(BAD), force: true });
+    check('a podcast turn with such an analogy becomes the quoted words, and an unquoted analogy turn is dropped', pBad.episode && !pBad.episode.turns.some((t) => /Steve/.test(t.text)) && pBad.episode.turns.some((t) => t.text === S1), pBad.episode && pBad.episode.turns.map((t) => t.text));
+    const kBad = await packs.build(kid.id, mKid.id, { llm: analogyLlm(BAD), force: true });
+    check('a pack card falls back to its quote and a summary paragraph with it is dropped (the clean one stays)', kBad.pack && kBad.pack.cards[0].back === S1 && !kBad.pack.summary.some((p) => /Steve/.test(p)) && kBad.pack.summary.length === 1 && kBad.pack.dropped.analogies >= 1, kBad.pack && [kBad.pack.cards, kBad.pack.summary]);
+    const nFresh = await notes.build(fresh.id, mFresh.id, { llm: analogyLlm(BAD), force: true });
+    check('a learner with no interests has no guard: nothing is rewritten', nFresh.notes && /Steve/.test(nFresh.notes.sections[0].bullets[0].text));
     const turns = Array.from({ length: 60 }, (_, i) => ({ host: i % 2 ? 'B' : 'A', text: 'word '.repeat(40) }));
     const slotsDefault = podcast.checkinSlots(turns).length;
     const everySmall = podcast.checkinSlots(turns, { isDefault: false, lesson: { checkEveryChunks: 1 } }).length;
@@ -313,6 +336,22 @@ const goodLesson = (extra = {}) => ({
     check('the own-material course builder\'s lesson prompt carries the block, the verifier\'s does not, and the default learner gets none', lessonCalls('course-kid').includes(HEAD) && !lessonCalls('course-fresh').includes(HEAD) && !(seen['course-kid'] || []).filter((c) => c.task === 'material_verify').some((c) => c.system.includes(HEAD)));
     const built = cb.get(kid.id, mKid.id);
     check('and its questions are still grounded in the passages', built && built.skills.every((s) => s.questions.every((q) => TEXT.includes(q.quote))));
+    const QSHAPE = 'Questions: Give every question a tier';
+    check('the same learner\'s question shape (tiers, answer format, explanations, stakes) reaches the course builder\'s question writer, and a learner with no scorecard gets none', lessonCalls('course-kid').includes(QSHAPE) && !lessonCalls('course-fresh').includes(QSHAPE) && /For the practice questions only/.test(lessonCalls('course-kid')));
+    check('and the study pack\'s quiz and practice test writer, which may now tier its questions', sys('pack-kid').includes(QSHAPE) && !sys('pack-fresh').includes(QSHAPE) && !sys('pack-owner').includes(QSHAPE) && /For the quiz and test questions only/.test(sys('pack-kid')));
+    // The extra questions of "more practice" are written for the same learner too (course-extend had no block at all).
+    const extend = require('../services/course-extend');
+    await extend.more(kid.id, mKid.id, { llm: llm('extend-kid') });
+    await extend.more(fresh.id, mFresh.id, { llm: llm('extend-fresh') });
+    check('"more practice" questions carry the block and the question shape for the kid, and neither for a learner with no scorecard', lessonCalls('extend-kid').includes(HEAD) && lessonCalls('extend-kid').includes(QSHAPE) && !lessonCalls('extend-fresh').includes(HEAD) && (seen['extend-kid'] || []).some((c) => c.task === 'material_lesson'), [(seen['extend-kid'] || []).length, (seen['extend-fresh'] || []).length]);
+    // The topic is the material's title: a learner who dislikes maths is eased into material that IS maths, and only then.
+    const mathy = makeLearner('mathy', { stats: SHORT, survey: { interests: 'chess', notes: 'I really dislike math.' } });
+    const mMath = materials.addPaste(mathy.id, 'Solving two-step equations', TEXT).value;
+    const mCells = materials.addPaste(mathy.id, 'Cells and their parts', TEXT).value;
+    await packs.build(mathy.id, mMath.id, { llm: llm('pack-mathy-math') });
+    await packs.build(mathy.id, mCells.id, { llm: llm('pack-mathy-cells') });
+    check('a maths-averse learner\'s pack on a maths material gets the gentle-start note, the same learner\'s pack on a biology material does not', /off-putting: keep the first step small/.test(sys('pack-mathy-math')) && !/off-putting: keep the first step small/.test(sys('pack-mathy-cells')));
+    check('the spec the notes and the podcast read is topic-aware too (the aversion moves the same levers as in a lesson)', ls.buildSpec(mathy.id, { topic: 'Solving two-step equations' }).aversions.includes('math') && ls.buildSpec(mathy.id, { topic: 'Solving two-step equations' }).provenance.pressure.some((p) => p.source === 'context:aversion_math') && !(ls.buildSpec(mathy.id, { topic: 'Cells' }).provenance.pressure || []).some((p) => p.source === 'context:aversion_math'));
 
     // Scheduling and practice size.
     const specKid = ls.buildSpec(kid.id, {}); const specAdult = ls.buildSpec(adult.id, {});
@@ -327,6 +366,33 @@ const goodLesson = (extra = {}) => ({
     check('questions per skill follow the spec but every unknown skill keeps at least one', planKid.skills.length === planDefault.skills.length && planKid.skills.every((s) => s.items >= 1));
     const optK = test.options(kid.id, mKid.id);
     const optF = test.options(fresh.id, mFresh.id);
+    // The order of the practice test: a learner with a spec climbs by tier, ties random; the base learner is shuffled as before.
+    const tierCourse = new Map([['s1', { questions: [3, 1, 2, 1, 3, 2, 2, 1].map((t, i) => ({ id: `q${i}`, tier: t })) }]]);
+    const picked = [...tierCourse.get('s1').questions.keys()].map((i) => ['s1', `q${i}`]);
+    const tierOf = (p) => tierCourse.get('s1').questions.find((q) => q.id === p[1]).tier;
+    const rnd = (() => { let a = 5; return () => { a = (a * 48271) % 2147483647; return a / 2147483647; }; })();
+    const climbs = test.orderQuestions(picked, tierCourse, { isDefault: false, difficulty: { startOffset: 0 } }, rnd).map(tierOf);
+    check('a learner with a spec is asked the practice test in tier order, easy to hard', climbs.join('') === '11122233', climbs);
+    const high = test.orderQuestions(picked, tierCourse, { isDefault: false, difficulty: { startOffset: 0.8 } }, rnd).map(tierOf);
+    check('one whose difficulty starts at the level opens with a tier-2-or-higher question, then climbs', high[0] >= 2 && high.slice(1).join('') === [...high.slice(1)].sort().join('') && [...high].sort().join('') === '11122233', high);
+    const base = test.orderQuestions(picked, tierCourse, ls.defaultSpec(), rnd);
+    check('a default spec keeps the old shuffle (the same questions, not sorted)', base.length === picked.length && new Set(base.map((p) => p[1])).size === picked.length && base.map(tierOf).join('') !== '11122233');
+    // Which questions are drawn: to the learner's tier plan, not at random.
+    const steepSpec = { isDefault: false, lesson: { warmupItems: 0 }, difficulty: { rampLabel: 'steep', startOffset: 0 } };
+    const gentleSpec = { isDefault: false, lesson: { warmupItems: 3 }, difficulty: { rampLabel: 'gradual', startOffset: -0.8 } };
+    const planSteep = test.tierPlan(9, steepSpec); const planGentle = test.tierPlan(9, gentleSpec);
+    check('the tier plan: a steep ramp has a third at tier 3; a gradual one at most one, and easy wins first (warm-up items); the base learner has no plan', planSteep.filter((t) => t === 3).length === 3 && planGentle.filter((t) => t === 3).length === 1 && planGentle.filter((t) => t === 1).length >= 3 && test.tierPlan(9, ls.defaultSpec()) === null && planSteep.length === 9 && planGentle.length === 9, [planSteep, planGentle]);
+    const mkQ = (tiers, tag) => tiers.map((t, i) => [tag, `${tag}${i}`, t]);
+    const qs = [...mkQ([3, 3, 2, 2, 1], 'a'), ...mkQ([2, 1, 1, 3, 2], 'b'), ...mkQ([1, 2, 3, 3, 2], 'c')];
+    const queues = ['a', 'b', 'c'].map((tag) => qs.filter((q) => q[0] === tag).map((q) => [q[0], q[1]]));
+    const tierById = new Map(qs.map((q) => [q[1], q[2]]));
+    const drawn = test.pickByPlan(queues, 9, planGentle, (p) => tierById.get(p[1]));
+    check('questions are drawn to the plan from across the skills (the plan\'s tiers, every skill represented)', drawn.map((p) => tierById.get(p[1])).join('') === planGentle.join('') && new Set(drawn.map((p) => p[0])).size === 3, drawn.map((p) => tierById.get(p[1])));
+    const material = ls.specToPrompt(ls.buildSpec(kid.id, {}), { surface: 'material' });
+    const lessonBlock = ls.specToPrompt(ls.buildSpec(kid.id, {}), { surface: 'lesson' });
+    check('own-material blocks never tell a writer to cut to "the key idea, one example, then practice" (a content loss): they keep every definition, step and fact; the lesson block is unchanged', /keep every definition, formula, step, number and fact/.test(material) && !/then practice/.test(material) && /then practice/.test(lessonBlock), material.slice(0, 600));
+    const shape = ls.textShapeFor(kid.id, {});
+    check('a spec learner\'s course text is shaped in paragraphs of their size (up to ten), a learner with no scorecard\'s is not', shape && shape.maxParagraphs === 10 && /at most \d sentences/.test(shape.line) && ls.textShapeFor(fresh.id, {}) === null && lessonCalls('course-kid').includes('Lesson paragraphs:') && !lessonCalls('course-fresh').includes('Lesson paragraphs:'), shape);
     check('the practice test: a test-anxious kid is given more time per question and the untimed test first; the base learner keeps 75 s', optK.seconds_per_question > 75 && optK.suggest_timed === false && optF.seconds_per_question === 75 && optF.suggest_timed === true, [optK.seconds_per_question, optK.suggest_timed, optF.seconds_per_question]);
 
     // Source passages shown to the tutor: shorter for a learner who loses focus in paragraphs.
