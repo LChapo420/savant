@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 /**
  * The tutor uses what it durably knows (T3): the facts that match the skill on the page and the words of
- * the question go into the reply's prompt within a fixed budget, with current mastery on that skill; facts
- * about something unrelated do not.
+ * the question go into the reply's "learned over time" block within a fixed budget, with current mastery on that
+ * skill; facts about something unrelated do not go in THAT block.
+ *
+ * Since tutor-depth (1 Nov 2026) the compiled learner model (services/tutor-learner-model.js) also goes into every
+ * prompt and carries everything, ranked for the moment (the owner: "uses all of it in every reply"). So "not sent"
+ * below means "not in the relevance-chosen facts block"; where an unrelated fact appears in the learner model, the
+ * test checks it is ranked below the related one (scripts/tutor-depth-test.js tests the model itself).
  *
  *   node scripts/tutor-relevance-test.js
  */
@@ -27,6 +32,8 @@ providers.ALL.nvidia = {
 };
 
 let failed = 0;
+// The relevance-chosen facts block (tutor-facts `relevant`), apart from the learner model.
+const factsBlock = (t) => { const i = t.indexOf('--- WHAT YOU HAVE LEARNED ABOUT THEM OVER TIME'); if (i < 0) return ''; const j = t.indexOf('\n\n---', i + 5); return t.slice(i, j < 0 ? undefined : j); };
 async function check(name, fn) {
   try { await fn(); console.log(`ok   ${name}`); } catch (err) { failed += 1; console.log(`FAIL ${name}\n     ${err.stack.split('\n').slice(0, 3).join('\n     ')}`); }
 }
@@ -57,8 +64,10 @@ db.insert('skill_states', { user_id: u.id, skill_id: 'word_problems', mastery: 0
 
   await check('an unrelated fact is not sent', () => {
     const text = tutor.contextText(u.id, { skillId: 'word_problems', about: 'Maya ate 3/4 of a pizza. How much of the fraction is left?' });
-    assert.ok(!text.includes('cylinder'), 'a hard spot on volume stays out of a fractions question');
-    assert.ok(!text.includes('chess'), 'an interest nobody mentioned stays out');
+    assert.ok(!factsBlock(text).includes('cylinder'), 'a hard spot on volume stays out of the facts chosen for a fractions question');
+    assert.ok(!factsBlock(text).includes('chess'), 'an interest nobody mentioned stays out of the chosen facts');
+    // In the learner model it may be there (ranked, not dropped), but never as what they are doing now.
+    assert.ok(!/Right now:[^\n]*cylinder/.test(text), 'the unrelated hard spot is never put under what they are doing now');
   });
 
   await check('goals and what has worked always go; an interest goes when the question touches it', () => {
@@ -96,11 +105,11 @@ db.insert('skill_states', { user_id: u.id, skill_id: 'word_problems', mastery: 0
     await dock.reply({ user: u, messages: [{ role: 'user', content: 'I do not get this one' }], page: { path: '/lesson', question: 'What is 1/2 + 1/3 as a fraction?' } });
     const sys = calls[calls.length - 1].system;
     assert.ok(sys.includes('Adds the denominators when adding fractions'), 'mix-up reached the prompt');
-    assert.ok(!sys.includes('cylinder'));
+    assert.ok(!factsBlock(sys).includes('cylinder'));
     assert.ok(sys.indexOf('RULE FOR EVERY REPLY') > sys.indexOf('Adds the denominators'), 'the answer rule still comes last');
     await dock.reply({ user: u, messages: [{ role: 'user', content: 'hi' }], page: { path: '/lesson', question: 'Find the volume of a cylinder with radius 2.' } });
     const sys2 = calls[calls.length - 1].system;
-    assert.ok(sys2.includes('volume of a cylinder') && !sys2.includes('Adds the denominators'));
+    assert.ok(factsBlock(sys2).includes('volume of a cylinder') && !factsBlock(sys2).includes('Adds the denominators'));
   });
 
   await check('the learner record reaches the tutor: sure facts and repeated struggles, matched to the question, never tentative ones or scores', () => {
@@ -124,12 +133,12 @@ db.insert('skill_states', { user_id: u.id, skill_id: 'word_problems', mastery: 0
     assert.ok(on.includes('likes short step-by-step explanations'), 'a sure preference applies anywhere');
     assert.ok(!on.includes('dislikes long paragraphs'), 'a tentative dislike (2 supports, not solid) is held back');
     assert.ok(!on.includes('drops a remainder'), 'a one-off struggle is held back');
-    assert.ok(!on.includes('drumming'), 'an unrelated sure fact is held back');
+    assert.ok(!factsBlock(on).includes('drumming'), 'an unrelated sure fact is held back from the chosen facts (the learner model may offer it as an example domain)');
     assert.ok(!on.includes('old struggle'), 'superseded facts are gone');
     assert.ok(!on.includes('CONCLUSION-SECRET'), 'conclusions stay with the level writer');
     assert.ok(tutor.contextText(r.id, { about: 'Can we use drumming to explain rhythm and fractions?' }).includes('drumming'));
     const off = tutor.contextText(r.id, { about: 'What is the capital of France?' });
-    assert.ok(!off.includes('common denominator'));
+    assert.ok(!factsBlock(off).includes('common denominator'));
   });
 
   console.log(failed ? `\n${failed} failed` : '\nall passed');

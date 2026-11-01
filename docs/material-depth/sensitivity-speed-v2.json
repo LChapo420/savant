@@ -1,0 +1,2642 @@
+{
+ "tag": "speed-v2",
+ "phase": "speed",
+ "depth": "v2",
+ "generated_at": "2026-11-01T08:23:14.285Z",
+ "live": true,
+ "writer": "minimax/minimax-m3.1-flash",
+ "judges": [
+  "mistralai/mistral-large-2512",
+  "gemini-3.5-flash-lite"
+ ],
+ "lo": 10,
+ "hi": 90,
+ "base": {
+  "age": 14,
+  "survey": {
+   "interests": "basketball, video games",
+   "hobbies": "drawing comics"
+  }
+ },
+ "structural": {
+  "counts": {
+   "lesson": 100,
+   "level": 100,
+   "material": 100,
+   "notes": 70,
+   "podcast": 100,
+   "test": 77,
+   "code": 15
+  },
+  "anySurface": 100,
+  "rows": [
+   {
+    "measure": "intake_baseline",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "working_memory_span",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "processing_velocity",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "chunk_granularity",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "abstraction_tolerance",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "example_density_need",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "text_density_tolerance",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "vocabulary_ceiling",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "jargon_absorption",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "spatial_anchoring",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "deductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "inductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "cognitive_flexibility",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "analogical_transfer",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "causal_chain_depth",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "systems_thinking",
+    "group": "reasoning",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "pattern_detection",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "logical_rigor",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "contradiction_sensitivity",
+    "group": "reasoning",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "global_framing_need",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "cycle_architecture",
+    "group": "pacing",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "attention_runway",
+    "group": "pacing",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "warmup_latency",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "fatigue_curve",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "momentum_dependence",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "interleaving_tolerance",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "rush_tendency",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "deliberation_depth",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "session_rhythm",
+    "group": "pacing",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "reentry_cost",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "stimulus_envelope",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "novelty_hunger",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "humor_receptivity",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "narrative_pull",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "gamification_response",
+    "group": "engagement",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "challenge_appetite",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "curiosity_hook",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "interest_transfer",
+    "group": "engagement",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "relevance_demand",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "tone_formality",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "retrieval_strength",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "recognition_recall_gap",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "decay_rate",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "elaboration_benefit",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "mnemonic_receptivity",
+    "group": "memory",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "consolidation_need",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "interference_susceptibility",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "enactive_encoding",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "generation_effect",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "retention_index",
+    "group": "memory",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "failure_response",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "error_recovery_speed",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "frustration_threshold",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "hint_dependency",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "help_seeking",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "guessing_propensity",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "perfectionism",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "productive_struggle",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "confidence_calibration",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "error_driven_learning",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "self_monitoring",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "strategy_awareness",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "mastery_orientation",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "autonomy_preference",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "structure_need",
+    "group": "metacognition",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "instruction_adherence",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "reflection_depth",
+    "group": "metacognition",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "question_generation",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "self_efficacy",
+    "group": "metacognition",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "planning_tendency",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "step_explicitness",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "worked_example_dependence",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "scaffolding_fade",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "notation_comfort",
+    "group": "representation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "brevity_preference",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "repetition_tolerance",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "feedback_granularity",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "feedback_tone_sensitivity",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "open_response_performance",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "dialogic_preference",
+    "group": "representation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "intrinsic_motivation",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "extrinsic_reward_sensitivity",
+    "group": "motivation",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "competitive_drive",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "praise_sensitivity",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "evaluation_anxiety",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "boredom_susceptibility",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "persistence",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "social_framing",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "identity_alignment",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "emotional_engagement",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "near_transfer",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "far_transfer",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "application_orientation",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "conceptual_bias",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "prior_knowledge",
+    "group": "transfer",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "misconception_persistence",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "integration_tendency",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "depth_breadth",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "creative_extension",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "mastery_velocity",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   }
+  ]
+ },
+ "speed": [
+  {
+   "learner": "Lena",
+   "blurb": "age 60, knows most of it, art and gardening, long desk sessions",
+   "age": 60,
+   "kind": "lesson",
+   "topic": "photosynthesis",
+   "code": {
+    "tailored": {
+     "words": 608,
+     "keyFactsMissing": 0,
+     "checks": 2
+    },
+    "generic": {
+     "words": 643,
+     "keyFactsMissing": 2,
+     "checks": 4
+    }
+   },
+   "minutes": {
+    "tailored": 4,
+    "generic": 5.2
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Concise, avoids over-explanation, and ties examples to the learner's interests (gardening, botany, ceramics)."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 7,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Accurate and clear but less tailored to the learner's interests and slightly more repetitive."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version A integrates the learner's interests in botany and gardening while respecting prior knowledge by keeping the lesson concise."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 6,
+      "covered": [
+       1,
+       2,
+       4,
+       5
+      ],
+      "why": "Version B misses teaching objective 3 about chlorophyll and chloroplasts, and lacks personalization for a gardening-focused learner."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Noah",
+   "blurb": "age 17, cars, fast and gifted-and-bored",
+   "age": 17,
+   "kind": "lesson",
+   "topic": "two-step equations",
+   "code": {
+    "tailored": {
+     "words": 300,
+     "keyFactsMissing": 1,
+     "checks": 2
+    },
+    "generic": {
+     "words": 262,
+     "keyFactsMissing": 1,
+     "checks": 3
+    }
+   },
+   "minutes": {
+    "tailored": 2.4,
+    "generic": 2.7
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Tailored to the learner's interests (motorbikes, Formula 1) and avoids repetition, matching their preferences."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 7,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Clear and structured but lacks the learner's specific interests (cars/engines) to engage them fully."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version B hits all objectives, perfectly leverages the learner's interests in cars, engines, and Formula 1, and respects their dislike of repetition."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 4,
+      "covered": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "why": "Version A covers objectives well but uses generic examples that fail to engage this car-obsessed learner."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Ethan",
+   "blurb": "age 17, music, gifted-and-bored",
+   "age": 17,
+   "kind": "lesson",
+   "topic": "photosynthesis",
+   "code": {
+    "tailored": {
+     "words": 442,
+     "keyFactsMissing": 0,
+     "checks": 2
+    },
+    "generic": {
+     "words": 643,
+     "keyFactsMissing": 2,
+     "checks": 4
+    }
+   },
+   "minutes": {
+    "tailored": 3,
+    "generic": 4.9
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Tailored to the learner’s interests with analogies to music production and avoids unnecessary detail."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 6,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Accurate and complete but lacks engagement for a gifted, music-focused learner who dislikes baby-steps."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 9,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version B covers all base text objectives and nicely incorporates the learner's music and studio interests."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 2,
+      "covered": [
+       1,
+       2
+      ],
+      "why": "Version A introduces unrequested balancing chemistry that goes far beyond the base text and ignores all learner interests."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Lena",
+   "blurb": "age 60, knows most of it, art and gardening, long desk sessions",
+   "age": 60,
+   "kind": "notes",
+   "topic": "photosynthesis",
+   "code": {
+    "tailored": {
+     "words": 249,
+     "keyFactsMissing": 0,
+     "checks": null
+    },
+    "generic": {
+     "words": 237,
+     "keyFactsMissing": 0,
+     "checks": null
+    }
+   },
+   "minutes": {
+    "tailored": 1.2,
+    "generic": 1.2
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Concise, structured, and aligns with the learner's preference for no over-explanation, with a practical gardening analogy."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 7,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Accurate and complete but slightly verbose for a learner who knows most of it and prefers brevity."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 6,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version B includes patronizing gardening analogies and Q&A elements that violate the learner's request not to over-explain."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version A strictly adheres to the base text without over-explaining, which fits the learner's request."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Ben",
+   "blurb": "age 11, fast, gaming, dislikes reading",
+   "age": 11,
+   "kind": "lesson",
+   "topic": "two-step equations",
+   "code": {
+    "tailored": {
+     "words": 208,
+     "keyFactsMissing": 0,
+     "checks": 2
+    },
+    "generic": {
+     "words": 262,
+     "keyFactsMissing": 1,
+     "checks": 3
+    }
+   },
+   "minutes": {
+    "tailored": 2.6,
+    "generic": 3.5
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Uses gaming themes, concise, and directly addresses the learner's preference for brevity and engagement."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 6,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Accurate and complete but more verbose and less tailored to the learner's interests and dislike of reading."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Matches the learner's interest in gaming, speedrunning, and brevity perfectly while hitting all objectives."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 4,
+      "covered": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "why": "Too long and text-heavy for an 11-year-old who hates reading, and misses objective 5."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Ethan",
+   "blurb": "age 17, music, gifted-and-bored",
+   "age": 17,
+   "kind": "notes",
+   "topic": "photosynthesis",
+   "code": {
+    "tailored": {
+     "words": 249,
+     "keyFactsMissing": 0,
+     "checks": null
+    },
+    "generic": {
+     "words": 237,
+     "keyFactsMissing": 0,
+     "checks": null
+    }
+   },
+   "minutes": {
+    "tailored": 1.1,
+    "generic": 1.1
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Engages the learner with concise, structured notes and a music-production analogy, avoiding busywork."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 7,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Accurate and complete but lacks the learner’s preferred depth and efficiency, feeling more like baby-steps."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "It uses concise chains and music metaphors that engage a gifted 17-year-old musician who dislikes baby steps."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 6,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "It is accurate and covers all objectives, but relies on basic verbatim copying of the base text that feels too elementary for a gifted 17-year-old."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Noah",
+   "blurb": "age 17, cars, fast and gifted-and-bored",
+   "age": 17,
+   "kind": "notes",
+   "topic": "two-step equations",
+   "code": {
+    "tailored": {
+     "words": 220,
+     "keyFactsMissing": 1,
+     "checks": null
+    },
+    "generic": {
+     "words": 186,
+     "keyFactsMissing": 1,
+     "checks": null
+    }
+   },
+   "minutes": {
+    "tailored": 1,
+    "generic": 0.8
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 8,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Engages the learner with a Formula 1 analogy but includes an unnecessary optional question."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Clear, concise, and directly aligned with the learner's need for efficiency and no repetition."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 9,
+      "fit": 6,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "It includes a good Formula 1 car reference for the learner, but adds unprompted questions and alters some base text formatting."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 7,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "It strictly follows the base text and logical order without unnecessary fluff, suiting a bored learner who dislikes repetition."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Ben",
+   "blurb": "age 11, fast, gaming, dislikes reading",
+   "age": 11,
+   "kind": "notes",
+   "topic": "two-step equations",
+   "code": {
+    "tailored": {
+     "words": 177,
+     "keyFactsMissing": 1,
+     "checks": null
+    },
+    "generic": {
+     "words": 186,
+     "keyFactsMissing": 1,
+     "checks": null
+    }
+   },
+   "minutes": {
+    "tailored": 1.4,
+    "generic": 1.4
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 8,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Uses gaming analogy (Fortnite) and concise steps, but includes unnecessary questions and a 'harder question' that may not suit the learner's preference for brevity."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Direct, step-by-step, and avoids extra fluff, aligning well with the learner's dislike for long explanations."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 8,
+      "fit": 7,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version A includes a fun Fortnite analogy tailored to the user's interests, but strays slightly from the base text's exact phrasing."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 6,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version B is extremely accurate to the base text and follows the outline format well, but lacks personalized hooks for a gaming-focused 11-year-old."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Frank",
+   "blurb": "age 60, art, slow pace, little background",
+   "age": 60,
+   "kind": "lesson",
+   "topic": "two-step equations",
+   "code": {
+    "tailored": {
+     "words": 438,
+     "keyFactsMissing": 1,
+     "checks": 3
+    },
+    "generic": {
+     "words": 262,
+     "keyFactsMissing": 1,
+     "checks": 3
+    }
+   },
+   "minutes": {
+    "tailored": 3.7,
+    "generic": 2.8
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Uses art-related examples, a slow pace, and clear, gentle explanations tailored to the learner's interests and needs."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 6,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Accurate and complete but lacks the gentle, concrete, and relatable approach the learner requested."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version B is accurate, covers all five objectives including the specific example form, and perfectly tailors the content to the 60-year-old art and museum learner with a gentle, contextualized approac"
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 4,
+      "covered": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "why": "Version A is mathematically accurate and covers most objectives, but completely ignores the learner's preference for a gentle explanation and art/museum interests."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Omar",
+   "blurb": "age 8, almost no prior knowledge, loves cars",
+   "age": 8,
+   "kind": "lesson",
+   "topic": "photosynthesis",
+   "code": {
+    "tailored": {
+     "words": 477,
+     "keyFactsMissing": 0,
+     "checks": 3
+    },
+    "generic": {
+     "words": 643,
+     "keyFactsMissing": 2,
+     "checks": 4
+    }
+   },
+   "minutes": {
+    "tailored": 7.5,
+    "generic": 10
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Uses simple, concrete language and car-related examples tailored to the learner's interests."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 3,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Too technical and abstract for an 8-year-old with no prior knowledge, despite being accurate."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Excellently tailored to an 8-year-old car enthusiast by incorporating toy cars and matching all learning objectives from the base text."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 1,
+      "covered": [
+       1,
+       2
+      ],
+      "why": "Too advanced and abstract for an 8-year-old with no prior knowledge, focusing heavily on chemical equations."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Frank",
+   "blurb": "age 60, art, slow pace, little background",
+   "age": 60,
+   "kind": "notes",
+   "topic": "two-step equations",
+   "code": {
+    "tailored": {
+     "words": 431,
+     "keyFactsMissing": 1,
+     "checks": null
+    },
+    "generic": {
+     "words": 186,
+     "keyFactsMissing": 1,
+     "checks": null
+    }
+   },
+   "minutes": {
+    "tailored": 2.2,
+    "generic": 0.9
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 7,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Accurate and complete but overly verbose with analogies that may distract a slow-paced learner."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Clear, concise, and directly aligned with the learner's need for gentle, step-by-step explanations."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 8,
+      "fit": 7,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version A includes gentle art and gardening analogies tailored to the learner, though it is slightly repetitive."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 4,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version B covers all objectives accurately and concisely, but misses the gentle, tailored analogies the learner requested for their math anxiety."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Omar",
+   "blurb": "age 8, almost no prior knowledge, loves cars",
+   "age": 8,
+   "kind": "notes",
+   "topic": "photosynthesis",
+   "code": {
+    "tailored": {
+     "words": 183,
+     "keyFactsMissing": 0,
+     "checks": null
+    },
+    "generic": {
+     "words": 237,
+     "keyFactsMissing": 0,
+     "checks": null
+    }
+   },
+   "minutes": {
+    "tailored": 2.3,
+    "generic": 3
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 7,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Engaging analogy (truck) but slightly verbose for an 8-year-old."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 8,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Clear and direct, but lacks learner-specific hooks (e.g., cars)."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 8,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "It covers all objectives accurately and adds a helpful truck analogy for an 8-year-old car lover, though some phrasing is a bit dry."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 5,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "It accurately covers all objectives and strictly outlines the base text, but lacks adaptations or engagement for an 8-year-old."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Grace",
+   "blurb": "age 25, English is a second language, cooking, step-by-step",
+   "age": 25,
+   "kind": "lesson",
+   "topic": "photosynthesis",
+   "code": {
+    "tailored": {
+     "words": 504,
+     "keyFactsMissing": 0,
+     "checks": 3
+    },
+    "generic": {
+     "words": 643,
+     "keyFactsMissing": 2,
+     "checks": 4
+    }
+   },
+   "minutes": {
+    "tailored": 4.5,
+    "generic": 5.8
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Uses simple language, cooking-related examples, and step-by-step explanations tailored to the learner's interests and ESL needs."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 5,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Focuses on chemical equations and balancing, which may be too abstract and less engaging for the learner's profile."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version A matches the learner's interests in cooking and step-by-step format while successfully teaching all five objectives."
+     },
+     "generic": {
+      "accuracy": 9,
+      "fit": 3,
+      "covered": [
+       1,
+       2,
+       4
+      ],
+      "why": "Version B focuses heavily on chemical balancing equations, which goes beyond the base text and does not suit a beginner or the learner's cooking hobby."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Sam",
+   "blurb": "age 14, dyslexia-like reading profile, art",
+   "age": 14,
+   "kind": "lesson",
+   "topic": "photosynthesis",
+   "code": {
+    "tailored": {
+     "words": 437,
+     "keyFactsMissing": 0,
+     "checks": 3
+    },
+    "generic": {
+     "words": 643,
+     "keyFactsMissing": 2,
+     "checks": 4
+    }
+   },
+   "minutes": {
+    "tailored": 3.9,
+    "generic": 5.6
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Short, visual, and comic-style examples suit the learner's dyslexia-like profile and interests."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 4,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Long paragraphs, chemical equations, and detailed balancing are ill-suited for the learner's preferences and reading challenges."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 10,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version A successfully targets all objectives and uses formatting, comic themes, and concise chunks tailored specifically to a 14-year-old reader with dyslexia and an interest in drawing."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 3,
+      "covered": [
+       1,
+       2,
+       4
+      ],
+      "why": "Version B introduces chemical equations and balancing that go beyond the base text and teaching objectives, creating long, text-heavy paragraphs unsuitable for a dyslexic 14-year-old who dislikes read"
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Grace",
+   "blurb": "age 25, English is a second language, cooking, step-by-step",
+   "age": 25,
+   "kind": "notes",
+   "topic": "photosynthesis",
+   "code": {
+    "tailored": {
+     "words": 331,
+     "keyFactsMissing": 0,
+     "checks": null
+    },
+    "generic": {
+     "words": 237,
+     "keyFactsMissing": 0,
+     "checks": null
+    }
+   },
+   "minutes": {
+    "tailored": 2,
+    "generic": 1.4
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Uses cooking analogies and simple language, well-suited for the learner's profile."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 7,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Clear and accurate but lacks learner-friendly analogies for a non-native English speaker interested in cooking."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version B covers all objectives accurately and cleverly uses cooking and recipe analogies suited to the learner's background and interests."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 6,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Version A strictly outlines the base text accurately and covers all objectives, but lacks tailored analogies for an ESL learner interested in cooking."
+     }
+    }
+   ]
+  },
+  {
+   "learner": "Sam",
+   "blurb": "age 14, dyslexia-like reading profile, art",
+   "age": 14,
+   "kind": "notes",
+   "topic": "photosynthesis",
+   "code": {
+    "tailored": {
+     "words": 222,
+     "keyFactsMissing": 0,
+     "checks": null
+    },
+    "generic": {
+     "words": 237,
+     "keyFactsMissing": 0,
+     "checks": null
+    }
+   },
+   "minutes": {
+    "tailored": 1.2,
+    "generic": 1.3
+   },
+   "verdicts": [
+    {
+     "judge": "mistralai/mistral-large-2512",
+     "tailored": {
+      "accuracy": 10,
+      "fit": 8,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "Clear, concise, and broken into short bullets, but some sections could be even shorter for dyslexia-friendly reading."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 9,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "More direct, shorter sentences, and better structured for a dyslexic learner who dislikes long paragraphs."
+     }
+    },
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "tailored": {
+      "accuracy": 9,
+      "fit": 6,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "It covers all objectives accurately and adds helpful visual analogies, but uses slightly longer paragraphs than requested."
+     },
+     "generic": {
+      "accuracy": 10,
+      "fit": 8,
+      "covered": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "It strictly follows the base text as one-sentence bullets, keeping text short for a reader who dislikes long paragraphs."
+     }
+    }
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "learner": "Lena",
+   "kind": "lesson",
+   "texts": {
+    "tailored": "TITLE: Photosynthesis: How Plants Store Sunlight\n\nINTRO: Question: Why do healthy garden plants grow even when no glucose is added to the soil?\nAnswer: Their leaves use sunlight to convert carbon dioxide and water into glucose, a sugar used for growth and energy storage.\n\nTry it: Which two raw materials does a plant need for photosynthesis? Answer: Carbon dioxide and water.\n\nSECTION 1 - 1. Where the process occurs\nQuestion: Where does photosynthesis happen mainly?\nAnswer: It happens mainly in leaves, whose chloroplasts contain chlorophyll, the pigment that absorbs light.\n\nQuestion: What does chlorophyll do?\nAnswer: Chlorophyll absorbs light energy, mainly red and blue light, allowing the plant to power the chemical reaction.\n\nTry it: A plant has yellow leaves with little chlorophyll. What part of photosynthesis is most affected? Answer: Light absorption.\nEXAMPLE: Botany example: A green leaf is green because chlorophyll absorbs mainly red and blue light. The light energy captured by this pigment powers photosynthesis in the leaf's chloroplasts.\n\nSECTION 2 - 2. How the materials change\nQuestion: What does the plant build during photosynthesis?\nAnswer: The plant makes glucose, or C6H12O6, from carbon dioxide and water.\n\nQuestion: What supplies the energy for this change?\nAnswer: Light energy from the sun supplies the energy needed to rearrange the molecules.\n\nTry it: Name the product used by the plant for growth and energy storage. Answer: Glucose.\nEXAMPLE: Gardening example: A gardener notices that a plant makes sugars rather than receiving glucose from the soil. The plant uses carbon dioxide from air and water from its roots to make glucose in its leaves.\n\nSECTION 3 - 3. What leaves behind\nQuestion: What other product leaves the plant during photosynthesis?\nAnswer: Oxygen is released as a by-product, mainly through the leaves.\n\nQuestion: How can the overall reaction be represented?\nAnswer: Carbon dioxide plus water, using light energy, produces glucose and oxygen. Chlorophyll makes the absorption of this energy possible.\n\nTry it: Which gas is released during photosynthesis? Answer: Oxygen.\nEXAMPLE: Ceramics example: A pottery workshop uses a kiln powered by gas. Plants growing near the workshop still release oxygen while making glucose, even though the kiln is not part of their process.\n\nWORKED EXAMPLE: A leaf has access to carbon dioxide, water, and sunlight. Use the word equation to show what the plant makes and releases during photosynthesis.\n  1. 1. Name the inputs: the leaf receives carbon dioxide and water. Sunlight supplies light energy.\n  2. 2. Identify the energy-capturing structure: chlorophyll in the leaf's chloroplasts absorbs the light.\n  3. 3. Write the balanced word equation: carbon dioxide + water + light energy become glucose + oxygen.\n  4. 4. Check the carbon atoms: 6 carbon dioxide molecules contain 6 carbon atoms in total, and 1 glucose molecule contains 6 carbon atoms.\n  5. 5. Check the oxygen atoms: 6 carbon dioxide molecules plus 6 water molecules contain 18 oxygen atoms in total; 1 glucose molecule contains 6, and 6 oxygen molecules contain 12, giving 18 altogether.\n  6. 6. Interpret the products: the plant makes glucose for growth and energy storage, while oxygen is released as a by-product.\n  ANSWER: 6CO2 + 6H2O + light energy becomes C6H12O6 + 6O2. The plant makes glucose and releases oxygen.\n\nCOMMON MISTAKES:\nWrong: 6CO2 + 6H2O + light energy becomes C6H12O6 + O2. Why: the oxygen product is not balanced. The 18 oxygen atoms on the left require 6O2, containing 12 oxygen atoms, to balance the 6 in glucose. Right: 6CO2 + 6H2O + light energy becomes C6H12O6 + 6O2.\nWrong: 6CO2 + 6H2O becomes C6H12O6 + 6O2, so sunlight is a product. Why: sunlight supplies energy rather than forming a chemical product. Right: 6CO2 + 6H2O + light energy becomes C6H12O6 + 6O2.\nWrong: Photosynthesis makes glucose, so oxygen is also used to make the glucose. Why: oxygen is released as a by-product; it is not a raw material in the balanced equation. Right: The plant uses carbon dioxide and water to make glucose, then releases oxygen.\n\nSUMMARY: Photosynthesis happens mainly in leaves. Chlorophyll in chloroplasts absorbs sunlight, providing energy for the plant to make glucose from carbon dioxide and water. Oxygen is released as a by-product.\n\nCHECK QUESTIONS:\n1. Which statement correctly identifies the location, energy source, and main product of photosynthesis? [choices: Chlorophyll in leaf chloroplasts absorbs sunlight, allowing plants to make glucose from carbon dioxide and water. | Chlorophyll absorbs carbon dioxide, allowing plants to make sunlight from water and oxygen. | Roots contain chlorophyll, so roots make glucose directly from soil and sunlight. | Leaves release glucose as a by-product while making oxygen from carbon dioxide.] -> Chlorophyll in leaf chloroplasts absorbs sunlight, allowing plants to make glucose from carbon dioxide and water.\n2. A plant makes glucose and releases 6 oxygen molecules. Write a balanced chemical equation for photosynthesis, including light energy. [typed answer] -> 6CO2 + 6H2O + light energy becomes C6H12O6 + 6O2.",
+    "generic": "TITLE: How Photosynthesis Makes Food\n\nINTRO: Photosynthesis is how plants, algae, and some bacteria use light energy to make sugar. You will learn the rule that identifies what goes in, what comes out, and where energy enters the process.\n\nSECTION 1 - The Rule\nPhotosynthesis needs carbon dioxide and water. Light energy allows a plant to combine them to make glucose, a type of sugar the plant uses for energy and growth. Oxygen is also released. You can remember the main pattern as: carbon dioxide + water + light energy becomes glucose + oxygen.\nEXAMPLE: For every 6 molecules of carbon dioxide and 6 molecules of water, the process can use light energy to make 1 molecule of glucose and 6 molecules of oxygen.\n\nSECTION 2 - The Balanced Equation\nA balanced equation shows the amounts of each substance used or made. The equation for photosynthesis is 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. The coefficients 6, 6, 1, and 6 show the relative number of molecules or units of each substance.\nEXAMPLE: Count the carbon in 6CO2: there are 6 carbon atoms. Count the carbon in 1 molecule of glucose, C6H12O6: there are 6 carbon atoms. The carbon atoms match, so the equation is balanced.\n\nSECTION 3 - Where Each Part Matters\nThe reactants are the substances used before photosynthesis: carbon dioxide, water, and light energy. Light is needed to power the reaction, but it is not a substance that becomes part of the glucose. The products are glucose and oxygen. Glucose stores chemical energy made using the incoming light energy.\nEXAMPLE: If a plant takes in 6CO2 and 6H2O and receives enough light, it can produce 1 molecule of C6H12O6 and release 6 molecules of O2 into the air.\n\nWORKED EXAMPLE: A plant has 6 molecules of carbon dioxide and 6 molecules of water. Use the photosynthesis equation to show what can be produced when light energy is available.\n  1. Start with the rule: carbon dioxide + water + light energy becomes glucose + oxygen.\n  2. Write the balanced equation: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\n  3. Identify the substances on the left. There are 6 molecules of carbon dioxide and 6 molecules of water, and light energy is available.\n  4. Identify the substances on the right. The coefficient 6 before O2 means that 6 molecules of oxygen are produced.\n  5. Identify the glucose. There is no number before C6H12O6, so the coefficient is 1. This means 1 molecule of glucose is produced.\n  6. Check the carbon count: 6CO2 contains 6 carbon atoms, and 1 molecule of C6H12O6 contains 6 carbon atoms. The carbon matches.\n  7. Check the hydrogen count: 6H2O contains 6 times 2, or 12, hydrogen atoms. One molecule of C6H12O6 contains 12 hydrogen atoms. The hydrogen matches.\n  8. Check the oxygen count: 6CO2 contains 6 times 2, or 12, oxygen atoms, and 6H2O contains 6 oxygen atoms, for 18 oxygen atoms total. The products contain 6 oxygen atoms in C6H12O6 and 6 times 2, or 12, oxygen atoms in 6O2, for 18 oxygen atoms total. The oxygen matches.\n  ANSWER: With light energy available, the plant can produce 1 molecule of glucose, C6H12O6, and 6 molecules of oxygen, 6O2.\n\nCOMMON MISTAKES:\nWrong: 6CO2 + 6H2O + light energy -> C6H12O6 + O2. Why: the oxygen product is missing its coefficient. Without the 6, the equation has only 6 oxygen atoms on the product side but 18 on the reactant side, so it is not balanced. Right: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\nWrong: light energy -> C6H12O6, so plants do not need carbon dioxide or water. Why: the reactants were left out, so this does not show the substances needed for photosynthesis. Right: carbon dioxide + water + light energy -> glucose + oxygen, which is represented by 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\nWrong: 6CO2 + 6H2O -> C6H12O6 + 6O2, because light energy is not matter. Why: this omits light even though light is needed to power photosynthesis. A chemical equation can show energy as an input even though energy is not matter. Right: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\n\nSUMMARY: Photosynthesis uses carbon dioxide and water with light energy to make glucose and oxygen. Its balanced equation is 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. Glucose stores chemical energy for the plant, while oxygen is released.\n\nCHECK QUESTIONS:\n1. Which set correctly lists the reactants needed for photosynthesis? [choices: Carbon dioxide and oxygen | Carbon dioxide and water | Glucose and water | Glucose and oxygen] -> Carbon dioxide and water\n2. Using the balanced equation, how many molecules of oxygen are produced for every 6 molecules of carbon dioxide? [choices: 1 | 2 | 6 | 12] -> 6\n3. A student writes: 6CO2 + 6H2O + light energy -> C6H12O6 + O2. What is the exact problem with this equation? [choices: Glucose has the wrong formula | The number of oxygen molecules on the product side is missing a coefficient of 6 | Carbon dioxide should have a coefficient of 12 | Water should not be included] -> The number of oxygen molecules on the product side is missing a coefficient of 6\n4. Complete the statement: During photosynthesis, the plant uses light energy to make glucose and releases _____. [typed answer] -> oxygen"
+   }
+  },
+  {
+   "learner": "Noah",
+   "kind": "lesson",
+   "texts": {
+    "tailored": "TITLE: Solving Two-Step Equations\n\nINTRO: How can you find an unknown engine part when it appears inside an equation? You can undo two operations in reverse order.\n\nSECTION 1 - Undo the operations\nA two-step equation contains two operations that must be undone. Whatever operation you perform on one side, you must perform the same operation on the other side so the equation stays balanced. First undo addition or subtraction by doing the opposite operation. Then undo multiplication or division by doing the opposite operation.\nEXAMPLE: Try it: A motorbike tyre has 5x = 20. Answer: Divide both sides by 5, so x = 4.\n\nSECTION 2 - Work in reverse order\nUndo the last operation first. If an equation has multiplication and addition, subtract the added number before dividing. Subtracting first prevents the addition from becoming part of the term you divide.\nEXAMPLE: Try it: A Formula 1 car travels 4x - 6 = 14. Answer: Add 6 to both sides to get 4x = 20, then divide both sides by 4 to get x = 5.\n\nSECTION 3 - Check the solution\nSubstitute the answer for the variable in the original equation. This confirms that both sides have the same value. If they do not, revisit the inverse-operation order.\nEXAMPLE: Try it: A restored engine has 3x + 9 = 30. Answer: Subtract 9 to get 3x = 21, divide by 3 to get x = 7, then 3(7) + 9 = 30.\n\nWORKED EXAMPLE: In a Formula 1 pit lane, 2x + 3 = 11 models the remaining distance in metres. Find x.\n  1. Start with 2x + 3 = 11.\n  2. Undo addition by subtracting 3 from both sides: 2x + 3 - 3 = 11 - 3.\n  3. Simplify both sides: 2x = 8.\n  4. Undo multiplication by dividing both sides by 2: 2x / 2 = 8 / 2.\n  5. Simplify both sides: x = 4.\n  6. Check by substituting 4 into the original equation: 2(4) + 3 = 8 + 3 = 11. Both sides equal 11, so x = 4 is correct.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so 2x = 14. Why: subtracting 3 was replaced with adding 3 on the right, so 11 + 3 = 14 does not undo the + 3. Right: subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8.\n\nSUMMARY: To solve a two-step equation, undo addition or subtraction first, then undo multiplication or division. Apply every operation to both sides and substitute the result into the original equation to check it.\n\nCHECK QUESTIONS:\n1. A car's tyre pressure is modeled by 7x - 4 = 17. What is x? [choices: x = 1 | x = 3 | x = 4 | x = 21] -> x = 3\n2. A motorbike restoration uses 5x + 8 = 43. Find x, and state the inverse-operation order you used. [typed answer] -> x = 7; subtract 8 first, then divide by 5",
+    "generic": "TITLE: Solving Two-Step Equations\n\nINTRO: A two-step equation needs two inverse operations to solve it. You will undo addition or subtraction first, then undo multiplication or division.\n\nSECTION 1 - 1. Undo addition or subtraction first\nUse the inverse of the operation outside the variable. If a number is added to a term, subtract that number from both sides. Doing the same operation to both sides keeps the equation balanced.\nEXAMPLE: Solve 3x + 5 = 20. Subtract 5 from both sides: 3x + 5 - 5 = 20 - 5, so 3x = 15.\n\nSECTION 2 - 2. Undo multiplication or division\nAfter removing the addition or subtraction, a number may still multiply the variable. Divide both sides by that number to isolate the variable.\nEXAMPLE: Continue with 3x = 15. Divide both sides by 3: 3x / 3 = 15 / 3, so x = 5.\n\nSECTION 3 - 3. Check the solution\nSubstitute the value of x for x in the original equation. A correct solution makes both sides equal.\nEXAMPLE: For x = 5, substitute into 3x + 5 = 20: 3(5) + 5 = 15 + 5 = 20. The sides match, so x = 5 is correct.\n\nWORKED EXAMPLE: Solve 3x + 5 = 20.\n  1. Start with 3x + 5 = 20.\n  2. The number 5 is added to 3x, so subtract 5 from both sides: 3x + 5 - 5 = 20 - 5.\n  3. Simplify both sides: 3x = 15.\n  4. The 3 multiplies x, so divide both sides by 3: 3x / 3 = 15 / 3.\n  5. Simplify both sides: x = 5.\n  6. Check by substituting x = 5 into the original equation: 3(5) + 5 = 15 + 5 = 20.\n  7. Both sides equal 20, so the solution is correct.\n  ANSWER: x = 5\n\nCOMMON MISTAKES:\nWrong: 3x + 5 = 20, so 3x = 20 + 5 = 25. Why: the 5 must be subtracted from both sides because it is added to 3x; subtracting gives 3x = 15, not 25. Right: subtract 5 from both sides: 3x + 5 - 5 = 20 - 5, so 3x = 15.\nWrong: 3x = 15, so x = 15. Why: dividing by 3 is the step that removes the coefficient; x = 15 gives 3(15) + 5 = 50, not 20. Right: divide both sides by 3: 3x / 3 = 15 / 3, so x = 5.\n\nSUMMARY: To solve a two-step equation, undo addition or subtraction first, then undo multiplication or division. Perform each operation on both sides and check the solution in the original equation.\n\nCHECK QUESTIONS:\n1. Solve 3x + 5 = 20. [choices: x = 3 | x = 5 | x = 15 | x = 25] -> x = 5\n2. Solve 4x + 7 = 31. Type an equation or just the value of x. [typed answer] -> x = 6\n3. A learner writes: 7x + 3 = 24, so 7x = 27, so x = 27. Substituting x = 27 gives 7(27) + 3 = 192, which is not 24. Which step should replace the first incorrect step? [choices: Add 3 to both sides: 7x = 27 | Subtract 3 from both sides: 7x = 21 | Divide both sides by 7: x + 3 = 24 | Subtract 24 from both sides: 7x = 21] -> Subtract 3 from both sides: 7x = 21"
+   }
+  },
+  {
+   "learner": "Ethan",
+   "kind": "lesson",
+   "texts": {
+    "tailored": "TITLE: Photosynthesis: Capturing Light to Build Sugar\n\nINTRO: How can a plant at your recording studio turn sunlight into chemical energy without making food from sunlight?\n\nSECTION 1 - From light to sugar\nThe rule is that plants make glucose from carbon dioxide and water by using light energy. Chlorophyll in leaf chloroplasts absorbs the light that powers this process. Photosynthesis occurs mainly in leaves, where these chloroplasts are concentrated.\n\nThink of a guitar amplifier near a sunny window: the leaves capture light, while carbon dioxide enters through stomata. Water reaches the leaves through the xylem.\nEXAMPLE: A potted plant beside a recording desk receives sunlight through the window. Try it: What substance enters the leaf from the air? Answer: Carbon dioxide.\n\nSECTION 2 - The reaction and its by-product\nThe balanced equation is 6CO2 + 6H2O + light energy → C6H12O6 + 6O2. The products are glucose and oxygen; oxygen is released as a by-product. The plant stores some of the glucose’s chemical energy for growth and cellular work.\n\nIn music-production terms, the leaf is like a solar-powered effects processor: it converts one energy source into another, with a usable output released.\nEXAMPLE: A bassist waters a plant near the studio window because plant photosynthesis requires water as well as carbon dioxide and light. Try it: Which product does the plant release into the room? Answer: Oxygen.\n\nSECTION 3 - Connecting the inputs and outputs\nEach glucose molecule contains six carbon atoms, so the reaction must also release six oxygen molecules. Chlorophyll does not become glucose; it transfers absorbed light energy to the reaction.\n\nFor a composer, the equation works like a chord progression: each input has a role, and the products can be traced back to those inputs.\nEXAMPLE: During an outdoor jazz session, a tree’s leaves use sunlight, air, and soil water to support its growth. Try it: If carbon dioxide stops being supplied during daylight, what input becomes limiting? Answer: Carbon dioxide.\n\nWORKED EXAMPLE: A leaf uses the photosynthesis equation to make glucose. If it produces 2 glucose molecules, how many oxygen molecules does it release?\n  1. Start with the balanced equation: 6CO2 + 6H2O + light energy → C6H12O6 + 6O2.\n  2. The equation shows that 6 oxygen molecules are released for every 1 glucose molecule produced.\n  3. Make the required ratio: 2 glucose molecules require 2 times the oxygen ratio.\n  4. Calculate 2 × 6 oxygen molecules = 12 oxygen molecules.\n  5. Check by substitution: 2 × C6H12O6 corresponds to 2 × 6 = 12 oxygen molecules, so the result is consistent with the equation.\n  ANSWER: 12 oxygen molecules\n\nCOMMON MISTAKES:\nWrong: 6CO2 + 6H2O + light energy → C6H12O6 + 6O2, so 2 glucose molecules produce 6 oxygen molecules. Why: the coefficient 6 applies to oxygen for each 1 glucose molecule; it must be multiplied by 2. Right: 2 × 6 = 12, so 2 glucose molecules produce 12 oxygen molecules.\n\nSUMMARY: Plants mainly perform photosynthesis in their leaves. Chlorophyll in chloroplasts absorbs sunlight, which powers the conversion of carbon dioxide and water into glucose. Oxygen is released as a by-product.\n\nCHECK QUESTIONS:\n1. A plant is placed in darkness while keeping its normal access to carbon dioxide and water. What stops, and why? [choices: Photosynthesis stops because light energy is unavailable. | Photosynthesis continues because chlorophyll stores sunlight indefinitely. | Photosynthesis stops because chlorophyll absorbs carbon dioxide. | Photosynthesis increases because water supplies more energy.] -> Photosynthesis stops because light energy is unavailable.\n2. During photosynthesis, carbon dioxide contributes all six carbon atoms to one glucose molecule. If the balanced equation produces 3 glucose molecules, how many oxygen molecules are released? [choices: 3 | 6 | 12 | 18] -> 18",
+    "generic": "TITLE: How Photosynthesis Makes Food\n\nINTRO: Photosynthesis is how plants, algae, and some bacteria use light energy to make sugar. You will learn the rule that identifies what goes in, what comes out, and where energy enters the process.\n\nSECTION 1 - The Rule\nPhotosynthesis needs carbon dioxide and water. Light energy allows a plant to combine them to make glucose, a type of sugar the plant uses for energy and growth. Oxygen is also released. You can remember the main pattern as: carbon dioxide + water + light energy becomes glucose + oxygen.\nEXAMPLE: For every 6 molecules of carbon dioxide and 6 molecules of water, the process can use light energy to make 1 molecule of glucose and 6 molecules of oxygen.\n\nSECTION 2 - The Balanced Equation\nA balanced equation shows the amounts of each substance used or made. The equation for photosynthesis is 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. The coefficients 6, 6, 1, and 6 show the relative number of molecules or units of each substance.\nEXAMPLE: Count the carbon in 6CO2: there are 6 carbon atoms. Count the carbon in 1 molecule of glucose, C6H12O6: there are 6 carbon atoms. The carbon atoms match, so the equation is balanced.\n\nSECTION 3 - Where Each Part Matters\nThe reactants are the substances used before photosynthesis: carbon dioxide, water, and light energy. Light is needed to power the reaction, but it is not a substance that becomes part of the glucose. The products are glucose and oxygen. Glucose stores chemical energy made using the incoming light energy.\nEXAMPLE: If a plant takes in 6CO2 and 6H2O and receives enough light, it can produce 1 molecule of C6H12O6 and release 6 molecules of O2 into the air.\n\nWORKED EXAMPLE: A plant has 6 molecules of carbon dioxide and 6 molecules of water. Use the photosynthesis equation to show what can be produced when light energy is available.\n  1. Start with the rule: carbon dioxide + water + light energy becomes glucose + oxygen.\n  2. Write the balanced equation: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\n  3. Identify the substances on the left. There are 6 molecules of carbon dioxide and 6 molecules of water, and light energy is available.\n  4. Identify the substances on the right. The coefficient 6 before O2 means that 6 molecules of oxygen are produced.\n  5. Identify the glucose. There is no number before C6H12O6, so the coefficient is 1. This means 1 molecule of glucose is produced.\n  6. Check the carbon count: 6CO2 contains 6 carbon atoms, and 1 molecule of C6H12O6 contains 6 carbon atoms. The carbon matches.\n  7. Check the hydrogen count: 6H2O contains 6 times 2, or 12, hydrogen atoms. One molecule of C6H12O6 contains 12 hydrogen atoms. The hydrogen matches.\n  8. Check the oxygen count: 6CO2 contains 6 times 2, or 12, oxygen atoms, and 6H2O contains 6 oxygen atoms, for 18 oxygen atoms total. The products contain 6 oxygen atoms in C6H12O6 and 6 times 2, or 12, oxygen atoms in 6O2, for 18 oxygen atoms total. The oxygen matches.\n  ANSWER: With light energy available, the plant can produce 1 molecule of glucose, C6H12O6, and 6 molecules of oxygen, 6O2.\n\nCOMMON MISTAKES:\nWrong: 6CO2 + 6H2O + light energy -> C6H12O6 + O2. Why: the oxygen product is missing its coefficient. Without the 6, the equation has only 6 oxygen atoms on the product side but 18 on the reactant side, so it is not balanced. Right: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\nWrong: light energy -> C6H12O6, so plants do not need carbon dioxide or water. Why: the reactants were left out, so this does not show the substances needed for photosynthesis. Right: carbon dioxide + water + light energy -> glucose + oxygen, which is represented by 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\nWrong: 6CO2 + 6H2O -> C6H12O6 + 6O2, because light energy is not matter. Why: this omits light even though light is needed to power photosynthesis. A chemical equation can show energy as an input even though energy is not matter. Right: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\n\nSUMMARY: Photosynthesis uses carbon dioxide and water with light energy to make glucose and oxygen. Its balanced equation is 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. Glucose stores chemical energy for the plant, while oxygen is released.\n\nCHECK QUESTIONS:\n1. Which set correctly lists the reactants needed for photosynthesis? [choices: Carbon dioxide and oxygen | Carbon dioxide and water | Glucose and water | Glucose and oxygen] -> Carbon dioxide and water\n2. Using the balanced equation, how many molecules of oxygen are produced for every 6 molecules of carbon dioxide? [choices: 1 | 2 | 6 | 12] -> 6\n3. A student writes: 6CO2 + 6H2O + light energy -> C6H12O6 + O2. What is the exact problem with this equation? [choices: Glucose has the wrong formula | The number of oxygen molecules on the product side is missing a coefficient of 6 | Carbon dioxide should have a coefficient of 12 | Water should not be included] -> The number of oxygen molecules on the product side is missing a coefficient of 6\n4. Complete the statement: During photosynthesis, the plant uses light energy to make glucose and releases _____. [typed answer] -> oxygen"
+   }
+  },
+  {
+   "learner": "Lena",
+   "kind": "notes",
+   "texts": {
+    "tailored": "## How plants make food\n- Photosynthesis is the process plants use to make their own food.\n- Step 1 is carbon dioxide entering the leaves through tiny openings; next, the roots take in water from the soil.\n- Think of it like gardening: the roots gather water while the leaves gather carbon dioxide for the plant’s food-making process.\n- Step 2 is using light energy from the sun to turn carbon dioxide and water into glucose, a kind of sugar.\n- Step 3 is using glucose as food for growth and stored energy; next, oxygen is released as a by-product.\n\n## Where photosynthesis happens\n- Photosynthesis happens mainly in leaves, where chloroplasts are small green structures inside leaf cells.\n- Chloroplasts contain chlorophyll, a green pigment that absorbs mostly red and blue light from the sun.\n- Chlorophyll reflects green light, which explains why leaves look green.\n- Without chlorophyll, a plant cannot capture the light energy needed for photosynthesis.\n\n## The products and word equation\n- Oxygen is released as a by-product and leaves the plant through the same tiny openings in its leaves.\n- This matters because animals and people breathe in the oxygen released during photosynthesis.\n- The word equation is carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## Conditions that slow photosynthesis\n- A plant receiving too little light, water, or carbon dioxide makes less glucose and grows more slowly.\n- Optional harder question: Why does a plant kept in a dark cupboard turn pale and weak? It receives too little light, so it makes less glucose and grows slowly.",
+    "generic": "## What Photosynthesis Does\n- Photosynthesis is the process plants use to make their own food.\n- A plant takes in carbon dioxide from the air through tiny openings in its leaves and takes in water from the soil through its roots.\n- Using light energy from the sun, the plant turns carbon dioxide and water into glucose, a kind of sugar.\n- The glucose is the plant's food, and the plant uses it to grow and to store energy.\n\n## Where Photosynthesis Happens\n- Photosynthesis happens mainly in the leaves.\n- Inside the cells of a leaf are small green structures called chloroplasts.\n- They contain a green pigment called chlorophyll.\n\n## Chlorophyll and Light\n- Chlorophyll absorbs light energy from the sun, mostly red and blue light, and reflects green light, which is why leaves look green.\n- Without chlorophyll the plant could not capture the light energy it needs.\n\n## Oxygen and the Word Equation\n- Oxygen is released as a by-product of photosynthesis.\n- The oxygen leaves the plant through the same tiny openings in the leaves.\n- Animals and people breathe in this oxygen, which is one reason plants matter so much to life on Earth.\n- The word equation is carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## Needs for Healthy Growth\n- A plant that gets too little light, too little water or too little carbon dioxide makes less glucose and grows more slowly.\n- A plant kept in a dark cupboard turns pale and weak."
+   }
+  },
+  {
+   "learner": "Ben",
+   "kind": "lesson",
+   "texts": {
+    "tailored": "TITLE: Two-Step Equations: Beat Your Best Score\n\nINTRO: Can you find the missing number? A two-step equation needs two undo moves. Undo addition or subtraction first, then multiplication or division.\n\nSECTION 1 - The Rule\nUndo addition or subtraction first. Use the opposite operation on both sides. Then undo multiplication or division. Whatever you do to one side, do to the other. Example form: 2x + 3 = 11 gives x = 4.\nEXAMPLE: Fortnite quest: 2x + 3 = 11. Subtract 3: 2x = 8. Divide by 2: x = 4. Check: 2(4) + 3 = 11.\n\nSECTION 2 - Practice Ladder\nTry to beat your own best score. Pokemon example: 3x + 2 = 14. Undo +2 first, then divide by 3. Try it: 3x + 2 = 14. Answer: x = 4.\nEXAMPLE: Speedrun split: 5x - 4 = 26. Undo -4 first by adding 4. Then divide by 5.\n\nSECTION 3 - Try the Harder Case\nKeep the same order when the equation looks different. Try it: 4x + 6 = 38. Answer: x = 8.\nEXAMPLE: Check your harder answer by substituting it into the original equation.\n\nWORKED EXAMPLE: Fortnite level: Solve 2x + 3 = 11.\n  1. Start with 2x + 3 = 11.\n  2. Undo addition first: subtract 3 from both sides. 2x + 3 - 3 = 11 - 3, so 2x = 8.\n  3. Undo multiplication next: divide both sides by 2. 2x/2 = 8/2, so x = 4.\n  4. Check by substituting 4: 2(4) + 3 = 8 + 3 = 11.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, 2x = 11, x = 5.5. Why: the step subtracting 3 from both sides was skipped, so 11 remained instead of 8. Right: subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8; then divide both sides by 2: 2x/2 = 8/2, so x = 4.\n\nSUMMARY: Undo addition or subtraction first, then multiplication or division. Do the same operation to both sides. Always check by substituting your answer back into the original equation.\n\nCHECK QUESTIONS:\n1. In 4x + 6 = 38, which operation should you undo first? [choices: Add 6 | Subtract 6 | Divide by 4 | Multiply by 4] -> Subtract 6\n2. Solve 5x - 4 = 26. Type the value of x. [typed answer] -> x = 6",
+    "generic": "TITLE: Solving Two-Step Equations\n\nINTRO: A two-step equation needs two inverse operations to solve it. You will undo addition or subtraction first, then undo multiplication or division.\n\nSECTION 1 - 1. Undo addition or subtraction first\nUse the inverse of the operation outside the variable. If a number is added to a term, subtract that number from both sides. Doing the same operation to both sides keeps the equation balanced.\nEXAMPLE: Solve 3x + 5 = 20. Subtract 5 from both sides: 3x + 5 - 5 = 20 - 5, so 3x = 15.\n\nSECTION 2 - 2. Undo multiplication or division\nAfter removing the addition or subtraction, a number may still multiply the variable. Divide both sides by that number to isolate the variable.\nEXAMPLE: Continue with 3x = 15. Divide both sides by 3: 3x / 3 = 15 / 3, so x = 5.\n\nSECTION 3 - 3. Check the solution\nSubstitute the value of x for x in the original equation. A correct solution makes both sides equal.\nEXAMPLE: For x = 5, substitute into 3x + 5 = 20: 3(5) + 5 = 15 + 5 = 20. The sides match, so x = 5 is correct.\n\nWORKED EXAMPLE: Solve 3x + 5 = 20.\n  1. Start with 3x + 5 = 20.\n  2. The number 5 is added to 3x, so subtract 5 from both sides: 3x + 5 - 5 = 20 - 5.\n  3. Simplify both sides: 3x = 15.\n  4. The 3 multiplies x, so divide both sides by 3: 3x / 3 = 15 / 3.\n  5. Simplify both sides: x = 5.\n  6. Check by substituting x = 5 into the original equation: 3(5) + 5 = 15 + 5 = 20.\n  7. Both sides equal 20, so the solution is correct.\n  ANSWER: x = 5\n\nCOMMON MISTAKES:\nWrong: 3x + 5 = 20, so 3x = 20 + 5 = 25. Why: the 5 must be subtracted from both sides because it is added to 3x; subtracting gives 3x = 15, not 25. Right: subtract 5 from both sides: 3x + 5 - 5 = 20 - 5, so 3x = 15.\nWrong: 3x = 15, so x = 15. Why: dividing by 3 is the step that removes the coefficient; x = 15 gives 3(15) + 5 = 50, not 20. Right: divide both sides by 3: 3x / 3 = 15 / 3, so x = 5.\n\nSUMMARY: To solve a two-step equation, undo addition or subtraction first, then undo multiplication or division. Perform each operation on both sides and check the solution in the original equation.\n\nCHECK QUESTIONS:\n1. Solve 3x + 5 = 20. [choices: x = 3 | x = 5 | x = 15 | x = 25] -> x = 5\n2. Solve 4x + 7 = 31. Type an equation or just the value of x. [typed answer] -> x = 6\n3. A learner writes: 7x + 3 = 24, so 7x = 27, so x = 27. Substituting x = 27 gives 7(27) + 3 = 192, which is not 24. Which step should replace the first incorrect step? [choices: Add 3 to both sides: 7x = 27 | Subtract 3 from both sides: 7x = 21 | Divide both sides by 7: x + 3 = 24 | Subtract 24 from both sides: 7x = 21] -> Subtract 3 from both sides: 7x = 21"
+   }
+  },
+  {
+   "learner": "Ethan",
+   "kind": "notes",
+   "texts": {
+    "tailored": "## Core Process\n- How do plants make their own food?\n- Photosynthesis uses light energy from the sun to turn carbon dioxide and water into glucose, a kind of sugar.\n- The plant takes in carbon dioxide from the air through tiny leaf openings and takes in water from the soil through its roots.\n- Glucose is the plant’s food, which it uses to grow and store energy.\n\n## Where It Happens\n- Photosynthesis happens mainly in leaves.\n- Chloroplasts are small green structures inside leaf cells.\n- Chlorophyll is the green pigment inside chloroplasts that captures light energy.\n- Chlorophyll absorbs mostly red and blue light, reflects green light, and provides the energy needed for photosynthesis.\n- Without chlorophyll, the plant could not capture the light energy it needs.\n\n## Products and Word Equation\n- Process chain: carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n- Think of it like a music-production chain: carbon dioxide, water, and light energy enter the process, while glucose and oxygen come out.\n- Oxygen is released as a by-product and leaves through the same tiny openings as carbon dioxide.\n- Animals and people breathe in the oxygen released by plants, which is one reason plants matter to life on Earth.\n\n## Limits on Growth\n- Limiting-input chain: too little light, water, or carbon dioxide → less glucose → slower growth.\n- A plant kept in a dark cupboard turns pale and weak because it receives too little light.\n- Optional harder question—why do shortages of light, water, or carbon dioxide slow growth—because each shortage reduces glucose production.",
+    "generic": "## What Photosynthesis Does\n- Photosynthesis is the process plants use to make their own food.\n- A plant takes in carbon dioxide from the air through tiny openings in its leaves and takes in water from the soil through its roots.\n- Using light energy from the sun, the plant turns carbon dioxide and water into glucose, a kind of sugar.\n- The glucose is the plant's food, and the plant uses it to grow and to store energy.\n\n## Where Photosynthesis Happens\n- Photosynthesis happens mainly in the leaves.\n- Inside the cells of a leaf are small green structures called chloroplasts.\n- They contain a green pigment called chlorophyll.\n\n## Chlorophyll and Light\n- Chlorophyll absorbs light energy from the sun, mostly red and blue light, and reflects green light, which is why leaves look green.\n- Without chlorophyll the plant could not capture the light energy it needs.\n\n## Oxygen and the Word Equation\n- Oxygen is released as a by-product of photosynthesis.\n- The oxygen leaves the plant through the same tiny openings in the leaves.\n- Animals and people breathe in this oxygen, which is one reason plants matter so much to life on Earth.\n- The word equation is carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## Needs for Healthy Growth\n- A plant that gets too little light, too little water or too little carbon dioxide makes less glucose and grows more slowly.\n- A plant kept in a dark cupboard turns pale and weak."
+   }
+  },
+  {
+   "learner": "Noah",
+   "kind": "notes",
+   "texts": {
+    "tailored": "## Understanding the Goal\n- How do you solve a two-step equation while keeping the equation true?\n- A two-step equation needs two steps to solve, such as 2x + 3 = 11.\n- Get the variable x alone by undoing operations performed on x with their opposite operations.\n- The worked chain is 2x + 3 = 11 → 2x = 8 → x = 4.\n\n## Step One: Undo Addition or Subtraction\n- Step one undoes addition or subtraction.\n- Because 3 is added in 2x + 3 = 11, subtract 3 from both sides to get 2x = 8.\n\n## Step Two: Undo Multiplication or Division\n- Step two undoes multiplication or division.\n- Because x is multiplied by 2, divide both sides by 2 to get x = 4.\n\n## Keeping Both Sides Balanced\n- Whatever you do to one side of an equation, you must do to the other side.\n- An equation is like a balanced scale because doing the same thing to both sides keeps it balanced.\n- Think of it like a Formula 1 car's engine being balanced on both sides, which maps to applying the same operation to both equation sides.\n- If you subtract 3 from only one side, the equation is no longer true.\n\n## Checking the Answer\n- Always check an answer by putting it back into the original equation.\n- For x = 4, 2 times 4 plus 3 is 8 plus 3, which is 11, so both sides equal and the answer is correct.\n- Optional harder question: How does adding 5 and then dividing by 3 solve 3x - 5 = 10?—it gives 3x = 15 and x = 5.",
+    "generic": "## Goal of solving a two-step equation\n- A two-step equation needs two steps to solve, such as 2x + 3 = 11.\n- The goal is to get the variable x alone on one side of the equals sign.\n- Undo the operations that have been done to x by using the opposite operation.\n\n## Solving the example 2x + 3 = 11\n- Step one is to undo addition or subtraction.\n- Because 3 is added, subtract 3 from both sides to get 2x = 8.\n- Step two is to undo multiplication or division.\n- Because x is multiplied by 2, divide both sides by 2 to get x = 4.\n\n## Keeping the equation balanced\n- Whatever you do to one side of an equation, you must do to the other side.\n- An equation is like a balanced scale, and doing the same thing to both sides keeps it balanced.\n- If you subtract 3 from only one side, the equation is no longer true.\n\n## Checking the answer\n- Always check your answer by putting it back into the original equation.\n- For x = 4, 2 times 4 plus 3 is 8 plus 3, which is 11, so the answer is correct.\n\n## Solving the example 3x - 5 = 10\n- Add 5 to both sides to get 3x = 15.\n- Divide both sides by 3 to get x = 5."
+   }
+  },
+  {
+   "learner": "Ben",
+   "kind": "notes",
+   "texts": {
+    "tailored": "## What makes a two-step equation?\n- What must happen before an equation is solved?\n- A two-step equation needs two steps to solve, such as 2x + 3 = 11.\n- Get x alone by undoing the operations done to x.\n- Do the same thing to both sides, like keeping a balanced scale balanced.\n- Think of it like a Fortnite match where both sides must match, because changing only one side would break the equation.\n\n## Solve 2x + 3 = 11\n- Step one undoes addition or subtraction. Subtract 3 from both sides.\n- Step two undoes multiplication or division. Divide both sides by 2.\n\n## Keep both sides equal\n- Whatever you do to one side, do to the other side too.\n- Changing only one side would make the equation false.\n\n## Solve 3x - 5 = 10\n- Add 5 to both sides to get 3x = 15.\n- Divide both sides by 3 to get x = 5.\n\n## Check the answer\n- Put the answer back into the original equation.\n- For x = 4, the left side is 8 plus 3, which is 11.\n- The answer is correct when both sides are equal.\n- Harder question: Why is x = 5 correct for 3x - 5 = 10? Add 5 to both sides, then divide both sides by 3.",
+    "generic": "## Goal of solving a two-step equation\n- A two-step equation needs two steps to solve, such as 2x + 3 = 11.\n- The goal is to get the variable x alone on one side of the equals sign.\n- Undo the operations that have been done to x by using the opposite operation.\n\n## Solving the example 2x + 3 = 11\n- Step one is to undo addition or subtraction.\n- Because 3 is added, subtract 3 from both sides to get 2x = 8.\n- Step two is to undo multiplication or division.\n- Because x is multiplied by 2, divide both sides by 2 to get x = 4.\n\n## Keeping the equation balanced\n- Whatever you do to one side of an equation, you must do to the other side.\n- An equation is like a balanced scale, and doing the same thing to both sides keeps it balanced.\n- If you subtract 3 from only one side, the equation is no longer true.\n\n## Checking the answer\n- Always check your answer by putting it back into the original equation.\n- For x = 4, 2 times 4 plus 3 is 8 plus 3, which is 11, so the answer is correct.\n\n## Solving the example 3x - 5 = 10\n- Add 5 to both sides to get 3x = 15.\n- Divide both sides by 3 to get x = 5."
+   }
+  },
+  {
+   "learner": "Frank",
+   "kind": "lesson",
+   "texts": {
+    "tailored": "TITLE: Solving Two-Step Equations\n\nINTRO: This lesson shows how to solve equations with two operations, such as finding an unknown number of paintbrushes.\nIt matters whenever a real-life total combines a starting amount with a repeated amount.\n\nSECTION 1 - Start with a concrete problem\nAt a museum, 3 stickers are added to an unknown number. The total is 11 stickers.\nThe equation is x + 3 = 11, where x is the starting number.\nThe rule is to undo addition or subtraction first. To undo + 3, subtract 3 from both sides.\nEXAMPLE: Start with x + 3 = 11. Subtract 3 from the left side: x + 3 - 3 = x. Subtract 3 from the right side: 11 - 3 = 8. This gives x = 8. Check: 8 + 3 = 11. The original equation is true.\n\nSECTION 2 - Then undo multiplication or division\nSuppose each box of watercolor paints has 2 brushes, and there are 3 extra brushes. The total is 11.\nThe equation is 2x + 3 = 11. First undo the addition, then undo the multiplication.\nTo undo multiplication by 2, divide both sides by 2.\nEXAMPLE: Solve 2x + 3 = 11. First subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8. Next divide both sides by 2: 2x / 2 = 8 / 2, so x = 4. Check: 2(4) + 3 = 8 + 3 = 11.\n\nSECTION 3 - Use the same plan every time\nWhatever operation you do to one side, you must do to the other side too.\nThis keeps the two sides equal and preserves the meaning of the equation.\nAfter solving, put your answer back into the original equation to check it.\nEXAMPLE: A gardener collects 4y - 2 = 14. Undo subtraction first by adding 2 to both sides: 4y - 2 + 2 = 14 + 2, so 4y = 16. Undo multiplication next by dividing both sides by 4: 4y / 4 = 16 / 4, so y = 4. Check: 4(4) - 2 = 16 - 2 = 14. Try it: Solve 3x + 5 = 20. Answer: x = 5.\n\nWORKED EXAMPLE: A painting workshop packs brushes into sets of 2. Each learner receives 3 extra brushes, and the total is 11 brushes. Find the number of sets.\n  1. Write the equation: 2x + 3 = 11. Here, x is the number of sets of brushes.\n  2. Undo addition first because + 3 is outside the multiplication. Subtract 3 from both sides: 2x + 3 - 3 = 11 - 3.\n  3. Simplify both sides: 2x = 8.\n  4. Undo multiplication by 2. Divide both sides by 2: 2x / 2 = 8 / 2.\n  5. Simplify both sides: x = 4. The workshop has 4 sets of brushes.\n  6. Check the answer in the original equation. Substitute 4 for x: 2(4) + 3 = 8 + 3 = 11.\n  7. The result 4 makes the original equation true, so x = 4 is correct.\n  ANSWER: x = 4 sets of brushes\n\nCOMMON MISTAKES:\nWrong: x + 5 = 12, so x = 12 + 5 = 17. Why: the + 5 on the left was not undone. Adding 5 does not undo addition; 17 + 5 = 22, not 12. Right: subtract 5 from both sides: x + 5 - 5 = 12 - 5, so x = 7.\nWrong: 2x + 4 = 14, so 2x = 18, so x = 9. Why: the subtraction of 4 was skipped. The equation became 2x = 18 by incorrectly adding 4 instead of subtracting it. Right: subtract 4 from both sides: 2x + 4 - 4 = 14 - 4, so 2x = 10; divide both sides by 2: 2x / 2 = 10 / 2, so x = 5.\nWrong: 3x = 15, so x = 3. Why: only the right side was divided by 3. The same operation must be performed on both sides. Right: divide both sides by 3: 3x / 3 = 15 / 3, so x = 5.\n\nSUMMARY: Solve a two-step equation by undoing addition or subtraction first. Then undo multiplication or division. Perform every operation on both sides, and check the answer in the original equation.\n\nCHECK QUESTIONS:\n1. Solve x + 4 = 13. Hint: undo + 4 by subtracting 4 from both sides. [choices: x = 8 | x = 9 | x = 17 | x = 4] -> x = 9\n2. Solve 2x + 3 = 11. Hint: first undo + 3, then undo multiplication by 2. [choices: x = 2 | x = 3 | x = 4 | x = 7] -> x = 4\n3. Solve 5x - 3 = 17. Type only the number x. Hint: undo - 3 by adding 3 to both sides before dividing by 5. [typed answer] -> 4",
+    "generic": "TITLE: Solving Two-Step Equations\n\nINTRO: A two-step equation needs two inverse operations to solve it. You will undo addition or subtraction first, then undo multiplication or division.\n\nSECTION 1 - 1. Undo addition or subtraction first\nUse the inverse of the operation outside the variable. If a number is added to a term, subtract that number from both sides. Doing the same operation to both sides keeps the equation balanced.\nEXAMPLE: Solve 3x + 5 = 20. Subtract 5 from both sides: 3x + 5 - 5 = 20 - 5, so 3x = 15.\n\nSECTION 2 - 2. Undo multiplication or division\nAfter removing the addition or subtraction, a number may still multiply the variable. Divide both sides by that number to isolate the variable.\nEXAMPLE: Continue with 3x = 15. Divide both sides by 3: 3x / 3 = 15 / 3, so x = 5.\n\nSECTION 3 - 3. Check the solution\nSubstitute the value of x for x in the original equation. A correct solution makes both sides equal.\nEXAMPLE: For x = 5, substitute into 3x + 5 = 20: 3(5) + 5 = 15 + 5 = 20. The sides match, so x = 5 is correct.\n\nWORKED EXAMPLE: Solve 3x + 5 = 20.\n  1. Start with 3x + 5 = 20.\n  2. The number 5 is added to 3x, so subtract 5 from both sides: 3x + 5 - 5 = 20 - 5.\n  3. Simplify both sides: 3x = 15.\n  4. The 3 multiplies x, so divide both sides by 3: 3x / 3 = 15 / 3.\n  5. Simplify both sides: x = 5.\n  6. Check by substituting x = 5 into the original equation: 3(5) + 5 = 15 + 5 = 20.\n  7. Both sides equal 20, so the solution is correct.\n  ANSWER: x = 5\n\nCOMMON MISTAKES:\nWrong: 3x + 5 = 20, so 3x = 20 + 5 = 25. Why: the 5 must be subtracted from both sides because it is added to 3x; subtracting gives 3x = 15, not 25. Right: subtract 5 from both sides: 3x + 5 - 5 = 20 - 5, so 3x = 15.\nWrong: 3x = 15, so x = 15. Why: dividing by 3 is the step that removes the coefficient; x = 15 gives 3(15) + 5 = 50, not 20. Right: divide both sides by 3: 3x / 3 = 15 / 3, so x = 5.\n\nSUMMARY: To solve a two-step equation, undo addition or subtraction first, then undo multiplication or division. Perform each operation on both sides and check the solution in the original equation.\n\nCHECK QUESTIONS:\n1. Solve 3x + 5 = 20. [choices: x = 3 | x = 5 | x = 15 | x = 25] -> x = 5\n2. Solve 4x + 7 = 31. Type an equation or just the value of x. [typed answer] -> x = 6\n3. A learner writes: 7x + 3 = 24, so 7x = 27, so x = 27. Substituting x = 27 gives 7(27) + 3 = 192, which is not 24. Which step should replace the first incorrect step? [choices: Add 3 to both sides: 7x = 27 | Subtract 3 from both sides: 7x = 21 | Divide both sides by 7: x + 3 = 24 | Subtract 24 from both sides: 7x = 21] -> Subtract 3 from both sides: 7x = 21"
+   }
+  },
+  {
+   "learner": "Omar",
+   "kind": "lesson",
+   "texts": {
+    "tailored": "TITLE: Photosynthesis: The Leaf’s Food Factory\n\nINTRO: A tree can make food and feed its leaves. How? A leaf traps sunlight, then uses it to make sugar. This process is photosynthesis.\n\nSECTION 1 - The Leaf Workshop\nPhotosynthesis happens mainly in leaves. A leaf makes sugar and sends it to the rest of the plant.\nEXAMPLE: A toy car parks under a leafy tree. The leaves make sugar, so the tree can grow. Quick check: Where does photosynthesis happen mainly? Answer: Mainly in leaves.\nHint: Look for the tree’s food-making parts.\n\nSECTION 2 - The Light Catchers\nInside leaf cells are chloroplasts, tiny parts that help with photosynthesis. They contain chlorophyll, a green substance that absorbs light.\nEXAMPLE: Sunlight shines on a truck beside a tree. Chlorophyll catches the light, like a green toy catcher. Quick check: What substance absorbs light? Answer: Chlorophyll.\nHint: It is green and sits inside chloroplasts.\n\nSECTION 3 - Food and Oxygen\nLeaves take in carbon dioxide, a gas in air. Roots take in water, and stems carry it up.\nEXAMPLE: Before a Hot Wheels race, you water a plant beside the track. Air brings carbon dioxide, while sunlight supplies energy. Try it: What three things does the plant need for photosynthesis? Answer: Carbon dioxide, water, and light.\nHint: One comes from air, one from roots, and one from the sun.\n\nSECTION 4 - What the Plant Makes\nThe plant uses light energy to make glucose, a type of sugar, from carbon dioxide and water. Oxygen, a gas, is also released as a by-product, a useful extra product.\nEXAMPLE: As the toy car reaches the finish line, nearby leaves make sugar for the tree and release oxygen into the air. Quick check: What gas is released during photosynthesis? Answer: Oxygen.\nHint: It is the gas people need for breathing.\n\nWORKED EXAMPLE: A toy car race runs beside a leafy tree. One leaf receives sunlight. Carbon dioxide is in the air, and roots supply water. Explain what happens in the leaf.\n  1. 1. Start at the leaf. Photosynthesis happens mainly in leaves. Leaf cells contain chloroplasts, tiny parts with chlorophyll. Chlorophyll absorbs the sunlight.\n  2. 2. Bring in the carbon dioxide. Carbon dioxide is a gas in the air. It enters the leaf through openings called pores.\n  3. 3. Bring in the water. Roots absorb water from the soil. The stem carries the water to the leaf.\n  4. 4. Use the captured light energy. The plant uses this energy to process the carbon dioxide and water.\n  5. 5. Make glucose. The plant makes glucose, a type of sugar, from carbon dioxide and water. The plant can use or store this sugar.\n  6. 6. Notice the extra product. Oxygen is released into the air as a by-product of photosynthesis.\n  ANSWER: The leaf uses chlorophyll in its chloroplasts to absorb sunlight. It uses that light energy to make glucose from carbon dioxide and water, while releasing oxygen.\n\nCOMMON MISTAKES:\nWrong: \"Plants make glucose from carbon dioxide and water in the dark.\" Why: This leaves out light energy, which photosynthesis needs to happen. Right: Plants use light energy to make glucose from carbon dioxide and water.\n\nSUMMARY: Photosynthesis happens mainly in leaves. Chlorophyll in chloroplasts absorbs light. Plants use light energy to make glucose from carbon dioxide and water. Oxygen is released as a by-product.\n\nCHECK QUESTIONS:\n1. Where does photosynthesis happen mainly? [choices: In roots | In leaves | In flowers | In car tires] -> In leaves\n2. Which set lists the three things needed for photosynthesis? [choices: Glucose, oxygen, and soil | Carbon dioxide, water, and light | Salt, water, and plastic | Sunlight, glucose, and oxygen] -> Carbon dioxide, water, and light\n3. Name the gas released as a by-product during photosynthesis. [typed answer] -> Oxygen",
+    "generic": "TITLE: How Photosynthesis Makes Food\n\nINTRO: Photosynthesis is how plants, algae, and some bacteria use light energy to make sugar. You will learn the rule that identifies what goes in, what comes out, and where energy enters the process.\n\nSECTION 1 - The Rule\nPhotosynthesis needs carbon dioxide and water. Light energy allows a plant to combine them to make glucose, a type of sugar the plant uses for energy and growth. Oxygen is also released. You can remember the main pattern as: carbon dioxide + water + light energy becomes glucose + oxygen.\nEXAMPLE: For every 6 molecules of carbon dioxide and 6 molecules of water, the process can use light energy to make 1 molecule of glucose and 6 molecules of oxygen.\n\nSECTION 2 - The Balanced Equation\nA balanced equation shows the amounts of each substance used or made. The equation for photosynthesis is 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. The coefficients 6, 6, 1, and 6 show the relative number of molecules or units of each substance.\nEXAMPLE: Count the carbon in 6CO2: there are 6 carbon atoms. Count the carbon in 1 molecule of glucose, C6H12O6: there are 6 carbon atoms. The carbon atoms match, so the equation is balanced.\n\nSECTION 3 - Where Each Part Matters\nThe reactants are the substances used before photosynthesis: carbon dioxide, water, and light energy. Light is needed to power the reaction, but it is not a substance that becomes part of the glucose. The products are glucose and oxygen. Glucose stores chemical energy made using the incoming light energy.\nEXAMPLE: If a plant takes in 6CO2 and 6H2O and receives enough light, it can produce 1 molecule of C6H12O6 and release 6 molecules of O2 into the air.\n\nWORKED EXAMPLE: A plant has 6 molecules of carbon dioxide and 6 molecules of water. Use the photosynthesis equation to show what can be produced when light energy is available.\n  1. Start with the rule: carbon dioxide + water + light energy becomes glucose + oxygen.\n  2. Write the balanced equation: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\n  3. Identify the substances on the left. There are 6 molecules of carbon dioxide and 6 molecules of water, and light energy is available.\n  4. Identify the substances on the right. The coefficient 6 before O2 means that 6 molecules of oxygen are produced.\n  5. Identify the glucose. There is no number before C6H12O6, so the coefficient is 1. This means 1 molecule of glucose is produced.\n  6. Check the carbon count: 6CO2 contains 6 carbon atoms, and 1 molecule of C6H12O6 contains 6 carbon atoms. The carbon matches.\n  7. Check the hydrogen count: 6H2O contains 6 times 2, or 12, hydrogen atoms. One molecule of C6H12O6 contains 12 hydrogen atoms. The hydrogen matches.\n  8. Check the oxygen count: 6CO2 contains 6 times 2, or 12, oxygen atoms, and 6H2O contains 6 oxygen atoms, for 18 oxygen atoms total. The products contain 6 oxygen atoms in C6H12O6 and 6 times 2, or 12, oxygen atoms in 6O2, for 18 oxygen atoms total. The oxygen matches.\n  ANSWER: With light energy available, the plant can produce 1 molecule of glucose, C6H12O6, and 6 molecules of oxygen, 6O2.\n\nCOMMON MISTAKES:\nWrong: 6CO2 + 6H2O + light energy -> C6H12O6 + O2. Why: the oxygen product is missing its coefficient. Without the 6, the equation has only 6 oxygen atoms on the product side but 18 on the reactant side, so it is not balanced. Right: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\nWrong: light energy -> C6H12O6, so plants do not need carbon dioxide or water. Why: the reactants were left out, so this does not show the substances needed for photosynthesis. Right: carbon dioxide + water + light energy -> glucose + oxygen, which is represented by 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\nWrong: 6CO2 + 6H2O -> C6H12O6 + 6O2, because light energy is not matter. Why: this omits light even though light is needed to power photosynthesis. A chemical equation can show energy as an input even though energy is not matter. Right: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\n\nSUMMARY: Photosynthesis uses carbon dioxide and water with light energy to make glucose and oxygen. Its balanced equation is 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. Glucose stores chemical energy for the plant, while oxygen is released.\n\nCHECK QUESTIONS:\n1. Which set correctly lists the reactants needed for photosynthesis? [choices: Carbon dioxide and oxygen | Carbon dioxide and water | Glucose and water | Glucose and oxygen] -> Carbon dioxide and water\n2. Using the balanced equation, how many molecules of oxygen are produced for every 6 molecules of carbon dioxide? [choices: 1 | 2 | 6 | 12] -> 6\n3. A student writes: 6CO2 + 6H2O + light energy -> C6H12O6 + O2. What is the exact problem with this equation? [choices: Glucose has the wrong formula | The number of oxygen molecules on the product side is missing a coefficient of 6 | Carbon dioxide should have a coefficient of 12 | Water should not be included] -> The number of oxygen molecules on the product side is missing a coefficient of 6\n4. Complete the statement: During photosynthesis, the plant uses light energy to make glucose and releases _____. [typed answer] -> oxygen"
+   }
+  },
+  {
+   "learner": "Frank",
+   "kind": "notes",
+   "texts": {
+    "tailored": "## Overview and First Example\n- The material covers how to solve a two-step equation by undoing two operations and then checking the result.\n- It begins with the goal of separating the variable x from the other terms.\n- Think of the first example as two times x plus three equals eleven (2x + 3 = 11).\n- Step one: The number three was added, so subtract three from both sides to get two times x equals eight (2x = 8).\n- Think of undoing addition or subtraction as removing the first operation applied to x.\n- Step two: The variable x was multiplied by two, so divide both sides by two to get x equals four (x = 4).\n- Think of dividing both sides as sharing the same division across both sides of the equation.\n- The key point is to undo the operations in reverse order until x stands alone.\n\n## Keeping Both Sides Balanced\n- The main rule states that every operation performed on one side must also be performed on the other side.\n- To undo an operation means to perform its opposite operation.\n- This matters because applying the same operation to both sides preserves the equation’s balance.\n- Think of an equation like a balanced scale with equal weights resting on both sides.\n- Changing only one side would break the balance and make the equation untrue.\n- The key point is that both sides must always receive the same operation.\n\n## Checking the First Answer\n- For x equals four (x = 4), substitute it into the original equation to get two times four plus three equals eleven.\n- The left side then equals the right side, so the answer x equals four is correct.\n- Always check by placing the answer back into the original equation.\n- This matters because the check confirms that both sides still have equal values.\n- Think of checking the answer like holding a painting against the original view to confirm its placement.\n- The key point is that an answer is correct when substitution makes both sides equal.\n\n## Solving a Second Example\n- The second example is three times x minus five equals ten (3x - 5 = 10).\n- Step one: Add five to both sides because subtraction by five was applied, producing three times x equals fifteen (3x = 15).\n- Think of adding five to both sides like watering two equal garden rows with the same watering can.\n- Step two: Divide both sides by three because x was multiplied by three, producing x equals five (x = 5).\n- then divide both sides by 3 to get x = 5.\n- The general sequence is to undo addition or subtraction first, then undo multiplication or division.\n- The key point is that each opposite operation must be applied to both sides.",
+    "generic": "## Goal of solving a two-step equation\n- A two-step equation needs two steps to solve, such as 2x + 3 = 11.\n- The goal is to get the variable x alone on one side of the equals sign.\n- Undo the operations that have been done to x by using the opposite operation.\n\n## Solving the example 2x + 3 = 11\n- Step one is to undo addition or subtraction.\n- Because 3 is added, subtract 3 from both sides to get 2x = 8.\n- Step two is to undo multiplication or division.\n- Because x is multiplied by 2, divide both sides by 2 to get x = 4.\n\n## Keeping the equation balanced\n- Whatever you do to one side of an equation, you must do to the other side.\n- An equation is like a balanced scale, and doing the same thing to both sides keeps it balanced.\n- If you subtract 3 from only one side, the equation is no longer true.\n\n## Checking the answer\n- Always check your answer by putting it back into the original equation.\n- For x = 4, 2 times 4 plus 3 is 8 plus 3, which is 11, so the answer is correct.\n\n## Solving the example 3x - 5 = 10\n- Add 5 to both sides to get 3x = 15.\n- Divide both sides by 3 to get x = 5."
+   }
+  },
+  {
+   "learner": "Omar",
+   "kind": "notes",
+   "texts": {
+    "tailored": "## How Plants Make Food\n- How do plants make food, and what helps them grow? Photosynthesis covers inputs, light use, outputs, and limits.\n- Plants take in carbon dioxide through tiny leaf openings.\n- Plants take in water from soil through their roots.\n- Light energy changes carbon dioxide and water into glucose, a sugar.\n\n## Food, Energy, and Growth\n- Glucose is the plant’s food.\n- Plants use glucose to grow and store energy.\n- Think of it like a truck: glucose delivers what the plant needs.\n\n## Leaves and Light\n- Photosynthesis happens mainly in leaves.\n- Leaf cells contain chloroplasts, small green structures.\n- Chloroplasts contain chlorophyll, a green pigment.\n- Chlorophyll takes in mostly red and blue light.\n- Chlorophyll reflects green light, so leaves look green.\n\n## Oxygen and the Word Equation\n- Oxygen is a by-product of photosynthesis.\n- Oxygen leaves through tiny openings in leaves.\n- Animals and people breathe in this oxygen.\n- Carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## What Plants Need\n- Too little light, water, or carbon dioxide means less glucose.\n- Less glucose means slower plant growth.\n- A plant in a dark cupboard turns pale and weak.",
+    "generic": "## What Photosynthesis Does\n- Photosynthesis is the process plants use to make their own food.\n- A plant takes in carbon dioxide from the air through tiny openings in its leaves and takes in water from the soil through its roots.\n- Using light energy from the sun, the plant turns carbon dioxide and water into glucose, a kind of sugar.\n- The glucose is the plant's food, and the plant uses it to grow and to store energy.\n\n## Where Photosynthesis Happens\n- Photosynthesis happens mainly in the leaves.\n- Inside the cells of a leaf are small green structures called chloroplasts.\n- They contain a green pigment called chlorophyll.\n\n## Chlorophyll and Light\n- Chlorophyll absorbs light energy from the sun, mostly red and blue light, and reflects green light, which is why leaves look green.\n- Without chlorophyll the plant could not capture the light energy it needs.\n\n## Oxygen and the Word Equation\n- Oxygen is released as a by-product of photosynthesis.\n- The oxygen leaves the plant through the same tiny openings in the leaves.\n- Animals and people breathe in this oxygen, which is one reason plants matter so much to life on Earth.\n- The word equation is carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## Needs for Healthy Growth\n- A plant that gets too little light, too little water or too little carbon dioxide makes less glucose and grows more slowly.\n- A plant kept in a dark cupboard turns pale and weak."
+   }
+  },
+  {
+   "learner": "Grace",
+   "kind": "lesson",
+   "texts": {
+    "tailored": "TITLE: Photosynthesis: How Plants Make Their Own Food\n\nINTRO: Photosynthesis gives plants food and gives us oxygen. It matters because almost all life depends on plant-made food.\n\nSECTION 1 - 1. The Rule and Its Ingredients\nThe rule is that plants use light energy to make glucose from carbon dioxide and water. Glucose is a sugar that the plant can use as food, so plants make part of their own food.\nEXAMPLE: When basil grows for pesto, its leaves use sunlight to make glucose. This food helps the basil grow before anyone picks it for cooking.\n\nSECTION 2 - 2. Where Photosynthesis Happens\nPhotosynthesis happens mainly in leaves because leaves contain many chloroplasts. A chloroplast is a small part of a plant cell where photosynthesis takes place.\nEXAMPLE: The green parts of spinach contain chlorophyll. When spinach grows outside, this green substance absorbs sunlight for photosynthesis.\n\nSECTION 3 - 3. Chlorophyll Catches Light\nChlorophyll is the green substance that absorbs light inside chloroplasts. The absorbed light energy powers the chemical process that makes glucose.\nEXAMPLE: The green leaves of a lettuce plant catch sunlight. This captured energy helps the lettuce turn carbon dioxide and water into sugar.\n\nSECTION 4 - 4. Inputs, Outputs, and a Second Example\nCarbon dioxide and water are inputs, which means materials going into the process. Glucose and oxygen are outputs, which means products coming out of the process.\nEXAMPLE: Second worked example: A kale plant is growing for soup.\n1. The kale takes in carbon dioxide from the air.\n2. Water arrives from the roots.\n3. Chlorophyll in the leaf absorbs light energy.\n4. Your final step: use those facts to write the word equation for photosynthesis.\n\nTry it: Write the word equation for photosynthesis. Answer: carbon dioxide + water + light energy -> glucose + oxygen.\n\nWORKED EXAMPLE: A basil plant grows in a sunny window. Explain how its leaves make glucose and release oxygen.\n  1. 1. Start with the rule: photosynthesis uses light energy to make glucose from carbon dioxide and water.\n  2. 2. Identify the first ingredient. The basil leaf takes in carbon dioxide from the air.\n  3. 3. Identify the second ingredient. Water reaches the leaf from the plant's roots.\n  4. 4. Identify the energy source. Chlorophyll, a green substance in chloroplasts, absorbs light from the sun or window.\n  5. 5. Chloroplasts are parts of leaf cells where photosynthesis mainly happens. They use the absorbed light energy to help make glucose.\n  6. 6. Write the word equation: carbon dioxide + water + light energy -> glucose + oxygen.\n  7. 7. Check the outputs. The plant keeps some glucose as food, and oxygen is released into the air.\n  8. 8. The basil leaf is therefore making food while light is present. The oxygen produced can enter the air around the cooking area.\n  ANSWER: Photosynthesis mainly happens in the basil's leaves. Its chlorophyll absorbs light, which powers the making of glucose from carbon dioxide and water, and oxygen is released.\n\nCOMMON MISTAKES:\nWrong: \"carbon dioxide + water -> glucose\". Why: this leaves out light energy, which is needed to power photosynthesis, and it also leaves out the oxygen that is released. Right: carbon dioxide + water + light energy -> glucose + oxygen.\nWrong: \"Plants make glucose by absorbing it from the soil.\". Why: glucose is made inside the plant during photosynthesis; it is not absorbed from soil. Right: photosynthesis makes glucose inside mainly leaf cells, using carbon dioxide, water, and light energy.\n\nSUMMARY: Photosynthesis mainly happens in leaves. Chlorophyll in chloroplasts absorbs light, and the plant uses that energy to make glucose from carbon dioxide and water. Glucose is plant food, and oxygen is released as a by-product.\n\nCHECK QUESTIONS:\n1. Which set of materials does a plant mainly use for photosynthesis?\nHint: Recall the inputs listed in the word equation. [choices: carbon dioxide, water, and light energy | oxygen, sugar, and soil | carbon dioxide, glucose, and chlorophyll | water, oxygen, and heat energy] -> carbon dioxide, water, and light energy\n2. Where does photosynthesis happen mainly in a plant, and what captures the light there?\nHint: Focus on the plant part and the green substance in its cells. [choices: Roots, using chlorophyll | Flowers, using glucose | Leaves, using chlorophyll in chloroplasts | Stems, using oxygen] -> Leaves, using chlorophyll in chloroplasts\n3. Explain what happens to the two products of photosynthesis.\nHint: Decide what the plant uses and what enters the air. [typed answer] -> The plant keeps some glucose as food, and oxygen is released into the air.",
+    "generic": "TITLE: How Photosynthesis Makes Food\n\nINTRO: Photosynthesis is how plants, algae, and some bacteria use light energy to make sugar. You will learn the rule that identifies what goes in, what comes out, and where energy enters the process.\n\nSECTION 1 - The Rule\nPhotosynthesis needs carbon dioxide and water. Light energy allows a plant to combine them to make glucose, a type of sugar the plant uses for energy and growth. Oxygen is also released. You can remember the main pattern as: carbon dioxide + water + light energy becomes glucose + oxygen.\nEXAMPLE: For every 6 molecules of carbon dioxide and 6 molecules of water, the process can use light energy to make 1 molecule of glucose and 6 molecules of oxygen.\n\nSECTION 2 - The Balanced Equation\nA balanced equation shows the amounts of each substance used or made. The equation for photosynthesis is 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. The coefficients 6, 6, 1, and 6 show the relative number of molecules or units of each substance.\nEXAMPLE: Count the carbon in 6CO2: there are 6 carbon atoms. Count the carbon in 1 molecule of glucose, C6H12O6: there are 6 carbon atoms. The carbon atoms match, so the equation is balanced.\n\nSECTION 3 - Where Each Part Matters\nThe reactants are the substances used before photosynthesis: carbon dioxide, water, and light energy. Light is needed to power the reaction, but it is not a substance that becomes part of the glucose. The products are glucose and oxygen. Glucose stores chemical energy made using the incoming light energy.\nEXAMPLE: If a plant takes in 6CO2 and 6H2O and receives enough light, it can produce 1 molecule of C6H12O6 and release 6 molecules of O2 into the air.\n\nWORKED EXAMPLE: A plant has 6 molecules of carbon dioxide and 6 molecules of water. Use the photosynthesis equation to show what can be produced when light energy is available.\n  1. Start with the rule: carbon dioxide + water + light energy becomes glucose + oxygen.\n  2. Write the balanced equation: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\n  3. Identify the substances on the left. There are 6 molecules of carbon dioxide and 6 molecules of water, and light energy is available.\n  4. Identify the substances on the right. The coefficient 6 before O2 means that 6 molecules of oxygen are produced.\n  5. Identify the glucose. There is no number before C6H12O6, so the coefficient is 1. This means 1 molecule of glucose is produced.\n  6. Check the carbon count: 6CO2 contains 6 carbon atoms, and 1 molecule of C6H12O6 contains 6 carbon atoms. The carbon matches.\n  7. Check the hydrogen count: 6H2O contains 6 times 2, or 12, hydrogen atoms. One molecule of C6H12O6 contains 12 hydrogen atoms. The hydrogen matches.\n  8. Check the oxygen count: 6CO2 contains 6 times 2, or 12, oxygen atoms, and 6H2O contains 6 oxygen atoms, for 18 oxygen atoms total. The products contain 6 oxygen atoms in C6H12O6 and 6 times 2, or 12, oxygen atoms in 6O2, for 18 oxygen atoms total. The oxygen matches.\n  ANSWER: With light energy available, the plant can produce 1 molecule of glucose, C6H12O6, and 6 molecules of oxygen, 6O2.\n\nCOMMON MISTAKES:\nWrong: 6CO2 + 6H2O + light energy -> C6H12O6 + O2. Why: the oxygen product is missing its coefficient. Without the 6, the equation has only 6 oxygen atoms on the product side but 18 on the reactant side, so it is not balanced. Right: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\nWrong: light energy -> C6H12O6, so plants do not need carbon dioxide or water. Why: the reactants were left out, so this does not show the substances needed for photosynthesis. Right: carbon dioxide + water + light energy -> glucose + oxygen, which is represented by 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\nWrong: 6CO2 + 6H2O -> C6H12O6 + 6O2, because light energy is not matter. Why: this omits light even though light is needed to power photosynthesis. A chemical equation can show energy as an input even though energy is not matter. Right: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\n\nSUMMARY: Photosynthesis uses carbon dioxide and water with light energy to make glucose and oxygen. Its balanced equation is 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. Glucose stores chemical energy for the plant, while oxygen is released.\n\nCHECK QUESTIONS:\n1. Which set correctly lists the reactants needed for photosynthesis? [choices: Carbon dioxide and oxygen | Carbon dioxide and water | Glucose and water | Glucose and oxygen] -> Carbon dioxide and water\n2. Using the balanced equation, how many molecules of oxygen are produced for every 6 molecules of carbon dioxide? [choices: 1 | 2 | 6 | 12] -> 6\n3. A student writes: 6CO2 + 6H2O + light energy -> C6H12O6 + O2. What is the exact problem with this equation? [choices: Glucose has the wrong formula | The number of oxygen molecules on the product side is missing a coefficient of 6 | Carbon dioxide should have a coefficient of 12 | Water should not be included] -> The number of oxygen molecules on the product side is missing a coefficient of 6\n4. Complete the statement: During photosynthesis, the plant uses light energy to make glucose and releases _____. [typed answer] -> oxygen"
+   }
+  },
+  {
+   "learner": "Sam",
+   "kind": "lesson",
+   "texts": {
+    "tailored": "TITLE: Photosynthesis: How Plants Make Their Food\n\nINTRO: Plants can make their own sugar. The rule is simple: plants use light to turn water and carbon dioxide into sugar, and they release oxygen.\n\nSECTION 1 - The Rule\nPhotosynthesis is the process plants use to make sugar. The main ingredients are carbon dioxide from the air and water from the roots.\n\nLight energy powers the process, and oxygen leaves the plant as a by-product.\nEXAMPLE: A comic plant says, \"I use light to turn air and water into sugar!\" That is the rule in a comic panel.\n\nSECTION 2 - Where It Happens\nPhotosynthesis happens mainly in leaves. Chlorophyll is the green color in leaves that absorbs light.\n\nChlorophyll works inside chloroplasts, which are tiny parts of plant cells where photosynthesis happens.\nEXAMPLE: Try it: Where does photosynthesis happen mainly? Answer: In the leaves.\n\nTry it: What part of a leaf absorbs light? Answer: Chlorophyll.\n\nSECTION 3 - The Parts and Products\nA leaf uses light energy, carbon dioxide, and water to make glucose, which is a type of sugar. The plant uses glucose for energy and growth.\n\nOxygen is released into the air as a by-product. By-product means something made during a process and released afterward.\nEXAMPLE: Imagine a drawing of a leaf:\nLight energy + carbon dioxide + water -> glucose + oxygen\n\nThe oxygen shown leaving the leaf is the by-product.\n\nSECTION 4 - Put It Together\nRoots collect water, and leaves take in carbon dioxide from the air. Chlorophyll in the chloroplasts catches light energy.\n\nThe plant uses that energy to make glucose and release oxygen. This is why plants are important for living things.\nEXAMPLE: Try it: What gas does the plant release during photosynthesis? Answer: Oxygen.\n\nWORKED EXAMPLE: A comic shows a leaf using light energy to make glucose. The leaf has carbon dioxide and water. Explain what the plant uses and what it releases.\n  1. 1. Identify the place. Photosynthesis happens mainly in leaves, so the leaf is the main place where the process happens.\n  2. 2. Identify the light catcher. Chlorophyll in the chloroplasts absorbs light energy.\n  3. 3. Identify the ingredients. Carbon dioxide comes from the air, and water comes from the roots.\n  4. 4. Use light energy to combine the ingredients. The plant uses light energy to make glucose, which is sugar.\n  5. 5. Check the product that leaves. Oxygen is released as a by-product, so it leaves the plant and enters the air.\n  6. 6. State the whole process. The plant uses light energy, carbon dioxide, and water to make glucose, and it releases oxygen.\n  ANSWER: The plant mainly uses light energy, carbon dioxide, and water in its leaves to make glucose. It releases oxygen as a by-product.\n\nCOMMON MISTAKES:\nWrong: carbon dioxide + water + oxygen -> glucose. Why: oxygen is released as a by-product, not used as an ingredient to make glucose. Right: carbon dioxide + water + light energy -> glucose + oxygen.\n\nSUMMARY: Photosynthesis mainly happens in leaves. Chlorophyll in chloroplasts absorbs light, and plants use that energy to make glucose from carbon dioxide and water while releasing oxygen.\n\nCHECK QUESTIONS:\n1. Which sentence correctly describes photosynthesis? [choices: Plants use light energy to make glucose from carbon dioxide and water, and release oxygen. | Plants use oxygen to make glucose from soil and light. | Plants make glucose without water or carbon dioxide. | Plants release glucose while keeping oxygen.] -> Plants use light energy to make glucose from carbon dioxide and water, and release oxygen.\n2. A plant cell has chloroplasts with chlorophyll. Which part absorbs light energy? [choices: Chlorophyll | Glucose | Roots | Oxygen] -> Chlorophyll\n3. If a leaf has light energy, carbon dioxide, and water, what does it make during photosynthesis? Type the answer. [typed answer] -> Glucose",
+    "generic": "TITLE: How Photosynthesis Makes Food\n\nINTRO: Photosynthesis is how plants, algae, and some bacteria use light energy to make sugar. You will learn the rule that identifies what goes in, what comes out, and where energy enters the process.\n\nSECTION 1 - The Rule\nPhotosynthesis needs carbon dioxide and water. Light energy allows a plant to combine them to make glucose, a type of sugar the plant uses for energy and growth. Oxygen is also released. You can remember the main pattern as: carbon dioxide + water + light energy becomes glucose + oxygen.\nEXAMPLE: For every 6 molecules of carbon dioxide and 6 molecules of water, the process can use light energy to make 1 molecule of glucose and 6 molecules of oxygen.\n\nSECTION 2 - The Balanced Equation\nA balanced equation shows the amounts of each substance used or made. The equation for photosynthesis is 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. The coefficients 6, 6, 1, and 6 show the relative number of molecules or units of each substance.\nEXAMPLE: Count the carbon in 6CO2: there are 6 carbon atoms. Count the carbon in 1 molecule of glucose, C6H12O6: there are 6 carbon atoms. The carbon atoms match, so the equation is balanced.\n\nSECTION 3 - Where Each Part Matters\nThe reactants are the substances used before photosynthesis: carbon dioxide, water, and light energy. Light is needed to power the reaction, but it is not a substance that becomes part of the glucose. The products are glucose and oxygen. Glucose stores chemical energy made using the incoming light energy.\nEXAMPLE: If a plant takes in 6CO2 and 6H2O and receives enough light, it can produce 1 molecule of C6H12O6 and release 6 molecules of O2 into the air.\n\nWORKED EXAMPLE: A plant has 6 molecules of carbon dioxide and 6 molecules of water. Use the photosynthesis equation to show what can be produced when light energy is available.\n  1. Start with the rule: carbon dioxide + water + light energy becomes glucose + oxygen.\n  2. Write the balanced equation: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\n  3. Identify the substances on the left. There are 6 molecules of carbon dioxide and 6 molecules of water, and light energy is available.\n  4. Identify the substances on the right. The coefficient 6 before O2 means that 6 molecules of oxygen are produced.\n  5. Identify the glucose. There is no number before C6H12O6, so the coefficient is 1. This means 1 molecule of glucose is produced.\n  6. Check the carbon count: 6CO2 contains 6 carbon atoms, and 1 molecule of C6H12O6 contains 6 carbon atoms. The carbon matches.\n  7. Check the hydrogen count: 6H2O contains 6 times 2, or 12, hydrogen atoms. One molecule of C6H12O6 contains 12 hydrogen atoms. The hydrogen matches.\n  8. Check the oxygen count: 6CO2 contains 6 times 2, or 12, oxygen atoms, and 6H2O contains 6 oxygen atoms, for 18 oxygen atoms total. The products contain 6 oxygen atoms in C6H12O6 and 6 times 2, or 12, oxygen atoms in 6O2, for 18 oxygen atoms total. The oxygen matches.\n  ANSWER: With light energy available, the plant can produce 1 molecule of glucose, C6H12O6, and 6 molecules of oxygen, 6O2.\n\nCOMMON MISTAKES:\nWrong: 6CO2 + 6H2O + light energy -> C6H12O6 + O2. Why: the oxygen product is missing its coefficient. Without the 6, the equation has only 6 oxygen atoms on the product side but 18 on the reactant side, so it is not balanced. Right: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\nWrong: light energy -> C6H12O6, so plants do not need carbon dioxide or water. Why: the reactants were left out, so this does not show the substances needed for photosynthesis. Right: carbon dioxide + water + light energy -> glucose + oxygen, which is represented by 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\nWrong: 6CO2 + 6H2O -> C6H12O6 + 6O2, because light energy is not matter. Why: this omits light even though light is needed to power photosynthesis. A chemical equation can show energy as an input even though energy is not matter. Right: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2.\n\nSUMMARY: Photosynthesis uses carbon dioxide and water with light energy to make glucose and oxygen. Its balanced equation is 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. Glucose stores chemical energy for the plant, while oxygen is released.\n\nCHECK QUESTIONS:\n1. Which set correctly lists the reactants needed for photosynthesis? [choices: Carbon dioxide and oxygen | Carbon dioxide and water | Glucose and water | Glucose and oxygen] -> Carbon dioxide and water\n2. Using the balanced equation, how many molecules of oxygen are produced for every 6 molecules of carbon dioxide? [choices: 1 | 2 | 6 | 12] -> 6\n3. A student writes: 6CO2 + 6H2O + light energy -> C6H12O6 + O2. What is the exact problem with this equation? [choices: Glucose has the wrong formula | The number of oxygen molecules on the product side is missing a coefficient of 6 | Carbon dioxide should have a coefficient of 12 | Water should not be included] -> The number of oxygen molecules on the product side is missing a coefficient of 6\n4. Complete the statement: During photosynthesis, the plant uses light energy to make glucose and releases _____. [typed answer] -> oxygen"
+   }
+  },
+  {
+   "learner": "Grace",
+   "kind": "notes",
+   "texts": {
+    "tailored": "## What Photosynthesis Does\n- Photosynthesis is the process plants use to make their own food.\n- Think of it like cooking a meal from ingredients that the plant collects.\n- A plant takes carbon dioxide from the air through tiny leaf openings and water from the soil through its roots.\n- Using light energy from the sun, the plant turns carbon dioxide and water into glucose, a kind of sugar.\n- The glucose is the plant's food. The plant uses it to grow and store energy.\n\n## Where Photosynthesis Happens\n- Photosynthesis happens mainly in the leaves, inside small green structures called chloroplasts.\n- Chloroplasts contain chlorophyll, a green pigment that absorbs light energy.\n- Think of it like a small green part that catches light for the whole plant.\n- Without chlorophyll, the plant could not capture the light energy it needs.\n\n## Light, Color, and Oxygen\n- Chlorophyll absorbs mostly red and blue light and reflects green light, so leaves look green.\n- Think of it like red and blue light being taken in, while green light is sent back out.\n- Oxygen is released as a by-product of photosynthesis and leaves through the same tiny leaf openings.\n- Animals and people breathe in this oxygen. This is one reason plants matter so much to life on Earth.\n\n## The Word Equation\n- The word equation is: carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n- Think of it like a recipe: carbon dioxide and water go in, and glucose and oxygen come out.\n- The materials entering the process are carbon dioxide and water. The products are glucose and oxygen.\n\n## Why Plants Need the Right Conditions\n- Too little light, water, or carbon dioxide makes a plant produce less glucose and grow more slowly.\n- A plant that gets too little light, too little water or too little carbon dioxide makes less glucose and grows more slowly.\n- This is why a plant kept in a dark cupboard turns pale and weak.\n- Key point: plants need light, water, and carbon dioxide to make glucose and grow well.",
+    "generic": "## What Photosynthesis Does\n- Photosynthesis is the process plants use to make their own food.\n- A plant takes in carbon dioxide from the air through tiny openings in its leaves and takes in water from the soil through its roots.\n- Using light energy from the sun, the plant turns carbon dioxide and water into glucose, a kind of sugar.\n- The glucose is the plant's food, and the plant uses it to grow and to store energy.\n\n## Where Photosynthesis Happens\n- Photosynthesis happens mainly in the leaves.\n- Inside the cells of a leaf are small green structures called chloroplasts.\n- They contain a green pigment called chlorophyll.\n\n## Chlorophyll and Light\n- Chlorophyll absorbs light energy from the sun, mostly red and blue light, and reflects green light, which is why leaves look green.\n- Without chlorophyll the plant could not capture the light energy it needs.\n\n## Oxygen and the Word Equation\n- Oxygen is released as a by-product of photosynthesis.\n- The oxygen leaves the plant through the same tiny openings in the leaves.\n- Animals and people breathe in this oxygen, which is one reason plants matter so much to life on Earth.\n- The word equation is carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## Needs for Healthy Growth\n- A plant that gets too little light, too little water or too little carbon dioxide makes less glucose and grows more slowly.\n- A plant kept in a dark cupboard turns pale and weak."
+   }
+  },
+  {
+   "learner": "Sam",
+   "kind": "notes",
+   "texts": {
+    "tailored": "## What Photosynthesis Does\n- Photosynthesis is the process plants use to make their own food.\n- Plants take in carbon dioxide through tiny leaf openings and water through their roots.\n- Using light energy from the sun, plants turn carbon dioxide and water into glucose, a kind of sugar.\n- Think of chloroplasts as tiny green parts inside leaf cells that help capture sunlight.\n- Key point: Plants make glucose for food and use it to grow and store energy.\n\n## Leaves and Chlorophyll\n- Photosynthesis happens mainly in leaves, where cells contain small green structures called chloroplasts.\n- Chloroplasts contain chlorophyll, a green pigment that absorbs light energy.\n- Chlorophyll absorbs mostly red and blue light and reflects green light, so leaves look green.\n- Without chlorophyll, a plant could not capture the light energy it needs.\n\n## Oxygen and the Word Equation\n- Oxygen is released as a by-product of photosynthesis and leaves through tiny openings in leaves.\n- Animals and people breathe in this oxygen, so plants matter to life on Earth.\n- The word equation is: carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## What Plants Need\n- Too little light, water, or carbon dioxide makes a plant produce less glucose.\n- Less glucose means slower growth, and a plant kept in a dark cupboard turns pale and weak.\n- Key point: Plants need light, water, and carbon dioxide to grow well.",
+    "generic": "## What Photosynthesis Does\n- Photosynthesis is the process plants use to make their own food.\n- A plant takes in carbon dioxide from the air through tiny openings in its leaves and takes in water from the soil through its roots.\n- Using light energy from the sun, the plant turns carbon dioxide and water into glucose, a kind of sugar.\n- The glucose is the plant's food, and the plant uses it to grow and to store energy.\n\n## Where Photosynthesis Happens\n- Photosynthesis happens mainly in the leaves.\n- Inside the cells of a leaf are small green structures called chloroplasts.\n- They contain a green pigment called chlorophyll.\n\n## Chlorophyll and Light\n- Chlorophyll absorbs light energy from the sun, mostly red and blue light, and reflects green light, which is why leaves look green.\n- Without chlorophyll the plant could not capture the light energy it needs.\n\n## Oxygen and the Word Equation\n- Oxygen is released as a by-product of photosynthesis.\n- The oxygen leaves the plant through the same tiny openings in the leaves.\n- Animals and people breathe in this oxygen, which is one reason plants matter so much to life on Earth.\n- The word equation is carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## Needs for Healthy Growth\n- A plant that gets too little light, too little water or too little carbon dioxide makes less glucose and grows more slowly.\n- A plant kept in a dark cupboard turns pale and weak."
+   }
+  }
+ ],
+ "usage": {
+  "writerCalls": 13,
+  "writerIn": 25178,
+  "writerOut": 24184,
+  "judgeCalls": {
+   "mistralai/mistral-large-2512": 12,
+   "gemini-3.5-flash-lite": 8
+  },
+  "judgeTokens": {
+   "gemini-3.5-flash-lite": 14636
+  },
+  "errors": {},
+  "seconds": 190,
+  "standardComputeUsd": 0,
+  "xkiro": {
+   "free_tokens_today": 622824,
+   "grants": {
+    "minimax/minimax-m3.1-flash": {
+     "used": 1396407,
+     "cap": 12000000,
+     "refused": false
+    }
+   }
+  }
+ }
+}

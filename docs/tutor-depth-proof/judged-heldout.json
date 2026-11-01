@@ -1,0 +1,774 @@
+{
+ "at": "2026-11-01T08:14:01.505Z",
+ "probes": [
+  {
+   "learner": "maya",
+   "probe": "h_minutes",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 3,
+     "no_stale": 5,
+     "adapts": 3,
+     "correct_integrity": 3,
+     "interests": 3,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Uses her current music interest, but the bar-length analogy is misleading and it omits the deadline, days remaining, and a timed plan."
+    },
+    "after": {
+     "right_facts": 3,
+     "no_stale": 5,
+     "adapts": 3,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Correctly prioritizes fractions and stays brief, but omits February 6, the roughly 97 days remaining, and a concrete 20-minute plan."
+    }
+   }
+  },
+  {
+   "learner": "maya",
+   "probe": "h_why",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 4,
+     "no_stale": 1,
+     "adapts": 3,
+     "correct_integrity": 4,
+     "interests": 4,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": true,
+     "note": "Uses a relevant music analogy and denominator hint, but invents mastery of numerator addition, exceeds the requested brevity, and uses a potentially confusing bar comparison."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 3,
+     "correct_integrity": 4,
+     "interests": 4,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Plainly identifies adding denominators and preserves the answer, but exceeds the requested brevity, offers limited reassurance, and uses an imprecise beats-per-bar analogy."
+    }
+   }
+  },
+  {
+   "learner": "maya",
+   "probe": "h_practice",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 1,
+     "no_stale": 1,
+     "adapts": 1,
+     "correct_integrity": 5,
+     "interests": 1,
+     "stale_used": true,
+     "gave_answer": false,
+     "used_avoided": true,
+     "invented": false,
+     "note": "The question is valid and concise but wrongly presents basketball as Maya's interest."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Uses Maya's current beat-making interest in a brief, appropriately targeted fraction question without giving away the answer."
+    }
+   }
+  },
+  {
+   "learner": "leo",
+   "probe": "h_minutes",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 3,
+     "no_stale": 5,
+     "adapts": 4,
+     "correct_integrity": 5,
+     "interests": 3,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Targets ser/estar and invites dialogue, but omits the 12-day deadline and gives only a vague 20-minute plan."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 3,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Names the 12-day deadline and current ser/estar confusion, then starts a low-stakes Socratic prompt."
+    }
+   }
+  },
+  {
+   "learner": "leo",
+   "probe": "h_why",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 3,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": true,
+     "note": "It gives a useful temporary-state hint and Socratic prompt, but invents that Leo has made this error six times."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "It accurately explains Leo's ser/estar mix-up with a low-pressure self-question and does not reveal the answer."
+    }
+   }
+  },
+  {
+   "learner": "leo",
+   "probe": "h_practice",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Uses soccer to practice a temporary state and prompts a dialogic explanation without test pressure or giving the answer."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Uses Real Madrid to target temporary feelings and invites a low-pressure explanation without revealing the answer."
+    }
+   }
+  },
+  {
+   "learner": "priya",
+   "probe": "h_minutes",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 3,
+     "no_stale": 5,
+     "adapts": 2,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Targets weak slope without stale facts, but omits the deadline and a concrete 20-minute plan, and does not offer the worked example she benefits from."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 3,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Uses the deadline and fading ratios for a time-conscious plan, but does not provide the worked example or specific praise that would better fit her traits."
+    }
+   }
+  },
+  {
+   "learner": "priya",
+   "probe": "h_why",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 4,
+     "no_stale": 2,
+     "adapts": 4,
+     "correct_integrity": 5,
+     "interests": 3,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": true,
+     "note": "Gives an appropriate hint and reassurance but invents a claim about the learner's previous answer."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 3,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Clearly names the rise/run mix-up, uses a worked example, and preserves the on-screen question."
+    }
+   }
+  },
+  {
+   "learner": "priya",
+   "probe": "h_practice",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 4,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Uses K-pop, targets slope, and invites an achievable first step without revealing the answer."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Directly targets Priya's rise-versus-run mix-up with a manageable K-pop practice question and no answer."
+    }
+   }
+  },
+  {
+   "learner": "omar",
+   "probe": "h_minutes",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 1,
+     "no_stale": 4,
+     "adapts": 2,
+     "correct_integrity": 5,
+     "interests": 3,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": true,
+     "note": "It gives generic tactics advice, invents a test, and misses the 18-day deadline and tailored 20-minute plan."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 3,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "It uses the deadline, current pin-skewer confusion, fading openings, and a concise time-boxed plan."
+    }
+   }
+  },
+  {
+   "learner": "omar",
+   "probe": "h_why",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": true,
+     "note": "It names the pin-skewer mix-up clearly and gives a minimal hint, though “a few times” is unsupported."
+    },
+    "after": {
+     "right_facts": 4,
+     "no_stale": 5,
+     "adapts": 4,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "It gives a brief, useful nudge toward the key distinction without revealing the answer."
+    }
+   }
+  },
+  {
+   "learner": "omar",
+   "probe": "h_practice",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "A concise Elden Ring-themed chess position directly tests the pin-versus-skewer mix-up without giving away the answer."
+    },
+    "after": {
+     "right_facts": 3,
+     "no_stale": 5,
+     "adapts": 4,
+     "correct_integrity": 2,
+     "interests": 4,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "It uses a current interest and stays brief, but the football analogy does not clearly or accurately model a pin or skewer."
+    }
+   }
+  },
+  {
+   "learner": "sofia",
+   "probe": "h_minutes",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 3,
+     "no_stale": 5,
+     "adapts": 4,
+     "correct_integrity": 4,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Fits the brief visual style and targets commas, but omits the nearest deadline and gives a somewhat vague plan."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Uses the deadline, weak comma skill, brief visual step, and a manageable 20-minute focus."
+    }
+   }
+  },
+  {
+   "learner": "sofia",
+   "probe": "h_why",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 4,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 3,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": true,
+     "note": "It gives a concise visual hint suited to Sofia, but does not plainly name comma splices and makes an unsupported claim about her guessing."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "It clearly names the comma splice, uses the horse example and a visual prompt, and preserves the question by withholding the correction."
+    }
+   }
+  },
+  {
+   "learner": "sofia",
+   "probe": "h_practice",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "B uses a brief, visual horse-themed prompt and asks the learner to identify what is missing without supplying it."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "A concise horse-themed visual question targets comma splices without revealing the answer."
+    }
+   }
+  },
+  {
+   "learner": "ben",
+   "probe": "h_minutes",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 2,
+     "no_stale": 1,
+     "adapts": 3,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": true,
+     "note": "Targets independent events and verbal reasoning, but invents counting weakness and test coverage, omits the deadline, and lacks a timed plan."
+    },
+    "after": {
+     "right_facts": 4,
+     "no_stale": 4,
+     "adapts": 3,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Correctly identifies the deadline and relevant skills, but overstates possible exponent fading and lacks a timed, why-first plan."
+    }
+   }
+  },
+  {
+   "learner": "ben",
+   "probe": "h_why",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 4,
+     "no_stale": 5,
+     "adapts": 2,
+     "correct_integrity": 2,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Names the mix-up but reinforces the incorrect addition method and provides little useful explanation."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 4,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Clearly names the addition mix-up and gives a conceptual hint without revealing the answer."
+    }
+   }
+  },
+  {
+   "learner": "ben",
+   "probe": "h_practice",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 4,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Coffee roasting targets his mix-up, and the independence prompt encourages conceptual reasoning, though it offers little why-first support."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 3,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Cycling targets his mix-up at an appropriate level, but the generic first-move prompt provides little conceptual scaffolding."
+    }
+   }
+  },
+  {
+   "learner": "chloe",
+   "probe": "h_minutes",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 3,
+     "no_stale": 5,
+     "adapts": 3,
+     "correct_integrity": 5,
+     "interests": 4,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Targets the current area/perimeter mix-up, but misses the deadline, fading ratios, and a clear 20-minute plan."
+    },
+    "after": {
+     "right_facts": 3,
+     "no_stale": 5,
+     "adapts": 4,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Mentions the upcoming geometry check and area/perimeter, with a reassuring tone, but omits days left, fading ratios, and a concrete plan."
+    }
+   }
+  },
+  {
+   "learner": "chloe",
+   "probe": "h_why",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Uses a clear worked example and a baking analogy while keeping the on-screen answer for Chloe."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 4,
+     "adapts": 4,
+     "correct_integrity": 5,
+     "interests": 3,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": true,
+     "note": "Names the mix-up and gives a useful example, but assumes Chloe has done this work before."
+    }
+   }
+  },
+  {
+   "learner": "chloe",
+   "probe": "h_practice",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 4,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Uses current interests and targets both concepts with a low-pressure prompt, though conceptual scaffolding is limited."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Uses Pepper naturally and offers one manageable conceptual distinction that directly targets the mix-up without giving the answer."
+    }
+   }
+  },
+  {
+   "learner": "sam",
+   "probe": "h_minutes",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 2,
+     "no_stale": 1,
+     "adapts": 2,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": true,
+     "note": "Invents a 42% chord score, omits the exam deadline and timed plan, and returns to an unsuccessful step-by-step approach."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 4,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Correctly identifies the deadline and 45 days remaining, prioritizes chords with worked examples, and reserves five minutes for fading scales."
+    }
+   }
+  },
+  {
+   "learner": "sam",
+   "probe": "h_why",
+   "flip": true,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Accurately identifies the mix-up and uses a worked example with a guided hint without revealing the answer."
+    },
+    "after": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "Clearly names the major-third mix-up and uses a detailed worked example before offering a hint."
+    }
+   }
+  },
+  {
+   "learner": "sam",
+   "probe": "h_practice",
+   "flip": false,
+   "judge": "gpt-6.1-sol",
+   "scores": {
+    "before": {
+     "right_facts": 5,
+     "no_stale": 5,
+     "adapts": 5,
+     "correct_integrity": 4,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "The detailed Zelda-themed prompt targets the minor-third mix-up and gives a method without supplying the notes."
+    },
+    "after": {
+     "right_facts": 4,
+     "no_stale": 5,
+     "adapts": 3,
+     "correct_integrity": 5,
+     "interests": 5,
+     "stale_used": false,
+     "gave_answer": false,
+     "used_avoided": false,
+     "invented": false,
+     "note": "The jazz prompt targets the key mix-up, but offers little of the detail this learner prefers."
+    }
+   }
+  }
+ ],
+ "counterfactual": []
+}

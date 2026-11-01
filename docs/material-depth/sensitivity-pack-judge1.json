@@ -1,0 +1,1630 @@
+{
+ "tag": "pack (judge v1, code before the pilot fixes)",
+ "phase": "pilot",
+ "depth": "v2",
+ "generated_at": "2026-11-01T06:51:14.999Z",
+ "live": true,
+ "writer": "deepseek/deepseek-v4.1-flash-1017 (Standard Compute)",
+ "judges": [
+  "mistralai/mistral-large-2512",
+  "gemini-3.5-flash-lite"
+ ],
+ "lo": 10,
+ "hi": 90,
+ "base": {
+  "age": 14,
+  "survey": {
+   "interests": "basketball, video games",
+   "hobbies": "drawing comics"
+  }
+ },
+ "structural": {
+  "counts": {
+   "lesson": 100,
+   "level": 100,
+   "material": 100,
+   "notes": 63,
+   "podcast": 99,
+   "test": 62,
+   "code": 15
+  },
+  "anySurface": 100,
+  "rows": [
+   {
+    "measure": "intake_baseline",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "working_memory_span",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "processing_velocity",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "chunk_granularity",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "abstraction_tolerance",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "example_density_need",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "text_density_tolerance",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "vocabulary_ceiling",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "jargon_absorption",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "spatial_anchoring",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "deductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "inductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "cognitive_flexibility",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "analogical_transfer",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "causal_chain_depth",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "systems_thinking",
+    "group": "reasoning",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "pattern_detection",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "logical_rigor",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "contradiction_sensitivity",
+    "group": "reasoning",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "global_framing_need",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "cycle_architecture",
+    "group": "pacing",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "attention_runway",
+    "group": "pacing",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "warmup_latency",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "fatigue_curve",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "momentum_dependence",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "interleaving_tolerance",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "rush_tendency",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "deliberation_depth",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "session_rhythm",
+    "group": "pacing",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "reentry_cost",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "stimulus_envelope",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "novelty_hunger",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "humor_receptivity",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "narrative_pull",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "gamification_response",
+    "group": "engagement",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "challenge_appetite",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "curiosity_hook",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "interest_transfer",
+    "group": "engagement",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "relevance_demand",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "tone_formality",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "retrieval_strength",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "recognition_recall_gap",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "decay_rate",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "elaboration_benefit",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "mnemonic_receptivity",
+    "group": "memory",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "consolidation_need",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "interference_susceptibility",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "enactive_encoding",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "generation_effect",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "retention_index",
+    "group": "memory",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "failure_response",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "error_recovery_speed",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "frustration_threshold",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "hint_dependency",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "help_seeking",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "guessing_propensity",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "perfectionism",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "productive_struggle",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "confidence_calibration",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "error_driven_learning",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "self_monitoring",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "strategy_awareness",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "mastery_orientation",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "autonomy_preference",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "structure_need",
+    "group": "metacognition",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": false,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "instruction_adherence",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "reflection_depth",
+    "group": "metacognition",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "question_generation",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "self_efficacy",
+    "group": "metacognition",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "planning_tendency",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "step_explicitness",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "worked_example_dependence",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "scaffolding_fade",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "notation_comfort",
+    "group": "representation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "brevity_preference",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "repetition_tolerance",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "feedback_granularity",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "feedback_tone_sensitivity",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "open_response_performance",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "dialogic_preference",
+    "group": "representation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "intrinsic_motivation",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "extrinsic_reward_sensitivity",
+    "group": "motivation",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "competitive_drive",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "praise_sensitivity",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "evaluation_anxiety",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "boredom_susceptibility",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "persistence",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "social_framing",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "identity_alignment",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "emotional_engagement",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "near_transfer",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "far_transfer",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "application_orientation",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "conceptual_bias",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "prior_knowledge",
+    "group": "transfer",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "misconception_persistence",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "integration_tendency",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "depth_breadth",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "creative_extension",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "mastery_velocity",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   }
+  ]
+ },
+ "single": {
+  "cells": [
+   {
+    "measure": "vocabulary_ceiling",
+    "group": "intake",
+    "impact": 3,
+    "kind": "pack",
+    "topic": "photosynthesis",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 753,
+     "hi": 830
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A uses more advanced vocabulary (e.g., 'inputs', 'by-product', 'pigment', 'absorbs', 'reflects') and complex analogies (e.g., 'arrow chain', 'comic artist's colour station'), while Version B uses simpler language (e.g., 'colouring',)",
+     "gemini-3.5-flash-lite: Y (Version A uses more complex sentence structures and advanced phrasing like 'two inputs' and 'arrow chain', whereas Version B uses simpler, shorter sentences suited for plain language.)"
+    ]
+   },
+   {
+    "measure": "deductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "kind": "pack",
+    "topic": "causes of World War I",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 0,
+    "same": 0,
+    "wrong": 2,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 832,
+     "hi": 966
+    },
+    "evidence": [
+     "mistral-large-2512: X (Version B starts with the spark (event) and then introduces the four causes, aligning with a rule-first (deductive) approach by presenting the overarching structure before details.)",
+     "gemini-3.5-flash-lite: X (Version B starts the summary with the specific case/event (the assassination and subsequent chain) before moving to the general rules (the four long-term causes), whereas Version A starts rule-first.)"
+    ]
+   },
+   {
+    "measure": "working_memory_span",
+    "group": "intake",
+    "impact": 3,
+    "kind": "pack",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": false,
+    "words": {
+     "lo": 923,
+     "hi": 809
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A uses more complex sentences and requires juggling multiple ideas (e.g., explaining the 'why' behind steps and providing multi-part reasoning in quiz/practice test questions), while Version B breaks concepts into smaller, discrete )",
+     "gemini-3.5-flash-lite: Y (Version B includes extra scaffolding such as 'Takeaway' summaries and hints in quiz explanations, which are designed to support a learner with low working memory.)"
+    ]
+   },
+   {
+    "measure": "attention_runway",
+    "group": "pacing",
+    "impact": 3,
+    "kind": "pack",
+    "topic": "Spanish greetings",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 0,
+    "wrong": 1,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 577,
+     "hi": 734
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version B uses more elaborate analogies, longer explanations, and additional examples (e.g., basketball, comics, gamer) to sustain engagement, which suits a learner with high attention runway.)",
+     "gemini-3.5-flash-lite: X (Version A contains more advanced tiered questions (reaching tier 3) and a longer practice test, suitable for a learner who sustains long focus.)"
+    ]
+   },
+   {
+    "measure": "interest_transfer",
+    "group": "engagement",
+    "impact": 3,
+    "kind": "pack",
+    "topic": "photosynthesis",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 708,
+     "hi": 781
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version B uses interest-based analogies (basketball team, video game plant) while Version A does not.)",
+     "gemini-3.5-flash-lite: Y (Version B includes interest-based framing using analogies like a basketball team and a video game, whereas Version A does not.)"
+    ]
+   },
+   {
+    "measure": "generation_effect",
+    "group": "memory",
+    "impact": 2,
+    "kind": "pack",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": false,
+    "words": {
+     "lo": 679,
+     "hi": 657
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version B includes more active, production-based tasks (e.g., 'Solve 3x - 5 = 10', 'Predict first', 'Use both steps in order... type the final value') while Version A relies more on recognition and recall (e.g., multiple-choice, flashcards )",
+     "gemini-3.5-flash-lite: Y (Version B incorporates active production tasks in the quiz and practice test requiring the learner to type or generate answers and make predictions, fitting a learner high on the generation effect.)"
+    ]
+   },
+   {
+    "measure": "productive_struggle",
+    "group": "resilience",
+    "impact": 2,
+    "kind": "pack",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 811,
+     "hi": 793
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A includes prompts for recall and analogies (e.g., basketball scoreboard, video game) that encourage independent struggle, while Version B provides more direct hints and step-by-step guidance.)",
+     "gemini-3.5-flash-lite: Y (Version A introduces active recall prompts ('Before the steps are shown again, try to recall...') and higher-tier open-ended challenges requiring productive struggle, whereas Version B provides hints and structured scaffolding suitable for )"
+    ]
+   },
+   {
+    "measure": "worked_example_dependence",
+    "group": "representation",
+    "impact": 3,
+    "kind": "pack",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 579,
+     "hi": 743
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A provides full worked examples with every step explicitly shown and explained, while Version B focuses more on principles and memory recall.)",
+     "gemini-3.5-flash-lite: Y (Version A includes explicit step-by-step worked examples and model answers in the practice test that cater to high worked example dependence.)"
+    ]
+   },
+   {
+    "measure": "structure_need",
+    "group": "metacognition",
+    "impact": 2,
+    "kind": "pack",
+    "topic": "Spanish greetings",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 689,
+     "hi": 677
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A uses explicit step-by-step instructions (e.g., 'Start with', 'Next', 'Then') while Version B uses open-ended analogies (e.g., 'Think of it like a video game').)",
+     "gemini-3.5-flash-lite: Y (Version A uses numbered, sequential steps in the summary to provide the clear structure needed by a learner high on structure need.)"
+    ]
+   },
+   {
+    "measure": "evaluation_anxiety",
+    "group": "motivation",
+    "impact": 2,
+    "kind": "pack",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 0,
+    "same": 0,
+    "wrong": 2,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 680,
+     "hi": 733
+    },
+    "evidence": [
+     "mistral-large-2512: X (Version B has more tier 3 questions in the practice test and fewer quiz questions, which may increase pressure for a learner with high evaluation anxiety.)",
+     "gemini-3.5-flash-lite: X (Version A contains more test items labeled as quizzes and practice tests, whereas Version B reduces the formal testing pressure by structuring fewer quiz questions and embedding supportive framing.)"
+    ]
+   },
+   {
+    "measure": "prior_knowledge",
+    "group": "transfer",
+    "impact": 3,
+    "kind": "pack",
+    "topic": "causes of World War I",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 805,
+     "hi": 623
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version B uses more concise definitions and assumes familiarity with terms like 'blocs' and 'long-term causes' without worked examples or analogies, while Version A includes step-by-step explanations and analogies (e.g., basketball, comic p)",
+     "gemini-3.5-flash-lite: Y (Version B uses fewer scaffolding elements, worked examples, and explicit analogies per concept compared to Version A, which provides extensive step-by-step worked examples and multiple analogies suited for a learner with low prior knowledge)"
+    ]
+   }
+  ],
+  "byKind": {
+   "pack": {
+    "pairs": 11,
+    "ignored": 0,
+    "failedBuilds": 0,
+    "verdicts": 22,
+    "correct": 17,
+    "same": 0,
+    "wrong": 5,
+    "intact": 9,
+    "judged": 11
+   }
+  },
+  "all": {
+   "verdicts": 60,
+   "correct": 47,
+   "same": 1,
+   "wrong": 12,
+   "pairs": 33,
+   "judged": 30,
+   "ignored": 3,
+   "intact": 23
+  }
+ },
+ "texts": [
+  {
+   "measure": "vocabulary_ceiling",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nPhotosynthesis is how plants make their own food. A plant takes carbon dioxide from the air through tiny openings in its leaves. It takes water from the soil through its roots. Using light energy from the sun, the plant turns carbon dioxide and water into glucose. Glucose is a kind of sugar, and it is the plant's food. The plant uses glucose to grow and to store energy. Think of it like a basketball play: carbon dioxide and water are the passes, and light energy is what makes the play work. The basket at the end is glucose.\n\nPhotosynthesis happens mainly in the leaves. Inside leaf cells are small green structures called chloroplasts. They hold a green pigment, or colouring, called chlorophyll. Chlorophyll takes in light energy from the sun, mostly red and blue light. It reflects green light, which is why leaves look green. Without chlorophyll, a plant could not capture the light energy it needs.\n\nOxygen is released as a by-product, which means it is made along the way but is not the plant's food. The oxygen leaves the plant through the same tiny openings. Animals and people breathe it in, which is one reason plants matter so much to life on Earth. Here is the whole process as a picture in words: carbon dioxide + water, using light energy → glucose + oxygen. A plant with too little light, water or carbon dioxide makes less glucose and grows more slowly. That is why a plant in a dark cupboard turns pale and weak.\n\nFLASHCARDS (8):\n1. What is photosynthesis? -> The process plants use to make their own food.\n2. How does a plant take in water? -> Through its roots, from the soil.\n3. What are chloroplasts? -> Small green structures inside the cells of a leaf.\n4. What does chlorophyll do? -> It absorbs light energy from the sun, mostly red and blue light.\n5. What is glucose? -> A kind of sugar that is the plant's food.\n6. Write the word equation for photosynthesis. -> Carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n7. What is released as a by-product of photosynthesis? -> Oxygen. It leaves the plant through the tiny openings in the leaves.\n8. What happens when a plant gets too little light, water or carbon dioxide? -> It makes less glucose and grows more slowly.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] Which gas does a plant take in from the air? (choices: (A) Oxygen | (B) Nitrogen | (C) Glucose | (D) Carbon dioxide; correct: D)\n   EXPLANATION: The passage says the plant takes in carbon dioxide from the air through tiny openings in its leaves.\n2. [tier 1] Where does photosynthesis happen mainly? (choices: (A) In the soil | (B) In the roots | (C) In the air | (D) In the leaves; correct: D)\n   EXPLANATION: The passage states that photosynthesis happens mainly in the leaves.\n3. [tier 2] Why do leaves look green? (choices: (A) Roots send green water up | (B) Glucose is green | (C) Chlorophyll reflects green light | (D) Oxygen makes them green; correct: C)\n   EXPLANATION: Chlorophyll absorbs mostly red and blue light and reflects green light. That is why leaves look green.\n4. [tier 2] Think of it like a video game: a plant gets light and water but no carbon dioxide. What happens? (choices: (A) It stops making chlorophyll | (B) It makes more oxygen | (C) It makes less glucose and grows more slowly | (D) It grows faster; correct: C)\n   EXPLANATION: Too little carbon dioxide is one of the things that makes a plant produce less glucose. With less glucose, it grows more slowly.\n\nPRACTICE TEST (4 questions, in this order):\n1. [tier 1] What is glucose to a plant? (choices: (A) A pigment | (B) The plant's food | (C) A tiny opening | (D) A by-product; correct: B)\n   EXPLANATION: The passage says glucose is the plant's food, and the plant uses it to grow and store energy.\n2. [tier 1] Oxygen leaves the plant through the same ___ in the leaves. (typed answer; correct: tiny openings)\n   EXPLANATION: The passage says the oxygen leaves through the same tiny openings in the leaves.\n3. [tier 2] Chlorophyll absorbs light energy and reflects ___ light, so leaves look green. (typed answer; correct: green)\n   EXPLANATION: Chlorophyll takes in mostly red and blue light and reflects green light.\n4. [tier 2] Why does oxygen from plants matter to animals and people? (choices: (A) It makes the roots grow | (B) It helps leaves look green | (C) Animals and people breathe it in | (D) It is a kind of sugar; correct: C)\n   EXPLANATION: Oxygen is released as a by-product, and animals and people breathe it in. That is one reason plants matter so much to life on Earth.",
+    "hi": "SUMMARY:\nPhotosynthesis is the process plants use to make their own food. A plant takes carbon dioxide from the air through tiny openings in its leaves and water from the soil through its roots. Using light energy from the sun, the plant turns these two inputs into glucose, a kind of sugar. The glucose is the plant's food, and the plant uses it to grow and to store energy.\n\nPicture the whole thing as an arrow chain, with every label taken from the material: carbon dioxide (air, through the tiny openings in leaves) + water (soil, through roots) + light energy (captured by chlorophyll inside chloroplasts) → glucose (food, used to grow and to store energy) + oxygen (released through the same tiny openings). That chain is just the word equation drawn as a labelled list. Worked example: with enough light, water and carbon dioxide, the chain runs and the plant makes glucose. Now do one of the same kind from memory before reading on: what changes for a plant kept in a dark cupboard?\n\nChloroplasts are the small green structures inside leaf cells, and they hold chlorophyll, a green pigment. Chlorophyll absorbs light energy, mostly red and blue light, and reflects green light, which is why leaves look green. Think of it like a comic artist's colour station: certain inks get taken up and one gets bounced back to your eye, so the page reads as green — that is the chlorophyll point, not a new fact about leaves. Oxygen is released as a by-product and leaves through the same tiny openings. A plant short of light, water or carbon dioxide makes less glucose and grows more slowly, which is why a plant in a dark cupboard turns pale and weak.\n\nFLASHCARDS (8):\n1. What is photosynthesis? -> The process plants use to make their own food, turning carbon dioxide and water into glucose using light energy.\n2. How does water get into the plant for photosynthesis? -> It is taken in from the soil through the plant's roots.\n3. What are chloroplasts? -> Small green structures inside the cells of a leaf.\n4. What is chlorophyll and what does it do? -> A green pigment in chloroplasts that absorbs light energy, mostly red and blue light, and reflects green light.\n5. What sugar does the plant make, and what is it for? -> Glucose, a kind of sugar; it is the plant's food, used to grow and to store energy.\n6. What happens to the oxygen made in photosynthesis? -> It is released as a by-product and leaves the plant through the tiny openings in the leaves.\n7. Write the word equation for photosynthesis. -> Carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n8. What happens to a plant that gets too little light, water or carbon dioxide? -> It makes less glucose and grows more slowly.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] Where does photosynthesis mainly take place in a plant? (choices: (A) In the leaves | (B) In the air around the plant | (C) In the soil | (D) In the roots; correct: A)\n   EXPLANATION: The material states that photosynthesis happens mainly in the leaves.\n2. [tier 1] Which substance is released as a by-product of photosynthesis? (choices: (A) Glucose | (B) Oxygen | (C) Chlorophyll | (D) Carbon dioxide; correct: B)\n   EXPLANATION: Oxygen is released as a by-product and leaves through the same tiny openings in the leaves.\n3. [tier 2] Why do leaves look green? (choices: (A) Chloroplasts absorb only green light | (B) Glucose stored in the leaf is green | (C) Chlorophyll reflects green light | (D) Water in the leaf reflects green light; correct: C)\n   EXPLANATION: Chlorophyll absorbs mostly red and blue light and reflects green light, which is why leaves look green.\n4. [tier 2] A plant is kept in a dark cupboard. Why does it turn pale and weak? (choices: (A) It makes less glucose and grows more slowly | (B) It releases too much oxygen | (C) It takes in too much carbon dioxide | (D) Its roots stop taking in water from soil; correct: A)\n   EXPLANATION: With too little light the plant makes less glucose and grows more slowly, so it turns pale and weak.\n\nPRACTICE TEST (4 questions, in this order):\n1. [tier 1] The green pigment inside chloroplasts that absorbs light energy is called ___. (typed answer; correct: chlorophyll)\n   EXPLANATION: Chloroplasts contain a green pigment called chlorophyll, which absorbs light energy.\n2. [tier 2] Complete the word equation: carbon dioxide plus water, using light energy, makes ___. (choices: (A) oxygen plus water | (B) chlorophyll plus water | (C) glucose plus oxygen | (D) glucose plus carbon dioxide; correct: C)\n   EXPLANATION: The material's word equation ends with glucose plus oxygen as the products.\n3. [tier 2] The oxygen made during photosynthesis leaves the plant through the same ___ in the leaves. (typed answer; correct: tiny openings)\n   EXPLANATION: Oxygen leaves through the same tiny openings that carbon dioxide comes in through.\n4. [tier 2] Chlorophyll absorbs light energy from the sun, mostly which colours of light? (choices: (A) Blue and green | (B) Red and green | (C) Green and yellow | (D) Red and blue; correct: D)\n   EXPLANATION: Chlorophyll absorbs mostly red and blue light and reflects green light."
+   }
+  },
+  {
+   "measure": "deductive_trajectory",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nStart with a single event: the assassination of Archduke Franz Ferdinand in Sarajevo on 28 June 1914. The passage says Austria-Hungary's war on Serbia soon drew in Russia, Germany, France and Britain. Because of the alliances, a local conflict could pull in many countries. So a quarrel between two states could grow into a continental war.\n\nBehind that chain were four long-term causes. Militarism was the build-up of large armies and navies, and Germany and Britain raced to build battleships. Alliances split Europe into two blocs: the Triple Entente and the Triple Alliance. Imperialism was rivalry between empires for colonies, markets and power. Nationalism was strong pride in one's nation or a wish for independence, and it was especially powerful in the Balkans.\n\nThink of it like a basketball game: one hard foul can start a bench-clearing push if teammates are tied to each other. The material calls that tying together alliances, and says a local conflict could pull in many countries. The four causes are militarism, alliances, imperialism and nationalism; the spark was the assassination.\n\nFLASHCARDS (8):\n1. What was militarism in the years before 1914? -> The great powers built up large armies and navies, and Germany and Britain raced to build battleships.\n2. What two blocs divided Europe through alliances? -> The Triple Entente joined France, Russia and Britain. The Triple Alliance joined Germany, Austria-Hungary and Italy.\n3. Why did alliances make a local conflict dangerous? -> A local conflict could pull in many countries, so a quarrel could grow into a continental war.\n4. What does imperialism mean in the passage? -> Rivalry between empires for colonies, markets and power.\n5. How did imperial rivalry increase distrust? -> European empires competed for land and resources in Africa and Asia.\n6. What is nationalism? -> Strong pride in one's nation or a wish for independence.\n7. Where was nationalism especially powerful, and what did Serbia want? -> In the Balkans. Serbia wanted to unite the Slavic peoples, and Austria-Hungary feared losing its empire.\n8. What was the spark, and when and where did it happen? -> The assassination of Archduke Franz Ferdinand in Sarajevo on 28 June 1914.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] How many long-term causes plus one event does the passage say historians often describe? (choices: (A) Four long-term causes plus one event | (B) Five long-term causes plus one event | (C) Two long-term causes plus one event | (D) Three long-term causes plus one event; correct: A)\n   EXPLANATION: The passage says historians often describe four long-term causes, plus one event that set it off.\n2. [tier 2] Think of it like a video game: a team builds up units before a match. Which cause is most like that build-up? (choices: (A) Alliances | (B) Imperialism | (C) Militarism | (D) Nationalism; correct: C)\n   EXPLANATION: Militarism is the build-up of large armies and navies before 1914.\n3. [tier 2] A local quarrel pulls in many countries because of which cause? (choices: (A) Militarism | (B) Nationalism | (C) Imperialism | (D) Alliances; correct: D)\n   EXPLANATION: The passage says alliances could pull many countries into a local conflict.\n4. [tier 2] What does imperialism mean in the passage? (choices: (A) Pride in one's nation | (B) A plan to build battleships | (C) A wish for independence | (D) Rivalry between empires for colonies, markets and power; correct: D)\n   EXPLANATION: The passage defines imperialism as rivalry between empires for colonies, markets and power.\n\nPRACTICE TEST (6 questions, in this order):\n1. [tier 2] Which two countries raced to build battleships before 1914? (choices: (A) Austria-Hungary and Italy | (B) France and Russia | (C) Germany and Britain | (D) Serbia and Russia; correct: C)\n   EXPLANATION: The passage says Germany and Britain raced to build battleships.\n2. [tier 2] The Triple Entente joined France, Russia and ___. (typed answer; correct: Britain)\n   EXPLANATION: The Triple Entente joined France, Russia and Britain.\n3. [tier 2] Nationalism was especially powerful in the ___. (typed answer; correct: Balkans)\n   EXPLANATION: The passage says nationalism was especially powerful in the Balkans.\n4. [tier 2] Think of it like drawing comics: a character is proud of their own group and wants independence. Which cause does this most resemble? (choices: (A) Militarism | (B) Imperialism | (C) Alliances | (D) Nationalism; correct: D)\n   EXPLANATION: Nationalism is strong pride in one's nation or a wish for independence.\n5. [tier 3] Which chain best matches the passage: the assassination, then Austria-Hungary's war on Serbia, then other powers joining? (choices: (A) Alliances pulled in Russia, Germany, France and Britain | (B) Militarism ended all armies before the war | (C) Imperialism gave Serbia colonies in Africa | (D) Nationalism stopped the war from spreading; correct: A)\n   EXPLANATION: The passage says that, because of the alliances, Austria-Hungary's war on Serbia soon drew in Russia, Germany, France and Britain.\n6. [tier 3] Explain how alliances could turn a local quarrel into a continental war. (typed or written answer; model answer: The passage says a local conflict could pull in many countries because of the alliances. A quarrel between two states could grow into a continental war. It also says Austria-Hungary's war on Serbia soon drew in Russia, Germany, France and Britain because of the alliances.)\n   EXPLANATION: A strong answer uses the passage's chain from local conflict to wider war and names the powers drawn in.",
+    "hi": "SUMMARY:\nThe passage says four long-term causes helped lead to the First World War, and one event set it off. The causes are militarism, alliances, imperialism and nationalism. The event was the assassination of Archduke Franz Ferdinand in Sarajevo on 28 June 1914.\n\nMilitarism means the great powers built large armies and navies, and Germany and Britain raced to build battleships. Generals planned for war, and many leaders saw war as a normal way to settle disputes. Think of it like leveling up an army in a video game: the passage's point is that countries built up military power and planned for war.\n\nAlliances split Europe into the Triple Entente and the Triple Alliance. Imperialism was rivalry between empires for colonies, markets and power. Nationalism was strong pride or a wish for independence, especially in the Balkans. Think of alliances like a basketball team: one fight can pull in teammates; the passage says a local conflict could pull in many countries. The passage's chain is: assassination -> Austria-Hungary's war on Serbia -> Russia, Germany, France and Britain drawn in.\n\nFLASHCARDS (8):\n1. What are the four long-term causes of the First World War named in the passage? -> Militarism, alliances, imperialism and nationalism.\n2. What is militarism in this passage? -> Great powers built large armies and navies; Germany and Britain raced to build battleships.\n3. What two blocs divided Europe? -> The Triple Entente (France, Russia, Britain) and the Triple Alliance (Germany, Austria-Hungary, Italy).\n4. Why did alliances make a local conflict dangerous? -> A local conflict could pull in many countries, so a quarrel between two states could grow into a continental war.\n5. What is imperialism? -> Rivalry between empires for colonies, markets and power.\n6. What is nationalism? -> Strong pride in one's nation or a wish for independence.\n7. Where was nationalism especially powerful, and why? -> In the Balkans, where Serbia wanted to unite the Slavic peoples and Austria-Hungary feared losing its empire.\n8. What was the spark of the war? -> The assassination of Archduke Franz Ferdinand, heir to the Austro-Hungarian throne, in Sarajevo on 28 June 1914.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] Which list gives the four long-term causes named in the passage? (choices: (A) Militarism, alliances, imperialism and the assassination | (B) Militarism, alliances, imperialism and nationalism | (C) Alliances, imperialism, nationalism and the Triple Entente | (D) Militarism, nationalism, the Triple Alliance and the Balkans; correct: B)\n   EXPLANATION: The passage names militarism, alliances, imperialism and nationalism as the four long-term causes.\n2. [tier 1] What event does the passage call the spark? (choices: (A) The assassination of Archduke Franz Ferdinand | (B) The Triple Entente joining France, Russia and Britain | (C) Germany and Britain racing to build battleships | (D) Serbia wanting to unite the Slavic peoples; correct: A)\n   EXPLANATION: The passage calls the assassination of Archduke Franz Ferdinand the spark.\n3. [tier 2] Why could a local conflict pull in many countries, according to the passage? (choices: (A) Because Serbia wanted to unite the Slavic peoples | (B) Because empires competed in Africa and Asia | (C) Because generals planned for war | (D) Because of the alliances; correct: D)\n   EXPLANATION: The passage says alliances could pull many countries into a local conflict.\n4. [tier 2] What made nationalism especially powerful in the Balkans? (choices: (A) France, Russia and Britain formed the Triple Entente | (B) The European empires competed for land and resources in Africa and Asia | (C) Germany and Britain raced to build battleships | (D) Serbia wanted to unite the Slavic peoples and Austria-Hungary feared losing its empire; correct: D)\n   EXPLANATION: The passage ties Balkan nationalism to Serbia and Austria-Hungary's fears.\n\nPRACTICE TEST (6 questions, in this order):\n1. [tier 2] A basketball team buys better gear and plans plays for every opponent. Which cause from the passage does this most resemble? (choices: (A) Imperialism | (B) Alliances | (C) Militarism | (D) Nationalism; correct: C)\n   EXPLANATION: It resembles militarism: the passage says great powers built up large armies and navies.\n2. [tier 2] The Triple Alliance joined Germany, Austria-Hungary and ___. (typed answer; correct: Italy)\n   EXPLANATION: The passage lists Italy as the third member of the Triple Alliance.\n3. [tier 2] The spark was the assassination of Archduke Franz Ferdinand, heir to the Austro-Hungarian throne, in ___ on 28 June 1914. (typed answer; correct: Sarajevo)\n   EXPLANATION: The passage names Sarajevo as the place of the assassination on 28 June 1914.\n4. [tier 3] According to the passage, which chain best shows how the spark widened the war? (choices: (A) Assassination -> Germany and Britain raced to build battleships -> generals planned for war | (B) Alliances formed -> empires competed in Africa and Asia -> nationalism in the Balkans | (C) Assassination -> Austria-Hungary's war on Serbia -> alliances drew in Russia, Germany, France and Britain | (D) Serbia wanted to unite Slavic peoples -> Austria-Hungary feared losing its empire -> assassination; correct: C)\n   EXPLANATION: The passage says Austria-Hungary's war on Serbia soon drew in Russia, Germany, France and Britain because of the alliances.\n5. [tier 3] How did alliances help turn a local quarrel into a continental war, according to the passage? (typed or written answer; model answer: Europe was split into two blocs, the Triple Entente and the Triple Alliance. Because of these alliances, a local conflict could pull in many countries, so a quarrel between two states could grow into a continental war. After the spark, Austria-Hungary's war on Serbia soon drew in Russia, Germany, France and Britain.)\n   EXPLANATION: The passage says alliances could pull many countries into a local conflict and lists the powers drawn in after Austria-Hungary's war on Serbia.\n6. [tier 3] A comic artist shows one small fight pulling in the whole cast because they are on two teams. Which passage point does this best illustrate? (choices: (A) Alliances could pull many countries into a local conflict | (B) Imperialism increased distrust between empires | (C) Nationalism was strong pride or a wish for independence | (D) Militarism made many leaders see war as a normal way to settle disputes; correct: A)\n   EXPLANATION: The passage says a local conflict could pull in many countries because of the alliances."
+   }
+  },
+  {
+   "measure": "working_memory_span",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nA two-step equation needs two steps to solve, such as 2x + 3 = 11. The goal is to get the variable x alone on one side of the equals sign. You do this by undoing the operations that were done to x, using the opposite operation. Takeaway: get x alone by undoing, in order.\n\nStep one is to undo addition or subtraction. In 2x + 3 = 11 the number 3 is added, so we subtract 3 from both sides. That gives 2x = 8. Takeaway: step one removes the number that was added or subtracted.\n\nStep two is to undo multiplication or division. Here x is multiplied by 2, so we divide both sides by 2. That gives x = 4. Takeaway: step two removes the number multiplying or dividing x.\n\nThe most important rule is that whatever you do to one side of the equation you must do to the other side. An equation is like a balanced scale, and doing the same thing to both sides keeps it balanced. Think of it like a basketball scoreboard that must stay tied: whatever you add to one team's score, you add to the other. If you subtract 3 from only one side, the equation is no longer true. Takeaway: same move on both sides, every time.\n\nFLASHCARDS (8):\n1. What is a two-step equation? -> An equation that needs two steps to solve, like 2x + 3 = 11.\n2. What is the goal when solving for x? -> Get the variable x alone on one side of the equals sign.\n3. How do you undo what was done to x? -> Use the opposite operation.\n4. Which step comes first: undoing addition/subtraction, or undoing multiplication/division? -> Undo addition or subtraction first. That is step one.\n5. What is the first step in 2x + 3 = 11, and what do you get? -> Subtract 3 from both sides; that gives 2x = 8.\n6. What is the second step in 2x + 3 = 11, and what do you get? -> Divide both sides by 2; that gives x = 4.\n7. What is the most important rule for equations? -> Whatever you do to one side, you must do to the other side.\n8. How do you check that x = 4 solves 2x + 3 = 11? -> Put 4 back in: 2 times 4 plus 3 is 11, so both sides match.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] In 2x + 3 = 11, what is the first step? (choices: (A) Multiply both sides by 2 | (B) Subtract 3 from both sides | (C) Add 3 to both sides | (D) Divide both sides by 2; correct: B)\n   EXPLANATION: Hint: 3 is added, so undo it with the opposite operation. Subtracting 3 from both sides gives 2x = 8.\n2. [tier 1] After subtracting 3 from both sides of 2x + 3 = 11, what equation do you have? (choices: (A) 2x = 8 | (B) 2x = 14 | (C) x = 4 | (D) x = 8; correct: A)\n   EXPLANATION: Hint: 11 minus 3 is 8, and x is still multiplied by 2. So the left side becomes 2x = 8.\n3. [tier 2] For 3x - 5 = 10, after you add 5 to both sides, what do you do next? (choices: (A) Subtract 5 from both sides | (B) Add 5 to both sides again | (C) Divide both sides by 3 | (D) Multiply both sides by 3; correct: C)\n   EXPLANATION: Hint: after adding 5 you have 3x = 15. Dividing both sides by 3 gives x = 5.\n4. [tier 2] A comic artist draws an equation as a scale. She subtracts 3 from only one side. What happens? (choices: (A) The scale stays balanced | (B) Both sides stay equal | (C) The answer becomes x = 4 | (D) The equation is no longer true; correct: D)\n   EXPLANATION: Hint: only one side was changed, so the two sides no longer match. The material says the equation is no longer true.\n\nPRACTICE TEST (6 questions, in this order):\n1. [tier 2] You have 2x = 8. Divide both sides by 2. Then x = ___ (typed answer; correct: 4)\n   EXPLANATION: Hint: 8 divided by 2 is 4. Since x is multiplied by 2, dividing both sides by 2 gives x = 4.\n2. [tier 2] In 3x - 5 = 10, add 5 to both sides. Then 3x = ___ (typed answer; correct: 15)\n   EXPLANATION: Hint: undo the subtraction first, then look at the new right side. Adding 5 to both sides gives 3x = 15.\n3. [tier 2] How do you check that x = 4 is right for 2x + 3 = 11? (choices: (A) Add 3 to both sides again | (B) Subtract 4 from both sides | (C) Divide both sides by 4 | (D) Put 4 back in for x and see if both sides match; correct: D)\n   EXPLANATION: Hint: you are testing the answer, not solving again. Putting 4 back in gives 11 on the left, so both sides match.\n4. [tier 2] A player writes the steps for 3x - 5 = 10 in a playbook. Which step comes first? (choices: (A) Add 5 to both sides | (B) Divide both sides by 3 | (C) Multiply both sides by 3 | (D) Subtract 5 from both sides; correct: A)\n   EXPLANATION: Hint: step one always undoes addition or subtraction. So add 5 to both sides to get 3x = 15, then divide.\n5. [tier 3] Explain how to solve 2x + 3 = 11 in two steps, and say why you do the same thing to both sides. (typed or written answer; model answer: First subtract 3 from both sides to get 2x = 8. Then divide both sides by 2 to get x = 4. You do the same thing to both sides because whatever you do to one side you must do to the other, which keeps the equation balanced.)\n   EXPLANATION: Hint: name the opposite operation for each step, then state the balancing rule. Subtracting 3 and then dividing by 2 gives x = 4.\n6. [tier 3] In a game, a score follows 3x - 5 = 10. A player says, \"I'll divide both sides by 3 first.\" Why is that a problem? (choices: (A) An equation can never have two steps | (B) Step one is to undo addition or subtraction, so dividing first skips that step | (C) x is not multiplied by 3 in this equation | (D) Dividing by 3 changes only one side of the equation; correct: B)\n   EXPLANATION: Hint: look at the order of the two steps. Step one undoes addition or subtraction, and step two undoes multiplication or division.",
+    "hi": "SUMMARY:\nA two-step equation needs two steps to solve, like 2x + 3 = 11. Your goal is to get the variable x alone on one side of the equals sign. You do that by undoing the operations that were done to x, using the opposite operation each time.\n\nStep one undoes addition or subtraction. In 2x + 3 = 11 the number 3 is added, so you subtract 3 from both sides, which gives 2x = 8. Step two undoes multiplication or division. Here x is multiplied by 2, so you divide both sides by 2, which gives x = 4. A second example, 3x - 5 = 10, follows the same path: add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nThe most important rule is that whatever you do to one side of the equation you must do to the other side. Think of it like a balanced scale: doing the same thing to both sides keeps it balanced. If you subtract 3 from only one side, the equation is no longer true. Always check your answer by putting it back into the original equation. For x = 4, 2 times 4 plus 3 is 8 plus 3, which is 11, so the left side equals the right side.\n\nFLASHCARDS (8):\n1. What is the goal when you solve a two-step equation? -> Get the variable x alone on one side of the equals sign.\n2. What is step one in solving a two-step equation? -> Undo addition or subtraction.\n3. In 2x + 3 = 11, what is step one and what does it give? -> Subtract 3 from both sides; that gives 2x = 8.\n4. Which operation undoes multiplication, and what does it give in 2x = 8? -> Division: you divide both sides by 2, which gives x = 4.\n5. What is the most important rule when solving an equation? -> Whatever you do to one side of the equation you must do to the other side.\n6. What goes wrong if you subtract 3 from only one side of 2x + 3 = 11? -> The equation is no longer true.\n7. How do you check that x = 4 is correct for 2x + 3 = 11? -> Put 4 back into the original equation: 2 times 4 plus 3 is 8 plus 3, which is 11, so the left side equals the right side.\n8. Solve 3x - 5 = 10. -> Add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nQUIZ (3 questions, in this order):\n1. [tier 1] What is the goal when solving a two-step equation? (choices: (A) Make both sides equal to zero | (B) Remove the equals sign | (C) Get the variable alone on one side | (D) Put the variable on both sides; correct: C)\n   EXPLANATION: The passage states the goal is to get the variable x alone on one side of the equals sign.\n2. [tier 1] In 2x + 3 = 11, what is step one? (choices: (A) Divide both sides by 2 | (B) Subtract 3 from both sides | (C) Add 3 to both sides | (D) Subtract 2 from both sides; correct: B)\n   EXPLANATION: Because 3 is added to x, step one subtracts 3 from both sides, giving 2x = 8.\n3. [tier 2] Why subtract 3 from both sides of 2x + 3 = 11 instead of only the left side? (choices: (A) An equation is like a balanced scale, so the same change must be made on both sides | (B) Because subtracting from one side always turns x negative | (C) Because x has to end up on the right side | (D) Because 3 is an odd number; correct: A)\n   EXPLANATION: Doing the same thing to both sides keeps the scale balanced, so the equation stays true.\n\nPRACTICE TEST (5 questions, in this order):\n1. [tier 2] A game shows 2x + 3 = 11. After subtracting 3 from both sides, the equation reads ___. (typed answer; correct: 2x = 8)\n   EXPLANATION: Subtracting 3 from both sides of 2x + 3 = 11 leaves 2x = 8.\n2. [tier 2] In 3x - 5 = 10, what do you have right after adding 5 to both sides? (choices: (A) x = 3 | (B) 3x = 10 | (C) 3x = 5 | (D) x = 15 | (E) 3x = 15; correct: E)\n   EXPLANATION: Adding 5 to both sides of 3x - 5 = 10 gives 3x = 15.\n3. [tier 3] Explain how you check that x = 4 solves 2x + 3 = 11. (typed or written answer; model answer: Put the answer back into the original equation. Two times 4 plus 3 is 8 plus 3, which is 11. The left side equals the right side, so the answer is correct.)\n   EXPLANATION: Checking means substituting the answer into the original equation and comparing both sides.\n4. [tier 3] A player solves 2x + 3 = 11 by subtracting 3 from the left side only, writing 2x = 11. What is wrong? (choices: (A) The player should have added 3 to both sides instead | (B) The same operation must be done to both sides, so the equation is no longer true | (C) The player should have divided by 2 before subtracting | (D) Nothing is wrong, because only the side with x matters; correct: B)\n   EXPLANATION: Whatever you do to one side you must do to the other; changing only one side makes the equation untrue.\n5. [tier 3] Describe, in order, the two steps that solve 3x - 5 = 10, and state the value of x. (typed or written answer; model answer: First add 5 to both sides to undo the subtraction, which gives 3x = 15. Then divide both sides by 3, which gives x = 5.)\n   EXPLANATION: Step one undoes addition or subtraction, and step two undoes multiplication or division."
+   }
+  },
+  {
+   "measure": "attention_runway",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nSpanish has everyday greetings. Hola means hello and works at any time of day. Think of it like a default button in a game menu: it is always there, whether you greet friends or someone new.\n\nFor a certain time, say buenos días (good morning), buenas tardes (good afternoon), or buenas noches (good evening or good night). Días is masculine plural, while tardes and noches are feminine plural, so the ending changes. To say goodbye, use adiós or hasta luego. Hasta luego is friendly; think of it like telling a teammate \"next game\" because you expect to meet again soon.\n\nTo ask how someone is, use cómo estás with friends, family and children. Use cómo está usted with older people, strangers or in polite situations. The usual answer is bien, gracias. When you meet someone for the first time, say mucho gusto.\n\nFLASHCARDS (8):\n1. What does hola mean? -> Hello.\n2. When can you use hola? -> At any time of day, with friends or with people you have just met.\n3. How do you say good morning? -> Buenos días.\n4. How do you say good afternoon? -> Buenas tardes.\n5. How do you say good evening or good night? -> Buenas noches.\n6. Why buenos in buenos días but buenas in buenas tardes? -> Días is masculine plural; tardes is feminine plural, so the ending changes.\n7. What does adiós mean? -> Goodbye.\n8. Formal vs informal how are you? -> Use cómo estás with friends, family and children; use cómo está usted with older people, strangers or polite situations.\n\nQUIZ (2 questions, in this order):\n1. [tier 1] What does hola mean? (choices: (A) Nice to meet you | (B) Goodbye | (C) See you later | (D) Hello; correct: D)\n   EXPLANATION: The passage states that hola means hello.\n2. [tier 2] In a comic, a kid greets an older stranger politely. Which question asks how they are? (choices: (A) cómo estás | (B) cómo está usted | (C) hasta luego | (D) mucho gusto; correct: B)\n   EXPLANATION: The formal question cómo está usted is used with older people, strangers or in polite situations.\n\nPRACTICE TEST (5 questions, in this order):\n1. [tier 2] At basketball practice, a friend asks cómo estás. Which answer is the usual one? (choices: (A) mucho gusto | (B) bien, gracias | (C) buenos días | (D) adiós; correct: B)\n   EXPLANATION: The passage says the usual answer is bien, gracias.\n2. [tier 2] To say nice to meet you, fill the gap: ___. (typed answer; correct: mucho gusto)\n   EXPLANATION: Mucho gusto means nice to meet you and is used when you meet someone for the first time.\n3. [tier 2] Días is masculine plural, so the ending in buenos días is ___. (typed answer; correct: buenos)\n   EXPLANATION: Días is masculine plural, so the ending buenos is used.\n4. [tier 3] Why does Spanish use buenas tardes but buenos días? (choices: (A) Because the ending never changes with time of day. | (B) Because tardes is masculine plural and días is feminine plural. | (C) Because días is masculine plural and tardes is feminine plural. | (D) Because both greetings use feminine plural endings.; correct: C)\n   EXPLANATION: The passage notes that días is masculine plural while tardes is feminine plural, so the endings differ.\n5. [tier 3] When do you use cómo estás, and when do you use cómo está usted? What is the usual answer? (typed or written answer; model answer: Use cómo estás with friends, family and children. Use cómo está usted with older people, strangers or in polite situations. The usual answer is bien, gracias.)\n   EXPLANATION: The passage separates the informal and formal questions and gives bien, gracias as the usual answer.",
+    "hi": "SUMMARY:\nSpanish has everyday greetings. Hola means hello and works at any time of day, with friends or people you just met. Think of it like a basic basketball pass you can use in many plays: hola is the all-purpose greeting. For a certain time, use buenos días (good morning), buenas tardes (good afternoon), or buenas noches (good evening or good night). The ending changes because días is masculine plural, while tardes and noches are feminine plural.\n\nTo say goodbye, use adiós (goodbye) or hasta luego (see you later). Hasta luego is friendly and fits when you expect to see the person soon. To ask how someone is, use cómo estás informally with friends, family, and children. Use cómo está usted formally with older people, strangers, or polite situations. The usual answer is bien, gracias.\n\nWhen you meet someone for the first time, say mucho gusto (nice to meet you). Think of it like drawing comics: you pick a speech bubble that fits the person and situation. In the same way, Spanish uses cómo estás informally and cómo está usted formally. Arrow chain: hola → any time; buenos días → morning; buenas tardes → afternoon; buenas noches → evening or night; adiós or hasta luego → goodbye.\n\nFLASHCARDS (8):\n1. What does hola mean, and when can you use it? -> It means hello. It works at any time of day, with friends or new people.\n2. Which greeting means good morning? -> Buenos días.\n3. Which greetings mean good afternoon and good evening or good night? -> Buenas tardes means good afternoon; buenas noches means good evening or good night.\n4. Why does Spanish use buenos with días but buenas with tardes and noches? -> Días is masculine plural; tardes and noches are feminine plural. So the ending changes.\n5. What are two ways to say goodbye in Spanish? -> Adiós means goodbye; hasta luego means see you later.\n6. When is hasta luego a good goodbye? -> It is friendly and fits when you expect to see the person again soon.\n7. How do you ask how someone is informally and formally, and what is the usual answer? -> Informal: cómo estás. Formal: cómo está usted. Usual answer: bien, gracias.\n8. What do you say when you meet someone for the first time? -> Mucho gusto, which means nice to meet you.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] What does hola mean? (choices: (A) Nice to meet you | (B) Goodbye | (C) Good morning | (D) Hello; correct: D)\n   EXPLANATION: The passage says hola means hello and can be used at any time.\n2. [tier 1] Which greeting means good afternoon? (choices: (A) Hasta luego | (B) Buenas noches | (C) Buenas tardes | (D) Buenos días; correct: C)\n   EXPLANATION: The passage says buenas tardes means good afternoon.\n3. [tier 2] A basketball player greets a coach in the morning. Which greeting fits the time of day? (choices: (A) Buenas tardes | (B) Adiós | (C) Buenas noches | (D) Buenos días; correct: D)\n   EXPLANATION: Buenos días is the greeting for good morning.\n4. [tier 2] You will see a friend later and want a friendly goodbye. Which phrase fits? (choices: (A) Bien, gracias | (B) Mucho gusto | (C) Hasta luego | (D) Adiós; correct: C)\n   EXPLANATION: Hasta luego is friendly and is used when you expect to see the person soon.\n\nPRACTICE TEST (4 questions, in this order):\n1. [tier 2] In a comic, a character politely greets an older stranger. Which question fits? (choices: (A) Buenas noches | (B) Mucho gusto | (C) Cómo está usted | (D) Cómo estás; correct: C)\n   EXPLANATION: The formal question cómo está usted is for older people, strangers, or polite situations.\n2. [tier 2] With friends, family, and children, use the informal question ___. (typed answer; correct: cómo estás)\n   EXPLANATION: The passage names cómo estás as the informal question for friends, family, and children.\n3. [tier 3] Explain how to choose between cómo estás and cómo está usted, and give the usual answer. (typed or written answer; model answer: Use cómo estás with friends, family, and children; it is informal. Use cómo está usted with older people, strangers, or in polite situations; it is formal. The usual answer is bien, gracias.)\n   EXPLANATION: The passage separates the informal question from the formal question and gives the usual answer.\n4. [tier 3] A gamer meets a new person for the first time in the evening. Which pair fits both parts? (choices: (A) buenas tardes / bien, gracias | (B) buenas noches / mucho gusto | (C) hola / hasta luego | (D) buenos días / adiós; correct: B)\n   EXPLANATION: Buenas noches fits the evening, and mucho gusto fits meeting someone for the first time."
+   }
+  },
+  {
+   "measure": "interest_transfer",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nPhotosynthesis is how plants make their own food. A plant takes carbon dioxide from air through tiny openings in its leaves and water from soil through its roots. Using sunlight, it turns these into glucose, a sugar it uses to grow and store energy.\n\nThis happens mainly in the leaves. Leaf cells contain chloroplasts with chlorophyll. Chlorophyll absorbs mostly red and blue light and reflects green light, so leaves look green. Oxygen is released through the same leaf openings.\n\nPicture it as an arrow chain: carbon dioxide + water → (light energy) → glucose + oxygen. Too little light, water, or carbon dioxide means less glucose and slower growth. A plant in a dark cupboard turns pale and weak.\n\nFLASHCARDS (8):\n1. What is photosynthesis? -> The process plants use to make their own food, turning carbon dioxide and water into glucose using light energy.\n2. Where does a plant take in carbon dioxide, and where does it take in water? -> Carbon dioxide enters through tiny openings in the leaves; water enters through the roots.\n3. What is glucose used for in a plant? -> It is the plant's food; the plant uses it to grow and store energy.\n4. What are chloroplasts and what do they contain? -> Small green structures inside leaf cells; they contain chlorophyll.\n5. What light does chlorophyll absorb and reflect? -> It absorbs mostly red and blue light and reflects green light.\n6. What is oxygen in photosynthesis, and how does it leave the plant? -> Oxygen is released as a by-product and leaves through the same tiny openings in the leaves.\n7. From memory, write the word equation for photosynthesis. -> Carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n8. What happens when a plant gets too little light, water, or carbon dioxide? -> It makes less glucose and grows more slowly.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] What gas do plants take in from the air for photosynthesis? (choices: (A) Carbon dioxide | (B) Nitrogen | (C) Hydrogen | (D) Oxygen; correct: A)\n   EXPLANATION: Plants take in carbon dioxide through tiny openings in their leaves.\n2. [tier 2] A leaf cell has chloroplasts. What pigment inside them captures light energy? (choices: (A) Glucose | (B) Oxygen | (C) Water | (D) Chlorophyll; correct: D)\n   EXPLANATION: Chloroplasts contain chlorophyll, the green pigment that captures light.\n3. [tier 2] Why do most leaves look green? (choices: (A) Chlorophyll reflects green light | (B) Glucose is green | (C) Chlorophyll absorbs green light | (D) Chloroplasts are blue; correct: A)\n   EXPLANATION: Chlorophyll reflects green light, so leaves look green.\n4. [tier 3] A plant has water and carbon dioxide but only weak light. What is the best prediction? (choices: (A) It stops needing chlorophyll | (B) It takes in glucose from soil | (C) It makes less glucose and grows more slowly | (D) It makes more oxygen and grows faster; correct: C)\n   EXPLANATION: Worked example: if a plant gets too little water, it makes less glucose and grows slowly. The same applies when light is weak.\n\nPRACTICE TEST (6 questions, in this order):\n1. [tier 1] Photosynthesis happens mainly in the ___ of a plant. (typed answer; correct: leaves)\n   EXPLANATION: The passage says photosynthesis happens mainly in the leaves.\n2. [tier 1] Which sugar is made during photosynthesis? (choices: (A) Chlorophyll | (B) Carbon dioxide | (C) Oxygen | (D) Glucose; correct: D)\n   EXPLANATION: The passage names glucose as the sugar made from carbon dioxide and water.\n3. [tier 2] What does chlorophyll absorb from sunlight? (choices: (A) Glucose | (B) Water | (C) Light energy | (D) Oxygen; correct: C)\n   EXPLANATION: Chlorophyll captures light energy, mostly red and blue light.\n4. [tier 2] A plant kept in a dark cupboard turns pale and weak because it makes less ___. (typed answer; correct: glucose)\n   EXPLANATION: Too little light, water, or carbon dioxide leads to less glucose, so the plant grows slowly and looks weak.\n5. [tier 2] The word equation is: carbon dioxide plus water, using ___ energy, makes glucose plus oxygen. (typed answer; correct: light)\n   EXPLANATION: The equation shows that light energy is the energy source for the reaction.\n6. [tier 3] Use the word equation to explain what a plant needs and what it makes. (typed or written answer; model answer: A plant takes carbon dioxide from the air and water from the soil. Using light energy, it turns them into glucose, its food, and oxygen, which is released.)\n   EXPLANATION: A strong answer names the two inputs, the energy source, and both outputs from the equation.",
+    "hi": "SUMMARY:\nPhotosynthesis is the process plants use to make their own food. A plant takes carbon dioxide from the air through tiny openings in its leaves. It takes water from the soil through its roots. Using light energy from the sun, the plant turns these into glucose, a kind of sugar. The plant uses the glucose to grow and to store energy.\n\nThink of it like a basketball team that needs all its players to score: the plant needs light, water and carbon dioxide. The job happens mainly in the leaves, inside small green structures called chloroplasts. They contain chlorophyll, a green pigment. Chlorophyll absorbs light energy, mostly red and blue light, and reflects green light. That is why leaves look green.\n\nOxygen is released as a by-product and leaves through the same tiny openings. As a word equation: carbon dioxide plus water, using light energy, makes glucose plus oxygen. Too little light, water or carbon dioxide means less glucose and slower growth. Picture a video game plant that levels up slowly whenever it misses supplies.\n\nFLASHCARDS (8):\n1. What is photosynthesis? -> The process plants use to make their own food.\n2. What does a plant take in, and from where? -> Carbon dioxide from the air through tiny openings in its leaves, and water from the soil through its roots.\n3. What are chloroplasts? -> Small green structures inside the cells of a leaf.\n4. What is chlorophyll, and what does it do? -> A green pigment that absorbs light energy from the sun, mostly red and blue light.\n5. Why do leaves look green? -> Because chlorophyll reflects green light.\n6. What is glucose, and what does the plant do with it? -> Glucose is the plant's food, and the plant uses it to grow and to store energy.\n7. What is the word equation for photosynthesis? -> Carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n8. What happens to a plant that gets too little light, water or carbon dioxide? -> It makes less glucose and grows more slowly.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] What does a plant take in from the air through tiny openings in its leaves? (choices: (A) Carbon dioxide | (B) Glucose | (C) Chlorophyll | (D) Oxygen; correct: A)\n   EXPLANATION: The passage says the plant takes in carbon dioxide from the air through tiny openings in its leaves. Oxygen is what it releases, not what it takes in.\n2. [tier 2] Chlorophyll absorbs mostly red and blue light. What does it do with green light? (choices: (A) It turns it into water | (B) It reflects it | (C) It absorbs it | (D) It stores it as carbon dioxide; correct: B)\n   EXPLANATION: Chlorophyll reflects green light, which is why leaves look green. Absorbing it would not explain the leaf's colour.\n3. [tier 2] Inside a leaf cell, where is the green pigment chlorophyll found? (choices: (A) In the air openings | (B) In the roots | (C) In the soil | (D) In the chloroplasts; correct: D)\n   EXPLANATION: The cells of a leaf hold small green structures called chloroplasts, and those contain chlorophyll.\n4. [tier 2] Think of it like a player left off the court: a plant in a dark cupboard turns pale and weak. Why? (choices: (A) It gets too little light, so it makes less glucose | (B) It takes in too much carbon dioxide | (C) Its roots stop taking in water | (D) It releases too much oxygen; correct: A)\n   EXPLANATION: A plant with too little light makes less glucose and grows more slowly. That is why a plant kept in a dark cupboard turns pale and weak.\n\nPRACTICE TEST (4 questions, in this order):\n1. [tier 2] The word equation reads: carbon dioxide plus water, using light energy, makes glucose plus ___. (typed answer; correct: oxygen)\n   EXPLANATION: The word equation ends with glucose plus oxygen. Oxygen is the by-product released by the plant.\n2. [tier 2] Imagine a video game plant that gets plenty of light and water but too little carbon dioxide. What happens to it? (choices: (A) It makes more glucose than usual | (B) Its roots take in more water | (C) Its leaves stop looking green | (D) It makes less glucose and grows more slowly; correct: D)\n   EXPLANATION: Too little light, water or carbon dioxide all lead to less glucose and slower growth. Carbon dioxide is one of the three needed inputs.\n3. [tier 2] Without chlorophyll, a plant could not ___ the light energy it needs. (typed answer; correct: capture)\n   EXPLANATION: Chlorophyll is what absorbs, or captures, light energy from the sun. Without it the plant cannot get that energy.\n4. [tier 3] A plant takes in carbon dioxide and water and uses light energy. The sugar it makes is called ___. (typed answer; correct: glucose)\n   EXPLANATION: The plant turns carbon dioxide and water into glucose, a kind of sugar. Glucose is the plant's food."
+   }
+  },
+  {
+   "measure": "generation_effect",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nA two-step equation takes two steps to solve, like 2x + 3 = 11. The goal is to get the variable x alone on one side of the equals sign. To do that, you undo each operation with its opposite operation.\n\nStep one is to undo addition or subtraction. In 2x + 3 = 11, the 3 is added, so you subtract 3 from both sides and get 2x = 8. Step two is to undo multiplication or division: x is multiplied by 2, so you divide both sides by 2 and get x = 4.\n\nHere is the same thing as a picture in text: 2x + 3 = 11 → subtract 3 from both sides → 2x = 8 → divide both sides by 2 → x = 4.\n\nThe most important rule is that whatever you do to one side of the equation you must do to the other side. An equation is like a balanced scale. Always check your answer by putting it back into the original equation.\n\nFLASHCARDS (8):\n1. What is a two-step equation? -> An equation that needs two steps to solve, such as 2x + 3 = 11.\n2. What is the goal when solving an equation like 2x + 3 = 11? -> To get the variable x alone on one side of the equals sign.\n3. How do you undo the operations that were done to x? -> By using the opposite operation.\n4. What is step one in solving 2x + 3 = 11? -> Undo the addition: subtract 3 from both sides, which gives 2x = 8.\n5. What is step two in solving 2x + 3 = 11? -> Undo the multiplication: divide both sides by 2, which gives x = 4.\n6. What is the most important rule when solving an equation? -> Whatever you do to one side of the equation, you must do to the other side too.\n7. What is an equation compared to in the passage? -> A balanced scale: doing the same thing to both sides keeps it balanced.\n8. How do you check the answer x = 4 for 2x + 3 = 11? -> Put 4 back in: 2 times 4 plus 3 is 8 plus 3, which is 11, so both sides match.\n\nQUIZ (3 questions, in this order):\n1. [tier 1] How many steps does a two-step equation need to solve it? (choices: (A) One step | (B) Three steps | (C) Two steps | (D) No steps; correct: C)\n   EXPLANATION: The passage defines a two-step equation as one that needs two steps to solve.\n2. [tier 1] In 2x + 3 = 11, what should you do first? (choices: (A) Add 3 to both sides | (B) Divide both sides by 2 | (C) Subtract 3 from both sides | (D) Multiply both sides by 2; correct: C)\n   EXPLANATION: Step one undoes the addition, so you subtract 3 from both sides.\n3. [tier 2] Why must you do the same thing to both sides of an equation? (choices: (A) Because the variable must stay on the left | (B) Because it keeps the equation balanced like a scale | (C) Because the answer must be a whole number | (D) Because division always comes last; correct: B)\n   EXPLANATION: The passage compares an equation to a balanced scale that stays balanced when both sides get the same treatment.\n\nPRACTICE TEST (4 questions, in this order):\n1. [tier 2] In 3x - 5 = 10, adding 5 to both sides gives 3x = ___. (typed answer; correct: 15)\n   EXPLANATION: Adding 5 to both sides leaves 3x = 15, and dividing by 3 then gives x = 5.\n2. [tier 2] To get x by itself, we undo the operations done to x by using the ___ operation. (typed answer; correct: opposite)\n   EXPLANATION: The passage says the way to undo what was done to x is to use the opposite operation.\n3. [tier 2] A comic artist draws a check for x = 4 in 2x + 3 = 11. What does the check show? (choices: (A) 2 times 4 plus 3 is 11, so the answer is correct | (B) The answer cannot be checked | (C) 4 plus 3 is 11, so the answer is correct | (D) 2 times 4 plus 3 is 7, so the answer is wrong; correct: A)\n   EXPLANATION: Putting 4 back in gives 8 plus 3, which is 11, so the left side equals the right side.\n4. [tier 3] Two basketball players solve 2x + 3 = 11. Player A subtracts 3 from both sides, then divides both sides by 2. How does that compare to the passage? (choices: (A) It follows step one, then step two, in the passage's order | (B) It does different things to each side | (C) It reverses the steps, so it is wrong | (D) It skips step one completely; correct: A)\n   EXPLANATION: The passage's method subtracts 3 from both sides first, then divides both sides by 2.",
+    "hi": "SUMMARY:\nA two-step equation takes two steps to solve, like 2x + 3 = 11. The goal is to get the variable x alone on one side of the equals sign. You do this by undoing what was done to x, using the opposite operation.\n\nFirst undo addition or subtraction. In 2x + 3 = 11, 3 was added, so subtract 3 from both sides to get 2x = 8. Then undo multiplication or division: x is multiplied by 2, so divide both sides by 2 to get x = 4. An equation is like a balanced scale, so whatever you do to one side you must do to the other.\n\nAlways check by putting the answer back into the original equation: 2 times 4 plus 3 is 11, so it works. A second example is 3x - 5 = 10: add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nFLASHCARDS (8):\n1. What is the goal when solving a two-step equation? -> Get the variable x alone on one side of the equals sign.\n2. Which operations do you undo first, and which second? -> First undo addition or subtraction, then undo multiplication or division.\n3. In 2x + 3 = 11, what is step one and what does it give? -> Subtract 3 from both sides, which gives 2x = 8.\n4. In 2x + 3 = 11, what is step two and what does it give? -> Divide both sides by 2, which gives x = 4.\n5. What is the most important rule when solving an equation? -> Whatever you do to one side, you must do to the other side too.\n6. What comparison does the material use for an equation? -> A balanced scale: doing the same thing to both sides keeps it balanced.\n7. How do you check that x = 4 is right for 2x + 3 = 11? -> Put it back in the original equation: 2 times 4 plus 3 is 11, so both sides match.\n8. Solve 3x - 5 = 10. -> Add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] When solving a two-step equation, which kind of operation do you undo first? (choices: (A) Both at the same time | (B) Addition or subtraction | (C) Multiplication or division | (D) Neither one; correct: B)\n   EXPLANATION: Step one is undoing the addition or subtraction; multiplication or division comes second.\n2. [tier 1] In 2x + 3 = 11, what equation do you have right after subtracting 3 from both sides? (choices: (A) 2x = 8 | (B) x = 4 | (C) x = 8 | (D) 2x = 14; correct: A)\n   EXPLANATION: Subtracting 3 from both sides turns 2x + 3 = 11 into 2x = 8. Dividing comes after that.\n3. [tier 2] Think of it like a video game with two health bars that must stay equal. In 2x + 3 = 11, you subtract 3 from one side. What must you do to the other side? (choices: (A) Add 3 to it | (B) Subtract 3 from it too | (C) Multiply it by 2 | (D) Leave it unchanged; correct: B)\n   EXPLANATION: The rule is that any change made to one side must also be made to the other side.\n4. [tier 2] In the example 3x - 5 = 10, what is the first step? (choices: (A) Add 5 to both sides | (B) Multiply both sides by 3 | (C) Divide both sides by 3 | (D) Subtract 5 from both sides; correct: A)\n   EXPLANATION: The 5 is subtracted, so you undo it by adding 5, giving 3x = 15.\n\nPRACTICE TEST (4 questions, in this order):\n1. [tier 1] Predict first: after you subtract 3 from both sides of 2x + 3 = 11, the equation is 2x = ___. Type the number. (typed answer; correct: 8)\n   EXPLANATION: Subtracting 3 from both sides leaves 2x = 8.\n2. [tier 2] In 2x = 8, x is multiplied by ___. Type the number. (typed answer; correct: 2)\n   EXPLANATION: x was multiplied by 2, which is why you divide both sides by 2.\n3. [tier 2] Think of it like two comic panels that must match. A student subtracts 3 from only the left side of 2x + 3 = 11. What happens? (choices: (A) The answer is still x = 4 | (B) The scale stays balanced | (C) x becomes 8 | (D) The equation is no longer true; correct: D)\n   EXPLANATION: Doing something to only one side breaks the balance, so the equation is no longer true.\n4. [tier 3] Use both steps in order on 2x + 3 = 11. Predict, then type the final value: x = ___. (typed answer; correct: 4)\n   EXPLANATION: After subtracting 3 you get 2x = 8, and dividing both sides by 2 gives x = 4."
+   }
+  },
+  {
+   "measure": "productive_struggle",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nA two-step equation takes two steps to solve, like 2x + 3 = 11. Your goal is to get the variable x alone on one side of the equals sign. You do that by undoing the operations done to x, using the opposite operation.\n\nStep one undoes addition or subtraction. In 2x + 3 = 11, 3 is added, so you subtract 3 from both sides and get 2x = 8. Step two undoes multiplication or division: x is multiplied by 2, so you divide both sides by 2 and get x = 4.\n\nThe most important rule is that whatever you do to one side, you must do to the other side, because an equation is like a balanced scale. Always check your answer by putting it back into the original equation. A second example is 3x - 5 = 10: add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nFLASHCARDS (8):\n1. What is a two-step equation? -> An equation that needs two steps to solve, such as 2x + 3 = 11.\n2. What is the goal when solving a two-step equation? -> To get the variable x alone on one side of the equals sign.\n3. Which operation do you use to undo something that was done to x? -> The opposite operation.\n4. In 2x + 3 = 11, what is step one? -> Subtract 3 from both sides, which gives 2x = 8.\n5. In 2x + 3 = 11, what is step two? -> Divide both sides by 2, which gives x = 4.\n6. What is the most important rule for equations? -> Whatever you do to one side of the equation you must do to the other side.\n7. How do you check your answer? -> Put it back into the original equation and see if the two sides are equal.\n8. Solve 3x - 5 = 10. -> Add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nQUIZ (3 questions, in this order):\n1. [tier 1] In 2x + 3 = 11, what is the first step? Hint: the 3 is added, so undo it. (choices: (A) Divide both sides by 2 | (B) Subtract 3 from both sides | (C) Multiply both sides by 2 | (D) Add 3 to both sides; correct: B)\n   EXPLANATION: Name the operation done to x first: 3 is added. So the opposite step is to subtract 3 from both sides, giving 2x = 8.\n2. [tier 1] Think of an equation like a balanced scale. What must you do to the other side? (choices: (A) Do the same thing you did to the first side | (B) Nothing at all | (C) Change only the variable | (D) Add 3 every time; correct: A)\n   EXPLANATION: Start with the rule for balance: both sides must be treated the same way. So whatever you do to one side, you do to the other side.\n3. [tier 2] You get x = 4 for 2x + 3 = 11. Which check shows the answer is correct? (choices: (A) 2 times 4 gives 11 | (B) 2 plus 4 plus 3 gives 11 | (C) 4 plus 3 gives 11 | (D) 2 times 4 plus 3 gives 11, so both sides match; correct: D)\n   EXPLANATION: Put the answer back into the original equation: 2 times 4 is 8, and 8 plus 3 is 11. The left side equals the right side.\n\nPRACTICE TEST (6 questions, in this order):\n1. [tier 2] In 3x - 5 = 10, add 5 to both sides. That gives 3x = ___. Hint: 10 plus 5. (typed answer; correct: 15)\n   EXPLANATION: First undo the subtraction by adding 5 to both sides. 10 plus 5 gives 3x = 15.\n2. [tier 2] In 3x - 5 = 10 you now have 3x = 15. What is the next step? Hint: x is multiplied by 3. (choices: (A) Subtract 3 from both sides | (B) Divide both sides by 5 | (C) Multiply both sides by 3 | (D) Divide both sides by 3; correct: D)\n   EXPLANATION: The next step undoes multiplication, so divide both sides by 3. That gives x = 5.\n3. [tier 2] After you divide both sides of 2x = 8 by 2, you get x = ___. Hint: 8 divided by 2. (typed answer; correct: 4)\n   EXPLANATION: Divide both sides by 2 to undo the multiplication. 8 divided by 2 gives x = 4.\n4. [tier 3] Drawing comics, a helper solves 2x + 3 = 11 by subtracting 3 from the left side only. What happens? (choices: (A) The equation is no longer true | (B) x becomes 8 | (C) The equation stays balanced | (D) x becomes 4; correct: A)\n   EXPLANATION: Only one side was changed, so the two sides no longer match. The material says the equation is no longer true.\n5. [tier 3] Explain why you do the same operation to both sides, using the scale idea. (typed or written answer; model answer: An equation is like a balanced scale. Doing the same thing to both sides keeps it balanced, so the equation stays true. If you change only one side, the equation is no longer true.)\n   EXPLANATION: Start with the scale picture: the two sides must stay balanced. Then say what happens when only one side is changed.\n6. [tier 3] A basketball teammate asks how to solve 2x + 3 = 11 and how to check it. What do you say? (typed or written answer; model answer: Subtract 3 from both sides to get 2x = 8, then divide both sides by 2 to get x = 4. To check, put 4 back into the original equation: 2 times 4 plus 3 is 8 plus 3, which is 11. The left side equals the right side, so the answer is correct.)\n   EXPLANATION: First undo the addition, then undo the multiplication. Finish by substituting your answer into the original equation.",
+    "hi": "SUMMARY:\nA two-step equation needs two steps to solve, such as 2x + 3 = 11. The goal is to get the variable x alone on one side of the equals sign. To do that, undo the operations done to x by using the opposite operation. Before the steps are shown again, try to recall from memory what the goal is and what rule keeps an equation true. Think of it like a basketball scoreboard: if you adjust one side, you must adjust the other side the same way to keep the balance. That maps to the material's balanced-scale rule: whatever you do to one side of the equation you must do to the other side. Arrow chain: 2x + 3 = 11 → subtract 3 from both sides → 2x = 8 → divide both sides by 2 → x = 4.\n\nStep one is to undo addition or subtraction. In 2x + 3 = 11, 3 is added, so subtract 3 from both sides to get 2x = 8. Step two is to undo multiplication or division. Here x is multiplied by 2, so divide both sides by 2 to get x = 4. Think of it like a video game where you undo the added item first, then undo the multiplied boost. That maps to the material's order: undo addition or subtraction, then undo multiplication or division.\n\nThe most important rule is that whatever you do to one side of the equation you must do to the other side. An equation is like a balanced scale, and doing the same thing to both sides keeps it balanced. If you subtract 3 from only one side, the equation is no longer true. Check by putting the answer back into the original equation. For x = 4, 2 times 4 plus 3 is 8 plus 3, which is 11, so the left side equals the right side. A same-kind problem is 3x - 5 = 10; the second example shows that adding 5 gives 3x = 15, then dividing by 3 gives x = 5.\n\nFLASHCARDS (8):\n1. What is a two-step equation? -> An equation that needs two steps to solve, such as 2x + 3 = 11.\n2. What is the goal when solving 2x + 3 = 11? -> Get the variable x alone on one side of the equals sign.\n3. How do we undo operations done to x? -> Use the opposite operation.\n4. In 2x + 3 = 11, what is step one? -> Subtract 3 from both sides, giving 2x = 8.\n5. In 2x + 3 = 11, what is step two? -> Divide both sides by 2, giving x = 4.\n6. What is the most important rule? -> Whatever you do to one side of the equation you must do to the other side.\n7. How do you check x = 4 in 2x + 3 = 11? -> Put 4 back in: 2 times 4 plus 3 is 8 plus 3, which is 11; left equals right.\n8. Solve 3x - 5 = 10. -> Add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] What is the goal when solving a two-step equation? (choices: (A) Add 3 to both sides | (B) Remove the equals sign | (C) Get the variable alone on one side | (D) Make both sides zero; correct: C)\n   EXPLANATION: The passage says the goal is to get the variable x alone on one side of the equals sign.\n2. [tier 2] In 2x + 3 = 11, what should you do first? (choices: (A) Add 3 to both sides | (B) Divide both sides by 2 | (C) Subtract 3 from both sides | (D) Multiply both sides by 2; correct: C)\n   EXPLANATION: Step one undoes the addition of 3 by subtracting 3 from both sides.\n3. [tier 2] After subtracting 3 from both sides of 2x + 3 = 11, what equation do you get? (choices: (A) 2x = 14 | (B) 2x + 3 = 8 | (C) x = 8 | (D) 2x = 8; correct: D)\n   EXPLANATION: The passage says subtracting 3 from both sides gives 2x = 8.\n4. [tier 2] In the same equation, what is step two? (choices: (A) Divide both sides by 2 | (B) Add 3 to both sides | (C) Subtract 2 from both sides | (D) Multiply both sides by 3; correct: A)\n   EXPLANATION: Step two undoes multiplication by 2 by dividing both sides by 2.\n\nPRACTICE TEST (3 questions, in this order):\n1. [tier 2] A player tracks a score equation like 3x - 5 = 10. What is the first step? (choices: (A) Divide both sides by 3 | (B) Multiply both sides by 3 | (C) Add 5 to both sides | (D) Subtract 5 from both sides; correct: C)\n   EXPLANATION: The second example undoes subtraction by adding 5 to both sides.\n2. [tier 2] In 3x - 5 = 10, after adding 5 to both sides, the equation is 3x = ___. (typed answer; correct: 15)\n   EXPLANATION: Adding 5 to both sides in the second example gives 3x = 15.\n3. [tier 3] Optional harder: explain why doing the same thing to both sides keeps an equation true. Use the balanced scale idea. (typed or written answer; model answer: The most important rule is that whatever you do to one side you must do to the other side. An equation is like a balanced scale, so doing the same thing to both sides keeps it balanced. If you subtract 3 from only one side, the equation is no longer true.)\n   EXPLANATION: The rule and balanced scale idea show that the same operation on both sides keeps the equation true. Changing only one side makes it no longer true."
+   }
+  },
+  {
+   "measure": "worked_example_dependence",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nTry from memory: in 2x + 3 = 11, what do you undo first? A two-step equation needs two steps to solve, such as 2x + 3 = 11. The goal is to get x alone on one side. You undo the operations done to x by using the opposite operation.\n\nArrow chain from the material: 2x + 3 = 11 → subtract 3 from both sides → 2x = 8 → divide both sides by 2 → x = 4. Step one undoes addition or subtraction; step two undoes multiplication or division. Think of it like undoing layers in a video game: first undo the outer addition/subtraction, then the inner multiplication/division—that maps to step one and step two.\n\nThe most important rule: whatever you do to one side, do to the other. An equation is like a balanced scale, and doing the same to both sides keeps it balanced; subtracting 3 from only one side makes it no longer true. Think of it like a basketball scoreboard: a change to one side must be matched on the other—that maps to this balance rule. Check by putting the answer back: 2 times 4 plus 3 is 8 plus 3, which is 11. A second example, 3x - 5 = 10: add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nFLASHCARDS (8):\n1. What is the goal when solving a two-step equation like 2x + 3 = 11? -> Get the variable x alone on one side of the equals sign.\n2. In 2x + 3 = 11, what is step one? -> Undo addition or subtraction: subtract 3 from both sides.\n3. After subtracting 3 from both sides of 2x + 3 = 11, what equation do you get? -> 2x = 8.\n4. In 2x + 3 = 11, what is step two? -> Undo multiplication or division: divide both sides by 2.\n5. What is the most important rule for solving an equation? -> Whatever you do to one side, you must do to the other side.\n6. What does the balanced-scale idea show? -> Doing the same thing to both sides keeps the equation balanced.\n7. How do you check x = 4 in 2x + 3 = 11? -> 2 times 4 plus 3 is 8 plus 3, which is 11.\n8. Solve 3x - 5 = 10. -> Add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] Which operation should you undo first in 2x + 3 = 11? (choices: (A) Division by 2 | (B) Subtraction of 11 | (C) Multiplication by 2 | (D) Addition of 3; correct: D)\n   EXPLANATION: Step one undoes addition or subtraction, so undo the added 3 first.\n2. [tier 1] What is the goal when solving 2x + 3 = 11? (choices: (A) Multiply both sides by 3 | (B) Remove the equals sign | (C) Make both sides zero | (D) Get x alone on one side; correct: D)\n   EXPLANATION: The material says the goal is to get the variable x alone on one side.\n3. [tier 2] In 2x + 3 = 11, what equation do you get after subtracting 3 from both sides? (choices: (A) 2x + 3 = 8 | (B) x = 8 | (C) 2x = 8 | (D) 2x = 14; correct: C)\n   EXPLANATION: Subtracting 3 from both sides gives 2x = 8.\n4. [tier 2] Why must you subtract 3 from both sides of 2x + 3 = 11? (choices: (A) To make x equal 3 | (B) To change the right side only | (C) To keep the equation balanced | (D) To remove the equals sign; correct: C)\n   EXPLANATION: Doing the same thing to both sides keeps the equation balanced.\n\nPRACTICE TEST (3 questions, in this order):\n1. [tier 2] After 2x = 8 in the example, the next step is to ___. (typed answer; correct: divide by 2)\n   EXPLANATION: Step two undoes multiplication, so divide both sides by 2.\n2. [tier 2] What is the solution to 3x - 5 = 10? (choices: (A) x = 3 | (B) x = 15 | (C) x = 5 | (D) x = 10; correct: C)\n   EXPLANATION: After adding 5 and dividing by 3, the material gives x = 5.\n3. [tier 2] Check x = 4 in 2x + 3 = 11: 2 times 4 plus 3 = ___. (typed answer; correct: 11)\n   EXPLANATION: The check gives 8 plus 3, which is 11.",
+    "hi": "SUMMARY:\nHere is a worked example. Solve 2x + 3 = 11. The goal is to get x alone on one side. Step one undoes the addition: subtract 3 from both sides. That gives 2x = 8. Step two undoes the multiplication: divide both sides by 2. That gives x = 4. Every step is shown, and each step uses the opposite operation.\n\nThe rule that matters most: whatever you do to one side, you must do to the other side. Think of it like drawing two identical comic panels — add a detail to one and you must add it to the other, or they no longer match. An equation works like a balanced scale. Subtract 3 from only one side and the equation is no longer true.\n\nAlways check by putting your answer back in: 2 times 4 plus 3 is 11, so the left side equals the right side. Then try 3x - 5 = 10: add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5. Before you reread, say the two steps from memory. A picture of the order: undo + or − first → undo × or ÷ second → check.\n\nFLASHCARDS (8):\n1. What is a two-step equation? -> An equation that needs two steps to solve, such as 2x + 3 = 11.\n2. When solving 2x + 3 = 11, what is the goal? -> To get the variable x alone on one side of the equals sign.\n3. How do we undo the operations that have been done to x? -> By using the opposite operation.\n4. In 2x + 3 = 11, what is step one and what does it give? -> Subtract 3 from both sides, which gives 2x = 8.\n5. In 2x = 8, what is step two and what does it give? -> Divide both sides by 2, which gives x = 4.\n6. What is the most important rule for solving equations? -> Whatever you do to one side of the equation, you must do to the other side.\n7. How do you check an answer? -> Put the answer back into the original equation and see if the two sides match.\n8. Solve 3x - 5 = 10. -> Add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nQUIZ (3 questions, in this order):\n1. [tier 1] In 2x + 3 = 11, what is the first step? (choices: (A) Multiply both sides by 2 | (B) Subtract 3 from both sides | (C) Add 3 to both sides | (D) Divide both sides by 2; correct: B)\n   EXPLANATION: The number 3 is added, so step one undoes the addition by subtracting 3 from both sides.\n2. [tier 1] Which operation undoes multiplication? (choices: (A) Addition | (B) Division | (C) Multiplication | (D) Subtraction; correct: B)\n   EXPLANATION: Step two undoes multiplication or division, and here x is multiplied by 2, so we divide.\n3. [tier 2] For 3x - 5 = 10, what is step one and what does it give? (choices: (A) Add 10 to both sides to get 3x = 20 | (B) Divide both sides by 3 to get x - 5 = 10 | (C) Add 5 to both sides to get 3x = 15 | (D) Subtract 5 from both sides to get 3x = 5; correct: C)\n   EXPLANATION: Step one undoes the subtraction, so you add 5 to both sides and get 3x = 15.\n\nPRACTICE TEST (5 questions, in this order):\n1. [tier 2] If you subtract 3 from only one side of 2x + 3 = 11, what happens? (choices: (A) The equation is no longer true | (B) You must divide by 2 first | (C) x still comes out as 4 | (D) The equation stays balanced; correct: A)\n   EXPLANATION: Doing the operation to one side only breaks the balance, so the equation is no longer true.\n2. [tier 2] Which line correctly checks x = 4 for 2x + 3 = 11? (choices: (A) 2 plus 4 plus 3 is 9 | (B) 2 times 11 plus 3 is 25 | (C) 2 times 4 plus 3 is 8 plus 3, which is 11 | (D) 11 minus 4 is 7; correct: C)\n   EXPLANATION: The check puts 4 back into the original equation, and the left side equals 11.\n3. [tier 2] In 2x + 3 = 11, subtracting 3 from both sides gives 2x = ___. (typed answer; correct: 8)\n   EXPLANATION: Subtracting 3 from both sides of 2x + 3 = 11 leaves 2x = 8.\n4. [tier 3] Solve 3x - 5 = 10 and show both steps. Say what each step undoes. (typed or written answer; model answer: First add 5 to both sides, which undoes the subtraction and gives 3x = 15. Then divide both sides by 3, which undoes the multiplication and gives x = 5. Both operations are done to both sides, so the equation stays balanced.)\n   EXPLANATION: The two steps undo the subtraction first, then the multiplication, each done to both sides.\n5. [tier 3] How do you check a solution? Use x = 4 in 2x + 3 = 11 to show it. (typed or written answer; model answer: Put your answer back into the original equation in place of x. For x = 4, 2 times 4 plus 3 is 8 plus 3, which is 11. The left side equals the right side, so the answer is correct.)\n   EXPLANATION: The check reruns the original equation with the answer in place of x and compares the two sides."
+   }
+  },
+  {
+   "measure": "structure_need",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nSpanish has everyday greetings. Hola means hello, and it can be used at any time of day, with friends or with people you have just met. Think of it like a basic move in a video game that works in any level: the passage says hola works at any time.\n\nAt a certain time of day, Spanish speakers use buenos días for good morning, buenas tardes for good afternoon, and buenas noches for good evening or good night. Días is masculine plural; tardes and noches are feminine plural, so the endings buenos and buenas change.\n\nTo say goodbye, use adiós or hasta luego; hasta luego is friendly and fits when you expect to see the person again soon. To ask how someone is, use cómo estás with friends, family and children, or cómo está usted with older people, strangers or in polite situations. The usual answer is bien, gracias. When you meet someone for the first time, say mucho gusto.\n\nFLASHCARDS (8):\n1. What does hola mean, and when can you use it? -> Hola means hello. You can use it at any time of day, with friends or with people you have just met.\n2. What does buenos días mean? -> Buenos días means good morning.\n3. What do buenas tardes and buenas noches mean? -> Buenas tardes means good afternoon, and buenas noches means good evening or good night.\n4. Why do the endings change in buenos días and buenas tardes? -> Días is masculine plural, while tardes and noches are feminine plural, so buenos changes to buenas.\n5. What are two ways to say goodbye, and which is friendly for seeing someone soon? -> Adiós means goodbye; hasta luego means see you later and is friendly when you expect to see the person again soon.\n6. Which how-are-you question is informal, and who is it for? -> Cómo estás is informal; use it with friends, family and children.\n7. Which how-are-you question is formal, and when do you use it? -> Cómo está usted is formal; use it with older people, strangers or in polite situations.\n8. What do you say when you meet someone for the first time? -> Say mucho gusto, which means nice to meet you.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] What does hola mean? (choices: (A) nice to meet you | (B) goodbye | (C) good morning | (D) hello; correct: D)\n   EXPLANATION: The passage says hola means hello.\n2. [tier 1] What does buenos días mean? (choices: (A) good morning | (B) good afternoon | (C) good evening | (D) goodbye; correct: A)\n   EXPLANATION: The passage pairs buenos días with good morning.\n3. [tier 1] Which greeting means good afternoon? (choices: (A) hola | (B) buenas noches | (C) buenas tardes | (D) buenos días; correct: C)\n   EXPLANATION: The passage says buenas tardes means good afternoon.\n4. [tier 2] In a polite situation, which question asks how are you? (choices: (A) hasta luego | (B) cómo está usted | (C) cómo estás | (D) mucho gusto; correct: B)\n   EXPLANATION: The formal question cómo está usted is used in polite situations.\n\nPRACTICE TEST (4 questions, in this order):\n1. [tier 2] Ana asks a friend cómo estás. The usual answer is ___ , gracias. (typed answer; correct: bien)\n   EXPLANATION: The passage gives bien, gracias as the usual answer.\n2. [tier 2] Which goodbye is friendly and used when you expect to see the person again soon? (choices: (A) mucho gusto | (B) hasta luego | (C) adiós | (D) buenos días; correct: B)\n   EXPLANATION: Hasta luego is friendly and fits when you expect to see the person again soon.\n3. [tier 3] Think of it like drawing comics: a young character politely greets an older stranger. Which how-are-you question fits, and why? (typed or written answer; model answer: Use cómo está usted. The passage says to use the formal question with older people, strangers or in polite situations. It also means how are you.)\n   EXPLANATION: The formal question is for older people, strangers or polite situations.\n4. [tier 3] Think of it like a basketball game clock: a greeting is tied to a certain time of day. Which pair is correct? (choices: (A) hola — good evening | (B) buenos días — good morning | (C) buenas noches — good afternoon | (D) buenas tardes — good night; correct: B)\n   EXPLANATION: The passage pairs buenos días with good morning; the other pairs mix greetings and meanings.",
+    "hi": "SUMMARY:\n1. Start with hola. It means hello, and you can use it at any time of day with friends or people you have just met.\n\n2. Next, match the greeting to the time of day. Say buenos días for good morning. Say buenas tardes for good afternoon. Say buenas noches for good evening or good night. Días is masculine plural, so use buenos. Tardes and noches are feminine plural, so use buenas.\n\n3. Then, choose a goodbye or a question. Say adiós for goodbye. Say hasta luego for see you later when you expect to meet again soon. It is friendly. Use cómo estás with friends, family, or children. Use cómo está usted with older people, strangers, or in polite situations. The usual answer is bien, gracias. When you meet someone for the first time, say mucho gusto.\n\nFLASHCARDS (8):\n1. What does hola mean, and when can you use it? -> Hola means hello. You can use it at any time of day.\n2. What are the Spanish greetings for good morning, good afternoon, and good evening or night? -> Buenos días is good morning, buenas tardes is good afternoon, and buenas noches is good evening or good night.\n3. Why do you say buenos with días but buenas with tardes and noches? -> Días is masculine plural, so use buenos. Tardes and noches are feminine plural, so use buenas.\n4. What are two ways to say goodbye, and what do they mean? -> Adiós means goodbye. Hasta luego means see you later.\n5. When is hasta luego used? -> It is friendly and used when you expect to see the person again soon.\n6. Which how-are-you question is informal, and who is it for? -> Cómo estás is informal. Use it with friends, family, and children.\n7. Which how-are-you question is formal, and when do you use it? -> Cómo está usted is formal. Use it with older people, strangers, or in polite situations.\n8. What do you say when you meet someone for the first time? -> Say mucho gusto. It means nice to meet you.\n\nQUIZ (3 questions, in this order):\n1. [tier 1] What does hola mean? (choices: (A) nice to meet you | (B) goodbye | (C) good morning | (D) hello; correct: D)\n   EXPLANATION: Hola means hello, and the passage calls it the simplest greeting.\n2. [tier 2] A student says buenas tardes. What does it mean? (choices: (A) good morning | (B) good afternoon | (C) see you later | (D) good night; correct: B)\n   EXPLANATION: The passage says buenas tardes means good afternoon.\n3. [tier 2] Why do Spanish speakers say buenos días but buenas noches? (choices: (A) because días is feminine and noches is masculine | (B) because días is masculine plural and noches is feminine plural | (C) because one is formal and one is informal | (D) because one is morning and one is evening; correct: B)\n   EXPLANATION: The passage says días is masculine plural while tardes and noches are feminine plural. That is why the endings buenos and buenas change.\n\nPRACTICE TEST (4 questions, in this order):\n1. [tier 2] Think of it like a video game: a friend says you will meet again soon. To say see you later, type ___. (typed answer; correct: hasta luego)\n   EXPLANATION: Hasta luego means see you later. This maps to the passage point that it is used when you expect to see the person again soon.\n2. [tier 2] With friends, family, and children, which question means how are you? (choices: (A) mucho gusto | (B) cómo está usted | (C) cómo estás | (D) bien, gracias; correct: C)\n   EXPLANATION: The passage says to use the informal question cómo estás with friends, family and children. It means how are you.\n3. [tier 2] In a polite situation with an older person, which question should you use? (choices: (A) hasta luego | (B) cómo estás | (C) buenos días | (D) cómo está usted; correct: D)\n   EXPLANATION: The passage says to use the formal question cómo está usted with older people, strangers or in polite situations.\n4. [tier 3] Think of it like a basketball timeout: an older coach asks cómo está usted. The usual answer is ___. (typed answer; correct: bien, gracias)\n   EXPLANATION: The passage says the usual answer is bien, gracias. This maps to the basketball timeout case."
+   }
+  },
+  {
+   "measure": "evaluation_anxiety",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nA two-step equation needs two steps to solve, such as 2x + 3 = 11. The goal is to get the variable x alone on one side of the equals sign. You undo what was done to x by using the opposite operation.\n\nFirst undo addition or subtraction. In 2x + 3 = 11, subtract 3 from both sides to get 2x = 8. Then undo multiplication or division. Divide both sides by 2 to get x = 4.\n\nRule: do the same thing to both sides. Picture it as a chain: 2x + 3 = 11 -> subtract 3 from both sides -> 2x = 8 -> divide both sides by 2 -> x = 4. Always check by putting the answer back in. For 3x - 5 = 10, add 5 to both sides, then divide both sides by 3, to get x = 5.\n\nFLASHCARDS (8):\n1. What is a two-step equation? -> A two-step equation is an equation that needs two steps to solve, such as 2x + 3 = 11.\n2. What is the goal when solving for x? -> Get the variable x alone on one side of the equals sign.\n3. How do you undo operations done to x? -> Use the opposite operation.\n4. What is step one for 2x + 3 = 11? -> Undo addition or subtraction. Subtract 3 from both sides to get 2x = 8.\n5. What is step two for 2x + 3 = 11? -> Undo multiplication or division. Divide both sides by 2 to get x = 4.\n6. What is the most important rule? -> Whatever you do to one side of the equation, you must do to the other side.\n7. Why does the same action on both sides matter? -> Doing the same thing to both sides keeps the equation balanced, like a scale.\n8. How do you check an answer? -> Put the answer back into the original equation and see if both sides match.\n\nQUIZ (3 questions, in this order):\n1. [tier 1] What is the goal when solving 2x + 3 = 11? (choices: (A) Add 3 to both sides | (B) Remove the equals sign | (C) Get x alone on one side | (D) Get 11 alone; correct: C)\n   EXPLANATION: The passage says the goal is to get the variable x alone on one side of the equals sign.\n2. [tier 2] After subtracting 3 from both sides of 2x + 3 = 11, what equation do you get? (choices: (A) x = 8 | (B) 2x = 14 | (C) 2x = 8 | (D) 2x = 11; correct: C)\n   EXPLANATION: After subtracting 3 from both sides, the passage shows 2x = 8.\n3. [tier 2] Why must you do the same thing to both sides? (choices: (A) To keep the equation balanced | (B) To make x bigger | (C) To check the answer | (D) To remove the variable; correct: A)\n   EXPLANATION: The passage compares an equation to a balanced scale and says the same action on both sides keeps it balanced.\n\nPRACTICE TEST (6 questions, in this order):\n1. [tier 2] Solve 3x - 5 = 10. First add ___ to both sides. (typed answer; correct: 5)\n   EXPLANATION: The second example says to add 5 to both sides first.\n2. [tier 2] Think of it like a basketball drill: the equation is 2x + 3 = 11. Which move undoes the +3? (choices: (A) Multiply both sides by 2 | (B) Subtract 3 from both sides | (C) Add 3 to both sides | (D) Divide both sides by 2; correct: B)\n   EXPLANATION: The passage says the 3 is added, so subtract 3 from both sides.\n3. [tier 2] A game asks you to check x = 4 in 2x + 3 = 11. The left side equals ___. (typed answer; correct: 11)\n   EXPLANATION: Putting x = 4 back in gives 8 plus 3, which is 11.\n4. [tier 3] Why is it wrong to subtract 3 from only one side of 2x + 3 = 11? (typed or written answer; model answer: The rule says whatever you do to one side, you must do to the other side. If you subtract 3 from only one side, the equation is no longer true.)\n   EXPLANATION: The passage says the same operation must be done to both sides, or the equation is no longer true.\n5. [tier 3] Think of it like drawing comics: you solve 3x - 5 = 10. Which pair of steps matches the passage? (choices: (A) Add 5 to both sides, then divide both sides by 3 | (B) Divide both sides by 3, then add 5 to both sides | (C) Subtract 5 from both sides, then divide both sides by 3 | (D) Add 5 to both sides, then multiply both sides by 3; correct: A)\n   EXPLANATION: The passage gives this exact two-step order for 3x - 5 = 10.\n6. [tier 3] In 2x + 3 = 11, after subtracting 3 from both sides and dividing both sides by 2, x = ___. (typed answer; correct: 4)\n   EXPLANATION: After subtracting 3 and dividing by 2, the passage gives x = 4.",
+    "hi": "SUMMARY:\nA two-step equation takes two steps to solve. One example in the material is 2x + 3 = 11. The aim is to get the variable x alone on one side of the equals sign. You do this by undoing what was done to x, using the opposite operation.\n\nFirst undo addition or subtraction. In 2x + 3 = 11 the number 3 is added, so subtract 3 from both sides. That gives 2x = 8. Then undo multiplication or division: x is multiplied by 2, so divide both sides by 2. That gives x = 4. As a chain: 2x + 3 = 11 → subtract 3 from both sides → 2x = 8 → divide both sides by 2 → x = 4.\n\nThe most important rule is that whatever you do to one side, you must do to the other side. An equation is like a balanced scale, so the same move on both sides keeps it balanced. Always check by putting your answer back into the original equation. For x = 4, 2 times 4 plus 3 is 11, so the answer is correct. A second example is 3x - 5 = 10, which gives x = 5.\n\nFLASHCARDS (8):\n1. What is a two-step equation? -> An equation that needs two steps to solve, such as 2x + 3 = 11.\n2. What is the goal when solving 2x + 3 = 11? -> To get the variable x alone on one side of the equals sign.\n3. In 2x + 3 = 11, what is step one? -> Undo the addition by subtracting 3 from both sides, which gives 2x = 8.\n4. In 2x + 3 = 11, what is step two? -> Undo the multiplication by dividing both sides by 2, which gives x = 4.\n5. What is the most important rule for solving equations? -> Whatever you do to one side of the equation, you must do to the other side.\n6. What does the balanced scale picture show about equations? -> Doing the same thing to both sides keeps the equation balanced and true.\n7. How do you check the answer x = 4 for 2x + 3 = 11? -> Put 4 back in: 2 times 4 plus 3 is 11, so the left side equals the right side.\n8. Solve 3x - 5 = 10. -> Add 5 to both sides to get 3x = 15, then divide both sides by 3 to get x = 5.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] In the equation 2x + 3 = 11, which number is added to 2x? (choices: (A) 2 | (B) 3 | (C) 11 | (D) 8; correct: B)\n   EXPLANATION: Good reading of the equation: the 3 is the number added to 2x. That is why step one subtracts 3 from both sides.\n2. [tier 1] Which line best shows the most important rule for equations? (choices: (A) Do the step to the right side only. | (B) Skip the same step on both sides. | (C) Do the step to the left side only. | (D) Do the same thing to both sides.; correct: D)\n   EXPLANATION: Yes, that is the key rule in the material. An equation works like a balanced scale, so both sides get the same change.\n3. [tier 2] Think of it like a comic panel: a character solves 3x - 5 = 10. After adding 5 to both sides, which equation do they write? (choices: (A) 3x = 15 | (B) 3x = 5 | (C) 3x = 10 | (D) x = 15; correct: A)\n   EXPLANATION: Nicely followed step one: adding 5 to both sides gives 3x = 15. Dividing both sides by 3 then gives x = 5.\n4. [tier 2] In 2x + 3 = 11, which step comes second? (choices: (A) Divide both sides by 2 | (B) Multiply both sides by 2 | (C) Add 3 to both sides | (D) Subtract 3 from both sides; correct: A)\n   EXPLANATION: Right, step two undoes the multiplication by dividing both sides by 2. Step one, subtracting 3 from both sides, comes before it.\n\nPRACTICE TEST (4 questions, in this order):\n1. [tier 2] In 2x + 3 = 11, you subtract 3 from both sides. The new equation is 2x = ___. (typed answer; correct: 8)\n   EXPLANATION: That works: 11 minus 3 is 8, so the equation becomes 2x = 8. Dividing both sides by 2 then gives x = 4.\n2. [tier 2] A player checks x = 4 in 2x + 3 = 11 by working out 2 times 4 plus 3. What number do they get? (choices: (A) 14 | (B) 11 | (C) 7 | (D) 8; correct: B)\n   EXPLANATION: Good check: 2 times 4 plus 3 is 8 plus 3, which is 11. That matches the right side, so x = 4 is correct.\n3. [tier 2] Solve 3x - 5 = 10 all the way to the end. The value of x is ___. (typed answer; correct: 5)\n   EXPLANATION: Nice work: adding 5 to both sides gives 3x = 15, and dividing both sides by 3 gives x = 5. Putting 5 back in also checks out.\n4. [tier 3] A video game shows the equation 2x = 8 after the first step. Which move finishes it, and what is x? (choices: (A) Add 2 to both sides, so x = 10 | (B) Subtract 2 from both sides, so x = 6 | (C) Divide both sides by 2, so x = 4 | (D) Multiply both sides by 2, so x = 16; correct: C)\n   EXPLANATION: That fits the rule: x is multiplied by 2, so you divide both sides by 2 and get x = 4. The other moves change the balance."
+   }
+  },
+  {
+   "measure": "prior_knowledge",
+   "kind": "pack",
+   "texts": {
+    "lo": "SUMMARY:\nWorked example: How can a quarrel between two countries pull in many countries? Step 1: Europe was divided into two blocs. Step 2: The Triple Entente joined France, Russia and Britain. Step 3: The Triple Alliance joined Germany, Austria-Hungary and Italy. Step 4: Because of these alliances, a local conflict could pull in many countries. So a quarrel between two states could grow into a continental war.\n\nThe passage names four long-term causes: militarism, alliances, imperialism and nationalism. Militarism means the great powers built large armies and navies before 1914, and Germany and Britain raced to build battleships. Generals planned for war, and many leaders saw war as a normal way to settle disputes. Imperialism means rivalry between empires for colonies, markets and power. Nationalism means strong pride in one's nation or a wish for independence. It was especially powerful in the Balkans. There, Serbia wanted to unite the Slavic peoples, and Austria-Hungary feared losing its empire.\n\nThe spark was the assassination of Archduke Franz Ferdinand, heir to the Austro-Hungarian throne, in Sarajevo on 28 June 1914. Because of the alliances, Austria-Hungary's war on Serbia soon drew in Russia, Germany, France and Britain. Picture in text: Militarism + Alliances + Imperialism + Nationalism → assassination of Franz Ferdinand → Austria-Hungary's war on Serbia → Russia, Germany, France and Britain drawn in. Think of it like drawing a comic with four background panels and one splash panel. The four long-term causes are the background; the assassination is the splash that starts the action. Think of it like a basketball game where one hard foul can pull in both benches. The alliances \n\nFLASHCARDS (8):\n1. What is the first long-term cause? -> Militarism.\n2. What were the two alliance blocs? -> The Triple Entente joined France, Russia and Britain. The Triple Alliance joined Germany, Austria-Hungary and Italy.\n3. How did alliances help turn a local conflict into a wider war? -> A local conflict could pull in many countries, so a quarrel between two states could grow into a continental war.\n4. What is imperialism? -> Rivalry between empires for colonies, markets and power.\n5. What is nationalism? -> Strong pride in one's nation or a wish for independence.\n6. Where was nationalism especially powerful, and who wanted to unite Slavic peoples? -> It was especially powerful in the Balkans, where Serbia wanted to unite the Slavic peoples.\n7. What was the spark that set off the war? -> The assassination of Archduke Franz Ferdinand in Sarajevo on 28 June 1914.\n8. After Austria-Hungary's war on Serbia, which countries were drawn in because of alliances? -> Russia, Germany, France and Britain.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] Hint: it means building armies and navies. Which is a long-term cause? (choices: (A) Militarism | (B) Sarajevo | (C) The assassination | (D) The Triple Entente; correct: A)\n   EXPLANATION: The passage says the first long-term cause is militarism.\n2. [tier 1] Hint: it joined France, Russia and Britain. Which countries were in the Triple Entente? (choices: (A) Serbia and Austria-Hungary | (B) Germany, Austria-Hungary and Italy | (C) France, Russia and Britain | (D) Russia and Germany only; correct: C)\n   EXPLANATION: The passage lists the Triple Entente as France, Russia and Britain.\n3. [tier 2] Hint: think of teams pulled into a fight. In basketball, one fight pulls in both benches. Which cause is this? (choices: (A) Alliances | (B) Nationalism | (C) Imperialism | (D) Militarism; correct: A)\n   EXPLANATION: The passage says alliances meant a local conflict could pull in many countries.\n4. [tier 3] Hint: four background panels plus one splash. Which set matches the passage? (choices: (A) Four sparks plus one long-term cause | (B) Only militarism and nationalism | (C) Four long-term causes plus the assassination spark | (D) Only the Triple Entente and the Triple Alliance; correct: C)\n   EXPLANATION: The passage describes four long-term causes plus one event that set the war off.\n\nPRACTICE TEST (5 questions, in this order):\n1. [tier 1] Hint: the passage says one event set the war off. What was the spark? (choices: (A) The battleship race | (B) The assassination of Archduke Franz Ferdinand | (C) Imperialism | (D) The Triple Alliance; correct: B)\n   EXPLANATION: The passage names the assassination of Archduke Franz Ferdinand as the spark.\n2. [tier 1] Hint: it is strong pride in one's nation. Nationalism means strong pride in one's nation or a wish for ___. (typed answer; correct: independence)\n   EXPLANATION: The passage defines nationalism with a wish for independence.\n3. [tier 2] Hint: a video game has two teams that join together. This matches the cause called ___. (typed answer; correct: alliances)\n   EXPLANATION: The passage names alliances as the second long-term cause.\n4. [tier 2] Hint: look at the first cause. A country builds many battleships and its generals plan for war. Which cause is this? (choices: (A) Imperialism | (B) Militarism | (C) Alliances | (D) Nationalism; correct: B)\n   EXPLANATION: The passage links large armies, navies and battleship building to militarism.\n5. [tier 2] Hint: the passage defines it as rivalry between empires. A comic shows empires competing for land. This matches ___. (typed answer; correct: imperialism)\n   EXPLANATION: The passage defines imperialism as rivalry between empires for colonies, markets and power.",
+    "hi": "SUMMARY:\nFour long-term causes are usually named: militarism, alliances, imperialism and nationalism. Militarism: the great powers built large armies and navies, Germany and Britain raced to build battleships, and generals planned for war. Alliances: Europe split into two blocs, so a local quarrel could pull in many countries and become a continental war.\n\nImperialism is rivalry between empires for colonies, markets and power, and competition for land and resources in Africa and Asia raised distrust. Nationalism is strong pride in one's nation or a wish for independence, and it was especially powerful in the Balkans, where Serbia wanted to unite the Slavic peoples and Austria-Hungary feared losing its empire.\n\nThe spark was the assassination of Archduke Franz Ferdinand, heir to the Austro-Hungarian throne, in Sarajevo on 28 June 1914. Because of the alliances, Austria-Hungary's war on Serbia soon drew in Russia, Germany, France and Britain.\n\nFLASHCARDS (8):\n1. Four long-term causes of the First World War? -> Militarism, alliances, imperialism and nationalism.\n2. Militarism before 1914 -> The great powers built up large armies and navies, and Germany and Britain raced to build battleships.\n3. Which two blocs divided Europe? -> The Triple Entente (France, Russia, Britain) and the Triple Alliance (Germany, Austria-Hungary, Italy).\n4. Why did alliances widen a war? -> A local conflict could pull in many countries, so a quarrel between two states could grow into a continental war.\n5. Imperialism -> Rivalry between empires for colonies, markets and power.\n6. Nationalism -> Strong pride in one's nation or a wish for independence.\n7. Nationalism in the Balkans -> Serbia wanted to unite the Slavic peoples, and Austria-Hungary feared losing its empire.\n8. The spark -> The assassination of Archduke Franz Ferdinand, heir to the Austro-Hungarian throne, in Sarajevo on 28 June 1914.\n\nQUIZ (4 questions, in this order):\n1. [tier 1] Which event was the spark that set off the war? (choices: (A) Germany's battleship race with Britain | (B) Serbia's wish to unite the Slavic peoples | (C) Rivalry for colonies in Africa and Asia | (D) The assassination of Archduke Franz Ferdinand in Sarajevo; correct: D)\n   EXPLANATION: The passage names the assassination in Sarajevo as the spark, separate from the four long-term causes.\n2. [tier 2] Which bloc joined Germany, Austria-Hungary and Italy? (choices: (A) The Triple Alliance | (B) The Triple Entente | (C) Both blocs | (D) Neither bloc; correct: A)\n   EXPLANATION: The Triple Alliance was the bloc of Germany, Austria-Hungary and Italy.\n3. [tier 2] What did the alliance system make possible? (choices: (A) Nationalism disappearing in the Balkans | (B) A small quarrel growing into a continental war | (C) Colonies being shared out without rivalry | (D) The great powers abandoning their armies; correct: B)\n   EXPLANATION: Alliances meant a local conflict could pull in many countries.\n4. [tier 3] Think of it like a video game: two small guilds feud and both alliances pile in. Which cause does this mirror? (choices: (A) The alliance system | (B) Nationalism | (C) The assassination itself | (D) Imperialism; correct: A)\n   EXPLANATION: The analogy maps onto the alliance point: a local conflict pulls in many countries.\n\nPRACTICE TEST (4 questions, in this order):\n1. [tier 1] The four long-term causes were militarism, alliances, ___ and nationalism. (typed answer; correct: imperialism)\n   EXPLANATION: Imperialism is the third of the four long-term causes.\n2. [tier 1] Which countries belonged to the Triple Entente? (choices: (A) Germany, Austria-Hungary and Italy | (B) France, Germany and Britain | (C) Russia, Austria-Hungary and Italy | (D) France, Russia and Britain; correct: D)\n   EXPLANATION: The Triple Entente joined France, Russia and Britain.\n3. [tier 2] Before 1914, Germany and Britain raced to build ___. (typed answer; correct: battleships)\n   EXPLANATION: The naval race between Germany and Britain centred on battleships.\n4. [tier 2] Think of it like a basketball crowd proud of its own team and wanting its own league. Which cause is that? (choices: (A) Imperialism | (B) Alliances | (C) Nationalism | (D) Militarism; correct: C)\n   EXPLANATION: The analogy maps onto nationalism: strong pride in one's nation or a wish for independence."
+   }
+  }
+ ],
+ "usage": {
+  "writerCalls": 238,
+  "writerIn": 288887,
+  "writerOut": 814196,
+  "judgeCalls": {
+   "mistralai/mistral-large-2512": 30,
+   "gemini-3.5-flash-lite": 30
+  },
+  "judgeTokens": {
+   "gemini-3.5-flash-lite": 118623
+  },
+  "errors": {},
+  "seconds": 622,
+  "standardComputeUsd": 1.2215,
+  "xkiro": {
+   "free_tokens_today": 175713,
+   "grants": {
+    "minimax/minimax-m3.1-flash": {
+     "used": 281205,
+     "cap": 12000000,
+     "refused": false
+    }
+   }
+  }
+ }
+}

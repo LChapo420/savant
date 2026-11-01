@@ -64,7 +64,7 @@ function serve(router) {
       const { port } = server.address();
       const call = (method, url, body, uid) => new Promise((ok, fail) => {
         const data = body ? JSON.stringify(body) : null;
-        const req = http.request({ host: '127.0.0.1', port, path: url, method, headers: { 'content-type': 'application/json', 'x-user': String(uid || ''), ...(data ? { 'content-length': Buffer.byteLength(data) } : {}) } }, (res) => {
+        const req = http.request({ host: '127.0.0.1', agent: false, port, path: url, method, headers: { 'content-type': 'application/json', 'x-user': String(uid || ''), ...(data ? { 'content-length': Buffer.byteLength(data) } : {}) } }, (res) => {
           let text = '';
           res.on('data', (c) => { text += c; });
           res.on('end', () => { let json = null; try { json = JSON.parse(text); } catch { json = text; } ok({ status: res.statusCode, json }); });
