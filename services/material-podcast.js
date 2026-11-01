@@ -324,7 +324,7 @@ async function build(userId, materialId, opts = {}) {
       role: 'fast', task: 'material_podcast', schema: SCRIPT_SCHEMA, schemaName: 'material_podcast', maxTokens: 5000, dataClass: 'learner', userId,
       system: `You write a short podcast script for a student: two friendly hosts, A and B, talking about the student's own study material. ${UNTRUSTED} `
         + 'Host A explains; host B asks the questions a student would ask, checks understanding and gives small examples that are in the text (and, where the block below asks for them, short framed analogies from the interests of the listener, never as facts). '
-        + `Write ${MIN_TURNS * 2} to ${MAX_TURNS - 8} turns of one to three plain spoken sentences each: no markdown, no stage directions, no sound effects, nothing a speech voice would read badly. Start with a one-line welcome and end with a one-line recap. `
+        + `Write ${MIN_TURNS * 2} to ${MAX_TURNS - 8} turns of one to three plain spoken sentences each: no markdown, no stage directions, no sound effects, nothing a speech voice would read badly. Start with a one-line welcome and end with a recap (one line unless the block below says otherwise). `
         + 'Every turn that states a fact needs passage_id (one of the ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows it. Short linking turns need no quote. Leave out anything you cannot back with a quote.' + focus
         + (skills.length ? `\n\nAlso write check-in questions for the listener, one about each of these skills, using its id: ${skills.map((s) => `${s.id} (${clean(s.title, 60)})`).join(', ')}. Each is a short question about a fact the script states, with three or four answer choices and answer_index counting the right one from 0. No hints in the prompt, and no "all of the above".` : '')
         + (block ? `\n\n${block}` : ''),
@@ -333,15 +333,35 @@ async function build(userId, materialId, opts = {}) {
     const cost = estTokens(args.system, args.user) + args.maxTokens;
     const limit = opts.tokenBudget || TOKEN_BUDGET;
     let used = 0;
-    let data = null;
     let model = null;
-    for (let attempt = 0; attempt < 2 && !data; attempt++) {
-      if (used + cost > limit) break;
-      used += cost;
-      let res = null;
-      try { res = await llm(args); } catch { res = null; } // eslint-disable-line no-await-in-loop
-      const turns = res && res.data && cleanTurns(res.data.turns, byId, learningSpec.analogyGuard(spec, mat.text));
-      if (turns && turns.length >= MIN_TURNS) { data = { title: clean(res.data.title, 120), turns, checkins: cleanChecks(res.data.checkins, skills) }; model = res.model || null; }
+    // One write (two tries if the first gives nothing usable); `note` is the revision pass's list of what the draft got wrong.
+    const generate = async (note) => {
+      const call = note ? { ...args, user: `${note}\n\n${args.user}` } : args;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        if (used + cost > limit) return null;
+        used += cost;
+        let res = null;
+        try { res = await llm(call); } catch { res = null; } // eslint-disable-line no-await-in-loop
+        const turns = res && res.data && cleanTurns(res.data.turns, byId, learningSpec.analogyGuard(spec, mat.text));
+        if (turns && turns.length >= MIN_TURNS) { model = res.model || model; return { title: clean(res.data.title, 120), turns, checkins: cleanChecks(res.data.checkins, skills) }; }
+      }
+      return null;
+    };
+    let data = null;
+    let revised = false;
+    let open = [];
+    if (spec.isDefault) data = await generate(null);
+    else {
+      // The listener's script is held to their spec as a lesson is: every point of the material carried (term overlap, for an overview), their
+      // interests used as framed analogies, sentences and words at their level; a draft that breaks it is written once more with the problems named.
+      const run = await learningSpec.reviseOnce({
+        generate, textOf: (d) => d.turns.map((t) => t.text).join(' '), spec,
+        keyFacts: weak ? [] : learningSpec.sourceFacts(shown.map((p) => p.text).join('\n\n')), source: mat.text, minShare: 0.3, own: true,
+        interestNeed: learningSpec.ownInterestNeed(spec, shown.reduce((n, p) => n + p.text.length, 0)),
+      });
+      data = run.result;
+      revised = !!run.revised;
+      open = (run.problems || []).map((p) => p.id);
     }
     if (!data) {
       // A failed rebuild leaves the last good episode as it was.
@@ -352,7 +372,7 @@ async function build(userId, materialId, opts = {}) {
     const slots = checkinSlots(data.turns, spec);
     const checkins = placeCheckins(data.turns, [...packQuiz, ...courseChecks(skills, slots.length), ...data.checkins], slots, slotSkills(data.turns, slots, skills));
     saved = db.update('material_podcasts', saved.id, {
-      title: data.title || mat.title, turns: data.turns, skills: weak ? weak.map((w) => ({ id: w.skill.id, title: w.skill.title })) : [], checkins, status: 'ready', models: model ? [model] : [], tokens_used: used, error: null, finished_at: new Date().toISOString(),
+      title: data.title || mat.title, turns: data.turns, skills: weak ? weak.map((w) => ({ id: w.skill.id, title: w.skill.title })) : [], checkins, status: 'ready', models: model ? [model] : [], revised, open_problems: open, tokens_used: used, error: null, finished_at: new Date().toISOString(),
     });
     db.flush();
     return { episode: saved };

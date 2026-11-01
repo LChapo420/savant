@@ -38,6 +38,7 @@ const K = require('./lib/material-proof-kinds');
 
 const { LIVE, MOCK, flag, db, ai, ls, providers, TOPICS, LEARNERS, STATS, avg, f1, table } = base;
 const argv = process.argv.slice(2);
+const readJsonSafe = (f, d) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return d; } };
 /** --name=value or --name value. */
 function arg(name, def = null) {
   const eq = argv.find((a) => a.startsWith(`--${name}=`));
@@ -47,7 +48,7 @@ function arg(name, def = null) {
 }
 const TAG = arg('tag', MOCK ? 'mock' : 'run');
 const KIND_ARG = arg('kind', 'all');
-const KINDS = KIND_ARG === 'all' ? K.KINDS : KIND_ARG.split(',').filter(Boolean);
+let KINDS = KIND_ARG === 'all' ? K.KINDS : KIND_ARG.split(',').filter(Boolean);
 for (const k of KINDS) if (!K.KINDS.includes(k)) { console.error(`unknown kind "${k}" (lesson, notes, podcast, test, pack, path, all)`); process.exit(2); }
 const N_LEARNERS = Math.max(1, Math.min(LEARNERS.length, Number(arg('learners', LEARNERS.length))));
 const N_TOPICS = Math.max(1, Number(arg('topics', 4)));
@@ -59,7 +60,8 @@ const JSON_OUT = arg('json', MOCK ? path.join(os.tmpdir(), `scorecard-proof-all-
 const TIE = 0.25; // a difference of a quarter point or less is a tie
 const JUDGE_VERSION = 'v1';
 // Bump a kind's spec-arm revision when its generator changes, so a cached artifact written by older code is not reused.
-const SPEC_REV = {};
+// notes, podcast r3: held to the learner's spec as a lesson is (every point of the text, their interests as analogies, one revision).
+const SPEC_REV = { notes: 'r3', podcast: 'r3' };
 
 const materials = require('../services/materials');
 const notesSvc = require('../services/material-notes');
@@ -542,6 +544,13 @@ function renderMarkdown(data) {
   const allWins = JUDGE_NAMES.map((j) => ({ j, wins: KINDS.reduce((n, k) => n + agg[k].judges[j].wins, 0), losses: KINDS.reduce((n, k) => n + agg[k].judges[j].losses, 0), n: KINDS.reduce((n, k) => n + agg[k].judges[j].n, 0) }));
   L.push(`Across all kinds: ${allWins.map((w) => `${jn(w.j)} found the spec version better in ${w.wins} of ${w.n} comparisons and worse in ${w.losses}`).join('; ')}.`, '');
 
+  if (data.merge) {
+    const m = data.merge;
+    L.push('## Re-run: ' + m.redone.map((k) => K.KIND_INFO[k].label.toLowerCase()).join(' and '), '');
+    L.push(`These kinds were written again after their generators were changed (notes and podcast are now held to the learner's spec as a lesson is: every point of the text carried, their interests used as framed analogies, one revision pass naming what was wrong, never a revision with fewer points). Every other kind in this report is from the run before (${m.merged_from}). Same sixteen learners, one topic each, same judges and the same generic versions.`, '');
+    const row = (k, a) => (a ? [K.KIND_INFO[k].label, a.built + '/' + a.cells, ...JUDGE_NAMES.flatMap((j) => [f1(a.judges[j].fit.spec), f1(a.judges[j].fit.generic), `${a.judges[j].wins} of ${a.judges[j].n}`]), a.agreement ? `${a.agreement.sameVerdict} of ${a.agreement.n}` : 'n/a'] : [K.KIND_INFO[k].label, 'n/a']);
+    L.push(table(['Kind', 'Cells', ...JUDGE_NAMES.flatMap((j) => [`${jn(j)} spec`, 'generic', 'wins']), 'Judges agree'], [...m.redone.flatMap((k) => [['**before**', ...row(k, m.before[k]).slice(1)].map((c, i) => (i === 0 ? `${K.KIND_INFO[k].label}, before` : c)), row(k, agg[k]).map((c, i) => (i === 0 ? `**${K.KIND_INFO[k].label}, after**` : c))])]), '');
+  }
   for (const kind of KINDS) {
     const a = agg[kind];
     const info = K.KIND_INFO[kind];
@@ -725,12 +734,27 @@ async function main() {
   process.stdout.write('\n');
   if (cache.flush) cache.flush();
 
-  const order = (r) => KINDS.indexOf(r.kind) * 1000 + cells.findIndex((c) => c.l.name === r.learner && c.topicId === r.topic);
+  const order = (r) => K.KINDS.indexOf(r.kind) * 1000 + cells.findIndex((c) => c.l.name === r.learner && c.topicId === r.topic);
+  // --merge FILE.json: this run re-did some kinds; the others come from an earlier run's results (its -materials.json carries their text),
+  // and the report covers them all.
+  let note = null;
+  if (arg('merge')) {
+    const old = JSON.parse(fs.readFileSync(arg('merge'), 'utf8'));
+    const oldMats = readJsonSafe(arg('merge').replace(/\.json$/, '-materials.json'), []);
+    const redone = new Set(KINDS);
+    const carried = old.recs.filter((r) => !redone.has(r.kind)).map((r) => ({ ...r, text: (oldMats.find((m) => m.kind === r.kind && m.learner === r.learner && m.topic === r.topic) || {}).text }));
+    // The earlier results of the same cells (this run may cover fewer than the earlier one), for the before and after.
+    const cellKeys = new Set(recs.map((r) => `${r.learner}|${r.topic}`));
+    const was = aggregate(old.recs.filter((r) => redone.has(r.kind) && cellKeys.has(`${r.learner}|${r.topic}`)));
+    recs.push(...carried);
+    KINDS = K.KINDS.filter((k) => recs.some((r) => r.kind === k));
+    note = { merged_from: path.basename(arg('merge')), redone: [...redone], before: was, earlier_spend: old.spend, earlier_ledgers: old.ledgers };
+  }
   recs.sort((a, b) => order(a) - order(b));
   const agg = aggregate(recs);
   const data = {
-    tag: TAG, live: LIVE, writerPath, generated_at: new Date().toISOString(), kinds: KINDS, learners: learners.length, cells: cells.length, judges: JUDGE_SET.map((j) => j.id),
-    agg, recs: recs.map((r) => ({ ...r, text: undefined })), spend, writers: spend.models, ledgers: { ledgerBefore, ledgerAfter: ledger ? ledger.status() : null },
+    tag: TAG, live: LIVE, writerPath, generated_at: new Date().toISOString(), kinds: KINDS, learners: new Set(recs.map((r) => r.learner)).size, cells: new Set(recs.map((r) => `${r.learner}|${r.topic}`)).size, judges: JUDGE_SET.map((j) => j.id),
+    agg, recs: recs.map((r) => ({ ...r, text: undefined })), spend, writers: spend.models, ledgers: { ledgerBefore, ledgerAfter: ledger ? ledger.status() : null }, merge: note,
   };
   const md = renderMarkdown({ ...data, recs });
   fs.mkdirSync(path.dirname(OUT), { recursive: true });

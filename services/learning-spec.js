@@ -978,7 +978,7 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
   if (MATERIAL_SURFACE.has(surface) && ex.exampleDomains.length && ex.share >= 0.3) {
     const doms = ex.exampleDomains.slice(0, 4).join(', ');
     const n = ex.share >= 0.7 ? 'at least three' : ex.share >= 0.4 ? 'at least two' : 'at least one';
-    const where = surface === 'notes' ? 'in a few bullets, after the sentence that states the point, add a short framed analogy' : 'build short analogies or practice contexts';
+    const where = surface === 'notes' ? 'add short framed analogies, each as its own one-sentence bullet that starts "Think of" and comes right after the bullet whose point it pictures (it carries that bullet\'s passage_id and quote, and is not counted in the bullet limit)' : 'build short analogies or practice contexts';
     lines.push(`Interests: ${where} on ${doms}, ${n} in all, each introduced as an analogy ("think of it like...") and mapped back to a named point of the material; they add no fact, number, name or claim about the topic, and every fact and quote stays the material's own.`);
   }
   if (surface === 'lesson' || surface === 'level' || surface === 'tutor') {
@@ -1100,7 +1100,7 @@ function analogyGuard(spec, source) {
  * content words appear. `exempt` lists words that are the topic's own and may exceed the vocabulary cap.
  * Returns { ok, problems: [{ id, detail }], stats }.
  */
-function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = null, source = null } = {}) {
+function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = null, source = null, minShare = 0.5, own = false, interestNeed = null } = {}) {
   const problems = [];
   const body = String(text || '');
   const stats = {};
@@ -1126,17 +1126,17 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
   if (hits.length) problems.push({ id: 'avoid_domain', detail: `it uses ${hits.join(', ')}, which this learner dislikes; use other examples` });
   // 4. Interests used when they should be.
   const doms = spec.interests.exampleDomains || [];
-  if (doms.length && spec.interests.share >= 0.5) {
+  if (doms.length && spec.interests.share >= minShare) {
     const used = doms.filter((d) => mentions(body, d));
     stats.interestsUsed = used.length;
-    if (!used.length) problems.push({ id: 'interest_unused', detail: `no example uses their interests (${doms.slice(0, 3).join(', ')}); build at least two examples on them` });
+    if (!used.length) problems.push({ id: 'interest_unused', detail: own ? `nothing in it uses their interests (${doms.slice(0, 3).join(', ')}); add short analogies on them, each framed as an analogy and pointing back at a point of the material, adding no fact` : `no example uses their interests (${doms.slice(0, 3).join(', ')}); build at least two examples on them` });
     else {
       // How often: at least two uses at a share of half or more, three at seven tenths.
       const low = body.toLowerCase();
       const uses = doms.reduce((n, d) => n + wordsOf(d).filter((w) => w.length >= 4).reduce((m, w) => m + (low.split(w).length - 1), 0), 0);
       stats.interestUses = uses;
-      const need = spec.interests.share >= 0.7 ? 3 : 2;
-      if (uses < need) problems.push({ id: 'interest_unused', detail: `their interests (${doms.slice(0, 3).join(', ')}) appear only ${uses} time${uses === 1 ? '' : 's'}; build the worked example and at least ${need} examples in all on them` });
+      const need = interestNeed || (spec.interests.share >= 0.7 ? 3 : spec.interests.share >= 0.5 ? 2 : 1);
+      if (uses < need) problems.push({ id: 'interest_unused', detail: own ? `their interests (${doms.slice(0, 3).join(', ')}) appear only ${uses} time${uses === 1 ? '' : 's'}; add short framed analogies on them, at least ${need} in all, each pointing back at a point of the material and adding no fact` : `their interests (${doms.slice(0, 3).join(', ')}) appear only ${uses} time${uses === 1 ? '' : 's'}; build the worked example and at least ${need} examples in all on them` });
     }
   }
   // 4b. An interest analogy adds no claim of its own (when the source text is given).
@@ -1198,6 +1198,27 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
   return { ok: problems.length === 0, problems, stats };
 }
 
+/**
+ * The points of a source text that an output must still carry (checkFollowed's coverage, term overlap): its sentences of seven words or
+ * more, at most `max` of them (spread evenly over the text when there are more). For the material generators, whose source has no
+ * list of key facts of its own.
+ */
+function sourceFacts(text, max = 14) {
+  const sents = String(text || '').replace(/\s+/g, ' ').split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter((s, i, all) => s.split(' ').length >= 7 && all.indexOf(s) === i);
+  if (sents.length <= max) return sents;
+  return Array.from({ length: max }, (_, i) => sents[Math.floor((i * sents.length) / max)]);
+}
+
+/**
+ * How many times a learner's interests should appear in one piece of their own material (a notes part, a podcast script): the spec's
+ * count ("at least three in all" at a strong share) scaled by how much text the piece covers, so a long material is not asked for three
+ * analogies in every part. One at least.
+ */
+function ownInterestNeed(spec, chars) {
+  const base = spec.interests.share >= 0.7 ? 3 : spec.interests.share >= 0.5 ? 2 : 1;
+  return Math.max(1, Math.round(base * Math.min(1, Number(chars) / 3000)));
+}
+
 /** The sentence added to a prompt on the single revision pass. */
 function revisionNote(problems) {
   return `Your draft broke these requirements. Rewrite it fixing exactly these and keeping every fact, step and answer the same:\n${problems.map((p, i) => `${i + 1}. ${p.detail}`).join('\n')}`;
@@ -1207,18 +1228,21 @@ function revisionNote(problems) {
  * Write once; if the check finds problems, ask once more with the problems named; keep the better draft
  * (never one with less coverage). `generate(note)` returns a text-bearing result or null; `textOf(result)` its text.
  */
-async function reviseOnce({ generate, textOf, structureOf = null, spec, keyFacts = [], exempt = [] }) {
+async function reviseOnce({ generate, textOf, structureOf = null, spec, keyFacts = [], exempt = [], source = null, minShare = 0.5, own = false, interestNeed = null }) {
+  const opts = (r) => ({ keyFacts, exempt, structure: structureOf ? structureOf(r) : null, source, minShare, own, interestNeed });
   const first = await generate(null);
   if (!first) return { result: first, revised: false, problems: [] };
-  const check1 = checkFollowed(textOf(first), spec, { keyFacts, exempt, structure: structureOf ? structureOf(first) : null });
+  const check1 = checkFollowed(textOf(first), spec, opts(first));
   if (check1.ok) return { result: first, revised: false, problems: [], stats: check1.stats };
   let second = null;
   try { second = await generate(revisionNote(check1.problems)); } catch { second = null; }
   if (!second) return { result: first, revised: false, problems: check1.problems, stats: check1.stats };
-  const check2 = checkFollowed(textOf(second), spec, { keyFacts, exempt, structure: structureOf ? structureOf(second) : null });
+  const check2 = checkFollowed(textOf(second), spec, opts(second));
   const cov1 = check1.problems.some((p) => p.id === 'coverage');
   const cov2 = check2.problems.some((p) => p.id === 'coverage');
-  const better = (!cov2 || cov1) && check2.problems.length <= check1.problems.length;
+  // Never a revision that carries fewer of the points that must be taught, even when it fixes more of the rest.
+  const missed = (c) => (c.stats && c.stats.keyFactsMissing) || 0;
+  const better = (!cov2 || cov1) && missed(check2) <= missed(check1) && check2.problems.length <= check1.problems.length;
   return better
     ? { result: second, revised: true, problems: check2.problems, before: check1.problems, stats: check2.stats }
     : { result: first, revised: false, problems: check1.problems, rejected: check2.problems, stats: check1.stats };
@@ -1247,7 +1271,7 @@ module.exports = {
   LEVERS, LEVER_IDS, METRIC_RULES, RULE_OF, CONTEXT_RULES, PHRASES, SURFACES, CONTRACT_LINE,
   buildSpec, buildSpecFrom, defaultSpec, gather, pulls, contextOf,
   specToPrompt, specToLines, specHash, linesFor, questionLinesFor, questionShape,
-  checkFollowed, analogyProblems, analogyGuard, revisionNote, reviseOnce, keyTerms, mentions, textShapeFor,
+  checkFollowed, analogyProblems, analogyGuard, sourceFacts, ownInterestNeed, revisionNote, reviseOnce, keyTerms, mentions, textShapeFor,
   interestsFromText: splitDomains, dislikesFromText, splitDislikes, topicDomainOf,
   reviewScale, scaleMinutes, reviewFor,
 };

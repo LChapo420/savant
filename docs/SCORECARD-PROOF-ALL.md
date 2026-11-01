@@ -1,10 +1,10 @@
 # Scorecard proof, every kind of material
 
-Run `full` (live models) on 2026-11-01. Written by `node scripts/scorecard-material-proof.js`.
+Run `rerun-np` (live models) on 2026-11-01. Written by `node scripts/scorecard-material-proof.js`.
 
 > **This is a smoke run** (16 learners, 16 learner-topic cells, kinds: lesson, notes, podcast, test, pack, path), made to prove the pipeline end to end. It is too small to show a trend. The full proof is the command in the last section; running it rewrites this file.
 
-For each learner and topic, the same short base text (what the learner "uploaded") is turned into each kind of material twice through the app's real generator: with the learner's **spec** (the learning spec in the prompt, built from their scorecard, survey and context) and **generic** (a learner we know nothing about: the default spec, no block). Kinds: Lesson, Notes, Podcast, Practice test, Study pack, Learning path. 16 learner-topic cells, 16 synthetic learners. Writer path: Standard Compute DeepSeek V4.1 Flash through the ledger (the free NVIDIA lineup was not answering). Writers: deepseek/deepseek-v4.1-flash-1017 x306.
+For each learner and topic, the same short base text (what the learner "uploaded") is turned into each kind of material twice through the app's real generator: with the learner's **spec** (the learning spec in the prompt, built from their scorecard, survey and context) and **generic** (a learner we know nothing about: the default spec, no block). Kinds: Lesson, Notes, Podcast, Practice test, Study pack, Learning path. 16 learner-topic cells, 16 synthetic learners. Writer path: Standard Compute DeepSeek V4.1 Flash through the ledger (the free NVIDIA lineup was not answering). Writers: deepseek/deepseek-v4.1-flash-1017 x51.
 
 Two judges from different model families, Gemini 3.8 Flash and Claude Sonnet 5.5 (both on Standard Compute, through the ledger), each read one learner's pair in a single call, **blind to which version is which** (labelled X and Y, order shuffled), and score each version 0 to 10 on every spec field that applies to that kind, plus key-fact coverage, accuracy, interests used, dislikes avoided and reading level. "Fit" is the mean of a kind's spec fields. A **win** is a cell where the spec version's fit is more than 0.25 above the generic one's; within 0.25 is a tie.
 
@@ -13,13 +13,24 @@ Two judges from different model families, Gemini 3.8 Flash and Claude Sonnet 5.5
 | Kind | Cells | Gemini 3.8 Flash spec | generic | gain | Claude Sonnet 5.5 spec | generic | gain | Wins (judge 1 / 2) | Judges agree |
 |---|---|---|---|---|---|---|---|---|---|
 | Lesson | 16/16 | 9.2 | 5.2 | +4.0 | 7.6 | 4.3 | +3.3 | 16 of 16 / 16 of 16 | 16 of 16 |
-| Notes | 16/16 | 7.8 | 6.6 | +1.2 | 6.7 | 5.6 | +1.1 | 13 of 16 / 11 of 16 | 14 of 16 |
-| Podcast | 14/16 | 7.2 | 5.8 | +1.4 | 6.0 | 4.5 | +1.5 | 11 of 14 / 9 of 14 | 10 of 14 |
+| Notes | 16/16 | 8.1 | 6.6 | +1.5 | 6.8 | 5.6 | +1.2 | 14 of 16 / 13 of 16 | 14 of 16 |
+| Podcast | 16/16 | 8.3 | 5.9 | +2.4 | 6.4 | 4.5 | +1.9 | 15 of 16 / 15 of 16 | 14 of 16 |
 | Practice test | 16/16 | 8.3 | 5.3 | +3.1 | 6.8 | 4.6 | +2.3 | 16 of 16 / 16 of 16 | 16 of 16 |
 | Study pack | 14/16 | 8.5 | 6.0 | +2.5 | 7.2 | 5.1 | +2.1 | 13 of 14 / 13 of 14 | 13 of 14 |
 | Learning path | 16/16 | 8.0 | 4.1 | +3.9 | 6.5 | 3.7 | +2.8 | 16 of 16 / 15 of 16 | 15 of 16 |
 
-Across all kinds: Gemini 3.8 Flash found the spec version better in 85 of 92 comparisons and worse in 1; Claude Sonnet 5.5 found the spec version better in 80 of 92 comparisons and worse in 3.
+Across all kinds: Gemini 3.8 Flash found the spec version better in 90 of 94 comparisons and worse in 1; Claude Sonnet 5.5 found the spec version better in 88 of 94 comparisons and worse in 4.
+
+## Re-run: notes and podcast
+
+These kinds were written again after their generators were changed (notes and podcast are now held to the learner's spec as a lesson is: every point of the text carried, their interests used as framed analogies, one revision pass naming what was wrong, never a revision with fewer points). Every other kind in this report is from the run before (scorecard-proof-all-full.json). Same sixteen learners, one topic each, same judges and the same generic versions.
+
+| Kind | Cells | Gemini 3.8 Flash spec | generic | wins | Claude Sonnet 5.5 spec | generic | wins | Judges agree |
+|---|---|---|---|---|---|---|---|---|
+| Notes, before | 16/16 | 7.8 | 6.6 | 13 of 16 | 6.7 | 5.6 | 11 of 16 | 14 of 16 |
+| **Notes, after** | 16/16 | 8.1 | 6.6 | 14 of 16 | 6.8 | 5.6 | 13 of 16 | 14 of 16 |
+| Podcast, before | 14/16 | 7.2 | 5.8 | 11 of 14 | 6.0 | 4.5 | 9 of 14 | 10 of 14 |
+| **Podcast, after** | 16/16 | 8.3 | 5.9 | 15 of 16 | 6.4 | 4.5 | 15 of 16 | 14 of 16 |
 
 ## Lesson
 
@@ -77,97 +88,95 @@ Real generator: `services/material-notes.js` `build` (surface `notes`). What is 
 
 | Spec field (0 to 10) | Gemini 3.8 Flash generic | spec | gain | Claude Sonnet 5.5 generic | spec | gain | n |
 |---|---|---|---|---|---|---|---|
-| Bullet size | 8.2 | 7.0 | -1.2 | 6.9 | 6.9 | +0.0 | 16 |
-| Brevity | 8.5 | 8.0 | -0.5 | 7.1 | 6.6 | -0.5 | 16 |
-| Density layout | 7.6 | 7.9 | +0.3 | 6.2 | 6.4 | +0.2 | 16 |
-| Vocabulary level | 6.4 | 7.6 | +1.2 | 5.7 | 6.9 | +1.3 | 16 |
-| Sentence length | 6.3 | 6.3 | +0.1 | 5.3 | 6.6 | +1.3 | 16 |
-| Register | 8.5 | 8.9 | +0.4 | 7.1 | 7.3 | +0.1 | 16 |
-| Interest analogies | 0.0 | 8.1 | +8.1 | 0.0 | 6.1 | +6.1 | 16 |
-| Rigor | 9.5 | 9.5 | +0.0 | 9.0 | 6.5 | -2.5 | 2 |
-| Avoided domains | 10.0 | 10.0 | +0.0 | 10.0 | 8.0 | -2.0 | 2 |
-| **Fit (mean of the fields)** | **6.6** | **7.8** | **+1.2** | **5.6** | **6.7** | **+1.1** |  |
-| Key-fact coverage | 10.0 | 9.9 | -0.1 | 9.9 | 9.7 | -0.3 |  |
-| Accuracy | 10.0 | 10.0 | +0.0 | 10.0 | 8.8 | -1.3 |  |
-| Interests used | 0.0 | 8.4 | +8.4 | 0.0 | 7.1 | +7.1 |  |
-| Dislikes avoided | 8.9 | 9.1 | +0.2 | 8.9 | 8.8 | -0.1 |  |
-| Age-appropriate reading level | 6.6 | 8.0 | +1.4 | 6.1 | 7.4 | +1.3 |  |
+| Bullet size | 8.3 | 7.4 | -0.9 | 6.9 | 6.5 | -0.4 | 16 |
+| Brevity | 8.6 | 8.3 | -0.4 | 6.9 | 6.3 | -0.6 | 16 |
+| Density layout | 7.9 | 8.5 | +0.6 | 6.4 | 6.6 | +0.3 | 16 |
+| Vocabulary level | 6.1 | 7.4 | +1.3 | 6.1 | 6.9 | +0.8 | 16 |
+| Sentence length | 6.4 | 6.9 | +0.5 | 5.1 | 6.7 | +1.6 | 16 |
+| Register | 8.3 | 9.1 | +0.8 | 7.1 | 7.4 | +0.3 | 16 |
+| Interest analogies | 0.0 | 9.3 | +9.3 | 0.0 | 6.6 | +6.6 | 16 |
+| Rigor | 9.0 | 8.0 | -1.0 | 9.0 | 7.0 | -2.0 | 2 |
+| Avoided domains | 10.0 | 10.0 | +0.0 | 10.0 | 9.5 | -0.5 | 2 |
+| **Fit (mean of the fields)** | **6.6** | **8.1** | **+1.5** | **5.6** | **6.8** | **+1.2** |  |
+| Key-fact coverage | 10.0 | 10.0 | +0.0 | 9.9 | 9.9 | -0.1 |  |
+| Accuracy | 10.0 | 9.8 | -0.2 | 10.0 | 8.8 | -1.2 |  |
+| Interests used | 0.0 | 9.6 | +9.6 | 0.0 | 7.6 | +7.6 |  |
+| Dislikes avoided | 8.8 | 9.3 | +0.4 | 8.9 | 9.2 | +0.3 |  |
+| Age-appropriate reading level | 6.7 | 8.2 | +1.5 | 6.3 | 7.6 | +1.3 |  |
 
-**Wins:** Gemini 3.8 Flash 13 of 16 (3 ties, 0 worse); Claude Sonnet 5.5 11 of 16 (5 ties, 0 worse).
+**Wins:** Gemini 3.8 Flash 14 of 16 (2 ties, 0 worse); Claude Sonnet 5.5 13 of 16 (1 ties, 2 worse). Cells where the spec version scored worse: Claude Sonnet 5.5: Noah/two-step equations 6.9 vs 7.4; Sam/photosynthesis 6.5 vs 6.9.
 
-**Agreement between the judges:** the same verdict (spec better, tie or worse) in 14 of 16 cells; both found the spec version better in 11; opposite verdicts in 0. Correlation of the spec-minus-generic gain across cells 0.90; of the fit scores themselves 0.90; on average the two judges' fit scores for the same text differ by 1.1 points.
+**Agreement between the judges:** the same verdict (spec better, tie or worse) in 14 of 16 cells; both found the spec version better in 13; opposite verdicts in 1. Correlation of the spec-minus-generic gain across cells 0.86; of the fit scores themselves 0.88; on average the two judges' fit scores for the same text differ by 1.2 points.
 
-**Per-field weaknesses** (mean of both judges): lowest for the spec version: sentence length 6.4, bullet size 6.9, interest analogies 7.1. Smallest gain over generic: rigor -1.3, avoided domains -1.0, bullet size -0.6. **Fields where generic scored higher: bullet size -0.6, brevity -0.5, rigor -1.3, avoided domains -1.0**.
+**Per-field weaknesses** (mean of both judges): lowest for the spec version: sentence length 6.8, bullet size 6.9, vocabulary level 7.1. Smallest gain over generic: rigor -1.5, bullet size -0.7, brevity -0.5. **Fields where generic scored higher: bullet size -0.7, brevity -0.5, rigor -1.5, avoided domains -0.3**.
 
-**Learners the spec fitted least well:** Maya 4.6, Omar 6.1, Leo 6.2.
+**Learners the spec fitted least well:** Omar 6.0, Maya 6.6, Lena 7.0.
 
-**Key facts the judges found missing:** spec/two-step equations: Omits intermediate 2x=8 result in step one; spec/two-step equations: The 2x = 8 intermediate result is omitted; spec/two-step equations: x = 4 for the first example is only shown in the check; spec/two-step equations: missing the intermediate result 2x = 8 in step one; spec/two-step equations: Intermediate result 2x = 8 not stated.
+**Key facts the judges found missing:** spec/two-step equations: Step one bullet omits the result 2x = 8.
 
 **What the code measured in the text (no model):**
 
 | Measure (mean over cells) | spec | generic |
 |---|---|---|
 | Words | 326.2 | 225.1 |
-| MeanSentenceWords | 17.3 | 18.2 |
+| MeanSentenceWords | 16.1 | 18.2 |
 | LongWordShare | 0.0 | 0.0 |
-| Sections | 4.8 | 4.6 |
-| Bullets | 16.9 | 14.1 |
-| BulletsPerSection | 3.6 | 3.1 |
-| MeanBulletWords | 18.7 | 15.7 |
+| Sections | 4.6 | 4.6 |
+| Bullets | 19.9 | 14.1 |
+| BulletsPerSection | 4.3 | 3.1 |
+| MeanBulletWords | 15.8 | 15.7 |
 | Cells that used a disliked domain | 0 | 0 |
-| Cells that used a stated interest (of those with interests) | 11 of 16 | 1 of 16 |
-| Key facts missing by term overlap (of all) | 2 of 80 | 0 of 80 |
+| Cells that used a stated interest (of those with interests) | 15 of 16 | 1 of 16 |
+| Key facts missing by term overlap (of all) | 0 of 80 | 0 of 80 |
 
 ## Podcast
 
 Real generator: `services/material-podcast.js` `build` (surface `podcast`; check-in spacing by `checkinSlots`). What is judged: a short two-host podcast script (host A explains, host B asks) that talks through the base text; the marks [CHECK-IN QUESTION] show where the app would pause to ask the listener a question.
 
-Cells that did not complete: Zoe/causes of World War I: spec: An episode could not be made from that material. Try a longer or clearer text.; Ruth/causes of World War I: spec: An episode could not be made from that material. Try a longer or clearer text..
-
 | Spec field (0 to 10) | Gemini 3.8 Flash generic | spec | gain | Claude Sonnet 5.5 generic | spec | gain | n |
 |---|---|---|---|---|---|---|---|
-| Pacing length | 7.4 | 6.7 | -0.6 | 5.6 | 5.6 | +0.0 | 14 |
-| Vocabulary spoken | 5.9 | 7.3 | +1.4 | 5.2 | 7.0 | +1.8 | 14 |
-| Sentence length | 6.4 | 8.6 | +2.3 | 5.3 | 8.6 | +3.3 | 14 |
-| Check in frequency | 0.0 | 5.5 | +5.5 | 0.3 | 2.3 | +2.0 | 4 |
-| Dialogue style | 7.6 | 7.6 | +0.0 | 5.3 | 5.9 | +0.6 | 14 |
-| Tone | 7.0 | 7.9 | +0.9 | 5.2 | 6.3 | +1.1 | 14 |
-| Explanation order | 6.1 | 7.1 | +1.0 | 4.4 | 5.6 | +1.1 | 7 |
-| Interest analogies | 0.0 | 5.1 | +5.1 | 0.0 | 3.6 | +3.6 | 14 |
-| Repetition recap | 7.8 | 5.8 | -2.0 | 5.8 | 4.0 | -1.8 | 4 |
-| Avoided domains | 10.0 | 10.0 | +0.0 | 9.0 | 9.0 | +0.0 | 2 |
-| **Fit (mean of the fields)** | **5.8** | **7.2** | **+1.4** | **4.5** | **6.0** | **+1.5** |  |
-| Key-fact coverage | 10.0 | 7.9 | -2.1 | 9.8 | 7.4 | -2.4 |  |
-| Accuracy | 10.0 | 9.7 | -0.3 | 9.9 | 8.4 | -1.6 |  |
-| Interests used | 0.0 | 5.3 | +5.3 | 0.0 | 4.2 | +4.2 |  |
-| Dislikes avoided | 8.1 | 8.9 | +0.9 | 7.8 | 8.4 | +0.6 |  |
-| Age-appropriate reading level | 6.6 | 8.1 | +1.6 | 5.8 | 7.8 | +2.0 |  |
+| Pacing length | 7.4 | 8.1 | +0.7 | 5.7 | 6.3 | +0.6 | 16 |
+| Vocabulary spoken | 6.6 | 8.0 | +1.4 | 5.6 | 6.8 | +1.1 | 16 |
+| Sentence length | 6.8 | 8.8 | +2.1 | 5.8 | 8.2 | +2.4 | 16 |
+| Check in frequency | 0.0 | 8.2 | +8.2 | 0.2 | 3.0 | +2.8 | 6 |
+| Dialogue style | 7.5 | 8.2 | +0.7 | 5.1 | 5.8 | +0.7 | 16 |
+| Tone | 7.3 | 8.4 | +1.1 | 5.1 | 6.4 | +1.4 | 16 |
+| Explanation order | 6.3 | 7.9 | +1.6 | 4.9 | 6.3 | +1.4 | 7 |
+| Interest analogies | 0.0 | 8.4 | +8.4 | 0.0 | 5.9 | +5.9 | 16 |
+| Repetition recap | 8.0 | 8.2 | +0.2 | 4.3 | 5.8 | +1.5 | 6 |
+| Avoided domains | 10.0 | 10.0 | +0.0 | 9.5 | 9.5 | +0.0 | 2 |
+| **Fit (mean of the fields)** | **5.9** | **8.3** | **+2.4** | **4.5** | **6.4** | **+1.9** |  |
+| Key-fact coverage | 10.0 | 9.6 | -0.4 | 9.7 | 9.8 | +0.1 |  |
+| Accuracy | 10.0 | 10.0 | +0.0 | 9.8 | 8.8 | -1.1 |  |
+| Interests used | 0.0 | 8.6 | +8.6 | 0.0 | 6.7 | +6.7 |  |
+| Dislikes avoided | 8.4 | 8.9 | +0.5 | 7.9 | 8.4 | +0.5 |  |
+| Age-appropriate reading level | 6.8 | 8.5 | +1.8 | 5.8 | 7.6 | +1.9 |  |
 
-**Wins:** Gemini 3.8 Flash 11 of 14 (2 ties, 1 worse); Claude Sonnet 5.5 9 of 14 (3 ties, 2 worse). Cells where the spec version scored worse: Gemini 3.8 Flash: Sam/photosynthesis 5.4 vs 7.1 | Claude Sonnet 5.5: Frank/two-step equations 4.8 vs 5.8; Lena/photosynthesis 5.5 vs 6.2.
+**Wins:** Gemini 3.8 Flash 15 of 16 (0 ties, 1 worse); Claude Sonnet 5.5 15 of 16 (0 ties, 1 worse). Cells where the spec version scored worse: Gemini 3.8 Flash: Grace/photosynthesis 5.4 vs 6.7 | Claude Sonnet 5.5: Lena/photosynthesis 5.8 vs 6.3.
 
-**Agreement between the judges:** the same verdict (spec better, tie or worse) in 10 of 14 cells; both found the spec version better in 9; opposite verdicts in 1. Correlation of the spec-minus-generic gain across cells 0.80; of the fit scores themselves 0.89; on average the two judges' fit scores for the same text differ by 1.2 points.
+**Agreement between the judges:** the same verdict (spec better, tie or worse) in 14 of 16 cells; both found the spec version better in 14; opposite verdicts in 2. Correlation of the spec-minus-generic gain across cells 0.77; of the fit scores themselves 0.87; on average the two judges' fit scores for the same text differ by 1.7 points.
 
-**Per-field weaknesses** (mean of both judges): lowest for the spec version: check in frequency 3.9, interest analogies 4.4, repetition recap 4.9. Smallest gain over generic: repetition recap -1.9, pacing length -0.3, avoided domains +0.0. **Fields where generic scored higher: pacing length -0.3, repetition recap -1.9**.
+**Per-field weaknesses** (mean of both judges): lowest for the spec version: check in frequency 5.6, dialogue style 7.0, repetition recap 7.0. Smallest gain over generic: avoided domains +0.0, pacing length +0.6, dialogue style +0.7.
 
-**Learners the spec fitted least well:** Maya 4.3, Frank 5.3, Sam 5.4.
+**Learners the spec fitted least well:** Grace 5.4, Lena 6.7, Diego 6.7.
 
-**Key facts the judges found missing:** spec/photosynthesis: Oxygen is released as a by-product; spec/photosynthesis: Full role of chlorophyll absorbing light not finished; spec/photosynthesis: Oxygen as by-product absent; spec/photosynthesis: Chlorophyll absorbing light not stated; spec/photosynthesis: Word equation absent.
+**Key facts the judges found missing:** spec/photosynthesis: Oxygen is released as a by-product; spec/photosynthesis: Word equation and consequences of missing inputs; spec/photosynthesis: Oxygen released as by-product; spec/photosynthesis: Word equation and wrap-up absent (truncated); generic/two-step equations: balanced scale reasoning thin.
 
 **What the code measured in the text (no model):**
 
 | Measure (mean over cells) | spec | generic |
 |---|---|---|
-| Words | 347.6 | 336.2 |
-| MeanSentenceWords | 9.8 | 13.2 |
+| Words | 431.2 | 339.4 |
+| MeanSentenceWords | 10.2 | 12.9 |
 | LongWordShare | 0.0 | 0.0 |
-| Turns | 24.2 | 25.8 |
-| WordsPerTurn | 14.9 | 13.9 |
-| BQuestions | 6.5 | 11.1 |
-| CheckIns | 0.2 | 0.1 |
-| SpokenMinutes | 2.3 | 2.2 |
-| Cells that used a disliked domain | 0 | 0 |
-| Cells that used a stated interest (of those with interests) | 6 of 14 | 1 of 14 |
-| Key facts missing by term overlap (of all) | 11 of 70 | 5 of 70 |
+| Turns | 32.5 | 26.4 |
+| WordsPerTurn | 14.0 | 13.6 |
+| BQuestions | 9.3 | 11.4 |
+| CheckIns | 0.4 | 0.2 |
+| SpokenMinutes | 2.9 | 2.2 |
+| Cells that used a disliked domain | 1 | 0 |
+| Cells that used a stated interest (of those with interests) | 13 of 16 | 2 of 16 |
+| Key facts missing by term overlap (of all) | 2 of 80 | 5 of 80 |
 
 ## Practice test
 
@@ -321,11 +330,11 @@ Real generator: `services/course-builder.js` `build` (surface `material`). What 
 
 ## Systemic patterns across learners and kinds
 
-- Fields that recur across kinds, lowest first: interest analogies (notes, podcast, test, pack, path) spec 5.8, gain +5.8; explanation order (podcast, path) spec 6.9, gain +1.5; density layout (notes, path) spec 7.1, gain +1.6; stakes tone (test, pack) spec 7.3, gain +1.5.
-- Kind with the smallest overall gain: notes +1.2; the largest: lesson +3.7.
-- Learners the spec fitted least well across all kinds: Maya 5.9, Leo 7.0, Frank 7.3.
-- **Interests in own-material kinds.** The learner's interests, hobbies and dislikes shape their own material too, with the text as the only source of facts: interests appear only as clearly framed analogies, examples or practice contexts that map back to a point of the text (`analogyProblems` in `services/learning-spec.js` checks that one adds no number, name or point the text lacks, and each generator falls back to the text's own words when it does). Cells where the spec version used a stated interest, of those with interests: lesson 14 of 16 (generic 2); notes 11 of 16 (generic 1); podcast 6 of 14 (generic 1); practice test 11 of 16 (generic 1); study pack 8 of 14 (generic 1); learning path 14 of 16 (generic 2). Spec versions that used a disliked domain: lesson 0, notes 0, podcast 0, test 0, pack 0, path 0. Analogies the check would flag in the spec version: lesson 0.0 per cell, notes 0.0 per cell, podcast 0.0 per cell, test 0.1 per cell, pack 0.0 per cell, path 0.1 per cell. The one lever own material still withholds is `depth` (one deeper why or edge case), which would bring facts the text lacks.
-- Cells that did not complete: podcast Zoe/causes of World War I: spec: An episode could not be made from that material. Try a longer or clearer text.; podcast Ruth/causes of World War I: spec: An episode could not be made from that material. Try a longer or clearer text.; pack Frank/two-step equations: spec: The models were busy, so the pack could not be built yet.; pack Chloe/causes of World War I: spec: The models were busy, so the pack could not be built yet..
+- Fields that recur across kinds, lowest first: interest analogies (notes, podcast, test, pack, path) spec 6.6, gain +6.6; explanation order (podcast, path) spec 7.2, gain +1.7; density layout (notes, path) spec 7.3, gain +1.7; stakes tone (test, pack) spec 7.3, gain +1.5.
+- Kind with the smallest overall gain: notes +1.4; the largest: lesson +3.7.
+- Learners the spec fitted least well across all kinds: Maya 6.8, Leo 7.3, Lena 7.4.
+- **Interests in own-material kinds.** The learner's interests, hobbies and dislikes shape their own material too, with the text as the only source of facts: interests appear only as clearly framed analogies, examples or practice contexts that map back to a point of the text (`analogyProblems` in `services/learning-spec.js` checks that one adds no number, name or point the text lacks, and each generator falls back to the text's own words when it does). Cells where the spec version used a stated interest, of those with interests: lesson 14 of 16 (generic 2); notes 15 of 16 (generic 1); podcast 13 of 16 (generic 2); practice test 11 of 16 (generic 1); study pack 8 of 14 (generic 1); learning path 14 of 16 (generic 2). Spec versions that used a disliked domain: lesson 0, notes 0, podcast 1, test 0, pack 0, path 0. Analogies the check would flag in the spec version: lesson 0.0 per cell, notes 0.0 per cell, podcast 0.0 per cell, test 0.1 per cell, pack 0.0 per cell, path 0.1 per cell. The one lever own material still withholds is `depth` (one deeper why or edge case), which would bring facts the text lacks.
+- Cells that did not complete: pack Frank/two-step equations: spec: The models were busy, so the pack could not be built yet.; pack Chloe/causes of World War I: spec: The models were busy, so the pack could not be built yet..
 
 ## Limits of this proof
 
@@ -340,8 +349,8 @@ Real generator: `services/course-builder.js` `build` (surface `material`). What 
 
 ## Cost
 
-- Standard Compute spend by this run: $3.3466 through the ledger (assumed prices, an upper bound), 306 writer calls and 182 judge calls (google/gemini-3.8-flash x92, anthropic/claude-sonnet-5.5 x90).
-- Ledger: before spent $17.260975 (2767 calls, headroom $12.739025); after spent $21.17012 (3365 calls, headroom $8.82988).
+- Standard Compute spend by this run: $0.7644 through the ledger (assumed prices, an upper bound), 51 writer calls and 65 judge calls (google/gemini-3.8-flash x33, anthropic/claude-sonnet-5.5 x32).
+- Ledger: before spent $21.17012 (3365 calls, headroom $8.82988); after spent $21.934554 (3481 calls, headroom $8.065446).
 
 ## Running the full proof
 

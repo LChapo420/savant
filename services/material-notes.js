@@ -51,7 +51,7 @@ const NOTES_SCHEMA = {
 };
 
 /** Grounded sections from one model answer: a bullet without a found quote is dropped, a section with none is dropped. */
-function cleanSections(raw, byId, guard = null) {
+function cleanSections(raw, byId, guard = null, keepMax = MAX_BULLETS) {
   const allowed = new Set(byId.keys());
   const out = [];
   let dropped = 0;
@@ -60,14 +60,14 @@ function cleanSections(raw, byId, guard = null) {
     if (!s || typeof s !== 'object') continue;
     const heading = clean(s.heading, 120);
     const bullets = [];
-    for (const b of (Array.isArray(s.bullets) ? s.bullets : []).slice(0, MAX_BULLETS + 4)) {
+    for (const b of (Array.isArray(s.bullets) ? s.bullets : []).slice(0, keepMax + 4)) {
       let text = clean(b && b.text, 400);
       const pid = String((b && b.passage_id) || '');
       const quote = text && allowed.has(pid) ? pack.groundQuote(byId.get(pid), b.quote) : null;
       if (!quote) { dropped++; continue; }
       // An interest analogy may not bring a claim the text lacks: the bullet becomes the text's own words.
       if (guard && !guard(text)) { text = clean(quote, 400); fixed++; }
-      if (bullets.length < MAX_BULLETS) bullets.push({ text, passage_id: pid, quote });
+      if (bullets.length < keepMax) bullets.push({ text, passage_id: pid, quote });
     }
     if (heading && bullets.length >= MIN_BULLETS) out.push({ heading, bullets });
   }
@@ -104,7 +104,10 @@ async function build(userId, materialId, opts = {}) {
     const block = learningSpec.specToLines(spec, { surface: 'notes' }).join('\n');
     const guard = learningSpec.analogyGuard(spec, mat.text);
     const maxBullets = spec.isDefault ? MAX_BULLETS : Math.max(3, Math.min(MAX_BULLETS, spec.lesson.chunkSentences + 2));
-    let used = 0; let stopped = false; let unanswered = 0; let dropped = 0; let analogiesFixed = 0;
+    // Analogy bullets (a learner with interests) come on top of the point bullets, so a section may keep up to twice the limit.
+    const keepMax = guard ? MAX_BULLETS * 2 : MAX_BULLETS;
+    let used = 0; let stopped = false; let unanswered = 0; let dropped = 0; let analogiesFixed = 0; let revisions = 0;
+    const open = new Set();
     const sections = [];
     const touched = new Set();
     for (const part of parts) {
@@ -113,21 +116,40 @@ async function build(userId, materialId, opts = {}) {
       const args = {
         role: 'fast', task: 'material_notes', schema: NOTES_SCHEMA, schemaName: 'material_notes', maxTokens: 5000, dataClass: 'learner', userId,
         system: `You write study notes for a student from their own material. ${UNTRUSTED} `
-          + `Write up to ${MAX_SECTIONS_PART} sections in the order the text teaches them. Each has a short heading and 2 to ${maxBullets} bullets: one plain sentence each that keeps the text's own terms, numbers, names and definitions. Do not leave out a definition, formula or step the text gives. `
+          + `Write up to ${MAX_SECTIONS_PART} sections in the order the text teaches them. Each has a short heading and 2 to ${maxBullets} bullets${guard ? ' of points of the text (analogy bullets, where the block below asks for them, come on top of that)' : ''}: one plain sentence each that keeps the text's own terms, numbers, names and definitions. Do not leave out a definition, formula or step the text gives. `
           + 'Every bullet needs passage_id (one of the ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows it. Leave out anything you cannot back with such a quote.'
           + (block ? `\n\n${block}` : ''),
         user: `Title: ${mat.title}\n\nPassages:\n${text}`,
       };
       const cost = estTokens(args.system, args.user) + args.maxTokens;
+      // One write (two tries if the first gives nothing usable); `note` is the revision pass's list of what the draft got wrong.
+      const generate = async (note) => {
+        const call = note ? { ...args, user: `${note}\n\n${args.user}` } : args;
+        let out = null;
+        for (let attempt = 0; attempt < 2 && !out; attempt++) {
+          if (used + cost > limit) { stopped = true; break; }
+          used += cost;
+          let res = null;
+          try { res = await llm(call); } catch { res = null; } // eslint-disable-line no-await-in-loop
+          const c = res && res.data && cleanSections(res.data.sections, byId, guard, keepMax);
+          if (c && c.sections.length) out = c;
+          else if (c) dropped += c.dropped;
+        }
+        return out;
+      };
       let got = null;
-      for (let attempt = 0; attempt < 2 && !got; attempt++) {
-        if (used + cost > limit) { stopped = true; break; }
-        used += cost;
-        let res = null;
-        try { res = await llm(args); } catch { res = null; } // eslint-disable-line no-await-in-loop
-        const c = res && res.data && cleanSections(res.data.sections, byId, guard);
-        if (c && c.sections.length) got = c;
-        else if (c) dropped += c.dropped;
+      if (spec.isDefault) got = await generate(null);
+      else {
+        // The learner's notes are held to their spec as a lesson is: every point of the text still carried (term overlap), their interests
+        // used as framed analogies, sentences and words at their level; a draft that breaks it is written once more with the problems named.
+        const partText = part.passages.map((p) => p.text).join('\n\n');
+        const run = await learningSpec.reviseOnce({
+          generate, textOf: (c) => c.sections.flatMap((s) => s.bullets.map((b) => b.text)).join(' '),
+          spec, keyFacts: learningSpec.sourceFacts(partText), source: partText, minShare: 0.3, own: true, interestNeed: learningSpec.ownInterestNeed(spec, partText.length),
+        });
+        got = run.result;
+        if (run.revised) revisions++;
+        for (const p of run.problems || []) open.add(p.id);
       }
       if (stopped) break;
       if (!got) { unanswered++; continue; }
@@ -139,7 +161,7 @@ async function build(userId, materialId, opts = {}) {
     const coverage = passages.length ? Math.round((touched.size / passages.length) * 100) : 0;
     const status = !sections.length ? 'failed' : (stopped || unanswered ? 'partial' : 'ready');
     saved = db.update('material_notes', saved.id, {
-      sections, dropped, analogies_fixed: analogiesFixed, coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
+      sections, dropped, analogies_fixed: analogiesFixed, revised_parts: revisions, open_problems: [...open], coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     db.flush();
