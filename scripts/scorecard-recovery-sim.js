@@ -76,17 +76,38 @@ function opt(name, dflt) {
   return hit ? hit.slice(name.length + 3) : dflt;
 }
 const QUICK = has('quick');
+// Round 8: every answer draws its randomness from its own stream (learner, level, position), so a change in one answer (an experiment arm,
+// a different review) no longer re-draws every later answer of that learner. Before, any change to which experiment a page ran reshuffled
+// the whole simulated history, and the 30-learner gate check flipped a dozen measures that nothing had touched (docs/SCORECARD-MEASURED.md).
+// --item-rng=0 is the old single stream (rounds 1 to 7).
+const ITEM_RNG = Number(opt('item-rng', 1)) !== 0;
 const LEARNERS = Number(opt('learners', QUICK ? 24 : 200));
 const MAX_LEVELS = Number(opt('levels', 100));
 const simGate = require('./lib/sim-gate');
 // --channels=reading,questionnaire,delayed,games,import,max (or all): the optional measurement channels of services/boosters.js, modelled and sent through the
 // app's own hooks (scorecard/hooks.js on...), so the accuracy gate shows what each one is worth IN THIS SIMULATED WORLD. What a channel's observations look like
 // is an assumption the sim has to make, stated at each one below; where the sim has no way to generate the truth of a channel, it is not run and the report says so.
-const CHANNEL_NAMES = ['reading', 'questionnaire', 'delayed', 'games', 'import', 'max'];
+const CHANNEL_NAMES = ['reading', 'questionnaire', 'delayed', 'games', 'import', 'max', 'choice'];
 const CHANNELS = new Set(String(opt('channels', '')).split(',').map((s) => s.trim()).filter(Boolean).flatMap((c) => (c === 'all' ? CHANNEL_NAMES : [c])));
 const IPIP_R = 0.5;       // how well a validated-scale item reflects the measure it maps to (published self-report validities: about 0.3 to 0.5)
 const GAME_R = 0.6;       // how well a two-minute game reflects the trait it is a task for (a rough, assumed correlation)
 const ACT_NOISE_Z = 0.4;  // the error of a past ACT composite as a read of prior knowledge, in standard deviations
+// Round 8, the "which is clearer?" channel (services/boosters.js choice): after a lesson page (at most one a lesson and CHOICE_PER_DAY a
+// day, as the app limits it), two versions differing on one experiment stat, picked by personalize.choiceDimension. The learner's felt
+// difference is u = CHOICE_R z + sqrt(1 - CHOICE_R^2) e with z their true standing on that stat; they pick the high version when u > 0.4,
+// the low one when u < -0.4, "no difference" otherwise, and skip CHOICE_SKIP of the time. CHOICE_R is the choice's validity, an ASSUMPTION
+// set conservatively at 0.3 (--choice-r): what people say helped them is a weak guide to what does. It equals the scorecard's own
+// SCORECARD_CHOICE_VALIDITY, so this is the rule's best case; --choice-r=0 is the case where choices say nothing (the rule then over-trusts them).
+const CHOICE_R = Number(opt('choice-r', 0.3));
+const CHOICE_SKIP = Number(opt('choice-skip', 0.25));
+const CHOICE_CUT_SIM = 0.4;
+// Round 8, item skill tags (services/scorecard/item-tags.js): every item carries each tag with chance TAG_RATE; on a tagged item the answer
+// logit moves by TAG_B x z(stat) (z = (truth - 50) / 50, as text load does), and the tags the app sees are the true ones with each flipped
+// TAG_FLIP of the time (a model's labels are not perfect). The size is an assumption like text load's; --item-tags=0 turns the channel off.
+const TAG_B = Number(opt('item-tags', 0.6));
+const TAG_RATE = 0.25;
+const TAG_FLIP = 0.1;
+const TAG_STATS = TAG_B ? require('../services/scorecard/item-tags').TAG_STATS : [];
 if (CHANNELS.has('max')) process.env.PERSONALIZE_EXPERIMENT_RATE = '1';
 // The accuracy gate (scripts/lib/sim-gate.js): every measure's error at the end of weeks 1 to 4 of use, against the best achievable from the same
 // data. A week is seven simulated days from the learner's first sitting; how many levels that is depends on how often they study (the sim's
@@ -246,6 +267,7 @@ scorecard.observe = function observeCounted(userId, observations, meta = {}) {
     // A model-scored observation (a contrast, a shift against expectation, a
     // difficulty tap read against the level, a memory test) carries no weight of its own; it
     // is counted as one small unit of behaviour (0.05), or of a tap (0.25).
+    if (o.choice) { credit(o.stat, 'tap', 0.25); continue; }
     if (o.contrast || o.shift || o.tap || o.memory || o.velocity || o.pace || o.reach) {
       // A memory test feeds the forgetting model, which sets all three memory stats.
       const ids = o.memory ? ['decay_rate', 'retention_index', 'retrieval_strength'] : [o.stat];
@@ -317,7 +339,10 @@ const SIGNAL_STATS = new Set(['rush_tendency', 'guessing_propensity', 'processin
   'scaffolding_fade']);
 // Round 5: with --text-load, language level drives answers on wordy items.
 if (Number(opt('text-load', 0.6))) SIGNAL_STATS.add('vocabulary_ceiling');
+// The stats an experiment can be run on (round 8 added eleven), for the truth model; the stat GROUPS stay the research split of
+// 2026-10-22 (the first eleven experiment stats), so a converted stat is compared with itself across runs (it stays in llm-only).
 const EXPERIMENT_STATS = personalize.EXPERIMENTS.map((e) => e.stat);
+const EXPERIMENT_GROUP = (personalize.BASE_EXPERIMENTS || personalize.EXPERIMENTS).map((e) => e.stat);
 // The questionnaire's reach is measured, not copied: seed a throwaway card with
 // every answer at the top and see which stats moved.
 const QUIZ_DIMS = ['explanation_depth', 'example_order', 'visual_support', 'practice_density', 'session_pacing',
@@ -338,7 +363,7 @@ const QUIZ_STATS = (() => {
  * questionnaire seeds it; otherwise "llm-only".
  */
 function groupOf(id) {
-  if (EXPERIMENT_STATS.includes(id)) return 'experiment';
+  if (EXPERIMENT_GROUP.includes(id)) return 'experiment';
   if (SIGNAL_STATS.has(id)) return 'behavioural';
   if (QUIZ_STATS.has(id)) return 'questionnaire';
   return 'llm-only';
@@ -408,6 +433,7 @@ const GENERATIVE = {
   // (50 + 17 z). The fixed draw is used only by the honest model-read stub.
   scaffolding_fade: 'how far ahead of (high) or behind (low) the course the learner is now: true ability minus the difficulty of the course at this level, as a standing among learners',
   text_density_tolerance: 'fewer scroll-backs over a lesson page',
+  ...Object.fromEntries(TAG_STATS.map((id) => [id, `answers on items tagged with it move by ${TAG_B} x z (item tags, round 8)`])),
 };
 const DEAD_WIRED = {};
 const NO_GENERATIVE_NOTE = {
@@ -761,6 +787,7 @@ function runLearner(index, mode, { population = false } = {}) {
   const T = drawTruth(new Rng(hashSeed(SEED, `${tag}truth`, index)));
   const P = paramsFor(T);
   const rng = new Rng(hashSeed(SEED, `${tag}behaviour`, index));
+  const outerRng = rng;
   const llmRng = new Rng(hashSeed(SEED, `${tag}llm`, mode, index));
   // Its own stream, so adding scroll-backs left every other behaviour as it was.
   const scrollRng = new Rng(hashSeed(SEED, `${tag}scroll`, index));
@@ -768,6 +795,10 @@ function runLearner(index, mode, { population = false } = {}) {
   const openRng = new Rng(hashSeed(SEED, `${tag}open`, index));
   // And for the reading test knob (round 4).
   const readingRng = new Rng(hashSeed(SEED, `${tag}reading`, index));
+  // Round 8: item tags and pairwise choices, each on its own stream so turning one on leaves every other draw as it was.
+  const tagRng = new Rng(hashSeed(SEED, `${tag}tags`, index));
+  const choiceRng = new Rng(hashSeed(SEED, `${tag}choice`, index));
+  const choiceLog = [];
   const readingDone = new Set();
   const fixedDir = Object.fromEntries(STATS.map((s) => [s.id, llmRng.chance(0.5) ? 1 : -1]));
   const allIds = STATS.map((s) => s.id);
@@ -923,6 +954,7 @@ function runLearner(index, mode, { population = false } = {}) {
 
     const page = pendingPage;
     for (let i = first; i < plan.length; i++) {
+      const rng = ITEM_RNG ? new Rng(hashSeed(SEED, `${tag}item`, index, L, i)) : outerRng; // eslint-disable-line no-shadow
       const { skill, role } = plan[i];
       const kept = resume ? resume.rows[i] : null;
       const format = kept ? kept.format : rng.chance(0.7) ? 'multiple_choice' : 'typed';
@@ -934,6 +966,13 @@ function runLearner(index, mode, { population = false } = {}) {
         prompt: wordsOf(12 + rng.int(18)), choices: format === 'multiple_choice' ? CHOICES : undefined,
         answer: 'x', confidence: null, coach_used: false, answer_changes: 0, error_tag: null,
       };
+      // Round 8: the item's true skill tags drive its answer; the app sees them with label noise (skill_tags).
+      let trueTags = kept ? kept.sim_true_tags || [] : [];
+      if (!kept && TAG_STATS.length) {
+        trueTags = TAG_STATS.filter(() => tagRng.chance(TAG_RATE));
+        base.sim_true_tags = trueTags;
+        base.skill_tags = TAG_STATS.filter((t) => (trueTags.includes(t) ? !tagRng.chance(TAG_FLIP) : tagRng.chance(TAG_FLIP * TAG_RATE / (1 - TAG_RATE))));
+      }
       if (quit || (leaveAt >= 0 && i >= leaveAt)) {
         // Left with questions unanswered: they exist, but have no answer.
         const row = kept || memoryDb.insert('items', { ...base, correct: null, ms: 0 });
@@ -954,6 +993,7 @@ function runLearner(index, mode, { population = false } = {}) {
       if (format === 'typed') logit += P.typed;
       if (TEXT_LOAD) logit += TEXT_LOAD * P.z('vocabulary_ceiling') * ((String(base.prompt || '').split(' ').length - 20.5) / 5.2);
       if (ctx.reentry) logit += P.reentry;
+      for (const t of trueTags) logit += TAG_B * P.z(t);
       if (page && (role === 'focus' || role === 'stretch')) {
         if (page.skimmed) logit -= 0.4;
         if (page.words > 2200) logit += P.intake;
@@ -1278,6 +1318,21 @@ function runLearner(index, mode, { population = false } = {}) {
       let result;
       if (isPage) {
         result = pageLevel(level);
+        if (CHANNELS.has('choice')) {
+          // "Which is clearer?" after the lesson page, within the app's limits (services/boosters.js CHOICE_PER_LESSON, CHOICE_PER_DAY).
+          const day = Math.floor(simNow / 86400000);
+          const boosters = require('../services/boosters'); // eslint-disable-line global-require
+          if (choiceLog.filter((d) => d === day).length < boosters.CHOICE_PER_DAY) {
+            const e = personalize.choiceDimension(userId);
+            if (e) {
+              choiceLog.push(day);
+              if (!choiceRng.chance(CHOICE_SKIP)) {
+                const u = CHOICE_R * zOf(e.stat) + Math.sqrt(1 - CHOICE_R ** 2) * choiceRng.normal();
+                hooks.onChoice(userId, e.stat, u > CHOICE_CUT_SIM ? 'high' : u < -CHOICE_CUT_SIM ? 'low' : 'same');
+              }
+            }
+          }
+        }
       } else {
         result = practiceLevel(level, session, sessionItems, { firstOfSitting: k === 0, reentry: reentry && firstPractice }, k === 0 ? resume : null);
         firstPractice = false;
@@ -1875,6 +1930,8 @@ if (WRITE) {
     config: {
       learners: LEARNERS, max_levels: MAX_LEVELS, checkpoints: CHECKPOINTS, modes: MODES, seed: SEED, population: POPULATION,
       population_sd: POP_SD, experiment_effect_logits: EXP_EFFECT, self_report_r: SELF_REPORT_R,
+      channels: [...CHANNELS], item_rng: ITEM_RNG, choice_validity: CHOICE_R, choice_skip: CHOICE_SKIP, item_tag_effect: TAG_B, item_tag_rate: TAG_RATE, item_tag_flip: TAG_FLIP,
+      experiment_allocator: process.env.PERSONALIZE_ALLOCATOR === 'weighted' ? 'weighted' : 'info', experiment_stats: EXPERIMENT_STATS.length,
       questionnaire_rate: QUIZ_RATE, feedback_rate: FEEDBACK_RATE, confidence_tap_rate: TAP_RATE,
       items_per_practice_level: LEVEL_ITEMS, lesson_page_every: 3, model_read_stats_per_level: LLM_STATS_PER_READ,
       directive_edge: EDGE, directive_min_confidence: MIN_CONF, max_directives: translate.MAX_DIRECTIVES,
