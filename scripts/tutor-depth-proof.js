@@ -685,6 +685,17 @@ function report() {
     L.push('| run | replies | prompt chars, mean (about tokens) | reply time median ms | answered by | ledger spend |', '|---|---|---|---|---|---|');
     for (const [name, R] of [['before', B], ['after', A]]) L.push(`| ${name} | ${R.rows.length} | ${Math.round(mean(sys(R)))} (~${Math.round(mean(sys(R)) / 4)}) | ${med(ms(R))} | ${models(R).replace(/\|/g, '/')} | $${R.ledger_delta_usd} |`);
     L.push('');
+    // Coverage: the ground truth in the prompt, and out-of-date facts in it unmarked (no model, no judge).
+    L.push('| run | ground-truth facts found in the prompt (keyword checks, 40 prompts) | prompts carrying an out-of-date fact unmarked | prompts with an answer key |', '|---|---|---|---|');
+    for (const [name, R] of [['before', B], ['after', A]]) {
+      const rows = coverageOf({ rows: R.rows.filter((r) => !/_cf$/.test(r.learner)) });
+      L.push(`| ${name} | ${rows.reduce((n, r) => n + r.have, 0)} of ${rows.reduce((n, r) => n + r.of, 0)} | ${rows.filter((r) => r.stale_live.length).length} of ${rows.length} | ${rows.filter((r) => r.key_leak).length} |`);
+    }
+    L.push('');
+    // The answer on question pages, by pattern (the stuck and answer probes).
+    const LEAK = { maya: /11\s*\/\s*12|eleven.twelfths/i, ben: /\b1\s*\/\s*4\b|\b25\s*%|0?\.25\b|one.quarter/i, chloe: /\b24\b/, sam: /e.?flat|e♭|\beb\b/i, priya: /slope (is|=|of) 3\b|\bm\s*=\s*3\b/i, omar: /\b(in front|front)\b/i, leo: /\best[aá]\b/i };
+    const leaks = (R) => R.rows.filter((r) => ['stuck', 'answer'].includes(r.probe) && !/_cf$/.test(r.learner) && LEAK[r.learner] && LEAK[r.learner].test(r.reply)).map((r) => `${r.learner}:${r.probe}`);
+    L.push(`Answer patterns on question pages (stuck and answer probes, 7 learners with a pattern; a match is a flag to read, not proof of a leak): before ${leaks(B).length} (${leaks(B).join(', ') || 'none'}), after ${leaks(A).length} (${leaks(A).join(', ') || 'none'}).`, '');
   }
   L.push(`Judge calls answered by: ${JSON.stringify([...ok.map((p) => p.judge), ...cf.map((c) => c.judge)].reduce((m, x) => { m[x] = (m[x] || 0) + 1; return m; }, {}))}; probes judged ${ok.length} of ${J.probes.length}.`);
   const md = L.join('\n');
@@ -710,7 +721,7 @@ function coverKeys() {
     maya: { have: [['moved ACT date', d(97)], ['GarageBand', /garageband/i], ['added-denominators mix-up', /add(s|ed)? the denominators|added denominators/i], ['analogy outcomes', OUTCOME('analogy')], ['brevity measure value', NUM('brevity preference')], ['frustration measure value', NUM('frustration threshold')], ['decimals fading', /fading: decimals/i]], stale: [['old ACT date', new RegExp(spoken(41), 'i')], ['basketball as an interest', /basketball/i]] },
     leo: { have: [['oral exam date', d(12)], ['Madrid trip', /madrid/i], ['ser for states mix-up', /ser for temporary|ser for state/i], ['step-question outcomes', OUTCOME('step questions')], ['humour measure value', NUM('humor receptivity')], ['evaluation anxiety value', NUM('evaluation anxiety')], ['preterite fading', /fading: preterite/i]], stale: [] },
     priya: { have: [['ACT date', d(25)], ['target 28', /target (composite )?28/i], ['rise/run mix-up', /rise[ _]run/i], ['sign error marked fixed', /fixed: sign error|sign error[^|\n]{0,60}fixed/i], ['worked-example outcomes', OUTCOME('worked example')], ['self-efficacy value', /self.efficacy \d+/i], ['ratios fading', /fading: ratios/i]], stale: [['the fixed sign error as current', /sign error moving terms|flips the sign/i]] },
-    omar: { have: [['tournament date', d(18)], ['pin/skewer mix-up', /pin and a skewer|pin vs skewer/i], ['endgames now solid', /said it was hard[^|\n]*solid/i], ['brief outcomes', OUTCOME('brief')], ['hint dependency value', NUM('hint dependency')], ['openings fading', /fading: openings/i]], stale: [['endgames as a current weakness', /endgames are really hard/i]] },
+    omar: { have: [['tournament date', d(18)], ['pin/skewer mix-up', /pin and a skewer|pin vs skewer/i], ['endgames now solid', /(said it was hard|really hard)[^|\n]*solid/i], ['brief outcomes', OUTCOME('brief')], ['hint dependency value', NUM('hint dependency')], ['openings fading', /fading: openings/i]], stale: [['endgames as a current weakness', /endgames are really hard/i]] },
     sofia: { have: [['essay date', d(9)], ['comma splice mix-up', /comma splice/i], ['visual outcomes', OUTCOME('visual')], ['attention measure value', NUM('attention runway')], ['avoid sports', /sports examples/i], ['verb tense fading', /fading: verb tense/i]], stale: [] },
     ben: { have: [['bootcamp test date', d(30)], ['independent-events mix-up', /independent/i], ['detailed outcomes', OUTCOME('detailed')], ['analogy failed', /analogy[^|\n]{0,16}0 of 3/i], ['humour measure value', NUM('humor receptivity')], ['exponents fading', /fading: exponents/i]], stale: [] },
     chloe: { have: [['moved-up test date', d(5)], ['Pepper', /pepper/i], ['area/perimeter mix-up', /area and perimeter|area perimeter/i], ['evaluation anxiety value', NUM('evaluation anxiety')], ['ratios fading', /fading: ratios/i]], stale: [['old test date', new RegExp(spoken(12), 'i')]] },
@@ -751,4 +762,4 @@ else if (mode === 'report') report();
 else if (mode === 'coverage') coverage();
 else { console.log('usage: build | replies | judge | report | coverage (see the header)'); process.exit(2); }
 
-module.exports = { learners, probesFor };
+module.exports = { learners, probesFor, ask, JUDGE_SYSTEM, profileText, coverageOf };

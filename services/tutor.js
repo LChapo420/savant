@@ -220,7 +220,9 @@ async function fold(userId) {
     let onFile = '';
     try {
       // eslint-disable-next-line global-require
-      onFile = require('./tutor-facts').list(userId).slice(0, 12).map((f) => `- ${f.kind}: ${clip(f.text, 120)} (${String(f.last_confirmed_at || f.first_at || '').slice(0, 10)})`).join('\n');
+      const tf = require('./tutor-facts'); // eslint-disable-line global-require
+      // With what their answers say since, so the summary does not keep "finds X hard" once X is solid.
+      onFile = tf.list(userId).slice(0, 12).map((f) => `- ${f.kind}: ${clip(f.text, 120)}${tf.sinceNote(userId, f)} (${String(f.last_confirmed_at || f.first_at || '').slice(0, 10)})`).join('\n');
     } catch { onFile = ''; }
     let summary = null;
     try {
