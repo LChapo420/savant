@@ -142,3 +142,12 @@ real-world challenges, scenario role-play, self-report surveys.
   through it.
 - **Keys in `.env`.** Low risk: the GitHub repo is not publicly visible (checked 2026-10-20) and no person has the file.
   Make new keys before anyone else gets the code or the repo goes public.
+
+## Scorecard accuracy (owner, 2026-10-31)
+
+- **Goal.** Every scorecard measure as close to the learner's true value as physically possible within a month of use: best-possible (Bayesian) estimation per measure with an honest uncertainty range, the most informative probe asked next, and a simulation gate that compares each measure's error at 1, 2, 3 and 4 weeks against the best achievable with the same data. Never claim "perfect" or "within 1 point" accuracy.
+- **Approved now.** Review timing by predicted recall (review when recall is predicted below 85%); a calibrated reading-level check; short validated questionnaires at sign-up (skippable); delayed memory checks (about 30 seconds at 1 week and 1 month); 2-minute brain games (memory span, speed, attention); silent behaviour signals (rereading, hesitation, answer changes, typing rhythm) with a privacy notice; optional import of past results (ACT/PSAT reports, grades, Anki/Quizlet history); an optional max-accuracy mode (confidence taps, more teaching experiments).
+- **How they appear.** Quick, worthwhile ones are built into the normal flow and are always skippable. Longer or less fun ones are offered on the side as optional extras that raise accuracy.
+- **Later, with real users.** Starting a new learner from similar learners: build after the beta so it can be tested on real people. "Is this you?" profile check: maybe; decide later.
+- **Not now.** Webcam eye tracking and wearables (privacy, especially for children).
+- **Own material.** The learner's interests and dislikes shape their own uploaded material too, as clearly framed analogies and examples; the text stays the only source of facts.
