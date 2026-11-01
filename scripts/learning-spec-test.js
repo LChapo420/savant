@@ -367,7 +367,13 @@ console.log('8. the prompt');
   check('and it still never uses what they dislike, and invents no interest for a learner who stated none', /Never use examples[^\n]*spiders/.test(material) && !/Interests:/.test(ls.specToPrompt(noInterest, { surface: 'material' })));
   check('every surface of own material carries the interests: material, notes and podcast (the test asks for the setting of its questions)', ['material', 'notes', 'podcast'].every((s) => /minecraft/.test(ls.specToPrompt(spec, { surface: s }))) && /Where a question needs a setting, use minecraft/.test(ls.specToPrompt(spec, { surface: 'test' })));
   const blocked = ls.LEVER_IDS.filter((l) => !ls.SURFACES.material(l));
-  check('the only lever own material still withholds is depth (it would bring facts the text lacks); every other label is honoured with a source-limited sentence', blocked.join() === 'depth' && ls.LEVER_IDS.filter((l) => l !== 'depth').every((l) => ls.SURFACES.podcast(l) || ['visual', 'structure', 'typed', 'density', 'notation'].includes(l)), blocked);
+  // Version 2: own material withholds no lever. Depth, the last one withheld, now has a source-limited sentence (unpack the material's
+  // own reasoning, never a deeper fact); version 1 (LEARNING_SPEC_DEPTH=off) still withholds it.
+  const deep = ls.buildSpecFrom({ ...input({ topic: 'photosynthesis' }), metrics: { ...input().metrics, depth_breadth: { measured: 95, confidence: 95 } } });
+  check('own material withholds no lever: depth gets a sentence limited to the reasoning the material gives; every label is honoured', blocked.length === 0 && /unpack its own reasoning[^\n]*using only what the material says/.test(ls.specToPrompt(deep, { surface: 'material' })) && ls.LEVER_IDS.every((l) => ls.SURFACES.podcast(l) || ['visual', 'structure', 'typed', 'density', 'notation'].includes(l)), blocked);
+  process.env.LEARNING_SPEC_DEPTH = 'off';
+  check('and version 1 (LEARNING_SPEC_DEPTH=off) still withholds only depth', ls.LEVER_IDS.filter((l) => !ls.SURFACES.material(l)).join() === 'depth' && !/unpack its own reasoning/.test(ls.specToPrompt(deep, { surface: 'material' })));
+  delete process.env.LEARNING_SPEC_DEPTH;
   const src = 'Plants make glucose from carbon dioxide and water using light energy. Chlorophyll absorbs the light.';
   const withDomain = ls.buildSpecFrom(input({ interests: ['minecraft'], topic: 'photosynthesis' }));
   withDomain.interests.share = 0.9;
