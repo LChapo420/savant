@@ -102,13 +102,16 @@ App.mount(async () => {
         </section>
 
         <section class="child-part">
-          <h3>Outside AI and AI training</h3>
+          <h3>Outside AI, AI training and measurement extras</h3>
           <label class="check-row"><input type="checkbox" data-opt="third_party_ai" ${s.third_party_ai && (s.third_party_ai.requested || s.third_party_ai.active) ? 'checked' : ''}>
             <span>Allow what ${esc(ch.display_name || 'my child')} writes or says to go to the <a href="/privacy#vendors">outside AI companies</a>, only to answer or mark it.
               <span class="tiny muted opt-status">${esc(optStatus(s.third_party_ai))}</span></span></label>
           <label class="check-row"><input type="checkbox" data-opt="ai_training" ${s.ai_training && (s.ai_training.requested || s.ai_training.active) ? 'checked' : ''}>
             <span>Allow their data to be used to train AI models (Savant does not do this today).
               <span class="tiny muted opt-status">${esc(optStatus(s.ai_training))}</span></span></label>
+          <label class="check-row"><input type="checkbox" data-opt="measurement_extras" ${s.measurement_extras && (s.measurement_extras.requested || s.measurement_extras.active) ? 'checked' : ''}>
+            <span>Allow the optional <a href="/privacy">measurement extras</a> (a questionnaire, memory checks, short games, results you type in, quiet typing signals) so lessons fit ${esc(ch.display_name || 'my child')} better. Without this, none of them is offered.
+              <span class="tiny muted opt-status">${esc(optStatus(s.measurement_extras))}</span></span></label>
           <p class="tiny muted">Turning one on needs the <a href="/parent-form">signed form</a>. Turning one off works at once.</p>
         </section>
 

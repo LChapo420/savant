@@ -12,6 +12,10 @@ App.mount(async () => {
   if (!user) return;
   App.header(user, 'dashboard');
 
+  // Max-accuracy mode (an optional extra, /boosters): a confidence tap on every question, not one in three.
+  let maxAccuracy = false;
+  App.api.get('/api/boosters').then((s) => { maxAccuracy = !!(s && s.allowed && s.max_accuracy && s.max_accuracy.on); }).catch(() => {});
+
   const host = document.getElementById('player');
   const enrollmentId = Number(App.query('enrollment'));
   if (!enrollmentId) {
@@ -818,7 +822,7 @@ function renderRubricResult(result) {
       // Asked on about one question in three, so it stays a quick tap rather than
       // a chore — enough for the learning scorecard to learn how well this learner
       // knows what they know.
-      askConfidence: !isExam() && index % 3 === 1,
+      askConfidence: !isExam() && (maxAccuracy || index % 3 === 1),
       onSubmit: async (answer, meta = {}) => {
         let result;
         try {

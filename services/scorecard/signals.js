@@ -838,6 +838,70 @@ function fromReadingCheck({ score, grade, se, expected_grade: expected }) {
   return [{ stat: 'vocabulary_ceiling', value: clamp(Number(score)), weight, test: true, note: `reading check: about grade ${Number(grade).toFixed(1)} against ${expected} expected for their age` }];
 }
 
+// ── the measurement channels (services/boosters*.js): each turns what the learner gave into observations, which the hooks fold in ──
+/**
+ * The sign-up questionnaire (content/ipip-items.js): each answered item moves the measures it is mapped to a little, as a PRIOR (source
+ * "questionnaire": counted as self-report, never as measured evidence). answers: { itemId: 1..5 }.
+ */
+function fromQuestionnaire(answers, items) {
+  const obs = [];
+  for (const item of items) {
+    const v = Number(answers && answers[item.id]);
+    if (!(v >= 1 && v <= 5)) continue;
+    const x = (v - 1) / 4;
+    for (const [stat, dir, weight] of item.maps) {
+      obs.push({ stat, value: clamp(dir > 0 ? 10 + 80 * x : 90 - 80 * x), weight, note: `questionnaire: "${item.text}"` });
+    }
+  }
+  return obs;
+}
+
+/**
+ * A delayed memory check: some seconds of questions on skills last practised `dt` days ago (a week or a month), each a memory test for the
+ * forgetting model (scorecard/forgetting.js row): the days since the skill was last practised, its earlier right and wrong answers, the chance
+ * of being right had it been fresh, the chance of a guess, and whether it was right.
+ */
+function fromDelayedCheck(tests) {
+  return (tests || []).filter((t) => Number.isFinite(t.dt) && t.dt >= 1).map((t) => ({
+    stat: 'decay_rate',
+    memory: { dt: t.dt, nc: t.nc, nw: t.nw, ns: t.ns || 0, nsw: t.nsw || 0, pk: t.pk, g: t.g, y: !!t.right, open: false, review: false },
+    note: `${t.right ? 'remembered' : 'forgot'} after ${Math.round(t.dt)} day${Math.round(t.dt) === 1 ? '' : 's'} (delayed check)`,
+  }));
+}
+
+/** A two-minute game's result as a designed test (weight 1.5, test: true) on the measure it is a task for; `score` is 0 to 100 against age norms. */
+function fromGame(stat, score, note) {
+  if (!Number.isFinite(Number(score))) return [];
+  return [{ stat, value: clamp(Number(score)), weight: 1.5, test: true, note }];
+}
+
+/**
+ * Silent behaviour summaries (hesitation before the first move, typing rhythm, backspaces; never the keys): a small, repeated observation, never a
+ * test. `s` = { items, hesitation_ms, key_median_ms, key_cv, backspace_share } aggregated over a batch of answered items.
+ */
+function fromSilent(s) {
+  const obs = [];
+  if (!s || !(s.items >= 5)) return obs;
+  const note = `silent signals over ${s.items} answers`;
+  // Slower first move, slower keys: a slower processing pace; a long wait before the first move: more deliberate. Measured against typical values, weakly.
+  if (Number.isFinite(s.key_median_ms) && s.key_median_ms > 0 && s.keys >= 20) obs.push({ stat: 'processing_velocity', value: clamp(50 - 17 * Math.log2(s.key_median_ms / 220)), weight: 0.3, note: `${note}: typing pace` });
+  if (Number.isFinite(s.hesitation_ms) && s.hesitation_ms > 0) obs.push({ stat: 'deliberation_depth', value: clamp(50 + 17 * Math.log2(s.hesitation_ms / 3500)), weight: 0.3, note: `${note}: wait before the first move` });
+  if (Number.isFinite(s.backspace_share) && s.keys >= 20) obs.push({ stat: 'perfectionism', value: clamp(50 + 170 * (s.backspace_share - 0.1)), weight: 0.2, note: `${note}: corrections while typing` });
+  return obs;
+}
+
+/** Past results the learner typed or imported (ACT, SAT/PSAT, grades): prior knowledge, as a designed test at the weight of a self-reported figure. */
+function fromImportedResults(r) {
+  const obs = [];
+  const z = (v, mean, sd) => (Number(v) - mean) / sd;
+  const add = (v, mean, sd, note, weight) => { if (Number.isFinite(Number(v))) obs.push({ stat: 'prior_knowledge', value: clamp(50 + 17 * z(v, mean, sd)), weight, test: true, note }); };
+  if (r.act_composite) add(r.act_composite, 19.5, 5.9, `past result: ACT composite ${r.act_composite}`, 2);
+  if (r.sat_total) add(r.sat_total, 1050, 210, `past result: SAT total ${r.sat_total}`, 2);
+  if (r.psat_total) add(r.psat_total, 920, 200, `past result: PSAT total ${r.psat_total}`, 2);
+  if (r.gpa) add(r.gpa, 3.0, 0.7, `past result: grade average ${r.gpa}`, 1);
+  return obs;
+}
+
 /** This learner's usual check accuracy on a lesson: the bar an experiment is measured against. */
 function lessonBaseline(userId) {
   const rows = db.find('level_signals', (r) => r.user_id === userId
@@ -866,6 +930,11 @@ module.exports = {
   fromSession,
   fromPlacement,
   fromReadingCheck,
+  fromQuestionnaire,
+  fromDelayedCheck,
+  fromGame,
+  fromSilent,
+  fromImportedResults,
   lessonBaseline,
   lessonWords,
   accuracy,

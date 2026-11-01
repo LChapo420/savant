@@ -67,7 +67,8 @@ app.use(securityHeaders);
 // one express 4.22.3 ships) can be made to hang on one (GHSA-27r3-jxmh-p828;
 // security review 2026-10-24, finding 9). A compressed body is refused with 415.
 const jsonBody = express.json({ limit: '64kb', inflate: false });
-app.use((req, res, next) => (req.path.startsWith('/api/essays') ? next() : jsonBody(req, res, next)));
+// The review-history import (routes/boosters.js) takes a CSV of up to 400 KB and mounts its own parser.
+app.use((req, res, next) => (req.path.startsWith('/api/essays') || req.path === '/api/boosters/import' ? next() : jsonBody(req, res, next)));
 
 // The key that signs session cookies. In production a guessable key would let
 // anyone forge a login cookie for any account, so the app refuses to run without
@@ -129,6 +130,8 @@ app.use('/api', require('./routes/retention')); // study sessions, retention enf
 app.use('/api/placement', require('./routes/placement'));
 // The reading check: a few minutes of vocabulary and passages that measure language level for the scorecard (services/reading-check.js).
 app.use('/api/reading-check', require('./routes/reading-check'));
+// Optional measurement channels that raise the scorecard's accuracy: questionnaire, delayed memory checks, brain games, silent signals, imports, max accuracy (services/boosters.js).
+app.use('/api/boosters', require('./routes/boosters'));
 // The subject-level quiz: one walk up a whole subject, ending in a recommended
 // percentage per grade for the learner who does not know where to start.
 app.use('/api/subject-placement', require('./routes/subject-placement'));

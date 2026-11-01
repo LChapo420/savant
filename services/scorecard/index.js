@@ -416,9 +416,25 @@ function get(userId) {
 // a full maths record must not make a first Spanish lesson look certain.
 const SUBJECT_ONLY = new Set(['prior_knowledge']);
 
-/** A measured score's standard error, in points, from its mass (one prior unit included). */
-function seOf(mass) {
-  return 25 / Math.sqrt(1 + (mass || 0));
+/**
+ * A measured score's standard error, in points: the sampling noise from its mass (one prior unit included), plus, for a measure read through a
+ * rule that is known to leak (its validity v under 1, signals.js RATES / SHIFTS / CONTRASTS / TAPS and the secondary and model reads), the
+ * error the rule makes even with unlimited evidence: the part of a learner's spread it cannot see, POP_SD x sqrt(1 - v^2), added in quadrature.
+ * Without it a measure whose rule is biased reports an interval that shrinks with evidence toward a wrong value (the accuracy gate,
+ * scripts/lib/sim-gate.js, found intervals that held the truth 70% of the time where 90% was claimed). The mass fades with time (read()),
+ * not with updates, so a learner who stops studying gets wider intervals, not stale confident ones.
+ */
+const POP_SD = 17;
+function validityOf(statId) {
+  if (!statId) return 1;
+  const v = (RATES[statId] && RATES[statId].validity) || (SHIFTS[statId] && SHIFTS[statId].validity) || (CONTRASTS[statId] && CONTRASTS[statId].validity) || (TAPS[statId] && TAPS[statId].validity);
+  if (v) return Math.min(1, v);
+  return SECONDARY_RATES.has(statId) ? SECONDARY_VALIDITY : 1;
+}
+function seOf(mass, statId = null) {
+  const sampling = 25 / Math.sqrt(1 + (mass || 0));
+  const v = validityOf(statId);
+  return v >= 1 ? sampling : Math.sqrt(sampling ** 2 + (POP_SD * Math.sqrt(1 - v * v)) ** 2);
 }
 
 // ── standing: where this learner stands among learners ─────────────────────
@@ -665,7 +681,7 @@ function read(card, statId, { trackId } = {}) {
   const own = trackId && SUBJECT_ONLY.has(statId);
   if (!sub || !(sub.w || sub.mw)) {
     if (own) return { score: Math.round(overall.s), confidence: 0, measured: 50, se: seOf(0), evidence: null, tested: false };
-    return { score: Math.round(overall.s), confidence: confidenceOf(measuredMass(overall)), measured: Math.round(measuredScore(overall)), se: seOf(measuredMass(overall)), ...evidenceOf(overall) };
+    return { score: Math.round(overall.s), confidence: confidenceOf(measuredMass(overall)), measured: Math.round(measuredScore(overall)), se: seOf(measuredMass(overall), statId), ...evidenceOf(overall) };
   }
   // Subject evidence is the more specific, so it dominates as soon as there is
   // any: being advanced in maths says little about being advanced in Spanish.
@@ -676,7 +692,7 @@ function read(card, statId, { trackId } = {}) {
   const measured = subM || allM
     ? blend(measuredScore(sub), measuredScore(overall), subM * 4, Math.min(allM, 1.5))
     : measuredScore(sub);
-  return { score: Math.round(score), confidence: confidenceOf(Math.max(subM, allM)), measured: Math.round(measured), se: seOf(Math.max(subM, allM)), ...evidenceOf(subM >= allM ? sub : overall) };
+  return { score: Math.round(score), confidence: confidenceOf(Math.max(subM, allM)), measured: Math.round(measured), se: seOf(Math.max(subM, allM), statId), ...evidenceOf(subM >= allM ? sub : overall) };
 }
 
 /**

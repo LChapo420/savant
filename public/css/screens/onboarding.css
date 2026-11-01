@@ -449,3 +449,21 @@ body.ob-subject-placement .odds-name { font-weight: var(--w-strong); }
 body.ob-reading-check .passage { max-height: none; overflow: visible; }
 body.ob-reading-check .rc-points { margin: var(--s-4) 0; padding-left: 1.2em; color: var(--ink-2); }
 body.ob-reading-check .rc-actions { margin-top: var(--s-5); gap: var(--s-3); }
+
+/* ── the extras page and the games ──────────────────────────────────────── */
+body.ob-boosters .boost { margin-bottom: var(--s-4); }
+body.ob-boosters .boost h2 { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
+.boost-list { list-style: none; margin: var(--s-3) 0 0; padding: 0; display: grid; gap: var(--s-3); }
+.boost-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3); }
+.boost-row > div:first-child { min-width: 0; flex: 1 1 14rem; }
+.check-row { display: flex; align-items: flex-start; gap: var(--s-3); }
+.check-row input { margin-top: 0.3em; inline-size: 1.25rem; block-size: 1.25rem; }
+.game-card .game-stage { min-height: 14rem; display: grid; place-items: center; align-content: center; gap: var(--s-4); text-align: center; outline: none; }
+.game-big { font-size: clamp(3rem, 14vw, 5.5rem); font-weight: var(--w-strong); line-height: 1; font-variant-numeric: tabular-nums; }
+.game-pad { display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center; inline-size: 100%; }
+.game-pad .btn { flex: 1 1 8rem; min-height: 3.25rem; }
+.game-answer { display: grid; gap: var(--s-3); justify-items: center; }
+.game-answer input { font-size: 1.5rem; text-align: center; inline-size: min(100%, 16rem); letter-spacing: 0.15em; }
+
+/* The questionnaire has a sticky Save bar; the tutor button would sit on it on a phone. */
+body.sq-open .tdock-btn { display: none; }

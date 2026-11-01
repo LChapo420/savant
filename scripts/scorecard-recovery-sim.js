@@ -78,6 +78,23 @@ function opt(name, dflt) {
 const QUICK = has('quick');
 const LEARNERS = Number(opt('learners', QUICK ? 24 : 200));
 const MAX_LEVELS = Number(opt('levels', 100));
+const simGate = require('./lib/sim-gate');
+// --channels=reading,questionnaire,delayed,games,import,max (or all): the optional measurement channels of services/boosters.js, modelled and sent through the
+// app's own hooks (scorecard/hooks.js on...), so the accuracy gate shows what each one is worth IN THIS SIMULATED WORLD. What a channel's observations look like
+// is an assumption the sim has to make, stated at each one below; where the sim has no way to generate the truth of a channel, it is not run and the report says so.
+const CHANNEL_NAMES = ['reading', 'questionnaire', 'delayed', 'games', 'import', 'max'];
+const CHANNELS = new Set(String(opt('channels', '')).split(',').map((s) => s.trim()).filter(Boolean).flatMap((c) => (c === 'all' ? CHANNEL_NAMES : [c])));
+const IPIP_R = 0.5;       // how well a validated-scale item reflects the measure it maps to (published self-report validities: about 0.3 to 0.5)
+const GAME_R = 0.6;       // how well a two-minute game reflects the trait it is a task for (a rough, assumed correlation)
+const ACT_NOISE_Z = 0.4;  // the error of a past ACT composite as a read of prior knowledge, in standard deviations
+if (CHANNELS.has('max')) process.env.PERSONALIZE_EXPERIMENT_RATE = '1';
+// The accuracy gate (scripts/lib/sim-gate.js): every measure's error at the end of weeks 1 to 4 of use, against the best achievable from the same
+// data. A week is seven simulated days from the learner's first sitting; how many levels that is depends on how often they study (the sim's
+// learners average about 10 levels a week: 100 levels in about 67 days), and the report prints the levels reached.
+const GATE_WEEKS = [1, 2, 3, 4];
+const GATE_CHECK = has('gate-check');     // compare against the stored baseline and exit 1 on a regression (the quick form run by npm test)
+const GATE_WRITE = has('gate-write');     // store this run's gate as the baseline to compare against
+const GATE_BASELINE = path.join(ROOT, 'curriculum-build', 'scorecard-sim', 'gate-baseline.json');
 const CHECKPOINTS = [10, 30, 100].filter((c) => c <= MAX_LEVELS);
 if (!CHECKPOINTS.includes(MAX_LEVELS)) CHECKPOINTS.push(MAX_LEVELS);
 const MODES = opt('modes', 'off,honest,confirming').split(',').map((m) => m.trim()).filter(Boolean);
@@ -86,7 +103,7 @@ const POPULATION = Number(opt('population', QUICK ? 30 : 60));
 const VERBOSE = has('verbose');
 // The full run writes the baseline; --quick only prints unless asked.
 const WRITE = has('write') || (!QUICK && !has('no-write'));
-const OUT_DIR = path.resolve(opt('out', path.join(ROOT, 'curriculum-build', 'scorecard-sim')));
+const OUT_DIR = path.resolve(opt('out', GATE_CHECK ? path.join(os.tmpdir(), 'scorecard-gate-check') : path.join(ROOT, 'curriculum-build', 'scorecard-sim')));
 // --name=step-1 writes step-1.json and puts a row in BASELINE.md's progress
 // table instead of rewriting the baseline write-up.
 const OUT_NAME = opt('name', QUICK ? 'quick' : 'baseline');
@@ -419,7 +436,7 @@ const EXP_EFFECT = 0.8;       // logits between arms for an extreme learner (~17
 const SELF_REPORT_R = 0.4;    // how well a questionnaire answer reflects the true value
 const QUIZ_RATE = 0.7;        // share of learners who fill in the questionnaire
 const FEEDBACK_RATE = 0.3;    // share of levels the learner leaves feedback on
-const TAP_RATE = Number(opt('tap-rate', 1 / 3));
+const TAP_RATE = CHANNELS.has('max') ? 1 : Number(opt('tap-rate', 1 / 3));
 // --tap-pick=random|hard (round 5, product-call measurement only): which
 // questions show "how sure are you?". random: any question, TAP_RATE of them
 // (the app). hard: the same number of taps, but weighted toward the level's
@@ -453,7 +470,7 @@ const REVIEW_TARGET = Number(opt('review-target', 0.85));
 // on vocabulary_ceiling (language level), which nothing in the app measures
 // today. It stands for an onboarding passage test (or periodic passage
 // checks indexed by readability); the app has no such channel yet.
-const READING_TESTS = Number(opt('reading-test', 0));
+const READING_TESTS = CHANNELS.has('reading') ? 4 : Number(opt('reading-test', 0));
 // --text-load=B (round 5): language level shows in the answers. An item's text
 // load is its prompt's length (12-29 words, as standardised z); a learner's
 // answer logit moves by B * z(vocabulary_ceiling) * load z, so a learner with a
@@ -785,6 +802,35 @@ function runLearner(index, mode, { population = false } = {}) {
     for (const s of QUIZ_STATS) credit(s, 'quiz', 0.6);
     scorecard.seedFromStyleQuiz(userId, vector);
   }
+
+  // ── the measurement channels that happen once, at the start (--channels) ──
+  const chanRng = new Rng(hashSeed(SEED, `${tag}channels`, index));
+  const zOf = (stat) => (T[stat] - 50) / POP_SD;
+  if (CHANNELS.has('questionnaire')) {
+    // Sixteen IPIP items: each answer reflects the mean z of the measures it maps to, at validity IPIP_R, on a five-point scale.
+    const ipip = require('../content/ipip-items');
+    const answers = {};
+    for (const it of ipip.ITEMS) {
+      const mapped = it.maps.filter(([stat]) => T[stat] !== undefined);
+      if (!mapped.length) continue;
+      const z = mapped.reduce((a, [stat, dir]) => a + dir * zOf(stat), 0) / mapped.length;
+      answers[it.id] = clamp(Math.round(3 + 1.1 * (IPIP_R * z + Math.sqrt(1 - IPIP_R ** 2) * chanRng.normal())), 1, 5);
+    }
+    hooks.onQuestionnaire(userId, answers, ipip.ITEMS);
+  }
+  if (CHANNELS.has('games')) {
+    // Three games on the first days: the score is the trait's standing plus noise, correlated GAME_R with it (assumed). working_memory_span has no
+    // behaviour in the sim, so its truth is generated only through this channel.
+    for (const [stat, name] of [['working_memory_span', 'Memory span'], ['processing_velocity', 'Reaction speed'], ['attention_runway', 'Sustained attention']]) {
+      hooks.onGame(userId, stat, clamp(50 + POP_SD * (GAME_R * zOf(stat) + Math.sqrt(1 - GAME_R ** 2) * chanRng.normal()), 2, 98), `${name} game`);
+    }
+  }
+  if (CHANNELS.has('import') && chanRng.chance(0.5)) {
+    // Half the learners have an ACT composite to type in: a read of prior knowledge with an error of ACT_NOISE_Z standard deviations.
+    const z = zOf('prior_knowledge') + ACT_NOISE_Z * chanRng.normal();
+    hooks.onImportedResults(userId, { act_composite: clamp(Math.round(19.5 + 5.9 * z), 1, 36) }, []);
+  }
+  const delayedDone = new Set();
 
   // Memory: each skill's true half-life (days) and when it was last practised.
   const memory = {};
@@ -1143,7 +1189,7 @@ function runLearner(index, mode, { population = false } = {}) {
       if (out.firstConfident[s.id] === undefined && scorecard.read(card, s.id, { trackId: TRACK }).confidence >= translate.MIN_CONF) out.firstConfident[s.id] = done;
       if (out.firstDirective[s.id] === undefined && sides[s.id]) out.firstDirective[s.id] = done;
     }
-    if (CHECKPOINTS.includes(done)) {
+    const takeSnapshot = (key) => {
       const est = {};
       // Where the learner truly stands against the course now (scaffolding_fade's truth).
       const rel = theta - (thetaHat0 + 0.02 * L);
@@ -1153,15 +1199,23 @@ function runLearner(index, mode, { population = false } = {}) {
         const st = scorecard.standing ? scorecard.standing(card, s.id, { trackId: TRACK }) : null;
         if (st) est[s.id].standing = { z: Number(st.z.toFixed(4)), sd: Number(st.sd.toFixed(4)) };
       }
-      out.snapshots[done] = {
+      const days = (simNow - START) / 86400000;
+      const starts = memoryDb.find('sessions', (r) => r.user_id === userId).map((r) => Date.parse(r.started_at)).filter(Number.isFinite).sort((a, b) => a - b);
+      out.snapshots[key] = {
         est,
         sides,
         tokens: promptSizes(userId, L),
         outcome: outcomeNow(),
         rel,
         ledger: JSON.parse(JSON.stringify(ledger)),
+        levels: done,
+        days: Number(days.toFixed(1)),
+        // The answer log reduced to what a read-out of the same data can use (the accuracy gate's benchmark).
+        feat: simGate.featuresOf(memoryDb.find('items', (r) => r.user_id === userId), { gaps: starts.slice(1).map((t, i) => (t - starts[i]) / 86400000), quits: out.quits, levels: done, days }),
       };
-    }
+    };
+    if (CHECKPOINTS.includes(done)) takeSnapshot(done);
+    for (const w of GATE_WEEKS) if (!out.snapshots[`w${w}`] && (simNow - START) >= w * 7 * 86400000) takeSnapshot(`w${w}`);
   }
 
   // Sittings, with the days between them set by how regular the learner is.
@@ -1171,6 +1225,22 @@ function runLearner(index, mode, { population = false } = {}) {
     if (lastSessionEnd !== null) {
       const gapDays = Math.max(0.3, 1.4 * Math.exp(P.gapSd * rng.normal() - P.gapSd ** 2 / 2));
       simNow = lastSessionEnd + gapDays * 86400000;
+    }
+    // Delayed memory checks (a week and a month after practice): three skills last practised that long ago, answered by the TRUE memory, as a memory test.
+    if (CHANNELS.has('delayed')) {
+      for (const [hid, minDays] of [['week', 7], ['month', 28]]) {
+        if (delayedDone.has(hid) || (simNow - START) < minDays * 86400000) continue;
+        const picks = Object.entries(memory).filter(([, m]) => m.last !== null && (simNow - m.last) / 86400000 >= minDays).slice(0, 3);
+        if (picks.length) delayedDone.add(hid);
+        const tests = picks.map(([skill, m]) => {
+          const days = (simNow - m.last) / 86400000;
+          const [nc, nw] = skillCounts[skill] || [0, 0];
+          const [ns, nsw] = spacedCounts[skill] || [0, 0];
+          const pr = trueRecall(m, days);
+          return { dt: days, nc, nw, ns, nsw, pk: 0.9, g: 0.1, right: chanRng.chance(0.1 + 0.85 * pr) };
+        });
+        if (tests.length) hooks.onDelayedCheck(userId, tests);
+      }
     }
     const reentry = lastSessionEnd !== null && (simNow - lastSessionEnd) >= 3 * 86400000;
     let resume = null;
@@ -1317,6 +1387,45 @@ function truthFns(runs, cp) {
     }
     return run.truth[id];
   };
+}
+
+/**
+ * The accuracy gate for one mode (scripts/lib/sim-gate.js): per week, per measure, error against the best achievable from the same data,
+ * the 90% interval's coverage, a status (pass, fail, no signal) and for a failure its reason; then pass counts by evidence group and by
+ * how the sim generates the truth. The truth of scaffolding_fade is the same standing among learners as at a level checkpoint.
+ */
+function gateFor(runs) {
+  const weeks = {};
+  for (const w of GATE_WEEKS) {
+    const key = `w${w}`;
+    const have = runs.filter((r) => r.snapshots[key]);
+    const truthOf = truthFns(runs, key);
+    const perStat = {};
+    for (const s of STATS) {
+      const rows = have.map((r) => {
+        const e = r.snapshots[key].est[s.id];
+        const measured = e.measured !== undefined ? e.measured : e.score;
+        return { truth: truthOf(r, s.id), measured, se: e.se === undefined ? 0 : e.se, confidence: e.confidence, feat: r.snapshots[key].feat };
+      });
+      perStat[s.id] = { group: groupOf(s.id), truth_model: TRUTH_MODEL[s.id].model, ...simGate.gateMeasure(rows) };
+    }
+    const tally = (pick) => {
+      const rows = Object.values(perStat).filter(pick);
+      const real = rows.filter((r) => r.status === 'pass' || r.status === 'fail');
+      return {
+        measures: rows.length, pass: rows.filter((r) => r.status === 'pass').length, fail: rows.filter((r) => r.status === 'fail').length, no_signal: rows.filter((r) => r.status === 'no_signal').length,
+        mean_ratio: real.length ? round(mean(real.map((r) => r.ratio)), 2) : null, mean_mae: real.length ? round(mean(real.map((r) => r.mae)), 1) : null,
+        mean_coverage90: real.length ? round(mean(real.map((r) => r.coverage90)), 2) : null,
+      };
+    };
+    weeks[w] = {
+      learners: have.length, mean_levels: round(mean(have.map((r) => r.snapshots[key].levels)), 1), mean_days: round(mean(have.map((r) => r.snapshots[key].days)), 1), perStat,
+      groups: Object.fromEntries(GROUPS.map((g) => [g, tally((r) => r.group === g)])),
+      truth_models: Object.fromEntries([...new Set(STATS.map((s) => TRUTH_MODEL[s.id].model))].map((m) => [m, tally((r) => r.truth_model === m)])),
+      all: tally(() => true),
+    };
+  }
+  return { weeks };
 }
 
 /** Per-stat and per-group numbers for one mode at one checkpoint. */
@@ -1605,6 +1714,7 @@ for (const mode of MODES) {
     spread[cp] = { batches, false_directive_rate: range('false_directive_rate'), mean_r: range('mean_r'), directives_per_learner: range('directives_per_learner') };
   }
   results[mode].batch_spread = spread;
+  results[mode].gate = gateFor(runs);
   results[mode].activity = {
     mean_days: round(mean(runs.map((r) => r.days)), 0),
     experiments_per_learner: round(mean(runs.map((r) => r.experiments)), 2),
@@ -1660,6 +1770,48 @@ for (const mode of MODES) {
     const oc = results[mode].checkpoints[cp].overall.outcomes;
     const f = (x) => (x ? `${x.mae} / ${x.bias} / ${x.r}` : '—');
     say(`  ${mode.padEnd(40)} ${num(cp, 4)}  ${f(oc.pred7).padStart(22)}  ${f(oc.pred30).padStart(22)}  ${oc.pred30 ? oc.pred30.fitted_share : '—'}   default curve +30d: ${f(oc.pred30_default)}`);
+  }
+}
+// The accuracy gate (round 7): every measure's error against the best achievable from the same data, at weeks 1 to 4.
+{
+  const mode = MODES[0];
+  const g = results[mode].gate;
+  say('');
+  say(`ACCURACY GATE (${mode}): per measure group, weeks 1 to 4 of use; pass = mean absolute error within 10% of the best achievable from the same data (an empirical ideal observer, scripts/lib/sim-gate.js); no signal = nothing in the data beats the population mean by 5%`);
+  say('  group / truth model              ' + GATE_WEEKS.map((w) => `week ${w} (${g.weeks[w].mean_levels} lvls)`.padEnd(30)).join(''));
+  const cell = (t) => `${String(t.pass).padStart(2)} pass ${String(t.fail).padStart(2)} fail ${String(t.no_signal).padStart(2)} none  ratio ${t.mean_ratio === null ? ' — ' : t.mean_ratio.toFixed(2)}  cov ${t.mean_coverage90 === null ? '—' : t.mean_coverage90.toFixed(2)}`.padEnd(30);
+  for (const gr of [...GROUPS, 'all']) say(`  ${gr.padEnd(32)}` + GATE_WEEKS.map((w) => cell(gr === 'all' ? g.weeks[w].all : g.weeks[w].groups[gr])).join(''));
+  for (const m of Object.keys(g.weeks[1].truth_models)) say(`  truth: ${m.padEnd(25)}` + GATE_WEEKS.map((w) => cell(g.weeks[w].truth_models[m])).join(''));
+  const w4 = g.weeks[4].perStat;
+  const fails = Object.entries(w4).filter(([, r]) => r.status === 'fail').sort((a, b) => b[1].ratio - a[1].ratio);
+  say(`  week 4, failing measures (${fails.length}), worst first: error / achievable (ratio), interval coverage, why`);
+  for (const [id, r] of fails.slice(0, 14)) say(`    ${id.padEnd(28)} ${String(r.mae).padStart(5)} / ${String(r.achievable).padEnd(5)} (${r.ratio.toFixed(2)})  cov ${r.coverage90.toFixed(2)}  ${r.reason}`);
+  const reasons = {};
+  for (const [, r] of fails) reasons[r.reason] = (reasons[r.reason] || 0) + 1;
+  say(`  why they fail: ${Object.entries(reasons).map(([k, v]) => `${v} x ${k}`).join('; ') || 'none'}`);
+  say(`  interval coverage at week 4 (target 0.90) over measures with a signal: ${g.weeks[4].all.mean_coverage90 === null ? '—' : g.weeks[4].all.mean_coverage90.toFixed(2)}; ${Object.values(w4).filter((r) => r.status !== 'no_signal' && r.coverage90 < 0.8).length} measures overconfident (under 0.80), ${Object.values(w4).filter((r) => r.status !== 'no_signal' && r.coverage90 > 0.97).length} very wide (over 0.97)`);
+  say(`  The levels in a week are the sim's own (its learners study about ${round(mean(GATE_WEEKS.map((w) => g.weeks[w].mean_levels / w)), 1)} levels a week on average); the benchmark is a linear read-out of 16 log features, so "achievable" is a floor found, not proved optimal.`);
+}
+// The gate's quick form (test-steps.json): a regression is a measure that passed at week 4 and now fails, or a drop of more than two passes in the
+// whole at weeks 2 and 4, or a drop of more than 0.05 in mean interval coverage. A measure with no signal never fails the check (nothing can be read from
+// it); a measure that fails in the baseline too is reported, not failed, so the suite stays green while the known failures are worked down.
+{
+  const g = results[MODES[0]].gate;
+  const snap = { args: { learners: LEARNERS, levels: MAX_LEVELS, seed: SEED, mode: MODES[0], channels: [...CHANNELS] }, weeks: {} };
+  for (const w of [2, 4]) snap.weeks[w] = { pass: g.weeks[w].all.pass, fail: g.weeks[w].all.fail, coverage90: g.weeks[w].all.mean_coverage90, status: Object.fromEntries(Object.entries(g.weeks[w].perStat).map(([id, r]) => [id, r.status])) };
+  if (GATE_WRITE) { fs.writeFileSync(GATE_BASELINE, JSON.stringify(snap, null, 1)); say(`\nwrote the gate baseline ${path.relative(ROOT, GATE_BASELINE)}`); }
+  if (GATE_CHECK) {
+    const base = JSON.parse(fs.readFileSync(GATE_BASELINE, 'utf8'));
+    const problems = [];
+    if (JSON.stringify(base.args) !== JSON.stringify(snap.args)) problems.push(`the baseline was written for ${JSON.stringify(base.args)}, this run is ${JSON.stringify(snap.args)}: rerun with --gate-write`);
+    for (const w of [2, 4]) {
+      const b = base.weeks[w]; const n = snap.weeks[w];
+      for (const [id, st] of Object.entries(b.status)) if (st === 'pass' && n.status[id] === 'fail') problems.push(`week ${w}: ${id} passed in the baseline and fails now`);
+      if (n.pass < b.pass - 2) problems.push(`week ${w}: passes fell from ${b.pass} to ${n.pass}`);
+      if (b.coverage90 !== null && n.coverage90 !== null && n.coverage90 < b.coverage90 - 0.05) problems.push(`week ${w}: interval coverage fell from ${b.coverage90} to ${n.coverage90}`);
+    }
+    say(problems.length ? `GATE CHECK FAILED:\n  ${problems.join('\n  ')}` : `gate check ok: week 4 ${snap.weeks[4].pass} pass / ${snap.weeks[4].fail} fail (baseline ${base.weeks[4].pass} / ${base.weeks[4].fail}), coverage ${snap.weeks[4].coverage90}`);
+    if (problems.length) process.exitCode = 1;
   }
 }
 const lastCp = CHECKPOINTS[CHECKPOINTS.length - 1];

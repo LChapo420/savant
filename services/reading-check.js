@@ -128,6 +128,9 @@ const usedSlots = (userId) => rowsOf(userId).filter((r) => r.status === 'done' |
 
 /** { offer: 'onboarding' | 'periodic' | null, taken, last } for the screens that offer it. */
 function status(userId) {
+  // A learner under their consent age gets no new data collection unless a parent agreed to it (services/boosters.js allowed).
+  const who = db.byId('users', userId);
+  if (who && !require('./boosters').allowed(who)) return { enabled: enabled(), offer: null, open: null, taken: 0, levels: 0, items: `${ITEMS_MIN} to ${ITEMS_MAX}`, minutes: 4, last: null, not_allowed: true }; // eslint-disable-line global-require
   const rows = rowsOf(userId);
   const done = rows.filter((r) => r.status === 'done');
   const last = done.length ? done[done.length - 1] : null;
@@ -150,6 +153,7 @@ function status(userId) {
 // ── running a check ──────────────────────────────────────────────────────────
 function start(user, { kind = 'onboarding' } = {}) {
   if (!enabled()) return { error: 'The reading check is switched off.', code: 'off' };
+  if (!require('./boosters').allowed(user)) return { error: 'Not available for this account.', code: 'off' }; // eslint-disable-line global-require
   const open = rowsOf(user.id).find((r) => r.status === 'open');
   const age = ageOf(user);
   let row = open;

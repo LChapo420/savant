@@ -219,6 +219,9 @@ function scopeActive(consent, scope) {
   return !!(s && s.active);
 }
 
+/** The scopes a parent can switch on, each by the signed form (the operator's check turns it on). */
+const OPT_INS = ['third_party_ai', 'ai_training', 'measurement_extras'];
+
 function blankScopes() {
   return {
     // Covered by the base consent (email plus): internal use only.
@@ -227,6 +230,9 @@ function blankScopes() {
     // Disclosures: separate, unticked, and not in force until a signed form is checked.
     third_party_ai: { requested: false, active: false, method: null, requested_at: null, verified_at: null },
     ai_training: { requested: false, active: false, method: null, requested_at: null, verified_at: null },
+    // The optional measurement channels (services/boosters.js: questionnaire, memory checks, games, silent signals, imports). Off for a child
+    // until a parent agrees; a child with this off gets no new data collection beyond what they already have.
+    measurement_extras: { requested: false, active: false, method: null, requested_at: null, verified_at: null },
   };
 }
 
@@ -883,7 +889,7 @@ router.post('/parent/children/:id/opt-ins', requireParent, (req, res) => {
   const scopes = { ...blankScopes(), ...(c.scopes || {}) };
   const at = nowIso();
   const events = [];
-  for (const key of ['third_party_ai', 'ai_training']) {
+  for (const key of OPT_INS) {
     if (typeof req.body[key] !== 'boolean') continue;
     const was = scopes[key] || {};
     if (req.body[key] && !was.requested) {
@@ -978,14 +984,14 @@ function requireAdminUser(req, res, next) {
 
 router.get('/admin/forms', requireAdminUser, (req, res) => {
   const rows = db.find('parental_consents', (c) => c.status === 'active'
-    && ['third_party_ai', 'ai_training'].some((k) => c.scopes && c.scopes[k] && c.scopes[k].requested && !c.scopes[k].active));
+    && OPT_INS.some((k) => c.scopes && c.scopes[k] && c.scopes[k].requested && !c.scopes[k].active));
   res.json({
     waiting: rows.map((c) => ({
       id: c.id,
       parent_email: c.parent_email,
       child: (db.byId('users', c.child_user_id) || {}).display_name || null,
       granted_at: c.granted && c.granted.at,
-      requested: ['third_party_ai', 'ai_training'].filter((k) => c.scopes[k].requested && !c.scopes[k].active),
+      requested: OPT_INS.filter((k) => c.scopes[k].requested && !c.scopes[k].active),
     })),
   });
 });
@@ -993,7 +999,7 @@ router.get('/admin/forms', requireAdminUser, (req, res) => {
 router.post('/admin/forms/:id/verify', requireAdminUser, (req, res) => {
   const c = db.byId('parental_consents', req.params.id);
   const scope = String(req.body.scope || '');
-  if (!c || c.status !== 'active' || !['third_party_ai', 'ai_training'].includes(scope)
+  if (!c || c.status !== 'active' || !OPT_INS.includes(scope)
       || !c.scopes[scope] || !c.scopes[scope].requested) {
     return res.status(404).json({ error: 'Nothing waiting for that form.' });
   }

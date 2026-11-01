@@ -959,6 +959,14 @@
     }
   }
 
+  // The silent behaviour signals (an optional extra the learner switches on at /boosters) are collected only on the question screens.
+  if (/^\/(session|skill-practice|review|placement|reading-check)/i.test(location.pathname)) {
+    const silentScript = document.createElement('script');
+    silentScript.src = '/js/silent-signals.js';
+    silentScript.defer = true;
+    document.head.appendChild(silentScript);
+  }
+
   // The tutor dock goes on every page except the sealed Spanish tests (js/tutor-dock.js checks again).
   if (!/^\/spanish-(check|listening)/i.test(location.pathname)) {
     const dockScript = document.createElement('script');

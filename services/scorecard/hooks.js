@@ -275,6 +275,28 @@ function onPlacement(userId, { trackId, placedLevel, pathLength }) {
     { source: 'placement', trackId }));
 }
 
+/** The measurement channels (services/boosters*.js): what each gave, as observations through the scorecard's evidence path. Throw if the card is not updated. */
+function onQuestionnaire(userId, answers, items) {
+  const obs = signals.fromQuestionnaire(answers, items);
+  return obs.length ? scorecard.observe(userId, obs, { source: 'questionnaire' }) : null;
+}
+function onDelayedCheck(userId, tests) {
+  const obs = signals.fromDelayedCheck(tests);
+  return obs.length ? scorecard.observe(userId, obs, { source: 'delayed check' }) : null;
+}
+function onGame(userId, stat, score, note) {
+  const obs = signals.fromGame(stat, score, note);
+  return obs.length ? scorecard.observe(userId, obs, { source: 'brain game' }) : null;
+}
+function onSilentSignals(userId, summary) {
+  const obs = signals.fromSilent(summary);
+  return obs.length ? scorecard.observe(userId, obs, { source: 'silent signals' }) : null;
+}
+function onImportedResults(userId, results, memoryTests) {
+  const obs = [...signals.fromImportedResults(results || {}), ...signals.fromDelayedCheck(memoryTests || [])];
+  return obs.length ? scorecard.observe(userId, obs, { source: 'imported results' }) : null;
+}
+
 /** The reading check (services/reading-check.js) ended: its measure of language level, as a designed test. Throws if the card is not updated. */
 function onReadingCheck(userId, result) {
   const obs = signals.fromReadingCheck(result);
@@ -301,6 +323,11 @@ function conclusionsFor(userId, { trackId, gradeId, max = 6 } = {}) {
 }
 
 module.exports = {
+  onQuestionnaire,
+  onDelayedCheck,
+  onGame,
+  onSilentSignals,
+  onImportedResults,
   onReadingCheck,
   onAnswer,
   onLessonRead,

@@ -156,7 +156,9 @@ function unit(text) {
 function armFor(userId, where) {
   const key = `${userId}:${where.trackId}:${where.gradeId}:${where.level}`;
   if (unit(`holdout:${key}`) < HOLDOUT) return { arm: 'holdout', experiment: null };
-  if (unit(`experiment:${key}`) >= EXPERIMENT_RATE) return { arm: 'tailored', experiment: null };
+  // Max-accuracy mode (services/boosters.js): an experiment on every tailored page, so what works for this learner is measured sooner.
+  const rate = require('./boosters').maxAccuracy.isOn(userId) ? 1 : EXPERIMENT_RATE; // eslint-disable-line global-require
+  if (unit(`experiment:${key}`) >= rate) return { arm: 'tailored', experiment: null };
   const card = scorecard.get(userId);
   const open = EXPERIMENTS.filter((e) => scorecard.read(card, e.stat).confidence < EXPERIMENT_MAX_CONFIDENCE);
   if (!open.length) return { arm: 'tailored', experiment: null };

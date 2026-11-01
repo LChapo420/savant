@@ -6,7 +6,7 @@ App.mount(async () => {
   const esc = App.escapeHtml;
   const list = document.getElementById('list');
   const errorBox = document.getElementById('error');
-  const NAME = { third_party_ai: 'Outside AI', ai_training: 'AI training' };
+  const NAME = { third_party_ai: 'Outside AI', ai_training: 'AI training', measurement_extras: 'Optional measurement extras' };
 
   async function load() {
     let out;
