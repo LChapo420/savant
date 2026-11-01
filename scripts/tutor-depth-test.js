@@ -139,6 +139,36 @@ function richLearner(n) {
     assert.strictEqual(db.find('tutor_facts', (f) => f.user_id === u.id && f.superseded_at).length, 0, 'gone after the keep period');
   });
 
+  await check('a taste fact that says two things becomes a dislike and an interest', () => {
+    assert.deepStrictEqual(facts.splitTaste({ kind: 'interest', text: 'Over Minecraft now, playing Zelda instead' }).map((f) => `${f.kind}:${f.text}`), ['dislike:Over Minecraft now', 'interest:playing Zelda instead']);
+    assert.strictEqual(facts.splitTaste({ kind: 'interest', text: 'No longer into basketball, quit the team' }).length, 1, 'two negative clauses stay one fact');
+    const u = adult('split');
+    facts.remember(u.id, [{ kind: 'interest', text: 'Loves Minecraft, builds redstone machines' }], {}, NOW - 20 * DAY);
+    facts.remember(u.id, [{ kind: 'interest', text: 'Over Minecraft now, playing Zelda instead' }], {}, NOW - 2 * DAY);
+    assert.deepStrictEqual(facts.list(u.id).map((f) => f.kind).sort(), ['dislike', 'interest']);
+    assert.ok(facts.list(u.id).some((f) => f.kind === 'interest' && /Zelda/.test(f.text)) && !facts.list(u.id).some((f) => f.kind === 'interest' && /Minecraft/.test(f.text)));
+  });
+
+  await check('a "hard" fact their answers have since overturned says so wherever it is sent', () => {
+    const u = adult('since');
+    facts.remember(u.id, [{ kind: 'hard', text: 'Says endgames are really hard', skill_id: OTHERS[2] }], {}, NOW - 25 * DAY);
+    db.insert('skill_states', { user_id: u.id, skill_id: OTHERS[2], mastery: 0.86, attempts: 22, correct: 19, last_seen_at: iso(2) });
+    const r = facts.relevant(u.id, { skillId: OTHERS[2], text: 'help' });
+    assert.ok(r.lines.some((l) => /endgames are really hard; but their answers since show it solid now \(86% over 22\)/.test(l)), r.lines);
+  });
+
+  await check('an old chat snippet that repeats a superseded fact is marked out of date in the prompt', () => {
+    const u = adult('snippet');
+    const archive = require('../services/tutor-archive');
+    for (let i = 0; i < 12; i++) archive.append(u.id, { where: 'home', learnerSaid: `filler message ${i} about fractions practice`, tutorSaid: 'ok', at: iso(30 - i) });
+    archive.append(u.id, { where: 'home', learnerSaid: 'my violin recital is on 12 December, kind of scared', tutorSaid: 'We will get you ready.', at: iso(20) });
+    facts.remember(u.id, [{ kind: 'goal', text: 'Violin recital on 12 December' }], {}, NOW - 20 * DAY);
+    facts.remember(u.id, [{ kind: 'goal', text: 'Violin recital moved to 9 January' }], {}, NOW - 3 * DAY);
+    const t = tutor.contextText(u.id, { about: 'remember when my violin recital is?', recallQuery: 'remember when my violin recital is?' });
+    const older = t.slice(t.indexOf('--- FROM OLDER CHATS'));
+    assert.ok(/recital is on 12 December[^\n]*\[OUT OF DATE: since \d{4}-\d\d-\d\d they said "Violin recital moved to 9 January"\]/.test(older), older);
+  });
+
   // ── the learner model ───────────────────────────────────────────────────
   const rich = richLearner('rich');
   await check('every source with data reaches the prompt: all eleven sections of the learner model', () => {

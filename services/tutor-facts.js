@@ -118,7 +118,7 @@ function remember(userId, proposed, source = {}, now = Date.now()) {
   const at = new Date(now).toISOString();
   let added = 0;
   let confirmed = 0;
-  for (const raw of (Array.isArray(proposed) ? proposed : []).slice(0, MAX_PER_TURN)) {
+  for (const raw of (Array.isArray(proposed) ? proposed : []).slice(0, MAX_PER_TURN).flatMap(splitTaste)) {
     const f = clean(raw);
     if (!f) continue;
     if (f.kind === 'worked' && f.style) strategy.record(userId, f.style, 'worked', now);
@@ -166,7 +166,22 @@ function prune(userId, now = Date.now()) {
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 const MONTH_RE = '(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)';
-const NEGATED = /\b(no longer|not into|not interested|isn'?t into|stopped|quit|gave up|don'?t (?:like|enjoy|care)|doesn'?t (?:like|enjoy)|dislikes?|hates?|can'?t stand|bored (?:of|by|with)|finds? .{0,30}boring|anymore|any more|over (?:it|that))\b/i;
+const NEGATED = /\b(no longer|not into|not interested|isn'?t into|stopped|quit|gave up|don'?t (?:like|enjoy|care)|doesn'?t (?:like|enjoy)|dislikes?|hates?|can'?t stand|bored (?:of|by|with)|finds? .{0,30}boring|anymore|any more|over (?:it|that)|over [a-z0-9'-]+ now|done with)\b/i;
+
+/**
+ * One taste fact that says two things ("Over Minecraft now, playing Zelda instead") is two facts: the dislike and the
+ * interest. Anything else is returned as it came.
+ */
+function splitTaste(raw) {
+  if (!raw || (raw.kind !== 'interest' && raw.kind !== 'dislike') || typeof raw.text !== 'string') return [raw];
+  const parts = raw.text.split(/[,;]\s*|\s+but\s+|\s+and now\s+|\s+now into\s+/i).map((p) => p.trim()).filter((p) => p.length >= 4);
+  if (parts.length < 2) return [raw];
+  const neg = parts.filter((p) => NEGATED.test(p));
+  const pos = parts.filter((p) => !NEGATED.test(p) && tasteTokens(p).size);
+  if (!neg.length || !pos.length) return [raw];
+  const { replaces, ...rest } = raw;
+  return [{ ...rest, kind: 'dislike', text: neg.join(', '), ...(replaces ? { replaces } : {}) }, { ...rest, kind: 'interest', text: pos.join(', ') }];
+}
 const EVENTS = ['act', 'sat', 'psat', 'gcse', 'exam', 'final', 'finals', 'midterm', 'test', 'quiz', 'recital', 'tournament', 'interview', 'audition', 'competition', 'presentation', 'deadline', 'essay', 'project', 'olympiad', 'concert'];
 const SUBJECTS = ['math', 'maths', 'algebra', 'geometry', 'calculus', 'chemistry', 'chem', 'biology', 'bio', 'physics', 'history', 'english', 'spanish', 'french', 'science', 'reading', 'writing', 'piano', 'chess', 'basketball', 'statistics', 'stats'];
 const ALIAS = { maths: 'math', chem: 'chemistry', bio: 'biology', stats: 'statistics', finals: 'final' };
@@ -497,13 +512,25 @@ function relevant(userId, { skillId = null, text = '' } = {}, { budget = FACTS_B
   const chosen = [];
   let used = 0;
   for (const { f } of scored) {
-    const line = factLine(f);
+    const line = `${factLine(f)}${f.from_record ? '' : sinceNote(userId, f)}`;
     if (used + line.length + 1 > budget) continue;
     lines.push(line);
     chosen.push(f);
     used += line.length + 1;
   }
   return { skill, lines, facts: chosen };
+}
+
+/**
+ * What their answers since say about a "hard" or "mix-up" fact on a skill: solid now (mastery 0.8 or more over 5 or more
+ * answers, practised after the fact was noted) is said, so an old difficulty is not taken as current. '' otherwise.
+ */
+function sinceNote(userId, f) {
+  if (!f.skill_id || (f.kind !== 'hard' && f.kind !== 'misconception')) return '';
+  const s = db.findOne('skill_states', (r) => r.user_id === userId && r.skill_id === f.skill_id);
+  if (!s || !(s.attempts >= 5) || !(s.mastery >= 0.8)) return '';
+  if (!(Date.parse(s.last_seen_at) > Date.parse(f.last_confirmed_at || f.first_at))) return '';
+  return `; but their answers since show it solid now (${Math.round(s.mastery * 100)}% over ${s.attempts})`;
 }
 
 /** Current mastery on a skill as one plain line, or '' when they have not tried it. */
@@ -516,7 +543,7 @@ function masteryLine(userId, skillId) {
 
 module.exports = {
   FACTS_BUDGET, relevant, masteryLine, inferSkill,
-  dateIn, eventKey, datesDiffer, tasteTokens, sharesTaste, supersede, outOfDate, NEGATED, SUPERSEDED_KEEP_DAYS,
+  dateIn, eventKey, datesDiffer, tasteTokens, sharesTaste, supersede, outOfDate, NEGATED, SUPERSEDED_KEEP_DAYS, splitTaste, sinceNote,
   KINDS, MAX_FACTS, MAX_PER_KIND, MAX_PER_TURN, TEXT_MAX, HALF_LIFE_DAYS, MIN_WEIGHT,
   weight, list, view, remove, forgetAll, clean, remember, prune, extract, parse, similar,
   EVERY_TURNS, offer, flush, dockStarted, dockEnded, stats,

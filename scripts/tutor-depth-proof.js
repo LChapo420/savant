@@ -699,22 +699,49 @@ function report() {
   } else console.log(md);
 }
 
-// ── coverage: does the prompt carry the ground truth? (no model) ──────────
-function coverage() {
-  const B = JSON.parse(fs.readFileSync(args.before, 'utf8'));
-  const A = JSON.parse(fs.readFileSync(args.after, 'utf8'));
-  // Keyword checks per learner: [label, regex that must appear in the prompt].
-  const KEYS = {
-    maya: { now: [['moved ACT date', /ACT[^\n]{0,80}(moved|97 days)/i], ['GarageBand', /garageband/i], ['added denominators', /add(s|ed)? the denominators|added denominators/i], ['analogy worked', /analogy[^\n]{0,30}(4 of 5|worked)/i], ['detailed failed', /detailed[^\n]{0,12}0 of 3/i], ['brevity value', /brevity[^\n]{0,20}\d/i], ['frustration value', /frustration[^\n]{0,20}\d/i]], stale: [['old ACT date live', new RegExp(`(?<!out of date[^\\n]{0,200})ACT on ${spoken(41)}`, 'i')]] },
+// ── coverage: does the prompt carry the ground truth? (no model, no judge) ──
+// Per learner: facts that should reach the model ([label, regex]) and out-of-date facts that must not appear as current
+// (a line matching the regex that does not also say it is out of date / dropped / fixed).
+function coverKeys() {
+  const d = (n) => new RegExp(`${spoken(n)}|${isoDay(n)}`, 'i');
+  const NUM = (name) => new RegExp(`${name} \\d+`, 'i');
+  const OUTCOME = (style) => new RegExp(`${style}[^|\\n]{0,24}\\d of \\d`, 'i');
+  return {
+    maya: { have: [['moved ACT date', d(97)], ['GarageBand', /garageband/i], ['added-denominators mix-up', /add(s|ed)? the denominators|added denominators/i], ['analogy outcomes', OUTCOME('analogy')], ['brevity measure value', NUM('brevity preference')], ['frustration measure value', NUM('frustration threshold')], ['decimals fading', /fading: decimals/i]], stale: [['old ACT date', new RegExp(spoken(41), 'i')], ['basketball as an interest', /basketball/i]] },
+    leo: { have: [['oral exam date', d(12)], ['Madrid trip', /madrid/i], ['ser for states mix-up', /ser for temporary|ser for state/i], ['step-question outcomes', OUTCOME('step questions')], ['humour measure value', NUM('humor receptivity')], ['evaluation anxiety value', NUM('evaluation anxiety')], ['preterite fading', /fading: preterite/i]], stale: [] },
+    priya: { have: [['ACT date', d(25)], ['target 28', /target (composite )?28/i], ['rise/run mix-up', /rise[ _]run/i], ['sign error marked fixed', /fixed: sign error|sign error[^|\n]{0,60}fixed/i], ['worked-example outcomes', OUTCOME('worked example')], ['self-efficacy value', /self.efficacy \d+/i], ['ratios fading', /fading: ratios/i]], stale: [['the fixed sign error as current', /sign error moving terms|flips the sign/i]] },
+    omar: { have: [['tournament date', d(18)], ['pin/skewer mix-up', /pin and a skewer|pin vs skewer/i], ['endgames now solid', /said it was hard[^|\n]*solid/i], ['brief outcomes', OUTCOME('brief')], ['hint dependency value', NUM('hint dependency')], ['openings fading', /fading: openings/i]], stale: [['endgames as a current weakness', /endgames are really hard/i]] },
+    sofia: { have: [['essay date', d(9)], ['comma splice mix-up', /comma splice/i], ['visual outcomes', OUTCOME('visual')], ['attention measure value', NUM('attention runway')], ['avoid sports', /sports examples/i], ['verb tense fading', /fading: verb tense/i]], stale: [] },
+    ben: { have: [['bootcamp test date', d(30)], ['independent-events mix-up', /independent/i], ['detailed outcomes', OUTCOME('detailed')], ['analogy failed', /analogy[^|\n]{0,16}0 of 3/i], ['humour measure value', NUM('humor receptivity')], ['exponents fading', /fading: exponents/i]], stale: [] },
+    chloe: { have: [['moved-up test date', d(5)], ['Pepper', /pepper/i], ['area/perimeter mix-up', /area and perimeter|area perimeter/i], ['evaluation anxiety value', NUM('evaluation anxiety')], ['ratios fading', /fading: ratios/i]], stale: [['old test date', new RegExp(spoken(12), 'i')]] },
+    sam: { have: [['piano exam date', d(45)], ['major-third mix-up', /major third/i], ['worked-example outcomes', OUTCOME('worked example')], ['Zelda', /zelda/i], ['brevity measure value', NUM('brevity preference')], ['scales fading', /fading: scales/i]], stale: [['Minecraft as an interest', /minecraft/i]] },
   };
-  const out = [];
-  for (const [name, R] of [['before', B], ['after', A]]) {
-    for (const r of R.rows.filter((x) => KEYS[x.learner])) {
-      const k = KEYS[r.learner];
-      out.push({ v: name, learner: r.learner, probe: r.probe, have: k.now.filter(([, re]) => re.test(r.system || '')).map(([l]) => l), of: k.now.length });
-    }
+}
+// A line that names the old thing in order to say it changed or must not be used is not a stale fact.
+const MARKED = /out of date|no longer|never build|never use|avoid|quit|over minecraft|overruled|fixed|moved|said it was hard[^|]*solid|probably fixed|solid now/i;
+function coverageOf(R) {
+  const K = coverKeys();
+  const rows = [];
+  for (const r of R.rows.filter((x) => K[x.learner] && x.system)) {
+    const k = K[r.learner];
+    const sys = r.system;
+    const have = k.have.filter(([, re]) => re.test(sys)).map(([l]) => l);
+    // A stale fact counts as live when some line carries it with no mark that it changed (split on lines and on " | ").
+    const pieces = sys.split(/\n| \| /);
+    const live = k.stale.filter(([, re]) => pieces.some((ln) => re.test(ln) && !MARKED.test(ln))).map(([l]) => l);
+    rows.push({ learner: r.learner, probe: r.probe, have: have.length, of: k.have.length, missing: k.have.map(([l]) => l).filter((l) => !have.includes(l)), stale_live: live, key_leak: /KEY-NOT-FOR-TUTOR/.test(sys) });
   }
-  console.log(JSON.stringify(out, null, 1));
+  return rows;
+}
+function coverage() {
+  for (const [name, f] of [['before', args.before], ['after', args.after]]) {
+    if (!f) continue;
+    const rows = coverageOf(JSON.parse(fs.readFileSync(f, 'utf8')));
+    const have = rows.reduce((n, r) => n + r.have, 0);
+    const of = rows.reduce((n, r) => n + r.of, 0);
+    console.log(name, `facts in prompt ${have}/${of}`, `stale live in ${rows.filter((r) => r.stale_live.length).length} of ${rows.length} prompts`, `key leaks ${rows.filter((r) => r.key_leak).length}`);
+    if (args.verbose) console.log(JSON.stringify(rows, null, 1));
+  }
 }
 
 if (require.main !== module) { /* required for its learner definitions */ } else if (mode === 'build') build().catch((e) => { console.error(e); process.exit(1); });
