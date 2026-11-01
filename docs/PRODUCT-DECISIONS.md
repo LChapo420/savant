@@ -80,6 +80,7 @@ real-world challenges, scenario role-play, self-report surveys.
 ## Look
 - Adapts to the user: playful for kids, clean for adults.
 - Mobile web should feel as close to an app as possible. Native iOS/Android apps later.
+- Landing page (owner, 2026-10-31): the live savantedu.com design stays. The site-v3 restyle was rejected ("a crappy version of what we have live"). Do not restyle the landing page again unless the owner asks; copy or section changes go onto the live design.
 
 ## Languages
 - English only for launch, then Spanish, then top 5, 10, 25 languages.
