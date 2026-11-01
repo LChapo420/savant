@@ -186,11 +186,25 @@ function residuals(items, ctx = {}, { delayed = false } = {}) {
   return out;
 }
 
-/** Observations crediting one experiment arm with an outcome's residual sums. */
+/**
+ * The experiments one page ran: the main one and, on a factorial page (round 9, services/personalize.js PERSONALIZE_FACTORIAL), the
+ * others crossed with it (`also`). Each dimension's arm is credited with the same outcome: the dimensions on one page are chosen not to
+ * touch the same part of it, so their effects add, and each one's estimate uses every page it was on (the other's arm is noise to it).
+ */
+function experimentsOf(experiment) {
+  if (!experiment || !experiment.stat) return [];
+  return [experiment, ...(Array.isArray(experiment.also) ? experiment.also.filter((e) => e && e.stat && e.stat !== experiment.stat) : [])];
+}
+
+/** Observations crediting each experiment arm a page ran with an outcome's residual sums. */
 function experimentOutcome(experiment, res, note) {
-  if (!experiment || !experiment.stat || !res || !(res.n > 0)) return [];
-  const side = `exp_${experiment.arm === 'high' ? 'hi' : 'lo'}:${experiment.stat}`;
-  return [{ resid: side, r: res.r, v: res.v, n: res.n }, { stat: experiment.stat, shift: true, kind: 'experiment', note }];
+  if (!res || !(res.n > 0)) return [];
+  const out = [];
+  for (const e of experimentsOf(experiment)) {
+    const side = `exp_${e.arm === 'high' ? 'hi' : 'lo'}:${e.stat}`;
+    out.push({ resid: side, r: res.r, v: res.v, n: res.n }, { stat: e.stat, shift: true, kind: 'experiment', note: e === experiment ? note : `${note} (crossed with ${e.label || e.stat})` });
+  }
+  return out;
 }
 
 /**
@@ -409,13 +423,13 @@ function delayedExperimentOutcome(userId, item, ctx = null) {
   if (ctx && Number.isFinite(ctx.expected_lpo)) {
     return experimentOutcome(row.experiment, residuals([item], { [item.id]: ctx }, { delayed: true }), note);
   }
-  return [{
-    stat: row.experiment.stat,
-    value: (good === highArm) ? 70 : 30,
+  return experimentsOf(row.experiment).map((e) => ({
+    stat: e.stat,
+    value: (good === (e.arm === 'high')) ? 70 : 30,
     weight: DELAYED_WEIGHT,
     kind: 'experiment',
-    note: `delayed recall after a lesson taught ${highArm ? 'with' : 'without'} ${row.experiment.label}: ${good ? 'remembered' : 'forgot'}`,
-  }];
+    note: `delayed recall after a lesson taught ${e.arm === 'high' ? 'with' : 'without'} ${e.label}: ${good ? 'remembered' : 'forgot'}`,
+  }));
 }
 
 // ── one level ──────────────────────────────────────────────────────────────
@@ -675,14 +689,16 @@ function fromBaseLesson({ readMs = 0, words: length = 0, nextAccuracy = null, ba
       // and ability are out of it, unlike accuracy against a usual result.
       obs.push(...experimentOutcome(experiment, outcome, `lesson taught ${experiment.arm === 'high' ? 'with' : 'without'} ${experiment.label}: next level ${outcome.r >= 0 ? 'above' : 'below'} what was expected`));
     } else if (experiment && experiment.stat) {
-      const sign = experiment.arm === 'high' ? 1 : -1;
-      obs.push({
-        stat: experiment.stat,
-        value: clamp(50 + sign * (nextAccuracy - baseline) * 120),
-        weight: EXPERIMENT_WEIGHT,
-      kind: 'experiment',
-        note: `lesson taught ${experiment.arm === 'high' ? 'with' : 'without'} ${experiment.label}: next level ${Math.round(nextAccuracy * 100)}% against a usual ${Math.round(baseline * 100)}%`,
-      });
+      for (const e of experimentsOf(experiment)) {
+        const sign = e.arm === 'high' ? 1 : -1;
+        obs.push({
+          stat: e.stat,
+          value: clamp(50 + sign * (nextAccuracy - baseline) * 120),
+          weight: EXPERIMENT_WEIGHT,
+          kind: 'experiment',
+          note: `lesson taught ${e.arm === 'high' ? 'with' : 'without'} ${e.label}: next level ${Math.round(nextAccuracy * 100)}% against a usual ${Math.round(baseline * 100)}%`,
+        });
+      }
     }
   }
   return obs;
@@ -970,6 +986,7 @@ function lessonBaseline(userId) {
 }
 
 module.exports = {
+  experimentsOf,
   experimentModel,
   residuals,
   fromChoice,

@@ -8,7 +8,8 @@
  *   - the app's own number recalibrated (truth regressed on the measured score and its evidence): the best any bias or shrinkage fix
  *     of the number could do;
  *   - a ridge read-out of the learner's whole answer log (accuracy, speed, rapid guesses, coach use, revisions, taps, post-miss and
- *     first-items effects, quits, spacing...) plus the app's number: the best a linear reading of the same observations does;
+ *     first-items effects, quits, spacing...) plus the app's number and (round 9) the learner's indicator means for the measure
+ *     (what they wrote, how they used the app: scorecard/indicators.js): the best a linear reading of the same observations does;
  *   - the population mean, which is what the data adds nothing to.
  * A measure passes when the app's error is within 10% of the achievable. When even the achievable cannot beat the population mean by
  * 5%, the data holds no signal about it ("no signal"): neither pass nor fail. A failing measure is given its reason: the number
@@ -114,7 +115,8 @@ function gateMeasure(rows, { lambda = 8 } = {}) {
   const mae = mean(t.map((v, i) => Math.abs(v - m[i])));
   const bias = mean(t.map((v, i) => v - m[i]));
   const Xcal = rows.map((r) => [r.measured, (r.confidence / 100) * (r.measured - 50)]);
-  const Xlog = rows.map((r) => [...FEATURES.map((f) => r.feat[f]), r.measured, (r.confidence / 100) * (r.measured - 50)]);
+  // Round 9: a row may carry extra columns (the learner's indicator means for this measure, scorecard/indicators.js): the read-out sees them too.
+  const Xlog = rows.map((r) => [...FEATURES.map((f) => r.feat[f]), r.measured, (r.confidence / 100) * (r.measured - 50), ...(r.extra || [])]);
   const calPred = ridgeLOO(Xcal, t, 0.5);
   const logPred = ridgeLOO(Xlog, t, lambda);
   const floorCal = mean(t.map((v, i) => Math.abs(v - calPred[i])));
