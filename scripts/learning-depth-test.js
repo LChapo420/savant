@@ -167,6 +167,8 @@ console.log('6. every material surface, and version 1 one switch away');
   const v1 = ls.specToPrompt(spec);
   delete process.env.LEARNING_SPEC_DEPTH;
   check('LEARNING_SPEC_DEPTH=off writes the version 1 block (no methods, no context, no grading)', !/Learning methods|About this learner|Light touches|Apply this throughout/.test(v1) && /Content contract/.test(v1));
+  const brief = ls.buildSpecFrom({ ...one('brevity_preference', 95, 95), metrics: { ...blank(), brevity_preference: { measured: 95, confidence: 95 }, interest_transfer: { measured: 95, confidence: 95 } } });
+  check('a learner who needs less gets own material no longer than its outline, with one interest analogy, not three', ls.needsLess(brief) && ls.ownInterestNeed(brief, 3000) === 1 && /exactly one in all/.test(ls.specToPrompt(brief, { surface: 'notes' })) && /no longer than a plain outline/.test(ls.specToPrompt(brief, { surface: 'notes' })));
   check('the default spec still writes nothing at all', ls.specToPrompt(ls.defaultSpec()) === '' && ls.specToPrompt(ls.buildSpecFrom({ metrics: blank() })) === '');
 }
 

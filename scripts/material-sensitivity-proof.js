@@ -694,8 +694,16 @@ function render(files) {
   if (singles.length) {
     md.push('### Single measures: summary per run and kind', '');
     const rows = [];
-    for (const r of singles) for (const [k, b] of Object.entries(r.single.byKind)) rows.push([r.tag, r.depth, k, `${b.pairs}`, `${b.ignored}`, `${b.failedBuilds}`, `${b.correct}/${b.verdicts} (${pct(b.correct, b.verdicts)})`, `${b.same}`, `${b.wrong}`, `${b.intact}/${b.judged}`]);
-    md.push(tableMd(['run', 'spec', 'kind', 'pairs', 'block unchanged (ignored)', 'build failed', 'direction-correct verdicts', 'said "same"', 'wrong way', 'content intact (pairs)'], rows), '');
+    for (const r of singles) {
+      for (const [k, b] of Object.entries(r.single.byKind)) {
+        // Per measure: right when more of its verdicts name the high version than not, wrong when more name the low one.
+        const cs = r.single.cells.filter((c) => c.kind === k && c.verdicts);
+        const right = cs.filter((c) => c.correct > c.wrong + c.same).length;
+        const wrongCells = cs.filter((c) => c.wrong > c.correct).length;
+        rows.push([r.tag, r.depth, k, `${b.pairs}`, `${b.ignored}`, `${b.failedBuilds}`, `${b.correct}/${b.verdicts} (${pct(b.correct, b.verdicts)})`, `${b.same}`, `${b.wrong}`, `${right} / ${cs.length - right - wrongCells} / ${wrongCells}`, `${b.intact}/${b.judged}`]);
+      }
+    }
+    md.push(tableMd(['run', 'spec', 'kind', 'pairs', 'block unchanged (ignored)', 'build failed', 'direction-correct verdicts', 'said "same"', 'wrong way', 'measures right / split / wrong', 'content intact (pairs)'], rows), '');
     // Per measure: one column per run-and-kind.
     const cols = [];
     for (const r of singles) for (const k of Object.keys(r.single.byKind)) cols.push({ r, k });

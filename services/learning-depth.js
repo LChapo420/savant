@@ -246,6 +246,11 @@ const JOINT_RULES = [
     'An easy win first, the stretch last: the first item is one they will surely get, and the hardest comes at the end.'),
   J('abstract_but_concrete_access', 'access', ['ruleFirst', 'vocab', 'notation'], (L) => L.ruleFirst >= 0.3 && (L.vocab <= -0.4 || L.notation <= -0.4),
     'Rule first, in words: state the general rule first, but in plain words, and bring in a symbol only after a worked case.'),
+  // Found by the joint profiles: a story frame swallowed the numbered steps a structure-needing learner also has.
+  J('story_with_steps', 'access', ['story', 'structure'], (L) => L.story >= 0.3 && L.structure >= 0.3,
+    'Story and steps together: tell it as a story, but inside the story number every step and say what comes next.'),
+  J('story_with_support', 'access', ['story', 'scaffold', 'hintSize'], (L) => L.story >= 0.3 && (L.scaffold >= 0.3 || L.hintSize >= 0.4),
+    'Story and support together: the story carries the idea, and every practice item inside it still gets its hint and partial steps.'),
 ];
 const MAX_JOINT = 4;
 
@@ -315,7 +320,9 @@ function learningOf(L = {}, spec = {}, ctx = {}, measures = []) {
       tomorrowLine: lean('reviewSpacing') <= -SHOW || lean('recapEnd') >= 0.3 || lean('reviewIntensity') >= 0.3,
     },
     gapOnly: { on: expert && !novice, strong: prior >= 80 || (mastery !== null && mastery >= 0.85) },
-    dualCoding: { on: lean('visual') > -SHOW, strength: lean('visual') >= 0.3 || lean('multiRep') >= 0.3 ? 'every-key-idea' : 'central-idea' },
+    // The picture's form follows the learner too (the full run found an arrow chain read as a long causal chain for a learner who follows
+    // one or two links): no arrow chain when short cause links are asked for.
+    dualCoding: { on: lean('visual') > -SHOW, strength: lean('visual') >= 0.3 || lean('multiRep') >= 0.3 ? 'every-key-idea' : 'central-idea', forms: lean('causal') <= -SHOW ? 'an aligned table or a labelled list (no long arrow chains)' : 'an aligned table, an arrow chain or a labelled list' },
     length: { words: lesson.wordBudget || null, minutes: lesson.minutes || null, compact: lean('length') <= -0.3 },
     measures: LEARNING_MEASURES,
   };
@@ -352,6 +359,10 @@ function learningLines(learning, surface) {
   } else if ((surface === 'notes' || surface === 'podcast' || surface === 'material') && sp.tomorrowLine) {
     out.push('Close with the one point to recall tomorrow, in a single line.');
   }
+  // Own material for a learner who needs less: no longer than the plain outline (every added bullet or line is paid for by a cut).
+  if ((learning.length.compact || learning.gapOnly.on) && (surface === 'notes' || surface === 'podcast' || surface === 'material')) {
+    out.push('Length: no longer than a plain outline of the material would be; every question, analogy or aid you add is paid for by cutting words elsewhere, never by dropping a point.');
+  }
   if (learning.gapOnly.on) {
     out.push(surface === 'lesson' || surface === 'level'
       ? `Gap-only: they know the basics, so each point they already know gets ${learning.gapOnly.strong ? 'a single line' : 'one or two lines'} (still stated, so every objective appears) and the words go to what is new.`
@@ -359,7 +370,7 @@ function learningLines(learning, surface) {
   }
   if (learning.dualCoding.on) {
     if (surface === 'podcast') out.push(`Dual coding: describe ${learning.dualCoding.strength === 'every-key-idea' ? 'a simple picture for each key idea' : 'one simple picture of the central idea'} that the listener can hold in mind.`);
-    else out.push(`Dual coding: pair ${learning.dualCoding.strength === 'every-key-idea' ? 'each key idea' : 'the central idea'} with a picture in text (an aligned table, an arrow chain or a labelled list) that shows the same thing as the words${surface === 'notes' || surface === 'material' ? ', built only from the material' : ''}.`);
+    else out.push(`Dual coding: pair ${learning.dualCoding.strength === 'every-key-idea' ? 'each key idea' : 'the central idea'} with a picture in text (${learning.dualCoding.forms || 'an aligned table, an arrow chain or a labelled list'}) that shows the same thing as the words${surface === 'notes' || surface === 'material' ? ', built only from the material' : ''}.`);
   }
   return out;
 }

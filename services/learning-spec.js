@@ -1100,7 +1100,9 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
   const ex = spec.interests;
   if (MATERIAL_SURFACE.has(surface) && ex.exampleDomains.length && ex.share >= 0.3) {
     const doms = ex.exampleDomains.slice(0, 4).join(', ');
-    const n = ex.share >= 0.7 ? 'at least three' : ex.share >= 0.4 ? 'at least two' : 'at least one';
+    // A learner who needs less (a short treatment or what they know already) gets one analogy, not three: the speed proof found their notes
+    // growing longer than the plain outline (version 2).
+    const n = needsLess(spec) ? 'exactly one' : ex.share >= 0.7 ? 'at least three' : ex.share >= 0.4 ? 'at least two' : 'at least one';
     const where = surface === 'notes' ? 'add short framed analogies, each as its own one-sentence bullet that starts "Think of" and comes right after the bullet whose point it pictures (it carries that bullet\'s passage_id and quote, and is not counted in the bullet limit)' : 'build short analogies or practice contexts';
     lines.push(`Interests: ${where} on ${doms}, ${n} in all, each introduced as an analogy ("think of it like...") and mapped back to a named point of the material; they add no fact, number, name or claim about the topic, and every fact and quote stays the material's own.`);
   }
@@ -1369,8 +1371,14 @@ function sourceFacts(text, max = 14) {
  * analogies in every part. One at least.
  */
 function ownInterestNeed(spec, chars) {
+  if (needsLess(spec)) return 1;
   const base = spec.interests.share >= 0.7 ? 3 : spec.interests.share >= 0.5 ? 2 : 1;
   return Math.max(1, Math.round(base * Math.min(1, Number(chars) / 3000)));
+}
+
+/** A learner who needs less (version 2): a short treatment asked for, or gap-only coverage of what they already know. */
+function needsLess(spec) {
+  return !!(depthOn() && spec && !spec.isDefault && ((spec.levers && spec.levers.length <= -0.3) || (spec.learning && spec.learning.gapOnly && spec.learning.gapOnly.on)));
 }
 
 /** The sentence added to a prompt on the single revision pass. */
@@ -1427,7 +1435,7 @@ module.exports = {
   specToPrompt, specToLines, specHash, linesFor, questionLinesFor, questionShape,
   checkFollowed, analogyProblems, analogyGuard, sourceFacts, ownInterestNeed, revisionNote, reviseOnce, keyTerms, mentions, textShapeFor,
   // Version 2, the full depth (services/learning-depth.js): the tail alone, the switch, and the pieces for any other consumer.
-  depthLines, depthOn, NOTES_PHRASES, TEST_PHRASES, PODCAST_PHRASES, MATERIAL_PHRASES, measuresOf: (metrics) => depth.measuresOf(metrics, METRIC_RULES),
+  depthLines, depthOn, needsLess, NOTES_PHRASES, TEST_PHRASES, PODCAST_PHRASES, MATERIAL_PHRASES, measuresOf: (metrics) => depth.measuresOf(metrics, METRIC_RULES),
   jointOf: depth.jointOf, learningOf: depth.learningOf, JOINT_RULES: depth.JOINT_RULES,
   interestsFromText: splitDomains, dislikesFromText, splitDislikes, topicDomainOf,
   reviewScale, scaleMinutes, reviewFor,
