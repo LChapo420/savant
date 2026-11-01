@@ -21,7 +21,7 @@ App.mount(async () => {
     root.innerHTML = `
       <div class="ob-head">
         <h1>Extras</h1>
-        <p class="lede">Optional ways to help Savant fit your lessons to you. Skip any of them: nothing here changes what you are taught, and what you do in lessons counts for more than any of it.</p>
+        <p class="lede">Optional ways to help Savant fit your lessons to you more closely, sooner. Each one is skippable, and what you do in lessons still counts most.</p>
       </div>
 
       <section class="card boost" aria-labelledby="b-q">
