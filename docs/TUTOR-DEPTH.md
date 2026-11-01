@@ -64,14 +64,17 @@ the pack and model now carry are no longer sent twice.
 | `said_cannot` ("I'm bad at this") | self_efficacy | - | the learner's message |
 | `explanation_outcome` | analogy: analogical_transfer; worked example: worked_example_dependence; step questions: dialogic_preference; visual: spatial_anchoring; brief: brevity_preference +; detailed: brevity_preference - | + if it worked, - if it failed | the fact reader's judgement of the next turn |
 
-**The hook:** `onTutorObservation(userId, { kind, skill_id, where, style, outcome, note })`. **To adopt it**, add
-`fromTutor(rows)` to `services/scorecard/signals.js` returning scorecard observations; every stored row is then passed
-through it and on to `scorecard.observe(userId, obs, { source: 'tutor' })` (the row is marked `bridged`). Until then
-nothing reaches the card and the rows wait (400 per learner) so they can be replayed. `proposedObservations(rows)` is a
-starting point: value 50 +/- 20 by direction, weight 0.15 x strength (a chat line is weak evidence beside a lesson's
-answers). The owner decides weights, decay and which kinds count. Only learners allowed extra measurement channels
-(`boosters.allowed`: no parent needed, or a parent's "measurement extras" opt-in) get rows; an under-13 without it gets
-none. Exported and deleted with the account. signals.js and index.js were not edited.
+**The hook:** `tutor-evidence.onTutorObservation(userId, { kind, skill_id, where, style, outcome, note })`, called by the dock,
+the home chat and the fact reader. **Wired to the scorecard's own hook** (main 174a3ae, `services/scorecard/hooks.js
+onTutorObservation`, docs/SCORECARD-EVERYTHING.md section 8): every row whose measure is one the hook reads
+(`indicators.LLM_STATS`: frustration_threshold, self_efficacy, productive_struggle, dialogic_preference here) is sent as
+`{ measure, direction, strength: round(3 x strength) }` and marked `bridged`; each learner message also sends "looked, saw
+nothing" (direction 0) for the three measures it is read for, as that hook asks. The other rows (hint_dependency,
+help_seeking, analogical_transfer, worked_example_dependence, spatial_anchoring, brevity_preference) are kept, 400 per
+learner, until the scorecard reads those measures from the tutor; `proposedObservations(rows)` is a starting point for
+that. When the dock closes, `chatEnded` calls `hooks.onTutorActivity` so the scorecard reads the new chat text at once.
+Only learners allowed extra measurement channels (`boosters.allowed`) get rows; the scorecard hook gates the same way.
+Exported and deleted with the account. Nothing under services/scorecard/ was edited.
 
 ## 4. Method of the proof (`scripts/tutor-depth-proof.js`)
 

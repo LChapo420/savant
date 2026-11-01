@@ -16,12 +16,14 @@
  *                                     PROPOSAL: value 50 +/- 20 by direction, weight WEIGHT x strength (small: a chat
  *                                     line is weak evidence next to a lesson's answers).
  *
- * Bridge (for the scorecard owner; services/scorecard/signals.js and index.js are NOT edited here):
- *   if `signals.fromTutor(rows)` exists, each stored row is passed through it and what it returns goes to
- *   scorecard.observe(userId, obs, { source: 'tutor' }). Until the owner adds it, nothing reaches the card: the rows
- *   wait in `tutor_observations` (MAX_ROWS per learner, oldest dropped) so they can be replayed through it later. The
- *   owner decides the weights, the decay and whether a kind counts at all; proposedObservations is a starting point.
- *   Documented in docs/TUTOR-DEPTH.md ("The scorecard hook").
+ * Bridge (services/scorecard/* is NOT edited here): the scorecard owner's hook, services/scorecard/hooks.js
+ *   onTutorObservation(userId, [{ measure, direction, strength 0-3 }]) (main 174a3ae, docs/SCORECARD-EVERYTHING.md 8),
+ *   takes the measures in indicators.LLM_STATS as llm.<measure> units at the owner's validity. Each stored row whose
+ *   measure it takes is forwarded (strength x 3, rounded) and marked `bridged`; the others (hint_dependency, help_seeking,
+ *   the explanation measures other than dialogic_preference) wait in `tutor_observations` (MAX_ROWS per learner) until
+ *   the hook reads more. Each message also sends "looked, saw nothing" (direction 0) for the measures it was read for
+ *   (LOOKED_FOR), as the hook asks. When the dock closes, `chatEnded` calls hooks.onTutorActivity so the scorecard reads
+ *   the new chat text now. Documented in docs/TUTOR-DEPTH.md ("The scorecard hook").
  *
  * Who: only a learner allowed extra measurement channels (services/boosters.js `allowed`: an adult or teen who needs
  * no parent, or a child whose parent turned "measurement extras" on). An under-13 without that consent gets no row.
@@ -66,19 +68,41 @@ function allowed(userId) {
   } catch { return false; }
 }
 
-/** The bridge: hand the row to the scorecard owner's reader, if they have written one. */
+/** The measures the scorecard's tutor hook takes (services/scorecard/indicators.js LLM_STATS); [] when it is not there. */
+function hookStats() {
+  try { return require('./scorecard/indicators').LLM_STATS || []; } catch { return []; } // eslint-disable-line global-require
+}
+
+/** One row as the scorecard hook's unit: { measure, direction -1|0|1, strength 0-3 }. */
+const asUnit = (row) => ({ measure: row.stat, direction: Math.sign(row.direction || 0), strength: Math.max(0, Math.min(3, Math.round((row.strength || 0) * 3))) });
+
+/**
+ * The bridge: the scorecard owner's hook (services/scorecard/hooks.js onTutorObservation, on main since 174a3ae) takes
+ * the rows whose measure it reads; the others stay stored here (bridged false) for when it reads more.
+ */
 function bridge(userId, row) {
   try {
-    /* eslint-disable global-require */
-    const signals = require('./scorecard/signals');
-    if (typeof signals.fromTutor !== 'function') return false;
-    const obs = signals.fromTutor([row]);
-    if (!Array.isArray(obs) || !obs.length) return false;
-    require('./scorecard').observe(userId, obs, { source: 'tutor' });
-    /* eslint-enable global-require */
+    if (!hookStats().includes(row.stat)) return false;
+    // eslint-disable-next-line global-require
+    const hooks = require('./scorecard/hooks');
+    if (typeof hooks.onTutorObservation !== 'function') return false;
+    hooks.onTutorObservation(userId, [asUnit(row)]);
     db.update('tutor_observations', row.id, { bridged: true });
     return true;
   } catch { return false; }
+}
+
+// Measures each learner message is read for: when none of the signs is in it, the scorecard is told "looked, saw
+// nothing" (direction 0), as its hook asks, so a learner who gives no sign reads as typical rather than not at all.
+const LOOKED_FOR = { said_frustrated: 'frustration_threshold', said_cannot: 'self_efficacy', attempted_first: 'productive_struggle' };
+
+/** The tutor chat ended (the dock closed): the scorecard reads the new messages now (hooks.onTutorActivity). Never throws. */
+function chatEnded(userId) {
+  try {
+    // eslint-disable-next-line global-require
+    const hooks = require('./scorecard/hooks');
+    return typeof hooks.onTutorActivity === 'function' ? hooks.onTutorActivity(userId) : null;
+  } catch { return null; }
 }
 
 /** THE HOOK: one thing the tutor observed. Never throws. */
@@ -124,7 +148,13 @@ function fromMessage(userId, text, { skillId = null, where = '', priorReplies = 
   if (STUCK.test(t)) kinds.push('said_stuck');
   if (FED_UP.test(t)) kinds.push('said_frustrated');
   if (CANNOT.test(t)) kinds.push('said_cannot');
-  return kinds.filter((kind) => onTutorObservation(userId, { kind, skill_id: skillId, where, note: t.slice(0, 120) }, now));
+  const kept = kinds.filter((kind) => onTutorObservation(userId, { kind, skill_id: skillId, where, note: t.slice(0, 120) }, now));
+  // "Looked, saw nothing" for the measures this message was read for and showed no sign of (the hook gates the account).
+  const zeros = Object.entries(LOOKED_FOR).filter(([kind, stat]) => !kinds.includes(kind) && hookStats().includes(stat)).map(([, stat]) => ({ measure: stat, direction: 0, strength: 0 }));
+  if (zeros.length && allowed(userId)) {
+    try { require('./scorecard/hooks').onTutorObservation(userId, zeros); } catch { /* the scorecard learning nothing never breaks the chat */ } // eslint-disable-line global-require
+  }
+  return kept;
 }
 
 function pending(userId, { since = null } = {}) {
@@ -143,4 +173,4 @@ function forgetAll(userId) {
   return db.remove('tutor_observations', (r) => r.user_id === userId);
 }
 
-module.exports = { KINDS, STYLE_STAT, MAX_ROWS, WEIGHT, onTutorObservation, fromMessage, pending, proposedObservations, forgetAll, allowed };
+module.exports = { KINDS, STYLE_STAT, MAX_ROWS, WEIGHT, LOOKED_FOR, onTutorObservation, fromMessage, chatEnded, pending, proposedObservations, forgetAll, allowed, asUnit };

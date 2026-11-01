@@ -325,19 +325,36 @@ function richLearner(n) {
     assert.strictEqual(evidence.pending(kid.id).length, 0);
   });
 
-  await check('until the scorecard owner adds signals.fromTutor nothing reaches the card; once added, rows flow through it', () => {
-    const u = adult('bridge');
-    const before = JSON.stringify(scorecard.get(u.id).stats.hint_dependency || null);
-    evidence.fromMessage(u.id, 'just tell me the answer', {});
-    assert.strictEqual(JSON.stringify(scorecard.get(u.id).stats.hint_dependency || null), before, 'no fromTutor yet: the card is untouched');
-    const signals = require('../services/scorecard/signals');
-    const seen = [];
-    signals.fromTutor = (rows) => { seen.push(...rows); return evidence.proposedObservations(rows); };
+  await check('rows go to the scorecard\'s own tutor hook for the measures it reads; the rest wait; "saw nothing" is sent as 0', () => {
+    const hooks = require('../services/scorecard/hooks');
+    const { LLM_STATS } = require('../services/scorecard/indicators');
+    const orig = hooks.onTutorObservation;
+    const sent = [];
+    hooks.onTutorObservation = (uid, units) => { sent.push(...units); return orig(uid, units); };
     try {
+      const u = adult('bridge');
+      evidence.fromMessage(u.id, 'ugh this is so annoying', {});
+      const rows = evidence.pending(u.id);
+      const fr = rows.find((r) => r.kind === 'said_frustrated');
+      assert.ok(fr.bridged && sent.some((x) => x.measure === 'frustration_threshold' && x.direction === -1 && x.strength === 2), JSON.stringify(sent));
+      assert.ok(sent.some((x) => x.measure === 'self_efficacy' && x.direction === 0), 'looked for, saw nothing');
+      assert.ok(sent.every((x) => LLM_STATS.includes(x.measure)), 'only measures the hook reads');
+      sent.length = 0;
       evidence.fromMessage(u.id, 'just tell me the answer', {});
-      assert.strictEqual(seen.length, 1);
-      assert.ok(evidence.pending(u.id).slice(-1)[0].bridged);
-    } finally { delete signals.fromTutor; }
+      const ask = evidence.pending(u.id).find((r) => r.kind === 'asked_for_answer');
+      assert.ok(!ask.bridged && !sent.some((x) => x.measure === 'hint_dependency'), 'hint dependency is not one the hook reads: kept for later');
+      assert.ok(scorecard.get(u.id).stats.frustration_threshold, 'the card has the unit');
+    } finally { hooks.onTutorObservation = orig; }
+  });
+
+  await check('closing the dock asks the scorecard to read the new chat text', () => {
+    const hooks = require('../services/scorecard/hooks');
+    const orig = hooks.onTutorActivity;
+    let called = null;
+    hooks.onTutorActivity = (uid) => { called = uid; return null; };
+    try { evidence.chatEnded(rich.id); } finally { hooks.onTutorActivity = orig; }
+    assert.strictEqual(called, rich.id);
+    assert.ok(/tutor-evidence'\)\.chatEnded/.test(fs.readFileSync(path.join(__dirname, '..', 'routes', 'tutor.js'), 'utf8')), 'the dock-closed route calls it');
   });
 
   await check('the new store is exported and deleted with the account', () => {
