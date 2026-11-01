@@ -317,9 +317,10 @@ async function playSession(user, session, items, ceiling) {
   check('a coached correct answer counts for less mastery', coachedMastery < soloMastery,
     { solo: soloMastery.toFixed(3), coached: coachedMastery.toFixed(3) });
   check('a coached correct answer still counts for something', coachedMastery > 0.2, coachedMastery);
-  check('a coached answer comes back for review sooner',
-    Date.parse(mastery.stateFor(coachedUser.id, 'linear_eq').next_due_at)
-      < Date.parse(mastery.stateFor(soloUser.id, 'linear_eq').next_due_at));
+  // Review timing is the forgetting model's (services/mastery.js, scripts/review-schedule-test.js): both learners have
+  // the same three right answers on record, so the same predicted-recall date; a coached answer is not a memory test.
+  check('a coached answer is dated by the same forgetting model as a solo one (three right answers each)',
+    Math.abs(Date.parse(mastery.stateFor(coachedUser.id, 'linear_eq').next_due_at) - Date.parse(mastery.stateFor(soloUser.id, 'linear_eq').next_due_at)) < 2000);
 
   const soloXp = mastery.xpForItems([{ correct: true, difficulty: 6 }]);
   const coachedXp = mastery.xpForItems([{ correct: true, difficulty: 6, coach_used: true }]);
@@ -1681,7 +1682,9 @@ async function playSession(user, session, items, ceiling) {
   }
   const solid = mastery.stateFor(revUser.id, 'linear_eq');
   const later = Date.parse(solid.next_due_at) - Date.now();
-  check('a solid skill comes back much later', later > 5 * 24 * 3600 * 1000, Math.round(later / 86400000));
+  // The next listing is when the forgetting model's recall falls to 0.85 (REVIEW_SCHEDULE=fixed restores the old ladder).
+  check('a solid skill comes back later than a missed one, on the forgetting model\'s date', later > soon + 3 * 3600 * 1000
+    && Math.abs(later / 86400000 - mastery.daysToTarget(solid, null)) < 0.05, [Math.round(soon / 3600000), Math.round(later / 3600000)]);
   check('mastery rose with the streak', solid.mastery > 0.5, solid.mastery);
 
   // ── the Challenge Exam ───────────────────────────────────────────────────

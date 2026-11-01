@@ -17,6 +17,41 @@ const MIN_EASE = 1.3;
 const MAX_EASE = 3.0;
 const INTERVALS_DAYS = [1, 3, 7, 16, 35, 70, 140];
 
+// ── review timing ───────────────────────────────────────────────────────────
+// A skill is due for review when the app's own forgetting model (scorecard.forgettingCurve: the population's fitted
+// half-life curve and this learner's own multiplier, the default curve until there are enough memory tests) predicts
+// recall below REVIEW_TARGET, lowest predicted recall first, at most three a level. Measured in the recovery simulation
+// (curriculum-build/SCORECARD-RESEARCH-2026-10-22.md 7.5 and 8.2): 30-day recall of practised skills up about 40% and
+// skills retained per practice hour up about 40% against the fixed ladder, with false directives under 2%.
+// REVIEW_SCHEDULE=fixed brings the old SM-2 ladder back (INTERVALS_DAYS above, next_due_at) without a deploy.
+const REVIEW_TARGET = 0.85;
+const REVIEW_MAX = 3;
+const DAY_MS = 24 * 3600 * 1000;
+const scheduleMode = () => (String(process.env.REVIEW_SCHEDULE || 'model').toLowerCase() === 'fixed' ? 'fixed' : 'model');
+const forgetting = () => require('./scorecard/forgetting'); // eslint-disable-line global-require
+
+/** Predicted recall of one skill state after `days`, read from a recallCurve() result (the default curve when null). */
+function predictedRecall(state, days, rc = null) {
+  const right = Math.max(0, Number(state.correct) || 0);
+  const wrong = Math.max(0, (Number(state.attempts) || 0) - right);
+  return forgetting().recallAt(rc, {
+    days, right, wrong, spacedRight: Number(state.spaced_right) || 0, spacedWrong: Number(state.spaced_wrong) || 0, fresh: 1, guess: 0,
+  });
+}
+
+/** Days until predicted recall falls to `target` (recall only falls with time): bisection, 0.1 to 365 days. */
+function daysToTarget(state, rc, target = REVIEW_TARGET) {
+  if (predictedRecall(state, 0.1, rc) < target) return 0.1;
+  if (predictedRecall(state, 365, rc) >= target) return 365;
+  let lo = 0.1;
+  let hi = 365;
+  for (let i = 0; i < 24; i++) {
+    const mid = (lo + hi) / 2;
+    if (predictedRecall(state, mid, rc) >= target) lo = mid; else hi = mid;
+  }
+  return hi;
+}
+
 const LEVEL_UP = {
   averageMastery: 0.8,
   weakestMastery: 0.6,
@@ -97,15 +132,30 @@ function recordAttempt({ userId, skillId, correct, difficulty, levelDifficulty, 
       if (correct && errorTag) tags.delete(errorTag);
 
       const intervalIndex = Math.min(INTERVALS_DAYS.length - 1, Math.max(0, streak - 1));
-      const days = correct
+      const fixedDays = correct
         ? INTERVALS_DAYS[intervalIndex] * (ease / DEFAULT_EASE) * (hintUsed ? 0.5 : 1)
         : 0.5; // a miss comes back in the next session, not next week
+      // An answer a day or more after the skill was last practised, given alone and not in a rush, is a memory test
+      // (forgetting.js reads these as their own terms; see recallAt). Counted beside correct and attempts.
+      const gapDays = prev.last_seen_at ? (Date.now() - Date.parse(prev.last_seen_at)) / DAY_MS : 0;
+      const spaced = gapDays >= 1 && !hintUsed && !(model && model.ctx && model.ctx.rapid);
+      const next = {
+        correct: prev.correct + (correct ? 1 : 0),
+        attempts: prev.attempts + 1,
+        spaced_right: (prev.spaced_right || 0) + (spaced && correct ? 1 : 0),
+        spaced_wrong: (prev.spaced_wrong || 0) + (spaced && !correct ? 1 : 0),
+      };
+      // The date the skill is next listed (reminders, the profile's due list): the fixed ladder's, or when the default
+      // curve says recall reaches the target. dueReviews() re-predicts with the learner's own fitted curve.
+      const days = scheduleMode() === 'fixed' ? fixedDays : daysToTarget({ ...next, correct: next.correct }, null);
       return {
         user_id: userId,
         skill_id: skillId,
         mastery,
-        attempts: prev.attempts + 1,
-        correct: prev.correct + (correct ? 1 : 0),
+        attempts: next.attempts,
+        correct: next.correct,
+        spaced_right: next.spaced_right,
+        spaced_wrong: next.spaced_wrong,
         streak,
         ease,
         error_tags: [...tags].slice(-8),
@@ -140,8 +190,38 @@ function recordAttempt({ userId, skillId, correct, difficulty, levelDifficulty, 
   return row;
 }
 
-/** Skills whose review is due now, weakest and most overdue first. */
-function dueReviews(userId, skillIds, limit = 3) {
+/**
+ * Skills whose review is due now, at most `limit` (three a level). model (the default): predicted recall below the
+ * target, lowest first; each is returned as a copy of its state with `recall`. fixed (REVIEW_SCHEDULE=fixed): the old
+ * ladder, weakest and most overdue first. A learner whose spec says they forget fast (or keep things) has the target
+ * moved by up to 0.05 and the gap since the last answer stretched by up to 0.6x to 1.25x (services/learning-spec.js).
+ */
+function dueReviews(userId, skillIds, limit = REVIEW_MAX) {
+  return scheduleMode() === 'fixed' ? dueReviewsFixed(userId, skillIds, limit) : dueReviewsByRecall(userId, skillIds, limit);
+}
+
+function dueReviewsByRecall(userId, skillIds, limit) {
+  const now = Date.now();
+  // eslint-disable-next-line global-require
+  const rev = require('./learning-spec').reviewFor(userId);
+  const target = REVIEW_TARGET + (rev.spec && !rev.spec.isDefault ? rev.targetRecall - 0.9 : 0);
+  let rc = null;
+  try { rc = require('./scorecard').forgettingCurve({ userId }); } catch { rc = null; } // eslint-disable-line global-require
+  const out = [];
+  for (const id of skillIds) {
+    const s = stateFor(userId, id);
+    if (!(s.attempts > 0)) continue;
+    const last = Date.parse(s.last_seen_at);
+    if (!Number.isFinite(last)) { if (s.next_due_at && Date.parse(s.next_due_at) <= now) out.push({ ...s, recall: 0 }); continue; } // no last answer on record: the stored date decides
+    const days = Math.max(0, now - last) / DAY_MS / rev.spacingScale;
+    const recall = predictedRecall(s, days, rc);
+    if (recall < target) out.push({ ...s, recall });
+  }
+  return out.sort((a, b) => (a.recall - b.recall) || (a.mastery - b.mastery)).slice(0, limit);
+}
+
+/** The old ladder: weakest and most overdue first. */
+function dueReviewsFixed(userId, skillIds, limit) {
   const now = Date.now();
   // The learner's own spacing (services/learning-spec.js review.spacingScale): the gap between the last answer
   // and the review is stretched or shortened, within 0.6x to 1.25x. 1x for a learner with no spec.
@@ -692,6 +772,7 @@ function xpForItems(items) {
 }
 
 module.exports = {
+  REVIEW_TARGET, REVIEW_MAX, predictedRecall, daysToTarget, scheduleMode,
   LEVEL_UP,
   blankState,
   stateFor,
