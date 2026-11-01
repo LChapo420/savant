@@ -41,6 +41,13 @@
  * Evidence mass is also kept by source (src: beh, exp, quiz, llm), so "why is
  * the app sure of this?" has an answer.
  *
+ * Indicators (round 9, indicators.js): everything else the learner does and
+ * says (their words in tutor chats and typed answers, a model's read of the
+ * chats, the question-screen capture, how they use the app) is kept as faded
+ * moments on the card (`ind`) and read in read() and standing() as one more
+ * likelihood on top of the stat's own evidence, at a stated validity, so it
+ * moves the measured score and narrows its interval only as far as it can.
+ *
  * New learners start at the population average for each stat once enough
  * learners have confident scores, and at 50 until then — with zero confidence
  * either way.
@@ -49,6 +56,7 @@ const db = require('../../config/db');
 const { STATS, BY_ID, CATEGORIES } = require('./stats');
 const { RATES, CONTRASTS, SHIFTS, TAPS, experimentModel } = require('./signals');
 const forgetting = require('./forgetting');
+const indicators = require('./indicators');
 
 /** The shift model of a stat: its own (signals.js SHIFTS), or an experiment's. */
 function shiftModelOf(statId) {
@@ -242,7 +250,9 @@ function populationPriors() {
   const memoryLists = [];
   for (const r of rows) for (const list of Object.values(r.memory || {})) memoryLists.push(list);
   const memory = forgetting.population(memoryLists, today);
-  populationCache = { at: Date.now(), values, norms, strengths, contrastNorms, ordinals, shifts, taps, memory, rateLogits, valuePaths, velocity, pace, reach };
+  // Indicators (round 9, indicators.js): each one's centre, true spread between learners and within-learner noise of one unit.
+  const indicatorFigures = indicators.population(rows, ebFigures);
+  populationCache = { at: Date.now(), values, norms, strengths, contrastNorms, ordinals, shifts, taps, memory, rateLogits, valuePaths, velocity, pace, reach, indicators: indicatorFigures };
   return values;
 }
 
@@ -675,10 +685,38 @@ function standing(card, statId, { trackId } = {}) {
     const e = valuePoint(rec.vx, f.within);
     if (e) parts.push(zPosterior(e.x, e.s2, f.mu, f.tau));
   }
-  return combineZ(parts);
+  const base = combineZ(parts);
+  // The indicators (round 9): their likelihood on top of everything above, with that as the prior (indicators.combine).
+  const l = card.ind ? indicators.likelihood(card.ind, statId, pop.indicators) : null;
+  if (!l) return base;
+  const c = indicators.combine(base, l);
+  return base && base.v ? { ...c, v: base.v } : c;
 }
 
-function read(card, statId, { trackId } = {}) {
+/**
+ * read()'s result with the indicators' evidence (round 9, indicators.js) folded in: the measure's own posterior (its measured score and
+ * standard error, as a standing on the population's scale: centre the population value, 17 points per between-learner SD) is the prior,
+ * the indicators' likelihood is added, and the result is turned back into points. Confidence never drops; it rises only as far as the
+ * combined standard error says.
+ */
+function withIndicators(card, statId, res) {
+  if (!card || !card.ind || !indicators.isOn()) return res;
+  if (!populationCache.values) populationPriors();
+  const l = indicators.likelihood(card.ind, statId, populationCache.indicators);
+  if (!l) return res;
+  const centre = populationCache.values && populationCache.values[statId] !== undefined ? populationCache.values[statId] : 50;
+  const c = indicators.combine({ z: (res.measured - centre) / POP_SD, sd: (res.se || REF_SD) / POP_SD }, l);
+  const se = POP_SD * c.sd;
+  const massEq = Math.max(0, (REF_SD / se) ** 2 - 1);
+  return { ...res, measured: Math.round(clamp(centre + POP_SD * c.z, 0, 100)), se, confidence: Math.max(res.confidence, confidenceOf(massEq)), indicator_units: l.units };
+}
+
+function read(card, statId, opts = {}) {
+  return withIndicators(card, statId, readOwn(card, statId, opts));
+}
+
+/** A stat's own evidence, before the indicators. */
+function readOwn(card, statId, { trackId } = {}) {
   // Evidence fades with time whether or not anything new arrives, so masses are
   // read as of now, not as of the record's last update.
   const nowIso = new Date().toISOString();
@@ -1233,10 +1271,11 @@ function observe(userId, observations, { source = 'unknown', trackId = null } = 
   const velocityObs = (observations || []).filter((o) => o && o.velocity && o.stat === 'mastery_velocity');
   const paceObs = (observations || []).filter((o) => o && o.pace && o.stat === 'processing_velocity');
   const reachObs = REACH_ON ? (observations || []).filter((o) => o && o.reach && o.stat === REACH_STAT) : [];
+  const indObs = (observations || []).filter((o) => o && o.indicator && indicators.INDICATORS[o.indicator] && Number.isFinite(Number(o.x)) && Number(o.n) > 0);
   const valid = (observations || []).filter((o) => o && BY_ID[o.stat] && !o.contrast
     && (isRateObservation(o) || (o.trials === undefined && Number.isFinite(Number(o.value)) && Number(o.weight) > 0)));
   const card = get(userId);
-  if (!valid.length && !sideObs.length && !contrastIds.length && !residObs.length && !choiceObs.length && !shiftIds.length && !tapObs.length && !memoryObs.length && !velocityObs.length && !paceObs.length && !reachObs.length) return card;
+  if (!valid.length && !sideObs.length && !contrastIds.length && !residObs.length && !choiceObs.length && !shiftIds.length && !tapObs.length && !memoryObs.length && !velocityObs.length && !paceObs.length && !reachObs.length && !indObs.length) return card;
   const sides = { ...(card.sides || {}) };
   const nowSides = new Date().toISOString();
   for (const o of sideObs) sides[o.side] = addCounts(sides[o.side], Math.min(Number(o.hits) || 0, Number(o.trials)), Number(o.trials), nowSides);
@@ -1470,10 +1509,18 @@ function observe(userId, observations, { source = 'unknown', trackId = null } = 
     }
   }
 
+  // Indicators (round 9): faded moments per indicator, on the card (one indicator bears on several stats; indicators.js reads them).
+  let ind = card.ind;
+  if (indObs.length) {
+    ind = { ...(card.ind || {}) };
+    for (const o of indObs) ind[o.indicator] = indicators.addUnits(ind[o.indicator], Number(o.x), Number(o.n), now);
+  }
+
   return db.update('scorecards', card.id, {
     stats,
     subjects,
     sides,
+    ...(ind ? { ind } : {}),
     ...(memoryObs.length ? { memory } : {}),
     log: log.slice(-LOG_KEEP),
     updates: (card.updates || 0) + 1,
@@ -1642,6 +1689,8 @@ module.exports = {
   forgettingCurve,
   experimentState,
   experimentPosterior,
+  indicatorLikelihood: (card, statId) => { if (!populationCache.values) populationPriors(); return card && card.ind ? indicators.likelihood(card.ind, statId, populationCache.indicators) : null; },
+  readOwn,
   choiceProbs,
   choiceInfo,
   CHOICE_VALIDITY,

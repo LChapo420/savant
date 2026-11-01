@@ -30,7 +30,10 @@
  *                     level's arm is the same every time it is asked about and
  *                     a page is never rewritten because the card moved.
  *                     PERSONALIZE_ALLOCATOR=weighted is the old hash-weighted
- *                     pick (the rollback).
+ *                     pick (the rollback). Round 9: under the allocator a page
+ *                     can cross up to PERSONALIZE_FACTORIAL dimensions (default 1)
+ *                     that do not touch the same part of it (PARTS), each
+ *                     credited with the same outcome (signals.experimentsOf).
  *
  *   choiceDimension   which experiment stat a "which is clearer?" pairwise
  *                     choice (services/boosters.js choice) should ask about
@@ -308,13 +311,39 @@ function experimentValue(st, arm) {
   return Math.max(one, (1 / before - 1 / after) / 2);
 }
 
+// ── factorial pages (round 9, docs/SCORECARD-EVERYTHING.md) ───────────────
+// The month's experiments are the bottleneck: about fifteen pages, one dimension each. A page can run more than one when the dimensions
+// do not touch the same part of it (a 2^k factorial: Collins, Dziak & Li 2009), so each dimension's arm is read from every page it was on
+// and the others' arms are noise to it (their effects add when they work on different parts of the page). PERSONALIZE_FACTORIAL is how
+// many dimensions a page may cross (1, the one-dimension design of round 8, is the default: measured in the recovery sim, two per page
+// doubled the dimensions run and moved their recovery r by only +0.005 to +0.016 at 100 levels, while false directives rose from 0.9% to
+// 1.9% and one untouched measure regressed; docs/SCORECARD-EVERYTHING.md section 4). Two dimensions conflict when they share a part
+// of the page below; brevity conflicts with everything that adds text. More than two instructions per page are not the default: a writer
+// follows fewer of them as they pile up (the research report, 4.2), and the page must still read as one lesson.
+const FACTORIAL = () => Math.max(1, Math.min(3, Number(process.env.PERSONALIZE_FACTORIAL || 1)));
+const PARTS = {
+  inductive_trajectory: ['opening', 'order'], abstraction_tolerance: ['opening', 'order'], worked_example_dependence: ['examples', 'order', 'length'],
+  cycle_architecture: ['order'], dialogic_preference: ['order', 'register'], novelty_hunger: ['order'],
+  curiosity_hook: ['opening'], global_framing_need: ['opening', 'length'], relevance_demand: ['opening'], narrative_pull: ['opening', 'examples'],
+  analogical_transfer: ['examples'], interest_transfer: ['examples'], example_density_need: ['examples', 'length'], social_framing: ['examples'],
+  emotional_engagement: ['examples'], brevity_preference: ['length', 'examples', 'opening', 'order'],
+  tone_formality: ['register'], jargon_absorption: ['register', 'terms'], humor_receptivity: ['register'],
+  feedback_tone_sensitivity: ['feedback'], praise_sensitivity: ['feedback'], mnemonic_receptivity: ['memory aids'],
+};
+function compatible(a, b) {
+  const pa = PARTS[a] || [a];
+  const pb = PARTS[b] || [b];
+  return a !== b && !pa.some((x) => pb.includes(x));
+}
+
 /**
  * The stat and arm one more experiment should go to, or null when nothing is open. Ties are broken by the level's hash, so the pick is a
- * pure function of the card and the level.
+ * pure function of the card and the level. `besides`: stats already on this page (only dimensions compatible with all of them).
  */
-function pickExperiment(userId, card, key) {
+function pickExperiment(userId, card, key, besides = []) {
   let best = null;
   for (const e of openExperiments(userId, card)) {
+    if (besides.some((b) => !compatible(b, e.stat))) continue;
     const st = stateOf(card, e.stat);
     const arm = st.vHigh === st.vLow ? (unit(`side:${key}:${e.stat}`) < 0.5 ? 'high' : 'low') : (st.vHigh < st.vLow ? 'high' : 'low');
     const value = importanceOf(e.stat) * experimentValue(st, arm) * (1 + 1e-6 * unit(`which:${key}:${e.stat}`));
@@ -329,12 +358,33 @@ function allocated(userId, where, key) {
   const kept = db.findOne('experiment_arms', match);
   if (kept) {
     const e = EXPERIMENTS.find((x) => x.stat === kept.stat);
-    return e && kept.arm ? { stat: e.stat, label: e.label, arm: kept.arm, text: e[kept.arm] } : null;
+    if (!e || !kept.arm) return null;
+    const also = (kept.also || []).map((a) => { const x = EXPERIMENTS.find((y) => y.stat === a.stat); return x && a.arm ? { stat: x.stat, label: x.label, arm: a.arm, text: x[a.arm] } : null; }).filter(Boolean);
+    return asExperiment({ stat: e.stat, label: e.label, arm: kept.arm, text: e[kept.arm] }, also);
   }
   const card = scorecard.get(userId);
   const best = pickExperiment(userId, card, key);
-  db.insert('experiment_arms', { user_id: userId, track_id: where.trackId, grade_id: where.gradeId, level: where.level, stat: best ? best.e.stat : null, arm: best ? best.arm : null, at: new Date().toISOString() });
-  return best ? { stat: best.e.stat, label: best.e.label, arm: best.arm, text: best.e[best.arm] } : null;
+  const also = [];
+  if (best) {
+    // The page's other dimensions: the same rule over what is compatible with those already chosen. Credit for one does not change the
+    // value of another before the page is read, so the picks are made from the same card.
+    for (let k = 1; k < FACTORIAL(); k++) {
+      const next = pickExperiment(userId, card, `${key}:${k}`, [best.e.stat, ...also.map((a) => a.stat)]);
+      if (!next) break;
+      also.push({ stat: next.e.stat, label: next.e.label, arm: next.arm, text: next.e[next.arm] });
+    }
+  }
+  db.insert('experiment_arms', {
+    user_id: userId, track_id: where.trackId, grade_id: where.gradeId, level: where.level, stat: best ? best.e.stat : null, arm: best ? best.arm : null,
+    ...(also.length ? { also: also.map((a) => ({ stat: a.stat, arm: a.arm })) } : {}), at: new Date().toISOString(),
+  });
+  return best ? asExperiment({ stat: best.e.stat, label: best.e.label, arm: best.arm, text: best.e[best.arm] }, also) : null;
+}
+
+/** One page's experiment: the main dimension, plus the crossed ones (`also`) with every instruction in `text`. */
+function asExperiment(main, also) {
+  if (!also.length) return main;
+  return { ...main, text: [main.text, ...also.map((a) => a.text)].join(' '), also };
 }
 
 /**
@@ -384,6 +434,8 @@ function checkAgainstBase(html, baseHtml) {
 }
 
 module.exports = {
+  compatible,
+  PARTS,
   isEnabled,
   scorecardSection,
   recentLevelsSection,

@@ -57,7 +57,7 @@ App.mount(async () => {
 
       <section class="card boost" aria-labelledby="b-s">
         <h2 id="b-s">Quiet signals <span class="chip">off until you switch it on</span></h2>
-        <p class="small">While you answer questions, Savant can note how long you wait before your first move, how fast you type (the gaps between key presses, never which keys or what you write) and how often you press backspace. Only these numbers are kept. <a href="/privacy#collect">Read exactly what is collected</a>.</p>
+        <p class="small">While you answer questions, Savant can note how long you wait before your first move, how fast you type (the gaps between key presses, never which keys or what you write), how often you press backspace, how often and how long you leave the tab, whether you change your pick before checking (never which one), pauses while typing and stretches with no input. Only these numbers are kept. <a href="/privacy#collect">Read exactly what is collected</a>.</p>
         <label class="check-row"><input type="checkbox" id="silent-on" ${s.silent.on ? 'checked' : ''}> <span>Collect these quiet signals</span></label>
       </section>
 
