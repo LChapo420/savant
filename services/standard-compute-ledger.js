@@ -26,7 +26,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const CAP_USD = 30.0; // raised from $15 to $20 by the owner on 2026-10-28, and by $10 more on 2026-10-31
+const CAP_USD = 39.5; // owner 2026-11-01: the subscription allows $41, keep $1.50 spare (was $30 on 2026-10-31)
 const SEED_USD = 0.5;
 const STALE_RESERVATION_MS = 2 * 60 * 60 * 1000;
 const FILE = () => process.env.STANDARD_COMPUTE_LEDGER_FILE || path.join(__dirname, '..', 'data', 'standard-compute-ledger.json');
@@ -34,8 +34,13 @@ const FILE = () => process.env.STANDARD_COMPUTE_LEDGER_FILE || path.join(__dirna
 /** Dollars per million tokens: an assumed upper bound (see the header). */
 const PRICES = {
   'deepseek/deepseek-v4.1-flash-1017': { input: 0.3, output: 1.2 },
+  // Owner 2026-11-01: the dashboard showed $30.90 when the ledger said $22.09, so the old $1/$4 worst case undercounted the
+  // frontier models. These are list-price upper bounds.
+  'anthropic/claude-sonnet-5.5': { input: 3, output: 15 },
+  'anthropic/claude-opus-5.5': { input: 5, output: 25 },
+  'google/gemini-3.8-flash': { input: 0.5, output: 3 },
 };
-const WORST = { input: 1, output: 4 };
+const WORST = { input: 1.5, output: 6 };
 
 function capUsd() {
   const env = Number(process.env.STANDARD_COMPUTE_CAP_USD);
