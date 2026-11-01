@@ -18,6 +18,7 @@
  * `response_format`, because tool calling is documented and a JSON-schema
  * response format is not. Same approach as the Anthropic provider.
  */
+const sj = require('./structured-json');
 const BASE_URL = (process.env.MIMO_BASE_URL || 'https://api.xiaomimimo.com/v1').replace(/\/$/, '');
 
 const MODEL_DEEP = process.env.MIMO_MODEL_DEEP || 'mimo-v2.6-pro';
@@ -304,7 +305,10 @@ function thinkingFor(role) {
 }
 
 /** One structured call: JSON matching `schema`, or null. */
-async function structured({ role, system, user, schema, schemaName = 'submit', maxTokens = 4096, lane, think }) {
+/** An answer cut off by the output cap is asked again with a larger one (structured-json.js withLengthRetry). */
+function structured(args) { return sj.withLengthRetry(structuredOnce, args); }
+
+async function structuredOnce({ role, system, user, schema, schemaName = 'submit', maxTokens = 4096, lane, think }) {
   const model = modelFor(role);
   const body = {
     messages: messagesFor(system, [{ role: 'user', content: user }]),
@@ -343,13 +347,14 @@ async function structured({ role, system, user, schema, schemaName = 'submit', m
       // here reads as "the model had nothing to say", which is the wrong
       // diagnosis and the hardest kind to find.
       console.warn(`ai: ${model} returned unparseable ${schemaName} arguments`
-        + `${finish === 'length' ? ' — output hit max_completion_tokens, raise maxTokens for this call' : ''}`
+        + `${finish === 'length' ? ' — output hit max_completion_tokens' : ''}`
         + ` (${call.function.arguments.length} chars)`);
-      return null;
+      return finish === 'length' ? sj.TRUNCATED : null;
     }
   }
   if (finish === 'length') {
-    console.warn(`ai: ${model} hit max_completion_tokens before calling ${schemaName}; raise maxTokens for this call`);
+    console.warn(`ai: ${model} hit max_completion_tokens before calling ${schemaName}; asking again with a larger cap`);
+    if (!String(message.content || '').trim().startsWith('{')) return sj.TRUNCATED;
   }
 
   // Some models answer with the JSON in the message instead of calling the

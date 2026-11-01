@@ -153,7 +153,10 @@ const unorouter = {
   modelFor() { return 'gemini-3.6-flash:free'; },
   describeError(err) { return err && err.message ? err.message : String(err); },
 
-  async structured({ system, user, schema, schemaName = 'submit', maxTokens = 2048, models, timeoutMs = null }) {
+  /** An answer cut off by the output cap is asked again with a larger one (structured-json.js withLengthRetry). */
+  structured(args) { return sj.withLengthRetry((a) => this.structuredOnce(a), args); },
+
+  async structuredOnce({ system, user, schema, schemaName = 'submit', maxTokens = 2048, models, timeoutMs = null }) {
     const list = [].concat(models || ['gemini-3.6-flash:free']).filter((m) => typeof m === 'string');
     let lastErr = null;
     for (const model of list) {
@@ -163,7 +166,7 @@ const unorouter = {
       ];
       try {
         // eslint-disable-next-line no-await-in-loop
-        const payload = await post({ model, messages, max_tokens: Math.max(512, Number(maxTokens) || 1024) + 2048, temperature: 0 }, timeoutMs || Number(process.env.UNOROUTER_TIMEOUT_MS) || 180000);
+        const payload = await post({ model, messages, max_tokens: sj.outputBudget(maxTokens, null), temperature: 0 }, timeoutMs || Number(process.env.UNOROUTER_TIMEOUT_MS) || 180000);
         const msg = payload.choices && payload.choices[0] && payload.choices[0].message;
         const parsed = sj.parseStructured(msg, schemaName);
         const checked = parsed.data !== undefined ? sj.validate(schema, parsed.data) : null;
@@ -171,8 +174,10 @@ const unorouter = {
           const u = payload.usage || {};
           return { data: checked.value, usage: { input_tokens: u.prompt_tokens || 0, output_tokens: u.completion_tokens || 0, cost_usd: 0 }, model, tier: 'unorouter_free' };
         }
+        if (payload.choices && payload.choices[0] && payload.choices[0].finish_reason === 'length') throw sj.truncatedError(`unorouter: ${model} was cut off by the output cap (${schemaName})`);
         lastErr = Object.assign(new Error(`unorouter: ${model} gave an unusable ${schemaName}`), { status: 422, unusable: true });
       } catch (err) {
+        if (err.truncated) throw err;
         lastErr = err;
         if (err.status === 402 || err.status === 403) throw err;
       }

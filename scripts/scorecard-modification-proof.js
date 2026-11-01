@@ -476,8 +476,11 @@ function makeScWriter() {
   return {
     name: 'standard_compute_proof', outside: true, isEnabled: () => true, costCents: () => 0,
     // One retry on an unusable reply (the gateway does not enforce the schema; the app's own providers retry the same way).
+    // The same two guards the app's providers have (services/providers/structured-json.js): room for the thinking in the output cap, and
+    // a larger cap when an answer is cut off by it (finish length); then one retry on any other unusable reply.
     async structured(args) {
-      try { return await this.structuredOnce(args); } catch (e) { if (!/unusable structured reply/.test(e.message)) throw e; return this.structuredOnce(args); }
+      const run = (a) => sj.withLengthRetry((b) => this.structuredOnce(b), a);
+      try { return await run(args); } catch (e) { if (!/unusable structured reply/.test(e.message) || e.truncated) throw e; return run(args); }
     },
     async structuredOnce({ system, user, schema, schemaName = 'submit', maxTokens = 2048, effort = null }) {
       const sys = `${system || ''}\n\nReply with one JSON object only (no prose, no code fence) matching this JSON schema (${schemaName}):\n${JSON.stringify(schema)}`.trim();
@@ -485,7 +488,7 @@ function makeScWriter() {
       const key = String(process.env.STANDARD_COMPUTE_API_KEY || '').trim();
       if (!key) throw new Error('no Standard Compute key');
       const base = (/^https?:\/\//.test(String(process.env.STANDARD_COMPUTE_BASE_URL || '')) ? process.env.STANDARD_COMPUTE_BASE_URL : 'https://api.stdcmpt.com/v1').replace(/\/chat\/completions\/?$/, '').replace(/\/$/, '');
-      const body = { model, messages: [{ role: 'system', content: sys }, { role: 'user', content: String(user || '') }], max_tokens: Math.max(512, Number(maxTokens) || 1024) + 1024, temperature: 0, response_format: { type: 'json_object' }, ...(effort === 'medium' || effort === 'high' ? { reasoning_effort: effort } : {}) };
+      const body = { model, messages: [{ role: 'system', content: sys }, { role: 'user', content: String(user || '') }], max_tokens: sj.outputBudget(maxTokens, effort === 'medium' || effort === 'high' ? effort : null), temperature: 0, response_format: { type: 'json_object' }, ...(effort === 'medium' || effort === 'high' ? { reasoning_effort: effort } : {}) };
       const est = ledger.estimate({ model, inputChars: sys.length + String(user || '').length, maxTokens: body.max_tokens });
       const id = ledger.reserve({ usd: est, task: 'scorecard_proof_writer', model, ceilingUsd: 26 });
       let settled = false;
@@ -504,7 +507,8 @@ function makeScWriter() {
         const checked = parsed.data !== undefined ? sj.validate(schema, parsed.data) : null;
         if (checked && !checked.errors.length) return { data: checked.value, usage: { ...usage, cost_usd: usd }, model };
         if (process.env.PROOF_DEBUG) console.error('unusable reply:', parsed.error || (checked && checked.errors.slice(0, 5).join('; ')), String(parsed.raw || '').slice(0, 300), 'finish:', r.json.choices[0].finish_reason);
-        throw new Error(`unusable structured reply (${parsed.error || (checked && checked.errors[0]) || 'no data'}; finish ${r.json.choices[0].finish_reason})`);
+        const cutOff = r.json.choices[0].finish_reason === 'length';
+        throw Object.assign(new Error(`unusable structured reply (${parsed.error || (checked && checked.errors[0]) || 'no data'}; finish ${r.json.choices[0].finish_reason})`), cutOff ? { truncated: true } : {});
       } catch (e) { settleOnce({ outcome: 'unknown' }); throw e; }
     },
   };

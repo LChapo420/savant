@@ -21,6 +21,7 @@
  * model aside, let services/providers/index.js hand the work to the next
  * provider, and never block a learner on it.
  */
+const sj = require('./structured-json');
 const BASE_URL = (process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1').replace(/\/$/, '');
 
 const MODEL_DEEP = process.env.OPENROUTER_MODEL_DEEP || process.env.OPENROUTER_MODEL || 'qwen/qwen3.8-27b:free';
@@ -785,7 +786,10 @@ function splitLeakedArgs(data) {
 }
 
 /** One structured call: JSON matching `schema`, or null. */
-async function structured({ role, system, user, schema, schemaName = 'submit', maxTokens = 4096, lane, effort = null }) {
+/** An answer cut off by the output cap is asked again with a larger one (structured-json.js withLengthRetry). */
+function structured(args) { return sj.withLengthRetry(structuredOnce, args); }
+
+async function structuredOnce({ role, system, user, schema, schemaName = 'submit', maxTokens = 4096, lane, effort = null }) {
   const model = modelFor(role);
   const body = {
     messages: messagesFor(system, [{ role: 'user', content: user }]),
@@ -820,13 +824,14 @@ async function structured({ role, system, user, schema, schemaName = 'submit', m
       // here reads as "the model had nothing to say", which is the wrong
       // diagnosis and the hardest kind to find.
       console.warn(`ai: ${model} returned unparseable ${schemaName} arguments`
-        + `${finish === 'length' ? ' — output hit max_tokens, raise maxTokens for this call' : ''}`
+        + `${finish === 'length' ? ' — output hit max_tokens' : ''}`
         + ` (${call.function.arguments.length} chars)`);
-      return null;
+      return finish === 'length' ? sj.TRUNCATED : null;
     }
   }
   if (finish === 'length') {
-    console.warn(`ai: ${model} hit max_tokens before calling ${schemaName}; raise maxTokens for this call`);
+    console.warn(`ai: ${model} hit max_tokens before calling ${schemaName}; asking again with a larger cap`);
+    if (!String(message.content || '').trim().startsWith('{')) return sj.TRUNCATED;
   }
 
   // Some models answer with the JSON in the message instead of calling the

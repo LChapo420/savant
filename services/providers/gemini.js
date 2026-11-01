@@ -10,6 +10,7 @@
  * `GEMINI_MODEL_FAST`) select them, and `npm run ai:models` prints exactly what
  * the key in use can reach.
  */
+const sj = require('./structured-json');
 const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta';
 
 const MODEL_AUTHOR = process.env.GEMINI_MODEL || 'gemini-flash-latest';
@@ -318,7 +319,10 @@ function usageOf(payload) {
 }
 
 /** One structured call: JSON matching `schema`, or null. */
-async function structured({ role, system, user, schema, maxTokens = 4096, lane }) {
+/** An answer cut off by the output cap is asked again with a larger one (structured-json.js withLengthRetry). */
+function structured(args) { return sj.withLengthRetry(structuredOnce, args); }
+
+async function structuredOnce({ role, system, user, schema, maxTokens = 4096, lane }) {
   const model = modelFor(role);
   const body = {
     systemInstruction: { parts: [{ text: system }] },
@@ -338,11 +342,12 @@ async function structured({ role, system, user, schema, maxTokens = 4096, lane }
   );
 
   const text = textOf(payload);
-  if (!text) return null;
+  const cut = (payload && payload.candidates && payload.candidates[0] && payload.candidates[0].finishReason) === 'MAX_TOKENS';
+  if (!text) return cut ? sj.TRUNCATED : null;
   try {
     return { data: JSON.parse(text), usage: usageOf(payload), model };
   } catch {
-    return null;
+    return cut ? sj.TRUNCATED : null;
   }
 }
 

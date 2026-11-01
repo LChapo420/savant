@@ -683,8 +683,11 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
         : `${system || ''}\n\nReply with one JSON object only (no prose, no code fence) matching this JSON schema:\n${JSON.stringify(schema)}`.trim(),
       [{ role: 'user', content: user }],
     );
+    // The answer's budget: doubled for the repair turn when the first answer was cut off by the output cap (a reasoning model that
+    // spent its tokens thinking), rather than asking it to be concise inside the same cap.
+    let budget = maxTokens;
     const build = (msgs) => (e) => ({
-      ...baseBody(e, { messages: msgs || baseMessages(), maxTokens }),
+      ...baseBody(e, { messages: msgs || baseMessages(), maxTokens: budget }),
       ...(toolMode() ? {
         tools: [{ type: 'function', function: { name: schemaName, description: 'Submit the result. Call this exactly once.', parameters: schema } }],
         tool_choice: 'auto',
@@ -708,6 +711,7 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
     // One repair turn on the same model: show it what it sent and exactly what is wrong.
     const problems = checked ? checked.errors.slice(0, 12).join('; ') : parsed.error;
     const finish = choice && choice.finish_reason;
+    if (finish === 'length') budget = Math.min(sj.OUTPUT_CAP, budget * 2 + 1024);
     const repairMessages = [
       ...baseMessages(),
       { role: 'assistant', content: String(parsed.raw || '').slice(0, 8000) || '(no answer)' },

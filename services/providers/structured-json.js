@@ -233,4 +233,48 @@ function validate(schema, value, at = '$') {
   return { value: v, errors };
 }
 
-module.exports = { stripThinking, extractJson, parseLoose, closeTruncated, splitLeakedArgs, parseStructured, validate };
+// ── output budgets and the retry on a cut-off answer ───────────────────────────
+/**
+ * A reasoning model spends tokens thinking BEFORE it writes the answer, and both count against the output cap: a cap sized for
+ * the answer alone comes back empty or cut ("finish length"). Room for the thinking, by effort, on top of the answer's own budget.
+ */
+const THINKING_HEADROOM = { none: 1024, off: 1024, minimal: 1024, low: 4096, medium: 6144, high: 16384, max: 32768 };
+const OUTPUT_CAP = 32768;
+function outputBudget(answerTokens, effort = null, { cap = OUTPUT_CAP, thinks = true } = {}) {
+  const extra = effort === null || effort === undefined ? (thinks ? 4096 : 1024) : (THINKING_HEADROOM[effort] === undefined ? 6144 : THINKING_HEADROOM[effort]);
+  return Math.min(cap, Math.max(256, Number(answerTokens) || 1024) + extra);
+}
+
+/** What a provider's one attempt returns (or throws, as an error with .truncated) when the output cap cut the answer off. */
+const TRUNCATED = { truncated: true };
+const truncatedError = (message, extra = {}) => Object.assign(new Error(message), { truncated: true, status: 422, unusable: true, ...extra });
+
+/**
+ * Run `attempt(args)` and, if the answer was cut off by the token cap (it returns TRUNCATED or throws a .truncated error), run it again
+ * with a larger budget: the answer's budget doubles (plus 1,024), up to `ceiling`, at most `tries` times in all. A long output is
+ * not given up on because the first cap was tight. When the ceiling is reached the last cut-off stands: TRUNCATED becomes null (the
+ * provider's "answered, nothing usable"), a thrown one is thrown again. Every other result or error passes through untouched.
+ */
+async function withLengthRetry(attempt, args, { ceiling = OUTPUT_CAP, tries = 3, onRetry = null } = {}) {
+  let maxTokens = Number(args && args.maxTokens) || 2048;
+  let lastThrown = null;
+  for (let i = 0; i < tries; i++) {
+    let out;
+    try {
+      out = await attempt({ ...args, maxTokens });
+    } catch (err) {
+      if (!(err && err.truncated)) throw err;
+      lastThrown = err;
+      out = TRUNCATED;
+    }
+    if (out !== TRUNCATED) return out;
+    if (maxTokens >= ceiling || i === tries - 1) break;
+    const next = Math.min(ceiling, maxTokens * 2 + 1024);
+    if (onRetry) onRetry(maxTokens, next);
+    maxTokens = next;
+  }
+  if (lastThrown) throw lastThrown;
+  return null;
+}
+
+module.exports = { outputBudget, THINKING_HEADROOM, OUTPUT_CAP, TRUNCATED, truncatedError, withLengthRetry, stripThinking, extractJson, parseLoose, closeTruncated, splitLeakedArgs, parseStructured, validate };

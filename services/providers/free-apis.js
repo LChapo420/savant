@@ -149,7 +149,7 @@ function orUsage(payload, model) {
  */
 const ZERO_PRICE = { prompt: 0, completion: 0, request: 0, image: 0 };
 function orBody(model, messages, maxTokens, extra = {}) {
-  return { ...extra, model, messages, max_tokens: Math.max(256, Number(maxTokens) || 1024) + 4096, temperature: 0, provider: { max_price: ZERO_PRICE } };
+  return { ...extra, model, messages, max_tokens: sj.outputBudget(maxTokens, null), temperature: 0, provider: { max_price: ZERO_PRICE } };
 }
 
 /** Any reported cost above $0 locks the whole tier off (persisted) until a person clears it. */
@@ -185,7 +185,10 @@ const openrouterFree = {
   costCents() { return 0; },
   describeError(err) { return err && err.message ? err.message : String(err); },
 
-  async structured({ system, user, schema, schemaName = 'submit', maxTokens = 2048, models = null, timeoutMs = null, signal = null }) {
+  /** An answer cut off by the output cap is asked again with a larger one (structured-json.js withLengthRetry). */
+  structured(args) { return sj.withLengthRetry((a) => this.structuredOnce(a), args); },
+
+  async structuredOnce({ system, user, schema, schemaName = 'submit', maxTokens = 2048, models = null, timeoutMs = null, signal = null }) {
     if (!this.isConfigured()) return null;
     const list = (models ? [].concat(models).map((m) => (typeof m === 'string' ? m : m.model)) : orModels()).filter((m) => !isResting(m));
     let lastErr = null;
@@ -210,8 +213,10 @@ const openrouterFree = {
         const parsed = sj.parseStructured(msg, schemaName);
         const checked = parsed.data !== undefined ? sj.validate(schema, parsed.data) : null;
         if (checked && !checked.errors.length) return { data: checked.value, usage: orUsage(payload, model), model, tier: 'free_api' };
+        if (payload.choices && payload.choices[0] && payload.choices[0].finish_reason === 'length') throw sj.truncatedError(`openrouter_free: ${model} was cut off by the output cap (${schemaName})`);
         lastErr = Object.assign(new Error(`openrouter_free: ${model} gave an unusable ${schemaName}`), { status: 422, unusable: true });
       } catch (err) {
+        if (err.truncated) throw err;
         lastErr = err;
         if (err.aborted) throw err;
         // A free model's 429 is usually its daily allowance: rest it for a while.

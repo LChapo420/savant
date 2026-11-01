@@ -6,6 +6,7 @@
  * schema-valid JSON on every current model, including the ones that reject a
  * forced tool choice.
  */
+const sj = require('./structured-json');
 const ledger = require('../anthropic-ledger');
 
 let Anthropic = null;
@@ -44,7 +45,10 @@ function modelFor(role) {
   return role === 'author' || role === 'deep' ? MODEL_AUTHOR : MODEL_FAST;
 }
 
-async function structured({ role, task = null, system, user, schema, schemaName = 'submit', maxTokens = 4096, effort = 'medium', signal = null }) {
+/** An answer cut off by the output cap is asked again with a larger one (structured-json.js withLengthRetry). */
+function structured(args) { return sj.withLengthRetry(structuredOnce, args); }
+
+async function structuredOnce({ role, task = null, system, user, schema, schemaName = 'submit', maxTokens = 4096, effort = 'medium', signal = null }) {
   const c = getClient();
   if (!c) return null;
   const model = modelFor(role);
@@ -72,6 +76,7 @@ async function structured({ role, task = null, system, user, schema, schemaName 
 
   if (response.stop_reason === 'refusal') return null;
   const block = (response.content || []).find((b) => b.type === 'tool_use' && b.name === schemaName);
+  if (!block && response.stop_reason === 'max_tokens') return sj.TRUNCATED;
   return block ? { data: block.input, usage: response.usage, model } : null;
 }
 

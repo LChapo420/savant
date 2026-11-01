@@ -5,6 +5,7 @@
  * to the API key's routing group, so the requested model must be enabled for that
  * key in Modelflare.
  */
+const sj = require('./structured-json');
 const BASE_URL = (process.env.MODELFLARE_BASE_URL || 'https://modelflare.dev/v1').replace(/\/$/, '');
 const MODEL_PLACEMENT = process.env.MODELFLARE_MODEL_PLACEMENT || 'gpt-6.1-sol';
 const RETRYABLE = new Set([408, 429, 500, 502, 503, 504]);
@@ -110,7 +111,10 @@ function parseArguments(message, schemaName) {
   try { return JSON.parse(text); } catch { return null; }
 }
 
-async function structured({ role, system, user, schema, schemaName = 'submit', maxTokens = 4096 }) {
+/** An answer cut off by the output cap is asked again with a larger one (structured-json.js withLengthRetry). */
+function structured(args) { return sj.withLengthRetry(structuredOnce, args); }
+
+async function structuredOnce({ role, system, user, schema, schemaName = 'submit', maxTokens = 4096 }) {
   if (!isEnabled(role)) return null;
   const model = modelFor(role);
   const payload = await queued(() => callWithRetries({
@@ -133,6 +137,7 @@ async function structured({ role, system, user, schema, schemaName = 'submit', m
   const message = payload && payload.choices && payload.choices[0] && payload.choices[0].message;
   if (!message) return null;
   const data = parseArguments(message, schemaName);
+  if (!data && payload.choices[0].finish_reason === 'length') return sj.TRUNCATED;
   return data ? { data, usage: usageOf(payload), model: payload.model || model } : null;
 }
 

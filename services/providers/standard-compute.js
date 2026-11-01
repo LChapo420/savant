@@ -116,14 +116,17 @@ const standardCompute = {
   modelFor() { return MODEL(); },
   describeError(err) { return err && err.message ? err.message : String(err); },
 
-  async structured({ task = null, system, user, schema, schemaName = 'submit', maxTokens = 2048, effort = null, timeoutMs = null, signal = null }) {
+  /** One structured call; an answer cut off by the output cap is asked again with a larger one (structured-json.js withLengthRetry). */
+  structured(args) { return sj.withLengthRetry((a) => this.structuredOnce(a), args); },
+
+  async structuredOnce({ task = null, system, user, schema, schemaName = 'submit', maxTokens = 2048, effort = null, timeoutMs = null, signal = null }) {
     const model = MODEL();
     const messages = [
       { role: 'system', content: `${system || ''}\n\nReply with one JSON object only (no prose, no code fence) matching this JSON schema (${schemaName}):\n${JSON.stringify(schema)}`.trim() },
       { role: 'user', content: String(user || '') },
     ];
     const { payload, usage } = await post(
-      { model, messages, max_tokens: Math.max(512, Number(maxTokens) || 1024) + 1024, temperature: 0, response_format: { type: 'json_object' }, ...reasoning(effort) },
+      { model, messages, max_tokens: sj.outputBudget(maxTokens, effort), temperature: 0, response_format: { type: 'json_object' }, ...reasoning(effort) },
       timeoutMs || Number(process.env.STANDARD_COMPUTE_TIMEOUT_MS) || 180000, { signal, task },
     );
     const msg = payload.choices && payload.choices[0] && payload.choices[0].message;
@@ -132,6 +135,7 @@ const standardCompute = {
     if (checked && !checked.errors.length) {
       return { data: checked.value, usage: { ...usage, cost_usd: ledger.costOf(model, usage) }, model, tier: 'standard_compute' };
     }
+    if (payload.choices && payload.choices[0] && payload.choices[0].finish_reason === 'length') throw sj.truncatedError(`standard_compute: ${model} was cut off by the output cap (${schemaName})`, { usage });
     throw Object.assign(new Error(`standard_compute: ${model} gave an unusable ${schemaName}`), { status: 422, unusable: true, usage });
   },
 
