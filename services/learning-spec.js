@@ -198,7 +198,8 @@ const METRIC_RULES = [
   R('global_framing_need', null, [['bigPicture', 1, 0.8]], 'Needs the big picture first: where it fits and why, then details.'),
   // Pacing and cycle architecture
   R('cycle_architecture', null, [['checkFreq', -1, 0.7], ['chunk', 1, 0.2]], 'Prefers a long teach then a check: fewer interruptions. Needs short teach-then-check cycles: a check after each piece.'),
-  R('attention_runway', '03-M19', [['sessionLen', 1, 0.7], ['length', 1, 0.4], ['breaks', -1, 0.5]], 'Sustains long focus: longer lesson and session. Focus drops fast: short lesson, short session, more breaks.'),
+  // chunk added in version 2 (the sensitivity proof found short-focus notes no shorter in their pieces): focus that drops fast gets small pieces too.
+  R('attention_runway', '03-M19', [['sessionLen', 1, 0.7], ['length', 1, 0.4], ['breaks', -1, 0.5], ['chunk', 1, 0.25]], 'Sustains long focus: longer lesson and session. Focus drops fast: short lesson, short session, more breaks, small pieces.'),
   R('warmup_latency', null, [['warmup', 1, 0.8]], 'Needs a ramp-in: easy items first. Engages instantly: start straight in.'),
   R('fatigue_curve', null, [['fatigue', 1, 0.6], ['sessionLen', -1, 0.3], ['breaks', 1, 0.5]], 'Drops sharply late: hardest work early, finish on an easy item, shorter sessions, more breaks.'),
   R('momentum_dependence', '03-M27', [['momentum', 1, 0.8], ['warmup', 1, 0.2], ['diffStart', -1, 0.3]], 'Needs quick wins: an easy first item, a lower start. (03-M27: design choice.)'),
@@ -237,7 +238,8 @@ const METRIC_RULES = [
   R('help_seeking', '03-M30', [['checkFreq', -1, 0.4], ['autonomy', 1, 0.2]], 'Struggles silently: check understanding often. Asks readily: fewer checks.'),
   R('guessing_propensity', null, [['selfCheck', 1, 0.5], ['feedbackDetail', 1, 0.2], ['checks', 1, 0.2]], 'Guesses freely: rate sureness first, explain why.'),
   R('perfectionism', null, [['pressure', -1, 0.5], ['warmth', 1, 0.3]], 'Needs everything perfect: low stakes, partial progress named as progress.'),
-  R('productive_struggle', '03-M30', [['hintSize', -1, 0.6], ['scaffold', -1, 0.4], ['challenge', 1, 0.3]], 'Benefits from struggle: small hints, less support. Needs rescue early: bigger hints sooner.'),
+  // generation added in version 2: a learner who gains from struggle is asked to attempt before the reveal (and one who needs rescue is shown first).
+  R('productive_struggle', '03-M30', [['hintSize', -1, 0.6], ['scaffold', -1, 0.4], ['challenge', 1, 0.3], ['generation', 1, 0.3]], 'Benefits from struggle: small hints, less support, attempt before the reveal. Needs rescue early: bigger hints sooner, shown first.'),
   R('confidence_calibration', null, [['selfCheck', -1, 0.5]], 'Confidence predicts accuracy: no calibration prompts. Mismatched: ask for sureness.'),
   R('error_driven_learning', null, [['reviewIntensity', -1, 0.3], ['misconception', -1, 0.3]], 'Rarely repeats a corrected mistake: lighter review. Repeats mistakes: refute and revisit.'),
   // Metacognition and self-regulation

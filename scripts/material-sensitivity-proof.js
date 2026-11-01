@@ -103,7 +103,7 @@ function chosenMeasures() {
 const KINDS = arg('kinds', 'lesson,notes').split(',').filter(Boolean);
 for (const k of KINDS) if (!K.KINDS.includes(k)) { console.error(`unknown kind ${k}`); process.exit(2); }
 // A topic for each measure where the measure has something to act on; otherwise the topics in turn.
-const TOPIC_FOR = { notation_comfort: 'two-step equations', logical_rigor: 'two-step equations', worked_example_dependence: 'two-step equations', productive_struggle: 'two-step equations', step_explicitness: 'two-step equations', causal_chain_depth: 'causes of World War I', narrative_pull: 'causes of World War I', interference_susceptibility: 'Spanish greetings' };
+const TOPIC_FOR = { notation_comfort: 'two-step equations', logical_rigor: 'two-step equations', worked_example_dependence: 'two-step equations', productive_struggle: 'two-step equations', step_explicitness: 'two-step equations', structure_need: 'two-step equations', causal_chain_depth: 'causes of World War I', narrative_pull: 'causes of World War I', interference_susceptibility: 'Spanish greetings' };
 const topicFor = (m, i) => TOPIC_FOR[m] || TOPIC_IDS[i % TOPIC_IDS.length];
 
 // ── the learners ────────────────────────────────────────────────────────────
@@ -591,8 +591,11 @@ function aggregateSingle(recs) {
     const v = (r.verdicts || []).filter((x) => !x.error);
     const correct = v.filter((x) => x.correct[r.measure]).length;
     const same = v.filter((x) => x.same[r.measure]).length;
-    const intactJudge = v.length ? v.every((x) => !(x.X.missing.length || x.Y.missing.length) && x.X.accuracy >= 8 && x.Y.accuracy >= 8) : null;
-    const intactCode = r.code ? (r.code.lo.keyFactsMissing || 0) === 0 && (r.code.hi.keyFactsMissing || 0) === 0 : null;
+    // A practice test is a sample of questions drawn from the course (services/material-test.js), so it is not expected to carry every key
+    // point: for tests, "intact" is accuracy only; every other kind must keep every key point too.
+    const sample = r.kind === 'test';
+    const intactJudge = v.length ? v.every((x) => (sample || !(x.X.missing.length || x.Y.missing.length)) && x.X.accuracy >= 8 && x.Y.accuracy >= 8) : null;
+    const intactCode = sample ? null : r.code ? (r.code.lo.keyFactsMissing || 0) === 0 && (r.code.hi.keyFactsMissing || 0) === 0 : null;
     return { measure: r.measure, group: r.group, impact: r.impact, kind: r.kind, topic: r.topic, promptDiffers: r.promptDiffers, result: r.result || null, verdicts: v.length, correct, same, wrong: v.length - correct - same, intactJudge, intactCode, words: r.code ? { lo: r.code.lo.words, hi: r.code.hi.words } : null, evidence: v.map((x) => `${x.judge.split('/').pop()}: ${x.picks[r.measure]} (${x.evidence || ''})`) };
   });
   const judged = cells.filter((c) => c.verdicts);
