@@ -76,6 +76,21 @@ function opt(name, dflt) {
   return hit ? hit.slice(name.length + 3) : dflt;
 }
 const QUICK = has('quick');
+// Round 10 (speed-retention, docs/SPEED-RETENTION.md): --levers=none|default|all|a,b,c selects which of services/efficiency.js's levers (personal,
+// relearn,interleave,stop,pretest,difficulty) the app code runs: none = SR_ALL=off (the old behaviour), default = the app's own defaults, a list = only
+// those. --learning=legacy|v2 picks the learners' learning model (v2 is the audited one: docs/SPEED-RETENTION.md section 1); --lm=pessimistic is v2 with
+// every learning parameter at the pessimistic end of the published range. The scorecard measures are read off the legacy model (the gate).
+{
+  const lv = opt('levers', 'default');
+  if (lv === 'none') process.env.SR_ALL = 'off';
+  else if (lv !== 'default') {
+    process.env.SR_ALL = 'on';
+    const want = new Set(lv === 'all' ? ['personal', 'relearn', 'interleave', 'stop', 'pretest', 'difficulty'] : lv.split(','));
+    for (const [name, env] of Object.entries({ personal: 'SR_PERSONAL_TIMING', relearn: 'SR_RELEARN', interleave: 'SR_INTERLEAVE', stop: 'SR_STOP', pretest: 'SR_PRETEST', difficulty: 'SR_DIFFICULTY' })) {
+      process.env[env] = want.has(name) ? 'on' : 'off';
+    }
+  }
+}
 // Round 8: every answer draws its randomness from its own stream (learner, level, position), so a change in one answer (an experiment arm,
 // a different review) no longer re-draws every later answer of that learner. Before, any change to which experiment a page ran reshuffled
 // the whole simulated history, and the 30-learner gate check flipped a dozen measures that nothing had touched (docs/SCORECARD-MEASURED.md).
@@ -247,6 +262,7 @@ const signals = require('../services/scorecard/signals');
 const personalize = require('../services/personalize');
 const learnerRecord = require('../services/learner-record');
 const mastery = require('../services/mastery');
+const efficiency = require('../services/efficiency');
 const irt = require('../services/scorecard/irt');
 
 // The hooks swallow their own errors (a scorecard failure must never break a
@@ -545,6 +561,18 @@ const tapMean = (plan) => plan.reduce((acc, x) => acc + (TAP_WEIGHTS[x.role] || 
 // (w11 D^-w12 ((S + 1)^w13 - 1) e^{w14 (1 - R)}), with difficulty D. The
 // learner's decay trait scales time (t / halfLifeMult) in both.
 const MEMORY_MODEL = opt('memory', 'sim');
+// --learning=v2 (round 10): the audited learning model. Legacy has properties that flatter an efficiency lever (docs/SPEED-RETENTION.md 1): every
+// right answer inside one sitting multiplies the half-life by 1.3 without limit (criterion learning does help, Rawson & Dunlosky 2011, but the gain
+// per repeat shrinks after about five), a skill is "known" as soon as it is met (a lesson page and practice build no knowledge, only memory), a lesson
+// page has no instructional value so skipping one costs nothing, and a wrong first answer starts the same memory as a right one. v2: the first
+// massN right answers in a sitting give the legacy 1.3, later ones 1.03; each skill has a knowledge level k that a page and practice-with-feedback
+// raise (about ten opportunities per skill: the power law of practice, Newell & Rosenbloom 1981, and Cognitive Tutor learning curves, Koedinger et al. 2012; the rate is an assumption), k sets how often an item is answered from knowledge rather than a guess, and what
+// is recalled at 30 days is k x the memory's recall.
+const V2 = opt('learning', 'legacy') === 'v2';
+const LM_PESS = opt('lm', 'literature') === 'pessimistic';
+const LM = LM_PESS
+  ? { mass1: 0.3, massN: 5, mass2: 0.03, massDays: 0.25, sp0: 1.15, sp1: 0.8, h0: 2.8, missH: 1.5, miss: 0.4, a: 0.12, page: 0.35, pageSkim: 0.1, priorShift: 0.9, dd: 0.25 }
+  : { mass1: 0.3, massN: 5, mass2: 0.03, massDays: 0.25, sp0: 1.3, sp1: 1.5, h0: 2.8, missH: 1.5, miss: 0.4, a: 0.2, page: 0.5, pageSkim: 0.15, priorShift: 0.5, dd: 0.5 };
 const FW = [0.212, 1.2931, 2.3065, 8.2956, 6.4133, 0.8334, 3.0194, 0.001, 1.8722, 0.1666, 0.796, 1.4835, 0.0614, 0.2629, 1.6483, 0.6014, 1.8729, 0.5425, 0.0912, 0.0658, 0.1542];
 const FF = 0.9 ** (-1 / FW[20]) - 1;
 const fsrsD0 = (g) => FW[4] - Math.exp(FW[5] * (g - 1)) + 1;
@@ -556,10 +584,22 @@ function trueRecall(m, days) {
 }
 /** A new skill's memory, before its first answer. */
 function newMemory(mult) {
-  return MEMORY_MODEL === 'fsrs' ? { S: null, D: null, mult, H: null, last: null } : { H: 2 * mult, mult, last: null };
+  return MEMORY_MODEL === 'fsrs' ? { S: null, D: null, mult, H: null, last: null } : { H: 2 * mult, mult, last: null, mass: 0 };
 }
 /** One answer's effect on the true memory (recall: its R at the answer; days: since last practised). */
-function trueUpdate(m, correct, recall, days) {
+function trueUpdate(m, correct, recall, days, pItem = 0.7) {
+  if (MEMORY_MODEL !== 'fsrs' && V2) {
+    const first = m.last === null;
+    if (correct) {
+      if (first) { m.H = LM.h0 * m.mult; m.mass = 1; }
+      else if (days < LM.massDays) { m.H *= 1 + (m.mass < LM.massN ? LM.mass1 : LM.mass2); m.mass++; }
+      else { m.H *= (LM.sp0 + LM.sp1 * (1 - recall)) * (1 + LM.dd * clamp(0.8 - pItem, -0.3, 0.4)); m.mass = 0; }
+    } else {
+      m.H = first ? LM.missH * m.mult : Math.max(LM.missH * m.mult, m.H * LM.miss);
+      m.mass = 0;
+    }
+    return;
+  }
   if (MEMORY_MODEL !== 'fsrs') {
     if (correct) m.H = m.H * (1.3 + 1.5 * (1 - recall)) + 0.2 * m.mult;
     else m.H = Math.max(2 * m.mult, m.H * 0.7);
@@ -950,6 +990,10 @@ function runLearner(index, mode, { population = false } = {}) {
     resumed: 0,
     abandoned: 0,
     practiceMs: 0, // answering and reading time, for the outcome metrics (round 4)
+    pageMs: 0,     // of which reading lesson pages (round 10)
+    pretestMs: 0,  // of which pretest items (round 10)
+    pagesSkipped: 0,
+    pretests: 0,
     pages: [],     // lesson pages judged by the level after them (round 4)
   };
   const skillCounts = {}; // skill -> [right, wrong] answers, as the app's records hold them
@@ -957,6 +1001,19 @@ function runLearner(index, mode, { population = false } = {}) {
   let done = 0;
   let theta = P.theta0;
 
+  // Round 10 (--learning=v2): each skill's knowledge level k, from what the learner already had when the course reached it (the course is
+  // pitched at their placement, so prior knowledge varies by skill around it: 0.8 logits) and raised by a lesson page and by practice with feedback.
+  const know = {};
+  const kRng = new Rng(hashSeed(SEED, `${tag}know`, index));
+  const sitCorrect = {}; // session id -> skill -> right answers given in that sitting (services/efficiency.js worthAsking)
+  function kFor(skill) {
+    if (!(skill in know)) {
+      const L0 = Number(skill.slice(1)) * 2 - 1;
+      const rel = theta - (thetaHat0 + 0.02 * L0) + 0.8 * kRng.normal();
+      know[skill] = V2 ? clamp(sigmoid(1.5 * (rel - LM.priorShift)), 0.02, 0.97) : 1;
+    }
+    return know[skill];
+  }
   const focusSkill = (L) => `s${Math.ceil(L / 2)}`;
   const introduced = (L) => Array.from({ length: Math.ceil(L / 2) }, (_, i) => `s${i + 1}`);
 
@@ -999,16 +1056,37 @@ function runLearner(index, mode, { population = false } = {}) {
           : mastery.dueReviews(userId, introduced(L), 3);
       for (const st of due) plan.push({ skill: st.skill_id, role: 'review' });
       const weak = mastery.weakSkills(userId, introduced(L));
-      plan.push({ skill: (weak[0] && weak[0].skill_id) || focusSkill(L), role: 'support' });
-      while (plan.length < LEVEL_ITEMS - 1) plan.push({ skill: focusSkill(L), role: 'focus' });
+      const supportSkill = (weak[0] && weak[0].skill_id) || focusSkill(L);
+      plan.push({ skill: supportSkill, role: 'support' });
+      // services/efficiency.js: gap-only focus practice on a skill whose page was skipped on a passed pretest; interleaving of skills past first mastery.
+      const nFocus = efficiency.focusCount(LEVEL_ITEMS - 1 - (plan.length - due.length + efficiency.displacedReviews(due.length)), V2 && efficiency.pretestPassed(userId, focusSkill(L)));
+      for (let f = 0; f < nFocus; f++) plan.push({ skill: focusSkill(L), role: 'focus' });
+      const every = efficiency.interleaveEvery((L - 1) % 3);
+      if (every) {
+        const pool = efficiency.interleavePool({ rows: mastery.recallByskill(userId, introduced(L)), focus: focusSkill(L), exclude: [...due.map((d) => d.skill_id), supportSkill] });
+        let j = 0;
+        let fi = 0;
+        for (const e of plan) {
+          if (e.role !== 'focus') continue;
+          fi++;
+          if (fi % every === 0 && pool.length) { e.skill = pool[j++ % pool.length]; e.role = 'mix'; }
+        }
+      }
       plan.push({ skill: focusSkill(L), role: 'stretch' });
     }
 
     const content = thetaHat0 + 0.02 * L;   // the course's difficulty at this level
     // Pitched so a typical learner lands near 70% overall, the success rate the
     // app's levels are built around (support easiest, stretch hardest).
-    const offsets = { review: -2.6, support: -2.9, focus: -2.2, stretch: -0.8 };
-    const labels = { review: -1, support: -1.5, focus: 0, stretch: 1.5 };
+    const offsets = { review: -2.6, support: -2.9, focus: -2.2, stretch: -0.8, mix: -2.2 };
+    const labels = { review: -1, support: -1.5, focus: 0, stretch: 1.5, mix: 0 };
+    // services/efficiency.js difficulty lever: harder items for a faster learner (the app's measured pace standing), easier for a slower one.
+    let dshift = 0;
+    if (V2 && efficiency.enabled('difficulty')) {
+      const rd = scorecard.read(scorecard.get(userId), 'mastery_velocity', { trackId: TRACK });
+      dshift = efficiency.difficultyShift((rd.score - 50) / 50, rd.confidence / 100);
+    }
+    const sit = sitCorrect[session.id] || (sitCorrect[session.id] = {});
     // Resumed: the answered part of the level stands; the rest is answered now,
     // in the same sitting's rows, after the break.
     const items = resume ? resume.rows.filter((r) => r.correct !== null) : [];
@@ -1023,13 +1101,21 @@ function runLearner(index, mode, { population = false } = {}) {
     for (let i = first; i < plan.length; i++) {
       const rng = ITEM_RNG ? new Rng(hashSeed(SEED, `${tag}item`, index, L, i)) : outerRng; // eslint-disable-line no-shadow
       const { skill, role } = plan[i];
+      // The row's role as the app writes it: an interleaved item is a focus item (services/sessions.js planLesson), so the scorecard reads it as one.
+      const rowRole = role === 'mix' ? 'focus' : role;
+      // services/efficiency.js stop rule: an item that buys least is not asked (not on a resumed level, whose rows are indexed by plan position).
+      if (!resume && !efficiency.worthAsking({ role: rowRole, correctInSitting: sit[skill] || 0, mastery: mastery.stateFor(userId, skill).mastery, asked: i })) {
+        plan.splice(i, 1);
+        i--;
+        continue;
+      }
       const kept = resume ? resume.rows[i] : null;
       const format = kept ? kept.format : rng.chance(0.7) ? 'multiple_choice' : 'typed';
-      const label = kept ? kept.difficulty : clamp(Math.round(5 + labels[role] + 0.8 * rng.normal()), 1, 10);
+      const label = kept ? kept.difficulty : clamp(Math.round(5 + labels[role] + (role === 'review' ? 0 : dshift) + 0.8 * rng.normal()), 1, 10);
       const base = kept ? { ...kept } : {
         // No track_id or grade_id: the app's practice rows carry their sitting (session_id), not their subject.
         user_id: userId, session_id: session.id, level: L, index: i,
-        skill_id: skill, role, format, difficulty: label,
+        skill_id: skill, role: rowRole, format, difficulty: label,
         prompt: wordsOf(12 + rng.int(18)), choices: format === 'multiple_choice' ? CHOICES : undefined,
         answer: 'x', confidence: null, coach_used: false, answer_changes: 0, error_tag: null,
       };
@@ -1050,13 +1136,13 @@ function runLearner(index, mode, { population = false } = {}) {
 
       // The chance of being right, from ability, true difficulty and the
       // within-level effects the behavioural stats are about.
-      const b = content + offsets[role] + 0.5 * rng.normal();
+      const b = content + offsets[role] + (role === 'review' ? 0 : 0.5 * dshift) + 0.5 * rng.normal();
       let logit = theta - b;
       if (i < 3) logit += P.warmup;
       if (i >= plan.length / 2) logit += P.fatigue;
       if (prevWrong) logit += P.postError;
       if (i >= 2 && items[0].correct === false && items[1].correct === false) logit += P.momentum;
-      if (role === 'review') logit += P.interleave;
+      if (role === 'review' || role === 'mix') logit += P.interleave;
       if (format === 'typed') logit += P.typed;
       if (TEXT_LOAD) logit += TEXT_LOAD * P.z('vocabulary_ceiling') * ((String(base.prompt || '').split(' ').length - 20.5) / 5.2);
       if (ctx.reentry) logit += P.reentry;
@@ -1073,10 +1159,12 @@ function runLearner(index, mode, { population = false } = {}) {
       }
       const guess = format === 'multiple_choice' ? 0.25 : 0.03;
       let pKnow = sigmoid(logit);
+      if (V2) pKnow = guess + (pKnow - guess) * kFor(skill);
       const mem = memory[skill];
       let recall = 1;
       if (mem && mem.last !== null) recall = trueRecall(mem, (simNow - mem.last) / 86400000);
       let p = recall * pKnow + (1 - recall) * guess;
+      const pItem = p;
 
       const expected = signals.expectedMs(base);
       const rushed = rng.chance(P.rushRate + (format === 'multiple_choice' ? P.mcGuessRate : 0)
@@ -1098,6 +1186,12 @@ function runLearner(index, mode, { population = false } = {}) {
         if (coach) ms += rng.range(15000, 45000);
       }
       const correct = rng.chance(p);
+      if (V2 && !rushed) {
+        // Practice with feedback builds knowledge: faster learners need fewer opportunities; a miss with feedback teaches half as much.
+        const kk = kFor(skill);
+        know[skill] = kk + LM.a * clamp(P.learnRate / 0.02, 0.4, 1.6) * (correct ? 1 : 0.5) * (coach ? 0.5 : 1) * (1 - kk);
+      }
+      if (correct && !rushed) sit[skill] = (sit[skill] || 0) + 1;
 
       let confidence = null;
       if (rng.chance(TAP_PICK === 'hard' ? Math.min(1, TAP_RATE * TAP_WEIGHTS[role] / tapMean(plan)) : TAP_RATE)) {
@@ -1134,7 +1228,7 @@ function runLearner(index, mode, { population = false } = {}) {
         const spc = spacedCounts[skill] || (spacedCounts[skill] = [0, 0]);
         spc[correct ? 0 : 1]++;
       }
-      for (const k of ['all', role]) if (out.answered[k]) { out.answered[k][0] += correct ? 1 : 0; out.answered[k][1] += 1; }
+      for (const k of ['all', rowRole]) if (out.answered[k]) { out.answered[k][0] += correct ? 1 : 0; out.answered[k][1] += 1; }
 
       // The order sessions.js uses: mastery first (it schedules the next review),
       // then the scorecard.
@@ -1146,7 +1240,7 @@ function runLearner(index, mode, { population = false } = {}) {
 
       // True memory: a hard-won recall strengthens it most; a miss weakens it.
       const m = memory[skill] || (memory[skill] = newMemory(P.halfLifeMult));
-      trueUpdate(m, correct, recall, m.last === null ? 0 : (simNow - m.last) / 86400000);
+      trueUpdate(m, correct, recall, m.last === null ? 0 : (simNow - m.last) / 86400000, pItem);
       m.last = simNow;
 
       prevWrong = !correct;
@@ -1175,6 +1269,50 @@ function runLearner(index, mode, { population = false } = {}) {
     return { finished: true, accuracy };
   }
 
+  /**
+   * Round 10, the pretest (services/efficiency.js): PRETEST.items questions on the page's skill before the page; true when the learner clearly
+   * knows it and skips the page. The answers go through the app's own path (mastery, the scorecard hooks). No feedback is shown, so a pretest
+   * answer builds no knowledge; a right one is a retrieval of prior knowledge (it starts the memory), a wrong one leaves no memory.
+   */
+  function pretest(L, session, sessionItems) {
+    const skill = focusSkill(L);
+    const content = thetaHat0 + 0.02 * L;
+    const results = [];
+    out.pretests++;
+    for (let j = 0; j < efficiency.PRETEST.items; j++) {
+      const prng = new Rng(hashSeed(SEED, `${tag}pre`, index, L, j));
+      const format = prng.chance(0.7) ? 'multiple_choice' : 'typed';
+      const guess = format === 'multiple_choice' ? 0.25 : 0.03;
+      const label = clamp(Math.round(5 + 0.8 * prng.normal()), 1, 10);
+      const pK = guess + (sigmoid(theta - (content - 2.2 + 0.5 * prng.normal())) - guess) * kFor(skill);
+      const rushed = prng.chance(P.rushRate + (format === 'multiple_choice' ? P.mcGuessRate : 0));
+      const right = prng.chance(rushed ? guess : pK);
+      const base = {
+        user_id: userId, session_id: session.id, level: L, index: j, skill_id: skill, role: 'focus', format, difficulty: label,
+        prompt: wordsOf(12 + prng.int(18)), choices: format === 'multiple_choice' ? CHOICES : undefined,
+        answer: 'x', confidence: null, coach_used: false, answer_changes: 0, error_tag: null,
+      };
+      const ms = signals.expectedMs(base) * P.timeMult * prng.logn(0.35) * (rushed ? 0.15 : 1);
+      advance(ms + 3000);
+      const row = memoryDb.insert('items', { ...base, correct: right, ms: Math.round(ms), user_answer: right ? 'x' : 'y' });
+      sessionItems.push(row);
+      out.practiceMs += ms;
+      out.pretestMs += ms;
+      mastery.recordAttempt({ userId, skillId: skill, correct: right, difficulty: label, levelDifficulty: 5, latencyMs: Math.round(ms), errorTag: null, hintUsed: false, itemId: row.id });
+      hooks.onAnswer(userId, row, { trackId: TRACK });
+      if (right && !rushed) {
+        const m = memory[skill] || (memory[skill] = newMemory(P.halfLifeMult));
+        const mem0 = m.last;
+        trueUpdate(m, true, mem0 === null ? 1 : trueRecall(m, (simNow - mem0) / 86400000), mem0 === null ? 0 : (simNow - mem0) / 86400000, 0.7);
+        m.last = simNow;
+      }
+      results.push({ correct: right && !rushed, guess });
+    }
+    const skip = efficiency.pretestSkips(results);
+    efficiency.recordPretest(userId, skill, skip);
+    return skip;
+  }
+
   function pageLevel(L) {
     const arm = personalize.armFor(userId, { trackId: TRACK, gradeId: GRADE, level: L });
     const tailored = arm.arm === 'tailored';
@@ -1201,6 +1339,8 @@ function runLearner(index, mode, { population = false } = {}) {
       scrollBacks: skimmed ? 0 : scrollRng.poisson(P.scrollBacks * Math.min(2, words / 2000)),
     });
     pendingPage = { level: L, words, skimmed, experiment, arm: arm.arm };
+    out.pageMs += readMs;
+    if (V2) { const sk = focusSkill(L); const kk = kFor(sk); know[sk] = kk + (skimmed ? LM.pageSkim : LM.page) * (1 - kk); }
     if (experiment) experimentsBySkill[focusSkill(L)] = { list: signals.experimentsOf(experiment).map((e) => ({ stat: e.stat, arm: e.arm })), until: simNow + 30 * 86400000 };
     return { finished: true, accuracy: null, words };
   }
@@ -1232,8 +1372,10 @@ function runLearner(index, mode, { population = false } = {}) {
   // with no more practice, and the practice time it took. Read only; nothing
   // here feeds back into the learner or the app.
   function outcomeNow() {
-    const skills = Object.values(memory).filter((m) => m.last !== null);
-    const at = (days) => mean(skills.map((m) => trueRecall(m, (simNow + days * 86400000 - m.last) / 86400000)));
+    const entries = Object.entries(memory).filter(([, m]) => m.last !== null);
+    const skills = entries.map(([, m]) => m);
+    // v2: what is recalled is what was learned (k) times what the memory still holds.
+    const at = (days) => mean(entries.map(([k, m]) => (V2 ? kFor(k) : 1) * trueRecall(m, (simNow + days * 86400000 - m.last) / 86400000)));
     const r30 = skills.length ? at(30) : null;
     const hours = out.practiceMs / 3600000;
     return {
@@ -1242,6 +1384,14 @@ function runLearner(index, mode, { population = false } = {}) {
       retention30: r30,
       practice_hours: hours,
       review_answers: out.reviewItems,
+      page_hours: out.pageMs / 3600000,
+      pretest_hours: out.pretestMs / 3600000,
+      pages_skipped: out.pagesSkipped,
+      // objectives: understood (k >= 0.85, v2), and by the app's own mastery record (>= 0.8, and >= 0.6 which is the level-up floor)
+      mastered_k: V2 ? entries.filter(([k]) => kFor(k) >= 0.85).length : skills.length,
+      mastered_k60: V2 ? entries.filter(([k]) => kFor(k) >= 0.6).length : skills.length,
+      mastered_app80: entries.filter(([k]) => mastery.stateFor(userId, k).mastery >= 0.8).length,
+      mastered_app60: entries.filter(([k]) => mastery.stateFor(userId, k).mastery >= 0.6).length,
       // skills still recalled at 30 days per hour of practice
       retained30_per_hour: hours > 0 && r30 !== null ? (r30 * skills.length) / hours : null,
       median_half_life_days: median(skills.map((m) => m.H)),
@@ -1387,9 +1537,14 @@ function runLearner(index, mode, { population = false } = {}) {
       }
       const isPage = level % 3 === 1;
       let result;
+      let pageSkipped = false;
       if (isPage) {
-        result = pageLevel(level);
-        if (CHANNELS.has('choice')) {
+        if (V2 && efficiency.pretestOffered(userId) && pretest(level, session, sessionItems)) {
+          pageSkipped = true;
+          out.pagesSkipped++;
+          result = { finished: true, accuracy: null, words: 0 };
+        } else result = pageLevel(level);
+        if (CHANNELS.has('choice') && !pageSkipped) {
           // "Which is clearer?" after the lesson page, within the app's limits (services/boosters.js CHOICE_PER_LESSON, CHOICE_PER_DAY).
           const day = Math.floor(simNow / 86400000);
           const boosters = require('../services/boosters'); // eslint-disable-line global-require
@@ -1410,7 +1565,7 @@ function runLearner(index, mode, { population = false } = {}) {
       }
       if (!result.finished) { leftOpen = result.resume; break; }
       session.levels.push(level);
-      const said = feedback(level, result, isPage);
+      const said = pageSkipped ? false : feedback(level, result, isPage);
       afterLevel(level, said);
       level++;
       advance(30000);
@@ -1844,6 +1999,13 @@ for (const mode of MODES) {
     spread[cp] = { batches, false_directive_rate: range('false_directive_rate'), mean_r: range('mean_r'), directives_per_learner: range('directives_per_learner') };
   }
   results[mode].batch_spread = spread;
+  // Round 10: each learner's true pace, prior knowledge and forgetting, with their learning outcomes at the last checkpoint (learner types for docs/SPEED-RETENTION.md).
+  results[mode].learner_outcomes = runs.filter((r) => r.snapshots[CHECKPOINTS[CHECKPOINTS.length - 1]]).map((r) => {
+    const o = r.snapshots[CHECKPOINTS[CHECKPOINTS.length - 1]].outcome;
+    const slim = {};
+    for (const [k, v] of Object.entries(o)) if (typeof v === 'number' || v === null) slim[k] = v;
+    return { mv: Math.round(r.truth.mastery_velocity), pk: Math.round(r.truth.prior_knowledge), dr: Math.round(r.truth.decay_rate), ...slim, pretests: r.pretests, pages_skipped: r.pagesSkipped };
+  });
   results[mode].gate = gateFor(runs);
   results[mode].activity = {
     mean_days: round(mean(runs.map((r) => r.days)), 0),
@@ -2007,6 +2169,7 @@ if (WRITE) {
     config: {
       learners: LEARNERS, max_levels: MAX_LEVELS, checkpoints: CHECKPOINTS, modes: MODES, seed: SEED, population: POPULATION,
       population_sd: POP_SD, experiment_effect_logits: EXP_EFFECT, self_report_r: SELF_REPORT_R,
+      learning: V2 ? (LM_PESS ? 'v2-pessimistic' : 'v2') : 'legacy', levers: { SR_ALL: process.env.SR_ALL || null, ...Object.fromEntries(Object.entries(efficiency.SWITCH).map(([k, e]) => [k, efficiency.enabled(k)])) },
       channels: [...CHANNELS], item_rng: ITEM_RNG, choice_validity: CHOICE_R, choice_skip: CHOICE_SKIP, item_tag_effect: TAG_B, item_tag_rate: TAG_RATE, item_tag_flip: TAG_FLIP, signals: [...SIGNALS], signal_validity_scale: SIGNAL_V, signal_rho: SIGNAL_RHO, chat_share: CHAT_SHARE, factorial: Number(process.env.PERSONALIZE_FACTORIAL || 1), indicators: process.env.SCORECARD_INDICATORS !== 'off',
       experiment_allocator: process.env.PERSONALIZE_ALLOCATOR === 'weighted' ? 'weighted' : 'info', experiment_stats: EXPERIMENT_STATS.length,
       questionnaire_rate: QUIZ_RATE, feedback_rate: FEEDBACK_RATE, confidence_tap_rate: TAP_RATE,

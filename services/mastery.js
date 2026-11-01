@@ -11,6 +11,7 @@ const db = require('../config/db');
 const curriculum = require('../config/curriculum');
 const learnerPath = require('./learner-path');
 const irt = require('./scorecard/irt');
+const efficiency = require('./efficiency');
 
 const DEFAULT_EASE = 2.5;
 const MIN_EASE = 1.3;
@@ -24,7 +25,10 @@ const INTERVALS_DAYS = [1, 3, 7, 16, 35, 70, 140];
 // (curriculum-build/SCORECARD-RESEARCH-2026-10-22.md 7.5 and 8.2): 30-day recall of practised skills up about 40% and
 // skills retained per practice hour up about 40% against the fixed ladder, with false directives under 2%.
 // REVIEW_SCHEDULE=fixed brings the old SM-2 ladder back (INTERVALS_DAYS above, next_due_at) without a deploy.
-const REVIEW_TARGET = 0.85;
+// services/efficiency.js (docs/SPEED-RETENTION.md) adds, each behind its own SR_* switch: the learner's own target and the
+// successive-relearning retirement in dueReviewsByRecall, and extra review slots when more are due (SR_STOP, default on).
+// REVIEW_TARGET overrides the flat target for experiments (the simulation's target sweep); unset it is 0.85.
+const REVIEW_TARGET = Number(process.env.REVIEW_TARGET || 0.85);
 const REVIEW_MAX = 3;
 const DAY_MS = 24 * 3600 * 1000;
 const scheduleMode = () => (String(process.env.REVIEW_SCHEDULE || 'model').toLowerCase() === 'fixed' ? 'fixed' : 'model');
@@ -144,6 +148,9 @@ function recordAttempt({ userId, skillId, correct, difficulty, levelDifficulty, 
         attempts: prev.attempts + 1,
         spaced_right: (prev.spaced_right || 0) + (spaced && correct ? 1 : 0),
         spaced_wrong: (prev.spaced_wrong || 0) + (spaced && !correct ? 1 : 0),
+        // Consecutive right answers given a day or more after the previous one (successive relearning, services/efficiency.js):
+        // a miss, at any time, starts the count again.
+        spaced_streak: !correct ? 0 : spaced ? (prev.spaced_streak || 0) + 1 : (prev.spaced_streak || 0),
       };
       // The date the skill is next listed (reminders, the profile's due list): the fixed ladder's, or when the default
       // curve says recall reaches the target. dueReviews() re-predicts with the learner's own fitted curve.
@@ -156,6 +163,7 @@ function recordAttempt({ userId, skillId, correct, difficulty, levelDifficulty, 
         correct: next.correct,
         spaced_right: next.spaced_right,
         spaced_wrong: next.spaced_wrong,
+        spaced_streak: next.spaced_streak,
         streak,
         ease,
         error_tags: [...tags].slice(-8),
@@ -208,6 +216,7 @@ function dueReviewsByRecall(userId, skillIds, limit) {
   let rc = null;
   try { rc = require('./scorecard').forgettingCurve({ userId }); } catch { rc = null; } // eslint-disable-line global-require
   const out = [];
+  const m = rc && Number.isFinite(rc.m) ? rc.m : 0;
   for (const id of skillIds) {
     const s = stateFor(userId, id);
     if (!(s.attempts > 0)) continue;
@@ -215,9 +224,11 @@ function dueReviewsByRecall(userId, skillIds, limit) {
     if (!Number.isFinite(last)) { if (s.next_due_at && Date.parse(s.next_due_at) <= now) out.push({ ...s, recall: 0 }); continue; } // no last answer on record: the stored date decides
     const days = Math.max(0, now - last) / DAY_MS / rev.spacingScale;
     const recall = predictedRecall(s, days, rc);
-    if (recall < target) out.push({ ...s, recall });
+    // services/efficiency.js: the target is the learner's own (their forgetting multiplier, their spaced recalls so far), or the
+    // maintenance level once the skill has met the successive-relearning criterion. The flat target with SR_ALL=off.
+    if (recall < efficiency.dueBelow(target, s, m)) out.push({ ...s, recall });
   }
-  return out.sort((a, b) => (a.recall - b.recall) || (a.mastery - b.mastery)).slice(0, limit);
+  return out.sort((a, b) => (a.recall - b.recall) || (a.mastery - b.mastery)).slice(0, efficiency.reviewSlots(limit, out.length));
 }
 
 /** The old ladder: weakest and most overdue first. */
@@ -771,7 +782,23 @@ function xpForItems(items) {
   }, 0);
 }
 
+/**
+ * Predicted recall of each skill that has an answer on record, now, from the learner's own fitted curve (the pool
+ * services/efficiency.js interleaves from, and the order it takes it in). { skill_id, state, recall }, lowest first.
+ */
+function recallByskill(userId, skillIds) {
+  let rc = null;
+  try { rc = require('./scorecard').forgettingCurve({ userId }); } catch { rc = null; } // eslint-disable-line global-require
+  const now = Date.now();
+  return skillIds.map((id) => stateFor(userId, id)).filter((s) => s.attempts > 0).map((s) => {
+    const last = Date.parse(s.last_seen_at);
+    const days = Number.isFinite(last) ? Math.max(0, now - last) / DAY_MS : 0;
+    return { skill_id: s.skill_id, state: s, recall: predictedRecall(s, days, rc) };
+  }).sort((a, b) => a.recall - b.recall);
+}
+
 module.exports = {
+  recallByskill,
   REVIEW_TARGET, REVIEW_MAX, predictedRecall, daysToTarget, scheduleMode,
   LEVEL_UP,
   blankState,

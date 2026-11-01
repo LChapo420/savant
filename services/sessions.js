@@ -37,6 +37,7 @@ const blockLevels = require('./block-levels');
 const blockCheckpoints = require('./block-checkpoints');
 const adaptation = require('./adaptation');
 const goals = require('./goals');
+const efficiency = require('./efficiency');
 
 /** Does this account get the base product (config/owner.js ownerBase)? False on any failure. */
 function ownerBaseOf(userId) {
@@ -162,7 +163,8 @@ function planLesson(userId, enrollment, grade, params) {
 
   const stretchCount = Math.max(1, Math.round(count * params.stretchShare));
   const supportCount = Math.round(count * params.supportShare);
-  const focusCount = Math.max(1, count - entries.length - stretchCount - supportCount);
+  // Gap-only practice on a skill whose lesson page was skipped on a passed pretest (services/efficiency.js, SR_PRETEST).
+  const focusCount = efficiency.focusCount(Math.max(1, count - (entries.length - due.length + efficiency.displacedReviews(due.length)) - stretchCount - supportCount), efficiency.pretestPassed(userId, plan.focus));
 
   // Support items come from the weakest introduced skill, or the focus skill if
   // nothing is weak yet.
@@ -178,7 +180,12 @@ function planLesson(userId, enrollment, grade, params) {
   // taking weak[0] made the "earlier topic" an item on the focus itself.)
   const earlier = plan.introduced.filter((s) => s !== plan.focus);
   const altEvery = mix && mix.since >= 3 ? 2 : 3;
-  const alternates = mix && mix.since >= 2 && earlier.length
+  // SR_INTERLEAVE=on (default off, docs/SPEED-RETENTION.md): only skills past first mastery are woven in, lowest predicted recall first, and none when there are none
+  // (the new topic stays blocked). Off, the earlier behaviour below (INTERLEAVE_SESSIONS) applies.
+  const pooled = mix && efficiency.enabled('interleave') && mix.since >= 2
+    ? efficiency.interleavePool({ rows: mastery.recallByskill(userId, plan.introduced), focus: plan.focus, exclude: [...due.map((d) => d.skill_id), supportSkill] })
+    : null;
+  const alternates = pooled ? null : mix && mix.since >= 2 && earlier.length
     ? (() => {
       const weakEarlier = weak.map((w) => w.skill_id).filter((s) => s !== plan.focus && earlier.includes(s));
       return [...weakEarlier, ...earlier.filter((s) => !weakEarlier.includes(s))];
@@ -187,9 +194,11 @@ function planLesson(userId, enrollment, grade, params) {
   for (let i = 0; i < focusCount; i++) {
     // Alternate between the level's focus skill and the next weakest, so a block
     // is never twelve copies of one idea.
-    const alt = alternates
-      ? { skill_id: alternates[Math.floor(i / altEvery) % alternates.length] }
-      : weak[i % Math.max(1, weak.length)];
+    const alt = pooled
+      ? (pooled.length ? { skill_id: pooled[Math.floor(i / altEvery) % pooled.length] } : null)
+      : alternates
+        ? { skill_id: alternates[Math.floor(i / altEvery) % alternates.length] }
+        : weak[i % Math.max(1, weak.length)];
     const skillId = i % altEvery === altEvery - 1 && alt ? alt.skill_id : plan.focus;
     entries.push({ skillId, difficulty: clampDifficulty(plan.difficulty), role: 'focus' });
   }
@@ -270,6 +279,7 @@ function curveReviews(userId, enrollment, introduced, limit) {
     const { model, states } = rec.report;
     const queue = adaptation.reviewQueue(model, states, Date.now(), { limit: model.objectives.length, curve: rec.curve });
     const allowed = new Set(introduced);
+    const cap = efficiency.reviewSlots(limit, queue.length); // SR_STOP: extra review slots when more are waiting
     const perSkill = new Map();
     const out = [];
     for (const q of queue) {
@@ -277,7 +287,7 @@ function curveReviews(userId, enrollment, introduced, limit) {
       if ((perSkill.get(q.skill) || 0) >= 2) continue;
       perSkill.set(q.skill, (perSkill.get(q.skill) || 0) + 1);
       out.push({ skill_id: q.skill, objective: q.id, reason: q.reason });
-      if (out.length >= limit) break;
+      if (out.length >= cap) break;
     }
     return out;
   } catch (err) {
@@ -1252,7 +1262,24 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
     rationale: item.rationale,
     feedback,
     errorTag,
+    // The stop rule (services/efficiency.js, SR_STOP): the rest of this block's focus and support items that would buy least. Advice
+    // only; the session player decides whether to skip them.
+    skippable: stoppableItems({ userId, session, item }),
   };
+}
+
+/** Ids of this block's unanswered focus/support items that the stop rule would not ask now (none when SR_STOP is off). */
+function stoppableItems({ userId, session, item }) {
+  if (!efficiency.enabled('stop')) return [];
+  try {
+    const block = itemsInBlock(session.id, item.block || 0);
+    const answered = block.filter((i) => i.correct !== null);
+    const right = {};
+    for (const i of itemsFor(session.id)) if (i.correct === true && !i.coach_used) right[i.skill_id] = (right[i.skill_id] || 0) + 1;
+    return block.filter((i) => i.correct === null && i.id !== item.id && !efficiency.worthAsking({
+      role: i.role, correctInSitting: right[i.skill_id] || 0, mastery: mastery.stateFor(userId, i.skill_id).mastery, asked: answered.length,
+    })).map((i) => i.id);
+  } catch { return []; }
 }
 
 /** One quick recall question about the level just finished, drawn from whatever

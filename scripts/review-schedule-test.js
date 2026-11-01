@@ -16,6 +16,9 @@ process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(TMP, 'db.json');
 process.env.OWNER_EMAIL = 'review-owner@example.test';
 delete process.env.REVIEW_SCHEDULE;
+// This file pins the flat schedule (0.85, three a level). The speed-retention levers (services/efficiency.js: extra review slots,
+// personal targets, successive relearning) change those numbers on purpose and are tested in speed-retention-test.js; SR_ALL=off is the old behaviour.
+process.env.SR_ALL = 'off';
 process.on('exit', () => { try { fs.rmSync(TMP, { recursive: true, force: true }); } catch { /* temp dir */ } });
 
 const db = require('../config/db');

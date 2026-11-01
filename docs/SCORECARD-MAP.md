@@ -183,7 +183,7 @@ Columns: **meaning** (a low score, then a high one); **channels before**; **spec
 | `integration_tendency` | treats each level separately / connects to past levels | lesson text | +integration; no mechanism; transfer.linkEarlier | scorecard/indicators.js:56 |
 | `depth_breadth` | wants a wide overview / wants deep dives | lesson text | +depth; no mechanism; transfer.depth | [w] scorecard/signals.js:718 |
 | `creative_extension` | wants defined tasks / loves open, creative extensions | lesson text | +creative; no mechanism; transfer.creativeExtension | scorecard/indicators.js:59; content/ipip-items.js:37 |
-| `mastery_velocity` | slow improvement across levels / rapid improvement across levels | lesson text | +pace +diffRamp -reviewIntensity; no mechanism; lesson.wordBudget, lesson.pace, difficulty.ramp, difficulty.rampLabel, review.targetRecall, +1 | [w] scorecard/index.js:1271; [w] scorecard/signals.js:394 |
+| `mastery_velocity` | slow improvement across levels / rapid improvement across levels | lesson text | +pace +diffRamp -reviewIntensity; no mechanism; lesson.wordBudget, lesson.pace, difficulty.ramp, difficulty.rampLabel, review.targetRecall, +1 | efficiency.js:197; [w] scorecard/index.js:1271; [w] scorecard/signals.js:394 |
 
 ## What the spec fields are read by
 

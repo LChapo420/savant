@@ -20,6 +20,9 @@ const path = require('path');
 const fs = require('fs');
 
 process.env.NODE_ENV = 'test';
+// This file pins the planner as the evidence article P1 and P4 describe it (interleaving from any earlier skill, three reviews a level).
+// The speed-retention levers (services/efficiency.js) refine both and are tested in speed-retention-test.js; SR_ALL=off is their old behaviour.
+process.env.SR_ALL = 'off';
 for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|_TOKEN$|ANTHROPIC|OPENROUTER|NVIDIA|GEMINI|MIMO|MODELFLARE|XKIRO/.test(k) && k !== 'NODE_ENV') process.env[k] = '';
 process.env.OLLAMA_ENABLED = '0';
 for (const k of ['INTERLEAVE_SESSIONS', 'CHECKPOINT_SPRT', 'CHALLENGE_SPRT', 'CURVE_REVIEWS', 'PLACEMENT_SKILL_BELIEF', 'OWNER_BASE', 'ADAPT_OWNER', 'OWNER_EMAIL']) delete process.env[k];
