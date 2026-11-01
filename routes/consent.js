@@ -360,7 +360,7 @@ function publicConsent(user) {
 // ── deletion ─────────────────────────────────────────────────────────────────
 
 /** Collections that hold no learner's rows (shared content), or are handled apart. */
-const SHARED = new Set(['users', 'content_cache', 'placement_question_sets', 'fact_pools', 'parents', 'parental_consents']);
+const SHARED = new Set(['users', 'content_cache', 'placement_question_sets', 'fact_pools', 'parents', 'parental_consents', 'beta_blocks']);
 
 /**
  * Delete a child's account and every row tied to it, and reduce the consent
@@ -412,6 +412,7 @@ const KNOWN_COLLECTIONS = [
   'material_notes',
   'reading_checks',
   'experiment_arms', 'choice_pairs',
+  'beta_blocks', // arm slots only, no learner id (services/beta-arm.js); a child's own arm is on the user row and goes with it
 ];
 function collectionNames() {
   return KNOWN_COLLECTIONS.filter((name) => {
