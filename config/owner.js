@@ -50,7 +50,8 @@ function ownerOnly(userOrId) {
 
 /** Is the built-in beta comparison (services/beta-arm.js, docs/BETA-COMPARISON.md) switched on? BETA_COMPARE=off is the kill switch. */
 function betaCompareOn() {
-  return String(process.env.BETA_COMPARE || 'on').trim().toLowerCase() !== 'off';
+  // Off until the owner approves the beta terms and the base arm's features (BETA_COMPARE=on starts it).
+  return String(process.env.BETA_COMPARE || 'off').trim().toLowerCase() === 'on';
 }
 
 /**

@@ -25,6 +25,8 @@ const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'beta-compare-'));
 process.env.DB_FILE = path.join(dir, 'db.json');
 process.env.BETA_REPORT_FILE = path.join(dir, 'beta-report.json');
 for (const k of ['BETA_COMPARE', 'BETA_HOLDOUT_SHARE', 'OWNER_BASE', 'ADAPT_OWNER', 'OWNER_EMAIL', 'SR_ALL', 'SR_STOP', 'SR_INTERLEAVE', 'METRICS_EXCLUDE_EMAILS']) delete process.env[k];
+const defaultOff = require('../config/owner').betaCompareOn() === false;
+process.env.BETA_COMPARE = 'on';
 
 const db = require('../config/db');
 assert.ok(db.path.startsWith(dir), 'the test must run on its own database file');
@@ -37,6 +39,7 @@ const efficiency = require('../services/efficiency');
 
 let checks = 0;
 const ok = (cond, msg) => { checks++; assert.ok(cond, msg); };
+ok(defaultOff, 'the comparison is off by default (the owner switches it on)');
 const near = (a, b, tol, msg) => { checks++; assert.ok(Math.abs(a - b) <= tol, `${msg}: ${a} vs ${b} (tol ${tol})`); };
 
 // ── 1. statistics ────────────────────────────────────────────────────────────
@@ -141,7 +144,7 @@ const enroll = (user, track) => db.insert('enrollments', { user_id: user.id, tra
   process.env.BETA_COMPARE = 'off';
   const late = addUser();
   ok(arm.ensure(late) === null && arm.ineligibleReason(late) === 'off' && arm.armOf(adult) === null, 'BETA_COMPARE=off: nobody is drawn and no arm is read');
-  delete process.env.BETA_COMPARE;
+  process.env.BETA_COMPARE = 'on';
   ok(arm.ensure(late) !== null, 'and back on, the learner is drawn at their next request');
 }
 
@@ -205,7 +208,7 @@ const enroll = (user, track) => db.insert('enrollments', { user_id: user.id, tra
   ok(personalize.scorecardSection(baseU.id, {}).length === 0, 'no scorecard lines are written into a base-arm learner\'s prompts');
   process.env.BETA_COMPARE = 'off';
   ok(owner.ownerBase(baseU) === false, 'with the comparison off the base arm is tailored again');
-  delete process.env.BETA_COMPARE;
+  process.env.BETA_COMPARE = 'on';
 
   // Speed levers read off while a base-arm learner's work is planned, and are unchanged for everyone else.
   process.env.SR_ALL = 'on';

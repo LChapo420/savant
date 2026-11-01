@@ -19,7 +19,7 @@ The base arm uses the owner-base switch that already existed (`OWNER_BASE`; see 
 - **Who qualifies:** a real learner (not the owner, not a team, test or demo account: the existing `real-user-metrics` classification) who has answered the age screen. **A learner under their country's consent age is drawn only if a parent has agreed to the optional measurement** (consent scope `measurement_extras`, the same gate as every other extra measurement channel, `boosters.allowed`). An under-13 learner without that agreement gets the ordinary product and is not drawn, not counted and not measured. A learner who has not answered the age screen is not drawn until they do. If a parent later withdraws the agreement, the child stays in their arm (their product does not change) and is **left out of the report** from then on.
 - **How:** stratified, permuted blocks. Strata are age band (under 13, 13 to 17, 18 and over) by the subject of the learner's first enrolment. For each stratum a block of 20 slots is shuffled with `crypto` randomness, with `round(share x 20)` of them base (default share **20%**, `BETA_HOLDOUT_SHARE`, capped at 50%), and learners take the slots in order, so each stratum stays within one block of the planned share. Nothing about the learner picks the arm.
 - **Never moved:** `ensure` returns the stored arm and nothing else writes it. Changing the share changes only blocks opened afterwards. Tested.
-- **Kill switch:** `BETA_COMPARE=off` makes everyone tailored again at once (the base arm's learners get the tailored product back) and stops the report.
+- **Switch:** off by default; `BETA_COMPARE=on` starts it. `BETA_COMPARE=off` makes everyone tailored again at once (the base arm's learners get the tailored product back) and stops the report.
 
 ## Ethics
 
@@ -96,7 +96,7 @@ Secondary outcomes are at 99.2% intervals (alpha 0.05 / 6): wider on purpose. A 
 
 | Variable | Default | Effect |
 | --- | --- | --- |
-| `BETA_COMPARE` | on | `off`: nobody is drawn, everyone is tailored, no report |
+| `BETA_COMPARE` | off | `on` starts the draw and the daily report. Off by default until the owner approves the beta terms wording and what the base arm loses; off: nobody is drawn, everyone is tailored, no report |
 | `BETA_HOLDOUT_SHARE` | 0.2 | Share of new blocks in the base arm (0 to 0.5) |
 | `BETA_REPORT_DAILY` | on | `off`: the daily job is not scheduled (the page still computes on request) |
 | `BETA_REPORT_FILE` | `data/beta-report.json` | Where the report is written (tests use a temp file) |

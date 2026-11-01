@@ -10,7 +10,7 @@
  *              keeps them (config/owner.js ownerOnly), so it is the product without tailoring, never a worse one.
  *
  * Who is drawn. A learner is drawn at first use (services/../middleware/auth.js attachUser calls ensure) when ALL of these hold:
- *   - BETA_COMPARE is not off (the kill switch; with it off everyone is tailored and nothing is reported);
+ *   - BETA_COMPARE=on (off by default until the owner approves; with it off everyone is tailored and nothing is reported);
  *   - the account is a real learner: not the owner, not a team, test or demo account (services/real-user-metrics.js classify);
  *   - the account has answered the age screen, and, below the country's age of consent, a parent has agreed to the optional measurement
  *     (consent scope measurement_extras; services/boosters.js allowed). A learner who is not drawn gets the ordinary product and is not
