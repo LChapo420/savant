@@ -39,151 +39,151 @@ Columns: **meaning** (a low score, then a high one); **channels before**; **spec
 
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
-| `intake_baseline` | needs tiny doses of new information / handles a lot of new information per step | lesson text, coach text | +chunk +pace; 03-M19; lesson.sections, lesson.chunkSentences, lesson.wordBudget, lesson.newIdeasPerChunk, lesson.maxNewTerms, +1 | [w] scorecard/signals.js:627 |
-| `working_memory_span` | juggles one or two ideas at once / holds many moving parts at once | lesson text, coach text | +chunk -structure -scaffold; 03-M19; lesson.sections, lesson.chunkSentences, lesson.newIdeasPerChunk, difficulty.supportShare, scaffolding.level, +2 | boosters.js:144 |
-| `processing_velocity` | needs time to digest / gets it on the first read | lesson text, coach text, structure, tutor plan | +pace -repetition -length; 03-M19; lesson.minutes, lesson.wordBudget, lesson.pace, lesson.restate, explain.modes | adaptation.js:104; boosters.js:145; scorecard/contract.js:71; [w] scorecard/index.js:532 |
-| `chunk_granularity` | needs micro-steps / prefers big unified blocks | lesson text, tutor plan | +chunk; 03-M19; lesson.sections, lesson.chunkSentences, lesson.newIdeasPerChunk, lesson.maxNewTerms | [w] scorecard/index.js:1546; tutor-plan.js:58 |
-| `abstraction_tolerance` | needs something concrete first / comfortable with pure abstraction | lesson text, coach text, tutor plan, experiment | +ruleFirst -application; no mechanism; explain.modes, explain.order, transfer.application | personalize.js:152; scorecard/translate.js:136; tutor-plan.js:58; content/ipip-items.js:35 |
-| `example_density_need` | one example is enough / needs many varied examples | lesson text, experiment | +exampleCount; no mechanism; practice.workedExamples, practice.tryItems, practice.examplesPerIdea | personalize.js:167; scorecard/translate.js:120 |
-| `text_density_tolerance` | loses focus in paragraphs / fine with dense prose | **dead** | +density +chunk; no mechanism; lesson.chunkSentences, explain.modes, explain.textDensity, explain.paragraphSentences | [w] scorecard/signals.js:69 |
-| `vocabulary_ceiling` | needs plain language / handles advanced vocabulary | lesson text, coach text | +vocab +sentence; no mechanism; language.vocabularyGrade, language.maxSentenceWords, language.plainLanguage | reading-check.js:3; scorecard/item-tags.js:5; [w] scorecard/signals.js:129; content/ipip-items.js:32 |
-| `jargon_absorption` | new terms need repeated definitions / terms stick after one exposure | lesson text, experiment | -defineTerms; no mechanism; lesson.maxNewTerms, language.defineTerms | personalize.js:170 |
-| `spatial_anchoring` | layouts and diagrams do not help / layouts and diagrams help a lot | lesson text, coach text, tutor plan | +visual; no mechanism; explain.modes, explain.visual | [w] scorecard/index.js:1545; tutor-plan.js:58 |
+| `intake_baseline` | needs tiny doses of new information / handles a lot of new information per step | lesson text, coach text | +chunk +pace; 03-M19; lesson.sections, lesson.chunkSentences, lesson.wordBudget, lesson.newIdeasPerChunk, lesson.maxNewTerms, +7 | learning-depth.js:104; [w] scorecard/signals.js:627 |
+| `working_memory_span` | juggles one or two ideas at once / holds many moving parts at once | lesson text, coach text | +chunk -structure -scaffold; 03-M19; lesson.sections, lesson.chunkSentences, lesson.newIdeasPerChunk, difficulty.supportShare, scaffolding.level, +7 | boosters.js:144; learning-depth.js:104 |
+| `processing_velocity` | needs time to digest / gets it on the first read | lesson text, coach text, structure, tutor plan | +pace -repetition -length; 03-M19; lesson.minutes, lesson.wordBudget, lesson.pace, lesson.restate, explain.modes, +7 | adaptation.js:104; boosters.js:145; learning-depth.js:104; scorecard/contract.js:71 |
+| `chunk_granularity` | needs micro-steps / prefers big unified blocks | lesson text, tutor plan | +chunk; 03-M19; lesson.sections, lesson.chunkSentences, lesson.newIdeasPerChunk, lesson.maxNewTerms, depth.measures | [w] scorecard/index.js:1546; tutor-plan.js:58 |
+| `abstraction_tolerance` | needs something concrete first / comfortable with pure abstraction | lesson text, coach text, tutor plan, experiment | +ruleFirst -application; no mechanism; explain.modes, explain.order, transfer.application, learning.order, depth.measures, +4 | learning-depth.js:105; personalize.js:152; scorecard/translate.js:136; tutor-plan.js:58 |
+| `example_density_need` | one example is enough / needs many varied examples | lesson text, experiment | +exampleCount; no mechanism; practice.workedExamples, practice.tryItems, practice.examplesPerIdea, depth.measures | personalize.js:167; scorecard/translate.js:120 |
+| `text_density_tolerance` | loses focus in paragraphs / fine with dense prose | **dead** | +density +chunk; no mechanism; lesson.chunkSentences, explain.modes, explain.textDensity, explain.paragraphSentences, depth.measures, +4 | learning-depth.js:105; [w] scorecard/signals.js:69 |
+| `vocabulary_ceiling` | needs plain language / handles advanced vocabulary | lesson text, coach text | +vocab +sentence; no mechanism; language.vocabularyGrade, language.maxSentenceWords, language.plainLanguage, depth.measures, depth.facts.measuredStrengths, +3 | learning-depth.js:104; reading-check.js:3; scorecard/item-tags.js:5; [w] scorecard/signals.js:129 |
+| `jargon_absorption` | new terms need repeated definitions / terms stick after one exposure | lesson text, experiment | -defineTerms; no mechanism; lesson.maxNewTerms, language.defineTerms, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, +2 | learning-depth.js:104; personalize.js:170 |
+| `spatial_anchoring` | layouts and diagrams do not help / layouts and diagrams help a lot | lesson text, coach text, tutor plan | +visual; no mechanism; explain.modes, explain.visual, learning.dualCoding.on, learning.dualCoding.strength, depth.measures, +4 | learning-depth.js:111; [w] scorecard/index.js:1545; tutor-plan.js:58 |
 
 ### Reasoning architecture
 
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
-| `deductive_trajectory` | rule-first loses them / learns best rule first, then cases | lesson text, coach text | +ruleFirst; no mechanism; explain.modes, explain.order | [w] scorecard/index.js:1544; scorecard/translate.js:5 |
-| `inductive_trajectory` | examples-first confuses them / learns best from cases, then the rule | lesson text, coach text, experiment | -ruleFirst; no mechanism; explain.modes, explain.order | personalize.js:125; [w] scorecard/index.js:1544; scorecard/translate.js:116 |
-| `cognitive_flexibility` | stuck on one explanation / switches easily between representations | lesson text, coach text | +multiRep; no mechanism; explain.modes | none |
-| `analogical_transfer` | analogies confuse them / analogies unlock understanding | lesson text, coach text, tutor plan, experiment | +analogy; no mechanism; explain.modes, explain.analogy | personalize.js:128; tutor-plan.js:57 |
-| `causal_chain_depth` | follows one or two "because" links / follows long causal chains | lesson text, coach text | +causal; no mechanism; explain.modes | scorecard/item-tags.js:26 |
-| `systems_thinking` | sees parts in isolation / naturally sees interconnections | lesson text | +systems +integration; no mechanism; explain.modes, transfer.connections | scorecard/item-tags.js:27 |
-| `pattern_detection` | needs patterns pointed out / spots patterns unprompted | lesson text, coach text | -patternHints; no mechanism; explain.patternPointedOut | scorecard/item-tags.js:24 |
-| `logical_rigor` | prefers intuitive explanations / wants formal precision | lesson text, coach text | +rigor; no mechanism; explain.rigor | scorecard/item-tags.js:25 |
-| `contradiction_sensitivity` | misses inconsistencies / catches them immediately | lesson text | +contradiction; no mechanism; meta.spotTheInconsistency | scorecard/item-tags.js:28 |
-| `global_framing_need` | fine starting at details / needs the big picture first | lesson text, experiment | +bigPicture; no mechanism; lesson.bigPictureFirst, explain.modes | personalize.js:173 |
+| `deductive_trajectory` | rule-first loses them / learns best rule first, then cases | lesson text, coach text | +ruleFirst; no mechanism; explain.modes, explain.order, learning.order, depth.measures | learning-depth.js:289; [w] scorecard/index.js:1544; scorecard/translate.js:5 |
+| `inductive_trajectory` | examples-first confuses them / learns best from cases, then the rule | lesson text, coach text, experiment | -ruleFirst; no mechanism; explain.modes, explain.order, learning.order, depth.measures | learning-depth.js:276; personalize.js:125; [w] scorecard/index.js:1544; scorecard/translate.js:116 |
+| `cognitive_flexibility` | stuck on one explanation / switches easily between representations | lesson text, coach text | +multiRep; no mechanism; explain.modes, learning.dualCoding.strength, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, +2 | learning-depth.js:106 |
+| `analogical_transfer` | analogies confuse them / analogies unlock understanding | lesson text, coach text, tutor plan, experiment | +analogy; no mechanism; explain.modes, explain.analogy, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, +2 | learning-depth.js:106; personalize.js:128; tutor-plan.js:57 |
+| `causal_chain_depth` | follows one or two "because" links / follows long causal chains | lesson text, coach text | +causal; no mechanism; explain.modes, learning.dualCoding.forms, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, +2 | learning-depth.js:105; scorecard/item-tags.js:26 |
+| `systems_thinking` | sees parts in isolation / naturally sees interconnections | lesson text | +systems +integration; no mechanism; explain.modes, transfer.connections, learning.retrieval.cumulative, learning.spacing.earlierQuestion, depth.measures, +4 | learning-depth.js:106; scorecard/item-tags.js:27 |
+| `pattern_detection` | needs patterns pointed out / spots patterns unprompted | lesson text, coach text | -patternHints; no mechanism; explain.patternPointedOut, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, depth.facts.measuredIds.strengths, +1 | learning-depth.js:105; scorecard/item-tags.js:24 |
+| `logical_rigor` | prefers intuitive explanations / wants formal precision | lesson text, coach text | +rigor; no mechanism; explain.rigor, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, depth.facts.measuredIds.strengths, +1 | learning-depth.js:105; scorecard/item-tags.js:25 |
+| `contradiction_sensitivity` | misses inconsistencies / catches them immediately | lesson text | +contradiction; no mechanism; meta.spotTheInconsistency, depth.measures | scorecard/item-tags.js:28 |
+| `global_framing_need` | fine starting at details / needs the big picture first | lesson text, experiment | +bigPicture; no mechanism; lesson.bigPictureFirst, explain.modes, depth.measures | personalize.js:173 |
 
 ### Pacing and cycle architecture
 
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
-| `cycle_architecture` | needs short teach-then-check cycles / prefers a long teach, then a check | lesson text, tutor plan, experiment | -checkFreq +chunk; no mechanism; lesson.chunkSentences, lesson.quickCheckEverySection, lesson.quickCheckEvery, lesson.retrievalChecks, lesson.checkEveryChunks | personalize.js:149; [w] scorecard/index.js:1547; scorecard/translate.js:138; tutor-plan.js:58 |
-| `attention_runway` | focus drops quickly / sustains long focus | lesson text, structure, tutor plan | +sessionLen +length -breaks; 03-M19; lesson.minutes, lesson.mistakes, lesson.wordBudget, explain.modes, session.minutes, +3 | adaptation.js:108; boosters.js:146; scorecard/contract.js:75; [w] scorecard/index.js:528 |
-| `warmup_latency` | engages instantly / needs a ramp-in period | lesson text | +warmup; no mechanism; lesson.warmupItems | [w] scorecard/signals.js:112 |
-| `fatigue_curve` | performance holds all session / drops sharply late in session | lesson text | +fatigue -sessionLen +breaks; no mechanism; session.minutes, session.breakEveryMinutes, session.breakMinutes, session.items, session.hardestFirst | [w] scorecard/signals.js:114 |
-| `momentum_dependence` | unaffected by early wins / needs quick wins to keep going | lesson text, coach text | +momentum +warmup -diffStart; 03-M27; lesson.warmupItems, difficulty.startOffset | [w] scorecard/signals.js:117 |
-| `interleaving_tolerance` | needs one topic at a time / thrives on mixed practice | lesson text | +interleave; 03-M36; review.interleaving | [w] scorecard/signals.js:567 |
-| `rush_tendency` | careful reader / skims and answers too fast | lesson text, coach text | +structure +checks +reflection -pace; 03-M29; lesson.wordBudget, lesson.retrievalChecks, explain.modes, explain.numberedSteps | scorecard/contract.js:59; [w] scorecard/signals.js:64 |
-| `deliberation_depth` | answers on instinct / deliberates thoroughly | lesson text | +pressure -pace; no mechanism; lesson.wordBudget, feedback.lowStakes, feedback.timers | [w] scorecard/signals.js:54 |
-| `session_rhythm` | erratic usage / consistent routine | **dead** | -recapStart -sessionLen; no mechanism; lesson.recapAtStart, session.minutes, session.breakEveryMinutes, session.items | [w] scorecard/signals.js:848; content/ipip-items.js:23 |
-| `reentry_cost` | resumes easily after breaks / needs a recap after any gap | lesson text | +recapStart; no mechanism; lesson.recapAtStart | [w] scorecard/signals.js:137 |
+| `cycle_architecture` | needs short teach-then-check cycles / prefers a long teach, then a check | lesson text, tutor plan, experiment | -checkFreq +chunk; no mechanism; lesson.chunkSentences, lesson.quickCheckEverySection, lesson.quickCheckEvery, lesson.retrievalChecks, lesson.checkEveryChunks, +3 | learning-depth.js:272; personalize.js:149; [w] scorecard/index.js:1547; scorecard/translate.js:138 |
+| `attention_runway` | focus drops quickly / sustains long focus | lesson text, structure, tutor plan | +sessionLen +length -breaks +chunk; 03-M19; lesson.minutes, lesson.chunkSentences, lesson.mistakes, lesson.wordBudget, explain.modes, +12 | adaptation.js:108; boosters.js:146; learning-depth.js:106; scorecard/contract.js:75 |
+| `warmup_latency` | engages instantly / needs a ramp-in period | lesson text | +warmup; no mechanism; lesson.warmupItems, depth.measures | [w] scorecard/signals.js:112 |
+| `fatigue_curve` | performance holds all session / drops sharply late in session | lesson text | +fatigue -sessionLen +breaks; no mechanism; session.minutes, session.breakEveryMinutes, session.breakMinutes, session.items, session.hardestFirst, +1 | [w] scorecard/signals.js:114 |
+| `momentum_dependence` | unaffected by early wins / needs quick wins to keep going | lesson text, coach text | +momentum +warmup -diffStart; 03-M27; lesson.warmupItems, difficulty.startOffset, depth.measures | [w] scorecard/signals.js:117 |
+| `interleaving_tolerance` | needs one topic at a time / thrives on mixed practice | lesson text | +interleave; 03-M36; review.interleaving, learning.retrieval.cumulative, learning.spacing.earlierQuestion, learning.spacing.lookalike, depth.measures | learning-depth.js:278; [w] scorecard/signals.js:567 |
+| `rush_tendency` | careful reader / skims and answers too fast | lesson text, coach text | +structure +checks +reflection -pace; 03-M29; lesson.wordBudget, lesson.retrievalChecks, explain.modes, explain.numberedSteps, learning.retrieval.questions, +6 | learning-depth.js:110; scorecard/contract.js:59; [w] scorecard/signals.js:64 |
+| `deliberation_depth` | answers on instinct / deliberates thoroughly | lesson text | +pressure -pace; no mechanism; lesson.wordBudget, feedback.lowStakes, feedback.timers, learning.length.words, depth.measures | [w] scorecard/signals.js:54 |
+| `session_rhythm` | erratic usage / consistent routine | **dead** | -recapStart -sessionLen; no mechanism; lesson.recapAtStart, session.minutes, session.breakEveryMinutes, session.items, depth.measures | [w] scorecard/signals.js:848; content/ipip-items.js:23 |
+| `reentry_cost` | resumes easily after breaks / needs a recap after any gap | lesson text | +recapStart; no mechanism; lesson.recapAtStart, depth.measures | [w] scorecard/signals.js:137 |
 
 ### Stimulus envelope and engagement
 
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
-| `stimulus_envelope` | narrow band of novelty before overload or boredom / wide tolerable range of intensity | lesson text | +novelty; no mechanism; engagement.novelty | none |
-| `novelty_hunger` | prefers familiar formats / needs constant variety | lesson text, experiment | +novelty; no mechanism; engagement.novelty | personalize.js:185 |
-| `humor_receptivity` | humor distracts / humor boosts engagement and recall | lesson text, coach text, tutor plan, experiment | +humor; no mechanism; feedback.tone.humor | personalize.js:155; tutor-plan.js:57 |
-| `narrative_pull` | stories are fluff to them / story framing drives engagement | lesson text, experiment | +story; no mechanism; lesson.hook, lesson.storyFrame, explain.modes | personalize.js:131; scorecard/translate.js:132 |
-| `gamification_response` | points and streaks do nothing / strongly motivated by them | **dead** | +gamification; no mechanism; engagement.gamification | none |
-| `challenge_appetite` | prefers comfortable difficulty / seeks hard problems | lesson text, coach text, structure | +challenge +diffRamp +diffStart; 03-M22; difficulty.startOffset, difficulty.ramp, difficulty.rampLabel, difficulty.stretchShare, difficulty.supportShare, +1 | adaptation.js:105; ai.js:1155; learner.js:32; scorecard/contract.js:63 |
-| `curiosity_hook` | mystery openers do not help / mystery and question openers strongly engage | lesson text, experiment | +curiosity; no mechanism; lesson.hook | personalize.js:143; content/ipip-items.js:37 |
-| `interest_transfer` | wrapping content in their interests does not help / interest-based framing helps a lot | lesson text, coach text, structure, experiment | +interestUse; 03-M33; interests.share | adaptation.js:109; personalize.js:134; scorecard/contract.js:76; scorecard/translate.js:134 |
-| `relevance_demand` | learns without a "why" / disengages without real-world relevance | lesson text, experiment | +relevance +application; no mechanism; lesson.whyItMatters, transfer.application | personalize.js:182 |
-| `tone_formality` | casual and conversational / formal and academic | lesson text, coach text, experiment | +formality; no mechanism; feedback.tone.formality | personalize.js:179 |
+| `stimulus_envelope` | narrow band of novelty before overload or boredom / wide tolerable range of intensity | lesson text | +novelty; no mechanism; engagement.novelty, depth.measures | none |
+| `novelty_hunger` | prefers familiar formats / needs constant variety | lesson text, experiment | +novelty; no mechanism; engagement.novelty, depth.measures | personalize.js:185 |
+| `humor_receptivity` | humor distracts / humor boosts engagement and recall | lesson text, coach text, tutor plan, experiment | +humor; no mechanism; feedback.tone.humor, depth.measures | personalize.js:155; tutor-plan.js:57 |
+| `narrative_pull` | stories are fluff to them / story framing drives engagement | lesson text, experiment | +story; no mechanism; lesson.hook, lesson.storyFrame, explain.modes, depth.measures | personalize.js:131; scorecard/translate.js:132 |
+| `gamification_response` | points and streaks do nothing / strongly motivated by them | **dead** | +gamification; no mechanism; engagement.gamification, depth.measures | none |
+| `challenge_appetite` | prefers comfortable difficulty / seeks hard problems | lesson text, coach text, structure | +challenge +diffRamp +diffStart; 03-M22; difficulty.startOffset, difficulty.ramp, difficulty.rampLabel, difficulty.stretchShare, difficulty.supportShare, +2 | adaptation.js:105; ai.js:1155; learner.js:32; scorecard/contract.js:63 |
+| `curiosity_hook` | mystery openers do not help / mystery and question openers strongly engage | lesson text, experiment | +curiosity; no mechanism; lesson.hook, depth.measures | personalize.js:143; content/ipip-items.js:37 |
+| `interest_transfer` | wrapping content in their interests does not help / interest-based framing helps a lot | lesson text, coach text, structure, experiment | +interestUse; 03-M33; interests.share, depth.measures | adaptation.js:109; personalize.js:134; scorecard/contract.js:76; scorecard/translate.js:134 |
+| `relevance_demand` | learns without a "why" / disengages without real-world relevance | lesson text, experiment | +relevance +application; no mechanism; lesson.whyItMatters, transfer.application, depth.measures | personalize.js:182 |
+| `tone_formality` | casual and conversational / formal and academic | lesson text, coach text, experiment | +formality; no mechanism; feedback.tone.formality, depth.measures | personalize.js:179 |
 
 ### Memory and retention
 
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
-| `retrieval_strength` | needs cues to recall / recalls unprompted | **dead** | -checks +reviewSpacing; 02-M16; lesson.retrievalChecks, review.spacingScale | [w] scorecard/index.js:1367; [w] scorecard/signals.js:371 |
-| `recognition_recall_gap` | recognizes and recalls equally / recognizes but cannot produce | lesson text | +typed +generation; 02-M35; practice.typedAnswers, practice.predictBeforeReveal, review.typedRecall | [w] scorecard/signals.js:538 |
-| `decay_rate` | retains long-term / forgets fast | **dead** | -reviewSpacing +reviewIntensity; 02-M50; review.spacingScale, review.targetRecall, review.reviewShare, review.firstReviewDays | [w] scorecard/index.js:1232; [w] scorecard/signals.js:361 |
-| `elaboration_benefit` | explaining in own words does not help / big retention gain from explaining | lesson text, coach text | +elaboration; no mechanism; practice.selfExplain | [w] scorecard/index.js:1549 |
-| `mnemonic_receptivity` | mnemonics do not stick / mnemonics work well | lesson text, experiment | +mnemonic; no mechanism; explain.modes | personalize.js:176 |
-| `consolidation_need` | no recap needed / needs summaries and recaps | lesson text, structure | +recapEnd +reviewIntensity; 03-M34; lesson.recapAtEnd, review.targetRecall, review.reviewShare | adaptation.js:110; scorecard/contract.js:77; [w] scorecard/signals.js:68; scorecard/translate.js:128 |
-| `interference_susceptibility` | keeps similar concepts separate / confuses similar concepts | lesson text, coach text | +contrast +misconception -interleave; no mechanism; explain.misconception, explain.contrastLookalikes, review.interleaving | none |
-| `enactive_encoding` | learns fine passively / learns mainly by doing | lesson text | -worked +generation +checks; no mechanism; practice.workedToPractice, practice.workedExamples, practice.tryItems, practice.predictBeforeReveal, explain.modes | none |
-| `generation_effect` | reading is as good as producing / much better when producing answers | lesson text, coach text | +generation +typed; no mechanism; practice.typedAnswers, practice.predictBeforeReveal, explain.modes, review.typedRecall | [w] scorecard/index.js:1551; scorecard/translate.js:140 |
-| `retention_index` | poor delayed recall / excellent delayed recall | **dead** | +reviewSpacing -reviewIntensity; 02-M50; review.spacingScale, review.targetRecall, review.reviewShare, review.firstReviewDays | [w] scorecard/index.js:1366; [w] scorecard/signals.js:373 |
+| `retrieval_strength` | needs cues to recall / recalls unprompted | **dead** | -checks +reviewSpacing; 02-M16; lesson.retrievalChecks, review.spacingScale, learning.retrieval.questions, learning.spacing.earlierQuestion, learning.spacing.tomorrowLine, +5 | learning-depth.js:106; [w] scorecard/index.js:1367; [w] scorecard/signals.js:371 |
+| `recognition_recall_gap` | recognizes and recalls equally / recognizes but cannot produce | lesson text | +typed +generation; 02-M35; practice.typedAnswers, practice.predictBeforeReveal, review.typedRecall, learning.retrieval.produce, depth.measures | learning-depth.js:272; [w] scorecard/signals.js:538 |
+| `decay_rate` | retains long-term / forgets fast | **dead** | -reviewSpacing +reviewIntensity; 02-M50; review.spacingScale, review.targetRecall, review.reviewShare, review.firstReviewDays, learning.retrieval.cumulative, +7 | learning-depth.js:107; [w] scorecard/index.js:1232; [w] scorecard/signals.js:361 |
+| `elaboration_benefit` | explaining in own words does not help / big retention gain from explaining | lesson text, coach text | +elaboration; no mechanism; practice.selfExplain, depth.measures | [w] scorecard/index.js:1549 |
+| `mnemonic_receptivity` | mnemonics do not stick / mnemonics work well | lesson text, experiment | +mnemonic; no mechanism; explain.modes, depth.measures | personalize.js:176 |
+| `consolidation_need` | no recap needed / needs summaries and recaps | lesson text, structure | +recapEnd +reviewIntensity; 03-M34; lesson.recapAtEnd, review.targetRecall, review.reviewShare, learning.retrieval.cumulative, learning.spacing.earlierQuestion, +2 | adaptation.js:110; learning-depth.js:271; scorecard/contract.js:77; [w] scorecard/signals.js:68 |
+| `interference_susceptibility` | keeps similar concepts separate / confuses similar concepts | lesson text, coach text | +contrast +misconception -interleave; no mechanism; explain.misconception, explain.contrastLookalikes, review.interleaving, learning.retrieval.cumulative, learning.spacing.earlierQuestion, +6 | learning-depth.js:107 |
+| `enactive_encoding` | learns fine passively / learns mainly by doing | lesson text | -worked +generation +checks; no mechanism; practice.workedToPractice, practice.workedExamples, practice.tryItems, practice.predictBeforeReveal, explain.modes, +4 | learning-depth.js:272 |
+| `generation_effect` | reading is as good as producing / much better when producing answers | lesson text, coach text | +generation +typed; no mechanism; practice.typedAnswers, practice.predictBeforeReveal, explain.modes, review.typedRecall, learning.retrieval.produce, +1 | learning-depth.js:271; [w] scorecard/index.js:1551; scorecard/translate.js:140 |
+| `retention_index` | poor delayed recall / excellent delayed recall | **dead** | +reviewSpacing -reviewIntensity; 02-M50; review.spacingScale, review.targetRecall, review.reviewShare, review.firstReviewDays, learning.retrieval.cumulative, +7 | learning-depth.js:107; [w] scorecard/index.js:1366; [w] scorecard/signals.js:373 |
 
 ### Failure response and resilience
 
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
-| `failure_response` | disengages after errors / treats errors as fuel | lesson text, coach text | +mistakes -gentleness; no mechanism; practice.mistakeShown, feedback.tone.correction | [w] scorecard/signals.js:105 |
-| `error_recovery_speed` | needs several attempts to correct / corrects immediately | lesson text, coach text | -scaffold -hintSize +feedbackImmediacy; no mechanism; difficulty.supportShare, scaffolding.level, scaffolding.hintInChecks, scaffolding.hintsBeforeReveal, scaffolding.fade, +1 | [w] scorecard/signals.js:106 |
-| `frustration_threshold` | frustrates quickly / very patient | lesson text, coach text, structure, tutor plan | -scaffold +challenge -hintSize -gentleness; 03-M23; difficulty.stretchShare, difficulty.supportShare, scaffolding.level, scaffolding.hintInChecks, scaffolding.hintsBeforeReveal, +3 | adaptation.js:106; scorecard/contract.js:73; [w] scorecard/signals.js:237; scorecard/translate.js:130 |
-| `hint_dependency` | rarely needs hints / relies on hints heavily | lesson text, coach text, tutor plan | +worked +generation -hintSize; 03-M30; scaffolding.hintsBeforeReveal, practice.workedToPractice, practice.workedExamples, practice.tryItems, practice.predictBeforeReveal, +1 | [w] scorecard/signals.js:52; tutor-plan.js:56 |
-| `help_seeking` | struggles silently / asks for help readily | lesson text, coach text, tutor plan | -checkFreq +autonomy; 03-M30; lesson.quickCheckEverySection, lesson.quickCheckEvery, lesson.retrievalChecks, lesson.checkEveryChunks | [w] scorecard/signals.js:53; tutor-plan.js:58 |
-| `guessing_propensity` | only answers when sure / guesses freely | lesson text, coach text | +selfCheck +feedbackDetail +checks; no mechanism; practice.ratePrompt, feedback.nameTheError | [w] scorecard/signals.js:229 |
-| `perfectionism` | fine with partial progress / needs everything perfect | lesson text, coach text | -pressure +warmth; no mechanism; feedback.tone.warmth, feedback.lowStakes, feedback.timers | [w] scorecard/signals.js:55; content/basketball-grades.js:7076; content/chess-grades.js:7473; content/ipip-items.js:8 |
-| `productive_struggle` | needs rescue early / benefits from being left to struggle | lesson text, coach text, tutor plan | -hintSize -scaffold +challenge; 03-M30; difficulty.stretchShare, difficulty.supportShare, scaffolding.level, scaffolding.hintLevel, scaffolding.hintSize, +4 | [w] scorecard/index.js:1548; tutor-plan.js:56 |
-| `confidence_calibration` | confidence does not match accuracy / confidence predicts accuracy | lesson text, coach text | -selfCheck; no mechanism; practice.ratePrompt | [w] scorecard/signals.js:223 |
-| `error_driven_learning` | repeats the same mistakes / rarely repeats a corrected mistake | **dead** | -reviewIntensity -misconception; no mechanism; explain.misconception, review.targetRecall, review.reviewShare | [w] scorecard/signals.js:60 |
+| `failure_response` | disengages after errors / treats errors as fuel | lesson text, coach text | +mistakes -gentleness; no mechanism; practice.mistakeShown, feedback.tone.correction, depth.measures | [w] scorecard/signals.js:105 |
+| `error_recovery_speed` | needs several attempts to correct / corrects immediately | lesson text, coach text | -scaffold -hintSize +feedbackImmediacy; no mechanism; difficulty.supportShare, scaffolding.level, scaffolding.hintInChecks, scaffolding.hintsBeforeReveal, scaffolding.fade, +6 | learning-depth.js:107; [w] scorecard/signals.js:106 |
+| `frustration_threshold` | frustrates quickly / very patient | lesson text, coach text, structure, tutor plan | -scaffold +challenge -hintSize -gentleness; 03-M23; difficulty.stretchShare, difficulty.supportShare, scaffolding.level, scaffolding.hintInChecks, scaffolding.hintsBeforeReveal, +8 | adaptation.js:106; learning-depth.js:107; scorecard/contract.js:73; [w] scorecard/signals.js:237 |
+| `hint_dependency` | rarely needs hints / relies on hints heavily | lesson text, coach text, tutor plan | +worked +generation -hintSize; 03-M30; scaffolding.hintsBeforeReveal, practice.workedToPractice, practice.workedExamples, practice.tryItems, practice.predictBeforeReveal, +10 | learning-depth.js:110; [w] scorecard/signals.js:52; tutor-plan.js:56 |
+| `help_seeking` | struggles silently / asks for help readily | lesson text, coach text, tutor plan | -checkFreq +autonomy; 03-M30; lesson.quickCheckEverySection, lesson.quickCheckEvery, lesson.retrievalChecks, lesson.checkEveryChunks, learning.retrieval.questions, +2 | [w] scorecard/signals.js:53; tutor-plan.js:58 |
+| `guessing_propensity` | only answers when sure / guesses freely | lesson text, coach text | +selfCheck +feedbackDetail +checks; no mechanism; practice.ratePrompt, feedback.nameTheError, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, +2 | learning-depth.js:110; [w] scorecard/signals.js:229 |
+| `perfectionism` | fine with partial progress / needs everything perfect | lesson text, coach text | -pressure +warmth; no mechanism; feedback.tone.warmth, feedback.lowStakes, feedback.timers, depth.measures, depth.facts.measuredStrengths, +3 | learning-depth.js:111; [w] scorecard/signals.js:55; content/basketball-grades.js:7076; content/chess-grades.js:7473 |
+| `productive_struggle` | needs rescue early / benefits from being left to struggle | lesson text, coach text, tutor plan | -hintSize -scaffold +challenge +generation; 03-M30; difficulty.stretchShare, difficulty.supportShare, scaffolding.level, scaffolding.hintLevel, scaffolding.hintSize, +7 | learning-depth.js:288; [w] scorecard/index.js:1548; tutor-plan.js:56 |
+| `confidence_calibration` | confidence does not match accuracy / confidence predicts accuracy | lesson text, coach text | -selfCheck; no mechanism; practice.ratePrompt, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, depth.facts.measuredIds.strengths, +1 | learning-depth.js:111; [w] scorecard/signals.js:223 |
+| `error_driven_learning` | repeats the same mistakes / rarely repeats a corrected mistake | **dead** | -reviewIntensity -misconception; no mechanism; explain.misconception, review.targetRecall, review.reviewShare, learning.retrieval.cumulative, learning.spacing.earlierQuestion, +2 | [w] scorecard/signals.js:60 |
 
 ### Metacognition and self-regulation
 
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
-| `self_monitoring` | does not know what they do not know / accurate self-assessment | lesson text, coach text | -selfCheck +autonomy -reflection; no mechanism; practice.ratePrompt, engagement.choices | [w] scorecard/signals.js:224 |
-| `strategy_awareness` | no study strategy / deliberately uses strategies | lesson text | +autonomy +planning; no mechanism; engagement.choices, meta.plan | none |
-| `mastery_orientation` | wants the score or completion / wants real understanding | lesson text | +conceptual +depth -extrinsic; no mechanism; explain.modes, explain.conceptFirst, engagement.milestones, transfer.depth | [w] scorecard/signals.js:645 |
-| `autonomy_preference` | wants to be guided / wants to choose their own path | lesson text, coach text | +autonomy; no mechanism; engagement.choices | none |
-| `structure_need` | fine with open-ended tasks / needs clear steps and structure | lesson text, coach text | +structure; no mechanism; explain.modes, explain.numberedSteps | content/ipip-items.js:23 |
-| `instruction_adherence` | skims directions / follows directions precisely | lesson text | +instructions; no mechanism; meta.oneShortAction | [w] scorecard/signals.js:75 |
-| `reflection_depth` | shallow reflection / rich, specific reflection | **dead** | +reflection; no mechanism; meta.reflection | [w] scorecard/signals.js:735; content/ipip-items.js:36 |
-| `question_generation` | never asks their own questions / constantly asks "what if" | lesson text, coach text | +questionPrompts; no mechanism; meta.questionPrompt | none |
-| `self_efficacy` | believes they are "bad at this" / confident they can learn it | lesson text, coach text, tutor plan | -momentum -warmth -scaffold +challenge; 03-M31; difficulty.stretchShare, difficulty.supportShare, scaffolding.level, feedback.tone.warmth, engagement.challenge | [w] scorecard/signals.js:89; tutor-plan.js:56; content/ipip-items.js:34 |
-| `planning_tendency` | dives straight in / plans an approach first | lesson text | +planning; no mechanism; meta.plan | content/ipip-items.js:22 |
+| `self_monitoring` | does not know what they do not know / accurate self-assessment | lesson text, coach text | -selfCheck +autonomy -reflection; no mechanism; practice.ratePrompt, engagement.choices, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, +2 | learning-depth.js:108; [w] scorecard/signals.js:224 |
+| `strategy_awareness` | no study strategy / deliberately uses strategies | lesson text | +autonomy +planning; no mechanism; engagement.choices, meta.plan, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, +2 | learning-depth.js:108 |
+| `mastery_orientation` | wants the score or completion / wants real understanding | lesson text | +conceptual +depth -extrinsic; no mechanism; explain.modes, explain.conceptFirst, engagement.milestones, transfer.depth, depth.measures | [w] scorecard/signals.js:645 |
+| `autonomy_preference` | wants to be guided / wants to choose their own path | lesson text, coach text | +autonomy; no mechanism; engagement.choices, depth.measures | none |
+| `structure_need` | fine with open-ended tasks / needs clear steps and structure | lesson text, coach text | +structure; no mechanism; explain.modes, explain.numberedSteps, depth.measures | content/ipip-items.js:23 |
+| `instruction_adherence` | skims directions / follows directions precisely | lesson text | +instructions; no mechanism; meta.oneShortAction, depth.measures | [w] scorecard/signals.js:75 |
+| `reflection_depth` | shallow reflection / rich, specific reflection | **dead** | +reflection; no mechanism; meta.reflection, depth.measures | [w] scorecard/signals.js:735; content/ipip-items.js:36 |
+| `question_generation` | never asks their own questions / constantly asks "what if" | lesson text, coach text | +questionPrompts; no mechanism; meta.questionPrompt, depth.measures | none |
+| `self_efficacy` | believes they are "bad at this" / confident they can learn it | lesson text, coach text, tutor plan | -momentum -warmth -scaffold +challenge; 03-M31; difficulty.stretchShare, difficulty.supportShare, scaffolding.level, feedback.tone.warmth, engagement.challenge, +5 | learning-depth.js:108; [w] scorecard/signals.js:89; tutor-plan.js:56; content/ipip-items.js:34 |
+| `planning_tendency` | dives straight in / plans an approach first | lesson text | +planning; no mechanism; meta.plan, depth.measures | content/ipip-items.js:22 |
 
 ### Communication and representation
 
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
-| `step_explicitness` | skipped steps are fine / every step must be shown | lesson text, coach text, tutor plan | +scaffold +structure -chunk +worked; 03-M17; lesson.sections, lesson.chunkSentences, lesson.newIdeasPerChunk, difficulty.supportShare, scaffolding.level, +6 | [w] scorecard/index.js:1543; [w] scorecard/signals.js:712; scorecard/translate.js:114; tutor-plan.js:58 |
-| `worked_example_dependence` | learns from principles / needs full worked examples | lesson text, tutor plan, experiment | +worked; 03-M17; practice.workedToPractice, practice.workedExamples, practice.tryItems, explain.modes | personalize.js:140; scorecard/translate.js:118; tutor-plan.js:57 |
-| `scaffolding_fade` | supports must be removed slowly / supports can be removed quickly | lesson text, structure | -scaffold -hintSize; 03-M17; difficulty.supportShare, scaffolding.level, scaffolding.hintInChecks, scaffolding.hintsBeforeReveal, scaffolding.fade, +1 | adaptation.js:102; scorecard/contract.js:69; [w] scorecard/index.js:494; [w] scorecard/signals.js:385 |
-| `notation_comfort` | formulas and symbols intimidate / comfortable with notation | lesson text, coach text | +notation +vocab; no mechanism; explain.notation | scorecard/item-tags.js:31; scorecard/translate.js:136 |
-| `brevity_preference` | wants full detail / wants the shortest version | lesson text, coach text, structure, tutor plan, experiment | -length -feedbackDetail; 03-M19; lesson.minutes, lesson.sections, lesson.mistakes, lesson.wordBudget, lesson.retrievalChecks, +3 | adaptation.js:103; personalize.js:137; scorecard/contract.js:70; [w] scorecard/index.js:531 |
-| `repetition_tolerance` | bored by restating / benefits from restating | lesson text | +repetition; no mechanism; lesson.restate | [w] scorecard/signals.js:716 |
-| `feedback_granularity` | "right or wrong" is enough / wants a detailed breakdown | lesson text, coach text | +feedbackDetail; 02-M45; feedback.granularity, feedback.nameTheError | [w] scorecard/index.js:1550 |
-| `feedback_tone_sensitivity` | handles blunt correction / needs gentle framing | lesson text, coach text, tutor plan, experiment | +gentleness +warmth; 02-M45; feedback.tone.warmth, feedback.tone.correction | personalize.js:188; tutor-plan.js:57 |
-| `open_response_performance` | much better on multiple choice / strong on open-ended answers | **dead** | +typed +creative; no mechanism; practice.typedAnswers, review.typedRecall | [w] scorecard/signals.js:537 |
-| `dialogic_preference` | prefers being told / prefers a Socratic back-and-forth | lesson text, coach text, tutor plan, experiment | +dialogic; no mechanism; explain.modes, engagement.dialogue | personalize.js:146; scorecard/translate.js:138; tutor-plan.js:58 |
+| `step_explicitness` | skipped steps are fine / every step must be shown | lesson text, coach text, tutor plan | +scaffold +structure -chunk +worked; 03-M17; lesson.sections, lesson.chunkSentences, lesson.newIdeasPerChunk, difficulty.supportShare, scaffolding.level, +7 | learning-depth.js:288; [w] scorecard/index.js:1543; [w] scorecard/signals.js:712; scorecard/translate.js:114 |
+| `worked_example_dependence` | learns from principles / needs full worked examples | lesson text, tutor plan, experiment | +worked; 03-M17; practice.workedToPractice, practice.workedExamples, practice.tryItems, explain.modes, learning.fading.mode, +2 | learning-depth.js:274; personalize.js:140; scorecard/translate.js:118; tutor-plan.js:57 |
+| `scaffolding_fade` | supports must be removed slowly / supports can be removed quickly | lesson text, structure | -scaffold -hintSize; 03-M17; difficulty.supportShare, scaffolding.level, scaffolding.hintInChecks, scaffolding.hintsBeforeReveal, scaffolding.fade, +2 | adaptation.js:102; learning-depth.js:274; scorecard/contract.js:69; [w] scorecard/index.js:494 |
+| `notation_comfort` | formulas and symbols intimidate / comfortable with notation | lesson text, coach text | +notation +vocab; no mechanism; explain.notation, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, depth.facts.measuredIds.strengths, +1 | learning-depth.js:109; scorecard/item-tags.js:31; scorecard/translate.js:136 |
+| `brevity_preference` | wants full detail / wants the shortest version | lesson text, coach text, structure, tutor plan, experiment | -length -feedbackDetail; 03-M19; lesson.minutes, lesson.sections, lesson.mistakes, lesson.wordBudget, lesson.retrievalChecks, +8 | adaptation.js:103; learning-depth.js:283; personalize.js:137; scorecard/contract.js:70 |
+| `repetition_tolerance` | bored by restating / benefits from restating | lesson text | +repetition; no mechanism; lesson.restate, depth.measures | [w] scorecard/signals.js:716 |
+| `feedback_granularity` | "right or wrong" is enough / wants a detailed breakdown | lesson text, coach text | +feedbackDetail; 02-M45; feedback.granularity, feedback.nameTheError, depth.measures | [w] scorecard/index.js:1550 |
+| `feedback_tone_sensitivity` | handles blunt correction / needs gentle framing | lesson text, coach text, tutor plan, experiment | +gentleness +warmth; 02-M45; feedback.tone.warmth, feedback.tone.correction, depth.measures | personalize.js:188; tutor-plan.js:57 |
+| `open_response_performance` | much better on multiple choice / strong on open-ended answers | **dead** | +typed +creative; no mechanism; practice.typedAnswers, review.typedRecall, learning.retrieval.produce, depth.measures, depth.facts.measuredStrengths, +3 | learning-depth.js:109; [w] scorecard/signals.js:537 |
+| `dialogic_preference` | prefers being told / prefers a Socratic back-and-forth | lesson text, coach text, tutor plan, experiment | +dialogic; no mechanism; explain.modes, engagement.dialogue, depth.measures | personalize.js:146; scorecard/translate.js:138; tutor-plan.js:58 |
 
 ### Motivation and affect
 
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
-| `intrinsic_motivation` | needs outside reasons / learns for its own sake | lesson text | -extrinsic -relevance +autonomy; no mechanism; engagement.milestones | none |
-| `extrinsic_reward_sensitivity` | rewards do not matter / rewards strongly drive effort | **dead** | +extrinsic +gamification; no mechanism; engagement.gamification, engagement.milestones | none |
-| `competitive_drive` | indifferent to comparison / motivated by beating benchmarks | lesson text | +competition; no mechanism; engagement.competition | none |
-| `praise_sensitivity` | praise has no effect / praise noticeably boosts effort | lesson text, coach text, tutor plan, experiment | +praise +warmth; no mechanism; feedback.tone.warmth, feedback.tone.praise | personalize.js:191; tutor-plan.js:57 |
-| `evaluation_anxiety` | calm on quizzes / performance drops when "tested" | lesson text, coach text | -pressure +gentleness; 02-M29; feedback.tone.correction, feedback.lowStakes, feedback.timers | content/ipip-items.js:28 |
-| `boredom_susceptibility` | tolerates dry content / disengages fast when bored | lesson text | +novelty +pace +curiosity -length; no mechanism; lesson.minutes, lesson.mistakes, lesson.wordBudget, lesson.pace, lesson.hook, +2 | none |
-| `persistence` | quits on hard tasks / pushes through | lesson text, coach text, structure | +length -momentum +sessionLen; 03-M25; lesson.minutes, lesson.mistakes, lesson.wordBudget, explain.modes, session.minutes, +2 | adaptation.js:107; catchup-engine.js:8; scorecard/contract.js:74; [w] scorecard/hooks.js:257 |
-| `social_framing` | people in examples do not matter / characters strongly engage | lesson text, experiment | +social; no mechanism; interests.people | personalize.js:194 |
-| `identity_alignment` | "people like you" framing does nothing / identity framing is strongly motivating | lesson text | +identity; no mechanism; interests.identity | none |
-| `emotional_engagement` | emotional stakes do not affect recall / emotional stakes boost recall | lesson text, experiment | +emotion; no mechanism; explain.modes, engagement.emotionalStakes | personalize.js:197 |
+| `intrinsic_motivation` | needs outside reasons / learns for its own sake | lesson text | -extrinsic -relevance +autonomy; no mechanism; engagement.milestones, depth.measures | none |
+| `extrinsic_reward_sensitivity` | rewards do not matter / rewards strongly drive effort | **dead** | +extrinsic +gamification; no mechanism; engagement.gamification, engagement.milestones, depth.measures | none |
+| `competitive_drive` | indifferent to comparison / motivated by beating benchmarks | lesson text | +competition; no mechanism; engagement.competition, depth.measures | none |
+| `praise_sensitivity` | praise has no effect / praise noticeably boosts effort | lesson text, coach text, tutor plan, experiment | +praise +warmth; no mechanism; feedback.tone.warmth, feedback.tone.praise, depth.measures | personalize.js:191; tutor-plan.js:57 |
+| `evaluation_anxiety` | calm on quizzes / performance drops when "tested" | lesson text, coach text | -pressure +gentleness -diffRamp +warmup; 02-M29; lesson.warmupItems, difficulty.ramp, difficulty.rampLabel, feedback.tone.correction, feedback.lowStakes, +6 | learning-depth.js:109; content/ipip-items.js:28 |
+| `boredom_susceptibility` | tolerates dry content / disengages fast when bored | lesson text | +novelty +pace +curiosity -length; no mechanism; lesson.minutes, lesson.mistakes, lesson.wordBudget, lesson.pace, lesson.hook, +10 | learning-depth.js:110 |
+| `persistence` | quits on hard tasks / pushes through | lesson text, coach text, structure | +length -momentum +sessionLen; 03-M25; lesson.minutes, lesson.mistakes, lesson.wordBudget, explain.modes, session.minutes, +10 | adaptation.js:107; catchup-engine.js:8; learning-depth.js:108; scorecard/contract.js:74 |
+| `social_framing` | people in examples do not matter / characters strongly engage | lesson text, experiment | +social; no mechanism; interests.people, depth.measures | personalize.js:194 |
+| `identity_alignment` | "people like you" framing does nothing / identity framing is strongly motivating | lesson text | +identity; no mechanism; interests.identity, depth.measures | none |
+| `emotional_engagement` | emotional stakes do not affect recall / emotional stakes boost recall | lesson text, experiment | +emotion; no mechanism; explain.modes, engagement.emotionalStakes, depth.measures | personalize.js:197 |
 
 ### Transfer and mastery
 
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
-| `near_transfer` | cannot apply to slightly different problems / applies easily to variations | lesson text | +transfer +diffRamp; no mechanism; difficulty.ramp, transfer.variedCases | scorecard/item-tags.js:29 |
-| `far_transfer` | knowledge stays in context / applies it across domains | lesson text | +transfer +integration; no mechanism; transfer.variedCases | scorecard/item-tags.js:30 |
-| `application_orientation` | likes theory / wants practical use | lesson text | +application; no mechanism; lesson.whyItMatters, explain.modes, transfer.application | none |
-| `conceptual_bias` | learns the "how" (procedures) best / learns the "why" (concepts) best | lesson text, coach text | +conceptual; no mechanism; explain.modes, explain.conceptFirst | none |
-| `prior_knowledge` | little background in this subject / strong background in this subject | lesson text, coach text, structure | +diffStart -scaffold -worked -length +vocab; 03-M17; lesson.minutes, lesson.mistakes, lesson.wordBudget, difficulty.startOffset, difficulty.supportShare, +9 | adaptation.js:101; scorecard/contract.js:68; [w] scorecard/index.js:421; [w] scorecard/signals.js:860 |
-| `misconception_persistence` | corrections stick / wrong beliefs keep coming back | lesson text, coach text | +misconception; 03-M32; explain.misconception | [w] scorecard/signals.js:59 |
-| `integration_tendency` | treats each level separately / connects to past levels | lesson text | +integration; no mechanism; transfer.linkEarlier | none |
-| `depth_breadth` | wants a wide overview / wants deep dives | lesson text | +depth; no mechanism; transfer.depth | [w] scorecard/signals.js:702 |
-| `creative_extension` | wants defined tasks / loves open, creative extensions | lesson text | +creative; no mechanism; transfer.creativeExtension | content/ipip-items.js:37 |
-| `mastery_velocity` | slow improvement across levels / rapid improvement across levels | lesson text | +pace +diffRamp -reviewIntensity; no mechanism; lesson.wordBudget, lesson.pace, difficulty.ramp, difficulty.rampLabel, review.targetRecall, +1 | [w] scorecard/index.js:1233; [w] scorecard/signals.js:380 |
+| `near_transfer` | cannot apply to slightly different problems / applies easily to variations | lesson text | +transfer +diffRamp; no mechanism; difficulty.ramp, transfer.variedCases, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, +2 | learning-depth.js:108; scorecard/item-tags.js:29 |
+| `far_transfer` | knowledge stays in context / applies it across domains | lesson text | +transfer +integration; no mechanism; transfer.variedCases, learning.retrieval.cumulative, learning.spacing.earlierQuestion, depth.measures, depth.facts.measuredStrengths, +3 | learning-depth.js:108; scorecard/item-tags.js:30 |
+| `application_orientation` | likes theory / wants practical use | lesson text | +application; no mechanism; lesson.whyItMatters, explain.modes, transfer.application, depth.measures | none |
+| `conceptual_bias` | learns the "how" (procedures) best / learns the "why" (concepts) best | lesson text, coach text | +conceptual; no mechanism; explain.modes, explain.conceptFirst, depth.measures | none |
+| `prior_knowledge` | little background in this subject / strong background in this subject | lesson text, coach text, structure | +diffStart -scaffold -worked -length +vocab; 03-M17; lesson.minutes, lesson.mistakes, lesson.wordBudget, difficulty.startOffset, difficulty.supportShare, +20 | adaptation.js:101; learning-depth.js:109; scorecard/contract.js:68; [w] scorecard/index.js:421 |
+| `misconception_persistence` | corrections stick / wrong beliefs keep coming back | lesson text, coach text | +misconception; 03-M32; explain.misconception, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, depth.facts.measuredIds.strengths, +1 | learning-depth.js:110; [w] scorecard/signals.js:59 |
+| `integration_tendency` | treats each level separately / connects to past levels | lesson text | +integration; no mechanism; transfer.linkEarlier, learning.retrieval.cumulative, learning.spacing.earlierQuestion, depth.measures | learning-depth.js:278 |
+| `depth_breadth` | wants a wide overview / wants deep dives | lesson text | +depth; no mechanism; transfer.depth, depth.measures | [w] scorecard/signals.js:702 |
+| `creative_extension` | wants defined tasks / loves open, creative extensions | lesson text | +creative; no mechanism; transfer.creativeExtension, depth.measures | content/ipip-items.js:37 |
+| `mastery_velocity` | slow improvement across levels / rapid improvement across levels | lesson text | +pace +diffRamp -reviewIntensity; no mechanism; lesson.wordBudget, lesson.pace, difficulty.ramp, difficulty.rampLabel, review.targetRecall, +9 | learning-depth.js:109; [w] scorecard/index.js:1233; [w] scorecard/signals.js:380 |
 
 ## What the spec fields are read by
 
@@ -196,7 +196,7 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `learner.esl` | prompt only | 0 |
 | `lesson.minutes` | prompt only | 6 |
 | `lesson.sections` | prompt only | 5 |
-| `lesson.chunkSentences` | material-notes.js, material-pack.js, tutor-plan.js | 6 |
+| `lesson.chunkSentences` | material-notes.js, material-pack.js, tutor-plan.js | 7 |
 | `lesson.mistakes` | ai.js | 5 |
 | `lesson.quickCheckEverySection` | prompt only | 2 |
 | `lesson.quickCheckEvery` | prompt only | 2 |
@@ -207,7 +207,7 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `lesson.restate` | prompt only | 2 |
 | `lesson.retrievalChecks` | ai.js, material-adapt.js, material-pack.js | 5 |
 | `lesson.checkEveryChunks` | material-podcast.js | 2 |
-| `lesson.warmupItems` | material-test.js | 2 |
+| `lesson.warmupItems` | material-test.js | 3 |
 | `lesson.recapAtStart` | prompt only | 2 |
 | `lesson.recapAtEnd` | prompt only | 1 |
 | `lesson.hook` | prompt only | 3 |
@@ -215,8 +215,8 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `lesson.whyItMatters` | prompt only | 2 |
 | `lesson.bigPictureFirst` | prompt only | 1 |
 | `difficulty.startOffset` | material-test.js | 3 |
-| `difficulty.ramp` | prompt only | 3 |
-| `difficulty.rampLabel` | prompt only | 2 |
+| `difficulty.ramp` | prompt only | 4 |
+| `difficulty.rampLabel` | prompt only | 3 |
 | `difficulty.stretchShare` | adaptation.js | 4 |
 | `difficulty.supportShare` | adaptation.js | 9 |
 | `scaffolding.level` | material-path.js | 8 |
@@ -230,7 +230,7 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `practice.tryItems` | prompt only | 6 |
 | `practice.examplesPerIdea` | prompt only | 1 |
 | `practice.typedAnswers` | adaptation.js | 3 |
-| `practice.predictBeforeReveal` | prompt only | 4 |
+| `practice.predictBeforeReveal` | prompt only | 5 |
 | `practice.selfExplain` | prompt only | 1 |
 | `practice.mistakeShown` | prompt only | 1 |
 | `practice.ratePrompt` | prompt only | 3 |
@@ -298,6 +298,42 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `meta.questionPrompt` | prompt only | 1 |
 | `meta.spotTheInconsistency` | prompt only | 1 |
 | `meta.oneShortAction` | prompt only | 1 |
+| `learning.retrieval.questions` | prompt only | 5 |
+| `learning.retrieval.spread` | prompt only | 2 |
+| `learning.retrieval.fromMemory` | prompt only | 0 |
+| `learning.retrieval.produce` | prompt only | 6 |
+| `learning.retrieval.cumulative` | prompt only | 10 |
+| `learning.fading.mode` | prompt only | 4 |
+| `learning.order` | prompt only | 3 |
+| `learning.spacing.earlierQuestion` | prompt only | 11 |
+| `learning.spacing.lookalike` | prompt only | 2 |
+| `learning.spacing.tomorrowLine` | prompt only | 5 |
+| `learning.gapOnly.on` | prompt only | 4 |
+| `learning.gapOnly.strong` | prompt only | 1 |
+| `learning.dualCoding.on` | prompt only | 1 |
+| `learning.dualCoding.strength` | prompt only | 2 |
+| `learning.dualCoding.forms` | prompt only | 1 |
+| `learning.length.words` | prompt only | 10 |
+| `learning.length.minutes` | prompt only | 6 |
+| `learning.length.compact` | prompt only | 5 |
+| `learning.measures.retrieval` | prompt only | 0 |
+| `learning.measures.fading` | prompt only | 0 |
+| `learning.measures.order` | prompt only | 0 |
+| `learning.measures.spacing` | prompt only | 0 |
+| `learning.measures.gapOnly` | prompt only | 0 |
+| `learning.measures.dualCoding` | prompt only | 0 |
+| `learning.measures.length` | prompt only | 0 |
+| `depth.measures` | prompt only | 100 |
+| `depth.facts.difficulties` | prompt only | 0 |
+| `depth.facts.strengths` | prompt only | 0 |
+| `depth.facts.worked` | prompt only | 0 |
+| `depth.facts.goals` | prompt only | 0 |
+| `depth.facts.studying` | prompt only | 0 |
+| `depth.facts.measuredStrengths` | prompt only | 39 |
+| `depth.facts.measuredDifficulties` | prompt only | 39 |
+| `depth.facts.measuredIds.strengths` | prompt only | 39 |
+| `depth.facts.measuredIds.difficulties` | prompt only | 39 |
+| `depth.joint` | prompt only | 1 |
 | `aversions` | prompt only | 0 |
 | `aversionNotes` | prompt only | 0 |
 | `ownerBase` | prompt only | 0 |

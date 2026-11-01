@@ -1,0 +1,1932 @@
+{
+ "tag": "pilot-v1",
+ "phase": "pilot",
+ "depth": "v1",
+ "generated_at": "2026-11-01T07:08:15.300Z",
+ "live": true,
+ "writer": "minimax/minimax-m3.1-flash",
+ "judges": [
+  "mistralai/mistral-large-2512",
+  "gemini-3.5-flash-lite"
+ ],
+ "lo": 10,
+ "hi": 90,
+ "base": {
+  "age": 14,
+  "survey": {
+   "interests": "basketball, video games",
+   "hobbies": "drawing comics"
+  }
+ },
+ "structural": {
+  "counts": {
+   "lesson": 98,
+   "level": 98,
+   "material": 97,
+   "notes": 22,
+   "podcast": 94,
+   "test": 31,
+   "code": 15
+  },
+  "anySurface": 98,
+  "rows": [
+   {
+    "measure": "intake_baseline",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "working_memory_span",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "processing_velocity",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "chunk_granularity",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "abstraction_tolerance",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "example_density_need",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "text_density_tolerance",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "vocabulary_ceiling",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "jargon_absorption",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "spatial_anchoring",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": false,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "deductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "inductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "cognitive_flexibility",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "analogical_transfer",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "causal_chain_depth",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "systems_thinking",
+    "group": "reasoning",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "pattern_detection",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "logical_rigor",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "contradiction_sensitivity",
+    "group": "reasoning",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "global_framing_need",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "cycle_architecture",
+    "group": "pacing",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "attention_runway",
+    "group": "pacing",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "warmup_latency",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "fatigue_curve",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "momentum_dependence",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "interleaving_tolerance",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "rush_tendency",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "deliberation_depth",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "session_rhythm",
+    "group": "pacing",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "reentry_cost",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "stimulus_envelope",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "novelty_hunger",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "humor_receptivity",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "narrative_pull",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "gamification_response",
+    "group": "engagement",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "challenge_appetite",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "curiosity_hook",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "interest_transfer",
+    "group": "engagement",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "relevance_demand",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "tone_formality",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "retrieval_strength",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "recognition_recall_gap",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "decay_rate",
+    "group": "memory",
+    "impact": 2,
+    "lesson": false,
+    "level": false,
+    "material": false,
+    "notes": false,
+    "podcast": false,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "elaboration_benefit",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "mnemonic_receptivity",
+    "group": "memory",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "consolidation_need",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "interference_susceptibility",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "enactive_encoding",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "generation_effect",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "retention_index",
+    "group": "memory",
+    "impact": 1,
+    "lesson": false,
+    "level": false,
+    "material": false,
+    "notes": false,
+    "podcast": false,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "failure_response",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "error_recovery_speed",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "frustration_threshold",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "hint_dependency",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "help_seeking",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "guessing_propensity",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "perfectionism",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "productive_struggle",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "confidence_calibration",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "error_driven_learning",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "self_monitoring",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "strategy_awareness",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "mastery_orientation",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "autonomy_preference",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "structure_need",
+    "group": "metacognition",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": false,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "instruction_adherence",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "reflection_depth",
+    "group": "metacognition",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "question_generation",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "self_efficacy",
+    "group": "metacognition",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "planning_tendency",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "step_explicitness",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "worked_example_dependence",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "scaffolding_fade",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "notation_comfort",
+    "group": "representation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": false,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "brevity_preference",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "repetition_tolerance",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "feedback_granularity",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "feedback_tone_sensitivity",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "open_response_performance",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "dialogic_preference",
+    "group": "representation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "intrinsic_motivation",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "extrinsic_reward_sensitivity",
+    "group": "motivation",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "competitive_drive",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "praise_sensitivity",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "evaluation_anxiety",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "boredom_susceptibility",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "persistence",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "social_framing",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "identity_alignment",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "emotional_engagement",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "near_transfer",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "far_transfer",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "application_orientation",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "conceptual_bias",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "prior_knowledge",
+    "group": "transfer",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "misconception_persistence",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "integration_tendency",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "depth_breadth",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": false,
+    "notes": false,
+    "podcast": false,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "creative_extension",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "mastery_velocity",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": true
+   }
+  ]
+ },
+ "single": {
+  "cells": [
+   {
+    "measure": "vocabulary_ceiling",
+    "group": "intake",
+    "impact": 3,
+    "kind": "lesson",
+    "topic": "photosynthesis",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 493,
+     "hi": 523
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A uses advanced vocabulary (e.g., 'convert', 'pigment', 'cellular respiration', 'balanced equation') while Version B uses simpler terms (e.g., 'change', 'green color', 'by-product', 'starting materials').)",
+     "gemini-3.5-flash-lite: Y (Version A uses advanced chemical concepts and balancing equations suitable for high vocabulary and chemistry proficiency, while Version B uses plain, simpler language and definitions for basic terms.)"
+    ]
+   },
+   {
+    "measure": "vocabulary_ceiling",
+    "group": "intake",
+    "impact": 3,
+    "kind": "notes",
+    "topic": "photosynthesis",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 1,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 247,
+     "hi": 248
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A uses more advanced vocabulary and analogies (e.g., 'pigment', 'by-product', 'palette', 'video-game recipe'), while Version B uses simpler language and more repetitive phrasing.)",
+     "gemini-3.5-flash-lite: same (Both versions use virtually identical, straightforward vocabulary matching the base text, showing no difference in lexical complexity to distinguish between vocabulary ceiling levels.)"
+    ]
+   },
+   {
+    "measure": "deductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "kind": "lesson",
+    "topic": "causes of World War I",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 522,
+     "hi": 540
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A starts with the spark (assassination) and then introduces the underlying causes, while Version B starts with the rules and long-term causes before presenting the spark.)",
+     "gemini-3.5-flash-lite: Y (Version B explicitly leads with abstract rules before giving examples and cases in each section, whereas Version A starts with narratives/cases before introducing rules and examples.)"
+    ]
+   },
+   {
+    "measure": "deductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "kind": "notes",
+    "topic": "causes of World War I",
+    "promptDiffers": false,
+    "result": "ignored: the block is the same for low and high",
+    "verdicts": 0,
+    "correct": 0,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": null,
+    "intactCode": null,
+    "words": null,
+    "evidence": []
+   },
+   {
+    "measure": "working_memory_span",
+    "group": "intake",
+    "impact": 3,
+    "kind": "notes",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 0,
+    "wrong": 1,
+    "intactJudge": true,
+    "intactCode": false,
+    "words": {
+     "lo": 229,
+     "hi": 214
+    },
+    "evidence": [
+     "mistral-large-2512: X (Version A breaks steps into smaller, sequential chunks with simpler analogies, while Version B groups steps and uses more layered analogies (e.g., 'two drills' or 'video game obstacles').)",
+     "gemini-3.5-flash-lite: Y (Version B explicitly includes summary 'Takeaway' bullet points that chunk and reiterate the core rules, which helps a learner with low working memory who can only juggle one or two ideas at a time.)"
+    ]
+   },
+   {
+    "measure": "attention_runway",
+    "group": "pacing",
+    "impact": 3,
+    "kind": "notes",
+    "topic": "Spanish greetings",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 0,
+    "same": 0,
+    "wrong": 2,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 243,
+     "hi": 243
+    },
+    "evidence": [
+     "mistral-large-2512: X (Version A uses longer, more detailed sentences and explanations, while Version B uses shorter, more concise sentences and simpler analogies.)",
+     "gemini-3.5-flash-lite: X (Version A contains more detailed, explanatory sentences for each point, whereas Version B condenses the bullets more compactly.)"
+    ]
+   },
+   {
+    "measure": "attention_runway",
+    "group": "pacing",
+    "impact": 3,
+    "kind": "lesson",
+    "topic": "Spanish greetings",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 285,
+     "hi": 435
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A uses shorter sentences, simpler examples, and fewer steps in the worked example, while Version B provides more detailed explanations, longer examples, and a more extensive worked example.)",
+     "gemini-3.5-flash-lite: Y (Version A includes frequent mini-check tasks and smaller chunks of content with built-in micro-feedback to maintain focus, whereas Version B has longer sections with more continuous text per block.)"
+    ]
+   },
+   {
+    "measure": "interest_transfer",
+    "group": "engagement",
+    "impact": 3,
+    "kind": "lesson",
+    "topic": "photosynthesis",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 365,
+     "hi": 421
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version B uses interest-based analogies (video-game character, comic, basketball game) while Version A does not.)",
+     "gemini-3.5-flash-lite: Y (Version B wraps the scientific concepts in engaging analogies and imaginative framing like video games, comic books, and basketball, whereas Version A presents the material in a straightforward, literal manner.)"
+    ]
+   },
+   {
+    "measure": "interest_transfer",
+    "group": "engagement",
+    "impact": 3,
+    "kind": "notes",
+    "topic": "photosynthesis",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 202,
+     "hi": 244
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version B includes interest-based analogies (video-game recipe, comics, basketball) while Version A does not.)",
+     "gemini-3.5-flash-lite: Y (Version B includes interest-based framing and analogies such as video-game recipes, comics, and basketball, whereas Version A is straightforward and factual.)"
+    ]
+   },
+   {
+    "measure": "generation_effect",
+    "group": "memory",
+    "impact": 2,
+    "kind": "notes",
+    "topic": "two-step equations",
+    "promptDiffers": false,
+    "result": "ignored: the block is the same for low and high",
+    "verdicts": 0,
+    "correct": 0,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": null,
+    "intactCode": null,
+    "words": null,
+    "evidence": []
+   },
+   {
+    "measure": "generation_effect",
+    "group": "memory",
+    "impact": 2,
+    "kind": "lesson",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 1,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": false,
+    "words": {
+     "lo": 258,
+     "hi": 297
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A includes more 'Try it' prompts and multiple-choice check questions, while Version B uses open-ended 'Solve' prompts and typed answers.)",
+     "gemini-3.5-flash-lite: same (Version A includes frequent interactive prompts and fill-in tasks that require the learner to produce answers, whereas Version B incorporates predictive steps and active generation tasks throughout the lesson.)"
+    ]
+   },
+   {
+    "measure": "productive_struggle",
+    "group": "resilience",
+    "impact": 2,
+    "kind": "notes",
+    "topic": "two-step equations",
+    "promptDiffers": false,
+    "result": "ignored: the block is the same for low and high",
+    "verdicts": 0,
+    "correct": 0,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": null,
+    "intactCode": null,
+    "words": null,
+    "evidence": []
+   },
+   {
+    "measure": "productive_struggle",
+    "group": "resilience",
+    "impact": 2,
+    "kind": "lesson",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": false,
+    "words": {
+     "lo": 299,
+     "hi": 324
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A provides more step-by-step guidance, hints, and explicit corrections, while Version B includes pauses for independent work and harder optional problems.)",
+     "gemini-3.5-flash-lite: Y (Version A provides extensive scaffolding with explicit hints, step-by-step guidance, and common mistake breakdowns to support a learner who needs early rescue, whereas Version B leaves steps open-ended and prompts the learner to work things)"
+    ]
+   },
+   {
+    "measure": "working_memory_span",
+    "group": "intake",
+    "impact": 3,
+    "kind": "lesson",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 290,
+     "hi": 325
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A breaks the process into smaller, sequential steps with explicit intermediate results, while Version B combines steps and relies more on conceptual understanding.)",
+     "gemini-3.5-flash-lite: Y (Version A breaks the process down into highly explicit, scaffolded steps and common mistake analyses to reduce cognitive load, whereas Version B presents the information more densely and holistically.)"
+    ]
+   },
+   {
+    "measure": "worked_example_dependence",
+    "group": "representation",
+    "impact": 3,
+    "kind": "lesson",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 0,
+    "wrong": 1,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 265,
+     "hi": 333
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A provides more prompts to try solving before showing full worked examples, while Version B includes more detailed step-by-step explanations and full worked examples upfront.)",
+     "gemini-3.5-flash-lite: X (Version A includes frequent interactive prompts and examples embedded throughout the sections for practice, while Version B provides more direct principle-based explanations and worked out examples.)"
+    ]
+   },
+   {
+    "measure": "worked_example_dependence",
+    "group": "representation",
+    "impact": 3,
+    "kind": "notes",
+    "topic": "two-step equations",
+    "promptDiffers": false,
+    "result": "ignored: the block is the same for low and high",
+    "verdicts": 0,
+    "correct": 0,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": null,
+    "intactCode": null,
+    "words": null,
+    "evidence": []
+   },
+   {
+    "measure": "structure_need",
+    "group": "metacognition",
+    "impact": 2,
+    "kind": "lesson",
+    "topic": "Spanish greetings",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 343,
+     "hi": 503
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version B uses explicit step-by-step numbering and repetitive 'Next' cues, while Version A presents information in a more open, example-driven format.)",
+     "gemini-3.5-flash-lite: Y (Version B uses heavily numbered, step-by-step sequential instructions with explicit transitional phrases like 'Next' in every section, providing much higher structure than Version A.)"
+    ]
+   },
+   {
+    "measure": "evaluation_anxiety",
+    "group": "motivation",
+    "impact": 2,
+    "kind": "notes",
+    "topic": "two-step equations",
+    "promptDiffers": false,
+    "result": "ignored: the block is the same for low and high",
+    "verdicts": 0,
+    "correct": 0,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": null,
+    "intactCode": null,
+    "words": null,
+    "evidence": []
+   },
+   {
+    "measure": "prior_knowledge",
+    "group": "transfer",
+    "impact": 3,
+    "kind": "lesson",
+    "topic": "causes of World War I",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 626,
+     "hi": 470
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A uses simpler language, more examples, and more explicit explanations, while Version B assumes more prior knowledge with concise explanations and fewer examples.)",
+     "gemini-3.5-flash-lite: Y (Version A provides very detailed definitions, analogies, and explicit step-by-step explanations for a beginner, while Version B combines concepts and uses more advanced phrasing suitable for someone with strong background knowledge.)"
+    ]
+   },
+   {
+    "measure": "structure_need",
+    "group": "metacognition",
+    "impact": 2,
+    "kind": "notes",
+    "topic": "Spanish greetings",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 220,
+     "hi": 274
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A presents information in a straightforward, unnumbered list, while Version B uses numbered steps and explicit sequencing cues like 'next'.)",
+     "gemini-3.5-flash-lite: Y (Version B explicitly sequences the steps with numbers and procedural transitions ('next, choose...', 'next, notice...'), whereas Version A presents standard descriptive bullet points.)"
+    ]
+   },
+   {
+    "measure": "prior_knowledge",
+    "group": "transfer",
+    "impact": 3,
+    "kind": "notes",
+    "topic": "causes of World War I",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 0,
+    "wrong": 1,
+    "intactJudge": true,
+    "intactCode": true,
+    "words": {
+     "lo": 305,
+     "hi": 220
+    },
+    "evidence": [
+     "mistral-large-2512: X (Version A uses simpler analogies and more basic explanations, while Version B includes more structural context (e.g., numbering causes) and slightly more detailed comparisons.)",
+     "gemini-3.5-flash-lite: Y (Version B includes more explicit structural signposts and foundational definitions suited for a beginner, whereas Version A omits some scaffolding.)"
+    ]
+   },
+   {
+    "measure": "evaluation_anxiety",
+    "group": "motivation",
+    "impact": 2,
+    "kind": "lesson",
+    "topic": "two-step equations",
+    "promptDiffers": true,
+    "result": null,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "wrong": 0,
+    "intactJudge": true,
+    "intactCode": false,
+    "words": {
+     "lo": 300,
+     "hi": 316
+    },
+    "evidence": [
+     "mistral-large-2512: Y (Version A includes explicit 'Try it' exercises and multiple-choice/check questions, while Version B frames questions as low-pressure scenarios (e.g., basketball, video games) and avoids traditional quiz formats.)",
+     "gemini-3.5-flash-lite: Y (Version A uses open-ended typed check questions and multiple-step practice problems that create test performance pressure, whereas Version B uses multiple-choice check questions with lower performance stakes.)"
+    ]
+   }
+  ],
+  "byKind": {
+   "lesson": {
+    "pairs": 11,
+    "ignored": 0,
+    "failedBuilds": 0,
+    "verdicts": 22,
+    "correct": 20,
+    "same": 1,
+    "wrong": 1,
+    "intact": 8,
+    "judged": 11
+   },
+   "notes": {
+    "pairs": 11,
+    "ignored": 5,
+    "failedBuilds": 0,
+    "verdicts": 12,
+    "correct": 7,
+    "same": 1,
+    "wrong": 4,
+    "intact": 5,
+    "judged": 6
+   }
+  },
+  "all": {
+   "verdicts": 34,
+   "correct": 27,
+   "same": 2,
+   "wrong": 5,
+   "pairs": 22,
+   "judged": 17,
+   "ignored": 5,
+   "intact": 13
+  }
+ },
+ "texts": [
+  {
+   "measure": "vocabulary_ceiling",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: How Plants Make Food\n\nINTRO: Plants can make their own sugar. This process is called photosynthesis.\n\nSECTION 1 - What plants need\nThe rule is that plants use light energy to make glucose from carbon dioxide and water. Glucose is a sugar that plants use for energy and growth. Carbon dioxide is a gas that plants take in from the air.\nEXAMPLE: Think of a plant on a basketball court. It takes in air and water, then uses sunlight like energy for a game. Try it: What two materials does a plant use to make glucose? Answer: Carbon dioxide and water.\n\nSECTION 2 - Where photosynthesis happens\nPhotosynthesis happens mainly in leaves. Chlorophyll is the green color in leaves that absorbs light. Chlorophyll lives inside chloroplasts. A chloroplast is a tiny part of a plant cell where photosynthesis happens.\nEXAMPLE: In a video game, a leaf could be a power-up factory. Its green chlorophyll catches light, then its chloroplasts use that energy. Try it: Which part of a plant mainly performs photosynthesis? Answer: The leaves.\n\nSECTION 3 - What plants make and release\nThe plant uses light energy to change carbon dioxide and water into glucose. Oxygen is also released as a by-product. A by-product is something made during a process that the plant does not need to use for growth.\nEXAMPLE: Draw a comic where a leaf gives you a bag of sugar and blows out oxygen bubbles. The sugar is useful food, while oxygen leaves the plant.\n\nWORKED EXAMPLE: A plant has 6 molecules of carbon dioxide and 6 molecules of water. Light energy is available. Write the balanced photosynthesis equation and name the useful product and the released gas.\n  1. The starting materials are carbon dioxide and water. The plant also needs light energy.\n  2. Carbon dioxide has the formula CO2. Water has the formula H2O. Glucose has the formula C6H12O6. Oxygen has the formula O2.\n  3. Write the starting materials on the left: 6CO2 + 6H2O.\n  4. Write glucose and oxygen on the right: 6CO2 + 6H2O -> C6H12O6 + 6O2.\n  5. Check carbon: the left has 6 carbon atoms, and the right has 6 carbon atoms.\n  6. Check hydrogen: the left has 12 hydrogen atoms, and the right has 12 hydrogen atoms.\n  7. Check oxygen: the left has 6 x 2 + 6 x 1 = 18 oxygen atoms. The right has 6 + 6 x 2 = 18 oxygen atoms.\n  8. The atoms match, so the equation is balanced. Light energy drives the reaction.\n  9. The useful product is glucose. The gas released as a by-product is oxygen.\n  ANSWER: 6CO2 + 6H2O -> C6H12O6 + 6O2, using light energy. The plant makes glucose and releases oxygen.\n\nCOMMON MISTAKES:\nWrong: Plants use carbon dioxide and water to make glucose, and they release oxygen. Why: this states the products in reverse; the plant does not release the glucose it makes. Right: The plant makes glucose and releases oxygen as a by-product.\nWrong: The plant takes in oxygen during photosynthesis, so carbon dioxide is released. Why: this swaps the gases; plants take in carbon dioxide and release oxygen. Right: Plants take in carbon dioxide and water, then use light energy to make glucose and release oxygen.\n\nSUMMARY: Plants use light energy to make glucose from carbon dioxide and water. This happens mainly in leaves. Chlorophyll in chloroplasts absorbs the light. Plants release oxygen as a by-product.\n\nCHECK QUESTIONS:\n1. Which sentence best describes photosynthesis? [choices: Plants use light energy to make glucose from carbon dioxide and water. | Plants use oxygen to make glucose from soil and sunlight. | Plants make glucose by absorbing carbon dioxide and releasing light. | Plants use chlorophyll to make sunlight from water.] -> Plants use light energy to make glucose from carbon dioxide and water.\n2. A plant is making glucose. Where does photosynthesis happen mainly? Type the name of the plant part. [typed answer] -> Leaves\n3. Which gas is released as a by-product during photosynthesis? [choices: Carbon dioxide | Oxygen | Nitrogen | Hydrogen] -> Oxygen",
+    "hi": "TITLE: Photosynthesis: Using Light to Make Sugar\n\nINTRO: Photosynthesis is how plants use light energy to make glucose from carbon dioxide and water. The process mainly occurs in leaves, and oxygen is released as a by-product.\n\nSECTION 1 - 1. The photosynthesis rule\nThe rule is that plants use light energy to convert carbon dioxide and water into glucose and oxygen. Chlorophyll, a pigment inside leaf chloroplasts, absorbs light. A simplified equation is carbon dioxide + water -> glucose + oxygen. Sunlight powers the process, but it is not matter consumed by the plant.\nEXAMPLE: Imagine a drawing-comic panel showing a leaf. An arrow from the sun points toward the leaf, while carbon dioxide and water enter from below. A glucose molecule leaves for the plant, and oxygen molecules leave for the atmosphere.\n\nSECTION 2 - 2. Where the process happens\nPhotosynthesis happens mainly in leaves because they contain many chloroplasts. Chlorophyll gives leaves their green color and captures light energy. The captured energy allows the plant to build glucose from raw materials.\nEXAMPLE: In a basketball video game, a plant avatar collects carbon dioxide and water. Its chlorophyll power-up captures sunlight, then uses that energy to produce glucose and oxygen.\n\nSECTION 3 - 3. Products and their roles\nGlucose is a sugar that stores chemical energy the plant can use. Oxygen is released into the atmosphere as a by-product of photosynthesis. Plants also use some of the oxygen they produce in cellular respiration.\nEXAMPLE: Think of a basketball player receiving glucose after a game. The glucose stores usable energy, just as it does for a plant, while the plant releases oxygen during photosynthesis.\n\nWORKED EXAMPLE: A plant has access to carbon dioxide, water, and sunlight. Write the balanced equation that shows what photosynthesis produces.\n  1. Step 1: Identify the reactants. The plant takes in carbon dioxide, written as CO2, and water, written as H2O.\n  2. Step 2: Identify the products. The plant makes glucose, written as C6H12O6, and oxygen, written as O2.\n  3. Step 3: Start with one glucose molecule: 6CO2 + 6H2O -> C6H12O6 + 6O2.\n  4. Step 4: Check carbon. The left side has 6 carbon atoms, and the right side has 6 carbon atoms.\n  5. Step 5: Check hydrogen. The left side has 6 times 2, or 12, hydrogen atoms. The right side has 12 hydrogen atoms.\n  6. Step 6: Check oxygen. The left side has 6 times 2 plus 6 times 1, or 18, oxygen atoms. The right side has 6 in glucose plus 6 times 2, or 18, oxygen atoms.\n  7. Step 7: Place sunlight and chlorophyll above the arrow because they provide the energy and capture mechanism.\n  8. Step 8: The balanced equation is 6CO2 + 6H2O -> C6H12O6 + 6O2, with sunlight and chlorophyll above the arrow.\n  ANSWER: 6CO2 + 6H2O -> C6H12O6 + 6O2, with sunlight and chlorophyll above the arrow. The plant makes glucose and releases oxygen.\n\nCOMMON MISTAKES:\nWrong: 6CO2 + 6H2O + sunlight -> C6H12O6 + 6O2. Why: sunlight is shown as a substance on the reactant side, so it is treated like matter used up. Light supplies energy and belongs above the arrow. Right: 6CO2 + 6H2O -> C6H12O6 + 6O2, with sunlight and chlorophyll above the arrow.\nWrong: 6CO2 + 6H2O -> 6O2 + C6H12O6. Why: the products are reversed to represent the reverse process, which is cellular respiration rather than photosynthesis. Right: 6CO2 + 6H2O -> C6H12O6 + 6O2, with sunlight and chlorophyll above the arrow.\n\nSUMMARY: Photosynthesis mainly occurs in leaves. Chlorophyll inside chloroplasts absorbs light, which powers the conversion of carbon dioxide and water into glucose and oxygen. Glucose stores chemical energy, while oxygen is released into the atmosphere.\n\nCHECK QUESTIONS:\n1. Which statement correctly describes photosynthesis? [choices: Plants use light energy to make glucose from carbon dioxide and water, releasing oxygen. | Plants absorb glucose from soil and release carbon dioxide during photosynthesis. | Animals use chlorophyll to make food from sunlight. | Photosynthesis creates energy even though no energy source is required.] -> Plants use light energy to make glucose from carbon dioxide and water, releasing oxygen.\n2. In the balanced equation 12CO2 + 12H2O -> 2C6H12O6 + 12O2, how many oxygen molecules are released? [typed answer] -> 12 oxygen molecules\n3. A learner wrote 6CO2 + 6H2O -> 2C6H12O6 + 6O2. Counting carbon gives 6 on the left but 12 on the right, so the work is wrong. What is the correct balanced equation? [typed answer] -> 6CO2 + 6H2O -> C6H12O6 + 6O2, with sunlight and chlorophyll above the arrow"
+   }
+  },
+  {
+   "measure": "vocabulary_ceiling",
+   "kind": "notes",
+   "texts": {
+    "lo": "## How Plants Make Food\n- Photosynthesis is the process plants use to make their own food.\n- Plants take carbon dioxide through tiny leaf openings and water through their roots.\n- Using light energy from the sun, plants turn carbon dioxide and water into glucose, a kind of sugar.\n- Glucose is the plant's food, which it uses to grow and store energy.\n\n## Where Photosynthesis Happens\n- Photosynthesis happens mainly in leaves.\n- Leaf cells contain chloroplasts, small green structures with a green pigment called chlorophyll.\n- Chlorophyll absorbs mostly red and blue light and reflects green light, so leaves look green.\n- Without chlorophyll, a plant could not capture the light energy it needs.\n- Photosynthesis happens mainly in the leaves. Inside the cells of a leaf are small green structures called chloroplasts.\n\n## Oxygen and the Word Equation\n- Oxygen is released as a by-product of photosynthesis.\n- Oxygen leaves through the same tiny openings that let carbon dioxide enter.\n- Animals and people breathe in this oxygen, which is one reason plants matter to life on Earth.\n- The word equation is carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n- Think of it like a comic panel showing carbon dioxide entering, oxygen leaving, and glucose forming inside.\n\n## What Plants Need\n- A plant with too little light, water, or carbon dioxide makes less glucose and grows more slowly.\n- A plant kept in a dark cupboard turns pale and weak.\n- Think of it like a video-game character losing supplies and having less energy for the next stage.",
+    "hi": "## Making Food\n- Plants use photosynthesis to make food by taking in carbon dioxide through leaf openings and water through roots.\n- Light energy from the sun lets the plant turn carbon dioxide and water into glucose, a kind of sugar.\n- The plant stores energy in glucose and uses the glucose to grow.\n- The glucose is the plant's food, and the plant uses it to grow and to store energy.\n\n## Leaf Structures and Light\n- Photosynthesis happens mainly in leaves, whose cells contain chloroplasts, small green structures.\n- Chloroplasts contain chlorophyll, a green pigment that absorbs light energy, mostly red and blue light.\n- Chlorophyll reflects green light, so leaves look green; without chlorophyll, plants cannot capture the light energy they need.\n- Think of it like drawing comics with a color palette that helps show which light colors are absorbed or reflected.\n\n## Oxygen and the Equation\n- Oxygen is released as a by-product and leaves the plant through the same tiny openings in the leaves.\n- Animals and people breathe in this oxygen, which is one reason plants matter greatly to life on Earth.\n- The word equation is carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n- Think of it like a video-game recipe listing what goes in, what powers the action, and what comes out.\n\n## Conditions for Growth\n- A plant receiving too little light, water, or carbon dioxide makes less glucose and grows more slowly.\n- A plant kept in a dark cupboard turns pale and weak because it receives too little light."
+   }
+  },
+  {
+   "measure": "deductive_trajectory",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: Why World War I Began\n\nINTRO: In 1914, a crisis in Sarajevo grew into a worldwide war. The causes worked together, but each played a different part.\n\nSECTION 1 - A Killing in Sarajevo\nOn June 28, 1914, Gavrilo Princip assassinated Archduke Franz Ferdinand in Sarajevo. He was the heir to Austria-Hungary, and the killing created a serious crisis between that empire and Serbia.\nEXAMPLE: In basketball, one final foul can trigger a fight only if players are already hostile. The rule is: distinguish the spark from the underlying causes. An event sparks a crisis, while deeper problems help it grow. Try it: Which was the spark of World War I? Answer: The assassination of Archduke Franz Ferdinand in Sarajevo in 1914.\n\nSECTION 2 - Rivalry Across Europe\nBefore 1914, European powers competed for colonies, trade, and influence. Imperialism meant that stronger empires controlled weaker territories and competed over more colonies and power.\nEXAMPLE: Imagine two comic-book heroes fighting over the same city. The rule is: rivalry over power increases tension. When empires compete for colonies and status, even disputes far away can become dangerous. Try it: Name one reason European empires competed before 1914. Answer: They wanted more colonies, trade, and power.\n\nSECTION 3 - Armies, Alliances, and Nationalism\nMilitarism meant that the great powers built up large armies and navies. Alliances divided Europe into two blocs, so a local conflict could pull many countries into the war.\nEXAMPLE: Drawing a comic team with two players against three players resembles an alliance system. The rule is: commitments and national feelings can widen a conflict. Nationalism was especially strong in the Balkans, where Serbia’s support for other Serbs increased tensions with Austria-Hungary. Nationalism also encouraged demands for independence and challenged existing empires.\n\nWORKED EXAMPLE: Explain how the assassination of Archduke Franz Ferdinand became the spark for World War I.\n  1. 1. On June 28, 1914, Gavrilo Princip assassinated Archduke Franz Ferdinand in Sarajevo.\n  2. 2. Franz Ferdinand was Austria-Hungary’s heir, so Austria-Hungary blamed Serbia and presented Serbia with harsh demands.\n  3. 3. Austria-Hungary declared war on Serbia on July 28, 1914.\n  4. 4. Russia mobilized its army to support Serbia. France supported Russia, while Germany supported Austria-Hungary.\n  5. 5. These actions drew the rival alliance blocs into a wider conflict. Germany’s war plan required attacking France and passing through Belgium.\n  6. 6. Germany invaded Belgium on August 4, and Britain entered the war because of its treaty with Belgium and its concern about European power.\n  7. 7. Therefore, the assassination was the immediate spark. Nationalism, imperial rivalry, militarism, and alliances had prepared Europe to expand a local crisis into a world war.\n  ANSWER: The assassination started the July Crisis. Nationalism, imperial rivalry, militarism, and alliance commitments then helped turn the crisis between Austria-Hungary and Serbia into a wider European war.\n\nCOMMON MISTAKES:\nWrong: The assassination was the only cause of World War I. Why: this ignores the long-term nationalism, imperial rivalry, militarism, and alliances that made escalation possible. Right: The assassination was the spark, while nationalism, imperial rivalry, militarism, and alliances were underlying causes that helped widen the crisis.\nWrong: Alliances kept World War I limited because countries promised not to help each other. Why: the alliances did the opposite. They grouped European powers into rival blocs, allowing a local conflict to pull in more countries. Right: Europe’s two alliance blocs helped turn a regional crisis into a much wider war.\n\nSUMMARY: World War I had several connected causes. Nationalism, imperial rivalry, and militarism created tension, while alliances allowed one crisis to involve many countries. The assassination of Archduke Franz Ferdinand was the immediate spark.\n\nCHECK QUESTIONS:\n1. Which event was the immediate spark for World War I? [choices: The building of large armies and navies | The assassination of Archduke Franz Ferdinand in Sarajevo in 1914 | The competition between European empires for colonies | The creation of Europe’s alliance blocs] -> The assassination of Archduke Franz Ferdinand in Sarajevo in 1914\n2. After the assassination, which empire issued harsh demands to Serbia and then declared war on it? [typed answer] -> Austria-Hungary\n3. Which explanation best shows why a local Balkan crisis could become a world war? [choices: Nationalism was important only inside Serbia. | Imperialism involved only competition within Europe’s cities. | Militarism was the event that directly started the war. | Alliances committed larger powers to support one side, widening the conflict.] -> Alliances committed larger powers to support one side, widening the conflict.",
+    "hi": "TITLE: Why World War I Began\n\nINTRO: World War I grew from several connected causes. One event started the war, but long-term pressures made a wider conflict possible.\n\nSECTION 1 - 1. Long-Term Causes\nRule: a spark can cause a war only when deeper tensions are already present. Militarism was one cause because the great powers built large armies and navies. Like rival basketball teams stocking up on players, these nations prepared for war. Try it: Why did militarism make a wider conflict more likely? Answer: It left nations ready to mobilize quickly and fight.\nEXAMPLE: Germany and Britain both expanded their navies, adding to competition and distrust.\n\nSECTION 2 - 2. Alliances and Imperialism\nRule: alliances can turn a local dispute into a wider war. Europe had two opposing blocs, so one country’s crisis could pull in its allies. Imperialism increased rivalry between empires seeking colonies and power. This worked like rival video game factions: a dispute involving one faction could draw in its allies.\nEXAMPLE: After Austria-Hungary moved against Serbia, Serbia’s allies were drawn into the crisis.\n\nSECTION 3 - 3. Nationalism and the Spark\nRule: national feelings could make leaders less willing to compromise. Nationalism was strong in the Balkans, where Serbia wanted to unite South Slav lands. On June 28, 1914, Archduke Franz Ferdinand was assassinated in Sarajevo. This assassination was the spark that began the chain of events leading to World War I. Try it: What was the spark that began World War I? Answer: The assassination of Archduke Franz Ferdinand in Sarajevo in 1914.\nEXAMPLE: Austria-Hungary blamed Serbia and declared war. Other powers then entered because of alliances and rivalries.\n\nWORKED EXAMPLE: Explain why the assassination of Archduke Franz Ferdinand was the spark of World War I, but not its only cause.\n  1. Step 1: Identify the long-term causes. The great powers had built large armies and navies because of militarism.\n  2. Step 2: Identify another long-term cause. Rival empires competed for colonies and power because of imperialism.\n  3. Step 3: Identify a third long-term cause. Nationalism was especially strong in the Balkans, where Serbia wanted to unite South Slav lands.\n  4. Step 4: Identify another long-term cause. European alliances divided the powers into opposing blocs.\n  5. Step 5: Identify the spark. Archduke Franz Ferdinand was assassinated in Sarajevo on June 28, 1914.\n  6. Step 6: Connect the spark to the causes. The assassination produced an Austro-Serbian crisis involving nationalism and imperial rivalry.\n  7. Step 7: Connect the crisis to the wider war. Austria-Hungary declared war on Serbia, and the alliance system drew in other great powers.\n  8. Step 8: State the conclusion. The assassination triggered the war, while militarism, alliances, imperialism, and nationalism shaped how far it spread.\n  ANSWER: The assassination of Archduke Franz Ferdinand was the spark, but militarism, alliances, imperialism, and nationalism were the deeper causes that made a wider war possible.\n\nCOMMON MISTAKES:\nWrong: The assassination was the only cause, so militarism, alliances, imperialism, and nationalism did not matter. Why: this treats the spark as the entire cause and ignores the long-term tensions that made the crisis expand. Right: The assassination was the spark, while militarism, alliances, imperialism, and nationalism helped create the wider war.\nWrong: Serbia was in Europe’s two blocs, so Austria-Hungary had to fight both blocs at once. Why: this misidentifies Serbia as a major bloc leader and confuses one alliance with the whole alliance system. Right: Austria-Hungary moved against Serbia, and the actions and obligations of the wider blocs helped draw in other powers.\n\nSUMMARY: World War I began when Archduke Franz Ferdinand was assassinated in Sarajevo in 1914. That event was the spark, while militarism, alliances, imperialism, and nationalism created the conditions for a wider conflict.\n\nCHECK QUESTIONS:\n1. Which factor was the immediate spark of World War I? [choices: Militarism | The assassination of Archduke Franz Ferdinand | Imperialism | Alliance rivalry] -> The assassination of Archduke Franz Ferdinand\n2. In your own words, explain why the assassination was not the only cause of World War I. [typed answer] -> Because militarism, alliances, imperialism, and nationalism had already created tensions that helped the crisis become a wider war.\n3. Why could a dispute between Austria-Hungary and Serbia draw in countries far beyond the Balkans? [choices: All the countries had the same ruler. | Imperialism made every country join the first war. | Nationalism stopped all diplomacy. | Alliance obligations connected the crisis to rival blocs of European powers.] -> Alliance obligations connected the crisis to rival blocs of European powers."
+   }
+  },
+  {
+   "measure": "deductive_trajectory",
+   "kind": "notes"
+  },
+  {
+   "measure": "working_memory_span",
+   "kind": "notes",
+   "texts": {
+    "lo": "## Understand the Goal\n- A two-step equation needs two steps, as in 2x + 3 = 11.\n- The goal is to get the variable x alone on one side of the equals sign.\n- Think of it like a basketball practice with two drills: each drill moves you closer to solving the equation.\n\n## Undo the Operations\n- Step 1 is to undo addition or subtraction; next, subtract 3 from both sides to get 2x = 8.\n- Step 2 is to undo multiplication or division; next, divide both sides by 2 to get x = 4.\n- Think of it like a video game: each opposite operation removes one obstacle, and the next obstacle is multiplication or division.\n- Takeaway: Undo addition or subtraction first, then undo multiplication or division.\n\n## Keep Both Sides Balanced\n- Whatever you do to one side of the equation, you must do to the other side.\n- An equation is like a balanced scale, and doing the same thing to both sides keeps it balanced.\n- If you subtract 3 from only one side, the equation is no longer true.\n- Takeaway: Apply every operation to both sides so the equation stays balanced.\n\n## Check the Answer\n- Always check your answer by putting it back into the original equation.\n- For x = 4, the left side becomes 8 plus 3, which equals 11, so the answer is correct.\n- For 3x - 5 = 10, add 5 to both sides, then divide both sides by 3 to get x = 5.\n- Takeaway: Substitute the answer into the original equation to confirm it.",
+    "hi": "## What a two-step equation needs\n- A two-step equation needs two steps to solve, such as 2x + 3 = 11.\n- The goal is to get the variable x alone on one side of the equals sign.\n- Undo the operations done to x by using the opposite operation.\n\n## Solving 2x + 3 = 11\n- Step one undoes addition or subtraction.\n- Since 3 is added, subtract 3 from both sides to get 2x = 8.\n- Think of this like a basketball game: undoing an operation on both sides keeps the score balanced.\n- Step two undoes multiplication or division.\n- Since x is multiplied by 2, divide both sides by 2 to get x = 4.\n\n## Keeping the equation balanced\n- Whatever you do to one side of an equation, do the same to the other side.\n- An equation is like a balanced scale because the same operation keeps both sides balanced.\n- If you subtract 3 from only one side, the equation is no longer true.\n\n## Checking the answer\n- Always check your answer by putting it back into the original equation.\n- For x = 4, 2 times 4 plus 3 is 8 plus 3, which is 11.\n- The left side equals the right side, so the answer is correct.\n\n## Solving 3x - 5 = 10\n- Add 5 to both sides to get 3x = 15.\n- Then divide both sides by 3 to get x = 5.\n- Think of this like drawing a comic panel: each operation must match on both sides of the equation."
+   }
+  },
+  {
+   "measure": "attention_runway",
+   "kind": "notes",
+   "texts": {
+    "lo": "## Everyday Greetings\n- The simplest everyday greeting is hola, which means hello.\n- You can use hola at any time of day with friends or people you have just met.\n- Think of hola like a quick high-five in a basketball game that works whenever you meet someone.\n\n## Time-of-Day Greetings\n- Spanish speakers say buenos días for good morning, buenas tardes for good afternoon, and buenas noches for good evening or good night.\n- Días is masculine plural, while tardes and noches are feminine plural.\n- Because of this difference, the endings buenos and buenas change.\n- Think of the endings like choosing different team jerseys for morning, afternoon, and evening.\n\n## Saying Goodbye\n- You can say adiós, which means goodbye, or hasta luego, which means see you later.\n- Hasta luego is friendly and is used when you expect to see the person again soon.\n- Think of hasta luego like ending a video game session with a promise to play again soon.\n\n## Asking How Someone Is\n- With friends, family and children, use the informal question cómo estás, which means how are you.\n- With older people, strangers or in polite situations, use the formal question cómo está usted, which also means how are you.\n- The usual answer is bien, gracias, which means fine, thank you.\n- Think of informal and formal questions like two drawing-comic speech styles for different situations.\n\n## Meeting Someone for the First Time\n- When you meet someone for the first time, say mucho gusto, which means nice to meet you.",
+    "hi": "## Everyday Hello\n- Hola means hello and works at any time of day with friends or new acquaintances.\n- Think of it like choosing a basketball before a game: hola works whenever you need a simple greeting.\n\n## Greetings for the Time of Day\n- Spanish speakers use buenos días for good morning, buenas tardes for good afternoon, and buenas noches for good evening or good night.\n- Días is masculine plural, while tardes and noches are feminine plural, so buenos changes to buenas.\n- Think of it like choosing a video-game character: the greeting changes to match the part of the day.\n\n## Saying Goodbye\n- Adiós means goodbye, while hasta luego means see you later.\n- Hasta luego is friendly and works when you expect to see the person again soon.\n- Think of it like ending a basketball session: hasta luego fits when you expect another meeting soon.\n\n## Asking How Someone Is\n- Use the informal question cómo estás with friends, family, and children.\n- Use the formal question cómo está usted with older people, strangers, or in polite situations.\n- The usual answer is bien, gracias, which means fine, thank you.\n- Think of it like selecting a video-game dialogue option: your relationship and the situation guide the informal or formal question.\n\n## Meeting Someone for the First Time\n- Say mucho gusto when meeting someone for the first time; it means nice to meet you.\n- Think of it like placing the first page of a comic greeting: mucho gusto introduces you to someone new."
+   }
+  },
+  {
+   "measure": "attention_runway",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: Spanish Greetings\n\nINTRO: You will learn common Spanish greetings and when to use them. Notice the time of day and the level of formality.\n\nSECTION 1 - Basic greetings\nHola means “hello.” Adiós means “goodbye.” Hasta luego means “see you later.” Use these to start and end a friendly conversation.\nEXAMPLE: Try it: What does “Hola” mean? Answer: Hello.\n\nSECTION 2 - Greetings by time of day\nBuenos días means “good morning.” Buenas tardes means “good afternoon.” Buenas noches means “good evening” or “good night.” Choose the greeting that matches the time.\nEXAMPLE: Try it: It is morning. Which greeting do you use? Answer: Buenos días.\n\nSECTION 3 - Asking and meeting someone\nCómo estás asks “How are you?” in an informal situation. Cómo está usted asks “How are you?” in a formal situation. Mucho gusto means “nice to meet you.”\nEXAMPLE: At your drawing club, your teammate says, “Hola, me llamo Ana.” You answer, “Mucho gusto.”\n\nWORKED EXAMPLE: A new player arrives at a basketball game in the morning. How do you greet the player?\n  1. 1. Notice that it is morning, so choose the greeting for morning.\n  2. 2. The Spanish greeting for “good morning” is buenos días.\n  3. 3. Add the Spanish greeting to your English sentence: Buenos días.\n  ANSWER: Buenos días.\n\nCOMMON MISTAKES:\nWrong: Hola means good morning. Why: Hola means hello, while buenos días means good morning. Right: Hola means hello; buenos días means good morning.\nWrong: Cómo está usted means “How are you?” with a friend. Why: Cómo está usted is the formal form. Right: Use cómo está usted in a formal situation and cómo estás with a friend.\n\nSUMMARY: Hola means hello. Use buenos días in the morning, buenas tardes in the afternoon, and buenas noches in the evening or at night. Adiós means goodbye, and hasta luego means see you later. Use cómo estás informally and cómo está usted formally. Mucho gusto means nice to meet you.\n\nCHECK QUESTIONS:\n1. What does “Hola” mean? [choices: Hello | Good morning | Goodbye | Nice to meet you] -> Hello\n2. It is afternoon. Which greeting matches it? [choices: Buenos días | Buenas tardes | Buenas noches | Hasta luego] -> Buenas tardes\n3. Type the informal way to ask “How are you?” in Spanish. [typed answer] -> Cómo estás",
+    "hi": "TITLE: Spanish Greetings\n\nINTRO: In this lesson, you will learn six Spanish greetings and two ways to ask how someone is. You will also learn when to use an informal or formal expression.\n\nSECTION 1 - Hello and good morning\nSay hola when you greet someone with hello. Use buenos días from the morning until noon. It means good morning. In Spanish, buenos and días agree with each other.\nEXAMPLE: A player greets teammates before a basketball game.\nHola, buenos días.\n\nTry it: How do you say hello in Spanish? Answer: Hola.\n\nSECTION 2 - Afternoon and evening\nUse buenas tardes in the afternoon. It means good afternoon. Use buenas noches in the evening or at night. It means both good evening and good night.\nEXAMPLE: A comic creator says good evening to a friend after dinner.\nBuenas noches.\n\nTry it: What greeting do you use in the afternoon? Answer: Buenas tardes.\n\nSECTION 3 - Goodbye and meeting someone\nAdiós means goodbye. Hasta luego means see you later. Ask how someone is with cómo estás for an informal situation. Use cómo está usted for a formal situation. After meeting someone, say mucho gusto, which means nice to meet you.\nEXAMPLE: A gamer meets a new teammate after a video game tournament.\nHola, mucho gusto. ¿Cómo estás?\n\nTry it: How do you formally ask someone how they are? Answer: ¿Cómo está usted?\n\nWORKED EXAMPLE: You meet a new coach in the morning. Greet the coach and ask how the coach is.\n  1. 1. Identify the time: the meeting is in the morning.\n  2. 2. Choose the greeting for that time: buenos días means good morning.\n  3. 3. Identify the situation: speaking to a coach is formal, so use cómo está usted.\n  4. 4. Put the greeting and question together: Buenos días, ¿cómo está usted?\n  5. 5. Check the meaning: this says good morning, how are you formally?\n  6. 6. Add the response to a first introduction: Mucho gusto means nice to meet you.\n  7. 7. Put the full introduction together: Buenos días, ¿cómo está usted? Mucho gusto.\n  ANSWER: Buenos días, ¿cómo está usted? Mucho gusto.\n\nCOMMON MISTAKES:\nWrong: Buenos días = good night. Why: this gives the wrong time of day; buenos días is used in the morning. Right: Buenos días = good morning.\nWrong: Adiós = see you later. Why: this confuses two different goodbye expressions; adiós means goodbye. Right: Adiós = goodbye; hasta luego = see you later.\nWrong: Cómo estás = how are you, formally. Why: this uses the informal expression for a formal situation. Right: Cómo estás = how are you, informally; cómo está usted = how are you, formally.\n\nSUMMARY: Hola means hello. Buenos días means good morning, buenas tardes means good afternoon, and buenas noches means good evening or good night. Adiós means goodbye, while hasta luego means see you later. Use cómo estás informally and cómo está usted formally when asking how someone is. Mucho gusto means nice to meet you.\n\nCHECK QUESTIONS:\n1. Which greeting means good afternoon? [choices: Buenos días | Buenas tardes | Buenas noches | Hasta luego] -> Buenas tardes\n2. You want to say see you later to a friend. Which expression should you use? [choices: Hola | Adiós | Hasta luego | Mucho gusto] -> Hasta luego\n3. Type the formal Spanish question that asks how someone is. [typed answer] -> ¿Cómo está usted?"
+   }
+  },
+  {
+   "measure": "interest_transfer",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: Photosynthesis\n\nINTRO: Photosynthesis is the rule that lets plants use light energy to make glucose from carbon dioxide and water. Oxygen is released during this process.\n\nSECTION 1 - What Plants Use\nPlants take in carbon dioxide from the air and water from the soil. They use light energy from the sun to make glucose, which is a sugar.\nTry it: What two substances does a plant use to make glucose? Answer: Carbon dioxide and water.\nEXAMPLE: Worked example, part 1: A plant takes in carbon dioxide and water, then uses sunlight as an energy source.\n\nSECTION 2 - Where It Happens\nPhotosynthesis happens mainly in the leaves. Chlorophyll is the green substance inside leaf chloroplasts that absorbs light.\nTry it: What part of a plant contains chlorophyll that absorbs light? Answer: The chloroplasts in its leaves.\nEXAMPLE: Worked example, part 2: Light enters a leaf, and chlorophyll inside the chloroplasts absorbs the light.\n\nSECTION 3 - What the Plant Makes\nThe plant uses the absorbed light energy to combine carbon dioxide and water into glucose. Oxygen is released as a by-product, so it leaves the plant.\nTry it: What gas is released as a by-product of photosynthesis? Answer: Oxygen.\nEXAMPLE: Worked example, part 3: Carbon dioxide and water become glucose, while oxygen is released into the air.\n\nWORKED EXAMPLE: Explain how a leaf makes glucose during photosynthesis.\n  1. Step 1: Light from the sun reaches the leaf.\n  2. Step 2: Chlorophyll inside the leaf's chloroplasts absorbs the light.\n  3. Step 3: The plant takes in carbon dioxide from the air and water from the soil.\n  4. Step 4: The plant uses the absorbed light energy to make glucose from the carbon dioxide and water.\n  5. Step 5: The plant releases oxygen into the air as a by-product.\n  6. Answer: The leaf makes glucose from carbon dioxide and water by using light energy absorbed by chlorophyll.\n  ANSWER: A leaf uses light energy absorbed by chlorophyll in its chloroplasts to make glucose from carbon dioxide and water, and it releases oxygen.\n\nCOMMON MISTAKES:\nWrong: carbon dioxide + oxygen -> glucose. Why: oxygen is a by-product released during photosynthesis, not a substance the plant uses to make glucose. Right: carbon dioxide + water + light energy -> glucose + oxygen.\nWrong: glucose + oxygen -> carbon dioxide + water. Why: this describes cellular respiration, which releases energy from glucose. Right: photosynthesis uses carbon dioxide and water with light energy to make glucose and release oxygen.\n\nSUMMARY: Photosynthesis mainly happens in leaves. Chlorophyll in chloroplasts absorbs sunlight, which powers the making of glucose from carbon dioxide and water. Oxygen is released as a by-product.\n\nCHECK QUESTIONS:\n1. Which statement best describes photosynthesis? [choices: Plants make glucose from carbon dioxide and water using light energy. | Plants make oxygen from glucose using light energy. | Plants absorb light without using carbon dioxide or water. | Plants release carbon dioxide as the main by-product.] -> Plants make glucose from carbon dioxide and water using light energy.\n2. A plant is making glucose. Where does photosynthesis happen mainly, and what absorbs the light? [typed answer] -> It happens mainly in the leaves, where chlorophyll in the chloroplasts absorbs light.\n3. Which correctly pairs a photosynthesis input with its result? [choices: Carbon dioxide and water -> glucose | Glucose and oxygen -> carbon dioxide and water | Oxygen and sunlight -> soil | Chlorophyll and water -> sunlight] -> Carbon dioxide and water -> glucose",
+    "hi": "TITLE: How Plants Make Food\n\nINTRO: Plants can make their own food through photosynthesis. You will learn what the plant needs, where it happens, and what it produces.\n\nSECTION 1 - The Photosynthesis Rule\nPlants make glucose, a sugar, from carbon dioxide and water. They use light energy from the sun to power this process. Glucose stores chemical energy that the plant can use later.\nEXAMPLE: Think of a plant like a video-game character making a power-up. Carbon dioxide and water are the ingredients, while sunlight provides the energy needed to make glucose. Try it: What two substances does a plant use to make glucose? Answer: Carbon dioxide and water.\n\nSECTION 2 - Where It Happens\nPhotosynthesis happens mainly in leaves. Chlorophyll is a green pigment inside chloroplasts in leaf cells. Chlorophyll absorbs light, giving the plant energy for photosynthesis.\nEXAMPLE: Imagine drawing a comic where sunlight shines on a green leaf. The leaf's chlorophyll acts like a solar panel, absorbing the light. Try it: What pigment absorbs light inside a leaf? Answer: Chlorophyll.\n\nSECTION 3 - What the Plant Makes\nThe products of photosynthesis are glucose and oxygen. The plant stores some glucose, and some becomes material for growth. Oxygen is released into the surrounding air as a by-product.\nEXAMPLE: Picture a basketball game powered by a plant's sugar. The plant also sends oxygen into the air, just as players breathe oxygen during the game.\n\nWORKED EXAMPLE: A leaf receives sunlight. Carbon dioxide enters through the air, and water arrives from the roots. Explain how the leaf makes glucose and what it releases.\n  1. 1. Identify the ingredients. The leaf has carbon dioxide from the air and water from the roots.\n  2. 2. Identify the energy source. Sunlight supplies light energy.\n  3. 3. Identify the structures involved. The process happens mainly in the leaf's chloroplasts, where chlorophyll absorbs the light.\n  4. 4. Use the absorbed energy. The chloroplasts use light energy to combine carbon dioxide and water.\n  5. 5. Identify the products. This process makes glucose, which stores chemical energy, and oxygen.\n  6. 6. Write the overall equation: 6CO2 + 6H2O + light energy → C6H12O6 + 6O2.\n  7. 7. Check the main facts. The equation includes carbon dioxide, water, and light as needed, and glucose and oxygen as products.\n  ANSWER: The leaf uses light energy, carbon dioxide, and water to make glucose. Chlorophyll in the chloroplasts absorbs the light, and oxygen is released.\n\nCOMMON MISTAKES:\nWrong: carbon dioxide + water → glucose + oxygen + light. Why: Light supplies energy for photosynthesis; it is not made as a product. Right: carbon dioxide + water + light energy → glucose + oxygen.\nWrong: Chlorophyll absorbs water from the roots. Why: Chlorophyll absorbs light, while roots supply water used in photosynthesis. Right: Chlorophyll in the chloroplasts absorbs light energy, and roots supply water.\n\nSUMMARY: Photosynthesis happens mainly in leaves. Chlorophyll in chloroplasts absorbs light, which powers the making of glucose from carbon dioxide and water. Oxygen is released as a by-product.\n\nCHECK QUESTIONS:\n1. Which substances do plants use to make glucose during photosynthesis? [choices: Carbon dioxide and water | Glucose and oxygen | Sunlight and oxygen | Soil and chlorophyll] -> Carbon dioxide and water\n2. Which statement describes where photosynthesis happens and what it releases? [choices: It happens mainly in roots and releases soil. | It happens mainly in leaves and releases oxygen. | It happens inside chlorophyll and releases glucose. | It happens in basketball gyms and releases water vapor.] -> It happens mainly in leaves and releases oxygen.\n3. Name the organelle where photosynthesis mainly occurs and the pigment that absorbs light. [typed answer] -> Chloroplasts; chlorophyll."
+   }
+  },
+  {
+   "measure": "interest_transfer",
+   "kind": "notes",
+   "texts": {
+    "lo": "## How Plants Make Food\n- Photosynthesis is the process plants use to make their own food.\n- Plants take in carbon dioxide through tiny openings in their leaves and water through their roots.\n- Using light energy, plants turn carbon dioxide and water into glucose, a kind of sugar.\n- Glucose is the plant’s food, which it uses to grow and store energy.\n\n## Leaves, Chloroplasts, and Chlorophyll\n- Photosynthesis happens mainly in leaves.\n- Chloroplasts are small green structures inside leaf cells.\n- Chlorophyll is a green pigment inside chloroplasts.\n- Chlorophyll absorbs mostly red and blue light but reflects green light.\n- Leaves look green because chlorophyll reflects green light.\n- Without chlorophyll, plants could not capture the light energy they need.\n\n## Oxygen and the Word Equation\n- Oxygen is released as a by-product of photosynthesis.\n- Oxygen leaves plants through the same tiny openings in their leaves.\n- Animals and people breathe in the oxygen released by plants.\n- The word equation is carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## Needs for Healthy Growth\n- Too little light, water, or carbon dioxide causes a plant to make less glucose.\n- Plants with too little of these needs grow more slowly.\n- A plant kept in a dark cupboard turns pale and weak.",
+    "hi": "## Making Plant Food\n- Photosynthesis is the process plants use to make their own food.\n- Plants take in carbon dioxide through tiny leaf openings and water through their roots.\n- Using light energy, plants turn carbon dioxide and water into glucose, a kind of sugar.\n- Think of it like a video-game recipe that combines carbon dioxide, water, and sunlight to make glucose.\n- Glucose is the plant’s food, which it uses to grow and store energy.\n\n## Leaves and Light\n- Photosynthesis happens mainly in leaves, where tiny openings let carbon dioxide enter.\n- Chloroplasts are small green structures inside leaf cells.\n- Chlorophyll is a green pigment inside chloroplasts.\n- Chlorophyll absorbs mostly red and blue light but reflects green light, making leaves look green.\n- Think of it like drawing comics with green-colored highlights that show where the green light reflects.\n- Without chlorophyll, the plant could not capture the light energy it needs.\n\n## Oxygen Release\n- Oxygen is released as a by-product of photosynthesis and leaves through tiny leaf openings.\n- Animals and people breathe in the oxygen released by plants.\n- Think of it like a basketball passing from the plant to animals and people that breathe in its oxygen.\n- The word equation is carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## Plant Needs\n- Too little light, water, or carbon dioxide causes a plant to make less glucose and grow more slowly.\n- A plant kept in a dark cupboard turns pale and weak because it receives too little light."
+   }
+  },
+  {
+   "measure": "generation_effect",
+   "kind": "notes"
+  },
+  {
+   "measure": "generation_effect",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: Solving Two-Step Equations\n\nINTRO: A two-step equation needs two inverse operations to isolate the variable. The key rule is: do the same thing to both sides.\n\nSECTION 1 - 1. Keep the Equation Balanced\nWhatever operation you perform on one side, you must perform on the other side. This keeps the equation balanced.\n\nIn 2x + 3 = 11, undo addition first by subtracting 3 from both sides.\nEXAMPLE: 2x + 3 = 11\n2x + 3 - 3 = 11 - 3\n2x = 8\n\nTry it: What operation undoes adding 3? Answer: Subtract 3 from both sides.\n\nSECTION 2 - 2. Undo the Operations in Order\nFirst undo addition or subtraction. Then undo multiplication or division.\n\nAfter subtracting 3, divide both sides by 2 because dividing undoes multiplying by 2.\nEXAMPLE: 2x + 3 = 11\n2x + 3 - 3 = 11 - 3\n2x = 8\n2x / 2 = 8 / 2\nx = 4\n\nTry it: Solve 3x + 2 = 14. Answer: Subtract 2 to get 3x = 12, then divide by 3 to get x = 4.\n\nSECTION 3 - 3. Check by Substitution\nPut your answer into the original equation. This shows whether both sides have the same value.\n\nFor x = 4, the left side is 2(4) + 3 = 11. The right side is also 11, so the answer works.\nEXAMPLE: Original equation: 2x + 3 = 11\nYour answer: x = 4\nCheck: 2(4) + 3 = 11\n2(4) + 3 = 8 + 3 = 11\n11 = 11\n\nWORKED EXAMPLE: Solve 2x + 3 = 11.\n  1. Start with 2x + 3 = 11.\n  2. Undo adding 3 by subtracting 3 from both sides: 2x + 3 - 3 = 11 - 3.\n  3. Simplify both sides: 2x = 8.\n  4. Undo multiplying x by 2 by dividing both sides by 2: 2x / 2 = 8 / 2.\n  5. Simplify both sides: x = 4.\n  6. Check by substituting x = 4 into the original equation: 2(4) + 3 = 11.\n  7. Calculate: 8 + 3 = 11, so both sides equal 11.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, 2x = 14, x = 7. Why: subtracting 3 from the right side gives 8, not 14, so the first step is wrong. Right: subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8.\nWrong: 2x + 3 = 11, 2x = 8, x = 16. Why: dividing both sides by 2 gives 4, not 16. Right: divide both sides by 2: 2x / 2 = 8 / 2, so x = 4.\n\nSUMMARY: Undo addition or subtraction first. Then undo multiplication or division, doing each operation on both sides. Finish by substituting your answer into the original equation.\n\nCHECK QUESTIONS:\n1. Which answer solves 2x + 3 = 11? [choices: x = 3 | x = 4 | x = 5 | x = 7] -> x = 4\n2. Solve 5x + 2 = 17. Type the equation and answer in x = _ form. [typed answer] -> x = 3\n3. Which equation has solution x = 6? [choices: 2x + 1 = 13 | 3x + 4 = 22 | 4x + 3 = 27 | 5x + 2 = 32] -> 3x + 4 = 22",
+    "hi": "TITLE: Solving Two-Step Equations\n\nINTRO: A two-step equation needs two undoing moves. You will undo addition or subtraction first, then undo multiplication or division.\n\nSECTION 1 - Keep the Equation Balanced\nThe balance rule says whatever you do to one side, you must do to the other side. For example, subtracting 3 from both sides of 2x + 3 = 11 gives 2x = 8. Dividing both sides by 2 then gives x = 4.\nEXAMPLE: Example form: 2x + 3 = 11 gives x = 4.\n\nSECTION 2 - Undo Addition or Subtraction First\nIf a number is being added, subtract that number from both sides. If a number is being subtracted, add that number to both sides. This removes the number beside x before you undo the operation on x.\nEXAMPLE: Video games example: 3x - 5 = 16. Add 5 to both sides: 3x = 21. Divide both sides by 3: x = 7.\n\nSECTION 3 - Then Undo Multiplication or Division\nIf x is being multiplied, divide both sides by that number. If x is being divided, multiply both sides by that number. Always check by putting your answer into the original equation.\nEXAMPLE: Drawing comics example: 4 + 2x = 18. Subtract 4 from both sides: 2x = 14. Divide both sides by 2: x = 7. Check: 4 + 2(7) = 4 + 14 = 18.\n\nWORKED EXAMPLE: A basketball team needs 2x + 3 = 11 points to reach its target.\n  1. Predict: Which operation will you undo first? Answer: Undo addition by subtracting 3 from both sides. Reveal: 2x + 3 - 3 = 11 - 3, so 2x = 8.\n  2. Predict: What will the equation look like after the second step? Answer: Divide both sides by 2 to get x = 4. Reveal: 2x / 2 = 8 / 2, so x = 4.\n  3. Predict: How can you check x = 4? Answer: Put 4 into the original equation. Reveal: 2(4) + 3 = 8 + 3 = 11, so x = 4 works.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so x = 11 - 3 = 8. Why: the + 3 was removed without also removing the 2 multiplying x. Right: subtract 3 from both sides first: 2x + 3 - 3 = 11 - 3, so 2x = 8.\nWrong: 2x = 8, so x = 16. Why: multiplying by 2 was undone by multiplying by 2 again. Right: divide both sides by 2: 2x / 2 = 8 / 2, so x = 4.\n\nSUMMARY: To solve a two-step equation, undo addition or subtraction first. Then undo multiplication or division. Do each operation on both sides and check your answer in the original equation.\n\nCHECK QUESTIONS:\n1. Solve 2x + 3 = 11. Type x = followed by your answer. [typed answer] -> x = 4\n2. Solve 3x - 5 = 16. Type x = followed by your answer. [typed answer] -> x = 7\n3. Solve 4 + 2x = 18. Type x = followed by your answer. [typed answer] -> x = 7"
+   }
+  },
+  {
+   "measure": "productive_struggle",
+   "kind": "notes"
+  },
+  {
+   "measure": "productive_struggle",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: Solving Two-Step Equations\n\nINTRO: A two-step equation needs two inverse operations. You will undo addition or subtraction first, then undo multiplication or division.\n\nSECTION 1 - 1. Keep the Equation Balanced\nThe rule is: whatever operation you do to one side, you must do to the other side. This keeps the equation balanced. First undo addition or subtraction. Then undo multiplication or division.\nEXAMPLE: Basketball example: Solve 2x + 3 = 11. Subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8. Divide both sides by 2: 2x / 2 = 8 / 2, so x = 4.\n\nSECTION 2 - 2. Undo Addition, Then Multiplication\nWhen x has an addition or subtraction outside it, undo that operation first. For example, subtract 4 from both sides to remove + 4. After that, undo the operation attached to x.\nEXAMPLE: Video games example: Solve 4x - 5 = 15. Add 5 to both sides: 4x - 5 + 5 = 15 + 5, so 4x = 20. Divide both sides by 4: 4x / 4 = 20 / 4, so x = 5.\n\nSECTION 3 - 3. Check by Substitution\nChecking means putting your answer into the original equation. Every number on the left must match the number on the right. If they do not match, find the step where the sides stopped being equal.\nEXAMPLE: For 2x + 3 = 11, substitute x = 4: 2(4) + 3 = 8 + 3 = 11. The sides match, so x = 4 is correct. Try it: Solve 3x + 2 = 14. Answer: x = 4, because 3x + 2 - 2 = 14 - 2 gives 3x = 12, then 3x / 3 = 12 / 3 gives x = 4.\n\nWORKED EXAMPLE: Solve 2x + 3 = 11.\n  1. Start with 2x + 3 = 11.\n  2. Undo addition by subtracting 3 from both sides: 2x + 3 - 3 = 11 - 3.\n  3. Simplify both sides: 2x = 8.\n  4. Undo multiplication by dividing both sides by 2: 2x / 2 = 8 / 2.\n  5. Simplify both sides: x = 4.\n  6. Check by substituting x = 4 into the original equation: 2(4) + 3 = 8 + 3 = 11.\n  7. Both sides equal 11, so x = 4 is correct.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so x = 11 - 3 = 8. Why: you subtracted 3 without dividing the 2x term by 2. Substituting 8 gives 2(8) + 3 = 19, not 11. Right: divide both sides by 2, so 2x / 2 = 8 / 2 and x = 4.\nWrong: 4x - 5 = 15, so 4x = 15 - 5 = 10. Why: -5 means you must add 5, not subtract 5. Substituting x = 10/4 gives 4(10/4) - 5 = 5, not 15. Right: add 5 to both sides, so 4x - 5 + 5 = 15 + 5 and 4x = 20.\n\nSUMMARY: Solve a two-step equation by undoing addition or subtraction first. Then undo multiplication or division. Do the same operation to both sides, simplify each step, and check by substitution.\n\nCHECK QUESTIONS:\n1. Which operation should you undo first in 5x + 2 = 17? Hint: start by removing the number outside x. [choices: Subtract 2 from both sides | Add 2 to both sides | Divide both sides by 5 | Multiply both sides by 5] -> Subtract 2 from both sides\n2. Solve 6x - 4 = 14. Type only the value of x. Hint: add 4 to both sides before dividing by 6. [typed answer] -> x = 3\n3. You solve 3x + 4 = 19 and get x = 5. What should you do next? Hint: put 5 back into the original equation. [choices: Check by substituting 5 | Add 4 to 5 | Divide 19 by 3 | Make the equation longer] -> Check by substituting 5",
+    "hi": "TITLE: Solving Two-Step Equations\n\nINTRO: A two-step equation needs two inverse operations to solve it. You will undo addition or subtraction first, then undo multiplication or division.\n\nSECTION 1 - The two-step rule\nRule: Do the opposite operation to both sides. The equality sign means both sides have the same value. If a number is added, subtract it. If a number is subtracted, add it.\nEXAMPLE: In 2x + 3 = 11, subtract 3 from both sides because subtraction undoes addition. This gives 2x = 8. Try it: What is 11 - 3? Answer: 8\n\nSECTION 2 - Undo multiplication or division\nAfter addition or subtraction is undone, undo multiplication or division. Divide by a multiplier. Multiply by a divisor. Whatever operation you perform on one side, you must perform on the other side.\nEXAMPLE: For a video game, 3x + 4 = 25. Subtract 4 from both sides to get 3x = 21. Then divide both sides by 3 to get x = 7. Try it: What is 21 / 3? Answer: 7\n\nSECTION 3 - Check and try a harder case\nCheck your answer by putting it into the original equation. Each side should have the same value. For an optional harder case, solve 5x + 2 = 32 using the same two steps.\nEXAMPLE: For a comic with 4 characters on each page, 4x = 24. Divide both sides by 4 to get x = 6.\n\nWORKED EXAMPLE: Solve 2x + 3 = 11.\n  1. Start with 2x + 3 = 11.\n  2. The rule is to undo addition or subtraction first. Subtract 3 from both sides: 2x + 3 - 3 = 11 - 3.\n  3. Combine like terms and numbers: 2x = 8.\n  4. Pause: Work out how to get x by yourself.\n  5. Now undo multiplication by dividing both sides by 2: 2x / 2 = 8 / 2.\n  6. Simplify both sides: x = 4.\n  7. Check by putting x = 4 into the original equation: 2(4) + 3 = 8 + 3 = 11.\n  8. Both sides equal 11, so x = 4 is correct.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so 2x = 11 - 3 = 7. Why: subtracting 3 from only the right side breaks the rule that the same operation must be done to both sides. Right: subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8.\nWrong: 2x = 8, so 2x = 8 * 2 = 16 and x = 16. Why: multiplication does not undo division by 2, and 2 * 16 = 32, not 8. Right: divide both sides by 2: 2x / 2 = 8 / 2, so x = 4.\n\nSUMMARY: Solve a two-step equation by undoing addition or subtraction first. Then undo multiplication or division, doing the same operation on both sides. Finally, substitute your answer into the original equation to check it.\n\nCHECK QUESTIONS:\n1. Solve 4x = 28. [typed answer] -> x = 7\n2. Solve 3x + 5 = 23. [typed answer] -> x = 6"
+   }
+  },
+  {
+   "measure": "working_memory_span",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: Solving Two-Step Equations\n\nINTRO: You can solve many equations with two moves. Keep each result written down, and check your final answer.\n\nSECTION 1 - 1. Keep the Equation Balanced\nRule: whatever operation you do to one side, you must do to the other side. This keeps the two sides equal. Write down the result after each move.\nEXAMPLE: Start with 4x + 3 = 19. Subtract 3 from both sides: 4x + 3 - 3 = 19 - 3, so 4x = 16. Takeaway: equal operations keep the equation balanced.\n\nSECTION 2 - 2. Undo Addition or Subtraction First\nRule: when an equation has both addition or subtraction and multiplication or division, undo the addition or subtraction first. This creates a simpler equation.\nEXAMPLE: For 2x + 3 = 11, subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8. Next, divide both sides by 2: 2x / 2 = 8 / 2, so x = 4. This is the example form: 2x + 3 = 11 gives x = 4.\n\nSECTION 3 - 3. Then Undo Multiplication or Division\nRule: after removing the added or subtracted number, divide both sides by the coefficient. A coefficient is the number multiplying x.\nEXAMPLE: Video game example: 5x + 7 = 32. Subtract 7: 5x = 25. Divide both sides by 5: x = 5. Try it: 3x + 4 = 16. Answer: x = 4.\n\nSECTION 4 - 4. Check by Substitution\nRule: put your answer back into the original equation. Both sides should have the same value.\nEXAMPLE: Drawing comics example: 2x + 1 = 9 gives x = 4. Check: 2(4) + 1 = 8 + 1 = 9. Try it: 6x + 2 = 20. Answer: x = 3.\n\nWORKED EXAMPLE: A basketball team needs 4x + 3 = 19 points. Find x.\n  1. 1. Start with 4x + 3 = 19.\n  2. 2. Undo addition by subtracting 3 from both sides: 4x + 3 - 3 = 19 - 3.\n  3. 3. Simplify both sides: 4x = 16.\n  4. 4. Undo multiplication by dividing both sides by 4: 4x / 4 = 16 / 4.\n  5. 5. Simplify both sides: x = 4.\n  6. 6. Check by substituting 4: 4(4) + 3 = 16 + 3 = 19. Both sides match.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so x = 11 - 3 = 8. Why: subtracting 3 removes only the + 3, but 2x still remains. Also, 2(8) + 3 = 19, not 11. Right: 2x + 3 = 11, so 2x + 3 - 3 = 11 - 3, which gives 2x = 8.\nWrong: 2x = 10, so x = 2 + 10 = 12. Why: dividing by 2 means dividing both sides, not adding 2 to the right side. Also, 2(12) = 24, not 10. Right: 2x / 2 = 10 / 2, so x = 5.\n\nSUMMARY: Solve a two-step equation by keeping both sides balanced. Undo addition or subtraction first, then undo multiplication or division. Write down each result and check by substitution.\n\nCHECK QUESTIONS:\n1. Solve 2x + 3 = 11. Hint: subtract 3 before dividing by 2. [choices: x = 2 | x = 4 | x = 7 | x = 14] -> x = 4\n2. Solve 5x + 7 = 32. Hint: subtract 7 first, then divide both sides by 5. [typed answer] -> x = 5\n3. Solve 3x - 4 = 11. Hint: add 4 to both sides before dividing by 3. [choices: x = 3 | x = 5 | x = 9 | x = 15] -> x = 5",
+    "hi": "TITLE: Solving Two-Step Equations\n\nINTRO: You can solve a two-step equation by undoing one operation, then undoing the next. The order matters, and checking your answer confirms that your work is correct.\n\nSECTION 1 - Undo addition or subtraction first\nA two-step equation has two operations to undo. First undo addition or subtraction by doing the opposite operation to both sides. Then undo multiplication or division by doing the opposite operation to both sides. Whatever you do to one side, you must do to the other side. Example form: 2x + 3 = 11 gives x = 4.\nEXAMPLE: Try it: 2x + 3 = 11. Answer: x = 4, because subtracting 3 gives 2x = 8, and dividing by 2 gives x = 4.\n\nSECTION 2 - Keep both sides equal\nAn equation is like a balanced scale. If you subtract a number from one side, subtract the same number from the other side. This keeps the two sides equal. The answer is correct only if it makes the original equation true.\nEXAMPLE: Video game example: 5s - 7 = 18. Add 7 to both sides: 5s = 25. Divide both sides by 5: s = 5. Check: 5(5) - 7 = 25 - 7 = 18. Try it: 4y + 6 = 22. Answer: y = 4.\n\nSECTION 3 - Check your answer\nAfter finding x, put it back into the original equation. Substitute the answer for x and calculate both sides. If both sides equal the same number, your answer works. For 2x + 3 = 11, x = 4 gives 2(4) + 3 = 8 + 3 = 11.\nEXAMPLE: Drawing comics example: 3c + 4 = 25. Subtract 4 from both sides: 3c = 21. Divide both sides by 3: c = 7. Check: 3(7) + 4 = 21 + 4 = 25. Try it: 7p + 2 = 23. Answer: p = 3.\n\nWORKED EXAMPLE: A basketball team needs 2x + 5 = 17 points to reach its target. Solve for x.\n  1. Start with 2x + 5 = 17.\n  2. Undo addition by subtracting 5 from both sides: 2x + 5 - 5 = 17 - 5, so 2x = 12.\n  3. Undo multiplication by dividing both sides by 2: 2x / 2 = 12 / 2, so x = 6.\n  4. Check by substituting x = 6 into the original equation: 2(6) + 5 = 12 + 5 = 17.\n  ANSWER: x = 6\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so 2x = 14, so x = 7. Why: subtracting 3 from 11 gives 8, not 14; the equation would become 2x = 8. Right: subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8.\nWrong: 4x + 6 = 22, so 4x = 28, so x = 7. Why: subtracting 6 from 22 gives 16, not 28; the equation would become 4x = 16. Right: subtract 6 from both sides: 4x + 6 - 6 = 22 - 6, so 4x = 16.\n\nSUMMARY: Undo addition or subtraction first, then undo multiplication or division. Do every operation to both sides, and check by substituting your answer into the original equation.\n\nCHECK QUESTIONS:\n1. Solve 3x + 4 = 19. [choices: x = 3 | x = 5 | x = 6 | x = 7] -> x = 5\n2. Solve 6y - 8 = 10. Type the value of y. [typed answer] -> y = 3\n3. Solve 4n + 2 = 18. [choices: n = 2 | n = 4 | n = 5 | n = 6] -> n = 4"
+   }
+  },
+  {
+   "measure": "worked_example_dependence",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: Solving Two-Step Equations\n\nINTRO: Try this first: solve 2x + 3 = 11. Before you look at the worked step, decide which operation comes first. The answer is x = 4.\n\nSECTION 1 - Use the inverse operation\nRule: undo addition or subtraction first. Do the opposite operation on both sides. After that, undo multiplication or division. Whatever you do to one side, you must do to the other side.\nEXAMPLE: Try it: Solve 2x + 3 = 11. Answer: x = 4\n\nSECTION 2 - Undo addition, then multiplication\nFor 2x + 3 = 11, subtract 3 from both sides. This gives 2x = 8. Then divide both sides by 2. This gives x = 4. This is the example form: 2x + 3 = 11 gives x = 4.\nEXAMPLE: Try it: Solve 4x + 5 = 17. Answer: x = 3\n\nSECTION 3 - Check by substituting\nCheck the answer by putting it back into the original equation. For x = 4, replace x in 2x + 3 = 11 with 4. You get 2(4) + 3 = 8 + 3 = 11, so the answer works.\nEXAMPLE: Try it: Solve 3x + 6 = 24, then check it. Answer: x = 6; 3(6) + 6 = 24\n\nWORKED EXAMPLE: A basketball game has 2 points per basket plus 3 free throws, totaling 11 points. Solve 2x + 3 = 11.\n  1. Start with 2x + 3 = 11.\n  2. Undo addition by subtracting 3 from both sides: 2x + 3 - 3 = 11 - 3.\n  3. Simplify both sides: 2x = 8.\n  4. Undo multiplication by dividing both sides by 2: 2x / 2 = 8 / 2.\n  5. Simplify both sides: x = 4.\n  6. Check by substituting 4 into the original equation: 2(4) + 3 = 8 + 3 = 11.\n  7. The answer is correct.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so 2x = 14, so x = 7. Why: the + 3 was not undone by subtracting 3 from both sides; adding 3 instead gives 2x = 14. Right: subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8.\nWrong: 2x + 3 = 11, so 2x = 8, so x = 16. Why: dividing by 2 was replaced with multiplying by 2; 8 times 2 is 16, not 8. Right: divide both sides by 2: 2x / 2 = 8 / 2, so x = 4.\n\nSUMMARY: To solve a two-step equation, undo addition or subtraction first. Then undo multiplication or division. Apply each operation to both sides, and check by substituting the answer back into the original equation. For example, 2x + 3 = 11 gives x = 4.\n\nCHECK QUESTIONS:\n1. Which operation should you undo first in 2x + 3 = 11? [choices: Add 3 to both sides | Subtract 3 from both sides | Divide both sides by 2 | Multiply both sides by 2] -> Subtract 3 from both sides\n2. Solve 4x + 5 = 17. Type the value of x. [typed answer] -> x = 3\n3. Which check proves that x = 4 solves 2x + 3 = 11? [choices: 2(4) + 3 = 8 + 3 = 11 | 2(4) + 3 = 8 - 3 = 5 | 2(11) + 3 = 22 + 3 = 25 | 2(4) - 3 = 8 - 3 = 5] -> 2(4) + 3 = 8 + 3 = 11",
+    "hi": "TITLE: Solving Two-Step Equations\n\nINTRO: A two-step equation needs two inverse operations. Work carefully, keep both sides balanced, and check your answer.\n\nSECTION 1 - 1. Keep the Equation Balanced\nRule: whatever operation you do to one side, you must also do to the other side. This keeps the two sides equal. First undo addition or subtraction by using the opposite operation.\nEXAMPLE: Example form: 2x + 3 = 11 gives x = 4. Subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8. Divide both sides by 2: 2x / 2 = 8 / 2, so x = 4.\n\nSECTION 2 - 2. Use the Two Steps\nAfter removing addition or subtraction, undo multiplication or division. Divide both sides when a number is beside x. Multiply both sides when x is beside a number.\nEXAMPLE: A video game gives 5 points for each level. Let x be the number of levels. The total is 5x - 4 = 21. Add 4 to both sides: 5x - 4 + 4 = 21 + 4, so 5x = 25. Divide both sides by 5: 5x / 5 = 25 / 5, so x = 5.\nTry it: Solve 2x + 6 = 14. Answer: x = 4\n\nSECTION 3 - 3. Check Your Answer\nSubstitute your answer for x in the original equation. A correct answer makes both sides equal. If they differ, find the step where the equality broke.\nEXAMPLE: For 5x - 4 = 21, substitute x = 5. Then 5(5) - 4 = 25 - 4 = 21. Both sides equal 21, so x = 5 is correct.\nTry it: Solve 3x + 2 = 14 and check x = 4. Answer: 3(4) + 2 = 12 + 2 = 14, so x = 4\n\nWORKED EXAMPLE: In basketball, a team scored 2 points per basket plus 3 bonus points. Its total was 11 points. Solve 2x + 3 = 11 for x.\n  1. Start with 2x + 3 = 11.\n  2. Undo addition by subtracting 3 from both sides: 2x + 3 - 3 = 11 - 3.\n  3. Simplify both sides: 2x = 8.\n  4. Undo multiplication by dividing both sides by 2: 2x / 2 = 8 / 2.\n  5. Simplify both sides: x = 4.\n  6. Check by substituting x = 4 into the original equation: 2(4) + 3 = 8 + 3 = 11.\n  7. Both sides equal 11, so x = 4 is correct.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so 2x = 11, so x = 5.5. Why: the step subtracting 3 from both sides was skipped. Substituting x = 5.5 gives 2(5.5) + 3 = 14, not 11. Right: subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8; divide both sides by 2, so x = 4.\nWrong: 4x - 5 = 19, so 4x = 19 - 5 = 14, so x = 3.5. Why: subtracting 5 did not undo subtraction. Substituting x = 3.5 gives 4(3.5) - 5 = 9, not 19. Right: add 5 to both sides: 4x - 5 + 5 = 19 + 5, so 4x = 24; divide both sides by 4, so x = 6.\n\nSUMMARY: Undo addition or subtraction first, then undo multiplication or division. Apply each operation to both sides. Finally, substitute your answer into the original equation to check it.\n\nCHECK QUESTIONS:\n1. Solve 3x + 2 = 14. [choices: x = 2 | x = 4 | x = 6 | x = 12] -> x = 4\n2. Solve 4x - 5 = 19. Type the value of x. [typed answer] -> x = 6\n3. Which equation has the solution x = 5? [choices: 2x + 1 = 12 | 3x + 2 = 17 | 4x - 3 = 17 | 5x + 4 = 29] -> 3x + 2 = 17"
+   }
+  },
+  {
+   "measure": "worked_example_dependence",
+   "kind": "notes"
+  },
+  {
+   "measure": "structure_need",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: Spanish Greetings\n\nINTRO: You will learn common Spanish greetings and use them in short conversations.\n\nSECTION 1 - Hello\nThe rule is that hola is a greeting used at any time of day. It means hello. You can also say buenos días before noon.\nEXAMPLE: Try it: A player meets a coach in the morning. Which greeting should the player use? Answer: Buenos días. Good morning.\n\nSECTION 2 - Good Morning, Afternoon, or Night\nUse buenos días for good morning, buenas tardes for good afternoon, and buenas noches for good evening or good night. Choose the greeting by matching its meaning to the time.\nEXAMPLE: You meet your friends after lunch and say buenas tardes. You meet them at night and say buenas noches.\n\nSECTION 3 - Farewells and Questions\nAdiós means goodbye, while hasta luego means see you later. Cómo estás asks how are you informally, and cómo está usted asks how are you formally. Mucho gusto means nice to meet you.\nEXAMPLE: Try it: A new comic creator says “Nice to meet you.” How does the creator say it in Spanish? Answer: Mucho gusto.\n\nWORKED EXAMPLE: Create a short greeting for a basketball player meeting a coach in the afternoon.\n  1. Choose a greeting. The coach is arriving in the afternoon, so use buenas tardes.\n  2. Add a friendly question. You know the coach well, so use the informal question cómo estás.\n  3. Put the greeting and question together: Buenas tardes, ¿cómo estás?\n  4. Check the meaning: buenas tardes means good afternoon, and cómo estás means how are you informally.\n  ANSWER: Buenas tardes, ¿cómo estás?\n\nCOMMON MISTAKES:\nWrong: Hola = good morning. Why: hola means hello and can be used at any time of day; it does not specifically mean good morning. Right: buenos días = good morning.\nWrong: Cómo está usted = How are you, informally? Why: the usted form is formal, so this asks how are you formally rather than informally. Right: cómo está usted = how are you, formally; cómo estás = how are you, informally.\n\nSUMMARY: Hola means hello. Use buenos días, buenas tardes, and buenas noches for morning, afternoon, and evening or night. Adiós means goodbye, hasta luego means see you later, and mucho gusto means nice to meet you. Use cómo estás informally and cómo está usted formally.\n\nCHECK QUESTIONS:\n1. Which expression means good night? [choices: Buenos días | Buenas tardes | Buenas noches | Hasta luego] -> Buenas noches\n2. A video game club leader meets a new player at school. Which greeting fits? [choices: Hola | Adiós | Mucho gusto | Buenas noches] -> Mucho gusto\n3. Type the Spanish expression that means “see you later.” [typed answer] -> Hasta luego",
+    "hi": "TITLE: Spanish Greetings\n\nINTRO: Spanish greetings change with the time of day and the person you address. You will learn when to use each greeting and how to ask how someone is.\n\nSECTION 1 - 1. Hello and Time-Based Greetings\n1. Rule: Hola means hello. Next, use this greeting at any time of day. 2. Rule: Buenos días means good morning, buenas tardes means good afternoon, and buenas noches means good evening or good night. Next, choose the greeting that matches the time. 3. Try it: Which greeting do you use at 2 p.m.? Answer: Buenas tardes. 4. At 8 a.m., say buenos días; at 8 p.m., say buenas noches. Next, learn two ways to say goodbye.\nEXAMPLE: Before a basketball game at 10 a.m., say “Buenos días.” At halftime, use “Hola” to greet your teammate.\n\nSECTION 2 - 2. Goodbye and Meeting Someone\n1. Rule: Adiós and hasta luego mean goodbye and see you later. Next, use either phrase when leaving. 2. Rule: Mucho gusto means nice to meet you. Next, use it after meeting someone new. 3. Try it: What do you say when leaving a friend until later? Answer: Hasta luego. 4. Adiós and hasta luego are both correct because both express leaving. Next, ask how someone is.\nEXAMPLE: When you meet the player who drew your favorite comic, say “Mucho gusto.” When you leave, say “Adiós.”\n\nSECTION 3 - 3. Asking How Someone Is\n1. Rule: Cómo estás asks how are you in an informal situation. Next, use it with friends or people you know well. 2. Rule: Cómo está usted asks how are you in a formal situation. Next, use it with someone you address formally. 3. Both questions can be answered with “Estoy bien,” meaning I am well. Next, choose the form that fits your relationship. 4. The word usted signals formality, while estás is informal. Next, use the correct form in each conversation.\nEXAMPLE: Ask a close friend, “Cómo estás?” Before speaking with a teacher, ask “Cómo está usted?”\n\nWORKED EXAMPLE: At 8 a.m., you meet your friend before a basketball game. Greet the person and ask how they are.\n  1. 1. The time is 8 a.m., so identify the part of the day as morning. Next, choose the matching Spanish greeting.\n  2. 2. Buenos días means good morning, so use it for an 8 a.m. greeting. Next, add the informal question because the person is your friend.\n  3. 3. The informal question is Cómo estás, so combine the greeting and question: “Buenos días, cómo estás?” Next, check that both parts match the situation.\n  4. 4. The complete greeting is “Buenos días, cómo estás?” It means “Good morning, how are you?” Next, say it to your friend.\n  ANSWER: Buenos días, cómo estás?\n\nCOMMON MISTAKES:\nWrong: “Buenos noches” means good morning. Why: noches refers to evening or night, while días refers to morning. Right: “Buenos días” means good morning.\nWrong: “Cómo está usted” is the informal way to ask how someone is. Why: usted marks the formal form; estás is informal. Right: “Cómo está usted” asks how are you formally, while “Cómo estás” asks how are you informally.\n\nSUMMARY: Hola means hello. Time-based greetings are buenos días, buenas tardes, and buenas noches. Adiós and hasta luego mean goodbye and see you later. Use cómo estás informally and cómo está usted formally. Mucho gusto means nice to meet you.\n\nCHECK QUESTIONS:\n1. What is the Spanish greeting for good afternoon? [choices: Buenos días | Buenas tardes | Buenas noches | Hasta luego] -> Buenas tardes\n2. You meet a teacher for the first time. Which question is most suitable? [choices: Cómo estás | Cómo está usted | Hasta luego | Mucho gusto] -> Cómo está usted\n3. At 9 p.m., you say goodbye to a friend. Write one Spanish greeting that works. [typed answer] -> Adiós"
+   }
+  },
+  {
+   "measure": "evaluation_anxiety",
+   "kind": "notes"
+  },
+  {
+   "measure": "prior_knowledge",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: Why Did World War I Begin?\n\nINTRO: World War I began in 1914, but several causes had grown for years. A cause is something that helps make an event happen. We will separate the immediate spark from the deeper causes.\n\nSECTION 1 - Spark and Long-Term Causes\nWorld War I began in 1914, but several causes had grown for years. A cause is something that helps make an event happen. Long-term causes created the danger. The assassination in Sarajevo was the immediate spark.\nEXAMPLE: In a video game, one attack may be the spark, while weak defenses and rival teams are long-term causes.\n\nSECTION 2 - Militarism\nMilitarism means trusting military power and preparing for war. The great powers built up large armies and navies. This made war seem normal and increased rivalries. Militarism was a long-term cause, not the event that started the war.\nEXAMPLE: A basketball league grows stronger when every team buys better players and trains harder. That is like militarism building military power.\n\nSECTION 3 - Alliances\nAlliances were military promises between countries. Europe was divided into two blocs: the Triple Alliance and the Triple Entente. If one country fought, its allies might join. This could turn a local conflict into a wider war.\nEXAMPLE: In basketball, if one player joins a new team, old teammates may feel betrayed. Countries could respond in a similar way.\n\nSECTION 4 - Imperialism and Rivalry\nImperialism means one country controlling another country's territory. Rival empires competed for colonies and power. That competition sharpened distrust among the great powers. Imperial rivalry was therefore another long-term cause.\nEXAMPLE: In a comic, two heroes may compete for the same prize. Their competition can cause distrust before any fight begins.\n\nSECTION 5 - Nationalism\nNationalism is strong pride in one's own nation. In the Balkans, national groups wanted control over their territories. Serbia was especially important to this story. National tensions made the Balkan crisis more dangerous.\nEXAMPLE: A video game team may celebrate its national identity strongly. National pride can also create conflict between rival groups.\n\nSECTION 6 - The Assassination and the War\nOn June 28, 1914, Archduke Franz Ferdinand was assassinated in Sarajevo. He was the heir to Austria-Hungary's throne. Austria-Hungary blamed Serbia and declared war on July 28. Then alliances and rivalries helped spread the war.\nEXAMPLE: A comic might show the assassination in one panel. Later panels show alliances and rivalries pulling more countries into the conflict. Try it: What was the immediate spark of World War I? Answer: The assassination of Archduke Franz Ferdinand in Sarajevo in 1914.\n\nWORKED EXAMPLE: Explain why the crisis in Sarajevo grew into a world war.\n  1. Start with the event: Archduke Franz Ferdinand was assassinated in Sarajevo in 1914.\n  2. Ask what happened first. The assassination was the immediate spark that set the war in motion.\n  3. Now look for the deeper causes. Militarism had built up because the great powers had large armies and navies.\n  4. Alliances also mattered. Europe was divided into the Triple Alliance and the Triple Entente.\n  5. Imperial rivalry mattered because empires competed for colonies and power.\n  6. Nationalism mattered, especially in the Balkans and in Serbia, where national tensions were strong.\n  7. Put the causes together. The assassination lit the spark, while militarism, alliances, rivalry, and nationalism made the crisis spread.\n  8. Check the explanation against the question. It explains both why war began and why it became a world war.\n  ANSWER: The assassination of Archduke Franz Ferdinand was the spark. Militarism, alliances, imperial rivalry, and nationalism were the deeper causes that made the crisis become a world war.\n\nCOMMON MISTAKES:\nWrong: \"The assassination was the only cause of World War I.\" Why: this ignores the long-term causes that made the crisis spread. Right: \"The assassination was the immediate spark, while militarism, alliances, imperial rivalry, and nationalism were long-term causes.\"\nWrong: \"The war began in 1914, so nationalism cannot have caused it.\" Why: the year a war begins does not remove the causes that developed before it. Right: \"Nationalism was a long-term cause, and the war began in 1914 when the assassination triggered a crisis.\"\n\nSUMMARY: The assassination of Archduke Franz Ferdinand was the immediate spark. Militarism, alliances, imperial rivalry, and nationalism were long-term causes. These deeper causes helped a Balkan crisis grow into a world war.\n\nCHECK QUESTIONS:\n1. Which event was the immediate spark of World War I? [choices: The building of large armies and navies | The assassination of Archduke Franz Ferdinand | The formation of the Triple Alliance | The competition for colonies] -> The assassination of Archduke Franz Ferdinand\n2. Which long-term cause means strong pride in one's own nation? [typed answer] -> Nationalism\n3. Why could a conflict between Austria-Hungary and Serbia become a world war? [choices: Because every country had the same national flag | Because the assassination created a new alliance in one day | Because alliances and rivalries could draw more countries into the war | Because imperial rivalry ended after the assassination] -> Because alliances and rivalries could draw more countries into the war",
+    "hi": "TITLE: The Causes of World War I\n\nINTRO: Start by deciding whether a crisis was likely to remain local or become a wider war. Then test how each cause helped turn conflict in the Balkans into a global war.\n\nSECTION 1 - Militarism and Alliances\nMilitarism mattered because the great powers built large armies and navies. Alliances mattered because Europe was divided into two blocs, so a local conflict could pull in many countries. Rule: ask which connection would spread a crisis beyond its original participants.\nEXAMPLE: Worked example: Austria-Hungary and Serbia fought over Serbia’s conflict with Austria-Hungary, but alliance commitments could draw in other powers. Try it: Why could alliances turn a Balkan crisis into a world war? Answer: They could bring many countries into the conflict.\n\nSECTION 2 - Imperialism and Nationalism\nImperialism meant that empires competed for colonies and power. Nationalism meant strong loyalty to one’s nation, and it was especially important in the Balkans and Serbia. Rule: distinguish gaining power over territory from identifying strongly with a nation.\nEXAMPLE: Worked example: Rivalry among empires increased tensions, while Serbian nationalism encouraged resistance to Austrian influence. Try it: Which cause focused on loyalty to Serbia as a nation? Answer: Nationalism.\n\nSECTION 3 - The Spark: Assassination in Sarajevo\nOn 28 June 1914, Archduke Franz Ferdinand was assassinated in Sarajevo. The assassination was the spark that set off the war, but it did not create all the underlying tensions. Rule: identify the immediate trigger, then explain the longer-term causes.\nEXAMPLE: Worked example: The assassination occurred in Sarajevo, where Bosnian and Serbian nationalism made Austrian rule deeply contested. Try it: What was the immediate spark for World War I? Answer: The assassination of Archduke Franz Ferdinand in Sarajevo in 1914.\n\nWORKED EXAMPLE: Explain why the assassination in Sarajevo could become a world war rather than remain a conflict between Austria-Hungary and Serbia.\n  1. Identify the immediate event: Archduke Franz Ferdinand was assassinated in Sarajevo in 1914.\n  2. Connect nationalism: Balkan and Serbian nationalism had created strong resistance to Austrian influence.\n  3. Connect militarism: The great powers had built large armies and navies, making military power central to their policies.\n  4. Connect alliances: Europe was divided into two blocs, so commitments could draw many countries into the conflict.\n  5. State the result: The assassination was the spark, while militarism, alliances, imperialism, and nationalism made wider escalation more likely.\n  ANSWER: The Sarajevo assassination was the spark, but militarism, alliance systems, imperial rivalry, and nationalism made the crisis spread into a world war.\n\nCOMMON MISTAKES:\nWrong: The assassination was the only cause of World War I. Why: This treats the spark as the entire cause and ignores the tensions that made wider war likely. Right: The assassination was the spark, while militarism, alliances, imperialism, and nationalism were underlying causes.\nWrong: Nationalism caused the war because empires wanted more colonies. Why: This confuses nationalism with imperialism; empire rivalry focused on colonies and power. Right: Nationalism concerned strong national loyalty, especially in the Balkans and Serbia; imperialism concerned colonies and power.\n\nSUMMARY: World War I grew from several connected causes: militarism, alliances, imperialism, and nationalism. The assassination of Archduke Franz Ferdinand in Sarajevo in 1914 was the spark that ignited the crisis.\n\nCHECK QUESTIONS:\n1. Which cause describes the great powers building large armies and navies? [choices: Nationalism | Militarism | Imperialism | Alliances] -> Militarism\n2. Why did alliance systems make a local Balkan conflict more dangerous? [choices: They made every empire use atomic weapons. | They created competition for sports clubs. | They could draw countries from rival blocs into the war. | They ended all nationalism in Europe.] -> They could draw countries from rival blocs into the war.\n3. Explain why the assassination should be called the spark of World War I rather than its only cause. [choices: Because it happened in a European city. | Because Austria-Hungary was an empire. | Because underlying causes made wider escalation likely. | Because nationalism existed only in Serbia.] -> Because underlying causes made wider escalation likely."
+   }
+  },
+  {
+   "measure": "structure_need",
+   "kind": "notes",
+   "texts": {
+    "lo": "## Everyday greetings\n- Hola means hello and works at any time of day with friends or new acquaintances.\n- You can use it at any time of day, with friends or with people you have just met.\n\n## Greetings by time of day\n- Spanish speakers say buenos días for good morning, buenas tardes for good afternoon, and buenas noches for good evening or good night.\n- Días is masculine plural, while tardes and noches are feminine plural, so buenos and buenas have different endings.\n\n## Saying goodbye\n- Adiós means goodbye, while hasta luego means see you later.\n- Hasta luego is friendly and fits situations when you expect to see the person again soon.\n- Think of it like leaving a basketball game: an ordinary goodbye differs from saying you will see someone later soon.\n\n## Asking how someone is\n- Use the informal question cómo estás with friends, family, and children; it means how are you.\n- Use the formal question cómo está usted with older people, strangers, or in polite situations; it also means how are you.\n- The usual answer is bien, gracias, which means fine, thank you.\n\n## Meeting someone for the first time\n- Say mucho gusto when you meet someone for the first time; it means nice to meet you.\n- Think of it like a comic character’s first entrance: the special greeting marks a first meeting.",
+    "hi": "## Greetings by Time of Day\n- 1. Start with hola, which means hello; use it anytime with friends or people you have just met, then choose a time-of-day greeting.\n- 2. Use buenos días for good morning, buenas tardes for good afternoon, and buenas noches for good evening or good night; next, notice the endings.\n- Think of it like choosing a basketball time-out signal for morning, afternoon, or evening; next, notice how the endings change.\n- 3. Notice that días is masculine plural, while tardes and noches are feminine plural, so buenos and buenas change; next, learn how to say goodbye.\n\n## Saying Goodbye\n- 4. To say goodbye, choose adiós, which means goodbye, or hasta luego, which means see you later; next, decide which one fits.\n- Think of it like choosing a video-game sign-off that either ends the session or promises another soon; next, decide which fits.\n- 5. Use hasta luego when the goodbye is friendly and you expect to see the person again soon; next, ask how someone is.\n\n## Asking How Someone Is\n- 1. To ask how someone is, choose an informal or formal question; next, match it to the person and situation.\n- Think of it like drawing two comic speech styles for close relationships or respectful distance; next, choose the matching question.\n- 2. With friends, family, or children, use cómo estás, meaning “how are you”; with older people, strangers, or polite situations, use cómo está usted.\n- 3. Both questions mean “how are you,” and the usual answer is bien, gracias, meaning “fine, thank you”; next, greet a first-time meeting with mucho gusto.\n- 4. When you meet someone for the first time, say mucho gusto, which means nice to meet you; next, use this first-meeting greeting."
+   }
+  },
+  {
+   "measure": "prior_knowledge",
+   "kind": "notes",
+   "texts": {
+    "lo": "## Militarism\n- Historians describe four long-term causes of the First World War, plus one event that set it off.\n- Militarism was the first long-term cause.\n- Before 1914, great powers built large armies and navies, while Germany and Britain raced to build battleships.\n- Generals planned for war, and many leaders saw war as a normal way to settle disputes.\n- Think of militarism like preparing for a game before you know when it will start.\n\n## Alliances\n- Alliances were the second long-term cause.\n- Europe was divided into two blocs: the Triple Entente and the Triple Alliance.\n- The Triple Entente joined France, Russia and Britain.\n- The Triple Alliance joined Germany, Austria-Hungary and Italy.\n- Alliances allowed a local conflict to pull in many countries and turn a quarrel into a continental war.\n- Think of alliances like teams where one team’s fight can quickly involve every other team.\n\n## Imperialism\n- Imperialism was the third long-term cause.\n- Imperialism means rivalry between empires for colonies, markets and power.\n- European empires competed for land and resources in Africa and Asia, increasing distrust between them.\n- Think of imperialism like teams competing for limited resources, which can make distrust grow.\n\n## Nationalism\n- Nationalism was the fourth long-term cause.\n- Nationalism means strong pride in one’s nation or a wish for independence.\n- Nationalism was especially powerful in the Balkans.\n- Serbia wanted to unite the Slavic peoples, while Austria-Hungary feared losing its empire.\n- Think of nationalism like a team’s strong pride in itself and desire to protect its identity.\n\n## The Spark\n- The assassination of Archduke Franz Ferdinand set off the war.\n- Franz Ferdinand was heir to the Austro-Hungarian throne.\n- He was assassinated in Sarajevo on 28 June 1914.\n- Because of the alliances, Austria-Hungary’s war on Serbia soon drew in Russia, Germany, France and Britain.\n- Think of the assassination like the spark that starts a fire, while alliances bring in more countries.",
+    "hi": "## Militarism\n- Historians describe four long-term causes of the First World War and one event that set it off.\n- Before 1914, great powers built large armies and navies, while Germany and Britain raced to build battleships.\n- Generals planned for war, and many leaders viewed it as a normal way to settle disputes.\n- Think of militarism like video games where stronger armies and weapons can decide conflicts before diplomacy helps.\n\n## Alliances\n- The Triple Entente joined France, Russia and Britain.\n- The Triple Alliance joined Germany, Austria-Hungary and Italy.\n- Alliances allowed a local conflict to pull in many countries and grow into a continental war.\n- Think of alliances like basketball teams whose support automatically brings teammates into a fight.\n\n## Imperialism\n- Imperialism means rivalry between empires for colonies, markets and power.\n- European empires competed for land and resources in Africa and Asia, increasing distrust between them.\n\n## Nationalism\n- Nationalism means strong pride in one's nation or a wish for independence.\n- Nationalism was especially powerful in the Balkans, where Serbia wanted to unite the Slavic peoples.\n- Austria-Hungary feared losing its empire.\n- Think of nationalism like drawing comics about a hero defending a homeland from an empire.\n\n## The Spark\n- Archduke Franz Ferdinand, heir to the Austro-Hungarian throne, was assassinated in Sarajevo on 28 June 1914.\n- Austria-Hungary's war on Serbia soon drew in Russia, Germany, France and Britain because of the alliances."
+   }
+  },
+  {
+   "measure": "evaluation_anxiety",
+   "kind": "lesson",
+   "texts": {
+    "lo": "TITLE: Solving Two-Step Equations\n\nINTRO: A two-step equation needs two inverse operations. You undo addition or subtraction first, then undo multiplication or division.\n\nSECTION 1 - Undo Addition or Subtraction First\nThe rule is to do the opposite operation to both sides. Addition and subtraction undo each other. Keep the equals sign and change what is on each side equally. Example form: 2x + 3 = 11 gives x = 4. Try it: x - 5 = 12. Answer: x = 17.\nEXAMPLE: For 2x + 3 = 11, subtract 3 from both sides. This gives 2x = 8. Then divide both sides by 2 to get x = 4.\n\nSECTION 2 - Undo Multiplication or Division Next\nAfter removing addition or subtraction, undo multiplication or division. Division undoes multiplication, and multiplication undoes division. Whatever you do to one side, you must do to the other side. Example: 4x = 20 becomes x = 5 after dividing both sides by 4. Try it: 3x = 21. Answer: x = 7.\nEXAMPLE: For a comic score, 6 points per panel times 4 panels equals 24 points. The equation 6p = 24 gives p = 4 when you divide both sides by 6.\n\nSECTION 3 - Check Your Answer\nCheck by putting your answer back into the original equation. For 2x + 3 = 11, substitute x = 4. This gives 2(4) + 3 = 8 + 3 = 11, so the answer works. A checked answer helps catch a wrong move.\nEXAMPLE: For 3x = 21, put x = 7 back into the equation. This gives 3(7) = 21, so x = 7 is correct.\n\nWORKED EXAMPLE: Solve 2x + 3 = 11.\n  1. The equation is 2x + 3 = 11.\n  2. Undo the addition first by subtracting 3 from both sides: 2x + 3 - 3 = 11 - 3.\n  3. Simplify both sides: 2x = 8.\n  4. Undo the multiplication by dividing both sides by 2: 2x / 2 = 8 / 2.\n  5. Simplify both sides: x = 4.\n  6. Check x = 4 in the original equation: 2(4) + 3 = 8 + 3 = 11.\n  7. The answer is correct because it makes the original equation true.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so 2x = 14. Why: you added 3 instead of subtracting it, and 11 + 3 = 14. Right: subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8.\nWrong: 2x = 8, so x = 16. Why: you multiplied both sides by 2 instead of dividing, and 8 multiplied by 2 is 16. Right: divide both sides by 2: 2x / 2 = 8 / 2, so x = 4.\n\nSUMMARY: Undo addition or subtraction first. Then undo multiplication or division. Apply every operation to both sides and check your answer in the original equation.\n\nCHECK QUESTIONS:\n1. Solve 2x + 3 = 11. [choices: x = 3 | x = 4 | x = 7 | x = 8] -> x = 4\n2. Solve 5x - 4 = 21. [typed answer] -> x = 5\n3. Solve 4x = 32, then check the answer in the original equation. [typed answer] -> x = 8; substituting gives 4(8) = 32",
+    "hi": "TITLE: Solving Two-Step Equations\n\nINTRO: Start with two easy questions: the opposite of adding 3 is subtracting 3, and the opposite of dividing by 2 is multiplying by 2. These opposite operations help you undo work in an equation.\n\nSECTION 1 - Keep the Equation Balanced\nAn equation has the same value on both sides. Whatever operation you do to one side, you must do to the other side. This keeps the equation balanced.\nEXAMPLE: A basketball score is 2x + 3 = 11, where x is the number of two-point baskets. Subtracting 3 gives 2x = 8, and dividing by 2 gives x = 4.\n\nSECTION 2 - Undo Addition or Subtraction First\nFor a two-step equation, undo addition or subtraction first. Then undo multiplication or division by doing the opposite operation to both sides. This order works even when the equation starts with a fraction.\nEXAMPLE: In a video game, 3x + 2 = 14. Try it: What is x? Answer: x = 4, because 3x + 2 - 2 = 14 - 2 gives 3x = 12, then 3x / 3 = 12 / 3 gives x = 4.\n\nSECTION 3 - Check by Substitution\nAfter finding x, put it back into the original equation. Substitute x = 4 into 2x + 3 = 11: 2(4) + 3 = 8 + 3 = 11. The answer checks because both sides equal 11.\nEXAMPLE: While drawing comics, you write x / 2 + 5 = 9. Try it: What is x? Answer: x = 8, because subtracting 5 gives x / 2 = 4, then multiplying both sides by 2 gives x = 8.\n\nWORKED EXAMPLE: Solve 2x + 3 = 11. Think of x as the number of two-point basketball baskets after one three-point basket.\n  1. Start with 2x + 3 = 11.\n  2. Undo addition by subtracting 3 from both sides: 2x + 3 - 3 = 11 - 3.\n  3. Simplify both sides: 2x = 8.\n  4. Undo multiplication by dividing both sides by 2: 2x / 2 = 8 / 2.\n  5. Simplify both sides: x = 4.\n  6. Check by substituting 4 into the original equation: 2(4) + 3 = 8 + 3 = 11.\n  7. Both sides equal 11, so x = 4 is correct.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: x + 3 = 11, so x = 14. Why: the 3 was added instead of subtracted when undoing addition, so 14 + 3 equals 17, not 11. Right: subtract 3 from both sides: x + 3 - 3 = 11 - 3, so x = 8.\nWrong: 2x = 8, so x = 16. Why: the 2 was multiplied instead of divided when undoing multiplication, so 2(16) equals 32, not 8. Right: divide both sides by 2: 2x / 2 = 8 / 2, so x = 4.\n\nSUMMARY: To solve a two-step equation, undo addition or subtraction first. Then undo multiplication or division, and do every operation on both sides. Always check by substituting the answer into the original equation.\n\nCHECK QUESTIONS:\n1. In 2x + 3 = 11, which operation should you do first? [choices: Add 3 to both sides | Subtract 3 from both sides | Multiply both sides by 2 | Divide both sides by 2] -> Subtract 3 from both sides\n2. A video game equation is 3x + 2 = 14. What is x? [choices: 2 | 3 | 4 | 6] -> 4\n3. Solve x / 2 + 5 = 9. Type the value of x. [typed answer] -> 8"
+   }
+  }
+ ],
+ "usage": {
+  "writerCalls": 12,
+  "writerIn": 20480,
+  "writerOut": 20407,
+  "judgeCalls": {
+   "mistralai/mistral-large-2512": 17,
+   "gemini-3.5-flash-lite": 17
+  },
+  "judgeTokens": {
+   "gemini-3.5-flash-lite": 39556
+  },
+  "errors": {},
+  "seconds": 114,
+  "standardComputeUsd": 0.1446,
+  "xkiro": {
+   "free_tokens_today": 274217,
+   "grants": {
+    "minimax/minimax-m3.1-flash": {
+     "used": 409009,
+     "cap": 12000000,
+     "refused": false
+    }
+   }
+  }
+ }
+}

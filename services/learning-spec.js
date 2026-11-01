@@ -1102,9 +1102,10 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
     const doms = ex.exampleDomains.slice(0, 4).join(', ');
     // A learner who needs less (a short treatment or what they know already) gets one analogy, not three: the speed proof found their notes
     // growing longer than the plain outline (version 2).
-    const n = needsLess(spec) ? 'exactly one' : ex.share >= 0.7 ? 'at least three' : ex.share >= 0.4 ? 'at least two' : 'at least one';
+    const less = needsLess(spec);
+    const n = less ? 'at least one' : ex.share >= 0.7 ? 'at least three' : ex.share >= 0.4 ? 'at least two' : 'at least one';
     const where = surface === 'notes' ? 'add short framed analogies, each as its own one-sentence bullet that starts "Think of" and comes right after the bullet whose point it pictures (it carries that bullet\'s passage_id and quote, and is not counted in the bullet limit)' : 'build short analogies or practice contexts';
-    lines.push(`Interests: ${where} on ${doms}, ${n} in all, each introduced as an analogy ("think of it like...") and mapped back to a named point of the material; they add no fact, number, name or claim about the topic, and every fact and quote stays the material's own.`);
+    lines.push(`Interests: ${where} on ${doms}, ${n} in all, each introduced as an analogy ("think of it like...") and mapped back to a named point of the material; they add no fact, number, name or claim about the topic, and every fact and quote stays the material's own.${less ? ' Keep it to that one analogy: this version is meant to be short.' : ''}`);
   }
   if (surface === 'lesson' || surface === 'level' || surface === 'tutor') {
     if (ex.exampleDomains.length && ex.share >= 0.7) lines.push(`Examples: build the worked example and every other example on ${ex.exampleDomains.slice(0, 4).join(', ')}, at least three in all; the facts stay the topic's own.`);
