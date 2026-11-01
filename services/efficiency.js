@@ -1,8 +1,9 @@
 /**
  * Speed and retention levers: how the app spends a learner's practice minutes so that more of what they practise
- * is still recalled a month later, per hour spent. All six are off by default. SR_STOP=on carries the simulated gain
- * (docs/SPEED-RETENTION.md) but costs scorecard measurement at week 4 (gate: 32 -> 29 pass), so it stays off until that is
- * fixed; the other five are built, tested and switchable, and off. One module, six levers, each with its own off switch, read by the
+ * is still recalled a month later, per hour spent. All six are off by default. SR_STOP=on (its extra due reviews) carries the simulated gain
+ * (docs/SPEED-RETENTION.md) and, since round 11 (section 7: the skip half off by default, two scorecard rules reading reviews as reviews), costs the
+ * 200-learner accuracy gate nothing; it stays off only because the 30-learner quick gate check of npm test, cut from the old answer stream, trips on
+ * ANY change of that stream (section 7.5), and the owner has said the baseline is not to be re-cut. The other five are built, tested and switchable, and off. One module, six levers, each with its own off switch, read by the
  * scheduler (services/mastery.js), the level planner (services/sessions.js) and the recovery simulation
  * (scripts/scorecard-recovery-sim.js) so the simulation exercises the code the app runs.
  *
@@ -11,8 +12,9 @@
  *   SR_RELEARN=off           successive relearning: a skill leaves the active review set after SR_RELEARN_CRITERION
  *                            consecutive spaced correct recalls (it is still checked at a maintenance recall level)
  *   SR_INTERLEAVE=off        practice items on skills past first mastery are woven into the level, lowest recall first
- *   SR_STOP=off              items that buy least are not asked: a skill already answered right twice in this sitting and
- *                            known by the mastery record is not asked again; the freed minutes go to due reviews
+ *   SR_STOP=off              up to SR_STOP_EXTRA_REVIEWS (6) more due reviews a level, on top of practice; with SR_STOP_SKIP=on
+ *                            (OFF by default: it cost the scorecard its answers and bought no retention) items that buy least are not asked:
+ *                            a skill already answered right twice in this sitting and known by the mastery record is not asked again
  *   SR_PRETEST=off           a short pretest before a lesson page; a learner who clearly knows the skill skips the page
  *                            and gets gap-only practice on it
  *   SR_DIFFICULTY=off        item difficulty shifted for the learner's pace (harder for faster, easier for slower)
@@ -89,15 +91,20 @@ function dueBelow(base, state, m) {
 // Repeating a retrieval inside one sitting adds little to a month-later memory (massed practice: Donovan & Radosevich 1999,
 // spacing d about 0.4-0.5; Cepeda et al. 2006), and a skill the learner demonstrably has (mastery record at SR_STOP_MASTERY or
 // above) gains nothing in understanding either. Such items are not asked; the minutes go to due reviews (spaced retrieval).
+// The skip half is OFF unless SR_STOP_SKIP=on (round 11, docs/SPEED-RETENTION.md section 7): skipping fresh items took the answers several scorecard
+// measures are read from (help_seeking, fatigue_curve, repetition_tolerance...) and carried none of the gain (skip alone: 1.02 skills per hour against 1.19 live;
+// extra reviews without it: 1.77, the same as with it).
 const STOP = {
   sittingCap: Number(process.env.SR_STOP_CAP || 2),      // right answers on the skill already given this sitting
   masteryFloor: Number(process.env.SR_STOP_MASTERY || 0.7),
   minItems: 5,                                            // a level always asks at least this many
   extraReviews: Number(process.env.SR_STOP_EXTRA_REVIEWS || 6),
 };
+/** Is the skip half of the stop rule on? (SR_STOP on and SR_STOP_SKIP=on.) */
+function skipOn() { return enabled('stop') && String(process.env.SR_STOP_SKIP || 'off').toLowerCase() === 'on'; }
 /** Should another focus/support item on this skill be asked? */
 function worthAsking({ role, correctInSitting = 0, mastery = 0, asked = 0 }) {
-  if (!enabled('stop')) return true;
+  if (!skipOn()) return true;
   if (role !== 'focus' && role !== 'support') return true; // reviews, mixed items and the stretch item are the point
   if (asked < STOP.minItems) return true;
   return !(correctInSitting >= STOP.sittingCap && mastery >= STOP.masteryFloor);
@@ -207,7 +214,7 @@ module.exports = {
   SWITCH, DEFAULT, enabled,
   PERSONAL, RELEARN, STOP, INTERLEAVE, PRETEST, DIFFICULTY,
   reviewTarget, relearnDone, dueBelow,
-  worthAsking, reviewSlots, displacedReviews,
+  worthAsking, skipOn, reviewSlots, displacedReviews,
   interleavePool, interleaveEvery,
   pretestPosterior, pretestSkips, pretestOffered, recordPretest, pretestPassed, focusCount,
   difficultyShift,

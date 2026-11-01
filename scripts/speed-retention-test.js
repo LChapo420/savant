@@ -14,7 +14,7 @@ const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'speed-retention-'));
 process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(TMP, 'db.json');
 process.env.OWNER_EMAIL = 'sr-owner@example.test';
-for (const k of ['SR_ALL', 'SR_PERSONAL_TIMING', 'SR_RELEARN', 'SR_INTERLEAVE', 'SR_STOP', 'SR_PRETEST', 'SR_DIFFICULTY', 'REVIEW_SCHEDULE']) delete process.env[k];
+for (const k of ['SR_ALL', 'SR_PERSONAL_TIMING', 'SR_RELEARN', 'SR_INTERLEAVE', 'SR_STOP', 'SR_STOP_SKIP', 'SR_PRETEST', 'SR_DIFFICULTY', 'REVIEW_SCHEDULE']) delete process.env[k];
 // Every lever on, so each is tested whatever its shipped default is; the defaults themselves are checked in section 1.
 process.env.SR_ALL = 'on';
 process.on('exit', () => { try { fs.rmSync(TMP, { recursive: true, force: true }); } catch { /* temp dir */ } });
@@ -52,10 +52,16 @@ for (let l = 1; l <= GRADE0.pathLength; l++) if (curriculum.levelKind(l, GRADE0.
     withEnv({ SR_ALL: null, SR_STOP: 'off' }, () => { assert.strictEqual(efficiency.enabled('stop'), false); assert.strictEqual(efficiency.enabled('personal'), false); });
     withEnv({ SR_ALL: 'on', SR_DIFFICULTY: null }, () => assert.strictEqual(efficiency.enabled('difficulty'), true));
   });
-  await check('with no SR_ALL, each lever takes its shipped default (all off until the stop rule no longer costs measurement)', () => {
-    withEnv({ SR_ALL: null }, () => {
+  await check('with no SR_ALL, each lever takes its shipped default (all off: the 30-learner quick gate check blocks turning the stop rule on, docs/SPEED-RETENTION.md 7.5); the skip half is off even with the stop rule on', () => {
+    withEnv({ SR_ALL: null, SR_STOP: null, SR_STOP_SKIP: null }, () => {
       for (const [lever, d] of Object.entries(efficiency.DEFAULT)) assert.strictEqual(efficiency.enabled(lever), d === 'on', lever);
       assert.strictEqual(efficiency.enabled('stop'), false);
+      assert.strictEqual(efficiency.reviewSlots(3, 99), 3);
+    });
+    withEnv({ SR_ALL: null, SR_STOP: 'on', SR_STOP_SKIP: null }, () => {
+      assert.strictEqual(efficiency.enabled('stop'), true);
+      assert.strictEqual(efficiency.reviewSlots(3, 99), 3 + efficiency.STOP.extraReviews);
+      assert.strictEqual(efficiency.skipOn(), false, 'the skip half cost the scorecard its answers and bought no retention (docs/SPEED-RETENTION.md section 7)');
       assert.strictEqual(efficiency.enabled('interleave'), false);
       assert.strictEqual(efficiency.enabled('difficulty'), false);
     });
@@ -109,7 +115,14 @@ for (let l = 1; l <= GRADE0.pathLength; l++) if (curriculum.levelKind(l, GRADE0.
   });
 
   console.log('4. stopping when the next item buys least');
-  await check('a focus or support item on a skill already right twice in the sitting and mastered is not asked; reviews and the stretch item always are', () => {
+  await check('the skip half is off by default, even with the stop rule on: every item is asked, whatever the sitting has shown', () => {
+    withEnv({ SR_ALL: null, SR_STOP: 'on', SR_STOP_SKIP: null }, () => {
+      assert.strictEqual(efficiency.worthAsking({ role: 'focus', correctInSitting: 9, mastery: 1, asked: 9 }), true);
+      assert.strictEqual(efficiency.skipOn(), false);
+    });
+    withEnv({ SR_ALL: null, SR_STOP: 'off', SR_STOP_SKIP: 'on' }, () => assert.strictEqual(efficiency.skipOn(), false, 'no skipping when the whole stop rule is off'));
+  });
+  await check('with SR_STOP_SKIP=on: a focus or support item on a skill already right twice in the sitting and mastered is not asked; reviews and the stretch item always are', () => withEnv({ SR_STOP_SKIP: 'on' }, () => {
     const ask = (o) => efficiency.worthAsking({ asked: 6, ...o });
     assert.strictEqual(ask({ role: 'focus', correctInSitting: 2, mastery: 0.8 }), false);
     assert.strictEqual(ask({ role: 'support', correctInSitting: 3, mastery: 0.9 }), false);
@@ -118,7 +131,7 @@ for (let l = 1; l <= GRADE0.pathLength; l++) if (curriculum.levelKind(l, GRADE0.
     for (const role of ['review', 'mix', 'stretch']) assert.strictEqual(ask({ role, correctInSitting: 9, mastery: 1 }), true, role);
     assert.strictEqual(efficiency.worthAsking({ role: 'focus', correctInSitting: 9, mastery: 1, asked: 2 }), true, 'a level asks at least a few items');
     withEnv({ SR_STOP: 'off' }, () => assert.strictEqual(ask({ role: 'focus', correctInSitting: 9, mastery: 1 }), true));
-  });
+  }));
   await check('the freed minutes go to due reviews: extra slots on top of the usual three, only when more are due; the extras do not displace practice', () => {
     const extra = efficiency.STOP.extraReviews;
     assert.strictEqual(efficiency.reviewSlots(3, 2), 3);
@@ -221,7 +234,7 @@ for (let l = 1; l <= GRADE0.pathLength; l++) if (curriculum.levelKind(l, GRADE0.
     assert.strictEqual(mastery.dueReviews(u.id, ['r1', 'r2', 'r3', 'r4', 'r5']).length, 3);
     assert.strictEqual(mastery.REVIEW_TARGET, 0.85);
   }));
-  await check('the answer path advises skippable items (none with SR_STOP=off) and never throws without a block', () => {
+  await check('the answer path advises skippable items (none unless the skip half is on) and never throws without a block', () => {
     assert.deepStrictEqual(withEnv({ SR_STOP: 'off' }, () => efficiency.worthAsking({ role: 'focus', correctInSitting: 9, mastery: 1, asked: 9 })), true);
     assert.strictEqual(typeof sessions.planLesson, 'function');
   });

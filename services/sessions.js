@@ -1268,9 +1268,9 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
   };
 }
 
-/** Ids of this block's unanswered focus/support items that the stop rule would not ask now (none when SR_STOP is off). */
+/** Ids of this block's unanswered focus/support items that the stop rule would not ask now (none unless the skip half is on: SR_STOP and SR_STOP_SKIP). */
 function stoppableItems({ userId, session, item }) {
-  if (!efficiency.enabled('stop')) return [];
+  if (!efficiency.skipOn()) return [];
   try {
     const block = itemsInBlock(session.id, item.block || 0);
     const answered = block.filter((i) => i.correct !== null);

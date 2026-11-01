@@ -43,6 +43,13 @@ const DEFAULT_CURVE = { a: 1, b: 0.3, c: -0.1, d: 0, e: 0 };
 const FEATURES = process.env.SCORECARD_FORGET_FEATURES || 'basic';
 const NP = FEATURES === 'basic' ? 3 : 5;
 const KEYS = ['a', 'b', 'c', 'd', 'e'].slice(0, NP);
+// Round 11: the curve the decay stat is READ with. With the stop rule's extra due reviews, most right answers on a skill are spaced ones, which
+// lengthen a half-life far more than the massed ones the 'basic' terms count alongside; read with 'basic' terms, a learner's multiplier m
+// then absorbs how much they have reviewed (the memory trio decay_rate / retention_index / retrieval_strength fell from pass to fail with
+// every extra measurement channel on, bias -1.4 -> -4.4). The 'spaced' terms (ns, nsw) separate the two. The SCHEDULE keeps its own curve
+// ('basic', FEATURES above): fitting 'spaced' for the schedule too cost 4-5% of the retention gain (BASELINE round 5; docs/SPEED-RETENTION.md
+// section 7). SCORECARD_READ_FEATURES=basic reads with the schedule's curve, as before.
+const READ_NP = (process.env.SCORECARD_READ_FEATURES || 'spaced') === 'basic' ? 3 : 5;
 // Round 5: the curve's SHAPE. 'exp' is 2^(-dt/h) (rounds 2-4). 'fit' also lets
 // the population choose a power-law tail, R = (1 + F dt / h)^-k with
 // F = 2^(1/k) - 1 (so h is still the half-life), k from SHAPES by likelihood:
@@ -80,9 +87,9 @@ function row({ dt, nc, nw, pk, g, y, day, open = false, review = false, ns = 0, 
 }
 
 /** A row's terms for the curve's coefficients, in KEYS order. */
-function terms(r) {
+function terms(r, np = NP) {
   const x = [1, r[1], r[2], Number(r[9]) || 0, Number(r[10]) || 0];
-  return x.slice(0, NP);
+  return x.slice(0, np);
 }
 
 function predict(curve, r, m) {
@@ -117,8 +124,8 @@ function ageWeight(r, today) {
  * The population curve: Fisher scoring on (a, b, c) over everyone's tests,
  * with a weak ridge toward the default so a thin sample cannot run away.
  */
-function fitCurve(rows, offs = null) {
-  if (SHAPE !== 'fit') return fitCoefficients(rows, Infinity, offs);
+function fitCurve(rows, offs = null, np = NP) {
+  if (SHAPE !== 'fit') return fitCoefficients(rows, Infinity, offs, np);
   // The shape is chosen on an even subsample (at most SHAPE_SAMPLE tests), then
   // the coefficients are fitted to every test with that shape: one full fit
   // per refresh, as before, however many learners there are.
@@ -127,7 +134,7 @@ function fitCurve(rows, offs = null) {
   const sOffs = offs ? (step === 1 ? offs : offs.filter((_, i) => i % step === 0)) : null;
   let best = null;
   for (const k of SHAPES) {
-    const curve = fitCoefficients(sample, k, sOffs);
+    const curve = fitCoefficients(sample, k, sOffs, np);
     let ll = 0;
     for (let i = 0; i < sample.length; i++) {
       const r = sample[i];
@@ -136,12 +143,14 @@ function fitCurve(rows, offs = null) {
     }
     if (!best || ll > best.ll) best = { ll, k };
   }
-  return fitCoefficients(rows, best.k, offs);
+  return fitCoefficients(rows, best.k, offs, np);
 }
 
 /** The coefficients for one curve shape k (Infinity: exponential). */
-function fitCoefficients(rows, shapeK, offs = null) {
+function fitCoefficients(rows, shapeK, offs = null, np = NP) {
   const withK = (c) => (Number.isFinite(shapeK) ? { ...c, k: shapeK } : c);
+  const KEYS = ['a', 'b', 'c', 'd', 'e'].slice(0, np); // eslint-disable-line no-shadow
+  const NP = np; // eslint-disable-line no-shadow
   let p = KEYS.map((k) => DEFAULT_CURVE[k]);
   const ridge = [0.5, 5, 5, 5, 5].slice(0, NP);
   for (let iter = 0; iter < 30; iter++) {
@@ -151,7 +160,7 @@ function fitCoefficients(rows, shapeK, offs = null) {
     for (let ri = 0; ri < rows.length; ri++) {
       const r = rows[ri];
       const { P, dP } = predict(curve, r, offs ? offs[ri] : 0);
-      const x = terms(r);
+      const x = terms(r, NP);
       const s = ((r[5] - P) / (P * (1 - P))) * dP;
       const w = (dP * dP) / (P * (1 - P));
       for (let i = 0; i < NP; i++) {
@@ -212,11 +221,18 @@ function fitLearner(curve, rows, { mean = 0, sd = PRIOR_SD, today } = {}) {
  * @param {object[][]} lists  each learner's memory rows
  */
 function population(lists, today) {
+  const pop = populationOf(lists, today);
+  // The curve the decay stat is read with (READ_NP above): its own fit, norm and spread, when it is not the schedule's.
+  if (pop && READ_NP !== NP) pop.read = populationOf(lists, today, READ_NP);
+  return pop;
+}
+
+function populationOf(lists, today, np = NP) {
   const usable = lists.filter((l) => Array.isArray(l) && l.length);
   const all = usable.flat();
   if (usable.length < MIN_FIT_LEARNERS || all.length < MIN_FIT_TESTS) return null;
-  let curve = fitCurve(all);
-  if (JOINT) {
+  let curve = fitCurve(all, null, np);
+  if (JOINT && np === NP) {
     // Round 5: refit the curve with each learner's own multiplier as an offset
     // (one alternating step of the mixed model). Pooled over learners who
     // forget at different speeds, a single curve sees a mixture, which looks
@@ -242,8 +258,10 @@ function population(lists, today) {
  * This learner's decay-rate score and evidence mass. High decay = forgets
  * faster = a shorter half-life than the population's typical learner.
  */
-function estimate(rows, pop, today) {
+function estimate(rows, popFull, today) {
   if (!rows || !rows.length) return { score: 50, mass: 0, m: 0, tests: 0 };
+  // Read with the read curve when the population has one (READ_NP above); its norm and spread belong to that curve.
+  const pop = (popFull && popFull.read) || popFull;
   const curve = (pop && pop.curve) || DEFAULT_CURVE;
   const norm = pop && pop.norm !== null && pop.norm !== undefined ? pop.norm : 0;
   const tau = pop && pop.tau ? pop.tau : PRIOR_SD;

@@ -12,6 +12,8 @@
  *   5. item tags (scorecard/item-tags.js, signals.js SHIFTS): the key, the table, notation, the residual sides, the direction
  *   6. the tagger (scripts/tag-question-skills.js): only question text is sent, answers parsed strictly, a spread sample
  *   7. the behavioural rules fixed: instruction adherence from page skims, re-entry against expectation, depth from both length taps
+ *   8. (round 11) reviews read as reviews: a due review that should still be remembered is not a help-seeking chance; mixed practice is a shift
+ *      of reviews against focus items, a review read against the forgetting curve
  */
 const fs = require('fs');
 const os = require('os');
@@ -425,6 +427,92 @@ const choose = (u, stat, pick, times = 1) => { for (let i = 0; i < times; i++) h
     assert.ok(signals.fromFeedback({ length: 'long' }).some((o) => o.stat === 'depth_breadth' && o.value < 50));
   });
 
+  console.log('8. reviews read as reviews (round 11, docs/SPEED-RETENTION.md section 7)');
+  const memCtx = (days, right) => ({
+    expected: 0.8, expected_lpo: 0.8, delayed: true, interval_days: days, prior_attempts: right, prior_correct: right,
+    prior_spaced_right: 0, prior_spaced_wrong: 0, prev_wrong: false, rapid: false, guess: 0.1,
+  });
+  await check('a due review the forgetting curve says should still be remembered is not a chance for help seeking (nor for hint dependency, as before); a faded one is', () => {
+    const asked = { prompt: 'x', difficulty: 4, ms: 9000, correct: true, role: 'review', format: 'typed', coach_used: true };
+    const near = signals.fromAnswer(asked, memCtx(1.2, 12));
+    assert.ok(!near.some((o) => o.stat === 'help_seeking' || o.stat === 'hint_dependency'), JSON.stringify(near));
+    const faded = signals.fromAnswer(asked, memCtx(60, 1));
+    assert.ok(faded.some((o) => o.stat === 'help_seeking' && o.hits === 1) && !faded.some((o) => o.stat === 'hint_dependency'), JSON.stringify(faded));
+    const old = process.env.SCORECARD_STUCK_MEMORY;
+    process.env.SCORECARD_STUCK_MEMORY = 'off';
+    try {
+      assert.ok(signals.fromAnswer(asked, memCtx(1.2, 12)).some((o) => o.stat === 'help_seeking'), 'the rollback reads every memory test as a chance');
+    } finally { if (old === undefined) delete process.env.SCORECARD_STUCK_MEMORY; else process.env.SCORECARD_STUCK_MEMORY = old; }
+  });
+  await check('more reviews in a level add no help-seeking chances when they should be remembered (the stop rule\'s extra reviews do not dilute the rate)', () => {
+    const chances = (nReviews) => {
+      let n = 0;
+      for (let i = 0; i < nReviews; i++) {
+        n += signals.fromAnswer({ prompt: 'x', difficulty: 4, ms: 9000, correct: true, role: 'review', format: 'typed', coach_used: false }, memCtx(1.5, 10))
+          .filter((o) => o.stat === 'help_seeking').length;
+      }
+      return n;
+    };
+    assert.strictEqual(chances(3), chances(9));
+  });
+  await check('mixed practice is a shift of the level\'s reviews against its focus items; a review is read against the forgetting curve, not as a fresh answer', () => {
+    const mk = (reviewsCorrect, focusCorrect, days, nReviews = 5) => {
+      const items = []; const ctx = {};
+      for (let i = 0; i < nReviews + 4; i++) {
+        const review = i < nReviews;
+        items.push({ id: 2000 + i, index: i, skill_id: review ? `a${i}` : 'z', role: review ? 'review' : 'focus', correct: review ? reviewsCorrect : focusCorrect, ms: 9000, format: 'typed' });
+        ctx[2000 + i] = review ? memCtx(days, 10) : { expected: 0.8, expected_lpo: 0.8, delayed: false, rapid: false };
+      }
+      return { items, ctx };
+    };
+    const good = mk(true, true, 1.5);
+    const obs = signals.fromBlock(good.items, { ctx: good.ctx });
+    const rv = obs.find((o) => o.resid === 'res_review'); const fc = obs.find((o) => o.resid === 'res_focus');
+    assert.ok(rv && fc && rv.n === 5 && fc.n === 4, JSON.stringify(obs.filter((o) => o.resid)));
+    assert.ok(obs.some((o) => o.stat === 'interleaving_tolerance' && o.shift));
+    assert.ok(!obs.some((o) => o.stat === 'interleaving_tolerance' && o.value !== undefined), 'no raw difference when the model read it');
+    // The same right answers 60 days on are worth more against a curve that says they should have faded.
+    const m60 = mk(true, true, 60);
+    const far = signals.fromBlock(m60.items, { ctx: m60.ctx }).find((o) => o.resid === 'res_review');
+    assert.ok(far.r > rv.r, `${far.r} ${rv.r}`);
+    // A learner who handles reviews better than the model expects reads higher than one who does worse, on the same level shape.
+    const a = user(); const b = user();
+    const hi = mk(true, false, 1.5); const lo = mk(false, true, 1.5);
+    for (let k = 0; k < 8; k++) {
+      scorecard.observe(a.id, signals.fromBlock(hi.items, { ctx: hi.ctx }), { source: 'test' });
+      scorecard.observe(b.id, signals.fromBlock(lo.items, { ctx: lo.ctx }), { source: 'test' });
+    }
+    assert.ok(scorecard.read(scorecard.get(a.id), 'interleaving_tolerance').measured > 55 && scorecard.read(scorecard.get(b.id), 'interleaving_tolerance').measured < 45);
+    assert.ok(signals.SHIFTS.interleaving_tolerance.needsPopulation);
+  });
+  await check('without the ability model the raw review-against-focus difference is kept', () => {
+    const items = [0, 1, 2, 3, 4, 5].map((i) => ({ id: 3000 + i, index: i, skill_id: `s${i}`, role: i < 2 ? 'review' : 'focus', correct: i % 2 === 0, ms: 9000, format: 'typed' }));
+    const obs = signals.fromBlock(items, { ctx: {} });
+    assert.ok(obs.some((o) => o.stat === 'interleaving_tolerance' && o.value !== undefined && o.weight === 0.1));
+  });
+  await check('the decay stat is read with spaced and massed answers told apart (a read curve of its own); the review schedule keeps its curve', () => {
+    const forgetting = require('../services/scorecard/forgetting');
+    // 25 learners, 24 memory tests each: a skill with more spaced right answers keeps longer, whatever its count of all right answers.
+    let seedN = 7;
+    const rnd = () => { seedN = (seedN * 1103515245 + 12345) % 2147483648; return seedN / 2147483648; };
+    const lists = [];
+    for (let l = 0; l < 25; l++) {
+      const rows = [];
+      for (let i = 0; i < 24; i++) {
+        const nc = 3 + Math.floor(rnd() * 8); const ns = Math.floor(rnd() * 6); const dt = 1 + rnd() * 20;
+        const half = 2 ** (0.5 + 0.1 * nc + 0.45 * ns);
+        rows.push(forgetting.row({ dt, nc, nw: 1, pk: 0.9, g: 0.1, y: rnd() < 0.1 + 0.8 * 2 ** (-dt / half), day: i, ns, nsw: 0 }));
+      }
+      lists.push(rows);
+    }
+    const pop = forgetting.population(lists, 30);
+    assert.ok(pop && pop.read && pop.read.curve, 'a population with a read curve');
+    assert.ok(pop.read.curve.d !== undefined && pop.curve.d === undefined, 'the read curve has the spaced terms, the schedule\'s does not');
+    assert.ok(pop.read.curve.d > 0.15, `spaced right answers lengthen the half-life: ${pop.read.curve.d}`);
+    const mine = lists[0];
+    assert.deepStrictEqual(forgetting.estimate(mine, pop, 30), forgetting.estimate(mine, { ...pop.read }, 30), 'the stat is read with the read curve');
+    assert.ok(forgetting.recallCurve(pop, mine, 30).curve.d === undefined, 'the schedule keeps the curve it was tuned on');
+  });
   console.log(failed ? `\n${failed} failed` : '\nall passed');
   process.exitCode = failed ? 1 : 0;
 })();

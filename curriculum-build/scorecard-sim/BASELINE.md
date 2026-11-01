@@ -451,3 +451,21 @@ Each lever alone (audited model, seed 20261022, against live): personal timing 1
 Gate: `gate-baseline.json` re-stored from the default code (the stop rule changes the answer stream; the 30-learner check flipped measures that were passing). At 200 learners, week 4: levers off 32 pass / 13 fail / 55 no signal, default 29 / 14 / 57, mean error ratio 1.13 -> 1.14; help_seeking pass -> fail, four measures pass -> no signal, two the other way. See docs/SPEED-RETENTION.md 3.6.
 
 Kept: the stop rule's extra review slots (`SR_STOP`, default on). Built, switchable, off by default: personal timing, successive relearning, interleaving once past first mastery, pretest and skip, difficulty shift. Rejected as levers: a flat review target other than 0.85 (0.70 to 0.95 all within noise), extras that take the place of focus practice (understanding down 2 to 4%).
+
+## Round 11 (step 40): the stop rule without the scorecard cost
+
+All runs: 200 learners, 100 levels, `--modes=off`, population 60, legacy learning model, `--levers=none` (off) or `--levers=stop` (on). Simulated; write-up in `docs/SPEED-RETENTION.md` section 7. `gate-baseline.json` was not touched.
+
+| run | week-4 gate, pass / fail / no signal | skills recalled at 30 d per hour |
+|---|---|---|
+| levers off, main's rules (seed 20261022) | 32 / 13 / 55 | 1.193 |
+| stop rule as shipped 1 Nov (extra reviews + skipping), main's rules | 29 / 14 / 57 (help_seeking fails) | 1.775 |
+| extra reviews only, main's rules | 33 / 13 / 54 | 1.772 |
+| skipping only, main's rules | 31 / 15 / 54 | 1.024 |
+| levers off, this round's rules, seed 20261022 / 7 | 32 / 14 / 54 ; 31 / 15 / 54 | 1.179 ; 1.255 |
+| **stop rule on (extra reviews only), this round's rules**, seed 20261022 / 7 | 35 / 13 / 52 ; 31 / 15 / 54 (no pass -> fail at any week) | 1.792 ; 1.859 |
+| levers off, this round's rules, every extra on, seed 20261022 / 7 | 43 / 14 / 43 ; 37 / 14 / 49 | 1.194 ; 1.228 |
+| **stop rule on, every extra on**, seed 20261022 / 7 | 45 / 15 / 40 (week 4 failure_response and error_recovery_speed 1.011 -> 1.101) ; 40 / 13 / 47 | 1.809 ; 1.863 |
+| audited model (v2), off / extras only / extras + skipping | not gated | 0.335 / 0.727 / 0.723 |
+
+Kept: the skip half of the stop rule off by default (`SR_STOP_SKIP`); help_seeking reads a memory test as a stuck moment only when the forgetting curve says it is more likely missed than not (`SCORECARD_STUCK_MEMORY=off` restores); interleaving_tolerance as a shift of reviews against focus items with forgetting counted (`SCORECARD_MIXED_SHIFT=off`); the decay stat read with a curve that has the spaced terms while the review schedule keeps the basic one (`SCORECARD_READ_FEATURES=basic`). The stop rule stays off by default: the 30-learner quick gate check of `npm test` fails on any change of the answer stream (docs/SPEED-RETENTION.md 7.3) and the baseline is not re-cut.

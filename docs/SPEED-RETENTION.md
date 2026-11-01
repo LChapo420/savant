@@ -4,6 +4,8 @@ Branch `speed-retention`, 1 to 2 November 2026. Code: `services/efficiency.js` (
 
 **Everything in this document is simulated. None of it is evidence about real learners.** The simulated learners are the 200 of the recovery simulation (seed 20261022, 100 levels, 60 other learners as the population; `--modes=off`, because the model-read modes change what the scorecard is told, not what a learner learns); a second seed (11) and two robustness runs are reported beside it.
 
+**Update, round 11 (2 Nov), section 7:** the cost is found and fixed at the 200-learner gate (the skip half was the cause and carried no gain; two scorecard rules read reviews as fresh answers and one forgetting read ignored spaced answers). The stop rule is still off by default only because the 30-learner quick gate check of `npm test` trips on any change of the answer stream and the baseline may not be re-cut. The paragraph below is the 1 Nov position.
+
 **Shipped default (merge, 1 Nov): every lever is off, the stop rule included.** With the stop rule on, the scorecard gate at week 4 (200 learners, no extras) goes from 32 pass / 13 fail to 29 / 14 (help_seeking fails; four measures lose their signal), and the gate baseline may not be re-cut to hide a regression. The rule turns on (`SR_STOP=on`, then the default) once the measurement cost is fixed. The numbers below are for the stop rule switched on.
 
 ## Summary
@@ -69,7 +71,7 @@ What already existed, and was extended rather than duplicated: the model-based r
 | Personal timing | The review target depends on this learner's own forgetting multiplier (from the fitted curve) and falls a little with every consecutive spaced recall (expanding intervals) | Optimal gap scales with the retention interval and the learner's decay (Cepeda et al. 2008; Pavlik and Anderson 2008); expanding schedules (Landauer and Bjork 1978) | `SR_PERSONAL_TIMING` | off (no measurable gain) |
 | Successive relearning | `skill_states.spaced_streak` counts consecutive spaced right answers (a miss resets it); at 3 a skill leaves the active review set and is checked again only when predicted recall falls to 0.6 | Rawson and Dunlosky 2011, 2013: recall to criterion over several sessions, then stop | `SR_RELEARN`, `SR_RELEARN_CRITERION`, `SR_RELEARN_MAINTENANCE` | off (no measurable gain) |
 | Interleaving once past first mastery | Practice items on earlier skills are woven in only from skills with mastery at least 0.6 and 3 answers, lowest predicted recall first and below 0.9; the new topic stays blocked; the first level after a lesson stays blocked | Brunmair and Richter 2019; Rohrer et al. 2015, 2020; novices learn a new idea better blocked (Kalyuga et al. 2003) | `SR_INTERLEAVE` (also gated by the existing `INTERLEAVE_SESSIONS`) | off (+7%, +11%, +1% on three tests; understanding down 1-2%) |
-| Stop when the next item buys least | Up to six extra due reviews are added to a level, on top of the usual three and without taking the place of focus practice; a focus or support item on a skill already answered right twice in this sitting and held at mastery 0.7 or more is not asked (never fewer than five items) | Massed repeats add little to a month-later memory (Donovan and Radosevich 1999; Cepeda et al. 2006); spaced retrieval is where the delayed-test gain is (Rowland 2014; Karpicke and Roediger 2008) | `SR_STOP`, `SR_STOP_CAP`, `SR_STOP_MASTERY`, `SR_STOP_EXTRA_REVIEWS` | **on** |
+| Stop when the next item buys least | Up to six extra due reviews are added to a level, on top of the usual three and without taking the place of focus practice; a focus or support item on a skill already answered right twice in this sitting and held at mastery 0.7 or more is not asked (never fewer than five items) | Massed repeats add little to a month-later memory (Donovan and Radosevich 1999; Cepeda et al. 2006); spaced retrieval is where the delayed-test gain is (Rowland 2014; Karpicke and Roediger 2008) | `SR_STOP`, `SR_STOP_SKIP`, `SR_STOP_CAP`, `SR_STOP_MASTERY`, `SR_STOP_EXTRA_REVIEWS` | off (round 11: the extra reviews alone carry the gain; the skip half is off even when this is on, section 7) |
 | Pretest, then skip what is known | Three questions on the page's skill before the page; Bayes on the answers (guessing floor counted) at 0.93 or more skips the page and leaves two focus items; stops being offered after four failed pretests in a row | Pretesting effect (Richland, Kornell and Kao 2009); expertise reversal (Kalyuga et al. 2003; Tetzlaff et al. 2025) | `SR_PRETEST`, `SR_PRETEST_ITEMS`, `SR_PRETEST_SKIP_AT` | off (+11%, +3%, +5% on three tests, but no screen asks the questions yet) |
 | Difficulty follows the learner | Item difficulty shifted by up to one band toward harder for a fast learner (measured pace standing) and easier for a slow one, scaled by the scorecard's confidence | Desirable difficulties (Bjork and Bjork 2011); success-rate sweet spot (Wilson et al. 2019) | `SR_DIFFICULTY`, `SR_DIFFICULTY_BANDS` | off (+6%, an assumed mechanism) |
 
@@ -251,3 +253,69 @@ node scripts/scorecard-recovery-sim.js ... --levers=all                         
 ```
 
 `--levers=none|default|all|a,b,c` sets the `SR_*` switches for the run (`default` leaves the app's own defaults). The slim result of every run in the tables is in `curriculum-build/scorecard-sim/speed-retention/<name>.json` (config, command, outcome means, gate summary, one line per learner). A 200-learner run takes about 7 minutes alone and 20 with eight in parallel.
+
+## 7. Round 11: the stop rule without the scorecard cost (2 Nov 2026)
+
+Branch `stop-measure`. Everything here is simulated (recovery simulation, 200 learners x 100 levels, `--modes=off`, legacy learning model unless stated, population 60); none of it is learner evidence. `scripts/scorecard-gate-compare.js` reproduces any pair below from the run files.
+
+### 7.1 What the regression was, measure by measure
+
+First, which half of the stop rule did it. Same learners, seed 20261022, gate at week 4 (pass / fail / no signal), skills recalled at 30 days per practice hour:
+
+| run | gate, week 4 | skills per hour | vs live |
+|---|---|---|---|
+| levers off (live) | 32 / 13 / 55 | 1.193 | 1.00 |
+| the stop rule as shipped on 1 Nov (extra reviews + skipping) | 29 / 14 / 57 | 1.775 | 1.49 |
+| **extra reviews only** (`SR_STOP_CAP=99`; now the only half there is by default) | 33 / 13 / 54 | **1.772** | 1.49 |
+| skipping only (`SR_STOP_EXTRA_REVIEWS=0`) | 31 / 15 / 54 | 1.024 | 0.86 |
+
+**The skip half carries none of the gain and caused most of the cost.** Skipping alone retains less per hour than not skipping (it removes practice and nothing replaces it); the extra reviews alone keep 99.8% of the gain. The audited model agrees (`--learning=v2`: extras only 0.727, extras + skipping 0.723, live 0.335). The 1 Nov write-up said the skip half "does no harm"; for the scorecard that was wrong. It is off by default now (`SR_STOP_SKIP=on` restores it; `efficiency.skipOn()`), and `sessions.recordAnswer` advises nothing to skip unless it is on.
+
+Then one diagnostic run per question (100 learners x 45 levels, counters in `signals.js`, levers off / skip + extras / extras only):
+
+| what a rule reads | off | skip + extras | extras only |
+|---|---|---|---|
+| levels with 8+ answers (fatigue needs them) | 100% | 66% | 100% |
+| levels with fresh answers in both halves | 96% | 42% | 84% |
+| fresh answers read per level, first half / second half | 2.7 / 4.0 | 1.3 / 2.7 | 2.9 / 4.3 |
+| levels with 2+ reviews and 3+ focus items (mixed practice) | 57% | 27% | 37% |
+| help-seeking chances that the simulation's own truth says were not a stuck moment (coach rate 4%, a stuck moment's 13%) | 25.5% | 33.4% | 28.1% |
+
+| measure | what the rule reads | why the stop rule moved it | fix |
+|---|---|---|---|
+| help_seeking (pass -> fail, ratio 1.064 -> 1.127, bias 5.7 -> 7.4) | coach use per "moment stuck"; every memory test (a skill last practised a day or more ago) counted as stuck | a due review the learner should still remember is not stuck. Each extra review added a non-stuck chance, with a 4% coach rate, to a rate whose real chances run at 13%. Skipping made it worse (fewer real chances left) | a memory test is a stuck moment only when the forgetting curve (default curve, `memoryExpected`) puts the chance of a right answer under 0.5; one that should be remembered feeds neither help seeking nor hint dependency (as before for the latter). Tests: `scripts/scorecard-measured-test.js` section 8. Levers off: bias 5.7 -> 3.6, ratio 1.064 -> 1.041. `SCORECARD_STUCK_MEMORY=off` restores the old rule |
+| fatigue_curve (pass -> no signal), contradiction_sensitivity (pass -> no signal), repetition_tolerance (fails with skipping alone) | position and tag residuals of fresh answers; need a level of 8+ answers with fresh ones in both halves | skipping shortened levels below the length the rule needs and halved the fresh answers in the first half; the extra reviews alone leave both. With the skip half off all pass as with the stop rule off | the skip half off. No scorecard change |
+| interleaving_tolerance (pass -> no signal, bias +2.6 -> -5.6) | raw accuracy of the level's reviews minus its focus items, only in a level with 2+ reviews and 3+ focus items | reviews are memory tests, so their accuracy falls with every one that is due and is read as a dislike of mixed practice; skipping and extra reviews each change how many levels qualify at all | now a shift (`SHIFTS.interleaving_tolerance`): every review and focus answer against what was expected of it, a review's expectation carried through the forgetting curve, population-normalised like the other position shifts. `SCORECARD_MIXED_SHIFT=off` restores the old rule. Levers off: bias +2.6 -> +1.8 |
+| decay_rate, retention_index, retrieval_strength (pass -> fail from week 3, only with every extra channel on; bias -1.4 -> -4.4, error 12.7 -> 13.7) | the learner's half-life multiplier against the population's forgetting curve, fitted on "basic" terms (all right answers on the skill, all wrong ones) | with the extra reviews most right answers are spaced ones, which lengthen a half-life far more than massed ones; the multiplier then absorbs how much the learner has reviewed. The delayed checks (a week and a month on) are what make it show | the stat is read with a curve that also has the spaced terms (`forgetting.js` `READ_NP`, the population's `read`). The schedule keeps the 'basic' curve: fitting 'spaced' for the schedule too costs 4-5% of the retention gain (1.823 -> 1.723 skills per hour in the same run). `SCORECARD_READ_FEATURES=basic` restores the old read. Every extra on, week 4, stop rule on: error 13.7 -> 11.9 (levers off 12.3) |
+| question_generation, inductive_trajectory, notation_comfort, intrinsic_motivation, global_framing_need, productive_struggle, depth_breadth | indicators, tags | no rule reads reviews; ratios of 1.00 to 1.02 sit on the "5% better than the population mean" line (question_generation: 4.8% against 5.3%) and flip with any change of the answer stream, in both directions; a different set flips at seed 7 | none (noise) |
+
+### 7.2 Proof
+
+Pass / fail / no signal at week 4, levers off -> stop rule on (extra reviews only, as now built), final code. "Pass -> fail" is any measure that passes off and fails on at any of weeks 1 to 4:
+
+| run | levers off | stop rule on | pass -> fail |
+|---|---|---|---|
+| seed 20261022, no extras | 32 / 14 / 54 | 35 / 13 / 52 | none |
+| seed 7, no extras | 31 / 15 / 54 | 31 / 15 / 54 | none |
+| seed 20261022, every extra on | 43 / 14 / 43 | 45 / 15 / 40 | week 4 failure_response and error_recovery_speed (one rule; ratio 1.011 -> 1.101, a hair over 1.10; the app's own error falls 12.85 -> 12.43, the log read-out's falls more) |
+| seed 7, every extra on | 37 / 14 / 49 | 40 / 13 / 47 | none |
+
+Before this round (rules as on main, the 1 Nov stop rule): 32 / 13 / 55 -> 29 / 14 / 57 with help_seeking failing. Skills recalled at 30 days per practice hour (legacy settings, the same two runs as the gate): seed 20261022 1.179 -> 1.792 (1.52x live), seed 7 1.255 -> 1.859 (1.48x), every extra on 1.194 -> 1.809 (1.52x) and 1.228 -> 1.863 (1.52x); audited model 0.335 -> 0.727 (2.17x live), skills understood 42.3 -> 47.1 of 50. Practice hours +10% (10.1 -> 11.2): the extras are extra items, and with skipping gone they are not paid back. Of the 1.49x, 99.8% survives.
+
+False directives (200 learners, at 10 / 30 / 100 levels, off -> on): 1.9 / 1.4 / 2.6 -> 1.9 / 2.0 / 1.6 (seed 20261022), 0.0 / 1.8 / 1.0 -> 0.0 / 2.4 / 0.3 (seed 7), and with every extra on 1.0 / 1.6 / 1.3 -> 1.9 / 1.6 / 1.4 and 0.8 / 2.2 / 0.6 -> 0.8 / 1.3 / 0.5. The twelve-cell mean is 1.35% off and 1.31% on; single cells move by half a point either way, and one "off" cell (2.2%) is already above the 2% line.
+
+The scorecard changes alone, levers off against main's rules, same learners: the answer stream is not identical (the experiment allocator reads the card, so any change to a stat reshuffles which pages get which arm), and a few measures near the 1.10 line cross it the wrong way: week 4 repetition_tolerance 1.099 -> 1.106 and 1.099 -> 1.101, seed 7 week 2 rush_tendency 1.096 -> 1.111 and week 3 hint_dependency 1.087 -> 1.105, against, over the four runs and four weeks, 32 measures going from no signal to pass and 5 from fail to pass (and 21 from pass to no signal). With every extra on and seed 7, week 4 goes from 31 to 37 passes.
+
+### 7.3 Why the default is still off, and what turns it on
+
+`npm test` runs the 30-learner quick gate check (`--quick --levels=60 --learners=30 --gate-check`) against `gate-baseline.json`, which is cut from the old answer stream. With this round's scorecard changes and the stop rule off it passes better than the baseline (46 pass / 15 fail against 41 / 16). With the stop rule on it fails: four to eleven measures that passed in the baseline fail now (in the last run rush_tendency, challenge_appetite, interest_transfer, self_efficacy at week 4 and contradiction_sensitivity, brevity_preference at week 2). The 200-learner gate does not show that; the quick check is a tripwire on one exact answer stream, and any change to it trips it. Tried earlier in this round, with the stop rule off, the personal-timing lever alone trips it (frustration_threshold), interleaving trips five measures, and the extra-review count at 2, 4 and 8 trips six to ten each. Across five 30-learner seeds with the final code the stop rule has 207 passes against 202 off and 72 fails against 72, with three to five pass -> fail in every seed offset by fail -> pass.
+
+The owner's instruction is that `gate-baseline.json` is not re-cut to hide a cost. It was not re-cut, so the default stays off. To turn the stop rule on: `DEFAULT.stop = 'on'` in `services/efficiency.js`; flip the two default assertions in `scripts/speed-retention-test.js` section 1; re-cut the quick baseline once (`node scripts/scorecard-recovery-sim.js --quick --modes=off --levels=60 --learners=30 --gate-write`), on the owner's say-so, with the table in 7.2 as the reason.
+
+### 7.4 Not done, not verified
+
+- The "no signal" flips of measures sitting on the 5% line (question_generation and the like) are threshold noise and are not fixed.
+- failure_response / error_recovery_speed at seed 20261022 with every extra on is a borderline crossing (1.101). Reading delayed reviews on the after-a-miss side against the forgetting curve was not tried.
+- The session player still does not act on `skippable`; the skip half is off anyway.
+- The read curve was fitted and tested only on the simulation's exponential memory; on real memory tests `scorecard.forgettingCurve` and `SCORECARD_FORGET_SHAPE=fit` are the first things to check.
+- All of it is simulated.

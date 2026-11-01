@@ -29,6 +29,7 @@
  */
 const db = require('../../config/db');
 const itemTags = require('./item-tags');
+const forgetting = require('./forgetting');
 
 const EXPERIMENT_WEIGHT = 0.45;
 const DELAYED_WEIGHT = 0.3;
@@ -112,6 +113,15 @@ const SHIFTS = {
   warmup_latency: { high: 'res_after_opening', low: 'res_opening', scale: 60, tau: 0.3, norm: 0, needsPopulation: true },
   // Fatigue: the first half of a long level against the second.
   fatigue_curve: { high: 'res_first_half', low: 'res_second_half', scale: 60, tau: 0.3, norm: 0, needsPopulation: true },
+  // Round 11: mixed practice. The level's due reviews against its focus items, each answer read against what was expected of it: a review's
+  // expectation carries the time since the skill was last practised through the forgetting curve (memoryExpected), so a level with many
+  // reviews due does not read forgetting as a difficulty with mixed practice. How well the default curve fits is the population's
+  // (needsPopulation). Its old rule compared raw accuracy of the reviews and the focus items within each level, which fell with every review
+  // that was due, and which a level with fewer than two reviews or three focus items did not read at all.
+  // SCORECARD_MIXED_SHIFT=off restores the raw per-level difference.
+  ...(process.env.SCORECARD_MIXED_SHIFT === 'off' ? {} : {
+    interleaving_tolerance: { high: 'res_review', low: 'res_focus', scale: 60, tau: 0.3, norm: 0, needsPopulation: true },
+  }),
   // Momentum: after two misses to open a level, the rest of it, against the
   // same positions in levels that opened otherwise.
   momentum_dependence: { high: 'res_rest_after_good_start', low: 'res_rest_after_bad_start', scale: 60, tau: 0.3, norm: 0, needsPopulation: true },
@@ -271,6 +281,22 @@ function expectedMs(item) {
   return reading + 4000 + Number(item.difficulty || 5) * 1500;
 }
 
+/**
+ * What to expect of this answer given the learner's ability AND the time since the skill was last practised: the ability model's expectation
+ * for an ordinary answer; for a memory test (a day or more since the skill was last practised) that expectation carried through the forgetting
+ * curve (scorecard/forgetting.js, the default curve: an average learner, so this learner's own forgetting stays in the residual). Without it a
+ * due review is read as if it were fresh, and the more reviews a level holds the more the score reads forgetting as the trait under test
+ * (round 11, docs/SPEED-RETENTION.md section 7).
+ */
+function memoryExpected(c) {
+  if (!c || !Number.isFinite(c.expected)) return null;
+  if (!c.delayed || !Number.isFinite(c.interval_days)) return c.expected;
+  return forgetting.recallAt(null, {
+    days: c.interval_days, right: c.prior_correct || 0, wrong: Math.max(0, (c.prior_attempts || 0) - (c.prior_correct || 0)),
+    spacedRight: c.prior_spaced_right || 0, spacedWrong: c.prior_spaced_wrong || 0, fresh: c.expected, guess: Number.isFinite(c.guess) ? c.guess : 0,
+  });
+}
+
 function accuracy(items) {
   const answered = items.filter((i) => i.correct !== null && i.correct !== undefined);
   return answered.length ? answered.filter((i) => i.correct).length / answered.length : null;
@@ -346,12 +372,19 @@ function fromAnswer(item, ctx = null) {
     const coach = !!item.coach_used;
     if (ctx && Number.isFinite(ctx.expected)) {
       // Stuck: just missed one, the item was beyond their measured level, or
-      // it is a memory test on something not practised for a day or more.
-      const stuck = ctx.prev_wrong || ctx.expected < 0.5 || ctx.delayed;
+      // it is a memory test on something not practised for a day or more AND the
+      // forgetting curve says it is more likely missed than not. A due review that
+      // should still be remembered is not a moment of being stuck (counting it as one
+      // diluted the rate with every extra review the stop rule adds), and it is not
+      // a clear case of an unaided answer either: it feeds neither rate, as before.
+      // SCORECARD_STUCK_MEMORY=off restores every memory test as a stuck moment.
+      const memoryStuck = ctx.delayed && (process.env.SCORECARD_STUCK_MEMORY === 'off' || memoryExpected(ctx) < 0.5);
+      const stuck = ctx.prev_wrong || ctx.expected < 0.5 || memoryStuck;
       // A rapid answer when stuck is giving up (frustration), not a moment
       // they weighed asking for help, so it is not a chance for help seeking.
       if (stuck && !ctx.rapid) obs.push(rate('help_seeking', coach, 'asked the coach when stuck'));
       else if (stuck) { /* rapid: frustration's evidence, not help seeking's */ }
+      else if (ctx.delayed) { /* a review that should still be remembered: neither rate */ }
       else {
         obs.push(rate('hint_dependency', coach, 'used the coach on something within reach'));
         obs.push({ side: 'coach_unstuck', hits: coach ? 1 : 0, trials: 1 });
@@ -477,8 +510,14 @@ function fromBlock(items, { priorErrorTags = {}, ctx = {} } = {}) {
     for (let i = 0; i < answered.length; i++) {
       const it = answered[i];
       const c = ctx[it.id];
-      if (!c || !Number.isFinite(c.expected_lpo) || isRapid(it) || it.coach_used || c.delayed) continue;
+      if (!c || !Number.isFinite(c.expected_lpo) || isRapid(it) || it.coach_used) continue;
+      if (c.delayed) {
+        // A memory test is read by no position or text rule (forgetting is not the trait), only by mixed practice, against the forgetting curve.
+        if (SHIFTS.interleaving_tolerance && it.role === 'review' && memoryExpected(c) !== null) add('res_review', it, clamp(memoryExpected(c), 0.02, 0.98));
+        continue;
+      }
       const p = clamp(c.expected_lpo, 0.02, 0.98);
+      if (SHIFTS.interleaving_tolerance && (it.role === 'review' || it.role === 'focus')) add(it.role === 'review' ? 'res_review' : 'res_focus', it, p);
       add(i > 0 && !answered[i - 1].correct ? 'res_after_miss' : 'res_otherwise', it, p);
       if (answered.length >= 6) add(i < 3 ? 'res_opening' : 'res_after_opening', it, p);
       if (long) add(i < half ? 'res_first_half' : 'res_second_half', it, p);
@@ -493,6 +532,7 @@ function fromBlock(items, { priorErrorTags = {}, ctx = {} } = {}) {
       obs.push({ stat: 'failure_response', shift: true, note });
       obs.push({ stat: 'error_recovery_speed', shift: true });
     }
+    if (sides.res_review && sides.res_focus) obs.push({ stat: 'interleaving_tolerance', shift: true, note: `reviews ${sides.res_review.r / sides.res_review.n >= sides.res_focus.r / sides.res_focus.n ? 'no harder' : 'harder'} than the level's practice items, forgetting counted` });
     if (sides.res_opening && sides.res_after_opening) obs.push({ stat: 'warmup_latency', shift: true, note: `first three answers ${sides.res_opening.r >= 0 ? 'above' : 'below'} what was expected` });
     if (sides.res_first_half && sides.res_second_half) obs.push({ stat: 'fatigue_curve', shift: true, note: `second half ${sides.res_second_half.r >= 0 ? 'above' : 'below'} what was expected` });
     if (sides.res_text_heavy && sides.res_text_light) obs.push({ stat: 'vocabulary_ceiling', shift: true, note: `wordier questions ${sides.res_text_heavy.r >= sides.res_text_light.r ? 'no harder' : 'harder'} than expected` });
@@ -577,7 +617,8 @@ function fromBlock(items, { priorErrorTags = {}, ctx = {} } = {}) {
   // Interleaving: how review items mixed into the level held up against focus items.
   const review = answered.filter((i) => i.role === 'review');
   const focus = answered.filter((i) => i.role === 'focus');
-  if (review.length >= 2 && focus.length >= 3) {
+  // (With the ability model, mixed practice is a shift, SHIFTS interleaving_tolerance; the raw difference stays for answers it never saw.)
+  if (!(SHIFTS.interleaving_tolerance && withModel.length >= Math.min(3, answered.length)) && review.length >= 2 && focus.length >= 3) {
     obs.push({ stat: 'interleaving_tolerance', value: clamp(50 + (accuracy(review) - accuracy(focus) + 0.1) * 100), weight: 0.1 });
   }
 
