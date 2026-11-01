@@ -372,6 +372,8 @@ adds. 58 measures now get at least one indicator; of the 16 that had no source b
   new words). Nothing was spent on it here.
 - Validities and the nuisance correlation must be re-estimated on beta data (each indicator's correlation with the same learners'
   measured standings) before relying on them; until then they are stated priors, conservative by design.
+- Children under their country's consent age without a parent's agreement get none of round 9 (no text features, usage read, model read
+  or tutor observations), by the owner's rule of no extra measurement channels for them. The sim does not model that group separately.
 - The UI changes (capture counts, privacy text) were checked by tests and syntax, not clicked through in a browser.
 
 ## 8. For the tutor agent: the observation hook

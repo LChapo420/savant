@@ -265,11 +265,12 @@ const wordCount = (t) => String(t || '').split(/\s+/).filter(Boolean).length;
 /**
  * What the learner wrote, as deterministic text features (text-features.js), computed here with no model: only the batch means reach the
  * scorecard (scorecards.ind), never the text. `messages`: [{ text, context?, latencyMs? }] (context: the tutor message it answers).
- * Allowed for every account, including an under-13 one without a parent's measurement agreement: it reads only what the learner already
- * sent, on this machine (no new collection, no provider). Throws nothing.
+ * Not for an under-13 account without a parent's measurement agreement (owner rule: no extra measurement channels for them), though it
+ * reads only what the learner already sent, on this machine. Throws nothing.
  */
 function onLearnerText(userId, messages, { source = 'learner text' } = {}) {
   return safely('learner text', () => {
+    if (!mayMeasureMore(userId)) return null;
     const list = (messages || []).filter((m) => m && String(m.text || '').trim());
     if (!list.length) return null;
     const obs = indicators.observations(textFeatures.summarize(list));
@@ -380,6 +381,7 @@ function hourSpread(hours) {
  */
 function usageSweep(userId, { now = Date.now() } = {}) {
   return safely('usage sweep', () => {
+    if (!mayMeasureMore(userId)) return null;
     const card = scorecard.get(userId);
     if (card.use_at && now - Date.parse(card.use_at) < 7 * DAY_MS) return null;
     const since = now - 7 * DAY_MS;

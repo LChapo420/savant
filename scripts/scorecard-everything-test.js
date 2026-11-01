@@ -6,8 +6,8 @@
  *      at the assumed validity, and an honest (wider than claimed, not narrower) failure when the true validity is half
  *   3. through the scorecard: no indicators leaves every read exactly as before; with a population, a learner's indicators move the
  *      measure the right way and narrow its interval, and SCORECARD_INDICATORS=off ignores them
- *   4. the sweeps: tutor chat swept once (cursor), typed answers, the usage read once a week, a child without consent gets text features
- *      only (no model read, no tutor observations, no queue kept)
+ *   4. the sweeps: tutor chat swept once (cursor), typed answers, the usage read once a week, a child without consent gets none of
+ *      them (no text features, usage read, model read or tutor observations, no queue kept)
  *   5. the transcript read: invented quotes and unknown measures dropped, unmentioned measures read as 0, too little text not sent
  *   6. the browser capture: the silent-signals batch's new counts reach the scorecard as cap.* indicators, no keys or choices kept
  *   7. factorial pages (opt-in, PERSONALIZE_FACTORIAL=2): two compatible dimensions per page, stored and stable, both credited with the
@@ -180,15 +180,16 @@ const normal = () => Math.sqrt(-2 * Math.log(rnd() || 1e-9)) * Math.cos(2 * Math
     assert.strictEqual(hooks.textSweep(u.id), null);
     assert.strictEqual(scorecard.get(u.id).ind['txt.question'].w, w);
   });
-  await check('a child without a parent\'s agreement: text features only, no tutor observations, nothing queued for a model', () => {
+  await check('a child without a parent\'s agreement: no text features, no usage read, no tutor observations, nothing queued for a model', () => {
     const kid = user(10);
     archive(kid, ['why do we need fractions', 'this is boring']);
     hooks.textSweep(kid.id);
     const card = scorecard.get(kid.id);
-    assert.ok(card.ind['txt.boredom']);
+    assert.ok(!card.ind || !Object.keys(card.ind).length, 'no indicators at all');
+    assert.strictEqual(hooks.usageSweep(kid.id), null);
     assert.ok(!card.read_words && !card.read_at, 'nothing counted toward a model read');
     assert.strictEqual(hooks.onTutorObservation(kid.id, [{ measure: 'curiosity_hook', direction: 1, strength: 2 }]), null);
-    assert.ok(!scorecard.get(kid.id).ind['llm.curiosity_hook']);
+    assert.ok(!(scorecard.get(kid.id).ind || {})['llm.curiosity_hook']);
     const teen = user(15);
     hooks.onTutorObservation(teen.id, [{ measure: 'curiosity_hook', direction: 1, strength: 2 }, { measure: 'not_a_measure', direction: 1, strength: 3 }, { measure: 'evaluation_anxiety', direction: 0, strength: 0 }]);
     const t = scorecard.get(teen.id).ind;
