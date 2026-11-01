@@ -317,7 +317,7 @@ function experimentValue(st, arm) {
 // and the others' arms are noise to it (their effects add when they work on different parts of the page). PERSONALIZE_FACTORIAL is how
 // many dimensions a page may cross (1, the one-dimension design of round 8, is the default: measured in the recovery sim, two per page
 // doubled the dimensions run and moved their recovery r by only +0.005 to +0.016 at 100 levels, while false directives rose from 0.9% to
-// 1.9% and one untouched measure regressed; docs/SCORECARD-EVERYTHING.md section 4). Two dimensions conflict when they share a part
+// 1.9% and one untouched measure regressed; docs/SCORECARD-EVERYTHING.md section 5.6). Two dimensions conflict when they share a part
 // of the page below; brevity conflicts with everything that adds text. More than two instructions per page are not the default: a writer
 // follows fewer of them as they pile up (the research report, 4.2), and the page must still read as one lesson.
 const FACTORIAL = () => Math.max(1, Math.min(3, Number(process.env.PERSONALIZE_FACTORIAL || 1)));

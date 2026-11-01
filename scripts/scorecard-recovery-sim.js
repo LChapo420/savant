@@ -87,7 +87,7 @@ const simGate = require('./lib/sim-gate');
 // --channels=reading,questionnaire,delayed,games,import,max (or all): the optional measurement channels of services/boosters.js, modelled and sent through the
 // app's own hooks (scorecard/hooks.js on...), so the accuracy gate shows what each one is worth IN THIS SIMULATED WORLD. What a channel's observations look like
 // is an assumption the sim has to make, stated at each one below; where the sim has no way to generate the truth of a channel, it is not run and the report says so.
-const CHANNEL_NAMES = ['reading', 'questionnaire', 'delayed', 'games', 'import', 'max', 'choice'];
+const CHANNEL_NAMES = ['reading', 'questionnaire', 'delayed', 'games', 'import', 'max', 'choice', 'silent'];
 const CHANNELS = new Set(String(opt('channels', '')).split(',').map((s) => s.trim()).filter(Boolean).flatMap((c) => (c === 'all' ? CHANNEL_NAMES : [c])));
 const IPIP_R = 0.5;       // how well a validated-scale item reflects the measure it maps to (published self-report validities: about 0.3 to 0.5)
 const GAME_R = 0.6;       // how well a two-minute game reflects the trait it is a task for (a rough, assumed correlation)
@@ -108,6 +108,22 @@ const TAG_B = Number(opt('item-tags', 0.6));
 const TAG_RATE = 0.25;
 const TAG_FLIP = 0.1;
 const TAG_STATS = TAG_B ? require('../services/scorecard/item-tags').TAG_STATS : [];
+// Round 9, everything else the learner does and says (services/scorecard/indicators.js, docs/SCORECARD-EVERYTHING.md): tutor-chat text
+// features (txt.*), a model's read of the chats (llm.*), question-screen capture (cap.*, the opt-in silent signals: only with --channels
+// silent or all) and how the app is used (use.*). Each indicator k of a learner has a long-run value t_k = sum_j a_kj z_j + sqrt(1 - sum a^2)
+// x (sqrt(RHO) g_family + sqrt(1 - RHO) u_k), z_j their true standing on each measure it bears on and a_kj = sign x validity x SIGNAL_V: the
+// SAME validities and nuisance correlation the scorecard assumes (SIGNAL_V = 1, its best case), or half of them (--signal-v=0.5, the
+// robustness run, where the scorecard over-trusts every indicator by two). One unit (a message, an answered question, a week) is t_k plus
+// noise; a model read is a coarse -3..3 reading of t_k plus noise. --signals=text,llm,usage,capture picks the sources the world produces
+// (default all; 'none' none), --chat-share the share of learners who ever talk to the tutor (0.65, an assumption: no real figure yet).
+// The app's own sweep of its tables (hooks.textSweep / usageSweep) is off here: the sim feeds the same aggregates through hooks.onIndicators.
+const IND = require('../services/scorecard/indicators');
+const SIGNAL_V = Number(opt('signal-v', 1));
+const SIGNAL_RHO = Number(opt('signal-rho', IND.RHO));
+const SIGNALS = new Set(String(opt('signals', 'text,llm,usage,capture')).split(',').map((x) => x.trim()).filter((x) => x && x !== 'none'));
+const CHAT_SHARE = Number(opt('chat-share', 0.65));
+process.env.SCORECARD_SWEEP = 'off';
+const UNIT_NOISE = (key) => (/^txt\.(len|vocab|grade|formal|latency|drift|nonstd)$/.test(key) ? 2 : key.startsWith('use.') ? 1 : 3);
 if (CHANNELS.has('max')) process.env.PERSONALIZE_EXPERIMENT_RATE = '1';
 // The accuracy gate (scripts/lib/sim-gate.js): every measure's error at the end of weeks 1 to 4 of use, against the best achievable from the same
 // data. A week is seven simulated days from the learner's first sitting; how many levels that is depends on how often they study (the sim's
@@ -248,7 +264,7 @@ console.warn = (...args) => {
 let ledger = null;
 function credit(stat, cls, w) {
   if (!ledger || !BY_ID[stat] || !(w > 0)) return;
-  const row = ledger[stat] || (ledger[stat] = { beh: 0, tap: 0, exp: 0, quiz: 0, llm: 0 });
+  const row = ledger[stat] || (ledger[stat] = { beh: 0, tap: 0, exp: 0, quiz: 0, llm: 0, ind: 0 });
   row[cls] += w;
 }
 function sourceClass(o, source) {
@@ -268,6 +284,11 @@ scorecard.observe = function observeCounted(userId, observations, meta = {}) {
     // difficulty tap read against the level, a memory test) carries no weight of its own; it
     // is counted as one small unit of behaviour (0.05), or of a tap (0.25).
     if (o.choice) { credit(o.stat, 'tap', 0.25); continue; }
+    if (o.indicator) {
+      // An indicator unit, credited to each measure it bears on by the information it can carry (validity^2), for the ledger only.
+      for (const m of (IND.INDICATORS[o.indicator] || { maps: [] }).maps) credit(m.stat, 'ind', 0.05 * Math.min(20, Number(o.n) || 0) * m.v * m.v);
+      continue;
+    }
     if (o.contrast || o.shift || o.tap || o.memory || o.velocity || o.pace || o.reach) {
       // A memory test feeds the forgetting model, which sets all three memory stats.
       const ids = o.memory ? ['decay_rate', 'retention_index', 'retrieval_strength'] : [o.stat];
@@ -836,6 +857,52 @@ function runLearner(index, mode, { population = false } = {}) {
 
   // ── the measurement channels that happen once, at the start (--channels) ──
   const chanRng = new Rng(hashSeed(SEED, `${tag}channels`, index));
+  // Round 9: the learner's indicators (see SIGNAL_V above), on their own stream.
+  const sigRng = new Rng(hashSeed(SEED, `${tag}signals`, index));
+  const famG = { text: sigRng.normal(), capture: sigRng.normal(), usage: sigRng.normal() };
+  const latent = {};
+  for (const ind of Object.values(IND.INDICATORS)) {
+    let sum = 0;
+    let load2 = 0;
+    for (const m of ind.maps) {
+      const a = m.sign * Math.min(0.95, m.v * SIGNAL_V);
+      sum += a * (T[m.stat] - 50) / POP_SD;
+      load2 += a * a;
+    }
+    const rest = Math.sqrt(Math.max(0, 1 - load2));
+    latent[ind.key] = sum + rest * (Math.sqrt(SIGNAL_RHO) * famG[ind.family] + Math.sqrt(1 - SIGNAL_RHO) * sigRng.normal());
+  }
+  const chatter = sigRng.chance(CHAT_SHARE);
+  const sig = { sinceRead: 0, lastRead: -Infinity, weekStart: null, weekMsgs: 0, weekSittings: 0 };
+  const unitMean = (key, n) => latent[key] + UNIT_NOISE(key) * sigRng.normal() / Math.sqrt(n);
+  const keysOf = (prefix) => Object.keys(IND.INDICATORS).filter((k) => k.startsWith(prefix));
+  /** One sitting's worth of the round-9 sources: a chat after it (some learners), its question-screen capture, a weekly usage read. */
+  function sittingSignals(answered) {
+    if (sig.weekStart === null) sig.weekStart = simNow;
+    sig.weekSittings += 1;
+    if (chatter && (SIGNALS.has('text') || SIGNALS.has('llm')) && sigRng.chance(1 / (1 + Math.exp(-(-0.4 + 0.9 * latent['use.chat']))))) {
+      const m = 1 + sigRng.poisson(2);
+      sig.sinceRead += m;
+      sig.weekMsgs += m;
+      if (SIGNALS.has('text')) hooks.onIndicators(userId, Object.fromEntries(keysOf('txt.').map((k) => [k, { mean: unitMean(k, m), n: m }])), { source: 'tutor chat' });
+      if (SIGNALS.has('llm') && sig.sinceRead >= 4 && simNow - sig.lastRead >= 20 * 3600000) {
+        // A read: most measures 0 ("nothing either way"), the rest -3..3.
+        const coarse = (r) => (Math.abs(r) < 0.8 ? 0 : Math.sign(r) * Math.min(3, Math.ceil((Math.abs(r) - 0.8) / 0.6)));
+        hooks.onIndicators(userId, Object.fromEntries(keysOf('llm.').map((k) => [k, { mean: coarse(latent[k] + sigRng.normal()), n: 1 }])), { source: 'chat read' });
+        sig.lastRead = simNow;
+        sig.sinceRead = 0;
+      }
+    }
+    if (CHANNELS.has('silent') && SIGNALS.has('capture') && answered > 0) {
+      hooks.onIndicators(userId, Object.fromEntries(keysOf('cap.').map((k) => [k, { mean: unitMean(k, answered), n: answered }])), { source: 'silent signals' });
+    }
+    if (SIGNALS.has('usage') && simNow - sig.weekStart >= 7 * 86400000) {
+      const batch = Object.fromEntries(['use.hour', 'use.extras', 'use.uploads', 'use.reread'].map((k) => [k, { mean: unitMean(k, 1), n: 1 }]));
+      batch['use.chat'] = { mean: Math.log(1 + sig.weekMsgs / Math.max(1, sig.weekSittings)), n: 1 };
+      hooks.onIndicators(userId, batch, { source: 'how the app is used' });
+      Object.assign(sig, { weekStart: simNow, weekMsgs: 0, weekSittings: 0 });
+    }
+  }
   const zOf = (stat) => (T[stat] - 50) / POP_SD;
   if (CHANNELS.has('questionnaire')) {
     // Sixteen IPIP items: each answer reflects the mean z of the measures it maps to, at validity IPIP_R, on a five-point scale.
@@ -997,11 +1064,12 @@ function runLearner(index, mode, { population = false } = {}) {
       if (page && (role === 'focus' || role === 'stretch')) {
         if (page.skimmed) logit -= 0.4;
         if (page.words > 2200) logit += P.intake;
-        if (page.experiment) logit += (page.experiment.arm === 'high' ? 1 : -1) * 0.5 * EXP_EFFECT * P.z(page.experiment.stat);
+        // Round 9: a factorial page runs more than one dimension; their effects add (the dimensions are chosen not to interact).
+        for (const e of signals.experimentsOf(page.experiment)) logit += (e.arm === 'high' ? 1 : -1) * 0.5 * EXP_EFFECT * P.z(e.stat);
       }
       const delayedExp = experimentsBySkill[skill];
       if (role === 'review' && delayedExp && simNow < delayedExp.until) {
-        logit += (delayedExp.arm === 'high' ? 1 : -1) * 0.25 * EXP_EFFECT * P.z(delayedExp.stat);
+        for (const e of delayedExp.list) logit += (e.arm === 'high' ? 1 : -1) * 0.25 * EXP_EFFECT * P.z(e.stat);
       }
       const guess = format === 'multiple_choice' ? 0.25 : 0.03;
       let pKnow = sigmoid(logit);
@@ -1116,10 +1184,11 @@ function runLearner(index, mode, { population = false } = {}) {
       const side = directiveSides(scorecard.get(userId)).brevity_preference;
       if (side === 'high') words = Math.round(words * 0.6);
       if (side === 'low') words = Math.round(words * 1.35);
-      if (arm.experiment && arm.experiment.stat === 'brevity_preference') words = Math.round(words * (arm.experiment.arm === 'high' ? 0.6 : 1.3));
+      const bre = signals.experimentsOf(arm.experiment).find((e) => e.stat === 'brevity_preference');
+      if (bre) words = Math.round(words * (bre.arm === 'high' ? 0.6 : 1.3));
     }
     const experiment = tailored ? arm.experiment : null;
-    if (experiment) out.experiments++;
+    if (experiment) { out.experiments++; out.dimensions = (out.dimensions || 0) + signals.experimentsOf(experiment).length; }
     if (!tailored) out.holdouts++;
     const skimmed = rng.chance(P.skimRate + 0.5 * P.rushRate);
     const fullMs = (words / P.wpm) * 60000 * rng.logn(0.25);
@@ -1132,7 +1201,7 @@ function runLearner(index, mode, { population = false } = {}) {
       scrollBacks: skimmed ? 0 : scrollRng.poisson(P.scrollBacks * Math.min(2, words / 2000)),
     });
     pendingPage = { level: L, words, skimmed, experiment, arm: arm.arm };
-    if (experiment) experimentsBySkill[focusSkill(L)] = { stat: experiment.stat, arm: experiment.arm, until: simNow + 30 * 86400000 };
+    if (experiment) experimentsBySkill[focusSkill(L)] = { list: signals.experimentsOf(experiment).map((e) => ({ stat: e.stat, arm: e.arm })), until: simNow + 30 * 86400000 };
     return { finished: true, accuracy: null, words };
   }
 
@@ -1252,6 +1321,8 @@ function runLearner(index, mode, { population = false } = {}) {
         days: Number(days.toFixed(1)),
         // The answer log reduced to what a read-out of the same data can use (the accuracy gate's benchmark).
         feat: simGate.featuresOf(memoryDb.find('items', (r) => r.user_id === userId), { gaps: starts.slice(1).map((t, i) => (t - starts[i]) / 86400000), quits: out.quits, levels: done, days }),
+        // Round 9: the learner's indicator means as the app holds them, for the ideal observer (0 where there are none).
+        ind: Object.fromEntries(Object.entries(card.ind || {}).filter(([, m]) => m && m.w > 0).map(([k, m]) => [k, Number((m.s / m.w).toFixed(4))])),
       };
     };
     if (CHECKPOINTS.includes(done)) takeSnapshot(done);
@@ -1356,6 +1427,7 @@ function runLearner(index, mode, { population = false } = {}) {
       });
       hooks.onSessionFinished(userId, memoryDb.byId('sessions', session.id), sessionItems);
     }
+    sittingSignals(sessionItems.filter((i) => i.correct !== null).length);
     lastSessionEnd = simNow;
   }
   out.truth = T;
@@ -1460,7 +1532,10 @@ function gateFor(runs) {
       const rows = have.map((r) => {
         const e = r.snapshots[key].est[s.id];
         const measured = e.measured !== undefined ? e.measured : e.score;
-        return { truth: truthOf(r, s.id), measured, se: e.se === undefined ? 0 : e.se, confidence: e.confidence, feat: r.snapshots[key].feat };
+        // Round 9: the ideal observer also sees the learner's indicator means for the measures each bears on (what the app could use).
+        const ind = r.snapshots[key].ind || {};
+        const extra = (IND.BY_STAT[s.id] || []).map((m) => (ind[m.key] === undefined ? 0 : ind[m.key]));
+        return { truth: truthOf(r, s.id), measured, se: e.se === undefined ? 0 : e.se, confidence: e.confidence, feat: r.snapshots[key].feat, extra };
       });
       perStat[s.id] = { group: groupOf(s.id), truth_model: TRUTH_MODEL[s.id].model, ...simGate.gateMeasure(rows) };
     }
@@ -1605,7 +1680,7 @@ function summarize(runs, cp) {
   const ledgerMean = {};
   for (const g of GROUPS) {
     const ids = STATS.filter((s) => groupOf(s.id) === g).map((s) => s.id);
-    const sums = { beh: 0, tap: 0, exp: 0, quiz: 0, llm: 0 };
+    const sums = { beh: 0, tap: 0, exp: 0, quiz: 0, llm: 0, ind: 0 };
     for (const run of runs) {
       const led = run.snapshots[cp] ? run.snapshots[cp].ledger : {};
       for (const id of ids) for (const k of Object.keys(sums)) sums[k] += (led[id] && led[id][k]) || 0;
@@ -1773,6 +1848,8 @@ for (const mode of MODES) {
   results[mode].activity = {
     mean_days: round(mean(runs.map((r) => r.days)), 0),
     experiments_per_learner: round(mean(runs.map((r) => r.experiments)), 2),
+    // Round 9: experiment dimensions run (a factorial page counts each one it crosses).
+    dimensions_per_learner: round(mean(runs.map((r) => r.dimensions || 0)), 2),
     holdout_pages_per_learner: round(mean(runs.map((r) => r.holdouts)), 2),
     abandoned_levels_per_learner: round(mean(runs.map((r) => r.quits)), 2),
     review_items_per_learner: round(mean(runs.map((r) => r.reviewItems)), 1),
@@ -1930,7 +2007,7 @@ if (WRITE) {
     config: {
       learners: LEARNERS, max_levels: MAX_LEVELS, checkpoints: CHECKPOINTS, modes: MODES, seed: SEED, population: POPULATION,
       population_sd: POP_SD, experiment_effect_logits: EXP_EFFECT, self_report_r: SELF_REPORT_R,
-      channels: [...CHANNELS], item_rng: ITEM_RNG, choice_validity: CHOICE_R, choice_skip: CHOICE_SKIP, item_tag_effect: TAG_B, item_tag_rate: TAG_RATE, item_tag_flip: TAG_FLIP,
+      channels: [...CHANNELS], item_rng: ITEM_RNG, choice_validity: CHOICE_R, choice_skip: CHOICE_SKIP, item_tag_effect: TAG_B, item_tag_rate: TAG_RATE, item_tag_flip: TAG_FLIP, signals: [...SIGNALS], signal_validity_scale: SIGNAL_V, signal_rho: SIGNAL_RHO, chat_share: CHAT_SHARE, factorial: Number(process.env.PERSONALIZE_FACTORIAL || 1), indicators: process.env.SCORECARD_INDICATORS !== 'off',
       experiment_allocator: process.env.PERSONALIZE_ALLOCATOR === 'weighted' ? 'weighted' : 'info', experiment_stats: EXPERIMENT_STATS.length,
       questionnaire_rate: QUIZ_RATE, feedback_rate: FEEDBACK_RATE, confidence_tap_rate: TAP_RATE,
       items_per_practice_level: LEVEL_ITEMS, lesson_page_every: 3, model_read_stats_per_level: LLM_STATS_PER_READ,
