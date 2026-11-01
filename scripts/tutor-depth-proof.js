@@ -687,14 +687,14 @@ function report() {
   }
   L.push('');
   const cf = (args.cf && fs.existsSync(args.cf) ? JSON.parse(fs.readFileSync(args.cf, 'utf8')).counterfactual : J.counterfactual).filter((c) => c.result);
-  L.push('| counterfactual pair (one thing moved) | before: the judge\'s picks (each order) | after |', '|---|---|---|');
+  if (cf.length) L.push('| counterfactual pair (one thing moved) | before: the judge\'s picks (each order) | after |', '|---|---|---|');
   const word = (c) => (c.correct === 1 ? 'right' : c.correct === 0.5 ? 'cannot tell' : 'WRONG');
-  for (const s of learners()) {
+  for (const s of (cf.length ? learners() : [])) {
     const show = (v) => { const xs = cf.filter((c) => c.learner === s.key && c.version === v); return xs.length ? `${xs.map(word).join(', ')} (score ${f2(mean(xs.map((c) => c.correct)))})` : 'n/a'; };
     L.push(`| ${s.key}: ${s.twin.what} | ${show('before')} | ${show('after')} |`);
   }
   const acc = (v) => { const xs = cf.filter((c) => c.version === v); return xs.length ? `score ${f2(mean(xs.map((c) => c.correct)))}: ${xs.filter((c) => c.correct === 1).length} right, ${xs.filter((c) => c.correct === 0.5).length} cannot tell, ${xs.filter((c) => c.correct === 0).length} wrong (of ${xs.length} judgements)` : 'n/a'; };
-  L.push(`| **total** (right 1, cannot tell 0.5, wrong 0; chance 0.5) | ${acc('before')} | ${acc('after')} |`, '');
+  if (cf.length) L.push(`| **total** (right 1, cannot tell 0.5, wrong 0; chance 0.5) | ${acc('before')} | ${acc('after')} |`, '');
   if (A && B) {
     const sys = (R) => R.rows.map((r) => r.system_chars).filter(Number.isFinite);
     const ms = (R) => R.rows.map((r) => r.ms).sort((x, y) => x - y);

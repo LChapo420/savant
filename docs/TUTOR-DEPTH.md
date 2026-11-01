@@ -9,6 +9,13 @@ known.
 reach the model and that a blind judge rates the replies as using them; it is **not** evidence that real learners learn
 more. No real learner has used this version.
 
+**Headline (simulated learners, AI judge).** On 8 simulated month-long learners, every one of 250 ground-truth facts the
+probes call for now reaches the tutor's prompt (105 before), and no prompt carries an out-of-date fact unmarked (23 of 40
+did). A blind judge from another family (GPT Sol) scored the replies 4.16 before and 4.53 after out of 5 on the 40
+development probes, and 4.13 before and 4.64 after on 24 held-out probes; replies giving the answer away 2 to 0; told only
+what differs between two near-identical learners, the judge picked the right reply 0.72 of the time after vs 0.56 before
+(chance 0.5). Section 8 says why these are not learning gains.
+
 ## 1. Gap table: what reached the tutor's prompt before, and what reaches it now
 
 "Before" is main at 51322ab (the tutor files are the same at 968e3f2, where this branch started). Every tutor surface
@@ -30,7 +37,7 @@ there reaches all of them.
 
 Budget: the model block is ranked and fitted to `MODEL_BUDGET` = 2,600 characters (about 650 tokens). Every source with
 data keeps its best line; the rest are filled by score; each shortened source ends with "(+N more: ...)". Nothing is
-dropped whole (tested at 1,200, 1,800 and 2,600 characters). On the dock, the goals and "style and interests" lines that
+dropped whole (tested at 1,500, 1,800 and 2,600 characters). On the dock, the goals and "style and interests" lines that
 the pack and model now carry are no longer sent twice.
 
 ## 2. Memory that stays accurate over a month
@@ -109,8 +116,10 @@ Exported and deleted with the account. Nothing under services/scorecard/ was edi
 
 ## 5. Results
 
-**How the numbers were reached (the rounds, honestly).** The proof was run four times; each round's misses were fixed in
-the code and the next round rerun on the same learners. "Before" is the same in every round (main's code, run once).
+**How the numbers were reached (the rounds, honestly).** The proof was run five times; each round's misses were fixed in
+the code and the next round rerun on the same learners. "Before" is the same in every round (main's code, run once). The
+five main probes were therefore the DEVELOPMENT set: the code was changed after looking at them. The held-out probes
+further down were written after round 3 and never used to change anything; they are the fairer test.
 
 1. Round 1 (coverage only, no judge): 247 of 250 ground-truth facts reached the after prompts, but 15 of 40 still carried
    an out-of-date fact unmarked: a two-sided "over Minecraft now, playing Zelda instead" stored as one interest; "finds
@@ -125,11 +134,67 @@ the code and the next round rerun on the same learners. "Before" is the same in 
    replies used the model's facts but rarely acted on deadlines or measures. Fixed: the spec lines given to the tutor are
    the delivery levers only (hint size and worked examples stay the plan's); a "for this message" line says what to do
    with the model and turns the top measures into reply behaviour; the dock's leak check also runs on worked-example
-   rungs and asks about an example with the same answer.
-4. Round 4: the numbers below.
+   rungs and asks about an example with the same answer. (A second judge, Gemini 3.5 Flash, scored 21 of round 3's probes
+   before its free quota ran out: +0.30 after minus before, the same as GPT Sol on those 21; they agreed on the sign of
+   the difference in 11 of 21, so single-probe scores are noisy and only the totals mean much.)
+4. Round 4: 4.17 before, 4.26 after. Found: the judge marked every use of the learner's first name as "invented" (both
+   tutors are told it; the judge's profile did not say so), and explain replies built on interests made content errors
+   (a "permanent location takes ser" slip, a misdefined pin, a wrong interval). Fixed: the judge's profile names the
+   learner; the explain focus says "get the subject exactly right first, then set the example in an interest only where it
+   fits the real rule"; stuck and answer focus lines forbid an example with the learner's own answer.
+5. Round 5: the numbers below (the replies are from the code at commit 761f836; the later merge of main changed only
+   scorecard measurement code, and the scorecard-hook wiring runs after the reply, so the tutor's prompt code is the same).
 
 <!-- proof:start -->
-(filled in by `node scripts/tutor-depth-proof.js report`)
+| criterion (1 to 5) | before (main) | after (tutor-depth) | after minus before, 95% CI | after better / same / worse |
+|---|---|---|---|---|
+| right facts | 3.92 | 4.38 | 0.45 [0.07, 0.80] | 14 / 20 / 6 |
+| no stale | 4.22 | 4.80 | 0.57 [0.20, 1.02] | 7 / 33 / 0 |
+| adapts | 3.90 | 4.17 | 0.28 [-0.10, 0.65] | 18 / 13 / 9 |
+| correct integrity | 4.33 | 4.75 | 0.42 [0.07, 0.80] | 7 / 31 / 2 |
+| interests | 4.42 | 4.53 | 0.10 [-0.03, 0.28] | 3 / 36 / 1 |
+| **all five** | **4.16** | **4.53** | 0.37 | |
+
+| flag (count of replies) | before | after |
+|---|---|---|
+| stale used | 0 of 40 | 0 of 40 |
+| gave answer | 2 of 40 | 0 of 40 |
+| used avoided | 0 of 40 | 0 of 40 |
+| invented | 13 of 40 | 6 of 40 |
+
+| probe | n | before (mean of 5 criteria) | after | |
+|---|---|---|---|---|
+| plan | 8 | 3.75 | 4.47 | |
+| stuck | 8 | 4.35 | 4.80 | |
+| explain | 8 | 4.40 | 4.45 | |
+| recall | 8 | 4.25 | 4.63 | |
+| answer | 8 | 4.05 | 4.28 | |
+
+| counterfactual pair (one thing moved) | before: the judge's picks (each order) | after |
+|---|---|---|
+| maya: Brevity preference (how short they want explanations) | WRONG, WRONG (score 0.00) | right, right (score 1.00) |
+| leo: Interests | right, right (score 1.00) | right, right (score 1.00) |
+| priya: How soon the ACT is | right, cannot tell (score 0.75) | right, right (score 1.00) |
+| omar: Hint dependency | WRONG, WRONG (score 0.00) | WRONG, WRONG (score 0.00) |
+| sofia: Whether her comma-splice mix-up is still current | right, right (score 1.00) | right, WRONG (score 0.50) |
+| ben: Whether analogies have worked for him | right, right (score 1.00) | right, right (score 1.00) |
+| chloe: How long since she practised ratios | cannot tell, WRONG (score 0.25) | cannot tell, right (score 0.75) |
+| sam: Self-efficacy (whether he believes he can learn this) | right, WRONG (score 0.50) | WRONG, right (score 0.50) |
+| **total** (right 1, cannot tell 0.5, wrong 0; chance 0.5) | score 0.56: 8 right, 2 cannot tell, 6 wrong (of 16 judgements) | score 0.72: 11 right, 1 cannot tell, 4 wrong (of 16 judgements) |
+
+| run | replies | prompt chars, mean (about tokens) | reply time median ms | answered by | ledger spend |
+|---|---|---|---|---|---|
+| before | 48 | 6937 (~1734) | 2150 | {"deepseek/deepseek-v4.1-flash-1017":48} | $0.2776 |
+| after | 48 | 9150 (~2287) | 2190 | {"deepseek/deepseek-v4.1-flash-1017":48} | $0.0522 |
+
+| run | ground-truth facts found in the prompt (keyword checks) | prompts carrying an out-of-date fact unmarked | prompts with an answer key |
+|---|---|---|---|
+| before | 105 of 250 | 23 of 40 | 0 |
+| after | 250 of 250 | 0 of 40 | 0 |
+
+Answer patterns on question pages (stuck and answer probes, 7 learners with a pattern; a match is a flag to read, not proof of a leak): before 1 (omar:stuck), after 0 (none).
+
+Judge calls answered by: {"gpt-6.1-sol":72}; probes judged 40 of 40.
 <!-- proof:end -->
 
 ### Held-out probes (never used to tune the code)
@@ -139,7 +204,41 @@ minutes today, what is the best use of it?", "why do I keep getting these wrong?
 make me a practice question about something I am into?" (24 per version, the same judge, the same blind A/B).
 
 <!-- heldout:start -->
-(filled in by `node scripts/tutor-depth-proof.js report --marker=heldout`)
+| criterion (1 to 5) | before (main) | after (tutor-depth) | after minus before, 95% CI | after better / same / worse |
+|---|---|---|---|---|
+| right facts | 3.75 | 4.63 | 0.88 [0.25, 1.50] | 12 / 9 / 3 |
+| no stale | 4.17 | 4.92 | 0.75 [0.17, 1.38] | 6 / 17 / 1 |
+| adapts | 3.75 | 4.25 | 0.50 [-0.04, 1.04] | 11 / 8 / 5 |
+| correct integrity | 4.67 | 4.83 | 0.17 [-0.25, 0.54] | 4 / 19 / 1 |
+| interests | 4.33 | 4.58 | 0.25 [-0.17, 0.75] | 4 / 18 / 2 |
+| **all five** | **4.13** | **4.64** | 0.51 | |
+
+| flag (count of replies) | before | after |
+|---|---|---|
+| stale used | 1 of 24 | 0 of 24 |
+| gave answer | 0 of 24 | 0 of 24 |
+| used avoided | 1 of 24 | 0 of 24 |
+| invented | 8 of 24 | 1 of 24 |
+
+| probe | n | before (mean of 5 criteria) | after | |
+|---|---|---|---|---|
+| h_minutes | 8 | 3.60 | 4.55 | |
+| h_why | 8 | 4.30 | 4.67 | |
+| h_practice | 8 | 4.50 | 4.70 | |
+
+| run | replies | prompt chars, mean (about tokens) | reply time median ms | answered by | ledger spend |
+|---|---|---|---|---|---|
+| before | 24 | 7216 (~1804) | 2206 | {"deepseek/deepseek-v4.1-flash-1017":24} | $0.032 |
+| after | 24 | 9371 (~2343) | 2175 | {"deepseek/deepseek-v4.1-flash-1017":24} | $0.019 |
+
+| run | ground-truth facts found in the prompt (keyword checks) | prompts carrying an out-of-date fact unmarked | prompts with an answer key |
+|---|---|---|---|
+| before | 63 of 150 | 14 of 24 | 0 |
+| after | 150 of 150 | 0 of 24 | 0 |
+
+Answer patterns on question pages (stuck and answer probes, 7 learners with a pattern; a match is a flag to read, not proof of a leak): before 0 (none), after 0 (none).
+
+Judge calls answered by: {"gpt-6.1-sol":24}; probes judged 24 of 24.
 <!-- heldout:end -->
 
 ## 6. Integrity
@@ -152,17 +251,34 @@ learner model carries no answer key (tested with a planted key on the learner's 
 
 ## 7. Cost
 
-See the table in section 5 (ledger spend per run). The ledger is shared with other agents working at the same time, so a
-run's window also counts their calls: these figures are ceilings on this work's spend.
+| provider | what | spend |
+|---|---|---|
+| Standard Compute (DeepSeek V4.1 Flash, live ledger) | 5 builds (560 memory folds), about 380 dock replies and their leak checks | about $0.35 (the ledger's log, 629 calls for $0.33 after 06:55 UTC, plus the first minutes before the log window); the "ledger spend" column above is the ledger's whole delta in each run's window and also counts other agents' calls |
+| Modelflare GPT Sol 6.1 | the judge: 275 calls | on Modelflare's own key limit (no ledger in this repo); about 3,000 tokens a call |
+| Gemini 3.5 Flash (free tier) | the first judge: 21 calls until the free quota ran out | $0 |
+| Anthropic | none | $0 |
+
+In production the model block adds about 550 tokens to every tutor prompt (6,937 to 9,150 characters on average): about
+$0.00017 more per reply at the ledger's DeepSeek price.
 
 ## 8. Limits
 
-- Simulated learners and an AI judge. The judge sees ground truth written by the same author as the learners; its scores
-  are a consistency check, not a learning outcome. The probes are single messages, not long conversations.
+- Simulated learners and an AI judge. The ground truth and the learners were written by the same author as the code;
+  the judge's scores are a consistency check, not a learning outcome. Probes are single messages, not conversations.
+- The main five probes were also the development set (section 5); the held-out probes are the cleaner number. One
+  judge (GPT Sol) scored everything reported; single-probe scores are noisy (two judges agreed on the sign of the
+  difference in 11 of 21 probes), so read the totals and the confidence intervals, not single rows.
+- Counterfactual sensitivity is 16 judgements per version: 0.56 before, 0.72 after, against 0.5 for chance. Two pairs
+  stay at or below chance after: hint dependency (the reply plan deliberately asks a high-hint-dependency learner to try
+  first, so both twins get the same first reply: a design choice, not a missed fact) and self-efficacy (the reassurance
+  the plan asks for is not reliably visible to the judge).
 - The month's facts were given to both versions as the fact reader would have proposed them; the reader itself (a model)
   was not run, so how often it writes a good `replaces` or a dated goal is not measured. The deterministic slot rules
-  (dated goals, tastes) do not depend on it.
-- The model block adds about 650 tokens to every tutor prompt.
-- The scorecard hook stores observations; none reach the scorecard until its owner adds `signals.fromTutor`.
-- Not done: a real-learner study; a long multi-turn probe; the home chat and question coach were not probed separately
-  (they read the same `contextText`).
+  (dated goals, tastes, two-sided taste facts) do not depend on it.
+- The content of a reply is still only as correct as the model: round 4 found a "permanent location takes ser" slip and a
+  wrong music interval in explain replies; the focus line lowered this in round 5 but nothing checks a reply's facts.
+- The scorecard hook forwards only the measures the scorecard's tutor hook reads (LLM_STATS); hint dependency,
+  help-seeking and four explanation measures are stored and wait.
+- Not done: a real-learner study; long multi-turn probes; the home chat and question coach were not probed separately
+  (they read the same `contextText`); an under-13 account was tested only in unit tests (no real-model run).
+- The raw replies, prompts and judge scores of the final round are in `docs/tutor-depth-proof/`.
