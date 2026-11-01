@@ -201,12 +201,18 @@ const silent = {
     put(user.id, { silent: { ...b.silent, on: !!on, ...(on ? { since: new Date().toISOString() } : { acc: null }) } });
     return { ok: true, on: !!on };
   },
-  /** batch: [{ hesitation_ms, key_median_ms, key_cv, keys, backspaces }] for answered items. Summaries only: no keys, no text. */
+  /**
+   * batch: [{ hesitation_ms, key_median_ms, key_cv, keys, backspaces, shown_ms, tab_aways, away_ms, mc, mc_changes, pauses, idle }] for answered
+   * items. Summaries only: no keys, no text, no choice. The round-9 counts (tab-aways, time away, a changed multiple-choice pick, pauses while
+   * typing, idle stretches) reach the scorecard as indicators (scorecard/indicators.js cap.*), one unit per answered question.
+   */
   ingest(user, batch) {
     if (!allowed(user)) return { error: 'Not available for this account.', code: 'not_allowed' };
     const b = get(user.id);
     if (!b.silent.on) return { ok: true, kept: 0, reason: 'off' };
     const acc = b.silent.acc || { items: 0, keys: 0, backspaces: 0, hes: [], med: [] };
+    const cap = acc.cap || {};
+    const add = (key, v) => { if (!Number.isFinite(v)) return; const c = cap[key] || (cap[key] = [0, 0]); c[0] += v; c[1] += 1; };
     for (const s of (Array.isArray(batch) ? batch : []).slice(0, 40).filter((x) => x && typeof x === 'object')) {
       acc.items += 1;
       const h = Number(s.hesitation_ms);
@@ -214,16 +220,26 @@ const silent = {
       const k = clamp(Number(s.keys) || 0, 0, 2000);
       const m = Number(s.key_median_ms);
       if (k >= 3 && m >= 20 && m <= 5000) { acc.keys += k; acc.med.push(m); acc.backspaces += clamp(Number(s.backspaces) || 0, 0, k); }
+      const shown = Number(s.shown_ms);
+      if (shown > 0 && shown < 3600000) {
+        add('cap.tabaway', clamp(Number(s.tab_aways) || 0, 0, 20));
+        add('cap.away', clamp((Number(s.away_ms) || 0) / shown, 0, 1));
+        add('cap.idle', clamp(Number(s.idle) || 0, 0, 20));
+        if (s.mc === true) add('cap.mcchange', (Number(s.mc_changes) || 0) > 0 ? 1 : 0);
+        if (s.pauses !== null && s.pauses !== undefined && k >= 3) add('cap.pause', clamp(Number(s.pauses) || 0, 0, 50));
+      }
     }
     let fed = false;
     if (acc.items >= SILENT_FLUSH) {
       const median = (xs) => (xs.length ? [...xs].sort((a, c) => a - c)[Math.floor(xs.length / 2)] : null);
       try {
         hooks().onSilentSignals(user.id, { items: acc.items, keys: acc.keys, hesitation_ms: median(acc.hes), key_median_ms: median(acc.med), backspace_share: acc.keys ? acc.backspaces / acc.keys : null });
+        const means = Object.fromEntries(Object.entries(cap).filter(([, c]) => c[1] > 0).map(([key, c]) => [key, { mean: c[0] / c[1], n: c[1] }]));
+        if (Object.keys(means).length) hooks().onIndicators(user.id, means, { source: 'silent signals' });
         fed = true;
       } catch (err) { console.warn(`boosters: silent signals not applied: ${err.message}`); }
       put(user.id, { silent: { ...b.silent, acc: null } });
-    } else put(user.id, { silent: { ...b.silent, acc: { items: acc.items, keys: acc.keys, backspaces: acc.backspaces, hes: acc.hes.slice(-60), med: acc.med.slice(-60) } } });
+    } else put(user.id, { silent: { ...b.silent, acc: { items: acc.items, keys: acc.keys, backspaces: acc.backspaces, hes: acc.hes.slice(-60), med: acc.med.slice(-60), cap } } });
     return { ok: true, kept: acc.items, fed };
   },
 };

@@ -118,7 +118,9 @@ check('the same evidence read months later is less certain than read now, and re
   feed(u.id, 'prior_knowledge', 30, 'test');
   const now = scorecard.read(scorecard.get(u.id), 'prior_knowledge');
   const again = scorecard.read(scorecard.get(u.id), 'prior_knowledge');
-  assert.strictEqual(again.se, now.se);
+  // The real clock moves between the two reads, so the evidence fades by a millisecond's worth (it failed now and then at strict equality,
+  // the npm test of 1 Nov 2026); reading twice must change nothing beyond that.
+  assert.ok(Math.abs(again.se - now.se) < 1e-6, `${again.se} vs ${now.se}`);
   assert.strictEqual(again.measured, now.measured);
   const card = scorecard.get(u.id);
   card.stats.prior_knowledge.at = new Date(Date.now() - 200 * 86400000).toISOString();

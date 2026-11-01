@@ -247,6 +247,169 @@ function onSessionFinished(userId, session, items) {
     const obs = signals.fromSession(userId, session, items);
     if (obs.length) scorecard.observe(userId, obs, { source: 'session', trackId: session.track_id });
   });
+  // Round 9: what they wrote (typed answers of a few words or more, and any tutor chat since the last sweep) and how they use the app.
+  if (process.env.SCORECARD_SWEEP !== 'off') {
+    onLearnerText(userId, (items || []).filter((i) => i && ['type_in', 'short_answer', 'typed'].includes(i.format) && wordCount(i.user_answer) >= 4)
+      .map((i) => ({ text: String(i.user_answer) })), { source: 'typed answers' });
+    textSweep(userId);
+    usageSweep(userId);
+  }
+}
+
+// ── round 9: everything else the learner does and says (indicators.js, docs/SCORECARD-EVERYTHING.md) ──
+const indicators = require('./indicators');
+const textFeatures = require('./text-features');
+const DAY_MS = 86400000;
+const wordCount = (t) => String(t || '').split(/\s+/).filter(Boolean).length;
+
+/**
+ * What the learner wrote, as deterministic text features (text-features.js), computed here with no model: only the batch means reach the
+ * scorecard (scorecards.ind), never the text. `messages`: [{ text, context?, latencyMs? }] (context: the tutor message it answers).
+ * Not for an under-13 account without a parent's measurement agreement (owner rule: no extra measurement channels for them), though it
+ * reads only what the learner already sent, on this machine. Throws nothing.
+ */
+function onLearnerText(userId, messages, { source = 'learner text' } = {}) {
+  return safely('learner text', () => {
+    if (!mayMeasureMore(userId)) return null;
+    const list = (messages || []).filter((m) => m && String(m.text || '').trim());
+    if (!list.length) return null;
+    const obs = indicators.observations(textFeatures.summarize(list));
+    return obs.length ? scorecard.observe(userId, obs, { source }) : null;
+  });
+}
+
+/** Indicator means already aggregated elsewhere ({ 'cap.tabaway': { mean, n }, ... }: the browser's capture, a usage sweep, the sim). */
+function onIndicators(userId, batch, { source = 'indicators' } = {}) {
+  return safely('indicators', () => {
+    const obs = indicators.observations(batch);
+    return obs.length ? scorecard.observe(userId, obs, { source }) : null;
+  });
+}
+
+/**
+ * The tutor's own observations of the learner (the hook for services/tutor*.js; documented in docs/SCORECARD-EVERYTHING.md):
+ * [{ measure, direction: -1 | 0 | 1, strength: 0-3 }] for measures in indicators.LLM_STATS. Each is one unit of the same llm.<measure>
+ * indicator a transcript read feeds, at the same validity. Send a 0 for a measure the tutor looked for and saw nothing of, so a learner who
+ * gives no sign is read as typical rather than not at all. Not for an under-13 account without a parent's measurement agreement.
+ */
+function onTutorObservation(userId, observations) {
+  return safely('tutor observation', () => {
+    if (!mayMeasureMore(userId)) return null;
+    const batch = {};
+    for (const o of observations || []) {
+      const stat = o && String(o.measure || '');
+      if (!indicators.LLM_STATS.includes(stat)) continue;
+      const dir = Number(o.direction) > 0 ? 1 : Number(o.direction) < 0 ? -1 : 0;
+      const v = dir * Math.max(0, Math.min(3, Math.round(Number(o.strength) || 0)));
+      const key = `llm.${stat}`;
+      const b = batch[key] || (batch[key] = { s: 0, n: 0 });
+      b.s += v;
+      b.n += 1;
+    }
+    const means = Object.fromEntries(Object.entries(batch).map(([k, b]) => [k, { mean: b.s / b.n, n: b.n }]));
+    return Object.keys(means).length ? scorecard.observe(userId, indicators.observations(means), { source: 'tutor observation' }) : null;
+  });
+}
+
+/** Whether new measurement channels may reach this account (services/boosters.js allowed: age screen answered; under the consent age, a parent's agreement). */
+function mayMeasureMore(userId) {
+  try {
+    const user = db.byId('users', userId);
+    return !!(user && require('../boosters').allowed(user)); // eslint-disable-line global-require
+  } catch { return false; }
+}
+
+/** The tutor chat ended (for services/tutor*.js to call): sweep the new messages now instead of after the next sitting. */
+function onTutorActivity(userId) {
+  return textSweep(userId);
+}
+
+/**
+ * The learner's tutor-chat messages since the last sweep (tutor_archive), as text features; and, when there is enough new text and the
+ * account allows it, a model read of them in the background (transcript-read.js), at most once a day. The cursor is the time of the
+ * last exchange swept, kept on the scorecard row with the words not yet read (only while a read may happen; never for an account that
+ * may not have one).
+ */
+function textSweep(userId) {
+  return safely('text sweep', () => {
+    const row = db.findOne('tutor_archive', (r) => r.user_id === userId);
+    const entries = (row && row.entries) || [];
+    const card = scorecard.get(userId);
+    const cursor = card.text_cursor || '';
+    const fresh = [];
+    for (let i = 0; i < entries.length; i++) {
+      const e = entries[i];
+      if (!e || !e.learner || !(String(e.at || '') > cursor)) continue;
+      const prev = entries[i - 1];
+      const gap = prev && prev.at ? Date.parse(e.at) - Date.parse(prev.at) : null;
+      fresh.push({ text: e.learner, context: prev ? prev.tutor : null, latencyMs: gap !== null && gap > 0 && gap < 3600000 ? gap : null, at: e.at });
+    }
+    if (!fresh.length) return null;
+    onLearnerText(userId, fresh, { source: 'tutor chat' });
+    const transcript = require('./transcript-read'); // eslint-disable-line global-require
+    const may = mayMeasureMore(userId) && process.env.SCORECARD_TRANSCRIPT_READ !== 'off';
+    const patch = { text_cursor: fresh[fresh.length - 1].at };
+    if (may) {
+      // The words not yet read are counted, not kept: when a read is due its messages are taken from the archive again (after read_from).
+      const words = (card.read_words || 0) + fresh.reduce((a, m) => a + wordCount(m.text), 0);
+      const due = !card.read_at || Date.now() - Date.parse(card.read_at) >= transcript.READ_GAP_MS;
+      if (due && words >= transcript.MIN_WORDS) {
+        const from = card.read_from || '';
+        const unread = entries.filter((e) => e && e.learner && String(e.at || '') > from).slice(-60).map((e) => e.learner);
+        Object.assign(patch, { read_at: new Date().toISOString(), read_from: patch.text_cursor, read_words: 0 });
+        transcript.read(userId, unread).catch(() => {});
+      } else patch.read_words = words;
+    } else patch.read_words = 0;
+    db.update('scorecards', card.id, patch);
+    return fresh.length;
+  });
+}
+
+/** The circular standard deviation of clock hours, in hours (null under three). */
+function hourSpread(hours) {
+  if (hours.length < 3) return null;
+  const a = hours.map((h) => (h / 24) * 2 * Math.PI);
+  const c = a.reduce((x, t) => x + Math.cos(t), 0) / a.length;
+  const s = a.reduce((x, t) => x + Math.sin(t), 0) / a.length;
+  const r = Math.min(1, Math.sqrt(c * c + s * s));
+  return (24 / (2 * Math.PI)) * Math.sqrt(-2 * Math.log(Math.max(r, 1e-6)));
+}
+
+/**
+ * How the app is used, once a week per learner (use.* indicators), read from the learner's own rows: which optional extras are on, own
+ * material added, how regular the hour of starting a sitting is, how much they talk to the tutor. `now` for tests.
+ */
+function usageSweep(userId, { now = Date.now() } = {}) {
+  return safely('usage sweep', () => {
+    if (!mayMeasureMore(userId)) return null;
+    const card = scorecard.get(userId);
+    if (card.use_at && now - Date.parse(card.use_at) < 7 * DAY_MS) return null;
+    const since = now - 7 * DAY_MS;
+    const mine = (s) => s.user_id === userId && s.kind !== 'placement' && !s.preview;
+    const sessions = db.find('sessions', (s) => mine(s) && Date.parse(s.started_at || 0) >= since);
+    if (!sessions.length) return null;
+    const batch = {};
+    // Hours are read in the server's zone: regularity is what counts, not the clock.
+    const spread = hourSpread(db.find('sessions', (s) => mine(s) && Date.parse(s.started_at || 0) >= now - 14 * DAY_MS)
+      .map((s) => new Date(s.started_at).getHours() + new Date(s.started_at).getMinutes() / 60));
+    if (spread !== null) batch['use.hour'] = { mean: spread, n: 1 };
+    const arch = db.findOne('tutor_archive', (r) => r.user_id === userId);
+    const said = ((arch && arch.entries) || []).filter((e) => e && e.learner && Date.parse(e.at || 0) >= since).length;
+    batch['use.chat'] = { mean: Math.log(1 + said / sessions.length), n: 1 };
+    try {
+      const uploads = db.find('materials', (m) => m.user_id === userId && Date.parse(m.created_at || 0) >= since).length;
+      batch['use.uploads'] = { mean: Math.log(1 + uploads), n: 1 };
+    } catch { /* no materials table */ }
+    try {
+      const b = require('../boosters').get(userId); // eslint-disable-line global-require
+      const on = [!!b.questionnaire, !!(b.silent && b.silent.on), !!b.max_accuracy, !!b.imports, Object.keys(b.games || {}).length > 0, ((b.delayed && b.delayed.taken) || []).length > 0].filter(Boolean).length;
+      batch['use.extras'] = { mean: on, n: 1 };
+    } catch { /* no boosters */ }
+    const obs = indicators.observations(batch);
+    if (obs.length) scorecard.observe(userId, obs, { source: 'how the app is used' });
+    db.update('scorecards', scorecard.get(userId).id, { use_at: new Date(now).toISOString() });
+    return batch;
+  });
 }
 
 /**
@@ -346,6 +509,13 @@ function conclusionsFor(userId, { trackId, gradeId, max = 6 } = {}) {
 }
 
 module.exports = {
+  onLearnerText,
+  onIndicators,
+  onTutorObservation,
+  onTutorActivity,
+  textSweep,
+  usageSweep,
+  hourSpread,
   onQuestionnaire,
   onDelayedCheck,
   onGame,
