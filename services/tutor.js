@@ -16,6 +16,14 @@
  *   archive        every exchange is also kept in `tutor_archive` (services/tutor-archive.js) and
  *                  searched with a local keyword index when the learner brings up something from
  *                  long ago: a few clipped snippets, a fixed token budget, no model call (06-M11).
+ *                  A snippet repeating something since superseded is marked OUT OF DATE (staleNote).
+ *   learner model  (tutor-depth, 1 Nov 2026) services/tutor-learner-model.js: every source the app has on
+ *                  them (all scorecard measures with value and confidence, the learning spec, mastery
+ *                  and the forgetting model, mix-ups current or fixed, what explanations worked, goals
+ *                  and deadlines, tastes, what went out of date), ranked for this reply and fitted to its
+ *                  budget, in every contextText. TUTOR_LEARNER_MODEL=0 turns it off. The memory fold is
+ *                  dated, sees the facts on file, and is not kept if it names something its sources do
+ *                  not (`invented`). Docs: docs/TUTOR-DEPTH.md.
  *
  * Inside a question the rules of the coach stay in force: services/ai.js
  * coachSystemFor puts this context after the coach's rules, and the reply still goes
@@ -219,7 +227,6 @@ async function fold(userId) {
     const transcript = old.map((t) => `${t.at ? `(${String(t.at).slice(0, 10)}) ` : ''}${t.role === 'user' ? 'Learner' : 'Tutor'}${t.where ? ` [${t.where}]` : ''}: ${t.content}`).join('\n');
     let onFile = '';
     try {
-      // eslint-disable-next-line global-require
       const tf = require('./tutor-facts'); // eslint-disable-line global-require
       // With what their answers say since, so the summary does not keep "finds X hard" once X is solid.
       onFile = tf.list(userId).slice(0, 12).map((f) => `- ${f.kind}: ${clip(f.text, 120)}${tf.sinceNote(userId, f)} (${String(f.last_confirmed_at || f.first_at || '').slice(0, 10)})`).join('\n');

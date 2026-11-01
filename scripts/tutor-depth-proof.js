@@ -551,6 +551,13 @@ async function sol(system, user) {
 }
 function parseJson(t) { const m = String(t || '').match(/\{[\s\S]*\}/); if (!m) return null; try { return JSON.parse(m[0]); } catch { return null; } }
 async function ask(system, user) {
+  // JUDGE=sol: one judge for every call (Gemini's free daily quota ran out part-way through the first pass).
+  if (process.env.JUDGE === 'sol') {
+    for (let i = 0; i < 3; i++) {
+      try { const r = await sol(system, user); const j = parseJson(r.text); if (j) return { ...j, _judge: r.model }; } catch (err) { if (i === 2) console.warn(err.message); await new Promise((r) => { setTimeout(r, 5000 * (i + 1)); }); }
+    }
+    return null;
+  }
   for (let i = 0; i < 4; i++) {
     try { const r = await gemini(system, user); const j = parseJson(r.text); if (j) return { ...j, _judge: r.model }; } catch (err) { if (i === 3) console.warn(err.message); await new Promise((r) => { setTimeout(r, 8000 * (i + 1)); }); }
   }
@@ -698,6 +705,17 @@ function report() {
     L.push(`Answer patterns on question pages (stuck and answer probes, 7 learners with a pattern; a match is a flag to read, not proof of a leak): before ${leaks(B).length} (${leaks(B).join(', ') || 'none'}), after ${leaks(A).length} (${leaks(A).join(', ') || 'none'}).`, '');
   }
   L.push(`Judge calls answered by: ${JSON.stringify([...ok.map((p) => p.judge), ...cf.map((c) => c.judge)].reduce((m, x) => { m[x] = (m[x] || 0) + 1; return m; }, {}))}; probes judged ${ok.length} of ${J.probes.length}.`);
+  // A second judge on the probes it finished (another family again): does it see the same difference?
+  if (args.second && fs.existsSync(args.second)) {
+    const S = JSON.parse(fs.readFileSync(args.second, 'utf8'));
+    const both = S.probes.filter((p) => p.scores && p.scores.before && p.scores.after && p.judge && p.judge !== (ok[0] && ok[0].judge))
+      .map((p) => ({ p, q: ok.find((x) => x.learner === p.learner && x.probe === p.probe) })).filter((x) => x.q);
+    const diff = (s) => mean(CRIT.map((c) => Number(s.after[c]) - Number(s.before[c])));
+    const d2 = both.map(({ p }) => diff(p.scores));
+    const d1 = both.map(({ q }) => diff(q.scores));
+    const agree = both.filter(({ p, q }) => Math.sign(diff(p.scores)) === Math.sign(diff(q.scores))).length;
+    L.push('', `Second judge (${both.length ? both[0].p.judge : 'none'}) on the ${both.length} probes it scored before its free quota ran out: after minus before, mean of the 5 criteria, ${f2(mean(d2))} (the main judge on the same probes: ${f2(mean(d1))}); the two agree on the sign of the difference in ${agree} of ${both.length}.`);
+  }
   const md = L.join('\n');
   if (args.md) {
     const file = args.md;

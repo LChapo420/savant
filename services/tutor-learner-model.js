@@ -8,6 +8,8 @@
  * Sources (each is a SECTION; every section with data keeps at least one line, so ranking shortens a source and the
  * summary line says what was left out; nothing is dropped whole):
  *
+ *   focus        what to do with all of it for THIS message (by its intent: plan, stuck, explain, recall, answer) and the
+ *                top three measures for it as reply behaviour (TUTOR_DO: written for a chat reply, inside the hint rule).
  *   now          the skill on the page: mastery, attempts, predicted recall from the forgetting model
  *                (services/mastery.js predictedRecall with the learner's own curve, scorecard.forgettingCurve), the
  *                days since it was last practised, and the mix-up they show on it.
@@ -18,7 +20,9 @@
  *                about (stuck -> resilience, explain -> intake and representation, planning -> motivation, pacing,
  *                memory); the rest are counted ("9 more leaning, 31 near average, 52 not measured yet").
  *   teach        the learning spec (services/learning-spec.js, consumed, never edited): every measure folded into
- *                levers, written for the 'tutor' surface, with the interests and dislikes this file resolved.
+ *                levers, with the interests and dislikes this file resolved; only the delivery levers a chat reply can
+ *                follow (TEACH_LEVERS), never hint size or worked examples (the plan owns those, under the answer rule),
+ *                and never a way of explaining that has measurably failed for them.
  *   explain      which ways of explaining worked or failed for them (tutor-strategy counts, "worked" facts).
  *   mixups       misconceptions: the tutor's own (with the wrong answer and how often) and the error tags on their
  *                answers. One they have since fixed (at least 4 answers on that skill after it, 80% right, mastery
@@ -44,9 +48,9 @@ const curriculum = require('../config/curriculum');
 
 const MODEL_BUDGET = 2600;
 const DAY = 86400000;
-const SECTION_ORDER = ['now', 'goals', 'measures', 'teach', 'explain', 'mixups', 'hard', 'memory', 'tastes', 'told', 'stale'];
+const SECTION_ORDER = ['focus', 'now', 'goals', 'measures', 'teach', 'explain', 'mixups', 'hard', 'memory', 'tastes', 'told', 'stale'];
 const SECTION_LABEL = {
-  now: 'Right now', goals: 'Goals and deadlines', measures: 'Measures that matter here (measured value of 100, how sure)',
+  focus: 'For this message', now: 'Right now', goals: 'Goals and deadlines', measures: 'Measures that matter here (measured value of 100, how sure)',
   teach: 'How to teach them (from all their measures)', explain: 'Ways of explaining', mixups: 'Mix-ups',
   hard: 'Difficulties and strengths', memory: 'Solid and fading', tastes: 'Interests and dislikes', told: 'They told you',
   stale: 'Out of date (do not use)',
@@ -237,21 +241,94 @@ function measureItems(userId, intent) {
     if (!Number.isFinite(m) || Math.abs(m - 50) < 10) { near += 1; continue; }
     const base = (Math.abs(m - 50) / 50) * (c / 100);
     const boost = (cats.includes(s.category) ? 1.8 : 1) * (TUTOR_STATS.has(s.id) ? 1.3 : 1);
-    items.push({ id: s.id, text: `${s.name} ${m} (${m >= 50 ? s.high : s.low}; ${c}% sure)`, score: 3 * base * boost, short: s.name.toLowerCase() });
+    items.push({ id: s.id, high: m >= 50, text: `${s.name} ${m} (${m >= 50 ? s.high : s.low}; ${c}% sure)`, score: 3 * base * boost, short: s.name.toLowerCase() });
   }
   items.sort((a, b) => b.score - a.score);
   return { items, summary: `of all ${reads.length}: ${items.length} lean clearly, ${near} near average, ${unmeasured} not measured enough yet` };
 }
 
+// The spec's levers a chat reply can follow. Left out on purpose: hint size, worked examples, scaffolding and the other
+// levers the reply's plan owns (services/tutor-plan.js sets the hint rung and the way of explaining from the same spec,
+// under the answer rule), and the ones about building a lesson or a session. A first proof run showed why: the spec's
+// lesson line "lead with fully worked examples" pushed one reply to work an example whose answer was the learner's own.
+const TEACH_LEVERS = ['chunk', 'pace', 'vocab', 'sentence', 'defineTerms', 'density', 'warmth', 'formality', 'humor', 'praise', 'gentleness', 'pressure',
+  'novelty', 'story', 'autonomy', 'structure', 'visual', 'dialogic', 'elaboration', 'mnemonic', 'repetition', 'application', 'conceptual', 'bigPicture',
+  'rigor', 'misconception', 'analogy', 'causal', 'curiosity', 'relevance', 'multiRep', 'patternHints', 'social', 'emotion', 'identity', 'contrast'];
+// A lever whose way of explaining has measurably failed for them is not recommended (06-M8: what was measured wins).
+const LEVER_STYLE = { analogy: 'analogy', visual: 'visual', dialogic: 'step_questions' };
+
 function teachItems(userId, skillId, tasteSets) {
-  // eslint-disable-next-line global-require
+  /* eslint-disable global-require */
   const ls = require('./learning-spec');
+  const strategy = require('./tutor-strategy');
+  /* eslint-enable global-require */
   const context = { interests: tasteSets.interests.map((x) => domainWords(x.text)), dislikes: tasteSets.dislikes.map((x) => domainWords(x.text)) };
   const spec = safe(() => ls.buildSpec(userId, { skillIds: skillId ? [skillId] : [], context }), null);
-  if (!spec || spec.isDefault) return [];
-  const lines = safe(() => ls.specToLines(spec, { surface: 'tutor', bare: true }), []);
-  return lines.filter((l) => !/^Language: write at/.test(l) || spec.learner.esl || spec.language.plainLanguage)
-    .map((l, i) => ({ text: clip(l.replace(/^Language: write at/, 'Talk at'), 220), score: 2.1 - 0.12 * i, short: clip(l, 30) }));
+  if (!spec || spec.isDefault || !spec.levers) return [];
+  const failed = new Set(safe(() => strategy.ranked(userId, skillId), []).filter((r) => r.tried >= 2 && r.worked / r.tried < 0.34).map((r) => r.style));
+  const out = [];
+  for (const l of TEACH_LEVERS) {
+    const lean = spec.levers[l] || 0;
+    if (Math.abs(lean) < ls.SHOW_AT || !ls.PHRASES[l]) continue;
+    if (lean > 0 && LEVER_STYLE[l] && failed.has(LEVER_STYLE[l])) continue;
+    const text = ls.PHRASES[l][lean > 0 ? 1 : 0];
+    if (!text) continue;
+    out.push({ text: clip(text, 200), score: 1.2 + Math.abs(lean) * (1 + ((ls.LEVERS[l] && ls.LEVERS[l].imp) || 0)) * 0.3, short: l });
+  }
+  if (spec.learner && (spec.learner.esl || (spec.language && spec.language.plainLanguage))) {
+    out.push({ text: `Talk at about reading grade ${spec.language.vocabularyGrade}, short sentences${spec.learner.esl ? '; English is not their first language: one meaning per word' : ''}.`, score: 2.2, short: 'language' });
+  }
+  return out.sort((a, b) => b.score - a.score);
+}
+
+// ── for this message: what to do with the model, by what the message is about ──
+const INTENT_DO = {
+  plan: 'They are asking what to work on: lead with their nearest dated deadline and the days left, then the weakest or fading skill worth a quick review, in a sentence or two.',
+  stuck: 'They are stuck: aim the next hint at their current mix-up on this skill, in the way of explaining that has worked for them.',
+  explain: 'They want an explanation: build the example on a CURRENT interest (never on a dislike or a dropped one), in the way that has worked for them.',
+  recall: 'They are asking about something from before: answer from the dated notes (the newest wins) and say roughly when they told you.',
+  answer: 'They want the answer: do not give it. One warm line, then the next hint, aimed at their mix-up, in the way that works for them.',
+};
+// How each measure that leans should shape a CHAT reply ([low, high]); written for the tutor and kept inside the hint rule.
+const TUTOR_DO = {
+  frustration_threshold: ['they get frustrated quickly: name it in half a sentence, keep the step small and the tone gentle', 'patient: fine to let them sit with it a moment'],
+  hint_dependency: ['rarely needs hints: the smallest nudge, then let them run', 'leans on hints: ask what they tried first, then give one clear hint'],
+  productive_struggle: ['needs rescue early: do not leave them stuck; offer the next rung sooner', 'gains from struggling: hold back and ask a question'],
+  help_seeking: ['struggles silently: check whether it makes sense', null],
+  brevity_preference: ['wants full detail: three or four sentences, step by step', 'wants it short: one or two sentences, one idea'],
+  humor_receptivity: ['no jokes', 'a light joke is welcome'],
+  praise_sensitivity: ['skip praise filler', 'name the specific move they got right'],
+  feedback_tone_sensitivity: ['direct correction is fine', 'correct gently: say what is right first'],
+  worked_example_dependence: ['the principle over examples', 'a short example on different numbers helps (its answer must differ from theirs)'],
+  analogical_transfer: ['no analogies: explain the thing itself', 'one familiar analogy, mapped back to the idea'],
+  spatial_anchoring: [null, 'describe a small layout or picture they can sketch'],
+  dialogic_preference: ['explain directly rather than quizzing', 'one small question at a time'],
+  self_efficacy: ['doubts they can do this: make the first step clearly doable and say what they already got right', 'confident: brisk and matter-of-fact is fine'],
+  evaluation_anxiety: [null, 'keep it low-stakes: no test or timer talk'],
+  vocabulary_ceiling: ['plain everyday words', null],
+  attention_runway: ['focus drops quickly: one small piece at a time', null],
+  step_explicitness: [null, 'spell out each step'],
+  abstraction_tolerance: ['a concrete case before any rule', 'fine to state the principle directly'],
+  challenge_appetite: ['keep it comfortable', 'offer one harder optional case at the end'],
+  conceptual_bias: ['the how first, the why after', 'why it works before how'],
+  tone_formality: ['casual voice', 'a more formal register'],
+  novelty_hunger: [null, 'vary the format'],
+  persistence: ['make the payoff quick', null],
+  competitive_drive: [null, 'frame it as beating their own best'],
+};
+
+function focusItems(intent, measures) {
+  const out = [];
+  if (INTENT_DO[intent]) out.push({ text: INTENT_DO[intent], score: 4, short: 'focus' });
+  const dos = [];
+  for (const m of measures) {
+    const d = TUTOR_DO[m.id];
+    const t = d && d[m.high ? 1 : 0];
+    if (t) dos.push(t);
+    if (dos.length >= 3) break;
+  }
+  if (dos.length) out.push({ text: `shape it for them: ${dos.join('; ')}`, score: 3.9, short: 'shape' });
+  return out;
 }
 
 function explainItems(userId, skillId, facts, intent) {
@@ -436,6 +513,9 @@ function compile(userId, { skillId = null, about = '', budget = MODEL_BUDGET, no
       told: { items: safe(() => toldItems(rec, about), []) },
       stale: { items: safe(() => staleItems(userId, now), []) },
     };
+    // What to do with all of it for THIS message; only when there is something known to do it with.
+    const known = Object.values(sections).some((x) => x.items.length);
+    sections.focus = { items: known ? safe(() => focusItems(intent, m.items), []) : [] };
     const { lines, used, chosen } = fit(sections, budget);
     const report = Object.fromEntries(SECTION_ORDER.map((id) => [id, { total: sections[id].items.length, shown: chosen[id].filter((x) => !x.summary).length }]));
     return { text: lines.join('\n'), lines, sections: report, intent, used, tastes: { interests: tasteSets.interests.map((x) => x.text), dislikes: tasteSets.dislikes.map((x) => x.text), dropped: tasteSets.dropped.map((x) => x.text) } };

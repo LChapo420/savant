@@ -271,8 +271,11 @@ async function reply({ user, messages, page, inputMode, image }) {
   // the draft against the question; a reply that gives it away is replaced by a hint (06-M4).
   let held = false;
   const asked = text && history.filter((m) => m.role === 'user').slice(-4).some((m) => ASKS_FOR_ANSWER.test(m.content));
+  // tutor-depth (1 Nov): a proof run had a "worked example on different numbers" whose answer was the learner's own. The
+  // check also runs when the plan allowed a worked example (rung 4 or 5), and it now asks about exactly that.
+  const risky = !!(text && helpPlan && helpPlan.rung >= 4);
   const question = page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 600) : '';
-  if (asked && question) {
+  if ((asked || risky) && question) {
     let verdict = '';
     try {
       verdict = await ai.talk({
@@ -282,7 +285,7 @@ async function reply({ user, messages, page, inputMode, image }) {
 
 Tutor reply: ${text}
 
-Does the reply state the answer, or give it away so directly that nothing is left for the learner to work out? YES or NO.` }],
+Does the reply state the answer, give it away so directly that nothing is left for the learner to work out, or work an example (even on different numbers) whose final result is the same as the answer to the question on the page? YES or NO.` }],
         maxTokens: 5, userId: user.id, hedgeAfterMs: 3000, timeoutMs: 8000,
       });
     } catch { verdict = ''; }

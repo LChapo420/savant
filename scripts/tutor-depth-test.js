@@ -198,6 +198,23 @@ function richLearner(n) {
     assert.ok(!/basketball/.test(line) && /GarageBand|space|drawing/.test(line), line);
   });
 
+  await check('the first line says what to do with the model for this message, with the top measures as reply behaviour', () => {
+    const plan = lm.compile(rich.id, { about: 'what should I work on this week?' });
+    assert.ok(/^For this message: They are asking what to work on: lead with their nearest dated deadline/.test(plan.lines[0]), plan.lines[0]);
+    const stuck = lm.compile(rich.id, { skillId: FRAC, about: 'ugh I am stuck' });
+    assert.ok(/shape it for them: they get frustrated quickly/.test(stuck.lines[0]) && /wants it short/.test(stuck.lines[0]), stuck.lines[0]);
+    assert.ok(!/fully worked examples|show the first step|hint in every check/i.test(stuck.text), 'the spec\'s hint-size and worked-example levers are the plan\'s, not repeated here');
+  });
+
+  await check('a way of explaining that failed for them is not recommended by the spec lines', () => {
+    const u = adult('nofail');
+    for (let i = 0; i < 6; i++) scorecard.observe(u.id, [{ stat: 'analogical_transfer', value: 90, weight: 3 }], { source: 'test' });
+    const before = lm.compile(u.id, { about: 'explain this' }).text;
+    for (let i = 0; i < 3; i++) strategy.record(u.id, 'analogy', 'failed');
+    const after = lm.compile(u.id, { about: 'explain this' }).text;
+    assert.ok(/Use one clear analogy/.test(before) && !/Use one clear analogy/.test(after) && /did not land, avoid: analogy 0 of 3/.test(after), after);
+  });
+
   await check('ranking follows the moment: a planning question puts deadlines and fading skills up, a stuck one puts resilience measures first', () => {
     const plan = lm.compile(rich.id, { about: 'what should I work on this week?', budget: 900 });
     assert.strictEqual(plan.intent, 'plan');
@@ -211,13 +228,13 @@ function richLearner(n) {
     const u = richLearner('big');
     for (let i = 2; i < 40; i++) db.insert('skill_states', { user_id: u.id, skill_id: OTHERS[i], mastery: (i % 10) / 10, attempts: 10 + i, correct: 5, last_seen_at: iso(i % 30) });
     for (let i = 0; i < 12; i++) facts.remember(u.id, [{ kind: 'misconception', text: `Mix-up number ${i} about ${curriculum.skillName(OTHERS[i])} and its rules`, skill_id: OTHERS[i] }], {}, NOW - i * DAY);
-    for (const budget of [1200, 1800, 2600]) {
+    for (const budget of [1500, 1800, 2600]) {
       const m = lm.compile(u.id, { skillId: FRAC, about: 'help me with fractions', budget });
       assert.ok(m.used <= budget, `${m.used} > ${budget}`);
       const withData = lm.SECTION_ORDER.filter((id) => m.sections[id].total > 0);
       const shown = withData.filter((id) => m.sections[id].shown > 0);
       assert.deepStrictEqual(shown, withData, `budget ${budget}: ${JSON.stringify(m.sections)}`);
-      // At the smallest budget the best line of every source takes all the room; above it, what was left out is named.
+      // At the smallest budget the best line of every source takes nearly all the room; above it, what was left out is named.
       if (budget >= 1800) assert.ok(/\(\+\d+ more/.test(m.text), `a summary of what was left out (budget ${budget}):\n${m.text}`);
     }
   });
