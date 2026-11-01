@@ -275,6 +275,13 @@ function onPlacement(userId, { trackId, placedLevel, pathLength }) {
     { source: 'placement', trackId }));
 }
 
+/** The reading check (services/reading-check.js) ended: its measure of language level, as a designed test. Throws if the card is not updated. */
+function onReadingCheck(userId, result) {
+  const obs = signals.fromReadingCheck(result);
+  if (!obs.length) return null;
+  return scorecard.observe(userId, obs, { source: 'reading check' });
+}
+
 /**
  * The most recent conclusions for one course, oldest first: what the next level's
  * writer is told about how the last few levels went.
@@ -294,6 +301,7 @@ function conclusionsFor(userId, { trackId, gradeId, max = 6 } = {}) {
 }
 
 module.exports = {
+  onReadingCheck,
   onAnswer,
   onLessonRead,
   onBaseLessonFinished,

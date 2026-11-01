@@ -78,6 +78,7 @@ const COLLECTIONS = [
   'materials',               // learn from your own material: the extracted text of a learner's upload or paste, private to them (services/materials.js)
   'es_review',               // main-path Spanish: the item-level review queue, one per learner per phrase: box, due time, right/wrong (services/spanish/path.js)
   'es_catch_up',             // Spanish skill catch-up: one per learner per subject placement: skill check, blocks, re-check (services/spanish/catch-up.js)
+  'reading_checks',          // the reading check: one per offer a learner took, declined or has open, its answers and result (services/reading-check.js), private to them
   'catchup_units',           // catch-up for math/english/reading: one per learner, subject and target grade: unit check, blocks, re-check (services/catchup-units.js)
 ];
 

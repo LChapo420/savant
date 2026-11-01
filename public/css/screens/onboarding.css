@@ -443,3 +443,9 @@ body.ob-subject-placement .odds-bar { height: 10px; border-radius: var(--r-bar);
 body.ob-subject-placement .odds-bar > span { border-radius: var(--r-bar); background: var(--bar-fill-2); }
 body.ob-subject-placement .odds-row.is-rec .odds-bar > span, body.ob-subject-placement .odds-row:has(.odds-input:checked) .odds-bar > span { background: var(--bar-fill); }
 body.ob-subject-placement .odds-name { font-weight: var(--w-strong); }
+
+/* ── the reading check ──────────────────────────────────────────────────── */
+/* The passage is the thing being read: never a scrolling box that hides its end (the shared .passage caps its height). */
+body.ob-reading-check .passage { max-height: none; overflow: visible; }
+body.ob-reading-check .rc-points { margin: var(--s-4) 0; padding-left: 1.2em; color: var(--ink-2); }
+body.ob-reading-check .rc-actions { margin-top: var(--s-5); gap: var(--s-3); }

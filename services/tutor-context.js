@@ -38,6 +38,9 @@ const DOCK_MAX = 3600;
 const PAGE_MAX = 500;
 
 const SEALED = [/^\/spanish-check/, /^\/spanish-listening/];
+// A measurement, not a lesson: the reading check (services/reading-check.js) reads language level from the learner's own answers, and a tutor
+// that explains a word or a passage would measure the tutor. No dock at all, not even method hints.
+const MEASURING = [/^\/reading-check/];
 const METHOD_ONLY = [/^\/placement/, /^\/subject-placement/, /^\/stage-check/, /^\/skip/, /^\/enforcer/, /^\/review/, /^\/my-material-study/, /^\/my-material-test/,
   // The Spanish catch-up's skill check and final check are checks (services/spanish/catch-up.js).
   /^\/spanish\/catch-up/, /^\/catchup/];
@@ -53,7 +56,7 @@ function cleanPath(p) {
 
 function modeFor(pagePath) {
   const p = cleanPath(pagePath);
-  if (SEALED.some((re) => re.test(p))) return 'off';
+  if (SEALED.some((re) => re.test(p)) || MEASURING.some((re) => re.test(p))) return 'off';
   if (METHOD_ONLY.some((re) => re.test(p))) return 'method';
   return 'full';
 }
