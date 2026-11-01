@@ -37,7 +37,7 @@ function enabled() {
 
 /** Does the new rule apply to this user (a row)? */
 function appliesTo(user) {
-  return enabled() && !!user && !owner.ownerBase(user);
+  return enabled() && !!user && !owner.ownerOnly(user); // the beta base arm keeps the grace: it is not tailoring
 }
 
 /** The learner's zone: retention_tz, else the browser's, else UTC. */

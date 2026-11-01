@@ -209,6 +209,10 @@ function dueReviews(userId, skillIds, limit = REVIEW_MAX) {
 }
 
 function dueReviewsByRecall(userId, skillIds, limit) {
+  return efficiency.forLearner(userId, () => dueReviewsByRecallRaw(userId, skillIds, limit));
+}
+
+function dueReviewsByRecallRaw(userId, skillIds, limit) {
   const now = Date.now();
   // eslint-disable-next-line global-require
   const rev = require('./learning-spec').reviewFor(userId);
@@ -574,7 +578,7 @@ function skipOffer(userId, enrollment, grade) {
     from_level: enrollment.current_level,
     // The bands the exam would be built with (the likelihood-ratio rule, evidence P3, or every band perfect for the owner).
     // eslint-disable-next-line global-require
-    bands: curriculum.skipExamBands(enrollment.current_level, grade.pathLength, { rule: curriculum.skipRule({ base: require('../config/owner').ownerBase(userId) }) }),
+    bands: curriculum.skipExamBands(enrollment.current_level, grade.pathLength, { rule: curriculum.skipRule({ base: require('../config/owner').ownerOnly(userId) }) }),
   };
 }
 

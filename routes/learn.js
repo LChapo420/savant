@@ -402,7 +402,7 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
     return res.json({
       ...sessionShape(open),
       resumed: true,
-      pass_mark: curriculum.passMarkFor(open.kind, { base: require('../config/owner').ownerBase(req.user.id) }), // eslint-disable-line global-require
+      pass_mark: curriculum.passMarkFor(open.kind, { base: require('../config/owner').ownerOnly(req.user.id) }), // eslint-disable-line global-require
       kind_label: open.kind === 'essay'
         ? curriculum.checkpointLabel(grade, open.level)
         : curriculum.CHECKPOINT_LABEL[open.kind] || null,
@@ -418,7 +418,7 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
   res.status(201).json({
     ...sessionShape(session),
     resumed: false,
-    pass_mark: curriculum.passMarkFor(session.kind, { base: require('../config/owner').ownerBase(req.user.id) }), // eslint-disable-line global-require
+    pass_mark: curriculum.passMarkFor(session.kind, { base: require('../config/owner').ownerOnly(req.user.id) }), // eslint-disable-line global-require
     kind_label: session.kind === 'essay'
       ? curriculum.checkpointLabel(grade, session.level)
       : curriculum.CHECKPOINT_LABEL[session.kind] || null,
@@ -664,7 +664,7 @@ router.post('/sessions/:id/next-block', requireAuth, limit('next-block', 120, 60
     kind,
     lesson,
     essay,
-    pass_mark: curriculum.passMarkFor(kind, { base: require('../config/owner').ownerBase(req.user.id) }), // eslint-disable-line global-require
+    pass_mark: curriculum.passMarkFor(kind, { base: require('../config/owner').ownerOnly(req.user.id) }), // eslint-disable-line global-require
     kind_label: kind === 'essay'
       ? curriculum.checkpointLabel(grade, level)
       : curriculum.CHECKPOINT_LABEL[kind] || null,
@@ -1475,7 +1475,7 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
       },
       // Whether this course's syllabus states the level of each of its lessons.
       stated_lessons: curriculum.statesLessonLevels(grade),
-      pass_marks: curriculum.passMarksFor({ base: require('../config/owner').ownerBase(req.user.id) }), // eslint-disable-line global-require
+      pass_marks: curriculum.passMarksFor({ base: require('../config/owner').ownerOnly(req.user.id) }), // eslint-disable-line global-require
     },
     nodes: req.query.view === 'page' ? nodes.map(pageNode) : nodes,
     progress,

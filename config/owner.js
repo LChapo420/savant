@@ -42,10 +42,35 @@ function baseRuleOn() {
   return process.env.ADAPT_OWNER !== '1';
 }
 
-/** Does this account (a row or an id) get the base product, unmodified? */
-function ownerBase(userOrId) {
+/** Does this account (a row or an id) get the base product because it is the owner's? Only the owner; the beta holdout is not asked here. */
+function ownerOnly(userOrId) {
   if (!baseRuleOn()) return false;
   return isOwner(userOf(userOrId));
 }
 
-module.exports = { DEFAULT_OWNER, ownerEmail, isOwner, ownerBase, baseRuleOn, userOf };
+/** Is the built-in beta comparison (services/beta-arm.js, docs/BETA-COMPARISON.md) switched on? BETA_COMPARE=off is the kill switch. */
+function betaCompareOn() {
+  return String(process.env.BETA_COMPARE || 'on').trim().toLowerCase() !== 'off';
+}
+
+/**
+ * Is this account in the beta comparison's base (holdout) arm? The arm is stored on the user row once, at first use, and never changes
+ * (services/beta-arm.js). Reading it here costs one property lookup, so this stays dependency-free.
+ */
+function holdoutBase(userOrId) {
+  if (!betaCompareOn()) return false;
+  const user = userOf(userOrId);
+  return !!(user && user.beta_arm && user.beta_arm.arm === 'base');
+}
+
+/**
+ * Does this account (a row or an id) get the base product, unmodified? The owner's account, and learners drawn into the beta comparison's
+ * base arm: they get exactly what the owner's account gets (the standard curriculum and lessons, no scorecard-driven tailoring), so
+ * "tailored vs base" compares the product with and without tailoring. Checks that are not tailoring (pass marks and skip rules,
+ * the streak grace, the break nudge) ask `ownerOnly` instead, so the base arm keeps them: nobody in it gets a worse product.
+ */
+function ownerBase(userOrId) {
+  return ownerOnly(userOrId) || holdoutBase(userOrId);
+}
+
+module.exports = { DEFAULT_OWNER, ownerEmail, isOwner, ownerBase, ownerOnly, holdoutBase, betaCompareOn, baseRuleOn, userOf };

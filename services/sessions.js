@@ -39,11 +39,11 @@ const adaptation = require('./adaptation');
 const goals = require('./goals');
 const efficiency = require('./efficiency');
 
-/** Does this account get the base product (config/owner.js ownerBase)? False on any failure. */
+/** Is this the owner's account, which gets the fixed assessment rules (config/owner.js ownerOnly)? False on any failure. */
 function ownerBaseOf(userId) {
   try {
     // eslint-disable-next-line global-require
-    return require('../config/owner').ownerBase(userId);
+    return require('../config/owner').ownerOnly(userId); // assessment rules (skip rule, checkpoint SPRT): the beta base arm keeps them
   } catch {
     return false;
   }
@@ -142,6 +142,10 @@ function clampDifficulty(d) {
 
 /** Plan one level's worth of work: an array of { skillId, difficulty, role }. */
 function planLesson(userId, enrollment, grade, params) {
+  return efficiency.forLearner(userId, () => planLessonRaw(userId, enrollment, grade, params));
+}
+
+function planLessonRaw(userId, enrollment, grade, params) {
   const plan = curriculum.levelPlan(grade, enrollment.current_level);
   const count = params.itemCount || 10;
   const reviewLimit = Math.max(1, Math.round(count * 0.3));
@@ -270,6 +274,10 @@ function spreadBySkill(body) {
  * curve says nothing is due.
  */
 function curveReviews(userId, enrollment, introduced, limit) {
+  return efficiency.forLearner(userId, () => curveReviewsRaw(userId, enrollment, introduced, limit));
+}
+
+function curveReviewsRaw(userId, enrollment, introduced, limit) {
   if (String(process.env.CURVE_REVIEWS || 'on').toLowerCase() === 'off') return null;
   try {
     // eslint-disable-next-line global-require
@@ -1270,6 +1278,10 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
 
 /** Ids of this block's unanswered focus/support items that the stop rule would not ask now (none unless the skip half is on: SR_STOP and SR_STOP_SKIP). */
 function stoppableItems({ userId, session, item }) {
+  return efficiency.forLearner(userId, () => stoppableItemsRaw({ userId, session, item }));
+}
+
+function stoppableItemsRaw({ userId, session, item }) {
   if (!efficiency.skipOn()) return [];
   try {
     const block = itemsInBlock(session.id, item.block || 0);

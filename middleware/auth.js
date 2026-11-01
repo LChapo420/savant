@@ -13,8 +13,13 @@ function attachUser(req, res, next) {
   req.user = null;
   if (req.session && req.session.userId) {
     const user = db.byId('users', req.session.userId);
-    if (user) req.user = user;
-    else req.session.destroy(() => {}); // the account is gone; the cookie should be too
+    if (user) {
+      req.user = user;
+      // The beta comparison draws a learner's arm once, at first use (services/beta-arm.js); a failure must never block a request.
+      if (!user.beta_arm && user.age_check) {
+        try { require('../services/beta-arm').ensure(user); } catch (err) { console.warn(`beta-arm: not drawn: ${err.message}`); } // eslint-disable-line global-require
+      }
+    } else req.session.destroy(() => {}); // the account is gone; the cookie should be too
   }
   // The rest of the request runs with this learner's held-back questions in force
   // (content/holdout.js); for everyone without any, this is just next().

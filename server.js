@@ -230,6 +230,8 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   // The after-level reads run in the background, one at a time.
   require('./services/learner-record').start();
+  // The beta comparison (tailored vs base): writes data/beta-report.json once a day (services/beta-compare.js; BETA_REPORT_DAILY=off stops it).
+  require('./services/beta-compare').startDaily();
   // Base levels shipped in content/base-levels are added if the data file lacks them.
   try {
     const shipped = require('./services/base-content').importAll();

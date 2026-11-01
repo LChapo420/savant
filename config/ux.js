@@ -36,9 +36,10 @@ function breakAfterMin() {
 /** What the browser is told for a user row. */
 function flagsFor(user) {
   const base = owner.ownerBase(user);
+  const ownerAcct = owner.ownerOnly(user); // the beta base arm keeps the streak grace and the break nudge: they are care, not tailoring
   return {
-    streak_local_grace: on('STREAK_LOCAL_GRACE') && !base,
-    break_nudge: on('BREAK_NUDGE') && !base,
+    streak_local_grace: on('STREAK_LOCAL_GRACE') && !ownerAcct,
+    break_nudge: on('BREAK_NUDGE') && !ownerAcct,
     break_after_min: breakAfterMin(),
     touch44: on('UX_TOUCH44'),
     hide_stats_setting: on('UX_HIDE_STATS'),

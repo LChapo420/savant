@@ -39,8 +39,21 @@ const SWITCH = {
 // Default for a lever when its env switch is unset. Set from the measured results (docs/SPEED-RETENTION.md).
 const DEFAULT = { personal: 'off', relearn: 'off', interleave: 'off', stop: 'off', pretest: 'off', difficulty: 'off' };
 
+// The beta comparison's base arm gets the levers OFF (services/beta-arm.js). The levers are read deep in the scheduler without a learner,
+// so the code that plans one learner's work runs inside forLearner(userId, fn): while it runs, every lever reads off for a base-arm
+// learner. Synchronous only (the planners are); nests; and a no-op for everyone else, so no simulation or other learner changes.
+let suspended = 0;
+function forLearner(userId, fn) {
+  let off = false;
+  try { off = !!userId && require('../config/owner').holdoutBase(userId); } catch { off = false; } // eslint-disable-line global-require
+  if (!off) return fn();
+  suspended++;
+  try { return fn(); } finally { suspended--; }
+}
+
 /** Is this lever on? SR_ALL=off beats everything; SR_ALL=on forces all on; else the lever's own switch, else its default. */
 function enabled(lever) {
+  if (suspended) return false;
   const all = String(process.env.SR_ALL || '').toLowerCase();
   if (all === 'off') return false;
   if (all === 'on') return String(process.env[SWITCH[lever]] || 'on').toLowerCase() !== 'off';
@@ -223,7 +236,7 @@ function difficultyShift(zPace, confidence = 1) {
 }
 
 module.exports = {
-  SWITCH, DEFAULT, enabled,
+  SWITCH, DEFAULT, enabled, forLearner,
   PERSONAL, RELEARN, STOP, INTERLEAVE, PRETEST, DIFFICULTY,
   reviewTarget, relearnDone, dueBelow,
   worthAsking, skipOn, followsStop, reviewSlots, displacedReviews,

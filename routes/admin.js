@@ -22,6 +22,7 @@ const summary = require('../services/scorecard/summary');
 const ai = require('../services/ai');
 const learnerRecord = require('../services/learner-record');
 const realMetrics = require('../services/real-user-metrics');
+const betaCompare = require('../services/beta-compare');
 const { requireAuth, requireAdmin, isAdmin, publicUser } = require('../middleware/auth');
 
 const router = express.Router();
@@ -266,6 +267,16 @@ function metricsNow(req) {
 
 router.get('/metrics', (req, res) => {
   res.json(metricsNow(req));
+});
+
+/**
+ * The beta comparison, tailored vs base (services/beta-compare.js, docs/BETA-COMPARISON.md): today's report from data/beta-report.json
+ * (written daily), computed now when there is none yet or ?refresh=1. Counts and statistics only, no learner ids.
+ */
+router.get('/beta-report', (req, res) => {
+  let report = req.query.refresh === '1' ? null : betaCompare.readReport();
+  if (!report) report = betaCompare.runDaily();
+  res.json(report);
 });
 
 router.get('/metrics.csv', (req, res) => {
