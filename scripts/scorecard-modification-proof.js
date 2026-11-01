@@ -445,7 +445,7 @@ async function chatStandardCompute(model, system, user, opts = {}) {
   if (!key) throw new Error('no Standard Compute key');
   const base = (/^https?:\/\//.test(String(process.env.STANDARD_COMPUTE_BASE_URL || '')) ? process.env.STANDARD_COMPUTE_BASE_URL : 'https://api.stdcmpt.com/v1').replace(/\/chat\/completions\/?$/, '').replace(/\/$/, '');
   const est = ledger.estimate({ model, inputChars: system.length + user.length, maxTokens });
-  const id = ledger.reserve({ usd: est, task, model, ceilingUsd: 26 }); // every call through the ledger, held to $26
+  const id = ledger.reserve({ usd: est, task, model, ceilingUsd: 38 }); // every call through the ledger, held to $26
   let settled = false;
   const settleOnce = (a) => { if (!settled) { settled = true; ledger.settle(id, a); } };
   try {
@@ -490,7 +490,7 @@ function makeScWriter() {
       const base = (/^https?:\/\//.test(String(process.env.STANDARD_COMPUTE_BASE_URL || '')) ? process.env.STANDARD_COMPUTE_BASE_URL : 'https://api.stdcmpt.com/v1').replace(/\/chat\/completions\/?$/, '').replace(/\/$/, '');
       const body = { model, messages: [{ role: 'system', content: sys }, { role: 'user', content: String(user || '') }], max_tokens: sj.outputBudget(maxTokens, effort === 'medium' || effort === 'high' ? effort : null), temperature: 0, response_format: { type: 'json_object' }, ...(effort === 'medium' || effort === 'high' ? { reasoning_effort: effort } : {}) };
       const est = ledger.estimate({ model, inputChars: sys.length + String(user || '').length, maxTokens: body.max_tokens });
-      const id = ledger.reserve({ usd: est, task: 'scorecard_proof_writer', model, ceilingUsd: 26 });
+      const id = ledger.reserve({ usd: est, task: 'scorecard_proof_writer', model, ceilingUsd: 38 });
       let settled = false;
       const settleOnce = (a) => { if (!settled) { settled = true; ledger.settle(id, a); } };
       try {

@@ -38,7 +38,7 @@ const JUDGES = [
 ];
 const LEVELS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 const TYPES = ['vocab', 'passage'];
-const CEILING_USD = 26;
+const CEILING_USD = 38;
 let spent = 0;
 
 async function chat(model, system, user, { maxTokens, json = true } = {}) {

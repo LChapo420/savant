@@ -12,7 +12,7 @@
  * curriculum-build/placement-judge/<track>-<judge>.json in the shape placement-second-judge.js uses, so a rerun only asks
  * for what is missing. Questions are never edited here (the Spanish tests are sealed); key disagreements are reported.
  *
- * Every call goes through services/standard-compute-ledger.js (ceiling $26). Only curriculum text is sent, no learner data.
+ * Every call goes through services/standard-compute-ledger.js (ceiling $38). Only curriculum text is sent, no learner data.
  */
 const path = require('path');
 const fs = require('fs');
@@ -28,7 +28,7 @@ const write = (name, data) => fs.writeFileSync(path.join(DIR, `${name}.json`), J
 
 const DEFAULT_MODELS = ['anthropic/claude-sonnet-5.5', 'google/gemini-3.8-flash'];
 const tagOf = (model) => ({ 'anthropic/claude-sonnet-5.5': 'sonnet', 'google/gemini-3.8-flash': 'gemini' }[model] || model.split('/').pop().replace(/[^a-z0-9]+/gi, '-'));
-const CEILING_USD = 26;
+const CEILING_USD = 38;
 const BATCH = 25;
 
 const INSTRUCTIONS = 'For each question: the FIRST point in this curriculum (grade G and unit U) by which a learner who has '

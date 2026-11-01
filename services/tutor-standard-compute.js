@@ -30,7 +30,7 @@
 const ledger = require('./standard-compute-ledger');
 
 /** 80% of the $20 Standard Compute cap (owner, 30 Oct 2026): above this committed total the tutor uses NVIDIA only. */
-const TUTOR_CAP_USD = 26.0; // owner 2026-10-31: the Standard Compute budget raised by $10 (was $16)
+const TUTOR_CAP_USD = 38.0; // owner 2026-11-01: subscription $41, $1.50 kept spare (cap $39.50); was $26
 /** The tutor's tasks that may use the model (the dock and its memory). */
 const TASKS = new Set(['dock_help', 'dock_leak_check', 'tutor_memory_fold', 'tutor_facts']);
 /** Strongest priced chat model on the gateway (DeepSeek V4.1). The ledger knows its price; an unpriced model would be under-counted. */
