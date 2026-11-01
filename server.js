@@ -127,6 +127,8 @@ app.use('/api', require('./routes/catalog').router);
 app.use('/api', require('./routes/review'));
 app.use('/api', require('./routes/retention')); // study sessions, retention enforcers, the calendar (RETENTION_ENFORCERS)
 app.use('/api/placement', require('./routes/placement'));
+// The reading check: a few minutes of vocabulary and passages that measure language level for the scorecard (services/reading-check.js).
+app.use('/api/reading-check', require('./routes/reading-check'));
 // The subject-level quiz: one walk up a whole subject, ending in a recommended
 // percentage per grade for the learner who does not know where to start.
 app.use('/api/subject-placement', require('./routes/subject-placement'));

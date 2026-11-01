@@ -40,6 +40,9 @@ App.mount(async () => {
     document.getElementById('ob-step').classList.remove('hidden');
   }
 
+  // Once, skippable: the short reading check (services/reading-check.js) that measures language level.
+  if (window.ReadingOffer) window.ReadingOffer.mount(document.getElementById('reading-offer'), { next: '/onboarding' });
+
   const enrolled = new Set(enrollments.map((e) => `${e.track.id}:${e.grade.id}`));
   const selected = new Map(); // "track:grade" -> { track_id, grade_id, name, placement }
 

@@ -556,6 +556,8 @@ App.mount(async () => {
       <aside class="home-aside" aria-label="More">
         ${plannerSection()}
 
+        <div id="reading-offer"></div>
+
         ${!data.profile.took_style_quiz ? `
           <section class="card">
             <h2>Your preferences</h2>
@@ -596,6 +598,9 @@ App.mount(async () => {
   App.bindRetake(root);
 
   // The planner's form, clear and calendar-file buttons.
+  // The short reading check, when one is on offer (services/reading-check.js): quiet if not.
+  if (window.ReadingOffer) window.ReadingOffer.mount(root.querySelector('#reading-offer'), { next: '/dashboard' });
+
   // The persistent tutor (services/tutor.js): the same one that helps inside a question.
   if (window.TutorChat) window.TutorChat.mount(root.querySelector('#tutor-host'), { where: 'home' });
 

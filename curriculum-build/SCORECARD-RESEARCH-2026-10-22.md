@@ -653,7 +653,7 @@ levels against the same learners without the change.
 
 ### 7.6 What to do next, in order of evidence times measured gain
 
-1. **Schedule reviews by predicted recall** (owner's call; 7.5). The best-supported lever in the
+1. **Schedule reviews by predicted recall** (**done 2026-10-31**: `services/mastery.js` dueReviews, `REVIEW_SCHEDULE=fixed` to roll back; re-measured through the live code in the recovery sim, step-38 rows of `scorecard-sim/BASELINE.md`: 30-day recall 17.5 -> 24.5%, skills retained per practice hour 0.89 -> 1.24, false directives 1.1% at 100 levels). Owner's call; 7.5. The best-supported lever in the
    literature and the largest measured gain here (+43% skills retained per practice hour), and it
    also measures forgetting better. It would replace `mastery.js`'s fixed intervals with "review
    when the forgetting model predicts recall below ~85%"; FSRS's own optimiser is the mature
@@ -662,7 +662,7 @@ levels against the same learners without the change.
    fade, step 27–28). Next, per skill rather than per subject: the expertise reversal effect is
    about the task in front of the learner (Kalyuga & Sweller's rapid first-step check is the
    cheapest per-skill probe). Block-level checks have no item row, so they do not feed reach yet.
-3. **A calibrated reading check** (owner's call; 7.5) is the only way language level becomes
+3. **A calibrated reading check** (**built 2026-10-31**: `services/reading-check.js`, `content/reading-check-bank.json`, `/reading-check`; offered once at onboarding and at most one more per 25 levels). Owner's call; 7.5. It is the only way language level becomes
    measurable.
 4. **Population-level defaults, not per-learner directives**, for what helps nearly everyone:
    interest-based contexts when interests are known (already in the level editor's task text),

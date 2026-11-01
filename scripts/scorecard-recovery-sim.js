@@ -435,7 +435,11 @@ const TAP_WEIGHTS = { stretch: 3, review: 1.5, focus: 0.8, support: 0.4 }; // "h
 // and otherwise comes back to it (the app resumes it). Nothing in the app's
 // data says which is more common; half is a guess, and --abandon=0..1 sets it.
 const ABANDON_SHARE = Number(opt('abandon', 0.5));
+// 'app' (the default) is the live scheduler, services/mastery.js dueReviews: since 2026-11 it reviews a skill when the app's own
+// forgetting model predicts recall below 0.85, lowest first, at most three a level. 'fixed' runs the old SM-2 ladder in the same
+// code (REVIEW_SCHEDULE=fixed, the rollback flag). 'model' / 'oracle' / 'oldest' are this script's own pickers, kept to measure against.
 const REVIEW_PICK = opt('review-pick', 'app');
+if (REVIEW_PICK === 'fixed') process.env.REVIEW_SCHEDULE = 'fixed';
 // --review-pick=model / oracle (round 4, product-call measurement only): review
 // a skill when its PREDICTED recall has fallen below --review-target (FSRS's
 // "desired retention"), lowest first, at most three per level. model: the

@@ -238,8 +238,15 @@ const goodLesson = (extra = {}) => ({
     const sk = curriculum.levelPlan(grade, 10).focus;
     const seed = (u) => db.insert('skill_states', { user_id: u.id, skill_id: sk, mastery: 0.5, attempts: 6, correct: 4, streak: 2, ease: 2.5, error_tags: [], last_seen_at: new Date(now.getTime() - 10 * DAY).toISOString(), next_due_at: new Date(now.getTime() + 5 * DAY).toISOString() });
     seed(decayer); seed(keeper); seed(fresh);
-    check('a learner who forgets fast has the review come back sooner (15 days becomes about 9)', mastery.dueReviews(decayer.id, [sk]).length === 1);
-    check('one who keeps things, and one with no scorecard, wait the full interval', mastery.dueReviews(keeper.id, [sk]).length === 0 && mastery.dueReviews(fresh.id, [sk]).length === 0);
+    // Review timing is the forgetting model's: a skill is due when predicted recall falls below 0.85, moved by up to 0.05 and the gap
+    // stretched by 0.6x to 1.25x for a learner whose spec says they forget fast or keep things. Put the last answer just short of the
+    // base learner's crossing, so only the one who forgets fast is due.
+    const near = mastery.daysToTarget({ correct: 4, attempts: 6 }, null) * 0.9;
+    db.update('skill_states', db.findOne('skill_states', (s) => s.user_id === decayer.id && s.skill_id === sk).id, { last_seen_at: new Date(now.getTime() - near * DAY).toISOString() });
+    db.update('skill_states', db.findOne('skill_states', (s) => s.user_id === keeper.id && s.skill_id === sk).id, { last_seen_at: new Date(now.getTime() - near * DAY).toISOString() });
+    db.update('skill_states', db.findOne('skill_states', (s) => s.user_id === fresh.id && s.skill_id === sk).id, { last_seen_at: new Date(now.getTime() - near * DAY).toISOString() });
+    check('a learner who forgets fast has the review come back sooner (due where the base learner is not)', mastery.dueReviews(decayer.id, [sk]).length === 1);
+    check('one who keeps things, and one with no scorecard, wait for the base model\'s date', mastery.dueReviews(keeper.id, [sk]).length === 0 && mastery.dueReviews(fresh.id, [sk]).length === 0);
     const specD = ls.buildSpec(decayer.id, {}); const specK = ls.buildSpec(keeper.id, {});
     check('and their review spacing and recall target differ the documented way', specD.review.spacingScale < 1 && specK.review.spacingScale > 1 && specD.review.targetRecall > specK.review.targetRecall, [specD.review, specK.review]);
   }

@@ -827,6 +827,17 @@ function fromPlacement(placedLevel, pathLength) {
   return [{ stat: 'prior_knowledge', value: clamp(10 + share * 85), weight: 4, test: true, note: `placed at level ${placedLevel}` }];
 }
 
+/**
+ * The reading check (services/reading-check.js) measures language level directly: a designed test of about ten points'
+ * error, counted like a placement (weight 4, test true) on vocabulary_ceiling. `score` is already relative to the learner's
+ * age (50 = reading at the level their age leads us to expect). A check that ended with a wide standard error counts for less.
+ */
+function fromReadingCheck({ score, grade, se, expected_grade: expected }) {
+  if (!Number.isFinite(Number(score))) return [];
+  const weight = Number(se) <= 1.5 ? 4 : 2.5;
+  return [{ stat: 'vocabulary_ceiling', value: clamp(Number(score)), weight, test: true, note: `reading check: about grade ${Number(grade).toFixed(1)} against ${expected} expected for their age` }];
+}
+
 /** This learner's usual check accuracy on a lesson: the bar an experiment is measured against. */
 function lessonBaseline(userId) {
   const rows = db.find('level_signals', (r) => r.user_id === userId
@@ -854,6 +865,7 @@ module.exports = {
   fromFeedback,
   fromSession,
   fromPlacement,
+  fromReadingCheck,
   lessonBaseline,
   lessonWords,
   accuracy,

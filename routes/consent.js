@@ -404,6 +404,7 @@ const KNOWN_COLLECTIONS = [
   'tutor_facts', 'tutor_strategies', 'tutor_archive',
   'es_catch_up', 'catchup_units',
   'material_notes',
+  'reading_checks',
 ];
 function collectionNames() {
   return KNOWN_COLLECTIONS.filter((name) => {
