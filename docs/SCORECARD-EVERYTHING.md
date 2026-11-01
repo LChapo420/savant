@@ -82,8 +82,8 @@ All at or below the best case the research reports. The sim uses the same number
 | lexical categories: hedges, certainty, emotion, worry, boredom, planning, competition, reward... | 0.1-0.3 | word-category use is stable within a person and correlates about 0.1-0.3 with traits (Pennebaker & King 1999, *JPSP* 77(6); Yarkoni 2010, *J Res Pers* 44; review: Tausczik & Pennebaker 2010, *J Lang Soc Psych* 29(1)); affect words in tutoring dialogue track confusion, frustration and boredom (D'Mello & Graesser 2012, *Learning and Instruction* 22) |
 | vocabulary and reading grade of what they write (`txt.vocab`, `txt.grade`) | 0.3, 0.25 | lexical sophistication indices predict learners' proficiency (Crossley, Salsbury & McNamara 2012, *Language Testing* 29(2)); Flesch-Kincaid grade (Kincaid et al. 1975) |
 | register (`txt.formal`, `txt.emoji`, `txt.polite`) for tone preference | 0.3, 0.2, 0.15 | people converge on their partner's style and tend to prefer their own register (Niederhoffer & Pennebaker 2002, *J Lang Soc Psych* 21(4)) |
-| asking for the answer (`txt.answerseek`) | 0.25 | help abuse and bottom-out hint seeking as a stable help-seeking style (Aleven et al. 2006, *IJAIED* 16) |
-| tab-away, idle (`cap.*`) | 0.15-0.25 | off-task behaviour in tutoring systems is detectable from logs and relates to disengagement (Baker 2007, CHI) |
+| asking for the answer (`txt.answerseek`) | 0.25 | help-seeking, including ineffective strategies such as help abuse, can be modelled and checked against tutor logs (Aleven et al. 2006, *IJAIED* 16) |
+| tab-away, idle (`cap.*`) | 0.15-0.25 | off-task behaviour in tutoring systems is detectable from usage logs and is associated with attitudes and motivation (Baker 2007, CHI) |
 | changed pick before checking | 0.1-0.2 | changes are more often wrong-to-right and reflect monitoring (Kruger, Wirtz & Miller 2005, *JPSP* 88(5)) |
 | pauses while typing | 0.1-0.15 | keystroke pauses carry state and load (Epp, Lippold & Mandryk 2011, CHI) |
 | starting-hour regularity (`use.hour`) | 0.3 | habits form with a consistent context and time (Lally et al. 2010, *EJSP* 40(6)) |

@@ -1,0 +1,714 @@
+{
+ "07-M1-c3": {
+  "mid": "07-M1",
+  "old": "Indexing textbook sections with concepts by hand is effortful and error-prone, which motivates automatic keyphrase/concept extraction from the material.",
+  "claim": "Indexing textbook sections with concepts by hand is effortful and error-prone, which motivates automatic keyphrase/concept extraction from the material.",
+  "decision": "keep",
+  "why": "The source explicitly says manual concept indexing of each textbook section is challenging, time-consuming, and prone to errors, and presents automatic keyphrase extraction as an attractive alternative.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M1-c2": {
+  "mid": "07-M1",
+  "old": "Prerequisite relations between course concepts can be inferred automatically from course data, though imperfectly and with method-dependent gains.",
+  "claim": "Prerequisite relations between course concepts can be inferred automatically from MOOC course data, with performance varying according to the features and method used.",
+  "decision": "rewrite",
+  "why": "The source directly supports automatic inference of prerequisite relations from MOOC concept data and examines different features and a proposed method with gains over existing methods. It does not explicitly establish that the inference is imperfect, so that wording is removed.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M1-c27": {
+  "mid": "07-M1",
+  "old": "Learning with concept/knowledge maps (constructing, modifying or viewing node-link diagrams) is associated with better knowledge retention.",
+  "claim": "Learning with concept/knowledge maps (constructing, modifying or viewing node-link diagrams) is associated with better knowledge retention. Quote: “the use of concept maps was associated with increased knowledge retention.” Population: Students from Grade 4 to postsecondary in science, psychology, statistics and nursing; 55 studies, 5,818 participants.",
+  "decision": "keep",
+  "why": "The source directly reports an association between using concept maps through construction, modification, or viewing node-link diagrams and increased knowledge retention. It gives the stated study count, participant count, grade range, and subject domains.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M1-c30": {
+  "mid": "07-M1",
+  "old": "Concept mapping is associated with moderate gains in science achievement for school students, including low-achieving students.",
+  "claim": "Concept mapping is associated with moderate gains in science achievement for school students, including low-achieving students.",
+  "decision": "keep",
+  "why": "The source explicitly reports a moderate mean effect size for overall science achievement (g = 0.776), states that concept maps were generally associated with increased science learning, and includes elementary and secondary students, including low-achieving students.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M1-c18": {
+  "mid": "07-M1",
+  "old": "Fully automatic concept-map generation from learning material tends to yield generic maps that do not match the teacher's intent or context, which is why a semi-automatic approach was proposed.",
+  "claim": "Automatic concept-map generation from learning material can yield general maps that do not fit the learning context or the teacher’s purpose and intention, which is why a semi-automatic approach was proposed.",
+  "decision": "rewrite",
+  "why": "The source supports that CMM-generated maps can only be general, may not fit the learning context or correspond to the teacher’s purpose and intention, and motivated the proposed semi-automatic approach. It does not establish a tendency or common outcome, so “tends to yield” should be narrowed to “can yield.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M1-c28": {
+  "mid": "07-M1",
+  "old": "Guidance and structure added to learner-driven inquiry generally help learning activities and outcomes, with the type of guidance mattering for performance success.",
+  "claim": "Guidance and structure added to learner-driven inquiry generally help learning activities and outcomes in inquiry-based learning, with the type of guidance mattering for performance success.",
+  "decision": "rewrite",
+  "why": "The meta-analysis supports facilitative effects of guidance in inquiry-based learning, but does not establish that guidance and structure are synonymous. It also says guidance type moderated performance success, not that it generally matters; phrase this as moderation rather than a universal practical rule. Smallest supported rewrite: “In inquiry-based learning, guidance generally has facilitative effects on learning activities, performance success, and learning outcomes; its type moderates effects on performance success, but not on learning activities or learning outcomes.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M2-c3": {
+  "mid": "07-M2",
+  "old": "In Gagné's hierarchy work, no child acquired a higher skill without first acquiring the subordinate skills shown beneath it in the hierarchy.",
+  "claim": "In a small preliminary study, Gagné (1962) observed that none of the seven children acquired a higher skill without first acquiring all subordinate skills shown beneath it in the hierarchy.",
+  "decision": "rewrite",
+  "why": "The source directly reports this observation for seven children in Gagné's single preliminary study, but it does not establish a universal rule about Gagné's hierarchy work in general.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M2-c5": {
+  "mid": "07-M2",
+  "old": "The strong claim that prerequisites are essential holds only for intellectual skills, not for specific verbalized facts, so gating every skill on mastery is not supported across all content types.",
+  "claim": "Evidence supports the strong hypothesis that prerequisites are essential for intellectual skills only, not across all content types.",
+  "decision": "rewrite",
+  "why": "The source explicitly says evidence supports the strong hypothesis for intellectual skills only and distinguishes intellectual skills from specific verbalized knowledge. It does not directly establish the broader claim about gating every skill on mastery.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M2-c14": {
+  "mid": "07-M2",
+  "old": "Candidate prerequisites can be found in knowledge graphs and filtered by a supervised model, validated against a ground truth of concepts from different domains.",
+  "claim": "Candidate prerequisites can be found in knowledge graphs and filtered by a supervised model, validated against a ground truth of concepts from different domains.",
+  "decision": "keep",
+  "why": "The source explicitly describes using Knowledge Graphs to identify candidate prerequisite concepts, using a supervised learning model to evaluate the prerequisite relationships, and validating the approach with a ground truth of 80 concepts from different domains.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M2-c25": {
+  "mid": "07-M2",
+  "old": "The structure of a curriculum's prerequisite network shapes completion time and dropout, so the ordering rule is consequential, though this study models flow rather than testing a gating rule on learning.",
+  "claim": "The structure of a curriculum's prerequisite network shapes completion time and dropout, so the ordering rule is consequential, though this study models flow rather than testing a gating rule on learning.",
+  "decision": "rewrite",
+  "why": "The source explicitly says prerequisite network design has a large impact on completion time and dropping out, and models student flow and graduation time based on network topology. It does not test a gating rule on learning, nor specifically establish an “ordering rule.” Smallest supported rewrite: “The structure of a curriculum’s prerequisite network shapes completion time and dropout, and is consequential, though this study models student flow rather than testing a gating rule on learning.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M3-c6": {
+  "mid": "07-M3",
+  "old": "Adaptive testing is expected to cut testing time while raising measurement precision compared with fixed pencil-and-paper tests, which is the efficiency premise behind asking fewer, better-targeted questions.",
+  "claim": "Adaptive testing may reduce testing time while increasing measurement precision compared with conventional pencil-and-paper tests, providing an efficiency rationale for selecting better-targeted questions.",
+  "decision": "rewrite",
+  "why": "The source presents reduced time and increased precision as a prospect, so the claim should say “may” rather than “is expected.” It supports efficiency through successively selecting items that provide optimal measurement and measuring examinees quickly and accurately, but it does not explicitly support asking fewer questions; that wording is removed.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M3-c9": {
+  "mid": "07-M3",
+  "old": "Trait level can be estimated with reasonable accuracy from a small number of item responses, and most CAT algorithms performed equally well once a test reached about ten items.",
+  "claim": "Trait level can be estimated with reasonable accuracy from a small number of item responses, and most CAT algorithms performed equally well once a test reached about ten items.",
+  "decision": "rewrite",
+  "why": "The source states that trait level must be estimated with reasonable accuracy based on a small number of item responses, but does not report that this accuracy was achieved. It does support that most CAT algorithms performed equally well for tests of 10 or more items. Rewrite: “In CAT, trait level must be estimated with reasonable accuracy from a small number of item responses; most CAT algorithms performed equally well for tests of 10 or more items.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M3-c10": {
+  "mid": "07-M3",
+  "old": "A large simulation using real ALEKS data examined how reliably a knowledge-space-theory adaptive assessment measures what a learner knows, showing the knowledge-space approach is being evaluated at scale rather than assumed correct.",
+  "claim": "A large simulation using real ALEKS data examined how reliably a knowledge-space-theory adaptive assessment measures what a learner knows, showing the knowledge-space approach is being evaluated at scale rather than assumed correct.",
+  "decision": "keep",
+  "why": "The source explicitly describes a large-scale simulation study of the assessment effectiveness of a knowledge-space-theory instantiation, using data from more than 700,000 actual ALEKS mathematics assessments to simulate the same number of assessments and examine reliability. The claim accurately characterizes this as large-scale evaluation of the approach.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M3-c25": {
+  "mid": "07-M3",
+  "old": "A Bayesian-network-based intelligent tutoring system produced significantly higher average academic performance than other system versions, though the tutor adapted support rather than skipping known skills.",
+  "claim": "A Bayesian-network-based intelligent tutoring system produced significantly higher average academic performance than other system versions, though the tutor adapted support rather than skipping known skills.",
+  "decision": "rewrite",
+  "why": "The source supports significantly higher average academic performance for FB-ITS compared with fuzzy ITS, Bayesian ITS, and a traditional e-learning system. It does not state that the tutor adapted support rather than skipping known skills, so remove that unsupported clause and identify the comparison systems.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M3-c28": {
+  "mid": "07-M3",
+  "old": "Retrieval during testing itself improves later performance, so skipping skills judged known removes practice opportunities that the review step would need to compensate for.",
+  "claim": "Retrieval during testing itself is relevant to future performance, and testing can serve as a learning opportunity.",
+  "decision": "rewrite",
+  "why": "The source supports that processing during testing is relevant for future performance and frames testing as a learning opportunity. It does not support the additional claims that skipping skills judged known removes practice opportunities or that review must compensate for this.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M4-c13": {
+  "mid": "07-M4",
+  "old": "A meta-analysis finds the expertise reversal effect: novices learn more from high-assistance instruction, while experts do worse with it, supporting the app's move away from heavy support as mastery grows.",
+  "claim": "A meta-analysis suggests the expertise reversal effect: novices learn more from high-assistance instruction, while high-prior-knowledge learners learn better from low-assistance instruction, supporting the app's move away from heavy support as mastery grows.",
+  "decision": "rewrite",
+  "why": "The source directly reports better learning with high assistance for low-prior-knowledge learners and with low assistance for high-prior-knowledge learners, but it says the results suggest the effect rather than simply finds it. The rewrite also uses the source's supported framing for the higher-knowledge group and avoids the stronger, less directly reported claim that experts do worse with high assistance.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M4-c1": {
+  "mid": "07-M4",
+  "old": "Instructional support that helps novices can lose effectiveness or backfire for more knowledgeable learners, which is the general principle behind reducing guidance at higher tiers.",
+  "claim": "Instructional support that helps novices can lose effectiveness or backfire for more knowledgeable learners, which is the general principle behind reducing guidance at higher tiers.",
+  "decision": "rewrite",
+  "why": "The source directly supports the expertise-dependent loss of effectiveness or negative effects, but does not connect this principle to reducing guidance at higher tiers. Smallest supported revision: “Instructional techniques that help inexperienced learners can lose effectiveness or have negative consequences for more experienced learners, a phenomenon known as the expertise reversal effect.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M4-c12": {
+  "mid": "07-M4",
+  "old": "In a statistics course, low prior knowledge students gained most from worked examples while high prior knowledge students gained most from generating their own arguments, illustrating a shift in optimal support with prior knowledge.",
+  "claim": "In a statistics course, low prior knowledge students gained most from worked examples while high prior knowledge students gained most from generating their own arguments, illustrating a shift in optimal support with prior knowledge.",
+  "decision": "keep",
+  "why": "The source directly reports that low prior knowledge students learned most from worked-out examples and high prior knowledge students profited most from formulating arguments, identifying this as an expertise reversal effect. The claim accurately summarizes the finding and context.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M4-c6": {
+  "mid": "07-M4",
+  "old": "A meta-analysis finds guidance generally helps learning, so automatically stripping support from apparently knowledgeable learners (one perfect check moves a skill up a tier) may remove help that still pays off.",
+  "claim": "A meta-analysis finds that guidance has positive effects on learning activities, performance success, and learning outcomes, but it does not establish what guidance is adequate for apparently knowledgeable learners; automatically stripping support after one perfect check may therefore remove help that still pays off.",
+  "decision": "rewrite",
+  "why": "The source supports positive overall effects of guidance across the reported outcomes and says that the adequacy of guidance and age-related differences remain unresolved. It does not specifically test removing support from apparently knowledgeable learners or the one-check tier rule, so those implications must be framed as possibilities rather than findings.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M4-c31": {
+  "mid": "07-M4",
+  "old": "Difficulties that demand more effort may slow short-term performance yet help long-term retention, which is the rationale the app uses for raising tier and asking harder reviews.",
+  "claim": "Difficulties that demand more effort may slow short-term performance yet help long-term retention, which is the rationale the app uses for raising tier and asking harder reviews.",
+  "decision": "rewrite",
+  "why": "The source supports that intentional difficulties may impede short-term learning while benefiting long-term learning, and discusses strategies in health professions education. It does not establish that raising tiers or asking harder reviews is what the app uses. Smallest supported rewrite: “Difficulties that require more effort may impede short-term learning but benefit long-term learning, a rationale for using desirable-difficulty strategies in health professions education.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M4-c28": {
+  "mid": "07-M4",
+  "old": "Not every added difficulty helps: interleaved versus blocked practice and expanding retrieval produced no retention advantage, so 'harder after mastery' cannot be assumed to improve learning.",
+  "claim": "In this study, interleaved and blocked practice produced no significant differences on any assessment, whereas expanding retrieval produced higher scores than uniform retrieval; therefore, the effects of added difficulty cannot be assumed to be uniformly beneficial or harmful.",
+  "decision": "rewrite",
+  "why": "The source supports no difference between interleaved and blocked practice, but it contradicts the original claim that expanding retrieval produced no retention advantage: the expanding group scored significantly higher than the uniform group on all four assessments, including the final assessment. This rewrite preserves the topic while accurately reflecting both findings without claiming a causal effect beyond the study.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M5-c1": {
+  "mid": "07-M5",
+  "old": "A meta-analysis of 108 controlled evaluations found that mastery learning programmes improved examination performance across college, high school and upper elementary students, with larger effects for weaker students.",
+  "claim": "A meta-analysis of 108 controlled evaluations found that mastery learning programmes have positive effects on examination performance across college, high school and upper elementary students, with effects that appear to be stronger for weaker students.",
+  "decision": "rewrite",
+  "why": "The source supports the topic, population, evaluation count, and positive examination-performance effects, but describes the stronger effects for weaker students as appearing rather than stating them definitively. The rewrite preserves that qualification.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M5-c6": {
+  "mid": "07-M5",
+  "old": "A best-evidence synthesis of group-based mastery learning in schools concluded that, in studies lasting at least four weeks, mastery learning had essentially no effect on standardized achievement tests and only a small effect on researcher-made tests, which may be biased toward the treatment.",
+  "claim": "A best-evidence synthesis of group-based mastery learning in schools concluded that, in studies lasting at least four weeks, mastery learning had essentially no effect on standardized achievement tests and only a small effect on researcher-made tests, which may be biased toward the treatment.",
+  "decision": "keep",
+  "why": "The source explicitly attributes this conclusion to Slavin's best-evidence synthesis of group-based mastery learning in elementary and secondary schools, including the four-week duration threshold, essentially no effect on standardized measures, and a small effect on experimenter-made measures. It also states that such tests were often biased in favor of mastery learning, supporting the claim's qualified wording.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M5-c10": {
+  "mid": "07-M5",
+  "old": "An analysis of mastery criteria with simulated and real data found that which data are used for the mastery decision and where the threshold is set matter more than the learner-modelling technique.",
+  "claim": "An analysis of mastery criteria with simulated and real data found that which data are used for the mastery decision and where the threshold is set matter more than the learner-modelling technique.",
+  "decision": "keep",
+  "why": "The source explicitly states that the analysis used both simulated and real data and that the choice of data sources for the mastery decision and the setting of thresholds are more important than the choice of learner-modelling technique.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M5-c15": {
+  "mid": "07-M5",
+  "old": "In a first-year undergraduate mathematics mastery implementation, students reported feeling taught to pass a test rather than gaining deeper understanding of the content.",
+  "claim": "In a first-year undergraduate mathematics mastery implementation, students reported feeling taught to pass a test rather than gaining deeper understanding of the content.",
+  "decision": "keep",
+  "why": "The source explicitly states that the negative outcome of implementing Mastery Learning in four first-year mathematics subjects was students having a sense of being taught how to pass a test rather than having a deeper understanding of the content. The claim accurately preserves the topic, population, and finding.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M6-c14": {
+  "mid": "07-M6",
+  "old": "In computer-based learning, elaborated feedback with an explanation produced larger effects than feedback only on answer correctness.",
+  "claim": "In computer-based learning, elaborated feedback with an explanation produced larger effects than feedback only on answer correctness.",
+  "decision": "keep",
+  "why": "The meta-analysis directly reports that elaborated feedback (for example, providing an explanation) had a larger effect size (0.49) than feedback regarding answer correctness (KR; 0.05) in computer-based environments.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M6-c15": {
+  "mid": "07-M6",
+  "old": "When feedback on text learning is given directly after reading, elaborate feedback was more effective than knowledge-of-response feedback.",
+  "claim": "When feedback on text learning is given directly after reading, elaborate feedback was more effective than knowledge-of-response feedback.",
+  "decision": "rewrite",
+  "why": "The source supports this comparison but also reports that knowledge-of-correct-response feedback was more effective than knowledge-of-response feedback. Narrow the claim to preserve the source’s full result: “When feedback on text learning is given directly after reading, elaborate feedback and knowledge-of-correct-response feedback were more effective than knowledge-of-response feedback.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M6-c28": {
+  "mid": "07-M6",
+  "old": "In grade 9 ecology, both a refutation text and a didactic control text induced accommodation in many students, so refutation was not uniquely superior.",
+  "claim": "In grade 9 ecology, both a refutation text and a didactic control text induced accommodation in many students, so refutation was not uniquely superior.",
+  "decision": "rewrite",
+  "why": "The source supports that both texts induced accommodation in a large proportion of the 36 grade 9 students with the misconception. It does not explicitly compare overall superiority, so remove the inference that refutation was not uniquely superior: “Among 36 grade 9 students with a misconception about ecological role, both a refutation text and a didactic control text induced accommodation in a large proportion.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M6-c8": {
+  "mid": "07-M6",
+  "old": "This essay warns that the term misconception is tied to eradication or replacement and argues that students' naive ideas can be resources for building understanding.",
+  "claim": "This essay warns that the term misconception is tied to eradication or replacement and argues that students' naive ideas can be resources for building understanding.",
+  "decision": "keep",
+  "why": "The source explicitly says that misconceptions have been aligned with eradication and/or replacement, and states that students' naive ideas can provide resources for building scientific understanding. It also identifies the learning sciences community and biology education researchers and uses evolution and ecology examples.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M7-c1": {
+  "mid": "07-M7",
+  "old": "Across many experiments, taking practice tests on studied material produces better learning than restudying or other non-testing activities.",
+  "claim": "Across many experiments, taking practice tests on studied material produces better learning than restudying or other non-testing activities.",
+  "decision": "keep",
+  "why": "The source is a meta-analysis of experiments comparing practice tests with restudying and other nontesting conditions, and explicitly reports that practice tests are more beneficial for learning than restudying and all other comparison conditions. The claim's wording is supported by the stated results.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M7-c18": {
+  "mid": "07-M7",
+  "old": "In real classrooms, retrieval practice improved learning across education levels, content areas and test formats in most coded experiments.",
+  "claim": "In real classrooms, retrieval practice improved learning across education levels, content areas and test formats in most coded experiments.",
+  "decision": "rewrite",
+  "why": "The source supports improvement across education levels, content areas, and retrieval and final test formats, but says that 57% of effect sizes—not most coded experiments—revealed medium or large benefits. Smallest supported rewrite: “In real classrooms, retrieval practice improved learning across education levels, content areas, and retrieval and final test formats.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M7-c2": {
+  "mid": "07-M7",
+  "old": "In psychology courses, testing during learning produced a moderate benefit to later learning outcomes.",
+  "claim": "In psychology classes, testing during learning was associated with beneficial learning outcomes, with an overall effect size of d = 0.56.",
+  "decision": "rewrite",
+  "why": "The source supports psychology classes, testing during the learning phase, beneficial learning outcomes, and d = 0.56. It does not explicitly describe the effect as moderate, and the reported outcome is learning outcomes rather than specifically later learning outcomes.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M7-c22": {
+  "mid": "07-M7",
+  "old": "Reviewed applied classroom studies generally favour retrieval practice over restudying, whether or not feedback is given.",
+  "claim": "The reviewed classroom studies generally found retrieval practice favorable, regardless of whether feedback was provided.",
+  "decision": "rewrite",
+  "why": "The source explicitly says the reviewed studies were generally favorable to retrieval practice in classroom settings regardless of feedback, but it also notes that most comparisons were with repeated study or no activity and that findings against alternative controls were less conclusive. Removing the broad over-restudying comparison makes the claim fully supported.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M7-c13": {
+  "mid": "07-M7",
+  "old": "Feedback given at final recall can reverse the usual testing advantage, at least when practice retrieval success was low.",
+  "claim": "Feedback given at final recall can reverse the usual testing advantage, at least when practice retrieval success was low.",
+  "decision": "keep",
+  "why": "The source directly states that repeated feedback at final recall can reverse the long-term testing advantage and reports that this reversed testing effect was present only when retrieval success during practice was low.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M8-c11": {
+  "mid": "07-M8",
+  "old": "In a preregistered cluster randomized trial in real classrooms, students given interleaved assignments outscored blocked-practice students on an unannounced test one month later.",
+  "claim": "In a preregistered cluster randomized trial in real classrooms, students given interleaved assignments outscored blocked-practice students on an unannounced test one month later.",
+  "decision": "keep",
+  "why": "The source explicitly reports a preregistered cluster randomized controlled trial in a naturalistic setting involving 54 seventh-grade mathematics classes. It states that students completed interleaved or blocked assignments, then took an unannounced test one month later, on which the interleaved group outscored the blocked group.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M8-c2": {
+  "mid": "07-M8",
+  "old": "Seventh-graders who practiced the same problems in interleaved rather than blocked order learned the skills over a 3-month period (the abstract is truncated before the test result).",
+  "claim": "Seventh-graders who practiced the same problems in interleaved rather than blocked order learned the skills over a 3-month period (the abstract is truncated before the test result).",
+  "decision": "rewrite",
+  "why": "The source reports higher scores for interleaved practice than blocked practice on both the immediate and delayed tests. Smallest supported rewrite: “Seventh-graders who practiced the same problems in interleaved rather than blocked order scored higher on both the immediate and delayed tests.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M8-c1": {
+  "mid": "07-M8",
+  "old": "The interleaving advantage is larger when the material being mixed is more similar across categories, so what gets mixed together matters.",
+  "claim": "The interleaving advantage is larger when the material being mixed is more similar across categories, so what gets mixed together matters.",
+  "decision": "keep",
+  "why": "The source directly states that multiple metaregression found stronger interleaving effects for learning material more similar between categories. The claim accurately paraphrases this finding without adding a causal mechanism or unsupported population.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M8-c6": {
+  "mid": "07-M8",
+  "old": "Interleaving helped most when differences between the mixed items were subtle, and the benefit extended to delayed tests.",
+  "claim": "Interleaving helped most when differences between the mixed items were subtle, and the benefit extended to delayed tests.",
+  "decision": "keep",
+  "why": "The source states that interleaving was of greatest use when item differences were subtle and that the benefit extended to delayed tests.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M8-c4": {
+  "mid": "07-M8",
+  "old": "Undergraduates who did interleaved physics homework recalled more and solved more problems correctly on surprise tests, though they judged the method harder and thought they learned less.",
+  "claim": "Undergraduates who did interleaved physics homework recalled more and solved more problems correctly on surprise tests, though they judged the method harder and thought they learned less.",
+  "decision": "keep",
+  "why": "The source directly supports all parts of the claim: undergraduates in an introductory university physics course completed interleaved homework, then recalled more relevant information and more frequently produced correct solutions on two surprise criterial tests; they also rated interleaved practice as more difficult and believed they learned less.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M8-c9": {
+  "mid": "07-M8",
+  "old": "In critical-thinking practice, interleaving produced no better learning or transfer than blocking, regardless of task format.",
+  "claim": "In critical-thinking practice, interleaving produced no better learning or transfer than blocking, regardless of task format.",
+  "decision": "keep",
+  "why": "The source directly reports no indications that interleaved practice led to better learning or transfer than blocked practice, irrespective of practice-task format, in two experiments on unbiased reasoning.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M9-c1": {
+  "mid": "07-M9",
+  "old": "Spacing review helps retention, and the best spacing depends jointly on how long the material must be retained.",
+  "claim": "Spacing review helps retention, and the best spacing depends jointly on how long the material must be retained.",
+  "decision": "rewrite",
+  "why": "The meta-analysis supports that ISI and retention interval jointly affect final-test retention and that the ISI producing maximal retention increased with retention interval. The source does not state the broader claim that spacing review helps retention. Smallest supported rewrite: “The ISI producing maximal retention increased as the retention interval increased.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M9-c11": {
+  "mid": "07-M9",
+  "old": "Spacing improves long-term retention, but the optimal gap changes with the test delay rather than being a single fixed rule.",
+  "claim": "Spacing improves long-term retention, but the optimal gap changes with the test delay rather than being a single fixed rule.",
+  "decision": "keep",
+  "why": "The source directly reports that increasing the interstudy gap initially improves and then reduces final-test performance, that the optimal gap increases as test delay increases, and that the optimal gap varies as a proportion of test delay. The noted population, review delay, and final-test delay are also stated in the source.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M9-c2": {
+  "mid": "07-M9",
+  "old": "A trainable half-life regression model can estimate memory half-life and predict student recall better than baselines.",
+  "claim": "A trainable half-life regression model can estimate memory half-life and predict student recall better than baselines.",
+  "decision": "keep",
+  "why": "The source states that HLR models are fit using Duolingo data, indirectly estimate the half-life of a word or concept in long-term memory, and reduce error by 45%+ compared to several baselines when predicting student recall rates. This supports the claim's core points.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M9-c3": {
+  "mid": "07-M9",
+  "old": "Under a recall-maximization-with-review-cost model, the optimal review time can be set by the recall probability itself.",
+  "claim": "Under a recall-maximization-with-review-cost model, the optimal review time can be set by the recall probability itself.",
+  "decision": "keep",
+  "why": "The source explicitly states that for two well-known human memory models, when the learner maximizes recall probability subject to a cost on reviewing frequency, the optimal reviewing schedule is given by the recall probability itself.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M9-c4": {
+  "mid": "07-M9",
+  "old": "Personalized review improved course retention over massed study in a middle-school foreign-language course.",
+  "claim": "Personalized review improved course retention over massed study in a middle-school foreign-language course.",
+  "decision": "keep",
+  "why": "The source explicitly describes a semester-long middle-school foreign-language course, a cumulative exam after the semester, and reports that personalized review yielded a 16.5% boost in course retention over massed study.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M9-c28": {
+  "mid": "07-M9",
+  "old": "Computational memory models can give practical guidance on spacing review under a fixed weekly review-time budget.",
+  "claim": "Computational memory models can give practical guidance on spacing review under a fixed weekly review-time budget.",
+  "decision": "keep",
+  "why": "The source describes simulations using ACT-R and MCM under a premise of fixed weekly review time, finds an optimal schedule beneficial over haphazard schedules, and identifies near-optimal scheduling heuristics with classroom and digital-tutor implications.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M10-c1": {
+  "mid": "07-M10",
+  "old": "A review of 93 educational automatic question generation papers finds that manual item writing is costly and slow, which is the practical motivation for machine-generated questions.",
+  "claim": "A review of 93 educational automatic question generation papers finds that manual item writing is costly and slow, which is the practical motivation for machine-generated questions.",
+  "decision": "keep",
+  "why": "The source is directly about the 93-paper educational AQG review and states that manual question construction requires resources, hinders and slows activities needing large question pools, and creates expenses. It explicitly says AQG was introduced to reduce those expenses and provide a continuous supply of new questions.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M10-c8": {
+  "mid": "07-M10",
+  "old": "Adding a teacher-derived prompt pattern to an LLM produced high-quality questions that expert evaluators scored significantly better and that approached teacher-written items in some respects.",
+  "claim": "Adding a teacher-derived prompt pattern to an LLM produced high-quality questions that expert evaluators scored significantly better and that approached teacher-written items in some respects.",
+  "decision": "rewrite",
+  "why": "The source supports that a teacher-derived collective knowledge base informs a prompt pattern, and that expert evaluations found high-quality questions with statistically significant results that approached teacher-written questions in certain aspects. It does not say the questions scored significantly better, so remove that comparison.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M10-c10": {
+  "mid": "07-M10",
+  "old": "Radiologists blind to source rated GPT-4 board-style items highly on clarity, relevance and distractor quality, though the study evaluated items, not learning gains.",
+  "claim": "Radiologists blind to source rated GPT-4 board-style items highly on clarity, relevance and distractor quality, though the study evaluated items, not learning gains.",
+  "decision": "keep",
+  "why": "The source states that two board-certified radiologists were blinded to question source and rated GPT-4 items 9.9 for clarity and relevance and 9.8 for distractor quality. The study assessed item characteristics and answer accuracy, not learner outcomes or learning gains.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M10-c11": {
+  "mid": "07-M10",
+  "old": "Two chatbots produced caries MCQs that specialists judged statistically comparable, but the analysis also examined item-writing flaws in the generated items.",
+  "claim": "Two chatbots produced caries MCQs that specialists judged statistically comparable, but the analysis also examined item-writing flaws in the generated items.",
+  "decision": "keep",
+  "why": "The source states that ChatGPT and Bard generated dental-caries MCQs, that three dental specialists assessed them, that statistical tests found no significant differences in the questions and their quality, and that the questions were qualitatively evaluated for item-writing flaws.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M10-c2": {
+  "mid": "07-M10",
+  "old": "A comprehensive review covers distractor development and the optimal ordering of options in multiple-choice items, the general principle behind the app's option handling.",
+  "claim": "A comprehensive review covers distractor development and the optimal ordering of options in multiple-choice items, the general principle behind the app's option handling.",
+  "decision": "rewrite",
+  "why": "The review covers distractor development and summarizes earlier research on optimal distractor ordering, but it does not establish a general principle for the app's option handling. Narrow to: “A comprehensive review covers distractor development and summarizes earlier research on the optimal ordering of distractors in multiple-choice items.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M10-c28": {
+  "mid": "07-M10",
+  "old": "Correct-answer organization across scrambled exam versions was tested for effects on undergraduates' answer selection, addressing the same concern the app's shuffling targets.",
+  "claim": "Correct-answer organization across scrambled exam versions was tested for effects on undergraduates' answer selection, addressing the same concern the app's shuffling targets.",
+  "decision": "rewrite",
+  "why": "The source directly investigates whether correct-answer organization in multiple computer-scrambled MCQ exam versions affects student answer selection. It supports the study description, but not the app-specific comparison implied by “addressing the same concern the app's shuffling targets.” Rewrite: “A project investigated whether consecutive multiple-choice questions sharing the same correct-answer letter in multiple exam versions affected student answer selection in large first- and second-year undergraduate courses.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M11-c1": {
+  "mid": "07-M11",
+  "old": "Language-model generation is known to produce unsupported text, which is the problem the quote-tie is meant to catch.",
+  "claim": "Deep-learning-based generation is prone to hallucinate unintended text, which can degrade system performance and fail to meet user expectations.",
+  "decision": "rewrite",
+  "why": "The source supports that deep-learning-based generation is prone to hallucinate unintended text and that this degrades performance and fails to meet user expectations. It does not specifically state that the text is unsupported or that a quote-tie is intended to catch it.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M11-c2": {
+  "mid": "07-M11",
+  "old": "Retrieval-augmented models that generate from an explicit source index are proposed partly because citing provenance is otherwise unsolved.",
+  "claim": "Retrieval-augmented models that generate from an explicit source index are proposed partly because citing provenance is otherwise unsolved.",
+  "decision": "rewrite",
+  "why": "The source says providing provenance for language models’ decisions remains an open research problem, then introduces RAG models that combine parametric memory with an explicit Wikipedia vector index. It does not specifically claim that RAG is proposed to solve citation or source-citation provenance. Narrow to: “Retrieval-augmented generation is proposed partly in response to open problems including providing provenance for language models’ decisions.”",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M11-c19": {
+  "mid": "07-M11",
+  "old": "Reviews of retrieval-augmented generation in clinical settings report that grounding in retrieved text is used to improve factual consistency and reduce hallucination.",
+  "claim": "Reviews of retrieval-augmented generation in clinical settings report that grounding in retrieved text is used to improve factual consistency and reduce hallucination.",
+  "decision": "keep",
+  "why": "The source explicitly states that RAG integrates external knowledge retrieval to improve factual consistency and reduce hallucinations, and it describes a review of 30 peer-reviewed studies on RAG in clinical domains, including diagnostic support, EHR summarization, and medical question answering.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M11-c3": {
+  "mid": "07-M11",
+  "old": "Whether a model can attribute the text it generates is treated as a central requirement for information-seeking use.",
+  "claim": "Whether a model can attribute the text it generates is treated as a central requirement for information-seeking use.",
+  "decision": "keep",
+  "why": "The source says attribution is likely to be crucial for LLMs in information-seeking scenarios and presents Attributed QA as a key first step toward attributed LLMs. The claim accurately captures this as a central requirement without overstating the finding.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M11-c21": {
+  "mid": "07-M11",
+  "old": "ChatGPT-generated citations and references are frequently non-existent, so requiring a quote to actually be found in the source screens out fabricated support.",
+  "claim": "ChatGPT-generated citations were not always confirmed to exist, so checking that a cited source exists can help screen out some fabricated references.",
+  "decision": "rewrite",
+  "why": "The source directly reports that only 72.7% of natural-science citations and 76.6% of humanities citations were confirmed to exist, supporting that some citations were unconfirmed. However, it evaluated citation/reference existence and accuracy, not whether a quoted passage could actually be found in the source, so the quote-verification claim must be narrowed.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M11-c4": {
+  "mid": "07-M11",
+  "old": "Even strong retrieval-and-citation systems often lack a citation that fully supports the statement, so a present quote does not by itself guarantee the claim is supported.",
+  "claim": "On the ELI5 dataset, even the best models lacked complete citation support 50% of the time.",
+  "decision": "rewrite",
+  "why": "The source supports this narrower statement, but not the broader generalization to retrieval-and-citation systems overall or the additional inference that merely presenting a quote does not guarantee support.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M12-c1": {
+  "mid": "07-M12",
+  "old": "Strong LLM judges can reach roughly human-level agreement with human preferences on open-ended evaluation, so a model checker is a usable screen for content quality.",
+  "claim": "Strong LLM judges can reach roughly human-level agreement with human preferences on open-ended evaluation, so a model checker is a usable screen for content quality.",
+  "decision": "keep",
+  "why": "The source directly states that strong LLM judges such as GPT-4 match controlled and crowdsourced human preferences at over 80% agreement, the same level as agreement between humans, on the open-ended MT-bench and Chatbot Arena evaluations. It also describes LLM-as-a-judge as a scalable way to approximate human preferences, supporting the claim that it can serve as a usable screen for content quality.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M12-c2": {
+  "mid": "07-M12",
+  "old": "A panel of diverse, smaller judges from disjoint model families beats a single large judge while showing less intra-model bias, supporting the app's use of other-family auditors.",
+  "claim": "A panel of diverse, smaller judges from disjoint model families beats a single large judge while showing less intra-model bias, supporting the app's use of other-family auditors.",
+  "decision": "keep",
+  "why": "The source directly states that across three judge settings and six datasets, a panel composed of more smaller models outperforms a single large judge and exhibits less intra-model bias due to its disjoint model-family composition. The population note matches the source.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M12-c3": {
+  "mid": "07-M12",
+  "old": "Making a model plan and answer verification questions about its own draft reduces hallucination on several factuality tasks, backing a verification pass before output is shown.",
+  "claim": "Chain-of-Verification, in which a model drafts an answer, plans verification questions, answers them independently, and then generates a verified response, reduces hallucinations across Wikidata list-based questions, closed-book Multi-SpanQA, and longform text generation, supporting a verification pass before output is shown.",
+  "decision": "keep",
+  "why": "The source describes this exact sequence and reports that COVE decreases hallucinations across the listed tasks. The claim's concluding support for a verification pass follows from the described final verified response.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M12-c4": {
+  "mid": "07-M12",
+  "old": "Inconsistent, diverging sampled responses can signal hallucinated content without an external database, supporting consistency-based screening rather than a single pass.",
+  "claim": "SelfCheckGPT uses zero-resource sampling-based fact-checking: when an LLM has knowledge of a concept, sampled responses tend to be similar and consistent, while hallucinated facts tend to produce divergent, contradictory responses. The study evaluated this approach on GPT-3 passages about WikiBio individuals with manual factuality annotations, supporting consistency-based screening rather than relying on a single response.",
+  "decision": "rewrite",
+  "why": "The source directly supports sampling-based screening without an external database, the expected consistency/divergence pattern, and the stated GPT-3/WikiBio evaluation. It does not explicitly contrast screening with a single-pass method, so remove that inference.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M12-c7": {
+  "mid": "07-M12",
+  "old": "In a non-English global-health setting, building juries to balance model biases improved agreement on only one extra criterion, and judges varied from lenient to harsh.",
+  "claim": "In a global-health evaluation involving questions from Rwandan health workers, constructing LLM juries to balance model-specific biases improved agreement on only one additional criterion, and judges ranged from too lenient to too harsh.",
+  "decision": "rewrite",
+  "why": "The source fully supports the jury result and the variation from too lenient to too harsh, but it does not clearly establish that the jury improvement occurred specifically in a non-English setting. It describes the Rwandan global-health evaluation and separately reports reduced performance when moving from English to Kinyarwanda.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M12-c10": {
+  "mid": "07-M12",
+  "old": "A survey of LLM-as-a-judge concludes that reliable judging is not automatic and depends on careful design, bias mitigation and standardization.",
+  "claim": "A survey of LLM-as-a-judge concludes that reliable judging is not automatic and depends on careful design, bias mitigation and standardization.",
+  "decision": "keep",
+  "why": "The source is directly about LLM-as-a-judge reliability. It states that ensuring reliability remains a significant challenge requiring careful design and standardization, and it explicitly discusses mitigating biases as a strategy to enhance reliability. The wording about reliability not being automatic is a fair summary of these statements.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M12-c12": {
+  "mid": "07-M12",
+  "old": "In healthcare reviews, LLM judges track clinicians best on objective criteria such as factuality and internal consistency but are limited elsewhere.",
+  "claim": "In healthcare reviews, LLM judges track clinicians best on objective criteria such as factuality and internal consistency but are limited elsewhere.",
+  "decision": "keep",
+  "why": "The source directly states that across healthcare tasks, LLM judges align most closely with clinicians on objective criteria including factuality and internal consistency, while remaining limited for subjective or affective judgments and other stated constraints. The claim is fully supported.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M13-c1": {
+  "mid": "07-M13",
+  "old": "Trusted learning analytics is framed as requiring an explicit, checkable set of privacy safeguards rather than ad hoc practice.",
+  "claim": "Trusted learning analytics is framed as requiring an explicit, checkable set of privacy safeguards rather than ad hoc practice.",
+  "decision": "rewrite",
+  "why": "The source supports an explicit eight-point checklist (DELICATE) intended to facilitate trusted implementation of learning analytics, but it does not state that the checklist is specifically about privacy safeguards, is required, or is contrasted with ad hoc practice. Smallest supported rewrite: \"Trusted learning analytics is framed as facilitated by an explicit eight-point checklist for implementation.\"",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M13-c10": {
+  "mid": "07-M13",
+  "old": "Students often do not know what data is collected and consider informed consent and control over sharing necessary.",
+  "claim": "Students often do not know what data is collected and consider informed consent and control over sharing necessary.",
+  "decision": "rewrite",
+  "why": "The source supports lack of awareness of educational data-mining and analytic practices and the data used, and that students valued informed consent and had nuanced views about when and with whom data should be shared. Narrow the wording to those reported findings rather than generalizing to students overall.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M13-c9": {
+  "mid": "07-M13",
+  "old": "Students who perceive privacy risk are more concerned, and perceived privacy control is modelled as shaping trust and disclosure.",
+  "claim": "Students who perceive privacy risk are more concerned, and perceived privacy control is modelled as an antecedent of privacy concerns, with trust and non-self-disclosure as outcomes.",
+  "decision": "rewrite",
+  "why": "The source directly supports perceived privacy risk as a predictor of privacy concerns and places perceived privacy control among the model's antecedents, with trusting beliefs and non-self-disclosure behaviours as outcomes. It does not clearly report a direct effect of privacy control on disclosure, so the claim should describe the model structure without asserting that direct relationship.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M13-c3": {
+  "mid": "07-M13",
+  "old": "Technical privacy measures rest on assumptions about individual control and depend on institutional governance, consent and accountability, not technology alone.",
+  "claim": "Technical privacy measures rest on assumptions about individual control and depend on institutional governance, consent and accountability, not technology alone.",
+  "decision": "keep",
+  "why": "The source explicitly states that many technological privacy solutions assume individuals have control over their data and that regulating student data privacy through technology mostly depends on institutional data governance, consent, data security, and accountability. It also says privacy is not only a technological problem but a social problem.",
+  "model": "gpt-6.1-terra"
+ },
+ "07-M13-c18": {
+  "mid": "07-M13",
+  "old": "Ethics guidance specifically for children and K-12 AI is less developed than general AI ethics policy, so child-specific rules rest on general principles.",
+  "claim": "AI ethics policy guidance specific to children and K-12 education has lagged behind general AI ethics guidance, and K-12 guidelines employ many core principles from non-K-12 AI ethics documents, sometimes adapted for children.",
+  "decision": "rewrite",
+  "why": "The source explicitly says child- and K-12-specific guidance has lagged behind general AI ethics guidance and that the analyzed guidelines use many core principles from non-AIEdK-12 documents, sometimes adapted for children. The original claim overstates this by implying that child-specific rules rest on general principles, while the source also identifies principles unique to K-12 education.",
+  "model": "gpt-6.1-terra",
+  "recheck": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  }
+ },
+ "07-M13-c23": {
+  "mid": "07-M13",
+  "old": "Children's data privacy rights under GDPR are raised as a hard problem, with current regulation not easily supporting a fair balance.",
+  "claim": "Children's data privacy rights under GDPR are raised as a hard problem, with current regulation not easily supporting a fair balance.",
+  "decision": "keep",
+  "why": "The source explicitly highlights children’s and young people’s data privacy rights as defined by GDPR and says balancing fairness, pedagogic rights, privacy rights, and effective data use is difficult and not easily supported by current regulation.",
+  "model": "gpt-6.1-terra"
+ }
+}
