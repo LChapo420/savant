@@ -850,7 +850,10 @@ function render(files) {
   return md.join('\n');
 }
 
-if (arg('render')) {
+if (require.main !== module) {
+  // Required by scripts/block-sensitivity-proof.js, which runs the same measures, writer, judges and cache on built-in block levels.
+  module.exports = { arg, base, ls, usage, installWriter, judgeOnce, JUDGES, JUDGE_SYSTEM, JOINT, LO, HI, BASE_LEARNER, userFor, measureLine, PLANT, REPLAY, CONCURRENCY, REP, LIVE, MOCK, cache, sha, limited, BY_ID, WRITER_MODEL, WRITER, gated };
+} else if (arg('render')) {
   const text = render(arg('render').split(',').filter(Boolean));
   if (arg('out')) fs.writeFileSync(arg('out'), `${text}\n`); else console.log(text);
 } else {

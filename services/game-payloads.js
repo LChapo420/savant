@@ -717,7 +717,12 @@ async function writeTailored(userId, trackId, gradeId, level, assignment, schema
   if (arm === 'holdout') return null;
 
   const context = blockLevels.levelContext(trackId, gradeId, level);
-  const learner = blockLevels.learnerText(userId, where, { tailored: true, experiment });
+  // The learning spec at depth (services/block-adapt.js): the question shape, subject wording and theme for this learner, and the
+  // check that the set followed it. Empty (the prompts exactly as before) for a learner with no spec.
+  // eslint-disable-next-line global-require
+  const blockAdapt = require('./block-adapt');
+  const adapt = blockAdapt.begin({ userId, where, kind: 'game', context });
+  const learner = `${blockLevels.learnerText(userId, where, { tailored: true, experiment })}${adapt.game}`;
   const started = Date.now();
 
   const planned = await ai.structuredDetail({
@@ -746,21 +751,29 @@ async function writeTailored(userId, trackId, gradeId, level, assignment, schema
   ].join('\n');
 
   let reply = null;
+  let specCheck = null;
   let problems = ['no reply'];
   let usage = planned && planned.usage ? { ...planned.usage } : { input_tokens: 0, output_tokens: 0 };
   let model = null;
   for (let attempt = 0; attempt < 2 && problems.length; attempt++) {
-    const got = await ai.structuredDetail({
-      role: 'blocks',
-      task: 'game_questions',
-      system: prompt.system,
-      user,
-      schema: outputSchema(schema),
-      schemaName: 'submit_game_questions',
-      maxTokens: Math.min(60000, 6000 + schema.questionCount * 440),
-      userId,
-      lane: process.env.BLOCK_LANE || 'background',
+    const run = await blockAdapt.revise(adapt, {
+      generate: (note) => ai.structuredDetail({
+        role: 'blocks',
+        task: 'game_questions',
+        system: prompt.system,
+        user: note ? `${user}\n\n${note}` : user,
+        schema: outputSchema(schema),
+        schemaName: 'submit_game_questions',
+        maxTokens: Math.min(60000, 6000 + schema.questionCount * 440),
+        userId,
+        lane: process.env.BLOCK_LANE || 'background',
+      }),
+      parts: (r) => ({ teach: [], checks: blockAdapt.textOf(((normalizeReply(r && r.data) || {}).questions || []).map((q) => (q && typeof q === 'object' ? { prompt: q.prompt, explanation: q.explanation } : null))) }),
+      topic: context.topic,
+      wordLimit: false,
     });
+    const got = run.result;
+    if (run.checked) specCheck = { revised: run.revised, before: run.before, open: run.problems };
     reply = normalizeReply(got && got.data);
     if (got && got.usage) {
       usage.input_tokens = (usage.input_tokens || 0) + (got.usage.input_tokens || 0);
@@ -805,6 +818,7 @@ async function writeTailored(userId, trackId, gradeId, level, assignment, schema
     payload,
     problems: payload ? [] : (problems.length ? problems : ['the model did not answer']),
     plan: plan || null,
+    spec_check: specCheck,
     arm,
     experiment: experiment || null,
     model,

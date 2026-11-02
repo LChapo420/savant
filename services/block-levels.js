@@ -2126,6 +2126,13 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
   const catalog = catalogFor(kind, trackId);
   const formats = checkFormats(trackId);
   const learner = learnerText(owner, where, { tailored, experiment });
+  // The learning spec at depth (services/block-adapt.js): the size, formats, wording and subject lines of this level for this learner,
+  // and the check that the fill-out followed them. Empty (the prompts exactly as before) for a learner with no spec.
+  // eslint-disable-next-line global-require
+  const blockAdapt = require('./block-adapt');
+  const adapt = blockAdapt.begin({ userId: owner, where, kind, context });
+  const learnerLayout = `${learner}${adapt.layout}`;
+  const learnerFill = `${learner}${adapt.fill}`;
   const started = Date.now();
   const row = anyRow({ userId: owner, trackId, gradeId, level })
     || db.insert(COLLECTION, { user_id: owner, track_id: trackId, grade_id: gradeId, level, attempt: 1, kind, status: 'writing' });
@@ -2145,7 +2152,7 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
     role: 'blocks',
     task: 'block_layout',
     system: `${LAYOUT_SYSTEM}${subjectNote(trackId, 'layout')}\n\nLIBRARY (${kind === 'retention' ? 'retention and assessment blocks' : 'lesson blocks'}):\n${catalog.map(catalogLine).join('\n')}`,
-    user: `${context.text}\n\n${learner}\n\nDesign the ${kind} layout now.`,
+    user: `${context.text}\n\n${learnerLayout}\n\nDesign the ${kind} layout now.`,
     schema: layoutSchema(kind, catalog.map((b) => b.tag), context.skills, formats),
     schemaName: 'submit_layout',
     // Room for a thinking model's reasoning as well as the layout itself.
@@ -2182,11 +2189,11 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
   }
 
   // 2. fill
-  const fillReply = await ai.structuredDetail({
+  const callFill = (note) => ai.structuredDetail({
     role: 'blocks',
     task: 'block_fill',
     system: FILL_SYSTEM + subjectNote(trackId, 'fill'),
-    user: fillPrompt({ context, learner, layout, factSheet }),
+    user: `${fillPrompt({ context, learner: learnerFill, layout, factSheet })}${note ? `\n\n${note}` : ''}`,
     schema: fillSchema(),
     schemaName: 'submit_block_content',
     maxTokens: Number(process.env.BLOCK_FILL_MAX_TOKENS || 32000),
@@ -2194,6 +2201,18 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
     dataClass: poolClass(owner),
     lane: process.env.BLOCK_LANE || 'background',
   });
+  // A tailored fill-out is checked against the learner's spec (key points kept, interests used, dislikes avoided, wording, length)
+  // and written once more with the problems named when it broke them (services/block-adapt.js); everything else is one call, as before.
+  const fillRun = await blockAdapt.revise(adapt, {
+    generate: callFill,
+    parts: (r) => ({
+      teach: blockAdapt.textOf(readList(r && r.data && r.data.blocks)),
+      checks: blockAdapt.textOf(readList(r && r.data && r.data.checks).map((c) => (c && typeof c === 'object' ? { prompt: c.prompt, rationale: c.rationale, hint: c.hint } : null))),
+    }),
+    keyFacts: layout.coverage || [],
+    topic: context.topic,
+  });
+  const fillReply = fillRun.result;
   if (!fillReply || !fillReply.data) {
     settle({ status: 'failed', reason: 'the fill-out call returned nothing', finished_at: new Date().toISOString() });
     return null;
@@ -2266,7 +2285,7 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
   // Still none: the reply left them out. One small call writes just the checks.
   let checksUsage = null;
   if (!checkList.length && layout.checks.length) {
-    const only = await writeChecksOnly({ context, learner, layout, userId: owner });
+    const only = await writeChecksOnly({ context, learner: learnerFill, layout, userId: owner });
     checksUsage = only && only.usage;
     checkList = readList(only && only.data && only.data.checks);
   }
@@ -2392,6 +2411,7 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
     usage,
     seconds: Math.round((Date.now() - started) / 1000),
     brief_hash: tailored ? hash(learner) : null,
+    spec_check: fillRun.checked ? { revised: fillRun.revised, before: fillRun.before, open: fillRun.problems } : null,
     finished_at: new Date().toISOString(),
     answers: {},
   });

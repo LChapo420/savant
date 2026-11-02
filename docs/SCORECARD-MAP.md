@@ -194,7 +194,7 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `learner.readingGrade` | prompt only | 0 |
 | `learner.ageBand` | prompt only | 0 |
 | `learner.esl` | tutor-learner-model.js | 0 |
-| `lesson.minutes` | prompt only | 6 |
+| `lesson.minutes` | block-adapt.js | 6 |
 | `lesson.sections` | prompt only | 7 |
 | `lesson.chunkSentences` | material-notes.js, material-pack.js, tutor-plan.js | 7 |
 | `lesson.mistakes` | ai.js | 5 |
@@ -205,9 +205,9 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `lesson.maxNewTerms` | prompt only | 3 |
 | `lesson.pace` | learner-path.js, material-test.js, tutor-plan.js | 4 |
 | `lesson.restate` | prompt only | 2 |
-| `lesson.retrievalChecks` | ai.js, material-adapt.js, material-pack.js | 5 |
+| `lesson.retrievalChecks` | ai.js, block-adapt.js, material-adapt.js, material-pack.js | 5 |
 | `lesson.checkEveryChunks` | material-podcast.js | 2 |
-| `lesson.warmupItems` | material-test.js | 3 |
+| `lesson.warmupItems` | block-adapt.js, material-test.js | 3 |
 | `lesson.recapAtStart` | prompt only | 2 |
 | `lesson.recapAtEnd` | prompt only | 1 |
 | `lesson.hook` | prompt only | 3 |
@@ -219,17 +219,17 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `difficulty.rampLabel` | prompt only | 3 |
 | `difficulty.stretchShare` | adaptation.js | 4 |
 | `difficulty.supportShare` | adaptation.js | 9 |
-| `scaffolding.level` | material-path.js | 8 |
+| `scaffolding.level` | block-adapt.js, material-path.js | 8 |
 | `scaffolding.hintLevel` | tutor-plan.js | 1 |
 | `scaffolding.hintSize` | prompt only | 1 |
-| `scaffolding.hintInChecks` | prompt only | 6 |
+| `scaffolding.hintInChecks` | block-adapt.js | 6 |
 | `scaffolding.hintsBeforeReveal` | prompt only | 5 |
 | `scaffolding.fade` | prompt only | 6 |
 | `practice.workedToPractice` | prompt only | 5 |
-| `practice.workedExamples` | prompt only | 5 |
+| `practice.workedExamples` | block-adapt.js | 5 |
 | `practice.tryItems` | prompt only | 5 |
 | `practice.examplesPerIdea` | prompt only | 1 |
-| `practice.typedAnswers` | adaptation.js | 3 |
+| `practice.typedAnswers` | adaptation.js, block-adapt.js | 3 |
 | `practice.predictBeforeReveal` | prompt only | 5 |
 | `practice.selfExplain` | prompt only | 1 |
 | `practice.mistakeShown` | prompt only | 1 |
@@ -242,20 +242,20 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `explain.paragraphSentences` | prompt only | 1 |
 | `explain.rigor` | prompt only | 1 |
 | `explain.conceptFirst` | prompt only | 2 |
-| `explain.misconception` | prompt only | 3 |
-| `explain.contrastLookalikes` | prompt only | 1 |
-| `explain.numberedSteps` | prompt only | 4 |
+| `explain.misconception` | block-adapt.js | 3 |
+| `explain.contrastLookalikes` | block-adapt.js | 1 |
+| `explain.numberedSteps` | block-adapt.js | 4 |
 | `explain.patternPointedOut` | prompt only | 1 |
-| `explain.notation` | prompt only | 1 |
+| `explain.notation` | block-adapt.js | 1 |
 | `language.vocabularyGrade` | tutor-learner-model.js, tutor-plan.js | 2 |
 | `language.maxSentenceWords` | prompt only | 1 |
 | `language.defineTerms` | prompt only | 1 |
 | `language.plainLanguage` | tutor-learner-model.js, tutor-plan.js | 2 |
-| `language.avoidIdioms` | prompt only | 0 |
-| `language.eslSupport` | prompt only | 0 |
-| `interests.exampleDomains` | prompt only | 0 |
+| `language.avoidIdioms` | block-adapt.js | 0 |
+| `language.eslSupport` | block-adapt.js | 0 |
+| `interests.exampleDomains` | block-adapt.js | 0 |
 | `interests.avoidDomains` | prompt only | 0 |
-| `interests.share` | prompt only | 1 |
+| `interests.share` | block-adapt.js | 1 |
 | `interests.people` | prompt only | 1 |
 | `interests.identity` | prompt only | 1 |
 | `review.spacingScale` | adaptation.js, material-path.js | 3 |
@@ -300,7 +300,7 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `meta.questionPrompt` | prompt only | 1 |
 | `meta.spotTheInconsistency` | prompt only | 1 |
 | `meta.oneShortAction` | prompt only | 1 |
-| `learning.retrieval.questions` | prompt only | 5 |
+| `learning.retrieval.questions` | block-adapt.js | 5 |
 | `learning.retrieval.spread` | prompt only | 2 |
 | `learning.retrieval.fromMemory` | prompt only | 0 |
 | `learning.retrieval.produce` | prompt only | 6 |
@@ -312,7 +312,7 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `learning.spacing.tomorrowLine` | prompt only | 5 |
 | `learning.gapOnly.on` | prompt only | 1 |
 | `learning.gapOnly.strong` | prompt only | 1 |
-| `learning.dualCoding.on` | prompt only | 1 |
+| `learning.dualCoding.on` | block-adapt.js | 1 |
 | `learning.dualCoding.strength` | prompt only | 2 |
 | `learning.dualCoding.forms` | prompt only | 2 |
 | `learning.length.words` | prompt only | 10 |
