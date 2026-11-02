@@ -42,12 +42,19 @@ The rules, as stated in the header of `services/learning-depth.js`:
 The block stays usable: 500 to 850 words for the sixteen realistic test learners (version 1: 380 to 470), at most 1,151 over 2,000
 random extreme profiles (the test caps it at 1,300).
 
-### 1.2 Conflicts settled (23 rules)
+### 1.2 Conflicts settled (25 rules)
 
 Examples: *stretch without stakes* (challenge with anxiety: the harder case is an optional puzzle, never a test); *support on the
 core, stretch last*; *short, but retrieval stays* (cut explanation first, never the checks); *worked and generative* (predict each
 step of the worked example); *brisk but small*; *game framing without pressure*; *precise but plain*; *story with steps* and *story
-with support* (both added after the joint profiles found a story frame swallowing the steps a structure-needing learner also has).
+with support* (both added after the joint profiles found a story frame swallowing the steps a structure-needing learner also has);
+*open but predicting* and *practice first, but gently* (2 Nov, same cause: "predict each step" was written as a numbered list, and a
+practice-first lesson for an anxious learner opened with a quick check).
+**Priority by measure (2 Nov).** Levers are ranked by how much they shape the page, so a measure whose levers are small (a short attention
+span only asks for smaller pieces) was outranked by the measures sharing the page and became a light touch, which a reader cannot see.
+`promote` in `services/learning-depth.js` now gives every strongly moved measure (|value x confidence| of 0.5 or more, at most four) one
+numbered instruction of its own: the sentence of the lever it moves most among the levers no other strongly moved measure also pulls, and
+only a lever whose final lean points the way that measure pulls. Nothing is dropped: the lowest ranked numbered sentence moves to "Also".
 Full list: `JOINT_RULES` in `services/learning-depth.js`.
 
 ### 1.3 The learner's own context
@@ -163,17 +170,34 @@ Over the top 30 measures by impact (every group covered), final code:
 
 - **Lesson 80%** of 60 verdicts direction-correct (21 measures right, 6 split between the judges, 3 the wrong way).
 - **Practice test 83%** (20 measures), **path 82%** (20 measures), **pack 77%** (11 measures, judge v1 and code before the pilot fixes).
+  **Pack re-judged on version 2 (2 Nov): 14 of 16 verdicts (88%) direction-correct, 8 measures** (vocabulary_ceiling, working_memory_span,
+  structure_need, evaluation_anxiety, prior_knowledge, interest_transfer, worked_example_dependence, deductive_trajectory); writer
+  DeepSeek V4.1 Flash through the ledger, judges Gemini 3.5 Flash Lite and Modelflare Sol, judge v2. The two misses are structure_need and
+  evaluation_anxiety (1 of 2 each). Content: a key point or an accuracy below 8 is flagged by a judge in 1 of the 8 pairs
+  (deductive_trajectory) and by the code's term-overlap check in 3 (working_memory_span, structure_need, worked_example_dependence; a pack
+  is a summary and a quiz, which paraphrase), so only 4 of 8 pairs are "intact" on both counts. Only 8 of the pilot's 11
+  measures were re-run (the Standard Compute budget, section 5), and the other 3 (generation_effect, attention_runway, productive_struggle)
+  are not re-judged. The earlier 77% is a different judge and writer, so the two numbers are not a like-for-like gain.
 - **Podcast 63%** and **notes 65%** (30 measures): weaker. In both, about a third of the verdicts went the wrong way.
 - Content: every lesson pair kept its five key points in 26 of 30 pairs (judges and code); for notes the term-overlap check flags
   more (16 of 27 intact) but the speed run below shows the same misses in the base notes (the notes generator paraphrases), so it is
   not caused by tailoring. Practice tests are a sample of questions, so only their accuracy is checked (15 of 15 intact).
 
-Measures that went the wrong way for both judges in the final run, so far unfixed: intake_baseline (notes, podcast: the high learner's
+Measures that went the wrong way for both judges in the first full run (the 2 Nov changes and their re-judge are listed after this paragraph): intake_baseline (notes, podcast: the high learner's
 version read as more fragmented), attention_runway (notes, path), error_driven_learning (lesson, podcast), application_orientation
 (lesson), analogical_transfer and productive_struggle (notes), causal_chain_depth, example_density_need, boredom_susceptibility,
 consolidation_need, step_explicitness and working_memory_span (podcast), brevity_preference (path), reentry_cost (notes). Several are
 judge readings that contradict their own evidence sentence (section 6); others are real: the writer did not make the difference large
 enough to see.
+
+**Re-check of the wrong-way measures on 2 Nov (notes only, one sample, ONE judge).** The new rules change the notes block of 11 of the
+30 judged measures; 8 of them were re-written with the old and the new rules by the same writer (Mistral Large 3 on xKiro) and judged by Sol
+(Gemini's free quota was spent, so there is one verdict a measure). Old rules 3 of 7 the right way (narrative_pull: block unchanged, so
+ignored); new rules 7 of 8: attention_runway, worked_example_dependence, evaluation_anxiety and brevity_preference turned from wrong to right,
+productive_struggle, prior_knowledge and boredom_susceptibility stayed right, and narrative_pull, which now changes the notes, was judged the wrong
+way once. One verdict each cannot separate a fix from a lucky draw; read it as "nothing got worse and attention_runway and
+productive_struggle (the two on the list above) are pointing the right way", not as proof. The other measures on the list (podcast,
+path, lesson, intake_baseline and the rest) were not touched by 2 Nov's changes and were not re-run.
 
 ### 3.3 Joint profiles
 
@@ -183,6 +207,36 @@ tell", 13 the wrong way**. Lessons 19/32, notes 17/32 (12 of them "can't tell").
 measure's effect masks another's, for example a story frame hiding numbered steps, which led to two new conflict rules) and in judging
 four overlapping differences at once. This is the weakest result here and the most important one to improve: real learners differ on
 many measures at once.
+
+**Second attempt (2 Nov, branch `material-weak`): the goal of 75% was not reached, and the gain is not reliable.** AI-judged, simulated
+learners; raw runs in `docs/material-depth/material-weak/`.
+
+*The judge.* The joint question is now put to the judge once per measure, with the other three named as explanations that are not to be
+credited, and "either" when the only visible difference is better explained by another measure (`--joint-judge each`; the first wording
+stays as `old`). It is not easier: "either" and a wrong pick both still count as not correct. On the *same recorded texts* from the first
+run, the new judge gives 31 of 64 with Mistral Large 3 and Gemini (11 "can't tell", 22 wrong) and 36 of 64 with Gemini and Modelflare Sol
+(11 "can't tell"), against 36 of 64 and 15 "can't tell" for the old wording. So the judge change by itself does not raise the number; it
+turns some "can't tell" into wrong answers.
+
+*The writing.* Changes: priority by measure (section 1.2), two new conflict rules, a visible "nothing here is scored" sentence for the
+anxious learner's lesson and a calm lead-in for their notes, a scene opening for a story-following learner's notes (those notes ignored
+narrative_pull before), and the notes word limit (3.4). xKiro's MiniMax answered 503 for the whole of 1 Nov and its free quota ran out, so
+before and after were both re-run with the same writer, Standard Compute DeepSeek V4.1 Flash, judges Gemini 3.5 Flash Lite and Sol, the
+four original profiles, topics and mirror design, with fresh samples (`--rep`) because a single draw is noisy:
+
+| Arm | Notes | Lesson | All |
+|---|---|---|---|
+| Rules as on 1 Nov (3 samples of notes, 2 of lessons) | 52/96 (54%), 24 "can't tell" | 56/64 (88%) | 108/160 (68%) |
+| Rules of 2 Nov before the last notes tuning (same samples) | 63/96 (66%), 17 "can't tell" | 47/64 (73%), 0 | 110/160 (69%) |
+| Final rules, notes only (2 samples; Gemini rate-limited, 18 verdicts lost) | 25/44 (57%), 11 "can't tell" | not re-run | |
+
+Reading it honestly: only the J1 lesson block (vocabulary, attention, anxiety, prior knowledge) changed between the arms; the J2, J3 and J4
+lesson blocks are character for character the same, so the lesson difference there (J4: 16/16 against 11/16) is sampling, not the rules.
+J1 lessons, the one changed block, over 8 samples each: 43/64 (67%) to 47/64 (73%); in six extra samples evaluation_anxiety went from 4/12 to
+8/12 and attention_runway from 3/12 to 5/12. Notes gained about 12 points before the last tuning, and "can't tell" fell from 24 to 17 of 96,
+but the final-rules sample is smaller and lower (57%), so no gain on notes can be claimed for the final rules. Remaining misses are mostly
+notes where a judge sees no difference ("can't tell") and confounds the judges themselves name (a reassuring "no earlier science needed"
+for a low-prior-knowledge learner read as an anxious learner's). Not met: 75% direction-correct and "can't tell" well below 15 of 64.
 
 ### 3.4 Understanding, retention and speed: tailored against base material
 
@@ -199,6 +253,27 @@ Notes: tailored notes keep 5 of 5 objectives for every learner (as the base note
 less growing *longer* than the base (Noah 186 -> 347 words, Ethan 237 -> 372, Lena 237 -> 298) as interest analogies and question
 bullets were added; after the fix (one analogy, no longer than a plain outline) they are 220, 249 and 249: still 5% to 18% over the base,
 and two judges scored Lena's and Noah's tailored notes as fitting a little worse than the base (7.5 against 8.5; 7.0 against 8.0).
+
+**Notes word limit (2 Nov).** A learner who needs less (a short treatment asked for, or gap-only coverage) now gets notes held to a hard
+limit: 85% of the passage's words, headings and bullets together (`notesWordLimit`; the plain outline runs 0.8 to 1.05 of the passage). The
+limit is in the writer's prompt, a draft over it is sent back once with the overshoot named (`checkFollowed` `too_long`), and what is
+still over is cut by code: scene and harder-question bullets always go from a short version, framed-analogy bullets go last-first until it
+fits, a bullet that carries a point never does. The interests analogy is optional there and only inside the limit. Notes also now read
+"please do not over-explain" as a dislike of repetition ("say each thing once"). A first try at 75% of the passage cut definitions and
+steps (objectives fell to 3.5 to 4.5 of 5 for Omar, Sam and Lena) and was raised to 85%. Same writer (DeepSeek through the ledger), same
+judges (Gemini and Sol), six learner types who need less, notes only, one sample each:
+
+| | Words | Fit (0-10) |
+|---|---|---|
+| Base (generic) notes | 242 on average (224 to 251) | 7.0 |
+| Tailored, rules as on 1 Nov | 320 (213 to 431; five of six longer than base) | 6.9 |
+| Tailored, final rules | **167 (151 to 189; all six shorter than base)** | **7.75** (above base for five of six; Lena 7.5 against 9.5) |
+
+Objectives taught (judges' count): 5 of 5 for four of the six, 4.5 for Sam and 4.0 for Ben (one judge counted a missing objective; the old
+rules gave Ben 4.5). Not "no objective dropped" proven: it is a judge's reading of one sample, not a guarantee. The generic notes of a
+single run are also noisy (a second run's generic fit for Lena was 7.5, a third's 9.5), so the fit column has about two points of play.
+Learners who need more still get longer notes (Frank 570, Grace 393 words), as before. Lessons for these learners were not re-run on
+2 Nov (budget), although the priority rule can change their blocks.
 
 **What this does not show.** Not one learner was timed, tested a week later or asked. The estimated minutes are words over a reading
 speed. A 25% to 35% cut in reading time for some learner types, with every objective kept, is far from "three times faster", and no
@@ -221,12 +296,21 @@ evidence here bears on retention. That needs real learners (section 6).
 | joint profiles | a story frame hid the numbered steps of a structure-needing learner | two conflict rules: story with steps, story with support |
 | speed run | own material for learners who need less grew longer than the base | one interest analogy, and no longer than a plain outline (Noah's notes 347 -> 220 words) |
 | writer | MiniMax gave unusable lessons about 1 time in 10 at first | one immediate retry in the harness (the app's own providers already retry) |
+| joint profiles (2 Nov) | a measure with small levers (attention span) was a light touch next to three other moved measures, so the text did not show it | priority by measure: every strongly moved measure keeps one numbered instruction of its own |
+| joint profiles (2 Nov) | "predict each step" was written as a numbered list (read as the step-needing learner's version); an anxious learner's practice-first lesson opened with a quick check | conflict rules open-but-predicting and practice-first-but-gently; the anxious lesson says once that nothing is scored |
+| joint profiles (2 Nov) | notes ignored narrative_pull and low stakes | a scene opening for a story-following learner's notes, a calm lead-in for an anxious learner's |
+| speed run (2 Nov) | notes for learners who need less were still 5% to 18% over the base (and 20% to 70% over with the other writer) | a hard word limit (85% of the passage) in the prompt, in the check and in code, scene and question bullets dropped from a short version |
+| speed run (2 Nov) | a first limit of 75% cut definitions and steps | raised to 85% |
+| harness (2 Nov) | the generic notes of one topic were built by several learners at once and came back "busy"; a lesson sample could not be redrawn | one build per generic version; `--rep` redraws lessons too |
 
 ## 5. Cost
 
 | Provider | Spent | What |
 |---|---|---|
 | Standard Compute (through the ledger, `ceilingUsd` 38) | **$2.41** of the $2.50 budget (ledger $30.90 -> $33.39 over the session, which includes any other agent's calls) | DeepSeek V4.1 Flash writing tests, paths and packs |
+| Standard Compute, 2 Nov (material-weak) | **$1.48** of the $1.50 budget (ledger $33.00 -> $34.47) | DeepSeek V4.1 Flash writing the joint-profile, speed and pack samples of both arms |
+| Modelflare Sol, 2 Nov | not metered in the run; about 400 judge calls of about 3,000 tokens each, at the cheapest of the account's models | judge (third family) |
+| xKiro, 2 Nov | 0 dollars; MiniMax answered 503 all day, Qwen and Mistral free models used up the day's free quota (the first re-run attempts, both arms, were lost to it) | judge and failed writer attempts |
 | Anthropic key | $0 | not used |
 | Modelflare | $0 | not used |
 | xKiro MiniMax M3.1 Flash (free token grant) | 0 dollars; about 1.5M tokens of the grant | writer for lessons, notes, podcasts |
@@ -244,12 +328,13 @@ evidence here bears on retention. That needs real learners (section 6).
 - **Small samples.** One pair per measure and kind (two verdicts), one topic each; a single pair can flip with the writer's sampling.
   30 of 100 measures were judged on lessons, notes and podcasts, 20 on tests and paths, 11 on packs. The other 70 are covered only by
   the structural matrix.
-- **Packs** were judged once, with judge v1 and code from before the pilot fixes; the Standard Compute budget did not stretch to a rerun.
+- **Packs** were re-judged on 2 Nov on version 2 for 8 of the pilot's 11 measures (3.2), not all 11, and not against the other two arms.
 - **Built-in levels** were not rewritten live: the level editor writes whole HTML pages. The level block has the same sentences as the
   lesson block (checked by the matrix), so the lesson results stand for it, but the HTML path itself was not judged.
-- **Joint profiles are weak (56%).** The block is right; the writing and the judging of several overlapping differences are not yet.
+- **Joint profiles are still weak.** 56% on 1 Nov; on 2 Nov, with a fairer judge and the new rules, 68% before and 69% after on the same writer and judges, 57% on the final notes (3.3). The 75% goal was not reached; notes often differ too little for any judge to say. Four profiles, two kinds and a few samples cannot show a small gain.
 - **Three times faster is not shown.** The best measured cut is about 35% in estimated reading time for some learner types, with every
-  objective kept. Notes for learners who need less are still slightly longer than the base.
+  objective kept. Notes for learners who need less are now shorter than the base (167 words against 242 on average, one sample each), but
+  two of the six had an objective a judge counted as missing, and Lena's fit is below the base.
 - **Wording after the runs.** The one-analogy instruction for learners who need less was reworded after the last runs (from "exactly one" to "at least one ... keep it to that one analogy") so the existing mock material proof can parse it; the meaning is the same, but those prompts were not re-run.
 - **Tutor not touched.** The tutor's block is version 1; `depthLines` is ready for its owner.
 
@@ -262,6 +347,12 @@ evidence here bears on retention. That needs real learners (section 6).
     node scripts/material-sensitivity-proof.js --live --phase speed --kinds lesson,notes --cache FILE
     node scripts/material-sensitivity-proof.js --render a.json,b.json --out FILE.md       # the tables below
     add --depth off for version 1
+    node scripts/material-sensitivity-proof.js --live --phase joint --kinds lesson,notes --rep 2 --profiles J1 --judges gemini,sol --writer sc --budget 0.3 --cache FILE
+        --joint-judge each|together|old   how the four measures are put to the judge; --replay FILE re-judges the texts of an earlier run
+        --writer sc|nvidia|xkiro, --writer-model M (another xKiro or NVIDIA model), --judges mistral,gemini,sol,qwen,cohere
+    node scripts/lib/joint-report.js FILE --evidence      # per measure, with the judges' words
+    node scripts/lib/speed-report.js FILE notes           # words and fit per learner
+    node scripts/lib/block-snapshot.js OUT.json; node scripts/lib/block-diff.js A.json B.json   # which single-measure blocks a rule change touched
 
 ## 8. Result tables (generated by --render)
 

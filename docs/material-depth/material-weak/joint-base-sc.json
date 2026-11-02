@@ -1,0 +1,2444 @@
+{
+ "tag": "joint-base-sc",
+ "phase": "joint",
+ "depth": "v2",
+ "generated_at": "2026-11-01T22:43:42.787Z",
+ "live": true,
+ "writer": "deepseek/deepseek-v4.1-flash-1017 (Standard Compute)",
+ "judges": [
+  "gemini-3.5-flash-lite",
+  "gpt-6.1-sol"
+ ],
+ "lo": 10,
+ "hi": 90,
+ "base": {
+  "age": 14,
+  "survey": {
+   "interests": "basketball, video games",
+   "hobbies": "drawing comics"
+  }
+ },
+ "structural": {
+  "counts": {
+   "lesson": 100,
+   "level": 100,
+   "material": 100,
+   "notes": 70,
+   "podcast": 100,
+   "test": 77,
+   "code": 15
+  },
+  "anySurface": 100,
+  "rows": [
+   {
+    "measure": "intake_baseline",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "working_memory_span",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "processing_velocity",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "chunk_granularity",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "abstraction_tolerance",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "example_density_need",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "text_density_tolerance",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "vocabulary_ceiling",
+    "group": "intake",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "jargon_absorption",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "spatial_anchoring",
+    "group": "intake",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "deductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "inductive_trajectory",
+    "group": "reasoning",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "cognitive_flexibility",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "analogical_transfer",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "causal_chain_depth",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "systems_thinking",
+    "group": "reasoning",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "pattern_detection",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "logical_rigor",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "contradiction_sensitivity",
+    "group": "reasoning",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "global_framing_need",
+    "group": "reasoning",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "cycle_architecture",
+    "group": "pacing",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "attention_runway",
+    "group": "pacing",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "warmup_latency",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "fatigue_curve",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "momentum_dependence",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "interleaving_tolerance",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "rush_tendency",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "deliberation_depth",
+    "group": "pacing",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "session_rhythm",
+    "group": "pacing",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "reentry_cost",
+    "group": "pacing",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "stimulus_envelope",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "novelty_hunger",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "humor_receptivity",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "narrative_pull",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "gamification_response",
+    "group": "engagement",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "challenge_appetite",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "curiosity_hook",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "interest_transfer",
+    "group": "engagement",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "relevance_demand",
+    "group": "engagement",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "tone_formality",
+    "group": "engagement",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "retrieval_strength",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "recognition_recall_gap",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "decay_rate",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "elaboration_benefit",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "mnemonic_receptivity",
+    "group": "memory",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "consolidation_need",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": true
+   },
+   {
+    "measure": "interference_susceptibility",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "enactive_encoding",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "generation_effect",
+    "group": "memory",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "retention_index",
+    "group": "memory",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "failure_response",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "error_recovery_speed",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "frustration_threshold",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "hint_dependency",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "help_seeking",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "guessing_propensity",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "perfectionism",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "productive_struggle",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "confidence_calibration",
+    "group": "resilience",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "error_driven_learning",
+    "group": "resilience",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "self_monitoring",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "strategy_awareness",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "mastery_orientation",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "autonomy_preference",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "structure_need",
+    "group": "metacognition",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "instruction_adherence",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "reflection_depth",
+    "group": "metacognition",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "question_generation",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "self_efficacy",
+    "group": "metacognition",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "planning_tendency",
+    "group": "metacognition",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "step_explicitness",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "worked_example_dependence",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "scaffolding_fade",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "notation_comfort",
+    "group": "representation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "brevity_preference",
+    "group": "representation",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "repetition_tolerance",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "feedback_granularity",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "feedback_tone_sensitivity",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "open_response_performance",
+    "group": "representation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "dialogic_preference",
+    "group": "representation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "intrinsic_motivation",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "extrinsic_reward_sensitivity",
+    "group": "motivation",
+    "impact": 0,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "competitive_drive",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "praise_sensitivity",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "evaluation_anxiety",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "boredom_susceptibility",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "persistence",
+    "group": "motivation",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   },
+   {
+    "measure": "social_framing",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "identity_alignment",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "emotional_engagement",
+    "group": "motivation",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "near_transfer",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "far_transfer",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "application_orientation",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "conceptual_bias",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "prior_knowledge",
+    "group": "transfer",
+    "impact": 3,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "misconception_persistence",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "integration_tendency",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": false,
+    "code": false
+   },
+   {
+    "measure": "depth_breadth",
+    "group": "transfer",
+    "impact": 2,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "creative_extension",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": false,
+    "podcast": true,
+    "test": true,
+    "code": false
+   },
+   {
+    "measure": "mastery_velocity",
+    "group": "transfer",
+    "impact": 1,
+    "lesson": true,
+    "level": true,
+    "material": true,
+    "notes": true,
+    "podcast": true,
+    "test": true,
+    "code": true
+   }
+  ]
+ },
+ "joint": {
+  "rows": [
+   {
+    "profile": "J1",
+    "kind": "notes",
+    "measure": "vocabulary_ceiling",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J1",
+    "kind": "notes",
+    "measure": "attention_runway",
+    "high": false,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 1,
+    "result": null
+   },
+   {
+    "profile": "J1",
+    "kind": "notes",
+    "measure": "evaluation_anxiety",
+    "high": true,
+    "verdicts": 2,
+    "correct": 0,
+    "same": 2,
+    "result": null
+   },
+   {
+    "profile": "J1",
+    "kind": "notes",
+    "measure": "prior_knowledge",
+    "high": true,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 1,
+    "result": null
+   },
+   {
+    "profile": "J1",
+    "kind": "lesson",
+    "measure": "vocabulary_ceiling",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J1",
+    "kind": "lesson",
+    "measure": "attention_runway",
+    "high": false,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J1",
+    "kind": "lesson",
+    "measure": "evaluation_anxiety",
+    "high": true,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J1",
+    "kind": "lesson",
+    "measure": "prior_knowledge",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J2",
+    "kind": "notes",
+    "measure": "working_memory_span",
+    "high": false,
+    "verdicts": 2,
+    "correct": 0,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J2",
+    "kind": "notes",
+    "measure": "deductive_trajectory",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J2",
+    "kind": "notes",
+    "measure": "interest_transfer",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J2",
+    "kind": "notes",
+    "measure": "brevity_preference",
+    "high": true,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 1,
+    "result": null
+   },
+   {
+    "profile": "J2",
+    "kind": "lesson",
+    "measure": "working_memory_span",
+    "high": false,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J2",
+    "kind": "lesson",
+    "measure": "deductive_trajectory",
+    "high": true,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J2",
+    "kind": "lesson",
+    "measure": "interest_transfer",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J2",
+    "kind": "lesson",
+    "measure": "brevity_preference",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J3",
+    "kind": "notes",
+    "measure": "worked_example_dependence",
+    "high": true,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 1,
+    "result": null
+   },
+   {
+    "profile": "J3",
+    "kind": "notes",
+    "measure": "challenge_appetite",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J3",
+    "kind": "notes",
+    "measure": "spatial_anchoring",
+    "high": false,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 1,
+    "result": null
+   },
+   {
+    "profile": "J3",
+    "kind": "notes",
+    "measure": "tone_formality",
+    "high": true,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 1,
+    "result": null
+   },
+   {
+    "profile": "J4",
+    "kind": "lesson",
+    "measure": "structure_need",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J4",
+    "kind": "lesson",
+    "measure": "narrative_pull",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J4",
+    "kind": "lesson",
+    "measure": "productive_struggle",
+    "high": false,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J4",
+    "kind": "lesson",
+    "measure": "text_density_tolerance",
+    "high": false,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J3",
+    "kind": "lesson",
+    "measure": "worked_example_dependence",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J3",
+    "kind": "lesson",
+    "measure": "challenge_appetite",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J3",
+    "kind": "lesson",
+    "measure": "spatial_anchoring",
+    "high": false,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J3",
+    "kind": "lesson",
+    "measure": "tone_formality",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J4",
+    "kind": "notes",
+    "measure": "structure_need",
+    "high": true,
+    "verdicts": 2,
+    "correct": 2,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J4",
+    "kind": "notes",
+    "measure": "narrative_pull",
+    "high": true,
+    "verdicts": 2,
+    "correct": 0,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J4",
+    "kind": "notes",
+    "measure": "productive_struggle",
+    "high": false,
+    "verdicts": 2,
+    "correct": 1,
+    "same": 0,
+    "result": null
+   },
+   {
+    "profile": "J4",
+    "kind": "notes",
+    "measure": "text_density_tolerance",
+    "high": false,
+    "verdicts": 2,
+    "correct": 0,
+    "same": 0,
+    "result": null
+   }
+  ],
+  "verdicts": 64,
+  "correct": 46,
+  "same": 8
+ },
+ "jointRecs": [
+  {
+   "profile": "J1",
+   "set": {
+    "vocabulary_ceiling": 1,
+    "attention_runway": 0,
+    "evaluation_anxiety": 1,
+    "prior_knowledge": 1
+   },
+   "kind": "notes",
+   "topic": "photosynthesis",
+   "code": {
+    "profile": {
+     "words": 260,
+     "keyFactsMissing": 0,
+     "checks": null
+    },
+    "mirror": {
+     "words": 363,
+     "keyFactsMissing": 0,
+     "checks": null
+    }
+   },
+   "verdicts": [
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "family": "google",
+     "picks": {
+      "vocabulary_ceiling": "X",
+      "attention_runway": "same",
+      "evaluation_anxiety": "same",
+      "prior_knowledge": "same"
+     },
+     "correct": {
+      "vocabulary_ceiling": true,
+      "attention_runway": false,
+      "evaluation_anxiety": false,
+      "prior_knowledge": false
+     },
+     "same": {
+      "vocabulary_ceiling": false,
+      "attention_runway": true,
+      "evaluation_anxiety": true,
+      "prior_knowledge": true
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "vocabulary_ceiling: Version B defines advanced or technical vocabulary terms like pigment and by-pro; attention_runway: The versions do not differ in the length of unbroken bullet sections or structur; evaluation_anxiety: The versions do not differ in ways that relate to evaluation anxiety, as neither; prior_knowledge: The two versions do not differ in the amount of foundational background explanat"
+    },
+    {
+     "judge": "gpt-6.1-sol",
+     "family": "openai",
+     "picks": {
+      "vocabulary_ceiling": "X",
+      "attention_runway": "Y",
+      "evaluation_anxiety": "same",
+      "prior_knowledge": "X"
+     },
+     "correct": {
+      "vocabulary_ceiling": true,
+      "attention_runway": true,
+      "evaluation_anxiety": false,
+      "prior_knowledge": true
+     },
+     "same": {
+      "vocabulary_ceiling": false,
+      "attention_runway": false,
+      "evaluation_anxiety": true,
+      "prior_knowledge": false
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "vocabulary_ceiling: Version B uses plainer language by defining terms such as “pigment” and “by-prod; attention_runway: Version A is shorter and more concise, while Version B uses more bullets, added ; evaluation_anxiety: Version A is shorter and more direct, while Version B adds definitions, repeated; prior_knowledge: Version B defines terms such as “pigment” and “by-product” and spells out more e"
+    }
+   ]
+  },
+  {
+   "profile": "J1",
+   "set": {
+    "vocabulary_ceiling": 1,
+    "attention_runway": 0,
+    "evaluation_anxiety": 1,
+    "prior_knowledge": 1
+   },
+   "kind": "lesson",
+   "topic": "photosynthesis",
+   "code": {
+    "profile": {
+     "words": 395,
+     "keyFactsMissing": 0,
+     "checks": 2
+    },
+    "mirror": {
+     "words": 615,
+     "keyFactsMissing": 0,
+     "checks": 3
+    }
+   },
+   "verdicts": [
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "family": "google",
+     "picks": {
+      "vocabulary_ceiling": "X",
+      "attention_runway": "X",
+      "evaluation_anxiety": "Y",
+      "prior_knowledge": "X"
+     },
+     "correct": {
+      "vocabulary_ceiling": true,
+      "attention_runway": false,
+      "evaluation_anxiety": false,
+      "prior_knowledge": true
+     },
+     "same": {
+      "vocabulary_ceiling": false,
+      "attention_runway": false,
+      "evaluation_anxiety": false,
+      "prior_knowledge": false
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "vocabulary_ceiling: Version A explicitly defines and explains difficult terms like by-product and st; attention_runway: Version A includes frequent examples, step-by-step guidance within the sections,; evaluation_anxiety: Version A includes extensive instructional scaffolding and multiple-choice hints; prior_knowledge: Version A provides extensive scaffolding with step-by-step explanations, basic d"
+    },
+    {
+     "judge": "gpt-6.1-sol",
+     "family": "openai",
+     "picks": {
+      "vocabulary_ceiling": "X",
+      "attention_runway": "Y",
+      "evaluation_anxiety": "X",
+      "prior_knowledge": "X"
+     },
+     "correct": {
+      "vocabulary_ceiling": true,
+      "attention_runway": true,
+      "evaluation_anxiety": true,
+      "prior_knowledge": true
+     },
+     "same": {
+      "vocabulary_ceiling": false,
+      "attention_runway": false,
+      "evaluation_anxiety": false,
+      "prior_knowledge": false
+     },
+     "X": {
+      "accuracy": 8,
+      "errors": [
+       "The comic example says one exit pipe carries glucose, which may imply that glucose leaves the plant; the base text says glucose is used for growth and stored as energy.",
+       "The word “reaction” is terminology not used in the base text, though it does not change the core meaning.",
+       "The comic-panel example incorrectly presents glucose as leaving through an exit pipe; the base text says glucose is made and used or stored, while oxygen is released from the plant."
+      ],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 7,
+      "errors": [
+       "The heading “Two Gases In, Two Things Made” is inaccurate because water is not a gas and only carbon dioxide is a gas input.",
+       "“Only green parts of a plant have chlorophyll, so only green parts can do this” is an unsupported overgeneralization beyond the base text.",
+       "“A green stem can do a little” is not stated in the base text.",
+       "The claim that roots have no chlorophyll and that no light reaches them is an unsupported absolute statement.",
+       "The statement that oxygen “builds up in the dome” is not supported by the base text.",
+       "The heading 'Two Gases In' is false because the inputs are carbon dioxide and water, and water is not a gas."
+      ],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "vocabulary_ceiling: Version A uses plainer definitions, repeated explanations, hints, and step-by-st; attention_runway: Version A is longer and more demanding to sustain attention, with extra explanat; evaluation_anxiety: Version A uses more guided, hinted practice with several check items, while Vers; prior_knowledge: Version A gives more definitions, explanations, misconception corrections, and s"
+    }
+   ]
+  },
+  {
+   "profile": "J2",
+   "set": {
+    "working_memory_span": 0,
+    "deductive_trajectory": 1,
+    "interest_transfer": 1,
+    "brevity_preference": 1
+   },
+   "kind": "notes",
+   "topic": "two-step equations",
+   "code": {
+    "profile": {
+     "words": 253,
+     "keyFactsMissing": 0,
+     "checks": null
+    },
+    "mirror": {
+     "words": 222,
+     "keyFactsMissing": 1,
+     "checks": null
+    }
+   },
+   "verdicts": [
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "family": "google",
+     "picks": {
+      "working_memory_span": "X",
+      "deductive_trajectory": "X",
+      "interest_transfer": "X",
+      "brevity_preference": "same"
+     },
+     "correct": {
+      "working_memory_span": false,
+      "deductive_trajectory": true,
+      "interest_transfer": true,
+      "brevity_preference": false
+     },
+     "same": {
+      "working_memory_span": false,
+      "deductive_trajectory": false,
+      "interest_transfer": false,
+      "brevity_preference": true
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "working_memory_span: Version B combines related procedural steps and rules concisely into single sect; deductive_trajectory: Version B states the rule and order of work upfront before presenting cases, whe; interest_transfer: Version B frames an equation using a basketball scoreboard metaphor, whereas Ver; brevity_preference: Version A includes slightly more structural rearranging and a chain representati"
+    },
+    {
+     "judge": "gpt-6.1-sol",
+     "family": "openai",
+     "picks": {
+      "working_memory_span": "X",
+      "deductive_trajectory": "X",
+      "interest_transfer": "X",
+      "brevity_preference": "X"
+     },
+     "correct": {
+      "working_memory_span": false,
+      "deductive_trajectory": true,
+      "interest_transfer": true,
+      "brevity_preference": true
+     },
+     "same": {
+      "working_memory_span": false,
+      "deductive_trajectory": false,
+      "interest_transfer": false,
+      "brevity_preference": false
+     },
+     "X": {
+      "accuracy": 9,
+      "errors": [
+       "The basketball scoreboard comparison is confusing and does not accurately support the balanced-scale explanation, although the mathematical rule itself is correct.",
+       "The basketball scoreboard analogy is a slightly imprecise comparison because the base text uses a balanced scale, not a scoreboard; the mathematical explanation remains correct.",
+       "The basketball scoreboard analogy is not part of the base text and awkwardly mixes with the balanced-scale analogy, which may confuse the meaning of equation balance."
+      ],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "working_memory_span: Version A breaks the procedure into more segmented sections, repeats the step ru; deductive_trajectory: Version A introduces the operation cases and examples before stating the abstrac; interest_transfer: Version B adds basketball-based framing to the balanced-scale explanation, while; brevity_preference: Version A uses more separate bullets and expands the procedure with repeated exp"
+    }
+   ]
+  },
+  {
+   "profile": "J2",
+   "set": {
+    "working_memory_span": 0,
+    "deductive_trajectory": 1,
+    "interest_transfer": 1,
+    "brevity_preference": 1
+   },
+   "kind": "lesson",
+   "topic": "two-step equations",
+   "code": {
+    "profile": {
+     "words": 323,
+     "keyFactsMissing": 0,
+     "checks": 2
+    },
+    "mirror": {
+     "words": 444,
+     "keyFactsMissing": 0,
+     "checks": 3
+    }
+   },
+   "verdicts": [
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "family": "google",
+     "picks": {
+      "working_memory_span": "Y",
+      "deductive_trajectory": "X",
+      "interest_transfer": "X",
+      "brevity_preference": "X"
+     },
+     "correct": {
+      "working_memory_span": true,
+      "deductive_trajectory": true,
+      "interest_transfer": true,
+      "brevity_preference": true
+     },
+     "same": {
+      "working_memory_span": false,
+      "deductive_trajectory": false,
+      "interest_transfer": false,
+      "brevity_preference": false
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "working_memory_span: Version A provides more detailed explanations, extra sub-steps, and extensive er; deductive_trajectory: Version A starts with an explanatory concept/rationale chain before rules, where; interest_transfer: Version B wraps the algebraic content in interest-based framing such as video ga; brevity_preference: Version A is longer and provides extensive explanations and common mistakes, whe"
+    },
+    {
+     "judge": "gpt-6.1-sol",
+     "family": "openai",
+     "picks": {
+      "working_memory_span": "Y",
+      "deductive_trajectory": "Y",
+      "interest_transfer": "X",
+      "brevity_preference": "X"
+     },
+     "correct": {
+      "working_memory_span": true,
+      "deductive_trajectory": false,
+      "interest_transfer": true,
+      "brevity_preference": true
+     },
+     "same": {
+      "working_memory_span": false,
+      "deductive_trajectory": false,
+      "interest_transfer": false,
+      "brevity_preference": false
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "working_memory_span: Version A presents a longer, more interconnected solution chain with several exa; deductive_trajectory: Version A foregrounds an abstract rule and reverse-operation structure before ap; interest_transfer: Version A presents the lesson neutrally, while Version B repeatedly frames examp; brevity_preference: Version A is substantially longer and gives more explanation, worked steps, extr"
+    }
+   ]
+  },
+  {
+   "profile": "J3",
+   "set": {
+    "worked_example_dependence": 1,
+    "challenge_appetite": 1,
+    "spatial_anchoring": 0,
+    "tone_formality": 1
+   },
+   "kind": "notes",
+   "topic": "causes of World War I",
+   "code": {
+    "profile": {
+     "words": 286,
+     "keyFactsMissing": 0,
+     "checks": null
+    },
+    "mirror": {
+     "words": 236,
+     "keyFactsMissing": 0,
+     "checks": null
+    }
+   },
+   "verdicts": [
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "family": "google",
+     "picks": {
+      "worked_example_dependence": "X",
+      "challenge_appetite": "X",
+      "spatial_anchoring": "same",
+      "tone_formality": "same"
+     },
+     "correct": {
+      "worked_example_dependence": true,
+      "challenge_appetite": true,
+      "spatial_anchoring": false,
+      "tone_formality": false
+     },
+     "same": {
+      "worked_example_dependence": false,
+      "challenge_appetite": false,
+      "spatial_anchoring": true,
+      "tone_formality": true
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "worked_example_dependence: Version B includes explicit analogical breakdowns and structured examples explai; challenge_appetite: Version B includes an embedded question prompting the reader to check their unde; spatial_anchoring: Neither version uses spatial layouts, structural diagrams, or visual spatial anc; tone_formality: Both versions use a casual and conversational tone with analogies, showing no cl"
+    },
+    {
+     "judge": "gpt-6.1-sol",
+     "family": "openai",
+     "picks": {
+      "worked_example_dependence": "same",
+      "challenge_appetite": "X",
+      "spatial_anchoring": "Y",
+      "tone_formality": "X"
+     },
+     "correct": {
+      "worked_example_dependence": false,
+      "challenge_appetite": true,
+      "spatial_anchoring": true,
+      "tone_formality": true
+     },
+     "same": {
+      "worked_example_dependence": true,
+      "challenge_appetite": false,
+      "spatial_anchoring": false,
+      "tone_formality": false
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "worked_example_dependence: Version B adds concrete analogies and a retrieval question, but neither version ; challenge_appetite: Version B adds a self-test question that requires retrieval, while Version A pre; spatial_anchoring: Version A provides a stronger overall sequence map and hierarchical section stru; tone_formality: Version A uses a casual, conversational tone with informal analogies such as bas"
+    }
+   ]
+  },
+  {
+   "profile": "J4",
+   "set": {
+    "structure_need": 1,
+    "narrative_pull": 1,
+    "productive_struggle": 0,
+    "text_density_tolerance": 0
+   },
+   "kind": "lesson",
+   "topic": "Spanish greetings",
+   "code": {
+    "profile": {
+     "words": 414,
+     "keyFactsMissing": 0,
+     "checks": 3
+    },
+    "mirror": {
+     "words": 503,
+     "keyFactsMissing": 0,
+     "checks": 3
+    }
+   },
+   "verdicts": [
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "family": "google",
+     "picks": {
+      "structure_need": "X",
+      "narrative_pull": "X",
+      "productive_struggle": "Y",
+      "text_density_tolerance": "Y"
+     },
+     "correct": {
+      "structure_need": true,
+      "narrative_pull": true,
+      "productive_struggle": true,
+      "text_density_tolerance": true
+     },
+     "same": {
+      "structure_need": false,
+      "narrative_pull": false,
+      "productive_struggle": false,
+      "text_density_tolerance": false
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "structure_need: Version B uses explicit, numbered steps and structured tables, whereas Version A; narrative_pull: Version B frames the lesson around a recurring character and a comic panel story; productive_struggle: Version A prompts the learner with a missing step in the worked example to predi; text_density_tolerance: Version A contains much denser paragraphs of prose compared to Version B's more "
+    },
+    {
+     "judge": "gpt-6.1-sol",
+     "family": "openai",
+     "picks": {
+      "structure_need": "X",
+      "narrative_pull": "X",
+      "productive_struggle": "Y",
+      "text_density_tolerance": "Y"
+     },
+     "correct": {
+      "structure_need": true,
+      "narrative_pull": true,
+      "productive_struggle": true,
+      "text_density_tolerance": true
+     },
+     "same": {
+      "structure_need": false,
+      "narrative_pull": false,
+      "productive_struggle": false,
+      "text_density_tolerance": false
+     },
+     "X": {
+      "accuracy": 7,
+      "errors": [
+       "Saying that the clock picks the 'polite greeting' is misleading because the time determines the time-of-day greeting, not its politeness.",
+       "Saying to use adiós when leaving for good adds a restriction not stated in the base text.",
+       "Saying to use the formal question with an adult is too broad; the base text specifies older people, strangers, or polite situations, while adults can also be addressed informally.",
+       "It says the clock picks the polite greeting, although the time-of-day greetings are not defined as polite forms in the base text.",
+       "It says to use adiós when leaving for good, but the base text gives adiós as goodbye without limiting it to permanent departures.",
+       "It treats any adult as requiring the formal form, while the base text specifies older people, strangers, or polite situations; being an adult alone is too broad."
+      ],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 9,
+      "errors": [
+       "The instruction to say the greeting before a name or a question is an unsupported universal rule in the base text.",
+       "The lesson says mucho gusto is used when meeting someone, but the base text specifies that it is used when meeting someone for the first time; the short exchange presents it without that first-meeting context."
+      ],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "structure_need: Version A presents rules with some open-ended choice, while Version B repeatedly; narrative_pull: Version A presents greetings as direct rules and practice, while Version B wraps; productive_struggle: Version A asks the learner to predict, generate an open-ended exchange, and work; text_density_tolerance: Version A presents longer, denser rule-and-example prose, while Version B breaks"
+    }
+   ]
+  },
+  {
+   "profile": "J3",
+   "set": {
+    "worked_example_dependence": 1,
+    "challenge_appetite": 1,
+    "spatial_anchoring": 0,
+    "tone_formality": 1
+   },
+   "kind": "lesson",
+   "topic": "causes of World War I",
+   "code": {
+    "profile": {
+     "words": 899,
+     "keyFactsMissing": 0,
+     "checks": 3
+    },
+    "mirror": {
+     "words": 620,
+     "keyFactsMissing": 0,
+     "checks": 3
+    }
+   },
+   "verdicts": [
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "family": "google",
+     "picks": {
+      "worked_example_dependence": "X",
+      "challenge_appetite": "X",
+      "spatial_anchoring": "Y",
+      "tone_formality": "X"
+     },
+     "correct": {
+      "worked_example_dependence": true,
+      "challenge_appetite": true,
+      "spatial_anchoring": true,
+      "tone_formality": true
+     },
+     "same": {
+      "worked_example_dependence": false,
+      "challenge_appetite": false,
+      "spatial_anchoring": false,
+      "tone_formality": false
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "worked_example_dependence: Version B includes an explicit, step-by-step numbered worked example breaking do; challenge_appetite: Version B includes an optional harder extension task in the summary (\"Harder cas; spatial_anchoring: Version A uses a spatial visual layout with indentation and line breaks for the ; tone_formality: Version A uses casual analogies like basketball games and comic artists, whereas"
+    },
+    {
+     "judge": "gpt-6.1-sol",
+     "family": "openai",
+     "picks": {
+      "worked_example_dependence": "X",
+      "challenge_appetite": "X",
+      "spatial_anchoring": "Y",
+      "tone_formality": "X"
+     },
+     "correct": {
+      "worked_example_dependence": true,
+      "challenge_appetite": true,
+      "spatial_anchoring": true,
+      "tone_formality": true
+     },
+     "same": {
+      "worked_example_dependence": false,
+      "challenge_appetite": false,
+      "spatial_anchoring": false,
+      "tone_formality": false
+     },
+     "X": {
+      "accuracy": 5,
+      "errors": [
+       "It adds many facts not stated in the base text, including the Morocco crises, raw materials and prestige as imperial motives, Germany's 6 July free hand, mobilization details, the declaration dates of 1 and 3 August, the attack through Belgium, and Britain's guarantee of Belgian neutrality.",
+       "It states that each alliance camp had promised to defend its partners, which overstates and simplifies the alliance arrangements described in the base text.",
+       "It says Serbia wanted to unite the South Slavs and that Austria-Hungary ruled many South Slavs, narrowing and extending the base text's more general wording.",
+       "The claims that imperial rivalry brought Germany and France close to war twice over Morocco, that colonies supplied raw materials and prestige, and that Britain entered because it had guaranteed Belgian neutrality are not supported by the base text.",
+       "The version adds specific claims about Germany giving Austria-Hungary a free hand, Russia protecting Serbia, mobilization, and the exact sequence of declarations that are not stated in the base text.",
+       "\"Serbia wanted to unite the South Slavs\" is more specific than the base text's statement that Serbia wanted to unite the Slavic peoples."
+      ],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 8,
+      "errors": [
+       "It adds facts not stated in the base text, including that Gavrilo Princip shot Franz Ferdinand and that Austria-Hungary declared war on Serbia on 28 July.",
+       "It calls Franz Ferdinand heir to the Austrian throne rather than the Austro-Hungarian throne.",
+       "It says Serbia wanted a bigger Serb state, which narrows the base text's statement that Serbia wanted to unite the Slavic peoples.",
+       "\"Heir to the Austrian throne\" is less precise than the base text's \"heir to the Austro-Hungarian throne.\"",
+       "The statement that Serbia wanted \"a bigger Serb state\" narrows the base text's claim that Serbia wanted to unite the Slavic peoples.",
+       "Calling Franz Ferdinand the heir to the Austrian throne omits that the base text identifies him as heir to the Austro-Hungarian throne."
+      ],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "worked_example_dependence: Version A gives a shorter classification example that emphasizes applying princi; challenge_appetite: Version A presents the material with simpler classification tasks and heavier sc; spatial_anchoring: Version A uses an explicit side-by-side bloc table and concrete visual compariso; tone_formality: Version A uses casual, conversational language and everyday analogies, while Ver"
+    }
+   ]
+  },
+  {
+   "profile": "J4",
+   "set": {
+    "structure_need": 1,
+    "narrative_pull": 1,
+    "productive_struggle": 0,
+    "text_density_tolerance": 0
+   },
+   "kind": "notes",
+   "topic": "Spanish greetings",
+   "code": {
+    "profile": {
+     "words": 318,
+     "keyFactsMissing": 0,
+     "checks": null
+    },
+    "mirror": {
+     "words": 451,
+     "keyFactsMissing": 0,
+     "checks": null
+    }
+   },
+   "verdicts": [
+    {
+     "judge": "gemini-3.5-flash-lite",
+     "family": "google",
+     "picks": {
+      "structure_need": "X",
+      "narrative_pull": "Y",
+      "productive_struggle": "Y",
+      "text_density_tolerance": "X"
+     },
+     "correct": {
+      "structure_need": true,
+      "narrative_pull": false,
+      "productive_struggle": true,
+      "text_density_tolerance": false
+     },
+     "same": {
+      "structure_need": false,
+      "narrative_pull": false,
+      "productive_struggle": false,
+      "text_density_tolerance": false
+     },
+     "X": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "structure_need: Version B explicitly uses clear step numbering (\"Step 1:\", \"Step 2:\") to organiz; narrative_pull: Version A includes several conversational rhetorical prompts and framing questio; productive_struggle: Version A includes probing questions that prompt the learner to think and solve ; text_density_tolerance: Version A breaks up information with frequent questions and interactive elements"
+    },
+    {
+     "judge": "gpt-6.1-sol",
+     "family": "openai",
+     "picks": {
+      "structure_need": "X",
+      "narrative_pull": "Y",
+      "productive_struggle": "X",
+      "text_density_tolerance": "X"
+     },
+     "correct": {
+      "structure_need": true,
+      "narrative_pull": false,
+      "productive_struggle": false,
+      "text_density_tolerance": false
+     },
+     "same": {
+      "structure_need": false,
+      "narrative_pull": false,
+      "productive_struggle": false,
+      "text_density_tolerance": false
+     },
+     "X": {
+      "accuracy": 9,
+      "errors": [
+       "The arrow chain 'hola → buenos días, buenas tardes, buenas noches → adiós or hasta luego' implies that the greetings form a sequence, which the base text does not state.",
+       "The arrow chain “hola → buenos días, buenas tardes, buenas noches → adiós or hasta luego” can misleadingly suggest that the greetings are used in sequence, whereas the base text presents them as separate greeting and goodbye options.",
+       "The arrow chain 'hola → buenos días, buenas tardes, buenas noches → adiós or hasta luego' misleadingly presents the greetings as a sequence rather than as alternatives used for different situations.",
+       "The arrow chain suggesting hola leads to time-of-day greetings and then to adiós or hasta luego implies a sequence that the base text does not state; these are separate greeting and farewell choices."
+      ],
+      "missing": []
+     },
+     "Y": {
+      "accuracy": 10,
+      "errors": [],
+      "missing": []
+     },
+     "certainty": null,
+     "evidence": "structure_need: Version A uses open-ended questions, optional challenge prompts, and exploratory; narrative_pull: Version A uses more story-like analogies, imagined scenarios, and conversational; productive_struggle: Version A repeatedly rescues the learner with answered questions, explicit mappi; text_density_tolerance: Version A uses many short, separated bullets with repetition, prompts, and elabo"
+    }
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "profile": "J1",
+   "kind": "notes",
+   "texts": {
+    "profile": "## What photosynthesis is\n- Photosynthesis is the process plants use to make their own food.\n- A plant takes in carbon dioxide from the air through tiny openings in its leaves, and water from the soil through its roots.\n- Using light energy from the sun, the plant turns carbon dioxide and water into glucose, a kind of sugar.\n- That glucose is the plant's food, used to grow and to store energy.\n\n## Inside the leaf: chloroplasts and chlorophyll\n- Photosynthesis happens mainly in the leaves.\n- Inside the cells of a leaf are small green structures called chloroplasts.\n- They contain a green pigment called chlorophyll.\n- Chlorophyll absorbs light energy from the sun, mostly red and blue light, and reflects green light, which is why leaves look green.\n- Without chlorophyll the plant could not capture the light energy it needs.\n- Think of chlorophyll like the arena lights at a basketball game: without them the plant cannot capture the light energy it needs.\n\n## Oxygen out, and the word equation\n- Oxygen is released as a by-product of photosynthesis.\n- The oxygen leaves the plant through the same tiny openings in the leaves.\n- Animals and people breathe in this oxygen, which is one reason plants matter so much to life on Earth.\n- In the text's own chain: carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n\n## When a plant gets too little\n- A plant that gets too little light, too little water or too little carbon dioxide makes less glucose and grows more slowly.\n- This is why a plant kept in a dark cupboard turns pale and weak.",
+    "mirror": "## What photosynthesis is\n- Photosynthesis is the process plants use to make their own food.\n- A plant takes carbon dioxide from the air through tiny openings in its leaves.\n- It takes in water from the soil through its roots.\n- Using light energy from the sun, the plant turns carbon dioxide and water into glucose, a kind of sugar.\n- Glucose is the plant's food, and the plant uses it to grow and to store energy.\n- Think of it like a basketball play: the plant feeds in two things, carbon dioxide and water, and the sun's light energy turns them into a score, the glucose. This pictures the light-energy step in the material.\n\n## Where it happens: leaves, chloroplasts and chlorophyll\n- Photosynthesis happens mainly in the leaves.\n- Inside the cells of a leaf are small green structures called chloroplasts.\n- Chloroplasts contain a green pigment called chlorophyll. A pigment is a colouring substance.\n- Chlorophyll absorbs light energy from the sun, mostly red and blue light, and reflects green light.\n- Reflecting that green light is why leaves look green.\n- Without chlorophyll the plant could not capture the light energy it needs.\n- Think of it like a video game power-up: chlorophyll is the grabber that takes in light energy. This pictures the point that chlorophyll absorbs light energy for the plant.\n\n## Oxygen out, and the word equation\n- Oxygen is released as a by-product, which means a side product.\n- The oxygen leaves the plant through the same tiny openings in the leaves.\n- Animals and people breathe in this oxygen, and that is one reason plants matter to life on Earth.\n- The word equation: carbon dioxide plus water, using light energy, makes glucose plus oxygen.\n- Picture that equation as an arrow chain: carbon dioxide + water, with light energy, then an arrow to glucose + oxygen.\n- Think of it like drawing comics: the inputs sit in the first panel, light energy is the action panel, and glucose plus oxygen is the last panel. This pictures the order in the word equation.\n\n## When a plant makes less glucose\n- Too little light, water or carbon dioxide means less glucose and slower growth.\n- That is why a plant kept in a dark cupboard turns pale and weak."
+   }
+  },
+  {
+   "profile": "J1",
+   "kind": "lesson",
+   "texts": {
+    "profile": "TITLE: Photosynthesis: the leaf's recipe\n\nINTRO: Photosynthesis is the process plants use to make their own food. This short lesson gives you the recipe, the location, and the outputs; the questions are just practice to see what stuck.\n\nSECTION 1 - The recipe: inputs and energy\nPlants make glucose, a sugar, from carbon dioxide and water. They use light energy from the sun to drive that change. Read the arrow chain left to right: carbon dioxide + water + light energy -> glucose + oxygen. The left side lists what goes in; the right side lists what comes out.\nEXAMPLE: Try it: A basketball team needs players and a ball before it can score. In photosynthesis, which two raw materials go in? Answer: carbon dioxide and water.\n\nSECTION 2 - The factory: leaves and chlorophyll\nPhotosynthesis happens mainly in the leaves. Inside leaf cells, chloroplasts contain chlorophyll, the green pigment that absorbs light. Chlorophyll captures the light energy the plant needs. The leaf is the main factory; the chloroplast is the room where the light is caught.\nEXAMPLE: Try it: In a video game, a crafting station turns raw materials into an item. Which part of the plant cell is the station that holds chlorophyll? Answer: the chloroplast.\n\nSECTION 3 - The outputs: food and by-product\nGlucose is the food product the plant makes and can use or store. Oxygen is released as a by-product, not used as the plant's food. So the arrow chain ends with glucose + oxygen. If you remember the inputs, the outputs are easier to keep straight.\nEXAMPLE: Try it: In a comic panel, a leaf factory has two exit pipes. One carries glucose; what does the other release? Answer: oxygen.\n\nWORKED EXAMPLE: Complete the word equation for photosynthesis: carbon dioxide + water + light energy -> ?\n  1. List the inputs on the left: carbon dioxide, water, and light energy. Light is not a material, but it is the energy that drives the reaction.\n  2. The plant makes glucose, a sugar, so glucose goes on the right as the food product.\n  3. Oxygen is released as a by-product, so it also goes on the right.\n  4. Put them together: carbon dioxide + water + light energy -> glucose + oxygen.\n  ANSWER: carbon dioxide + water + light energy -> glucose + oxygen\n\nCOMMON MISTAKES:\nWrong: photosynthesis takes in oxygen and glucose and releases carbon dioxide and water. Why: this reverses the arrow chain; oxygen and glucose are outputs, while carbon dioxide and water are inputs. Right: carbon dioxide + water + light energy -> glucose + oxygen.\n\nSUMMARY: Photosynthesis uses light energy, carbon dioxide, and water to make glucose, with oxygen released as a by-product. Chlorophyll in leaf chloroplasts absorbs the light, so the process happens mainly in the leaves.\n\nCHECK QUESTIONS:\n1. From memory, which pair are the raw materials that plants take in for photosynthesis? [choices: Carbon dioxide and water | Oxygen and glucose | Water and glucose | Carbon dioxide and oxygen] -> Carbon dioxide and water\n2. Name the green pigment in chloroplasts that absorbs light for photosynthesis. [typed answer] -> chlorophyll",
+    "mirror": "TITLE: Photosynthesis: How a Plant Makes Its Own Food\n\nINTRO: Photosynthesis is how a plant makes its own sugar food using light. In this lesson you will learn what goes in, what comes out, and where in the plant it happens.\n\nSECTION 1 - The Rule: Two Gases In, Two Things Made\nPhotosynthesis is the way a plant makes its own food. The plant takes in carbon dioxide, a gas from the air, and water, and turns them into glucose. Glucose is a sugar, which is a fuel the plant uses to grow. Light energy from the sun powers that change. Oxygen is released as a by-product, meaning a gas made along the way that the plant does not keep.\nEXAMPLE: The whole rule in one line: carbon dioxide + water, powered by light energy, becomes glucose + oxygen.\n\nSECTION 2 - Chlorophyll: The Light Catcher\nThe light is caught by chlorophyll. Chlorophyll is the green colouring inside a leaf. It sits in tiny green packets called chloroplasts, which are inside leaf cells. Chlorophyll absorbs the light energy, and that absorbed energy is what drives the joining of carbon dioxide and water. Only green parts of a plant have chlorophyll, so only green parts can do this.\nEXAMPLE: Picture a comic panel: a sunbeam arrow goes into a green chloroplast, and two arrows come out, one labelled glucose and one labelled oxygen.\n\nSECTION 3 - Where It Happens: Mainly the Leaves\nPhotosynthesis happens mainly in the leaves. Leaves are flat and thin, so light reaches many cells and gases move in and out easily. Carbon dioxide enters through tiny holes called stomata, and oxygen leaves the same way. Water travels up from the roots through the stem. A green stem can do a little, but the leaves do most of the work.\nEXAMPLE: Try it: A plant sits in a sunny window and is watered every day. Name the gas it releases as a by-product. Answer: oxygen.\n\nWORKED EXAMPLE: In a video game level, a green plant sits inside a sealed glass dome on a sunny windowsill. The dome holds air and water. Label (a) the two things the plant takes in, (b) the part that catches the light, (c) the sugar made, and (d) the gas released. Hint: start with what is used up.\n  1. Step 1 - Find the inputs. The dome holds air, which contains carbon dioxide, and water in the soil. So the two inputs are carbon dioxide and water.\n  2. Step 2 - Name the energy source. Sunlight passes through the clear glass and lands on the leaves. Light is energy, not a material, so it is not one of the two inputs.\n  3. Step 3 - Find the light catcher. Inside leaf cells are chloroplasts, and inside them is chlorophyll. Chlorophyll absorbs the light energy.\n  4. Step 4 - Make the sugar. The absorbed light energy drives carbon dioxide and water to join and form glucose, the plant's sugar fuel.\n  5. Step 5 - Name what is left over. Oxygen is released as a by-product, so it builds up in the dome.\n  ANSWER: (a) Carbon dioxide and water. (b) Chlorophyll, inside the chloroplasts of leaf cells. (c) Glucose. (d) Oxygen.\n\nCOMMON MISTAKES:\nWrong: Plants get their food from the soil. Why: soil supplies water, but the sugar is not in the soil; it is built in the leaves from carbon dioxide and water using light energy. Right: carbon dioxide + water + light energy -> glucose + oxygen.\nWrong: Plants take in oxygen and breathe out carbon dioxide, so oxygen is a photosynthesis input. Why: that mixes up the by-product with an input; photosynthesis uses carbon dioxide and releases oxygen. Right: carbon dioxide goes in, and oxygen comes out as the by-product.\nWrong: Photosynthesis happens in the roots, because that is where the water is. Why: roots take in water, but they have no chlorophyll and no light reaches them, so no glucose is made there. Right: photosynthesis happens mainly in the leaves.\n\nSUMMARY: Plants make glucose from carbon dioxide and water, using light energy that chlorophyll in the chloroplasts absorbs. Oxygen is released as a by-product. This happens mainly in the leaves.\n\nCHECK QUESTIONS:\n1. Which gas does a plant take in to make glucose? Hint: it is the gas that goes in, not the one that comes out. [choices: Oxygen | Carbon dioxide | Nitrogen | Hydrogen] -> Carbon dioxide\n2. Type the name of the green substance that absorbs light, and the tiny green packets inside a leaf cell where it sits. Hint: one word is the colouring, the other is the packet. [typed answer] -> Chlorophyll, inside chloroplasts.\n3. Mia writes: 'A plant in a dark cupboard will still make glucose, because it has water and carbon dioxide.' Which sentence fixes her mistake? Hint: check whether the light catcher has anything to catch. [choices: It needs more water before it can make glucose. | It needs more carbon dioxide from the air. | It needs light energy, which chlorophyll absorbs, to drive the change. | It needs to be planted in more soil first.] -> It needs light energy, which chlorophyll absorbs, to drive the change."
+   }
+  },
+  {
+   "profile": "J2",
+   "kind": "notes",
+   "texts": {
+    "profile": "## What a two-step equation is\n- A two-step equation needs two steps to solve, such as 2x + 3 = 11.\n- The goal is to get the variable x alone on one side of the equals sign.\n- To do that, we undo the operations done to x by using the opposite operation.\n- Order of work: step one is to undo addition or subtraction, then step two is to undo multiplication or division.\n\n## Step 1: undo addition or subtraction\n- Step one is to undo addition or subtraction.\n- In 2x + 3 = 11 the number 3 is added, so we subtract 3 from both sides, which gives 2x = 8.\n- Second example, 3x - 5 = 10: add 5 to both sides to get 3x = 15.\n\n## Step 2: undo multiplication or division\n- Step two is to undo multiplication or division.\n- In 2x = 8, x is multiplied by 2, so we divide both sides by 2, which gives x = 4.\n- In the second example, we then divide both sides by 3 to get x = 5.\n\n## The most important rule: do it to both sides\n- The most important rule is that whatever you do to one side of the equation you must do to the other side.\n- Think of it like a basketball scoreboard: an equation is a balanced scale, and it stays balanced only if the same thing is done to both sides.\n- If you subtract 3 from only one side, the equation is no longer true.\n\n## Check your answer\n- Always check your answer by putting it back into the original equation.\n- For x = 4: 2 times 4 plus 3 is 8 plus 3, which is 11, so the left side equals the right side and the answer is correct.",
+    "mirror": "## Two-step equations\n- A two-step equation needs two steps to solve, as in 2x + 3 = 11.\n- The goal is to get the variable x alone on one side of the equals sign.\n- To reach that goal, undo the operations done to x by using the opposite operation.\n\n## Undo addition or subtraction first\n- In 2x + 3 = 11, the number 3 is added, so subtract 3 from both sides to get 2x = 8.\n- A second case, 3x - 5 = 10, uses addition: add 5 to both sides to get 3x = 15.\n- Step one is to undo addition or subtraction.\n\n## Undo multiplication or division next\n- In the first case, x is multiplied by 2, so divide both sides by 2 to get x = 4.\n- In the second case, divide both sides of 3x = 15 by 3 to get x = 5.\n- Step two is to undo multiplication or division.\n- Picture the example as a chain: 2x + 3 = 11 → 2x = 8 → x = 4.\n\n## Keep both sides balanced\n- If you subtract 3 from only one side, the equation is no longer true.\n- The most important rule is to do to one side whatever you do to the other side.\n- An equation is like a balanced scale.\n- Doing the same thing to both sides keeps the scale balanced.\n\n## Check the answer\n- For x = 4, 2 times 4 plus 3 is 8 plus 3, which is 11.\n- Always check your answer by putting it back into the original equation.\n- The left side equals the right side, so the answer is correct."
+   }
+  },
+  {
+   "profile": "J2",
+   "kind": "lesson",
+   "texts": {
+    "profile": "TITLE: Solving Two-Step Equations\n\nINTRO: A two-step equation has two operations on x. Undo the adding or subtracting first, then undo the multiplying or dividing. Every move goes on both sides.\n\nSECTION 1 - Two steps, and which one goes first\nA two-step equation puts two operations on x, like 2x + 3 = 11. Undo them in reverse order: the adding or subtracting always goes first. Whatever you do to one side, you must do to the other side.\nEXAMPLE: Comic example: 3p + 5 = 20. The + 5 goes first. Subtract 5 from both sides: 3p + 5 - 5 = 20 - 5, so 3p = 15.\n\nSECTION 2 - Then undo the multiplying or dividing\nNow only the number in front of x is left. Undo it with the opposite operation on both sides. Dividing both sides by that number leaves x alone.\nEXAMPLE: Arrow chain:\n3p = 15\n-> divide both sides by 3\n-> 3p / 3 = 15 / 3\n-> p = 5\n\nTry it: In a game you get 4 coins per level plus 2 bonus, and you have 14 coins: 4c + 2 = 14. What is the first step, and what does it give? Answer: subtract 2 from both sides, giving 4c = 12.\n\nSECTION 3 - Check by putting the answer back\nChecking means putting your answer into the original equation and working out both sides. The two sides must match. If they do not match, the answer is wrong.\nEXAMPLE: Video game example: 5g - 4 = 21. Add 4 to both sides: 5g - 4 + 4 = 21 + 4, so 5g = 25. Divide both sides by 5: g = 5. Check: 5(5) - 4 = 25 - 4 = 21, which matches.\n\nTry it: You drew 3 panels on each page plus 5 extra panels: 3p + 5 = 20. Is p = 5 correct? Answer: 3(5) + 5 = 15 + 5 = 20, which matches, so yes.\n\nWORKED EXAMPLE: In basketball you scored 11 points from 2-point baskets plus 3 free throws: 2b + 3 = 11. How many baskets did you make?\n  1. Start: 2b + 3 = 11. Two operations sit on b: multiply by 2, and add 3.\n  2. Step 1, undo the + 3 first. Subtract 3 from both sides: 2b + 3 - 3 = 11 - 3.\n  3. That gives 2b = 8.\n  4. Step 2, undo the multiply by 2. Divide both sides by 2: 2b / 2 = 8 / 2.\n  5. That gives b = 4.\n  6. Check: 2(4) + 3 = 8 + 3 = 11, which matches the original equation.\n  ANSWER: b = 4 baskets.\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so 2x = 11 + 3 = 14, then x = 7. Why: the + 3 was carried across without changing its sign, and 2(7) + 3 = 17, not 11. Right: subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8, then x = 4.\n\nSUMMARY: Undo adding or subtracting first, then undo multiplying or dividing, always on both sides. Check by substituting your answer back in. 2x + 3 = 11 gives x = 4.\n\nCHECK QUESTIONS:\n1. You want to solve 5x + 6 = 21. Which step comes first? Hint: the adding or subtracting is always undone first. [choices: Divide both sides by 5 | Subtract 6 from both sides | Add 6 to both sides | Subtract 21 from both sides] -> Subtract 6 from both sides\n2. A friend writes: 3x + 4 = 19, so 3x = 19 + 4 = 23. Hint: put x = 23/3 back in and you get 27, not 19. Type the line that should replace 3x = 23. [typed answer] -> 3x = 15",
+    "mirror": "TITLE: Solving Two-Step Equations: Undo in Reverse\n\nINTRO: A two-step equation applies two operations to the variable, such as multiplying by 2 and then adding 3. You solve it by undoing those operations in reverse order. Do each move to both sides so the equation stays balanced, then check the answer in the original equation.\n\nSECTION 1 - A chain of two operations\nStart with x = 4: multiplying by 2 gives 8, and adding 3 gives 11. Written as an equation, that is 2x + 3 = 11. Picture the chain: x -> times 2 -> plus 3 -> 11, and going back: 11 -> minus 3 -> 8 -> divide by 2 -> 4. To undo a chain, reverse the order: undo the +3 first, then the times 2. Do each move to both sides so the two sides stay equal.\nEXAMPLE: Try it: If x = 6, what is 2x + 3? Answer: 15.\n\nSECTION 2 - Using both sides to keep balance\nTake 2x + 3 = 11 and subtract 3 from both sides. Write it as 2x + 3 - 3 = 11 - 3, which simplifies to 2x = 8. The equation stays true because the same amount left each side. Now divide both sides by 2: 2x/2 = 8/2, so x = 4. In general, for ax + b = c, undo the +b or -b first, then divide by a, and do every move to both sides.\nEXAMPLE: Try it: Start with 2x = 8. Divide both sides by 2. What do you get? Answer: x = 4.\n\nSECTION 3 - Checking in the original equation\nPut x = 4 back into the original equation: 2(4) + 3 = 8 + 3 = 11. The left side equals the right side, so x = 4 is correct. If the two sides do not match, the answer is wrong, even if the algebra looked neat. Check every answer in the original equation, not in a simplified line.\nEXAMPLE: Example: Check x = 5 in 2x + 3 = 11: 2(5) + 3 = 10 + 3 = 13, which does not equal 11, so x = 5 is not a solution.\n\nWORKED EXAMPLE: Solve 2x + 3 = 11.\n  1. The left side applies two operations to x: multiply by 2, then add 3. To undo them, reverse the order and undo the +3 first.\n  2. Subtract 3 from both sides: 2x + 3 - 3 = 11 - 3. This simplifies to 2x = 8.\n  3. Now undo the multiplication by 2. Divide both sides by 2: 2x/2 = 8/2. This gives x = 4.\n  4. Check by substituting 4 into the original equation: 2(4) + 3 = 8 + 3 = 11. The left side matches the right side, so x = 4 is correct.\n  ANSWER: x = 4\n\nCOMMON MISTAKES:\nWrong: 2x + 3 = 11, so 2x = 11 + 3 = 14, so x = 7. Why: the +3 was moved across without changing its sign; 2(7) + 3 = 17, not 11. Right: subtract 3 from both sides: 2x + 3 - 3 = 11 - 3, so 2x = 8, then divide both sides by 2: x = 4.\nWrong: 2x + 3 = 11, so x + 3 = 11, so x = 8. Why: only the 2x was divided by 2, and the right side was not divided; 2(8) + 3 = 19, not 11. Right: subtract 3 from both sides first: 2x = 8, then divide both sides by 2: x = 4.\nWrong: 2x + 3 = 11, so 2x = 8, so x = 16. Why: the 2 was multiplied by 8 instead of dividing both sides by 2; 2(16) + 3 = 35, not 11. Right: divide both sides by 2: 2x/2 = 8/2, so x = 4.\n\nSUMMARY: To solve a two-step equation such as 2x + 3 = 11, undo the addition or subtraction first, then undo the multiplication or division. Apply each move to both sides, and check the result by substituting it into the original equation. For 2x + 3 = 11, subtracting 3 gives 2x = 8, dividing by 2 gives x = 4, and the check gives 8 + 3 = 11.\n\nCHECK QUESTIONS:\n1. In 3x + 5 = 20, which operation do you undo first? [choices: Add 5 to both sides | Subtract 5 from both sides | Divide both sides by 3 | Multiply both sides by 3] -> Subtract 5 from both sides\n2. Solve 4x - 7 = 17 for x. Type just the number. [typed answer] -> 6\n3. A learner solves 5x + 2 = 27 and writes: 5x = 29, x = 5.8. What is the first wrong step? [choices: They added 2 to both sides instead of subtracting 2. | They divided both sides by 5 incorrectly. | They should have divided by 5 before subtracting 2. | There is no mistake; x = 5.8 is correct.] -> They added 2 to both sides instead of subtracting 2."
+   }
+  },
+  {
+   "profile": "J3",
+   "kind": "notes",
+   "texts": {
+    "profile": "## Causes of War\n- Historians often describe four long-term causes of the First World War, plus one event that set it off.\n- The text names militarism as the first cause.\n- In the years before 1914 the great powers built up large armies and navies, and Germany and Britain raced to build battleships.\n- Think of it like a basketball team adding taller players, which pictures militarism as the great powers' build-up of armies and navies.\n- Generals began to plan for war, and many leaders came to see it as a normal way to settle disputes.\n\n## Alliances\n- The second cause is alliances, and Europe was divided into two blocs.\n- The Triple Entente joined France, Russia and Britain, while the Triple Alliance joined Germany, Austria-Hungary and Italy.\n- Because of these alliances, a local conflict could pull in many countries, so a quarrel between two states could grow into a continental war.\n- Think of it like a video game where one skirmish pulls allied players into the match, which pictures alliances pulling many countries into a local conflict.\n\n## Imperialism\n- Imperialism means rivalry between empires for colonies, markets and power.\n- The European empires competed for land and resources in Africa and Asia, which increased distrust between them.\n\n## Nationalism\n- Nationalism is strong pride in one's nation or a wish for independence.\n- Nationalism was especially powerful in the Balkans, where Serbia wanted to unite the Slavic peoples and Austria-Hungary feared losing its empire.\n\n## The Spark\n- The spark was the assassination of Archduke Franz Ferdinand, heir to the Austro-Hungarian throne, in Sarajevo on 28 June 1914.\n- Because of the alliances, Austria-Hungary's war on Serbia soon drew in Russia, Germany, France and Britain.\n- Which event does the text identify as the spark that set off the First World War?",
+    "mirror": "## The big picture: four causes plus one event\n- The setup is four long-term causes — militarism, alliances, imperialism, nationalism — and then one event that set the war off.\n- Think of it like a basketball season: the four causes build tension all year, and the spark is the opening whistle.\n- So the order is: militarism, alliances, imperialism, nationalism, then the spark.\n\n## Cause 1: militarism\n- Before 1914 the great powers built large armies and navies, and Germany and Britain raced to build battleships.\n- Generals planned for war, and many leaders came to see war as a normal way to settle disputes.\n\n## Cause 2: alliances\n- Europe split in two: the Triple Entente (France, Russia, Britain) and the Triple Alliance (Germany, Austria-Hungary, Italy).\n- Alliances meant a local conflict could pull in many countries, so a quarrel between two states could grow into a continental war.\n\n## Cause 3: imperialism\n- Imperialism means rivalry between empires for colonies, markets and power.\n- The empires competed for land and resources in Africa and Asia, which increased distrust between them.\n\n## Cause 4: nationalism, then the spark\n- Nationalism means strong pride in one's nation or a wish for independence.\n- In the Balkans it was especially powerful: Serbia wanted to unite the Slavic peoples, and Austria-Hungary feared losing its empire.\n- The spark was the assassination of Archduke Franz Ferdinand, heir to the Austro-Hungarian throne, in Sarajevo on 28 June 1914.\n- Because of the alliances, Austria-Hungary's war on Serbia soon drew in Russia, Germany, France and Britain."
+   }
+  },
+  {
+   "profile": "J4",
+   "kind": "lesson",
+   "texts": {
+    "profile": "TITLE: Spanish Greetings: The Comic Panel Problem\n\nINTRO: Leo is drawing a basketball comic, and every panel needs the right Spanish greeting for the time of day and the person.\n\nSECTION 1 - 1. Start with hello and the clock\nRule: Hola means hello, and the clock picks the polite greeting. Step 1: say hola for any hello. Step 2: check the time, then use this table.\nmorning -> Buenos días\nafternoon -> Buenas tardes\nevening or night -> Buenas noches\nStep 3: say the greeting to the person.\nEXAMPLE: Example: At 9 a.m., Leo's hero meets a friend in a comic panel. He says: Hola, buenos días.\n\nSECTION 2 - 2. Say goodbye when the scene ends\nRule: Adiós means goodbye, and hasta luego means see you later. Step 1: use adiós when you leave for good. Step 2: use hasta luego when you expect to see the person again. Step 3: keep the phrase short and clear.\nEXAMPLE: Example: Leo's hero leaves the gym after a game and says: Adiós, hasta luego.\nTry it: You leave basketball practice but will see the team tomorrow. Answer: Hasta luego.\n\nSECTION 3 - 3. Ask how someone is, and say nice to meet you\nRule: Use ¿Cómo estás? with a friend, and ¿Cómo está usted? with an adult or stranger; mucho gusto means nice to meet you. Step 1: pick informal for a friend or teammate. Step 2: pick formal for an adult or stranger. Step 3: add mucho gusto when you meet someone for the first time.\nEXAMPLE: Example: At 8 p.m., the hero meets a coach. He says: Buenas noches, mucho gusto, ¿cómo está usted?\nTry it: At 4 p.m., you meet a new teammate your age. Answer: Buenas tardes, ¿cómo estás?\n\nWORKED EXAMPLE: Panel 2: At 8 a.m., Leo's hero meets the coach for the first time. Write a greeting, a nice-to-meet-you line, and a formal how-are-you question.\n  1. Step 1: Find the time. It is 8 a.m., so the time is morning.\n  2. Step 2: Match morning to the table: Buenos días.\n  3. Step 3: The coach is an adult, so use formal. The formal how-are-you is ¿Cómo está usted?\n  4. Step 4: It is a first meeting, so add Mucho gusto.\n  5. Step 5: Put it in order: greeting, nice to meet you, question. Buenos días. Mucho gusto, ¿cómo está usted?\n  ANSWER: Buenos días. Mucho gusto, ¿cómo está usted?\n\nCOMMON MISTAKES:\nWrong: Buenas días. Why: días is masculine plural, so the matching word is buenos, not buenas; buenas días does not agree. Right: Buenos días.\nWrong: ¿Cómo estás usted? Why: estás is the informal tú form, so it cannot be paired with the formal usted. Right: ¿Cómo está usted?\n\nSUMMARY: Hola is hello; the clock picks buenos días, buenas tardes, or buenas noches. Adiós and hasta luego are for leaving; use ¿cómo estás? with a friend and ¿cómo está usted? with an adult, and add mucho gusto at a first meeting.\n\nCHECK QUESTIONS:\n1. In the story, Leo's hero says Hola to a friend. What does hola mean?\nHint: it is the first greeting in the lesson. [choices: A) Hello | B) Goodbye | C) Good night | D) Nice to meet you] -> A) Hello\n2. At 3 p.m., the hero meets the coach, an adult. Which line fits?\nHint: first choose the greeting for the afternoon; then choose formal for an adult. [choices: A) Buenas noches, ¿cómo estás? | B) Buenas tardes, ¿cómo está usted? | C) Buenos días, ¿cómo estás? | D) Adiós, mucho gusto] -> B) Buenas tardes, ¿cómo está usted?\n3. A learner writes: Buenas días for good morning. Type the correct greeting.\nHint: check whether días is masculine or feminine. [typed answer] -> Buenos días",
+    "mirror": "TITLE: Spanish Greetings: Hello, How Are You, Goodbye\n\nINTRO: This lesson teaches the Spanish greetings you need to start and end a short conversation. The rule comes first, then an example shows it in use.\n\nSECTION 1 - Hello and the time of day\nRule: use hola as a general hello, and use a time greeting when the time matters. The time picture is morning -> Buenos días, afternoon -> Buenas tardes, evening or night -> Buenas noches. Buenos días is masculine plural, but buenas tardes and buenas noches use buenas because tardes and noches are feminine. Say the greeting before a name or a question.\nEXAMPLE: At 7 a.m. before basketball practice, you see your coach and say: Buenos días. Try it: At 2 p.m. you greet a teammate; which greeting fits? Answer: Buenas tardes.\n\nSECTION 2 - How are you: informal and formal\nRule: choose the form of how are you by who you are speaking to. Use ¿Cómo estás? with a friend, a teammate, or someone you call tú. Use ¿Cómo está usted? with a teacher, a coach in a formal setting, or anyone you call usted. Mucho gusto means nice to meet you, and you say it when you meet someone.\nEXAMPLE: You join a video game chat with a friend and ask: ¿Cómo estás? Try it: You meet a new person at a comic club and say nice to meet you. Answer: Mucho gusto.\n\nSECTION 3 - Goodbyes and a short exchange\nRule: adiós means goodbye, and hasta luego means see you later. Use adiós when you are leaving, and use hasta luego when you expect to see the person again. A short exchange can go: Hola, buenos días. ¿Cómo estás? Mucho gusto. Adiós. Task: write a two-line greeting exchange for a comic club meeting; choose a time of day and formal or informal. There is no single right script.\nEXAMPLE: At a comic club you meet a new artist at 8 p.m. and say: Buenas noches. Mucho gusto. Hasta luego.\n\nWORKED EXAMPLE: You arrive at basketball practice at 9 a.m. and meet your coach. Later at 8 p.m. you join a video game chat with a friend. What greetings and how-are-you questions fit?\n  1. First, note the time: 9 a.m. is morning.\n  2. Predict before you read the next step: which greeting means good morning?\n  3. Buenos días means good morning, so use it with the coach.\n  4. The coach is an adult in a formal setting, so ask ¿Cómo está usted?\n  5. 8 p.m. is evening or night, so use buenas noches with your friend.\n  6. Your friend is informal, so ask ¿Cómo estás?\n  ANSWER: Coach at 9 a.m.: Buenos días. ¿Cómo está usted? Friend at 8 p.m.: Buenas noches. ¿Cómo estás?\n\nCOMMON MISTAKES:\nWrong: At 3 p.m. I say 'Buenos tardes.' Why: tardes is feminine, so the word before it must be buenas; buenos tardes mixes masculine buenos with feminine tardes. Right: buenas tardes.\nWrong: To my principal I say '¿Cómo estás?' Why: estás is the informal tú form, so it treats the principal as a friend; the formal form is needed. Right: ¿Cómo está usted?\n\nSUMMARY: Use hola for a general hello, and use buenos días, buenas tardes, or buenas noches for morning, afternoon, and evening or night. Use ¿Cómo estás? informally and ¿Cómo está usted? formally; mucho gusto means nice to meet you. Adiós means goodbye, and hasta luego means see you later.\n\nCHECK QUESTIONS:\n1. You arrive at basketball practice at 9 a.m. Which greeting fits? [choices: Buenas noches | Buenos días | Buenas tardes | Hasta luego] -> Buenos días\n2. You meet your teacher and want to ask 'How are you?' in the formal form. Write the question. [typed answer] -> ¿Cómo está usted?\n3. A learner writes: 'At 4 p.m. I say Buenos tardes.' What is wrong? [choices: Tardes is feminine, so it needs buenas, not buenos. | Tardes is masculine, so it needs buenos. | 4 p.m. needs buenos días. | The phrase should be hasta luego.] -> Tardes is feminine, so it needs buenas, not buenos."
+   }
+  },
+  {
+   "profile": "J3",
+   "kind": "lesson",
+   "texts": {
+    "profile": "TITLE: The Causes of World War I: Four Pressures and One Spark\n\nINTRO: In 1914, four long pressures pushed Europe towards war, and one event lit the fuse. This lesson names the four pressures, then follows the fuse from Sarajevo to a general war.\n\nSECTION 1 - Militarism and Alliances: Armed Camps and Fixed Promises\nEurope's great powers built up large armies and navies, and each tried to outbuild the others. This build-up is called militarism. At the same time, the powers signed promises to defend one another, and those promises divided Europe into two blocs. The Triple Alliance joined Germany, Austria-Hungary and Italy, while the Triple Entente joined Britain, France and Russia.\nEXAMPLE: Example (worked). Problem: why did the alliance blocs make a general war more likely? Step 1. Start with one quarrel. Austria-Hungary and Serbia are two players with a private dispute. Step 2. Add the benches. Each player belongs to a team, and the teams are the blocs: the Triple Alliance on one side, the Triple Entente on the other. Step 3. Show the pull. A punch thrown at the smallest player, Serbia, brings in that player's strongest teammate, Russia. Step 4 (your turn). Finish it: once Russia mobilises, what does the other bench do, and which two powers join first? Check your answer: Germany backs Austria-Hungary and declares war on Russia on 1 August 1914, and France is drawn in as Russia's ally. Try it: Which two blocs divided Europe by 1914, and which powers made up each one? Answer: the Triple Alliance (Germany, Austria-Hungary, Italy) and the Triple Entente (Britain, France, Russia).\n\nSECTION 2 - Imperialism and Nationalism: Colonies and Proud Nations\nEmpires also raced for colonies in Africa and Asia, because colonies supplied raw materials, trade and prestige. This rivalry is imperialism, and it twice brought Germany and France close to war over Morocco. Nationalism is the belief that your nation should rule itself and be honoured above others. It burned hottest in the Balkans, where Serbia wanted to unite the South Slavs and Austria-Hungary feared for its own Slav subjects.\nEXAMPLE: Example. A comic strip shows a chain of panels: one character insults another in panel one, and by panel four the whole school is fighting. The insult fills one panel, but the crowd was already in the corridor. In 1914 the insult was at Sarajevo, and the crowd was the alliance blocs. Try it: In one sentence, why did Serbia's ambitions worry Austria-Hungary? Answer: Serbia wanted to unite the South Slavs, and Austria-Hungary ruled many South Slavs, so Serbia's success threatened to break up the empire.\n\nSECTION 3 - The Spark: Sarajevo, 28 June 1914\nOn 28 June 1914, Gavrilo Princip shot Archduke Franz Ferdinand, heir to the Austro-Hungarian throne, in Sarajevo. Austria-Hungary blamed Serbia and declared war on 28 July 1914. Russia mobilised to defend Serbia, and Germany declared war on Russia on 1 August and on France on 3 August. Germany's march through Belgium then brought Britain into the war on 4 August, because Britain had guaranteed Belgian neutrality.\nEXAMPLE: Example. Read the timing as a sequence of dates: 28 June, the shooting; 28 July, Austria-Hungary declares war on Serbia; 1 August, Germany declares war on Russia; 3 August, Germany declares war on France; 4 August, Britain declares war on Germany. Each date depends on the one before it. Try it: Which country's attack on which neutral state brought Britain into the war? Answer: Germany's attack on Belgium.\n\nWORKED EXAMPLE: Using the alliance system, explain how a quarrel between Austria-Hungary and Serbia became a European war in the summer of 1914.\n  1. Identify the two blocs. The Triple Alliance was Germany, Austria-Hungary and Italy, and the Triple Entente was Britain, France and Russia. Europe was therefore split into two armed camps, and each camp had promised to defend its partners.\n  2. Place Austria-Hungary. It belonged to the Triple Alliance, and Germany was its closest partner. On 6 July 1914 Germany gave Austria-Hungary a free hand against Serbia, so Austria-Hungary knew it had backing.\n  3. Place Serbia. Serbia was not in a bloc, but Russia protected it, and Russia was in the Triple Entente. A defeat for Serbia would therefore cost Russia its influence in the Balkans, so Russia had reason to step in.\n  4. Take the first step. Austria-Hungary declared war on Serbia on 28 July 1914. Russia answered by mobilising its army, and mobilisation was itself a threat, because a full army is hard to halt.\n  5. Take the second step. Germany declared war on Russia on 1 August 1914 and on France on 3 August 1914. Germany attacked France through Belgium, which was a neutral country.\n  6. Take the third step. Britain had promised to defend Belgian neutrality, so it declared war on Germany on 4 August 1914. A local quarrel had become a general war in a single week.\n  ANSWER: The alliance blocs turned a local quarrel into a general war. Austria-Hungary fought Serbia first. Within a week of 28 July 1914, Russia, Germany, France and Britain had all been drawn in.\n\nCOMMON MISTAKES:\nWrong: The assassination caused the war on its own, so the alliances did not really matter. Why: this confuses the spark with the pressures underneath it; a quarrel between Austria-Hungary and Serbia stays local unless allies are pulled in. Right: the assassination was the spark, and the two alliance blocs turned the local quarrel into a general war.\nWrong: Serbia declared war on Austria-Hungary on 28 July 1914, and that is what started the chain. Why: the declaration ran the other way, because Austria-Hungary declared war on Serbia after blaming Serbia for the assassination. Right: Austria-Hungary declared war on Serbia on 28 July 1914, and Russia mobilised in reply.\n\nSUMMARY: Militarism, alliances, imperialism and nationalism are the four long pressures. The assassination at Sarajevo was the spark, and the alliance blocs spread the fire. A good answer separates the spark from the pressures and gives one fact for each. Harder case, if you want it: pick militarism and alliances, then argue in three sentences which one is the deeper cause. Name one fact that supports the other side.\n\nCHECK QUESTIONS:\n1. Which cause describes the great powers building up large armies and navies? [choices: Militarism | Alliances | Imperialism | Nationalism] -> Militarism\n2. Name the event that acted as the spark in 1914, and the city where it happened. [typed answer] -> The assassination of Archduke Franz Ferdinand, in Sarajevo.\n3. A learner writes: Serbia declared war on Austria-Hungary on 28 July 1914, and the alliances then pulled in the other powers. Which statement explains the error? [choices: The declaration ran the other way, because Austria-Hungary declared war on Serbia. | The date is wrong, because the declaration came in August 1914. | The alliances played no part in spreading the war beyond the Balkans. | Serbia had no protector, so no other power was involved.] -> The declaration ran the other way, because Austria-Hungary declared war on Serbia.",
+    "mirror": "TITLE: The Causes of World War I\n\nINTRO: Big wars do not start from nowhere. By 1914, four long-term causes had built up tension in Europe. Then one event in Sarajevo lit the fuse.\n\nSECTION 1 - Militarism and alliances\nMilitarism means the great powers built up huge armies and navies. Each country wanted to be ready to fight, so a build-up in one place worried its neighbours. Alliances split Europe into two blocs. A quarrel between two small countries could then pull in many big ones.\n\nTwo blocs, side by side:\n\n  Triple Alliance   Germany, Austria-Hungary, Italy\n  Triple Entente    Britain, France, Russia\nEXAMPLE: Think of a basketball game where two players clash. Both benches jump up at once, and a small argument becomes a whole-court brawl. That is what the two blocs did to a local quarrel.\n\nTry it: Which cause is this? A country doubles the size of its navy. Answer: Militarism.\n\nSECTION 2 - Imperialism and nationalism\nImperialism is rivalry between empires for colonies and power. Big empires grabbed land in Africa and Asia, and each grab angered a rival. Nationalism is strong pride in your own nation. It was sharpest in the Balkans, where Serbia wanted a bigger Serb state.\nEXAMPLE: Two comic artists both claim the same character and both want the credit and the sales. Each one's grab makes the other angrier. That is imperial rivalry.\n\nTry it: Which cause is this? Serbia wants to unite all Serbs into one state. Answer: Nationalism.\n\nSECTION 3 - The spark\nThe spark came on 28 June 1914, in Sarajevo. Gavrilo Princip shot Archduke Franz Ferdinand, who was heir to the Austrian throne. Austria-Hungary blamed Serbia and declared war on 28 July. The alliances then dragged the big powers in.\nEXAMPLE: A spark on its own does nothing. A spark in a room full of fuel does everything. The four long-term causes were the fuel, and Sarajevo was the spark.\n\nTry it: Who shot Archduke Franz Ferdinand, and in which city? Answer: Gavrilo Princip, in Sarajevo.\n\nWORKED EXAMPLE: Sort these three clues into the right long-term cause: 1) Country A doubled its battleship fleet. 2) Country B seized a colony in Africa from Country C. 3) Serbs in the Balkans wanted one Serb state of their own.\n  1. Step 1: ask whether the clue is about armies and navies. Clue 1 is about a fleet, and a fleet is a navy, so clue 1 is militarism.\n  2. Step 2: ask whether the clue is about taking land or power from a rival empire. Clue 2 is land grabbed from a rival, so clue 2 is imperialism.\n  3. Step 3: ask whether the clue is about pride in a nation and wanting a state of its own. Clue 3 is Serb unity, so clue 3 is nationalism.\n  4. Step 4: check whether alliances fits any clue. No clue mentions a promise to help another country, so alliances is not here.\n  ANSWER: 1 is militarism, 2 is imperialism, 3 is nationalism. Alliances does not appear.\n\nCOMMON MISTAKES:\nWrong: \"Alliances caused the war because every country in Europe was friends with every other country.\" Why: this treats Europe as one big friendship group, but it was split into two rival blocs that pulled against each other; a promise to help one ally is not the same as being friends with everyone. Right: Europe was divided into the Triple Alliance (Germany, Austria-Hungary, Italy) and the Triple Entente (Britain, France, Russia), so a local quarrel could pull in both sides.\nWrong: \"The assassination of Franz Ferdinand was the main cause of World War I.\" Why: this treats the spark as the whole cause and skips the four long-term causes that had built the tension first; without them, one shooting would not have pulled in all of Europe. Right: militarism, alliances, imperialism and nationalism built the tension, and the assassination in Sarajevo was the spark that set it off.\n\nSUMMARY: Four long-term causes built the tension: militarism, alliances, imperialism and nationalism. The assassination of Archduke Franz Ferdinand in Sarajevo was the spark. The alliances turned a local quarrel into a European war.\n\nCHECK QUESTIONS:\n1. A country builds a navy far larger than its neighbours' navies. Which long-term cause of World War I is that? [choices: Militarism | Alliances | Imperialism | Nationalism] -> Militarism\n2. What event in Sarajevo in 1914 was the spark that set off the war? [typed answer] -> The assassination of Archduke Franz Ferdinand.\n3. A student sorts this clue: 'A country seizes a colony in Africa to beat a rival empire.' They write: 'This is militarism, because the country is building up its power.' What cause is it really? [typed answer] -> Imperialism."
+   }
+  },
+  {
+   "profile": "J4",
+   "kind": "notes",
+   "texts": {
+    "profile": "## Hola: the simplest greeting\n- Spanish has many everyday greetings, and the simplest one is hola, which means hello.\n- You can use hola at any time of day, with friends or with people you have just met.\n- You can use it at any time of day, with friends or with people you have just met.\n- See the whole set as one arrow chain: hola → buenos días, buenas tardes, buenas noches → adiós or hasta luego.\n\n## Greetings by time of day\n- For a certain time of day, Spanish speakers say buenos días for good morning, buenas tardes for good afternoon, and buenas noches for good evening or good night.\n- Think of it like the day and night cycle in a video game: the screen changes from morning to afternoon to night, and the greeting changes with it.\n- Días is masculine plural while tardes and noches are feminine plural, so the endings buenos and buenas change.\n- Think of it like two pencil grips when you draw comics: buenos is one grip and buenas is the other, and you pick the one that matches the noun.\n- So the ending of the greeting has to match the gender and number of the word after it.\n\n## Saying goodbye\n- To say goodbye you can say adiós, which means goodbye.\n- You can also say hasta luego, which means see you later.\n- Hasta luego is friendly and is used when you expect to see the person again soon.\n\n## How are you: informal and formal\n- Step 1: with friends, family and children, use the informal question cómo estás, which means how are you.\n- Step 2: with older people, strangers or in polite situations, use the formal question cómo está usted, which also means how are you.\n- Step 3: the usual answer is bien, gracias, which means fine, thank you.\n\n## Meeting someone for the first time\n- When you meet someone for the first time, say mucho gusto, which means nice to meet you.",
+    "mirror": "## Hola, the simplest greeting\n- Spanish has many everyday greetings, and the simplest one is hola, which means hello.\n- Hola works at any time of day, with friends or with people you have just met.\n- Think of hola like a pick-up basketball game that anyone can join at any hour. The material says the same: hola works at any time of day, with friends or new people.\n- What does hola mean, and when can you use it?\n- Hola means hello, and you can use it at any time of day.\n\n## Greetings for a certain time of day\n- To greet people at a certain time of day, Spanish speakers say buenos días for good morning.\n- Buenas tardes means good afternoon, and buenas noches means good evening or good night.\n- Think of these three like the level select in a video game, where you pick the version that matches the moment. The material's point is that each greeting belongs to a certain time of day.\n- The three greetings as a labelled list: buenos días → good morning; buenas tardes → good afternoon; buenas noches → good evening or good night.\n- Why do the endings change from buenos to buenas?\n- Días is masculine plural, while tardes and noches are feminine plural, so the endings change.\n\n## Saying goodbye\n- To say goodbye you can say adiós, which means goodbye.\n- Hasta luego means see you later, and it is a friendly thing to say.\n- When is hasta luego the right goodbye?\n- Use hasta luego when you expect to see the person again soon.\n\n## Asking how someone is\n- With friends, family and children, use the informal question cómo estás, which means how are you.\n- With older people, strangers or polite situations, use the formal question cómo está usted, which also means how are you.\n- The two questions as a map: cómo estás → friends, family and children; cómo está usted → older people, strangers and polite situations.\n- Think of it like drawing the same comic panel twice, once for a friend and once for an editor. The material's point is that one question has an informal and a formal version.\n- Which question would you use with a stranger, and why?\n- Use the formal cómo está usted, because strangers call for the polite form.\n- The usual answer is bien, gracias, which means fine, thank you.\n\n## Meeting someone for the first time\n- What do you say when you meet someone for the first time?\n- When you meet someone for the first time, say mucho gusto, which means nice to meet you.\n- Optional harder question: at 9 p.m. you meet someone new, so which greeting can you use? The material's answer is hola, since it works with people you have just met at any time of day."
+   }
+  }
+ ],
+ "usage": {
+  "writerCalls": 24,
+  "writerIn": 37891,
+  "writerOut": 108858,
+  "judgeCalls": {
+   "gemini-3.5-flash-lite": 32,
+   "gpt-6.1-sol": 32
+  },
+  "judgeTokens": {
+   "gemini-3.5-flash-lite": 82243,
+   "gpt-6.1-sol": 927795
+  },
+  "errors": {},
+  "seconds": 379,
+  "standardComputeUsd": 0.3066,
+  "xkiro": {
+   "free_tokens_today": 135539,
+   "grants": {
+    "minimax/minimax-m3.1-flash": {
+     "used": 0,
+     "cap": 12000000,
+     "refused": false
+    }
+   }
+  }
+ }
+}

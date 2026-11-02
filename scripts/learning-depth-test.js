@@ -170,7 +170,7 @@ console.log('6. every material surface, and version 1 one switch away');
   const brief = ls.buildSpecFrom({ ...one('brevity_preference', 95, 95), metrics: { ...blank(), brevity_preference: { measured: 95, confidence: 95 }, interest_transfer: { measured: 95, confidence: 95 } } });
   check('a learner who needs less gets own material no longer than its outline, with one interest analogy, not three', ls.needsLess(brief) && ls.ownInterestNeed(brief, 3000) === 1 && /at least one in all[^\n]*Keep it to that one analogy/.test(ls.specToPrompt(brief, { surface: 'podcast' })) && /no longer than a plain outline/.test(ls.specToPrompt(brief, { surface: 'notes' })));
   // Notes (material-weak): an analogy there is an extra bullet, so it is optional and only inside the word limit.
-  check('and in notes the one analogy is optional and only inside the word limit, with no other extra bullet', ls.ownInterestNeed(brief, 3000, 'notes') === 0 && /add one short framed analogy bullet[^\n]*only if the notes still fit the word limit/.test(ls.specToPrompt(brief, { surface: 'notes' })) && !/at least one in all/.test(ls.specToPrompt(brief, { surface: 'notes' })));
+  check('and in notes the one analogy is optional and only inside the word limit, with no other extra bullet', ls.ownInterestNeed(brief, 3000, 'notes') === 0 && /short framed analogy bullet[^\n]*at most one in all[^\n]*only if the notes still fit the word limit/.test(ls.specToPrompt(brief, { surface: 'notes' })) && !/at least one in all/.test(ls.specToPrompt(brief, { surface: 'notes' })));
   check('the default spec still writes nothing at all', ls.specToPrompt(ls.defaultSpec()) === '' && ls.specToPrompt(ls.buildSpecFrom({ metrics: blank() })) === '');
 }
 

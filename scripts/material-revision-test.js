@@ -40,7 +40,8 @@ function makeLearner(tag, { age = null, stats = {}, survey = {} } = {}) {
   }
   return user;
 }
-const kid = makeLearner('kid', { age: 11, stats: { interest_transfer: 92, brevity_preference: 85, vocabulary_ceiling: 10 }, survey: { interests: 'minecraft, drawing', notes: 'I hate spiders.' } });
+// (Not a learner who needs less: notes for those get an optional analogy inside a word limit, tested in learning-depth-test.js and below.)
+const kid = makeLearner('kid', { age: 11, stats: { interest_transfer: 92, vocabulary_ceiling: 10 }, survey: { interests: 'minecraft, drawing', notes: 'I hate spiders.' } });
 const fresh = makeLearner('fresh', {});
 
 const SENTS = [
@@ -99,6 +100,20 @@ const turnsDraft = (sentences, analogy) => () => ({ title: 'Ep', turns: [
   await notes.build(fresh.id, mFresh.id, { llm: llmE, force: true });
   check('a learner we know nothing about is written for exactly as before: one call, no revision, whatever the draft', llmE.calls.length === 1 && !/analogy bullets/.test(llmE.calls[0].system));
   check('the kid\'s prompt asks for analogy bullets on top of the bullet limit', /analogy bullets, where the block below asks for them, come on top/.test(llmA.calls[0].system) && /own one-sentence bullet that starts "Think of"/.test(llmA.calls[0].system));
+
+  // A learner who needs less (material-weak): a word limit in the prompt and in the check, the analogy optional and inside it.
+  const brief = makeLearner('brief', { age: 14, stats: { interest_transfer: 92, brevity_preference: 90 }, survey: { interests: 'minecraft, drawing' } });
+  const mBrief = mk(brief, 'Photosynthesis');
+  const llmF = scripted([notesDraft([...SENTS, 'Plants are living things that need light and water to grow well.'], false)]);
+  const rF = await notes.build(brief.id, mBrief.id, { llm: llmF, force: true });
+  const limitOf = (s) => Number((/run to at most (\d+) words/.exec(s) || [])[1]);
+  check('a learner who needs less: the prompt carries a word limit, the analogy is optional, so a draft with none is kept after one call', llmF.calls.length === 1 && limitOf(llmF.calls[0].system) > 0 && /at most one in all/.test(llmF.calls[0].system) && rF.notes.revised_parts === 0, [llmF.calls.length, limitOf(llmF.calls[0].system)]);
+  const longAnalogy = Array.from({ length: 6 }, () => ANALOGY.replace(/^Think of /, '')).join(' ');
+  const overDraft = () => ({ sections: [{ heading: 'Plants', bullets: [...SENTS.map((s) => bullet(s)), bullet('Plants are living things that need light and water to grow well.'), bullet(`Think of ${longAnalogy}`, { quote: SENTS[1] }), bullet(`Picture this: ${ANALOGY.replace(/^Think of /, '')}`, { quote: SENTS[0] })] }] });
+  const llmG = scripted([overDraft]);
+  const rG = await notes.build(brief.id, mBrief.id, { llm: llmG, force: true });
+  const kept = rG.notes.sections.flatMap((s) => s.bullets.map((b) => b.text));
+  check('over the word limit: written once more with the overshoot named, then the scene bullet is cut, the analogy too if it is still over, and no point is', llmG.calls.length === 2 && /the limit is \d+/.test(llmG.calls[1].user) && !kept.some((t) => /^Picture this/.test(t)) && (!kept.some((t) => /^Think of/.test(t)) || notes.notesWords(rG.notes.sections) <= limitOf(llmG.calls[0].system)) && SENTS.every((s) => kept.includes(s)) && rG.notes.trimmed_extras >= 1, [llmG.calls.length, kept.length, rG.notes.trimmed_extras, notes.notesWords(rG.notes.sections), limitOf(llmG.calls[0].system)]);
 
   console.log('podcast');
   const llmP = scripted([turnsDraft(SENTS, false), turnsDraft(SENTS, true)]);

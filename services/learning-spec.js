@@ -1118,7 +1118,7 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
     // Notes for a learner who needs less: an analogy is an extra bullet, so it is allowed only inside the word limit (the speed proof found
     // judges scoring tailored notes below the plain ones for padding), never required.
     if (less && surface === 'notes') {
-      lines.push(`Interests: you may add one short framed analogy bullet on ${doms} (it starts "Think of", comes right after the bullet whose point it pictures, carries that bullet's passage_id and quote, and is not counted in the bullet limit), but only if the notes still fit the word limit; it adds no fact, number, name or claim about the topic, and every fact and quote stays the material's own. Add no other extra bullets.`);
+      lines.push(`Interests: you may add a short framed analogy bullet on ${doms}, at most one in all (it starts "Think of", comes right after the bullet whose point it pictures, carries that bullet's passage_id and quote, and is not counted in the bullet limit), but only if the notes still fit the word limit; it adds no fact, number, name or claim about the topic, and every fact and quote stays the material's own. Add no other extra bullets.`);
     } else {
       lines.push(`Interests: ${where} on ${doms}, ${n} in all, each introduced as an analogy ("think of it like...") and mapped back to a named point of the material; they add no fact, number, name or claim about the topic, and every fact and quote stays the material's own.${less ? ' Keep it to that one analogy: this version is meant to be short.' : ''}`);
     }

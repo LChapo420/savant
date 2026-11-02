@@ -119,7 +119,7 @@ function mockTask(req) {
   });
   const typedPref = /Prefer questions answered by typing/.test(sys);
   // The interests the block asks for (the "Interests:" line, or the setting a question may use): framed analogies that point back at a point of the text.
-  const doms = (((/ on ([^\n]*?), at least \w+ in all/.exec(sys) || [])[1] || (/use ([^\n]*?) as the context/.exec(sys) || [])[1] || '')).split(',').map((d) => d.trim()).filter(Boolean);
+  const doms = (((/ on ([^\n]*?), (?:at least|at most) \w+ in all/.exec(sys) || [])[1] || (/use ([^\n]*?) as the context/.exec(sys) || [])[1] || '')).split(',').map((d) => d.trim()).filter(Boolean);
   const longest = (s) => s.split(/[^A-Za-zà-ÿ-]+/).sort((a, b) => b.length - a.length)[0];
   const analogy = (x, i) => (doms.length ? `Think of ${doms[i % doms.length]}, like ${longest(x.s)}.` : '');
   if (task === 'material_notes') {
