@@ -118,6 +118,8 @@ const LEVERS = {
   breaks: { imp: 0, doc: '+ more frequent breaks; - fewer' },
   // How much a course built from their material is split and tested (brevity_preference only): the path and the test are code-shaped,
   // so this lever has no sentence of its own; it sets spec.course (skills the outline may plan, length of the default test).
+  // Notes only: a sharper sentence for the worked case of worked_example_dependence (no sentence on any other surface).
+  workedChain: { imp: 3, doc: '+ a worked case is walked step by step with each result and reason, then checked; - the case is one reasons-free bullet (notes only)' },
   courseSize: { imp: 0, doc: '+ finer skills and a longer default test; - fewer, broader skills and a shorter default test' },
   autonomy: { imp: 1, doc: '+ offer choices; - guide step by step' },
   structure: { imp: 2, doc: '+ numbered steps and a stated next step; - open-ended tasks' },
@@ -258,7 +260,7 @@ const METRIC_RULES = [
   R('planning_tendency', null, [['planning', 1, 0.7]], 'Plans an approach first: ask for a plan. Dives in: start with a step.'),
   // Communication and representation
   R('step_explicitness', '03-M17', [['scaffold', 1, 0.4], ['structure', 1, 0.5], ['chunk', -1, 0.3], ['worked', 1, 0.2]], 'Every step must be shown: numbered, none skipped. Skipped steps are fine: compress.'),
-  R('worked_example_dependence', '03-M17', [['worked', 1, 0.8]], 'Needs full worked examples: they lead. Learns from principles: practice leads (03-M17, 03-M18: never removed from an unseen objective).'),
+  R('worked_example_dependence', '03-M17', [['worked', 1, 0.8], ['workedChain', 1, 0.8]], 'Needs full worked examples: they lead. Learns from principles: practice leads (03-M17, 03-M18: never removed from an unseen objective).'),
   R('scaffolding_fade', '03-M17', [['scaffold', -1, 0.6], ['hintSize', -1, 0.3]], 'Supports can be removed quickly: little support. Slowly: keep it.'),
   R('notation_comfort', null, [['notation', 1, 0.7], ['vocab', 1, 0.1]], 'Comfortable with symbols: use them. Intimidated: words first, symbols last, read out.'),
   R('brevity_preference', '03-M19', [['length', -1, 0.8], ['feedbackDetail', -1, 0.3], ['courseSize', -1, 0.8]], 'Wants the shortest version: cut everything not required (03-M19). Wants full detail: fuller only on new material.'),
@@ -984,7 +986,8 @@ const NOTES_PHRASES = {
   // Working memory and chunk size: one idea a bullet against whole steps of reasoning in a bullet.
   chunk: ['Make every bullet one idea in one short sentence (about twelve words or fewer, nothing joining two ideas with "and", "so" or "because"), put at most three bullets under a heading, and let each section end on a one-line takeaway.', 'Let each bullet carry a whole step of the reasoning, joining its ideas with "so" or "because" in one sentence, under fewer headings, instead of splitting every idea into a bullet of its own.'],
   // Text density: the length and connectedness of a bullet.
-  density: ['Keep every bullet to one short sentence (about fifteen words at most) so that nothing reads as a paragraph.', 'Bullets may be full, connected sentences that hold several linked ideas.'],
+  // The high side is a shape a reader can count (notes judged "same" for a dense-prose reader, depth-notes2): one sentence of about twenty to twenty-five words with two or three linked ideas.
+  density: ['Keep every bullet to one short sentence (about fifteen words at most) so that nothing reads as a paragraph.', 'Make each bullet one full, connected sentence of about twenty to twenty-five words that holds two or three linked ideas, joined with "because", "which" or "so"; no bullet is a bare fragment.'],
   // Register: formal against casual, in words a reader can quote.
   formality: ['Write to the learner as "you", with contractions and everyday phrasing.', 'Write in a formal, academic register: third person, no contractions, no "you", precise terms and no casual asides; word any analogy formally.'],
   // Vocabulary: glossed against technical.
@@ -993,6 +996,9 @@ const NOTES_PHRASES = {
   // Worked examples: notes had no sentence for it, so a learner who needs full worked examples and one who learns from the principle got the same
   // outline (depth-75 joint profiles: notes of worked_example_dependence read as "same" in 3 of 3 samples).
   worked: ['State the principle first in a bullet of its own; where the material works a case or chain through, give it in one compact bullet that still contains every step.', 'Where the material works a case or chain through, give it step by step: one bullet per step, each saying what is done and why, in the words of the material.'],
+  // worked_example_dependence only (depth-notes2): in a topic that has a worked case both versions of the line above read as full worked examples, so this
+  // replaces it with two shapes a reader can see: the case in one reasons-free bullet against a case walked step by step, each result and reason, closed by the material's own check.
+  workedChain: ['State the principle first in a bullet of its own; where the material works a case or chain through, give it in ONE short bullet (the start, the operations named in one phrase, and the result) and show no working between them.', 'Where the material works a case or chain through, give it step by step, one bullet per step in the form "Step n:", each writing out the state before the step, what is done, the state after it and why that is allowed, in the words of the material, and end the case with a bullet that checks the result the way the material does.'],
 };
 // The levers whose notes sentence adds a bullet that is not one of the material's points; dropped for a learner who needs less.
 const NOTES_EXTRAS = new Set(['story', 'challenge', 'relevance', 'curiosity', 'elaboration', 'generation', 'mnemonic', 'bigPicture', 'recapStart', 'systems', 'patternHints', 'depth']);
@@ -1053,7 +1059,7 @@ const SURFACES = {
   // examples kept or trimmed, cause chains, why before how, the use first, depth, restating, and grounded question bullets: an opening
   // question, own-words and question-then-answer bullets, an optional harder question, why it matters).
   notes: (l) => ['chunk', 'length', 'density', 'vocab', 'sentence', 'defineTerms', 'visual', 'structure', 'recapEnd', 'rigor', 'formality', 'interestUse', 'analogy'].includes(l) || (depthOn() && [
-    'bigPicture', 'mnemonic', 'contrast', 'misconception', 'exampleCount', 'causal', 'conceptual', 'application', 'ruleFirst', 'depth', 'repetition', 'recapStart', 'notation', 'multiRep', 'patternHints', 'systems',
+    'bigPicture', 'mnemonic', 'contrast', 'misconception', 'exampleCount', 'causal', 'conceptual', 'application', 'ruleFirst', 'depth', 'repetition', 'recapStart', 'workedChain', 'notation', 'multiRep', 'patternHints', 'systems',
     'curiosity', 'elaboration', 'generation', 'challenge', 'relevance', 'story', 'pressure', 'worked'].includes(l)),
   // Spoken: no layout. Version 2 lets structure through as steps numbered aloud.
   podcast: (l) => !blockedFor().has(l) && !['visual', 'structure', 'typed', 'density', 'notation'].includes(l) || (depthOn() && l === 'structure'),
@@ -1140,6 +1146,8 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
       else if (r.lever === 'chunk' && r.lean < 0 && spec.levers && spec.levers.courseSize <= -0.3) r.text = r.text.replace(/, and let each section end on a one-line takeaway/, '');
     }
   }
+  // workedChain (worked_example_dependence only) says the worked case more sharply than the shared "worked" line: it replaces it in notes.
+  if (surface === 'notes' && ranked.some((r) => r.lever === 'workedChain')) for (let i = ranked.length - 1; i >= 0; i--) if (ranked[i].lever === 'worked') ranked.splice(i, 1);
   ranked.sort((a, b) => b.score - a.score || a.lever.localeCompare(b.lever));
   const lines = [];
   const lang = spec.language;

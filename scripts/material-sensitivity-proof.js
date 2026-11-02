@@ -577,7 +577,9 @@ async function runJoint(kinds) {
   const only = arg('profiles') ? arg('profiles').split(',') : null; // --profiles J1,J4: just these (topics stay as they are)
   JOINT.forEach((p, i) => {
     if (only && !only.includes(p.id)) return;
-    const topicId = TOPIC_IDS[i % TOPIC_IDS.length];
+    // --joint-topic J3=two-step equations: another topic for one profile (a measure the default topic cannot show, e.g. worked examples in history).
+    const over = (arg('joint-topic') || '').split(';').map((x) => x.split('=')).find((x) => x[0] === p.id);
+    const topicId = over && TOPICS[over[1]] ? over[1] : TOPIC_IDS[i % TOPIC_IDS.length];
     const stats = Object.fromEntries(Object.entries(p.set).map(([m, h]) => [m, h ? HI : LO]));
     const mirror = Object.fromEntries(Object.entries(p.set).map(([m, h]) => [m, h ? LO : HI]));
     const P = { name: `${p.id}-profile`, age: BASE_LEARNER.age, survey: BASE_LEARNER.survey };

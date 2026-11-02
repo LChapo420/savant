@@ -681,3 +681,46 @@ strongly high. `block-snapshot.js` / `block-diff.js`: **no single-measure block 
 
 Planted swap on the J2 notes: caught 8/8. Remaining J2 notes noise: interest_transfer read 0/2 (two "same") in the first sample, where the writer left out the
 one required analogy, and 2/2 in the second; working_memory_span 2/2 then 1/2. One course per cell, so the path and test numbers are single samples.
+
+### 9.10 Notes: worked_example_dependence (J3) and text_density_tolerance (2 Nov, branch `depth-notes2`)
+
+AI-judged, simulated learners (Gemini 3.5 Flash Lite and Nemotron 3 Ultra judging, DeepSeek V4.1 Flash via Standard Compute writing, notes only, 2 sample sets
+x 2 judges = 4 verdicts a cell). Not a real-learner result. Raw runs: `docs/material-depth/depth-75/notes2/` (`before-*`, `after-*`, `after2-*`, `planted-swap-eq-r1.json`).
+Note: in the harness `text_density_tolerance` is in **J4** (Spanish greetings), not J2; J2 is working_memory_span, deductive_trajectory, interest_transfer, brevity_preference.
+
+**Re-check first.** On the code at the start: brevity_preference in J2 4/4 (fixed in 9.9); text_density_tolerance in J4 2/4, with 2 "same" and no wrong-way verdict
+(the 0/3 wrong-way of 9.9's table is gone); worked_example_dependence in J3 (history) 2/4, all "same", none wrong-way.
+
+**Causes.** (1) worked_example_dependence: the notes sentence for the low side ("one compact bullet that still contains every step") and the high side ("one bullet per step")
+differ so little that a judge sees the same steps in both. The topic is half the story: J3's history text has no solved case, but it does have a chain (alliances, then the
+assassination, then the war), and a sharper sentence is visible even there. On a topic with a real worked case (two-step equations) the old sentence scored 0/4 (1 wrong-way,
+3 same: "both include the same two fully worked examples"). (2) text_density_tolerance: the high side said only "bullets may be full, connected sentences", a permission,
+and the writer kept short bullets (mean 14 words against 11 for the low side in the first sample).
+
+**Fix** (`services/learning-spec.js`): the high density sentence now asks for one connected sentence of about 20 to 25 words with two or three linked ideas; a new lever `workedChain`
+(moved only by worked_example_dependence, notes only, replaces the shared `worked` line there): low = the case in one short bullet (start, operations in one phrase, result), high =
+one "Step n:" bullet per step with the state before, the operation, the state after and why, closed by the material's own check. `block-diff.js`: only text_density_tolerance and
+worked_example_dependence notes blocks changed; no other measure's block did (a first version that edited the shared `worked` line also changed enactive_encoding, hint_dependency,
+step_explicitness and prior_knowledge, and was replaced). A change to the dual-coding "Layout" line for low working memory also changed chunk_granularity and intake_baseline, so it was dropped.
+
+| Cell (notes, 2 sample sets, 2 judges) | before | after |
+|---|---|---|
+| J3 history, worked_example_dependence | 2/4 (2 same) | **4/4** |
+| J3 history, challenge_appetite / spatial_anchoring / tone_formality | 4/4, 4/4, 2/4 | 4/4, 4/4, 4/4 |
+| J3 two-step equations, worked_example_dependence | 0/4 (1 wrong, 3 same) | 1/4 (0 wrong, 3 same) |
+| J3 two-step equations, challenge / spatial / tone | 4/4, 4/4, 3/4 | 4/4, 4/4, 4/4 |
+| J4 Spanish, text_density_tolerance | 2/4 (2 same) | 2/4 (2 same); mean bullet length of the high side 14.3 to 21.3 words in one sample, 19.0 to 18.7 in the other |
+| J4 other: structure_need, productive_struggle, narrative_pull | 2/4, 2/4, 4/4 | 2/4, 4/4, 4/4 |
+
+**Honest reading.** worked_example_dependence now reads right in history and no longer wrong-way on equations, but on equations it is still mostly "same": the content contract
+keeps every step in every version of the notes, so both versions show the worked case and a judge asked for "fully worked examples" sees them in both. That is a limit of notes,
+not of the rule; the lesson and test carry the measure (lesson 2/2 in 9.2). text_density_tolerance: no wrong-way verdict, but not yet read as a difference (2 same of 4),
+because the confounded questions-and-answers of the other J4 measure make the high side's bullets short again. Both are small samples (4 verdicts a cell).
+
+**J2 was not changed, and one measure there is bad.** Fresh samples (r3, r4) of J2 on unchanged code: brevity_preference 4/4, deductive_trajectory 4/4, interest_transfer 2/4,
+**working_memory_span 0/4** (4 wrong-way); with the first two sets (1/4) that is 1/8 over four sample sets, so working_memory_span in J2 notes is wrong-way, not noise. Both judges name the
+low-memory text as the higher-span one: its "Layout:" bullet packs the whole solution into one arrow chain (`2x+3=11 -> -3 -> 2x=8 -> /2 -> x=4`), which is many parts at once. The Layout line
+is on for every learner and is shared by the mirror, so fixing it needs a rule that only the working-memory measure moves; the one tried here touched other measures and was not kept. Open.
+
+Planted swap on the equations after run (`--plant swap --replay`): caught 6/8, fooled 1, could not tell 1, so the verdicts follow the writing.
+Money: Standard Compute about $0.38 through its ledger (DeepSeek writing, 0 judge calls), Gemini and Nemotron free tiers, Anthropic $0.
