@@ -25,6 +25,7 @@ const db = require('../config/db');
 const curriculum = require('../config/curriculum');
 const grading = require('./grading');
 const providers = require('./providers');
+const costTracker = require('./cost-tracker'); // cost and performance tracker (docs/COST-TRACKER.md): sizes, times and costs only
 
 const DAILY_CENTS = Number(process.env.AI_DAILY_CENTS_PER_USER || 25);
 const DAILY_CALLS = Number(process.env.AI_DAILY_CALLS_PER_USER || 120);
@@ -130,10 +131,11 @@ function outsideAllowed(userId) {
   return require('./typed-grading').outsideAllowed(userId);
 }
 
-function recordSpend(userId, model, usage, usedProvider) {
+function recordSpend(userId, model, usage, usedProvider, meta) {
   // The provider that actually answered, which is not always the preferred one.
   const p = usedProvider || provider();
   const cents = p && usage ? p.costCents(model, usage) : 0;
+  costTracker.recordAi({ userId, model, usage, provider: p, cents, ...(meta || {}) });
   if (!userId) return;
   db.upsert('ai_usage', (u) => u.user_id === userId && u.day === today(), (existing) => ({
     user_id: userId,
@@ -166,6 +168,7 @@ async function viaPool(userId, req, role, task, outside) {
     { timeoutMs: req.timeoutMs || undefined, hedgeAfterMs: req.hedgeAfterMs != null ? req.hedgeAfterMs : undefined, validate: (r) => !!r, trace },
   );
   if (!res) {
+    costTracker.recordAi({ userId, role, task, ok: false, ms: trace.elapsedMs || 0, tries: (trace.attempts || []).length || 1, provider: 'pool' });
     console.warn(`ai: no slot gave a valid ${role}${task ? `/${task}` : ''} answer in ${Math.round((trace.elapsedMs || 0) / 1000)}s: ${(trace.attempts || []).map((a) => `${a.slot} ${a.kind}`).join(', ') || 'no slot available'}`);
     return null;
   }
@@ -173,7 +176,8 @@ async function viaPool(userId, req, role, task, outside) {
     console.log(`ai: ${role}${task ? `/${task}` : ''} answered by ${res.pool.slot} after ${Math.round(res.pool.elapsedMs / 1000)}s (${res.pool.attempts.length} attempt${res.pool.attempts.length === 1 ? '' : 's'})`);
   }
   // Standard Compute is not in providers.ALL (it must never enter a chain); the tutor's calls to it are still recorded.
-  recordSpend(userId, res.model, res.usage, providers.ALL[res.pool.provider] || (res.pool.provider === 'standard_compute' ? require('./providers/standard-compute').standardCompute : null));
+  recordSpend(userId, res.model, res.usage, providers.ALL[res.pool.provider] || (res.pool.provider === 'standard_compute' ? require('./providers/standard-compute').standardCompute : null),
+    { role, task, ms: res.pool.elapsedMs, tries: (res.pool.attempts || []).length || 1, hedged: res.pool.hedged, costUsd: res.pool.costUsd });
   return res;
 }
 
@@ -193,12 +197,14 @@ async function withProviders(userId, attempt, role = 'fast', task = null, req = 
         + `(services/anthropic-ledger.js, stop $${ledger.HARD_STOP_USD}); ${role} gets no answer from it`);
       continue;
     }
+    const t0 = Date.now();
     try {
       const result = await attempt(p);
       if (!result) return null; // answered, but with nothing usable
-      recordSpend(userId, result.model, result.usage, p);
+      recordSpend(userId, result.model, result.usage, p, { role, task, ms: Date.now() - t0, tries: i + 1 });
       return result;
     } catch (err) {
+      costTracker.recordAi({ userId, provider: p, role, task, ok: false, ms: Date.now() - t0, tries: i + 1 });
       const next = candidates.slice(i + 1).find((c) => c.isEnabled(role, task));
       console.warn(`ai: ${p.describeError ? p.describeError(err) : err.message}`
         + `${next ? ` — ${role} falling back to ${next.name}` : ''}`);
@@ -1484,6 +1490,7 @@ async function coachReply({ item, messages, userId }) {
  * caller's signal to use the non-streaming path.
  */
 async function coachReplyStream({ item, messages, userId, onDelta }) {
+  const streamT0 = Date.now();
   if (!withinBudget(userId)) return null;
   const outside = outsideAllowed(userId);
   const streamers = providers.chain('fast', 'coach_turn').filter((p) => typeof p.chatStream === 'function' && (outside || !providers.isOutside(p)));
@@ -1537,7 +1544,7 @@ async function coachReplyStream({ item, messages, userId, onDelta }) {
   }
 
   if (!result) return null;
-  recordSpend(userId, result.model, result.usage, used);
+  recordSpend(userId, result.model, result.usage, used, { role: 'fast', task: 'coach_turn', ms: Date.now() - streamT0 });
 
   if (leaked || wouldLeak(result.text)) {
     tutorNote(userId, item, history, COACH_REDIRECT);
