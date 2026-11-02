@@ -150,6 +150,10 @@ if (CHANNELS.has('max')) process.env.PERSONALIZE_EXPERIMENT_RATE = '1';
 // The start time of each day's study jitters with the learner's session_rhythm (gapSd), so the regularity of the days stays measurable. The run ends
 // at --days (default 30), where a 'day' snapshot is taken and the gate also reports it (as week days/7). Off by default: nothing else changes.
 const MIN_PER_DAY = Number(opt('minutes-per-day', 0));
+// --ramp-cap=N (long pace runs, 180 and 365 days): the course gets harder by 0.02 logits a level only for the first N levels, then new material arrives at that difficulty
+// (the sim has one ramp built for 100 levels; at 3,500 levels it would be 70 logits and every learner would fail). Off by default.
+const RAMP_CAP = Number(opt('ramp-cap', Infinity));
+const DUMP = opt('dump', '') ? path.resolve(opt('dump', '')) : '';
 const PACE = MIN_PER_DAY > 0;
 const PACE_DAYS = PACE ? Number(opt('days', 30)) : 0;
 const GATE_WEEKS = PACE ? [1, 2, 3, 4, PACE_DAYS / 7] : [1, 2, 3, 4];
@@ -655,9 +659,23 @@ const KEPT = {
   language_level: 'vocabulary_ceiling',
 };
 
+// Round 11, --truth-factors=1 (docs/SCORECARD-90.md): true values correlate through one general factor and one factor per category, as learner traits do in
+// the published correlation tables (cognitive tasks share a positive manifold of about 0.3 to 0.5; motivation and self-regulation measures correlate about
+// 0.2 to 0.4 within a family and about 0.1 across). An ASSUMPTION: loadings g 0.5 / category 0.3 for the three cognitive categories (intake, reasoning,
+// transfer), 0.25 / 0.4 for the rest; the marginal SD stays POP_SD. Off by default: independent truths, as in rounds 1 to 10.
+const TRUTH_FACTORS = Number(opt('truth-factors', 0)) !== 0;
+const COG_CATS = new Set(['intake', 'reasoning', 'transfer']);
 function drawTruth(rng) {
   const T = {};
-  for (const s of STATS) T[s.id] = clamp(50 + POP_SD * rng.normal(), 2, 98);
+  if (TRUTH_FACTORS) {
+    const g = rng.normal();
+    const cat = {};
+    for (const s of STATS) {
+      if (cat[s.category] === undefined) cat[s.category] = rng.normal();
+      const [lg, lc] = COG_CATS.has(s.category) ? [0.5, 0.3] : [0.25, 0.4];
+      T[s.id] = clamp(50 + POP_SD * (lg * g + lc * cat[s.category] + Math.sqrt(1 - lg * lg - lc * lc) * rng.normal()), 2, 98);
+    }
+  } else for (const s of STATS) T[s.id] = clamp(50 + POP_SD * rng.normal(), 2, 98);
   for (const [id, base, inv] of ALIASES) T[id] = inv ? 100 - T[base] : T[base];
   return T;
 }
@@ -1025,7 +1043,7 @@ function runLearner(index, mode, { population = false } = {}) {
   function kFor(skill) {
     if (!(skill in know)) {
       const L0 = Number(skill.slice(1)) * 2 - 1;
-      const rel = theta - (thetaHat0 + 0.02 * L0) + 0.8 * kRng.normal();
+      const rel = theta - (thetaHat0 + 0.02 * Math.min(L0, RAMP_CAP)) + 0.8 * kRng.normal();
       know[skill] = V2 ? clamp(sigmoid(1.5 * (rel - LM.priorShift)), 0.02, 0.97) : 1;
     }
     return know[skill];
@@ -1091,7 +1109,7 @@ function runLearner(index, mode, { population = false } = {}) {
       plan.push({ skill: focusSkill(L), role: 'stretch' });
     }
 
-    const content = thetaHat0 + 0.02 * L;   // the course's difficulty at this level
+    const content = thetaHat0 + 0.02 * Math.min(L, RAMP_CAP);   // the course's difficulty at this level
     // Pitched so a typical learner lands near 70% overall, the success rate the
     // app's levels are built around (support easiest, stretch hardest).
     const offsets = { review: -2.6, support: -2.9, focus: -2.2, stretch: -0.8, mix: -2.2 };
@@ -1292,7 +1310,7 @@ function runLearner(index, mode, { population = false } = {}) {
    */
   function pretest(L, session, sessionItems) {
     const skill = focusSkill(L);
-    const content = thetaHat0 + 0.02 * L;
+    const content = thetaHat0 + 0.02 * Math.min(L, RAMP_CAP);
     const results = [];
     out.pretests++;
     for (let j = 0; j < efficiency.PRETEST.items; j++) {
@@ -1467,7 +1485,7 @@ function runLearner(index, mode, { population = false } = {}) {
     const takeSnapshot = (key) => {
       const est = {};
       // Where the learner truly stands against the course now (scaffolding_fade's truth).
-      const rel = theta - (thetaHat0 + 0.02 * L);
+      const rel = theta - (thetaHat0 + 0.02 * Math.min(L, RAMP_CAP));
       for (const s of STATS) {
         est[s.id] = scorecard.read(card, s.id, { trackId: TRACK });
         // The standing posterior (what the directive gate reads), for its own recovery r (round 4).
@@ -2036,6 +2054,22 @@ for (const mode of MODES) {
     return { mv: Math.round(r.truth.mastery_velocity), pk: Math.round(r.truth.prior_knowledge), dr: Math.round(r.truth.decay_rate), ...slim, pretests: r.pretests, pages_skipped: r.pagesSkipped };
   });
   results[mode].gate = gateFor(runs);
+  if (DUMP && mode === MODES[0]) {
+    // The per-learner day-30 state for scripts/scorecard-90-measure.js: truth, the app's reading (measured, se, confidence), the answer-log features and indicator means.
+    const key = `w${GATE_WEEKS[GATE_WEEKS.length - 1]}`;
+    const have = runs.filter((r) => r.snapshots[key]);
+    const truthOf = truthFns(have, key);
+    const learners = have.map((r) => {
+      const sn = r.snapshots[key];
+      return {
+        truth: Object.fromEntries(STATS.map((st) => [st.id, Number(truthOf(r, st.id).toFixed(3))])),
+        app: Object.fromEntries(STATS.map((st) => { const e = sn.est[st.id]; return [st.id, [Number((e.measured !== undefined ? e.measured : e.score).toFixed(3)), Number((e.se === undefined ? 0 : e.se).toFixed(3)), e.confidence]]; })),
+        feat: sn.feat, ind: sn.ind, levels: sn.levels, days: sn.days,
+      };
+    });
+    fs.mkdirSync(path.dirname(DUMP), { recursive: true });
+    fs.writeFileSync(DUMP, JSON.stringify({ seed: SEED, truth_factors: TRUTH_FACTORS, pop_sd: POP_SD, aliases: ALIASES, truth_models: Object.fromEntries(STATS.map((st) => [st.id, TRUTH_MODEL[st.id].model])), categories: Object.fromEntries(STATS.map((st) => [st.id, st.category])), learners }));
+  }
   results[mode].activity = {
     mean_days: round(mean(runs.map((r) => r.days)), 0),
     // Round 11 (--minutes-per-day): the sim's own study time, per level and per calendar day.
