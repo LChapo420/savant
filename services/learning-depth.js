@@ -307,7 +307,10 @@ function learningOf(L = {}, spec = {}, ctx = {}, measures = []) {
   const mastery = Number.isFinite(ctx.mastery) && (ctx.attempts || 0) >= 3 ? ctx.mastery : null;
   // Each method only where no lever sentence says the opposite (a method never contradicts the block it sits in).
   const novice = (lean('worked') >= 0.3 || prior <= 35 || (mastery !== null && mastery < 0.35)) && lean('worked') > -SHOW;
-  const expert = (lean('worked') <= -0.3 || prior >= 70 || (mastery !== null && mastery >= 0.75 && (ctx.attempts || 0) >= 5)) && lean('worked') < SHOW;
+  // Knows the subject (a high prior or topic mastery) is not the same as learning from principles rather than worked cases (a low
+  // worked_example_dependence says nothing about what they know): only the first is told they know the basics or given gap-only coverage.
+  const knows = prior >= 70 || (mastery !== null && mastery >= 0.75 && (ctx.attempts || 0) >= 5);
+  const expert = (lean('worked') <= -0.3 || knows) && lean('worked') < SHOW;
   const mixOk = lean('interleave') > -SHOW;
   const lesson = spec.lesson || {};
   return {
@@ -318,14 +321,14 @@ function learningOf(L = {}, spec = {}, ctx = {}, measures = []) {
       produce: lean('typed') >= 0.3 || lean('generation') >= 0.3,
       cumulative: lean('interleave') >= SHOW || lean('integration') >= SHOW || lean('reviewIntensity') >= SHOW || lean('recapEnd') >= 0.3,
     },
-    fading: { mode: expert && !novice ? 'expert' : novice && !expert ? 'fade' : 'one-then-try' },
+    fading: { mode: expert && !novice ? (knows ? 'expert' : 'principles') : novice && !expert ? 'fade' : 'one-then-try' },
     order: lean('ruleFirst') >= 0.3 ? 'abstract-first' : lean('ruleFirst') <= -0.3 ? 'concrete-first' : 'balanced',
     spacing: {
       earlierQuestion: mixOk && lean('integration') > -SHOW && (lean('interleave') >= SHOW || lean('integration') >= SHOW || lean('reviewIntensity') >= SHOW || lean('reviewSpacing') <= -SHOW),
       lookalike: mixOk && (lean('contrast') >= 0.3 || lean('interleave') >= 0.3),
       tomorrowLine: lean('reviewSpacing') <= -SHOW || lean('recapEnd') >= 0.3 || lean('reviewIntensity') >= 0.3,
     },
-    gapOnly: { on: expert && !novice, strong: prior >= 80 || (mastery !== null && mastery >= 0.85) },
+    gapOnly: { on: knows && !novice && lean('worked') < SHOW, strong: prior >= 80 || (mastery !== null && mastery >= 0.85) },
     // The picture's form follows the learner too (the full run found an arrow chain read as a long causal chain for a learner who follows
     // one or two links): no arrow chain when short cause links are asked for.
     dualCoding: { on: lean('visual') > -SHOW, strength: lean('visual') >= 0.3 || lean('multiRep') >= 0.3 ? 'every-key-idea' : 'central-idea', forms: lean('causal') <= -SHOW ? 'an aligned table or a labelled list (no long arrow chains)' : 'an aligned table, an arrow chain or a labelled list' },
@@ -351,6 +354,7 @@ function learningLines(learning, surface) {
   if (lessonLike || surface === 'material') {
     if (f === 'fade') out.push('Worked examples fade: the first fully worked with every step shown, the next with its last step left for them to finish, then one they do alone.');
     else if (f === 'expert') out.push('They already know the basics: at most one short solved case for reference, then straight to problems; no long worked example.');
+    else if (f === 'principles') out.push('They learn from the principle rather than from long solved cases: at most one short solved case for reference, then straight to problems.');
     else out.push('One worked example, then a problem of the same kind for them to do.');
   }
   if (learning.order === 'concrete-first') out.push('Concrete first: start from one or two concrete cases, then name the general rule they show, then the general form.');
@@ -376,7 +380,8 @@ function learningLines(learning, surface) {
   }
   if (learning.dualCoding.on) {
     if (surface === 'podcast') out.push(`Dual coding: describe ${learning.dualCoding.strength === 'every-key-idea' ? 'a simple picture for each key idea' : 'one simple picture of the central idea'} that the listener can hold in mind.`);
-    else out.push(`Dual coding: pair ${learning.dualCoding.strength === 'every-key-idea' ? 'each key idea' : 'the central idea'} with a picture in text (${learning.dualCoding.forms || 'an aligned table, an arrow chain or a labelled list'}) that shows the same thing as the words${surface === 'notes' || surface === 'material' ? ', built only from the material' : ''}.`);
+    else if (surface === 'notes') out.push(`Dual coding: for ${learning.dualCoding.strength === 'every-key-idea' ? 'each section that has steps, parts or a sequence' : 'the central idea'}, add one bullet that starts "Layout:" and draws the point as a picture in text (${learning.dualCoding.forms || 'an aligned table, an arrow chain or a labelled list'}), built only from the material.`);
+    else out.push(`Dual coding: pair ${learning.dualCoding.strength === 'every-key-idea' ? 'each key idea' : 'the central idea'} with a picture in text (${learning.dualCoding.forms || 'an aligned table, an arrow chain or a labelled list'}) that shows the same thing as the words${surface === 'material' ? ', built only from the material' : ''}.`);
   }
   return out;
 }

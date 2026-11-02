@@ -632,7 +632,9 @@ function derive(L, ctx, input, interestsUsed, avoid) {
   // Stretch and support together never take more than half the items: most of the practice is at the level.
   const support = round(clamp(Math.min(span(L.scaffold, 0.05, 0.15, 0.35) + (L.challenge < -SHOW_AT ? 0.05 : 0), 0.5 - stretch), 0, 0.35));
   const hintLevel = L.hintSize >= 0.4 ? 3 : L.hintSize <= -0.4 ? 1 : 2;
-  const sectionCount = Math.round(clamp(3 + 1.5 * -L.chunk + 0.8 * L.length, 2, 6));
+  // Small pieces mean MORE sections (a short-attention learner's lesson was the same three sections as anyone's, because a short lesson
+  // pulled the count down as hard as small pieces pushed it up): chunk size sets the count, length only trims it.
+  const sectionCount = Math.round(clamp(3 + 3.5 * -L.chunk + 0.5 * L.length, 2, 6));
   return {
     isDefault: false,
     learner: { readingGrade: grade, ageBand: ctx.age === null ? 'unknown' : ctx.age <= 8 ? '6-8' : ctx.age <= 11 ? '9-11' : ctx.age <= 14 ? '12-14' : ctx.age <= 17 ? '15-17' : ctx.age <= 54 ? 'adult' : 'older-adult', esl: ctx.esl },
@@ -963,11 +965,27 @@ const NOTES_PHRASES = {
   relevance: [null, 'Add one bullet saying why it matters, using only the reasons the material gives.'],
   // Found by the joint profiles: a learner who follows a story and one who is anxious both left notes unchanged (version 2 first run).
   story: [null, 'Tell the points as one short story in order: start the first bullet with "Picture this:" and a one-sentence scene that uses only things the material names, and start the first bullet of each later section with a link such as "Next," or "Then,"; every fact and quote stays the material\'s own.'],
-  pressure: ['Start the first bullet with a calm lead-in ("No rush:" or "Just one idea at a time:") before its point; word no bullet as a test, a quiz or a trap.', null],
+  pressure: ['Start the first bullet with a calm lead-in ("No rush:" or "Just one idea at a time:") before its point; word no bullet as a test, a quiz or a trap.', 'Close the notes with one bullet that starts "Quick check:" and asks, from memory, a question on the key point, with its answer after "Answer:" in the same bullet; plain, direct wording is fine.'],
+  // Visible, measure-specific markers (material-depth 75): the joint profiles showed judges crediting the wrong measure when two measures
+  // shaped the same thing (more bullets, more detail). Each of these makes ONE difference a reader can point to.
+  // Working memory and chunk size: one idea a bullet against whole steps of reasoning in a bullet.
+  chunk: ['Make every bullet one idea in one short sentence (about twelve words or fewer, nothing joining two ideas with "and", "so" or "because"), put at most three bullets under a heading, and let each section end on a one-line takeaway.', 'Let each bullet carry a whole step of the reasoning, joining its ideas with "so" or "because" in one sentence, under fewer headings, instead of splitting every idea into a bullet of its own.'],
+  // Text density: the length and connectedness of a bullet.
+  density: ['Keep every bullet to one short sentence (about fifteen words at most) so that nothing reads as a paragraph.', 'Bullets may be full, connected sentences that hold several linked ideas.'],
+  // Register: formal against casual, in words a reader can quote.
+  formality: ['Write to the learner as "you", with contractions and everyday phrasing.', 'Write in a formal, academic register: third person, no contractions, no "you", precise terms and no casual asides; word any analogy formally.'],
+  // Vocabulary: glossed against technical.
+  vocab: ['Use plain everyday words; the first time a term of the subject appears, follow it with a short plain gloss in brackets.', 'Use the precise technical terms and formal verbs the material has, and gloss none of them.'],
+  visual: ['Prose bullets only: no tables, arrow chains or layouts.', null],
 };
+// The levers whose notes sentence adds a bullet that is not one of the material's points; dropped for a learner who needs less.
+const NOTES_EXTRAS = new Set(['story', 'challenge', 'relevance', 'curiosity', 'elaboration', 'generation', 'mnemonic', 'bigPicture', 'recapStart', 'systems', 'patternHints', 'depth']);
 // Lesson and level sentences of their own (version 2, found by the joint profiles): a sentence the tutor also reads stays as it was, so a
 // change that is only for the written lesson lives here. A null side falls back to PHRASES.
 const LESSON_PHRASES = {
+  // Density (found by the joint profiles): a learner who is fine with dense prose was still given short lines and tables, because "is fine" permits
+  // and the writer's habit is lists. Said as a shape a reader can see: one paragraph against short pieces.
+  density: [null, 'Full paragraphs of connected prose are fine: write each section body as one paragraph, with no bullet lists, tables or line breaks inside it.'],
   // The anxious learner's low stakes must be visible next to other measures' hints and worked examples, which a judge also reads as kind.
   pressure: ['No timers, no countdowns, no "test" language: frame all practice as low stakes, and say once, in the first lines, that nothing here is scored and a wrong answer only shows what to look at next.', null],
 };
@@ -1087,6 +1105,17 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
     if (!text) continue;
     ranked.push({ lever: l, text, lean, score: Math.abs(lean) * (1 + LEVERS[l].imp) });
   }
+  // Notes for a learner who needs less (what they know already, or "do not over-explain") carry the points and nothing else: an
+  // extra bullet that is not a point (a scene, a question, a harder question, a why-it-matters, a big picture) read as padding to the
+  // judges in the speed proof (Lena's notes scored 7.5 against 9.5 for the plain ones, with "Picture this", "Harder question" and
+  // "Next," in them). A strongly moved extra is still kept; "a fuller treatment" is turned round to the short side.
+  if (surface === 'notes' && depthOn() && needsLess(spec)) {
+    for (let i = ranked.length - 1; i >= 0; i--) {
+      const r = ranked[i];
+      if ((NOTES_EXTRAS.has(r.lever) || (r.lever === 'pressure' && r.lean > 0)) && Math.abs(r.lean) < depth.STRONG) ranked.splice(i, 1);
+      else if (r.lever === 'length' && r.lean > 0) r.text = MATERIAL_PHRASES.length[0];
+    }
+  }
   ranked.sort((a, b) => b.score - a.score || a.lever.localeCompare(b.lever));
   const lines = [];
   const lang = spec.language;
@@ -1096,7 +1125,7 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
   }
   if (surface === 'lesson' || surface === 'level') {
     const les = spec.lesson;
-    lines.push(`Shape: about ${les.sections} short sections; the body of each section is at most ${les.chunkSentences} sentences (count them, and split a longer one into another section), ${les.newIdeasPerChunk === 1 ? 'one new idea' : `at most ${les.newIdeasPerChunk} new ideas`} per section, ${les.retrievalChecks} check question${les.retrievalChecks === 1 ? '' : 's'} in all (${checkOrder(spec)})${les.quickCheckEvery ? `, a line "Quick check: <question> Answer: <answer>" at the end of ${les.quickCheckEvery === 1 ? 'every section' : 'every second section'}` : ''}${spec.scaffolding.hintInChecks ? `, each with a one-line hint after the question (${spec.scaffolding.hintSize === 'nudge' ? 'a nudge' : spec.scaffolding.hintSize === 'partial' ? 'the idea to use' : 'the first step'}, never the answer)` : ''}, at most ${les.mistakes} common mistake${les.mistakes === 1 ? '' : 's'}. At most about ${les.wordBudget} words in all (not counting the check questions); a shorter lesson that teaches every point is better. ${spec.practice.workedExamples} worked example${spec.practice.workedExamples === 1 ? '' : 's'} (the worked example and the sections' example fields), then ${spec.practice.tryItems === 0 ? 'no extra try-it items' : `${spec.practice.tryItems} try-it line${spec.practice.tryItems === 1 ? '' : 's'} inside the sections, each written "Try it: <question> Answer: <answer>" and placed after the worked examples`}.${les.hook === 'question' ? ' Open with a question the lesson then answers.' : les.hook === 'scenario' ? ' Open with a one-line scenario.' : ''} This is the shape, not a cap on content: if the topic needs more, add sections or words; never drop a point to fit.`);
+    lines.push(`Shape: ${les.sections >= 4 ? 'exactly' : 'about'} ${les.sections} short sections; the body of each section is at most ${les.chunkSentences} sentences (count them, and split a longer one into another section), ${les.newIdeasPerChunk === 1 ? 'one new idea' : `at most ${les.newIdeasPerChunk} new ideas`} per section, ${les.retrievalChecks} check question${les.retrievalChecks === 1 ? '' : 's'} in all (${checkOrder(spec)})${les.quickCheckEvery ? `, a line "Quick check: <question> Answer: <answer>" at the end of ${les.quickCheckEvery === 1 ? 'every section' : 'every second section'}` : ''}${spec.scaffolding.hintInChecks ? `, each with a one-line hint after the question (${spec.scaffolding.hintSize === 'nudge' ? 'a nudge' : spec.scaffolding.hintSize === 'partial' ? 'the idea to use' : 'the first step'}, never the answer)` : ''}, at most ${les.mistakes} common mistake${les.mistakes === 1 ? '' : 's'}. At most about ${les.wordBudget} words in all (not counting the check questions); a shorter lesson that teaches every point is better. ${spec.practice.workedExamples} worked example${spec.practice.workedExamples === 1 ? '' : 's'} (the worked example and the sections' example fields), then ${spec.practice.tryItems === 0 ? 'no extra try-it items' : `${spec.practice.tryItems} try-it line${spec.practice.tryItems === 1 ? '' : 's'} inside the sections, each written "Try it: <question> Answer: <answer>" and placed after the worked examples`}.${les.hook === 'question' ? ' Open with a question the lesson then answers.' : les.hook === 'scenario' ? ' Open with a one-line scenario.' : ''} This is the shape, not a cap on content: if the topic needs more, add sections or words; never drop a point to fit.`);
   }
   if (surface === 'test') lines.push(questionShape(spec));
   const own = ranked.filter((r) => !(surfaceHasText && r.lever === 'sentence'));
@@ -1117,7 +1146,9 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
     const where = surface === 'notes' ? 'add short framed analogies, each as its own one-sentence bullet that starts "Think of" and comes right after the bullet whose point it pictures (it carries that bullet\'s passage_id and quote, and is not counted in the bullet limit)' : 'build short analogies or practice contexts';
     // Notes for a learner who needs less: an analogy is an extra bullet, so it is allowed only inside the word limit (the speed proof found
     // judges scoring tailored notes below the plain ones for padding), never required.
-    if (less && surface === 'notes') {
+    if (less && surface === 'notes' && strongInterest(spec)) {
+      lines.push(`Interests: add exactly one short framed analogy bullet on ${doms} (it starts "Think of", comes right after the bullet whose point it pictures, carries that bullet's passage_id and quote, and is not counted in the bullet limit), and pay for it by cutting words elsewhere, never a point; it adds no fact, number, name or claim about the topic, and every fact and quote stays the material's own. Add no other extra bullets.`);
+    } else if (less && surface === 'notes') {
       lines.push(`Interests: you may add a short framed analogy bullet on ${doms}, at most one in all (it starts "Think of", comes right after the bullet whose point it pictures, carries that bullet's passage_id and quote, and is not counted in the bullet limit), but only if the notes still fit the word limit; it adds no fact, number, name or claim about the topic, and every fact and quote stays the material's own. Add no other extra bullets.`);
     } else {
       lines.push(`Interests: ${where} on ${doms}, ${n} in all, each introduced as an analogy ("think of it like...") and mapped back to a named point of the material; they add no fact, number, name or claim about the topic, and every fact and quote stays the material's own.${less ? ' Keep it to that one analogy: this version is meant to be short.' : ''}`);
@@ -1346,6 +1377,9 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
     stats.meanSectionSentences = round(meanSec, 1);
     const want = spec.lesson.chunkSentences;
     if (meanSec > want + 1.5 || Math.max(...per) > want + 3) problems.push({ id: 'chunk_size', detail: `the sections are too long (${per.map((n) => `${n}`).join(', ')} sentences; keep each section's body to ${want} sentences by splitting it into more sections, and drop nothing)` });
+    // Small pieces were asked for as MORE sections ("about 4") and the writers kept their usual three (depth-75 joint profiles): a short-
+    // attention or low working-memory learner's lesson then looked like anyone's. Only too few is named, and the fix is to split, never to cut.
+    if (spec.lesson.sections >= 4 && per.length < spec.lesson.sections - 1) problems.push({ id: 'section_count', detail: `there are ${per.length} sections; this learner needs smaller pieces, so split it into ${spec.lesson.sections} sections of one new idea each (split, do not cut: every point stays)` });
     if (Number.isFinite(structure.mistakes) && structure.mistakes > spec.lesson.mistakes) problems.push({ id: 'mistakes_count', detail: `there are ${structure.mistakes} common mistakes; keep at most ${spec.lesson.mistakes}` });
     if (spec.scaffolding.hintInChecks && Array.isArray(structure.checks) && structure.checks.length) {
       const withHint = structure.checks.filter((c) => /hint\s*[:\-]|\(hint|think about|remember (that|the)|start (by|with)/i.test(c)).length;
@@ -1393,8 +1427,12 @@ function sourceFacts(text, max = 14) {
  * count ("at least three in all" at a strong share) scaled by how much text the piece covers, so a long material is not asked for three
  * analogies in every part. One at least.
  */
+const strongInterest = (spec) => !!(spec && spec.levers && spec.levers.interestUse >= depth.STRONG);
 function ownInterestNeed(spec, chars, surface = null) {
-  if (needsLess(spec)) return surface === 'notes' ? 0 : 1; // notes: an analogy is optional there, only inside the word limit
+  // notes: an analogy is optional there, only inside the word limit, unless interest framing is what the learner is strongest on (a strong
+  // interest_transfer lean): then one analogy is required and paid for by cutting words elsewhere (the joint profiles: brevity high with
+  // interest transfer high wrote no analogy at all, so the interest measure could not be seen).
+  if (needsLess(spec)) return surface === 'notes' ? (strongInterest(spec) ? 1 : 0) : 1;
   const base = spec.interests.share >= 0.7 ? 3 : spec.interests.share >= 0.5 ? 2 : 1;
   return Math.max(1, Math.round(base * Math.min(1, Number(chars) / 3000)));
 }

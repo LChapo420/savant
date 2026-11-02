@@ -243,6 +243,10 @@ const ALL_JUDGES = {
   gemini: { id: 'gemini-3.5-flash-lite', family: 'google', call: (s, u) => geminiChat('gemini-3.5-flash-lite', s, u) },
   qwen: { id: 'qwen/qwen3.8-max:free', family: 'alibaba', call: (s, u) => xkiroChat('qwen/qwen3.8-max:free', s, u) },
   cohere: { id: 'cohere/command-a-plus', family: 'cohere', call: (s, u) => xkiroChat('cohere/command-a-plus', s, u) },
+  // 2 Nov (depth-75): Sol's key answered 401 and Gemini's free quota ran out, so two more xKiro free judges of other families.
+  command: { id: 'cohere/command-a', family: 'cohere', call: (s, u) => xkiroChat('cohere/command-a', s, u) },
+  qwen37: { id: 'qwen/qwen3.7-max:free', family: 'alibaba', call: (s, u) => xkiroChat('qwen/qwen3.7-max:free', s, u) },
+  mistralm: { id: 'mistralai/mistral-medium-3.5', family: 'mistral', call: (s, u) => xkiroChat('mistralai/mistral-medium-3.5', s, u) },
 };
 const JUDGES = arg('judges', 'mistral,gemini').split(',').map((j) => ALL_JUDGES[j]).filter(Boolean);
 // Joint profiles: how the four measures are put to the judge. 'each' (default): one call per measure, the other three named as
@@ -252,6 +256,12 @@ const JOINT_JUDGE = arg('joint-judge', 'each');
 const REP = Number(arg('rep', 1)) === 1 ? 'r1' : `r${Number(arg('rep'))}`;
 // --replay FILE: judge the texts recorded in an earlier joint run (its `texts`) instead of writing new ones, so a change of judge is
 // measured on the same writing.
+// --plant swap: the profile's text and the mirror's are swapped before judging, so every pair is a text planted the wrong way round. A judge that
+// reads the texts must now name the other version (the harness counts that as "wrong" and the report calls it caught); a judge that is fooled names
+// the planted one (counted correct), and one that cannot tell says same. Run on the same texts as the real run (--replay), it checks that the
+// verdicts follow the writing and not the position, the length or the judge's habit.
+const PLANT = arg('plant');
+if (PLANT && PLANT !== 'swap') { console.error('--plant takes: swap'); process.exit(2); }
 const REPLAY = arg('replay') ? Object.values(JSON.parse(fs.readFileSync(arg('replay'), 'utf8')).texts) : null;
 
 // ── building one kind for one user ─────────────────────────────────────────
@@ -439,6 +449,8 @@ async function judgeOnce(judge, prompt, measures) {
     try {
       const text = await judge.call(JUDGE_SYSTEM, prompt); // eslint-disable-line no-await-in-loop
       usage.judgeCalls[judge.id] = (usage.judgeCalls[judge.id] || 0) + 1;
+      if (process.env.PROOF_DEBUG_JUDGE) fs.appendFileSync(process.env.PROOF_DEBUG_JUDGE, `${JSON.stringify({ judge: judge.id, measures, prompt: prompt.slice(prompt.indexOf('VERSION A:') - 20, prompt.indexOf('VERSION A:')), raw: String(text).slice(0, 700) })}
+`);
       const v = parseVerdict(text, measures);
       if (v) { if (LIVE) cache.set(k, v); return v; }
       last = new Error(`unusable verdict: ${String(text).slice(0, 160)}`);
@@ -559,8 +571,9 @@ async function runJoint(kinds) {
     const measures = Object.keys(t.p.set);
     const rec = { profile: t.p.id, set: t.p.set, kind: t.kind, topic: t.topicId };
     const rec0 = REPLAY ? REPLAY.find((x) => x.profile === t.p.id && x.kind === t.kind) : null;
-    const [aP, aM] = rec0 ? [{ text: rec0.texts.profile }, { text: rec0.texts.mirror }] : await Promise.all([artifact(t.kind, t.P, t.uP, t.topicId), artifact(t.kind, t.M, t.uM, t.topicId)]);
+    let [aP, aM] = rec0 ? [{ text: rec0.texts.profile }, { text: rec0.texts.mirror }] : await Promise.all([artifact(t.kind, t.P, t.uP, t.topicId), artifact(t.kind, t.M, t.uM, t.topicId)]);
     if (aP.error || aM.error) { rec.result = `build failed: ${aP.error || aM.error}`; recs.push(rec); return; }
+    if (PLANT) { const keep = aP; aP = aM; aM = keep; rec.plant = PLANT; }
     // X = the profile, Y = the mirror: the high version of a measure is X where the profile has it high.
     const hiOf = Object.fromEntries(measures.map((m) => [m, t.p.set[m] ? 'X' : 'Y']));
     rec.code = { profile: codeMeasure(aP, t.topicId), mirror: codeMeasure(aM, t.topicId) };
@@ -741,7 +754,7 @@ async function main() {
   } else if (PHASE === 'joint') {
     console.log(`joint (${DEPTH}): ${JOINT.length} profiles x ${KINDS.join('+')}`);
     const recs = await runJoint(KINDS);
-    out.joint = aggregateJoint(recs);
+    out.joint = aggregateJoint(recs); out.plant = PLANT || null;
     out.jointRecs = recs.map((r) => ({ ...r, texts: undefined }));
     out.texts = recs.map((r) => ({ profile: r.profile, kind: r.kind, texts: r.texts }));
   } else if (PHASE === 'speed') {
@@ -759,6 +772,7 @@ async function main() {
   console.log(`wrote ${OUT_JSON}`);
   if (out.single) { const a = out.single.all; console.log(`direction-correct ${a.correct}/${a.verdicts} verdicts (same ${a.same}, wrong ${a.wrong}); ignored ${a.ignored}/${a.pairs}; intact ${a.intact}/${a.judged}`); for (const [k, b] of Object.entries(out.single.byKind)) console.log(`  ${k}: ${b.correct}/${b.verdicts} correct, ${b.same} same, ${b.wrong} wrong; ignored ${b.ignored}; failed ${b.failedBuilds}; intact ${b.intact}/${b.judged}`); }
   if (out.joint) console.log(`joint: ${out.joint.correct}/${out.joint.verdicts} correct (same ${out.joint.same})`);
+  if (out.joint && PLANT) console.log(`planted wrong way round (${PLANT}): caught ${out.joint.verdicts - out.joint.correct - out.joint.same}/${out.joint.verdicts}, fooled ${out.joint.correct}, could not tell ${out.joint.same}`);
   console.log(`writer calls ${usage.writerCalls} (${usage.writerIn} in, ${usage.writerOut} out tokens); judge calls ${JSON.stringify(usage.judgeCalls)}; errors ${JSON.stringify(usage.errors)}; ${out.usage.seconds}s`);
 }
 
