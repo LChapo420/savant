@@ -54,6 +54,8 @@ if (LIVE_FLAG) {
   process.env.XKIRO_REST_MS = '0';
   process.env.XKIRO_RETRIES = '2';
 }
+// A second or third sample of the same cases (--rep N) must also rewrite the lessons, which the base proof caches by prompt.
+if (Number(arg('rep', 1)) > 1) process.env.PROOF_REP = `r${Number(arg('rep'))}`;
 const base = require('./scorecard-modification-proof');
 const K = require('./lib/material-proof-kinds');
 
@@ -115,7 +117,8 @@ function userFor(name, stats) {
 }
 
 // ── the writer and the judges ───────────────────────────────────────────────
-const WRITER_MODEL = 'minimax/minimax-m3.1-flash';
+// --writer-model: another xKiro model when MiniMax is at capacity (1 Nov 2026 it answered 503 for hours); before and after must use the same one.
+const WRITER_MODEL = arg('writer-model', 'minimax/minimax-m3.1-flash');
 /** At most XKIRO_AT_ONCE xKiro calls in flight from this run (the account's own limit is small), each retried after a wait on a 429. */
 const XKIRO_AT_ONCE = Number(process.env.XKIRO_AT_ONCE || 2);
 let inFlight = 0;
@@ -149,6 +152,23 @@ function installWriter() {
       const r = await raw(a);
       usage.writerCalls += 1; usage.writerIn += (r.usage && r.usage.input_tokens) || 0; usage.writerOut += (r.usage && r.usage.output_tokens) || 0;
       return r;
+    };
+    process.env.AI_POOL = '0';
+    providers.chain = () => [w];
+    providers.isOutside = () => false;
+    return;
+  }
+  if (WRITER === 'nvidia') {
+    // NVIDIA build, free: used on 1 Nov 2026 when xKiro's MiniMax was at capacity and its free quota was spent. Before and after use the same writer.
+    const nv = require('../services/providers/nvidia'); // eslint-disable-line global-require
+    const w = {
+      name: 'nvidia_proof', outside: true, isEnabled: () => true, costCents: () => 0, describeError: (e) => e.message,
+      async structured(a) {
+        const r = await gated(() => nv.structured({ role: a.role, task: a.task, system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: a.maxTokens, models: [WRITER_MODEL], timeoutMs: 360000 }));
+        usage.writerCalls += 1; usage.writerIn += (r.usage && r.usage.input_tokens) || 0; usage.writerOut += (r.usage && r.usage.output_tokens) || 0;
+        const ctx = base.als.getStore(); if (ctx) ctx.models.push(WRITER_MODEL);
+        return r;
+      },
     };
     process.env.AI_POOL = '0';
     providers.chain = () => [w];
@@ -199,13 +219,40 @@ async function xkiroChat(model, system, user) {
   const r = await gated(() => xkiro.chat({ system, messages: [{ role: 'user', content: user }], models: [model], maxTokens: 2500, timeoutMs: 240000 }));
   return r.text;
 }
+// Modelflare Sol (gpt-6.1-sol): a judge of a third family, used when xKiro's free quota is spent. The key is read from the .env file here because the
+// scorecard proof's setup blanks the Modelflare keys for the app path.
+async function solChat(system, user) {
+  const key = require('dotenv').parse(fs.readFileSync('C:/coding/claudecommittdIq/folderThing/.env')).MODELFLARE_LUNA_API_KEY; // eslint-disable-line global-require
+  if (!key) throw new Error('no Modelflare key');
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const r = await fetch(`${(process.env.MODELFLARE_BASE_URL || 'https://modelflare.dev/v1').replace(/\/$/, '')}/chat/completions`, { // eslint-disable-line no-await-in-loop
+      method: 'POST', signal: AbortSignal.timeout(180000), headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      body: JSON.stringify({ model: 'gpt-6.1-sol', temperature: 0, max_tokens: 2500, messages: [{ role: 'system', content: system }, { role: 'user', content: user }] }),
+    });
+    if (r.status === 429 || r.status === 503) { await new Promise((res) => { setTimeout(res, 15000 * (attempt + 1)); }); continue; } // eslint-disable-line no-await-in-loop
+    const j = await r.json().catch(() => ({})); // eslint-disable-line no-await-in-loop
+    if (r.status !== 200) throw new Error(`modelflare ${r.status}`);
+    const u = j.usage || {}; usage.judgeTokens['gpt-6.1-sol'] = (usage.judgeTokens['gpt-6.1-sol'] || 0) + (u.total_tokens || 0);
+    return (((j.choices || [])[0] || {}).message || {}).content || '';
+  }
+  throw new Error('modelflare: rate limited');
+}
 const ALL_JUDGES = {
+  sol: { id: 'gpt-6.1-sol', family: 'openai', call: (s, u) => solChat(s, u) },
   mistral: { id: 'mistralai/mistral-large-2512', family: 'mistral', call: (s, u) => xkiroChat('mistralai/mistral-large-2512', s, u) },
   gemini: { id: 'gemini-3.5-flash-lite', family: 'google', call: (s, u) => geminiChat('gemini-3.5-flash-lite', s, u) },
   qwen: { id: 'qwen/qwen3.8-max:free', family: 'alibaba', call: (s, u) => xkiroChat('qwen/qwen3.8-max:free', s, u) },
   cohere: { id: 'cohere/command-a-plus', family: 'cohere', call: (s, u) => xkiroChat('cohere/command-a-plus', s, u) },
 };
 const JUDGES = arg('judges', 'mistral,gemini').split(',').map((j) => ALL_JUDGES[j]).filter(Boolean);
+// Joint profiles: how the four measures are put to the judge. 'each' (default): one call per measure, the other three named as
+// explanations and not judged; 'together': one call, told to judge each measure alone; 'old': the first wording (the recorded run).
+const JOINT_JUDGE = arg('joint-judge', 'each');
+// --rep N: a fresh writing of everything (the cache key carries it), for a second and third sample of the same profiles; 1 is the original key.
+const REP = Number(arg('rep', 1)) === 1 ? 'r1' : `r${Number(arg('rep'))}`;
+// --replay FILE: judge the texts recorded in an earlier joint run (its `texts`) instead of writing new ones, so a change of judge is
+// measured on the same writing.
+const REPLAY = arg('replay') ? Object.values(JSON.parse(fs.readFileSync(arg('replay'), 'utf8')).texts) : null;
 
 // ── building one kind for one user ─────────────────────────────────────────
 const materials = require('../services/materials');
@@ -284,35 +331,50 @@ async function buildKind(kind, lrn, user, topicId) {
     return { error: `${kind}: ${e.message}` };
   }
 }
+const artifactsInFlight = new Map();
 async function artifact(kind, lrn, user, topicId) {
   const block = blockFor(kind, user.id, topicId);
-  const ck = `sens:${kind}:${topicId}:${sha(JSON.stringify([block, K.BASE_TEXTS[topicId], 'r1']))}`;
+  const ck = `sens:${kind}:${topicId}:${sha(JSON.stringify([block, K.BASE_TEXTS[topicId], REP]))}`;
   const hit = LIVE ? cache.get(ck) : null;
   if (hit && hit.text) return { ...hit, cached: true };
-  const a = await buildKind(kind, lrn, user, topicId);
-  if (LIVE && a.text) cache.set(ck, a);
-  return a;
+  // The generic version of a topic is one build for every learner who shares it (two at once for the same material came back "busy").
+  if (artifactsInFlight.has(ck)) return artifactsInFlight.get(ck);
+  const task = (async () => {
+    const a = await buildKind(kind, lrn, user, topicId);
+    if (LIVE && a.text) cache.set(ck, a);
+    return a;
+  })();
+  artifactsInFlight.set(ck, task);
+  return task;
 }
 
 // ── the judge ──────────────────────────────────────────────────────────────
 const JUDGE_SYSTEM = 'You are a careful, blind evaluator of teaching material. You compare two versions of the same material and decide which learner each was written for, using only the evidence in the text. You never guess who or what wrote them. Reply with one JSON object only, no prose.';
 const measureLine = (id) => { const s = BY_ID[id]; return `"${s.name}". A learner LOW on it: ${s.low}. A learner HIGH on it: ${s.high}.`; };
-function pairPrompt(kind, topicId, measures, A, B) {
+function pairPrompt(kind, topicId, measures, A, B, others = null) {
   const topic = TOPICS[topicId];
   const one = measures.length === 1;
+  const hasOthers = !!(others && others.length);
   // Judge v2: first the difference, then which learner each version suits (LOW, HIGH or EITHER), so a judge cannot describe a version
   // as suiting the low learner and then name it as the high one's (the pilot's commonest judge slip).
+  // Joint judge (material-weak): the same question asked about each measure on its own ('each': one call per measure, the other
+  // measures named as explanations; 'together': one call, told to judge each measure alone). A difference that another listed measure
+  // explains is not evidence about this one, so a judge says EITHER rather than crediting hints or length to the wrong measure. It is
+  // not easier: EITHER still counts as not correct, and a wrong pick is still wrong. JOINT_JUDGE=old is the earlier wording.
+  const together = !one && JOINT_JUDGE === 'together';
   const ask = one
-    ? `First, in one sentence, say how the two versions differ in ways this measure would explain. Then say which learner each version suits better: "LOW", "HIGH", or "EITHER" if the versions do not differ in a way this measure explains.`
-    : `For EACH measure: first say in a few words how the versions differ on it, then which learner each version suits better on that measure: "LOW", "HIGH", or "EITHER" if you cannot tell. (The learners differ on all of these measures at once.)`;
+    ? `First, in one sentence, say how the two versions differ in ways this measure would explain. Then say which learner each version suits better: "LOW", "HIGH", or "EITHER" if the versions do not differ in a way this measure explains.${hasOthers ? ' The two learners ALSO differ on the other measures listed above, so a difference that one of THOSE explains (and this measure does not) is not evidence about this measure: answer "EITHER" if that is all you can see.' : ''}`
+    : together
+      ? `The two learners differ on all of these measures at once, so one visible difference (more hints, shorter pieces, more examples) may belong to a different measure than the one you are judging. For EACH measure, separately: point to what each version actually does that THIS measure's own LOW or HIGH description would produce (a few words from each version), then say which learner each version suits better on that measure alone: "LOW", "HIGH", or "EITHER" if the only differences you see are better explained by another listed measure, or there are none.`
+      : `For EACH measure: first say in a few words how the versions differ on it, then which learner each version suits better on that measure: "LOW", "HIGH", or "EITHER" if you cannot tell. (The learners differ on all of these measures at once.)`;
   const shape = one
     ? '"evidence": "one sentence: the difference in the text", "A_suits": "LOW" | "HIGH" | "EITHER", "B_suits": "LOW" | "HIGH" | "EITHER", "certainty": 1-5'
-    : `"measures": { ${measures.map((m) => `"${m}": {"evidence": "a few words", "A_suits": "LOW" | "HIGH" | "EITHER", "B_suits": "LOW" | "HIGH" | "EITHER"}`).join(', ')} }`;
-  return `Two versions, A and B, of the same ${K.KIND_INFO[kind].label.toLowerCase()} (${K.KIND_INFO[kind].what}) were made from the same base text for two learners who are the same in every way except ${one ? 'ONE learning measure: one learner is LOW on it and the other HIGH' : `these ${measures.length} learning measures`}.
+    : `"measures": { ${measures.map((m) => `"${m}": {"evidence": "a few words${together ? ' from A and from B' : ''}", "A_suits": "LOW" | "HIGH" | "EITHER", "B_suits": "LOW" | "HIGH" | "EITHER"}`).join(', ')} }`;
+  return `Two versions, A and B, of the same ${K.KIND_INFO[kind].label.toLowerCase()} (${K.KIND_INFO[kind].what}) were made from the same base text for two learners who ${hasOthers ? `differ on ${others.length + 1} learning measures at once; judge the ONE below` : `are the same in every way except ${one ? 'ONE learning measure: one learner is LOW on it and the other HIGH' : `these ${measures.length} learning measures`}`}.
 
-${one ? 'THE MEASURE' : 'THE MEASURES'}:
+${one ? 'THE MEASURE' : 'THE MEASURES'}${hasOthers ? ' TO JUDGE' : ''}:
 ${measures.map((m, i) => `${one ? '' : `${i + 1}. [${m}] `}${measureLine(m)}`).join('\n')}
-
+${hasOthers ? `\nTHE OTHER MEASURES the two learners also differ on (do not judge these; they only explain differences that are not this measure's):\n${others.map((m) => `- ${measureLine(m)}`).join('\n')}\n` : ''}
 BASE TEXT (the only source of facts):
 <<<
 ${K.BASE_TEXTS[topicId]}
@@ -390,6 +452,19 @@ function mockJudge(measures) {
   return { picks: Object.fromEntries(measures.map((m) => [m, 'same'])), A: { accuracy: 10, errors: [], missing: [] }, B: { accuracy: 10, errors: [], missing: [] }, evidence: 'mock' };
 }
 
+/** Joint profile, one call per measure (the other measures named as explanations); the four answers are merged into one verdict. */
+async function judgeEach(judge, kind, topicId, measures, A, B) {
+  const parts = [];
+  for (const m of measures) {
+    const others = measures.filter((x) => x !== m);
+    parts.push(await judgeOnce(judge, pairPrompt(kind, topicId, [m], A.text, B.text, others), [m])); // eslint-disable-line no-await-in-loop
+  }
+  const bad = parts.find((p) => p.error);
+  if (bad) return bad;
+  const merge = (k) => ({ accuracy: Math.min(...parts.map((p) => p[k].accuracy)), errors: [...new Set(parts.flatMap((p) => p[k].errors))].slice(0, 6), missing: [...new Set(parts.flatMap((p) => p[k].missing))] });
+  return { picks: Object.fromEntries(measures.map((m, i) => [m, parts[i].picks[m]])), A: merge('A'), B: merge('B'), evidence: measures.map((m, i) => `${m}: ${String(parts[i].evidence || '').slice(0, 80)}`).join('; ') };
+}
+
 /** Judge one pair: hiArt is the high learner's version; the order shown is shuffled by a seed from the pair. Returns per-judge verdicts. */
 async function judgePair(kind, topicId, measures, hiOf, artX, artY) {
   // artX and artY are two artifacts; hiOf[m] says which of them ('X' or 'Y') is the HIGH learner's for measure m.
@@ -400,7 +475,7 @@ async function judgePair(kind, topicId, measures, hiOf, artX, artY) {
   const out = [];
   for (const j of (MOCK ? [{ id: 'mock', family: 'code' }] : JUDGES)) {
     // eslint-disable-next-line no-await-in-loop
-    const v = MOCK ? mockJudge(measures) : await judgeOnce(j, prompt, measures);
+    const v = MOCK ? mockJudge(measures) : (measures.length > 1 && JOINT_JUDGE === 'each' ? await judgeEach(j, kind, topicId, measures, A, B) : await judgeOnce(j, prompt, measures));
     if (v.error) { out.push({ judge: j.id, error: v.error }); continue; }
     // Map A and B back to X and Y so the record does not depend on the shuffle.
     const back = (s) => (s === 'A' ? (flip ? 'Y' : 'X') : s === 'B' ? (flip ? 'X' : 'Y') : 'same');
@@ -469,7 +544,9 @@ const JOINT = [
 async function runJoint(kinds) {
   const recs = [];
   const tasks = [];
+  const only = arg('profiles') ? arg('profiles').split(',') : null; // --profiles J1,J4: just these (topics stay as they are)
   JOINT.forEach((p, i) => {
+    if (only && !only.includes(p.id)) return;
     const topicId = TOPIC_IDS[i % TOPIC_IDS.length];
     const stats = Object.fromEntries(Object.entries(p.set).map(([m, h]) => [m, h ? HI : LO]));
     const mirror = Object.fromEntries(Object.entries(p.set).map(([m, h]) => [m, h ? LO : HI]));
@@ -481,7 +558,8 @@ async function runJoint(kinds) {
   await limited(tasks, CONCURRENCY, async (t) => {
     const measures = Object.keys(t.p.set);
     const rec = { profile: t.p.id, set: t.p.set, kind: t.kind, topic: t.topicId };
-    const [aP, aM] = await Promise.all([artifact(t.kind, t.P, t.uP, t.topicId), artifact(t.kind, t.M, t.uM, t.topicId)]);
+    const rec0 = REPLAY ? REPLAY.find((x) => x.profile === t.p.id && x.kind === t.kind) : null;
+    const [aP, aM] = rec0 ? [{ text: rec0.texts.profile }, { text: rec0.texts.mirror }] : await Promise.all([artifact(t.kind, t.P, t.uP, t.topicId), artifact(t.kind, t.M, t.uM, t.topicId)]);
     if (aP.error || aM.error) { rec.result = `build failed: ${aP.error || aM.error}`; recs.push(rec); return; }
     // X = the profile, Y = the mirror: the high version of a measure is X where the profile has it high.
     const hiOf = Object.fromEntries(measures.map((m) => [m, t.p.set[m] ? 'X' : 'Y']));

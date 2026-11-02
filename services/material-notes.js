@@ -74,6 +74,33 @@ function cleanSections(raw, byId, guard = null, keepMax = MAX_BULLETS) {
   return { sections: out, dropped, fixed };
 }
 
+/** Words in a notes draft, headings and bullets together (what the word limit counts). */
+function notesWords(sections) {
+  const n = (t) => String(t || '').trim().split(/\s+/).filter(Boolean).length;
+  return (sections || []).reduce((sum, s) => sum + n(s.heading) + (s.bullets || []).reduce((m, b) => m + n(b.text), 0), 0);
+}
+/** A bullet that only adds to the points: a framed analogy ("Think of ...") or the optional harder question. */
+const EXTRA_BULLET = /^(think of|picture this|optional|harder question)\b/i;
+/** The extras that go from a short version even when it fits: a scene and a harder question read as padding to a learner who needs less. */
+const ALWAYS_EXTRA = /^(picture this|optional|harder question)\b/i;
+/**
+ * Brings notes under a word limit by removing extra bullets, last first, until they fit or none is left. A bullet that carries a point
+ * of the text is never removed, so an over-limit draft with no extras stays as it is. Returns { sections, removed }.
+ */
+function trimToLimit(sections, limit, { always = false } = {}) {
+  const out = (sections || []).map((s) => ({ ...s, bullets: [...(s.bullets || [])] }));
+  let removed = 0;
+  if (always) {
+    for (const s of out) for (let bi = s.bullets.length - 1; bi >= 0; bi--) if (ALWAYS_EXTRA.test(s.bullets[bi].text) && s.bullets.length > 1) { s.bullets.splice(bi, 1); removed++; }
+  }
+  for (let si = out.length - 1; si >= 0 && notesWords(out) > limit; si--) {
+    for (let bi = out[si].bullets.length - 1; bi >= 0 && notesWords(out) > limit; bi--) {
+      if (EXTRA_BULLET.test(out[si].bullets[bi].text) && out[si].bullets.length > 1) { out[si].bullets.splice(bi, 1); removed++; }
+    }
+  }
+  return { sections: out, removed };
+}
+
 function row(userId, materialId) {
   return db.findOne('material_notes', (c) => c.user_id === userId && c.material_id === Number(materialId));
 }
@@ -106,13 +133,16 @@ async function build(userId, materialId, opts = {}) {
     const maxBullets = spec.isDefault ? MAX_BULLETS : Math.max(3, Math.min(MAX_BULLETS, spec.lesson.chunkSentences + 2));
     // Analogy bullets (a learner with interests) come on top of the point bullets, so a section may keep up to twice the limit.
     const keepMax = guard ? MAX_BULLETS * 2 : MAX_BULLETS;
-    let used = 0; let stopped = false; let unanswered = 0; let dropped = 0; let analogiesFixed = 0; let revisions = 0;
+    let used = 0; let stopped = false; let unanswered = 0; let dropped = 0; let analogiesFixed = 0; let revisions = 0; let trimmed = 0;
     const open = new Set();
     const sections = [];
     const touched = new Set();
     for (const part of parts) {
       const byId = new Map(part.passages.map((p) => [p.id, p]));
       const text = part.passages.map((p) => `[${p.id}]\n${p.text}`).join('\n\n');
+      const partSource = part.passages.map((p) => p.text).join(' ');
+      // A learner who needs less is held to a word limit that is below the plain outline (the speed proof found their notes 5% to 18% over it).
+      const wordLimit = learningSpec.notesWordLimit(spec, partSource);
       const args = {
         role: 'fast', task: 'material_notes', schema: NOTES_SCHEMA, schemaName: 'material_notes', maxTokens: 5000, dataClass: 'learner', userId,
         system: `You write study notes for a student from their own material. ${UNTRUSTED} `
@@ -121,6 +151,7 @@ async function build(userId, materialId, opts = {}) {
           + (block ? `\n\n${block}` : ''),
         user: `Title: ${mat.title}\n\nPassages:\n${text}`,
       };
+      if (wordLimit) args.system += `\n\nWORD LIMIT: the sections together, headings and bullets, run to at most ${wordLimit} words and not much under ${Math.round(wordLimit * 0.85)}. Count them. Cut restated points, filler and any extra analogy or question first. Every definition, formula, step, number and fact the passage gives stays, each in its shortest wording: a note that is too short to carry them is worse than one at the limit.`;
       const cost = estTokens(args.system, args.user) + args.maxTokens;
       // One write (two tries if the first gives nothing usable); `note` is the revision pass's list of what the draft got wrong.
       const generate = async (note) => {
@@ -145,7 +176,8 @@ async function build(userId, materialId, opts = {}) {
         const partText = part.passages.map((p) => p.text).join('\n\n');
         const run = await learningSpec.reviseOnce({
           generate, textOf: (c) => c.sections.flatMap((s) => s.bullets.map((b) => b.text)).join(' '),
-          spec, keyFacts: learningSpec.sourceFacts(partText), source: partText, minShare: 0.3, own: true, interestNeed: learningSpec.ownInterestNeed(spec, partText.length),
+          structureOf: wordLimit ? (c) => ({ words: notesWords(c.sections), maxWords: wordLimit }) : null,
+          spec, keyFacts: learningSpec.sourceFacts(partText), source: partText, minShare: 0.3, own: true, interestNeed: learningSpec.ownInterestNeed(spec, partText.length, 'notes'),
         });
         got = run.result;
         if (run.revised) revisions++;
@@ -155,13 +187,15 @@ async function build(userId, materialId, opts = {}) {
       if (!got) { unanswered++; continue; }
       dropped += got.dropped;
       analogiesFixed += got.fixed;
+      // A short version carries no scene or harder-question bullet, and loses its analogy too if it is still over the limit after the revision; never a bullet that carries a point.
+      if (wordLimit) { const t = trimToLimit(got.sections, wordLimit, { always: true }); got.sections = t.sections; trimmed += t.removed; }
       for (const s of got.sections) { sections.push(s); s.bullets.forEach((b) => touched.add(b.passage_id)); }
     }
     sections.forEach((s, i) => { s.id = `n${i + 1}`; });
     const coverage = passages.length ? Math.round((touched.size / passages.length) * 100) : 0;
     const status = !sections.length ? 'failed' : (stopped || unanswered ? 'partial' : 'ready');
     saved = db.update('material_notes', saved.id, {
-      sections, dropped, analogies_fixed: analogiesFixed, revised_parts: revisions, open_problems: [...open], coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
+      sections, dropped, trimmed_extras: trimmed, analogies_fixed: analogiesFixed, revised_parts: revisions, open_problems: [...open], coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     db.flush();
@@ -191,4 +225,4 @@ function removeForMaterial(userId, materialId) {
   return db.remove('material_notes', (c) => c.user_id === userId && c.material_id === Number(materialId));
 }
 
-module.exports = { VERSION, TOKEN_BUDGET, cleanSections, build, view, get, removeForMaterial };
+module.exports = { VERSION, TOKEN_BUDGET, cleanSections, notesWords, trimToLimit, build, view, get, removeForMaterial };

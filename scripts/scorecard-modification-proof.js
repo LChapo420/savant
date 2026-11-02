@@ -671,7 +671,7 @@ async function generate(arm, lrn, userId, topicId, spec) {
   if (arm === 'spec') call = { ...base, extraLines: [...legacyLines(userId), ...ls.specToLines(spec, { surface: 'lesson' })], spec, keyFacts: topic.keyFacts };
   else if (arm === 'legacy') call = { ...base, extraLines: legacyLines(userId), spec: null, keyFacts: [] };
   else call = { ...base, userId: GENERIC.id, profile: learner.getProfile(GENERIC.id), params: learner.sessionParams(learner.getProfile(GENERIC.id)), extraLines: [], spec: null, keyFacts: [] };
-  const key = `gen:${arm}:${arm === 'generic' ? '' : lrn.name}:${topicId}:${sha(JSON.stringify([call.extraLines, call.topic, call.urgent, learner.teachingBrief(call.userId, { skillId: topicId, noSpec: true })]))}`;
+  const key = `gen:${arm}:${arm === 'generic' ? '' : lrn.name}:${topicId}:${sha(JSON.stringify([call.extraLines, call.topic, call.urgent, learner.teachingBrief(call.userId, { skillId: topicId, noSpec: true }), ...(process.env.PROOF_REP ? [process.env.PROOF_REP] : [])]))}`;
   const hit = cache.get(key);
   if (hit && hit.lesson) return hit;
   // The generic lesson is one prompt per topic: cells of the same topic wait for the one in flight.

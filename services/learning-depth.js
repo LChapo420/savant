@@ -251,6 +251,12 @@ const JOINT_RULES = [
     'Story and steps together: tell it as a story, but inside the story number every step and say what comes next.'),
   J('story_with_support', 'access', ['story', 'scaffold', 'hintSize'], (L) => L.story >= 0.3 && (L.scaffold >= 0.3 || L.hintSize >= 0.4),
     'Story and support together: the story carries the idea, and every practice item inside it still gets its hint and partial steps.'),
+  // Found by the joint profiles (material-weak): "predict each step" was written as a numbered list, which two judges read as the
+  // numbered-steps learner's version; and a practice-first lesson for an anxious learner opened with a quick check.
+  J('open_but_predicting', 'compose', ['structure', 'generation'], (L) => L.structure <= -0.3 && L.generation >= 0.3,
+    'Open but predicting: put the prediction prompts as plain questions in the flow of the text, with no step numbers or labels, and leave one task without a set method.'),
+  J('practice_first_but_gentle', 'access', ['worked', 'pressure', 'gentleness'], (L) => L.worked <= -0.3 && (L.pressure <= -0.3 || L.gentleness >= 0.4),
+    'Practice first, but gently: the first item is one they will surely get, nothing opens with a quick check or a quiz, and the first lines say that nothing here is scored.'),
 ];
 const MAX_JOINT = 4;
 
@@ -397,19 +403,62 @@ function contextLines(facts, surface) {
  */
 function gradeRanked(ranked, maxNumbered = 12) {
   const numbered = []; const overflow = []; const light = [];
+  // A promoted sentence (see promote below) is numbered even when its lean is light, and holds its place: the others fill what room is left.
+  let room = maxNumbered - ranked.filter((r) => r.promoted && strengthOf(r.lean) !== 'none').length;
   for (const r of ranked) {
     const st = strengthOf(r.lean);
     if (st === 'none') continue;
-    if (st === 'light') { light.push(r.text.replace(/\.$/, '')); continue; }
+    if (st === 'light' && !r.promoted) { light.push(r.text.replace(/\.$/, '')); continue; }
     const text = st === 'strong' ? `${r.text.replace(/\.$/, '')}. Apply this throughout.` : r.text;
-    (numbered.length < maxNumbered ? numbered : overflow).push(text);
+    if (r.promoted) numbered.push(text);
+    else if (room > 0) { numbered.push(text); room -= 1; } else overflow.push(text);
   }
   return { numbered, overflow, light };
+}
+
+/** A measure this far from the middle (z times confidence) counts as strongly moved. */
+const SIGNATURE_AT = 0.5;
+const MAX_PROMOTED = 4;
+/**
+ * Priority ordering by measure. Levers are ranked by how much they shape the page, so when several measures move at once a measure
+ * whose levers are small (an attention span, say, which only asks for smaller pieces) is outranked and ends up as a light touch, or
+ * is lost behind the measures that share its levers: the joint profiles showed that effect vanishing from the text. So every
+ * strongly moved measure keeps ONE numbered instruction of its own: the sentence of the lever it moves most, taken only from the
+ * levers whose final lean points the way this measure pulls (a sentence that says the opposite is never promoted). A measure already
+ * represented in the numbered list gets nothing more. Nothing is dropped: a promoted sentence takes the place of the lowest
+ * ranked numbered one, which moves to the "Also" list.
+ *
+ * `ranked`: learning-spec's { lever, text, lean, score } for one surface. `measures`: measuresOf(). `impOf(lever)`: how much a lever
+ * shapes the page. Returns the same list with `promoted: true` on the chosen entries (copies; the input is untouched).
+ */
+function promote(ranked, measures, { max = 10, impOf = () => 0, limit = MAX_PROMOTED } = {}) {
+  const list = (ranked || []).map((r) => ({ ...r }));
+  if (!list.length || !Array.isArray(measures)) return list;
+  // The sentences the plain ranking numbers.
+  const inNumbered = new Set(list.filter((r) => strengthOf(r.lean) === 'clear' || strengthOf(r.lean) === 'strong').slice(0, max).map((r) => r.lever));
+  const byLever = new Map(list.map((r) => [r.lever, r]));
+  const strong = measures.filter((m) => Math.abs(m.z) >= SIGNATURE_AT).sort((a, b) => Math.abs(b.z) - Math.abs(a.z) || a.id.localeCompare(b.id));
+  const chosen = new Set();
+  // A lever several strongly moved measures pull on is explained by all of them, so it does not stand for any one: a measure is
+  // represented by a lever of its own when it has one with a sentence, and by a shared one only when it has none.
+  const claims = new Map();
+  for (const m of strong) for (const e of (m.levers || [])) if (e.pull) claims.set(e.lever, (claims.get(e.lever) || 0) + 1);
+  for (const m of strong) {
+    if (chosen.size >= limit) break;
+    let mine = (m.levers || []).map((e) => ({ e, r: byLever.get(e.lever) })).filter((x) => x.r && strengthOf(x.r.lean) !== 'none' && Math.sign(x.e.pull) === Math.sign(x.r.lean));
+    const own = mine.filter((x) => claims.get(x.e.lever) === 1);
+    if (own.length) mine = own;
+    if (!mine.length || mine.some((x) => inNumbered.has(x.e.lever) || chosen.has(x.e.lever))) continue;
+    mine.sort((a, b) => Math.abs(b.e.pull) * (1 + impOf(b.e.lever)) - Math.abs(a.e.pull) * (1 + impOf(a.e.lever)) || a.e.lever.localeCompare(b.e.lever));
+    chosen.add(mine[0].e.lever);
+  }
+  for (const r of list) if (chosen.has(r.lever)) r.promoted = true;
+  return list;
 }
 
 module.exports = {
   SHOW, CLEAR, STRONG, strengthOf, bandOf,
   measuresOf, CAPABILITIES, CAP_TEXT, capabilitiesOf, cleanSaid, saidOf, factsOf,
   JOINT_RULES, MAX_JOINT, jointOf,
-  LEARNING_MEASURES, learningOf, learningLines, contextLines, gradeRanked,
+  LEARNING_MEASURES, learningOf, learningLines, contextLines, gradeRanked, promote, SIGNATURE_AT, MAX_PROMOTED,
 };

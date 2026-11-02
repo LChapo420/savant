@@ -382,7 +382,7 @@ function topicDomainOf(topic, trackId) {
 
 // ── interests and dislikes from what the learner said ─────────────────────
 const STOP_WORDS = new Set(['and', 'the', 'a', 'an', 'of', 'to', 'in', 'on', 'for', 'with', 'my', 'i', 'like', 'love', 'really', 'also', 'playing', 'watching', 'doing', 'stuff', 'things', 'lots', 'all', 'some', 'many', 'much', 'about', 'etc', 'or']);
-const DISLIKE_RE = /\b(?:i\s+)?(?:really\s+)?(?:hate|hates|dislike|dislikes|can'?t stand|cannot stand|am bored by|get bored (?:by|with)|not a fan of|don'?t like|do not like|never liked|never enjoyed|detest|despise|avoid|dread|scared of|afraid of|nervous about)\s+([^.;\n!?]{2,60})/gi;
+const DISLIKE_RE = /\b(?:i\s+)?(?:really\s+)?(?:hate|hates|dislike|dislikes|can'?t stand|cannot stand|am bored by|get bored (?:by|with)|not a fan of|don'?t like|do not like|never liked|never enjoyed|detest|despise|avoid|dread|scared of|afraid of|nervous about|please (?:do not|don'?t))\s+([^.;\n!?]{2,60})/gi;
 
 function cleanPhrase(s) {
   return String(s || '').toLowerCase().replace(/[^a-z0-9' &/+-]+/g, ' ').replace(/\s+/g, ' ').trim()
@@ -961,6 +961,15 @@ const NOTES_PHRASES = {
   generation: ['State every point outright.', 'Turn one bullet in each section into a question, with its answer in the bullet after it.'],
   challenge: ['Keep the notes to what the material states; no harder question.', 'End with one optional harder question bullet that the material answers.'],
   relevance: [null, 'Add one bullet saying why it matters, using only the reasons the material gives.'],
+  // Found by the joint profiles: a learner who follows a story and one who is anxious both left notes unchanged (version 2 first run).
+  story: [null, 'Tell the points as one short story in order: start the first bullet with "Picture this:" and a one-sentence scene that uses only things the material names, and start the first bullet of each later section with a link such as "Next," or "Then,"; every fact and quote stays the material\'s own.'],
+  pressure: ['Start the first bullet with a calm lead-in ("No rush:" or "Just one idea at a time:") before its point; word no bullet as a test, a quiz or a trap.', null],
+};
+// Lesson and level sentences of their own (version 2, found by the joint profiles): a sentence the tutor also reads stays as it was, so a
+// change that is only for the written lesson lives here. A null side falls back to PHRASES.
+const LESSON_PHRASES = {
+  // The anxious learner's low stakes must be visible next to other measures' hints and worked examples, which a judge also reads as kind.
+  pressure: ['No timers, no countdowns, no "test" language: frame all practice as low stakes, and say once, in the first lines, that nothing here is scored and a wrong answer only shows what to look at next.', null],
 };
 const PODCAST_PHRASES = {
   structure: ['Let the talk flow without step labels.', 'The hosts number the steps aloud (first, second, then) and say what comes next before they move on.'],
@@ -1011,7 +1020,7 @@ const SURFACES = {
   // question, own-words and question-then-answer bullets, an optional harder question, why it matters).
   notes: (l) => ['chunk', 'length', 'density', 'vocab', 'sentence', 'defineTerms', 'visual', 'structure', 'recapEnd', 'rigor', 'formality', 'interestUse', 'analogy'].includes(l) || (depthOn() && [
     'bigPicture', 'mnemonic', 'contrast', 'misconception', 'exampleCount', 'causal', 'conceptual', 'application', 'ruleFirst', 'depth', 'repetition', 'recapStart', 'notation', 'multiRep', 'patternHints', 'systems',
-    'curiosity', 'elaboration', 'generation', 'challenge', 'relevance'].includes(l)),
+    'curiosity', 'elaboration', 'generation', 'challenge', 'relevance', 'story', 'pressure'].includes(l)),
   // Spoken: no layout. Version 2 lets structure through as steps numbered aloud.
   podcast: (l) => !blockedFor().has(l) && !['visual', 'structure', 'typed', 'density', 'notation'].includes(l) || (depthOn() && l === 'structure'),
   // Questions: difficulty, format, explanation, stakes and wording (version 2 adds look-alike contrasts, a varied setting, real use,
@@ -1072,7 +1081,7 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
     if (allow && !allow(l)) continue;
     const over = MATERIAL_SURFACE.has(surface) ? MATERIAL_PHRASES[l] : null;
     const pair = PHRASES[l];
-    const kind = !depthOn() ? null : surface === 'notes' ? NOTES_PHRASES[l] : surface === 'test' ? TEST_PHRASES[l] : surface === 'podcast' ? PODCAST_PHRASES[l] : null;
+    const kind = !depthOn() ? null : surface === 'notes' ? NOTES_PHRASES[l] : surface === 'test' ? TEST_PHRASES[l] : surface === 'podcast' ? PODCAST_PHRASES[l] : surface === 'lesson' || surface === 'level' ? LESSON_PHRASES[l] : null;
     const side = lean > 0 ? 1 : 0;
     const text = (kind && kind[side]) || (over && over[side]) || (pair && pair[side]);
     if (!text) continue;
@@ -1094,7 +1103,8 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
   // Version 2 (the full depth): every lean that clears the bar is kept and graded (services/learning-depth.js gradeRanked); the
   // strongest are numbered, the overflow and the light touches are listed after the numbered block, nothing is dropped.
   // The tutor's block is another surface's (services/tutor*.js consume it as it was); it can opt in through depthLines.
-  const graded = depthOn() && surface !== 'tutor' ? depth.gradeRanked(own, MAX_PHRASES) : null;
+  // Priority ordering by measure (learning-depth promote): every strongly moved measure keeps one numbered instruction of its own.
+  const graded = depthOn() && surface !== 'tutor' ? depth.gradeRanked(depth.promote(own, spec.depth && spec.depth.measures, { max: MAX_PHRASES, impOf: (l) => (LEVERS[l] ? LEVERS[l].imp : 0) }), MAX_PHRASES) : null;
   if (graded) for (const t of graded.numbered) lines.push(t);
   else for (const r of own.slice(0, MAX_PHRASES)) lines.push(r.text);
   const ex = spec.interests;
@@ -1105,7 +1115,13 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
     const less = needsLess(spec);
     const n = less ? 'at least one' : ex.share >= 0.7 ? 'at least three' : ex.share >= 0.4 ? 'at least two' : 'at least one';
     const where = surface === 'notes' ? 'add short framed analogies, each as its own one-sentence bullet that starts "Think of" and comes right after the bullet whose point it pictures (it carries that bullet\'s passage_id and quote, and is not counted in the bullet limit)' : 'build short analogies or practice contexts';
-    lines.push(`Interests: ${where} on ${doms}, ${n} in all, each introduced as an analogy ("think of it like...") and mapped back to a named point of the material; they add no fact, number, name or claim about the topic, and every fact and quote stays the material's own.${less ? ' Keep it to that one analogy: this version is meant to be short.' : ''}`);
+    // Notes for a learner who needs less: an analogy is an extra bullet, so it is allowed only inside the word limit (the speed proof found
+    // judges scoring tailored notes below the plain ones for padding), never required.
+    if (less && surface === 'notes') {
+      lines.push(`Interests: you may add one short framed analogy bullet on ${doms} (it starts "Think of", comes right after the bullet whose point it pictures, carries that bullet's passage_id and quote, and is not counted in the bullet limit), but only if the notes still fit the word limit; it adds no fact, number, name or claim about the topic, and every fact and quote stays the material's own. Add no other extra bullets.`);
+    } else {
+      lines.push(`Interests: ${where} on ${doms}, ${n} in all, each introduced as an analogy ("think of it like...") and mapped back to a named point of the material; they add no fact, number, name or claim about the topic, and every fact and quote stays the material's own.${less ? ' Keep it to that one analogy: this version is meant to be short.' : ''}`);
+    }
   }
   if (surface === 'lesson' || surface === 'level' || surface === 'tutor') {
     if (ex.exampleDomains.length && ex.share >= 0.7) lines.push(`Examples: build the worked example and every other example on ${ex.exampleDomains.slice(0, 4).join(', ')}, at least three in all; the facts stay the topic's own.`);
@@ -1114,7 +1130,8 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
     else if (ex.exampleDomains.length && ex.share < 0.3) lines.push('Examples: keep them neutral; do not build them on personal interests.');
   }
   if (ex.avoidDomains.length) lines.push(`Never use examples, comparisons or settings from: ${ex.avoidDomains.slice(0, 6).join(', ')}.`);
-  if (surface !== 'notes') for (const note of (spec.aversionNotes || []).slice(0, 2)) lines.push(note);
+  // Notes are bullets, so a lesson's tone notes do not fit them; a dislike of repetition and over-explaining does (version 2).
+  for (const note of (spec.aversionNotes || []).slice(0, 2)) if (surface !== 'notes' || (depthOn() && note === AVERSION_NOTE.repetition)) lines.push(note);
   // Version 2: the rest of the full depth, as unnumbered groups after the numbered instructions.
   const tail = graded ? depthTail(spec, surface, graded) : [];
   if (!lines.length && !tail.length) return [];
@@ -1283,7 +1300,7 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
   if (hits.length) problems.push({ id: 'avoid_domain', detail: `it uses ${hits.join(', ')}, which this learner dislikes; use other examples` });
   // 4. Interests used when they should be.
   const doms = spec.interests.exampleDomains || [];
-  if (doms.length && spec.interests.share >= minShare) {
+  if (doms.length && spec.interests.share >= minShare && interestNeed !== 0) {
     const used = doms.filter((d) => mentions(body, d));
     stats.interestsUsed = used.length;
     if (!used.length) problems.push({ id: 'interest_unused', detail: own ? `nothing in it uses their interests (${doms.slice(0, 3).join(', ')}); add short analogies on them, each framed as an analogy and pointing back at a point of the material, adding no fact` : `no example uses their interests (${doms.slice(0, 3).join(', ')}); build at least two examples on them` });
@@ -1316,6 +1333,11 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
   if (structure && Number.isFinite(structure.words) && spec.lesson.wordBudget) {
     stats.words = structure.words;
     if (structure.words > spec.lesson.wordBudget * 1.3) problems.push({ id: 'too_long', detail: `the lesson is ${structure.words} words; keep it to at most about ${spec.lesson.wordBudget}: cut repeats, extra examples and padding, but not any key point` });
+  }
+  // 5c. A hard word limit (notes for a learner who needs less: see notesWordLimit): over it is always named, never given slack.
+  if (structure && Number.isFinite(structure.maxWords) && Number.isFinite(structure.words)) {
+    stats.words = structure.words;
+    if (structure.words > structure.maxWords) problems.push({ id: 'too_long', detail: `it is ${structure.words} words; the limit is ${structure.maxWords}: cut repeats, restated points and any extra analogy or question first, but not any key point` });
   }
   if (structure && structure.intro !== undefined && spec.lesson.hook === 'question' && !/[?]/.test(String(structure.intro))) problems.push({ id: 'hook_missing', detail: 'open with a question that the lesson then answers' });
   if (structure && Array.isArray(structure.sections) && structure.sections.length) {
@@ -1371,10 +1393,19 @@ function sourceFacts(text, max = 14) {
  * count ("at least three in all" at a strong share) scaled by how much text the piece covers, so a long material is not asked for three
  * analogies in every part. One at least.
  */
-function ownInterestNeed(spec, chars) {
-  if (needsLess(spec)) return 1;
+function ownInterestNeed(spec, chars, surface = null) {
+  if (needsLess(spec)) return surface === 'notes' ? 0 : 1; // notes: an analogy is optional there, only inside the word limit
   const base = spec.interests.share >= 0.7 ? 3 : spec.interests.share >= 0.5 ? 2 : 1;
   return Math.max(1, Math.round(base * Math.min(1, Number(chars) / 3000)));
+}
+
+/** Notes for a learner who needs less are held to this share of the source passage's words (the plain outline runs 0.8 to 1.05 of it; the first try at three quarters cut definitions and steps, so it is 0.85). */
+const NOTES_BUDGET_SHARE = 0.85;
+/** The most words (headings and bullets) one passage's notes may run to for this learner; null when they are not held to one. */
+function notesWordLimit(spec, sourceText) {
+  if (!needsLess(spec)) return null;
+  const n = String(sourceText || '').trim().split(/\s+/).filter(Boolean).length;
+  return n >= 20 ? Math.max(40, Math.round(n * NOTES_BUDGET_SHARE)) : null;
 }
 
 /** A learner who needs less (version 2): a short treatment asked for, or gap-only coverage of what they already know. */
@@ -1436,7 +1467,7 @@ module.exports = {
   specToPrompt, specToLines, specHash, linesFor, questionLinesFor, questionShape,
   checkFollowed, analogyProblems, analogyGuard, sourceFacts, ownInterestNeed, revisionNote, reviseOnce, keyTerms, mentions, textShapeFor,
   // Version 2, the full depth (services/learning-depth.js): the tail alone, the switch, and the pieces for any other consumer.
-  depthLines, depthOn, needsLess, NOTES_PHRASES, TEST_PHRASES, PODCAST_PHRASES, MATERIAL_PHRASES, measuresOf: (metrics) => depth.measuresOf(metrics, METRIC_RULES),
+  depthLines, depthOn, needsLess, notesWordLimit, NOTES_BUDGET_SHARE, NOTES_PHRASES, TEST_PHRASES, PODCAST_PHRASES, MATERIAL_PHRASES, measuresOf: (metrics) => depth.measuresOf(metrics, METRIC_RULES),
   jointOf: depth.jointOf, learningOf: depth.learningOf, JOINT_RULES: depth.JOINT_RULES,
   interestsFromText: splitDomains, dislikesFromText, splitDislikes, topicDomainOf,
   reviewScale, scaleMinutes, reviewFor,

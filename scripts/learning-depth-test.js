@@ -168,7 +168,9 @@ console.log('6. every material surface, and version 1 one switch away');
   delete process.env.LEARNING_SPEC_DEPTH;
   check('LEARNING_SPEC_DEPTH=off writes the version 1 block (no methods, no context, no grading)', !/Learning methods|About this learner|Light touches|Apply this throughout/.test(v1) && /Content contract/.test(v1));
   const brief = ls.buildSpecFrom({ ...one('brevity_preference', 95, 95), metrics: { ...blank(), brevity_preference: { measured: 95, confidence: 95 }, interest_transfer: { measured: 95, confidence: 95 } } });
-  check('a learner who needs less gets own material no longer than its outline, with one interest analogy, not three', ls.needsLess(brief) && ls.ownInterestNeed(brief, 3000) === 1 && /at least one in all[^\n]*Keep it to that one analogy/.test(ls.specToPrompt(brief, { surface: 'notes' })) && /no longer than a plain outline/.test(ls.specToPrompt(brief, { surface: 'notes' })));
+  check('a learner who needs less gets own material no longer than its outline, with one interest analogy, not three', ls.needsLess(brief) && ls.ownInterestNeed(brief, 3000) === 1 && /at least one in all[^\n]*Keep it to that one analogy/.test(ls.specToPrompt(brief, { surface: 'podcast' })) && /no longer than a plain outline/.test(ls.specToPrompt(brief, { surface: 'notes' })));
+  // Notes (material-weak): an analogy there is an extra bullet, so it is optional and only inside the word limit.
+  check('and in notes the one analogy is optional and only inside the word limit, with no other extra bullet', ls.ownInterestNeed(brief, 3000, 'notes') === 0 && /add one short framed analogy bullet[^\n]*only if the notes still fit the word limit/.test(ls.specToPrompt(brief, { surface: 'notes' })) && !/at least one in all/.test(ls.specToPrompt(brief, { surface: 'notes' })));
   check('the default spec still writes nothing at all', ls.specToPrompt(ls.defaultSpec()) === '' && ls.specToPrompt(ls.buildSpecFrom({ metrics: blank() })) === '');
 }
 
@@ -191,6 +193,62 @@ console.log('7. the app\'s records');
   check('but not a struggle seen once', !f.difficulties.some((d) => /seen once/.test(d)));
   check('reads strengths, what worked and what they are studying', f.strengths.some((s) => /diagrams/.test(s)) && f.worked.some((w) => /diagram before/.test(w)) && /GCSE biology/.test(f.studying || ''));
   check('and the block carries them', /balancing chemical equations/.test(ls.specToPrompt(spec)) && /remembers diagrams well/.test(ls.specToPrompt(spec)));
+}
+
+console.log('8. priority by measure, the new conflict rules, the notes word limit');
+{
+  const many = (set) => ({ ...one('prior_knowledge', 50, 0), metrics: { ...blank(), ...Object.fromEntries(Object.entries(set).map(([m, v]) => [m, { measured: v, confidence: 90 }])) } });
+  // J1 of the joint proofs: a short attention span among three other moved measures was a light touch, so the text did not show it.
+  const j1 = ls.buildSpecFrom(many({ vocabulary_ceiling: 90, attention_runway: 10, evaluation_anxiety: 90, prior_knowledge: 90 }));
+  const numberedOf = (spec, surface) => ls.specToPrompt(spec, { surface }).split('\n').filter((l) => /^\d+\. /.test(l)).join('\n');
+  const lightOf = (spec, surface) => (ls.specToPrompt(spec, { surface }).split('Light touches')[1] || '');
+  const SMALL = 'Break the material into many short pieces';
+  check('a strongly moved measure keeps a numbered instruction of its own: a short attention span is not left as a light touch', numberedOf(j1, 'lesson').includes(SMALL) && !lightOf(j1, 'lesson').includes(SMALL));
+  const all = ls.specToPrompt(j1, { surface: 'lesson' });
+  const plain = depth.gradeRanked(Object.keys(j1.levers).map((l) => ({ lever: l, text: ls.PHRASES[l] ? ls.PHRASES[l][j1.levers[l] > 0 ? 1 : 0] : null, lean: j1.levers[l], score: Math.abs(j1.levers[l]) })).filter((r) => r.text && r.lever !== 'pressure' && r.lever !== 'sentence' && Math.abs(r.lean) >= ls.SHOW_AT), 10);
+  check('and nothing is dropped by it: every sentence the plain grading wrote is still in the block', [...plain.numbered, ...plain.overflow, ...plain.light].every((t) => all.includes(t.replace(/ Apply this throughout\.$/, '').replace(/\.$/, ''))));
+  const fake = [{ lever: 'chunk', text: 'a', lean: -0.2, score: 3 }, { lever: 'length', text: 'b', lean: -0.5, score: 9 }];
+  const ms = [{ id: 'm1', z: 0.7, levers: [{ lever: 'chunk', pull: 0.4 }] }, { id: 'm2', z: 0.7, levers: [{ lever: 'chunk', pull: 0.4 }, { lever: 'length', pull: 0.3 }] }];
+  const p = depth.promote(fake, ms, { max: 10, impOf: () => 0 });
+  check('a sentence that says the opposite of a measure\'s pull is never promoted for it', !p.find((r) => r.lever === 'chunk').promoted && !p.find((r) => r.lever === 'length').promoted);
+  const q = depth.promote(fake, [{ id: 'm1', z: 0.7, levers: [{ lever: 'chunk', pull: -0.4 }] }], { max: 10, impOf: () => 0 });
+  check('a measure whose lever is only a light touch is promoted once, and the input is untouched', q.find((r) => r.lever === 'chunk').promoted === true && !fake[0].promoted && depth.promote(fake, [], { max: 10 }).every((r) => !r.promoted));
+  const g = depth.gradeRanked(q, 1);
+  check('a promoted sentence is numbered even when its lean is light, and the others give way to it', g.numbered.includes('a') && g.overflow.includes('b') && g.light.length === 0);
+  // The new conflict rules.
+  const rules = (levers) => depth.jointOf(levers).map((r) => r.id);
+  check('open but predicting: no step numbers on the predictions', rules({ structure: -0.5, generation: 0.5 }).includes('open_but_predicting') && !rules({ structure: 0.5, generation: 0.5 }).includes('open_but_predicting'));
+  check('practice first but gently: for an anxious learner who needs little support', rules({ worked: -0.5, pressure: -0.5 }).includes('practice_first_but_gentle') && rules({ worked: -0.5, gentleness: 0.5 }).includes('practice_first_but_gentle') && !rules({ worked: 0.5, pressure: -0.5 }).includes('practice_first_but_gentle'));
+  // Notes: story and low stakes now change the notes; the anxious learner's lesson says nothing is scored, the tutor's block is as it was.
+  const noteLo = ls.specToPrompt(ls.buildSpecFrom(one('narrative_pull', 10)), { surface: 'notes' });
+  const noteHi = ls.specToPrompt(ls.buildSpecFrom(one('narrative_pull', 90)), { surface: 'notes' });
+  check('a learner who follows a story gets notes that open with a scene, and the one who does not does not', noteHi !== noteLo && /Picture this/.test(noteHi) && !/Picture this/.test(noteLo));
+  const anxN = ls.specToPrompt(ls.buildSpecFrom(one('evaluation_anxiety', 90)), { surface: 'notes' });
+  check('an anxious learner\'s notes start with a calm lead-in and no bullet is a test', /calm lead-in/.test(anxN) && !/calm lead-in/.test(ls.specToPrompt(ls.buildSpecFrom(one('evaluation_anxiety', 10)), { surface: 'notes' })));
+  const anxL = ls.buildSpecFrom(one('evaluation_anxiety', 90));
+  check('an anxious learner\'s lesson says once that nothing is scored; the tutor\'s block does not change', /nothing here is scored/.test(ls.specToPrompt(anxL, { surface: 'lesson' })) && !/nothing here is scored/.test(ls.specToPrompt(anxL, { surface: 'tutor' })));
+  // What the learner asked for in their own words.
+  const dl = ls.dislikesFromText('I already know a lot of this. Please do not over-explain.');
+  check('"please do not over-explain" is read as a dislike of repetition, a way of teaching, not a subject to avoid', ls.splitDislikes(dl).aversions.includes('repetition') && ls.splitDislikes(dl).domains.length === 0);
+  // The notes word limit.
+  const lessSpec = ls.buildSpecFrom({ ...one('brevity_preference', 95, 95), metrics: { ...blank(), brevity_preference: { measured: 95, confidence: 95 } } });
+  const src = Array.from({ length: 200 }, (_, i) => `word${i}`).join(' ');
+  check('notes for a learner who needs less get a word limit of 85% of the passage; everyone else none', ls.notesWordLimit(lessSpec, src) === 170 && ls.notesWordLimit(ls.buildSpecFrom(one('brevity_preference', 5, 95)), src) === null && ls.notesWordLimit(ls.defaultSpec(), src) === null && ls.notesWordLimit(lessSpec, 'too short') === null);
+  const over = ls.checkFollowed('A plain sentence about the topic. Another plain sentence about it.', lessSpec, { structure: { words: 180, maxWords: 150 } });
+  const under = ls.checkFollowed('A plain sentence about the topic. Another plain sentence about it.', lessSpec, { structure: { words: 120, maxWords: 150 } });
+  check('over the word limit is named as a problem; at or under it is not', over.problems.some((x) => x.id === 'too_long' && /limit is 150/.test(x.detail)) && !under.problems.some((x) => x.id === 'too_long'));
+  const noInterest = ls.checkFollowed('A plain sentence about the topic. Another plain sentence about it.', ls.buildSpecFrom(one('interest_transfer', 90, 95)), { own: true, minShare: 0.3, interestNeed: 0 });
+  check('interestNeed 0 asks for no analogy at all', !noInterest.problems.some((x) => x.id === 'interest_unused'));
+  const notes = require('../services/material-notes');
+  const mk = (...texts) => [{ heading: 'One two', bullets: texts.map((t) => ({ text: t })) }];
+  check('notesWords counts headings and bullets', notes.notesWords(mk('a b c', 'd e')) === 7);
+  const draft = [{ heading: 'A', bullets: [{ text: 'point one is here' }, { text: 'Think of a long basketball analogy with many words in it' }] }, { heading: 'B', bullets: [{ text: 'point two is here too' }, { text: 'Optional harder question: is this a long extra question with many words?' }] }];
+  const cut = notes.trimToLimit(draft, 14);
+  const fit = notes.trimToLimit(draft, 99, { always: true });
+  check('a short version loses the scene and harder-question bullets even when it fits, and keeps a framed analogy that fits', fit.removed === 1 && fit.sections[1].bullets.length === 1 && fit.sections[0].bullets.length === 2);
+  check('trimToLimit removes extras, last first, until it fits, and never a point', cut.removed === 2 && cut.sections.every((s) => s.bullets.length === 1) && cut.sections[0].bullets[0].text === 'point one is here' && notes.notesWords(draft) > 14 && draft[0].bullets.length === 2);
+  const stay = notes.trimToLimit([{ heading: 'A', bullets: [{ text: 'point one is here and it is long' }, { text: 'point two is here and it is long' }] }], 3);
+  check('and an over-limit draft with only points stays as it is', stay.removed === 0 && stay.sections[0].bullets.length === 2);
 }
 
 if (failures) { console.log(`\n${failures} check(s) failed`); process.exit(1); }
