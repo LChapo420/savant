@@ -87,9 +87,14 @@ const ALWAYS_EXTRA = /^(picture this|optional|harder question)\b/i;
  * Brings notes under a word limit by removing extra bullets, last first, until they fit or none is left. A bullet that carries a point
  * of the text is never removed, so an over-limit draft with no extras stays as it is. Returns { sections, removed }.
  */
-function trimToLimit(sections, limit, { always = false } = {}) {
+function trimToLimit(sections, limit, { always = false, maxAnalogies = null } = {}) {
   const out = (sections || []).map((s) => ({ ...s, bullets: [...(s.bullets || [])] }));
   let removed = 0;
+  // A short version is told "at most one analogy" and the writers (the NVIDIA model in the 2 Nov A/B: three) do not always keep to it: the first ones stay, the rest go.
+  if (Number.isFinite(maxAnalogies)) {
+    let seen = 0;
+    for (const s of out) for (let bi = 0; bi < s.bullets.length; bi++) if (/^think of\b/i.test(s.bullets[bi].text) && s.bullets.length > 1 && ++seen > maxAnalogies) { s.bullets.splice(bi, 1); bi--; removed++; }
+  }
   if (always) {
     for (const s of out) for (let bi = s.bullets.length - 1; bi >= 0; bi--) if (ALWAYS_EXTRA.test(s.bullets[bi].text) && s.bullets.length > 1) { s.bullets.splice(bi, 1); removed++; }
   }
@@ -188,7 +193,7 @@ async function build(userId, materialId, opts = {}) {
       dropped += got.dropped;
       analogiesFixed += got.fixed;
       // A short version carries no scene or harder-question bullet, and loses its analogy too if it is still over the limit after the revision; never a bullet that carries a point.
-      if (wordLimit) { const t = trimToLimit(got.sections, wordLimit, { always: true }); got.sections = t.sections; trimmed += t.removed; }
+      if (wordLimit) { const t = trimToLimit(got.sections, wordLimit, { always: true, maxAnalogies: 1 }); got.sections = t.sections; trimmed += t.removed; }
       for (const s of got.sections) { sections.push(s); s.bullets.forEach((b) => touched.add(b.passage_id)); }
     }
     sections.forEach((s, i) => { s.id = `n${i + 1}`; });

@@ -251,6 +251,9 @@ console.log('8. priority by measure, the new conflict rules, the notes word limi
   check('a short version loses the scene and harder-question bullets even when it fits, and keeps a framed analogy that fits', fit.removed === 1 && fit.sections[1].bullets.length === 1 && fit.sections[0].bullets.length === 2);
   check('trimToLimit removes extras, last first, until it fits, and never a point', cut.removed === 2 && cut.sections.every((s) => s.bullets.length === 1) && cut.sections[0].bullets[0].text === 'point one is here' && notes.notesWords(draft) > 14 && draft[0].bullets.length === 2);
   const stay = notes.trimToLimit([{ heading: 'A', bullets: [{ text: 'point one is here and it is long' }, { text: 'point two is here and it is long' }] }], 3);
+  const three = [{ heading: 'A', bullets: [{ text: 'point one is here' }, { text: 'Think of a first analogy' }] }, { heading: 'B', bullets: [{ text: 'point two is here' }, { text: 'Think of a second analogy' }, { text: 'point three is here' }, { text: 'Think of a third analogy' }] }];
+  const capped = notes.trimToLimit(three, 999, { maxAnalogies: 1 });
+  check('a short version told "at most one analogy" keeps the first and loses the rest, never a point (the writers do not always keep to one)', capped.removed === 2 && capped.sections[0].bullets.length === 2 && capped.sections[1].bullets.map((b) => b.text).join('|') === 'point two is here|point three is here' && notes.trimToLimit(three, 999).removed === 0);
   check('and an over-limit draft with only points stays as it is', stay.removed === 0 && stay.sections[0].bullets.length === 2);
 }
 

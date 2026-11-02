@@ -808,6 +808,10 @@ function buildSpecFrom(input) {
   const facts = depth.factsOf(inp, measures);
   spec.learning = depth.learningOf(L, spec, ctx, measures);
   spec.depth = { measures, facts, joint: depth.jointOf(L) };
+  // A learner who knows the basics is not given a longer lesson than a plain one (2 Nov speed run: Lena, who knows most of it and asked not to be
+  // over-explained, got 966 words against a plain lesson's 696 because her measured wish for full detail raised the ceiling): their ceiling is
+  // below the plain lesson's, and the detail goes to what is new (see the length sentence in specToLines).
+  if (depthOn() && spec.learning && spec.learning.gapOnly && spec.learning.gapOnly.on) spec.lesson.wordBudget = Math.min(spec.lesson.wordBudget, spec.learning.gapOnly.strong ? 520 : 640);
   const moved = LEVER_IDS.some((l) => Math.abs(L[l]) >= 0.02);
   const said = facts.difficulties.length || facts.strengths.length || facts.worked.length;
   spec.isDefault = !moved && !interestsUsed.length && !avoid.length && !(said && depthOn());
@@ -977,6 +981,9 @@ const NOTES_PHRASES = {
   // Vocabulary: glossed against technical.
   vocab: ['Use plain everyday words; the first time a term of the subject appears, follow it with a short plain gloss in brackets.', 'Use the precise technical terms and formal verbs the material has, and gloss none of them.'],
   visual: ['Prose bullets only: no tables, arrow chains or layouts.', null],
+  // Worked examples: notes had no sentence for it, so a learner who needs full worked examples and one who learns from the principle got the same
+  // outline (depth-75 joint profiles: notes of worked_example_dependence read as "same" in 3 of 3 samples).
+  worked: ['State the principle first in a bullet of its own; where the material works a case or chain through, give it in one compact bullet that still contains every step.', 'Where the material works a case or chain through, give it step by step: one bullet per step, each saying what is done and why, in the words of the material.'],
 };
 // The levers whose notes sentence adds a bullet that is not one of the material's points; dropped for a learner who needs less.
 const NOTES_EXTRAS = new Set(['story', 'challenge', 'relevance', 'curiosity', 'elaboration', 'generation', 'mnemonic', 'bigPicture', 'recapStart', 'systems', 'patternHints', 'depth']);
@@ -1038,7 +1045,7 @@ const SURFACES = {
   // question, own-words and question-then-answer bullets, an optional harder question, why it matters).
   notes: (l) => ['chunk', 'length', 'density', 'vocab', 'sentence', 'defineTerms', 'visual', 'structure', 'recapEnd', 'rigor', 'formality', 'interestUse', 'analogy'].includes(l) || (depthOn() && [
     'bigPicture', 'mnemonic', 'contrast', 'misconception', 'exampleCount', 'causal', 'conceptual', 'application', 'ruleFirst', 'depth', 'repetition', 'recapStart', 'notation', 'multiRep', 'patternHints', 'systems',
-    'curiosity', 'elaboration', 'generation', 'challenge', 'relevance', 'story', 'pressure'].includes(l)),
+    'curiosity', 'elaboration', 'generation', 'challenge', 'relevance', 'story', 'pressure', 'worked'].includes(l)),
   // Spoken: no layout. Version 2 lets structure through as steps numbered aloud.
   podcast: (l) => !blockedFor().has(l) && !['visual', 'structure', 'typed', 'density', 'notation'].includes(l) || (depthOn() && l === 'structure'),
   // Questions: difficulty, format, explanation, stakes and wording (version 2 adds look-alike contrasts, a varied setting, real use,
@@ -1101,10 +1108,16 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
     const pair = PHRASES[l];
     const kind = !depthOn() ? null : surface === 'notes' ? NOTES_PHRASES[l] : surface === 'test' ? TEST_PHRASES[l] : surface === 'podcast' ? PODCAST_PHRASES[l] : surface === 'lesson' || surface === 'level' ? LESSON_PHRASES[l] : null;
     const side = lean > 0 ? 1 : 0;
-    const text = (kind && kind[side]) || (over && over[side]) || (pair && pair[side]);
+    let text = (kind && kind[side]) || (over && over[side]) || (pair && pair[side]);
     if (!text) continue;
+    // "A fuller lesson is fine" is turned to what is new when they know the basics (the sentence still starts with the shared text).
+    if (l === 'length' && side === 1 && depthOn() && (surface === 'lesson' || surface === 'level') && spec.learning && spec.learning.gapOnly && spec.learning.gapOnly.on) text = `${text.replace(/\.$/, '')}, but only for what is new to them; a point they already know gets a single line.`;
     ranked.push({ lever: l, text, lean, score: Math.abs(lean) * (1 + LEVERS[l].imp) });
   }
+  // A learner for whom stories are fluff (a strong negative story lean) gets notes without the framed "Think of it like..." analogies as well, unless interest
+  // framing is what they are strongest on: judges read the analogies as story framing (depth-75: narrative_pull was wrong-way in 3 of 3 notes samples).
+  const plainNotes = surface === 'notes' && depthOn() && spec.levers && spec.levers.story <= -0.5 && !strongInterest(spec);
+  if (plainNotes) for (let i = ranked.length - 1; i >= 0; i--) if (ranked[i].lever === 'interestUse' || ranked[i].lever === 'analogy') ranked.splice(i, 1);
   // Notes for a learner who needs less (what they know already, or "do not over-explain") carry the points and nothing else: an
   // extra bullet that is not a point (a scene, a question, a harder question, a why-it-matters, a big picture) read as padding to the
   // judges in the speed proof (Lena's notes scored 7.5 against 9.5 for the plain ones, with "Picture this", "Harder question" and
@@ -1137,7 +1150,7 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
   if (graded) for (const t of graded.numbered) lines.push(t);
   else for (const r of own.slice(0, MAX_PHRASES)) lines.push(r.text);
   const ex = spec.interests;
-  if (MATERIAL_SURFACE.has(surface) && ex.exampleDomains.length && ex.share >= 0.3) {
+  if (MATERIAL_SURFACE.has(surface) && ex.exampleDomains.length && ex.share >= 0.3 && !plainNotes) {
     const doms = ex.exampleDomains.slice(0, 4).join(', ');
     // A learner who needs less (a short treatment or what they know already) gets one analogy, not three: the speed proof found their notes
     // growing longer than the plain outline (version 2).
@@ -1429,6 +1442,7 @@ function sourceFacts(text, max = 14) {
  */
 const strongInterest = (spec) => !!(spec && spec.levers && spec.levers.interestUse >= depth.STRONG);
 function ownInterestNeed(spec, chars, surface = null) {
+  if (surface === 'notes' && depthOn() && spec.levers && spec.levers.story <= -0.5 && !strongInterest(spec)) return 0; // no analogies asked for (see specToLines)
   // notes: an analogy is optional there, only inside the word limit, unless interest framing is what the learner is strongest on (a strong
   // interest_transfer lean): then one analogy is required and paid for by cutting words elsewhere (the joint profiles: brevity high with
   // interest transfer high wrote no analogy at all, so the interest measure could not be seen).

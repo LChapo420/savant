@@ -30,6 +30,12 @@
  *
  * Flags: --phase pilot|full|joint|speed, --kinds a,b, --measures a,b (or --top N by impact), --judges mistral,gemini,
  * --concurrency N, --tag NAME, --cache FILE, --depth off, --out FILE.md, --json FILE.
+ *
+ * Added 2 Nov 2026 (depth-75): --plant swap (joint: the profile's and the mirror's texts are swapped, so every pair is planted the wrong way round; the
+ * judges must name the other version, and the run prints how many they caught), --judges also takes command, qwen37, mistralm (xKiro) and nemotron,
+ * mistral4, minimax (NVIDIA build, free); the four measures of a profile and the judges are asked at once. Control files next to the cache file:
+ * SC_STOP (no Standard Compute writes), NO_JUDGE (no judging), XKIRO_DOWN (judges qwen and mistral answered by the NVIDIA ones). PROOF_DEBUG_JUDGE=FILE
+ * appends every raw judge answer to FILE.
  */
 const fs = require('fs');
 const os = require('os');
@@ -257,6 +263,7 @@ const ALL_JUDGES = {
   mistralm: { id: 'mistralai/mistral-medium-3.5', family: 'mistral', call: (s, u) => xkiroChat('mistralai/mistral-medium-3.5', s, u) },
 };
 ALL_JUDGES.nemotron = { id: 'nvidia/nemotron-3-ultra-550b-a55b', family: 'nvidia', call: (s, u) => nvidiaChat('nvidia/nemotron-3-ultra-550b-a55b', s, u) };
+ALL_JUDGES.minimax = { id: 'minimaxai/minimax-m3.1-flash', family: 'minimax', call: (s, u) => nvidiaChat('minimaxai/minimax-m3.1-flash', s, u) };
 ALL_JUDGES.mistral4 = { id: 'mistralai/mistral-large-4-1t-a52b', family: 'mistral', call: (s, u) => nvidiaChat('mistralai/mistral-large-4-1t-a52b', s, u) };
 // While a file named XKIRO_DOWN sits next to the cache file (or PROOF_XKIRO_DOWN names one), the xKiro judges qwen and mistral are answered by the NVIDIA ones
 // instead (the records carry the real model ids).
@@ -458,6 +465,8 @@ async function judgeOnce(judge, prompt, measures) {
   const k = `sensj2:${judge.id}:${sha(prompt)}`;
   const hit = LIVE ? cache.get(k) : null;
   if (hit) return hit;
+  // A file named NO_JUDGE next to the cache file turns off judging for runs that start after it appears (texts are still written and cached; judge later).
+  if (LIVE && arg('cache') && fs.existsSync(path.join(path.dirname(arg('cache')), 'NO_JUDGE'))) return { error: 'judging skipped (NO_JUDGE)' };
   let last = null;
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
