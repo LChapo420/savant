@@ -632,7 +632,24 @@ seed 7: 21.5%); the figure is now printed. `SELF_TEST_REAL=1` gives the real gen
 | Gemini free tier | 0 dollars; about 130 calls; the quota ran out twice | judge |
 | NVIDIA build (free) | 0 dollars; several hundred good calls (about 320 in one checkout's counter, of about 775 tries; most failures were timeouts) | judge (Nemotron 3 Ultra) and writer of the A/B |
 
-Not verified, plainly: (1) **a second judge family at scale**, so the 75% is one judge's; (2) the final notes rules with a DeepSeek writer (they were measured with Nemotron as
+Not verified, plainly: (1) the second judge (9.8) re-judged the r2 and r3 sample sets only, not r1 or r4, and it is a small model; (2) the final notes rules with a DeepSeek writer (they were measured with Nemotron as
 writer and judge); (3) path and test items for the wrong-way measures; (4) 3 of the 13 wrong-way podcasts with the DeepSeek writer, the other 10 with a different one; (5) Lena's lesson fit;
 (6) text_density_tolerance, brevity_preference in J2 and worked_example_dependence in J3 are still wrong-way in notes; (7) the lesson "exactly N sections" instruction is a prompt and a revision check,
 and whether writers other than DeepSeek follow it is not shown (Mistral kept three sections twice); (8) none of this is a real learner.
+
+### 9.8 Second judge family (Gemini 3.5 Flash Lite, free tier), 2 Nov after the merge
+
+AI-judged, simulated learners. The saved DeepSeek texts of the r2 and r3 sample sets were re-judged with  (no new writing, 0 writer calls),
+before and after the rule changes, same per-measure joint judge. Raw runs: .
+
+| Gemini, r2 + r3 | correct | can't tell | wrong way |
+|---|---|---|---|
+| before: all | 39/64 (61%) | 11 | 14 |
+| after: all | **49/64 (77%)** | 2 | 13 |
+| after: lesson | 26/32 (81%) | 0 | 6 |
+| after: notes | 23/32 (72%) | 2 | 7 |
+
+Planted swap on the after texts (notes r2, lesson r3): caught 23/32 (72%), fooled 4, could not tell 5, so the verdicts follow the writing, not the position.
+
+With Nemotron at 60/80 (75%) on the after texts, both judge families now put the joint profiles at 75% or above, and Gemini's gain (+16 points) is outside
+the noise band of 9.2. Notes stay the weaker kind for both judges (71% and 72%); the three wrong-way notes measures in (6) are unchanged.
