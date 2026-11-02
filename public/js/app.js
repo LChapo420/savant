@@ -973,5 +973,10 @@
     dockScript.src = '/js/tutor-dock.js';
     dockScript.defer = true;
     document.head.appendChild(dockScript);
+    // Level-open timing for the cost tracker (js/cost-beacon.js): times only, no text.
+    const beaconScript = document.createElement('script');
+    beaconScript.src = '/js/cost-beacon.js';
+    beaconScript.defer = true;
+    document.head.appendChild(beaconScript);
   }
 })();

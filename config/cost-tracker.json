@@ -1,0 +1,17 @@
+{
+  "_doc": "Settings for services/cost-tracker.js (docs/COST-TRACKER.md). Prices are USD per million tokens. Claude models are priced from services/anthropic-ledger.js PRICES (first-party list prices, 2026-10) and Standard Compute models from services/standard-compute-ledger.js PRICES; the entries below cover everything else. An entry with assumed:true is a planning assumption the owner should confirm against the provider's price page.",
+  "session_gap_min": 20,
+  "idle_cap_min": 5,
+  "wait_ms": 1500,
+  "retention_days": 90,
+  "estimated_paid_providers": ["modelflare"],
+  "models": [
+    { "match": "gpt-6.1-sol", "in": 1.0, "out": 4.0, "assumed": true, "note": "Modelflare Sol 6.1: cheapest paid route; price not published in the repo, assumed between the cheap-open and Sonnet rates (2026-11-02)" }
+  ],
+  "free_equivalent": { "in": 0.3, "out": 1.2, "note": "What a free-tier model (NVIDIA, xKiro, UnoRouter, OpenRouter :free, Gemini free tier, local Ollama) would cost on a paid cheap route: DeepSeek V4.1 Flash on Standard Compute, 0.30 in / 1.20 out (services/standard-compute-ledger.js, 2026-10)" },
+  "fixed_monthly_usd": { "vm": 0, "domain": 0, "other": 0, "note": "Not set yet. Put the real monthly VM, domain and other fixed costs here (or COST_FIXED_MONTHLY_USD for a total) and the per-user share rows fill in." },
+  "tier_hours_per_day": [0.5, 1, 2],
+  "tier_users": [10, 100, 1000],
+  "projection_days_per_month": 30,
+  "projection_min_active_min": 5
+}

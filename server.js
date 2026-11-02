@@ -59,6 +59,8 @@ app.use((req, res, next) => {
 });
 
 app.use(securityHeaders);
+// The cost and performance tracker (services/cost-tracker.js): times every /api request and every model call; written in batches, off the request path.
+app.use(require('./services/cost-tracker').middleware);
 // The body parser, skipped for the essay routes. A draft is markup rather than
 // prose, and the same words in tags outrun the default ceiling, so those routes
 // mount their own — see routes/essays.js. Everything else keeps 64kb, because
@@ -163,6 +165,7 @@ app.use('/api/piano', require('./routes/piano-songs'));
 app.use('/api', require('./routes/skills'));
 // Every learner's scorecard and details, for the accounts in ADMIN_EMAILS.
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api', require('./routes/cost-tracker')); // cost beacon + /api/admin/cost-tracker (admin only)
 app.use(require('./routes/game-lab'));
 // The Spanish section: its own API, and its rendered voice lines. Media files are
 // named by a hash of their content, so they can be cached for good.
@@ -201,6 +204,9 @@ app.use('/api', (req, res) => res.status(404).json({ error: 'No such endpoint.' 
 // change under a running server and re-downloading it every navigation is
 // slower for no benefit. The filename is not versioned, so a deploy that
 // changes a script is one where an hour of stale is acceptable.
+// The cost tracker page: its data is admin-only already; the page is too, so no one else even sees that it exists.
+app.use(['/cost-tracker', '/cost-tracker.html'], (req, res, next) => (require('./middleware/auth').isAdmin(req.user) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
+
 app.use(express.static(path.join(__dirname, 'public'), {
   extensions: ['html'],
   maxAge: isProduction ? '1h' : 0,
@@ -230,6 +236,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   // The after-level reads run in the background, one at a time.
   require('./services/learner-record').start();
+  require('./services/cost-tracker').start(); // process snapshots every minute (COST_TRACKER=off stops all tracking)
   // The beta comparison (tailored vs base): writes data/beta-report.json once a day (services/beta-compare.js; BETA_REPORT_DAILY=off stops it).
   require('./services/beta-compare').startDaily();
   // Base levels shipped in content/base-levels are added if the data file lacks them.
