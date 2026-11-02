@@ -1,0 +1,1432 @@
+{
+ "06-M2-c1": {
+  "mid": "06-M2",
+  "claim": "Across studies of interactive learning environments, good help-seeking predicts better learning, yet learners typically do not use on-demand help facilities effectively.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "The claim matches the source: the review states that effective help-seeking behavior in ILEs is related to better learning outcomes while learners are not using help facilities effectively, and \"predicts\" is consistent with the correlational/predictive wording.",
+   "smallest_fix": "No change needed; optionally soften \"predicts better learning\" to \"is related to better learning outcomes\" to mirror the source exactly."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim generalizes 'studies' and uses 'predicts' (causal) while the source mentions 'recent studies report evidence' (correlational) and does not explicitly state 'across studies'.",
+   "smallest_fix": "Replace 'Across studies... predicts' with 'Recent studies report that effective help-seeking behavior in ILEs is related to better learning outcomes'."
+  },
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source says 'Recent studies report evidence,' which is weaker than the claim's unqualified assertion that good help-seeking 'predicts' better learning across studies.",
+   "smallest_fix": "Change 'good help-seeking predicts better learning' to 'recent studies report evidence that effective help-seeking behavior is related to better learning outcomes'."
+  }
+ },
+ "06-M2-c3": {
+  "mid": "06-M2",
+  "claim": "Students in a real classroom ITS who voluntarily kept their level of hint support to a minimum achieved greater learning gains, suggesting that withholding help can benefit learning.",
+  "planted": false,
+  "deepseek": {
+   "rating": "partly",
+   "problem": "The source attributes greater learning gains specifically to keeping-off behavior (restraining oneself from requesting help while keeping support at a minimum) and explicitly states the effect was NOT detected for self-fading—the behavior the paper defines as \"voluntarily\" lowering support—so labeling the beneficial behavior \"voluntarily kept their level of hint support to a minimum\" conflates the two distinct behaviors the study separates, and it also changes \"help support\" to \"hint support.\"",
+   "smallest_fix": "Replace \"voluntarily kept their level of hint support to a minimum\" with \"restrained themselves from requesting help and kept their level of help support at a minimum (keeping-off behavior).\""
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim generalizes 'withholding help' to all stoic behavior, but the source only supports 'keeping-off behavior' (not self-fading) and specifies it as active keeping-off, not general withholding.",
+   "smallest_fix": "Replace 'withholding help' with 'actively keeping hint support at a minimum' and specify it applies only to keeping-off behavior."
+  },
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim attributes the greater learning gains to students who 'voluntarily kept their level of hint support to a minimum,' but the source states that the learning gains were achieved by participants exhibiting 'active keeping-off behavior,' while explicitly noting that the experiment did not detect this effect for 'self-fading behavior' (the voluntary lowering of support).",
+   "smallest_fix": "Replace 'voluntarily kept their level of hint support to a minimum' with 'actively restrained themselves from requesting help, keeping levels of support at a minimum'."
+  }
+ },
+ "06-M2-c8": {
+  "mid": "06-M2",
+  "claim": "In online one-to-one primary math tutoring, more effective human tutors provided hints more frequently and proactively than their less effective colleagues.",
+  "planted": false,
+  "deepseek": {
+   "rating": "partly",
+   "problem": "The source states that effective tutors showed more frequent hint provision and more frequent *proactive planning behaviours*, so the \"proactive\" descriptor attaches to planning, not to hint provision; the claim shifts it onto the hints themselves (it also says \"effective tutors\" rather than the source's non-significance-qualified comparison, though the direction and setting match).",
+   "smallest_fix": "Rewrite as: \"effective tutors provided hints more frequently and showed more proactive planning behaviours than their less effective colleagues.\""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M2-c11": {
+  "mid": "06-M2",
+  "claim": "Students who failed to seek help when they needed it generally had worse robust learning outcomes in a genetics cognitive tutor.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "The claim tracks the source: help avoidance (failing to seek help when needed) is described as \"generally stably (negatively) related to robust learning outcomes\" in the Genetics Cognitive Tutor, and the claim preserves both the population/setting and the \"generally\" hedge, without overstating it as causal.",
+   "smallest_fix": "Optionally add the source's caveat \"except at very high or very low prior knowledge\" to be maximally faithful."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source specifies that the negative relationship between help avoidance and robust learning is generally stable except at very high or low prior knowledge, and does not explicitly state that failing to seek help *generally* leads to worse outcomes without this nuance.",
+   "smallest_fix": "Clarify that the negative relationship holds except at very high or very low prior knowledge."
+  },
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source describes a correlational, negatively related association and notes an exception at very high or very low prior knowledge, whereas the claim states it as a general outcome without these qualifications.",
+   "smallest_fix": "Change 'generally had worse robust learning outcomes' to 'was generally negatively correlated with robust learning outcomes, except at very high or very low prior knowledge levels'."
+  }
+ },
+ "06-M2-c12": {
+  "mid": "06-M2",
+  "claim": "Unsolicited hints delivered as partially-worked \"Assertions\" were used significantly more than unsolicited text messages, and interacted with prior proficiency.",
+  "planted": false,
+  "deepseek": {
+   "rating": "error",
+   "problem": "nvidia timeout after 300s"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M2-c14": {
+  "mid": "06-M2",
+  "claim": "Real-time feedback on help seeking made students use on-demand help more deliberately, even later, but did not improve their domain-level learning outcomes.",
+  "planted": false,
+  "deepseek": {
+   "rating": "error",
+   "problem": "nvidia timeout after 300s"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M3-c1": {
+  "mid": "06-M3",
+  "claim": "Meta-analytic evidence indicates that taking a test over previously studied material is itself a potent learning event (the testing effect), supporting testing over restudy for retention.",
+  "planted": false,
+  "deepseek": {
+   "rating": "partly",
+   "problem": "The source hedges the phenomenon as something that \"can serve as\" a potent learning event, whereas the claim states it flatly \"is itself\" one, and the meta-analysis is described as examining testing-versus-restudy effects and mechanism (effortful processing, recall > recognition benefits) rather than as a general demonstration of testing superiority.",
+   "smallest_fix": "Soften the wording to match the source: replace \"taking a test ... is itself a potent learning event\" with \"engaging in a test over previously studied information can serve as a potent learning event.\""
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source text describes a single meta-analysis (not meta-analytic evidence in general) and does not explicitly state that testing is supported over restudy for retention, only that it examines the effects.",
+   "smallest_fix": "Replace 'Meta-analytic evidence indicates' with 'A meta-analysis indicates' and add 'examining' before 'the effects of testing versus restudy on retention'."
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M3-c2": {
+  "mid": "06-M3",
+  "claim": "A meta-analysis of psychology classrooms found that testing during the learning phase benefited later retrieval from long-term memory.",
+  "planted": false,
+  "deepseek": {
+   "rating": "partly",
+   "problem": "The meta-analysis in psychology classes measured a significant benefit of testing for general \"learning outcomes\" (d = 0.56), not specifically for \"later retrieval from long-term memory,\" and the studies were in the context of learning/teaching psychology (not necessarily classrooms); only the general testing-effect literature, not this meta-analysis, describes facilitation of later long-term-memory retrieval.",
+   "smallest_fix": "Replace \"benefited later retrieval from long-term memory\" with \"benefited learning outcomes\" (in psychology classes)."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source describes a meta-analysis of psychology classes but does not explicitly state that the meta-analysis found the effect (only that it was investigated and a significant effect size was observed).",
+   "smallest_fix": "Replace 'found that' with 'showed that' or 'demonstrated that'."
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M3-c10": {
+  "mid": "06-M3",
+  "claim": "In a field experiment, students given unfettered GPT-4 access while practising later performed worse than peers who never had access once access was removed, whereas safeguarded access mitigated the harm.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M3-c5": {
+  "mid": "06-M3",
+  "claim": "In mathematics learning, the meta-analytic effect of testing versus restudy was small and its confidence interval crossed zero, so the testing effect was not robust in this domain.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "No problem: the source reports a weighted mean testing-versus-restudy effect of g = 0.18 with a 95% confidence interval crossing zero, concluding the testing effect is not robust in mathematics learning.",
+   "smallest_fix": "No fix needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M3-c3": {
+  "mid": "06-M3",
+  "claim": "Retrieval practice produced worse transitive inference than restudy in a small-scale meta-analysis, showing the testing effect does not extend to some complex, high-interactivity reasoning.",
+  "planted": false,
+  "deepseek": {
+   "rating": "partly",
+   "problem": "The source hedges this conclusion—it says TI \"may be impaired\" and offers no claim that the testing effect definitively \"does not extend\" to complex reasoning—whereas the claim states it as established (\"showing the testing effect does not extend\").",
+   "smallest_fix": "Weaken \"showing the testing effect does not extend\" to \"suggesting the testing effect may not extend,\" matching the source's cautious wording."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim states retrieval practice 'does not extend' to some complex reasoning, but the source says it 'may be impaired,' which is a stronger and more specific conclusion than the source's hedged wording.",
+   "smallest_fix": "Change 'showing the testing effect does not extend to some complex, high-interactivity reasoning' to 'suggesting this aspect of reasoning may be impaired by retrieval practice'."
+  }
+ },
+ "06-M3-c23": {
+  "mid": "06-M3",
+  "claim": "Assessment validity is defined as whether an instrument measures what it purports to measure, which supports the principle that outside help would compromise what a test measures.",
+  "planted": false,
+  "deepseek": {
+   "rating": "partly",
+   "problem": "The source supports the definition half (\"validity refers to whether a test or a measurement instrument measures what it purports to measure\"), but it never mentions \"outside help\" anywhere and gives no basis for the added inference that outside help would compromise what a test measures, so that supporting claim is an unsupported extrapolation beyond the text.",
+   "smallest_fix": "Limit the claim to the definition actually given—\"Assessment validity is defined as whether an instrument measures what it purports to measure\"—and delete the clause about outside help compromising what a test measures, or cite a source that states it."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source defines validity but does not explicitly support the claim that outside help would compromise what a test measures.",
+   "smallest_fix": "Remove the clause about outside help or provide a source that explicitly links outside help to compromised validity."
+  },
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source defines validity as whether a test measures what it purports to measure, but it does not mention outside help or state that outside help would compromise what a test measures.",
+   "smallest_fix": "Remove 'which supports the principle that outside help would compromise what a test measures.'"
+  }
+ },
+ "06-M4-c29": {
+  "mid": "06-M4",
+  "claim": "High school math students given unrestricted GPT-4 access to answers performed worse once access was removed than students who never had access, while prompts designed to safeguard learning largely mitigated that harm.",
+  "planted": false,
+  "deepseek": {
+   "rating": "error",
+   "problem": "nvidia timeout after 300s"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M4-c1": {
+  "mid": "06-M4",
+  "claim": "Students who obtain correct answers by systematically exploiting the tutor's feedback and help (gaming the system) score substantially lower on post-tests.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "No discrepancy: the source states that gaming the system is behavior aimed at obtaining correct answers and advancing by systematically taking advantage of regularities in the software's feedback and help, and that controlling for prior domain knowledge, students who game frequently score substantially lower on a post-test than those who never game—matching the claim's topic, direction, population, and strength.",
+   "smallest_fix": "None needed; optionally match the source by saying \"frequently game the system score substantially lower on a post-test than students who never game\" (singular and with the prior-knowledge control noted)."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M4-c4": {
+  "mid": "06-M4",
+  "claim": "The ICAP framework predicts that learning increases as students' cognitive engagement moves from passive to active to constructive to interactive.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M4-c30": {
+  "mid": "06-M4",
+  "claim": "The assistance dilemma frames the core open question of how much information to give versus withhold to optimize learning, rather than resolving it.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M4-c5": {
+  "mid": "06-M4",
+  "claim": "Some bottom-out hint (answer) use is not abusive and can function like a worked example, distinguishable by response time.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "The source matches the claim: it proposes that some bottom-out-hint use is not abusive and that bottom-out hints can act as worked examples, and it builds and validates a model that distinguishes good from bad bottom-out-hint use using logged response times (which predicts learning and relates to self-explanation). The hedged wording (\"can function\") also matches the source's \"can act.\"",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M4-c26": {
+  "mid": "06-M4",
+  "claim": "A scaffolding chatbot showed no significant difference in math learning versus traditional hints in an online platform, though students' confidence dropped afterward.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "The source reports no significant differences in math learning performance between the scaffolding chatbot and traditional hints in the ASSISTments online platform, and significantly lower post-intervention confidence in the chatbot condition; the claim matches this in topic, direction, setting, and strength (the only minor narrowing is that the confidence measure was specifically about solving a similar problem).",
+   "smallest_fix": "Optionally specify \"confidence in solving a similar problem\" to match the source's exact measure."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim omits that the drop in confidence was significant and only occurred in the chatbot condition, and it does not mention the positive attitudes toward chatbots.",
+   "smallest_fix": "A scaffolding chatbot showed no significant difference in math learning versus traditional hints in an online platform, though students' confidence significantly dropped afterward in the chatbot condition."
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M5-c1": {
+  "mid": "06-M5",
+  "claim": "In one-to-one tutoring, prompting students interactively rather than giving explanations and feedback produced learning that was just as effective.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "The source states that when tutors were suppressed from giving explanations and feedback and instead encouraged to prompt students in a more interactive style, students learned just as effectively; this matches the claim's topic (one-to-one tutoring), direction (prompting vs. explanations/feedback), and wording (just as effective).",
+   "smallest_fix": "No change needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M5-c2": {
+  "mid": "06-M5",
+  "claim": "The ICAP framework predicts that learning increases as engagement moves from passive to active to constructive to interactive.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "The source states exactly that the ICAP hypothesis predicts learning will increase as students move from passive to active to constructive to interactive, matching the claim's topic, direction, ordering, and predictive (not causal-empirical) wording.",
+   "smallest_fix": "No change needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M5-c14": {
+  "mid": "06-M5",
+  "claim": "A second-order meta-analysis found that technology-supported learning activities at more advanced ICAP levels yielded higher cognitive learning outcomes.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "No problem: the source is a second-order meta-analysis in higher education reporting that \"digital technologies that offered more advanced learning activities resulted in higher cognitive learning outcomes,\" and it explicitly ties this to enhancing the ICAP level of learning activities, matching the claim's topic, direction, population, and wording strength.",
+   "smallest_fix": "None needed."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not explicitly state that the second-order meta-analysis found higher outcomes for 'more advanced ICAP levels'—it only implies that more advanced learning activities (aligned with ICAP) yielded better outcomes.",
+   "smallest_fix": "Replace 'more advanced ICAP levels' with 'more advanced learning activities aligned with ICAP'."
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M5-c3": {
+  "mid": "06-M5",
+  "claim": "Naturalistic one-to-one tutoring prominently features collaborative problem solving, question answering, and explanation within specific examples.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "No problem: the abstract states that the most prominent components of naturalistic one-to-one tutoring consisted of collaborative problem solving, question answering, and explanation in the context of specific examples, matching the claim's topic, direction, and wording.",
+   "smallest_fix": "No fix needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M5-c26": {
+  "mid": "06-M5",
+  "claim": "The segmenting principle holds that presenting material in learner-paced small segments yields deeper learning than one continuous unit.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "The source states that the segmenting principle is that people learn more deeply when a multimedia message is presented in learner-paced segments rather than as a continuous unit, which matches the claim's topic, direction, and wording.",
+   "smallest_fix": "No change needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim generalizes to 'material' and adds 'small', while the source specifies 'a multimedia message' and does not describe the segments as small.",
+   "smallest_fix": "Replace 'material in learner-paced small segments' with 'a multimedia message in learner-paced segments'."
+  }
+ },
+ "06-M5-c13": {
+  "mid": "06-M5",
+  "claim": "In an experimental intervention, interactive versus constructive learning activities did not explain students' learning about appraising scientific literature.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M9-c2": {
+  "mid": "06-M9",
+  "claim": "Tutoring systems are described as running an inner loop that gives feedback and hints on each step and updates a model of the student's evolving competence, which is the step-level awareness this page rule is meant to supply.",
+  "planted": false,
+  "deepseek": {
+   "rating": "error",
+   "problem": "nvidia timeout after 300s"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim states the inner loop 'gives feedback and hints' and 'updates a model,' but the source says it 'can give' and 'can also assess... and update,' making the claim's wording stronger than the source.",
+   "smallest_fix": "Change 'gives feedback and hints on each step and updates a model' to 'can give feedback and hints on each step and can update a model'."
+  }
+ },
+ "06-M9-c3": {
+  "mid": "06-M9",
+  "claim": "A decade review identifies contingency as a key characteristic of scaffolding and finds the small number of effectiveness studies suggest scaffolding is effective.",
+  "planted": false,
+  "deepseek": {
+   "rating": "error",
+   "problem": "nvidia timeout after 300s"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M9-c8": {
+  "mid": "06-M9",
+  "claim": "An intervention study treats diagnosing the learner's current understanding before giving adapted support as central to good teaching, supporting the page-awareness-then-diagnose logic.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "The source states that \"adapting support contingently to student needs by first diagnosing their current understanding ... is considered a key aspect of excellent teaching,\" and the intervention study is explicitly based on a model of contingent teaching whose first steps are diagnostic strategies, checking of diagnoses, then giving contingent support—matching the claim's topic, direction (diagnose before adapting support), population (teachers in an experimental professional-development study), and strength of wording.",
+   "smallest_fix": "None needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim introduces 'page-awareness-then-diagnose logic,' which does not appear in the source; the study evaluates a teacher professional development program based on a model of contingent teaching (diagnosing then giving support).",
+   "smallest_fix": "Remove 'supporting the page-awareness-then-diagnose logic' and replace with 'as demonstrated in a teacher professional development intervention using a model of contingent teaching.'"
+  }
+ },
+ "06-M9-c4": {
+  "mid": "06-M9",
+  "claim": "A meta-analysis of scaffolding in online higher education finds a large, statistically significant effect on learning outcomes, backing the general principle that scaffolding online helps.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "No problem: the source is a meta-analysis of scaffolding in online higher education that reports a large and statistically significant effect on learning outcomes, matching the claim's topic, population, direction, magnitude, significance, and hedging.",
+   "smallest_fix": "No fix needed."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim generalizes the effect to 'scaffolding online helps' without specifying the context (higher education) and overstates the certainty by omitting 'in this meta-analysis'.",
+   "smallest_fix": "A meta-analysis of scaffolding in online higher education finds a large, statistically significant effect on learning outcomes, suggesting that scaffolding may help in this context."
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M9-c20": {
+  "mid": "06-M9",
+  "claim": "A mediation study found that although students applying a teacher's support predicted more accurate answers, the contingency of that support did not affect uptake or answer accuracy, cautioning that contingent awareness alone may not drive learning.",
+  "planted": false,
+  "deepseek": {
+   "rating": "partly",
+   "problem": "The two empirical findings are shown (higher likelihood of accurate answers when students applied the teacher's support, and no effect of contingency on uptake or answer accuracy), but the claim adds a caution that \"contingent awareness alone may not drive learning,\" which the source never states—it instead notes that gradually faded contingent support was most effective at fostering uptake.",
+   "smallest_fix": "Delete the added caution (or replace it with the source's own point), e.g., end at \"...did not affect students' uptake or the accuracy of their answers.\""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim states that applying support 'predicted more accurate answers,' but the source reports a higher likelihood of 'formulating accurate answers,' and the claim omits the specific setting (subsequent small-group work) and population (secondary social studies students).",
+   "smallest_fix": "Change 'predicted more accurate answers' to 'predicted a higher likelihood of formulating accurate answers in subsequent small-group work' and specify secondary social studies students."
+  }
+ },
+ "06-M10-c4": {
+  "mid": "06-M10",
+  "claim": "In two AutoTutor experiments, learning gains from spoken and typed input were on par, but highly motivated learners reported lower cognitive load and learned more when typing.",
+  "planted": false,
+  "deepseek": {
+   "rating": "partly",
+   "problem": "The source supports the on-par learning gains and the higher motivation/typing effect, but it never names \"AutoTutor\"—it only refers to \"intelligent tutoring systems with natural language dialogues,\" so the claim adds a system-specific setting the source does not show.",
+   "smallest_fix": "Replace \"AutoTutor experiments\" with \"experiments with an intelligent tutoring system using natural language dialogues.\""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M10-c2": {
+  "mid": "06-M10",
+  "claim": "In a 24-participant AutoTutor study, spoken dialogue increased content coverage and learning gains for spoken and typed were equal, while speech recognition errors did not relate to learning but did relate to evaluations of the tutor.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "No problem: the source states the study had 24 participants learning with spoken and typed AutoTutor dialogues, with enhanced content coverage in the spoken condition, learning gains on par across modalities (and above a no-instruction control), and speech recognition errors unrelated to learning gains but linked to evaluations of the tutor.",
+   "smallest_fix": "No change needed."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M10-c9": {
+  "mid": "06-M10",
+  "claim": "A spoken-dialogue CALL system required many adaptations to cope with the numerous errors and variations produced by non-native speakers.",
+  "planted": false,
+  "deepseek": {
+   "rating": "supported",
+   "problem": "The source states that \"a variety of adaptations have been applied to overcome some problems caused by numerous errors and variations naturally produced by non-native speakers,\" which matches the claim's topic (a spoken-dialog-based CALL approach), direction (adaptations applied to cope with non-native errors/variations), population (non-native speakers), and strength of wording (\"a variety of\" = many).",
+   "smallest_fix": "No change needed."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states the system 'required many adaptations' (implying necessity), while the source says 'a variety of adaptations have been applied' (describing action taken, not necessity).",
+   "smallest_fix": "Change 'required many adaptations' to 'applied many adaptations'."
+  },
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source states that adaptations were applied to spoken dialog systems as part of a set of POSTECH approaches, not that a single spoken-dialogue CALL system required them.",
+   "smallest_fix": "Change 'A spoken-dialogue CALL system required' to 'Spoken dialog systems in POSTECH's CALL approaches used'."
+  }
+ },
+ "06-M10-c19": {
+  "mid": "06-M10",
+  "claim": "An ASR-based reading tutor produced significant positive effects on reading accuracy for first-grade pupils.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source studied two feedback conditions (explicit and implicit) of the ASR-based tutor against each other, not the tutor itself against a no-tutor baseline, so attributing the significant positive effects to the tutor as a whole overstates what the study shows.",
+   "smallest_fix": "Change to: 'An ASR-based reading tutor produced significant positive effects on reading accuracy for first-grade pupils under both explicit and implicit feedback conditions.'"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim attributes the effect to the ASR-based reading tutor generally, but the source specifies that the significant positive effects were observed for both explicit and implicit feedback conditions within the tutor.",
+   "smallest_fix": "An ASR-based reading tutor with explicit or implicit feedback produced significant positive effects on reading accuracy for first-grade pupils."
+  }
+ },
+ "06-M10-c5": {
+  "mid": "06-M10",
+  "claim": "A systematic review found that most natural-language-dialogue ITSs target university-level STEM and have empirical evaluations of learning gains or tutoring strategies.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M10-c1": {
+  "mid": "06-M10",
+  "claim": "AutoTutor, which processes typed or spoken natural-language responses, produced learning improvements of about one letter grade across more than 20 controlled experiments.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M11-c16": {
+  "mid": "06-M11",
+  "claim": "Memory and consistency toward the user is one of the recurring design levers linked to relationship quality (rapport) between students and social pedagogical agents.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source lists 'memory and consistency' as a recurring design lever shaping relationship quality and separately lists rapport as one of four aspects enhanced, but it does not specifically link memory and consistency to rapport rather than to the other three relational indicators.",
+   "smallest_fix": "Change 'linked to relationship quality (rapport)' to 'linked to relationship quality'."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M11-c6": {
+  "mid": "06-M11",
+  "claim": "Motivated learners will use a simple open learner model and want to consult their stored model information over time to plan learning.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim states motivated learners 'will' use the model and 'want to consult' it as a general fact, but the source reports results from one study of trainee pilots suggesting they 'will use' it and 'are interested in consulting' it.",
+   "smallest_fix": "Add 'One study suggests that' at the start and specify 'such as trainee pilots' after 'motivated learners'."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source suggests motivated users *may* use a simple open learner model and *are interested* in consulting it, but the claim states they *will* use it and *want* to consult it, which is stronger than the source's wording.",
+   "smallest_fix": "Change 'will use' to 'may use' and 'want to consult' to 'are interested in consulting'."
+  }
+ },
+ "06-M11-c4": {
+  "mid": "06-M11",
+  "claim": "Negotiated open learner models can help maintain the accuracy of a learner model built from multiple data sources while prompting learner reflection.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M11-c8": {
+  "mid": "06-M11",
+  "claim": "E-portfolios and independent open learner models persist user-managed learner data across a career, aiding decision-making and personal reflection.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source does not state that e-portfolios and independent open learner models persist user-managed learner data across a career; it says the ALC 2015 learning model must offer opportunities for Soldiers to provide input throughout their career, and separately that these tools are user-managed and aid decision-making and reflection.",
+   "smallest_fix": "Remove 'persist user-managed learner data across a career' or rephrase to note that the Army Learning Concept envisions career-long input while e-portfolios and independent open learner models are user-managed tools that aid decision-making and personal reflection."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source only mentions e-portfolios and independent open learner models aiding decision-making and personal reflection in the context of the Army Learning Concept (ALC) 2015, not across a career in general.",
+   "smallest_fix": "Specify that the persistence and benefits are in the context of the Army Learning Concept (ALC) 2015."
+  }
+ },
+ "06-M11-c1": {
+  "mid": "06-M11",
+  "claim": "A review of open learner models and e-portfolios found they improve learner autonomy, especially by strengthening self-reflection.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M11-c3": {
+  "mid": "06-M11",
+  "claim": "Opening up a learner model is complex: interactions among modelled aspects raise questions about the accuracy of the underlying model.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M12-c1": {
+  "mid": "06-M12",
+  "claim": "LLM-integrated apps that mix retrieved or page data into the prompt blur the line between data and instructions, which is what makes indirect prompt injection possible.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M12-c18": {
+  "mid": "06-M12",
+  "claim": "Prompt injection is a leading, catalogued security risk for LLM applications because inputs can alter model behavior in unintended ways.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M12-c17": {
+  "mid": "06-M12",
+  "claim": "A defense that keeps trusted instructions and untrusted content in separate roles supports the principle of separating instructions from data.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source instructs placing trusted instructions in the user role and untrusted content in the input role but does not state that this supports the principle of separating instructions from data.",
+   "smallest_fix": "A defense that keeps trusted instructions and untrusted content in separate roles, such as placing trusted instructions in the user role and untrusted content in the input role, is used by LocalAlign."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source describes a specific implementation (placing trusted instructions in the user role and untrusted content in the input role) but does not explicitly state that this supports the principle of separating instructions from data.",
+   "smallest_fix": "Replace 'supports the principle of separating instructions from data' with 'implements a separation of trusted instructions and untrusted content in distinct roles'."
+  }
+ },
+ "06-M12-c6": {
+  "mid": "06-M12",
+  "claim": "Indirect prompt injection is relevant to educational contexts such as tutoring and automated essay review, where hidden prompts can steer model output.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M12-c11": {
+  "mid": "06-M12",
+  "claim": "Relying on system prompts alone to keep untrusted content from acting as instructions fails under practical evasion techniques.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M12-c5": {
+  "mid": "06-M12",
+  "claim": "Prompt-level defenses are unreliable: the same defense prompt can raise attack success for certain models.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M13-c1": {
+  "mid": "06-M13",
+  "claim": "In a randomized controlled trial, college students learned significantly more, and in less time, with a pedagogical-design AI tutor than with an in-class active-learning lesson.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M13-c27": {
+  "mid": "06-M13",
+  "claim": "In a high-school math field experiment, unfettered GPT-4 access harmed students' later independent performance, while a tutor with prompts designed to safeguard learning largely mitigated the harm.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M13-c15": {
+  "mid": "06-M13",
+  "claim": "A meta-analysis of 35 experimental studies found a moderately positive effect of ChatGPT on student learning outcomes across cognitive and non-cognitive skills.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source text states the meta-analysis included 35 studies but does not describe them as experimental studies.",
+   "smallest_fix": "Change 'experimental studies' to 'studies'."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M13-c10": {
+  "mid": "06-M13",
+  "claim": "In a meta-analysis of RCTs on clinical simulation skills training, LLM-based support showed no statistically significant advantage over traditional training, though other AI types did.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source reports that vision-based deep-learning AI 'may have more advantages,' which is hedged, whereas the claim states definitively that 'other AI types did' show an advantage.",
+   "smallest_fix": "Change 'though other AI types did' to 'though vision-based deep-learning AI may have shown an advantage'."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M13-c28": {
+  "mid": "06-M13",
+  "claim": "A survey of the field documents that LLMs are inherently prone to generating plausible but nonfactual content, a reliability concern for LLM answer quality.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source says LLMs are prone to hallucination and that open-ended attributes are inherent, but it does not state that LLMs are 'inherently prone' to hallucination, and the reliability concern is specifically about real-world information retrieval systems rather than general 'LLM answer quality'.",
+   "smallest_fix": "Change 'inherently prone' to 'prone' and change 'LLM answer quality' to 'reliability in real-world information retrieval systems'."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states the source is a survey documenting the phenomenon, but the source is a survey discussing and analyzing the phenomenon rather than documenting it as a field-wide fact.",
+   "smallest_fix": "Replace 'documents that LLMs are inherently prone' with 'discusses that LLMs are prone'."
+  }
+ },
+ "06-M13-c24": {
+  "mid": "06-M13",
+  "claim": "A hybrid retrieval-augmented generation plus guardrails framework empirically reduced hallucinated content substantially, indicating guardrails can partially mitigate hallucination.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim uses the vague term 'substantially' instead of the source's specific '30–45%' and omits that RAG was part of the evaluated framework, making it unclear whether guardrails alone partially mitigate hallucination.",
+   "smallest_fix": "Replace 'reduced hallucinated content substantially' with 'reduced hallucinated content by 30–45% in combination with RAG'."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M1-c27": {
+  "mid": "06-M1",
+  "claim": "A good tutor per student (or per two or three students) is a more effective learning condition than conventional class instruction with about 30 students per teacher.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source text only defines the three instructional conditions and notes that corrective work under tutoring is very small; it does not state that tutoring is more effective than conventional instruction.",
+   "smallest_fix": "Remove 'is a more effective learning condition than' and instead describe the conditions as defined, e.g., 'A good tutor per student (or per two or three students) is one instructional condition compared to conventional class instruction with about 30 students per teacher.'"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M1-c1": {
+  "mid": "06-M1",
+  "claim": "Compared with no tutoring, both human tutoring and intelligent tutoring systems produce moderate-to-large improvements in learning.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states 'moderate-to-large improvements' but the source provides specific effect sizes (d = 0.79 for human tutoring, d = 0.76 for intelligent tutoring systems) without explicitly categorizing them as 'moderate-to-large'.",
+   "smallest_fix": "Replace 'moderate-to-large improvements' with 'effect sizes of approximately d = 0.79 for human tutoring and d = 0.76 for intelligent tutoring systems'."
+  }
+ },
+ "06-M1-c28": {
+  "mid": "06-M1",
+  "claim": "Intelligent tutoring raises test scores over conventional instruction, by a median of 0.66 standard deviations across 50 evaluations.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M1-c3": {
+  "mid": "06-M1",
+  "claim": "In K-12 mathematics, intelligent tutoring had no negative and perhaps only a small positive effect on learning.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M1-c4": {
+  "mid": "06-M1",
+  "claim": "Even though effective help-seeking is linked to better learning outcomes, learners often do not use on-demand help facilities effectively.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M1-c11": {
+  "mid": "06-M1",
+  "claim": "Feedback on help-seeking helped students use on-demand help more deliberately but did not improve their learning outcomes.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M6-c26": {
+  "mid": "06-M6",
+  "claim": "Tracking a student's changing knowledge state with a model lets an adaptive tutor give individualized exercises and predicts test performance.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not explicitly state that the model predicts test performance for individualized exercises, only that it predicts test performance in general.",
+   "smallest_fix": "Tracking a student's changing knowledge state with a model lets an adaptive tutor give individualized exercises and can predict test performance."
+  }
+ },
+ "06-M6-c19": {
+  "mid": "06-M6",
+  "claim": "Ordering lessons by an adaptive model of each learner's skill proficiency (personalization) was tested over multiple sessions in a robot tutor.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M6-c11": {
+  "mid": "06-M6",
+  "claim": "Targeted feedback built around students' common errors and misconceptions helps them correct errors and may promote conceptual change.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M6-c20": {
+  "mid": "06-M6",
+  "claim": "Automatically generated feedback personalized to individual student needs was associated with higher exercise success rates in a large ITS.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not specify that the feedback was associated with higher exercise success rates, only that it led to improved success rates at solving exercises (22.95% improvement in performance outcomes).",
+   "smallest_fix": "Replace 'associated with higher exercise success rates' with 'led to a 22.95% improvement in exercise success rates'."
+  }
+ },
+ "06-M6-c1": {
+  "mid": "06-M6",
+  "claim": "A review of the feedback research concludes formative feedback should be nonevaluative, supportive, timely, and specific.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M6-c2": {
+  "mid": "06-M6",
+  "claim": "Feedback is influential but its effect depends on the type and delivery, and can be positive or negative.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M7-c2": {
+  "mid": "06-M7",
+  "claim": "Presenting identical material in individually personalized, meaningful contexts raised elementary students' motivation, engagement, and how much they learned in a fixed time.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source reports that contextualization, personalization, and choice together produced the increases, not individually personalized contexts alone.",
+   "smallest_fix": "Change 'Presenting identical material in individually personalized, meaningful contexts raised' to 'Presenting identical material in meaningful contexts, with personalization or choice, raised'."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim attributes the effect solely to 'individually personalized, meaningful contexts,' but the source shows that contextualization, personalization, and choice all contributed to the increases.",
+   "smallest_fix": "Presenting identical material in meaningful contexts, whether generic or individually personalized, and with or without choices, raised elementary students' motivation, engagement, and how much they learned in a fixed time."
+  }
+ },
+ "06-M7-c1": {
+  "mid": "06-M7",
+  "claim": "In an intelligent tutoring system, ninth-graders given algebra story problems matched to their out-of-school interests solved problems faster and more accurately than those given normal problems.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M7-c3": {
+  "mid": "06-M7",
+  "claim": "The theory that personalizing tasks to interests works by generating situational interest is questioned, and whether such interventions improve both interest and achievement is uncertain.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states the theory is questioned and the effect on both interest and achievement is uncertain, but the source shows positive effects on both situational interest and achievement (exam performance) and only questions the mechanism (situational interest as a cause).",
+   "smallest_fix": "Replace 'is questioned' with 'the mechanism is questioned' and 'is uncertain' with 'is supported but the mechanism is uncertain'."
+  }
+ },
+ "06-M7-c8": {
+  "mid": "06-M7",
+  "claim": "Personalizing word problems using individual student interests produced no significant improvement in fourth-graders' problem-solving achievement.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M7-c13": {
+  "mid": "06-M7",
+  "claim": "In a quasi-experiment in Nigeria, personalizing instruction by embedding students' preferences into word problems significantly raised their motivation to learn mathematics word problems.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M7-c5": {
+  "mid": "06-M7",
+  "claim": "Context personalization using learners' interests is theorized to elicit situational interest, which may then spur motivational and metacognitive states; it can also ground concepts in prior knowledge.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M8-c1": {
+  "mid": "06-M8",
+  "claim": "A controlled experiment using the design Pashler et al. specified found no significant relationship between learning-style preference and comprehension, after earlier work concluded the meshing hypothesis lacks evidence.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M8-c4": {
+  "mid": "06-M8",
+  "claim": "A mini-review of studies meeting strict methodological criteria found only very low, non-significant effects, so there is still no replicable evidence that matching instruction to modality preference helps.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M8-c2": {
+  "mid": "06-M8",
+  "claim": "Surveys indicate that neuromyths such as learning styles are prevalent among educators, even in a sample motivated to use neuroscience.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim generalizes to 'surveys' (plural) and 'educators' broadly, but the source is a single survey of 242 teachers in the UK and the Netherlands.",
+   "smallest_fix": "Change 'Surveys indicate that neuromyths such as learning styles are prevalent among educators' to 'A survey indicated that neuromyths were prevalent among teachers in the UK and the Netherlands'."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source only shows prevalence in a specific sample of UK and Netherlands teachers interested in neuroscience, not 'surveys' in general or 'educators' broadly.",
+   "smallest_fix": "Replace 'Surveys indicate that neuromyths... among educators' with 'A survey found neuromyths such as learning styles are prevalent among teachers interested in neuroscience in the UK and Netherlands'."
+  }
+ },
+ "06-M8-c15": {
+  "mid": "06-M8",
+  "claim": "Belief in using learning styles remained high among higher-education academics even though the abstract states there is currently no evidence to support it, supporting that learning styles are a widespread myth.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim omits that belief was specifically 58% among UK higher-education academics and was lower than in previous studies, continuing a downward trend, which weakens the unqualified 'remained high' phrasing.",
+   "smallest_fix": "Specify that general belief was high at 58% among UK higher-education academics, though lower than in previous studies."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim generalizes the population to 'higher-education academics' and omits the specific context (UK) and the nuance that belief (58%) is higher than actual use (33%).",
+   "smallest_fix": "Belief in using learning styles remained high among UK higher-education academics (58%) even though the study states there is currently no evidence to support it, supporting that learning styles are a widespread myth."
+  }
+ },
+ "06-M8-c6": {
+  "mid": "06-M8",
+  "claim": "An article argues instruction should be based on measured knowledge, strategies and interest rather than style preference, supporting the app's use of measured study behaviour instead of style types.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source text does not mention any app or the use of measured study behaviour.",
+   "smallest_fix": "Remove 'supporting the app's use of measured study behaviour instead of style types'."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not explicitly state that the app uses measured study behavior, only that instruction should be based on knowledge, strategies, and interest.",
+   "smallest_fix": "Replace 'supporting the app's use of measured study behaviour' with 'supporting instruction based on knowledge, strategies, and interest'."
+  }
+ },
+ "06-M8-c9": {
+  "mid": "06-M8",
+  "claim": "A theoretical review argues the opposite: that students achieve better when teaching or instruction matches their learning style, which cuts against the app's design.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "PLANT-1": {
+  "mid": "06-M2",
+  "claim": "Across studies of interactive learning environments, good help-seeking predicts better learning, yet learners typically do not use on-demand help facilities effectively.",
+  "planted": true,
+  "qwen": {
+   "rating": "not_supported",
+   "problem": "The source is a single field experiment on generative AI tutors in high school math, not multiple studies of interactive learning environments, and it does not mention help-seeking predicting better learning.",
+   "smallest_fix": "In a field experiment with high school math students using generative AI tutors, unfettered access to GPT-4 harmed learning when subsequently removed, but safeguards largely mitigated these negative effects."
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not mention help-seeking behavior or on-demand help facilities in interactive learning environments.",
+   "smallest_fix": "Remove the claim about help-seeking behavior and on-demand help facilities."
+  }
+ },
+ "PLANT-2": {
+  "mid": "06-M3",
+  "claim": "A meta-analysis of psychology classrooms found that testing during the learning phase benefited later retrieval from long-term memory.",
+  "planted": true,
+  "qwen": {
+   "rating": "not_supported",
+   "problem": "The source is a selective review of help-seeking in interactive learning environments, not a meta-analysis of testing effects in psychology classrooms.",
+   "smallest_fix": "Replace the citation with one that actually reports a meta-analysis of testing during learning in psychology classrooms."
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not mention a meta-analysis, psychology classrooms, testing during learning, or retrieval from long-term memory.",
+   "smallest_fix": "Replace the claim with a statement about help-seeking behavior in interactive learning environments."
+  }
+ },
+ "PLANT-3": {
+  "mid": "06-M4",
+  "claim": "The ICAP framework predicts that learning increases as students' cognitive engagement moves from passive to active to constructive to interactive.",
+  "planted": true,
+  "qwen": {
+   "rating": "not_supported",
+   "problem": "The source text is about feedback conditions in an ASR-based reading tutor for first-grade pupils and does not mention the ICAP framework or cognitive engagement levels.",
+   "smallest_fix": "Replace the citation with a source that actually discusses the ICAP framework, such as Chi (2009) or Chi & Wylie (2014)."
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not mention or evaluate the ICAP framework or its predictions about cognitive engagement levels.",
+   "smallest_fix": "Remove the claim or replace it with a supported statement about the study's findings on feedback conditions."
+  }
+ },
+ "PLANT-4": {
+  "mid": "06-M5",
+  "claim": "Naturalistic one-to-one tutoring prominently features collaborative problem solving, question answering, and explanation within specific examples.",
+  "planted": true,
+  "qwen": {
+   "rating": "not_supported",
+   "problem": "The source text discusses help-seeking behavior in a computer-based cognitive tutor and does not mention naturalistic one-to-one tutoring, collaborative problem solving, question answering, or explanation within specific examples.",
+   "smallest_fix": "Replace the claim with a statement about help avoidance in computer-based tutoring, such as: 'In computer-based tutoring, help avoidance is negatively related to robust learning outcomes, especially early in practice.'"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not mention naturalistic one-to-one tutoring, collaborative problem solving, question answering, or explanation within specific examples.",
+   "smallest_fix": "Remove the claim or replace it with a supported statement about help-seeking behaviors in computer-based or classroom settings."
+  }
+ },
+ "PLANT-5": {
+  "mid": "06-M9",
+  "claim": "A mediation study found that although students applying a teacher's support predicted more accurate answers, the contingency of that support did not affect uptake or answer accuracy, cautioning that contingent awareness alone may not drive learning.",
+  "planted": true,
+  "qwen": {
+   "rating": "not_supported",
+   "problem": "The source is a selective review of on-demand help in interactive learning environments and does not describe a mediation study about teacher support contingency, uptake, or answer accuracy.",
+   "smallest_fix": "Replace the citation with the actual mediation study on teacher support contingency being referenced."
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not mention a mediation study, teacher's support, contingency of support, uptake, or answer accuracy.",
+   "smallest_fix": "Replace the claim with a statement about the review's findings on help-seeking behavior and learning outcomes in ILEs."
+  }
+ },
+ "PLANT-6": {
+  "mid": "06-M11",
+  "claim": "Memory and consistency toward the user is one of the recurring design levers linked to relationship quality (rapport) between students and social pedagogical agents.",
+  "planted": true,
+  "qwen": {
+   "rating": "not_supported",
+   "problem": "The source text is about explicit versus implicit feedback in an ASR-based reading tutor and does not mention memory, consistency, social pedagogical agents, rapport, or relationship quality.",
+   "smallest_fix": "Replace the citation with a source that discusses memory and consistency as design levers for rapport between students and social pedagogical agents."
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not mention memory, consistency, design levers, relationship quality, or rapport between students and social pedagogical agents.",
+   "smallest_fix": "Remove the claim or replace it with a supported statement about feedback conditions and reading accuracy."
+  }
+ },
+ "PLANT-7": {
+  "mid": "06-M12",
+  "claim": "Prompt injection is a leading, catalogued security risk for LLM applications because inputs can alter model behavior in unintended ways.",
+  "planted": true,
+  "qwen": {
+   "rating": "not_supported",
+   "problem": "The source text is about help-seeking behavior and learning in educational settings, not prompt injection or LLM security risks.",
+   "smallest_fix": "Replace the citation with a source that discusses prompt injection as a security risk for LLM applications."
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text is about help-seeking behaviors in educational settings and has no relation to prompt injection or LLM security risks.",
+   "smallest_fix": "Remove the claim or provide a relevant source about prompt injection as a security risk for LLM applications."
+  }
+ },
+ "PLANT-8": {
+  "mid": "06-M13",
+  "claim": "A meta-analysis of 35 experimental studies found a moderately positive effect of ChatGPT on student learning outcomes across cognitive and non-cognitive skills.",
+  "planted": true,
+  "qwen": {
+   "rating": "not_supported",
+   "problem": "The source is a selective review of help-seeking in interactive learning environments and does not mention ChatGPT, a meta-analysis of 35 experimental studies, or effects on student learning outcomes.",
+   "smallest_fix": "Replace the claim with: 'A selective review found that effective help-seeking behavior in interactive learning environments is related to better learning outcomes, but learners often do not use help facilities effectively.'"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source does not mention ChatGPT, a meta-analysis, 35 studies, or a moderately positive effect on student learning outcomes.",
+   "smallest_fix": "Replace the claim with a statement about on-demand help in ILEs and its relation to learning outcomes as described in the source."
+  }
+ }
+}

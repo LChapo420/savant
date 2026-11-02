@@ -1,0 +1,2362 @@
+{
+ "07-M1-c3": {
+  "mid": "07-M1",
+  "claim": "Indexing textbook sections with concepts by hand is effortful and error-prone, which motivates automatic keyphrase/concept extraction from the material.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly states that manual indexing is challenging, time-consuming, and prone to errors, and presents automatic keyphrase extraction as an attractive alternative motivated by this problem.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M1-c2": {
+  "mid": "07-M1",
+  "claim": "Prerequisite relations between course concepts can be inferred automatically from course data, though imperfectly and with method-dependent gains.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not explicitly state that the inference is imperfect or method-dependent, only that it achieves improvements over existing methods.",
+   "smallest_fix": "Prerequisite relations between course concepts can be inferred automatically from course data, as shown by a method achieving +5.9-48.0% F1-score improvements over existing methods in MOOC datasets."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports that prerequisite relations among course concepts can be inferred automatically and that gains depend on the method/features, but it does not explicitly state that the inference is imperfect.",
+   "smallest_fix": "Remove \"though imperfectly\" (e.g., \"can be inferred automatically from course data, with method-dependent gains\"), or replace it with \"to the extent captured by the chosen features.\""
+  }
+ },
+ "07-M1-c27": {
+  "mid": "07-M1",
+  "claim": "Learning with concept/knowledge maps (constructing, modifying or viewing node-link diagrams) is associated with better knowledge retention.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly supports the claim: the meta-analysis found that students who learned with concept maps, including by constructing, modifying, or viewing node-link diagrams, showed increased knowledge retention, and the claim appropriately preserves the correlational wording.",
+   "smallest_fix": "No change is needed."
+  }
+ },
+ "07-M1-c30": {
+  "mid": "07-M1",
+  "claim": "Concept mapping is associated with moderate gains in science achievement for school students, including low-achieving students.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states 'moderate gains' but the source reports a mean effect size of g = 0.776, which is typically considered large, not moderate.",
+   "smallest_fix": "Replace 'moderate gains' with 'large gains' or specify the effect size (e.g., 'g = 0.776')."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source supports the claim’s population, effect direction, and magnitude: it reports a moderate overall effect for science achievement (g = 0.776) and generally increased learning across conditions including low-achieving students, while the claim appropriately says “associated with” rather than implying causation.",
+   "smallest_fix": "No substantive fix is needed; optionally note that heterogeneity was significant in most subsets."
+  }
+ },
+ "07-M1-c18": {
+  "mid": "07-M1",
+  "claim": "Fully automatic concept-map generation from learning material tends to yield generic maps that do not match the teacher's intent or context, which is why a semi-automatic approach was proposed.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source only mentions that automatic-generated concept maps produce general maps that do not fit the teacher's intent or context, but does not explicitly state that this is a tendency or common outcome.",
+   "smallest_fix": "Replace 'tends to yield' with 'can yield'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source explicitly states that automatically generated concept maps with Concept Map Mining \"can only produce general concept maps\" that are difficult to align with the teacher's purpose, intention, and learning context, and that this motivated the study's proposed semi-automatic approach, so the claim matches the source in topic, effect direction, and wording strength.",
+   "smallest_fix": "No change needed; optionally note that the automatic generation discussed is Concept Map Mining (CMM) applied to EFL reading-comprehension texts."
+  }
+ },
+ "07-M1-c28": {
+  "mid": "07-M1",
+  "claim": "Guidance and structure added to learner-driven inquiry generally help learning activities and outcomes, with the type of guidance mattering for performance success.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim generalizes the effect of guidance on learning activities and outcomes without specifying that the source only shows this for inquiry-based learning, and it overstates the certainty about the type of guidance mattering for all outcomes (it only matters for performance success).",
+   "smallest_fix": "Guidance and structure added to learner-driven inquiry generally help learning activities and outcomes in inquiry-based learning, with the type of guidance mattering for performance success."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No problem: the meta-analysis reports overall facilitative effects of guidance on learning activities and learning outcomes, and type of guidance moderates effects on performance success.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M2-c3": {
+  "mid": "07-M2",
+  "claim": "In Gagné's hierarchy work, no child acquired a higher skill without first acquiring the subordinate skills shown beneath it in the hierarchy.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source describes a single preliminary study of seven children and uses tentative language ('suggested,' 'if hierarchies were generally valid'), whereas the claim presents it as an established universal rule from 'Gagné's hierarchy work' in general.",
+   "smallest_fix": "Change to: 'In a small preliminary study, Gagné (1962) observed that none of the seven children acquired a higher skill without first acquiring all subordinate skills shown beneath it in the hierarchy.'"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly reports that none of the seven children acquired a skill without also acquiring all skills shown as subordinate to it in Gagné’s hierarchy.",
+   "smallest_fix": "No fix is needed; the claim could optionally specify Gagné’s 1962 preliminary study of seven children for greater precision."
+  }
+ },
+ "07-M2-c5": {
+  "mid": "07-M2",
+  "claim": "The strong claim that prerequisites are essential holds only for intellectual skills, not for specific verbalized facts, so gating every skill on mastery is not supported across all content types.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No material mismatch: the source presents supporting evidence for the strong essential-prerequisites hypothesis for intellectual skills only, distinguishes specific verbalized facts, and therefore does not establish mastery gating across all content types.",
+   "smallest_fix": "No change needed; optionally phrase the first clause as “is supported only for intellectual skills” to mirror the source’s evidentiary wording."
+  }
+ },
+ "07-M2-c13": {
+  "mid": "07-M2",
+  "claim": "Identifying prerequisite dependencies between learning resources is an established research task aimed at organizing content and personalizing learning.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No problem: the source describes prerequisite relation learning as a fundamental, systematically reviewed task that identifies dependencies between learning resources to facilitate personalized learning and optimize content organization.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M2-c14": {
+  "mid": "07-M2",
+  "claim": "Candidate prerequisites can be found in knowledge graphs and filtered by a supervised model, validated against a ground truth of concepts from different domains.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source supports the claim: it describes exploring knowledge graphs to find candidate prerequisites, evaluating/filtering prerequisite relations with a supervised learning model, and validating the approach against a ground truth of 80 concepts from different domains.",
+   "smallest_fix": "No change is needed; optionally add that the ground truth contains 80 concepts."
+  }
+ },
+ "07-M2-c2": {
+  "mid": "07-M2",
+  "claim": "Prerequisite relations between MOOC concepts can be inferred automatically from learned concept representations, improving on prior methods.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source supports that prerequisite relations between MOOC concepts are inferred automatically using a representation-learning method and that this method significantly improves over existing methods.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M2-c25": {
+  "mid": "07-M2",
+  "claim": "The structure of a curriculum's prerequisite network shapes completion time and dropout, so the ordering rule is consequential, though this study models flow rather than testing a gating rule on learning.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not explicitly state that the ordering rule is consequential, only that the network structure impacts completion time and dropout.",
+   "smallest_fix": "Replace 'the ordering rule is consequential' with 'the network structure is consequential'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source explicitly states that prerequisite-network structure has a huge impact on completion time and dropping out and describes a probabilistic student-flow model focused on graduation time and network changes rather than a test of learning effects.",
+   "smallest_fix": "No change needed; the claim accurately preserves the source’s causal wording and notes the study’s flow-modeling scope."
+  }
+ },
+ "07-M3-c6": {
+  "mid": "07-M3",
+  "claim": "Adaptive testing is expected to cut testing time while raising measurement precision compared with fixed pencil-and-paper tests, which is the efficiency premise behind asking fewer, better-targeted questions.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states 'expected' and 'is the efficiency premise' as if it were a general fact, while the source frames it as a 'prospect' (possibility) and discusses practical limitations.",
+   "smallest_fix": "Replace 'is expected' with 'may' and add 'in theory' before 'the efficiency premise'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source explicitly states that CAT offers the prospect of reducing testing time and increasing measurement precision relative to conventional pencil-and-paper tests, and describes its efficiency as coming from successively selecting items that optimally measure each examinee's estimated ability, which matches the claim's hedged wording and the fewer, better-targeted question rationale.",
+   "smallest_fix": "No substantive change needed; optionally replace \"fixed\" with the source's term \"conventional\" pencil-and-paper tests."
+  }
+ },
+ "07-M3-c9": {
+  "mid": "07-M3",
+  "claim": "Trait level can be estimated with reasonable accuracy from a small number of item responses, and most CAT algorithms performed equally well once a test reached about ten items.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No problem; the source states both that trait level must be estimated with reasonable accuracy based on a small number of item responses and that most CAT algorithms performed equally well for tests of 10 or more items.",
+   "smallest_fix": "None needed."
+  }
+ },
+ "07-M3-c10": {
+  "mid": "07-M3",
+  "claim": "A large simulation using real ALEKS data examined how reliably a knowledge-space-theory adaptive assessment measures what a learner knows, showing the knowledge-space approach is being evaluated at scale rather than assumed correct.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source explicitly describes a large-scale simulation using more than 700,000 actual ALEKS mathematics assessments to examine the reliability of a particular knowledge-space-theory instantiation, so the claim accurately characterizes the topic, setting, and evaluative purpose without overstating causality or generalizing from one study to studies in general.",
+   "smallest_fix": "No change needed; optionally add the source’s precision that the scale comprised more than 700,000 actual mathematics ALEKS assessments."
+  }
+ },
+ "07-M3-c21": {
+  "mid": "07-M3",
+  "claim": "Bayesian networks are proposed as a probabilistic framework for dynamically updating a model of what each learner knows as they work.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No problem: the source explicitly states that Bayesian networks are proposed as a probabilistic framework for the dynamic management and update of the learner model in adaptive educational/hypermedia systems, matching the claim's topic, framing, and tentative wording.",
+   "smallest_fix": "No fix needed."
+  }
+ },
+ "07-M3-c25": {
+  "mid": "07-M3",
+  "claim": "A Bayesian-network-based intelligent tutoring system produced significantly higher average academic performance than other system versions, though the tutor adapted support rather than skipping known skills.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim omits that the comparison was with specific other ITS versions (fuzzy ITS, Bayesian ITS) and a traditional e-learning system, not just 'other system versions' generally.",
+   "smallest_fix": "Specify that the comparison was with fuzzy ITS, Bayesian ITS, and a traditional e-learning system."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports the significantly higher average academic performance of FB-ITS versus the other systems and its adaptive support, but it never states that the tutor avoided skipping known skills, so that distinction is unsupported.",
+   "smallest_fix": "Replace \"though the tutor adapted support rather than skipping known skills\" with \"and the tutor adaptively supported students in learning environments.\""
+  }
+ },
+ "07-M3-c28": {
+  "mid": "07-M3",
+  "claim": "Retrieval during testing itself improves later performance, so skipping skills judged known removes practice opportunities that the review step would need to compensate for.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source confirms that testing (retrieval) improves later performance but does not explicitly state that skipping known skills removes practice opportunities or that review must compensate for this.",
+   "smallest_fix": "Clarify that retrieval during testing improves later performance, and skipping known skills may reduce such opportunities."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports the general testing effect, but it does not establish that skipping skills judged known removes practice opportunities or that a review step would need to compensate for this.",
+   "smallest_fix": "Replace the second clause with: “Retrieval during testing can improve later performance, making testing itself a learning opportunity.”"
+  }
+ },
+ "07-M4-c13": {
+  "mid": "07-M4",
+  "claim": "A meta-analysis finds the expertise reversal effect: novices learn more from high-assistance instruction, while experts do worse with it, supporting the app's move away from heavy support as mastery grows.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The claim states experts 'do worse with' high-assistance instruction, but the source reports that high prior knowledge learners learn better from low-assistance instruction (d = −0.428), framing the effect in terms of low-assistance benefit rather than explicitly stating they do worse with high assistance, and omits the noted caveats for younger students and certain domains.",
+   "smallest_fix": "Change 'while experts do worse with it' to 'while high prior knowledge learners learn better from low-assistance instruction'."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states the meta-analysis 'finds' the expertise reversal effect and implies symmetry, but the source notes the effect is not symmetrical and only 'suggests' robustness.",
+   "smallest_fix": "A meta-analysis suggests the expertise reversal effect: novices learn more from high-assistance instruction, while experts perform worse with it, though the effect is not symmetrical."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports the meta-analytic expertise-reversal pattern, but it does not evaluate this app or directly justify its design change, and it notes that the evidence is less clear for younger students and humanities/language learning.",
+   "smallest_fix": "Replace \"supporting the app's move away from heavy support as mastery grows\" with \"suggesting that reducing heavy support as prior knowledge grows may be appropriate, though the meta-analysis did not evaluate the app.\""
+  }
+ },
+ "07-M4-c1": {
+  "mid": "07-M4",
+  "claim": "Instructional support that helps novices can lose effectiveness or backfire for more knowledgeable learners, which is the general principle behind reducing guidance at higher tiers.",
+  "planted": false,
+  "qwen": {
+   "rating": "partly",
+   "problem": "The source does not mention 'reducing guidance at higher tiers' as a general principle derived from the expertise reversal effect.",
+   "smallest_fix": "Remove 'which is the general principle behind reducing guidance at higher tiers' or replace it with 'known as the expertise reversal effect'."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No material mismatch: the source explicitly states that instructional techniques highly effective with inexperienced learners can lose their effectiveness and even have negative consequences for more experienced learners (the expertise reversal effect), and its reference to techniques designed to reduce working-memory load provides the basis for the claim's framing about reducing guidance at higher levels of expertise.",
+   "smallest_fix": "No correction needed; optionally use the source's term \"instructional techniques\" instead of \"instructional support\" for closer wording."
+  }
+ },
+ "07-M4-c12": {
+  "mid": "07-M4",
+  "claim": "In a statistics course, low prior knowledge students gained most from worked examples while high prior knowledge students gained most from generating their own arguments, illustrating a shift in optimal support with prior knowledge.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly reports an expertise-reversal effect in statistics: low-prior-knowledge students learned most from worked-out examples, while high-prior-knowledge students benefited most from formulating their own arguments, matching the claim and its stated shift in optimal support.",
+   "smallest_fix": "No change needed; the claim accurately paraphrases the source."
+  }
+ },
+ "07-M4-c6": {
+  "mid": "07-M4",
+  "claim": "A meta-analysis finds guidance generally helps learning, so automatically stripping support from apparently knowledgeable learners (one perfect check moves a skill up a tier) may remove help that still pays off.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim generalizes the meta-analysis findings to imply that guidance 'generally helps learning' and applies it to a specific scenario (stripping support from knowledgeable learners), but the source only shows overall positive effects of guidance without addressing the specific case of removing support from high-performing learners.",
+   "smallest_fix": "Replace 'A meta-analysis finds guidance generally helps learning, so' with 'A meta-analysis finds guidance has positive effects on learning outcomes, but it does not address whether removing support from high-performing learners is beneficial or harmful, so'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports the meta-analysis's positive overall effects of guidance on learning, but it does not mention apparently knowledgeable learners, automatic support removal, or a perfect check moving a skill up a tier, so the parenthetical and specific application are unsupported.",
+   "smallest_fix": "Delete the parenthetical and recast the inference as a cautious suggestion: \"A meta-analysis of 72 studies finds positive overall effects of guidance on learning activities, performance success, and learning outcomes, suggesting that removing support could forgo benefits, although support removal was not directly tested.\""
+  }
+ },
+ "07-M4-c31": {
+  "mid": "07-M4",
+  "claim": "Difficulties that demand more effort may slow short-term performance yet help long-term retention, which is the rationale the app uses for raising tier and asking harder reviews.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source discusses Desirable Difficulties in health professions education generally, not specifically in the context of an app raising tier and asking harder reviews.",
+   "smallest_fix": "Replace 'the app uses' with 'educational strategies use'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports that effortful difficulties may impede short-term learning while benefiting long-term learning, but it neither discusses an app, tier increases, or harder reviews nor establishes that the app uses this rationale, and it speaks of learning rather than performance or retention.",
+   "smallest_fix": "Remove the app-specific clause and write: “Difficulties that demand more effort may impede short-term learning but are beneficial for long-term learning.”"
+  }
+ },
+ "07-M4-c28": {
+  "mid": "07-M4",
+  "claim": "Not every added difficulty helps: interleaved versus blocked practice and expanding retrieval produced no retention advantage, so 'harder after mastery' cannot be assumed to improve learning.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states that interleaved practice produced no retention advantage, but the source only shows no difference between interleaved and blocked practice, not that interleaved practice had no advantage over other methods or baselines.",
+   "smallest_fix": "Clarify that interleaved practice showed no advantage over blocked practice in this study."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports the lack of a retention advantage for interleaved versus blocked practice, but it directly contradicts the claim that expanding retrieval produced no advantage, showing significantly higher scores for expanding than uniform retrieval, and it does not equate expanding retrieval with “harder after mastery.”",
+   "smallest_fix": "Replace the claim with: “Interleaved versus blocked practice produced no retention advantage, but expanding retrieval did improve retention relative to uniform retrieval, so the effect of added difficulty cannot be assumed to improve learning.”"
+  }
+ },
+ "07-M5-c1": {
+  "mid": "07-M5",
+  "claim": "A meta-analysis of 108 controlled evaluations found that mastery learning programmes improved examination performance across college, high school and upper elementary students, with larger effects for weaker students.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states 'improved' and 'larger effects' as definitive, but the source uses 'positive effects' and 'appear to be stronger' which are more tentative.",
+   "smallest_fix": "Replace 'improved' with 'have positive effects on' and 'larger effects' with 'effects appear to be stronger'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The claim presents the larger effects for weaker students as certain, whereas the source says only that the effects “appear to be stronger” for weaker students.",
+   "smallest_fix": "Change “with larger effects for weaker students” to “with effects that appeared larger for weaker students.”"
+  }
+ },
+ "07-M5-c6": {
+  "mid": "07-M5",
+  "claim": "A best-evidence synthesis of group-based mastery learning in schools concluded that, in studies lasting at least four weeks, mastery learning had essentially no effect on standardized achievement tests and only a small effect on researcher-made tests, which may be biased toward the treatment.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly reports Slavin's best-evidence synthesis of group-based mastery learning in elementary and secondary schools concluding essentially no effect on standardized achievement measures and a small effect on experimenter-made measures in studies of at least four weeks, with the author's argument that the latter were often biased in favor of the treatment; the claim's 'may be biased' is, if anything, more hedged than the source.",
+   "smallest_fix": "No change needed (optionally, 'which Slavin argued were often biased in favor of the treatment' would match the source's strength more exactly)."
+  }
+ },
+ "07-M5-c10": {
+  "mid": "07-M5",
+  "claim": "An analysis of mastery criteria with simulated and real data found that which data are used for the mastery decision and where the threshold is set matter more than the learner-modelling technique.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No problem: the source directly states that the analysis used simulated and real data and found the choice of data sources and threshold setting to be more important than the learner-modelling technique.",
+   "smallest_fix": "None needed."
+  }
+ },
+ "07-M5-c8": {
+  "mid": "07-M5",
+  "claim": "A quasi-experimental study (Solomon four-group design) compared a mastery learning approach with regular teaching for a three-week physics topic in Kenyan secondary schools.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source supports the design, interventions, three-week duration, physics topic, and Kenyan secondary-school setting, although the study was conducted specifically in Kieni East Division of Nyeri District.",
+   "smallest_fix": "Add the more precise setting: “in secondary schools in Kieni East Division of Nyeri District, Kenya.”"
+  }
+ },
+ "07-M5-c20": {
+  "mid": "07-M5",
+  "claim": "In a virtual-reality abdominal ultrasound course, 21 of 24 trainees reached a predefined mastery level on two consecutive attempts, and the study set out to measure the cost per trainee of reaching that standard.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly supports the topic, setting, population, mastery result, and stated cost-per-trainee aim of the claim.",
+   "smallest_fix": "No fix needed."
+  }
+ },
+ "07-M5-c15": {
+  "mid": "07-M5",
+  "claim": "In a first-year undergraduate mathematics mastery implementation, students reported feeling taught to pass a test rather than gaining deeper understanding of the content.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly states that students in the first-year Mastery Learning implementation had a sense of being taught how to pass a test rather than gaining a deeper understanding of the content.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M6-c14": {
+  "mid": "07-M6",
+  "claim": "In computer-based learning, elaborated feedback with an explanation produced larger effects than feedback only on answer correctness.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly states that elaborated feedback, including providing an explanation, produced larger effect sizes (0.49) than feedback regarding answer correctness (0.05) in a computer-based environment.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M6-c15": {
+  "mid": "07-M6",
+  "claim": "When feedback on text learning is given directly after reading, elaborate feedback was more effective than knowledge-of-response feedback.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No problem: the source explicitly states that, when feedback is provided directly after reading, elaborate feedback was more effective than knowledge-of-response feedback.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M6-c31": {
+  "mid": "07-M6",
+  "claim": "Multiple-choice item structure, when used wisely, can serve as a diagnostic tool for students' conceptions, including misconceptions.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The claim directly reflects the source’s statement that multiple-choice structure, when wisely used, is a diagnostic tool for identifying students’ conceptions, including misconceptions; the claim’s wording is no stronger than the source.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M6-c26": {
+  "mid": "07-M6",
+  "claim": "Undergraduates who read a refutation text had fewer misconceptions at posttest than those who read an expository text.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "error",
+   "problem": "nvidia 429: Too Many Requests"
+  }
+ },
+ "07-M6-c28": {
+  "mid": "07-M6",
+  "claim": "In grade 9 ecology, both a refutation text and a didactic control text induced accommodation in many students, so refutation was not uniquely superior.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states 'many students' while the source specifies 'a large proportion of the students' (36 out of 87, with 44% having the misconception initially).",
+   "smallest_fix": "Replace 'many students' with 'a large proportion of the students'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly reports that both the refutational text and the didactic control text induced accommodation in a large proportion of grade 9 students, supporting the claim that refutation was not uniquely effective in this setting.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M6-c8": {
+  "mid": "07-M6",
+  "claim": "This essay warns that the term misconception is tied to eradication or replacement and argues that students' naive ideas can be resources for building understanding.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source explicitly states that the term \"misconceptions\" has been aligned with eradication and/or replacement of conceptions and that students' naïve ideas can provide resources for building scientific understanding.",
+   "smallest_fix": "No fix needed; the claim is supported as written."
+  }
+ },
+ "07-M7-c1": {
+  "mid": "07-M7",
+  "claim": "Across many experiments, taking practice tests on studied material produces better learning than restudying or other non-testing activities.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states 'across many experiments' and uses absolute wording ('produces better learning'), while the source refers to a meta-analysis and uses more cautious language ('often outperform', 'may guide').",
+   "smallest_fix": "Replace 'Across many experiments, taking practice tests... produces better learning' with 'A meta-analysis shows that practice tests often lead to better learning than restudying or other non-testing activities.'"
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source’s meta-analysis reports that practice tests on studied material yield greater learning than restudying and other nontesting comparison conditions across multiple studies, matching the claim’s topic, direction, and strength.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M7-c18": {
+  "mid": "07-M7",
+  "claim": "In real classrooms, retrieval practice improved learning across education levels, content areas and test formats in most coded experiments.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states 'in most coded experiments' but the source specifies '57% revealed medium or large benefits', not 'most'.",
+   "smallest_fix": "Replace 'in most coded experiments' with 'in 57% of coded experiments'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports classroom settings and improved learning across a variety of education levels, content areas, and test formats, but it reports that 57% of effect sizes (not most coded experiments per se) showed medium or large benefits and does not state that most experiments showed improvement across all three dimensions.",
+   "smallest_fix": "In real-world classroom research, retrieval practice improved learning across a variety of education levels, content areas, and test formats, with 57% of effect sizes showing medium or large benefits."
+  }
+ },
+ "07-M7-c2": {
+  "mid": "07-M7",
+  "claim": "In psychology courses, testing during learning produced a moderate benefit to later learning outcomes.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim specifies 'psychology courses' and 'moderate benefit', but the source text refers to 'psychology classes' and reports a specific effect size (d = 0.56) without explicitly labeling it as 'moderate'.",
+   "smallest_fix": "Replace 'moderate benefit' with 'an effect size of d = 0.56' and 'psychology courses' with 'psychology classes'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly supports testing in psychology classes benefiting later learning outcomes, with a meta-analytic effect size of d = 0.56, reasonably characterized as moderate.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M7-c22": {
+  "mid": "07-M7",
+  "claim": "Reviewed applied classroom studies generally favour retrieval practice over restudying, whether or not feedback is given.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source states that retrieval practice is generally favorable in classroom settings regardless of feedback, but it does not explicitly confirm that it is *generally* favored *over restudying* in all cases, as some comparisons were inconclusive or involved alternative control conditions.",
+   "smallest_fix": "Replace 'generally favour retrieval practice over restudying' with 'often show retrieval practice is beneficial compared to restudying or no activity'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly states that the reviewed classroom studies generally favoured retrieval practice regardless of whether feedback was provided, although comparisons with alternative classroom activities were less conclusive.",
+   "smallest_fix": "No change is needed, though the claim could optionally note that comparisons with alternative learning activities were less conclusive."
+  }
+ },
+ "07-M7-c19": {
+  "mid": "07-M7",
+  "claim": "In regular primary-school vocabulary lessons, retrieval practice exercises showed no retention advantage over copying the word description.",
+  "planted": false,
+  "qwen": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No substantive problem: the source directly reports that retrieval practice produced no benefit over restudy (copying part of a word's description) in regular primary-school vocabulary lessons, on both immediate cued-recall and delayed multiple-choice tests.",
+   "smallest_fix": "None needed; optionally specify \"copying part of the word description\" and that no benefit was found on either the cued-recall or delayed multiple-choice test."
+  }
+ },
+ "07-M7-c13": {
+  "mid": "07-M7",
+  "claim": "Feedback given at final recall can reverse the usual testing advantage, at least when practice retrieval success was low.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly supports the claim, reporting that feedback at final recall reversed the testing effect only when retrieval success during practice was low, while moderate and high success produced a testing effect.",
+   "smallest_fix": "No change is needed."
+  }
+ },
+ "07-M8-c11": {
+  "mid": "07-M8",
+  "claim": "In a preregistered cluster randomized trial in real classrooms, students given interleaved assignments outscored blocked-practice students on an unannounced test one month later.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro 503: The model is temporarily unavailable due to high demand. Please retry in a moment."
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly reports a preregistered, cluster randomized trial in naturalistic 7th-grade mathematics classrooms where students assigned interleaved practice scored higher than those assigned blocked practice on an unannounced test one month later.",
+   "smallest_fix": "No change is needed."
+  }
+ },
+ "07-M8-c2": {
+  "mid": "07-M8",
+  "claim": "Seventh-graders who practiced the same problems in interleaved rather than blocked order learned the skills over a 3-month period (the abstract is truncated before the test result).",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "None — the source directly states that 126 seventh-grade students received the same practice problems over a 3-month period arranged in interleaved versus blocked order and that skills were learned under these approaches.",
+   "smallest_fix": "No change needed."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The seventh-grade population, identical practice problems, interleaved-versus-blocked conditions, skill learning, and 3-month period are supported, but the supplied source includes the test results and therefore does not support the parenthetical that the abstract is truncated before them.",
+   "smallest_fix": "Delete the parenthetical, or replace it with: “the source also reports higher scores for interleaved practice on both the immediate and delayed tests.”"
+  }
+ },
+ "07-M8-c1": {
+  "mid": "07-M8",
+  "claim": "The interleaving advantage is larger when the material being mixed is more similar across categories, so what gets mixed together matters.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "None; the claim accurately reflects the source's metaregression finding that interleaving effects are stronger when learning material is more similar between (across) categories, and the source's conclusion that the type of learning material must be considered.",
+   "smallest_fix": "No change needed."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly reports stronger interleaving effects for material that is more similar between categories, matching the claim’s topic, direction, and wording strength.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M8-c6": {
+  "mid": "07-M8",
+  "claim": "Interleaving helped most when differences between the mixed items were subtle, and the benefit extended to delayed tests.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "The source directly states both that interleaving was of greatest use when differences between items are subtle and that the benefit extended to delayed tests.",
+   "smallest_fix": "No change needed."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly states that interleaving was of greatest use when differences between items are subtle and that the benefit extended to delayed tests.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M8-c4": {
+  "mid": "07-M8",
+  "claim": "Undergraduates who did interleaved physics homework recalled more and solved more problems correctly on surprise tests, though they judged the method harder and thought they learned less.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "None — the claim accurately reflects the source's population (undergraduate physics students), setting (8 weeks of homework), direction of effects (interleaved practice led to more recall and more correct solutions on two surprise tests), and the metacognitive finding that students rated the method as more difficult and believed they learned less.",
+   "smallest_fix": "No change needed."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly supports that undergraduates using interleaved physics homework recalled more information and produced more correct solutions on surprise tests, while tending to judge the method more difficult and believing they had learned less.",
+   "smallest_fix": "No change is needed; optionally say that students “tended to” judge the method harder and think they learned less, matching the source’s qualified wording."
+  }
+ },
+ "07-M8-c9": {
+  "mid": "07-M8",
+  "claim": "In critical-thinking practice, interleaving produced no better learning or transfer than blocking, regardless of task format.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim upgrades the source's cautious \"there were no indications that interleaved practice led to better learning/transfer than blocked practice\" into a definitive \"interleaving produced no better learning or transfer than blocking,\" turning an absence of evidence for an advantage into a stated null effect (equivalence), which is stronger than the source supports.",
+   "smallest_fix": "Change \"interleaving produced no better learning or transfer than blocking\" to \"there were no indications that interleaving led to better learning or transfer than blocking\" (keeping \"regardless of task format\" / \"irrespective of task format\")."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No discrepancy: the source explicitly reports no indication of an interleaving advantage over blocking for learning or transfer of unbiased critical-thinking reasoning, irrespective of practice-task format, and the claim adds no numbers or unsupported causal/population statements.",
+   "smallest_fix": "None needed; if desired, soften to the source's exact phrasing: \"there were no indications that interleaved practice led to better learning/transfer than blocked practice, irrespective of task format.\""
+  }
+ },
+ "07-M9-c1": {
+  "mid": "07-M9",
+  "claim": "Spacing review helps retention, and the best spacing depends jointly on how long the material must be retained.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "None; the source states that spacing affects final-test retention and that ISI and retention interval operate jointly, with the optimal ISI increasing as the retention interval increases.",
+   "smallest_fix": "No change needed."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports the interaction between interstudy interval and retention interval—and that the optimal interval increased with retention interval—but it does not explicitly state that spacing improves retention or that spaced learning outperforms massed learning.",
+   "smallest_fix": "Replace “Spacing review helps retention” with “The meta-analysis found that interstudy interval and retention interval jointly affected final-test retention.”"
+  }
+ },
+ "07-M9-c11": {
+  "mid": "07-M9",
+  "claim": "Spacing improves long-term retention, but the optimal gap changes with the test delay rather than being a single fixed rule.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "No mismatch: the source explicitly reports an inverted-U spacing effect on final test performance and states that the optimal gap increased as test delay increased (with its share of test delay falling from ~20-40% to ~5-10%), plus a gap-by-test-delay interaction, so there is no single fixed rule.",
+   "smallest_fix": "None needed; the claim already matches the source's direction, population/setting, and conditional wording."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "None: the source shows that increasing the interstudy gap initially improves final-test performance at delays up to one year and that the optimal gap increases with test delay, so there is no single fixed optimal gap.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M9-c2": {
+  "mid": "07-M9",
+  "claim": "A trainable half-life regression model can estimate memory half-life and predict student recall better than baselines.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "No discrepancy: the source explicitly states that HLR models are fitted to Duolingo data, indirectly estimate the half-life of memory items, and reduce error by 45%+ compared to several baselines when predicting student recall rates.",
+   "smallest_fix": "No change needed."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source supports the claim: it describes fitted HLR models that indirectly estimate the half-life of words or concepts in students’ long-term memory and reduce error by 45%+ versus several baselines when predicting student recall rates.",
+   "smallest_fix": "None needed."
+  }
+ },
+ "07-M9-c3": {
+  "mid": "07-M9",
+  "claim": "Under a recall-maximization-with-review-cost model, the optimal review time can be set by the recall probability itself.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "None; the source explicitly states that, under maximizing recall probability subject to a review-frequency cost, the optimal reviewing schedule is given by the recall probability itself.",
+   "smallest_fix": "No change needed."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly states that, when maximizing recall probability subject to a cost on reviewing frequency, the optimal reviewing schedule is given by the recall probability itself, matching the claim.",
+   "smallest_fix": "No fix is needed; optionally specify that this result holds for the two human memory models considered."
+  }
+ },
+ "07-M9-c4": {
+  "mid": "07-M9",
+  "claim": "Personalized review improved course retention over massed study in a middle-school foreign-language course.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "None; the source explicitly states that personalized review yielded a boost in course retention over massed study in a semester-long middle-school foreign-language course.",
+   "smallest_fix": "No change needed."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly states that personalized review yielded a 16.5% boost in course retention over massed study in a semester-long middle-school foreign-language course, so the claim's topic, effect direction, population, setting, and wording are all supported.",
+   "smallest_fix": "No fix needed; optionally add \"a 16.5% boost\" measured by a post-semester cumulative exam to reflect the source's specifics."
+  }
+ },
+ "07-M9-c28": {
+  "mid": "07-M9",
+  "claim": "Computational memory models can give practical guidance on spacing review under a fixed weekly review-time budget.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "No discrepancy: the source explicitly uses two computational memory models (ACT-R and MCM) in simulation studies premised on a fixed time each week to review, and reports converging evidence plus two near-optimal scheduling heuristics with stated implications for classroom instruction and digital tutors, which is exactly the practical guidance the claim attributes to such models.",
+   "smallest_fix": "No change needed; the claim's hedged wording (\"can give\") is no stronger than the source's \"suggests\" and \"identify... heuristics.\""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No problem: the source reports simulation studies using ACT-R and MCM that identify practical review-scheduling heuristics under a premise of fixed review time each week.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M10-c1": {
+  "mid": "07-M10",
+  "claim": "A review of 93 educational automatic question generation papers finds that manual item writing is costly and slow, which is the practical motivation for machine-generated questions.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "No issue: the source states the review includes 93 papers on automatic generation of questions for educational purposes, that manual construction requires training/experience/resources and hinders/slows educational activities, and that reducing the expenses of manual construction (plus the need for a continuous supply of questions) is why AQG was introduced.",
+   "smallest_fix": "No change needed."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No substantive mismatch: the review covers 93 educational AQG papers and states that manual question construction is resource-intensive, slows educational activities, and incurs expenses that AQG is intended to reduce.",
+   "smallest_fix": "No change needed; optionally clarify that the source says manual construction slows the use of question-dependent educational activities, rather than directly measuring how long each item takes to write."
+  }
+ },
+ "07-M10-c8": {
+  "mid": "07-M10",
+  "claim": "Adding a teacher-derived prompt pattern to an LLM produced high-quality questions that expert evaluators scored significantly better and that approached teacher-written items in some respects.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "The source text directly supports every element of the claim: it describes integrating a teacher-derived prompt pattern into LLMs, states that expert evaluations demonstrated statistically significant high-quality results, and notes that the questions approach the quality of teacher-constructed items in certain aspects.",
+   "smallest_fix": "No change needed."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source explicitly reports that integrating the teacher-derived collective knowledge base prompt pattern into LLMs produced high-quality questions with statistically significant expert-evaluation results that approached teacher-written questions in certain aspects.",
+   "smallest_fix": "No fix needed; the claim accurately reflects the source, with “in some respects” appropriately preserving the limited comparison to teacher-written questions."
+  }
+ },
+ "07-M10-c10": {
+  "mid": "07-M10",
+  "claim": "Radiologists blind to source rated GPT-4 board-style items highly on clarity, relevance and distractor quality, though the study evaluated items, not learning gains.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No substantive problem: the source reports high ratings from source-blinded radiologists for GPT-4 items on clarity, relevance, and distractor quality, and the study assessed item quality rather than learning gains.",
+   "smallest_fix": "None needed."
+  }
+ },
+ "07-M10-c11": {
+  "mid": "07-M10",
+  "claim": "Two chatbots produced caries MCQs that specialists judged statistically comparable, but the analysis also examined item-writing flaws in the generated items.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states that specialists judged the MCQs 'statistically comparable' and that the analysis 'examined item-writing flaws,' but the source text specifies that the comparison was done via paired t-tests and ANOVA (not explicitly by specialists' judgment) and that item-writing flaws were qualitatively evaluated (not necessarily as part of the statistical analysis).",
+   "smallest_fix": "Replace 'specialists judged statistically comparable' with 'statistical tests showed no significant differences' and clarify that item-writing flaws were qualitatively evaluated."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No substantive problem: ChatGPT and Bard generated dental-caries MCQs assessed by three dental specialists, statistical analyses found no significant differences, and the questions were qualitatively evaluated for item-writing flaws.",
+   "smallest_fix": "No change is needed, though “analyses found no significant differences” would more precisely avoid attributing the statistical comparison to the specialists themselves."
+  }
+ },
+ "07-M10-c2": {
+  "mid": "07-M10",
+  "claim": "A comprehensive review covers distractor development and the optimal ordering of options in multiple-choice items, the general principle behind the app's option handling.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not explicitly mention the app's option handling or its general principle.",
+   "smallest_fix": "Remove 'the general principle behind the app's option handling' from the claim."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports the review's coverage of distractor development and the optimal ordering of distractors, but it does not mention an app or establish that this is the principle behind the app's option handling.",
+   "smallest_fix": "Remove the app-specific clause: \"A comprehensive review covers distractor development and the optimal ordering of options in multiple-choice items.\""
+  }
+ },
+ "07-M10-c28": {
+  "mid": "07-M10",
+  "claim": "Correct-answer organization across scrambled exam versions was tested for effects on undergraduates' answer selection, addressing the same concern the app's shuffling targets.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim overgeneralizes the source's focus on consecutive correct answers (4-5 in a row) to all 'correct-answer organization' and omits the survey's nuance (students noticed patterns but performance was unaffected).",
+   "smallest_fix": "Specify that the study tested the effect of 4-5 consecutive identical correct answers on undergraduates' performance, finding no adverse impact."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly describes testing whether correct-answer organization in computer-scrambled MCQ versions affects undergraduates’ answer selection, without overstating the findings.",
+   "smallest_fix": "No fix is needed."
+  }
+ },
+ "07-M11-c1": {
+  "mid": "07-M11",
+  "claim": "Language-model generation is known to produce unsupported text, which is the problem the quote-tie is meant to catch.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source discusses hallucination in NLG broadly but does not explicitly state that language-model generation is *known* to produce unsupported text (the claim's wording is too strong).",
+   "smallest_fix": "Replace 'is known to produce' with 'can produce'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "error",
+   "problem": "nvidia 429: Too Many Requests"
+  }
+ },
+ "07-M11-c2": {
+  "mid": "07-M11",
+  "claim": "Retrieval-augmented models that generate from an explicit source index are proposed partly because citing provenance is otherwise unsolved.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source states that providing provenance is an open research problem, but does not explicitly say it is 'unsolved' or that retrieval-augmented models are proposed *partly* for this reason.",
+   "smallest_fix": "Replace 'are proposed partly because citing provenance is otherwise unsolved' with 'address the open problem of providing provenance'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source explicitly identifies providing provenance as an open research problem for pre-trained models, states that explicit non-parametric memory can overcome it, and frames RAG — which generates using a retrieved Wikipedia vector index — as extending this beyond extractive tasks, so the claim's cautious \"partly because\" motivation matches the text.",
+   "smallest_fix": "No change needed; optionally replace \"citing provenance\" with \"providing provenance for their decisions\" to mirror the source's wording exactly."
+  }
+ },
+ "07-M11-c19": {
+  "mid": "07-M11",
+  "claim": "Reviews of retrieval-augmented generation in clinical settings report that grounding in retrieved text is used to improve factual consistency and reduce hallucination.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not explicitly state that grounding in retrieved text is used to improve factual consistency and reduce hallucination in clinical settings, only that RAG in general does so.",
+   "smallest_fix": "Replace 'grounding in retrieved text is used' with 'RAG is used'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source is a review of 30 studies on RAG in clinical domains and explicitly states that integrating external knowledge retrieval improves factual consistency and reduces hallucinations, which supports the claim’s mechanism, direction, and clinical context.",
+   "smallest_fix": "No substantive fix needed; optionally change “Reviews” to “A review of 30 clinical-domain studies” to reflect the singular source precisely."
+  }
+ },
+ "07-M11-c3": {
+  "mid": "07-M11",
+  "claim": "Whether a model can attribute the text it generates is treated as a central requirement for information-seeking use.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source states attribution is 'likely to be crucial' (not a central requirement) and focuses on QA, not all information-seeking use.",
+   "smallest_fix": "Replace 'central requirement' with 'likely to be crucial' and specify 'in QA tasks'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly states that the ability of an LLM to attribute the text it generates is likely to be crucial in information-seeking settings, which supports the claim's characterization of attribution as a central requirement for such use.",
+   "smallest_fix": "No fix needed."
+  }
+ },
+ "07-M11-c21": {
+  "mid": "07-M11",
+  "claim": "ChatGPT-generated citations and references are frequently non-existent, so requiring a quote to actually be found in the source screens out fabricated support.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source shows that a significant portion of ChatGPT-generated citations do not exist (27.3% in natural sciences, 23.4% in humanities), but it does not confirm that requiring a quote to be found in the source screens out fabricated support.",
+   "smallest_fix": "Replace 'frequently non-existent' with 'sometimes non-existent' and clarify that the study only evaluated existence, not the screening effect of requiring quotes."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports that many ChatGPT citations did not exist or could not be confirmed (15/55 and 11/47 across the two disciplines), but it does not test or mention the claimed use of requiring a quote to be found in the source to screen out fabricated support.",
+   "smallest_fix": "Delete “so requiring a quote to actually be found in the source screens out fabricated support.”"
+  }
+ },
+ "07-M11-c4": {
+  "mid": "07-M11",
+  "claim": "Even strong retrieval-and-citation systems often lack a citation that fully supports the statement, so a present quote does not by itself guarantee the claim is supported.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source text does not explicitly state that 'a present quote does not by itself guarantee the claim is supported', only that current systems lack complete citation support 50% of the time on a specific dataset.",
+   "smallest_fix": "Replace 'a present quote does not by itself guarantee the claim is supported' with 'current systems lack complete citation support 50% of the time on the ELI5 dataset'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly reports that even the best models on ELI5 lack complete citation support 50% of the time, supporting the claim that the presence of a quote alone does not guarantee full support.",
+   "smallest_fix": "No change needed; optionally specify the ELI5 setting and the reported 50% rate for precision."
+  }
+ },
+ "07-M12-c1": {
+  "mid": "07-M12",
+  "claim": "Strong LLM judges can reach roughly human-level agreement with human preferences on open-ended evaluation, so a model checker is a usable screen for content quality.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not explicitly state that LLM judges can be used as a 'model checker' for content quality, only that they approximate human preferences.",
+   "smallest_fix": "Replace 'a model checker is a usable screen for content quality' with 'LLM judges can approximate human preferences for evaluation'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "None; the source states that strong LLM judges such as GPT-4 can match both controlled and crowdsourced human preferences, achieving over 80% agreement—the same level as agreement between humans—and describes LLM-as-a-judge as a scalable, explainable way to approximate human preferences, which supports using a model checker as a practical screen for quality.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M12-c2": {
+  "mid": "07-M12",
+  "claim": "A panel of diverse, smaller judges from disjoint model families beats a single large judge while showing less intra-model bias, supporting the app's use of other-family auditors.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source does not explicitly state that the panel consists of judges from 'other-family auditors' or that the app uses them.",
+   "smallest_fix": "Replace 'supporting the app's use of other-family auditors' with 'due to its composition of disjoint model families'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No material mismatch: the source directly reports that a PoLL of smaller models from disjoint families outperforms a single large judge across three judge settings and six datasets and exhibits less intra-model bias.",
+   "smallest_fix": "No change needed; if desired, specify that the result spans three judge settings and six datasets."
+  }
+ },
+ "07-M12-c3": {
+  "mid": "07-M12",
+  "claim": "Making a model plan and answer verification questions about its own draft reduces hallucination on several factuality tasks, backing a verification pass before output is shown.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "No problem; the source describes planning and independently answering verification questions about the model’s draft before producing a final verified response, and reports reduced hallucination across several task types.",
+   "smallest_fix": "None needed."
+  }
+ },
+ "07-M12-c4": {
+  "mid": "07-M12",
+  "claim": "Inconsistent, diverging sampled responses can signal hallucinated content without an external database, supporting consistency-based screening rather than a single pass.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly supports that repeatedly sampled responses tend to diverge and contradict one another for hallucinated facts, and presents this as a sampling-based, zero-resource screening method that does not require an external database.",
+   "smallest_fix": "No change needed; optionally specify that the reported investigation used GPT-3-generated passages about individuals from the WikiBio dataset."
+  }
+ },
+ "07-M12-c7": {
+  "mid": "07-M12",
+  "claim": "In a non-English global-health setting, building juries to balance model biases improved agreement on only one extra criterion, and judges varied from lenient to harsh.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source supports that, in a Rwandan global-health evaluation that included Kinyarwanda, bias-balancing LLM juries improved agreement on only one additional criterion and that judges exhibited lenient and harsh scoring biases.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M12-c10": {
+  "mid": "07-M12",
+  "claim": "A survey of LLM-as-a-judge concludes that reliable judging is not automatic and depends on careful design, bias mitigation and standardization.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim adds 'bias mitigation' as a dependency, but the source only explicitly mentions 'mitigating biases' as a strategy rather than a strict requirement for reliability.",
+   "smallest_fix": "Remove 'bias mitigation' or rephrase to 'strategies like bias mitigation'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source explicitly describes a comprehensive survey of LLM-as-a-judge and states that ensuring reliability remains a significant challenge requiring careful design and standardization, while identifying bias mitigation as a reliability-enhancing strategy.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M12-c12": {
+  "mid": "07-M12",
+  "claim": "In healthcare reviews, LLM judges track clinicians best on objective criteria such as factuality and internal consistency but are limited elsewhere.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports the strongest clinician alignment on objective criteria such as factuality and internal consistency, but “limited elsewhere” is broader than its specific finding that judges remain limited for subjective or affective judgments (and for some tasks or datasets).",
+   "smallest_fix": "Replace “but are limited elsewhere” with “but remain limited for subjective or affective judgments.”"
+  }
+ },
+ "07-M13-c1": {
+  "mid": "07-M13",
+  "claim": "Trusted learning analytics is framed as requiring an explicit, checkable set of privacy safeguards rather than ad hoc practice.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source mentions a checklist (DELICATE) for trusted implementation but does not explicitly state that trusted learning analytics *requires* an explicit, checkable set of privacy safeguards rather than ad hoc practice.",
+   "smallest_fix": "Replace 'is framed as requiring' with 'can be facilitated by'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports an eight-point checklist for facilitating trusted learning analytics but does not identify it as a set of privacy safeguards or frame its use as required rather than optional.",
+   "smallest_fix": "Replace the claim with: “The paper proposes an eight-point checklist, DELICATE, to facilitate trusted implementation of learning analytics.”"
+  }
+ },
+ "07-M13-c10": {
+  "mid": "07-M13",
+  "claim": "Students often do not know what data is collected and consider informed consent and control over sharing necessary.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "error",
+   "problem": "nvidia 429: Too Many Requests"
+  }
+ },
+ "07-M13-c9": {
+  "mid": "07-M13",
+  "claim": "Students who perceive privacy risk are more concerned, and perceived privacy control is modelled as shaping trust and disclosure.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The claim states that perceived privacy control shapes trust and disclosure, but the source text specifies that perceived privacy control and privacy risks *together* determine trusting beliefs, and privacy concerns (not control alone) affect non-self-disclosure.",
+   "smallest_fix": "Perceived privacy control, along with privacy risk, shapes trust, and privacy concerns (influenced by perceived privacy risk) affect disclosure."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly supports both parts: perceived privacy risk is a \"firm predictor\" of students' privacy concerns, and the SPICE model treats perceived privacy control as an antecedent of trusting beliefs and of willingness to share personal information (with non-self-disclosure behaviour as an outcome) in the learning-analytics higher-education context.",
+   "smallest_fix": "None needed; at most, specify the setting as \"students in higher education learning analytics (132 students at three Swedish universities)\" to make the population explicit."
+  }
+ },
+ "07-M13-c3": {
+  "mid": "07-M13",
+  "claim": "Technical privacy measures rest on assumptions about individual control and depend on institutional governance, consent and accountability, not technology alone.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "partly",
+   "problem": "The source text focuses specifically on student data privacy in learning analytics, not technical privacy measures in general.",
+   "smallest_fix": "Specify that the claim applies to student data privacy in learning analytics."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source directly supports the claim: technological privacy solutions rely on assumptions about individual control, while privacy regulation through technology mostly depends on institutional data governance, consent, security and accountability rather than technology alone.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "07-M13-c18": {
+  "mid": "07-M13",
+  "claim": "Ethics guidance specifically for children and K-12 AI is less developed than general AI ethics policy, so child-specific rules rest on general principles.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The source supports that child/K-12 guidance has lagged behind general AI ethics policy and largely reuses core general principles, but the claim omits that the analysis also found four principles unique to K-12 education (Pedagogical Appropriateness, Children's Rights, AI Literacy, and Teacher Well-being).",
+   "smallest_fix": "Say that child/K-12 guidance has lagged behind general AI ethics policy and draws on its core principles, while also introducing some K-12-specific principles."
+  }
+ },
+ "07-M13-c23": {
+  "mid": "07-M13",
+  "claim": "Children's data privacy rights under GDPR are raised as a hard problem, with current regulation not easily supporting a fair balance.",
+  "planted": false,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "supported",
+   "problem": "The source explicitly highlights children's data privacy rights under the 2018 GDPR and concludes that balancing fairness, privacy rights, pedagogic rights, and effective data use is a difficult challenge not easily supported by current regulation.",
+   "smallest_fix": "No change needed."
+  }
+ },
+ "PLANT-1": {
+  "mid": "07-M1",
+  "claim": "Indexing textbook sections with concepts by hand is effortful and error-prone, which motivates automatic keyphrase/concept extraction from the material.",
+  "planted": true,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not mention the effort or error-proneness of manual indexing of textbook sections with concepts, nor does it discuss automatic keyphrase/concept extraction.",
+   "smallest_fix": "Remove the claim or provide a source that explicitly supports the effort and error-proneness of manual indexing and the motivation for automatic extraction."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source is a survey abstract about prerequisite relation learning in educational technology and never mentions manual indexing of textbook sections, its effortfulness or error-proneness, nor automatic keyphrase/concept extraction as the motivation.",
+   "smallest_fix": "Remove this citation-supported claim (or replace the source with one that discusses manual concept indexing), or restate it as what the source shows: the survey reviews methods for identifying dependencies between learning resources (knowledge concepts and learning objects) to support personalized learning and content organization."
+  }
+ },
+ "PLANT-2": {
+  "mid": "07-M2",
+  "claim": "The strong claim that prerequisites are essential holds only for intellectual skills, not for specific verbalized facts, so gating every skill on mastery is not supported across all content types.",
+  "planted": true,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not address the claim about prerequisites being essential for intellectual skills but not for specific verbalized facts, nor does it discuss gating skills on mastery.",
+   "smallest_fix": "Remove the claim or provide a source that directly supports the assertion about prerequisites and content types."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source describes and evaluates FACE for automatic concept extraction from digital textbooks and does not address prerequisite mastery, intellectual skills versus verbalized facts, or the gating of skills.",
+   "smallest_fix": "Replace the claim with: \"FACE is a supervised feature-based method for automatic concept extraction from digital textbooks that outperformed several state-of-the-art keyphrase extraction methods on a newly constructed full-scale dataset.\""
+  }
+ },
+ "PLANT-3": {
+  "mid": "07-M3",
+  "claim": "A large simulation using real ALEKS data examined how reliably a knowledge-space-theory adaptive assessment measures what a learner knows, showing the knowledge-space approach is being evaluated at scale rather than assumed correct.",
+  "planted": true,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text is about LLMs generating radiology MCQs, not about knowledge-space-theory adaptive assessment or ALEKS data.",
+   "smallest_fix": "Remove the claim entirely or replace it with a supported statement about LLMs generating radiology MCQs."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source evaluates LLM-generated radiology board-style MCQs and contains nothing about ALEKS data, knowledge-space theory, adaptive assessment, or measurement reliability, so none of the claim's topic, design, population, or findings are shown.",
+   "smallest_fix": "Replace the claim with: \"Two LLMs (Llama 2 and GPT-4) were used to develop 104 radiology board-style MCQs and rationales that were rated by two board-certified radiologists and compared with ACR DXIT items, with GPT-4 scoring not significantly differently from ACR DXIT items and Llama 2 scoring lower.\""
+  }
+ },
+ "PLANT-4": {
+  "mid": "07-M4",
+  "claim": "A meta-analysis finds guidance generally helps learning, so automatically stripping support from apparently knowledgeable learners (one perfect check moves a skill up a tier) may remove help that still pays off.",
+  "planted": true,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source is about concept maps improving learning, not about guidance in general or the specific scenario of stripping support from knowledgeable learners.",
+   "smallest_fix": "Replace 'guidance generally helps learning' with 'concept maps improve knowledge retention in specific educational settings'."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "partly",
+   "problem": "The meta-analysis supports only that concept-map use was associated with increased knowledge retention, with effects varying by implementation and substantial heterogeneity, but it does not establish that guidance generally helps learning or examine automatically withdrawing support from learners who pass one check.",
+   "smallest_fix": "Replace the claim with: \"This meta-analysis found that concept-map use was associated with increased knowledge retention on average, although effects varied substantially; it did not directly test automatically removing support from learners who pass one check.\""
+  }
+ },
+ "PLANT-5": {
+  "mid": "07-M5",
+  "claim": "In a virtual-reality abdominal ultrasound course, 21 of 24 trainees reached a predefined mastery level on two consecutive attempts, and the study set out to measure the cost per trainee of reaching that standard.",
+  "planted": true,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not mention a virtual-reality abdominal ultrasound course, trainees, mastery levels, or cost per trainee.",
+   "smallest_fix": "Remove the claim entirely or replace it with a claim supported by the source text."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source concerns automatic keyphrase extraction for adaptive digital textbooks and contains nothing about virtual-reality abdominal ultrasound training, the 21-of-24 mastery result, or cost per trainee.",
+   "smallest_fix": "Remove this citation or replace it with the ultrasound-course study that reports 21 of 24 trainees reaching mastery on two consecutive attempts and set out to measure cost per trainee reaching that standard."
+  }
+ },
+ "PLANT-6": {
+  "mid": "07-M6",
+  "claim": "This essay warns that the term misconception is tied to eradication or replacement and argues that students' naive ideas can be resources for building understanding.",
+  "planted": true,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text is about LLMs generating radiology MCQs and does not mention the term 'misconception' or students' naive ideas.",
+   "smallest_fix": "Remove the claim entirely as it is unrelated to the source."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source evaluates LLMs' ability to generate radiology board-style MCQs and rationales and says nothing about the term \"misconception,\" eradication or replacement, or students' naive ideas as resources for building understanding.",
+   "smallest_fix": "Replace the claim with: \"This study concludes that a state-of-the-art LLM such as GPT-4 may be used to develop radiology board-style MCQs and rationales to enhance exam preparation materials and serve as teaching and learning tools.\""
+  }
+ },
+ "PLANT-7": {
+  "mid": "07-M8",
+  "claim": "In a preregistered cluster randomized trial in real classrooms, students given interleaved assignments outscored blocked-practice students on an unannounced test one month later.",
+  "planted": true,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text is about a meta-analysis on concept maps, not interleaved vs. blocked practice in classrooms.",
+   "smallest_fix": "Replace the claim with evidence from a study on interleaved vs. blocked practice in real classrooms."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source is a meta-analysis of concept-map learning and does not report a preregistered cluster-randomized classroom trial or an interleaved-versus-blocked comparison on an unannounced test one month later.",
+   "smallest_fix": "Replace the claim with: \"In a meta-analysis of 55 studies involving 5,818 participants, students using concept maps showed increased knowledge retention relative to comparison treatments, with effects ranging from small to large and significant heterogeneity in most subsets.\""
+  }
+ },
+ "PLANT-8": {
+  "mid": "07-M9",
+  "claim": "Spacing improves long-term retention, but the optimal gap changes with the test delay rather than being a single fixed rule.",
+  "planted": true,
+  "qwen": {
+   "rating": "error",
+   "problem": "xkiro: daily free allowance used (950000 tokens per day)"
+  },
+  "mistral": {
+   "rating": "not_supported",
+   "problem": "The source text does not mention spacing, long-term retention, or optimal gaps for learning.",
+   "smallest_fix": "Remove the claim or provide a relevant source that discusses spacing and retention."
+  },
+  "glm": {
+   "rating": "error",
+   "problem": "nvidia 410: The model 'z-ai/glm-5.3' has reached its end of life on 2026-10-28T08:00:00Z and is no longer available."
+  },
+  "kimi": {
+   "rating": "error",
+   "problem": "nvidia 404: Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account 'bTWhf_xWBaMgjMx609H90hQ4Wbzogw5vbTWXy2tgxRk'"
+  },
+  "minimax": {
+   "rating": "not_supported",
+   "problem": "The source concerns automatic concept extraction and student modeling for adaptive digital textbooks and provides no evidence about spacing, long-term retention, optimal gaps, or test delays.",
+   "smallest_fix": "Replace the claim with: “FACE outperforms several state-of-the-art keyphrase extraction methods on a newly constructed full-scale digital-textbook dataset.”"
+  }
+ }
+}

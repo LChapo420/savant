@@ -1,0 +1,403 @@
+{
+ "06-M2-c1": {
+  "mid": "06-M2",
+  "old": "Across studies of interactive learning environments, good help-seeking predicts better learning, yet learners typically do not use on-demand help facilities effectively.",
+  "claim": "Across studies of interactive learning environments, good help-seeking predicts better learning, yet learners typically do not use on-demand help facilities effectively.",
+  "decision": "rewrite",
+  "why": "The source attributes the evidence to recent studies, states that effective help-seeking is related to better learning outcomes, and says learners are not using help facilities effectively; it does not support the broader 'across studies' framing or the causal term 'predicts'.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The claim generalizes 'studies' and uses 'predicts' (causal) while the source mentions 'recent studies report evidence' (correlational) and does not explicitly state 'across studies' or causality.",
+   "smallest_fix": "Replace 'Across studies... predicts' with 'Recent studies report that effective help-seeking behavior in ILEs is related to better learning outcomes'."
+  }
+ },
+ "06-M2-c3": {
+  "mid": "06-M2",
+  "old": "Students in a real classroom ITS who voluntarily kept their level of hint support to a minimum achieved greater learning gains, suggesting that withholding help can benefit learning.",
+  "claim": "Students in a real classroom ITS who actively restrained themselves from requesting help, keeping their level of hint support to a minimum, achieved greater learning gains, suggesting that active keeping-off behavior can benefit learning.",
+  "decision": "rewrite",
+  "why": "The source supports greater gains for active keeping-off behavior, in which students restrain help requests, but explicitly says it did not detect the effect for voluntary self-fading behavior. Narrowing the claim to active keeping-off behavior preserves the supported finding.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The claim generalizes 'active keeping-off behavior' to 'active restraint from requesting help' and omits that the effect was only observed for keeping-off behavior, not self-fading behavior.",
+   "smallest_fix": "Specify that only active keeping-off behavior (not all restraint from help) showed greater learning gains in a real classroom ITS."
+  }
+ },
+ "06-M2-c11": {
+  "mid": "06-M2",
+  "old": "Students who failed to seek help when they needed it generally had worse robust learning outcomes in a genetics cognitive tutor.",
+  "claim": "Students who failed to seek help when they needed it generally had worse robust learning outcomes in a genetics cognitive tutor.",
+  "decision": "rewrite",
+  "why": "The source reports a correlational negative association, not that help avoidance caused worse outcomes, and qualifies it as holding except at very high or very low prior knowledge. Smallest supported rewrite: “In two modules of the Genetics Cognitive Tutor, help avoidance was generally negatively correlated with robust learning outcomes, except at very high or very low prior knowledge levels.”",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The source shows a negative correlation between help avoidance and robust learning outcomes, but does not explicitly state that students who failed to seek help 'generally had worse' outcomes (causality/strength of wording).",
+   "smallest_fix": "Replace 'generally had worse' with 'was negatively correlated with'."
+  }
+ },
+ "06-M3-c1": {
+  "mid": "06-M3",
+  "old": "Meta-analytic evidence indicates that taking a test over previously studied material is itself a potent learning event (the testing effect), supporting testing over restudy for retention.",
+  "claim": "Meta-analytic evidence indicates that taking a test over previously studied material is itself a potent learning event (the testing effect), supporting testing over restudy for retention.",
+  "decision": "rewrite",
+  "why": "The source supports that testing previously studied information can be a potent learning event and that one meta-analysis examines testing versus restudy effects on retention. It does not support the broader phrase \"meta-analytic evidence\" or the stronger conclusion that it supports testing over restudy for retention.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The source text describes a single meta-analysis (not meta-analytic evidence in general) and does not explicitly state that testing is supported over restudy for retention, only that it examines the effects.",
+   "smallest_fix": "Replace 'Meta-analytic evidence indicates' with 'A meta-analysis indicates' and add 'examines' before 'supporting testing over restudy'."
+  }
+ },
+ "06-M3-c2": {
+  "mid": "06-M3",
+  "old": "A meta-analysis of psychology classrooms found that testing during the learning phase benefited later retrieval from long-term memory.",
+  "claim": "A meta-analysis of psychology classrooms found that testing during the learning phase benefited later retrieval from long-term memory.",
+  "decision": "rewrite",
+  "why": "The source reports that the psychology-class meta-analysis found testing beneficial to learning outcomes. It states that testing facilitates later retrieval from long-term memory as background, but does not attribute that specific outcome to the meta-analysis.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The source describes a meta-analysis of psychology classes but does not explicitly state that the meta-analysis found the effect (only that it was investigated and a significant effect size was observed).",
+   "smallest_fix": "Replace 'found that testing... benefited' with 'found that testing... was associated with a benefit (d = 0.56) in'."
+  }
+ },
+ "06-M3-c3": {
+  "mid": "06-M3",
+  "old": "Retrieval practice produced worse transitive inference than restudy in a small-scale meta-analysis, showing the testing effect does not extend to some complex, high-interactivity reasoning.",
+  "claim": "Retrieval practice produced worse transitive inference than restudy in a small-scale meta-analysis, suggesting this aspect of reasoning may be impaired by retrieval practice.",
+  "decision": "rewrite",
+  "why": "The source supports worse transitive inference under retrieval practice and a significant negative testing effect, but it hedges the broader conclusion with “may be impaired” rather than showing that the testing effect does not extend to complex reasoning generally.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M3-c23": {
+  "mid": "06-M3",
+  "old": "Assessment validity is defined as whether an instrument measures what it purports to measure, which supports the principle that outside help would compromise what a test measures.",
+  "claim": "Assessment validity is defined as whether an instrument measures what it purports to measure, which supports the principle that outside help would compromise what a test measures.",
+  "decision": "rewrite",
+  "why": "The source supports only the definition of validity as whether a test or measurement instrument measures what it purports to measure. It does not mention outside help or say that outside help compromises what a test measures. Smallest supported rewrite: \"Assessment validity is defined as whether an instrument measures what it purports to measure.\"",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The source defines validity but does not explicitly support the claim that outside help would compromise what a test measures.",
+   "smallest_fix": "Remove the clause about outside help or provide a source that explicitly links outside help to compromised validity."
+  }
+ },
+ "06-M4-c26": {
+  "mid": "06-M4",
+  "old": "A scaffolding chatbot showed no significant difference in math learning versus traditional hints in an online platform, though students' confidence dropped afterward.",
+  "claim": "A scaffolding chatbot showed no significant difference in math learning versus traditional hints in an online platform, though students' confidence dropped afterward.",
+  "decision": "rewrite",
+  "why": "The source supports no significant difference in math learning, but the confidence finding was significant and occurred specifically among students in the chatbot condition. Smallest supported rewrite: \"A scaffolding chatbot showed no significant difference in math learning versus traditional hints in an online platform, though students' confidence significantly dropped afterward in the chatbot condition.\"",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M5-c14": {
+  "mid": "06-M5",
+  "old": "A second-order meta-analysis found that technology-supported learning activities at more advanced ICAP levels yielded higher cognitive learning outcomes.",
+  "claim": "A second-order meta-analysis found that technology-supported learning activities aligned with more advanced ICAP levels yielded higher cognitive learning outcomes.",
+  "decision": "rewrite",
+  "why": "The source directly reports that digital technologies offering more advanced learning activities resulted in higher cognitive learning outcomes, and separately says the study supports enhancing the ICAP level of learning activities. It does not explicitly state that the observed higher outcomes were specifically tied to more advanced ICAP levels.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The claim specifies 'a second-order meta-analysis found' but the source text describes a systematic review of meta-analyses and a second-order meta-analysis, not just a second-order meta-analysis.",
+   "smallest_fix": "Replace 'A second-order meta-analysis found' with 'A systematic review of meta-analyses and a second-order meta-analysis found'."
+  }
+ },
+ "06-M5-c26": {
+  "mid": "06-M5",
+  "old": "The segmenting principle holds that presenting material in learner-paced small segments yields deeper learning than one continuous unit.",
+  "claim": "The segmenting principle holds that presenting a multimedia message in learner-paced segments yields deeper learning than as a continuous unit.",
+  "decision": "rewrite",
+  "why": "The source supports the segmenting principle for a multimedia message presented in learner-paced segments versus a continuous unit. It does not support the broader term 'material' or the added descriptor 'small.'",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M9-c2": {
+  "mid": "06-M9",
+  "old": "Tutoring systems are described as running an inner loop that gives feedback and hints on each step and updates a model of the student's evolving competence, which is the step-level awareness this page rule is meant to supply.",
+  "claim": "Tutoring systems are described as running an inner loop that gives feedback and hints on each step and updates a model of the student's evolving competence, which is the step-level awareness this page rule is meant to supply.",
+  "decision": "rewrite",
+  "why": "The source supports the topic and the inner loop's step-level feedback, hints, competence assessment, and student-model update, but it presents these as capabilities: the inner loop \"can give\" feedback and hints and \"can also assess\" evolving competence and update a student model. The smallest supported rewrite is: \"Tutoring systems are described as running an inner loop that can give feedback and hints on each step and can assess the student's evolving competence and update a student model, which is the step-level awareness this page rule is meant to supply.\"",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The claim omits that the inner loop's updates to the student model are used by the outer loop for task selection, and the source does not mention 'step-level awareness' or 'this page rule'.",
+   "smallest_fix": "Replace 'which is the step-level awareness this page rule is meant to supply' with 'and updates a student model used by the outer loop to select tasks'."
+  }
+ },
+ "06-M9-c8": {
+  "mid": "06-M9",
+  "old": "An intervention study treats diagnosing the learner's current understanding before giving adapted support as central to good teaching, supporting the page-awareness-then-diagnose logic.",
+  "claim": "An intervention study treats diagnosing the learner's current understanding before giving adapted support as central to good teaching, as demonstrated in a teacher professional development intervention using a model of contingent teaching.",
+  "decision": "rewrite",
+  "why": "The source supports diagnosing current understanding before giving contingent support as a key aspect of excellent teaching and describes a professional development intervention based on a model of contingent teaching. It does not mention or support the phrase “page-awareness-then-diagnose logic.”",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M9-c4": {
+  "mid": "06-M9",
+  "old": "A meta-analysis of scaffolding in online higher education finds a large, statistically significant effect on learning outcomes, backing the general principle that scaffolding online helps.",
+  "claim": "A meta-analysis of scaffolding in online higher education finds a large, statistically significant effect on learning outcomes, suggesting that scaffolding may help in this context.",
+  "decision": "rewrite",
+  "why": "The source supports the meta-analysis finding, but the original claim broadens it into a general principle about scaffolding online. Narrowing the implication to this higher-education context and using “suggesting” preserves the source’s scope.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The claim uses 'may help' which weakens the source's stronger conclusion of a large, statistically significant effect.",
+   "smallest_fix": "Replace 'may help' with 'has a large, statistically significant effect on'."
+  }
+ },
+ "06-M9-c20": {
+  "mid": "06-M9",
+  "old": "A mediation study found that although students applying a teacher's support predicted more accurate answers, the contingency of that support did not affect uptake or answer accuracy, cautioning that contingent awareness alone may not drive learning.",
+  "claim": "A mediation study found that among secondary social studies students, applying a teacher’s support was associated with a higher likelihood of formulating accurate answers during subsequent small-group work, whereas the contingency of that support did not affect students’ uptake or answer accuracy.",
+  "decision": "rewrite",
+  "why": "The source supports the association with accurate answers only in subsequent small-group work and specifies the secondary social studies setting. The original wording’s broader “predicted more accurate answers” and its caution about learning go beyond the source.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M10-c9": {
+  "mid": "06-M10",
+  "old": "A spoken-dialogue CALL system required many adaptations to cope with the numerous errors and variations produced by non-native speakers.",
+  "claim": "A spoken-dialogue CALL system required many adaptations to cope with the numerous errors and variations produced by non-native speakers.",
+  "decision": "rewrite",
+  "why": "The source refers to a variety of adaptations applied to spoken dialog systems within a set of POSTECH CALL approaches, to overcome problems caused by errors and variations from non-native speakers. It does not support a single system requiring many adaptations.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The claim states the system 'required many adaptations' (implying necessity), while the source says 'a variety of adaptations have been applied' (implying action taken, not strict necessity).",
+   "smallest_fix": "Change 'required many adaptations' to 'applied many adaptations'."
+  }
+ },
+ "06-M10-c19": {
+  "mid": "06-M10",
+  "old": "An ASR-based reading tutor produced significant positive effects on reading accuracy for first-grade pupils.",
+  "claim": "An ASR-based reading tutor with explicit or implicit feedback produced significant positive effects on reading accuracy for first-grade pupils.",
+  "decision": "rewrite",
+  "why": "The source reports significant positive effects for both explicit and implicit feedback conditions within the ASR-based tutor, so the claim should specify those conditions rather than attribute the effect to the tutor generally.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M11-c16": {
+  "mid": "06-M11",
+  "old": "Memory and consistency toward the user is one of the recurring design levers linked to relationship quality (rapport) between students and social pedagogical agents.",
+  "claim": "Memory and consistency is one of the recurring design levers linked to relationship quality (rapport) between students and social pedagogical agents.",
+  "decision": "rewrite",
+  "why": "The source supports memory and consistency as a recurring design lever shaping relationship quality, and separately identifies rapport as one aspect of relationship quality. It does not specifically link memory and consistency to rapport. Smallest supported rewrite: “Memory and consistency is one of the recurring design levers shaping relationship quality between students and social pedagogical agents.”",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M11-c6": {
+  "mid": "06-M11",
+  "old": "Motivated learners will use a simple open learner model and want to consult their stored model information over time to plan learning.",
+  "claim": "Motivated learners will use a simple open learner model and want to consult their stored model information over time to plan learning.",
+  "decision": "rewrite",
+  "why": "The source reports results from one four-week study of trainee pilots and says that motivated users such as trainee pilots will use the model and are interested in consulting learner-model information for planning over time. A supported rewrite is: “One study suggests that motivated users such as trainee pilots will use a simple open learner model and are interested in consulting their learner-model information over time to plan learning.”",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The source suggests motivated users *may* use the model and *are interested* in consulting it, but the claim states they *will* use it and *want* to consult it, which is stronger than the source supports.",
+   "smallest_fix": "Change 'will use' to 'may use' and 'want to consult' to 'are interested in consulting'."
+  }
+ },
+ "06-M11-c8": {
+  "mid": "06-M11",
+  "old": "E-portfolios and independent open learner models persist user-managed learner data across a career, aiding decision-making and personal reflection.",
+  "claim": "In the Army Learning Concept (ALC) 2015, e-portfolios and independent open learner models are user-managed tools that can aid decision-making about career development and provide personal reflection, within a learning model that offers Soldiers opportunities to provide input throughout their careers.",
+  "decision": "rewrite",
+  "why": "The source supports that these tools are user-managed and can aid career-development decision-making and personal reflection. It separately states that the ALC 2015 learning model should offer Soldiers opportunities to provide input throughout their careers, but it does not say that the tools persist learner data across a career.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M13-c15": {
+  "mid": "06-M13",
+  "old": "A meta-analysis of 35 experimental studies found a moderately positive effect of ChatGPT on student learning outcomes across cognitive and non-cognitive skills.",
+  "claim": "A meta-analysis of 35 experimental studies found a moderately positive effect of ChatGPT on student learning outcomes across cognitive and non-cognitive skills.",
+  "decision": "rewrite",
+  "why": "The source supports a meta-analysis of 35 studies involving 4,193 participants, a moderately positive effect, and significant enhancement of both cognitive and non-cognitive skills, but it does not characterize the studies as experimental. Smallest supported rewrite: “A meta-analysis of 35 studies involving 4,193 participants found a moderately positive effect of ChatGPT on student learning outcomes, significantly enhancing both cognitive and non-cognitive skills.”",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M13-c10": {
+  "mid": "06-M13",
+  "old": "In a meta-analysis of RCTs on clinical simulation skills training, LLM-based support showed no statistically significant advantage over traditional training, though other AI types did.",
+  "claim": "In a meta-analysis of RCTs on clinical simulation skills training, LLM-based support showed no statistically significant advantage over traditional training, though vision-based deep-learning AI may have shown an advantage.",
+  "decision": "rewrite",
+  "why": "The source supports no statistically significant difference for the large language model, but describes the vision-based deep-learning AI advantage as possible or hedged rather than definitive.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M13-c28": {
+  "mid": "06-M13",
+  "old": "A survey of the field documents that LLMs are inherently prone to generating plausible but nonfactual content, a reliability concern for LLM answer quality.",
+  "claim": "A survey of the field discusses that LLMs are prone to generating plausible but nonfactual content, a reliability concern for LLMs in real-world information retrieval systems.",
+  "decision": "rewrite",
+  "why": "The source supports that LLMs are prone to hallucination and generate plausible yet nonfactual content, and that this raises reliability concerns in real-world information retrieval systems. It does not support 'inherently prone' or the broader phrase 'LLM answer quality,' and 'documents that' overstates what the survey text says.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M13-c24": {
+  "mid": "06-M13",
+  "old": "A hybrid retrieval-augmented generation plus guardrails framework empirically reduced hallucinated content substantially, indicating guardrails can partially mitigate hallucination.",
+  "claim": "A hybrid retrieval-augmented generation plus guardrails framework empirically reduced hallucinated content substantially, indicating guardrails can partially mitigate hallucination.",
+  "decision": "rewrite",
+  "why": "The source supports a 30–45% reduction from the combined RAG and NeMo Guardrails approach, but it does not isolate guardrails' effect or support the claim that guardrails alone partially mitigate hallucination. Smallest supported rewrite: \"A hybrid retrieval-augmented generation plus guardrails framework empirically reduced hallucinated content by 30–45%, suggesting the combined approach can mitigate hallucination.\"",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M1-c27": {
+  "mid": "06-M1",
+  "old": "A good tutor per student (or per two or three students) is a more effective learning condition than conventional class instruction with about 30 students per teacher.",
+  "claim": "A good tutor per student (or per two or three students) is a more effective learning condition than conventional class instruction with about 30 students per teacher.",
+  "decision": "rewrite",
+  "why": "The source defines tutoring as one instructional condition and conventional instruction as a class with about 30 students per teacher, but it does not state that tutoring is more effective.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The source describes the conditions but does not explicitly state that tutoring is *more effective* than conventional instruction.",
+   "smallest_fix": "Add 'may be' before 'a more effective learning condition' or cite a result showing the effectiveness comparison."
+  }
+ },
+ "06-M1-c1": {
+  "mid": "06-M1",
+  "old": "Compared with no tutoring, both human tutoring and intelligent tutoring systems produce moderate-to-large improvements in learning.",
+  "claim": "Compared with no tutoring, both human tutoring and intelligent tutoring systems produce moderate-to-large improvements in learning.",
+  "decision": "rewrite",
+  "why": "The source supports that human tutoring had an effect size of d = 0.79 and intelligent tutoring systems had an effect size of d = 0.76, and that the two were nearly equally effective. It does not explicitly characterize these effects as moderate-to-large improvements.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The claim states 'moderate-to-large improvements' without specifying effect sizes, and the source provides exact effect sizes (d = 0.79 for human tutoring, d = 0.76 for intelligent tutoring systems).",
+   "smallest_fix": "Specify the effect sizes: 'produce improvements in learning with effect sizes of approximately d = 0.79 for human tutoring and d = 0.76 for intelligent tutoring systems.'"
+  }
+ },
+ "06-M6-c26": {
+  "mid": "06-M6",
+  "old": "Tracking a student's changing knowledge state with a model lets an adaptive tutor give individualized exercises and predicts test performance.",
+  "claim": "Tracking a student's changing knowledge state with a model lets an adaptive tutor give individualized exercises and predicts test performance.",
+  "decision": "keep",
+  "why": "The source says the tutor maintains probability estimates of which rules the student has learned, presents an individualized sequence of exercises based on those estimates, and that the model is successful in predicting test performance.",
+  "model": "gpt-6.1-sol"
+ },
+ "06-M6-c20": {
+  "mid": "06-M6",
+  "old": "Automatically generated feedback personalized to individual student needs was associated with higher exercise success rates in a large ITS.",
+  "claim": "Automatically generated feedback personalized to individual student needs was associated with higher exercise success rates in a large ITS.",
+  "decision": "keep",
+  "why": "The source explicitly states that the proposed automated, data-driven personalized feedback takes individual student needs into account and leads to improved success rates at solving exercises in Korbit, a large-scale ITS. The claim accurately preserves the association wording without adding unsupported details.",
+  "model": "gpt-6.1-sol"
+ },
+ "06-M7-c2": {
+  "mid": "06-M7",
+  "old": "Presenting identical material in individually personalized, meaningful contexts raised elementary students' motivation, engagement, and how much they learned in a fixed time.",
+  "claim": "Presenting identical material in meaningful contexts, in generic or individually personalized form, with or without additional choices, increased elementary students' motivation, engagement, and the amount they learned in a fixed time period.",
+  "decision": "rewrite",
+  "why": "The source supports increases from contextualization, personalization, and choice, and specifies meaningful contexts that were either generic or individually personalized. This wording avoids attributing the effect solely to individually personalized contexts while preserving the reported outcomes and population.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M7-c3": {
+  "mid": "06-M7",
+  "old": "The theory that personalizing tasks to interests works by generating situational interest is questioned, and whether such interventions improve both interest and achievement is uncertain.",
+  "claim": "The theory that personalizing tasks to interests works by generating situational interest is questioned, and whether such interventions improve both interest and achievement is uncertain.",
+  "decision": "keep",
+  "why": "The source explicitly says theorists have questioned whether situational interest is the mechanism producing learning outcomes, and that few studies show effects on both interest and achievement, calling into question whether interventions can achieve both ends. The claim accurately summarizes those statements without denying that this particular study found positive effects.",
+  "model": "gpt-6.1-sol"
+ },
+ "06-M8-c2": {
+  "mid": "06-M8",
+  "old": "Surveys indicate that neuromyths such as learning styles are prevalent among educators, even in a sample motivated to use neuroscience.",
+  "claim": "A survey found that neuromyths were prevalent among primary and secondary school teachers interested in neuroscience in selected regions of the UK and the Netherlands.",
+  "decision": "rewrite",
+  "why": "The source reports one survey of 242 primary and secondary teachers interested in neuroscience in selected UK and Netherlands regions, with teachers believing 49% of the neuromyths on average. It does not specifically mention learning styles, so that example should be removed.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
+  }
+ },
+ "06-M8-c15": {
+  "mid": "06-M8",
+  "old": "Belief in using learning styles remained high among higher-education academics even though the abstract states there is currently no evidence to support it, supporting that learning styles are a widespread myth.",
+  "claim": "Belief in using learning styles remained high among higher-education academics even though the abstract states there is currently no evidence to support it, supporting that learning styles are a widespread myth.",
+  "decision": "rewrite",
+  "why": "The source supports high belief at 58% among UK higher-education academics and states that there is currently no evidence supporting learning styles. It also says belief was lower than in similar previous studies and that some have labeled learning styles a “myth,” but it does not support the stronger phrasing “remained high” or directly frame the finding as proof of a “widespread myth.”",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The claim generalizes the population to 'higher-education academics' and implies the abstract states belief is high, but the source specifies the survey was limited to UK Higher Education (n=114) and reports 58% belief (not 'high' without context).",
+   "smallest_fix": "Belief in using learning styles remained high (58%) among surveyed UK higher-education academics (n=114), even though the study notes there is currently no evidence to support it, supporting that learning styles are a widespread myth."
+  }
+ },
+ "06-M8-c6": {
+  "mid": "06-M8",
+  "old": "An article argues instruction should be based on measured knowledge, strategies and interest rather than style preference, supporting the app's use of measured study behaviour instead of style types.",
+  "claim": "An article argues instruction should be based on measured knowledge, strategies and interest rather than style preference, supporting the app's use of measured study behaviour instead of style types.",
+  "decision": "rewrite",
+  "why": "The source supports replacing learning styles with instructional decisions based on the development of knowledge, strategies, and interest, and says this can improve learning outcomes across subjects and grade levels. It does not mention an app, study behaviour, or measured study behaviour.",
+  "model": "gpt-6.1-sol",
+  "recheck": {
+   "rating": "partly",
+   "problem": "The source does not explicitly state that the app uses measured study behavior, only that instruction should be based on knowledge, strategies, and interest.",
+   "smallest_fix": "Remove 'supporting the app's use of measured study behaviour instead of style types'."
+  }
+ }
+}

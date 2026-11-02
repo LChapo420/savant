@@ -29,6 +29,9 @@ const CLAIMS = {
   Johari: 'Always-valid p-values and confidence intervals allow A/B test results to be monitored continuously with the error rate controlled, where repeatedly checking a fixed-sample test inflates false positives.',
   Robbins: 'Sequential tests and confidence sequences based on the law of the iterated logarithm allow statistical inference that stays valid under continuous monitoring.',
 };
+// Claims narrowed to what each source shows (after the first check rated them 'partly'); a changed claim is checked afresh.
+const NARROW = path.join(__dirname, 'claims-narrowed.json');
+if (fs.existsSync(NARROW)) Object.assign(CLAIMS, require(NARROW));
 const PICK_SCHEMA = { type: 'object', properties: { quote: { type: 'string' } }, required: ['quote'] };
 const RATE_SCHEMA = { type: 'object', properties: { rating: { type: 'string', enum: ['supported', 'partly', 'not_supported'] }, problem: { type: 'string' }, smallest_fix: { type: 'string' } }, required: ['rating', 'problem', 'smallest_fix'] };
 const PICK = 'Copy, word for word, the one sentence or clause from the source text that best supports the claim. Copy it exactly, with no changes. If nothing supports it, return an empty string. Reply only through the tool.';
@@ -50,6 +53,7 @@ const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
   const items = res.map((o) => ({ key: o.author, claim: CLAIMS[o.author], abstract: o.abstract, src: o, planted: false }));
   for (let i = 0; i < 4; i++) { const a = items[i * 3]; const b = items[(i * 3 + 7) % items.length]; items.push({ key: `PLANT-${i + 1}`, claim: a.claim, abstract: b.abstract, planted: true }); }
   for (const it of items) {
+    if (out[it.key] && !it.planted && out[it.key].claim !== it.claim) out[it.key] = { claim: it.claim, planted: false, first_claim: out[it.key].claim };
     const o = out[it.key] = out[it.key] || { claim: it.claim, planted: it.planted };
     if (!it.abstract) { o.noAbstract = true; console.log(it.key, 'no abstract'); continue; }
     const user = `Claim: ${it.claim}\n\nSource text:\n${String(it.abstract).slice(0, 4000)}`;

@@ -2,9 +2,9 @@
  "Koedinger": {
   "claim": "Learning of knowledge components can be measured from student performance data, and the framework links kinds of knowledge to the instructional principles that work for them.",
   "planted": false,
-  "quote": "",
+  "quote": "KLI promotes the emergence of instructional principles of high potential for generality, while explicitly identifying constraints of and opportunities for detailed analysis of the knowledge students may acquire in courses.",
   "pickError": "nvidia timeout after 300s",
-  "verbatim": false,
+  "verbatim": true,
   "minimax": {
    "rating": "partly",
    "problem": "The source describes coordinated analyses of knowledge, learning, and instruction, but it neither says that knowledge-component learning is measured from student performance data nor establishes that particular instructional principles “work for” each kind of knowledge.",
@@ -23,19 +23,20 @@
   "abstract_from": "openalex"
  },
  "Aleven": {
-  "claim": "Help-seeking behaviour in an intelligent tutor, including help abuse such as clicking through hints to the answer, can be modelled from the logs and is often unproductive.",
+  "claim": "Help-seeking behaviour in an intelligent tutor, including ineffective help-seeking strategies, can be modelled and evaluated against logs of student-tutor interaction.",
   "planted": false,
-  "quote": "We created a preliminary model, implemented by 57 production rules that capture both effective and ineffective help-seeking behavior.",
+  "first_claim": "Help-seeking behaviour in an intelligent tutor, including help abuse such as clicking through hints to the answer, can be modelled from the logs and is often unproductive.",
+  "quote": "As a first test of the model’s efficacy, we used it off-line to evaluate students’ help-seeking behavior in an existing data set of student-tutor interactions.",
   "verbatim": true,
   "minimax": {
-   "rating": "partly",
-   "problem": "The source supports a preliminary model that captures effective and ineffective help-seeking and its evaluation using an existing student–tutor interaction dataset, but it does not mention clicking through hints to the answer or establish that such behaviour is often unproductive.",
-   "smallest_fix": "Change the claim to: “Help-seeking behaviour in an intelligent tutor, including ineffective help-seeking, can be modelled with preliminary production rules and evaluated using logs of student–tutor interactions.”"
+   "rating": "supported",
+   "problem": "The source states that a model capturing both effective and ineffective help-seeking behavior was used offline to evaluate students’ help-seeking behavior in an existing data set of student-tutor interactions.",
+   "smallest_fix": "No fix needed; optionally note that the model and evaluation were preliminary and offline."
   },
   "mistral": {
-   "rating": "partly",
-   "problem": "The source describes modeling help-seeking behavior (including ineffective behavior) but does not explicitly state that help abuse (e.g., clicking through hints to the answer) is 'often unproductive' or that the modeling is based on logs.",
-   "smallest_fix": "Replace 'can be modelled from the logs and is often unproductive' with 'can be modeled, including ineffective strategies'."
+   "rating": "supported",
+   "problem": "No problem; the claim matches the source text exactly.",
+   "smallest_fix": ""
   },
   "doi": "10.3233/irg-2006-16(2)02",
   "title": "Toward Meta-cognitive Tutoring: A Model of Help Seeking with a Cognitive Tutor",
@@ -45,20 +46,20 @@
   "abstract_from": "openalex"
  },
  "Baker": {
-  "claim": "Off-task behaviour of students in an intelligent tutoring system can be detected from interaction logs, and it is associated with poorer learning.",
+  "claim": "Off-task behaviour of students in an intelligent tutoring system can be detected from system-usage logs, and it is associated with certain attitudes and motivations.",
   "planted": false,
-  "quote": "",
-  "pickError": "nvidia timeout after 300s",
-  "verbatim": false,
+  "first_claim": "Off-task behaviour of students in an intelligent tutoring system can be detected from interaction logs, and it is associated with poorer learning.",
+  "quote": "We use this model in combination with motivational and attitudinal instruments, developing a profile of the attitudes and motivations associated with off-task behavior, and compare this profile to the attitudes and motivations associated with other behaviors in intelligent tutoring systems.",
+  "verbatim": true,
   "minimax": {
-   "rating": "partly",
-   "problem": "The source supports detecting students’ off-task behavior from system-usage logs, but it does not report that off-task behavior is associated with poorer learning.",
-   "smallest_fix": "Remove “and it is associated with poorer learning,” leaving the claim focused on detection from system-usage logs."
+   "rating": "supported",
+   "problem": "The source directly supports both elements: it states that a machine-learned model using only system-usage log files can automatically detect students' off-task behavior in an intelligent tutoring system, and that combining this model with motivational and attitudinal instruments yields a profile of the attitudes and motivations associated with off-task behavior, without overstating causality or generalizing beyond the single study.",
+   "smallest_fix": "No change needed."
   },
   "mistral": {
-   "rating": "partly",
-   "problem": "The source shows detection of off-task behavior and its association with attitudes/motivations, but does not explicitly state it is associated with poorer learning.",
-   "smallest_fix": "Remove 'and it is associated with poorer learning' or replace with 'and it is associated with certain attitudes and motivations'."
+   "rating": "supported",
+   "problem": "No problem; the claim matches the source text exactly.",
+   "smallest_fix": ""
   },
   "doi": "10.1145/1240624.1240785",
   "title": "Modeling and understanding students' off-task behavior in intelligent tutoring systems",
@@ -68,19 +69,20 @@
   "abstract_from": "openalex"
  },
  "Graesser": {
-  "claim": "The questions students ask during one-to-one tutoring can be classified by depth, and the rate of deep questions is related to comprehension or achievement.",
+  "claim": "Student questions during one-to-one tutoring can be classified, and the quality of the questions students ask was positively correlated with achievement once they had some tutoring experience.",
   "planted": false,
-  "quote": "Student achievement was positively correlated with the quality of student questions after students had some experience with tutoring, but the frequency of questions was not correlated with achievement.",
+  "first_claim": "The questions students ask during one-to-one tutoring can be classified by depth, and the rate of deep questions is related to comprehension or achievement.",
+  "quote": "Student achievement was positively correlated with the quality of student questions after students had some experience with tutoring",
   "verbatim": true,
   "minimax": {
    "rating": "partly",
-   "problem": "The source classifies question quality by degree of specification, content, and question-generation mechanism—not specifically “depth”—and links quality (not the rate of deep questions) only to achievement, not comprehension.",
-   "smallest_fix": "Change the claim to: “Student questions during one-to-one tutoring can be classified by degree of specification, content, and question-generation mechanism, and question quality was positively correlated with achievement after students had some tutoring experience.”"
+   "problem": "The source confirms that questions in tutoring sessions were classified by specificity, content, and generation mechanism and that question quality was positively correlated with achievement after students had some tutoring experience, but it never specifies that the tutoring was one-to-one (it refers only to \"tutoring sessions/settings\" and to college students and 7th graders).",
+   "smallest_fix": "Replace \"one-to-one tutoring\" with \"tutoring sessions\" (or \"tutoring settings\")."
   },
   "mistral": {
-   "rating": "partly",
-   "problem": "The source does not explicitly classify questions by 'depth' (only by specification, content, and mechanism) and only shows a correlation with 'quality' (not 'deep questions' or 'rate of deep questions').",
-   "smallest_fix": "Replace 'depth' with 'quality' and 'rate of deep questions' with 'quality of questions'."
+   "rating": "supported",
+   "problem": "None",
+   "smallest_fix": ""
   },
   "doi": "10.2307/1163269",
   "title": "Question Asking During Tutoring",
@@ -156,19 +158,21 @@
   "abstract_from": "openalex"
  },
  "Pennebaker": {
-  "claim": "Use of word categories is reliable within a person over time and across settings, and relates to personality.",
+  "claim": "Word-category measures of written language show good internal consistency across samples and relate modestly to personality.",
   "planted": false,
-  "quote": "Daily diaries from 15 substance abuse inpatients, daily writing assignments from 35 students, and journal abstracts from 40 social psychologists demonstrated good internal consistency for over 36 language dimensions.",
-  "verbatim": true,
+  "first_claim": "Use of word categories is reliable within a person over time and across settings, and relates to personality.",
+  "quote": "",
+  "pickError": "nvidia timeout after 300s",
+  "verbatim": false,
   "minimax": {
-   "rating": "partly",
-   "problem": "The source reports good internal consistency and factor replication across written samples, not within-person test–retest reliability over time or across settings, and it characterizes the personality association as modest and suggestive rather than established.",
-   "smallest_fix": "Change the claim to: “Word-based linguistic measures show good internal consistency and replicated factors across written samples, and modestly relate to personality.”"
+   "rating": "supported",
+   "problem": "The source supports the claim as written: it reports good internal consistency across multiple written-language samples and explicitly notes modest effect sizes when linguistic profiles are examined in relation to personality measures.",
+   "smallest_fix": "No change needed."
   },
   "mistral": {
    "rating": "partly",
-   "problem": "The source shows reliability within a person over time and across settings for specific groups (students, inpatients, psychologists) and suggests a modest relation to personality, but the claim generalizes to all people and settings and omits the modest effect size.",
-   "smallest_fix": "Use of word categories is reliable within a person over time and across settings in specific groups (e.g., students, inpatients), and may modestly relate to personality."
+   "problem": "The claim states 'good internal consistency across samples' which is supported, but 'relate modestly to personality' is too strong as the source only mentions 'modest effect sizes' and does not explicitly state the relationship to personality.",
+   "smallest_fix": "Word-category measures of written language show good internal consistency across samples and show modest associations with personality-related measures."
   },
   "doi": "10.1037//0022-3514.77.6.1296",
   "title": "Linguistic styles: Language use as an individual difference.",
@@ -200,19 +204,20 @@
   "abstract_from": "openalex"
  },
  "Crossley": {
-  "claim": "Lexical indices computed from learners' writing predict their language proficiency level.",
+  "claim": "Lexical indices computed from second-language learners' writing predict which proficiency level the learner belongs to.",
   "planted": false,
-  "quote": "The strongest predictors of an individual’s proficiency level were word imagability, word frequency, lexical diversity, and word familiarity.",
+  "first_claim": "Lexical indices computed from learners' writing predict their language proficiency level.",
+  "quote": "In total, the indices correctly classified 70% of the texts based on proficiency level in both a training and a test set.",
   "verbatim": true,
   "minimax": {
    "rating": "supported",
-   "problem": "The source directly supports the claim: a discriminant function analysis used lexical indices from L2 learners' writing to predict their beginning, intermediate, or advanced proficiency-level group, with 70% correct classification in both training and test sets.",
-   "smallest_fix": "No fix is needed; optionally specify that the prediction targets proficiency-level group membership."
+   "problem": "The source directly reports that lexical indices from L2 learners' writing were used in discriminant function analysis to predict proficiency-level categorization, with the strongest predictors being word imagability, word frequency, lexical diversity, and word familiarity.",
+   "smallest_fix": "No fix needed; the claim accurately reflects the source."
   },
   "mistral": {
-   "rating": "partly",
-   "problem": "The claim states a general predictive relationship without specifying the population (L2 learners), the setting (written samples), or the strength of the prediction (70% accuracy).",
-   "smallest_fix": "Lexical indices computed from L2 learners' writing predict their language proficiency level with 70% accuracy in a study of 100 learners."
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
   },
   "doi": "10.1177/0265532211419331",
   "title": "Predicting the proficiency level of language learners using lexical indices",
@@ -288,19 +293,20 @@
   "abstract_from": "openalex"
  },
  "Robbins": {
-  "claim": "Sequential tests and confidence sequences based on the law of the iterated logarithm allow statistical inference that stays valid under continuous monitoring.",
+  "claim": "The paper develops probability inequalities and limit theorems for the behaviour of an entire sequence of random variables, the basis for statistical methods that hold over a whole sequence rather than at one sample size.",
   "planted": false,
-  "quote": "",
-  "verbatim": false,
+  "first_claim": "Sequential tests and confidence sequences based on the law of the iterated logarithm allow statistical inference that stays valid under continuous monitoring.",
+  "quote": "We shall give a method for obtaining probability inequalities and related limit theorems concerning the behavior of the entire sequence of x’s.",
+  "verbatim": true,
   "minimax": {
-   "rating": "not_supported",
-   "problem": "The source only states that it develops probability inequalities and limit theorems for an entire sequence of random variables; it does not mention the law of the iterated logarithm, sequential tests, confidence sequences, or validity of statistical inference under continuous monitoring.",
-   "smallest_fix": "Replace the claim with: “The paper develops probability inequalities and related limit theorems concerning the behavior of an entire sequence of random variables.”"
+   "rating": "partly",
+   "problem": "The source supports that the paper develops probability inequalities and related limit theorems concerning an entire sequence of random variables, but it does not describe these results as the basis for statistical methods.",
+   "smallest_fix": "Delete “the basis for statistical methods that hold over a whole sequence rather than at one sample size.”"
   },
   "mistral": {
-   "rating": "not_supported",
-   "problem": "The source does not mention sequential tests, confidence sequences, or the law of the iterated logarithm in the context of continuous monitoring.",
-   "smallest_fix": "Remove the claim or provide a source that explicitly supports the use of sequential tests and confidence sequences based on the law of the iterated logarithm for continuous monitoring."
+   "rating": "supported",
+   "problem": "",
+   "smallest_fix": ""
   },
   "doi": "10.1214/aoms/1177696786",
   "title": "Statistical Methods Related to the Law of the Iterated Logarithm",
