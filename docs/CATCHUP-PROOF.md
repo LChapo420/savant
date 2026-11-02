@@ -46,6 +46,14 @@ Every design choice that claims to help learning, with the mechanism it rests on
 | reading | 3.0% | few | 36 | 95.6% (43/45) | 0.3% | 227 | 1089 |
 | reading | 3.0% | many | 36 | 98.2% (216/220) | 1.9% | 660 | 1089 |
 | reading | 3.0% | all | 36 | 98.4% (425/432) | n/a | 1167 | 1089 |
+| iq | 0.0% | none | 27 | n/a (0/0) | 0.0% | 81 | 8283 |
+| iq | 0.0% | few | 27 | 100.0% (38/38) | 0.0% | 1063 | 8283 |
+| iq | 0.0% | many | 27 | 96.9% (158/163) | 0.0% | 4101 | 8283 |
+| iq | 0.0% | all | 27 | 97.5% (316/324) | n/a | 8162 | 8283 |
+| iq | 3.0% | none | 27 | n/a (0/0) | 0.3% | 117 | 8283 |
+| iq | 3.0% | few | 27 | 96.6% (28/29) | 1.0% | 878 | 8283 |
+| iq | 3.0% | many | 27 | 97.4% (149/153) | 0.6% | 3921 | 8283 |
+| iq | 3.0% | all | 27 | 97.8% (317/324) | n/a | 8172 | 8283 |
 
 Work = check questions + levels taught; linear = every level below the target. A check question counts as a whole level (overstates catch-up cost). In the "all" scenario the check is pure overhead, so no saving is claimed there.
 

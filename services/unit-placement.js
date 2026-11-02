@@ -100,14 +100,19 @@ function unitsFor(trackId, gradeId) {
   if (!grade || !Array.isArray(grade.units) || !grade.units.length) return null;
   if (grade.units.some((u) => !Array.isArray(u.questions) || !u.questions.length)) return null;
   const calibration = calibrationFor(trackId);
-  if (!calibration) return grade.units;
-  return grade.units.map((u) => ({
+  const units = !calibration ? grade.units.slice() : grade.units.map((u) => ({
     ...u,
     questions: u.questions.map((q) => {
       const at = calibration[adaptive.questionKey(q)];
       return Number.isFinite(at) ? { ...q, at } : q;
     }),
   }));
+  // A bank may carry the shape of its own walk (IQ: a cluster step is gentler than a unit's). Not enumerable, so the
+  // array stays a plain list to every caller; beliefOf reads it.
+  if (bank.shape && Number.isFinite(bank.shape.width) && Number.isFinite(bank.shape.reliable)) {
+    Object.defineProperty(units, 'shape', { value: { width: bank.shape.width, reliable: bank.shape.reliable, ...(Number.isFinite(bank.shape.round) ? { round: bank.shape.round } : {}) } });
+  }
+  return units;
 }
 
 /** Where a question sits, in units from the start of the grade: calibrated, or by the unit it was written for. */
@@ -157,7 +162,7 @@ function beliefOf(units, answered) {
     pos: pointOf(units[a.unit - 1].questions[a.slot], a.unit),
     guess: 1 / Math.max(2, (units[a.unit - 1].questions[a.slot] || units[a.unit - 1].questions[0]).choices.length),
     correct: !!a.correct,
-  })), UNIT_SHAPE);
+  })), units.shape || UNIT_SHAPE);
 }
 
 /**
@@ -223,7 +228,7 @@ function placedUnit(units, answered) {
   // is the compromise (about 72% and 53%), and within one unit either way; a
   // late start is covered by the quick check of the unit it skips.
   return {
-    unit: Math.max(1, Math.min(units.length, Math.floor(x + UNIT_ROUND) + 1)),
+    unit: Math.max(1, Math.min(units.length, Math.floor(x + (units.shape && Number.isFinite(units.shape.round) ? units.shape.round : UNIT_ROUND)) + 1)),
     sure: adaptive.massWithin(post, x - 1, x + 1),
   };
 }

@@ -24,11 +24,11 @@ const answerOf = (trackId, q) => cu.questionsFor(cu.skillByKey(trackId, q.key)).
 const wrongOf = (trackId, q) => q.choices.find((c) => c !== answerOf(trackId, q));
 const targetOf = (trackId) => curriculum.getTrack(trackId).grades[5].id;
 
-check('subjects report: math, english, reading are ready; the rest say what they lack', () => {
+check('subjects report: math, english, reading, iq are ready; the rest say what they lack', () => {
   const rep = Object.fromEntries(cu.subjectsReport().map((s) => [s.track_id, s]));
   for (const t of cu.TRACKS) assert.ok(rep[t].ready && rep[t].engine === 'unit-bank adapter', t);
   assert.ok(rep.spanish.ready);
-  for (const t of ['act', 'iq', 'chess', 'piano', 'basketball']) assert.ok(!rep[t].ready && rep[t].engine === null, t);
+  for (const t of ['act', 'chess', 'piano', 'basketball']) assert.ok(!rep[t].ready && rep[t].engine === null, t);
 });
 
 for (const trackId of cu.TRACKS) {
@@ -110,7 +110,7 @@ check('page: catch-up page, its script, the route mount and the subject-page lin
   assert.ok(/@media|max-width: 640px/.test(html), 'a width limit for 375 px');
   assert.ok(fs.readFileSync(path.join(root, 'server.js'), 'utf8').includes("'/api/catchup', require('./routes/catchup')"));
   const pathJs = fs.readFileSync(path.join(root, 'public', 'js', 'path.js'), 'utf8');
-  assert.ok(pathJs.includes("['math', 'english', 'reading'].includes(track.id)") && pathJs.includes('/catchup?track='));
+  assert.ok(pathJs.includes("['math', 'english', 'reading', 'iq'].includes(track.id)") && pathJs.includes('/catchup?track='));
   const js = fs.readFileSync(path.join(root, 'public', 'js', 'catchup.js'), 'utf8');
   for (const needle of ['next_review_due_at', 'found missing', 'blocks done', 'Catch me up to']) assert.ok(js.includes(needle), needle);
 });
@@ -119,7 +119,7 @@ check('page: catch-up page, its script, the route mount and the subject-page lin
 // (scripts/content-gap-tools.js; counts and checks in curriculum-build/content-gap/catchup-*-report.json). A skill with a
 // bank of 7 is checked slip-tolerantly: a first miss never sends it to learn. The sim (scripts/catchup-sim.js) holds the
 // resulting false-teach rate under 5% at a 3% slip, and fails if the banks or the engine regress.
-const TOLERANT_GRADES = { math: 12, english: 8, reading: 8 }; // the first N grades have every unit at 7+ questions
+const TOLERANT_GRADES = { math: 12, english: 8, reading: 8, iq: 12 }; // the first N grades have every unit at 7+ questions
 for (const trackId of cu.TRACKS) {
   check(`${trackId}: the first ${TOLERANT_GRADES[trackId]} grades have 7+ checked questions in every unit, so every skill there is tolerant`, () => {
     const grades = curriculum.getTrack(trackId).grades.slice(0, TOLERANT_GRADES[trackId]).map((g) => g.id);
