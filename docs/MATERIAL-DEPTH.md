@@ -1,6 +1,6 @@
 # Material uses the full depth of the scorecard (learning spec version 2)
 
-Built 1 Nov 2026 on branch `material-depth`. Code: `services/learning-depth.js` (new), `services/learning-spec.js` (version 2), proof
+Built 1 Nov 2026 on branch `material-depth`; second round 2 Nov on `material-weak`; third round 2 Nov on `depth-75` (section 9). Code: `services/learning-depth.js` (new), `services/learning-spec.js` (version 2), proof
 `scripts/material-sensitivity-proof.js`, tests `scripts/learning-depth-test.js` and `scripts/material-sensitivity-proof.js --mock` (both
 in `npm test`). Raw results: `docs/material-depth/*.json` (every judged pair, with both texts).
 
@@ -238,6 +238,8 @@ but the final-rules sample is smaller and lower (57%), so no gain on notes can b
 notes where a judge sees no difference ("can't tell") and confounds the judges themselves name (a reassuring "no earlier science needed"
 for a low-prior-knowledge learner read as an anxious learner's). Not met: 75% direction-correct and "can't tell" well below 15 of 64.
 
+**Third attempt (2 Nov, branch `depth-75`): 71% to 75% on one judge, which is inside the noise; see section 9.**
+
 ### 3.4 Understanding, retention and speed: tailored against base material
 
 Lessons (8 learner types): tailored lessons teach **all five objectives in all 8** by both judges' count (base lessons 3.5 to 4.5 of 5),
@@ -311,6 +313,7 @@ evidence here bears on retention. That needs real learners (section 6).
 | Standard Compute, 2 Nov (material-weak) | **$1.48** of the $1.50 budget (ledger $33.00 -> $34.47) | DeepSeek V4.1 Flash writing the joint-profile, speed and pack samples of both arms |
 | Modelflare Sol, 2 Nov | not metered in the run; about 400 judge calls of about 3,000 tokens each, at the cheapest of the account's models | judge (third family) |
 | xKiro, 2 Nov | 0 dollars; MiniMax answered 503 all day, Qwen and Mistral free models used up the day's free quota (the first re-run attempts, both arms, were lost to it) | judge and failed writer attempts |
+| Standard Compute, 2 Nov (depth-75) | **$1.43** of the $1.50 (ledger $34.47 -> $35.91) | DeepSeek V4.1 Flash writing the joint samples of both arms, speed lessons and notes, packs and podcasts; no judge calls (section 9.7) |
 | Anthropic key | $0 | not used |
 | Modelflare | $0 | not used |
 | xKiro MiniMax M3.1 Flash (free token grant) | 0 dollars; about 1.5M tokens of the grant | writer for lessons, notes, podcasts |
@@ -331,6 +334,7 @@ evidence here bears on retention. That needs real learners (section 6).
 - **Packs** were re-judged on 2 Nov on version 2 for 8 of the pilot's 11 measures (3.2), not all 11, and not against the other two arms.
 - **Built-in levels** were not rewritten live: the level editor writes whole HTML pages. The level block has the same sentences as the
   lesson block (checked by the matrix), so the lesson results stand for it, but the HTML path itself was not judged.
+- **Joint profiles: third round (section 9).** 71% before and 75% after on one judge (Nemotron; 80 verdicts each), 50% to 68% for the final notes rules with the free NVIDIA writer. Not a demonstrated 75%, and not two judges. The paragraph below is the second round.
 - **Joint profiles are still weak.** 56% on 1 Nov; on 2 Nov, with a fairer judge and the new rules, 68% before and 69% after on the same writer and judges, 57% on the final notes (3.3). The 75% goal was not reached; notes often differ too little for any judge to say. Four profiles, two kinds and a few samples cannot show a small gain.
 - **Three times faster is not shown.** The best measured cut is about 35% in estimated reading time for some learner types, with every
   objective kept. Notes for learners who need less are now shorter than the base (167 words against 242 on average, one sample each), but
@@ -339,6 +343,15 @@ evidence here bears on retention. That needs real learners (section 6).
 - **Tutor not touched.** The tutor's block is version 1; `depthLines` is ready for its owner.
 
 ## 7. Rerun
+
+    # depth-75 (2 Nov): control and judges
+    node scripts/material-sensitivity-proof.js --live --phase joint --kinds notes --rep 5 --writer sc --budget 0.15 --judges nemotron,minimax --cache FILE --json OUT.json
+        --plant swap --replay RUN.json      the profile's and the mirror's texts swapped: the judges must name the other version (prints how many were caught)
+        --judges also: command, qwen37, mistralm (xKiro), nemotron, mistral4, minimax (NVIDIA free); --writer nvidia --writer-model "nvidia/nemotron-3-ultra-550b-a55b@off"
+        files next to the cache file: SC_STOP (no Standard Compute writes), NO_JUDGE (no judging), XKIRO_DOWN (qwen and mistral judges answered by NVIDIA ones)
+    node scripts/lib/joint-summary.js RUN.json [RUN.json ...] [--measures]   # verdicts by kind, judge and cell, several sample sets summed
+    node scripts/lib/joint-blocks.js J1 notes | joint-leans.js J1 | measure-blocks.js MEASURE SURFACE | learner-block.js Lena notes   # what a writer is given
+    SELF_TEST_SEED=n node scripts/self-test.js   # the seeded self-test; SELF_TEST_REAL=1 for the real generator
 
     node scripts/material-sensitivity-proof.js --mock                                    # structural matrix + harness (npm test)
     node scripts/material-sensitivity-proof.js --live --phase full --top 30 --kinds lesson,notes,podcast --cache FILE
@@ -466,4 +479,160 @@ All: 36/64 verdicts direction-correct (56%), 15 "same".
 | Grace | age 25, English is a second language, cooking, step-by-step | notes | 237 -> 331 | 1.4 -> 2 | 5.0 -> 5.0 of 5 | 0 -> 0 | 10.0 -> 10.0 | 6.5 -> 9.0 |
 | Sam | age 14, dyslexia-like reading profile, art | notes | 237 -> 222 | 1.3 -> 1.2 | 5.0 -> 5.0 of 5 | 0 -> 0 | 10.0 -> 9.5 | 8.5 -> 7.0 |
 
+## 9. Third round (branch `depth-75`, 2 Nov 2026): joint profiles, the skipped re-judges, Lena's notes, the flaky self-test
 
+> Same caveat as everywhere above: every learner is simulated, every text was written by a model, every verdict is a model's. Nothing
+> here shows that a real learner learns faster or remembers more. Raw runs, texts included: `docs/material-depth/depth-75/`. **Only one
+> judge family could be used at scale this time** (section 9.7), so every number below is one judge unless it says otherwise.
+
+### 9.1 What the recorded runs showed, and what was changed
+
+The recorded runs of the last round were read cell by cell (`scripts/lib/joint-report.js --evidence`, `joint-blocks.js`, `joint-leans.js`,
+`measure-blocks.js`, `learner-block.js`), because "what does the judge see?" has to be answered before the rules are changed.
+
+1. **The block was often right and the page was not.** J1 asked a short-attention learner for "about 4 short sections" and a plain learner for
+   "about 2"; both writers kept three. Sections were counted from `3 + 1.5 x -chunk + 0.8 x length`, so a short lesson (length down) cancelled
+   the small pieces (chunk down). Now chunk size sets the count (`3 + 3.5 x -chunk + 0.5 x length`), the shape line says "exactly N" from
+   four up, and a draft with fewer than N-1 sections is revised once (`section_count` in `checkFollowed`: split, never cut). Not changed:
+   a "Part n of N / In one line:" marker for small pieces was tried and dropped (it made the short version read as compressed, and the lesson
+   cell fell from 25 to 22 of 32 in that one run).
+2. **A measure that changed the notes through another measure's door.** `gapOnly` ("they know the basics") switched on whenever the worked-example
+   lean was low, so a learner who merely learns from principles was told they know the basics and given one line a point; in notes that was the
+   only thing worked_example_dependence changed. Gap-only now needs a high prior (70) or topic mastery; learning from principles has its own
+   sentence; and notes have a sentence of their own for worked examples (a bullet a step against the principle first and one compact bullet).
+3. **Extras read as padding, and a measured wish overrode a stated one.** Lena (knows most of it, "please do not over-explain") had notes with
+   a scene opener, "Next," links, a harder question and a why-it-matters bullet, and a lesson of 966 words against a plain 696, because her
+   measured wish for full detail raised the ceiling. Now notes for a learner who needs less carry no extra bullet unless that lever is strongly
+   moved (60 or more), "a fuller treatment" is turned to the short side; a lesson for a learner who knows the basics has a ceiling below the plain
+   lesson's (640 words, 520 if the background is very high) and "a fuller lesson is fine" ends "but only for what is new to them".
+4. **Two measures could not be seen at all.** With brevity and interest transfer both high, notes were told "at most one analogy, only inside the
+   word limit" and wrote none. A strong interest lean now requires exactly one analogy (paid for by cutting words), and the code keeps the
+   first and drops further ones when a short version is told "at most one" (the Nemotron writer wrote three). For a learner who finds stories
+   fluff the notes still carried "Think of it like..." analogies, which judges read as story framing (narrative_pull wrong-way in 3 of 3 samples);
+   they now carry none unless interest framing is that learner's strongest lean.
+5. **Markers a judge can point to.** Notes got sentences of their own for chunk size (one idea of about twelve words a bullet against a whole
+   step of reasoning a bullet), density (a bullet of fifteen words at most against connected sentences), register (formal third person without
+   "you" against "you" and contractions), vocabulary (a plain gloss in brackets against none), layout (a bullet that starts "Layout:", because
+   a dual-coding "picture" was mistaken for the story opener "Picture this:"), a calm lead-in for the anxious learner and a "Quick check:" bullet
+   for the calm one. Lessons: one paragraph a section for a learner who is fine with dense prose.
+6. **The judge adds error of its own.** On one pair (J1 lesson, attention_runway) Qwen, Cohere and Mistral all named the right version when
+   asked the plain question, and Qwen the wrong one in the per-measure prompt that names the other three measures as explanations. One pair is an
+   anecdote, not a measurement, and the per-measure prompt (the owner-approved instrument of the last round) was left as it is.
+
+The structural matrix after the changes: 100 of 100 measures change lessons, levels, own material and podcasts, 71 notes (70 before), 77 tests.
+Tests added or updated in `learning-depth-test.js` (section 8), `material-revision-test.js` and `learning-spec-wiring-test.js`.
+
+### 9.2 Results: joint profiles
+
+**Headline (the same design as last round: Standard Compute DeepSeek V4.1 Flash writes, the four original profiles and mirrors, 3 samples of
+notes and 2 of lessons each arm, per-measure judge).** The judge is NVIDIA Nemotron 3 Ultra (free): Gemini's free quota, Sol's key (401) and
+xKiro's daily free quota were all gone, and Mistral Large 4, MiniMax and Gemma on NVIDIA mostly timed out. The "before" arm was re-written with
+the rules as they stood at the start of the round (a separate checkout of `ba5d557`), so writer, judge, topics and samples are the same for both.
+
+| Arm | Notes | Lesson | All | "can't tell" | wrong way |
+|---|---|---|---|---|---|
+| Rules at the start of the round | 32/48 (67%) | 25/32 (78%) | **57/80 (71%)** | 14 | 9 |
+| Rules after this round's first changes (texts written before the worked-example sentence, the plain notes for "stories are fluff" and the analogy cap) | 34/48 (71%) | 26/32 (81%) | **60/80 (75%)** | 11 | 9 |
+
+That is 75.0% on one judge, three verdicts better than before: inside the noise of 80 verdicts (a sample of 80 has about plus or minus 10 points).
+It is **not a demonstrated 75%**, and it is not two judges.
+
+**The final notes rules, measured separately** (the last three edits came after the DeepSeek texts were written, and DeepSeek money was spent, so
+they were measured with the free NVIDIA writer: Nemotron 3 Ultra as writer **and** judge, so the judge and writer are one family; read it as a
+before-and-after on the same pair, not as an absolute): notes, 3 samples each, rules at the start of the round against the final rules.
+
+| Arm (Nemotron writes and judges, notes only) | direction-correct | "can't tell" | wrong way |
+|---|---|---|---|
+| Rules at the start of the round | 22/44 (50%) | 11 | 11 |
+| Final rules | **30/44 (68%)** | 6 | 8 |
+
+By cell (3 samples, before to after): spatial_anchoring 0/2 to 3/3, narrative_pull 0/3 to 3/3, attention_runway 2/3 to 3/3, evaluation_anxiety 2/3 to
+3/3, deductive_trajectory 2/3 to 2/2, vocabulary_ceiling 0/3 to 1/3, tone_formality 1/2 to 2/3. **Not fixed or worse:** text_density_tolerance 0/3 and 0/3
+(a dense-prose reader's notes read as the compact version), brevity_preference in J2 2/3 to 0/2 (joining ideas with "so" and "because" under fewer
+headings, which the chunk sentence asks for a high working memory, made the full-detail learner's notes look shorter), worked_example_dependence 1/2
+to 0/3 (J3's text is the causes of the First World War; it has no worked case for the notes sentence to act on, so that cell can only read "same"; the
+topic of a profile is part of the instrument), interest_transfer and working_memory_span 1 of 2 or 3.
+
+Two attempts to go further were dropped: wording the fuller treatment as more bullets and removing "under fewer headings" scored 21/32 (66%, 8
+"can't tell") against 19/24 (79%) for the final rules on the same two samples; the "Part n of N" lesson marker above.
+
+An earlier iteration with a different writer and judges (Mistral Large 3 writes; Qwen 3.8 Max and Cohere Command A judge; one lesson set and one notes
+set; rules before the final edits): 45/64 (70%) for the start-of-round rules against 48/64 (75%) after. That is the only two-judge comparison of the round.
+
+### 9.3 Planted wrong-way texts
+
+`--plant swap` swaps the profile's and the mirror's text before judging, so every pair is a text written for the other learner and the judge must
+name the other version (the run counts those as "caught"). On the final-round DeepSeek texts, one sample of notes and one of lessons, 32 verdicts
+(Nemotron): **caught 24 of 32 (75%)**, fooled 5, could not tell 3 (notes 11 caught, 2 fooled, 3 can't tell; lessons 13 caught, 3 fooled). The same
+pairs the right way round scored 11/16 and 12/16 correct. So the verdicts follow the writing and not the position or the first text, and the
+judge's own error rate is of the same size as the gain that is being measured (a quarter of the verdicts are wrong or undecided either way). A first
+attempt with Gemini and Sol on last round's texts got 11 of 12 caught before their quotas ended (12 verdicts only).
+
+### 9.4 The parts the last round skipped
+
+*Lesson speed* (DeepSeek writes, Nemotron judges, one sample, 8 learner types, tailored against the plain lesson; the judge's rubric has accuracy, which of
+the 5 objectives it fully teaches, and fit 0 to 10):
+
+| learner | words | est. minutes | fit | objectives taught (judge) |
+|---|---|---|---|---|
+| Omar (age 8, almost no background) | 696 to 266 | 10.7 to 4.8 | 5 to 9 | 5 to 5 |
+| Ethan (gifted) | 696 to 398 | 5.2 to 2.8 | 8 to 9 | 5 to 5 |
+| Sam (dyslexia-like) | 696 to 354 | 5.9 to 3.5 | 5 to 9 | 5 to 5 |
+| Ben (fast, dislikes reading) | 358 to 225 | 4.8 to 2.7 | 6 to 9 | 4 to 5 |
+| Lena (knows most of it) | 696 to 649 | 5.5 to 4.2 | **9 to 7** | 5 to 5 |
+| Noah (fast, gifted) | 358 to 412 | 3.6 to 2.9 | 7 to 9 | 4 to 5 |
+| Frank (slow, little background) | 358 to 535 | 3.8 to 4.2 | 8 to 9 | 4 to 5 |
+| Grace (English second language) | 696 to 857 | 6.1 to 6.6 | 7 to 9 | 5 to 5 |
+
+Average fit 6.9 to 8.75, estimated minutes 5.7 to 4.0 (31% fewer; the two learners who need more get longer lessons, as they should). Every tailored
+lesson teaches all 5 objectives by the judge; the term-overlap code finds a key point missing in one tailored lesson (Ben) and in three plain ones.
+Lena's lesson is the miss: the judge says it has "extra try-it examples and pottery analogies" for someone who asked not to be over-explained; her first
+lesson was 966 words (before the ceiling above) and this one 649. One sample, one judge; not fixed. Minutes are words over a reading speed, not timed
+learners.
+
+*Podcasts, the wrong-way list* (a pair per measure, one sample): 13 measures were wrong-way for both judges in the first run. With the DeepSeek writer
+only 3 could be built before the money ran out (intake_baseline, working_memory_span, step_explicitness: all three direction-correct now, with the start-of-round
+rules too, so they were sampling or judge noise, not a rule fault; with the start-of-round rules two more were built: consolidation_need direction-correct, error_driven_learning wrong). The other 10 were built with the
+free Nemotron writer: the final rules 6 of 6 judged pairs direction-correct (consolidation_need, boredom_susceptibility, causal_chain_depth, analogical_transfer,
+worked_example_dependence, self_efficacy; 3 builds failed and 1 verdict was lost), the start-of-round rules 5 of 9 (error_driven_learning, analogical_transfer and
+reentry_cost wrong, causal_chain_depth "same"). Small and different writers, so "no longer wrong" is all that can be said.
+
+*Packs*: the 3 pilot packs that were not run (generation_effect, attention_runway, productive_struggle) were built and judged: **3 of 3 direction-correct**; one of the 3 has a
+key point or an accuracy below 8 by the judge or the code.
+
+*Path and test items for the wrong-way measures: not re-run.* They need a course build each (about $0.05), and the money was gone (9.7).
+
+### 9.5 Lena's notes (7.5 against 9.5)
+
+The cause was not one thing: (1) her notes carried the extras in 9.1 item 3, which both judges named ("Picture this", "Harder question", "Next,");
+(2) the plain notes she is scored against are noisy: the same plain outline of a topic scored 8.5, 9.5, 7.5 and 5.5 in four different runs, and once it covered only 2 of the
+5 objectives; (3) her measured wish for full detail contradicted what she wrote. After the change (DeepSeek writes, Nemotron judges, one
+sample): notes **250 to 181 words, 1.3 to 0.9 minutes, fit 8 to 9**, all 5 objectives; across all eight learner types the notes are shorter for six, with fit
+**6.5 to 9.0**, and longer for the two who need more (Frank 228 to 353, Grace 250 to 368). With the Mistral writer on the first attempt: 175 to 133 words, fit 6.5 to 9.0
+(Sol, one judge). A caveat on completeness: by the term-overlap code three of the eight tailored notes (Noah, Ben, Omar) are missing one key point, and the judge counted
+only 3 of 5 objectives for Ben's, so "no objective dropped" is again a reading of one sample, not a guarantee.
+
+### 9.6 The flaky self-test
+
+`scripts/self-test.js`, "a real sitting repeats less than 1 question in 4": the pooled rate (three sittings of eleven grades, 396 questions) averaged 22%
+over 22 real runs (20.5% to 24.5%) and could land on exactly 25.0%, which fails `< 0.25` on the draw. The bound was right (it says what it means:
+fewer than one repeat in four) so it was not touched. The test now runs on a seeded generator (mulberry32, seed 20261102; `SELF_TEST_SEED=n` for another),
+a clock that steps one millisecond a call from a fixed date, `crypto.randomInt` on the same generator, and restarts all three from a fixed point at the start of
+the sitting check, because the checks before it draw a varying number of numbers. Six runs in parallel print `87 of 396 = 22.0%` every time (seed 1: 23.5%,
+seed 7: 21.5%); the figure is now printed. `SELF_TEST_REAL=1` gives the real generator and clock back.
+
+### 9.7 Money, providers, and what is not verified
+
+| Provider | Spent | What |
+|---|---|---|
+| Standard Compute (ledger, `ceilingUsd` 38) | **$1.43** of the $1.50 (ledger $34.47 to $35.91, which can include another agent's calls in the window) | DeepSeek V4.1 Flash writing the joint samples of both arms, the speed lessons and notes, 3 packs and 3 podcasts; no judge calls |
+| Anthropic key | $0 | not used (one 20-token probe of Modelflare Sonnet, $0.00) |
+| Modelflare Sol | about 50 judge calls early on, then its key answered 401 ("invalid or unavailable") for the rest of the night | judge |
+| xKiro free tier | 0 dollars; about 0.8M tokens (Mistral Large 3 writer for the iteration runs; Qwen and Cohere judges); the account's free quota ran out about 22:00 and does not return before the evening | writer, judge |
+| Gemini free tier | 0 dollars; about 130 calls; the quota ran out twice | judge |
+| NVIDIA build (free) | 0 dollars; several hundred good calls (about 320 in one checkout's counter, of about 775 tries; most failures were timeouts) | judge (Nemotron 3 Ultra) and writer of the A/B |
+
+Not verified, plainly: (1) **a second judge family at scale**, so the 75% is one judge's; (2) the final notes rules with a DeepSeek writer (they were measured with Nemotron as
+writer and judge); (3) path and test items for the wrong-way measures; (4) 3 of the 13 wrong-way podcasts with the DeepSeek writer, the other 10 with a different one; (5) Lena's lesson fit;
+(6) text_density_tolerance, brevity_preference in J2 and worked_example_dependence in J3 are still wrong-way in notes; (7) the lesson "exactly N sections" instruction is a prompt and a revision check,
+and whether writers other than DeepSeek follow it is not shown (Mistral kept three sections twice); (8) none of this is a real learner.
