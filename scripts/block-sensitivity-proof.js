@@ -91,6 +91,8 @@ async function levelFor(subject, user, label) {
   const ck = `blk:${ADAPTER}:${subject}:${sha(JSON.stringify([stats, REP, cfg]))}`;
   const hit = LIVE ? cache.get(ck) : null;
   if (hit && hit.text) return { ...hit, cached: true };
+  // BLOCK_PROOF_CACHE_ONLY=1: judge what has been written, write nothing more (a level that is not cached counts as not built).
+  if (process.env.BLOCK_PROOF_CACHE_ONLY === '1') return { error: `not written yet (${label})` };
   if (writes.has(ck)) return writes.get(ck);
   const task = (async () => {
     try {
@@ -250,7 +252,16 @@ main().catch((e) => { console.error(e); process.exit(1); });
 // ── the report: --render off.json,on.json ──────────────────────────────────
 function renderReport() {
   const files = flagVal('render').split(',').filter(Boolean);
-  const runs = files.map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));
+  // Files of one adapter setting (a single-measure run and a joint run) are merged into one column.
+  const runs = [];
+  for (const f of files) {
+    const r = JSON.parse(fs.readFileSync(f, 'utf8'));
+    const same = runs.find((x) => x.adapter === r.adapter);
+    if (!same) { runs.push({ ...r, tag: r.tag }); continue; }
+    for (const k of ['single', 'joint']) if (r[k]) same[k] = same[k] ? { ...same[k], bySubject: { ...same[k].bySubject, ...r[k].bySubject } } : r[k];
+    same.subjects = [...new Set([...same.subjects, ...r.subjects])];
+    same.tag = `${same.tag}+${r.tag}`;
+  }
   const pct = (a, b) => (b ? `${Math.round((100 * a) / b)}%` : 'n/a');
   const subjects = [...new Set(runs.flatMap((r) => r.subjects))];
   const lines = ['| subject | phase | ' + runs.map((r) => `adapter ${r.adapter} (${r.tag})`).join(' | ') + ' |', `|---|---|${runs.map(() => '---').join('|')}|`];

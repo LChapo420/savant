@@ -93,7 +93,9 @@ function classify(items, picks) {
     if (!(dup || bothOther || oneOther)) continue;
     const rec = { key: it.key, row: it.row, level: it.level, qi: it.qi, keyIndex: key, judgeA: a, judgeB: b, flagged: flag.flagged, dup, pointsTo: flag.pointsTo };
     out.wrong.push(rec);
-    if (!dup && bothOther && (flag.pointsTo === null || flag.pointsTo === a)) out.rekey.push({ ...rec, set: { answerIndex: a } });
+    // Two independent signals for one other option: the explanation describes it AND a blind judge picks it (or both blind judges pick it).
+    const pick = a !== null && a !== key && flag.flagged && flag.pointsTo === a ? a : (bothOther && (flag.pointsTo === null || flag.pointsTo === a) ? a : null);
+    if (!dup && pick !== null) out.rekey.push({ ...rec, set: { answerIndex: pick } });
     else out.rewrite.push(rec);
   }
   return out;
