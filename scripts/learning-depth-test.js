@@ -255,6 +255,20 @@ console.log('8. priority by measure, the new conflict rules, the notes word limi
   const capped = notes.trimToLimit(three, 999, { maxAnalogies: 1 });
   check('a short version told "at most one analogy" keeps the first and loses the rest, never a point (the writers do not always keep to one)', capped.removed === 2 && capped.sections[0].bullets.length === 2 && capped.sections[1].bullets.map((b) => b.text).join('|') === 'point two is here|point three is here' && notes.trimToLimit(three, 999).removed === 0);
   check('and an over-limit draft with only points stays as it is', stay.removed === 0 && stay.sections[0].bullets.length === 2);
+  const kept = notes.trimToLimit(three, 5, { maxAnalogies: 1, keepFirstAnalogy: true });
+  check('the one required analogy survives the word limit (J2 notes: it was trimmed away), and without the flag it is the first to go', kept.sections[0].bullets.some((b) => /^Think of/.test(b.text)) && !notes.trimToLimit(three, 5, { maxAnalogies: 1 }).sections[0].bullets.some((b) => /^Think of/.test(b.text)));
+  {
+    // A revision that finally carries the required analogy wins over a draft with none, even with one more problem.
+    const sp = ls.buildSpecFrom(one('interest_transfer', 95, 95));
+    const src = 'Plants make food from light. Roots take in water. Leaves take in air.';
+    const bare = 'Plants make food from light. Roots take in water. Leaves take in air.';
+    const withIt = 'Plants make food from light. Roots take in water. Leaves take in air. ' + 'Think of a basketball team: the roots and leaves each bring a different part of the water and air together. '.repeat(1);
+    let n = 0;
+    const longOne = withIt + 'Extra extra extra words here and there again and again and more and more words follow now. '.repeat(6);
+    ls.reviseOnce({ generate: async () => (n++ === 0 ? bare : longOne), textOf: (x) => x, spec: sp, keyFacts: [], source: src, minShare: 0.3, own: true, interestNeed: 1, structureOf: (x) => ({ words: x.split(' ').length, maxWords: 20 }) }).then((r) => {
+      check('a revision that adds the required analogy is kept even when it also runs over the word limit', r.result === longOne && r.revised);
+    });
+  }
 }
 
 console.log('8. depth-75: what the joint profiles found');

@@ -823,6 +823,9 @@ function buildSpecFrom(input) {
   // over-explained, got 966 words against a plain lesson's 696 because her measured wish for full detail raised the ceiling): their ceiling is
   // below the plain lesson's, and the detail goes to what is new (see the length sentence in specToLines).
   if (depthOn() && spec.learning && spec.learning.gapOnly && spec.learning.gapOnly.on) spec.lesson.wordBudget = Math.min(spec.lesson.wordBudget, spec.learning.gapOnly.strong ? 520 : 640);
+  // Lena again (2 Nov, lesson speed re-judge: fit 9 then 7, "more narrative and practice prompts than the learner requested"): a learner who knows
+  // most of it gets two "Try it" lines at most (a third is another practice prompt on what they already know).
+  if (depthOn() && spec.learning && spec.learning.gapOnly && spec.learning.gapOnly.on && spec.learning.gapOnly.strong) spec.practice.tryItems = Math.min(spec.practice.tryItems, 2);
   const moved = LEVER_IDS.some((l) => Math.abs(L[l]) >= 0.02);
   const said = facts.difficulties.length || facts.strengths.length || facts.worked.length;
   spec.isDefault = !moved && !interestsUsed.length && !avoid.length && !(said && depthOn());
@@ -1127,6 +1130,7 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
     if (!text) continue;
     // "A fuller lesson is fine" is turned to what is new when they know the basics (the sentence still starts with the shared text).
     if (l === 'length' && side === 1 && depthOn() && (surface === 'lesson' || surface === 'level') && spec.learning && spec.learning.gapOnly && spec.learning.gapOnly.on) text = `${text.replace(/\.$/, '')}, but only for what is new to them; a point they already know gets a single line.`;
+    if (l === 'story' && side === 1 && depthOn() && (surface === 'lesson' || surface === 'level') && spec.learning && spec.learning.gapOnly && spec.learning.gapOnly.on && spec.learning.gapOnly.strong) text = `${text.replace(/\.$/, '')}, in a sentence or two at the start, not a running narrative.`;
     ranked.push({ lever: l, text, lean, score: Math.abs(lean) * (1 + LEVERS[l].imp) });
   }
   // A learner for whom stories are fluff (a strong negative story lean) gets notes without the framed "Think of it like..." analogies as well, unless interest
@@ -1336,7 +1340,10 @@ function analogyProblems(text, spec, source) {
 /** A function text -> boolean (true: no analogy in it brings a new claim) for a spec with interests, else null. */
 function analogyGuard(spec, source) {
   if (!spec || spec.isDefault || !spec.interests.exampleDomains.length || spec.interests.share < 0.3 || !source) return null;
-  return (t) => analogyProblems(t, spec, source).length === 0;
+  const guard = (t) => analogyProblems(t, spec, source).length === 0;
+  // Why a text fails the guard (the problems with the analogy in it), so a bullet the guard replaced can still be named in the revision note.
+  guard.why = (t) => analogyProblems(t, spec, source);
+  return guard;
 }
 
 /**
@@ -1501,21 +1508,27 @@ function revisionNote(problems) {
  * Write once; if the check finds problems, ask once more with the problems named; keep the better draft
  * (never one with less coverage). `generate(note)` returns a text-bearing result or null; `textOf(result)` its text.
  */
-async function reviseOnce({ generate, textOf, structureOf = null, spec, keyFacts = [], exempt = [], source = null, minShare = 0.5, own = false, interestNeed = null }) {
+async function reviseOnce({ generate, textOf, structureOf = null, extraProblemsOf = null, spec, keyFacts = [], exempt = [], source = null, minShare = 0.5, own = false, interestNeed = null }) {
   const opts = (r) => ({ keyFacts, exempt, structure: structureOf ? structureOf(r) : null, source, minShare, own, interestNeed });
+  // extraProblemsOf(result): problems the text no longer shows (an analogy the guard replaced by the source's own words), added to the check so the revision names them.
+  const check = (r) => { const c = checkFollowed(textOf(r), spec, opts(r)); const extra = extraProblemsOf ? (extraProblemsOf(r) || []) : []; if (extra.length) { c.problems = [...c.problems, ...extra]; c.ok = false; } return c; };
   const first = await generate(null);
   if (!first) return { result: first, revised: false, problems: [] };
-  const check1 = checkFollowed(textOf(first), spec, opts(first));
+  const check1 = check(first);
   if (check1.ok) return { result: first, revised: false, problems: [], stats: check1.stats };
   let second = null;
   try { second = await generate(revisionNote(check1.problems)); } catch { second = null; }
   if (!second) return { result: first, revised: false, problems: check1.problems, stats: check1.stats };
-  const check2 = checkFollowed(textOf(second), spec, opts(second));
+  const check2 = check(second);
   const cov1 = check1.problems.some((p) => p.id === 'coverage');
   const cov2 = check2.problems.some((p) => p.id === 'coverage');
   // Never a revision that carries fewer of the points that must be taught, even when it fixes more of the rest.
   const missed = (c) => (c.stats && c.stats.keyFactsMissing) || 0;
-  const better = (!cov2 || cov1) && missed(check2) <= missed(check1) && check2.problems.length <= check1.problems.length;
+  // A draft that finally carries the one analogy a strong interest lean requires wins over one that does not, even when it has a problem more (a length
+  // the notes' own trim then handles): the interest measure could not be seen at all in a draft with none (J2 notes, interest_transfer 2/6).
+  const isInt = (p) => p.id === 'interest_unused';
+  const fixesAnalogy = check1.problems.some(isInt) && !check2.problems.some(isInt) && !check2.problems.some((p) => p.id === 'profile_leak' || p.id === 'avoid_domain');
+  const better = (!cov2 || cov1) && missed(check2) <= missed(check1) && (check2.problems.length <= check1.problems.length || fixesAnalogy);
   return better
     ? { result: second, revised: true, problems: check2.problems, before: check1.problems, stats: check2.stats }
     : { result: first, revised: false, problems: check1.problems, rejected: check2.problems, stats: check1.stats };

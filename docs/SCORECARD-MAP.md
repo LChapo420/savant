@@ -178,7 +178,7 @@ Columns: **meaning** (a low score, then a high one); **channels before**; **spec
 | `far_transfer` | knowledge stays in context / applies it across domains | lesson text | +transfer +integration; no mechanism; transfer.variedCases, learning.retrieval.cumulative, learning.spacing.earlierQuestion, depth.measures, depth.facts.measuredStrengths, +3 | learning-depth.js:108; scorecard/indicators.js:56; scorecard/item-tags.js:30 |
 | `application_orientation` | likes theory / wants practical use | lesson text | +application; no mechanism; lesson.whyItMatters, explain.modes, transfer.application, depth.measures | scorecard/indicators.js:57 |
 | `conceptual_bias` | learns the "how" (procedures) best / learns the "why" (concepts) best | lesson text, coach text | +conceptual; no mechanism; explain.modes, explain.conceptFirst, depth.measures | scorecard/indicators.js:39; tutor-learner-model.js:313 |
-| `prior_knowledge` | little background in this subject / strong background in this subject | lesson text, coach text, structure | +diffStart -scaffold -worked -length +vocab; 03-M17; lesson.minutes, lesson.mistakes, lesson.wordBudget, difficulty.startOffset, difficulty.supportShare, +20 | adaptation.js:101; learning-depth.js:109; scorecard/contract.js:68; [w] scorecard/index.js:431 |
+| `prior_knowledge` | little background in this subject / strong background in this subject | lesson text, coach text, structure | +diffStart -scaffold -worked -length +vocab; 03-M17; lesson.minutes, lesson.mistakes, lesson.wordBudget, difficulty.startOffset, difficulty.supportShare, +19 | adaptation.js:101; learning-depth.js:109; scorecard/contract.js:68; [w] scorecard/index.js:431 |
 | `misconception_persistence` | corrections stick / wrong beliefs keep coming back | lesson text, coach text | +misconception; 03-M32; explain.misconception, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, depth.facts.measuredIds.strengths, +1 | learning-depth.js:110; [w] scorecard/signals.js:61 |
 | `integration_tendency` | treats each level separately / connects to past levels | lesson text | +integration; no mechanism; transfer.linkEarlier, learning.retrieval.cumulative, learning.spacing.earlierQuestion, depth.measures | learning-depth.js:284; scorecard/indicators.js:56 |
 | `depth_breadth` | wants a wide overview / wants deep dives | lesson text | +depth; no mechanism; transfer.depth, depth.measures | [w] scorecard/signals.js:760 |
@@ -227,7 +227,7 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `scaffolding.fade` | prompt only | 6 |
 | `practice.workedToPractice` | prompt only | 5 |
 | `practice.workedExamples` | prompt only | 5 |
-| `practice.tryItems` | prompt only | 6 |
+| `practice.tryItems` | prompt only | 5 |
 | `practice.examplesPerIdea` | prompt only | 1 |
 | `practice.typedAnswers` | adaptation.js | 3 |
 | `practice.predictBeforeReveal` | prompt only | 5 |

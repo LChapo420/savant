@@ -747,3 +747,42 @@ Raw runs: `docs/material-depth/depth-75/wm/` (`after-j2-r3/r4/r5.json`, `planted
 **Honest reading.** The wrong-way reading is gone (the low text no longer has an arrow chain), but working_memory_span is 4/6, not 6/6: in the two misses a judge reads the longer, more connected mirror text as "more detailed" and
 the low text as the "higher-span" one because it is the shorter text of a learner who also wants brevity (confounded with brevity_preference in J2, a joint effect). Small samples. interest_transfer is unchanged code and writer noise.
 Planted swap on r4 (`--plant swap --replay`): caught 8/8. Money: Standard Compute about $0.05 through its ledger (3 sample sets), Gemini and Nemotron free tiers, Anthropic $0.
+
+### 9.12 Lena's lesson fit and the missing required analogy (2 Nov, branch `depth-lena`)
+
+AI-judged, simulated learners (Gemini 3.5 Flash Lite and Nemotron 3 Ultra judging, DeepSeek V4.1 Flash via Standard Compute writing). Not a real-learner result. Raw runs:
+`docs/material-depth/depth-75/lena/` (`before-speed-lesson.json`, `after-speed-lesson.json`, `before-j2-*.json`, `after-j2-r7/r8/r9.json`, `planted-swap-j2-r7.json`).
+
+**Problem 1: Lena's lesson fit (9 to 7 in 9.4).** Her lesson block against the one before depth-75 (`learner-block.js Lena lesson`, `block-diff.js`) differs only by the gap-only rules (ceiling 1000 to 520
+words, one-paragraph sections), so that change is not what the judge disliked; the 9.4 verdict ("extra try-it examples and pottery analogies", later "more narrative and practice prompts than the learner
+requested") points at what is left: her block still asks for **3 "Try it" lines** (worked_example_dependence 14 makes the worked-to-practice ratio large, and the count clamps at 3 whatever else she knows) and a story
+frame (narrative_pull 78), on top of a learner who knows most of it. Re-measured on the current code first: her fit was already 9 and 7 (8 on average), the 7 being the same complaint. Fix (`services/learning-spec.js`): for a *strong* gap-only
+learner (prior knowledge 80 or more) `practice.tryItems` is capped at 2, and the story sentence gets "in a sentence or two at the start, not a running narrative" (the sentence itself stays, so the
+every-lever-sentence-is-in-the-block test is unchanged). `block-diff.js` over 1000 blocks: only prior_knowledge's lesson block changed; no other measure's block did.
+
+| Lesson speed, 8 learners (judged fit tailored, 2 judges; words of the tailored lesson) | before | after |
+|---|---|---|
+| Lena | 9 and 7 (avg 8), 496 words | 9 and 7 (avg 8), 588 words; two other samples 9/8 (504 words) and 8/6 (648 words, before the story wording) |
+| Ethan, Noah (also strong gap-only, so also capped at 2 try-its) | 9/9 (493 words), 10/9 (364 words) | 10/9 (346 words), 9/9 (261 words); minutes 3.2 to 2.6 and 2.7 to 2.2 |
+| Ben, Omar, Sam, Frank, Grace | unchanged prompts, same texts | identical (9/9, 10/9, 10/9, 10/9, 9/9) |
+
+**Honest reading.** Lena's fit is 8 or more (8, 8.5 and 7 across three samples), but this is **not** a measured improvement over the same code's baseline (also 8): her two judges disagree by two points in either arm and the
+tailored lesson still runs over her 520-word budget (496 to 648; the over-length check only fires at 1.3 times the budget). The two other gap-only learners got shorter lessons at equal or better fit. One sample per cell. Open: a tighter
+length check for strong gap-only learners.
+
+**Problem 2: the required analogy goes missing (J2 notes, interest_transfer 2/6).** A missing required analogy *does* start a revision (`interest_unused` in `checkFollowed`, `reviseOnce` in `material-notes.js`); the analogy
+was lost in three other places, found by logging each build (J2, 6 builds): (1) the **analogy guard** replaced a refused analogy by the source's own words, so the revision saw only "no analogy" and the writer wrote the same refused
+one again (2 of 6 builds, both drafts); (2) `reviseOnce` **threw away a revision that added the analogy** whenever it also had one more problem (here the word limit or sentence length), keeping the draft with none (2 of 6);
+(3) `trimToLimit` removed "Think of" bullets first to meet the word limit, including the one required analogy. Fixes: `cleanSections` records why a guard refused an analogy and the notes' revision names it (`extraProblemsOf`,
+`analogyGuard().why`); `reviseOnce` prefers a draft that carries the required analogy (unless it leaks the profile or uses an avoided domain) and still never one with fewer key points; `trimToLimit(..., { keepFirstAnalogy })`
+keeps the one required analogy and cuts other extras first. A short version still gets exactly one analogy (the cap of one and the extras rule are unchanged). Tests added in `scripts/learning-depth-test.js`.
+
+| J2 notes, same 3 sample sets (reps 7 to 9), 2 judges, 6 verdicts a cell | before (old code) | after |
+|---|---|---|
+| interest_transfer | **0/6** | **6/6** |
+| brevity_preference | 6/6 | 6/6 |
+| deductive_trajectory | 5/6 | 4/6 (one "same") |
+| working_memory_span | 1/6 | 1/6 (unchanged; the confound with brevity in 9.11 remains, and 9.11's 4/6 was a lucky draw: four older sets on this code gave 2/5) |
+
+Planted swap on the after run (`--plant swap --replay`, r7): caught 7/8, fooled 1. Money: Standard Compute about $0.49 through its ledger, Gemini and Nemotron free tiers, Anthropic $0.
+Not verified: the lesson and podcast paths use `reviseOnce` too, so the "analogy wins" rule applies there; it was only run on notes.
