@@ -149,6 +149,8 @@ function installWriter() {
     const raw = w.structured.bind(w);
     w.structured = async (a) => {
       if (spend.scUsd >= BUDGET) throw new Error(`budget $${BUDGET} reached`);
+      // A file named SC_STOP next to the cache file stops every Standard Compute write of a run that starts after it appears (a way to halt a driver script without a kill).
+      if (arg('cache') && fs.existsSync(path.join(path.dirname(arg('cache')), 'SC_STOP'))) throw new Error('Standard Compute writes stopped (SC_STOP)');
       const r = await raw(a);
       usage.writerCalls += 1; usage.writerIn += (r.usage && r.usage.input_tokens) || 0; usage.writerOut += (r.usage && r.usage.output_tokens) || 0;
       return r;
@@ -214,6 +216,12 @@ async function geminiChat(model, system, user) {
   }
   throw new Error('gemini: rate limited');
 }
+// NVIDIA build (free, fast for the non-reasoning models): used as judges on 2 Nov 2026, when xKiro's daily free quota, Gemini's free quota and Sol's key were all spent.
+async function nvidiaChat(model, system, user) {
+  const nv = require('../services/providers/nvidia'); // eslint-disable-line global-require
+  const r = await gated(() => nv.chat({ role: 'fast', system, messages: [{ role: 'user', content: user }], maxTokens: 2500, model, effort: 'off', timeoutMs: 180000 }));
+  return r.text;
+}
 async function xkiroChat(model, system, user) {
   const { xkiro } = require('../services/providers/xkiro'); // eslint-disable-line global-require
   const r = await gated(() => xkiro.chat({ system, messages: [{ role: 'user', content: user }], models: [model], maxTokens: 2500, timeoutMs: 240000 }));
@@ -248,6 +256,12 @@ const ALL_JUDGES = {
   qwen37: { id: 'qwen/qwen3.7-max:free', family: 'alibaba', call: (s, u) => xkiroChat('qwen/qwen3.7-max:free', s, u) },
   mistralm: { id: 'mistralai/mistral-medium-3.5', family: 'mistral', call: (s, u) => xkiroChat('mistralai/mistral-medium-3.5', s, u) },
 };
+ALL_JUDGES.nemotron = { id: 'nvidia/nemotron-3-ultra-550b-a55b', family: 'nvidia', call: (s, u) => nvidiaChat('nvidia/nemotron-3-ultra-550b-a55b', s, u) };
+ALL_JUDGES.mistral4 = { id: 'mistralai/mistral-large-4-1t-a52b', family: 'mistral', call: (s, u) => nvidiaChat('mistralai/mistral-large-4-1t-a52b', s, u) };
+// While a file named XKIRO_DOWN sits next to the cache file (or PROOF_XKIRO_DOWN names one), the xKiro judges qwen and mistral are answered by the NVIDIA ones
+// instead (the records carry the real model ids).
+const DOWN_FILE = process.env.PROOF_XKIRO_DOWN || (arg('cache') ? path.join(path.dirname(arg('cache')), 'XKIRO_DOWN') : null);
+if (DOWN_FILE && fs.existsSync(DOWN_FILE)) { ALL_JUDGES.qwen = ALL_JUDGES.nemotron; ALL_JUDGES.mistral = ALL_JUDGES.mistral4; }
 const JUDGES = arg('judges', 'mistral,gemini').split(',').map((j) => ALL_JUDGES[j]).filter(Boolean);
 // Joint profiles: how the four measures are put to the judge. 'each' (default): one call per measure, the other three named as
 // explanations and not judged; 'together': one call, told to judge each measure alone; 'old': the first wording (the recorded run).
@@ -466,11 +480,8 @@ function mockJudge(measures) {
 
 /** Joint profile, one call per measure (the other measures named as explanations); the four answers are merged into one verdict. */
 async function judgeEach(judge, kind, topicId, measures, A, B) {
-  const parts = [];
-  for (const m of measures) {
-    const others = measures.filter((x) => x !== m);
-    parts.push(await judgeOnce(judge, pairPrompt(kind, topicId, [m], A.text, B.text, others), [m])); // eslint-disable-line no-await-in-loop
-  }
+  // The four measures are asked at once (each its own call; the xKiro/NVIDIA gate limits how many are in flight): the judges' free queues were the slow part.
+  const parts = await Promise.all(measures.map((m) => judgeOnce(judge, pairPrompt(kind, topicId, [m], A.text, B.text, measures.filter((x) => x !== m)), [m])));
   const bad = parts.find((p) => p.error);
   if (bad) return bad;
   const merge = (k) => ({ accuracy: Math.min(...parts.map((p) => p[k].accuracy)), errors: [...new Set(parts.flatMap((p) => p[k].errors))].slice(0, 6), missing: [...new Set(parts.flatMap((p) => p[k].missing))] });
@@ -484,22 +495,20 @@ async function judgePair(kind, topicId, measures, hiOf, artX, artY) {
   const A = flip ? artY : artX; const B = flip ? artX : artY;
   const truth = Object.fromEntries(measures.map((m) => [m, (hiOf[m] === 'X') !== flip ? 'A' : 'B']));
   const prompt = pairPrompt(kind, topicId, measures, A.text, B.text);
-  const out = [];
-  for (const j of (MOCK ? [{ id: 'mock', family: 'code' }] : JUDGES)) {
-    // eslint-disable-next-line no-await-in-loop
+  const perJudge = await Promise.all((MOCK ? [{ id: 'mock', family: 'code' }] : JUDGES).map(async (j) => {
     const v = MOCK ? mockJudge(measures) : (measures.length > 1 && JOINT_JUDGE === 'each' ? await judgeEach(j, kind, topicId, measures, A, B) : await judgeOnce(j, prompt, measures));
-    if (v.error) { out.push({ judge: j.id, error: v.error }); continue; }
+    if (v.error) return { judge: j.id, error: v.error };
     // Map A and B back to X and Y so the record does not depend on the shuffle.
     const back = (s) => (s === 'A' ? (flip ? 'Y' : 'X') : s === 'B' ? (flip ? 'X' : 'Y') : 'same');
-    out.push({
+    return {
       judge: j.id, family: j.family,
       picks: Object.fromEntries(measures.map((m) => [m, back(v.picks[m])])),
       correct: Object.fromEntries(measures.map((m) => [m, v.picks[m] === truth[m]])),
       same: Object.fromEntries(measures.map((m) => [m, v.picks[m] === 'same'])),
       X: flip ? v.B : v.A, Y: flip ? v.A : v.B, certainty: v.certainty || null, evidence: v.evidence,
-    });
-  }
-  return out;
+    };
+  }));
+  return perJudge;
 }
 
 // ── plain code: coverage, words, minutes ────────────────────────────────────

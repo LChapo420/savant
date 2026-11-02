@@ -102,12 +102,21 @@ const turnsDraft = (sentences, analogy) => () => ({ title: 'Ep', turns: [
   check('the kid\'s prompt asks for analogy bullets on top of the bullet limit', /analogy bullets, where the block below asks for them, come on top/.test(llmA.calls[0].system) && /own one-sentence bullet that starts "Think of"/.test(llmA.calls[0].system));
 
   // A learner who needs less (material-weak): a word limit in the prompt and in the check, the analogy optional and inside it.
-  const brief = makeLearner('brief', { age: 14, stats: { interest_transfer: 92, brevity_preference: 90 }, survey: { interests: 'minecraft, drawing' } });
+  const brief = makeLearner('brief', { age: 14, stats: { interest_transfer: 62, brevity_preference: 90 }, survey: { interests: 'minecraft, drawing' } });
   const mBrief = mk(brief, 'Photosynthesis');
   const llmF = scripted([notesDraft([...SENTS, 'Plants are living things that need light and water to grow well.'], false)]);
   const rF = await notes.build(brief.id, mBrief.id, { llm: llmF, force: true });
   const limitOf = (s) => Number((/run to at most (\d+) words/.exec(s) || [])[1]);
   check('a learner who needs less: the prompt carries a word limit, the analogy is optional, so a draft with none is kept after one call', llmF.calls.length === 1 && limitOf(llmF.calls[0].system) > 0 && /at most one in all/.test(llmF.calls[0].system) && rF.notes.revised_parts === 0, [llmF.calls.length, limitOf(llmF.calls[0].system)]);
+  // ...but a learner who is also strong on interest framing (depth-75) is asked for exactly one analogy, so a draft with none is written once more.
+  const strongBrief = makeLearner('strongbrief', { age: 14, stats: { interest_transfer: 92, brevity_preference: 90 }, survey: { interests: 'minecraft, drawing' } });
+  const mStrongBrief = mk(strongBrief, 'Photosynthesis');
+  const llmS1 = scripted([notesDraft(SENTS, false), notesDraft(SENTS, true)]);
+  const rS1 = await notes.build(strongBrief.id, mStrongBrief.id, { llm: llmS1, force: true });
+  check('a learner who needs less and is strong on interest framing: one analogy is required (and still paid for by the word limit), so a draft with none is written once more and the second is kept', llmS1.calls.length === 2 && /add one short framed analogy bullet/.test(llmS1.calls[0].system) && limitOf(llmS1.calls[0].system) > 0 && rS1.notes.revised_parts === 1, [llmS1.calls.length, rS1.notes && rS1.notes.revised_parts]);
+  const llmS2 = scripted([notesDraft(SENTS, true)]);
+  const rS2 = await notes.build(strongBrief.id, mStrongBrief.id, { llm: llmS2, force: true });
+  check('and a draft with the one analogy is kept after one call', llmS2.calls.length === 1 && rS2.notes.revised_parts === 0, [llmS2.calls.length, rS2.notes && rS2.notes.open_problems]);
   const longAnalogy = Array.from({ length: 6 }, () => ANALOGY.replace(/^Think of /, '')).join(' ');
   const overDraft = () => ({ sections: [{ heading: 'Plants', bullets: [...SENTS.map((s) => bullet(s)), bullet('Plants are living things that need light and water to grow well.'), bullet(`Think of ${longAnalogy}`, { quote: SENTS[1] }), bullet(`Picture this: ${ANALOGY.replace(/^Think of /, '')}`, { quote: SENTS[0] })] }] });
   const llmG = scripted([overDraft]);
