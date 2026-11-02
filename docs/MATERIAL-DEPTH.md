@@ -640,7 +640,7 @@ and whether writers other than DeepSeek follow it is not shown (Mistral kept thr
 ### 9.8 Second judge family (Gemini 3.5 Flash Lite, free tier), 2 Nov after the merge
 
 AI-judged, simulated learners. The saved DeepSeek texts of the r2 and r3 sample sets were re-judged with `--replay` (no new writing, 0 writer calls),
-before and after the rule changes, same per-measure joint judge. Raw runs: .
+before and after the rule changes, same per-measure joint judge. Raw runs: `docs/material-depth/depth-75/gemini-second-judge/`.
 
 | Gemini, r2 + r3 | correct | can't tell | wrong way |
 |---|---|---|---|
