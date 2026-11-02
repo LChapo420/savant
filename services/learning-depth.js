@@ -312,6 +312,8 @@ function learningOf(L = {}, spec = {}, ctx = {}, measures = []) {
   const knows = prior >= 70 || (mastery !== null && mastery >= 0.75 && (ctx.attempts || 0) >= 5);
   const expert = (lean('worked') <= -0.3 || knows) && lean('worked') < SHOW;
   const mixOk = lean('interleave') > -SHOW;
+  // Low working memory (the measure itself, not the chunk lever it shares with chunk_granularity and intake_baseline): the picture holds one idea a line, never a chain of steps held at once (depth-wm).
+  const wmLow = eff.has('working_memory_span') && eff.get('working_memory_span') <= 35;
   const lesson = spec.lesson || {};
   return {
     retrieval: {
@@ -331,7 +333,7 @@ function learningOf(L = {}, spec = {}, ctx = {}, measures = []) {
     gapOnly: { on: knows && !novice && lean('worked') < SHOW, strong: prior >= 80 || (mastery !== null && mastery >= 0.85) },
     // The picture's form follows the learner too (the full run found an arrow chain read as a long causal chain for a learner who follows
     // one or two links): no arrow chain when short cause links are asked for.
-    dualCoding: { on: lean('visual') > -SHOW, strength: lean('visual') >= 0.3 || lean('multiRep') >= 0.3 ? 'every-key-idea' : 'central-idea', forms: lean('causal') <= -SHOW ? 'an aligned table or a labelled list (no long arrow chains)' : 'an aligned table, an arrow chain or a labelled list' },
+    dualCoding: { on: lean('visual') > -SHOW, strength: lean('visual') >= 0.3 || lean('multiRep') >= 0.3 ? 'every-key-idea' : 'central-idea', forms: wmLow ? 'a short labelled list with one idea on each line, three lines at most; no arrow chain, no table that joins several steps' : lean('causal') <= -SHOW ? 'an aligned table or a labelled list (no long arrow chains)' : 'an aligned table, an arrow chain or a labelled list' },
     length: { words: lesson.wordBudget || null, minutes: lesson.minutes || null, compact: lean('length') <= -0.3 },
     measures: LEARNING_MEASURES,
   };

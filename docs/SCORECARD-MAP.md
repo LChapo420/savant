@@ -40,9 +40,9 @@ Columns: **meaning** (a low score, then a high one); **channels before**; **spec
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
 | `intake_baseline` | needs tiny doses of new information / handles a lot of new information per step | lesson text, coach text | +chunk +pace; 03-M19; lesson.sections, lesson.chunkSentences, lesson.wordBudget, lesson.newIdeasPerChunk, lesson.maxNewTerms, +7 | learning-depth.js:104; [w] scorecard/signals.js:683 |
-| `working_memory_span` | juggles one or two ideas at once / holds many moving parts at once | lesson text, coach text | +chunk -structure -scaffold; 03-M19; lesson.sections, lesson.chunkSentences, lesson.newIdeasPerChunk, difficulty.supportShare, scaffolding.level, +7 | boosters.js:144; learning-depth.js:104; scorecard/indicators.js:72 |
+| `working_memory_span` | juggles one or two ideas at once / holds many moving parts at once | lesson text, coach text | +chunk -structure -scaffold; 03-M19; lesson.sections, lesson.chunkSentences, lesson.newIdeasPerChunk, difficulty.supportShare, scaffolding.level, +8 | boosters.js:144; learning-depth.js:104; scorecard/indicators.js:72 |
 | `processing_velocity` | needs time to digest / gets it on the first read | lesson text, coach text, structure, tutor plan | +pace -repetition -length; 03-M19; lesson.minutes, lesson.wordBudget, lesson.pace, lesson.restate, explain.modes, +7 | adaptation.js:104; boosters.js:145; learning-depth.js:104; scorecard/contract.js:71 |
-| `chunk_granularity` | needs micro-steps / prefers big unified blocks | lesson text, tutor plan | +chunk; 03-M19; lesson.sections, lesson.chunkSentences, lesson.newIdeasPerChunk, lesson.maxNewTerms, depth.measures | [w] scorecard/index.js:1593; tutor-plan.js:58 |
+| `chunk_granularity` | needs micro-steps / prefers big unified blocks | lesson text, tutor plan | +chunk; 03-M19; lesson.sections, lesson.chunkSentences, lesson.newIdeasPerChunk, lesson.maxNewTerms, depth.measures | learning-depth.js:315; [w] scorecard/index.js:1593; tutor-plan.js:58 |
 | `abstraction_tolerance` | needs something concrete first / comfortable with pure abstraction | lesson text, coach text, tutor plan, experiment | +ruleFirst -application; no mechanism; explain.modes, explain.order, transfer.application, learning.order, depth.measures, +4 | learning-depth.js:105; personalize.js:155; scorecard/indicators.js:43; scorecard/translate.js:136 |
 | `example_density_need` | one example is enough / needs many varied examples | lesson text, experiment | +exampleCount; no mechanism; practice.workedExamples, practice.tryItems, practice.examplesPerIdea, depth.measures | personalize.js:170; scorecard/indicators.js:63; scorecard/translate.js:120 |
 | `text_density_tolerance` | loses focus in paragraphs / fine with dense prose | **dead** | +density +chunk; no mechanism; lesson.sections, lesson.chunkSentences, explain.modes, explain.textDensity, explain.paragraphSentences, +5 | learning-depth.js:105; scorecard/indicators.js:42; [w] scorecard/signals.js:71 |
@@ -314,7 +314,7 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `learning.gapOnly.strong` | prompt only | 1 |
 | `learning.dualCoding.on` | prompt only | 1 |
 | `learning.dualCoding.strength` | prompt only | 2 |
-| `learning.dualCoding.forms` | prompt only | 1 |
+| `learning.dualCoding.forms` | prompt only | 2 |
 | `learning.length.words` | prompt only | 10 |
 | `learning.length.minutes` | prompt only | 6 |
 | `learning.length.compact` | prompt only | 5 |

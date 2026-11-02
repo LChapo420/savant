@@ -724,3 +724,26 @@ is on for every learner and is shared by the mirror, so fixing it needs a rule t
 
 Planted swap on the equations after run (`--plant swap --replay`): caught 6/8, fooled 1, could not tell 1, so the verdicts follow the writing.
 Money: Standard Compute about $0.38 through its ledger (DeepSeek writing, 0 judge calls), Gemini and Nemotron free tiers, Anthropic $0.
+
+### 9.11 Notes: working_memory_span low in J2 (2 Nov, branch `depth-wm`)
+
+AI-judged, simulated learners (Gemini 3.5 Flash Lite and Nemotron 3 Ultra judging, DeepSeek V4.1 Flash via Standard Compute writing, notes only, J2, 2 judges a sample set). Not a real-learner result.
+Raw runs: `docs/material-depth/depth-75/wm/` (`after-j2-r3/r4/r5.json`, `planted-swap-j2-r4.json`, `blocks-before.json`, `blocks-after.json`); the before samples are `notes2/after-j2-r3/r4.json` (unchanged code, section 9.10).
+
+**Cause (from 9.10).** The dual-coding method line for notes ("Layout:" bullet, forms "an aligned table, an arrow chain or a labelled list") is on for every learner, so a learner who holds few things at once got
+`2x+3=11 -> -3 -> 2x=8 -> /2 -> x=4` in one bullet, which judges read as many parts held at once.
+
+**Fix** (`services/learning-depth.js`, `learningOf`): the forms of the picture follow the working_memory_span measure itself (effective value 35 or lower), not the `chunk` lever it shares with chunk_granularity and intake_baseline:
+"a short labelled list with one idea on each line, three lines at most; no arrow chain, no table that joins several steps". Every other learner keeps the old forms.
+`block-snapshot.js` / `block-diff.js` (1000 blocks, before and after): the only blocks that changed are working_memory_span's (notes, lesson, material); no other measure's block changed on any surface.
+
+| J2 notes, 2 judges a sample set | before (4 verdicts, 9.10) | after (6 verdicts, 3 sample sets) |
+|---|---|---|
+| working_memory_span | 0/4 (all wrong-way); 1/8 over four sets | **4/6** (1/2, 1/2, 2/2); no wrong-way pattern left |
+| brevity_preference | 4/4 | 6/6 |
+| deductive_trajectory | 4/4 | 5/6 (one "same") |
+| interest_transfer | 2/4 | 2/6 (3 "same": the writer left out the one required analogy or a judge saw none; same noise as 9.9) |
+
+**Honest reading.** The wrong-way reading is gone (the low text no longer has an arrow chain), but working_memory_span is 4/6, not 6/6: in the two misses a judge reads the longer, more connected mirror text as "more detailed" and
+the low text as the "higher-span" one because it is the shorter text of a learner who also wants brevity (confounded with brevity_preference in J2, a joint effect). Small samples. interest_transfer is unchanged code and writer noise.
+Planted swap on r4 (`--plant swap --replay`): caught 8/8. Money: Standard Compute about $0.05 through its ledger (3 sample sets), Gemini and Nemotron free tiers, Anthropic $0.
