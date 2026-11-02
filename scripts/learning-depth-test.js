@@ -257,5 +257,37 @@ console.log('8. priority by measure, the new conflict rules, the notes word limi
   check('and an over-limit draft with only points stays as it is', stay.removed === 0 && stay.sections[0].bullets.length === 2);
 }
 
+console.log('8. depth-75: what the joint profiles found');
+{
+  const many = (set, over = {}) => ({ metrics: { ...blank(), ...Object.fromEntries(Object.entries(set).map(([k, v]) => [k, { measured: v, confidence: 95 }])) }, age: 14, interests: ['basketball', 'video games'], topic: 'photosynthesis', ...over });
+  // Gap-only means they know the subject, not that they learn from principles.
+  const principles = ls.buildSpecFrom(many({ worked_example_dependence: 5 }));
+  const knows = ls.buildSpecFrom(many({ prior_knowledge: 95 }));
+  check('learning from principles (low worked-example dependence) is not "they know the basics": no gap-only coverage, its own sentence', principles.learning.fading.mode === 'principles' && !principles.learning.gapOnly.on && !/already know the basics|Gap-only/.test(ls.specToPrompt(principles, { surface: 'lesson' })) && /learn from the principle rather than from long solved cases/.test(ls.specToPrompt(principles, { surface: 'lesson' })));
+  check('a very high background still gets gap-only coverage and a ceiling under the plain lesson (520 words)', knows.learning.gapOnly.on && knows.lesson.wordBudget <= 520 && /Gap-only/.test(ls.specToPrompt(knows, { surface: 'lesson' })));
+  const fuller = ls.buildSpecFrom(many({ prior_knowledge: 85, brevity_preference: 10 }));
+  check('a wish for full detail does not lift the ceiling of a learner who knows the basics, and "a fuller lesson" ends "but only for what is new to them"', fuller.learning.gapOnly.on && fuller.lesson.wordBudget <= 640 && /A fuller lesson is fine: give the reasoning behind each step, but only for what is new to them/.test(ls.specToPrompt(fuller, { surface: 'lesson' })));
+  // Small pieces are more sections.
+  const small = ls.buildSpecFrom(many({ attention_runway: 8, chunk_granularity: 10 }));
+  const big = ls.buildSpecFrom(many({ attention_runway: 92, chunk_granularity: 90 }));
+  check('small pieces mean more sections and big pieces fewer (it was three for everyone), said as "exactly N" from four up', small.lesson.sections >= 4 && big.lesson.sections <= 2 && /Shape: exactly [0-9] short sections/.test(ls.specToPrompt(small, { surface: 'lesson' })) && /Shape: about [0-9] short sections/.test(ls.specToPrompt(big, { surface: 'lesson' })), [small.lesson.sections, big.lesson.sections]);
+  const sec = (n) => Array.from({ length: n }, () => ({ sentences: 2, text: 'x' }));
+  check('a draft with fewer sections than the small pieces need is named (split, never cut); with enough it is not', ls.checkFollowed('Plants make food.', small, { structure: { sections: sec(2) } }).problems.some((p) => p.id === 'section_count' && /split, do not cut/.test(p.detail)) && !ls.checkFollowed('Plants make food.', small, { structure: { sections: sec(small.lesson.sections) } }).problems.some((p) => p.id === 'section_count'));
+  // Notes.
+  const fluff = ls.buildSpecFrom(many({ narrative_pull: 5 }));
+  const fluffInterest = ls.buildSpecFrom(many({ narrative_pull: 5, interest_transfer: 95 }));
+  const pn = ls.specToPrompt(fluff, { surface: 'notes' });
+  check('a learner who finds stories fluff gets notes without framed analogies, and the check does not ask for one', !/Think of|Interests:|short framed analogies/.test(pn) && ls.ownInterestNeed(fluff, 3000, 'notes') === 0 && /No story frame/.test(pn));
+  check('unless interest framing is their strongest lean', /Interests:/.test(ls.specToPrompt(fluffInterest, { surface: 'notes' })) && ls.ownInterestNeed(fluffInterest, 3000, 'notes') >= 1);
+  const lessNotes = ls.specToPrompt(ls.buildSpecFrom(many({ prior_knowledge: 90, narrative_pull: 70, challenge_appetite: 70 })), { surface: 'notes' });
+  check('notes for a learner who needs less carry no scene, no harder question and no "fuller treatment"', !/Picture this|harder question|A fuller treatment/.test(lessNotes) && /Keep it short/.test(lessNotes));
+  const wHi = ls.specToPrompt(ls.buildSpecFrom(many({ worked_example_dependence: 95 })), { surface: 'notes' });
+  const wLo = ls.specToPrompt(ls.buildSpecFrom(many({ worked_example_dependence: 5 })), { surface: 'notes' });
+  check('notes have a sentence for worked examples: a bullet a step against the principle first and one compact bullet', /one bullet per step/.test(wHi) && /State the principle first in a bullet of its own/.test(wLo) && wHi !== wLo);
+  const anxious = ls.specToPrompt(ls.buildSpecFrom(many({ evaluation_anxiety: 95 })), { surface: 'notes' });
+  const calm = ls.specToPrompt(ls.buildSpecFrom(many({ evaluation_anxiety: 5 })), { surface: 'notes' });
+  check('a calm learner closes the notes with a "Quick check:" bullet; an anxious learner opens with a calm lead-in and has none', /Quick check:/.test(calm) && !/Quick check:/.test(anxious) && /No rush/.test(anxious));
+}
+
 if (failures) { console.log(`\n${failures} check(s) failed`); process.exit(1); }
 console.log('learning-depth-test: all checks passed');
