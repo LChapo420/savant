@@ -509,7 +509,7 @@ async function planWindow(ctx, mat, windows, win, planned, share) {
     // eslint-disable-next-line no-await-in-loop
     out = await ask(ctx.llm, ctx.budget, ctx.userId, {
       role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 4000, dataClass: 'learner',
-      system: `You plan a course from a student's study material. ${UNTRUSTED} Split ${windows.length > 1 ? 'this part of it' : 'it'} into skills a student can learn one at a time (as many as it really covers, at most ${share}; a skill is a topic worth a short lesson and a few questions, not a single fact), grouped into units, both in the material's own order. Cover it from start to end: if it has more topics than that, merge neighbouring topics into one skill rather than stopping early. `
+      system: `You plan a course from a student's study material. ${UNTRUSTED} Split ${windows.length > 1 ? 'this part of it' : 'it'} into skills a student can learn one at a time (as many as it really covers, at most ${share}; a skill is a topic worth a short lesson and a few questions, not a single fact), grouped into units, both in the material's own order. Cover it from start to end: if it has more topics than that, merge neighbouring topics into one skill rather than stopping early. ${ctx.skillShare && ctx.skillShare < 0.8 ? 'This student wants the shortest version: prefer fewer, broader skills, and never plan a skill that only restates another. ' : ''}`
         + 'Use only topics the material itself covers or names; leave out course logistics (grading, dates, office hours, exams as events). '
         + 'For each skill: a short id, a title, a one-sentence summary, its unit (a short title shared by the skills of one unit), the ids of skills that must be learned first (prerequisites: only real dependencies), the passage ids that teach it (1 to 6), and taught: false when the material only names the topic (a syllabus or list line) without explaining it, otherwise true.',
       user: `Title: ${mat.title}\n${earlier}Passages${windows.length > 1 ? ` (part ${win.n} of ${windows.length})` : ''}:\n${win.text}`,
@@ -573,7 +573,7 @@ async function build(userId, materialId, opts = {}) {
     const all = chunk(mat.text);
     const passages = all.slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId, mat.title), questionBlock: questionBlockFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title }), makeGuard: guardMaker(userId, mat.title), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
+    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId, mat.title), questionBlock: questionBlockFor(userId, mat.title), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title }), makeGuard: guardMaker(userId, mat.title), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
     const base = {
       user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, total_chars: mat.text.length, status: 'building', started_at: new Date().toISOString(),
       passages: passages.map(({ id, start, end }) => ({ id, start, end })), truncated: all.length > passages.length,
@@ -584,7 +584,10 @@ async function build(userId, materialId, opts = {}) {
 
     let outline = base.outline;
     if (!outline) {
-      const most = Math.max(1, Math.min(MAX_SKILLS, Math.ceil(mat.text.length / CHARS_PER_SKILL)));
+      // A learner who wants the shortest version gets fewer, broader skills (spec.course.skillShare, from brevity_preference): the same
+      // facts, without the explanation repeated skill after skill. Everyone else: one skill per CHARS_PER_SKILL, as before.
+      const share = ctx.skillShare || 1;
+      const most = Math.max(1, Math.min(MAX_SKILLS, Math.ceil((mat.text.length / CHARS_PER_SKILL) * share)));
       const raw = [];
       let stoppedOutline = false;
       let gaps = 0;

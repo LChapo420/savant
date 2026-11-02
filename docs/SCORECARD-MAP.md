@@ -148,7 +148,7 @@ Columns: **meaning** (a low score, then a high one); **channels before**; **spec
 | `worked_example_dependence` | learns from principles / needs full worked examples | lesson text, tutor plan, experiment | +worked; 03-M17; practice.workedToPractice, practice.workedExamples, practice.tryItems, explain.modes, learning.fading.mode, +1 | learning-depth.js:280; personalize.js:143; scorecard/indicators.js:63; scorecard/translate.js:118 |
 | `scaffolding_fade` | supports must be removed slowly / supports can be removed quickly | lesson text, structure | -scaffold -hintSize; 03-M17; difficulty.supportShare, scaffolding.level, scaffolding.hintInChecks, scaffolding.hintsBeforeReveal, scaffolding.fade, +2 | adaptation.js:102; learning-depth.js:280; scorecard/contract.js:69; [w] scorecard/index.js:504 |
 | `notation_comfort` | formulas and symbols intimidate / comfortable with notation | lesson text, coach text | +notation +vocab; no mechanism; explain.notation, depth.measures, depth.facts.measuredStrengths, depth.facts.measuredDifficulties, depth.facts.measuredIds.strengths, +1 | learning-depth.js:109; scorecard/item-tags.js:31; scorecard/translate.js:136 |
-| `brevity_preference` | wants full detail / wants the shortest version | lesson text, coach text, structure, tutor plan, experiment | -length -feedbackDetail; 03-M19; lesson.minutes, lesson.mistakes, lesson.wordBudget, lesson.retrievalChecks, explain.modes, +7 | adaptation.js:103; learning-depth.js:289; personalize.js:140; scorecard/contract.js:70 |
+| `brevity_preference` | wants full detail / wants the shortest version | lesson text, coach text, structure, tutor plan, experiment | -length -feedbackDetail -courseSize; 03-M19; lesson.minutes, lesson.mistakes, lesson.wordBudget, lesson.retrievalChecks, explain.modes, +9 | adaptation.js:103; course-builder.js:587; learning-depth.js:289; personalize.js:140 |
 | `repetition_tolerance` | bored by restating / benefits from restating | lesson text | +repetition; no mechanism; lesson.restate, depth.measures | efficiency.js:120; [w] scorecard/signals.js:774 |
 | `feedback_granularity` | "right or wrong" is enough / wants a detailed breakdown | lesson text, coach text | +feedbackDetail; 02-M45; feedback.granularity, feedback.nameTheError, depth.measures | [w] scorecard/index.js:1597 |
 | `feedback_tone_sensitivity` | handles blunt correction / needs gentle framing | lesson text, coach text, tutor plan, experiment | +gentleness +warmth; 02-M45; feedback.tone.warmth, feedback.tone.correction, depth.measures | personalize.js:191; tutor-learner-model.js:90; tutor-plan.js:57 |
@@ -279,6 +279,8 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `session.breakMinutes` | prompt only | 2 |
 | `session.items` | adaptation.js, material-test.js | 4 |
 | `session.hardestFirst` | prompt only | 1 |
+| `course.skillShare` | course-builder.js | 1 |
+| `course.testScale` | material-test.js | 1 |
 | `engagement.challenge` | prompt only | 4 |
 | `engagement.novelty` | prompt only | 3 |
 | `engagement.gamification` | prompt only | 2 |

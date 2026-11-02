@@ -653,3 +653,31 @@ Planted swap on the after texts (notes r2, lesson r3): caught 23/32 (72%), foole
 
 With Nemotron at 60/80 (75%) on the after texts, both judge families now put the joint profiles at 75% or above, and Gemini's gain (+16 points) is outside
 the noise band of 9.2. Notes stay the weaker kind for both judges (71% and 72%); the three wrong-way notes measures in (6) are unchanged.
+
+### 9.9 brevity_preference on the path, the test and J2 notes (2 Nov, branch `depth-brevity`)
+
+AI-judged, simulated learners (Gemini 3.5 Flash Lite and Nemotron 3 Ultra judging, DeepSeek V4.1 Flash via Standard Compute writing). Not a real-learner result.
+Raw runs: `docs/material-depth/depth-75/brevity/`.
+
+**Cause.** Both wrong-way surfaces came from the same place, a course built from the learner's material. (1) The outline pass that splits the
+material into skills was told nothing about the learner (`services/course-builder.js`, `planWindow`), so a learner who wants the shortest version
+got 3 skills and a full lesson per skill (879 words, the explanation repeated in each) against 1 skill (405 words) for the full-detail learner, by
+chance. (2) The default test length is capped by the number of questions the course holds; the 3-skill course held more, so the "short" learner got
+10 questions against 8. The prompt block for brevity was fine; nothing in code carried it to the course. (3) J2 notes: the working-memory-low
+sentence ("let each section end on a one-line takeaway") added a repeated bullet to every section of the notes of a learner who wants less.
+
+**Fix.** A new lever `courseSize` that only `brevity_preference` moves (so only brevity changes): `spec.course.skillShare` (0.43 at a strong high, 1.16
+at a strong low) scales how many skills the outline may plan and adds "prefer fewer, broader skills" to the outline prompt; `spec.course.testScale`
+(0.68 / 1.13) scales the default test length (`defaultLen` in `services/material-test.js`). Notes: the takeaway clause is dropped when brevity is
+strongly high. `block-snapshot.js` / `block-diff.js`: **no single-measure block changed** (the changes are code-shaped, or only act in the joint case).
+
+| Cell (brevity_preference high against low, two-step equations) | before | after |
+|---|---|---|
+| path, words high / low | 879 / 405 (both judges wrong-way) | 763 / 2433 (2/2 correct) |
+| test, words high / low | 263 / 251, 10 vs 8 questions (both judges wrong-way) | 198 / 444 (2/2 correct) |
+| J2 notes, brevity_preference | 1/2 earlier, wrong-way (9.7 item 6) | 2/2 in two fresh samples (187 and 202 words against 279) |
+| cycle_architecture test + path | correct | 4/4 correct |
+| attention_runway test + path | correct | test 2/2; path 1/2 in the main run (Gemini wrong, Nemotron right), 2/2 in a fresh re-run; its block did not change, so this is judge/writer noise |
+
+Planted swap on the J2 notes: caught 8/8. Remaining J2 notes noise: interest_transfer read 0/2 (two "same") in the first sample, where the writer left out the
+one required analogy, and 2/2 in the second; working_memory_span 2/2 then 1/2. One course per cell, so the path and test numbers are single samples.

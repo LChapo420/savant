@@ -116,6 +116,9 @@ const LEVERS = {
   story: { imp: 1, doc: '+ story or scenario framing; - none' },
   sessionLen: { imp: 0, doc: '+ longer sessions; - shorter' },
   breaks: { imp: 0, doc: '+ more frequent breaks; - fewer' },
+  // How much a course built from their material is split and tested (brevity_preference only): the path and the test are code-shaped,
+  // so this lever has no sentence of its own; it sets spec.course (skills the outline may plan, length of the default test).
+  courseSize: { imp: 0, doc: '+ finer skills and a longer default test; - fewer, broader skills and a shorter default test' },
   autonomy: { imp: 1, doc: '+ offer choices; - guide step by step' },
   structure: { imp: 2, doc: '+ numbered steps and a stated next step; - open-ended tasks' },
   visual: { imp: 2, doc: '+ lay structure out spatially in plain text; - prose only' },
@@ -258,7 +261,7 @@ const METRIC_RULES = [
   R('worked_example_dependence', '03-M17', [['worked', 1, 0.8]], 'Needs full worked examples: they lead. Learns from principles: practice leads (03-M17, 03-M18: never removed from an unseen objective).'),
   R('scaffolding_fade', '03-M17', [['scaffold', -1, 0.6], ['hintSize', -1, 0.3]], 'Supports can be removed quickly: little support. Slowly: keep it.'),
   R('notation_comfort', null, [['notation', 1, 0.7], ['vocab', 1, 0.1]], 'Comfortable with symbols: use them. Intimidated: words first, symbols last, read out.'),
-  R('brevity_preference', '03-M19', [['length', -1, 0.8], ['feedbackDetail', -1, 0.3]], 'Wants the shortest version: cut everything not required (03-M19). Wants full detail: fuller only on new material.'),
+  R('brevity_preference', '03-M19', [['length', -1, 0.8], ['feedbackDetail', -1, 0.3], ['courseSize', -1, 0.8]], 'Wants the shortest version: cut everything not required (03-M19). Wants full detail: fuller only on new material.'),
   R('repetition_tolerance', null, [['repetition', 1, 0.7]], 'Benefits from restating: restate the key point. Bored by it: say it once.'),
   R('feedback_granularity', '02-M45', [['feedbackDetail', 1, 0.8]], 'Wants a detailed breakdown: step by step. Right or wrong is enough: one line.'),
   R('feedback_tone_sensitivity', '02-M45', [['gentleness', 1, 0.8], ['warmth', 1, 0.4]], 'Needs gentle framing: say what is right first. Handles blunt correction: direct.'),
@@ -749,6 +752,12 @@ function derive(L, ctx, input, interestsUsed, avoid) {
       items: Math.round(clamp(8 * (sessionMin / 20), 4, 16)),
       hardestFirst: L.fatigue >= 0.3,
     },
+    // Code-shaped course settings (material-depth 75, brevity): a learner who wants the shortest version gets a course of fewer, broader
+    // skills (the explanation is not repeated skill after skill) and a shorter default test. Only courseSize moves them, so only brevity does.
+    course: {
+      skillShare: round(span(L.courseSize, 0.1, 1, 1.25)),
+      testScale: round(span(L.courseSize, 0.5, 1, 1.2)),
+    },
     engagement: {
       challenge: round(clamp(0.5 + 0.5 * L.challenge, 0, 1)),
       novelty: round(clamp(0.5 + 0.5 * L.novelty, 0, 1)),
@@ -1054,7 +1063,7 @@ const SURFACES = {
   test: (l) => ['pressure', 'gentleness', 'diffStart', 'diffRamp', 'challenge', 'feedbackDetail', 'feedbackImmediacy', 'typed', 'vocab', 'sentence', 'instructions', 'warmth', 'momentum', 'warmup', 'misconception', 'selfCheck', 'interestUse'].includes(l) || (depthOn() && [
     'contrast', 'transfer', 'application', 'notation', 'formality', 'hintSize', 'generation', 'mistakes', 'conceptual', 'praise', 'humor',
     'story', 'novelty', 'curiosity', 'elaboration', 'worked', 'structure', 'social', 'emotion', 'identity', 'depth', 'creative', 'chunk', 'scaffold'].includes(l)),
-  tutor: (l) => !['sessionLen', 'breaks', 'length', 'checks', 'recapStart', 'recapEnd', 'warmup', 'fatigue', 'extrinsic', 'gamification'].includes(l),
+  tutor: (l) => !['sessionLen', 'breaks', 'length', 'checks', 'recapStart', 'recapEnd', 'warmup', 'fatigue', 'extrinsic', 'gamification', 'courseSize'].includes(l),
 };
 
 /** How the check questions are ordered, from the spec's difficulty start and ramp. */
@@ -1127,6 +1136,8 @@ function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
       const r = ranked[i];
       if ((NOTES_EXTRAS.has(r.lever) || (r.lever === 'pressure' && r.lean > 0)) && Math.abs(r.lean) < depth.STRONG) ranked.splice(i, 1);
       else if (r.lever === 'length' && r.lean > 0) r.text = MATERIAL_PHRASES.length[0];
+      // A one-line takeaway after each section repeats the section: padding for a learner who wants less (J2 notes, brevity).
+      else if (r.lever === 'chunk' && r.lean < 0 && spec.levers && spec.levers.courseSize <= -0.3) r.text = r.text.replace(/, and let each section end on a one-line takeaway/, '');
     }
   }
   ranked.sort((a, b) => b.score - a.score || a.lever.localeCompare(b.lever));
@@ -1233,6 +1244,14 @@ function textShapeFor(userId, opts = {}) {
     const n = Math.max(2, Math.min(spec.explain.paragraphSentences, spec.lesson.chunkSentences));
     return { maxParagraphs: 10, line: `Lesson paragraphs: each carries one idea in at most ${n} sentences; write as many paragraphs as that takes (up to 10) rather than fewer long ones, and drop no point of the passage to fit.` };
   } catch { return null; }
+}
+
+/** The share of skills the outline of a course may plan for this learner (1 = as before; below 1 = fewer, broader skills). Never throws. */
+function courseShareFor(userId, title) {
+  try {
+    const spec = buildSpec(userId, { topic: title });
+    return spec.isDefault || !spec.course ? 1 : spec.course.skillShare;
+  } catch { return 1; }
 }
 
 /**
@@ -1517,7 +1536,7 @@ module.exports = {
   LEVERS, LEVER_IDS, METRIC_RULES, RULE_OF, CONTEXT_RULES, PHRASES, SURFACES, CONTRACT_LINE,
   buildSpec, buildSpecFrom, defaultSpec, gather, pulls, contextOf,
   specToPrompt, specToLines, specHash, linesFor, questionLinesFor, questionShape,
-  checkFollowed, analogyProblems, analogyGuard, sourceFacts, ownInterestNeed, revisionNote, reviseOnce, keyTerms, mentions, textShapeFor,
+  checkFollowed, analogyProblems, analogyGuard, sourceFacts, ownInterestNeed, revisionNote, reviseOnce, keyTerms, mentions, textShapeFor, courseShareFor,
   // Version 2, the full depth (services/learning-depth.js): the tail alone, the switch, and the pieces for any other consumer.
   depthLines, depthOn, needsLess, notesWordLimit, NOTES_BUDGET_SHARE, NOTES_PHRASES, TEST_PHRASES, PODCAST_PHRASES, MATERIAL_PHRASES, measuresOf: (metrics) => depth.measuresOf(metrics, METRIC_RULES),
   jointOf: depth.jointOf, learningOf: depth.learningOf, JOINT_RULES: depth.JOINT_RULES,

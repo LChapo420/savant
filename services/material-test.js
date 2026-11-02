@@ -93,7 +93,7 @@ function orderQuestions(picked, byId, spec, rnd) {
   return sorted;
 }
 const secondsPer = (spec) => (spec && !spec.isDefault ? Math.round(SECONDS_PER_QUESTION * (spec.lesson.pace === 'slow' ? 1.3 : spec.lesson.pace === 'brisk' ? 0.9 : 1) * (spec.feedback.timers === 'none' ? 1.5 : 1)) : SECONDS_PER_QUESTION);
-const defaultLen = (spec) => (spec && !spec.isDefault ? Math.max(MIN_LEN, Math.min(20, Math.round(DEFAULT_LEN * spec.session.items / 8))) : DEFAULT_LEN);
+const defaultLen = (spec) => (spec && !spec.isDefault ? Math.max(MIN_LEN, Math.min(20, Math.round(DEFAULT_LEN * spec.session.items / 8 * ((spec.course && spec.course.testScale) || 1)))) : DEFAULT_LEN);
 const isBlank = (a) => a == null || (typeof a === 'string' && !a.trim());
 
 /** What the test page needs to offer its choices: the skills, how many questions each has, the last results. */
