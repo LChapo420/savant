@@ -229,3 +229,39 @@ App MAE with defaults, share of learners within 10 and within 5, ideal observer'
 | attention_runway | generative | 15.5 | 40% | 21% | 5.9 | 13.5 | 14.3 | b |  |
 | session_rhythm | generative | 17.8 | 34% | 19% | 13.6 | 14.1 | 17.7 | c | PROBE |
 | scaffolding_fade | generative | 19.2 | 21% | 9% | 5.4 | 13.4 | 18.8 | b |  |
+
+## 10. Phase 3: more signal per minute (SIMULATED; nothing here is in the product)
+
+**Everything in this section is simulated.** Source validities are assumptions with the anchor stated in `scripts/scorecard-90-measure.js` (the `--lev` block). Method: `scripts/scorecard-90-measure.js`; day-30 dumps from `scorecard-recovery-sim.js --minutes-per-day=60 --days=30 --truth-factors=1` for seeds 20261022 (A), 7 (B) and 31415 (C, **held out**: never used to calibrate or choose anything; the read-outs are calibrated on A+B and only C is scored with `--c=`). The default sim and `--gate-check` baseline are unchanged (the sim only gained `--ramp-cap` and `--dump`, both off by default).
+
+### 10.1 Results, day 30, 60 min of study a day (average accuracy = 100 - mean absolute error)
+
+| run | measuring min/day | seeds A+B (cross-fit) | seed C (held out) | measures within 5 (C) |
+|---|---|---|---|---|
+| the app as it is (S0) | 0 | 87.7 | 87.9 | 0 |
+| Phase 2 plan (all six levers) | 6.3 | 92.6 | 92.9 | 4 |
+| + cohort standardisation | 6.3 | 92.8 | 93.0 | 6 |
+| + Phase 3 item levers (`--lev=all`) | 6.3 | 93.3 | 93.6 | 15 |
+| same, budget raised to the brief's ~10 min a day | 9.9 | 93.5 | 93.7 | 21 |
+| what-if: every source's method error divided by 5 | 9.9 | 95.3 | 95.4 | 72 |
+
+Honest reading: the Phase 3 levers add about 0.7 points and the gain **holds on the held-out seed** (+0.6 to +0.7). Extra minutes add almost nothing (6.3 to 9.9 min: +0.1 to +0.2) because every measure is already at the ceiling of its sources, not short of time. **95% at day 30 is not reached with literature-conservative validities.** It is reached only if the persistent (method) error of the sources is about five times smaller than assumed (last row).
+
+### 10.2 What was tried (each alone, seeds A+B, 9.9 min/day: 93.13 with no lever)
+
+cohort standardisation of the app's number and answer-log features before the read-out (the app norms against its own cohort, and seeds differed by up to 7 points on one measure; read-outs trained on another cohort turned that into error: S1 88.5 to 89.05); best-worst blocks 93.22; adaptive item selection (CAT) 93.28; response times with scale/choice items 93.17; graded confidence on knowledge/reasoning items 93.18; items doubling as lesson practice 93.24; four-dimension production-task bundles 93.16; three-attribute conjoint choice bundles 93.25; all together 93.54. Treating the 100 recalibrated reads as correlated evidence (GLS with their out-of-fold error covariance) lifted the middle stages by 0.2 but not the final number.
+Extracting more from answers already given (response-time distributions, error types, hints, skips, pace) was not added as a source: in the sim the measures that carry such behaviour (group a) are already at 2 to 6 points; the 62 questionnaire/LLM-only measures have, by the sim's construction, no behaviour to read, so only designed measurement or the joint posterior can reach them.
+
+### 10.3 Why day 180 was lower than day 30 (S0 86.45 vs 87.7)
+
+Not true-value drift (the sim's truths are fixed) and not a measuring-error bug. Two causes: (1) learners really improve (accuracy 58% to 71%, calibration and first-items features move a lot), so the app's fixed-norm numbers drift for the same underlying trait (self_monitoring and confidence_calibration read 78 against a true mean of 49); (2) the sim's long runs cap the course ramp, so everyone ends far above the course and the app's scaffolding_fade saturates at 100 (error 50). Fix that works in the sim: norm each number against learners of the same tenure (the cohort standardisation above, which needs no truth). Day 180 (80 learners, 40+40 cross-fit): S1 87.97 to 88.65; scaffolding_fade 7.4 to 6.9, self_monitoring 6.7 to 6.5. A real learner's traits do change, so a forgetting/state-space layer is still needed in the product; the sim cannot test it because its truths do not move.
+
+Day 180, same method: S5 93.3 (Phase 2) to 93.6 with the levers at 6.2 min/day, 93.7 at 10.4 min/day; with method error divided by 5, 95.8; by 10, 96.5; by 25, 96.7. **98 to 99% was not reached at day 180** even with near-perfect sources: the rest is small-sample calibration (40 learners per side) plus the free sources' own noise. Day 365: runs are still going; not reported.
+
+### 10.4 Worst measures at day 30 (held out seed C, 9.9 min/day, errors in points)
+
+conceptual_bias 9.4, identity_alignment 9.3, cognitive_flexibility 9.0, competitive_drive 9.0, depth_breadth 8.9, productive_struggle 8.8, planning_tendency 8.8, emotional_engagement 8.7, intrinsic_motivation 8.7, integration_tendency 8.6. Reason for all ten: the sim gives them no behavioural footprint (free precision from the app 0.1 to 0.4 against 6.3 needed), so they depend on one-minute-class designed items whose persistent method error sets the ceiling (precision 1.4 to 1.8 at most). Average error 6.3; 21 measures within 5, 72 within 7.
+
+### 10.5 What the still-missing measures need
+
+An independent method with a persistent error of about a fifth of today's assumed self-report/choice error (a validity of roughly 0.9 against the learner's behaviour, where published self-report/behaviour correlations are 0.1 to 0.4), or a behavioural footprint the app can read. Without either, the closest possible at day 30 in this sim is about 93.7% on average. Confirming this needs a real-learner study; nothing here is real-learner proof.
