@@ -17,6 +17,37 @@
  * It writes to its own copy of the data file, under accounts named selftest-*.
  */
 process.env.NODE_ENV = 'test';
+// Deterministic run (2 Nov). The test's own random draws (which questions a sitting is dealt; the seeds the question
+// generators build from Math.random() and Date.now()) come from a seeded generator and a clock that steps one
+// millisecond a call, so a check that sits near its bound gives the same answer on every run. Before this,
+// 'a real sitting repeats less than 1 question in 4' averaged 22% but landed on exactly 25.0% on a bad draw and
+// failed on the draw, not on a regression. SELF_TEST_SEED=n tries another seed (default 20261102);
+// SELF_TEST_REAL=1 gives the real generator and clock back (the pooled rate over 22 real draws ran 20.5% to 24.5%).
+if (!process.env.SELF_TEST_REAL) {
+  let rngState = Number(process.env.SELF_TEST_SEED || 20261102) >>> 0;
+  Math.random = () => {
+    rngState = (rngState + 0x6D2B79F5) >>> 0;
+    let t = rngState;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  // A fixed date rather than the real start time: the generators put Date.now() in their seeds, so a real start
+  // time would give a different set of questions every run.
+  let clockBase = 1793500000000;
+  let clockTicks = 0;
+  Date.now = () => clockBase + (clockTicks++);
+  // What the earlier checks drew (and how many calls they made) varies a little with timing, so the sitting
+  // check restarts both from a fixed point.
+  globalThis.selfTestRestart = (offset) => {
+    rngState = (Number(process.env.SELF_TEST_SEED || 20261102) + offset) >>> 0;
+    clockBase = 1793500000000;
+    clockTicks = offset * 1000000;
+  };
+  // objective-items draws with crypto.randomInt; route it through the same seeded generator
+  const nodeCrypto = require('crypto');
+  nodeCrypto.randomInt = (x, y) => (y === undefined ? Math.floor(Math.random() * x) : x + Math.floor(Math.random() * (y - x)));
+}
 // Every model key is blanked, and the test writes to its own copy of the data
 // file (deleted at the end) unless DB_FILE=<file> names one: run on a machine
 // with a key in its environment, a test could otherwise make paid calls, and it
@@ -1053,6 +1084,7 @@ async function playSession(user, session, items, ceiling) {
   // reports the median, which is the number to read for the real figure. A tight
   // bound here would fail on the draw rather than on a regression, and a check
   // that cries wolf gets ignored, which is worse than not having it.
+  if (globalThis.selfTestRestart) globalThis.selfTestRestart(1);
   let sittingAsked = 0;
   let sittingRepeated = 0;
   for (const [trackId, gradeId, level] of [
@@ -1082,6 +1114,7 @@ async function playSession(user, session, items, ceiling) {
       }
     }
   }
+  console.log(`  sitting repeat rate: ${sittingRepeated} of ${sittingAsked} = ${(100 * sittingRepeated / sittingAsked).toFixed(1)}%`);
   check('a real sitting repeats less than 1 question in 4',
     sittingRepeated / sittingAsked < 0.25,
     `${sittingRepeated} of ${sittingAsked} = ${(100 * sittingRepeated / sittingAsked).toFixed(1)}%`);
