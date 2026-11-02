@@ -99,6 +99,7 @@ function featuresOf(rows, { gaps = [], quits = 0, levels = 0, days = 1 } = {}) {
   };
 }
 
+const share = (t, m, k) => t.filter((v, i) => Math.abs(v - m[i]) <= k).length / t.length;
 const MIN_N = 12;
 const PASS_RATIO = 1.1;
 const NO_SIGNAL_SHARE = 0.95;
@@ -141,6 +142,11 @@ function gateMeasure(rows, { lambda = 8 } = {}) {
     n, mae: Number(mae.toFixed(2)), achievable: Number(achievable.toFixed(2)), ratio: Number(ratio.toFixed(3)), prior: Number(prior.toFixed(2)),
     floor_recalibrated: Number(floorCal.toFixed(2)), floor_log: Number(floorLog.toFixed(2)), bias: Number(bias.toFixed(2)),
     coverage90: Number(covered.toFixed(3)), width90: Number(width.toFixed(1)), confidence: Number(conf.toFixed(0)), status, reason,
+    // Round 11: the share of learners within 10 and within 5 points of their true value, for the app and for the two read-outs (ideal = the
+    // cross-validated log read-out), and the prior's. Extra fields only; the gate's pass/fail does not read them.
+    within10: Number(share(t, m, 10).toFixed(3)), within5: Number(share(t, m, 5).toFixed(3)),
+    ideal_within10: Number(share(t, logPred, 10).toFixed(3)), ideal_within5: Number(share(t, logPred, 5).toFixed(3)),
+    ideal: Number(Math.min(floorCal, floorLog, prior).toFixed(2)),
   };
 }
 

@@ -97,7 +97,7 @@ const QUICK = has('quick');
 // --item-rng=0 is the old single stream (rounds 1 to 7).
 const ITEM_RNG = Number(opt('item-rng', 1)) !== 0;
 const LEARNERS = Number(opt('learners', QUICK ? 24 : 200));
-const MAX_LEVELS = Number(opt('levels', 100));
+const MAX_LEVELS = Number(opt('levels', has('minutes-per-day') || Number(opt('minutes-per-day', 0)) > 0 ? 100000 : 100));
 const simGate = require('./lib/sim-gate');
 // --channels=reading,questionnaire,delayed,games,import,max (or all): the optional measurement channels of services/boosters.js, modelled and sent through the
 // app's own hooks (scorecard/hooks.js on...), so the accuracy gate shows what each one is worth IN THIS SIMULATED WORLD. What a channel's observations look like
@@ -143,12 +143,21 @@ if (CHANNELS.has('max')) process.env.PERSONALIZE_EXPERIMENT_RATE = '1';
 // The accuracy gate (scripts/lib/sim-gate.js): every measure's error at the end of weeks 1 to 4 of use, against the best achievable from the same
 // data. A week is seven simulated days from the learner's first sitting; how many levels that is depends on how often they study (the sim's
 // learners average about 10 levels a week: 100 levels in about 67 days), and the report prints the levels reached.
-const GATE_WEEKS = [1, 2, 3, 4];
+// Round 11 (docs/SCORECARD-90.md): --minutes-per-day=60 [--days=30] is a study-pace run: one block of sittings every calendar day, each day filled with
+// levels until that many minutes of the sim's own level time (the item and reading times it already generates, plus 30 s between levels) have been
+// spent. A sitting keeps its default length (the learner's attention_runway sets the levels in it, as in the default run), and the next sitting opens
+// about 1.5 hours later the same day until the minutes are used, so attention_runway and the quitting traits still show in behaviour.
+// The start time of each day's study jitters with the learner's session_rhythm (gapSd), so the regularity of the days stays measurable. The run ends
+// at --days (default 30), where a 'day' snapshot is taken and the gate also reports it (as week days/7). Off by default: nothing else changes.
+const MIN_PER_DAY = Number(opt('minutes-per-day', 0));
+const PACE = MIN_PER_DAY > 0;
+const PACE_DAYS = PACE ? Number(opt('days', 30)) : 0;
+const GATE_WEEKS = PACE ? [1, 2, 3, 4, PACE_DAYS / 7] : [1, 2, 3, 4];
 const GATE_CHECK = has('gate-check');     // compare against the stored baseline and exit 1 on a regression (the quick form run by npm test)
 const GATE_WRITE = has('gate-write');     // store this run's gate as the baseline to compare against
 const GATE_BASELINE = path.join(ROOT, 'curriculum-build', 'scorecard-sim', 'gate-baseline.json');
 const CHECKPOINTS = [10, 30, 100].filter((c) => c <= MAX_LEVELS);
-if (!CHECKPOINTS.includes(MAX_LEVELS)) CHECKPOINTS.push(MAX_LEVELS);
+if (!CHECKPOINTS.includes(MAX_LEVELS) && MAX_LEVELS < 100000) CHECKPOINTS.push(MAX_LEVELS);
 const MODES = opt('modes', 'off,honest,confirming').split(',').map((m) => m.trim()).filter(Boolean);
 const SEED = Number(opt('seed', 20261022));
 const POPULATION = Number(opt('population', QUICK ? 30 : 60));
@@ -250,7 +259,8 @@ class SimDate extends RealDate {
   static now() { return simNow; }
 }
 global.Date = SimDate;
-function advance(ms) { simNow += Math.max(0, Math.round(ms)); }
+let activeMs = 0; // study time the learner spends inside levels (every advance() in a level), for --minutes-per-day
+function advance(ms) { const d = Math.max(0, Math.round(ms)); simNow += d; activeMs += d; }
 
 // ── the app's own modules ──────────────────────────────────────────────────
 const scorecard = require('../services/scorecard');
@@ -832,6 +842,7 @@ const wordsOf = (n) => Array(n).fill('w').join(' ');
 const CHOICES = ['a', 'b', 'c', 'd'];
 
 function runLearner(index, mode, { population = false } = {}) {
+  const maxLevels = PACE && population ? 100 : MAX_LEVELS; // the other learners keep the default 100 levels in a pace run
   resetStore();
   simNow = START;
   ledger = {};
@@ -976,6 +987,11 @@ function runLearner(index, mode, { population = false } = {}) {
   let pendingPage = null;      // the lesson page the next practice level is the test of
   const experimentsBySkill = {}; // skill -> { stat, arm, until }
   let lastSessionEnd = null;
+  const pace = PACE && !population; // the other learners (the population) keep the default pace
+  let stopRun = false;
+  let dayIdx = 0;
+  let dayBase = 0;
+  activeMs = 0;
 
   const out = {
     snapshots: {},
@@ -1477,13 +1493,23 @@ function runLearner(index, mode, { population = false } = {}) {
     };
     if (CHECKPOINTS.includes(done)) takeSnapshot(done);
     for (const w of GATE_WEEKS) if (!out.snapshots[`w${w}`] && (simNow - START) >= w * 7 * 86400000) takeSnapshot(`w${w}`);
+    if (pace && out.snapshots[`w${PACE_DAYS / 7}`]) stopRun = true;
   }
 
   // Sittings, with the days between them set by how regular the learner is.
   let level = 1;
   let open = null; // a sitting left open on a level left partway
-  while (done < MAX_LEVELS) {
-    if (lastSessionEnd !== null) {
+  while (done < maxLevels && !stopRun) {
+    if (pace) {
+      // --minutes-per-day: the next sitting is later today if today's minutes are not used up, else the next calendar day (start time jittered by rhythm).
+      if (lastSessionEnd !== null) {
+        if (activeMs - dayBase >= MIN_PER_DAY * 60000) {
+          dayIdx++;
+          dayBase = activeMs;
+          simNow = START + dayIdx * 86400000 + Math.max(-8, Math.min(8, P.gapSd * 3 * rng.normal())) * 3600000;
+        } else simNow = lastSessionEnd + 3600000 * 1.5 * Math.exp(0.35 * rng.normal()); // the rest of today's minutes: a later sitting, 1 to 2 hours on
+      }
+    } else if (lastSessionEnd !== null) {
       const gapDays = Math.max(0.3, 1.4 * Math.exp(P.gapSd * rng.normal() - P.gapSd ** 2 / 2));
       simNow = lastSessionEnd + gapDays * 86400000;
     }
@@ -1528,10 +1554,11 @@ function runLearner(index, mode, { population = false } = {}) {
     }
     open = null;
     const planned = Math.min(6, 1 + rng.poisson(P.levelsPerSitting));
+    const maxLevelsHere = planned;
     let firstPractice = true;
     let leftOpen = null;
-    for (let k = 0; k < planned && done < MAX_LEVELS; k++) {
-      if (READING_TESTS > 0 && !readingDone.has(level) && (level - 1) % Math.max(1, Math.floor(MAX_LEVELS / READING_TESTS)) === 0 && (level - 1) / Math.max(1, Math.floor(MAX_LEVELS / READING_TESTS)) < READING_TESTS) {
+    for (let k = 0; k < maxLevelsHere && done < maxLevels && !stopRun && (!pace || activeMs - dayBase < MIN_PER_DAY * 60000); k++) {
+      if (READING_TESTS > 0 && !readingDone.has(level) && (level - 1) % Math.max(1, Math.floor(maxLevels / READING_TESTS)) === 0 && (level - 1) / Math.max(1, Math.floor(maxLevels / READING_TESTS)) < READING_TESTS) {
         readingDone.add(level);
         scorecard.observe(userId, [{ stat: 'vocabulary_ceiling', value: clamp(T.vocabulary_ceiling + 10 * readingRng.normal(), 0, 100), weight: 4, test: true, note: 'reading test (sim knob)' }], { source: 'placement' });
       }
@@ -1593,6 +1620,8 @@ function runLearner(index, mode, { population = false } = {}) {
     if (card.ability && card.ability.trend) realWarn(`  trend fit ${JSON.stringify(card.ability.trend.fit)} truth_mv ${Math.round(T.mastery_velocity)}`);
   }
   out.days = Math.round((simNow - START) / 86400000);
+  out.activeMs = activeMs;
+  out.levelsDone = done;
   return out;
 }
 
@@ -2009,6 +2038,10 @@ for (const mode of MODES) {
   results[mode].gate = gateFor(runs);
   results[mode].activity = {
     mean_days: round(mean(runs.map((r) => r.days)), 0),
+    // Round 11 (--minutes-per-day): the sim's own study time, per level and per calendar day.
+    minutes_per_level: round(mean(runs.map((r) => (r.levelsDone ? r.activeMs / 60000 / r.levelsDone : 0))), 2),
+    levels_per_learner: round(mean(runs.map((r) => r.levelsDone)), 1),
+    minutes_per_day: round(mean(runs.map((r) => (r.days ? r.activeMs / 60000 / r.days : 0))), 1),
     experiments_per_learner: round(mean(runs.map((r) => r.experiments)), 2),
     // Round 9: experiment dimensions run (a factorial page counts each one it crosses).
     dimensions_per_learner: round(mean(runs.map((r) => r.dimensions || 0)), 2),
