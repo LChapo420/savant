@@ -289,7 +289,16 @@ async function main() {
   delete process.env.MODELFLARE_ENABLED;
   check('placement follows deep when MODELFLARE_ENABLED is unset',
     JSON.stringify(providers.order('placement')) === JSON.stringify(providers.order('deep')), providers.order('placement'));
+  // The live .env names AI_PROVIDER_PLACEMENT=modelflare; without the opt-in that must still reach a writer.
+  const previousPlacement = process.env.AI_PROVIDER_PLACEMENT;
+  process.env.AI_PROVIDER_PLACEMENT = 'modelflare';
+  check('placement named as modelflare without the opt-in still follows deep',
+    JSON.stringify(providers.order('placement')) === JSON.stringify(providers.order('deep')), providers.order('placement'));
   process.env.MODELFLARE_ENABLED = '1';
+  check('and with MODELFLARE_ENABLED=1 the named Modelflare is kept',
+    JSON.stringify(providers.order('placement')) === JSON.stringify(['modelflare']), providers.order('placement'));
+  if (previousPlacement === undefined) delete process.env.AI_PROVIDER_PLACEMENT;
+  else process.env.AI_PROVIDER_PLACEMENT = previousPlacement;
   check('placement stays on Modelflare alone when MODELFLARE_ENABLED=1',
     JSON.stringify(providers.order('placement')) === JSON.stringify(['modelflare']), providers.order('placement'));
   if (previousModelflareEnabled === undefined) delete process.env.MODELFLARE_ENABLED;

@@ -183,12 +183,16 @@ function order(role) {
   let list = [...new Set([preferred, ...fallbacks])];
 
   // Placement keeps its named provider when configured; otherwise it follows deep
-  // unless Modelflare is explicitly enabled.
+  // unless Modelflare is explicitly enabled. Modelflare named in the environment
+  // (AI_PROVIDER_PLACEMENT=modelflare) is dropped without the opt-in too, and a
+  // list left empty falls back to deep, so the quiz always has a writer.
   if (group === 'placement') {
+    const modelflareOn = process.env.MODELFLARE_ENABLED === '1';
     if (declared === undefined && !named('AI_PROVIDER_PLACEMENT')) {
-      return process.env.MODELFLARE_ENABLED === '1' ? ['modelflare'] : order('deep');
+      return modelflareOn ? ['modelflare'] : order('deep');
     }
-    return list.filter((n) => n !== 'anthropic' || anthropicAllowed());
+    const kept = list.filter((n) => (n !== 'anthropic' || anthropicAllowed()) && (n !== 'modelflare' || modelflareOn));
+    return kept.length ? kept : order('deep');
   }
 
   // Every other role: the free models are always in the chain, then the free
