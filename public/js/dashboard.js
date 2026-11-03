@@ -46,7 +46,7 @@ App.mount(async () => {
         <p>Choose what you want to learn and the level you are aiming at. A placement quiz sets your starting point.</p>
         <a class="btn btn-primary btn-lg" href="/onboarding">Choose subjects</a>
         ${data.profile && !data.profile.took_style_quiz
-          ? '<p style="margin-top:14px"><a class="btn btn-text" href="/style-quiz?next=/survey%3Fnext=/onboarding">First, take the learning-style and interests quiz</a></p>'
+          ? '<p style="margin-top:14px"><a class="btn btn-text" href="/baseline?next=/onboarding">First, show Savant how you learn (Quick takes under 5 minutes)</a></p>'
           : '<p style="margin-top:14px" id="survey-step" hidden><a class="btn btn-text" href="/survey?next=/onboarding">First, tell us your interests</a></p>'}
         ${user.id === 6689 ? '<p style="margin-top:14px"><a class="btn btn-text" href="/spanish-check">Open Spanish progress (take the daily test before any Spanish)</a> <a class="btn btn-text" href="/spanish-listening">Spanish listening test</a></p>' : ''}
       </div>`;
@@ -563,7 +563,7 @@ App.mount(async () => {
           <section class="card">
             <h2>Your preferences</h2>
             <p>${styleCopy()}</p>
-            <a class="btn btn-text" href="/style-quiz?next=/dashboard">Take the learning-style quiz</a>
+            <a class="btn btn-text" href="/baseline?next=/dashboard">Show Savant how you learn</a>
           </section>` : ''}
 
         ${data.profile.traits.length ? `

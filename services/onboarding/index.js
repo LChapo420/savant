@@ -104,6 +104,8 @@ function finish(user, active, planner) {
   const fed = baseline.fedAfter(est, g.known.fed);
   const line = { id: active.id, mode: active.mode, at: new Date().toISOString(), minutes: Math.round((planner.elapsed / 60) * 10) / 10, items: planner.log.filter((l) => l.seconds > 0).length, measures_fed: obs.length };
   put(user.id, { known: { state: planner.state, used: [...planner.used], fed }, active: null, sessions: [...g.sessions, line] });
+  // The baseline replaces the old style quiz for this account, so the pages stop offering that quiz once it is done.
+  learner.saveProfile(user.id, { took_style_quiz: true });
   try { require('../scorecard/hooks').onOnboarding && require('../scorecard/hooks').onOnboarding(user.id, line); } catch { /* optional hook */ }
   return { done: true, summary: { ...line, known: obs.length, card_updated: !!tracked } };
 }

@@ -244,7 +244,7 @@ App.mount(async () => {
     : 'The preferences quiz takes about two minutes. It sets a starting session length and how much explanation you get. It does not change what you are taught, because research does not find that teaching to a learning style raises scores. You can skip it and go straight in.'}
           </p>
           <div class="row-wrap">
-            <a class="btn btn-text" href="/style-quiz?next=${encodeURIComponent(`/path?enrollment=${enrollmentId}`)}">Take the learning-style quiz</a>
+            <a class="btn btn-text" href="/baseline?next=${encodeURIComponent(`/path?enrollment=${enrollmentId}`)}">Show Savant how you learn</a>
             <a class="btn btn-text" href="/dashboard">Back to dashboard</a>
           </div>
         </section>`}

@@ -277,7 +277,7 @@ App.mount(async () => {
     const answered = Object.keys(profile.survey_fields || {}).filter((k) => String((profile.survey || {})[k] || '').trim()).length;
     return `
       <div class="card pf-rows">
-        ${row('/style-quiz?next=/profile', 'Learning style', profile.took_style_quiz ? 'Taken' : 'Not taken yet')}
+        ${row('/baseline?next=/profile', 'Learning style', profile.took_style_quiz ? 'Taken' : 'Not taken yet')}
         ${row('/survey?next=/profile', 'Interests and goals', answered ? `${answered} answered` : 'Not filled in')}
         ${row('/act-scores', 'ACT scores', act && act.scores && act.scores.length ? `${act.scores.length} recorded` : 'None yet')}
         ${row('/api/account/export', 'Download my data', 'JSON file', ' download')}
@@ -338,7 +338,7 @@ App.mount(async () => {
         ${profile.took_style_quiz
           ? dimensionRows(profile.stated)
           : `<p class="small muted">You have not taken the learning-style questionnaire.</p>
-             <a class="btn btn-sm btn-primary" href="/style-quiz?next=/profile">Take it now</a>`}
+             <a class="btn btn-sm btn-primary" href="/baseline?next=/profile">Take it now</a>`}
         ${profile.took_style_quiz ? '<a class="btn btn-sm" style="margin-top:10px" href="/style-quiz?next=/profile">Retake it</a>' : ''}
         <a class="btn btn-sm" style="margin-top:10px" href="/baseline?next=/profile">Go deeper on how you learn</a>
       </div>
