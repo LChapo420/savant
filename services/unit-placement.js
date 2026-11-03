@@ -33,11 +33,11 @@ const BANK_DIR = path.join(__dirname, '..', 'content', 'unit-placement');
 /**
  * The modes inside a grade. Their clocks are what is left of each mode's whole
  * budget after the subject stage (services/adaptive-placement.js MODES): Quick
- * 4.4 + 0.5 = 5 minutes (the clock allows about one in-grade question; the caps below are unchanged, so the clock binds), Balanced 14 + 6 = 20, Accurate 40 + 14 = 54, leaving 3 for
- * the earlier-grade gap scan (the owner's limits of 2026-11-02). They were Quick 14 + 6, Balanced 32 + 13, Accurate 57 + 25 (+ 8 for the gap scan).
+ * Quick 14 + 6 = 20 minutes (unchanged: a 5-minute Quick did not hold 90% within a grade), Balanced 14 + 6 = 20, Accurate 40 + 14 = 54, leaving 3 for
+ * the earlier-grade gap scan (the owner's limits of 2026-11-02 for Balanced and Accurate). Balanced was 32 + 13 and Accurate 57 + 25 (+ 8 for the gap scan).
  */
 const MODES = {
-  quick: { max: 14, min: 6, sure: 0.85, minutes: 0.5 },
+  quick: { max: 14, min: 6, sure: 0.85, minutes: 6 },
   balanced: { max: 30, min: 10, sure: 0.95, minutes: 6 },
   // Up to 80: with five questions a unit, simulated Accurate walks average about
   // 69 questions and place 926 of 928 testers within a unit (the clock still

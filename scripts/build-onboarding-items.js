@@ -5,7 +5,7 @@
  *
  * Output: content/onboarding/items.json. Nothing here touches a learner: the prompts carry only scorecard definitions and topics.
  *   writer   nvidia/nemotron-3-ultra-550b-a55b (thinking off)
- *   judge    z-ai/glm-5.3-flash, else deepseek-v4.1-flash, else the writer model again (a model that times out is skipped; the run prints which model
+ *   judge    nvidia/nemotron-3.5-lightning, else z-ai/glm-5.3-flash, else the writer model again (a model that times out is skipped; the run prints which model
  *            answered how many calls, so a check the writer model made on itself is visible as such)
  * Checks (an item that fails one is dropped, never shown):
  *   forced-choice self-report  the judge, shown the two options shuffled and the measure's low/high meaning, must pick the writer's high option
@@ -22,7 +22,9 @@ const { STATS } = require('../services/scorecard/stats');
 const KEY = process.env.NVIDIA_API_KEY;
 const BASE = (process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1').replace(/\/$/, '');
 const WRITER = { model: 'nvidia/nemotron-3-ultra-550b-a55b', kwargs: { enable_thinking: false } };
-const JUDGE = [{ model: 'z-ai/glm-5.3-flash', kwargs: { reasoning_effort: 'low' } }, { model: 'deepseek-ai/deepseek-v4.1-flash', kwargs: { thinking: false } }, { model: 'nvidia/nemotron-3-ultra-550b-a55b', kwargs: { enable_thinking: false } }];
+// 3 Nov: glm-5.3-flash and deepseek-v4.1-flash timed out on every call for hours, and the Gemini free tier was over quota, so the independent judge is
+// nemotron-3.5-lightning (a different, smaller model; 0.3 s a call); the writer model is the last resort and the report says when it was used.
+const JUDGE = [{ model: 'nvidia/nemotron-3.5-lightning-30b-a3b', kwargs: { enable_thinking: false } }, { model: 'z-ai/glm-5.3-flash', kwargs: { reasoning_effort: 'low' } }, { model: 'nvidia/nemotron-3-ultra-550b-a55b', kwargs: { enable_thinking: false } }];
 const OUT = path.join(__dirname, '..', 'content', 'onboarding', 'items.json');
 const only = (process.argv.find((a) => a.startsWith('--only=')) || '').slice(7).split(',').filter(Boolean);
 const want = (k) => !only.length || only.includes(k);
@@ -31,20 +33,40 @@ let last = 0;
 
 const used = {};
 const dead = new Set();   // a model that timed out is left alone for the rest of the run (the free endpoint is slow for some models some hours)   // which model actually answered how many calls (the judge falls back when a model times out: the report says so)
+// 3 Nov (owner): the 90M MiniMax M3.1 Flash tokens on xKiro expire Nov 6, so the WRITER is MiniMax through services/providers/xkiro.js (pipeline only; set
+// XKIRO_PIPELINE=1 and XKIRO_GRANTS='{"minimax/minimax-m3.1-flash":108000000}'), with NVIDIA's nemotron as the fallback; the JUDGE stays a different
+// model (NVIDIA nemotron-3.5-lightning), so no item is checked by the model that wrote it. No learner data goes in any prompt.
+const XK_MODEL = 'minimax/minimax-m3.1-flash';
+const xk = process.env.XKIRO_API_KEY && process.env.XKIRO_PIPELINE === '1' && process.env.NO_XKIRO !== '1' ? require('../services/providers/xkiro').xkiro : null;
+async function viaXkiro(prompt, maxTokens) {
+  for (let attempt = 0; attempt < 6; attempt++) {
+    try {
+      const r = await xk.chat({ messages: [{ role: 'user', content: prompt }], maxTokens: Math.max(maxTokens, 6000), models: [XK_MODEL], timeoutMs: 300000 });
+      used[XK_MODEL] = (used[XK_MODEL] || 0) + 1;
+      return r.text;
+    } catch (err) {
+      if (err.status === 402 || err.status === 403 || err.daily) return null;   // refused locally: use NVIDIA
+      await sleep(Math.min(90000, 8000 * 2 ** attempt));
+    }
+  }
+  return null;
+}
 async function chat(who, prompt, maxTokens = 3000) {
+  if (who === WRITER && xk) { const t = await viaXkiro(`${prompt}
+(Draft ${Math.random().toString(36).slice(2, 7)}.)`, maxTokens); if (t) return t; }
   const chain = Array.isArray(who) ? who : [who];
   for (const m of chain) {
     if (dead.has(m.model) && chain.length > 1) continue;
     for (let attempt = 0; attempt < 9; attempt++) {
       const wait = Math.max(0, last + 2600 - Date.now()); await sleep(wait); last = Date.now();
-      const ac = new AbortController(); const timer = setTimeout(() => ac.abort(), 40000);
+      const ac = new AbortController(); const timer = setTimeout(() => ac.abort(), chain.length > 1 ? 40000 : 150000);   // the writer is alone in its chain and writes long answers: it gets time and a retry, not a verdict
       let res;
       try {
         res = await fetch(BASE + '/chat/completions', {
           signal: ac.signal, method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer ' + KEY },
           body: JSON.stringify({ model: m.model, messages: [{ role: 'user', content: prompt }], max_tokens: maxTokens, temperature: 0.7, chat_template_kwargs: m.kwargs }),
         });
-      } catch { clearTimeout(timer); dead.add(m.model); break; }   // timed out or unreachable: the next model in the chain
+      } catch { clearTimeout(timer); if (chain.length > 1) { dead.add(m.model); break; } await sleep(Math.min(60000, 4000 * 2 ** attempt)); continue; }   // timed out or unreachable: the next model in the chain (or, alone, another try)
       clearTimeout(timer);
       if (res.status === 429 || res.status >= 500) { await sleep(Math.min(60000, 4000 * 2 ** attempt)); continue; }
       if (!res.ok) break;
@@ -65,7 +87,16 @@ const words = (s) => String(s || '').trim().split(/\s+/).filter(Boolean).length;
 const shuffle = (a) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 
 const db = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : { built: null, self: {}, reading: [], reason: {}, minilesson: [], taste: [] };
-const save = () => { db.built = new Date().toISOString(); fs.mkdirSync(path.dirname(OUT), { recursive: true }); fs.writeFileSync(OUT, JSON.stringify(db, null, 1)); };
+// Several stages can run in parallel processes, each with --only=: a save re-reads the file and replaces only the sections this process owns.
+const save = () => {
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  const mine = ['self', 'reading', 'reason', 'minilesson', 'taste'].filter(want);
+  let cur = {};
+  try { cur = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch { cur = {}; }
+  const merged = { ...cur, built: new Date().toISOString() };
+  for (const k of mine) merged[k] = db[k];
+  fs.writeFileSync(OUT, JSON.stringify(merged, null, 1));
+};
 const stats = {};
 const tally = (k, ok) => { (stats[k] = stats[k] || { kept: 0, dropped: 0 })[ok ? 'kept' : 'dropped']++; };
 

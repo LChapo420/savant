@@ -41,6 +41,7 @@ const providers = require('./providers');
 const englishPlacement = require('../content/english-placement');
 const adaptive = require('./adaptive-placement');
 const unitPlacement = require('./unit-placement');
+const { questionSeconds } = require('./placement-seconds');
 
 const SETS = 'placement_question_sets';
 const PLACEMENTS = 'subject_placements';
@@ -706,7 +707,7 @@ function start(userId, trackId, { restart = false, mode = null, startGradeId = n
     patch.deadline_at = new Date(Date.now() + adaptive.MODES[mode].minutes * 60 * 1000).toISOString();
     const set = questionSet(trackId);
     if (set) {
-      const block = adaptive.nextBlock(blocksOf(trackId), [], adaptive.firstTarget(gradeIds.length, patch.start_hint ?? NaN));
+      const block = adaptive.nextBlock(blocksOf(trackId), [], adaptive.firstTarget(gradeIds.length, patch.start_hint ?? NaN), { fast: !!adaptive.MODES[mode].shortFirst });
       if (block) { patch.current_block = block; patch.position = block.grade; }
     }
   }
@@ -716,7 +717,8 @@ function start(userId, trackId, { restart = false, mode = null, startGradeId = n
 
 /** The subject's question blocks, as the adaptive walk sees them. */
 function blocksOf(trackId) {
-  return adaptive.blocksFor(rules.gradesFor(trackId).map((id) => questionsFor(trackId, id) || []));
+  // Each question carries its estimated seconds (services/placement-seconds.js) so the walk can take the quickest of two equally good ones.
+  return adaptive.blocksFor(rules.gradesFor(trackId).map((id) => (questionsFor(trackId, id) || []).map((q) => ({ ...q, sec: questionSeconds(q, trackId) }))));
 }
 
 function isAdaptive(placement) {
@@ -784,13 +786,14 @@ function submitBlock(userId, trackId, answers, { partial = false } = {}) {
   const post = adaptive.posterior(placement.grade_ids.length, answered);
   // The clock only ends a walk that has its minimum answers. A learner who stepped away mid-quiz was stopped
   // after 4 answers and placed three grades up on them (owner, 2026-10-29).
-  const late = placement.deadline_at && Date.now() >= Date.parse(placement.deadline_at)
-    && answered.length >= adaptive.limits(placement.mode, placement.grade_ids.length).min;
+  // (adaptive.clockEnded: a minimum of answers, or HARD_STOP times the clock once HARD_FLOOR are in.)
+  const late = placement.deadline_at
+    && adaptive.clockEnded(placement.mode, placement.grade_ids.length, answered.length, Date.now() - (Date.parse(placement.deadline_at) - adaptive.MODES[placement.mode].minutes * 60000), adaptive.MODES[placement.mode].minutes * 60000);
   const allBlocks = blocksOf(trackId);
   const ctx = { topLeft: adaptive.topLeft(placement.grade_ids.length, allBlocks, asked) };
   const next = adaptive.done(placement.mode, answered, post, ctx) || late || partial
     ? null
-    : adaptive.nextBlock(allBlocks, asked, adaptive.nextTarget(answered, post, ctx));
+    : adaptive.nextBlock(allBlocks, asked, adaptive.nextTarget(answered, post, ctx), { fast: !!(adaptive.MODES[placement.mode] || {}).shortFirst });
 
   const updated = db.update(PLACEMENTS, placement.id, {
     scores,

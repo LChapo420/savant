@@ -106,8 +106,8 @@ check('Balanced stays about 20 minutes and Accurate under 60, at any pace', () =
     assert(b <= 20.2 && b >= 12, `balanced ${b}`); assert(a < 60 && a >= 35, `accurate ${a}`);
   }
 });
-check('the owner limits are in the modes: 5 / 20 / 57 minutes', () => {
-  assert.deepStrictEqual(adaptive.WHOLE_MINUTES, { quick: 5, balanced: 20, accurate: 57 });
+check('the owner limits are in the modes: baseline 5 / 20 / 57 minutes; placement Balanced 20 and Accurate 57, Quick placement kept at 20 (5 minutes held only 90.2% within a grade, docs/ONBOARDING-MODES.md section 4)', () => {
+  assert.deepStrictEqual(adaptive.WHOLE_MINUTES, { quick: 20, balanced: 20, accurate: 57 });
   assert(MODES.quick.budgetSec / 60 < 5 && MODES.balanced.budgetSec / 60 <= 20 && MODES.accurate.budgetSec / 60 < 60);
   for (const m of ['quick', 'balanced', 'accurate']) {
     const stages = adaptive.MODES[m].minutes + unitPlacement.MODES[m].minutes;

@@ -36,6 +36,9 @@ const adaptive = require('../services/adaptive-placement');
   const lim = arg0('limits');
   if (lim) for (const part of lim.split(',')) { const [m, max, min, sure] = part.split(':'); Object.assign(adaptive.MODES[m], { max: Number(max), min: Number(min), sure: Number(sure) }); }
   if (arg0('quick-scale') !== null) process.env.ADAPTIVE_QUICK_SCALE = arg0('quick-scale');
+  // --quick=fast: the 5-minute Quick this branch tried and did not ship (a clock-bound walk that prefers short questions, minimum 10 answers, no lift); --quick-min=n its minimum.
+  if (arg0('quick') === 'fast') Object.assign(adaptive.MODES.quick, { min: 10, noLift: true });
+  if (arg0('quick-min')) adaptive.MODES.quick.min = Number(arg0('quick-min'));
 }
 
 const ROOT = path.join(__dirname, '..');
@@ -72,6 +75,28 @@ function bankFor(trackId) {
   return { span, sets, items: points.length };
 }
 
+/**
+ * Like bankFor, but each item also carries `sec`, its estimated seconds (services/placement-seconds.js: from its words and answer
+ * type, not timed on people), read from the stored question sets, so it needs the data file (DB_FILE=<a copy>). Only the
+ * calibrated items, as bankFor. Null when the subject has no stored questions.
+ */
+function bankWithSeconds(trackId) {
+  const base = bankFor(trackId);
+  if (!base) return null;
+  // eslint-disable-next-line global-require
+  const subjectPlacement = require('../services/subject-placement');
+  // eslint-disable-next-line global-require
+  const { questionSeconds } = require('../services/placement-seconds');
+  // eslint-disable-next-line global-require
+  const rules = require('../config/subject-placement');
+  const sets = rules.gradesFor(trackId).map((gradeId) => (subjectPlacement.questionsFor(trackId, gradeId) || [])
+    .filter((q) => Number.isFinite(q.pos))
+    .map((q) => ({ pos: q.pos, choices: q.choices || ['a', 'b', 'c', 'd'], sec: questionSeconds(q, trackId) })));
+  const items = sets.reduce((n, g) => n + g.length, 0);
+  if (!items) return null;
+  return { span: base.span, sets, items };
+}
+
 /** The chance learner `ability` answers an item at `pos` right when it knows or guesses. */
 function chanceRight(ability, pos, guess) {
   const known = 1 / (1 + Math.exp(-(ability - pos) / TRUE_WIDTH));
@@ -84,13 +109,17 @@ function trueGrade(ability, span) {
 }
 
 /** One sitting. Returns {placed, asked}. `dontKnow` learners decline items above their ability. */
-function sit(bank, mode, ability, random, { dontKnow = false } = {}) {
+function sit(bank, mode, ability, random, { dontKnow = false, clock = null, fast = false } = {}) {
   const { span, sets } = bank;
+  // clock = { seconds, pace }: a learner takes pace x an item's estimated seconds (+-20%); the walk ends once the clock has run out
+  // and the mode's minimum has been answered (the same rule as services/subject-placement.js `late`), however many questions fit.
+  let elapsed = 0;
+  const pace = clock ? clock.pace : 1;
   const blocks = adaptive.blocksFor(sets);
   const answered = [];
   const asked = [];
   let post = adaptive.posterior(span, answered);
-  let block = adaptive.nextBlock(blocks, asked, adaptive.firstTarget(span, NaN));
+  let block = adaptive.nextBlock(blocks, asked, adaptive.firstTarget(span, NaN), { fast });
   const ctxOf = () => ({ topLeft: adaptive.topLeft(span, blocks, asked) });
   while (block) {
     for (const i of block.idx) {
@@ -101,12 +130,14 @@ function sit(bank, mode, ability, random, { dontKnow = false } = {}) {
       if (dontKnow && q.pos > ability && random() < IDK_RATE) { correct = false; idk = true; }
       else correct = random() < chanceRight(ability, q.pos, guess);
       answered.push({ pos: q.pos, guess, correct, ...(idk ? { idk: true } : {}) });
+      if (clock && Number.isFinite(q.sec)) elapsed += q.sec * pace * (0.8 + 0.4 * random());
     }
     asked.push({ grade: block.grade, part: block.part });
     post = adaptive.posterior(span, answered);
-    block = adaptive.done(mode, answered, post, ctxOf()) ? null : adaptive.nextBlock(blocks, asked, adaptive.nextTarget(answered, post, ctxOf()));
+    const late = clock && adaptive.clockEnded(mode, span, answered.length, elapsed * 1000, clock.seconds * 1000);
+    block = adaptive.done(mode, answered, post, ctxOf()) || late ? null : adaptive.nextBlock(blocks, asked, adaptive.nextTarget(answered, post, ctxOf()), { fast });
   }
-  return { placed: adaptive.recommend(span, post, answered).index, asked: answered.length };
+  return { placed: adaptive.recommend(span, post, answered).index, asked: answered.length, seconds: elapsed };
 }
 
 /** Abilities from knows-nothing to knows-everything, as fractions of the subject plus both extremes. */
@@ -148,9 +179,10 @@ function measure(trackId, mode, { seeds = 15, seed = 20261030, dontKnow = false 
  * boundary. A learner exactly on a grade boundary is half in each grade, so the in-grade draw is the fair test of
  * "placed within one grade"; the boundary case is what `measure` shows. Levels are the same grid as `abilities`.
  */
-function measureSpread(trackId, mode, { seeds = 40, seed = 20261030, dontKnow = false } = {}) {
-  const bank = bankFor(trackId);
+function measureSpread(trackId, mode, { seeds = 40, seed = 20261030, dontKnow = false, clockSeconds = null, fast = false, pace = null } = {}) {
+  const bank = clockSeconds ? bankWithSeconds(trackId) : bankFor(trackId);
   if (!bank) return null;
+  const seconds = [];
   const rows = abilities(bank.span).map(({ label, ability }, a) => {
     const edge = ability < 0 || ability >= bank.span;
     const errors = [];
@@ -158,9 +190,13 @@ function measureSpread(trackId, mode, { seeds = 40, seed = 20261030, dontKnow = 
     for (let s = 0; s < seeds; s++) {
       const random = rng(seed + a * 7919 + s * 104729 + trackId.length);
       const own = edge ? ability : Math.floor(ability) + random();
-      const r = sit(bank, mode, own, random, { dontKnow });
+      // A learner's pace: lognormal around the estimate (sd 0.28, as services/onboarding/model.js), or fixed by --pace.
+      const gauss = Math.sqrt(-2 * Math.log(random() || 1e-9)) * Math.cos(2 * Math.PI * random());
+      const clock = clockSeconds ? { seconds: clockSeconds, pace: pace || Math.exp(0.28 * gauss) } : null;
+      const r = sit(bank, mode, own, random, { dontKnow, clock, fast });
       errors.push(r.placed - trueGrade(own, bank.span));
       questions += r.asked;
+      if (clockSeconds) seconds.push(r.seconds);
     }
     return {
       label, seeds,
@@ -173,7 +209,9 @@ function measureSpread(trackId, mode, { seeds = 40, seed = 20261030, dontKnow = 
       questions: questions / seeds,
     };
   });
-  return { span: bank.span, items: bank.items, rows };
+  seconds.sort((a, b) => a - b);
+  const at = (q) => (seconds.length ? seconds[Math.min(seconds.length - 1, Math.floor(q * seconds.length))] / 60 : null);
+  return { span: bank.span, items: bank.items, rows, minutes: { median: at(0.5), p90: at(0.9) } };
 }
 
 const pct = (x) => `${Math.round(x * 1000) / 10}%`;
@@ -205,7 +243,7 @@ function report({ subjects = SUBJECTS, modes = ['quick', 'balanced', 'accurate']
   return out.join('\n');
 }
 
-module.exports = { bankFor, sit, measure, measureSpread, abilities, trueGrade, chanceRight, rng, report, SUBJECTS };
+module.exports = { bankFor, bankWithSeconds, sit, measure, measureSpread, abilities, trueGrade, chanceRight, rng, report, SUBJECTS };
 
 if (require.main === module) {
   const arg = (k, d) => { const m = process.argv.find((a) => a.startsWith(`--${k}=`)); return m ? m.split('=')[1] : d; };
@@ -214,15 +252,20 @@ if (require.main === module) {
   // --summary: one line per subject and mode across all abilities (the spread draws inside each grade), for docs/ONBOARDING-MODES.md.
   if (process.argv.includes('--summary')) {
     const seeds = Number(arg('seeds', 40));
-    const lines = ['subject,mode,within1,exact,lowest_level_within1,mean_questions'];
+    const seed = Number(arg('seed', 20261030));
+    // --clock=<minutes>: end each sitting on that clock using each item's estimated seconds (needs DB_FILE=<a copy of the data file>);
+    // --pace=<x> fixes every learner's pace (1 = the estimate; default a spread of paces); --fast prefers short questions in Quick.
+    const clockSeconds = arg('clock', null) ? Number(arg('clock')) * 60 : null;
+    const fastWalk = process.argv.includes('--fast');
+    const lines = ['subject,mode,within1,exact,lowest_level_within1,mean_questions' + (clockSeconds ? ',median_min,p90_min' : '')];
     const tot = {};
     for (const trackId of subjects) {
       for (const mode of modes) {
-        const res = measureSpread(trackId, mode, { seeds });
+        const res = measureSpread(trackId, mode, { seeds, seed, clockSeconds, fast: fastWalk && (mode === 'quick' || process.argv.includes('--fast-all')), pace: arg('pace', null) ? Number(arg('pace')) : null });
         if (!res) continue;
         const mean = (f) => res.rows.reduce((a, r) => a + f(r), 0) / res.rows.length;
         const row = { w1: mean((r) => r.within1), ex: mean((r) => r.exact), low: Math.min(...res.rows.map((r) => r.within1)), q: mean((r) => r.questions) };
-        lines.push([trackId, mode, row.w1.toFixed(4), row.ex.toFixed(4), row.low.toFixed(3), row.q.toFixed(1)].join(','));
+        lines.push([trackId, mode, row.w1.toFixed(4), row.ex.toFixed(4), row.low.toFixed(3), row.q.toFixed(1), ...(clockSeconds ? [res.minutes.median.toFixed(2), res.minutes.p90.toFixed(2)] : [])].join(','));
         const t = tot[mode] || (tot[mode] = { w1: 0, ex: 0, q: 0, n: 0 });
         t.w1 += row.w1; t.ex += row.ex; t.q += row.q; t.n += 1;
       }

@@ -139,7 +139,8 @@ function buildFallback({ userId, enrollment, grade, level, skillId }) {
   // The checks avoid everything the learner has already been asked and the
   // examples the lesson just showed — a check is never allowed to be the
   // question whose answer is two sections above it.
-  const checkAvoid = new Set([...avoid, ...demo.map((d) => bank.itemKey(d))]);
+  // Both the exact item and its wording: the same stem with another answer is still the example repeated.
+  const checkAvoid = new Set([...avoid, ...demo.map((d) => bank.itemKey(d)), ...demo.map((d) => bank.stemKey(d))]);
   const onTopic = bank.generateMany(
     [fit(difficulty)], new Set(avoid), pinned, checkAvoid,
   );
@@ -150,7 +151,7 @@ function buildFallback({ userId, enrollment, grade, level, skillId }) {
     ],
     new Set([...avoid, ...onTopic.map((d) => bank.itemKey(d))]),
     null,
-    new Set([...checkAvoid, ...onTopic.map((d) => bank.itemKey(d))]),
+    new Set([...checkAvoid, ...onTopic.map((d) => bank.itemKey(d)), ...onTopic.map((d) => bank.stemKey(d))]),
   );
   const checks = [...onTopic, ...rest].map((item) => ({ ...item, role: 'check' }));
 
