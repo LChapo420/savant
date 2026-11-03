@@ -12,10 +12,9 @@ Built by `scripts/generate-spanish-unit-placement.js` (free NVIDIA models write 
 * Every question was **re-solved blind** by a second model that never saw the key (Nemotron Ultra, or DeepSeek v4.1 flash for the units
   Nemotron wrote); a disagreement is dropped, a question the judge never answered is dropped (never kept on no evidence); a lint drops
   questions that quote their own answer or write the options into the prompt. **COUNT:** 3,499 written, **2,621 kept**, all `gate: agreed`.
-* **Coverage: 35 of 57 grades are complete** (every unit has 3-5 gated questions): 1-26, 29-32, 35, 36, 42, 45, 52. The other 22
-  (27, 28, 33, 34, 37-41, 43, 44, 46-51, 53-57) keep the old difficulty-ladder placement until the writer and gate are run again
-  (`node scripts/generate-spanish-unit-placement.js write && ... gate && ... prune`); NVIDIA's free tier returned 429/timeouts for the last
-  hour, which is why. `unit-placement.js` already ignores a grade with an unfinished bank, so nothing is served from it.
+* **Coverage: 57 of 57 grades are complete** (every unit has 3-5 gated questions). It was 35 on 2 Nov, 49 later that day; the last eight (40, 47, 50,
+  53-57) stalled on NVIDIA 429s and were finished on 3 Nov with the same builder and gates (see the 3 Nov update below). `unit-placement.js`
+  still ignores any grade with an unfinished unit, so a half-built grade is never served.
 * **Time bound.** The in-grade stage runs on the mode's clock: Quick **6 min**, Balanced **13 min**, Accurate **25 min** (whole placement
   with the subject stage: 20 / 45 / 90). Question caps 14 / 30 / 80.
 * **SIMULATED, held-out seed 20261102, 360 learners per mode over 10 grades, planted holes 0/10/30%** (`scripts/spanish-placement-sim.js`):
@@ -34,6 +33,24 @@ Built by `scripts/generate-spanish-unit-placement.js` (free NVIDIA models write 
   3-5 questions per unit, so the walk runs out of questions). The sim treats item positions as exact (the repo's convention, a best case).
 * **Route test** (`scripts/spanish-depth-route-test.js`, a throwaway DB, real routes): a fresh account enrolls in grade 9, gets the adaptive unit walk
   (not the ladder), is placed at unit 5 for a learner who finished 4 (within 1) inside the bounded question count, with a unit plan.
+
+### 3 Nov update: the last 8 grades (40, 47, 50, 53, 54, 55, 56, 57)
+
+* Writer: MiniMax M3.1 Flash on xKiro (free grant, pipeline only, curriculum text only; `UNIT_WRITER=xkiro UNIT_WRITER_EFFORT=low`). Checker: the same
+  blind re-solve as the other 49 grades (Nemotron Ultra, a different family, key withheld). No gate, lint or threshold was changed. Two fixes to
+  the builder, not to the gates: it now passes a reasoning effort (MiniMax at its default "max" effort returned unusable replies) and accepts a
+  reply that names a unit by its label ("55.3") instead of its position, when exactly one asked-for unit matches (that mismatch had silently dropped
+  every question for 26 units).
+* **COUNT:** the 8 grades have 104 units and 422 kept questions, all `gate: agreed`. 263 questions were written in the first pass; the blind
+  re-solve disagreed with 8 (3.0%) and they were dropped, plus a few more on the units that needed rewrites (grade 53 unit 2 needed several tries; the
+  writer is deterministic at temperature 0). Whole bank: 721 units, 3,388 questions.
+* **SIMULATED, held-out seed 20261102, 24 learners per grade and hole rate, only these 8 grades (576 learners a mode):** within 1 unit
+  **83.7% / 81.6% / 79.7%** (quick / balanced / accurate), exact 47.0 / 51.7 / 51.4%, mean error -0.70 / -0.87 / -0.98 units, planted gaps on path
+  97.8 / 99.4 / 100%, false gaps 2.0 / 1.4 / 0.0%, lost hours 0.37 / 0.18 / 0.25 h. These upper grades place slightly **worse** than the table above
+  (accurate sits just under 80% within 1 unit); reported as measured, nothing tuned.
+* **SIMULATED, same seed, 10 grades spread over all 57 (720 learners a mode):** within 1 unit **86.1% / 82.6% / 83.8%**, exact 51.5 / 56.9 / 53.9%,
+  mean error -0.62 / -0.84 / -0.86, gaps on path 98.2 / 98.4 / 99.5%, false gaps 1.6 / 1.3 / 0.0%, wasted h on known 1.68 / 1.93 / 2.02 (14.4 with no placement).
+  `scripts/spanish-placement-sim.js --only=40,47,...` runs chosen grades; `--gate` (4 grades, balanced) passes at 80.6% within 1 unit against the 80% floor.
 
 ## 2. Catch-up for every grade
 

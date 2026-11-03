@@ -171,7 +171,7 @@ async function xkiroWrite(system, user) {
   const models = String(process.env.UNIT_WRITER_MODELS || 'mistralai/mistral-large-2512').split(',');
   let last = null;
   for (const m of models) {
-    try { return await xkiro.structured({ system, user, schema: SCHEMA, schemaName: 'submit_unit_questions', maxTokens: 9000, models: [m], timeoutMs: 240000 }); } catch (e) { last = e; }
+    try { return await xkiro.structured({ system, user, schema: SCHEMA, schemaName: 'submit_unit_questions', maxTokens: 9000, models: [m], timeoutMs: 240000, ...(process.env.UNIT_WRITER_EFFORT ? { reasoningEffort: process.env.UNIT_WRITER_EFFORT } : {}) }); } catch (e) { last = e; }
   }
   throw last;
 }
@@ -205,14 +205,21 @@ async function write() {
     }
     if (!reply) { failed++; console.log(`  ${job.g.gradeId} U${job.wanted.join(',')}: FAILED`); return; }
     // Merge into the file as it is now: another writer process (a different model, other grades) may have saved since this one started.
+    if (process.env.UNIT_VERBOSE) console.log(`  ${job.g.gradeId.slice(0, 16)} asked ${job.wanted.join(',')}; reply units ${(reply.data.units || []).map((r) => `${r.unit}(${(r.questions || []).length})`).join(' ') || 'none'}`);
     const disk = sync(readBank(), cur);
     const grade = disk.grades[job.g.gradeId];
     for (const row of reply.data.units) {
-      const n = Number(row.unit);
-      if (!job.wanted.includes(n)) continue;
+      let n = Number(row.unit);
+      if (!job.wanted.includes(n)) {
+        // Some writers answer with the unit's label ("55.3") instead of its position (3): accept it only when exactly one asked-for unit matches.
+        const hit = job.wanted.filter((w) => Number(String(job.g.units[w - 1].label).replace(/^Unit /, '')) === n);
+        if (hit.length !== 1) continue;
+        n = hit[0];
+      }
       const kept = grade.units[n - 1].questions;
       const seen = new Set(kept.map((q) => q.prompt.toLowerCase()));
       const fresh = (row.questions || []).map(clean).filter((q) => q && !seen.has(q.prompt.toLowerCase()));
+      if (process.env.UNIT_VERBOSE) console.log(`  ${job.g.gradeId.slice(0, 16)} U${n}: ${(row.questions || []).length} written, ${fresh.length} usable`);
       grade.units[n - 1].questions = [...kept, ...fresh].slice(0, PER_UNIT);
       bank.grades[job.g.gradeId].units[n - 1].questions = grade.units[n - 1].questions;
     }
