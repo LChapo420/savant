@@ -1,6 +1,6 @@
 # Built-in levels at the depth of uploaded material: math, English, IQ, Spanish
 
-Written by `scripts/block-depth-doc.js` from `docs/block-depth/*.json` (`scripts/block-sensitivity-proof.js`). **Every proof number is AI-judged on simulated learners (age-14 profiles built from the scorecard), written by MiniMax M3.1 Flash on xKiro (free grant, pipeline use), judged blind by two free models of other families. It is not real-learner proof.** The base level is the same writer with the adapter off (`BLOCK_ADAPT=off`), so before and after share the writer, the judges, the levels and the learners.
+Written by `scripts/block-depth-doc.js` from `docs/block-depth/*.json` (`scripts/block-sensitivity-proof.js`). **Every proof number is AI-judged on simulated learners (age-14 profiles built from the scorecard), written by MiniMax M3.1 Flash on xKiro (free grant, pipeline use). Judges: Nemotron Ultra and MiniMax M3.1 Flash on NVIDIA (free; the second is the family of the writer, so treat it as weaker). Gemini and xKiro judges hit their free quotas and Modelflare Sol had no quota left. The numbers are PARTIAL: only the pairs whose levels were written and judged before the deadline are counted (the cells give the counts), and not every verdict has both judges. It is not real-learner proof.** The base level is the same writer with the adapter off (`BLOCK_ADAPT=off`), so before and after share the writer, the judges, the levels and the learners.
 
 ## What changed
 
@@ -12,24 +12,28 @@ One level per subject (math 30, English 40, IQ 20, Spanish 8 of their grades), f
 
 | subject | single, adapter off | single, adapter on | joint, adapter off | joint, adapter on |
 |---|---|---|---|---|
-| math | n/a | n/a | n/a | n/a |
-| english | n/a | n/a | n/a | n/a |
-| iq | n/a | n/a | n/a | n/a |
-| spanish | n/a | n/a | n/a | n/a |
-| all | 0/0 (n/a) | 0/0 (n/a) | 0/0 (n/a) | 0/0 (n/a) |
+| math | 6/6 (100%) | 6/6 (100%) | 11/12 (92%) | 11/12 (92%) |
+| english | 4/4 (100%) | 3/4 (75%) | 7/8 (88%) | 10/12 (83%) |
+| iq | 3/3 (100%) | 2/2 (100%) | n/a (3 of 4 pairs not written) | 7/8 (88%) |
+| spanish | 2/2 (100%) | 3/3 (100%) | 8/8 (100%) | n/a (1 of 4 pairs not written) |
+| all | 15/15 (100%) | 14/15 (93%) | 26/28 (93%) | 28/32 (88%) |
+
+**Reading (partial, AI-judged, simulated):** the direction-correct share with the adapter on is not higher than with it off in these counts; both are high because the base learner brief already carries the level lines. These numbers do NOT show a gain from the adapter. What is shown elsewhere is structural: the size, formats and wording lines change with the spec (`scripts/block-adapt-test.js`), a short-attention learner got 4 blocks/541 words against 9 blocks/1053 words in the English smoke run, and base prompts are unchanged for an empty spec.
+
+Planted swap: NOT RUN (the judges were rate-limited and the deadline came first).
 
 ### What the writer did for a learner who needs it short (brevity_preference low against high; plain code, no judge)
 
 | subject | adapter | blocks lo -> hi | graded checks lo -> hi | words lo -> hi | revised |
 |---|---|---|---|---|---|
-| math | off | not written in this run | | | |
-| math | on | not written in this run | | | |
-| english | off | not written in this run | | | |
-| english | on | not written in this run | | | |
-| iq | off | not written in this run | | | |
-| iq | on | not written in this run | | | |
-| spanish | off | not written in this run | | | |
-| spanish | on | not written in this run | | | |
+| math | off | 9 -> 5 | 3 -> 3 | 859 -> 501 | no |
+| math | on | 8 -> 5 | 3 -> 2 | 598 -> 384 | no |
+| english | off | 10 -> 7 | 3 -> 2 | 1181 -> 988 | no |
+| english | on | 5 -> 5 | 3 -> 2 | 785 -> 671 | no |
+| iq | off | 9 -> 8 | 3 -> 2 | 993 -> 677 | no |
+| iq | on | 8 -> 5 | 3 -> 2 | 970 -> 631 | no |
+| spanish | off | 10 -> 9 | 3 -> 2 | 1142 -> 535 | no |
+| spanish | on | 8 -> 4 | 3 -> 2 | 693 -> 418 | no |
 
 ## English game answer keys re-audited (audit gap 10)
 
@@ -38,7 +42,7 @@ Source: a copy of the live database (`copy of data/db.json (16 MB, 2 Nov 13:33)`
 - **Before: 152 wrong or ambiguous keys of 3500 (4%)**, all in the 56 original held games (0 in the 14 regenerated games, which pass the key gate). 17 duplicate-option questions, 223 explanation flags. The blind judge alone disagreed with the key on 502 of 3490 judged questions (about 13% of those are judge false alarms, per the 23 Oct audit).
 - **Fix, staged and not applied** (`curriculum-build/staged/content-fixes/english-games-reaudit/rekey.json`): 112 re-keys (the explanation and the blind judge name the same other option) and 40 questions listed for a rewrite (duplicate options or no agreement).
 - **After the re-keys, same checks: 40 wrong (1%)**, explanation flags 223 -> 111. The 56 originals stay held (`content/game-holds.json`); the database was only read.
-- The second judge (GLM 5.3 on NVIDIA) returned no answers, so the error count rests on one blind judge plus the code check. Not re-solved by a person.
+- Second blind judge (MiniMax M3.1 Flash on NVIDIA) answered 128 of the 152 flagged questions. **90 re-keys are confirmed** by both blind judges and the code check (staged in rekey-confirmed.json); **62 go to rewrite** (rewrite.json). Sol, the intended second judge, had no quota left (Modelflare 403), so per the build rule nothing was applied: the live database was only read and the 56 originals stay held. Not re-solved by a person.
 
 ## Not done / honest limits
 
@@ -46,5 +50,3 @@ Source: a copy of the live database (`copy of data/db.json (16 MB, 2 Nov 13:33)`
 - Bank practice items (about 80% of levels) are package E and untouched. Spanish player files (package D) and the sealed Spanish files are untouched.
 - Games of math, IQ and Spanish are bank games (computed, no model), so the game lines apply to model-written games only (English); the checkpoint lines apply to every subject.
 - No real-learner evidence of learning faster or retaining more exists for any of this.
-
-> **Status when committed (2 Nov 2026, 17:02):** the proof runs had not finished judging, so every proof cell above is n/a: no before/after number is claimed yet. Writing is the slow part (xKiro free-model quota ran out; NVIDIA and Gemini free tiers rate-limited). The finishing chain (scratchpad `blk/final2.sh`) regenerates this page with `node scripts/block-depth-doc.js` once `docs/block-depth/blk-{off,on}-{single,joint}.json` exist; rerun `node scripts/block-sensitivity-proof.js --live --adapter on|off ...` (cached writes are reused) to finish it.

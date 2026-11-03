@@ -236,7 +236,7 @@ async function xkiroChat(model, system, user) {
 // Modelflare Sol (gpt-6.1-sol): a judge of a third family, used when xKiro's free quota is spent. The key is read from the .env file here because the
 // scorecard proof's setup blanks the Modelflare keys for the app path.
 async function solChat(system, user) {
-  const key = require('dotenv').parse(fs.readFileSync('C:/coding/claudecommittdIq/folderThing/.env')).MODELFLARE_LUNA_API_KEY; // eslint-disable-line global-require
+  const key = require('dotenv').parse(fs.readFileSync('C:/coding/claudecommittdIq/folderThing/.env')).MODELFLARE_API_KEY; // eslint-disable-line global-require
   if (!key) throw new Error('no Modelflare key');
   for (let attempt = 0; attempt < 3; attempt++) {
     const r = await fetch(`${(process.env.MODELFLARE_BASE_URL || 'https://modelflare.dev/v1').replace(/\/$/, '')}/chat/completions`, { // eslint-disable-line no-await-in-loop

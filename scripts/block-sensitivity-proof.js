@@ -230,9 +230,40 @@ function tally(recs, joint) {
 }
 const sumOf = (t) => Object.values(t).reduce((a, s) => ({ verdicts: a.verdicts + s.verdicts, correct: a.correct + s.correct, same: a.same + s.same }), { verdicts: 0, correct: 0, same: 0 });
 
+/** --writer sol: Modelflare Sol (gpt-6.1-sol, MODELFLARE_API_KEY, within the key's own limit) as the writer, for subjects where the free writers are too slow. Before and after use the same one. */
+function installSolWriter() {
+  const key = require('dotenv').parse(fs.readFileSync('C:/coding/claudecommittdIq/folderThing/.env')).MODELFLARE_API_KEY; // eslint-disable-line global-require
+  const w = {
+    name: 'sol_proof', outside: true, isEnabled: () => true, costCents: () => 0, describeError: (e) => e.message,
+    async structured(a) {
+      const body = JSON.stringify({
+        model: 'gpt-6.1-sol', max_tokens: Math.min(a.maxTokens || 16000, 30000),
+        messages: [{ role: 'system', content: a.system }, { role: 'user', content: `${a.user}\n\nReturn ONLY one JSON object (no prose, no code fence) that matches this JSON Schema:\n${JSON.stringify(a.schema).slice(0, 14000)}` }],
+      });
+      for (let attempt = 0; ; attempt++) {
+        let r; let j;
+        try {
+          r = await fetch(`${(process.env.MODELFLARE_BASE_URL || 'https://modelflare.dev/v1').replace(/\/$/, '')}/chat/completions`, { method: 'POST', signal: AbortSignal.timeout(420000), headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` }, body }); // eslint-disable-line no-await-in-loop
+          j = await r.json().catch(() => ({})); // eslint-disable-line no-await-in-loop
+        } catch (e) { if (attempt >= 3) throw e; await new Promise((res) => { setTimeout(res, 10000 * (attempt + 1)); }); continue; } // eslint-disable-line no-await-in-loop
+        if (r.status === 429 || r.status >= 500) { if (attempt >= 3) throw new Error(`modelflare ${r.status}`); await new Promise((res) => { setTimeout(res, 15000 * (attempt + 1)); }); continue; } // eslint-disable-line no-await-in-loop
+        if (r.status !== 200) throw new Error(`modelflare ${r.status}`);
+        const data = base.parseJsonLoose((((j.choices || [])[0] || {}).message || {}).content || '');
+        if (!data || typeof data !== 'object') throw new Error('unusable reply from Sol');
+        const u = j.usage || {};
+        usage.writerCalls += 1; usage.writerIn += u.prompt_tokens || 0; usage.writerOut += u.completion_tokens || 0;
+        return { data, model: 'gpt-6.1-sol', usage: { input_tokens: u.prompt_tokens || 0, output_tokens: u.completion_tokens || 0 } };
+      }
+    },
+  };
+  process.env.AI_POOL = '0';
+  base.providers.chain = () => [w];
+  base.providers.isOutside = () => false;
+}
+
 async function main() {
   const t0 = Date.now();
-  installWriter();
+  if (arg('writer') === 'sol') installSolWriter(); else installWriter();
   const out = { tag: TAG, adapter: ADAPTER, generated_at: new Date().toISOString(), writer: P.WRITER_MODEL, judges: JUDGES.map((j) => j.id), subjects: SUBJECTS, levels: LEVELS, single_measures: SINGLE, plant: PLANT || null, label: 'AI-judged on simulated learners; not real-learner proof' };
   const phase = arg('phase', 'both');
   if (phase === 'single' || phase === 'both') { const recs = await runSingle(); out.single = { bySubject: tally(recs, false), recs: recs.map((r) => ({ ...r, texts: undefined })), texts: recs.map((r) => ({ subject: r.subject, measure: r.measure, texts: r.texts })) }; }

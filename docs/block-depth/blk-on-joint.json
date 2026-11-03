@@ -1,0 +1,951 @@
+{
+ "tag": "blk-on-joint",
+ "adapter": "on",
+ "generated_at": "2026-11-03T01:04:17.751Z",
+ "writer": "minimax/minimax-m3.1-flash",
+ "judges": [
+  "nvidia/nemotron-3-ultra-550b-a55b",
+  "minimaxai/minimax-m3.1-flash"
+ ],
+ "subjects": [
+  "math",
+  "english",
+  "iq",
+  "spanish"
+ ],
+ "levels": {
+  "math": {
+   "trackId": "math",
+   "gradeId": "algebra_1_part_a",
+   "level": 30
+  },
+  "english": {
+   "trackId": "english",
+   "gradeId": "proficient",
+   "level": 40
+  },
+  "iq": {
+   "trackId": "iq",
+   "gradeId": "abstract_reasoning",
+   "level": 20
+  },
+  "spanish": {
+   "trackId": "spanish",
+   "gradeId": "spanish_grade_04_time_food_shopping_and_core_verbs",
+   "level": 8
+  }
+ },
+ "single_measures": [
+  "brevity_preference",
+  "vocabulary_ceiling",
+  "interest_transfer",
+  "worked_example_dependence"
+ ],
+ "plant": null,
+ "label": "AI-judged on simulated learners; not real-learner proof",
+ "joint": {
+  "bySubject": {
+   "math": {
+    "verdicts": 12,
+    "correct": 11,
+    "same": 0,
+    "failed": 1,
+    "pairs": 4
+   },
+   "english": {
+    "verdicts": 12,
+    "correct": 10,
+    "same": 0,
+    "failed": 1,
+    "pairs": 4
+   },
+   "iq": {
+    "verdicts": 8,
+    "correct": 7,
+    "same": 0,
+    "failed": 1,
+    "pairs": 4
+   },
+   "spanish": {
+    "verdicts": 0,
+    "correct": 0,
+    "same": 0,
+    "failed": 1,
+    "pairs": 4
+   }
+  },
+  "recs": [
+   {
+    "subject": "math",
+    "profile": "J3",
+    "set": {
+     "worked_example_dependence": 1,
+     "challenge_appetite": 1,
+     "spatial_anchoring": 0,
+     "tone_formality": 1
+    },
+    "result": "build failed: not written yet (J3 mirror)"
+   },
+   {
+    "subject": "math",
+    "profile": "J1",
+    "set": {
+     "vocabulary_ceiling": 1,
+     "attention_runway": 0,
+     "evaluation_anxiety": 1,
+     "prior_knowledge": 1
+    },
+    "code": {
+     "profile": {
+      "words": 349,
+      "blocks": 4,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 15,
+      "interestUses": 3,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": true
+     },
+     "mirror": {
+      "words": 600,
+      "blocks": 6,
+      "checks": 3,
+      "typed": 2,
+      "hints": 0,
+      "rationaleWords": 11,
+      "interestUses": 4,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "family": "nvidia",
+      "picks": {
+       "vocabulary_ceiling": "X",
+       "attention_runway": "Y",
+       "evaluation_anxiety": "X",
+       "prior_knowledge": "X"
+      },
+      "correct": {
+       "vocabulary_ceiling": true,
+       "attention_runway": true,
+       "evaluation_anxiety": true,
+       "prior_knowledge": true
+      },
+      "same": {
+       "vocabulary_ceiling": false,
+       "attention_runway": false,
+       "evaluation_anxiety": false,
+       "prior_knowledge": false
+      },
+      "accuracy": 6
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "math",
+    "profile": "J2",
+    "set": {
+     "working_memory_span": 0,
+     "deductive_trajectory": 1,
+     "interest_transfer": 1,
+     "brevity_preference": 1
+    },
+    "code": {
+     "profile": {
+      "words": 390,
+      "blocks": 4,
+      "checks": 2,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 14,
+      "interestUses": 4,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": true
+     },
+     "mirror": {
+      "words": 840,
+      "blocks": 10,
+      "checks": 3,
+      "typed": 2,
+      "hints": 0,
+      "rationaleWords": 7,
+      "interestUses": 0,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": true
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "family": "nvidia",
+      "picks": {
+       "working_memory_span": "Y",
+       "deductive_trajectory": "X",
+       "interest_transfer": "X",
+       "brevity_preference": "X"
+      },
+      "correct": {
+       "working_memory_span": true,
+       "deductive_trajectory": true,
+       "interest_transfer": true,
+       "brevity_preference": true
+      },
+      "same": {
+       "working_memory_span": false,
+       "deductive_trajectory": false,
+       "interest_transfer": false,
+       "brevity_preference": false
+      },
+      "accuracy": 9
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "math",
+    "profile": "J4",
+    "set": {
+     "structure_need": 1,
+     "narrative_pull": 1,
+     "productive_struggle": 0,
+     "text_density_tolerance": 0
+    },
+    "code": {
+     "profile": {
+      "words": 542,
+      "blocks": 7,
+      "checks": 3,
+      "typed": 1,
+      "hints": 3,
+      "rationaleWords": 7,
+      "interestUses": 9,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     },
+     "mirror": {
+      "words": 706,
+      "blocks": 6,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 13,
+      "interestUses": 2,
+      "spider": false,
+      "coverageMissing": 1,
+      "revised": false
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "family": "nvidia",
+      "picks": {
+       "structure_need": "X",
+       "narrative_pull": "X",
+       "productive_struggle": "Y",
+       "text_density_tolerance": "X"
+      },
+      "correct": {
+       "structure_need": true,
+       "narrative_pull": true,
+       "productive_struggle": true,
+       "text_density_tolerance": false
+      },
+      "same": {
+       "structure_need": false,
+       "narrative_pull": false,
+       "productive_struggle": false,
+       "text_density_tolerance": false
+      },
+      "accuracy": 9
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "english",
+    "profile": "J1",
+    "set": {
+     "vocabulary_ceiling": 1,
+     "attention_runway": 0,
+     "evaluation_anxiety": 1,
+     "prior_knowledge": 1
+    },
+    "code": {
+     "profile": {
+      "words": 761,
+      "blocks": 4,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 20,
+      "interestUses": 5,
+      "spider": false,
+      "coverageMissing": 1,
+      "revised": true
+     },
+     "mirror": {
+      "words": 951,
+      "blocks": 6,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 18,
+      "interestUses": 22,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "family": "nvidia",
+      "picks": {
+       "vocabulary_ceiling": "Y",
+       "attention_runway": "Y",
+       "evaluation_anxiety": "X",
+       "prior_knowledge": "X"
+      },
+      "correct": {
+       "vocabulary_ceiling": false,
+       "attention_runway": true,
+       "evaluation_anxiety": true,
+       "prior_knowledge": true
+      },
+      "same": {
+       "vocabulary_ceiling": false,
+       "attention_runway": false,
+       "evaluation_anxiety": false,
+       "prior_knowledge": false
+      },
+      "accuracy": 7
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "english",
+    "profile": "J2",
+    "set": {
+     "working_memory_span": 0,
+     "deductive_trajectory": 1,
+     "interest_transfer": 1,
+     "brevity_preference": 1
+    },
+    "code": {
+     "profile": {
+      "words": 660,
+      "blocks": 5,
+      "checks": 2,
+      "typed": 1,
+      "hints": 2,
+      "rationaleWords": 19,
+      "interestUses": 12,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": true
+     },
+     "mirror": {
+      "words": 829,
+      "blocks": 5,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 22,
+      "interestUses": 0,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "family": "nvidia",
+      "picks": {
+       "working_memory_span": "Y",
+       "deductive_trajectory": "X",
+       "interest_transfer": "X",
+       "brevity_preference": "Y"
+      },
+      "correct": {
+       "working_memory_span": true,
+       "deductive_trajectory": true,
+       "interest_transfer": true,
+       "brevity_preference": false
+      },
+      "same": {
+       "working_memory_span": false,
+       "deductive_trajectory": false,
+       "interest_transfer": false,
+       "brevity_preference": false
+      },
+      "accuracy": 4
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "english",
+    "profile": "J4",
+    "set": {
+     "structure_need": 1,
+     "narrative_pull": 1,
+     "productive_struggle": 0,
+     "text_density_tolerance": 0
+    },
+    "result": "build failed: not written yet (J4 profile)"
+   },
+   {
+    "subject": "iq",
+    "profile": "J1",
+    "set": {
+     "vocabulary_ceiling": 1,
+     "attention_runway": 0,
+     "evaluation_anxiety": 1,
+     "prior_knowledge": 1
+    },
+    "result": "build failed: not written yet (J1 mirror)"
+   },
+   {
+    "subject": "english",
+    "profile": "J3",
+    "set": {
+     "worked_example_dependence": 1,
+     "challenge_appetite": 1,
+     "spatial_anchoring": 0,
+     "tone_formality": 1
+    },
+    "code": {
+     "profile": {
+      "words": 924,
+      "blocks": 5,
+      "checks": 3,
+      "typed": 2,
+      "hints": 0,
+      "rationaleWords": 19,
+      "interestUses": 10,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": true
+     },
+     "mirror": {
+      "words": 897,
+      "blocks": 5,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 16,
+      "interestUses": 11,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "family": "nvidia",
+      "picks": {
+       "worked_example_dependence": "X",
+       "challenge_appetite": "X",
+       "spatial_anchoring": "Y",
+       "tone_formality": "X"
+      },
+      "correct": {
+       "worked_example_dependence": true,
+       "challenge_appetite": true,
+       "spatial_anchoring": true,
+       "tone_formality": true
+      },
+      "same": {
+       "worked_example_dependence": false,
+       "challenge_appetite": false,
+       "spatial_anchoring": false,
+       "tone_formality": false
+      },
+      "accuracy": 6
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "spanish",
+    "profile": "J1",
+    "set": {
+     "vocabulary_ceiling": 1,
+     "attention_runway": 0,
+     "evaluation_anxiety": 1,
+     "prior_knowledge": 1
+    },
+    "result": "build failed: not written yet (J1 mirror)"
+   },
+   {
+    "subject": "iq",
+    "profile": "J2",
+    "set": {
+     "working_memory_span": 0,
+     "deductive_trajectory": 1,
+     "interest_transfer": 1,
+     "brevity_preference": 1
+    },
+    "code": {
+     "profile": {
+      "words": 329,
+      "blocks": 4,
+      "checks": 2,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 19,
+      "interestUses": 3,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     },
+     "mirror": {
+      "words": 1151,
+      "blocks": 8,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 22,
+      "interestUses": 0,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": true
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "error": "judging skipped (NO_JUDGE)"
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "iq",
+    "profile": "J3",
+    "set": {
+     "worked_example_dependence": 1,
+     "challenge_appetite": 1,
+     "spatial_anchoring": 0,
+     "tone_formality": 1
+    },
+    "code": {
+     "profile": {
+      "words": 740,
+      "blocks": 5,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 19,
+      "interestUses": 6,
+      "spider": false,
+      "coverageMissing": 1,
+      "revised": false
+     },
+     "mirror": {
+      "words": 497,
+      "blocks": 5,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 14,
+      "interestUses": 6,
+      "spider": false,
+      "coverageMissing": 1,
+      "revised": false
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "family": "nvidia",
+      "picks": {
+       "worked_example_dependence": "X",
+       "challenge_appetite": "X",
+       "spatial_anchoring": "Y",
+       "tone_formality": "X"
+      },
+      "correct": {
+       "worked_example_dependence": true,
+       "challenge_appetite": true,
+       "spatial_anchoring": true,
+       "tone_formality": true
+      },
+      "same": {
+       "worked_example_dependence": false,
+       "challenge_appetite": false,
+       "spatial_anchoring": false,
+       "tone_formality": false
+      },
+      "accuracy": 8
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "iq",
+    "profile": "J4",
+    "set": {
+     "structure_need": 1,
+     "narrative_pull": 1,
+     "productive_struggle": 0,
+     "text_density_tolerance": 0
+    },
+    "code": {
+     "profile": {
+      "words": 694,
+      "blocks": 5,
+      "checks": 3,
+      "typed": 1,
+      "hints": 3,
+      "rationaleWords": 22,
+      "interestUses": 6,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     },
+     "mirror": {
+      "words": 573,
+      "blocks": 5,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 20,
+      "interestUses": 2,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "family": "nvidia",
+      "picks": {
+       "structure_need": "X",
+       "narrative_pull": "X",
+       "productive_struggle": "Y",
+       "text_density_tolerance": "X"
+      },
+      "correct": {
+       "structure_need": true,
+       "narrative_pull": true,
+       "productive_struggle": true,
+       "text_density_tolerance": false
+      },
+      "same": {
+       "structure_need": false,
+       "narrative_pull": false,
+       "productive_struggle": false,
+       "text_density_tolerance": false
+      },
+      "accuracy": 8
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "spanish",
+    "profile": "J2",
+    "set": {
+     "working_memory_span": 0,
+     "deductive_trajectory": 1,
+     "interest_transfer": 1,
+     "brevity_preference": 1
+    },
+    "code": {
+     "profile": {
+      "words": 443,
+      "blocks": 4,
+      "checks": 2,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 14,
+      "interestUses": 16,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     },
+     "mirror": {
+      "words": 818,
+      "blocks": 8,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 19,
+      "interestUses": 0,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "error": "judging skipped (NO_JUDGE)"
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "spanish",
+    "profile": "J3",
+    "set": {
+     "worked_example_dependence": 1,
+     "challenge_appetite": 1,
+     "spatial_anchoring": 0,
+     "tone_formality": 1
+    },
+    "code": {
+     "profile": {
+      "words": 494,
+      "blocks": 4,
+      "checks": 3,
+      "typed": 2,
+      "hints": 0,
+      "rationaleWords": 16,
+      "interestUses": 8,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     },
+     "mirror": {
+      "words": 453,
+      "blocks": 6,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 14,
+      "interestUses": 8,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "error": "judging skipped (NO_JUDGE)"
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   },
+   {
+    "subject": "spanish",
+    "profile": "J4",
+    "set": {
+     "structure_need": 1,
+     "narrative_pull": 1,
+     "productive_struggle": 0,
+     "text_density_tolerance": 0
+    },
+    "code": {
+     "profile": {
+      "words": 583,
+      "blocks": 5,
+      "checks": 3,
+      "typed": 1,
+      "hints": 3,
+      "rationaleWords": 18,
+      "interestUses": 7,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     },
+     "mirror": {
+      "words": 629,
+      "blocks": 5,
+      "checks": 3,
+      "typed": 1,
+      "hints": 0,
+      "rationaleWords": 16,
+      "interestUses": 15,
+      "spider": false,
+      "coverageMissing": 0,
+      "revised": false
+     }
+    },
+    "verdicts": [
+     {
+      "judge": "nvidia/nemotron-3-ultra-550b-a55b",
+      "error": "judging skipped (NO_JUDGE)"
+     },
+     {
+      "judge": "minimaxai/minimax-m3.1-flash",
+      "error": "judging skipped (NO_JUDGE)"
+     }
+    ]
+   }
+  ]
+ },
+ "jointTexts": [
+  {
+   "subject": "math",
+   "profile": "J3"
+  },
+  {
+   "subject": "math",
+   "profile": "J1",
+   "texts": {
+    "profile": "THE LEVEL: 4 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Steps Block; Warm up by reading two short expressions as structures of terms, factors, coefficients, and grouping symbols, then identify the first operation to perform in each without yet solving them.): Warm Up: Read the Structure | Nothing here is scored. A wrong answer only shows what to look at next. | Expression 1 | Read 3x + 2(4 - 1) as three terms: 3x, 2(4 - 1), and nothing else. | The grouping symbol 4 - 1 is one factor of the second term. | Expression 2 | Read y^2 - 5 + 8 ÷ 2 as three terms: y^2, -5, and 8 ÷ 2. | The coefficient of y^2 is 1, and 8 ÷ 2 is a term. | First move | For 3x + 2(4 - 1), evaluate the grouping symbol first. | For y^2 - 5 + 8 ÷ 2, evaluate the exponent first. | Try it | Try it: Which operation comes first in 6 + 2(3 + 1) - 8 ÷ 4? Answer: Evaluate 3 + 1 first.\nBLOCK 2 (Theory RuleCard; Teach the complete precedence rule, the one-sentence memory anchor, left-to-right handling of equal-precedence operations, and the distinction between a negative outside an exponent and a negative exponent base.): Order of Operations | Grouping symbols, exponents, multiplication or division, then addition or subtraction. | Evaluate the innermost grouping symbol first, then work outward through any remaining grouping symbols. | At one precedence level, work from left to right, whether the operations are multiplication and division or addition and subtraction. | A negative sign outside an exponent applies to the power, but (-2)^2 has -2 as its base.\nBLOCK 3 (Concept FlowDiagram; Model one basketball-themed worked example as an arrow chain from grouping to exponents, multiplication or division, addition or subtraction, and final answer while explicitly showing where a common parenthesis and negative-sign slip would occur.): Basketball Worked Example | Evaluate each stage before moving to the next. | Start with the full expression. | Innermost grouping: 4 - 1 = 3. | Exponent: 3^2 = 9. | Left to right: 2(9) = 18, then 8 ÷ 4 = 2. | Left to right: 3 + 18 = 21, then 21 - 2 = 19. | The expression equals 19. | Common slip | Dropping parentheses gives 2 × 4 - 1, not 2 × (4 - 1). A negative sign also belongs to the part it directly precedes. | multiply or divide | add or subtract | left to right | Required order | Correct result | Watch for | Try it: Evaluate 2(5 - 2) - 6 ÷ 3. Answer: 4.\nBLOCK 4 (Interact CategorySort; Practise evaluating varied expressions and classifying common solution steps as correct or needing another look, then consolidate with substitution, technology checks, and a concise final takeaway.): Practice and Verification | Sort each card by whether its evaluation is correct or needs another look. | Evaluate correctly | The steps follow grouping, exponents, multiplication or division, then addition or subtraction. | Needs another look | Check grouping, left-to-right order, and where the negative sign applies. | Video games: 4 + 3^2 - 10 ÷ 5 = 11 | 9 and 2 are found before the addition and subtraction; then 4 + 9 - 2 = 11. | Comics: 2(6 - 2) - 8 = 0 | The grouping gives 4, then 2(4) - 8 = 0. | This drops the parentheses. The correct evaluation is 6 - 2(3) = 0. | The base is negative, so (-3)^2 = 9. The correct result is 13. | Substitute: 2 + 3(4 - x), with x = 1 | The value is 11. Substituting x = 1 gives 2 + 3(3) = 11, confirming the result. | Calculator check: 2(5 - 2) - 6 ÷ 3 | A calculator gives 4, independently confirming the hand calculation. | Try Again\nCHECK c1 after block 2 (multiple_choice): Which operation should you perform first in 4 + 3(2 - 1)^2 - 8 ÷ 2? Choices: Evaluate 2 - 1 / Evaluate the exponent / Multiply 3 by 2 / Divide 8 by 2. Hint: (none) Explanation: Grouping symbols come before exponents, so the innermost group 2 - 1 is the first operation to perform.\nCHECK c2 after block 3 (type_in): Evaluate 2 + 3(1 - (4 - 2)^2). Hint: (none) Explanation: Evaluate the innermost group first: 4 - 2 = 2, then 2^2 = 4, then 1 - 4 = -3, and finally 2 + 3(-3) = -7.\nCHECK c3 after block 4 (multiple_choice): A calculator gives -25 for 5 - 2(3 + 1)^2 + 8 ÷ 4. Which evaluation agrees and checks the result? Choices: -25; substituting 4 for (3 + 1) gives 5 - 32 + 2 = -25 / -13; left-to-right addition confirms it / -25; the exponent can be evaluated last / -29; division should happen before grouping. Hint: (none) Explanation: First, (3 + 1) = 4, so the square is 16 and 2(16) = 32. Then 8 ÷ 4 = 2, giving 5 - 32 + 2 = -25, which a calculator independently confirms.",
+    "mirror": "THE LEVEL: 6 blocks, 3 graded checks (2 typed, 1 multiple choice).\nBLOCK 1 (Hook Dilemma; Present two plausible video-game score calculations so the learner must decide which operation should happen first and why.): WARM-UP DILEMMA | Which method should you use to find a video-game score? | A game awards 2 points for each level you clear, then adds a 3-point bonus. You clear x levels. | OPTION A | Multiply first | Calculate 2x + 3. This treats the bonus as part of the multiplication. | OPTION B | Group first | Calculate 2(x + 3). This puts the bonus inside the multiplication. | The parentheses show which operation happens first.\nBLOCK 2 (Concept StepLadder; Build the order-of-operations hierarchy from grouping and exponents through multiplication or division and addition or subtraction, including how negative signs fit.): The Order-of-Operations Ladder | Work from the bottom rung to the top rung. | VISUAL RULE | Start by reading the expression carefully. | Finish with addition or subtraction. | Read terms, factors, coefficients, and operation symbols. | Terms are joined by + or -. Factors are joined by multiplication or division. A coefficient is a number multiplying a term. | In 3x + 2, 3x and 2 are terms. In 3x, 3 is the coefficient. | Step 1 | Do operations inside grouping symbols first. | Parentheses and brackets tell you which part to complete first. | In 2(x + 3), evaluate x + 3 first. | Step 2 | Evaluate powers next. | An exponent tells how many times to use the base. A negative exponent means reciprocal. | x^2 means x multiplied by x. 2^-3 = 1/2^3. | Step 3 | Multiply or divide from left to right. | These operations have equal priority. Do not add before multiplying. | 2 + 3(4) means 2 + 12 = 14. | Step 4 | Add or subtract from left to right. | These operations have equal priority and come last. | 8 - 3 + 2 means 8 - 3 + 2 = 7.\nBLOCK 3 (Steps Block; Work through one basketball expression step by step with substitution, one same-kind try-it line, and a technology check that compares each displayed result.): Worked Example: Basketball Points | Substitute first, then follow the ladder. | Substitute x = 2 for x in 2 + 3(x + 2)^2. | Replace the variable with its value before calculating. | Evaluate the grouping: (2 + 2) = 4. | The parentheses come before the exponent. | Evaluate the power: 4^2 = 16. | A square means multiply a number by itself. | Multiply: 3(16) = 48. | Keep the addition for last. | Add: 2 + 48 = 50. | The expression equals 50 points. | Try it | Try it: Evaluate 1 + 4(x + 1)^2 when x = 2. Answer: 25. | Technology check | Enter the expression on a calculator or use a math app. Check each result: 1 + 4(3)^2 gives 1 + 4(9) gives 37.\nBLOCK 4 (Interact CategorySort; Have the learner classify expressions by the operation that must happen first and then show how grouping, exponents, and negative signs change that order.): Sort by the First Operation | Sort each expression into the bucket for the operation that must happen first. | Parentheses or brackets come first. | Evaluate exponents next. | Multiply or Divide | Do these before adding or subtracting. | The grouping changes what gets squared. | The exponent is on x. | The parentheses contain a sum. | Multiplication and division come before addition. | The exponent must be evaluated first. | Reset Sort\nBLOCK 5 (Trap CommonError; Challenge the common error of adding before multiplying and another likely mistake involving negative signs, requiring the learner to identify and repair the mistake.): Evaluate both expressions: 2 + 3(4) and -3^2 + 2. Which answer is correct? | One expression traps you into adding first. The other traps you into moving a negative sign. | 14 and -7 | 20 and 11 | 14 and 11 | 20 and -7 | Adding before multiplying and mishandling a negative sign | This adds 2 and 3 before multiplying by 4, and treats -3^2 as (-3)^2. | This gets the first expression right but treats -3^2 as (-3)^2. | This gets the first expression wrong but handles the negative sign correctly. | Multiplication does not wait until addition is finished. Also, -3^2 means the opposite of 3^2, not (-3)^2. | First, 3(4) = 12, so 2 + 12 = 14. Then 3^2 = 9, so -3^2 + 2 = -9 + 2 = -7. | Write one line for each step. If a power has a negative base, add parentheses: (-3)^2. | Order of Operations\nBLOCK 6 (Memory CheatSheet; Summarize the evaluation order, negative-sign rules, substitution steps, and technology-check method in a compact reference for later retrieval.): Evaluation Memory Sheet | Use this page to check your steps. | Terms are joined by + or -. Factors are joined by multiplication or division. A coefficient is a number multiplying a term. | 1. Grouping | Evaluate parentheses and brackets first. | Grouping shows which operation happens first. | 2. Powers | Evaluate exponents next. | A negative exponent means reciprocal: x^-2 = 1/x^2. | 3. Multiply or divide | Work from left to right. | Do not add before multiplying. | 4. Add or subtract | Work from left to right. | These operations come last. | Negative signs | A negative number is less than zero. Subtraction takes one number away from another. -3^2 means -(3^2). | Replace each variable with its value, then work step by step. | Technology check | Enter each step. Compare the calculator result with your written result.\nCHECK c1 after block 2 (multiple_choice): In 2 + 3(x + 1)^2, which operation comes first when x = 2? Choices: Evaluate (x + 1) / Evaluate x^2 / Multiply 3 by x / Add 2 and 3. Hint: (none) Explanation: Grouping symbols come first. So (x + 1) becomes (2 + 1) before the exponent is evaluated.\nCHECK c2 after block 3 (type_in): A basketball expression is 1 + 4(x + 1)^2. If x = 2, what is its value? Hint: (none) Explanation: Substitute 2, evaluate (2 + 1) = 3, then square 3 to get 9. Multiply 4(9) = 36 and add 1 for 25.\nCHECK c3 after block 5 (type_in): Evaluate 2 + 3(-2)^-1. Write the value as a fraction. Hint: (none) Explanation: The negative exponent means (-2)^-1 = -1/2. Then 3(-1/2) = -3/2, and 2 - 3/2 = 1/2."
+   }
+  },
+  {
+   "subject": "math",
+   "profile": "J2",
+   "texts": {
+    "profile": "THE LEVEL: 4 blocks, 2 graded checks (1 typed, 1 multiple choice).\nBLOCK 1 (Hook Dilemma; Pose two plausible basketball expressions that evaluate differently so the learner sees why order matters.): Warm-Up Dilemma | Which expression tells how many points the basketball team scores after a three-pointer and two two-pointers? | Both choices seem to describe the same play, but they give different results. The order of operations decides which answer is correct. | OPTION A | Add the points first | 3 + 2 × 2 = 7 points | OPTION B | Multiply first | 3 + (2 × 2) = 7 points | Same basketball idea, different algebraic meaning.\nBLOCK 2 (Theory RuleCard; State the complete evaluation rule first, then use one worked video-game example with grouping, exponents, negatives, and written intermediate results.): Order of Operations | Evaluate parentheses first, then exponents, then multiplication and division from left to right, and finally addition and subtraction from left to right. | Parentheses group the work inside them and must be done first. | An exponent tells how many times the base is used as a factor: 3^2 means 3 × 3. | Multiplication and division have equal priority, so do them from left to right. | Addition and subtraction have equal priority, so do them from left to right. | A negative sign stays with its number: -3 squared means -(3^2), but (-3) squared means (-3)(-3). | Video-game worked example: 2(-3^2) + 10. | 1. Evaluate the exponent: -3^2 = -(3 × 3) = -9. | 2. Multiply inside the parentheses: 2 × (-9) = -18. | 3. Add 10: -18 + 10 = -8. | Try it: Evaluate -3^2 + 4. Answer: -5. | Try it: Evaluate (-3)^2 + 4. Answer: 13. | Takeaway: Use parentheses to control the order, and keep each negative sign with its number.\nBLOCK 3 (Multiple Choice Question; Have the learner apply the rule to short basketball and comic-style expressions and identify the evaluation that shows a common order-of-operations slip.): Which evaluation shows the correct order for 5 + 2 × 3? | Basketball expression | A player earns 5 points and each bonus is 2 points, repeated 3 times. | Try again: multiplication comes before addition. | Parentheses were added in a place that was not in the original expression. | You multiplied before adding, which follows the order of operations. | You added before multiplying, so the expression was evaluated in the wrong order. | You left out one factor of 2. | Try again\nBLOCK 4 (Memory CheatSheet; Consolidate the priority order, left-to-right rules, negative-number distinction, substitution steps, and technology-check routine in a compact reference.): Order-of-Operations Cheat Sheet | Evaluate carefully, then check your work | 1. Parentheses | Do grouped work first. | Use parentheses to change the evaluation order. | 2. Exponents | Evaluate powers before multiplication, division, addition, or subtraction. | 3. Equal priority | Do multiplication and division left to right. | Do addition and subtraction left to right. | 4. Negative signs | Keep a negative sign attached to its number. | -3^2 = -9, but (-3)^2 = 9. | 5. Substitute | Replace each variable, then write each intermediate result. | For x = 2, 3x + 1 becomes 3(2) + 1, then 6 + 1, then 7. | 6. Check | Use a calculator or graphing technology to check whether the result is reasonable. | Compare the calculator result with your written steps. | Common slip | Do not skip parentheses or ignore left-to-right order. | Also check that a negative sign is on the correct base.\nCHECK c1 after block 2 (multiple_choice): Which intermediate result comes first for 2(3^2 - 4) + 5? Choices: 9 / 5 / -1 / 11. Hint: (none) Explanation: Exponents come before work inside the larger multiplication. So 3^2 = 9 is the first result.\nCHECK c2 after block 3 (type_in): Evaluate -2^2 + 3(-3). What is the final value? Hint: (none) Explanation: First, -2^2 means -(2^2), so it equals -4. Then 3(-3) = -9, and -4 + (-9) = -13.",
+    "mirror": "THE LEVEL: 10 blocks, 3 graded checks (2 typed, 1 multiple choice).\nBLOCK 1 (Hook Dilemma; Open with two plausible evaluations of the same expression and ask the learner to decide which result is correct, creating curiosity about why order matters.): Warm-Up Dilemma | Which value correctly represents 12 + 3(-2)^2 - 8 ÷ 2? | Two students calculated the same expression but got different answers. The signs and symbols all matter. | OPTION A | This student evaluates the exponent, then multiplication and division, then addition and subtraction. | OPTION B | This student treats (-2)^2 as negative before multiplying by 3. | Decide which result is correct, then explain the order that makes your choice work.\nBLOCK 2 (Theory RuleCard; Give the complete order-of-operations rule after the concrete case, including grouping, exponents, multiplication and division, addition and subtraction, and left-to-right ties.): Order of Operations | Evaluate grouping first, then exponents, multiplication and division from left to right, and addition and subtraction from left to right. | A constant has a fixed value, such as 7 or -3. | A variable represents an unknown number, such as x or y. | An expression combines numbers, variables, and operation symbols. | Substitution means replacing each variable with its given value. | A calculator can verify arithmetic after you identify the correct structure.\nBLOCK 3 (Steps Block; Teach one fully worked example step by step, showing the expression, the order of calculations, and a final answer with an explanation of each step.): A Complete Worked Example | Evaluate 12 + 3(-2)^2 - 8 ÷ 2. | Group first | Evaluate 3(-2)^2 as one grouped term. | The parentheses around -2 tell you to square that value before multiplying by 3. | Use the exponent | Replace (-2)^2 with 4. | A negative number squared becomes positive because (-2)(-2) = 4. | Multiply and divide | Calculate 3(4) - 8 ÷ 2 = 12 - 4. | Multiplication and division have equal priority, so work from left to right. | Calculate 12 + 12 - 4 = 20. | Addition and subtraction also have equal priority, so work from left to right. | Try it | Try it: Evaluate 4 + 2(5 - 1). Answer: 12. | First, 5 - 1 = 4. Then 2(4) = 8, and 4 + 8 = 12. | Try it | Try it: Evaluate 24 ÷ 4 × 3 + 2. Answer: 20. | Work left to right: 24 ÷ 4 = 6, then 6 × 3 = 18, and 18 + 2 = 20.\nBLOCK 4 (Theory AnatomyCallout; Label the parts of a grouped expression so the learner sees exactly which section is calculated first and how parentheses change the result.): Parts of 12 + 3(-2)^2 - 8 ÷ 2 | Each colored section controls the next calculation. Select a part to see its role. | Choose a part of the expression | Select a labeled part. | grouped term | Fixed value | A number keeps its value. Here, 12 is added after the grouped and divided parts are evaluated. | In 12 + 3(-2)^2 - 8 ÷ 2, the constant 12 stays 12. | Grouped term | Calculate first | Parentheses group the factor 3 with the squared value. This part becomes 12. | 3(-2)^2 becomes 3 × 4, which is 12. | Repeated multiplication | The exponent applies to the value inside the parentheses. The exponent is evaluated before multiplication. | Equal priority with multiplication | Division and multiplication are calculated from left to right. Here, 8 ÷ 2 becomes 4. | 8 ÷ 2 = 4 before the final addition and subtraction. | Equal priority with addition | Addition and subtraction are calculated from left to right after higher-priority work is complete.\nBLOCK 5 (Data Table; Show a substitution table for several expressions, letting the learner replace each variable and check a calculated value against the original expression.): Substitution values for evaluating expressions | Given values | Substituted expression | Replace every variable first. Then follow the order of operations to calculate the result.\nBLOCK 6 (Theory ContrastSplit; Compare correct and incorrect handling of negative signs, especially when a negative number is squared, multiplied, or placed inside grouping symbols.): Negative Signs: Where They Belong | A sign applies to the number or group immediately beside it unless grouping changes its meaning. | What it is | A negative base | A minus sign before a number changes that number to its opposite. | -3 means the opposite of 3. | A squared negative | A negative number raised to an even exponent becomes positive. | A negative factor | A negative factor changes the sign of the product. | What it is NOT | Not always negative | Squaring a negative number does not leave the result negative. | (-2)^2 is not -4. | Not part of the next term | A minus sign before parentheses applies to the entire group. | -(2 + 3) = -5, not -2 + 3. | Not ignored | The sign must be carried through every calculation involving its factor. | Before squaring or multiplying a negative, write the signed number clearly. Then show each intermediate result.\nBLOCK 7 (Multiple Choice Question; Let the learner practise choosing the correct order and value for an expression with grouping, exponents, and negative signs, with feedback explaining each choice.): Choose the correct value of 6 + 2(-3)^2 ÷ 3. | Show the order of operations before selecting an answer. | Check the exponent and the sign. Begin with (-3)^2, then multiply and divide from left to right. | This is correct because (-3)^2 = 9 and the remaining steps give 6 + 6 = 12. | The exponent is even, so (-3)^2 = 9, not -9. | The factor 2 must multiply the exponent value before division by 3. | Multiplication must be completed before the final addition. | Try again\nBLOCK 8 (Text Fill Out Question; Have the learner type the missing calculation step or final value for an expression that requires left-to-right multiplication and division, then check their reasoning.): Evaluate 48 ÷ 6 × 2 - 5. Give the final value. | Multiplication and division have equal priority, so work from left to right before subtracting. | Type the final value | Final value of the expression | Check answer | Correct. Your value matches the ordered calculation. | Try again. Work through multiplication and division from left to right. | First, 48 ÷ 6 = 8. Then 8 × 2 = 16. Finally, 16 - 5 = 11.\nBLOCK 9 (Concept CautionFlag; Summarize the three most common order-of-operations mistakes and show how substitution or a calculator can verify the arithmetic after the structure is understood.): Order of Operations | Three Common Slips | Most mistakes happen when the structure is ignored or a negative sign is moved too early. | Calculating addition before multiplication | Multiplication and subtraction at the same level must be evaluated from left to right. | Complete multiplication before adding. | Equal-priority operations | Treating a negative square as negative | The exponent acts on the whole signed base inside the parentheses. | Show (-3)(-3) when you are unsure. | Using a calculator before finding the structure | Substitute values and identify the order first. Then use technology to verify each arithmetic step. | Enter 6 + 2(-3)^2 ÷ 3 and trust the display immediately | Substitute if needed, calculate 9, 18, 6, then 12 | Technology checks arithmetic, not your reasoning. | Substitution and technology check | Check the grouping, exponents, signs, and left-to-right steps before using a calculator.\nBLOCK 10 (Concept TakeawayBadge; End with a compact memory anchor that restates the complete evaluation sequence and the distinction between reasoning first and technology checking.): Key Takeaway | Grouping, then exponents, then multiplication and division left to right, then addition and subtraction left to right. Substitute first and use technology to verify the arithmetic. | Evaluating Expressions and Order of Operations with Care | Order of Operations | Lesson Summary | Structure first, arithmetic second, verification last.\nCHECK c1 after block 4 (multiple_choice): Evaluate 5 + 2(3^2). Choices: 17 / 23 / 29 / 41. Hint: (none) Explanation: The exponent gives 3^2 = 9. Then 2(9) = 18, so 5 + 18 = 23.\nCHECK c2 after block 8 (type_in): Evaluate 18 - 6 ÷ 3 + (-2) × 4. Hint: (none) Explanation: Calculate 6 ÷ 3 = 2 and (-2) × 4 = -8. Then 18 - 2 - 8 = 8.\nCHECK c3 after block 9 (type_in): For x = 3 and y = -2, substitute into 2x^2 - 3y and give the value. Hint: (none) Explanation: Substitution gives 2(3^2) - 3(-2). Since 3^2 = 9, the calculation is 18 + 6 = 24."
+   }
+  },
+  {
+   "subject": "math",
+   "profile": "J4",
+   "texts": {
+    "profile": "THE LEVEL: 7 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Hook Dilemma; Open with a basketball video-game scenario in which a player must choose whether to add points before multiplying a bonus or multiply before adding, revealing why order matters.): Warm-Up Dilemma | Should the player add 5 points before multiplying by 2, or multiply first? | A basketball video game gives a player 10 points. The player can gain 5 points, then receive a 2-times bonus. The two orders produce different final scores. | OPTION A | Add, then multiply | Add 5 points first: 10 + 5 = 15. Then multiply by 2 for a score of 30. | OPTION B | Multiply, then add | Multiply the 5-point bonus by 2: 5 × 2 = 10. Then add it to 10 for a score of 20. | Order changes the result, so algebra needs a careful rule.\nBLOCK 2 (Theory RuleCard; Establish the complete order-of-operations rule and its anchor sentence, with prerequisites for grouping symbols, powers, multiplication and division, and addition and subtraction.): Order of Operations | Grouping symbols first, then powers, then multiplication and division from left to right, and addition and subtraction from left to right. | Parentheses and other grouping symbols show which part to evaluate first. | A power uses a base and an exponent, such as 5^2. | A negative sign tells you the direction of a number.\nBLOCK 3 (Steps Block; Model one fully supported basketball example in numbered steps, showing each replacement, operation, intermediate result, final answer, and what comes next.): Worked Example: A Basketball Bonus | Evaluate 2(3 + 4) + 5^2 one operation at a time. | 1. Group | Evaluate 3 + 4. | 3 + 4 = 7. Next, evaluate the power. | 2. Power | Evaluate 5^2. | 5^2 = 5 × 5 = 25. Next, multiply. | 3. Multiply | Evaluate 2 × 7. | 2 × 7 = 14. Next, add. | 4. Add | Evaluate 14 + 25. | 14 + 25 = 39. This is the final value. | 5. Explain | Check what the expression represents. | The expression gives 39 points after its bonus and multiplier are applied. | Try it: Evaluate 2(8 + 1) + 3^2. Answer: 27. | First group 8 + 1, then evaluate 3^2, and finish with multiplication and addition.\nBLOCK 4 (Multiple Choice Question; Let the learner apply the rule to a partially shown video-game expression with feedback, then use a same-kind Try it line before checking the answer.): Which operation comes first in -2 + 3 × 4^2? | Expression: -2 + 3 × 4^2 | Game Score | Evaluate 4^2 | Evaluate 3 × 16 | Add -2 and 3 | Add -2 and 16 | Start with the highest-priority operation. Then follow the rule card in order. | Try again\nBLOCK 5 (Trap CommonError; Challenge the likely mistakes of multiplying before adding, ignoring grouping symbols, or mishandling negatives, then explain why the tempting answer is wrong and guide a corrected calculation.): What is the value of 6 + 4 × 2? | A video game awards 6 points, then doubles 4 bonus points. | Adding before multiplying | This answer adds 6 and 4 before multiplying by 2. | You may read 6 + 4 × 2 from left to right. However, multiplication has priority over addition. | Multiply first: 4 × 2 = 8. Then add: 6 + 8 = 14. | Circle grouping symbols and powers first. Then write the remaining operations in order. | Order of Operations\nBLOCK 6 (Normal Text Block; Consolidate the fourth section with a short substitution-and-technology routine: replace variables, evaluate step by step, verify in a calculator, and interpret the result in the original context.): Fourth Section | Substitute, Evaluate, Verify, Explain | Use the same four-step routine on a game-score expression. | 1. Substitute | Replace each variable with its given value. For example, in x + 2(x - 4), let x = 10. The expression becomes 10 + 2(10 - 4). | A second example is 2x + (-3)^2 when x = 2. Substitute to get 4 + (-3)^2. | 2. Evaluate | Evaluate grouping symbols before other operations. For the first example, 10 - 4 becomes 6, so the expression becomes 10 + 2 × 6. | Next, evaluate powers. In the second example, (-3)^2 = 9. Continue with multiplication and division from left to right, then addition and subtraction from left to right. | 3. Verify | Enter 10+2*(10-4) in a calculator. It gives 22, which matches the step-by-step result. | For the second example, enter 2*2+(-3)^2. It gives 13. A calculator checks your work; it does not replace the steps. | 4. Interpret | If x + 2(x - 4) represents a final game score, the result of 22 means 22 points. | The second result, 13, means 13 points if that expression also represents a score. | Try it: Evaluate x^2 - 2x for x = -3. Answer: 15.\nBLOCK 7 (Interact ErrorHighlighter; Have the learner identify and correct expression-order errors in a short game-score paragraph, reinforcing careful substitution, left-to-right execution, and calculator verification.): Find the Order-of-Operations Errors | Tap each wrong number or action. Then correct the calculation. | Jordan says -3 + 2 * 4 = -1. He adds -3 and 2 before multiplying by 4. His final answer is -4. | Adding first gives the wrong intermediate value. Multiply 2 × 4 first. | Addition cannot come before multiplication in this expression. | The correct final value is 5, because 2 × 4 = 8 and -3 + 8 = 5. | Reveal errors | Try again | You found every error. Multiply first, then add the negative value. | Look for the wrong intermediate value, wrong first operation, and wrong final answer.\nCHECK c1 after block 4 (multiple_choice): Which operation comes first in 4(5 + 2) - 6? Choices: Add 5 and 2 / Multiply 4 and 7 / Subtract 6 from 4 / Add 4 and 2. Hint: Start with the part inside the parentheses. Explanation: Grouping symbols have priority, so 5 + 2 is evaluated first.\nCHECK c2 after block 5 (type_in): Evaluate 2(-3)^2 + 4. Hint: Evaluate the power before multiplying by 2. Explanation: The power gives (-3)^2 = 9. Then 2 × 9 + 4 = 22.\nCHECK c3 after block 7 (multiple_choice): A player gets 8 points and 2 bonus points, each multiplied by 3. What is the correct total? Choices: 30 / 14 / 18 / 24. Hint: Find the operation that must happen before addition. Explanation: Multiply the two bonus points first: 2 × 3 = 6. Then 8 + 6 = 14.",
+    "mirror": "THE LEVEL: 6 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Theory RuleCard; Teach the complete order-of-operations rule: grouping, exponents, multiplication and division, then addition and subtraction, while explaining how signs attach to terms.): Order of Operations | Evaluate grouping symbols first, then exponents, then multiplication and division left to right, then addition and subtraction left to right. | A negative sign can be part of a term, as in -3x, or an operation, as in 5 - 3. | Parentheses and other grouping symbols show which parts must be evaluated together. | Multiplication and division have equal priority, as do addition and subtraction.\nBLOCK 2 (Theory AnatomyCallout; Use a worked basketball expression to show every evaluation stage, asking the learner to predict each result and leaving one intermediate step for them to calculate before revealing it.): Evaluate a Basketball Expression | Predict each result before opening a card. For the highlighted step, calculate before you check. | Basketball example | Choose an evaluation stage | Choose a labeled stage. | Left group: 12 + 4^2 | Your turn: 8 - 3 | Multiply: 3(28) and 2(5) | Subtract: 84 - 10 | Read the whole expression | Start with structure | Predict which part you will evaluate first. The parentheses group terms before any multiplication happens outside them. | Evaluate the left group | Grouping and exponent | Predict the exponent result before continuing. Inside this group, the exponent comes before addition. | Calculate the right group | Your calculation | Calculate this difference before opening the next card. The grouping symbol tells you to finish this group first. | Your answer: 8 - 3 = 5 | Multiply and divide left to right | Equal-priority operations | Both products are ready to calculate. Multiplication has priority over the subtraction joining the two groups. | Finish with subtraction | Final operation | Subtract the two signed terms. The answer is 74.\nBLOCK 3 (Trap CommonError; Confront the common mistake of treating a negative sign like a separate operation and show why signed terms, subtraction, and parentheses must be handled correctly.): What is the value of -3^2 + 1? | Choose one value. A negative sign before a power can affect only the base. | Applying the negative sign before the exponent | This treats -3^2 as (-3)^2, so the exponent acts on the negative number. | The exponent applies to 3 first unless the negative number is grouped. A sign written before a power is part of the term, not a separate operation. | Compute 3^2 = 9, then apply the negative sign to get -9. Finally, -9 + 1 = -8. | Check whether a negative number is inside parentheses before deciding what the exponent affects. | Negative signs and exponents\nBLOCK 4 (Interact ErrorHighlighter; Have the learner find and correct order-of-operations and substitution errors in a calculator-style expression, then use technology to verify the corrected result.): Correct the Calculator-Style Error | Tap both errors. Then substitute carefully, apply the correct order, and use technology to check your result. | To evaluate 3(x - 2)^2 - 4 when x = 5, substitute 5 for x: 3(5 - 2)^2 - 4. I multiply 3 by 5 before using the exponent, so I enter 3(5 - 2)2 - 4. Then I use a calculator to check the result. | Multiplication cannot happen before the exponent. | Multiplication cannot happen before the exponent. | Multiplication cannot happen before the exponent. | Multiplication cannot happen before the exponent. | Multiplication cannot happen before the exponent. | Multiplication cannot happen before the exponent. | Multiplication cannot happen before the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | This calculator entry leaves out the exponent. | Reveal errors | Try again | You found both errors. Evaluate the exponent before multiplying, then use the calculator to confirm your result. | Check the order of operations and the exponent in the calculator entry.\nBLOCK 5 (Interact CategorySort; Give the learner two mixed expressions to sort and evaluate, including grouping, exponents, negatives, and one video-game themed example, with one try-it line after each worked example.): Sort by the Value | Evaluate each expression. Sort it by whether its value is positive or negative. | Positive value | The final value is greater than zero. | Negative value | The final value is less than zero. | Worked: 2^3 + 2(4 - 1) = 8 + 2(3) = 14. Try it: 6 - 2^2. Answer: 2. | Worked: 3(-4^2 + 5) = 3(-16 + 5) = 3(-11) = -33. Try it: -5 + 3(2 - 6). Answer: -20.\nBLOCK 6 (Memory CheatSheet; Consolidate the full rule in a compact reference and require retrieval of the sequence, sign rule, left-to-right rule, and technology-check method without rereading the lesson.): Order-of-Operations Cheat Sheet | Use it after you reason, not instead of reasoning. | 1. Grouping | Evaluate parentheses and other grouping symbols first. | Finish nested groups from the inside out. | 2. Exponents | Apply exponents before multiplication or division. | In -3^2, the exponent applies to 3 first. | 3. Multiply and divide | Work from left to right. | These operations have equal priority. | 4. Add and subtract | Work from left to right. | These operations also have equal priority. | 5. Signs | A negative sign may belong to a term or represent subtraction. | In 5 - 3, subtract 3. In -3 + 2, add the signed term -3. | 6. Substitute | Replace a variable with its value without changing the structure. | Keep parentheses, exponents, and signs attached to the correct terms. | 7. Technology check | Use a calculator to confirm a result after showing your order. | If the calculator disagrees, recheck your signs and order.\nCHECK c1 after block 1 (multiple_choice): Tier 1: Which operation should you do first in 2 + 3(4^2 - 5)? Choices: Evaluate 4^2 inside the parentheses. / Multiply 3 by 4^2. / Add 2 to 4^2. / Multiply 3 by 5.. Hint: (none) Explanation: You first enter the grouping symbol and evaluate its contents. The exponent 4^2 comes before the subtraction inside that group.\nCHECK c2 after block 2 (type_in): Tier 2: Evaluate 3(8 - 2) + (-4). Hint: (none) Explanation: The grouping gives 8 - 2 = 6. Then 3(6) + (-4) = 18 - 4 = 14.\nCHECK c3 after block 5 (multiple_choice): Tier 3: Which correction correctly evaluates -2^2 + 9? Choices: Evaluate -2^2 as -4, then add 9. / Evaluate -2^2 as 4, then add 9. / Multiply -2 by 2 before adding 9. / Skip the exponent and add 9 to -2.. Hint: (none) Explanation: The exponent applies to 2 first, so 2^2 = 4. The negative sign makes it -4, and -4 + 9 = 5."
+   }
+  },
+  {
+   "subject": "english",
+   "profile": "J1",
+   "texts": {
+    "profile": "THE LEVEL: 4 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Normal Text Block; Warm up prior knowledge of grammatical choices by presenting a short basketball narration, naming its voice and mood, and giving one worked example that models why grammatical perspective should remain consistent.): Warm up | Keep the grammatical viewpoint steady | Nothing here is scored; a wrong answer only shows what to look at next. | Voice shows who performs the action | Grammatical voice shows whether the subject acts or receives the action. An active sentence makes the doer the subject; a passive sentence makes the receiver the subject. | In “Maya dribbled toward the basket,” Maya acts, so the sentence is active. In “The ball was passed to Maya,” Maya receives the action, so the sentence is passive. | Worked example: repair the perspective | The narration begins with the player acting: “Maya dribbled toward the basket.” Then it changes: “The crowd was cheering.” This passive shift is inappropriate because it moves attention away from Maya for no clear reason. | Repair: “Maya dribbled toward the basket, and the crowd cheered.” The revision preserves both actions while keeping the narration in active voice. | Mood shows the speaker’s stance | Mood shows the attitude or grammatical stance of a statement. Indicative presents facts, imperative gives directions or requests, and subjunctive expresses wishes, doubts, or situations that may not happen. | Narration usually stays indicative: “Jordan won the match.” Dialogue may use an imperative: “Pass the ball.” Explanation may use the subjunctive: “If Jordan had practiced more, she might have improved.” | One viewpoint per purpose | Voice and mood are separate features: voice identifies the action’s perspective, while mood identifies the speaker’s stance. Keep each feature consistent within narration, dialogue, and explanation unless a change has a clear purpose. | Try it: The coach gave instructions, and the team was huddling. Answer: The coach gave instructions, and the team huddled. Both clauses now keep the active voice.\nBLOCK 2 (Theory ContrastSplit; Teach the core distinction between grammatical voice and mood through a side-by-side comparison of active, passive, indicative, imperative, and subjunctive sentences, including a comic-game example and a try-it line.): Voice and mood: different jobs | Voice identifies who acts; mood identifies the speaker’s stance. | What each feature does | Active voice | The subject performs the action. | Jordan defeats the boss. | Passive voice | The subject receives the action, often with a form of “be” followed by a past participle. | The boss is defeated by Jordan. | Indicative mood | The statement presents information as fact. | Jordan defeats the boss. | Imperative mood | The sentence gives a command, request, or instruction. | Defeat the boss. | Subjunctive mood | The sentence expresses uncertainty, a wish, or a hypothetical outcome. | If Jordan retries, she might win. | What it does not do | Voice is not mood | Changing active to passive does not by itself make a statement uncertain or commanding. | The boss is defeated. / Defeat the boss. | Mood is not voice | Changing indicative to imperative does not by itself change who performs the action. | Jordan defeats the boss. / Defeat the boss. | A voice change is not automatically bad | Passive voice is useful when the receiver matters or the doer is unknown. | The screen was cracked during the tournament. | A consistent passage keeps its perspective clear; a deliberate change should have a reason.\nBLOCK 3 (Concept CautionFlag; Show when shifts in voice or mood are inappropriate, why they can blur responsibility or certainty, and how to repair them using a concise checklist and a second try-it line.): Consistent voice and mood | Two shifts to watch for | Consistency does not mean every sentence must have the same form. It means each shift should support meaning rather than happen by accident. | Avoid random passive shifts | A sudden passive clause can blur responsibility or pull attention away from the important actor. | Maya shoots the ball, and the basket was scored. | Maya shoots the ball, and the basket is scored. | Keep the active perspective here unless the basket itself matters most. | Consistent voice | Avoid mixing moods in one sentence | A single statement should not shift from reporting facts to giving a command without a clear boundary. | The coach tells us clear the court. | The coach tells us to clear the court. | The command can stand alone as dialogue, or it can be reported in the indicative. | Consistent mood | Try it: The video game begins, and press start. Answer: The video game begins, and you press Start. The second clause stays in the indicative mood.\nBLOCK 4 (Interact ErrorHighlighter; Ask the learner to locate voice or mood shifts in a short mixed narration and dialogue, then correct each shift while preserving meaning, before retrieving the full repair rule.): Find and repair the shifts | Tap the words that create an accidental voice or mood shift, then correct each shift while preserving the meaning. | Maya dribbled toward the hoop. The crowd was cheering. Coach said, 'Please clear the court,' and everyone was moving to the benches. | The crowd | This passive construction shifts the narration away from the active viewpoint without a clear reason. | The direct command should end the quotation; the following clause should be a separate indicative statement. | This passive clause also changes the narration’s perspective without a clear purpose. | Show the shifts | Try again | You found both kinds of shifts. The active narration and the direct command now remain clear. | Review the passages: one shift changes voice, and one sentence mixes a command with reported action.\nCHECK c1 after block 1 (multiple_choice): Which statement correctly identifies both the voice and mood of “Jordan defeats the boss”? Choices: It is in active voice and indicative mood. / It is in passive voice and imperative mood. / It is in active voice and imperative mood. / It is in passive voice and subjunctive mood.. Hint: (none) Explanation: Jordan performs the action, so the voice is active. The sentence states a fact, so the mood is indicative.\nCHECK c2 after block 2 (multiple_choice): Which revision best avoids an accidental voice shift in the basketball narration? Choices: Maya shoots, and the basket was scored. / Maya shoots, and the crowd was roaring. / Maya was shooting, and she was cheering. / The ball is shot, and Maya was watching.. Hint: (none) Explanation: This revision keeps the narration in active voice and gives each clause a clear actor. The other choices introduce an unexplained passive perspective.\nCHECK c3 after block 4 (type_in): Repair this sentence in active voice while preserving the perspective: “The final boss was defeated by Jordan.” Hint: (none) Explanation: Jordan performs the action, so making Jordan the subject preserves the meaning and uses active voice consistently.",
+    "mirror": "THE LEVEL: 6 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Hook Dilemma; Earns attention by asking the learner to choose between a sentence that changes voice and one that changes mood in a basketball scene.): Warm-Up Dilemma | Which change should you make to the basketball scene? | Both versions sound clear, but each changes the reader's view in a different way. | OPTION A | Change the voice | Change who acts in the sentence, while keeping the speaker's message. | OPTION B | Change the mood | Change the speaker's attitude, such as certainty, doubt, command, or question. | Choose one. Then you will identify what each change does.\nBLOCK 2 (Theory ContrastSplit; Contrasts grammatical voice with rhetorical voice and compares the main moods while using short, plain examples.): Voice and Mood: What Each Means | Voice describes the grammar. Mood describes the writer's attitude. | What they are | Grammatical voice | Voice is the grammatical relationship between the subject and the action. It tells who does what to whom. | Jordan passes the ball. Active voice: Jordan does the action. | Rhetorical voice | Rhetorical voice is the effect of choosing active or passive voice. It is not another kind of grammar. | Jordan passes the ball. Active voice focuses on Jordan. | Mood is the writer's attitude toward the action. The four main moods are indicative, subjunctive, imperative, and interrogative. | Dribble toward the hoop! This is imperative mood. | What they are not | Not the same thing | Grammatical voice asks, “Who does the action?” Rhetorical voice asks, “What effect does this choice create?” | The game was won by Maya. Passive voice can hide the doer. | Indicative mood presents facts, ideas, or the speaker's normal view. | Maya knows the score. | Subjunctive mood appears in wishes, doubts, or suggestions. The word if often helps signal it. | If Maya were taller, she could dunk easily. | Imperative mood gives a command, request, or advice. | Pass the ball. | Interrogative mood asks a question. | Where is the ball? | Quick picture: voice → who acts. Mood → the speaker's attitude.\nBLOCK 3 (Normal Text Block; Introduces one worked example that labels each sentence's voice, mood, and any purposeful shift, followed by a same-kind practice.): Worked Example | Read the Labels | Voice and mood can work together without shifting the point of view. | A basketball passage with labels | Narration: **Jordan dribbles toward the hoop.** This is active voice and indicative mood. The speaker presents the action as a fact. | Dialogue: **“If Jordan gets the ball, let Sam pass.”** The if-clause uses subjunctive mood. The main clause uses imperative mood because it gives an instruction. | Description: **The final shot is made by Jordan.** This is passive voice and indicative mood. It focuses on the shot instead of Jordan. The shift is deliberate and keeps Jordan as the key point of view. | Why the shifts work | A shift can change what the reader notices. Jordan's action feels direct in the narration. The dialogue imagines a plan. The final sentence puts attention on the result. | An accidental shift is different. It may make the speaker sound inconsistent or change who seems responsible for the action. Ask, “Did the meaning or point of view change on purpose?” | Try it: In “The ball is stolen by Jordan,” who is presented as the doer? Answer: Jordan; the sentence is passive voice, and passive voice can place more focus on the action.\nBLOCK 4 (Theory RuleCard; Gives a clear anchor for voice and mood, including the three prerequisite facts needed to identify them.): Voice and Mood Anchor | Voice tells how the subject relates to the action; mood tells the writer's attitude toward that action. | A subject is the person or thing the sentence is about. | An action is something a subject does or has done. | A speaker is the voice a writer uses to present events, thoughts, and information. | The four moods are indicative, subjunctive, imperative, and interrogative. | A consistent point of view keeps the same speaker, time, and attitude.\nBLOCK 5 (Trap CommonError; Makes the learner find and correct a common accidental shift between narration and dialogue in a comic-script example.): Which sentence fixes the accidental shift between narration and dialogue? | Narration: Sam creates a comic about a basketball game. Dialogue: “I enjoy drawing the players. The game is exciting!” | Sam creates a comic about a basketball game. He enjoys drawing the players because the game is exciting. | Sam creates a comic about a basketball game. “I enjoy drawing the players because the game is exciting!” | Sam creates a comic about a basketball game. The players enjoy drawing because the game is exciting. | Sam creates a comic about a basketball game. Drawing the players is enjoyed because the game is exciting. | Changing voice without changing the speaker | This changes quotation into narration, so it does not repair the voice shift. | This moves the feeling from the speaker to the players, changing the meaning. | This replaces the speaker's words with a claim about drawing and changes the meaning. | You might think every sentence needs the same grammatical form. However, narration and dialogue can have different voices. The speaker and meaning must stay the same. | The first choice keeps narration in third person and dialogue in first person. It preserves Sam as the speaker and keeps both ideas clear. | Mark each sentence as narration or dialogue. Then check that the speaker and meaning stay the same. | Voice and Mood\nBLOCK 6 (Memory CheatSheet; Summarizes voice, the four moods, effects of deliberate shifts, and a final check for consistent meaning and point of view.): Voice and Mood Quick Reference | Use this to label choices and spot accidental shifts. | Grammatical voice | The relationship between the subject and the action: active or passive. | Active: the subject acts. Passive: the subject receives or experiences the action. | Rhetorical voice | The effect created by choosing active or passive voice. | Active often focuses on the doer. Passive often focuses on the action or receiver. | Indicative mood | States facts or the speaker's usual view. | Example: “The game starts at noon.” | Subjunctive mood | Expresses wishes, doubts, or suggestions. | Example: “If the team were taller, they would win more games.” | Imperative mood | Gives a command, request, or advice. | Example: “Pass the ball.” | Interrogative mood | Asks a question. | Example: “Who made the shot?” | Effects of shifts | A deliberate shift can focus attention, show a change in thought, or make dialogue sound natural. | An accidental shift can change the speaker, responsibility, attitude, or meaning. | Final check | Ask: Is the speaker clear? Is the point of view steady? Does each mood fit the meaning? | Repair an accidental shift by restoring the speaker and intended attitude, not by forcing every sentence into one form.\nCHECK c1 after block 4 (multiple_choice): What does “Jordan passes the ball” show? Choices: Active voice and indicative mood / Passive voice and imperative mood / Active voice and interrogative mood / Passive voice and subjunctive mood. Hint: (none) Explanation: The subject Jordan performs the action, so the voice is active. It states a fact, so the mood is indicative.\nCHECK c2 after block 5 (multiple_choice): How does a deliberate passive-voice shift change a basketball description? Choices: It can move focus from the player to the action. / It always changes the speaker's identity. / It turns every statement into a question. / It removes every verb from the sentence.. Hint: (none) Explanation: Passive voice often highlights the action or result. The other choices describe errors that passive voice does not cause.\nCHECK c3 after block 6 (type_in): Rewrite to keep the same speaker: The narrator said, “I lost the game.” Hint: (none) Explanation: The revision removes the unnecessary switch into direct quotation while keeping the narrator as the speaker."
+   }
+  },
+  {
+   "subject": "english",
+   "profile": "J2",
+   "texts": {
+    "profile": "THE LEVEL: 5 blocks, 2 graded checks (1 typed, 1 multiple choice).\nBLOCK 1 (Theory RuleCard; Begin Section 1 with the plain rule that voice is the grammatical point of view while mood is the emotional atmosphere, using a labeled basketball comic list as the central picture and a basketball passage as the worked example.): Voice and Mood | Voice is the grammatical point of view used to tell a story, while mood is the emotional atmosphere created by a passage. | Basketball comic picture: Voice shows who speaks; Mood shows how the scene feels. | Worked example: “I entered the gym, and our team was ready. The crowd cheered loudly, so I believed we could win.” | The narration uses first-person voice: the speaker says “I.” The hopeful mood comes from “cheered loudly” and “believed we could win.”\nBLOCK 2 (Theory ContrastSplit; Teach Section 2 by contrasting first-person, second-person, and third-person voice, then contrast neutral, tense, and hopeful mood through connected basketball and video-game examples; include the first try-it line after the examples.): Narrative Voice and Mood | A narrator stays with one point of view, while mood shapes the reader’s feelings. | What it is | First-person voice | The narrator tells the story using I, me, and we. | “I practiced my jump shot until the buzzer.” | Second-person voice | The narrator addresses the reader as you. | “You race through the final level.” | Third-person voice | The narrator tells the story using he, she, they, or a group. | “The team entered the tournament without fear.” | Mood is the emotional atmosphere. It may be neutral, tense, or hopeful. | A video-game boss appears: “The final boss blocks the door.” The mood is tense. | What it is NOT | Not a time change | Moving from morning to night does not by itself change voice or mood. | “I arrived at noon. The sun set at six.” The voice stays first-person. | Not always a problem | An intentional change can suit the passage’s purpose when it signals a clear change. | “We lost the game. At practice the next morning, our coach said, ‘We begin again.’ | Not the same idea | Voice tells who speaks; mood tells how the passage feels. | “You must choose the next quest” uses second-person voice and creates a challenging mood. | Try it: Change the basketball sentence to second-person voice. Answer: “You enter the gym, and your team is ready.”\nBLOCK 3 (Concept CautionFlag; Teach Section 3 by flagging the single common mistake of accidental shifts, explaining when a voice or mood change may be intentional, and using a comic example with an abrupt narrator and mood change; include the second try-it line.): Accidental Voice and Mood Shifts | Spot accidental shifts | The common mistake is changing voice or mood without a clear reason. Such a shift can confuse readers about who speaks or how the scene feels. | An accidental shift breaks continuity | A sudden change in narrator or emotional atmosphere can make the reader feel disoriented. | I entered the final game. The crowd grew quiet. We still had a chance. | I entered the final game. The crowd grew quiet, but I still believed we had a chance. | The voice stays first-person, and the mood stays hopeful. | Consistent Narrative Voice | Intentional changes can work | Voice or mood may change when the purpose requires it and the change is clearly signaled. | “The screen went black. A new narrator said, ‘You wake inside the comic.’” | The new voice and mood signal a deliberate scene change. | Intentional Shift | Every difference is not a shift | A change in topic, time, or action does not automatically change voice or mood. | Check the narrator and emotional atmosphere, not just the events. | Identify the Feature | Try it: A comic narrator becomes “the coach” midway through a panel. Answer: Name the narrator change, decide if it is intended, then revise or signal it clearly.\nBLOCK 4 (Interact ClickToReveal; Give Section 4 practice by asking the learner to reveal and revise an accidental voice or mood shift, naming the original voice and mood before selecting one focused correction.): Reveal and Revise | Name the original voice and mood. Then choose one focused correction. | This comic uses I and we. Its mood is hopeful. Why might the switch to the coach’s report cause a problem? | Revise the report in first person, or clearly signal a new scene and narrator. | The video-game scene stays third-person, but hope changes to hopelessness. What should you check? | A consistent narrative voice can still contain a mood shift, but it should not feel accidental. | Tap to reveal\nBLOCK 5 (Memory CheatSheet; End with a compact three-line memory anchor: spot the shift, ask whether it is intended, then revise or signal the change, followed by one basketball-video-game-comics consolidation example.): Three-Line Memory Anchor | Use this to repair a confusing shift. | 1. Spot the shift | Identify what changed: voice, mood, or both. | Check the narrator and the emotional atmosphere. | 2. Ask whether it is intended | Decide whether the change suits the passage’s purpose and is clearly signaled. | 3. Revise or signal | Repair the wording, or clearly mark the deliberate change. | A basketball comic can enter a video game, but a new narrator or mood must not appear by accident.\nCHECK c1 after block 2 (multiple_choice): A basketball story begins: “I entered the gym, and our team was ready. The crowd cheered, so I believed we could win.” What changes next? Choices: First-person voice and hopeful mood become third-person voice and anxious mood. / Third-person voice and hopeful mood become first-person voice and anxious mood. / First-person voice and anxious mood become third-person voice and hopeful mood. / Third-person voice and anxious mood become first-person voice and hopeful mood.. Hint: Check the pronouns and the emotional atmosphere. Explanation: The opening uses I and creates hope. It then changes to “The team might lose,” creating anxiety.\nCHECK c2 after block 4 (type_in): A video-game paragraph says: “The final boss appears. The screen explodes. Our team has no chance.” What single correction is best? Hint: Name what changed first. Explanation: The voice stays third-person, while the mood moves from tension to hopelessness. Keep one mood or clearly signal the change.",
+    "mirror": "THE LEVEL: 5 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Theory RuleCard; ): Voice and mood consistency | A writer shifts voice or mood only when the change is intentional and suits the purpose; otherwise, revise the sentence to restore consistency. | Active voice makes the subject perform the action, while passive voice makes the subject receive it. | Mood shows the writer's attitude through choices such as indicative, imperative, or subjunctive. | Narrative voice identifies who is speaking or observing, while grammatical voice identifies who performs an action. | A change can clarify a point, but an accidental shift can make the writing unclear or inconsistent.\nBLOCK 2 (Normal Text Block; ): Shifts in Voice and Mood | Notice the Shift, Then Test Its Purpose | Changing grammatical voice or mood can guide a reader, but only when the change is deliberate. | One voice can become another | The first sentence says, \"The committee released the report.\" The second says, \"The report was released by the committee.\" The event stays the same, but the active voice makes the committee prominent. The passive voice gives the report more attention. | Here is the rule these cases reveal: voice shifts are appropriate when they change emphasis for a clear reason. An unexplained shift can hide who acted or make the writer appear careless. | A second example changes \"The storm damaged the fence\" into \"The fence was damaged during the storm.\" The change is useful only if the fence matters more than the storm at that moment. | Try it: Rewrite \"The chef prepared the meal\" in the passive voice without changing its meaning. Answer: \"The meal was prepared by the chef.\" | Mood shifts work in a similar way | Read \"The door is open\" and then \"Open the door.\" The first is indicative because it states a fact. The second is imperative because it gives a command. Both can be correct, but mixing them within one request may sound abrupt. | This second rule is more specific: a mood shift is justified when it moves from stating information to giving a command, asking a question, or expressing a wish. Otherwise, keep the mood steady. | A writer might use subjunctive mood in \"I wish the train were on time.\" The verb \"were\" shows that the wish is contrary to present reality. Using \"was\" would make it ordinary reporting instead. | Try it: Change \"Close the window\" into a question that politely requests the same action. Answer: \"Could you close the window?\"\nBLOCK 3 (Steps Block; ): A Four-Part Revision Process | Use this method when a passage shifts unexpectedly in voice or mood. | Find the change | Read each sentence aloud and mark places where the voice or mood differs from its neighbors. | Look for active or passive constructions, commands, questions, factual statements, and conditional or wish-based clauses. | Identify both sides | Label the expected voice or mood and the new voice or mood. | Example: expected active voice; found passive voice. Expected indicative mood; found imperative mood. | Test the purpose | Ask whether the change improves emphasis, perspective, or meaning. | A good answer explains why the new choice fits the writer's purpose. A weak answer merely says that the change sounds different. | Revise or justify | Keep the change if it has a clear purpose; otherwise, restore the original voice or mood. | You may also adjust the wording so the transition feels smooth rather than abrupt.\nBLOCK 4 (Trap CommonError; ): Which revision most clearly fixes an inappropriate shift in voice? | A narrator writes: \"The team entered the gym. Loud cheers filled the room. The coach welcomed the visitors.\" The surrounding paragraphs consistently make the team the focus. | The visitors were welcomed by the coach. | The coach then welcomed the visitors. | The visitors were welcomed. | The coach was welcomed by the visitors. | Changing voice without checking the passage's emphasis | It changes the sentence to passive voice but leaves the awkward sequence in place. | It reverses the actors, so the coach incorrectly becomes the person welcomed. | Replacing one verb with another is not enough if the revision still creates an unnatural jump. The sentence must preserve the surrounding emphasis and fit the sequence. | The passage consistently focuses on the team and their actions. \"The coach then welcomed the visitors\" keeps the coach as the active doer and signals that this event follows the entrance. | Before changing voice, state the point of view or emphasis that should remain constant. Then revise without disturbing that focus. | Voice and Mood\nBLOCK 5 (Memory CheatSheet; ): Voice and Mood Quick Check | A compact guide for noticing and explaining shifts. | Active voice | The subject performs the action. | \"The player moved the chair.\" | Passive voice | The subject receives the action or is described as being acted on. | \"The chair was moved.\" | Indicative mood | States facts, asks questions, or reports events as they appear to be. | \"The train is late.\" | Imperative mood | Gives a command, request, or instruction. | \"Wait for the announcement.\" | Subjunctive mood | Expresses wishes, doubts, or conditions that may differ from reality. | \"If the signal were clear, the train would stop.\" | Revision test | Name the shift, explain its purpose, and keep it only if that purpose is clear. | If no clear purpose exists, restore the expected voice or mood.\nCHECK c1 after block 5 (multiple_choice): Tier 1: Which voice makes the subject receive the action? Choices: Active voice / Passive voice / Imperative mood / Subjunctive mood. Hint: (none) Explanation: Passive voice places the action on the subject that receives it. The other choices describe grammatical voice or types of mood.\nCHECK c2 after block 5 (type_in): Tier 2: A writer consistently gives commands, then switches to a factual statement without purpose. What should the writer do? Hint: (none) Explanation: The command sequence establishes an appropriate mood. Without a purpose for the shift, the writer should return to that mood.\nCHECK c3 after block 5 (multiple_choice): Tier 3: Which sentence best preserves active voice while changing the emphasis? Choices: The letter was mailed by the manager. / The manager mailed the letter. / The letter was mailed. / The manager was mailed the letter.. Hint: (none) Explanation: This version keeps the manager as the active doer and presents the action directly. The passive version changes emphasis, so it does not preserve active voice."
+   }
+  },
+  {
+   "subject": "english",
+   "profile": "J4"
+  },
+  {
+   "subject": "iq",
+   "profile": "J1"
+  },
+  {
+   "subject": "english",
+   "profile": "J3",
+   "texts": {
+    "profile": "THE LEVEL: 5 blocks, 3 graded checks (2 typed, 1 multiple choice).\nBLOCK 1 (Normal Text Block; Teach voice and mood through a fully annotated basketball example that identifies the established grammatical voice, explains the changed mood, diagnoses the accidental shift, and shows a minimal revision.): Literary Analysis | Voice and Mood: A Worked Example | First establish the controlling features before judging a change. | Step 1: Establish the baseline | In basketball, I practiced my jump shot until the gym clock read 9:00. The ball left my hand with a clean arc. My teammates called for a pass. **The established grammatical voice is first person because the speaker uses “I” and “we.”** The present tense presents the action as it happens. | Step 2: Notice the change | Then the writer says, “The player was alone, and the gym was empty.” **The grammatical voice shifts to third person.** The tense also shifts from present to past. The mood becomes distant and lonely instead of focused and energetic. | Step 3: Diagnose and revise | This change is accidental because nothing signals a new scene or narrator. It breaks the established point of view and tense without adding meaning. A minimal revision restores them: “**Then I was alone, and the gym was empty.**” This keeps the basketball setting and the lonely mood. It preserves the passage’s purpose because the speaker still experiences the moment directly. | Try it: Is every mood change wrong? | Try it: Does a calm mood after a tense basketball game always signal an error? Answer: No. A deliberate change in mood can create contrast when the shift is clear and purposeful.\nBLOCK 2 (Steps Block; Give a short procedure for finding inappropriate voice and mood shifts: establish the baseline, compare the changed passage, decide whether the shift is intentional, restore the controlling feature, and reread for coherence.): A Five-Step Diagnostic Procedure | Use this method when a voice or mood change feels confusing. | 1. Establish the baseline. | Identify the grammatical person, tense, viewpoint, and emotional mood around the change. | For example, first person and present tense may create an immediate, energetic mood. | 2. Compare the changed passage. | Mark each feature that differs from the baseline. | Look for shifts such as “I” becoming “the player,” or present becoming past. | 3. Decide whether it is intentional. | Ask whether the new angle has a clear signal and a purpose. | A deliberate shift may create irony, suspense, distance, or contrast. | 4. Restore the controlling feature. | If the shift is accidental, revise the fewest words possible. | Return to the established voice, tense, perspective, and mood unless the passage gives a reason to change them. | 5. Reread for coherence. | Check that the revision preserves meaning and stylistic purpose. | The revision should still fit the scene, narrator, and emotional effect.\nBLOCK 3 (Interact ErrorHighlighter; Have the learner identify and correct an accidental shift in a video-game narrative, with a second comics example that leaves the final repair decision to them.): Find the Shifts | Tap every marked error. In the second example, identify the problem and decide the repair yourself. | I entered the final level of my video game with one life left. The boss appeared behind the gate, and my teammate warned me. The team was winning, but the screen went black. I could hear the controller clicking in my hands.\n\nIn my comic, I drew the hero at the empty stadium. The crowd was cheering loudly. I wanted the next panel to feel suddenly lonely, so the artist shows the hero from far away. How should the narration be fixed to keep one viewpoint and tense? | I entered the final level of my video game with one life left. | The boss appeared behind the gate, and my teammate warned me. | The team was winning, but the screen went black. | I could hear the controller clicking in my hands. | In my comic, I drew the hero at the empty stadium. | The crowd was cheering loudly. | I wanted the next panel to feel suddenly lonely, so the artist shows the hero from far away. How should the narration be fixed to keep one viewpoint and tense? | Reveal shifts | Try again | You found the inconsistency in the comic narration. | Check the viewpoint and tense in the comic example.\nBLOCK 4 (Trap CommonError; Challenge the misconception that every change in mood or perspective is wrong by requiring the learner to distinguish an intentional atmospheric shift from an accidental inconsistency.): Which choice best describes the shift in this passage? | “I entered the arena. My team was ready. The crowd roared, and I felt nervous. Afterward, the empty court was quiet.” | A deliberate change in emotional atmosphere | An accidental change in tense and viewpoint | A required change from first to third person | A grammatical mistake in every mood change | Treating every mood change as an error | This choice focuses on grammar and misses the clear shift in atmosphere. | This choice assumes that all changes are mistakes, even purposeful ones. | A change in mood is not automatically a grammatical error. Here, the tense and viewpoint remain stable. The quiet court creates contrast with the roaring crowd. | The mood moves from excitement and nervousness to quietness after the game. This deliberate contrast helps you feel the arena’s emptiness. | Separate grammatical consistency from emotional effect. Check both before deciding that a shift needs repair. | Literary Analysis\nBLOCK 5 (Normal Text Block; Present an optional harder case in which tense and perspective shift together, then consolidate the lesson with a concise rule for deciding whether a change works and how to repair one that does not.): Optional Harder Case | When Tense and Perspective Move Together | A final test asks you to repair a complex shift without changing the purpose. | A harder revision | A comic narrator says, “**I am drawing the final panel, and the hero scores.** The next sentence reads, “The artist finished the page yesterday, and the hero had already left the court.” | Here, **first-person present** shifts to **third-person past**, and the time viewpoint changes. The shift is accidental because no new scene, narrator, or time period is established. | Repair with purpose in mind | A revised sentence is, “**As I finished the page, the hero was leaving the court.**” This keeps first person and present tense. It also preserves the sense of creating the comic while showing the hero’s departure. | The rule is simple: **a change works when its voice, tense, perspective, and mood support a clear purpose. Repair a change only when it creates confusion.** | Try it: Would restoring first person still work if the goal were to distance readers from the artist? Answer: No. A clear shift to third person could work when the scene and time change together.\nCHECK c1 after block 1 (multiple_choice): Which choice identifies the baseline voice and mood in “I dribble toward the hoop. The crowd shouts my name”? Choices: Third person and celebratory / First person and suspenseful / First person and celebratory / Second person and anxious. Hint: (none) Explanation: The speaker uses “I,” which establishes first-person grammatical voice. The crowd’s shout creates a celebratory mood.\nCHECK c2 after block 3 (type_in): In the video-game example, what shifts without a clear reason, and why is it inappropriate? Hint: (none) Explanation: The narrator begins with “I,” but “the team” replaces that controlling viewpoint. No new narrator or scene explains the shift.\nCHECK c3 after block 5 (type_in): Revise this sentence to keep first-person present tense: “The artist drew the panel, and the hero was leaving.” Hint: (none) Explanation: The revision restores first-person grammatical voice and present tense. It also preserves the comic-making purpose and the hero’s departure.",
+    "mirror": "THE LEVEL: 5 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Multiple Choice Question; Begin with an easy choice about which sentence keeps a stable first-person voice and consistent mood in a basketball scene, using the learner’s immediate answer to reveal what they already sense.): Which sentence keeps a stable first-person voice and mood? | The gym is quiet before our final game. My hands feel cold, but our team stays focused. | Basketball scene | The gym is quiet before our final game. My hands feel cold, but our team stays focused. | The gym is quiet before our final game. The players feel cold, but the team stays focused. | The gym is quiet before our final game. You feel cold, but our team stays focused. | The gym is quiet before our final game. I felt cold, but their team stays focused. | Look for the same narrator and the same tense. The mood should not jump suddenly. | It changes “I” to “the players,” so the perspective shifts. | It changes “I” to “you,” so the narrator's position shifts. | It changes “I/my/our” to “their,” so the narrative voice shifts. | Try again\nBLOCK 2 (Theory ContrastSplit; Teach narrative voice and mood side by side, including perspective versus atmosphere, common narrative-voice types, and a plain-text before-and-after model showing an accidental shift.): Narrative Voice and Mood | Voice tells you who is looking. Mood tells you how the scene feels. | What it is | Narrative voice | The narrator's position or perspective. It is not grammatical active or passive voice. | First person uses I, we. Second person uses you. Third person uses he, she, they, or a name. | Third-person options | Limited narration knows only one character's thoughts. Omniscient narration can reveal several characters' thoughts and feelings. | Limited: Maya missed the pass. Omniscient: Maya missed the pass, while Eli already knew the play was lost. | The emotional atmosphere a scene creates for the reader. | A quiet gym and tense waiting can create a nervous mood. | What it is NOT | Not a character’s emotion | Mood is the scene's atmosphere, not one person's private feeling. | Maya is afraid, but the whole scene may feel suspenseful. | Not tone | Tone is the narrator's attitude. Mood is the feeling created in the reader. | A sarcastic tone can create a mocking mood. | Not plot | Plot is what happens. Mood is the atmosphere around those events. | Winning the game is plot. Tension before the game contributes to mood. | Try it: Is “you” narration second person? Answer: Yes, it addresses the reader directly.\nBLOCK 3 (Context RealWorldScope; Work through one short comic example in which a first-person narrator’s perspective and a suddenly bright mood create an inconsistency, then show how one focused revision restores continuity without changing the events.): Keeping voice and mood consistent | One Comic, Two Sudden Jumps | I drew the final basketball panel, but my hands shook. Our team was ready. The crowd cheered as I stepped to the line. Then everyone knew what would happen next.\n\nThe first paragraph keeps the first-person narrator and nervous mood. The second suddenly becomes third person. It also shifts from nervous waiting to bright confidence. Neither jump signals a planned change. | comic story logic | inconsistencies found in the comic | Without a revision, the narrator and atmosphere seem to change for no clear reason. | A focused revision keeps the first-person view and nervous mood without changing the game. | Practice case using the learner's interests in basketball and drawing comics. | narrative voice\nBLOCK 4 (Trap CommonError; Have the learner confront the common mistake of treating mood as one character’s emotion or confusing mood with tone, and use a contrasting scene to test whether a shift is purposeful or accidental.): Which revision keeps the comic's voice and mood consistent? | Original: “I stepped to the line. The crowd roared. Everyone knew I would make the shot.” | I stepped to the line. The crowd roared. I knew I would make the shot. | I stepped to the line. The crowd roared. Everyone knew I would make the shot. | We stepped to the line. The crowd roared. Everyone knew I would make the shot. | I step to the line. The crowd roars. Everyone knows I will make the shot. | Confusing mood with one emotion or changing perspective accidentally | It treats the narrator's confidence as the mood and keeps an inconsistent third-person view. | It keeps the same atmosphere but shifts the narrator from I to we. | It changes the narrative tense and makes the scene feel like another moment. | A character can feel confident without the entire scene becoming cheerful. Mood still needs to fit the scene, and voice must remain stable unless a deliberate change is signaled. | The first choice keeps the first-person narrator and the same tense. It also presents confidence as the narrator's thought rather than treating it as the scene's mood or as an omniscient narrator's knowledge. | Ask two questions: Who is seeing this? Does the atmosphere suddenly change? | Voice and mood\nBLOCK 5 (Interact ErrorHighlighter; Let the learner locate and repair voice and mood shifts in a short paragraph, with one easy item and one slightly harder item, before the final retrieval check.): Find the Voice and Mood Shifts | Tap the words that cause an accidental shift in narrative voice or mood. There are two errors: one is easier to spot, and one requires thinking about the whole scene's atmosphere. | We entered the abandoned school as thunder rolled above us. I shone my flashlight across the hallway, where broken lockers cast long shadows. A bright celebration filled the classrooms, and cheerful music echoed through the empty halls. | The narrative voice changes suddenly from first-person plural (“we”) to first-person singular (“I”). Choose one viewpoint and keep it consistent. | The cheerful description conflicts with the threatening atmosphere established by the abandoned school, thunder, and long shadows. No event signals a deliberate emotional turn. | The cheerful description conflicts with the threatening atmosphere established by the abandoned school, thunder, and long shadows. No event signals a deliberate emotional turn. | The cheerful description conflicts with the threatening atmosphere established by the abandoned school, thunder, and long shadows. No event signals a deliberate emotional turn. | The cheerful description conflicts with the threatening atmosphere established by the abandoned school, thunder, and long shadows. No event signals a deliberate emotional turn. | Reveal errors | Try again | You found both shifts. Now repair them while keeping the scene's tense and meaning unchanged. | Look again for one perspective change and one change in the scene's emotional atmosphere.\nCHECK c1 after block 2 (multiple_choice): Tier 1: What does narrative voice describe? Choices: The narrator's position or perspective / The grammatical use of active voice / The events in the plot / The emotion of one character. Hint: (none) Explanation: Narrative voice identifies who is telling the story or what perspective the narrator has.\nCHECK c2 after block 4 (type_in): Tier 2: Repair this shift: “I felt nervous. Everyone knew I would miss.” Hint: (none) Explanation: The revision keeps the first-person narrator and the nervous mood while preserving the event.\nCHECK c3 after block 5 (multiple_choice): Tier 3: A narrator moves from I to she without warning. Is this shift purposeful? Choices: Yes, because the mood always changes with pronouns / Yes, because a new narrator can signal a new perspective / No, because third person always creates a brighter mood / No, because narrative voice can never change. Hint: (none) Explanation: A clear switch to “she” can deliberately signal a new perspective. The change itself is not automatically a mistake."
+   }
+  },
+  {
+   "subject": "spanish",
+   "profile": "J1"
+  },
+  {
+   "subject": "iq",
+   "profile": "J2",
+   "texts": {
+    "profile": "THE LEVEL: 4 blocks, 2 graded checks (1 typed, 1 multiple choice).\nBLOCK 1 (Hook Dilemma; Present two plausible missing-player choices in a basketball video-game matrix and ask the learner to decide what rule would justify each choice.): WARM-UP DILEMMA | Which missing basketball player belongs in the matrix? | The first row shows three player icons. Each player faces the next player, but the third player is missing. | OPTION A | Player faces right | This choice works if each player turns 90 degrees clockwise from left to right. | OPTION B | Player faces left | This choice works if each player turns 90 degrees counterclockwise from left to right. | Do not choose yet. First name the rule each choice assumes.\nBLOCK 2 (Theory RuleCard; Teach the central rule plainly: describe the pattern in words before looking at options, with bullets for naming what changes, naming how it changes, and saying what comes next.): Name the Rule First | Describe the pattern in words before you examine the answer choices. | Name what changes across a row or column. | Describe how the change moves from one step to the next. | State what should come next using that rule.\nBLOCK 3 (Interact ClickToReveal; Work through one rotation example using a basketball or video-game graphic, revealing each rule phrase only after the learner states the next step; include one try-it line.): Rotation Rule Practice | State your prediction before you reveal each answer. | Look at the video-game arrow graphic: it turns one quarter-turn to the right each step. Before revealing, say what changes. | Step 1 — Name the rule | Clockwise means the same direction as the hands of a clock. | Using the rule, state what happens when the arrow takes its next step. | Step 2 — Continue the pattern | Next step | The change stays the same at every step. | Try it: Say the rule for this arrow sequence, then state the direction of the next turn. | Try it — State, then solve | Try-it answer | Tap to reveal after you state your answer | Revealed — tap to hide\nBLOCK 4 (Memory CheatSheet; Consolidate a three-line answer pattern for naming a rule and provide one comic-drawing example that applies the same method before choosing a missing panel.): Three-Line Rule Anchor | Use this order before choosing a missing panel. | 1. What changes? | Name the feature that changes. | For example: the comic hero faces a new direction. | 2. How does it change? | Name the direction, amount, or order. | For example: the hero turns 90 degrees clockwise each panel. | 3. What comes next? | Apply the rule once more. | In a three-panel comic, the hero faces right, down, then left. | Try it | Try it: A comic hero moves one square right, then two squares right. Where should the next panel place the hero? Answer: Three squares right from the start. | Write the rule before choosing a panel.\nCHECK c1 after block 3 (multiple_choice): Tier 2: A ball turns from up to right. Which rule names the change? Choices: It turns 90 degrees clockwise / It turns 90 degrees counterclockwise / It moves two squares right / It changes from up to down. Hint: (none) Explanation: A clockwise turn from up moves to right. Naming the direction before choosing prevents a pattern-free guess.\nCHECK c2 after block 4 (type_in): Tier 3: A video-game arrow points left, up, then right. Write the rule for the next panel. Hint: (none) Explanation: Left turns to up, and up turns to right, showing a 90-degree clockwise rotation. The next arrow should point down.",
+    "mirror": "THE LEVEL: 8 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Hook Dilemma; Present two plausible answer choices for a visual pattern and ask the learner what must be understood before either can be selected.): Warm-Up Dilemma | Two figures look like possible answers. What must you understand before choosing either one? | A square moves around a four-cell path while its shading changes. One choice says the square moves clockwise; the other says counterclockwise. Both fit part of the pattern. | OPTION A | Choose from the visible change | This choice notices that the square changes position, but it does not explain the direction or the shading. | OPTION B | Choose from the complete rule | This choice names what changes, what stays constant, and the direction of each step. | Before selecting an answer, describe the whole pattern in words.\nBLOCK 2 (Normal Text Block; Teach the first section with one fully worked abstract sequence, an aligned arrow chain showing each state, then state its rule in words only after the example; include the first “Try it: <question> Answer: <answer>” line after the demonstration.): First Section | Track the figure before naming the rule | A complete description makes the next step easier to judge. | Worked example | The sequence has four positions arranged as a square: top-left, top-right, bottom-right, bottom-left. A small arrow starts at top-left pointing right. In frame 2, it is at top-right pointing down. In frame 3, it is at bottom-right pointing left. In frame 4, it is at bottom-left pointing up. | The arrow moves one position clockwise around the square each step. Its direction also turns clockwise by 90 degrees. The arrow's size and the square's outline stay constant. | Try it: What changes from frame 1 to frame 2? Answer: The arrow moves from top-left to top-right, and it turns from right to down. | The rule after tracking | Now state the rule in one sentence: each step moves the arrow one corner clockwise and rotates it 90 degrees clockwise, while its size and the outline stay unchanged. | A good rule explains every step, not just the last move. It also tells you what stays the same. | Try it: In frame 5, where should the arrow be, and which way should it point? Answer: It should be at top-left and point right.\nBLOCK 3 (Theory ContrastSplit; Generalize the worked example by contrasting a supported rule with a superficially plausible rule, covering constant versus changing elements, complete rule statements, and checking every step.): Supported rule versus tempting rule | A rule must fit every frame and use the cue that changes. | What it is | It names every changing element, the direction, and the constant elements. | Move one corner clockwise, rotate 90 degrees clockwise, and keep the size and outline unchanged. | You can use the rule to predict a missing frame and check every earlier frame. | Frame 3 must be at bottom-right pointing left. | The rule uses the visible change that gives the answer away, not a chance resemblance. | Both the position change and the turning direction support the rule. | What it is NOT | One-step rule | A description of only one visible move is incomplete and may fail later. | The arrow turns down is not enough. | Reversed rule | A plausible rule with the wrong direction does not match the sequence. | Moving counterclockwise fails at frame 2. | Unsupported rule | A rule that ignores a reset or another changing element cannot explain all frames. | Saying only the arrow turns ignores its movement around the square. | State the rule before reading options, then test it against every step.\nBLOCK 4 (Interact ClickToReveal; Make the learner state the rule for a new rotation-and-position sequence before revealing the verbal rule and explanation; include the second “Try it: <question> Answer: <answer>” line.): State the rule in a new setting | Use the same method when the figures and positions change. | A blue triangle starts at the left end of a three-box row. It moves to the middle box and then to the right box. Each move is one box to the right. The triangle stays the same size and color. What rule explains the sequence? | Your turn | The position cue shows the direction, while size and color show what stays constant. | In a column, a black circle moves down one row each step. It also changes to white, then black, then white. What complete rule would you state? | Try it | Track position and color together before choosing a rule. | A square rotates 90 degrees counterclockwise and gains one dot at each step. What changes, and what stays constant? | This transfers the method to a new abstract-reasoning problem. | Tap to reveal\nBLOCK 5 (Concept CautionFlag; Address up to three common errors: naming only one visible change, choosing the wrong direction or transformation, and accepting a rule that fails in an earlier step.): Complete pattern rules | Use a rule that survives every step | These mistakes can make a rule seem right before you test it. | Do not name only one visible change | Mentioning one movement is not a complete rule. Include every changing element and the constant elements. | The arrow turns. | The arrow moves one corner clockwise and turns 90 degrees clockwise; size and outline stay unchanged. | The second rule can predict every frame. | Rule completeness | Do not reverse the direction | A reversed rule may look plausible but fails at the first transition. Check the direction against the figures. | The arrow moves counterclockwise. | The arrow moves one position clockwise each step. | Frame 2 settles the direction. | Direction cue | Do not ignore a reset | If one element returns to its starting state, the rule must explain that reset. Test the rule at every step. | The arrow always adds a new position. | The arrow follows the same clockwise movement, then returns to top-left in frame 5. | The return to the start is part of the sequence. | Step-by-step verification | A strong rule is specific, directional, and true at every step.\nBLOCK 6 (Interact CategorySort; Require the learner to sort candidate statements into valid rule descriptions versus incomplete or contradictory descriptions, showing why each rule fits or fails.): Sort the rule statements | Place each statement in the bucket that best describes it. Some statements are incomplete or fail a frame. | Valid rule | Explains all changing and constant elements and fits every step. | Incomplete or invalid | Names only one change, uses the wrong direction, or fails a frame. | Each step moves the arrow one corner clockwise and rotates it 90 degrees clockwise; size and outline stay unchanged. | This explains position, direction, and constants. | The arrow turns down from the first frame to the second. | This describes only one transition. | Each step moves the arrow one corner counterclockwise and rotates it 90 degrees counterclockwise. | This fails frame 2. | Each step moves the triangle one box right and changes its color from red to blue; its size stays unchanged. | This names both changes and the constant size. | The square rotates and changes. | This does not identify the direction, amount, or constant elements.\nBLOCK 7 (Recall BinarySwipe; Retrieve from memory whether each statement gives a complete, testable rule before choosing the options, targeting the distinction between noticing a change and explaining the pattern.): Quick check: is the rule complete? | Swipe each statement right if it gives a complete, testable rule, or left if it does not. | swipe left | swipe right | The dot moves one square right and changes from black to white each step. | The dot's size stays the same. | It identifies both changes and one constant. | The dot moves right. | No direction of color change or constants are given. | It notices only one visible change. | The triangle moves up and grows by one side each step. | The triangle's color stays yellow. | It names movement, growth, and the constant color. | Complete means specific, directional, and true at every step.\nBLOCK 8 (Memory CheatSheet; Consolidate a compact rule-stating checklist covering elements, starting state, transformation, direction, step-by-step verification, and comparison with the options.): Rule-stating checklist | Use this before choosing an answer. | Describe the starting position, direction, shape, color, and count. | Track each element from that state. | Name every element that changes and say how it changes. | Include position, rotation, reflection, addition, or substitution. | State which elements stay the same across the sequence. | Size, outline, or color may remain constant. | Say which direction the movement or rotation occurs. | Clockwise and counterclockwise are not the same. | Check the rule against every step, including any reset. | A rule must survive the whole sequence. | State the rule before looking at the options. | Then choose the option that follows it.\nCHECK c1 after block 2 (multiple_choice): A square moves one box right each step and rotates 90 degrees clockwise. Its color stays red. Which rule is complete? Choices: It moves right and rotates clockwise; its color stays red. / It moves right, rotates, and changes color. / It only rotates clockwise each step. / It moves right, but its direction is unclear.. Hint: (none) Explanation: The position and rotation change each step, while the color stays constant. The correct choice states both changes and the constant.\nCHECK c2 after block 4 (type_in): A triangle moves up one row and gains one dot each step. Its color stays yellow. State the rule in words. Hint: (none) Explanation: Track the starting triangle, then compare every step. Its row, dot count, and unchanged color give the rule.\nCHECK c3 after block 7 (multiple_choice): A square moves clockwise and turns 90 degrees clockwise. Its size stays fixed. Which rule fits every step? Choices: The square moves one corner clockwise and rotates 90 degrees clockwise; size stays fixed. / The square rotates clockwise, and its size may change. / The square moves counterclockwise and rotates 90 degrees counterclockwise. / The square moves clockwise, but its rotation is ignored.. Hint: (none) Explanation: The position cue gives clockwise movement, and the turning cue gives clockwise rotation. The fixed size is the constant, so the first rule fits every step."
+   }
+  },
+  {
+   "subject": "iq",
+   "profile": "J3",
+   "texts": {
+    "profile": "THE LEVEL: 5 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Steps Block; Teach the core process through a fully worked basketball sequence: inspect the changing features, name the rule, apply it, and only then choose an answer.): Name the Rule Before You Choose | Use this four-step method on every abstract sequence. | 1. Inspect | Look for what changes and what repeats. | A basketball token moves through five court zones in this order: D, E, A, B, C. The token changes position, while its shape and color stay the same. | 2. Name | State the rule as one plain sentence before looking at the choices. | The rule is: each step, the basketball token moves one zone clockwise through the order D, E, A, B, C. | 3. Apply | Continue the sequence once using that rule. | After C comes D, so the next token must occupy zone D. This answer comes from the rule, not from an option's familiar appearance. | 4. Compare | Check each option against every part of the rule. | Choose only the option with the correct zone, direction, order, and any exception. Reject options that match one feature but break another.\nBLOCK 2 (Normal Text Block; Present a second worked video-game example in which the final naming step is left for the learner to complete and explain.): Worked Example 2 | A Video-Game Rotation | The final reasoning step is left for you. | Inspect the sequence | In a video game, a power-up arrow points right, down, left, and up in four consecutive frames. The arrow's color remains purple. | The changing feature is its direction. The repeated feature is its purple color. | Name and apply the rule | Try it: What single sentence states the rule, and where does the arrow point next? Answer: Each step rotates the arrow 90 degrees clockwise, so the next arrow points right. | Now compare the choices with that rule. Check the direction of rotation, not merely whether an option shows a familiar purple arrow. | Why a feature-only description fails | “The arrow is purple” does not establish the rule because purple never changes. A complete rule states what changes, in what direction, and in what order. | It also includes any exception. If one frame broke the rotation, that exception would need to be stated before choosing.\nBLOCK 3 (Multiple Choice Question; Let the learner identify and state the rule in a level-appropriate sequence before selecting the answer that follows from it.): State the rule, then choose the option that correctly continues the sequence. | A drawing-comic panel shows a speed-line arrow pointing north, east, south, and west. The line width stays constant. | Given sequence | Rotate 90 degrees clockwise; the next arrow points north. | Rotate 90 degrees counterclockwise; the next arrow points north. | Rotate 180 degrees clockwise; the next arrow points east. | Keep the direction; the next arrow points north. | State the changing feature and direction before choosing. The arrow rotates 90 degrees clockwise from west back to north. | Try again\nBLOCK 4 (Trap CommonError; Expose the common mistake of choosing an answer because it resembles one earlier item rather than because it follows the named rule.): A player token moves around four video-game rooms in the order A, B, C, D. Which room should come next? | The token moves one room forward in that order on every step. It does not change color or shape. | Room A | Room B | Room C | Room D | Choosing by resemblance to an earlier item | Room A appears first, so it may feel familiar. However, the rule requires continuing forward, not repeating an earlier position. | A familiar option can attract your attention without satisfying the stated rule. Room A repeats an earlier item instead of continuing the order. | The rule says the token moves one room forward through A, B, C, D. After D, it returns to A, so Room A is correct here. | Before choosing, cover the options and predict the next item from your rule. Then compare that prediction with the choices. | Spatial reasoning\nBLOCK 5 (Normal Text Block; Consolidate the method with a try-it line, a harder optional comic-character case, and a compact memory anchor for the rule-first routine.): Make the Rule Do the Deciding | A complete rule controls direction, order, and exceptions. | Use the rule-first routine | A complete rule says what changes, how it changes, and whether any exception occurs. “The positions change” is incomplete because it gives neither direction nor order. | Compare each option with the full rule. A choice that matches one visible feature can still fail the direction or order. | Try it | Try it: Four comic-book stars occupy north, east, south, and west positions. Each step moves one position clockwise, but the north frame repeats. Where should the fifth star go? Answer: It moves from west to north, because the north frame is the stated exception. | Optional harder case | A comic hero visits four square panels in order: top-left, top-right, bottom-right, bottom-left. The hero then visits top-left again. Each move changes the panel beside the hero from empty to a coin, except once. Where is the coin in the fourth panel? | Answer: The coin is in the fourth panel because the only exception follows the hero’s return to top-left. Name that exception before choosing an option. | Memory anchor | Use this routine: Inspect, Name, Apply, Compare. If you cannot name the rule, you do not yet have enough evidence to choose.\nCHECK c1 after block 3 (multiple_choice): Tier 2: State the rule and select the item that follows it. Choices: Rotate 90 degrees clockwise; the next arrow points down. / Rotate 90 degrees clockwise; the next arrow points left. / Rotate 90 degrees counterclockwise; the next arrow points down. / Rotate 180 degrees clockwise; the next arrow points up.. Hint: (none) Explanation: The arrows point up, right, then down. The direction changes by a quarter-turn clockwise, so the next quarter-turn gives left.\nCHECK c2 after block 4 (type_in): Tier 2: Why does “the shapes change” fail to state a complete rule? Hint: (none) Explanation: The deciding step is naming every rule feature. Saying only that shapes change leaves too much undefined.\nCHECK c3 after block 5 (multiple_choice): Tier 3: A token starts at A facing up. It moves two rooms clockwise and turns 90 degrees clockwise. What comes next? Choices: Room A, facing right / Room C, facing up / Room A, facing up / Room C, facing right. Hint: (none) Explanation: Two clockwise room moves from C return the token to A. A second quarter-turn changes its facing from down to up.",
+    "mirror": "THE LEVEL: 5 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Recall SpeedPick; Start with an easy attempt in which the learner names a simple rule before choosing from four possibilities.): A comic arrow points up, then right, then down. First name this rule: Each arrow turns 90 degrees clockwise. Which direction comes next? | Quick Rule Recall | The arrow moves 90 degrees clockwise each time. Up becomes right, right becomes down, and down becomes left.\nBLOCK 2 (Theory RuleCard; Define a pattern rule as the repeated change or relationship, provide three prerequisite reminders, and include the first guided try-it.): Name the Rule First | A pattern rule names what changes, by how much, and in which direction. | List every element that changes, including its position, number, size, color, or direction. | Separate changing elements from features that stay the same. | Try it: A game arrow moves up, then right. What rule fits both stages? Answer: The arrow turns 90 degrees clockwise each stage.\nBLOCK 3 (Concept BeforeAfter; Use one basketball-themed before-and-after example to show how to track the change, state its amount and direction, and verify it across stages.): Track, Name, Then Verify | A basketball-panel example shows why the rule must fit every stage. | Compare the two methods, then check each stage before using the rule. | Tracking One Arrow | Stage 1 shows an up arrow above a basketball. Stage 2 shows a right-pointing arrow, and stage 3 shows a down-pointing arrow. The blue rectangle and corner star stay unchanged. | The arrow's direction changes. | The basketball, rectangle, and star stay the same. | Looking at only one stage can hide a reversal. | Compare each stage, not just the first. | Naming and Checking the Rule | Stage 1 shows the arrow up, stage 2 right, and stage 3 down. The arrow turns 90 degrees clockwise at each stage. The rule also predicts stage 4 points left. The blue rectangle and corner star stay in every stage. | Change: arrow direction | Amount: 90 degrees | Direction: clockwise | Whole-pattern check: stages 1, 2, and 3 fit. | The rule names the amount and direction. | Try it: A square in a comic panel rotates up, right, down, then left. Which amount and direction? Answer: 90 degrees clockwise.\nBLOCK 4 (Multiple Choice Question; Let the learner apply a stated rule to a new visual puzzle, including a final try-it that requires naming the rule before selecting an answer.): Use the rule sentence before choosing the missing panel. Which panel completes the sequence? | Rule: Each stage, the arrow turns 90 degrees clockwise, while the purple square stays fixed. Stage 1 has an up arrow above the square. Stage 2 has a right arrow. Stage 3 has a down arrow. Stage 4 is missing. | Video-game sequence | A left arrow above the purple square | An up arrow above the purple square | A right arrow above the purple square | A down arrow above the purple square | Check the rule against stages 1 through 3. The arrow keeps turning 90 degrees clockwise. | Down becomes left after another 90-degree clockwise turn. | Up would repeat stage 1 and reverse the rule. | Right repeats stage 2 and does not fit the sequence. | Down repeats stage 3 and stops the movement. | Try Again\nBLOCK 5 (Memory CheatSheet; Consolidate the method in a compact checklist covering elements, change, direction, whole-pattern check, and avoiding premature choice.): Rule-First Checklist | Use this before choosing any answer. | 1. Elements | List the elements that change and the ones that stay the same. | Color, count, position, size, and direction can change. | 2. Change | State what changes, the amount, and the direction. | Example: The arrow turns 90 degrees clockwise. | 3. Whole pattern | Test the proposed rule against every row, column, or stage. | A valid rule must fit all parts, not just one panel. | 4. Distractors | Ignore features that stay the same or deliberately tempt you. | A fixed shape or color may be background information. | 5. Final move | Name the rule before examining answer choices. | This helps prevent reversed directions and premature guesses.\nCHECK c1 after block 1 (multiple_choice): Tier 1: A comic arrow points up, then right, then down. Which verbal rule fits every stage? Choices: Each arrow turns 90 degrees clockwise. / Each arrow turns 90 degrees counterclockwise. / Each arrow turns 180 degrees clockwise. / Each arrow stays in the same direction.. Hint: (none) Explanation: Up becomes right, then right becomes down. Both changes are 90 degrees clockwise.\nCHECK c2 after block 3 (type_in): Tier 2: A game arrow points right, then down. State the amount and direction of its change. Hint: (none) Explanation: The arrow turns from right to down, which is a 90-degree clockwise turn.\nCHECK c3 after block 4 (multiple_choice): Tier 3: Which rule fits all panels: up arrow, right arrow, down arrow, and a fixed star? Choices: The arrow turns clockwise while the star stays fixed. / The arrow turns counterclockwise while the star stays fixed. / The arrow turns clockwise while the star also turns. / The arrow stays fixed while the star turns.. Hint: (none) Explanation: The arrow changes from up to right to down, while the star appears unchanged in every panel."
+   }
+  },
+  {
+   "subject": "iq",
+   "profile": "J4",
+   "texts": {
+    "profile": "THE LEVEL: 5 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Hook Dilemma; Open with a comic-game puzzle in which the player must choose between two answers before revealing that naming the pattern rule comes first.): SECTION 1 · COMIC-GAME DILEMMA | Your comic-game team has only one move left. Should you pick the option that looks right, or name the pattern rule first? | Two answer tiles appear, but neither card explains the puzzle. The boss says, \"Choose your reasoning process before you choose the answer.\" | OPTION A | Pick by eye | Choose the answer that looks most familiar, then check it later. | OPTION B | Name the rule first | Compare positions, describe what changes, and then test each option. | The winning move is Option B because a rule explains every step before you guess.\nBLOCK 2 (Theory RuleCard; Define a pattern rule and give a numbered method: compare figures, name what changes, add direction, then test options, with one partly completed basketball example.): Pattern Rule | A pattern rule states what stays the same and what changes across positions. | 1. Compare figures in order by row, column, position, or sequence. Then name the changes you see. | 2. Check both the objects and their locations. Next, say what changes about each object. | 3. Add movement and direction when needed. Next, describe the change as one clear sentence. | 4. Test every option against your rule. Finally, reject any option that breaks it. | Worked start: In three basketball frames, an arrow moves from the left box to the center box and then the right box. It also points up, right, then down. Partly complete rule: Each arrow moves one box right and rotates 90 degrees clockwise.\nBLOCK 3 (Concept FlowDiagram; Show the complete worked example as an arrow chain from comparison to rule wording to option testing, including the two required “Try it” lines.): SECTION 3 · FROM COMPARISON TO VERIFICATION | Worked example: one basketball arrow moves across three boxes. | Compare each frame | Left: arrow up. Center: arrow right. Right: arrow down. | Name the position change | The arrow moves one box right each frame. | Name the spatial change | The arrow rotates 90 degrees clockwise each frame. | State one rule | Each arrow moves one box right and rotates 90 degrees clockwise. | Test each option | Keep only an option that obeys both parts of the rule. | Verify every part | The arrow must wrap to the left box and point left. Then the option is valid. | Try it: In a comic panel, a star moves from top-left to top-right while rotating 90 degrees clockwise. Where does it move next? Answer: Top-right. | Try it: A video-game icon moves one box right each frame, wrapping to the left. It starts in the middle. Where is it after two moves? Answer: Left box. | no: revise | Observe and compare | State the rule | Test and verify | The rule is not an answer choice. It is the test you use to judge every answer choice.\nBLOCK 4 (Multiple Choice Question; Let the learner apply the method to a supported rotation-and-position puzzle and give feedback on both the correct choice and a plausible rule-first mistake.): Which tile continues the video-game pattern correctly? | Frame 1: a token stands in the left box, and an arrow points up. Frame 2: the token stands in the center box, and the arrow points right. Frame 3: the token stands in the right box, and the arrow points down. | The token is in the left box, and the arrow points left. | The token is in the left box, and the arrow points up. | The token is in the center box, and the arrow points right. | The token is in the right box, and the arrow points down. | Check both parts of the rule: the token's position and the arrow's direction. Then test each option again. | This continues both the position change and the 90-degree clockwise rotation. | The arrow points up, so it repeats the first orientation instead of rotating. | This repeats Frame 2, so it does not continue the sequence. | This repeats Frame 3, so it does not continue the sequence. | Try the rule again\nBLOCK 5 (Memory CheatSheet; Consolidate the lesson with a compact rule-first checklist, a model sentence frame, and a final retrieval prompt before the closing check.): SECTION 4 · RULE-FIRST CHEAT SHEET | Use this checklist before choosing any answer. | 1. Compare | Compare figures systematically by row, column, position, or sequence. | Look at each position in the same order every time. | 2. Separate | Decide what stays the same and what changes across positions. | Check objects, positions, counts, and orientation. | 3. Name | State the governing rule in words before looking at the options. | A rule explains the pattern; a choice is only one possible result. | 4. Describe | Describe spatial change using object, movement, and direction. | Example: The arrow rotates 90 degrees clockwise. | 5. Test | Test each answer option against the stated rule. | Reject any option that breaks even one part of the rule. | 6. Verify | Check that the rule accounts for every relevant part. | Confirm positions, objects, orientation, counts, and any color change. | Do not focus on one detail or guess from a familiar-looking option. | Also do not describe the result without first naming the rule.\nCHECK c1 after block 2 (multiple_choice): A row shows square, circle, triangle, then square. Which verbal rule best explains it? Choices: Each shape moves one place right, and the last wraps around. / Each shape moves one place left, and the last stays still. / Each shape changes color, but its position stays fixed. / Each shape stays still, and a new shape appears beside it.. Hint: Start by comparing each shape with the position just after it. Explanation: Comparing consecutive positions shows that each shape shifts one place right and then wraps around. The repeated square confirms the cycle.\nCHECK c2 after block 3 (type_in): An arrow points up, then right, then down. What movement and direction comes next? Hint: Track the turn from up to right before predicting the next turn. Explanation: The arrow turns right from up and down from right, so it is rotating 90 degrees clockwise each time. The next turn keeps that same direction.\nCHECK c3 after block 5 (multiple_choice): A token moves clockwise around a square. Its arrow rotates 90 degrees clockwise. From top-right with a right-pointing arrow, what comes next? Choices: Bottom-right with the arrow pointing down. / Bottom-left with the arrow pointing left. / Top-left with the arrow pointing up. / Top-right with the arrow pointing right.. Hint: Track the token's position and the arrow's direction separately. Explanation: Moving clockwise from the top-right takes the token to the bottom-right. Rotating the right-pointing arrow 90 degrees clockwise makes it point down.",
+    "mirror": "THE LEVEL: 5 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Hook StatShock; Challenge the learner to notice that recognizing a pattern is not enough; they must name its rule.): Rule first | One clear rule can govern every position in a sequence. Naming it is harder than spotting the change. | Similar-looking choices can distract you. A stated rule tells you which details matter and which answer must survive. | First action | State the rule\nBLOCK 2 (Theory RuleCard; Teach the rule-first method: inspect the structure, state the change precisely, check every position, and only then choose an answer.): The Rule-First Method | State the governing rule in words before you look at the answer choices. | Choose the structure to inspect: rows, columns, diagonals, or sequence order. | Compare consecutive positions and identify exactly what changes. | Describe the transformation by naming the element, direction, and amount. | Separate invariant features, which stay the same, from features that change. | Test the proposed rule against every position, then use it to predict the missing item. | Eliminate choices that conflict with the rule; never let the choices define it.\nBLOCK 3 (Interact PredictionCard; Present a worked basketball sequence in which the learner predicts one rotation before seeing the result and naming the rule.): Worked example · Basketball | Predict the next position | Watch the basketball-player marker move around the central hoop. Commit to your prediction before the animation reveals the next frame. | Try it | Try it: If the marker starts south of the hoop, what position comes after one 90-degree clockwise turn? Answer: West of the hoop. | Frame order: north → east → south → next frame | North of the hoop | The marker returns to its first position. | East of the hoop | The marker stays at the second position. | South of the hoop | The marker stays at the third position. | Ready to predict the next frame. | The marker points north again | The player marker rotates 90 degrees clockwise around the stationary hoop: north, east, south, west, then north. The hoop's position and the marker's shape remain unchanged, while its direction changes by 90 degrees clockwise. | Name the rule | Compare both neighboring positions, then predict what the same 90-degree turn produces. | The element is the player marker. | The direction is clockwise. | The amount is 90 degrees. | The central hoop stays fixed. | Predict again\nBLOCK 4 (Interact Elimination; Use a video-game sequence for practice, requiring the learner to state a rule before eliminating choices that do not fit it.): State the rule, then eliminate every option that conflicts with it. Which option survives? | Try it: In the same sequence, which token is second in row 4? Answer: Blue triangle. | Try it | Red square | Each row shifts one place right, so row 4 repeats row 1 and begins with the red square. | Blue triangle | This token appears second in row 1, but row 4 must begin with row 1's first token. | Green circle | This token is first in row 3, but each row shifts right before wrapping around. | Red triangle | No red triangle appears in the sequence, and the rule preserves each token's shape and color. | First say: each row shifts one place right, with the last token wrapping to the front. | Only the red square survives | The rule fits all three rows. Each token keeps its shape and color, but its position shifts one place right. Choices that change a token's identity or ignore the wraparound fail the rule. | Try the sequence again\nBLOCK 5 (Memory CheatSheet; Summarize the rule-first checklist, invariants, and common errors, then offer one optional harder rule-naming case.): Rule-First Checklist | Use this before choosing an answer | 1. Inspect | Choose rows, columns, diagonals, or sequence order before comparing figures. | 2. Compare | Compare consecutive positions and identify what changes. | 3. Name | State the element, direction, and amount of the transformation. | 4. Separate | Keep invariant features separate from features that change. | 5. Test | Check the proposed rule against every position, then predict the missing item. | 6. Eliminate | Remove choices that conflict with the rule. Do not use only resemblance, one row, or the choices themselves. | Common mistake | A plausible-looking answer can still fail a rule that was tested across the whole sequence. | Optional harder case | Comic rows read A B C; B C A; C A ?. Name the rule before naming the missing tile.\nCHECK c1 after block 2 (multiple_choice): Tier 1: A sequence changes between panels. What is the best first action? Choices: Compare positions and state the rule / Choose the closest-looking option / Use only the final panel / Decide before comparing panels. Hint: (none) Explanation: The decisive cue is the change between consecutive positions. Comparing them reveals the rule before any option is considered.\nCHECK c2 after block 3 (type_in): Tier 2: A blue arrow points north, then east, then south. State the next transformation. Hint: (none) Explanation: North to east to south is a 90-degree clockwise turn. The same transformation predicts that the arrow will next point west.\nCHECK c3 after block 4 (multiple_choice): Tier 3: Comic rows read A B C; B C A; C A?. Which rule fits every row and predicts the missing tile? Choices: Each row shifts one place left, and the last shape wraps around. / Each row shifts one place right, and the first shape stays fixed. / Each row keeps every shape in its original column. / Each row reverses its order, and the last shape stays fixed.. Hint: (none) Explanation: Every row moves one place left while wrapping the first shape to the end. This rule makes the missing tile B."
+   }
+  },
+  {
+   "subject": "spanish",
+   "profile": "J2",
+   "texts": {
+    "profile": "THE LEVEL: 4 blocks, 2 graded checks (1 typed, 1 multiple choice).\nBLOCK 1 (Hook Dilemma; Present a choice between going to a basketball game and going to play a video game, and ask where each choice leads to introduce movement and destinations.): WARM-UP CHOICE | Where should you go next? | One choice leads to a basketball game. The other leads to a place to play video games. | OPTION A | Basketball game | Go to the court and watch your favorite team play. | OPTION B | Video game session | Go somewhere and play your favorite game. | Each choice gives you a destination.\nBLOCK 2 (Normal Text Block; State the complete ir conjugation as a short labelled list, show the destination pattern a + place and al, and use one worked example such as Voy al trabajo plus basketball, video-game, and comic examples and two Try it lines.): IR IN THE PRESENT | Say where you are going | Match the subject, then add the destination. | 1. Match the subject | ir (to go) has irregular present forms. | Match the subject: yo (I)—voy; tú (you)—vas; él, ella, usted (he, she, you formal)—va. | For more subjects: nosotros (we)—vamos; vosotros (you all)—vais; ellos, ustedes (they, you all)—van. | 2. Build a destination | Use a + place (to a place) for a destination. | Destination examples: | a la cancha — to the basketball court | a la tienda de cómics — to the comic shop | Use al instead of a + el. Al means to the. | 3. Work one example | 1. Choose yo, so use voy (I go). | 2. Choose el trabajo (work). Because it uses el, write a + el as al. | 3. Join the parts: Voy al trabajo (I go to work). | Try it: ¿Adónde ___? Answer: voy (I go). | 4. Use the pattern | More examples: | Vamos al juego de basketball (We go to the basketball game) | Voy al gimnasio para jugar videojuegos (I go to the gym to play video games) | Voy a la tienda de cómics (I go to the comic shop) | Try it: ¿Adónde van ___? Answer: al gimnasio (to the gym) | Remember: match the subject, then add the destination.\nBLOCK 3 (Multiple Choice Question; Have the learner choose the correct form of ir for different subjects and choose betweenvoy al trabajo, Voy a la Cancha, and Voy al gimnasio to practise destination sentences.): Which question and answer correctly use ir for “you” and name the destination? | You are going to work. | ¿Adónde vas? Voy al trabajo. | ¿Adónde vas? Vas al trabajo. | ¿Adónde va? Voy al trabajo. | ¿Adónde van? Voy al trabajo. | Find the form for tú in the question and the form for yo in the answer. | Correct: vas matches tú, and voy al trabajo means “I go to work.” | Vas matches tú in the question, but the answer should use voy because the speaker is yo. | Va matches él, ella, or usted, not tú. | Van matches ellos or ustedes, not tú. | Try again\nBLOCK 4 (Memory CheatSheet; Consolidate the six present forms of ir, the subject each one matches, and the adónde destination pattern in a compact reference learners can retrieve without rereading.): Ir Present Quick Guide | Six forms, one clear pattern | ir means “to go,” but its present forms are irregular. | Subject match | yo: voy; tú: vas; él, ella, usted: va; nosotros: vamos; vosotros: vais; ellos, ustedes: van. | Choose the form that matches the subject. | Ask the destination | Use adónde (where to) to ask where someone is going. | Write adónde as one word with an accent. | Add a place | Use a + place for a destination. | Use al for a + el. Example: Voy al trabajo (I go to work).\nCHECK c1 after block 2 (multiple_choice): Which subject matches the form “va”? Choices: yo / tú / él / nosotros. Hint: (none) Explanation: Find the subject in the list. Va matches él, ella, and usted.\nCHECK c2 after block 3 (type_in): Write the question and answer: “Where are you going? To the basketball court.” Hint: (none) Explanation: Use adónde for “where to,” vas for tú, and a + la cancha for the destination.",
+    "mirror": "THE LEVEL: 8 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Hook Dilemma; Open with a concrete choice between going to the library and staying at school, prompting the learner to infer that ir expresses movement toward a destination.): WARM-UP CHOICE | Where are you going after class? | You have two possible plans. You can leave school for the library, or stay inside the school building. | OPTION A | Go to the library | You leave the school building and walk to a place where books are available. | OPTION B | Stay at school | You remain inside the building instead of moving toward another place. | The Spanish verb ir, meaning “to go,” shows movement toward a destination.\nBLOCK 2 (Normal Text Block; Teach the first worked example, such as “Ana va al trabajo. —¿Adónde va Ana?—Al trabajo,” before naming the subject–verb and destination pattern it demonstrates.): FIRST EXAMPLE | Showing where someone is going | A subject, ir, and a destination | Ana goes to work | Ana va al trabajo. Ana goes to work. The sentence begins with Ana, the subject. The verb va is the third-person singular form of ir (“to go”). | The phrase al trabajo means “to work.” Al combines a and el, so it shows ir + a + place: va + al trabajo. | ¿Adónde va Ana? means “Where is Ana going?” Ana answers, “Al trabajo,” or “To work.” | Try the pattern | María va a la biblioteca. María goes to the library. Va agrees with María because María is one person. | Try it: Where is Carlos going? Answer: ¿Adónde va Carlos?\nBLOCK 3 (Theory RuleCard; Explain that ir is irregular, so its present forms do not follow the regular -ar pattern, and state the anchor “voy, vas, va, vamos, vais, van” with its pronoun links.): The irregular verb ir | ir (“to go”) is irregular: its present forms are completely different from regular -ar verb endings. | The subject tells who performs the action. | Va agrees with a singular subject such as Ana or Carlos. | Vamos agrees with nosotros, while van agrees with ellos or ellas.\nBLOCK 4 (Data Table; Give a dual-coded reference table pairing every subject with its present form of ir, while showing how the destination construction ir + a + place works in parallel examples.): Present forms of ir and destination patterns | Form of ir | Destination example | Voy al trabajo. | I go to work. | Vas a la escuela. | You go to school. | Ana va a la biblioteca. | Ana goes to the library. | Vamos al centro. | We go to the center. | Vais al parque. | You all go to the park. | Van al trabajo. | They go to work. | Destination formula: ir + a + place. Use a + el before a masculine noun: a + el trabajo becomes al trabajo.\nBLOCK 5 (Text Fill Out Question; Make the learner retrieve and complete a neutral dialogue with voy, vas, and va, including one try-it question and an answer that explains the required agreement.): Complete the dialogue with the correct form of ir. | Lucía: Voy a la biblioteca. Tú: ___ a la escuela. Pregunta: ¿Adónde vas? | Type the missing word | Missing verb | Check answer | Correct. Vas agrees with tú, meaning “you.” | Try the form that agrees with tú. | The missing subject is tú. The singular you form of ir is vas, so the sentence is “Vas a la escuela.”\nBLOCK 6 (Concept CautionFlag; Warn about the common mistakes of using voy for every subject, omitting a before a place, forgetting the accent in adónde, and using dónde for a destination.): Common errors with ir | Check the subject, destination, and question word | These mistakes can make a sentence sound incorrect even when its main idea is clear. | Do not use voy for every subject | Ir changes fully in the present tense. Use voy with yo, vas with tú, and va with él or ella. | Ana voy al trabajo. | Ana va al trabajo. | The subject determines the verb form. | Subject–verb agreement | Do not omit a before a place | Use ir + a + place when you name a destination. Use a + el when the place begins with el, so a + el trabajo becomes al trabajo. | Ana va trabajo. | Ana va al trabajo. | A destination needs a before the place. | Destination phrase | Keep the question word accurate | Adónde asks about a destination. Dónde asks about a location, such as “¿Dónde está Ana?” | ¿Dónde va Ana? — Al trabajo. | ¿Adónde va Ana? — Al trabajo. | Use adónde for movement toward a place. | Adónde and dónde | Adónde needs an accent. The word a in a destination phrase does not need an accent.\nBLOCK 7 (Interact CategorySort; Have the learner sort short sentences or questions into correct ir usage, wrong subject–verb agreement, and adónde versus dónde distinctions, with feedback after each choice.): Sort each expression | Sort each card by whether it uses ir correctly, makes an agreement error, or tests the right question word. | Correct ir usage | The verb agrees with its subject, and any destination is complete. | Wrong agreement | The form of ir does not match the subject. | Adónde or dónde | A destination takes adónde; a location takes dónde. | Voy al trabajo. | I go to work. | Ella va a la biblioteca. | She goes to the library. | Nosotros vamos al centro. | We go to the center. | Ana vas a la escuela. | The verb does not agree with Ana. | Yo van al parque. | The form must agree with yo. | Tú van a la casa. | The form must agree with tú. | ¿Adónde va Luis? — Al mercado. | The question asks for a destination. | ¿Dónde va Luis? — Al mercado. | The answer gives a destination, but dónde asks for a location. | ¿Dónde está Luis? — En el mercado. | The question asks where a person is located.\nBLOCK 8 (Memory CheatSheet; Consolidate the complete conjugation table, the ir + a + place formula, the adónde question pattern, and the key correction rules as a compact memory anchor.): Ir in the present tense | Quick reference | ir means “to go.” | Its present forms do not follow regular -ar endings. | Singular forms | yo: voy | tú: vas | él/ella: va | Plural forms | nosotros/as: vamos | vosotros/as: vais | ellos/ellas: van | Destination formula | ir + a + place | Voy al trabajo = I go to work. | Destination question | ¿Adónde + conjugated ir + subject? | ¿Adónde va Ana? = Where is Ana going? | Question word | adónde asks for a destination; dónde asks for a location. | ¿Adónde va Ana? | ¿Dónde está Ana? | Match the verb to its subject, keep a before a place, and accent adónde. | Ana va, not Ana voy. Va al trabajo, not va trabajo.\nCHECK c1 after block 4 (multiple_choice): Tier 2: Which form of ir correctly completes “Elena ___ a la biblioteca”? Choices: Vas / Va / Voy / Vais. Hint: (none) Explanation: Elena is third-person singular, so the verb must be va. The full sentence means “Elena goes to the library.”\nCHECK c2 after block 6 (multiple_choice): Tier 2: Which exchange correctly asks for a destination and answers with ir + a + place? Choices: ¿Adónde va Luis? — Al mercado. / ¿Dónde va Luis? — Al mercado. / ¿Adónde está Luis? — Al mercado. / ¿Dónde está Luis? — En el mercado.. Hint: (none) Explanation: Adónde asks where someone is going, and va agrees with Luis. Al mercado is the destination phrase “to the market.”\nCHECK c3 after block 8 (type_in): Tier 3: Write a complete sentence saying that Elena is going to the library. Hint: (none) Explanation: Use va because Elena is singular, then add a + place: a + la biblioteca. The complete sentence gives the destination."
+   }
+  },
+  {
+   "subject": "spanish",
+   "profile": "J3",
+   "texts": {
+    "profile": "THE LEVEL: 4 blocks, 3 graded checks (2 typed, 1 multiple choice).\nBLOCK 1 (Normal Text Block; Work through “Voy al trabajo” step by step, identifying voy, translating it, explaining the destination phrase, and connecting the example to the learner’s interest in basketball.): Present Tense • Ir | First, locate every part of the sentence | A fully worked example | Worked example: “Voy al trabajo” | 1. Find the verb. Voy is the present-tense form of ir, which means “to go.” | 2. Identify the subject. Voy means “I go,” so the subject is “I.” | 3. Read the destination. Al trabajo means “to work” or “to the workplace.” Here, a + el becomes al. | 4. Translate the sentence. Voy al trabajo means “I go to work.” It names a planned destination. | Connect the example to your day | You can use the same structure for basketball: Voy a la cancha means “I am going to the basketball court.” | A sentence can name where someone is headed, just as you might head from your desk to the basketball court.\nBLOCK 2 (Theory RuleCard; Give the complete irregular present-tense pattern of ir, with voy, vas, and va emphasized before the remaining forms, plus the meaning of adónde.): The complete pattern of ir | The present forms of ir are yo voy, tú vas, él, ella and usted va, nosotros vamos, vosotros vais, and ellos, ellas and ustedes van. | Use ir for movement or to name a planned destination, as in voy al trabajo. | Adónde means “where to” or “to where.” Ask ¿Adónde vas? to ask where someone is going. | Use al and del before masculine articles. Al = a + el, and del = de + el. | In Voy del trabajo al gimnasio, del = de + el means “from the,” and al = a + el means “to the.” | Do not use a form of ser, which means “to be,” instead of ir. Say Ana va, not Ana es.\nBLOCK 3 (Normal Text Block; Show a second, varied example with its final step left blank, then include two gradual “Try it” lines for immediate practice.): Practice • Build the Sentence | Now complete a second example | The final step is yours | Faded example: a video game store | 1. Identify the subject. Ana is third-person singular, so the needed form is va. | 2. Identify the destination. A la tienda de videojuegos means “to the video game store.” The article is feminine, so it stays as a la. | 3. Write the complete sentence: Ana ___ a la tienda de videojuegos. | Do not replace ir with ser. Ser means “to be”: Ana va, not Ana es. | Two quick checks | Try it: Which present form of ir goes with tú? Answer: vas. | Try it: Write “You go to the basketball court.” Answer: Vas a la cancha. | Optional harder case | Write a sentence saying you go from work to the park to draw comics. Use del and al. | Para means “in order to,” dibujar means “to draw,” and cómics means “comics.” | Model answer: Voy del trabajo al parque para dibujar cómics.\nBLOCK 4 (Interact ErrorHighlighter; Practise identifying errors involving incorrect ir forms, missing adónde accents, and omitted destination contractions.): Find and correct the errors | Tap the three errors: a wrong form of ir, a missing accent, and a missing destination contraction. | María voy al gimnasio. ¿Adonde vas? Lucas va a el parque. | María is third-person singular, so the correct form is va. | The destination question needs the accent: ¿Adónde? | Before the masculine article el, combine a + el as al: al parque. | The two words a el must be combined as al. | Reveal errors | Try again | Correct. The passage uses va, adónde with its accent, and al before el. | Review the subject, the accent in adónde, and the contraction a + el.\nCHECK c1 after block 1 (multiple_choice): In “Ana va a la cancha,” what does va mean when the subject is Ana? Choices: I go / You go / She goes / We go. Hint: (none) Explanation: Ana is third-person singular. The form va means “she goes” or “he goes” in the present tense.\nCHECK c2 after block 3 (type_in): Write the full question asking where Leo is going: ¿___ ___? Hint: (none) Explanation: Adónde asks about a destination, and va is the present form of ir that agrees with Leo.\nCHECK c3 after block 4 (type_in): Write a sentence saying you are going to the park to draw comics. Use ir and a destination contraction. Hint: (none) Explanation: Voy agrees with the subject “you,” and a + el becomes al before the masculine article.",
+    "mirror": "THE LEVEL: 6 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Hook Dilemma; Give the learner an easy opening choice between Voy, Vas, and Va to reveal who is going to a basketball game.): WARM-UP CHOICE | Who says they are going to the basketball game? | You hear one short answer. Choose the form that fits the person speaking. | OPTION A | I am going to the basketball game. | OPTION B | I am going to the basketball game. | Listen for the person. The ending changes to match the subject.\nBLOCK 2 (Data Table; Show a plain aligned table matching yo, tú, and él/ella/usted with voy, vas, and va, plus one worked sentence.): ir (to go) in the present tense | I go / I am going | you go / you are going | él / ella / usted | he, she, or you go / is going | Worked example: yo → voy → a + el gimnasio → al gimnasio. Say: Voy al gimnasio (I am going to the gymnasium).\nBLOCK 3 (Multiple Choice Question; Let the learner practise choosing the correct form for each subject in short basketball and video-game sentences.): Choose the form that matches the subject. | Mi amigo y yo ___ alucunvideojuego. | Check the subject. Mi amigo y yo means my friend and I, so use voy. | Try again\nBLOCK 4 (Concept CautionFlag; Teach where to place adónde and warn that dónde asks about a location while adónde asks about a destination.): adónde and dónde | Ask about the destination | Use adónde (to where) when you ask where someone is going. Use dónde (where) for a location. | Put the accent on adónde | Write adónde with an accent. Write dónde without an accent when asking about a place. | ¿Adonde vas? | ¿Adónde vas? | The destination question includes the accent. | adónde / dónde | Do not confuse the two questions | ¿Dónde estás? asks where someone is now. ¿Adónde vas? asks where someone is going. | ¿Dónde vas? | ¿Adónde vas? | Both sentences can include vas, but the question word changes. | Use the same answer pattern | Answer with voy, vas, or va + a + place. Try it: ¿Adónde vas después del partido? Answer: Voy al gimnasio. | Quick check: Adónde = going somewhere. Dónde = being there.\nBLOCK 5 (Context RealWorldScope; Show how voy, vas, and va work with destinations and al contractions in an everyday plan involving drawing comics.): Destinations and contractions | Choose the right destination for your comic project | You draw a comic about a basketball player. You tell your friend where you are going.\n\nFirst, join a + el. The phrase becomes al. So write: Voy al parque.\n\nYou also need a + un. The phrase becomes aun. Write: Voy aun dibujo. This means I am going to a drawing.\n\nThe same pattern works with the other forms: vas, va, plus a place. Try it: Ella ___ a la biblioteca. Answer: Va a la biblioteca. | Your comic's next stop | al + aun | two destination contractions to check | If you miss a contraction, your destination phrase may sound incomplete or unnatural. | The correct contraction keeps your destination phrase clear and natural. | Example: making a comic about basketball. | drawing comics\nBLOCK 6 (Memory CheatSheet; Consolidate the three forms, adónde pattern, accent rule, and destination contractions in a compact reference.): Ir present-tense cheat sheet | Use it for movement and plans | yo → voy | tú → vas | él/ella/usted → va | These are the present-tense forms of ir (to go). | Destination pattern | voy / vas / va + a + place | Example: Voy a la escuela. | a + el → al | a + un → aun | Examples: al parque | aun dibujo. | adónde = to where | Write dónde without the accent for a location. | voy + a + activity | vas + a + activity | Voy a estudiar means I am going to study.\nCHECK c1 after block 2 (multiple_choice): Which form completes: Elena ___ al gimnasio? Choices: Voy / Vas / Va / Van. Hint: (none) Explanation: Elena is third-person singular, so the form matching ella is va.\nCHECK c2 after block 4 (type_in): Diego says, “I go to the comic store.” Write a question with vas and adónde. Hint: (none) Explanation: Use adónde for a destination, then vas because you are asking Diego what he is going toward.\nCHECK c3 after block 6 (multiple_choice): Which phrase correctly says “I am going to the park”? Choices: Voy al parque / Vas al parque / Va al parque / Voy a el parque. Hint: (none) Explanation: Use voy for yo, and combine a + el into al before the masculine noun parque."
+   }
+  },
+  {
+   "subject": "spanish",
+   "profile": "J4",
+   "texts": {
+    "profile": "THE LEVEL: 5 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Theory RuleCard; ): Present tense of ir | The verb ir means “to go,” and its present forms are irregular: yo voy, tú vas, él/ella va, nosotros vamos, vosotros vais, and ellos/ellas van. | Use subject pronouns to show who goes: yo, tú, él/ella, nosotros, vosotros, ellos/ellas. | Use “a” plus a place to say where someone is going, as in a al trabajo. | Use adónde with an accent mark in questions asking where someone is going.\nBLOCK 2 (Normal Text Block; ): Step 1: Follow the story | Where is everyone going? | Learn ir and adónde through a game-day plan. | 1. Meet Mateo | Mateo plans to go to the basketball game. He asks, “¿Adónde vas?” (Where are you going?). His friend answers, “Voy al gimnasio” (I am going to the gym). Mateo uses ir to say where he is going. | 2. Change the subject | The ending changes with the subject: yo voy, tú vas, and él/ella va. In a question, adónde comes before the verb: “¿Adónde va Ana?” (Where is Ana going?). Next, match each subject with its form. | 3. Add a place | Say “a” plus a place after the verb. For example, “Voy al centro comercial” means “I am going to the shopping center.” With a person, use “a”: “Vas con Diego” means “You are going with Diego.” | 4. Make your own plan | You can use ir for plans, games, or trips. Complete each line with the correct form of ir, then say what comes next in the story. | The worked example is “Mateo asks: ¿Adónde vas? You answer: Voy al gimnasio.” | Try it: A player asks, “¿Adónde vas?” Answer: Voy al parque. | Try it: Your friend asks, “¿Adónde va el equipo?” Answer: Va al gimnasio.\nBLOCK 3 (Steps Block; ): Steps for saying where someone is going | Use these steps in order, then check your answer. | Step 1 | Find the subject. | Ask yourself who is going: yo, tú, él/ella, nosotros, vosotros, or ellos/ellas. | Step 2 | Choose the matching form of ir. | Use voy, vas, va, vamos, vais, or van. Next, keep only that form. | Step 3 | Add the destination. | Use a plus a place, such as a la cancha (to the court), or a plus a person. | Step 4 | Ask about the destination with adónde. | Put adónde before the verb: “¿Adónde vas?” Now answer with your destination sentence.\nBLOCK 4 (Trap CommonError; ): A friend says, “¿Adónde va el equipo?” Which answer means “The team is going to the court”? | The team is leaving for the basketball court. | El equipo va a la cancha. | El equipo va de la cancha. | El equipo van a la cancha. | El equipo vas a la cancha. | Using the wrong form of ir for the subject | “Van” agrees with nosotros or ellos/ellas, not “el equipo” here. | “Vas” is for tú, not for el equipo. | The destination ending does not change the verb form. The subject decides whether you say va, van, or vas. | “El equipo” is third-person singular, so use va. For the court, say a la cancha. The full answer is “El equipo va a la cancha.” | First point to the subject, then say its matching form of ir. | Ir in the present\nBLOCK 5 (Memory CheatSheet; ): Quick guide to ir and adónde | One page for finding the right form. | ir means “to go.” | voy — I go | vas — you go | va — he or she goes | vamos — we go | vais — you all go | van — they or you all go | Use a plus a place: Voy a la cancha. | Say “a” before a place or person. | Ask with adónde: ¿Adónde vas? | Adónde has an accent mark. | Quick pattern | Subject → form of ir → a → destination\nCHECK c1 after block 5 (multiple_choice): Lucía asks her friend where he is going. Which form completes “Tú ___ al gimnasio”? Choices: Vas / Voy / Va / Vais. Hint: Start with the subject tú, then choose its matching form. Explanation: The subject is tú, so use vas. “Vas al gimnasio” means “You are going to the gym.”\nCHECK c2 after block 5 (type_in): Complete the sentence: “Nosotros ___ al centro comercial.” Hint: Say “we” in English, then use its form of ir. Explanation: Nosotros means “we,” so the matching form of ir is vamos. The full sentence means “We are going to the shopping center.”\nCHECK c3 after block 5 (multiple_choice): Diego is going to play video games with friends. Which question asks where he is going? Choices: ¿Adónde va Diego? / ¿Dónde va Diego? / ¿Qué va Diego? / ¿Quién va Diego?. Hint: Choose the word that asks “where to” and place it before va. Explanation: Adónde asks about a destination. It has an accent mark and comes before the verb va.",
+    "mirror": "THE LEVEL: 5 blocks, 3 graded checks (1 typed, 2 multiple choice).\nBLOCK 1 (Theory RuleCard; Introduce voy, vas, and va as irregular present forms of ir, link each form to its subject, and show that ir takes a destination using al or del.): Ir in the present tense | Voy, vas, and va are the present-tense forms of ir, which means to go. | Use yo for the speaker, tú for one person you address, and él, ella, or usted for another person or a group. | A destination tells where someone is going. | Use al before a masculine noun and del before a feminine noun when saying to the or from the.\nBLOCK 2 (Normal Text Block; Present one connected worked example, such as “Yo voy al trabajo,” asking the learner to predict each step before revealing it and leaving the final conjugation step for the learner to complete; include two try-it lines based on basketball and drawing comics.): Worked example | Going to a game | Build a sentence with ir and a destination. | Work with the destination | First, decide who is going. If the subject is yo, choose voy from ir. If it is tú, choose vas. If it is él, ella, or usted, choose va. These forms do not follow the regular -ar endings. | Now add the destination. Al is used before a masculine noun, and del is used before a feminine noun. For example, la cancha is the basketball court, so al cancha means to the basketball court. | Predict the first part: Yo ___ al cancha. The answer is voy, so the beginning is Yo voy. | Predict the last part: Voy ___ al cancha. The answer is al, because cancha is masculine. Now complete the final step yourself: use voy before al cancha. The complete sentence is Yo voy al cancha. I am going to the basketball court. | Try it: How would you say that tú are going to the basketball court? Answer: Vas al cancha. | Use other destinations | For a video game, the destination is el juego, the game. For drawing comics, the destination is el dibujo, the drawing. Before each masculine noun, use al: Voy al juego. Voy al dibujo. | The form va matches él, ella, or usted. For example, Ella va al dibujo. She is going to the drawing. | Try it: How would you say that she is going to the video game? Answer: Ella va al juego.\nBLOCK 3 (Interact CategorySort; Have the learner classify matching subjects and destinations to practice selecting voy, vas, or va and forming complete ir sentences, including al and del.): Sort the subjects and sentences | Sort each card into the subject group it matches. | Use voy | Choose the form for yo. | Use vas | Choose the form for tú. | Use va | Choose the form for él, ella, or usted. | Yo voy al juego | The subject is yo. | Tú vas al dibujo | The subject is tú. | Él va al torneo | The subject is él.\nBLOCK 4 (Concept CautionFlag; Contrast correct adónde questions with common errors, especially missing accents and misplaced question words, then let the learner apply the rule in a concise try-it line.): Adónde questions | Ask about a destination correctly | Adónde means where to or where are you going. It takes an accent because it is a question word, and it comes before the subject. | Keep the accent | Write dónde with an accent in direct questions. The accent helps show that the word asks about a destination. | A donde vas? | ¿Adónde vas? | Adónde asks where you are going. | Question word formation | Put the question word first | Do not move adónde after the subject. It normally begins the question. | ¿Vas adónde al juego? | ¿Adónde vas al juego? | The destination phrase can still follow the subject. | Question word order | Match va with the subject | In ¿Adónde va Ella? use va because ella is third person. Do not use vas or voy. | ¿Adónde vas Ella? | ¿Adónde va Ella? | Choose the form from the subject, not from the destination. | Subject and verb agreement | Try it: Write one question asking where she is going to the video game. Answer: ¿Adónde va ella al juego?\nBLOCK 5 (Memory CheatSheet; Consolidate the three forms, their subjects, the destination structure, the al and del contractions, and the accented question word adónde for independent retrieval.): Ir present-tense cheat sheet | Use it to check a subject, destination, or question. | I go; I am going | Use with yo. | You go; you are going | Use with tú. | He, she, or you go; he, she, or you are going | Use with él, ella, or usted. | Use ir with a destination. | Example: Voy al torneo. | to the; before a masculine noun | Example: al juego. | from the; before a feminine noun | Example: de la liga. | where to; where are you going | Write it with an accent and place it first in the question.\nCHECK c1 after block 1 (multiple_choice): Which form of ir matches the subject tú? Choices: voy / vas / va / ir. Hint: (none) Explanation: Tú is the subject for vas. Voy matches yo, and va matches él, ella, or usted.\nCHECK c2 after block 3 (type_in): Write a complete sentence saying that Carlos is going to the basketball court. Hint: (none) Explanation: Use va because Carlos is third person, and al because cancha is masculine.\nCHECK c3 after block 4 (multiple_choice): Which question correctly asks where Elena is going to the video game? Choices: ¿Adónde va Elena al juego? / ¿Dónde Elena va al juego? / ¿Adónde va Elena al juego / ¿A dónde va Elena al juego?. Hint: (none) Explanation: Adónde takes an accent and comes first, while va matches Elena. Use al before the masculine noun juego."
+   }
+  }
+ ],
+ "usage": {
+  "writerCalls": 0,
+  "writerIn": 0,
+  "writerOut": 0,
+  "judgeCalls": {},
+  "judgeTokens": {},
+  "errors": {},
+  "seconds": 0
+ }
+}
