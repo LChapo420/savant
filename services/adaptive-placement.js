@@ -54,7 +54,7 @@ const RELIABLE = Number(process.env.ADAPTIVE_RELIABLE || 0.3);
  * build (short questions first, clock-bound) places only 82% (math) to 95% (act) within one grade in 5 minutes,
  * under the 90% bar on four subjects, so it was not shipped (docs/ONBOARDING-MODES.md section 4, simulated).
  */
-const WHOLE_MINUTES = { quick: 20, balanced: 20, accurate: 57 };
+const WHOLE_MINUTES = { quick: 14, balanced: 20, accurate: 57 };
 
 /**
  * When the clock ends a walk. It ends it once the clock has run out AND the mode's minimum has been answered (a learner who
@@ -78,9 +78,9 @@ const MODES = {
   // (`shortFirst`, nextBlock `fast`): among the questions near the belief's middle it takes the quickest, which keeps the accuracy and saves
   // minutes (docs/ONBOARDING-MODES.md section 4, simulated, seconds estimated from word counts: services/placement-seconds.js).
   // A mode with `noLift` gets no span-based lift of its minimum (see limits); none ships with it, it is how the sim tried a 5-minute Quick.
-  quick: { max: 32, min: 18, sure: 0.94, minutes: 14, shortFirst: true },
-  balanced: { max: 70, min: 20, sure: 0.97, minutes: 14, shortFirst: true },
-  accurate: { max: 130, min: 40, sure: 0.995, minutes: 40, shortFirst: true },
+  quick: { max: 30, min: 8, sure: 0.94, confidence: 0.97, minutes: 6, shortFirst: true, noLift: true },
+  balanced: { max: 70, min: 16, sure: 0.97, confidence: 0.97, minutes: 12, shortFirst: true },
+  accurate: { max: 130, min: 24, sure: 0.995, confidence: 0.99, minutes: 40, shortFirst: true },
 };
 
 /** The chance the walk assumes of a right answer from someone at `x`, on a question written for `pos`. */
@@ -185,7 +185,9 @@ function blocksFor(sets) {
         const pos = idx.reduce((s, i) => s + positionOf(questions[i], g), 0) / idx.length;
         // `sec`: what the block is estimated to take (services/placement-seconds.js), when its questions carry it.
         const secs = idx.map((i) => questions[i].sec);
-        blocks.push({ grade: g, part: `b${k / size}`, idx, pos, ...(secs.every(Number.isFinite) ? { sec: secs.reduce((a, b) => a + b, 0) } : {}) });
+        // `guess`: the chance a blind guess is right on the block's questions (the information pick needs it).
+        const guess = idx.reduce((n, i) => n + (Array.isArray(questions[i].choices) && questions[i].choices.length ? 1 / questions[i].choices.length : 0.02), 0) / idx.length;
+        blocks.push({ grade: g, part: `b${k / size}`, idx, pos, guess, ...(secs.every(Number.isFinite) ? { sec: secs.reduce((a, b) => a + b, 0) } : {}) });
       }
       return;
     }
@@ -226,6 +228,49 @@ function nextBlock(blocks, asked, target, { fast = false } = {}) {
     if (fast ? cost(b) < cost(best) : Math.abs(b.pos - target) < Math.abs(best.pos - target)) best = b;
   }
   return best;
+}
+
+/**
+ * The information pick. Of the unasked blocks nearest the target (the gallop-limited middle of the belief, see nextTarget), take
+ * the one whose answer is expected to leave the belief narrowest: smallest expected entropy, per second of the block's estimated
+ * time when `fast` (a clock-bound mode spends seconds, not questions). A block with no estimate counts as FAST_DEFAULT_SEC. This
+ * is the question that separates the grades the belief still cannot tell apart, rather than the one nearest the middle: at the
+ * middle of a belief a question is answered right with about even odds by someone just below or just above it, so the
+ * nearest question to the middle is not always the most telling one. ADAPTIVE_INFO=0 restores nextBlock's rule.
+ */
+const INFO = process.env.ADAPTIVE_INFO !== '0';
+const INFO_NEAR = Number(process.env.ADAPTIVE_INFO_NEAR || 20);
+const entropyOf = (w) => { let h = 0; for (let i = 0; i < w.length; i++) if (w[i] > 1e-12) h -= w[i] * Math.log(w[i]); return h; };
+
+function nextBlockByInfo(blocks, asked, target, post, { fast = false, shape = {} } = {}) {
+  const done = new Set(asked.map((b) => `${b.grade}:${b.part}`));
+  const open = blocks.filter((b) => !done.has(`${b.grade}:${b.part}`));
+  if (!open.length) return null;
+  open.sort((a, b) => Math.abs(a.pos - target) - Math.abs(b.pos - target));
+  const now = entropyOf(post.w);
+  let best = null;
+  for (const b of open.slice(0, INFO_NEAR)) {
+    const guess = Number.isFinite(b.guess) ? b.guess : 0.25;
+    const pr = post.grid.map((x, i) => assumed(x, b.pos, guess, shape));
+    let zr = 0; let zw = 0;
+    for (let i = 0; i < pr.length; i++) { zr += post.w[i] * pr[i]; zw += post.w[i] * (1 - pr[i]); }
+    const wr = post.w.map((v, i) => (zr > 0 ? (v * pr[i]) / zr : 0));
+    const ww = post.w.map((v, i) => (zw > 0 ? (v * (1 - pr[i])) / zw : 0));
+    const expected = zr * entropyOf(wr) + zw * entropyOf(ww);
+    const sec = fast ? (Number.isFinite(b.sec) ? b.sec : FAST_DEFAULT_SEC) : 1;
+    const score = (now - expected) / sec;
+    if (!best || score > best.score) best = { block: b, score };
+  }
+  return best ? best.block : null;
+}
+
+/** The block to ask next: by information once there is a belief to narrow, else the one nearest the target (nextBlock). */
+function chooseBlock(blocks, asked, target, post, answeredCount, opts = {}) {
+  if (INFO && answeredCount > 0 && post) {
+    const b = nextBlockByInfo(blocks, asked, target, post, opts);
+    if (b) return b;
+  }
+  return nextBlock(blocks, asked, target, opts);
 }
 
 /**
@@ -357,8 +402,29 @@ function done(mode, answered, post, ctx = {}) {
   if (topProven(span, answered, post)) return true;
   if (ctx.topLeft > 0 && ceilingCandidate(span, answered, post)) return false;
   const m = median(post);
+  if (STOP === 'within1' && Number.isFinite(cfg.confidence)) {
+    // Stop on the error the walk is held to: the share of the belief that puts the true grade within one of the recommended one,
+    // and, as before, only once the boundary itself has been tested (CONFIRM answers near the belief's middle).
+    if (!confirmed(answered, post)) return false;
+    // At either end of the scale half of the within-one window lies outside it, so confidence there is cheap, while the product
+    // wants a beginner placed at the very start and a learner who knows everything at the very end. Near an end the walk needs END_MIN answers.
+    const r = recommend(span, post, answered).index;
+    if ((r <= 1 || r >= span - 2) && answered.length < END_MIN) return false;
+    return withinOneGrade(span, post, answered) >= cfg.confidence;
+  }
   if (SE_MAX && (standardError(post) > SE_MAX || !confirmed(answered, post))) return false;
   return massWithin(post, m - 1, m + 1) >= cfg.sure;
+}
+
+/**
+ * The share of the belief in which the true grade lies within one of the recommended grade R: the learner's real grade is
+ * floor(position), so that is the positions in [R - 1, R + 2). ADAPTIVE_STOP=legacy keeps the earlier stop rule (`sure`).
+ */
+const STOP = process.env.ADAPTIVE_STOP || 'within1';
+const END_MIN = Number(process.env.ADAPTIVE_END_MIN || 14);
+function withinOneGrade(span, post, answered) {
+  const r = recommend(span, post, answered).index;
+  return massWithin(post, r - 1, r + 2 - 1e-9);
 }
 
 /**
@@ -423,6 +489,6 @@ function recommend(span, post, answered) {
 }
 
 module.exports = {
-  questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, clockEnded, HARD_STOP, HARD_FLOOR, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, firstTarget, nextTarget, done, limits,
+  questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, clockEnded, HARD_STOP, HARD_FLOOR, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, chooseBlock, nextBlockByInfo, withinOneGrade, firstTarget, nextTarget, done, limits,
   gradeMass, wholePercents, recommend, CEILING, ceilingProof, topProven, standardError, confirmed, SE_MAX, ceilingCandidate, topLeft,
 };

@@ -34,7 +34,7 @@ const adaptive = require('../services/adaptive-placement');
 {
   const arg0 = (n) => { const h = process.argv.find((x) => x.startsWith('--' + n + '=')); return h ? h.slice(n.length + 3) : null; };
   const lim = arg0('limits');
-  if (lim) for (const part of lim.split(',')) { const [m, max, min, sure] = part.split(':'); Object.assign(adaptive.MODES[m], { max: Number(max), min: Number(min), sure: Number(sure) }); }
+  if (lim) for (const part of lim.split(',')) { const [m, max, min, sure] = part.split(':'); Object.assign(adaptive.MODES[m], { max: Number(max), min: Number(min), sure: Number(sure), confidence: Number(sure) }); }
   if (arg0('quick-scale') !== null) process.env.ADAPTIVE_QUICK_SCALE = arg0('quick-scale');
   // --quick=fast: the 5-minute Quick this branch tried and did not ship (a clock-bound walk that prefers short questions, minimum 10 answers, no lift); --quick-min=n its minimum.
   if (arg0('quick') === 'fast') Object.assign(adaptive.MODES.quick, { min: 10, noLift: true });
@@ -135,7 +135,7 @@ function sit(bank, mode, ability, random, { dontKnow = false, clock = null, fast
     asked.push({ grade: block.grade, part: block.part });
     post = adaptive.posterior(span, answered);
     const late = clock && adaptive.clockEnded(mode, span, answered.length, elapsed * 1000, clock.seconds * 1000);
-    block = adaptive.done(mode, answered, post, ctxOf()) || late ? null : adaptive.nextBlock(blocks, asked, adaptive.nextTarget(answered, post, ctxOf()), { fast });
+    block = adaptive.done(mode, answered, post, ctxOf()) || late ? null : adaptive.chooseBlock(blocks, asked, adaptive.nextTarget(answered, post, ctxOf()), post, answered.length, { fast });
   }
   return { placed: adaptive.recommend(span, post, answered).index, asked: answered.length, seconds: elapsed };
 }

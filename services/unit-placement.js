@@ -37,12 +37,12 @@ const BANK_DIR = path.join(__dirname, '..', 'content', 'unit-placement');
  * the earlier-grade gap scan (the owner's limits of 2026-11-02 for Balanced and Accurate). Balanced was 32 + 13 and Accurate 57 + 25 (+ 8 for the gap scan).
  */
 const MODES = {
-  quick: { max: 14, min: 6, sure: 0.85, minutes: 6 },
-  balanced: { max: 30, min: 10, sure: 0.95, minutes: 6 },
+  quick: { max: 20, min: 6, sure: 0.85, confidence: 0.95, minutes: 8 },
+  balanced: { max: 30, min: 10, sure: 0.95, confidence: 0.97, minutes: 8 },
   // Up to 80: with five questions a unit, simulated Accurate walks average about
   // 69 questions and place 926 of 928 testers within a unit (the clock still
   // bounds it).
-  accurate: { max: 80, min: 16, sure: 0.995, minutes: 14 },
+  accurate: { max: 40, min: 14, sure: 0.995, confidence: 0.98, minutes: 14 },
 };
 
 /**
@@ -94,13 +94,19 @@ function calibrationFor(trackId) {
   return data;
 }
 
-/** The grade's units with their questions, or null when the grade has no complete bank. */
+/**
+ * The grade's units with their questions, or null when the grade has no complete bank. Memoised against the bank file's and the
+ * calibration file's modification times, so the same array comes back until either file changes (the walk caches on it).
+ */
+const unitsMemo = new Map();
 function unitsFor(trackId, gradeId) {
   const bank = bankFor(trackId);
   const grade = bank && bank.grades && bank.grades[gradeId];
   if (!grade || !Array.isArray(grade.units) || !grade.units.length) return null;
   if (grade.units.some((u) => !Array.isArray(u.questions) || !u.questions.length)) return null;
   const calibration = calibrationFor(trackId);
+  const hit = unitsMemo.get(`${trackId}|${gradeId}`);
+  if (hit && hit.grade === grade && hit.calibration === calibration) return hit.units;
   const units = !calibration ? grade.units.slice() : grade.units.map((u) => ({
     ...u,
     questions: u.questions.map((q) => {
@@ -113,6 +119,7 @@ function unitsFor(trackId, gradeId) {
   if (bank.shape && Number.isFinite(bank.shape.width) && Number.isFinite(bank.shape.reliable)) {
     Object.defineProperty(units, 'shape', { value: { width: bank.shape.width, reliable: bank.shape.reliable, ...(Number.isFinite(bank.shape.round) ? { round: bank.shape.round } : {}) } });
   }
+  unitsMemo.set(`${trackId}|${gradeId}`, { grade, calibration, units });
   return units;
 }
 
@@ -157,13 +164,177 @@ function itemFor(trackId, gradeId, unit, slot) {
   };
 }
 
-/** The belief from the answers so far: {unit, correct} rows. */
+/**
+ * Holes. A learner who has moved past a unit has usually learned it, but not always: a unit skipped in school, forgotten, or
+ * never taught is a hole, and every question in it is answered at the guess rate however far past it the learner is. A walk
+ * that reads each answer on its own takes a miss on a hole for evidence the frontier is low, and a learner with holes was
+ * placed early (simulated: 100% within one unit with no holes, 60-70% with three holes in ten). So the belief reads a unit's
+ * answers together and allows that, with probability UNIT_HOLE times how likely the unit is to be below the frontier, they
+ * were all guessed. The frontier is then what the units above the holes say. UNIT_HOLE=0 turns this off (the earlier walk).
+ * 0.15 is an assumption about real learners, not a measurement: the simulator tests it at 0, 10, 20, 30 and 40% holes.
+ */
+const UNIT_HOLE = Number(process.env.UNIT_HOLE ?? 0.15);
+/** The chance a hole's question is guessed right, over pure chance: a little slack for the odd question that can be eliminated. */
+const HOLE_SLACK = 0.04;
+
+const KNOWN = (x, pos, shape) => 1 / (1 + Math.exp(-(x - pos + shape.reliable) / shape.width));
+
+/**
+ * What never changes for a grade's units: the grid, and for each unit how likely it is to be below the frontier at each point
+ * (the mean over its questions of the chance a learner at x knows them), which is what a hole's weight is scaled by. Cached on
+ * the units array, which unitsFor memoises.
+ */
+const preps = new WeakMap();
+function prepOf(units) {
+  let p = preps.get(units);
+  if (p) return p;
+  const shape = units.shape || UNIT_SHAPE;
+  const grid = [];
+  for (let x = 0; x <= units.length + 1e-9; x += 0.05) grid.push(Math.round(x * 100) / 100);
+  const below = units.map((u, i) => {
+    const pos = u.questions.map((q) => pointOf(q, i + 1));
+    return Float64Array.from(grid, (x) => pos.reduce((n, pp) => n + KNOWN(x, pp, shape), 0) / pos.length);
+  });
+  p = { grid, below, shape };
+  preps.set(units, p);
+  return p;
+}
+
+/** One answered question as the walk reads it. */
+function termOf(units, a) {
+  const q = units[a.unit - 1].questions[a.slot] || units[a.unit - 1].questions[0];
+  return { pos: pointOf(q, a.unit), guess: 1 / Math.max(2, q.choices.length), correct: !!a.correct };
+}
+
+/** The log chance of one answer at every grid point, under "known to the frontier" (k) and "a hole, guessed" (h). */
+function termLogs(prep, t) {
+  const n = prep.grid.length;
+  const k = new Float64Array(n);
+  const h = new Float64Array(n);
+  const q = Math.min(0.6, t.guess + HOLE_SLACK);
+  const lh = Math.log(t.correct ? q : 1 - q);
+  for (let g = 0; g < n; g++) {
+    const p = adaptive.assumed(prep.grid[g], t.pos, t.guess, prep.shape);
+    k[g] = Math.log(t.correct ? p : 1 - p);
+    h[g] = lh;
+  }
+  return { k, h };
+}
+
+/** A unit's log belief from its summed per-answer logs: lk (all known), lh (all guessed), mixed by the hole weight. */
+function mixLog(lk, lh, below, hole) {
+  const n = lk.length;
+  const out = new Float64Array(n);
+  for (let g = 0; g < n; g++) {
+    if (!hole) { out[g] = lk[g]; continue; }
+    const pi = hole * below[g];
+    const m = lk[g] > lh[g] ? lk[g] : lh[g];
+    out[g] = m + Math.log((1 - pi) * Math.exp(lk[g] - m) + pi * Math.exp(lh[g] - m));
+  }
+  return out;
+}
+
+/** Per unit, the summed answer logs {lk, lh} (null for a unit with no answers). */
+function sums(units, prep, answered) {
+  const per = units.map(() => null);
+  for (const a of answered) {
+    const t = termLogs(prep, termOf(units, a));
+    const cur = per[a.unit - 1] || (per[a.unit - 1] = { lk: new Float64Array(prep.grid.length), lh: new Float64Array(prep.grid.length) });
+    for (let g = 0; g < t.k.length; g++) { cur.lk[g] += t.k[g]; cur.lh[g] += t.h[g]; }
+  }
+  return per;
+}
+
+function normalised(grid, logp) {
+  let top = -Infinity;
+  for (let g = 0; g < logp.length; g++) if (logp[g] > top) top = logp[g];
+  const w = new Array(logp.length);
+  let total = 0;
+  for (let g = 0; g < logp.length; g++) { w[g] = Math.exp(logp[g] - top); total += w[g]; }
+  for (let g = 0; g < w.length; g++) w[g] /= total;
+  return { grid, w };
+}
+
+/** The belief from the answers so far: {unit, slot, correct} rows. */
 function beliefOf(units, answered) {
-  return adaptive.posterior(units.length, answered.map((a) => ({
-    pos: pointOf(units[a.unit - 1].questions[a.slot], a.unit),
-    guess: 1 / Math.max(2, (units[a.unit - 1].questions[a.slot] || units[a.unit - 1].questions[0]).choices.length),
-    correct: !!a.correct,
-  })), units.shape || UNIT_SHAPE);
+  const prep = prepOf(units);
+  const per = sums(units, prep, answered);
+  const logp = new Float64Array(prep.grid.length);
+  per.forEach((s, i) => {
+    if (!s) return;
+    const l = mixLog(s.lk, s.lh, prep.below[i], UNIT_HOLE);
+    for (let g = 0; g < logp.length; g++) logp[g] += l[g];
+  });
+  return normalised(prep.grid, logp);
+}
+
+/**
+ * The question that tells the walk most: of the unused questions near the middle of the belief, the one whose answer is
+ * expected to leave the belief narrowest (smallest expected entropy), computed with the unit's other answers in view, so a
+ * question in a unit that has just been missed is worth less than one in its neighbour. UNIT_PICK=nearest is the earlier rule
+ * (the unused question that sits nearest the middle).
+ */
+const UNIT_PICK = process.env.UNIT_PICK || 'info';
+const PICK_NEAR = Number(process.env.UNIT_PICK_NEAR || 24);
+
+function pickByInformation(units, answered, post) {
+  const prep = prepOf(units);
+  const { grid } = prep;
+  const n = grid.length;
+  const per = sums(units, prep, answered);
+  const logs = per.map((s, i) => (s ? mixLog(s.lk, s.lh, prep.below[i], UNIT_HOLE) : new Float64Array(n)));
+  const base = new Float64Array(n);
+  for (const l of logs) for (let g = 0; g < n; g++) base[g] += l[g];
+  const m = adaptive.median(post);
+  const used = new Set(answered.map((a) => `${a.unit}:${a.slot}`));
+  const cands = [];
+  units.forEach((u, i) => u.questions.forEach((q, slot) => {
+    if (!used.has(`${i + 1}:${slot}`)) cands.push({ unit: i + 1, slot, pos: pointOf(q, i + 1), q });
+  }));
+  cands.sort((a, b) => Math.abs(a.pos - m) - Math.abs(b.pos - m));
+  let best = null;
+  const rest = new Float64Array(n);
+  const lp = new Float64Array(n);
+  const zero = new Float64Array(n);
+  for (const c of cands.slice(0, PICK_NEAR)) {
+    const i = c.unit - 1;
+    for (let g = 0; g < n; g++) rest[g] = base[g] - logs[i][g];
+    const s = per[i] || { lk: zero, lh: zero };
+    const guess = 1 / Math.max(2, c.q.choices.length);
+    const out = [];
+    for (const correct of [true, false]) {
+      const t = termLogs(prep, { pos: c.pos, guess, correct });
+      const lk = new Float64Array(n);
+      const lh = new Float64Array(n);
+      for (let g = 0; g < n; g++) { lk[g] = s.lk[g] + t.k[g]; lh[g] = s.lh[g] + t.h[g]; }
+      const l = mixLog(lk, lh, prep.below[i], UNIT_HOLE);
+      let top = -Infinity;
+      for (let g = 0; g < n; g++) { lp[g] = rest[g] + l[g]; if (lp[g] > top) top = lp[g]; }
+      let z = 0;
+      for (let g = 0; g < n; g++) { lp[g] = Math.exp(lp[g] - top); z += lp[g]; }
+      let h = 0;
+      for (let g = 0; g < n; g++) { const w = lp[g] / z; if (w > 1e-12) h -= w * Math.log(w); }
+      out.push({ z: z * Math.exp(top), h });
+    }
+    const expected = (out[0].z * out[0].h + out[1].z * out[1].h) / (out[0].z + out[1].z);
+    if (!best || expected < best.expected - 1e-9) best = { unit: c.unit, slot: c.slot, expected };
+  }
+  return best;
+}
+
+/**
+ * The stop rule. A placement is within one unit of the truth when the learner's real first unfinished unit is the placed one or
+ * either neighbour, that is when the frontier lies in [placed - 2, placed + 1). The walk stops once the belief puts at least the
+ * mode's `confidence` of its weight there, so it stops on the very error the owner holds it to (about 90% within one unit),
+ * not on a stand-in for it (the earlier rule asked for `sure` of the belief within one unit of its middle, a wider band than
+ * the placement needs, and at 0.95 ran most walks to their cap). UNIT_STOP=legacy restores the earlier rule.
+ */
+const UNIT_STOP = process.env.UNIT_STOP || 'within1';
+
+function withinOneMass(units, answered, post) {
+  const placed = placedUnit(units, answered, post).unit;
+  const shift = units.shape && Number.isFinite(units.shape.round) ? units.shape.round : UNIT_ROUND;
+  return post.grid.reduce((n, x, i) => (x + shift >= placed - 2 && x + shift < placed + 1 ? n + post.w[i] : n), 0);
 }
 
 /**
@@ -178,10 +349,16 @@ function nextQuestion(trackId, gradeId, mode, answered, { deadline = null, start
   if (deadline && Date.now() >= Date.parse(deadline)) return null;
   const post = beliefOf(units, answered);
   if (answered.length >= cfg.min) {
-    const m = adaptive.median(post);
-    if (adaptive.massWithin(post, m - 1, m + 1) >= cfg.sure) return null;
+    if (UNIT_STOP === 'legacy') {
+      const m = adaptive.median(post);
+      if (adaptive.massWithin(post, m - 1, m + 1) >= cfg.sure) return null;
+    } else if (withinOneMass(units, answered, post) >= cfg.confidence) return null;
   }
   const target = answered.length ? adaptive.median(post) : (Number.isFinite(startUnit) ? startUnit - 1 + UNIT_AT : units.length / 2);
+  if (answered.length && UNIT_PICK === 'info') {
+    const pick = pickByInformation(units, answered, post);
+    if (pick) return { unit: pick.unit, slot: pick.slot };
+  }
   const used = new Set(answered.map((a) => `${a.unit}:${a.slot}`));
   let best = null;
   // The unused question that sits nearest the middle of the belief, wherever it was written.
@@ -212,8 +389,8 @@ const UNIT_THIN_Q = Number(process.env.UNIT_THIN_Q || 0.1);
 const UNIT_THIN_ASKED = Number(process.env.UNIT_THIN_ASKED || 6);
 
 /** The unit a learner starts at, from the answers. */
-function placedUnit(units, answered) {
-  const post = beliefOf(units, answered);
+function placedUnit(units, answered, belief = null) {
+  const post = belief || beliefOf(units, answered);
   const x = adaptive.median(post);
   const sure = adaptive.massWithin(post, x - 1, x + 1);
   if (!answered.some((a) => a.correct)) return { unit: 1, sure };

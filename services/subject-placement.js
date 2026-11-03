@@ -793,7 +793,7 @@ function submitBlock(userId, trackId, answers, { partial = false } = {}) {
   const ctx = { topLeft: adaptive.topLeft(placement.grade_ids.length, allBlocks, asked) };
   const next = adaptive.done(placement.mode, answered, post, ctx) || late || partial
     ? null
-    : adaptive.nextBlock(allBlocks, asked, adaptive.nextTarget(answered, post, ctx), { fast: !!(adaptive.MODES[placement.mode] || {}).shortFirst });
+    : adaptive.chooseBlock(allBlocks, asked, adaptive.nextTarget(answered, post, ctx), post, answered.length, { fast: !!(adaptive.MODES[placement.mode] || {}).shortFirst });
 
   const updated = db.update(PLACEMENTS, placement.id, {
     scores,

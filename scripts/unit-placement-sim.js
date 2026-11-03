@@ -36,6 +36,7 @@ process.env.HOLDOUT_DIR = TMP;
 const db = require('../config/db');
 const curriculum = require('../config/curriculum');
 const unitPlacement = require('../services/unit-placement');
+const { questionSeconds } = require('../services/placement-seconds');
 const learnerPath = require('../services/learner-path');
 const cu = require('../services/catchup-units');
 
@@ -44,6 +45,14 @@ const SEEDS = { dev: 20261101, held: 20261102 };
 const SEED_NAME = arg('seed', 'held');
 const SEED = SEEDS[SEED_NAME] || Number(SEED_NAME);
 const HARD = !!arg('hard', false);
+// The mode's in-grade clock (unitPlacement.MODES[mode].minutes) ends a walk as it does in the app (routes/placement.js deadline): each learner
+// answers at a pace of their own (lognormal around the estimate, sd 0.28, as scripts/placement-sim.js) x the question's estimated seconds.
+// --no-clock turns it off, which is how the first simulations of this stage (26 s a question, no clock) ran.
+const CLOCK = !arg('no-clock', false);
+if (arg('clock-min', null)) for (const part of String(arg('clock-min')).split(',')) { const [m, min] = part.split(':'); unitPlacement.MODES[m].minutes = Number(min); }
+const WALK_ONLY = !!arg('walk-only', false); // tuning: skip the gap-only path and quick checks; only the placement columns mean anything
+// --limits=quick:max:min:confidence,balanced:max:min:confidence tries other in-grade walk limits without editing the service (as scripts/placement-sim.js).
+if (arg('limits', null)) for (const part of String(arg('limits')).split(',')) { const [m, max, min, sure] = part.split(':'); Object.assign(unitPlacement.MODES[m], { max: Number(max), min: Number(min), confidence: Number(sure), sure: Number(sure) }); }
 const WIDTH = HARD ? 0.45 : 0.3;
 const SLIP = 0.03;
 const ITEM_SD = HARD ? 0.4 : 0;
@@ -74,12 +83,17 @@ function oneLearner({ trackId, gradeId, mode, f, holes, rand, tag }) {
     return rand() < guess + (1 - SLIP - guess) * known;
   };
   const answered = [];
+  const pace = Math.exp(0.28 * normal(rng(Math.floor(hashNoise(`pace|${tag}`) * 4294967296))));
+  let walkSeconds = 0; // the walk's time, ESTIMATED from each question's words (services/placement-seconds.js), not timed on people
   for (let i = 0; i < 200; i++) {
+    if (CLOCK && walkSeconds >= unitPlacement.MODES[mode].minutes * 60) break;
     const next = unitPlacement.nextQuestion(trackId, gradeId, mode, answered);
     if (!next) break;
+    walkSeconds += questionSeconds(units[next.unit - 1].questions[next.slot], trackId) * pace;
     answered.push({ ...next, correct: respond(next.unit, next.slot) });
   }
   const result = unitPlacement.score(trackId, gradeId, answered);
+  if (WALK_ONLY) return { placed: result.unit, asked: answered.length, checks: 0, status: {}, walkSeconds };
   const user = db.insert('users', { email: `${tag}@sim.test`, display_name: 'S', xp: 0, streak: 0 });
   const enr = db.insert('enrollments', { user_id: user.id, track_id: trackId, grade_id: gradeId, current_level: 1, path_length: curriculum.getGrade(trackId, gradeId).pathLength });
   learnerPath.initFromPlacement(db.byId('enrollments', enr.id), result, answered);
@@ -93,11 +107,13 @@ function oneLearner({ trackId, gradeId, mode, f, holes, rand, tag }) {
   }
   const status = {};
   for (const r of learnerPath.unitRows(db.byId('enrollments', enr.id))) status[r.unit] = r.status;
-  return { placed: result.unit, asked: answered.length, checks, status };
+  return { placed: result.unit, asked: answered.length, checks, status, walkSeconds };
 }
 
 function simulate(trackId, mode, gradeCount) {
   const out = { rows: [], total: {} };
+  const byHole = HOLE_RATES.map(() => ({ n: 0, w: 0, e: 0 }));
+  const walkMinutes = [];
   const t = { n: 0, within1: 0, exact: 0, err: 0, asked: 0, checks: 0, wasted: 0, lost: 0, planted: 0, onPath: 0, below: 0, belowReopened: 0, known: 0, falseGap: 0, fullPath: 0, neededMin: 0, falseSkipLearners: 0, knownMin: 0, within1None: 0 };
   for (const gradeId of gradesOf(trackId, gradeCount)) {
     const units = unitPlacement.unitsFor(trackId, gradeId);
@@ -121,6 +137,8 @@ function simulate(trackId, mode, gradeCount) {
           if (needs && !onPath(u)) lost += minutes[u - 1];
           if (holes.has(u)) { planted++; if (onPath(u)) found++; if (u < r.placed) { below++; if (r.status[u] === 'learn') belowOpen++; } }
         }
+        walkMinutes.push(r.walkSeconds / 60);
+        byHole[hi].n++; byHole[hi].w += Math.abs(r.placed - start) <= 1 ? 1 : 0; byHole[hi].e += r.placed - start;
         t.n++; t.within1None += start <= 2 ? 1 : 0; t.within1 += Math.abs(r.placed - start) <= 1 ? 1 : 0; t.exact += r.placed === start ? 1 : 0; t.err += r.placed - start;
         t.asked += r.asked; t.checks += r.checks; t.wasted += wasted; t.lost += lost; t.planted += planted; t.onPath += found; t.below += below; t.belowReopened += belowOpen;
         t.known += known; t.falseGap += falseGap; t.fullPath += minutes.reduce((a, b) => a + b, 0); t.neededMin += needed; t.falseSkipLearners += lost > 0 ? 1 : 0; t.knownMin += knownMin;
@@ -130,6 +148,8 @@ function simulate(trackId, mode, gradeCount) {
   }
   const h = (m) => m / 60;
   out.total = {
+    walkMedianMin: (walkMinutes.sort((a, b) => a - b)[Math.floor(walkMinutes.length / 2)]), walkP90Min: walkMinutes[Math.floor(walkMinutes.length * 0.9)],
+    byHole: byHole.map((b, i) => ({ holeRate: HOLE_RATES[i], within1: b.w / b.n, meanErr: b.e / b.n })),
     track: trackId, mode, learners: t.n, grades: out.rows.length,
     within1: t.within1 / t.n, within1None: t.within1None / t.n, exact: t.exact / t.n, meanErr: t.err / t.n,
     questions: t.asked / t.n, checks: t.checks / t.n, minutes: ((t.asked + t.checks) * SECONDS) / 60 / t.n,
@@ -213,6 +233,8 @@ if (require.main === module) {
   const rows = runOne(modes);
   console.log(`unit-placement-sim seed=${SEED_NAME}(${SEED}) ${HARD ? 'HARD (wider slope, item error)' : 'standard'} ${PER_CELL} learners per grade and hole rate`);
   console.log(table(rows));
+  for (const r of rows) console.log(`walk time (estimated from words) ${r.track}/${r.mode}: median ${r.walkMedianMin.toFixed(1)} min, p90 ${r.walkP90Min.toFixed(1)} min`);
+  for (const r of rows) console.log(`by hole rate ${r.track}/${r.mode}: ` + r.byHole.map((b) => `${Math.round(b.holeRate * 100)}% holes -> within 1 ${pct(b.within1)} (mean error ${b.meanErr.toFixed(2)})`).join('; '));
   let failed = 0;
   if (gate) {
     for (const r of rows) {
