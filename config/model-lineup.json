@@ -576,43 +576,38 @@
       },
       "lesson_write": {
         "allow": [
-          "xkiro:minimax/minimax-m3.1-flash",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017"
         ],
         "timeout_ms": 300000,
-        "basis": "same family as the lineup's hard-tier head (DeepSeek V4.1 Flash); no direct eval on lesson writing; MiniMax M3.1 Flash allowed for learner writing while the xKiro learner window is open (owner, 3 Nov, until Nov 6): the pipeline wrote and gated today's content with it"
+        "basis": "same family as the lineup's hard-tier head (DeepSeek V4.1 Flash); no direct eval on lesson writing"
       },
       "block_fill": {
         "allow": [
-          "xkiro:minimax/minimax-m3.1-flash",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017"
         ],
         "timeout_ms": 300000,
-        "basis": "as lesson_write; MiniMax M3.1 Flash allowed for learner writing while the xKiro learner window is open (owner, 3 Nov, until Nov 6): the pipeline wrote and gated today's content with it"
+        "basis": "as lesson_write"
       },
       "block_layout": {
         "allow": [
-          "xkiro:minimax/minimax-m3.1-flash",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017"
         ],
         "timeout_ms": 180000,
-        "basis": "as lesson_write; MiniMax M3.1 Flash allowed for learner writing while the xKiro learner window is open (owner, 3 Nov, until Nov 6): the pipeline wrote and gated today's content with it"
+        "basis": "as lesson_write"
       },
       "game_questions": {
         "allow": [
-          "xkiro:minimax/minimax-m3.1-flash",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017"
         ],
         "timeout_ms": 300000,
-        "basis": "as lesson_write; MiniMax M3.1 Flash allowed for learner writing while the xKiro learner window is open (owner, 3 Nov, until Nov 6): the pipeline wrote and gated today's content with it"
+        "basis": "as lesson_write"
       },
       "author_items": {
         "allow": [
-          "xkiro:minimax/minimax-m3.1-flash",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017"
         ],
         "timeout_ms": 300000,
-        "basis": "as lesson_write; MiniMax M3.1 Flash allowed for learner writing while the xKiro learner window is open (owner, 3 Nov, until Nov 6): the pipeline wrote and gated today's content with it"
+        "basis": "as lesson_write"
       },
       "lesson_write_urgent": {
         "timeout_ms": 180000
