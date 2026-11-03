@@ -23,6 +23,7 @@ const path = require('./material-path');
 const courses = require('./course-builder');
 const materials = require('./materials');
 const adapt = require('./material-adapt');
+const retentionGoal = require('./retention-goal');
 
 const DAY = 24 * 60 * 60 * 1000;
 const MAX_CARDS = 400;
@@ -179,6 +180,10 @@ function review(userId, materialId, cardId, rating, now = Date.now()) {
     days = path.intervalDays(c.right, c.wrong, r.forget_m || 0, require('./learning-spec').buildSpec(userId, {})); // eslint-disable-line global-require
     if (rating === 'hard') days = Math.max(1, Math.floor(days / 2));
     if (rating === 'easy') days = Math.min(MAX_INTERVAL, Math.ceil(days * 1.5));
+    // The course's retention goal (services/retention-goal.js): compress to a test date, or stop once a review would land past the horizon.
+    // A card that needs no more reviews is parked ten years out (an empty due date would mean due now).
+    const lim = retentionGoal.limitInterval(retentionGoal.forMaterial(userId, materialId, now), days, now);
+    if (lim.done) { c.goal_done = true; days = 3650; } else { delete c.goal_done; days = lim.days; }
     c.due = new Date(now + days * DAY).toISOString();
   }
   c.interval_days = days;

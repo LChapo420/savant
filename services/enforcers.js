@@ -43,6 +43,12 @@
  *              work in time order, spread evenly), the standard question time
  *              rather than their own, and they can skip any enforcer.
  *
+ *   goals      a retention goal per subject (services/retention-goal.js) shapes which scheduled
+ *              enforcers speak for that subject's work: a few months, a year, years or forever keep
+ *              the owner's types its horizon needs (forever: all of them, exactly as above); a test
+ *              date replaces them with its own compressed reviews (covers marked `goal`), a final one
+ *              the day before and a short one on the day. The end-of-day enforcer stays for every subject.
+ *
  * Off with RETENTION_ENFORCERS=off (every route answers 404, the daily review
  * comes back as it was).
  */
@@ -57,6 +63,7 @@ const coverage = require('./coverage');
 const adaptation = require('./adaptation');
 const mastery = require('./mastery');
 const objItems = require('./objective-items');
+const retentionGoal = require('./retention-goal');
 
 const DAY = 24 * 3600 * 1000;
 const FINAL = new Set(['done', 'declined', 'skipped', 'stopped', 'expired', 'empty', 'merged']);
@@ -578,24 +585,28 @@ function questionFor(u, avoid, used, shapes, { scope = 'session', varied = false
 /** Measure a window and store the enforcer for it (status `choosing`, or `empty` when nothing fits). */
 function create(userId, { scope, win, covers = [], studyIds = [], dayStudyIds = [], status = 'choosing', late = false, now = Date.now() }) {
   const tz = study.zoneFor(userId);
-  const rows = windowItems(userId, win, tz);
   const base = isBase(userId);
   const model = costModel(userId, base, now);
-  const { units, recFor } = unitsFrom(userId, rows);
   // A scheduled enforcer absorbs its day's end-of-day enforcer and, on a shared
   // day, the narrower scheduled ones: one part per absorbed scope, each on its
   // own window (allocation.budget.combined).
   const scheduled = covers.filter((c) => SCHEDULED.has(c.type));
   const dayDate = scheduled.length ? scheduled.reduce((m, c) => (c.date > m ? c.date : m), scheduled[0].date) : null;
+  // Each subject's retention goal decides which of them speak for its work.
+  const rows = keepRows(windowItems(userId, win, tz), scheduled, goalView(userId, study.anchorOf(userId), now), tz, dayDate);
+  const { units, recFor } = unitsFrom(userId, rows);
   let parts = null;
   if (scheduled.length) {
     const spans = new Map();
     for (const c of scheduled) {
-      const x = spans.get(c.type);
-      if (!x || c.from_date < x.from_date) spans.set(c.type, { from_date: c.from_date, to_date: c.to_date });
+      // A retention goal's own reviews each keep their own part (several of one size are separate windows of work).
+      const key = c.goal ? `${c.type}#goal#${c.day}#${c.enrollment_id}` : c.type;
+      const x = spans.get(key);
+      if (!x || c.from_date < x.from_date) spans.set(key, { from_date: c.from_date, to_date: c.to_date, scope: c.type });
     }
     spans.set('day', { from_date: dayDate, to_date: dayDate });
-    parts = [...spans.entries()].map(([type, w]) => {
+    parts = [...spans.entries()].map(([key, w]) => {
+      const type = w.scope || key;
       const inPart = rows.filter((r) => { const d = schedule.localDate(r.t, tz); return d >= w.from_date && d <= w.to_date; });
       return { scope: type, from_date: w.from_date, to_date: w.to_date, active_ms: Math.round(inPart.length ? activeMs(userId, w, inPart) : 0) };
     });
@@ -683,7 +694,9 @@ function slimUnit(u) {
  * attempts, topics, seconds, left_out}}, questions: {"key|k": q}, units }.
  */
 function draftAll(userId, enf, { now = Date.now() } = {}) {
-  const rows = windowItems(userId, winOf(enf), enf.tz || study.zoneFor(userId));
+  const tzOf = enf.tz || study.zoneFor(userId);
+  const sched = (enf.covers || []).filter((c) => SCHEDULED.has(c.type));
+  const rows = keepRows(windowItems(userId, winOf(enf), tzOf), sched, sched.length ? goalView(userId, study.anchorOf(userId), now) : null, tzOf, enf.day_date || null);
   const base = !!enf.base;
   const model = costModel(userId, base, now);
   const { units, recFor } = unitsFrom(userId, rows);
@@ -899,7 +912,7 @@ function onSessionEnded(userId, row, { scope = 'session', auto = false, now = Da
       }
       // A scheduled day: its end-of-day enforcer is part of the scheduled one (the widest absorbs the rest).
       const at = dayOf(userId, now);
-      if (at && at.today === day && schedule.typesOn(at.t).some((type) => !rowFor(userId, type, at.t))) {
+      if (at && at.today === day && (schedule.typesOn(at.t).some((type) => !rowFor(userId, type, at.t)) || goalToday(userId, at, now))) {
         const combined = scheduledOffer(userId, now, { includeToday: true });
         if (combined && combined.status !== 'running') return combined;
       }
@@ -943,9 +956,47 @@ function dayOf(userId, now = Date.now()) {
   return { anchor, tz, today, t: schedule.dayIndex(anchor, today) };
 }
 
-/** Rows that already speak for a scheduled occurrence. */
-function rowFor(userId, type, day) {
-  return db.findOne('enforcers', (e) => e.user_id === userId && Array.isArray(e.covers) && e.covers.some((c) => c.type === type && c.day === day)) || null;
+/** A retention goal's own review falls today and is not yet taken. */
+function goalToday(userId, at, now) {
+  const gv = goalView(userId, at.anchor, now);
+  return !!gv && retentionGoal.goalCovers(gv.goals, at.anchor, at.t).some((c) => c.day === at.t && !rowFor(userId, c.type, c.day, c.enrollment_id));
+}
+
+/** Rows that already speak for a scheduled occurrence (a retention goal's own review is told apart by its enrollment). */
+function rowFor(userId, type, day, goalEnrollment = null) {
+  return db.findOne('enforcers', (e) => e.user_id === userId && Array.isArray(e.covers) && e.covers.some((c) => c.type === type && c.day === day && (c.enrollment_id || null) === goalEnrollment)) || null;
+}
+
+/**
+ * The learner's retention goals as the enforcers read them (services/retention-goal.js), or null while
+ * every subject keeps the owner's whole calendar and no test date is set: then nothing below changes.
+ */
+function goalView(userId, anchor, now = Date.now()) {
+  if (!anchor) return null;
+  const gv = retentionGoal.enforcerView(userId, anchor, now);
+  return gv.intact && !gv.goals.length ? null : gv;
+}
+
+/**
+ * The rows of work a set of covers speaks for. Each row follows its own subject's goal; the work of the
+ * covers' last day (dayDate) always stays, because the end-of-day enforcer is part of a scheduled one.
+ */
+function keepRows(rows, covers, gv, tz, dayDate = null) {
+  if (!gv || !covers.length) return rows;
+  const fallback = retentionGoal.effective(null, gv.today);
+  return rows.filter((r) => {
+    const date = schedule.localDate(r.t, tz);
+    if (dayDate && date === dayDate) return true;
+    const tg = gv.byTrackGrade.get(`${r.track_id}/${r.grade_id}`);
+    const row = { enrollment_id: tg ? tg.enrollment_id : null, date, eff: tg ? tg.eff : fallback };
+    return covers.some((c) => retentionGoal.coverKeeps(c, row));
+  });
+}
+
+/** Does any of the learner's subjects keep this scheduled type on the owner's calendar? */
+function calendarKept(gv, type) {
+  if (!gv || !gv.byTrackGrade.size) return true;
+  return [...gv.byTrackGrade.values()].some((x) => retentionGoal.keptTypes(x.eff).includes(type));
 }
 
 /**
@@ -962,17 +1013,30 @@ function scheduledOffer(userId, now, { includeToday = false } = {}) {
   // session on a later day; never before today's own sessions.
   const upTo = includeToday ? at.t : at.t - 1;
   const due = [];
+  const gv = goalView(userId, at.anchor, now);
+  const consider = (cover) => {
+    const win = { from_date: cover.from_date, to_date: cover.to_date };
+    const raw = windowItems(userId, win, at.tz);
+    // The subjects whose goal still wants this one: the owner's calendar for forever and the horizons that need it, a test date's own reviews.
+    const rows = keepRows(raw, [cover], gv, at.tz);
+    if (!rows.length) {
+      db.insert('enforcers', { user_id: userId, scope: cover.type, status: 'empty', reason: raw.length ? 'goal' : 'nothing_answered', covers: [cover], window: { ...win, from_ms: null, to_ms: null }, base: isBase(userId), local_day: at.today, tz: at.tz, offered_at: iso(now) });
+      return;
+    }
+    due.push(cover);
+  };
   for (const type of schedule.TYPES) {
     const d = upTo >= 1 ? schedule.latest(type, upTo) : null;
     if (!d || rowFor(userId, type, d)) continue;
     const w = schedule.windowFor(type, d);
-    const win = { from_date: schedule.addDays(at.anchor, w.from), to_date: schedule.addDays(at.anchor, w.to) };
-    const cover = { type, day: d, date: schedule.addDays(at.anchor, d), from_date: win.from_date, to_date: win.to_date };
-    if (!windowItems(userId, win, at.tz).length) {
-      db.insert('enforcers', { user_id: userId, scope: type, status: 'empty', reason: 'nothing_answered', covers: [cover], window: { ...win, from_ms: null, to_ms: null }, base: isBase(userId), local_day: at.today, tz: at.tz, offered_at: iso(now) });
-      continue;
+    consider({ type, day: d, date: schedule.addDays(at.anchor, d), from_date: schedule.addDays(at.anchor, w.from), to_date: schedule.addDays(at.anchor, w.to) });
+  }
+  // A test date's own reviews (the day-of one is offered that morning, the others as the calendar's are).
+  if (gv) {
+    for (const c of retentionGoal.goalCovers(gv.goals, at.anchor, at.t)) {
+      if ((c.day > upTo && c.kind !== 'dayof') || rowFor(userId, c.type, c.day, c.enrollment_id)) continue;
+      consider(c);
     }
-    due.push(cover);
   }
   const open = db.findOne('enforcers', (e) => e.user_id === userId && SCHEDULED.has(e.scope) && (e.status === 'choosing' || e.status === 'running'));
   if (!due.length) return open;
@@ -1283,6 +1347,7 @@ function calendar(userId, { month = null, now = Date.now() } = {}) {
   const last = new Date(Date.UTC(y, m, 0)).toISOString().slice(0, 10);
   const t = schedule.dayIndex(anchor, today);
   const rows = db.find('enforcers', (e) => e.user_id === userId);
+  const gv = goalView(userId, real, now);
   // Days with answered work, for "missed" against "nothing to cover".
   const worked = new Set();
   const lookFrom = schedule.addDays(first, -40);
@@ -1298,7 +1363,7 @@ function calendar(userId, { month = null, now = Date.now() } = {}) {
     if (type) {
       const w = schedule.combinedWindow(idx);
       const win = { from_date: schedule.addDays(anchor, w.from), to_date: schedule.addDays(anchor, w.to) };
-      let row = rows.filter((e) => Array.isArray(e.covers) && e.covers.some((c) => c.type === type && c.day === idx)).sort((a, b) => b.id - a.id);
+      let row = rows.filter((e) => Array.isArray(e.covers) && e.covers.some((c) => c.type === type && c.day === idx && !c.goal)).sort((a, b) => b.id - a.id);
       row = row.find((e) => e.status !== 'merged') || row[0] || null;
       let status;
       if (row) status = STATUS[row.status] || row.status;
@@ -1307,6 +1372,8 @@ function calendar(userId, { month = null, now = Date.now() } = {}) {
       else if (idx === t) status = 'today';
       else status = anyWork(win.from_date, win.to_date) ? 'missed' : 'empty';
       if (status === 'merged') status = idx < t ? 'missed' : 'due';
+      // Every subject's goal has dropped this one: nothing is coming that day.
+      if (!row && !calendarKept(gv, type)) status = 'goal';
       ev = {
         type, label: schedule.LABEL[type], status,
         // The narrower ones it absorbs on this day; it is also this day's end-of-day enforcer.
@@ -1323,18 +1390,22 @@ function calendar(userId, { month = null, now = Date.now() } = {}) {
   const upcoming = [];
   for (let d = Math.max(1, t + 1); upcoming.length < 8 && d < t + 80; d++) {
     const types = schedule.typesOn(d);
-    if (!types.length) continue;
+    if (!types.length || !calendarKept(gv, types[0])) continue;
     const w = schedule.combinedWindow(d);
     upcoming.push({ type: types[0], label: schedule.LABEL[types[0]], absorbs: types.slice(1).map((x) => ({ type: x, label: schedule.LABEL[x] })), date: schedule.addDays(anchor, d), window: { from_date: schedule.addDays(anchor, w.from), to_date: schedule.addDays(anchor, w.to) } });
   }
-  return { tz, today, anchor: real, preview: !real, month: ym, first, last, days, upcoming };
+  // A test date's own reviews, from today on.
+  const goalReviews = gv ? retentionGoal.goalCovers(gv.goals, anchor, 1e9).filter((c) => c.date >= today).sort((a, b) => a.day - b.day).slice(0, 12)
+    .map((c) => ({ date: c.date, kind: c.kind, enrollment_id: c.enrollment_id, window: { from_date: c.from_date, to_date: c.to_date } })) : [];
+  return { tz, today, anchor: real, preview: !real, month: ym, first, last, days, upcoming, goal_reviews: goalReviews };
 }
 
 /** Today's scheduled enforcer (taken at End day session), or null: {type, label, absorbs, done}. */
 function scheduledToday(userId, now = Date.now()) {
   const at = dayOf(userId, now);
   if (!at || at.t < 1) return null;
-  const types = schedule.typesOn(at.t);
+  const gv = goalView(userId, at.anchor, now);
+  const types = schedule.typesOn(at.t).filter((x) => calendarKept(gv, x));
   if (!types.length) return null;
   const row = rowFor(userId, types[0], at.t);
   return { type: types[0], label: schedule.LABEL[types[0]], absorbs: types.slice(1).map((x) => ({ type: x, label: schedule.LABEL[x] })), done: !!(row && FINAL.has(row.status)), enforcer_id: row ? row.id : null };

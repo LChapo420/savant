@@ -22,6 +22,7 @@ const express = require('express');
 const db = require('../config/db');
 const study = require('../services/study-sessions');
 const enforcers = require('../services/enforcers');
+const retentionGoal = require('../services/retention-goal');
 const { requireAuth, requireSkip } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
 
@@ -45,6 +46,8 @@ function state(userId) {
     study: study.view(open, now),
     offer: waiting.length ? enforcers.view(waiting[0], { userId }) : null,
     waiting: waiting.length,
+    // The nearest test date among the learner's subjects and courses, for the daily plan (services/retention-goal.js).
+    test: retentionGoal.headline(userId),
     today: study.today(userId, now),
     anchor: study.anchorOf(userId),
     // Today's scheduled enforcer, taken at End day session (it absorbs the end-of-day one).
