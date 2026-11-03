@@ -1,5 +1,9 @@
 # Material matrix: what each kind of material becomes
 
+> Updated 3 Nov 2026: the format list, the structure each format keeps (headings, bold, boxes, pages, slides, time), the key points
+> with emphasis weights and the coverage gate are in `docs/UPLOADS-ANY-FORMAT.md`, with measured numbers. The table below is the
+> earlier slice (30 Oct) and is kept as written.
+
 Owner's order (30 Oct): any material should work, or fail with a precise, honest message. This table is what is
 proven today and where. "Proven" means a test with a fixture runs in `npm test`; nothing here was tried with a real
 model, a real speech model or a browser (that is S13, on the owner's machine).

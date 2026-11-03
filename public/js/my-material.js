@@ -30,7 +30,7 @@ App.mount(async () => {
       <div class="card" style="margin-top:18px">
         <h2>Upload a file</h2>
         <label class="field"><span>PDF, Word (.docx), PowerPoint (.pptx), .txt, .md or a picture (.png, .jpg). For Google Slides, use File, Download, PowerPoint. Up to ${lim.max_mb} MB and about ${lim.max_pages} pages.</span>
-          <input type="file" id="file" accept=".pdf,.docx,.pptx,.xlsx,.odt,.epub,.rtf,.html,.htm,.csv,.tex,.txt,.md,.markdown,.png,.jpg,.jpeg,.mp4,.mov,.webm,.mkv,application/pdf,image/png,image/jpeg,text/plain,text/markdown,video/mp4,video/quicktime,video/webm,video/x-matroska"></label>
+          <input type="file" id="file" accept=".pdf,.docx,.doc,.pptx,.xlsx,.odt,.odp,.ods,.epub,.rtf,.html,.htm,.csv,.tex,.ipynb,.srt,.vtt,.zip,.txt,.md,.markdown,.png,.jpg,.jpeg,.webp,.gif,.bmp,.tif,.tiff,.heic,.mp4,.mov,.webm,.mkv,application/pdf,image/png,image/jpeg,text/plain,text/markdown,video/mp4,video/quicktime,video/webm,video/x-matroska"></label>
         <button class="btn btn-primary" type="button" id="upload">Upload</button>
         <p class="small" id="upload-note" role="status"></p>
       </div>

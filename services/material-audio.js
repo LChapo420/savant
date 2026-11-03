@@ -7,8 +7,14 @@
  * the model files are optional: when either is missing the learner is told so plainly and nothing is made up.
  *
  * The transcript keeps its timestamps, one "[m:ss] text" line per chunk, and is stored as a material of kind
- * 'audio'. The audio itself is held in memory while the job runs and thrown away after; it is never written
- * to disk. A job row (progress, errors) belongs to one learner and goes with their account.
+ * 'audio'. The audio itself is held in memory while the job runs and thrown away after. The one exception is an
+ * m4a or mp4 container (the common phone recording): ffmpeg cannot read those from a pipe when the index is at
+ * the end of the file, so the bytes go to a random temp file for the decode and the file is deleted straight after.
+ * A job row (progress, errors) belongs to one learner and goes with their account.
+ *
+ * Whisper is asked for segment timestamps (return_timestamps). Without them the model stops after its first segment
+ * of each 30 second window and silently drops the rest: measured on a read lecture (scripts/uploads-proof.js), the
+ * plain call kept 5 words of the first window, the timestamped call kept all of it.
  *
  *   material_audio_jobs   { user_id, title, status: queued|running|done|failed, chunks, done, material_id, error }
  */
@@ -84,9 +90,9 @@ function ffmpegPath() {
 }
 
 /** Any container to 16 kHz mono float samples, through ffmpeg (stdin to stdout, nothing on disk). */
-function decodeWithFfmpeg(buf, bin) {
+function decodeWithFfmpeg(buf, bin, file) {
   return new Promise((resolve) => {
-    const p = spawn(bin, ['-v', 'error', '-i', 'pipe:0', '-vn', '-ac', '1', '-ar', String(SAMPLE_RATE), '-t', String(MAX_SECONDS + 1), '-f', 'f32le', 'pipe:1'], { stdio: ['pipe', 'pipe', 'ignore'] });
+    const p = spawn(bin, ['-v', 'error', '-i', file || 'pipe:0', '-vn', '-ac', '1', '-ar', String(SAMPLE_RATE), '-t', String(MAX_SECONDS + 1), '-f', 'f32le', 'pipe:1'], { stdio: ['pipe', 'pipe', 'ignore'] });
     const parts = [];
     p.stdout.on('data', (d) => parts.push(d));
     p.on('error', () => resolve(fail('The audio decoder could not start.', 'no_decoder')));
@@ -97,7 +103,7 @@ function decodeWithFfmpeg(buf, bin) {
       resolve({ samples: new Float32Array(copy.buffer, copy.byteOffset, Math.floor(copy.length / 4)) });
     });
     p.stdin.on('error', () => {});
-    p.stdin.end(buf);
+    if (file) p.stdin.end(); else p.stdin.end(buf);
   });
 }
 
@@ -105,6 +111,10 @@ async function decode(buf, type, deps = {}) {
   if (type === 'wav') return decodeWav(buf);
   const bin = deps.ffmpeg === undefined ? ffmpegPath() : deps.ffmpeg;
   if (!bin) return fail('This server cannot read mp3, m4a, webm or ogg yet: its audio decoder (ffmpeg-static) is not installed. A WAV file works, or paste a transcript.', 'no_decoder');
+  if (type === 'm4a') {
+    const tmp = path.join(require('os').tmpdir(), `savant-audio-${require('crypto').randomBytes(8).toString('hex')}.m4a`); // eslint-disable-line global-require
+    try { fs.writeFileSync(tmp, buf, { mode: 0o600 }); return await decodeWithFfmpeg(buf, bin, tmp); } finally { try { fs.unlinkSync(tmp); } catch { /* already gone */ } }
+  }
   return decodeWithFfmpeg(buf, bin);
 }
 
@@ -148,7 +158,7 @@ async function realTranscriber() {
   tf.env.localModelPath = MODEL_DIR;
   const asr = await tf.pipeline('automatic-speech-recognition', MODEL);
   cachedTranscriber = async (samples) => {
-    const out = await asr(samples);
+    const out = await asr(samples, { return_timestamps: true });
     return String((out && out.text) || '').trim();
   };
   return cachedTranscriber;
@@ -245,5 +255,5 @@ async function work(userId, jobId, buf, type, deps) {
 
 module.exports = {
   SAMPLE_RATE, CHUNK_SECONDS, MAX_SECONDS,
-  sniffAudio, decodeWav, decode, chunk, stamp, availability, submit, listJobs, removeJob,
+  sniffAudio, decodeWav, decode, chunk, stamp, availability, realTranscriber, submit, listJobs, removeJob,
 };

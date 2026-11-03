@@ -9,6 +9,11 @@
  * it will go through services/pool.js with learner-class providers only.
  *
  * File type is decided by the first bytes, never by the name or the browser's content type.
+ *
+ * Understanding (services/material-keypoints.js): every parser also returns `rich` text with the structure it saw (headings,
+ * bold, boxes, page / slide / time marks). add() runs the key-point pass over it and keeps, per material, the key points
+ * (emphasis weight 1 to 5, source location, offset in the stored text) and the topics. The course builder reads them:
+ * services/course-builder.js teaches every key point and gates on it. Formats: see docs/UPLOADS-ANY-FORMAT.md.
  */
 const db = require('../config/db');
 
@@ -20,21 +25,24 @@ const MAX_ITEMS = 20;                    // materials per learner
 const MAX_TOTAL_CHARS = 3000000;         // stored text per learner
 const MAX_TITLE = 120;
 
-const { fail, normalise, zipEntries, fromImage } = require('./material-parsers');
+const { fail, normalise, zipEntries, ocr, countWords, MIN_OCR_WORDS } = require('./material-parsers');
 const { parseInChild } = require('./material-runner');
+const formats = require('./material-formats');
+const keypoints = require('./material-keypoints');
 
 function cleanTitle(t, fallback) {
   const s = String(t || '').replace(/[\u0000-\u001f\u007f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, MAX_TITLE);
   return s || fallback;
 }
 
-/** The kind of file from its first bytes: 'pdf', 'docx', 'png', 'jpeg', 'text' or null. */
+/** The kind of file from its first bytes: 'pdf', 'rtf', a picture type, 'cfb' (old Office), 'zip', 'text' or null. */
 function sniff(buf) {
   if (!Buffer.isBuffer(buf) || buf.length < 4) return null;
   if (buf.slice(0, 5).toString('latin1') === '%PDF-') return 'pdf';
   if (buf.slice(0, 5).toString('latin1') === '{\\rtf') return 'rtf';
-  if (buf[0] === 0x89 && buf.slice(1, 4).toString('latin1') === 'PNG') return 'png';
-  if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'jpeg';
+  const pic = formats.sniffImage(buf);
+  if (pic) return pic;
+  if (formats.isCfb(buf)) return 'cfb';
   if (buf[0] === 0x50 && buf[1] === 0x4b && buf[2] === 0x03 && buf[3] === 0x04) return 'zip';
   // Text: no NUL bytes in the first 8 KB and valid UTF-8 (a BOM is fine).
   const head = buf.slice(0, 8192);
@@ -44,43 +52,92 @@ function sniff(buf) {
   return 'text';
 }
 
+const PICTURE = new Set(['png', 'jpeg', 'webp', 'gif', 'bmp', 'tiff', 'heic', 'avif']);
+
+/** OCR a picture (any supported type). Returns { text } or { error, code }. Preprocessing is best effort for PNG and JPG. */
+async function readPicture(buf, type) {
+  let work = buf;
+  const prepared = await formats.toPng(buf, type);
+  if (prepared.png) work = prepared.png;
+  else if (type !== 'png' && type !== 'jpeg') return prepared;
+  return ocr(work);
+}
+
+const pageMarks = (pages) => pages.map((p) => `[[p${p.page}]]\n${p.text}`).join('\n\n');
+
 /**
- * Turn an uploaded file into text. Returns { text, kind, pages } or { error, code }.
- * The name is used only for the title; the type comes from the bytes.
+ * Turn an uploaded file into text. Returns { text, rich, kind, pages } or { error, code }.
+ * The name is used only for the title; the type comes from the bytes. opts.inner is set for a file inside a ZIP.
  */
-async function extract(buf) {
+async function extract(buf, opts = {}) {
   if (!Buffer.isBuffer(buf) || !buf.length) return fail('The file is empty.', 'empty');
   if (buf.length > MAX_BYTES) return fail('That file is over 20 MB.', 'too_big');
   const type = sniff(buf);
   let out;
   let kind;
-  if (type === 'png' || type === 'jpeg') {
+  if (PICTURE.has(type)) {
     // OCR runs in this process so a test can swap the recognizer; tesseract.js is optional.
     kind = 'image';
-    out = await fromImage(buf);
+    out = await readPicture(buf, type);
+    if (!out.error) {
+      const text = normalise(out.text);
+      out = countWords(text) < MIN_OCR_WORDS
+        ? fail('There is too little text in that picture to work with. Try a clearer one, or paste the text.', 'too_little')
+        : { text, pages: 1 };
+    }
   }
-  else if (type === 'pdf') { kind = 'pdf'; out = await parseInChild('pdf', buf); }
+  else if (type === 'pdf') {
+    kind = 'pdf'; out = await parseInChild('pdf', buf);
+    if (out.scanned) {
+      // No text layer: the page pictures come back from the worker and are read here, one at a time.
+      const pages = [];
+      let failure = null;
+      for (const im of out.images) {
+        // eslint-disable-next-line no-await-in-loop
+        const got = await ocr(im.png);
+        if (got.error) { failure = got; if (got.code === 'no_ocr') break; continue; }
+        const text = normalise(got.text);
+        if (text) pages.push({ page: im.page, text });
+      }
+      const text = normalise(pages.map((p) => p.text).join('\n\n'));
+      out = countWords(text) < MIN_OCR_WORDS
+        ? (failure || fail('That PDF looks scanned and little could be read from its pictures. Try clearer scans, or paste the text.', 'scanned'))
+        : { text, rich: pageMarks(pages), pages: out.pages, ocr: true };
+    }
+  }
   else if (type === 'zip') {
     const listing = zipEntries(buf);
     const has = (re) => !!listing && listing.entries.some((e) => re.test(e.name));
-    const mime = listing && listing.entries.length && listing.entries[0].name === 'mimetype' ? buf.slice(38, 38 + 60).toString('latin1') : '';
+    const mime = listing && listing.entries.length && listing.entries[0].name === 'mimetype' ? buf.slice(38, 38 + 70).toString('latin1') : '';
     kind = has(/^ppt\/slides\/slide\d+\.xml$/) ? 'pptx' : has(/^xl\/workbook\.xml$/) ? 'xlsx' : /opendocument\.text/.test(mime) ? 'odt'
-      : /epub\+zip/.test(mime) || has(/^META-INF\/container\.xml$/) ? 'epub' : 'docx';
-    out = await parseInChild(kind, buf);
+      : /opendocument\.presentation/.test(mime) ? 'odp' : /opendocument\.spreadsheet/.test(mime) ? 'ods'
+        : /epub\+zip/.test(mime) || has(/^META-INF\/container\.xml$/) ? 'epub'
+          : has(/^word\/document\.xml$/) || has(/^\[Content_Types\]\.xml$/) ? 'docx' : 'zip';
+    if (kind === 'zip') {
+      if (opts.inner) return fail('A ZIP inside a ZIP is not opened. Unpack it and upload the files.', 'bad_type');
+      out = await formats.fromZipFiles(buf, (data) => extract(data, { inner: true }));
+    } else out = await parseInChild(kind, buf);
   }
   else if (type === 'rtf') { kind = 'rtf'; out = await parseInChild('rtf', buf); }
-  else if (type === 'text' && /^\s*(<!doctype html|<html)/i.test(buf.slice(0, 512).toString('utf8'))) { kind = 'html'; out = await parseInChild('html', buf); }
-  else if (type === 'text') { kind = 'text'; out = { text: normalise(buf.toString('utf8')), pages: null }; }
-  else return fail('Only PDF, Word, PowerPoint, Excel, OpenDocument text, EPUB, RTF, HTML, text, Markdown, CSV, pictures (PNG, JPG) and source files are supported.', 'bad_type');
+  else if (type === 'cfb') { kind = 'doc'; out = await parseInChild('doc', buf); }
+  else if (type === 'text') {
+    const head = buf.slice(0, 4096).toString('utf8');
+    if (/^\s*(<!doctype html|<html)/i.test(head.slice(0, 512))) { kind = 'html'; out = await parseInChild('html', buf); }
+    else if (/^\s*\{/.test(head) && /"nbformat"|"cell_type"/.test(head)) { kind = 'ipynb'; out = await parseInChild('ipynb', buf); }
+    else if (formats.isSubtitles(head)) { kind = 'subtitles'; out = await parseInChild('subtitles', buf); }
+    else if (formats.isLatex(head)) { kind = 'latex'; out = await parseInChild('latex', buf); }
+    else { kind = 'text'; const t = normalise(buf.toString('utf8')); out = { text: t, rich: t, pages: null }; }
+  }
+  else return fail('Supported: PDF (text or scanned), Word (.docx, .doc), PowerPoint, Excel, OpenDocument (text, slides, sheets), EPUB, RTF, HTML, LaTeX, Jupyter notebooks, subtitles (SRT, VTT), text, Markdown, CSV, source files, pictures (PNG, JPG, WEBP, GIF, BMP, TIFF), ZIPs of these, and audio or video as recordings.', 'bad_type');
   if (out.error) return out;
-  // A picture's reader has already applied its own 20-word rule.
-  if (kind !== 'image' && out.text.length < MIN_CHARS) {
+  // A picture's reader has already applied its own 20-word rule; a file inside a ZIP only has to say something.
+  if (kind !== 'image' && out.text.length < (opts.inner ? 40 : MIN_CHARS)) {
     return fail(kind === 'pdf'
       ? 'There is hardly any text in that PDF. If it is scans or photos, text extraction cannot read it yet.'
       : 'There is too little text there to build a course from.', 'too_little');
   }
   if (out.text.length > MAX_CHARS) return fail(`That is about ${Math.round(out.text.length / 3000)} pages of text. The limit is about 300. Upload a part of it.`, 'too_long');
-  return { text: out.text, kind, pages: out.pages };
+  return { text: out.text, rich: out.rich || out.text, kind, pages: out.pages, ocr: !!out.ocr || kind === 'image', files: out.files };
 }
 
 function words(text) { return (text.match(/\S+/g) || []).length; }
@@ -91,7 +148,8 @@ function pub(row, withText) {
     words: row.words, chars: row.chars, added_at: row.created_at,
     preview: row.text.slice(0, 400),
   };
-  if (withText) out.text = row.text;
+  out.key_point_count = (row.key_points || []).length;
+  if (withText) { out.text = row.text; out.key_points = row.key_points || []; out.topics = row.topics || []; }
   return out;
 }
 
@@ -111,7 +169,20 @@ function textOf(userId, id) {
   return row && row.user_id === userId ? row.text : null;
 }
 
-function add(userId, { title, text, kind, pages, sourceName }) {
+const SPOKEN = new Set(['audio', 'video', 'transcript', 'subtitles']);
+
+/** The key points, topics and assessed items of a text: a model-free pass that must never stop an upload. */
+function understand(text, rich, kind) {
+  try {
+    const got = keypoints.extract(rich || text, { plain: text, spoken: SPOKEN.has(kind) });
+    return { key_points: got.key_points, topics: got.topics, assessed: got.assessed };
+  } catch (err) {
+    console.warn(`materials: key points skipped: ${err.message}`);
+    return { key_points: [], topics: [], assessed: [] };
+  }
+}
+
+function add(userId, { title, text, rich, kind, pages, sourceName, ocr: viaOcr, files }) {
   const mine = db.find('materials', (m) => m.user_id === userId);
   if (mine.length >= MAX_ITEMS) return fail(`You can keep ${MAX_ITEMS} materials. Delete one first.`, 'limit');
   if (mine.reduce((s, m) => s + m.chars, 0) + text.length > MAX_TOTAL_CHARS) return fail('That would take you over your storage limit. Delete a material first.', 'limit');
@@ -124,6 +195,9 @@ function add(userId, { title, text, kind, pages, sourceName }) {
     words: words(text),
     chars: text.length,
     text,
+    ...understand(text, rich, kind),
+    ...(viaOcr ? { ocr: true } : {}),
+    ...(files ? { files: files.slice(0, 40) } : {}),
   });
   return { value: pub(row, false) };
 }
@@ -132,7 +206,7 @@ async function addFile(userId, buf, name) {
   const got = await extract(buf);
   if (got.error) return got;
   const base = String(name || '').replace(/^.*[\\/]/, '').replace(/\.[A-Za-z0-9]{1,5}$/, '');
-  return add(userId, { title: base, text: got.text, kind: got.kind, pages: got.pages, sourceName: name });
+  return add(userId, { title: base, text: got.text, rich: got.rich, kind: got.kind, pages: got.pages, sourceName: name, ocr: got.ocr, files: got.files });
 }
 
 function addPaste(userId, title, text) {
@@ -146,11 +220,29 @@ function addPaste(userId, title, text) {
 
 /** A public web page the learner names: the server fetches it and keeps the article text only. */
 async function addLink(userId, link, title) {
+  // A Google Docs, Slides or Sheets link goes through that file's export, so its headings, bold and slides survive.
+  if (formats.googleExport(link)) return addGoogleLink(userId, link, title);
   const got = await require('./material-web').fetchPage(link); // eslint-disable-line global-require
   if (got.error) return got;
   if (got.text.length < MIN_CHARS) return fail('There is hardly any readable text on that page.', 'too_little');
   if (got.text.length > MAX_CHARS) return fail('That page is too long. Paste the part you want instead.', 'too_long');
-  return add(userId, { title: title || got.title, text: got.text, kind: 'link', pages: null, sourceName: got.url });
+  return add(userId, { title: title || got.title, text: got.text, rich: got.rich, kind: 'link', pages: null, sourceName: got.url });
+}
+
+/**
+ * A public Google Docs, Slides or Sheets link: the server asks Google for the file's export (DOCX, PPTX or XLSX), so headings,
+ * bold, slides and sheets come through, and reads it like an upload. Only docs.google.com links that are shared with "anyone
+ * with the link" work; a private file comes back as a sign-in page, which is reported plainly.
+ */
+async function addGoogleLink(userId, link, title, opts = {}) {
+  const g = formats.googleExport(link);
+  if (!g) return fail('That is not a Google Docs, Slides or Sheets link.', 'bad_url');
+  const web = require('./material-web'); // eslint-disable-line global-require
+  const got = await web.fetchText(g.url, { ...opts, types: /^(?:application\/(?:vnd\.openxmlformats|octet-stream|zip)|application\/vnd\.ms)/i, hostOk: (h) => /(^|\.)(?:google\.com|googleusercontent\.com)$/i.test(h) });
+  if (got.error) return got.code === 'not_page' || got.code === 'bad_type' ? fail('That Google file is not shared with anyone who has the link. Share it that way, or export it as DOCX, PPTX or PDF and upload that.', 'private') : got;
+  const file = await extract(got.raw, {});
+  if (file.error) return file;
+  return add(userId, { title: title || `Google ${g.kind === 'docx' ? 'document' : g.kind === 'pptx' ? 'slides' : 'sheet'}`, text: file.text, rich: file.rich, kind: file.kind, pages: file.pages, sourceName: g.url });
 }
 
 const YOUTUBE_HOST = /^(www\.|m\.|music\.)?(youtube\.com|youtu\.be)$/i;
@@ -166,6 +258,7 @@ function cleanTranscript(text) {
  * link is kept as a label only, and must look like a YouTube address.
  */
 function addTranscript(userId, title, text, link) {
+  const rich = null;
   let label = null;
   if (link) {
     let u;
@@ -178,13 +271,13 @@ function addTranscript(userId, title, text, link) {
   const t = cleanTranscript(text);
   if (t.length < MIN_CHARS) return fail('There is too little text there to build a course from.', 'too_little');
   if (t.length > MAX_CHARS) return fail('That transcript is over the limit. Paste a part of it.', 'too_long');
-  return add(userId, { title: title || 'Video transcript', text: t, kind: 'transcript', pages: null, sourceName: label });
+  return add(userId, { title: title || 'Video transcript', text: t, rich, kind: 'transcript', pages: null, sourceName: label });
 }
 
-function transcriptRow(userId, title, text, sourceName) {
+function transcriptRow(userId, title, text, sourceName, rich) {
   if (text.length < MIN_CHARS) return fail('There is too little spoken text there to build a course from.', 'too_little');
   if (text.length > MAX_CHARS) return fail('That transcript is over the limit. Use a shorter part.', 'too_long');
-  return add(userId, { title: title || 'Video transcript', text, kind: 'transcript', pages: null, sourceName });
+  return add(userId, { title: title || 'Video transcript', text, rich: rich || text, kind: 'transcript', pages: null, sourceName });
 }
 
 /** A YouTube link: read its caption track (never the video) and keep the text. */
@@ -192,7 +285,9 @@ async function addYoutube(userId, link, title, opts) {
   const got = await require('./material-youtube').fetchCaptions(link, opts); // eslint-disable-line global-require
   if (got.error) return got;
   const text = cleanTranscript(got.text);
-  const out = transcriptRow(userId, title || got.title, text, got.url);
+  // The stored text has no timestamps; the key-point pass reads the timed version so each point keeps its time in the video.
+  const timed = got.segments && got.segments.length ? formats.mergeTimed(got.segments.map((c) => ({ start: c.start, text: c.text }))) : null;
+  const out = transcriptRow(userId, title || got.title, text, got.url, timed || undefined);
   if (out.error) return out;
   out.value.captions = { language: got.language, auto: got.auto };
   return out;
@@ -214,5 +309,5 @@ function remove(userId, id) {
 
 module.exports = {
   MAX_BYTES, MAX_PAGES, MAX_CHARS, MIN_CHARS, MAX_ITEMS, MAX_TOTAL_CHARS,
-  sniff, extract, add, list, get, textOf, addFile, addPaste, addLink, addYoutube, addTranscript, cleanTranscript, remove, zipEntries,
+  sniff, extract, add, list, get, textOf, addFile, addPaste, addLink, addGoogleLink, addYoutube, addTranscript, cleanTranscript, remove, zipEntries,
 };
