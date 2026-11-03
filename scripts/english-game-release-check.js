@@ -5,7 +5,7 @@
  *
  * Takes the worktree copy of the data file (read only), applies the re-keys (rekey-confirmed.json) and the passed rewrites in memory,
  * and for every level that is still held and has no rewrite that failed, judges ALL its questions blind with two judges of different
- * families (NVIDIA Nemotron Ultra, then Gemini free tier). A level is released only when every question: has 4 distinct options, passes
+ * families (NVIDIA Nemotron Ultra, then Gemini free tier, or MiniMax M3.1 Flash through xKiro where Gemini is rate-limited: see scripts/lib/english-game-judges.js). A level is released only when every question: has 4 distinct options, passes
  * the explanation-key check or is picked by both judges, and is picked (the key) by BOTH judges. Anything less stays held.
  * Writes DIR/release.json {level: hash} (the hash services/game-fixes.js pins the release to) and DIR/release-report.json.
  * Resumable: per-question picks are kept in DIR/release-picks.json. Question text only; free models only.
@@ -38,7 +38,7 @@ async function judgeAll(row, qs, which) {
       const b = batches[at++];
       // eslint-disable-next-line no-await-in-loop
       const p = await judges[which](b);
-      b.forEach((q, j) => { const k = idOf(row, q); picks[k] = { ...(picks[k] || {}), [which]: p[j] === null ? -1 : p[j] }; });
+      b.forEach((q, j) => { const k = idOf(row, q); picks[k] = { ...(picks[k] || {}), [which]: p[j] === null ? -1 : p[j], ...(which === 'B' && p.by ? { Bby: p.by } : {}) }; });
       save();
     }
   };

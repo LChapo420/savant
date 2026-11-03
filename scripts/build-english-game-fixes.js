@@ -23,7 +23,7 @@ const out = {
   grade_id: 'proficient',
   rekeys: rek.map((k) => ({ level: k.level, qid: k.key.split(':')[1], from: k.keyIndex, to: k.set.answerIndex })),
   rewrites: Object.entries(rewritten).map(([key, v]) => {
-    const { judgeA, judgeB, writer, tries, ...question } = v.question;
+    const { judgeA, judgeB, judgeBby, writer, tries, ...question } = v.question;
     return { level: v.level, qid: key.split(':')[1], old_prompt: v.old_prompt, question };
   }),
   release: Object.entries(release).map(([level, hash]) => ({ level: Number(level), hash })),

@@ -4,7 +4,8 @@
  *   node scripts/english-game-rewrite.js --db data/db.json --out DIR [--limit N]
  *
  * Reads the worktree copy of the data file (read only). For each entry of rewrite.json:
- *   1. writer: the free NVIDIA writer (REWRITE_MODEL; default DeepSeek V4.1 Flash) writes a replacement question on the same skill (4 distinct options, one defensible answer);
+ *   1. writer: the free NVIDIA writer (REWRITE_MODEL; default DeepSeek V4.1 Flash), or with REWRITE_WRITER=minimax MiniMax M3.1 Flash through xKiro
+ *      (pipeline only, question text only; judge B is then Gemini only, never MiniMax), writes a replacement question on the same skill (4 distinct options, one defensible answer);
  *      the correct option's position is shuffled here, not by the model;
  *   2. code checks: distinct options, no "all/none of the above", services/key-agreement.js does not flag it;
  *   3. blind re-solve by two judges of different families, neither shown the key or the explanation: NVIDIA Nemotron Ultra
@@ -18,7 +19,9 @@ const path = require('path');
 const argv = process.argv.slice(2);
 const arg = (n, d = null) => { const i = argv.indexOf(`--${n}`); return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : d; };
 require('dotenv').config({ path: 'C:/coding/claudecommittdIq/folderThing/.env' });
-const WRITER = process.env.REWRITE_MODEL || 'deepseek-ai/deepseek-v4.1-flash';
+const MINIMAX_WRITER = process.env.REWRITE_WRITER === 'minimax';
+if (MINIMAX_WRITER) process.env.XKIRO_PIPELINE = '1';
+const WRITER = MINIMAX_WRITER ? 'minimax/minimax-m3.1-flash' : (process.env.REWRITE_MODEL || 'deepseek-ai/deepseek-v4.1-flash');
 const DB = arg('db'); const OUT = arg('out'); const LIMIT = Number(arg('limit', 0));
 if (!DB || !OUT) { console.error('--db data/db.json --out DIR'); process.exit(2); }
 fs.mkdirSync(OUT, { recursive: true });
@@ -58,14 +61,17 @@ function shuffleKey(q, seed) {
   return { ...q, choices, answerIndex: idx.indexOf(q.correct_index) };
 }
 
-function codeProblems(q, origPrompt) {
+function codeProblems(q, origPrompt, origChoices = []) {
   const p = [];
   if (!q || typeof q.prompt !== 'string' || !Array.isArray(q.choices) || q.choices.length !== 4) return ['shape'];
-  const norm = q.choices.map((c) => String(c).trim().toLowerCase().replace(/[^a-z0-9 ]/g, ''));
+  // Same test as the release gate (english-game-release-check.js): trimmed, lower-cased text. Punctuation counts, so a punctuation question can pass.
+  const same = (c) => String(c).trim().toLowerCase().replace(/\s+/g, ' ');
+  const norm = q.choices.map(same);
   if (new Set(norm).size !== 4 || norm.some((c) => !c)) p.push('options not distinct');
   if (q.choices.some((c) => /\b(all|none|both|neither) of (the|these)\b|\bboth (a|b|c|d)\b|\ball of the above\b/i.test(c))) p.push('all/none/both option');
   if (!Number.isInteger(q.correct_index) || q.correct_index < 0 || q.correct_index > 3) p.push('bad index');
-  if (q.prompt.trim().toLowerCase() === String(origPrompt).trim().toLowerCase()) p.push('same prompt');
+  // A copy of the old question is not a rewrite: same prompt AND (nearly) the same options. A generic prompt with new options is fine.
+  if (q.prompt.trim().toLowerCase() === String(origPrompt).trim().toLowerCase() && q.choices.filter((c) => origChoices.map(same).includes(same(c))).length >= 3) p.push('same prompt');
   return p;
 }
 
@@ -89,17 +95,19 @@ async function main() {
         let w = null;
         try {
           // eslint-disable-next-line no-await-in-loop
-          w = await nvidia.structured({ role: 'blocks', system: SYSTEM, user: userFor(orig, it.why), schema: SCHEMA, schemaName: 'submit_question', maxTokens: 1500, models: [{ model: WRITER, effort: 'low' }], timeoutMs: 150000, attempts: 1 });
-        } catch (e) { tries.push(`writer: ${String(e.message).slice(0, 80)}`); }
+          w = MINIMAX_WRITER
+            ? await require('../services/providers/xkiro').xkiro.structured({ system: SYSTEM, user: userFor(orig, it.why), schema: SCHEMA, schemaName: 'submit_question', maxTokens: 3000, models: [WRITER], timeoutMs: 240000, reasoningEffort: 'low' }) // eslint-disable-line global-require
+            : await nvidia.structured({ role: 'blocks', system: SYSTEM, user: userFor(orig, it.why), schema: SCHEMA, schemaName: 'submit_question', maxTokens: 1500, models: [{ model: WRITER, effort: 'low' }], timeoutMs: 150000, attempts: 1 });
+        } catch (e) { tries.push(`writer: ${String(e.message).slice(0, 80)}`); await new Promise((r) => { setTimeout(r, 25000); }); } // a rate limit: wait, then the next try
         const d = w && w.data;
-        const probs = codeProblems(d, orig.prompt);
+        const probs = codeProblems(d, orig.prompt, orig.choices);
         if (!d || probs.length) { tries.push(`code: ${probs.join(',') || 'no data'}`); continue; }
         const q = shuffleKey(d, (it.row * 7919 + it.qi * 31 + t) | 0);
         const full = { id: orig.id, prompt: q.prompt.trim(), choices: q.choices.map((c) => String(c).trim()), answerIndex: q.answerIndex, explanation: String(q.explanation).trim(), difficulty: orig.difficulty, skill: orig.skill, topic: orig.topic };
         if (ka.keyAgreement(full).flagged) { tries.push('explanation does not match the key'); continue; }
         // eslint-disable-next-line no-await-in-loop
-        const [a, b] = await Promise.all([judges.A([full]), judges.B([full])]);
-        if (a[0] === full.answerIndex && b[0] === full.answerIndex) result = { ...full, judgeA: a[0], judgeB: b[0], writer: WRITER, tries: t + 1 };
+        const [a, b] = await Promise.all([judges.A([full]), judges.B([full], MINIMAX_WRITER ? { not: 'minimax' } : {})]);
+        if (a[0] === full.answerIndex && b[0] === full.answerIndex) result = { ...full, judgeA: a[0], judgeB: b[0], judgeBby: b.by, writer: WRITER, tries: t + 1 };
         else tries.push(`judges: A=${a[0]} B=${b[0]} key=${full.answerIndex}`);
       }
       if (result) done[it.key] = { row: it.row, level: it.level, old_prompt: orig.prompt, question: result };
@@ -109,7 +117,7 @@ async function main() {
       process.stdout.write(result ? '+' : '-');
     }
   };
-  await Promise.all([worker(), worker(), worker(), worker(), worker()]);
+  await Promise.all(Array.from({ length: Number(process.env.REWRITE_WORKERS || 5) }, () => worker()));
   console.log(`\npassed ${Object.keys(done).length}, failed ${Object.keys(failed).length}`);
 }
 main().catch((e) => { console.error(e); process.exit(1); });
