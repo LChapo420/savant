@@ -285,7 +285,15 @@ async function main() {
   const groups = ['fast', 'deep', 'regen', 'diagnose', 'rewrite', 'personalize', 'games', 'blocks'];
   const FREE_CHAIN = ['nvidia', 'ollama', 'gemini_free', 'openrouter_free', 'anthropic'];
   for (const g of groups) check(`${g}: nvidia, the free fallbacks, then anthropic last`, JSON.stringify(providers.order(g)) === JSON.stringify(FREE_CHAIN), providers.order(g));
-  check('placement stays on Modelflare alone', JSON.stringify(providers.order('placement')) === JSON.stringify(['modelflare']), providers.order('placement'));
+  const previousModelflareEnabled = process.env.MODELFLARE_ENABLED;
+  delete process.env.MODELFLARE_ENABLED;
+  check('placement follows deep when MODELFLARE_ENABLED is unset',
+    JSON.stringify(providers.order('placement')) === JSON.stringify(providers.order('deep')), providers.order('placement'));
+  process.env.MODELFLARE_ENABLED = '1';
+  check('placement stays on Modelflare alone when MODELFLARE_ENABLED=1',
+    JSON.stringify(providers.order('placement')) === JSON.stringify(['modelflare']), providers.order('placement'));
+  if (previousModelflareEnabled === undefined) delete process.env.MODELFLARE_ENABLED;
+  else process.env.MODELFLARE_ENABLED = previousModelflareEnabled;
   check('MiMo, Gemini and OpenRouter are in no chain', [...groups, 'placement', 'author', 'check'].every((g) => !providers.order(g).some((n) => ['mimo', 'gemini', 'openrouter'].includes(n))));
 
   const env = { AI_PROVIDER_FAST: 'openrouter', AI_PROVIDER_FAST_FALLBACK: 'gemini,mimo', AI_PROVIDER_DEEP: 'mimo', AI_PROVIDER_DEEP_FALLBACK: 'openrouter,gemini', AI_PROVIDER_REGEN: 'mimo', AI_PROVIDER_DIAGNOSE: 'mimo' };

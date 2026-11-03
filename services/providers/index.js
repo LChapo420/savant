@@ -9,8 +9,8 @@
  * resort, always last, behind its spend guards (services/ai.js).
  *
  *   every role   nvidia (its tier's models, then their fallbacks)  ->  anthropic
- *   placement    modelflare, unchanged: the whole-subject placement quiz stays where
- *                it was (the owner has not moved it), pinned to one set of weights.
+ *   placement    modelflare only with MODELFLARE_ENABLED=1; otherwise the same
+ *                free-first chain as deep work (owner ban: credits nearly gone, 2026-11-03).
  *
  * Out of the lineup, and so out of every chain by default (their code is kept):
  *   mimo         the owner: GLM 5.3 / DeepSeek V4.1 at max reasoning match it.
@@ -120,8 +120,8 @@ const ROLE_DEFAULTS = {
   diagnose: ['nvidia', 'anthropic'],
   rewrite: ['nvidia', 'anthropic'],
   personalize: ['nvidia', 'anthropic'],
-  // Writing the whole-subject placement quiz: GPT Sol through Modelflare and
-  // nothing else, exactly as before this lineup (placement-only; left as it was).
+  // Writing the whole-subject placement quiz uses Modelflare only when it is
+  // explicitly enabled; otherwise it follows the deep free-first chain.
   placement: ['modelflare'],
   games: ['nvidia', 'anthropic'],
   blocks: ['nvidia', 'anthropic'],
@@ -182,9 +182,12 @@ function order(role) {
   const fallbacks = declared === undefined ? defaults.slice(1) : namedList(`AI_PROVIDER_${suffix}_FALLBACK`);
   let list = [...new Set([preferred, ...fallbacks])];
 
-  // Placement stays pinned to what it names (Modelflare by default), as before.
+  // Placement keeps its named provider when configured; otherwise it follows deep
+  // unless Modelflare is explicitly enabled.
   if (group === 'placement') {
-    if (declared === undefined && !named('AI_PROVIDER_PLACEMENT')) return ['modelflare'];
+    if (declared === undefined && !named('AI_PROVIDER_PLACEMENT')) {
+      return process.env.MODELFLARE_ENABLED === '1' ? ['modelflare'] : order('deep');
+    }
     return list.filter((n) => n !== 'anthropic' || anthropicAllowed());
   }
 
