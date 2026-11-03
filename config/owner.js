@@ -74,4 +74,17 @@ function ownerBase(userOrId) {
   return ownerOnly(userOrId) || holdoutBase(userOrId);
 }
 
-module.exports = { DEFAULT_OWNER, ownerEmail, isOwner, ownerBase, ownerOnly, holdoutBase, betaCompareOn, baseRuleOn, userOf };
+/**
+ * The owner's own learner account(s) (2026-11-02: landon@savantedu.com, an ordinary learner with every modification). Kept apart
+ * from everyone else and from scripts and tests in the cost tracker and services/my-stats.js, so its numbers are its own.
+ * OWNER_LEARNER_EMAILS (comma-separated) overrides.
+ */
+function ownerLearnerEmails() {
+  return String(process.env.OWNER_LEARNER_EMAILS || 'landon@savantedu.com').split(',').map((e) => e.trim().toLowerCase()).filter(Boolean);
+}
+
+function isOwnerLearner(user) {
+  return !!(user && user.email && ownerLearnerEmails().includes(String(user.email).trim().toLowerCase()));
+}
+
+module.exports = { DEFAULT_OWNER, ownerEmail, isOwner, ownerLearnerEmails, isOwnerLearner, ownerBase, ownerOnly, holdoutBase, betaCompareOn, baseRuleOn, userOf };

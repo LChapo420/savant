@@ -53,12 +53,28 @@ Never logged: prompts, answers, typed text, upload contents, emails, titles.
 - **Server** = the snapshots above. The monthly fixed cost (VM, domain, other) is in `config/cost-tracker.json` `fixed_monthly_usd`, or
   `COST_FIXED_MONTHLY_USD` for one total. It is **not set yet**: the fixed share reads $0 until it is.
 
+## Whose use (buckets, 2026-11-03)
+
+Every event is put in one bucket, and the page's "Whose use" buttons (`?scope=`) show one at a time:
+
+- **My account** (`me`): the owner's learner account, config/owner.js `isOwnerLearner` (landon@savantedu.com; `OWNER_LEARNER_EMAILS` overrides).
+- **Other learners** (`learners`): every real account (services/real-user-metrics.js rules).
+- **Team / test** (`internal`): founder, team-domain, test and demo accounts, including the admin account.
+- **Shared** (`shared`): work for no one account: shared base levels, signed-out requests, under-13 calls.
+- **Scripts / tests** (`scripts`): every event from a process that is not the app server (a script, build job or test) carries `src`, and is
+  never counted as anyone's use, even when it names a learner. It still counts in "Everything".
+- **Product use** (`product`) is My account plus Other learners.
+
+A tab refreshing itself (`GET /api/auth/me`, `/api/retention/state`, `/api/tutor/dock`) neither opens nor extends a session.
+Paid gateway voice (TTS / STT through LLM Gateway) is a row per call on the account it was for, at its metered cost.
+
 ## Tier projection
 
 From the user-days with at least 5 active minutes (`projection_min_active_min`): cost per active hour at p50 and p95, for list and for
 actual. Cost per user-month at 30 min, 1 h and 2 h a day = cost per active hour x hours x 30 days. Then the fixed monthly cost divided by
 10 / 100 / 1,000 users is added to show a total per user-month. With only one learner's days, p50 and p95 sit close together: they spread out as
-more accounts study. The owner's own study account (landon@savantedu.com, id 6689) is the first real data; open `?user=6689`.
+more accounts study. Only product use counts (the owner's learner account and real learners): team, test and demo accounts and anything from a script
+or test never price a tier. The owner's own study account (landon@savantedu.com, id 6689) is the first real data; its own page is /my-stats.
 
 ## Under-13 accounts
 
@@ -84,6 +100,6 @@ the noise). Events go to an in-memory buffer and are appended to disk asynchrono
 
 ## Not covered yet
 
-- Voice (TTS/STT) and upload extraction that do not go through `services/ai.js` are timed as routes but have no token cost.
+- Free voice (Gemini TTS, MiMo ASR) and upload extraction that do not go through `services/ai.js` are timed as routes but have no cost row.
 - Hedged calls that lose the race are not costed.
 - Learner-side time on screen with no requests longer than 5 minutes is not counted as active.

@@ -14,6 +14,7 @@ const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'voicegw-'));
 process.env.SPANISH_MEDIA_DIR = path.join(dir, 'media');
 process.env.LLMGATEWAY_LEDGER_FILE = path.join(dir, 'ledger.json'); // never the real data/llmgateway-ledger.json
 process.env.HOLDOUT_DIR = dir; // where spanish-gateway-users.json is read from
+process.env.COST_TRACKER_DIR = path.join(dir, 'cost-tracker'); // never the real data/cost-tracker
 fs.writeFileSync(path.join(dir, 'spanish-gateway-users.json'), '[6689]');
 delete process.env.GEMINI_API_KEY; delete process.env.MIMO_API_KEY; delete process.env.SPANISH_GATEWAY_USERS;
 
@@ -48,6 +49,15 @@ server.listen(0, async () => {
     // 2. The same line again is the cached file: no second call.
     const b = await voice.tts('Hola, ¿cómo estás?', 'mara', { userId: 6689 });
     assert.strictEqual(b.cached, true); assert.strictEqual(calls.length, 1);
+    // The paid clip is one cost-tracker row on that account, with its cost and no words; the cached replay adds none.
+    const tracker = require('../services/cost-tracker');
+    tracker.flushSync();
+    const rows = fs.readdirSync(process.env.COST_TRACKER_DIR).flatMap((x) => fs.readFileSync(path.join(process.env.COST_TRACKER_DIR, x), 'utf8').split('\n').filter(Boolean).map(JSON.parse));
+    const clip = rows.filter((r) => r.task === 'voice_tts');
+    assert.strictEqual(clip.length, 1); assert.strictEqual(clip[0].u, 6689); assert.strictEqual(clip[0].prov, 'llmgateway');
+    assert(clip[0].usd > 0 && clip[0].usd === clip[0].list && clip[0].basis === 'metered', JSON.stringify(clip[0]));
+    assert.strictEqual(clip[0].src, 'script'); // a test run: never counted as the account's own use
+    assert(!JSON.stringify(clip[0]).includes('Hola'));
     // 3. Another voice is another clip; an unknown character gets the narrator's Spanish voice, never an English default.
     await voice.tts('Hola, ¿cómo estás?', 'nobody', { userId: 6689 });
     assert.strictEqual(JSON.parse(calls[1].body.toString()).voice, 'Aria'); assert.strictEqual(JSON.parse(calls[1].body.toString()).language, 'es');

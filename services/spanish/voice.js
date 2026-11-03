@@ -128,22 +128,35 @@ function noteGatewayFailure(err) {
  * An HTTP error the gateway answered is not billed; a network failure or timeout is counted at the reservation.
  */
 async function billed(call, fn) {
-  const id = gatewayLedger.reserve(call);
+  const { userId = null, ...spend } = call;
+  const id = gatewayLedger.reserve(spend);
+  const t0 = Date.now();
   let settled = false;
   try {
     const out = await fn();
     gatewayLedger.settle(id, { outcome: 'ok' });
     settled = true;
+    track(spend, userId, t0, true);
     return out;
   } catch (err) {
-    if (!settled) gatewayLedger.settle(id, { outcome: err && err.status ? 'not_billed' : 'unknown' });
+    if (!settled) {
+      gatewayLedger.settle(id, { outcome: err && err.status ? 'not_billed' : 'unknown' });
+      track(spend, userId, t0, false);
+    }
     throw err;
   }
 }
 
-async function gatewaySpeak(voice, line, lang = 'es') {
+/** The cost tracker's row for one paid voice call, on the account it was for (kind, size, time and cost only; never the words). */
+function track(spend, userId, t0, ok) {
+  const usd = ok ? gatewayLedger.costOf(spend) : 0;
+  // eslint-disable-next-line global-require
+  require('../cost-tracker').recordAi({ userId, provider: 'llmgateway', model: spend.model, role: 'voice', task: `voice_${spend.kind}`, costUsd: usd, listUsd: usd, ms: Date.now() - t0, ok });
+}
+
+async function gatewaySpeak(voice, line, lang = 'es', userId = null) {
   const model = GATEWAY_TTS_MODEL();
-  return billed({ kind: 'tts', model, chars: line.length }, async () => {
+  return billed({ kind: 'tts', model, chars: line.length, userId }, async () => {
     const res = await gatewayFetch('/audio/speech', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -157,7 +170,7 @@ async function gatewaySpeak(voice, line, lang = 'es') {
 }
 
 /** The cached clip, or one new call. Returns { url, cached }. */
-async function ttsGateway(line, voiceId) {
+async function ttsGateway(line, voiceId, userId = null) {
   const wanted = (VOICES[voiceId] || VOICES.narrator).eleven;
   const voice = ELEVEN_VOICES.has(wanted) ? wanted : 'Aria';
   const hash = crypto.createHash('sha256').update(`gateway|${GATEWAY_TTS_MODEL()}|${voice}|es|${line}`).digest('hex').slice(0, 32);
@@ -172,7 +185,7 @@ async function ttsGateway(line, voiceId) {
   if (inflight.has(hash)) return inflight.get(hash);
   const job = (async () => {
     try {
-      const mp3 = await gatewaySpeak(voice, line);
+      const mp3 = await gatewaySpeak(voice, line, 'es', userId);
       spent.chars += line.length;
       fs.mkdirSync(MEDIA_DIR, { recursive: true });
       const tmp = `${file}.${process.pid}.tmp`;
@@ -195,7 +208,7 @@ async function ttsGateway(line, voiceId) {
 async function tts(text, voiceId = 'narrator', opts = {}) {
   const line = String(text || '').trim().slice(0, 600);
   if (!line) throw new Error('nothing to say');
-  if (gatewayFor(opts.userId)) return ttsGateway(line, voiceId);
+  if (gatewayFor(opts.userId)) return ttsGateway(line, voiceId, opts.userId);
   const voice = (VOICES[voiceId] || VOICES.narrator).gemini;
   const hash = crypto.createHash('sha256').update(`gemini|${voice}|${line}`).digest('hex').slice(0, 32);
   const file = path.join(MEDIA_DIR, `${hash}.wav`);
@@ -234,7 +247,7 @@ const MIME = { wav: 'audio/wav', mp3: 'audio/mpeg', ogg: 'audio/ogg', m4a: 'audi
  * @param {Buffer} buf
  * @param {string} [kind] wav | mp3 | ogg | m4a | flac
  */
-async function asrGateway(buf, kind, lang = 'es') {
+async function asrGateway(buf, kind, lang = 'es', userId = null) {
   if (Date.now() < gatewayCoolUntil) throw Object.assign(new Error('gateway speech cooling down'), { status: 429 });
   const model = GATEWAY_STT_MODEL();
   const form = new FormData();
@@ -242,7 +255,7 @@ async function asrGateway(buf, kind, lang = 'es') {
   form.append('model', model);
   form.append('language', lang);
   try {
-    return await billed({ kind: 'stt', model, bytes: buf.length }, async () => {
+    return await billed({ kind: 'stt', model, bytes: buf.length, userId }, async () => {
       const res = await gatewayFetch('/audio/transcriptions', { method: 'POST', body: form }, 45000);
       const json = await res.json();
       return String((json && (json.text != null ? json.text : json.transcript)) || '').trim();
@@ -254,7 +267,7 @@ async function asr(buf, kind = 'wav', opts = {}) {
   if (!buf || !buf.length) throw new Error('empty recording');
   // An account on the gateway list is transcribed there; MiMo (below) is the fallback for them and the only path for everyone else.
   if (gatewayFor(opts.userId)) {
-    try { return await asrGateway(buf, kind); } catch (err) { if (!asrEnabled()) throw err; }
+    try { return await asrGateway(buf, kind, 'es', opts.userId); } catch (err) { if (!asrEnabled()) throw err; }
   }
   if (!asrEnabled()) throw new Error('speech recognition is not configured');
   const mime = MIME[kind] || MIME.wav;
@@ -291,7 +304,7 @@ async function tutorSpeak(text, { userId, lang = 'en' } = {}) {
   if (used + line.length > TUTOR_DAILY_CHARS()) throw Object.assign(new Error('daily tutor voice used'), { status: 429 });
   tutorSpent.set(key, used + line.length);
   try {
-    return await gatewaySpeak(lang === 'es' ? ((VOICES.narrator || {}).eleven || 'Aria') : 'Aria', line, lang === 'es' ? 'es' : 'en');
+    return await gatewaySpeak(lang === 'es' ? ((VOICES.narrator || {}).eleven || 'Aria') : 'Aria', line, lang === 'es' ? 'es' : 'en', userId);
   } catch (err) {
     tutorSpent.set(key, used);
     noteGatewayFailure(err);
@@ -329,7 +342,7 @@ async function tutorTranscribe(buf, { userId, lang = 'en' } = {}) {
   if (used + buf.length > TUTOR_STT_DAILY_BYTES()) throw Object.assign(new Error('daily tutor listening used'), { status: 429 });
   tutorHeard.set(key, used + buf.length);
   try {
-    return await asrGateway(buf, kind, lang === 'es' ? 'es' : 'en');
+    return await asrGateway(buf, kind, lang === 'es' ? 'es' : 'en', userId);
   } catch (err) {
     tutorHeard.set(key, used);
     if (err.code === 'LEDGER_STOP') err.status = 402;

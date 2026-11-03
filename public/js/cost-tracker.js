@@ -11,6 +11,9 @@ App.mount(async () => {
   const q = new URLSearchParams(location.search);
   const days = Math.max(1, Math.min(90, Number(q.get('days')) || 7));
   const only = q.get('user') || '';
+  const SCOPES = [['all', 'Everything'], ['product', 'Product use'], ['me', 'My account'], ['learners', 'Other learners'], ['internal', 'Team / test'], ['shared', 'Shared'], ['scripts', 'Scripts / tests']];
+  const scope = SCOPES.some(([k]) => k === q.get('scope')) ? q.get('scope') : 'all';
+  const link = (o) => { const p = new URLSearchParams({ days: o.days || days }); if (o.scope && o.scope !== 'all') p.set('scope', o.scope); if (o.user) p.set('user', o.user); return `?${p}`; };
 
   const usd = (v) => (v === null || v === undefined ? '—' : `$${Number(v).toFixed(Number(v) !== 0 && Math.abs(v) < 0.1 ? 4 : 2)}`);
   const n = (v, d = 0) => (v === null || v === undefined ? '—' : Number(v).toFixed(d));
@@ -20,7 +23,7 @@ App.mount(async () => {
 
   let d;
   try {
-    d = await App.api.get(`/api/admin/cost-tracker?days=${days}${only ? `&user=${encodeURIComponent(only)}` : ''}`);
+    d = await App.api.get(`/api/admin/cost-tracker?days=${days}&scope=${scope}${only ? `&user=${encodeURIComponent(only)}` : ''}`);
   } catch (err) {
     root.innerHTML = `<div class="notice notice-error">${esc(err.message)}</div>`;
     return;
@@ -40,10 +43,14 @@ App.mount(async () => {
     <p class="note">Times are UTC. "Actual" is what was paid or metered (free providers are $0${w.estimated_actual_usd ? `; ${usd(w.estimated_actual_usd)} of it is estimated for routes that report no cost` : ''}).
       "List" is what the same tokens would cost on a paid route, for planning after the free tiers run out. Definitions: docs/COST-TRACKER.md.</p>
     <div class="controls">
-      Window: ${[1, 7, 30].map((x) => `<a class="btn btn-small${x === d.days ? ' btn-primary' : ''}" href="?days=${x}${only ? `&user=${esc(only)}` : ''}">${x === 1 ? 'today' : `${x} days`}</a>`).join(' ')}
-      ${only ? `<a class="btn btn-small" href="?days=${d.days}">all users</a>` : '<span class="note">Add ?user=ID to see one account.</span>'}
+      Window: ${[1, 7, 30].map((x) => `<a class="btn btn-small${x === d.days ? ' btn-primary' : ''}" href="${esc(link({ days: x, scope, user: only }))}">${x === 1 ? 'today' : `${x} days`}</a>`).join(' ')}
+      ${only ? `<a class="btn btn-small" href="${esc(link({ scope }))}">all users</a>` : '<span class="note">Add ?user=ID to see one account.</span>'}
+      <a class="btn btn-small" href="/my-stats">My stats, day by day</a>
     </div>
+    <div class="controls">Whose use: ${SCOPES.map(([k, label]) => `<a class="btn btn-small${k === scope ? ' btn-primary' : ''}" href="${esc(link({ scope: k, user: only }))}">${esc(label)}</a>`).join(' ')}</div>
     <div class="tiles">${tiles}</div>
+    <p class="note">Kept apart in these ${d.days} days: ${d.buckets.map((b) => `${esc((SCOPES.find(([k]) => k === b.bucket) || [0, b.bucket])[1])} ${usd(b.list_usd)} list / ${b.ai_calls} AI calls`).join(' · ')}.
+      The projection below uses product use only (your learner account and real learners), never team, test or script days.</p>
 
     <h2>Cost projection per user-month (tiers)</h2>
     <p class="note">Measured from ${P.basis_user_days} user-day(s) with at least ${P.min_active_min} active minutes. Cost per active hour: list p50 ${usd(P.cost_per_active_hour.list_p50)}, p95 ${usd(P.cost_per_active_hour.list_p95)}; actual p50 ${usd(P.cost_per_active_hour.actual_p50)}, p95 ${usd(P.cost_per_active_hour.actual_p95)}.

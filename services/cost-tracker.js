@@ -19,6 +19,16 @@
  *     own: it only adds to the aggregate counts and costs.
  *   - "Foreground" for an AI call means it finished while the request that started it was still open (the learner
  *     was waiting). "Background" is the rest: write-ahead, scripts, work that outlives its request.
+ *   - Every event from a process that is not the app server (start() never ran: a script, a build job, a test) carries
+ *     src 'script' or 'test', so it is never counted as anyone's use even when it names a learner.
+ *
+ * Buckets (bucketOf; owner 2026-11-03: "my stats separate from everyone else and your tests"):
+ *   me        the owner's own learner account(s) (config/owner.js isOwnerLearner: landon@savantedu.com)
+ *   learners  every other real account (services/real-user-metrics.js classify 'real'; an id with no row counts here)
+ *   internal  founder, team, test and demo accounts, including the admin account
+ *   shared    app work for no one account: shared base levels, signed-out requests, under-13 calls
+ *   scripts   anything from a script, build job or test process
+ * summarize({ scope }) shows one bucket ('product' is me + learners); the tier projection always uses me + learners only.
  */
 const fs = require('fs');
 const path = require('path');
@@ -35,6 +45,7 @@ let buf = [];
 let timer = null;
 let chain = Promise.resolve();
 let dirMade = false;
+let appProcess = false; // set by start(), which only server.js calls
 const own = { ns: 0, n: 0 }; // time spent in this module's per-request code, for the overhead number
 
 const dir = () => process.env.COST_TRACKER_DIR || path.join(path.dirname(db.path), 'cost-tracker');
@@ -82,6 +93,7 @@ function flushSync() {
 
 function push(e) {
   if (off()) return;
+  if (!appProcess) e.src = process.env.NODE_ENV === 'test' ? 'test' : 'script';
   buf.push(e);
   if (buf.length >= FLUSH_AT) setImmediate(flush);
   else if (!timer) { timer = setTimeout(flush, FLUSH_MS); if (timer.unref) timer.unref(); }
@@ -127,6 +139,7 @@ const FEATURES = [
   [/^(coach_turn|tutor_|dock_|assist_help|remediation_teach|spanish_partner)/, 'tutor'],
   [/^(analyze_session|diagnose)/, 'session analysis'],
   [/^(lesson_write|block_|author_items|game_questions|level_editor|regen_items|personalize_read|essay_prompt|choice_pair)/, 'lesson write'],
+  [/^voice_/, 'voice (speech / listening)'],
 ];
 
 function featureOf(task, role, model, basis, fg) {
@@ -160,7 +173,7 @@ function recordAi(a) {
     const tout = num(usage.output_tokens != null ? usage.output_tokens : usage.completion_tokens);
     const prov = a.provider && typeof a.provider === 'object' ? a.provider.name : (a.provider || null);
     const model = a.model || null;
-    const list = listUsd(model, tin, tout);
+    const list = a.listUsd != null ? num(a.listUsd) : listUsd(model, tin, tout); // listUsd: calls priced per clip, not per token (voice)
     let usd = 0;
     let basis = 'free';
     if (num(a.costUsd) > 0) { usd = num(a.costUsd); basis = 'metered'; }
@@ -189,6 +202,7 @@ function routeOf(req) {
 
 /** Express middleware: times every /api request. Put it before the routers. */
 function middleware(req, res, next) {
+  appProcess = true; // only the server mounts this
   if (off() || !req.path.startsWith('/api/')) return next();
   const t0 = process.hrtime.bigint();
   const ctx = { ended: false };
@@ -240,6 +254,7 @@ let snapTimer = null;
 
 function start() {
   if (snapTimer || off()) return;
+  appProcess = true;
   let hist = null;
   try { hist = require('perf_hooks').monitorEventLoopDelay({ resolution: 20 }); hist.enable(); } catch { /* optional */ } // eslint-disable-line global-require
   let lastCpu = process.cpuUsage();
@@ -319,16 +334,51 @@ function aiRows(events) {
   })).sort((a, b) => b.list_usd - a.list_usd || b.calls - a.calls);
 }
 
+// ── buckets (see the header) ─────────────────────────────────────────────────
+
+const BUCKETS = ['me', 'learners', 'internal', 'shared', 'scripts'];
+// A tab refreshing itself (sign-in check, the study strip on becoming visible, the tutor's settings): not someone studying,
+// so these neither open nor extend a session.
+const PASSIVE = /^GET \/api\/(auth\/me|retention\/state|tutor\/dock)$/;
+
+/** A function from an event to its bucket; reads each account once. */
+function bucketer() {
+  const owner = require('../config/owner'); // eslint-disable-line global-require
+  const rum = require('./real-user-metrics'); // eslint-disable-line global-require
+  const r = rum.rules();
+  const seen = new Map();
+  return (e) => {
+    if (e.src) return 'scripts';
+    if (!e.u) return 'shared';
+    if (!seen.has(e.u)) {
+      const u = db.byId('users', e.u);
+      seen.set(e.u, !u ? 'learners' : owner.isOwnerLearner(u) ? 'me' : rum.classify(u, r).group === 'real' ? 'learners' : 'internal');
+    }
+    return seen.get(e.u);
+  };
+}
+
 /**
- * Everything the page shows. opts: { days (7), user (id | null), now (ms) }.
+ * Everything the page shows. opts: { days (7), user (id | null), scope ('all' | a bucket | 'product'), now (ms) }.
  * Time is UTC. Under-13 accounts appear only inside the aggregate tables.
  */
 function summarize(opts = {}) {
   const now = opts.now || Date.now();
   const days = Math.max(1, Math.min(90, Number(opts.days) || 7));
   const userFilter = opts.user ? Number(opts.user) : null;
+  const scope = BUCKETS.includes(opts.scope) || opts.scope === 'product' ? opts.scope : 'all';
   const since = now - days * 86400000;
   let events = load(since);
+  const bucketOf = bucketer();
+  for (const e of events) if (e.t !== 'srv') e.b = bucketOf(e);
+  const buckets = BUCKETS.map((b) => {
+    const mine = events.filter((e) => e.b === b);
+    const ai = mine.filter((e) => e.t === 'ai');
+    return { bucket: b, ai_calls: ai.length, actual_usd: rnd(ai.reduce((s, e) => s + e.usd, 0), 4), list_usd: rnd(ai.reduce((s, e) => s + e.list, 0), 4),
+      requests: mine.filter((e) => e.t === 'req').length, accounts: new Set(mine.filter((e) => e.u).map((e) => e.u)).size };
+  });
+  const product = (b) => b === 'me' || b === 'learners';
+  if (scope !== 'all') events = events.filter((e) => e.t === 'srv' || (scope === 'product' ? product(e.b) : e.b === scope));
   if (userFilter) events = events.filter((e) => e.u === userFilter);
   events.sort((a, b) => a.ts - b.ts);
   const today = dayOf(now);
@@ -343,7 +393,11 @@ function summarize(opts = {}) {
   const slice = (d) => ai.filter((e) => dayOf(e.ts) === d);
   const dayRow = (d) => {
     const a = slice(d);
-    return { day: d, ai_calls: a.length, actual_usd: rnd(total(a, 'usd'), 4), list_usd: rnd(total(a, 'list'), 4), requests: reqs.filter((e) => dayOf(e.ts) === d).length };
+    const ss = sessions.filter((s) => dayOf(s.start) === d);
+    const opens = lvs.filter((e) => dayOf(e.ts) === d);
+    return { day: d, ai_calls: a.length, actual_usd: rnd(total(a, 'usd'), 4), list_usd: rnd(total(a, 'list'), 4), requests: reqs.filter((e) => dayOf(e.ts) === d).length,
+      sessions: ss.length, active_min: rnd(ss.reduce((s, x) => s + x.active, 0) / 60000, 1), levels: ss.reduce((s, x) => s + x.levels, 0),
+      level_opens: opens.length, level_open_p50_ms: rnd(p50(opens.map((e) => e.ms)), 0), level_waits: opens.filter((e) => e.waited).length };
   };
   const dayList = [];
   for (let i = 0; i < days; i++) dayList.push(dayOf(now - i * 86400000));
@@ -352,7 +406,11 @@ function summarize(opts = {}) {
   const gap = CFG.session_gap_min * 60000;
   const cap = CFG.idle_cap_min * 60000;
   const byUser = new Map();
-  for (const e of reqs) { if (e.u) { if (!byUser.has(e.u)) byUser.set(e.u, []); byUser.get(e.u).push(e); } }
+  for (const e of reqs) {
+    if (!e.u || e.src || PASSIVE.test(`${e.m} ${e.route}`)) continue;
+    if (!byUser.has(e.u)) byUser.set(e.u, []);
+    byUser.get(e.u).push(e);
+  }
   const sessions = [];
   for (const [uid, evs] of byUser) {
     let cur = null;
@@ -368,7 +426,9 @@ function summarize(opts = {}) {
     }
   }
   const aiByUser = new Map();
-  for (const e of ai) { if (e.u) { if (!aiByUser.has(e.u)) aiByUser.set(e.u, []); aiByUser.get(e.u).push(e); } }
+  // A script's call that names an account is still no one's use: it counts in the totals, never on a person.
+  const personal = ai.filter((e) => e.u && !e.src);
+  for (const e of personal) { if (!aiByUser.has(e.u)) aiByUser.set(e.u, []); aiByUser.get(e.u).push(e); }
   for (const s of sessions) {
     const mine = (aiByUser.get(s.user) || []).filter((e) => e.ts >= s.start && e.ts <= s.last + cap);
     s.ai_calls = mine.length; s.actual_usd = total(mine, 'usd'); s.list_usd = total(mine, 'list');
@@ -384,8 +444,7 @@ function summarize(opts = {}) {
     if (!userDays.has(k)) userDays.set(k, { user: s.user, day: dayOf(s.start), active: 0, usd: 0, list: 0, levels: 0 });
     const r = userDays.get(k); r.active += s.active / 60000; r.levels += s.levels;
   }
-  for (const e of ai) {
-    if (!e.u) continue;
+  for (const e of personal) {
     const k = `${e.u}|${dayOf(e.ts)}`;
     if (!userDays.has(k)) userDays.set(k, { user: e.u, day: dayOf(e.ts), active: 0, usd: 0, list: 0, levels: 0 });
     const r = userDays.get(k); r.usd += e.usd; r.list += e.list;
@@ -398,7 +457,7 @@ function summarize(opts = {}) {
   for (const e of ai) e.key = `${e.prov || '?'} / ${e.model || '?'}`;
   const models = aiRows(ai);
   const usersMap = new Map();
-  for (const e of ai) { if (e.u) { const r = usersMap.get(e.u) || { calls: 0, usd: 0, list: 0 }; r.calls++; r.usd += e.usd; r.list += e.list; usersMap.set(e.u, r); } }
+  for (const e of personal) { const r = usersMap.get(e.u) || { calls: 0, usd: 0, list: 0 }; r.calls++; r.usd += e.usd; r.list += e.list; usersMap.set(e.u, r); }
   const activeByUser = new Map();
   for (const s of sessions) activeByUser.set(s.user, (activeByUser.get(s.user) || 0) + s.active / 60000);
   const users = [...usersMap.entries()].map(([uid, r]) => ({
@@ -438,7 +497,8 @@ function summarize(opts = {}) {
   const fixedEnv = Number(process.env.COST_FIXED_MONTHLY_USD);
   const fx = CFG.fixed_monthly_usd;
   const fixed = Number.isFinite(fixedEnv) && process.env.COST_FIXED_MONTHLY_USD ? fixedEnv : num(fx.vm) + num(fx.domain) + num(fx.other);
-  const usable = udList.filter((r) => r.active >= CFG.projection_min_active_min);
+  // Only the product's own use prices a tier: the owner's learner account and real learners, never team, test or script days.
+  const usable = udList.filter((r) => r.active >= CFG.projection_min_active_min && product(bucketOf({ u: r.user })));
   const per = (field) => usable.map((r) => r[field] / (r.active / 60));
   const cph = { actual_p50: p50(per('usd')), actual_p95: p95(per('usd')), list_p50: p50(per('list')), list_p95: p95(per('list')) };
   const dpm = CFG.projection_days_per_month;
@@ -460,7 +520,7 @@ function summarize(opts = {}) {
 
   const failed = ai.filter((e) => !e.ok);
   return {
-    generated_at: new Date(now).toISOString(), timezone: 'UTC', days, user: userFilter,
+    generated_at: new Date(now).toISOString(), timezone: 'UTC', days, user: userFilter, scope, buckets,
     today: { ...dayRow(today), ai_failed: slice(today).filter((e) => !e.ok).length, sessions: sessions.filter((s) => dayOf(s.start) === today).length },
     daily: dayList.map(dayRow),
     window: { ai_calls: ai.length, ai_failed: failed.length, actual_usd: rnd(total(ai, 'usd'), 4), list_usd: rnd(total(ai, 'list'), 4),
@@ -477,4 +537,4 @@ function summarize(opts = {}) {
   };
 }
 
-module.exports = { recordAi, recordClient, middleware, start, flush, flushSync, summarize, overhead, listPriceOf, listUsd, featureOf, dir, CFG };
+module.exports = { recordAi, recordClient, middleware, start, flush, flushSync, summarize, overhead, listPriceOf, listUsd, featureOf, dir, CFG, BUCKETS, PASSIVE };

@@ -210,6 +210,8 @@ app.use('/api', (req, res) => res.status(404).json({ error: 'No such endpoint.' 
 // changes a script is one where an hour of stale is acceptable.
 // The cost tracker page: its data is admin-only already; the page is too, so no one else even sees that it exists.
 app.use(['/cost-tracker', '/cost-tracker.html'], (req, res, next) => (require('./middleware/auth').isAdmin(req.user) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
+// The owner's own learner stats (services/my-stats.js): an admin or that account itself.
+app.use(['/my-stats', '/my-stats.html'], (req, res, next) => (require('./middleware/auth').isAdmin(req.user) || require('./config/owner').isOwnerLearner(req.user) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
 
 app.use(express.static(path.join(__dirname, 'public'), {
   extensions: ['html'],

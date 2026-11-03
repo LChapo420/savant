@@ -74,7 +74,8 @@ async function part1() {
   check('metered call: actual cost from the provider ($0.015)', near(e.usd, 0.015) && e.basis === 'metered', e);
   check('list price from the Anthropic ledger prices (Sonnet 5.5: 1000 in x $2 + 500 out x $10 per Mtok = $0.007)', near(e.list, 0.007), e);
   check('it records tokens, provider, model, task and role, and a latency', e.in === 1000 && e.out === 500 && e.prov === 'standard_compute' && e.task === 'fact_verify' && e.role === 'fast' && e.ms >= 0, e);
-  check('it carries no text: only the listed fields', Object.keys(e).sort().join() === ['basis', 'child', 'fg', 'hedged', 'in', 'list', 'model', 'ms', 'ok', 'out', 'prov', 'role', 'task', 'tries', 't', 'ts', 'u', 'usd'].sort().join(), Object.keys(e));
+  check('it carries no text: only the listed fields', Object.keys(e).sort().join() === ['basis', 'child', 'fg', 'hedged', 'in', 'list', 'model', 'ms', 'ok', 'out', 'prov', 'role', 'task', 'tries', 't', 'ts', 'u', 'usd', 'src'].sort().join(), Object.keys(e));
+  check('a call from outside the app server is marked as a test (src), so it is never counted as any account use', e.src === 'test' || e.src === 'script', e.src);
 
   use(stub('nvidia', { model: 'qwen/qwen3.5-122b' }));
   await ai.structured({ role: 'deep', task: 'lesson_write', system: 's', user: 'u', userId: 4001 });
@@ -257,7 +258,7 @@ async function part3() {
       check('the learner\'s requests were timed per route (me x4, paste, level)', d.routes.some((r) => r.route === 'GET /api/auth/me' && r.n >= 4) && d.routes.some((r) => r.route === 'POST /api/materials/paste')
         && d.routes.some((r) => r.route === 'GET /api/lessons/:track/:grade/:level'), d.routes.map((r) => r.route));
       const mine = d.sessions.find((s) => /tracker-learner/.test(s.user));
-      check('a session row exists for the learner with the upload counted and the subject', mine && mine.uploads === 1 && mine.subjects.includes('math') && mine.requests >= 6, d.sessions);
+      check('a session row exists for the learner with the upload counted and the subject', mine && mine.uploads === 1 && mine.subjects.includes('math') && mine.requests >= 3, d.sessions); // sign-in checks and other self-refreshes are not counted (PASSIVE)
       check('the beacon rows rolled up: 2 valid opens (the negative one rejected), 1 waited', d.loads.level_open_client.n === 2 && d.loads.level_open_client.waited_n === 1 && d.loads.level_open_client.ready_n === 1, d.loads.level_open_client);
       check('the unknown-level GET counts in the server-side level-open numbers', d.loads.level_open_server.n >= 1, d.loads.level_open_server);
       check('today has a total row and 1 day in the daily table', d.daily.length === 1 && d.today.requests >= 7, d.today);
