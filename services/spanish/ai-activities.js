@@ -9,6 +9,16 @@
  */
 const ai = require('../ai');
 const grade = require('../../public/spanish/js/shared/grade');
+const specFit = require('./spec-fit');
+
+/** The learner's own lines for a model-run activity (services/spanish/spec-fit.js): nothing for a default spec or no user. */
+function learnerLines(userId, surface) {
+  if (!userId) return '';
+  try {
+    const lines = specFit.linesFor(specFit.specFor(userId, null, null), surface);
+    return lines.length ? `\nThis learner:\n- ${lines.join('\n- ')}` : '';
+  } catch { return ''; }
+}
 
 const RUBRIC_SCHEMA = {
   type: 'object',
@@ -64,8 +74,9 @@ const TURN_SCHEMA = {
   additionalProperties: false,
 };
 
-function partnerSystem(level) {
+function partnerSystem(level, userId = null) {
   const s = level.scenario;
+  const topics = s.topics && s.topics.like && s.topics.like.length ? `\nThe learner likes: ${s.topics.like.join(', ')} (small talk may turn there if it fits; never push it).` : '';
   return `You are ${s.partnerName}, a character in a Spanish-learning role-play. Stay in character and speak only Spanish.
 Learner level: ${level.cefr}. Use only very common words and the structures below; replies are 1 or 2 short sentences (max 15 words).
 Setting: ${s.setting}
@@ -79,7 +90,7 @@ Rules:
 - If the learner writes in English, answer in Spanish and gently ask them to try in Spanish.
 - goals_met lists every goal id the learner has achieved so far in the whole conversation.
 - finished is true only when all goals are met or the conversation has clearly ended.
-- hint is one short English tip for what the learner could say next (empty if none needed).`;
+- hint is one short English tip for what the learner could say next (empty if none needed).${topics}${learnerLines(userId, 'partner')}`;
 }
 
 function scriptedTurn(level, history, text) {
@@ -111,7 +122,7 @@ async function conversationTurn(level, history, text, userId) {
     const out = await ai.structured({
       role: 'fast',
       task: 'spanish_partner_turn',
-      system: partnerSystem(level),
+      system: partnerSystem(level, userId),
       user: `Conversation so far:\n${transcript}\nLearner: ${text}\n\nReply as ${level.scenario.partnerName}.`,
       schema: TURN_SCHEMA,
       schemaName: 'partner_turn',
@@ -202,7 +213,7 @@ async function writingFeedback(level, draft, userId) {
     const out = await ai.structured({
       role: 'fast',
       task: 'spanish_rubric',
-      system: `You are a warm Spanish writing coach for a ${level.cefr} learner. Give feedback on exactly 2 or 3 priorities, most important first, in English (title max 6 words, detail max 30 words), each with a short corrected Spanish example taken from or modelled on their text. Do not rewrite the whole text. Judge only what this level expects.`,
+      system: `You are a warm Spanish writing coach for a ${level.cefr} learner. Give feedback on exactly 2 or 3 priorities, most important first, in English (title max 6 words, detail max 30 words), each with a short corrected Spanish example taken from or modelled on their text. Do not rewrite the whole text. Judge only what this level expects.${learnerLines(userId, 'coach')}`,
       user: `Task: ${w.task}\nReader: ${w.reader}\nLength: ${w.minWords}-${w.maxWords} words\nMust show: ${(w.mustUse || []).map((m) => m.title).join('; ')}\n\nLearner draft:\n${draft}`,
       schema: FEEDBACK_SCHEMA,
       schemaName: 'feedback',

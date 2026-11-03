@@ -226,6 +226,20 @@ function unitQuestions(skill) {
   return out;
 }
 
+/**
+ * The skill's questions from the unit placement bank (content/unit-placement/spanish.json): written per unit for all 57
+ * grades, each one re-solved blind by a second model before it was kept. This is what lets the catch-up look at every
+ * grade's units, not only grades 3-4 whose engine units carry their own fills and phrases.
+ */
+function placementBankQuestions(skill) {
+  // eslint-disable-next-line global-require
+  const units = require('../unit-placement').unitsFor(TRACK, skill.grade_id);
+  if (!units) return [];
+  const unit = units.find((u) => skill.unit_levels[0] >= u.start && skill.unit_levels[0] <= u.end);
+  if (!unit) return [];
+  return unit.questions.map((q, i) => ({ qid: `u:${skill.key}:${i}`, source: 'bank:placement', prompt: nfc(q.prompt), choices: q.choices.map(nfc), answer: nfc(q.answer) }));
+}
+
 const questionCache = new Map();
 /**
  * Every question for a skill, in the order they are asked: a fill-the-blank, a
@@ -238,9 +252,10 @@ function questionsFor(skill) {
   const fills = unit.filter((q) => q.source === 'unit:fill');
   const phrases = unit.filter((q) => q.source === 'unit:phrase').sort((a, b) => hashOf(a.qid) - hashOf(b.qid));
   const bank = bankQuestions(skill);
-  const lists = [fills, bank, phrases];
+  const written = placementBankQuestions(skill);
+  const lists = [fills, bank, phrases, written];
   const out = [];
-  for (let i = 0; out.length < fills.length + bank.length + phrases.length; i++) {
+  for (let i = 0; out.length < fills.length + bank.length + phrases.length + written.length; i++) {
     for (const l of lists) if (l[i]) out.push(l[i]);
   }
   const final = out.map((q) => ({ ...q, key: skill.key, choices: ordered(q.qid, q.choices) }));
@@ -391,6 +406,12 @@ function nextLevel(userId, now = Date.now()) {
   if (!pos.block) return { error: 'Every block is done.', status: 409 };
   const skill = skillByKey(pos.block.key);
   const enrollment = blockEnrollment(userId, skill.grade_id, now);
+  // Grades 5-57: the block's unit (and the next block's) is written and checked ahead of the learner (unit-writer.js).
+  esPath().writeAhead(skill.grade_id, pos.level);
+  try {
+    const next = (state.blocks || []).find((b) => b.status !== 'done' && b !== pos.block && skillByKey(b.key));
+    if (next) esPath().writeAhead(skillByKey(next.key).grade_id, next.levels[0]);
+  } catch { /* the next block is a convenience */ }
   if (!pos.block.started_at) pos.block.started_at = new Date(now).toISOString();
   pos.block.enrollment_id = enrollment.id;
   save(state);
