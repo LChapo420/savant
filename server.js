@@ -134,6 +134,8 @@ app.use('/api/placement', require('./routes/placement'));
 app.use('/api/reading-check', require('./routes/reading-check'));
 // Optional measurement channels that raise the scorecard's accuracy: questionnaire, delayed memory checks, brain games, silent signals, imports, max accuracy (services/boosters.js).
 app.use('/api/boosters', require('./routes/boosters'));
+// The baseline: Quick / Balanced / Accurate tasks and choices that give the scorecard a first, accurate picture before any material is written (services/onboarding).
+app.use('/api/onboarding', require('./routes/onboarding'));
 // The subject-level quiz: one walk up a whole subject, ending in a recommended
 // percentage per grade for the learner who does not know where to start.
 app.use('/api/subject-placement', require('./routes/subject-placement'));

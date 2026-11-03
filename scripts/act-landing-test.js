@@ -28,7 +28,7 @@ const { TRACKS } = require('../config/curriculum');
 const act = TRACKS.find((t) => t.id === 'act');
 check('ACT has 16 grades, as the page says', act.grades.length === 16 && /16 ACT grades/.test(text));
 const adaptive = read('services/adaptive-placement.js');
-check('placement length on the page (20 to 90 minutes) matches WHOLE_MINUTES', /from about 20 to about 90 minutes/.test(text) && /WHOLE_MINUTES = \{ quick: 20, balanced: 45, accurate: 90 \}/.test(adaptive));
+check('placement length on the page (20 to 57 minutes) matches WHOLE_MINUTES', /from about 20 to about 57 minutes/.test(text) && /WHOLE_MINUTES = \{ quick: 20, balanced: 20, accurate: 57 \}/.test(adaptive));
 const exists = (p) => fs.existsSync(path.join(__dirname, '..', p));
 check('daily review session exists', exists('services/review-session.js'));
 check('ACT scores page and route exist', exists('public/act-scores.html') && exists('routes/act.js'));

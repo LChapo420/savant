@@ -47,23 +47,40 @@ const RELIABLE = Number(process.env.ADAPTIVE_RELIABLE || 0.3);
  * one grade of its middle before the walk may stop, after at least `min`.
  */
 /**
- * Each mode's whole placement budget, in minutes: the owner's limits (Quick 20 at
- * most, Accurate 90 at most), shared by the subject walk, the in-grade stage, the
- * earlier-grade gap scan and the quick check. Stated on its own because the stage
- * clocks no longer add up to it: Accurate leaves 8 minutes for the gap scan.
+ * Each mode's whole placement budget, in minutes: the owner's limits of 2026-11-02 for Balanced (about 20) and
+ * Accurate (under 60; they were 45 and 90), shared by the subject walk, the in-grade stage, the earlier-grade gap
+ * scan and the quick check. Stated on its own because the stage clocks do not add up to it: Accurate leaves 3
+ * minutes for the gap scan. QUICK STAYS AT 20: the owner's limit is under 5, but the best Quick this branch could
+ * build (short questions first, clock-bound) places only 82% (math) to 95% (act) within one grade in 5 minutes,
+ * under the 90% bar on four subjects, so it was not shipped (docs/ONBOARDING-MODES.md section 4, simulated).
  */
-const WHOLE_MINUTES = { quick: 20, balanced: 45, accurate: 90 };
+const WHOLE_MINUTES = { quick: 20, balanced: 20, accurate: 57 };
+
+/**
+ * When the clock ends a walk. It ends it once the clock has run out AND the mode's minimum has been answered (a learner who
+ * stepped away mid-quiz was once stopped after 4 answers and placed three grades up, owner, 2026-10-29). A mode whose minimum
+ * cannot be met in its clock (long reading passages at 60 seconds a question) would never stop, so a walk also ends at
+ * HARD_STOP times the clock once HARD_FLOOR answers are in: the learner who stepped away has at least those 8 answers behind
+ * them, and nobody is kept 60% past the owner's limit for the sake of a count.
+ */
+const HARD_STOP = 1.25;
+const HARD_FLOOR = 8;
+function clockEnded(mode, span, answeredCount, elapsedMs, clockMs) {
+  if (!(elapsedMs >= clockMs)) return false;
+  return answeredCount >= limits(mode, span).min || (elapsedMs >= clockMs * HARD_STOP && answeredCount >= HARD_FLOOR);
+}
 
 const MODES = {
   // Quick was 28 / 12 / 0.90; on calibrated questions, against the stricter of
   // two judges, that missed 2-5 testers in 256, and 32 / 18 / 0.94 missed 0-1.
-  quick: { max: 32, min: 18, sure: 0.94, minutes: 14 },
-  balanced: { max: 70, min: 20, sure: 0.97, minutes: 32 },
-  // Accurate was 160 questions / 65 minutes. Capped at 130 / 57 it places the
-  // same testers exactly as well (588 of 588 math within one grade, 410 exact),
-  // and the 8 minutes it frees go to the earlier-grade gap scan, which had almost
-  // none left in math (missed gaps 2.3% -> 1.0% in scripts/gap-path-sim.js).
-  accurate: { max: 130, min: 40, sure: 0.995, minutes: 57 },
+  // 2026-11-03: Balanced and Accurate are re-fitted to the owner's limits by shortening the CLOCKS only; the question caps, the stop rule and every
+  // gate that measures them are as they were. Quick keeps its 14 minutes (see WHOLE_MINUTES). Every mode asks short questions first
+  // (`shortFirst`, nextBlock `fast`): among the questions near the belief's middle it takes the quickest, which keeps the accuracy and saves
+  // minutes (docs/ONBOARDING-MODES.md section 4, simulated, seconds estimated from word counts: services/placement-seconds.js).
+  // A mode with `noLift` gets no span-based lift of its minimum (see limits); none ships with it, it is how the sim tried a 5-minute Quick.
+  quick: { max: 32, min: 18, sure: 0.94, minutes: 14, shortFirst: true },
+  balanced: { max: 70, min: 20, sure: 0.97, minutes: 14, shortFirst: true },
+  accurate: { max: 130, min: 40, sure: 0.995, minutes: 40, shortFirst: true },
 };
 
 /** The chance the walk assumes of a right answer from someone at `x`, on a question written for `pos`. */
@@ -166,7 +183,9 @@ function blocksFor(sets) {
       for (let k = 0; k < order.length; k += size) {
         const idx = order.slice(k, k + size).sort((x, y) => x - y);
         const pos = idx.reduce((s, i) => s + positionOf(questions[i], g), 0) / idx.length;
-        blocks.push({ grade: g, part: `b${k / size}`, idx, pos });
+        // `sec`: what the block is estimated to take (services/placement-seconds.js), when its questions carry it.
+        const secs = idx.map((i) => questions[i].sec);
+        blocks.push({ grade: g, part: `b${k / size}`, idx, pos, ...(secs.every(Number.isFinite) ? { sec: secs.reduce((a, b) => a + b, 0) } : {}) });
       }
       return;
     }
@@ -182,13 +201,29 @@ function blocksFor(sets) {
   return blocks;
 }
 
-/** The next block: the unasked one written nearest the middle of the belief. */
-function nextBlock(blocks, asked, target) {
+/**
+ * How far from the target, in grades, a question may sit before its length stops being worth it: a question this far
+ * off tells the walk about as much as one half as far away does in half the time (see nextBlock `fast`).
+ */
+const FAST_W = Number(process.env.ADAPTIVE_FAST_W ?? 0.5);
+
+/**
+ * The next block: the unasked one written nearest the middle of the belief.
+ *
+ * `fast` (Quick, which is bound by a clock and not by a count): the cost of a question is its seconds, so among the blocks
+ * near the target the one that is quickest is preferred. The score is seconds times (1 + (distance / FAST_W)^2), the
+ * seconds per unit of what a question this far from the belief's middle can still tell; a block with no estimate counts
+ * as FAST_DEFAULT_SEC. With every block the same length it picks the same block as the plain rule.
+ */
+const FAST_DEFAULT_SEC = 26;
+function nextBlock(blocks, asked, target, { fast = false } = {}) {
   const done = new Set(asked.map((b) => `${b.grade}:${b.part}`));
+  const cost = (b) => (Number.isFinite(b.sec) ? b.sec : FAST_DEFAULT_SEC) * (1 + ((b.pos - target) / FAST_W) ** 2);
   let best = null;
   for (const b of blocks) {
     if (done.has(`${b.grade}:${b.part}`)) continue;
-    if (!best || Math.abs(b.pos - target) < Math.abs(best.pos - target)) best = b;
+    if (!best) { best = b; continue; }
+    if (fast ? cost(b) < cost(best) : Math.abs(b.pos - target) < Math.abs(best.pos - target)) best = b;
   }
   return best;
 }
@@ -233,7 +268,7 @@ function nextTarget(answered, post, ctx = {}) {
 function limits(mode, span) {
   const cfg = MODES[mode];
   const scale = Number(process.env.ADAPTIVE_QUICK_SCALE ?? 1.5);
-  if (mode !== 'quick' || !scale) return cfg;
+  if (mode !== 'quick' || !scale || cfg.noLift) return cfg;
   return { ...cfg, min: cfg.min + Math.floor((span * scale) / 8), max: cfg.max + Math.floor((span * scale) / 12) };
 }
 
@@ -388,6 +423,6 @@ function recommend(span, post, answered) {
 }
 
 module.exports = {
-  questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, firstTarget, nextTarget, done, limits,
+  questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, clockEnded, HARD_STOP, HARD_FLOOR, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, firstTarget, nextTarget, done, limits,
   gradeMass, wholePercents, recommend, CEILING, ceilingProof, topProven, standardError, confirmed, SE_MAX, ceilingCandidate, topLeft,
 };

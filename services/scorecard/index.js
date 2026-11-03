@@ -1680,6 +1680,7 @@ module.exports = {
   observe,
   shift,
   seedFromStyleQuiz,
+  STYLE_MAP,
   forDimension,
   DIMENSION_STAT,
   view,
