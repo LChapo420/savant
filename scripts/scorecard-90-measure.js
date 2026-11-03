@@ -158,6 +158,31 @@ const bank = ROOTS.map((id) => (SRC[id] || ['SCALE']).map((t) => {
   if (bundle) se2 *= t === 'GEN' ? 1.25 : 1.3;
   return { type: t, sec, su2, se2, bundle };
 }));
+// Phase 4 (docs/SCORECARD-90.md section 11): behavioural footprints, off by default (--foot=1) so every earlier number reproduces. Each footprint in
+// scripts/lib/scorecard-footprints.js adds one source to each measure it reads, with its OWN persistent error (assumed independent of the designed tasks').
+//   --foot-v=X     validity multiplier on footprints only (1 = the conservative values in that file; 0.75 and 0.5 are the pessimistic runs)
+//   --foot-only=K  keep only footprint kinds K (CP,VOL,EMB,PRM) to see what each kind adds alone
+//   --foot-rinf=R  what-if: set every footprint's ceiling (rhoInf) to R instead (how good would a footprint have to be)
+// Free footprints (VOL: logged behaviour, no learner time) happen whether or not the app asks, so they enter at their cap with no seconds charged. Charged
+// ones (CP, EMB, PRM) are chosen by the planner like any item, up to their monthly cap, inside the same measuring budget.
+const FOOT_ON = arg('foot', '0') === '1';
+const FOOT_V = Number(arg('foot-v', 1));
+const FOOT_ONLY = arg('foot-only', '').split(',').filter(Boolean);
+const FOOT_RINF = Number(arg('foot-rinf', 0));
+if (FOOT_ON) {
+  const FP = require('./lib/scorecard-footprints');
+  for (const f of FP.FOOTPRINTS) {
+    if (FOOT_ONLY.length && !FOOT_ONLY.includes(f.kind)) continue;
+    const k = FP.KINDS[f.kind]; const lo = FOOT_V;
+    const shared = f.reads.length > 1;
+    for (const m of f.reads) {
+      const j = LIDX[m]; if (j === undefined) throw new Error(`footprint ${f.id} reads unknown latent ${m}`);
+      const r1 = Math.min(0.95, k.rho1 * lo * lo); const rinf = Math.min(0.97, Math.max(r1, (FOOT_RINF || k.rhoInf) * lo * lo));
+      const su2 = (1 / rinf - 1) / RINF_X; let se2 = Math.max(0, 1 / r1 - 1 - (1 / rinf - 1)); if (shared) se2 *= 1.3;
+      bank[j].push({ type: 'FP_' + f.kind, fp: f.id, sec: f.sec, su2, se2, bundle: shared ? 'FP:' + f.id : null, cap: f.cap, free: f.kind === 'VOL' });
+    }
+  }
+}
 // the aggregate of n items has error variance su2 + se2/n, precision 1/(that)
 const precN = (s, n) => (n <= 0 ? 0 : 1 / (s.su2 + s.se2 / n));
 
@@ -287,8 +312,9 @@ const hfun = (v) => Math.max(v - TARGET_VAR, 0) + 0.02 * v;
 const ACTIONS = (() => {
   const acts = []; const byBundle = {};
   bank.forEach((b, j) => b.forEach((so, s) => {
-    if (!so.bundle) { acts.push({ mem: [[j, s]], sec: so.sec, type: so.type }); return; }
-    if (!byBundle[so.bundle]) { byBundle[so.bundle] = { mem: [], sec: so.sec, type: so.type }; acts.push(byBundle[so.bundle]); }
+    if (so.free) return; // free footprints are applied at the start of every plan, never chosen
+    if (!so.bundle) { acts.push({ mem: [[j, s]], sec: so.sec, type: so.type, cap: so.cap }); return; }
+    if (!byBundle[so.bundle]) { byBundle[so.bundle] = { mem: [], sec: so.sec, type: so.type, cap: so.cap }; acts.push(byBundle[so.bundle]); }
     byBundle[so.bundle].mem.push([j, s]);
   }));
   return acts;
@@ -299,11 +325,19 @@ function plan(Sig0inv, Lp0, budgetSec, Pm) {
   if (Pm) for (let i = 0; i < n * n; i++) M[i] += Pm[i];
   const S = invert(M, n); const counts = bank.map((b) => new Int32Array(b.length));
   let spent = 0; const order = [];
+  bank.forEach((b, j) => b.forEach((so, s) => { // free footprints: every event the learner produces anyway, at no cost in seconds
+    if (!so.free) return; const d = precN(so, so.cap); if (d <= 1e-9) return;
+    const f = d / (1 + d * S[j * n + j]); const col = new Float64Array(n); for (let k = 0; k < n; k++) col[k] = S[k * n + j];
+    for (let a = 0; a < n; a++) for (let c = 0; c < n; c++) S[a * n + c] -= f * col[a] * col[c];
+    counts[j][s] = so.cap;
+  }));
   while (spent + CHUNK <= budgetSec) {
     let bestG = 0; let ba = null; let bn = 0;
     const hcur = new Float64Array(n); for (let k = 0; k < n; k++) hcur[k] = MULT[k] * hfun(S[k * n + k]);
     for (const act of ACTIONS) {
-      const isMenu = act.type === 'MENU'; let add = Math.max(1, Math.round(CHUNK / act.sec)); if (isMenu) add = Math.min(add, menuLeft); if (add <= 0) continue;
+      const isMenu = act.type === 'MENU'; let add = Math.max(1, Math.round(CHUNK / act.sec)); if (isMenu) add = Math.min(add, menuLeft);
+      if (act.cap) add = Math.min(add, act.cap - counts[act.mem[0][0]][act.mem[0][1]]);
+      if (add <= 0) continue;
       let g = 0;
       for (const [j, s] of act.mem) {
         if (S[j * n + j] < TARGET_VAR * 0.5) continue;
@@ -406,7 +440,7 @@ function runSide(T, C, seedBase) {
   const covDes = covFrom(popX, popP, NL); const SigI_des = inv(covDes.Sigma);
   log('covariance: app-only kept', covApp.kept, 'top', covApp.top.join(','), '| designed kept', covDes.kept, 'top', covDes.top.join(','));
   // 4. stages
-  const res = { S0: [], S1: [], S2: [], S3: [], S4: [], S5: [] }; const minutes = []; const caps = [];
+  const res = { S0: [], S1: [], S2: [], S3: [], S4: [], S5: [] }; const minutes = []; const caps = []; const fpMin = [];
   const post = (SigI, parts) => { const P = new Float64Array(NL); const b = new Float64Array(NL); let Pm = null; for (const p of parts) { for (let k = 0; k < NL; k++) { if (p.Pm) { b[k] += p.b[k]; } else { P[k] += p.P[k]; b[k] += p.b[k]; } } if (p.Pm) Pm = p.Pm; } return postFrom(SigI, P, b, NL, Pm).mu; };
   const toPts = (mu, ids) => ids.map((id) => Math.max(2, Math.min(98, 50 + POP_SD * mu[lat(id)] * sgn(id))));
   const seeds = rngFor(seedBase + 6);
@@ -425,9 +459,10 @@ function runSide(T, C, seedBase) {
     const P5 = new Float64Array(NL); const b5 = new Float64Array(NL); for (const o of obs) { P5[o.j] += o.P; b5[o.j] += o.P * o.x; }
     const mu5 = post(SigI_des, [apps[i], lltmOnly[i], retOnly[i], { P: P5, b: b5 }]); res.S5.push(toPts(mu5, IDS).map((v, k) => Math.abs(v - truthPts[k])));
     minutes.push(pl.spent / 60);
+    if (FOOT_ON) { let sec = 0; const seen = new Set(); pl.counts.forEach((c, j) => c.forEach((n, s) => { const so = bank[j][s]; if (!n || !so.fp || so.free) return; if (so.bundle) { if (seen.has(so.bundle)) return; seen.add(so.bundle); } sec += n * so.sec; })); fpMin.push(sec / 60); }
     if (i === 0) log('first learner planned minutes', (pl.spent / 60).toFixed(0), 'items', pl.counts.reduce((s, c, j) => s + c.reduce((a, n) => a + n, 0), 0));
     if (i % 25 === 0) log(`learner ${i}/${nT}`);
-    if (i === 0) { const types = {}; pl.counts.forEach((c, j) => c.forEach((n, s) => { if (n) types[bank[j][s].type] = (types[bank[j][s].type] || 0) + n * bank[j][s].sec / 60 / (bank[j][s].bundle ? ACTIONS.find((a) => a.mem.some((m) => m[0] === j && m[1] === s)).mem.length : 1); })); res.mix = types; }
+    if (i === 0) { const types = {}; pl.counts.forEach((c, j) => c.forEach((n, s) => { if (n && bank[j][s].sec > 0) types[bank[j][s].type] = (types[bank[j][s].type] || 0) + n * bank[j][s].sec / 60 / (bank[j][s].bundle ? ACTIONS.find((a) => a.mem.some((m) => m[0] === j && m[1] === s)).mem.length : 1); })); res.mix = types; }
   }
   // what each latent would still need: its free precision (app, embedded design, retests), the most any number of items of each of its sources can add, and
   // the seconds a single source would need alone to reach the variance for an MAE of 5 (0.136 of the population's)
@@ -438,7 +473,7 @@ function runSide(T, C, seedBase) {
     const forVar = (vv) => { const need = 1 / vv - 1; let solo = Infinity; let soloType = null; for (const so of bank[j]) { const want = need - free; if (want <= 0) { solo = 0; soloType = 'free'; break; } if (want >= 1 / so.su2) continue; const n = so.se2 / (1 / want - so.su2); const sec = n * so.sec; if (sec < solo) { solo = sec; soloType = so.type; } } const extra = Math.max(0, need - cap); return { capOK: cap >= need, soloMin: Number.isFinite(solo) ? Number((solo / 60).toFixed(1)) : null, soloType, extraRho: extra > 0 ? Number((extra / (1 + extra)).toFixed(2)) : 0 }; };
     needs.push({ id: ROOTS[j], free: Number(free.toFixed(2)), cap: Number(cap.toFixed(2)), mae5: forVar(0.136), sd19: forVar((1.9 / 17) ** 2) });
   }
-  res.needs = needs; res.minutes = minutes; res.lltm = { slope: lReg.slope, var: lReg.var }; res.ret = { var: rReg.var, current: rRegCur.var, events: mean(rC.map((o) => o.events)), eventsCurrent: mean(rCcur.map((o) => o.events)) }; res.cov = { app: covApp.kept, designed: covDes.kept };
+  res.needs = needs; res.minutes = minutes; res.fpMin = fpMin; res.lltm = { slope: lReg.slope, var: lReg.var }; res.ret = { var: rReg.var, current: rRegCur.var, events: mean(rC.map((o) => o.events)), eventsCurrent: mean(rCcur.map((o) => o.events)) }; res.cov = { app: covApp.kept, designed: covDes.kept };
   return res;
 }
 
@@ -459,8 +494,14 @@ for (const st of stages) {
   summary[st] = { accuracy: Number((100 - mean(mae)).toFixed(2)), measures_w5_99: w5.filter((v) => v >= 0.99).length, measures_w5_90: w5.filter((v) => v >= 0.9).length, mae: Number(mean(mae).toFixed(2)), measures_le5: mae.filter((v) => v <= 5).length, measures_le10: mae.filter((v) => v <= 10).length, learners_w5: Number(mean(w5).toFixed(3)), learners_w10: Number(mean(w10).toFixed(3)), groups: { a: g('a'), b: g('b'), c: g('c'), d: g('d') } };
 }
 const mins = [...sideAB.minutes, ...sideBA.minutes];
-const out = { days: DAYS, stop: STOP, minutes_p50: Number(mins.slice().sort((x, y) => x - y)[Math.floor(mins.length / 2)].toFixed(0)), minutes_p90: Number(mins.slice().sort((x, y) => x - y)[Math.floor(mins.length * 0.9)].toFixed(0)), half: HALF, blind: BLIND, truth_factors: A.truth_factors, learners: A.learners.length + B.learners.length, minutes_total_per_learner: Number(mean(mins).toFixed(1)), minutes_per_day: Number((mean(mins) / DAYS).toFixed(2)), mix_minutes_by_source: sideAB.mix, summary, needs: sideAB.needs, lltm: sideAB.lltm, retest: sideAB.ret, cov: sideAB.cov, perMeasure };
+const fpm = [...(sideAB.fpMin || []), ...(sideBA.fpMin || [])];
+const out = { foot: FOOT_ON ? { v: FOOT_V, only: FOOT_ONLY, rinf: FOOT_RINF, charged_min_per_learner: Number(mean(fpm).toFixed(1)), charged_min_per_day: Number((mean(fpm) / DAYS).toFixed(2)) } : null, days: DAYS, stop: STOP, minutes_p50: Number(mins.slice().sort((x, y) => x - y)[Math.floor(mins.length / 2)].toFixed(0)), minutes_p90: Number(mins.slice().sort((x, y) => x - y)[Math.floor(mins.length * 0.9)].toFixed(0)), half: HALF, blind: BLIND, truth_factors: A.truth_factors, learners: A.learners.length + B.learners.length, minutes_total_per_learner: Number(mean(mins).toFixed(1)), minutes_per_day: Number((mean(mins) / DAYS).toFixed(2)), mix_minutes_by_source: sideAB.mix, summary, needs: sideAB.needs, lltm: sideAB.lltm, retest: sideAB.ret, cov: sideAB.cov, perMeasure };
 const o = arg('out'); if (o) fs.writeFileSync(o, JSON.stringify(out));
 const line = (st) => `${st}: ACC ${summary[st].accuracy}% pairs<=5 ${(summary[st].learners_w5 * 100).toFixed(0)}% measures w5>=99% ${summary[st].measures_w5_99} MAE ${summary[st].mae}  measures<=5 ${summary[st].measures_le5}  <=10 ${summary[st].measures_le10}  learners within5 ${(summary[st].learners_w5 * 100).toFixed(0)}% within10 ${(summary[st].learners_w10 * 100).toFixed(0)}%  groups(mae/le5) a ${summary[st].groups.a.mae}/${summary[st].groups.a.le5} b ${summary[st].groups.b.mae}/${summary[st].groups.b.le5} c ${summary[st].groups.c.mae}/${summary[st].groups.c.le5} d ${summary[st].groups.d.mae}/${summary[st].groups.d.le5}`;
 console.log(`half=${HALF} blind=${BLIND} truth_factors=${A.truth_factors} minutes/learner ${out.minutes_total_per_learner} (${out.minutes_per_day}/day)`);
 for (const st of stages) console.log(line(st));
+{ // Phase 4 summary: the ten worst measures at S5 and the footprint minutes (all SIMULATED)
+  const w = Object.entries(perMeasure.S5).map(([id, v]) => [id, v[0]]).sort((a, b) => b[1] - a[1]);
+  console.log('worst10 S5: ' + w.slice(0, 10).map(([id, v]) => `${id} ${v}`).join(', '));
+  console.log(`worst20 mean ${mean(w.slice(0, 20).map((x) => x[1])).toFixed(2)}  within5 ${summary.S5.measures_le5}  within7 ${w.filter((x) => x[1] <= 7).length}` + (FOOT_ON ? `  footprint minutes charged/learner ${out.foot.charged_min_per_learner} (${out.foot.charged_min_per_day}/day)` : ''));
+}

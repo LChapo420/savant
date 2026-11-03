@@ -265,3 +265,110 @@ conceptual_bias 9.4, identity_alignment 9.3, cognitive_flexibility 9.0, competit
 ### 10.5 What the still-missing measures need
 
 An independent method with a persistent error of about a fifth of today's assumed self-report/choice error (a validity of roughly 0.9 against the learner's behaviour, where published self-report/behaviour correlations are 0.1 to 0.4), or a behavioural footprint the app can read. Without either, the closest possible at day 30 in this sim is about 93.7% on average. Confirming this needs a real-learner study; nothing here is real-learner proof.
+
+## 11. Phase 4: behavioural footprints and a drift layer (SIMULATED; nothing here is in the product)
+
+**Every number in this section is SIMULATED.** The footprints' validities are assumptions (kinds and anchors in `scripts/lib/scorecard-footprints.js`; the citations there are from memory and their coefficients were not re-checked in this session). Method: `scripts/scorecard-90-measure.js --foot=1` (new, off by default; the default sim, the `--gate-check` baseline and every earlier number reproduce: the reference run below gives the same 93.70 as section 10.1). Same dumps as section 10: seeds A and B calibrate, seed C (31415) is held out and only scored. The day-0 onboarding (`docs/ONBOARDING-MODES.md`) is a different job and is not part of these numbers.
+
+### 11.1 What was built
+
+- 14 footprints (11.2) covering 24 measures, including all ten of section 10.4's worst and the next ten. Each adds one source per measure it reads, with **its own persistent error** (assumed independent of the designed tasks' and of the other footprints') and conservative validity: a choice point inside a lesson reads at validity 0.20 an event and 0.40 at most however many events; a voluntary behaviour at 0.14 and 0.35; a variation embedded in a practice item at 0.17 and 0.50; a one-tap prompt at 0.20 and 0.35. The day-0 mini-lesson (`services/onboarding/model.js`) assumes up to 0.55 for the same kind of choice, so these are stricter, because in-use choices are made in a messier context.
+- **Minutes, counted honestly.** A choice point costs 5 to 8 s, a tap 3 s, an embedded rule switch 3 s more than the plain item. Those events are chosen by the same planner as every other item, **inside the same 9.9 min/day measuring budget**, up to a monthly cap, and are charged. Voluntary behaviour (extra practice, a retry after a fail, a goal kept, skips, panel opens) costs the learner nothing extra and enters at its cap with no seconds charged. `scripts/scorecard-footprints-test.js` (new, in `npm test`) checks the list: real measures, free only if voluntary, files exist, the worst ten covered.
+- The footprints reuse the day-0 mini-lesson's choice names and scorer (`services/onboarding/tasks.js` scoreMiniLesson: first, hint, mode, deeper, connect, feel, more), so the product work in 11.6 is the same choice points offered again inside ordinary lessons, not a second design.
+
+### 11.2 The footprints (design only)
+
+| footprint | kind | measures it reads | events a month | learner seconds | the file it would live in |
+|---|---|---|---|---|---|
+| why_or_steps | CP | conceptual_bias | 200 | 5 | public/js/session.js (step renderer) + routes/learn.js (a footprint field on the level-complete POST) |
+| deeper_or_move_on | CP | depth_breadth | 200 | 5 | public/js/session.js (level-complete card) |
+| race_or_solo | CP | competitive_drive, social_framing | 60 | 8 | public/js/session.js + routes/learn.js |
+| hint_or_try | CP | productive_struggle, hint_dependency | 150 | 5 | public/js/session.js (the hint button, already there) + services/sessions.js (log hint-first against try-first) |
+| retry_after_fail | VOL | productive_struggle, persistence | 60 | 0 (already done) | services/scorecard/hooks.js usageSweep (attempts per level are already stored) + a use.* indicator in services/scorecard/indicators.js |
+| extra_practice | VOL | intrinsic_motivation, mastery_orientation | 90 | 0 (already done) | services/daily-plan.js (the plan knows what was asked) + services/scorecard/hooks.js usageSweep |
+| plan_set_and_kept | VOL | planning_tendency, strategy_awareness, instruction_adherence | 60 | 0 (already done) | services/daily-plan.js + services/retention-goal.js (goal set, goal kept) read by usageSweep |
+| rule_switch | EMB | cognitive_flexibility, interference_susceptibility | 150 | 3 | services/objective-items.js (reasoning items) + public/js/silent-signals.js (item timing, already captured) |
+| link_prompt | PRM | integration_tendency, creative_extension | 60 | 8 | public/js/session.js + services/material-notes.js (the existing note scorer) |
+| feel_tap | PRM | emotional_engagement | 90 | 3 | public/js/session.js |
+| topic_pick | VOL | identity_alignment, curiosity_hook | 40 | 0 (already done) | services/learner-path.js + services/learning-spec.js (interest match of what was picked) |
+| skip_and_exit | VOL | boredom_susceptibility, momentum_dependence | 200 | 0 (already done) | public/js/silent-signals.js (already captures idle stretches) + routes/learn.js (skips are already stored) |
+| reward_panel | VOL | extrinsic_reward_sensitivity, praise_sensitivity | 100 | 0 (already done) | public/js/dashboard.js (panel opens) + services/scorecard/hooks.js usageSweep |
+| ask_a_question | VOL | question_generation | 60 | 0 (already done) | routes/tutor.js (count and length of unprompted questions) |
+
+What the learner sees and the research reason for each are in that file's `ui` and `why` fields. "Events a month" is the cap on what the app can see in a 30-day month at the sim's 286 to 292 levels.
+
+### 11.3 Results, day 30, 9.9 min/day (SIMULATED; accuracy = 100 minus mean absolute error)
+
+| run | seeds A+B (cross-fit) | seed C (held out) | measures within 5 (C) | within 7 (C) | the ten worst-before measures, mean error (C) | footprint minutes charged a day |
+|---|---|---|---|---|---|---|
+| Phase 3 plan, no footprints (reproduced) | 93.52 | **93.70** | 21 | 72 | 8.92 | 0 |
+| + footprints, conservative validity | 93.62 | **93.74** | 22 | 72 | 8.32 | 0.36 |
+| same, validities x 0.75 | | 93.71 | 22 | 71 | 8.47 | 0.22 |
+| same, validities x 0.5 | | 93.70 | 22 | 70 | 8.56 | 0.14 |
+| only choice points (CP) | | 93.76 | 22 | 74 | 8.46 | 0.19 |
+| only voluntary behaviour (VOL) | | 93.71 | 23 | 73 | 8.68 | 0 |
+| only embedded rule switches (EMB) | | 93.70 | 21 | 74 | 8.64 | 0.10 |
+| only one-tap prompts (PRM) | | 93.71 | 23 | 73 | 8.85 | 0.07 |
+
+Worst ten of the held-out run with footprints: identity_alignment 9.14, interference_susceptibility 8.90, depth_breadth 8.83, creative_extension 8.71, strategy_awareness 8.58, competitive_drive 8.43, extrinsic_reward_sensitivity 8.34, boredom_susceptibility 8.33, integration_tendency 8.32, emotional_engagement 8.30. Without footprints: conceptual_bias 9.37, identity_alignment 9.27, cognitive_flexibility 9.04, competitive_drive 9.00, depth_breadth 8.91, productive_struggle 8.80, planning_tendency 8.76, emotional_engagement 8.74, intrinsic_motivation 8.70, integration_tendency 8.63. The worst-ten list reshuffles from run to run by a few tenths: a difference under about 0.3 points on one measure, on 200 held-out learners, is not a result.
+
+**Honest reading: footprints at conservative validity add 0.04 points on the held-out seed (0.10 on A+B) and move the ten worst from about 8.9 to 8.3. Average 95% at day 30 is not reached, and not close.** The 24 measures that carry a footprint improve by about 0.3 (mean error 8.16 to 7.89); the other 76 get 0.04 worse (5.71 to 5.75: about 0.4 minutes a day of the budget moved to footprints, within noise).
+
+### 11.4 Why it is so small, and what a footprint would have to be
+
+A source with ceiling validity v can never add more than v^2 / (1 - v^2) of precision to a measure, however many events there are: 0.19 for v = 0.40, 0.14 for v = 0.35. Section 10.4 puts the need at about 6.3 for the worst measures, against 0.1 to 0.4 free from the app. Three independent footprints at v = 0.4 add about 0.5 in total, which is the gain above. Raising only the footprints' ceilings (what-if, held-out seed C, same minutes budget, the planner free to spend more on them):
+
+| footprint ceiling (validity) | accuracy day 30 (C) | mean error of the ten worst-before | footprint min/day |
+|---|---|---|---|
+| 0.16 (0.40, the run above) | 93.74 | 8.32 | 0.36 |
+| 0.30 (0.55, the day-0 mini-lesson's ceiling) | 93.79 | 8.06 | 0.70 |
+| 0.50 (0.71) | 93.87 | 7.62 | 1.33 |
+| 0.70 (0.84) | 93.97 | 7.12 | 1.72 |
+| 0.85 (0.92) | 94.05 | 6.64 | 2.05 |
+
+Even a footprint that read the trait at 0.92 would add 0.35 points on average and leave the ten worst above 6.6: 200 events at 0.2 each still leave a large per-event error, and the budget is shared. What is needed is the section 10.5 condition (every source's persistent error about five times smaller); with it, footprints add only 0.06 (95.36 to 95.42; measures within 5: 72 to 80). **The footprints are worth building for what they do for the learner (in-flow choices that also drive the lesson, and no extra time for the voluntary ones), not as the road to 95%.** Their real validity is the unknown: the first product step is logging the free ones and checking them against the designed items on real learners.
+
+### 11.5 Day 30, 180 and 365 (SIMULATED, held-out seed C, `--lev=all`, early 15 and late 5.5 min/day)
+
+| horizon | learners (A and B calibrate; C held out) | min/day measuring | accuracy A+B cross-fit | accuracy C, no footprints | accuracy C, with footprints | within 5 (C) | method error / 5 (C) | worst measures (C, no footprints) |
+|---|---|---|---|---|---|---|---|---|
+| day 30 | 200 + 200; C 200 | 9.9 | 93.52 | 93.70 | 93.74 | 21 (22) | 95.36 (95.42) | conceptual_bias 9.37, identity_alignment 9.27, cognitive_flexibility 9.04, competitive_drive 9.00, depth_breadth 8.91 |
+| day 180 | 100 + 100; C 100 | 6.2 | 93.98 | 94.11 | 94.09 | 34 (34) | 95.95 | creative_extension 9.47, productive_struggle 9.20, identity_alignment 8.84, competitive_drive 8.77, interference_susceptibility 8.66 |
+| day 365 | 60 + 60; C 60 | 5.9 | 93.97 | 94.02 | 94.07 | 34 (36) | 96.11 (96.20) | emotional_engagement 9.81, depth_breadth 9.81, strategy_awareness 9.50, recognition_recall_gap 9.45, open_response_performance 9.45 |
+
+Brackets are with footprints. At day 365 with method error / 25 the sim gives 96.88 and 100 of 100 measures within 5, at 1.75 min/day because the planner stops once every measure meets its variance target. The day-365 dumps come from the runs that were still going at the end of Phase 3 (`_proof-out/scorecard-90-v4`); the dump is written after the first mode, and the seed-7 process then crashed in a later mode with `RangeError: Invalid time value` in `scorecard-recovery-sim.js` (a date overflow at day 365, after the dump was written and unrelated to these numbers; not fixed). **Day 365 rests on 60 learners per seed: a difference of a tenth of a point is noise.** Days 180 and 365 read higher than day 30 only because evidence keeps accumulating in a world where the sim's truths never move; 11.7 shows what a moving truth does. Section 10.3's "98 to 99% was not reached at day 180" stands: even at day 365 with method error / 25 the sim gives 96.9.
+
+### 11.6 Product changes (design only, nothing built)
+
+One new logging channel and four small UI changes; the log has to ship before anything else can be checked.
+
+1. **Footprint log.** One row per event `{ footprint id, choice, ms, level id, time }` through the existing level-complete POST in `routes/learn.js`; scored by the rules `services/onboarding/tasks.js` scoreMiniLesson already has (shared) and sent to `scorecard.observe` with `source: 'footprint'`, standardised within tenure cohorts like the other reads (section 10). Treat CP, EMB and PRM as an extra measurement channel: **off for an under-13 account without a parent's agreement** (`boosters.allowed`, the same rule as the onboarding), and no extra Standard Compute. VOL is derived from rows the app already stores (`services/scorecard/hooks.js` usageSweep and `use.*` indicators in `services/scorecard/indicators.js`).
+2. **Choice points in lessons** (`public/js/session.js`): "Why does this work?" under steps (conceptual_bias); "Go deeper / Next" on the level-complete card (depth_breadth); "Race your best / Practise alone" every few levels (competitive_drive, social_framing); try-first versus hint (productive_struggle, hint_dependency; the hint button exists, the log of which came first is new). Each costs 5 to 8 s and the lesson is the same either way.
+3. **Voluntary-behaviour reads** (`services/daily-plan.js`, `services/retention-goal.js`, `services/scorecard/hooks.js`): goal set and kept, order followed (planning_tendency, strategy_awareness, instruction_adherence); extra practice and replays nobody scheduled (intrinsic_motivation, mastery_orientation); retries after a fail (productive_struggle, persistence); skips and idle gaps (boredom_susceptibility, momentum_dependence); streak and XP panel opens (extrinsic_reward_sensitivity, praise_sensitivity); topic picks against stated interests (identity_alignment); unprompted tutor questions (`routes/tutor.js`, question_generation).
+4. **Mixed-rule reasoning items** (`services/objective-items.js`, timing from `public/js/silent-signals.js`): a rule that changes every few items inside normal practice (cognitive_flexibility, interference_susceptibility).
+5. **Two one-tap prompts** (`public/js/session.js`): "connect this to something you learned elsewhere" (integration_tendency, creative_extension) and the five-face feel tap (emotional_engagement).
+6. **A check before any claim.** For each footprint, correlate it on real learners with the designed item for the same measure after a month and replace the assumed validity in `scripts/lib/scorecard-footprints.js` with the measured one. If footprints share a persistent error (a learner who never clicks anything skips them all), the independence assumed here fails and the gain is smaller than in 11.3.
+
+### 11.7 The forgetting and drift layer (design, with a SIMULATED toy)
+
+Section 10.3: the sim's truths are fixed, so it cannot test what happens when a real learner changes. `scripts/scorecard-drift-sim.js` is a one-measure toy, not the 100-measure sim: daily readings with independent noise tuned so a never-forgetting average gives the day-30 error of the main sim (6.3 points), a true value that drifts with a stated one-year stability, and Kalman filters with and without the right fade. Mean absolute error in points (SIMULATED, 4000 learners):
+
+| stability over a year | estimator | day 30 | day 90 | day 180 | day 365 |
+|---|---|---|---|---|---|
+| 0.8 | never forgets | 6.37 | 4.63 | 4.60 | 5.35 |
+| 0.8 | fades old evidence, right rate | 6.37 | 4.59 | 4.31 | 4.16 |
+| 0.8 | fade 4x too fast | 6.37 | 4.78 | 4.68 | 4.63 |
+| 0.8 | fade 4x too slow | 6.37 | 4.61 | 4.44 | 4.50 |
+| 0.9 | never forgets / right fade | 6.29 / 6.29 | 4.28 / 4.26 | 3.82 / 3.73 | 4.03 / 3.50 |
+| 0.95 | never forgets / right fade | 6.26 / 6.26 | 4.10 / 4.10 | 3.38 / 3.36 | 3.19 / 2.98 |
+
+A posterior that never forgets stops improving once real change is bigger than the noise it averages away (at stability 0.8 the error rises by 0.75 points from day 180 to day 365); one that fades old evidence at the right rate keeps improving and ends 1.2 points better. A fade that is too slow costs little, one that is too fast costs more. Design: (1) replace the one 90-day evidence half-life (`EVIDENCE_HALF_LIFE_DAYS` in `services/scorecard/index.js`) with a half-life per measure, short for state-like measures (emotional_engagement, intrinsic_motivation, boredom_susceptibility) and long for abilities (working_memory_span, vocabulary_ceiling), set from stability figures in the literature at first and from the app's own re-measurements (the planned retests of section 6) once there are enough; (2) apply the fade as variance inflation per day on the state, the Kalman form above, so a new reading moves a stale estimate more; (3) keep the tenure-matched cohort norms of section 10.3, which already stop the app's fixed-norm numbers drifting for an unchanged trait; (4) show a measure's age on the profile ("last read 40 days ago") so a stale number is not read as a fresh one. The toy shows direction and rough size only: most designed sources have a persistent error that does not average out like this noise, and real drift is not one rate for everyone.
+
+### 11.8 Not done, and not verified
+
+- The footprints' validities and the independence of their errors are assumptions; no real-learner data exists for any of them. The 0.04 to 0.10 point gain is a lower-confidence number than the sim's other results.
+- Footprints are not combined with the day-0 onboarding: the mini-lesson choices and the in-use choices come from one family (a learner's choice style), so their persistent errors are shared and adding the two would double-count.
+- The 100-measure sim's truths still do not move: the drift layer is shown only in a one-measure toy.
+- Day 365 rests on 60 learners per seed; day 180 on 100.
+- Two Phase 3 simulator processes from before this phase were still running at the end (`scorecard-recovery-sim.js` day-365 seeds 20261022 and 31415, later modes only). When they finish they rewrite `curriculum-build/scorecard-sim/BASELINE.md` and `baseline.json` in this worktree with a different default run (100 learners, 100000 levels, seed 31415). That is what had dirtied those two files at the start of this phase; the stale copy was discarded, not committed, and `gate-baseline.json` is untouched. Discard them again if they reappear.
+- Not run: any change to the product, any model call, any real learner.
