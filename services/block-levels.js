@@ -760,9 +760,10 @@ function readyPlan({ userId, trackId, gradeId, level, attempt = 1 }) {
 }
 
 function anyRow({ userId, trackId, gradeId, level, attempt = 1 }) {
+  // A version replaced by its re-tailored one (retailor) is history, never written into again.
   return db.findOne(COLLECTION, (p) => (p.user_id || null) === (userId || null)
     && p.track_id === trackId && p.grade_id === gradeId && p.level === level
-    && (p.attempt || 1) === attempt) || null;
+    && (p.attempt || 1) === attempt && p.status !== 'superseded') || null;
 }
 
 // ── call 1: the layout ─────────────────────────────────────────────────────
@@ -2107,7 +2108,7 @@ const inFlight = new Map();
  *
  * @returns {Promise<object|null>} the stored plan, or null when it could not be written
  */
-async function write({ userId, trackId, gradeId, level, tailored }) {
+async function write({ userId, trackId, gradeId, level, tailored, retailorOf = null }) {
   // eslint-disable-next-line global-require
   const ai = require('./ai');
   // eslint-disable-next-line global-require
@@ -2134,8 +2135,10 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
   const learnerLayout = `${learner}${adapt.layout}`;
   const learnerFill = `${learner}${adapt.fill}`;
   const started = Date.now();
-  const row = anyRow({ userId: owner, trackId, gradeId, level })
-    || db.insert(COLLECTION, { user_id: owner, track_id: trackId, grade_id: gradeId, level, attempt: 1, kind, status: 'writing' });
+  const row = retailorOf
+    ? db.insert(COLLECTION, { user_id: owner, track_id: trackId, grade_id: gradeId, level, attempt: 1, kind, status: 'writing', retailor_of: retailorOf })
+    : anyRow({ userId: owner, trackId, gradeId, level })
+      || db.insert(COLLECTION, { user_id: owner, track_id: trackId, grade_id: gradeId, level, attempt: 1, kind, status: 'writing' });
   // Each write holds a token on the row. A write that was timed out and then
   // replaced (ensure, BLOCK_WRITE_TIMEOUT_MS) finds another token there when it
   // finally ends, and leaves the row to the write that replaced it.
@@ -2562,6 +2565,65 @@ function isWriting({ userId, trackId, gradeId, level, tailored }) {
 }
 
 /**
+ * The ready learner plan that should be written again because the learner's
+ * spec has drifted. The caller checks who may be re-tailored.
+ */
+function retailorDue({ userId, trackId, gradeId, level, now = Date.now() }) {
+  const old = readyPlan({ userId, trackId, gradeId, level });
+  if (!old || !old.spec_sig) return null;
+
+  const last = Date.parse(old.retailored_at || '');
+  if (Number.isFinite(last) && now - last < 24 * 60 * 60 * 1000) return null;
+
+  // eslint-disable-next-line global-require
+  const specSig = require('./spec-sig');
+  // eslint-disable-next-line global-require
+  const blockAdapt = require('./block-adapt');
+  const current = specSig.specSig(blockAdapt.specFor(userId, { trackId, gradeId, level }, {}));
+  return specSig.driftedEnough(old.spec_sig, current) ? old : null;
+}
+
+/**
+ * Write a new tailored plan beside the old one. The old plan stays ready until
+ * the replacement is servable, so a learner is never left without a version.
+ */
+function retailor({ userId, trackId, gradeId, level }) {
+  const old = retailorDue({ userId, trackId, gradeId, level });
+  if (!old) return Promise.resolve(null);
+
+  db.update(COLLECTION, old.id, { retailored_at: new Date().toISOString() });
+  const key = `${planKey(userId, trackId, gradeId, level)}:retailor`;
+  if (inFlight.has(key)) return inFlight.get(key);
+
+  const task = timedOut(
+    write({ userId, trackId, gradeId, level, tailored: true, retailorOf: old.id }),
+    null, // the old version is not the row being written, so a timeout is settled below
+  )
+    .then((result) => {
+      if (!result || !servable(result)) {
+        // Timed out or not servable: the replacement is closed and the old version stays served.
+        for (const r of db.find(COLLECTION, (p) => p.retailor_of === old.id && p.status === 'writing')) {
+          db.update(COLLECTION, r.id, { status: 'failed', reason: 'the re-tailored version did not finish', write_token: null, finished_at: new Date().toISOString() });
+        }
+        return null;
+      }
+      db.update(COLLECTION, old.id, {
+        status: 'superseded',
+        superseded_by: result.id,
+        superseded_at: new Date().toISOString(),
+      });
+      return result;
+    })
+    .catch((err) => {
+      console.warn(`blocks: re-tailoring ${trackId}/${gradeId}/${level} failed: ${err.message}`);
+      return null;
+    })
+    .finally(() => inFlight.delete(key));
+  inFlight.set(key, task);
+  return task;
+}
+
+/**
  * The plan to serve this account at this level, waiting a bounded time for it.
  *
  * @returns {Promise<{plan: object|null, writing: boolean}>}
@@ -2928,6 +2990,8 @@ module.exports = {
   ensure,
   ensureShared,
   isWriting,
+  retailorDue,
+  retailor,
   forLevel,
   prefetchAhead,
   levelsAhead,
