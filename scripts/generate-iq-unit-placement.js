@@ -253,7 +253,8 @@ async function gate(rows) {
   const thin = Object.values(shipped.grades).flatMap((g) => g.units).filter((u) => u.questions.length < QUESTIONS).length;
   console.log(`${tiers} tiers, ${clusters} clusters, ${total} questions, ${thin} clusters short of ${QUESTIONS}`);
   if (process.argv.includes('--check')) {
-    const disk = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
+    // A Windows checkout (core.autocrlf) turns the trailing newline into CRLF; the content is what is checked.
+    const disk = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8').replace(/\r\n/g, '\n') : '';
     if (disk !== text) { console.log('FAIL content/unit-placement/iq.json differs from a fresh build (run without --check)'); process.exit(1); }
     console.log('ok iq.json is the fresh build');
   } else {
