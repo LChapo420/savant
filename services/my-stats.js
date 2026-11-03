@@ -67,7 +67,7 @@ function compute(opts = {}) {
   const daily = [...rows.values()].map((r) => ({
     day: r.day, study_min: rnd(r.study_min, 1), app_active_min: r.app_active_min || 0, sessions: r.sessions || 0, levels: r.levels || 0,
     questions: r.questions, correct: r.correct, accuracy_pct: r.questions ? rnd((100 * r.correct) / r.questions, 1) : null,
-    median_sec_per_question: rnd(median(r.q_ms) / 1000, 1), placement_questions: r.placement_questions,
+    median_sec_per_question: r.q_ms.length ? rnd(median(r.q_ms) / 1000, 1) : null, placement_questions: r.placement_questions,
     level_opens: r.level_opens || 0, level_open_p50_ms: r.level_open_p50_ms === undefined ? null : r.level_open_p50_ms, level_waits: r.level_waits || 0,
     ai_calls: r.ai_calls || 0, actual_usd: r.actual_usd || 0, list_usd: r.list_usd || 0,
   })).reverse();
