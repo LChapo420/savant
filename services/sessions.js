@@ -145,6 +145,65 @@ function planLesson(userId, enrollment, grade, params) {
   return efficiency.forLearner(userId, () => planLessonRaw(userId, enrollment, grade, params));
 }
 
+/**
+ * The learner's personalized block specification, or null when the base
+ * lesson plan should be used. Owner-base accounts and disabled block
+ * adaptation keep the ordinary practice plan.
+ */
+function specOf(userId, enrollment) {
+  if (!enrollment) return null;
+  if (String(process.env.BLOCK_ADAPT || 'on').toLowerCase() === 'off') return null;
+  try {
+    // eslint-disable-next-line global-require
+    if (require('../config/owner').ownerBase(userId)) return null;
+    // eslint-disable-next-line global-require
+    return require('./block-adapt').specFor(userId, {
+      trackId: enrollment.track_id,
+      gradeId: enrollment.grade_id,
+      level: enrollment.current_level,
+    }, {});
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Apply the learner's requested practice ramp without changing the plan's
+ * skills, roles, or size. Reviews stay first and untouched. Warm-ups come
+ * from the body in order; the remaining focus items rise around their start
+ * offset, while remaining support and stretch items keep their difficulty.
+ */
+function applySpecRamp(entries, spec, base) {
+  if (!spec || spec.isDefault) return entries;
+
+  const reviews = entries.filter((entry) => entry.role === 'review');
+  const body = entries.filter((entry) => entry.role !== 'review');
+  const requestedWarmups = (spec.lesson && spec.lesson.warmupItems) || 0;
+  const W = Math.max(0, Math.min(3, Math.round(requestedWarmups)));
+  const remaining = body.slice(W);
+  const n = remaining.filter((entry) => entry.role === 'focus').length;
+  const difficultySpec = spec.difficulty || {};
+  const s = Number.isFinite(difficultySpec.startOffset) ? difficultySpec.startOffset : 0;
+  const r = Number.isFinite(difficultySpec.ramp) ? difficultySpec.ramp : 0;
+  let k = 0;
+
+  const rampedBody = body.map((entry, index) => {
+    if (index < W) {
+      return { ...entry, difficulty: clampDifficulty(base - 1.5), warmup: true };
+    }
+    if (entry.role !== 'focus') return entry;
+
+    const difficulty = clampDifficulty(Math.max(
+      base - 2,
+      Math.min(base + 2, base + s + r * (k - (n - 1) / 2)),
+    ));
+    k += 1;
+    return { ...entry, difficulty };
+  });
+
+  return [...reviews, ...rampedBody];
+}
+
 function planLessonRaw(userId, enrollment, grade, params) {
   const plan = curriculum.levelPlan(grade, enrollment.current_level);
   const count = params.itemCount || 10;
@@ -214,7 +273,8 @@ function planLessonRaw(userId, enrollment, grade, params) {
   // as before, or, with interleaving on, spread evenly across skills.
   const body = entries.filter((e) => e.role !== 'review');
   const reviews = entries.filter((e) => e.role === 'review');
-  return withinGrade(grade, [...reviews, ...(mix && mix.since >= 2 ? spreadBySkill(body) : body)]);
+  const ordered = [...reviews, ...(mix && mix.since >= 2 ? spreadBySkill(body) : body)];
+  return withinGrade(grade, applySpecRamp(ordered, specOf(userId, enrollment), plan.difficulty));
 }
 
 /**
@@ -1955,6 +2015,7 @@ module.exports = {
   finish,
   sanitize,
   planLesson,
+  applySpecRamp,
   interleaveMode,
   spreadBySkill,
   curveReviews,
