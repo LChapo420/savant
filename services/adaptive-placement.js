@@ -44,17 +44,19 @@ const RELIABLE = Number(process.env.ADAPTIVE_RELIABLE || 0.3);
 /**
  * The modes. `max` caps the questions; `minutes` is the clock the app holds the
  * walk to whatever the count. `sure` is how much of the belief has to sit within
- * one grade of its middle before the walk may stop, after at least `min`.
+ * one grade of its middle before the walk may stop, after at least `min` (the earlier rule, which Quick keeps). A mode with
+ * `confidence` stops instead on the measured rule: the share of the belief that puts the true grade within one of the
+ * recommended grade must reach it (withinOneGrade; ADAPTIVE_STOP=legacy restores `sure`).
  */
 /**
  * Each mode's whole placement budget, in minutes: the owner's limits of 2026-11-02 for Balanced (about 20) and
  * Accurate (under 60; they were 45 and 90), shared by the subject walk, the in-grade stage, the earlier-grade gap
  * scan and the quick check. Stated on its own because the stage clocks do not add up to it: Accurate leaves 3
- * minutes for the gap scan. QUICK STAYS AT 20: the owner's limit is under 5, but the best Quick this branch could
- * build (short questions first, clock-bound) places only 82% (math) to 95% (act) within one grade in 5 minutes,
- * under the 90% bar on four subjects, so it was not shipped (docs/ONBOARDING-MODES.md section 4, simulated).
+ * minutes for the gap scan. Quick is 18: a 5-minute subject clock (the walk ends at 1.25 times it once its 8 answers are in, so about
+ * 6.3 minutes), 8 minutes in the grade, 4 for the scan. Its 20-minute predecessor held 98.8% within one grade on the held-out seed; the
+ * 5-minute clock holds 96.1% on average and 92.6% or better on every subject, simulated (docs/PLACEMENT-ACCURACY-AFTER.md, 3 Nov).
  */
-const WHOLE_MINUTES = { quick: 14, balanced: 20, accurate: 57 };
+const WHOLE_MINUTES = { quick: 18, balanced: 20, accurate: 57 };
 
 /**
  * When the clock ends a walk. It ends it once the clock has run out AND the mode's minimum has been answered (a learner who
@@ -63,6 +65,14 @@ const WHOLE_MINUTES = { quick: 14, balanced: 20, accurate: 57 };
  * HARD_STOP times the clock once HARD_FLOOR answers are in: the learner who stepped away has at least those 8 answers behind
  * them, and nobody is kept 60% past the owner's limit for the sake of a count.
  */
+/**
+ * A subject whose questions are long gets a longer clock for the same walk: reading's are passages (about 62 seconds a question
+ * against 17 to 32 for the others, services/placement-seconds.js, ESTIMATED), so a 6-minute Quick fits about 6 of them and placed
+ * only 89% within one grade on the held-out seed; at 1.5 times the clock (9 minutes) it holds 90% or better.
+ */
+const CLOCK_SCALE = { reading: 1.5 };
+const clockMinutes = (mode, trackId) => MODES[mode].minutes * (CLOCK_SCALE[trackId] || 1);
+
 const HARD_STOP = 1.25;
 const HARD_FLOOR = 8;
 function clockEnded(mode, span, answeredCount, elapsedMs, clockMs) {
@@ -73,12 +83,14 @@ function clockEnded(mode, span, answeredCount, elapsedMs, clockMs) {
 const MODES = {
   // Quick was 28 / 12 / 0.90; on calibrated questions, against the stricter of
   // two judges, that missed 2-5 testers in 256, and 32 / 18 / 0.94 missed 0-1.
-  // 2026-11-03: Balanced and Accurate are re-fitted to the owner's limits by shortening the CLOCKS only; the question caps, the stop rule and every
-  // gate that measures them are as they were. Quick keeps its 14 minutes (see WHOLE_MINUTES). Every mode asks short questions first
+  // 2026-11-03: Balanced and Accurate stop on the within-one confidence (0.97 and 0.99; they asked 20 and 40 answers at least before, 16 and 24 now),
+  // with clocks of 12 and 40 minutes (were 14 and 40). Quick keeps its stop, minimum and span lift (the 95% per level gate in placement-accuracy-test measures
+  // them) and its clock goes from 14 to 5 minutes: the walk now picks the most informative question rather than the nearest, so the same
+  // answers place better. Every mode asks short questions first
   // (`shortFirst`, nextBlock `fast`): among the questions near the belief's middle it takes the quickest, which keeps the accuracy and saves
   // minutes (docs/ONBOARDING-MODES.md section 4, simulated, seconds estimated from word counts: services/placement-seconds.js).
   // A mode with `noLift` gets no span-based lift of its minimum (see limits); none ships with it, it is how the sim tried a 5-minute Quick.
-  quick: { max: 30, min: 8, sure: 0.94, confidence: 0.97, minutes: 6, shortFirst: true, noLift: true },
+  quick: { max: 32, min: 18, sure: 0.94, minutes: 5, shortFirst: true },
   balanced: { max: 70, min: 16, sure: 0.97, confidence: 0.97, minutes: 12, shortFirst: true },
   accurate: { max: 130, min: 24, sure: 0.995, confidence: 0.99, minutes: 40, shortFirst: true },
 };
@@ -239,6 +251,7 @@ function nextBlock(blocks, asked, target, { fast = false } = {}) {
  * nearest question to the middle is not always the most telling one. ADAPTIVE_INFO=0 restores nextBlock's rule.
  */
 const INFO = process.env.ADAPTIVE_INFO !== '0';
+const END_ZONE = Number(process.env.ADAPTIVE_END_ZONE || 3);
 const INFO_NEAR = Number(process.env.ADAPTIVE_INFO_NEAR || 20);
 const entropyOf = (w) => { let h = 0; for (let i = 0; i < w.length; i++) if (w[i] > 1e-12) h -= w[i] * Math.log(w[i]); return h; };
 
@@ -266,7 +279,10 @@ function nextBlockByInfo(blocks, asked, target, post, { fast = false, shape = {}
 
 /** The block to ask next: by information once there is a belief to narrow, else the one nearest the target (nextBlock). */
 function chooseBlock(blocks, asked, target, post, answeredCount, opts = {}) {
-  if (INFO && answeredCount > 0 && post) {
+  // Not at the ends of the scale: there the ceiling and floor proofs want their own questions, asked in the order of nextBlock.
+  const m = post ? median(post) : 0;
+  const span = post ? post.grid[post.grid.length - 1] : 0;
+  if (INFO && answeredCount > 0 && post && m >= END_ZONE && m <= span - END_ZONE) {
     const b = nextBlockByInfo(blocks, asked, target, post, opts);
     if (b) return b;
   }
@@ -326,7 +342,8 @@ const FLOOR_SURE = 0.95;
 /** Is the learner at the very start of the subject, sure enough to stop early? */
 function atFloor(answered, post) {
   if (!FLOOR_MIN || answered.length < FLOOR_MIN) return false;
-  return massWithin(post, 0, 1) >= FLOOR_SURE;
+  // Strictly inside the first grade (position 1 itself belongs to the second), so a walk stopped here recommends the first grade.
+  return massWithin(post, 0, 1 - 1e-9) >= FLOOR_SURE;
 }
 
 /**
@@ -384,9 +401,9 @@ function standardError(post) {
   return Math.sqrt(post.grid.reduce((s, x, i) => s + post.w[i] * (x - mean) ** 2, 0));
 }
 
-function confirmed(answered, post) {
+function confirmed(answered, post, near = CONFIRM_NEAR, count = CONFIRM) {
   const m = median(post);
-  return answered.filter((a) => Math.abs(a.pos - m) <= CONFIRM_NEAR).length >= CONFIRM;
+  return answered.filter((a) => Math.abs(a.pos - m) <= near).length >= count;
 }
 
 /**
@@ -405,7 +422,7 @@ function done(mode, answered, post, ctx = {}) {
   if (STOP === 'within1' && Number.isFinite(cfg.confidence)) {
     // Stop on the error the walk is held to: the share of the belief that puts the true grade within one of the recommended one,
     // and, as before, only once the boundary itself has been tested (CONFIRM answers near the belief's middle).
-    if (!confirmed(answered, post)) return false;
+    if (!confirmed(answered, post, WIDE_NEAR, WIDE_COUNT)) return false;
     // At either end of the scale half of the within-one window lies outside it, so confidence there is cheap, while the product
     // wants a beginner placed at the very start and a learner who knows everything at the very end. Near an end the walk needs END_MIN answers.
     const r = recommend(span, post, answered).index;
@@ -421,6 +438,8 @@ function done(mode, answered, post, ctx = {}) {
  * floor(position), so that is the positions in [R - 1, R + 2). ADAPTIVE_STOP=legacy keeps the earlier stop rule (`sure`).
  */
 const STOP = process.env.ADAPTIVE_STOP || 'within1';
+const WIDE_NEAR = Number(process.env.ADAPTIVE_WIDE_NEAR || 0.75);
+const WIDE_COUNT = Number(process.env.ADAPTIVE_WIDE_COUNT || 2);
 const END_MIN = Number(process.env.ADAPTIVE_END_MIN || 14);
 function withinOneGrade(span, post, answered) {
   const r = recommend(span, post, answered).index;
@@ -489,6 +508,6 @@ function recommend(span, post, answered) {
 }
 
 module.exports = {
-  questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, clockEnded, HARD_STOP, HARD_FLOOR, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, chooseBlock, nextBlockByInfo, withinOneGrade, firstTarget, nextTarget, done, limits,
+  questionKey, positionOf, BAND_AT, MODES, CLOCK_SCALE, clockMinutes, WHOLE_MINUTES, clockEnded, HARD_STOP, HARD_FLOOR, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, chooseBlock, nextBlockByInfo, withinOneGrade, firstTarget, nextTarget, done, limits,
   gradeMass, wholePercents, recommend, CEILING, ceilingProof, topProven, standardError, confirmed, SE_MAX, ceilingCandidate, topLeft,
 };

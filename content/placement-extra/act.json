@@ -1,6 +1,6 @@
 {
  "track_id": "act",
- "note": "Extra calibrated top-end items, appended after a grade's seven stored questions (services/subject-placement.js withExtras). Written by Standard Compute (DeepSeek V4.1), each blind-checked and located by two other families (MiniMax M3.1 Flash, Mistral Large 4); the point is the mean of the two judges. Grade = the grade the point falls in.",
+ "note": "Extra calibrated top-end items, appended after a grade's seven stored questions (services/subject-placement.js withExtras). Written by Standard Compute (DeepSeek V4.1), each blind-checked and located by two other families (MiniMax M3.1 Flash, Mistral Large 4); the point is the mean of the two judges. Grade = the grade the point falls in. Round of 3 Nov 2026: mid-ladder items written by MiniMax M3.1 Flash on xKiro, blind-solved by Qwen 3.8 Max (xKiro free) with the key withheld, positioned as the mean of two MiniMax readings (the curriculum outline, and reference items), kept only where the two readings differ by 1.5 or less (--max_spread).",
  "grades": {
   "act_grade_15": [
    {
@@ -312,9 +312,65 @@
     "rationale": "The unit's practice is to keep essay structure stable across prompts so the process, not topic familiarity, carries the essay.",
     "band": "capstone"
    }
+  ],
+  "act_grade_6": [
+   {
+    "topic": "[Math] Simple Interest and Financial Word Problems — Use I = Prt to find interest earned a",
+    "prompt": "A savings account has a principal balance of $2,400, earns simple interest at an annual rate of 7.5%, and remains untouched for 3 years. What is the total balance after 3 years?",
+    "answer": "$2,940",
+    "choices": [
+     "$2,940",
+     "$2,880",
+     "$2,940.50",
+     "$3,480"
+    ],
+    "rationale": "Using I = Prt gives interest of $2,400(0.075)(3) = $540, so adding the interest to the $2,400 principal produces a total balance of $2,940.",
+    "band": "hard"
+   },
+   {
+    "topic": "Factors, Multiples, GCF, and LCM",
+    "prompt": "The prime factorizations of two numbers are 24 = 2^3 × 3 and 36 = 2^2 × 3^2. What are the greatest common factor and least common multiple of 24 and 36?",
+    "answer": "GCF = 12; LCM = 72",
+    "choices": [
+     "GCF = 12; LCM = 72",
+     "GCF = 6; LCM = 72",
+     "GCF = 12; LCM = 144",
+     "GCF = 24; LCM = 36"
+    ],
+    "rationale": "The GCF uses the smallest power of each shared prime factor, while the LCM uses the largest power of every prime factor.",
+    "band": "hard"
+   }
+  ],
+  "act_grade_7": [
+   {
+    "topic": "[Reading] Main Idea Versus Supporting Detail in Longer Passages — Separate the central ide",
+    "prompt": "A middle school recently converted an unused courtyard into a garden. Fifth-grade students planted vegetables there and measured their growth each week. The harvest was distributed to families, and several students used the data in science projects. However, without summer volunteers, weeds spread quickly, and the garden produced far fewer vegetables the following year. What is the main idea of the passage?",
+    "answer": "The garden benefits students and families, but keeping it productive requires continued care.",
+    "choices": [
+     "The garden benefits students and families, but keeping it productive requires continued care.",
+     "Weeds spread quickly when volunteers are absent during the summer.",
+     "Students used garden measurements for several science projects.",
+     "Fifth-grade students planted vegetables in a school courtyard."
+    ],
+    "rationale": "The passage's central point is that the garden provides educational and community benefits while depending on ongoing care, whereas the other choices describe supporting details.",
+    "band": "hard"
+   },
+   {
+    "topic": "Character Feelings, Motives, and Change in Literary Passages",
+    "prompt": "Read the passage. “Maya had planned to enter the science fair, but when she saw how nervous her younger brother was about presenting his volcano, she signed up to help him rehearse instead. By the next day, Maya realized she had let go of her own project without complaining. She asked the teacher whether she could build a smaller project with a partner, then began making a model of a bridge.” Which choice best explains Maya’s change?",
+    "answer": "Maya shifts from focusing on her own project to supporting her brother, but she also finds a way to continue pursuing her own interest with support.",
+    "choices": [
+     "Maya shifts from focusing on her own project to supporting her brother, but she also finds a way to continue pursuing her own interest with support.",
+     "Maya shifts from helping her brother to rejecting all group work and working only by herself.",
+     "Maya changes from wanting to enter the science fair to believing that science projects are not valuable.",
+     "Maya shifts from disliking her younger brother to blaming him for the loss of her science-fair project."
+    ],
+    "rationale": "Maya’s choice to help her brother and her later decision to work with a partner show that she maintains her own goals while becoming more willing to support others.",
+    "band": "hard"
+   }
   ]
  },
- "made_at": "2026-10-30T19:12:13.888Z",
+ "made_at": "2026-11-03T21:58:10.753Z",
  "judges": [
   "minimaxai/minimax-m3.1-flash (blind solve, key, ambiguity, distractors, fit)",
   "deepseek-v4.1 via Standard Compute: position read from the curriculum outline, sanity-checked against reference items (placement only; never asked about a key)"

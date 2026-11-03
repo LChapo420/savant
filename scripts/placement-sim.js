@@ -192,7 +192,7 @@ function measureSpread(trackId, mode, { seeds = 40, seed = 20261030, dontKnow = 
       const own = edge ? ability : Math.floor(ability) + random();
       // A learner's pace: lognormal around the estimate (sd 0.28, as services/onboarding/model.js), or fixed by --pace.
       const gauss = Math.sqrt(-2 * Math.log(random() || 1e-9)) * Math.cos(2 * Math.PI * random());
-      const clock = clockSeconds ? { seconds: clockSeconds, pace: pace || Math.exp(0.28 * gauss) } : null;
+      const clock = clockSeconds ? { seconds: clockSeconds * (adaptive.CLOCK_SCALE[trackId] || 1), pace: pace || Math.exp(0.28 * gauss) } : null;
       const r = sit(bank, mode, own, random, { dontKnow, clock, fast });
       errors.push(r.placed - trueGrade(own, bank.span));
       questions += r.asked;

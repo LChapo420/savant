@@ -31,17 +31,16 @@ const adaptive = require('./adaptive-placement');
 const BANK_DIR = path.join(__dirname, '..', 'content', 'unit-placement');
 
 /**
- * The modes inside a grade. Their clocks are what is left of each mode's whole
- * budget after the subject stage (services/adaptive-placement.js MODES): Quick
- * Quick 14 + 6 = 20 minutes (unchanged: a 5-minute Quick did not hold 90% within a grade), Balanced 14 + 6 = 20, Accurate 40 + 14 = 54, leaving 3 for
- * the earlier-grade gap scan (the owner's limits of 2026-11-02 for Balanced and Accurate). Balanced was 32 + 13 and Accurate 57 + 25 (+ 8 for the gap scan).
+ * The modes inside a grade. Clocks (minutes): Quick 5 + 8 (subject stage + this one) + 4 for the gap scan = 18, Balanced 12 + 8 = 20, Accurate
+ * 40 + 14 = 54, leaving 3 for the earlier-grade gap scan (services/adaptive-placement.js WHOLE_MINUTES). A walk stops at its clock, at its cap,
+ * or once the belief puts `confidence` of its weight on the placement being within one unit of the truth (withinOneMass), after at least `min`
+ * answers. Earlier: Quick 14 / Balanced 30 / Accurate 80 questions on the rule `sure` (a share of the belief within one unit of its middle);
+ * `sure` is kept for UNIT_STOP=legacy. Simulated on the held-out seed (docs/PLACEMENT-ACCURACY-AFTER.md, 3 Nov): 91 to 96% within one unit
+ * for math, English, IQ and Spanish in every mode, from 80 to 88%.
  */
 const MODES = {
   quick: { max: 20, min: 6, sure: 0.85, confidence: 0.95, minutes: 8 },
   balanced: { max: 30, min: 10, sure: 0.95, confidence: 0.97, minutes: 8 },
-  // Up to 80: with five questions a unit, simulated Accurate walks average about
-  // 69 questions and place 926 of 928 testers within a unit (the clock still
-  // bounds it).
   accurate: { max: 40, min: 14, sure: 0.995, confidence: 0.98, minutes: 14 },
 };
 
@@ -170,10 +169,10 @@ function itemFor(trackId, gradeId, unit, slot) {
  * that reads each answer on its own takes a miss on a hole for evidence the frontier is low, and a learner with holes was
  * placed early (simulated: 100% within one unit with no holes, 60-70% with three holes in ten). So the belief reads a unit's
  * answers together and allows that, with probability UNIT_HOLE times how likely the unit is to be below the frontier, they
- * were all guessed. The frontier is then what the units above the holes say. UNIT_HOLE=0 turns this off (the earlier walk).
+ * were all guessed. The frontier is then what the units above the holes say. UNIT_HOLE=0 (or CONFIG.hole = 0) turns this off (the earlier walk).
  * 0.15 is an assumption about real learners, not a measurement: the simulator tests it at 0, 10, 20, 30 and 40% holes.
  */
-const UNIT_HOLE = Number(process.env.UNIT_HOLE ?? 0.15);
+const CONFIG = { hole: Number(process.env.UNIT_HOLE ?? 0.15) }; // exported so a test or a simulation can compare with the hole model off (hole 0)
 /** The chance a hole's question is guessed right, over pure chance: a little slack for the odd question that can be eliminated. */
 const HOLE_SLACK = 0.04;
 
@@ -262,7 +261,7 @@ function beliefOf(units, answered) {
   const logp = new Float64Array(prep.grid.length);
   per.forEach((s, i) => {
     if (!s) return;
-    const l = mixLog(s.lk, s.lh, prep.below[i], UNIT_HOLE);
+    const l = mixLog(s.lk, s.lh, prep.below[i], CONFIG.hole);
     for (let g = 0; g < logp.length; g++) logp[g] += l[g];
   });
   return normalised(prep.grid, logp);
@@ -282,7 +281,7 @@ function pickByInformation(units, answered, post) {
   const { grid } = prep;
   const n = grid.length;
   const per = sums(units, prep, answered);
-  const logs = per.map((s, i) => (s ? mixLog(s.lk, s.lh, prep.below[i], UNIT_HOLE) : new Float64Array(n)));
+  const logs = per.map((s, i) => (s ? mixLog(s.lk, s.lh, prep.below[i], CONFIG.hole) : new Float64Array(n)));
   const base = new Float64Array(n);
   for (const l of logs) for (let g = 0; g < n; g++) base[g] += l[g];
   const m = adaptive.median(post);
@@ -307,7 +306,7 @@ function pickByInformation(units, answered, post) {
       const lk = new Float64Array(n);
       const lh = new Float64Array(n);
       for (let g = 0; g < n; g++) { lk[g] = s.lk[g] + t.k[g]; lh[g] = s.lh[g] + t.h[g]; }
-      const l = mixLog(lk, lh, prep.below[i], UNIT_HOLE);
+      const l = mixLog(lk, lh, prep.below[i], CONFIG.hole);
       let top = -Infinity;
       for (let g = 0; g < n; g++) { lp[g] = rest[g] + l[g]; if (lp[g] > top) top = lp[g]; }
       let z = 0;
@@ -481,4 +480,4 @@ function nextCheck(checks) {
   return row ? { unit: row.unit, slot: row.slots[0] } : null;
 }
 
-module.exports = { pointOf, calibrationFor, MODES, UNIT_AT, bankFor, unitsFor, available, itemFor, nextQuestion, placedUnit, score, markCheck, nextCheck, startLevelOf, beliefOf };
+module.exports = { CONFIG, withinOneMass, pickByInformation, pointOf, calibrationFor, MODES, UNIT_AT, bankFor, unitsFor, available, itemFor, nextQuestion, placedUnit, score, markCheck, nextCheck, startLevelOf, beliefOf };

@@ -181,7 +181,7 @@ function table(rows) {
 }
 
 // Floors for --gate: the first held-out run, with a margin; never raised to make a number look better.
-const FLOORS = { within1: 0.8, gapsOnPath: 0.9, falseGaps: 0.1, lostH: 3 };
+const FLOORS = { within1: 0.85, gapsOnPath: 0.9, falseGaps: 0.1, lostH: 3 };
 
 if (require.main === module) {
   const gate = !!arg('gate', false);

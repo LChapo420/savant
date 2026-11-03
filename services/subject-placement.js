@@ -704,7 +704,7 @@ function start(userId, trackId, { restart = false, mode = null, startGradeId = n
     const hint = gradeIds.indexOf(String(startGradeId || ''));
     patch.mode = mode;
     patch.start_hint = hint >= 0 ? hint : null;
-    patch.deadline_at = new Date(Date.now() + adaptive.MODES[mode].minutes * 60 * 1000).toISOString();
+    patch.deadline_at = new Date(Date.now() + adaptive.clockMinutes(mode, trackId) * 60 * 1000).toISOString();
     const set = questionSet(trackId);
     if (set) {
       const block = adaptive.nextBlock(blocksOf(trackId), [], adaptive.firstTarget(gradeIds.length, patch.start_hint ?? NaN), { fast: !!adaptive.MODES[mode].shortFirst });
@@ -788,7 +788,7 @@ function submitBlock(userId, trackId, answers, { partial = false } = {}) {
   // after 4 answers and placed three grades up on them (owner, 2026-10-29).
   // (adaptive.clockEnded: a minimum of answers, or HARD_STOP times the clock once HARD_FLOOR are in.)
   const late = placement.deadline_at
-    && adaptive.clockEnded(placement.mode, placement.grade_ids.length, answered.length, Date.now() - (Date.parse(placement.deadline_at) - adaptive.MODES[placement.mode].minutes * 60000), adaptive.MODES[placement.mode].minutes * 60000);
+    && adaptive.clockEnded(placement.mode, placement.grade_ids.length, answered.length, Date.now() - (Date.parse(placement.deadline_at) - adaptive.clockMinutes(placement.mode, trackId) * 60000), adaptive.clockMinutes(placement.mode, trackId) * 60000);
   const allBlocks = blocksOf(trackId);
   const ctx = { topLeft: adaptive.topLeft(placement.grade_ids.length, allBlocks, asked) };
   const next = adaptive.done(placement.mode, answered, post, ctx) || late || partial

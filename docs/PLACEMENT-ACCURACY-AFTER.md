@@ -499,3 +499,71 @@ placed unit, which are worked anyway. "False gaps" are known units sent back to 
 points; adjacent clusters differ by only about 0.2 difficulty points, so the HARD table (wider learner slope, every item moved by a fixed error) is the one to
 trust for IQ. (3) An IQ question measures "can already do the work this stretch trains" (fine for skipping it), not intelligence; the product still makes no IQ claim.
 (4) The development seed was used to choose the IQ walk shape (width 0.45, reliable 0.3, rounding unchanged); the held-out seed was not touched while tuning. (5) The sim places learners by question position and never reads a question, so it says nothing about whether a key is right: that rests on the generator audit (scripts/iq-template-audit.js, clean) and a blind re-solve of all 756 IQ bank questions with the key withheld (Nemotron Ultra, free: 4 questions it disagreed with were dropped, then 756 of 756 agreed).
+
+## 2026-11-03: placement to 90% within one unit or grade, in every subject (branch place-90)
+
+**Everything below is SIMULATED.** The learners, their true levels, their holes and the way they answer are assumptions (responder model unchanged from the sections above: slope 0.3, 3% slips, a guess at 1 in 4, and a unit left unlearned answered at the guess rate). Seconds are ESTIMATED from word counts (services/placement-seconds.js), at a pace per learner (lognormal, sd 0.28). Nothing here is a result on real learners. Held-out seeds only: unit stage 20261102, grade stage 31415; the development seeds (20261101, 20261030) were used while tuning.
+
+### Why the numbers were where they were
+
+Reproduced first, on the code as it stood and the held-out seed: unit stage math 82 to 84%, English 81 to 85%, IQ 86 to 88%, Spanish 81 to 87% within one unit. The grade stage was 97 to 99% on average, so it was never the problem except that Quick needed 20 minutes.
+
+The unit stage's misses were almost all one cause. Split by how many of a learner's finished units are holes (never learned, answered at the guess rate): **with no holes the old walk placed 99 to 100% within one unit; with 10% holes, 84 to 92%; with 30%, 59 to 74%**. Every mode, even Full at 56 to 80 questions, was no better than Quick, because more questions meant more misses on holes, read as evidence that the frontier was low (mean error -0.4 to -2.1 units). Item information, the stopping rule and the prior were not the main loss.
+
+### What was built
+
+1. **Hole-robust belief** (services/unit-placement.js `beliefOf`). A unit's answers are read together: with probability 0.15 times how likely the unit is to lie below the frontier, they were all guessed. The frontier is then what the units above the holes say. 0.15 is an assumption about real learners; 0.08 to 0.35 were tried and the result moves by about 2 points (English 87% at 0.35).
+2. **Information-maximising question pick** (`pickByInformation`): among the unused questions nearest the middle of the belief, the one with the lowest expected entropy of the belief after the answer, with the unit's other answers in view. The same idea in the grade walk (`adaptive.nextBlockByInfo`, per second of the question's estimated time in the clocked modes), used away from the ends of the scale; at the ends the floor and ceiling proofs keep their own order (using it there cost 1 to 7 points of exact placement at "knows nothing" and "knows everything").
+3. **Stop on the error the walk is held to** (`withinOneMass`, `adaptive.withinOneGrade`): stop once the belief puts at least `confidence` of its weight on the true unit (grade) being within one of the recommendation. Unit stage: Quick 0.95, Standard 0.97, Full 0.98. Grade stage: Standard 0.97 and Full 0.99, after at least 16 and 24 answers (they were 20 and 40). Quick's grade walk keeps its old stop, minimum and span lift (the 95%-per-level gate in placement-accuracy-test measures them); only its clock changes. Near either end of the scale at least 14 answers are needed (the within-one window is half outside the scale there).
+4. **Clocks.** Quick: a 5-minute grade stage (the walk ends at 1.25 times the clock once 8 answers are in, about 6.3 minutes) + 8 in the grade + 4 for the gap scan = 18 (was 14 + 6 = 20). Standard 12 + 8 = 20 (was 14 + 6). Full 40 + 14 + 3 = 57 (unchanged). Reading's grade clock is 1.5 times longer (`CLOCK_SCALE`; its questions are passages, about 62 s each): at 5 minutes it placed 89% within one grade.
+5. `unitsFor` is memoised (the belief caches on it): the simulations run 2.3 times faster.
+6. **Content.** ACT's ladder had 1 and 3 calibrated items in its grades 5 and 6 (its 40% level held only 94% in 80 learners, old walk and new). Four mid-ladder items were added by the pipeline (scripts/content-gap-tools.js with `PLACE_WRITER=xkiro PLACE_SOLVER=xkiro:qwen/qwen3.8-max:free`): MiniMax M3.1 Flash writes, Qwen 3.8 Max (free) blind-solves with the key withheld, the position is the mean of two MiniMax readings, kept only where the two differ by 1.5 or less. 4 of 59 candidates cleared that bar (the position readings disagreed on most). **Weak point:** writer and position judges are one model family, and the four positions are estimates, not calibrated points; a second family should re-judge them before they are trusted.
+
+### Unit stage, held-out seed 20261102 (24 learners per grade and hole rate: none, 10%, 30%; math and English 6 grades, IQ 12 tiers, Spanish all 57 grades = 4104 learners)
+
+| subject | mode | within 1 unit, before | exact, before | within 1 unit, **after** | exact, after | walk median min, before (no clock) | walk median min, after (clock 8 / 8 / 14) |
+|---|---|---|---|---|---|---|---|
+| math | Quick | 82.4% | 53.9% | **93.5%** | 59.5% | 5.1 | 8.0 |
+| math | Standard | 83.6% | 59.0% | **95.6%** | 64.4% | 6.9 | 8.1 |
+| math | Full | 83.1% | 57.9% | **95.8%** | 66.4% | 25.9 | 14.0 |
+| English | Quick | 83.1% | 56.9% | **91.2%** | 59.0% | 4.8 | 7.9 |
+| English | Standard | 85.4% | 58.1% | **94.4%** | 62.5% | 7.2 | 8.2 |
+| English | Full | 80.6% | 51.2% | **96.1%** | 65.7% | 25.6 | 14.1 |
+| IQ | Quick | 87.8% | 57.9% | **95.6%** | 64.1% | 3.7 | 6.0 |
+| IQ | Standard | 86.0% | 58.2% | **95.5%** | 68.1% | 6.3 | 8.1 |
+| IQ | Full | 86.0% | 60.2% | **96.2%** | 68.9% | 19.2 | 11.7 |
+| Spanish (57 grades) | Quick | 83.9% | 51.9% | **92.3%** | 58.4% | 3.2 | 5.5 |
+| Spanish (57 grades) | Standard | 83.8% | 54.0% | **93.1%** | 59.9% | 4.9 | 8.0 |
+| Spanish (57 grades) | Full | 81.8% | 52.5% | **94.1%** | 59.2% | 16.7 | 11.4 |
+
+("Before" rows: the same simulator with the earlier walk switched on by flags, `UNIT_HOLE=0 UNIT_PICK=nearest UNIT_STOP=legacy`, the old limits and no clock; Spanish before is on today's 57-grade bank. The 2 Nov table, on the 35 grades then banked, read 85.6 / 86.7 / 81.0.) The after rows include the in-grade clock the app applies; the before rows had none, so they could only have got worse with it. Quick and Standard now use their whole 8-minute clock, because their bar is higher: that is what the accuracy costs.
+
+By holes (Standard, within one unit, no holes / 10% / 30%): math 100 / 99.3 / 87.5%, English 99.3 / 97.2 / 86.8, IQ 99.7 / 98.6 / 88.2, Spanish 99.0 / 96.0 / 84.4. Before: 100 / 84.0 / 67.4, 100 / 84.7 / 61.1, 100 / 89.9 / 71.5, 99.3 / 86.4 / 65.6. **A learner with many holes is still the weak case (82 to 89% in Quick and Standard); how many real learners are like that is unknown.**
+
+### Grade stage, held-out seed 31415 (60 learners per level, 11 levels from knows nothing to knows everything, nine subjects)
+
+| mode (whole budget) | within 1 grade, before | exact, before | within 1 grade, **after** | exact, after | lowest subject, after | median min of the grade stage, after |
+|---|---|---|---|---|---|---|
+| Quick (18, was 20) | 98.8% | 68.0% | **96.1%** | 65.1% | math 92.6% | 6.3 to 6.5 (reading 9.8) |
+| Standard (20) | 99.0% | 68.3% | **98.5%** | 68.0% | reading 95.9% | 6.0 to 9.3 (reading 16.7) |
+| Full (57) | 99.6% | 69.2% | **99.3%** | 68.8% | IQ and ACT 98.6% | 8.7 to 15.2 (reading 24.8) |
+
+Quick's grade stage gives up 2.7 points to run in a median 6.4 minutes instead of 7.4 to 15.4 (reading 15.4): the 20-minute Quick it replaces is not needed to stay above 90% on every subject. Per subject, Quick after: math 92.6, English 95.9, reading 94.1, IQ 95.6, ACT 97.1, Spanish 97.6, chess 97.3, piano 97.7, basketball 96.8.
+
+### The mode table (SIMULATED; the two stages' medians are added, which is an approximation)
+
+| | whole budget | grade stage median | unit stage median | together, median | within 1 grade | within 1 unit (math / English / IQ / Spanish) | exact unit |
+|---|---|---|---|---|---|---|---|
+| Quick | 18 min | 6.4 min | 5.5 to 8.0 min | about 12 to 14.5 min (+ scan up to 4) | 92.6 to 97.7% | 93.5 / 91.2 / 95.6 / 92.3% | 58 to 64% |
+| Standard | 20 min | 6.0 to 9.3 min | 8.0 to 8.2 min | about 14 to 17.5 min | 95.9 to 99.4% | 95.6 / 94.4 / 95.5 / 93.1% | 60 to 68% |
+| Full | 57 min | 8.7 to 15.2 min | 11.4 to 14.1 min | about 20 to 29 min (+ 3 scan) | 98.6 to 99.7% | 95.8 / 96.1 / 96.2 / 94.1% | 59 to 69% |
+
+### What is not reached, and exactly why
+
+- **Quick at about 8 minutes whole is not reachable at 90% on both stages.** The grade stage needs about 6.3 minutes (a 4.4-minute clock gave 95.1% on average, math 91.1%) and the unit stage about 8 minutes at 91 to 96%; with a cap of 12 questions (about 5 minutes) the unit stage gave math 90.7% and, at 14 questions, English 89.6% on the development seed. What would close the gap: shorter questions (reading passages, math word problems), more items placed near the unit boundaries, and a prior for where in the grade the learner is. A prior from the onboarding's reasoning or g estimate was **not built**: nothing validates a mapping from g to a grade or unit, and a wrong prior biases placements; the 90% target is met without it. It is the first thing to try once real learner data exist.
+- **Hole-heavy learners** stay at 82 to 89% within one unit in Quick and Standard. More questions do not fix this (Full: 86 to 91%).
+- **The per-level 95% gate** (placement-accuracy-test, 40 learners a level) sits at the edge for several subjects: the true rate at the weakest level is 96 to 99% over 100 learners, so a 40-learner run can miss it by luck. It was kept at 95% and passes on its fixed seeds; Quick's grade walk keeps its older, longer stop for that reason.
+- **Reading's unit stage** was not simulated here (reading is not among the unit simulator's tracks).
+- **The responder is unchanged and unvalidated.** Real learners may be slower, slip more or guess less than the model; the walk assumes more slips (10%) than the model uses (3%), so it is conservative on that, and nothing was tuned to make the responder easier.
+
+Reproduce: `node scripts/unit-placement-sim.js --seed=held --mode=quick,balanced,accurate`, `node scripts/spanish-placement-sim.js --seed=held --grades=57 --mode=quick,balanced,accurate`, and for the grade stage `DB_FILE=<a copy> node scripts/placement-sim.js --summary --seeds=60 --seed=31415 --fast --fast-all --mode=quick --clock=5` (`balanced` 12, `accurate` 40). The old walk: `UNIT_HOLE=0 UNIT_PICK=nearest UNIT_STOP=legacy` (units), `ADAPTIVE_INFO=0 ADAPTIVE_STOP=legacy` (grades; old limits via `--limits`).

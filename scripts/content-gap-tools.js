@@ -59,12 +59,17 @@ async function pool(items, limit, fn) {
   }));
 }
 
-/** Writer: Standard Compute, up to 3 tries. A ledger stop (402) is fatal. */
+/** Writer: Standard Compute (or, with PLACE_WRITER=xkiro, MiniMax M3.1 Flash on xKiro, $0 pipeline use), up to 3 tries. A ledger stop (402) is fatal. */
 async function write({ system, user, schema, schemaName, maxTokens = 6000, task }) {
   let last = null;
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
       // eslint-disable-next-line no-await-in-loop
+      if (process.env.PLACE_WRITER === 'xkiro') {
+        process.env.XKIRO_PIPELINE = '1';
+        // eslint-disable-next-line global-require
+        return await require('../services/providers/xkiro').xkiro.structured({ system, user, schema, schemaName, maxTokens, models: ['minimax/minimax-m3.1-flash'], timeoutMs: 300000, reasoningEffort: process.env.PLACE_EFFORT || 'low' });
+      }
       return await standardCompute.structured({ task, system, user, schema, schemaName, maxTokens });
     } catch (err) {
       last = err;
@@ -95,6 +100,20 @@ function release(f) { try { fs.unlinkSync(f); } catch { /* gone */ } }
 let lastOk = Date.now();
 
 async function ask(model, { system, user, schema, schemaName, maxTokens = 6000 }) {
+  if (String(model).startsWith('xkiro:')) {
+    // A free xKiro model of another family as the blind solver (pipeline only; the item text is curriculum, no learner data).
+    process.env.XKIRO_PIPELINE = '1';
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        // eslint-disable-next-line global-require, no-await-in-loop
+        const r = await require('../services/providers/xkiro').xkiro.structured({ system, user, schema, schemaName, maxTokens, models: [model.slice(6)], timeoutMs: 300000, reasoningEffort: 'low' });
+        if (r && r.data) return r.data;
+      } catch (err) { /* retried */ }
+      // eslint-disable-next-line no-await-in-loop
+      await sleep(8000 * attempt);
+    }
+    return null;
+  }
   for (let attempt = 1; attempt <= 4; attempt++) {
     // eslint-disable-next-line no-await-in-loop
     const held = await slot(); // a slot is held only for the call itself, never while waiting to retry
@@ -577,7 +596,7 @@ async function placeGen(trackId, args) {
     }
   }
   console.log(`${trackId}: ${jobs.length} writer calls`);
-  await pool(jobs, 4, async (job) => {
+  await pool(jobs, Number(process.env.PLACE_CONC || 4), async (job) => {
     let reply;
     try { reply = await write({ system: placeSystem(trackId), user: placeUser(trackId, job.g, job.counts, written), schema: PLACE_GEN_SCHEMA, schemaName: 'submit_questions', maxTokens: 14000, task: `night_content_place_${trackId}` }); } catch (err) { if (err.status === 402) throw err; console.log(`  ${job.gradeId}: ${String(err.message).slice(0, 100)}`); return; }
     for (const raw of reply.data.questions || []) {
@@ -754,7 +773,7 @@ async function placeCheck(trackId) {
       // took about 90 s an item (gateway timeouts), and Mistral Large 4 timed out on these hard items, so the position comes from
       // DeepSeek: a reading of the curriculum outline (the method the earlier calibration used), sanity-checked by a second reading
       // against reference items. DeepSeek is never asked whether a key is right.
-      const [sa, la, lb] = await Promise.all([solveBatch(MINIMAX, items, ctx, 'a'), locateByOutline('deepseek', trackId, batch), locateBatch('deepseek', trackId, batch)]);
+      const [sa, la, lb] = await Promise.all([solveBatch(process.env.PLACE_SOLVER === 'mistral' ? MISTRAL : process.env.PLACE_SOLVER ? process.env.PLACE_SOLVER : MINIMAX, items, ctx, 'a'), locateByOutline('deepseek', trackId, batch), locateBatch('deepseek', trackId, batch)]);
       const sb = sa;
       for (const c of batch) {
         const va = verdictOf(c.item, sa.get(c.id));
@@ -803,6 +822,7 @@ function placeApply(trackId, args) {
   const seen = new Set(Object.values(extra.grades).flat().map((q) => norm(q.prompt)));
   for (const c of cand.items.filter((x) => x.status === 'passed')) {
     if (c.point < minPoint || seen.has(norm(c.item.prompt))) continue;
+    if (args.max_spread !== undefined && !(c.spread <= Number(args.max_spread))) continue; // the two position readings must agree
     const gi = Math.max(0, Math.min(gradeIds.length - 1, Math.floor(c.point)));
     const gradeId = gradeIds[gi];
     const band = c.point - gi >= 0.66 ? 'capstone' : c.point - gi >= 0.33 ? 'hard' : 'hard';
@@ -814,6 +834,7 @@ function placeApply(trackId, args) {
     added++;
   }
   extra.note = 'Extra calibrated top-end items, appended after a grade\'s seven stored questions (services/subject-placement.js withExtras). Written by Standard Compute (DeepSeek V4.1), each blind-checked and located by two other families (MiniMax M3.1 Flash, Mistral Large 4); the point is the mean of the two judges. Grade = the grade the point falls in.';
+  if (process.env.PLACE_WRITER === 'xkiro' && !/3 Nov 2026/.test(extra.note)) extra.note += ' Round of 3 Nov 2026: mid-ladder items written by MiniMax M3.1 Flash on xKiro, blind-solved by Qwen 3.8 Max (xKiro free) with the key withheld, positioned as the mean of two MiniMax readings (the curriculum outline, and reference items), kept only where the two readings differ by 1.5 or less (--max_spread).';
   extra.made_at = new Date().toISOString();
   extra.judges = ['minimaxai/minimax-m3.1-flash (blind solve, key, ambiguity, distractors, fit)', 'deepseek-v4.1 via Standard Compute: position read from the curriculum outline, sanity-checked against reference items (placement only; never asked about a key)'];
   fs.mkdirSync(EXTRA_DIR, { recursive: true });
