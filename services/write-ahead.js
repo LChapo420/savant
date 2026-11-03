@@ -37,6 +37,9 @@
  * and in all (WRITE_AHEAD_GLOBAL, 4): the free models rate-limit. The provider
  * order is the app's own (NVIDIA first; never a paid OpenRouter model).
  * A level whose write failed is tried again later, with a growing pause.
+ *
+ * Re-tailoring rides the same queue: when a tailored level's learner profile has
+ * drifted enough, a separate job replaces that level with a newly tailored one.
  */
 const curriculum = require('../config/curriculum');
 
@@ -215,7 +218,9 @@ function trigger({ user, enrollment, grade, reason = null }) {
     const pace = paceFor(enrollment);
     const ahead = aheadFor(enrollment, pace);
     const steps = planFor({ user, enrollment, grade: g });
-    const where = { trackId: enrollment.track_id, gradeId: enrollment.grade_id };
+    const trackId = enrollment.track_id;
+    const gradeId = enrollment.grade_id;
+    const where = { trackId, gradeId };
     const wanted = new Set();
 
     // Keep the last 20 enrollments in trigger order for operational status.
@@ -235,6 +240,19 @@ function trigger({ user, enrollment, grade, reason = null }) {
       const key = bl.planKey(step.tailored ? user.id : null, where.trackId, where.gradeId, step.level);
       wanted.add(key);
       enqueue({ user, step, key, enrollmentId: enrollment.id, levelsPerHour: pace.levelsPerHour, reason, ...where });
+      if (!step.tailored) continue;
+      const due = bl.retailorDue({ userId: user.id, trackId, gradeId, level: step.level });
+      if (!due) continue;
+      const retailorKey = `${key}:retailor`;
+      wanted.add(retailorKey);
+      if (running.has(retailorKey) || queue.some((job) => job.key === retailorKey)) continue;
+      if (queue.length >= MAX_QUEUE) continue;
+      queue.push({
+        key: retailorKey, kind: 'retailor', user, userId: user.id, enrollmentId: enrollment.id,
+        levelsPerHour: pace.levelsPerHour, reason, trackId, gradeId, level: step.level,
+        tailored: step.tailored, tier: step.tier, priority: step.position + 0.5, seq: seq++,
+      });
+      note({ type: 'queued', key: retailorKey, kind: 'retailor', level: step.level });
     }
     // Only ahead of where the learner is: queued work for this enrollment that is
     // no longer ahead of them (they jumped, or moved on) is dropped.
@@ -328,11 +346,16 @@ function start(job) {
   runningFor.set(job.userId, (runningFor.get(job.userId) || 0) + 1);
   note({ type: 'start', key: job.key, kind: job.kind, tier: job.tier });
   const where = { userId: job.userId, trackId: job.trackId, gradeId: job.gradeId, level: job.level, tailored: job.tailored };
-  const work = job.kind === 'upgrade'
-    ? Promise.resolve(bl.findPlan({ ...where, userId: job.tailored ? job.userId : null })).then((p) => (p ? bl.upgrade(p) : null))
+  let work;
+  if (job.kind === 'upgrade') {
+    work = Promise.resolve(bl.findPlan({ ...where, userId: job.tailored ? job.userId : null })).then((p) => (p ? bl.upgrade(p) : null));
+  } else if (job.kind === 'retailor') {
+    work = bl.retailor({ userId: job.userId, trackId: job.trackId, gradeId: job.gradeId, level: job.level });
+  } else {
     // The level stood on is written on the free check (so it can be served at
     // once) and Sonnet-checked after, as an upgrade below.
-    : bl.ensure({ ...where, tier: job.tier === 'open' ? 'free' : job.tier });
+    work = bl.ensure({ ...where, tier: job.tier === 'open' ? 'free' : job.tier });
+  }
   Promise.resolve(work)
     .then((plan) => {
       if (job.kind === 'write') {
@@ -342,15 +365,18 @@ function start(job) {
           failures.set(job.key, { n: before ? before.n + 1 : 1, at: Date.now() });
         }
       }
-      note({
+      const done = {
         type: 'done',
         key: job.key,
         kind: job.kind,
-        tier: job.tier,
         ok: !!plan,
-        check_tier: plan ? plan.check_tier || null : null,
         ms: Date.now() - startedAt,
-      });
+      };
+      if (job.kind !== 'retailor') {
+        done.tier = job.tier;
+        done.check_tier = plan ? plan.check_tier || null : null;
+      }
+      note(done);
       // Its Sonnet check, when it is the level stood on or the next one.
       if (job.kind === 'write' && plan && job.tier !== 'free' && bl.sonnetPending(plan)) {
         queue.push({ ...job, kind: 'upgrade', seq: seq++ });
