@@ -75,6 +75,8 @@ by an exercise (0.8), definition (0.6), topic sentence (0.6), formula (0.4). wei
 ("Remember this." "That will be on the exam.") stresses the sentence before it; a cue in speaker notes stresses the slide's strongest
 point; a cue about a sentence stresses that sentence.
 
+Evidence status (3 Nov 2026, curriculum-build/evidence-article/09-nov3-builds.md): that signals such as headings, overviews, summaries and pointer words improve recall of text structure and transfer is supported by abstract-checked studies (Mautone & Mayer 2001; Lorch et al. 1993; Rickards et al. 1997), and that the units of a passage judged most important dominate recall is shown by Brown & Smiley 1977. The weights above (2.0, 2.5, 1.6 and so on) and the 3.4 coverage threshold are design values: no study sets them.
+
 ## 3. Key points and emphasis, per format (MEASURED, planted points)
 
 Development document `tides` (12 planted points, levels 1 to 5), held-out-ish `vaccines` (10), per format. "Stressed" = planted

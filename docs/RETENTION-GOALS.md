@@ -37,8 +37,7 @@ is untouched, and for a learner with no goals every code path in `services/enfor
 still passes unchanged, 140 checks).
 
 **A horizon** (months, year, years): an enforcer type is kept while its spacing is at most `GAP_MAX` (35%) of the horizon.
-Cepeda et al. (2008) and Rohrer and Pashler put the best gap at roughly 10-20% of the retention interval; 35% is as far as the
-simulation allows. The first version used 25%, which dropped the monthly at 90 days; the simulation showed the
+Cepeda et al. (2008) found that, as a proportion of the test delay, the best gap fell from about 20 to 40% of a 1-week delay to about 5 to 10% of a 1-year delay (1,350 people, gaps up to 3.5 months, delays up to 1 year); Rohrer and Pashler (2007) found the benefit of a gap depends jointly on the gap and the delay. There is no single "10 to 20%" figure: the best share shrinks as the horizon grows, and 35% is above the best share for any horizon over a week. 35% is therefore a ceiling the simulation allows (it keeps the monthly review at a 90-day horizon), not the evidence-best value; for a year the best gap is nearer 5 to 10% (about 18 to 36 days). The first version used 25%, which dropped the monthly at 90 days; the simulation showed the
 average and below-average learners' recall at 90 days falling (93.6% to 93.0%, 92.6% to 91.7%), so the monthly stays for any
 horizon of 86 days or more. Reviews of the subject's older work stop once the objective was proven more than the horizon ago
 (`adaptation.dailyReview`), and an uploaded course's reviews stop once the next one would land past the horizon.

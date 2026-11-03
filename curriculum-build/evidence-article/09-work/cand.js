@@ -125,4 +125,12 @@ module.exports = [
  ['calamia2013','Calamia',2013,'The robust reliability of neuropsychological measures: Meta-analyses of test-retest correlations','speed'],
  ['eckart2021','Eckart',2021,'Internal consistency and test-retest reliability of an affective task-switching paradigm','switch'],
  ['warne2019','Warne',2019,'Spearmans g found in 31 non-Western nations: Strong evidence that g is a universal phenomenon','corr'],
+ ['mautone2001','Mautone',2001,'Signaling as a cognitive guide in multimedia learning','upl'],
+ ['loman1983','Loman',1983,'Signaling techniques that increase the understandability of expository prose','upl'],
+ ['glynn1979','Glynn',1979,'Control of prose processing via instructional and typographical cues','upl'],
+ ['lorch1993','Lorch',1993,'Effects of signaling topic structure on text recall','upl'],
+ ['rickards1997','Rickards',1997,'Signaling, notetaking, and field independence-dependence in text comprehension and recall','upl'],
+ ['jamet2008','Jamet',2008,'Attention guiding in multimedia learning','upl'],
+ ['dekoning2010','de Koning',2010,'Attention guidance in learning from a complex animation: Seeing is understanding?','upl'],
+ ['kiewra1988','Kiewra',1988,'Providing study notes: Comparison of three types of notes for review','upl'],
 ];
