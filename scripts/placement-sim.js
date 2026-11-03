@@ -33,6 +33,7 @@ const ROOT = path.join(__dirname, '..');
 const TRUE_WIDTH = 0.3; // the learner's own slope; the walk assumes 0.2
 const TRUE_SLIP = 0.03; // the walk assumes 0.10
 const IDK_RATE = 0.9; // chance a "don't know" learner declines an item above their ability
+const KEEP_MARK = '<!-- unit-sim:start -->';
 const SUBJECTS = ['math', 'english', 'reading', 'iq', 'act', 'spanish', 'chess', 'piano', 'basketball'];
 
 function rng(seed) {
@@ -154,6 +155,8 @@ function measureSpread(trackId, mode, { seeds = 40, seed = 20261030, dontKnow = 
     }
     return {
       label, seeds,
+      // The grade the level sits in (the spread draws inside it); the edges are the first and last grade.
+      truth: trueGrade(edge ? ability : Math.floor(ability), bank.span),
       within1: errors.filter((e) => Math.abs(e) <= 1).length / seeds,
       exact: errors.filter((e) => e === 0).length / seeds,
       meanError: errors.reduce((x, y) => x + y, 0) / seeds,
@@ -212,7 +215,11 @@ if (require.main === module) {
         out.push(`## ${trackId}, ${mode}: lowest share within 1 grade ${pct(low)}, mean ${(res.rows.reduce((s, r) => s + r.questions, 0) / res.rows.length).toFixed(1)} questions`, '', table(res), '');
       }
     }
-    fs.writeFileSync(path.join(ROOT, 'docs', 'PLACEMENT-ACCURACY-AFTER.md'), out.join('\n'));
+    // Sections appended after the marker by other scripts (scripts/unit-placement-sim.js --write) are kept.
+    const afterFile = path.join(ROOT, 'docs', 'PLACEMENT-ACCURACY-AFTER.md');
+    const old = fs.existsSync(afterFile) ? fs.readFileSync(afterFile, 'utf8') : '';
+    const kept = old.includes(KEEP_MARK) ? `\n${KEEP_MARK}${old.split(KEEP_MARK)[1]}` : '';
+    fs.writeFileSync(afterFile, out.join('\n') + kept);
     console.log('wrote docs/PLACEMENT-ACCURACY-AFTER.md');
     process.exit(0);
   }

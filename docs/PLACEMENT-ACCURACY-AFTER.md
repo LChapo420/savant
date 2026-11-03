@@ -8,238 +8,494 @@ Same item-response model and limits as the baseline. Subjects with no calibrated
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 97.5% | +0.03 | +1 | 11.2 |
-| 2% | NaN | 100% | 95% | +0.05 | +1 | 17.3 |
-| 10% | NaN | 100% | 55% | -0.45 | -1 | 32.2 |
-| 25% | NaN | 100% | 60% | -0.30 | -1 | 33.8 |
-| 40% | NaN | 100% | 45% | -0.40 | -1 | 34.5 |
-| 50% | NaN | 97.5% | 65% | -0.38 | -2 | 33.8 |
-| 60% | NaN | 100% | 70% | -0.30 | -1 | 35.1 |
-| 75% | NaN | 97.5% | 52.5% | -0.50 | -2 | 35.7 |
-| 90% | NaN | 100% | 60% | -0.30 | -1 | 34.5 |
-| 98% | NaN | 100% | 67.5% | -0.33 | -1 | 27.9 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 27.0 |
+| nothing | 1 | 100% | 97.5% | +0.03 | +1 | 11.2 |
+| 2% | 1 | 100% | 95% | +0.05 | +1 | 17.3 |
+| 10% | 5 | 100% | 55% | -0.45 | -1 | 32.2 |
+| 25% | 13 | 100% | 60% | -0.30 | -1 | 33.8 |
+| 40% | 20 | 100% | 45% | -0.40 | -1 | 34.5 |
+| 50% | 25 | 97.5% | 65% | -0.38 | -2 | 33.8 |
+| 60% | 30 | 100% | 70% | -0.30 | -1 | 35.1 |
+| 75% | 37 | 97.5% | 52.5% | -0.50 | -2 | 35.7 |
+| 90% | 45 | 100% | 60% | -0.30 | -1 | 34.5 |
+| 98% | 49 | 100% | 67.5% | -0.33 | -1 | 27.9 |
+| everything | 49 | 100% | 100% | +0.00 | 0 | 27.0 |
 
 ## math, balanced: lowest share within 1 grade 97.5%, mean 36.0 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 97.5% | +0.03 | +1 | 11.9 |
-| 2% | NaN | 100% | 95% | +0.05 | +1 | 17.6 |
-| 10% | NaN | 100% | 55% | -0.45 | -1 | 36.6 |
-| 25% | NaN | 100% | 60% | -0.30 | -1 | 41.4 |
-| 40% | NaN | 100% | 50% | -0.40 | -1 | 44.2 |
-| 50% | NaN | 97.5% | 65% | -0.38 | -2 | 43.1 |
-| 60% | NaN | 100% | 67.5% | -0.33 | -1 | 38.5 |
-| 75% | NaN | 97.5% | 52.5% | -0.50 | -2 | 54.0 |
-| 90% | NaN | 100% | 60% | -0.30 | -1 | 60.7 |
-| 98% | NaN | 100% | 75% | -0.25 | -1 | 27.8 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 20.2 |
+| nothing | 1 | 100% | 97.5% | +0.03 | +1 | 11.9 |
+| 2% | 1 | 100% | 95% | +0.05 | +1 | 17.6 |
+| 10% | 5 | 100% | 55% | -0.45 | -1 | 36.6 |
+| 25% | 13 | 100% | 60% | -0.30 | -1 | 41.4 |
+| 40% | 20 | 100% | 50% | -0.40 | -1 | 44.2 |
+| 50% | 25 | 97.5% | 65% | -0.38 | -2 | 43.1 |
+| 60% | 30 | 100% | 67.5% | -0.33 | -1 | 38.5 |
+| 75% | 37 | 97.5% | 52.5% | -0.50 | -2 | 54.0 |
+| 90% | 45 | 100% | 60% | -0.30 | -1 | 60.7 |
+| 98% | 49 | 100% | 75% | -0.25 | -1 | 27.8 |
+| everything | 49 | 100% | 100% | +0.00 | 0 | 20.2 |
 
 ## math, accurate: lowest share within 1 grade 97.5%, mean 88.2 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 97.5% | +0.03 | +1 | 16.6 |
-| 2% | NaN | 100% | 95% | +0.05 | +1 | 40.9 |
-| 10% | NaN | 100% | 55% | -0.45 | -1 | 118.8 |
-| 25% | NaN | 100% | 60% | -0.30 | -1 | 103.1 |
-| 40% | NaN | 100% | 50% | -0.40 | -1 | 112.1 |
-| 50% | NaN | 97.5% | 65% | -0.38 | -2 | 109.8 |
-| 60% | NaN | 100% | 67.5% | -0.33 | -1 | 92.3 |
-| 75% | NaN | 97.5% | 52.5% | -0.50 | -2 | 130.0 |
-| 90% | NaN | 100% | 60% | -0.30 | -1 | 130.0 |
-| 98% | NaN | 100% | 62.5% | -0.38 | -1 | 76.0 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 40.0 |
+| nothing | 1 | 100% | 97.5% | +0.03 | +1 | 16.6 |
+| 2% | 1 | 100% | 95% | +0.05 | +1 | 40.9 |
+| 10% | 5 | 100% | 55% | -0.45 | -1 | 118.8 |
+| 25% | 13 | 100% | 60% | -0.30 | -1 | 103.1 |
+| 40% | 20 | 100% | 50% | -0.40 | -1 | 112.1 |
+| 50% | 25 | 97.5% | 65% | -0.38 | -2 | 109.8 |
+| 60% | 30 | 100% | 67.5% | -0.33 | -1 | 92.3 |
+| 75% | 37 | 97.5% | 52.5% | -0.50 | -2 | 130.0 |
+| 90% | 45 | 100% | 60% | -0.30 | -1 | 130.0 |
+| 98% | 49 | 100% | 62.5% | -0.38 | -1 | 76.0 |
+| everything | 49 | 100% | 100% | +0.00 | 0 | 40.0 |
 
 ## english, quick: lowest share within 1 grade 97.5%, mean 22.3 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 8.3 |
-| 2% | NaN | 100% | 100% | +0.00 | 0 | 12.4 |
-| 10% | NaN | 100% | 57.5% | -0.42 | -1 | 22.4 |
-| 25% | NaN | 100% | 65% | -0.35 | -1 | 24.7 |
-| 40% | NaN | 100% | 62.5% | -0.38 | -1 | 27.9 |
-| 50% | NaN | 100% | 60% | -0.35 | -1 | 26.5 |
-| 60% | NaN | 100% | 62.5% | -0.38 | -1 | 27.4 |
-| 75% | NaN | 97.5% | 62.5% | -0.30 | -2 | 27.3 |
-| 90% | NaN | 100% | 60% | -0.30 | -1 | 25.8 |
-| 98% | NaN | 100% | 67.5% | -0.33 | -1 | 22.0 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 21.0 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 8.3 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 12.4 |
+| 10% | 2 | 100% | 57.5% | -0.42 | -1 | 22.4 |
+| 25% | 5 | 100% | 65% | -0.35 | -1 | 24.7 |
+| 40% | 7 | 100% | 62.5% | -0.38 | -1 | 27.9 |
+| 50% | 9 | 100% | 60% | -0.35 | -1 | 26.5 |
+| 60% | 10 | 100% | 62.5% | -0.38 | -1 | 27.4 |
+| 75% | 13 | 97.5% | 62.5% | -0.30 | -2 | 27.3 |
+| 90% | 15 | 100% | 60% | -0.30 | -1 | 25.8 |
+| 98% | 16 | 100% | 67.5% | -0.33 | -1 | 22.0 |
+| everything | 16 | 100% | 100% | +0.00 | 0 | 21.0 |
 
 ## english, balanced: lowest share within 1 grade 97.5%, mean 28.9 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 8.3 |
-| 2% | NaN | 100% | 100% | +0.00 | 0 | 12.3 |
-| 10% | NaN | 100% | 57.5% | -0.42 | -1 | 27.1 |
-| 25% | NaN | 100% | 62.5% | -0.38 | -1 | 28.7 |
-| 40% | NaN | 100% | 62.5% | -0.38 | -1 | 34.0 |
-| 50% | NaN | 100% | 60% | -0.35 | -1 | 36.5 |
-| 60% | NaN | 100% | 62.5% | -0.38 | -1 | 46.7 |
-| 75% | NaN | 97.5% | 62.5% | -0.30 | -2 | 33.3 |
-| 90% | NaN | 100% | 60% | -0.25 | -1 | 38.3 |
-| 98% | NaN | 100% | 67.5% | -0.33 | -1 | 32.7 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 20.0 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 8.3 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 12.3 |
+| 10% | 2 | 100% | 57.5% | -0.42 | -1 | 27.1 |
+| 25% | 5 | 100% | 62.5% | -0.38 | -1 | 28.7 |
+| 40% | 7 | 100% | 62.5% | -0.38 | -1 | 34.0 |
+| 50% | 9 | 100% | 60% | -0.35 | -1 | 36.5 |
+| 60% | 10 | 100% | 62.5% | -0.38 | -1 | 46.7 |
+| 75% | 13 | 97.5% | 62.5% | -0.30 | -2 | 33.3 |
+| 90% | 15 | 100% | 60% | -0.25 | -1 | 38.3 |
+| 98% | 16 | 100% | 67.5% | -0.33 | -1 | 32.7 |
+| everything | 16 | 100% | 100% | +0.00 | 0 | 20.0 |
 
 ## english, accurate: lowest share within 1 grade 97.5%, mean 72.7 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 8.8 |
-| 2% | NaN | 100% | 100% | +0.00 | 0 | 20.7 |
-| 10% | NaN | 100% | 60% | -0.40 | -1 | 78.9 |
-| 25% | NaN | 100% | 62.5% | -0.38 | -1 | 86.8 |
-| 40% | NaN | 100% | 60% | -0.40 | -1 | 81.4 |
-| 50% | NaN | 100% | 60% | -0.35 | -1 | 105.1 |
-| 60% | NaN | 100% | 62.5% | -0.38 | -1 | 112.0 |
-| 75% | NaN | 97.5% | 65% | -0.28 | -2 | 88.6 |
-| 90% | NaN | 100% | 60% | -0.30 | -1 | 108.4 |
-| 98% | NaN | 100% | 67.5% | -0.33 | -1 | 68.8 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 40.0 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 8.8 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 20.7 |
+| 10% | 2 | 100% | 60% | -0.40 | -1 | 78.9 |
+| 25% | 5 | 100% | 62.5% | -0.38 | -1 | 86.8 |
+| 40% | 7 | 100% | 60% | -0.40 | -1 | 81.4 |
+| 50% | 9 | 100% | 60% | -0.35 | -1 | 105.1 |
+| 60% | 10 | 100% | 62.5% | -0.38 | -1 | 112.0 |
+| 75% | 13 | 97.5% | 65% | -0.28 | -2 | 88.6 |
+| 90% | 15 | 100% | 60% | -0.30 | -1 | 108.4 |
+| 98% | 16 | 100% | 67.5% | -0.33 | -1 | 68.8 |
+| everything | 16 | 100% | 100% | +0.00 | 0 | 40.0 |
 
 ## reading, quick: lowest share within 1 grade 97.5%, mean 23.2 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 9.1 |
-| 2% | NaN | 100% | 100% | +0.00 | 0 | 13.2 |
-| 10% | NaN | 100% | 62.5% | -0.38 | -1 | 21.9 |
-| 25% | NaN | 100% | 50% | -0.50 | -1 | 25.4 |
-| 40% | NaN | 100% | 65% | -0.20 | -1 | 29.8 |
-| 50% | NaN | 100% | 60% | -0.30 | -1 | 28.0 |
-| 60% | NaN | 100% | 62.5% | -0.23 | -1 | 26.4 |
-| 75% | NaN | 100% | 72.5% | -0.28 | -1 | 30.3 |
-| 90% | NaN | 100% | 57.5% | -0.38 | -1 | 26.7 |
-| 98% | NaN | 97.5% | 70% | -0.33 | -2 | 22.9 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 21.0 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 9.1 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 13.2 |
+| 10% | 2 | 100% | 62.5% | -0.38 | -1 | 21.9 |
+| 25% | 5 | 100% | 50% | -0.50 | -1 | 25.4 |
+| 40% | 7 | 100% | 65% | -0.20 | -1 | 29.8 |
+| 50% | 9 | 100% | 60% | -0.30 | -1 | 28.0 |
+| 60% | 10 | 100% | 62.5% | -0.23 | -1 | 26.4 |
+| 75% | 13 | 100% | 72.5% | -0.28 | -1 | 30.3 |
+| 90% | 15 | 100% | 57.5% | -0.38 | -1 | 26.7 |
+| 98% | 16 | 97.5% | 70% | -0.33 | -2 | 22.9 |
+| everything | 16 | 100% | 100% | +0.00 | 0 | 21.0 |
 
 ## reading, balanced: lowest share within 1 grade 97.5%, mean 31.1 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 9.1 |
-| 2% | NaN | 100% | 100% | +0.00 | 0 | 13.0 |
-| 10% | NaN | 100% | 62.5% | -0.38 | -1 | 24.7 |
-| 25% | NaN | 100% | 50% | -0.50 | -1 | 38.5 |
-| 40% | NaN | 100% | 65% | -0.20 | -1 | 45.3 |
-| 50% | NaN | 100% | 60% | -0.30 | -1 | 47.6 |
-| 60% | NaN | 100% | 62.5% | -0.23 | -1 | 32.8 |
-| 75% | NaN | 100% | 72.5% | -0.28 | -1 | 36.2 |
-| 90% | NaN | 100% | 60% | -0.35 | -1 | 41.8 |
-| 98% | NaN | 97.5% | 70% | -0.33 | -2 | 32.8 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 20.0 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 9.1 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 13.0 |
+| 10% | 2 | 100% | 62.5% | -0.38 | -1 | 24.7 |
+| 25% | 5 | 100% | 50% | -0.50 | -1 | 38.5 |
+| 40% | 7 | 100% | 65% | -0.20 | -1 | 45.3 |
+| 50% | 9 | 100% | 60% | -0.30 | -1 | 47.6 |
+| 60% | 10 | 100% | 62.5% | -0.23 | -1 | 32.8 |
+| 75% | 13 | 100% | 72.5% | -0.28 | -1 | 36.2 |
+| 90% | 15 | 100% | 60% | -0.35 | -1 | 41.8 |
+| 98% | 16 | 97.5% | 70% | -0.33 | -2 | 32.8 |
+| everything | 16 | 100% | 100% | +0.00 | 0 | 20.0 |
 
 ## reading, accurate: lowest share within 1 grade 97.5%, mean 77.5 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 9.6 |
-| 2% | NaN | 100% | 100% | +0.00 | 0 | 18.8 |
-| 10% | NaN | 100% | 60% | -0.40 | -1 | 82.5 |
-| 25% | NaN | 100% | 50% | -0.50 | -1 | 103.0 |
-| 40% | NaN | 100% | 65% | -0.20 | -1 | 108.4 |
-| 50% | NaN | 100% | 62.5% | -0.33 | -1 | 110.2 |
-| 60% | NaN | 100% | 62.5% | -0.23 | -1 | 95.8 |
-| 75% | NaN | 100% | 72.5% | -0.28 | -1 | 112.0 |
-| 90% | NaN | 100% | 57.5% | -0.38 | -1 | 106.6 |
-| 98% | NaN | 97.5% | 70% | -0.33 | -2 | 65.2 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 40.0 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 9.6 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 18.8 |
+| 10% | 2 | 100% | 60% | -0.40 | -1 | 82.5 |
+| 25% | 5 | 100% | 50% | -0.50 | -1 | 103.0 |
+| 40% | 7 | 100% | 65% | -0.20 | -1 | 108.4 |
+| 50% | 9 | 100% | 62.5% | -0.33 | -1 | 110.2 |
+| 60% | 10 | 100% | 62.5% | -0.23 | -1 | 95.8 |
+| 75% | 13 | 100% | 72.5% | -0.28 | -1 | 112.0 |
+| 90% | 15 | 100% | 57.5% | -0.38 | -1 | 106.6 |
+| 98% | 16 | 97.5% | 70% | -0.33 | -2 | 65.2 |
+| everything | 16 | 100% | 100% | +0.00 | 0 | 40.0 |
 
 ## iq, quick: lowest share within 1 grade 97.5%, mean 22.6 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 9.0 |
-| 2% | NaN | 100% | 97.5% | +0.03 | +1 | 13.4 |
-| 10% | NaN | 100% | 60% | -0.40 | -1 | 22.7 |
-| 25% | NaN | 100% | 65% | -0.15 | -1 | 27.6 |
-| 40% | NaN | 100% | 30% | -0.60 | -1 | 24.7 |
-| 50% | NaN | 100% | 67.5% | -0.23 | +1 | 25.6 |
-| 60% | NaN | 97.5% | 70% | -0.13 | +2 | 25.9 |
-| 75% | NaN | 100% | 70% | -0.25 | -1 | 28.1 |
-| 90% | NaN | 100% | 52.5% | -0.47 | -1 | 28.4 |
-| 98% | NaN | 100% | 55% | -0.45 | -1 | 22.5 |
-| everything | NaN | 100% | 97.5% | -0.03 | -1 | 20.3 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 9.0 |
+| 2% | 1 | 100% | 97.5% | +0.03 | +1 | 13.4 |
+| 10% | 2 | 100% | 60% | -0.40 | -1 | 22.7 |
+| 25% | 4 | 100% | 65% | -0.15 | -1 | 27.6 |
+| 40% | 5 | 100% | 30% | -0.60 | -1 | 24.7 |
+| 50% | 7 | 100% | 67.5% | -0.23 | +1 | 25.6 |
+| 60% | 8 | 97.5% | 70% | -0.13 | +2 | 25.9 |
+| 75% | 10 | 100% | 70% | -0.25 | -1 | 28.1 |
+| 90% | 11 | 100% | 52.5% | -0.47 | -1 | 28.4 |
+| 98% | 12 | 100% | 55% | -0.45 | -1 | 22.5 |
+| everything | 12 | 100% | 97.5% | -0.03 | -1 | 20.3 |
 
 ## iq, balanced: lowest share within 1 grade 97.5%, mean 39.7 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 9.0 |
-| 2% | NaN | 100% | 97.5% | +0.03 | +1 | 13.6 |
-| 10% | NaN | 100% | 60% | -0.40 | -1 | 23.0 |
-| 25% | NaN | 100% | 65% | -0.15 | -1 | 46.6 |
-| 40% | NaN | 100% | 30% | -0.60 | -1 | 42.9 |
-| 50% | NaN | 100% | 67.5% | -0.23 | +1 | 49.1 |
-| 60% | NaN | 97.5% | 70% | -0.13 | +2 | 54.6 |
-| 75% | NaN | 100% | 70% | -0.25 | -1 | 66.7 |
-| 90% | NaN | 100% | 52.5% | -0.47 | -1 | 70.0 |
-| 98% | NaN | 100% | 55% | -0.45 | -1 | 40.0 |
-| everything | NaN | 100% | 97.5% | -0.03 | -1 | 21.3 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 9.0 |
+| 2% | 1 | 100% | 97.5% | +0.03 | +1 | 13.6 |
+| 10% | 2 | 100% | 60% | -0.40 | -1 | 23.0 |
+| 25% | 4 | 100% | 65% | -0.15 | -1 | 46.6 |
+| 40% | 5 | 100% | 30% | -0.60 | -1 | 42.9 |
+| 50% | 7 | 100% | 67.5% | -0.23 | +1 | 49.1 |
+| 60% | 8 | 97.5% | 70% | -0.13 | +2 | 54.6 |
+| 75% | 10 | 100% | 70% | -0.25 | -1 | 66.7 |
+| 90% | 11 | 100% | 52.5% | -0.47 | -1 | 70.0 |
+| 98% | 12 | 100% | 55% | -0.45 | -1 | 40.0 |
+| everything | 12 | 100% | 97.5% | -0.03 | -1 | 21.3 |
 
 ## iq, accurate: lowest share within 1 grade 97.5%, mean 54.6 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 9.5 |
-| 2% | NaN | 100% | 100% | +0.00 | 0 | 16.2 |
-| 10% | NaN | 100% | 60% | -0.40 | -1 | 48.4 |
-| 25% | NaN | 100% | 65% | -0.15 | -1 | 70.4 |
-| 40% | NaN | 100% | 30% | -0.60 | -1 | 72.0 |
-| 50% | NaN | 100% | 67.5% | -0.23 | +1 | 72.0 |
-| 60% | NaN | 97.5% | 70% | -0.13 | +2 | 72.0 |
-| 75% | NaN | 100% | 70% | -0.25 | -1 | 72.0 |
-| 90% | NaN | 100% | 52.5% | -0.47 | -1 | 72.0 |
-| 98% | NaN | 100% | 55% | -0.45 | -1 | 55.2 |
-| everything | NaN | 100% | 97.5% | -0.03 | -1 | 40.8 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 9.5 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 16.2 |
+| 10% | 2 | 100% | 60% | -0.40 | -1 | 48.4 |
+| 25% | 4 | 100% | 65% | -0.15 | -1 | 70.4 |
+| 40% | 5 | 100% | 30% | -0.60 | -1 | 72.0 |
+| 50% | 7 | 100% | 67.5% | -0.23 | +1 | 72.0 |
+| 60% | 8 | 97.5% | 70% | -0.13 | +2 | 72.0 |
+| 75% | 10 | 100% | 70% | -0.25 | -1 | 72.0 |
+| 90% | 11 | 100% | 52.5% | -0.47 | -1 | 72.0 |
+| 98% | 12 | 100% | 55% | -0.45 | -1 | 55.2 |
+| everything | 12 | 100% | 97.5% | -0.03 | -1 | 40.8 |
 
 ## act, quick: lowest share within 1 grade 97.5%, mean 24.5 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 8.4 |
-| 2% | NaN | 100% | 100% | +0.00 | 0 | 13.9 |
-| 10% | NaN | 100% | 70% | -0.30 | -1 | 24.6 |
-| 25% | NaN | 97.5% | 60% | -0.07 | -2 | 32.8 |
-| 40% | NaN | 100% | 37.5% | -0.47 | -1 | 30.6 |
-| 50% | NaN | 100% | 52.5% | -0.33 | +1 | 25.9 |
-| 60% | NaN | 100% | 55% | -0.30 | -1 | 26.3 |
-| 75% | NaN | 97.5% | 55% | -0.23 | +2 | 29.2 |
-| 90% | NaN | 100% | 47.5% | -0.38 | -1 | 32.8 |
-| 98% | NaN | 97.5% | 70% | -0.33 | -2 | 24.2 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 21.0 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 8.4 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 13.9 |
+| 10% | 2 | 100% | 70% | -0.30 | -1 | 24.6 |
+| 25% | 5 | 97.5% | 60% | -0.07 | -2 | 32.8 |
+| 40% | 7 | 100% | 37.5% | -0.47 | -1 | 30.6 |
+| 50% | 9 | 100% | 52.5% | -0.33 | +1 | 25.9 |
+| 60% | 10 | 100% | 55% | -0.30 | -1 | 26.3 |
+| 75% | 13 | 97.5% | 55% | -0.23 | +2 | 29.2 |
+| 90% | 15 | 100% | 47.5% | -0.38 | -1 | 32.8 |
+| 98% | 16 | 97.5% | 70% | -0.33 | -2 | 24.2 |
+| everything | 16 | 100% | 100% | +0.00 | 0 | 21.0 |
 
 ## act, balanced: lowest share within 1 grade 97.5%, mean 38.1 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 8.4 |
-| 2% | NaN | 100% | 100% | +0.00 | 0 | 13.9 |
-| 10% | NaN | 100% | 70% | -0.30 | -1 | 24.6 |
-| 25% | NaN | 97.5% | 60% | -0.07 | -2 | 70.0 |
-| 40% | NaN | 100% | 40% | -0.50 | -1 | 56.5 |
-| 50% | NaN | 100% | 52.5% | -0.33 | +1 | 35.1 |
-| 60% | NaN | 100% | 55% | -0.30 | -1 | 43.5 |
-| 75% | NaN | 97.5% | 55% | -0.23 | +2 | 63.8 |
-| 90% | NaN | 100% | 47.5% | -0.38 | -1 | 53.8 |
-| 98% | NaN | 97.5% | 70% | -0.33 | -2 | 29.0 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 20.0 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 8.4 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 13.9 |
+| 10% | 2 | 100% | 70% | -0.30 | -1 | 24.6 |
+| 25% | 5 | 97.5% | 60% | -0.07 | -2 | 70.0 |
+| 40% | 7 | 100% | 40% | -0.50 | -1 | 56.5 |
+| 50% | 9 | 100% | 52.5% | -0.33 | +1 | 35.1 |
+| 60% | 10 | 100% | 55% | -0.30 | -1 | 43.5 |
+| 75% | 13 | 97.5% | 55% | -0.23 | +2 | 63.8 |
+| 90% | 15 | 100% | 47.5% | -0.38 | -1 | 53.8 |
+| 98% | 16 | 97.5% | 70% | -0.33 | -2 | 29.0 |
+| everything | 16 | 100% | 100% | +0.00 | 0 | 20.0 |
 
 ## act, accurate: lowest share within 1 grade 97.5%, mean 73.0 questions
 
 | true level | true grade | placed within 1 | exact | mean error | worst | questions |
 |---|---|---|---|---|---|---|
-| nothing | NaN | 100% | 100% | +0.00 | 0 | 8.4 |
-| 2% | NaN | 100% | 100% | +0.00 | 0 | 17.5 |
-| 10% | NaN | 100% | 70% | -0.30 | -1 | 48.4 |
-| 25% | NaN | 97.5% | 60% | -0.07 | -2 | 107.0 |
-| 40% | NaN | 100% | 40% | -0.50 | -1 | 102.0 |
-| 50% | NaN | 100% | 52.5% | -0.33 | +1 | 93.6 |
-| 60% | NaN | 100% | 55% | -0.30 | -1 | 103.7 |
-| 75% | NaN | 97.5% | 55% | -0.23 | +2 | 107.0 |
-| 90% | NaN | 100% | 55% | -0.45 | -1 | 107.0 |
-| 98% | NaN | 97.5% | 60% | -0.42 | -2 | 68.5 |
-| everything | NaN | 100% | 100% | +0.00 | 0 | 40.0 |
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 8.4 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 17.5 |
+| 10% | 2 | 100% | 70% | -0.30 | -1 | 48.4 |
+| 25% | 5 | 97.5% | 60% | -0.07 | -2 | 107.0 |
+| 40% | 7 | 100% | 40% | -0.50 | -1 | 102.0 |
+| 50% | 9 | 100% | 52.5% | -0.33 | +1 | 93.6 |
+| 60% | 10 | 100% | 55% | -0.30 | -1 | 103.7 |
+| 75% | 13 | 97.5% | 55% | -0.23 | +2 | 107.0 |
+| 90% | 15 | 100% | 55% | -0.45 | -1 | 107.0 |
+| 98% | 16 | 97.5% | 60% | -0.42 | -2 | 68.5 |
+| everything | 16 | 100% | 100% | +0.00 | 0 | 40.0 |
+
+## spanish, quick: lowest share within 1 grade 97.5%, mean 33.0 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 15.4 |
+| 2% | 2 | 100% | 50% | -0.45 | -1 | 29.1 |
+| 10% | 6 | 100% | 65% | -0.35 | -1 | 32.8 |
+| 25% | 15 | 100% | 70% | -0.30 | -1 | 35.0 |
+| 40% | 23 | 97.5% | 57.5% | -0.25 | +2 | 37.6 |
+| 50% | 29 | 100% | 72.5% | -0.28 | -1 | 37.5 |
+| 60% | 35 | 100% | 62.5% | -0.38 | -1 | 36.4 |
+| 75% | 43 | 100% | 50% | -0.45 | -1 | 38.6 |
+| 90% | 52 | 100% | 20% | -0.75 | -1 | 39.0 |
+| 98% | 56 | 100% | 40% | -0.45 | -1 | 33.9 |
+| everything | 57 | 100% | 100% | +0.00 | 0 | 28.0 |
+
+## spanish, balanced: lowest share within 1 grade 97.5%, mean 44.4 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 20.6 |
+| 2% | 2 | 100% | 50% | -0.45 | -1 | 38.8 |
+| 10% | 6 | 100% | 65% | -0.35 | -1 | 44.7 |
+| 25% | 15 | 100% | 70% | -0.30 | -1 | 39.0 |
+| 40% | 23 | 97.5% | 57.5% | -0.25 | +2 | 67.0 |
+| 50% | 29 | 100% | 75% | -0.25 | -1 | 43.6 |
+| 60% | 35 | 100% | 60% | -0.40 | -1 | 43.2 |
+| 75% | 43 | 100% | 50% | -0.45 | -1 | 70.0 |
+| 90% | 52 | 100% | 20% | -0.75 | -1 | 70.0 |
+| 98% | 56 | 100% | 22.5% | -0.23 | -1 | 31.4 |
+| everything | 57 | 100% | 100% | +0.00 | 0 | 20.3 |
+
+## spanish, accurate: lowest share within 1 grade 97.5%, mean 103.0 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 41.3 |
+| 2% | 2 | 100% | 50% | -0.45 | -1 | 109.8 |
+| 10% | 6 | 100% | 65% | -0.35 | -1 | 127.8 |
+| 25% | 15 | 100% | 70% | -0.30 | -1 | 92.3 |
+| 40% | 23 | 97.5% | 57.5% | -0.25 | +2 | 130.0 |
+| 50% | 29 | 100% | 75% | -0.25 | -1 | 98.6 |
+| 60% | 35 | 100% | 60% | -0.40 | -1 | 114.6 |
+| 75% | 43 | 100% | 50% | -0.45 | -1 | 130.0 |
+| 90% | 52 | 100% | 20% | -0.75 | -1 | 130.0 |
+| 98% | 56 | 100% | 40% | -0.45 | -1 | 118.8 |
+| everything | 57 | 100% | 100% | +0.00 | 0 | 40.0 |
+
+## chess, quick: lowest share within 1 grade 97.5%, mean 23.1 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 8.2 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 13.9 |
+| 10% | 2 | 100% | 75% | -0.20 | -1 | 22.6 |
+| 25% | 5 | 97.5% | 52.5% | -0.45 | -2 | 26.3 |
+| 40% | 8 | 97.5% | 67.5% | -0.35 | -2 | 28.0 |
+| 50% | 10 | 97.5% | 60% | -0.38 | -2 | 27.7 |
+| 60% | 12 | 97.5% | 60% | -0.23 | +2 | 27.9 |
+| 75% | 15 | 100% | 45% | -0.40 | -1 | 30.8 |
+| 90% | 18 | 100% | 65% | -0.20 | -1 | 25.6 |
+| 98% | 19 | 100% | 72.5% | -0.28 | -1 | 22.2 |
+| everything | 19 | 100% | 100% | +0.00 | 0 | 21.0 |
+
+## chess, balanced: lowest share within 1 grade 97.5%, mean 31.0 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 8.2 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 14.0 |
+| 10% | 2 | 100% | 75% | -0.20 | -1 | 23.7 |
+| 25% | 5 | 97.5% | 50% | -0.47 | -2 | 32.8 |
+| 40% | 8 | 97.5% | 67.5% | -0.35 | -2 | 40.2 |
+| 50% | 10 | 97.5% | 60% | -0.38 | -2 | 36.4 |
+| 60% | 12 | 97.5% | 60% | -0.23 | +2 | 49.8 |
+| 75% | 15 | 100% | 45% | -0.40 | -1 | 57.9 |
+| 90% | 18 | 100% | 65% | -0.20 | -1 | 35.5 |
+| 98% | 19 | 100% | 72.5% | -0.28 | -1 | 22.4 |
+| everything | 19 | 100% | 100% | +0.00 | 0 | 20.1 |
+
+## chess, accurate: lowest share within 1 grade 97.5%, mean 81.5 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 8.2 |
+| 2% | 1 | 100% | 100% | +0.00 | 0 | 20.9 |
+| 10% | 2 | 100% | 75% | -0.20 | -1 | 63.5 |
+| 25% | 5 | 97.5% | 47.5% | -0.50 | -2 | 89.6 |
+| 40% | 8 | 97.5% | 67.5% | -0.35 | -2 | 118.8 |
+| 50% | 10 | 97.5% | 60% | -0.38 | -2 | 123.3 |
+| 60% | 12 | 97.5% | 60% | -0.23 | +2 | 130.0 |
+| 75% | 15 | 100% | 45% | -0.40 | -1 | 125.5 |
+| 90% | 18 | 100% | 65% | -0.20 | -1 | 114.3 |
+| 98% | 19 | 100% | 72.5% | -0.28 | -1 | 62.5 |
+| everything | 19 | 100% | 100% | +0.00 | 0 | 40.0 |
+
+## piano, quick: lowest share within 1 grade 97.5%, mean 22.8 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 9.7 |
+| 2% | 1 | 100% | 97.5% | +0.03 | +1 | 16.5 |
+| 10% | 2 | 100% | 70% | -0.30 | -1 | 22.1 |
+| 25% | 5 | 97.5% | 42.5% | -0.07 | +9 | 25.8 |
+| 40% | 8 | 97.5% | 60% | -0.42 | -2 | 25.7 |
+| 50% | 10 | 97.5% | 72.5% | -0.20 | -2 | 26.5 |
+| 60% | 12 | 100% | 62.5% | -0.33 | -1 | 25.9 |
+| 75% | 15 | 97.5% | 65% | -0.23 | +2 | 27.2 |
+| 90% | 18 | 97.5% | 55% | -0.42 | -2 | 28.1 |
+| 98% | 19 | 97.5% | 65% | -0.38 | -2 | 22.8 |
+| everything | 19 | 100% | 100% | +0.00 | 0 | 21.0 |
+
+## piano, balanced: lowest share within 1 grade 95%, mean 28.2 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 9.7 |
+| 2% | 1 | 100% | 97.5% | +0.03 | +1 | 17.8 |
+| 10% | 2 | 100% | 70% | -0.30 | -1 | 26.5 |
+| 25% | 5 | 100% | 45% | -0.35 | +1 | 33.9 |
+| 40% | 8 | 97.5% | 60% | -0.42 | -2 | 28.5 |
+| 50% | 10 | 97.5% | 72.5% | -0.20 | -2 | 30.4 |
+| 60% | 12 | 100% | 62.5% | -0.33 | -1 | 36.5 |
+| 75% | 15 | 97.5% | 65% | -0.23 | +2 | 35.6 |
+| 90% | 18 | 95% | 55% | -0.45 | -2 | 45.5 |
+| 98% | 19 | 97.5% | 65% | -0.38 | -2 | 26.1 |
+| everything | 19 | 100% | 100% | +0.00 | 0 | 20.0 |
+
+## piano, accurate: lowest share within 1 grade 95%, mean 84.3 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 9.7 |
+| 2% | 1 | 100% | 97.5% | +0.03 | +1 | 39.7 |
+| 10% | 2 | 100% | 70% | -0.30 | -1 | 98.5 |
+| 25% | 5 | 100% | 45% | -0.35 | +1 | 114.3 |
+| 40% | 8 | 97.5% | 60% | -0.42 | -2 | 105.3 |
+| 50% | 10 | 97.5% | 72.5% | -0.20 | -2 | 112.0 |
+| 60% | 12 | 100% | 62.5% | -0.33 | -1 | 127.8 |
+| 75% | 15 | 97.5% | 65% | -0.23 | +2 | 98.5 |
+| 90% | 18 | 95% | 55% | -0.45 | -2 | 125.5 |
+| 98% | 19 | 97.5% | 62.5% | -0.40 | -2 | 55.8 |
+| everything | 19 | 100% | 100% | +0.00 | 0 | 40.0 |
+
+## basketball, quick: lowest share within 1 grade 95%, mean 22.2 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 7.8 |
+| 2% | 1 | 100% | 97.5% | +0.03 | +1 | 11.4 |
+| 10% | 2 | 100% | 62.5% | -0.33 | -1 | 21.7 |
+| 25% | 4 | 97.5% | 47.5% | -0.20 | +8 | 22.6 |
+| 40% | 7 | 100% | 57.5% | -0.42 | -1 | 28.1 |
+| 50% | 8 | 100% | 70% | -0.25 | -1 | 28.5 |
+| 60% | 10 | 100% | 70% | -0.30 | -1 | 24.7 |
+| 75% | 12 | 97.5% | 60% | -0.33 | +2 | 27.4 |
+| 90% | 14 | 95% | 47.5% | -0.42 | -2 | 29.3 |
+| 98% | 15 | 97.5% | 52.5% | -0.50 | -2 | 22.1 |
+| everything | 15 | 100% | 100% | +0.00 | 0 | 20.1 |
+
+## basketball, balanced: lowest share within 1 grade 95%, mean 30.1 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 7.8 |
+| 2% | 1 | 100% | 97.5% | +0.03 | +1 | 11.4 |
+| 10% | 2 | 100% | 62.5% | -0.33 | -1 | 24.8 |
+| 25% | 4 | 100% | 47.5% | -0.42 | -1 | 25.1 |
+| 40% | 7 | 100% | 55% | -0.45 | -1 | 29.0 |
+| 50% | 8 | 100% | 70% | -0.25 | -1 | 31.1 |
+| 60% | 10 | 100% | 65% | -0.35 | -1 | 34.7 |
+| 75% | 12 | 97.5% | 60% | -0.33 | +2 | 53.0 |
+| 90% | 14 | 95% | 47.5% | -0.42 | -2 | 59.4 |
+| 98% | 15 | 97.5% | 52.5% | -0.50 | -2 | 34.5 |
+| everything | 15 | 100% | 100% | +0.00 | 0 | 20.1 |
+
+## basketball, accurate: lowest share within 1 grade 95%, mean 67.2 questions
+
+| true level | true grade | placed within 1 | exact | mean error | worst | questions |
+|---|---|---|---|---|---|---|
+| nothing | 1 | 100% | 100% | +0.00 | 0 | 7.8 |
+| 2% | 1 | 100% | 97.5% | +0.03 | +1 | 15.0 |
+| 10% | 2 | 100% | 62.5% | -0.33 | -1 | 61.5 |
+| 25% | 4 | 100% | 50% | -0.40 | -1 | 94.0 |
+| 40% | 7 | 100% | 55% | -0.45 | -1 | 54.8 |
+| 50% | 8 | 100% | 67.5% | -0.28 | -1 | 60.1 |
+| 60% | 10 | 100% | 65% | -0.35 | -1 | 108.4 |
+| 75% | 12 | 97.5% | 60% | -0.33 | +2 | 112.0 |
+| 90% | 14 | 95% | 50% | -0.45 | -2 | 110.2 |
+| 98% | 15 | 97.5% | 52.5% | -0.50 | -2 | 76.0 |
+| everything | 15 | 100% | 100% | +0.00 | 0 | 40.0 |
+
+<!-- unit-sim:start -->
+
+## 2026-11-02: in-tier placement and gap-only path, planted-gap proof (SIMULATED learners, not real ones)
+
+Generated by `node scripts/unit-placement-sim.js --write`. Every number below comes from simulated learners with a known true frontier and planted holes
+(see the header of that script for the response model); none of it is a measurement of a real learner. The walk, the evidence model, the quick checks and the
+gap-only path are the app's own code (services/unit-placement.js, services/learner-path.js) run on a throwaway data file.
+
+**What is new.** IQ now has an in-tier placement: each of its 12 tiers (100-234 hours) is cut into 9 clusters of whole checkpoint units, each with 7 questions
+built by the tier's own generators (content/unit-placement/iq.json, scripts/generate-iq-unit-placement.js). Placement uses the same adaptive walk as math and
+English, stops on the mode's clock (Quick 6 min, Balanced 13 min, Accurate 25 min for this stage), and the clusters it passes over get quick checks; a hole found
+there goes on the gap-only path. IQ is also in "Catch me up to this tier" (services/catchup-units.js).
+
+**Before / after for IQ** (balanced, held-out seed, standard learners): before, a learner worked a tier from its first lesson, so every known unit was worked:
+71.0 h of a 190 h tier on average, 24.3% of learners already started within 1 cluster of their true start, and no hole below the start was ever looked for.
+After: 8.7 h on known material, 1.25 h of needed material wrongly skipped, 86.0% within 1 cluster, 99.1% of planted holes on the path, 1.9% false gaps.
+Math and English in-grade placement and catch-up were not changed; they are re-measured here on today's code (the first in-grade planted-gap numbers for them).
+
+### Held-out seed, standard learners (slope 0.3 unit, exact item positions), all modes
+
+Seed 20261102; 24 learners per grade and hole rate (0, 10%, 30% of finished units are holes); math and English: 6 grades spread across the track, IQ: all 12 tiers.
+
+| Subject | Mode | Learners | Within 1 unit | Exact | Mean error (units) | Questions + checks | Minutes | Wasted h on known (none placed: all known) | Lost h (false skip) | Tier h | Planted gaps on path | Gaps below placed point found | False gaps |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| math | quick | 432 | 82.4% | 53.9% | -0.69 | 11.3 + 12.5 | 10.3 | 1.74 (16.18) | 0.34 | 40 | 98.6% (345) | 95.7% (188) | 1.6% |
+| math | balanced | 432 | 83.6% | 59.0% | -0.84 | 17.9 + 11.4 | 12.7 | 1.83 (16.24) | 0.16 | 40 | 98.7% (377) | 95.4% (194) | 1.9% |
+| math | accurate | 432 | 83.1% | 57.9% | -0.80 | 55.6 + 4.1 | 25.8 | 1.57 (15.42) | 0.23 | 40 | 99.2% (368) | 93.3% (180) | 0.5% |
+| english | quick | 432 | 83.1% | 56.9% | -0.68 | 11.5 + 14.4 | 11.2 | 1.81 (18.42) | 0.36 | 45 | 96.7% (395) | 92.8% (237) | 2.2% |
+| english | balanced | 432 | 85.4% | 58.1% | -0.77 | 17.8 + 12.6 | 13.1 | 1.84 (17.54) | 0.25 | 45 | 97.6% (382) | 93.6% (218) | 2.2% |
+| english | accurate | 432 | 80.6% | 51.2% | -1.07 | 61.0 + 4.6 | 28.4 | 2.17 (17.75) | 0.17 | 45 | 99.5% (373) | 91.0% (155) | 0.8% |
+| iq | quick | 864 | 87.8% | 57.9% | -0.43 | 11.4 + 7.3 | 8.1 | 7.61 (72.55) | 2.09 | 190 | 97.9% (484) | 92.6% (243) | 1.7% |
+| iq | balanced | 864 | 86.0% | 58.2% | -0.55 | 20.8 + 5.4 | 11.3 | 8.69 (70.99) | 1.25 | 190 | 99.1% (448) | 94.6% (185) | 1.9% |
+| iq | accurate | 864 | 86.0% | 60.2% | -0.66 | 58.3 + 0.0 | 25.3 | 9.09 (72.61) | 1.04 | 190 | 100.0% (414) | 89.5% (114) | 0.0% |
+
+### Held-out seed, HARD learners (slope 0.45 unit, items moved by a fixed error of sd 0.4 unit), balanced
+
+Same learners with a wider slope and an error on every item position, which is what an uncalibrated bank is up against.
+
+| Subject | Mode | Learners | Within 1 unit | Exact | Mean error (units) | Questions + checks | Minutes | Wasted h on known (none placed: all known) | Lost h (false skip) | Tier h | Planted gaps on path | Gaps below placed point found | False gaps |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| math | balanced | 432 | 78.2% | 46.3% | -1.04 | 19.3 + 10.3 | 12.8 | 2.38 (16.14) | 0.24 | 40 | 99.1% (346) | 95.0% (140) | 1.4% |
+| english | balanced | 432 | 79.9% | 47.5% | -0.90 | 19.5 + 12.0 | 13.6 | 2.34 (17.46) | 0.23 | 45 | 98.7% (379) | 95.7% (208) | 2.2% |
+| iq | balanced | 864 | 85.2% | 54.6% | -0.62 | 22.6 + 5.0 | 12.0 | 11.44 (70.68) | 1.46 | 190 | 98.9% (457) | 93.3% (195) | 1.2% |
+
+### Development seed (the one used while tuning), standard, balanced
+
+Seed 20261101. Shown so the gap between the tuned seed and the held-out one is visible.
+
+| Subject | Mode | Learners | Within 1 unit | Exact | Mean error (units) | Questions + checks | Minutes | Wasted h on known (none placed: all known) | Lost h (false skip) | Tier h | Planted gaps on path | Gaps below placed point found | False gaps |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| math | balanced | 432 | 82.4% | 59.3% | -0.81 | 17.6 + 11.1 | 12.4 | 1.67 (15.78) | 0.22 | 40 | 99.1% (351) | 96.7% (181) | 1.4% |
+| english | balanced | 432 | 81.9% | 55.3% | -0.91 | 17.5 + 12.3 | 12.9 | 1.90 (17.15) | 0.22 | 45 | 98.3% (410) | 93.8% (208) | 2.1% |
+| iq | balanced | 864 | 86.9% | 59.0% | -0.59 | 20.5 + 5.6 | 11.3 | 9.09 (72.20) | 1.24 | 190 | 98.2% (444) | 95.2% (188) | 1.2% |
+
+**Reading the tables.** "Wasted h on known" is what the gap-only path still spends on units the learner already knew (in brackets: what a path with no
+placement would spend). "Lost h" is needed material (a hole or an unfinished unit) the path marks known: the false skip, the mistake the design most wants to avoid.
+"Gaps below placed point found" counts only holes the placement skipped over and a quick check reopened; "planted gaps on path" also counts holes at or after the
+placed unit, which are worked anyway. "False gaps" are known units sent back to learn. Minutes assume 26 s a question (the quick check's figure).
+
+**Limits, stated plainly.** (1) Simulated learners, not people. (2) IQ questions are generator items positioned by the course's own difficulty ramp, not judge-calibrated
+points; adjacent clusters differ by only about 0.2 difficulty points, so the HARD table (wider learner slope, every item moved by a fixed error) is the one to
+trust for IQ. (3) An IQ question measures "can already do the work this stretch trains" (fine for skipping it), not intelligence; the product still makes no IQ claim.
+(4) The development seed was used to choose the IQ walk shape (width 0.45, reliable 0.3, rounding unchanged); the held-out seed was not touched while tuning. (5) The sim places learners by question position and never reads a question, so it says nothing about whether a key is right: that rests on the generator audit (scripts/iq-template-audit.js, clean) and a blind re-solve of all 756 IQ bank questions with the key withheld (Nemotron Ultra, free: 4 questions it disagreed with were dropped, then 756 of 756 agreed).

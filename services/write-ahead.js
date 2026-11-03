@@ -163,7 +163,7 @@ function trigger({ user, enrollment, grade, reason = null }) {
   }
 }
 
-/** Write ahead on every enrollment the dashboard shows that the learner is working on, most recent first (WRITE_AHEAD_ENROLLMENTS, 2). */
+/** Write ahead on every enrollment the dashboard shows that the learner is working on, most recent first (WRITE_AHEAD_ENROLLMENTS, 4: every subject of the four, so the next level loads rather than generates whichever subject is opened). */
 function triggerForUser({ user, reason = 'dashboard' }) {
   try {
     if (!on() || !user) return;
@@ -171,7 +171,7 @@ function triggerForUser({ user, reason = 'dashboard' }) {
     const db = require('../config/db');
     const rows = db.find('enrollments', (e) => e.user_id === user.id && e.status !== 'graduated' && e.status !== 'placement_pending')
       .sort((a, b) => String(b.updated_at || b.created_at || '').localeCompare(String(a.updated_at || a.created_at || '')))
-      .slice(0, num('WRITE_AHEAD_ENROLLMENTS', 2, 0, 20));
+      .slice(0, num('WRITE_AHEAD_ENROLLMENTS', 4, 0, 20));
     for (const enrollment of rows) trigger({ user, enrollment, reason });
   } catch (err) {
     console.warn(`write-ahead: ${err.message}`);
