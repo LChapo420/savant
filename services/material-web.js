@@ -67,7 +67,7 @@ async function resolvePublic(hostname, lookup) {
 }
 
 /** One request to a vetted address. Resolves { status, headers, body } or an error object. */
-function requestOnce(u, target, requester, okType, extraHeaders) {
+function requestOnce(u, target, requester, okType, extraHeaders, maxBytes) {
   return new Promise((resolve) => {
     const lib = requester || (u.protocol === 'https:' ? https : http);
     let done = false;
@@ -86,7 +86,7 @@ function requestOnce(u, target, requester, okType, extraHeaders) {
       if (!(okType || /^(text\/html|text\/plain|application\/xhtml\+xml)/).test(type)) { res.resume(); return finish(fail('That link is not a web page or plain text. Upload files as files.', 'bad_type')); }
       res.on('data', (c) => {
         size += c.length;
-        if (size > MAX_HTML) { finish(fail('That page is too large to read.', 'too_big')); req.destroy(); return; }
+        if (size > (maxBytes || MAX_HTML)) { finish(fail('That page is too large to read.', 'too_big')); req.destroy(); return; }
         chunks.push(c);
       });
       res.on('end', () => finish({ status: 200, headers: res.headers, body: Buffer.concat(chunks) }));
@@ -136,7 +136,7 @@ async function fetchText(raw, opts = {}) {
     if (opts.hostOk && !opts.hostOk(u.hostname)) return fail('That link goes somewhere this feature does not read.', 'bad_url');
     const target = await resolvePublic(u.hostname, lookup);
     if (target.error) return target;
-    const res = await requestOnce(u, target, opts.requester, opts.types, opts.headers);
+    const res = await requestOnce(u, target, opts.requester, opts.types, opts.headers, opts.maxBytes);
     if (res.error) return res;
     if (res.status >= 300) {
       if (hop === MAX_REDIRECTS || !res.headers.location) return fail('That link redirects too many times.', 'unreachable');
@@ -146,7 +146,7 @@ async function fetchText(raw, opts = {}) {
       if (current.error) return current;
       continue;
     }
-    return { body: res.body.toString('utf8'), type: String(res.headers['content-type'] || '').toLowerCase(), url: u.href };
+    return { raw: res.body, body: res.body.toString('utf8'), type: String(res.headers['content-type'] || '').toLowerCase(), url: u.href };
   }
   return fail('That link redirects too many times.', 'unreachable');
 }

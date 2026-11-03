@@ -9,8 +9,8 @@
  * resort, always last, behind its spend guards (services/ai.js).
  *
  *   every role   nvidia (its tier's models, then their fallbacks)  ->  anthropic
- *   placement    modelflare, unchanged: the whole-subject placement quiz stays where
- *                it was (the owner has not moved it), pinned to one set of weights.
+ *   placement    modelflare only with MODELFLARE_ENABLED=1; otherwise the same
+ *                free-first chain as deep work (owner ban: credits nearly gone, 2026-11-03).
  *
  * Out of the lineup, and so out of every chain by default (their code is kept):
  *   mimo         the owner: GLM 5.3 / DeepSeek V4.1 at max reasoning match it.
@@ -53,7 +53,8 @@ const os = require('os');
 const nvidia = require('./nvidia');
 const ollamaRaw = require('./ollama');
 const { openrouterFree, geminiFree } = require('./free-apis');
-const { xkiro } = require('./xkiro');
+const xkiroLib = require('./xkiro');
+const { xkiro } = xkiroLib;
 const mimo = require('./mimo');
 const openrouter = require('./openrouter');
 const gemini = require('./gemini');
@@ -119,8 +120,8 @@ const ROLE_DEFAULTS = {
   diagnose: ['nvidia', 'anthropic'],
   rewrite: ['nvidia', 'anthropic'],
   personalize: ['nvidia', 'anthropic'],
-  // Writing the whole-subject placement quiz: GPT Sol through Modelflare and
-  // nothing else, exactly as before this lineup (placement-only; left as it was).
+  // Writing the whole-subject placement quiz uses Modelflare only when it is
+  // explicitly enabled; otherwise it follows the deep free-first chain.
   placement: ['modelflare'],
   games: ['nvidia', 'anthropic'],
   blocks: ['nvidia', 'anthropic'],
@@ -181,20 +182,27 @@ function order(role) {
   const fallbacks = declared === undefined ? defaults.slice(1) : namedList(`AI_PROVIDER_${suffix}_FALLBACK`);
   let list = [...new Set([preferred, ...fallbacks])];
 
-  // Placement stays pinned to what it names (Modelflare by default), as before.
+  // Placement keeps its named provider when configured; otherwise it follows deep
+  // unless Modelflare is explicitly enabled. Modelflare named in the environment
+  // (AI_PROVIDER_PLACEMENT=modelflare) is dropped without the opt-in too, and a
+  // list left empty falls back to deep, so the quiz always has a writer.
   if (group === 'placement') {
-    if (declared === undefined && !named('AI_PROVIDER_PLACEMENT')) return ['modelflare'];
-    return list.filter((n) => n !== 'anthropic' || anthropicAllowed());
+    const modelflareOn = process.env.MODELFLARE_ENABLED === '1';
+    if (declared === undefined && !named('AI_PROVIDER_PLACEMENT')) {
+      return modelflareOn ? ['modelflare'] : order('deep');
+    }
+    const kept = list.filter((n) => (n !== 'anthropic' || anthropicAllowed()) && (n !== 'modelflare' || modelflareOn));
+    return kept.length ? kept : order('deep');
   }
 
   // Every other role: the free models are always in the chain, then the free
   // fallbacks, and Claude is always last — whatever the environment names.
   list = list.filter((n) => n !== 'anthropic' && n !== 'modelflare' && n !== 'xkiro' && !FREE_FALLBACKS.includes(n));
   if (!list.includes('nvidia')) list.push('nvidia');
-  // Build scripts only (XKIRO_PIPELINE=1; the app server never sets it): xKiro's $0
-  // models and MiniMax grant come straight after NVIDIA, before the local models.
-  // No learner's words reach it (services/providers/xkiro.js).
-  if (process.env.XKIRO_PIPELINE === '1') list.push('xkiro');
+  // Pipeline calls and the dated learner window put xKiro's $0 models and MiniMax
+  // grant after NVIDIA, before the local models. The learner path is guarded in
+  // services/ai.js.
+  if (process.env.XKIRO_PIPELINE === '1' || xkiroLib.learnerWindowOpen()) list.push('xkiro');
   // NVIDIA down for 15 confirmed minutes: local first until NVIDIA recovers.
   if (nvidia.outage && nvidia.outage().state === 'down') list.unshift('ollama');
   for (const n of FREE_FALLBACKS) if (!list.includes(n)) list.push(n);

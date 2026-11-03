@@ -87,3 +87,19 @@ That writes `content/base-levels/<track>-<grade>.json` (shared plans and game
 sets only — no answers, telemetry or accounts). The server adds any shipped
 level the data file does not already have when it starts; `npm run base:import`
 does the same by hand. Nothing already in the data file is overwritten.
+
+## The learner's full spec reaches every built-in level (2 Nov 2026)
+
+`services/block-adapt.js` is the one adapter between the learning spec (`services/learning-spec.js`) and the block writers, for math,
+English, IQ and Spanish alike. Before it, a built-in level got the spec only as general lines inside the learner brief. Now each call also gets:
+
+| Level | Added to the call | Checked after |
+|---|---|---|
+| Lesson / retention | layout: blocks and checks to plan from the learner's minutes, check formats and order of difficulty; fill-out: word budget, examples and worked steps per idea, hints, explanation detail, interests as the setting, per-subject wording | `checkFollowed` on the whole fill-out (key points kept, interests used, dislikes avoided, sentence length, vocabulary, profile leaks, length against their time) and one revision with the problems named |
+| Game questions | the question shape (tier mix and order, answer formats, explanation detail, wording), a theme from the interests, the difficulty order | the same check and revision on the question set |
+| Master / Grand Master / Final | presentation only: answer format, explanation detail and tone, wording, low stakes | the same check (no disliked setting, no profile showing) on each batch |
+
+A learner with no spec, the shared base version of a level and the owner under the owner-base rule get nothing added: the prompts are byte
+for byte what they were (`node scripts/block-diff.js --selfcheck`, run by `npm test`; `BLOCK_ADAPT=off` switches the adapter off). A plan
+records `spec_check` (whether it was revised, what was open). Bank practice items (package E) and the sealed Spanish files are not touched.
+Proof and numbers: `docs/SUBJECT-LEVELS-DEPTH.md`.

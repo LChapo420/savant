@@ -144,13 +144,13 @@ console.log('\nthe clock');
 {
   for (const mode of ['quick', 'balanced', 'accurate']) {
     const total = gapScan.totalMinutes(mode);
-    for (const used of [0, 5, 12, adaptive.MODES[mode].minutes]) {
+    for (const used of [0, Math.round(total * 0.25), Math.round(total * 0.6), adaptive.MODES[mode].minutes]) {
       const b = gapScan.budgetFor({ mode, placement: { mode, started_at: new Date(T0 - used * MIN).toISOString(), finished_at: new Date(T0).toISOString() }, enrollment: null, now: T0 });
       const whole = b.subject_minutes_used + b.minutes + b.unit_minutes;
       check(`${mode}, subject walk took ${used} min: the whole placement stays within ${total} min`, whole <= total + 1e-9 && b.max_questions * gapScan.SECONDS_PER_QUESTION <= b.minutes * 60 + 1e-9, b);
     }
   }
-  check('the whole budgets are Quick 20, Balanced 45, Accurate 90', gapScan.totalMinutes('quick') === 20 && gapScan.totalMinutes('balanced') === 45 && gapScan.totalMinutes('accurate') === 90);
+  check('the whole budgets are Quick 20 (its old clock kept: 5 minutes did not hold 90% within a grade), Balanced 20 and Accurate 57 (the owner limits of 2026-11-02)', gapScan.totalMinutes('quick') === 20 && gapScan.totalMinutes('balanced') === 20 && gapScan.totalMinutes('accurate') === 57);
   const full = gapScan.budgetFor({ mode: 'quick', placement: { mode: null, started_at: new Date(T0 - 60 * MIN).toISOString(), finished_at: new Date(T0).toISOString() }, enrollment: null, now: T0 });
   check('after the untimed full climb the scan gets only its own cap', full.minutes === gapScan.SCAN.quick.maxMinutes && full.total_minutes === null, full);
 
@@ -347,7 +347,7 @@ console.log('\ndecline, retake and done');
 console.log('\nreusing an earlier enrollment');
 {
   const u = makeUser('reuse');
-  walk(u.id, { mode: 'balanced', used: 20, answered: [{ pos: 3.5, guess: 0.25, correct: false }] });
+  walk(u.id, { mode: 'balanced', used: 9, answered: [{ pos: 3.5, guess: 0.25, correct: false }] });
   const m = enroll(u.id, gradeIds[G]);
   const own = enroll(u.id, gradeIds[3], { status: 'active', current_level: 1, placed_at: new Date(T0).toISOString() });
   const otherKey = units3[0].key === units3[half - 1].key ? units3[1].key : units3[0].key;

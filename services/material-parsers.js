@@ -55,7 +55,7 @@ async function fromPdf(buf) {
   const { getDocumentProxy, extractText } = await import('unpdf');
   let pdf;
   try {
-    pdf = await getDocumentProxy(new Uint8Array(buf), { isEvalSupported: false, useSystemFonts: false, verbosity: 0 });
+    pdf = await getDocumentProxy(new Uint8Array(buf), { isEvalSupported: false, useSystemFonts: false, verbosity: 0, fontExtraProperties: true });
   } catch (err) {
     if (/password/i.test(String(err && (err.name + err.message)))) return fail('That PDF is password-protected. Remove the password and upload it again.', 'encrypted');
     return fail('That PDF could not be read. It may be damaged.', 'unreadable');
@@ -64,11 +64,17 @@ async function fromPdf(buf) {
     if (pdf.numPages > MAX_PAGES) return fail(`That PDF has ${pdf.numPages} pages. The limit is ${MAX_PAGES}. Upload a part of it.`, 'too_many_pages');
     const { text } = await extractText(pdf, { mergePages: false });
     const joined = normalise(text.join('\n\n'));
-    // A PDF with no text layer is a scan; page images are not rendered here, so say so plainly.
+    // A PDF with no text layer is a scan: the page pictures go back to the caller to be read by OCR (material-formats.js pdfImages).
     if (countWords(joined) < MIN_OCR_WORDS) {
-      return fail('That PDF looks scanned: it has no copyable text, only pictures of pages. Upload each page as a PNG or JPG picture, or paste the text.', 'scanned');
+      let images = [];
+      try { images = await require('./material-formats').pdfImages(pdf); } catch { images = []; }
+      if (images.length) return { scanned: true, images, pages: pdf.numPages };
+      return fail('That PDF looks scanned, and the pictures in it could not be pulled out to read. Upload each page as a PNG or JPG picture, or paste the text.', 'scanned');
     }
-    return { text: joined, pages: pdf.numPages };
+    // Headings, bold and page marks for the key-point pass; the stored text stays the plain text above.
+    let rich = null;
+    try { const r = await require('./material-formats').pdfRich(pdf, MAX_PAGES); rich = r && countWords(r.text) >= MIN_OCR_WORDS ? r.rich : null; } catch { rich = null; }
+    return { text: joined, rich: rich || undefined, pages: pdf.numPages };
   } catch {
     return fail('That PDF could not be read. It may be damaged.', 'unreadable');
   } finally {
@@ -88,7 +94,9 @@ async function fromDocx(buf) {
   const mammoth = require('mammoth');
   try {
     const out = await mammoth.extractRawText({ buffer: buf });
-    return { text: normalise(out.value), pages: null };
+    let rich;
+    try { rich = require('./material-formats').htmlRich((await mammoth.convertToHtml({ buffer: buf }, { styleMap: ["p[style-name='Key Point'] => blockquote:fresh", "p[style-name='Callout'] => blockquote:fresh", "p[style-name='Important'] => blockquote:fresh", "p[style-name='Note'] => blockquote:fresh", "p[style-name='Intense Quote'] => blockquote:fresh", "p[style-name='Block Text'] => blockquote:fresh", "p[style-name='Quote'] => blockquote:fresh"] })).value); } catch { rich = undefined; }
+    return { text: normalise(out.value), rich, pages: null };
   } catch {
     return fail('That Word document could not be read. It may be damaged.', 'unreadable');
   }
@@ -124,17 +132,21 @@ async function fromPptx(buf) {
   let zip;
   try { zip = await require('jszip').loadAsync(buf); } catch { return fail('That PowerPoint file could not be read. It may be damaged.', 'unreadable'); }
   const parts = [];
+  const rich = [];
   for (const s of slides) {
     const n = num(s.name);
-    const lines = slideLines(await zip.file(s.name).async('string'));
+    const slideXml = await zip.file(s.name).async('string');
+    const lines = slideLines(slideXml);
+    const boldLines = require('./material-formats').slideBold(slideXml);
     const notesFile = zip.file(`ppt/notesSlides/notesSlide${n}.xml`);
     // Notes pages repeat the slide number as a lone digit line; drop it.
     const notes = notesFile ? slideLines(await notesFile.async('string')).filter((l) => !/^\d{1,3}$/.test(l)) : [];
     if (!lines.length && !notes.length) continue;
     const [title, ...rest] = lines;
     parts.push([`Slide ${n}${title ? `: ${title}` : ''}`, ...rest, ...(notes.length ? [`Speaker notes: ${notes.join(' ')}`] : [])].join('\n'));
+    rich.push([`[[s${n}]]`, title ? `# ${title}` : '', ...rest.map((l) => `- ${boldLines.get(l) || l}`), ...(notes.length ? [`Speaker notes: ${notes.join(' ')}`] : [])].filter(Boolean).join('\n'));
   }
-  return { text: normalise(parts.join('\n\n')), pages: slides.length };
+  return { text: normalise(parts.join('\n\n')), rich: normalise(rich.join('\n\n')), pages: slides.length };
 }
 
 async function openZip(buf, label) {
@@ -151,8 +163,18 @@ async function fromOdt(buf) {
   const f = z.zip.file('content.xml');
   if (!f) return fail('That file has no document text in it.', 'bad_type');
   const xml = (await f.async('string')).replace(/<text:(?:tab|s)\b[^>]*\/>/g, ' ').replace(/<text:line-break\s*\/>/g, '\n');
-  const lines = (xml.match(/<text:(?:p|h)\b[^>]*>[\s\S]*?<\/text:(?:p|h)>/g) || []).map((p) => unxml(p.replace(/<[^>]+>/g, '')).trim()).filter(Boolean);
-  return { text: normalise(lines.join('\n\n')), pages: null };
+  const blocks = xml.match(/<text:(?:p|h)\b[^>]*>[\s\S]*?<\/text:(?:p|h)>/g) || [];
+  const lines = blocks.map((p) => unxml(p.replace(/<[^>]+>/g, '')).trim()).filter(Boolean);
+  // Headings (text:h outline level) and bold spans (an automatic style with a bold weight) for the key-point pass.
+  const boldStyles = new Set((xml.match(/<style:style\b[^>]*style:name="[^"]+"[^>]*>(?:(?!<\/style:style>)[\s\S])*?fo:font-weight="bold"[\s\S]*?<\/style:style>/g) || []).map((st) => (st.match(/style:name="([^"]+)"/) || [])[1]));
+  const rich = blocks.map((p) => {
+    const lvl = (p.match(/^<text:h\b[^>]*text:outline-level="(\d)"/) || [])[1];
+    const inner = p.replace(/<text:span\b[^>]*text:style-name="([^"]+)"[^>]*>([\s\S]*?)<\/text:span>/g, (m, st, t) => (boldStyles.has(st) && t.trim() ? `**${t.replace(/<[^>]+>/g, '').trim()}** ` : t));
+    const t = unxml(inner.replace(/<[^>]+>/g, '')).replace(/[ \t]+/g, ' ').trim();
+    if (t && !lvl && /^<text:p\b[^>]*text:style-name="(?:Quotations?|Key|Callout|Important|Note|Block_20_Quotation)/.test(p)) return `> ${t}`;
+    return t ? `${lvl ? `${'#'.repeat(Number(lvl))} ` : /^<text:p\b[^>]*text:style-name="(?:Title|Heading)/.test(p) ? '# ' : ''}${t}` : '';
+  }).filter(Boolean);
+  return { text: normalise(lines.join('\n\n')), rich: normalise(rich.join('\n\n')), pages: null };
 }
 
 /** HTML to plain text: scripts, styles and navigation removed, block tags become line breaks. */
@@ -179,12 +201,17 @@ async function fromEpub(buf) {
   const order = (xml.match(/<itemref\b[^>]*>/g) || []).map((m) => manifest[(m.match(/\bidref="([^"]+)"/) || [])[1]]).filter(Boolean);
   if (order.length > MAX_PAGES * 2) return fail('That book has too many sections. Upload a part of it.', 'too_many_pages');
   const parts = [];
+  const rich = [];
   for (const href of order) {
     const f = z.zip.file(decodeURIComponent(base + href.split('#')[0]));
-    if (f) { const t = htmlText(await f.async('string')); if (t) parts.push(t); }
+    if (f) {
+      const html = await f.async('string');
+      const t = htmlText(html);
+      if (t) { parts.push(t); rich.push(`[[n ${parts.length}]]\n${require('./material-formats').htmlRich(html)}`); }
+    }
   }
   if (!parts.length) return fail('That book has no readable text in it.', 'bad_type');
-  return { text: normalise(parts.join('\n\n')), pages: order.length };
+  return { text: normalise(parts.join('\n\n')), rich: normalise(rich.join('\n\n')), pages: order.length };
 }
 
 /** What a number format shows, so date-formatted cells can be written as dates: { kind, seconds } or null. */
@@ -301,7 +328,8 @@ function fromRtf(buf) {
 }
 
 async function fromHtmlFile(buf) {
-  return { text: htmlText(buf.toString('utf8')), pages: null };
+  const html = buf.toString('utf8');
+  return { text: htmlText(html), rich: require('./material-formats').htmlRich(html), pages: null };
 }
 
 /** The real recognizer. tesseract.js is an optional dependency: without it the learner is told so. */
@@ -325,14 +353,21 @@ async function tesseractOcr(buf) {
 let recognizer = null;
 function setOcr(fn) { recognizer = typeof fn === 'function' ? fn : null; }
 
-/** A PNG or JPG: the words in the picture, read in English. */
-async function fromImage(buf) {
+/** The words in a picture, read in English, with no minimum: { text } or { error, code }. */
+async function ocr(buf) {
   const out = await (recognizer || tesseractOcr)(buf);
   if (out && out.missing) return fail('This server cannot read text from images yet (tesseract.js is not installed). Paste the text instead.', 'no_ocr');
   if (!out || out.failed) return fail('That picture could not be read. Try a clearer or larger one.', 'unreadable');
-  const text = normalise(out.text);
+  return { text: out.text || '' };
+}
+
+/** A PNG or JPG: the words in the picture, read in English. */
+async function fromImage(buf) {
+  const got = await ocr(buf);
+  if (got.error) return got;
+  const text = normalise(got.text);
   if (countWords(text) < MIN_OCR_WORDS) return fail('There is too little text in that picture to work with. Try a clearer one, or paste the text.', 'too_little');
   return { text, pages: 1 };
 }
 
-module.exports = { MAX_PAGES, MIN_OCR_WORDS, fail, normalise, countWords, zipEntries, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, fromImage, setOcr, htmlText };
+module.exports = { MAX_PAGES, MIN_OCR_WORDS, fail, normalise, countWords, zipEntries, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, fromImage, ocr, setOcr, htmlText };

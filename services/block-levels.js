@@ -760,9 +760,10 @@ function readyPlan({ userId, trackId, gradeId, level, attempt = 1 }) {
 }
 
 function anyRow({ userId, trackId, gradeId, level, attempt = 1 }) {
+  // A version replaced by its re-tailored one (retailor) is history, never written into again.
   return db.findOne(COLLECTION, (p) => (p.user_id || null) === (userId || null)
     && p.track_id === trackId && p.grade_id === gradeId && p.level === level
-    && (p.attempt || 1) === attempt) || null;
+    && (p.attempt || 1) === attempt && p.status !== 'superseded') || null;
 }
 
 // ── call 1: the layout ─────────────────────────────────────────────────────
@@ -2107,7 +2108,7 @@ const inFlight = new Map();
  *
  * @returns {Promise<object|null>} the stored plan, or null when it could not be written
  */
-async function write({ userId, trackId, gradeId, level, tailored }) {
+async function write({ userId, trackId, gradeId, level, tailored, retailorOf = null }) {
   // eslint-disable-next-line global-require
   const ai = require('./ai');
   // eslint-disable-next-line global-require
@@ -2126,14 +2127,31 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
   const catalog = catalogFor(kind, trackId);
   const formats = checkFormats(trackId);
   const learner = learnerText(owner, where, { tailored, experiment });
+  // The learning spec at depth (services/block-adapt.js): the size, formats, wording and subject lines of this level for this learner,
+  // and the check that the fill-out followed them. Empty (the prompts exactly as before) for a learner with no spec.
+  // eslint-disable-next-line global-require
+  const blockAdapt = require('./block-adapt');
+  const adapt = blockAdapt.begin({ userId: owner, where, kind, context });
+  const learnerLayout = `${learner}${adapt.layout}`;
+  const learnerFill = `${learner}${adapt.fill}`;
   const started = Date.now();
-  const row = anyRow({ userId: owner, trackId, gradeId, level })
-    || db.insert(COLLECTION, { user_id: owner, track_id: trackId, grade_id: gradeId, level, attempt: 1, kind, status: 'writing' });
+  const row = retailorOf
+    ? db.insert(COLLECTION, { user_id: owner, track_id: trackId, grade_id: gradeId, level, attempt: 1, kind, status: 'writing', retailor_of: retailorOf })
+    : anyRow({ userId: owner, trackId, gradeId, level })
+      || db.insert(COLLECTION, { user_id: owner, track_id: trackId, grade_id: gradeId, level, attempt: 1, kind, status: 'writing' });
   // Each write holds a token on the row. A write that was timed out and then
   // replaced (ensure, BLOCK_WRITE_TIMEOUT_MS) finds another token there when it
   // finally ends, and leaves the row to the write that replaced it.
   const token = crypto.randomBytes(8).toString('hex');
-  db.update(COLLECTION, row.id, { status: 'writing', kind, started_at: new Date().toISOString(), write_token: token, reason: null });
+  db.update(COLLECTION, row.id, {
+    status: 'writing',
+    kind,
+    started_at: new Date().toISOString(),
+    write_token: token,
+    reason: null,
+    // eslint-disable-next-line global-require
+    spec_sig: adapt && adapt.active ? require('./spec-sig').specSig(adapt.spec) : null,
+  });
   const settle = (patch) => {
     const now = db.byId(COLLECTION, row.id);
     if (!now || now.write_token !== token) return null;
@@ -2145,7 +2163,7 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
     role: 'blocks',
     task: 'block_layout',
     system: `${LAYOUT_SYSTEM}${subjectNote(trackId, 'layout')}\n\nLIBRARY (${kind === 'retention' ? 'retention and assessment blocks' : 'lesson blocks'}):\n${catalog.map(catalogLine).join('\n')}`,
-    user: `${context.text}\n\n${learner}\n\nDesign the ${kind} layout now.`,
+    user: `${context.text}\n\n${learnerLayout}\n\nDesign the ${kind} layout now.`,
     schema: layoutSchema(kind, catalog.map((b) => b.tag), context.skills, formats),
     schemaName: 'submit_layout',
     // Room for a thinking model's reasoning as well as the layout itself.
@@ -2182,11 +2200,11 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
   }
 
   // 2. fill
-  const fillReply = await ai.structuredDetail({
+  const callFill = (note) => ai.structuredDetail({
     role: 'blocks',
     task: 'block_fill',
     system: FILL_SYSTEM + subjectNote(trackId, 'fill'),
-    user: fillPrompt({ context, learner, layout, factSheet }),
+    user: `${fillPrompt({ context, learner: learnerFill, layout, factSheet })}${note ? `\n\n${note}` : ''}`,
     schema: fillSchema(),
     schemaName: 'submit_block_content',
     maxTokens: Number(process.env.BLOCK_FILL_MAX_TOKENS || 32000),
@@ -2194,6 +2212,18 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
     dataClass: poolClass(owner),
     lane: process.env.BLOCK_LANE || 'background',
   });
+  // A tailored fill-out is checked against the learner's spec (key points kept, interests used, dislikes avoided, wording, length)
+  // and written once more with the problems named when it broke them (services/block-adapt.js); everything else is one call, as before.
+  const fillRun = await blockAdapt.revise(adapt, {
+    generate: callFill,
+    parts: (r) => ({
+      teach: blockAdapt.textOf(readList(r && r.data && r.data.blocks)),
+      checks: blockAdapt.textOf(readList(r && r.data && r.data.checks).map((c) => (c && typeof c === 'object' ? { prompt: c.prompt, rationale: c.rationale, hint: c.hint } : null))),
+    }),
+    keyFacts: layout.coverage || [],
+    topic: context.topic,
+  });
+  const fillReply = fillRun.result;
   if (!fillReply || !fillReply.data) {
     settle({ status: 'failed', reason: 'the fill-out call returned nothing', finished_at: new Date().toISOString() });
     return null;
@@ -2266,7 +2296,7 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
   // Still none: the reply left them out. One small call writes just the checks.
   let checksUsage = null;
   if (!checkList.length && layout.checks.length) {
-    const only = await writeChecksOnly({ context, learner, layout, userId: owner });
+    const only = await writeChecksOnly({ context, learner: learnerFill, layout, userId: owner });
     checksUsage = only && only.usage;
     checkList = readList(only && only.data && only.data.checks);
   }
@@ -2392,6 +2422,7 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
     usage,
     seconds: Math.round((Date.now() - started) / 1000),
     brief_hash: tailored ? hash(learner) : null,
+    spec_check: fillRun.checked ? { revised: fillRun.revised, before: fillRun.before, open: fillRun.problems } : null,
     finished_at: new Date().toISOString(),
     answers: {},
   });
@@ -2531,6 +2562,65 @@ function ensureShared({ trackId, gradeId, level }) {
 
 function isWriting({ userId, trackId, gradeId, level, tailored }) {
   return inFlight.has(`${tailored ? userId : 'shared'}:${trackId}:${gradeId}:${level}`);
+}
+
+/**
+ * The ready learner plan that should be written again because the learner's
+ * spec has drifted. The caller checks who may be re-tailored.
+ */
+function retailorDue({ userId, trackId, gradeId, level, now = Date.now() }) {
+  const old = readyPlan({ userId, trackId, gradeId, level });
+  if (!old || !old.spec_sig) return null;
+
+  const last = Date.parse(old.retailored_at || '');
+  if (Number.isFinite(last) && now - last < 24 * 60 * 60 * 1000) return null;
+
+  // eslint-disable-next-line global-require
+  const specSig = require('./spec-sig');
+  // eslint-disable-next-line global-require
+  const blockAdapt = require('./block-adapt');
+  const current = specSig.specSig(blockAdapt.specFor(userId, { trackId, gradeId, level }, {}));
+  return specSig.driftedEnough(old.spec_sig, current) ? old : null;
+}
+
+/**
+ * Write a new tailored plan beside the old one. The old plan stays ready until
+ * the replacement is servable, so a learner is never left without a version.
+ */
+function retailor({ userId, trackId, gradeId, level }) {
+  const old = retailorDue({ userId, trackId, gradeId, level });
+  if (!old) return Promise.resolve(null);
+
+  db.update(COLLECTION, old.id, { retailored_at: new Date().toISOString() });
+  const key = `${planKey(userId, trackId, gradeId, level)}:retailor`;
+  if (inFlight.has(key)) return inFlight.get(key);
+
+  const task = timedOut(
+    write({ userId, trackId, gradeId, level, tailored: true, retailorOf: old.id }),
+    null, // the old version is not the row being written, so a timeout is settled below
+  )
+    .then((result) => {
+      if (!result || !servable(result)) {
+        // Timed out or not servable: the replacement is closed and the old version stays served.
+        for (const r of db.find(COLLECTION, (p) => p.retailor_of === old.id && p.status === 'writing')) {
+          db.update(COLLECTION, r.id, { status: 'failed', reason: 'the re-tailored version did not finish', write_token: null, finished_at: new Date().toISOString() });
+        }
+        return null;
+      }
+      db.update(COLLECTION, old.id, {
+        status: 'superseded',
+        superseded_by: result.id,
+        superseded_at: new Date().toISOString(),
+      });
+      return result;
+    })
+    .catch((err) => {
+      console.warn(`blocks: re-tailoring ${trackId}/${gradeId}/${level} failed: ${err.message}`);
+      return null;
+    })
+    .finally(() => inFlight.delete(key));
+  inFlight.set(key, task);
+  return task;
 }
 
 /**
@@ -2900,6 +2990,8 @@ module.exports = {
   ensure,
   ensureShared,
   isWriting,
+  retailorDue,
+  retailor,
   forLevel,
   prefetchAhead,
   levelsAhead,

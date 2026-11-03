@@ -236,7 +236,7 @@ async function xkiroChat(model, system, user) {
 // Modelflare Sol (gpt-6.1-sol): a judge of a third family, used when xKiro's free quota is spent. The key is read from the .env file here because the
 // scorecard proof's setup blanks the Modelflare keys for the app path.
 async function solChat(system, user) {
-  const key = require('dotenv').parse(fs.readFileSync('C:/coding/claudecommittdIq/folderThing/.env')).MODELFLARE_LUNA_API_KEY; // eslint-disable-line global-require
+  const key = require('dotenv').parse(fs.readFileSync('C:/coding/claudecommittdIq/folderThing/.env')).MODELFLARE_API_KEY; // eslint-disable-line global-require
   if (!key) throw new Error('no Modelflare key');
   for (let attempt = 0; attempt < 3; attempt++) {
     const r = await fetch(`${(process.env.MODELFLARE_BASE_URL || 'https://modelflare.dev/v1').replace(/\/$/, '')}/chat/completions`, { // eslint-disable-line no-await-in-loop
@@ -850,7 +850,10 @@ function render(files) {
   return md.join('\n');
 }
 
-if (arg('render')) {
+if (require.main !== module) {
+  // Required by scripts/block-sensitivity-proof.js, which runs the same measures, writer, judges and cache on built-in block levels.
+  module.exports = { arg, base, ls, usage, installWriter, judgeOnce, JUDGES, JUDGE_SYSTEM, JOINT, LO, HI, BASE_LEARNER, userFor, measureLine, PLANT, REPLAY, CONCURRENCY, REP, LIVE, MOCK, cache, sha, limited, BY_ID, WRITER_MODEL, WRITER, gated };
+} else if (arg('render')) {
   const text = render(arg('render').split(',').filter(Boolean));
   if (arg('out')) fs.writeFileSync(arg('out'), `${text}\n`); else console.log(text);
 } else {

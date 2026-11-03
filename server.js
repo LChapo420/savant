@@ -59,6 +59,8 @@ app.use((req, res, next) => {
 });
 
 app.use(securityHeaders);
+// The cost and performance tracker (services/cost-tracker.js): times every /api request and every model call; written in batches, off the request path.
+app.use(require('./services/cost-tracker').middleware);
 // The body parser, skipped for the essay routes. A draft is markup rather than
 // prose, and the same words in tags outrun the default ceiling, so those routes
 // mount their own — see routes/essays.js. Everything else keeps 64kb, because
@@ -127,11 +129,15 @@ app.use('/api', require('./routes/catalog').router);
 // The daily review (staged round 3; ADAPT_REVIEW_SESSION=on, 404 while off).
 app.use('/api', require('./routes/review'));
 app.use('/api', require('./routes/retention')); // study sessions, retention enforcers, the calendar (RETENTION_ENFORCERS)
+app.use('/api', require('./routes/retention-goals')); // how long to remember each subject and course (services/retention-goal.js)
+app.use('/api', require('./routes/daily-plan')); // today's plan across every subject (services/daily-plan.js)
 app.use('/api/placement', require('./routes/placement'));
 // The reading check: a few minutes of vocabulary and passages that measure language level for the scorecard (services/reading-check.js).
 app.use('/api/reading-check', require('./routes/reading-check'));
 // Optional measurement channels that raise the scorecard's accuracy: questionnaire, delayed memory checks, brain games, silent signals, imports, max accuracy (services/boosters.js).
 app.use('/api/boosters', require('./routes/boosters'));
+// The baseline: Quick / Balanced / Accurate tasks and choices that give the scorecard a first, accurate picture before any material is written (services/onboarding).
+app.use('/api/onboarding', require('./routes/onboarding'));
 // The subject-level quiz: one walk up a whole subject, ending in a recommended
 // percentage per grade for the learner who does not know where to start.
 app.use('/api/subject-placement', require('./routes/subject-placement'));
@@ -163,6 +169,7 @@ app.use('/api/piano', require('./routes/piano-songs'));
 app.use('/api', require('./routes/skills'));
 // Every learner's scorecard and details, for the accounts in ADMIN_EMAILS.
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api', require('./routes/cost-tracker')); // cost beacon + /api/admin/cost-tracker (admin only)
 app.use(require('./routes/game-lab'));
 // The Spanish section: its own API, and its rendered voice lines. Media files are
 // named by a hash of their content, so they can be cached for good.
@@ -201,6 +208,9 @@ app.use('/api', (req, res) => res.status(404).json({ error: 'No such endpoint.' 
 // change under a running server and re-downloading it every navigation is
 // slower for no benefit. The filename is not versioned, so a deploy that
 // changes a script is one where an hour of stale is acceptable.
+// The cost tracker page: its data is admin-only already; the page is too, so no one else even sees that it exists.
+app.use(['/cost-tracker', '/cost-tracker.html'], (req, res, next) => (require('./middleware/auth').isAdmin(req.user) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
+
 app.use(express.static(path.join(__dirname, 'public'), {
   extensions: ['html'],
   maxAge: isProduction ? '1h' : 0,
@@ -230,6 +240,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   // The after-level reads run in the background, one at a time.
   require('./services/learner-record').start();
+  require('./services/cost-tracker').start(); // process snapshots every minute (COST_TRACKER=off stops all tracking)
   // The beta comparison (tailored vs base): writes data/beta-report.json once a day (services/beta-compare.js; BETA_REPORT_DAILY=off stops it).
   require('./services/beta-compare').startDaily();
   // Base levels shipped in content/base-levels are added if the data file lacks them.
@@ -238,6 +249,14 @@ app.listen(PORT, () => {
     if (shipped.plans || shipped.games) console.log(`Base levels loaded: ${shipped.plans} lessons/retention/tests, ${shipped.games} games.`);
   } catch (err) {
     console.warn('Base levels could not be loaded:', err.message);
+  }
+  // Shipped fixes to stored shared game sets (content/game-fixes): re-keys and rewrites, applied once each; held levels stay held.
+  try {
+    const fixed = require('./services/game-fixes').applyAll();
+    if (fixed.rekeyed || fixed.rewritten || fixed.released) console.log(`Game fixes applied: ${fixed.rekeyed} re-keyed, ${fixed.rewritten} rewritten, ${fixed.released} released.`);
+    if (fixed.conflicts.length) console.warn(`Game fixes left alone (stored content differs): ${fixed.conflicts.length}`);
+  } catch (err) {
+    console.warn('Game fixes could not be applied:', err.message);
   }
   const ai = require('./services/ai');
   const providers = require('./services/providers');

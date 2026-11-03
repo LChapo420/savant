@@ -1,15 +1,18 @@
 /**
  * xKiro (https://xkiro.com), an OpenAI-compatible gateway with 47 models listed at $0
- * on its free plan (2026-10-23), for the BUILD PIPELINE only: drafting, independent
- * judging and evals of content this app writes. It is never on a learner's path.
+ * on its free plan (2026-10-23), for the BUILD PIPELINE: drafting, independent
+ * judging and evals of content this app writes. Through the end of Nov 6, 2026 Central
+ * (owner approval, 2026-11-03), the owner also approved its MiniMax grant for the
+ * owner and test learners.
  *
  * Why pipeline only:
  *   - Its privacy policy says the service "is not directed at children" and that
  *     prompts are forwarded to each model's own provider (Alibaba, Mistral, Cohere,
  *     Meituan and others), whose retention and training terms it does not state.
- *   - So no learner's words go here. A process must opt in with XKIRO_PIPELINE=1
- *     (scripts set it; the app server never does), and services/providers/index.js
- *     does not list it.
+ *   - Outside the dated learner window, no learner's words go here. A process must
+ *     opt in with XKIRO_PIPELINE=1 (scripts set it; the app server never does), and
+ *     services/providers/index.js does not list it. During the window, index.js and
+ *     services/ai.js apply the age and outside-AI guards.
  *
  * Why it cannot spend:
  *   - Before a model is used, its entry in the key's own GET /models must say
@@ -25,7 +28,7 @@
  * rotation between accounts.
  *
  * Env: XKIRO_API_KEY, XKIRO_BASE_URL, XKIRO_PIPELINE=1, XKIRO_DAILY_TOKENS,
- * XKIRO_USAGE_FILE, XKIRO_TIMEOUT_MS.
+ * XKIRO_LEARNER_UNTIL, XKIRO_USAGE_FILE, XKIRO_TIMEOUT_MS.
  */
 const fs = require('fs');
 const path = require('path');
@@ -36,6 +39,10 @@ const BASE = () => String(process.env.XKIRO_BASE_URL || 'https://api.xkiro.com/v
 const USAGE_FILE = () => process.env.XKIRO_USAGE_FILE || path.join(__dirname, '..', '..', 'data', 'xkiro-usage.json');
 const DAILY_TOKENS = () => Number(process.env.XKIRO_DAILY_TOKENS || 950000);
 const pipelineOptIn = () => process.env.XKIRO_PIPELINE === '1';
+
+function learnerWindowOpen(now = new Date()) {
+  return now < Date.parse(process.env.XKIRO_LEARNER_UNTIL || '2026-11-07T05:59:00Z');
+}
 
 let fetchImpl = (...args) => fetch(...args);
 function _setFetch(fn) { fetchImpl = fn || ((...args) => fetch(...args)); }
@@ -79,10 +86,12 @@ async function verifiedFree(model) {
  * call is refused. Each grant is capped a little under its size, counted over all
  * days in the usage record, and a payment error (402, "insufficient", "balance")
  * locks the model off for good.
+ * The owner (2026-11-03): 90M MiniMax tokens left, expiring Nov 6. The usage record had
+ * counted 21.2M, so the cap is that plus 87M (a little under the 90M).
  */
 const GRANTS = () => {
   try { return JSON.parse(process.env.XKIRO_GRANTS || ''); } catch { /* default below */ }
-  return { 'minimax/minimax-m3.1-flash': 60000000 };
+  return { 'minimax/minimax-m3.1-flash': 108000000 };
 };
 function grantTokensUsed(model) {
   let n = 0;
@@ -169,7 +178,7 @@ function defaultModels() {
 }
 
 async function postOnce(body, timeoutMs, signal = null) {
-  if (!pipelineOptIn()) throw Object.assign(new Error('xkiro: pipeline use only (XKIRO_PIPELINE=1 not set)'), { status: 403 });
+  if (!pipelineOptIn() && !learnerWindowOpen()) throw Object.assign(new Error('xkiro: pipeline use only (XKIRO_PIPELINE=1 not set)'), { status: 403 });
   const free = await verifiedFree(body.model);
   const granted = !free && grantAllows(body.model, body.max_tokens);
   if (!free && !granted) {
@@ -238,10 +247,15 @@ const xkiro = {
   outside: true,
   learnerData: false,
   isConfigured() { return !!KEY(); },
-  isEnabled() { return this.isConfigured() && pipelineOptIn() && (freeTokensToday() < DAILY_TOKENS() || Object.keys(GRANTS()).some((m) => grantAllows(m, 0))); },
+  isEnabled() {
+    return this.isConfigured()
+      && (pipelineOptIn() || learnerWindowOpen())
+      && (freeTokensToday() < DAILY_TOKENS() || Object.keys(GRANTS()).some((m) => grantAllows(m, 0)));
+  },
   status() {
     const grants = Object.fromEntries(Object.entries(GRANTS()).map(([m, cap]) => [m, { used: grantTokensUsed(m), cap, refused: grantLocked.has(m) }]));
-    const reason = !this.isConfigured() ? 'no xKiro key' : !pipelineOptIn() ? 'pipeline only (XKIRO_PIPELINE=1 not set)' : null;
+    const reason = !this.isConfigured() ? 'no xKiro key'
+      : !pipelineOptIn() && !learnerWindowOpen() ? 'pipeline only (XKIRO_PIPELINE=1 not set)' : null;
     return { configured: this.isConfigured(), available: this.isEnabled(), reason, pipeline: pipelineOptIn(), free_tokens_today: freeTokensToday(), daily_cap: DAILY_TOKENS(), grants, catalog: catalog.error || (catalog.at ? 'ok' : 'not yet') };
   },
   costCents() { return 0; },
@@ -301,4 +315,4 @@ const xkiro = {
 
 function _reset() { catalog = { at: 0, map: new Map(), error: null }; resting.clear(); grantLocked.clear(); }
 
-module.exports = { xkiro, isFreeEntry, verifiedFree, refreshCatalog, tokensToday, freeTokensToday, grantTokensUsed, GRANTS, _setFetch, _reset };
+module.exports = { xkiro, isFreeEntry, verifiedFree, refreshCatalog, tokensToday, freeTokensToday, grantTokensUsed, GRANTS, learnerWindowOpen, _setFetch, _reset };

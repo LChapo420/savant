@@ -340,6 +340,7 @@ App.mount(async () => {
           : `<p class="small muted">You have not taken the learning-style questionnaire.</p>
              <a class="btn btn-sm btn-primary" href="/style-quiz?next=/profile">Take it now</a>`}
         ${profile.took_style_quiz ? '<a class="btn btn-sm" style="margin-top:10px" href="/style-quiz?next=/profile">Retake it</a>' : ''}
+        <a class="btn btn-sm" style="margin-top:10px" href="/baseline?next=/profile">Go deeper on how you learn</a>
       </div>
       <div class="card">
         <div class="card-title">${window.icon('trending-up')}What your sessions showed</div>
@@ -376,6 +377,9 @@ App.mount(async () => {
     <div class="card" id="goals-card">
       <p class="small muted">What you want from each subject or grade. It shapes how long a placement is and how lessons and practice are set up to start with; how you do as you go keeps adjusting it.</p>
     </div>
+
+    <h2 class="section-title">${window.icon('edit')}How long to remember</h2>
+    <div class="card" id="retention-goals-card"></div>
 
     <h2 class="section-title">${window.icon('edit')}Your details report</h2>
     <div class="card">
@@ -600,6 +604,7 @@ App.mount(async () => {
   } catch { /* the card is optional */ }
 
   if (window.GoalPicker) window.GoalPicker.list(document.getElementById('goals-card'));
+  if (window.RetentionGoal) window.RetentionGoal.list(document.getElementById('retention-goals-card'));
 
   const masteryHost = document.getElementById('mastery');
   for (const enrollment of progress.enrollments) {

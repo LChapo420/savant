@@ -1464,6 +1464,12 @@ async function playSession(user, session, items, ceiling) {
     topicLesson.check_questions.every((c) => !topicLesson.sections.some(
       (s) => s.example && s.example.startsWith(c.prompt))),
     topicLesson.check_questions.map((c) => c.prompt.slice(0, 40)));
+  // The hole that check had (2 Nov): itemKey is prompt + answer + options, so the same wording with another answer passed as "a new question".
+  // The lesson now hands the examples' wordings to the draw (bank.stemKey); this pins the rule itself, with no draw, so it cannot move the random stream.
+  const stemBank = require('../content/bank');
+  check('one wording is one stem whatever its answer, while the items stay two',
+    stemBank.stemKey({ prompt: 'Which word starts with t?', answer: 'toe' }) === stemBank.stemKey({ prompt: ' Which word starts with t? ', answer: 'tiger' })
+    && stemBank.itemKey({ prompt: 'Which word starts with t?', answer: 'toe' }) !== stemBank.itemKey({ prompt: 'Which word starts with t?', answer: 'tiger' }));
 
   // ── role routing ─────────────────────────────────────────────────────────
   // Which vendor answers which kind of work, and what catches it when that one

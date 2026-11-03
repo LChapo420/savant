@@ -2460,7 +2460,7 @@ body:has(.player .player-head) .study-row { min-height: 40px; padding-block: 2px
 .cal-ev { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 6px; }
 .cal-tag { display: inline-block; max-width: 100%; padding: 2px 6px; border: 1px solid var(--ink-2); border-radius: var(--r-xs); color: var(--ink); font-size: var(--t-meta); line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cal-ev.is-upcoming .cal-tag, .cal-tag.is-dashed { border-style: dashed; border-color: var(--control); color: var(--ink-2); }
-.cal-ev.is-missed .cal-tag, .cal-ev.is-empty .cal-tag, .cal-ev.is-none .cal-tag, .cal-ev.is-skipped .cal-tag, .cal-ev.is-stopped .cal-tag { border-color: var(--line-strong); color: var(--ink-3); }
+.cal-ev.is-missed .cal-tag, .cal-ev.is-goal .cal-tag, .cal-ev.is-empty .cal-tag, .cal-ev.is-none .cal-tag, .cal-ev.is-skipped .cal-tag, .cal-ev.is-stopped .cal-tag { border-color: var(--line-strong); color: var(--ink-3); }
 .cal-ev.is-due .cal-tag, .cal-ev.is-today .cal-tag { border-color: var(--ink); background: var(--ink); color: var(--page); }
 .cal-ev svg.mark, .cal-legend svg.mark { width: 18px; height: 18px; }
 .cal-ev svg.mark-plain, .cal-legend svg.mark-plain { color: var(--ink-2); }

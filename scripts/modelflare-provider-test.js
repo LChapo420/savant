@@ -1,5 +1,6 @@
 /** Focused tests for Modelflare's isolated placement provider. */
 process.env.MODELFLARE_API_KEY = 'test-modelflare-key';
+process.env.MODELFLARE_ENABLED = '1';
 process.env.MODELFLARE_BASE_URL = 'https://modelflare.test/v1';
 process.env.MODELFLARE_MODEL_PLACEMENT = 'gpt-6.1-sol';
 process.env.AI_PROVIDER_PLACEMENT = 'modelflare';

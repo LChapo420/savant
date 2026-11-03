@@ -33,15 +33,16 @@ const BANK_DIR = path.join(__dirname, '..', 'content', 'unit-placement');
 /**
  * The modes inside a grade. Their clocks are what is left of each mode's whole
  * budget after the subject stage (services/adaptive-placement.js MODES): Quick
- * 14 + 6 = 20 minutes, Balanced 32 + 13 = 45, Accurate 57 + 25 = 82, leaving 8 for the earlier-grade gap scan.
+ * Quick 14 + 6 = 20 minutes (unchanged: a 5-minute Quick did not hold 90% within a grade), Balanced 14 + 6 = 20, Accurate 40 + 14 = 54, leaving 3 for
+ * the earlier-grade gap scan (the owner's limits of 2026-11-02 for Balanced and Accurate). Balanced was 32 + 13 and Accurate 57 + 25 (+ 8 for the gap scan).
  */
 const MODES = {
   quick: { max: 14, min: 6, sure: 0.85, minutes: 6 },
-  balanced: { max: 30, min: 10, sure: 0.95, minutes: 13 },
+  balanced: { max: 30, min: 10, sure: 0.95, minutes: 6 },
   // Up to 80: with five questions a unit, simulated Accurate walks average about
   // 69 questions and place 926 of 928 testers within a unit (the clock still
   // bounds it).
-  accurate: { max: 80, min: 16, sure: 0.995, minutes: 25 },
+  accurate: { max: 80, min: 16, sure: 0.995, minutes: 14 },
 };
 
 /**
@@ -100,14 +101,19 @@ function unitsFor(trackId, gradeId) {
   if (!grade || !Array.isArray(grade.units) || !grade.units.length) return null;
   if (grade.units.some((u) => !Array.isArray(u.questions) || !u.questions.length)) return null;
   const calibration = calibrationFor(trackId);
-  if (!calibration) return grade.units;
-  return grade.units.map((u) => ({
+  const units = !calibration ? grade.units.slice() : grade.units.map((u) => ({
     ...u,
     questions: u.questions.map((q) => {
       const at = calibration[adaptive.questionKey(q)];
       return Number.isFinite(at) ? { ...q, at } : q;
     }),
   }));
+  // A bank may carry the shape of its own walk (IQ: a cluster step is gentler than a unit's). Not enumerable, so the
+  // array stays a plain list to every caller; beliefOf reads it.
+  if (bank.shape && Number.isFinite(bank.shape.width) && Number.isFinite(bank.shape.reliable)) {
+    Object.defineProperty(units, 'shape', { value: { width: bank.shape.width, reliable: bank.shape.reliable, ...(Number.isFinite(bank.shape.round) ? { round: bank.shape.round } : {}) } });
+  }
+  return units;
 }
 
 /** Where a question sits, in units from the start of the grade: calibrated, or by the unit it was written for. */
@@ -157,7 +163,7 @@ function beliefOf(units, answered) {
     pos: pointOf(units[a.unit - 1].questions[a.slot], a.unit),
     guess: 1 / Math.max(2, (units[a.unit - 1].questions[a.slot] || units[a.unit - 1].questions[0]).choices.length),
     correct: !!a.correct,
-  })), UNIT_SHAPE);
+  })), units.shape || UNIT_SHAPE);
 }
 
 /**
@@ -223,7 +229,7 @@ function placedUnit(units, answered) {
   // is the compromise (about 72% and 53%), and within one unit either way; a
   // late start is covered by the quick check of the unit it skips.
   return {
-    unit: Math.max(1, Math.min(units.length, Math.floor(x + UNIT_ROUND) + 1)),
+    unit: Math.max(1, Math.min(units.length, Math.floor(x + (units.shape && Number.isFinite(units.shape.round) ? units.shape.round : UNIT_ROUND)) + 1)),
     sure: adaptive.massWithin(post, x - 1, x + 1),
   };
 }

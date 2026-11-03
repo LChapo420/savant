@@ -1,6 +1,6 @@
 /**
  * Catch-up for the subjects that have a unit bank (content/unit-placement/<track>.json):
- * math, english and reading. Spanish keeps its own adapter (services/spanish/catch-up.js);
+ * math, english, reading and iq (iq's units are clusters of a tier, about a ninth each). Spanish keeps its own adapter (services/spanish/catch-up.js);
  * both run on the shared state machine in services/catchup-engine.js.
  *
  * "Catch me up to grade N": the skills are the units of the grades below the target
@@ -25,7 +25,7 @@ const { createEngine, UNDECIDED } = require('./catchup-engine');
 
 const COLL = 'catchup_units';
 const VERSION = 1;
-const TRACKS = ['math', 'english', 'reading'];
+const TRACKS = ['math', 'english', 'reading', 'iq'];
 // A skill whose bank has TOLERANT_BANK or more questions gets the slip-tolerant check: a first miss never sends it to
 // learn (a learner who knows a skill still slips, about 3% of answers in the sim), it is asked again, up to 5 questions
 // for the check and 2 fresh ones for the re-check. A skill with a smaller bank (at least MIN_QUESTIONS) keeps the plain

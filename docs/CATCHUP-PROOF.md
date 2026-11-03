@@ -46,8 +46,35 @@ Every design choice that claims to help learning, with the mechanism it rests on
 | reading | 3.0% | few | 36 | 95.6% (43/45) | 0.3% | 227 | 1089 |
 | reading | 3.0% | many | 36 | 98.2% (216/220) | 1.9% | 660 | 1089 |
 | reading | 3.0% | all | 36 | 98.4% (425/432) | n/a | 1167 | 1089 |
+| iq | 0.0% | none | 27 | n/a (0/0) | 0.0% | 81 | 8283 |
+| iq | 0.0% | few | 27 | 100.0% (38/38) | 0.0% | 1063 | 8283 |
+| iq | 0.0% | many | 27 | 96.9% (158/163) | 0.0% | 4101 | 8283 |
+| iq | 0.0% | all | 27 | 97.5% (316/324) | n/a | 8162 | 8283 |
+| iq | 3.0% | none | 27 | n/a (0/0) | 0.3% | 117 | 8283 |
+| iq | 3.0% | few | 27 | 96.6% (28/29) | 1.0% | 878 | 8283 |
+| iq | 3.0% | many | 27 | 97.4% (149/153) | 0.6% | 3921 | 8283 |
+| iq | 3.0% | all | 27 | 97.8% (317/324) | n/a | 8172 | 8283 |
 
 Work = check questions + levels taught; linear = every level below the target. A check question counts as a whole level (overstates catch-up cost). In the "all" scenario the check is pure overhead, so no saving is claimed there.
 
 **Slip-tolerant check (C3b):** before it, at a 3% slip about 9% of the skills a learner knew were still taught (the shared belief sends a skill to learn after one miss). A skill whose unit bank has 7 or more questions is now checked slip-tolerantly (services/catchup-units.js tolerant): a first miss never sends it to learn, it is asked again (up to 5 questions for the check, 2 kept fresh for the re-check). Banks were extended from 5 to 7 questions a unit for math grades 1-12 and english and reading grades 1-8 (all three subjects' skills in this sim's lookback window; counts and the second-model checks in curriculum-build/content-gap/catchup-*-report.json); a skill with a shorter bank keeps the plain check, so the tolerant share grows with the content and never ahead of it. The suite holds the 5% bar at both slips (GATED_SLIPS), and scripts/catchup-units-test.js fails if a covered unit loses its seventh question. Gaps found stay at 95% or above. The cost is a few more check questions for a learner who slips once.
 <!-- sim:end -->
+
+<!-- spanish-sim:start -->
+
+## Spanish, every grade (scripts/spanish-catchup-sim.js, seed 20261102, 8 learners per target and row, targets grades 6, 9, 14, 22; SIMULATED learners)
+
+The catch-up now has questions for every unit of every grade (the unit placement bank, content/unit-placement/spanish.json, each question re-solved blind by a second model),
+not only grades 3-4. Skills are the curriculum's own units (7 to 16 per grade); the lookback is every grade below the target. "Work" counts a check question as a whole level, as above.
+Hours: the catch-up's taught blocks plus 26 s a check question, against every unit of every grade below the target.
+
+| Subject | Slip | Scenario | Skills (mean) | Gaps found | Known skills taught | Work (catch-up) | Work (linear) | Hours (catch-up) | Hours (linear) |
+|---|---|---|---|---|---|---|---|---|---|
+| spanish | 0.0% | none | 137 | n/a | 0.0% | 411 | 1856 | 3.0 | 220.2 |
+| spanish | 0.0% | few | 137 | 98.2% (445 planted) | 0.0% | 483 | 1856 | 13.0 | 220.2 |
+| spanish | 0.0% | many | 137 | 98.2% (2167 planted) | 0.0% | 758 | 1856 | 51.7 | 220.2 |
+| spanish | 0.0% | all | 137 | 98.1% (4384 planted) | n/a | 1118 | 1856 | 101.7 | 220.2 |
+| spanish | 3.0% | none | 137 | n/a | 8.7% | 483 | 1856 | 11.8 | 220.2 |
+| spanish | 3.0% | few | 137 | 98.6% (414 planted) | 7.6% | 533 | 1856 | 19.3 | 220.2 |
+| spanish | 3.0% | many | 137 | 98.5% (2200 planted) | 9.0% | 803 | 1856 | 57.3 | 220.2 |
+| spanish | 3.0% | all | 137 | 98.3% (4384 planted) | n/a | 1117 | 1856 | 101.8 | 220.2 |

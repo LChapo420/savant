@@ -14,7 +14,8 @@ const lane = { chain: Promise.resolve(), lastCallAt: 0 };
 const MIN_GAP_MS = Number(process.env.MODELFLARE_MIN_GAP_MS || 0);
 
 function isConfigured() {
-  return !!process.env.MODELFLARE_API_KEY;
+  // Owner banned Modelflare on 2026-11-03 because its credits are nearly gone.
+  return !!process.env.MODELFLARE_API_KEY && process.env.MODELFLARE_ENABLED === '1';
 }
 
 function isEnabled(role = 'placement') {

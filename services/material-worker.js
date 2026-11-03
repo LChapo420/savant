@@ -3,8 +3,10 @@
  * which enforces the time and memory limit. Gets { kind, data } over IPC and answers once.
  */
 const P = require('./material-parsers');
+const F = require('./material-formats');
 
-const PARSER = { pdf: P.fromPdf, pptx: P.fromPptx, docx: P.fromDocx, odt: P.fromOdt, epub: P.fromEpub, xlsx: P.fromXlsx, rtf: P.fromRtf, html: P.fromHtmlFile };
+const PARSER = { pdf: P.fromPdf, pptx: P.fromPptx, docx: P.fromDocx, odt: P.fromOdt, epub: P.fromEpub, xlsx: P.fromXlsx, rtf: P.fromRtf, html: P.fromHtmlFile,
+  ipynb: (b) => F.fromIpynb(b), subtitles: (b) => F.fromSubtitles(b), latex: (b) => F.fromLatex(b), doc: (b) => F.fromDoc(b), odp: (b) => F.fromOdp(b), ods: (b) => F.fromOds(b) };
 
 process.once('message', async (msg) => {
   let out;

@@ -2,8 +2,10 @@
  * The write-ahead: lessons never keep a learner waiting (owner's decision,
  * 2026-10-25; WRITE_AHEAD, on by default; =off restores prefetchAhead as it was).
  *
- * The level the learner stands on and the next WRITE_AHEAD_LEVELS (3) are kept
- * written ahead, each with its check:
+ * The level the learner stands on and the next WRITE_AHEAD_LEVELS (normally 3)
+ * are kept written ahead. The horizon can rise as high as WRITE_AHEAD_MAX (10)
+ * so writing stays ahead at twice the learner's observed finishing pace; every
+ * level is kept with its check:
  *
  *   position 0   the level they stand on (the jump target after a jump): written
  *                first, on the free check so it can be served as soon as that
@@ -28,12 +30,16 @@
  * pre-built in bulk: only ahead of where each learner is.
  *
  * Every trigger is fire-and-forget. Work is queued, best first (the level the
- * learner stands on before anything ahead), de-duplicated by the level's plan key
+ * learner stands on before anything ahead, then the enrollment with the higher
+ * measured pace), de-duplicated by the level's plan key
  * (the same key as block-levels' in-flight map, so a request and a write-ahead
  * never write one level twice), and capped per account (WRITE_AHEAD_PER_USER, 2)
  * and in all (WRITE_AHEAD_GLOBAL, 4): the free models rate-limit. The provider
  * order is the app's own (NVIDIA first; never a paid OpenRouter model).
  * A level whose write failed is tried again later, with a growing pause.
+ *
+ * Re-tailoring rides the same queue: when a tailored level's learner profile has
+ * drifted enough, a separate job replaces that level with a newly tailored one.
  */
 const curriculum = require('../config/curriculum');
 
@@ -74,8 +80,84 @@ const running = new Map(); // plan key -> job
 const runningFor = new Map(); // account id -> jobs running
 const failures = new Map(); // plan key -> { n, at }
 const events = []; // the last 300, for tests and ops
+const triggeredEnrollments = new Map(); // enrollment id -> { enrollmentId, levelsPerHour, ahead }
 let seq = 0;
 let idleWaiters = [];
+
+/**
+ * Measure the learner's demonstrated pace for one enrollment. Only sessions
+ * that both started and ended in the last seven days count; the level count
+ * is the session's own count when present, otherwise its level span. Active
+ * time gives every session at least one minute so a very short burst does not
+ * exaggerate the rate. One session is too little evidence, so two are required.
+ */
+function paceFor(enrollment) {
+  // eslint-disable-next-line global-require
+  const db = require('../config/db');
+  const asTimestamp = (value) => {
+    if (value instanceof Date) return value.getTime();
+    if (typeof value === 'number') return value;
+    if (typeof value === 'string' && value.trim() !== '') {
+      const numeric = Number(value);
+      if (Number.isFinite(numeric)) return numeric;
+    }
+    const parsed = Date.parse(value);
+    return Number.isFinite(parsed) ? parsed : Number.NaN;
+  };
+  const now = Date.now();
+  const cutoff = now - 7 * 24 * 60 * 60 * 1000;
+  const rows = db.find('sessions', (row) => {
+    const endedAt = asTimestamp(row.ended_at);
+    const startedAt = asTimestamp(row.started_at);
+    return row.enrollment_id === enrollment.id
+      && Number.isFinite(startedAt)
+      && Number.isFinite(endedAt)
+      && endedAt >= cutoff
+      && endedAt <= now;
+  });
+  if (rows.length < 2) return { levelsPerHour: 0, sessions: rows.length };
+
+  let levels = 0;
+  let activeMs = 0;
+  for (const row of rows) {
+    const endedAt = asTimestamp(row.ended_at);
+    const startedAt = asTimestamp(row.started_at);
+    levels += typeof row.levels === 'number'
+      ? row.levels
+      : Math.max(0, (row.end_level || 0) - (row.start_level || 0));
+    activeMs += Math.max(60000, endedAt - startedAt);
+  }
+  return { levelsPerHour: levels / (activeMs / 3.6e6), sessions: rows.length };
+}
+
+/**
+ * Estimate write time from the slow tail rather than the average. The
+ * nearest-rank p90 of the last 30 completed writes that reported a duration
+ * keeps one unusually slow run from distorting the estimate. Five samples are
+ * the minimum; until then, use the conservative four-minute default.
+ */
+function writeMinutes() {
+  const samples = events
+    .filter((event) => event.type === 'done' && event.ok && typeof event.ms === 'number' && Number.isFinite(event.ms))
+    .slice(-30)
+    .map((event) => event.ms / 60000);
+  if (samples.length < 5) return 4;
+  samples.sort((a, b) => a - b);
+  return samples[Math.ceil(samples.length * 0.9) - 1];
+}
+
+/**
+ * Choose how many levels this enrollment must keep ahead. The configured
+ * baseline remains in force when pace is unknown, while a measured pace raises
+ * the horizon to cover twice the writing time needed for the learner's rate.
+ * WRITE_AHEAD_MAX keeps that adaptive horizon bounded.
+ */
+function aheadFor(enrollment, pace = paceFor(enrollment)) {
+  return Math.min(
+    num('WRITE_AHEAD_MAX', 10, 3, 20),
+    Math.max(aheadCount(), Math.ceil(2 * pace.levelsPerHour * writeMinutes() / 60) + 1),
+  );
+}
 
 function note(event) {
   events.push({ at: Date.now(), ...event });
@@ -92,6 +174,7 @@ function planFor({ user, enrollment, grade }) {
   const bl = blockLevels();
   const tailored = bl.tailorsFor(user);
   const from = enrollment.current_level || 1;
+  const horizon = aheadFor(enrollment);
   // "Levels" are the ones that have to be written: lesson and retention levels.
   // A practice level is the ordinary session, served at once from the bank, so
   // the path is read on (WRITE_AHEAD_SCAN, 40 levels at most) to the next ones
@@ -105,7 +188,7 @@ function planFor({ user, enrollment, grade }) {
     const kind = bl.kindFor(grade, level);
     const here = level === from;
     if (kind === 'lesson' || kind === 'retention') {
-      if (!here && ahead >= aheadCount()) break;
+      if (!here && ahead >= horizon) break;
       const position = here ? 0 : ++ahead;
       if (!bl.visibleTo(user)) continue;
       const tier = position === 0 ? 'open' : position <= sonnetCount() ? 'sonnet' : 'free';
@@ -113,7 +196,7 @@ function planFor({ user, enrollment, grade }) {
     } else if (kind === 'checkpoint' && tailored) {
       // The tailored checkpoint prefetch, as prefetchAhead did, for a checkpoint
       // reached before the last written level ahead.
-      if (!here && ahead >= aheadCount()) break;
+      if (!here && ahead >= horizon) break;
       steps.push({ level, position: here ? 0 : ahead + 1, kind, tier: null, tailored });
     }
   }
@@ -132,9 +215,24 @@ function trigger({ user, enrollment, grade, reason = null }) {
     if (!g || enrollment.status === 'graduated' || enrollment.status === 'placement_pending') return [];
     if (enrollment.user_id && user.id && enrollment.user_id !== user.id) return [];
     if (!bl.aiReady() || !bl.mayGenerate(user)) return [];
+    const pace = paceFor(enrollment);
+    const ahead = aheadFor(enrollment, pace);
+    // A nearer test date is written first (services/retention-goal.js); no test date sorts last, so forever changes nothing.
+    const testDays = testDaysOf(user.id, enrollment);
     const steps = planFor({ user, enrollment, grade: g });
-    const where = { trackId: enrollment.track_id, gradeId: enrollment.grade_id };
+    const trackId = enrollment.track_id;
+    const gradeId = enrollment.grade_id;
+    const where = { trackId, gradeId };
     const wanted = new Set();
+
+    // Keep the last 20 enrollments in trigger order for operational status.
+    triggeredEnrollments.delete(enrollment.id);
+    triggeredEnrollments.set(enrollment.id, {
+      enrollmentId: enrollment.id, levelsPerHour: pace.levelsPerHour, ahead,
+    });
+    if (triggeredEnrollments.size > 20) {
+      triggeredEnrollments.delete(triggeredEnrollments.keys().next().value);
+    }
     for (const step of steps) {
       if (step.kind === 'checkpoint') {
         // eslint-disable-next-line global-require
@@ -143,7 +241,20 @@ function trigger({ user, enrollment, grade, reason = null }) {
       }
       const key = bl.planKey(step.tailored ? user.id : null, where.trackId, where.gradeId, step.level);
       wanted.add(key);
-      enqueue({ user, step, key, enrollmentId: enrollment.id, reason, ...where });
+      enqueue({ user, step, key, enrollmentId: enrollment.id, levelsPerHour: pace.levelsPerHour, testDays, reason, ...where });
+      if (!step.tailored) continue;
+      const due = bl.retailorDue({ userId: user.id, trackId, gradeId, level: step.level });
+      if (!due) continue;
+      const retailorKey = `${key}:retailor`;
+      wanted.add(retailorKey);
+      if (running.has(retailorKey) || queue.some((job) => job.key === retailorKey)) continue;
+      if (queue.length >= MAX_QUEUE) continue;
+      queue.push({
+        key: retailorKey, kind: 'retailor', user, userId: user.id, enrollmentId: enrollment.id,
+        levelsPerHour: pace.levelsPerHour, testDays, reason, trackId, gradeId, level: step.level,
+        tailored: step.tailored, tier: step.tier, priority: step.position + 0.5, seq: seq++,
+      });
+      note({ type: 'queued', key: retailorKey, kind: 'retailor', level: step.level });
     }
     // Only ahead of where the learner is: queued work for this enrollment that is
     // no longer ahead of them (they jumped, or moved on) is dropped.
@@ -163,7 +274,7 @@ function trigger({ user, enrollment, grade, reason = null }) {
   }
 }
 
-/** Write ahead on every enrollment the dashboard shows that the learner is working on, most recent first (WRITE_AHEAD_ENROLLMENTS, 2). */
+/** Write ahead on every enrollment the dashboard shows that the learner is working on, most recent first (WRITE_AHEAD_ENROLLMENTS, 4: every subject of the four, so the next level loads rather than generates whichever subject is opened). */
 function triggerForUser({ user, reason = 'dashboard' }) {
   try {
     if (!on() || !user) return;
@@ -171,14 +282,24 @@ function triggerForUser({ user, reason = 'dashboard' }) {
     const db = require('../config/db');
     const rows = db.find('enrollments', (e) => e.user_id === user.id && e.status !== 'graduated' && e.status !== 'placement_pending')
       .sort((a, b) => String(b.updated_at || b.created_at || '').localeCompare(String(a.updated_at || a.created_at || '')))
-      .slice(0, num('WRITE_AHEAD_ENROLLMENTS', 2, 0, 20));
+      .slice(0, num('WRITE_AHEAD_ENROLLMENTS', 4, 0, 20));
     for (const enrollment of rows) trigger({ user, enrollment, reason });
   } catch (err) {
     console.warn(`write-ahead: ${err.message}`);
   }
 }
 
-function enqueue({ user, step, key, enrollmentId, reason, trackId, gradeId }) {
+/** Days to the learner's test in this subject (null: none set, or the test has passed). */
+function testDaysOf(userId, enrollment) {
+  try {
+    // eslint-disable-next-line global-require
+    const eff = require('./retention-goal').forEnrollment(userId, enrollment);
+    return eff.status === 'date' ? eff.days_left : null;
+  } catch { return null; }
+}
+const soonest = (job) => (Number.isFinite(job.testDays) ? job.testDays : 1e9);
+
+function enqueue({ user, step, key, enrollmentId, levelsPerHour, testDays = null, reason, trackId, gradeId }) {
   const bl = blockLevels();
   const owner = step.tailored ? user.id : null;
   const plan = bl.findPlan({ userId: owner, trackId, gradeId, level: step.level });
@@ -209,14 +330,14 @@ function enqueue({ user, step, key, enrollmentId, reason, trackId, gradeId }) {
   }
   if (queue.length >= MAX_QUEUE) return;
   queue.push({
-    key, kind, user, userId: user.id, enrollmentId, reason, trackId, gradeId,
+    key, kind, user, userId: user.id, enrollmentId, levelsPerHour, testDays, reason, trackId, gradeId,
     level: step.level, tailored: step.tailored, tier: step.tier, priority: step.position, seq: seq++,
   });
   note({ type: 'queued', key, kind, tier: step.tier, level: step.level });
 }
 
 function pump() {
-  queue.sort((a, b) => a.priority - b.priority || a.seq - b.seq);
+  queue.sort((a, b) => a.priority - b.priority || soonest(a) - soonest(b) || (b.levelsPerHour || 0) - (a.levelsPerHour || 0) || a.seq - b.seq);
   for (let i = 0; i < queue.length && running.size < globalCap();) {
     const job = queue[i];
     if ((runningFor.get(job.userId) || 0) >= perUserCap() || running.has(job.key)) { i++; continue; }
@@ -231,16 +352,22 @@ function pump() {
 }
 
 function start(job) {
+  const startedAt = Date.now();
   const bl = blockLevels();
   running.set(job.key, job);
   runningFor.set(job.userId, (runningFor.get(job.userId) || 0) + 1);
   note({ type: 'start', key: job.key, kind: job.kind, tier: job.tier });
   const where = { userId: job.userId, trackId: job.trackId, gradeId: job.gradeId, level: job.level, tailored: job.tailored };
-  const work = job.kind === 'upgrade'
-    ? Promise.resolve(bl.findPlan({ ...where, userId: job.tailored ? job.userId : null })).then((p) => (p ? bl.upgrade(p) : null))
+  let work;
+  if (job.kind === 'upgrade') {
+    work = Promise.resolve(bl.findPlan({ ...where, userId: job.tailored ? job.userId : null })).then((p) => (p ? bl.upgrade(p) : null));
+  } else if (job.kind === 'retailor') {
+    work = bl.retailor({ userId: job.userId, trackId: job.trackId, gradeId: job.gradeId, level: job.level });
+  } else {
     // The level stood on is written on the free check (so it can be served at
     // once) and Sonnet-checked after, as an upgrade below.
-    : bl.ensure({ ...where, tier: job.tier === 'open' ? 'free' : job.tier });
+    work = bl.ensure({ ...where, tier: job.tier === 'open' ? 'free' : job.tier });
+  }
   Promise.resolve(work)
     .then((plan) => {
       if (job.kind === 'write') {
@@ -250,14 +377,27 @@ function start(job) {
           failures.set(job.key, { n: before ? before.n + 1 : 1, at: Date.now() });
         }
       }
-      note({ type: 'done', key: job.key, kind: job.kind, tier: job.tier, ok: !!plan, check_tier: plan ? plan.check_tier || null : null });
+      const done = {
+        type: 'done',
+        key: job.key,
+        kind: job.kind,
+        ok: !!plan,
+        ms: Date.now() - startedAt,
+      };
+      if (job.kind !== 'retailor') {
+        done.tier = job.tier;
+        done.check_tier = plan ? plan.check_tier || null : null;
+      }
+      note(done);
       // Its Sonnet check, when it is the level stood on or the next one.
       if (job.kind === 'write' && plan && job.tier !== 'free' && bl.sonnetPending(plan)) {
         queue.push({ ...job, kind: 'upgrade', seq: seq++ });
         note({ type: 'queued', key: job.key, kind: 'upgrade', tier: job.tier, level: job.level });
       }
     })
-    .catch((err) => { note({ type: 'error', key: job.key, error: err.message }); })
+    .catch((err) => {
+      note({ type: 'error', key: job.key, error: err.message, ms: Date.now() - startedAt });
+    })
     .finally(() => {
       running.delete(job.key);
       const n = (runningFor.get(job.userId) || 1) - 1;
@@ -279,17 +419,20 @@ function status() {
     sonnet: sonnetCount(),
     per_user: perUserCap(),
     global: globalCap(),
+    writeMinutes: writeMinutes(),
+    enrollments: [...triggeredEnrollments.values()],
     queued: queue.map((j) => ({ key: j.key, kind: j.kind, tier: j.tier, priority: j.priority })),
     running: [...running.values()].map((j) => ({ key: j.key, kind: j.kind, tier: j.tier })),
     failures: [...failures].map(([key, f]) => ({ key, ...f })),
   };
 }
 
-/** Forget everything queued and every recorded failure (tests). Running work is left to finish. */
+/** Forget queued work, recorded failures, event history, and trigger history (tests). Running work is left to finish. */
 function reset() {
   queue.length = 0;
   failures.clear();
   events.length = 0;
+  triggeredEnrollments.clear();
 }
 
-module.exports = { trigger, triggerForUser, planFor, idle, status, reset, events };
+module.exports = { trigger, triggerForUser, planFor, idle, status, reset, events, paceFor, writeMinutes, aheadFor, testDaysOf };

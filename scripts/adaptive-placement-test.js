@@ -190,7 +190,7 @@ console.log('\n"I don\'t know" inside a grade (every subject with a unit bank)')
         // Stopped after one or two answers, both "I don't know".
         for (const k of [1, 2]) {
           const few = [];
-          for (let i = 0; i < k; i++) few.push({ ...unitPlacement.nextQuestion(track, gradeId, mode, few), correct: false });
+          for (let i = 0; i < k; i++) { const nq = unitPlacement.nextQuestion(track, gradeId, mode, few); if (!nq) break; few.push({ ...nq, correct: false }); }
           const u = unitPlacement.score(track, gradeId, few).unit;
           if (u > thin.unit) thin = { unit: u, gradeId, mode, k };
         }
@@ -230,6 +230,25 @@ console.log('\n"I don\'t know" inside a grade (every subject with a unit bank)')
       check(`${track} subject walk: ${stopAfter === 1 ? 'one' : 'all'} "I don't know" recommends the first grade`, rec.index === 0, rec.index);
     }
   }
+}
+
+console.log('\nthe clock, and short questions first');
+{
+  const MIN = 60000;
+  const q = adaptive.MODES.quick;
+  const min = adaptive.limits('quick', 20).min;
+  check('before the clock runs out nothing ends the walk', !adaptive.clockEnded('quick', 20, 100, q.minutes * MIN - 1, q.minutes * MIN));
+  check('after it, a walk with its minimum answers ends', adaptive.clockEnded('quick', 20, min, q.minutes * MIN, q.minutes * MIN));
+  check('after it, a walk short of its minimum goes on (a learner who stepped away is not placed on a handful of answers)', !adaptive.clockEnded('quick', 20, 4, q.minutes * MIN * 1.1, q.minutes * MIN));
+  check('but only up to 1.25 times the clock, and only with 8 answers in', adaptive.clockEnded('quick', 20, adaptive.HARD_FLOOR, q.minutes * MIN * adaptive.HARD_STOP, q.minutes * MIN) && !adaptive.clockEnded('quick', 20, adaptive.HARD_FLOOR - 1, q.minutes * MIN * 2, q.minutes * MIN));
+  const blocks = [
+    { grade: 0, part: 'b0', idx: [0], pos: 3.0, sec: 60 },
+    { grade: 0, part: 'b1', idx: [1], pos: 3.2, sec: 12 },
+    { grade: 0, part: 'b2', idx: [2], pos: 8, sec: 5 },
+  ];
+  check('the plain walk takes the nearest question', adaptive.nextBlock(blocks, [], 3.0).part === 'b0');
+  check('short-first takes the quick question nearly as near, never a far one', adaptive.nextBlock(blocks, [], 3.0, { fast: true }).part === 'b1');
+  check('with no estimate on any block short-first picks what the plain walk picks', adaptive.nextBlock(blocks.map(({ sec, ...b }) => b), [], 3.0, { fast: true }).part === 'b0');
 }
 
 db.flush();

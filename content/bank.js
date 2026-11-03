@@ -181,6 +181,12 @@ function itemKey(item) {
   return parts.join('||');
 }
 
+const STEM_PREFIX = 'stem||';
+/** The key that blocks an item's exact wording, for generateMany's `extraAvoid`. */
+function stemKey(item) {
+  return item ? `${STEM_PREFIX}${String(item.prompt || '').trim()}` : '';
+}
+
 /**
  * Generate items for a plan of { skillId, difficulty } entries, skipping repeats.
  *
@@ -207,16 +213,23 @@ function itemKey(item) {
 function generateMany(plan, seenShapes, only, extraAvoid) {
   const avoid = extraAvoid instanceof Set ? new Set(extraAvoid) : new Set();
   const shapes = seenShapes instanceof Set ? seenShapes : new Set();
+  // A key built by stemKey() in `extraAvoid` blocks every item that asks that exact wording, whatever its
+  // answer or options. itemKey alone let "Which word starts with the letter t?" through a second time
+  // with a different answer, which is a worked example repeated as its own check (the self-test failure
+  // of 2 Nov). Such a draw gets more attempts, since the wording is what it must not repeat.
+  const stemAvoided = [...avoid].some((k) => String(k).startsWith(STEM_PREFIX));
+  const attempts = stemAvoided ? 40 : 8;
+  const blocked = (it) => avoid.has(itemKey(it)) || avoid.has(stemKey(it));
   const out = [];
   for (const entry of plan) {
     let item = null;
-    for (let attempt = 0; attempt < 8; attempt++) {
+    for (let attempt = 0; attempt < attempts; attempt++) {
       if (only) {
         const candidate = only(makeRng(`${entry.skillId}:${entry.difficulty}:${Date.now()}:${out.length}:${attempt}:${Math.random()}`),
           clampDifficulty(entry.difficulty), { avoid, seenShapes: shapes, ...(Number.isFinite(entry.school) ? { school: entry.school } : {}) });
         const normalized = normalize(candidate, entry.skillId, clampDifficulty(entry.difficulty), 'pinned');
         item = normalized;
-        if (!avoid.has(itemKey(normalized)) && !holdout.isBlocked(normalized)) break;
+        if (!blocked(normalized) && !holdout.isBlocked(normalized)) break;
         continue;
       }
       const candidate = generate({
@@ -228,7 +241,7 @@ function generateMany(plan, seenShapes, only, extraAvoid) {
         school: entry.school,
       });
       item = candidate;
-      if (!avoid.has(itemKey(candidate))) break;
+      if (!blocked(candidate)) break;
     }
     avoid.add(itemKey(item));
     shapes.add(shapeKey(item));
@@ -237,4 +250,4 @@ function generateMany(plan, seenShapes, only, extraAvoid) {
   return out;
 }
 
-module.exports = { generate, generateMany, itemKey, shapeKey, GENERATORS, missingSkills };
+module.exports = { generate, generateMany, itemKey, stemKey, shapeKey, GENERATORS, missingSkills };

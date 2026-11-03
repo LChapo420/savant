@@ -1,4 +1,4 @@
-/* "Catch me up to grade N" for math, english and reading (services/catchup-units.js):
+/* "Catch me up to grade N" for math, english, reading and IQ (services/catchup-units.js):
  * the target, what the check found missing, progress, and when the next review is due. */
 App.mount(async () => {
   const user = await App.currentUser({ require: true });

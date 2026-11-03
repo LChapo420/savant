@@ -173,7 +173,11 @@ async function write({ userId, enrollment, grade, level, attempt }) {
 
   const where = { trackId: enrollment.track_id, gradeId: enrollment.grade_id, level };
   const context = blockLevels.levelContext(enrollment.track_id, enrollment.grade_id, level);
-  const learner = blockLevels.learnerText(userId, where, { tailored: !!userId });
+  // Presentation only (services/block-adapt.js): answer format, explanation detail and tone, wording and setting from the learner's full spec; never skill, difficulty or hints. Empty for a learner with no spec.
+  // eslint-disable-next-line global-require
+  const blockAdapt = require('./block-adapt');
+  const adapt = blockAdapt.begin({ userId, where, kind: 'checkpoint', context });
+  const learner = `${blockLevels.learnerText(userId, where, { tailored: !!userId })}${adapt.checkpoint}`;
   const label = curriculum.CHECKPOINT_LABEL[kind] || 'checkpoint';
   const started = Date.now();
 
@@ -206,17 +210,25 @@ async function write({ userId, enrollment, grade, level, attempt }) {
       const e = entries[s.slot];
       return `slot ${s.slot}: skill ${e.skillId} (${curriculum.skillName(e.skillId)}), difficulty ${Math.round(e.difficulty)}, ${s.format}, style ${s.style}${s.context ? ` (${s.context})` : ''}`;
     }).join('\n');
-    batches.push(ai.structuredDetail({
+    const callBatch = (note) => ai.structuredDetail({
       role: 'blocks',
       task: 'block_fill',
       system: FILL_SYSTEM,
-      user: `${label} at level ${level}.\n${context.text}\n\n${learner}\n\nWRITE THESE SLOTS:\n${lines}\n\nAlready asked at this level, do not reuse:\n${avoid || '(none)'}`,
+      user: `${label} at level ${level}.\n${context.text}\n\n${learner}\n\nWRITE THESE SLOTS:\n${lines}\n\nAlready asked at this level, do not reuse:\n${avoid || '(none)'}${note ? `\n\n${note}` : ''}`,
       schema: ITEMS_SCHEMA,
       schemaName: 'submit_quiz_items',
       maxTokens: 24000,
       userId,
       lane: 'parallel',
-    }).catch(() => null));
+    });
+    // A tailored batch is checked once against the spec (no disliked setting, no profile showing, wording) and rewritten once if it broke it.
+    batches.push(blockAdapt.revise(adapt, {
+      generate: callBatch,
+      parts: (r) => ({ teach: [], checks: blockAdapt.textOf(readList(r && r.data && r.data.items).map((c) => (c && typeof c === 'object' ? { prompt: c.prompt, rationale: c.rationale } : null))) }),
+      topic: context.topic,
+      wordLimit: false,
+      interestNeed: 0,
+    }).then((run) => run.result).catch(() => null));
   }
   const replies = await Promise.all(batches);
 

@@ -32,6 +32,7 @@ const db = require('../../config/db');
 const curriculum = require('../../config/curriculum');
 const mastery = require('../mastery');
 const fit = require('./goal-fit');
+const specFit = require('./spec-fit');
 
 // Grades 3 and 4 (units-g3.js, units-g4.js) were written for the skill catch-up
 // (services/spanish/catch-up.js, scripts/spanish-catchup-content.js); a grade whose
@@ -49,6 +50,25 @@ const unitKey = (gradeId, unit) => `${gradeId}|${unit}`;
 const UNIT_BY_KEY = new Map(UNITS.map((u) => [unitKey(u.grade, u.unit), u]));
 const PHRASES = new Map();
 for (const u of UNITS) for (const p of u.phrases) PHRASES.set(p.id, { ...p, unit: u.unit, grade: u.grade });
+
+// Grades 5-57 are written one unit at a time, just ahead of the learner (services/spanish/unit-writer.js), and
+// only after the checks there (blind re-solve of every keyed item, native-speaker review). Stored units are
+// registered here at start-up and when one is written; a level whose unit is not stored goes to the ordinary session.
+const unitWriter = () => require('./unit-writer');
+function registerUnit(u) {
+  const key = unitKey(u.grade, u.unit);
+  if (UNIT_BY_KEY.has(key)) return false;
+  UNITS.push(u);
+  UNIT_BY_KEY.set(key, u);
+  for (const p of u.phrases) PHRASES.set(p.id, { ...p, unit: u.unit, grade: u.grade });
+  return true;
+}
+function loadWrittenUnits() { let n = 0; try { for (const u of unitWriter().load()) if (registerUnit(u)) n++; } catch (err) { console.warn(`spanish: written units not loaded (${err.message})`); } return n; }
+loadWrittenUnits();
+/** Write what the learner needs next (this level's unit, the next level's, the next unit near the end of one). Fire and forget. */
+function writeAhead(gradeId, level) {
+  try { unitWriter().ahead(gradeId, level).catch(() => {}); } catch { /* never in the learner's way */ }
+}
 
 // ── slots ──────────────────────────────────────────────────────────────────
 
@@ -458,15 +478,16 @@ function matchPairs(phrases, rand) {
  * matching the level's own topic first, ordered by the profile. Old: due
  * reviews first, then weak spots, then phrases met most recently.
  */
-function choosePhrases({ userId, units, row, profileId, slot, now, mixIn = [] }) {
+function choosePhrases({ userId, units, row, profileId, slot, now, mixIn = [], k = null }) {
   const reviewed = new Map(reviewRows(userId).map((r) => [r.pid, r]));
   const unitPhrases = units.flatMap((u) => u.phrases.map((p) => PHRASES.get(p.id)));
   const topic = units.flatMap((u) => u.topics || []).find((t) => t.match.test(row.title));
   const unseen = unitPhrases.filter((p) => !reviewed.has(p.id));
   const onTopic = topic ? unseen.filter((p) => p.topic === topic.id) : [];
   const offTopic = unseen.filter((p) => !onTopic.includes(p));
-  const ordered = [...fit.orderPhrases(onTopic, profileId), ...fit.orderPhrases(offTopic, profileId)];
-  const nNew = ['review', 'checkpoint'].includes(slot) ? 0 : slot === 'listening' || slot === 'pronunciation' ? 3 : 4;
+  const ordered = [...specFit.orderByInterest(fit.orderPhrases(onTopic, profileId), k), ...specFit.orderByInterest(fit.orderPhrases(offTopic, profileId), k)];
+  // The learner's support level (scaffolding) sets how many new phrases arrive at once: more support, fewer.
+  const nNew = ['review', 'checkpoint'].includes(slot) ? 0 : Math.max(2, (slot === 'listening' || slot === 'pronunciation' ? 3 : 4) + (k && !k.neutral ? k.newDelta : 0));
   let fresh = ordered.slice(0, nNew);
   // A unit whose phrases are all met already still needs something to work on.
   const q = queueFor(userId, now);
@@ -480,9 +501,9 @@ function choosePhrases({ userId, units, row, profileId, slot, now, mixIn = [] })
   return { fresh, old: old.slice(0, 10), unitPhrases, due: new Set(q.due), weak: new Set(q.weak) };
 }
 
-function buildLessonItems({ userId, units, row, profileId, slot, seed, now, mixIn = [] }) {
+function buildLessonItems({ userId, units, row, profileId, slot, seed, now, mixIn = [], k = null }) {
   const rand = rng(seed);
-  const { fresh, old, unitPhrases, due, weak } = choosePhrases({ userId, units, row, profileId, slot, now, mixIn });
+  const { fresh, old, unitPhrases, due, weak } = choosePhrases({ userId, units, row, profileId, slot, now, mixIn, k });
   // Distractors come from this grade's units so far plus everything in this unit.
   const pool = [...new Map([...unitPhrases, ...old, ...fresh].map((p) => [p.id, p])).values()];
   const gradeUnits = UNITS.filter((u) => u.grade === units[0].grade);
@@ -498,7 +519,9 @@ function buildLessonItems({ userId, units, row, profileId, slot, seed, now, mixI
     counters[which] += 1;
     return p;
   };
-  const steps = fit.recipe(profileId, slot === 'checkpoint' ? 'review' : slot);
+  // The learner's own spec reshapes the recipe (services/spanish/spec-fit.js); a default spec leaves it as written.
+  const recipe = fit.recipe(profileId, slot === 'checkpoint' ? 'review' : slot);
+  const steps = slot === 'checkpoint' ? recipe : specFit.reshape(recipe, k, slot, { chats: units.some((u) => (u.chats || []).length), reads: units.some((u) => (u.reads || []).length) });
   const introduced = new Set();
   for (const step of steps) {
     const [kind, use] = step.split(':');
@@ -607,26 +630,31 @@ function introLevel(unit, row, rand) {
   };
 }
 
-function sprintLevel(unit, userId, profileId) {
+function sprintLevel(unit, userId, profileId, k = null) {
   const phrases = fit.orderPhrases(unit.phrases, 'conversation').filter((p) => bareWords(p.es).length <= 5).slice(0, 9);
   const r1 = phrases.slice(0, 3).map((p, i) => ({ id: `f${i + 1}`, mode: 'repeat', es: p.es }));
   const r2 = phrases.slice(3, 6).map((p, i) => ({ id: `f${i + 4}`, mode: 'say', en: p.en[0], es: p.es, accepted: [p.es, ...(p.alt || [])] }));
   const r3 = phrases.slice(6, 9).map((p, i) => (p.art ? { id: `f${i + 7}`, mode: 'picture', art: p.art, es: p.es, accepted: [p.es, ...(p.alt || [])] } : { id: `f${i + 7}`, mode: 'say', en: p.en[0], es: p.es, accepted: [p.es, ...(p.alt || [])] }));
-  return { engine: 'fluency_sprint', rounds: [{ seconds: 8, prompts: r1 }, { seconds: 6, prompts: r2 }, { seconds: profileId === 'conversation' ? 5 : 4, prompts: r3 }].filter((r) => r.prompts.length) };
+  return { engine: 'fluency_sprint', rounds: [{ seconds: specFit.sprintSeconds(8, k), prompts: r1 }, { seconds: specFit.sprintSeconds(6, k), prompts: r2 }, { seconds: specFit.sprintSeconds(profileId === 'conversation' ? 5 : 4, k), prompts: r3 }].filter((r) => r.prompts.length) };
 }
 
-function conversationLevel(unit) {
-  return { engine: 'conversation_lab', cefr: 'Pre-A1', scenario: unit.convo };
+function conversationLevel(unit, k = null) {
+  // The partner's small talk can turn to the learner's interests (never their dislikes): services/spanish/ai-activities.js reads topics.
+  const topics = specFit.topicsFor(k);
+  return { engine: 'conversation_lab', cefr: 'Pre-A1', scenario: topics.like.length || topics.avoid.length ? { ...unit.convo, topics } : unit.convo };
 }
 
 /**
  * Build the level for this learner. Returns the full level (answers in it);
  * routes send publicLevel() of it.
  */
-function buildLevel({ userId, gradeId, level, seed, now = Date.now(), mixIn = [] }) {
+function buildLevel({ userId, gradeId, level, seed, now = Date.now(), mixIn = [], context = null, spec: givenSpec = null }) {
   const grade = gradeOf(gradeId);
   const row = rowAt(grade, level);
   if (!row) return null;
+  // The learner's spec (scorecard + context); tests and the simulations may pass one in.
+  const spec = givenSpec || specFit.specFor(userId, gradeId, row, context);
+  const k = specFit.knobs(spec);
   const profile = fit.profileFor(userId, gradeId);
   const pre = prewritten().get(`${gradeId}|${level}`);
   const slot = slotOf(row) || 'vocabulary';
@@ -646,10 +674,10 @@ function buildLevel({ userId, gradeId, level, seed, now = Date.now(), mixIn = []
     case 'story': case 'input': body = storyLevel(unit, row, slot); break;
     case 'listening_lab': body = listeningLabLevel(unit); break;
     case 'dictation': body = dictationLevel(unit, rand); break;
-    case 'conversation': body = conversationLevel(unit); break;
-    case 'sprint': body = sprintLevel(unit, userId, profile.id); break;
+    case 'conversation': body = conversationLevel(unit, k); break;
+    case 'sprint': body = sprintLevel(unit, userId, profile.id, k); break;
     default: {
-      const built = buildLessonItems({ userId, units, row, profileId: profile.id, slot, seed, now, mixIn });
+      const built = buildLessonItems({ userId, units, row, profileId: profile.id, slot, seed, now, mixIn, k });
       const reviewish = slot === 'review' || slot === 'checkpoint';
       body = {
         engine: 'lesson',
@@ -681,6 +709,7 @@ function pruneRuns(userId) {
  * the enrollment stands on (finishing it does not move the learner).
  */
 function startRun({ user, enrollment, level }) {
+  writeAhead(enrollment.grade_id, level);
   const attempt = db.find('es_path_runs', (r) => r.user_id === user.id && r.enrollment_id === enrollment.id && r.level === level).length + 1;
   const runId = `${RUN_PREFIX}${crypto.randomBytes(9).toString('hex')}`;
   // A catch-up block's lesson recycles phrases from the skills already caught up (services/spanish/catch-up.js).
@@ -881,6 +910,7 @@ function settleDeferred(enrollment) {
   if (!enrollment || enrollment.track_id !== 'spanish' || enrollment.status !== 'active') return enrollment;
   const grade = gradeOf(enrollment.grade_id);
   if (!grade) return enrollment;
+  writeAhead(enrollment.grade_id, enrollment.current_level);
   const to = fit.stepOverDeferred(enrollment, grade, enrollment.current_level);
   if (to === enrollment.current_level) return enrollment;
   db.update('enrollments', enrollment.id, { current_level: to, level_items: 0, goal_fit_moved: { from: enrollment.current_level, to, at: new Date().toISOString() } });
@@ -891,6 +921,7 @@ function settleDeferred(enrollment) {
 function pathFit(enrollment) {
   if (!enrollment || enrollment.track_id !== 'spanish') return null;
   const grade = gradeOf(enrollment.grade_id);
+  writeAhead(enrollment.grade_id, enrollment.current_level);
   const profile = fit.profileFor(enrollment.user_id, enrollment.grade_id);
   const deferred = fit.deferredLevels(grade, profile.id);
   return {
@@ -905,7 +936,7 @@ function pathFit(enrollment) {
 }
 
 module.exports = {
-  UNITS, PHRASES, SLOT_LABEL, BOX_HOURS, PASS,
+  UNITS, PHRASES, SLOT_LABEL, BOX_HOURS, PASS, registerUnit, loadWrittenUnits, writeAhead,
   slotOf, supports, buildLevel, startRun, runLevel, runRow, recordResult, finishRun, publicLevel, itemsOf,
   queueFor, noteReview, pathFit, settleDeferred, prewritten, resetPrewritten, isRunId, sameMeaning, gapOf, checkpointUnits,
 };

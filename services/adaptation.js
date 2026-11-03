@@ -42,6 +42,7 @@
  */
 const coverage = require('./coverage');
 const learningSpec = require('./learning-spec');
+const retentionGoal = require('./retention-goal');
 
 const DAY = coverage.DAY;
 
@@ -773,6 +774,12 @@ function dailyReview({ userId, enrollment, now = Date.now(), minutes: asked, rec
     if (!rec) return null;
     const { model, states } = rec.report;
     const k = knobs();
+    // The learner's retention goal for this subject (services/retention-goal.js): reviews stop after a test they chose to stop after,
+    // an objective is no longer reviewed once its goal's horizon has passed since it was proven, and a forgotten objective is
+    // re-taught for less time when the test is close. Forever (the default) changes nothing here.
+    const goalEff = enrollment ? retentionGoal.forEnrollment(userId, enrollment, now) : null;
+    if (!retentionGoal.reviewsWanted(goalEff)) return null;
+    const reteachMinutes = k.RETEACH_MINUTES * retentionGoal.reteachScale(goalEff);
     // Review timing is the learner's own (services/learning-spec.js): the recall target and spacing in the queue,
     // and a time budget that follows how long they can work at a stretch.
     const spec = learningSpec.buildSpec(userId, { trackId: enrollment ? enrollment.track_id : null, gradeId: enrollment ? enrollment.grade_id : null });
@@ -789,8 +796,9 @@ function dailyReview({ userId, enrollment, now = Date.now(), minutes: asked, rec
     let used = 0;
     let more = 0;
     for (const q of queue) {
+      if (goalEff && goalEff.status === 'horizon' && states[q.i].proven_at && now - states[q.i].proven_at > goalEff.days * DAY) continue;
       if (q.reason === 'reteach') {
-        reteach.push(objectiveRow(model, q.i, { reason: 'reteach', status: states[q.i].status, minutes: k.RETEACH_MINUTES }));
+        reteach.push(objectiveRow(model, q.i, { reason: 'reteach', status: states[q.i].status, minutes: reteachMinutes }));
         continue;
       }
       if (retrieve.length && used + k.ITEM_MINUTES > minutes + 1e-9) { more += 1; continue; }

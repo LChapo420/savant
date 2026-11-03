@@ -1,0 +1,2980 @@
+{
+ "note": "Fixes to the stored shared English Proficient game sets (services/game-fixes.js applies them once, idempotently, at start-up). From the 2 Nov 2026 re-audit; see curriculum-build/staged/content-fixes/english-games-reaudit/.",
+ "source": "english-games-reaudit-2026-11-02",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "rekeys": [
+  {
+   "level": 12,
+   "qid": "q42",
+   "from": 1,
+   "to": 3
+  },
+  {
+   "level": 11,
+   "qid": "q3",
+   "from": 2,
+   "to": 3
+  },
+  {
+   "level": 11,
+   "qid": "q47",
+   "from": 1,
+   "to": 3
+  },
+  {
+   "level": 11,
+   "qid": "q49",
+   "from": 0,
+   "to": 2
+  },
+  {
+   "level": 22,
+   "qid": "q50",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 24,
+   "qid": "q30",
+   "from": 2,
+   "to": 3
+  },
+  {
+   "level": 25,
+   "qid": "q31",
+   "from": 1,
+   "to": 0
+  },
+  {
+   "level": 31,
+   "qid": "q04",
+   "from": 3,
+   "to": 0
+  },
+  {
+   "level": 31,
+   "qid": "q38",
+   "from": 3,
+   "to": 1
+  },
+  {
+   "level": 31,
+   "qid": "q45",
+   "from": 1,
+   "to": 0
+  },
+  {
+   "level": 31,
+   "qid": "q36",
+   "from": 2,
+   "to": 3
+  },
+  {
+   "level": 31,
+   "qid": "q29",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 31,
+   "qid": "q46",
+   "from": 2,
+   "to": 1
+  },
+  {
+   "level": 27,
+   "qid": "q38",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 27,
+   "qid": "q36",
+   "from": 0,
+   "to": 1
+  },
+  {
+   "level": 33,
+   "qid": "q2",
+   "from": 1,
+   "to": 0
+  },
+  {
+   "level": 35,
+   "qid": "q23",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 37,
+   "qid": "q23",
+   "from": 3,
+   "to": 1
+  },
+  {
+   "level": 37,
+   "qid": "q41",
+   "from": 0,
+   "to": 1
+  },
+  {
+   "level": 36,
+   "qid": "q49",
+   "from": 1,
+   "to": 3
+  },
+  {
+   "level": 36,
+   "qid": "q41",
+   "from": 1,
+   "to": 3
+  },
+  {
+   "level": 36,
+   "qid": "q04",
+   "from": 3,
+   "to": 2
+  },
+  {
+   "level": 36,
+   "qid": "q02",
+   "from": 2,
+   "to": 0
+  },
+  {
+   "level": 32,
+   "qid": "q20",
+   "from": 3,
+   "to": 0
+  },
+  {
+   "level": 32,
+   "qid": "q29",
+   "from": 3,
+   "to": 0
+  },
+  {
+   "level": 32,
+   "qid": "q09",
+   "from": 2,
+   "to": 0
+  },
+  {
+   "level": 41,
+   "qid": "q39",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 41,
+   "qid": "q36",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 41,
+   "qid": "q22",
+   "from": 2,
+   "to": 0
+  },
+  {
+   "level": 41,
+   "qid": "q38",
+   "from": 2,
+   "to": 0
+  },
+  {
+   "level": 41,
+   "qid": "q46",
+   "from": 3,
+   "to": 2
+  },
+  {
+   "level": 46,
+   "qid": "q35",
+   "from": 3,
+   "to": 0
+  },
+  {
+   "level": 46,
+   "qid": "q30",
+   "from": 1,
+   "to": 0
+  },
+  {
+   "level": 46,
+   "qid": "q49",
+   "from": 2,
+   "to": 0
+  },
+  {
+   "level": 46,
+   "qid": "q34",
+   "from": 2,
+   "to": 0
+  },
+  {
+   "level": 46,
+   "qid": "q11",
+   "from": 2,
+   "to": 1
+  },
+  {
+   "level": 46,
+   "qid": "q22",
+   "from": 2,
+   "to": 1
+  },
+  {
+   "level": 53,
+   "qid": "q21",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 45,
+   "qid": "q22",
+   "from": 3,
+   "to": 2
+  },
+  {
+   "level": 57,
+   "qid": "q39",
+   "from": 3,
+   "to": 0
+  },
+  {
+   "level": 57,
+   "qid": "q24",
+   "from": 3,
+   "to": 0
+  },
+  {
+   "level": 58,
+   "qid": "q7",
+   "from": 3,
+   "to": 0
+  },
+  {
+   "level": 63,
+   "qid": "q32",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 65,
+   "qid": "q25",
+   "from": 2,
+   "to": 0
+  },
+  {
+   "level": 65,
+   "qid": "q17",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 69,
+   "qid": "q03",
+   "from": 2,
+   "to": 0
+  },
+  {
+   "level": 67,
+   "qid": "q17",
+   "from": 1,
+   "to": 0
+  },
+  {
+   "level": 67,
+   "qid": "q37",
+   "from": 1,
+   "to": 3
+  },
+  {
+   "level": 47,
+   "qid": "q02",
+   "from": 2,
+   "to": 1
+  },
+  {
+   "level": 47,
+   "qid": "q13",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 47,
+   "qid": "q15",
+   "from": 0,
+   "to": 1
+  },
+  {
+   "level": 47,
+   "qid": "q29",
+   "from": 1,
+   "to": 0
+  },
+  {
+   "level": 76,
+   "qid": "q27",
+   "from": 3,
+   "to": 2
+  },
+  {
+   "level": 77,
+   "qid": "q46",
+   "from": 0,
+   "to": 1
+  },
+  {
+   "level": 77,
+   "qid": "q09",
+   "from": 3,
+   "to": 2
+  },
+  {
+   "level": 83,
+   "qid": "ug32",
+   "from": 0,
+   "to": 3
+  },
+  {
+   "level": 83,
+   "qid": "ug2",
+   "from": 2,
+   "to": 1
+  },
+  {
+   "level": 83,
+   "qid": "ug28",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 83,
+   "qid": "ug35",
+   "from": 1,
+   "to": 3
+  },
+  {
+   "level": 83,
+   "qid": "ug46",
+   "from": 3,
+   "to": 0
+  },
+  {
+   "level": 83,
+   "qid": "ug13",
+   "from": 3,
+   "to": 1
+  },
+  {
+   "level": 83,
+   "qid": "ug38",
+   "from": 1,
+   "to": 0
+  },
+  {
+   "level": 83,
+   "qid": "ug37",
+   "from": 2,
+   "to": 3
+  },
+  {
+   "level": 79,
+   "qid": "q14",
+   "from": 2,
+   "to": 3
+  },
+  {
+   "level": 79,
+   "qid": "q45",
+   "from": 2,
+   "to": 3
+  },
+  {
+   "level": 84,
+   "qid": "u44",
+   "from": 0,
+   "to": 1
+  },
+  {
+   "level": 97,
+   "qid": "d43",
+   "from": 2,
+   "to": 1
+  },
+  {
+   "level": 97,
+   "qid": "d9",
+   "from": 1,
+   "to": 0
+  },
+  {
+   "level": 97,
+   "qid": "d29",
+   "from": 2,
+   "to": 3
+  },
+  {
+   "level": 98,
+   "qid": "q11",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 98,
+   "qid": "q17",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 98,
+   "qid": "q34",
+   "from": 0,
+   "to": 1
+  },
+  {
+   "level": 98,
+   "qid": "q18",
+   "from": 2,
+   "to": 3
+  },
+  {
+   "level": 98,
+   "qid": "q14",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 98,
+   "qid": "q50",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 86,
+   "qid": "q6",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 86,
+   "qid": "q21",
+   "from": 2,
+   "to": 1
+  },
+  {
+   "level": 86,
+   "qid": "q4",
+   "from": 3,
+   "to": 0
+  },
+  {
+   "level": 86,
+   "qid": "q46",
+   "from": 0,
+   "to": 2
+  },
+  {
+   "level": 86,
+   "qid": "q11",
+   "from": 2,
+   "to": 1
+  },
+  {
+   "level": 100,
+   "qid": "d40",
+   "from": 0,
+   "to": 2
+  },
+  {
+   "level": 100,
+   "qid": "d16",
+   "from": 2,
+   "to": 1
+  },
+  {
+   "level": 100,
+   "qid": "d9",
+   "from": 2,
+   "to": 3
+  },
+  {
+   "level": 99,
+   "qid": "q45",
+   "from": 0,
+   "to": 1
+  },
+  {
+   "level": 99,
+   "qid": "q2",
+   "from": 0,
+   "to": 1
+  },
+  {
+   "level": 99,
+   "qid": "q48",
+   "from": 3,
+   "to": 2
+  },
+  {
+   "level": 89,
+   "qid": "q27",
+   "from": 1,
+   "to": 0
+  },
+  {
+   "level": 89,
+   "qid": "q50",
+   "from": 2,
+   "to": 1
+  },
+  {
+   "level": 89,
+   "qid": "q30",
+   "from": 1,
+   "to": 2
+  },
+  {
+   "level": 89,
+   "qid": "q37",
+   "from": 0,
+   "to": 1
+  }
+ ],
+ "rewrites": [
+  {
+   "level": 12,
+   "qid": "q13",
+   "old_prompt": "In the sentence 'She finished the novel, and she lent it to me', the clause 'She finished the novel' is which type?",
+   "question": {
+    "id": "q13",
+    "prompt": "In the sentence 'Since the meeting started, several key points were discussed', the clause 'Since the meeting started' is which type?",
+    "choices": [
+     "Gerund phrase",
+     "Independent clause",
+     "Dependent clause",
+     "Prepositional phrase"
+    ],
+    "answerIndex": 2,
+    "explanation": "The clause 'Since the meeting started' begins with the subordinating conjunction 'Since' and cannot stand alone, so it is a dependent clause, matching the correct option.",
+    "difficulty": 3,
+    "skill": "Classifying clauses",
+    "topic": "Advanced Grammar Review"
+   }
+  },
+  {
+   "level": 23,
+   "qid": "q02",
+   "old_prompt": "Why does 'Because the roads iced over overnight, schools closed' work better as 'Because the roads iced over overnight, a full week of classes was suddenly cancelled, schools closed'? Wait — instead: a writer wants maximum suspense from these two facts: The roads iced over overnight. Schools closed. Which pattern should she choose, and why?",
+   "question": {
+    "id": "q02",
+    "prompt": "A writer wants maximum suspense from these two facts: The roads iced over overnight. Schools closed. Which sentence pattern should she choose, and why?",
+    "choices": [
+     "Because using a semicolon to join the two independent clauses creates a compound sentence that balances the ideas but offers no particular rhetorical advantage for suspense.",
+     "Because beginning with the main clause and ending with the subordinate clause piles detail on detail, making the sentence feel explanatory rather than dramatic.",
+     "Because starting with the subordinate clause (\"Because the roads iced over overnight\") and ending with the main clause (\"Schools closed\") creates a periodic sentence that saves the punch for the end, building suspense.",
+     "Because placing the main clause first and the subordinate clause after delivers the news immediately, which is the loose‑sentence style that reduces suspense."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (0) is correct because starting with the subordinate clause creates a periodic sentence that saves the punch for the end, heightening suspense.",
+    "difficulty": 6,
+    "skill": "Choosing a sentence pattern",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   }
+  },
+  {
+   "level": 11,
+   "qid": "q37",
+   "old_prompt": "What is missing in the fragment: Walking through the empty hallway after class.",
+   "question": {
+    "id": "q37",
+    "prompt": "What is missing in the fragment: Walking to the store?",
+    "choices": [
+     "Missing subject",
+     "Missing verb",
+     "Missing object",
+     "Missing conjunction"
+    ],
+    "answerIndex": 0,
+    "explanation": "Walking to the store lacks a subject, making it a fragment; therefore the missing element is the subject.",
+    "difficulty": 2,
+    "skill": "Identifying fragments",
+    "topic": "Advanced Grammar Review"
+   }
+  },
+  {
+   "level": 22,
+   "qid": "q40",
+   "old_prompt": "If it rains tomorrow, since we cannot reschedule the picnic. Fill in the blank: The problem with this group of words is ______.",
+   "question": {
+    "id": "q40",
+    "prompt": "During the storm. Fill in the blank: The problem with this group of words is ______.",
+    "choices": [
+     "Unbalanced parallel halves",
+     "Modifiers placed before the main clause",
+     "Two clauses joined by no punctuation",
+     "Missing subject and verb"
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct answer is 'Missing subject and verb' because the phrase 'During the storm' contains no subject and no main verb, making it a fragment.",
+    "difficulty": 2,
+    "skill": "Diagnosing fragments",
+    "topic": "Advanced Syntax and Sentence Craft"
+   }
+  },
+  {
+   "level": 27,
+   "qid": "q24",
+   "old_prompt": "When checking a sentence against a syntax rubric, the first question should be:",
+   "question": {
+    "id": "q24",
+    "prompt": "When applying a syntax rubric to assess a sentence, the writer should first consider whether the sentence's structure aligns with the intended emphasis and purpose.",
+    "choices": [
+     "Whether the sentence avoids any use of coordination",
+     "Whether the sentence's structure aligns with the intended emphasis and purpose",
+     "Whether the sentence adheres to traditional subject‑verb‑object order",
+     "Whether the sentence includes at least one dependent clause"
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option states that the writer should first check whether the sentence's structure aligns with the intended emphasis and purpose, which is the core criterion in an advanced syntax rubric.",
+    "difficulty": 8,
+    "skill": "Applying a rubric to syntax",
+    "topic": "Advanced Syntax and Sentence Craft"
+   }
+  },
+  {
+   "level": 35,
+   "qid": "q21",
+   "old_prompt": "Which expansion of The road stretched ahead is strongest for a descriptive passage, and why?",
+   "question": {
+    "id": "q21",
+    "prompt": "Which expansion of The wind howled is strongest for a suspenseful narrative, and why?",
+    "choices": [
+     "The wind howled, a low mournful sound that echoed through the empty valley, because a single strong image keeps a description focused.",
+     "The wind howled, a fierce gale that roared across the moor, because dramatic adjectives intensify the mood.",
+     "The wind howled loudly enough to shake the windows, because extreme volume startles the reader.",
+     "The wind howled, whistling through the cracks of the old house, gaining speed and dying away, because varying rhythm creates tension and release."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option 1 is correct because the wind’s changing pace—whistling through cracks, gaining speed, and dying away—creates a tension‑and‑release rhythm that sustains suspense.",
+    "difficulty": 6,
+    "skill": "Matching structure to purpose",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 33,
+   "qid": "q46",
+   "old_prompt": "Why is clause order considered a rhetorical choice rather than just a grammar rule?",
+   "question": {
+    "id": "q46",
+    "prompt": "When a writer joins two independent clauses with a semicolon rather than a comma and a coordinating conjunction, what effect does this have on the sentence's emphasis and rhythm?",
+    "choices": [
+     "It makes the sentence easier to read because the pause is shorter.",
+     "It removes all grammatical connection between the clauses, making the sentence confusing.",
+     "It creates a stronger pause that gives the second clause more emphasis.",
+     "It forces the reader to focus on the first clause, ignoring the second."
+    ],
+    "answerIndex": 2,
+    "explanation": "The semicolon creates a stronger pause that gives the second clause more emphasis, which is exactly what option B states.",
+    "difficulty": 6,
+    "skill": "Understanding emphasis and rhythm in combined sentences",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 36,
+   "qid": "q16",
+   "old_prompt": "In revising 'The museum displayed the painting,' a writer changes it to 'The painting was displayed by the museum.' What rhetorical effect justifies this passive construction?",
+   "question": {
+    "id": "q16",
+    "prompt": "In revising 'The manager approved the request,' a writer changes it to 'The request was approved by the manager.' What rhetorical effect justifies this passive construction?",
+    "choices": [
+     "it shifts focus onto the request and away from the manager, which can be the writer's real point",
+     "it emphasizes the manager as the doer of the action",
+     "it makes the action feel more immediate and vivid to readers",
+     "it shortens the sentence while keeping the original meaning intact"
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option, (3) it shifts focus onto the request and away from the manager, which can be the writer's real point, is correct because the passive construction promotes the object to subject position, allowing the writer to emphasize the receiver.",
+    "difficulty": 8,
+    "skill": "Choosing voice for emphasis",
+    "topic": "Revise a Weak Sentence - Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 36,
+   "qid": "q13",
+   "old_prompt": "When is a semicolon generally the best choice for joining two independent clauses?",
+   "question": {
+    "id": "q13",
+    "prompt": "In the sentence \"The storm raged outside the windows the room was pitch black,\" which punctuation mark would most effectively create a strong rhetorical link, indicating that the second clause explains or amplifies the first?",
+    "choices": [
+     "a comma, which creates a light pause but leaves the clauses feeling loosely connected",
+     "a period, which separates the clauses into two sentences and loses the immediate connection",
+     "a colon, which explicitly introduces an explanation or amplification of the preceding clause",
+     "a semicolon, which joins the clauses equally without highlighting the relationship"
+    ],
+    "answerIndex": 2,
+    "explanation": "A colon is the best choice because it signals that the second clause explains or amplifies the first, providing a strong rhetorical link.",
+    "difficulty": 7,
+    "skill": "Selecting punctuation for rhetorical effect",
+    "topic": "Revise a Weak Sentence - Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 32,
+   "qid": "q03",
+   "old_prompt": "Complete the guidance: Deliberate fragments are usually safest to use ______.",
+   "question": {
+    "id": "q03",
+    "prompt": "In which of the following situations is it generally considered acceptable to use a deliberate sentence fragment in academic writing?",
+    "choices": [
+     "in a lab report’s abstract, to save space",
+     "in a formal thesis statement, to emphasize a claim",
+     "in a business memo, to meet a word count",
+     "in a personal reflection essay, for stylistic effect"
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct answer is (1) because personal reflection essays are considered a genre where writers have more stylistic freedom, including the use of sentence fragments for effect, whereas the other contexts are formal writing situations where fragments are generally discouraged.",
+    "difficulty": 3,
+    "skill": "Judging when fragments are acceptable",
+    "topic": "Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 27,
+   "qid": "q30",
+   "old_prompt": "A student revises 'The town was flooded after the dam broke' into 'After the dam broke, and after years of warnings no one heeded, the town was flooded.' What emphasis shift has the student engineered?",
+   "question": {
+    "id": "q30",
+    "prompt": "A student revises 'The manager gave the bonus to the staff after the project's success' into 'After the project's success, the manager gave the bonus to the staff.' What emphasis shift has the student engineered?",
+    "choices": [
+     "She wanted to eliminate the causal link between success and the bonus",
+     "She wanted the climactic fact (the bonus) to appear later in the sentence, giving it greater prominence",
+     "She wanted to shift focus onto the project's success as the starting point of the sentence",
+     "She wanted to make the sentence sound more conversational by fronting a time clause"
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option is (1) 'She wanted to shift focus onto the project's success as the starting point of the sentence' because moving the time phrase to the beginning places the project's success in the topic position, thereby foregrounding it as the sentence's initial focus.",
+    "difficulty": 7,
+    "skill": "Analyzing emphasis through word order",
+    "topic": "Advanced Syntax and Sentence Craft"
+   }
+  },
+  {
+   "level": 24,
+   "qid": "q4",
+   "old_prompt": "Combine: The letter asked for money. The handwriting shook slightly. The envelope smelled faintly of smoke.",
+   "question": {
+    "id": "q4",
+    "prompt": "Combine: The doctor examined the patient. The patient had a high fever. The doctor wrote a prescription.",
+    "choices": [
+     "The doctor examined the patient, who had a high fever, and wrote a prescription.",
+     "The patient was examined by the doctor who had a high fever and wrote a prescription.",
+     "Having a high fever, the doctor examined the patient and wrote a prescription.",
+     "The doctor wrote a prescription for the patient, having a high fever, after examining the doctor."
+    ],
+    "answerIndex": 0,
+    "explanation": "Option (0) correctly embeds the detail 'who had a high fever' next to 'patient' and maintains the doctor's actions without a misplaced modifier.",
+    "difficulty": 5,
+    "skill": "Embedding details without misplaced modifiers",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   }
+  },
+  {
+   "level": 45,
+   "qid": "q2",
+   "old_prompt": "The library lent the book on Friday. Fix the shift: The book was lent on Friday, and it was returned by Monday.",
+   "question": {
+    "id": "q2",
+    "prompt": "The coach blew the whistle and the game was stopped. Fix the shift by choosing the correct verb form.",
+    "choices": [
+     "was stopped",
+     "has stopped",
+     "is stopping",
+     "stopped"
+    ],
+    "answerIndex": 3,
+    "explanation": "The option 'stopped' keeps the sentence in the active voice, matching 'blew' and thus fixes the voice shift.",
+    "difficulty": 5,
+    "skill": "Fixing voice shifts",
+    "topic": "Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 45,
+   "qid": "q24",
+   "old_prompt": "The essay earned a high score, and praise was given by the judge. What is the most direct fix?",
+   "question": {
+    "id": "q24",
+    "prompt": "The contractor finished the job, and the payment was processed by the accounting department. What is the most direct fix to eliminate the voice shift?",
+    "choices": [
+     "Combine the clauses into one sentence using a conjunction.",
+     "Remove the second clause.",
+     "Change the second clause to active voice.",
+     "Change the first clause to passive voice."
+    ],
+    "answerIndex": 2,
+    "explanation": "Changing the second clause to active voice eliminates the voice shift while preserving the original meaning, making it the most direct fix.",
+    "difficulty": 6,
+    "skill": "Fixing voice shifts",
+    "topic": "Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 41,
+   "qid": "q16",
+   "old_prompt": "What makes a shift in voice or mood acceptable rather than an error?",
+   "question": {
+    "id": "q16",
+    "prompt": "Which of the following indicates that a shift from active to passive voice is a deliberate choice rather than an error?",
+    "choices": [
+     "The subject of the sentence remains the same throughout.",
+     "The sentence contains a direct object that receives the action.",
+     "The writer introduces the shift with a phrase such as 'The results were analyzed,'",
+     "The passive construction is used at the very beginning of the paragraph."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option is the one stating that a shift is appropriate when the writer explicitly signals the change with a transitional phrase, because such a signal shows the shift is intentional rather than an error.",
+    "difficulty": 3,
+    "skill": "Judging deliberate versus inappropriate shifts",
+    "topic": "Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 66,
+   "qid": "q48",
+   "old_prompt": "Combine these with however: The storm knocked out the power. The flashlights were all missing batteries.",
+   "question": {
+    "id": "q48",
+    "prompt": "Combine these with therefore: The game was postponed. The fans left the stadium.",
+    "choices": [
+     "(0) The game was postponed, therefore the fans left the stadium.",
+     "(3) The game was postponed: therefore, the fans left the stadium.",
+     "(2) The game was postponed; therefore, the fans left the stadium.",
+     "(1) The game was postponed; therefore the fans left the stadium."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option is (2) The game was postponed; therefore, the fans left the stadium., which properly uses a semicolon before the transition word and a comma after it.",
+    "difficulty": 6,
+    "skill": "Semicolon with transition words",
+    "topic": "Punctuation for Effect"
+   }
+  },
+  {
+   "level": 54,
+   "qid": "q20",
+   "old_prompt": "A shift in voice or mood is inappropriate only when ___.",
+   "question": {
+    "id": "q20",
+    "prompt": "A shift in narrative voice from objective to subjective is inappropriate only when ___.",
+    "choices": [
+     "the author wants to convey the protagonist's inner thoughts",
+     "the story is written in the first person",
+     "the shift occurs without any contextual cue",
+     "the reader can easily follow the change"
+    ],
+    "answerIndex": 2,
+    "explanation": "The shift is inappropriate only when it occurs without any contextual cue, because such a sudden change disrupts the reader's expectations; the other options describe purposeful shifts or unrelated situations.",
+    "difficulty": 4,
+    "skill": "Recognizing inappropriate shifts",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 66,
+   "qid": "q31",
+   "old_prompt": "Combine these with consequently: The trail marker was gone. We hiked an extra hour.",
+   "question": {
+    "id": "q31",
+    "prompt": "Select the sentence that correctly uses a semicolon with the transition word therefore.",
+    "choices": [
+     "(0) The rain started unexpectedly; therefore we decided to stay indoors.",
+     "(2) The rain started unexpectedly, therefore, we decided to stay indoors.",
+     "(1) The rain started unexpectedly; therefore, we decided to stay indoors.",
+     "(3) The rain started unexpectedly: therefore, we decided to stay indoors."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (1) correctly uses a semicolon before 'therefore' followed by a comma, which is the standard punctuation for a transition word joining two independent clauses.",
+    "difficulty": 5,
+    "skill": "Semicolon with transition words",
+    "topic": "Punctuation for Effect"
+   }
+  },
+  {
+   "level": 32,
+   "qid": "q05",
+   "old_prompt": "Choose the completion: Readers get confused by ______.",
+   "question": {
+    "id": "q05",
+    "prompt": "Readers get confused by ______.",
+    "choices": [
+     "run-on sentences that join two or more independent clauses without proper punctuation",
+     "sentences that place a descriptive phrase next to the wrong noun",
+     "sentences that use a semicolon to join two independent clauses correctly",
+     "sentences that join two independent clauses with only a comma"
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct choice, 'run-on sentences that join two or more independent clauses without proper punctuation,' directly identifies the type of sentence that fuses independent clauses without punctuation, which is the core reason readers lose track of meaning.",
+    "difficulty": 3,
+    "skill": "Explaining why run-ons confuse readers",
+    "topic": "Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 47,
+   "qid": "q26",
+   "old_prompt": "Where should a student focus a rewrite in: Read the recipe carefully, and the cake was baked in an hour?",
+   "question": {
+    "id": "q26",
+    "prompt": "Where should a student focus a rewrite in: The coach demonstrates the play, and the team mimicked the moves?",
+    "choices": [
+     "second clause",
+     "conjunction",
+     "first clause",
+     "there is no shift"
+    ],
+    "answerIndex": 0,
+    "explanation": "The shift from present‑tense 'demonstrates' to past‑tense 'mimicked' occurs in the second clause, so focusing the rewrite there eliminates the shift.",
+    "difficulty": 7,
+    "skill": "Locating shift points",
+    "topic": "Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 84,
+   "qid": "u28",
+   "old_prompt": "Which sentence uses the correct word for a hot, dry region?",
+   "question": {
+    "id": "u28",
+    "prompt": "Which sentence uses disinterested correctly?",
+    "choices": [
+     "The magistrate remained disinterested while reviewing the evidence, ensuring an unbiased verdict.",
+     "He was disinterested in the lecture, so he checked his phone the whole time.",
+     "The disinterested crowd watched the play without reacting.",
+     "She claimed to be disinterested in the controversy, but later posted an angry comment."
+    ],
+    "answerIndex": 0,
+    "explanation": "Option 0 correctly uses disinterested to mean impartial, as in a judge reviewing evidence without bias.",
+    "difficulty": 3,
+    "skill": "Distinguishing commonly confused pairs",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 79,
+   "qid": "q26",
+   "old_prompt": "Why is a comma better than a dash in: She opened the door, and gasped?",
+   "question": {
+    "id": "q26",
+    "prompt": "In the sentence 'She wanted to stay but the rain began,' which punctuation mark would best convey a sharp break between the two clauses?",
+    "choices": [
+     "a comma, because the two items are close in rhythm and weight, so only a mild pause is called for.",
+     "an ellipsis, because the two items represent an omission, so a trailing off is needed.",
+     "a dash, because the two items are far apart in weight, so a sharp break will do.",
+     "a comma, because the two items repeat the same idea, so no pause at all is needed."
+    ],
+    "answerIndex": 2,
+    "explanation": "The dash is correct because the two items are far apart in weight, so a sharp break will do.",
+    "difficulty": 7,
+    "skill": "Weighing pause strength",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   }
+  },
+  {
+   "level": 84,
+   "qid": "u36",
+   "old_prompt": "What is a practical reason AP style omits the Oxford comma?",
+   "question": {
+    "id": "u36",
+    "prompt": "Which style guide uses lowercase 'internet'?",
+    "choices": [
+     "APA style: internet is capitalized",
+     "AP style: Internet is always capitalized",
+     "Chicago style: internet is lowercase",
+     "MLA style: internet is capitalized only at the beginning of a sentence"
+    ],
+    "answerIndex": 2,
+    "explanation": "Chicago style recommends lowercase 'internet', making it the correct choice among the options.",
+    "difficulty": 4,
+    "skill": "Comparing style guides",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 84,
+   "qid": "u9",
+   "old_prompt": "The best conclusion about the Oxford comma is that it...",
+   "question": {
+    "id": "u9",
+    "prompt": "Which style guide explicitly requires the use of the Oxford (serial) comma in a series of three or more items?",
+    "choices": [
+     "Chicago Manual of Style",
+     "Garner's Modern English Usage",
+     "AP Stylebook",
+     "MLA Handbook"
+    ],
+    "answerIndex": 0,
+    "explanation": "The Chicago Manual of Style explicitly requires the serial comma, whereas AP style omits it, making Chicago the correct choice.",
+    "difficulty": 2,
+    "skill": "Applying style guide reasoning",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 85,
+   "qid": "q43",
+   "old_prompt": "What does an ellipsis signal at the end of a quoted line?",
+   "question": {
+    "id": "q43",
+    "prompt": "Which punctuation mark should set off the introductory phrase \"After careful consideration\" in the sentence \"After careful consideration the committee approved the proposal\"?",
+    "choices": [
+     "a colon",
+     "a semicolon",
+     "a comma",
+     "a dash"
+    ],
+    "answerIndex": 2,
+    "explanation": "A comma is used to set off an introductory phrase that is not essential to the sentence's core meaning, making option (0) the correct choice.",
+    "difficulty": 4,
+    "skill": "Marking phrase breaks",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 88,
+   "qid": "q33",
+   "old_prompt": "What is the usual distinction between its and it's?",
+   "question": {
+    "id": "q33",
+    "prompt": "According to traditional usage guides, which statement correctly distinguishes between 'farther' and 'further'?",
+    "choices": [
+     "Farther is used for metaphorical distance; further is used for physical distance.",
+     "Farther and further are interchangeable in all contexts.",
+     "Farther is the plural form; further is the singular form.",
+     "Farther is used for physical distance; further is used for metaphorical distance."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first option correctly states that farther refers to physical distance while further is used for metaphorical or additional distance, matching the traditional distinction found in style guides.",
+    "difficulty": 6,
+    "skill": "Confused word pairs",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 88,
+   "qid": "q37",
+   "old_prompt": "A magazine adopts a house style guide primarily to:",
+   "question": {
+    "id": "q37",
+    "prompt": "A publishing house requires all its authors to follow its style guide primarily to:",
+    "choices": [
+     "To allow editors to impose their personal preferences on writers",
+     "To eliminate the need for proofreading entirely",
+     "To limit the length of submitted manuscripts",
+     "To guarantee that all publications use the same grammatical and formatting conventions"
+    ],
+    "answerIndex": 3,
+    "explanation": "The style guide's main purpose is to ensure consistent conventions across the publication, making option (1) correct.",
+    "difficulty": 5,
+    "skill": "Define style guide",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 88,
+   "qid": "q35",
+   "old_prompt": "Why was the split infinitive historically criticized?",
+   "question": {
+    "id": "q35",
+    "prompt": "Why was the word \"irregardless\" originally criticized by language authorities?",
+    "choices": [
+     "Because it was coined by a single author and never accepted",
+     "Because it violates the rule that adverbs must end in -ly",
+     "Because it was originally a legal term with a different meaning",
+     "Because it combines two negative prefixes, creating a logical contradiction"
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct option is (0) Because it combines two negative prefixes, creating a logical contradiction, which reflects the historical objection to \"irregardless\" as a double negative.",
+    "difficulty": 8,
+    "skill": "Understand rule origins",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 88,
+   "qid": "q1",
+   "old_prompt": "What is the main purpose of a style guide?",
+   "question": {
+    "id": "q1",
+    "prompt": "In publishing, what primary role does a style guide serve?",
+    "choices": [
+     "It provides a definitive list of correct grammar rules for all contexts.",
+     "It serves as a dictionary of rare words and their etymologies.",
+     "It outlines the legal penalties for plagiarism.",
+     "It standardizes choices such as capitalization, citation format, and punctuation within a publication."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option (B) correctly states that a style guide standardizes choices such as capitalization, citation format, and punctuation within a publication, which is its primary purpose.",
+    "difficulty": 5,
+    "skill": "Define style guide",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 88,
+   "qid": "q45",
+   "old_prompt": "Why might one guide place a period outside a quotation mark and another inside?",
+   "question": {
+    "id": "q45",
+    "prompt": "Which style guide typically requires the Oxford comma in a simple series?",
+    "choices": [
+     "The New York Times Manual of Style and Usage",
+     "The American Psychological Association Publication Manual",
+     "The Associated Press Stylebook",
+     "The Chicago Manual of Style"
+    ],
+    "answerIndex": 3,
+    "explanation": "The Chicago Manual of Style prescribes the use of the serial (Oxford) comma, making it the correct choice.",
+    "difficulty": 7,
+    "skill": "Compare style guides",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 88,
+   "qid": "q29",
+   "old_prompt": "A teacher requires MLA format for a research paper. What does this show about style guides in academic writing?",
+   "question": {
+    "id": "q29",
+    "prompt": "A publishing house requires its editors to follow the Chicago Manual of Style for documentation of sources in its journals. What does this requirement indicate about style guides in publishing?",
+    "choices": [
+     "(0) It guarantees that all articles will be accepted by peer‑reviewed journals",
+     "(1) It reflects the editorial conventions and expectations of the publishing house",
+     "(2) It is a legal requirement for all written work in the United States",
+     "(3) It removes the need for authors to cite their sources"
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option is (1) It reflects the editorial conventions and expectations of the publishing house, because style guides institutionalize the preferred practices of a particular community or publication.",
+    "difficulty": 7,
+    "skill": "Apply style guide decisions",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 88,
+   "qid": "q13",
+   "old_prompt": "Which statement reflects the lesson's core idea?",
+   "question": {
+    "id": "q13",
+    "prompt": "In dealing with disputed grammatical usage, which of the following best reflects the core principle discussed in the lesson?",
+    "choices": [
+     "(C) Disputed usage is resolved by consulting the oldest available style manual.",
+     "(B) Grammatical rules with disputed usage are objectively right or wrong regardless of opinion.",
+     "(A) The most authoritative style guide should always be followed without question.",
+     "(D) Disputed usage is settled by convention among language users, not by absolute error."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option (D) correctly states that disputed usage is settled by convention, not absolute error, which is the core principle of the lesson.",
+    "difficulty": 7,
+    "skill": "Understand core principle",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 88,
+   "qid": "q12",
+   "old_prompt": "Which style guide is most associated with newspaper and wire-service writing?",
+   "question": {
+    "id": "q12",
+    "prompt": "Which style guide is most commonly used for publishing books and scholarly articles in the humanities?",
+    "choices": [
+     "Chicago Manual of Style",
+     "Guardian style guide",
+     "MLA Handbook",
+     "AP Stylebook"
+    ],
+    "answerIndex": 0,
+    "explanation": "Chicago Manual of Style is the standard guide for publishing books and humanities scholarship, making it the correct choice.",
+    "difficulty": 8,
+    "skill": "Know style guide domains",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 88,
+   "qid": "q46",
+   "old_prompt": "A student essay must choose among disputed conventions. The most defensible plan is to:",
+   "question": {
+    "id": "q46",
+    "prompt": "When formatting the title of a book in the text of an APA paper, the writer should:",
+    "choices": [
+     "underline the title and capitalize all words",
+     "enclose the title in quotation marks and capitalize only the first word",
+     "italicize the title and capitalize major words (title case)",
+     "bold the title and use title case for all words"
+    ],
+    "answerIndex": 2,
+    "explanation": "APA style requires italicizing book titles and capitalizing major words (title case), making the first option the defensible choice.",
+    "difficulty": 7,
+    "skill": "Apply style guide decisions",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 87,
+   "qid": "q18",
+   "old_prompt": "Choose the correct word: Please ______ the papers on the desk.",
+   "question": {
+    "id": "q18",
+    "prompt": "Please choose the correct word to complete the sentence: The new evidence may ______ the jury's decision.",
+    "choices": [
+     "affect",
+     "effect",
+     "effected",
+     "affecting"
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct answer is 'affect' because the sentence requires a verb meaning 'to influence,' and 'affect' is the verb form, while 'effect' is typically a noun.",
+    "difficulty": 5,
+    "skill": "Confusing word pairs",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 88,
+   "qid": "q50",
+   "old_prompt": "A student uses a dash for a dramatic pause mid-sentence. The dash is an example of:",
+   "question": {
+    "id": "q50",
+    "prompt": "A writer uses a colon after a complete sentence to introduce a list of three items. The colon is an example of:",
+    "choices": [
+     "The colon correctly separates the complete sentence from the list, following standard punctuation conventions",
+     "The colon is unnecessary because a comma can also connect a sentence to a list",
+     "The colon mistakenly treats the list as a parenthetical aside",
+     "The colon is reserved for dialogue and not for narrative description"
+    ],
+    "answerIndex": 0,
+    "explanation": "The colon correctly separates the complete sentence from the list, following standard punctuation conventions, which matches the description in the question that the colon follows a complete sentence to introduce a list.",
+    "difficulty": 6,
+    "skill": "Apply style decisions",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 96,
+   "qid": "q14",
+   "old_prompt": "What does diction mean in writing?",
+   "question": {
+    "id": "q14",
+    "prompt": "Which of the following best defines effective diction in writing?",
+    "choices": [
+     "Using the biggest words possible to impress readers.",
+     "Avoiding all informal language, no matter the context.",
+     "Repeating the same word throughout a paragraph for emphasis.",
+     "Choosing words that fit the meaning, tone, and audience."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option 1, ‘Choosing words that fit the meaning, tone, and audience,’ correctly defines diction as purposeful word selection matching meaning, tone, and reader.",
+    "difficulty": 2,
+    "skill": "Diction defined",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 96,
+   "qid": "q22",
+   "old_prompt": "Choose the correct word: 'We bought ___ bottles of water for the trip.'",
+   "question": {
+    "id": "q22",
+    "prompt": "Choose the correct word: 'The cafeteria served ___ coffee today.'",
+    "choices": [
+     "fewer",
+     "altogether",
+     "entirely",
+     "less"
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct choice is 'less' because 'coffee' is an uncountable noun, and standard usage requires 'less' with mass nouns.",
+    "difficulty": 4,
+    "skill": "Fewer vs less",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 96,
+   "qid": "q5",
+   "old_prompt": "Which sentence uses the most precise diction?",
+   "question": {
+    "id": "q5",
+    "prompt": "Which sentence uses the most precise verb to describe cutting bread?",
+    "choices": [
+     "He stabbed the bread.",
+     "He spread the bread.",
+     "He cut the bread.",
+     "He sliced the bread."
+    ],
+    "answerIndex": 3,
+    "explanation": "\"He sliced the bread\" uses the more precise verb \"sliced\" rather than the more general \"cut\", making it the most precise diction.",
+    "difficulty": 3,
+    "skill": "Precision over vagueness",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 87,
+   "qid": "q41",
+   "old_prompt": "A guide says to use 'whether' when alternatives are implied. Which sentence follows that rule?",
+   "question": {
+    "id": "q41",
+    "prompt": "According to most style guides, which sentence correctly uses 'fewer' with a count noun and 'less' with a mass noun?",
+    "choices": [
+     "She has fewer money than before.",
+     "There are less than ten students in the class.",
+     "I have less apples than you.",
+     "He drank less water than the team."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option C 'He drank less water than the team' correctly uses 'less' with the mass noun 'water', following the style guide rule for mass nouns.",
+    "difficulty": 6,
+    "skill": "Applying a style guide",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 96,
+   "qid": "q45",
+   "old_prompt": "Which sentence reports a group project with precise verbs?",
+   "question": {
+    "id": "q45",
+    "prompt": "Which sentence uses precise verbs to describe a group project?",
+    "choices": [
+     "The team messed around with the project for a while.",
+     "The group sort of worked on it off and on.",
+     "The members kind of thought about the topic.",
+     "The teammates collaborated efficiently and completed the assignment on time."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option 0 uses precise verbs ('collaborated efficiently and completed') while the other options contain vague language ('messed around', 'sort of worked', 'kind of thought').",
+    "difficulty": 3,
+    "skill": "Replacing vague verbs",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 96,
+   "qid": "q24",
+   "old_prompt": "Choose the correct word: 'There was ___ noise in the library than expected.'",
+   "question": {
+    "id": "q24",
+    "prompt": "Choose the correct word: 'There were ___ bicycles parked outside the school than last year.'",
+    "choices": [
+     "few",
+     "little",
+     "fewer",
+     "less"
+    ],
+    "answerIndex": 2,
+    "explanation": "Fewer is correct because bicycles are countable nouns, and fewer is used with count nouns in comparative structures.",
+    "difficulty": 4,
+    "skill": "Fewer vs less",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 96,
+   "qid": "q8",
+   "old_prompt": "Which word has a negative connotation?",
+   "question": {
+    "id": "q8",
+    "prompt": "Which word has a positive connotation?",
+    "choices": [
+     "tedious",
+     "reluctant",
+     "sluggish",
+     "diligent"
+    ],
+    "answerIndex": 3,
+    "explanation": "Diligent describes someone who works hard and carefully, giving it a positive connotation, whereas the other words suggest weariness, unwillingness, or slowness.",
+    "difficulty": 4,
+    "skill": "Tone through word choice",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 96,
+   "qid": "q26",
+   "old_prompt": "A friend edits your essay and changes 'the grim puppy' to 'the tiny puppy.' What was wrong with grim?",
+   "question": {
+    "id": "q26",
+    "prompt": "A friend edits your story and changes 'the furious child' to 'the energetic child.' What was wrong with 'furious'?",
+    "choices": [
+     "The word is too long to fit the sentence smoothly.",
+     "The word's emotional coloring does not fit the sentence.",
+     "The word does not match the formal register of the sentence.",
+     "The word repeats a nearby word in the sentence."
+    ],
+    "answerIndex": 1,
+    "explanation": "The word's emotional coloring does not fit the sentence.",
+    "difficulty": 3,
+    "skill": "Editing for wrong tone",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 96,
+   "qid": "q31",
+   "old_prompt": "Which choice best matches a formal register for a note to a teacher's colleague?",
+   "question": {
+    "id": "q31",
+    "prompt": "Which of the following sentences would be most appropriate for a formal note to a school principal about missing a deadline?",
+    "choices": [
+     "Heads up: I couldn't make the deadline.",
+     "FYI, the deadline passed.",
+     "Please be advised that the assignment deadline has been missed.",
+     "Yo, missed the deadline, sorry."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (1) uses formal phrasing 'Please be advised that the assignment deadline has been missed,' which matches the respectful register expected when communicating with a principal, unlike the informal or semi‑informal tones of the other choices.",
+    "difficulty": 4,
+    "skill": "Audience and register",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 96,
+   "qid": "q20",
+   "old_prompt": "Choose the correct word: 'The new practice schedule will ___ the team's score.'",
+   "question": {
+    "id": "q20",
+    "prompt": "Choose the correct word: 'The new software update will ___ the computer's performance.'",
+    "choices": [
+     "effect",
+     "influence",
+     "improve",
+     "affect"
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct answer is affect because it is a verb meaning to influence, and the sentence structure requires a verb after 'will'.",
+    "difficulty": 4,
+    "skill": "Affect vs effect",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 100,
+   "qid": "d2",
+   "old_prompt": "A draft sentence praises a donor who is 'parsimonious' with her money. Which word would better match the intended positive tone?",
+   "question": {
+    "id": "d2",
+    "prompt": "A magazine profile lauds a scientist for her \"arrogant\" dedication to research. Which word would better match the intended positive tone of confident expertise?",
+    "choices": [
+     "confident",
+     "conceited",
+     "arrogant",
+     "haughty"
+    ],
+    "answerIndex": 0,
+    "explanation": "Confident conveys assured expertise without the negative connotation of arrogance, matching the positive tone.",
+    "difficulty": 8,
+    "skill": "Choosing tone-appropriate words",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 97,
+   "qid": "d3",
+   "old_prompt": "Which word has the most positive connotation for a low price?",
+   "question": {
+    "id": "d3",
+    "prompt": "Which word has the most positive connotation for someone who pays great attention to detail?",
+    "choices": [
+     "Pickiness",
+     "Careful",
+     "Fastidious",
+     "Meticulous"
+    ],
+    "answerIndex": 3,
+    "explanation": "\"Meticulous\" carries a positive connotation of thoroughness and careful work, while \"Pickiness\" and \"Fastidious\" can imply unreasonable fussiness, and \"Careful\" is neutral.",
+    "difficulty": 3,
+    "skill": "Connotation",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 6,
+   "qid": "q31",
+   "old_prompt": "What determines whether a source is credible?",
+   "question": {
+    "id": "q31",
+    "prompt": "When assessing the credibility of an online source for a research paper, which of the following is the most reliable sign?",
+    "choices": [
+     "The source provides a clear author name and credentials",
+     "The site is updated frequently with new content",
+     "The URL ends in .com",
+     "The webpage has many images and animations"
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option is the one stating the source provides a clear author name and credentials, because author expertise is a key factor in judging a source's credibility.",
+    "difficulty": 5,
+    "skill": "Judging credibility",
+    "topic": "Research Skills: Building a Question"
+   }
+  },
+  {
+   "level": 99,
+   "qid": "q25",
+   "old_prompt": "An essay should state a claim without arguing loudly. The most precise verb is that the essay ______ its claim.",
+   "question": {
+    "id": "q25",
+    "prompt": "In academic writing, which verb most precisely replaces 'states' when the writer wants to express a tentative finding? 'The researcher ______ that the results are inconclusive.'",
+    "choices": [
+     "suggests",
+     "insists",
+     "argues",
+     "claims"
+    ],
+    "answerIndex": 0,
+    "explanation": "The verb 'suggests' is the most precise because it conveys a cautious, tentative stance appropriate for uncertain findings, unlike the more assertive 'claims' or 'insists'.",
+    "difficulty": 8,
+    "skill": "Academic diction",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 99,
+   "qid": "q15",
+   "old_prompt": "For a school fire-drill announcement read over the loudspeaker, the most fitting register is",
+   "question": {
+    "id": "q15",
+    "prompt": "When notifying a job applicant that they have not been selected, which sentence best employs the appropriate professional register?",
+    "choices": [
+     "Sorry, we chose someone else.",
+     "We regret to inform you that we cannot offer you the position.",
+     "Your application will not be moving forward.",
+     "Thanks for applying; we went with other candidates."
+    ],
+    "answerIndex": 1,
+    "explanation": "Option (3) \\\"We regret to inform you that we cannot offer you the position\\\" is the standard, courteous way to deliver bad news in a professional context, matching the expected register for a job rejection notice.",
+    "difficulty": 7,
+    "skill": "Audience and register",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 99,
+   "qid": "q31",
+   "old_prompt": "Replace the vague verb precisely: Fans ______ around the stage after the show.",
+   "question": {
+    "id": "q31",
+    "prompt": "Replace the vague verb precisely: The wind ______ the leaves off the ground.",
+    "choices": [
+     "pushed",
+     "lifted",
+     "blew",
+     "pulled"
+    ],
+    "answerIndex": 2,
+    "explanation": "\"Blew\" is the standard verb for wind moving leaves, making it the precise replacement; the other options describe actions not typically associated with wind in this context.",
+    "difficulty": 7,
+    "skill": "Editing for precision",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 26,
+   "qid": "q34",
+   "old_prompt": "A student revises: Even though the two rivals were evenly matched, the crowd favored the home team, which was loud. Which pattern would serve a passage about two evenly matched teams best?",
+   "question": {
+    "id": "q34",
+    "prompt": "A student revises: Even though the two teams played evenly, the visitors won, which surprised the crowd. Which pattern would serve a passage about an upset victory best?",
+    "choices": [
+     "Periodic form, because suspense fits an upset",
+     "Cumulative form, because detail deepens the surprise",
+     "Antithesis, because it juxtaposes the expectation of an even match with the surprising victory, creating a sharp contrast that highlights the upset",
+     "Balance, because each side of the rivalry gets equal structural weight"
+    ],
+    "answerIndex": 2,
+    "explanation": "Antithesis is correct because it juxtaposes the expectation of an even match with the surprising victory, creating a sharp contrast that highlights the upset.",
+    "difficulty": 8,
+    "skill": "Choosing pattern deliberately",
+    "topic": "Revise a Weak Sentence - Advanced Syntax and Sentence Craft"
+   }
+  },
+  {
+   "level": 26,
+   "qid": "q15",
+   "old_prompt": "Which of these is a sentence fragment?",
+   "question": {
+    "id": "q15",
+    "prompt": "Which of the following is a sentence fragment?",
+    "choices": [
+     "The data, which the researchers analyzed thoroughly, confirmed the theory.",
+     "Running down the street, the child laughed.",
+     "The committee approved the new budget after a lengthy debate.",
+     "Because the experiment yielded unexpected results."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct choice, \\\"Because the experiment yielded unexpected results,\\\" is a dependent clause lacking a main verb, making it a sentence fragment.",
+    "difficulty": 8,
+    "skill": "Spotting the fragment",
+    "topic": "Revise a Weak Sentence - Advanced Syntax and Sentence Craft"
+   }
+  },
+  {
+   "level": 26,
+   "qid": "q18",
+   "old_prompt": "How does a writer create symmetry in a balanced sentence?",
+   "question": {
+    "id": "q18",
+    "prompt": "Which technique best creates structural symmetry in a balanced sentence?",
+    "choices": [
+     "Using a subordinating conjunction at the start of each clause",
+     "Placing the most important word at the end of each clause",
+     "Matching the grammatical structure and length of the two halves",
+     "Using contrasting adjectives in each half"
+    ],
+    "answerIndex": 2,
+    "explanation": "Matching the grammatical structure and length of the two halves creates symmetry because balanced sentences rely on parallel construction and comparable length.",
+    "difficulty": 8,
+    "skill": "Explaining symmetry",
+    "topic": "Revise a Weak Sentence - Advanced Syntax and Sentence Craft"
+   }
+  },
+  {
+   "level": 31,
+   "qid": "q09",
+   "old_prompt": "In a model essay, the writer closes with: \"We have waited long enough. Act.\" What is the grammatical structure of the final word sentence?",
+   "question": {
+    "id": "q09",
+    "prompt": "In a model essay, the writer closes with: \"Silence.\" What is the grammatical structure of the final word sentence?",
+    "choices": [
+     "(0) Rhetorical fragment, ending on the demand so it lands with force",
+     "(1) Cumulative sentence, adding detail after the main clause",
+     "(2) Balanced sentence, weighing two ideas against each other",
+     "(3) Periodic sentence, delaying the main clause until the end"
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence “Silence.” consists solely of a single word used for rhetorical effect, making it a rhetorical fragment, as stated in option (0).",
+    "difficulty": 3,
+    "skill": "Identifying rhetorical fragments in a model text",
+    "topic": "Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 26,
+   "qid": "q03",
+   "old_prompt": "A weak sentence reads: The diners noticed her quickly when she passed by the tables in a way that was not loud, and their voices were made lower by it. Which revision fixes the stacked adverbs while keeping the same facts?",
+   "question": {
+    "id": "q03",
+    "prompt": "A weak sentence reads: The players ran fast quickly across the field, and the crowd cheered loudly enthusiastically. Which revision fixes the stacked adverbs while keeping the same facts?",
+    "choices": [
+     "(2) The players ran across the field quickly, and the crowd cheered loudly while enthusiastically waving.",
+     "(1) The players ran fast quickly across the field, and the crowd cheered loudly enthusiastically.",
+     "(0) The players ran quickly across the field, and the crowd cheered loudly.",
+     "(3) The players ran quickly across the field, and the crowd cheered quickly loudly."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (0) places each adverb alone next to the verb it modifies, eliminating the stacked construction while preserving the original facts.",
+    "difficulty": 7,
+    "skill": "Revising stacked modifiers and vague adverbs",
+    "topic": "Activity 6 of 9: Revise a Weak Sentence"
+   }
+  },
+  {
+   "level": 31,
+   "qid": "q39",
+   "old_prompt": "Why do cumulative sentences work well in descriptive writing?",
+   "question": {
+    "id": "q39",
+    "prompt": "Which of the following best describes the main advantage of using a cumulative sentence in writing?",
+    "choices": [
+     "It front‑loads the main image so readers grasp it instantly",
+     "It lets each added phrase sharpen the picture of one subject",
+     "It puts the subject last so readers stay curious",
+     "It keeps all description at the same level of detail"
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct choice, 'It lets each added phrase sharpen the picture of one subject,' accurately describes how cumulative sentences accumulate modifying phrases to focus and refine the central subject.",
+    "difficulty": 3,
+    "skill": "Analyzing cumulative sentences",
+    "topic": "Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 31,
+   "qid": "q30",
+   "old_prompt": "A classmate marks every short sentence in a model text as an error. What did the classmate miss?",
+   "question": {
+    "id": "q30",
+    "prompt": "A classmate marks the standalone sentence \"Never!\" in a persuasive essay as a grammatical error. What did the classmate miss?",
+    "choices": [
+     "The sentence is an example of a cumulative construction that adds detail to the argument.",
+     "The sentence incorrectly shifts tense from the surrounding paragraph.",
+     "The sentence lacks a main verb, making it a sentence fragment that should be revised.",
+     "The sentence is a rhetorical fragment used for dramatic emphasis, which is acceptable in persuasive writing."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct option is (0) The sentence is a rhetorical fragment used for dramatic emphasis, which is acceptable in persuasive writing, so the reviewer misinterpreted a deliberate stylistic choice as an error.",
+    "difficulty": 3,
+    "skill": "Distinguishing rhetorical choice from error",
+    "topic": "Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 31,
+   "qid": "q15",
+   "old_prompt": "In formal writing, which structure should generally be avoided because it looks like an editing mistake?",
+   "question": {
+    "id": "q15",
+    "prompt": "In formal writing, which structure should generally be avoided because it can appear to be an editing mistake?",
+    "choices": [
+     "Balanced sentences",
+     "Parallel structure",
+     "Periodic sentences",
+     "Sentence fragments"
+    ],
+    "answerIndex": 3,
+    "explanation": "Sentence fragments are incomplete sentences and thus can look like a missing part, i.e., an editing mistake, whereas the other options are grammatically complete and standard.",
+    "difficulty": 2,
+    "skill": "Judging risky structures",
+    "topic": "Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 37,
+   "qid": "q31",
+   "old_prompt": "What makes the following two clauses balanced: Ask not what your school can do for you; ask what you can do for your school?",
+   "question": {
+    "id": "q31",
+    "prompt": "What makes the following two clauses balanced: \"The professor challenged the students; the students challenged the professor\"?",
+    "choices": [
+     "They use different subjects and verbs, creating variety that avoids monotony",
+     "They have the same subject‑verb structure and mirror each other, creating persuasive rhythm",
+     "They shift from third person to first person, drawing the reader into the argument",
+     "The semicolon joins two independent clauses without a coordinating conjunction"
+    ],
+    "answerIndex": 1,
+    "explanation": "Option (2) correctly identifies that the clauses share the same subject‑verb order and mirror each other, which creates the balanced, persuasive rhythm characteristic of mirrored structure.",
+    "difficulty": 8,
+    "skill": "Recognizing mirrored clause structure",
+    "topic": "Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 26,
+   "qid": "q25",
+   "old_prompt": "A weak sentence reads: The night market glowed at the far end of the lane where lanterns swung and vendors shouted loudly and brightly. What is the strongest craft issue in the original?",
+   "question": {
+    "id": "q25",
+    "prompt": "Identify the primary craft issue in the sentence: Walking to the store, the sun was shining brightly.",
+    "choices": [
+     "(2) The sentence lacks a main clause, resulting in a fragment.",
+     "(3) The adjective 'brightly' is misplaced and modifies 'shining' rather than 'sun.'",
+     "(0) The introductory phrase 'Walking to the store' incorrectly modifies 'the sun,' creating a dangling modifier.",
+     "(1) The verb 'was shining' is in the passive voice, making the sentence less vivid."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (0) correctly identifies the dangling modifier, because the participial phrase 'Walking to the store' logically refers to an implied person, not the sun.",
+    "difficulty": 8,
+    "skill": "Diagnosing weak modification",
+    "topic": "Revise a Weak Sentence - Advanced Syntax and Sentence Craft"
+   }
+  },
+  {
+   "level": 37,
+   "qid": "q12",
+   "old_prompt": "Two drafts exist: A) The city council ignored months of complaints. B) Months of complaints were ignored by the city council. What does switching between these demonstrate?",
+   "question": {
+    "id": "q12",
+    "prompt": "Two drafts exist: A) The manager approved the budget after the fiscal year ended. B) After the fiscal year ended, the manager approved the budget. What does switching between these demonstrate?",
+    "choices": [
+     "Shifting from a cumulative to a periodic sentence structure for emphasis",
+     "Combining two independent clauses with a semicolon",
+     "Changing active voice to passive voice",
+     "Fixing a misplaced modifier"
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct answer is (2) because moving the prepositional phrase to the front creates a periodic sentence that delays the main clause, thereby shifting emphasis to the condition preceding the action, which is exactly \"Shifting from a cumulative to a periodic sentence structure for emphasis\".",
+    "difficulty": 8,
+    "skill": "Analyzing how structure shifts emphasis",
+    "topic": "Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 26,
+   "qid": "q07",
+   "old_prompt": "A weak sentence reads: The iron gate groaned as it opened and at the same time the wooden gate made a creaking sound when it also opened. Which revision achieves balance?",
+   "question": {
+    "id": "q07",
+    "prompt": "A weak sentence reads: The old oak door creaked as it swung shut, and the glass panel made a tinkling sound when it also closed. Which revision achieves proper parallel balance?",
+    "choices": [
+     "The old oak door creaked as it swung shut, and the glass panel made a tinkling sound when it also closed.",
+     "Swinging shut, the old oak door creaked and the glass panel tinkled.",
+     "The old oak door creaked as it swung shut, and the glass panel tinkled as it closed.",
+     "Creaking and tinkling, the old oak door and the glass panel swung shut."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option 2 achieves parallel balance by matching the structure 'creaked as it swung shut' with 'tinkled as it closed', giving both clauses the same grammatical form.",
+    "difficulty": 8,
+    "skill": "Revising for parallel balance",
+    "topic": "Revise a Weak Sentence - Advanced Syntax and Sentence Craft"
+   }
+  },
+  {
+   "level": 43,
+   "qid": "q25",
+   "old_prompt": "Combine without an inappropriate voice shift: The detective solved the mystery. The police arrested the thief.",
+   "question": {
+    "id": "q25",
+    "prompt": "Combine without an inappropriate voice shift: The manager approved the proposal. The staff presented the report.",
+    "choices": [
+     "The proposal was approved by the manager, and the report was presented by the staff.",
+     "The manager approved the proposal, and the staff presented the report.",
+     "The manager approved the proposal, and the report was presented by the staff.",
+     "The proposal was approved by the manager, and the staff presented the report."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct choice is option 0, \"The manager approved the proposal, and the staff presented the report,\" because both clauses retain the active voice established in the original sentences, avoiding an inappropriate voice shift.",
+    "difficulty": 6,
+    "skill": "Combining sentences in consistent voice",
+    "topic": "Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 43,
+   "qid": "q50",
+   "old_prompt": "Why does an inappropriate voice shift confuse readers?",
+   "question": {
+    "id": "q50",
+    "prompt": "Why can an unexpected shift from declarative to interrogative mood within a paragraph confuse readers?",
+    "choices": [
+     "The change in mood signals a new speaker, which distracts the reader.",
+     "The shift from declarative to imperative misleads the reader about the intended action.",
+     "The interrogative mood is grammatically incorrect in narrative prose.",
+     "The reader expects a statement and may not recognize the shift in purpose, disrupting comprehension."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct answer is 'The reader expects a statement and may not recognize the shift in purpose, disrupting comprehension' because an abrupt mood shift without a cue forces the reader to reinterpret the sentence's intent, causing confusion.",
+    "difficulty": 6,
+    "skill": "Explaining why shifts confuse readers",
+    "topic": "Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 37,
+   "qid": "q41",
+   "old_prompt": "Which revision shows grammatical choice serving the reader: The museum closed early we missed the exhibit?",
+   "question": {
+    "id": "q41",
+    "prompt": "Which revision shows grammatical choice serving the reader: The bakery reduced prices the line grew longer?",
+    "choices": [
+     "Converting the run-on to two sentences separated by a period",
+     "Moving the second clause to the beginning of the sentence",
+     "Combining the clauses with because to show the causal link clearly",
+     "Inserting however after the first clause to signal contrast"
+    ],
+    "answerIndex": 2,
+    "explanation": "Combining the clauses with because explicitly identifies the price reduction as the cause of the longer line, making the writer’s intent clear to the reader.",
+    "difficulty": 7,
+    "skill": "Revising run-ons for reader clarity",
+    "topic": "Rhetorical Grammar"
+   }
+  },
+  {
+   "level": 43,
+   "qid": "q02",
+   "old_prompt": "Combine without an inappropriate mood shift: First, preheat the oven. Then mix the batter.",
+   "question": {
+    "id": "q02",
+    "prompt": "Combine without an inappropriate mood shift: Turn off the lights. Then leave the room.",
+    "choices": [
+     "Turn off the lights, and then the lights should be left.",
+     "Turning off the lights, and then leave the room.",
+     "Turn off the lights, and then leave the room.",
+     "The lights are turned off, and then leave the room."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option is \"Turn off the lights, and then leave the room,\" because both verbs remain in the imperative mood, avoiding an inappropriate shift.",
+    "difficulty": 5,
+    "skill": "Combining sentences in consistent mood",
+    "topic": "Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 43,
+   "qid": "q40",
+   "old_prompt": "Combine without an inappropriate voice shift: Scientists developed the vaccines. Clinics tested them.",
+   "question": {
+    "id": "q40",
+    "prompt": "Combine without an inappropriate voice shift: The manager approved the proposal. The committee reviewed it.",
+    "choices": [
+     "(2) The proposal was approved by the manager, and the committee reviewed it.",
+     "(1) The manager approved the proposal, and the committee reviewed it.",
+     "(0) The manager approved the proposal, and it was reviewed by the committee.",
+     "(3) The proposal was approved by the manager, and it was reviewed by the committee."
+    ],
+    "answerIndex": 1,
+    "explanation": "Option (1) maintains active voice in both clauses, matching the original sentences' voices.",
+    "difficulty": 6,
+    "skill": "Combining sentences in consistent voice",
+    "topic": "Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 44,
+   "qid": "q10",
+   "old_prompt": "Combine: (1) The artist painted the mural. (2) Everyone admired it. (3) Passersby photographed it daily. Which version avoids a voice shift?",
+   "question": {
+    "id": "q10",
+    "prompt": "Combine: (1) The gardener planted the flowers. (2) The visitors admired them. (3) The children watered them daily. Which version avoids a voice shift?",
+    "choices": [
+     "The gardener planted the flowers, and the flowers were admired by the visitors, and the children watered them daily.",
+     "The gardener planted the flowers, the visitors were admired by them, and the children watered them daily.",
+     "The flowers were planted by the gardener, the visitors admired them, and the children watered them daily.",
+     "The gardener planted the flowers, the visitors admired them, and the children watered them daily."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct answer is option 0, \"The gardener planted the flowers, the visitors admired them, and the children watered them daily,\" because all three clauses retain active voice with their original subjects, avoiding any voice shift.",
+    "difficulty": 4,
+    "skill": "Maintaining active voice across combined clauses",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 44,
+   "qid": "q22",
+   "old_prompt": "Combine: (1) The Senator introduced the bill. (2) It was debated for weeks. (3) Journalists covered the hearings. Which version keeps a consistent passive voice?",
+   "question": {
+    "id": "q22",
+    "prompt": "Combine: (1) The researcher conducted the experiment. (2) Results were analyzed by the team. (3) Conclusions were published in a journal. Which version keeps a consistent passive voice?",
+    "choices": [
+     "The researcher conducted the experiment, results were analyzed by the team, and conclusions were published in a journal.",
+     "The experiment was conducted by the researcher, the team analyzed results, and conclusions were published in a journal.",
+     "The researcher conducted the experiment, and the team analyzed results, and a journal published conclusions.",
+     "The experiment was conducted by the researcher, results were analyzed by the team, and conclusions were published in a journal."
+    ],
+    "answerIndex": 3,
+    "explanation": "The experiment was conducted by the researcher, results were analyzed by the team, and conclusions were published in a journal is correct because it maintains passive voice throughout all three events, matching the original sentences' verbal patterns.",
+    "difficulty": 5,
+    "skill": "Sustaining passive voice across related events",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 44,
+   "qid": "q5",
+   "old_prompt": "Combine: (1) The storm knocked down power lines. (2) Crews repaired the cables overnight. (3) The police closed several streets. Which version keeps the voice consistent as passive?",
+   "question": {
+    "id": "q5",
+    "prompt": "Combine: (1) The artist painted the mural. (2) The sculptor carved the statue. (3) The photographer captured the event. Which version keeps the voice consistent as passive?",
+    "choices": [
+     "The mural was painted by the artist, the sculptor carved the statue, and the event was captured by the photographer.",
+     "The mural painted by the artist, the statue carved by the sculptor, and the event captured by the photographer.",
+     "The mural was painted by the artist, the statue was carved by the sculptor, and the event was captured by the photographer.",
+     "The artist painted the mural, the sculptor carved the statue, and the photographer captured the event."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option 0 keeps the voice consistently passive by using 'was painted by', 'was carved by', and 'was captured by' for each clause, while the other options either retain active voice, mix voices, or omit necessary auxiliary verbs.",
+    "difficulty": 6,
+    "skill": "Combining sentences in consistent passive voice",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 44,
+   "qid": "q40",
+   "old_prompt": "Combine: (1) Be kind to the new student. (2) Introduce yourself. (3) You will make a friend quickly. Which version avoids a mood shift?",
+   "question": {
+    "id": "q40",
+    "prompt": "Combine: (1) Offer help. (2) Ask for guidance. (3) You will build a strong relationship. Which version avoids a mood shift?",
+    "choices": [
+     "Offer help, ask for guidance, and a strong relationship will be built.",
+     "Offer help, ask for guidance, and you will build a strong relationship.",
+     "Offering help, asking for guidance, and you will build a strong relationship.",
+     "Offer help, ask for guidance, and a strong relationship is built."
+    ],
+    "answerIndex": 1,
+    "explanation": "Option (1) maintains the second-person 'you' throughout, avoiding a mood shift.",
+    "difficulty": 5,
+    "skill": "Keeping second-person address consistent",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 53,
+   "qid": "q12",
+   "old_prompt": "An author shifts from passive to active voice in the middle of a paragraph. What is the most likely purpose?",
+   "question": {
+    "id": "q12",
+    "prompt": "An author shifts from a formal to an informal tone in the middle of an essay. What is the most likely purpose?",
+    "choices": [
+     "to clarify technical terms",
+     "to engage the reader with a conversational style",
+     "to increase the sentence length",
+     "to avoid using active voice"
+    ],
+    "answerIndex": 1,
+    "explanation": "The shift to an informal tone is intended to engage the reader with a conversational style, making the text more approachable.",
+    "difficulty": 3,
+    "skill": "Explain intentional shifts",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 53,
+   "qid": "q48",
+   "old_prompt": "What does it mean to use voice and mood for effect?",
+   "question": {
+    "id": "q48",
+    "prompt": "When a writer wants to create a formal tone in an essay, which choice best shows using voice and mood for effect?",
+    "choices": [
+     "Using first-person pronouns throughout the essay",
+     "Choosing active voice and a confident, assertive mood to engage readers",
+     "Shifting between past and present tense randomly",
+     "Avoiding any emotional language to stay completely neutral"
+    ],
+    "answerIndex": 1,
+    "explanation": "Choosing active voice and a confident, assertive mood directly shapes the reader's experience for effect, which is the intended use of voice and mood.",
+    "difficulty": 3,
+    "skill": "Summarize the level's skill",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 44,
+   "qid": "q37",
+   "old_prompt": "Which sentence contains an inappropriate shift?",
+   "question": {
+    "id": "q37",
+    "prompt": "Which sentence contains an inappropriate shift from imperative to indicative mood?",
+    "choices": [
+     "Close the door, the room is stuffy.",
+     "Study hard for the exam, and you will succeed.",
+     "Open the window; the air will freshen.",
+     "Please turn off the television, and then you may leave."
+    ],
+    "answerIndex": 0,
+    "explanation": "Option 1 shifts inappropriately from the imperative “Close the door” to the indicative “the room is stuffy” by joining the two clauses with only a comma, creating a comma splice.",
+    "difficulty": 4,
+    "skill": "Spotting imperative-to-indicative shifts",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 53,
+   "qid": "q31",
+   "old_prompt": "In the sentence If the storm were worse, the ferry would cancel, what does were signal?",
+   "question": {
+    "id": "q31",
+    "prompt": "In the sentence 'I wish it were Friday', what does were signal?",
+    "choices": [
+     "States a likely condition and its result.",
+     "Reports a fact that already happened.",
+     "Commands a listener directly.",
+     "Signals a wish about something unreal."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence uses 'were' after 'wish' to express a contrary‑to‑fact desire, which is the subjunctive mood signaling a wish about something unreal.",
+    "difficulty": 3,
+    "skill": "Recognizing subjunctive mood",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 43,
+   "qid": "q44",
+   "old_prompt": "Combine without an inappropriate voice shift: The kite was caught in the tree. A firefighter retrieved it.",
+   "question": {
+    "id": "q44",
+    "prompt": "Combine without an inappropriate voice shift: The old bridge was closed by the city. A crew repaired it.",
+    "choices": [
+     "A crew closed the old bridge, and it was repaired by the city.",
+     "The old bridge was closed by the city, and a crew repaired it.",
+     "The old bridge was closed by the city, and it was repaired by a crew.",
+     "The old bridge was closed by the city, and a crew repaired it with tools."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (0) keeps the passive voice in both clauses, so there is no inappropriate voice shift.",
+    "difficulty": 7,
+    "skill": "Fixing a voice shift between clauses",
+    "topic": "Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 44,
+   "qid": "q48",
+   "old_prompt": "Combine: (1) The lights went out. (2) The storm knocked down a power line. (3) Crews worked all night. Which ending avoids a voice shift: The lights went out because...",
+   "question": {
+    "id": "q48",
+    "prompt": "Combine: (1) The manager announced the new policy. (2) The employees objected loudly. (3) The changes were implemented immediately. Which ending avoids a voice shift: The manager announced the new policy because",
+    "choices": [
+     "because they completed it eagerly",
+     "because eager completion was done by them",
+     "because it had been completed eagerly",
+     "because it was completed eagerly by them"
+    ],
+    "answerIndex": 0,
+    "explanation": "Option (0) “because they completed it eagerly” maintains the active voice of the preceding clause, whereas the other choices introduce passive constructions.",
+    "difficulty": 5,
+    "skill": "Completing active-voice combinations",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   }
+  },
+  {
+   "level": 55,
+   "qid": "q3",
+   "old_prompt": "Combine into one conditional sentence about a real possibility: The museum might open early. We would see the new exhibit before the crowds arrive.",
+   "question": {
+    "id": "q3",
+    "prompt": "Combine into one conditional sentence about a real possibility: The forecast calls for snow. We will stay home.",
+    "choices": [
+     "If the forecast will call for snow, we would stay home.",
+     "If the forecast calls for snow, we would stay home.",
+     "If the forecast calls for snow, we will stay home.",
+     "If the forecast called for snow, we will stay home."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (0) 'If the forecast calls for snow, we will stay home' correctly uses the first conditional (present‑simple if clause + will in the main clause) to express a real future possibility.",
+    "difficulty": 5,
+    "skill": "Forming conditional sentences",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 55,
+   "qid": "q2",
+   "old_prompt": "Combine these so the shot itself is emphasized, not the shooter: Martinez made the winning shot. The buzzer sounded at that moment.",
+   "question": {
+    "id": "q2",
+    "prompt": "Combine these so the record itself is emphasized, not the athlete: The athlete broke the record. The crowd cheered.",
+    "choices": [
+     "The record was broken by the athlete as the crowd cheered.",
+     "The crowd cheered the record broken by the athlete.",
+     "The record broke the athlete as the crowd cheered.",
+     "The athlete was broken by the record as the crowd cheered."
+    ],
+    "answerIndex": 0,
+    "explanation": "\"The record was broken by the athlete as the crowd cheered\" uses the passive voice with \"the record\" as the subject, emphasizing the record rather than the athlete.",
+    "difficulty": 4,
+    "skill": "Choosing passive voice for emphasis",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 55,
+   "qid": "q4",
+   "old_prompt": "Combine so the situation stays clearly hypothetical: I am not tall. I want to try out for the basketball team anyway.",
+   "question": {
+    "id": "q4",
+    "prompt": "I am not a confident speaker. I want to join the debate club anyway. Combine so the situation stays clearly hypothetical:",
+    "choices": [
+     "If I am a confident speaker, I would join the debate club.",
+     "If I were a confident speaker, I can join the debate club.",
+     "If I was a confident speaker, I will join the debate club.",
+     "If I were a confident speaker, I would join the debate club."
+    ],
+    "answerIndex": 3,
+    "explanation": "\"If I were a confident speaker, I would join the debate club\" is correct because it uses the subjunctive \"were\" and the conditional \"would\" to keep the situation clearly hypothetical.",
+    "difficulty": 5,
+    "skill": "Using subjunctive mood in hypotheticals",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 57,
+   "qid": "q42",
+   "old_prompt": "Plain sentence: He was benched by the coach. Which expansion keeps the same passive emphasis but adds detail correctly?",
+   "question": {
+    "id": "q42",
+    "prompt": "Plain sentence: The new policy was approved by the manager. Which expansion keeps the same passive emphasis but adds detail correctly?",
+    "choices": [
+     "The new policy was approved by the manager, citing improved safety measures.",
+     "The manager approved the new policy, citing improved safety measures.",
+     "The new policy is approved by the manager, citing improved safety measures.",
+     "The new policy was approved, citing improved safety measures by the manager."
+    ],
+    "answerIndex": 0,
+    "explanation": "Option 1 is correct because it retains the passive voice “was approved by the manager” while smoothly adding the detail about improved safety measures.",
+    "difficulty": 3,
+    "skill": "Expanding passive sentences",
+    "topic": "Expand a Sentence - Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 56,
+   "qid": "q15",
+   "old_prompt": "Combine into one sentence in active voice: The clerk counted the votes. The committee had waited. The deadline arrived first.",
+   "question": {
+    "id": "q15",
+    "prompt": "Combine into one sentence in active voice: The painter painted the wall. The rain stopped. The sun shone.",
+    "choices": [
+     "After the rain stopped, the painter painted the wall before the sun shone.",
+     "The sun shone after the painter painted the wall while the rain stopped.",
+     "The wall was painted by the painter after the rain stopped and before the sun shone.",
+     "The painter painted the wall after the rain stopped and before the sun shone."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option 0, 'The painter painted the wall after the rain stopped and before the sun shone,' is correct because it keeps the painter as the active subject and follows the original event order.",
+    "difficulty": 5,
+    "skill": "Combining with active voice",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 57,
+   "qid": "q27",
+   "old_prompt": "Plain sentence: Someone sent the memo. Which expansion is passive?",
+   "question": {
+    "id": "q27",
+    "prompt": "Plain sentence: The manager approved the proposal. Which expansion is passive?",
+    "choices": [
+     "The manager had the proposal approved.",
+     "The manager approved the proposal promptly.",
+     "The proposal was approved by the manager.",
+     "The proposal approved the manager."
+    ],
+    "answerIndex": 2,
+    "explanation": "\"The proposal was approved by the manager\" is the only option that uses the passive voice, with the object becoming the subject and the agent introduced by \"by\".",
+    "difficulty": 4,
+    "skill": "Rewriting in passive voice",
+    "topic": "Expand a Sentence - Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 55,
+   "qid": "q14",
+   "old_prompt": "Combine into a conditional stating a general truth: Heat ice. It melts.",
+   "question": {
+    "id": "q14",
+    "prompt": "Combine into a conditional stating a general truth: Freeze water. It turns into ice.",
+    "choices": [
+     "If you freeze water, it would turn into ice.",
+     "If you freeze water, it turns into ice.",
+     "If you froze water, it will turn into ice.",
+     "If you would freeze water, it turns into ice."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option 'If you freeze water, it turns into ice' uses present simple in both the if-clause and main clause, which is the standard way to express a general truth.",
+    "difficulty": 5,
+    "skill": "Forming conditional sentences",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 57,
+   "qid": "q16",
+   "old_prompt": "What is the purpose of the conditional mood?",
+   "question": {
+    "id": "q16",
+    "prompt": "Which sentence uses the conditional mood to express a hypothetical situation?",
+    "choices": [
+     "Please pass the salt.",
+     "If I were you, I would accept the job offer.",
+     "She has finished her homework.",
+     "The sun rises in the east."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence 'If I were you, I would accept the job offer.' uses the conditional mood ('would') to hypothesize about a different circumstance, making it the correct choice.",
+    "difficulty": 4,
+    "skill": "Understanding conditional mood",
+    "topic": "Expand a Sentence - Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 57,
+   "qid": "q11",
+   "old_prompt": "Which sentence correctly uses the subjunctive for a wish about a hypothetical?",
+   "question": {
+    "id": "q11",
+    "prompt": "Which sentence correctly uses the subjunctive mood for a wish about a hypothetical situation?",
+    "choices": [
+     "If she was the captain, she would call the coin toss.",
+     "If she were the captain, she would call the coin toss.",
+     "If she were the captain, she calls the coin toss.",
+     "She calls the coin toss if she is the captain."
+    ],
+    "answerIndex": 1,
+    "explanation": "The subjunctive mood requires 'were' (not 'was') in contrary-to-fact clauses and pairs it with 'would call' to show a hypothetical result, making option (2) the only correct usage.",
+    "difficulty": 5,
+    "skill": "Forming the subjunctive",
+    "topic": "Expand a Sentence - Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 55,
+   "qid": "q16",
+   "old_prompt": "Combine so the choir, not the anthem, is emphasized: The anthem was sung by the choir. The flag was raised at the same time.",
+   "question": {
+    "id": "q16",
+    "prompt": "Combine so the students, not the mayor, is emphasized: The mural was painted by the students. The building was dedicated by the mayor.",
+    "choices": [
+     "The students painted the mural while the building was dedicated by the mayor.",
+     "The mural was painted by the students, and the building was dedicated by the mayor.",
+     "The mural was painted by the students as the building was dedicated by the mayor.",
+     "The mural painted the students while the building dedicated the mayor."
+    ],
+    "answerIndex": 0,
+    "explanation": "Option (1) 'The students painted the mural while the building was dedicated by the mayor' combines the sentences with the students as the active subject, emphasizing them over the mayor, who remains in the passive 'by the mayor' phrase.",
+    "difficulty": 5,
+    "skill": "Combining sentences with active voice",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 59,
+   "qid": "c1",
+   "old_prompt": "Complete the conditional: If she had studied, she ___ the exam.",
+   "question": {
+    "id": "c1",
+    "prompt": "Complete the conditional: If the team had practiced more, they ___ the championship.",
+    "choices": [
+     "would have won",
+     "would have quit",
+     "would have tied",
+     "would have lost"
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option is 'would have won', because the past‑perfect conditional 'If ... had ...' requires 'would have + past participle' to express the hypothetical result.",
+    "difficulty": 8,
+    "skill": "Conditional mood structures",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 57,
+   "qid": "q20",
+   "old_prompt": "What does passive voice emphasize in a sentence?",
+   "question": {
+    "id": "q20",
+    "prompt": "In the sentence \"The mountain was climbed by the hikers,\" what does the passive voice primarily achieve?",
+    "choices": [
+     "It names the hikers as the doer of the action.",
+     "It emphasizes the action's receiver and puts the verb in past tense.",
+     "It emphasizes the action's receiver and can add mystery or blamelessness.",
+     "It emphasizes the action's doer and keeps the sentence direct."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (3) correctly states that the passive voice emphasizes the action's receiver and can add mystery or blamelessness, which matches the effect of the given sentence.",
+    "difficulty": 4,
+    "skill": "Understanding passive voice",
+    "topic": "Expand a Sentence - Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 59,
+   "qid": "v8",
+   "old_prompt": "In a passive sentence, the grammatical subject is usually which participant?",
+   "question": {
+    "id": "v8",
+    "prompt": "Which of the following sentences is in the active voice?",
+    "choices": [
+     "The meeting was called to order by the chairperson.",
+     "The cake was eaten by the children.",
+     "The novel was written by a famous author.",
+     "A famous author wrote the novel."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option 1 is the only active‑voice sentence: “A famous author wrote the novel,” where the subject performs the action, whereas the other three sentences use passive constructions with forms of “to be” plus past participles.",
+    "difficulty": 8,
+    "skill": "Identifying active and passive voice",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 59,
+   "qid": "c5",
+   "old_prompt": "Which sentence keeps a consistent third conditional structure throughout?",
+   "question": {
+    "id": "c5",
+    "prompt": "Which sentence maintains a consistent third conditional structure throughout?",
+    "choices": [
+     "(0) If she had studied, she would pass the exam.",
+     "(2) If she studied, she would have passed the exam.",
+     "(3) If she has studied, she would have passed the exam.",
+     "(1) If she had studied, she would have passed the exam."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option 1 correctly uses the past perfect in the if‑clause and would have + past participle in the main clause, maintaining a consistent third conditional structure.",
+    "difficulty": 9,
+    "skill": "Conditional mood structures",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 59,
+   "qid": "s12",
+   "old_prompt": "Which sentence uses the subjunctive to imagine an unlikely promotion?",
+   "question": {
+    "id": "s12",
+    "prompt": "Which sentence uses the subjunctive mood to express a hypothetical situation that is contrary to fact?",
+    "choices": [
+     "If she has been the team captain, she celebrates every goal.",
+     "If she was the team captain, she would celebrate every goal.",
+     "If she were the team captain, she would celebrate every goal.",
+     "If she is the team captain, she will celebrate every goal."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (1) 'If she were the team captain' is correct because the subjunctive mood requires were after if when the situation is contrary to fact.",
+    "difficulty": 7,
+    "skill": "Subjunctive mood: hypotheticals",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 59,
+   "qid": "c3",
+   "old_prompt": "Which if-clause signals the least likely possibility?",
+   "question": {
+    "id": "c3",
+    "prompt": "Which if‑clause signals the least likely possibility?",
+    "choices": [
+     "If the manager approved the request, the project would proceed.",
+     "If the manager had approved the request, the project would have proceeded.",
+     "If the manager were to approve the request, the project would proceed.",
+     "If the manager approves the request, the project will proceed."
+    ],
+    "answerIndex": 1,
+    "explanation": "The third‑conditional clause 'If the manager had approved the request, the project would have proceeded' signals the least likely possibility because it refers to a past condition that did not happen, making it contrary to fact.",
+    "difficulty": 8,
+    "skill": "Conditional mood structures",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 59,
+   "qid": "v2",
+   "old_prompt": "Which sentence is the deliberate, correct use of passive voice?",
+   "question": {
+    "id": "v2",
+    "prompt": "Which sentence deliberately uses the passive voice to emphasize the final answer rather than the instructor?",
+    "choices": [
+     "The final answer was provided by the instructor.",
+     "Provided by the instructor, the final answer appeared clear.",
+     "The instructor provided the final answer.",
+     "The final answer appears clear after instruction."
+    ],
+    "answerIndex": 0,
+    "explanation": "Option (0) 'The final answer was provided by the instructor' correctly uses the passive voice to shift focus to the answer, fulfilling the purpose of emphasizing the receiver.",
+    "difficulty": 7,
+    "skill": "Choosing voice for purpose",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  },
+  {
+   "level": 63,
+   "qid": "q2",
+   "old_prompt": "Which sentence correctly uses a colon?",
+   "question": {
+    "id": "q2",
+    "prompt": "Which sentence correctly uses a colon to introduce a list of items?",
+    "choices": [
+     "(1) The library contains; novels, biographies, and magazines.",
+     "(3) The library contains— novels: biographies and magazines.",
+     "(0) The library contains: novels, biographies, and magazines.",
+     "(2) The library contains novels, biographies, and magazines."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (0) correctly uses a colon to introduce the list 'novels, biographies, and magazines', making it the only sentence with proper colon usage.",
+    "difficulty": 2,
+    "skill": "Identify colon introducing a list",
+    "topic": "Punctuation for Effect"
+   }
+  },
+  {
+   "level": 64,
+   "qid": "q48",
+   "old_prompt": "Which transition fits after the semicolon? The instructions were confusing; ___ no one could assemble the shelf correctly.",
+   "question": {
+    "id": "q48",
+    "prompt": "Which transition fits after the semicolon? The experiment produced no clear pattern; ___ the researchers decided to collect more data.",
+    "choices": [
+     "Therefore,",
+     "Besides,",
+     "However,",
+     "Meanwhile,"
+    ],
+    "answerIndex": 0,
+    "explanation": "Therefore correctly shows the cause‑effect relationship between the two independent clauses separated by the semicolon.",
+    "difficulty": 5,
+    "skill": "Choosing transitions after semicolons",
+    "topic": "Punctuation for Effect"
+   }
+  },
+  {
+   "level": 63,
+   "qid": "q49",
+   "old_prompt": "A student writes: 'We needed three things ___ tent, stove, lantern.' The first part is a complete sentence. Which mark fits?",
+   "question": {
+    "id": "q49",
+    "prompt": "A traveler packed the essentials ___ a map, a compass, and a flashlight.",
+    "choices": [
+     "A colon, because the first part is a complete sentence introducing the list.",
+     "A semicolon, because the first part is a complete sentence leading into the list.",
+     "A dash, because the pause before the list should feel dramatic.",
+     "A comma, because the list items are short and need only a light break."
+    ],
+    "answerIndex": 0,
+    "explanation": "A colon is the standard punctuation to follow a complete sentence when introducing a list, so option (3) 'A colon, because the first part is a complete sentence introducing the list' is correct.",
+    "difficulty": 3,
+    "skill": "Colon before a list after full sentence",
+    "topic": "Punctuation for Effect"
+   }
+  },
+  {
+   "level": 69,
+   "qid": "q41",
+   "old_prompt": "How does the complete-sentence rule apply to a colon before a one-item list?",
+   "question": {
+    "id": "q41",
+    "prompt": "Which of the following sentences uses a colon correctly according to standard punctuation rules?",
+    "choices": [
+     "After the deadline: all submissions must be turned in.",
+     "The scientist noted, the data showed a trend:",
+     "Because the experiment failed: we had to repeat the procedure.",
+     "The committee passed three resolutions: increase funding, reduce waste, and improve transparency."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct choice is \"The committee passed three resolutions: increase funding, reduce waste, and improve transparency\" because a colon may follow a complete independent clause, and the sentence before the colon expresses a full thought.",
+    "difficulty": 8,
+    "skill": "Colon rules",
+    "topic": "Write Your Own (Rubric Check) - Punctuation for Effect"
+   }
+  },
+  {
+   "level": 64,
+   "qid": "q35",
+   "old_prompt": "What effect does the dash have in this sentence? The bell rang, everyone bolted — nobody wanted to be last in line.",
+   "question": {
+    "id": "q35",
+    "prompt": "What effect does the dash have in this sentence? The team practiced every day — they won the final game.",
+    "choices": [
+     "Which adds emphasis to the result that follows",
+     "Which makes the sentence feel unresolved",
+     "Which indicates a pause for rhetorical effect",
+     "Which signals that the writer is listing items"
+    ],
+    "answerIndex": 0,
+    "explanation": "The dash sets off the result, giving it extra weight, which matches option (1) Which adds emphasis to the result that follows.",
+    "difficulty": 4,
+    "skill": "Interpreting the effect of dashes",
+    "topic": "Punctuation for Effect"
+   }
+  },
+  {
+   "level": 76,
+   "qid": "q03",
+   "old_prompt": "Combine so that the speaker's energy trails off: I thought I had finished the essay. Then I remembered the conclusion. I remembered the bibliography and the title page too.",
+   "question": {
+    "id": "q03",
+    "prompt": "Combine so that the speaker's energy trails off: She talked about her weekend plans. Then she mentioned hiking, camping, and a bonfire.",
+    "choices": [
+     "She talked about her weekend plans; then she mentioned hiking, camping, and a bonfire.",
+     "She talked about her weekend plans – then she mentioned hiking, camping, and a bonfire.",
+     "She talked about her weekend plans but then she mentioned hiking, camping, and a bonfire...",
+     "She talked about her weekend plans, and then she mentioned hiking, camping, and a bonfire."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (0) uses an ellipsis at the end to show the speaker's voice trailing off after listing the activities, which fulfills the requirement.",
+    "difficulty": 6,
+    "skill": "Combining sentences with ellipses",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   }
+  },
+  {
+   "level": 83,
+   "qid": "ug48",
+   "old_prompt": "In the list apples, pears, and plums, the Oxford comma is which item?",
+   "question": {
+    "id": "ug48",
+    "prompt": "In the list 'sun, moon, and stars,' the Oxford comma is which item?",
+    "choices": [
+     "comma between the second and third items",
+     "comma before the final and",
+     "colon before the list",
+     "comma after the first item"
+    ],
+    "answerIndex": 1,
+    "explanation": "The Oxford comma is the comma placed immediately before the conjunction 'and' in a series of three or more items, so in 'sun, moon, and stars' it is the comma before the final and.",
+    "difficulty": 2,
+    "skill": "Identify Oxford comma",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 76,
+   "qid": "q01",
+   "old_prompt": "Combine into one sentence: The storm knocked out the power. We lit candles. We played cards until the night passed quickly.",
+   "question": {
+    "id": "q01",
+    "prompt": "Combine into one sentence: The rain started. The game was canceled.",
+    "choices": [
+     "(1) The rain started, the game was canceled.",
+     "(3) The rain started… the game was canceled.",
+     "(2) The rain started— The game was canceled.",
+     "(0) The rain started, so the game was canceled."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option (0) is correct because the comma with 'so' properly coordinates the two independent clauses, indicating cause and effect while following standard comma usage.",
+    "difficulty": 4,
+    "skill": "Combining sentences with commas",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   }
+  },
+  {
+   "level": 69,
+   "qid": "q15",
+   "old_prompt": "According to the rubric, what does a colon require before it?",
+   "question": {
+    "id": "q15",
+    "prompt": "Which of the following sentences uses a colon correctly, with a complete independent clause before the colon?",
+    "choices": [
+     "Because the data confirmed the hypothesis: the experiment succeeded.",
+     "To confirm the data: the experiment succeeded.",
+     "The data confirmed the hypothesis: the experiment succeeded.",
+     "Due to the data confirming the hypothesis: the experiment succeeded."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct answer is the first option, 'The data confirmed the hypothesis: the experiment succeeded,' because a colon must follow a complete independent clause, and that sentence's clause before the colon is a full independent clause.",
+    "difficulty": 8,
+    "skill": "Colon rules",
+    "topic": "Write Your Own (Rubric Check) - Punctuation for Effect"
+   }
+  },
+  {
+   "level": 69,
+   "qid": "q06",
+   "old_prompt": "What is the common error named in the lesson about semicolons and colons?",
+   "question": {
+    "id": "q06",
+    "prompt": "Which of the following is a common punctuation error involving a colon?",
+    "choices": [
+     "Using a colon after a fragment that cannot stand alone",
+     "Using a dash where a colon belongs",
+     "Using a colon after a complete sentence to introduce a list",
+     "Using a colon between two independent clauses without a conjunction"
+    ],
+    "answerIndex": 0,
+    "explanation": "Using a colon after a fragment that cannot stand alone is incorrect because a colon must follow a complete sentence, which is exactly that option.",
+    "difficulty": 8,
+    "skill": "Common punctuation errors",
+    "topic": "Write Your Own (Rubric Check) - Punctuation for Effect"
+   }
+  },
+  {
+   "level": 83,
+   "qid": "ug27",
+   "old_prompt": "How many disputed rules in this lesson are outright grammar errors?",
+   "question": {
+    "id": "ug27",
+    "prompt": "Which of the following statements about common usage disputes describes an actual grammar error, rather than just a style preference?",
+    "choices": [
+     "Starting a sentence with 'However,' followed by a comma is a grammatical error.",
+     "Using 'they' as a singular pronoun for a singular antecedent is always wrong.",
+     "Using 'less' with countable nouns (e.g., 'less people') is always a grammatical mistake.",
+     "Splitting an infinitive by placing an adverb between 'to' and the verb is strictly incorrect."
+    ],
+    "answerIndex": 2,
+    "explanation": "The only actual grammar error described is using 'less' with countable nouns, as standard usage reserves 'fewer' for countable items, making option D correct.",
+    "difficulty": 2,
+    "skill": "Recognize misconception",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 83,
+   "qid": "ug29",
+   "old_prompt": "Which of these best fits the term disputed rule?",
+   "question": {
+    "id": "ug29",
+    "prompt": "Which of the following best describes a \"disputed rule\" in usage guides?",
+    "choices": [
+     "a rule that some writers break and that guides treat differently, often labeling it as \"optional\" or \"variable\"",
+     "a rule that applies only to capitalization choices",
+     "a rule enforced by law in publishing contracts",
+     "a rule that all major style guides agree on without exception"
+    ],
+    "answerIndex": 0,
+    "explanation": "Option (1) correctly defines a disputed rule as one that writers commonly break and that guides treat differently, reflecting the debate nature.",
+    "difficulty": 2,
+    "skill": "Define usage debate",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 83,
+   "qid": "ug18",
+   "old_prompt": "Which word shows possession in the cat licked ___ paw?",
+   "question": {
+    "id": "ug18",
+    "prompt": "Which word correctly completes the sentence: 'The loud noise might _____ your concentration'?",
+    "choices": [
+     "reflect",
+     "infect",
+     "effect",
+     "affect"
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct answer is 'affect' because it is the verb meaning to influence; 'effect' is a noun, and the sentence requires a verb.",
+    "difficulty": 2,
+    "skill": "Distinguish word pairs",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 86,
+   "qid": "q41",
+   "old_prompt": "Which of these has largely shifted from disputed convention into accepted modern usage?",
+   "question": {
+    "id": "q41",
+    "prompt": "Which of the following language usages has largely shifted from disputed convention into accepted modern usage?",
+    "choices": [
+     "Using \"ain't\" as a contraction for \"am not\"",
+     "Using \"literally\" to mean \"figuratively\"",
+     "Using \"irregardless\" as a synonym for \"regardless\"",
+     "Using \"they\" as a singular pronoun to refer to a single person"
+    ],
+    "answerIndex": 3,
+    "explanation": "Using \\\"they\\\" as a singular pronoun has been widely adopted by major style guides and is now considered standard, whereas the other options remain nonstandard or contested.",
+    "difficulty": 5,
+    "skill": "Recognizing how usage changes over time",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 86,
+   "qid": "q26",
+   "old_prompt": "Which sentence is correct?",
+   "question": {
+    "id": "q26",
+    "prompt": "Which sentence uses its or it's correctly?",
+    "choices": [
+     "(3) The company changed it's policy.",
+     "(0) The cat licked its paws after eating.",
+     "(1) Its important to remember your keys.",
+     "(2) The bird opened it's wings."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct answer is (0) The cat licked its paws after eating, because 'its' is the possessive form and the sentence uses it correctly without an apostrophe.",
+    "difficulty": 5,
+    "skill": "Choosing its or it's",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 86,
+   "qid": "q5",
+   "old_prompt": "What is the Oxford comma?",
+   "question": {
+    "id": "q5",
+    "prompt": "Which of the following best defines the Oxford comma?",
+    "choices": [
+     "A comma placed after a quotation mark to close dialogue",
+     "The comma placed before and in a series, as in speed, strength, and endurance",
+     "A comma required before the year in any full date",
+     "A comma used in place of a semicolon to join two clauses"
+    ],
+    "answerIndex": 1,
+    "explanation": "The Oxford comma is the comma placed before the final \"and\" in a series of three or more items, so option (2) correctly defines it with the example speed, strength, and endurance.",
+    "difficulty": 4,
+    "skill": "Defining the Oxford comma",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 83,
+   "qid": "ug39",
+   "old_prompt": "Which sentence contains a split infinitive?",
+   "question": {
+    "id": "ug39",
+    "prompt": "Which sentence uses 'fewer' correctly?",
+    "choices": [
+     "We need fewer time to finish.",
+     "He has fewer money than before.",
+     "She has fewer problems than her sister.",
+     "There are fewer happiness in the room."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (0) 'She has fewer problems than her sister.' correctly uses 'fewer' with a countable noun, while the other sentences misuse 'fewer' with uncountable nouns.",
+    "difficulty": 4,
+    "skill": "Recall disputed rules",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 83,
+   "qid": "ug20",
+   "old_prompt": "Choose the correct word: The box was ___ heavy to lift.",
+   "question": {
+    "id": "ug20",
+    "prompt": "Choose the correct word: I couldn't ___ the invitation due to a prior commitment.",
+    "choices": [
+     "except",
+     "examine",
+     "expect",
+     "accept"
+    ],
+    "answerIndex": 3,
+    "explanation": "'accept' is the verb meaning to receive, which logically fits the context of taking an invitation.",
+    "difficulty": 2,
+    "skill": "Distinguish word pairs",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 89,
+   "qid": "q07",
+   "old_prompt": "Which version of this famous phrase contains a split infinitive?",
+   "question": {
+    "id": "q07",
+    "prompt": "Which of the following sentences contains a split infinitive?",
+    "choices": [
+     "Quickly to decide",
+     "To decide quickly",
+     "To quickly decide",
+     "Deciding quickly"
+    ],
+    "answerIndex": 2,
+    "explanation": "The split infinitive \"to quickly decide\" places the adverb \"quickly\" between \"to\" and \"decide\", which is the only option that splits the infinitive.",
+    "difficulty": 7,
+    "skill": "Identifying split infinitives",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 89,
+   "qid": "q39",
+   "old_prompt": "Which sentence contains a split infinitive?",
+   "question": {
+    "id": "q39",
+    "prompt": "Which of the following sentences contains a split infinitive?",
+    "choices": [
+     "Seriously, the coach advised the team to consider the new strategy.",
+     "The coach seriously advised the team to consider the new strategy.",
+     "The coach advised the team to seriously consider the new strategy.",
+     "The coach advised the team to consider the new strategy seriously."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option (0) \"The coach advised the team to seriously consider the new strategy\" is correct because the adverb \"seriously\" splits the infinitive \"to consider\", creating a split infinitive, while the other options place \"seriously\" after the verb or use it as a sentence adverb.",
+    "difficulty": 7,
+    "skill": "Identifying split infinitives",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 89,
+   "qid": "q33",
+   "old_prompt": "Which of the following is the best example of a disputed usage?",
+   "question": {
+    "id": "q33",
+    "prompt": "Which of the following illustrates a disputed usage in contemporary English?",
+    "choices": [
+     "The spelling of \"receive\" as \"recieve\" – widely regarded as a misspelling.",
+     "The use of a semicolon to join two independent clauses – an accepted punctuation rule.",
+     "The requirement to capitalize the first word of a sentence – a standard rule.",
+     "The choice between \"data are\" and \"data is\" – style guides disagree on whether the noun should be treated as plural or singular."
+    ],
+    "answerIndex": 3,
+    "explanation": "The choice between \\\"data are\\\" and \\\"data is\\\" is a disputed usage because style guides differ on whether the noun should be treated as plural or singular.",
+    "difficulty": 7,
+    "skill": "Recognizing disputed usage",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 98,
+   "qid": "q46",
+   "old_prompt": "Which sentence states the news most directly and honestly?",
+   "question": {
+    "id": "q46",
+    "prompt": "Which sentence most plainly conveys that a company is reducing its workforce?",
+    "choices": [
+     "The company is optimizing its personnel costs.",
+     "The company is laying off employees.",
+     "The company is right‑sizing its staff.",
+     "The company is restructuring its workforce."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct choice, \"The company is laying off employees,\" states the action plainly without euphemism, while the other options substitute milder, less precise terms.",
+    "difficulty": 6,
+    "skill": "Revise for precision",
+    "topic": "Diction and Precision"
+   }
+  },
+  {
+   "level": 86,
+   "qid": "q9",
+   "old_prompt": "What is true about split infinitives?",
+   "question": {
+    "id": "q9",
+    "prompt": "Which statement about ending a sentence with a preposition is correct?",
+    "choices": [
+     "It has been banned by every printed style guide ever issued",
+     "It is acceptable in all forms of English without exception",
+     "It is a mistake that would doom any sentence to being unclear",
+     "It is acceptable in many modern writing styles, though some traditional style guides still discourage it"
+    ],
+    "answerIndex": 3,
+    "explanation": "Option (3) correctly reflects that many modern styles allow sentence‑final prepositions while some traditional guides still discourage the practice, making it the only accurate statement.",
+    "difficulty": 5,
+    "skill": "Judging disputed rules",
+    "topic": "Usage Debates and Style Guides"
+   }
+  },
+  {
+   "level": 98,
+   "qid": "q36",
+   "old_prompt": "Which word most precisely praises a spotless kitchen?",
+   "question": {
+    "id": "q36",
+    "prompt": "Which word most precisely praises a laboratory that is free of all microorganisms?",
+    "choices": [
+     "nice",
+     "clean",
+     "good",
+     "sterile"
+    ],
+    "answerIndex": 3,
+    "explanation": "Sterile specifically denotes freedom from all living microorganisms, making it the most precise choice for describing a microbe‑free laboratory, whereas good, nice, and clean are too vague.",
+    "difficulty": 6,
+    "skill": "Replace vague words",
+    "topic": "Diction and Precision"
+   }
+  }
+ ],
+ "release": [
+  {
+   "level": 6,
+   "hash": "fb759c2aaeb6f78b129ba87e"
+  },
+  {
+   "level": 43,
+   "hash": "7bc8fd06050a38bf9eab22b8"
+  },
+  {
+   "level": 56,
+   "hash": "85442196b32ef6e2c462ebb6"
+  },
+  {
+   "level": 78,
+   "hash": "adbc25aef34d244773720964"
+  },
+  {
+   "level": 83,
+   "hash": "1e910d51d494cc511dcca121"
+  },
+  {
+   "level": 86,
+   "hash": "3bb1ef30fe07ee5dbc9293bb"
+  },
+  {
+   "level": 89,
+   "hash": "88dec36b363cb820aef6232f"
+  }
+ ]
+}

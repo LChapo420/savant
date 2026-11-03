@@ -1,6 +1,7 @@
 /**
  * The xKiro provider's guards, against a fake server (no network, no key used):
- * pipeline-only, $0 models only, the daily token cap, and the usage record.
+ * pipeline-only, the dated learner window, $0 models only, the daily token cap, and
+ * the usage record.
  *
  *   node scripts/xkiro-provider-test.js
  */
@@ -15,10 +16,16 @@ process.env.XKIRO_BASE_URL = 'https://xkiro.test/v1';
 process.env.XKIRO_DAILY_TOKENS = '5000';
 // A small grant on the MiniMax model, so its cap can be reached in a test.
 process.env.XKIRO_GRANTS = JSON.stringify({ 'minimax/minimax-m3.1-flash': 4000 });
+process.env.XKIRO_LEARNER_UNTIL = '2000-01-01T00:00:00Z';
 delete process.env.XKIRO_PIPELINE;
 process.on('exit', () => { try { fs.unlinkSync(usageFile); } catch { /* none written */ } });
 
 const { xkiro, isFreeEntry, _setFetch, _reset } = require('../services/providers/xkiro');
+const providers = require('../services/providers');
+const pool = require('../services/pool');
+const ai = require('../services/ai');
+const db = require('../config/db');
+const boosters = require('../services/boosters');
 
 let failures = 0;
 function check(name, ok, detail) {
@@ -56,13 +63,37 @@ const ask = (model) => xkiro.structured({ system: 's', user: 'u', schema: SCHEMA
   check('a "free" label with a price above 0 is not free', !isFreeEntry(MODELS.data[2]));
   check('an entry with no pricing is not free', !isFreeEntry({ access_tier: 'free' }));
 
-  console.log('pipeline only');
-  check('not enabled without XKIRO_PIPELINE=1', !xkiro.isEnabled());
+  console.log('learner window');
+  check('not enabled after the learner window without XKIRO_PIPELINE=1', !xkiro.isEnabled());
   let err = null;
   try { await ask('qwen/qwen3.8-max:free'); } catch (e) { err = e; }
-  check('a call without the opt-in is refused before anything is sent', err && err.status === 403 && sent.length === 0, err && err.message);
+  check('a call after the learner window is refused before anything is sent', err && err.status === 403 && sent.length === 0, err && err.message);
+
+  process.env.XKIRO_LEARNER_UNTIL = '2099-01-01T00:00:00Z';
+  check('the open learner window enables xKiro', xkiro.isEnabled());
+  const learnerOrder = providers.order('fast');
+  check('xKiro sits right after NVIDIA in the chain', learnerOrder.indexOf('xkiro') === learnerOrder.indexOf('nvidia') + 1, learnerOrder);
+
+  const originalById = db.byId;
+  const originalAgeOf = boosters.ageOf;
+  db.byId = (collection, id) => (collection === 'users' && id === 'under-13' ? { id } : originalById.call(db, collection, id));
+  boosters.ageOf = () => 12;
+  let under13Allowed = null;
+  try { under13Allowed = ai.xkiroAllowedFor('under-13'); } finally {
+    db.byId = originalById;
+    boosters.ageOf = originalAgeOf;
+  }
+  check('an under-13 user is refused by xKiro', under13Allowed === false, under13Allowed);
+
+  const xkiroSlot = pool.makeSlot({ id: 'xkiro:test', provider: 'xkiro', dataClass: 'pipeline' });
+  const learnerRefusal = pool.refusal(xkiroSlot, { role: 'fast', task: null, dataClass: 'learner', xkiro: true }, 'structured');
+  const blockedRefusal = pool.refusal(xkiroSlot, { role: 'fast', task: null, dataClass: 'learner', xkiro: false }, 'structured');
+  check('the learner window lets xKiro serve learner data', learnerRefusal === null, learnerRefusal);
+  check('the pool rejects an xKiro slot when xkiro is false', blockedRefusal && blockedRefusal.startsWith('data:'), blockedRefusal);
 
   process.env.XKIRO_PIPELINE = '1';
+  const bothOrder = providers.order('fast');
+  check('xKiro appears once when both access modes are open', bothOrder.filter((name) => name === 'xkiro').length === 1, bothOrder);
   console.log('$0 models only');
   err = null;
   try { await ask('minimax/minimax-m3'); } catch (e) { err = e; }

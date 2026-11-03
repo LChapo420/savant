@@ -56,6 +56,7 @@ function cleanSections(raw, byId, guard = null, keepMax = MAX_BULLETS) {
   const out = [];
   let dropped = 0;
   let fixed = 0;
+  const lost = []; // why each analogy the guard replaced was refused
   for (const s of (Array.isArray(raw) ? raw : []).slice(0, MAX_SECTIONS_PART + 2)) {
     if (!s || typeof s !== 'object') continue;
     const heading = clean(s.heading, 120);
@@ -66,12 +67,12 @@ function cleanSections(raw, byId, guard = null, keepMax = MAX_BULLETS) {
       const quote = text && allowed.has(pid) ? pack.groundQuote(byId.get(pid), b.quote) : null;
       if (!quote) { dropped++; continue; }
       // An interest analogy may not bring a claim the text lacks: the bullet becomes the text's own words.
-      if (guard && !guard(text)) { text = clean(quote, 400); fixed++; }
+      if (guard && !guard(text)) { if (guard.why) lost.push(...guard.why(text).map((p) => p.detail)); text = clean(quote, 400); fixed++; }
       if (bullets.length < keepMax) bullets.push({ text, passage_id: pid, quote });
     }
     if (heading && bullets.length >= MIN_BULLETS) out.push({ heading, bullets });
   }
-  return { sections: out, dropped, fixed };
+  return { sections: out, dropped, fixed, lost };
 }
 
 /** Words in a notes draft, headings and bullets together (what the word limit counts). */
@@ -87,7 +88,7 @@ const ALWAYS_EXTRA = /^(picture this|optional|harder question)\b/i;
  * Brings notes under a word limit by removing extra bullets, last first, until they fit or none is left. A bullet that carries a point
  * of the text is never removed, so an over-limit draft with no extras stays as it is. Returns { sections, removed }.
  */
-function trimToLimit(sections, limit, { always = false, maxAnalogies = null } = {}) {
+function trimToLimit(sections, limit, { always = false, maxAnalogies = null, keepFirstAnalogy = false } = {}) {
   const out = (sections || []).map((s) => ({ ...s, bullets: [...(s.bullets || [])] }));
   let removed = 0;
   // A short version is told "at most one analogy" and the writers (the NVIDIA model in the 2 Nov A/B: three) do not always keep to it: the first ones stay, the rest go.
@@ -95,11 +96,15 @@ function trimToLimit(sections, limit, { always = false, maxAnalogies = null } = 
     let seen = 0;
     for (const s of out) for (let bi = 0; bi < s.bullets.length; bi++) if (/^think of\b/i.test(s.bullets[bi].text) && s.bullets.length > 1 && ++seen > maxAnalogies) { s.bullets.splice(bi, 1); bi--; removed++; }
   }
+  // The first framed analogy, found again by identity (the removals above and below move indexes), kept only when it must be.
+  let keep = null;
+  if (keepFirstAnalogy) for (const s of out) { keep = s.bullets.find((b) => /^think of\b/i.test(b.text)) || null; if (keep) break; }
   if (always) {
     for (const s of out) for (let bi = s.bullets.length - 1; bi >= 0; bi--) if (ALWAYS_EXTRA.test(s.bullets[bi].text) && s.bullets.length > 1) { s.bullets.splice(bi, 1); removed++; }
   }
   for (let si = out.length - 1; si >= 0 && notesWords(out) > limit; si--) {
     for (let bi = out[si].bullets.length - 1; bi >= 0 && notesWords(out) > limit; bi--) {
+      if (keep && out[si].bullets[bi] === keep) continue; // the one required analogy stays; other extras go first
       if (EXTRA_BULLET.test(out[si].bullets[bi].text) && out[si].bullets.length > 1) { out[si].bullets.splice(bi, 1); removed++; }
     }
   }
@@ -182,6 +187,8 @@ async function build(userId, materialId, opts = {}) {
         const run = await learningSpec.reviseOnce({
           generate, textOf: (c) => c.sections.flatMap((s) => s.bullets.map((b) => b.text)).join(' '),
           structureOf: wordLimit ? (c) => ({ words: notesWords(c.sections), maxWords: wordLimit }) : null,
+          // An analogy the guard replaced by the text's own words is gone from the draft; name it, or the revision repeats it.
+          extraProblemsOf: (c) => (c && c.lost && c.lost.length ? [{ id: 'analogy_refused', detail: `your interest analogy was removed: ${c.lost[0]}` }] : []),
           spec, keyFacts: learningSpec.sourceFacts(partText), source: partText, minShare: 0.3, own: true, interestNeed: learningSpec.ownInterestNeed(spec, partText.length, 'notes'),
         });
         got = run.result;
@@ -193,7 +200,7 @@ async function build(userId, materialId, opts = {}) {
       dropped += got.dropped;
       analogiesFixed += got.fixed;
       // A short version carries no scene or harder-question bullet, and loses its analogy too if it is still over the limit after the revision; never a bullet that carries a point.
-      if (wordLimit) { const t = trimToLimit(got.sections, wordLimit, { always: true, maxAnalogies: 1 }); got.sections = t.sections; trimmed += t.removed; }
+      if (wordLimit) { const t = trimToLimit(got.sections, wordLimit, { always: true, maxAnalogies: 1, keepFirstAnalogy: learningSpec.ownInterestNeed(spec, partSource.length, 'notes') >= 1 }); got.sections = t.sections; trimmed += t.removed; }
       for (const s of got.sections) { sections.push(s); s.bullets.forEach((b) => touched.add(b.passage_id)); }
     }
     sections.forEach((s, i) => { s.id = `n${i + 1}`; });

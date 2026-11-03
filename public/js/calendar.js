@@ -18,7 +18,7 @@ App.mount(async () => {
   const SHORT = { semiweekly: 'S', weekly: 'W', biweekly: 'B', monthly: 'M' };
   const STATUS = {
     done: 'done', none: 'no enforcer chosen', skipped: 'skipped', stopped: 'stopped partway', missed: 'missed',
-    empty: 'nothing to cover', due: 'due', upcoming: 'coming up', today: 'today, at End day session',
+    empty: 'nothing to cover', due: 'due', upcoming: 'coming up', today: 'today, at End day session', goal: 'not needed for your retention goal',
   };
   const TIER = { quick: 'quick', medium: 'medium', full: 'full' };
 
