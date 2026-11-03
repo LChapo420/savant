@@ -133,4 +133,9 @@ module.exports = [
  ['jamet2008','Jamet',2008,'Attention guiding in multimedia learning','upl'],
  ['dekoning2010','de Koning',2010,'Attention guidance in learning from a complex animation: Seeing is understanding?','upl'],
  ['kiewra1988','Kiewra',1988,'Providing study notes: Comparison of three types of notes for review','upl'],
+ ['wang2004','Wang',2004,'Item selection in multidimensional computerized adaptive testing: Gaining information from different angles','cat'],
+ ['segall1996','Segall',1996,'Multidimensional adaptive testing','cat'],
+ ['rayner2016','Rayner',2016,'So much to read, so little time: How do we read, and can speed reading help?','read'],
+ ['ryan2000','Ryan',2000,'Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being','foot'],
+ ['gollwitzer2006','Gollwitzer',2006,'Implementation intentions and goal achievement: A meta-analysis of effects and processes','foot'],
 ];

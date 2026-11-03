@@ -25,6 +25,8 @@ On the dashboard, inside the existing "Today's plan" section (nothing restyled),
 | Spec | `session.breakEveryMinutes` and `session.breakMinutes` place breaks at block boundaries; breaks count against the minutes given. The plan never exceeds the minutes (tested at 10 to 240). |
 | Catch-up, placement | An accepted catch-up (`gap-scan.routeForEnrollment`) is worked before the grade it leads to; the grade's levels wait and its untouched days belong to the group. A placement not taken comes first of the new material. A held Final or a cooling checkpoint retry gets its review but no level. |
 
+Evidence status (3 Nov 2026, curriculum-build/evidence-article/09-nov3-builds.md, 09-M15 to 09-M18): that retrieval before new material, spreading practice over days, studying what needs time and taking breaks help is supported by abstract-checked studies of mostly short laboratory or school settings (the forward effect of testing, Pastotter & Bauml 2014; spacing against cramming, Kornell 2009; study-time allocation, Metcalfe & Kornell 2003; a 20 to 30 minute break and test scores, Sievertsen et al. 2016). The numbers here (the 50% and 80% review shares, the need formula, 15 minutes of study and 3 of break) are design values: no study sets them. Interleaving is supported in mathematics and can hurt with texts and words (Rohrer & Taylor; Brunmair & Richter 2019), and the plan splits subjects across days, which is spacing.
+
 ## Tie to the enforcers (nothing counted twice; the owner's calendar untouched)
 
 `services/enforcers.js` is read, not changed. The plan never calls `enforcers.offers` (it writes rows); it reads open rows and `scheduledToday`.
