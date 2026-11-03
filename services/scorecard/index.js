@@ -57,6 +57,7 @@ const { STATS, BY_ID, CATEGORIES } = require('./stats');
 const { RATES, CONTRASTS, SHIFTS, TAPS, experimentModel } = require('./signals');
 const forgetting = require('./forgetting');
 const indicators = require('./indicators');
+const drift = require('./drift');
 
 /** The shift model of a stat: its own (signals.js SHIFTS), or an experiment's. */
 function shiftModelOf(statId) {
@@ -342,10 +343,11 @@ function priorStrength(statId) {
 }
 
 /** How much of a record's evidence is left after the time since it was last updated. */
-function ageFactor(record, nowIso) {
+function ageFactor(record, nowIso, statId) {
   if (!record || !record.at) return 1;
   const days = (Date.parse(nowIso) - Date.parse(record.at)) / 86400000;
-  return days > 0 ? 2 ** (-days / EVIDENCE_HALF_LIFE_DAYS) : 1;
+  // SCORECARD_DRIFT (drift.js, docs/SCORECARD-90.md 11.7): a half-life per measure; off, the one constant as before.
+  return days > 0 ? 2 ** (-days / drift.halfLife(statId, EVIDENCE_HALF_LIFE_DAYS)) : 1;
 }
 
 function blankStats() {
@@ -720,7 +722,7 @@ function readOwn(card, statId, { trackId } = {}) {
   // Evidence fades with time whether or not anything new arrives, so masses are
   // read as of now, not as of the record's last update.
   const nowIso = new Date().toISOString();
-  const asOfNow = (record) => record && record.at && record.mw ? { ...record, mw: record.mw * ageFactor(record, nowIso) } : record;
+  const asOfNow = (record) => record && record.at && record.mw ? { ...record, mw: record.mw * ageFactor(record, nowIso, statId) } : record;
   const overall = asOfNow(card.stats[statId]) || blankRecord();
   const stat = BY_ID[statId];
   const sub = asOfNow(trackId && stat && stat.subject && card.subjects[trackId] && card.subjects[trackId][statId]);
@@ -764,8 +766,8 @@ const RATE_PRIOR_CHANCES = 40; // the norm counts as this many chances: rates di
 // other stat's mass, so the one confidence rule applies to both.
 const REF_SD = 25;
 
-function fade(days) {
-  return days > 0 ? 2 ** (-days / RATE_HALF_LIFE_DAYS) : 1;
+function fade(days, statId) {
+  return days > 0 ? 2 ** (-days / drift.halfLife(statId, RATE_HALF_LIFE_DAYS)) : 1;
 }
 
 /**
@@ -807,9 +809,9 @@ function rateNorm(statId, sides = {}) {
 }
 
 /** Fold new counts into a faded count record. */
-function addCounts(prior, hits, trials, nowIso) {
+function addCounts(prior, hits, trials, nowIso, statId) {
   const was = prior || { k: 0, n: 0, at: nowIso };
-  const f = fade((Date.parse(nowIso) - Date.parse(was.at)) / 86400000);
+  const f = fade((Date.parse(nowIso) - Date.parse(was.at)) / 86400000, statId);
   return { k: Number((was.k * f + hits).toFixed(3)), n: Number((was.n * f + trials).toFixed(3)), at: nowIso };
 }
 
@@ -893,13 +895,13 @@ function ordinalScore(sides, model, pop) {
 function applyContrast(record, statId, sides) {
   if (CONTRASTS[statId].ordinal) {
     const { score, mass } = ordinalScore(sides, CONTRASTS[statId], populationOf('ordinals', statId));
-    return fromModel(record, score, mass);
+    return fromModel(record, score, mass, 'beh', statId);
   }
   const pop = populationOf('contrastNorms', statId);
   const { score, mass } = contrastScore(sides, CONTRASTS[statId], pop);
   // A contrast whose typical value is unknown until there is a population is
   // shown but never trusted before then.
-  return fromModel(record, score, CONTRASTS[statId].needsPopulation && !pop ? 0 : mass);
+  return fromModel(record, score, CONTRASTS[statId].needsPopulation && !pop ? 0 : mass, 'beh', statId);
 }
 
 // ── pairwise choices ("which is clearer?", services/boosters.js choice) ───
@@ -1041,9 +1043,9 @@ function combineMeasured(vm, vw, xm, xw) {
 }
 
 /** A record with a model's new score and mass, keeping its value-path evidence and what opinion added to the shown score. */
-function fromModel(record, score, mass, cls = 'beh') {
+function fromModel(record, score, mass, cls = 'beh', statId) {
   const nowIso = new Date().toISOString();
-  const f = ageFactor(record, nowIso);
+  const f = ageFactor(record, nowIso, statId);
   const opinion = (record.s !== undefined ? record.s : 50) - measuredScore(record);
   const modelled = record.xw !== undefined;
   const vm = modelled ? (record.vm !== undefined ? record.vm : 50) : measuredScore(record);
@@ -1073,12 +1075,12 @@ function applyShift(record, statId, sides) {
     const post = experimentPosterior(sides, statId, pop);
     const score = clamp(50 + POP_SD * post.z, 0, 100);
     const mass = clamp((REF_SD / (POP_SD * post.sd)) ** 2 - (REF_SD / POP_SD) ** 2, 0, MAX_MASS);
-    return fromModel(record, score, mass, 'exp');
+    return fromModel(record, score, mass, 'exp', statId);
   }
   const { score, mass } = shiftScore(sides, model, pop);
   // A shift whose typical value is unknown until there is a population is
   // shown but never trusted before then.
-  return fromModel(record, score, model.needsPopulation && !pop ? 0 : mass, model.experiment ? 'exp' : 'beh');
+  return fromModel(record, score, model.needsPopulation && !pop ? 0 : mass, model.experiment ? 'exp' : 'beh', statId);
 }
 
 // ── taps (signals.js TAPS) ─────────────────────────────────────────────────
@@ -1123,7 +1125,7 @@ function applyTap(record, statId, sides) {
   const { mean, sd } = tapPosterior(sides[`taps:${statId}`], centre, spread);
   const se = Math.max(0.5, sd * model.pointsPerUnit);
   const mass = clamp((REF_SD / se) ** 2 - (REF_SD / (spread * model.pointsPerUnit)) ** 2, 0, MAX_MASS);
-  return fromModel(record, 50 + (centre - mean) * model.pointsPerUnit, mass);
+  return fromModel(record, 50 + (centre - mean) * model.pointsPerUnit, mass, 'beh', statId);
 }
 
 /** Mass by source, faded the way the record's mass is, plus what just arrived. */
@@ -1136,7 +1138,7 @@ function addSource(src, cls, weight, factor = 1) {
 
 function applyRate(record, statId, hits, trials, sides) {
   const nowIso = new Date().toISOString();
-  const rate = addCounts(record.rate, hits, trials, nowIso);
+  const rate = addCounts(record.rate, hits, trials, nowIso, statId);
   const { score, mass } = rateScore(rate.k, rate.n, rateNorm(statId, sides), RATES[statId].invert);
   // What the model read or the questionnaire added to the shown score stays
   // added; the measured score is the counts alone.
@@ -1144,7 +1146,7 @@ function applyRate(record, statId, hits, trials, sides) {
   return {
     ...record,
     s: round2(clamp(score + opinion, 0, 100)),
-    w: round4(Math.max(mass, (record.w || 0) * ageFactor(record, nowIso))),
+    w: round4(Math.max(mass, (record.w || 0) * ageFactor(record, nowIso, statId))),
     m: round2(clamp(score, 0, 100)),
     mw: round4(mass),
     src: { ...(record.src || {}), beh: round4(mass) },
@@ -1190,7 +1192,7 @@ function addMoments(prev, value, weight, f, test) {
  */
 function applyTo(record, value, weight, measuredWeight = weight, bySource = { beh: weight }, { statId, maxStep = MAX_STEP, test = false } = {}) {
   const nowIso = new Date().toISOString();
-  const f = ageFactor(record, nowIso);
+  const f = ageFactor(record, nowIso, statId);
   const vx = measuredWeight > 0 ? addMoments(record.vx, value, measuredWeight, f, test) : record.vx;
   const strength = statId ? priorStrength(statId) : 1;
   let src = record.src || {};
@@ -1271,7 +1273,7 @@ function observe(userId, observations, { source = 'unknown', trackId = null } = 
   const velocityObs = (observations || []).filter((o) => o && o.velocity && o.stat === 'mastery_velocity');
   const paceObs = (observations || []).filter((o) => o && o.pace && o.stat === 'processing_velocity');
   const reachObs = REACH_ON ? (observations || []).filter((o) => o && o.reach && o.stat === REACH_STAT) : [];
-  const indObs = (observations || []).filter((o) => o && o.indicator && indicators.INDICATORS[o.indicator] && Number.isFinite(Number(o.x)) && Number(o.n) > 0);
+  const indObs = (observations || []).filter((o) => o && o.indicator && indicators.ALL_INDICATORS[o.indicator] && Number.isFinite(Number(o.x)) && Number(o.n) > 0);
   const valid = (observations || []).filter((o) => o && BY_ID[o.stat] && !o.contrast
     && (isRateObservation(o) || (o.trials === undefined && Number.isFinite(Number(o.value)) && Number(o.weight) > 0)));
   const card = get(userId);
@@ -1401,9 +1403,9 @@ function observe(userId, observations, { source = 'unknown', trackId = null } = 
       const ev = { kind: 'memory', count: est.tests };
       const zHalf = est.z === undefined ? null : est;
       return {
-        decay_rate: withZ(withEvidence(record.decay_rate, fromModel(record.decay_rate || blankRecord(), est.score, est.mass), ev), zHalf && { z: -zHalf.z, sd: zHalf.zsd }),
-        retention_index: withZ(withEvidence(record.retention_index, fromModel(record.retention_index || blankRecord(), 100 - est.score, est.mass), ev), zHalf && { z: zHalf.z, sd: zHalf.zsd }),
-        retrieval_strength: withZ(withEvidence(record.retrieval_strength, fromModel(record.retrieval_strength || blankRecord(), 100 - est.score, est.mass), ev), zHalf && { z: zHalf.z, sd: zHalf.zsd }),
+        decay_rate: withZ(withEvidence(record.decay_rate, fromModel(record.decay_rate || blankRecord(), est.score, est.mass, 'beh', 'decay_rate'), ev), zHalf && { z: -zHalf.z, sd: zHalf.zsd }),
+        retention_index: withZ(withEvidence(record.retention_index, fromModel(record.retention_index || blankRecord(), 100 - est.score, est.mass, 'beh', 'retention_index'), ev), zHalf && { z: zHalf.z, sd: zHalf.zsd }),
+        retrieval_strength: withZ(withEvidence(record.retrieval_strength, fromModel(record.retrieval_strength || blankRecord(), 100 - est.score, est.mass, 'beh', 'retrieval_strength'), ev), zHalf && { z: zHalf.z, sd: zHalf.zsd }),
       };
     };
     const all = Object.values(memory).flat().sort((a, b) => a[6] - b[6]).slice(-forgetting.KEEP);
@@ -1438,7 +1440,7 @@ function observe(userId, observations, { source = 'unknown', trackId = null } = 
       const z = pop && pop.tau ? zPosterior(fit.slope, fit.se * fit.se, pop.mu, pop.tau) : null;
       const score = z ? clamp(50 + 17 * z.z, 0, 100) : 50;
       const mass = z ? clamp((REF_SD / (17 * z.sd)) ** 2 - (REF_SD / 17) ** 2, 0, MAX_MASS) : 0;
-      const rec = withEvidence(before, fromModel(before, score, mass), { kind: 'velocity', count: fit.answers });
+      const rec = withEvidence(before, fromModel(before, score, mass, 'beh', 'mastery_velocity'), { kind: 'velocity', count: fit.answers });
       if (z) rec.mz = { z: round4(z.z), sd: round4(z.sd), v: MODEL_VALIDITY };
       else delete rec.mz;
       stats.mastery_velocity = rec;
@@ -1465,7 +1467,7 @@ function observe(userId, observations, { source = 'unknown', trackId = null } = 
       const z = pop && pop.tau ? zPosterior(point.x, point.s2, pop.mu, pop.tau) : null;
       const score = z ? clamp(50 + 17 * z.z, 0, 100) : 50;
       const mass = z ? clamp((REF_SD / (17 * z.sd)) ** 2 - (REF_SD / 17) ** 2, 0, MAX_MASS) : 0;
-      const rec = withEvidence(before, fromModel(before, score, mass), { kind: 'pace', count: p.n });
+      const rec = withEvidence(before, fromModel(before, score, mass, 'beh', 'processing_velocity'), { kind: 'pace', count: p.n });
       if (z) rec.mz = { z: round4(z.z), sd: round4(z.sd) };
       else delete rec.mz;
       stats.processing_velocity = rec;
@@ -1488,7 +1490,7 @@ function observe(userId, observations, { source = 'unknown', trackId = null } = 
       const z = f && f.tau && r.c >= REACH_MIN ? zPosterior(point.x, point.s2, f.mu, f.tau) : null;
       const score = z ? clamp(50 + 17 * z.z, 0, 100) : (before.m !== undefined ? before.m : 50);
       const mass = z ? clamp((REF_SD / (17 * z.sd)) ** 2 - (REF_SD / 17) ** 2, 0, MAX_MASS) : 0;
-      const rec = withEvidence(before, fromModel(before, score, mass), { kind: 'reach', count: r.c });
+      const rec = withEvidence(before, fromModel(before, score, mass, 'beh', REACH_STAT), { kind: 'reach', count: r.c });
       stats[REACH_STAT] = rec;
     }
   }
@@ -1513,7 +1515,7 @@ function observe(userId, observations, { source = 'unknown', trackId = null } = 
   let ind = card.ind;
   if (indObs.length) {
     ind = { ...(card.ind || {}) };
-    for (const o of indObs) ind[o.indicator] = indicators.addUnits(ind[o.indicator], Number(o.x), Number(o.n), now);
+    for (const o of indObs) ind[o.indicator] = indicators.addUnits(ind[o.indicator], Number(o.x), Number(o.n), now, o.indicator);
   }
 
   return db.update('scorecards', card.id, {
@@ -1545,7 +1547,7 @@ function shift(userId, statId, delta, { source = 'after-level read', note = '', 
   const mass = Math.min(1, 0.1 + Math.abs(d) / 25);
   const nowIso = new Date().toISOString();
   const move = (record) => {
-    const f = ageFactor(record, nowIso);
+    const f = ageFactor(record, nowIso, statId);
     return {
       ...record,
       s: round2(clamp(record.s + d, 0, 100)),

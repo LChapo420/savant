@@ -292,6 +292,14 @@ App.mount(async () => {
     return { count: () => count, stop: () => window.removeEventListener('scroll', onScroll) };
   }
 
+  // Two optional in-lesson choices (services/scorecard/footprints.js; docs/SCORECARD-90.md section 11): which way the learner went through a worked
+  // example, and whether they want to go deeper or move on. The lesson is the same either way; each is one tap and is sent as scorecard evidence only.
+  // Not offered (session.footprint_choices is false) to an account that may not be measured more: under the consent age without a parent's agreement.
+  function sendFootprint(id, choice, level) {
+    if (!session.footprint_choices || session.preview) return;
+    App.api.post(`/api/sessions/${session.session_id}/footprint`, { id, choice, level }).catch(() => { /* a lost tap is not worth an error */ });
+  }
+
   function renderLesson() {
     const itemHost = document.getElementById('item');
     host.setAttribute('data-view', 'lesson');
@@ -307,6 +315,7 @@ App.mount(async () => {
         ${s.example ? `<pre class="lesson-example">${App.escapeHtml(s.example)}</pre>` : ''}
       </section>`).join('');
 
+    const whyOffered = !!(session.footprint_choices && !session.preview && lesson.worked_example && lesson.sections && lesson.sections[0] && lesson.sections[0].body);
     const worked = lesson.worked_example ? `
       <section class="lesson-section lesson-worked card">
         <h3 class="lesson-label">Worked example</h3>
@@ -315,6 +324,7 @@ App.mount(async () => {
           ${lesson.worked_example.steps.map((step) => `<li>${App.escapeHtml(step)}</li>`).join('')}
         </ol>
         <p class="small"><strong>Answer:</strong> ${App.escapeHtml(lesson.worked_example.answer)}</p>
+        ${whyOffered ? `<details class="lesson-why" id="lesson-why"><summary class="small">Why does this work?</summary><p class="small">${App.escapeHtml(lesson.sections[0].body)}</p></details>` : ''}
       </section>` : '';
 
     const mistakes = (lesson.common_mistakes || []).length ? `
@@ -345,7 +355,12 @@ App.mount(async () => {
         </div>
       </article>`;
 
+    // First tap wins: did the learner open the reasoning before the checks, or go on with the steps?
+    let whyOpened = false;
+    const whyBox = document.getElementById('lesson-why');
+    if (whyBox) whyBox.addEventListener('toggle', () => { if (whyBox.open) whyOpened = true; });
     document.getElementById('start-checks').addEventListener('click', () => {
+      if (whyBox) sendFootprint('why_or_steps', whyOpened ? 'why' : 'steps', currentLevel);
       if (lessonTelemetry && lessonTelemetry.block === block && lessonTelemetry.read_ms === undefined) {
         lessonTelemetry.read_ms = Date.now() - lessonTelemetry.openedAt;
         lessonTelemetry.scroll_backs = lessonTelemetry.scroll.count();
@@ -1034,8 +1049,25 @@ function renderRubricResult(result) {
         <div class="meter meter-lg ${advanced ? 'meter-success' : ''}"><span style="width:${Math.min(1, p.average || 0) * 100}%"></span></div>`}
         ${heldReviewHtml(outcome.review)}
         <div id="level-retention" style="margin-top:16px"></div>
+        <div id="level-depth" style="margin-top:16px"></div>
         <div class="row-wrap" id="level-actions" style="margin-top:16px"></div>
       </div>`;
+
+    // Optional: go deeper on this, or move on. The next level is the same either way; the pick only helps Savant fit how deep the lessons go.
+    if (session.footprint_choices && !session.preview) {
+      const depth = document.getElementById('level-depth');
+      depth.appendChild(App.el('p', { class: 'small muted', style: 'margin:0 0 6px' }, 'How would you like to go on? Either way the next level is the same. Your pick helps fit how deep your lessons go.'));
+      const row = App.el('div', { class: 'row-wrap' });
+      for (const [choice, label] of [['deeper', 'Go deeper on this'], ['move', 'Move on']]) {
+        const b = App.el('button', { class: 'btn btn-sm', type: 'button' }, label);
+        b.addEventListener('click', () => {
+          sendFootprint('deeper_or_move_on', choice, outcome.level);
+          depth.innerHTML = '<p class="small muted" style="margin:0">Thanks, noted.</p>';
+        });
+        row.appendChild(b);
+      }
+      depth.appendChild(row);
+    }
 
     const actions = document.getElementById('level-actions');
     // A preview has nowhere to continue to — the level ahead is the one that was

@@ -287,6 +287,7 @@ const EXPORT_MORE = [
   'es_catch_up', 'catchup_units',
   'material_notes',
   'experiment_arms', 'choice_pairs',
+  'footprint_events',
 ];
 
 router.get('/account/export', requireAuth, (req, res) => {

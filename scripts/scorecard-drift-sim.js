@@ -17,7 +17,10 @@ const normal = () => { let x = 0; while (x === 0) x = u(); return Math.sqrt(-2 *
 const rho = Math.pow(STAB, 1 / 365);                   // daily persistence of the true value
 const sig2 = 30 / (1 / 0.216 - 1);                     // daily reading noise (z units^2): never-forgetting var at day 30 = 0.216 (MAE 6.3 points)
 const DAYS = [30, 90, 180, 365]; const out = {};
-const variants = { never_forgets: null, kalman_right: rho, kalman_fade_x4_too_fast: Math.pow(rho, 4), kalman_fade_x4_too_slow: Math.pow(rho, 0.25) };
+const variants = { never_forgets: null, kalman_right: rho, kalman_fade_x4_too_fast: Math.pow(rho, 4), kalman_fade_x4_too_slow: Math.pow(rho, 0.25), kalman_mass_only: rho };
+// kalman_mass_only is what the live scorecard does (services/scorecard/drift.js): the variance grows at the right rate, so a new reading moves a stale
+// estimate more, but the estimate itself is not pulled back toward the population (the full Kalman's mean step, m = r m, is left out).
+const MASS_ONLY = new Set(['kalman_mass_only']);
 for (const [name, r] of Object.entries(variants)) out[name] = DAYS.map(() => 0);
 for (let i = 0; i < N; i++) {
   let z = normal(); const st = { never_forgets: { P: 1, b: 0 } }; const kal = {};
@@ -27,7 +30,7 @@ for (let i = 0; i < N; i++) {
     z = rho * z + Math.sqrt(1 - rho * rho) * normal();
     const x = z + Math.sqrt(sig2) * normal();
     P += 1 / sig2; b += x / sig2;
-    for (const [k, r] of Object.entries(variants)) if (r !== null) { const s = kal[k]; const m = r * s.m; const v = r * r * s.v + (1 - r * r); const g = v / (v + sig2); s.m = m + g * (x - m); s.v = (1 - g) * v; }
+    for (const [k, r] of Object.entries(variants)) if (r !== null) { const s = kal[k]; const m = MASS_ONLY.has(k) ? s.m : r * s.m; const v = r * r * s.v + (1 - r * r); const g = v / (v + sig2); s.m = m + g * (x - m); s.v = (1 - g) * v; }
     const di = DAYS.indexOf(d); if (di >= 0) {
       out.never_forgets[di] += Math.abs(b / P - z) * POP_SD;
       for (const k of Object.keys(kal)) out[k][di] += Math.abs(kal[k].m - z) * POP_SD;

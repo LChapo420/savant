@@ -412,6 +412,7 @@ const KNOWN_COLLECTIONS = [
   'material_notes',
   'reading_checks',
   'experiment_arms', 'choice_pairs',
+  'footprint_events',
   'beta_blocks', // arm slots only, no learner id (services/beta-arm.js); a child's own arm is on the user row and goes with it
 ];
 function collectionNames() {

@@ -290,6 +290,8 @@ function save(userId, kind, id, body, now = Date.now()) {
     goal = n.goal;
   }
   db.update(TABLES[kind], row.id, { retention_goal: goal });
+  // A goal chosen is a footprint of planning (services/scorecard/footprints.js); a choice after a test is not. Never throws.
+  if (body && body.horizon) { try { lazy('./scorecard/footprints').onRetentionGoal(userId, goal); } catch { /* never in the way of saving */ } }
   return { goal, row: db.byId(TABLES[kind], row.id) };
 }
 

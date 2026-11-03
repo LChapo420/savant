@@ -102,6 +102,9 @@ const POP_MIN_UNITS = 3;
 // How fast old units fade (days), as the rest of the scorecard's evidence.
 const HALF_LIFE_DAYS = Number(process.env.SCORECARD_HALF_LIFE_DAYS || 90);
 
+const drift = require('./drift');
+const footprintDefs = require('./footprint-defs');
+
 const families = () => {
   const f = String(process.env.SCORECARD_INDICATOR_FAMILIES || '').split(',').map((s) => s.trim()).filter(Boolean);
   return f.length ? new Set(f) : null;
@@ -113,7 +116,24 @@ const INDICATORS = Object.fromEntries(RAW.map(([key, family, unit, maps]) => [ke
 const BY_STAT = {};
 for (const ind of Object.values(INDICATORS)) for (const m of ind.maps) (BY_STAT[m.stat] = BY_STAT[m.stat] || []).push({ key: ind.key, family: ind.family, sign: m.sign, v: m.v });
 
+/**
+ * The footprints that are live (footprint-defs.js, docs/SCORECARD-90.md section 11): each is an indicator of its own family (errors assumed
+ * independent between footprints) and of the group 'footprint'. They are kept OUT of INDICATORS and BY_STAT on purpose: the simulators
+ * (scripts/scorecard-recovery-sim.js, scorecard-90-measure.js) walk those two and model footprints only in their own --foot run, so the default sim
+ * and the gate baseline are unchanged. Everything that reads or stores evidence uses ALL_INDICATORS and BY_STAT_ALL.
+ */
+const FOOTPRINT_INDICATORS = Object.fromEntries(footprintDefs.LIVE.map((d) => [d.key, { key: d.key, family: d.family, group: d.group, unit: d.unit, maps: d.maps }]));
+const ALL_INDICATORS = { ...INDICATORS, ...FOOTPRINT_INDICATORS };
+const BY_STAT_ALL = Object.fromEntries(Object.entries(BY_STAT).map(([k, v]) => [k, [...v]]));
+for (const ind of Object.values(FOOTPRINT_INDICATORS)) for (const m of ind.maps) (BY_STAT_ALL[m.stat] = BY_STAT_ALL[m.stat] || []).push({ key: ind.key, family: ind.family, group: ind.group, sign: m.sign, v: m.v });
+
 const round4 = (v) => Number(v.toFixed(4));
+
+/** How fast an indicator's old units fade (days): with drift on, like the measures it reads (drift.js); else the one constant. */
+function halfLifeOf(key) {
+  const ind = ALL_INDICATORS[key];
+  return ind ? drift.halfLifeOfMeasures(ind.maps.map((m) => m.stat), HALF_LIFE_DAYS) : HALF_LIFE_DAYS;
+}
 
 /**
  * Fold a batch of n units with mean x into a learner's moments for one indicator, faded by time: w = sum of weights (n, faded), s and q =
@@ -121,17 +141,17 @@ const round4 = (v) => Number(v.toFixed(4));
  * and is within / n for unfaded units), b = batches. Only aggregates leave the browser, so a learner's own spread is read from the spread
  * of their batch means (each has variance within / n), pooled across learners.
  */
-function addUnits(prev, mean, n, nowIso) {
+function addUnits(prev, mean, n, nowIso, key) {
   const p = prev || { w: 0, s: 0, q: 0, ww: 0, b: 0, at: null };
   const days = p.at ? (Date.parse(nowIso) - Date.parse(p.at)) / 86400000 : 0;
-  const f = days > 0 ? 2 ** (-days / HALF_LIFE_DAYS) : 1;
+  const f = days > 0 ? 2 ** (-days / (key ? halfLifeOf(key) : HALF_LIFE_DAYS)) : 1;
   return { w: round4(p.w * f + n), s: round4(p.s * f + n * mean), q: round4(p.q * f + n * mean * mean), ww: round4(p.ww * f * f + n), b: (p.b || 0) + 1, at: nowIso };
 }
 
 /** The population figures for every indicator, from the learners' moments: { key: { mu, tau, within } }. `eb` is scorecard ebFigures. */
 function population(cards, eb) {
   const out = {};
-  for (const key of Object.keys(INDICATORS)) {
+  for (const key of Object.keys(ALL_INDICATORS)) {
     const ms = cards.map((c) => c && c.ind && c.ind[key]).filter((m) => m && m.w >= POP_MIN_UNITS);
     // Pooled within-learner variance of one unit: the weighted spread of each learner's batch means (sum of n_b (x_b - mean)^2, expected
     // (batches - 1) x within), over the learners' batches minus one each.
@@ -179,8 +199,9 @@ function likelihood(ind, statId, pop, { scale = 1 } = {}) {
   if (!isOn() || !ind || !pop) return null;
   const fam = families();
   const parts = [];
-  for (const m of BY_STAT[statId] || []) {
-    if (fam && !fam.has(m.family)) continue;
+  for (const m of BY_STAT_ALL[statId] || []) {
+    if (fam && !fam.has(m.family) && !(m.group && fam.has(m.group))) continue;
+    if (m.group === 'footprint' && !footprintDefs.isOn()) continue;
     const mom = ind[m.key];
     const f = pop[m.key];
     if (!mom || !(mom.w > 0) || !f || !f.tau) continue;
@@ -232,7 +253,7 @@ function combine(existing, l) {
 function observations(batch) {
   const out = [];
   for (const [key, v] of Object.entries(batch || {})) {
-    if (!INDICATORS[key] || !v) continue;
+    if (!ALL_INDICATORS[key] || !v) continue;
     const x = Number(v.mean);
     const n = Number(v.n);
     if (Number.isFinite(x) && n > 0) out.push({ indicator: key, x, n: Math.min(n, 500) });
@@ -240,4 +261,4 @@ function observations(batch) {
   return out;
 }
 
-module.exports = { INDICATORS, BY_STAT, LLM_STATS, LLM_VALIDITY, RHO, POP_MIN_UNITS, addUnits, population, likelihood, posterior, combine, observations, isOn };
+module.exports = { INDICATORS, BY_STAT, ALL_INDICATORS, BY_STAT_ALL, FOOTPRINT_INDICATORS, halfLifeOf, LLM_STATS, LLM_VALIDITY, RHO, POP_MIN_UNITS, addUnits, population, likelihood, posterior, combine, observations, isOn };

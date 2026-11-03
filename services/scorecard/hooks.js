@@ -13,6 +13,7 @@
  */
 const db = require('../../config/db');
 const scorecard = require('./index');
+const footprints = require('./footprints');
 const signals = require('./signals');
 const irt = require('./irt');
 
@@ -204,6 +205,8 @@ function onBlockResolved(userId, { session, kind, level, items, trackId, experim
     const gap = returnGapDays(userId, session, kind);
     if (gap !== null) obs.push(...signals.fromReturn(gap, graded, ctx));
     if (obs.length) scorecard.observe(userId, obs, { source: `level:${kind}`, trackId });
+    // Behavioural footprints in this level's answers (footprints.js: the coach opened first, switch cost on IQ levels).
+    footprints.onBlock(userId, { session, level, items: graded });
     return upsertLevelRow(userId, where, {
       kind,
       session_id: session.id,
@@ -253,6 +256,7 @@ function onSessionFinished(userId, session, items) {
       .map((i) => ({ text: String(i.user_answer) })), { source: 'typed answers' });
     textSweep(userId);
     usageSweep(userId);
+    footprints.weeklySweep(userId);
   }
 }
 

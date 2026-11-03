@@ -266,9 +266,9 @@ conceptual_bias 9.4, identity_alignment 9.3, cognitive_flexibility 9.0, competit
 
 An independent method with a persistent error of about a fifth of today's assumed self-report/choice error (a validity of roughly 0.9 against the learner's behaviour, where published self-report/behaviour correlations are 0.1 to 0.4), or a behavioural footprint the app can read. Without either, the closest possible at day 30 in this sim is about 93.7% on average. Confirming this needs a real-learner study; nothing here is real-learner proof.
 
-## 11. Phase 4: behavioural footprints and a drift layer (SIMULATED; nothing here is in the product)
+## 11. Phase 4: behavioural footprints and a drift layer (designed in simulation; the first part is now in the product, section 11.9)
 
-**Every number in this section is SIMULATED.** The footprints' validities are assumptions (kinds and anchors in `scripts/lib/scorecard-footprints.js`; the citations there are from memory and their coefficients were not re-checked in this session). Method: `scripts/scorecard-90-measure.js --foot=1` (new, off by default; the default sim, the `--gate-check` baseline and every earlier number reproduce: the reference run below gives the same 93.70 as section 10.1). Same dumps as section 10: seeds A and B calibrate, seed C (31415) is held out and only scored. The day-0 onboarding (`docs/ONBOARDING-MODES.md`) is a different job and is not part of these numbers.
+**Every number in sections 11.1 to 11.8 is SIMULATED, and what the product now does (11.9) has no real-learner result yet.** The footprints' validities are assumptions (kinds and anchors in `scripts/lib/scorecard-footprints.js`; the citations there are from memory and their coefficients were not re-checked in this session). Method: `scripts/scorecard-90-measure.js --foot=1` (new, off by default; the default sim, the `--gate-check` baseline and every earlier number reproduce: the reference run below gives the same 93.70 as section 10.1). Same dumps as section 10: seeds A and B calibrate, seed C (31415) is held out and only scored. The day-0 onboarding (`docs/ONBOARDING-MODES.md`) is a different job and is not part of these numbers.
 
 ### 11.1 What was built
 
@@ -276,7 +276,7 @@ An independent method with a persistent error of about a fifth of today's assume
 - **Minutes, counted honestly.** A choice point costs 5 to 8 s, a tap 3 s, an embedded rule switch 3 s more than the plain item. Those events are chosen by the same planner as every other item, **inside the same 9.9 min/day measuring budget**, up to a monthly cap, and are charged. Voluntary behaviour (extra practice, a retry after a fail, a goal kept, skips, panel opens) costs the learner nothing extra and enters at its cap with no seconds charged. `scripts/scorecard-footprints-test.js` (new, in `npm test`) checks the list: real measures, free only if voluntary, files exist, the worst ten covered.
 - The footprints reuse the day-0 mini-lesson's choice names and scorer (`services/onboarding/tasks.js` scoreMiniLesson: first, hint, mode, deeper, connect, feel, more), so the product work in 11.6 is the same choice points offered again inside ordinary lessons, not a second design.
 
-### 11.2 The footprints (design only)
+### 11.2 The footprints (design; 11.9 says which are live)
 
 | footprint | kind | measures it reads | events a month | learner seconds | the file it would live in |
 |---|---|---|---|---|---|
@@ -338,7 +338,7 @@ Even a footprint that read the trait at 0.92 would add 0.35 points on average an
 
 Brackets are with footprints. At day 365 with method error / 25 the sim gives 96.88 and 100 of 100 measures within 5, at 1.75 min/day because the planner stops once every measure meets its variance target. The day-365 dumps come from the runs that were still going at the end of Phase 3 (`_proof-out/scorecard-90-v4`); the dump is written after the first mode, and the seed-7 process then crashed in a later mode with `RangeError: Invalid time value` in `scorecard-recovery-sim.js` (a date overflow at day 365, after the dump was written and unrelated to these numbers; not fixed). **Day 365 rests on 60 learners per seed: a difference of a tenth of a point is noise.** Days 180 and 365 read higher than day 30 only because evidence keeps accumulating in a world where the sim's truths never move; 11.7 shows what a moving truth does. Section 10.3's "98 to 99% was not reached at day 180" stands: even at day 365 with method error / 25 the sim gives 96.9.
 
-### 11.6 Product changes (design only, nothing built)
+### 11.6 Product changes (design; 11.9 says what was built)
 
 One new logging channel and four small UI changes; the log has to ship before anything else can be checked.
 
@@ -349,7 +349,7 @@ One new logging channel and four small UI changes; the log has to ship before an
 5. **Two one-tap prompts** (`public/js/session.js`): "connect this to something you learned elsewhere" (integration_tendency, creative_extension) and the five-face feel tap (emotional_engagement).
 6. **A check before any claim.** For each footprint, correlate it on real learners with the designed item for the same measure after a month and replace the assumed validity in `scripts/lib/scorecard-footprints.js` with the measured one. If footprints share a persistent error (a learner who never clicks anything skips them all), the independence assumed here fails and the gain is smaller than in 11.3.
 
-### 11.7 The forgetting and drift layer (design, with a SIMULATED toy)
+### 11.7 The forgetting and drift layer (design, with a SIMULATED toy; live: 11.9)
 
 Section 10.3: the sim's truths are fixed, so it cannot test what happens when a real learner changes. `scripts/scorecard-drift-sim.js` is a one-measure toy, not the 100-measure sim: daily readings with independent noise tuned so a never-forgetting average gives the day-30 error of the main sim (6.3 points), a true value that drifts with a stated one-year stability, and Kalman filters with and without the right fade. Mean absolute error in points (SIMULATED, 4000 learners):
 
@@ -371,4 +371,34 @@ A posterior that never forgets stops improving once real change is bigger than t
 - The 100-measure sim's truths still do not move: the drift layer is shown only in a one-measure toy.
 - Day 365 rests on 60 learners per seed; day 180 on 100.
 - Two Phase 3 simulator processes from before this phase were still running at the end (`scorecard-recovery-sim.js` day-365 seeds 20261022 and 31415, later modes only). When they finish they rewrite `curriculum-build/scorecard-sim/BASELINE.md` and `baseline.json` in this worktree with a different default run (100 learners, 100000 levels, seed 31415). That is what had dirtied those two files at the start of this phase; the stale copy was discarded, not committed, and `gate-baseline.json` is untouched. Discard them again if they reappear.
-- Not run: any change to the product, any model call, any real learner.
+- Not run in that phase: any change to the product, any model call, any real learner. (11.9 is the product change that followed; still no model call and no real learner.)
+
+### 11.9 What is in the product now (built, with assumed validities; no real-learner result yet)
+
+Branch `sc-live`. Nothing below makes a number better by itself: it logs the footprints for real from now on, so the assumed validities in 11.2 can be calibrated against the designed items on tester data (11.6, item 6), and it makes the posterior forget old evidence at a per-measure rate.
+
+**Live footprints** (9 indicators for 7 of the 14 design footprints; each design footprint is one indicator family of its own, so errors are assumed independent between footprints; validity is the square root of the kind's ceiling in `scripts/lib/scorecard-footprints.js`: CP 0.40, VOL 0.35, EMB 0.50, and the likelihood in `services/scorecard/indicators.js` gives each its own persistent error sqrt(1 - v^2) plus the sampling noise of its units; all feed `scorecard.observe` as indicators):
+
+| design footprint | indicator (unit) | where it comes from | measures |
+|---|---|---|---|
+| extra_practice | `fp.extra_practice` (a sitting; 1 if a replay of a passed level or begun after the day's minutes goal) and `fp.unprompted_start` (a day; 1 if the first sitting was the learner's own pick, not a review or enforcer) | weekly sweep over `sessions` | intrinsic_motivation, mastery_orientation |
+| retry_after_fail | `fp.retry_after_fail` (a level not passed; minus log of the minutes until that level was worked again, capped at two days) | weekly sweep over `sessions` and `items` | productive_struggle, persistence |
+| plan_set_and_kept | `fp.plan_kept` (a study day under a goal the learner chose with `PUT /api/plan/minutes`; 1 if active minutes reached 80% of it, from `study_sessions`) and `fp.retention_choice` (a retention goal saved: 1 for a test date or bounded horizon, 0 for forever; at the moment of choosing, `services/retention-goal.js`) | weekly sweep and the save | planning_tendency, strategy_awareness, instruction_adherence (the goal kept only) |
+| rule_switch | `fp.switch_cost` (an IQ level: log time on a correct item after a change of skill minus after the same skill, at least 2 of each) | level close | cognitive_flexibility (negative), interference_susceptibility |
+| hint_or_try | `fp.hint_first` (a question where the coach was opened: 1 if within 8 s of it appearing) | level close, from `coach_started_at` and the answer time | hint_dependency, productive_struggle (negative) |
+| why_or_steps | `fp.why_first` (1 if the learner opened "Why does this work?" before the checks) | new, `public/js/session.js`: a disclosure under a lesson's worked example, showing the lesson's first section | conceptual_bias |
+| deeper_or_move_on | `fp.deeper` (1 for "Go deeper on this", 0 for "Move on") | new, `public/js/session.js`: two small buttons on the level-complete card; the next level is the same either way | depth_breadth |
+
+The last two are the two new in-lesson choice points (about 5 s each, optional, same look, no restyle); they were picked because they sit on two of 11.3's worst ten (conceptual_bias, depth_breadth) and have the most events a month (200 each at 5 s). They post to `POST /api/sessions/:id/footprint`. Footprints are not logged on a preview, a placement, a skip exam, a review or an enforcer.
+
+**Design only, not built:** race_or_solo, link_prompt, feel_tap (new prompts), topic_pick, skip_and_exit, reward_panel, ask_a_question (voluntary reads that need new capture or other services). The mixed-rule items of 11.6 item 4 are also not built: `fp.switch_cost` reads the skill changes that IQ levels already contain, which is a weaker, confounded stand-in (item difficulty differs between skills), kept at the EMB validity but expected to read lower than designed.
+
+**Who and what is kept.** Everything above runs only where `services/boosters.js` `allowed` says yes: an under-13 account without a parent's `measurement_extras` agreement (or an account that has not answered the age screen) gets no choice buttons, no log and no evidence, the same gate as the onboarding and `usageSweep`. `SCORECARD_FOOTPRINTS=off` stops all of it. One compact row per feed goes to the new `footprint_events` collection (`{ user_id, fp, ind, x, n, level, at }`: a number and a count, no text, no keys, no answers), pruned after 180 days, in the account export and deleted with the account; the privacy page says so. The weekly sweep runs once a week per learner after a sitting finishes; the in-lesson reads happen at the tap or when the level closes.
+
+**The footprints are kept out of the simulators on purpose.** `indicators.INDICATORS` and `BY_STAT` (what `scripts/scorecard-recovery-sim.js` and `scripts/scorecard-90-measure.js` walk) do not contain them; reading and storing evidence uses `ALL_INDICATORS` and `BY_STAT_ALL`. The footprints' only simulation is still `--foot=1`, so sections 11.3 to 11.5 reproduce unchanged.
+
+**Drift layer, `SCORECARD_DRIFT`, default on; `=off` restores today's behaviour exactly** (`services/scorecard/drift.js`). Every measure gets an evidence half-life from an assumed one-year stability s (`365 ln 0.9 / (2 ln s)` days, clamped to 21 to 365; s = 0.81 is the old 90 days): state-like measures (emotional_engagement, intrinsic_motivation, boredom_susceptibility, fatigue_curve at s = 0.5) about 28 days, evaluation_anxiety (0.6) 38, the engagement and motivation categories (0.7) 54, most measures (0.8 to 0.85) 86 to 118, intake and abilities (0.9 to 0.92) 183 to 231. It replaces the single 90 days in the evidence mass (`ageFactor`: value path, models, shifts, the stat records of taps), in a rate's counts, and in the faded units of every indicator (an indicator's half-life is the geometric mean over the measures it reads). The stabilities are ASSUMED (category defaults and a few named overrides; the figures are from memory, not re-checked) and are to be replaced by the app's own re-measurements. Not done: the stale estimate's mean is not pulled back toward the population, and the taps' and side counts' own fades keep 90 days. The toy now has that variant (`kalman_mass_only`, SIMULATED, 4000 learners, mean absolute error in points, stability 0.8): day 365 never forgets 5.35, full Kalman fade 4.16, mass fade only 4.22; stability 0.9: 4.03, 3.50, 3.53. So the part that was built keeps about 95% of the toy's gain.
+
+**What moved in the gates.** The 100-measure simulators do not read the footprints, so the footprints leave the default sim and the 11.3 to 11.5 numbers untouched. The drift layer does touch the recovery sim, because it runs the real scorecard: the quick `--gate-check` (30 learners, 60 levels, 35 simulated days) gives week 4 **43 pass / 15 fail with drift on (the default) against the committed baseline's 41 / 16**; with `SCORECARD_DRIFT=off` it reproduces 41 / 16 exactly. The baseline file is unchanged and the gate is not weakened (it passes; two extra passes are within what 30 learners can do by chance, and nothing here shows the drift layer helps the sim, because the sim's learners do not change). The full default recovery run was not repeated.
+
+**Tests.** `scripts/scorecard-footprints-live-test.js` (in `npm test`): the live list against the design list and validities, the sim-visible set excluding footprints, under-13 and `SCORECARD_FOOTPRINTS=off` (nothing logged or read), each read on synthetic rows, the two choices (allowed values, once each, never on a preview), the weekly sweep once a week with pruning, the information bound validity^2 / (1 - validity^2), two footprints adding while one footprint's two reads do not, the half-lives, `SCORECARD_DRIFT=off` giving exactly the old fade, and the toy.

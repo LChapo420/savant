@@ -28,6 +28,7 @@ const gameAssignments = require('../config/game-assignments');
 const grading = require('../services/grading');
 const ai = require('../services/ai');
 const scorecardHooks = require('../services/scorecard/hooks');
+const scorecardFootprints = require('../services/scorecard/footprints');
 const learnerRecord = require('../services/learner-record');
 // "Too fast to count" on checkpoints and the Final (staged round 3, ADAPT_EFFORT=on).
 const effortMonitor = require('../services/effort-monitor');
@@ -402,6 +403,7 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
     return res.json({
       ...sessionShape(open),
       resumed: true,
+      footprint_choices: scorecardFootprints.choicesOffered(req.user),
       pass_mark: curriculum.passMarkFor(open.kind, { base: require('../config/owner').ownerOnly(req.user.id) }), // eslint-disable-line global-require
       kind_label: open.kind === 'essay'
         ? curriculum.checkpointLabel(grade, open.level)
@@ -418,6 +420,7 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
   res.status(201).json({
     ...sessionShape(session),
     resumed: false,
+    footprint_choices: scorecardFootprints.choicesOffered(req.user),
     pass_mark: curriculum.passMarkFor(session.kind, { base: require('../config/owner').ownerOnly(req.user.id) }), // eslint-disable-line global-require
     kind_label: session.kind === 'essay'
       ? curriculum.checkpointLabel(grade, session.level)
@@ -628,6 +631,21 @@ router.post('/sessions/:id/block-finish', requireAuth, async (req, res) => {
     // back into the grading. Empty for everyone who saw it as they went.
     review: heldReview(session, sessions.itemsInBlock(session.id, blockIndex)),
   });
+});
+
+/**
+ * One of the two in-lesson choices (footprints.js: "Why does this work?" on a lesson page, "Go deeper / Move on" on the level-complete card):
+ * { id, choice, level }. Scorecard evidence only; the lesson is the same either way. Quietly ignored for an account that may not be measured more
+ * (age screen unanswered, or under the consent age without a parent's agreement) and for anything but a real level of this learner's own sitting.
+ */
+router.post('/sessions/:id/footprint', requireAuth, limit('footprint', 120, 60 * 60 * 1000), (req, res) => {
+  const session = loadSession(req);
+  if (!session) return res.status(404).json({ error: 'Session not found.' });
+  const level = Number((req.body || {}).level);
+  const block = (session.blocks || []).find((b) => b.level === level);
+  if (!block) return res.json({ ok: true, kept: false });
+  const fed = scorecardFootprints.onChoices(req.user.id, { session, level, choices: [{ id: (req.body || {}).id, choice: (req.body || {}).choice }] });
+  res.json({ ok: true, kept: !!(fed && fed.length) });
 });
 
 /**
