@@ -51,7 +51,10 @@ function applyFile(fix) {
     const i = row && row.payload ? (row.payload.questions || []).findIndex((x) => x.id === w.qid) : -1;
     if (i < 0) { out.missing++; continue; }
     const q = row.payload.questions[i];
-    if (q.prompt === w.question.prompt) { out.already++; continue; }
+    // Already applied only when the whole judged question is there: a rewrite can keep the prompt and change the options or the key.
+    const same = q.prompt === w.question.prompt && q.answerIndex === w.question.answerIndex
+      && JSON.stringify(q.choices) === JSON.stringify(w.question.choices);
+    if (same) { out.already++; continue; }
     if (q.prompt !== w.old_prompt) { out.conflicts.push(`${w.level}:${w.qid} prompt is neither the old nor the new one`); continue; }
     row.payload.questions[i] = { ...q, ...w.question, id: q.id };
     touched.add(row.id); out.rewritten++;

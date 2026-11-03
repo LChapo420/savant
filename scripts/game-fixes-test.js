@@ -32,6 +32,14 @@ const row = db.insert('game_payloads', { user_id: null, engine_id: holds[holds.l
   check('q3 rewritten, id kept', got[2].prompt === 'New prompt?' && got[2].id === 'q3' && got[2].answerIndex === 2);
   r = fixes.applyFile(fix);
   check('idempotent: a second run changes nothing', r.rekeyed === 0 && r.rewritten === 0, r);
+  // a second rewrite that keeps the prompt and changes only the options and key (eng-r3, 2026-11-03: 10 levels stayed held over this)
+  const same = { prompt: 'New prompt?', choices: ['w', 'x2', 'y2', 'z'], answerIndex: 0, explanation: 'w is right' };
+  r = fixes.applyFile({ ...fix, rekeys: [], rewrites: [{ level: L, qid: 'q3', old_prompt: 'New prompt?', question: same }] });
+  const kept = db.byId('game_payloads', row.id).payload.questions[2];
+  check('a same-prompt rewrite still replaces the options and the key', r.rewritten === 1 && kept.answerIndex === 0 && kept.choices[1] === 'x2', [r, kept]);
+  r = fixes.applyFile({ ...fix, rekeys: [], rewrites: [{ level: L, qid: 'q3', old_prompt: 'New prompt?', question: same }] });
+  check('and is idempotent', r.rewritten === 0 && r.already === 1, r);
+  fixes.applyFile({ ...fix, rekeys: [], rewrites: [{ level: L, qid: 'q3', old_prompt: 'New prompt?', question: neu }] }); // back to the first rewrite for the checks below
   // release pinned to a hash
   const bad = fixes.applyFile({ ...fix, release: [{ level: L, hash: 'deadbeef' }] });
   check('a release with the wrong hash stays held', bad.released === 0 && games.held('english', 'proficient', L) === true);
