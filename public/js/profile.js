@@ -378,6 +378,9 @@ App.mount(async () => {
       <p class="small muted">What you want from each subject or grade. It shapes how long a placement is and how lessons and practice are set up to start with; how you do as you go keeps adjusting it.</p>
     </div>
 
+    <h2 class="section-title">${window.icon('edit')}How long to remember</h2>
+    <div class="card" id="retention-goals-card"></div>
+
     <h2 class="section-title">${window.icon('edit')}Your details report</h2>
     <div class="card">
       <p class="small muted">
@@ -601,6 +604,7 @@ App.mount(async () => {
   } catch { /* the card is optional */ }
 
   if (window.GoalPicker) window.GoalPicker.list(document.getElementById('goals-card'));
+  if (window.RetentionGoal) window.RetentionGoal.list(document.getElementById('retention-goals-card'));
 
   const masteryHost = document.getElementById('mastery');
   for (const enrollment of progress.enrollments) {

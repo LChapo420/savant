@@ -31,6 +31,7 @@ const crypto = require('crypto');
 const db = require('../config/db');
 const courses = require('./course-builder');
 const path = require('./material-path');
+const retentionGoal = require('./retention-goal');
 
 const PASS = path.PASS;
 const QUIZ_SIZE = 5;
@@ -141,7 +142,13 @@ const specOf = (userId) => { try { return require('./learning-spec').buildSpec(u
 const isDue = (st, now) => st.status === 'mastered' && st.due && Date.parse(st.due) <= now;
 const dueAt = (now, days) => new Date(now + days * DAY).toISOString();
 function scheduleReview(r, st, now) {
-  const days = path.intervalDays(st.right, st.wrong_n, r.forget_m || 0, specOf(r.user_id));
+  let days = path.intervalDays(st.right, st.wrong_n, r.forget_m || 0, specOf(r.user_id));
+  // The course's retention goal (services/retention-goal.js): a test date compresses the review to the date, a horizon stops
+  // reviews that would land past it; forever (the default) leaves the curve's interval as it is.
+  const lim = retentionGoal.limitInterval(retentionGoal.forMaterial(r.user_id, r.material_id, now), days, now);
+  if (lim.done) { st.due = null; st.interval_days = days; st.goal_done = true; return days; }
+  days = lim.days;
+  delete st.goal_done;
   st.due = dueAt(now, days);
   st.interval_days = days;
   return days;

@@ -217,6 +217,8 @@ function trigger({ user, enrollment, grade, reason = null }) {
     if (!bl.aiReady() || !bl.mayGenerate(user)) return [];
     const pace = paceFor(enrollment);
     const ahead = aheadFor(enrollment, pace);
+    // A nearer test date is written first (services/retention-goal.js); no test date sorts last, so forever changes nothing.
+    const testDays = testDaysOf(user.id, enrollment);
     const steps = planFor({ user, enrollment, grade: g });
     const trackId = enrollment.track_id;
     const gradeId = enrollment.grade_id;
@@ -239,7 +241,7 @@ function trigger({ user, enrollment, grade, reason = null }) {
       }
       const key = bl.planKey(step.tailored ? user.id : null, where.trackId, where.gradeId, step.level);
       wanted.add(key);
-      enqueue({ user, step, key, enrollmentId: enrollment.id, levelsPerHour: pace.levelsPerHour, reason, ...where });
+      enqueue({ user, step, key, enrollmentId: enrollment.id, levelsPerHour: pace.levelsPerHour, testDays, reason, ...where });
       if (!step.tailored) continue;
       const due = bl.retailorDue({ userId: user.id, trackId, gradeId, level: step.level });
       if (!due) continue;
@@ -249,7 +251,7 @@ function trigger({ user, enrollment, grade, reason = null }) {
       if (queue.length >= MAX_QUEUE) continue;
       queue.push({
         key: retailorKey, kind: 'retailor', user, userId: user.id, enrollmentId: enrollment.id,
-        levelsPerHour: pace.levelsPerHour, reason, trackId, gradeId, level: step.level,
+        levelsPerHour: pace.levelsPerHour, testDays, reason, trackId, gradeId, level: step.level,
         tailored: step.tailored, tier: step.tier, priority: step.position + 0.5, seq: seq++,
       });
       note({ type: 'queued', key: retailorKey, kind: 'retailor', level: step.level });
@@ -287,7 +289,17 @@ function triggerForUser({ user, reason = 'dashboard' }) {
   }
 }
 
-function enqueue({ user, step, key, enrollmentId, levelsPerHour, reason, trackId, gradeId }) {
+/** Days to the learner's test in this subject (null: none set, or the test has passed). */
+function testDaysOf(userId, enrollment) {
+  try {
+    // eslint-disable-next-line global-require
+    const eff = require('./retention-goal').forEnrollment(userId, enrollment);
+    return eff.status === 'date' ? eff.days_left : null;
+  } catch { return null; }
+}
+const soonest = (job) => (Number.isFinite(job.testDays) ? job.testDays : 1e9);
+
+function enqueue({ user, step, key, enrollmentId, levelsPerHour, testDays = null, reason, trackId, gradeId }) {
   const bl = blockLevels();
   const owner = step.tailored ? user.id : null;
   const plan = bl.findPlan({ userId: owner, trackId, gradeId, level: step.level });
@@ -318,14 +330,14 @@ function enqueue({ user, step, key, enrollmentId, levelsPerHour, reason, trackId
   }
   if (queue.length >= MAX_QUEUE) return;
   queue.push({
-    key, kind, user, userId: user.id, enrollmentId, levelsPerHour, reason, trackId, gradeId,
+    key, kind, user, userId: user.id, enrollmentId, levelsPerHour, testDays, reason, trackId, gradeId,
     level: step.level, tailored: step.tailored, tier: step.tier, priority: step.position, seq: seq++,
   });
   note({ type: 'queued', key, kind, tier: step.tier, level: step.level });
 }
 
 function pump() {
-  queue.sort((a, b) => a.priority - b.priority || (b.levelsPerHour || 0) - (a.levelsPerHour || 0) || a.seq - b.seq);
+  queue.sort((a, b) => a.priority - b.priority || soonest(a) - soonest(b) || (b.levelsPerHour || 0) - (a.levelsPerHour || 0) || a.seq - b.seq);
   for (let i = 0; i < queue.length && running.size < globalCap();) {
     const job = queue[i];
     if ((runningFor.get(job.userId) || 0) >= perUserCap() || running.has(job.key)) { i++; continue; }
@@ -423,4 +435,4 @@ function reset() {
   triggeredEnrollments.clear();
 }
 
-module.exports = { trigger, triggerForUser, planFor, idle, status, reset, events, paceFor, writeMinutes, aheadFor };
+module.exports = { trigger, triggerForUser, planFor, idle, status, reset, events, paceFor, writeMinutes, aheadFor, testDaysOf };
