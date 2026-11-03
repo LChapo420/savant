@@ -2140,7 +2140,15 @@ async function write({ userId, trackId, gradeId, level, tailored }) {
   // replaced (ensure, BLOCK_WRITE_TIMEOUT_MS) finds another token there when it
   // finally ends, and leaves the row to the write that replaced it.
   const token = crypto.randomBytes(8).toString('hex');
-  db.update(COLLECTION, row.id, { status: 'writing', kind, started_at: new Date().toISOString(), write_token: token, reason: null });
+  db.update(COLLECTION, row.id, {
+    status: 'writing',
+    kind,
+    started_at: new Date().toISOString(),
+    write_token: token,
+    reason: null,
+    // eslint-disable-next-line global-require
+    spec_sig: adapt && adapt.active ? require('./spec-sig').specSig(adapt.spec) : null,
+  });
   const settle = (patch) => {
     const now = db.byId(COLLECTION, row.id);
     if (!now || now.write_token !== token) return null;
