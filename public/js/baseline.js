@@ -75,7 +75,7 @@ App.mount(async () => {
       for (const q of s.questions) answers.push((await mcq(q.q, q.options, false)).choice);
       return { answers, readMs, words: s.words };
     },
-    span: async () => {
+    span: async (s) => {
       const run = async (backward) => {
         let best = 0;
         for (let len = backward ? 2 : 3, fails = 0; fails < 2 && len < 10;) {
@@ -87,11 +87,13 @@ App.mount(async () => {
         }
         return best;
       };
-      const fwd = await run(false); const bwd = await run(true);
+      const fwd = await run(false);
+      if (s.forwardOnly) return { maxSpan: fwd };   // the short version of the task: forward span only
+      const bwd = await run(true);
       return { maxSpan: (fwd + bwd + 1.5) / 2 };   // backward runs a digit or two shorter: +1.5 puts the average on forward-span terms
     },
-    speed: async () => {
-      let correct = 0; let wrong = 0; let firstMs = null; const end = Date.now() + 60000; const t0 = Date.now();
+    speed: async (s) => {
+      let correct = 0; let wrong = 0; let firstMs = null; const end = Date.now() + (s.dur || 60) * 1000; const t0 = Date.now();
       const rnd = () => Array.from({ length: 5 }, () => Math.floor(Math.random() * 10)).join('');
       while (Date.now() < end) {
         const a = rnd(); const same = Math.random() < 0.5;

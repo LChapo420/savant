@@ -17,17 +17,17 @@ const INTRO_SEC = 15;   // reading the first screen
 
 const MODES = {
   quick: {
-    id: 'quick', label: 'Quick', minutes: 5, budgetSec: 276, minGainPerMin: 0, margin: 1.12,
+    id: 'quick', label: 'Quick', minutes: 5, budgetSec: 285, minGainPerMin: 0, margin: 1.12,
     required: ['sv:interests'],
     blurb: 'A first picture of how you learn, in under 5 minutes. Fewer things measured, and with less certainty. Good to start; you can go deeper any time.',
   },
   balanced: {
-    id: 'balanced', label: 'Balanced', minutes: 18, budgetSec: 1080, minGainPerMin: 0.1, margin: 1.08,
+    id: 'balanced', label: 'Balanced', minutes: 19, budgetSec: 1170, minGainPerMin: 0.05, margin: 1.08,
     required: ['sv:interests', 'sv:studying', 'sv:hobbies'],
     blurb: 'About 15 to 20 minutes: short tasks (memory, speed, reading, reasoning), a mini-lesson where you make choices, and a few quick questions. The best accuracy for the time.',
   },
   accurate: {
-    id: 'accurate', label: 'Accurate', minutes: 57, budgetSec: 3420, minGainPerMin: 0.1, margin: 1.05,
+    id: 'accurate', label: 'Accurate', minutes: 59, budgetSec: 3540, minGainPerMin: 0.05, margin: 1.05,
     required: ['sv:interests', 'sv:studying', 'sv:hobbies', 'sv:sports', 'sv:notes', 'sv:why'],
     blurb: 'Under an hour, with breaks whenever you want: everything above, more of it, and two ways of being taught tried side by side. The most accurate starting picture possible.',
   },
@@ -79,7 +79,7 @@ class Planner {
     this.used.add(item.id);
     if (this.queue[0] === item.id) this.queue.shift();
     for (const i of item.informs) {
-      if (readings[i.stat] !== undefined) model.bump(this.state, i.stat, item.family, i.r, readings[i.stat]);
+      if (readings[i.stat] !== undefined) model.bump(this.state, i.stat, item.family, model.eff(item.family, i.r), readings[i.stat]);
     }
     if (!item.free) { this.nominal += item.sec; this.actual += seconds; }
     this.elapsed += seconds;

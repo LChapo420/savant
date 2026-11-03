@@ -21,6 +21,12 @@ function content() {
   if (!cache) { try { cache = JSON.parse(fs.readFileSync(FILE, 'utf8')); } catch { cache = { self: {}, reading: [], reason: {}, minilesson: [], taste: [] }; } }
   return cache;
 }
+// The factor self-ratings (fq:*) are short hand-written statements about whole families of traits (content/onboarding/factor-items.json).
+let factorCache = null;
+function factorContent() {
+  if (!factorCache) { try { factorCache = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'content', 'onboarding', 'factor-items.json'), 'utf8')); } catch { factorCache = { items: {} }; } }
+  return factorCache;
+}
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 const z = (x, mu, sd) => clamp((x - mu) / sd, -3, 3);
 const shuffle = (a, rnd) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
@@ -67,8 +73,8 @@ function present(item, seed) {
       if (!q) return null;
       return { id: item.id, kind: 'forced', prompt: q.prompt, options: [{ k: 'low', text: q.low }, { k: 'high', text: q.high }], _server: {} };
     }
-    const [, stat, ab] = item.id.split(':');
-    const own = (c.self && c.self[stat]) || [];
+    const [prefix, stat, ab] = item.id.split(':');
+    const own = prefix === 'fq' ? ((factorContent().items || {})[stat] || []) : ((c.self && c.self[stat]) || []);
     const pair = own[ab === 'a' ? 0 : 1];
     if (!pair) return null;
     high = pair.high; low = pair.low;
@@ -103,7 +109,7 @@ function present(item, seed) {
     return { id: item.id, kind: 'taste', first: flip ? t.b : t.a, second: flip ? t.a : t.b, questions: t.questions.map((q) => ({ q: q.q, options: q.options })), _server: { flip, keys: t.questions.map((q) => q.key) } };
   }
   if (item.kind === 'survey') return { id: item.id, kind: 'survey', field: item.survey, _server: {} };
-  if (['span', 'speed', 'switch'].includes(item.kind)) return { id: item.id, kind: item.kind, config: item.id, seed, _server: {} };
+  if (['span', 'speed', 'switch'].includes(item.kind)) return { id: item.id, kind: item.kind, config: item.id, seed, dur: item.dur || null, forwardOnly: !!item.forwardOnly, _server: {} };
   return null;
 }
 
@@ -133,7 +139,7 @@ function score(item, response, server) {
     return orient(item, { working_memory_span: z(r.maxSpan, 5.5, 1.3), intake_baseline: z(r.maxSpan, 5.5, 1.3), chunk_granularity: z(r.maxSpan, 5.5, 1.3) });
   }
   if (item.kind === 'speed') {
-    const v = z(r.correct - 1.5 * (r.wrong || 0), 26, 7);
+    const v = z((r.correct - 1.5 * (r.wrong || 0)) * (60 / (item.dur || 60)), 26, 7);   // the norm is per 60 s
     return orient(item, { processing_velocity: v, intake_baseline: v, warmup_latency: -z(r.firstMs, 2200, 700) });
   }
   if (item.kind === 'switch') {

@@ -1,0 +1,694 @@
+{
+ "simulated": true,
+ "bundle": "central",
+ "selector_scenario": "central",
+ "selector_prior": "independent",
+ "world_scenario": "central",
+ "world_corr": "central",
+ "shared_noise": false,
+ "groups": {
+  "a": {
+   "label": "established fast, reliable tests (working memory, speed, reading, reasoning, switching)",
+   "n": 15
+  },
+  "b": {
+   "label": "read moderately by a short choice task or survey",
+   "n": 29
+  },
+  "c": {
+   "label": "no fast test on day 0 (self-report pair and correlated traits only)",
+   "n": 56
+  }
+ },
+ "shipped_content_only": false,
+ "seed": 31415,
+ "heldout": true,
+ "learners": 300,
+ "validity_factor": 1,
+ "fatigue": 0.2,
+ "guess_the_mean": {
+  "mae": 13.8,
+  "accuracy": 86.2
+ },
+ "today": {
+  "mae": 13.75,
+  "accuracy": 86.25,
+  "minutes": "about 3 to 4 (20 forced-choice items and the survey)",
+  "days_to": {
+   "87": 15,
+   "88": null,
+   "90": null,
+   "95": null
+  }
+ },
+ "today_items_ideal_readout": {
+  "accuracy": 86.29
+ },
+ "app_only_curve_default_pace": [
+  [
+   7,
+   87.8
+  ],
+  [
+   14,
+   87.7
+  ],
+  [
+   21,
+   88
+  ],
+  [
+   28,
+   88.2
+  ]
+ ],
+ "modes": {
+  "quick": {
+   "share_removed_app": 1,
+   "share_removed_ideal": 1.2,
+   "share_removed_by_group_app": {
+    "a": 3.9,
+    "b": 0.7,
+    "c": 0.3
+   },
+   "share_removed_by_group_ideal": {
+    "a": 4.5,
+    "b": 1.1,
+    "c": 0.4
+   },
+   "share_removed_by_category_app": {
+    "intake": 5,
+    "reasoning": 1.3,
+    "pacing": 0.8,
+    "engagement": 0.8,
+    "memory": 0,
+    "resilience": 0.4,
+    "metacognition": 0,
+    "representation": 0.8,
+    "motivation": 0.6,
+    "transfer": 0
+   },
+   "share_removed_by_factor": {},
+   "best10_measures_app": [
+    [
+     "processing_velocity",
+     19
+    ],
+    [
+     "working_memory_span",
+     15.9
+    ],
+    [
+     "inductive_trajectory",
+     6
+    ],
+    [
+     "step_explicitness",
+     5.9
+    ],
+    [
+     "challenge_appetite",
+     5.4
+    ],
+    [
+     "intake_baseline",
+     4.1
+    ],
+    [
+     "attention_runway",
+     3.7
+    ],
+    [
+     "productive_struggle",
+     3.6
+    ],
+    [
+     "cycle_architecture",
+     3.5
+    ],
+    [
+     "intrinsic_motivation",
+     2.5
+    ]
+   ],
+   "worst10_measures_app": [
+    [
+     "misconception_persistence",
+     0
+    ],
+    [
+     "integration_tendency",
+     0
+    ],
+    [
+     "depth_breadth",
+     0
+    ],
+    [
+     "creative_extension",
+     0
+    ],
+    [
+     "mastery_velocity",
+     0
+    ],
+    [
+     "momentum_dependence",
+     -0.1
+    ],
+    [
+     "gamification_response",
+     -0.1
+    ],
+    [
+     "interference_susceptibility",
+     -0.1
+    ],
+    [
+     "tone_formality",
+     -0.2
+    ],
+    [
+     "mastery_orientation",
+     -0.2
+    ]
+   ],
+   "minutes_median": 4.65,
+   "minutes_p90": 4.73,
+   "minutes_max": 4.92,
+   "items_median": 15,
+   "accuracy_ideal": 86.38,
+   "accuracy_app_readback": 86.34,
+   "gain_vs_today": 0.09,
+   "days_to": {
+    "87": 10,
+    "88": null,
+    "90": null,
+    "95": null
+   },
+   "accuracy_curve_days": [
+    [
+     0,
+     86.38
+    ],
+    [
+     7,
+     86.95
+    ],
+    [
+     14,
+     87.12
+    ],
+    [
+     21,
+     87.26
+    ],
+    [
+     28,
+     87.39
+    ]
+   ],
+   "measures_better_than_guess": 18,
+   "worst10": [
+    {
+     "stat": "conceptual_bias",
+     "today": 13.7,
+     "ideal": 13.7,
+     "app": 13.7
+    },
+    {
+     "stat": "identity_alignment",
+     "today": 13.5,
+     "ideal": 13.1,
+     "app": 13.2
+    },
+    {
+     "stat": "cognitive_flexibility",
+     "today": 13.1,
+     "ideal": 13,
+     "app": 13
+    },
+    {
+     "stat": "competitive_drive",
+     "today": 14.6,
+     "ideal": 14.6,
+     "app": 14.6
+    },
+    {
+     "stat": "depth_breadth",
+     "today": 13.9,
+     "ideal": 13.9,
+     "app": 13.9
+    },
+    {
+     "stat": "productive_struggle",
+     "today": 14.7,
+     "ideal": 12.8,
+     "app": 12.9
+    },
+    {
+     "stat": "planning_tendency",
+     "today": 13.6,
+     "ideal": 13.6,
+     "app": 13.6
+    },
+    {
+     "stat": "emotional_engagement",
+     "today": 14.3,
+     "ideal": 14.3,
+     "app": 14.3
+    },
+    {
+     "stat": "intrinsic_motivation",
+     "today": 14.2,
+     "ideal": 13.7,
+     "app": 13.8
+    },
+    {
+     "stat": "integration_tendency",
+     "today": 14.3,
+     "ideal": 14.3,
+     "app": 14.3
+    }
+   ]
+  },
+  "balanced": {
+   "share_removed_app": 2.8,
+   "share_removed_ideal": 3.6,
+   "share_removed_by_group_app": {
+    "a": 6.2,
+    "b": 2.3,
+    "c": 2.2
+   },
+   "share_removed_by_group_ideal": {
+    "a": 7,
+    "b": 3.3,
+    "c": 2.9
+   },
+   "share_removed_by_category_app": {
+    "intake": 6.7,
+    "reasoning": 3.7,
+    "pacing": 2.6,
+    "engagement": 2.2,
+    "memory": 2.3,
+    "resilience": 2.5,
+    "metacognition": 1.9,
+    "representation": 2.2,
+    "motivation": 2.2,
+    "transfer": 1.7
+   },
+   "share_removed_by_factor": {},
+   "best10_measures_app": [
+    [
+     "working_memory_span",
+     22.2
+    ],
+    [
+     "processing_velocity",
+     18.1
+    ],
+    [
+     "analogical_transfer",
+     9
+    ],
+    [
+     "inductive_trajectory",
+     6.7
+    ],
+    [
+     "intake_baseline",
+     6.5
+    ],
+    [
+     "intrinsic_motivation",
+     6
+    ],
+    [
+     "pattern_detection",
+     5.6
+    ],
+    [
+     "identity_alignment",
+     4.8
+    ],
+    [
+     "vocabulary_ceiling",
+     4.5
+    ],
+    [
+     "interference_susceptibility",
+     4.3
+    ]
+   ],
+   "worst10_measures_app": [
+    [
+     "global_framing_need",
+     0.9
+    ],
+    [
+     "creative_extension",
+     0.9
+    ],
+    [
+     "dialogic_preference",
+     0.8
+    ],
+    [
+     "decay_rate",
+     0.7
+    ],
+    [
+     "reflection_depth",
+     0.7
+    ],
+    [
+     "question_generation",
+     0.6
+    ],
+    [
+     "depth_breadth",
+     0.6
+    ],
+    [
+     "boredom_susceptibility",
+     0.5
+    ],
+    [
+     "praise_sensitivity",
+     0.4
+    ],
+    [
+     "emotional_engagement",
+     0.4
+    ]
+   ],
+   "minutes_median": 19.41,
+   "minutes_p90": 19.49,
+   "minutes_max": 19.77,
+   "items_median": 98,
+   "accuracy_ideal": 86.7,
+   "accuracy_app_readback": 86.59,
+   "gain_vs_today": 0.34,
+   "days_to": {
+    "87": 4,
+    "88": null,
+    "90": null,
+    "95": null
+   },
+   "accuracy_curve_days": [
+    [
+     0,
+     86.7
+    ],
+    [
+     7,
+     87.24
+    ],
+    [
+     14,
+     87.4
+    ],
+    [
+     21,
+     87.53
+    ],
+    [
+     28,
+     87.66
+    ]
+   ],
+   "measures_better_than_guess": 70,
+   "worst10": [
+    {
+     "stat": "conceptual_bias",
+     "today": 13.7,
+     "ideal": 13.5,
+     "app": 13.6
+    },
+    {
+     "stat": "identity_alignment",
+     "today": 13.5,
+     "ideal": 12.7,
+     "app": 12.9
+    },
+    {
+     "stat": "cognitive_flexibility",
+     "today": 13.1,
+     "ideal": 12.7,
+     "app": 12.9
+    },
+    {
+     "stat": "competitive_drive",
+     "today": 14.6,
+     "ideal": 14.1,
+     "app": 14.3
+    },
+    {
+     "stat": "depth_breadth",
+     "today": 13.9,
+     "ideal": 13.8,
+     "app": 13.8
+    },
+    {
+     "stat": "productive_struggle",
+     "today": 14.7,
+     "ideal": 12.8,
+     "app": 12.9
+    },
+    {
+     "stat": "planning_tendency",
+     "today": 13.6,
+     "ideal": 13.1,
+     "app": 13.2
+    },
+    {
+     "stat": "emotional_engagement",
+     "today": 14.3,
+     "ideal": 14.2,
+     "app": 14.2
+    },
+    {
+     "stat": "intrinsic_motivation",
+     "today": 14.2,
+     "ideal": 13.1,
+     "app": 13.3
+    },
+    {
+     "stat": "integration_tendency",
+     "today": 14.3,
+     "ideal": 14,
+     "app": 14.1
+    }
+   ]
+  },
+  "accurate": {
+   "share_removed_app": 5.5,
+   "share_removed_ideal": 6.2,
+   "share_removed_by_group_app": {
+    "a": 13.9,
+    "b": 4.3,
+    "c": 3.9
+   },
+   "share_removed_by_group_ideal": {
+    "a": 14.5,
+    "b": 5,
+    "c": 4.5
+   },
+   "share_removed_by_category_app": {
+    "intake": 12.4,
+    "reasoning": 10.6,
+    "pacing": 4.1,
+    "engagement": 3.8,
+    "memory": 4.2,
+    "resilience": 4,
+    "metacognition": 3.8,
+    "representation": 3.9,
+    "motivation": 4,
+    "transfer": 4.1
+   },
+   "share_removed_by_factor": {},
+   "best10_measures_app": [
+    [
+     "working_memory_span",
+     28.4
+    ],
+    [
+     "processing_velocity",
+     22.2
+    ],
+    [
+     "vocabulary_ceiling",
+     18.2
+    ],
+    [
+     "logical_rigor",
+     16.8
+    ],
+    [
+     "analogical_transfer",
+     16.3
+    ],
+    [
+     "pattern_detection",
+     15.6
+    ],
+    [
+     "inductive_trajectory",
+     13.3
+    ],
+    [
+     "deductive_trajectory",
+     11.7
+    ],
+    [
+     "intake_baseline",
+     11.2
+    ],
+    [
+     "abstraction_tolerance",
+     10.7
+    ]
+   ],
+   "worst10_measures_app": [
+    [
+     "frustration_threshold",
+     2.2
+    ],
+    [
+     "novelty_hunger",
+     2.1
+    ],
+    [
+     "rush_tendency",
+     1.9
+    ],
+    [
+     "mastery_velocity",
+     1.9
+    ],
+    [
+     "structure_need",
+     1.7
+    ],
+    [
+     "boredom_susceptibility",
+     1.7
+    ],
+    [
+     "global_framing_need",
+     1.6
+    ],
+    [
+     "momentum_dependence",
+     1.3
+    ],
+    [
+     "emotional_engagement",
+     0.6
+    ],
+    [
+     "tone_formality",
+     0.5
+    ]
+   ],
+   "minutes_median": 58.88,
+   "minutes_p90": 59.01,
+   "minutes_max": 59.65,
+   "items_median": 234,
+   "accuracy_ideal": 87.05,
+   "accuracy_app_readback": 86.96,
+   "gain_vs_today": 0.71,
+   "days_to": {
+    "87": 0,
+    "88": null,
+    "90": null,
+    "95": null
+   },
+   "accuracy_curve_days": [
+    [
+     0,
+     87.05
+    ],
+    [
+     7,
+     87.53
+    ],
+    [
+     14,
+     87.68
+    ],
+    [
+     21,
+     87.8
+    ],
+    [
+     28,
+     87.93
+    ]
+   ],
+   "measures_better_than_guess": 90,
+   "worst10": [
+    {
+     "stat": "conceptual_bias",
+     "today": 13.7,
+     "ideal": 13.1,
+     "app": 13.4
+    },
+    {
+     "stat": "identity_alignment",
+     "today": 13.5,
+     "ideal": 12.5,
+     "app": 12.5
+    },
+    {
+     "stat": "cognitive_flexibility",
+     "today": 13.1,
+     "ideal": 12.2,
+     "app": 12.2
+    },
+    {
+     "stat": "competitive_drive",
+     "today": 14.6,
+     "ideal": 13.7,
+     "app": 13.9
+    },
+    {
+     "stat": "depth_breadth",
+     "today": 13.9,
+     "ideal": 13,
+     "app": 13.3
+    },
+    {
+     "stat": "productive_struggle",
+     "today": 14.7,
+     "ideal": 13,
+     "app": 12.9
+    },
+    {
+     "stat": "planning_tendency",
+     "today": 13.6,
+     "ideal": 13,
+     "app": 13.2
+    },
+    {
+     "stat": "emotional_engagement",
+     "today": 14.3,
+     "ideal": 14.3,
+     "app": 14.2
+    },
+    {
+     "stat": "intrinsic_motivation",
+     "today": 14.2,
+     "ideal": 13.2,
+     "app": 13.2
+    },
+    {
+     "stat": "integration_tendency",
+     "today": 14.3,
+     "ideal": 13.2,
+     "app": 13.4
+    }
+   ]
+  }
+ }
+}

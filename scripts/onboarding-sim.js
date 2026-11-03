@@ -7,6 +7,13 @@
  *   node scripts/onboarding-sim.js --heldout            the held-out seed (31415): never used to choose anything
  *   node scripts/onboarding-sim.js --pessimistic        every item is 25% less valid than the selector assumes
  *   node scripts/onboarding-sim.js --json=out.json      also write the numbers
+ *   --bundle=pessimistic|central|optimistic   validity scenario AND trait-correlation scenario of the WORLD and of the selector's belief
+ *                                             (model.js SCENARIOS, LOADINGS; evidence in curriculum-build/evidence-article/09-work/validity-scenarios.json)
+ *   --selector-prior=independent|low|central|high|cogonly   what the selector assumes about trait correlations (default cogonly: the shipped selector)
+ *   --world-corr=independent|low|central|high       how the simulated traits really correlate (default: the bundle's)
+ *   --world-scenario=NAME     validity scenario of the world when it differs from the selector's (--bundle sets the selector's)
+ *   --shared-noise            one response error shared by every measure an item reads (the model treats them as independent)
+ *   --modes=quick,accurate    only these modes;  --<mode>-budget=SEC  --<mode>-mingain=X  override a mode's limits (the re-optimisation runs)
  *
  * What it does, per simulated learner: draws true values for all 100 measures (mean 50, sd 17), then
  *   - TODAY: the learner takes the current 20-item style quiz; the app's own services/scorecard seedFromStyleQuiz scores it (the real code, on an
@@ -32,6 +39,13 @@ const HELDOUT = has('heldout');
 const SEED = Number(opt('seed', HELDOUT ? 31415 : 20261102));
 const LEARNERS = Number(opt('learners', 300));
 const VFAC = has('pessimistic') ? 0.75 : Number(opt('vfac', 1));   // the world's validities against the ones the selector assumes
+const BUNDLES = { pessimistic: { scenario: 'pessimistic', corr: 'low' }, central: { scenario: 'central', corr: 'central' }, optimistic: { scenario: 'optimistic', corr: 'high' } };
+const BUNDLE = opt('bundle', 'central');
+if (!BUNDLES[BUNDLE]) throw new Error(`unknown bundle ${BUNDLE}`);
+const SEL_PRIOR = opt('selector-prior', 'cogonly');                            // 'independent' | low | central | high | cogonly (the shipped default)
+const WORLD_CORR = opt('world-corr', BUNDLES[BUNDLE].corr);
+const WORLD_SCN = opt('world-scenario', BUNDLES[BUNDLE].scenario);
+const SHARED_NOISE = has('shared-noise');
 const FATIGUE = 0.2;   // validity lost by the end of an hour
 const SELF_REPORT_R = 0.4; // the recovery sim's questionnaire validity on a dimension's main measure
 const POP_SD = 17;
@@ -61,6 +75,13 @@ const scorecard = require('../services/scorecard');
 const baseline = require('../services/onboarding/baseline');
 const model = require('../services/onboarding/model');
 const { Planner, MODES, STAT_IDS } = require('../services/onboarding/plan');
+const { GROUPS, LABELS } = require('../services/onboarding/groups');
+model.setScenario(BUNDLES[BUNDLE].scenario);
+model.setPrior(SEL_PRIOR === 'independent' ? null : SEL_PRIOR);
+for (const m of Object.keys(MODES)) {
+  if (opt(`${m}-budget`, '')) MODES[m].budgetSec = Number(opt(`${m}-budget`, ''));
+  if (opt(`${m}-mingain`, '')) MODES[m].minGainPerMin = Number(opt(`${m}-mingain`, ''));
+}
 const { pool, byId } = require('../services/onboarding/pool');
 const learner = require('../services/learner');
 
@@ -78,24 +99,36 @@ const quantile = (xs, q) => { const s = [...xs].sort((a, b) => a - b); return s[
 // ── a simulated learner ──────────────────────────────────────────────────────
 function makeLearner(index) {
   const rng = new Rng(hashSeed(SEED, 'learner', index));
-  const truth = {};
-  for (const id of STAT_IDS) truth[id] = clamp(50 + POP_SD * rng.normal(), 0, 100);
-  return { index, rng, truth, speed: Math.exp(0.28 * rng.normal()), method: {} };
+  const truth = {}; const fz = {};
+  if (WORLD_CORR === 'independent') {
+    for (const id of STAT_IDS) truth[id] = clamp(50 + POP_SD * rng.normal(), 0, 100);
+  } else {
+    // the factor model: z = lg g + lc c_cat + specific (the same structure as scripts/scorecard-recovery-sim.js drawTruth), loadings by scenario
+    const ld = model.loadingsOf(WORLD_CORR);
+    fz['F:g'] = rng.normal();
+    for (const f of model.FACTOR_IDS) if (f !== 'F:g') fz[f] = rng.normal();
+    STAT_IDS.forEach((id, j) => {
+      const cat = model.NODE_IDS[ld[j].cat];
+      truth[id] = clamp(50 + POP_SD * (ld[j].lg * fz['F:g'] + ld[j].lc * fz[cat] + Math.sqrt(1 - ld[j].lg ** 2 - ld[j].lc ** 2) * rng.normal()), 0, 100);
+    });
+  }
+  return { index, rng, truth, fz, speed: Math.exp(0.28 * rng.normal()), method: {} };
 }
 
 /** One item answered by a learner: its readings (sign-adjusted) and the seconds it took. */
 function answer(L, item, elapsed) {
   const fat = 1 - FATIGUE * Math.min(1, elapsed / 3600);
   const readings = {};
+  const shared = SHARED_NOISE ? L.rng.normal() : null;
   for (const i of item.informs) {
-    const rho = model.RHO[item.family];
-    const r = i.r * VFAC;
+    const rho = model.SCENARIOS[WORLD_SCN][item.family];
+    const r = model.effIn(WORLD_SCN, item.family, i.r) * VFAC;
     const w = r * Math.sqrt(Math.max(0, 1 / (rho * rho) - 1));
     const key = `${i.stat}:${item.family}`;
     if (L.method[key] === undefined) L.method[key] = L.rng.normal();
     const rt = r * fat;
-    const z = (L.truth[i.stat] - 50) / POP_SD;
-    const e = L.rng.normal();
+    const z = i.stat.startsWith('F:') ? (L.fz[i.stat] || 0) : (L.truth[i.stat] - 50) / POP_SD;
+    const e = shared !== null ? shared : L.rng.normal();
     const raw = rt * z + w * L.method[key] + Math.sqrt(Math.max(0, 1 - rt * rt - w * w)) * e;
     readings[i.stat] = raw;   // already read in the "high on the measure" direction (the sign only matters to the item's wording)
   }
@@ -148,7 +181,9 @@ const maeOf = (est, truth, ids = STAT_IDS) => mean(ids.map((id) => Math.abs(est[
 
 // ── run ──────────────────────────────────────────────────────────────────────
 const WORST10 = ['conceptual_bias', 'identity_alignment', 'cognitive_flexibility', 'competitive_drive', 'depth_breadth', 'productive_struggle', 'planning_tendency', 'emotional_engagement', 'intrinsic_motivation', 'integration_tendency'];
-const modeIds = Object.keys(MODES);
+const modeIds = opt('modes', '') ? opt('modes', '').split(',') : Object.keys(MODES);
+const factorErr = {};   // mode -> factor id -> [abs error]
+const factorGuess = {}; // factor id -> [abs error of guessing the mean], from the same learners
 const acc = { guess: [], today: [], today_items_ideal: [] };
 const perStat = { guess: {}, today: {}, today_items_ideal: {} };
 const addStat = (key, est, truth) => { for (const id of STAT_IDS) (perStat[key][id] = perStat[key][id] || []).push(Math.abs(est[id] - truth[id])); };
@@ -157,6 +192,7 @@ for (const m of modeIds) { acc[m] = { minutes: [], ideal: [], app: [], items: []
 const t0 = Date.now();
 for (let k = 0; k < LEARNERS; k++) {
   const L = makeLearner(k);
+  for (const [fid, v] of Object.entries(L.fz)) (factorGuess[fid] = factorGuess[fid] || []).push(Math.abs(POP_SD * v));
   const guess = Object.fromEntries(STAT_IDS.map((id) => [id, 50]));
   acc.guess.push(maeOf(guess, L.truth)); addStat('guess', guess, L.truth);
   const t = today(L);
@@ -165,7 +201,7 @@ for (let k = 0; k < LEARNERS; k++) {
   {
     const pl = new Planner('quick'); pl.state = model.emptyState();
     const L2 = makeLearner(k);
-    for (const it of pool.filter((p) => p.legacy)) { const a = answer(L2, it, 0); for (const i of it.informs) model.bump(pl.state, i.stat, it.family, i.r, a.readings[i.stat]); }
+    for (const it of pool.filter((p) => p.legacy)) { const a = answer(L2, it, 0); for (const i of it.informs) model.bump(pl.state, i.stat, it.family, model.eff(it.family, i.r), a.readings[i.stat]); }
     const e = pl.estimates(); const v = Object.fromEntries(STAT_IDS.map((id) => [id, e[id].value]));
     acc.today_items_ideal.push(maeOf(v, L.truth)); addStat('today_items_ideal', v, L.truth);
   }
@@ -182,6 +218,8 @@ for (let k = 0; k < LEARNERS; k++) {
       (perStat[`${m}_app`][id] = perStat[`${m}_app`][id] || []).push(Math.abs(app[id] - Lm.truth[id]));
     }
     if (k === 0) acc[m].first_items = pl.log.map((l) => l.id);
+    const fe = model.factorEstimates(pl.state);
+    for (const [fid, e2] of Object.entries(fe)) { ((factorErr[m] = factorErr[m] || {})[fid] = (factorErr[m][fid] || [])).push(Math.abs(e2.value - (50 + POP_SD * (Lm.fz[fid] || 0)))); }
   }
 }
 
@@ -221,8 +259,12 @@ const appOnlyCurve = (() => {
 
 // ── report ───────────────────────────────────────────────────────────────────
 const f1 = (x) => Number(x.toFixed(1)); const f2 = (x) => Number(x.toFixed(2));
+const share = (maeMode, maeGuess) => Number((100 * (1 - maeMode / maeGuess)).toFixed(1));
+const groupMae = (key, ids) => mean(ids.map((id) => mean(perStat[key][id])));
+const catOf = Object.fromEntries(require('../services/scorecard/stats').STATS.map((st) => [st.id, st.category]));
 const result = {
-  simulated: true, shipped_content_only: SHIPPED, seed: SEED, heldout: HELDOUT, learners: LEARNERS, validity_factor: VFAC, fatigue: FATIGUE,
+  simulated: true, bundle: BUNDLE, selector_scenario: BUNDLES[BUNDLE].scenario, selector_prior: SEL_PRIOR, world_scenario: WORLD_SCN, world_corr: WORLD_CORR, shared_noise: SHARED_NOISE,
+  groups: Object.fromEntries(Object.entries(GROUPS).map(([g, ids]) => [g, { label: LABELS[g], n: ids.length }])), shipped_content_only: SHIPPED, seed: SEED, heldout: HELDOUT, learners: LEARNERS, validity_factor: VFAC, fatigue: FATIGUE,
   guess_the_mean: { mae: f2(mean(acc.guess)), accuracy: f2(100 - mean(acc.guess)) },
   today: { mae: f2(mean(acc.today)), accuracy: f2(100 - mean(acc.today)), minutes: 'about 3 to 4 (20 forced-choice items and the survey)', days_to: daysTo('today').reach },
   today_items_ideal_readout: { accuracy: f2(100 - mean(acc.today_items_ideal)) },
@@ -233,7 +275,17 @@ for (const m of modeIds) {
   const a = acc[m];
   const days = daysTo(m);
   const worst = WORST10.map((id) => ({ stat: id, today: f1(mean(perStat.today[id])), ideal: f1(mean(perStat[m][id])), app: f1(mean(perStat[`${m}_app`][id])) }));
+  const gs = {}; const gsIdeal = {};
+  for (const [g, ids] of Object.entries(GROUPS)) { gs[g] = share(groupMae(`${m}_app`, ids), groupMae('guess', ids)); gsIdeal[g] = share(groupMae(m, ids), groupMae('guess', ids)); }
+  const cats = {};
+  for (const c of [...new Set(Object.values(catOf))]) { const ids = STAT_IDS.filter((id) => catOf[id] === c); cats[c] = share(groupMae(`${m}_app`, ids), groupMae('guess', ids)); }
+  const perMeasure = STAT_IDS.map((id) => [id, share(mean(perStat[`${m}_app`][id]), mean(perStat.guess[id]))]).sort((x, y) => y[1] - x[1]);
+  const fshare = {};
+  for (const [fid, errs] of Object.entries(factorErr[m] || {})) if (factorGuess[fid]) fshare[fid] = share(mean(errs), mean(factorGuess[fid]));
   result.modes[m] = {
+    share_removed_app: share(mean(a.app), mean(acc.guess)), share_removed_ideal: share(mean(a.ideal), mean(acc.guess)),
+    share_removed_by_group_app: gs, share_removed_by_group_ideal: gsIdeal, share_removed_by_category_app: cats, share_removed_by_factor: fshare,
+    best10_measures_app: perMeasure.slice(0, 10), worst10_measures_app: perMeasure.slice(-10),
     minutes_median: f2(quantile(a.minutes, 0.5)), minutes_p90: f2(quantile(a.minutes, 0.9)), minutes_max: f2(Math.max(...a.minutes)),
     items_median: quantile(a.items, 0.5),
     accuracy_ideal: f2(100 - mean(a.ideal)), accuracy_app_readback: f2(100 - mean(a.app)),

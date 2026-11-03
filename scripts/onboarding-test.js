@@ -82,6 +82,77 @@ check('the next item is the one with the most uncertainty removed per second', (
   assert(!model.pickNext(s, pool, { used: new Set(), secondsLeft: 3, pace: 1 }), 'nothing fits in 3 seconds');
 });
 
+
+// 2b. correlated traits, scenarios, factor items (round 3)
+check('the correlated posterior: the incremental update equals a rebuild from the stored state, and one answer moves related traits', () => {
+  const st = model.emptyState();
+  model.bump(st, 'working_memory_span', 'wm', model.eff('wm', 0.65), 1.4);
+  model.bump(st, 'deductive_trajectory', 'reason', model.eff('reason', 0.25), 0.9);
+  model.bump(st, 'F:g', 'self', model.eff('self', 0.29), 1);
+  const a = model.posterior(st, 'intake_baseline');
+  const clone = JSON.parse(JSON.stringify(st));   // a stored session comes back without its cache
+  const b = model.posterior(clone, 'intake_baseline');
+  assert(Math.abs(a.mean - b.mean) < 1e-9 && Math.abs(a.sd - b.sd) < 1e-9, JSON.stringify([a, b]));
+  assert(a.mean > 0.02 && a.sd < 1, 'a measure nobody asked about should move with its correlated neighbours');
+  model.setPrior(null);
+  const ind = model.posterior(st, 'intake_baseline');
+  model.setPrior('cogonly');
+  assert(ind.mean === 0 && ind.sd === 1, 'independent traits borrow nothing');
+  assert.strictEqual(model.priorLevel(), 'cogonly', 'the shipped selector assumes only the cognitive traits correlate');
+});
+check('the posterior is calibrated against a brute-force Gaussian update (small case)', () => {
+  model.setPrior('central');
+  const st = model.emptyState();
+  model.bump(st, 'vocabulary_ceiling', 'read', model.eff('read', 0.5), 1.2);
+  const p = model.posterior(st, 'vocabulary_ceiling'); const q = model.posterior(st, 'intake_baseline');
+  const P = model.familyTerm(st.fam.vocabulary_ceiling.read, 'read').P;   // data precision on vocabulary_ceiling
+  const prior = model.priorFor('central'); const names = model.NODE_IDS; const jv = names.indexOf('vocabulary_ceiling'); const ji = names.indexOf('intake_baseline'); const n = names.length;
+  // one observation with variance 1/P on one node: posterior mean of node i = R[i][v] / (R[v][v] + 1/P) * d, d = the data-only reading
+  const d = model.familyTerm(st.fam.vocabulary_ceiling.read, 'read').num / P;
+  assert(Math.abs(p.mean - prior.R[jv * n + jv] / (1 + 1 / P) * d) < 1e-9);
+  assert(Math.abs(q.mean - prior.R[ji * n + jv] / (1 + 1 / P) * d) < 1e-9);
+  model.setPrior('cogonly');
+});
+check('validity scenarios: pessimistic is the earlier assumption, central is lower only where the check said so, optimistic is never below central', () => {
+  const { SCENARIOS } = model;
+  for (const f of Object.keys(SCENARIOS.central)) { assert(SCENARIOS.optimistic[f] >= SCENARIOS.central[f] - 1e-9, f); assert(SCENARIOS.pessimistic[f] === model.TODAY_RHO[f]); }
+  assert(SCENARIOS.central.ml < SCENARIOS.pessimistic.ml, 'the mini-lesson ceiling was lowered by the research check');
+  assert.strictEqual(model.scenario(), 'central');
+  model.setScenario('optimistic'); assert(model.RHO.wm === SCENARIOS.optimistic.wm && model.eff('wm', 0.65) > 0.65); model.setScenario('central');
+  for (const it of pool) for (const i of it.informs) assert(model.effIn('optimistic', it.family, i.r) <= SCENARIOS.optimistic[it.family] + 1e-9);
+});
+check('the factor self-ratings: two for each of the 11 factors, with words, read through the correlated posterior', () => {
+  for (const F of model.FACTOR_IDS) for (const k of ['a', 'b']) {
+    const it = byId[`fq:${F.slice(2)}:${k}`];
+    assert(it && it.factor && it.informs.length === 1 && it.informs[0].stat === F, F);
+    const shown = tasks.present(it, 3); assert(shown && shown.options.length === 2 && shown.options[0].text !== shown.options[1].text, `${F} has no words`);
+  }
+  const st = model.emptyState(); model.bump(st, 'F:g', 'self', model.eff('self', 0.29), 1.5);
+  assert(model.posterior(st, 'working_memory_span').mean > 0, 'a self-rating of general learning speed should lift a cognitive measure');
+});
+check('short task versions exist, exclude their long version, and the score is per 60 seconds', () => {
+  assert(byId['t:speed_q'].sec < byId['t:symbol_match'].sec && byId['t:span_fwd'].sec < byId['t:span_verbal'].sec);
+  assert(byId['t:speed_q'].excludes.includes('t:symbol_match') && byId['t:span_fwd'].excludes.includes('t:span_verbal'));
+  const used = new Set(['t:symbol_match', 't:span_verbal']);
+  const hit = model.pickNext(model.emptyState(), pool.filter((p) => p.id === 't:speed_q' || p.id === 't:span_fwd'), { used, secondsLeft: 3000 });
+  assert.strictEqual(hit, null, 'the short version is not offered after the long one');
+  const half = tasks.score(byId['t:speed_q'], { correct: 13, wrong: 0, firstMs: 2000 }, {});
+  const full = tasks.score(byId['t:symbol_match'], { correct: 26, wrong: 0, firstMs: 2000 }, {});
+  assert(Math.abs(half.processing_velocity - full.processing_velocity) < 1e-9, 'a 30 second block is scaled to the 60 second norm');
+});
+check('the trait groups follow the pool: reasoning and working memory are in the task group', () => {
+  const { GROUPS } = require('../services/onboarding/groups');
+  assert.strictEqual(GROUPS.a.length + GROUPS.b.length + GROUPS.c.length, 100);
+  for (const id of ['working_memory_span', 'processing_velocity', 'vocabulary_ceiling', 'deductive_trajectory', 'cognitive_flexibility']) assert(GROUPS.a.includes(id), id);
+  assert(GROUPS.c.includes('decay_rate'));
+});
+check('Quick asks a short cognitive task and a factor rating first, not only self-report pairs', () => {
+  const pl = new Planner('quick'); const kinds = new Set();
+  for (let g = 0; g < 60; g++) { const it = pl.next(); if (!it) break; kinds.add(it.family + (it.factor ? ':factor' : '')); const rd = {}; for (const i of it.informs) rd[i.stat] = 0.2; pl.record(it, rd, it.sec); }
+  assert(kinds.has('speed') || kinds.has('wm') || kinds.has('reason'), [...kinds].join());
+  assert(kinds.has('self:factor'), [...kinds].join());
+});
+
 // 3. the planner's time limits at any pace
 function walk(modeId, pace, rnd) {
   const pl = new Planner(modeId);
