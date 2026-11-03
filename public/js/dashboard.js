@@ -514,6 +514,7 @@ App.mount(async () => {
 
       <section class="home-plan" aria-labelledby="plan-heading">
         <div class="sec-head"><h2 id="plan-heading">Today's plan</h2><span>${ordered.length} subject${ordered.length === 1 ? '' : 's'}</span></div>
+        <div class="card daily-plan" id="daily-plan" aria-live="polite"><p class="small muted">Building your plan for today.</p></div>
         ${leadBlock(lead)}
         ${others.length ? `<div class="plan-later" aria-label="Then">${others.map((e, i) => laterRow(e, i + 2)).join('')}</div>` : ''}
       </section>
@@ -591,6 +592,9 @@ App.mount(async () => {
       </aside>
     </div>`;
 
+  // Today's plan across every subject (GET /api/plan/today, services/daily-plan.js): the minutes picker is remembered per learner.
+  mountDailyPlan(root.querySelector('#daily-plan'));
+
   // Learn and Review in the navigation follow the subject this page leads with.
   App.setLead(lead.id);
 
@@ -645,6 +649,63 @@ App.mount(async () => {
         setTimeout(() => URL.revokeObjectURL(url), 1000);
       }
     });
+  }
+
+  /** The "Today's plan" card: minutes picker, the day's blocks with a reason each, and Start (opens the first block). Quiet on any error. */
+  async function mountDailyPlan(host) {
+    if (!host) return;
+    const PRESETS = [30, 45, 60, 90, 120];
+    const KIND = { review: 'Review', level: 'Level', catchup: 'Catch-up', break: 'Break' };
+    let shown = false;
+    let current = null;
+    const name = (b) => {
+      if (b.kind === 'break') return 'Take a break';
+      if (b.enforcer) return b.scheduledEnforcer ? 'End day session' : 'Finish your retention enforcer';
+      const what = b.kind === 'review' ? 'Review' : b.placement ? 'Placement quiz' : `${b.kind === 'catchup' ? 'Catch-up level' : 'Level'} ${b.level}`;
+      return b.subject ? `${what}: ${b.subject}` : what;
+    };
+    const draw = (plan) => {
+      current = plan.minutes;
+      const blocks = plan.blocks || [];
+      const first = blocks.find((b) => b.kind !== 'break' && b.href);
+      const list = shown ? blocks : blocks.slice(0, 5);
+      host.innerHTML = `
+        <div class="plan-picker" role="group" aria-label="Minutes you have today">
+          <span class="small muted">I have</span>
+          ${PRESETS.map((m) => `<button type="button" class="btn btn-sm${m === plan.minutes ? ' btn-primary' : ''}" data-plan-minutes="${m}" aria-pressed="${m === plan.minutes}">${m} min</button>`).join('')}
+        </div>
+        ${blocks.length ? `
+        <ol class="plan-blocks">${list.map((b) => `
+          <li class="plan-block plan-${esc(b.kind)}">
+            <div class="row-between"><b>${esc(name(b))}</b><span class="small muted num">${Math.round(b.estMinutes * 10) / 10} min</span></div>
+            <div class="tiny muted">${esc(b.why || '')}</div>
+          </li>`).join('')}</ol>
+        ${blocks.length > list.length ? `<button type="button" class="btn btn-text btn-sm" data-plan-more>Show all ${blocks.length} steps</button>` : ''}
+        <p class="tiny muted">About <span class="num">${Math.round(plan.minutes_used)}</span> of your ${plan.minutes} minutes${plan.break_minutes ? `, ${plan.break_minutes} of them breaks` : ''}. Estimates use your own pace once Savant has seen enough of it.</p>
+        ${first ? `<a class="btn btn-primary btn-lg btn-block" href="${esc(first.href)}">Start: ${esc(name(first))}</a>` : ''}`
+          : '<p class="small muted">Nothing is due today. Open a subject below to keep going.</p>'}`;
+    };
+    const load = async (minutes) => {
+      const plan = await App.api.get(`/api/plan/today${minutes ? `?minutes=${minutes}` : ''}`);
+      draw(plan);
+      return plan;
+    };
+    host.addEventListener('click', async (event) => {
+      const pick = event.target.closest('[data-plan-minutes]');
+      if (pick) {
+        const minutes = Number(pick.getAttribute('data-plan-minutes'));
+        try {
+          await App.api.request('PUT', '/api/plan/minutes', { minutes });
+          await load(minutes);
+          const again = host.querySelector(`[data-plan-minutes="${minutes}"]`);
+          if (again) again.focus();
+        } catch (err) { App.toast(err.message, 'error'); }
+      } else if (event.target.closest('[data-plan-more]')) {
+        shown = true;
+        try { await load(current); } catch { /* as drawn */ }
+      }
+    });
+    try { await load(); } catch { host.hidden = true; }
   }
 
   /** "Skipping 9 of 16 units, 7 to learn", plus a catch-up the learner took. */

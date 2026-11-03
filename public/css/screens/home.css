@@ -69,6 +69,21 @@
   .home-tutor .assist-chat > div, .home-tutor .tutor-know > div { grid-column: 1 / -1; }
 }
 
+/* ── The daily plan card (js/dashboard.js mountDailyPlan; services/daily-plan.js) ── */
+.daily-plan { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-bottom: var(--s-4); }
+.daily-plan .btn-block { white-space: normal; height: auto; min-height: 44px; padding-top: 8px; padding-bottom: 8px; text-align: center; }
+.daily-plan[hidden] { display: none; }
+.plan-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.plan-blocks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.plan-block { padding: 8px 0; border-top: 1px solid var(--line, currentColor); }
+.plan-block:first-child { border-top: 0; padding-top: 0; }
+.plan-block .tiny { margin-top: 2px; }
+.plan-break { opacity: 0.75; }
+.daily-plan, .plan-block { min-width: 0; }
+.plan-block .row-between { align-items: flex-start; }
+.plan-block .row-between > b { min-width: 0; overflow-wrap: anywhere; }
+.plan-block .row-between > span { flex: none; white-space: nowrap; }
+
 /* ── This week and today's plan on a phone ─────────────────────────────── */
 @media (max-width: 480px) {
   .home-hero { padding: 14px; gap: 14px; }
