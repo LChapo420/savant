@@ -5,6 +5,7 @@
  *   node scripts/spanish-placement-sim.js                      held-out seed, balanced, math + english + iq
  *   node scripts/spanish-placement-sim.js --seed=dev           the development seed (the one used while tuning)
  *   node scripts/spanish-placement-sim.js --track=iq --mode=quick --hard
+ *   node scripts/spanish-placement-sim.js --only=40,47,50,53,54,55,56,57   exactly those grades (by number)
  *   node scripts/spanish-placement-sim.js --write              append a dated section to docs/PLACEMENT-ACCURACY-AFTER.md
  *   node scripts/spanish-placement-sim.js --gate               exit 1 when a floor is missed (the check `npm test` runs, small sample)
  *
@@ -63,6 +64,12 @@ function unitMinutes(gradeId) {
 /** The grades of a track that have a bank, thinned to `n` spread across the track. */
 function gradesOf(trackId, n) {
   const all = curriculum.getTrack(trackId).grades.map((g) => g.id).filter((id) => unitPlacement.available(trackId, id));
+  // --only=40,47,50: exactly these grades (their number in the track), e.g. the grades whose bank was completed last.
+  const only = arg('only', '');
+  if (only && only !== true) {
+    const ids = curriculum.getTrack(trackId).grades.map((g) => g.id);
+    return String(only).split(',').map((k) => ids[Number(k) - 1]).filter((id) => id && unitPlacement.available(trackId, id));
+  }
   if (all.length <= n) return all;
   return Array.from({ length: n }, (_, i) => all[Math.round((i * (all.length - 1)) / (n - 1))]);
 }
