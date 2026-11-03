@@ -246,6 +246,14 @@ app.listen(PORT, () => {
   } catch (err) {
     console.warn('Base levels could not be loaded:', err.message);
   }
+  // Shipped fixes to stored shared game sets (content/game-fixes): re-keys and rewrites, applied once each; held levels stay held.
+  try {
+    const fixed = require('./services/game-fixes').applyAll();
+    if (fixed.rekeyed || fixed.rewritten || fixed.released) console.log(`Game fixes applied: ${fixed.rekeyed} re-keyed, ${fixed.rewritten} rewritten, ${fixed.released} released.`);
+    if (fixed.conflicts.length) console.warn(`Game fixes left alone (stored content differs): ${fixed.conflicts.length}`);
+  } catch (err) {
+    console.warn('Game fixes could not be applied:', err.message);
+  }
   const ai = require('./services/ai');
   const providers = require('./services/providers');
   console.log(`Polymath listening on http://localhost:${PORT}`);

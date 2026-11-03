@@ -275,8 +275,12 @@ function prune() {
   const bank = readBank();
   let dropped = 0;
   for (const g of Object.values(bank.grades)) for (const u of g.units) { const n = u.questions.length; u.questions = u.questions.filter((q) => q.gate === 'agreed' && !leaks(q)); dropped += n - u.questions.length; }
+  // A unit left with 1 or 2 questions would put its grade in use (services/unit-placement only asks for one), below the 3 a unit needs:
+  // empty it, so the grade stays on the old ladder until the unit is written in full.
+  let thin = 0;
+  for (const g of Object.values(bank.grades)) for (const u of g.units) if (u.questions.length && u.questions.length < KEEP_MIN) { dropped += u.questions.length; thin++; u.questions = []; }
   saveBank(bank);
-  console.log(`pruned ${dropped} questions that never passed the blind re-solve`);
+  console.log(`pruned ${dropped} questions that never passed the blind re-solve or sat in a unit under ${KEEP_MIN}${thin ? ` (${thin} unit(s) emptied)` : ''}`);
 }
 
 function coverage() {
