@@ -53,7 +53,8 @@ const os = require('os');
 const nvidia = require('./nvidia');
 const ollamaRaw = require('./ollama');
 const { openrouterFree, geminiFree } = require('./free-apis');
-const { xkiro } = require('./xkiro');
+const xkiroLib = require('./xkiro');
+const { xkiro } = xkiroLib;
 const mimo = require('./mimo');
 const openrouter = require('./openrouter');
 const gemini = require('./gemini');
@@ -191,10 +192,10 @@ function order(role) {
   // fallbacks, and Claude is always last — whatever the environment names.
   list = list.filter((n) => n !== 'anthropic' && n !== 'modelflare' && n !== 'xkiro' && !FREE_FALLBACKS.includes(n));
   if (!list.includes('nvidia')) list.push('nvidia');
-  // Build scripts only (XKIRO_PIPELINE=1; the app server never sets it): xKiro's $0
-  // models and MiniMax grant come straight after NVIDIA, before the local models.
-  // No learner's words reach it (services/providers/xkiro.js).
-  if (process.env.XKIRO_PIPELINE === '1') list.push('xkiro');
+  // Pipeline calls and the dated learner window put xKiro's $0 models and MiniMax
+  // grant after NVIDIA, before the local models. The learner path is guarded in
+  // services/ai.js.
+  if (process.env.XKIRO_PIPELINE === '1' || xkiroLib.learnerWindowOpen()) list.push('xkiro');
   // NVIDIA down for 15 confirmed minutes: local first until NVIDIA recovers.
   if (nvidia.outage && nvidia.outage().state === 'down') list.unshift('ollama');
   for (const n of FREE_FALLBACKS) if (!list.includes(n)) list.push(n);

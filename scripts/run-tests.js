@@ -52,6 +52,10 @@ if (sheetsMissing) {
 }
 // The Spanish test reads its sheet from SPANISH_SHEET when set.
 if (!fs.existsSync(path.join(ROOT, 'data', 'Spanish_Fluency_Path.csv'))) process.env.SPANISH_SHEET = SPANISH_COMMITTED;
+// The suite checks the provider chains as they stand outside xKiro's dated learner
+// window (services/providers/xkiro.js), so its result does not change on Nov 7; the
+// window itself is checked in scripts/xkiro-provider-test.js.
+if (!process.env.XKIRO_LEARNER_UNTIL) process.env.XKIRO_LEARNER_UNTIL = '2000-01-01T00:00:00Z';
 const fixtureSteps = [];
 const sheetSteps = [];
 const skipped = [];

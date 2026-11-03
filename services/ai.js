@@ -121,14 +121,22 @@ function paidAllowed(p) {
 }
 
 /**
- * Whether this learner's words may go to a model OUTSIDE this machine (NVIDIA, the
- * free APIs, Jev, Claude). A child whose consent does not cover outside AI
+ * Whether this learner's words may go to a model OUTSIDE this machine (NVIDIA, xKiro,
+ * the free APIs, Jev, Claude). A child whose consent does not cover outside AI
  * (routes/consent.js access().ai_free_text) gets only the local models (Ollama on this
  * laptop) and the deterministic floors. No user (background work, scripts): yes.
  */
 function outsideAllowed(userId) {
   // eslint-disable-next-line global-require
   return require('./typed-grading').outsideAllowed(userId);
+}
+
+function xkiroAllowedFor(userId) {
+  if (!userId) return true;
+  // eslint-disable-next-line global-require
+  const age = require('./boosters').ageOf(db.byId('users', userId));
+  if (age < 13) return false;
+  return outsideAllowed(userId);
 }
 
 function recordSpend(userId, model, usage, usedProvider, meta) {
@@ -163,7 +171,11 @@ function recordSpend(userId, model, usage, usedProvider, meta) {
 async function viaPool(userId, req, role, task, outside) {
   const trace = {};
   const res = await pool.callHedged(
-    { ...req, role, task, userId: userId || null, outside, dataClass: userId ? 'learner' : (req.dataClass || 'learner') },
+    {
+      ...req, role, task, userId: userId || null, outside,
+      dataClass: userId ? 'learner' : (req.dataClass || 'learner'),
+      xkiro: xkiroAllowedFor(userId),
+    },
     // hedgeAfterMs: an interactive caller (the tutor dock) may start the backup sooner than the pool's 20 s floor.
     { timeoutMs: req.timeoutMs || undefined, hedgeAfterMs: req.hedgeAfterMs != null ? req.hedgeAfterMs : undefined, validate: (r) => !!r, trace },
   );
@@ -189,7 +201,9 @@ async function withProviders(userId, attempt, role = 'fast', task = null, req = 
   // that does not take a provider offline — a 429 from a shared free pool, a
   // dropped connection — used to end the call here, which meant the configured
   // backup never actually caught anything.
-  const candidates = providers.chain(role, task).filter((p) => outside || !providers.isOutside(p));
+  const candidates = providers.chain(role, task)
+    .filter((p) => (outside || !providers.isOutside(p))
+      && (p.name !== 'xkiro' || xkiroAllowedFor(userId)));
   for (let i = 0; i < candidates.length; i++) {
     const p = candidates[i];
     if (!paidAllowed(p)) {
@@ -1493,7 +1507,10 @@ async function coachReplyStream({ item, messages, userId, onDelta }) {
   const streamT0 = Date.now();
   if (!withinBudget(userId)) return null;
   const outside = outsideAllowed(userId);
-  const streamers = providers.chain('fast', 'coach_turn').filter((p) => typeof p.chatStream === 'function' && (outside || !providers.isOutside(p)));
+  const streamers = providers.chain('fast', 'coach_turn')
+    .filter((p) => typeof p.chatStream === 'function'
+      && (outside || !providers.isOutside(p))
+      && (p.name !== 'xkiro' || xkiroAllowedFor(userId)));
   if (!streamers.length) return null;
 
   const { conversation, history } = coachConversation(item, messages);
@@ -2020,6 +2037,7 @@ module.exports = {
   diagnoseArea,
   remediationTeachReply,
   providerName,
+  xkiroAllowedFor,
   generateItems,
   generateLesson,
   validateLesson,
