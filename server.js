@@ -130,6 +130,7 @@ app.use('/api', require('./routes/catalog').router);
 app.use('/api', require('./routes/review'));
 app.use('/api', require('./routes/retention')); // study sessions, retention enforcers, the calendar (RETENTION_ENFORCERS)
 app.use('/api', require('./routes/retention-goals')); // how long to remember each subject and course (services/retention-goal.js)
+app.use('/api', require('./routes/daily-plan')); // today's plan across every subject (services/daily-plan.js)
 app.use('/api/placement', require('./routes/placement'));
 // The reading check: a few minutes of vocabulary and passages that measure language level for the scorecard (services/reading-check.js).
 app.use('/api/reading-check', require('./routes/reading-check'));
