@@ -190,7 +190,7 @@ console.log('\n"I don\'t know" inside a grade (every subject with a unit bank)')
         // Stopped after one or two answers, both "I don't know".
         for (const k of [1, 2]) {
           const few = [];
-          for (let i = 0; i < k; i++) few.push({ ...unitPlacement.nextQuestion(track, gradeId, mode, few), correct: false });
+          for (let i = 0; i < k; i++) { const nq = unitPlacement.nextQuestion(track, gradeId, mode, few); if (!nq) break; few.push({ ...nq, correct: false }); }
           const u = unitPlacement.score(track, gradeId, few).unit;
           if (u > thin.unit) thin = { unit: u, gradeId, mode, k };
         }

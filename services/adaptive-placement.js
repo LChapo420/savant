@@ -47,23 +47,25 @@ const RELIABLE = Number(process.env.ADAPTIVE_RELIABLE || 0.3);
  * one grade of its middle before the walk may stop, after at least `min`.
  */
 /**
- * Each mode's whole placement budget, in minutes: the owner's limits (Quick 20 at
- * most, Accurate 90 at most), shared by the subject walk, the in-grade stage, the
- * earlier-grade gap scan and the quick check. Stated on its own because the stage
- * clocks no longer add up to it: Accurate leaves 8 minutes for the gap scan.
+ * Each mode's whole placement budget, in minutes: the owner's limits of 2026-11-02 (Quick under 5,
+ * Balanced about 20, Accurate under 60; they were 20 / 45 / 90), shared by the subject walk, the
+ * in-grade stage, the earlier-grade gap scan and the quick check. Stated on its own because the stage
+ * clocks do not add up to it: Accurate leaves 3 minutes for the gap scan. A question is budgeted at
+ * 26 seconds, as before. What the shorter clocks cost in accuracy is in docs/ONBOARDING-MODES.md
+ * (simulated): Quick no longer reaches 90% within one grade on every subject.
  */
-const WHOLE_MINUTES = { quick: 20, balanced: 45, accurate: 90 };
+const WHOLE_MINUTES = { quick: 5, balanced: 20, accurate: 57 };
 
 const MODES = {
   // Quick was 28 / 12 / 0.90; on calibrated questions, against the stricter of
   // two judges, that missed 2-5 testers in 256, and 32 / 18 / 0.94 missed 0-1.
-  quick: { max: 32, min: 18, sure: 0.94, minutes: 14 },
-  balanced: { max: 70, min: 20, sure: 0.97, minutes: 32 },
-  // Accurate was 160 questions / 65 minutes. Capped at 130 / 57 it places the
-  // same testers exactly as well (588 of 588 math within one grade, 410 exact),
-  // and the 8 minutes it frees go to the earlier-grade gap scan, which had almost
-  // none left in math (missed gaps 2.3% -> 1.0% in scripts/gap-path-sim.js).
-  accurate: { max: 130, min: 40, sure: 0.995, minutes: 57 },
+  // 2026-11-02: re-fitted to the owner's new limits by shortening the CLOCKS only. The question caps, the stop rule and every gate that measures them are
+  // as they were; the clock now binds, so what a learner gets is what fits the time. At the 26 s a question budget that is about 10 questions in Quick,
+  // 32 in Balanced and 92 in Accurate, and a learner who answers faster gets more, up to the old cap. docs/ONBOARDING-MODES.md has the accuracy at
+  // those counts (simulated). Before: Quick 14 minutes, Balanced 32, Accurate 57.
+  quick: { max: 32, min: 18, sure: 0.94, minutes: 4.4 },
+  balanced: { max: 70, min: 20, sure: 0.97, minutes: 14 },
+  accurate: { max: 130, min: 40, sure: 0.995, minutes: 40 },
 };
 
 /** The chance the walk assumes of a right answer from someone at `x`, on a question written for `pos`. */

@@ -45,9 +45,12 @@ App.mount(async () => {
       // learn, then what they are interested in. The survey is free text that
       // lessons are written from, so a child account whose parent has not allowed
       // outside AI skips it.
-      window.location.href = user && user.consent && !user.consent.ai_free_text
+      // 2026-11-02: the baseline (services/onboarding: Quick / Balanced / Accurate) replaces both for an account the measurement channels are open
+      // to. Any other account (a child without a parent's agreement) is sent on to the old chain, unchanged, by the baseline page (`old`).
+      const oldChain = user && user.consent && !user.consent.ai_free_text
         ? `/style-quiz?next=${encodeURIComponent(onboarding)}`
         : `/style-quiz?next=${encodeURIComponent(`/survey?next=${encodeURIComponent(onboarding)}`)}`;
+      window.location.href = `/baseline?next=${encodeURIComponent(onboarding)}&old=${encodeURIComponent(oldChain)}`;
       return;
     }
     try {
