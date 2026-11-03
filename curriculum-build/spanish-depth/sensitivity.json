@@ -1,0 +1,181 @@
+{
+ "summary": {
+  "when": "2026-11-02T22:57:43.121Z",
+  "mode": "live",
+  "groups": 11,
+  "groupsWhereLevelDiffers": 9,
+  "byJudge": {
+   "nemotron-ultra (NVIDIA free)": {
+    "judged": 7,
+    "visibleBothWays": 4,
+    "rightUnswapped": 5,
+    "rightSwapped": 5
+   },
+   "gpt-6.1-sol (Modelflare)": {
+    "judged": 0,
+    "visibleBothWays": 0,
+    "rightUnswapped": 0,
+    "rightSwapped": 0
+   }
+  }
+ },
+ "rows": [
+  {
+   "group": "intake",
+   "codeDiffers": true,
+   "judges": [
+    {
+     "judge": "nemotron-ultra (NVIDIA free)",
+     "correct": false,
+     "swapCorrect": false,
+     "visible": false,
+     "reason": "Version 1 contains 13 steps (including extra translate, speak, and select_meaning activities) versus only 9 in Version 2, giving a larger, more varied practice block that matches the learner’s high information‑per‑step capacity, strong working memory, fast processing, preference for big unified chunks, and need for many varied examples."
+    },
+    {
+     "judge": "gpt-6.1-sol (Modelflare)",
+     "error": "modelflare 401"
+    }
+   ]
+  },
+  {
+   "group": "reasoning",
+   "codeDiffers": false,
+   "judges": []
+  },
+  {
+   "group": "pacing",
+   "codeDiffers": true,
+   "judges": [
+    {
+     "judge": "nemotron-ultra (NVIDIA free)",
+     "correct": true,
+     "swapCorrect": true,
+     "visible": true,
+     "reason": "Version 2 extends the lesson with additional varied activities (speak, type_heard, extra translate) providing the mixed‑practice interleaving the learner thrives on while still giving a long initial teach phase and early quick wins to sustain momentum."
+    },
+    {
+     "judge": "gpt-6.1-sol (Modelflare)",
+     "error": "modelflare 401"
+    }
+   ]
+  },
+  {
+   "group": "engagement",
+   "codeDiffers": true,
+   "judges": [
+    {
+     "judge": "nemotron-ultra (NVIDIA free)",
+     "error": "nvidia 429: Too Many Requests"
+    },
+    {
+     "judge": "gpt-6.1-sol (Modelflare)",
+     "error": "modelflare 401"
+    }
+   ]
+  },
+  {
+   "group": "memory",
+   "codeDiffers": true,
+   "judges": [
+    {
+     "judge": "nemotron-ultra (NVIDIA free)",
+     "correct": true,
+     "swapCorrect": true,
+     "visible": true,
+     "reason": "Version 1 offers many more production‑oriented steps (four translate tasks, a complete_translation, and a speak task) giving the learner the generation‑effect practice and enactive “doing” they benefit from, while the longer sequence provides the repeated exposure and recaps needed for fast decay and consolidation."
+    },
+    {
+     "judge": "gpt-6.1-sol (Modelflare)",
+     "error": "modelflare 401"
+    }
+   ]
+  },
+  {
+   "group": "resilience",
+   "codeDiffers": true,
+   "judges": [
+    {
+     "judge": "nemotron-ultra (NVIDIA free)",
+     "error": "nvidia 429: Too Many Requests"
+    },
+    {
+     "judge": "gpt-6.1-sol (Modelflare)",
+     "error": "modelflare 401"
+    }
+   ]
+  },
+  {
+   "group": "metacognition",
+   "codeDiffers": false,
+   "judges": []
+  },
+  {
+   "group": "representation",
+   "codeDiffers": true,
+   "judges": [
+    {
+     "judge": "nemotron-ultra (NVIDIA free)",
+     "correct": true,
+     "swapCorrect": false,
+     "visible": false,
+     "reason": "Version 1 is the shorter lesson (9 steps vs 14), matching the learner’s strong brevity preference while still providing explicit steps and allowing quick fading of scaffolds."
+    },
+    {
+     "judge": "gpt-6.1-sol (Modelflare)",
+     "error": "modelflare 401"
+    }
+   ]
+  },
+  {
+   "group": "motivation",
+   "codeDiffers": true,
+   "judges": [
+    {
+     "judge": "nemotron-ultra (NVIDIA free)",
+     "correct": true,
+     "swapCorrect": true,
+     "visible": true,
+     "reason": "Version 2 replaces several repetitive select‑meaning drills with varied match‑pairs activities, giving the learner more novelty to counter high boredom susceptibility while lowering test‑like pressure that triggers evaluation anxiety."
+    },
+    {
+     "judge": "gpt-6.1-sol (Modelflare)",
+     "error": "modelflare 401"
+    }
+   ]
+  },
+  {
+   "group": "transfer",
+   "codeDiffers": true,
+   "judges": [
+    {
+     "judge": "nemotron-ultra (NVIDIA free)",
+     "correct": false,
+     "swapCorrect": true,
+     "visible": false,
+     "reason": "Version 2 adds a speaking activity and an extra meaning‑selection step, giving the learner practical use, deeper practice, and reinforcement that match the application orientation, depth preference, and misconception persistence of this learner."
+    },
+    {
+     "judge": "gpt-6.1-sol (Modelflare)",
+     "error": "modelflare 401"
+    }
+   ]
+  },
+  {
+   "group": "context (interests and dislikes)",
+   "codeDiffers": true,
+   "judges": [
+    {
+     "judge": "nemotron-ultra (NVIDIA free)",
+     "correct": true,
+     "swapCorrect": true,
+     "visible": true,
+     "reason": "Version 2 includes role‑play topics about basketball and anime, which the learner loves, and omits cooking, which the learner dislikes."
+    },
+    {
+     "judge": "gpt-6.1-sol (Modelflare)",
+     "error": "modelflare 401"
+    }
+   ]
+  }
+ ]
+}
