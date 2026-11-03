@@ -79,10 +79,12 @@ async function verifiedFree(model) {
  * call is refused. Each grant is capped a little under its size, counted over all
  * days in the usage record, and a payment error (402, "insufficient", "balance")
  * locks the model off for good.
+ * The owner (2026-11-03): 90M MiniMax tokens left, expiring Nov 6. The usage record had
+ * counted 21.2M, so the cap is that plus 87M (a little under the 90M).
  */
 const GRANTS = () => {
   try { return JSON.parse(process.env.XKIRO_GRANTS || ''); } catch { /* default below */ }
-  return { 'minimax/minimax-m3.1-flash': 60000000 };
+  return { 'minimax/minimax-m3.1-flash': 108000000 };
 };
 function grantTokensUsed(model) {
   let n = 0;
