@@ -140,6 +140,21 @@ check('short task versions exist, exclude their long version, and the score is p
   const full = tasks.score(byId['t:symbol_match'], { correct: 26, wrong: 0, firstMs: 2000 }, {});
   assert(Math.abs(half.processing_velocity - full.processing_velocity) < 1e-9, 'a 30 second block is scaled to the 60 second norm');
 });
+check('switching is scored by rate residual (Hughes et al. 2014): speed and accuracy together, the old RT difference only for an older page', () => {
+  const it = byId['t:switch_a'];
+  const at = (rep, sw) => tasks.score(it, { costMs: 0, errorRate: 0, repeat: rep, switch: sw }, {}).cognitive_flexibility;
+  const even = at({ n: 9, ok: 9, ms: 9000 }, { n: 10, ok: 10, ms: 10000 });            // same rate on both: no cost
+  const slow = at({ n: 9, ok: 9, ms: 9000 }, { n: 10, ok: 10, ms: 12500 });            // switch trials 25% slower
+  const sloppy = at({ n: 9, ok: 9, ms: 9000 }, { n: 10, ok: 8, ms: 10000 });           // as fast, but 2 switch errors
+  assert(even > slow, 'slower switching reads as less flexible');
+  assert(even > sloppy, 'errors on switch trials count too (the RT difference ignored them)');
+  const typical = at({ n: 9, ok: 9, ms: 9000 }, { n: 10, ok: 10, ms: 10000 * Math.exp(0.2) });
+  assert(Math.abs(typical) < 1e-9, 'a switch rate about 20% below the repeat rate is the assumed norm');
+  const old = tasks.score(it, { costMs: 180, errorRate: 0.08 }, {}).cognitive_flexibility;
+  assert(Math.abs(old) < 1e-9, 'a response without per-condition counts keeps the RT-difference score');
+  const thin = tasks.score(it, { costMs: 180, errorRate: 0.08, repeat: { n: 2, ok: 2, ms: 2000 }, switch: { n: 2, ok: 2, ms: 9000 } }, {}).cognitive_flexibility;
+  assert(Math.abs(thin) < 1e-9, 'fewer than 3 trials in a condition falls back too');
+});
 check('the trait groups follow the pool: reasoning and working memory are in the task group', () => {
   const { GROUPS } = require('../services/onboarding/groups');
   assert.strictEqual(GROUPS.a.length + GROUPS.b.length + GROUPS.c.length, 100);

@@ -1,5 +1,5 @@
 {
- "note": "Short self-ratings about whole families of traits (the 10 scorecard categories and a general learner factor). Written by hand on 3 Nov 2026, NOT yet blind-judged by a second model (the 100 per-measure pairs in items.json were). Each pair: high = high on the factor, low = low. Read by services/onboarding/pool.js fq:* items.",
+ "note": "Short self-ratings about whole families of traits (the 10 scorecard categories and a general learner factor). Written by hand on 3 Nov 2026 and blind-judged the same day by two free models of different families (scripts/judge-factor-items.js, curriculum-build/onboarding-sim/factor-judge.json): two items were rewritten after the first runs (representation b pointed the opposite way to representation a; intake b read as attention, a pacing trait). Each pair: high = high on the factor, low = low. Read by services/onboarding/pool.js fq:* items.",
  "items": {
   "g": [
    { "high": "New subjects usually click for me faster than they do for the people around me", "low": "New subjects usually take me longer to click than the people around me" },
@@ -7,7 +7,7 @@
   ],
   "intake": [
    { "high": "I take in new information easily, whether I read it or hear it", "low": "I find it hard to take in new information in one go" },
-   { "high": "Long readings and lectures stay clear to me from start to finish", "low": "Long readings and lectures lose me part of the way through" }
+   { "high": "I can keep several new facts in mind at once while I read or listen", "low": "When several new facts come at once, some of them slip away from me" }
   ],
   "reasoning": [
    { "high": "I can usually see the rule or pattern behind a problem", "low": "The rule or pattern behind a problem is usually hard for me to see" },
@@ -35,7 +35,7 @@
   ],
   "representation": [
    { "high": "I like clear steps, worked examples and detailed feedback", "low": "I like to work things out from the problem with little guidance" },
-   { "high": "I am comfortable with notation, symbols and formal explanations", "low": "Notation, symbols and formal explanations put me off" }
+   { "high": "I learn best when each idea is shown more than one way, with every step written out", "low": "One compact explanation is enough for me; I do not need every step shown" }
   ],
   "motivation": [
    { "high": "I study because I want to understand, even when no one is checking", "low": "I mostly study because of marks, rewards or other people's expectations" },

@@ -109,6 +109,8 @@ App.mount(async () => {
         ? { blue: ['Odd', 'Even', (n) => n % 2 === 1], orange: ['More than 5', '5 or less', (n) => n > 5] }
         : { blue: ['Small (1 to 4)', 'Large (6 to 9)', (n) => n < 5], orange: ['Divisible by 3', 'Not', (n) => n % 3 === 0] };
       const times = { switch: [], repeat: [] }; let errors = 0; let prev = null; const N = 20;
+      // per condition, every trial after the first (errors too): for the rate-residual score (services/onboarding/tasks.js)
+      const cond = { repeat: { n: 0, ok: 0, ms: 0 }, switch: { n: 0, ok: 0, ms: 0 } };
       for (let i = 0; i < N; i++) {
         const color = i === 0 ? 'blue' : (Math.random() < 0.5 ? prev : (prev === 'blue' ? 'orange' : 'blue'));
         let n = 1 + Math.floor(Math.random() * 9); if (s.config === 't:switch_b' && n === 5) n = 4; if (s.config === 't:switch_a' && n === 5) n = 6;
@@ -116,10 +118,11 @@ App.mount(async () => {
         const k = await ask(`<p class="muted small">Blue box: ${esc(rules.blue[0])} or ${esc(rules.blue[1])}. Orange box: ${esc(rules.orange[0])} or ${esc(rules.orange[1])}.</p><div style="text-align:center;padding:24px;border-radius:12px;background:${color === 'blue' ? '#3b82f6' : '#f59e0b'};color:#fff"><h1 style="margin:0;font-size:64px">${n}</h1></div>`, [['1', l1], ['2', l2]]);
         const ok = (k === '1') === f(n); const ms = Date.now() - t;
         if (!ok) errors += 1; else if (i > 0) times[color === prev ? 'repeat' : 'switch'].push(ms);
+        if (i > 0) { const c = cond[color === prev ? 'repeat' : 'switch']; c.n += 1; c.ms += ms; if (ok) c.ok += 1; }
         prev = color;
       }
       const m = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0);
-      return { costMs: m(times.switch) - m(times.repeat), errorRate: errors / N };
+      return { costMs: m(times.switch) - m(times.repeat), errorRate: errors / N, repeat: cond.repeat, switch: cond.switch };
     },
     minilesson: async (s) => {
       const t0 = Date.now(); const c = {}; let answer = null; let feel = 3; let mine = 3; const T = s.text;

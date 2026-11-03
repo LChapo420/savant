@@ -17,7 +17,8 @@
  *   - The score moves toward the batch value in proportion to the batch weight
  *     against the evidence already held (a Bayesian-style precision update),
  *     and never by more than MAX_STEP points at once.
- *   - Old evidence fades with TIME (half-life EVIDENCE_HALF_LIFE_DAYS), not
+ *   - Old evidence fades with TIME (each measure's own half-life, services/scorecard/drift.js;
+ *     EVIDENCE_HALF_LIFE_DAYS only with SCORECARD_DRIFT=off), not
  *     with each update: a stat touched by every answer and one touched once a
  *     week lose the same share of their evidence in a quiet month. The mass is
  *     also capped, so a learner who changes is followed, not held to the past.

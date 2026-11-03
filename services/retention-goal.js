@@ -13,9 +13,10 @@
  *   forever      the owner's enforcer calendar (services/retention-schedule.js), untouched:
  *                semi-weekly, weekly, bi-weekly and monthly all stay.
  *   horizon      (months, year, years) an enforcer type is kept while its spacing is at most
- *                GAP_MAX of the horizon (the best gap is roughly 10-20% of the retention
- *                interval, with retrieval practice throughout: Cepeda et al. 2008, Rohrer and
- *                Pashler 2007); wider ones are dropped, and the learner is told which.
+ *                GAP_MAX (35%) of the horizon; wider ones are dropped, and the learner is told which.
+ *                The best gap shrinks as the horizon grows: about 20-40% of a 1-week delay, about
+ *                5-10% of a 1-year delay (Cepeda et al. 2008; Rohrer and Pashler 2007), so 35% is a
+ *                ceiling the simulation allows, not the evidence-best share (docs/RETENTION-GOALS.md).
  *                Reviews of an uploaded course stop once the next one would land past the horizon.
  *   date         the calendar rungs are replaced by a plan compressed to the date (datePlan):
  *                a review about every GAP_SHARE (15%) of the time left, a cumulative final

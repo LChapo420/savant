@@ -143,6 +143,17 @@ function score(item, response, server) {
     return orient(item, { processing_velocity: v, intake_baseline: v, warmup_latency: -z(r.firstMs, 2200, 700) });
   }
   if (item.kind === 'switch') {
+    // Rate residual (Hughes, Linck, Bowles, Koeth and Bunting 2014, Behav Res Methods, 10.3758/s13428-013-0411-5): speed and accuracy in one
+    // number per condition (correct answers per second, errors' time included), and the switch rate read against the repeat rate. A plain RT
+    // difference drops the errors and is the least reliable switch score there. With no population yet to fit the regression, the slope is
+    // fixed at 1 in log rates: cost = log(repeat rate / switch rate). Norm ASSUMED (switch trials about 20% slower in rate, sd .18), to be
+    // refitted from the app's own learners. A response without the per-condition counts (an older page) keeps the RT difference.
+    const rate = (c) => (c && c.n >= 3 && c.ms > 0 ? Math.max(c.ok, 0.5) / (c.ms / 1000) : null);
+    const rep = rate(r.repeat); const sw = rate(r.switch);
+    if (rep && sw) {
+      const cost = z(Math.log(rep / sw), 0.2, 0.18);
+      return orient(item, { cognitive_flexibility: -cost, error_recovery_speed: -cost, reentry_cost: -cost, interleaving_tolerance: -cost });
+    }
     const cost = z(r.costMs, 180, 90);
     return orient(item, { cognitive_flexibility: -cost - 0.3 * z(r.errorRate * 100, 8, 8), error_recovery_speed: -cost, reentry_cost: -cost, interleaving_tolerance: -cost });
   }
