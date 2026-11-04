@@ -70,6 +70,13 @@ async function write({ system, user, schema, schemaName, maxTokens = 6000, task 
         // eslint-disable-next-line global-require
         return await require('../services/providers/xkiro').xkiro.structured({ system, user, schema, schemaName, maxTokens, models: ['minimax/minimax-m3.1-flash'], timeoutMs: 300000, reasoningEffort: process.env.PLACE_EFFORT || 'low' });
       }
+      if (process.env.PLACE_WRITER === 'coral' || process.env.PLACE_WRITER === 'gonka') {
+        // Coral / Gonka (owner credits, capped ledgers; pipeline only): DeepSeek V4 Flash writes.
+        const name = process.env.PLACE_WRITER;
+        process.env[`${name.toUpperCase()}_PIPELINE`] = '1';
+        // eslint-disable-next-line global-require
+        return await require(`../services/providers/${name}`)[name].structured({ task, system, user, schema, schemaName, maxTokens, timeoutMs: 300000 });
+      }
       return await standardCompute.structured({ task, system, user, schema, schemaName, maxTokens });
     } catch (err) {
       last = err;
@@ -100,6 +107,34 @@ function release(f) { try { fs.unlinkSync(f); } catch { /* gone */ } }
 let lastOk = Date.now();
 
 async function ask(model, { system, user, schema, schemaName, maxTokens = 6000 }) {
+  if (String(model).startsWith('gemini:')) {
+    // Gemini free tier as solver or locator (another family; curriculum text only). A rate limit is waited out.
+    for (let attempt = 1; attempt <= 4; attempt++) {
+      try {
+        // eslint-disable-next-line global-require, no-await-in-loop
+        const r = await require('../services/providers/gemini').structured({ role: 'check', system, user, schema, schemaName, maxTokens });
+        if (r && r.data) return r.data;
+      } catch (err) { /* retried */ }
+      // eslint-disable-next-line no-await-in-loop
+      await sleep(15000 * attempt);
+    }
+    return null;
+  }
+  const cred = /^(gonka|coral|lyceum):(.*)$/.exec(String(model));
+  if (cred) {
+    // A credit provider of another family as solver or locator ("gonka:zai-org/GLM-5.3-Flash"). Pipeline only.
+    process.env[`${cred[1].toUpperCase()}_PIPELINE`] = '1';
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        // eslint-disable-next-line global-require, no-await-in-loop
+        const r = await require(`../services/providers/${cred[1]}`)[cred[1]].structured({ system, user, schema, schemaName, maxTokens, model: cred[2] || undefined, timeoutMs: 300000 });
+        if (r && r.data) return r.data;
+      } catch (err) { if (err.status === 402) throw err; }
+      // eslint-disable-next-line no-await-in-loop
+      await sleep(6000 * attempt);
+    }
+    return null;
+  }
   if (String(model).startsWith('xkiro:')) {
     // A free xKiro model of another family as the blind solver (pipeline only; the item text is curriculum, no learner data).
     process.env.XKIRO_PIPELINE = '1';
@@ -418,7 +453,7 @@ async function catchupCheck(trackId) {
     console.log(`${trackId} round ${round + 1}: checking ${todo.length} in ${batches.length} calls`);
     let finished = 0;
     const pending = [];
-    await pool(batches, 2, async (batch) => {
+    await pool(batches, Number(process.env.PLACE_CHECK_CONC || 2), async (batch) => {
       const ctx = [...new Set(batch.map((c) => `${c.grade_id} U${c.unit}`))].map((k) => { const [g, u] = k.split(' U'); return `${unitContext(trackId, g, Number(u))}`; }).join('\n\n');
       const context = `Each question is meant to check ONE skill of the unit it came from, at the level of a learner who has just finished that unit (not earlier-only, not later material). Units:\n\n${ctx}\n\nQuestion ids and their units: ${batch.map((c) => `${c.id}=${c.grade_id} U${c.unit}`).join('; ')}`;
       const verdicts = await solveBatch(MINIMAX, batch.map((c) => ({ id: c.id, item: c.item })), context, 'a');
@@ -773,7 +808,19 @@ async function placeCheck(trackId) {
       // took about 90 s an item (gateway timeouts), and Mistral Large 4 timed out on these hard items, so the position comes from
       // DeepSeek: a reading of the curriculum outline (the method the earlier calibration used), sanity-checked by a second reading
       // against reference items. DeepSeek is never asked whether a key is right.
-      const [sa, la, lb] = await Promise.all([solveBatch(process.env.PLACE_SOLVER === 'mistral' ? MISTRAL : process.env.PLACE_SOLVER ? process.env.PLACE_SOLVER : MINIMAX, items, ctx, 'a'), locateByOutline('deepseek', trackId, batch), locateBatch('deepseek', trackId, batch)]);
+      // PLACE_LOCATORS=<modelA>,<modelB>: two families each read the outline and the references; a family's point is the mean of its two
+      // readings, the item's point the mean of the families, the spread their difference (apply --max-spread keeps only agreeing items).
+      const LOC = (process.env.PLACE_LOCATORS || '').split(',').filter(Boolean);
+      const [sa, la, lb] = LOC.length === 2 ? await (async () => {
+        const solved = solveBatch(process.env.PLACE_SOLVER || MINIMAX, items, ctx, 'a');
+        const fam = await Promise.all(LOC.map(async (m) => {
+          const [o, r] = await Promise.all([locateByOutline(m, trackId, batch), locateBatch(m, trackId, batch)]);
+          const mean = new Map();
+          for (const c of batch) { const x = o.get(c.id); const y = r.get(c.id); if (x && y) mean.set(c.id, { point: (x.point + y.point) / 2, key: x.key, note: x.note }); }
+          return mean;
+        }));
+        return [await solved, fam[0], fam[1]];
+      })() : await Promise.all([solveBatch(process.env.PLACE_SOLVER === 'mistral' ? MISTRAL : process.env.PLACE_SOLVER ? process.env.PLACE_SOLVER : MINIMAX, items, ctx, 'a'), locateByOutline('deepseek', trackId, batch), locateBatch('deepseek', trackId, batch)]);
       const sb = sa;
       for (const c of batch) {
         const va = verdictOf(c.item, sa.get(c.id));
@@ -785,7 +832,7 @@ async function placeCheck(trackId) {
         const spread = Math.abs(ka.point - kb.point);
         const problems = [!va.pass && `MiniMax: ${va.why}`, keyBad && `locate judges: ${ka.key}/${kb.key} ${ka.note} ${kb.note}`, spread > 99 && `judges disagree on the level by ${spread.toFixed(1)} grades`].filter(Boolean);
         c.verdicts = { minimax_blind_solve: va.pass, placement_a: Number(ka.point.toFixed(3)), placement_b: Number(kb.point.toFixed(3)) };
-        c.point = Number(ka.point.toFixed(3)); // the outline reading (the method the earlier points used); the anchor reading is a sanity check
+        c.point = Number((process.env.PLACE_LOCATORS ? (ka.point + kb.point) / 2 : ka.point).toFixed(3)); // the outline reading (two families: their mean) (the method the earlier points used); the anchor reading is a sanity check
         c.spread = Number(spread.toFixed(2));
         if (!problems.length) { c.status = 'passed'; c.passed_after = c.tries; if (c.tries === 1) cand.counts.passed++; else cand.counts.rewritten_passed++; continue; }
         c.last_note = problems.join(' | ').slice(0, 400);
@@ -835,8 +882,9 @@ function placeApply(trackId, args) {
   }
   extra.note = 'Extra calibrated top-end items, appended after a grade\'s seven stored questions (services/subject-placement.js withExtras). Written by Standard Compute (DeepSeek V4.1), each blind-checked and located by two other families (MiniMax M3.1 Flash, Mistral Large 4); the point is the mean of the two judges. Grade = the grade the point falls in.';
   if (process.env.PLACE_WRITER === 'xkiro' && !/3 Nov 2026/.test(extra.note)) extra.note += ' Round of 3 Nov 2026: mid-ladder items written by MiniMax M3.1 Flash on xKiro, blind-solved by Qwen 3.8 Max (xKiro free) with the key withheld, positioned as the mean of two MiniMax readings (the curriculum outline, and reference items), kept only where the two readings differ by 1.5 or less (--max_spread).';
+  if (process.env.PLACE_LOCATORS && !/4 Nov 2026/.test(extra.note)) extra.note += ` Round of 4 Nov 2026 (${trackId} top end): written by ${process.env.PLACE_WRITER || 'standard-compute'} DeepSeek V4.1 Flash, blind-solved by ${process.env.PLACE_SOLVER || MINIMAX} with the key withheld, positioned by two other families (${process.env.PLACE_LOCATORS}), each the mean of an outline reading and a reference-anchored reading; kept only when the two families' points differ by at most the --max-spread given (AI-judged, not measured on learners).`;
   extra.made_at = new Date().toISOString();
-  extra.judges = ['minimaxai/minimax-m3.1-flash (blind solve, key, ambiguity, distractors, fit)', 'deepseek-v4.1 via Standard Compute: position read from the curriculum outline, sanity-checked against reference items (placement only; never asked about a key)'];
+  extra.judges = process.env.PLACE_LOCATORS ? [`${process.env.PLACE_SOLVER || MINIMAX} (blind solve)`, ...process.env.PLACE_LOCATORS.split(',').map((m) => `${m} (position, outline + anchors)`)] : ['minimaxai/minimax-m3.1-flash (blind solve, key, ambiguity, distractors, fit)', 'deepseek-v4.1 via Standard Compute: position read from the curriculum outline, sanity-checked against reference items (placement only; never asked about a key)'];
   fs.mkdirSync(EXTRA_DIR, { recursive: true });
   writeJson(file, extra);
   cal.made_at = new Date().toISOString();
@@ -847,7 +895,7 @@ function placeApply(trackId, args) {
   const perGrade = {};
   for (const [g, list] of Object.entries(extra.grades)) perGrade[g] = list.length;
   writeJson(path.join(REPORTS, `place-${trackId}-report.json`), {
-    track_id: trackId, made_at: new Date().toISOString(), writer: 'standard-compute deepseek v4.1 flash', checkers: [MINIMAX], placement: 'DeepSeek V4.1 reading of the curriculum outline (the method of the earlier points); a second reading against reference items is kept as a sanity figure (candidates.verdicts) but does not reject',
+    track_id: trackId, made_at: new Date().toISOString(), writer: process.env.PLACE_LOCATORS ? `${process.env.PLACE_WRITER || 'standard-compute'} deepseek v4.1 flash` : 'standard-compute deepseek v4.1 flash', checkers: process.env.PLACE_LOCATORS ? [process.env.PLACE_SOLVER || MINIMAX, ...process.env.PLACE_LOCATORS.split(',')] : [MINIMAX], placement: process.env.PLACE_LOCATORS ? 'two families (PLACE_LOCATORS), each the mean of an outline reading and a reference-anchored reading; point = mean of the families, spread = their difference' : 'DeepSeek V4.1 reading of the curriculum outline (the method of the earlier points); a second reading against reference items is kept as a sanity figure (candidates.verdicts) but does not reject',
     applied_detail: cand.items.filter((c) => c.status === 'applied').map((c) => ({ grade: c.grade_id, unit: c.unit, point: c.point, anchor_reading: c.verdicts && c.verdicts.placement_b, rewritten: c.passed_after === 2, prompt: c.item.prompt.slice(0, 90) })),
     checked: cand.items.filter((c) => c.tries > 0).length, not_checked_left_out: cand.items.filter((c) => !c.tries).length,
     generated: cand.items.length, passed_first_time: cand.items.filter((c) => ['passed', 'applied'].includes(c.status) && c.passed_after === 1).length, rewritten_then_passed: cand.items.filter((c) => ['passed', 'applied'].includes(c.status) && c.passed_after === 2).length, dropped: by('dropped'),

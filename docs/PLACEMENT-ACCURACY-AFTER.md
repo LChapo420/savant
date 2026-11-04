@@ -620,3 +620,22 @@ The grade and in-grade simulations in Standard and Full give byte-identical outp
 - Reading's grade stage (7.8 minutes; passages take about 62 s a question) and hole-heavy learners (30% holes: 81 to 84% within one unit) were not improved.
 
 Reproduce: `node scripts/unit-placement-sim.js --seed=20261104 --mode=quick --walk-only`, `node scripts/spanish-placement-sim.js --seed=20261104 --grades=57 --mode=quick --walk-only`, `DB_FILE=<a copy> node scripts/placement-sim.js --summary --seeds=60 --seed=27182 --fast --fast-all --mode=quick --clock=4`, `NODE_PATH=../node_modules node scripts/gap-path-sim.js --subjects=math,english,reading,iq --modes=quick --profiles=clean,holes,below,deep,mixed,strong --seeds=30 --answer=calibrated`. Before = commit 48bfe81 (grade `--clock=5`).
+
+## 2026-11-04: math top-end items written and calibrated (branch content-fix); the Quick clock is NOT lowered
+
+**SIMULATED and AI-judged throughout; no real learner was measured.** The second-round section above said math's grade stage would need more calibrated items near the top of the 49-grade scale. 123 candidates were written for grades 40 to 49 (writer: Coral DeepSeek V4.1 Flash), 117 passed a blind solve with the key withheld (Gemini free tier; 18 of them after one rewrite, 6 dropped), and each was positioned by two other families (Lyceum Qwen 3.8 and Lyceum MiniMax M3, each the mean of an outline reading and a reference-anchored reading). Only items whose two families differ by at most **2.0 grades** and sit at 33 or above were kept: **40 items** in `content/placement-extra/math.json`, with their calibrated points added to `content/placement-calibration/math.json` (tool: `scripts/content-gap-tools.js place-gen|place-check|place-apply math`, now with `PLACE_WRITER=coral`, `PLACE_SOLVER=` and `PLACE_LOCATORS=<two models>`).
+
+What the judges did: the two families correlate only 0.68 and read graduate-level items **compressed into 34 to 44** whatever grade they were written for (median spread 3.6 grades; Qwen mean 40.0, MiniMax 37.0, written-for mean 44.2). Of the 40 kept, 39 sit at 33 to 44 and none above 44.9. So the items fill the 36 to 41 stretch, not the 45 to 49 top where the errors are, because neither judge family will place anything higher.
+
+| Math Quick grade stage, within 1 grade | before (no new items) | after (40 items) |
+|---|---|---|
+| dev seed 11111, clock 5.5 min (shipped) | 91.5% | 92.0% |
+| dev seed 11111, clock 4.0 min | 84.7% | 85.2% |
+| **held-out seed 77777, 60 learners per level, clock 5.5 min (shipped)** | 91.5% (median 5.53 min) | 91.7% (5.53) |
+| **held-out seed 77777, clock 5.0 min** | 89.7% (5.08) | 89.7% (5.09) |
+
+**Result: no gain beyond noise (about 1.1 points standard error).** The gate was at least 90% within one grade on the held-out seed at the lower clock; it is 89.7%, so `QUICK_CLOCK_SCALE.math` stays 1.375 and math Quick stays about 10.5 minutes (5.5 + about 5 in-grade). The in-grade stage was not re-run because nothing about it changed. The 40 items are kept (blind-solved, in the walk, harmless in the sim) but are not claimed to speed anything up.
+
+What would move it: items the judges can place at 45 to 49. That needs a placement method that does not compress (for example a human or a stronger single judge reading the curriculum outline unit by unit), or learner data. Not built.
+
+Money: Coral about $0.06 and Gonka under $1 for this and the other runs of this branch; **Lyceum about $16, which is over the branch's $5 budget**: Qwen 3.8 2.4T is a reasoning model and billed about $0.1 a call over about 150 calls (the ledger is shared, so a few untagged calls of other work may be in that figure). Reproduce the sims: `DB_FILE=<a copy> node scripts/placement-sim.js --summary --seeds=60 --seed=77777 --fast --fast-all --mode=quick --subject=math --clock=4` (5.5 min) and `--clock=3.636` (5.0 min).

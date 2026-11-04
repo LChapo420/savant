@@ -48,20 +48,30 @@ function applyFile(fix) {
   }
   for (const w of fix.rewrites || []) {
     const row = rowOf(w.level);
-    const i = row && row.payload ? (row.payload.questions || []).findIndex((x) => x.id === w.qid) : -1;
+    // A stored set can carry one id twice (English level 24: q4, q5): prefer the one whose prompt is the old or the new one.
+    const qsAll = row && row.payload ? (row.payload.questions || []) : [];
+    const olds = [w.old_prompt, ...(w.also_old || [])]; // also_old: prompts of earlier rewrites of this question that a database may already hold
+    let i = qsAll.findIndex((x) => x.id === w.qid && (olds.includes(x.prompt) || x.prompt === w.question.prompt));
+    if (i < 0) i = qsAll.findIndex((x) => x.id === w.qid);
     if (i < 0) { out.missing++; continue; }
     const q = row.payload.questions[i];
     // Already applied only when the whole judged question is there: a rewrite can keep the prompt and change the options or the key.
     const same = q.prompt === w.question.prompt && q.answerIndex === w.question.answerIndex
       && JSON.stringify(q.choices) === JSON.stringify(w.question.choices);
     if (same) { out.already++; continue; }
-    if (q.prompt !== w.old_prompt) { out.conflicts.push(`${w.level}:${w.qid} prompt is neither the old nor the new one`); continue; }
+    if (!olds.includes(q.prompt)) { out.conflicts.push(`${w.level}:${w.qid} prompt is neither the old nor the new one`); continue; }
     row.payload.questions[i] = { ...q, ...w.question, id: q.id };
     touched.add(row.id); out.rewritten++;
   }
   for (const id of touched) { const row = db.byId('game_payloads', id); db.update('game_payloads', id, { payload: row.payload, content_fixed_at: new Date().toISOString() }); }
   for (const r of fix.release || []) {
     const row = rowOf(r.level);
+    // Re-release: a level released on an earlier hash whose set was then edited and re-judged in full carries the new hash.
+    if (row && row.payload && row.verified_replacement && row.verified_replacement.hash !== r.hash && setHash(row.payload.questions || []) === r.hash) {
+      db.update('game_payloads', row.id, { verified_replacement: { ...row.verified_replacement, hash: r.hash, re_released_at: new Date().toISOString() } });
+      out.released++;
+      continue;
+    }
     if (!row || !row.payload || row.verified_replacement) continue;
     if (setHash(row.payload.questions || []) !== r.hash) continue; // the content is not the judged set: stays held
     db.update('game_payloads', row.id, { verified_replacement: { source: fix.source || 'game-fixes', at: new Date().toISOString(), hash: r.hash } });

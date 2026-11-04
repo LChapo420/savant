@@ -1,0 +1,373 @@
+{
+ "track_id": "math",
+ "made_at": "2026-11-04T20:39:03.439Z",
+ "writer": "coral deepseek-v4.1-flash",
+ "checkers": [
+  "gemini free tier (blind solve, key withheld)",
+  "lyceum qwen/qwen3.8-2.4t-a95b (position)",
+  "lyceum minimax/minimax-m3 (position)"
+ ],
+ "placement": "two families (Qwen 3.8, MiniMax M3), each the mean of an outline reading and a reference-anchored reading; point = mean of the two families, spread = their difference; applied with --max-spread=2 and --min_point=33. AI-judged, not measured on learners.",
+ "applied_detail": [
+  {
+   "grade": "abstract_algebra_ii",
+   "unit": 5,
+   "point": 37.328,
+   "anchor_reading": 37.578,
+   "rewritten": true,
+   "prompt": "In the ring R = Z[x], let I = (x) and J = (x - 1). Since I + J = R, the Chinese Remainder "
+  },
+  {
+   "grade": "abstract_algebra_ii",
+   "unit": 8,
+   "point": 40.6,
+   "anchor_reading": 40.797,
+   "rewritten": true,
+   "prompt": "Let f(x) = x^4 - 2, viewed as a polynomial over Q, and let K be the splitting field of f i"
+  },
+  {
+   "grade": "abstract_algebra_ii",
+   "unit": 12,
+   "point": 40.734,
+   "anchor_reading": 40.109,
+   "rewritten": false,
+   "prompt": "Let f(x) = x^5 - 5x + 12 over Q. Suppose (as is true) that f is irreducible over Q and tha"
+  },
+  {
+   "grade": "abstract_algebra_ii",
+   "unit": 9,
+   "point": 38.941,
+   "anchor_reading": 38.516,
+   "rewritten": true,
+   "prompt": "Let F_3 denote the field with 3 elements. A polynomial in F_3[x] is called monic if its le"
+  },
+  {
+   "grade": "abstract_algebra_ii",
+   "unit": 9,
+   "point": 39.472,
+   "anchor_reading": 38.797,
+   "rewritten": false,
+   "prompt": "Let K be the splitting field over Q of x^3 - 2. What is the Galois group Gal(K/Q), up to i"
+  },
+  {
+   "grade": "abstract_algebra_ii",
+   "unit": 10,
+   "point": 38.997,
+   "anchor_reading": 38.297,
+   "rewritten": false,
+   "prompt": "Let E/F be a finite Galois extension with group G, and let H be a subgroup of G with fixed"
+  },
+  {
+   "grade": "topology",
+   "unit": 11,
+   "point": 40.138,
+   "anchor_reading": 39.438,
+   "rewritten": false,
+   "prompt": "The Klein bottle K is obtained from a square with edges identified according to the word a"
+  },
+  {
+   "grade": "topology",
+   "unit": 6,
+   "point": 38.629,
+   "anchor_reading": 38.479,
+   "rewritten": false,
+   "prompt": "Let X be the set of all functions f: [0,1] -> R, equipped with the product (pointwise) top"
+  },
+  {
+   "grade": "topology",
+   "unit": 7,
+   "point": 39.221,
+   "anchor_reading": 39.021,
+   "rewritten": false,
+   "prompt": "Let X be the Sorgenfrey line: the set R with the topology whose basis consists of all half"
+  },
+  {
+   "grade": "topology",
+   "unit": 2,
+   "point": 36.038,
+   "anchor_reading": 35.063,
+   "rewritten": false,
+   "prompt": "Let X be a topological space and A ⊆ X. Recall: cl(A) is the smallest closed set containin"
+  },
+  {
+   "grade": "topology",
+   "unit": 2,
+   "point": 36.471,
+   "anchor_reading": 35.521,
+   "rewritten": false,
+   "prompt": "Let X = {a, b, c} with the topology τ = {∅, {a}, {a, b}, X}. Consider the constant sequenc"
+  },
+  {
+   "grade": "topology",
+   "unit": 2,
+   "point": 37.288,
+   "anchor_reading": 36.604,
+   "rewritten": false,
+   "prompt": "Which of the following pairs of spaces (each with its usual subspace topology from R) are "
+  },
+  {
+   "grade": "topology",
+   "unit": 5,
+   "point": 40.612,
+   "anchor_reading": 40.438,
+   "rewritten": false,
+   "prompt": "In Zermelo–Fraenkel set theory (ZF), which statement is equivalent to the axiom of choice?"
+  },
+  {
+   "grade": "topology",
+   "unit": 5,
+   "point": 39.087,
+   "anchor_reading": 38.271,
+   "rewritten": false,
+   "prompt": "Let X be a locally compact Hausdorff space that is not compact, and let X* = X ∪ {∞} be it"
+  },
+  {
+   "grade": "complex_analysis",
+   "unit": 2,
+   "point": 36.438,
+   "anchor_reading": 36.313,
+   "rewritten": false,
+   "prompt": "Let u(x,y) = x^2 - y^2 + 2x, defined on all of R^2 (identified with C). Which statement is"
+  },
+  {
+   "grade": "complex_analysis",
+   "unit": 5,
+   "point": 39.633,
+   "anchor_reading": 38.938,
+   "rewritten": true,
+   "prompt": "Let f(z) = (cos z - 1 + z^2/2)/z^4 for z not equal to 0, and let z = 0 be the isolated sin"
+  },
+  {
+   "grade": "complex_analysis",
+   "unit": 6,
+   "point": 40.212,
+   "anchor_reading": 39.396,
+   "rewritten": true,
+   "prompt": "Let f(z) = (z^2 + 1) / (z^3 (z - 1)^2). Compute the residue of f at z = 0. (Convention: th"
+  },
+  {
+   "grade": "complex_analysis",
+   "unit": 8,
+   "point": 41.767,
+   "anchor_reading": 41.563,
+   "rewritten": true,
+   "prompt": "Let f(z) = pi*cot(pi*z)/z^2. The function cot(pi*z) has simple poles at every integer with"
+  },
+  {
+   "grade": "complex_analysis",
+   "unit": 9,
+   "point": 42.388,
+   "anchor_reading": 42.188,
+   "rewritten": true,
+   "prompt": "Let D = {z : |z| < 1} and let f be holomorphic on the upper half-disk D⁺ = {z in D : Im(z)"
+  },
+  {
+   "grade": "complex_analysis",
+   "unit": 10,
+   "point": 39.996,
+   "anchor_reading": 40.646,
+   "rewritten": true,
+   "prompt": "Let T(z) = (z - 1)/(z + 1), a Möbius transformation of the Riemann sphere. The real axis t"
+  },
+  {
+   "grade": "advanced_undergraduate_electives_and_honors_capstone",
+   "unit": 16,
+   "point": 34.94,
+   "anchor_reading": 34.715,
+   "rewritten": false,
+   "prompt": "Newton's method is applied to f(x) = x^2 - 2 to approximate the root r = sqrt(2). Let e_n "
+  },
+  {
+   "grade": "graduate_core_i",
+   "unit": 4,
+   "point": 38.237,
+   "anchor_reading": 37.438,
+   "rewritten": false,
+   "prompt": "Let G be the dihedral group D_8 of order 8, presented as G = <r, s | r^4 = s^2 = 1, s r s "
+  },
+  {
+   "grade": "graduate_core_i",
+   "unit": 5,
+   "point": 37.438,
+   "anchor_reading": 37.813,
+   "rewritten": false,
+   "prompt": "Let G be a finite group of order 60 = 2^2 * 3 * 5, and let N be a normal subgroup of G of "
+  },
+  {
+   "grade": "graduate_core_i",
+   "unit": 2,
+   "point": 43.122,
+   "anchor_reading": 42.547,
+   "rewritten": false,
+   "prompt": "Let λ* denote Lebesgue outer measure on R and λ the Lebesgue measure on the σ-algebra L of"
+  },
+  {
+   "grade": "graduate_core_i",
+   "unit": 3,
+   "point": 41.987,
+   "anchor_reading": 41.547,
+   "rewritten": false,
+   "prompt": "For n ≥ 1 let f_n : [0,1] → R be defined by f_n(x) = n·1_{(0, 1/n)}(x), where 1_A is the i"
+  },
+  {
+   "grade": "advanced_undergraduate_electives_and_honors_capstone",
+   "unit": 17,
+   "point": 41.604,
+   "anchor_reading": 41.729,
+   "rewritten": false,
+   "prompt": "Let f(x) = 1/(1 + 25x^2) on [-1, 1]. You approximate f by the degree-10 polynomial p that "
+  },
+  {
+   "grade": "advanced_undergraduate_electives_and_honors_capstone",
+   "unit": 18,
+   "point": 39.643,
+   "anchor_reading": 40.243,
+   "rewritten": false,
+   "prompt": "Let f: R^n -> R^m be computed by a straight-line program (a computation graph) with V inte"
+  },
+  {
+   "grade": "masters_specialization_and_thesis",
+   "unit": 21,
+   "point": 40.122,
+   "anchor_reading": 40.305,
+   "rewritten": false,
+   "prompt": "In the Cox proportional hazards model with a single covariate, the hazard for individual i"
+  },
+  {
+   "grade": "masters_specialization_and_thesis",
+   "unit": 24,
+   "point": 34.884,
+   "anchor_reading": 34.734,
+   "rewritten": false,
+   "prompt": "A binary symmetric channel has binary input X ∈ {0,1}, binary output Y ∈ {0,1}, and flips "
+  },
+  {
+   "grade": "masters_specialization_and_thesis",
+   "unit": 26,
+   "point": 38.448,
+   "anchor_reading": 37.898,
+   "rewritten": false,
+   "prompt": "Let 3-SAT be the set of satisfiable propositional formulas in conjunctive normal form with"
+  },
+  {
+   "grade": "doctoral",
+   "unit": 3,
+   "point": 41.571,
+   "anchor_reading": 41.063,
+   "rewritten": true,
+   "prompt": "Let D = {z : |z| < 1} and let F be the family of all holomorphic f : D → D with f(0) = 0 a"
+  },
+  {
+   "grade": "doctoral",
+   "unit": 5,
+   "point": 38.015,
+   "anchor_reading": 38.465,
+   "rewritten": true,
+   "prompt": "Consider the fixed-point iteration x_{n+1} = g(x_n) with g(x) = x + (x^2 - 2)/(2x) for x ≠"
+  },
+  {
+   "grade": "postdoctoral_professional",
+   "unit": 2,
+   "point": 34.963,
+   "anchor_reading": 34.604,
+   "rewritten": false,
+   "prompt": "You are refereeing for a journal whose referee form asks you to rate a submission on two i"
+  },
+  {
+   "grade": "postdoctoral_professional",
+   "unit": 3,
+   "point": 33.904,
+   "anchor_reading": 33.604,
+   "rewritten": false,
+   "prompt": "A publisher's book-proposal form asks for a 'competing-books' section and a 'market' secti"
+  },
+  {
+   "grade": "postdoctoral_professional",
+   "unit": 7,
+   "point": 40.105,
+   "anchor_reading": 40.539,
+   "rewritten": false,
+   "prompt": "Let X be a normal Q-factorial variety and let f: Y → X be a resolution with exceptional di"
+  },
+  {
+   "grade": "postdoctoral_professional",
+   "unit": 10,
+   "point": 38.246,
+   "anchor_reading": 38.896,
+   "rewritten": false,
+   "prompt": "Let P and Q be two finite point clouds in R^d, and let Dgm_k(P), Dgm_k(Q) be their degree-"
+  },
+  {
+   "grade": "postdoctoral_professional",
+   "unit": 11,
+   "point": 38.547,
+   "anchor_reading": 38.305,
+   "rewritten": false,
+   "prompt": "In split conformal prediction with a fitted score function s(x, y) (smaller means better f"
+  },
+  {
+   "grade": "senior_scholar",
+   "unit": 2,
+   "point": 41.941,
+   "anchor_reading": 41.391,
+   "rewritten": false,
+   "prompt": "Which statement best describes the current epistemic status of the Classification of Finit"
+  },
+  {
+   "grade": "senior_scholar",
+   "unit": 2,
+   "point": 41.866,
+   "anchor_reading": 41.008,
+   "rewritten": false,
+   "prompt": "Let A be an m-by-n real matrix with m < n, and let x be a vector with exactly s nonzero en"
+  },
+  {
+   "grade": "senior_scholar",
+   "unit": 2,
+   "point": 44.011,
+   "anchor_reading": 43.391,
+   "rewritten": false,
+   "prompt": "In Martin-Lof type theory with the univalence axiom (Voevodsky), consider the type Bool wi"
+  }
+ ],
+ "checked": 123,
+ "not_checked_left_out": 0,
+ "generated": 123,
+ "passed_first_time": 99,
+ "rewritten_then_passed": 15,
+ "dropped": 3,
+ "applied": 40,
+ "extra_items_per_grade": {
+  "real_analysis_ii_and_metric_spaces": 3,
+  "topology": 7,
+  "abstract_algebra_i": 8,
+  "abstract_algebra_ii": 6,
+  "real_analysis_i": 3,
+  "complex_analysis": 6,
+  "advanced_undergraduate_electives_and_honors_capstone": 1,
+  "probability": 3,
+  "graduate_core_i": 1,
+  "differential_equations_and_mathematical_modeling": 1,
+  "graduate_core_ii": 1
+ },
+ "dropped_notes": [
+  {
+   "grade": "abstract_algebra_ii",
+   "unit": 2,
+   "prompt": "Let F_2 be the field with two elements, and let R = F_2[x]/(x^3 + x^2 + 1), the quotient of F_2[x] b",
+   "why": "MiniMax: checker chose a different option than the key. "
+  },
+  {
+   "grade": "abstract_algebra_ii",
+   "unit": 4,
+   "prompt": "In the Euclidean domain Z[i] with norm N(a+bi) = a^2 + b^2, let alpha = 11 + 7i and beta = 5 + 3i. R",
+   "why": "MiniMax: checker chose a different option than the key. "
+  },
+  {
+   "grade": "topology",
+   "unit": 8,
+   "prompt": "A closed orientable surface S is given as a triangulation with V = 12 vertices, E = 36 edges, and F ",
+   "why": "MiniMax: checker chose a different option than the key. "
+  }
+ ]
+}
