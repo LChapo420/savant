@@ -205,17 +205,17 @@
         <div class="loading"><span class="spinner"></span>Laying out and writing this level for you. This usually takes under a minute.</div>
         ${enrollmentId ? `<p class="small muted" style="margin:12px 0 0">Rather not wait? <a href="${fallbackUrl || `/session?enrollment=${enrollmentId}&ordinary=1`}">Do the standard session for this level instead</a>.</p>` : ''}
       </div>`;
+    // Owner, 2026-11-04: nothing a learner reaches should keep them waiting. Still writing after about 8 s: open the standard
+    // session for this level (its lesson first, then the checks); the personalised level keeps being written for next time.
+    const fallback = fallbackUrl || (enrollmentId ? `/session?enrollment=${enrollmentId}&ordinary=1` : null);
     const tick = async () => {
       tries += 1;
       const ready = await onReady().catch(() => null);
       if (ready) return;
-      // Still writing after about a minute: the learner is not kept waiting. The
-      // standard session teaches the level (its lesson first, then the checks);
-      // this level keeps being written for next time.
-      if (fallbackUrl && Date.now() - startedAt >= 60000) { window.location.replace(fallbackUrl); return; }
-      if (tries < 60) setTimeout(tick, 4000);
+      if (fallback && Date.now() - startedAt >= 8000) { window.location.replace(fallback); return; }
+      if (tries < 90) setTimeout(tick, fallback ? 2000 : 4000);
     };
-    setTimeout(tick, 4000);
+    setTimeout(tick, 2000);
   }
 
   window.BlockLevel = { mount, waiting };

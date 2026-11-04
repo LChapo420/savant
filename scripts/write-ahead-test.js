@@ -391,7 +391,7 @@ const claim = (where, text) => ({ where, claim: text, kind: 'fact', verdict: 've
       check('dashboard', /writeAhead\.triggerForUser\(\{ user: req\.user, reason: 'dashboard' \}\)/.test(read('routes/profile.js')));
       check('placement (a new enrollment\'s first levels)', (read('routes/placement.js').match(/writeAhead\.trigger\(/g) || []).length >= 3);
       check('a lesson level whose block plan is not ready goes to the standard session (lesson, then checks)', /ordinary: true, level, block_kind: blockKind/.test(read('routes/base-lessons.js'))
-        && /lesson\.ordinary && lesson\.url/.test(read('public/js/base-lesson.js')) && /fallbackUrl && Date\.now\(\) - startedAt >= 60000/.test(read('public/js/block-level.js')));
+        && /lesson\.ordinary && lesson\.url/.test(read('public/js/base-lesson.js')) && /fallback && Date\.now\(\) - startedAt >= 8000/.test(read('public/js/block-level.js')));
     }
 
     console.log('\nWRITE_AHEAD=off restores the behaviour before it');
