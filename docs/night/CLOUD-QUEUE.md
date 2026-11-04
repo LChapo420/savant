@@ -21,7 +21,7 @@ mark it done with the commit, and push to `cloud-build` only. Never push to or m
   `docs/RETENTION-GOALS.md`) per subject AND per uploaded course; the subject side has a control, the material/course page does not. Add a control on the
   material page that reads and sets that course's goal through the existing API (add a route only if none exists), same look and plain copy as the page,
   with one line saying what the choice changes.
-- [claimed 2026-11-04] **The remaining 7 of 14 behavioural footprints into the live scorecard.** `scripts/lib/scorecard-footprints.js` and `docs/SCORECARD-90.md`
+- [done cc52eb5; npm test passes, new scripts/scorecard-footprints-rest-test.js 9 checks, live and design tests updated to 14 live; `scorecard-recovery-sim.js --gate-check` did NOT finish within 590 s here so it is unverified (footprints stay out of the sim's INDICATORS/BY_STAT, asserted by the live test); `scorecard-90-measure.js --gate-check` needs dump files absent here] **The remaining 7 of 14 behavioural footprints into the live scorecard.** `scripts/lib/scorecard-footprints.js` and `docs/SCORECARD-90.md`
   section 11 describe 14; 7 are live in `services/scorecard/footprints.js` / `indicators.js` (11.9). Build the other 7 the same way (event capture,
   indicator, 180-day prune, export/deletion coverage), keeping `scripts/scorecard-90-measure.js --gate-check` unchanged or better, and update 11.9.
 - [ ] **Fix `scripts/learner-path-test.js`** (13 failures on main, not in the suite): find whether the test or the product is wrong, fix the right side,
