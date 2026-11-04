@@ -1,0 +1,194 @@
+{
+ "generated_at": "2026-11-04T08:29:43.277Z",
+ "label": "AI-model answers graded against Savant bank keys; not real-learner results",
+ "ledger_file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/munito-ledger.json",
+ "ledger_spent_before": 3.523318,
+ "budget_usd": 3,
+ "item_sources": [
+  {
+   "bank": "spanish",
+   "file": "content/unit-placement/spanish.json",
+   "drawn": 10,
+   "of": 3388
+  },
+  {
+   "bank": "english",
+   "file": "content/unit-placement/english.json",
+   "drawn": 10,
+   "of": 1620
+  },
+  {
+   "bank": "math",
+   "file": "content/unit-placement/math.json",
+   "drawn": 10,
+   "of": 4763
+  },
+  {
+   "bank": "reading",
+   "file": "content/unit-placement/reading.json",
+   "drawn": 10,
+   "of": 1307
+  }
+ ],
+ "seed": 20261104,
+ "models": [],
+ "baseline": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "provider": "nvidia-free",
+   "short": {
+    "n": 10,
+    "ok": 0,
+    "p50_ms": null,
+    "p95_ms": null,
+    "cost_usd": 0
+   },
+   "long": {
+    "n": 5,
+    "ok": 0,
+    "input_tokens_avg": null,
+    "p50_ms": null,
+    "p95_ms": null,
+    "out_tok_per_s": null,
+    "cost_usd": 0
+   },
+   "structured": {
+    "n": 10,
+    "valid": 0,
+    "correct": 0,
+    "cost_usd": 0
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 0,
+    "right": 0,
+    "accuracy": 0,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 0
+     },
+     "english": {
+      "n": 10,
+      "right": 0
+     },
+     "math": {
+      "n": 10,
+      "right": 0
+     },
+     "reading": {
+      "n": 10,
+      "right": 0
+     }
+    },
+    "cost_usd": 0,
+    "p50_ms": null,
+    "avg_out_tokens": null
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 0,
+    "timeout": 65,
+    "empty_or_unusable": 0,
+    "other_error": 0,
+    "rate_limited": 0,
+    "error_rate": 1,
+    "sample_errors": [
+     "nvidia timeout after 120s",
+     "nvidia timeout after 120s",
+     "nvidia timeout after 120s",
+     "nvidia timeout after 120s",
+     "nvidia timeout after 120s"
+    ]
+   },
+   "cost": {
+    "counted_usd": 0,
+    "per_mcq_call_usd": 0,
+    "per_1000_mcq_tasks_usd": 0,
+    "note": "free tier: $0"
+   }
+  },
+  {
+   "model": "deepseek-ai/deepseek-v4.1-flash",
+   "provider": "nvidia-free",
+   "short": {
+    "n": 10,
+    "ok": 4,
+    "p50_ms": 91923,
+    "p95_ms": 102164,
+    "cost_usd": 0
+   },
+   "long": {
+    "n": 5,
+    "ok": 0,
+    "input_tokens_avg": null,
+    "p50_ms": null,
+    "p95_ms": null,
+    "out_tok_per_s": null,
+    "cost_usd": 0
+   },
+   "structured": {
+    "n": 10,
+    "valid": 0,
+    "correct": 0,
+    "cost_usd": 0
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 0,
+    "right": 0,
+    "accuracy": 0,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 0
+     },
+     "english": {
+      "n": 10,
+      "right": 0
+     },
+     "math": {
+      "n": 10,
+      "right": 0
+     },
+     "reading": {
+      "n": 10,
+      "right": 0
+     }
+    },
+    "cost_usd": 0,
+    "p50_ms": null,
+    "avg_out_tokens": null
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 4,
+    "timeout": 61,
+    "empty_or_unusable": 0,
+    "other_error": 0,
+    "rate_limited": 0,
+    "error_rate": 0.938,
+    "sample_errors": [
+     "nvidia timeout after 120s",
+     "nvidia timeout after 120s",
+     "nvidia timeout after 120s",
+     "nvidia timeout after 120s",
+     "nvidia timeout after 120s"
+    ]
+   },
+   "cost": {
+    "counted_usd": 0,
+    "per_mcq_call_usd": 0,
+    "per_1000_mcq_tasks_usd": 0,
+    "note": "free tier: $0"
+   }
+  }
+ ],
+ "not_chat": [
+  "perplexity-ai/pplx-decider-v1.2 (answers 400 on chat; not a chat model)"
+ ],
+ "ledger_spent_after": 3.600429,
+ "own_counted_usd": 0,
+ "ledger_delta_note": "ledger delta also includes any other process spending on the same ledger meanwhile",
+ "ledger_delta_usd": 0.077111
+}

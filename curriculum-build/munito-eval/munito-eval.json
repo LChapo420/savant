@@ -1,0 +1,568 @@
+{
+ "generated_at": "2026-11-04T08:29:43.209Z",
+ "label": "AI-model answers graded against Savant bank keys; not real-learner results",
+ "ledger_file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/munito-ledger.json",
+ "ledger_spent_before": 3.492718,
+ "budget_usd": 3,
+ "item_sources": [
+  {
+   "bank": "spanish",
+   "file": "content/unit-placement/spanish.json",
+   "drawn": 10,
+   "of": 3388
+  },
+  {
+   "bank": "english",
+   "file": "content/unit-placement/english.json",
+   "drawn": 10,
+   "of": 1620
+  },
+  {
+   "bank": "math",
+   "file": "content/unit-placement/math.json",
+   "drawn": 10,
+   "of": 4763
+  },
+  {
+   "bank": "reading",
+   "file": "content/unit-placement/reading.json",
+   "drawn": 10,
+   "of": 1307
+  }
+ ],
+ "seed": 20261104,
+ "models": [
+  {
+   "model": "deepseek-ai/deepseek-v4.1-flash-1017",
+   "provider": "munito",
+   "short": {
+    "n": 10,
+    "ok": 0,
+    "p50_ms": null,
+    "p95_ms": null,
+    "cost_usd": 0
+   },
+   "long": {
+    "n": 5,
+    "ok": 0,
+    "input_tokens_avg": null,
+    "p50_ms": null,
+    "p95_ms": null,
+    "out_tok_per_s": null,
+    "cost_usd": 0
+   },
+   "structured": {
+    "n": 10,
+    "valid": 0,
+    "correct": 0,
+    "cost_usd": 0
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 0,
+    "right": 0,
+    "accuracy": 0,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 0
+     },
+     "english": {
+      "n": 10,
+      "right": 0
+     },
+     "math": {
+      "n": 10,
+      "right": 0
+     },
+     "reading": {
+      "n": 10,
+      "right": 0
+     }
+    },
+    "cost_usd": 0,
+    "p50_ms": null,
+    "avg_out_tokens": null
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 0,
+    "timeout": 0,
+    "empty_or_unusable": 0,
+    "other_error": 0,
+    "rate_limited": 65,
+    "error_rate": 1,
+    "sample_errors": [
+     "munito 429: The daily free limit of deepseek-ai/deepseek-v4.1-flash-1017 is reached. It resets at 2026-11-05 00:00 UTC. ",
+     "munito 429: The daily free limit of deepseek-ai/deepseek-v4.1-flash-1017 is reached. It resets at 2026-11-05 00:00 UTC. ",
+     "munito 429: The daily free limit of deepseek-ai/deepseek-v4.1-flash-1017 is reached. It resets at 2026-11-05 00:00 UTC. ",
+     "munito 429: The daily free limit of deepseek-ai/deepseek-v4.1-flash-1017 is reached. It resets at 2026-11-05 00:00 UTC. ",
+     "munito 429: The daily free limit of deepseek-ai/deepseek-v4.1-flash-1017 is reached. It resets at 2026-11-05 00:00 UTC. "
+    ]
+   },
+   "cost": {
+    "counted_usd": 0,
+    "per_mcq_call_usd": 0,
+    "per_1000_mcq_tasks_usd": 0,
+    "note": "successful calls at list price; failed calls are not billed unless counted in the ledger delta"
+   },
+   "skipped": "rate limited (429) on most calls"
+  },
+  {
+   "model": "deepseek-ai/deepseek-v4-flash",
+   "provider": "munito",
+   "short": {
+    "n": 10,
+    "ok": 10,
+    "p50_ms": 1122,
+    "p95_ms": 1594,
+    "cost_usd": 0.00028505
+   },
+   "long": {
+    "n": 5,
+    "ok": 5,
+    "input_tokens_avg": 3358,
+    "p50_ms": 1593,
+    "p95_ms": 1977,
+    "out_tok_per_s": 99,
+    "cost_usd": 0.0018529599999999999
+   },
+   "structured": {
+    "n": 10,
+    "valid": 10,
+    "correct": 10,
+    "cost_usd": 0.00024673
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 15,
+    "right": 14,
+    "accuracy": 0.35,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 10
+     },
+     "english": {
+      "n": 10,
+      "right": 4
+     },
+     "math": {
+      "n": 10,
+      "right": 0
+     },
+     "reading": {
+      "n": 10,
+      "right": 0
+     }
+    },
+    "cost_usd": 0.000711567,
+    "p50_ms": 991,
+    "avg_out_tokens": 118
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 40,
+    "timeout": 0,
+    "empty_or_unusable": 0,
+    "other_error": 0,
+    "rate_limited": 25,
+    "error_rate": 0.385,
+    "sample_errors": [
+     "munito 429: Too Many Requests",
+     "munito 429: Too Many Requests",
+     "munito 429: Too Many Requests",
+     "munito 429: Too Many Requests",
+     "munito 429: Too Many Requests"
+    ]
+   },
+   "cost": {
+    "counted_usd": 0.003096,
+    "per_mcq_call_usd": 0.000047,
+    "per_1000_mcq_tasks_usd": 0.047,
+    "note": "successful calls at list price; failed calls are not billed unless counted in the ledger delta"
+   }
+  },
+  {
+   "model": "zai-org/glm-5.3-flash",
+   "provider": "munito",
+   "short": {
+    "n": 10,
+    "ok": 0,
+    "p50_ms": null,
+    "p95_ms": null,
+    "cost_usd": 0
+   },
+   "long": {
+    "n": 5,
+    "ok": 0,
+    "input_tokens_avg": null,
+    "p50_ms": null,
+    "p95_ms": null,
+    "out_tok_per_s": null,
+    "cost_usd": 0
+   },
+   "structured": {
+    "n": 10,
+    "valid": 0,
+    "correct": 0,
+    "cost_usd": 0
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 0,
+    "right": 0,
+    "accuracy": 0,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 0
+     },
+     "english": {
+      "n": 10,
+      "right": 0
+     },
+     "math": {
+      "n": 10,
+      "right": 0
+     },
+     "reading": {
+      "n": 10,
+      "right": 0
+     }
+    },
+    "cost_usd": 0,
+    "p50_ms": null,
+    "avg_out_tokens": null
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 0,
+    "timeout": 0,
+    "empty_or_unusable": 0,
+    "other_error": 0,
+    "rate_limited": 65,
+    "error_rate": 1,
+    "sample_errors": [
+     "munito 429: The daily free limit of zai-org/glm-5.3-flash is reached. It resets at 2026-11-05 00:00 UTC. Add credits to ",
+     "munito 429: The daily free limit of zai-org/glm-5.3-flash is reached. It resets at 2026-11-05 00:00 UTC. Add credits to ",
+     "munito 429: The daily free limit of zai-org/glm-5.3-flash is reached. It resets at 2026-11-05 00:00 UTC. Add credits to ",
+     "munito 429: The daily free limit of zai-org/glm-5.3-flash is reached. It resets at 2026-11-05 00:00 UTC. Add credits to ",
+     "munito 429: The daily free limit of zai-org/glm-5.3-flash is reached. It resets at 2026-11-05 00:00 UTC. Add credits to "
+    ]
+   },
+   "cost": {
+    "counted_usd": 0,
+    "per_mcq_call_usd": 0,
+    "per_1000_mcq_tasks_usd": 0,
+    "note": "successful calls at list price; failed calls are not billed unless counted in the ledger delta"
+   },
+   "skipped": "rate limited (429) on most calls"
+  },
+  {
+   "model": "qwen/qwen3.8-27b",
+   "provider": "munito",
+   "short": {
+    "n": 10,
+    "ok": 10,
+    "p50_ms": 1210,
+    "p95_ms": 1693,
+    "cost_usd": 0.0016626
+   },
+   "long": {
+    "n": 5,
+    "ok": 4,
+    "input_tokens_avg": 3487,
+    "p50_ms": 4956,
+    "p95_ms": 4968,
+    "out_tok_per_s": 65.9,
+    "cost_usd": 0.00564984
+   },
+   "structured": {
+    "n": 10,
+    "valid": 10,
+    "correct": 10,
+    "cost_usd": 0.00217374
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 39,
+    "right": 39,
+    "accuracy": 0.975,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 10
+     },
+     "english": {
+      "n": 10,
+      "right": 10
+     },
+     "math": {
+      "n": 10,
+      "right": 10
+     },
+     "reading": {
+      "n": 10,
+      "right": 9
+     }
+    },
+    "cost_usd": 0.014396639999999997,
+    "p50_ms": 1603,
+    "avg_out_tokens": 142
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 63,
+    "timeout": 0,
+    "empty_or_unusable": 2,
+    "other_error": 0,
+    "rate_limited": 0,
+    "error_rate": 0.031,
+    "sample_errors": [
+     "munito: qwen/qwen3.8-27b returned no text",
+     "munito: qwen/qwen3.8-27b returned no text"
+    ]
+   },
+   "cost": {
+    "counted_usd": 0.023883,
+    "per_mcq_call_usd": 0.000369,
+    "per_1000_mcq_tasks_usd": 0.369,
+    "note": "successful calls at list price; failed calls are not billed unless counted in the ledger delta"
+   }
+  },
+  {
+   "model": "aleph-alpha/kolibri-1",
+   "provider": "munito",
+   "short": {
+    "n": 10,
+    "ok": 2,
+    "p50_ms": 2513,
+    "p95_ms": 3479,
+    "cost_usd": 0.00035986000000000004
+   },
+   "long": {
+    "n": 5,
+    "ok": 1,
+    "input_tokens_avg": 3410,
+    "p50_ms": 3314,
+    "p95_ms": 3314,
+    "out_tok_per_s": 109.2,
+    "cost_usd": 0.00062792
+   },
+   "structured": {
+    "n": 10,
+    "valid": 10,
+    "correct": 10,
+    "cost_usd": 0.00173066
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 39,
+    "right": 38,
+    "accuracy": 0.95,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 10
+     },
+     "english": {
+      "n": 10,
+      "right": 9
+     },
+     "math": {
+      "n": 10,
+      "right": 10
+     },
+     "reading": {
+      "n": 10,
+      "right": 9
+     }
+    },
+    "cost_usd": 0.008492240000000002,
+    "p50_ms": 2746,
+    "avg_out_tokens": 386
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 52,
+    "timeout": 0,
+    "empty_or_unusable": 13,
+    "other_error": 0,
+    "rate_limited": 0,
+    "error_rate": 0.2,
+    "sample_errors": [
+     "munito: aleph-alpha/kolibri-1 returned no text",
+     "munito: aleph-alpha/kolibri-1 returned no text",
+     "munito: aleph-alpha/kolibri-1 returned no text",
+     "munito: aleph-alpha/kolibri-1 returned no text",
+     "munito: aleph-alpha/kolibri-1 returned no text"
+    ]
+   },
+   "cost": {
+    "counted_usd": 0.011211,
+    "per_mcq_call_usd": 0.000218,
+    "per_1000_mcq_tasks_usd": 0.218,
+    "note": "successful calls at list price; failed calls are not billed unless counted in the ledger delta"
+   }
+  },
+  {
+   "model": "blockbrain/cygnet",
+   "provider": "munito",
+   "short": {
+    "n": 10,
+    "ok": 10,
+    "p50_ms": 316,
+    "p95_ms": 918,
+    "cost_usd": 0.000017000000000000003
+   },
+   "long": {
+    "n": 5,
+    "ok": 5,
+    "input_tokens_avg": 3420,
+    "p50_ms": 597,
+    "p95_ms": 604,
+    "out_tok_per_s": 2,
+    "cost_usd": 0.0008557500000000001
+   },
+   "structured": {
+    "n": 10,
+    "valid": 0,
+    "correct": 0,
+    "cost_usd": 0
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 34,
+    "right": 31,
+    "accuracy": 0.775,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 10
+     },
+     "english": {
+      "n": 10,
+      "right": 9
+     },
+     "math": {
+      "n": 10,
+      "right": 4
+     },
+     "reading": {
+      "n": 10,
+      "right": 8
+     }
+    },
+    "cost_usd": 0.0002695,
+    "p50_ms": 251,
+    "avg_out_tokens": 1
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 55,
+    "timeout": 0,
+    "empty_or_unusable": 10,
+    "other_error": 0,
+    "rate_limited": 0,
+    "error_rate": 0.154,
+    "sample_errors": [
+     "munito: blockbrain/cygnet was cut off by the output cap (submit)",
+     "munito: blockbrain/cygnet was cut off by the output cap (submit)",
+     "munito: blockbrain/cygnet was cut off by the output cap (submit)",
+     "munito: blockbrain/cygnet was cut off by the output cap (submit)",
+     "munito: blockbrain/cygnet was cut off by the output cap (submit)"
+    ]
+   },
+   "cost": {
+    "counted_usd": 0.001142,
+    "per_mcq_call_usd": 0.000007,
+    "per_1000_mcq_tasks_usd": 0.007,
+    "note": "successful calls at list price; failed calls are not billed unless counted in the ledger delta"
+   }
+  },
+  {
+   "model": "google/gemma-4-12b",
+   "provider": "munito",
+   "short": {
+    "n": 10,
+    "ok": 10,
+    "p50_ms": 717,
+    "p95_ms": 1208,
+    "cost_usd": 0.00034599999999999995
+   },
+   "long": {
+    "n": 5,
+    "ok": 5,
+    "input_tokens_avg": 3420,
+    "p50_ms": 1317,
+    "p95_ms": 1361,
+    "out_tok_per_s": 32,
+    "cost_usd": 0.01713
+   },
+   "structured": {
+    "n": 10,
+    "valid": 0,
+    "correct": 0,
+    "cost_usd": 0
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 40,
+    "right": 34,
+    "accuracy": 0.85,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 10
+     },
+     "english": {
+      "n": 10,
+      "right": 9
+     },
+     "math": {
+      "n": 10,
+      "right": 7
+     },
+     "reading": {
+      "n": 10,
+      "right": 8
+     }
+    },
+    "cost_usd": 0.005562050000000001,
+    "p50_ms": 290,
+    "avg_out_tokens": 49
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 55,
+    "timeout": 0,
+    "empty_or_unusable": 10,
+    "other_error": 0,
+    "rate_limited": 0,
+    "error_rate": 0.154,
+    "sample_errors": [
+     "munito: google/gemma-4-12b gave an unusable submit",
+     "munito: google/gemma-4-12b gave an unusable submit",
+     "munito: google/gemma-4-12b gave an unusable submit",
+     "munito: google/gemma-4-12b gave an unusable submit",
+     "munito: google/gemma-4-12b gave an unusable submit"
+    ]
+   },
+   "cost": {
+    "counted_usd": 0.023038,
+    "per_mcq_call_usd": 0.000139,
+    "per_1000_mcq_tasks_usd": 0.139,
+    "note": "successful calls at list price; failed calls are not billed unless counted in the ledger delta"
+   }
+  }
+ ],
+ "baseline": [],
+ "not_chat": [
+  "perplexity-ai/pplx-decider-v1.2 (answers 400 on chat; not a chat model)"
+ ],
+ "ledger_spent_after": 3.597074,
+ "own_counted_usd": 0.06237,
+ "ledger_delta_note": "ledger delta also includes any other process spending on the same ledger meanwhile",
+ "ledger_delta_usd": 0.104356
+}

@@ -1,0 +1,119 @@
+{
+ "generated_at": "2026-11-04T08:36:51.074Z",
+ "label": "AI-model answers graded against Savant bank keys; not real-learner results",
+ "ledger_file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/munito-ledger.json",
+ "ledger_spent_before": 3.597074,
+ "budget_usd": 3,
+ "item_sources": [
+  {
+   "bank": "spanish",
+   "file": "content/unit-placement/spanish.json",
+   "drawn": 10,
+   "of": 3388
+  },
+  {
+   "bank": "english",
+   "file": "content/unit-placement/english.json",
+   "drawn": 10,
+   "of": 1620
+  },
+  {
+   "bank": "math",
+   "file": "content/unit-placement/math.json",
+   "drawn": 10,
+   "of": 4763
+  },
+  {
+   "bank": "reading",
+   "file": "content/unit-placement/reading.json",
+   "drawn": 10,
+   "of": 1307
+  }
+ ],
+ "seed": 20261104,
+ "models": [
+  {
+   "model": "deepseek-ai/deepseek-v4-flash",
+   "provider": "munito",
+   "short": {
+    "n": 10,
+    "ok": 10,
+    "p50_ms": 701,
+    "p95_ms": 1099,
+    "cost_usd": 0.00026655
+   },
+   "long": {
+    "n": 5,
+    "ok": 5,
+    "input_tokens_avg": 3358,
+    "p50_ms": 1053,
+    "p95_ms": 1189,
+    "out_tok_per_s": 129.8,
+    "cost_usd": 0.0018352099999999999
+   },
+   "structured": {
+    "n": 10,
+    "valid": 10,
+    "correct": 10,
+    "cost_usd": 0.00024948
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 21,
+    "right": 21,
+    "accuracy": 0.525,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 10
+     },
+     "english": {
+      "n": 10,
+      "right": 10
+     },
+     "math": {
+      "n": 10,
+      "right": 1
+     },
+     "reading": {
+      "n": 10,
+      "right": 0
+     }
+    },
+    "cost_usd": 0.000997757,
+    "p50_ms": 595,
+    "avg_out_tokens": 119
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 46,
+    "timeout": 0,
+    "empty_or_unusable": 0,
+    "other_error": 0,
+    "rate_limited": 19,
+    "error_rate": 0.292,
+    "sample_errors": [
+     "munito 429: Too Many Requests",
+     "munito 429: Too Many Requests",
+     "munito 429: Too Many Requests",
+     "munito 429: Too Many Requests",
+     "munito 429: Too Many Requests"
+    ]
+   },
+   "cost": {
+    "counted_usd": 0.003349,
+    "per_mcq_call_usd": 0.000048,
+    "per_1000_mcq_tasks_usd": 0.048,
+    "note": "successful calls at list price; failed calls are not billed unless counted in the ledger delta"
+   }
+  }
+ ],
+ "baseline": [],
+ "not_chat": [
+  "perplexity-ai/pplx-decider-v1.2 (answers 400 on chat; not a chat model)"
+ ],
+ "ledger_spent_after": 3.600429,
+ "own_counted_usd": 0.003349,
+ "ledger_delta_note": "ledger delta also includes any other process spending on the same ledger meanwhile",
+ "ledger_delta_usd": 0.003355
+}
