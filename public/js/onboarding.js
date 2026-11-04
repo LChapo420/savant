@@ -85,7 +85,7 @@ App.mount(async () => {
           <div class="small" style="font-weight:600">Not sure which grade to start at?</div>
           <div class="tiny muted">${rec
             ? `We suggested <strong>${App.escapeHtml(App.gradeLabel(recName || ''))}</strong> from your last quiz. Take it again to change it.`
-            : `Answer an adaptive quiz (Quick takes up to 18 minutes, Accurate up to about an hour) and we will tell you which of the ${track.grades.length} grades fits you.`}</div>
+            : `Answer an adaptive quiz (Quick takes about 6 to 12 minutes, Accurate up to about an hour) and we will tell you which of the ${track.grades.length} grades fits you.`}</div>
         </div>
         <a class="btn btn-sm" href="/subject-placement?track=${encodeURIComponent(track.id)}${rec ? '&again=1' : ''}">${rec ? 'Take it again' : 'Find my grade'}</a>
       </div>
