@@ -8,8 +8,8 @@ re-runnable. Everything labelled "AI-judged" or "simulated" is model output grad
 **Who we are.** Savant is a small adaptive-learning app (Node/Express). A solo founder builds it. Its content is generated and checked by a pipeline
 of language models, so we call many models, often thousands of short calls a day.
 
-**What we used Munito for.** Build-pipeline work only, never learner data (Munito's data policy was not confirmed to us when we started, so we
-kept learner words out). The workload so far (live ledger, all agents, 3 to 4 November 2026): about 4,300 calls and $3.6 of the $100.
+**What we used Munito for.** Mostly build-pipeline work (content writing and AI judging). From the night of 3 November the app may also send a
+learner's lesson writing to Munito when the free models are busy (accounts cleared for outside AI only); so far only test accounts have done so, no real learners. The workload so far (live ledger, all agents, 3 to 4 November 2026): about 4,300 calls and $3.6 of the $100.
 Most calls (about 3,800) were an AI judge that checks whether generated lessons and notes follow the learner's scorecard ("material-judge"), the rest layout,
 fill, regeneration and session analysis tasks. Table 4 in the appendix has the per-model and per-task counts.
 
