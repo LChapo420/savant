@@ -102,6 +102,30 @@ const goodReview = async () => ({ pass: true, reasons: [], model: 'fake-reviewer
   // 8. verdict parsing fails closed
   ok(A.parseVerdict('garbage').pass === false && A.parseVerdict('{"verdict":"pass","reasons":[]}').pass === true, 'review: verdict parsing fails closed');
 
+  // 9. credit providers: writer order and reviewer family (mock fetch, throwaway ledgers; no network)
+  {
+    const saved = {};
+    const set = (k, v) => { if (!(k in saved)) saved[k] = process.env[k]; process.env[k] = v; };
+    set('GROKIFIED_API_KEY', 'k-not-real'); set('GONKA_API_KEY', 'k-not-real'); set('XKIRO_API_KEY', 'k-not-real'); delete process.env.MUNITO_API_KEY; delete process.env.NVIDIA_API_KEY;
+    set('GROKIFIED_LEDGER_FILE', path.join(tmp, 'g1.json')); set('GONKA_LEDGER_FILE', path.join(tmp, 'g2.json'));
+    const w = A.writers({ XKIRO_API_KEY: 'x', GROKIFIED_API_KEY: 'k', GONKA_API_KEY: 'k' }, new Date('2026-11-04T00:00:00Z'));
+    ok(w.map((x) => x.model).join('|') === 'minimax/minimax-m3.1-flash|grok-build-0.1|deepseek-ai/DeepSeek-V4-Flash-0731|zai-org/GLM-5.3-Flash', 'writers: MiniMax (free), then grok-build-0.1, Gonka DeepSeek, Gonka GLM');
+    const w2 = A.writers({ GROKIFIED_API_KEY: 'k', GONKA_API_KEY: 'k' }, new Date('2026-11-08T00:00:00Z'));
+    ok(w2[0].model === 'grok-build-0.1' && w2.length === 3, 'writers: grok-build-0.1 first once the MiniMax grant has expired');
+    const models = [];
+    const mock = async (url, init) => { const b = JSON.parse(init.body); models.push(b.model); return { ok: true, status: 200, statusText: 'OK', text: async () => JSON.stringify({ choices: [{ message: { content: '{"verdict":"pass","reasons":[]}' }, finish_reason: 'stop' }], usage: { prompt_tokens: 10, completion_tokens: 5 } }) }; };
+    require('../services/providers/grokified')._setFetch(mock); require('../services/providers/gonka')._setFetch(mock);
+    const task = { id: 'x', goal: 'g', acceptance: 'a', files: ['f.js'] };
+    for (const [writer, want] of [[w[0], 'grok-4.3'], [w[1], 'zai-org/GLM-5.3-Flash'], [w[2], 'grok-4.3'], [w[3], 'grok-4.3']]) {
+      models.length = 0;
+      const rv = await A.review({ writer, task, diff: 'diff' });
+      ok(rv.pass && models[0] === want, `review: writer ${writer.model} is reviewed by ${models[0]} (want ${want})`);
+      ok(!(writer.family === 'grok' && /grok/.test(models[0])), 'review: never the writer own family');
+    }
+    require('../services/providers/grokified')._setFetch(null); require('../services/providers/gonka')._setFetch(null);
+    for (const [k, v] of Object.entries(saved)) { if (v === undefined) delete process.env[k]; else process.env[k] = v; }
+  }
+
   fs.rmSync(tmp, { recursive: true, force: true });
   console.log(failures ? `${failures} FAILED` : 'autobuild-test: all passed');
   process.exit(failures ? 1 : 0);

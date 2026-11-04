@@ -124,11 +124,21 @@ function weakeningGate(diffText) {
 }
 
 // ---------- models ----------
-const FAMILY = { xkiro: 'minimax', munito: 'deepseek', nvidia: 'nemotron' };
+const FAMILY = { xkiro: 'minimax', munito: 'deepseek', nvidia: 'nemotron', grokified: 'grok', gonka_ds: 'deepseek', gonka_glm: 'glm' };
+// Credit providers (4 Nov 2026): ledger module per writer key. A key may name the provider with ":model" for the second Gonka model.
+const CREDIT = { grokified: { ledger: '../services/grokified-ledger', prov: 'grokified', pipeline: 'GROKIFIED_PIPELINE' }, gonka: { ledger: '../services/gonka-ledger', prov: 'gonka', pipeline: 'GONKA_PIPELINE' }, munito: { ledger: '../services/munito-ledger', prov: 'munito', pipeline: 'MUNITO_PIPELINE' } };
+const creditOf = (w) => CREDIT[String(w.key).split(':')[0]];
 function writers(env, now = new Date()) {
   const list = [];
   if (env.XKIRO_API_KEY && now < new Date('2026-11-07T00:00:00Z')) list.push({ key: 'xkiro', family: FAMILY.xkiro, model: 'minimax/minimax-m3.1-flash', base: env.XKIRO_BASE_URL || 'https://api.xkiro.com/v1', apiKey: env.XKIRO_API_KEY, paid: false });
-  // Coral DeepSeek V4.1 Flash Standard: no provider in this repo yet; add here when one exists.
+  // Writer order (owner, 4 Nov): after the free expiring MiniMax, Grokified's grok-build-0.1 (coding model), then Gonka DeepSeek V4 Flash and GLM 5.3 Flash.
+  const gb = (key, family, model, base, apiKey) => ({ key, family, model, base, apiKey, paid: true });
+  if (env.GROKIFIED_API_KEY) list.push(gb('grokified', FAMILY.grokified, 'grok-build-0.1', require('../services/providers/grokified').baseUrl(env.GROKIFIED_BASE_URL), env.GROKIFIED_API_KEY));
+  if (env.GONKA_API_KEY) {
+    const gbase = require('../services/providers/gonka').baseUrl(env.GONKA_BASE_URL);
+    list.push(gb('gonka:deepseek', FAMILY.gonka_ds, 'deepseek-ai/DeepSeek-V4-Flash-0731', gbase, env.GONKA_API_KEY));
+    list.push(gb('gonka:glm', FAMILY.gonka_glm, 'zai-org/GLM-5.3-Flash', gbase, env.GONKA_API_KEY));
+  }
   if (env.MUNITO_API_KEY) list.push({ key: 'munito', family: FAMILY.munito, model: 'deepseek-ai/deepseek-v4.1-flash-1017', base: require('../services/providers/munito').baseUrl(env.MUNITO_BASE_URL), apiKey: env.MUNITO_API_KEY, paid: true });
   if (env.NVIDIA_API_KEY) list.push({ key: 'nvidia', family: FAMILY.nvidia, model: 'nvidia/nemotron-3-ultra-550b-a55b', base: (env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1').replace(/\/$/, ''), apiKey: env.NVIDIA_API_KEY, paid: false });
   return list;
@@ -145,9 +155,10 @@ function runAider(w, cwd, msgFile, files, timeoutMs, env) {
   const m = out.match(/Tokens:\s*([\d.,]+k?) sent,\s*([\d.,]+k?) received/i);
   const tokens = m ? { input_tokens: k(m[1].replace(/,/g, '')), output_tokens: k(m[2].replace(/,/g, '')) } : { input_tokens: 0, output_tokens: 0 };
   let costUsd = 0;
-  if (w.paid && w.key === 'munito') {
+  const credit = w.paid ? creditOf(w) : null;
+  if (credit) {
     try {
-      const L = require('../services/munito-ledger');
+      const L = require(credit.ledger);
       costUsd = L.costOf(w.model, tokens);
       const id = L.reserve({ usd: costUsd, task: 'autobuild', model: w.model });
       L.settle(id, { usd: costUsd, usage: tokens });
@@ -162,16 +173,23 @@ async function review({ writer, task, diff }) {
   const user = `TASK ${task.id}\nGOAL: ${task.goal}\nACCEPTANCE CRITERIA (every one must be met):\n${task.acceptance}\nFILES IN SCOPE: ${task.files.join(', ')}\n\n`
     + `Judge the diff below. Fail if any acceptance criterion is unmet, if tests or gates were weakened or skipped, if anything out of scope changed, or if code/docs claim a number, citation or fact `
     + `that is not traceable to a file in the repo (or marked ASSUMED). Pass only if you can find no such problem.\n\nDIFF:\n${diff.slice(0, 60000)}`;
+  // Reviewer: a different family than the writer. Grok 4.3 first (the cheapest capable Grok, and a different family from the DeepSeek/GLM/MiniMax writers);
+  // for a Grok writer, Gonka GLM (then DeepSeek), then Munito, then NVIDIA.
   const order = [];
+  if (writer.family !== FAMILY.grokified && process.env.GROKIFIED_API_KEY) order.push('grokified');
+  if (writer.family !== FAMILY.gonka_glm && process.env.GONKA_API_KEY) order.push('gonka:glm');
+  if (writer.family !== FAMILY.gonka_ds && process.env.GONKA_API_KEY) order.push('gonka:deepseek');
   if (writer.family !== FAMILY.munito && process.env.MUNITO_API_KEY) order.push('munito');
   if (writer.family !== FAMILY.nvidia && process.env.NVIDIA_API_KEY) order.push('nvidia');
   let lastErr = 'no reviewer of another model family is configured';
   for (const which of order) {
     try {
       let r;
-      if (which === 'munito') {
-        process.env.MUNITO_PIPELINE = '1';
-        r = await require('../services/providers/munito').munito.chat({ task: 'autobuild-review', system, messages: [{ role: 'user', content: user }], maxTokens: 1500, effort: null });
+      if (CREDIT[which.split(':')[0]]) {
+        const cr = CREDIT[which.split(':')[0]];
+        process.env[cr.pipeline] = '1';
+        const model = { grokified: 'grok-4.3', 'gonka:glm': 'zai-org/GLM-5.3-Flash', 'gonka:deepseek': 'deepseek-ai/DeepSeek-V4-Flash-0731' }[which];
+        r = await require(`../services/providers/${cr.prov}`)[cr.prov].chat({ task: 'autobuild-review', system, messages: [{ role: 'user', content: user }], maxTokens: 1500, effort: null, ...(model ? { model } : {}) });
         r = { text: r.text, model: r.model, costUsd: r.usage.cost_usd || 0 };
       } else {
         const n = require('../services/providers/nvidia');
@@ -312,8 +330,10 @@ function loadEnv() {
     const parsed = require('dotenv').parse(fs.readFileSync(ENV_FILE));
     Object.assign(base, parsed);
   } catch (e) { /* no .env: free paths only */ }
-  base.XKIRO_PIPELINE = '1'; base.MUNITO_PIPELINE = '1';
+  base.XKIRO_PIPELINE = '1'; base.MUNITO_PIPELINE = '1'; base.GONKA_PIPELINE = '1'; base.GROKIFIED_PIPELINE = '1';
   base.MUNITO_LEDGER_FILE = base.MUNITO_LEDGER_FILE || `${LIVE}/data/munito-ledger.json`;
+  base.GONKA_LEDGER_FILE = base.GONKA_LEDGER_FILE || `${LIVE}/data/gonka-ledger.json`;
+  base.GROKIFIED_LEDGER_FILE = base.GROKIFIED_LEDGER_FILE || `${LIVE}/data/grokified-ledger.json`;
   return base;
 }
 
@@ -327,4 +347,4 @@ if (require.main === module) {
   }).catch((e) => { console.error(`autobuild: ${e.message}`); process.exit(1); });
 }
 
-module.exports = { parseQueue, setStatus, frozen, scopeGate, weakeningGate, takeLock, dropLock, parseVerdict, writers, run, changedFiles };
+module.exports = { review, parseQueue, setStatus, frozen, scopeGate, weakeningGate, takeLock, dropLock, parseVerdict, writers, run, changedFiles };

@@ -123,6 +123,12 @@ function listPriceOf(model) {
     const mu = require('./munito-ledger').PRICES[model]; // eslint-disable-line global-require
     if (mu) out = { in: mu.input, out: mu.output, src: 'munito-ledger PRICES' };
   }
+  if (!out) {
+    for (const [led, name] of [['gonka-ledger', 'gonka'], ['grokified-ledger', 'grokified']]) {
+      const row = require(`./${led}`).PRICES[model]; // eslint-disable-line global-require, import/no-dynamic-require
+      if (row) { out = { in: row.input, out: row.output, src: `${led} PRICES${name === 'grokified' ? '' : ''}` }; break; }
+    }
+  }
   if (!out) out = { in: CFG.free_equivalent.in, out: CFG.free_equivalent.out, src: 'free-tier equivalent' };
   priceCache.set(key, out);
   return out;

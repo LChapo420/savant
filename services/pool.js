@@ -378,7 +378,7 @@ function expandProvider(p, req) {
   };
   // xKiro is in the order() list only in a process with XKIRO_PIPELINE=1. Its slots come from config "pool.extra_slots"
   // (per-model rpm / concurrency / daily tokens and the per-task allowlist), never from the chain, so it cannot skip the gates.
-  if (p.name === 'xkiro' || p.name === 'unorouter' || p.name === 'standard_compute' || p.name === 'munito') return out;
+  if (p.name === 'xkiro' || p.name === 'unorouter' || p.name === 'standard_compute' || p.name === 'munito' || p.name === 'gonka' || p.name === 'grokified') return out;
   if (p.name === 'nvidia' && typeof p.poolModels === 'function') {
     const cap = Math.max(1, Number(process.env.NVIDIA_MODEL_CONCURRENCY || 4));
     const rpm = Math.max(1, Number(process.env.NVIDIA_RPM || 36));
@@ -425,7 +425,7 @@ function expandProvider(p, req) {
 }
 const slotProviders = new Map(); // slot id -> provider object last seen in the chain
 
-/** Extra (non-chain) slots from config "pool.extra_slots": xKiro, UnoRouter, Standard Compute, Munito. */
+/** Extra (non-chain) slots from config "pool.extra_slots": xKiro, UnoRouter, Standard Compute, Munito, Gonka, Grokified. */
 function extraSlots() {
   const cfg = poolConfig();
   const out = [];
@@ -498,7 +498,23 @@ const ADAPTERS = {
       return mu[kind](chainArgs(rq, kind, ctx, { model: e.model }));
     },
   },
+  // Gonka broker ($50) and Grokified ($135), owner 2026-11-04: OpenAI-compatible credit providers (services/providers/openai-credit.js), each in its own
+  // hard-capped ledger. Pipeline-class always; learner-class only inside the learner window with consent (creditLearnerAllowed).
+  gonka: creditAdapter('gonka', 'gonka-ledger'),
+  grokified: creditAdapter('grokified', 'grokified-ledger'),
 };
+function creditAdapter(name, ledgerFile) {
+  const prov = () => require(`./providers/${name}`)[name]; // eslint-disable-line global-require, import/no-dynamic-require
+  const led = () => require(`./${ledgerFile}`); // eslint-disable-line global-require, import/no-dynamic-require
+  return {
+    supports: ['structured', 'chat'],
+    enabled: () => { try { return !!prov().isEnabled(); } catch { return false; } },
+    estimateUsd: (e, rq) => led().estimate({ model: e.model, inputChars: reqChars(rq), maxTokens: rq.maxTokens || 2048 }),
+    canSpend: (usd) => led().canSpend(usd),
+    costOf: (e, res) => led().costOf(e.model, res && res.usage),
+    call: (e, rq, ctx) => { const kind = reqKind(rq); return prov()[kind](chainArgs(rq, kind, ctx, { model: e.model })); },
+  };
+}
 
 // ── the quality gate and the data gate ─────────────────────────────────────────
 function taskConfig(task) { return (task && (poolConfig().tasks || {})[task]) || {}; }
@@ -506,9 +522,10 @@ function taskConfig(task) { return (task && (poolConfig().tasks || {})[task]) ||
 /** xKiro's MiniMax grant may serve the owner and test learners until the dated window closes (services/providers/xkiro.js), never a child. */
 /** Munito may serve a learner request when learner use is on and this learner is cleared for it (req.munito, set by services/ai.js). */
 function munitoLearnerAllowed(slot, req) {
-  if (slot.provider !== 'munito') return false;
-  // eslint-disable-next-line global-require
-  return require('./providers/munito').learnerOn() && req.munito === true;
+  // Munito, Gonka and Grokified: same consent clearance (req.munito); each has its own learner switch / window (providers/*.learnerOn).
+  if (slot.provider !== 'munito' && slot.provider !== 'gonka' && slot.provider !== 'grokified') return false;
+  // eslint-disable-next-line global-require, import/no-dynamic-require
+  return require(`./providers/${slot.provider}`).learnerOn() && req.munito === true;
 }
 
 function xkiroLearnerAllowed(slot, req) {
