@@ -54,6 +54,7 @@ const WALK_ONLY = !!arg('walk-only', false); // tuning: skip the gap-only path a
 // --limits=quick:max:min:confidence,balanced:max:min:confidence tries other in-grade walk limits without editing the service (as scripts/placement-sim.js).
 if (arg('limits', null)) for (const part of String(arg('limits')).split(',')) { const [m, max, min, sure] = part.split(':'); Object.assign(unitPlacement.MODES[m], { max: Number(max), min: Number(min), confidence: Number(sure), sure: Number(sure) }); }
 const WIDTH = HARD ? 0.45 : 0.3;
+if (arg('quick-track', null)) { for (const k of Object.keys(unitPlacement.QUICK_BY_TRACK)) delete unitPlacement.QUICK_BY_TRACK[k]; if (arg('quick-track') !== 'none') for (const part of String(arg('quick-track')).split(',')) { const [t, c, m] = part.split(':'); unitPlacement.QUICK_BY_TRACK[t] = { confidence: Number(c), minutes: Number(m) }; } }
 const SLIP = 0.03;
 const ITEM_SD = HARD ? 0.4 : 0;
 const SECONDS = 26;
@@ -98,7 +99,7 @@ function oneLearner({ trackId, gradeId, mode, f, holes, rand, tag }) {
   const pace = Math.exp(0.28 * normal(rng(Math.floor(hashNoise(`pace|${tag}`) * 4294967296))));
   let walkSeconds = 0; // the walk's time, ESTIMATED from each question's words (services/placement-seconds.js), not timed on people
   for (let i = 0; i < 200; i++) {
-    if (CLOCK && walkSeconds >= unitPlacement.MODES[mode].minutes * 60) break;
+    if (CLOCK && walkSeconds >= unitPlacement.modeCfg(trackId, mode).minutes * 60) break;
     const next = unitPlacement.nextQuestion(trackId, gradeId, mode, answered);
     if (!next) break;
     walkSeconds += questionSeconds(units[next.unit - 1].questions[next.slot], trackId) * pace;

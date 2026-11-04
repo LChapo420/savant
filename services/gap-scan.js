@@ -210,7 +210,7 @@ function subjectMinutesUsed(placement, now) {
  * otherwise its whole clock, held back for it.
  */
 function unitStageMinutes(enrollment, mode) {
-  const reserve = unitPlacement.MODES[modeOf(mode)].minutes;
+  const reserve = unitPlacement.modeCfg(enrollment && enrollment.track_id, modeOf(mode)).minutes;
   if (!enrollment || !enrollment.placement_session_id) return { minutes: reserve, ran: false };
   const session = db.byId('sessions', enrollment.placement_session_id);
   if (!session || !session.started_at || !session.ended_at) return { minutes: reserve, ran: false };

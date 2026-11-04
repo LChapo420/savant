@@ -192,12 +192,16 @@ check('Balanced stays about 20 minutes and Accurate under 60, at any pace', () =
     assert(b <= 20.2 && b >= 12, `balanced ${b}`); assert(a < 60 && a >= 35, `accurate ${a}`);
   }
 });
-check('the owner limits are in the modes: baseline 5 / 20 / 57 minutes; placement Quick 18 (6 + 8 + 4 for the gap scan, up from a 5-minute try that held 90.2% within a grade; docs/PLACEMENT-ACCURACY-AFTER.md 3 Nov), Balanced 20 and Accurate 57', () => {
-  assert.deepStrictEqual(adaptive.WHOLE_MINUTES, { quick: 18, balanced: 20, accurate: 57 });
+check('the owner limits are in the modes: baseline 5 / 20 / 57 minutes; placement Quick 12 (grade and in-grade clocks per subject, at most 6 + 6, the scan and quick checks use what is left; docs/PLACEMENT-ACCURACY-AFTER.md 3 Nov second section), Balanced 20 and Accurate 57', () => {
+  assert.deepStrictEqual(adaptive.WHOLE_MINUTES, { quick: 12, balanced: 20, accurate: 57 });
   assert(MODES.quick.budgetSec / 60 < 5 && MODES.balanced.budgetSec / 60 <= 20 && MODES.accurate.budgetSec / 60 < 60);
   for (const m of ['quick', 'balanced', 'accurate']) {
     const stages = adaptive.MODES[m].minutes + unitPlacement.MODES[m].minutes;
     assert(stages <= adaptive.WHOLE_MINUTES[m] + 1e-9, `${m}: stages ${stages} exceed the whole budget`);
+  }
+  for (const t of Object.keys(unitPlacement.QUICK_BY_TRACK)) {
+    const stages = adaptive.clockMinutes('quick', t) + unitPlacement.modeCfg(t, 'quick').minutes;
+    assert(stages <= adaptive.WHOLE_MINUTES.quick + 1e-9, `quick ${t}: stages ${stages} exceed the whole budget`);
   }
   assert.strictEqual(adaptive.MODES.quick.sure, 0.94, 'no stop gate was loosened');
   // Balanced and Accurate stop on the measured rule (the share of the belief with the true grade within one of the recommendation); its bars:

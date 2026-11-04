@@ -46,7 +46,7 @@ function makeUser(tag) {
 }
 
 /** A finished subject placement: started `used` minutes before T0, finished at T0. */
-function walk(userId, { mode = 'quick', used = 9, answered = [], track = TRACK } = {}) {
+function walk(userId, { mode = 'quick', used = 3, answered = [], track = TRACK } = {}) {
   const ids = rules.gradesFor(track);
   return db.insert('subject_placements', {
     user_id: userId,
@@ -150,14 +150,14 @@ console.log('\nthe clock');
       check(`${mode}, subject walk took ${used} min: the whole placement stays within ${total} min`, whole <= total + 1e-9 && b.max_questions * gapScan.SECONDS_PER_QUESTION <= b.minutes * 60 + 1e-9, b);
     }
   }
-  check('the whole budgets are Quick 18 (6 + 8 + a 4-minute scan, 3 Nov placement round), Balanced 20 and Accurate 57 (the owner limits of 2026-11-02)', gapScan.totalMinutes('quick') === 18 && gapScan.totalMinutes('balanced') === 20 && gapScan.totalMinutes('accurate') === 57);
+  check('the whole budgets are Quick 12 (3 Nov second placement round: the stage clocks are backstops, the scan and quick checks use what is left), Balanced 20 and Accurate 57 (the owner limits of 2026-11-02)', gapScan.totalMinutes('quick') === 12 && gapScan.totalMinutes('balanced') === 20 && gapScan.totalMinutes('accurate') === 57);
   const full = gapScan.budgetFor({ mode: 'quick', placement: { mode: null, started_at: new Date(T0 - 60 * MIN).toISOString(), finished_at: new Date(T0).toISOString() }, enrollment: null, now: T0 });
   check('after the untimed full climb the scan gets only its own cap', full.minutes === gapScan.SCAN.quick.maxMinutes && full.total_minutes === null, full);
 
   const u = makeUser('clock');
   const session = db.insert('sessions', { user_id: u.id, kind: 'placement', started_at: new Date(T0 - 3 * MIN).toISOString(), ended_at: new Date(T0).toISOString() });
   const e = enroll(u.id, gradeIds[G], { placement_session_id: session.id });
-  const ran = gapScan.budgetFor({ mode: 'quick', placement: { mode: 'quick', started_at: new Date(T0 - 11 * MIN).toISOString(), finished_at: new Date(T0).toISOString() }, enrollment: e, now: T0 });
+  const ran = gapScan.budgetFor({ mode: 'quick', placement: { mode: 'quick', started_at: new Date(T0 - 5 * MIN).toISOString(), finished_at: new Date(T0).toISOString() }, enrollment: e, now: T0 });
   check('a finished in-grade placement counts its real minutes, not its whole clock', ran.unit_stage_ran && ran.unit_minutes === 3 && ran.minutes === 4, ran);
 
   const spent = makeUser('spent');
@@ -168,7 +168,7 @@ console.log('\nthe clock');
 
   // One minute left: two questions at most, and the clock stops it, not a guess.
   const tight = makeUser('tight');
-  walk(tight.id, { mode: 'quick', used: 9, answered: [{ pos: 3.5, guess: 0.25, correct: false }] });
+  walk(tight.id, { mode: 'quick', used: 3, answered: [{ pos: 3.5, guess: 0.25, correct: false }] });
   const t = gapScan.start(tight.id, { trackId: TRACK, mode: 'quick', gradeId: gradeIds[G] }, T0);
   check('with a minute left the scan asks', !t.scan.finished_at && t.scan.max_questions === 2, t.scan.budget);
   const q = t.scan.current;
@@ -184,7 +184,7 @@ let learner;
 let main;
 {
   learner = makeUser('walk');
-  walk(learner.id, { mode: 'quick', used: 6, answered: [{ pos: 3.5, guess: 0.25, correct: false }, { pos: 7.1, guess: 0.25, correct: true }] });
+  walk(learner.id, { mode: 'quick', used: 2, answered: [{ pos: 3.5, guess: 0.25, correct: false }, { pos: 7.1, guess: 0.25, correct: true }] });
   main = enroll(learner.id, gradeIds[G]);
   const started = gapScan.start(learner.id, { trackId: TRACK, mode: 'quick', gradeId: gradeIds[G] }, T0);
   check('the first question is from the likeliest gap, with no answer sent', started.scan.current.grade_id === gradeIds[3] && gapScan.view(TRACK, started.scan, T0).question.answer === undefined);
@@ -307,7 +307,7 @@ console.log('\nkeep checking');
 console.log('\ndecline, retake and done');
 {
   const u = makeUser('decline');
-  walk(u.id, { mode: 'quick', used: 6, answered: [{ pos: 3.5, guess: 0.25, correct: false }] });
+  walk(u.id, { mode: 'quick', used: 2, answered: [{ pos: 3.5, guess: 0.25, correct: false }] });
   const m = enroll(u.id, gradeIds[G]);
   const s = gapScan.start(u.id, { trackId: TRACK, mode: 'quick', gradeId: gradeIds[G] }, T0);
   run(u.id, s, [gapA, gapB], { step: 20000 });
@@ -316,7 +316,7 @@ console.log('\ndecline, retake and done');
 
   const row = db.findOne('subject_placements', (p) => p.user_id === u.id);
   const firstAsked = row.gap_scan.asked.map((x) => `${x.grade_id}:${x.unit}:${x.slot}`);
-  db.update('subject_placements', row.id, { started_at: new Date(T0 + 10 * MIN).toISOString(), finished_at: new Date(T0 + 19 * MIN).toISOString() });
+  db.update('subject_placements', row.id, { started_at: new Date(T0 + 10 * MIN).toISOString(), finished_at: new Date(T0 + 13 * MIN).toISOString() });
   const between = gapScan.stateFor(u.id, TRACK, T0 + 19 * MIN);
   check('after a retake, state does not hand back the old walk\'s scan', between.scan === null && between.offers.length === 0, between.scan);
   check('nor can the old scan be answered', gapScan.answer(u.id, TRACK, { grade_id: gradeIds[3], unit: 1, slot: 0, answer: 'x' }, T0 + 19 * MIN).status === 404);
@@ -363,7 +363,7 @@ console.log('\nreusing an earlier enrollment');
 console.log('\nenrolling after the scan');
 {
   const u = makeUser('later');
-  walk(u.id, { mode: 'quick', used: 6, answered: [{ pos: 3.5, guess: 0.25, correct: false }] });
+  walk(u.id, { mode: 'quick', used: 2, answered: [{ pos: 3.5, guess: 0.25, correct: false }] });
   const s = gapScan.start(u.id, { trackId: TRACK, mode: 'quick', gradeId: gradeIds[G] }, T0);
   const { v } = run(u.id, s, [gapA], { step: 20000 });
   check('the scan finds the gap with no enrollment to put it on', v.done && v.gaps.length === 1 && !db.findOne('enrollments', (e) => e.user_id === u.id));
@@ -452,7 +452,7 @@ async function overHttp() {
     const now = Date.now();
     db.insert('subject_placements', {
       user_id: u.id, track_id: TRACK, grade_ids: gradeIds, mode: 'quick',
-      started_at: new Date(now - 9 * MIN).toISOString(), finished_at: new Date(now).toISOString(),
+      started_at: new Date(now - 3 * MIN).toISOString(), finished_at: new Date(now).toISOString(),
       answered: [{ pos: 3.5, guess: 0.25, correct: false }], scores: [],
     });
     const m = enroll(u.id, gradeIds[G]);

@@ -110,7 +110,7 @@ console.log('\nthe grade walk\'s stop');
   check('the share of the belief within one grade of the recommendation is a probability', m > 0 && m <= 1, m);
   const few = answers.slice(0, 3);
   check('and a short record is less sure than a long one', adaptive.withinOneGrade(span, adaptive.posterior(span, few), few) < m);
-  check('the whole budgets are Quick 18, Balanced 20, Accurate 57', JSON.stringify(adaptive.WHOLE_MINUTES) === JSON.stringify({ quick: 18, balanced: 20, accurate: 57 }));
+  check('the whole budgets are Quick 12, Balanced 20, Accurate 57', JSON.stringify(adaptive.WHOLE_MINUTES) === JSON.stringify({ quick: 12, balanced: 20, accurate: 57 }));
   check('every in-grade mode has a within-one confidence, and Balanced and Full also have one in the grade walk', ['quick', 'balanced', 'accurate'].every((k) => up.MODES[k].confidence >= 0.9) && adaptive.MODES.balanced.confidence >= 0.97 && adaptive.MODES.accurate.confidence >= 0.99);
   check('Quick keeps its minimum and the span lift, and its legacy stop (the 95% per level gate in placement-accuracy-test)', adaptive.MODES.quick.min === 18 && adaptive.limits('quick', 49).min > 18 && adaptive.MODES.quick.confidence === undefined);
 }

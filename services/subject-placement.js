@@ -790,7 +790,7 @@ function submitBlock(userId, trackId, answers, { partial = false } = {}) {
   const late = placement.deadline_at
     && adaptive.clockEnded(placement.mode, placement.grade_ids.length, answered.length, Date.now() - (Date.parse(placement.deadline_at) - adaptive.clockMinutes(placement.mode, trackId) * 60000), adaptive.clockMinutes(placement.mode, trackId) * 60000);
   const allBlocks = blocksOf(trackId);
-  const ctx = { topLeft: adaptive.topLeft(placement.grade_ids.length, allBlocks, asked) };
+  const ctx = { topLeft: adaptive.topLeft(placement.grade_ids.length, allBlocks, asked), clocked: !!placement.deadline_at };
   const next = adaptive.done(placement.mode, answered, post, ctx) || late || partial
     ? null
     : adaptive.chooseBlock(allBlocks, asked, adaptive.nextTarget(answered, post, ctx), post, answered.length, { fast: !!(adaptive.MODES[placement.mode] || {}).shortFirst });

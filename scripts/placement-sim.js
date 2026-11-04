@@ -120,7 +120,7 @@ function sit(bank, mode, ability, random, { dontKnow = false, clock = null, fast
   const asked = [];
   let post = adaptive.posterior(span, answered);
   let block = adaptive.nextBlock(blocks, asked, adaptive.firstTarget(span, NaN), { fast });
-  const ctxOf = () => ({ topLeft: adaptive.topLeft(span, blocks, asked) });
+  const ctxOf = () => ({ topLeft: adaptive.topLeft(span, blocks, asked), clocked: !!clock });
   while (block) {
     for (const i of block.idx) {
       const q = sets[block.grade][i];
@@ -137,7 +137,7 @@ function sit(bank, mode, ability, random, { dontKnow = false, clock = null, fast
     const late = clock && adaptive.clockEnded(mode, span, answered.length, elapsed * 1000, clock.seconds * 1000);
     block = adaptive.done(mode, answered, post, ctxOf()) || late ? null : adaptive.chooseBlock(blocks, asked, adaptive.nextTarget(answered, post, ctxOf()), post, answered.length, { fast });
   }
-  return { placed: adaptive.recommend(span, post, answered).index, asked: answered.length, seconds: elapsed };
+  return { placed: adaptive.recommend(span, post, answered).index, asked: answered.length, seconds: elapsed, median: adaptive.median(post), trace: answered };
 }
 
 /** Abilities from knows-nothing to knows-everything, as fractions of the subject plus both extremes. */
@@ -192,7 +192,7 @@ function measureSpread(trackId, mode, { seeds = 40, seed = 20261030, dontKnow = 
       const own = edge ? ability : Math.floor(ability) + random();
       // A learner's pace: lognormal around the estimate (sd 0.28, as services/onboarding/model.js), or fixed by --pace.
       const gauss = Math.sqrt(-2 * Math.log(random() || 1e-9)) * Math.cos(2 * Math.PI * random());
-      const clock = clockSeconds ? { seconds: clockSeconds * (adaptive.CLOCK_SCALE[trackId] || 1), pace: pace || Math.exp(0.28 * gauss) } : null;
+      const clock = clockSeconds ? { seconds: clockSeconds * adaptive.clockScale(mode, trackId), pace: pace || Math.exp(0.28 * gauss) } : null;
       const r = sit(bank, mode, own, random, { dontKnow, clock, fast });
       errors.push(r.placed - trueGrade(own, bank.span));
       questions += r.asked;

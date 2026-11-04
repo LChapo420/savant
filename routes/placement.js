@@ -140,7 +140,7 @@ router.post('/start', requireAuth, limit('placement-start', 30, 60 * 60 * 1000),
     analysis: null,
     xp_awarded: 0,
     unit_mode: unitBank ? mode : null,
-    deadline_at: unitBank ? new Date(Date.now() + unitPlacement.MODES[mode].minutes * 60 * 1000).toISOString() : null,
+    deadline_at: unitBank ? new Date(Date.now() + unitPlacement.modeCfg(enrollment.track_id, mode).minutes * 60 * 1000).toISOString() : null,
     retake: placed,
     retake_of: placed ? enrollment.placement_session_id || null : null,
   });

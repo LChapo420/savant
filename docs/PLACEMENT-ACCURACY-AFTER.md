@@ -567,3 +567,56 @@ Quick's grade stage gives up 2.7 points to run in a median 6.4 minutes instead o
 - **The responder is unchanged and unvalidated.** Real learners may be slower, slip more or guess less than the model; the walk assumes more slips (10%) than the model uses (3%), so it is conservative on that, and nothing was tuned to make the responder easier.
 
 Reproduce: `node scripts/unit-placement-sim.js --seed=held --mode=quick,balanced,accurate`, `node scripts/spanish-placement-sim.js --seed=held --grades=57 --mode=quick,balanced,accurate`, and for the grade stage `DB_FILE=<a copy> node scripts/placement-sim.js --summary --seeds=60 --seed=31415 --fast --fast-all --mode=quick --clock=5` (`balanced` 12, `accurate` 40). The old walk: `UNIT_HOLE=0 UNIT_PICK=nearest UNIT_STOP=legacy` (units), `ADAPTIVE_INFO=0 ADAPTIVE_STOP=legacy` (grades; old limits via `--limits`).
+
+## 2026-11-03 (second round): Quick placement shortened to about 8 minutes where the banks allow (branch place-8)
+
+**Everything below is SIMULATED** (same responder as the place-90 section: slope 0.3, 3% slips, guess rate, unlearned unit at the guess rate; seconds ESTIMATED from word counts, pace per learner lognormal sd 0.28). No real learner was measured. **Seeds:** the parameters were tuned on the seeds the place-90 section called held-out (grade 31415, unit 20261102) and the dev seeds, so those are no longer held out. The numbers below are on **fresh seeds, run once with the final settings: grade 27182, unit 20261104** (Spanish: all 57 grades). Money: $0 (no Anthropic key, no paid model; the ACT re-judge used the free NVIDIA tier). Placement makes **0 AI calls per learner before and after** (the walks, scan and checks read stored banks), so $0 at list price both times; what fell is requests: questions served per Quick placement (grade + unit) math 35.0 to 28.6, English 30.8 to 22.5, IQ 32.2 to 17.0, Spanish 42.2 to 27.6.
+
+### What changed (no new item written; all levers cost nothing to run)
+1. **Quick stops on the error it is held to, per subject** (the biggest lever). In the grade stage (`adaptive.limits(..., {clocked})`, `MODES.quick.clocked`: minimum 8 answers, confidence 0.90) and in the in-grade stage (`unitPlacement.QUICK_BY_TRACK`: confidence math 0.85, English 0.86, IQ 0.70, Spanish 0.80) the walk ends when the belief puts that much weight within one grade/unit, with the clock as the backstop. Before, Quick's walks ran to their clock (median = clock for nearly every learner). Applied only under a clock (the app and the clocked sims); the unclocked Quick walk keeps min 18, `sure` 0.94 and the span lift, so the 95%-per-level gate in `placement-accuracy-test` measures what it measured and is unchanged (it passes).
+2. **Per-subject Quick clocks** (`adaptive.QUICK_CLOCK_SCALE` on a 4-minute base: math 5.5, English and IQ 3.5, Spanish 4.5, reading 7.5, the rest 4; in-grade math 6, English 5.5, IQ 4, Spanish 6): the shortest that held about 90% in that subject. Other modes keep `CLOCK_SCALE`.
+3. **In-grade pick per estimated second** for Quick (`UNIT_PICK_SEC`): about the same accuracy for fewer minutes under the confidence stop (math median 4.7 to 3.8 on the tuning seed). Standard and Full unchanged.
+4. **Whole Quick budget 18 to 12 minutes**; the earlier-grade scan and the quick checks use what the two stages leave (scan cap unchanged at 4 minutes / 8 questions).
+5. **ACT's four mid-ladder items re-judged by a second family** (Nemotron 3 Ultra 550B, forward and reversed anchors). The two families differed by up to 1.3 grades and Nemotron's own two readings by 2.5 to 3.5, so the spread rule fails. Positions moved to the cross-family mean (two items read below grade 6 and were set to its start): 5.42/5.32/6.42/6.42 became 5.0/5.0/6.3/6.6. They remain estimates.
+
+### Fresh seeds, before (place-90) vs after
+| grade stage | within 1 grade, before | after | median / p90 min, before | after |
+|---|---|---|---|---|
+| math | 93.0% | 92.3% | 6.46 / 6.90 | 5.52 / 5.98 |
+| English | 97.1% | 92.1% | 6.48 / 7.02 | 3.59 / 4.03 |
+| IQ | 95.5% | 90.5% | 6.52 / 7.01 | 3.75 / 4.35 |
+| Spanish | 97.6% | 93.2% | 6.36 / 6.62 | 4.44 / 4.74 |
+| reading | 93.5% | 90.9% | 9.79 / 10.48 | 7.79 / 8.60 |
+| ACT / chess / piano / basketball | 97.4 / 96.7 / 97.9 / 97.4% | 95.0 / 93.0 / 94.8 / 92.1% | 6.3 to 6.4 | 4.1 |
+
+| in-grade stage | within 1 unit, before | after | exact, before | after | median / p90 min, before | after |
+|---|---|---|---|---|---|---|
+| math | 93.1% | 91.4% | 62.3% | 55.1% | 8.0 / 8.4 | 5.0 / 6.3 |
+| English | 91.2% | 90.7% | 62.3% | 48.6% | 7.8 / 8.5 | 4.6 / 5.9 |
+| IQ | 94.8% | 91.1% | 63.8% | 41.3% | 6.0 / 8.2 | 2.1 / 3.4 |
+| Spanish (57 grades) | 93.6% | 92.1% | 59.1% | 51.3% | 5.5 / 8.1 | 2.7 / 5.2 |
+
+**Whole Quick, grade + unit (sum of the stage medians; the p90 is the sum of the stage p90s, an upper bound since a learner's pace carries across stages):** math 14.5 min (p90 bound 15.3) to **10.5 (12.3)**; English 14.3 (15.5) to **8.2 (9.9)**; IQ 12.5 (15.2) to **5.9 (7.8)**; Spanish 11.9 (14.7) to **7.1 (9.9)**. Including the scan and the quick checks, the end-to-end simulation (scripts/gap-path-sim.js, 25 s a question, six learner profiles, 30 seeds each, calibrated answers) averages 11.4 to 11.7 minutes for math, English and IQ, down from 17.8, with the budget at 12.
+
+### Gap recall, before vs after (gap-path-sim, SIMULATED; the scan now gets only what is left of the 12 minutes)
+| | grade-below gaps confirmed | two or more grades below confirmed | false skips (of units) | known units still worked ("waste") |
+|---|---|---|---|---|
+| math | 68.1% to 62.7% | 37.2% to 24.2% | 0.3% to 0.5% | 11.6% to 14.4% |
+| English | 66.3% to 70.2% | 35.6% to 33.7% | 0.3% to 0.3% | 10.8% to 13.8% |
+| IQ | 73.0% to 71.4% | 51.0% to 52.7% | 0.4% to 0.4% | 14.9% to 22.8% |
+
+Missed gaps stay at 0.1 to 0.3% of units (target 2%) and false skips under 1%. Taking the scan out of Quick altogether was tried (`GAP_SCAN_QUICK_MIN=0`, since removed) and rejected: IQ grade-below recall fell to 58%, two-or-more below to 36% overall. Cost, stated plainly: less checking leaves more known units on the path (IQ waste 14.9 to 22.8%) and math's deep-gap recall fell 13 points.
+
+### Standard and Full: unchanged
+The grade and in-grade simulations in Standard and Full give byte-identical output before and after (same seeds). The new rules apply to Quick only, and only under a clock.
+
+### What is not reached, exactly why
+- **Math is about 10.5 minutes, p90 bound 12.3, not 8 / 10.** Its grade stage needs about 5.5 minutes for 90% (4.2 minutes gave 86%): the subject has 49 grades, strong learners need the questions to climb, and the errors sit at the top of the scale (75 to 98% levels), where a lucky guess on the top items reads as a hit. A faster climb (gallop 3 / x2, 2 / x3; `ADAPTIVE_GALLOP_FIRST`, `_GROW`, default unchanged) did not move it. More calibrated items near the top of math would. Not written (the owner asked for levers that cost nothing).
+- **p90 under 10 holds for English (9.9), IQ (7.8) and Spanish (9.9), not math.**
+- **Exact unit placement fell** (about 62% to 41-55%) because walks stop earlier: they stay within one unit in 90% or more, which is the owner's bar, but fewer learners start on exactly their unit.
+- **IQ's grade stage is 90.5% on the fresh seed (91.7% on the tuned seed)**, and math's in-grade 91.4%, so the margins over 90% are about one standard error (about 1.1 points over 660 learners).
+- **An in-grade prior from the grade stage's result was measured, not built.** The grade stage's belief median misses the true position by sd about 0.4 grade with a bias of -0.34, so within the placed grade the correlation between where it says and where the learner is is 0.33 to 0.43: worth well under one bit (less than one question) against 20 units. A wrong prior biases placement. An onboarding-based prior stays unbuilt for the reason in the place-90 section.
+- **Fast versions of items** were not written: the time model charges about 6 s of fixed overhead plus a band-based working time, so shortening the words saves 3 to 5 s of about 25 per question, and each new item needs two judge families.
+- Reading's grade stage (7.8 minutes; passages take about 62 s a question) and hole-heavy learners (30% holes: 81 to 84% within one unit) were not improved.
+
+Reproduce: `node scripts/unit-placement-sim.js --seed=20261104 --mode=quick --walk-only`, `node scripts/spanish-placement-sim.js --seed=20261104 --grades=57 --mode=quick --walk-only`, `DB_FILE=<a copy> node scripts/placement-sim.js --summary --seeds=60 --seed=27182 --fast --fast-all --mode=quick --clock=4`, `NODE_PATH=../node_modules node scripts/gap-path-sim.js --subjects=math,english,reading,iq --modes=quick --profiles=clean,holes,below,deep,mixed,strong --seeds=30 --answer=calibrated`. Before = commit 48bfe81 (grade `--clock=5`).

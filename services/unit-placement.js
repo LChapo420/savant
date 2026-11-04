@@ -27,6 +27,7 @@ const path = require('path');
 const curriculum = require('../config/curriculum');
 const LAYOUT = require('../config/level-layout');
 const adaptive = require('./adaptive-placement');
+const { questionSeconds } = require('./placement-seconds');
 
 const BANK_DIR = path.join(__dirname, '..', 'content', 'unit-placement');
 
@@ -43,6 +44,23 @@ const MODES = {
   balanced: { max: 30, min: 10, sure: 0.95, confidence: 0.97, minutes: 8 },
   accurate: { max: 40, min: 14, sure: 0.995, confidence: 0.98, minutes: 14 },
 };
+
+/**
+ * Quick's confidence and clock by subject (SIMULATED, held-out seed; docs/PLACEMENT-ACCURACY-AFTER.md, 3 Nov second section). Quick stops once the
+ * belief puts this much of its weight within one unit (math 0.80 ...), with the clock as the backstop: the shortest setting that held about 90%
+ * within one unit in that subject. A subject not listed keeps MODES.quick. modeCfg is the one place the walk, the route's deadline and the
+ * simulations read a mode's limits, so a subject's own setting cannot be missed.
+ */
+const QUICK_BY_TRACK = {
+  math: { confidence: 0.85, minutes: 6 },
+  english: { confidence: 0.86, minutes: 5.5 },
+  iq: { confidence: 0.7, minutes: 4 },
+  spanish: { confidence: 0.8, minutes: 6 },
+};
+function modeCfg(trackId, mode) {
+  const cfg = MODES[mode] || MODES.balanced;
+  return mode === 'quick' && QUICK_BY_TRACK[trackId] ? { ...cfg, ...QUICK_BY_TRACK[trackId] } : cfg;
+}
 
 /**
  * The walk's assumptions in units (services/adaptive-placement.js assumed): a
@@ -275,8 +293,10 @@ function beliefOf(units, answered) {
  */
 const UNIT_PICK = process.env.UNIT_PICK || 'info';
 const PICK_NEAR = Number(process.env.UNIT_PICK_NEAR || 24);
+// Information gained per estimated second, for Quick only (the clock-bound mode; Standard and Full pass no track and keep the earlier rule). UNIT_PICK_SEC=0 restores it for Quick too.
+const PICK_SEC = Number(process.env.UNIT_PICK_SEC ?? 1);
 
-function pickByInformation(units, answered, post) {
+function pickByInformation(units, answered, post, trackId = null) {
   const prep = prepOf(units);
   const { grid } = prep;
   const n = grid.length;
@@ -285,6 +305,11 @@ function pickByInformation(units, answered, post) {
   const base = new Float64Array(n);
   for (const l of logs) for (let g = 0; g < n; g++) base[g] += l[g];
   const m = adaptive.median(post);
+  let h0 = 0;
+  for (let g = 0; g < n; g++) {
+    const w = post.w[g];
+    if (w > 1e-12) h0 -= w * Math.log(w);
+  }
   const used = new Set(answered.map((a) => `${a.unit}:${a.slot}`));
   const cands = [];
   units.forEach((u, i) => u.questions.forEach((q, slot) => {
@@ -292,6 +317,7 @@ function pickByInformation(units, answered, post) {
   }));
   cands.sort((a, b) => Math.abs(a.pos - m) - Math.abs(b.pos - m));
   let best = null;
+  let bestScore = -Infinity;
   const rest = new Float64Array(n);
   const lp = new Float64Array(n);
   const zero = new Float64Array(n);
@@ -316,7 +342,11 @@ function pickByInformation(units, answered, post) {
       out.push({ z: z * Math.exp(top), h });
     }
     const expected = (out[0].z * out[0].h + out[1].z * out[1].h) / (out[0].z + out[1].z);
-    if (!best || expected < best.expected - 1e-9) best = { unit: c.unit, slot: c.slot, expected };
+    const score = trackId ? (h0 - expected) / Math.pow(questionSeconds(c.q, trackId), PICK_SEC) : h0 - expected;
+    if (!best || score > bestScore + 1e-9) {
+      best = { unit: c.unit, slot: c.slot, expected };
+      bestScore = score;
+    }
   }
   return best;
 }
@@ -343,7 +373,7 @@ function withinOneMass(units, answered, post) {
 function nextQuestion(trackId, gradeId, mode, answered, { deadline = null, startUnit = null } = {}) {
   const units = unitsFor(trackId, gradeId);
   if (!units) return null;
-  const cfg = MODES[mode] || MODES.balanced;
+  const cfg = modeCfg(trackId, mode);
   if (answered.length >= cfg.max) return null;
   if (deadline && Date.now() >= Date.parse(deadline)) return null;
   const post = beliefOf(units, answered);
@@ -355,7 +385,7 @@ function nextQuestion(trackId, gradeId, mode, answered, { deadline = null, start
   }
   const target = answered.length ? adaptive.median(post) : (Number.isFinite(startUnit) ? startUnit - 1 + UNIT_AT : units.length / 2);
   if (answered.length && UNIT_PICK === 'info') {
-    const pick = pickByInformation(units, answered, post);
+    const pick = pickByInformation(units, answered, post, mode === 'quick' ? trackId : null);
     if (pick) return { unit: pick.unit, slot: pick.slot };
   }
   const used = new Set(answered.map((a) => `${a.unit}:${a.slot}`));
@@ -480,4 +510,4 @@ function nextCheck(checks) {
   return row ? { unit: row.unit, slot: row.slots[0] } : null;
 }
 
-module.exports = { CONFIG, withinOneMass, pickByInformation, pointOf, calibrationFor, MODES, UNIT_AT, bankFor, unitsFor, available, itemFor, nextQuestion, placedUnit, score, markCheck, nextCheck, startLevelOf, beliefOf };
+module.exports = { CONFIG, QUICK_BY_TRACK, modeCfg, withinOneMass, pickByInformation, pointOf, calibrationFor, MODES, UNIT_AT, bankFor, unitsFor, available, itemFor, nextQuestion, placedUnit, score, markCheck, nextCheck, startLevelOf, beliefOf };

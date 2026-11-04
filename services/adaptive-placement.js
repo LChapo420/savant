@@ -52,11 +52,11 @@ const RELIABLE = Number(process.env.ADAPTIVE_RELIABLE || 0.3);
  * Each mode's whole placement budget, in minutes: the owner's limits of 2026-11-02 for Balanced (about 20) and
  * Accurate (under 60; they were 45 and 90), shared by the subject walk, the in-grade stage, the earlier-grade gap
  * scan and the quick check. Stated on its own because the stage clocks do not add up to it: Accurate leaves 3
- * minutes for the gap scan. Quick is 18: a 5-minute subject clock (the walk ends at 1.25 times it once its 8 answers are in, so about
- * 6.3 minutes), 8 minutes in the grade, 4 for the scan. Its 20-minute predecessor held 98.8% within one grade on the held-out seed; the
- * 5-minute clock holds 96.1% on average and 92.6% or better on every subject, simulated (docs/PLACEMENT-ACCURACY-AFTER.md, 3 Nov).
+ * minutes for the gap scan. Quick is 12 (was 18, 20 before that): the subject clock (4 minutes times QUICK_CLOCK_SCALE: math 5.5, English and IQ
+ * 3.5, Spanish 4.5) plus the in-grade clock (math 6, English 5.5, IQ 4, Spanish 6) are backstops, most walks stop earlier on their confidence,
+ * and the scan and the quick checks use what is left of the 12. Simulated, fresh seeds (docs/PLACEMENT-ACCURACY-AFTER.md, 3 Nov second section).
  */
-const WHOLE_MINUTES = { quick: 18, balanced: 20, accurate: 57 };
+const WHOLE_MINUTES = { quick: 12, balanced: 20, accurate: 57 };
 
 /**
  * When the clock ends a walk. It ends it once the clock has run out AND the mode's minimum has been answered (a learner who
@@ -71,13 +71,20 @@ const WHOLE_MINUTES = { quick: 18, balanced: 20, accurate: 57 };
  * only 89% within one grade on the held-out seed; at 1.5 times the clock (9 minutes) it holds 90% or better.
  */
 const CLOCK_SCALE = { reading: 1.5 };
-const clockMinutes = (mode, trackId) => MODES[mode].minutes * (CLOCK_SCALE[trackId] || 1);
+/**
+ * Quick's clock by subject, as multiples of MODES.quick.minutes (SIMULATED, held-out seed 31415; docs/PLACEMENT-ACCURACY-AFTER.md, 3 Nov second
+ * section): the shortest clock that held about 91% within one grade in that subject. Math is the long one (a 49-grade subject, strong learners
+ * need the questions to climb); reading's passages take 1.5 times as long per question. Other modes keep CLOCK_SCALE.
+ */
+const QUICK_CLOCK_SCALE = { math: 1.375, english: 0.875, iq: 0.875, spanish: 1.125, reading: 1.875 };
+const clockScale = (mode, trackId) => (mode === 'quick' ? (QUICK_CLOCK_SCALE[trackId] || 1) : (CLOCK_SCALE[trackId] || 1));
+const clockMinutes = (mode, trackId) => MODES[mode].minutes * clockScale(mode, trackId);
 
 const HARD_STOP = 1.25;
 const HARD_FLOOR = 8;
 function clockEnded(mode, span, answeredCount, elapsedMs, clockMs) {
   if (!(elapsedMs >= clockMs)) return false;
-  return answeredCount >= limits(mode, span).min || (elapsedMs >= clockMs * HARD_STOP && answeredCount >= HARD_FLOOR);
+  return answeredCount >= limits(mode, span, { clocked: true }).min || (elapsedMs >= clockMs * HARD_STOP && answeredCount >= HARD_FLOOR);
 }
 
 const MODES = {
@@ -90,7 +97,9 @@ const MODES = {
   // (`shortFirst`, nextBlock `fast`): among the questions near the belief's middle it takes the quickest, which keeps the accuracy and saves
   // minutes (docs/ONBOARDING-MODES.md section 4, simulated, seconds estimated from word counts: services/placement-seconds.js).
   // A mode with `noLift` gets no span-based lift of its minimum (see limits); none ships with it, it is how the sim tried a 5-minute Quick.
-  quick: { max: 32, min: 18, sure: 0.94, minutes: 5, shortFirst: true },
+  // `clocked`: what Quick uses when a clock runs it (the app and the clocked simulations), see limits(). Unclocked, Quick keeps the
+  // min / sure / span lift above, which the 95%-per-level gate in placement-accuracy-test measures.
+  quick: { max: 32, min: 18, sure: 0.94, minutes: 4, shortFirst: true, clocked: { min: Number(process.env.QUICK_CLOCKED_MIN ?? 8), confidence: Number(process.env.QUICK_CLOCKED_CONF ?? 0.9) } },
   balanced: { max: 70, min: 16, sure: 0.97, confidence: 0.97, minutes: 12, shortFirst: true },
   accurate: { max: 130, min: 24, sure: 0.995, confidence: 0.99, minutes: 40, shortFirst: true },
 };
@@ -307,6 +316,10 @@ function firstTarget(span, startHint) {
  * reaches the top of a 57-grade subject in about six right answers. Moving down is never limited.
  * ADAPTIVE_GALLOP=0 restores the plain median.
  */
+// The gallop's first step (grades) and its growth per further right answer in a row (1 and 2: 1, 2, 4, 8 ...). A faster climb reaches the top
+// of a long subject in fewer questions, which is what a short Quick needs for strong learners; ADAPTIVE_GALLOP_FIRST / _GROW to experiment.
+const GALLOP_FIRST = Number(process.env.ADAPTIVE_GALLOP_FIRST ?? 1);
+const GALLOP_GROW = Number(process.env.ADAPTIVE_GALLOP_GROW ?? 2);
 function nextTarget(answered, post, ctx = {}) {
   const m = median(post);
   const span = post.grid[post.grid.length - 1];
@@ -317,7 +330,7 @@ function nextTarget(answered, post, ctx = {}) {
   let streak = 0;
   for (let i = answered.length - 1; i >= 0 && answered[i].correct; i--) streak++;
   const top = Math.max(...right.map((a) => a.pos));
-  return Math.min(m, top + (streak ? 2 ** (streak - 1) : 0.5));
+  return Math.min(m, top + (streak ? GALLOP_FIRST * GALLOP_GROW ** (streak - 1) : 0.5));
 }
 
 /**
@@ -326,8 +339,11 @@ function nextTarget(answered, post, ctx = {}) {
  * a run of lucky guesses (Math Quick 582 of 588 testers within a grade; with this,
  * 586, at about 29 questions on average). The clock still bounds it.
  */
-function limits(mode, span) {
+function limits(mode, span, { clocked = false } = {}) {
   const cfg = MODES[mode];
+  // Quick under a clock stops on the error it is held to (the belief puts `confidence` of its weight within one grade of the
+  // recommendation), as Standard and Full do, instead of running to the clock: the clock is the backstop, not the plan.
+  if (clocked && cfg.clocked && Number.isFinite(cfg.clocked.confidence) && cfg.clocked.confidence < 1) return { ...cfg, ...cfg.clocked };
   const scale = Number(process.env.ADAPTIVE_QUICK_SCALE ?? 1.5);
   if (mode !== 'quick' || !scale || cfg.noLift) return cfg;
   return { ...cfg, min: cfg.min + Math.floor((span * scale) / 8), max: cfg.max + Math.floor((span * scale) / 12) };
@@ -411,7 +427,7 @@ function confirmed(answered, post, near = CONFIRM_NEAR, count = CONFIRM) {
  * ceiling candidate keeps going until the top is proven or its items run out, and a proven top may stop at the minimum.
  */
 function done(mode, answered, post, ctx = {}) {
-  const cfg = limits(mode, post.grid[post.grid.length - 1]);
+  const cfg = limits(mode, post.grid[post.grid.length - 1], ctx);
   if (answered.length >= cfg.max) return true;
   if (atFloor(answered, post)) return true;
   if (answered.length < cfg.min) return false;
@@ -508,6 +524,6 @@ function recommend(span, post, answered) {
 }
 
 module.exports = {
-  questionKey, positionOf, BAND_AT, MODES, CLOCK_SCALE, clockMinutes, WHOLE_MINUTES, clockEnded, HARD_STOP, HARD_FLOOR, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, chooseBlock, nextBlockByInfo, withinOneGrade, firstTarget, nextTarget, done, limits,
+  questionKey, positionOf, BAND_AT, MODES, CLOCK_SCALE, QUICK_CLOCK_SCALE, clockScale, clockMinutes, WHOLE_MINUTES, clockEnded, HARD_STOP, HARD_FLOOR, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, chooseBlock, nextBlockByInfo, withinOneGrade, firstTarget, nextTarget, done, limits,
   gradeMass, wholePercents, recommend, CEILING, ceilingProof, topProven, standardError, confirmed, SE_MAX, ceilingCandidate, topLeft,
 };
