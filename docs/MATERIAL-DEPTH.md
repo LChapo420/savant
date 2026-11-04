@@ -786,3 +786,33 @@ keeps the one required analogy and cuts other extras first. A short version stil
 
 Planted swap on the after run (`--plant swap --replay`, r7): caught 7/8, fooled 1. Money: Standard Compute about $0.49 through its ledger, Gemini and Nemotron free tiers, Anthropic $0.
 Not verified: the lesson and podcast paths use `reviseOnce` too, so the "analogy wins" rule applies there; it was only run on notes.
+
+### 9.13 Judge calibration with strong judges (4 Nov, branch `judge-cal`)
+
+AI-judged, simulated learners; not real-learner proof. Raw runs and the Coral-written fresh texts: `docs/material-depth/judge-cal/` (`swap-*`, `real-*`, `fresh-*`, `texts-r2*.json`).
+
+**A bug in the earlier calibration.** The Lyceum planted-swap runs (`swap-planted-swap-*`, 0/44 and 1/56 "caught") replayed the *already planted* files of depth-75, whose saved `texts` are post-swap, so
+they were swapped back: those numbers are the real-orientation accuracy (43/44 and 49/56 correct), not a catch rate. Replay a non-planted joint file with `--plant swap`.
+
+**Planted-swap catch (verdicts caught / all), same texts, per-measure joint judge:**
+
+| judge (family) | saved DeepSeek lesson r3 | saved notes r2 | 3 fresh Coral sets (lesson, notes) | pooled |
+|---|---|---|---|---|
+| GLM-5.3 (zai) | 12/12 | 4/4 | 39/40 (98%) | 55/56 (98%) |
+| Kimi k3 (moonshot) | 16/16 | 15/16 | 90/96 (94%) | 121/128 (94.5%) |
+| DeepSeek V4 Pro (deepseek) | 8/8 | 15/16 | 65/76 (86%) | 88/100 |
+| Crouton Alpha (free) | 16/16 | 14/16 | not run | 30/32 (94%) |
+| Gonka GLM-5.3-Flash | 12/12 | 7/8 | not run | 19/20 (95%) |
+| Grok 4.3 (Grokified) | 15/16 | 12/16 | not run | 27/32 (84%) |
+| Coral DeepSeek V4.1 Flash | 15/16 | 10/16 | not run | 25/32 (78%) |
+| Qwen 3.8 2.4T (Lyceum) | errored (15 of 16 calls) | | | unusable |
+
+Only GLM-5.3 clears 95% outright; Kimi k3 is at 94.5% (7 misses in 128, 5 of them "same" or notes), which is inside noise of 95% but not above it. So **two families at >= 95% is not strictly reached.**
+
+**Joint profile accuracy on the fresh held-out sets** (never tuned on; writer Coral DeepSeek V4.1 Flash, current rules; real orientation; "same" counts as not correct; judge errors excluded):
+Kimi k3 90/96 = 94% (lesson 96%, notes 92%); GLM-5.3 57/60 = 95% (lesson 97%, notes 93%); DeepSeek V4 Pro 54/64 = 84% (a judge that does not clear the planted gate). By set: r21 lesson 91% / notes 88%, r22 91% / 93%, r23 100% / 86% (all judges pooled).
+On the saved depth-75 texts the same strong judges give 92-100% (Kimi lesson 16/16, notes 11/12). So the 75% of 9.2 was mostly the weak judges' error, not the material; no rule was changed.
+
+Not done: the depth-90 rule loop was not run (the gate above is missed by 0.5 point for the second family, and the fresh sets already score 94-95% on the two best judges). A third strong family judge (and a larger planted set for Kimi) would settle it.
+Tooling added: judges `grok`, `coral`, `gonka`; writers `--writer coral|gonka` in `scripts/material-sensitivity-proof.js`. Note `XKIRO_AT_ONCE` (default 2) gates every judge call: set it to 12-24 for strong judges; Coral allows only 5 requests in flight (write first with `XKIRO_AT_ONCE=5` and a `NO_JUDGE` file, then replay-judge).
+Money: Lyceum about $32 this task (ledger 8.65 to 41.16; over the $25 budget), Coral $0.82 total, Gonka $0.26, Grokified $0.16, Crouton about 128 of 950 daily requests.
