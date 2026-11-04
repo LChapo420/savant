@@ -23,7 +23,11 @@
  *                           whose unit is not stored yet goes to the ordinary session (the path never dead-ends).
  *
  * Stored in <DB folder>/spanish-units/g<no>/<unit>.json (SPANISH_UNIT_DIR to move it). Each file records which
- * checks it passed. Money: NVIDIA free models only; Standard Compute and Anthropic are never called from here.
+ * checks it passed. Money (4 Nov 2026): the writer is Coral's DeepSeek V4.1 Flash, then Gonka's DeepSeek V4 Flash (owner credits, capped
+ * ledgers), then the free NVIDIA models; the blind solver and the reviewer are Gemini free tier, then Lyceum MiniMax M3, then Gonka's GLM 5.3
+ * Flash (other families than the writer), then Nemotron Ultra. The NVIDIA free tier alone timed out on a unit (240 s a call), which is why this was off; with the credit
+ * providers a level's units are written in under a minute (scripts/spanish-write-ahead-proof.js). Curriculum text only, never learner
+ * data. Standard Compute and Anthropic are never called from here. SPANISH_WRITE_AHEAD=off turns the writing-ahead off.
  */
 const fs = require('fs');
 const path = require('path');
@@ -179,6 +183,42 @@ function reviewItems(draft) {
   return out;
 }
 
+/**
+ * One structured call on the credit providers, in order (curriculum text only): the first that is enabled and answers wins.
+ * `order` is a list of {name, model}; a ledger stop or a failure moves on to the next, and null means none answered.
+ */
+async function creditCall(order, args) {
+  for (const o of order) {
+    let p = null;
+    try { const mod = require(`../providers/${o.name}`); p = mod[o.name] || mod; } catch { continue; } // eslint-disable-line global-require, import/no-dynamic-require
+    if (!p || !p.isEnabled || !p.isEnabled()) continue;
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      const r = await p.structured({ ...args, model: o.model, task: 'spanish_write_ahead' });
+      if (r && r.data) return r;
+    } catch (err) { console.warn(`spanish write-ahead: ${o.name} gave no answer (${String(err && err.message).slice(0, 120)}); trying the next`); }
+  }
+  return null;
+}
+const WRITER_ORDER = [{ name: 'coral', model: process.env.SPANISH_CORAL_MODEL || undefined }, { name: 'gonka', model: undefined }];
+// Judges are fast non-reasoning calls of other families than the writer (DeepSeek): Gemini free tier, Lyceum MiniMax M3, then Gonka GLM 5.3 Flash
+// (a reasoning model: it timed out at 60 s on a 20-item batch, so it is the last credit fallback).
+const JUDGE_ORDER = [{ name: 'gemini', model: undefined }, { name: 'lyceum', model: 'minimax/minimax-m3' }, { name: 'gonka', model: process.env.SPANISH_JUDGE_MODEL || 'zai-org/GLM-5.3-Flash' }];
+const JUDGE_SYSTEM = 'You answer multiple-choice questions for a school course. For each question, work it out yourself and give the index (0-based) of the one option you believe is correct. You are not told the answer key.';
+const JUDGE_SCHEMA = { type: 'object', properties: { picks: { type: 'array', items: { type: 'object', properties: { index: { type: 'integer' }, chosen_index: { type: 'integer' } }, required: ['index', 'chosen_index'] } } }, required: ['picks'] };
+
+/** The blind solver: Gemini, Lyceum MiniMax, Gonka GLM (none the writer's family), then the app's usual Nemotron judge. */
+async function defaultJudge(batch) {
+  const user = `${batch.map((q, i) => `Question ${i}: ${q.prompt}\n${q.choices.map((c, j) => `  (${j}) ${c}`).join('\n')}`).join('\n\n')}\n\nReturn one pick per question, with its index.`;
+  const r = await creditCall(JUDGE_ORDER, { role: 'check', system: JUDGE_SYSTEM, user, schema: JUDGE_SCHEMA, schemaName: 'submit_picks', maxTokens: 6000, timeoutMs: 60000 });
+  if (r) {
+    const by = new Map((r.data.picks || []).map((p) => [p.index, p.chosen_index]));
+    const picks = batch.map((_, i) => (Number.isInteger(by.get(i)) ? by.get(i) : null));
+    if (picks.some((x) => x !== null)) return picks;
+  }
+  return require('../key-gate').nemotronJudge(batch); // eslint-disable-line global-require
+}
+
 async function defaultReview(spec, items) {
   // eslint-disable-next-line global-require
   const nvidia = require('../providers/nvidia');
@@ -189,6 +229,8 @@ Reject an item only for a real error: a spelling or accent mistake, wrong gender
 ${items.map((it) => `${it.id}: ${it.text}`).join('\n')}
 
 Reply {"rejects":[{"id":"…","problem":"…"}]} listing only items with a real error (empty if none).`;
+  const viaCredit = await creditCall(JUDGE_ORDER, { role: 'check', system, user, schema: REVIEW_SCHEMA, schemaName: 'verdicts', maxTokens: 6000, timeoutMs: 60000 });
+  if (viaCredit) return (viaCredit.data.rejects || []).map((r) => String(r.id).trim());
   const out = await nvidia.structured({ role: 'check', system, user, schema: REVIEW_SCHEMA, schemaName: 'verdicts', maxTokens: 2500, models: [{ model: process.env.KEY_GATE_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b', effort: 'medium' }], timeoutMs: 150000, attempts: 2 });
   return (out.data.rejects || []).map((r) => String(r.id).trim());
 }
@@ -203,24 +245,30 @@ async function checkDraft(draft, spec, { judge = null, review = defaultReview } 
   const drop = new Set();
   const keyed = keyedItems(draft);
   let agreed = 0; let disagreed = 0; let unjudged = 0;
-  for (let i = 0; i < keyed.length; i += 20) {
-    const batch = keyed.slice(i, i + 20);
+  // The blind re-solve (batches of 20) and the native-speaker review (batches of 30) run side by side: they read the same draft and
+  // neither needs the other, so a unit waits for the slowest call, not the sum.
+  const solving = Promise.all(Array.from({ length: Math.ceil(keyed.length / 20) }, async (_, k) => {
+    const batch = keyed.slice(k * 20, k * 20 + 20);
     let res = [];
     for (let attempt = 0; attempt < 2; attempt++) {
       // eslint-disable-next-line no-await-in-loop
-      res = await keyGate.blindResolve(batch.map((q) => ({ prompt: q.prompt, choices: q.choices, answer: q.answer })), judge ? { judge } : {});
+      res = await keyGate.blindResolve(batch.map((q) => ({ prompt: q.prompt, choices: q.choices, answer: q.answer })), { judge: judge || defaultJudge });
       if (res.some((r) => r.verdict !== 'unjudged')) break;
     }
     res.forEach((r, j) => {
       if (r.verdict === 'agreed') agreed++;
       else { if (r.verdict === 'disagreed') disagreed++; else unjudged++; drop.add(batch[j].id); }
     });
-  }
+  }));
   let reviewed = true;
-  try {
-    const items = reviewItems(draft);
-    for (let i = 0; i < items.length; i += 30) for (const id of await review(spec, items.slice(i, i + 30))) drop.add(id);
-  } catch { reviewed = false; }
+  const reviewing = (async () => {
+    try {
+      const items = reviewItems(draft);
+      const parts = Array.from({ length: Math.ceil(items.length / 30) }, (_, k) => items.slice(k * 30, k * 30 + 30));
+      for (const ids of await Promise.all(parts.map((part) => review(spec, part)))) for (const id of ids) drop.add(id);
+    } catch { reviewed = false; }
+  })();
+  await Promise.all([solving, reviewing]);
   return { drop, agreed, disagreed, unjudged, reviewed };
 }
 
@@ -256,6 +304,8 @@ async function defaultWriter(spec) {
   // eslint-disable-next-line global-require
   const nvidia = require('../providers/nvidia');
   const { system, user } = genPrompt(spec);
+  const viaCredit = await creditCall(WRITER_ORDER, { system, user, schema: unitSchema(spec.skills), schemaName: 'submit_unit', maxTokens: 9000, timeoutMs: 120000 });
+  if (viaCredit) return viaCredit.data;
   const out = await nvidia.structured({ role: 'blocks', models: WRITERS, system, user, schema: unitSchema(spec.skills), schemaName: 'submit_unit', maxTokens: 9000, timeoutMs: 240000, attempts: 1 });
   return out.data;
 }
@@ -328,9 +378,9 @@ function unitsAhead(gradeId, level) {
 
 /** Fire-and-forget: write whatever the learner will need next. Static grades (1-4) are never written here. */
 function ahead(gradeId, level, opts = {}) {
-  // OFF BY DEFAULT: SPANISH_WRITE_AHEAD=on turns the writing-ahead on. Until it has run end to end on real learners' levels, grades 5-57
-  // keep going to the ordinary session (checked content); stored, checked units are still served if present.
-  if (gradeNo(gradeId) < 5 || process.env.SPANISH_WRITE_AHEAD !== 'on') return Promise.resolve([]);
+  // ON BY DEFAULT since 4 Nov 2026 (Coral and Gonka write and check a level's units in under a minute, scripts/spanish-write-ahead-proof.js);
+  // SPANISH_WRITE_AHEAD=off turns it off and grades 5-57 go to the ordinary session (checked content); stored, checked units are still served.
+  if (gradeNo(gradeId) < 5 || String(process.env.SPANISH_WRITE_AHEAD || '').toLowerCase() === 'off') return Promise.resolve([]);
   const pending = unitsAhead(gradeId, level).filter((u) => !isStored(gradeId, u)).map((u) => ensure(gradeId, u, opts));
   return Promise.all(pending);
 }
@@ -354,4 +404,4 @@ function load() {
   return out;
 }
 
-module.exports = { specOf, structural, keyedItems, checkDraft, finalUnit, writeUnit, ensure, ahead, unitsAhead, load, isStored, storeDir, MIN, genPrompt };
+module.exports = { unitSchema, defaultJudge, defaultReview, specOf, structural, keyedItems, checkDraft, finalUnit, writeUnit, ensure, ahead, unitsAhead, load, isStored, storeDir, MIN, genPrompt };
