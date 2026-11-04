@@ -145,7 +145,7 @@ async function gated(fn) {
   } finally { inFlight -= 1; const next = waiting.shift(); if (next) next(); }
 }
 const usage = { writerCalls: 0, writerIn: 0, writerOut: 0, judgeCalls: { }, judgeTokens: {}, errors: {} };
-// --writer sc: Standard Compute DeepSeek V4.1 Flash through the ledger (base.makeScWriter, ceilingUsd 38), stopped at --budget USD
+// --writer munito: Munito's deepseek-v4.1-flash-1017 (or --writer-model) through its ledger. --writer sc: Standard Compute DeepSeek V4.1 Flash through the ledger (base.makeScWriter, ceilingUsd 38), stopped at --budget USD
 // for this run. Used for the kinds that take many calls (a course build, a pack) when the free writer is too slow for them.
 const WRITER = arg('writer', 'xkiro');
 const BUDGET = Number(arg('budget', 2));
@@ -160,6 +160,28 @@ function installWriter() {
       const r = await raw(a);
       usage.writerCalls += 1; usage.writerIn += (r.usage && r.usage.input_tokens) || 0; usage.writerOut += (r.usage && r.usage.output_tokens) || 0;
       return r;
+    };
+    process.env.AI_POOL = '0';
+    providers.chain = () => [w];
+    providers.isOutside = () => false;
+    return;
+  }
+  if (WRITER === 'munito') {
+    // Munito (owner's $100 free credit), through services/munito-ledger.js; the default writer stays xKiro. --writer-model picks the Munito model
+    // (default deepseek-ai/deepseek-v4.1-flash-1017); stopped at --budget USD for this run. Pipeline only: synthetic learners, nothing real sent.
+    process.env.MUNITO_PIPELINE = '1';
+    const mu = require('../services/providers/munito').munito; // eslint-disable-line global-require
+    const model = arg('writer-model') || undefined;
+    let spentUsd = 0;
+    const w = {
+      name: 'munito_proof', outside: true, isEnabled: () => true, costCents: () => 0, describeError: (e) => e.message,
+      async structured(a) {
+        if (spentUsd >= BUDGET) throw new Error(`budget $${BUDGET} reached`);
+        const r = await mu.structured({ task: a.task, system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: a.maxTokens, effort: a.effort, model, timeoutMs: 360000 });
+        spentUsd += (r.usage && r.usage.cost_usd) || 0;
+        usage.writerCalls += 1; usage.writerIn += (r.usage && r.usage.input_tokens) || 0; usage.writerOut += (r.usage && r.usage.output_tokens) || 0;
+        return r;
+      },
     };
     process.env.AI_POOL = '0';
     providers.chain = () => [w];

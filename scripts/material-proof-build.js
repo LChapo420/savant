@@ -9,6 +9,7 @@
  * (scripts/material-proof-check.js) and the simulated learners (scripts/material-learner-sim.js).
  * Never point DB_FILE at the live db; the script refuses data/db.json.
  *
+ * --llm munito: the same on Munito (owner's $100 free credit, services/munito-ledger.js; sets MUNITO_PIPELINE=1).
  * --llm sc: for PUBLIC test inputs only, build with the same builder code but send the model calls to Standard Compute
  * (DeepSeek V4.1 Flash, paid, inside services/standard-compute-ledger.js; needs STANDARD_COMPUTE_PIPELINE=1), as
  * pipeline work with no user attached. Used when the free NVIDIA tier is shared with the live tutor and too slow.
@@ -51,6 +52,19 @@ const cb = require('../services/course-builder');
   console.log(`${name}: ${mat.kind}, ${mat.text.length} chars${mat.pages ? `, ${mat.pages} pages` : ''}, extracted in ${Date.now() - t0} ms`);
   const t1 = Date.now();
   let llm;
+  if (arg('llm') === 'munito') {
+    // Same as --llm sc, on Munito (owner's $100 free credit; services/munito-ledger.js). Public test inputs only. Default stays the plain build.
+    process.env.MUNITO_PIPELINE = '1';
+    // eslint-disable-next-line global-require
+    const { munito } = require('../services/providers/munito');
+    llm = async (a) => {
+      try {
+        const r = await munito.structured({ task: a.task, system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: a.maxTokens + 6000, timeoutMs: 240000 });
+        spent += (r.usage && r.usage.cost_usd) || 0;
+        return r;
+      } catch (err) { console.warn(`munito: ${err.message}`); return null; }
+    };
+  }
   if (arg('llm') === 'sc') {
     // eslint-disable-next-line global-require
     const { standardCompute } = require('../services/providers/standard-compute');
@@ -65,7 +79,7 @@ const cb = require('../services/course-builder');
   }
   let spent = 0;
   const res = await cb.build(user.id, mat.id, llm ? { llm, concurrency: 4 } : {});
-  if (llm) console.log(`Standard Compute spend for this build: $${spent.toFixed(4)}`);
+  if (llm) console.log(`${arg('llm') === 'munito' ? 'Munito' : 'Standard Compute'} spend for this build: $${spent.toFixed(4)}`);
   const secs = Math.round((Date.now() - t1) / 1000);
   if (res.error) { console.error(`build failed after ${secs}s:`, res.code, res.error); process.exit(1); }
   const c = res.course;

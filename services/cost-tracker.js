@@ -119,6 +119,10 @@ function listPriceOf(model) {
     const sc = require('./standard-compute-ledger').PRICES[model]; // eslint-disable-line global-require
     if (sc) out = { in: sc.input, out: sc.output, src: 'standard-compute-ledger PRICES' };
   }
+  if (!out) {
+    const mu = require('./munito-ledger').PRICES[model]; // eslint-disable-line global-require
+    if (mu) out = { in: mu.input, out: mu.output, src: 'munito-ledger PRICES' };
+  }
   if (!out) out = { in: CFG.free_equivalent.in, out: CFG.free_equivalent.out, src: 'free-tier equivalent' };
   priceCache.set(key, out);
   return out;

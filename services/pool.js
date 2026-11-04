@@ -41,12 +41,12 @@
  * Rules enforced here (hard):
  *   - QUALITY: a slot outside the app's chain serves a task only if config "pool.tasks"
  *     lists it as good enough for that task; any slot can be denied per task.
- *   - DATA: a "pipeline" slot (xKiro, UnoRouter, Standard Compute, Modelflare) never gets
+ *   - DATA: a "pipeline" slot (xKiro, UnoRouter, Standard Compute, Munito, Modelflare) never gets
  *     a request unless the caller marked it dataClass "pipeline" AND gave no userId.
  *     Everything defaults to "learner", which only the app's chain slots may serve.
  *   - SPEND: OpenRouter only through free-apis.js (":free" ids, $0 price cap); Anthropic
  *     only through services/anthropic-ledger.js (the provider reserves each call; this
- *     file pre-checks headroom); Standard Compute only through
+ *     file pre-checks headroom); Munito only through services/munito-ledger.js ($100 total); Standard Compute only through
  *     services/standard-compute-ledger.js ($15 total). LLM Gateway is not used for text.
  *
  * Env: AI_POOL=0 (services/ai.js bypasses the pool), POOL_TIMEOUT_MS, POOL_HEDGE_MIN_MS,
@@ -347,7 +347,7 @@ function expandProvider(p, req) {
   };
   // xKiro is in the order() list only in a process with XKIRO_PIPELINE=1. Its slots come from config "pool.extra_slots"
   // (per-model rpm / concurrency / daily tokens and the per-task allowlist), never from the chain, so it cannot skip the gates.
-  if (p.name === 'xkiro' || p.name === 'unorouter' || p.name === 'standard_compute') return out;
+  if (p.name === 'xkiro' || p.name === 'unorouter' || p.name === 'standard_compute' || p.name === 'munito') return out;
   if (p.name === 'nvidia' && typeof p.poolModels === 'function') {
     const cap = Math.max(1, Number(process.env.NVIDIA_MODEL_CONCURRENCY || 4));
     const rpm = Math.max(1, Number(process.env.NVIDIA_RPM || 36));
@@ -394,7 +394,7 @@ function expandProvider(p, req) {
 }
 const slotProviders = new Map(); // slot id -> provider object last seen in the chain
 
-/** Extra (non-chain) slots from config "pool.extra_slots": xKiro, UnoRouter, Standard Compute. */
+/** Extra (non-chain) slots from config "pool.extra_slots": xKiro, UnoRouter, Standard Compute, Munito. */
 function extraSlots() {
   const cfg = poolConfig();
   const out = [];
@@ -452,6 +452,19 @@ const ADAPTERS = {
       const sc = require('./providers/standard-compute').standardCompute; // eslint-disable-line global-require
       const kind = reqKind(rq);
       return sc[kind](chainArgs(rq, kind, ctx));
+    },
+  },
+  // Munito ($100 free credit, services/munito-ledger.js): pipeline-class only, like Standard Compute; the slot's model is passed on.
+  munito: {
+    supports: ['structured', 'chat'],
+    enabled: () => { try { return !!require('./providers/munito').munito.isEnabled(); } catch { return false; } }, // eslint-disable-line global-require
+    estimateUsd: (e, rq) => require('./munito-ledger').estimate({ model: e.model, inputChars: reqChars(rq), maxTokens: rq.maxTokens || 2048 }), // eslint-disable-line global-require
+    canSpend: (usd) => require('./munito-ledger').canSpend(usd), // eslint-disable-line global-require
+    costOf: (e, res) => require('./munito-ledger').costOf(e.model, res && res.usage), // eslint-disable-line global-require
+    call: (e, rq, ctx) => {
+      const mu = require('./providers/munito').munito; // eslint-disable-line global-require
+      const kind = reqKind(rq);
+      return mu[kind](chainArgs(rq, kind, ctx, { model: e.model }));
     },
   },
 };

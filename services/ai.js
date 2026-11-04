@@ -188,7 +188,7 @@ async function viaPool(userId, req, role, task, outside) {
     console.log(`ai: ${role}${task ? `/${task}` : ''} answered by ${res.pool.slot} after ${Math.round(res.pool.elapsedMs / 1000)}s (${res.pool.attempts.length} attempt${res.pool.attempts.length === 1 ? '' : 's'})`);
   }
   // Standard Compute is not in providers.ALL (it must never enter a chain); the tutor's calls to it are still recorded.
-  recordSpend(userId, res.model, res.usage, providers.ALL[res.pool.provider] || (res.pool.provider === 'standard_compute' ? require('./providers/standard-compute').standardCompute : null),
+  recordSpend(userId, res.model, res.usage, providers.ALL[res.pool.provider] || (res.pool.provider === 'standard_compute' ? require('./providers/standard-compute').standardCompute : res.pool.provider === 'munito' ? require('./providers/munito').munito : null),
     { role, task, ms: res.pool.elapsedMs, tries: (res.pool.attempts || []).length || 1, hedged: res.pool.hedged, costUsd: res.pool.costUsd });
   return res;
 }
