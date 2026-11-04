@@ -1,0 +1,335 @@
+{
+ "generated_at": "2026-11-04T11:52:12.540Z",
+ "what": "streaming latency, JSON validity and bank multiple-choice accuracy; AI-model output graded by script against known keys or a schema, not real-learner results",
+ "client": {
+  "node": "v24.19.0",
+  "os": "win32 10.0.26200",
+  "calls": "sequential, one at a time, HTTPS from the USA (Omaha, Nebraska), residential connection"
+ },
+ "n_per_length": 5,
+ "items": {
+  "n": 40,
+  "pools": [
+   {
+    "bank": "spanish",
+    "file": "content/unit-placement/spanish.json",
+    "n": 3388
+   },
+   {
+    "bank": "english",
+    "file": "content/unit-placement/english.json",
+    "n": 1620
+   },
+   {
+    "bank": "math",
+    "file": "content/unit-placement/math.json",
+    "n": 4763
+   },
+   {
+    "bank": "reading",
+    "file": "content/unit-placement/reading.json",
+    "n": 1307
+   }
+  ]
+ },
+ "coral_ledger_before": 0.13846,
+ "targets": [
+  {
+   "target": "nvidia-v41",
+   "label": "NVIDIA free tier deepseek-ai/deepseek-v4.1-flash",
+   "model": "deepseek-ai/deepseek-v4.1-flash",
+   "base_host": "integrate.api.nvidia.com",
+   "streaming": true,
+   "calls": {
+    "short": {
+     "n": 5,
+     "ok": 0,
+     "failures": {
+      "timeout": 5
+     },
+     "ttft_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "total_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "decode_tok_s": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "end_to_end_tok_s": {
+      "p50": null,
+      "mean": null
+     },
+     "out_tokens_mean": null,
+     "usage_reported_share": null,
+     "cost_usd_total": 0,
+     "cost_usd_per_call": null,
+     "raw": [
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25020,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25002,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25006,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25001,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25008,
+       "out_tokens": null
+      }
+     ]
+    },
+    "medium": {
+     "n": 5,
+     "ok": 0,
+     "failures": {
+      "timeout": 5
+     },
+     "ttft_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "total_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "decode_tok_s": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "end_to_end_tok_s": {
+      "p50": null,
+      "mean": null
+     },
+     "out_tokens_mean": null,
+     "usage_reported_share": null,
+     "cost_usd_total": 0,
+     "cost_usd_per_call": null,
+     "raw": [
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25005,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25004,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25006,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25007,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25002,
+       "out_tokens": null
+      }
+     ]
+    },
+    "long": {
+     "n": 5,
+     "ok": 0,
+     "failures": {
+      "timeout": 5
+     },
+     "ttft_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "total_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "decode_tok_s": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "end_to_end_tok_s": {
+      "p50": null,
+      "mean": null
+     },
+     "out_tokens_mean": null,
+     "usage_reported_share": null,
+     "cost_usd_total": 0,
+     "cost_usd_per_call": null,
+     "raw": [
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25004,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25005,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25004,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25011,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "timeout",
+       "ttft_ms": null,
+       "total_ms": 25013,
+       "out_tokens": null
+      }
+     ]
+    }
+   },
+   "json_validity": {
+    "n": 20,
+    "valid": 0,
+    "answered": 0,
+    "invalid_reasons": {},
+    "ok": 0,
+    "failures": {
+     "timeout": 20
+    },
+    "ttft_ms": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "total_ms": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "decode_tok_s": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "end_to_end_tok_s": {
+     "p50": null,
+     "mean": null
+    },
+    "out_tokens_mean": null,
+    "usage_reported_share": null,
+    "cost_usd_total": 0,
+    "cost_usd_per_call": null
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 0,
+    "right": 0,
+    "accuracy_of_answered": null,
+    "accuracy_of_all": 0,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 0
+     },
+     "english": {
+      "n": 10,
+      "right": 0
+     },
+     "math": {
+      "n": 10,
+      "right": 0
+     },
+     "reading": {
+      "n": 10,
+      "right": 0
+     }
+    },
+    "ok": 0,
+    "failures": {
+     "timeout": 40
+    },
+    "ttft_ms": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "total_ms": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "decode_tok_s": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "end_to_end_tok_s": {
+     "p50": null,
+     "mean": null
+    },
+    "out_tokens_mean": null,
+    "usage_reported_share": null,
+    "cost_usd_total": 0,
+    "cost_usd_per_call": null
+   }
+  }
+ ],
+ "coral_ledger_after": 0.167088,
+ "coral_spend_usd": 0.028628
+}

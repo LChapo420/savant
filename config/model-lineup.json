@@ -635,6 +635,35 @@
         "price_out": 3,
         "data_class": "pipeline",
         "price_note": "Grokified price per the owner (1.00/3.00). ~1,250 prompt tokens overhead per call, reserved by the ledger. Ledger: services/grokified-ledger.js, $135 hard cap. Learner data allowed until GROKIFIED_LEARNER_UNTIL (2026-11-14) with the consent rule."
+      },
+      {
+        "id": "coral:deepseek-v4.1-flash",
+        "provider": "coral",
+        "model": "deepseek-v4.1-flash",
+        "label": "Coral DeepSeek V4.1 Flash (paid, $100 API credit)",
+        "family": "deepseek",
+        "concurrency": 6,
+        "rpm": 60,
+        "hint_ms": 6000,
+        "price_in": 0.19,
+        "price_out": 0.6,
+        "data_class": "pipeline",
+        "price_note": "Coral promotional price. Ledger: services/coral-ledger.js, $100 hard cap. Same model family as the Munito DeepSeek V4.1 slot, cheaper output, so it sorts first among paid slots."
+      },
+      {
+        "id": "coral:deepseek-v4.1-flash-fast",
+        "provider": "coral",
+        "model": "deepseek-v4.1-flash-fast",
+        "label": "Coral DeepSeek V4.1 Flash Fast (paid, $100 API credit)",
+        "family": "deepseek",
+        "concurrency": 4,
+        "rpm": 60,
+        "hint_ms": 2500,
+        "price_in": 0.45,
+        "price_out": 1.8,
+        "data_class": "pipeline",
+        "fast": true,
+        "price_note": "Coral promotional price, advertised ~322 tokens/s. Only for tasks a learner waits on; never background work."
       }
     ],
     "tasks": {
@@ -648,7 +677,8 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
         ],
         "basis": "night-runner writers.json: MiniMax kept 8775 of 15098 drafts, Qwen3.8 Max 641 of 1615, through code checks + two independent blind judges + source checks"
       },
@@ -670,7 +700,8 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.3"
+          "grokified:grok-4.3",
+          "coral:deepseek-v4.1-flash"
         ],
         "basis": "blind judges; the night runner still enforces writer/judge family independence on its own lanes"
       },
@@ -682,7 +713,8 @@
           "standard_compute:deepseek/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
-          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731"
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "coral:deepseek-v4.1-flash"
         ],
         "basis": "the pool's own measurement batch: short fixed prompts, no learner data"
       },
@@ -693,7 +725,8 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
         ],
         "timeout_ms": 300000,
         "basis": "same family as the lineup's hard-tier head (DeepSeek V4.1 Flash); no direct eval on lesson writing"
@@ -705,7 +738,9 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast"
         ],
         "timeout_ms": 300000,
         "basis": "as lesson_write"
@@ -718,7 +753,9 @@
           "munito:deepseek-ai/deepseek-v4-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast"
         ],
         "timeout_ms": 180000,
         "basis": "as lesson_write; Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
@@ -730,7 +767,8 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
         ],
         "timeout_ms": 300000,
         "basis": "as lesson_write"
@@ -742,7 +780,8 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
         ],
         "timeout_ms": 300000,
         "basis": "as lesson_write"
@@ -750,7 +789,9 @@
       "lesson_write_urgent": {
         "timeout_ms": 180000,
         "allow": [
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast"
         ]
       },
       "fact_read": {
@@ -777,7 +818,9 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast"
         ],
         "timeout_ms": 300000,
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
@@ -788,7 +831,8 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
         ],
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
       },
@@ -798,7 +842,8 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
         ],
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
       },
@@ -808,7 +853,8 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7"
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
         ],
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
       },
@@ -818,7 +864,8 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.3"
+          "grokified:grok-4.3",
+          "coral:deepseek-v4.1-flash"
         ],
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
       },
