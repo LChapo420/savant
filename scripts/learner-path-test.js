@@ -57,6 +57,9 @@ const keyOf = (n) => units[n - 1].key;
 const statusOf = (e, n) => (learnerPath.planFor(db.byId('enrollments', e.id)).units[keyOf(n)] || {}).status;
 const fresh = (e) => db.byId('enrollments', e.id);
 
+// How many questions a unit's bank has (it was 5 when this test was written, and is 7 now).
+const BANK = units && units.length ? units[0].questions.length : 5;
+const range = (from, to) => Array.from({ length: to - from }, (_, i) => from + i);
 let userSeq = 0;
 function newUser() {
   userSeq++;
@@ -76,7 +79,7 @@ function newEnrollment(user, extra = {}) {
  * be known; one miss makes it a unit to learn.
  *   unit 1: right                   -> unchecked (one right answer is not proof)
  *   unit 2: right x3                -> known (placement)
- *   unit 3: wrong x5 (0 of 5)       -> learn, not stepped over with no question left
+ *   unit 3: wrong x the whole bank  -> learn, not stepped over with no question left
  *   unit 4: right, wrong x3         -> learn
  *   unit 5: wrong, wrong, right     -> learn (a right answer after two misses)
  *   unit 6: not asked               -> unchecked
@@ -92,7 +95,7 @@ const ANSWERED = [
   { unit: 2, slot: 0, correct: true },
   { unit: 2, slot: 1, correct: true },
   { unit: 2, slot: 2, correct: true },
-  ...[0, 1, 2, 3, 4].map((slot) => ({ unit: 3, slot, correct: false })),
+  ...range(0, BANK).map((slot) => ({ unit: 3, slot, correct: false })),
   { unit: 4, slot: 0, correct: true },
   { unit: 4, slot: 1, correct: false },
   { unit: 4, slot: 2, correct: false },
@@ -227,16 +230,20 @@ async function main() {
     check('the evidence is counted per unit', JSON.stringify(plan.units[keyOf(4)].evidence) === JSON.stringify({ right: 1, wrong: 3 })
       && JSON.stringify(plan.units[keyOf(8)].evidence) === JSON.stringify({ right: 2, wrong: 0 }));
     check('the learner stands at the earliest unit to learn — the gaps lead', learnerPath.firstLevel(e, grade) === startOf(3), learnerPath.firstLevel(e, grade));
-    check('the quick check asks the units not checked, with their fresh questions', JSON.stringify(learnerPath.quickChecks(e).map((c) => [c.unit, c.slots])) === JSON.stringify([[1, [1, 2, 3, 4]], [6, [0, 1, 2, 3, 4]]]),
+    check('the quick check asks the units not checked, with their fresh questions', JSON.stringify(learnerPath.quickChecks(e).map((c) => [c.unit, c.slots])) === JSON.stringify([[1, range(1, BANK)], [6, range(0, BANK)]]),
       learnerPath.quickChecks(e));
-    check('at the starting knobs no later unit can be proved with the five questions a unit has, so none is offered',
-      !learnerPath.testOutCandidates(e).some((c) => c.unit > PLACED));
-    check('the units not checked are open to a test-out', JSON.stringify(learnerPath.testOutCandidates(e).map((c) => c.unit)) === JSON.stringify([1, 6]));
+    // A later unit is offered only when its fresh questions could still prove it: every one answered right gives 'known'.
+    check('a later unit is offered only if all its fresh questions answered right would prove it, and one with a miss on a short bank is not',
+      learnerPath.testOutCandidates(e).filter((c) => c.unit > PLACED).every((c) => {
+        const ev = learnerPath.planFor(e).units[c.key].evidence;
+        return learnerPath.unitBelief({ right: ev.right + c.slots.length, wrong: ev.wrong }, { prior: 'island' }).decision === 'known';
+      }) && !learnerPath.testOutCandidates(e).some((c) => c.unit === 10 || c.unit === 11));
+    check('the units not checked are open to a test-out', JSON.stringify(learnerPath.testOutCandidates(e).filter((c) => c.unit < PLACED).map((c) => c.unit)) === JSON.stringify([1, 6]));
 
     const sum = learnerPath.summary(e);
     check('the summary counts each status, unchecked on its own', sum.planned && sum.known.count === 1 && sum.learn.count === 4 && sum.unchecked.count === 2
       && sum.unseen.count === units.length - 7 && sum.done.count === 0 && sum.units.length === units.length
-      && sum.unchecked.units.map((u) => u.unit).join() === '1,6' && Array.isArray(sum.catch_up) && sum.test_out === 2, sum);
+      && sum.unchecked.units.map((u) => u.unit).join() === '1,6' && Array.isArray(sum.catch_up) && sum.test_out === learnerPath.testOutCandidates(e).length, sum);
     check('and each unit row says whether it can be tested out of', sum.units.find((u) => u.unit === 6).can_test_out === true && sum.units.find((u) => u.unit === 3).can_test_out === false);
 
     // The repro from the simulation: English grammar, unit 3 missed on all five
@@ -267,7 +274,7 @@ async function main() {
     db.update('enrollments', e3.id, { unit_plan: { version: 1, catch_up: [], units: {
       [keyOf(1)]: { status: 'unseen', source: 'gap_scan', evidence: { right: 2, wrong: 0 }, at: null, asked: [{ slot: 3, correct: true, source: 'gap_scan' }, { slot: 4, correct: true, source: 'gap_scan' }] },
       [keyOf(8)]: { status: 'unseen', source: 'gap_scan', evidence: { right: 1, wrong: 0 }, at: null, asked: [{ slot: 2, correct: true, source: 'gap_scan' }] },
-      [keyOf(13)]: { status: 'unseen', source: 'gap_scan', evidence: { right: 0, wrong: 1 }, at: null, asked: [{ slot: 3, correct: false, source: 'gap_scan' }] },
+      [keyOf(13)]: { status: 'unseen', source: 'gap_scan', evidence: { right: 0, wrong: 3 }, at: null, asked: [...[3, 4, 5].map((slot) => ({ slot, correct: false, source: 'gap_scan' }))] },
     } } });
     learnerPath.initFromPlacement(fresh(e3), { unit: PLACED }, [...ANSWERED, { unit: 13, slot: 0, correct: true }]);
     const p3 = learnerPath.planFor(fresh(e3));
@@ -275,7 +282,7 @@ async function main() {
     check('and count as evidence: two scan rights and a placement right prove unit 1', statusOf(fresh(e3), 1) === 'known', p3.units[keyOf(1)]);
     withKnobs({ ISLAND_PRIOR: 0.85 }, () => {
       const c3 = learnerPath.testOutCandidates(fresh(e3));
-      check('the test-out leaves out what the gap scan asked', c3.some((c) => c.unit === 8 && JSON.stringify(c.slots) === JSON.stringify([3, 4])), c3);
+      check('the test-out leaves out what the gap scan asked', c3.some((c) => c.unit === 8 && JSON.stringify(c.slots) === JSON.stringify(range(3, BANK))), c3);
       check('and a unit the gap scan saw missed cannot be proved, so is not offered', !c3.some((c) => c.unit === 13));
     });
     check('the asked slots are listed per unit', learnerPath.askedSlots(fresh(e3))[8].has(2) && learnerPath.askedSlots(fresh(e3))[8].has(0));
@@ -301,12 +308,14 @@ async function main() {
 
     // Out of questions while still undecided: not checked, so worked.
     const e2 = placedEnrollment(newUser());
-    [[1, true], [2, false], [3, true], [4, true]].forEach(([slot, ok]) => learnerPath.recordCheck(e2, 1, ok, { slot }));
+    // Six answers on slots 1-6 (the placement asked slot 0) that leave it undecided at the end of a 7-question bank.
+    [[1, true], [2, false], [3, true], [4, true], [5, true], [6, false]].forEach(([slot, ok]) => learnerPath.recordCheck(e2, 1, ok, { slot }));
     check('a unit still undecided with no question left stays not checked', statusOf(e2, 1) === 'unchecked' && learnerPath.quickChecks(fresh(e2))[0].status === 'unchecked',
       learnerPath.unitBelief(learnerPath.planFor(fresh(e2)).units[keyOf(1)]).p);
     check('and the path walks it, after the units to learn', !walkProblems(e2, grade, units), walkProblems(e2, grade, units));
 
     // The clock the quick check has: the mode's whole budget less the sitting.
+    const whole = require('../services/adaptive-placement').WHOLE_MINUTES;
     const t0 = Date.parse('2026-10-22T10:00:00Z');
     const iso = (min) => new Date(t0 + min * 60000).toISOString();
     const user = newUser();
@@ -314,13 +323,13 @@ async function main() {
     const session = { unit_mode: 'quick', started_at: iso(14), ended_at: iso(19) };
     const now = t0 + 19 * 60000;
     const left = (deadline) => Math.round((Date.parse(deadline) - now) / 60000 * 10) / 10;
-    check('with no subject walk the check gets the budget less the in-grade stage (20 - 5)', left(learnerPath.checkDeadline(ce, session, now)) === 15);
-    const walk = db.insert('subject_placements', { user_id: user.id, track_id: TRACK, mode: 'quick', started_at: iso(0), finished_at: iso(10),
-      gap_scan: { started_at: iso(10), finished_at: iso(13) } });
-    check('with the subject walk and gap scan in the same sitting, it gets what they leave (20 - 10 - 3 - 5)', left(learnerPath.checkDeadline(ce, session, now)) === 2);
+    check('with no subject walk the check gets the budget less the in-grade stage (Quick whole - 5)', left(learnerPath.checkDeadline(ce, session, now)) === whole.quick - 5);
+    const walk = db.insert('subject_placements', { user_id: user.id, track_id: TRACK, mode: 'quick', started_at: iso(0), finished_at: iso(4),
+      gap_scan: { started_at: iso(4), finished_at: iso(5) } });
+    check('with the subject walk and gap scan in the same sitting, it gets what they leave (Quick whole - 4 - 1 - 5)', left(learnerPath.checkDeadline(ce, session, now)) === whole.quick - 4 - 1 - 5);
     db.update('subject_placements', walk.id, { started_at: iso(-300), finished_at: iso(-200), gap_scan: null });
-    check('a subject walk from another day does not count against it', left(learnerPath.checkDeadline(ce, session, now)) === 15);
-    check('Accurate has 90 minutes in all', left(learnerPath.checkDeadline(ce, { ...session, unit_mode: 'accurate' }, now)) === 85);
+    check('a subject walk from another day does not count against it', left(learnerPath.checkDeadline(ce, session, now)) === whole.quick - 5);
+    check('Accurate has its whole budget (adaptive-placement WHOLE_MINUTES)', left(learnerPath.checkDeadline(ce, { ...session, unit_mode: 'accurate' }, now)) === whole.accurate - 5);
     check('a question needs time left to be asked', learnerPath.checkTimeLeft(new Date(Date.now() + 60000).toISOString()) && !learnerPath.checkTimeLeft(new Date(Date.now() + 5000).toISOString()));
   }
 
@@ -349,9 +358,11 @@ async function main() {
     const e2 = placedEnrollment(newUser());
     const q1 = learnerPath.nextTestOut(e2, 6);
     learnerPath.recordCheck(e2, 6, true, { slot: q1.slot, source: 'test_out' });
+    // With a 7-question bank one right and one miss can still be proved by five more rights; a second miss cannot.
+    learnerPath.recordCheck(e2, 6, false, { slot: learnerPath.nextTestOut(fresh(e2), 6).slot, source: 'test_out' });
     out = learnerPath.recordCheck(e2, 6, false, { slot: learnerPath.nextTestOut(fresh(e2), 6).slot, source: 'test_out' });
-    check('a right then a miss can no longer be proved: the test-out is over and the unit stays on the path, not checked',
-      !out.changed && statusOf(e2, 6) === 'unchecked' && out.plan.units[keyOf(6)].test_out === 'failed', out.plan.units[keyOf(6)]);
+    check('a right then two misses is a hole on the 7-question bank: the test-out is over and the unit is to learn',
+      out.changed && statusOf(e2, 6) === 'learn' && out.plan.units[keyOf(6)].test_out === 'failed', out.plan.units[keyOf(6)]);
     check('and it is not offered again', learnerPath.nextTestOut(fresh(e2), 6) === null);
     const e2b = placedEnrollment(newUser());
     out = learnerPath.recordCheck(e2b, 6, false, { slot: learnerPath.nextTestOut(e2b, 6).slot, source: 'test_out' });
@@ -361,13 +372,13 @@ async function main() {
     withKnobs({ ISLAND_PRIOR: 0.85 }, () => {
       const e3 = placedEnrollment(newUser());
       const cands = learnerPath.testOutCandidates(e3).filter((c) => c.unit > PLACED).map((c) => c.unit);
-      check('a later unit answered right and never missed is offered, when it can be proved', cands.includes(8) && cands.includes(12) && !cands.includes(9) && !cands.includes(10) && !cands.includes(11), cands);
+      check('a later unit answered right and never missed is offered, when it can be proved', cands.includes(8) && cands.includes(12) && cands.includes(9) && !cands.includes(10) && !cands.includes(11), cands);
       const q8 = learnerPath.nextTestOut(e3, 8);
       check('on a question the placement did not ask', q8 && ![0, 1].includes(q8.slot));
       out = learnerPath.recordCheck(e3, 8, true, { slot: q8.slot, source: 'test_out' });
       check('two placement rights and one fresh right prove it', out.changed && statusOf(e3, 8) === 'known');
-      out = learnerPath.recordCheck(e3, 9, true, { slot: 2, source: 'test_out' });
-      check('an answer on a unit not open to a test-out is not recorded', !out.changed && learnerPath.planFor(fresh(e3)).units[keyOf(9)].asked.length === 2);
+      out = learnerPath.recordCheck(e3, 10, true, { slot: 2, source: 'test_out' });
+      check('an answer on a unit not open to a test-out is not recorded', !out.changed && learnerPath.planFor(fresh(e3)).units[keyOf(10)].asked.length === 1);
       db.update('enrollments', e3.id, { current_level: units[11].start });
       check('a later unit the learner has already started is not offered', !learnerPath.testOutCandidates(fresh(e3)).some((c) => c.unit === 12));
     });
@@ -756,7 +767,7 @@ async function httpChecks() {
     const t = placedEnrollment(tUser);
     r = await call(tUser, 'GET', `/test-out/${t.id}`);
     check('GET /test-out offers the units not checked', r.status === 200 && r.body.question && r.body.question.unit === 1
-      && JSON.stringify(r.body.candidates.map((x) => [x.unit, x.status])) === JSON.stringify([[1, 'unchecked'], [6, 'unchecked']]), r.body);
+      && JSON.stringify(r.body.candidates.filter((x) => x.unit < PLACED).map((x) => [x.unit, x.status])) === JSON.stringify([[1, 'unchecked'], [6, 'unchecked']]), r.body);
     check('with no answer in the question', r.body.question.answer === undefined && Array.isArray(r.body.question.choices));
     r = await call(tUser, 'GET', `/test-out/${t.id}?unit=6`);
     check('and one unit on its own, for a test-out from the path', r.body.question && r.body.question.unit === 6 && r.body.candidates.length === 1);

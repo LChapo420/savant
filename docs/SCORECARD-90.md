@@ -377,7 +377,7 @@ A posterior that never forgets stops improving once real change is bigger than t
 
 Branch `sc-live`. Nothing below makes a number better by itself: it logs the footprints for real from now on, so the assumed validities in 11.2 can be calibrated against the designed items on tester data (11.6, item 6), and it makes the posterior forget old evidence at a per-measure rate.
 
-**Live footprints** (9 indicators for 7 of the 14 design footprints; each design footprint is one indicator family of its own, so errors are assumed independent between footprints; validity is the square root of the kind's ceiling in `scripts/lib/scorecard-footprints.js`: CP 0.40, VOL 0.35, EMB 0.50, and the likelihood in `services/scorecard/indicators.js` gives each its own persistent error sqrt(1 - v^2) plus the sampling noise of its units; all feed `scorecard.observe` as indicators):
+**Live footprints** (16 indicators for all 14 design footprints; the first 7 are in the table, the last 7 are in the second table below; each design footprint is one indicator family of its own, so errors are assumed independent between footprints; validity is the square root of the kind's ceiling in `scripts/lib/scorecard-footprints.js`: CP 0.40, VOL 0.35, EMB 0.50, and the likelihood in `services/scorecard/indicators.js` gives each its own persistent error sqrt(1 - v^2) plus the sampling noise of its units; all feed `scorecard.observe` as indicators):
 
 | design footprint | indicator (unit) | where it comes from | measures |
 |---|---|---|---|
@@ -391,7 +391,21 @@ Branch `sc-live`. Nothing below makes a number better by itself: it logs the foo
 
 The last two are the two new in-lesson choice points (about 5 s each, optional, same look, no restyle); they were picked because they sit on two of 11.3's worst ten (conceptual_bias, depth_breadth) and have the most events a month (200 each at 5 s). They post to `POST /api/sessions/:id/footprint`. Footprints are not logged on a preview, a placement, a skip exam, a review or an enforcer.
 
-**Design only, not built:** race_or_solo, link_prompt, feel_tap (new prompts), topic_pick, skip_and_exit, reward_panel, ask_a_question (voluntary reads that need new capture or other services). The mixed-rule items of 11.6 item 4 are also not built: `fp.switch_cost` reads the skill changes that IQ levels already contain, which is a weaker, confounded stand-in (item difficulty differs between skills), kept at the EMB validity but expected to read lower than designed.
+**The other 7 (built 4 Nov 2026, same rules; every validity still assumed):**
+
+| design footprint | indicator (unit) | where it comes from | measures |
+|---|---|---|---|
+| race_or_solo | `fp.race` (a closed level; 1 for "Race my best time", 0 for "On my own") | one tap on the level-complete card; the choice changes nothing yet | competitive_drive, social_framing |
+| link_prompt | `fp.link` (a closed level; 1 for "Yes, it connects", 0 for "Skip") | one tap; the text of a link is NOT kept or asked for (the design's note scorer is not wired) | integration_tendency, creative_extension |
+| feel_tap | `fp.feel` (a closed level; five faces, -1 to 1) | one tap | emotional_engagement |
+| skip_and_exit | `fp.skip_rate` (a question of the week; 1 if skipped) | weekly sweep over `items`; fewer than 5 questions is no read; retention items and previews left out | boredom_susceptibility, momentum_dependence |
+| ask_a_question | `fp.ask_rate` (a tutor message of the week; 1 if a question) | weekly sweep over `tutor_archive`; a reply to a question the tutor had just asked is left out; fewer than 3 messages is no read | question_generation |
+| topic_pick | `fp.topic_match` (a subject started in the week; 1 if it matches a stated interest or goal) | weekly sweep over `enrollments`, against the survey and the tutor's interest and goal facts; catch-up placements are not picks | identity_alignment, curiosity_hook |
+| reward_panel | `fp.rewards_shown` (a week; 1 if the streak and XP are kept on screen, 0 if the learner switched them off) | weekly sweep, from the learner's own `hide_stats` switch (`routes/prefs.js`) | extrinsic_reward_sensitivity, praise_sensitivity |
+
+**Weaker than designed:** `skip_and_exit` reads skipped questions only (idle gaps and early exits are not in it); `reward_panel` reads the learner's own streak and XP switch because panel opens are not captured, so it is a stand-in and expected to read lower than the design; `race_or_solo` offers a choice but there is no race feature behind it; `link_prompt` logs the yes or skip only; `topic_pick` is a keyword match of the subject name against stated phrases. A parent-set `hide_stats` is stored apart and is not read. All of it follows the same gate, 180-day prune, export and deletion as the first seven.
+
+All 14 design footprints are now live; `DESIGN_ONLY` is empty. Test: `scripts/scorecard-footprints-rest-test.js` (in `npm test`). The mixed-rule items of 11.6 item 4 are also not built: `fp.switch_cost` reads the skill changes that IQ levels already contain, which is a weaker, confounded stand-in (item difficulty differs between skills), kept at the EMB validity but expected to read lower than designed.
 
 **Who and what is kept.** Everything above runs only where `services/boosters.js` `allowed` says yes: an under-13 account without a parent's `measurement_extras` agreement (or an account that has not answered the age screen) gets no choice buttons, no log and no evidence, the same gate as the onboarding and `usageSweep`. `SCORECARD_FOOTPRINTS=off` stops all of it. One compact row per feed goes to the new `footprint_events` collection (`{ user_id, fp, ind, x, n, level, at }`: a number and a count, no text, no keys, no answers), pruned after 180 days, in the account export and deleted with the account; the privacy page says so. The weekly sweep runs once a week per learner after a sitting finishes; the in-lesson reads happen at the tap or when the level closes.
 
