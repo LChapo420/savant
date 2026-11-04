@@ -4,7 +4,7 @@ Only the owner or the orchestrating Claude session edits this file. scripts/auto
 (open | claimed <date> | done <commit> | blocked <reason>); it checks that no other byte changes. See docs/AUTOBUILD.md.
 
 ## TASK strata-report
-Status: open
+Status: blocked 3 attempts failed; last: TASK TEST failed (node scripts/scorecard-strata-test.js): ❌ Test failed: require.ALIASES is not iterable 
 Goal: "Every scorecard measure is as close as physically possible to the learner's true value within one month of use." (owner, 1 Nov; and 3 Nov: "every kind of brain across every age across every demographic")
 Files: scripts/scorecard-90-measure.js, docs/SCORECARD-90.md, scripts/test-steps.json, scripts/scorecard-strata-test.js
 Test: node scripts/scorecard-strata-test.js

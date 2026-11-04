@@ -69,7 +69,7 @@ const tail = (s, n = 2500) => (s.length > n ? `...${s.slice(-n)}` : s);
 // ---------- gates 2 and 3 (pure, tested) ----------
 function changedFiles(cwd) {
   const out = git(cwd, 'status --porcelain --untracked-files=all').out;
-  return out.split(/\r?\n/).filter(Boolean).map((l) => ({ st: l.slice(0, 2), file: l.slice(3).replace(/^"|"$/g, '').replace(/ -> .*$/, '') }));
+  return out.split(/\r?\n/).filter(Boolean).map((l) => ({ st: l.slice(0, 2), file: l.slice(3).replace(/^"|"$/g, '').replace(/ -> .*$/, '') })).filter((c) => !/^\.aider/.test(c.file));
 }
 function scopeGate(changes, allowed) {
   const bad = [];
@@ -219,9 +219,11 @@ async function buildTask(opts, deps, task, deadline) {
   let cost = 0; let lastFail = ''; let usedModel = 'none'; let reviewerModel = '-'; const gateNotes = [];
   const dbCopy = path.join(dir, 'data', 'db.json');
   const env = { ...opts.env, DB_FILE: fs.existsSync(dbCopy) ? dbCopy : (opts.env.DB_FILE || ''), STANDARD_COMPUTE_LEDGER_FILE: '', };
-  for (let attempt = 1; attempt <= opts.attempts; attempt++) {
+  let attempt = 0; let skipped = 0;
+  while (attempt < opts.attempts) {
+    attempt++;
     if (Date.now() > deadline) return { blocked: 'time budget used up', cost, model: usedModel, started };
-    const w = ws[(attempt - 1) % ws.length];
+    const w = ws[(attempt - 1 + skipped) % ws.length];
     usedModel = `${w.model} (${w.key})`;
     const msg = path.join(opts.tmp, `autobuild-${task.id}-${attempt}.md`);
     fs.writeFileSync(msg, `Task ${task.id}. Goal this serves: ${task.goal}\n\nAcceptance criteria (all must be met, change nothing else):\n${task.acceptance}\n\n`
@@ -233,6 +235,9 @@ async function buildTask(opts, deps, task, deadline) {
     cost += a.costUsd || 0;
     // gate 2: scope
     const changes = changedFiles(dir).filter((c) => !/^node_modules/.test(c.file) && !/^data\//.test(c.file));
+    if (!changes.length && /capacity limit|overloaded|ServiceUnavailable|APIConnectionError|AuthenticationError|RateLimitError|Invalid API key/i.test(a.log || '') && skipped < ws.length) {
+      skipped++; attempt--; gateNotes.push(`${w.key}: provider unavailable, next model`); continue;
+    }
     if (!changes.length) { lastFail = 'No files changed.'; gateNotes.push(`a${attempt}: no change`); continue; }
     const scope = scopeGate(changes, task.files);
     if (scope.length) { lastFail = `SCOPE gate: ${scope.join('; ')}. Revert those and touch only the listed files.`; gateNotes.push(`a${attempt}: scope`); git(dir, 'checkout -- .'); continue; }
