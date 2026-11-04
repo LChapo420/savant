@@ -3,7 +3,7 @@
  * (the `ffmpeg-static` binary, else `ffmpeg` on the PATH) as small mono Opus, and hand it to the S8 audio job
  * (services/material-audio.js), which transcribes it in the background with progress. The video is read from a
  * private temp folder (mp4 needs a seekable file) that is deleted as soon as the audio is out, success or
- * failure; the audio itself lives in memory only, as in S8. No outside vendor is called. If ffmpeg or the
+ * failure; the audio itself lives in memory only, as in S8. The audio job tries Gladia first (material-audio.js), then local Whisper. If ffmpeg or the
  * speech model is missing the learner is told so plainly, before any work is done.
  */
 const fs = require('fs');
@@ -65,7 +65,7 @@ async function submitVideo(userId, buf, name, opts = {}) {
   const type = sniffVideo(buf);
   if (!type) return fail('That is not a video file Savant can read (mp4, mov, webm or mkv).', 'bad_type');
   const audio = opts.audio || require('./material-audio'); // eslint-disable-line global-require
-  if (!(opts.deps && opts.deps.transcribe)) {
+  if (!(opts.deps && opts.deps.transcribe) && !(audio.gladiaOn && audio.gladiaOn(userId, opts.deps || {}))) {
     const a = audio.availability();
     if (!a.ready) return fail(a.reason, 'no_transcriber');
   }

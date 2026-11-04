@@ -62,6 +62,8 @@ const autoBuild = (userId, material) => { if (material && material.id != null) r
 
 // Any content type that is not JSON is read as raw bytes; the type is decided from the bytes.
 const rawBody = express.raw({ type: (req) => !/json/i.test(req.headers['content-type'] || ''), limit: materials.MAX_BYTES });
+/** ?lang=es (two letters) tells Gladia the spoken language; anything else means auto-detect. */
+const langOf = (req) => (/^[a-z]{2}$/i.test(String(req.query.lang || '')) ? String(req.query.lang).toLowerCase() : undefined);
 const videoBody = express.raw({ type: (req) => !/json/i.test(req.headers['content-type'] || ''), limit: require('../services/material-video').MAX_VIDEO_BYTES });
 const pasteBody = express.json({ limit: '3mb', inflate: false });
 
@@ -117,7 +119,7 @@ router.post('/youtube', requireAuth, limit('materials-youtube', 10, 60 * 60 * 10
 router.post('/video', requireAuth, limit('materials-video', 6, 60 * 60 * 1000), videoBody, async (req, res) => {
   if (!Buffer.isBuffer(req.body) || !req.body.length) return res.status(400).json({ error: 'Choose a video to upload.', code: 'empty' });
   let out;
-  try { out = await require('../services/material-video').submitVideo(req.user.id, req.body, String(req.query.name || '')); } catch (err) { // eslint-disable-line global-require
+  try { out = await require('../services/material-video').submitVideo(req.user.id, req.body, String(req.query.name || ''), { deps: { language: langOf(req) } }); } catch (err) { // eslint-disable-line global-require
     console.error('materials video:', err.message);
     return res.status(400).json({ error: 'That video could not be read.', code: 'unreadable' });
   }
@@ -137,7 +139,7 @@ router.post('/transcript', requireAuth, limit('materials-transcript', 20, 60 * 6
 const audio = require('../services/material-audio');
 router.get('/audio', requireAuth, (req, res) => res.json({ available: audio.availability(), jobs: audio.listJobs(req.user.id) }));
 router.post('/audio', requireAuth, limit('materials-audio', 6, 60 * 60 * 1000), rawBody, (req, res) => {
-  const out = audio.submit(req.user.id, req.body, String(req.query.name || ''));
+  const out = audio.submit(req.user.id, req.body, String(req.query.name || ''), { language: langOf(req) });
   if (out.error) return refuse(res, out);
   out.finished.catch(() => {});
   res.status(202).json({ job: out.job, jobs: audio.listJobs(req.user.id) });

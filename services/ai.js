@@ -2031,6 +2031,7 @@ ${learnerBrief(userId, { skillId: area.skill_id, skillName: area.skill_name, lev
 }
 
 module.exports = {
+  munitoAllowedFor,
   structuredDetail,
   isEnabled,
   // The two primitives every call in this file is built on, exported because new
