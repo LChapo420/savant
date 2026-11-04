@@ -68,6 +68,31 @@ const now = () => Date.now();
 const sleep = (ms) => new Promise((r) => { setTimeout(r, ms); });
 const providersLib = () => require('./providers'); // eslint-disable-line global-require
 
+// ── who is waiting (owner, 3 Nov 2026: a waiting learner comes first) ───────────────────────────────────────────────
+// A call is FOREGROUND (a learner is waiting on it: the default) or BACKGROUND (write-ahead, builds nobody waits on). The lane
+// travels with the async call chain (AsyncLocalStorage), so no caller has to pass it down. Two rules follow:
+//   - a free slot keeps POOL_FOREGROUND_RESERVE (1) permit that background calls may not take, so a waiting learner always finds
+//     room however much is being written ahead;
+//   - a foreground call that has waited POOL_FOREGROUND_HEDGE_MS (8 s) with every free slot busy or slow goes to the cheapest
+//     capable paid slot the task allows (Munito); a background call never does that for speed (a paid slot is its last resort,
+//     after every free one failed).
+// The store is an object so a background write that a learner then asks for can be promoted in place (promote()).
+const { AsyncLocalStorage } = require('async_hooks');
+
+const lane = new AsyncLocalStorage();
+const fgReserve = () => Math.max(0, Number(process.env.POOL_FOREGROUND_RESERVE == null || process.env.POOL_FOREGROUND_RESERVE === '' ? 1 : process.env.POOL_FOREGROUND_RESERVE));
+const fgHedgeMs = () => Number(process.env.POOL_FOREGROUND_HEDGE_MS || 8000);
+/** Run fn as background work: its AI calls leave a permit free for waiting learners and never pay for speed. */
+function runBackground(fn) { return lane.run({ background: true }, fn); }
+/** Run fn as work a learner is waiting on, even from inside background work. */
+function runForeground(fn) { return lane.run({ background: false }, fn); }
+/** The current lane store (null outside any lane); pass it to promote() later. */
+function laneStore() { return lane.getStore() || null; }
+/** True when the current async context is background work. */
+function inBackground() { const st = lane.getStore(); return !!(st && st.background); }
+/** A learner now waits on work that was started in the background: its later calls are foreground. */
+function promote(store) { if (store) store.background = false; }
+
 // ── change notification: a free permit, a finished item ────────────────────────
 const waiters = new Set();
 function notify() { for (const w of [...waiters]) w(); }
@@ -238,9 +263,15 @@ class Slot {
   }
 
   // ── limits ──
-  hasPermit() {
-    if (this.inFlight >= this.maxConcurrent) return false;
-    if (this.group && (groupInFlight.get(this.group) || 0) >= (groupCaps.get(this.group) || Infinity)) return false;
+  hasPermit(background = false) {
+    // Background calls leave fgReserve() permits for a waiting learner (a slot of one has none to spare; paid slots are never reserved).
+    const spare = background && !this.paid ? Math.min(fgReserve(), this.maxConcurrent - 1) : 0;
+    if (this.inFlight >= this.maxConcurrent - spare) return false;
+    if (this.group) {
+      const cap = groupCaps.get(this.group) || Infinity;
+      const gspare = background && !this.paid && Number.isFinite(cap) ? Math.min(fgReserve(), cap - 1) : 0;
+      if ((groupInFlight.get(this.group) || 0) >= cap - gspare) return false;
+    }
     return true;
   }
 
@@ -641,10 +672,10 @@ async function attempt(slot, req, { validate = null, timeoutMs, signal = null } 
 }
 
 /** Could this slot start a call for `req` right now? Returns null if so, else why not (and how long to wait, if known). */
-function blocked(slot, req) {
+function blocked(slot, req, background = false) {
   if (!slot.isEnabled()) return { why: 'disabled' };
   if (slot.breakerOpen()) return { why: 'breaker', waitMs: Math.max(250, slot.breaker.openUntil - now()) };
-  if (!slot.hasPermit()) return { why: 'busy' };
+  if (!slot.hasPermit(background)) return { why: 'busy' };
   const w = slot.rpmWaitMs();
   if (w > 0) return { why: 'rpm', waitMs: w };
   if (slot.tokensLeft() < estTokens(req)) return { why: 'daily tokens', waitMs: 60000 };
@@ -678,6 +709,9 @@ async function callHedged(req, opts = {}) {
   const totalMs = opts.maxTotalMs || Math.round(maxTimeout * 2.5);
   const maxParallel = Math.max(1, opts.maxParallel || 2);
   const validate = opts.validate || null;
+  // Background work (write-ahead and the like) yields to a waiting learner and never pays for speed; see the lane note at the top.
+  const laneNow = lane.getStore();
+  const isBg = () => (opts.background != null ? !!opts.background : req.background != null ? !!req.background : !!(laneNow && laneNow.background));
   const spent = { usd: 0, reserved: 0 };
   const trace = opts.trace || {};
   trace.attempts = [];
@@ -706,7 +740,7 @@ async function callHedged(req, opts = {}) {
     // does not hold Claude back. A busy slot or a short RPM wait does (it is waited for).
     const untriedFree = () => cands.some((s) => {
       if (s.paid || tried.has(s.id)) return false;
-      const b = blocked(s, req);
+      const b = blocked(s, req, isBg());
       return !(b && (b.why === 'disabled' || b.why === 'breaker' || b.why === 'daily tokens'));
     });
 
@@ -719,15 +753,17 @@ async function callHedged(req, opts = {}) {
         if (s.paid) {
           if (opts.allowPaid === false) continue;
           // A preferred paid slot (the tutor's Standard Compute) starts first, as the primary, not as a last resort.
-          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable) continue; } else if (anyFreeRunning() || untriedFree()) continue; // last resort: only when every free one has failed
+          // A hedge onto a paid slot is for speed, so never from background work. A foreground call that has waited fgHedgeMs with every free slot busy takes the paid slot as its primary.
+          const fgLate = !isBg() && now() - t0 >= fgHedgeMs();
+          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && (anyFreeRunning() || untriedFree())) continue; // last resort: only when every free one has failed
           if (!budgetOk(s, req, opts, spent)) continue;
         }
-        const b = blocked(s, req);
+        const b = blocked(s, req, isBg());
         if (b) {
           // A better slot that is only busy (or a few seconds from its RPM window) is waited for, briefly, so
           // the chain's preference order holds; past BUSY_WAIT it is skipped and the next slot takes the call.
           // A hedge never waits. An open breaker is skipped.
-          const patient = !asHedge && now() - t0 < busyWaitMs();
+          const patient = !asHedge && now() - t0 < busyWaitMs() && (isBg() || now() - t0 < fgHedgeMs());
           if (b.why === 'busy' && patient) { waitMs = 150; break; }
           if (b.why === 'rpm' && patient && b.waitMs <= busyWaitMs()) { waitMs = Math.min(b.waitMs, 500); break; }
           if (b.why === 'busy') waitMs = Math.min(waitMs == null ? Infinity : waitMs, 500);
@@ -776,7 +812,8 @@ async function callHedged(req, opts = {}) {
     function armHedge(slot) {
       if (hedgeTimer) { clearTimeout(hedgeTimer); timers.delete(hedgeTimer); }
       const clamp = (v) => Math.min(opts.hedgeMaxMs || HEDGE_MAX_MS(), Math.max(opts.hedgeMinMs || HEDGE_MIN_MS(), v));
-      const after = opts.hedgeAfterMs != null ? opts.hedgeAfterMs : clamp(slot.p90);
+      // A waiting learner's backup starts after fgHedgeMs (8 s), not the slot's p90 (20 s floor).
+      const after = opts.hedgeAfterMs != null ? opts.hedgeAfterMs : (isBg() ? clamp(slot.p90) : Math.min(clamp(slot.p90), fgHedgeMs()));
       hedgeTimer = later(() => {
         hedgeTimer = null;
         if (settled || running.size >= maxParallel) return;
@@ -1110,6 +1147,7 @@ function freeParallelism(req = { role: 'blocks', task: 'block_fill', dataClass: 
 }
 
 module.exports = {
+  runBackground, runForeground, laneStore, inBackground, promote,
   callHedged, runBatch, candidatesFor, expandProvider, extraSlots, familyOfModel, makeSlot, registerSlot, setGroup, status, freeParallelism, poolConfig, refusal,
   reqClass, reqKind, Slot, attempt, classify, sleep, _reset, DEFAULT_TIMEOUT_MS, MAX_EXTRA_COPIES,
 };

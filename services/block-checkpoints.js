@@ -323,6 +323,21 @@ function prefetch({ userId, enrollment, grade, level, attempt }) {
   ensure({ userId, enrollment, grade, level: at, attempt: n }).catch(() => {});
 }
 
+/** Is this checkpoint attempt already written (or being written)? Nothing to start then. */
+function isReady({ userId, enrollment, level, attempt }) {
+  const existing = find(userId, enrollment, level, attempt);
+  return !!(existing && (existing.status === 'ready' || existing.status === 'writing'));
+}
+
+/** Write the level's shared first-attempt quiz ahead of the learners who will reach it (accounts on the base product). Nobody awaits this. */
+function prefetchShared({ enrollment, grade, level }) {
+  // eslint-disable-next-line global-require
+  if (!require('./block-levels').aiReady()) return;
+  const base = { id: `base:${enrollment.track_id}:${enrollment.grade_id}`, track_id: enrollment.track_id, grade_id: enrollment.grade_id, current_level: level, checkpoint_attempts: 0 };
+  if (isReady({ userId: null, enrollment: base, level, attempt: 1 })) return;
+  writeShared({ trackId: enrollment.track_id, gradeId: enrollment.grade_id, grade, level }).catch(() => {});
+}
+
 /**
  * The level's shared base questions, by slot — the first attempt for a learner
  * whose levels are not tailored. Written ahead by scripts/generate-base-levels.js,
@@ -365,4 +380,4 @@ async function claim({ userId, enrollment, grade, level, entries, attempt, waitM
   return out;
 }
 
-module.exports = { write, ensure, prefetch, claim, shared, writeShared, blueprint, cleanLayout, signature, LAYOUT_SYSTEM, FILL_SYSTEM, STYLES };
+module.exports = { write, ensure, prefetch, prefetchShared, isReady, claim, shared, writeShared, blueprint, cleanLayout, signature, LAYOUT_SYSTEM, FILL_SYSTEM, STYLES };

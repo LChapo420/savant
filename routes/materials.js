@@ -57,6 +57,9 @@ const notes = require('../services/material-notes');
 
 const router = express.Router();
 
+// A material starts building its notes and study pack as soon as it is added, so they are ready when opened (services/material-autobuild.js).
+const autoBuild = (userId, material) => { if (material && material.id != null) require('../services/material-autobuild').start(userId, material.id); }; // eslint-disable-line global-require
+
 // Any content type that is not JSON is read as raw bytes; the type is decided from the bytes.
 const rawBody = express.raw({ type: (req) => !/json/i.test(req.headers['content-type'] || ''), limit: materials.MAX_BYTES });
 const videoBody = express.raw({ type: (req) => !/json/i.test(req.headers['content-type'] || ''), limit: require('../services/material-video').MAX_VIDEO_BYTES });
@@ -81,6 +84,7 @@ router.post('/paste', requireAuth, limit('materials-paste', 20, 60 * 60 * 1000),
   const b = req.body || {};
   const out = materials.addPaste(req.user.id, b.title, b.text);
   if (out.error) return refuse(res, out);
+  autoBuild(req.user.id, out.value);
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
 });
 
@@ -92,6 +96,7 @@ router.post('/link', requireAuth, limit('materials-link', 10, 60 * 60 * 1000), p
     return res.status(400).json({ error: 'That page could not be read.', code: 'unreadable' });
   }
   if (out.error) return refuse(res, out);
+  autoBuild(req.user.id, out.value);
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
 });
 
@@ -104,6 +109,7 @@ router.post('/youtube', requireAuth, limit('materials-youtube', 10, 60 * 60 * 10
     return res.status(400).json({ error: 'That video could not be read.', code: 'unreadable' });
   }
   if (out.error) return refuse(res, out);
+  autoBuild(req.user.id, out.value);
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
 });
 
@@ -123,6 +129,7 @@ router.post('/transcript', requireAuth, limit('materials-transcript', 20, 60 * 6
   const b = req.body || {};
   const out = materials.addTranscript(req.user.id, b.title, b.text, b.link);
   if (out.error) return refuse(res, out);
+  autoBuild(req.user.id, out.value);
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
 });
 
@@ -148,6 +155,7 @@ router.post('/', requireAuth, limit('materials-upload', 12, 60 * 60 * 1000), raw
     return res.status(400).json({ error: 'That file could not be read.', code: 'unreadable' });
   }
   if (out.error) return refuse(res, out);
+  autoBuild(req.user.id, out.value);
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
 });
 

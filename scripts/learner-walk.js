@@ -19,6 +19,10 @@ const BASE = (process.argv[2] || `http://localhost:${process.env.PORT || 6767}`)
 const ONLY = process.argv[3] ? process.argv[3].split(',') : null;
 const STAMP = Date.now().toString(36);
 const rows = [];
+// Time-to-content (owner, 3 Nov 2026: nothing a learner waits on is slow): what a learner waits for, in ms, with its target.
+// WALK_OUT=file.json also writes them; WALK_SERIAL=1 runs the flows one after another (the 1-learner measurement).
+const ttcRows = [];
+function ttc(flow, what, ms, targetMs, note = '') { ttcRows.push({ flow, what, ms: Math.round(ms), targetMs, ok: ms <= targetMs, note }); }
 
 function client() {
   let cookie = '';
@@ -181,6 +185,7 @@ async function flowBlock() {
   await step(f, 'open the personalised lesson (waits for writing)', async () => {
     const o = await openLevel(call, 'math', 'algebra_1_part_a', LV);
     plan = o.plan;
+    ttc(f, 'first lesson after placement', o.waitedMs, o.firstStatus === 200 ? 2000 : 15000, `first poll ${o.firstStatus}`);
     return { ok: !!plan && plan.meta.tailored === true, detail: `first poll ${o.firstStatus}, ready after ${Math.round(o.waitedMs / 1000)}s, tailored=${plan && plan.meta.tailored}, ${plan ? '' : J(o.payload || o.status)}` };
   });
   if (plan) {
@@ -234,6 +239,7 @@ async function flowCheckpoint() {
       if (j.status !== 200) return { ok: false, detail: `jump ${j.status} ${J(j.payload.error || '')}` };
       const s = await call('POST', '/api/sessions', { enrollment_id: enr.id });
       if (s.status !== 201) return { ok: false, detail: `session ${s.status} ${J(s.payload.error || s.payload)}` };
+      ttc(f, `Master quiz opens (${tag} path)`, s.ms, 15000);
       const key = await call('GET', `/api/dev/item-key/${s.payload.session_id}`);
       const answers = Object.fromEntries((key.payload.items || []).map((i) => [i.id, i.answer]));
       let bad = 0;
@@ -300,24 +306,39 @@ async function flowUploads() {
   });
   if (!id) return;
   const M = `/api/materials/${id}`;
-  // Builds queue one at a time per learner, so start and wait in turn; the practice test and cards need the course.
-  await step(f, 'build the learning path (course)', async () => {
+  // Time-to-content: what a learner waits for when they open the notes / study pack after adding material. A learner reads the
+  // page for WALK_DWELL_S (45) seconds before opening the notes, then the pack straight after. If nothing has been started when they
+  // open it, ask for it as the page's button does. 'since upload' is also given: the build time itself, however early it started.
+  const tUp = Date.now();
+  await sleep(Number(process.env.WALK_DWELL_S || 45) * 1000);
+  const ready = (x, k) => x.status === 200 && x.payload[k] && ['ready', 'partial', 'failed'].includes(x.payload[k].status);
+  const waitBuilt = async (kind, label) => {
+    const key = kind === 'notes' ? 'notes' : 'pack';
+    const t0 = Date.now();
+    const r = await call('GET', `${M}/${kind}`);
+    const auto = !!r.payload[key];
+    if (!auto) await call('POST', `${M}/${kind}`, {});
+    const p = await poll(call, `${M}/${kind}`, (x) => ready(x, key), 600000);
+    const o = p.r.payload[key] || {};
+    const how = auto ? 'started on upload' : 'started only when asked';
+    ttc(f, label, Date.now() - t0, 15000, `${how}, ${Math.round((Date.now() - tUp) / 1000)}s since upload, status ${o.status}`);
+    return { ok: p.ok && o.status !== 'failed', detail: `status ${o.status}, waited ${Date.now() - t0} ms on opening, ${Math.round((Date.now() - tUp) / 1000)}s since upload, ${how}` };
+  };
+  await step(f, 'notes when opened after upload', () => waitBuilt('notes', 'notes when opened after upload'));
+  await step(f, 'study pack (cards, quiz, practice test) when opened after upload', () => waitBuilt('pack', 'study pack when opened after upload'));
+  await step(f, 'build the learning path (course, on request)', async () => {
+    const t = Date.now();
     const r = await call('POST', `${M}/course`, {});
     if (![200, 202].includes(r.status)) return { ok: false, detail: `start ${r.status} ${J(r.payload)}` };
     const p = await poll(call, `${M}/course`, (x) => x.status === 200 && x.payload.course && ['ready', 'partial'].includes(x.payload.course.status) && !(x.payload.activity && x.payload.activity.queued));
     const c = p.r.payload.course || {};
+    ttc(f, 'learning path built on request', Date.now() - t, 600000, 'generated when asked, by design');
     return { ok: p.ok, detail: `status ${c.status}, ${(c.skills || c.skill_count || '')} skills, ${p.s}s ${J(c.error || '')}` };
-  });
-  await step(f, 'build notes', async () => {
-    const r = await call('POST', `${M}/notes`, {});
-    if (![200, 202].includes(r.status)) return { ok: false, detail: `start ${r.status} ${J(r.payload)}` };
-    const p = await poll(call, `${M}/notes`, (x) => x.status === 200 && x.payload.notes && ['ready', 'partial', 'failed'].includes(x.payload.notes.status));
-    const n = p.r.payload.notes || {};
-    return { ok: p.ok && n.status !== 'failed', detail: `status ${n.status}, ${(n.sections || []).length} sections, ${p.s}s` };
   });
   let cardId = null;
   await step(f, 'flashcards: deck, pick, review', async () => {
     const d = await call('GET', `${M}/cards`);
+    ttc(f, 'flashcards open', d.ms, 2000);
     const pick = await call('GET', `${M}/cards/pick?limit=5`);
     const first = ((d.payload.cards || [])[0]) || ((pick.payload.cards || [])[0]);
     cardId = first && (first.id || first.card);
@@ -363,6 +384,7 @@ async function flowDaily() {
   });
   await step(f, 'tutor dock reply', async () => {
     const r = await call('POST', '/api/tutor/dock', { messages: [{ role: 'user', content: 'Can you explain what a variable is?' }], page: { path: '/dashboard' } });
+    ttc(f, 'tutor dock reply', r.ms, 15000, `source ${r.payload.source}`);
     return { ok: r.status === 200 && String(r.payload.reply || '').length > 10, detail: `status ${r.status} source ${r.payload.source} reply "${String(r.payload.reply || '').slice(0, 60)}"` };
   });
   await step(f, '/api/admin/my-stats for an admin', async () => { const r = await call('GET', '/api/admin/my-stats'); return { ok: r.status === 200, detail: `status ${r.status} ${J(Object.keys(r.payload))}` }; });
@@ -375,9 +397,14 @@ const FLOWS = { enroll: flowEnroll, block: flowBlock, game: async () => { await 
   const names = Object.keys(FLOWS).filter((n) => !ONLY || ONLY.includes(n));
   console.log(`learner walk against ${BASE}: ${names.join(', ')}`);
   const started = Date.now();
-  await Promise.all(names.map((n) => FLOWS[n]().catch((err) => rows.push({ flow: n, name: 'flow crashed', ok: false, ms: 0, detail: err.stack.split('\n').slice(0, 2).join(' ') }))));
+  const runFlow = (n) => FLOWS[n]().catch((err) => rows.push({ flow: n, name: 'flow crashed', ok: false, ms: 0, detail: err.stack.split('\n').slice(0, 2).join(' ') }));
+  if (process.env.WALK_SERIAL === '1') { for (const n of names) await runFlow(n); } else await Promise.all(names.map(runFlow));
   rows.sort((a, b) => a.flow.localeCompare(b.flow));
   for (const r of rows) console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.flow.padEnd(10)} ${r.name.padEnd(58)} ${String(Math.round(r.ms / 1000)).padStart(4)}s  ${r.detail}`);
+  console.log(`
+time-to-content (${process.env.WALK_SERIAL === '1' ? 'one learner at a time' : `${names.length} learners at once`}):`);
+  for (const t of ttcRows) console.log(`${t.ok ? 'OK  ' : 'SLOW'}  ${t.flow.padEnd(10)} ${t.what.padEnd(40)} ${String((t.ms / 1000).toFixed(1)).padStart(7)}s  target ${t.targetMs / 1000}s  ${t.note}`);
+  if (process.env.WALK_OUT) require('fs').writeFileSync(process.env.WALK_OUT, JSON.stringify({ mode: process.env.WALK_SERIAL === '1' ? 'serial' : 'parallel', flows: names, ttc: ttcRows, steps: rows }, null, 1));
   const failed = rows.filter((r) => !r.ok).length;
   console.log(`\n${rows.length - failed} passed, ${failed} failed, ${Math.round((Date.now() - started) / 1000)}s total`);
   process.exit(failed ? 1 : 0);

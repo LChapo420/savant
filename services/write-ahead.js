@@ -38,6 +38,21 @@
  * order is the app's own (NVIDIA first; never a paid OpenRouter model).
  * A level whose write failed is tried again later, with a growing pause.
  *
+ * Instant (owner, 3 Nov 2026: nothing a learner waits on is slow unless it must be written when they arrive; write about twice what
+ * makes it instant, no further):
+ *
+ *   - Checkpoints (Master quiz, Grand Master, Final) inside the horizon are written ahead for everyone: a tailored learner's own
+ *     (block-checkpoints.prefetch) and, for an account on the base product, the level's shared quiz (prefetchShared). Starting
+ *     one never waits on writing (services/sessions.js serves what is ready, the bank fills the rest, replacements are written
+ *     for the next attempt).
+ *   - The level a learner stands on right after a placement or skip is FAST: it jumps the queue, ignores the caps, and its calls
+ *     run in the waiting-learner lane of the pool (a permit kept free for it, a backup after 8 s; services/pool.js). Everything
+ *     else here is background: it leaves that permit free and never pays for speed.
+ *   - Not wasteful: a learner with no activity for WRITE_AHEAD_DORMANT_DAYS (7) gets nothing written by a passive trigger (a
+ *     sweep: pass passive: true) until they act again; any request-driven trigger is the learner returning and runs. At most
+ *     WRITE_AHEAD_DAILY_CAP (40) background writes a day per learner (the fast first level and anything a learner waits on do
+ *     not count; the count is in memory, so a restart resets it). WRITE_AHEAD_FAST=off puts the first level back in the normal queue.
+ *
  * Re-tailoring rides the same queue: when a tailored level's learner profile has
  * drifted enough, a separate job replaces that level with a newly tailored one.
  */
@@ -72,6 +87,39 @@ const globalCap = () => {
 };
 const retryMs = () => num('WRITE_AHEAD_RETRY_MS', 10 * 60 * 1000, 0, 24 * 3600 * 1000);
 const MAX_QUEUE = 500;
+const dailyCap = () => num('WRITE_AHEAD_DAILY_CAP', 40, 1, 1000);
+const dormantDays = () => num('WRITE_AHEAD_DORMANT_DAYS', 7, 1, 365);
+const fastOn = () => String(process.env.WRITE_AHEAD_FAST || '').toLowerCase() !== 'off';
+const FAST_REASONS = new Set(['placed', 'placement skip']);
+const pool = () => require('./pool'); // eslint-disable-line global-require
+
+const spentToday = new Map(); // `${account id}:${day}` -> background writes started today
+const touched = new Map(); // account id -> last request-driven trigger (ms)
+const dayKey = (id) => `${id}:${new Date().toISOString().slice(0, 10)}`;
+const writesToday = (id) => spentToday.get(dayKey(id)) || 0;
+function countWrite(id) {
+  const k = dayKey(id);
+  spentToday.set(k, (spentToday.get(k) || 0) + 1);
+  if (spentToday.size > 5000) for (const key of [...spentToday.keys()].slice(0, 2500)) spentToday.delete(key);
+}
+
+function uncountWrite(id) {
+  const k = dayKey(id);
+  if (spentToday.get(k) > 0) spentToday.set(k, spentToday.get(k) - 1);
+}
+
+/** When this learner last did anything we can see: a sitting, their enrollment moving, signing up, or a request-driven trigger. */
+function lastActiveMs(user) {
+  // eslint-disable-next-line global-require
+  const db = require('../config/db');
+  const t = (v) => { const n = Date.parse(v); return Number.isFinite(n) ? n : 0; };
+  let last = Math.max(t(user.created_at), touched.get(user.id) || 0);
+  for (const row of db.find('sessions', (r) => r.user_id === user.id)) last = Math.max(last, t(row.ended_at), t(row.started_at));
+  for (const row of db.find('enrollments', (r) => r.user_id === user.id)) last = Math.max(last, t(row.updated_at), t(row.created_at));
+  return last;
+}
+/** No activity for dormantDays: nothing is written ahead for them until they act (a request-driven trigger counts as acting). */
+const dormant = (user) => Date.now() - lastActiveMs(user) > dormantDays() * 86400000;
 
 const STRENGTH = { free: 0, sonnet: 1, open: 2 };
 
@@ -193,10 +241,11 @@ function planFor({ user, enrollment, grade }) {
       if (!bl.visibleTo(user)) continue;
       const tier = position === 0 ? 'open' : position <= sonnetCount() ? 'sonnet' : 'free';
       steps.push({ level, position, kind, tier, tailored });
-    } else if (kind === 'checkpoint' && tailored) {
-      // The tailored checkpoint prefetch, as prefetchAhead did, for a checkpoint
-      // reached before the last written level ahead.
+    } else if (kind === 'checkpoint') {
+      // A checkpoint reached before the last written level ahead: the learner's own
+      // (tailored) or the level's shared quiz (everyone else), written before they get there.
       if (!here && ahead >= horizon) break;
+      if (!tailored && !bl.visibleTo(user)) continue;
       steps.push({ level, position: here ? 0 : ahead + 1, kind, tier: null, tailored });
     }
   }
@@ -207,9 +256,12 @@ function planFor({ user, enrollment, grade }) {
  * Start writing ahead for this learner. Never throws, never awaited.
  * Returns the steps it queued (for tests).
  */
-function trigger({ user, enrollment, grade, reason = null }) {
+function trigger({ user, enrollment, grade, reason = null, passive = false }) {
   try {
     if (!on() || !user || !enrollment) return [];
+    // A passive trigger (a sweep, nobody asked) writes nothing for a dormant learner; a request-driven one is the learner returning.
+    if (passive && dormant(user)) { note({ type: 'dormant', userId: user.id, reason }); return []; }
+    if (!passive) touched.set(user.id, Date.now());
     const bl = blockLevels();
     const g = grade || curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
     if (!g || enrollment.status === 'graduated' || enrollment.status === 'placement_pending') return [];
@@ -235,13 +287,12 @@ function trigger({ user, enrollment, grade, reason = null }) {
     }
     for (const step of steps) {
       if (step.kind === 'checkpoint') {
-        // eslint-disable-next-line global-require
-        require('./block-checkpoints').prefetch({ userId: user.id, enrollment, grade: g, level: step.level });
+        prefetchCheckpoint({ user, enrollment, grade: g, step });
         continue;
       }
       const key = bl.planKey(step.tailored ? user.id : null, where.trackId, where.gradeId, step.level);
       wanted.add(key);
-      enqueue({ user, step, key, enrollmentId: enrollment.id, levelsPerHour: pace.levelsPerHour, testDays, reason, ...where });
+      enqueue({ user, step, key, enrollmentId: enrollment.id, levelsPerHour: pace.levelsPerHour, testDays, reason, ...where, fast: fastOn() && step.position === 0 && FAST_REASONS.has(reason) });
       if (!step.tailored) continue;
       const due = bl.retailorDue({ userId: user.id, trackId, gradeId, level: step.level });
       if (!due) continue;
@@ -262,6 +313,7 @@ function trigger({ user, enrollment, grade, reason = null }) {
       const job = queue[i];
       if (job.userId === user.id && job.enrollmentId === enrollment.id && !wanted.has(job.key)) {
         queue.splice(i, 1);
+        if (job.kind === 'write' && !job.fast) uncountWrite(job.userId); // never started: not spent
         note({ type: 'dropped', key: job.key, why: 'no longer ahead' });
       }
     }
@@ -272,6 +324,21 @@ function trigger({ user, enrollment, grade, reason = null }) {
     console.warn(`write-ahead: ${err.message}`);
     return [];
   }
+}
+
+/** A checkpoint ahead of the learner: their own tailored quiz, or the level's shared one; background, counted against the day's cap. */
+function prefetchCheckpoint({ user, enrollment, grade, step }) {
+  // eslint-disable-next-line global-require
+  const cps = require('./block-checkpoints');
+  const key = `checkpoint:${user.id}:${enrollment.id}:${step.level}`;
+  const attempt = step.position === 0 ? (enrollment.checkpoint_attempts || 0) + 1 : 1;
+  if (cps.isReady({ userId: step.tailored ? user.id : null, enrollment, level: step.level, attempt })) return;
+  if (writesToday(user.id) >= dailyCap()) { note({ type: 'daily-cap', key }); return; }
+  countWrite(user.id);
+  note({ type: 'queued', key, kind: 'checkpoint', level: step.level });
+  pool().runBackground(() => (step.tailored
+    ? cps.prefetch({ userId: user.id, enrollment, grade, level: step.level })
+    : cps.prefetchShared({ enrollment, grade, level: step.level })));
 }
 
 /** Write ahead on every enrollment the dashboard shows that the learner is working on, most recent first (WRITE_AHEAD_ENROLLMENTS, 4: every subject of the four, so the next level loads rather than generates whichever subject is opened). */
@@ -299,7 +366,7 @@ function testDaysOf(userId, enrollment) {
 }
 const soonest = (job) => (Number.isFinite(job.testDays) ? job.testDays : 1e9);
 
-function enqueue({ user, step, key, enrollmentId, levelsPerHour, testDays = null, reason, trackId, gradeId }) {
+function enqueue({ user, step, key, enrollmentId, levelsPerHour, testDays = null, reason, trackId, gradeId, fast = false }) {
   const bl = blockLevels();
   const owner = step.tailored ? user.id : null;
   const plan = bl.findPlan({ userId: owner, trackId, gradeId, level: step.level });
@@ -323,24 +390,32 @@ function enqueue({ user, step, key, enrollmentId, levelsPerHour, testDays = null
   }
   const queued = queue.find((j) => j.key === key);
   if (queued) {
+    if (fast) { queued.fast = true; queued.priority = -1; }
     queued.priority = Math.min(queued.priority, step.position);
     if (STRENGTH[step.tier] > STRENGTH[queued.tier]) queued.tier = step.tier;
     if (kind === 'write') queued.kind = 'write';
     return;
   }
   if (queue.length >= MAX_QUEUE) return;
+  // Not wasteful: a day's cap of background writes per learner (the fast first level is exempt; an upgrade is a check, not a new write).
+  if (kind === 'write' && !fast) {
+    if (writesToday(user.id) >= dailyCap()) { note({ type: 'daily-cap', key }); return; }
+    countWrite(user.id); // counted when queued, so a burst of steps cannot overshoot the cap
+  }
   queue.push({
-    key, kind, user, userId: user.id, enrollmentId, levelsPerHour, testDays, reason, trackId, gradeId,
-    level: step.level, tailored: step.tailored, tier: step.tier, priority: step.position, seq: seq++,
+    key, kind, user, userId: user.id, enrollmentId, levelsPerHour, testDays, reason, trackId, gradeId, fast,
+    level: step.level, tailored: step.tailored, tier: step.tier, priority: fast ? -1 : step.position, seq: seq++,
   });
   note({ type: 'queued', key, kind, tier: step.tier, level: step.level });
 }
 
 function pump() {
   queue.sort((a, b) => a.priority - b.priority || soonest(a) - soonest(b) || (b.levelsPerHour || 0) - (a.levelsPerHour || 0) || a.seq - b.seq);
-  for (let i = 0; i < queue.length && running.size < globalCap();) {
+  for (let i = 0; i < queue.length;) {
     const job = queue[i];
-    if ((runningFor.get(job.userId) || 0) >= perUserCap() || running.has(job.key)) { i++; continue; }
+    // The first level after a placement ignores the caps: a learner is about to wait on it.
+    if (!job.fast && running.size >= globalCap()) { i++; continue; }
+    if (running.has(job.key) || (!job.fast && (runningFor.get(job.userId) || 0) >= perUserCap())) { i++; continue; }
     queue.splice(i, 1);
     start(job);
   }
@@ -356,17 +431,18 @@ function start(job) {
   const bl = blockLevels();
   running.set(job.key, job);
   runningFor.set(job.userId, (runningFor.get(job.userId) || 0) + 1);
-  note({ type: 'start', key: job.key, kind: job.kind, tier: job.tier });
+  note({ type: 'start', key: job.key, kind: job.kind, tier: job.tier, fast: !!job.fast });
+  const lane = job.fast ? pool().runForeground : pool().runBackground;
   const where = { userId: job.userId, trackId: job.trackId, gradeId: job.gradeId, level: job.level, tailored: job.tailored };
   let work;
   if (job.kind === 'upgrade') {
-    work = Promise.resolve(bl.findPlan({ ...where, userId: job.tailored ? job.userId : null })).then((p) => (p ? bl.upgrade(p) : null));
+    work = lane(() => Promise.resolve(bl.findPlan({ ...where, userId: job.tailored ? job.userId : null })).then((p) => (p ? bl.upgrade(p) : null)));
   } else if (job.kind === 'retailor') {
-    work = bl.retailor({ userId: job.userId, trackId: job.trackId, gradeId: job.gradeId, level: job.level });
+    work = lane(() => bl.retailor({ userId: job.userId, trackId: job.trackId, gradeId: job.gradeId, level: job.level }));
   } else {
     // The level stood on is written on the free check (so it can be served at
     // once) and Sonnet-checked after, as an upgrade below.
-    work = bl.ensure({ ...where, tier: job.tier === 'open' ? 'free' : job.tier });
+    work = lane(() => bl.ensure({ ...where, tier: job.tier === 'open' ? 'free' : job.tier }));
   }
   Promise.resolve(work)
     .then((plan) => {
@@ -391,7 +467,7 @@ function start(job) {
       note(done);
       // Its Sonnet check, when it is the level stood on or the next one.
       if (job.kind === 'write' && plan && job.tier !== 'free' && bl.sonnetPending(plan)) {
-        queue.push({ ...job, kind: 'upgrade', seq: seq++ });
+        queue.push({ ...job, kind: 'upgrade', fast: false, priority: Math.max(job.priority, 0), seq: seq++ });
         note({ type: 'queued', key: job.key, kind: 'upgrade', tier: job.tier, level: job.level });
       }
     })
@@ -433,6 +509,8 @@ function reset() {
   failures.clear();
   events.length = 0;
   triggeredEnrollments.clear();
+  spentToday.clear();
+  touched.clear();
 }
 
-module.exports = { trigger, triggerForUser, planFor, idle, status, reset, events, paceFor, writeMinutes, aheadFor, testDaysOf };
+module.exports = { trigger, triggerForUser, planFor, idle, status, reset, events, paceFor, writeMinutes, aheadFor, testDaysOf, dormant, lastActiveMs, writesToday, dailyCap };

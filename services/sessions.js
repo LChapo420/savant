@@ -401,6 +401,9 @@ function examPromptsSeen(userId, level) {
 /** How long a retry waits on freshly written questions before the bank fills in.
  *  Someone is staring at a spinner, so this is a ceiling, not a target. */
 const REGEN_WAIT_MS = Number(process.env.CHECKPOINT_REGEN_WAIT_MS || 20000);
+/** Starting a checkpoint never waits on writing (owner, 3 Nov 2026: instant): at most this long for a set that is nearly done, then
+ *  what is ready (pre-written questions, then the bank) is served and replacements are written in the background for the next attempt. */
+const START_WAIT_MS = Number(process.env.CHECKPOINT_START_WAIT_MS || 1000);
 
 /**
  * Write the retry's questions while the learner is still reading why they failed.
@@ -410,7 +413,13 @@ const REGEN_WAIT_MS = Number(process.env.CHECKPOINT_REGEN_WAIT_MS || 20000);
  * and the retry opens immediately. Same trade as writing the next lesson a level
  * early. Nobody awaits this.
  */
-function prefetchRetry({ userId, enrollment, grade, kind, remediationId }) {
+function prefetchRetry(args) {
+  // Nobody is waiting on this (the learner is reading the recap): background work in the pool, which leaves a permit free for a waiting learner.
+  // eslint-disable-next-line global-require
+  return require('./pool').runBackground(() => prefetchRetryNow(args));
+}
+
+function prefetchRetryNow({ userId, enrollment, grade, kind, remediationId }) {
   // A tailored learner's retry is written the same way their first attempt was.
   const user = db.byId('users', userId);
   if (user && blockLevels.tailorsFor(user) && blockLevels.aiReady()) {
@@ -456,32 +465,6 @@ function claimPrefetchedRetry(userId, enrollmentId, entries) {
   // Used once: the next attempt gets questions of its own.
   db.update('remediations', row.id, { retry_items: [] });
   return out;
-}
-
-/**
- * Materialize a checkpoint retry: the same skills at the same difficulties, with
- * questions the learner has not seen.
- *
- * The questions come from the `regen` model (GLM 5.3 Flash) where it answers in
- * time, and from the bank with the old prompts excluded where it does not — so a
- * retry is never blocked on a vendor, and is never a rerun of the failed
- * attempt either way.
- */
-async function regeneratedItems({ userId, entries, level, kind, avoid }) {
-  const fresh = await Promise.race([
-    ai.regenerateItems({
-      entries,
-      avoid,
-      kindLabel: curriculum.CHECKPOINT_LABEL[kind] || 'checkpoint',
-      level,
-      userId,
-    }).catch((err) => {
-      console.warn(`ai: regenerating the ${kind} quiz failed: ${err.message}`);
-      return {};
-    }),
-    new Promise((resolve) => setTimeout(() => resolve({}), REGEN_WAIT_MS)),
-  ]);
-  return fresh || {};
 }
 
 /**
@@ -681,7 +664,7 @@ async function buildBlock({ userId, session, enrollment, grade, level, blockInde
       level,
       entries,
       attempt: (enrollment.checkpoint_attempts || 0) + 1,
-      waitMs: REGEN_WAIT_MS,
+      waitMs: START_WAIT_MS,
     });
   }
   // Everyone else's first attempt is the level's base quiz when one has been
@@ -694,8 +677,10 @@ async function buildBlock({ userId, session, enrollment, grade, level, blockInde
     fresh = { ...claimPrefetchedRetry(userId, enrollment.id, entries), ...fresh };
     const missing = entries.filter((_, slot) => !fresh[slot]).length;
     if (missing > entries.length / 2) {
-      const live = await regeneratedItems({ userId, entries, level, kind, avoid: avoidAlso });
-      fresh = { ...live, ...fresh };
+      // Not written yet: the bank fills these slots now (never a rerun: the questions already asked are excluded), and the
+      // replacements are written in the background, waiting for the attempt after this one.
+      const row = remediation.activeFor(userId, enrollment.id);
+      if (row) prefetchRetry({ userId, enrollment, grade, kind, remediationId: row.id });
     }
   }
 

@@ -2102,6 +2102,7 @@ function usageSum(...usages) {
 }
 
 const inFlight = new Map();
+const inFlightLane = new Map(); // plan key -> the pool lane store of the call that started the write (services/pool.js promote)
 
 /**
  * Write the plan for one level, for one learner or for everyone.
@@ -2504,7 +2505,13 @@ function ensure({ userId, trackId, gradeId, level, tailored, tier = null }) {
   const held = gateOn() || selfCheckOn() ? readyPlan({ userId: owner, trackId, gradeId, level }) : null;
   if (!held && !aiReady()) return Promise.resolve(null);
   const key = planKey(owner, trackId, gradeId, level);
-  if (inFlight.has(key)) return inFlight.get(key);
+  if (inFlight.has(key)) {
+    // A learner now waits on a write the write-ahead started in the background: its remaining calls go in the waiting-learner lane.
+    // eslint-disable-next-line global-require
+    const lanes = require('./pool');
+    if (!lanes.inBackground()) lanes.promote(inFlightLane.get(key));
+    return inFlight.get(key);
+  }
   const onTierNow = tierFor(tier);
   const run = async () => {
     // A level whose free check already failed is written again on the free tier
@@ -2525,6 +2532,8 @@ function ensure({ userId, trackId, gradeId, level, tailored, tier = null }) {
     })
     .finally(() => inFlight.delete(key));
   inFlight.set(key, task);
+  inFlightLane.set(key, require('./pool').laneStore()); // eslint-disable-line global-require
+  task.finally(() => inFlightLane.delete(key)).catch(() => {});
   if (tier === 'open') task.then((p) => { if (sonnetPending(p)) upgrade(p).catch(() => {}); }).catch(() => {});
   return task;
 }

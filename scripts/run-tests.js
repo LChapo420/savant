@@ -56,6 +56,7 @@ if (!fs.existsSync(path.join(ROOT, 'data', 'Spanish_Fluency_Path.csv'))) process
 // window (services/providers/xkiro.js), so its result does not change on Nov 7; the
 // window itself is checked in scripts/xkiro-provider-test.js.
 if (!process.env.XKIRO_LEARNER_UNTIL) process.env.XKIRO_LEARNER_UNTIL = '2000-01-01T00:00:00Z';
+if (!process.env.UPLOAD_AUTOBUILD) process.env.UPLOAD_AUTOBUILD = 'off'; // uploads build their notes and pack on upload; the tests do not call a model for that (material-autobuild-test turns it on with fakes)
 if (!process.env.MUNITO_LEARNER) process.env.MUNITO_LEARNER = 'off'; // the tests pin the pipeline-only rule; learner use is checked in munito-ledger-test
 const fixtureSteps = [];
 const sheetSteps = [];
