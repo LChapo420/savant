@@ -1,6 +1,7 @@
 /* Retention goals: how long do you want to remember each subject and each course of your own material?
  *
  *   RetentionGoal.list(host)   every subject and uploaded course with its goal, easy to change, for the profile
+ *   RetentionGoal.one(host, id) one uploaded course's control, for the My material page
  *
  * The choices are a test on a date, a few months, a year, years, or forever (the default). Everything is then
  * scheduled for that goal, so no time goes on remembering longer than you need. After a test date has passed
@@ -51,6 +52,10 @@
     if (!items.length) return;
     const head = state.headline ? `<p class="small" style="margin:0 0 6px"><strong>Next test:</strong> ${esc(state.headline.title)}, ${esc(state.headline.test_date)} (${state.headline.days_left === 0 ? 'today' : `${state.headline.days_left} day${state.headline.days_left === 1 ? '' : 's'}`})</p>` : '';
     host.innerHTML = `${head}<p class="small muted" style="margin-top:0">How long do you want to remember each one? A test on a date, a few months, a year, years or forever. Savant spends your review time only on what that goal needs. Forever is the default and keeps the full long-term schedule; you can change it any time.</p>${items.map((i) => row(i, state)).join('')}`;
+    wire(host);
+  }
+
+  function wire(host) {
     const send = async (node, body) => {
       const msg = node.querySelector('.rg-msg');
       msg.textContent = 'Saving...';
@@ -70,5 +75,19 @@
     });
   }
 
-  window.RetentionGoal = { list };
+  /**
+   * One uploaded course's control, for its own material page: the same row as the profile, with one line on what
+   * the choice changes. `host` is filled; nothing is shown if the course is not found or the call fails.
+   */
+  async function one(host, materialId) {
+    if (!host) return;
+    let state;
+    try { state = await api().get('/api/retention-goals'); } catch { return; }
+    const item = state.materials.find((m) => m.id === Number(materialId));
+    if (!item) return;
+    host.innerHTML = `<p class="tiny muted" style="margin:0">How long do you want to remember this? Forever keeps every review; a test date, a few months, a year or years drops the reviews you do not need and stops them when the goal is reached.</p>${row(item, state)}`;
+    wire(host);
+  }
+
+  window.RetentionGoal = { list, one };
 })();

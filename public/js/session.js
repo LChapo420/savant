@@ -1050,6 +1050,7 @@ function renderRubricResult(result) {
         ${heldReviewHtml(outcome.review)}
         <div id="level-retention" style="margin-top:16px"></div>
         <div id="level-depth" style="margin-top:16px"></div>
+        <div id="level-extras" style="margin-top:16px"></div>
         <div class="row-wrap" id="level-actions" style="margin-top:16px"></div>
       </div>`;
 
@@ -1067,6 +1068,33 @@ function renderRubricResult(result) {
         row.appendChild(b);
       }
       depth.appendChild(row);
+    }
+
+    // Three more optional one-taps (services/scorecard/footprints.js): how the level felt, a link to something known, and race or solo. Each is
+    // sent as a number only (no text is kept) and changes nothing about the next level except what the plain line under it says.
+    if (session.footprint_choices && !session.preview) {
+      const extras = document.getElementById('level-extras');
+      const ask = (id, line, options) => {
+        const box = App.el('div', { style: 'margin-bottom:12px' });
+        box.appendChild(App.el('p', { class: 'small muted', style: 'margin:0 0 6px' }, line));
+        const r = App.el('div', { class: 'row-wrap' });
+        for (const [choice, label] of options) {
+          const b = App.el('button', { class: 'btn btn-sm', type: 'button' }, label);
+          b.addEventListener('click', () => {
+            sendFootprint(id, choice, outcome.level);
+            box.innerHTML = '<p class="small muted" style="margin:0">Thanks, noted.</p>';
+          });
+          r.appendChild(b);
+        }
+        box.appendChild(r);
+        extras.appendChild(box);
+      };
+      ask('feel_tap', 'How did that level feel? One tap helps Savant see which lessons you enjoy.',
+        [['f1', 'Awful'], ['f2', 'Not great'], ['f3', 'Okay'], ['f4', 'Good'], ['f5', 'Great']]);
+      ask('link_prompt', 'Does this connect to something you already know? Only your yes or skip is kept, not what you would write.',
+        [['linked', 'Yes, it connects'], ['skipped', 'Skip']]);
+      ask('race_or_solo', 'Next time, would you like to race your own best time? Your pick helps fit how your practice is framed.',
+        [['race', 'Race my best time'], ['solo', 'On my own']]);
     }
 
     const actions = document.getElementById('level-actions');

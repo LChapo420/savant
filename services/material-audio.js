@@ -1,6 +1,11 @@
 /**
  * "Learn from your own material", S8: audio recordings as material.
  *
+ * Route 1 (2026-11-04): Gladia (services/providers/gladia.js, $50 ledger) transcribes the uploaded file when its key is set,
+ * GLADIA_LEARNER is not 'off' and the learner is cleared for outside AI (same rule as Munito, services/ai.js munitoAllowedFor).
+ * Any Gladia failure (refused by the ledger, network, error, timeout) falls back to route 2, the local Whisper below.
+ * The job row records `engine` ('gladia' or 'whisper'). Without a usable Whisper model a Gladia-capable server still accepts uploads.
+ *
  * A learner uploads (or records in the browser) mp3, m4a, wav, webm or ogg. The audio is decoded to 16 kHz
  * mono, cut into 30-second chunks, and each chunk goes to an open Whisper model that runs on this server
  * through @huggingface/transformers (ONNX, CPU). No outside speech vendor is ever called. The package and
@@ -33,6 +38,27 @@ const MODEL = process.env.WHISPER_MODEL || 'Xenova/whisper-tiny.en';
 const MODEL_DIR = process.env.WHISPER_MODEL_DIR || path.join(__dirname, '..', 'data', 'models');
 
 function fail(error, code) { return { error, code }; }
+
+/** Is Gladia the first route for this learner's upload? deps.gladia === false, or deps.transcribe (tests) without deps.gladia === true, turns it off. */
+function gladiaOn(userId, deps = {}) {
+  if (deps.gladia === false || (deps.transcribe && deps.gladia !== true)) return false;
+  const g = require('./providers/gladia'); // eslint-disable-line global-require
+  if (!g.isConfigured() || !g.learnerOn()) return false;
+  if (typeof deps.gladiaAllowed === 'boolean') return deps.gladiaAllowed;
+  try { return !!require('./ai').munitoAllowedFor(userId); } catch { return false; } // eslint-disable-line global-require
+}
+
+/** Gladia utterances to the "[m:ss] text" lines this pipeline stores, one line per window of about CHUNK_SECONDS. */
+function gladiaLines(res) {
+  const us = res.utterances && res.utterances.length ? res.utterances : [{ start: 0, text: res.text }];
+  const lines = []; let cur = null;
+  for (const u of us) {
+    const t = String(u.text || '').replace(/\s+/g, ' ').trim();
+    if (!t) continue;
+    if (cur && u.start - cur.start < CHUNK_SECONDS) cur.text += ` ${t}`; else { cur = { start: u.start, text: t }; lines.push(cur); }
+  }
+  return lines.map((l) => `[${stamp(l.start)}] ${l.text}`);
+}
 
 /** The audio container from its first bytes: 'wav', 'mp3', 'm4a', 'ogg', 'webm' or null. */
 function sniffAudio(buf) {
@@ -195,7 +221,7 @@ function submit(userId, buf, name, deps = {}) {
   if (buf.length > materials.MAX_BYTES) return fail('That file is over 20 MB. Record or export a shorter part.', 'too_big');
   const type = sniffAudio(buf);
   if (!type) return fail('That does not look like an audio file. mp3, m4a, wav, webm and ogg are supported.', 'bad_type');
-  if (!deps.transcribe) {
+  if (!deps.transcribe && !gladiaOn(userId, deps)) {
     const a = availability();
     if (!a.ready) return fail(a.reason, 'no_transcriber');
   }
@@ -224,6 +250,18 @@ function run(userId, jobId, buf, type, deps) {
 async function work(userId, jobId, buf, type, deps) {
   const set = (patch) => db.update(JOBS, jobId, patch);
   set({ status: 'running' });
+  let gladiaText = null;
+  if (gladiaOn(userId, deps)) {
+    const g = require('./providers/gladia'); // eslint-disable-line global-require
+    const job0 = db.byId(JOBS, jobId);
+    try {
+      const res = await g.transcribe(buf, { name: job0 && job0.source_name, language: deps.language, userId, timeoutMs: deps.gladiaTimeoutMs, pollMs: deps.gladiaPollMs });
+      gladiaText = gladiaLines(res).join('\n');
+      if (gladiaText) set({ engine: 'gladia', chunks: 1, done: 1 });
+    } catch (e) { console.warn(`material-audio: gladia failed (${e.code || 'error'}), using the local model`); }
+  }
+  if (gladiaText) return finish(userId, jobId, gladiaText, set);
+  set({ engine: 'whisper' });
   const dec = await decode(buf, type, deps);
   if (dec.error) return set({ status: 'failed', error: dec.error });
   if (dec.samples.length / SAMPLE_RATE > MAX_SECONDS) return set({ status: 'failed', error: 'That recording is over two hours. Upload a shorter part.' });
@@ -242,7 +280,10 @@ async function work(userId, jobId, buf, type, deps) {
     if (text) lines.push(`[${stamp(parts[i].start)}] ${text}`);
     set({ done: i + 1 });
   }
-  const text = lines.join('\n');
+  return finish(userId, jobId, lines.join('\n'), set);
+}
+
+function finish(userId, jobId, text, set) {
   if (!text) return set({ status: 'failed', error: 'No speech could be made out in that recording.' });
   if (text.length < materials.MIN_CHARS) return set({ status: 'failed', error: `That recording is too short to study from: its transcript has ${text.split(/\s+/).length} words. Record or upload a longer part (a minute or more of speech).` });
   if (text.length > materials.MAX_CHARS) return set({ status: 'failed', error: 'The transcript is longer than the limit. Upload a shorter part.' });
@@ -255,5 +296,5 @@ async function work(userId, jobId, buf, type, deps) {
 
 module.exports = {
   SAMPLE_RATE, CHUNK_SECONDS, MAX_SECONDS,
-  sniffAudio, decodeWav, decode, chunk, stamp, availability, realTranscriber, submit, listJobs, removeJob,
+  sniffAudio, gladiaOn, gladiaLines, decodeWav, decode, chunk, stamp, availability, realTranscriber, submit, listJobs, removeJob,
 };

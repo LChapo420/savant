@@ -26,6 +26,13 @@ const LIVE_RAW = [
   ['rule_switch', 'fp.switch_cost', 'a level of mixed reasoning items: log time on an item after a change of skill minus log time after the same skill, per level', [['cognitive_flexibility', -1], ['interference_susceptibility', 1]]],
   ['hint_or_try', 'fp.hint_first', 'a question where the coach was opened: 1 if within 8 s of the question appearing, 0 if the learner tried first', [['hint_dependency', 1], ['productive_struggle', -1]]],
   ['why_or_steps', 'fp.why_first', 'a lesson with a worked example: 1 if the learner opened "Why does this work?" before the checks, 0 if they went on with the steps', [['conceptual_bias', 1]]],
+  ['race_or_solo', 'fp.race', 'a closed level: 1 if the learner chose "Race my best time", 0 if "On my own"', [['competitive_drive', 1], ['social_framing', 1]]],
+  ['link_prompt', 'fp.link', 'a closed level: 1 if the learner chose "I can connect this", 0 if "Skip"; the text of a link is never kept', [['integration_tendency', 1], ['creative_extension', 1]]],
+  ['feel_tap', 'fp.feel', 'a closed level: how it felt, five faces from -1 to 1', [['emotional_engagement', 1]]],
+  ['skip_and_exit', 'fp.skip_rate', 'a question of the week: 1 if the learner skipped it', [['boredom_susceptibility', 1], ['momentum_dependence', 1]]],
+  ['ask_a_question', 'fp.ask_rate', 'a message of the week to the tutor that was not an answer to the tutor\'s own question: 1 if it was a question', [['question_generation', 1]]],
+  ['topic_pick', 'fp.topic_match', 'a subject the learner started in the week: 1 if it matches an interest or goal they stated', [['identity_alignment', 1], ['curiosity_hook', 1]]],
+  ['reward_panel', 'fp.rewards_shown', 'a week: 1 if the learner keeps the streak and XP on screen, 0 if they switched them off themselves', [['extrinsic_reward_sensitivity', 1], ['praise_sensitivity', 1]]],
   ['deeper_or_move_on', 'fp.deeper', 'a closed level: 1 if the learner chose "Go deeper on this", 0 if "Move on"', [['depth_breadth', 1]]],
 ];
 
