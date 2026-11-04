@@ -10,6 +10,7 @@
  * test, scope, no gate weakening, independent review. Pass: commit on auto/<id> (never pushed, never merged) + AUTO-LOG entry.
  */
 const fs = require('fs');
+require('../services/run-cap').defaultCap(5); // hard per-process spend cap across every paid ledger; --run-cap N or RUN_CAP_USD overrides
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');

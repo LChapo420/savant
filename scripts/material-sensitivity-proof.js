@@ -38,6 +38,7 @@
  * appends every raw judge answer to FILE.
  */
 const fs = require('fs');
+require('../services/run-cap').defaultCap(5); // hard per-process spend cap across every paid ledger; --run-cap N or RUN_CAP_USD overrides
 const os = require('os');
 const path = require('path');
 

@@ -18,6 +18,7 @@
  * together.
  */
 const path = require('path');
+require('../services/run-cap').defaultCap(5); // hard per-process spend cap across every paid ledger; --run-cap N or RUN_CAP_USD overrides
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');

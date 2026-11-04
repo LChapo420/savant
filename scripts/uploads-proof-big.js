@@ -6,6 +6,7 @@
  * Models: builder = Gonka DeepSeek V4 Flash (family M, paid from the $50 Gonka ledger), judge A = Gonka GLM 5.3 Flash (family Z), judge B and exam writer = NVIDIA free nemotron. No learner data.
  */
 const fs = require('fs'); const os = require('os'); const path = require('path');
+require('../services/run-cap').defaultCap(5); // hard per-process spend cap across every paid ledger; --run-cap N or RUN_CAP_USD overrides
 require('dotenv').config({ path: 'C:/coding/claudecommittdIq/folderThing/.env', quiet: true });
 process.env.XKIRO_PIPELINE = '1'; process.env.GONKA_PIPELINE = '1'; process.env.GONKA_LEDGER_FILE = process.env.GONKA_LEDGER_FILE || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/gonka-ledger.json';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-big-${process.pid}.json`);

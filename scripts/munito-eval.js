@@ -14,6 +14,7 @@
  * MUNITO_LEDGER_FILE defaults to the live ledger so spend counts against the real cap. The run stops if it spends > --budget USD.
  */
 const fs = require('fs');
+require('../services/run-cap').defaultCap(5); // hard per-process spend cap across every paid ledger; --run-cap N or RUN_CAP_USD overrides
 const path = require('path');
 const ENV = 'C:/coding/claudecommittdIq/folderThing/.env';
 if (fs.existsSync(ENV)) { try { require('dotenv').config({ path: ENV }); } catch { /* rely on environment */ } }
