@@ -1,0 +1,2 @@
+
+- 2026-11-04T11:52:05.685Z **strata-report** on `auto/strata-report` BLOCKED (3 attempts failed; last: TASK TEST failed (node scripts/scorecard-strata-test.js): ❌ Test failed: require.ALIASES is not iterable ). gates: xkiro: provider unavailable, next model, munito: provider unavailable, next model, a1: no change, xkiro: provider unavailable, next model, a2: no change, a3: task test. Last writer nvidia/nemotron-3-ultra-550b-a55b (nvidia), cost $0.0000, 20.4 min.
