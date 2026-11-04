@@ -534,7 +534,7 @@
         "rpm": 60,
         "hint_ms": 6000,
         "price_in": 0.27,
-        "price_out": 1.0,
+        "price_out": 1,
         "data_class": "pipeline",
         "price_note": "Munito list price. Ledger: services/munito-ledger.js, $100 hard cap. Same model as the Standard Compute slot."
       },
@@ -574,7 +574,8 @@
           "xkiro:qwen/*",
           "unorouter:*",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash"
         ],
         "basis": "night-runner writers.json: MiniMax kept 8775 of 15098 drafts, Qwen3.8 Max 641 of 1615, through code checks + two independent blind judges + source checks"
       },
@@ -592,7 +593,8 @@
           "xkiro:qwen/*",
           "unorouter:*",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash"
         ],
         "basis": "blind judges; the night runner still enforces writer/judge family independence on its own lanes"
       },
@@ -601,14 +603,16 @@
           "xkiro:*",
           "unorouter:*",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash"
         ],
         "basis": "the pool's own measurement batch: short fixed prompts, no learner data"
       },
       "lesson_write": {
         "allow": [
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash"
         ],
         "timeout_ms": 300000,
         "basis": "same family as the lineup's hard-tier head (DeepSeek V4.1 Flash); no direct eval on lesson writing"
@@ -616,7 +620,8 @@
       "block_fill": {
         "allow": [
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash"
         ],
         "timeout_ms": 300000,
         "basis": "as lesson_write"
@@ -624,7 +629,8 @@
       "block_layout": {
         "allow": [
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash"
         ],
         "timeout_ms": 180000,
         "basis": "as lesson_write"
@@ -632,7 +638,8 @@
       "game_questions": {
         "allow": [
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash"
         ],
         "timeout_ms": 300000,
         "basis": "as lesson_write"
@@ -640,7 +647,8 @@
       "author_items": {
         "allow": [
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash"
         ],
         "timeout_ms": 300000,
         "basis": "as lesson_write"

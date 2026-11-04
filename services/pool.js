@@ -473,6 +473,13 @@ const ADAPTERS = {
 function taskConfig(task) { return (task && (poolConfig().tasks || {})[task]) || {}; }
 
 /** xKiro's MiniMax grant may serve the owner and test learners until the dated window closes (services/providers/xkiro.js), never a child. */
+/** Munito may serve a learner request when learner use is on and this learner is cleared for it (req.munito, set by services/ai.js). */
+function munitoLearnerAllowed(slot, req) {
+  if (slot.provider !== 'munito') return false;
+  // eslint-disable-next-line global-require
+  return require('./providers/munito').learnerOn() && req.munito === true;
+}
+
 function xkiroLearnerAllowed(slot, req) {
   if (slot.provider !== 'xkiro') return false;
   // eslint-disable-next-line global-require
@@ -482,7 +489,7 @@ function xkiroLearnerAllowed(slot, req) {
 /** Why this slot may not serve this task / data class, or null if it may. */
 function refusal(slot, req, kind) {
   const cls = reqClass(req);
-  if (slot.dataClass === 'pipeline' && cls !== 'pipeline' && !xkiroLearnerAllowed(slot, req)) return 'data: a pipeline slot never gets learner data';
+  if (slot.dataClass === 'pipeline' && cls !== 'pipeline' && !xkiroLearnerAllowed(slot, req) && !munitoLearnerAllowed(slot, req)) return 'data: a pipeline slot never gets learner data';
   if (!slot.supports.includes(kind)) return `does not do ${kind}`;
   const t = taskConfig(req.task);
   if (req.excludeFamilies && slot.family && req.excludeFamilies.includes(slot.family)) return 'independence: family excluded for this request';
@@ -531,6 +538,8 @@ function candidatesFor(req, opts = {}) {
     slots.push(...expandProvider(p, req));
   }
   if (reqClass(req) === 'pipeline' && req.outside !== false && opts.extras !== false) slots.push(...extraSlots());
+  // A cleared learner may also use Munito's slots (munitoLearnerAllowed); no other extra slot ever sees learner data.
+  else if (req.munito === true && req.outside !== false && opts.extras !== false) slots.push(...extraSlots().filter((x) => munitoLearnerAllowed(x, req)));
   if (opts.tutorStandardCompute !== false) { const sc = tutorStandardCompute(req); if (sc) slots.unshift(sc); }
   const seen = new Set();
   const ok = slots.filter((s) => {

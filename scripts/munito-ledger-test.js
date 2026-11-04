@@ -152,7 +152,27 @@ const cleanEnv = () => { mu._setFetch(null); for (const k of ['MUNITO_API_KEY', 
     } finally { Object.assign(providers.ALL, saved); pool._reset(); }
   });
 
-  await check('pool: pipeline requests prefer Munito over Standard Compute; the GLM slot is not listed for lesson_write', () => {
+  await check('pool: with learner use on, a cleared learner may reach Munito; a child, an uncleared learner or learner use off may not', () => {
+    pool._reset();
+    const providers = require('../services/providers');
+    const saved = { ...providers.ALL };
+    const savedEnv = process.env.MUNITO_LEARNER;
+    providers.ALL.nvidia = { name: 'nvidia', isEnabled: () => true, isConfigured: () => true, modelFor: () => 'm', costCents: () => 0, structured: async () => ({ data: {}, model: 'm' }), chat: async () => ({ text: 't', model: 'm' }) };
+    try {
+      const chain = [providers.ALL.nvidia];
+      const ids = (req) => pool.candidatesFor(req, { chain }).map((x) => x.id);
+      const base = { role: 'blocks', task: 'block_fill', kind: 'structured', userId: 'u1' };
+      process.env.MUNITO_API_KEY = 'test-key-not-real'; delete process.env.MUNITO_PIPELINE; // learner use, not the pipeline opt-in
+      process.env.MUNITO_LEARNER = 'on';
+      assert.ok(ids({ ...base, munito: true }).includes(`munito:${DS}`), `cleared learner: ${ids({ ...base, munito: true })}`);
+      assert.ok(ids({ ...base, munito: false }).every((i) => !i.startsWith('munito:')), 'an under-13 or no-consent learner never reaches Munito');
+      assert.ok(ids({ ...base }).every((i) => !i.startsWith('munito:')), 'no clearance flag means no Munito');
+      process.env.MUNITO_LEARNER = 'off';
+      assert.ok(ids({ ...base, munito: true }).every((i) => !i.startsWith('munito:')), 'MUNITO_LEARNER=off keeps learners off it');
+    } finally { process.env.MUNITO_LEARNER = savedEnv; delete process.env.MUNITO_API_KEY; Object.assign(providers.ALL, saved); pool._reset(); }
+  });
+
+  await check('pool: pipeline requests prefer Munito over Standard Compute; Munito GLM is listed beside Munito DeepSeek', () => {
     pool._reset();
     const providers = require('../services/providers');
     const saved = { ...providers.ALL };
@@ -163,7 +183,7 @@ const cleanEnv = () => { mu._setFetch(null); for (const k of ['MUNITO_API_KEY', 
         const ids = pool.candidatesFor({ role: 'blocks', task, kind: 'structured', dataClass: 'pipeline' }, { chain }).map((s) => s.id);
         const m = ids.indexOf(`munito:${DS}`); const s = ids.findIndex((i) => i.startsWith('standard_compute:'));
         assert.ok(m >= 0 && s >= 0 && m < s, `${task}: ${ids}`);
-        if (task === 'lesson_write') assert.ok(!ids.includes(`munito:${GLM}`));
+        assert.ok(ids.includes(`munito:${GLM}`), `${task}: GLM listed`);
       }
     } finally { Object.assign(providers.ALL, saved); pool._reset(); }
   });

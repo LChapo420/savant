@@ -37,6 +37,9 @@ const BASE = () => baseUrl(process.env.MUNITO_BASE_URL);
 const MODEL = () => String(process.env.MUNITO_MODEL || 'deepseek-ai/deepseek-v4.1-flash-1017').trim();
 const modelOf = (m) => (typeof m === 'string' && m.trim() ? m.trim() : MODEL());
 const pipelineOptIn = () => process.env.MUNITO_PIPELINE === '1';
+// Learner use (owner, 2026-11-03: "use Munito for everything that would benefit"; listings say no retention, no training, EU): on unless
+// MUNITO_LEARNER=off. The pool still keeps under-13 and no-consent accounts off it (req.munito, services/ai.js).
+const learnerOn = () => String(process.env.MUNITO_LEARNER || 'on').toLowerCase() !== 'off';
 
 let fetchImpl = (...args) => fetch(...args);
 function _setFetch(fn) { fetchImpl = fn || ((...args) => fetch(...args)); }
@@ -46,7 +49,7 @@ async function post(body, timeoutMs, { signal = null, task = null } = {}) {
   if (!KEY()) throw Object.assign(new Error('munito: no key'), { status: 403 });
   const inputChars = (body.messages || []).reduce((n, m) => n + String(m.content || '').length, 0);
   const estimate = ledger.estimate({ model: body.model, inputChars, maxTokens: body.max_tokens });
-  if (!pipelineOptIn()) throw Object.assign(new Error('munito: pipeline use only (MUNITO_PIPELINE=1 not set)'), { status: 403 });
+  if (!pipelineOptIn() && !learnerOn()) throw Object.assign(new Error('munito: pipeline use only (MUNITO_PIPELINE=1 not set)'), { status: 403 });
   // Throws LEDGER_STOP (402) past the cap: nothing is sent.
   const id = ledger.reserve({ usd: estimate, task, model: body.model });
   const ctrl = new AbortController();
@@ -97,7 +100,7 @@ const munitoProvider = {
   learnerData: false,
   paid: true,
   isConfigured() { return !!KEY(); },
-  isEnabled() { return this.isConfigured() && pipelineOptIn() && ledger.canSpend(0.002); },
+  isEnabled() { return this.isConfigured() && (pipelineOptIn() || learnerOn()) && ledger.canSpend(0.002); },
   status() {
     const l = ledger.status();
     const reason = !this.isConfigured() ? 'no Munito key' : !pipelineOptIn() ? 'pipeline only (MUNITO_PIPELINE=1 not set)' : !l.ok ? l.reason : l.headroom_usd < 0.002 ? `ledger at the $${l.cap_usd} cap` : null;
@@ -143,4 +146,4 @@ const munitoProvider = {
   },
 };
 
-module.exports = { munito: munitoProvider, munitoProvider, _setFetch, post, baseUrl };
+module.exports = { munito: munitoProvider, munitoProvider, _setFetch, post, baseUrl, learnerOn };

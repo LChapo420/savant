@@ -131,6 +131,15 @@ function outsideAllowed(userId) {
   return require('./typed-grading').outsideAllowed(userId);
 }
 
+// Munito for learners (owner, 2026-11-03): every cleared account; under-13 accounts too until the day before the beta launches (MUNITO_CHILD_UNTIL,
+// default the start of Nov 14 Central). The outside-AI consent rule (outsideAllowed) still applies to everyone.
+function munitoAllowedFor(userId) {
+  if (!userId || !outsideAllowed(userId)) return false;
+  const age = require('./boosters').ageOf(db.byId('users', userId)); // eslint-disable-line global-require
+  if (age !== null && age !== undefined && age < 13) return Date.now() < Date.parse(process.env.MUNITO_CHILD_UNTIL || '2026-11-14T06:00:00Z');
+  return true;
+}
+
 function xkiroAllowedFor(userId) {
   if (!userId) return true;
   // eslint-disable-next-line global-require
@@ -175,6 +184,7 @@ async function viaPool(userId, req, role, task, outside) {
       ...req, role, task, userId: userId || null, outside,
       dataClass: userId ? 'learner' : (req.dataClass || 'learner'),
       xkiro: xkiroAllowedFor(userId),
+      munito: munitoAllowedFor(userId),
     },
     // hedgeAfterMs: an interactive caller (the tutor dock) may start the backup sooner than the pool's 20 s floor.
     { timeoutMs: req.timeoutMs || undefined, hedgeAfterMs: req.hedgeAfterMs != null ? req.hedgeAfterMs : undefined, validate: (r) => !!r, trace },
