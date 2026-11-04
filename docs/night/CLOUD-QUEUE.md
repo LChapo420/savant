@@ -17,7 +17,7 @@ mark it done with the commit, and push to `cloud-build` only. Never push to or m
 - Under-13 accounts without parent consent: no extra measurement.
 
 ## Queue
-- [ ] **Retention-goal control on the uploaded-material page.** Retention goals exist (`services/retention-goal.js`, `routes/retention-goals.js`,
+- [claimed 2026-11-04] **Retention-goal control on the uploaded-material page.** Retention goals exist (`services/retention-goal.js`, `routes/retention-goals.js`,
   `docs/RETENTION-GOALS.md`) per subject AND per uploaded course; the subject side has a control, the material/course page does not. Add a control on the
   material page that reads and sets that course's goal through the existing API (add a route only if none exists), same look and plain copy as the page,
   with one line saying what the choice changes.
