@@ -87,11 +87,13 @@ App.mount(async () => {
             <p class="tiny muted" id="course-note-${m.id}" role="status" style="margin:4px 0 0"></p>
             <div class="row-wrap" id="extend-${m.id}" style="margin:4px 0 0" hidden></div>
             <p class="tiny muted" id="pack-note-${m.id}" role="status" style="margin:4px 0 0"></p>
+            <div id="rg-host-${m.id}" style="margin:4px 0 0"></div>
             <p class="tiny muted" style="margin:4px 0 0">${esc(m.preview)}…</p>
           </li>`).join('')}</ul>` : '<p class="muted">Nothing yet.</p>'}
       </div>`;
 
     const note = (id, text) => { document.getElementById(id).textContent = text; };
+    if (window.RetentionGoal) data.materials.forEach((m) => window.RetentionGoal.one(document.getElementById(`rg-host-${m.id}`), m.id));
     document.getElementById('upload').addEventListener('click', async () => {
       const f = document.getElementById('file').files[0];
       if (!f) return note('upload-note', 'Choose a file first.');
