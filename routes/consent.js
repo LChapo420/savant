@@ -360,7 +360,7 @@ function publicConsent(user) {
 // ── deletion ─────────────────────────────────────────────────────────────────
 
 /** Collections that hold no learner's rows (shared content), or are handled apart. */
-const SHARED = new Set(['users', 'content_cache', 'placement_question_sets', 'fact_pools', 'parents', 'parental_consents', 'beta_blocks']);
+const SHARED = new Set(['users', 'content_cache', 'themed_items', 'themed_log', 'placement_question_sets', 'fact_pools', 'parents', 'parental_consents', 'beta_blocks']);
 
 /**
  * Delete a child's account and every row tied to it, and reduce the consent
@@ -400,7 +400,7 @@ function deleteChild(consent, reason, by) {
  * scripts/consent-test.js fails when the store has one this list lacks.
  */
 const KNOWN_COLLECTIONS = [
-    'users', 'enrollments', 'skill_states', 'profiles', 'sessions', 'items', 'events', 'content_cache', 'ai_usage',
+    'users', 'enrollments', 'skill_states', 'profiles', 'sessions', 'items', 'events', 'content_cache', 'themed_items', 'themed_log', 'ai_usage',
     'reports', 'lessons', 'remediations', 'streaks', 'essays', 'level_feedback', 'level_edits', 'scorecards',
     'level_signals', 'learner_records', 'level_debriefs', 'placement_question_sets', 'subject_placements',
     'game_payloads', 'block_plans', 'assist_chats', 'level_logs', 'chess_ratings', 'chess_puzzle_attempts',

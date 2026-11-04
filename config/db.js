@@ -25,6 +25,8 @@ const COLLECTIONS = [
   'items',           // every question served, with the user's answer
   'events',          // append-only attempt log, the raw material of the learner model
   'content_cache',   // generated items, shared across all users
+  'themed_items',    // bank items restyled into an interest, gated and written ahead (services/item-theme.js), shared by interest
+  'themed_log',      // one row per theming attempt (stage reached), for the proof
   'ai_usage',        // per user per day token spend, for the budget guard
   'reports',         // learner reports of a bad item
   'lessons',         // taught lessons, written per learner per level

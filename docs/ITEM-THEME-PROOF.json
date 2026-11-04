@@ -1,0 +1,66 @@
+{
+  "kind": "SIMULATED learners (interest labels) and AI-judged; not real-learner proof",
+  "at": "2026-11-04T19:20:50.010Z",
+  "candidates": 60,
+  "gate_stages": {
+    "stem": 26,
+    "write": 10,
+    "resolve": 12,
+    "ok": 10,
+    "judge": 2
+  },
+  "accepted": 10,
+  "accept_rate": 0.167,
+  "key_agreement": {
+    "gate": "blind re-solve (Nemotron) agrees with the original key on 100% of accepted, by construction",
+    "held_out_second_solver_themed": "7/10",
+    "held_out_second_solver_untouched_base": "8/10"
+  },
+  "engagement_fit_1to5": {
+    "n": 6,
+    "note": "re-run on the 6 example pairs (the first pass hit NVIDIA 429s); simulated 14 year old persona, AI-judged",
+    "before": 1.33,
+    "after": 4.17,
+    "better": 6,
+    "same": 0,
+    "worse": 0
+  },
+  "examples": [
+    {
+      "interest": "soccer",
+      "skill": "odd_one_out",
+      "before": "In soup, tea, lemonade, broth, three of them belong together. Name one of those three.",
+      "after": "At a soccer game, the concession stand offers soup, tea, lemonade, and broth. Three of them belong together. Name one of those three."
+    },
+    {
+      "interest": "animals",
+      "skill": "quadratics",
+      "before": "For y = x^2 + 8x + 15, what is the x-coordinate of the lowest point?",
+      "after": "A penguin slides on an icy hill shaped like the curve y = x^2 + 8x + 15 on a coordinate grid. What is the x-coordinate of the lowest point of the slide?"
+    },
+    {
+      "interest": "minecraft",
+      "skill": "spatial_reason",
+      "before": "Which set of numbers describes a cube?",
+      "after": "In Minecraft, every block is shaped like a cube. Which set of numbers describes a cube?"
+    },
+    {
+      "interest": "soccer",
+      "skill": "verbal_analogy",
+      "before": "Which pair does NOT show the same relationship as anemometer and wind speed?",
+      "after": "Before a soccer match, the groundskeeper checks an anemometer for wind speed. Which pair does NOT show the same relationship as anemometer and wind speed?"
+    },
+    {
+      "interest": "cooking",
+      "skill": "topology",
+      "before": "A convex polyhedron has 10 vertices and 15 edges. How many faces does it have?",
+      "after": "A pastry chef molds a centerpiece for a wedding cake into the shape of a convex polyhedron. The sculpture has 10 vertices and 15 edges. How many faces does it have?"
+    },
+    {
+      "interest": "basketball",
+      "skill": "data_stats",
+      "before": "What is the mode of 14, 20, 17, 12, 20, 10, 20, 17?",
+      "after": "A basketball player's points per game over eight games were 14, 20, 17, 12, 20, 10, 20, 17. What is the mode of these scores?"
+    }
+  ]
+}
