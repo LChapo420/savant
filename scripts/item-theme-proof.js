@@ -17,9 +17,13 @@ if (!fs.existsSync(process.env.DB_FILE)) fs.writeFileSync(process.env.DB_FILE, '
 const env = require('C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/node_modules/dotenv').parse(fs.readFileSync('C:/coding/claudecommittdIq/folderThing/.env'));
 for (const [k, v] of Object.entries(env)) if (process.env[k] === undefined) process.env[k] = v;
 process.env.XKIRO_PIPELINE = '1';
+process.env.GONKA_PIPELINE = '1';
+process.env.LYCEUM_PIPELINE = '1';
 const LIVE = 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/';
 process.env.ANTHROPIC_LEDGER_FILE = LIVE + 'anthropic-ledger.json';
 process.env.STANDARD_COMPUTE_LEDGER_FILE = LIVE + 'standard-compute-ledger.json';
+process.env.GONKA_LEDGER_FILE = LIVE + 'gonka-ledger.json';
+process.env.LYCEUM_LEDGER_FILE = LIVE + 'lyceum-ledger.json';
 
 const arg = (n, d) => { const a = process.argv.find((x) => x.startsWith(`--${n}=`)); return a ? a.split('=')[1] : d; };
 const N = Number(arg('items', 40));

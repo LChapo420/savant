@@ -25,12 +25,14 @@ const yes = async () => ({ same_skill: true, same_difficulty: true, natural: tru
   assert.match(it.stemProblem(item, ''), /empty/);
   assert.match(it.stemProblem(item, 'Flour 3 12 36 ' + 'x'.repeat(300)), /length|numbers/);
 
-  const run = (deps) => it.theme(item, 'cooking', { dataClass: 'pipeline', deps: { writer: async () => good, solver: agree, judger: yes, ...deps } });
+  const run = (deps) => it.theme(item, 'cooking', { dataClass: 'pipeline', deps: { writer: async () => good, solver: agree, solver2: agree, judger: yes, ...deps } });
   let r = await run({});
   assert.ok(r.ok && r.item.prompt === good && r.item.answer === '9' && r.item.choices.join() === item.choices.join() && r.item.themed === 'cooking');
   // a dissenting blind re-solve rejects; an unjudged one rejects too (never kept on no evidence)
   r = await run({ solver: async () => 'disagreed' }); assert.ok(!r.ok && r.stage === 'resolve');
   r = await run({ solver: async () => 'unjudged' }); assert.ok(!r.ok && r.stage === 'resolve');
+  r = await run({ solver2: async () => 'disagreed' }); assert.ok(!r.ok && r.stage === 'resolve2');
+  r = await run({ solver2: async () => 'unjudged' }); assert.ok(!r.ok && r.stage === 'resolve2');
   // the cross-family judge rejects a theme that changed skill or difficulty, or no answer
   r = await run({ judger: async () => ({ same_skill: true, same_difficulty: false, natural: true }) }); assert.ok(!r.ok && r.stage === 'judge');
   r = await run({ judger: async () => null }); assert.ok(!r.ok && r.stage === 'judge');
@@ -47,7 +49,7 @@ const yes = async () => ({ same_skill: true, same_difficulty: true, natural: tru
   const key = it.poolKey('add_sub', 4, 'Cooking');
   assert.strictEqual(key, 'add_sub|4|cooking');
   assert.strictEqual(it.take({ skillId: 'add_sub', difficulty: 4, domain: 'cooking' }), null); // nothing ready: the base item is served
-  const made = await it.topUp({ skillId: 'add_sub', difficulty: 4, domain: 'cooking', count: 2, deps: { writer: async (b) => b.prompt + ' (cooking)', solver: agree, judger: yes } });
+  const made = await it.topUp({ skillId: 'add_sub', difficulty: 4, domain: 'cooking', count: 2, deps: { writer: async (b) => b.prompt + ' (cooking)', solver: agree, solver2: agree, judger: yes } });
   assert.ok(made >= 0);
   const db = require('../config/db');
   db.insert('themed_items', { key: 'm|5|music', items: [themedOf(1), themedOf(2)], served: 0 });

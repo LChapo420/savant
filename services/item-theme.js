@@ -16,6 +16,7 @@
  *      length of the original, choices and answer untouched, no key leaked into the stem;
  *   2. an independent blind re-solve (services/key-gate.js blindResolve for multiple choice; the same Nemotron
  *      judge answering a typed question) must agree with the ORIGINAL key;
+ *   2b. a second blind re-solve by another family (GLM through Gonka, else Lyceum) must also agree; any disagreement rejects.
  *   3. a judge from another family (Nemotron, not the GLM / DeepSeek / MiniMax writers) must say the theme kept the
  *      skill and the difficulty and is natural for the interest.
  */
@@ -107,6 +108,39 @@ async function resolve(item, stem, { solver } = {}) {
   } catch { return 'unjudged'; }
 }
 
+const SECOND_MODELS = () => [
+  { provider: 'gonka', model: process.env.THEME_SOLVE2_GONKA || 'zai-org/GLM-5.3-Flash' },
+  { provider: 'lyceum', model: process.env.THEME_SOLVE2_LYCEUM || 'z-ai/glm-5.3' },
+];
+
+/** The same blind re-solve by a second model family (GLM): Gonka first, Lyceum if Gonka gives nothing. */
+async function resolve2(item, stem, { solver2 } = {}) {
+  const themed = { ...item, prompt: stem };
+  if (solver2) return solver2(themed);
+  const mc = item.format === 'multiple_choice';
+  const user = mc ? [stem, ...item.choices.map((c, j) => `(${j}) ${c}`)].join(String.fromCharCode(10)) : stem;
+  const schema = mc ? { type: 'object', properties: { index: { type: 'integer' } }, required: ['index'] } : SOLVE_SCHEMA;
+  const system = mc ? 'Work the question out yourself and give the 0-based index of the one correct option. You are not told the key.' : 'Solve the question yourself. Reply with only the final answer.';
+  for (const { provider, model } of SECOND_MODELS()) {
+    try {
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      const p = require(`./providers/${provider}`)[provider];
+      if (!p || !p.isEnabled()) continue;
+      // eslint-disable-next-line no-await-in-loop
+      const out = await p.structured({ role: 'check', model, system, user, schema, schemaName: 'submit_answer', maxTokens: 4000, timeoutMs: 120000 });
+      const d = out && out.data;
+      if (!d) continue;
+      if (mc) {
+        if (!Number.isInteger(d.index)) continue;
+        return String(item.choices[d.index]).trim() === String(item.answer).trim() ? 'agreed' : 'disagreed';
+      }
+      if (d.answer == null) continue;
+      return normAns(d.answer) === normAns(item.answer) ? 'agreed' : 'disagreed';
+    } catch { /* next provider */ }
+  }
+  return 'unjudged';
+}
+
 const JUDGE_SCHEMA = {
   type: 'object',
   properties: { same_skill: { type: 'boolean' }, same_difficulty: { type: 'boolean' }, natural: { type: 'boolean' }, note: { type: 'string' } },
@@ -139,6 +173,9 @@ async function theme(item, domain, { userId = null, dataClass = 'learner', deps 
   if (bad) return { ok: false, stage: 'stem', reason: bad };
   const verdict = await resolve(item, stem, deps);
   if (verdict !== 'agreed') return { ok: false, stage: 'resolve', reason: `blind re-solve ${verdict}` };
+  // Second family (GLM via Gonka, else Lyceum): both families must match the ORIGINAL key; any disagreement or no answer rejects.
+  const second = await resolve2(item, stem, deps);
+  if (second !== 'agreed') return { ok: false, stage: 'resolve2', reason: `second-family re-solve ${second}` };
   const j = await judge(item, stem, domain, deps);
   if (!j) return { ok: false, stage: 'judge', reason: 'no judge answer' };
   if (!j.same_skill || !j.same_difficulty || !j.natural) return { ok: false, stage: 'judge', reason: `judge: skill ${j.same_skill}, difficulty ${j.same_difficulty}, natural ${j.natural}` };
