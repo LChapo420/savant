@@ -53,7 +53,7 @@ const iso = (ms) => new Date(ms).toISOString();
   console.log('1. the live list');
   await check('every live footprint is in the design list at the design validity, and each design footprint is its own family', () => {
     const design = new Map(FOOTPRINTS.map((f) => [f.id, f]));
-    assert.ok(defs.LIVE_IDS.length >= 7, `live ${defs.LIVE_IDS.join(',')}`);
+    assert.ok(defs.LIVE_IDS.length >= 14, `live ${defs.LIVE_IDS.join(',')}`);
     for (const d of defs.LIVE) {
       const f = design.get(d.fp);
       assert.ok(f, `${d.fp} is not in the design list`);
@@ -67,7 +67,8 @@ const iso = (ms) => new Date(ms).toISOString();
     assert.strictEqual(defs.LIVE_IDS.length + defs.DESIGN_ONLY.length, FOOTPRINTS.length);
     for (const must of ['extra_practice', 'retry_after_fail', 'plan_set_and_kept', 'rule_switch', 'hint_or_try']) assert.ok(defs.LIVE_IDS.includes(must), must);
     assert.strictEqual(defs.LIVE_IDS.filter((id) => ['why_or_steps', 'deeper_or_move_on'].includes(id)).length, 2, 'exactly the two new in-lesson choice points');
-    for (const id of ['race_or_solo', 'link_prompt', 'feel_tap']) assert.ok(defs.DESIGN_ONLY.includes(id), `${id} stays design only`);
+    assert.strictEqual(defs.DESIGN_ONLY.length, 0, 'all 14 design footprints are live');
+    assert.strictEqual(defs.LIVE_IDS.length, 14);
   });
   await check('the simulators walk INDICATORS and BY_STAT, which do not contain footprints; reading and storing evidence uses the full set', () => {
     for (const d of defs.LIVE) {
@@ -116,7 +117,7 @@ const iso = (ms) => new Date(ms).toISOString();
     assert.strictEqual(fp.choicesOffered(db.byId('users', adult.id)), true);
     const fed = fp.onChoices(adult.id, { session, level: 4, choices: [
       { id: 'why_or_steps', choice: 'why' }, { id: 'why_or_steps', choice: 'steps' }, { id: 'deeper_or_move_on', choice: 'deeper' },
-      { id: 'deeper_or_move_on', choice: 'banana' }, { id: 'race_or_solo', choice: 'race' }, null,
+      { id: 'deeper_or_move_on', choice: 'banana' }, { id: 'bogus', choice: 'race' }, null,
     ] });
     assert.deepStrictEqual(fed.map((r) => [r.ind, r.x]), [['fp.why_first', 1], ['fp.deeper', 1]]);
     const rows = rowsOf(adult.id);

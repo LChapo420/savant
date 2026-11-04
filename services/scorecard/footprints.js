@@ -20,7 +20,11 @@
  *   hint_or_try          the coach opened within 8 s of a question appearing, or after trying first (the coach button already exists)
  *   why_or_steps         the new "Why does this work?" choice under a lesson's worked example (public/js/session.js)
  *   deeper_or_move_on    the new "Go deeper / Move on" choice on the level-complete card (public/js/session.js)
- * Design only: race_or_solo, link_prompt, feel_tap, topic_pick, skip_and_exit, reward_panel, ask_a_question.
+ *   race_or_solo, link_prompt, feel_tap   three one-tap choices on the level-complete card (public/js/session.js), logged as a number, never text
+ *   skip_and_exit        share of the week's questions skipped (weekly sweep, from `items`)
+ *   ask_a_question       share of the week's tutor messages that were questions and not answers to the tutor's own question (from `tutor_archive`)
+ *   topic_pick           share of subjects started in the week that match a stated interest or goal
+ *   reward_panel         whether the learner keeps the streak and XP on screen (their own hide_stats switch): a weaker stand-in for panel opens
  */
 'use strict';
 const db = require('../../config/db');
@@ -122,6 +126,9 @@ function onBlock(userId, { session, level, items }) {
 const CHOICES = {
   why_or_steps: { ind: 'fp.why_first', pick: { why: 1, steps: 0 } },
   deeper_or_move_on: { ind: 'fp.deeper', pick: { deeper: 1, move: 0 } },
+  race_or_solo: { ind: 'fp.race', pick: { race: 1, solo: 0 } },
+  link_prompt: { ind: 'fp.link', pick: { linked: 1, skipped: 0 } },
+  feel_tap: { ind: 'fp.feel', pick: { f1: -1, f2: -0.5, f3: 0, f4: 0.5, f5: 1 } },
 };
 
 /**
@@ -133,7 +140,7 @@ function onChoices(userId, { session, level, choices }) {
     if (!Array.isArray(choices) || !may(userId) || !session || session.preview || NOT_PRACTICE.has(session.kind)) return null;
     const rows = [];
     const seen = new Set();
-    for (const c of choices.slice(0, 4)) {
+    for (const c of choices.slice(0, 6)) {
       const spec = c && CHOICES[c.id];
       if (!spec || seen.has(c.id) || !Object.prototype.hasOwnProperty.call(spec.pick, String(c.choice))) continue;
       seen.add(c.id);
@@ -150,6 +157,64 @@ function onRetentionGoal(userId, goal) {
     if (!goal || !goal.horizon || !may(userId)) return null;
     return feed(userId, [{ ind: 'fp.retention_choice', x: goal.horizon === 'forever' ? 0 : 1, n: 1 }]);
   });
+}
+
+// ── voluntary reads of rows the app already keeps (weekly) ────────────────────
+/** Skipped questions of the week's own sittings (a skip exam's items are not skips by choice). */
+function skipRow(userId, sessions) {
+  const ids = new Set(sessions.filter((s) => !s.preview && !NOT_PRACTICE.has(s.kind)).map((s) => s.id));
+  if (!ids.size) return null;
+  const items = db.find('items', (i) => i.user_id === userId && ids.has(i.session_id) && i.role !== 'retention' && (i.skipped || (i.user_answer !== null && i.user_answer !== undefined)));
+  if (items.length < 5) return null;
+  return { ind: 'fp.skip_rate', x: items.filter((i) => i.skipped).length / items.length, n: Math.min(items.length, 100) };
+}
+
+const QUESTION_RE = /\?\s*$|^\s*(why|how|what|when|where|which|who|can|could|does|do|is|are|will|would)\b/i;
+
+/** The learner's tutor messages since `since`: share that are questions, leaving out replies to a question the tutor just asked. */
+function askRow(userId, since) {
+  const row = db.findOne('tutor_archive', (r) => r.user_id === userId);
+  const list = (row && row.entries) || [];
+  let n = 0;
+  let q = 0;
+  for (let k = 0; k < list.length; k++) {
+    const e = list[k];
+    if (!e.learner || Date.parse(e.at || 0) < since) continue;
+    const prev = k ? String(list[k - 1].tutor || '') : '';
+    if (/\?\s*$/.test(prev.trim())) continue; // an answer to the tutor's question, not the learner's own
+    n += 1;
+    if (QUESTION_RE.test(e.learner)) q += 1;
+  }
+  return n >= 3 ? { ind: 'fp.ask_rate', x: q / n, n: Math.min(n, 100) } : null;
+}
+
+const wordKeys = (t) => String(t || '').toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length >= 3).map((w) => w.replace(/(ing|es|s)$/, ''));
+
+/** Subjects started since `since` by the learner's own pick, against interests and goals they stated (pure: the phrases are passed in). */
+function topicPickRow(enrollments, phrases, since) {
+  const keys = new Set((phrases || []).flatMap(wordKeys));
+  if (!keys.size) return null;
+  const picked = (enrollments || []).filter((e) => Date.parse(e.placed_at || e.created_at || 0) >= since && !['catch_up', 'owner_skip'].includes(e.placed_by));
+  if (!picked.length) return null;
+  const hit = picked.filter((e) => wordKeys(`${e.track_id} ${e.title || ''}`).some((w) => keys.has(w))).length;
+  return { ind: 'fp.topic_match', x: hit / picked.length, n: picked.length };
+}
+
+/** Stated interests and goals: the survey, the tutor's facts. Never throws. */
+function statedPhrases(userId) {
+  const out = [];
+  try {
+    const survey = (lazy('../learner').getProfile(userId) || {}).survey || {};
+    for (const k of ['interests', 'hobbies', 'sports', 'studying']) if (survey[k]) out.push(String(survey[k]));
+  } catch { /* none */ }
+  try { for (const f of lazy('../tutor-facts').list(userId)) if (f.kind === 'interest' || f.kind === 'goal') out.push(f.text); } catch { /* none */ }
+  return out;
+}
+
+/** The streak and XP kept on screen: only where the learner made the choice themselves (prefs hide_stats true or false). */
+function rewardsRow(user) {
+  if (!user || typeof user.hide_stats !== 'boolean') return null;
+  return { ind: 'fp.rewards_shown', x: user.hide_stats ? 0 : 1, n: 1 };
 }
 
 // ── the weekly read of what the app already stores ───────────────────────────
@@ -266,6 +331,10 @@ function weeklySweep(userId, { now = Date.now() } = {}) {
     const rows = [
       ...extraPracticeRows(recent, { goalMinutes: plan.savedMinutes(userId), tz }),
       planKeptRow(userId, since, goalExplicit),
+      skipRow(userId, recent),
+      askRow(userId, since),
+      topicPickRow(db.find('enrollments', (e) => e.user_id === userId), statedPhrases(userId), since),
+      rewardsRow(user),
       retryRow(userId, all, { from: Math.max(Date.parse(card.fp_retry_to || 0) || 0, now - 9 * DAY), to: now - 2 * DAY, now }),
     ].filter(Boolean);
     const fed = feed(userId, rows, { now });
@@ -283,5 +352,5 @@ function prune(now = Date.now()) {
 
 module.exports = {
   may, choicesOffered, feed, onBlock, onChoices, onRetentionGoal, weeklySweep, prune,
-  hintFirstRow, switchCostRow, extraPracticeRows, planKeptRow, retryRow, ownSittings, KEEP_DAYS, HINT_FIRST_MS,
+  hintFirstRow, switchCostRow, skipRow, askRow, topicPickRow, rewardsRow, extraPracticeRows, planKeptRow, retryRow, ownSittings, KEEP_DAYS, HINT_FIRST_MS,
 };
