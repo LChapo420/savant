@@ -86,9 +86,11 @@ for (const trackId of TRACKS) {
   db.insert('placement_question_sets', { track_id: trackId, grade_ids: gradeIds, grades: dummy, written_at: new Date().toISOString() });
   const gradeWithExtras = gradeIds.find((id) => (extra.grades[id] || []).length);
   const have = extra.grades[gradeWithExtras].length;
+  // A track with placement revisions (math) shows the revised seven in place of the stored ones; the walk and the climb see the same seven.
+  const revised = fs.existsSync(path.join(__dirname, '..', 'content', 'placement-revisions', `${trackId}.json`));
   const all = subjectPlacement.questionsFor(trackId, gradeWithExtras);
   const core = subjectPlacement.questionsFor(trackId, gradeWithExtras, { core: true });
-  check('the walk sees the stored seven then the extras', all.length === 7 + have && all.slice(0, 7).every((q, i) => q.prompt === `stored ${gradeIds.indexOf(gradeWithExtras)}.${i}`), all.length);
+  check('the walk sees the stored seven then the extras', all.length === 7 + have && all.slice(0, 7).every((q, i) => q.prompt === core[i].prompt) && (revised || core.every((q, i) => q.prompt === `stored ${gradeIds.indexOf(gradeWithExtras)}.${i}`)), all.length);
   check('the full climb still gets exactly seven', core.length === 7 && core.every((q) => !q.extra));
   check('every extra reaches the walk with its calibrated point', all.slice(7).every((q) => q.extra && Number.isFinite(q.pos)));
   check('extras keep their own band (hard or capstone), not a position band', all.slice(7).every((q) => ['hard', 'capstone'].includes(q.band)));
