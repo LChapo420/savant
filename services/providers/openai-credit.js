@@ -6,6 +6,7 @@
  *   makeProvider({ name, label, ledger, keyEnv, baseEnv, defaultBase, defaultModel, modelEnv, prefix })
  *     prefix  env prefix, e.g. GONKA -> GONKA_PIPELINE, GONKA_LEARNER, GONKA_LEARNER_UNTIL, GONKA_TIMEOUT_MS.
  *
+ * cfg.pipelineOnly: never learner data (stealth models log prompts); cfg.free: $0 model behind a request counter (services/crouton-ledger.js).
  * Data (owner, 2026-11-04): fine for learner data until <PREFIX>_LEARNER_UNTIL (default 2026-11-14T06:00:00Z, the day before the
  * beta), with the usual outside-AI consent rule (services/ai.js munitoAllowedFor sets req.munito; pool.js checks it). After that
  * date, or with <PREFIX>_LEARNER=off, the provider is pipeline-only: a process opts in with <PREFIX>_PIPELINE=1 (or MUNITO_PIPELINE=1,
@@ -30,7 +31,7 @@ function makeProvider(cfg) {
   const MODEL = () => String(process.env[cfg.modelEnv] || cfg.defaultModel).trim();
   const modelOf = (m) => (typeof m === 'string' && m.trim() ? m.trim() : MODEL());
   const pipelineOptIn = () => process.env[`${P}_PIPELINE`] === '1' || process.env.MUNITO_PIPELINE === '1';
-  const learnerOn = (now = Date.now()) => String(process.env[`${P}_LEARNER`] || 'on').toLowerCase() !== 'off'
+  const learnerOn = (now = Date.now()) => !cfg.pipelineOnly && String(process.env[`${P}_LEARNER`] || 'on').toLowerCase() !== 'off'
     && now < Date.parse(process.env[`${P}_LEARNER_UNTIL`] || DEFAULT_UNTIL);
   const noJson = new Set(); // models that refused response_format
 
@@ -88,8 +89,8 @@ function makeProvider(cfg) {
   const provider = {
     name: cfg.name,
     outside: true,
-    learnerData: true, // inside the learner window and the consent rule only (pool.js)
-    paid: true,
+    learnerData: !cfg.pipelineOnly, // inside the learner window and the consent rule only (pool.js)
+    paid: !cfg.free,
     isConfigured() { return !!KEY(); },
     isEnabled() { return this.isConfigured() && (pipelineOptIn() || learnerOn()) && ledger.canSpend(0.002); },
     status() {

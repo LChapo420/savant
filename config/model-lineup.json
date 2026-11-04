@@ -623,6 +623,76 @@
         "price_note": "Grokified price per the owner (0.63/1.25), the cheapest capable Grok: the judge/check slot. Ledger: services/grokified-ledger.js."
       },
       {
+        "id": "lyceum:z-ai/glm-5.3",
+        "provider": "lyceum",
+        "model": "z-ai/glm-5.3",
+        "label": "Lyceum GLM 5.3 (paid, $250 credit; strong judge)",
+        "family": "glm",
+        "concurrency": 3,
+        "rpm": 60,
+        "hint_ms": 20000,
+        "price_in": 1.4,
+        "price_out": 4.4,
+        "data_class": "pipeline",
+        "price_note": "Lyceum list price (https://lyceum.technology/resources/pricing/, read 2026-11-04). Ledger: services/lyceum-ledger.js, $250 hard cap (owner; dashboard shows $500, pending Lyceum's answer). Learner data allowed until LYCEUM_LEARNER_UNTIL (2026-11-14) with the consent rule; pipeline otherwise. Strong model: judges and hard writing only. Pricier than Gonka/Coral/Munito for the same flash models, so only the strong models are pooled (owner, 4 Nov)."
+      },
+      {
+        "id": "lyceum:qwen/qwen3.8-2.4t-a95b",
+        "provider": "lyceum",
+        "model": "qwen/qwen3.8-2.4t-a95b",
+        "label": "Lyceum Qwen3.8 2.4T (paid, $250 credit; strong judge)",
+        "family": "qwen",
+        "concurrency": 3,
+        "rpm": 60,
+        "hint_ms": 20000,
+        "price_in": 2.5,
+        "price_out": 6,
+        "data_class": "pipeline",
+        "price_note": "Lyceum list price (https://lyceum.technology/resources/pricing/, read 2026-11-04). Ledger: services/lyceum-ledger.js, $250 hard cap (owner; dashboard shows $500, pending Lyceum's answer). Learner data allowed until LYCEUM_LEARNER_UNTIL (2026-11-14) with the consent rule; pipeline otherwise. Strong model: judges and hard writing only. Pricier than Gonka/Coral/Munito for the same flash models, so only the strong models are pooled (owner, 4 Nov)."
+      },
+      {
+        "id": "lyceum:deepseek/deepseek-v4-pro-0813",
+        "provider": "lyceum",
+        "model": "deepseek/deepseek-v4-pro-0813",
+        "label": "Lyceum DeepSeek V4 Pro 0813 (paid, $250 credit; strong judge)",
+        "family": "deepseek",
+        "concurrency": 3,
+        "rpm": 60,
+        "hint_ms": 20000,
+        "price_in": 2,
+        "price_out": 4,
+        "data_class": "pipeline",
+        "price_note": "Lyceum list price (https://lyceum.technology/resources/pricing/, read 2026-11-04). Ledger: services/lyceum-ledger.js, $250 hard cap (owner; dashboard shows $500, pending Lyceum's answer). Learner data allowed until LYCEUM_LEARNER_UNTIL (2026-11-14) with the consent rule; pipeline otherwise. Strong model: judges and hard writing only. Pricier than Gonka/Coral/Munito for the same flash models, so only the strong models are pooled (owner, 4 Nov)."
+      },
+      {
+        "id": "lyceum:moonshotai/kimi-k3",
+        "provider": "lyceum",
+        "model": "moonshotai/kimi-k3",
+        "label": "Lyceum Kimi K3 (paid, $250 credit; strongest judge)",
+        "family": "kimi",
+        "concurrency": 3,
+        "rpm": 60,
+        "hint_ms": 25000,
+        "price_in": 3,
+        "price_out": 15,
+        "data_class": "pipeline",
+        "price_note": "Lyceum list price (https://lyceum.technology/resources/pricing/, read 2026-11-04). Ledger: services/lyceum-ledger.js, $250 hard cap (owner; dashboard shows $500, pending Lyceum's answer). Learner data allowed until LYCEUM_LEARNER_UNTIL (2026-11-14) with the consent rule; pipeline otherwise. Strongest and dearest Lyceum model: judges and hard writing only. Pricier than Gonka/Coral/Munito for the same flash models, so only the strong models are pooled (owner, 4 Nov)."
+      },
+      {
+        "id": "crouton:stealth/crouton-alpha",
+        "provider": "crouton",
+        "model": "stealth/crouton-alpha",
+        "label": "Crouton Alpha (OpenRouter free stealth model; 950 requests per UTC day)",
+        "family": "crouton",
+        "concurrency": 4,
+        "rpm": 30,
+        "hint_ms": 2500,
+        "price_in": 0,
+        "price_out": 0,
+        "data_class": "pipeline",
+        "price_note": "$0, 1M context, 1000 requests/day (we stop at 950: services/crouton-ledger.js). Measured 4 Nov: 35/35 on 40 bank items where it answered, 5/40 not valid JSON, p50 1.7 s. PIPELINE ONLY: stealth models log prompts, never learner data."
+      },
+      {
         "id": "grokified:grok-4.7",
         "provider": "grokified",
         "model": "grok-4.7",
@@ -701,7 +771,12 @@
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
           "grokified:grok-4.3",
-          "coral:deepseek-v4.1-flash"
+          "coral:deepseek-v4.1-flash",
+          "lyceum:z-ai/glm-5.3",
+          "lyceum:deepseek/deepseek-v4-pro-0813",
+          "lyceum:moonshotai/kimi-k3",
+          "crouton:stealth/crouton-alpha",
+          "lyceum:qwen/qwen3.8-2.4t-a95b"
         ],
         "basis": "blind judges; the night runner still enforces writer/judge family independence on its own lanes"
       },
@@ -865,7 +940,12 @@
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
           "grokified:grok-4.3",
-          "coral:deepseek-v4.1-flash"
+          "coral:deepseek-v4.1-flash",
+          "lyceum:z-ai/glm-5.3",
+          "lyceum:deepseek/deepseek-v4-pro-0813",
+          "lyceum:moonshotai/kimi-k3",
+          "crouton:stealth/crouton-alpha",
+          "lyceum:qwen/qwen3.8-2.4t-a95b"
         ],
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
       },
@@ -917,7 +997,8 @@
         "allow": [
           "munito:deepseek-ai/deepseek-v4-flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.3"
+          "grokified:grok-4.3",
+          "crouton:stealth/crouton-alpha"
         ]
       },
       "placement_unit_judge": {
@@ -928,14 +1009,16 @@
         "allow": [
           "munito:deepseek-ai/deepseek-v4-flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.3"
+          "grokified:grok-4.3",
+          "crouton:stealth/crouton-alpha"
         ]
       },
       "fact_claims": {
         "allow": [
           "munito:deepseek-ai/deepseek-v4-flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.3"
+          "grokified:grok-4.3",
+          "crouton:stealth/crouton-alpha"
         ],
         "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },
@@ -943,7 +1026,8 @@
         "allow": [
           "munito:deepseek-ai/deepseek-v4-flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.3"
+          "grokified:grok-4.3",
+          "crouton:stealth/crouton-alpha"
         ],
         "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },

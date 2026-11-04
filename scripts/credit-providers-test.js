@@ -160,7 +160,7 @@ const optIn = (v) => { process.env[`${v.pre}_API_KEY`] = 'test-key-not-real'; pr
   await check('pool: pipeline requests list Gonka ahead of Munito, Grok after every other paid slot, only for judge and hard-writing tasks', () => withChain((chain) => {
     const ids = (task) => pool.candidatesFor({ role: 'blocks', task, kind: 'structured', dataClass: 'pipeline' }, { chain }).map((s) => s.id);
     for (const task of ['lesson_write', 'night_write', 'block_fill', 'block_layout', 'level_editor', 'material_pack', 'author_items', 'game_questions', 'night_judge', 'material_verify']) {
-      const l = ids(task);
+      const l = ids(task).filter((i) => !/^(lyceum|crouton):/.test(i)); // Lyceum's strong slots sort by price among the paid ones (lyceum-crouton-test)
       const gk = /judge|verify/.test(task) ? GJ : GK; // judges get grok-4.3, hard writing grok-4.7
       assert.ok(l.includes(GD) && l.includes(GL) && l.includes(gk) && (gk === GJ ? !l.includes(GK) : !l.includes(GJ)), `${task}: ${l}`);
       assert.ok(l.indexOf(GD) < l.indexOf(MD) && l.indexOf(GL) < l.indexOf(MD), `${task}: Gonka ahead of Munito`);

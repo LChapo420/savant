@@ -106,7 +106,7 @@ const goodReview = async () => ({ pass: true, reasons: [], model: 'fake-reviewer
   {
     const saved = {};
     const set = (k, v) => { if (!(k in saved)) saved[k] = process.env[k]; process.env[k] = v; };
-    set('GROKIFIED_API_KEY', 'k-not-real'); set('GONKA_API_KEY', 'k-not-real'); set('XKIRO_API_KEY', 'k-not-real'); delete process.env.MUNITO_API_KEY; delete process.env.NVIDIA_API_KEY;
+    set('GROKIFIED_API_KEY', 'k-not-real'); set('GONKA_API_KEY', 'k-not-real'); set('XKIRO_API_KEY', 'k-not-real'); delete process.env.MUNITO_API_KEY; delete process.env.NVIDIA_API_KEY; delete process.env.OPENROUTER_API_KEY;
     set('GROKIFIED_LEDGER_FILE', path.join(tmp, 'g1.json')); set('GONKA_LEDGER_FILE', path.join(tmp, 'g2.json'));
     const w = A.writers({ XKIRO_API_KEY: 'x', GROKIFIED_API_KEY: 'k', GONKA_API_KEY: 'k' }, new Date('2026-11-04T00:00:00Z'));
     ok(w.map((x) => x.model).join('|') === 'minimax/minimax-m3.1-flash|grok-build-0.1|deepseek-ai/DeepSeek-V4-Flash-0731|zai-org/GLM-5.3-Flash', 'writers: MiniMax (free), then grok-build-0.1, Gonka DeepSeek, Gonka GLM');

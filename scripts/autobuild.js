@@ -124,13 +124,15 @@ function weakeningGate(diffText) {
 }
 
 // ---------- models ----------
-const FAMILY = { xkiro: 'minimax', munito: 'deepseek', nvidia: 'nemotron', grokified: 'grok', gonka_ds: 'deepseek', gonka_glm: 'glm' };
+const FAMILY = { xkiro: 'minimax', munito: 'deepseek', nvidia: 'nemotron', grokified: 'grok', gonka_ds: 'deepseek', gonka_glm: 'glm', crouton: 'crouton' };
 // Credit providers (4 Nov 2026): ledger module per writer key. A key may name the provider with ":model" for the second Gonka model.
 const CREDIT = { grokified: { ledger: '../services/grokified-ledger', prov: 'grokified', pipeline: 'GROKIFIED_PIPELINE' }, gonka: { ledger: '../services/gonka-ledger', prov: 'gonka', pipeline: 'GONKA_PIPELINE' }, munito: { ledger: '../services/munito-ledger', prov: 'munito', pipeline: 'MUNITO_PIPELINE' } };
 const creditOf = (w) => CREDIT[String(w.key).split(':')[0]];
 function writers(env, now = new Date()) {
   const list = [];
   if (env.XKIRO_API_KEY && now < new Date('2026-11-07T00:00:00Z')) list.push({ key: 'xkiro', family: FAMILY.xkiro, model: 'minimax/minimax-m3.1-flash', base: env.XKIRO_BASE_URL || 'https://api.xkiro.com/v1', apiKey: env.XKIRO_API_KEY, paid: false });
+  // Crouton Alpha (OpenRouter free stealth model, 950 requests per UTC day via services/crouton-ledger.js): the first option after the expiring MiniMax while it is free and under the day's counter.
+  if (env.OPENROUTER_API_KEY && env.CROUTON_AUTOBUILD !== 'off' && require('../services/crouton-ledger').canSpend()) list.push({ key: 'crouton', family: FAMILY.crouton, model: 'stealth/crouton-alpha', base: require('../services/providers/crouton').baseUrl(env.CROUTON_BASE_URL), apiKey: env.OPENROUTER_API_KEY, paid: false });
   // Writer order (owner, 4 Nov): after the free expiring MiniMax, Grokified's grok-build-0.1 (coding model), then Gonka DeepSeek V4 Flash and GLM 5.3 Flash.
   const gb = (key, family, model, base, apiKey) => ({ key, family, model, base, apiKey, paid: true });
   if (env.GROKIFIED_API_KEY) list.push(gb('grokified', FAMILY.grokified, 'grok-build-0.1', require('../services/providers/grokified').baseUrl(env.GROKIFIED_BASE_URL), env.GROKIFIED_API_KEY));
@@ -155,6 +157,9 @@ function runAider(w, cwd, msgFile, files, timeoutMs, env) {
   const m = out.match(/Tokens:\s*([\d.,]+k?) sent,\s*([\d.,]+k?) received/i);
   const tokens = m ? { input_tokens: k(m[1].replace(/,/g, '')), output_tokens: k(m[2].replace(/,/g, '')) } : { input_tokens: 0, output_tokens: 0 };
   let costUsd = 0;
+  if (w.key === 'crouton') { // free, but every request counts against the day's 950: one per "Tokens:" line aider printed (at least one)
+    try { const L = require('../services/crouton-ledger'); for (let i = 0; i < Math.max(1, (out.match(/Tokens:/g) || []).length); i++) L.reserve(); } catch (err) { /* day's counter reached */ }
+  }
   const credit = w.paid ? creditOf(w) : null;
   if (credit) {
     try {
@@ -176,6 +181,7 @@ async function review({ writer, task, diff }) {
   // Reviewer: a different family than the writer. Grok 4.3 first (the cheapest capable Grok, and a different family from the DeepSeek/GLM/MiniMax writers);
   // for a Grok writer, Gonka GLM (then DeepSeek), then Munito, then NVIDIA.
   const order = [];
+  if (writer.family !== FAMILY.crouton && process.env.OPENROUTER_API_KEY && process.env.CROUTON_AUTOBUILD !== 'off' && require('../services/crouton-ledger').canSpend()) order.push('crouton');
   if (writer.family !== FAMILY.grokified && process.env.GROKIFIED_API_KEY) order.push('grokified');
   if (writer.family !== FAMILY.gonka_glm && process.env.GONKA_API_KEY) order.push('gonka:glm');
   if (writer.family !== FAMILY.gonka_ds && process.env.GONKA_API_KEY) order.push('gonka:deepseek');
@@ -185,7 +191,11 @@ async function review({ writer, task, diff }) {
   for (const which of order) {
     try {
       let r;
-      if (CREDIT[which.split(':')[0]]) {
+      if (which === 'crouton') {
+        process.env.CROUTON_PIPELINE = '1';
+        const c = await require('../services/providers/crouton').crouton.chat({ task: 'autobuild-review', system, messages: [{ role: 'user', content: user }], maxTokens: 1500, model: 'stealth/crouton-alpha' });
+        r = { text: c.text, model: c.model, costUsd: 0 };
+      } else if (CREDIT[which.split(':')[0]]) {
         const cr = CREDIT[which.split(':')[0]];
         process.env[cr.pipeline] = '1';
         const model = { grokified: 'grok-4.3', 'gonka:glm': 'zai-org/GLM-5.3-Flash', 'gonka:deepseek': 'deepseek-ai/DeepSeek-V4-Flash-0731' }[which];
@@ -330,7 +340,9 @@ function loadEnv() {
     const parsed = require('dotenv').parse(fs.readFileSync(ENV_FILE));
     Object.assign(base, parsed);
   } catch (e) { /* no .env: free paths only */ }
-  base.XKIRO_PIPELINE = '1'; base.MUNITO_PIPELINE = '1'; base.GONKA_PIPELINE = '1'; base.GROKIFIED_PIPELINE = '1';
+  base.XKIRO_PIPELINE = '1'; base.MUNITO_PIPELINE = '1'; base.GONKA_PIPELINE = '1'; base.GROKIFIED_PIPELINE = '1'; base.CROUTON_PIPELINE = '1'; base.LYCEUM_PIPELINE = '1';
+  base.CROUTON_COUNTER_FILE = base.CROUTON_COUNTER_FILE || `${LIVE}/data/crouton-counter.json`;
+  base.LYCEUM_LEDGER_FILE = base.LYCEUM_LEDGER_FILE || `${LIVE}/data/lyceum-ledger.json`;
   base.MUNITO_LEDGER_FILE = base.MUNITO_LEDGER_FILE || `${LIVE}/data/munito-ledger.json`;
   base.GONKA_LEDGER_FILE = base.GONKA_LEDGER_FILE || `${LIVE}/data/gonka-ledger.json`;
   base.GROKIFIED_LEDGER_FILE = base.GROKIFIED_LEDGER_FILE || `${LIVE}/data/grokified-ledger.json`;

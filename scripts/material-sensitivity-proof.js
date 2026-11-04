@@ -286,6 +286,28 @@ const ALL_JUDGES = {
 };
 ALL_JUDGES.nemotron = { id: 'nvidia/nemotron-3-ultra-550b-a55b', family: 'nvidia', call: (s, u) => nvidiaChat('nvidia/nemotron-3-ultra-550b-a55b', s, u) };
 ALL_JUDGES.minimax = { id: 'minimaxai/minimax-m3.1-flash', family: 'minimax', call: (s, u) => nvidiaChat('minimaxai/minimax-m3.1-flash', s, u) };
+// 4 Nov (lyceum branch): Lyceum judges through services/providers/lyceum.js (its $250 ledger; every call counted) and Crouton Alpha (OpenRouter free, pipeline only,
+// 950 requests a day, services/crouton-ledger.js). Synthetic learners only, so no learner data reaches either.
+async function lyceumChat(model, system, user) {
+  process.env.LYCEUM_PIPELINE = '1';
+  process.env.LYCEUM_LEDGER_FILE = process.env.LYCEUM_LEDGER_FILE || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/lyceum-ledger.json';
+  const { lyceum } = require('../services/providers/lyceum'); // eslint-disable-line global-require
+  const r = await gated(() => lyceum.chat({ task: 'judge-calibration', system, messages: [{ role: 'user', content: user }], maxTokens: 6000, model, timeoutMs: 300000 }));
+  usage.judgeTokens[model] = (usage.judgeTokens[model] || 0) + (r.usage.input_tokens || 0) + (r.usage.output_tokens || 0);
+  return r.text;
+}
+for (const [key, id, family] of [['lyc_kimi', 'moonshotai/kimi-k3', 'moonshot'], ['lyc_glm', 'z-ai/glm-5.3', 'zai'], ['lyc_dsv4pro', 'deepseek/deepseek-v4-pro-0813', 'deepseek'], ['lyc_qwen', 'qwen/qwen3.8-2.4t-a95b', 'alibaba']]) {
+  ALL_JUDGES[key] = { id, family, call: (s, u) => lyceumChat(id, s, u) };
+}
+ALL_JUDGES.crouton = { id: 'stealth/crouton-alpha', family: 'crouton', call: async (s, u) => {
+  process.env.CROUTON_PIPELINE = '1';
+  process.env.CROUTON_COUNTER_FILE = process.env.CROUTON_COUNTER_FILE || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/crouton-counter.json';
+  // the proof's setup blanks the OpenRouter key for the app path; Crouton is a free OpenRouter model, so read it here
+  if (!process.env.OPENROUTER_API_KEY) process.env.OPENROUTER_API_KEY = require('dotenv').parse(fs.readFileSync('C:/coding/claudecommittdIq/folderThing/.env')).OPENROUTER_API_KEY || ''; // eslint-disable-line global-require
+  const { crouton } = require('../services/providers/crouton'); // eslint-disable-line global-require
+  const r = await gated(() => crouton.chat({ task: 'judge-calibration', system: s, messages: [{ role: 'user', content: u }], maxTokens: 6000, timeoutMs: 300000 }));
+  return r.text;
+} };
 ALL_JUDGES.mistral4 = { id: 'mistralai/mistral-large-4-1t-a52b', family: 'mistral', call: (s, u) => nvidiaChat('mistralai/mistral-large-4-1t-a52b', s, u) };
 // While a file named XKIRO_DOWN sits next to the cache file (or PROOF_XKIRO_DOWN names one), the xKiro judges qwen and mistral are answered by the NVIDIA ones
 // instead (the records carry the real model ids).

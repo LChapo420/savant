@@ -3,7 +3,7 @@
  * One tiny chat call and one tiny structured (JSON) call per chat model of a credit provider, through its ledger: prints
  * latency, cost, tokens and whether the JSON validated. Live calls; not part of npm test.
  *
- *   node scripts/credit-probe.js gonka|grokified [model ...]
+ *   node scripts/credit-probe.js gonka|grokified|lyceum [model ...]
  *
  * Needs the key in the owner's .env (C:/coding/claudecommittdIq/folderThing/.env, loaded here, never printed). The ledger defaults to
  * the LIVE one in folderThing's data/ so probe spend counts against the real cap; set <PROVIDER>_LEDGER_FILE to use another.
@@ -14,8 +14,8 @@ const path = require('path');
 const ENV = 'C:/coding/claudecommittdIq/folderThing/.env';
 if (fs.existsSync(ENV)) { try { require('dotenv').config({ path: ENV }); } catch { /* rely on the environment */ } }
 const which = process.argv[2];
-const MODULES = { gonka: { ledger: 'gonka-ledger', file: 'GONKA_LEDGER_FILE', skip: /bge-m3/, pre: 'GONKA' }, grokified: { ledger: 'grokified-ledger', file: 'GROKIFIED_LEDGER_FILE', skip: /^$/, pre: 'GROKIFIED' } };
-if (!MODULES[which]) { console.error('usage: node scripts/credit-probe.js gonka|grokified [model ...]'); process.exit(2); }
+const MODULES = { gonka: { ledger: 'gonka-ledger', file: 'GONKA_LEDGER_FILE', skip: /bge-m3/, pre: 'GONKA' }, lyceum: { ledger: 'lyceum-ledger', file: 'LYCEUM_LEDGER_FILE', skip: /^$/, pre: 'LYCEUM' }, grokified: { ledger: 'grokified-ledger', file: 'GROKIFIED_LEDGER_FILE', skip: /^$/, pre: 'GROKIFIED' } };
+if (!MODULES[which]) { console.error('usage: node scripts/credit-probe.js gonka|grokified|lyceum [model ...]'); process.exit(2); }
 const m = MODULES[which];
 if (!process.env[m.file]) process.env[m.file] = path.join('C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq', 'data', `${which}-ledger.json`);
 process.env[`${m.pre}_PIPELINE`] = '1';

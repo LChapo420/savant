@@ -127,7 +127,7 @@ function listPriceOf(model) {
     const co = require('./coral-ledger').PRICES[model]; // eslint-disable-line global-require
     if (co) out = { in: co.input, out: co.output, src: 'coral-ledger PRICES' };
     if (!out) {
-      for (const [led, name] of [['gonka-ledger', 'gonka'], ['grokified-ledger', 'grokified']]) {
+      for (const [led, name] of [['gonka-ledger', 'gonka'], ['grokified-ledger', 'grokified'], ['lyceum-ledger', 'lyceum']]) {
         const row = require(`./${led}`).PRICES[model]; // eslint-disable-line global-require, import/no-dynamic-require
         if (row) { out = { in: row.input, out: row.output, src: `${led} PRICES${name === 'grokified' ? '' : ''}` }; break; }
       }
