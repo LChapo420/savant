@@ -185,6 +185,7 @@ async function viaPool(userId, req, role, task, outside) {
       dataClass: userId ? 'learner' : (req.dataClass || 'learner'),
       xkiro: xkiroAllowedFor(userId),
       munito: munitoAllowedFor(userId),
+      coral: munitoAllowedFor(userId), // same clearance; Coral learner use also needs CORAL_LEARNER=on (off by default)
     },
     // hedgeAfterMs: an interactive caller (the tutor dock) may start the backup sooner than the pool's 20 s floor.
     { timeoutMs: req.timeoutMs || undefined, hedgeAfterMs: req.hedgeAfterMs != null ? req.hedgeAfterMs : undefined, validate: (r) => !!r, trace },
@@ -198,7 +199,7 @@ async function viaPool(userId, req, role, task, outside) {
     console.log(`ai: ${role}${task ? `/${task}` : ''} answered by ${res.pool.slot} after ${Math.round(res.pool.elapsedMs / 1000)}s (${res.pool.attempts.length} attempt${res.pool.attempts.length === 1 ? '' : 's'})`);
   }
   // Standard Compute is not in providers.ALL (it must never enter a chain); the tutor's calls to it are still recorded.
-  recordSpend(userId, res.model, res.usage, providers.ALL[res.pool.provider] || (res.pool.provider === 'standard_compute' ? require('./providers/standard-compute').standardCompute : res.pool.provider === 'munito' ? require('./providers/munito').munito : null),
+  recordSpend(userId, res.model, res.usage, providers.ALL[res.pool.provider] || (res.pool.provider === 'standard_compute' ? require('./providers/standard-compute').standardCompute : res.pool.provider === 'munito' ? require('./providers/munito').munito : res.pool.provider === 'coral' ? require('./providers/coral').coral : null),
     { role, task, ms: res.pool.elapsedMs, tries: (res.pool.attempts || []).length || 1, hedged: res.pool.hedged, costUsd: res.pool.costUsd });
   return res;
 }

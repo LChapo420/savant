@@ -123,6 +123,10 @@ function listPriceOf(model) {
     const mu = require('./munito-ledger').PRICES[model]; // eslint-disable-line global-require
     if (mu) out = { in: mu.input, out: mu.output, src: 'munito-ledger PRICES' };
   }
+  if (!out) {
+    const co = require('./coral-ledger').PRICES[model]; // eslint-disable-line global-require
+    if (co) out = { in: co.input, out: co.output, src: 'coral-ledger PRICES' };
+  }
   if (!out) out = { in: CFG.free_equivalent.in, out: CFG.free_equivalent.out, src: 'free-tier equivalent' };
   priceCache.set(key, out);
   return out;

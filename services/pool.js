@@ -161,6 +161,7 @@ class Slot {
     this.supports = spec.supports || ['structured', 'chat'];
     this.hedgeable = spec.hedgeable !== false; // a paid last resort (Claude) is not a hedge
     this.extra = !!spec.extra; // not part of the app's chain: needs a config allowlist
+    this.fast = !!spec.fast; // a fast paid slot: waiting learners only (Coral Fast)
     this.preferred = !!spec.preferred; // goes first, paid or not (the tutor's Standard Compute slot)
     this.call = spec.call; // async (req, ctx) -> result
     this.estimateUsd = spec.estimateUsd || null; // (req) -> usd, paid slots
@@ -436,7 +437,7 @@ function extraSlots() {
       id: e.id, provider: e.provider, model: e.model, label: e.label || e.id, extra: true,
       priceIn: e.price_in || 0, priceOut: e.price_out || 0, dataClass: e.data_class === 'learner' ? 'learner' : 'pipeline',
       maxConcurrent: e.concurrency || 1, rpm: e.rpm || null, rpmGroup: e.rpm_group || e.id, latencyHintMs: e.hint_ms || 30000,
-      supports: e.supports || adapter.supports, hedgeable: e.hedgeable !== false, timeoutMs: e.timeout_ms || null, family: e.family || null,
+      supports: e.supports || adapter.supports, hedgeable: e.hedgeable !== false, fast: !!e.fast, timeoutMs: e.timeout_ms || null, family: e.family || null,
       dailyTokens: adapter.dailyTokens ? () => adapter.dailyTokens(e) : null,
       enabled: () => adapter.enabled(e),
       call: (rq, ctx) => adapter.call(e, rq, ctx),
@@ -485,6 +486,19 @@ const ADAPTERS = {
       return sc[kind](chainArgs(rq, kind, ctx));
     },
   },
+  // Coral ($100 API credit, services/coral-ledger.js): pipeline-class; learners only with CORAL_LEARNER=on (off by default) and clearance.
+  coral: {
+    supports: ['structured', 'chat'],
+    enabled: () => { try { return !!require('./providers/coral').coral.isEnabled(); } catch { return false; } }, // eslint-disable-line global-require
+    estimateUsd: (e, rq) => require('./coral-ledger').estimate({ model: e.model, inputChars: reqChars(rq), maxTokens: rq.maxTokens || 2048 }), // eslint-disable-line global-require
+    canSpend: (usd) => require('./coral-ledger').canSpend(usd), // eslint-disable-line global-require
+    costOf: (e, res) => require('./coral-ledger').costOf(e.model, res && res.usage), // eslint-disable-line global-require
+    call: (e, rq, ctx) => {
+      const co = require('./providers/coral').coral; // eslint-disable-line global-require
+      const kind = reqKind(rq);
+      return co[kind](chainArgs(rq, kind, ctx, { model: e.model }));
+    },
+  },
   // Munito ($100 free credit, services/munito-ledger.js): pipeline-class only, like Standard Compute; the slot's model is passed on.
   munito: {
     supports: ['structured', 'chat'],
@@ -511,6 +525,13 @@ function munitoLearnerAllowed(slot, req) {
   return require('./providers/munito').learnerOn() && req.munito === true;
 }
 
+/** Coral may serve a learner request only when CORAL_LEARNER=on and this learner is cleared (req.coral, set by services/ai.js). */
+function coralLearnerAllowed(slot, req) {
+  if (slot.provider !== 'coral') return false;
+  // eslint-disable-next-line global-require
+  return require('./providers/coral').learnerOn() && req.coral === true;
+}
+
 function xkiroLearnerAllowed(slot, req) {
   if (slot.provider !== 'xkiro') return false;
   // eslint-disable-next-line global-require
@@ -520,8 +541,10 @@ function xkiroLearnerAllowed(slot, req) {
 /** Why this slot may not serve this task / data class, or null if it may. */
 function refusal(slot, req, kind) {
   const cls = reqClass(req);
-  if (slot.dataClass === 'pipeline' && cls !== 'pipeline' && !xkiroLearnerAllowed(slot, req) && !munitoLearnerAllowed(slot, req)) return 'data: a pipeline slot never gets learner data';
+  if (slot.dataClass === 'pipeline' && cls !== 'pipeline' && !xkiroLearnerAllowed(slot, req) && !munitoLearnerAllowed(slot, req) && !coralLearnerAllowed(slot, req)) return 'data: a pipeline slot never gets learner data';
   if (!slot.supports.includes(kind)) return `does not do ${kind}`;
+  // Coral Fast is for a learner who is waiting: background work (write-ahead, builds) never uses it.
+  if (slot.fast && slotIsBackground(req)) return 'speed: a fast paid slot is for waiting learners, not background work';
   const t = taskConfig(req.task);
   if (req.excludeFamilies && slot.family && req.excludeFamilies.includes(slot.family)) return 'independence: family excluded for this request';
   if (matchesAny(slot.id, t.deny)) return 'quality: denied for this task';
@@ -557,6 +580,9 @@ function tutorStandardCompute(req) {
   });
 }
 
+/** Is this request background work (write-ahead, builds)? Same rule callHedged uses. */
+function slotIsBackground(req) { return req.background != null ? !!req.background : !!((lane.getStore() || {}).background); }
+
 /** All slots that may serve this request, free ones first in the app's order, then paid ones cheapest first. The tutor's Standard Compute slot, when allowed, goes before them. */
 function candidatesFor(req, opts = {}) {
   const providers = providersLib();
@@ -570,7 +596,7 @@ function candidatesFor(req, opts = {}) {
   }
   if (reqClass(req) === 'pipeline' && req.outside !== false && opts.extras !== false) slots.push(...extraSlots());
   // A cleared learner may also use Munito's slots (munitoLearnerAllowed); no other extra slot ever sees learner data.
-  else if (req.munito === true && req.outside !== false && opts.extras !== false) slots.push(...extraSlots().filter((x) => munitoLearnerAllowed(x, req)));
+  else if ((req.munito === true || req.coral === true) && req.outside !== false && opts.extras !== false) slots.push(...extraSlots().filter((x) => munitoLearnerAllowed(x, req) || coralLearnerAllowed(x, req)));
   if (opts.tutorStandardCompute !== false) { const sc = tutorStandardCompute(req); if (sc) slots.unshift(sc); }
   const seen = new Set();
   const ok = slots.filter((s) => {
@@ -580,7 +606,8 @@ function candidatesFor(req, opts = {}) {
   });
   const first = ok.filter((s) => s.preferred);
   const free = ok.filter((s) => !s.paid && !s.preferred);
-  const paid = ok.filter((s) => s.paid && !s.preferred).sort((a, b) => (a.hedgeable === b.hedgeable ? (a.priceOut - b.priceOut) : (a.hedgeable ? -1 : 1)));
+  // Cheapest output first; a waiting learner's request puts a fast slot (Coral Fast) ahead of the other paid ones.
+  const paid = ok.filter((s) => s.paid && !s.preferred).sort((a, b) => (!!b.fast - !!a.fast) || (a.hedgeable === b.hedgeable ? (a.priceOut - b.priceOut) : (a.hedgeable ? -1 : 1)));
   return [...first, ...free, ...paid];
 }
 

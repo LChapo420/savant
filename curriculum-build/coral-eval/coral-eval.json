@@ -1,0 +1,1220 @@
+{
+ "generated_at": "2026-11-04T11:49:27.763Z",
+ "what": "streaming latency, JSON validity and bank multiple-choice accuracy; AI-model output graded by script against known keys or a schema, not real-learner results",
+ "client": {
+  "node": "v24.19.0",
+  "os": "win32 10.0.26200",
+  "calls": "sequential, one at a time, HTTPS from the USA (Omaha, Nebraska), residential connection"
+ },
+ "n_per_length": 10,
+ "items": {
+  "n": 40,
+  "pools": [
+   {
+    "bank": "spanish",
+    "file": "content/unit-placement/spanish.json",
+    "n": 3388
+   },
+   {
+    "bank": "english",
+    "file": "content/unit-placement/english.json",
+    "n": 1620
+   },
+   {
+    "bank": "math",
+    "file": "content/unit-placement/math.json",
+    "n": 4763
+   },
+   {
+    "bank": "reading",
+    "file": "content/unit-placement/reading.json",
+    "n": 1307
+   }
+  ]
+ },
+ "coral_ledger_before": 0.068641,
+ "targets": [
+  {
+   "target": "coral-fast",
+   "label": "Coral deepseek-v4.1-flash-fast",
+   "model": "deepseek-v4.1-flash-fast",
+   "base_host": "inference.coralbricks.ai",
+   "streaming": true,
+   "calls": {
+    "short": {
+     "n": 10,
+     "ok": 10,
+     "failures": {},
+     "ttft_ms": {
+      "p50": 155,
+      "p95": 790,
+      "mean": 237
+     },
+     "total_ms": {
+      "p50": 261,
+      "p95": 954,
+      "mean": 353
+     },
+     "decode_tok_s": {
+      "p50": 480.3,
+      "p95": 519.5,
+      "mean": 435.3
+     },
+     "end_to_end_tok_s": {
+      "p50": 175.8,
+      "mean": 157.3
+     },
+     "out_tokens_mean": 47,
+     "usage_reported_share": 1,
+     "cost_usd_total": 0.000923,
+     "cost_usd_per_call": 0.000092,
+     "raw": [
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 790,
+       "total_ms": 954,
+       "out_tokens": 53
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 317,
+       "total_ms": 402,
+       "out_tokens": 44
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 155,
+       "total_ms": 266,
+       "out_tokens": 53
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 160,
+       "total_ms": 250,
+       "out_tokens": 44
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 146,
+       "total_ms": 237,
+       "out_tokens": 44
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 189,
+       "total_ms": 406,
+       "out_tokens": 45
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 151,
+       "total_ms": 238,
+       "out_tokens": 44
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 150,
+       "total_ms": 261,
+       "out_tokens": 50
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 151,
+       "total_ms": 250,
+       "out_tokens": 49
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 160,
+       "total_ms": 269,
+       "out_tokens": 44
+      }
+     ]
+    },
+    "medium": {
+     "n": 10,
+     "ok": 10,
+     "failures": {},
+     "ttft_ms": {
+      "p50": 119,
+      "p95": 292,
+      "mean": 147
+     },
+     "total_ms": {
+      "p50": 1057,
+      "p95": 1289,
+      "mean": 1009
+     },
+     "decode_tok_s": {
+      "p50": 338.6,
+      "p95": 506.8,
+      "mean": 379
+     },
+     "end_to_end_tok_s": {
+      "p50": 295.8,
+      "mean": 320.9
+     },
+     "out_tokens_mean": 315,
+     "usage_reported_share": 1,
+     "cost_usd_total": 0.005795,
+     "cost_usd_per_call": 0.00058,
+     "raw": [
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 148,
+       "total_ms": 1099,
+       "out_tokens": 322
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 292,
+       "total_ms": 1289,
+       "out_tokens": 326
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 117,
+       "total_ms": 1090,
+       "out_tokens": 322
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 142,
+       "total_ms": 879,
+       "out_tokens": 346
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 119,
+       "total_ms": 1126,
+       "out_tokens": 333
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 112,
+       "total_ms": 683,
+       "out_tokens": 261
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 107,
+       "total_ms": 1162,
+       "out_tokens": 312
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 119,
+       "total_ms": 983,
+       "out_tokens": 333
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 156,
+       "total_ms": 1057,
+       "out_tokens": 314
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 163,
+       "total_ms": 721,
+       "out_tokens": 283
+      }
+     ]
+    },
+    "long": {
+     "n": 10,
+     "ok": 10,
+     "failures": {},
+     "ttft_ms": {
+      "p50": 196,
+      "p95": 518,
+      "mean": 220
+     },
+     "total_ms": {
+      "p50": 3620,
+      "p95": 8720,
+      "mean": 4729
+     },
+     "decode_tok_s": {
+      "p50": 563,
+      "p95": 698.1,
+      "mean": 506.6
+     },
+     "end_to_end_tok_s": {
+      "p50": 540.2,
+      "mean": 480.3
+     },
+     "out_tokens_mean": 1960,
+     "usage_reported_share": 1,
+     "cost_usd_total": 0.035519,
+     "cost_usd_per_call": 0.003552,
+     "raw": [
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 123,
+       "total_ms": 4659,
+       "out_tokens": 1903
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 518,
+       "total_ms": 8704,
+       "out_tokens": 2114
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 253,
+       "total_ms": 5734,
+       "out_tokens": 2180
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 231,
+       "total_ms": 8720,
+       "out_tokens": 1969
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 238,
+       "total_ms": 3620,
+       "out_tokens": 2171
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 196,
+       "total_ms": 3147,
+       "out_tokens": 1841
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 127,
+       "total_ms": 3252,
+       "out_tokens": 1770
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 158,
+       "total_ms": 3879,
+       "out_tokens": 2095
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 211,
+       "total_ms": 2894,
+       "out_tokens": 1873
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 145,
+       "total_ms": 2678,
+       "out_tokens": 1684
+      }
+     ]
+    }
+   },
+   "json_validity": {
+    "n": 20,
+    "valid": 20,
+    "answered": 20,
+    "invalid_reasons": {},
+    "ok": 20,
+    "failures": {},
+    "ttft_ms": {
+     "p50": 122,
+     "p95": 175,
+     "mean": 130
+    },
+    "total_ms": {
+     "p50": 385,
+     "p95": 599,
+     "mean": 418
+    },
+    "decode_tok_s": {
+     "p50": 527.9,
+     "p95": 773.6,
+     "mean": 570.3
+    },
+    "end_to_end_tok_s": {
+     "p50": 352.8,
+     "mean": 379.9
+    },
+    "out_tokens_mean": 154,
+    "usage_reported_share": 1,
+    "cost_usd_total": 0.0076,
+    "cost_usd_per_call": 0.00038
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 40,
+    "right": 37,
+    "accuracy_of_answered": 0.925,
+    "accuracy_of_all": 0.925,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 10
+     },
+     "english": {
+      "n": 10,
+      "right": 9
+     },
+     "math": {
+      "n": 10,
+      "right": 9
+     },
+     "reading": {
+      "n": 10,
+      "right": 9
+     }
+    },
+    "ok": 40,
+    "failures": {},
+    "ttft_ms": {
+     "p50": 123,
+     "p95": 227,
+     "mean": 138
+    },
+    "total_ms": {
+     "p50": 129,
+     "p95": 232,
+     "mean": 145
+    },
+    "decode_tok_s": {
+     "p50": 407.9,
+     "p95": 3649,
+     "mean": 846.4
+    },
+    "end_to_end_tok_s": {
+     "p50": 15.3,
+     "mean": 14.5
+    },
+    "out_tokens_mean": 2,
+    "usage_reported_share": 1,
+    "cost_usd_total": 0.001936,
+    "cost_usd_per_call": 0.000048
+   }
+  },
+  {
+   "target": "coral-standard",
+   "label": "Coral deepseek-v4.1-flash (Standard)",
+   "model": "deepseek-v4.1-flash",
+   "base_host": "inference.coralbricks.ai",
+   "streaming": true,
+   "calls": {
+    "short": {
+     "n": 10,
+     "ok": 10,
+     "failures": {},
+     "ttft_ms": {
+      "p50": 120,
+      "p95": 186,
+      "mean": 131
+     },
+     "total_ms": {
+      "p50": 252,
+      "p95": 397,
+      "mean": 271
+     },
+     "decode_tok_s": {
+      "p50": 366.1,
+      "p95": 438.2,
+      "mean": 349.8
+     },
+     "end_to_end_tok_s": {
+      "p50": 182.3,
+      "mean": 173.1
+     },
+     "out_tokens_mean": 46,
+     "usage_reported_share": 1,
+     "cost_usd_total": 0.000306,
+     "cost_usd_per_call": 0.000031,
+     "raw": [
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 121,
+       "total_ms": 397,
+       "out_tokens": 44
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 140,
+       "total_ms": 252,
+       "out_tokens": 49
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 184,
+       "total_ms": 300,
+       "out_tokens": 44
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 186,
+       "total_ms": 318,
+       "out_tokens": 48
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 109,
+       "total_ms": 226,
+       "out_tokens": 44
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 102,
+       "total_ms": 239,
+       "out_tokens": 47
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 106,
+       "total_ms": 258,
+       "out_tokens": 45
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 116,
+       "total_ms": 230,
+       "out_tokens": 42
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 129,
+       "total_ms": 256,
+       "out_tokens": 49
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 120,
+       "total_ms": 234,
+       "out_tokens": 44
+      }
+     ]
+    },
+    "medium": {
+     "n": 10,
+     "ok": 10,
+     "failures": {},
+     "ttft_ms": {
+      "p50": 123,
+      "p95": 297,
+      "mean": 153
+     },
+     "total_ms": {
+      "p50": 1241,
+      "p95": 2031,
+      "mean": 1298
+     },
+     "decode_tok_s": {
+      "p50": 296.7,
+      "p95": 450.9,
+      "mean": 309.1
+     },
+     "end_to_end_tok_s": {
+      "p50": 261.1,
+      "mean": 266.5
+     },
+     "out_tokens_mean": 329,
+     "usage_reported_share": 1,
+     "cost_usd_total": 0.002026,
+     "cost_usd_per_call": 0.000203,
+     "raw": [
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 205,
+       "total_ms": 944,
+       "out_tokens": 324
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 157,
+       "total_ms": 821,
+       "out_tokens": 299
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 123,
+       "total_ms": 1204,
+       "out_tokens": 353
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 126,
+       "total_ms": 1198,
+       "out_tokens": 318
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 297,
+       "total_ms": 1431,
+       "out_tokens": 359
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 118,
+       "total_ms": 1451,
+       "out_tokens": 319
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 110,
+       "total_ms": 1241,
+       "out_tokens": 324
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 120,
+       "total_ms": 2031,
+       "out_tokens": 312
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 156,
+       "total_ms": 1304,
+       "out_tokens": 350
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 115,
+       "total_ms": 1358,
+       "out_tokens": 333
+      }
+     ]
+    },
+    "long": {
+     "n": 10,
+     "ok": 10,
+     "failures": {},
+     "ttft_ms": {
+      "p50": 123,
+      "p95": 238,
+      "mean": 151
+     },
+     "total_ms": {
+      "p50": 3822,
+      "p95": 4913,
+      "mean": 3845
+     },
+     "decode_tok_s": {
+      "p50": 575.5,
+      "p95": 660.5,
+      "mean": 554.7
+     },
+     "end_to_end_tok_s": {
+      "p50": 550.7,
+      "mean": 532.3
+     },
+     "out_tokens_mean": 2024,
+     "usage_reported_share": 1,
+     "cost_usd_total": 0.012244,
+     "cost_usd_per_call": 0.001224,
+     "raw": [
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 127,
+       "total_ms": 3641,
+       "out_tokens": 2080
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 136,
+       "total_ms": 4151,
+       "out_tokens": 1856
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 238,
+       "total_ms": 4913,
+       "out_tokens": 2277
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 224,
+       "total_ms": 3214,
+       "out_tokens": 1975
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 106,
+       "total_ms": 3822,
+       "out_tokens": 2261
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 116,
+       "total_ms": 3986,
+       "out_tokens": 2227
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 208,
+       "total_ms": 3975,
+       "out_tokens": 2189
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 112,
+       "total_ms": 3450,
+       "out_tokens": 1705
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 114,
+       "total_ms": 2580,
+       "out_tokens": 1442
+      },
+      {
+       "ok": true,
+       "kind": null,
+       "ttft_ms": 123,
+       "total_ms": 4715,
+       "out_tokens": 2227
+      }
+     ]
+    }
+   },
+   "json_validity": {
+    "n": 20,
+    "valid": 20,
+    "answered": 20,
+    "invalid_reasons": {},
+    "ok": 20,
+    "failures": {},
+    "ttft_ms": {
+     "p50": 151,
+     "p95": 365,
+     "mean": 202
+    },
+    "total_ms": {
+     "p50": 452,
+     "p95": 824,
+     "mean": 519
+    },
+    "decode_tok_s": {
+     "p50": 495,
+     "p95": 733.1,
+     "mean": 616.4
+    },
+    "end_to_end_tok_s": {
+     "p50": 316.8,
+     "mean": 308.7
+    },
+    "out_tokens_mean": 149,
+    "usage_reported_share": 1,
+    "cost_usd_total": 0.002657,
+    "cost_usd_per_call": 0.000133
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 40,
+    "right": 37,
+    "accuracy_of_answered": 0.925,
+    "accuracy_of_all": 0.925,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 10
+     },
+     "english": {
+      "n": 10,
+      "right": 9
+     },
+     "math": {
+      "n": 10,
+      "right": 9
+     },
+     "reading": {
+      "n": 10,
+      "right": 9
+     }
+    },
+    "ok": 40,
+    "failures": {},
+    "ttft_ms": {
+     "p50": 127,
+     "p95": 347,
+     "mean": 170
+    },
+    "total_ms": {
+     "p50": 132,
+     "p95": 359,
+     "mean": 177
+    },
+    "decode_tok_s": {
+     "p50": 402.4,
+     "p95": 2850.6,
+     "mean": 814.5
+    },
+    "end_to_end_tok_s": {
+     "p50": 14.9,
+     "mean": 13.2
+    },
+    "out_tokens_mean": 2,
+    "usage_reported_share": 1,
+    "cost_usd_total": 0.000805,
+    "cost_usd_per_call": 0.00002
+   }
+  },
+  {
+   "target": "munito-v41",
+   "label": "Munito deepseek-ai/deepseek-v4.1-flash-1017",
+   "model": "deepseek-ai/deepseek-v4.1-flash-1017",
+   "base_host": "api.munito.ai",
+   "streaming": true,
+   "calls": {
+    "short": {
+     "n": 10,
+     "ok": 0,
+     "failures": {
+      "http_429": 10
+     },
+     "ttft_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "total_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "decode_tok_s": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "end_to_end_tok_s": {
+      "p50": null,
+      "mean": null
+     },
+     "out_tokens_mean": null,
+     "usage_reported_share": null,
+     "cost_usd_total": 0,
+     "cost_usd_per_call": null,
+     "raw": [
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 468,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 458,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 159,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 155,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 162,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 165,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 160,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 163,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 170,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 167,
+       "out_tokens": null
+      }
+     ]
+    },
+    "medium": {
+     "n": 10,
+     "ok": 0,
+     "failures": {
+      "http_429": 10
+     },
+     "ttft_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "total_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "decode_tok_s": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "end_to_end_tok_s": {
+      "p50": null,
+      "mean": null
+     },
+     "out_tokens_mean": null,
+     "usage_reported_share": null,
+     "cost_usd_total": 0,
+     "cost_usd_per_call": null,
+     "raw": [
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 163,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 162,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 160,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 160,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 166,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 170,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 161,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 165,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 154,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 174,
+       "out_tokens": null
+      }
+     ]
+    },
+    "long": {
+     "n": 10,
+     "ok": 0,
+     "failures": {
+      "http_429": 10
+     },
+     "ttft_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "total_ms": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "decode_tok_s": {
+      "p50": null,
+      "p95": null,
+      "mean": null
+     },
+     "end_to_end_tok_s": {
+      "p50": null,
+      "mean": null
+     },
+     "out_tokens_mean": null,
+     "usage_reported_share": null,
+     "cost_usd_total": 0,
+     "cost_usd_per_call": null,
+     "raw": [
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 162,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 170,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 153,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 157,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 164,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 175,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 155,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 153,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 166,
+       "out_tokens": null
+      },
+      {
+       "ok": false,
+       "kind": "http_429",
+       "ttft_ms": null,
+       "total_ms": 156,
+       "out_tokens": null
+      }
+     ]
+    }
+   },
+   "json_validity": {
+    "n": 20,
+    "valid": 0,
+    "answered": 0,
+    "invalid_reasons": {},
+    "ok": 0,
+    "failures": {
+     "http_429": 20
+    },
+    "ttft_ms": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "total_ms": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "decode_tok_s": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "end_to_end_tok_s": {
+     "p50": null,
+     "mean": null
+    },
+    "out_tokens_mean": null,
+    "usage_reported_share": null,
+    "cost_usd_total": 0,
+    "cost_usd_per_call": null
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 0,
+    "right": 0,
+    "accuracy_of_answered": null,
+    "accuracy_of_all": 0,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 0
+     },
+     "english": {
+      "n": 10,
+      "right": 0
+     },
+     "math": {
+      "n": 10,
+      "right": 0
+     },
+     "reading": {
+      "n": 10,
+      "right": 0
+     }
+    },
+    "ok": 0,
+    "failures": {
+     "http_429": 40
+    },
+    "ttft_ms": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "total_ms": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "decode_tok_s": {
+     "p50": null,
+     "p95": null,
+     "mean": null
+    },
+    "end_to_end_tok_s": {
+     "p50": null,
+     "mean": null
+    },
+    "out_tokens_mean": null,
+    "usage_reported_share": null,
+    "cost_usd_total": 0,
+    "cost_usd_per_call": null
+   }
+  }
+ ],
+ "coral_ledger_after": 0.13846,
+ "coral_spend_usd": 0.069819
+}

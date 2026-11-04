@@ -579,6 +579,35 @@
         "price_out": 0.25,
         "data_class": "pipeline",
         "price_note": "Munito list price. Same family as NVIDIA's GLM 5.3 Flash, which rate-limits often."
+      },
+      {
+        "id": "coral:deepseek-v4.1-flash",
+        "provider": "coral",
+        "model": "deepseek-v4.1-flash",
+        "label": "Coral DeepSeek V4.1 Flash (paid, $100 API credit)",
+        "family": "deepseek",
+        "concurrency": 6,
+        "rpm": 60,
+        "hint_ms": 6000,
+        "price_in": 0.19,
+        "price_out": 0.6,
+        "data_class": "pipeline",
+        "price_note": "Coral promotional price. Ledger: services/coral-ledger.js, $100 hard cap. Same model family as the Munito DeepSeek V4.1 slot, cheaper output, so it sorts first among paid slots."
+      },
+      {
+        "id": "coral:deepseek-v4.1-flash-fast",
+        "provider": "coral",
+        "model": "deepseek-v4.1-flash-fast",
+        "label": "Coral DeepSeek V4.1 Flash Fast (paid, $100 API credit)",
+        "family": "deepseek",
+        "concurrency": 4,
+        "rpm": 60,
+        "hint_ms": 2500,
+        "price_in": 0.45,
+        "price_out": 1.8,
+        "data_class": "pipeline",
+        "fast": true,
+        "price_note": "Coral promotional price, advertised ~322 tokens/s. Only for tasks a learner waits on; never background work."
       }
     ],
     "tasks": {
@@ -587,6 +616,7 @@
           "xkiro:minimax/minimax-m3.1-flash",
           "xkiro:qwen/*",
           "unorouter:*",
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash"
@@ -606,6 +636,7 @@
           "xkiro:minimax/minimax-m3.1-flash",
           "xkiro:qwen/*",
           "unorouter:*",
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash"
@@ -616,6 +647,7 @@
         "allow": [
           "xkiro:*",
           "unorouter:*",
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash"
@@ -624,6 +656,7 @@
       },
       "lesson_write": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash"
@@ -633,25 +666,30 @@
       },
       "block_fill": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017",
-          "munito:zai-org/glm-5.3-flash"
+          "munito:zai-org/glm-5.3-flash",
+          "coral:deepseek-v4.1-flash-fast"
         ],
         "timeout_ms": 300000,
         "basis": "as lesson_write"
       },
       "block_layout": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash",
-          "munito:deepseek-ai/deepseek-v4-flash"
+          "munito:deepseek-ai/deepseek-v4-flash",
+          "coral:deepseek-v4.1-flash-fast"
         ],
         "timeout_ms": 180000,
         "basis": "as lesson_write; Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },
       "game_questions": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash"
@@ -661,6 +699,7 @@
       },
       "author_items": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash"
@@ -669,7 +708,11 @@
         "basis": "as lesson_write"
       },
       "lesson_write_urgent": {
-        "timeout_ms": 180000
+        "timeout_ms": 180000,
+        "allow": [
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast"
+        ]
       },
       "fact_read": {
         "timeout_ms": 300000
@@ -682,14 +725,17 @@
       },
       "level_editor": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "munito:zai-org/glm-5.3-flash"
+          "munito:zai-org/glm-5.3-flash",
+          "coral:deepseek-v4.1-flash-fast"
         ],
         "timeout_ms": 300000,
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
       },
       "material_notes": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash"
         ],
@@ -697,6 +743,7 @@
       },
       "material_pack": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash"
         ],
@@ -704,6 +751,7 @@
       },
       "material_outline": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash"
         ],
@@ -711,6 +759,7 @@
       },
       "material_verify": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "munito:zai-org/glm-5.3-flash"
         ],
