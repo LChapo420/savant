@@ -565,6 +565,20 @@
         "price_out": 1.2,
         "data_class": "pipeline",
         "price_note": "Assumed upper bound; the API reports no cost. The ledger (services/standard-compute-ledger.js) uses these figures, so recorded spend is a ceiling."
+      },
+      {
+        "id": "munito:deepseek-ai/deepseek-v4-flash",
+        "provider": "munito",
+        "model": "deepseek-ai/deepseek-v4-flash",
+        "label": "Munito DeepSeek V4 Flash (0.099 / 0.25 per Mtok)",
+        "family": "deepseek",
+        "concurrency": 6,
+        "rpm": 60,
+        "hint_ms": 8000,
+        "price_in": 0.099,
+        "price_out": 0.25,
+        "data_class": "pipeline",
+        "price_note": "Munito list price. Same family as NVIDIA's GLM 5.3 Flash, which rate-limits often."
       }
     ],
     "tasks": {
@@ -630,10 +644,11 @@
         "allow": [
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
           "standard_compute:deepseek/deepseek-v4.1-flash-1017",
-          "munito:zai-org/glm-5.3-flash"
+          "munito:zai-org/glm-5.3-flash",
+          "munito:deepseek-ai/deepseek-v4-flash"
         ],
         "timeout_ms": 180000,
-        "basis": "as lesson_write"
+        "basis": "as lesson_write; Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },
       "game_questions": {
         "allow": [
@@ -682,13 +697,25 @@
         "basis": "eval 2026-10-22: Lightning had 1 false accept in 48"
       },
       "analyze_session": {
-        "timeout_ms": 180000
+        "timeout_ms": 180000,
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4-flash"
+        ],
+        "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },
       "regen_items": {
-        "timeout_ms": 180000
+        "timeout_ms": 180000,
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4-flash"
+        ],
+        "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },
       "personalize_read": {
-        "timeout_ms": 180000
+        "timeout_ms": 180000,
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4-flash"
+        ],
+        "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },
       "spanish_rubric": {
         "timeout_ms": 180000
@@ -697,13 +724,37 @@
         "deny": [
           "nvidia:nvidia/nemotron-3.5-lightning-30b-a3b@*"
         ],
-        "basis": "eval: Lightning blind MC 0.833 with 8 false flags"
+        "basis": "eval: Lightning blind MC 0.833 with 8 false flags; Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)",
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4-flash"
+        ]
       },
       "placement_unit_judge": {
         "deny": [
           "nvidia:nvidia/nemotron-3.5-lightning-30b-a3b@*"
         ],
-        "basis": "eval: Lightning unit location 0.40"
+        "basis": "eval: Lightning unit location 0.40; Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)",
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4-flash"
+        ]
+      },
+      "fact_claims": {
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4-flash"
+        ],
+        "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
+      },
+      "placement_key_judge": {
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4-flash"
+        ],
+        "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
+      },
+      "essay_prompt": {
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4-flash"
+        ],
+        "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       }
     }
   }

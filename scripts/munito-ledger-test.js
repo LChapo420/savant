@@ -140,7 +140,7 @@ const cleanEnv = () => { mu._setFetch(null); for (const k of ['MUNITO_API_KEY', 
     providers.ALL.nvidia = { name: 'nvidia', isEnabled: () => true, isConfigured: () => true, modelFor: () => 'm', costCents: () => 0, structured: async () => ({ data: {}, model: 'm' }), chat: async () => ({ text: 't', model: 'm' }) };
     try {
       const slots = pool.extraSlots().filter((s) => s.id.startsWith('munito:'));
-      assert.deepStrictEqual(slots.map((s) => s.id).sort(), [`munito:${GLM}`, `munito:${DS}`].sort());
+      assert.deepStrictEqual(slots.map((s) => s.id).sort(), [`munito:${GLM}`, `munito:${DS}`, 'munito:deepseek-ai/deepseek-v4-flash'].sort());
       assert.ok(slots.every((s) => s.paid && s.dataClass === 'pipeline'));
       const chain = [providers.ALL.nvidia];
       const ids = (req) => pool.candidatesFor(req, { chain }).map((s) => s.id);
