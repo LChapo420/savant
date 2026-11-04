@@ -131,10 +131,10 @@ const today = () => new Date().toISOString().slice(0, 10);
     pool._reset(); on();
     try {
       const slots = pool.extraSlots().filter((s) => /^(lyceum|crouton):/.test(s.id));
-      assert.strictEqual(slots.length, 5);
+      assert.strictEqual(slots.length, 3); // GLM-5.3 and Kimi K3 (by value, owner 2026-11-04) plus Crouton
       const ids = (task) => pool.candidatesFor({ role: 'blocks', task, kind: 'structured', dataClass: 'pipeline' }, { chain: [] }).map((s) => s.id);
       const KIMI = 'lyceum:moonshotai/kimi-k3'; const FLASH = 'lyceum:z-ai/glm-5.3-flash'; const CR = 'crouton:stealth/crouton-alpha';
-      for (const t of ['night_judge', 'material_verify']) { const i = ids(t); assert.ok(i.includes('lyceum:qwen/qwen3.8-2.4t-a95b') && !i.includes(FLASH) && i.includes(KIMI) && i.includes('lyceum:z-ai/glm-5.3') && i.includes('lyceum:deepseek/deepseek-v4-pro-0813') && i.includes(CR), `${t}: ${i}`); }
+      for (const t of ['night_judge', 'material_verify']) { const i = ids(t); assert.ok(!i.includes('lyceum:qwen/qwen3.8-2.4t-a95b') && !i.includes(FLASH) && i.includes(KIMI) && i.includes('lyceum:z-ai/glm-5.3') && !i.includes('lyceum:deepseek/deepseek-v4-pro-0813') && i.includes(CR), `${t}: ${i}`); /* by value: GLM-5.3 and Kimi K3 only (owner, 2026-11-04) */ }
       for (const t of ['blind_mc', 'fact_claims', 'placement_key_judge', 'placement_unit_judge']) { const i = ids(t); assert.ok(i.includes(CR) && !i.includes(KIMI) && !i.includes(FLASH), `${t}: ${i}`); }
       assert.ok(!ids('lesson_write').some((i) => /^(crouton|lyceum:(moonshotai|z-ai\/glm-5.3$|deepseek\/deepseek-v4-pro))/.test(i)), 'strong slots and Crouton stay off other tasks');
       const byId = Object.fromEntries(slots.map((s) => [s.id, s]));
