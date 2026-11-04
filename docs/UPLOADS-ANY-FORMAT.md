@@ -194,3 +194,42 @@ What this does and does not show:
 - Tests: `scripts/materials-formats-test.js` (in `npm test`). Proof: `scripts/uploads-proof.js`; results in
   `docs/uploads-proof-results.json`. Fixtures: `scripts/lib/upload-fixtures.js`.
 - Money: $0 on every provider. No Modelflare, no Anthropic key, no Standard Compute. Free judges: NVIDIA free tier, then xKiro $0 models.
+
+## 9. Bigger proof (4 Nov 2026; AI-JUDGED, SIMULATED; builds are noisy and reps are few)
+
+`scripts/uploads-proof-big.js`; rows in `docs/uploads-proof-big-results*.json`, the fixed exam in `docs/uploads-proof-big-exam.json`, the
+table in `docs/uploads-proof-big-summary.json`. 10 documents, each cut to at most 1,700 words: 3 planted (tides PPTX, vaccines DOCX, lecture
+SRT), 3 written by a free model (law-making PDF, compound interest as a web page, heart as Markdown), 4 REAL files (Strunk's Elements of
+Style, Wells' Short History of the World .docx, the US Constitution PDF, MIT OCW 18.01 lecture-notes PDF). Per document an exam of up to 5
+questions on the points the extractor weights 2.5+ ("emphasised") and 4 on plain sentences nothing stresses ("plain"), written from the SOURCE by
+NVIDIA nemotron. Answered from the source (control) and from the generated course by two judge families (Gonka GLM 5.3 Flash = A, Gemini
+free-tier flash-lite = B), graded by the same judge. The builder was Gonka DeepSeek V4 Flash (a third family). One build per document and arm
+(a second for the five small documents in two cases, and for OCW and the Constitution): NOT the planned two for every document. Not done: audio
+through Gladia (no spoken fixture exists; the spoken case is the SRT lecture), PPTX/DOCX/PDF of the real files other than the ones listed.
+
+Source control: judges answered 100% (A) and 90-95% (B) of both kinds from the source. From the generated course (before = main's rule, after = the fix):
+
+| Documents | Lesson words / source words | Emphasised answerable A / B | Plain answerable A / B |
+|---|---|---|---|
+| 7 with emphasis, before | 2.27x | 96% / 92% | 66% / 57% |
+| 7 with emphasis, after | 2.25x | 91% / 84% | 84% / 84% |
+| 3 without emphasis (Strunk, Wells, Constitution), before | 0.95x | n/a | 58% / 58% |
+| 3 without emphasis, after | 1.22x | n/a | 42% / 38% |
+
+Findings:
+
+- **The generated course is not shorter than the source** on 8 of 10 documents (1.5x to 3.8x its words; only Wells and the Constitution came out
+  shorter). The 0.75 cap is a request the models ignore, and each skill has a 90-word floor. "Faster than the source" is not shown.
+- **Plain facts are dropped, and emphasis is not the (only) cause.** Emphasised points are answerable at about the source's rate (91-96%), plain
+  facts at 57-66% (source 93-100%). The three documents with nothing emphasised lose plain facts as much (58%), so it is the compression and the
+  choice of what a lesson keeps, not the stress prompt. The tides case reproduced: 0% plain in two builds (it was 75% in the old note; one of four plain questions).
+- **The fix** (`services/course-builder.js`, the stress rule and the lesson instruction): "emphasis only decides how many words a point gets,
+  never whether it is taught; every other specific fact stays in a short clause; cut repetition and filler, never a fact". On the emphasised
+  documents plain-fact answerability rose from 66/57% to 84/84%. Not shown to be free: emphasised answerability read 91/84% against 96/92%, and the gap
+  is one OCW build (0 of 4, the other 3 of 4) and one vaccines question: 8 questions and one build cannot separate it from noise. The key-point gate is unchanged
+  and every gated point was still taught in every build.
+- **The fix does not help where nothing is emphasised**: Strunk (2.6x the source) and the Constitution (0.2x, 1 to 3 skills) lost facts in
+  both arms; those are outline and compression failures of the builder, not covered here.
+- Builds ended "partial" in most runs (a gated or question check missed after one revision); the first attempt with xKiro/MiniMax and Munito failed (their daily
+  free quotas were spent), so those numbers are discarded, not reported.
+- Spend: Gonka about $1.7 (ledger delta, other users included), NVIDIA and Gemini free tiers $0; no Anthropic key, Modelflare or Standard Compute.
