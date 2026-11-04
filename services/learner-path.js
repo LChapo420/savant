@@ -332,9 +332,8 @@ function specFor(enrollment) {
 }
 
 /**
- * When the quick check has to stop: the mode's whole budget (Quick 20 minutes,
- * Balanced 45, Accurate 90 — the subject stage's clock plus the in-grade
- * stage's) less what this sitting has already spent on it — the in-grade
+ * When the quick check has to stop: the mode's whole budget (adaptive-placement
+ * WHOLE_MINUTES: Quick 12, Balanced 20, Accurate 57) less what this sitting has already spent on it — the in-grade
  * placement, and the subject walk and its gap scan when they were part of the
  * same sitting (finished within SITTING_HOURS before this placement started).
  * Whatever is undecided when the time is up stays `unchecked`, which is safe,
