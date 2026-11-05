@@ -172,7 +172,12 @@ function finish() {
     const dayBefore = goal.limitInterval(test, 3, Date.parse('2026-06-20T12:00:00Z'));
     check('after the final, a short look on the day', dayBefore.kind === 'dayof' && Math.abs(Date.parse('2026-06-20T12:00:00Z') + dayBefore.days * DAY - Date.parse('2026-06-21T00:00:00Z')) < 1000, dayBefore);
     check('on or after the test day: no more reviews', goal.limitInterval(test, 3, Date.parse('2026-06-21T09:00:00Z')).done === true);
-    check('a horizon stops reviews that land past it, keeps the ones inside it', goal.limitInterval(eff({ horizon: 'months', set_on: '2026-06-01' }), 140, now).done === true && goal.limitInterval(eff({ horizon: 'months', set_on: '2026-06-01' }), 35, now).days === 35);
+    // The old rule, per skill from the day the goal was set, is what SR_GOAL_REVIEW=off restores.
+    process.env.SR_GOAL_REVIEW = 'off';
+    check('with the switch off, a horizon stops reviews that land past it, keeps the ones inside it', goal.limitInterval(eff({ horizon: 'months', set_on: '2026-06-01' }), 140, now).done === true && goal.limitInterval(eff({ horizon: 'months', set_on: '2026-06-01' }), 35, now).days === 35);
+    delete process.env.SR_GOAL_REVIEW;
+    check('by default a horizon counts from finishing: an unfinished course keeps its reviews', goal.limitInterval(eff({ horizon: 'months', set_on: '2026-06-01' }), 140, now, null).done === false);
+    check('by default a review landing past the end of a finished course stops', goal.limitInterval(eff({ horizon: 'months', set_on: '2026-06-01' }), 900, now, '2026-06-01').done === true);
     check('stopped after a test: nothing more', goal.limitInterval({ status: 'stopped' }, 3, now).done === true);
   }
 

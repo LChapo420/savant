@@ -32,7 +32,6 @@ ok(goal.datePlan(0, 30).some((p) => p.kind === 'review'), 'date plan keeps its m
 
 // ---- SR_GOAL_REVIEW: the horizon counts from finishing ----
 process.env.SR_GOAL_REVIEW = 'on';
-ok(goal.reviewContext(1, { finished_on: null }) !== null || true, 'context is built with the switch on (needs the db for the goal)');
 eq(goal.reviewWindow(wk, null, T0), { daysToEnd: Infinity, final: false, hold: false, done: false }, 'not finished: the end is unknown, reviews run');
 let w = goal.reviewWindow(wk, iso(T0 - 2 * DAY), T0); // finished 2 days ago, 7-day horizon: 5 days left
 ok(Math.abs(w.daysToEnd - 5) < 1e-9 && !w.final && !w.done && !w.hold, '5 days to the end, not yet final');
