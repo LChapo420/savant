@@ -1,0 +1,188 @@
+{
+ "generated_at": "2026-11-05T00:17:10.192Z",
+ "label": "AI-model answers graded against Savant bank keys; not real-learner results",
+ "ledger_file": "data/munito-ledger.json",
+ "ledger_spent_before": 3.600429,
+ "budget_usd": 3,
+ "item_sources": [
+  {
+   "bank": "spanish",
+   "file": "content/unit-placement/spanish.json",
+   "drawn": 10,
+   "of": 3388
+  },
+  {
+   "bank": "english",
+   "file": "content/unit-placement/english.json",
+   "drawn": 10,
+   "of": 1620
+  },
+  {
+   "bank": "math",
+   "file": "content/unit-placement/math.json",
+   "drawn": 10,
+   "of": 4763
+  },
+  {
+   "bank": "reading",
+   "file": "content/unit-placement/reading.json",
+   "drawn": 10,
+   "of": 1307
+  }
+ ],
+ "seed": 20261104,
+ "models": [
+  {
+   "model": "deepseek-ai/deepseek-v4.1-flash-1017",
+   "provider": "munito",
+   "short": {
+    "n": 10,
+    "ok": 10,
+    "p50_ms": 794,
+    "p95_ms": 1201,
+    "cost_usd": 0.0005594
+   },
+   "long": {
+    "n": 5,
+    "ok": 5,
+    "input_tokens_avg": 3305,
+    "p50_ms": 982,
+    "p95_ms": 1171,
+    "out_tok_per_s": 222.5,
+    "cost_usd": 0.00553175
+   },
+   "structured": {
+    "n": 10,
+    "valid": 10,
+    "correct": 10,
+    "cost_usd": 0.0007113
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 40,
+    "right": 40,
+    "accuracy": 1,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 10
+     },
+     "english": {
+      "n": 10,
+      "right": 10
+     },
+     "math": {
+      "n": 10,
+      "right": 10
+     },
+     "reading": {
+      "n": 10,
+      "right": 10
+     }
+    },
+    "cost_usd": 0.0038043600000000014,
+    "p50_ms": 465,
+    "avg_out_tokens": 58
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 65,
+    "timeout": 0,
+    "empty_or_unusable": 0,
+    "other_error": 0,
+    "rate_limited": 0,
+    "error_rate": 0,
+    "sample_errors": []
+   },
+   "cost": {
+    "counted_usd": 0.010607,
+    "per_mcq_call_usd": 0.000095,
+    "per_1000_mcq_tasks_usd": 0.095,
+    "note": "successful calls at list price; failed calls are not billed unless counted in the ledger delta"
+   }
+  },
+  {
+   "model": "zai-org/glm-5.3-flash",
+   "provider": "munito",
+   "short": {
+    "n": 10,
+    "ok": 10,
+    "p50_ms": 996,
+    "p95_ms": 4414,
+    "cost_usd": 0.00027955000000000005
+   },
+   "long": {
+    "n": 5,
+    "ok": 0,
+    "input_tokens_avg": null,
+    "p50_ms": null,
+    "p95_ms": null,
+    "out_tok_per_s": null,
+    "cost_usd": 0
+   },
+   "structured": {
+    "n": 10,
+    "valid": 10,
+    "correct": 10,
+    "cost_usd": 0.00039564999999999994
+   },
+   "mcq": {
+    "n": 40,
+    "answered": 15,
+    "right": 15,
+    "accuracy": 0.375,
+    "by_bank": {
+     "spanish": {
+      "n": 10,
+      "right": 10
+     },
+     "english": {
+      "n": 10,
+      "right": 5
+     },
+     "math": {
+      "n": 10,
+      "right": 0
+     },
+     "reading": {
+      "n": 10,
+      "right": 0
+     }
+    },
+    "cost_usd": 0.0008492100000000002,
+    "p50_ms": 1149,
+    "avg_out_tokens": 94
+   },
+   "reliability": {
+    "total": 65,
+    "ok": 35,
+    "timeout": 0,
+    "empty_or_unusable": 5,
+    "other_error": 0,
+    "rate_limited": 25,
+    "error_rate": 0.462,
+    "sample_errors": [
+     "munito: zai-org/glm-5.3-flash returned no text",
+     "munito: zai-org/glm-5.3-flash returned no text",
+     "munito: zai-org/glm-5.3-flash returned no text",
+     "munito: zai-org/glm-5.3-flash returned no text",
+     "munito: zai-org/glm-5.3-flash returned no text"
+    ]
+   },
+   "cost": {
+    "counted_usd": 0.001524,
+    "per_mcq_call_usd": 0.000057,
+    "per_1000_mcq_tasks_usd": 0.057,
+    "note": "successful calls at list price; failed calls are not billed unless counted in the ledger delta"
+   }
+  }
+ ],
+ "baseline": [],
+ "not_chat": [
+  "perplexity-ai/pplx-decider-v1.2 (answers 400 on chat; not a chat model)"
+ ],
+ "ledger_spent_after": 3.615587,
+ "own_counted_usd": 0.012131,
+ "ledger_delta_note": "ledger delta also includes any other process spending on the same ledger meanwhile",
+ "ledger_delta_usd": 0.015158
+}
