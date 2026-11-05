@@ -668,14 +668,25 @@ const TRUTH_FACTORS = Number(opt('truth-factors', 0)) !== 0;
 const COG_CATS = new Set(['intake', 'reasoning', 'transfer']);
 // --strata=1 (docs/SCORECARD-90.md section 12, SIMULATED): every learner, measured and "other", gets an age band (a balanced stripe over the learner number) and,
 // for some, a trait-profile proxy (scripts/lib/scorecard-strata.js, each shift cited or marked ASSUMED). The shifts move the true values; behaviour follows them.
-const STRATA = Number(opt('strata', 0)) !== 0;
+// --extreme=1 (docs/EXTREME-LEARNERS.md, SIMULATED): the learners are drawn by scripts/lib/extreme-learners.js (tails, contradictory mixes, random draws over the whole
+// space, ages 8 to 70, English learners) instead of the population shape; --extreme-share=P keeps the rest ordinary (default 1: every measured learner is extreme).
+// Implies --strata=1 so the dump carries the age band; the dump also carries ext (kind, mix, age, tails). "Other" learners stay ordinary.
+const EXTREME = Number(opt('extreme', 0)) !== 0;
+const EXTREME_SHARE = Number(opt('extreme-share', 1));
+const EXTREME_LIB = EXTREME ? require('./lib/extreme-learners') : null;
+const STRATA = Number(opt('strata', 0)) !== 0 || EXTREME;
 const STRATA_LIB = STRATA ? require('./lib/scorecard-strata') : null;
 function strataOf(index, population) {
   if (!STRATA) return null;
+  if (EXTREME && !population && new Rng(hashSeed(SEED, 'extshare', index)).u() < EXTREME_SHARE) {
+    const L = EXTREME_LIB.learner(SEED, index);
+    return { age: L.band, profile: L.profile, ext: { id: L.id, kind: L.kind, mix: L.mix, age: L.age, tags: L.tags, traits: L.traits } };
+  }
   return STRATA_LIB.assign(index, new Rng(hashSeed(SEED, `${population ? 'pop-' : ''}stratum`, index)).u());
 }
 function drawTruth(rng, st = null) {
   const T = {};
+  if (st && st.ext) { for (const s of STATS) T[s.id] = st.ext.traits[s.id]; for (const [id, base, inv] of ALIASES) T[id] = inv ? 100 - T[base] : T[base]; return T; }
   const X = st ? STRATA_LIB.transform(st.age, st.profile) : null;
   if (X) {
     const g = rng.normal(); const cat = {};
@@ -2071,7 +2082,7 @@ for (const mode of MODES) {
     const o = r.snapshots[CHECKPOINTS[CHECKPOINTS.length - 1]].outcome;
     const slim = {};
     for (const [k, v] of Object.entries(o)) if (typeof v === 'number' || v === null) slim[k] = v;
-    return { mv: Math.round(r.truth.mastery_velocity), pk: Math.round(r.truth.prior_knowledge), dr: Math.round(r.truth.decay_rate), ...slim, pretests: r.pretests, pages_skipped: r.pagesSkipped };
+    return { ext_id: r.stratum && r.stratum.ext ? r.stratum.ext.id : null, mv: Math.round(r.truth.mastery_velocity), pk: Math.round(r.truth.prior_knowledge), dr: Math.round(r.truth.decay_rate), ...slim, pretests: r.pretests, pages_skipped: r.pagesSkipped };
   });
   results[mode].gate = gateFor(runs);
   if (DUMP && mode === MODES[0]) {
@@ -2084,7 +2095,7 @@ for (const mode of MODES) {
       return {
         truth: Object.fromEntries(STATS.map((st) => [st.id, Number(truthOf(r, st.id).toFixed(3))])),
         app: Object.fromEntries(STATS.map((st) => { const e = sn.est[st.id]; return [st.id, [Number((e.measured !== undefined ? e.measured : e.score).toFixed(3)), Number((e.se === undefined ? 0 : e.se).toFixed(3)), e.confidence]]; })),
-        feat: sn.feat, ind: sn.ind, levels: sn.levels, days: sn.days, age: r.stratum ? r.stratum.age : undefined, profile: r.stratum ? r.stratum.profile : undefined,
+        feat: sn.feat, ind: sn.ind, levels: sn.levels, days: sn.days, age: r.stratum ? r.stratum.age : undefined, profile: r.stratum ? r.stratum.profile : undefined, ext: r.stratum && r.stratum.ext ? { id: r.stratum.ext.id, kind: r.stratum.ext.kind, mix: r.stratum.ext.mix, age: r.stratum.ext.age, tags: r.stratum.ext.tags } : undefined,
       };
     });
     fs.mkdirSync(path.dirname(DUMP), { recursive: true });

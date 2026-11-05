@@ -1,0 +1,891 @@
+{
+ "label": "SIMULATED learners; calibrated on ordinary simulated learners, scored on held-out extreme ones",
+ "days": {
+  "30": {
+   "n_extreme": 122,
+   "n_ordinary": 38,
+   "stage": {
+    "D0": {
+     "n": 122,
+     "mean": 80.48980327868856,
+     "worst10": 74.42792307692308,
+     "worst5": 73.64957142857143,
+     "worst1": 72.42349999999999,
+     "min": 72.029,
+     "p10cut": 75.943,
+     "guess_acc": 80.48980327868853,
+     "removed": 0,
+     "removed_worst10": 0,
+     "removed_worst1": 0,
+     "removed_min": 0,
+     "ordinary_acc": 85.98331578947368
+    },
+    "S0": {
+     "n": 122,
+     "mean": 82.9110573770492,
+     "worst10": 78.138,
+     "worst5": 77.31985714285715,
+     "worst1": 75.85900000000001,
+     "min": 75.726,
+     "p10cut": 79.316,
+     "guess_acc": 80.48980327868853,
+     "removed": 0.12410198282192875,
+     "removed_worst10": 0.03413511117335498,
+     "removed_worst1": 0.005626602324403651,
+     "removed_min": 0.005214557305812106,
+     "ordinary_acc": 87.09386842105263
+    },
+    "S1": {
+     "n": 122,
+     "mean": 83.71377049180325,
+     "worst10": 78.67961538461539,
+     "worst5": 77.94042857142857,
+     "worst1": 76.9265,
+     "min": 76.251,
+     "p10cut": 80.19,
+     "guess_acc": 80.48980327868853,
+     "removed": 0.16524524376492444,
+     "removed_worst10": 0.08198923297208224,
+     "removed_worst1": 0.032996992887527166,
+     "removed_min": 0.010502353975891165,
+     "ordinary_acc": 88.2841052631579
+    },
+    "S5": {
+     "n": 122,
+     "mean": 90.43294262295083,
+     "worst10": 88.19269230769231,
+     "worst5": 87.797,
+     "worst1": 87.414,
+     "min": 87.36,
+     "p10cut": 88.813,
+     "guess_acc": 80.48980327868853,
+     "removed": 0.5096380875237998,
+     "removed_worst10": 0.4331684458679492,
+     "removed_worst1": 0.3732933305912099,
+     "removed_min": 0.3709923664122138,
+     "ordinary_acc": 92.73044736842105
+    }
+   },
+   "byKind": {
+    "tail_hi": {
+     "n": 15,
+     "acc_S5": 90.76726666666667,
+     "acc_S1": 84.35246666666666,
+     "acc_S0": 83.60726666666666,
+     "guess": 81.6272,
+     "removed_S5": 0.4974781561148365,
+     "worst_S5": 89.199
+    },
+    "random": {
+     "n": 24,
+     "acc_S5": 88.83779166666666,
+     "acc_S1": 79.85004166666667,
+     "acc_S0": 79.15333333333332,
+     "guess": 75.75412499999999,
+     "removed_S5": 0.5396244378339271,
+     "worst_S5": 87.36
+    },
+    "age_young": {
+     "n": 11,
+     "acc_S5": 91.06227272727273,
+     "acc_S1": 85.70654545454546,
+     "acc_S0": 84.28881818181819,
+     "guess": 82.80309090909091,
+     "removed_S5": 0.48027129611029484,
+     "worst_S5": 90.123
+    },
+    "age_old": {
+     "n": 14,
+     "acc_S5": 90.50535714285715,
+     "acc_S1": 84.00492857142855,
+     "acc_S0": 82.88178571428571,
+     "guess": 80.59821428571429,
+     "removed_S5": 0.510630464795214,
+     "worst_S5": 89.746
+    },
+    "ell": {
+     "n": 12,
+     "acc_S5": 91.23741666666666,
+     "acc_S1": 85.65008333333333,
+     "acc_S0": 84.66966666666667,
+     "guess": 82.72249999999998,
+     "removed_S5": 0.492832682197463,
+     "worst_S5": 90.555
+    },
+    "tail_lo": {
+     "n": 11,
+     "acc_S5": 91.23145454545454,
+     "acc_S1": 85.5389090909091,
+     "acc_S0": 84.42163636363635,
+     "guess": 82.02327272727273,
+     "removed_S5": 0.5122279310623838,
+     "worst_S5": 90.439
+    },
+    "contradict": {
+     "n": 24,
+     "acc_S5": 90.65483333333331,
+     "acc_S1": 84.06870833333335,
+     "acc_S0": 83.631875,
+     "guess": 81.135375,
+     "removed_S5": 0.5046195370082012,
+     "worst_S5": 89.474
+    },
+    "tail_both": {
+     "n": 11,
+     "acc_S5": 90.57563636363636,
+     "acc_S1": 84.19754545454545,
+     "acc_S0": 83.81809090909091,
+     "guess": 81.44227272727274,
+     "removed_S5": 0.49215960026453076,
+     "worst_S5": 89.288
+    }
+   },
+   "byMix": {
+    "curious_unfocused": {
+     "n": 2,
+     "acc_S5": 89.867,
+     "guess": 81.314,
+     "removed_S5": 0.45772235898533664
+    },
+    "praise_starved_hider": {
+     "n": 4,
+     "acc_S5": 91.38300000000001,
+     "guess": 80.69575,
+     "removed_S5": 0.5536216118212312
+    },
+    "fast_but_forgetful": {
+     "n": 5,
+     "acc_S5": 90.5056,
+     "guess": 80.828,
+     "removed_S5": 0.504777800959733
+    },
+    "reasoning_slow_decoding": {
+     "n": 3,
+     "acc_S5": 90.50366666666667,
+     "guess": 80.83866666666667,
+     "removed_S5": 0.5044012246886089
+    },
+    "sure_and_wrong": {
+     "n": 3,
+     "acc_S5": 90.21633333333334,
+     "guess": 80.888,
+     "removed_S5": 0.4880877633598437
+    },
+    "lazy_genius": {
+     "n": 2,
+     "acc_S5": 90.5265,
+     "guess": 81.112,
+     "removed_S5": 0.4984381617958492
+    },
+    "skimmer_with_memory": {
+     "n": 2,
+     "acc_S5": 91.352,
+     "guess": 83.262,
+     "removed_S5": 0.48333134185685267
+    },
+    "diligent_struggler": {
+     "n": 3,
+     "acc_S5": 90.66833333333334,
+     "guess": 81.25666666666667,
+     "removed_S5": 0.5021340921216433
+    }
+   },
+   "tails": {
+    "tail_measures": 1535,
+    "tail_S5_mae": 16.706905537459246,
+    "rest_S5_mae": 8.539287388654472,
+    "tail_S1_mae": 32.8039739413681,
+    "rest_S1_mae": 13.909179559306166,
+    "tail_guess_mae": 42.72143322475568,
+    "rest_guess_mae": 16.16962025316452
+   },
+   "worstMeasures": [
+    {
+     "id": "depth_breadth",
+     "n": 9,
+     "s5": 34.64444444444445,
+     "gb": 45.400000000000006
+    },
+    {
+     "id": "conceptual_bias",
+     "n": 13,
+     "s5": 33.59230769230769,
+     "gb": 44.19230769230769
+    },
+    {
+     "id": "integration_tendency",
+     "n": 20,
+     "s5": 31.850000000000005,
+     "gb": 44.05
+    },
+    {
+     "id": "creative_extension",
+     "n": 15,
+     "s5": 31.693333333333335,
+     "gb": 44.72
+    },
+    {
+     "id": "question_generation",
+     "n": 11,
+     "s5": 28.4,
+     "gb": 44.61818181818182
+    },
+    {
+     "id": "mastery_orientation",
+     "n": 16,
+     "s5": 26.237499999999994,
+     "gb": 43.512499999999996
+    },
+    {
+     "id": "planning_tendency",
+     "n": 19,
+     "s5": 23.47368421052631,
+     "gb": 42.11052631578948
+    },
+    {
+     "id": "interference_susceptibility",
+     "n": 16,
+     "s5": 23.418750000000003,
+     "gb": 43.418749999999996
+    }
+   ],
+   "byTails": {
+    "4-9": {
+     "n": 26,
+     "acc_S5": 90.96726923076923,
+     "guess": 82.25123076923077,
+     "removed": 0.4910784713132873
+    },
+    "10-30": {
+     "n": 96,
+     "acc_S5": 90.28822916666665,
+     "guess": 80.01275,
+     "removed": 0.5141016981659139
+    }
+   },
+   "byAge": {
+    "18-29": {
+     "n": 26,
+     "acc_S5": 90.37569230769229,
+     "guess": 80.48173076923078,
+     "removed": 0.5069077294448004
+    },
+    "30-59": {
+     "n": 40,
+     "acc_S5": 90.1796,
+     "guess": 79.64475,
+     "removed": 0.5175495265349235
+    },
+    "8-12": {
+     "n": 14,
+     "acc_S5": 90.82428571428572,
+     "guess": 82.11800000000001,
+     "removed": 0.48687427101474756
+    },
+    "60+": {
+     "n": 28,
+     "acc_S5": 90.56821428571428,
+     "guess": 80.5284642857143,
+     "removed": 0.5156116162236819
+    },
+    "13-17": {
+     "n": 14,
+     "acc_S5": 90.60121428571428,
+     "guess": 81.21371428571429,
+     "removed": 0.4996996289086263
+    }
+   },
+   "worst": [
+    {
+     "id": "x424242-96",
+     "acc_S5": 87.36,
+     "guess": 77.706,
+     "removed": 0.4330313088723423,
+     "profile": "x424242-96 random age 27 ELL(Mandarin); high tail: text_density_tolerance, systems_thinking, momentum_dependence, stimulus_envelope, generation_effect, emotional_engagement, application_orientation; low tail: processing_velocity, deductive_trajectory, cognitive_flexibility, attention_runway, instruction_adherence; hobbies: bass guitar; dislikes: -; past difficulties: English is the second language",
+     "worst_measures": [
+      [
+       "emotional_engagement",
+       33.3
+      ],
+      [
+       "interference_susceptibility",
+       30.6
+      ],
+      [
+       "application_orientation",
+       28
+      ],
+      [
+       "conceptual_bias",
+       28
+      ],
+      [
+       "far_transfer",
+       24.4
+      ]
+     ]
+    },
+    {
+     "id": "x424242-106",
+     "acc_S5": 87.468,
+     "guess": 72.029,
+     "removed": 0.5519645346966501,
+     "profile": "x424242-106 random age 59; high tail: jargon_absorption, pattern_detection, interleaving_tolerance, gamification_response, challenge_appetite, help_seeking, structure_need, worked_example_dependence (+9); low tail: analogical_transfer, humor_receptivity, mastery_orientation, brevity_preference, dialogic_preference, extrinsic_reward_sensitivity, emotional_engagement; hobbies: competitive baking shows, drone racing; dislikes: rewrites of the same idea three times; past difficulties: missed a year of school, dyscalculia-like trouble with number sense",
+     "worst_measures": [
+      [
+       "integration_tendency",
+       45.2
+      ],
+      [
+       "emotional_engagement",
+       33.8
+      ],
+      [
+       "extrinsic_reward_sensitivity",
+       33.4
+      ],
+      [
+       "conceptual_bias",
+       29.6
+      ],
+      [
+       "help_seeking",
+       28.8
+      ]
+     ]
+    },
+    {
+     "id": "x424242-43",
+     "acc_S5": 87.605,
+     "guess": 72.818,
+     "removed": 0.5439997056875874,
+     "profile": "x424242-43 random age 30; high tail: spatial_anchoring, cognitive_flexibility, novelty_hunger, decay_rate, generation_effect, instruction_adherence, repetition_tolerance, open_response_performance (+2); low tail: working_memory_span, example_density_need, jargon_absorption, logical_rigor, cycle_architecture, attention_runway, interleaving_tolerance, rush_tendency (+8); hobbies: -; dislikes: being told the answer right away; past difficulties: -",
+     "worst_measures": [
+      [
+       "persistence",
+       41.4
+      ],
+      [
+       "cognitive_flexibility",
+       40.7
+      ],
+      [
+       "question_generation",
+       38.9
+      ],
+      [
+       "extrinsic_reward_sensitivity",
+       35.8
+      ],
+      [
+       "competitive_drive",
+       34
+      ]
+     ]
+    },
+    {
+     "id": "x424242-153",
+     "acc_S5": 87.772,
+     "guess": 74.896,
+     "removed": 0.512906309751434,
+     "profile": "x424242-153 random age 31; high tail: intake_baseline, working_memory_span, spatial_anchoring, logical_rigor, cycle_architecture, fatigue_curve, recognition_recall_gap, generation_effect (+1); low tail: narrative_pull, failure_response, structure_need, notation_comfort, extrinsic_reward_sensitivity, emotional_engagement, far_transfer; hobbies: ship model building, fishing, fantasy football; dislikes: timed quizzes; past difficulties: missed a year of school, forgets formulas overnight",
+     "worst_measures": [
+      [
+       "far_transfer",
+       31.3
+      ],
+      [
+       "persistence",
+       31
+      ],
+      [
+       "mastery_velocity",
+       30.5
+      ],
+      [
+       "vocabulary_ceiling",
+       30.2
+      ],
+      [
+       "failure_response",
+       26.7
+      ]
+     ]
+    },
+    {
+     "id": "x424242-136",
+     "acc_S5": 87.909,
+     "guess": 74.33500000000001,
+     "removed": 0.5288914864601597,
+     "profile": "x424242-136 random age 58; high tail: generation_effect, hint_dependency, error_driven_learning, boredom_susceptibility, near_transfer; low tail: example_density_need, analogical_transfer, systems_thinking, deliberation_depth, humor_receptivity, gamification_response, consolidation_need, guessing_propensity (+6); hobbies: roller derby, lockpicking sport; dislikes: repetition drills, group work framing, word problems about money; past difficulties: math anxiety since middle school",
+     "worst_measures": [
+      [
+       "depth_breadth",
+       41.9
+      ],
+      [
+       "generation_effect",
+       35.2
+      ],
+      [
+       "strategy_awareness",
+       35
+      ],
+      [
+       "contradiction_sensitivity",
+       31.8
+      ],
+      [
+       "creative_extension",
+       30.4
+      ]
+     ]
+    }
+   ],
+   "worseThanGuess": []
+  },
+  "180": {
+   "n_extreme": 122,
+   "n_ordinary": 38,
+   "stage": {
+    "D0": {
+     "n": 122,
+     "mean": 80.50035245901637,
+     "worst10": 74.44269230769231,
+     "worst5": 73.64999999999999,
+     "worst1": 72.49799999999999,
+     "min": 72.088,
+     "p10cut": 76.066,
+     "guess_acc": 80.5003524590164,
+     "removed": 0,
+     "removed_worst10": 0,
+     "removed_worst1": 0,
+     "removed_min": 0,
+     "ordinary_acc": 86.01465789473684
+    },
+    "S0": {
+     "n": 122,
+     "mean": 82.52977868852456,
+     "worst10": 77.819,
+     "worst5": 76.87414285714284,
+     "worst1": 75.7365,
+     "min": 75.588,
+     "p10cut": 79.211,
+     "guess_acc": 80.5003524590164,
+     "removed": 0.10407502111219313,
+     "removed_worst10": 0.016238137492257835,
+     "removed_worst1": -0.010830667666259175,
+     "removed_min": -0.020648449169668792,
+     "ordinary_acc": 86.9318947368421
+    },
+    "S1": {
+     "n": 122,
+     "mean": 84.20548360655741,
+     "worst10": 79.24569230769231,
+     "worst5": 78.38942857142857,
+     "worst1": 77.236,
+     "min": 76.78,
+     "p10cut": 80.834,
+     "guess_acc": 80.5003524590164,
+     "removed": 0.19001015991461767,
+     "removed_worst10": 0.10398755365300495,
+     "removed_worst1": 0.07132404202341375,
+     "removed_min": 0.060823359471729344,
+     "ordinary_acc": 88.95305263157898
+    },
+    "S5": {
+     "n": 122,
+     "mean": 91.67786065573772,
+     "worst10": 89.96153846153848,
+     "worst5": 89.708,
+     "worst1": 89.43900000000001,
+     "min": 89.418,
+     "p10cut": 90.4,
+     "guess_acc": 80.5003524590164,
+     "removed": 0.5732159093249687,
+     "removed_worst10": 0.485242165525185,
+     "removed_worst1": 0.457095367557105,
+     "removed_min": 0.45524918069838405,
+     "ordinary_acc": 93.49221052631577
+    }
+   },
+   "byKind": {
+    "tail_hi": {
+     "n": 15,
+     "acc_S5": 91.93213333333333,
+     "acc_S1": 84.67579999999998,
+     "acc_S0": 83.1986,
+     "guess": 81.60939999999998,
+     "removed_S5": 0.5613048695166734,
+     "worst_S5": 90.832
+    },
+    "random": {
+     "n": 24,
+     "acc_S5": 90.71983333333334,
+     "acc_S1": 80.61379166666667,
+     "acc_S0": 79.01637500000002,
+     "guess": 75.78466666666665,
+     "removed_S5": 0.6167648597307491,
+     "worst_S5": 89.418
+    },
+    "age_young": {
+     "n": 11,
+     "acc_S5": 92.13418181818182,
+     "acc_S1": 85.94345454545454,
+     "acc_S0": 83.959,
+     "guess": 82.82527272727272,
+     "removed_S5": 0.5420120472999439,
+     "worst_S5": 90.359
+    },
+    "age_old": {
+     "n": 14,
+     "acc_S5": 91.87,
+     "acc_S1": 84.33114285714285,
+     "acc_S0": 82.22978571428573,
+     "guess": 80.60935714285714,
+     "removed_S5": 0.5807256077121146,
+     "worst_S5": 90.993
+    },
+    "ell": {
+     "n": 12,
+     "acc_S5": 92.08133333333332,
+     "acc_S1": 86.00241666666666,
+     "acc_S0": 84.42716666666666,
+     "guess": 82.74083333333333,
+     "removed_S5": 0.5411906716237749,
+     "worst_S5": 91.174
+    },
+    "tail_lo": {
+     "n": 11,
+     "acc_S5": 92.23554545454544,
+     "acc_S1": 86.014,
+     "acc_S0": 84.20563636363637,
+     "guess": 82.04572727272726,
+     "removed_S5": 0.5675427981184524,
+     "worst_S5": 90.4
+    },
+    "contradict": {
+     "n": 24,
+     "acc_S5": 91.49462499999998,
+     "acc_S1": 84.608625,
+     "acc_S0": 83.071125,
+     "guess": 81.12629166666669,
+     "removed_S5": 0.5493532670006116,
+     "worst_S5": 90.041
+    },
+    "tail_both": {
+     "n": 11,
+     "acc_S5": 92.12245454545456,
+     "acc_S1": 84.85427272727271,
+     "acc_S0": 83.30909090909091,
+     "guess": 81.4579090909091,
+     "removed_S5": 0.5751533366345858,
+     "worst_S5": 90.833
+    }
+   },
+   "byMix": {
+    "curious_unfocused": {
+     "n": 2,
+     "acc_S5": 91.2805,
+     "guess": 81.386,
+     "removed_S5": 0.5315622649618565
+    },
+    "praise_starved_hider": {
+     "n": 4,
+     "acc_S5": 91.9855,
+     "guess": 80.73525000000001,
+     "removed_S5": 0.5839811053867816
+    },
+    "fast_but_forgetful": {
+     "n": 5,
+     "acc_S5": 90.9442,
+     "guess": 80.794,
+     "removed_S5": 0.5284910965323337
+    },
+    "reasoning_slow_decoding": {
+     "n": 3,
+     "acc_S5": 91.95400000000001,
+     "guess": 80.78966666666666,
+     "removed_S5": 0.5811629157918481
+    },
+    "sure_and_wrong": {
+     "n": 3,
+     "acc_S5": 91.31533333333334,
+     "guess": 80.86866666666667,
+     "removed_S5": 0.5460501097675715
+    },
+    "lazy_genius": {
+     "n": 2,
+     "acc_S5": 91.243,
+     "guess": 81.18,
+     "removed_S5": 0.5346971307120085
+    },
+    "skimmer_with_memory": {
+     "n": 2,
+     "acc_S5": 92.475,
+     "guess": 83.218,
+     "removed_S5": 0.5516029078774878
+    },
+    "diligent_struggler": {
+     "n": 3,
+     "acc_S5": 91.13433333333332,
+     "guess": 81.19233333333334,
+     "removed_S5": 0.5286142176062952
+    }
+   },
+   "tails": {
+    "tail_measures": 1535,
+    "tail_S5_mae": 14.03185667752446,
+    "rest_S5_mae": 7.500093764650705,
+    "tail_S1_mae": 31.916221498371293,
+    "rest_S1_mae": 13.474580403187964,
+    "tail_guess_mae": 42.702475570032554,
+    "rest_guess_mae": 16.160328176277513
+   },
+   "worstMeasures": [
+    {
+     "id": "depth_breadth",
+     "n": 9,
+     "s5": 30.11111111111111,
+     "gb": 45.400000000000006
+    },
+    {
+     "id": "creative_extension",
+     "n": 15,
+     "s5": 29.02,
+     "gb": 44.72
+    },
+    {
+     "id": "question_generation",
+     "n": 11,
+     "s5": 27.518181818181823,
+     "gb": 44.61818181818182
+    },
+    {
+     "id": "integration_tendency",
+     "n": 20,
+     "s5": 26.959999999999997,
+     "gb": 44.05
+    },
+    {
+     "id": "conceptual_bias",
+     "n": 13,
+     "s5": 25.853846153846156,
+     "gb": 44.19230769230769
+    },
+    {
+     "id": "fatigue_curve",
+     "n": 11,
+     "s5": 23.85454545454546,
+     "gb": 44.64545454545455
+    },
+    {
+     "id": "mastery_velocity",
+     "n": 19,
+     "s5": 23.489473684210527,
+     "gb": 44.300000000000004
+    },
+    {
+     "id": "intrinsic_motivation",
+     "n": 20,
+     "s5": 23.474999999999998,
+     "gb": 44.045
+    }
+   ],
+   "byTails": {
+    "4-9": {
+     "n": 26,
+     "acc_S5": 92.09480769230768,
+     "guess": 82.26776923076923,
+     "removed": 0.5541907608483464
+    },
+    "10-30": {
+     "n": 96,
+     "acc_S5": 91.56493750000003,
+     "guess": 80.02167708333333,
+     "removed": 0.5777892601303809
+    }
+   },
+   "byAge": {
+    "18-29": {
+     "n": 26,
+     "acc_S5": 91.59230769230771,
+     "guess": 80.46892307692309,
+     "removed": 0.5695223391518054
+    },
+    "30-59": {
+     "n": 40,
+     "acc_S5": 91.50887500000002,
+     "guess": 79.66945,
+     "removed": 0.5823465179249947
+    },
+    "8-12": {
+     "n": 14,
+     "acc_S5": 91.79100000000001,
+     "guess": 82.1362142857143,
+     "removed": 0.5404669462959779
+    },
+    "60+": {
+     "n": 28,
+     "acc_S5": 91.79367857142856,
+     "guess": 80.54342857142858,
+     "removed": 0.5782236629563275
+    },
+    "13-17": {
+     "n": 14,
+     "acc_S5": 91.97478571428572,
+     "guess": 81.21071428571427,
+     "removed": 0.5728834822277133
+    }
+   },
+   "worst": [
+    {
+     "id": "x424242-103",
+     "acc_S5": 89.418,
+     "guess": 77.813,
+     "removed": 0.5230540406544373,
+     "profile": "x424242-103 random age 41; high tail: cognitive_flexibility, logical_rigor, deliberation_depth, reentry_cost, failure_response, confidence_calibration; low tail: contradiction_sensitivity, narrative_pull, challenge_appetite; hobbies: roller derby; dislikes: -; past difficulties: forgets formulas overnight",
+     "worst_measures": [
+      [
+       "failure_response",
+       29.2
+      ],
+      [
+       "error_recovery_speed",
+       29.2
+      ],
+      [
+       "interference_susceptibility",
+       27.9
+      ],
+      [
+       "confidence_calibration",
+       26
+      ],
+      [
+       "self_monitoring",
+       26
+      ]
+     ]
+    },
+    {
+     "id": "x424242-106",
+     "acc_S5": 89.46000000000001,
+     "guess": 72.088,
+     "removed": 0.622384637431929,
+     "profile": "x424242-106 random age 59; high tail: jargon_absorption, pattern_detection, interleaving_tolerance, gamification_response, challenge_appetite, help_seeking, structure_need, worked_example_dependence (+9); low tail: analogical_transfer, humor_receptivity, mastery_orientation, brevity_preference, dialogic_preference, extrinsic_reward_sensitivity, emotional_engagement; hobbies: competitive baking shows, drone racing; dislikes: rewrites of the same idea three times; past difficulties: missed a year of school, dyscalculia-like trouble with number sense",
+     "worst_measures": [
+      [
+       "error_driven_learning",
+       33.1
+      ],
+      [
+       "misconception_persistence",
+       33.1
+      ],
+      [
+       "recognition_recall_gap",
+       30.6
+      ],
+      [
+       "open_response_performance",
+       30.6
+      ],
+      [
+       "vocabulary_ceiling",
+       30.5
+      ]
+     ]
+    },
+    {
+     "id": "x424242-136",
+     "acc_S5": 89.569,
+     "guess": 74.36,
+     "removed": 0.5931747269890796,
+     "profile": "x424242-136 random age 58; high tail: generation_effect, hint_dependency, error_driven_learning, boredom_susceptibility, near_transfer; low tail: example_density_need, analogical_transfer, systems_thinking, deliberation_depth, humor_receptivity, gamification_response, consolidation_need, guessing_propensity (+6); hobbies: roller derby, lockpicking sport; dislikes: repetition drills, group work framing, word problems about money; past difficulties: math anxiety since middle school",
+     "worst_measures": [
+      [
+       "depth_breadth",
+       32.9
+      ],
+      [
+       "productive_struggle",
+       32.6
+      ],
+      [
+       "cognitive_flexibility",
+       30.4
+      ],
+      [
+       "conceptual_bias",
+       29.4
+      ],
+      [
+       "momentum_dependence",
+       28
+      ]
+     ]
+    },
+    {
+     "id": "x424242-153",
+     "acc_S5": 89.773,
+     "guess": 74.943,
+     "removed": 0.5918505806760586,
+     "profile": "x424242-153 random age 31; high tail: intake_baseline, working_memory_span, spatial_anchoring, logical_rigor, cycle_architecture, fatigue_curve, recognition_recall_gap, generation_effect (+1); low tail: narrative_pull, failure_response, structure_need, notation_comfort, extrinsic_reward_sensitivity, emotional_engagement, far_transfer; hobbies: ship model building, fishing, fantasy football; dislikes: timed quizzes; past difficulties: missed a year of school, forgets formulas overnight",
+     "worst_measures": [
+      [
+       "failure_response",
+       36
+      ],
+      [
+       "error_recovery_speed",
+       36
+      ],
+      [
+       "cycle_architecture",
+       35.7
+      ],
+      [
+       "persistence",
+       32.8
+      ],
+      [
+       "vocabulary_ceiling",
+       29.3
+      ]
+     ]
+    },
+    {
+     "id": "x424242-16",
+     "acc_S5": 89.85,
+     "guess": 73.714,
+     "removed": 0.6138628927946436,
+     "profile": "x424242-16 random age 53; high tail: jargon_absorption, systems_thinking, challenge_appetite, decay_rate, elaboration_benefit, guessing_propensity, autonomy_preference, self_efficacy (+2); low tail: abstraction_tolerance, interleaving_tolerance, deliberation_depth, reentry_cost, curiosity_hook, error_recovery_speed, structure_need, notation_comfort (+2); hobbies: birdwatching, puppetry; dislikes: -; past difficulties: missed a year of school, dyslexia-like slow reading",
+     "worst_measures": [
+      [
+       "creative_extension",
+       35.2
+      ],
+      [
+       "integration_tendency",
+       27.9
+      ],
+      [
+       "far_transfer",
+       27.2
+      ],
+      [
+       "notation_comfort",
+       26.1
+      ],
+      [
+       "recognition_recall_gap",
+       24.8
+      ]
+     ]
+    }
+   ],
+   "worseThanGuess": []
+  }
+ }
+}
