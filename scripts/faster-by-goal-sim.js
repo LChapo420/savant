@@ -35,6 +35,8 @@ const N_ORD = num('n-ordinary', 40);
 const JIT = args.jit === '1';          // goal-aware review floor (the candidate fix), see reviewDue()
 const GOAL_MEM = num('goal-memory', 0.8);   // candidate fix only (--jit=1): a review is deferred while predicted recall on the test day stays at least this
 const FLOOR = num('floor', 0.85); // goal-mode daily recall floor (candidate fix); 0.85 = the app today
+const FINISH = args.finish === '1';     // round 3: horizon counted from finishing the course
+const FINAL = args.final === '1';
 const SKIPK = num('skipk', 2);          // lesson-skip variant: a page is skipped when the skill is already known to this level (a passed pretest: needs a screen, not wired); 2 = never
 const KLOSS = num('kloss', 0);        // sensitivity: share of understanding lost in a deep lapse, i.e. memory recall under 0.5 (0 = the audited v2 model: k never decays)
 const EST_SD = num('est-sd', 0.3);     // log-sd of the app's error in a learner's half-life multiplier
@@ -104,7 +106,9 @@ function simulate(L, P, arm, plan) {
   const rnd = rngOf('run', L.id);
   const kr = rngOf('know', L.id);
   const base = X.hash('start', L.id) % 60; // absolute calendar day of the first study day (enforcer calendar position)
-  const { testRel } = plan;
+  const { testRel: testRel0 } = plan;
+  const FIN = !!plan.fromFinish;           // horizon counted from finishing the course (round 3)
+  let T = FIN ? 2200 : testRel0;           // the test day; with FIN it becomes finish + H once the course is covered
   const sk = [];
   for (let s = 0; s < SKILLS; s++) {
     const rel = 0.5 * P.theta0 + 0.8 * kr.normal();
@@ -149,21 +153,22 @@ function simulate(L, P, arm, plan) {
   let types = []; let datePlanDays = new Map(); let horizonN = null;
   if (arm.type === 'savant') {
     const g = arm.goal;
-    if (g.kind === 'date') { for (const p of goal.datePlan(base, base + testRel)) datePlanDays.set(p.day, p.kind); }
+    if (g.kind === 'date') { for (const p of goal.datePlan(base, base + T)) datePlanDays.set(p.day, p.kind); }
     else { horizonN = g.kind === 'horizon' ? g.H : null; types = goal.keptTypes({ status: g.kind === 'horizon' ? 'horizon' : 'forever', days: g.kind === 'horizon' ? g.H : null }); }
   }
   const savant = arm.type === 'savant';
 
-  for (let d = 0; d <= testRel; d++) {
+  for (let d = 0; d <= T; d++) {
     let budget = MINUTES; let spent = 0; const abs = base + d;
     const covered = next >= SKILLS;
     // ----- reviews (savant: calendar + goal + daily recall floor; tutor: weekly recap; normal: none until the cram day) -----
     const due = [];
     const now0 = d;
     if (savant && arm.backward) {
-      if (d >= testRel - arm.backward.P && d < testRel) for (let i = 0; i < next; i++) { const Re = memR(sk[i].e, now0); if (Re < arm.backward.floor) due.push({ i, Re }); }
+      if (arm.backward.safety > 0 && d < T - arm.backward.P) for (let i = 0; i < next; i++) { const Re = memR(sk[i].e, now0); if (Re < REVIEW_TARGET && memR(sk[i].e, now0 + (T - d)) < arm.backward.safety) due.push({ i, Re }); } // safety check: a skill predicted far under target at the test is reviewed anyway
+      if (d >= T - arm.backward.P && d < T) for (let i = 0; i < next; i++) { const Re = memR(sk[i].e, now0); if (Re < arm.backward.floor) due.push({ i, Re }); }
     } else if (savant) {
-      const planKind = datePlanDays.get(abs);
+      const planKind = datePlanDays.get(abs) || (FIN && FINAL && plan.H <= 60 && coverDay !== null ? (d === T - 1 ? 'final' : d === T ? 'dayof' : undefined) : undefined); // round 3: a horizon that is counted from finishing also gets a final and a day-of look
       for (let i = 0; i < next; i++) {
         const s = sk[i];
         if (d > s.end) continue;
@@ -178,8 +183,8 @@ function simulate(L, P, arm, plan) {
     } else if (tut && d > 0 && d % 7 === 0) {
       for (let i = 0; i < next; i++) if (sk[i].a !== null && sk[i].a >= d - 7 - 0.1 && sk[i].a < d) due.push({ i, Re: memR(sk[i].e, now0) });
     }
-    if (arm.fixedSR) for (let i = 0; i < next; i++) if (sk[i].a !== null && d <= testRel - 1 && (arm.fixedSR === 2 ? SR_DENSE : SR_DAYS).includes(d - sk[i].a)) due.push({ i, Re: memR(sk[i].e, now0) });
-    if (arm.passes && (plan.noDate ? (coverDay !== null && d > coverDay && d <= coverDay + arm.passes) : (d >= testRel - arm.passes && d < testRel))) for (let i = 0; i < next; i++) due.push({ i, Re: memR(sk[i].e, now0) });
+    if (arm.fixedSR) for (let i = 0; i < next; i++) if (sk[i].a !== null && d <= T - 1 && (arm.fixedSR === 2 ? SR_DENSE : SR_DAYS).includes(d - sk[i].a)) due.push({ i, Re: memR(sk[i].e, now0) });
+    if (arm.passes && (plan.noDate ? (coverDay !== null && d > coverDay && d <= coverDay + arm.passes) : (d >= T - arm.passes && d < T))) for (let i = 0; i < next; i++) due.push({ i, Re: memR(sk[i].e, now0) });
     due.sort((x, y) => x.Re - y.Re);
     const revCap = covered ? Infinity : MINUTES * REVIEW_SHARE;
     let revSpent = 0;
@@ -195,24 +200,30 @@ function simulate(L, P, arm, plan) {
       if (savant) {
         for (const ty of types) { const r = schedule.next(ty, base + d); if (r !== null) s.rungs.push(r); }
         s.rungs.sort((a, b) => a - b);
-        if (horizonN) s.end = d + horizonN - 1;
+        if (horizonN && !FIN) s.end = d + horizonN - 1;
       }
       next++;
-      if (next >= SKILLS && coverDay === null) coverDay = d;
+      if (next >= SKILLS && coverDay === null) { coverDay = d; if (FIN) { T = coverDay + plan.H; for (const q of sk) q.end = T - 1; } }
     }
     t = d;
     if (plan.itemH) for (const s of sk) if (s.a !== null && s.rI === undefined && d >= s.a + plan.itemH) s.rI = s.k * (1 - KLOSS * lapse(memR(s.m, d + 0.99))) * memR(s.m, d + 0.99);
-    if (arm.oracleStop && next >= SKILLS && recallAt(testRel + 0.5) >= TARGET) break; // bound: stops the day the TRUE recall on the test day (with no more study) reaches the target
+    if (arm.oracleStop && next >= SKILLS && recallAt(T + 0.5) >= TARGET) break; // bound: stops the day the TRUE recall on the test day (with no more study) reaches the target
   }
-  const recall = recallAt(testRel + 0.5);
-  const recallItem = plan.itemH ? mean(sk.map((s) => (s.rI === undefined ? s.k * memR(s.m, testRel + 0.5) : s.rI))) : null;
+  const recall = recallAt(T + 0.5);
+  const recallItem = plan.itemH ? mean(sk.map((s) => (s.rI === undefined ? s.k * memR(s.m, T + 0.5) : s.rI))) : null;
   const covered = coverDay !== null;
   const hours = (by.lesson + by.practice + by.review) / 60;
-  return { hours, by: { lesson: by.lesson / 60, practice: by.practice / 60, review: by.review / 60 }, covered, coverDay, recall, recallItem, passItem: recallItem !== null && coverDay !== null && recallItem >= TARGET, pass: covered && recall >= TARGET, testDay: testRel, meanK: mean(sk.map((s) => s.k)) };
+  return { hours, by: { lesson: by.lesson / 60, practice: by.practice / 60, review: by.review / 60 }, covered, coverDay, recall, recallItem, passItem: recallItem !== null && coverDay !== null && recallItem >= TARGET, pass: covered && recall >= TARGET, testDay: T, meanK: mean(sk.map((s) => s.k)) };
 
+  function projEnd(dayRel) {
+    if (coverDay !== null) return coverDay + plan.H;
+    const perSkill = next > 0 ? (by.lesson + by.practice) / next : 14;
+    return dayRel + Math.ceil((SKILLS - next) * perSkill / MINUTES) + plan.H;
+  }
   function daysToTest(s, dayRel) {
     if (!arm.goal || arm.goal.kind === 'forever') return Infinity;
-    return arm.goal.kind === 'horizon' ? s.end + 1 - dayRel : testRel - dayRel;
+    if (FIN) return projEnd(dayRel) - dayRel;
+    return arm.goal.kind === 'horizon' ? s.end + 1 - dayRel : T - dayRel;
   }
 }
 
@@ -234,8 +245,9 @@ function cheapest(L, P, arm, plan) {
 /** The diligent self-studier: a generic fixed-interval schedule, one question per skill at these days after learning it (no estimates, no outcome knowledge). */
 const SR_DAYS = [1, 3, 7, 14, 30, 60, 120, 240, 365, 540, 730, 900, 1000];
 const SR_DENSE = [1, 2, 4, 7, 10, 14, 21, 30, 40, 55, 75, 100, 130, 170, 220, 280, 350, 430, 520, 620, 730, 850, 1000]; // a denser generic schedule (about x1.3 expansion), the second self-study variant
-const BW_P = [1, 2, 3, 5, 7];
-const BW_FLOOR = [0.95, 0.85, 0.7];
+const BW_P = [7, 10, 14];
+const BW_FLOOR = [0.95];
+const BW_SAFETY = [0, 0.1, 0.2, 0.3];
 const GOALS = [
   { id: 'horizon 1 week', kind: 'horizon', H: 7 },
   { id: 'horizon 1 month', kind: 'horizon', H: 30 },
@@ -257,7 +269,8 @@ function main() {
     const cover = plannedCover(L, P);
     const row = { id: L.id, kind: L.kind, age: L.age, band: L.band, plannedCover: cover, goals: {} };
     for (const g of GOALS) {
-      const plan = { testRel: cover + g.H, noDate: g.kind !== 'date', itemH: g.kind === 'horizon' ? g.H : 0 };
+      const plan = { testRel: cover + g.H, noDate: g.kind !== 'date', fromFinish: FINISH && g.kind !== 'date', H: g.H, itemH: g.kind === 'horizon' ? g.H : 0 };
+      if (args.quick) { row.goals[g.id] = { savant: simulate(L, P, { type: 'savant', goal: g }, plan) }; continue; }
       const slim = (r) => ({ hours: r.hours, pass: r.pass, recall: r.recall, covered: r.covered, passItem: r.passItem });
       const table = (arm) => PASS_STEPS.map((n) => ({ n, ...slim(simulate(L, P, { ...arm, passes: n }, plan)) }));
       const tabs = { normal: table({ type: 'normal' }), tutor_lo: table(TUTORS.lo), tutor: table(TUTORS.typical), tutor_bloom: table(TUTORS.bloom) };
@@ -270,12 +283,12 @@ function main() {
         tabs,
         normal: oracle(tabs.normal), tutor: oracle(tabs.tutor), tutor_lo: oracle(tabs.tutor_lo), tutor_bloom: oracle(tabs.tutor_bloom),
       };
-      if (g.kind === 'date') { cell.bw = {}; for (const P1 of BW_P) for (const f of BW_FLOOR) cell.bw[P1 + '-' + f] = slim(simulate(L, P, { type: 'savant', goal: g, backward: { P: P1, floor: f } }, plan)); }
+      if (g.kind === 'date') { cell.bw = {}; for (const P1 of BW_P) for (const f of BW_FLOOR) for (const sf of BW_SAFETY) cell.bw[P1 + '-' + f + '-' + sf] = slim(simulate(L, P, { type: 'savant', goal: g, backward: { P: P1, floor: f, safety: sf } }, plan)); }
       row.goals[g.id] = cell;
     }
     rows.push(row);
   }
-  const out = { simulated: true, seed: SEED, forget: FORGET, lesson: LESSON, target: TARGET, minutes: MINUTES, skills: SKILLS, jit: JIT, skipk: SKIPK, floor: FLOOR, goal_memory: GOAL_MEM, kloss: KLOSS, est_sd: EST_SD, n_extreme: N_EXT, n_ordinary: N_ORD, rows };
+  const out = { simulated: true, seed: SEED, forget: FORGET, lesson: LESSON, target: TARGET, minutes: MINUTES, skills: SKILLS, jit: JIT, final: FINAL, finish: FINISH, skipk: SKIPK, floor: FLOOR, goal_memory: GOAL_MEM, kloss: KLOSS, est_sd: EST_SD, n_extreme: N_EXT, n_ordinary: N_ORD, rows };
   if (args.out) { fs.mkdirSync(path.dirname(args.out), { recursive: true }); fs.writeFileSync(args.out, JSON.stringify(out)); console.log(`wrote ${args.out} (${rows.length} learners)`); }
   return out;
 }

@@ -4,6 +4,35 @@ Owner, 5 Nov 2026: "faster means they get all the information they normally woul
 
 **Round 1 answer (see Round 2 below, which corrects its baselines): no.** Assumption (a) (lower goal, fewer hours) holds for all 160 held-out learners. Assumption (b) (every goal faster than the baselines) fails for every learner on every dated goal at the default forgetting model, and holds only where the baseline cannot reach the target at all (goals with no known test day). Nothing here is a marketing claim.
 
+## Round 3: the short-horizon rule, built behind two switches (SIMULATED; gate met on the main model, missed on one variant)
+
+**The bug.** Round 2 found that "remember 1 week" left 0% of learners recalling the whole course, and "remember 1 month" 76% to 78%, because reviews of each skill ended H days after it was learned. In the real code the same family of problem is: `limitInterval` (uploaded courses) ended a horizon at `set_on + H`, and enrollments' level reviews never read the goal at all (`mastery.dueReviewsByRecallRaw` uses a flat 0.85).
+
+**The rule** (`services/retention-goal.js`, `services/mastery.js`, `services/sessions.js`; opt-in, both off by default, off is today's behaviour exactly, tested):
+- `SR_GOAL_REVIEW=on`: a horizon counts from when the learner FINISHES the course (`enrollments.finished_on`, now written when the last level is passed). Before that the end is unknown and reviews run. For horizons of 60 days or less, the last two days ask every skill under 0.95 predicted recall (final look). A skill whose predicted recall on the end day stays at 0.8 or above is deferred. Uploaded courses: the interval limit counts from `finished_on` too (nothing sets it for materials yet, so their reviews carry on: the safe side).
+- `SR_GOAL_BACKWARD=on`: a dated test gets no recall-triggered review until 10 days before it, then every skill under 0.95 is asked; the plan's mid reviews are dropped, final and day-of stay. In the simulation the safety check (a skill predicted far under target is reviewed anyway) was swept on the design seed and cost 0.3 to 6 hours for no failure it prevented once the window was 10 days, so it is not in the code.
+- Not wired: the fitted-curve review queue (`adaptation.reviewQueue`, the primary path for grades with an objective model) still uses its own thresholds; the final-look and backward rules are not applied there. Existing finished enrollments have no `finished_on` (treated as unfinished). The real code was unit-tested and run through `npm test`; the end-to-end effect on hours is the simulation's, not measured in the app.
+
+**Gate** on a new held-out seed (20261105, never used before: 160 learners, 120 extreme and 40 ordinary; the rule's constants 0.85 floor, 0.8 deferral, final look for horizons up to 60 days were chosen on design seed 777002 only). Savant (app, rule on) against today's app, same learners; the test day is finish + H for every arm:
+
+| goal | hours now (rule) | hours today | reach 0.70 now | today | lowest kind or age band | worst 10% / 5% / 1% hours now |
+|---|---|---|---|---|---|---|
+| remember 1 week | 14.6 | 12.7 | 100% | 0% | 100% | 22.8 / 26.2 / 30.9 |
+| remember 1 month | 17.4 | 16.5 | 100% | 78% | 100% | 25.9 / 30.3 / 34.6 |
+| remember 6 months | 20.8 | 20.9 | 100% | 100% | 100% | 31.2 / 35.4 / 39.6 |
+| remember 1 year | 22.4 | 22.6 | 100% | 100% | 100% | 33.7 / 38.2 / 41.9 |
+| no test day (3 y) | 25.1 | 25.1 | 100% | 100% | 100% | 38.0 / 42.5 / 46.1 |
+
+**GATE MET** on the main model: every horizon at least 95% (100%), no kind or age band under 90%, hours at or below today's at 6 months and longer, lower goals take fewer hours (14.6 < 17.4 < 20.8 < 22.4 < 25.1). The extra 1.9 h at one week and 0.9 h at one month are the price of recalling the whole course instead of failing (today's hours there buy 0% and 78%).
+
+Same arms as the round 2 table, held-out seed 20261105 (mean hours over all learners, share reaching 0.70; fixed N chosen on seed 777002): remember 1 week: Savant 14.6 h 100%, stop-at-target bound 13.8 h, dense self-study 14.6 h 71% (sparse 12.9 h 17%), normal cram N 7 15.2 h 100%, tutor N 7 13.3 h 100%, tutor oracle bound 11.7 h. 1 month: 17.4 h 100%, bound 16.2 h, normal N 14 19.6 h 98%, tutor N 14 17.6 h 100%, self-study 14.6 h at 13% (sparse). 6 months: 20.8 h 100%, bound 20.0 h, normal N 14 19.6 h 5%, tutor 17.6 h 16%, self-study 16.9 h 0%. 1 year: 22.4 h 100%, bound 21.6 h, baselines 0%. No test day: 25.1 h 100%, bound 24.1 h, baselines 0%. Per-learner against cram: at 1 week and 1 month Savant is faster than normal cram for 135 and 155 of 160, against the typical tutor for 21 and 101; where a baseline cannot reach the target (6 months and longer: 134 to 160 learners) that is not counted as faster. Full tables: `docs/faster-by-goal/r3/report-k0.txt` (and k0.5, k1).
+
+**Dated test, backward plan** (design seed picked 10 days, no safety margin for 1 month and longer; the code uses 10 days for every dated goal): held-out 15.6 / 16.1 / 16.2 / 16.2 h at 1 week / 1 month / 6 months / 1 year against the app's 15.6 / 17.8 / 21.7 / 23.4 h, **100% reaching 0.70 and no learner failing, in every kind** (160 of 160 at each). Against fixed-7-pass cram (15.4 to 15.5 h, 97% to 99%) it is 0.2 h to 0.7 h slower but with no failures.
+
+**Deep-lapse variants** (a deep lapse costs half or all of understanding; `H-k0.5.json`, `H-k1.json`): the gate is MISSED in one place. With half: every horizon 98.8% or better, but hours at 6 months to no test day are 0.1 to 0.2 h above the k = 0 app run it was compared with (no like-for-like today run at 0.5). With all of understanding lost: "remember 1 week" reaches 97.5% overall but the tail_hi kind (6 learners) reaches 83% (one learner), under the 90% bar; everything else 100%. The backward plan drops to 99% at 1 month and 6 months in the deep-lapse variants (one learner), so it does not hold "no learner failing" there.
+
+**Left switched OFF.** The gate was met on the main model, but the real code has not been run against real sessions, the curve-queue path is not wired, and the deep-lapse variant misses; turning it on is a product decision. Reproduce: `node scripts/faster-by-goal-sim.js --seed=20261105 --finish=1 --jit=1 --final=1 --out=H.json` (and `--quick=1` without the flags for today), then `node scripts/faster-by-goal-gate.js H.json TODAY.json`.
+
 ## Round 2 (supersedes the round 1 comparison below where they differ)
 
 Round 1 was tilted. Corrections, all SIMULATED, same 0.70 target, held-out seed 909091 (160 learners), design seed 777002 (80 learners, never used to report):

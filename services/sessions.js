@@ -213,7 +213,8 @@ function planLessonRaw(userId, enrollment, grade, params) {
   // the grade has an objective model, the fitted forgetting curve's queue
   // (adaptation.reviewQueue) picks the reviews; the SM-2 ladder is the fallback.
   const curve = curveReviews(userId, enrollment, plan.introduced, reviewLimit);
-  const due = curve || mastery.dueReviews(userId, plan.introduced, reviewLimit);
+  const goalCtx = require('./retention-goal').reviewContext(userId, enrollment); // eslint-disable-line global-require
+  const due = curve || mastery.dueReviews(userId, plan.introduced, reviewLimit, goalCtx);
   const weak = mastery.weakSkills(userId, plan.introduced);
   const mix = interleaveMode(userId, enrollment, grade);
 
