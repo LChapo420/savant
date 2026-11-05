@@ -66,6 +66,17 @@ function deduct(rnd) {
 function present(item, seed) {
   const rnd = rngFrom(seed);
   const c = content();
+  if (item.kind === 'scale') {
+    const it = require('../../content/daily-check').SCALE_ITEMS.find((x) => x.id === item.id);
+    if (!it) return null;
+    return { id: item.id, kind: 'ipip', scale: require('../../content/ipip-items').SCALE, items: [{ id: item.id, text: it.text }], _server: {} };
+  }
+  if (item.kind === 'forced' && item.tap) {
+    const it = require('../../content/daily-check').TAP_ITEMS.find((x) => x.id === item.id);
+    if (!it) return null;
+    const opts = [{ k: 'high', text: it.high }, { k: 'low', text: it.low }];
+    return { id: item.id, kind: 'forced', prompt: it.prompt, options: rnd() < 0.5 ? opts.reverse() : opts, _server: {} };
+  }
   if (item.kind === 'forced') {
     let high; let low;
     if (item.legacy) {
@@ -125,6 +136,12 @@ const words = (s) => String(s || '').trim().split(/\s+/).filter(Boolean).length;
 function score(item, response, server) {
   const r = response || {};
   const out = {};
+  if (item.kind === 'scale') {
+    const v = Number(r.answers && r.answers[item.id]);
+    const x = Math.max(-1.8, Math.min(1.8, ((v >= 1 && v <= 5 ? v : 3) - 3) / 1.1));
+    for (const i of item.informs) out[i.stat] = x * i.sign;
+    return out;
+  }
   if (item.kind === 'forced') {
     const high = r.choice === 'high';
     for (const i of item.informs) out[i.stat] = (high ? 1 : -1) * i.sign;

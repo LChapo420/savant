@@ -136,6 +136,8 @@ app.use('/api/placement', require('./routes/placement'));
 app.use('/api/reading-check', require('./routes/reading-check'));
 // Optional measurement channels that raise the scorecard's accuracy: questionnaire, delayed memory checks, brain games, silent signals, imports, max accuracy (services/boosters.js).
 app.use('/api/boosters', require('./routes/boosters'));
+// The daily check in the normal flow (services/daily-check.js): a few minutes of measurement a day, always skippable; SCORECARD_DAILY=off turns it off.
+app.use('/api/daily-check', require('./routes/daily-check'));
 // The baseline: Quick / Balanced / Accurate tasks and choices that give the scorecard a first, accurate picture before any material is written (services/onboarding).
 app.use('/api/onboarding', require('./routes/onboarding'));
 // The subject-level quiz: one walk up a whole subject, ending in a recommended

@@ -18,11 +18,14 @@ const TEST_CAP = 4;   // services/scorecard/index.js TEST_BATCH_CAP
  * @param {Object<string,{dataValue:number,P:number}>} est  model.estimates() output
  * @param {Object<string,number>} [alreadyFed] precision already fed per measure by earlier sessions
  */
-function observations(est, alreadyFed = {}) {
+function observations(est, alreadyFed = {}, { tailK = Number(process.env.DAILY_TAIL_K || 0) } = {}) {
   const out = [];
   for (const [stat, e] of Object.entries(est)) {
-    const added = e.P - (alreadyFed[stat] || 0);
+    let added = e.P - (alreadyFed[stat] || 0);
     if (!(added > 0.02)) continue;
+    // Heavier-tailed prior (off by default, tailK 0): a reading far from the middle is trusted more, because a learner at a tail is exactly who a
+    // normal prior with spread 17 pulls in too far. The weight grows by tailK for each population spread beyond one, but only as far as the data's own precision.
+    if (tailK > 0) added *= 1 + tailK * Math.max(0, Math.min(2, Math.abs(e.dataValue - 50) / 17 - 1));
     out.push({
       stat,
       value: Math.round(clamp(e.dataValue, 0, 100) * 100) / 100,

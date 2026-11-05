@@ -287,6 +287,7 @@ const EXPORT_MORE = [
   'es_catch_up', 'catchup_units',
   'material_notes',
   'experiment_arms', 'choice_pairs',
+  // (the daily check, services/daily-check.js, adds no collection: its day log and answers sit in the profiles row, boosters.daily and onboarding.known)
   'footprint_events', 'recruit_applicants',
 ];
 

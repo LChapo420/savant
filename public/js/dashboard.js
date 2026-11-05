@@ -558,6 +558,7 @@ App.mount(async () => {
         ${plannerSection()}
 
         <div id="reading-offer"></div>
+        <div id="daily-offer"></div>
 
         ${!data.profile.took_style_quiz ? `
           <section class="card">
@@ -604,6 +605,8 @@ App.mount(async () => {
   // The planner's form, clear and calendar-file buttons.
   // The short reading check, when one is on offer (services/reading-check.js): quiet if not.
   if (window.ReadingOffer) window.ReadingOffer.mount(root.querySelector('#reading-offer'), { next: '/dashboard' });
+  // The daily check (services/daily-check.js): drawn after the page, only when on offer, skippable at one tap.
+  if (window.DailyOffer) window.DailyOffer.mount(root.querySelector('#daily-offer'), { next: '/dashboard' });
 
   // The persistent tutor (services/tutor.js): the same one that helps inside a question.
   if (window.TutorChat) window.TutorChat.mount(root.querySelector('#tutor-host'), { where: 'home' });
