@@ -161,6 +161,7 @@ const OKPLAYER = (t) => ({ playabilityStatus: { status: 'OK' }, videoDetails: { 
     check('a video with no sound track says so, and no job is made', r3.code === 'no_audio' && audio.listJobs(user.id).every((j) => j.title !== 'mute'), r3);
     const r4 = await video.submitVideo(user.id, mp4, 'x.mp4', {});
     check('without the speech model it says so plainly, before any work', audio.availability().ready ? true : (r4.code === 'no_transcriber' && tmpLeft() === before), r4);
+    if (r4.finished) await r4.finished.catch(() => {}); // with a speech model configured r4 really runs: let it end before the next submit
     const r5 = await video.submitVideo(user.id, Buffer.concat([mp4.slice(0, 40), Buffer.alloc(2000, 7)]), 'bad.mp4', { deps: { transcribe: stub } });
     check('a damaged video is a plain error', r5.code === 'unreadable' || r5.code === 'no_audio', r5);
     const r6 = await video.submitVideo(user.id, mp4, 'x.mp4', { ffmpeg: '/nonexistent/ffmpeg', deps: { transcribe: stub } });
