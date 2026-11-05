@@ -44,7 +44,7 @@ const TODAY_RHO = { self: 0.45, goal: 0.5, wm: 0.85, speed: 0.8, read: 0.75, rea
 // scale (IPIP agreement items) and tap (own-wording "which would you do next" taps) are the daily check's two designed sources: the ceilings are the square roots of
 // docs/SCORECARD-90.md section 6's reliabilities (scale 0.3, range 0.2 to 0.4; taps 0.45, range 0.3 to 0.55). ASSUMED, never measured on learners.
 const SCENARIOS = {
-  pessimistic: { ...TODAY_RHO, scale: 0.45, tap: 0.55 },
+  pessimistic: { ...TODAY_RHO },
   central: { self: 0.45, goal: 0.5, wm: 0.82, speed: 0.8, read: 0.75, reason: 0.75, switch: 0.5, ml: 0.42, taste: 0.45, conf: 0.55, scale: 0.55, tap: 0.67 },
   optimistic: { self: 0.56, goal: 0.5, wm: 0.91, speed: 0.89, read: 0.75, reason: 0.85, switch: 0.71, ml: 0.56, taste: 0.45, conf: 0.55, scale: 0.63, tap: 0.74 },
   // the LOW end of the section 6 ranges for every family the daily check uses (used for the simulated world only; the planner still believes `central`, as it would in the field)
