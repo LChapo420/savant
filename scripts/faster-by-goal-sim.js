@@ -160,7 +160,9 @@ function simulate(L, P, arm, plan) {
     // ----- reviews (savant: calendar + goal + daily recall floor; tutor: weekly recap; normal: none until the cram day) -----
     const due = [];
     const now0 = d;
-    if (savant) {
+    if (savant && arm.backward) {
+      if (d >= testRel - arm.backward.P && d < testRel) for (let i = 0; i < next; i++) { const Re = memR(sk[i].e, now0); if (Re < arm.backward.floor) due.push({ i, Re }); }
+    } else if (savant) {
       const planKind = datePlanDays.get(abs);
       for (let i = 0; i < next; i++) {
         const s = sk[i];
@@ -176,6 +178,7 @@ function simulate(L, P, arm, plan) {
     } else if (tut && d > 0 && d % 7 === 0) {
       for (let i = 0; i < next; i++) if (sk[i].a !== null && sk[i].a >= d - 7 - 0.1 && sk[i].a < d) due.push({ i, Re: memR(sk[i].e, now0) });
     }
+    if (arm.fixedSR) for (let i = 0; i < next; i++) if (sk[i].a !== null && d <= testRel - 1 && (arm.fixedSR === 2 ? SR_DENSE : SR_DAYS).includes(d - sk[i].a)) due.push({ i, Re: memR(sk[i].e, now0) });
     if (arm.passes && (plan.noDate ? (coverDay !== null && d > coverDay && d <= coverDay + arm.passes) : (d >= testRel - arm.passes && d < testRel))) for (let i = 0; i < next; i++) due.push({ i, Re: memR(sk[i].e, now0) });
     due.sort((x, y) => x.Re - y.Re);
     const revCap = covered ? Infinity : MINUTES * REVIEW_SHARE;
@@ -198,11 +201,14 @@ function simulate(L, P, arm, plan) {
       if (next >= SKILLS && coverDay === null) coverDay = d;
     }
     t = d;
+    if (plan.itemH) for (const s of sk) if (s.a !== null && s.rI === undefined && d >= s.a + plan.itemH) s.rI = s.k * (1 - KLOSS * lapse(memR(s.m, d + 0.99))) * memR(s.m, d + 0.99);
+    if (arm.oracleStop && next >= SKILLS && recallAt(testRel + 0.5) >= TARGET) break; // bound: stops the day the TRUE recall on the test day (with no more study) reaches the target
   }
   const recall = recallAt(testRel + 0.5);
+  const recallItem = plan.itemH ? mean(sk.map((s) => (s.rI === undefined ? s.k * memR(s.m, testRel + 0.5) : s.rI))) : null;
   const covered = coverDay !== null;
   const hours = (by.lesson + by.practice + by.review) / 60;
-  return { hours, by: { lesson: by.lesson / 60, practice: by.practice / 60, review: by.review / 60 }, covered, coverDay, recall, pass: covered && recall >= TARGET, testDay: testRel, meanK: mean(sk.map((s) => s.k)) };
+  return { hours, by: { lesson: by.lesson / 60, practice: by.practice / 60, review: by.review / 60 }, covered, coverDay, recall, recallItem, passItem: recallItem !== null && coverDay !== null && recallItem >= TARGET, pass: covered && recall >= TARGET, testDay: testRel, meanK: mean(sk.map((s) => s.k)) };
 
   function daysToTest(s, dayRel) {
     if (!arm.goal || arm.goal.kind === 'forever') return Infinity;
@@ -225,15 +231,23 @@ function cheapest(L, P, arm, plan) {
   for (const n of PASS_STEPS) { last = { ...simulate(L, P, { ...arm, passes: n }, plan), passes: n }; if (last.pass) return { first: n === 0 ? last : undefined, best: last }; }
   return { best: last };
 }
+/** The diligent self-studier: a generic fixed-interval schedule, one question per skill at these days after learning it (no estimates, no outcome knowledge). */
+const SR_DAYS = [1, 3, 7, 14, 30, 60, 120, 240, 365, 540, 730, 900, 1000];
+const SR_DENSE = [1, 2, 4, 7, 10, 14, 21, 30, 40, 55, 75, 100, 130, 170, 220, 280, 350, 430, 520, 620, 730, 850, 1000]; // a denser generic schedule (about x1.3 expansion), the second self-study variant
+const BW_P = [1, 2, 3, 5, 7];
+const BW_FLOOR = [0.95, 0.85, 0.7];
 const GOALS = [
-  { id: 'test in 1 week', kind: 'date', H: 7 },
-  { id: 'test in 1 month', kind: 'date', H: 30 },
-  { id: 'test in 6 months', kind: 'date', H: 180 },
-  { id: 'test in 1 year', kind: 'date', H: 365 },
-  { id: 'a year (horizon)', kind: 'horizon', H: 365 },
-  { id: 'forever (3 y test)', kind: 'forever', H: 1095 },
+  { id: 'horizon 1 week', kind: 'horizon', H: 7 },
+  { id: 'horizon 1 month', kind: 'horizon', H: 30 },
+  { id: 'horizon 6 months', kind: 'horizon', H: 180 },
+  { id: 'horizon 1 year', kind: 'horizon', H: 365 },
+  { id: 'no test day (3 y)', kind: 'forever', H: 1095 },
+  { id: 'date 1 week', kind: 'date', H: 7 },
+  { id: 'date 1 month', kind: 'date', H: 30 },
+  { id: 'date 6 months', kind: 'date', H: 180 },
+  { id: 'date 1 year', kind: 'date', H: 365 },
 ];
-const TUTORS = { typical: { type: 'tutor', gain: 1.3, page: 0.75, pageEff: 1.3, passes: 0 }, bloom: { type: 'tutor', gain: 1.8, page: 0.5, pageEff: 1.6, passes: 0 } };
+const TUTORS = { lo: { type: 'tutor', gain: 1.1, page: 0.9, pageEff: 1.1, passes: 0 }, typical: { type: 'tutor', gain: 1.3, page: 0.75, pageEff: 1.3, passes: 0 }, bloom: { type: 'tutor', gain: 1.8, page: 0.5, pageEff: 1.6, passes: 0 } };
 
 function main() {
   const learners = [...X.generate(SEED, N_EXT).map((l) => ({ ...l })), ...Array.from({ length: N_ORD }, (_, i) => ordinary(SEED, i))];
@@ -243,15 +257,21 @@ function main() {
     const cover = plannedCover(L, P);
     const row = { id: L.id, kind: L.kind, age: L.age, band: L.band, plannedCover: cover, goals: {} };
     for (const g of GOALS) {
-      const plan = { testRel: cover + g.H, noDate: g.kind !== 'date' };
-      row.goals[g.id] = {
+      const plan = { testRel: cover + g.H, noDate: g.kind !== 'date', itemH: g.kind === 'horizon' ? g.H : 0 };
+      const slim = (r) => ({ hours: r.hours, pass: r.pass, recall: r.recall, covered: r.covered, passItem: r.passItem });
+      const table = (arm) => PASS_STEPS.map((n) => ({ n, ...slim(simulate(L, P, { ...arm, passes: n }, plan)) }));
+      const tabs = { normal: table({ type: 'normal' }), tutor_lo: table(TUTORS.lo), tutor: table(TUTORS.typical), tutor_bloom: table(TUTORS.bloom) };
+      const oracle = (t) => t.find((x) => x.pass) || t[t.length - 1];
+      const cell = {
         savant: simulate(L, P, { type: 'savant', goal: g }, plan),
-        normal0: simulate(L, P, { type: 'normal', passes: 0 }, plan),
-        normal: cheapest(L, P, { type: 'normal' }, plan).best,
-        tutor0: simulate(L, P, TUTORS.typical, plan),
-        tutor: cheapest(L, P, TUTORS.typical, plan).best,
-        tutor_bloom: cheapest(L, P, TUTORS.bloom, plan).best,
+        savant_stop: slim(simulate(L, P, { type: 'savant', goal: g, oracleStop: true }, plan)),
+        self_sr: slim(simulate(L, P, { type: 'normal', fixedSR: true }, plan)),
+        self_sr2: slim(simulate(L, P, { type: 'normal', fixedSR: 2 }, plan)),
+        tabs,
+        normal: oracle(tabs.normal), tutor: oracle(tabs.tutor), tutor_lo: oracle(tabs.tutor_lo), tutor_bloom: oracle(tabs.tutor_bloom),
       };
+      if (g.kind === 'date') { cell.bw = {}; for (const P1 of BW_P) for (const f of BW_FLOOR) cell.bw[P1 + '-' + f] = slim(simulate(L, P, { type: 'savant', goal: g, backward: { P: P1, floor: f } }, plan)); }
+      row.goals[g.id] = cell;
     }
     rows.push(row);
   }
