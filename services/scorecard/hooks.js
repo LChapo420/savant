@@ -487,6 +487,11 @@ function onChoice(userId, stat, pick, note) {
   return obs.length ? scorecard.observe(userId, obs, { source: 'pairwise choice' }) : null;
 }
 
+/** The daily check (services/daily-check.js): designed-test observations of the precision a day added. Throws if the card is not updated. */
+function onDailyCheck(userId, obs) {
+  return obs && obs.length ? scorecard.observe(userId, obs, { source: 'daily check' }) : null;
+}
+
 /** The reading check (services/reading-check.js) ended: its measure of language level, as a designed test. Throws if the card is not updated. */
 function onReadingCheck(userId, result) {
   const obs = signals.fromReadingCheck(result);
@@ -527,6 +532,7 @@ module.exports = {
   onImportedResults,
   onReadingCheck,
   onChoice,
+  onDailyCheck,
   onAnswer,
   onLessonRead,
   onBaseLessonFinished,

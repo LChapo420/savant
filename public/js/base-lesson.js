@@ -742,9 +742,12 @@ App.mount(async () => {
           </div>
           <div id="base-lesson-feedback" style="margin-top:12px"></div>
           <div id="base-lesson-choice"></div>
+          <div id="base-lesson-daily"></div>
         </div>`;
       // "Which is clearer?" (public/js/boosters-choice.js): asked now and then, only when its two versions are ready.
       if (window.ChoiceCard) window.ChoiceCard.mount(document.getElementById('base-lesson-choice'), { track, grade, level: at });
+      // The daily check (services/daily-check.js), after the lesson is finished: never before or during one.
+      if (window.DailyOffer) window.DailyOffer.mount(document.getElementById('base-lesson-daily'), { next: window.location.pathname + window.location.search });
 
       // "Give Input" beside the button that moves the learner on — the same control
       // the adaptive session offers at the end of a level. It sits inside the finish

@@ -7,8 +7,13 @@ App.mount(async () => {
   const root = document.getElementById('root');
   const next = App.query('next');
   const nextHref = next && next.startsWith('/') && !next.startsWith('//') ? next : '/dashboard';
+  function nextHrefOf() { return nextHref; }
   const esc = App.escapeHtml;
-  const info = await App.api.get('/api/onboarding/modes');
+  // The daily check (public/daily-check.html) reuses this page's step renderers: window.OB_API points at its API and it has no mode picker.
+  const API = window.OB_API || '/api/onboarding';
+  const DAILY = !!window.OB_DAILY;
+  const info = DAILY ? { allowed: true, modes: [] } : await App.api.get('/api/onboarding/modes');
+  if (DAILY) { const o = await App.api.get(API); if (!o.offer) { window.location.href = nextHrefOf(); return; } }
   if (!info.allowed) {
     const old = App.query('old');
     window.location.href = old && old.startsWith('/') && !old.startsWith('//') ? old : `/style-quiz?next=${encodeURIComponent(nextHref)}`;
@@ -22,9 +27,11 @@ App.mount(async () => {
   const shell = (progress, body) => {
     const pct = progress ? Math.min(100, Math.round((progress.elapsed_minutes / progress.budget_minutes) * 100)) : 0;
     root.innerHTML = `<div class="ob-head">${progress ? `<div class="meter meter-lg" aria-hidden="true"><span style="width:${pct}%"></span></div>
-      <p class="small muted" role="status">About ${progress.minutes_left} min left. <a href="#" id="stop">Stop here and save what I have</a></p>` : ''}</div><div id="step">${body}</div>`;
+      <p class="small muted" role="status">About ${progress.minutes_left} min left. <a href="#" id="stop">Stop here and save what I have</a>${DAILY ? ' &middot; <a href="#" id="not-today">Not today</a>' : ''}</p>` : ''}</div><div id="step">${body}</div>`;
     const stop = document.getElementById('stop');
-    if (stop) stop.addEventListener('click', async (e) => { e.preventDefault(); finish(await App.api.post('/api/onboarding/stop', {})); });
+    const nt = document.getElementById('not-today');
+    if (nt) nt.addEventListener('click', async (e) => { e.preventDefault(); try { await App.api.post(`${API}/skip`, {}); } catch { /* it just stays */ } window.location.href = nextHref; });
+    if (stop) stop.addEventListener('click', async (e) => { e.preventDefault(); finish(await App.api.post(`${API}/stop`, {})); });
   };
   const ask = (html, buttons) => new Promise((resolve) => {
     const host = document.getElementById('step');
@@ -69,6 +76,17 @@ App.mount(async () => {
       return { text };
     },
     reason: async (s) => mcq(s.q, s.options, true),
+    // The daily check's two extra steps: the memory check (answers by question number) and a few IPIP statements, each skippable.
+    delayed: async (s) => {
+      const answers = {};
+      for (const q of s.questions) { const r = await mcq(q.prompt, q.choices, false); answers[q.n] = r.choice; }
+      return { answers };
+    },
+    ipip: async (s) => {
+      const answers = {};
+      for (const it of s.items) { const k = await ask(`<h2>${esc(it.text)}</h2>`, s.scale.map((o) => [String(o.value), o.label])); answers[it.id] = Number(k); }
+      return { answers };
+    },
     read: async (s) => {
       const readMs = await readThenAnswer(s.passage, 'I have finished reading');
       const answers = [];
@@ -172,7 +190,7 @@ App.mount(async () => {
       const t = Date.now();
       const response = await R[out.step.kind](out.step);
       shell(out.progress, '<div class="loading"><span class="spinner"></span></div>');
-      out = await App.api.post('/api/onboarding/answer', { session, id: out.step.id, response, ms: Date.now() - t });
+      out = await App.api.post(`${API}/answer`, { session, id: out.step.id, response, ms: Date.now() - t, skip: response === null ? true : undefined });
     }
     finish(out);
   }
@@ -181,10 +199,19 @@ App.mount(async () => {
       try { const p = await App.api.get('/api/profile'); await App.api.post('/api/profile/survey', { ...(p.survey || {}), ...survey }); } catch { /* the survey is kept next time */ }
     }
     const s = out.summary || {};
+    if (DAILY) { window.location.href = nextHref; return; }
     root.innerHTML = `<div class="ob-head"><h1>Done: your starting picture is set</h1><p class="lede">${s.minutes || 0} minutes, ${s.known || 0} things measured. Everything you do from here sharpens it, and you can go deeper any time from your profile.</p></div>
       <a class="btn btn-primary btn-lg" href="${esc(nextHref)}">Continue</a>`;
   }
 
+  if (DAILY) {
+    // No picker: the check starts at once, with a one-tap way out in the header ("Stop here" saves what was answered; "Not today" asks nothing more today).
+    root.innerHTML = '<div class="loading"><span class="spinner"></span></div>';
+    const out = await App.api.post(`${API}/start`, {});
+    session = out.session;
+    loop(out);
+    return;
+  }
   // ── the mode picker ─────────────────────────────────────────────────────────
   root.innerHTML = `<div class="ob-head"><h1>How do you learn best?</h1>
     <p class="lede">Before Savant writes anything, it learns how you take things in and what helps you. The longer you give it, the better the picture. It never grades you, and you can go deeper later.</p></div>

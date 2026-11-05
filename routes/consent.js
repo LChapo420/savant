@@ -411,6 +411,7 @@ const KNOWN_COLLECTIONS = [
   'es_catch_up', 'catchup_units',
   'material_notes',
   'reading_checks',
+  // (the daily check, services/daily-check.js, adds no collection: its day log and answers sit in the profiles row, boosters.daily and onboarding.known)
   'experiment_arms', 'choice_pairs',
   'footprint_events',
   'act_guests', 'recruit_counts', // no account behind them (services/act-check.js): a token hash and per-day totals; guests are deleted after 30 days
