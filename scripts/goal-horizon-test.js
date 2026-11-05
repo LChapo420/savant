@@ -15,7 +15,7 @@ let n = 0;
 const ok = (c, m) => { assert.ok(c, m); n++; };
 const eq = (a, b, m) => { assert.deepStrictEqual(a, b, m); n++; };
 const iso = (ms) => new Date(ms).toISOString();
-const clear = () => { delete process.env.SR_GOAL_REVIEW; delete process.env.SR_GOAL_BACKWARD; };
+const clear = () => { process.env.SR_GOAL_REVIEW = 'off'; delete process.env.SR_GOAL_BACKWARD; };
 
 const week = goal.effective({ horizon: 'months', set_on: '2026-10-01' }, '2026-11-05'); // 90 days
 const wk = { horizon: 'horizon', status: 'horizon', days: 7, set_on: '2026-10-01' };

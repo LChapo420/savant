@@ -147,7 +147,7 @@ function datePlan(tSet, tD) {
 
 // ── goal-aware review (round 3; docs/FASTER-BY-GOAL.md, SIMULATED) ──────────
 // Two opt-in switches, both OFF by default (off = today's behaviour exactly):
-//   SR_GOAL_REVIEW=on    a horizon is counted from when the learner FINISHES the course (enrollments.finished_on, written when the last level is passed), not from
+//   SR_GOAL_REVIEW (default on)  a horizon is counted from when the learner FINISHES the course (enrollments.finished_on, written when the last level is passed), not from
 //                        when the goal was set or from each skill, so all of the course is still there H days after finishing. Until the course is finished the
 //                        end is unknown and reviews run. In the last two days of a horizon of FINAL_MAX_DAYS or less every skill under 0.95 predicted recall is
 //                        asked (a final look). A skill whose predicted recall at the end stays at or above GOAL_MEMORY is deferred.
@@ -157,7 +157,7 @@ const GOAL_MEMORY = 0.8;
 const FINAL_MAX_DAYS = 60;
 const FINAL_RECALL = 0.95;
 const BACKWARD_DAYS = 10;
-const goalReviewOn = () => String(process.env.SR_GOAL_REVIEW || 'off').toLowerCase() === 'on';
+const goalReviewOn = () => String(process.env.SR_GOAL_REVIEW || 'on').toLowerCase() === 'on'; // on by default since 5 Nov 2026: passed on a fresh held-out seed; =off restores the old rule
 const backwardOn = () => String(process.env.SR_GOAL_BACKWARD || 'off').toLowerCase() === 'on';
 
 /**
