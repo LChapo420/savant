@@ -455,6 +455,15 @@ const prewriteCap = () => num('WRITE_AHEAD_PREWRITE_CONCURRENT', 2, 1, 12);
 /** Speculative writes running now, in all or for one learner (one at a time each: the best guess first, the next only when it is done). */
 function prewriteRunning(userId = null) { let n = 0; for (const j of running.values()) if (j.prewrite && (userId === null || j.userId === userId)) n++; return n; }
 
+const holdOn = () => String(process.env.WRITE_AHEAD_HOLD_BEHIND_FIRST || '').toLowerCase() !== 'off';
+/** True while a first-level (fast, not speculative) write of the same enrollment is queued or running. */
+function holdBehindFirst(job) {
+  if (!holdOn() || job.kind !== 'write') return false;
+  const first = (j) => j.fast && !j.prewrite && j.kind === 'write' && j.enrollmentId === job.enrollmentId;
+  for (const j of running.values()) if (first(j)) return true;
+  return queue.some(first);
+}
+
 function pump() {
   queue.sort((a, b) => a.priority - b.priority || soonest(a) - soonest(b) || (b.levelsPerHour || 0) - (a.levelsPerHour || 0) || a.seq - b.seq);
   for (let i = 0; i < queue.length;) {
@@ -463,6 +472,9 @@ function pump() {
     // A speculative first-lesson write (prewrite) waits its turn behind a small cap of its own, so a burst of learners in placement cannot crowd
     // out the write a learner is waiting on (measured 4 Nov: 3 learners at once, 6 prewrites each, every first lesson slower).
     if (job.prewrite && (prewriteRunning() >= prewriteCap() || prewriteRunning(job.userId) >= 1)) { i++; continue; }
+    // Levels 2 and 3 of a learner are written once the level they wait on is written, not beside it (they compete for the same models):
+    // 5 Nov first-lesson brief. Held only while that first-level write is queued or running, so it can never hold them for long.
+    if (!job.fast && holdBehindFirst(job)) { i++; continue; }
     if (!job.fast && running.size >= globalCap()) { i++; continue; }
     if (running.has(job.key) || (!job.fast && (runningFor.get(job.userId) || 0) >= perUserCap())) { i++; continue; }
     queue.splice(i, 1);
@@ -481,7 +493,7 @@ function start(job) {
   running.set(job.key, job);
   runningFor.set(job.userId, (runningFor.get(job.userId) || 0) + 1);
   note({ type: 'start', key: job.key, kind: job.kind, tier: job.tier, fast: !!job.fast });
-  const lane = job.fast ? (fn) => pool().runForeground(fn, { fast: true }) : pool().runBackground;
+  const lane = job.fast ? (fn) => pool().runForeground(fn, { fast: true, speculative: !!job.prewrite }) : pool().runBackground;
   const where = { userId: job.userId, trackId: job.trackId, gradeId: job.gradeId, level: job.level, tailored: job.tailored };
   let work;
   if (job.kind === 'upgrade') {

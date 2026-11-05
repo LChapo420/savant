@@ -85,13 +85,25 @@ const fgHedgeMs = () => Number(process.env.POOL_FOREGROUND_HEDGE_MS || 8000);
 /** Run fn as background work: its AI calls leave a permit free for waiting learners and never pay for speed. */
 function runBackground(fn) { return lane.run({ background: true }, fn); }
 /** Run fn as work a learner is waiting on, even from inside background work. `fast`: the first level after placement, written on Coral Fast first. */
-function runForeground(fn, { fast = false } = {}) { return lane.run({ background: false, fast: !!fast }, fn); }
+function runForeground(fn, { fast = false, speculative = false } = {}) { return lane.run({ background: false, fast: !!fast, speculative: !!speculative }, fn); }
 /** The current lane store (null outside any lane); pass it to promote() later. */
 function laneStore() { return lane.getStore() || null; }
 /** True when the current async context is background work. */
 function inBackground() { const st = lane.getStore(); return !!(st && st.background); }
 /** A learner now waits on work that was started in the background: its later calls are foreground. */
-function promote(store) { if (store) store.background = false; }
+function promote(store) { if (store) { store.background = false; store.speculative = false; } }
+
+// ── a learner waiting on a first level outranks speculative writes (owner, 5 Nov 2026) ───────────────────────────────
+// Speculative = a prewrite during placement (nobody waits on it yet). WAITING = the fast lane without that mark. Three rules:
+//   - a speculative call never takes the last POOL_SPECULATIVE_RESERVE (2) permits of a fast slot, and never starts while a waiting call is
+//     pending anywhere (queued calls: the waiting one is polled first and the speculative one stays blocked until none is pending);
+//   - a waiting call has a per-attempt deadline (POOL_WAITING_DEADLINE_MS, 45 s) after which it moves on to the next fast slot instead of
+//     sitting 340 to 465 s on a slow one; its whole call is bounded to 3 attempts' worth.
+const specReserve = () => Math.max(0, Number(process.env.POOL_SPECULATIVE_RESERVE == null || process.env.POOL_SPECULATIVE_RESERVE === '' ? 2 : process.env.POOL_SPECULATIVE_RESERVE));
+const waitingDeadlineMs = () => Number(process.env.POOL_WAITING_DEADLINE_MS || 45000);
+let waitingPending = 0; // waiting-lane calls in callHedged now
+const isWaitingStore = (st) => !!(st && st.fast && st.background === false && !st.speculative);
+const isSpecStore = (st) => !!(st && st.fast && st.background === false && st.speculative);
 
 // ── change notification: a free permit, a finished item ────────────────────────
 const waiters = new Set();
@@ -241,6 +253,7 @@ class Slot {
     const threshold = Number(process.env.POOL_BREAKER_THRESHOLD || poolConfig().breaker_threshold || 3);
     const baseOpen = Number(process.env.POOL_BREAKER_OPEN_MS || poolConfig().breaker_open_ms || 30000);
     const backoff = Math.min(10 * 60 * 1000, baseOpen * 2 ** Math.min(b.opens, 5));
+    if (kind === 'deadline') { this.stats.failed++; return; } // counts as a failure in the stats, never opens the breaker
     if (kind === 'invalid') {
       this.stats.invalid++;
       b.invalidRun++;
@@ -264,7 +277,9 @@ class Slot {
   }
 
   // ── limits ──
-  hasPermit(background = false) {
+  hasPermit(background = false, speculative = false) {
+    if (speculative && this.paid && waitingPending > 0) return false; // a waiting learner is pending: no speculative call starts on a paid slot
+    if (speculative && this.fast && this.inFlight >= this.maxConcurrent - Math.min(specReserve(), this.maxConcurrent - 1)) return false;
     // Background calls leave fgReserve() permits for a waiting learner (a slot of one has none to spare; paid slots are never reserved).
     const spare = background && !this.paid ? Math.min(fgReserve(), this.maxConcurrent - 1) : 0;
     if (this.inFlight >= this.maxConcurrent - spare) return false;
@@ -636,7 +651,9 @@ function candidatesFor(req, opts = {}) {
     // Also for a task with no fast slot of its own (fact_verify, blind_mc: 4 Nov first-lesson brief): a learner waiting is not made to wait on
     // a busy free model first (a whole level's fact read took 109 to 312 s there; grok-4.3 answered one in 67 s, a block in about 24 s).
     const fastPaid = paid.filter((s) => s.fast);
-    if (fastPaid.length || paid.length) return [...first, ...fastPaid, ...paid.filter((s) => !s.fast), ...free];
+    // POOL_FIRST_WRITER=<slot id>: an experiment switch (scripts/first-lesson-writer-ab.js): that slot writes the level first, Coral Fast next.
+    const want = process.env.POOL_FIRST_WRITER && (req.task === 'block_layout' || req.task === 'block_fill') ? paid.filter((s) => s.id === process.env.POOL_FIRST_WRITER) : [];
+    if (fastPaid.length || paid.length) return [...first, ...want, ...fastPaid.filter((s) => !want.includes(s)), ...paid.filter((s) => !s.fast && !want.includes(s)), ...free];
   }
   return [...first, ...free, ...paid];
 }
@@ -644,13 +661,15 @@ function candidatesFor(req, opts = {}) {
 function timeoutFor(slot, req, opts) {
   const t = taskConfig(req.task);
   const ms = opts.timeoutMs || req.timeoutMs || slot.timeoutMs || t.timeout_ms || DEFAULT_TIMEOUT_MS();
-  return Math.min(ms, Number(process.env.POOL_MAX_TIMEOUT_MS || 600000));
+  const cap = Math.min(ms, Number(process.env.POOL_MAX_TIMEOUT_MS || 600000));
+  return isWaitingStore(lane.getStore()) && req.coral === true && opts.noDeadline !== true ? Math.min(cap, waitingDeadlineMs()) : cap;
 }
 
 // ── one attempt on one slot ────────────────────────────────────────────────────
 function classify(err) {
   if (!err) return 'availability';
   if (err.aborted) return 'aborted';
+  if (err.deadline) return 'deadline'; // a waiting learner's patience ran out: the slot is slow for us, not broken
   const st = err.status;
   if (err.unusable || err.code === 'INVALID' || st === 422) return 'invalid';
   if (err.code === 'LEDGER_STOP' || st === 402) return 'budget';
@@ -676,7 +695,7 @@ function endAccounting(slot) {
  * Run `req` on `slot` with a hard timeout. Resolves (never rejects) to
  * { ok, result?, kind, err?, ms, usd }. `signal` (optional) abandons the attempt.
  */
-async function attempt(slot, req, { validate = null, timeoutMs, signal = null } = {}) {
+async function attempt(slot, req, { validate = null, timeoutMs, signal = null, deadline = false } = {}) {
   startAccounting(slot);
   const ctrl = new AbortController();
   const t0 = now();
@@ -688,7 +707,7 @@ async function attempt(slot, req, { validate = null, timeoutMs, signal = null } 
     const call = Promise.resolve().then(() => slot.call(kindOfReq === req.kind ? req : { ...req, kind: kindOfReq }, { signal: ctrl.signal, timeoutMs, slot }));
     call.catch(() => {}); // an abandoned call's late failure is not ours to report
     const gate = new Promise((_, reject) => {
-      timer = setTimeout(() => { reject(Object.assign(new Error(`${slot.id}: no answer within ${Math.round(timeoutMs / 1000)}s`), { status: 0, timeout: true })); ctrl.abort(); }, timeoutMs);
+      timer = setTimeout(() => { reject(Object.assign(new Error(`${slot.id}: no answer within ${Math.round(timeoutMs / 1000)}s`), { status: 0, timeout: true, deadline })); ctrl.abort(); }, timeoutMs);
       ctrl.signal.addEventListener('abort', () => reject(Object.assign(new Error(`${slot.id}: aborted`), { aborted: true })), { once: true });
     });
     gate.catch(() => {});
@@ -729,10 +748,10 @@ async function attempt(slot, req, { validate = null, timeoutMs, signal = null } 
 }
 
 /** Could this slot start a call for `req` right now? Returns null if so, else why not (and how long to wait, if known). */
-function blocked(slot, req, background = false) {
+function blocked(slot, req, background = false, speculative = false) {
   if (!slot.isEnabled()) return { why: 'disabled' };
   if (slot.breakerOpen()) return { why: 'breaker', waitMs: Math.max(250, slot.breaker.openUntil - now()) };
-  if (!slot.hasPermit(background)) return { why: 'busy' };
+  if (!slot.hasPermit(background, speculative)) return { why: 'busy' };
   const w = slot.rpmWaitMs();
   if (w > 0) return { why: 'rpm', waitMs: w };
   if (slot.tokensLeft() < estTokens(req)) return { why: 'daily tokens', waitMs: 60000 };
@@ -763,11 +782,14 @@ async function callHedged(req, opts = {}) {
   const cands = opts.slots ? opts.slots.filter((s) => !refusal(s, req, kind)) : candidatesFor(req, opts);
   const timeout = (slot) => timeoutFor(slot, req, opts);
   const maxTimeout = Math.max(...cands.map(timeout), opts.timeoutMs || DEFAULT_TIMEOUT_MS());
-  const totalMs = opts.maxTotalMs || Math.round(maxTimeout * 2.5);
+  const waitingCall = isWaitingStore(lane.getStore()) && req.coral === true;
+  const totalMs = opts.maxTotalMs || (waitingCall ? Math.min(Math.round(maxTimeout * 2.5), waitingDeadlineMs() * 3) : Math.round(maxTimeout * 2.5));
   const maxParallel = Math.max(1, opts.maxParallel || 2);
   const validate = opts.validate || null;
   // Background work (write-ahead and the like) yields to a waiting learner and never pays for speed; see the lane note at the top.
   const laneNow = lane.getStore();
+  const isSpec = () => isSpecStore(laneNow) && req.coral === true;
+  if (waitingCall) waitingPending++;
   const isBg = () => (opts.background != null ? !!opts.background : req.background != null ? !!req.background : !!(laneNow && laneNow.background));
   const spent = { usd: 0, reserved: 0 };
   const trace = opts.trace || {};
@@ -784,6 +806,7 @@ async function callHedged(req, opts = {}) {
     const finish = (value) => {
       if (settled) return;
       settled = true;
+      if (waitingCall) waitingPending = Math.max(0, waitingPending - 1);
       for (const h of timers) clearTimeout(h);
       timers.clear();
       for (const a of running.values()) a.ctrl.abort();
@@ -797,7 +820,7 @@ async function callHedged(req, opts = {}) {
     // does not hold Claude back. A busy slot or a short RPM wait does (it is waited for).
     const untriedFree = () => cands.some((s) => {
       if (s.paid || tried.has(s.id)) return false;
-      const b = blocked(s, req, isBg());
+      const b = blocked(s, req, isBg(), isSpec());
       return !(b && (b.why === 'disabled' || b.why === 'breaker' || b.why === 'daily tokens'));
     });
 
@@ -815,7 +838,7 @@ async function callHedged(req, opts = {}) {
           if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && (anyFreeRunning() || untriedFree())) continue; // last resort: only when every free one has failed
           if (!budgetOk(s, req, opts, spent)) continue;
         }
-        const b = blocked(s, req, isBg());
+        const b = blocked(s, req, isBg(), isSpec());
         if (b) {
           // A better slot that is only busy (or a few seconds from its RPM window) is waited for, briefly, so
           // the chain's preference order holds; past BUSY_WAIT it is skipped and the next slot takes the call.
@@ -849,7 +872,7 @@ async function callHedged(req, opts = {}) {
       const rq = slot.dataClass === 'pipeline' && req.pipelineVariant ? { ...req, ...req.pipelineVariant } : req;
       const est = slot.paid ? (slot.estimateUsd ? slot.estimateUsd(rq) : 0) : 0;
       spent.reserved += est;
-      attempt(slot, rq, { validate, timeoutMs: Math.min(timeout(slot), Math.max(1000, totalMs - (now() - t0))), signal: ctrl.signal }).then((o) => {
+      attempt(slot, rq, { validate, timeoutMs: Math.min(timeout(slot), Math.max(1000, totalMs - (now() - t0))), signal: ctrl.signal, deadline: waitingCall && timeout(slot) <= waitingDeadlineMs() }).then((o) => {
         running.delete(no);
         spent.reserved -= est;
         spent.usd += o.usd || 0;
