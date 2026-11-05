@@ -17,6 +17,25 @@ const pool = require('./pool');
 
 const on = () => String(process.env.UPLOAD_AUTOBUILD || '').toLowerCase() !== 'off';
 const perDay = () => Math.max(0, Math.floor(Number(process.env.UPLOAD_AUTOBUILD_PER_DAY || 6)));
+// The pool lane store of each build started here (account:label), so a learner who opens the page while it is still building turns it
+// from background work (free slots only, never pays for speed) into work a learner waits on (the 8 s overflow to a paid slot).
+// Found by the 4 Nov walk: notes and the pack took 160 s each on busy free models even though the learner was already looking at them.
+const lanes = new Map();
+const laneKey = (userId, label) => `${userId}:${label}`;
+const inLane = (userId, label, fn) => pool.runBackground(() => {
+  const key = laneKey(userId, label);
+  lanes.set(key, pool.laneStore());
+  return Promise.resolve().then(fn).finally(() => { if (lanes.get(key) === pool.laneStore()) lanes.delete(key); });
+});
+/** A learner opened the notes or the pack of this material: any build of it still running is now waited on. Returns how many it promoted. */
+function promote(userId, materialId, kinds = ['notes', 'pack']) {
+  let n = 0;
+  for (const kind of kinds) {
+    const st = lanes.get(laneKey(userId, `${kind}:${Number(materialId)}`));
+    if (st && st.background) { pool.promote(st); n += 1; }
+  }
+  return n;
+}
 const today = new Map(); // `${account id}:${day}` -> materials auto-built today
 const dayKey = (id) => `${id}:${new Date().toISOString().slice(0, 10)}`;
 
@@ -51,12 +70,12 @@ function start(userId, materialId, deps = {}) {
       out.started.push('notes');
       // The builds run inside the gate's line, and each is background work in its own right (the gate may start it from
       // another build's call chain, so the lane is set around the build itself).
-      gate.run(userId, nLabel, () => pool.runBackground(() => notes.build(userId, id, {}))).catch(warn('notes'));
+      gate.run(userId, nLabel, () => inLane(userId, nLabel, () => notes.build(userId, id, {}))).catch(warn('notes'));
     }
     const pLabel = `pack:${id}`;
     if (!gate.queuedFor(userId, pLabel)) {
       out.started.push('pack');
-      packs.buildWithRetry(userId, id, { between: (fn) => gate.run(userId, pLabel, () => pool.runBackground(fn)) }).catch(warn('pack'));
+      packs.buildWithRetry(userId, id, { between: (fn) => gate.run(userId, pLabel, () => inLane(userId, pLabel, fn)) }).catch(warn('pack'));
     }
   } catch (err) {
     console.warn(`material-autobuild: ${err.message}`);
@@ -66,4 +85,4 @@ function start(userId, materialId, deps = {}) {
 
 function reset() { today.clear(); }
 
-module.exports = { start, reset, on };
+module.exports = { start, reset, on, promote };

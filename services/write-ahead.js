@@ -432,7 +432,7 @@ function start(job) {
   running.set(job.key, job);
   runningFor.set(job.userId, (runningFor.get(job.userId) || 0) + 1);
   note({ type: 'start', key: job.key, kind: job.kind, tier: job.tier, fast: !!job.fast });
-  const lane = job.fast ? pool().runForeground : pool().runBackground;
+  const lane = job.fast ? (fn) => pool().runForeground(fn, { fast: true }) : pool().runBackground;
   const where = { userId: job.userId, trackId: job.trackId, gradeId: job.gradeId, level: job.level, tailored: job.tailored };
   let work;
   if (job.kind === 'upgrade') {

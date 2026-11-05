@@ -10,6 +10,8 @@
  *        ADMIN_EMAILS=walk-admin@example.com,walk-admin2@example.com node -r dotenv/config server.js
  *      (DOTENV_CONFIG_PATH names the real .env; blank any paid or banned key you do not want a walk to touch.)
  *   3. node scripts/learner-walk.js http://localhost:6931
+ * OWNER_EMAIL=walk-owner@example.com OWNER_BASE=off is also needed (only the owner account may jump levels: the game and checkpoint flows).
+ * Flows tracks (every subject's first lesson) and differ (two very different learners, same level) were added 4 Nov 2026.
  * ADMIN_EMAILS must list walk-admin@example.com and walk-admin2@example.com (the walk needs the jump-to and answer-key
  * tools and /api/admin/my-stats); DEV_TOOLS=1 turns the answer-key route on. Registering is rate limited to 10 an hour
  * per address, so restart the server between walks. Flows (run in parallel): enroll, block, game, checkpoint, spanish,
@@ -167,7 +169,7 @@ async function flowEnroll() {
 
 async function flowBlock() {
   const f = 'block'; const call = client();
-  await step(f, 'register consented adult (admin 2)', async () => { const r = await register(call, 'block', 2); return { ok: r.status === 201 || r.status === 200, detail: `status ${r.status}` }; });
+  await step(f, 'register consented adult (admin 2)', async () => { const r = await register(call, 'block'); return { ok: r.status === 201 || r.status === 200, detail: `status ${r.status}` }; });
   const e = await enrollIn(call, [{ track_id: 'math', grade_id: 'algebra_1_part_a' }]);
   const enr = (e.payload.created || [])[0] || ((await call('GET', '/api/enrollments')).payload.enrollments || []).find((x) => x.track.id === 'math');
   if (!enr) return rows.push({ flow: f, name: 'enroll math', ok: false, ms: 0, detail: J(e.payload) });
@@ -390,8 +392,96 @@ async function flowDaily() {
   await step(f, '/api/admin/my-stats for an admin', async () => { const r = await call('GET', '/api/admin/my-stats'); return { ok: r.status === 200, detail: `status ${r.status} ${J(Object.keys(r.payload))}` }; });
 }
 
+// ── deep flows (4 Nov 2026): every subject's first lesson, two very different learners ───────────────────────────────────────────
+const SUBJECT_FIRST = [
+  ['math', 'algebra_1_part_a'], ['english', 'grammar'], ['reading', 'foundations'], ['iq', 'concrete_thinking_foundations'], ['act', 'act_grade_1'],
+];
+const planText = (plan) => JSON.stringify((plan.plan.entries || []).map((e) => e.data)).replace(/"[a-z_]*id":"[^"]*",?/g, '');
+const wordSet = (t) => new Set(String(t).toLowerCase().match(/[a-z]{4,}/g) || []);
+const jaccard = (a, b) => { let i = 0; for (const w of a) if (b.has(w)) i++; return i / (a.size + b.size - i || 1); };
+
+async function flowTracks() {
+  const f = 'tracks'; const call = client();
+  await step(f, 'register consented adult', async () => { const r = await register(call, 'tracks'); return { ok: r.status === 201 || r.status === 200, detail: `status ${r.status}` }; });
+  await call('POST', '/api/profile/survey', { interests: 'basketball, drawing', hobbies: 'sketching', notes: 'short explanations please' });
+  const e = await enrollIn(call, SUBJECT_FIRST.map(([t, g]) => ({ track_id: t, grade_id: g })));
+  const mine = ((await call('GET', '/api/enrollments')).payload.enrollments || []);
+  await step(f, 'enrolled in five block subjects', async () => ({ ok: mine.length >= 5, detail: `${mine.length} enrolled, skipped ${J(e.payload.skipped || [])}` }));
+  await Promise.all(SUBJECT_FIRST.map(async ([t]) => {
+    const enr = mine.find((x) => x.track.id === t); if (!enr) return;
+    const tt = Date.now(); const o = await placement(call, f, enr.id);
+    ttc(f, `${t} placement (all five at once)`, Date.now() - tt, 15000);
+    rows.push({ flow: f, name: `${t} placement`, ok: o.ok, ms: Date.now() - tt, detail: o.detail });
+  }));
+  const after = ((await call('GET', '/api/enrollments')).payload.enrollments || []);
+  const sc0 = await call('GET', '/api/scorecard');
+  for (const [t, g] of SUBJECT_FIRST) {
+    const enr = after.find((x) => x.track.id === t); if (!enr) continue;
+    const LV = enr.current_level;
+    if (!['lesson', 'retention'].includes(enr.level_kind)) { rows.push({ flow: f, name: `${t} first level`, ok: false, ms: 0, detail: `kind ${enr.level_kind} at ${LV}` }); continue; }
+    let plan = null;
+    await step(f, `${t}: personalised first lesson (level ${LV})`, async () => {
+      const o = await openLevel(call, t, g, LV);
+      plan = o.plan;
+      ttc(f, `${t} first lesson after placement`, o.waitedMs, o.firstStatus === 200 ? 2000 : 15000, `first poll ${o.firstStatus}`);
+      return { ok: !!plan && plan.meta.tailored === true, detail: `first poll ${o.firstStatus}, ready ${Math.round(o.waitedMs / 1000)}s, tailored=${plan && plan.meta.tailored} ${plan ? '' : J(o.payload || o.status)}` };
+    });
+    if (!plan) continue;
+    let res = null;
+    await step(f, `${t}: answer checks`, async () => { res = await answerAllChecks(call, t, g, LV, plan); return { ok: res.n > 0 && res.bad === 0, detail: `${res.n} checks, ${res.right} right, ${res.bad} bad` }; });
+    await step(f, `${t}: finish advances the level`, async () => {
+      const r = await call('POST', `/api/lessons/${t}/${g}/${LV}/block-finish`, { blocks: [] });
+      const next = ((await call('GET', '/api/enrollments')).payload.enrollments || []).find((x) => x.id === enr.id);
+      return { ok: r.status === 200 && r.payload.advanced === true && next.current_level > LV, detail: `status ${r.status} advanced=${r.payload.advanced} level ${next && next.current_level}` };
+    });
+  }
+  await step(f, 'scorecard readable and changes after activity', async () => {
+    const sc1 = await call('GET', '/api/scorecard');
+    const moved = JSON.stringify(sc0.payload.measures || sc0.payload.card || sc0.payload) !== JSON.stringify(sc1.payload.measures || sc1.payload.card || sc1.payload);
+    return { ok: sc1.status === 200 && moved, detail: `status ${sc1.status}, changed=${moved}, confidence ${sc0.payload.overall_confidence} -> ${sc1.payload.overall_confidence}` };
+  });
+}
+
+const PEOPLE = {
+  a: { name: 'Ava', survey: { interests: 'basketball, hip hop, sneakers, video games', hobbies: 'pickup basketball, drawing comics', sports: 'basketball', notes: 'I hate long reading. Show me a quick example first, then let me try. I get bored fast.' } },
+  b: { name: 'Ben', survey: { interests: 'astronomy, classical piano, chess, history of science', hobbies: 'stargazing, practising piano, reading biographies', sports: 'none', notes: 'I like careful step by step reasoning and proofs. I have dyslexia so keep sentences plain, but I enjoy long deep explanations.' } },
+};
+
+async function flowDiffer() {
+  const f = 'differ'; const out = {};
+  await Promise.all(Object.entries(PEOPLE).map(async ([k, p]) => {
+    const call = client();
+    await register(call, `differ-${k}`);
+    await call('POST', '/api/profile/survey', p.survey);
+    out[k] = { call };
+    const e = await enrollIn(call, [{ track_id: 'math', grade_id: 'algebra_1_part_a' }]);
+    out[k].enr = (e.payload.created || [])[0] || ((await call('GET', '/api/enrollments')).payload.enrollments || []).find((x) => x.track.id === 'math');
+    out[k].placed = await placement(call, f, out[k].enr.id);
+  }));
+  for (const k of ['a', 'b']) rows.push({ flow: f, name: `learner ${k} (${PEOPLE[k].name}) placed`, ok: !!(out[k].placed && out[k].placed.ok), ms: 0, detail: out[k].placed ? out[k].placed.detail : 'no' });
+  const lv = {};
+  await Promise.all(['a', 'b'].map(async (k) => {
+    const enr = ((await out[k].call('GET', '/api/enrollments')).payload.enrollments || []).find((x) => x.id === out[k].enr.id);
+    lv[k] = enr.current_level;
+    const o = await openLevel(out[k].call, 'math', 'algebra_1_part_a', enr.current_level);
+    out[k].plan = o.plan;
+    ttc(f, `learner ${k} first lesson`, o.waitedMs, o.firstStatus === 200 ? 2000 : 15000, `first poll ${o.firstStatus}`);
+  }));
+  await step(f, 'both learners got a lesson at the same level', async () => ({ ok: !!(out.a.plan && out.b.plan) && lv.a === lv.b, detail: `levels ${lv.a} / ${lv.b}` }));
+  if (out.a.plan && out.b.plan) {
+    await step(f, 'the two lessons visibly differ (word overlap, heuristic not a judge)', async () => {
+      const ta = planText(out.a.plan); const tb = planText(out.b.plan);
+      const sim = jaccard(wordSet(ta), wordSet(tb));
+      const hitA = ['basketball', 'sneaker', 'game', 'hip', 'comic', 'drawing'].filter((w) => ta.toLowerCase().includes(w));
+      const hitB = ['astronom', 'piano', 'chess', 'star', 'planet', 'biograph', 'proof'].filter((w) => tb.toLowerCase().includes(w));
+      if (process.env.WALK_DIR) { require('fs').writeFileSync(`${process.env.WALK_DIR}/differ-a.txt`, ta); require('fs').writeFileSync(`${process.env.WALK_DIR}/differ-b.txt`, tb); }
+      return { ok: sim < 0.6 && (hitA.length + hitB.length) > 0, detail: `word jaccard ${sim.toFixed(2)}, length ${ta.length}/${tb.length}, A hits ${hitA.join('/')}, B hits ${hitB.join('/')}` };
+    });
+  }
+}
+
 // game and checkpoint share the one owner account (the only account that may jump levels), so they run one after the other.
-const FLOWS = { enroll: flowEnroll, block: flowBlock, game: async () => { await flowGame(); }, checkpoint: async () => { if (!ONLY || ONLY.includes('game')) await sleep(8000); await flowCheckpoint(); }, spanish: flowSpanish, uploads: flowUploads, daily: flowDaily };
+const FLOWS = { enroll: flowEnroll, block: flowBlock, game: async () => { await flowGame(); }, checkpoint: async () => { if (!ONLY || ONLY.includes('game')) await sleep(8000); await flowCheckpoint(); }, spanish: flowSpanish, uploads: flowUploads, daily: flowDaily, tracks: flowTracks, differ: flowDiffer };
 
 (async () => {
   const names = Object.keys(FLOWS).filter((n) => !ONLY || ONLY.includes(n));
