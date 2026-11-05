@@ -96,6 +96,7 @@ router.post('/register', limit('register', 10, 60 * 60 * 1000), async (req, res)
     account_type: 'standard',
   });
   referrals.attach(user, req.body.ref); // a friend's share link; an unknown code is ignored
+  require('../services/act-check').carry(user); // an applicant from the free ACT level check brings their result along
 
   await startSession(req, user);
   // A brand-new account has no profile row yet, so `getProfile` hands back the

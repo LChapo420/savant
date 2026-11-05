@@ -41,6 +41,7 @@ const NEEDS = {
   'subject-placement-test': [DB],
   'placement-result-test': [DB],
   'game-lab-integration-test': [DB],
+  'act-check-test': [DB],
 };
 
 const strict = process.argv.includes('--strict');
