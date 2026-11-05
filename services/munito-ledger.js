@@ -19,6 +19,7 @@
  * discounts are ignored: the recorded figure is an upper bound.
  */
 const fs = require('fs');
+const runCap = require('./run-cap');
 const path = require('path');
 
 const CAP_USD = 100;
@@ -196,6 +197,8 @@ function reserve({ usd, task = null, model = null, ceilingUsd = null }) {
       throw Object.assign(new Error(`munito ledger: refused (committed $${t.committed_usd.toFixed(4)} + this call up to $${amount.toFixed(4)} would pass the $${limit.toFixed(2)} ${what})`), { code: 'LEDGER_STOP', status: 402 });
     }
     const id = `r${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+    runCap.check('munito', amount);
+    runCap.hold('munito', id, amount);
     data.reservations[id] = { usd: Number(amount.toFixed(6)), task, model, at: new Date().toISOString(), pid: process.pid };
     write(data);
     return id;
@@ -213,6 +216,7 @@ function settle(id, { usd = null, outcome = 'ok', usage = null } = {}) {
     else if (outcome === 'unknown' || usd === null || !Number.isFinite(Number(usd))) amount = r.usd;
     else amount = Math.max(0, Number(usd));
     delete data.reservations[id];
+    runCap.settle('munito', id, amount);
     data.settled_usd = Number((Number(data.settled_usd) + amount).toFixed(6));
     data.calls = (data.calls || 0) + 1;
     if (outcome !== 'ok') data.failed_calls = (data.failed_calls || 0) + 1;

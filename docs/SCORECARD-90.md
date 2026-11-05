@@ -416,3 +416,87 @@ All 14 design footprints are now live; `DESIGN_ONLY` is empty. Test: `scripts/sc
 **What moved in the gates.** The 100-measure simulators do not read the footprints, so the footprints leave the default sim and the 11.3 to 11.5 numbers untouched. The drift layer does touch the recovery sim, because it runs the real scorecard: the quick `--gate-check` (30 learners, 60 levels, 35 simulated days) gives week 4 **43 pass / 15 fail with drift on (the default) against the committed baseline's 41 / 16**; with `SCORECARD_DRIFT=off` it reproduces 41 / 16 exactly. The baseline file is unchanged and the gate is not weakened (it passes; two extra passes are within what 30 learners can do by chance, and nothing here shows the drift layer helps the sim, because the sim's learners do not change). The full default recovery run was not repeated.
 
 **Tests.** `scripts/scorecard-footprints-live-test.js` (in `npm test`): the live list against the design list and validities, the sim-visible set excluding footprints, under-13 and `SCORECARD_FOOTPRINTS=off` (nothing logged or read), each read on synthetic rows, the two choices (allowed values, once each, never on a preview), the weekly sweep once a week with pruning, the information bound validity^2 / (1 - validity^2), two footprints adding while one footprint's two reads do not, the half-lives, `SCORECARD_DRIFT=off` giving exactly the old fade, and the toy.
+
+## 12. Stratified accuracy: does a group the average hides get served badly? (SIMULATED; nothing here is in the product)
+
+**Everything in this section is SIMULATED, and every subgroup is a trait-profile PROXY, not a diagnosis.** A proxy is a shift (in population SDs) and a spread multiplier on the true values of the measures a group is described as differing on. A real learner with ADHD or dyslexia is far more varied than a mean shift, and nothing here says anything about a real person. The owner's ask (3 Nov): accuracy for every kind of brain, age and demographic, not one average over one mixed population (`scripts/scorecard-90-measure.js` reports the average; a group served badly can hide in it).
+
+### 12.1 What was built
+
+- `scripts/lib/scorecard-strata.js`: the subgroup definitions. Five age bands (8-12, 13-17, 18-29, 30-59, 60+) and five overlay profiles (attention variability = ADHD-like, slow decoding with intact reasoning = dyslexia-like, English-language learner = low vocabulary with intact reasoning, the low and the high tail of ability at 1.2 SD). Every shift names its anchor in the file (Salthouse 2004/2009, Kail & Salthouse 1994, Hartshorne & Germine 2015, Roberts et al. 2006, Nelson & Dannefer 1992 for age; Willcutt et al. 2005, Kasper et al. 2012, Kofler et al. 2013, Frazier et al. 2004 for ADHD-like; Peterson & Pennington 2012, Swanson & Hsieh 2009, Stanovich 1986 for dyslexia-like; Abedi 2002 and Cummins 1979 for English learners) or says ASSUMED where no anchor gives the size. Most individual sizes are round numbers in the direction the literature describes (ASSUMED); the profile shares of 10, 10, 10, 7.5 and 7.5 percent are ASSUMED near published prevalences.
+- `scripts/scorecard-recovery-sim.js --strata=1` (off by default: the default sim, its learners and `--gate-check` are unchanged): every learner, measured and "other", gets an age band (a balanced stripe over the learner number) and maybe a profile. The shifts move the TRUE values (before the clamp, so the cross-measure correlation of `--truth-factors` is kept); the learner's behaviour follows the shifted values like anyone's. The app never sees the labels, only behaviour. The dump carries `age` and `profile`. (One learner in each of two day-180 shards hit a non-finite duration that crashed the sim with an Invalid Date; `advance()` now counts it as 0 ms and says so. Cause not traced; no default run hits it.)
+- `scripts/scorecard-90-measure.js --strata=1` (off by default: `--a`, `--b`, `--c` also take comma-separated shard lists; with the flag off the six stage lines are identical to before, checked on these dumps): per subgroup, accuracy (100 minus MAE), the guess baseline (predicting the pooled calibration mean for everyone), the share of error removed, at day 0 (no evidence: the prior), S0 (the app as it is), S1 (recalibrated read) and S5 (the designed plan, 6.3 min/day); the same restricted to the measures a group's proxy shifts by 0.5 SD or more; and the worst-group gap (best minus worst of the ten groups). Use dumps from the same `--strata=1` sim at `--days=30` and `--days=180`.
+- Test: `scripts/scorecard-strata-test.js` (in `npm test`): definitions, ids, shares and the off-by-default flags.
+
+Population: 250 learners a seed at day 30 (seeds 20261022 and 7 cross-fit; seed 31415 held out) and 105 a seed at day 180 (20261022 and 7), about 20 percent per age band, profile shares as above, 30 other learners to set the app's own norms. Subgroup sizes are small (16 to 57 for the profiles), so a gap between two groups under about 0.3 points is inside the noise of one run.
+
+### 12.2 Results, day 30 (S5 = the designed plan at 6.3 min/day; accuracy = 100 - mean absolute error, SIMULATED)
+
+| subgroup (simulated proxy) | n | guess baseline | day 0 prior | S0 app as is | S1 recalibrated | S5 full plan | share of error removed (S5) | shifted measures (n): S5 [guess, removed] |
+|---|---|---|---|---|---|---|---|---|
+| all learners | 500 | 85.77 | 85.77 | 87.06 | 88.92 | 92.87 | 50% | n/a |
+| age 8-12 | 100 | 85.72 | 85.72 | 86.74 | 88.89 | 92.87 | 50% | 23: 93.51 [83.99, 59%] |
+| age 13-17 | 100 | 86.29 | 86.29 | 87.5 | 89.2 | 92.96 | 49% | n/a |
+| age 18-29 | 100 | 86.21 | 86.21 | 87.47 | 89.02 | 93.1 | 50% | n/a |
+| age 30-59 | 100 | 85.93 | 85.93 | 87.41 | 89.16 | 92.94 | 50% | n/a |
+| age 60+ | 100 | 84.71 | 84.71 | 86.2 | 88.33 | 92.5 | 51% | 6: 93.14 [81.5, 63%] |
+| ADHD-like (attention variability) | 56 | 85.52 | 85.52 | 86.7 | 88.61 | 92.7 | 50% | 9: 92.13 [82.2, 56%] |
+| dyslexia-like (slow decoding) | 57 | 85.81 | 85.81 | 86.96 | 88.83 | 92.84 | 50% | 6: 94.57 [83.7, 67%] |
+| English-language learner | 52 | 85.74 | 85.74 | 87 | 88.81 | 92.89 | 50% | 3: 94.37 [81.09, 70%] |
+| low ability tail | 32 | 84.78 | 84.78 | 85.42 | 89.36 | 93.19 | 55% | 30: 93.65 [79.25, 69%] |
+| high ability tail | 32 | 84.98 | 84.98 | 87.27 | 89.5 | 93.3 | 55% | 30: 93.43 [78.48, 70%] |
+| no profile (age only) | 271 | 86.03 | 86.03 | 87.34 | 88.91 | 92.82 | 49% | n/a |
+
+Gaps (best minus worst of the ten groups): day 0 1.58 (60+ lowest), S0 2.08 (low tail), S1 1.17 (60+), **S5 0.80 (60+ 92.50 against the best, high tail, 93.30)**.
+
+### 12.3 Results, day 180 (SIMULATED; smaller groups, 16 to 42 learners each)
+
+| subgroup (simulated proxy) | n | guess baseline | day 0 prior | S0 app as is | S1 recalibrated | S5 full plan | share of error removed (S5) | shifted measures (n): S5 [guess, removed] |
+|---|---|---|---|---|---|---|---|---|
+| all learners | 210 | 85.68 | 85.68 | 86.73 | 89.13 | 93.7 | 56% | n/a |
+| age 8-12 | 42 | 85.57 | 85.57 | 86.25 | 89.04 | 93.67 | 56% | 23: 94.63 [83.18, 68%] |
+| age 13-17 | 42 | 86.31 | 86.31 | 87.17 | 89.55 | 93.85 | 55% | n/a |
+| age 18-29 | 42 | 86.4 | 86.4 | 87.3 | 89.36 | 93.8 | 54% | n/a |
+| age 30-59 | 42 | 85.86 | 85.86 | 87.02 | 89.42 | 93.72 | 56% | n/a |
+| age 60+ | 42 | 84.26 | 84.26 | 85.93 | 88.28 | 93.46 | 58% | 6: 94.79 [80.66, 73%] |
+| ADHD-like (attention variability) | 22 | 85.34 | 85.34 | 86.14 | 88.77 | 93.57 | 56% | 9: 93.43 [81.12, 65%] |
+| dyslexia-like (slow decoding) | 27 | 85.75 | 85.75 | 86.67 | 89.12 | 93.77 | 56% | 6: 95.28 [82.42, 73%] |
+| English-language learner | 16 | 85.43 | 85.43 | 86.52 | 88.86 | 93.68 | 57% | 3: 94.35 [81.47, 70%] |
+| low ability tail | 16 | 83.62 | 83.62 | 84.44 | 88.66 | 93.62 | 61% | 30: 94.37 [76.33, 76%] |
+| high ability tail | 19 | 84.96 | 84.96 | 86.97 | 89.77 | 93.8 | 59% | 30: 94.17 [78.68, 73%] |
+| no profile (age only) | 110 | 86.19 | 86.19 | 87.19 | 89.2 | 93.7 | 54% | n/a |
+
+Gaps: day 0 2.78 (low tail), S0 2.86 (low tail), S1 1.49 (60+), **S5 0.39 (60+ 93.46 against 13-17 93.85)**.
+
+**Reading.** (1) At day 0 the only reading is the prior, so accuracy equals the guess baseline by construction (0 percent of error removed); the low tail and 60+ start lowest, because a pooled-mean guess is far from them. (2) Once the app has data every subgroup removes about half of its error at S5 (day 30: 49 to 55 percent; day 180: 54 to 61 percent), and the worst-group gap closes from 1.6 to 2.8 points at day 0 to 0.8 (day 30) and 0.4 (day 180). The tails remove MORE (55 to 61 percent) because their true values sit far from the pooled mean, so the recalibration has more to remove. (3) The worst group at every stage with data is **60+**, by 0.4 to 0.8 points: its spread is wider in the proxy (x1.1, ASSUMED from Nelson & Dannefer 1992), and a wider group has more error at the same reading noise. On only the measures a proxy shifts, the worst is the **ADHD-like** group (day 30: 92.1 against 93.1 to 94.6 for the others; day 180: 93.4 against 94.2 to 95.3), the group whose attention and pacing measures also vary more (x1.3, ASSUMED).
+
+**The main limit, stated plainly.** The simulator gives every subgroup the SAME measurement validity: the designed tasks, the footprints and the app's reading are as informative for a dyslexia-like learner on a reading-loaded item as for anyone. A real test can be biased against a group (a timed or reading-heavy item reads decoding speed as ability; an English-language learner's answer reflects language, not the trait; a child's self-report scale is less valid than an adult's). Differential item functioning of that kind is NOT simulated beyond the learner's own behaviour, so the small gaps above are a floor, not a finding that the scorecard is fair to every learner. It needs real data from real groups, with consent, and an item-by-item bias audit; the sim cannot give that.
+
+### 12.4 Fixes that need no truth (tested; none adopted)
+
+All use only what a live app has: the learner's age band (from the date of birth) and the calibration set's truth, as the recalibration already uses. Switches on `--fix=` (all off by default):
+
+| fix | what it does |
+|---|---|
+| `oh` | the age band as one-hot columns in every ridge read-out (a per-band prior inside the recalibration) |
+| `prior` | the joint posterior's prior mean is the band's mean (the sources are read as residuals from it) instead of the pooled mean; day 0 uses the band mean too |
+| `var` | (with `prior`) the prior precision is divided by the band's own residual variance, so a wider band trusts its data more |
+| `norm` | the cohort standardisation is done within the age band |
+
+Rule: keep a fix only if it shrinks the S5 worst-group gap without lowering the overall S5 accuracy. S5 overall accuracy / worst-group gap:
+
+| run | day 30, seeds A+B | day 30, held-out seed C | day 180, seeds A+B |
+|---|---|---|---|
+| none | 92.87 / 0.80 | 92.99 / 0.86 | 93.70 / 0.39 |
+| prior | 92.87 / 0.74 | 93.00 / 0.83 | 93.67 / 0.41 |
+| prior + var | 92.88 / 0.71 | 93.01 / 0.79 | 93.67 / 0.37 |
+| oh | 92.86 / 0.84 | | 93.67 / 0.51 |
+| norm | 92.78 / 0.70 | | 93.55 / 0.73 |
+| norm + oh | 92.78 / 0.91 | | |
+| norm + oh + prior | 92.73 / 0.87 | | |
+
+**Verdict: no fix is adopted.** `prior + var` is the only one that passes at day 30, on the calibration seeds and on the held-out one (gap down 0.07 to 0.09, overall up 0.01 to 0.02), but at day 180 it lowers the overall number by 0.03 (93.70 to 93.67), which breaks the rule, and every one of these differences is inside the noise of one run (a group's accuracy moves 0.2 to 0.3 between seeds). `oh` and `norm` lower the overall number or widen the gap; `norm` loses 0.1 to 0.15 because the within-band standardisation throws away the true differences between bands, and `norm + oh` puts them back and still loses. Day 0 gets worse for the tails when the band prior is used (gap 1.58 to 1.67 at day 30; 2.78 to 2.93 at day 180): age says nothing about where in the ability range a learner sits. Per-profile priors are not testable without a profile label a live app does not have; a profile prior could only come from behaviour (a cluster of rapid guesses and short runs for the ADHD-like group), and that would be a measurement of the trait itself, not a fix.
+
+**What would move the worst groups**: more signal for the groups with the widest true spread (60+, ADHD-like) rather than a better prior, which is the finding of sections 10 and 11 again (precision per minute, not priors), plus item-level bias audits with real groups.
+
+**Reproduce.** Shard the sim over processes with `--only=` (`--modes=off --no-write --population=30 --strata=1 --minutes-per-day=60 --days=30 --truth-factors=1 --dump=...`, seeds 20261022, 7 and 31415, 250 learners each), then `node scripts/scorecard-90-measure.js --a=a1.json,a2.json,... --b=b1.json,... --strata=1 [--fix=prior,var] [--c=c1.json,...] [--days=180]`. The measure takes about a minute.

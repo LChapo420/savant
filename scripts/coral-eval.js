@@ -25,6 +25,7 @@
  * spend counts against the real caps. The run stops itself when its own Coral spend passes --budget USD (default 5).
  */
 const fs = require('fs');
+require('../services/run-cap').defaultCap(5); // hard per-process spend cap across every paid ledger; --run-cap N or RUN_CAP_USD overrides
 const os = require('os');
 const path = require('path');
 const ENV = 'C:/coding/claudecommittdIq/folderThing/.env';

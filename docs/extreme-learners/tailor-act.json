@@ -1,0 +1,457 @@
+{
+ "label": "AI-judged (GLM-5.3, blind) on SIMULATED learners; not real-learner proof",
+ "writer": "coral",
+ "judge": "z-ai/glm-5.3",
+ "seed": 515151,
+ "n": 48,
+ "plant_every": 0,
+ "generated_at": "2026-11-05T02:27:56.598Z",
+ "usage": {
+  "writerCalls": 10,
+  "writerIn": 59943,
+  "writerOut": 14224,
+  "judgeCalls": {
+   "z-ai/glm-5.3": 7
+  },
+  "judgeTokens": {
+   "z-ai/glm-5.3": 140400
+  },
+  "errors": {}
+ },
+ "recs": [
+  {
+   "learner": "x515151-5",
+   "kind": "contradict",
+   "mix": "needs praise but shuts down when corrected",
+   "age": 35,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "competitive beekeeping",
+    "puppetry"
+   ],
+   "dislikes": [
+    "word problems about money"
+   ],
+   "difficulties": [
+    "forgets formulas overnight"
+   ],
+   "level": "act_grade_10 L30",
+   "mirror": {
+    "id": "x515151-5~mirror",
+    "age": 43,
+    "hobbies": [
+     "quilting",
+     "falconry"
+    ],
+    "dislikes": [
+     "audio-only explanations"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 7,
+   "errors": [
+    "2: Block 2's agreement example, 'Both say the park will cost more than the estimate' (echoed in Block 4's sort item 'Both authors state that the park's construction cost exceeds the original budget'), contradicts Passage 2 as given in Block 3, where P2 only calls the cost 'real' and never states it exceeded the estimate; the only genuinely shared claim is 'the park carries a real financial cost'.",
+    "1: The hook statistic 'Roughly one paired-passage question in three turns not on what the authors say, but on how their emphases differ' is an unsupported figure presented as a 'Pattern drawn from published paired-passage question sets'."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the stated objective: state each passage's viewpoint separately first, then classify pairs as agree, disagree, or different emphasis. Version 2 adds an elimination strategy for 'both authors' question stems, which stays within the same objective."
+  },
+  {
+   "learner": "x515151-11",
+   "kind": "tail_lo",
+   "mix": null,
+   "age": 35,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "competitive chess",
+    "fantasy football",
+    "competitive eating videos"
+   ],
+   "dislikes": [
+    "food examples",
+    "being rushed"
+   ],
+   "difficulties": [
+    "working memory overload on multi-step problems",
+    "forgets formulas overnight"
+   ],
+   "level": "act_grade_4 L10",
+   "mirror": {
+    "id": "x515151-11~mirror",
+    "age": 43,
+    "hobbies": [
+     "drone racing",
+     "quilting"
+    ],
+    "dislikes": [
+     "audio-only explanations",
+     "being praised for easy things",
+     "cute mascots"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 2,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 8,
+   "errors": [
+    "Version 2, Block 5 correct-answer feedback is garbled and self-contradictory: 'so 4x = 16 and x = 4? No: 6x - 2x = 4x and 10 + 6 = 16, so x = 4. Recheck your value against the original equation.' (The math x = 4 is right, but the 'No:' and 'Recheck' inside a 'Correct' message distort the statement.)"
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: distribute, collect like terms, and apply inverse operations to solve equations like 2(x+3)=4x-5, ending with divide and check-by-substitution; neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-17",
+   "kind": "age_young",
+   "mix": null,
+   "age": 9,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "knitting amigurumi",
+    "collecting vintage typewriters"
+   ],
+   "dislikes": [
+    "being praised for easy things",
+    "food examples",
+    "cartoon characters"
+   ],
+   "difficulties": [
+    "attention that drifts after five minutes",
+    "never learned phonics well"
+   ],
+   "level": "act_grade_12 L20",
+   "mirror": {
+    "id": "x515151-17~mirror",
+    "age": 69,
+    "hobbies": [
+     "aquarium keeping",
+     "rock climbing",
+     "gardening carnivorous plants"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 9,
+   "errors": [
+    "2: Block 3's rule 'A verb slot takes affect. A noun slot takes effect.' and the c1 explanation ('The blank is a verb, so the verb twin affects fits') treat effect as noun-only, omitting its legitimate verb sense 'to bring about'; since 'effects' appears as a c1 distractor, the taught reasoning is an oversimplification (Version 1 states the verb sense correctly)."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the four commonly confused pairs via the word's-job/slot test, matching the stated generalization; Version 1 additionally covers fixed idioms ('for all intents and purposes'), while Version 2 omits the idioms half of the topic."
+  },
+  {
+   "learner": "x515151-23",
+   "kind": "random",
+   "mix": null,
+   "age": 55,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "competitive yo-yo",
+    "sourdough baking",
+    "fishing"
+   ],
+   "dislikes": [],
+   "difficulties": [
+    "attention that drifts after five minutes"
+   ],
+   "level": "act_grade_7 L20",
+   "mirror": {
+    "id": "x515151-23~mirror",
+    "age": 23,
+    "hobbies": [
+     "ballroom dancing",
+     "competitive beekeeping",
+     "cave exploring"
+    ],
+    "dislikes": [
+     "long reading passages",
+     "stories that waste time"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 10,
+   "errors": [],
+   "same_objective": true,
+   "objective_note": "Both teach the same objective: writing solution sets like x > 2 and at most 7 as (2, 7] and the bracket/open-circle correspondence on number lines. Version 2 grades graph matching (c3); Version 1 teaches the graph correspondence in Block 3 but its graded checks cover notation only."
+  },
+  {
+   "learner": "x515151-29",
+   "kind": "ell",
+   "mix": null,
+   "age": 69,
+   "ell": true,
+   "subject": "act",
+   "hobbies": [
+    "knitting amigurumi",
+    "ham-fisted woodworking"
+   ],
+   "dislikes": [
+    "being rushed",
+    "rewrites of the same idea three times"
+   ],
+   "difficulties": [
+    "long gap since last studied"
+   ],
+   "level": "act_grade_10 L30",
+   "mirror": {
+    "id": "x515151-29~mirror",
+    "age": 9,
+    "hobbies": [
+     "aquarium keeping",
+     "monster truck rallies"
+    ],
+    "dislikes": [
+     "cartoon characters",
+     "stories that waste time",
+     "leaderboards"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 8,
+   "errors": [
+    "V2, check c1 explanation: 'only passage A discusses machine knitting' matches no passage pair shown — the Block 2 amigurumi pair never mentions machine knitting, and in the Block 4 pair passage B does mention machine-knits ('A machine-knit cannot').",
+    "V2, Block 2: 'A blames loose joints on the wood. B blames them on the glue.' is classed as different emphasis, but rival causal claims are normally an alternative-explanation disagreement, in tension with V2's own c3 rule that 'emphasis differs only when the facts match and the stress differs'.",
+    "V1, Block 3: 'emphasis means one author stresses a point the other skips' is over-narrow — in V1's own worked example Passage B concedes (does not skip) A's safety point while stressing cost."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the assigned objective: summarize each passage separately, then classify the pair as agreement, disagreement, or different emphasis and answer both-passage questions. V1 adds a mnemonic and a pacing tip; V2 adds line-evidence checking and neutral-summary wording — supportive extras, not drift."
+  },
+  {
+   "learner": "x515151-35",
+   "kind": "contradict",
+   "mix": "anxious and competitive",
+   "age": 13,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "speedcubing"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "act_grade_4 L10",
+   "mirror": {
+    "id": "x515151-35~mirror",
+    "age": 65,
+    "hobbies": [
+     "ice hockey",
+     "competitive chess",
+     "cricket"
+    ],
+    "dislikes": [
+     "long reading passages",
+     "being praised for easy things",
+     "cartoon characters"
+    ]
+   },
+   "planted": false,
+   "result": "judge failed: lyceum: z-ai/glm-5.3 returned no text"
+  },
+  {
+   "learner": "x515151-41",
+   "kind": "tail_lo",
+   "mix": null,
+   "age": 66,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "coin collecting",
+    "tabletop roleplaying audio dramas"
+   ],
+   "dislikes": [
+    "cute mascots",
+    "jokes in lessons",
+    "leaderboards"
+   ],
+   "difficulties": [
+    "working memory overload on multi-step problems",
+    "lost confidence after failing a class"
+   ],
+   "level": "act_grade_12 L20",
+   "mirror": {
+    "id": "x515151-41~mirror",
+    "age": 12,
+    "hobbies": [
+     "taxidermy curiosity",
+     "minecraft redstone"
+    ],
+    "dislikes": [
+     "cartoon characters"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 2,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 9,
+   "errors": [
+    "1: Block 2 groups the words as 'affect and than' and 'effect and then' instead of the actual confusion pairs (affect/effect, than/then) — confusing organization, though each individual definition is accurate.",
+    "1: Block 5 supplies five chips for six sentences and has no 'comparison' chip, so 'Ravi finished the drill faster ___ Sam' cannot be matched (interaction defect rather than a false claim).",
+    "1: 'Someone who says couldn't care less means they care very little' conflicts with the same block's 'cares not at all'; the idiom conveys zero care (minor inconsistency)."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: choosing among affect/effect, than/then, principal/principle, and among/between based on the word's job in context. Version 1 adds a brief idioms-by-convention segment ('couldn't care less'), which stays within the stated topic."
+  },
+  {
+   "learner": "x515151-47",
+   "kind": "age_young",
+   "mix": null,
+   "age": 9,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "Formula 1 strategy",
+    "pottery",
+    "puppetry"
+   ],
+   "dislikes": [
+    "stories that waste time"
+   ],
+   "difficulties": [],
+   "level": "act_grade_7 L20",
+   "mirror": {
+    "id": "x515151-47~mirror",
+    "age": 69,
+    "hobbies": [
+     "weather chasing",
+     "genealogy"
+    ],
+    "dislikes": [
+     "formal academic tone",
+     "long reading passages",
+     "multiple choice trick questions"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 9,
+   "errors": [
+    "Version 2: 'The bracket opens toward the numbers that count' is a misleading rule — parentheses also open toward the interval, so opening direction does not distinguish included from excluded endpoints.",
+    "Version 2 (wording risk, not a hard falsehood): distractor feedback 'This flips both ends. 2 is out and 7 are in.' (Block 5) and 'This flips both ends: 2 is in and 7 is out.' (Block 8) can be misread as describing the flipped distractor, which would be false; they only work as restatements of the correct endpoints, and the phrasing is confusing for a low-flexibility reader."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: writing inequalities like 2 < x ≤ 7 as (2, 7] with correct brackets, infinity always taking a parenthesis, and matching notation to number-line graphs. Version 1 extends to solving a compound inequality to produce a solution set — an extension of the same objective, not a drift; Version 2 stays on notation/graph matching."
+  }
+ ]
+}

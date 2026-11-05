@@ -1,0 +1,77 @@
+{
+ "label": "AI-judged (GLM-5.3, blind) on SIMULATED learners; not real-learner proof",
+ "writer": "coral",
+ "judge": "z-ai/glm-5.3",
+ "seed": 515151,
+ "n": 48,
+ "plant_every": 0,
+ "generated_at": "2026-11-05T02:29:53.975Z",
+ "usage": {
+  "writerCalls": 0,
+  "writerIn": 0,
+  "writerOut": 0,
+  "judgeCalls": {
+   "z-ai/glm-5.3": 1
+  },
+  "judgeTokens": {
+   "z-ai/glm-5.3": 34751
+  },
+  "errors": {}
+ },
+ "recs": [
+  {
+   "learner": "x515151-35",
+   "kind": "contradict",
+   "mix": "anxious and competitive",
+   "age": 13,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "speedcubing"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "act_grade_4 L10",
+   "mirror": {
+    "id": "x515151-35~mirror",
+    "age": 65,
+    "hobbies": [
+     "ice hockey",
+     "competitive chess",
+     "cricket"
+    ],
+    "dislikes": [
+     "long reading passages",
+     "being praised for easy things",
+     "cartoon characters"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": false
+   },
+   "fit": 1,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 8,
+   "errors": [
+    "1: 'Most ACT algebra questions are multi-step equations' — unsupported overstatement; ACT algebra includes many single-step, substitution, function and word-problem items.",
+    "2: 'One chess problem, two attempts' labels a plain algebra equation as a chess problem (misleading framing; the mathematics itself is correct)."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the stated objective — distribute, collect like terms, apply inverse operations, check — anchored on the same equation 2(x + 3) = 4x - 5; neither drifts from the topic."
+  }
+ ]
+}

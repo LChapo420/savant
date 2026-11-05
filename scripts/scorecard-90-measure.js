@@ -31,8 +31,22 @@ const PLAN_MIN = { early: Number(arg('early-min', 10)), late: Number(arg('late-m
 const STOP = arg('stop', '0') === '1'; // per-measure stopping: keep measuring a learner until each posterior SD is under STOP_SD points, within CAP_MIN minutes
 const STOP_SD = Number(arg('stop-sd', 1.9)); const CAP_MIN = Number(arg('cap-min', 3000));
 let TARGET_VAR = STOP ? (STOP_SD / 17) ** 2 : 0.11; // post variance (z units) at which a measure counts as done (0.11: reliability 0.89, a margin under the 0.864 that gives MAE 5)
-const A = JSON.parse(fs.readFileSync(arg('a'), 'utf8'));
-const B = JSON.parse(fs.readFileSync(arg('b'), 'utf8'));
+// a dump argument may be a comma-separated list of shard files (the stratified runs are sharded over processes); their learners are concatenated
+const loadDump = (spec) => { const parts = spec.split(',').filter(Boolean).map((f) => JSON.parse(fs.readFileSync(f, 'utf8'))); const d = parts[0]; for (const q of parts.slice(1)) d.learners.push(...q.learners); return d; };
+const A = loadDump(arg('a'));
+const B = loadDump(arg('b'));
+// Stratified report (docs/SCORECARD-90.md section 12; ALL SIMULATED), off by default so every other number and --gate-check reproduce. --strata=1 needs dumps made
+// with scorecard-recovery-sim.js --strata=1 (each learner carries an age band and maybe a trait-profile proxy) and prints accuracy, the guess baseline and the share
+// of error removed per subgroup, at day 0 (no evidence: the prior) and the dump's day. Three fixes that need no truth are switchable (--fix=a,b,c):
+//   oh    the learner's age band (known from the date of birth) as one-hot columns in every ridge read-out: a per-band prior inside the recalibration
+//   prior the joint posterior's prior mean is the calibration set's mean of the learner's age band, not the pooled mean (the sources are read as residuals)
+//   var   (with prior) the prior's spread is the age band's own: the prior precision is divided by the band's mean residual variance of the calibration truth (a wider band, e.g. 60+, trusts its data more)
+//   norm  the cohort standardisation (above) is done within the age band instead of across the pooled cohort
+const STRATA = arg('strata', '0') === '1';
+const FIX = new Set(arg('fix', '').split(',').filter(Boolean));
+const BANDS = ['8-12', '13-17', '18-29', '30-59', '60+'];
+const bandOf = (L) => L.age;
+
 const POP_SD = A.pop_sd;
 // Phase 3 (docs/SCORECARD-90.md section 10): --cohort=1 standardises every column the recalibration reads (the app's number, the 16 answer-log features, the
 // indicator means) within its own cohort before the ridge sees it. The app's numbers are normed against a cohort the app itself keeps, so they carry a cohort-level
@@ -250,8 +264,11 @@ function retestRun(zd, policy, rng) {
   return { x: -best / RET.perSd, events };
 }
 
-function cohortZ(D) { // adds L.z = the learner's columns standardised within this cohort (no truth used)
-  const Ls = D.learners; const sdOf = (v) => Math.sqrt(mean(v.map((x) => (x - mean(v)) ** 2))) || 1;
+function cohortZ(D) { // adds L.z = the learner's columns standardised within this cohort (no truth used); with --fix=norm, within each age band
+  if (STRATA && FIX.has('norm')) { for (const b of BANDS) cohortZ1(D.learners.filter((L) => bandOf(L) === b)); return; }
+  cohortZ1(D.learners);
+}
+function cohortZ1(Ls) { const sdOf = (v) => Math.sqrt(mean(v.map((x) => (x - mean(v)) ** 2))) || 1;
   const col = (get) => { const v = Ls.map(get); const m = mean(v); const sd = sdOf(v); return (L) => (get(L) - m) / sd; };
   const app = {}; for (const id of IDS) app[id] = col((L) => L.app[id][0]);
   const feat = {}; for (const f of simGate.FEATURES) feat[f] = col((L) => L.feat[f]);
@@ -262,7 +279,8 @@ if (COHORT) { cohortZ(A); cohortZ(B); }
 // ── the app's own reading, recalibrated (cross-fit) ────────────────────────
 function rowFor(L, id) {
   const Z = COHORT ? L.z : L; const [m, se, conf] = Z.app[id]; const ex = (IND.BY_STAT[id] || []).map((k) => (Z.ind[k.key] === undefined ? 0 : Z.ind[k.key]));
-  return { simple: [m, (conf / 100) * (m - 50)], full: [...simGate.FEATURES.map((f) => Z.feat[f]), m, (conf / 100) * (m - 50), ...ex] };
+  const oh = STRATA && FIX.has('oh') ? BANDS.slice(1).map((b) => (bandOf(L) === b ? 1 : 0)) : [];
+  return { simple: [m, (conf / 100) * (m - 50), ...oh], full: [...simGate.FEATURES.map((f) => Z.feat[f]), m, (conf / 100) * (m - 50), ...ex, ...oh] };
 }
 function fitRead(C, id) {
   const y = C.map((L) => L.truth[id]); const rows = C.map((L) => rowFor(L, id));
@@ -376,12 +394,17 @@ function popTruth(rng) { // the same generating model as the sim (--truth-factor
 function runSide(T, C, seedBase) {
   // T = target learners, C = calibration learners. Returns per-stage per-learner posterior means (z units) and extras.
   const nT = T.length;
-  const zT = T.map((L) => zOf(L.truth)); const zC = C.map((L) => zOf(L.truth));
+  const BP = STRATA && FIX.has('prior'); const ZERO = new Float64Array(NL); const muBand = {};
+  if (BP) for (const b of BANDS) { const g = C.filter((L) => bandOf(L) === b).map((L) => zOf(L.truth)); muBand[b] = Float64Array.from(ROOTS, (_, k) => mean(g.map((v) => v[k]))); }
+  const varBand = {}; if (BP && FIX.has('var')) for (const b of BANDS) { const g = C.filter((L) => bandOf(L) === b).map((L) => zOf(L.truth)); varBand[b] = mean(ROOTS.map((_, k) => { const m = mean(g.map((v) => v[k])); return mean(g.map((v) => (v[k] - m) ** 2)); })); }
+  const offOf = (L) => (BP ? muBand[bandOf(L)] : ZERO); // the age band's prior mean (z units); sources are read as residuals from it
+  const zRes = (L) => { const o = offOf(L); return Float64Array.from(zOf(L.truth), (v, k) => v - o[k]); };
+  const zT = T.map(zRes); const zC = C.map(zRes);
   // 1. recalibrated reads
   const reads = IDS.map((id) => fitRead(C, id));
   const appLik = (L) => { // per latent: precision & b (information form) from the recalibrated app reads
     const P = new Float64Array(NL); const b = new Float64Array(NL);
-    IDS.forEach((id, k) => { const r = reads[k]; const rz = (r.pred(L) - 50) / POP_SD * sgn(id); const q = 1 / ((r.sd / POP_SD) ** 2); const lp = q - 1; if (lp < 0.02) return; const x = rz * q / lp; const l = lat(id); P[l] += lp; b[l] += lp * x; });
+    IDS.forEach((id, k) => { const r = reads[k]; const rz = (r.pred(L) - 50) / POP_SD * sgn(id) - offOf(L)[lat(id)]; const q = 1 / ((r.sd / POP_SD) ** 2); const lp = q - 1; if (lp < 0.02) return; const x = rz * q / lp; const l = lat(id); P[l] += lp; b[l] += lp * x; });
     return { P, b };
   };
   let glsPm = null; let glsLik = null;
@@ -393,7 +416,7 @@ function runSide(T, C, seedBase) {
     const Ri = invert(R, m); const Hm = (k) => [lat(IDS[k]), sgn(IDS[k])];
     glsPm = new Float64Array(NL * NL);
     for (let a = 0; a < m; a++) for (let b = 0; b < m; b++) { const [la, sa] = Hm(a); const [lb, sb] = Hm(b); glsPm[la * NL + lb] += sa * sb * Ri[a * m + b]; }
-    glsLik = (L) => { const xv = IDS.map((id, k) => (Math.abs(lam[k]) < 0.05 ? 0 : ((reads[k].pred(L) - c0[k]) / lam[k] - 50) / POP_SD)); const P = new Float64Array(NL); const b = new Float64Array(NL); for (let a = 0; a < m; a++) { const [la, sa] = Hm(a); let t = 0; for (let c = 0; c < m; c++) t += Ri[a * m + c] * xv[c]; b[la] += sa * t; } for (let k = 0; k < NL; k++) P[k] = glsPm[k * NL + k]; return { P, b, Pm: glsPm }; };
+    glsLik = (L) => { const xv = IDS.map((id, k) => (Math.abs(lam[k]) < 0.05 ? 0 : ((reads[k].pred(L) - c0[k]) / lam[k] - 50) / POP_SD - sgn(IDS[k]) * offOf(L)[lat(IDS[k])])); const P = new Float64Array(NL); const b = new Float64Array(NL); for (let a = 0; a < m; a++) { const [la, sa] = Hm(a); let t = 0; for (let c = 0; c < m; c++) t += Ri[a * m + c] * xv[c]; b[la] += sa * t; } for (let k = 0; k < NL; k++) P[k] = glsPm[k * NL + k]; return { P, b, Pm: glsPm }; };
   }
   const rawZ = (L) => Float64Array.from(IDS, (id) => (L.app[id][0] - 50) / POP_SD);
   // 2. the free designed sources, calibrated on C
@@ -440,24 +463,30 @@ function runSide(T, C, seedBase) {
   const covDes = covFrom(popX, popP, NL); const SigI_des = inv(covDes.Sigma);
   log('covariance: app-only kept', covApp.kept, 'top', covApp.top.join(','), '| designed kept', covDes.kept, 'top', covDes.top.join(','));
   // 4. stages
-  const res = { S0: [], S1: [], S2: [], S3: [], S4: [], S5: [] }; const minutes = []; const caps = []; const fpMin = [];
-  const post = (SigI, parts) => { const P = new Float64Array(NL); const b = new Float64Array(NL); let Pm = null; for (const p of parts) { for (let k = 0; k < NL; k++) { if (p.Pm) { b[k] += p.b[k]; } else { P[k] += p.P[k]; b[k] += p.b[k]; } } if (p.Pm) Pm = p.Pm; } return postFrom(SigI, P, b, NL, Pm).mu; };
+  const res = { S0: [], S1: [], S2: [], S3: [], S4: [], S5: [], D0: [], GB: [] }; const minutes = []; const caps = []; const fpMin = [];
+  const post = (SigI, parts, Lr) => { const P = new Float64Array(NL); const b = new Float64Array(NL); let Pm = null; for (const p of parts) { for (let k = 0; k < NL; k++) { if (p.Pm) { b[k] += p.b[k]; } else { P[k] += p.P[k]; b[k] += p.b[k]; } } if (p.Pm) Pm = p.Pm; } const sc = varBand[bandOf(Lr)]; const mu = postFrom(sc ? Float64Array.from(SigI, (v) => v / sc) : SigI, P, b, NL, Pm).mu; if (!BP) return mu; const off = offOf(Lr); return Float64Array.from(mu, (v, k) => v + off[k]); };
   const toPts = (mu, ids) => ids.map((id) => Math.max(2, Math.min(98, 50 + POP_SD * mu[lat(id)] * sgn(id))));
   const seeds = rngFor(seedBase + 6);
+  const muAll = IDS.map((id) => mean(C.map((L) => L.truth[id]))); const muByBand = {};
+  if (STRATA) for (const b of BANDS) { const g = C.filter((L) => bandOf(L) === b); muByBand[b] = IDS.map((id) => mean((g.length ? g : C).map((L) => L.truth[id]))); }
   for (let i = 0; i < nT; i++) {
     const L = T[i]; const truthPts = IDS.map((id) => L.truth[id]);
     res.S0.push(IDS.map((id, k) => Math.abs(L.app[id][0] - truthPts[k])));
+    if (STRATA) { // day 0 = no evidence: the prior (the age band's mean if the band is used anywhere, else the pooled mean); GB = the pooled-mean guess
+      res.GB.push(IDS.map((id, k) => Math.abs(truthPts[k] - muAll[k])));
+      const mb = (FIX.has('oh') || FIX.has('prior')) ? muByBand[bandOf(L)] : muAll; res.D0.push(IDS.map((id, k) => Math.abs(truthPts[k] - mb[k])));
+    }
     // S1: each measure's own recalibrated read (no sharing)
     res.S1.push(IDS.map((id, k) => { const r = reads[k]; return Math.abs(Math.max(2, Math.min(98, r.pred(L))) - truthPts[k]); }));
-    const mu2 = post(SigI_app, [apps[i]]); res.S2.push(toPts(mu2, IDS).map((v, k) => Math.abs(v - truthPts[k])));
-    const mu3 = post(SigI_des, [apps[i], lltmOnly[i]]); res.S3.push(toPts(mu3, IDS).map((v, k) => Math.abs(v - truthPts[k])));
-    const mu4 = post(SigI_des, [apps[i], lltmOnly[i], retOnly[i]]); res.S4.push(toPts(mu4, IDS).map((v, k) => Math.abs(v - truthPts[k])));
+    const mu2 = post(SigI_app, [apps[i]], L); res.S2.push(toPts(mu2, IDS).map((v, k) => Math.abs(v - truthPts[k])));
+    const mu3 = post(SigI_des, [apps[i], lltmOnly[i]], L); res.S3.push(toPts(mu3, IDS).map((v, k) => Math.abs(v - truthPts[k])));
+    const mu4 = post(SigI_des, [apps[i], lltmOnly[i], retOnly[i]], L); res.S4.push(toPts(mu4, IDS).map((v, k) => Math.abs(v - truthPts[k])));
     // S5: plan with the app's reading (or blind), take the items, then the joint posterior
     const Lp0 = Float64Array.from(freeP0); if (!BLIND && !GLS) for (let k = 0; k < NL; k++) Lp0[k] += apps[i].P[k];
     const pl = plan(SigI_des, Lp0, totalSec, GLS && !BLIND ? glsPm : null);
     const r5 = rngFor(seedBase + 90000 + i); const obs = obsFor(pl.counts, zT[i], r5);
     const P5 = new Float64Array(NL); const b5 = new Float64Array(NL); for (const o of obs) { P5[o.j] += o.P; b5[o.j] += o.P * o.x; }
-    const mu5 = post(SigI_des, [apps[i], lltmOnly[i], retOnly[i], { P: P5, b: b5 }]); res.S5.push(toPts(mu5, IDS).map((v, k) => Math.abs(v - truthPts[k])));
+    const mu5 = post(SigI_des, [apps[i], lltmOnly[i], retOnly[i], { P: P5, b: b5 }], L); res.S5.push(toPts(mu5, IDS).map((v, k) => Math.abs(v - truthPts[k])));
     minutes.push(pl.spent / 60);
     if (FOOT_ON) { let sec = 0; const seen = new Set(); pl.counts.forEach((c, j) => c.forEach((n, s) => { const so = bank[j][s]; if (!n || !so.fp || so.free) return; if (so.bundle) { if (seen.has(so.bundle)) return; seen.add(so.bundle); } sec += n * so.sec; })); fpMin.push(sec / 60); }
     if (i === 0) log('first learner planned minutes', (pl.spent / 60).toFixed(0), 'items', pl.counts.reduce((s, c, j) => s + c.reduce((a, n) => a + n, 0), 0));
@@ -478,9 +507,9 @@ function runSide(T, C, seedBase) {
 }
 
 // run both sides and pool
-let sideAB; let sideBA;
-if (HELD) { const Cd = JSON.parse(fs.readFileSync(HELD, 'utf8')); if (COHORT) cohortZ(Cd); sideAB = runSide(Cd.learners, A.learners.concat(B.learners), 3000); sideBA = { S0: [], S1: [], S2: [], S3: [], S4: [], S5: [], minutes: [], needs: sideAB.needs, mix: sideAB.mix, lltm: sideAB.lltm, ret: sideAB.ret, cov: sideAB.cov }; }
-else { sideAB = runSide(A.learners, B.learners, 1000); sideBA = runSide(B.learners, A.learners, 2000); }
+let sideAB; let sideBA; let TAGGED;
+if (HELD) { const Cd = loadDump(HELD); if (COHORT) cohortZ(Cd); sideAB = runSide(Cd.learners, A.learners.concat(B.learners), 3000); TAGGED = Cd.learners; sideBA = { S0: [], S1: [], S2: [], S3: [], S4: [], S5: [], D0: [], GB: [], minutes: [], needs: sideAB.needs, mix: sideAB.mix, lltm: sideAB.lltm, ret: sideAB.ret, cov: sideAB.cov }; }
+else { sideAB = runSide(A.learners, B.learners, 1000); sideBA = runSide(B.learners, A.learners, 2000); TAGGED = A.learners.concat(B.learners); }
 const stages = ['S0', 'S1', 'S2', 'S3', 'S4', 'S5'];
 const perMeasure = {}; // stage -> id -> [mae, w5, w10]
 const summary = {};
@@ -496,6 +525,33 @@ for (const st of stages) {
 const mins = [...sideAB.minutes, ...sideBA.minutes];
 const fpm = [...(sideAB.fpMin || []), ...(sideBA.fpMin || [])];
 const out = { foot: FOOT_ON ? { v: FOOT_V, only: FOOT_ONLY, rinf: FOOT_RINF, charged_min_per_learner: Number(mean(fpm).toFixed(1)), charged_min_per_day: Number((mean(fpm) / DAYS).toFixed(2)) } : null, days: DAYS, stop: STOP, minutes_p50: Number(mins.slice().sort((x, y) => x - y)[Math.floor(mins.length / 2)].toFixed(0)), minutes_p90: Number(mins.slice().sort((x, y) => x - y)[Math.floor(mins.length * 0.9)].toFixed(0)), half: HALF, blind: BLIND, truth_factors: A.truth_factors, learners: A.learners.length + B.learners.length, minutes_total_per_learner: Number(mean(mins).toFixed(1)), minutes_per_day: Number((mean(mins) / DAYS).toFixed(2)), mix_minutes_by_source: sideAB.mix, summary, needs: sideAB.needs, lltm: sideAB.lltm, retest: sideAB.ret, cov: sideAB.cov, perMeasure };
+if (STRATA) { // per-subgroup accuracy (100 - MAE), the guess baseline (pooled-mean guess) and the share of error removed; SIMULATED proxies, not diagnoses
+  const rowsOf = (st) => [...sideAB[st], ...sideBA[st]];
+  const GB = rowsOf('GB'); const groups = { all: TAGGED.map((_, i) => i) };
+  for (const b of BANDS) groups[b] = TAGGED.map((L, i) => (bandOf(L) === b ? i : -1)).filter((i) => i >= 0);
+  for (const pf of ['adhd', 'dyslexia', 'ell', 'low', 'high']) groups[pf] = TAGGED.map((L, i) => (L.profile === pf ? i : -1)).filter((i) => i >= 0);
+  groups.none = TAGGED.map((L, i) => (!L.profile ? i : -1)).filter((i) => i >= 0);
+  const gm = (rows, ix, ks) => mean(ix.map((i) => mean(ks ? ks.map((k) => rows[i][k]) : rows[i])));
+  // the measures a group's proxy actually shifts by 0.5 SD or more (the rest of its 100 measures dilute a group's average toward the pooled one)
+  const SL = require('./lib/scorecard-strata');
+  const shiftedKs = (g) => { const m = SL.AGE_PROFILES[g] || SL.PROFILE_DEFS[g]; if (!m) return null; const out = []; IDS.forEach((id, k) => { const v = m.shift[id] !== undefined ? m.shift[id] : (m.shift['*'] || 0); if (Math.abs(v) >= 0.5) out.push(k); }); return out.length ? out : null; };
+  const table = {};
+  for (const st of ['D0', 'S0', 'S1', 'S5']) { const rows = rowsOf(st); table[st] = {}; for (const [g, ix] of Object.entries(groups)) { const e = gm(rows, ix); const gb = gm(GB, ix); table[st][g] = { n: ix.length, acc: Number((100 - e).toFixed(2)), guess_acc: Number((100 - gb).toFixed(2)), removed: Number((1 - e / gb).toFixed(3)) }; const ks = shiftedKs(g); if (ks) { const e2 = gm(rows, ix, ks); const g2 = gm(GB, ix, ks); table[st][g].shifted = { measures: ks.length, acc: Number((100 - e2).toFixed(2)), guess_acc: Number((100 - g2).toFixed(2)), removed: Number((1 - e2 / g2).toFixed(3)) }; } } }
+  const GROUPS10 = [...BANDS, 'adhd', 'dyslexia', 'ell', 'low', 'high'];
+  const gap = {}; for (const st of Object.keys(table)) { const v = GROUPS10.map((g) => [g, table[st][g].acc]); const hi = v.reduce((a, b) => (b[1] > a[1] ? b : a)); const lo = v.reduce((a, b) => (b[1] < a[1] ? b : a)); gap[st] = { worst: lo[0], worst_acc: lo[1], best: hi[0], best_acc: hi[1], gap: Number((hi[1] - lo[1]).toFixed(2)) }; }
+  out.strata = { days: DAYS, fix: [...FIX], table, gap };
+  console.log('STRATA (SIMULATED proxies) days=' + DAYS + ' fix=' + ([...FIX].join(',') || 'none') + '  accuracy% [guess baseline% | share of error removed]');
+  console.log(' on the measures each proxy shifts by >=0.5 SD (S5): ' + GROUPS10.filter((g) => table.S5[g].shifted).map((g) => g + '(' + table.S5[g].shifted.measures + ') ' + table.S5[g].shifted.acc + '[' + table.S5[g].shifted.guess_acc + '|' + (table.S5[g].shifted.removed * 100).toFixed(0) + '%]').join('  '));
+  for (const st of Object.keys(table)) { console.log(' ' + st + ': ' + ['all', ...GROUPS10].map((g) => g + ' ' + table[st][g].acc + '[' + table[st][g].guess_acc + '|' + (table[st][g].removed * 100).toFixed(0) + '%]').join('  ')); console.log('    worst ' + gap[st].worst + ' ' + gap[st].worst_acc + ', best ' + gap[st].best + ' ' + gap[st].best_acc + ', gap ' + gap[st].gap); }
+}
+// --per-learner=file (docs/EXTREME-LEARNERS.md, SIMULATED): each learner's own mean absolute error over the 100 measures at day 0 (D0, the prior), S0, S1, S5 and the
+// guess baseline GB, plus the learner's ext tag (kind, mix, age), so a report can give per-individual percentiles and the worst learner's profile.
+const PL = arg('per-learner'); if (PL) {
+  const rowsOf = (st) => [...sideAB[st], ...sideBA[st]];
+  const R = {}; for (const st of ['D0', 'S0', 'S1', 'S5', 'GB']) R[st] = rowsOf(st);
+  const outL = TAGGED.map((L, i) => { const o2 = { ext: L.ext || null, age: L.age, profile: L.profile || null, days: DAYS }; for (const st of Object.keys(R)) o2[st] = Number(mean(R[st][i]).toFixed(3)); o2.e = Object.fromEntries(['S1', 'S5', 'GB'].map((st) => [st, R[st][i].map((v) => Number(v.toFixed(1)))])); o2.worst_measures = IDS.map((id, k) => [id, R.S5[i][k]]).sort((x, y) => y[1] - x[1]).slice(0, 5).map((x) => [x[0], Number(x[1].toFixed(1))]); return o2; });
+  fs.writeFileSync(PL, JSON.stringify(outL));
+}
 const o = arg('out'); if (o) fs.writeFileSync(o, JSON.stringify(out));
 const line = (st) => `${st}: ACC ${summary[st].accuracy}% pairs<=5 ${(summary[st].learners_w5 * 100).toFixed(0)}% measures w5>=99% ${summary[st].measures_w5_99} MAE ${summary[st].mae}  measures<=5 ${summary[st].measures_le5}  <=10 ${summary[st].measures_le10}  learners within5 ${(summary[st].learners_w5 * 100).toFixed(0)}% within10 ${(summary[st].learners_w10 * 100).toFixed(0)}%  groups(mae/le5) a ${summary[st].groups.a.mae}/${summary[st].groups.a.le5} b ${summary[st].groups.b.mae}/${summary[st].groups.b.le5} c ${summary[st].groups.c.mae}/${summary[st].groups.c.le5} d ${summary[st].groups.d.mae}/${summary[st].groups.d.le5}`;
 console.log(`half=${HALF} blind=${BLIND} truth_factors=${A.truth_factors} minutes/learner ${out.minutes_total_per_learner} (${out.minutes_per_day}/day)`);

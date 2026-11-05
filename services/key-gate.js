@@ -20,6 +20,10 @@
  */
 const keyAgreement = require('./key-agreement');
 
+// How long the free Nemotron Ultra judge may take before the app's own chain answers instead. It was 120 s x 2 attempts: the 4 Nov walk saw
+// it time out on every first lesson (busy free tier) and add 2 to 4 minutes before the fallback judge even started. The fallback is the same
+// independent blind re-solve, so nothing is relaxed; only the wait for a slow judge is. KEY_GATE_JUDGE_TIMEOUT_MS overrides.
+const JUDGE_TIMEOUT_MS = () => Math.max(5000, Number(process.env.KEY_GATE_JUDGE_TIMEOUT_MS || 40000));
 const JUDGE_MODELS = () => [{ model: process.env.KEY_GATE_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b', effort: 'medium' }];
 // Default on since 2026-10-24 (owner approved, LIVE-CHANGES-2026-10-24.md); KEY_GATE=off turns it off.
 const on = () => String(process.env.KEY_GATE || 'on').toLowerCase() === 'on';
@@ -58,7 +62,7 @@ async function nemotronJudge(batch) {
   const call = { role: 'check', system: SYSTEM, user, schema: SCHEMA, schemaName: 'submit_picks', maxTokens: 3000 };
   if (nvidia.isEnabled('check')) {
     try {
-      const picks = picksFrom(await nvidia.structured({ ...call, models: JUDGE_MODELS(), timeoutMs: 120000, attempts: 2 }), batch);
+      const picks = picksFrom(await nvidia.structured({ ...call, models: JUDGE_MODELS(), timeoutMs: JUDGE_TIMEOUT_MS(), attempts: 1 }), batch);
       if (picks.some((p) => p !== null)) return picks;
     } catch (err) {
       console.warn(`key-gate: Nemotron Ultra gave no blind picks (${err.message}); trying the app's chain`);

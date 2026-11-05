@@ -250,6 +250,13 @@ async function ensure({ userId, enrollment, grade, level }) {
   const user = db.byId('users', userId);
   if (!subscriptions.canEditLevels(user, profile)) return null;
 
+  // A lesson or retention level this learner reads as a BLOCK level is never shown as an edited HTML page (routes/base-lessons.js serves the
+  // block plan first), so rewriting the base page for it is wasted work. The 4 Nov walk saw those rewrites (three Coral Fast calls of
+  // 17 to 330 s, some rejected by the page checks) start at placement beside the block lesson and fill Fast's 4 slots while a learner waited.
+  // eslint-disable-next-line global-require
+  const blocks = require('./block-levels');
+  if (blocks.kindFor(grade, level) && ['lesson', 'retention'].includes(blocks.kindFor(grade, level)) && blocks.visibleTo(user)) return null;
+
   const existing = db.findOne('level_edits', (e) => e.user_id === userId
     && e.track_id === where.trackId && e.grade_id === where.gradeId && e.level === level);
   if (existing && !stale(existing, userId, where)) return forLevel(userId, where.trackId, where.gradeId, level);

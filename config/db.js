@@ -86,6 +86,9 @@ const COLLECTIONS = [
   'reading_checks',          // the reading check: one per offer a learner took, declined or has open, its answers and result (services/reading-check.js), private to them
   'beta_blocks',             // the beta comparison's randomisation: one permuted block of arm slots per age band and subject, used in order (services/beta-arm.js)
   'catchup_units',           // catch-up for math/english/reading: one per learner, subject and target grade: unit check, blocks, re-check (services/catchup-units.js)
+  'act_guests',              // the free ACT level check: one per visitor who answered the 13+ question with yes; token hash, ref, channel, the stored estimate. No personal data until they apply (services/act-check.js)
+  'recruit_applicants',      // beta applications taken by the app from the level check: email, result, qualified flag and its parts (services/act-check.js)
+  'recruit_counts',          // per day, ref code and channel: visits, started, finished, applied, qualified (the owner's /recruit page)
   'footprint_events',        // behavioural footprints for the scorecard: one compact row per event or weekly read (footprint, indicator, value, units, level, time); no text, no keys, pruned after 180 days (services/scorecard/footprints.js)
 ];
 

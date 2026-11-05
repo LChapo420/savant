@@ -154,6 +154,8 @@ app.use('/api', require('./routes/prefs')); // engagement settings: hide streak/
 // A held graduation (COVERAGE_GATE=enforce): what it waits on, and graduating once it is met.
 app.use('/api/act', require('./routes/act')); // ACT score entry: test date, target, practice-test scores (services/act-scores.js)
 app.use('/api/materials', require('./routes/materials')); // learn from your own material: upload, paste, list, delete (services/materials.js)
+app.use('/api/act-check', require('./routes/act-check').router); // the free ACT level check, no account (services/act-check.js)
+app.use('/api/recruit', require('./routes/act-check').recruit); // owner's recruiting numbers, admin only
 app.use('/api/act-study', require('./routes/act-study')); // the ACT measurement study: counterbalanced practice-test order, admin before/after (services/act-study.js)
 app.use('/api/spanish-study', require('./routes/spanish-study')); // Savant vs Duolingo beginner-Spanish study (services/spanish-study.js)
 app.use('/api/spanish-study-test', require('./routes/spanish-study-tests')); // sealed pre/post tests for study participants (spanish-study-tests/)
@@ -211,6 +213,8 @@ app.use('/api', (req, res) => res.status(404).json({ error: 'No such endpoint.' 
 // The cost tracker page: its data is admin-only already; the page is too, so no one else even sees that it exists.
 app.use(['/cost-tracker', '/cost-tracker.html'], (req, res, next) => (require('./middleware/auth').isAdmin(req.user) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
 // The owner's own learner stats (services/my-stats.js): an admin or that account itself.
+// The recruiting page (services/act-check.js stats): admin only.
+app.use(['/recruit', '/recruit.html'], (req, res, next) => (require('./middleware/auth').isAdmin(req.user) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
 app.use(['/my-stats', '/my-stats.html'], (req, res, next) => (require('./middleware/auth').isAdmin(req.user) || require('./config/owner').isOwnerLearner(req.user) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
 
 app.use(express.static(path.join(__dirname, 'public'), {

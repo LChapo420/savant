@@ -58,6 +58,7 @@ const notes = require('../services/material-notes');
 const router = express.Router();
 
 // A material starts building its notes and study pack as soon as it is added, so they are ready when opened (services/material-autobuild.js).
+const promoteBuilds = (userId, id, kinds) => { try { require('../services/material-autobuild').promote(userId, id, kinds); } catch { /* never blocks a read */ } }; // eslint-disable-line global-require
 const autoBuild = (userId, material) => { if (material && material.id != null) require('../services/material-autobuild').start(userId, material.id); }; // eslint-disable-line global-require
 
 // Any content type that is not JSON is read as raw bytes; the type is decided from the bytes.
@@ -242,6 +243,7 @@ router.post('/:id/pack', requireAuth, limit('materials-pack', 6, 60 * 60 * 1000)
 
 router.get('/:id/pack', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
+  promoteBuilds(req.user.id, req.params.id, ['pack']);
   if (req.query.adapt === '1') {
     const mine = packs.forLearner(req.user.id, req.params.id);
     return res.json(mine ? { pack: mine.pack, shown: mine.ids, skipped_known: mine.skipped_known } : { pack: null });
@@ -256,7 +258,7 @@ router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-g
   res.json(out);
 });
 
-router.get('/:id/notes', requireAuth, ownMaterial, (req, res) => res.json({ notes: notes.view(notes.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `notes:${Number(req.params.id)}`) }));
+router.get('/:id/notes', requireAuth, ownMaterial, (req, res) => { promoteBuilds(req.user.id, req.params.id, ['notes']); return res.json({ notes: notes.view(notes.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `notes:${Number(req.params.id)}`) }); });
 router.post('/:id/notes', requireAuth, ownMaterial, limit('materials-notes', 6, 60 * 60 * 1000), (req, res) => {
   const existing = notes.get(req.user.id, req.params.id);
   if (existing && existing.status === 'ready' && existing.version === notes.VERSION) return res.json({ notes: notes.view(existing), cached: true });

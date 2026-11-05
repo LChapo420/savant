@@ -38,6 +38,7 @@
  * appends every raw judge answer to FILE.
  */
 const fs = require('fs');
+require('../services/run-cap').defaultCap(5); // hard per-process spend cap across every paid ledger; --run-cap N or RUN_CAP_USD overrides
 const os = require('os');
 const path = require('path');
 
@@ -188,6 +189,29 @@ function installWriter() {
     providers.isOutside = () => false;
     return;
   }
+  if (WRITER === 'coral' || WRITER === 'gonka') {
+    // 4 Nov (judge-cal): Coral (DeepSeek V4.1 Flash) or Gonka (GLM-5.3-Flash) as the writer, through their ledgers; pipeline only, synthetic learners.
+    const cfg = WRITER === 'coral' ? { env: 'CORAL', led: 'coral-ledger.json', mod: '../services/providers/coral', model: 'deepseek-v4.1-flash' } : { env: 'GONKA', led: 'gonka-ledger.json', mod: '../services/providers/gonka', model: 'zai-org/GLM-5.3-Flash' };
+    process.env[`${cfg.env}_PIPELINE`] = '1';
+    process.env[`${cfg.env}_LEDGER_FILE`] = process.env[`${cfg.env}_LEDGER_FILE`] || `${LIVE_DATA}/${cfg.led}`;
+    const cp = require(cfg.mod)[WRITER]; // eslint-disable-line global-require, import/no-dynamic-require
+    const model = arg('writer-model') || cfg.model;
+    let spentUsd = 0;
+    const w = {
+      name: `${WRITER}_proof`, outside: true, isEnabled: () => true, costCents: () => 0, describeError: (e) => e.message,
+      async structured(a) {
+        if (spentUsd >= BUDGET) throw new Error(`budget $${BUDGET} reached`);
+        const r = await gated(() => cp.structured({ task: a.task, system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: a.maxTokens, effort: a.effort, model, timeoutMs: 360000 }));
+        spentUsd += (r.usage && r.usage.cost_usd) || 0;
+        usage.writerCalls += 1; usage.writerIn += (r.usage && r.usage.input_tokens) || 0; usage.writerOut += (r.usage && r.usage.output_tokens) || 0;
+        return r;
+      },
+    };
+    process.env.AI_POOL = '0';
+    providers.chain = () => [w];
+    providers.isOutside = () => false;
+    return;
+  }
   if (WRITER === 'nvidia') {
     // NVIDIA build, free: used on 1 Nov 2026 when xKiro's MiniMax was at capacity and its free quota was spent. Before and after use the same writer.
     const nv = require('../services/providers/nvidia'); // eslint-disable-line global-require
@@ -308,6 +332,21 @@ ALL_JUDGES.crouton = { id: 'stealth/crouton-alpha', family: 'crouton', call: asy
   const r = await gated(() => crouton.chat({ task: 'judge-calibration', system: s, messages: [{ role: 'user', content: u }], maxTokens: 6000, timeoutMs: 300000 }));
   return r.text;
 } };
+// 4 Nov (judge-cal): credit judges through their ledgers (Grokified grok-4.3, Coral DeepSeek V4.1 Flash, Gonka GLM-5.3-Flash). Synthetic learners only.
+const LIVE_DATA = 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data';
+function creditJudge(key, id, family, mod, exp, envs, ledgerEnv, ledgerFile) {
+  ALL_JUDGES[key] = { id, family, call: async (s, u) => {
+    for (const e of envs) process.env[e] = '1';
+    process.env[ledgerEnv] = process.env[ledgerEnv] || `${LIVE_DATA}/${ledgerFile}`;
+    const p = require(mod)[exp]; // eslint-disable-line global-require, import/no-dynamic-require
+    const r = await gated(() => p.chat({ task: 'judge-calibration', system: s, messages: [{ role: 'user', content: u }], maxTokens: 6000, model: id, timeoutMs: 300000 }));
+    usage.judgeTokens[id] = (usage.judgeTokens[id] || 0) + (r.usage.input_tokens || 0) + (r.usage.output_tokens || 0);
+    return r.text;
+  } };
+}
+creditJudge('grok', 'grok-4.3', 'xai', '../services/providers/grokified', 'grokified', ['GROKIFIED_PIPELINE'], 'GROKIFIED_LEDGER_FILE', 'grokified-ledger.json');
+creditJudge('coral', 'deepseek-v4.1-flash', 'deepseek', '../services/providers/coral', 'coral', ['CORAL_PIPELINE'], 'CORAL_LEDGER_FILE', 'coral-ledger.json');
+creditJudge('gonka', 'zai-org/GLM-5.3-Flash', 'zai', '../services/providers/gonka', 'gonka', ['GONKA_PIPELINE'], 'GONKA_LEDGER_FILE', 'gonka-ledger.json');
 ALL_JUDGES.mistral4 = { id: 'mistralai/mistral-large-4-1t-a52b', family: 'mistral', call: (s, u) => nvidiaChat('mistralai/mistral-large-4-1t-a52b', s, u) };
 // While a file named XKIRO_DOWN sits next to the cache file (or PROOF_XKIRO_DOWN names one), the xKiro judges qwen and mistral are answered by the NVIDIA ones
 // instead (the records carry the real model ids).

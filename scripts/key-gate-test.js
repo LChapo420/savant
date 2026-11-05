@@ -33,9 +33,11 @@ const rightKey = { ...wrongKey, answerIndex: 0 };
     const asked = [];
     const pick = (n) => async () => ({ data: { picks: [{ index: 0, chosen_index: n }] } });
     nvidia.isEnabled = () => true;
-    nvidia.structured = async (args) => { asked.push(`nvidia:${(args.models || [{}])[0].model || 'tier'}`); return pick(2)(); };
+    let judgeArgs = null;
+    nvidia.structured = async (args) => { judgeArgs = args; asked.push(`nvidia:${(args.models || [{}])[0].model || 'tier'}`); return pick(2)(); };
     providers.chain = () => [{ name: 'xkiro', structured: async () => { asked.push('xkiro'); return pick(1)(); } }];
     let picks = await keyGate.nemotronJudge([wrongKey]);
+    check('the Nemotron judge waits at most 40 s, once, before the app chain takes over', judgeArgs && judgeArgs.timeoutMs === 40000 && judgeArgs.attempts === 1, judgeArgs && [judgeArgs.timeoutMs, judgeArgs.attempts]);
     check('the judge asks Nemotron Ultra on NVIDIA first', picks[0] === 2 && String(asked[0]).startsWith('nvidia:nvidia/nemotron-3-ultra'), asked);
     nvidia.structured = async () => { asked.push('nvidia-fail'); throw new Error('429'); };
     providers.chain = () => [

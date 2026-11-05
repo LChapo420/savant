@@ -264,7 +264,8 @@ class SimDate extends RealDate {
 }
 global.Date = SimDate;
 let activeMs = 0; // study time the learner spends inside levels (every advance() in a level), for --minutes-per-day
-function advance(ms) { const d = Math.max(0, Math.round(ms)); simNow += d; activeMs += d; }
+let NONFINITE_MS = 0; // --strata runs only: a non-finite duration (seen in 2 of 14 day-180 shards, cause not traced) used to turn simNow into an Invalid Date and crash; it now counts as 0 ms and is reported
+function advance(ms) { let d = Math.max(0, Math.round(ms)); if (!Number.isFinite(d)) { NONFINITE_MS++; d = 0; } simNow += d; activeMs += d; }
 
 // ── the app's own modules ──────────────────────────────────────────────────
 const scorecard = require('../services/scorecard');
@@ -665,9 +666,37 @@ const KEPT = {
 // transfer), 0.25 / 0.4 for the rest; the marginal SD stays POP_SD. Off by default: independent truths, as in rounds 1 to 10.
 const TRUTH_FACTORS = Number(opt('truth-factors', 0)) !== 0;
 const COG_CATS = new Set(['intake', 'reasoning', 'transfer']);
-function drawTruth(rng) {
+// --strata=1 (docs/SCORECARD-90.md section 12, SIMULATED): every learner, measured and "other", gets an age band (a balanced stripe over the learner number) and,
+// for some, a trait-profile proxy (scripts/lib/scorecard-strata.js, each shift cited or marked ASSUMED). The shifts move the true values; behaviour follows them.
+// --extreme=1 (docs/EXTREME-LEARNERS.md, SIMULATED): the learners are drawn by scripts/lib/extreme-learners.js (tails, contradictory mixes, random draws over the whole
+// space, ages 8 to 70, English learners) instead of the population shape; --extreme-share=P keeps the rest ordinary (default 1: every measured learner is extreme).
+// Implies --strata=1 so the dump carries the age band; the dump also carries ext (kind, mix, age, tails). "Other" learners stay ordinary.
+const EXTREME = Number(opt('extreme', 0)) !== 0;
+const EXTREME_SHARE = Number(opt('extreme-share', 1));
+const EXTREME_LIB = EXTREME ? require('./lib/extreme-learners') : null;
+const STRATA = Number(opt('strata', 0)) !== 0 || EXTREME;
+const STRATA_LIB = STRATA ? require('./lib/scorecard-strata') : null;
+function strataOf(index, population) {
+  if (!STRATA) return null;
+  if (EXTREME && !population && new Rng(hashSeed(SEED, 'extshare', index)).u() < EXTREME_SHARE) {
+    const L = EXTREME_LIB.learner(SEED, index);
+    return { age: L.band, profile: L.profile, ext: { id: L.id, kind: L.kind, mix: L.mix, age: L.age, tags: L.tags, traits: L.traits } };
+  }
+  return STRATA_LIB.assign(index, new Rng(hashSeed(SEED, `${population ? 'pop-' : ''}stratum`, index)).u());
+}
+function drawTruth(rng, st = null) {
   const T = {};
-  if (TRUTH_FACTORS) {
+  if (st && st.ext) { for (const s of STATS) T[s.id] = st.ext.traits[s.id]; for (const [id, base, inv] of ALIASES) T[id] = inv ? 100 - T[base] : T[base]; return T; }
+  const X = st ? STRATA_LIB.transform(st.age, st.profile) : null;
+  if (X) {
+    const g = rng.normal(); const cat = {};
+    for (const s of STATS) {
+      if (cat[s.category] === undefined) cat[s.category] = rng.normal();
+      const [lg, lc] = TRUTH_FACTORS ? (COG_CATS.has(s.category) ? [0.5, 0.3] : [0.25, 0.4]) : [0, 0];
+      const z = TRUTH_FACTORS ? lg * g + lc * cat[s.category] + Math.sqrt(1 - lg * lg - lc * lc) * rng.normal() : rng.normal();
+      T[s.id] = clamp(50 + POP_SD * (X.sp(s.id) * z + X.dz(s.id)), 2, 98);
+    }
+  } else if (TRUTH_FACTORS) {
     const g = rng.normal();
     const cat = {};
     for (const s of STATS) {
@@ -874,7 +903,8 @@ function runLearner(index, mode, { population = false } = {}) {
   const where = { trackId: TRACK, gradeId: GRADE };
   // The learner (truth and behaviour) is the same in every mode; only the model
   // read's own randomness is separate, so modes are compared on the same people.
-  const T = drawTruth(new Rng(hashSeed(SEED, `${tag}truth`, index)));
+  const STRATUM = strataOf(index, population);
+  const T = drawTruth(new Rng(hashSeed(SEED, `${tag}truth`, index)), STRATUM);
   const P = paramsFor(T);
   const rng = new Rng(hashSeed(SEED, `${tag}behaviour`, index));
   const outerRng = rng;
@@ -1013,6 +1043,7 @@ function runLearner(index, mode, { population = false } = {}) {
 
   const out = {
     snapshots: {},
+    stratum: STRATUM,
     firstConfident: {},
     firstDirective: {},
     experiments: 0,
@@ -2051,7 +2082,7 @@ for (const mode of MODES) {
     const o = r.snapshots[CHECKPOINTS[CHECKPOINTS.length - 1]].outcome;
     const slim = {};
     for (const [k, v] of Object.entries(o)) if (typeof v === 'number' || v === null) slim[k] = v;
-    return { mv: Math.round(r.truth.mastery_velocity), pk: Math.round(r.truth.prior_knowledge), dr: Math.round(r.truth.decay_rate), ...slim, pretests: r.pretests, pages_skipped: r.pagesSkipped };
+    return { ext_id: r.stratum && r.stratum.ext ? r.stratum.ext.id : null, mv: Math.round(r.truth.mastery_velocity), pk: Math.round(r.truth.prior_knowledge), dr: Math.round(r.truth.decay_rate), ...slim, pretests: r.pretests, pages_skipped: r.pagesSkipped };
   });
   results[mode].gate = gateFor(runs);
   if (DUMP && mode === MODES[0]) {
@@ -2064,7 +2095,7 @@ for (const mode of MODES) {
       return {
         truth: Object.fromEntries(STATS.map((st) => [st.id, Number(truthOf(r, st.id).toFixed(3))])),
         app: Object.fromEntries(STATS.map((st) => { const e = sn.est[st.id]; return [st.id, [Number((e.measured !== undefined ? e.measured : e.score).toFixed(3)), Number((e.se === undefined ? 0 : e.se).toFixed(3)), e.confidence]]; })),
-        feat: sn.feat, ind: sn.ind, levels: sn.levels, days: sn.days,
+        feat: sn.feat, ind: sn.ind, levels: sn.levels, days: sn.days, age: r.stratum ? r.stratum.age : undefined, profile: r.stratum ? r.stratum.profile : undefined, ext: r.stratum && r.stratum.ext ? { id: r.stratum.ext.id, kind: r.stratum.ext.kind, mix: r.stratum.ext.mix, age: r.stratum.ext.age, tags: r.stratum.ext.tags } : undefined,
       };
     });
     fs.mkdirSync(path.dirname(DUMP), { recursive: true });
@@ -2216,6 +2247,7 @@ for (const mode of MODES) {
 say('');
 const act = results[MODES[0]].activity;
 say(`Activity per learner (${MODES[0]}): ${act.mean_days} days, ${act.experiments_per_learner} experiments, ${act.holdout_pages_per_learner} holdout pages, ${act.review_items_per_learner} review answers, ${act.abandoned_levels_per_learner} levels left partway (${act.left_early_levels_per_learner} left early, the rest quit after misses; the sitting was then resumed ${act.resumed_sittings_per_learner} and abandoned ${act.abandoned_sittings_per_learner} times); accuracy ${act.accuracy.all} (focus ${act.accuracy.focus}, review ${act.accuracy.review})`);
+if (NONFINITE_MS) say(`NOTE: ${NONFINITE_MS} non-finite durations were counted as 0 ms`);
 const hp = act.holdout_power;
 if (hp && hp.sd_raw !== null) {
   const d = (x) => (x ? `${(x.diff * 100).toFixed(1)} +/- ${(1.96 * x.se * 100).toFixed(1)} points (${x.tailored} tailored, ${x.holdout} holdout pages)` : '—');

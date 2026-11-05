@@ -16,6 +16,7 @@
  * stops at --budget USD of its own spend (default 2.4). Only invented text is sent: no learner data exists here.
  */
 const fs = require('fs');
+require('../services/run-cap').defaultCap(5); // hard per-process spend cap across every paid ledger; --run-cap N or RUN_CAP_USD overrides
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');

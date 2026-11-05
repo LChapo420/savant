@@ -41,6 +41,7 @@ const NEEDS = {
   'subject-placement-test': [DB],
   'placement-result-test': [DB],
   'game-lab-integration-test': [DB],
+  'act-check-test': [DB],
 };
 
 const strict = process.argv.includes('--strict');
@@ -57,6 +58,7 @@ if (!fs.existsSync(path.join(ROOT, 'data', 'Spanish_Fluency_Path.csv'))) process
 // window itself is checked in scripts/xkiro-provider-test.js.
 if (!process.env.XKIRO_LEARNER_UNTIL) process.env.XKIRO_LEARNER_UNTIL = '2000-01-01T00:00:00Z';
 if (!process.env.UPLOAD_AUTOBUILD) process.env.UPLOAD_AUTOBUILD = 'off'; // uploads build their notes and pack on upload; the tests do not call a model for that (material-autobuild-test turns it on with fakes)
+if (!process.env.SPANISH_WRITE_AHEAD) process.env.SPANISH_WRITE_AHEAD = 'off'; // Spanish writing-ahead is on by default in the app (4 Nov 2026); the suite never reaches for a model for it (spanish-unit-writer-test turns it on with fakes)
 if (!process.env.CORAL_LEARNER) process.env.CORAL_LEARNER = 'off'; // as for Munito: the tests pin the pipeline-only rule; learner use is checked in coral-ledger-test
 if (!process.env.GLADIA_LEARNER) process.env.GLADIA_LEARNER = 'off'; // existing tests keep the local route; gladia-test turns it on itself
 if (!process.env.MUNITO_LEARNER) process.env.MUNITO_LEARNER = 'off'; // the tests pin the pipeline-only rule; learner use is checked in munito-ledger-test

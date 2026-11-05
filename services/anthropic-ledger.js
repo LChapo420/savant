@@ -24,6 +24,7 @@
  * the owner's one Anthropic key budget.
  */
 const fs = require('fs');
+const runCap = require('./run-cap');
 const path = require('path');
 
 const HARD_STOP_USD = 60.5; // owner 2026-11-01: $47 left on the account, keep $5 spare: $18.50 counted + $42 (was $34)
@@ -206,6 +207,8 @@ function reserve({ usd, task = null, model = null }) {
       throw Object.assign(new Error(`anthropic ledger: refused (committed $${t.committed_usd.toFixed(4)} + this call up to $${amount.toFixed(4)} would pass the $${stopUsd().toFixed(2)} stop)`), { code: 'LEDGER_STOP', status: 402 });
     }
     const id = `r${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+    runCap.check('anthropic', amount);
+    runCap.hold('anthropic', id, amount);
     data.reservations[id] = { usd: Number(amount.toFixed(6)), task, model, at: new Date().toISOString(), pid: process.pid };
     write(data);
     return id;
@@ -226,6 +229,7 @@ function settle(id, { usd = null, outcome = 'ok', usage = null } = {}) {
     else if (outcome === 'unknown' || usd === null || !Number.isFinite(Number(usd))) amount = r.usd;
     else amount = Math.max(0, Number(usd));
     delete data.reservations[id];
+    runCap.settle('anthropic', id, amount);
     data.settled_usd = Number((Number(data.settled_usd) + amount).toFixed(6));
     data.calls = (data.calls || 0) + 1;
     if (outcome !== 'ok') data.failed_calls = (data.failed_calls || 0) + 1;
