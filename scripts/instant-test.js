@@ -180,6 +180,39 @@ const call = (n, slots, opts = {}) => pool.callHedged({ kind: 'structured', n },
     delete process.env.WRITE_AHEAD_PER_USER;
     ensureMs = 0;
   });
+  await check('prewrite: the likely start levels are written while placement runs, once each, fast lane, at most 4 per enrollment', async () => {
+    writeAhead.reset();
+    ensured.length = 0;
+    const lessons = [];
+    for (let l = 1; l <= grade.pathLength && lessons.length < 9; l++) if (blockLevels.kindFor(grade, l) === 'lesson') lessons.push(l);
+    const u = mk('prewrite');
+    const e = enroll(u, 50);
+    const steps = writeAhead.prewrite({ user: u, enrollment: e, grade, levels: lessons.slice(0, 2) });
+    assert.strictEqual(steps.length, 2, 'two levels queued');
+    await sleep(60);
+    assert.ok(lessons.slice(0, 2).every((l) => ensured.some((x) => x.userId === u.id && x.level === l && x.background === false)), 'both started in the waiting-learner lane');
+    assert.strictEqual(writeAhead.prewrite({ user: u, enrollment: e, grade, levels: lessons.slice(0, 2) }).length, 0, 'asking again writes nothing new');
+    writeAhead.prewrite({ user: u, enrollment: e, grade, levels: lessons.slice(2, 9) });
+    await writeAhead.idle();
+    assert.strictEqual(ensured.filter((x) => x.userId === u.id).length, 4, 'capped at 4 distinct levels');
+    assert.strictEqual(writeAhead.writesToday(u.id), 0, 'prewrites do not use the daily cap');
+    process.env.WRITE_AHEAD_PREWRITE_MAX = '0';
+    const v = mk('prewrite-off');
+    assert.strictEqual(writeAhead.prewrite({ user: v, enrollment: enroll(v, 50), grade, levels: lessons.slice(0, 2) }).length, 0, 'switched off');
+    delete process.env.WRITE_AHEAD_PREWRITE_MAX;
+    await writeAhead.idle();
+  });
+  await check('likelyStarts: the first two units before any answer, the placed unit and a neighbour after', () => {
+    const unitPlacement = require('../services/unit-placement');
+    const none = unitPlacement.likelyStarts('math', 'algebra_1_part_a', [], 2);
+    assert.strictEqual(none.length, 2);
+    assert.ok(none[0] < none[1]);
+    const units = unitPlacement.unitsFor('math', 'algebra_1_part_a');
+    const answered = [];
+    for (let u = 1; u <= Math.min(5, units.length); u++) answered.push({ unit: u, slot: 0, correct: true });
+    const later = unitPlacement.likelyStarts('math', 'algebra_1_part_a', answered, 2);
+    assert.ok(later.length === 2 && later[0] !== later[1] && later[0] > none[0], `after five right answers ${later}`);
+  });
   await check('a learner has a daily cap of background writes (the fast first level is exempt)', async () => {
     writeAhead.reset();
     ensured.length = 0;

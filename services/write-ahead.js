@@ -326,6 +326,48 @@ function trigger({ user, enrollment, grade, reason = null, passive = false }) {
   }
 }
 
+/**
+ * Write the first lesson while the placement is still running (owner, 4 Nov 2026: nothing a learner reaches should be slow; write about
+ * twice what is needed). `levels` are the likely start levels, best first (unit-placement likelyStarts); at most PREWRITE_MAX (4: 95% of simulated learners' start levels with none written before `min` answers, scripts/prewrite-hit-sim.js) distinct
+ * levels per enrollment in all, so a belief that wanders costs a bounded few writes. Same lane as the first level after a placement (fast,
+ * ignores the caps, the full gate and tier of any write), same plan key, so when the learner is placed and the level they stand on is
+ * one of these, it is already written or in flight and the request joins it. A learner who may not cause a model call gets nothing
+ * (mayGenerate: the child's consent rule is applied inside services/ai.js on every call too). Never throws, never awaited.
+ */
+const prewritten = new Map(); // enrollment id -> Set(levels already requested)
+function prewrite({ user, enrollment, grade, levels, reason = 'placement' }) {
+  try {
+    const max = num('WRITE_AHEAD_PREWRITE_MAX', 4, 0, 10);
+    if (!on() || !max || !user || !enrollment || !Array.isArray(levels)) return [];
+    if (enrollment.user_id && user.id && enrollment.user_id !== user.id) return [];
+    const g = grade || curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
+    if (!g || enrollment.status === 'graduated') return [];
+    const bl = blockLevels();
+    if (!bl.aiReady() || !bl.mayGenerate(user) || !bl.visibleTo(user)) return [];
+    const tailored = bl.tailorsFor(user);
+    const where = { trackId: enrollment.track_id, gradeId: enrollment.grade_id };
+    const done = prewritten.get(enrollment.id) || new Set();
+    const steps = [];
+    for (const [rank, level] of levels.entries()) {
+      if (done.size >= max) break;
+      if (done.has(level)) continue;
+      const kind = bl.kindFor(g, level);
+      if (kind !== 'lesson' && kind !== 'retention') continue;
+      done.add(level);
+      const step = { level, position: 0, kind, tier: 'free', tailored, rank };
+      enqueue({ user, step, key: bl.planKey(tailored ? user.id : null, where.trackId, where.gradeId, level), enrollmentId: enrollment.id, levelsPerHour: 0, reason, ...where, fast: fastOn(), prewrite: true });
+      steps.push(step);
+    }
+    if (done.size) prewritten.set(enrollment.id, done);
+    if (prewritten.size > 200) prewritten.delete(prewritten.keys().next().value);
+    if (steps.length) { note({ type: 'prewrite', userId: user.id, enrollmentId: enrollment.id, reason, levels: steps.map((s) => s.level) }); setImmediate(pump); }
+    return steps;
+  } catch (err) {
+    console.warn(`write-ahead: prewrite ${err.message}`);
+    return [];
+  }
+}
+
 /** A checkpoint ahead of the learner: their own tailored quiz, or the level's shared one; background, counted against the day's cap. */
 function prefetchCheckpoint({ user, enrollment, grade, step }) {
   // eslint-disable-next-line global-require
@@ -366,7 +408,7 @@ function testDaysOf(userId, enrollment) {
 }
 const soonest = (job) => (Number.isFinite(job.testDays) ? job.testDays : 1e9);
 
-function enqueue({ user, step, key, enrollmentId, levelsPerHour, testDays = null, reason, trackId, gradeId, fast = false }) {
+function enqueue({ user, step, key, enrollmentId, levelsPerHour, testDays = null, reason, trackId, gradeId, fast = false, prewrite = false }) {
   const bl = blockLevels();
   const owner = step.tailored ? user.id : null;
   const plan = bl.findPlan({ userId: owner, trackId, gradeId, level: step.level });
@@ -403,17 +445,24 @@ function enqueue({ user, step, key, enrollmentId, levelsPerHour, testDays = null
     countWrite(user.id); // counted when queued, so a burst of steps cannot overshoot the cap
   }
   queue.push({
-    key, kind, user, userId: user.id, enrollmentId, levelsPerHour, testDays, reason, trackId, gradeId, fast,
-    level: step.level, tailored: step.tailored, tier: step.tier, priority: fast ? -1 : step.position, seq: seq++,
+    key, kind, user, userId: user.id, enrollmentId, levelsPerHour, testDays, reason, trackId, gradeId, fast, prewrite,
+    level: step.level, tailored: step.tailored, tier: step.tier, priority: prewrite ? -0.5 + (step.rank || 0) / 100 : fast ? -1 : step.position, seq: seq++,
   });
   note({ type: 'queued', key, kind, tier: step.tier, level: step.level });
 }
+
+const prewriteCap = () => num('WRITE_AHEAD_PREWRITE_CONCURRENT', 2, 1, 12);
+/** Speculative writes running now, in all or for one learner (one at a time each: the best guess first, the next only when it is done). */
+function prewriteRunning(userId = null) { let n = 0; for (const j of running.values()) if (j.prewrite && (userId === null || j.userId === userId)) n++; return n; }
 
 function pump() {
   queue.sort((a, b) => a.priority - b.priority || soonest(a) - soonest(b) || (b.levelsPerHour || 0) - (a.levelsPerHour || 0) || a.seq - b.seq);
   for (let i = 0; i < queue.length;) {
     const job = queue[i];
     // The first level after a placement ignores the caps: a learner is about to wait on it.
+    // A speculative first-lesson write (prewrite) waits its turn behind a small cap of its own, so a burst of learners in placement cannot crowd
+    // out the write a learner is waiting on (measured 4 Nov: 3 learners at once, 6 prewrites each, every first lesson slower).
+    if (job.prewrite && (prewriteRunning() >= prewriteCap() || prewriteRunning(job.userId) >= 1)) { i++; continue; }
     if (!job.fast && running.size >= globalCap()) { i++; continue; }
     if (running.has(job.key) || (!job.fast && (runningFor.get(job.userId) || 0) >= perUserCap())) { i++; continue; }
     queue.splice(i, 1);
@@ -511,6 +560,7 @@ function reset() {
   triggeredEnrollments.clear();
   spentToday.clear();
   touched.clear();
+  prewritten.clear();
 }
 
-module.exports = { trigger, triggerForUser, planFor, idle, status, reset, events, paceFor, writeMinutes, aheadFor, testDaysOf, dormant, lastActiveMs, writesToday, dailyCap };
+module.exports = { trigger, prewrite, triggerForUser, planFor, idle, status, reset, events, paceFor, writeMinutes, aheadFor, testDaysOf, dormant, lastActiveMs, writesToday, dailyCap };

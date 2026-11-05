@@ -633,8 +633,10 @@ function candidatesFor(req, opts = {}) {
   // full (4 at once) the walk saw calls fall onto rate-limited free models and wait 2 to 6 minutes. Everything else keeps the order above.
   const st = lane.getStore();
   if (st && st.fast && st.background === false && req.coral === true) {
+    // Also for a task with no fast slot of its own (fact_verify, blind_mc: 4 Nov first-lesson brief): a learner waiting is not made to wait on
+    // a busy free model first (a whole level's fact read took 109 to 312 s there; grok-4.3 answered one in 67 s, a block in about 24 s).
     const fastPaid = paid.filter((s) => s.fast);
-    if (fastPaid.length) return [...first, ...fastPaid, ...paid.filter((s) => !s.fast), ...free];
+    if (fastPaid.length || paid.length) return [...first, ...fastPaid, ...paid.filter((s) => !s.fast), ...free];
   }
   return [...first, ...free, ...paid];
 }

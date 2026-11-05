@@ -1514,15 +1514,25 @@ function verifyOn() {
 }
 
 /**
+ * The model families that wrote a level (layout and fill), for the checks to stay off: a verifier or blind judge from the writer's own family
+ * shares its blind spots (owner's rule, brief first-lesson 4 Nov 2026). Empty when the writer's model is unknown or not in a known family.
+ */
+function writerFamilies(...models) {
+  // eslint-disable-next-line global-require
+  const { familyOfModel } = require('./pool');
+  return [...new Set(models.map((m) => familyOfModel(m)).filter(Boolean))];
+}
+
+/**
  * The blind re-solve half of the self-check, on a level's checks (changed in
  * place: a check the judge answers differently becomes null). Returns the record
  * kept on the plan, with `dropped` [{index, why}] for the plan's dropped checks.
  */
-async function selfCheck({ items, verification }) {
+async function selfCheck({ items, verification, excludeFamilies = null }) {
   // eslint-disable-next-line global-require
   const keyGate = require('./key-gate');
   const mc = items.map((it, i) => ({ it, i })).filter((x) => x.it && x.it.format === 'multiple_choice' && Array.isArray(x.it.choices) && x.it.choices.length);
-  const results = mc.length ? await keyGate.blindResolve(mc.map((x) => ({ prompt: x.it.prompt, choices: x.it.choices, answer: x.it.answer }))) : [];
+  const results = mc.length ? await keyGate.blindResolve(mc.map((x) => ({ prompt: x.it.prompt, choices: x.it.choices, answer: x.it.answer })), { excludeFamilies }) : [];
   const dropped = [];
   let agreed = 0;
   let unjudged = 0;
@@ -1640,7 +1650,7 @@ function verifyRequest({ context, blocks, checks, factSheet = null }) {
   return { system: VERIFY_SYSTEM + (FACT_NOTES[context.trackId] || ''), user: verifyPrompt({ context, blocks, checks, factSheet }), schema: VERIFY_SCHEMA };
 }
 
-async function verifyLevel({ context, blocks, checks, factSheet = null, userId = null, where = null, reader = null }) {
+async function verifyLevel({ context, blocks, checks, factSheet = null, userId = null, where = null, reader = null, excludeFamilies = null }) {
   // The cascade (services/fact-cascade.js): cheap and local checks on everything,
   // Sonnet only on what they flag. Opt-in (FACT_PIPELINE=cascade); see cascadeOn.
   if (where && cascadeOn()) {
@@ -1717,6 +1727,7 @@ This time list and verify ONLY the claims in ${part} (use the rest of the level 
   const ai = require('./ai');
   const reply = await ai.structuredDetail({
     role: 'blocks', task: 'fact_verify', system, user, schema: VERIFY_SCHEMA, schemaName: 'submit_verification', maxTokens: 16000, userId, lane: process.env.BLOCK_LANE || 'background',
+    excludeFamilies: excludeFamilies && excludeFamilies.length ? excludeFamilies : undefined,
   });
   if (!reply || !reply.data) return null;
   return { ...readVerification(reply.data), usage: reply.usage, cost: null, sources: [], searches: 0, model: reply.model || null };
@@ -1734,7 +1745,7 @@ This time list and verify ONLY the claims in ${part} (use the rest of the level 
  * Round 0 reads the whole level; each later round reads only what was repaired.
  * Two repair rounds at most; what is still flagged after them is dropped.
  */
-async function verifyAndRepair({ context, blocks, items, specs, validateBlock, owner = null, factSheet = null, coverage = [], where = null }) {
+async function verifyAndRepair({ context, blocks, items, specs, validateBlock, owner = null, factSheet = null, coverage = [], where = null, excludeFamilies = null }) {
   // Two repairs by GLM (at high effort: a careless repair brings new errors), then,
   // with the owner's key, a third by Claude for what GLM could not fix. Taking a
   // part out is the last resort: measured on 2026-10-21, a basketball level lost
@@ -1775,7 +1786,7 @@ async function verifyAndRepair({ context, blocks, items, specs, validateBlock, o
       if (!toRead.blocks.length && !toRead.checks.length) break;
       // eslint-disable-next-line no-await-in-loop
       // The slow local checkers run on the first full read only; later reads have Sonnet and the cheap reads.
-      const ask = (who) => verifyLevel({ context, blocks: toRead.blocks, checks: toRead.checks, factSheet, userId: owner, where: where && { ...where, localChecks: round === 0 }, reader: who })
+      const ask = (who) => verifyLevel({ context, blocks: toRead.blocks, checks: toRead.checks, factSheet, userId: owner, where: where && { ...where, localChecks: round === 0 }, reader: who, excludeFamilies })
         .catch((err) => { console.warn(`facts: verification failed (${err.message})`); return null; });
       // eslint-disable-next-line no-await-in-loop
       let v = await ask(reader);
@@ -1906,7 +1917,7 @@ async function verifyStored(plan) {
   }
   const { verification, usage, dropReasons } = await verifyAndRepair({
     context, blocks, items, specs, validateBlock, owner: plan.user_id || null, coverage: plan.coverage || [], factSheet: plan.fact_sheet || null,
-    where: { trackId, gradeId, level: plan.level },
+    where: { trackId, gradeId, level: plan.level }, excludeFamilies: writerFamilies(plan.model, plan.layout_model),
   });
   // The Sonnet check of a level served on its free check (the write-ahead's
   // upgrade) that could not finish (the key failed, or the ledger stopped it)
@@ -1918,7 +1929,7 @@ async function verifyStored(plan) {
   }
   // With no verifier key, a stored level is self-checked instead (P10); on the
   // free tier it is self-checked whether or not the key is set.
-  const selfChecked = selfCheckRun() ? await selfCheck({ items, verification }) : null;
+  const selfChecked = selfCheckRun() ? await selfCheck({ items, verification, excludeFamilies: writerFamilies(plan.model, plan.layout_model) }) : null;
   if (selfChecked) for (const d of selfChecked.dropped) dropReasons.set(d.index, d.why);
   const kept = blocks.filter((b) => !b.problems.length);
   const checks = [];
@@ -2340,6 +2351,7 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
     );
     const result = await verifyAndRepair({
       context, blocks, items, specs: layout.checks, validateBlock, owner, factSheet, coverage: layout.coverage || [], where: { trackId, gradeId, level },
+      excludeFamilies: writerFamilies(fillReply.model, layoutReply && layoutReply.model),
     });
     verification = result.verification;
     verifyUsage = result.usage;
@@ -2353,7 +2365,7 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
     // eslint-disable-next-line global-require
     const keyGate = require('./key-gate');
     const mc = items.map((it, i) => ({ it, i })).filter((x) => x.it && x.it.format === 'multiple_choice' && Array.isArray(x.it.choices));
-    const rejected = await keyGate.rejectedByKeyGate(mc.map((x) => ({ prompt: x.it.prompt, choices: x.it.choices, answer: x.it.answer, rationale: x.it.rationale })));
+    const rejected = await keyGate.rejectedByKeyGate(mc.map((x) => ({ prompt: x.it.prompt, choices: x.it.choices, answer: x.it.answer, rationale: x.it.rationale })), { excludeFamilies: writerFamilies(fillReply.model, layoutReply && layoutReply.model) });
     for (const r of rejected) {
       const index = mc[r.index].i;
       items[index] = null;
@@ -2363,7 +2375,7 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
   // With no verifier key, or on the free tier: the blind re-solve half of the self-check (selfCheckOn, P10).
   let selfChecked = null;
   if (selfCheckRun()) {
-    selfChecked = await selfCheck({ items, verification });
+    selfChecked = await selfCheck({ items, verification, excludeFamilies: writerFamilies(fillReply.model, layoutReply && layoutReply.model) });
     for (const d of selfChecked.dropped) brokenChecks.push({ index: d.index, spec: layout.checks[d.index], raw: null, reason: d.why });
   }
   const kept = blocks.filter((b) => !b.problems.length);
@@ -3025,6 +3037,7 @@ module.exports = {
   researchFacts,
   verifyLevel,
   verifyRequest,
+  VERIFY_SCHEMA,
   verifyAndRepair,
   verifyStored,
   tooMuchRemoved,

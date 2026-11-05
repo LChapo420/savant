@@ -29,6 +29,7 @@ const rules = require('../config/subject-placement');
 const areas = require('./act-areas');
 
 const TRACK = 'act';
+const START_INDEX = 7; // the 8th of 16 ACT grades (composite 23 to 25 in GRADE_BANDS): the middle of the ladder
 const GUESTS = 'act_guests';
 const APPLICANTS = 'recruit_applicants';
 const COUNTS = 'recruit_counts';
@@ -183,7 +184,12 @@ function begin({ ref, ch, token }) {
     result: null,
     applicant_id: null,
   });
-  sp.start(walkId(guest), TRACK, { mode: 'quick' });
+  // Opens mid-ladder, not on the lowest grade's place-value question: a high schooler's first question should not be "the value of the 6 in
+  // 4,052,681". The walk comes down quickly after a miss. Simulated on a held-out seed (scripts/act-start-sim.js): 98.8% within one grade
+  // against 98.5% from the first grade, same ~24 questions. ACT_CHECK_START_INDEX overrides (0 = the old opening).
+  const gradeIds = rules.gradesFor(TRACK);
+  const startAt = Number(process.env.ACT_CHECK_START_INDEX ?? START_INDEX);
+  sp.start(walkId(guest), TRACK, { mode: 'quick', startGradeId: startAt > 0 ? gradeIds[Math.min(gradeIds.length - 1, startAt)] : null });
   bump('started', r, channel);
   return { guest, token: `${gid}.${secret}`, state: stateOf(guest) };
 }

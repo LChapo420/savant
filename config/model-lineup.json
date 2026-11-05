@@ -854,8 +854,10 @@
       "fact_verify": {
         "timeout_ms": 300000,
         "allow": [
+          "coral:deepseek-v4.1-flash",
           "grokified:grok-4.3"
-        ]
+        ],
+        "basis": "scripts/fact-verifier-eval.js, 4 Nov 2026, 36 planted errors in real lesson blocks and checks + 24 clean (docs/fact-verifier-eval.json, AI-planted, not real-learner proof): grok-4.3 caught 22 (5 false alarms, p50 24 s a block); Coral DeepSeek V4.1 Standard caught 22 (11 false alarms, p50 1.2 s). Coral is DeepSeek, so the call excludes the writer's family (services/block-levels.js writerFamilies) and a DeepSeek-written level still goes to grok-4.3. Gonka DeepSeek V4 Flash 18, Gonka GLM 5.3 Flash 14 (24 of 60 answered), Lyceum GLM 5.3 14 (25 of 60 answered), Crouton Alpha answered none: below today's verifier, not added."
       },
       "fact_repair": {
         "timeout_ms": 300000,
@@ -967,8 +969,9 @@
         "deny": [
           "nvidia:nvidia/nemotron-3.5-lightning-30b-a3b@*"
         ],
-        "basis": "eval: Lightning blind MC 0.833 with 8 false flags; Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)",
+        "basis": "eval: Lightning blind MC 0.833 with 8 false flags; Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured). scripts/fact-verifier-eval.js 4 Nov 2026 on 48 planted/true keys (24 planted wrong): Gonka GLM 5.3 Flash caught 24/24 and kept 24/24 true keys, 0.3 to 1.3 s median (Nemotron Ultra the same accuracy at 6.7 s median, 38 s p95; Coral Standard 23/24 and 20/24, not added); added, another family from the DeepSeek writers",
         "allow": [
+          "gonka:zai-org/GLM-5.3-Flash",
           "munito:deepseek-ai/deepseek-v4-flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
           "grokified:grok-4.3",

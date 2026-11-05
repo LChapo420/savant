@@ -172,6 +172,8 @@ async function main() {
     const e1 = await call('POST', '/api/act-check/start', { age13: true, ref: 'tt-test' });
     const resume = await call('POST', '/api/act-check/start', { ref: 'ignored' }, { token: e1.json.token });
     check('the same token resumes the same walk', resume.status === 200 && resume.json.token === e1.json.token && resume.json.state.phase === 'walk' && resume.json.state.grade_id === e1.json.state.grade_id);
+    const openAt = rules.gradesFor('act').indexOf(e1.json.state.grade_id);
+    check('the check opens mid-ladder, not on the lowest grade (the digit-6 place-value question)', openAt >= 5 && openAt <= 9, openAt);
     await new Promise((r) => setTimeout(r, 1500)); // the server writes its db on a 250 ms debounce
     check('the walk is a subject placement row kept under a guest id, not a user', (() => {
       const rows = JSON.parse(fs.readFileSync(tmp, 'utf8')).subject_placements.filter((p) => String(p.user_id).startsWith('guest:'));

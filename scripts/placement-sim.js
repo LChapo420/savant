@@ -109,7 +109,7 @@ function trueGrade(ability, span) {
 }
 
 /** One sitting. Returns {placed, asked}. `dontKnow` learners decline items above their ability. */
-function sit(bank, mode, ability, random, { dontKnow = false, clock = null, fast = false } = {}) {
+function sit(bank, mode, ability, random, { dontKnow = false, clock = null, fast = false, startHint = NaN } = {}) {
   const { span, sets } = bank;
   // clock = { seconds, pace }: a learner takes pace x an item's estimated seconds (+-20%); the walk ends once the clock has run out
   // and the mode's minimum has been answered (the same rule as services/subject-placement.js `late`), however many questions fit.
@@ -119,7 +119,7 @@ function sit(bank, mode, ability, random, { dontKnow = false, clock = null, fast
   const answered = [];
   const asked = [];
   let post = adaptive.posterior(span, answered);
-  let block = adaptive.nextBlock(blocks, asked, adaptive.firstTarget(span, NaN), { fast });
+  let block = adaptive.nextBlock(blocks, asked, adaptive.firstTarget(span, startHint), { fast });
   const ctxOf = () => ({ topLeft: adaptive.topLeft(span, blocks, asked), clocked: !!clock });
   while (block) {
     for (const i of block.idx) {
