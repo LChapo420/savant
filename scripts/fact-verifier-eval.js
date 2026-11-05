@@ -28,6 +28,13 @@ for (const n of ['CORAL', 'GONKA', 'GROKIFIED', 'LYCEUM', 'MUNITO']) {
   process.env[`${n}_PIPELINE`] = '1';
 }
 process.env.CROUTON_PIPELINE = '1';
+// 5 Nov 2026 (evals-all): Standard Compute, Anthropic, NVIDIA candidates, all through their ledgers with the live files
+process.env.STANDARD_COMPUTE_PIPELINE = '1';
+if (!process.env.STANDARD_COMPUTE_LEDGER_FILE) process.env.STANDARD_COMPUTE_LEDGER_FILE = `${LIVE_DIR}/standard-compute-ledger.json`;
+if (!process.env.ANTHROPIC_LEDGER_FILE) process.env.ANTHROPIC_LEDGER_FILE = `${LIVE_DIR}/anthropic-ledger.json`;
+process.env.AI_MODEL_FAST = 'claude-haiku-5-5';
+process.env.AI_MODEL_AUTHOR = 'claude-sonnet-5-5';
+process.env.NVIDIA_PIPELINE = '1';
 process.env.XKIRO_PIPELINE = '1';
 process.env.XKIRO_GRANTS = process.env.XKIRO_GRANTS || JSON.stringify({ 'minimax/minimax-m3.1-flash': 6000000 });
 if (!process.env.CROUTON_COUNTER_FILE) process.env.CROUTON_COUNTER_FILE = `${LIVE_DIR}/crouton-counter.json`;
@@ -53,6 +60,16 @@ const CANDS = {
   'coral-deepseek-v4.1-std': { prov: () => require('../services/providers/coral').coral, model: 'deepseek-v4.1-flash', family: 'deepseek' },
   'gonka-deepseek-v4-flash': { prov: () => require('../services/providers/gonka').gonka, model: 'deepseek-ai/DeepSeek-V4-Flash-0731', family: 'deepseek' },
   'lyceum-glm-5.3': { prov: () => require('../services/providers/lyceum').lyceum, model: 'z-ai/glm-5.3', family: 'glm' },
+  'lyceum-kimi-k3': { prov: () => require('../services/providers/lyceum').lyceum, model: 'moonshotai/kimi-k3', family: 'kimi' },
+  'lyceum-minimax-m3': { prov: () => require('../services/providers/lyceum').lyceum, model: 'minimax/minimax-m3', family: 'minimax' },
+  // xKiro's key no longer lists any MiniMax model (404 "does not exist" on 5 Nov), so the free catalogue is evaluated instead (mistral-large is the planter: not used as a judge)
+  'xkiro-qwen3.8-max-free': { prov: () => require('../services/providers/xkiro').xkiro, model: 'qwen/qwen3.8-max:free', family: 'qwen', extra: (m) => ({ models: [m] }) },
+  'xkiro-command-a-plus': { prov: () => require('../services/providers/xkiro').xkiro, model: 'cohere/command-a-plus', family: 'cohere', extra: (m) => ({ models: [m] }) },
+  'nvidia-deepseek-v4.1-flash': { prov: () => require('../services/providers/nvidia'), model: 'deepseek-ai/deepseek-v4.1-flash', family: 'deepseek', extra: (m) => ({ models: [{ model: m, effort: 'medium' }], role: 'fast' }) },
+  'nvidia-glm-5.3-flash': { prov: () => require('../services/providers/nvidia'), model: 'z-ai/glm-5.3-flash', family: 'glm', extra: (m) => ({ models: [{ model: m, effort: 'medium' }], role: 'fast' }) },
+  'standard-compute-deepseek-v4.1-flash': { prov: () => require('../services/providers/standard-compute').standardCompute, model: 'deepseek/deepseek-v4.1-flash-1017', family: 'deepseek' },
+  'anthropic-haiku-5.5': { prov: () => require('../services/providers/anthropic'), model: 'claude-haiku-5-5', family: 'claude', extra: () => ({ role: 'fast', effort: 'low' }) },
+  'anthropic-sonnet-5.5': { prov: () => require('../services/providers/anthropic'), model: 'claude-sonnet-5-5', family: 'claude', extra: () => ({ role: 'author', effort: 'low' }) },
   'crouton-alpha': { prov: () => require('../services/providers/crouton').crouton, model: 'stealth/crouton-alpha', family: 'crouton' },
 };
 
@@ -171,7 +188,7 @@ async function callOne(cand, args) {
   for (let a = 0; a < Number(process.env.EVAL_ATTEMPTS || 2); a++) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      const r = await cand.prov().structured({ ...args, model: cand.model, timeoutMs: Number(process.env.EVAL_TIMEOUT_MS || 240000) });
+      const r = await cand.prov().structured({ ...args, model: cand.model, ...(cand.extra ? cand.extra(cand.model) : {}), timeoutMs: Number(process.env.EVAL_TIMEOUT_MS || 240000) });
       if (r && r.data) return { data: r.data, ms: Date.now() - t, usage: r.usage };
     } catch (err) { lastErr = err; await sleep(1500); }
   }
@@ -235,7 +252,9 @@ function summarise(name, set, fact, keys) {
   const keyCaught = plantedKeys.filter((k) => { const r = kmap.get(k.id); return r && r.ok && r.pick !== k.planted_index; }).length;
   const keyKept = trueKeys.filter((k) => { const r = kmap.get(k.id); return r && r.ok && r.pick === k.true_index; }).length;
   const kms = pct(keys.filter((r) => r.ok).map((r) => r.ms));
+  const errs = [...fact, ...keys].filter((r) => !r.ok && r.error).map((r) => r.error);
   return {
+    errors: errs.length, errors_429: errs.filter((e) => /429|rate/i.test(e)).length, errors_5xx: errs.filter((e) => /5\d\d|overload|unavailable/i.test(e)).length, error_sample: errs[0] || null,
     name, planted: planted.length, caught: catchN, caught_blocks: catchBlocks, caught_checks: catchChecks, clean: clean.length, false_alarms: falseAlarms,
     answered: answered.length, of: fact.length, fact_p50_ms: ms(0.5), fact_p95_ms: ms(0.95),
     keys_planted: plantedKeys.length, keys_caught: keyCaught, keys_true: trueKeys.length, keys_kept: keyKept, keys_answered: keys.filter((r) => r.ok).length, key_p50_ms: kms(0.5), key_p95_ms: kms(0.95),
@@ -244,6 +263,10 @@ function summarise(name, set, fact, keys) {
 
 async function run() {
   const set = JSON.parse(fs.readFileSync(SET, 'utf8'));
+  // --facts N --keys M: a seeded, deterministic sub-sample (keeps the planted / clean mix) for the expensive candidates; recorded in the row
+  const sub = (arr, n, keep) => { if (!n || n >= arr.length) return arr; const a = shuffle(arr.filter(keep)); const b = shuffle(arr.filter((x) => !keep(x))); const want = Math.round(n * a.length / arr.length); return [...a.slice(0, want), ...b.slice(0, n - want)]; };
+  if (arg('facts')) set.fact = sub(set.fact, Number(arg('facts')), (c) => !!c.planted);
+  if (arg('keys')) set.keys = sub(set.keys, Number(arg('keys')), (k) => k.planted_index !== null);
   const only = arg('only') ? String(arg('only')).split(',') : [...Object.keys(CANDS), 'nemotron-ultra'];
   const out = { at: new Date().toISOString(), set: path.basename(SET), rows: [] };
   await Promise.all(only.map(async (name) => {
