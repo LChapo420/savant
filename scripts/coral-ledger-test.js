@@ -211,6 +211,33 @@ const cleanEnv = () => { mu._setFetch(null); for (const k of ['CORAL_API_KEY', '
     } finally { if (savedEnv === undefined) delete process.env.CORAL_LEARNER; else process.env.CORAL_LEARNER = savedEnv; delete process.env.CORAL_API_KEY; Object.assign(providers.ALL, saved); pool._reset(); }
   });
 
+  await check('pool: a waiting learner outranks speculative prewrites (reserve on fast slots), a waiting deadline never opens a breaker, and a waiting fact check never lands on a free model', () => {
+    pool._reset();
+    const providers = require('../services/providers');
+    const saved = { ...providers.ALL };
+    providers.ALL.nvidia = { name: 'nvidia', isEnabled: () => true, isConfigured: () => true, modelFor: () => 'm', costCents: () => 0, structured: async () => ({ data: {}, model: 'm' }), chat: async () => ({ text: 't', model: 'm' }) };
+    try {
+      const slot = pool.makeSlot({ id: 'coral:fast-test', provider: 'coral', priceIn: 1, priceOut: 2, maxConcurrent: 4, fast: true, call: async () => ({}) });
+      slot.inFlight = 1;
+      assert.ok(slot.hasPermit(false, true), 'one running: a speculative call may start');
+      slot.inFlight = 2;
+      assert.ok(!slot.hasPermit(false, true), 'two of four running: the last two permits are for waiting learners');
+      assert.ok(slot.hasPermit(false, false), 'a waiting call still takes a permit');
+      assert.strictEqual(pool.classify({ deadline: true, status: 0 }), 'deadline');
+      for (let i = 0; i < 8; i++) slot.noteFail('deadline', { deadline: true });
+      assert.ok(!slot.breakerOpen(), 'deadline misses never open the breaker');
+      const lane = pool.runForeground(() => pool.laneStore(), { fast: true, speculative: true });
+      assert.strictEqual(lane.speculative, true);
+      pool.promote(lane);
+      assert.strictEqual(lane.speculative, false, 'a learner who now waits promotes a speculative write');
+      process.env.CORAL_API_KEY = 'test-key-not-real'; process.env.CORAL_BASE_URL = 'https://api.coral.test/v1';
+      const ids = pool.runForeground(() => pool.candidatesFor({ role: 'blocks', task: 'fact_verify', kind: 'structured', userId: 'u1', coral: true, munito: true }, { chain: [providers.ALL.nvidia] }).map((x) => x.id), { fast: true });
+      assert.ok(ids.every((i) => !i.startsWith('nvidia:')), `no free model for a waiting fact check: ${ids}`);
+      const g = ids.indexOf('grokified:grok-4.3'); const m = ids.indexOf('lyceum:minimax/minimax-m3');
+      assert.ok(g < 0 || m < 0 || g < m, `MiniMax M3 sits behind grok-4.3: ${ids}`);
+    } finally { delete process.env.CORAL_API_KEY; Object.assign(providers.ALL, saved); pool._reset(); }
+  });
+
   await check('pool: pipeline requests prefer Coral Standard over Munito V4.1 and Standard Compute; Fast only on the waiting-learner tasks and never in background', () => {
     pool._reset();
     const providers = require('../services/providers');

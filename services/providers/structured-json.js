@@ -185,6 +185,13 @@ function validate(schema, value, at = '$') {
     if ((t === 'array' || t === 'object') && typeof v === 'string') {
       const parsed = parseLoose(v);
       if (parsed.value !== undefined && typeOf(parsed.value) === t) v = parsed.value;
+      else {
+        // A string with the object wrapped in prose or a label ("Block 2: {...}") or fenced: the outermost braces / brackets are the value
+        // (Coral Fast's fill-out returned blocks like this, 5 Nov: the whole write then fell onto slow slots).
+        const open = t === 'object' ? '{' : '['; const close = t === 'object' ? '}' : ']';
+        const i = v.indexOf(open); const j = v.lastIndexOf(close);
+        if (i >= 0 && j > i) { const inner = parseLoose(v.slice(i, j + 1)); if (inner.value !== undefined && typeOf(inner.value) === t) v = inner.value; }
+      }
     }
     if (t === 'array' && v !== null && typeof v === 'object' && !Array.isArray(v)) {
       // An array of one sent as the bare item.

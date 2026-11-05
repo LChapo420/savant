@@ -126,7 +126,7 @@ const coralProvider = {
       return { data: checked.value, usage: { ...usage, cost_usd: ledger.costOf(model, usage) }, model, tier: 'coral' };
     }
     if (payload.choices && payload.choices[0] && payload.choices[0].finish_reason === 'length') throw sj.truncatedError(`coral: ${model} was cut off by the output cap (${schemaName})`, { usage });
-    throw Object.assign(new Error(`coral: ${model} gave an unusable ${schemaName}`), { status: 422, unusable: true, usage });
+    throw Object.assign(new Error(`coral: ${model} gave an unusable ${schemaName}${checked && checked.errors.length ? ` (${checked.errors.slice(0, 2).join('; ').slice(0, 160)})` : parsed.data === undefined ? ' (no JSON found)' : ''}`), { status: 422, unusable: true, usage });
   },
 
   /** One chat call (pipeline only). `model` names a Coral model (default CORAL_MODEL). */

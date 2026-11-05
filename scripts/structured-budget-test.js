@@ -95,6 +95,11 @@ function check(name, ok, detail) {
   check('nvidia: the repair turn of a cut-off answer gets a larger budget, not just a request to be brief', /finish === 'length'\) budget = Math\.min\(sj\.OUTPUT_CAP/.test(fs.readFileSync(path.join(root, 'nvidia.js'), 'utf8')));
   check('the proof harness\'s writer uses the same two guards', /withLengthRetry/.test(fs.readFileSync(path.join(__dirname, 'scorecard-modification-proof.js'), 'utf8')) && /outputBudget/.test(fs.readFileSync(path.join(__dirname, 'scorecard-modification-proof.js'), 'utf8')));
 
+  check('an object sent as a string with a label or fence around it is read (Coral Fast fill-out, 5 Nov); plain prose still fails', (() => {
+    const r = sj.validate({ type: 'object', properties: { blocks: { type: 'array', items: { type: 'object' } } } }, { blocks: ['Block 2: {"a":1}', '```json\n{"b":2}\n```', 'nonsense'] });
+    return r.value.blocks[0].a === 1 && r.value.blocks[1].b === 2 && r.errors.length === 1;
+  })());
+
   if (failures) { console.log(`\n${failures} check(s) failed`); process.exit(1); }
   console.log('\nstructured-budget-test: all checks passed');
 })().catch((e) => { console.error(e); process.exit(1); });

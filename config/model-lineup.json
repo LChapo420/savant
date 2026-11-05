@@ -706,6 +706,20 @@
         "data_class": "pipeline",
         "fast": true,
         "price_note": "Coral promotional price, advertised ~322 tokens/s. Only for tasks a learner waits on; never background work."
+      },
+      {
+        "id": "lyceum:minimax/minimax-m3",
+        "provider": "lyceum",
+        "model": "minimax/minimax-m3",
+        "label": "Lyceum MiniMax M3 (paid, fast fact verifier behind grok-4.3)",
+        "family": "minimax",
+        "concurrency": 3,
+        "rpm": 60,
+        "hint_ms": 3000,
+        "price_in": 0.4,
+        "price_out": 2,
+        "data_class": "pipeline",
+        "price_note": "Lyceum list price 0.4/2 per Mtok (services/lyceum-ledger.js), about $0.002 a call. Measured 5 Nov (docs/LYCEUM-EVALUATION.md): planted caught 17/36, false alarms 9/24, 60/60 answered, p50 2.3 s, p95 145 s. Only fact_verify, behind grok-4.3, for a waiting learner whose first-lesson fact read cannot wait on a grok-4.3 outage."
       }
     ],
     "tasks": {
@@ -855,9 +869,10 @@
         "timeout_ms": 300000,
         "allow": [
           "coral:deepseek-v4.1-flash",
-          "grokified:grok-4.3"
+          "grokified:grok-4.3",
+          "lyceum:minimax/minimax-m3"
         ],
-        "basis": "scripts/fact-verifier-eval.js, 4 Nov 2026, 36 planted errors in real lesson blocks and checks + 24 clean (docs/fact-verifier-eval.json, AI-planted, not real-learner proof): grok-4.3 caught 22 (5 false alarms, p50 24 s a block); Coral DeepSeek V4.1 Standard caught 22 (11 false alarms, p50 1.2 s). Coral is DeepSeek, so the call excludes the writer's family (services/block-levels.js writerFamilies) and a DeepSeek-written level still goes to grok-4.3. Gonka DeepSeek V4 Flash 18, Gonka GLM 5.3 Flash 14 (24 of 60 answered), Lyceum GLM 5.3 14 (25 of 60 answered), Crouton Alpha answered none: below today's verifier, not added."
+        "basis": "scripts/fact-verifier-eval.js, 4 Nov 2026, 36 planted errors in real lesson blocks and checks + 24 clean (docs/fact-verifier-eval.json, AI-planted, not real-learner proof): grok-4.3 caught 22 (5 false alarms, p50 24 s a block); Coral DeepSeek V4.1 Standard caught 22 (11 false alarms, p50 1.2 s). Coral is DeepSeek, so the call excludes the writer's family (services/block-levels.js writerFamilies) and a DeepSeek-written level still goes to grok-4.3. Gonka DeepSeek V4 Flash 18, Gonka GLM 5.3 Flash 14 (24 of 60 answered), Lyceum GLM 5.3 14 (25 of 60 answered), Crouton Alpha answered none: below today's verifier, not added. Lyceum MiniMax M3 added behind grok-4.3 (5 Nov): 17/36 caught, 9/24 false alarms, p50 2.3 s, p95 145 s; the waiting lane's 45 s deadline moves on past a slow answer, and the waiting lane never uses free models for this task."
       },
       "fact_repair": {
         "timeout_ms": 300000,

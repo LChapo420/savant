@@ -85,3 +85,47 @@ write-ahead of levels 2 and 3 for a learner still placing. Not done here.
 400 simulated learners (random abilities, "don't know" learners, extremes at both ends): placed within 1 grade 98.8% (opening at the lowest grade:
 98.5%), mean 24.2 questions (24.5), worst 10% / 5% of individual errors 1 grade, worst 1% 2 grades; learners who miss the opening question 99%
 within 1 grade. A second seed (777, 800 learners) gave 99.3% against 98.6%. Simulated, items taken at their calibrated positions: not a real-learner result.
+
+## 5. Rounds 2 and 3 (5 Nov 2026): priority, deadlines, MiniMax M3 behind grok-4.3
+
+Built (all in `services/pool.js`, `services/write-ahead.js`, config `fact_verify`):
+- A prewrite is SPECULATIVE (`runForeground(fn, { fast: true, speculative: true })`). A speculative call never takes the last 2 permits of a fast slot
+  (`POOL_SPECULATIVE_RESERVE`) and never starts on a paid slot while a waiting learner's call is pending anywhere (queued calls included). A learner who
+  then waits on the same write promotes it (`promote()` clears the mark). A waiting call is fast lane, not speculative, with a cleared learner.
+- A waiting call has a per-attempt deadline (`POOL_WAITING_DEADLINE_MS`, 45 s) and 3 attempts' worth in all; past it, the next slot takes the call. A deadline
+  miss is `kind: 'deadline'`: counted in the slot's stats, never opens its breaker (a slow answer for one learner is not a broken slot).
+- A waiting learner's `fact_verify` never lands on a free model: Coral Standard (a writer of another family only), grok-4.3, then Lyceum MiniMax M3
+  (`lyceum:minimax/minimax-m3`, added to `fact_verify.allow`, behind grok-4.3 by price). If none answers in time the level is not served as checked, the
+  standard session opens (public/js/block-level.js, 8 s) and the write finishes in the background lane (no deadline, free models allowed).
+- Levels 2 and 3 of an enrollment are held until its first-level write is done (`WRITE_AHEAD_HOLD_BEHIND_FIRST=off` restores the old parallel write).
+- `POOL_FIRST_WRITER=<slot id>` is an experiment switch only (a writer first for layout and fill). Not used in the runs below; the GLM Flash on Gonka cold
+  path was NOT tested (Gonka GLM 5.3 Flash read facts at p50 136 s on 5 Nov, far over any 45 s deadline).
+- Coral Fast "invalid" fill (cause found in the log): a fill block returned as a string that is not plain JSON (`$.blocks[1]: expected object, got string`),
+  so the whole answer was refused and the call fell onto slow slots. `structured-json.js` now reads an object or array wrapped in a label or fence; the
+  error text is now in the pool's warning. The fix is unit-tested; whether it removes the invalids in live fills is not measured.
+
+Catch rate of the verifier path on `docs/fact-verifier-set.json` (36 planted, 24 clean; AI-planted, small set; figures from the 5 Nov evaluation,
+`docs/fact-verifier-eval.json`, `docs/evals-5nov-grok.json`, `docs/evals-5nov-lyceum-minimax.json`, not re-run here because the path is a fallback chain,
+not a union, so its catch rate is that of whichever verifier answers):
+| path | planted caught /36 | false alarms /24 | p50 (p95) |
+|---|---|---|---|
+| grok-4.3 alone (grok up) | 22 | 5 | 24 s (38) |
+| grok-4.3 then MiniMax M3 (grok up) | 22 | 5 | same |
+| grok-4.3 down, MiniMax M3 answers | 17 | 9 | 2.3 s (145; a 145 s answer is cut at 45 s and the next slot or the standard session takes over) |
+When grok-4.3 is down, catches fall from 22 to about 17 of 36, and false alarms rise from 21% to 38% of clean blocks; each false alarm is a repair round
+(a grok-4.3 repair is 23 to 33 s, and the level is read again). Whether 17/36 is acceptable as the gate during an outage is the owner's call; this
+branch does not decide it, and the gate is not weakened: with no verifier in time the level is not served as checked.
+
+Timing (real models, DB copy, math Algebra 1 Part A, THINK_MS=7500 per question, gates on, PC at about 10% CPU, i.e. quiet):
+| run | learners | Grokified | seconds from end of placement to open lesson | median | worst | personal within 8 s |
+|---|---|---|---|---|---|---|
+| 1 | 1 strong (78 s placement) | down (1 answer in the run) | 199 | 199 | 199 | 0 of 1 |
+| 3 at once | strong, weak, mid (71 to 250 s) | down (0 answers), MiniMax M3 verified 6 | 288, 124, 47 | 124 | 288 | 0 of 3 |
+| 10 at once | strong/weak/mid/random | up (16 answers; MiniMax M3 9) | 82, 115, 46, 56, 99, 31, 31, 542, 79, 113 | 80 | 542 | 0 of 10 |
+Every first poll was 202 and no lesson opened in under 31 s, so none of the 14 first lessons would have been personal inside the 8 s fallback: all 14
+would have opened the standard session. The gate (median under 15 s, worst under 60 s at 3 at once) is NOT met. Round 2 (same code before MiniMax M3, load
+from other agents, network outage in one run): 1 learner 359 s, 3 at once timeout / 115 s / timeout, so this round is better (no timeouts at 1 and 3, one
+at 10) but 5 to 10 times over the target. What limits it: a cold level is layout 10 s, fill 17 s (more on a retry), fact read 9 to 33 s, repair 23 to 33 s,
+re-read, blind check, plus the Sonnet check: about 2 minutes written alone, and a prewrite started at answer 10 of a 75 s placement cannot finish before it
+ends. Why learners placed late (230 s) still waited 31 to 115 s, and why one learner (random profile, level 10) took 542 s, was not diagnosed (I did not
+trace those writes: a missed prewrite guess or a slow fill retry are the likely causes). Simulated learners, AI-judged: not real-learner proof.

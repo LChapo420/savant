@@ -653,7 +653,10 @@ function candidatesFor(req, opts = {}) {
     const fastPaid = paid.filter((s) => s.fast);
     // POOL_FIRST_WRITER=<slot id>: an experiment switch (scripts/first-lesson-writer-ab.js): that slot writes the level first, Coral Fast next.
     const want = process.env.POOL_FIRST_WRITER && (req.task === 'block_layout' || req.task === 'block_fill') ? paid.filter((s) => s.id === process.env.POOL_FIRST_WRITER) : [];
-    if (fastPaid.length || paid.length) return [...first, ...want, ...fastPaid.filter((s) => !want.includes(s)), ...paid.filter((s) => !s.fast && !want.includes(s)), ...free];
+    // A waiting learner's fact check never lands on a free model (a busy free NVIDIA took minutes while grok-4.3 was down, 5 Nov): if no paid
+    // verifier answers in time the level is not served as checked, the standard session opens and the write finishes in the background.
+    const tail = req.task === 'fact_verify' && paid.length ? [] : free;
+    if (fastPaid.length || paid.length) return [...first, ...want, ...fastPaid.filter((s) => !want.includes(s)), ...paid.filter((s) => !s.fast && !want.includes(s)), ...tail];
   }
   return [...first, ...free, ...paid];
 }
