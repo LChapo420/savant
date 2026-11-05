@@ -11,7 +11,7 @@
       if (!o || !o.offer) { host.innerHTML = ''; return; }
       host.innerHTML = `<section class="card rc-offer" aria-labelledby="dc-offer-h">
         <h2 id="dc-offer-h">Daily check</h2>
-        <p class="small">About ${o.minutes} minute${o.minutes === 1 ? '' : 's'} of quick tasks and taps that help Savant fit your lessons to you. Stop or skip any time.</p>
+        <p class="small"><strong>Recommended.</strong> About ${o.minutes} minute${o.minutes === 1 ? "" : "s"} of quick tasks and taps that help Savant fit your lessons to you. It is optional: stop or skip any time.</p>
         <div class="row-wrap"><a class="btn btn-sm btn-primary" href="/daily-check?next=${encodeURIComponent(next)}">Start</a>
         <button class="btn btn-sm btn-ghost" type="button" data-dc-skip>Not today</button></div></section>`;
       const b = host.querySelector('[data-dc-skip]');
