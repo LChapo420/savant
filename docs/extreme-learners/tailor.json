@@ -1,0 +1,2485 @@
+{
+ "label": "AI-judged (GLM-5.3, blind) on SIMULATED learners; not real-learner proof",
+ "writer": "coral",
+ "judge": "z-ai/glm-5.3",
+ "seed": 515151,
+ "n": 48,
+ "plant_every": 6,
+ "generated_at": "2026-11-05T02:10:25.080Z",
+ "usage": {
+  "writerCalls": 187,
+  "writerIn": 1092865,
+  "writerOut": 262147,
+  "judgeCalls": {
+   "z-ai/glm-5.3": 33
+  },
+  "judgeTokens": {
+   "z-ai/glm-5.3": 701164
+  },
+  "errors": {}
+ },
+ "recs": [
+  {
+   "learner": "x515151-0",
+   "kind": "tail_hi",
+   "mix": null,
+   "age": 27,
+   "ell": false,
+   "subject": "math",
+   "hobbies": [
+    "tea ceremony",
+    "rock climbing",
+    "speedrunning old video games"
+   ],
+   "dislikes": [
+    "leaderboards"
+   ],
+   "difficulties": [],
+   "level": "multiplication_and_division L10",
+   "mirror": {
+    "id": "x515151-0~mirror",
+    "age": 51,
+    "hobbies": [
+     "knife sharpening"
+    ],
+    "dislikes": [
+     "jokes in lessons"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 2,
+   "target_fit_other": 4,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 10,
+   "errors": [],
+   "same_objective": true,
+   "objective_note": "Both versions teach the stated objective: interpreting 5 x 7 as 5 equal groups of 7 and writing multiplication sentences for equal groups. Both also cover factor-swapping (same total, different picture) and recognizing when groups are unequal, which stays within the topic. Version 1 is rule-first with worked steps; Version 2 is cases-first with discovery warm-ups, but the objective is identical."
+  },
+  {
+   "learner": "x515151-1",
+   "kind": "tail_lo",
+   "mix": null,
+   "age": 26,
+   "ell": false,
+   "subject": "english",
+   "hobbies": [
+    "lockpicking sport",
+    "model railways",
+    "tabletop roleplaying audio dramas"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "advanced_intermediate L30",
+   "mirror": {
+    "id": "x515151-1~mirror",
+    "age": 52,
+    "hobbies": [
+     "amateur radio",
+     "falconry"
+    ],
+    "dislikes": [
+     "stories that waste time"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 7,
+   "errors": [
+    "2 (Block 5): claims 'The opening of the last sentence changes,' but the varied draft's final sentence 'The operator was tired.' is identical to the flat draft's, so the stated change did not happen",
+    "2 (Block 6): the tip 'Cover the first word. If the clause cannot stand alone, it is dependent' is backwards — covering 'Because' in 'Because the falcon flew high' leaves a clause that CAN stand alone, which is exactly what marks it dependent",
+    "2 (Block 1): 'A short sentence slows the reader down' distorts the standard rhythm rule (short clauses quicken pace and add emphasis by standing out), and sits oddly with the level's own 'long for flow' framing"
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the same objective: clause types (independent/dependent; simple/compound/complex) and clause length used to control rhythm and emphasis, plus fragment/comma-splice repair; v1 leans on rhythm control (throttle/brake), v2 on coordination vs subordination, but neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-2",
+   "kind": "contradict",
+   "mix": "brilliant, hates effort",
+   "age": 58,
+   "ell": false,
+   "subject": "reading",
+   "hobbies": [
+    "ultimate frisbee"
+   ],
+   "dislikes": [
+    "long reading passages",
+    "sports examples",
+    "leaderboards"
+   ],
+   "difficulties": [],
+   "level": "proficient_reader L30",
+   "mirror": {
+    "id": "x515151-2~mirror",
+    "age": 20,
+    "hobbies": [
+     "making rap beats"
+    ],
+    "dislikes": [
+     "rewrites of the same idea three times",
+     "violence in examples",
+     "jokes in lessons"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 2,
+    "forced": [
+     "The more you slow your throw, the faster it arrives"
+    ],
+    "dislike_hit": true
+   },
+   "interest_uses_own": true,
+   "accuracy": 9,
+   "errors": [
+    "Version 1: the paradox illustration 'The more you slow your throw, the faster it arrives' is offered as a contradiction that holds a real truth, but slowing a throw does not make a disc arrive sooner, so the example is strained and weakly models paradox.",
+    "Version 2: Block 2 states 'Nothing in this lesson is scored' (echoing Block 1) while the level header lists 4 graded checks (c1-c4); the reassurance contradicts the level's own structure, even if 'lesson' is meant to exclude the checks."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach metaphor, irony, paradox and symbol and their interplay. Version 1 keeps all four interlocking in one passage throughout; Version 2 builds the devices one at a time and synthesizes the interplay in Block 7 and check c4. Neither drifts from the objective."
+  },
+  {
+   "learner": "x515151-3",
+   "kind": "random",
+   "mix": null,
+   "age": 21,
+   "ell": false,
+   "subject": "spanish",
+   "hobbies": [
+    "urban foraging"
+   ],
+   "dislikes": [
+    "stories that waste time",
+    "being rushed",
+    "open-ended essays"
+   ],
+   "difficulties": [
+    "test panic"
+   ],
+   "level": "spanish_grade_04_time_food_shopping_and_core_verbs L8",
+   "mirror": {
+    "id": "x515151-3~mirror",
+    "age": 57,
+    "hobbies": [
+     "fermenting hot sauce",
+     "competitive baking shows",
+     "beatboxing"
+    ],
+    "dislikes": [
+     "leaderboards"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 2,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 5,
+   "errors": [
+    "Version 1, CHECK c2: it calls the market 'a feminine place' and the explanation endorses 'Ella va a la mercado'; mercado is masculine, so the correct sentence is 'Ella va al mercado' — the graded check itself is factually wrong and would teach/grade incorrect Spanish.",
+    "Version 2, Block 7: 'The word for office is masculine: el trabajo' — trabajo means work/job; 'office' is la oficina, so this gloss is a distorted vocabulary statement."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: conjugating present-tense ir (voy, vas, va) and using it with adónde plus the a + el = al / a la destination rule; neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-4",
+   "kind": "tail_both",
+   "mix": null,
+   "age": 20,
+   "ell": false,
+   "subject": "iq",
+   "hobbies": [],
+   "dislikes": [
+    "violence in examples",
+    "timed quizzes"
+   ],
+   "difficulties": [],
+   "level": "abstract_reasoning L20",
+   "mirror": {
+    "id": "x515151-4~mirror",
+    "age": 58,
+    "hobbies": [
+     "learning to juggle",
+     "speedrunning old video games"
+    ],
+    "dislikes": [
+     "food examples",
+     "audio-only explanations"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 8,
+   "errors": [
+    "2: 'Maya lays out three juggling balls in a row. The first points up...' — balls cannot point in a direction, and the example then switches to 'the arrow', conflating two different elements; the juggling and speedrunner references are labels that do not aid the explanation."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: state a complete pattern rule in words (element, amount, direction) before testing answer options. Version 1's third check (c3) drifts to a study-habits review question instead of the rule-naming skill, a minor assessment drift, but the core teaching objective is identical in both."
+  },
+  {
+   "learner": "x515151-5",
+   "kind": "contradict",
+   "mix": "needs praise but shuts down when corrected",
+   "age": 35,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "competitive beekeeping",
+    "puppetry"
+   ],
+   "dislikes": [
+    "word problems about money"
+   ],
+   "difficulties": [
+    "forgets formulas overnight"
+   ],
+   "level": "act_grade_10 L30",
+   "mirror": {
+    "id": "x515151-5~mirror",
+    "age": 43,
+    "hobbies": [
+     "quilting",
+     "falconry"
+    ],
+    "dislikes": [
+     "audio-only explanations"
+    ]
+   },
+   "planted": true,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 2,
+   "target_fit_other": 5,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 8,
+   "errors": [
+    "1: Block 2's test ('can both claims be true together? If yes, it is emphasis, not disagreement') is incomplete as stated: identical claims (agreement) also pass the test, so the rule would mislabel agreement as emphasis.",
+    "1: Check c1's explanation says the distractors 'restate Passage 1 or add points neither author makes,' but the budget-overrun choice is a point both authors make per Blocks 2 and 4 — internal inconsistency.",
+    "1: The traffic claims used in Block 2's example, Block 4's sort, and Check c2 ('Passage 1 says the park will worsen downtown traffic') are never grounded in any passage text the lesson actually provides.",
+    "2: Block 1's 'roughly one in three' hook statistic is attributed to published question sets but is unverifiable, and the sentence is garbled ('turns not on'); no clearly false statement found."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the stated objective: summarize each passage's viewpoint separately, then classify where authors agree, disagree, or place different emphasis. Version 1 stresses the classification scheme and 'both authors' stems; Version 2 stresses the separate-first summary procedure; neither drifts to a different objective."
+  },
+  {
+   "learner": "x515151-6",
+   "kind": "random",
+   "mix": null,
+   "age": 9,
+   "ell": true,
+   "subject": "math",
+   "hobbies": [
+    "coin collecting",
+    "ultimate frisbee"
+   ],
+   "dislikes": [
+    "violence in examples",
+    "sports examples"
+   ],
+   "difficulties": [
+    "lost confidence after failing a class"
+   ],
+   "level": "multiplication_and_division L10",
+   "mirror": {
+    "id": "x515151-6~mirror",
+    "age": 69,
+    "hobbies": [
+     "lockpicking sport",
+     "sourdough baking"
+    ],
+    "dislikes": [
+     "leaderboards"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 9,
+   "errors": [
+    "2: Block 1 lists four choices (5, 6, 9, 8 pins) but five feedback strings; the 'Yes: 3 + 3 = 6' feedback lines up with '9 pins' rather than the correct '6 pins', risking false confirmation of a wrong choice.",
+    "1: Block 7 stores the answer as 'twenty four' while the prompt says 'Type a number' (grading-format mismatch, not a math error)."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions interpret a product like 5 x 7 as equal groups (first factor = group count, second = group size) and practice writing multiplication sentences for equal groups; Version 2 opens with a short addition warm-up (2 groups of 3 -> 2 x 3) but stays on the same objective."
+  },
+  {
+   "learner": "x515151-7",
+   "kind": "age_young",
+   "mix": null,
+   "age": 10,
+   "ell": false,
+   "subject": "english",
+   "hobbies": [
+    "lockpicking sport",
+    "competitive chess",
+    "Dungeons and Dragons"
+   ],
+   "dislikes": [
+    "formal academic tone",
+    "audio-only explanations"
+   ],
+   "difficulties": [],
+   "level": "proficient L40",
+   "mirror": {
+    "id": "x515151-7~mirror",
+    "age": 68,
+    "hobbies": [
+     "roller derby",
+     "model railways"
+    ],
+    "dislikes": [
+     "long reading passages",
+     "stories that waste time",
+     "cute mascots"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 8,
+   "errors": [
+    "1: 'A sentence has one of each' (voice and mood) is an oversimplification — a multi-clause sentence can contain more than one voice or mood, which is exactly what a shift is; it sits awkwardly beside the lesson's own mixed-voice examples.",
+    "2: 'A shift is fine when a new subject or a real command needs it' — a change of subject alone does not license a voice shift (e.g., 'Ana moved the rook. Priya set the pins.' changes subject with no shift needed); deliberate shifts are justified by a real change of focus or purpose, not by a new subject."
+   ],
+   "same_objective": true,
+   "objective_note": "Both target recognizing/fixing unplanned voice and mood shifts. Version 1 practices both voice and mood shifts; Version 2 stays on-topic but practices almost only voice shifts — mood is defined and named once (c3) and never actually fixed, and its own model sentence 'Roll the dice, then the trap springs' contains an unaddressed mood shift."
+  },
+  {
+   "learner": "x515151-8",
+   "kind": "age_old",
+   "mix": null,
+   "age": 62,
+   "ell": false,
+   "subject": "reading",
+   "hobbies": [],
+   "dislikes": [],
+   "difficulties": [
+    "lost confidence after failing a class",
+    "long gap since last studied"
+   ],
+   "level": "proficient_reader L30",
+   "mirror": {
+    "id": "x515151-8~mirror",
+    "age": 16,
+    "hobbies": [
+     "falconry"
+    ],
+    "dislikes": [
+     "rewrites of the same idea three times",
+     "formal academic tone",
+     "long reading passages"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 8,
+   "errors": [
+    "2: Check c4's explanation says 'The repeated hood supplies the evidence' for a claim about Marta's hawk, but the Marta passage (Block 5) contains no hood — the cited evidence does not exist in the referenced text.",
+    "2 (minor): Block 5 labels 'by dusk she called it the calmest bird' as clear verbal irony, but 'by dusk' permits the reading that the bird genuinely calmed, making the intended gap ambiguous.",
+    "1 (minor): Block 5's explanation asserts 'A key that opens nothing,' an inference the passage does not state (it only says a rusted key hangs above the empty shop)."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach metaphor, irony, paradox, and symbol with the focus on reading them together; Version 2 adds a device-evidence-claim analysis chain, which extends but does not replace the shared objective."
+  },
+  {
+   "learner": "x515151-9",
+   "kind": "ell",
+   "mix": null,
+   "age": 36,
+   "ell": true,
+   "subject": "spanish",
+   "hobbies": [],
+   "dislikes": [],
+   "difficulties": [
+    "dyslexia-like slow reading"
+   ],
+   "level": "spanish_grade_05_home_places_and_directions L6",
+   "mirror": {
+    "id": "x515151-9~mirror",
+    "age": 42,
+    "hobbies": [
+     "Dungeons and Dragons",
+     "model railways"
+    ],
+    "dislikes": [
+     "long reading passages",
+     "being rushed"
+    ]
+   },
+   "result": "build failed: no level written for x515151-9"
+  },
+  {
+   "learner": "x515151-10",
+   "kind": "tail_hi",
+   "mix": null,
+   "age": 35,
+   "ell": false,
+   "subject": "iq",
+   "hobbies": [
+    "roller derby",
+    "Formula 1 strategy",
+    "competitive beekeeping"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "abstract_reasoning L20",
+   "mirror": {
+    "id": "x515151-10~mirror",
+    "age": 43,
+    "hobbies": [
+     "drone racing",
+     "quilting"
+    ],
+    "dislikes": [
+     "multiple choice trick questions",
+     "rewrites of the same idea three times"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 3,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 8,
+   "errors": [
+    "2, Block 5: the stem 'Which option fits row 1 only?' contradicts its own explanation, which answers a different question ('the next row after row 2', i.e. down); read literally, 'Points up' is the unique answer to the stem as written, yet it is treated as the trap."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: stating a precise pattern rule in words (Version 1: subject + direction; Version 2: what changes, how much, which direction) before looking at answer options, then testing it on every row. Neither drifts from the topic."
+  },
+  {
+   "learner": "x515151-11",
+   "kind": "tail_lo",
+   "mix": null,
+   "age": 35,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "competitive chess",
+    "fantasy football",
+    "competitive eating videos"
+   ],
+   "dislikes": [
+    "food examples",
+    "being rushed"
+   ],
+   "difficulties": [
+    "working memory overload on multi-step problems",
+    "forgets formulas overnight"
+   ],
+   "level": "act_grade_4 L10",
+   "mirror": {
+    "id": "x515151-11~mirror",
+    "age": 43,
+    "hobbies": [
+     "drone racing",
+     "quilting"
+    ],
+    "dislikes": [
+     "audio-only explanations",
+     "being praised for easy things",
+     "cute mascots"
+    ]
+   },
+   "planted": true,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 2,
+   "target_fit_other": 4,
+   "interest": {
+    "uses": "Q",
+    "natural": 2,
+    "forced": [
+     "A race team charges a flat setup fee plus a per-lap rate. The two sides of this equation describe the same total cost two ways.",
+     "three bundles of x minus 4 yards each equal one bundle of x plus 6 yards"
+    ],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 8,
+   "errors": [
+    "1: Block 5 'Correct' feedback is garbled and self-contradictory: 'so 4x = 16 and x = 4? No: 6x - 2x = 4x and 10 + 6 = 16, so x = 4. Recheck your value against the original equation.'",
+    "2: Block 6 chess-clock analogy claims 'Two clocks count down together,' but chess clocks alternate (only one runs at a time); the linkage point itself is sound."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach distributing, collecting like terms, and inverse operations for multi-step linear equations anchored on 2(x+3)=4x-5, with substitution checks; V2's general form ax+b=cx+d formalizes the same objective rather than drifting to a new one."
+  },
+  {
+   "learner": "x515151-12",
+   "kind": "contradict",
+   "mix": "anxious and competitive",
+   "age": 66,
+   "ell": true,
+   "subject": "math",
+   "hobbies": [
+    "cave exploring",
+    "cattle showing"
+   ],
+   "dislikes": [
+    "group work framing",
+    "abstract symbols without a picture",
+    "cute mascots"
+   ],
+   "difficulties": [
+    "dyscalculia-like trouble with number sense",
+    "English is the second language"
+   ],
+   "level": "multiplication_and_division L10",
+   "mirror": {
+    "id": "x515151-12~mirror",
+    "age": 12,
+    "hobbies": [
+     "rally car watching",
+     "parkour",
+     "writing fan fiction"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 1,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 5,
+   "errors": [
+    "Version 2, Block 4: 'Move 1 animal from a full pen to the short pen. Now each pen has 3 cattle' is false — pens go 4,4,2 to 3,4,3; 10 animals cannot form three equal pens (3 x 3 = 9), so 'The sentence is 3 x 3' is also wrong.",
+    "Version 2, Check c3: the keyed answer 'Move 1 light so each bag holds 3' is false — moving one light from a full bag to the short bag gives 3,4,3, not 3,3,3; with 4,4,2 (10 lights) no listed choice can equalize the groups, so the graded check has no correct option.",
+    "Version 1, Block 7 (minor): 'a sentence matches exactly one picture' overstates — 4 x 6 matches several distinct pictures used in the lesson (parkour jumpers, cars); it matches one group-structure, not literally one picture."
+   ],
+   "same_objective": true,
+   "objective_note": "Both interpret a x b as a equal groups of b, require equal groups before writing a multiplication sentence, and practice writing sentences from equal-group situations; V1 adds factor-order rigor and the unequal-group trap, V2 adds a repeated-addition bridge and an equalizing activity — both stay on the stated objective."
+  },
+  {
+   "learner": "x515151-13",
+   "kind": "random",
+   "mix": null,
+   "age": 41,
+   "ell": false,
+   "subject": "english",
+   "hobbies": [
+    "lockpicking sport",
+    "rally car watching",
+    "volunteering at a food bank"
+   ],
+   "dislikes": [
+    "jokes in lessons",
+    "being praised for easy things",
+    "being told the answer right away"
+   ],
+   "difficulties": [
+    "working memory overload on multi-step problems",
+    "math anxiety since middle school"
+   ],
+   "level": "basics L8",
+   "mirror": {
+    "id": "x515151-13~mirror",
+    "age": 37,
+    "hobbies": [
+     "sea kayaking",
+     "soap carving"
+    ],
+    "dislikes": []
+   },
+   "result": "build failed: no level written for x515151-13"
+  },
+  {
+   "learner": "x515151-14",
+   "kind": "tail_both",
+   "mix": null,
+   "age": 57,
+   "ell": false,
+   "subject": "reading",
+   "hobbies": [],
+   "dislikes": [
+    "being praised for easy things",
+    "open-ended essays",
+    "jokes in lessons"
+   ],
+   "difficulties": [
+    "dyslexia-like slow reading"
+   ],
+   "level": "intermediate_reader L20",
+   "mirror": {
+    "id": "x515151-14~mirror",
+    "age": 21,
+    "hobbies": [
+     "minecraft redstone"
+    ],
+    "dislikes": [
+     "abstract symbols without a picture"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 7,
+   "errors": [
+    "1: Block 4 chunks 'repeater' as 're-pea-ter', which contradicts its own prefix-root-suffix decoding rule (re- + peat + -er); phonetically it still blends, so minor.",
+    "2: 'Repeated re-reading costs flow and does not add meaning' is a distortion; re-reading (including repeated reading) is a standard, evidence-backed fluency and comprehension strategy that often does add meaning.",
+    "2: Block 6's model answer drops the comma after 'hand' ('...dug by hand / carried coal...') even though the task explicitly says to mark the pause with a comma.",
+    "2: Check c4 instructs 'Type the two chunks of this sentence' but no sentence is actually provided in the check."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: fluent oral reading of longer, harder texts — accurate word reading (sounding out hard words), grouping words into meaningful phrase chunks, pausing at punctuation, and keeping meaning intact. Version 2 adds an explicit pace rule and a re-read-once policy, but neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-15",
+   "kind": "contradict",
+   "mix": "creative but needs rigid structure",
+   "age": 18,
+   "ell": true,
+   "subject": "spanish",
+   "hobbies": [],
+   "dislikes": [
+    "rewrites of the same idea three times",
+    "timed quizzes",
+    "formal academic tone"
+   ],
+   "difficulties": [
+    "dyscalculia-like trouble with number sense",
+    "long gap since last studied"
+   ],
+   "level": "entry L6",
+   "mirror": {
+    "id": "x515151-15~mirror",
+    "age": 60,
+    "hobbies": [
+     "volunteering at a food bank",
+     "ship model building"
+    ],
+    "dislikes": []
+   },
+   "result": "build failed: no level written for x515151-15"
+  },
+  {
+   "learner": "x515151-16",
+   "kind": "random",
+   "mix": null,
+   "age": 46,
+   "ell": false,
+   "subject": "iq",
+   "hobbies": [
+    "sea kayaking",
+    "collecting vintage typewriters",
+    "3D printing miniatures"
+   ],
+   "dislikes": [
+    "being rushed",
+    "being praised for easy things",
+    "being told the answer right away"
+   ],
+   "difficulties": [],
+   "level": "abstract_reasoning L20",
+   "mirror": {
+    "id": "x515151-16~mirror",
+    "age": 32,
+    "hobbies": [
+     "tabletop wargames",
+     "train spotting"
+    ],
+    "dislikes": [
+     "gamified points",
+     "cute mascots"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 2,
+    "forced": [
+     "a typewriter key turns 90 degrees counterclockwise each row"
+    ],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 5,
+   "errors": [
+    "V1, Block 6: 'East is 90 degrees anticlockwise from west' is false — east is 180 degrees from west (90 degrees anticlockwise from west is south).",
+    "V1, Block 6: 'West is 180 degrees from west' is false — west is 0 degrees from itself; the option west merely repeats the given cell.",
+    "V1, Block 6: 'South repeats the previous cell, so no turn happened' is distorted — south repeats the row's first cell (the previous cell is west), and west-to-south would be a 90-degree anticlockwise turn.",
+    "V1, Block 5: 'east would need anticlockwise' is distorted — east is 180 degrees from west, not a quarter turn anticlockwise.",
+    "V1, check c2: 'East reverses the direction and fits only the first two cells' is muddled — east is 180 degrees from west and does not fit the given cells under the stated rule."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: stating the pattern rule in words (element, amount, direction) and verifying it on every item before looking at answer options, using 90-degree rotation examples and a rule-first vs option-first contrast; neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-17",
+   "kind": "age_young",
+   "mix": null,
+   "age": 9,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "knitting amigurumi",
+    "collecting vintage typewriters"
+   ],
+   "dislikes": [
+    "being praised for easy things",
+    "food examples",
+    "cartoon characters"
+   ],
+   "difficulties": [
+    "attention that drifts after five minutes",
+    "never learned phonics well"
+   ],
+   "level": "act_grade_4 L10",
+   "mirror": {
+    "id": "x515151-17~mirror",
+    "age": 69,
+    "hobbies": [
+     "aquarium keeping",
+     "rock climbing",
+     "gardening carnivorous plants"
+    ],
+    "dislikes": []
+   },
+   "planted": true,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 2,
+   "target_fit_other": 3,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 7,
+   "errors": [
+    "Version 1, Check c1: the explanation claims 'The parentheses must be cleared first,' which is false — dividing both sides by 2 first is also a valid opening move, so the item has two defensible choices with only one credited.",
+    "Version 1, Block 5: the fill-out asks for 'the next line after distributing' but never displays the source equation 3(x + 2) = 15, making the question unanswerable as presented.",
+    "Version 2, Check c1: two choices are correct — 'Distribute: 3x + 6 = 15' and 'Divide both sides by 3: x + 2 = 5' both correctly begin solving 3(x + 2) = 15; the explanation even concedes 'Dividing by 3 also works,' yet only distributing is credited."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the stated objective — combining distributing, collecting like terms, and inverse operations for multi-step equations (Version 2 even works the generalization's own example 2x + 3 = 4x - 5). Version 2 opens with simpler one- and two-step scaffolds but converges on the same multi-step goal; Version 1 stays on the multi-step method throughout."
+  },
+  {
+   "learner": "x515151-18",
+   "kind": "age_old",
+   "mix": null,
+   "age": 66,
+   "ell": true,
+   "subject": "math",
+   "hobbies": [
+    "collecting vintage typewriters",
+    "fixing bicycles"
+   ],
+   "dislikes": [
+    "group work framing",
+    "multiple choice trick questions"
+   ],
+   "difficulties": [
+    "missed a year of school",
+    "attention that drifts after five minutes"
+   ],
+   "level": "algebra_1_part_a L30",
+   "mirror": {
+    "id": "x515151-18~mirror",
+    "age": 12,
+    "hobbies": [
+     "K-pop dance covers"
+    ],
+    "dislikes": [
+     "competitive framing",
+     "repetition drills",
+     "being rushed"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 2,
+    "forced": [
+     "Then the gears, then the chain, then the frame"
+    ],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 7,
+   "errors": [
+    "1 (Block 6): the marked-correct answer is false — 2y^2 - 3(y + 1) at y = -3 equals 24, not 15; '18 + 6 = 15' is also false arithmetic, so a student who answers correctly would be told 'Not yet'.",
+    "2 (Check c2 explanation): claims the wrong answer 14 'comes from squaring -2 as -4', but that error yields -14 (3 x (-4) + (-2)), not 14; 'adding before multiplying' does not yield 14 either.",
+    "2 (Check c3 explanation): the claimed source of the wrong answer 5 does not check out — treating (4-7)^2 as -9 gives -5, treating it as 9 gives the correct 1, and adding before dividing gives 9; 5 would actually come from evaluating 2(-1) as +2."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: the precedence order (grouping, exponents, x/÷ left to right, +/− left to right), the -3^2 vs (-3)^2 slip, substituting negative values in parentheses, and technology/substitution checks. Version 2 adds analogy scaffolding and word-problem practice but does not drift off the objective."
+  },
+  {
+   "learner": "x515151-19",
+   "kind": "ell",
+   "mix": null,
+   "age": 50,
+   "ell": true,
+   "subject": "english",
+   "hobbies": [
+    "knife sharpening",
+    "fixing bicycles",
+    "quilting"
+   ],
+   "dislikes": [
+    "timed quizzes",
+    "group work framing",
+    "open-ended essays"
+   ],
+   "difficulties": [
+    "math anxiety since middle school",
+    "working memory overload on multi-step problems"
+   ],
+   "level": "advanced_intermediate L30",
+   "mirror": {
+    "id": "x515151-19~mirror",
+    "age": 28,
+    "hobbies": [
+     "competitive beekeeping",
+     "volunteering at a food bank",
+     "drone racing"
+    ],
+    "dislikes": [
+     "being praised for easy things",
+     "rewrites of the same idea three times"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 9,
+   "errors": [
+    "Version 1, Block 5: the run-on 'I soaked the stone and began to work the edge felt rough at first' has a perceptually ambiguous clause boundary because 'work the edge' is idiomatic sharpening phrasing; the intended split ('began to work' / 'the edge felt rough') is the only grammatical parse, but the error-highlighting target is easy to misread — minor clarity flaw, not a false grammar claim.",
+    "Version 1, Blocks 6 and 8: a fourth sentence type ('Two or more independent clauses plus at least one dependent clause', i.e. compound-complex) is described but never named, so it can read as a second, conflicting definition under 'Complex sentence' — minor labeling gap; the definition itself is correct."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: using clause types (simple/compound/complex; V1 adds compound-complex) and sentence length to control rhythm and emphasis, with fragment/run-on repair as supporting correctness content. V2 front-loads correctness rules, but its PerspectiveShift block and final check land squarely on rhythm and end-weight, matching V1's focus; neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-20",
+   "kind": "tail_hi",
+   "mix": null,
+   "age": 52,
+   "ell": false,
+   "subject": "reading",
+   "hobbies": [
+    "competitive yo-yo",
+    "monster truck rallies",
+    "knife sharpening"
+   ],
+   "dislikes": [
+    "open-ended essays",
+    "competitive framing"
+   ],
+   "difficulties": [],
+   "level": "proficient_reader L30",
+   "mirror": {
+    "id": "x515151-20~mirror",
+    "age": 26,
+    "hobbies": [
+     "learning to juggle",
+     "cave exploring",
+     "ballroom dancing"
+    ],
+    "dislikes": [
+     "stories that waste time"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [
+     "The wrench was a mirror in my hands: the more I sharpened (sharpening with a wrench is a shoehorned workshop image)"
+    ],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 7,
+   "errors": [
+    "2: 'The more Maya practiced the waltz, the less she had to think about it' is taught (Block 2) and graded (c2) as a paradox, but it is a plainly true statement about practice making steps automatic, not a seeming self-contradiction.",
+    "2 (minor): the dance partner's hand is offered as a symbol of 'trust and direction' though it literally tells the follower where to turn — a strained symbol example.",
+    "1 (minor): the hook's 'The wrench was a mirror in my hands: the more I sharpened' has the narrator sharpening with a wrench, an incoherent image (the device teaching itself is sound)."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions define metaphor, irony, paradox, and symbol and show the four devices reinforcing one another in a single passage (V1 Block 4; V2 Block 4), matching the objective; V2 adds simile and literal-vs-figurative groundwork but does not drift to a different objective."
+  },
+  {
+   "learner": "x515151-21",
+   "kind": "tail_lo",
+   "mix": null,
+   "age": 39,
+   "ell": false,
+   "subject": "spanish",
+   "hobbies": [
+    "sourdough baking"
+   ],
+   "dislikes": [],
+   "difficulties": [
+    "math anxiety since middle school"
+   ],
+   "level": "spanish_grade_04_time_food_shopping_and_core_verbs L8",
+   "mirror": {
+    "id": "x515151-21~mirror",
+    "age": 39,
+    "hobbies": [
+     "trading card games",
+     "volunteering at a food bank"
+    ],
+    "dislikes": [
+     "being told the answer right away"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 2,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 8,
+   "errors": [
+    "2: c3 explanation claims 'vivos' 'belongs to vivir (to live)' — vivir conjugates vivo, vives, vive, vivimos, vivís, viven; 'vivos' is not a form of vivir (the correct point is simply that ir's nosotros form is vamos)",
+    "1: Block 2's table as rendered omits the yo/voy and nosotros/vamos rows despite announcing 'the six forms' (possibly formatting loss, but the given text is incomplete)"
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach present-tense ir (voy, vas, va, vamos, vais, van) with a/al + place for destinations, e.g., Voy al trabajo; Version 1 also introduces ¿Adónde vas?, while Version 2 never uses adónde — a small coverage gap, not a different objective."
+  },
+  {
+   "learner": "x515151-22",
+   "kind": "contradict",
+   "mix": "brilliant, hates effort",
+   "age": 66,
+   "ell": false,
+   "subject": "iq",
+   "hobbies": [
+    "volunteering at a food bank"
+   ],
+   "dislikes": [],
+   "difficulties": [
+    "attention that drifts after five minutes"
+   ],
+   "level": "abstract_reasoning L20",
+   "mirror": {
+    "id": "x515151-22~mirror",
+    "age": 12,
+    "hobbies": [
+     "dog agility"
+    ],
+    "dislikes": [
+     "being praised for easy things",
+     "abstract symbols without a picture"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": false
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 2,
+   "target_fit_other": 4,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 6,
+   "errors": [
+    "1 (Block 7): 'Down appears in the matrix, so it looks safe. It does not follow from row three's own first two cells' is false — row three is up, then right, so the 90-degree clockwise rule gives down; the same block correctly concludes the missing cell is down, contradicting its own trap rationale.",
+    "1 (Block 7 and Check c2): 'Right is what row two ends on' / 'Right is tempting because row two ends on it' is false — row two (right, down, left) ends on left, not right."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the topic's objective — stating the pattern rule in words before looking at answer options. V1 builds the full predict-then-compare procedure (test on every row and column); V2 teaches say-it-then-check-it with a second-row check. Neither drifts to a different objective."
+  },
+  {
+   "learner": "x515151-23",
+   "kind": "random",
+   "mix": null,
+   "age": 55,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "competitive yo-yo",
+    "sourdough baking",
+    "fishing"
+   ],
+   "dislikes": [],
+   "difficulties": [
+    "attention that drifts after five minutes"
+   ],
+   "level": "act_grade_7 L20",
+   "mirror": {
+    "id": "x515151-23~mirror",
+    "age": 23,
+    "hobbies": [
+     "ballroom dancing",
+     "competitive beekeeping",
+     "cave exploring"
+    ],
+    "dislikes": [
+     "long reading passages",
+     "stories that waste time"
+    ]
+   },
+   "planted": true,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 3,
+   "target_fit_other": 4,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 10,
+   "errors": [],
+   "same_objective": true,
+   "objective_note": "Both teach writing intervals such as (2, 7] from compound inequalities and linking them to number lines. Version 1 also assesses the graph-matching half (check c3); Version 2 teaches number-line correspondence but never tests it, and its warm-up briefly recalls prior solving without drifting off-topic."
+  },
+  {
+   "learner": "x515151-24",
+   "kind": "tail_both",
+   "mix": null,
+   "age": 44,
+   "ell": false,
+   "subject": "math",
+   "hobbies": [],
+   "dislikes": [
+    "abstract symbols without a picture"
+   ],
+   "difficulties": [
+    "lost confidence after failing a class"
+   ],
+   "level": "multiplication_and_division L10",
+   "mirror": {
+    "id": "x515151-24~mirror",
+    "age": 34,
+    "hobbies": [
+     "roller derby",
+     "trading card games"
+    ],
+    "dislikes": [
+     "timed quizzes",
+     "repetition drills",
+     "competitive framing"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 3,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 10,
+   "errors": [],
+   "same_objective": true,
+   "objective_note": "Both versions teach the target objective: interpreting a product like 5 x 7 as 5 equal groups of 7 and writing multiplication sentences for equal-group pictures. Version 2's repeated-addition/skip-counting mention is framed as 'coming next,' a preview rather than a drift."
+  },
+  {
+   "learner": "x515151-25",
+   "kind": "contradict",
+   "mix": "works very hard, learns slowly",
+   "age": 64,
+   "ell": false,
+   "subject": "english",
+   "hobbies": [],
+   "dislikes": [],
+   "difficulties": [
+    "dyslexia-like slow reading",
+    "forgets formulas overnight"
+   ],
+   "level": "advanced_intermediate L30",
+   "mirror": {
+    "id": "x515151-25~mirror",
+    "age": 14,
+    "hobbies": [
+     "pottery"
+    ],
+    "dislikes": [
+     "being told the answer right away",
+     "formal academic tone"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 6,
+   "errors": [
+    "Version 2, Block 2: 'Although the clay was cold, I centered it and opened the middle, and as the walls rose I slowed down' contains two independent clauses plus two dependent clauses, so it is compound-complex, not 'One complex sentence' with 'One main clause carries the key action'.",
+    "Version 2, Block 2: 'Six short sentences, six full stops' — the choppy example ('The clay was cold. I centered it. I opened the middle. The walls rose. I slowed down.') has five sentences and five full stops.",
+    "Version 1, Block 6: 'a comma plus a joining word like because or and' — 'because' is a subordinating conjunction; it does not join two independent clauses after a comma (it turns the second into a dependent clause), so the stated fix rule is distorted."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach clause types and sentence length as controls on rhythm, pace, and emphasis; Version 2 adds the four structural labels (including compound-complex) but stays on the same objective."
+  },
+  {
+   "learner": "x515151-26",
+   "kind": "random",
+   "mix": null,
+   "age": 54,
+   "ell": false,
+   "subject": "reading",
+   "hobbies": [],
+   "dislikes": [
+    "sports examples",
+    "long reading passages"
+   ],
+   "difficulties": [],
+   "level": "proficient_reader L30",
+   "mirror": {
+    "id": "x515151-26~mirror",
+    "age": 24,
+    "hobbies": [
+     "genealogy",
+     "sewing historical costume"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 3,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 9,
+   "errors": [
+    "1 (minor distortion): Block 2's takeaway 'Irony: the gap is between saying and truth' drops the expectation-vs-reality half of the block's own definition, so its situational examples (fire station burns down, tow truck towed) and Check c1's lifeboat (explained as 'expectation and reality') fall outside the summarized rule.",
+    "2 (minor oversimplification): The symbol is defined as earning meaning 'from repetition and context', and the cheat sheet asks only 'where does it repeat?', implying recurrence is required for symbolism; a symbol need not repeat (e.g., Version 1's single lit window), so the repetition emphasis slightly overstates the rule."
+   ],
+   "same_objective": true,
+   "objective_note": "Both stay on the objective (metaphor, irony, paradox, symbol at proficient-reader depth): Version 1 stresses identifying each device and using them as converging evidence for one interpretation, Version 2 stresses how the devices modify one another; different emphasis, no drift off topic."
+  },
+  {
+   "learner": "x515151-27",
+   "kind": "age_young",
+   "mix": null,
+   "age": 9,
+   "ell": false,
+   "subject": "spanish",
+   "hobbies": [
+    "soap carving",
+    "rally car watching",
+    "tea ceremony"
+   ],
+   "dislikes": [
+    "gamified points",
+    "jokes in lessons"
+   ],
+   "difficulties": [
+    "forgets formulas overnight",
+    "dyscalculia-like trouble with number sense"
+   ],
+   "level": "spanish_grade_05_home_places_and_directions L6",
+   "mirror": {
+    "id": "x515151-27~mirror",
+    "age": 69,
+    "hobbies": [
+     "weather chasing"
+    ],
+    "dislikes": [
+     "leaderboards",
+     "abstract symbols without a picture",
+     "food examples"
+    ]
+   },
+   "result": "build failed: no level written for x515151-27"
+  },
+  {
+   "learner": "x515151-28",
+   "kind": "age_old",
+   "mix": null,
+   "age": 67,
+   "ell": false,
+   "subject": "iq",
+   "hobbies": [],
+   "dislikes": [
+    "cute mascots"
+   ],
+   "difficulties": [
+    "dyslexia-like slow reading"
+   ],
+   "level": "abstract_reasoning L20",
+   "mirror": {
+    "id": "x515151-28~mirror",
+    "age": 11,
+    "hobbies": [
+     "birdwatching",
+     "minecraft redstone"
+    ],
+    "dislikes": [
+     "competitive framing",
+     "group work framing",
+     "abstract symbols without a picture"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 5,
+   "errors": [
+    "2 (Block 1, Option A): 'Row 3 starts down, left, so right fits the same turn' is arithmetically false — the same clockwise turn gives up, not right; the distractor's stated reasoning is wrong rather than merely tempting, despite being presented as 'looking reasonable'.",
+    "2 (c1 explanation): 'Right fits row 1 alone but breaks row 2, where right is followed by down, not up' is incoherent — choosing 'right' for row 3 breaks row 3, not row 2, and 'right is followed by down' is exactly what the true clockwise rule predicts, so the stated rejection reason is distorted.",
+    "2 (c2): ill-posed single-answer item — 8, 10 and 4 all break the rise-by-two rule on row 2 (only 6 passes), so 'Which option breaks the rule on row 2?' has no unique correct answer; the explanation rules out only 8 and ignores 10.",
+    "1 (Block 4, minor ambiguity, not a clear falsehood): 'The rejected option fails because row 1 turns the other way' reads falsely if 'row 1' means the main grid's row 1 (which turns clockwise); it is only true of the rejected option's own row 1."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: state a precise pattern rule in one sentence before looking at the answer options, then test options against it. V1 leans on typing/elaborating the rule; V2 leans on testability and rejecting vague rules; neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-29",
+   "kind": "ell",
+   "mix": null,
+   "age": 69,
+   "ell": true,
+   "subject": "act",
+   "hobbies": [
+    "knitting amigurumi",
+    "ham-fisted woodworking"
+   ],
+   "dislikes": [
+    "being rushed",
+    "rewrites of the same idea three times"
+   ],
+   "difficulties": [
+    "long gap since last studied"
+   ],
+   "level": "act_grade_10 L30",
+   "mirror": {
+    "id": "x515151-29~mirror",
+    "age": 9,
+    "hobbies": [
+     "aquarium keeping",
+     "monster truck rallies"
+    ],
+    "dislikes": [
+     "cartoon characters",
+     "stories that waste time",
+     "leaderboards"
+    ]
+   },
+   "planted": true,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 1,
+   "target_fit_other": 4,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 6,
+   "errors": [
+    "1: Block 2 presents 'A blames loose joints on the wood. B blames them on the glue.' as the example of different emphasis, but opposing causal claims are a disagreement, not a difference of emphasis; defining emphasis as stressing 'different causes' invites misclassification on exactly the skill being taught.",
+    "1: Check c1 asks what 'both passages about amigurumi' support, but the explanation rejects a choice because 'only passage A discusses machine knitting' — citing the Block 4 knitting pair, which the question never presents; the graded check conflates two different example pairs.",
+    "1: The Block 4/c2 model answer 'hand-knitting lasts longer' goes beyond passage B, which states only that hand-knitting can be reblocked and a machine-knit cannot (minor overreach in a task that demands claim-only summaries).",
+    "2: Block 3 defines emphasis narrowly as stressing 'a point the other skips,' which does not cover emphasis cases where both authors mention both points but weight them differently (minor simplification, though consistent with its own examples)."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the stated objective: summarize each passage separately, then classify agreement, disagreement, or different emphasis using lines from both passages. V1 covers all three relations with examples; V2 leans on agreement vs. emphasis and treats outright disagreement more lightly, but neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-30",
+   "kind": "tail_hi",
+   "mix": null,
+   "age": 14,
+   "ell": true,
+   "subject": "math",
+   "hobbies": [
+    "ice hockey",
+    "weather chasing"
+   ],
+   "dislikes": [
+    "food examples",
+    "gamified points",
+    "timed quizzes"
+   ],
+   "difficulties": [],
+   "level": "multiplication_and_division L10",
+   "mirror": {
+    "id": "x515151-30~mirror",
+    "age": 64,
+    "hobbies": [
+     "stand-up comedy open mics",
+     "competitive beekeeping",
+     "cattle showing"
+    ],
+    "dislikes": [
+     "open-ended essays",
+     "formal academic tone",
+     "stories that waste time"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 1,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 10,
+   "errors": [],
+   "same_objective": true,
+   "objective_note": "Both versions teach the objective: interpreting a x b as a equal groups of b, distinguishing equal from unequal groups, and writing multiplication sentences for equal groups. No drift in either version."
+  },
+  {
+   "learner": "x515151-31",
+   "kind": "tail_lo",
+   "mix": null,
+   "age": 61,
+   "ell": false,
+   "subject": "english",
+   "hobbies": [
+    "weather chasing",
+    "train spotting"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "proficient L40",
+   "mirror": {
+    "id": "x515151-31~mirror",
+    "age": 17,
+    "hobbies": [
+     "aquarium keeping",
+     "speedrunning old video games"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 8,
+   "errors": [
+    "2: Block 3 claims 'Every sentence has one setting on each axis,' an overgeneralization contradicted by its own example 'Be advised that the tank was drained' (imperative main clause plus indicative subordinate clause) and it obscures the fact that a shift can occur inside one sentence.",
+    "1: Block 1 states 'Nothing in this lesson is scored' while the level includes 3 graded checks (minor framing inconsistency; may refer only to the in-block practice questions)."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: recognizing and fixing inappropriate shifts in verb voice and mood, including when a change is deliberate and justified. V1 works with indicative/imperative/interrogative moods, V2 with indicative/imperative/subjunctive, but neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-32",
+   "kind": "contradict",
+   "mix": "bursty, long gaps, deep when in",
+   "age": 70,
+   "ell": false,
+   "subject": "reading",
+   "hobbies": [
+    "drone racing",
+    "Formula 1 strategy",
+    "lockpicking sport"
+   ],
+   "dislikes": [],
+   "difficulties": [
+    "lost confidence after failing a class",
+    "test panic"
+   ],
+   "level": "intermediate_reader L20",
+   "mirror": {
+    "id": "x515151-32~mirror",
+    "age": 8,
+    "hobbies": [
+     "making rap beats",
+     "tabletop roleplaying audio dramas",
+     "monster truck rallies"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 9,
+   "errors": [
+    "Version 1: 'Prefix un, then syllables be-liev-able' — 'believable' syllabifies as be-liev-a-ble; the given split drops a syllable (minor simplification, mildly imprecise)"
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the stated objective: accurate oral reading of longer/harder texts via word-part decoding, phrase grouping, pausing at punctuation, and fitting pace. Version 2 adds fluency terminology (prosody, self-correction, repeated reading) but does not drift to a different objective."
+  },
+  {
+   "learner": "x515151-33",
+   "kind": "random",
+   "mix": null,
+   "age": 26,
+   "ell": true,
+   "subject": "spanish",
+   "hobbies": [
+    "speedcubing"
+   ],
+   "dislikes": [],
+   "difficulties": [
+    "working memory overload on multi-step problems",
+    "attention that drifts after five minutes"
+   ],
+   "level": "entry L6",
+   "mirror": {
+    "id": "x515151-33~mirror",
+    "age": 52,
+    "hobbies": [
+     "birdwatching",
+     "lockpicking sport",
+     "beatboxing"
+    ],
+    "dislikes": [
+     "stories that waste time",
+     "sports examples"
+    ]
+   },
+   "result": "build failed: no level written for x515151-33"
+  },
+  {
+   "learner": "x515151-34",
+   "kind": "tail_both",
+   "mix": null,
+   "age": 59,
+   "ell": false,
+   "subject": "iq",
+   "hobbies": [
+    "fixing bicycles",
+    "rugby"
+   ],
+   "dislikes": [
+    "rewrites of the same idea three times",
+    "multiple choice trick questions",
+    "being told the answer right away"
+   ],
+   "difficulties": [
+    "never learned phonics well",
+    "missed a year of school"
+   ],
+   "level": "abstract_reasoning L20",
+   "mirror": {
+    "id": "x515151-34~mirror",
+    "age": 19,
+    "hobbies": [
+     "tabletop roleplaying audio dramas"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 3,
+   "interest": {
+    "uses": "P",
+    "natural": 2,
+    "forced": [
+     "A 3 by 3 grid of rugby arrows"
+    ],
+    "dislike_hit": true
+   },
+   "interest_uses_own": true,
+   "accuracy": 6,
+   "errors": [
+    "1: Block 3 claims 'The third box points left, which breaks the guess,' but the same matrix is given as up, right, down, left — the third box points down; the statement contradicts the block's own sequence.",
+    "1: Block 6 feedback says 'the arrow turns right, then right, then left,' but in the shown sequence (up, right, down, left) every transition is a clockwise (right) turn; down-to-left is a right turn, so the feedback mischaracterizes the pattern and the premise that 'always' fails is confused.",
+    "2: Block 5 states 'Row 1 alone cannot tell clockwise from anticlockwise,' which is false — row 1 (up, right, down) shows clockwise rotation unambiguously.",
+    "2: Block 4 feedback for the anticlockwise option, 'Up to right would be a quarter turn the other way,' is garbled/false as written; up-to-right is a clockwise quarter turn, not 'the other way.'"
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: state the pattern rule in words before looking at the answer options (v1 practices choosing/testing stated rules, v2 practices producing the rule); neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-35",
+   "kind": "contradict",
+   "mix": "anxious and competitive",
+   "age": 13,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "speedcubing"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "act_grade_4 L10",
+   "mirror": {
+    "id": "x515151-35~mirror",
+    "age": 65,
+    "hobbies": [
+     "ice hockey",
+     "competitive chess",
+     "cricket"
+    ],
+    "dislikes": [
+     "long reading passages",
+     "being praised for easy things",
+     "cartoon characters"
+    ]
+   },
+   "planted": true,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": false
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 2,
+   "target_fit_other": 4,
+   "interest": {
+    "uses": "P",
+    "natural": 2,
+    "forced": [
+     "One chess problem, two attempts — the equation 2(x + 3) = 4x - 5 has no actual chess content",
+     "A cricket scoreboard equation is 3(x - 2) = 12 — cricket is only a label on a bare equation"
+    ],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 8,
+   "errors": [
+    "2: 'Most ACT algebra questions are multi-step equations' — unsupported exaggeration in the hook.",
+    "2: 'Algebra works the same way: undo the last operation first' — distorted analogy: the worked example it follows begins by distributing (not undoing), and equations with variables on both sides are not solved by simple reverse-order undoing.",
+    "2: 'keep the negative sign when you move a term' — misleading recall cue; moving a term across the equals sign flips its sign (Version 1 states the correct inverse-operation rule)."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the same objective: distribute, collect like terms, and use inverse operations to solve multi-step equations, with the identical anchor problem 2(x + 3) = 4x - 5; V1 frames it as a 6-step route, V2 as a 4-step mnemonic — no drift."
+  },
+  {
+   "learner": "x515151-36",
+   "kind": "random",
+   "mix": null,
+   "age": 33,
+   "ell": false,
+   "subject": "math",
+   "hobbies": [
+    "rock climbing"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "multiplication_and_division L10",
+   "mirror": {
+    "id": "x515151-36~mirror",
+    "age": 45,
+    "hobbies": [
+     "restoring old tractors",
+     "cave exploring"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "result": "judge failed: lyceum: z-ai/glm-5.3 returned no text"
+  },
+  {
+   "learner": "x515151-37",
+   "kind": "age_young",
+   "mix": null,
+   "age": 8,
+   "ell": false,
+   "subject": "english",
+   "hobbies": [
+    "longboarding",
+    "cricket"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "basics L8",
+   "mirror": {
+    "id": "x515151-37~mirror",
+    "age": 70,
+    "hobbies": [
+     "ship model building"
+    ],
+    "dislikes": [
+     "long reading passages",
+     "audio-only explanations"
+    ]
+   },
+   "result": "build failed: no level written for x515151-37"
+  },
+  {
+   "learner": "x515151-38",
+   "kind": "age_old",
+   "mix": null,
+   "age": 67,
+   "ell": false,
+   "subject": "reading",
+   "hobbies": [],
+   "dislikes": [
+    "audio-only explanations",
+    "stories that waste time",
+    "jokes in lessons"
+   ],
+   "difficulties": [
+    "missed a year of school"
+   ],
+   "level": "proficient_reader L30",
+   "mirror": {
+    "id": "x515151-38~mirror",
+    "age": 11,
+    "hobbies": [
+     "ship model building",
+     "sewing historical costume",
+     "ice hockey"
+    ],
+    "dislikes": [
+     "leaderboards",
+     "abstract symbols without a picture",
+     "sports examples"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 3,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 8,
+   "errors": [
+    "1: 'the fog is said to be cat feet' slightly distorts Sandburg's metaphor — the poem likens the fog to a cat (it arrives on little cat feet); it does not identify the fog with the feet themselves.",
+    "2: the irony example is muddled — a costume labelled 'authentically wrong' shows no clear gap between what is said and what is meant (the label means what it says); it functions as an oxymoron, so using it ('the label is true and the truth is the joke') to exemplify irony distorts the device.",
+    "2: 'The hull cut a knife through water' is garbled phrasing (standard idiom: 'cut through the water like a knife'), so the flagship metaphor example does not cleanly assert X is Y."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach metaphor, irony, paradox, and symbol as one interacting system (symbol built by repeated metaphor, deepened by irony, held by paradox). V2 adds an evidence-line quoting routine and its integrated chain omits irony, but neither drifts to a different objective."
+  },
+  {
+   "learner": "x515151-39",
+   "kind": "ell",
+   "mix": null,
+   "age": 48,
+   "ell": true,
+   "subject": "spanish",
+   "hobbies": [
+    "competitive yo-yo",
+    "quilting"
+   ],
+   "dislikes": [
+    "rewrites of the same idea three times",
+    "audio-only explanations"
+   ],
+   "difficulties": [
+    "missed a year of school"
+   ],
+   "level": "spanish_grade_04_time_food_shopping_and_core_verbs L8",
+   "mirror": {
+    "id": "x515151-39~mirror",
+    "age": 30,
+    "hobbies": [
+     "learning to juggle",
+     "minecraft redstone",
+     "tide pool exploring"
+    ],
+    "dislikes": [
+     "stories that waste time",
+     "competitive framing",
+     "formal academic tone"
+    ]
+   },
+   "planted": false,
+   "result": "judge failed: lyceum: z-ai/glm-5.3 returned no text"
+  },
+  {
+   "learner": "x515151-40",
+   "kind": "tail_hi",
+   "mix": null,
+   "age": 31,
+   "ell": true,
+   "subject": "iq",
+   "hobbies": [
+    "welding art",
+    "speedcubing",
+    "collecting vintage typewriters"
+   ],
+   "dislikes": [
+    "multiple choice trick questions",
+    "group work framing",
+    "repetition drills"
+   ],
+   "difficulties": [
+    "math anxiety since middle school"
+   ],
+   "level": "abstract_reasoning L20",
+   "mirror": {
+    "id": "x515151-40~mirror",
+    "age": 47,
+    "hobbies": [
+     "lockpicking sport",
+     "anime drawing"
+    ],
+    "dislikes": [
+     "being praised for easy things",
+     "being rushed",
+     "long reading passages"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 2,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 10,
+   "errors": [],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: state the pattern rule in words (element, amount, direction) before reading the answer options, using 90-degree rotation examples. Version 1 frames it as a guided 4-step procedure; Version 2 frames it as a concept-backed habit with a 'why' rationale. Neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-41",
+   "kind": "tail_lo",
+   "mix": null,
+   "age": 66,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "coin collecting",
+    "tabletop roleplaying audio dramas"
+   ],
+   "dislikes": [
+    "cute mascots",
+    "jokes in lessons",
+    "leaderboards"
+   ],
+   "difficulties": [
+    "working memory overload on multi-step problems",
+    "lost confidence after failing a class"
+   ],
+   "level": "act_grade_4 L10",
+   "mirror": {
+    "id": "x515151-41~mirror",
+    "age": 12,
+    "hobbies": [
+     "taxidermy curiosity",
+     "minecraft redstone"
+    ],
+    "dislikes": [
+     "cartoon characters"
+    ]
+   },
+   "planted": true,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 2,
+   "target_fit_other": 3,
+   "interest": {
+    "uses": "Q",
+    "natural": 2,
+    "forced": [
+     "A redstone build uses the equation 3(x + 4) = 2x + 17."
+    ],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 9,
+   "errors": [
+    "V1: the comparator analogy misstates redstone mechanics: 'You feed a signal of strength 7 into one input of a comparator and 7 into the other. The output reads equal.' A real Minecraft comparator has no 'equal' output (side input >= back input yields 0), so the analogy bends the interest domain; the chest analogy in the same block is sound.",
+    "V2: Block 7 distractors contradict their own described moves: 'Subtract 3x from the left side only, giving 2x + 2 = 16' (that move would give 2x + 10 = 3x + 16) and 'Add 2 to both sides first, giving 5x = 3x + 18' (that move would give 5x + 12 = 3x + 18). The correct answer, feedback and all solutions/explanations are accurate."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the stated objective (distribute, collect like terms, inverse operations to solve equations like 2(x+3)=4x-5) and both grade that exact equation. Version 2's extra case 6-(x-3)=10 (distributing a minus sign) is a sub-case of distributing, not a drift."
+  },
+  {
+   "learner": "x515151-42",
+   "kind": "contradict",
+   "mix": "needs praise but shuts down when corrected",
+   "age": 23,
+   "ell": false,
+   "subject": "math",
+   "hobbies": [
+    "puppetry",
+    "competitive eating videos",
+    "quilting"
+   ],
+   "dislikes": [
+    "repetition drills",
+    "group work framing",
+    "multiple choice trick questions"
+   ],
+   "difficulties": [
+    "attention that drifts after five minutes",
+    "dyscalculia-like trouble with number sense"
+   ],
+   "level": "algebra_1_part_a L30",
+   "mirror": {
+    "id": "x515151-42~mirror",
+    "age": 55,
+    "hobbies": [
+     "ice hockey",
+     "horse riding"
+    ],
+    "dislikes": [
+     "food examples",
+     "stories that waste time"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 1,
+    "forced": [
+     "The fabric cost is written as 4 x (12 + 12) dollars: two puppets, twelve dollars of cloth each, four yards per puppet"
+    ],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 7,
+   "errors": [
+    "Version 1, Block 2: headline 'One wrong order turns a $96 puppet budget into $144' contradicts the same block's worked wrong-order total of 60 (4 x 12 + 12 = 60); nothing shown yields 144.",
+    "Version 1, Block 2: 'the club overspends' does not follow, since the miscomputed 60 is less than the $96 budget/cost.",
+    "Version 1, Block 2: 'two puppets, twelve dollars of cloth each, four yards per puppet' does not coherently map to 4 x (12 + 12), and the wrong-order total is then relabeled '60 for one puppet' though the expression was the whole cost."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the assigned objective: evaluating expressions with grouping, exponents, and negatives, substitution with parentheses, and technology checks (V1 uses a graphing tool, V2 a calculator). V2 adds nested brackets and a fraction bar; V1 adds a real-world budget context; neither drifts off-topic."
+  },
+  {
+   "learner": "x515151-43",
+   "kind": "random",
+   "mix": null,
+   "age": 40,
+   "ell": false,
+   "subject": "english",
+   "hobbies": [
+    "rock climbing",
+    "making rap beats"
+   ],
+   "dislikes": [
+    "formal academic tone",
+    "timed quizzes"
+   ],
+   "difficulties": [
+    "math anxiety since middle school"
+   ],
+   "level": "advanced_intermediate L30",
+   "mirror": {
+    "id": "x515151-43~mirror",
+    "age": 38,
+    "hobbies": [
+     "Dungeons and Dragons",
+     "cosplay sewing"
+    ],
+    "dislikes": [
+     "cartoon characters",
+     "being rushed"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 8,
+   "errors": [
+    "2: 'Test: cover the second half. If it still stands alone, you have two independent clauses and need a real join' — checking only one half cannot establish two independent clauses; it fails when a dependent clause follows the main clause (e.g., 'Mira cheered because the dragon fled').",
+    "2: Block 3 calls 'Trapped.' a 'one-word sentence' although by the lesson's own definition it is a fragment (missing subject and verb); the deliberate stylistic fragment is never flagged as such, creating an internal inconsistency."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach clause types (independent/dependent, sentence types, fragment/run-on fixes) plus sentence length for rhythm and emphasis; version 1 stresses end-weight emphasis, version 2 frames length as a punch/flow dial — same objective, no drift."
+  },
+  {
+   "learner": "x515151-44",
+   "kind": "tail_both",
+   "mix": null,
+   "age": 20,
+   "ell": false,
+   "subject": "reading",
+   "hobbies": [
+    "learning to juggle",
+    "minecraft redstone"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "proficient_reader L30",
+   "mirror": {
+    "id": "x515151-44~mirror",
+    "age": 58,
+    "hobbies": [
+     "crochet",
+     "stand-up comedy open mics"
+    ],
+    "dislikes": [
+     "cute mascots",
+     "gamified points"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 7,
+   "errors": [
+    "Version 1 (check c2): 'a flame survives a storm' is presented as a paradox, but it is improbable rather than self-contradictory, so it fails the lesson's own paradox definition; the candle is also created by an explicit metaphor ('Hope was a candle') yet is labeled only a symbol.",
+    "Version 1 (Block 4): 'The furnace metaphor makes the heat literal' — a metaphor is non-literal by definition; imprecise wording.",
+    "Version 2 (check c3): the check grades an 'open-mic passage' with a 'repeated microphone' that is never presented anywhere in the lesson, making it unanswerable from the material taught.",
+    "Version 2 (Block 2): 'A literary device is a deliberate, repeated pattern in a text, not a single striking word' — metaphor, irony and paradox need not be repeated and can occur in a single word or statement; distorted definition.",
+    "Version 2 (Block 3): 'An object becomes a symbol only when the text repeats it' — too absolute; context and emphasis can establish a symbol without literal repetition."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective — defining metaphor, irony, paradox and symbol and analyzing how they work together in a passage; Version 1 does it via one worked passage, Version 2 via broad look-alike contrasts plus a naming/evidence procedure, with no drift off the topic."
+  },
+  {
+   "learner": "x515151-45",
+   "kind": "contradict",
+   "mix": "solitary, no feedback wanted",
+   "age": 52,
+   "ell": false,
+   "subject": "spanish",
+   "hobbies": [
+    "ice hockey"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "spanish_grade_05_home_places_and_directions L6",
+   "mirror": {
+    "id": "x515151-45~mirror",
+    "age": 26,
+    "hobbies": [
+     "fixing bicycles"
+    ],
+    "dislikes": []
+   },
+   "result": "build failed: no level written for x515151-45"
+  },
+  {
+   "learner": "x515151-46",
+   "kind": "random",
+   "mix": null,
+   "age": 30,
+   "ell": false,
+   "subject": "iq",
+   "hobbies": [
+    "volunteering at a food bank",
+    "tea ceremony",
+    "learning to juggle"
+   ],
+   "dislikes": [
+    "cartoon characters",
+    "being told the answer right away"
+   ],
+   "difficulties": [
+    "forgets formulas overnight",
+    "dyscalculia-like trouble with number sense"
+   ],
+   "level": "abstract_reasoning L20",
+   "mirror": {
+    "id": "x515151-46~mirror",
+    "age": 48,
+    "hobbies": [
+     "speedcubing",
+     "astrophotography"
+    ],
+    "dislikes": [
+     "gamified points"
+    ]
+   },
+   "planted": false,
+   "result": "judge failed: lyceum: z-ai/glm-5.3 returned no text"
+  },
+  {
+   "learner": "x515151-47",
+   "kind": "age_young",
+   "mix": null,
+   "age": 9,
+   "ell": false,
+   "subject": "act",
+   "hobbies": [
+    "Formula 1 strategy",
+    "pottery",
+    "puppetry"
+   ],
+   "dislikes": [
+    "stories that waste time"
+   ],
+   "difficulties": [],
+   "level": "act_grade_7 L20",
+   "mirror": {
+    "id": "x515151-47~mirror",
+    "age": 69,
+    "hobbies": [
+     "weather chasing",
+     "genealogy"
+    ],
+    "dislikes": [
+     "formal academic tone",
+     "long reading passages",
+     "multiple choice trick questions"
+    ]
+   },
+   "planted": true,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 2,
+   "target_fit_other": 4,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 9,
+   "errors": [
+    "1: Block 5 feedback 'This flips both ends. 2 is out and 7 is in.' appends the correct answer's endpoint reading to the flipped-choice feedback ([2, 7) has 2 in, 7 out), a confusing mispairing though not mathematically false"
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the core objective: writing intervals like (2, 7] with correct bracket types and matching them to number-line graphs (open circle vs solid dot, infinity always parenthesized). Version 1 extends to unbounded intervals; Version 2 extends to solving compound inequalities before writing the interval; neither drifts off-topic."
+  }
+ ]
+}

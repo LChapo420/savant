@@ -1,0 +1,77 @@
+{
+ "label": "AI-judged (GLM-5.3, blind) on SIMULATED learners; not real-learner proof",
+ "writer": "coral",
+ "judge": "z-ai/glm-5.3",
+ "seed": 515151,
+ "n": 48,
+ "plant_every": 6,
+ "generated_at": "2026-11-05T02:29:13.501Z",
+ "usage": {
+  "writerCalls": 0,
+  "writerIn": 0,
+  "writerOut": 0,
+  "judgeCalls": {
+   "z-ai/glm-5.3": 1
+  },
+  "judgeTokens": {
+   "z-ai/glm-5.3": 22731
+  },
+  "errors": {}
+ },
+ "recs": [
+  {
+   "learner": "x515151-15",
+   "kind": "contradict",
+   "mix": "creative but needs rigid structure",
+   "age": 18,
+   "ell": true,
+   "subject": "spanish",
+   "hobbies": [],
+   "dislikes": [
+    "rewrites of the same idea three times",
+    "timed quizzes",
+    "formal academic tone"
+   ],
+   "difficulties": [
+    "dyscalculia-like trouble with number sense",
+    "long gap since last studied"
+   ],
+   "level": "spanish_grade_04_time_food_shopping_and_core_verbs L8",
+   "mirror": {
+    "id": "x515151-15~mirror",
+    "age": 60,
+    "hobbies": [
+     "volunteering at a food bank",
+     "ship model building"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 2,
+   "target_fit_other": 3,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 8,
+   "errors": [
+    "V1, Block 2: 'Only vamos looks like a regular -ir verb' is false — vamos ends in -amos, the regular -ar ending (cf. hablamos); no form of ir resembles a regular -ir form (cf. vivimos), and vas/va/vais/van equally resemble -ar endings.",
+    "V2, Block 3: the table titled 'The six forms of ir' displays only four persons (yo and nosotros rows missing) and, as rendered, no Spanish forms; the c1 hint 'you (informal) is the second row' does not match the table as shown."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the same objective: conjugating irregular ir and using a/al to state destinations (Voy al trabajo). V1 explicitly covers the adondo component (Adonde? in Blocks 4 and 7 and check c4); V2 only glosses 'to where?' and never shows the Spanish word adonde, so that sub-objective is thinly covered but not replaced."
+  }
+ ]
+}

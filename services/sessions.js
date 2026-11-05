@@ -23,6 +23,7 @@ const db = require('../config/db');
 const curriculum = require('../config/curriculum');
 const gradeSkills = require('../config/grade-skills');
 const bank = require('../content/bank');
+const itemTheme = require('./item-theme');
 const mastery = require('./mastery');
 const learner = require('./learner');
 const grading = require('./grading');
@@ -491,6 +492,9 @@ async function materialize({ userId, session, entries, params, level, blockIndex
     userId,
   });
   let aiIndex = 0;
+  // Interest theming (services/item-theme.js): a ready themed copy of the bank item, else the base item; written ahead for next time.
+  const themeDomain = itemTheme.domainFor(userId, session);
+  if (themeDomain) itemTheme.writeAhead({ userId, domain: themeDomain, entries });
 
   const rows = [];
   for (let slot = 0; slot < entries.length; slot++) {
@@ -509,6 +513,9 @@ async function materialize({ userId, session, entries, params, level, blockIndex
         // eslint-disable-next-line global-require
         item = require('./objective-items').pick({ trackId: session.track_id, gradeId: session.grade_id, objectiveId: entry.objective, avoid, difficulty: entry.difficulty });
       } catch { item = null; }
+    }
+    if (!item && themeDomain && entry.role !== 'review' && !entry.objective) {
+      item = itemTheme.take({ skillId: entry.skillId, difficulty: entry.difficulty, domain: themeDomain, avoid });
     }
     if (!item) item = generateWithPreference(entry, params.preferTypeIn, avoid);
     avoid.add(bank.itemKey(item));

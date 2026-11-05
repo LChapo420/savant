@@ -1,0 +1,517 @@
+{
+ "label": "AI-judged (GLM-5.3, blind) on SIMULATED learners; not real-learner proof",
+ "writer": "coral",
+ "judge": "z-ai/glm-5.3",
+ "seed": 515151,
+ "n": 48,
+ "plant_every": 6,
+ "generated_at": "2026-11-05T02:22:18.606Z",
+ "usage": {
+  "writerCalls": 52,
+  "writerIn": 294133,
+  "writerOut": 66437,
+  "judgeCalls": {
+   "z-ai/glm-5.3": 7
+  },
+  "judgeTokens": {
+   "z-ai/glm-5.3": 130153
+  },
+  "errors": {}
+ },
+ "recs": [
+  {
+   "learner": "x515151-9",
+   "kind": "ell",
+   "mix": null,
+   "age": 36,
+   "ell": true,
+   "subject": "spanish",
+   "hobbies": [],
+   "dislikes": [],
+   "difficulties": [
+    "dyslexia-like slow reading"
+   ],
+   "level": "spanish_grade_05_home_places_and_directions L7",
+   "mirror": {
+    "id": "x515151-9~mirror",
+    "age": 42,
+    "hobbies": [
+     "Dungeons and Dragons",
+     "model railways"
+    ],
+    "dislikes": [
+     "long reading passages",
+     "being rushed"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 2,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 8,
+   "errors": [
+    "2: 'Está alto ... This one names a state. It can change by tomorrow.' — misleading and internally inconsistent: height is a lasting trait, and version 2's own Block 3 calls 'Está alto' the tempting wrong answer that fails; the hook misstates the very rule the level teaches."
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: ser for identity/origin/trait vs estar for location/state, with the required clear cases (Es alto, Está en casa). Minor drift: version 2's check c4 reviews hablar conjugation (an earlier topic) instead of ser/estar, but it is labeled as review and the lesson's teaching objective is unchanged."
+  },
+  {
+   "learner": "x515151-13",
+   "kind": "random",
+   "mix": null,
+   "age": 41,
+   "ell": false,
+   "subject": "english",
+   "hobbies": [
+    "lockpicking sport",
+    "rally car watching",
+    "volunteering at a food bank"
+   ],
+   "dislikes": [
+    "jokes in lessons",
+    "being praised for easy things",
+    "being told the answer right away"
+   ],
+   "difficulties": [
+    "working memory overload on multi-step problems",
+    "math anxiety since middle school"
+   ],
+   "level": "basics L10",
+   "mirror": {
+    "id": "x515151-13~mirror",
+    "age": 37,
+    "hobbies": [
+     "sea kayaking",
+     "soap carving"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 0,
+   "target_pick_ok": 0,
+   "target_fit_score": 2,
+   "target_fit_other": 4,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 9,
+   "errors": [
+    "1: Block 2 is headed 'Same story moment, two listeners' and says 'compare what each listener can answer', but both sides describe the same named listener (Maya) — a minor internal inconsistency, not a topic error"
+   ],
+   "same_objective": true,
+   "objective_note": "Both versions teach the stated objective: staying focused during a read-aloud (body still, eyes on reader/book) and answering simple who/what/where questions from what was heard. Version 2 adds a small in-scope extension (what to do when focus slips: look at the book again)."
+  },
+  {
+   "learner": "x515151-15",
+   "kind": "contradict",
+   "mix": "creative but needs rigid structure",
+   "age": 18,
+   "ell": true,
+   "subject": "spanish",
+   "hobbies": [],
+   "dislikes": [
+    "rewrites of the same idea three times",
+    "timed quizzes",
+    "formal academic tone"
+   ],
+   "difficulties": [
+    "dyscalculia-like trouble with number sense",
+    "long gap since last studied"
+   ],
+   "level": "spanish_grade_04_time_food_shopping_and_core_verbs L8",
+   "mirror": {
+    "id": "x515151-15~mirror",
+    "age": 60,
+    "hobbies": [
+     "volunteering at a food bank",
+     "ship model building"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "result": "judge failed: lyceum: z-ai/glm-5.3 returned no text"
+  },
+  {
+   "learner": "x515151-27",
+   "kind": "age_young",
+   "mix": null,
+   "age": 9,
+   "ell": false,
+   "subject": "spanish",
+   "hobbies": [
+    "soap carving",
+    "rally car watching",
+    "tea ceremony"
+   ],
+   "dislikes": [
+    "gamified points",
+    "jokes in lessons"
+   ],
+   "difficulties": [
+    "forgets formulas overnight",
+    "dyscalculia-like trouble with number sense"
+   ],
+   "level": "spanish_grade_05_home_places_and_directions L7",
+   "mirror": {
+    "id": "x515151-27~mirror",
+    "age": 69,
+    "hobbies": [
+     "weather chasing"
+    ],
+    "dislikes": [
+     "leaderboards",
+     "abstract symbols without a picture",
+     "food examples"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "P",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 10,
+   "errors": [],
+   "same_objective": true,
+   "objective_note": "Both versions teach the same objective: choosing ser for identity, origin, and traits vs estar for location and current state, using the required clear cases (Es alto, Está en casa) and adjective agreement; neither drifts to a different topic."
+  },
+  {
+   "learner": "x515151-33",
+   "kind": "random",
+   "mix": null,
+   "age": 26,
+   "ell": true,
+   "subject": "spanish",
+   "hobbies": [
+    "speedcubing"
+   ],
+   "dislikes": [],
+   "difficulties": [
+    "working memory overload on multi-step problems",
+    "attention that drifts after five minutes"
+   ],
+   "level": "spanish_grade_04_time_food_shopping_and_core_verbs L8",
+   "mirror": {
+    "id": "x515151-33~mirror",
+    "age": 52,
+    "hobbies": [
+     "birdwatching",
+     "lockpicking sport",
+     "beatboxing"
+    ],
+    "dislikes": [
+     "stories that waste time",
+     "sports examples"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 3,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 10,
+   "errors": [],
+   "same_objective": true,
+   "objective_note": "Both teach the same objective: irregular present of ir (voy/vas/va) with a/al + place and adónde. V1 adds all six forms, V2 adds a regular-hablar contrast, but neither drifts from the topic."
+  },
+  {
+   "learner": "x515151-36",
+   "kind": "random",
+   "mix": null,
+   "age": 33,
+   "ell": false,
+   "subject": "math",
+   "hobbies": [
+    "rock climbing"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "fractions_area_and_perimeter L20",
+   "mirror": {
+    "id": "x515151-36~mirror",
+    "age": 45,
+    "hobbies": [
+     "restoring old tractors",
+     "cave exploring"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "result": "judge failed: lyceum: z-ai/glm-5.3 returned no text"
+  },
+  {
+   "learner": "x515151-37",
+   "kind": "age_young",
+   "mix": null,
+   "age": 8,
+   "ell": false,
+   "subject": "english",
+   "hobbies": [
+    "longboarding",
+    "cricket"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "basics L10",
+   "mirror": {
+    "id": "x515151-37~mirror",
+    "age": 70,
+    "hobbies": [
+     "ship model building"
+    ],
+    "dislikes": [
+     "long reading passages",
+     "audio-only explanations"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "Q",
+    "natural": 2,
+    "forced": [
+     "The story may say the batter used a longboard to slide"
+    ],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 9,
+   "errors": [
+    "Version 1 (minor): 'ask who. Answer: the ship' applies the person-question word 'who' to an inanimate object, and 'Where? On the ship' is a circular model answer",
+    "Version 2 (minor): 'the batter used a longboard to slide' — sliding is not a cricket action; a contrived example that mixes sports and could confuse a cricket-interested child"
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach listening to a read-aloud, staying focused, and answering simple questions about what was heard; V1 stresses holding words and who/what/where recall, V2 stresses listener behaviors and answering from heard words rather than pictures or guesses."
+  },
+  {
+   "learner": "x515151-39",
+   "kind": "ell",
+   "mix": null,
+   "age": 48,
+   "ell": true,
+   "subject": "spanish",
+   "hobbies": [
+    "competitive yo-yo",
+    "quilting"
+   ],
+   "dislikes": [
+    "rewrites of the same idea three times",
+    "audio-only explanations"
+   ],
+   "difficulties": [
+    "missed a year of school"
+   ],
+   "level": "spanish_grade_04_time_food_shopping_and_core_verbs L8",
+   "mirror": {
+    "id": "x515151-39~mirror",
+    "age": 30,
+    "hobbies": [
+     "learning to juggle",
+     "minecraft redstone",
+     "tide pool exploring"
+    ],
+    "dislikes": [
+     "stories that waste time",
+     "competitive framing",
+     "formal academic tone"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 3,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 6,
+   "errors": [
+    "1: Check c2 is wrong and contradicts Block 7 of the same version: it asks for the reply to ¿Adónde vas? 'using the tú form of ir' and the explanation says 'the answer keeps vas', but the correct answer about oneself is 'Voy a la playa' (voy), as Block 7 itself correctly teaches.",
+    "1: Block 8 claims the three forms 'end in a vowel sound', but 'vas' ends in a consonant sound (/s/).",
+    "2: Block 4's mnemonic 'The forms get shorter as the person gets closer: voy, vas, va' is distorted — 'vas' is no shorter than 'voy', and the person referenced moves from the speaker (closest) to a third person (more distant), not closer."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the stated objective: conjugating irregular ir (voy, vas, va) and using it with adónde and a/al + place, as in Voy al trabajo. Version 1 adds supporting depth (pronoun dropping, word order, error correction) and Version 2 adds the wider conjugation table, but neither drifts to a different objective."
+  },
+  {
+   "learner": "x515151-45",
+   "kind": "contradict",
+   "mix": "solitary, no feedback wanted",
+   "age": 52,
+   "ell": false,
+   "subject": "spanish",
+   "hobbies": [
+    "ice hockey"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "spanish_grade_05_home_places_and_directions L7",
+   "mirror": {
+    "id": "x515151-45~mirror",
+    "age": 26,
+    "hobbies": [
+     "fixing bicycles"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "1",
+    "Q_best": "2",
+    "truthP": "1",
+    "truthQ": "2",
+    "targetIsP": false
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 5,
+   "target_fit_other": 3,
+   "interest": {
+    "uses": "Q",
+    "natural": 3,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": true,
+   "accuracy": 9,
+   "errors": [
+    "Version 2, Block 2: the table as laid out lists 'Está en casa' among the identity/trait examples before the 'state or condition' label appears, leaving the location example without its label and apparently grouped under ser (layout distortion; the individual grammar claims themselves are correct)"
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the target rule (ser for identity/origin/traits, estar for location/state) and both use the required clear cases Es alto and Está en casa; Version 2 adds the es/está aburrido meaning-shift nuance, which stays within the same ser-vs-estar decision objective."
+  },
+  {
+   "learner": "x515151-46",
+   "kind": "random",
+   "mix": null,
+   "age": 30,
+   "ell": false,
+   "subject": "iq",
+   "hobbies": [
+    "volunteering at a food bank",
+    "tea ceremony",
+    "learning to juggle"
+   ],
+   "dislikes": [
+    "cartoon characters",
+    "being told the answer right away"
+   ],
+   "difficulties": [
+    "forgets formulas overnight",
+    "dyscalculia-like trouble with number sense"
+   ],
+   "level": "advanced_analytical_thinking L20",
+   "mirror": {
+    "id": "x515151-46~mirror",
+    "age": 48,
+    "hobbies": [
+     "speedcubing",
+     "astrophotography"
+    ],
+    "dislikes": [
+     "gamified points"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 8,
+   "errors": [
+    "V1: rung-2 example is internally inconsistent — it states 'only one state breaks both patterns' but then describes the odd one as breaking only orientation ('Three states share face colour and corner orientation; one breaks orientation').",
+    "V1 (minor example detail): 8-second subs at 200 mm on a fixed tripod are described as giving 'round stars'; at 200 mm untracked the ~500 rule allows only ~2.5 s before trailing, so 8 s would still trail."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the same objective: read boredom/anxiety as mismatch signs, match challenge to current skill, and climb in short rungs/increments. V1 adds re-check and band-widening refinements; V2 stays on the core channel idea. No drift."
+  }
+ ]
+}

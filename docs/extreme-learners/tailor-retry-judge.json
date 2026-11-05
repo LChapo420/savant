@@ -1,0 +1,165 @@
+{
+ "label": "AI-judged (GLM-5.3, blind) on SIMULATED learners; not real-learner proof",
+ "writer": "coral",
+ "judge": "z-ai/glm-5.3",
+ "seed": 515151,
+ "n": 48,
+ "plant_every": 6,
+ "generated_at": "2026-11-05T02:14:59.407Z",
+ "usage": {
+  "writerCalls": 0,
+  "writerIn": 0,
+  "writerOut": 0,
+  "judgeCalls": {
+   "z-ai/glm-5.3": 2
+  },
+  "judgeTokens": {
+   "z-ai/glm-5.3": 43666
+  },
+  "errors": {}
+ },
+ "recs": [
+  {
+   "learner": "x515151-36",
+   "kind": "random",
+   "mix": null,
+   "age": 33,
+   "ell": false,
+   "subject": "math",
+   "hobbies": [
+    "rock climbing"
+   ],
+   "dislikes": [],
+   "difficulties": [],
+   "level": "multiplication_and_division L10",
+   "mirror": {
+    "id": "x515151-36~mirror",
+    "age": 45,
+    "hobbies": [
+     "restoring old tractors",
+     "cave exploring"
+    ],
+    "dislikes": []
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 4,
+   "target_fit_other": 3,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 10,
+   "errors": [],
+   "same_objective": true,
+   "objective_note": "Both teach the stated objective: interpreting a x b as a equal groups of b objects and writing multiplication sentences for equal groups. V1 adds an unequal-groups caution and V2 briefly notes factor-swap commutativity, but neither drifts off the equal-groups meaning of multiplication."
+  },
+  {
+   "learner": "x515151-39",
+   "kind": "ell",
+   "mix": null,
+   "age": 48,
+   "ell": true,
+   "subject": "spanish",
+   "hobbies": [
+    "competitive yo-yo",
+    "quilting"
+   ],
+   "dislikes": [
+    "rewrites of the same idea three times",
+    "audio-only explanations"
+   ],
+   "difficulties": [
+    "missed a year of school"
+   ],
+   "level": "spanish_grade_04_time_food_shopping_and_core_verbs L8",
+   "mirror": {
+    "id": "x515151-39~mirror",
+    "age": 30,
+    "hobbies": [
+     "learning to juggle",
+     "minecraft redstone",
+     "tide pool exploring"
+    ],
+    "dislikes": [
+     "stories that waste time",
+     "competitive framing",
+     "formal academic tone"
+    ]
+   },
+   "planted": false,
+   "verdict": {
+    "P_best": "2",
+    "Q_best": "1",
+    "truthP": "2",
+    "truthQ": "1",
+    "targetIsP": true
+   },
+   "fit": 2,
+   "target_pick_ok": 1,
+   "target_fit_score": 3,
+   "target_fit_other": 2,
+   "interest": {
+    "uses": "neither",
+    "natural": 0,
+    "forced": [],
+    "dislike_hit": false
+   },
+   "interest_uses_own": false,
+   "accuracy": 6,
+   "errors": [
+    "1: Check c2 is wrong and contradicts Block 7 of the same version: it asks for the reply to ¿Adónde vas? 'using the tú form of ir' and the explanation says 'the answer keeps vas', but the correct answer about oneself is 'Voy a la playa' (voy), as Block 7 itself correctly teaches.",
+    "1: Block 8 claims the three forms 'end in a vowel sound', but 'vas' ends in a consonant sound (/s/).",
+    "2: Block 4's mnemonic 'The forms get shorter as the person gets closer: voy, vas, va' is distorted — 'vas' is no shorter than 'voy', and the person referenced moves from the speaker (closest) to a third person (more distant), not closer."
+   ],
+   "same_objective": true,
+   "objective_note": "Both teach the stated objective: conjugating irregular ir (voy, vas, va) and using it with adónde and a/al + place, as in Voy al trabajo. Version 1 adds supporting depth (pronoun dropping, word order, error correction) and Version 2 adds the wider conjugation table, but neither drifts to a different objective."
+  },
+  {
+   "learner": "x515151-46",
+   "kind": "random",
+   "mix": null,
+   "age": 30,
+   "ell": false,
+   "subject": "iq",
+   "hobbies": [
+    "volunteering at a food bank",
+    "tea ceremony",
+    "learning to juggle"
+   ],
+   "dislikes": [
+    "cartoon characters",
+    "being told the answer right away"
+   ],
+   "difficulties": [
+    "forgets formulas overnight",
+    "dyscalculia-like trouble with number sense"
+   ],
+   "level": "abstract_reasoning L20",
+   "mirror": {
+    "id": "x515151-46~mirror",
+    "age": 48,
+    "hobbies": [
+     "speedcubing",
+     "astrophotography"
+    ],
+    "dislikes": [
+     "gamified points"
+    ]
+   },
+   "planted": false,
+   "result": "judge failed: lyceum: z-ai/glm-5.3 returned no text"
+  }
+ ]
+}
