@@ -41,7 +41,7 @@ const FIRST_SEC = Number(process.env.DAILY_FIRST_SEC || 600);
 const LATER_SEC = Number(process.env.DAILY_LATER_SEC || 180);
 const IPIP_PER_DAY = 4;
 const IPIP_SEC = 10;
-const KINDS = new Set(['forced', 'reason', 'span', 'speed', 'switch']);   // short, repeatable-or-single, no reading passages or mini-lessons
+const KINDS = new Set(['forced', 'reason', 'span', 'speed', 'switch', 'scale']);   // short, repeatable-or-single, no reading passages or mini-lessons
 const REPEAT = new Set(['span', 'speed', 'switch']);                      // generated fresh in the browser each time, so they can come back
 const MIN_GAIN_PER_MIN = 0.05;
 

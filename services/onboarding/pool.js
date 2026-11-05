@@ -108,6 +108,13 @@ add('sv:sports', 'goal', 12, 'survey', [inf('competitive_drive', 0.12), inf('soc
 add('sv:notes', 'goal', 45, 'survey', [inf('autonomy_preference', 0.15), inf('instruction_adherence', 0.1, -1), inf('help_seeking', 0.1), inf('misconception_persistence', 0.1)], { survey: 'notes' });
 add('sv:why', 'goal', 20, 'survey', [inf('intrinsic_motivation', 0.28), inf('extrinsic_reward_sensitivity', 0.2, -1), inf('identity_alignment', 0.28), inf('mastery_orientation', 0.2)], { survey: 'why' });
 
+// ── the daily check's own banks (content/daily-check/): IPIP scale items and own-wording taps. dailyOnly: the onboarding modes never pick them. ──────────
+{
+  const bank = require('../../content/daily-check');
+  for (const it of bank.SCALE_ITEMS) add(it.id, 'scale', 9, 'scale', it.maps.map(([stat, dir, r]) => inf(stat, r, dir)), { dailyOnly: true });
+  for (const it of bank.TAP_ITEMS) add(it.id, 'tap', 8, 'forced', [inf(it.measure, 0.2)], { dailyOnly: true, tap: true });
+}
+
 for (const it of pool) {
   for (const i of it.informs) if (i.r > RHO[it.family]) throw new Error(`pool: ${it.id} validity ${i.r} above its family ceiling`);
 }

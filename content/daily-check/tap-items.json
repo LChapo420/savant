@@ -1,0 +1,799 @@
+{
+ "note": "Own wording, validated:false. Writer deepseek-v4.1-flash (Munito); reviewer glm-5.3-flash (Munito, a different family). Never described as a validated instrument.",
+ "proposed": 106,
+ "kept": 88,
+ "items": [
+  {
+   "id": "tp:chunk_granularity:0",
+   "measure": "chunk_granularity",
+   "prompt": "You are learning to bake bread. What next?",
+   "high": "Read the whole recipe, then make the loaf.",
+   "low": "Read step one, then do step one.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:chunk_granularity:1",
+   "measure": "chunk_granularity",
+   "prompt": "You are learning a new card game. What next?",
+   "high": "Read all the rules, then play one round.",
+   "low": "Read one rule, then try that rule.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:abstraction_tolerance:2",
+   "measure": "abstraction_tolerance",
+   "prompt": "You are studying how area works. What next?",
+   "high": "Work through the formula for area.",
+   "low": "Count squares on a drawn shape first.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:abstraction_tolerance:3",
+   "measure": "abstraction_tolerance",
+   "prompt": "You are learning about averages. What next?",
+   "high": "Use the average formula on numbers.",
+   "low": "Sort a pile of blocks into equal groups.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:example_density_need:4",
+   "measure": "example_density_need",
+   "prompt": "You are learning a new math rule. What next?",
+   "high": "Try five different problems using the rule.",
+   "low": "Try one problem, then move on.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:example_density_need:5",
+   "measure": "example_density_need",
+   "prompt": "You are learning a new word. What next?",
+   "high": "Read five sentences that use the word.",
+   "low": "Read one sentence with the word.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:text_density_tolerance:6",
+   "measure": "text_density_tolerance",
+   "prompt": "You are reading about volcanoes. What next?",
+   "high": "Read the long article with many details.",
+   "low": "Read the short list of key facts.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:text_density_tolerance:7",
+   "measure": "text_density_tolerance",
+   "prompt": "You are studying a history topic. What next?",
+   "high": "Read the full chapter page by page.",
+   "low": "Read the bullet points and captions.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:jargon_absorption:8",
+   "measure": "jargon_absorption",
+   "prompt": "You are learning new words in a lesson. What next?",
+   "high": "Move on after seeing each word once.",
+   "low": "Review each word's meaning again and again.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:spatial_anchoring:9",
+   "measure": "spatial_anchoring",
+   "prompt": "You are learning how a bike works. What next?",
+   "high": "Study a labeled drawing of the bike.",
+   "low": "Read a list of bike parts and steps.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:spatial_anchoring:10",
+   "measure": "spatial_anchoring",
+   "prompt": "You are learning about the water cycle. What next?",
+   "high": "Trace the cycle on a diagram.",
+   "low": "Read the cycle as a written list.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:global_framing_need:11",
+   "measure": "global_framing_need",
+   "prompt": "You are starting a new book chapter. What next?",
+   "high": "Read the chapter summary before the details.",
+   "low": "Start reading at the first detail.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:global_framing_need:12",
+   "measure": "global_framing_need",
+   "prompt": "You are learning a new board game. What next?",
+   "high": "Read the goal and overview first.",
+   "low": "Read the first small rule, then play.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:narrative_pull:13",
+   "measure": "narrative_pull",
+   "prompt": "You are learning about earthquakes. What next?",
+   "high": "Read a story about a town during a quake.",
+   "low": "Read a clear list of quake facts.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:narrative_pull:14",
+   "measure": "narrative_pull",
+   "prompt": "You are studying a math idea. What next?",
+   "high": "Read a story where a character uses the idea.",
+   "low": "Read a direct explanation of the idea.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:tone_formality:15",
+   "measure": "tone_formality",
+   "prompt": "You write a study note for yourself. Which note would you make?",
+   "high": "Write full sentences with proper terms and clear structure.",
+   "low": "Jot a quick, chatty note like you are talking to a friend.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:elaboration_benefit:16",
+   "measure": "elaboration_benefit",
+   "prompt": "You finish a chapter. What would you do next?",
+   "high": "Close the book and explain the main idea your own way.",
+   "low": "Reread the chapter summary and mark the key lines.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:elaboration_benefit:17",
+   "measure": "elaboration_benefit",
+   "prompt": "You have ten minutes before a quiz. What do you do?",
+   "high": "Say the key ideas out loud in your own words.",
+   "low": "Read the key ideas over again a few times.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:mnemonic_receptivity:18",
+   "measure": "mnemonic_receptivity",
+   "prompt": "You need to remember a list for class. What do you do next?",
+   "high": "Make a catchy phrase or rhyme to remember the list.",
+   "low": "Read the list over several times until it feels familiar.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:mnemonic_receptivity:19",
+   "measure": "mnemonic_receptivity",
+   "prompt": "You learn new science words. What would you try?",
+   "high": "Link each word to a silly picture or sound.",
+   "low": "Write each word and its meaning a few times.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:enactive_encoding:20",
+   "measure": "enactive_encoding",
+   "prompt": "You are learning a new game. What would you do next?",
+   "high": "Start playing right away and learn as you go.",
+   "low": "Watch someone play first, then take your turn.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:enactive_encoding:21",
+   "measure": "enactive_encoding",
+   "prompt": "You need to learn a new tool. What do you do?",
+   "high": "Try using the tool on a small task right away.",
+   "low": "Read the guide first, then try the tool.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:generation_effect:22",
+   "measure": "generation_effect",
+   "prompt": "You are studying for a test. What would you do next?",
+   "high": "Cover the answers and write them from memory.",
+   "low": "Read the answers and notes again carefully.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:generation_effect:23",
+   "measure": "generation_effect",
+   "prompt": "You review a diagram. What do you do next?",
+   "high": "Draw the diagram from memory, then check it.",
+   "low": "Look over the diagram and read its labels.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:step_explicitness:24",
+   "measure": "step_explicitness",
+   "prompt": "You follow a math example. What helps you most?",
+   "high": "See every small step written out in order.",
+   "low": "See the main steps, with small ones skipped.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:step_explicitness:25",
+   "measure": "step_explicitness",
+   "prompt": "You read instructions for a task. Which do you prefer?",
+   "high": "Instructions that show each step, even the easy ones.",
+   "low": "Instructions that skip steps you can figure out.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:worked_example_dependence:26",
+   "measure": "worked_example_dependence",
+   "prompt": "You meet a new type of problem. What would you do next?",
+   "high": "Study a full example with every step done.",
+   "low": "Read the main rule, then try the problem.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:worked_example_dependence:27",
+   "measure": "worked_example_dependence",
+   "prompt": "You learn a new method in class. What helps most?",
+   "high": "Follow a complete example from start to finish.",
+   "low": "Learn the key idea, then work it out yourself.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:feedback_granularity:28",
+   "measure": "feedback_granularity",
+   "prompt": "You finish a practice quiz. What comments do you want next?",
+   "high": "A detailed breakdown of each answer and why.",
+   "low": "A simple mark showing right or wrong.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:feedback_granularity:29",
+   "measure": "feedback_granularity",
+   "prompt": "You get a marked assignment back. What do you look at first?",
+   "high": "Notes on each part explaining what to improve.",
+   "low": "The score and which items were wrong.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:feedback_tone_sensitivity:30",
+   "measure": "feedback_tone_sensitivity",
+   "prompt": "You get comments on a draft. Which would you pick?",
+   "high": "Comments that start with what works, then suggest fixes.",
+   "low": "Comments that get straight to the fixes.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:dialogic_preference:31",
+   "measure": "dialogic_preference",
+   "prompt": "You start a new topic. What next?",
+   "high": "Ask the guide questions to work out the idea.",
+   "low": "Read the guide's clear explanation from start to finish.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:dialogic_preference:32",
+   "measure": "dialogic_preference",
+   "prompt": "You get an answer wrong. What next?",
+   "high": "Talk through questions to find the mistake.",
+   "low": "Read the correct steps from the guide.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:praise_sensitivity:33",
+   "measure": "praise_sensitivity",
+   "prompt": "You get a 'nice work' note. What next?",
+   "high": "Pick a harder task and keep going.",
+   "low": "Close the note and continue as before.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:social_framing:34",
+   "measure": "social_framing",
+   "prompt": "A math story has two characters. What next?",
+   "high": "Follow the characters' choices to solve it.",
+   "low": "Skip the story and use the numbers.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:social_framing:35",
+   "measure": "social_framing",
+   "prompt": "A lesson includes a person's story. What next?",
+   "high": "Read the person's story before the facts.",
+   "low": "Go straight to the lesson's main facts.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:cycle_architecture:36",
+   "measure": "cycle_architecture",
+   "prompt": "You start a lesson. What next?",
+   "high": "Read the whole lesson, then do a check.",
+   "low": "Read a small part, then answer a check.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:cycle_architecture:37",
+   "measure": "cycle_architecture",
+   "prompt": "You have a study block. What next?",
+   "high": "Learn a long section before any questions.",
+   "low": "Learn a short bit, then answer questions.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:intrinsic_motivation:38",
+   "measure": "intrinsic_motivation",
+   "prompt": "You have free study time. What next?",
+   "high": "Pick a topic just because it interests you.",
+   "low": "Pick a topic that earns you a reward.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:intrinsic_motivation:39",
+   "measure": "intrinsic_motivation",
+   "prompt": "A task has no prize. What next?",
+   "high": "Do it to enjoy learning something new today.",
+   "low": "Do it only if it counts for something.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:extrinsic_reward_sensitivity:40",
+   "measure": "extrinsic_reward_sensitivity",
+   "prompt": "You can earn a sticker for practice. What next?",
+   "high": "Do extra practice to get the sticker today.",
+   "low": "Do the same practice as you usually do.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:extrinsic_reward_sensitivity:41",
+   "measure": "extrinsic_reward_sensitivity",
+   "prompt": "A quiz offers a small prize. What next?",
+   "high": "Work harder to win the small prize.",
+   "low": "Work at your usual steady pace today.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:competitive_drive:42",
+   "measure": "competitive_drive",
+   "prompt": "You see a class score chart. What next?",
+   "high": "Try to beat the top score.",
+   "low": "Focus on your own next step.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:competitive_drive:43",
+   "measure": "competitive_drive",
+   "prompt": "A friend finishes first. What next?",
+   "high": "Race to finish ahead of them.",
+   "low": "Keep your own steady pace going.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:boredom_susceptibility:44",
+   "measure": "boredom_susceptibility",
+   "prompt": "The reading feels slow and dry. What do you do next?",
+   "high": "Close it and find something more lively.",
+   "low": "Stay with it and read the next short part.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:boredom_susceptibility:45",
+   "measure": "boredom_susceptibility",
+   "prompt": "A video lesson gets dull. What next?",
+   "high": "Skip ahead to a fun part.",
+   "low": "Keep watching and note one useful point.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:mastery_orientation:46",
+   "measure": "mastery_orientation",
+   "prompt": "You finish a practice quiz. What next?",
+   "high": "Review the missed ideas until they make sense.",
+   "low": "Check the score and move to the next quiz.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:mastery_orientation:47",
+   "measure": "mastery_orientation",
+   "prompt": "You can stop after the worksheet. What next?",
+   "high": "Try one more example to see why it works.",
+   "low": "Mark it done and move on to the next task.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:identity_alignment:48",
+   "measure": "identity_alignment",
+   "prompt": "A poster says 'students like you belong here.' What next?",
+   "high": "Sign up and read every detail.",
+   "low": "Read the details and keep walking.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:autonomy_preference:49",
+   "measure": "autonomy_preference",
+   "prompt": "You start a new project. What next?",
+   "high": "Pick your own topic and make a plan.",
+   "low": "Use the topic list and follow the steps.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:autonomy_preference:50",
+   "measure": "autonomy_preference",
+   "prompt": "A study session has free time. What next?",
+   "high": "Choose what to study and set your order.",
+   "low": "Follow the suggested study order.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:strategy_awareness:51",
+   "measure": "strategy_awareness",
+   "prompt": "You have a big chapter to learn. What next?",
+   "high": "Make flash cards and test yourself in rounds.",
+   "low": "Read the chapter again from the start.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:strategy_awareness:52",
+   "measure": "strategy_awareness",
+   "prompt": "You keep forgetting key terms. What next?",
+   "high": "Use a memory trick and quiz yourself.",
+   "low": "Read the terms over and over.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:planning_tendency:53",
+   "measure": "planning_tendency",
+   "prompt": "You get a long assignment. What next?",
+   "high": "List the steps and pick the first one.",
+   "low": "Open it and start writing right away.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:planning_tendency:54",
+   "measure": "planning_tendency",
+   "prompt": "You have a test in three days. What next?",
+   "high": "Make a short study schedule first.",
+   "low": "Open the book and start studying now.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:question_generation:55",
+   "measure": "question_generation",
+   "prompt": "You read a surprising fact. What next?",
+   "high": "Ask 'what if' and look for an answer.",
+   "low": "Note the fact and keep reading.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:question_generation:56",
+   "measure": "question_generation",
+   "prompt": "A lesson leaves one thing unclear. What next?",
+   "high": "Write your own question and chase it.",
+   "low": "Reread the lesson and move on.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:productive_struggle:57",
+   "measure": "productive_struggle",
+   "prompt": "A puzzle gets hard. What next?",
+   "high": "Keep trying alone for a while longer.",
+   "low": "Ask for a hint right away.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:productive_struggle:58",
+   "measure": "productive_struggle",
+   "prompt": "You are stuck on a math step. What next?",
+   "high": "Try another way before asking for help.",
+   "low": "Ask someone to show the step now.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:curiosity_hook:59",
+   "measure": "curiosity_hook",
+   "prompt": "A lesson starts with a mystery. What next?",
+   "high": "Lean in and guess the answer.",
+   "low": "Skip the mystery and read the facts.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:curiosity_hook:60",
+   "measure": "curiosity_hook",
+   "prompt": "A chapter opens with a big question. What next?",
+   "high": "Read on to find the answer.",
+   "low": "Go straight to the summary.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:relevance_demand:61",
+   "measure": "relevance_demand",
+   "prompt": "You open a new math rule. Which next?",
+   "high": "Find a real-life example first.",
+   "low": "Start the practice problems now.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:relevance_demand:62",
+   "measure": "relevance_demand",
+   "prompt": "A history chapter feels far away. Which next?",
+   "high": "Find a way it connects to today.",
+   "low": "Read the chapter and take notes.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:conceptual_bias:63",
+   "measure": "conceptual_bias",
+   "prompt": "You start a new topic. Which next?",
+   "high": "Ask why the steps work.",
+   "low": "Practice the steps in order.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:conceptual_bias:64",
+   "measure": "conceptual_bias",
+   "prompt": "You meet a new rule in math. Which next?",
+   "high": "Learn the idea behind the rule.",
+   "low": "Learn the rule and repeat it.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:application_orientation:65",
+   "measure": "application_orientation",
+   "prompt": "You learn a new skill. Which next?",
+   "high": "Try it on a real task.",
+   "low": "Read the theory behind it.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:integration_tendency:66",
+   "measure": "integration_tendency",
+   "prompt": "You start a new unit. Which next?",
+   "high": "Connect it to earlier lessons.",
+   "low": "Keep it apart from earlier lessons.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:integration_tendency:67",
+   "measure": "integration_tendency",
+   "prompt": "You review a chapter. Which next?",
+   "high": "Link this chapter to last week.",
+   "low": "Review this chapter by itself.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:depth_breadth:68",
+   "measure": "depth_breadth",
+   "prompt": "You open a new subject. Which next?",
+   "high": "Pick one part and go deep.",
+   "low": "Skim the whole subject first.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:depth_breadth:69",
+   "measure": "depth_breadth",
+   "prompt": "You find a long article. Which next?",
+   "high": "Dig deep into one idea.",
+   "low": "Read the whole article first.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:creative_extension:70",
+   "measure": "creative_extension",
+   "prompt": "You finish a lesson. Which next?",
+   "high": "Make your own example or story.",
+   "low": "Finish the given practice questions.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:creative_extension:71",
+   "measure": "creative_extension",
+   "prompt": "You get a class project. Which next?",
+   "high": "Add your own creative twist.",
+   "low": "Follow the project steps exactly.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:gamification_response:72",
+   "measure": "gamification_response",
+   "prompt": "Your study app shows points. Which next?",
+   "high": "Try to beat your points score.",
+   "low": "Close the points screen and study.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:gamification_response:73",
+   "measure": "gamification_response",
+   "prompt": "You open a study app with a streak. Which next?",
+   "high": "Protect your daily streak today.",
+   "low": "Study without checking the streak.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:novelty_hunger:74",
+   "measure": "novelty_hunger",
+   "prompt": "You plan a study session. Which next?",
+   "high": "Try a brand-new study method.",
+   "low": "Use the method you know well.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:novelty_hunger:75",
+   "measure": "novelty_hunger",
+   "prompt": "You are practicing a skill. Which next?",
+   "high": "Switch to a different practice game.",
+   "low": "Repeat the same practice game.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:structure_need:76",
+   "measure": "structure_need",
+   "prompt": "You start a new craft project. What next?",
+   "high": "Follow a clear step-by-step guide.",
+   "low": "Try it freely and make it up as you go.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:structure_need:77",
+   "measure": "structure_need",
+   "prompt": "Your teacher gives a free-choice task. What next?",
+   "high": "Ask for a short list of steps to follow.",
+   "low": "Choose your own way to begin right away.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:intake_baseline:78",
+   "measure": "intake_baseline",
+   "prompt": "You open a new learning app. What next?",
+   "high": "Start with a big lesson and many new ideas.",
+   "low": "Start with one small idea at a time.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:intake_baseline:79",
+   "measure": "intake_baseline",
+   "prompt": "You read a new chapter. What next?",
+   "high": "Read the whole chapter in one go.",
+   "low": "Read one short section, then pause.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:warmup_latency:80",
+   "measure": "warmup_latency",
+   "prompt": "You sit down to study. What next?",
+   "high": "Do a slow warm-up before the main task.",
+   "low": "Jump straight into the main task now.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:warmup_latency:81",
+   "measure": "warmup_latency",
+   "prompt": "A group activity starts. What next?",
+   "high": "Watch for a bit, then join in.",
+   "low": "Join in as soon as it starts.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:interleaving_tolerance:82",
+   "measure": "interleaving_tolerance",
+   "prompt": "You plan a study session. What next?",
+   "high": "Mix three topics in one practice round.",
+   "low": "Finish one topic before starting the next.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:interleaving_tolerance:83",
+   "measure": "interleaving_tolerance",
+   "prompt": "You choose a practice set. What next?",
+   "high": "Pick a set with mixed question types.",
+   "low": "Pick a set with one question type only.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:session_rhythm:84",
+   "measure": "session_rhythm",
+   "prompt": "You plan your week. What next?",
+   "high": "Set the same study time each day.",
+   "low": "Study whenever a free moment comes.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:session_rhythm:85",
+   "measure": "session_rhythm",
+   "prompt": "You finish a study session. What next?",
+   "high": "Mark the next session on your calendar.",
+   "low": "Wait and see when you study next.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:reentry_cost:86",
+   "measure": "reentry_cost",
+   "prompt": "You return after a week away. What next?",
+   "high": "Read a quick recap before starting again.",
+   "low": "Open the task and continue right away.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  },
+  {
+   "id": "tp:reentry_cost:87",
+   "measure": "reentry_cost",
+   "prompt": "You come back to a project after a break. What next?",
+   "high": "Review your last notes before you continue.",
+   "low": "Jump back in and pick up where you left.",
+   "validated": false,
+   "review": "glm-5.3-flash: reading ok, not sensitive, on the measure"
+  }
+ ]
+}

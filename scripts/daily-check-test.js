@@ -172,5 +172,75 @@ check('deletion and download: no new collection; the screens and routes are wire
   assert.ok(read('services/scorecard/hooks.js').includes('onDailyCheck'));
 });
 
+// ── round 2: the new item banks (content/daily-check/) ───────────────────────────────────────────────────────────────────────────
+const bank = require('../content/daily-check');
+const { STATS } = require('../services/scorecard/stats');
+const tasks = require('../services/onboarding/tasks');
+const { Planner } = require('../services/onboarding/plan');
+const model = require('../services/onboarding/model');
+const STAT_SET = new Set(STATS.map((x) => x.id));
+
+check('scale bank: public-domain IPIP items with a source page and key, mapped to real measures, none repeating the sign-up sixteen', () => {
+  assert.ok(bank.SCALE_ITEMS.length >= 60, 'a real bank');
+  const sixteen = new Set(require('../content/ipip-items').ITEMS.map((i) => i.text.toLowerCase()));
+  for (const it of bank.SCALE_ITEMS) {
+    assert.ok(/^https:\/\/ipip\.ori\.org\//.test(it.source), it.id);
+    assert.ok(it.key === 1 || it.key === -1, it.id);
+    assert.ok(it.ipip_stem && it.text.startsWith('I '), it.id);
+    assert.ok(!sixteen.has(it.text.toLowerCase()), `${it.id} repeats a sign-up item`);
+    for (const [stat, dir, r] of it.maps) { assert.ok(STAT_SET.has(stat), stat); assert.ok(dir === 1 || dir === -1); assert.ok(r > 0 && r <= model.SCENARIOS.central.scale, `${it.id} validity`); }
+  }
+});
+
+check('tap bank: our own wording, every item marked validated:false, never claimed as validated', () => {
+  assert.ok(bank.TAP_ITEMS.length >= 30, 'a real bank');
+  for (const t of bank.TAP_ITEMS) {
+    assert.strictEqual(t.validated, false, t.id);
+    assert.ok(STAT_SET.has(t.measure) && t.prompt && t.high && t.low, t.id);
+    assert.ok(!/diagnos|disorder|adhd|dyslex|autis|depress/i.test(`${t.prompt} ${t.high} ${t.low}`), `${t.id} sensitive wording`);
+    assert.ok(Math.max(t.high.split(' ').length, t.low.split(' ').length) <= 22, `${t.id} too long`);
+  }
+  const doc = read('docs/SCORECARD-LIVE.md');
+  assert.ok(/validated: ?false/.test(doc) || /not validated/i.test(doc), 'the doc says so');
+});
+
+check('new items present and score through the real task path (scale as an agreement step, tap as a forced pair)', () => {
+  const sc = Object.values(require('../services/onboarding/pool').byId).find((i) => i.kind === 'scale');
+  const v = tasks.present(sc, 5);
+  assert.strictEqual(v.kind, 'ipip'); assert.strictEqual(v.items.length, 1);
+  const hi = tasks.score(sc, { answers: { [sc.id]: 5 } }); const lo = tasks.score(sc, { answers: { [sc.id]: 1 } });
+  for (const i of sc.informs) assert.ok(hi[i.stat] * lo[i.stat] < 0 && Math.sign(hi[i.stat]) === i.sign, 'direction follows the key');
+  const tp = Object.values(require('../services/onboarding/pool').byId).find((i) => i.tap);
+  const tv = tasks.present(tp, 9);
+  assert.strictEqual(tv.kind, 'forced'); assert.strictEqual(tv.options.length, 2);
+  assert.strictEqual(tasks.score(tp, { choice: 'high' })[tp.informs[0].stat], tp.informs[0].sign);
+});
+
+check('onboarding never picks daily-only items; the daily planner can', () => {
+  const pl = new Planner('accurate', {});
+  const seen = new Set();
+  for (let g = 0; g < 80; g++) { const it = pl.next(); if (!it) break; seen.add(it.id); pl.record(it, Object.fromEntries(it.informs.map((i) => [i.stat, 0.3])), it.sec); }
+  assert.ok(![...seen].some((id) => byId[id] && byId[id].dailyOnly), 'onboarding stays as it was');
+  const run = daily.openRun(user().id, T0);
+  let dailyOnly = 0;
+  for (let g = 0; g < 400; g++) { const it = run.planner.next(); if (!it) break; if (it.dailyOnly) dailyOnly += 1; run.planner.record(it, Object.fromEntries(it.informs.map((i) => [i.stat, 0.3])), it.sec); }
+  assert.ok(dailyOnly > 0, 'the daily planner uses the new banks');
+});
+
+check('validity scenarios: the low end of section 6 is below the middle for the new families and the planner ceilings hold', () => {
+  const S = model.SCENARIOS;
+  assert.ok(S.low6.scale < S.central.scale && S.low6.tap < S.central.tap && S.central.tap < S.optimistic.tap);
+  for (const it of Object.values(require('../services/onboarding/pool').byId)) for (const i of it.informs) assert.ok(i.r <= model.RHO[it.family], it.id);
+});
+
+check('tail weight: off by default (same observations), heavier only for a reading far from the middle', () => {
+  const baseline = require('../services/onboarding/baseline');
+  const est = { a: { dataValue: 50, P: 1 }, b: { dataValue: 95, P: 1 } };
+  const off = baseline.observations(est, {});
+  assert.deepStrictEqual(off.map((o) => o.weight), [1, 1]);
+  const on = baseline.observations(est, {}, { tailK: 0.5 });
+  assert.strictEqual(on[0].weight, 1); assert.ok(on[1].weight > 1.2 && on[1].weight <= 2, 'only the tail reading counts for more');
+});
+
 if (failed) { console.log(`\n${failed} failed`); process.exit(1); }
 console.log('\ndaily check: all ok');

@@ -111,6 +111,8 @@ const CHANNELS = new Set(String(opt('channels', '')).split(',').map((s) => s.tri
 // Not modelled here (so the real check is, if anything, better): the memory check when one is due and the games.
 const DAILY = Number(opt('daily', 0)) !== 0;
 const DAILY_SKIP = Number(opt('daily-skip', 0));
+// --daily-tail=K: the heavier-tailed read of the daily check's data (services/onboarding/baseline.js observations tailK); 0 = off.
+if (Number(opt('daily-tail', 0)) > 0) process.env.DAILY_TAIL_K = String(opt('daily-tail', 0));
 const DAILY_SCN = opt('daily-scenario', 'central');
 const IPIP_R = 0.5;       // how well a validated-scale item reflects the measure it maps to (published self-report validities: about 0.3 to 0.5)
 const GAME_R = 0.6;       // how well a two-minute game reflects the trait it is a task for (a rough, assumed correlation)
