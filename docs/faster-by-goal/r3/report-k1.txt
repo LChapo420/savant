@@ -1,0 +1,68 @@
+DESIGN docs/faster-by-goal/r3/D-k1.json (seed 777002, 80 learners), HELD-OUT docs/faster-by-goal/r3/H-k1.json (seed 20261105, 160 learners); forget 1 lesson 1 kloss 1
+
+cell = mean hours over all learners, share reaching the target
+goal | Savant (app) | Savant stop-at-target BOUND | self-study fixed spaced | normal fixed-N (N) | typical tutor fixed-N (N) | normal ORACLE bound | tutor ORACLE bound | backward Savant (P-floor)
+horizon 1 week | 14.6h 98% | 14.0h 98% | 12.9h 10% | 15.7h 75% (7) | 13.6h 93% (7) | 15.2h 75% | 12.7h 93% | -
+horizon 1 month | 17.7h 100% | 16.5h 100% | 14.7h 1% | 20.5h 59% (14) | 18.2h 77% (14) | 20.0h 59% | 17.3h 77% | -
+horizon 6 months | 21.2h 100% | 20.5h 100% | 17.0h 0% | 20.5h 0% (14) | 18.2h 7% (14) | 20.5h 0% | 18.2h 7% | -
+horizon 1 year | 22.8h 100% | 22.1h 100% | 19.3h 0% | 10.1h 0% (0) | 8.7h 0% (0) | 20.5h 0% | 18.2h 0% | -
+no test day (3 y) | 25.6h 100% | 24.6h 100% | 24.1h 0% | 10.1h 0% (0) | 8.7h 0% (0) | 20.5h 0% | 18.2h 0% | -
+date 1 week | 15.7h 100% | 14.7h 100% | 13.3h 6% | 19.1h 91% (14) | 17.6h 96% (14) | 17.8h 91% | 15.3h 96% | 15.7h 99% (7-0.95-0.3)
+date 1 month | 18.2h 100% | 17.0h 100% | 14.7h 0% | 22.1h 61% (14) | 20.0h 81% (14) | 21.3h 61% | 18.1h 81% | 18.0h 99% (10-0.95-0.3)
+date 6 months | 22.2h 100% | 21.0h 100% | 17.0h 0% | 22.2h 58% (14) | 20.3h 77% (14) | 21.7h 58% | 18.9h 77% | 20.8h 99% (7-0.95-0.3)
+date 1 year | 23.8h 100% | 22.7h 100% | 19.4h 0% | 22.2h 58% (14) | 20.3h 77% (14) | 21.7h 58% | 18.9h 77% | 22.2h 100% (7-0.95-0.3)
+
+Savant (app) against each non-oracle baseline, per learner: faster (both reach target, fewer hours) / not faster (both reach) / Savant misses / baseline misses, Savant reaches (NOT counted as faster) / both miss
+horizon 1 week       self-study SR 0/16/0/140/4 | normal fixed-N 117/3/0/36/4 | tutor fixed-N 32/113/3/11/1 | tutor oracle 4/141/3/11/1
+horizon 1 month      self-study SR 0/2/0/158/0 | normal fixed-N 94/0/0/66/0 | tutor fixed-N 114/9/0/37/0 | tutor oracle 57/66/0/37/0
+horizon 6 months     self-study SR 0/0/0/160/0 | normal fixed-N 0/0/0/160/0 | tutor fixed-N 0/11/0/149/0 | tutor oracle 0/11/0/149/0
+horizon 1 year       self-study SR 0/0/0/160/0 | normal fixed-N 0/0/0/160/0 | tutor fixed-N 0/0/0/160/0 | tutor oracle 0/0/0/160/0
+no test day (3 y)    self-study SR 0/0/0/160/0 | normal fixed-N 0/0/0/160/0 | tutor fixed-N 0/0/0/160/0 | tutor oracle 0/0/0/160/0
+date 1 week          self-study SR 0/10/0/150/0 | normal fixed-N 145/0/0/15/0 | tutor fixed-N 150/3/0/7/0 | tutor oracle 55/98/0/7/0
+date 1 month         self-study SR 0/0/0/160/0 | normal fixed-N 97/0/0/63/0 | tutor fixed-N 125/5/0/30/0 | tutor oracle 70/60/0/30/0
+date 6 months        self-study SR 0/0/0/160/0 | normal fixed-N 81/12/0/67/0 | tutor fixed-N 47/76/0/37/0 | tutor oracle 13/110/0/37/0
+date 1 year          self-study SR 0/0/0/160/0 | normal fixed-N 37/56/0/67/0 | tutor fixed-N 2/121/0/37/0 | tutor oracle 2/121/0/37/0
+
+Tutor multiplier sensitivity (guesses: low 1.1x learning / pages 10% shorter; typical 1.3x / 25%; high 1.8x / 50%), fixed-N chosen on design, mean hours and share
+horizon 1 week       tutor_lo N7: 15.1h 85% | tutor N7: 13.6h 93% | tutor_bloom N7: 11.4h 94%
+horizon 1 month      tutor_lo N14: 19.8h 69% | tutor N14: 18.2h 77% | tutor_bloom N14: 15.8h 86%
+horizon 6 months     tutor_lo N14: 19.8h 6% | tutor N14: 18.2h 7% | tutor_bloom N14: 15.8h 13%
+horizon 1 year       tutor_lo N0: 10.0h 0% | tutor N0: 8.7h 0% | tutor_bloom N0: 6.8h 0%
+no test day (3 y)    tutor_lo N0: 10.0h 0% | tutor N0: 8.7h 0% | tutor_bloom N0: 6.8h 0%
+date 1 week          tutor_lo N14: 18.6h 94% | tutor N14: 17.6h 96% | tutor_bloom N14: 15.9h 99%
+date 1 month         tutor_lo N14: 21.6h 74% | tutor N14: 20.0h 81% | tutor_bloom N14: 17.6h 92%
+date 6 months        tutor_lo N14: 22.0h 64% | tutor N14: 20.3h 77% | tutor_bloom N14: 17.8h 91%
+date 1 year          tutor_lo N14: 22.0h 64% | tutor N14: 20.3h 77% | tutor_bloom N14: 17.8h 91%
+
+Savant hours spread over all learners: mean / median / worst 10% / worst 1% (app) and self-study SR
+horizon 1 week       savant 14.6/13.5/22.8/30.9 | self SR 12.9/11.8/20.0/28.5 | stop-bound 14.0/12.9/21.6/29.8
+horizon 1 month      savant 17.7/16.7/25.9/36.0 | self SR 14.7/13.7/22.1/30.5 | stop-bound 16.5/15.4/24.8/34.5
+horizon 6 months     savant 21.2/19.8/31.2/40.7 | self SR 17.0/15.9/25.6/33.8 | stop-bound 20.5/19.2/30.2/39.7
+horizon 1 year       savant 22.8/21.5/33.7/43.0 | self SR 19.3/18.1/28.7/37.0 | stop-bound 22.1/20.7/32.8/41.9
+no test day (3 y)    savant 25.6/24.2/38.0/47.4 | self SR 24.1/22.8/36.2/43.7 | stop-bound 24.6/23.3/36.8/45.9
+date 1 week          savant 15.7/14.6/23.3/32.5 | self SR 13.3/12.3/20.3/29.3 | stop-bound 14.7/13.4/21.7/31.0
+date 1 month         savant 18.2/17.0/26.9/36.1 | self SR 14.7/13.7/22.2/30.5 | stop-bound 17.0/15.8/25.4/34.2
+date 6 months        savant 22.2/20.9/33.1/42.7 | self SR 17.0/15.9/25.6/33.8 | stop-bound 21.0/19.9/31.3/40.8
+date 1 year          savant 23.8/22.2/35.6/44.4 | self SR 19.4/18.2/28.8/37.0 | stop-bound 22.7/21.2/33.9/42.4
+
+Backward plan on design (dated goals): pass share and mean hours per setting
+date 1 week: 7-0.95-0 33%/15.9h  7-0.95-0.1 76%/16.2h  7-0.95-0.2 96%/16.1h  7-0.95-0.3 100%/16.0h  10-0.95-0 69%/17.1h  10-0.95-0.1 96%/16.6h  10-0.95-0.2 100%/16.4h  10-0.95-0.3 100%/16.4h  14-0.95-0 85%/17.4h  14-0.95-0.1 98%/16.6h  14-0.95-0.2 100%/16.5h  14-0.95-0.3 100%/16.5h
+date 1 month: 7-0.95-0 4%/16.6h  7-0.95-0.1 39%/19.1h  7-0.95-0.2 88%/18.6h  7-0.95-0.3 99%/18.3h  10-0.95-0 20%/18.9h  10-0.95-0.1 81%/20.1h  10-0.95-0.2 98%/19.1h  10-0.95-0.3 100%/18.7h  14-0.95-0 55%/21.5h  14-0.95-0.1 98%/20.5h  14-0.95-0.2 100%/19.4h  14-0.95-0.3 100%/19.1h
+date 6 months: 7-0.95-0 0%/16.7h  7-0.95-0.1 0%/22.0h  7-0.95-0.2 45%/21.7h  7-0.95-0.3 100%/21.6h  10-0.95-0 19%/19.1h  10-0.95-0.1 11%/22.9h  10-0.95-0.2 71%/22.3h  10-0.95-0.3 100%/21.9h  14-0.95-0 50%/21.8h  14-0.95-0.1 53%/24.1h  14-0.95-0.2 90%/22.9h  14-0.95-0.3 100%/22.1h
+date 1 year: 7-0.95-0 0%/16.7h  7-0.95-0.1 0%/22.8h  7-0.95-0.2 45%/23.0h  7-0.95-0.3 100%/23.1h  10-0.95-0 19%/19.1h  10-0.95-0.1 0%/23.5h  10-0.95-0.2 56%/23.2h  10-0.95-0.3 100%/23.3h  14-0.95-0 50%/21.8h  14-0.95-0.1 6%/24.5h  14-0.95-0.2 74%/23.7h  14-0.95-0.3 100%/23.4h
+
+HORIZON goals judged per skill at ITS OWN horizon (skill learned + H days): share of learners reaching 0.70 (Savant app / self-study SR)
+horizon 1 week       savant 94% | self SR 53%
+horizon 1 month      savant 100% | self SR 9%
+horizon 6 months     savant 100% | self SR 0%
+horizon 1 year       savant 100% | self SR 0%
+-- Denser generic spaced schedule (self-study variant 2): mean hours, share reaching target; Savant app faster/not faster/Savant misses/baseline misses/both miss
+horizon 1 week       14.2h 53% | 45/39/0/72/4
+horizon 1 month      16.8h 39% | 28/34/0/98/0
+horizon 6 months     21.9h 24% | 39/0/0/121/0
+horizon 1 year       24.6h 24% | 39/0/0/121/0
+no test day (3 y)    29.9h 19% | 30/0/0/130/0
+date 1 week          14.7h 49% | 8/70/0/82/0
+date 1 month         17.0h 35% | 16/40/0/104/0
+date 6 months        21.9h 24% | 30/8/0/122/0
+date 1 year          24.6h 23% | 36/0/0/124/0

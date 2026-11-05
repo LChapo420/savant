@@ -1,0 +1,55 @@
+file docs/faster-by-goal/main.json seed 909091 forget 1 lesson 1 target 0.7 jit false learners 160
+
+HOURS to cover the course and reach the target at the test day (passers only), and pass rate. mean / median / p90 / p99 (worst 1%).
+test in 1 week       | savant pass 100% 15.7/14.6/23.0/33.0 | normal pass 100% 13.2/12.4/19.5/27.9 | tutor pass 100% 11.0/10.4/16.0/24.1 | tutor_bloom pass 100% 9.0/8.6/13.2/18.9
+test in 1 month      | savant pass 100% 18.0/16.9/25.8/35.9 | normal pass 100% 13.4/12.6/19.8/27.9 | tutor pass 100% 11.4/10.6/16.5/25.6 | tutor_bloom pass 100% 9.3/9.0/13.6/19.0
+test in 6 months     | savant pass 100% 21.9/20.5/31.5/42.2 | normal pass 100% 13.4/12.6/19.8/27.9 | tutor pass 100% 11.5/10.8/16.9/25.7 | tutor_bloom pass 100% 9.4/9.0/13.6/19.0
+test in 1 year       | savant pass 100% 23.6/22.1/34.0/45.4 | normal pass 100% 13.4/12.6/19.8/27.9 | tutor pass 100% 11.5/10.8/16.9/25.6 | tutor_bloom pass 100% 9.4/9.0/13.6/19.0
+a year (horizon)     | savant pass 100% 22.5/21.0/33.0/43.8 | normal pass 0% n/a/n/a/n/a/n/a | tutor pass 1% 22.0/22.0/22.0/22.0 | tutor_bloom pass 0% n/a/n/a/n/a/n/a
+forever (3 y test)   | savant pass 100% 25.1/23.3/36.9/47.6 | normal pass 0% n/a/n/a/n/a/n/a | tutor pass 0% n/a/n/a/n/a/n/a | tutor_bloom pass 0% n/a/n/a/n/a/n/a
+
+PER-LEARNER comparison, savant vs baseline (n learners): faster / slower-or-equal (both pass) / savant fails / baseline fails (savant passes) / both fail
+test in 1 week       | normal: 0/160/0/0/0 ratio mean 1.20 med 1.20 p90 1.31 | tutor: 0/160/0/0/0 ratio mean 1.43 med 1.44 p90 1.55 | tutor_bloom: 0/160/0/0/0 ratio mean 1.74 med 1.76 p90 1.91
+test in 1 month      | normal: 0/160/0/0/0 ratio mean 1.36 med 1.36 p90 1.48 | tutor: 0/160/0/0/0 ratio mean 1.60 med 1.61 p90 1.73 | tutor_bloom: 0/160/0/0/0 ratio mean 1.94 med 1.98 p90 2.11
+test in 6 months     | normal: 0/160/0/0/0 ratio mean 1.66 med 1.66 p90 1.85 | tutor: 0/160/0/0/0 ratio mean 1.93 med 1.96 p90 2.12 | tutor_bloom: 0/160/0/0/0 ratio mean 2.36 med 2.38 p90 2.58
+test in 1 year       | normal: 0/160/0/0/0 ratio mean 1.78 med 1.78 p90 2.00 | tutor: 0/160/0/0/0 ratio mean 2.08 med 2.11 p90 2.27 | tutor_bloom: 0/160/0/0/0 ratio mean 2.53 med 2.57 p90 2.78
+a year (horizon)     | normal: 0/0/0/160/0 ratio mean NaN med NaN p90 NaN | tutor: 0/1/0/159/0 ratio mean 1.14 med 1.14 p90 1.14 | tutor_bloom: 0/0/0/160/0 ratio mean NaN med NaN p90 NaN
+forever (3 y test)   | normal: 0/0/0/160/0 ratio mean NaN med NaN p90 NaN | tutor: 0/0/0/160/0 ratio mean NaN med NaN p90 NaN | tutor_bloom: 0/0/0/160/0 ratio mean NaN med NaN p90 NaN
+
+ASSUMPTION (a) lower goal takes fewer hours: learners with an inversion between adjacent goals (hours at the lower goal exceed the next by > 0.1 h, both passing), of passers at both
+test in 1 week -> test in 1 month: inversions 0/160; extra hours for the longer goal mean 2.3 median 2.3 min 1.0
+test in 1 month -> test in 6 months: inversions 0/160; extra hours for the longer goal mean 3.9 median 3.7 min 1.6
+test in 6 months -> test in 1 year: inversions 0/160; extra hours for the longer goal mean 1.6 median 1.5 min 0.7
+test in 1 year -> forever (3 y test): inversions 0/160; extra hours for the longer goal mean 1.5 median 1.4 min -0.0
+
+BY KIND: savant hours mean (worst) and pass rate; ratio to the typical tutor (both pass) mean
+age_old     n 12 | 17.2 (25.1) 100% x1.44 | 20.0 (29.5) 100% x1.66 | 24.7 (36.7) 100% x2.01 | 26.4 (38.6) 100% x2.15 | 25.2 (37.6) 100% xNaN | 28.2 (42.1) 100% xNaN
+age_young   n 12 | 16.0 (23.0) 100% x1.41 | 18.6 (25.4) 100% x1.58 | 22.7 (31.5) 100% x1.94 | 24.3 (34.0) 100% x2.08 | 23.4 (33.2) 100% xNaN | 26.0 (37.1) 100% xNaN
+contradict  n 24 | 17.3 (33.0) 100% x1.41 | 19.8 (35.9) 100% x1.58 | 24.0 (42.2) 100% x1.90 | 25.8 (45.7) 100% x2.05 | 24.5 (43.8) 100% xNaN | 27.2 (47.6) 100% xNaN
+ell         n 12 | 19.0 (33.0) 100% x1.42 | 21.6 (35.1) 100% x1.55 | 25.9 (41.6) 100% x1.88 | 27.6 (43.9) 100% x2.00 | 26.5 (42.8) 100% xNaN | 29.4 (47.2) 100% xNaN
+ordinary    n 40 | 13.5 (27.3) 100% x1.45 | 15.6 (30.4) 100% x1.62 | 19.0 (35.1) 100% x1.96 | 20.3 (37.4) 100% x2.10 | 19.5 (37.0) 100% xNaN | 21.6 (40.5) 100% xNaN
+random      n 24 | 14.6 (33.0) 100% x1.41 | 16.8 (36.8) 100% x1.60 | 20.4 (43.0) 100% x1.93 | 22.0 (45.4) 100% x2.08 | 21.0 (44.4) 100% x1.14 | 23.5 (48.1) 100% xNaN
+tail_both   n 12 | 15.4 (25.7) 100% x1.43 | 17.4 (27.6) 100% x1.57 | 21.3 (33.8) 100% x1.89 | 22.9 (36.3) 100% x2.04 | 21.8 (34.8) 100% xNaN | 24.3 (38.7) 100% xNaN
+tail_hi     n 12 | 16.0 (29.0) 100% x1.39 | 18.5 (31.4) 100% x1.54 | 22.6 (37.7) 100% x1.90 | 24.5 (41.6) 100% x2.06 | 23.4 (40.0) 100% xNaN | 26.1 (44.8) 100% xNaN
+tail_lo     n 12 | 16.8 (26.8) 100% x1.49 | 19.1 (29.7) 100% x1.64 | 23.3 (36.8) 100% x1.99 | 25.1 (39.6) 100% x2.15 | 23.9 (37.6) 100% xNaN | 26.5 (41.7) 100% xNaN
+
+BY BAND: savant hours mean (worst) and pass rate; ratio to the typical tutor (both pass) mean
+13-17       n 17 | 14.4 (33.0) 100% x1.43 | 16.7 (36.8) 100% x1.58 | 20.3 (43.0) 100% x1.90 | 21.9 (45.4) 100% x2.06 | 21.0 (44.4) 100% xNaN | 23.3 (48.1) 100% xNaN
+18-29       n 27 | 13.9 (28.9) 100% x1.41 | 16.1 (31.3) 100% x1.57 | 19.7 (37.5) 100% x1.91 | 21.2 (39.6) 100% x2.05 | 20.2 (37.7) 100% xNaN | 22.4 (41.7) 100% xNaN
+30-59       n 61 | 16.5 (33.0) 100% x1.43 | 18.9 (35.9) 100% x1.61 | 22.9 (42.2) 100% x1.94 | 24.6 (45.7) 100% x2.09 | 23.4 (43.8) 100% x1.14 | 26.1 (47.6) 100% xNaN
+60+         n 35 | 15.6 (26.8) 100% x1.44 | 18.0 (29.7) 100% x1.61 | 22.1 (36.8) 100% x1.97 | 23.8 (39.1) 100% x2.11 | 22.7 (37.6) 100% xNaN | 25.4 (42.1) 100% xNaN
+8-12        n 20 | 16.7 (33.0) 100% x1.41 | 19.0 (35.1) 100% x1.58 | 23.1 (41.6) 100% x1.93 | 24.8 (43.9) 100% x2.07 | 23.9 (42.8) 100% xNaN | 26.5 (47.2) 100% xNaN
+
+HOURS SPLIT (savant, mean over learners, hours): lesson / practice / review, and share of lesson in first-pass (lesson+practice)
+test in 1 week       6.0 / 4.2 / 5.5  lesson share of first pass 59%, review share of all 35%
+test in 1 month      6.0 / 4.2 / 7.8  lesson share of first pass 59%, review share of all 43%
+test in 6 months     6.0 / 4.2 / 11.7  lesson share of first pass 59%, review share of all 54%
+test in 1 year       6.0 / 4.2 / 13.4  lesson share of first pass 59%, review share of all 57%
+a year (horizon)     6.0 / 4.2 / 12.3  lesson share of first pass 59%, review share of all 55%
+forever (3 y test)   6.0 / 4.2 / 14.9  lesson share of first pass 59%, review share of all 59%
+test in 1 week: savant failures 0
+test in 1 month: savant failures 0
+test in 6 months: savant failures 0
+test in 1 year: savant failures 0
+a year (horizon): savant failures 0
+forever (3 y test): savant failures 0
