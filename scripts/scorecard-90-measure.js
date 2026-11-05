@@ -544,6 +544,14 @@ if (STRATA) { // per-subgroup accuracy (100 - MAE), the guess baseline (pooled-m
   console.log(' on the measures each proxy shifts by >=0.5 SD (S5): ' + GROUPS10.filter((g) => table.S5[g].shifted).map((g) => g + '(' + table.S5[g].shifted.measures + ') ' + table.S5[g].shifted.acc + '[' + table.S5[g].shifted.guess_acc + '|' + (table.S5[g].shifted.removed * 100).toFixed(0) + '%]').join('  '));
   for (const st of Object.keys(table)) { console.log(' ' + st + ': ' + ['all', ...GROUPS10].map((g) => g + ' ' + table[st][g].acc + '[' + table[st][g].guess_acc + '|' + (table[st][g].removed * 100).toFixed(0) + '%]').join('  ')); console.log('    worst ' + gap[st].worst + ' ' + gap[st].worst_acc + ', best ' + gap[st].best + ' ' + gap[st].best_acc + ', gap ' + gap[st].gap); }
 }
+// --per-learner=file (docs/EXTREME-LEARNERS.md, SIMULATED): each learner's own mean absolute error over the 100 measures at day 0 (D0, the prior), S0, S1, S5 and the
+// guess baseline GB, plus the learner's ext tag (kind, mix, age), so a report can give per-individual percentiles and the worst learner's profile.
+const PL = arg('per-learner'); if (PL) {
+  const rowsOf = (st) => [...sideAB[st], ...sideBA[st]];
+  const R = {}; for (const st of ['D0', 'S0', 'S1', 'S5', 'GB']) R[st] = rowsOf(st);
+  const outL = TAGGED.map((L, i) => { const o2 = { ext: L.ext || null, age: L.age, profile: L.profile || null, days: DAYS }; for (const st of Object.keys(R)) o2[st] = Number(mean(R[st][i]).toFixed(3)); o2.e = Object.fromEntries(['S1', 'S5', 'GB'].map((st) => [st, R[st][i].map((v) => Number(v.toFixed(1)))])); o2.worst_measures = IDS.map((id, k) => [id, R.S5[i][k]]).sort((x, y) => y[1] - x[1]).slice(0, 5).map((x) => [x[0], Number(x[1].toFixed(1))]); return o2; });
+  fs.writeFileSync(PL, JSON.stringify(outL));
+}
 const o = arg('out'); if (o) fs.writeFileSync(o, JSON.stringify(out));
 const line = (st) => `${st}: ACC ${summary[st].accuracy}% pairs<=5 ${(summary[st].learners_w5 * 100).toFixed(0)}% measures w5>=99% ${summary[st].measures_w5_99} MAE ${summary[st].mae}  measures<=5 ${summary[st].measures_le5}  <=10 ${summary[st].measures_le10}  learners within5 ${(summary[st].learners_w5 * 100).toFixed(0)}% within10 ${(summary[st].learners_w10 * 100).toFixed(0)}%  groups(mae/le5) a ${summary[st].groups.a.mae}/${summary[st].groups.a.le5} b ${summary[st].groups.b.mae}/${summary[st].groups.b.le5} c ${summary[st].groups.c.mae}/${summary[st].groups.c.le5} d ${summary[st].groups.d.mae}/${summary[st].groups.d.le5}`;
 console.log(`half=${HALF} blind=${BLIND} truth_factors=${A.truth_factors} minutes/learner ${out.minutes_total_per_learner} (${out.minutes_per_day}/day)`);
