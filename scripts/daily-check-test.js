@@ -242,5 +242,17 @@ check('tail weight: off by default (same observations), heavier only for a readi
   assert.strictEqual(on[0].weight, 1); assert.ok(on[1].weight > 1.2 && on[1].weight <= 2, 'only the tail reading counts for more');
 });
 
+check('the page runs under the site content security policy: no inline script, and the config loads before the runner', () => {
+  const html = require('fs').readFileSync(require('path').join(__dirname, '..', 'public', 'daily-check.html'), 'utf8');
+  assert.ok(!/<script>/.test(html), 'an inline script is blocked, and the page then falls back to the onboarding quiz');
+  assert.ok(html.indexOf('daily-check-config.js') > -1 && html.indexOf('daily-check-config.js') < html.indexOf('baseline.js'), 'config before baseline.js');
+});
+
+check('stopping a run hides the offer until tomorrow', () => {
+  const src = require('fs').readFileSync(require('path').join(__dirname, '..', 'services', 'daily-check.js'), 'utf8');
+  const body = src.slice(src.indexOf('function stop('), src.indexOf('const markIpip'));
+  assert.ok(body.includes('skip(user, now)'), 'stop marks today as skipped');
+});
+
 if (failed) { console.log(`\n${failed} failed`); process.exit(1); }
 console.log('\ndaily check: all ok');

@@ -220,7 +220,9 @@ function stop(user, now = Date.now()) {
   if (!enabled() || !boosters.allowed(user)) return { error: 'Not available for this account.', code: 'not_allowed' };
   const active = getDaily(user.id).active;
   if (!active) return { error: 'No check is open.', code: 'stale' };
-  return closeRun(user.id, restore(active), now, { items: active.items });
+  const out = closeRun(user.id, restore(active), now, { items: active.items });
+  skip(user, now); // they chose to stop: no second offer today
+  return out;
 }
 
 /** The simulation's way of recording that these questionnaire items were asked (the real flow does it in answer()). */
