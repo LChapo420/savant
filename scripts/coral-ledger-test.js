@@ -176,8 +176,38 @@ const cleanEnv = () => { mu._setFetch(null); for (const k of ['CORAL_API_KEY', '
       assert.ok(ids({ ...base, coral: false }).every((i) => !i.startsWith('coral:')), 'an under-13 or no-consent learner never reaches Coral');
       assert.ok(ids({ ...base }).every((i) => !i.startsWith('coral:')), 'no clearance flag means no Coral');
       assert.ok(!ids({ ...base, coral: true, task: 'coach_turn' }).some((i) => i.startsWith('coral:')), 'not for tasks that do not list it');
+      { // the tutor dock: Coral Standard is the last resort behind the free slots for a cleared learner (a walk saw "no slot available" after 38 s)
+        const dockIds = (req) => pool.candidatesFor({ role: 'fast', task: 'dock_help', kind: 'chat', userId: 'u1', ...req }, { chain }).map((x) => x.id);
+        assert.ok(dockIds({ coral: true }).includes(`coral:${DS}`) && !dockIds({ coral: true }).includes(`coral:${FAST}`), `dock: Standard only: ${dockIds({ coral: true })}`);
+        assert.ok(dockIds({ coral: true }).findIndex((i) => i.startsWith('coral:')) > dockIds({ coral: true }).findIndex((i) => i.startsWith('nvidia:')), 'dock: free first');
+        assert.ok(dockIds({ coral: false }).every((i) => !i.startsWith('coral:')) && dockIds({}).every((i) => !i.startsWith('coral:')), 'dock: an uncleared learner never reaches Coral');
+      }
       process.env.CORAL_LEARNER = 'off';
       assert.ok(ids({ ...base, coral: true }).every((i) => !i.startsWith('coral:')), 'CORAL_LEARNER=off keeps learners off it');
+    } finally { if (savedEnv === undefined) delete process.env.CORAL_LEARNER; else process.env.CORAL_LEARNER = savedEnv; delete process.env.CORAL_API_KEY; Object.assign(providers.ALL, saved); pool._reset(); }
+  });
+
+  await check('pool: the first level after placement (runForeground fast) puts Coral Fast FIRST for a cleared learner, even with free models in the chain; plain foreground and background keep the old order', () => {
+    pool._reset();
+    const providers = require('../services/providers');
+    const saved = { ...providers.ALL };
+    const savedEnv = process.env.CORAL_LEARNER;
+    providers.ALL.nvidia = { name: 'nvidia', isEnabled: () => true, isConfigured: () => true, modelFor: () => 'm', costCents: () => 0, structured: async () => ({ data: {}, model: 'm' }), chat: async () => ({ text: 't', model: 'm' }) };
+    try {
+      const chain = [providers.ALL.nvidia];
+      process.env.CORAL_API_KEY = 'test-key-not-real'; process.env.CORAL_BASE_URL = 'https://api.coral.test/v1'; delete process.env.CORAL_PIPELINE; delete process.env.CORAL_LEARNER;
+      const ids = (req) => pool.candidatesFor({ role: 'blocks', task: 'block_layout', kind: 'structured', userId: 'u1', ...req }, { chain }).map((x) => x.id);
+      const fastFirst = pool.runForeground(() => ids({ coral: true }), { fast: true });
+      assert.strictEqual(fastFirst[0], `coral:${FAST}`, `fast lane: ${fastFirst}`);
+      assert.ok(fastFirst.some((i) => i.startsWith('nvidia:')), 'free models stay as the fallback');
+      assert.ok(fastFirst.findIndex((i) => i === `coral:${DS}`) < fastFirst.findIndex((i) => i.startsWith('nvidia:')), `other paid slots before free on the fast lane: ${fastFirst}`);
+      const plain = pool.runForeground(() => ids({ coral: true }));
+      assert.ok(!plain[0].startsWith('coral:'), `plain foreground keeps free first: ${plain}`);
+      assert.ok(!pool.runBackground(() => ids({ coral: true })).includes(`coral:${FAST}`), 'background never gets Fast');
+      assert.ok(pool.runForeground(() => ids({ coral: false }), { fast: true }).every((i) => !i.startsWith('coral:')), 'an uncleared learner never reaches Coral, fast lane or not');
+      assert.ok(!pool.runForeground(() => ids({ coral: true }), { fast: true }).includes('x'), 'sanity');
+      process.env.CORAL_LEARNER = 'off';
+      assert.ok(pool.runForeground(() => ids({ coral: true }), { fast: true }).every((i) => !i.startsWith('coral:')), 'CORAL_LEARNER=off wins');
     } finally { if (savedEnv === undefined) delete process.env.CORAL_LEARNER; else process.env.CORAL_LEARNER = savedEnv; delete process.env.CORAL_API_KEY; Object.assign(providers.ALL, saved); pool._reset(); }
   });
 

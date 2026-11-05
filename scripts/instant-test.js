@@ -241,6 +241,21 @@ const call = (n, slots, opts = {}) => pool.callHedged({ kind: 'structured', n },
   });
 
   console.log('\nuploads');
+  await check('placement does not rewrite the HTML base page of a level the learner reads as a block level (it hogged Coral Fast, 4 Nov walk)', async () => {
+    const levelEditor = require('../services/level-editor');
+    const user = mk('editor-skip');
+    const grade = curriculum.getGrade(TRACK, GRADE);
+    const enr = enroll(user, 10);
+    assert.strictEqual(blockLevels.kindFor(grade, 10), 'lesson', 'level 10 is a block lesson level');
+    let calls = 0;
+    const realStructured = ai.structured;
+    ai.structured = async (...a) => { calls += 1; return realStructured(...a); };
+    try {
+      const out = await levelEditor.ensure({ userId: user.id, enrollment: enr, grade, level: 10 });
+      assert.strictEqual(out, null, 'nothing to serve');
+      assert.strictEqual(calls, 0, 'no model call was started');
+    } finally { ai.structured = realStructured; }
+  });
   await check('a new material starts its notes and study pack at once, one at a time per learner, as background work', async () => {
     autobuild.reset();
     const order = [];
@@ -255,6 +270,26 @@ const call = (n, slots, opts = {}) => pool.callHedged({ kind: 'structured', n },
     await sleep(250);
     assert.deepStrictEqual(order.map((o) => o[0]), ['notes:start', 'notes:end', 'pack:start', 'pack:end'], 'one build at a time');
     assert.ok(order.filter((o) => o[0].endsWith(':start')).every((o) => o[1] === true), 'background lane');
+  });
+  await check('opening the notes or the pack while their build runs promotes it to the waiting-learner lane (walk 4 Nov: 160 s on busy free models)', async () => {
+    autobuild.reset();
+    const seen = { notes: [], pack: [] };
+    let release;
+    const hold = new Promise((r) => { release = r; });
+    const deps = {
+      ai: { isEnabled: () => true },
+      outside: () => true,
+      notes: { build: async () => { seen.notes.push(pool.inBackground()); await hold; seen.notes.push(pool.inBackground()); return {}; } },
+      packs: { buildWithRetry: async (u, id, { between }) => between(async () => { seen.pack.push(pool.inBackground()); await hold; seen.pack.push(pool.inBackground()); return {}; }) },
+    };
+    autobuild.start(990011, 3, deps);
+    await sleep(30);
+    assert.strictEqual(autobuild.promote(990012, 3), 0, 'another learner promotes nothing');
+    assert.strictEqual(autobuild.promote(990011, 3, ['notes']), 1, 'the learner opened the notes');
+    release();
+    await sleep(80);
+    assert.deepStrictEqual(seen.notes, [true, false], 'notes: background at start, a waiting learner after opening');
+    assert.strictEqual(autobuild.promote(990011, 3), 0, 'nothing left running to promote');
   });
   await check('uploads: no consent, no model, over the daily cap, or switched off: nothing starts', async () => {
     autobuild.reset();

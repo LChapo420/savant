@@ -84,8 +84,8 @@ const fgReserve = () => Math.max(0, Number(process.env.POOL_FOREGROUND_RESERVE =
 const fgHedgeMs = () => Number(process.env.POOL_FOREGROUND_HEDGE_MS || 8000);
 /** Run fn as background work: its AI calls leave a permit free for waiting learners and never pay for speed. */
 function runBackground(fn) { return lane.run({ background: true }, fn); }
-/** Run fn as work a learner is waiting on, even from inside background work. */
-function runForeground(fn) { return lane.run({ background: false }, fn); }
+/** Run fn as work a learner is waiting on, even from inside background work. `fast`: the first level after placement, written on Coral Fast first. */
+function runForeground(fn, { fast = false } = {}) { return lane.run({ background: false, fast: !!fast }, fn); }
 /** The current lane store (null outside any lane); pass it to promote() later. */
 function laneStore() { return lane.getStore() || null; }
 /** True when the current async context is background work. */
@@ -628,6 +628,14 @@ function candidatesFor(req, opts = {}) {
   const free = ok.filter((s) => !s.paid && !s.preferred);
   // Cheapest output first; a waiting learner's request puts a fast slot (Coral Fast) ahead of the other paid ones.
   const paid = ok.filter((s) => s.paid && !s.preferred).sort((a, b) => (!!b.fast - !!a.fast) || (a.hedgeable === b.hedgeable ? (a.priceOut - b.priceOut) : (a.hedgeable ? -1 : 1)));
+  // The level a learner stands on right after placement (store.fast) writes on the fast lane: a cleared learner's request goes to
+  // Coral Fast FIRST, then every other paid slot the task allows (Coral Standard, Munito, Gonka), and the free models LAST: when Fast is
+  // full (4 at once) the walk saw calls fall onto rate-limited free models and wait 2 to 6 minutes. Everything else keeps the order above.
+  const st = lane.getStore();
+  if (st && st.fast && st.background === false && req.coral === true) {
+    const fastPaid = paid.filter((s) => s.fast);
+    if (fastPaid.length) return [...first, ...fastPaid, ...paid.filter((s) => !s.fast), ...free];
+  }
   return [...first, ...free, ...paid];
 }
 

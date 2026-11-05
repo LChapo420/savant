@@ -270,6 +270,10 @@ function settle(userId, stat, value, times = 12, trackId) {
   check('a rewrite that breaks its script is refused',
     /compiles/.test(personalize.checkAgainstBase(base.html.replace('</script>', '{{{ </script>'), base.html) || ''));
 
+  // Level 105 is a block lesson level for every account now; the editor skips those (services/level-editor.js). This section tests the editor
+  // itself, so it runs as an account the block levels are not shown to (BLOCK_LEVELS=owner, a non-owner learner).
+  const savedBlockLevels = process.env.BLOCK_LEVELS;
+  process.env.BLOCK_LEVELS = 'owner';
   const realTalk = ai.talkDetail;
   const seen = [];
   let reply = 'good';
@@ -547,6 +551,7 @@ function settle(userId, stat, value, times = 12, trackId) {
     check('the creator\'s page is read as a creator-made lesson page',
       /creator-made lesson page/.test(record.levelContent({ user_id: r7.id, track_id: 'english', grade_id: 'proficient', level: 105 }, []).kind));
   } finally {
+    if (savedBlockLevels === undefined) delete process.env.BLOCK_LEVELS; else process.env.BLOCK_LEVELS = savedBlockLevels;
     ai.structured = realStructured;
     providers.current = realCurrent;
   }
