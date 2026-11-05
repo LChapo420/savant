@@ -66,7 +66,7 @@ class Planner {
       pace: this.pace * this.mode.margin,
       importance: this.importance,
       minGainPerMin: this.mode.minGainPerMin,
-      only: (it) => !it.free && (!this.available || this.available(it)),
+      only: (it) => !it.free && !(it.dailyOnly && this.mode.id !== 'daily') && (!this.available || this.available(it)),
     });
     return hit ? hit.item : null;
   }

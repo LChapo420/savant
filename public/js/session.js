@@ -1319,6 +1319,7 @@ function renderRubricResult(result) {
     host.innerHTML = `
       <h1 class="recap-title">Session summary</h1>
       ${banner}
+      <div id="session-daily"></div>
       ${outcome.skip && outcome.skip.offered ? `
       <div class="card" style="border-color:var(--accent)">
         <div class="row-between" style="align-items:flex-start; gap:14px">
@@ -1392,6 +1393,8 @@ function renderRubricResult(result) {
            session without closing the last level never saw it. Filed against the
            last level of the sitting, which is the one they are looking at. -->
       <div id="recap-feedback" style="margin-top:12px"></div>`;
+    // The daily check (services/daily-check.js): offered once the sitting is over, never during it; drawn after the summary.
+    if (window.DailyOffer) window.DailyOffer.mount(document.getElementById('session-daily'), { next: window.location.pathname + window.location.search });
 
     const feedbackHost = document.getElementById('recap-feedback');
     if (feedbackHost && session.track_id && session.grade_id && !session.preview) {

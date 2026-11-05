@@ -104,6 +104,16 @@ const simGate = require('./lib/sim-gate');
 // is an assumption the sim has to make, stated at each one below; where the sim has no way to generate the truth of a channel, it is not run and the report says so.
 const CHANNEL_NAMES = ['reading', 'questionnaire', 'delayed', 'games', 'import', 'max', 'choice', 'silent'];
 const CHANNELS = new Set(String(opt('channels', '')).split(',').map((s) => s.trim()).filter(Boolean).flatMap((c) => (c === 'all' ? CHANNEL_NAMES : [c])));
+// --daily=1 (docs/SCORECARD-LIVE.md): the daily check of services/daily-check.js, run by the REAL service code (openRun, the planner, closeRun, hooks.onDailyCheck, the
+// questionnaire items spread over days) once on every simulated day a learner has a sitting, right after it. Off by default, so every committed baseline reproduces.
+// The learner's readings come from the onboarding simulator's generative model (scripts/onboarding-sim.js answer(): validity r of the item against the true value,
+// method noise shared within an item family, a fatigue loss), ASSUMED like every validity there. --daily-skip=P is the share of offers the learner skips at one tap.
+// Not modelled here (so the real check is, if anything, better): the memory check when one is due and the games.
+const DAILY = Number(opt('daily', 0)) !== 0;
+const DAILY_SKIP = Number(opt('daily-skip', 0));
+// --daily-tail=K: the heavier-tailed read of the daily check's data (services/onboarding/baseline.js observations tailK); 0 = off.
+if (Number(opt('daily-tail', 0)) > 0) process.env.DAILY_TAIL_K = String(opt('daily-tail', 0));
+const DAILY_SCN = opt('daily-scenario', 'central');
 const IPIP_R = 0.5;       // how well a validated-scale item reflects the measure it maps to (published self-report validities: about 0.3 to 0.5)
 const GAME_R = 0.6;       // how well a two-minute game reflects the trait it is a task for (a rough, assumed correlation)
 const ACT_NOISE_Z = 0.4;  // the error of a past ACT composite as a read of prior knowledge, in standard deviations
@@ -1028,6 +1038,65 @@ function runLearner(index, mode, { population = false } = {}) {
     hooks.onImportedResults(userId, { act_composite: clamp(Math.round(19.5 + 5.9 * z), 1, 36) }, []);
   }
   const delayedDone = new Set();
+  const dailyRng = new Rng(hashSeed(SEED, `${tag}daily`, index));
+  const dailyStat = { offers: 0, skipped: 0, runs: 0, sec: 0 };
+  const dailyMethod = {};
+  let lastDailyDay = -1;
+  /** One item answered by this learner: sign-adjusted readings in z units and seconds, from the onboarding simulator's model. */
+  function dailyAnswer(item, elapsed, onbModel) {
+    const fat = 1 - 0.2 * Math.min(1, elapsed / 3600);
+    const readings = {};
+    for (const inf of item.informs) {
+      if (T[inf.stat] === undefined) continue;
+      const rho = onbModel.SCENARIOS[DAILY_SCN][item.family];
+      const r = onbModel.effIn(DAILY_SCN, item.family, inf.r);
+      const w = r * Math.sqrt(Math.max(0, 1 / (rho * rho) - 1));
+      const key = `${inf.stat}:${item.family}`;
+      if (dailyMethod[key] === undefined) dailyMethod[key] = dailyRng.normal();
+      const rt = r * fat;
+      readings[inf.stat] = rt * zOf(inf.stat) + w * dailyMethod[key] + Math.sqrt(Math.max(0, 1 - rt * rt - w * w)) * dailyRng.normal();
+    }
+    return { readings, seconds: item.free ? 0 : item.sec * Math.exp(0.2 * dailyRng.normal()) };
+  }
+  /** The daily check after the first sitting of a simulated day, through services/daily-check.js. */
+  function dailyAfterSitting() {
+    const day = Math.floor((simNow - START) / 86400000);
+    if (day === lastDailyDay) return;
+    lastDailyDay = day;
+    dailyStat.offers += 1;
+    if (dailyRng.chance(DAILY_SKIP)) { dailyStat.skipped += 1; return; }
+    const dailyCheck = require('../services/daily-check');
+    const onbModel = require('../services/onboarding/model');
+    const run = dailyCheck.openRun(userId, simNow);
+    if (!run) return;
+    const { planner } = run;
+    for (const pre of run.pre) {
+      if (pre.kind !== 'ipip') continue;
+      const ipip = require('../content/ipip-items');
+      const answers = {};
+      for (const it of ipip.ITEMS.filter((i) => pre.ids.includes(i.id))) {
+        const mapped = it.maps.filter(([stat]) => T[stat] !== undefined);
+        if (!mapped.length) continue;
+        const z = mapped.reduce((a, [stat, dir]) => a + dir * zOf(stat), 0) / mapped.length;
+        answers[it.id] = clamp(Math.round(3 + 1.1 * (IPIP_R * z + Math.sqrt(1 - IPIP_R ** 2) * dailyRng.normal())), 1, 5);
+      }
+      hooks.onQuestionnaire(userId, answers, ipip.ITEMS.filter((i) => answers[i.id] !== undefined));
+      dailyCheck.markIpip(userId, pre.ids);
+      planner.elapsed += pre.sec;
+    }
+    for (let guard = 0; guard < 400; guard++) {
+      const item = planner.next();
+      if (!item) break;
+      const a = dailyAnswer(item, planner.elapsed, onbModel);
+      planner.record(item, a.readings, a.seconds);
+      for (const f of planner.unlockedFree()) planner.record(f, dailyAnswer(f, planner.elapsed, onbModel).readings, 0);
+    }
+    // Diagnostic: how well the planner's own posterior knows this learner (before the card's combining rules), mean absolute error over the measures with a truth.
+    { const est = planner.estimates(); const ids = STATS.map((x) => x.id).filter((id) => T[id] !== undefined && est[id]); dailyStat.ideal_mae = Number((ids.reduce((acc, id) => acc + Math.abs(est[id].value - T[id]), 0) / (ids.length || 1)).toFixed(3)); }
+    dailyCheck.closeRun(userId, planner, simNow, {});
+    dailyStat.runs += 1;
+    dailyStat.sec += planner.elapsed;
+  }
 
   // Memory: each skill's true half-life (days) and when it was last practised.
   const memory = {};
@@ -1530,6 +1599,7 @@ function runLearner(index, mode, { population = false } = {}) {
       const days = (simNow - START) / 86400000;
       const starts = memoryDb.find('sessions', (r) => r.user_id === userId).map((r) => Date.parse(r.started_at)).filter(Number.isFinite).sort((a, b) => a - b);
       out.snapshots[key] = {
+        daily: { ...dailyStat },
         est,
         sides,
         tokens: promptSizes(userId, L),
@@ -1664,6 +1734,7 @@ function runLearner(index, mode, { population = false } = {}) {
     }
     sittingSignals(sessionItems.filter((i) => i.correct !== null).length);
     lastSessionEnd = simNow;
+    if (DAILY) dailyAfterSitting();
   }
   out.truth = T;
   if (DEBUG.length && !population) {
@@ -2099,7 +2170,7 @@ for (const mode of MODES) {
       return {
         truth: Object.fromEntries(STATS.map((st) => [st.id, Number(truthOf(r, st.id).toFixed(3))])),
         app: Object.fromEntries(STATS.map((st) => { const e = sn.est[st.id]; return [st.id, [Number((e.measured !== undefined ? e.measured : e.score).toFixed(3)), Number((e.se === undefined ? 0 : e.se).toFixed(3)), e.confidence]]; })),
-        feat: sn.feat, ind: sn.ind, levels: sn.levels, days: sn.days, age: r.stratum ? r.stratum.age : undefined, profile: r.stratum ? r.stratum.profile : undefined, ext: r.stratum && r.stratum.ext ? { id: r.stratum.ext.id, kind: r.stratum.ext.kind, mix: r.stratum.ext.mix, age: r.stratum.ext.age, tags: r.stratum.ext.tags } : undefined,
+        feat: sn.feat, ind: sn.ind, daily: sn.daily, levels: sn.levels, days: sn.days, age: r.stratum ? r.stratum.age : undefined, profile: r.stratum ? r.stratum.profile : undefined, ext: r.stratum && r.stratum.ext ? { id: r.stratum.ext.id, kind: r.stratum.ext.kind, mix: r.stratum.ext.mix, age: r.stratum.ext.age, tags: r.stratum.ext.tags } : undefined,
       };
     });
     fs.mkdirSync(path.dirname(DUMP), { recursive: true });
