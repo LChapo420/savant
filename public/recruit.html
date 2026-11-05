@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recruiting | Savant admin</title>
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/act-check.css">
+</head>
+<body>
+  <main class="rc">
+    <h1>Beta recruiting</h1>
+    <p class="ac-small" id="def"></p>
+    <section class="ac-card">
+      <p class="rc-big"><span id="q"></span> / <span id="goal"></span> qualified</p>
+      <div class="rc-meter" aria-hidden="true"><span id="meter"></span></div>
+      <p id="pace" class="ac-lede"></p>
+      <div class="rc-grid" id="totals"></div>
+    </section>
+    <section class="ac-card">
+      <h2>By ref code and channel</h2>
+      <div class="rc-scroll"><table id="refs"><thead><tr><th>Ref</th><th>Channel</th><th>Visits</th><th>Started</th><th>Finished</th><th>Applied</th><th>Qualified</th><th>Referrals</th></tr></thead><tbody></tbody></table></div>
+    </section>
+    <section class="ac-card">
+      <h2>Daily totals</h2>
+      <div class="rc-scroll"><table id="daily"><thead><tr><th>Day</th><th></th><th>Visits</th><th>Started</th><th>Finished</th><th>Applied</th><th>Qualified</th><th>Qualified so far</th></tr></thead><tbody></tbody></table></div>
+    </section>
+    <p><a class="ac-btn" href="/api/recruit/applicants?format=csv">Download applicants (CSV)</a></p>
+  </main>
+  <script src="/js/recruit.js"></script>
+</body>
+</html>

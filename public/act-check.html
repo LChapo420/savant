@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free ACT level check, no signup | Savant</title>
+  <meta name="description" content="Find your ACT level in about 10 minutes. No account, no email. You get an estimated score band and your three weakest areas. An estimate, not an official ACT score.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/act-check.css">
+</head>
+<body>
+  <main class="ac" id="app">
+    <noscript><p class="ac-note">The level check needs JavaScript. Turn it on and reload.</p></noscript>
+
+    <section id="intro" class="ac-card" hidden>
+      <p class="ac-eyebrow">Savant</p>
+      <h1>Find your ACT level in about 10 minutes</h1>
+      <p class="ac-lede">Free. No account and no email to start. You get an estimated score band and your three weakest areas.</p>
+      <ul class="ac-facts">
+        <li>Up to 32 questions, picked a block at a time from your answers</li>
+        <li>No AI grading; nothing leaves this check until you choose to save</li>
+        <li>An estimate from a short check, not an official ACT score</li>
+      </ul>
+      <fieldset class="ac-age" id="age-box">
+        <legend>First: how old are you?</legend>
+        <button type="button" class="ac-btn ac-primary" id="age-yes">I am 13 or older</button>
+        <button type="button" class="ac-btn" id="age-no">I am under 13</button>
+      </fieldset>
+      <p class="ac-error" id="intro-error" role="alert" hidden></p>
+      <p class="ac-small">We keep your answers under a random code in this browser, with no name or email, and delete them after 30 days unless you save your result. <a href="/privacy#act-check">How guest checks work</a>.</p>
+    </section>
+
+    <section id="under13" class="ac-card" hidden>
+      <h1>Thanks for asking first</h1>
+      <p class="ac-lede">The check is for people 13 and older, so we have not started one and we have kept nothing. Ask a parent or guardian to look at Savant with you.</p>
+    </section>
+
+    <section id="walk" class="ac-card" hidden>
+      <div class="ac-top"><span id="progress" class="ac-small"></span><span id="clock" class="ac-small"></span></div>
+      <div class="ac-bar" aria-hidden="true"><span id="bar"></span></div>
+      <p class="ac-small">No feedback until the end. Skip anything you do not know; a guess above your level costs you nothing.</p>
+      <div id="questions"></div>
+      <p class="ac-error" id="walk-error" role="alert" hidden></p>
+      <button type="button" class="ac-btn ac-primary ac-wide" id="next">Next</button>
+    </section>
+
+    <section id="loading" class="ac-card" hidden><p class="ac-lede" id="loading-text">Loading...</p></section>
+
+    <section id="result" class="ac-card" hidden>
+      <p class="ac-eyebrow">Your estimate</p>
+      <h1 id="band"></h1>
+      <p class="ac-lede" id="band-sub"></p>
+      <p class="ac-warn">This is an estimate from a short check. It is not an official ACT score, and we have not yet compared it with real ACT results. ACT is a trademark of ACT, Inc.; Savant is not affiliated with ACT, Inc.</p>
+      <h2>Your three weakest areas</h2>
+      <ol class="ac-weak" id="weak"></ol>
+
+      <div id="apply-box">
+        <h2>Save this and get free beta access</h2>
+        <p class="ac-small">Your result goes with your application. If you are approved, it carries into your Savant account so you start at your level.</p>
+        <form id="apply-form" novalidate>
+          <label>Email <input type="email" id="email" autocomplete="email" inputmode="email" required></label>
+          <label>First name or nickname (optional) <input type="text" id="name" maxlength="40" autocomplete="given-name"></label>
+          <label class="ac-check"><input type="checkbox" id="agree30"> <span id="agree-text"></span></label>
+          <label class="ac-check"><input type="checkbox" id="consent" required> <span id="consent-text"></span></label>
+          <p class="ac-error" id="apply-error" role="alert" hidden></p>
+          <button type="submit" class="ac-btn ac-primary ac-wide">Save and apply</button>
+        </form>
+      </div>
+
+      <div id="standing" hidden>
+        <h2>You are in line</h2>
+        <p id="standing-text" class="ac-lede"></p>
+        <p class="ac-small" id="qualified-text"></p>
+      </div>
+
+      <div id="share-box">
+        <h2>Send this to a friend</h2>
+        <p class="ac-small">Your own link. Each friend who finishes the check and applies as a qualified applicant moves you up the line.</p>
+        <div class="ac-share">
+          <input type="text" id="share-link" readonly aria-label="Your share link">
+          <button type="button" class="ac-btn" id="share">Share</button>
+        </div>
+      </div>
+      <p class="ac-small"><button type="button" class="ac-link" id="retake">Start over with a new check</button></p>
+    </section>
+
+    <footer class="ac-foot">
+      <p>ACT is a registered trademark of ACT, Inc. Savant is not affiliated with, or endorsed by, ACT, Inc. <a href="/privacy#act-check">Privacy</a></p>
+    </footer>
+  </main>
+  <script src="/js/act-check.js"></script>
+</body>
+</html>

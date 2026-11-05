@@ -123,7 +123,9 @@ function serve(router) {
   const pages = [...fs.readdirSync(path.join(root, 'public')).filter((f) => f.endsWith('.html')).map((f) => `public/${f}`),
     ...fs.readdirSync(path.join(root, 'public/spanish')).filter((f) => f.endsWith('.html') && f !== 'design.html').map((f) => `public/spanish/${f}`)]
     // The sealed Spanish tests, and study-demo.html (a filming demo with no learner data, not linked from the app).
-    .filter((f) => !/spanish-(check|listening)/.test(f) && f !== 'public/study-demo.html');
+    .filter((f) => !/spanish-(check|listening)/.test(f) && f !== 'public/study-demo.html'
+    // The free ACT check is for visitors with no account (no tutor to dock) and /recruit is the owner's admin page.
+    && f !== 'public/act-check.html' && f !== 'public/recruit.html');
   const bare = pages.filter((f) => { const t = read(f); return !/js\/app\.js/.test(t) && !/js\/tutor-dock\.js/.test(t); });
   check('every learner page loads the dock (app.js or the script itself)', bare.length === 0, bare);
   const seen = dock.build(u.id, { path: '/spanish/learn', query: 'track=entry&level=28', selected: 'la casa', typed: 'the house', feedback: 'Correct!' }, 'full').text;
