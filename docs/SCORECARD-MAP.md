@@ -253,9 +253,9 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `language.plainLanguage` | tutor-learner-model.js, tutor-plan.js | 2 |
 | `language.avoidIdioms` | block-adapt.js | 0 |
 | `language.eslSupport` | block-adapt.js | 0 |
-| `interests.exampleDomains` | block-adapt.js | 0 |
+| `interests.exampleDomains` | block-adapt.js, item-theme.js | 0 |
 | `interests.avoidDomains` | prompt only | 0 |
-| `interests.share` | block-adapt.js | 1 |
+| `interests.share` | block-adapt.js, item-theme.js | 1 |
 | `interests.people` | prompt only | 1 |
 | `interests.identity` | prompt only | 1 |
 | `review.spacingScale` | adaptation.js, material-path.js | 3 |

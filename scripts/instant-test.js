@@ -180,6 +180,39 @@ const call = (n, slots, opts = {}) => pool.callHedged({ kind: 'structured', n },
     delete process.env.WRITE_AHEAD_PER_USER;
     ensureMs = 0;
   });
+  await check('prewrite: the likely start levels are written while placement runs, once each, fast lane, at most 4 per enrollment', async () => {
+    writeAhead.reset();
+    ensured.length = 0;
+    const lessons = [];
+    for (let l = 1; l <= grade.pathLength && lessons.length < 9; l++) if (blockLevels.kindFor(grade, l) === 'lesson') lessons.push(l);
+    const u = mk('prewrite');
+    const e = enroll(u, 50);
+    const steps = writeAhead.prewrite({ user: u, enrollment: e, grade, levels: lessons.slice(0, 2) });
+    assert.strictEqual(steps.length, 2, 'two levels queued');
+    await sleep(60);
+    assert.ok(lessons.slice(0, 2).every((l) => ensured.some((x) => x.userId === u.id && x.level === l && x.background === false)), 'both started in the waiting-learner lane');
+    assert.strictEqual(writeAhead.prewrite({ user: u, enrollment: e, grade, levels: lessons.slice(0, 2) }).length, 0, 'asking again writes nothing new');
+    writeAhead.prewrite({ user: u, enrollment: e, grade, levels: lessons.slice(2, 9) });
+    await writeAhead.idle();
+    assert.strictEqual(ensured.filter((x) => x.userId === u.id).length, 4, 'capped at 4 distinct levels');
+    assert.strictEqual(writeAhead.writesToday(u.id), 0, 'prewrites do not use the daily cap');
+    process.env.WRITE_AHEAD_PREWRITE_MAX = '0';
+    const v = mk('prewrite-off');
+    assert.strictEqual(writeAhead.prewrite({ user: v, enrollment: enroll(v, 50), grade, levels: lessons.slice(0, 2) }).length, 0, 'switched off');
+    delete process.env.WRITE_AHEAD_PREWRITE_MAX;
+    await writeAhead.idle();
+  });
+  await check('likelyStarts: the first two units before any answer, the placed unit and a neighbour after', () => {
+    const unitPlacement = require('../services/unit-placement');
+    const none = unitPlacement.likelyStarts('math', 'algebra_1_part_a', [], 2);
+    assert.strictEqual(none.length, 2);
+    assert.ok(none[0] < none[1]);
+    const units = unitPlacement.unitsFor('math', 'algebra_1_part_a');
+    const answered = [];
+    for (let u = 1; u <= Math.min(5, units.length); u++) answered.push({ unit: u, slot: 0, correct: true });
+    const later = unitPlacement.likelyStarts('math', 'algebra_1_part_a', answered, 2);
+    assert.ok(later.length === 2 && later[0] !== later[1] && later[0] > none[0], `after five right answers ${later}`);
+  });
   await check('a learner has a daily cap of background writes (the fast first level is exempt)', async () => {
     writeAhead.reset();
     ensured.length = 0;
@@ -241,6 +274,21 @@ const call = (n, slots, opts = {}) => pool.callHedged({ kind: 'structured', n },
   });
 
   console.log('\nuploads');
+  await check('placement does not rewrite the HTML base page of a level the learner reads as a block level (it hogged Coral Fast, 4 Nov walk)', async () => {
+    const levelEditor = require('../services/level-editor');
+    const user = mk('editor-skip');
+    const grade = curriculum.getGrade(TRACK, GRADE);
+    const enr = enroll(user, 10);
+    assert.strictEqual(blockLevels.kindFor(grade, 10), 'lesson', 'level 10 is a block lesson level');
+    let calls = 0;
+    const realStructured = ai.structured;
+    ai.structured = async (...a) => { calls += 1; return realStructured(...a); };
+    try {
+      const out = await levelEditor.ensure({ userId: user.id, enrollment: enr, grade, level: 10 });
+      assert.strictEqual(out, null, 'nothing to serve');
+      assert.strictEqual(calls, 0, 'no model call was started');
+    } finally { ai.structured = realStructured; }
+  });
   await check('a new material starts its notes and study pack at once, one at a time per learner, as background work', async () => {
     autobuild.reset();
     const order = [];
@@ -255,6 +303,26 @@ const call = (n, slots, opts = {}) => pool.callHedged({ kind: 'structured', n },
     await sleep(250);
     assert.deepStrictEqual(order.map((o) => o[0]), ['notes:start', 'notes:end', 'pack:start', 'pack:end'], 'one build at a time');
     assert.ok(order.filter((o) => o[0].endsWith(':start')).every((o) => o[1] === true), 'background lane');
+  });
+  await check('opening the notes or the pack while their build runs promotes it to the waiting-learner lane (walk 4 Nov: 160 s on busy free models)', async () => {
+    autobuild.reset();
+    const seen = { notes: [], pack: [] };
+    let release;
+    const hold = new Promise((r) => { release = r; });
+    const deps = {
+      ai: { isEnabled: () => true },
+      outside: () => true,
+      notes: { build: async () => { seen.notes.push(pool.inBackground()); await hold; seen.notes.push(pool.inBackground()); return {}; } },
+      packs: { buildWithRetry: async (u, id, { between }) => between(async () => { seen.pack.push(pool.inBackground()); await hold; seen.pack.push(pool.inBackground()); return {}; }) },
+    };
+    autobuild.start(990011, 3, deps);
+    await sleep(30);
+    assert.strictEqual(autobuild.promote(990012, 3), 0, 'another learner promotes nothing');
+    assert.strictEqual(autobuild.promote(990011, 3, ['notes']), 1, 'the learner opened the notes');
+    release();
+    await sleep(80);
+    assert.deepStrictEqual(seen.notes, [true, false], 'notes: background at start, a waiting learner after opening');
+    assert.strictEqual(autobuild.promote(990011, 3), 0, 'nothing left running to promote');
   });
   await check('uploads: no consent, no model, over the daily cap, or switched off: nothing starts', async () => {
     autobuild.reset();

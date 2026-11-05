@@ -440,6 +440,24 @@ function placedUnit(units, answered, belief = null) {
   };
 }
 
+/**
+ * The first lesson levels a placement in progress is most likely to end on, best first (`n`, normally 2: the write-ahead writes about twice
+ * what makes the first lesson instant, no more). The placed unit of the belief so far, and the neighbour on the side its median leans to;
+ * before any answer, the first two units. Used to write those lessons while the learner is still answering (services/write-ahead.js prewrite).
+ */
+function likelyStarts(trackId, gradeId, answered, n = 2) {
+  const units = unitsFor(trackId, gradeId);
+  if (!units || !units.length) return [];
+  const belief = beliefOf(units, answered);
+  const placed = placedUnit(units, answered, belief);
+  const round = units.shape && Number.isFinite(units.shape.round) ? units.shape.round : UNIT_ROUND;
+  const lean = adaptive.median(belief) + round;
+  const order = [placed.unit];
+  const other = placed.unit === 1 || !answered.some((a) => a.correct) ? placed.unit + 1 : placed.unit + (lean - Math.floor(lean) >= 0.5 ? 1 : -1);
+  for (const u of [other, placed.unit + 1, placed.unit - 1]) if (u >= 1 && u <= units.length && !order.includes(u)) order.push(u);
+  return order.slice(0, n).map((u) => startLevelOf(trackId, gradeId, units[u - 1]));
+}
+
 /** The first lesson level of a unit: where a learner placed there starts. */
 function startLevelOf(trackId, gradeId, unit) {
   const grade = curriculum.getGrade(trackId, gradeId);
@@ -510,4 +528,4 @@ function nextCheck(checks) {
   return row ? { unit: row.unit, slot: row.slots[0] } : null;
 }
 
-module.exports = { CONFIG, QUICK_BY_TRACK, modeCfg, withinOneMass, pickByInformation, pointOf, calibrationFor, MODES, UNIT_AT, bankFor, unitsFor, available, itemFor, nextQuestion, placedUnit, score, markCheck, nextCheck, startLevelOf, beliefOf };
+module.exports = { CONFIG, QUICK_BY_TRACK, modeCfg, withinOneMass, pickByInformation, pointOf, calibrationFor, MODES, UNIT_AT, bankFor, unitsFor, available, itemFor, nextQuestion, placedUnit, likelyStarts, score, markCheck, nextCheck, startLevelOf, beliefOf };

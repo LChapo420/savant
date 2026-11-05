@@ -20,6 +20,11 @@
  */
 const keyAgreement = require('./key-agreement');
 
+// How long the free Nemotron Ultra judge may take before the app's own chain answers instead. It was 120 s x 2 attempts: the 4 Nov walk saw
+// it time out on every first lesson (busy free tier) and add 2 to 4 minutes before the fallback judge even started. The fallback is the same
+// independent blind re-solve, so nothing is relaxed; only the wait for a slow judge is. KEY_GATE_JUDGE_TIMEOUT_MS overrides.
+const POOL_TIMEOUT_MS = () => Math.max(3000, Number(process.env.KEY_GATE_POOL_TIMEOUT_MS || 20000));
+const JUDGE_TIMEOUT_MS = () => Math.max(5000, Number(process.env.KEY_GATE_JUDGE_TIMEOUT_MS || 40000));
 const JUDGE_MODELS = () => [{ model: process.env.KEY_GATE_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b', effort: 'medium' }];
 // Default on since 2026-10-24 (owner approved, LIVE-CHANGES-2026-10-24.md); KEY_GATE=off turns it off.
 const on = () => String(process.env.KEY_GATE || 'on').toLowerCase() === 'on';
@@ -49,16 +54,38 @@ function picksFrom(r, batch) {
  * then Claude inside the key's ledger). xKiro and UnoRouter are build-pipeline only
  * and are never asked here. Only question text and options are sent.
  */
-async function nemotronJudge(batch) {
+/**
+ * The blind judge through the pool's `blind_mc` slots (config/model-lineup.json), before the free NVIDIA models: the first lesson after a
+ * placement waited minutes on a busy free tier for this check (4 Nov 2026), while GLM 5.3 Flash on Gonka answered a question in 0.3 s
+ * median (scripts/fact-verifier-eval.js). Same independent re-solve (no key, no rationale sent); `excludeFamilies` keeps it off the
+ * writer's own family. Only question text and options leave: no learner words. KEY_GATE_POOL=off puts NVIDIA back first. Null = no picks.
+ */
+async function poolJudge(call, batch, excludeFamilies) {
+  if (String(process.env.KEY_GATE_POOL || 'on').toLowerCase() === 'off') return null;
+  try {
+    // eslint-disable-next-line global-require
+    const ai = require('./ai');
+    const r = await ai.structuredDetail({ ...call, task: 'blind_mc', dataClass: 'pipeline', timeoutMs: POOL_TIMEOUT_MS(), excludeFamilies: excludeFamilies && excludeFamilies.length ? excludeFamilies : undefined });
+    const picks = picksFrom(r, batch);
+    return picks.some((p) => p !== null) ? picks : null;
+  } catch (err) {
+    console.warn(`key-gate: the pool gave no blind picks (${err.message})`);
+    return null;
+  }
+}
+
+async function nemotronJudge(batch, { excludeFamilies = null } = {}) {
   // eslint-disable-next-line global-require
   const nvidia = require('./providers/nvidia');
   // eslint-disable-next-line global-require
   const providers = require('./providers');
   const user = `${batch.map((q, i) => `Question ${i}: ${q.prompt}\n${q.choices.map((c, j) => `  (${j}) ${c}`).join('\n')}`).join('\n\n')}\n\nReturn one pick per question, with its index.`;
   const call = { role: 'check', system: SYSTEM, user, schema: SCHEMA, schemaName: 'submit_picks', maxTokens: 3000 };
+  const pooled = await poolJudge(call, batch, excludeFamilies);
+  if (pooled) return pooled;
   if (nvidia.isEnabled('check')) {
     try {
-      const picks = picksFrom(await nvidia.structured({ ...call, models: JUDGE_MODELS(), timeoutMs: 120000, attempts: 2 }), batch);
+      const picks = picksFrom(await nvidia.structured({ ...call, models: JUDGE_MODELS(), timeoutMs: JUDGE_TIMEOUT_MS(), attempts: 1 }), batch);
       if (picks.some((p) => p !== null)) return picks;
     } catch (err) {
       console.warn(`key-gate: Nemotron Ultra gave no blind picks (${err.message}); trying the app's chain`);
@@ -80,9 +107,9 @@ async function nemotronJudge(batch) {
  * @param {object[]} questions {prompt, choices, answerIndex|answer, explanation|rationale}
  * @returns {Promise<{index: number, reason: string}[]>} the questions to reject; [] when the gate is off
  */
-async function rejectedByKeyGate(questions, { judge = nemotronJudge } = {}) {
+async function rejectedByKeyGate(questions, { judge = nemotronJudge, excludeFamilies = null } = {}) {
   if (!on() || !Array.isArray(questions) || !questions.length) return [];
-  const results = await keyAgreement.rekeyFlagged(questions, { judge: (batch) => judge(batch).catch(() => batch.map(() => null)) });
+  const results = await keyAgreement.rekeyFlagged(questions, { judge: (batch) => judge(batch, { excludeFamilies }).catch(() => batch.map(() => null)) });
   return results.filter((r) => r.verdict === 'rejected' || r.verdict === 'unjudged').map((r) => ({
     index: r.index,
     reason: r.verdict === 'rejected'
@@ -100,11 +127,11 @@ async function rejectedByKeyGate(questions, { judge = nemotronJudge } = {}) {
  * @param {object[]} questions {prompt, choices, answerIndex|answer}
  * @returns {Promise<{index, verdict: 'agreed'|'disagreed'|'unjudged', picked: number|null, keyIndex: number}[]>}
  */
-async function blindResolve(questions, { judge = nemotronJudge } = {}) {
+async function blindResolve(questions, { judge = nemotronJudge, excludeFamilies = null } = {}) {
   if (!Array.isArray(questions) || !questions.length) return [];
   const batch = questions.map((q) => ({ prompt: String(q.prompt || ''), choices: (q.choices || []).map(String) }));
   let picks = [];
-  try { picks = await judge(batch); } catch { picks = []; }
+  try { picks = await judge(batch, { excludeFamilies }); } catch { picks = []; }
   return questions.map((q, index) => {
     const keyIndex = keyAgreement.keyIndexOf(q);
     const pick = Array.isArray(picks) && Number.isInteger(picks[index]) ? picks[index] : null;

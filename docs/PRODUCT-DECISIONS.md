@@ -152,3 +152,13 @@ real-world challenges, scenario role-play, self-report surveys.
 - **Later, with real users.** Starting a new learner from similar learners: build after the beta so it can be tested on real people. "Is this you?" profile check: maybe; decide later.
 - **Not now.** Webcam eye tracking and wearables (privacy, especially for children).
 - **Own material.** The learner's interests and dislikes shape their own uploaded material too, as clearly framed analogies and examples; the text stays the only source of facts.
+
+## Faster, the daily check, and evaluations (owner, 2026-11-05)
+
+- **What "faster" means.** A learner gets all the information they would normally get from normal studying or a personal tutor, and remembers it for however long they chose as their retention goal. Lower retention goals should be faster overall; higher ones should still be faster, just not as fast. The owner calls the last two "just assumptions": test them, per learner, against normal studying and a tutor.
+- **Daily check.** Optional but encouraged.
+- **Kimi K3.** Expensive: look deeper before relying on it.
+- **Claude add-on on Grokified.** No (no money for it).
+- **Learner data after Nov 14.** Ask the owner again on Nov 10.
+- **Munito and Coral.** Keep building with them while credit lasts.
+- **Evaluations.** Build one for every API we use, as long as covering all of them adds no more than 2% to overall cost.
