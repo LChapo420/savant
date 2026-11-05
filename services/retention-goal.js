@@ -142,7 +142,63 @@ function datePlan(tSet, tD) {
   }
   if (tD - 1 >= Math.max(1, set)) out.push({ day: tD - 1, kind: 'final', from: 0, to: tD - 1, type: 'monthly' });
   if (tD >= 1) out.push({ day: tD, kind: 'dayof', from: 0, to: tD, type: 'semiweekly' });
-  return out;
+  return backwardOn() ? out.filter((p) => p.kind !== 'review') : out;
+}
+
+// ── goal-aware review (round 3; docs/FASTER-BY-GOAL.md, SIMULATED) ──────────
+// Two opt-in switches, both OFF by default (off = today's behaviour exactly):
+//   SR_GOAL_REVIEW (default on)  a horizon is counted from when the learner FINISHES the course (enrollments.finished_on, written when the last level is passed), not from
+//                        when the goal was set or from each skill, so all of the course is still there H days after finishing. Until the course is finished the
+//                        end is unknown and reviews run. In the last two days of a horizon of FINAL_MAX_DAYS or less every skill under 0.95 predicted recall is
+//                        asked (a final look). A skill whose predicted recall at the end stays at or above GOAL_MEMORY is deferred.
+//   SR_GOAL_BACKWARD=on  a dated test gets no recall-triggered review until BACKWARD_DAYS before the date, then every skill under 0.95 predicted recall is asked;
+//                        the plan's mid reviews are dropped (its final and day-of reviews stay).
+const GOAL_MEMORY = 0.8;
+const FINAL_MAX_DAYS = 60;
+const FINAL_RECALL = 0.95;
+const BACKWARD_DAYS = 10;
+const goalReviewOn = () => String(process.env.SR_GOAL_REVIEW || 'on').toLowerCase() === 'on'; // on by default since 5 Nov 2026: passed on a fresh held-out seed; =off restores the old rule
+const backwardOn = () => String(process.env.SR_GOAL_BACKWARD || 'off').toLowerCase() === 'on';
+
+/**
+ * Where a goal puts the learner in time: { daysToEnd, final, hold, done }. daysToEnd is Infinity when no end applies yet (forever, a horizon before the
+ * course is finished); final: the last two days of a short horizon or a dated test; hold: a dated test still more than BACKWARD_DAYS away (no
+ * recall-triggered review); done: past the end. With both switches off it returns { daysToEnd: Infinity } and callers behave as today.
+ */
+function reviewWindow(eff, finishedOn, nowMs = Date.now()) {
+  const none = { daysToEnd: Infinity, final: false, hold: false, done: false };
+  if (!eff) return none;
+  if (eff.status === 'horizon' && goalReviewOn()) {
+    const fin = finishedOn ? Date.parse(finishedOn) : NaN;
+    if (!Number.isFinite(fin)) return none;
+    const d = (fin + eff.days * DAY - nowMs) / DAY;
+    return { daysToEnd: d, final: eff.days <= FINAL_MAX_DAYS && d <= 2, hold: false, done: d < 0 };
+  }
+  if (eff.status === 'date' && (goalReviewOn() || backwardOn())) {
+    const d = (startOf(eff.test_date) - nowMs) / DAY;
+    return { daysToEnd: d, final: d <= 2, hold: backwardOn() && d > BACKWARD_DAYS, done: d < 0 };
+  }
+  return none;
+}
+
+/** The recall under which a skill is asked, given the window: the final look asks everything under FINAL_RECALL; a dated test inside the backward window too. */
+function reviewTargetFor(base, win, eff) {
+  if (!win) return base;
+  if (win.final) return Math.max(base, FINAL_RECALL);
+  if (eff && eff.status === 'date' && backwardOn() && !win.hold) return Math.max(base, FINAL_RECALL);
+  return base;
+}
+
+/** Defer a review while predicted recall on the end day stays at least `floor` (predictAt(days): recall after that many more days with no review). */
+function reviewNeeded(daysToEnd, predictAt, floor = GOAL_MEMORY) {
+  if (!Number.isFinite(daysToEnd) || daysToEnd <= 0) return true;
+  return predictAt(daysToEnd) < floor;
+}
+
+/** What the scheduler needs from an enrollment: its effective goal and when it was finished; null with both switches off (nothing changes). */
+function reviewContext(userId, enrollment, now = Date.now()) {
+  if (!goalReviewOn() && !backwardOn()) return null;
+  return { eff: forEnrollment(userId, enrollment, now), finishedOn: (enrollment && enrollment.finished_on) || null };
 }
 
 /** How much of the usual re-teaching time a forgotten objective gets: shorter when the test is close. */
@@ -164,11 +220,16 @@ const startOf = (date) => Date.parse(`${date}T00:00:00Z`);
  * `days` is the interval the course's own forgetting curve chose. Returns { days, done }:
  * done true means no further review is wanted (days is then null).
  */
-function limitInterval(eff, days, nowMs = Date.now()) {
+function limitInterval(eff, days, nowMs = Date.now(), finishedOn = null) {
   if (!eff || eff.status === 'forever' || eff.status === 'after_test') return { days, done: false };
   if (eff.status === 'stopped') return { days: null, done: true };
   if (eff.status === 'horizon') {
-    const end = startOf(eff.set_on) + eff.days * DAY;
+    let end = startOf(eff.set_on) + eff.days * DAY;
+    if (goalReviewOn()) { // counted from finishing; unknown (reviews carry on) until then
+      const fin = finishedOn ? Date.parse(finishedOn) : NaN;
+      if (!Number.isFinite(fin)) return { days, done: false };
+      end = fin + eff.days * DAY;
+    }
     if (nowMs + days * DAY > end) return { days: null, done: true };
     return { days, done: false };
   }
@@ -349,5 +410,6 @@ module.exports = {
   HORIZONS, CHOICES, DEFAULT_HORIZON, DEFAULT_SHOWN, SPACING, GAP_MAX, GAP_SHARE, MAX_AHEAD,
   normalize, normalizeAfter, effective, keptTypes, droppedTypes, isCalendarIntact, sizeFor, datePlan, reteachScale, reviewsWanted,
   limitInterval, describe, goalCovers, coverKeeps,
+  GOAL_MEMORY, FINAL_MAX_DAYS, BACKWARD_DAYS, goalReviewOn, backwardOn, reviewWindow, reviewTargetFor, reviewNeeded, reviewContext,
   todayFor, forEnrollment, forMaterial, save, listFor, headline, enforcerView,
 };

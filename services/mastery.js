@@ -204,16 +204,20 @@ function recordAttempt({ userId, skillId, correct, difficulty, levelDifficulty, 
  * ladder, weakest and most overdue first. A learner whose spec says they forget fast (or keep things) has the target
  * moved by up to 0.05 and the gap since the last answer stretched by up to 0.6x to 1.25x (services/learning-spec.js).
  */
-function dueReviews(userId, skillIds, limit = REVIEW_MAX) {
-  return scheduleMode() === 'fixed' ? dueReviewsFixed(userId, skillIds, limit) : dueReviewsByRecall(userId, skillIds, limit);
+function dueReviews(userId, skillIds, limit = REVIEW_MAX, goalCtx = null) {
+  return scheduleMode() === 'fixed' ? dueReviewsFixed(userId, skillIds, limit) : dueReviewsByRecall(userId, skillIds, limit, goalCtx);
 }
 
-function dueReviewsByRecall(userId, skillIds, limit) {
-  return efficiency.forLearner(userId, () => dueReviewsByRecallRaw(userId, skillIds, limit));
+function dueReviewsByRecall(userId, skillIds, limit, goalCtx = null) {
+  return efficiency.forLearner(userId, () => dueReviewsByRecallRaw(userId, skillIds, limit, goalCtx));
 }
 
-function dueReviewsByRecallRaw(userId, skillIds, limit) {
+function dueReviewsByRecallRaw(userId, skillIds, limit, goalCtx = null) {
   const now = Date.now();
+  // Retention goal (SR_GOAL_REVIEW / SR_GOAL_BACKWARD, services/retention-goal.js). goalCtx is null with both switches off: nothing below changes.
+  const rg = goalCtx ? require('./retention-goal') : null; // eslint-disable-line global-require
+  const win = rg ? rg.reviewWindow(goalCtx.eff, goalCtx.finishedOn, now) : null;
+  if (win && (win.done || win.hold)) return [];
   // eslint-disable-next-line global-require
   const rev = require('./learning-spec').reviewFor(userId);
   const target = REVIEW_TARGET + (rev.spec && !rev.spec.isDefault ? rev.targetRecall - 0.9 : 0);
@@ -230,7 +234,13 @@ function dueReviewsByRecallRaw(userId, skillIds, limit) {
     const recall = predictedRecall(s, days, rc);
     // services/efficiency.js: the target is the learner's own (their forgetting multiplier, their spaced recalls so far), or the
     // maintenance level once the skill has met the successive-relearning criterion. The flat target with SR_ALL=off.
-    if (recall < efficiency.dueBelow(target, s, m)) out.push({ ...s, recall });
+    let below = efficiency.dueBelow(target, s, m);
+    if (win) {
+      below = rg.reviewTargetFor(below, win, goalCtx.eff);
+      // still above the goal's memory floor on its end day: defer (not in the final look)
+      if (!win.final && goalCtx.eff.status === 'horizon' && !rg.reviewNeeded(win.daysToEnd, (more) => predictedRecall(s, days + more, rc))) continue;
+    }
+    if (recall < below) out.push({ ...s, recall });
   }
   return out.sort((a, b) => (a.recall - b.recall) || (a.mastery - b.mastery)).slice(0, efficiency.reviewSlots(limit, out.length));
 }
@@ -334,6 +344,8 @@ function moveTo(enrollment, grade, level, extra = {}) {
  */
 function advance(enrollment, grade, extra = {}) {
   const from = enrollment.current_level;
+  // Passing the last level finishes the course; a retention goal counts a horizon from here (SR_GOAL_REVIEW). Written once, whatever the switches say.
+  if (from >= grade.pathLength && !enrollment.finished_on) extra = { finished_on: new Date().toISOString(), ...extra };
   if (!learnerPath.planFor(enrollment)) {
     // learnerPath.nextLevelAfter is from + 1 on a path with no unit plan, except
     // that with ADAPTIVE_TEACHING=on it steps over the remaining practice of a
