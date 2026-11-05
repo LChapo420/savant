@@ -1224,6 +1224,7 @@ function runLearner(index, mode, { population = false } = {}) {
       }
       const guess = format === 'multiple_choice' ? 0.25 : 0.03;
       let pKnow = sigmoid(logit);
+      const kBefore = V2 ? kFor(skill) : 1;
       if (V2) pKnow = guess + (pKnow - guess) * kFor(skill);
       const mem = memory[skill];
       let recall = 1;
@@ -1287,6 +1288,8 @@ function runLearner(index, mode, { population = false } = {}) {
       if (!kept) sessionItems.push(row);
       if (role === 'review') out.reviewItems++;
       out.practiceMs += ms;
+      // diagnostic (understand-speed): where the practice time goes, by role and whether the skill was already understood (k >= 0.85) when asked
+      { const dg = out.diag || (out.diag = {}); const key = `${rowRole}${kBefore >= 0.85 ? '_secure' : ''}`; dg[`ms_${key}`] = (dg[`ms_${key}`] || 0) + ms + 3000; dg[`n_${key}`] = (dg[`n_${key}`] || 0) + 1; }
       const sc = skillCounts[skill] || (skillCounts[skill] = [0, 0]);
       sc[correct ? 0 : 1]++;
       if (mem && mem.last !== null && simNow - mem.last >= 86400000 && !rushed && !coach) {
@@ -1453,6 +1456,7 @@ function runLearner(index, mode, { population = false } = {}) {
       pretest_hours: out.pretestMs / 3600000,
       pages_skipped: out.pagesSkipped,
       // objectives: understood (k >= 0.85, v2), and by the app's own mastery record (>= 0.8, and >= 0.6 which is the level-up floor)
+      ...Object.fromEntries(Object.entries(out.diag || {}).map(([k, v]) => [`dg_${k}`, k.startsWith('ms_') ? v / 3600000 : v])),
       mastered_k: V2 ? entries.filter(([k]) => kFor(k) >= 0.85).length : skills.length,
       mastered_k60: V2 ? entries.filter(([k]) => kFor(k) >= 0.6).length : skills.length,
       mastered_app80: entries.filter(([k]) => mastery.stateFor(userId, k).mastery >= 0.8).length,

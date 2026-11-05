@@ -312,3 +312,28 @@ node scripts/extreme-learners.js outcome --base 'DIR/b*.json' --tailored 'DIR/t*
 ```
 
 Spend: Lyceum GLM-5.3 judge $6.88 (79 calls, ledger task `extreme-tailor-judge`); Coral DeepSeek writer under $1; Gonka under $0.10 (one failed retry); no Anthropic, Standard Compute, Munito, xKiro or Modelflare. Under the $10 run cap.
+
+## 7. Understanding per practice hour: where the extra hours go, and a second attempt (SIMULATED; gate MISSED)
+
+**Setup.** Same learning model as section 4 (`--learning=v2`). Design seed 777001 (24 extreme learners), final numbers on held-out seed 909091 never used while designing: 120 extreme learners and 40 ordinary ones. Base = `--levers=none --review-pick=fixed`; shipped = `--levers=stop`; new = shipped plus `SR_STOP_SKIP=on` with the skip rule tightened (`SR_STOP_CAP` 1, `SR_STOP_MASTERY` 0.6; set by environment only, `services/efficiency.js` defaults unchanged: skip stays opt-in, 2 and 0.7). Tools: `scripts/understand-speed-run.sh`, `scripts/understand-speed-compare.js`. The sim now logs practice hours by role and by whether the skill was already understood (k >= 0.85) when asked (`dg_*` fields).
+
+**Where the hours go (held-out, 120 extreme learners, mean hours per learner).** Base 11.7 h, shipped 14.0 h. Review of skills already understood: base 1.2 h, shipped 3.4 h (+2.1 h of the +2.3 h). Reviews of skills not yet understood: 0.5 -> 0.8 h. Focus/stretch items on skills already understood: 1.0 h (base), 0.9-1.3 h shipped. Lesson pages are about half of all hours in both arms. So the extra hours buy retention (30-day recall +12.3 points), not understanding; understanding rises only by +5.8 skills through the extra reviews of not-yet-understood skills.
+
+**Result (new vs base, held-out).**
+
+| | understood/hour, mean / median / worst 10% / worst 1% | below base | 30-day recall gain (pts) | hours | skills understood |
+|---|---|---|---|---|---|
+| shipped, 120 extreme | 1.07 / 0.93 / 0.78 / 0.75 | 77 | 12.3 | 11.7 -> 14.0 | 38.2 -> 44.0 |
+| new, 120 extreme | 1.08 / 0.98 / 0.80 / 0.77 | 71 | 12.0 (97% of shipped) | 11.7 -> 13.4 | 38.2 -> 43.0 |
+| shipped, 40 ordinary | 1.02 / 0.94 / 0.79 / 0.79 | 28 | 14.4 | 11.8 -> 14.2 | 40.5 -> 45.9 |
+| new, 40 ordinary | 1.04 / 0.97 / 0.79 / 0.75 | 26 | 12.4 (86% of shipped) | 11.8 -> 13.8 | 40.5 -> 45.4 |
+
+7-day recall (extreme): base 10.1%, shipped 32.2%, new 31.2%. Every kind and age band has a learner below base (worst kind minimum 0.77 to 0.90 of base per hour).
+
+**Gate: NOT met.** Required: every kind and the worst 10% at or above base per hour, and 30-day gain at least 90% of shipped's, and tests green. Worst 10% is 0.80, not 1.0; no kind is at or above base for its worst learner; the ordinary-learner gain is 86% of shipped's. Distance from 3x: understanding per hour is 1.08x on average (median 0.98x), so 3x is not close by this measure. Not merge-ready.
+
+**Tried on the design seed and not kept** (24 learners, understood/hour mean, worst 10%, 30-day gain): fewer extra reviews (3 instead of 6): 1.04, 0.87, +8.6; relearn+personal timing: 1.03, 0.78, +11.7; extra slots only for skills below 0.7 predicted recall or not secure: 1.03, 0.82, +12.5; a lower due target for secure skills (0.65, 0.55): no change in hours; skip + 4 extras: 1.05, 0.88, +9.8 (gain too low); skip at mastery 0.4: no better. Candidates not testable here: reviews of prerequisite skills (the sim's skills form a line, no dependency graph), retrieval that also advances new material (the sim's reviews already raise k), a per-learner budget scaled by forgetting rate (coded in a scratch version, not run).
+
+**What limits it.** In this model recall is k times memory, and only a review answer raises memory; k is raised only by practice on the skill. Retention therefore needs about 2 hours of reviews of skills the learner already understands, and the "understood per hour" measure counts none of that. Cutting those hours loses the retention gain roughly one for one; keeping them leaves most learners below base on this measure. The measure and the goal pull against each other unless the cost per review answer falls (item time, not scheduling) or lesson pages (half the hours) get shorter or are skipped on a passed pretest (needs a screen, not wired).
+
+**Assumptions the result leans on.** Rasch answers; half-life forgetting with the learner's own decay; k rises by about 0.2 per right answer scaled by learn rate (assumed); k >= 0.85 counts as understood; review items take the same time as practice items; a skipped item costs nothing; the review "secure" status in the app comes from a mastery record that rarely reaches 0.8 in the sim. **The skip half is not live in the app:** `sessions.recordAnswer` returns `skippable` ids but the session player does not act on them, so the new arm's gain over shipped exists only in the simulation. Simulated, not proof on real learners.
