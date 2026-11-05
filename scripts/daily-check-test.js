@@ -167,7 +167,7 @@ check('deletion and download: no new collection; the screens and routes are wire
   assert.ok(consent.includes("'profiles'"), 'the profiles row is on the deletion list');
   assert.ok(/daily check.*adds no collection/.test(profile) && /daily check.*adds no collection/.test(consent), 'registered in both');
   assert.ok(read('server.js').includes('/api/daily-check'));
-  assert.ok(read('public/daily-check.html').includes('OB_DAILY'));
+  assert.ok(read('public/daily-check.html').includes('daily-check-config.js') && read('public/js/daily-check-config.js').includes('OB_DAILY'));
   for (const f of ['public/js/dashboard.js', 'public/js/session.js', 'public/js/base-lesson.js']) assert.ok(read(f).includes('DailyOffer.mount'), f);
   assert.ok(read('services/scorecard/hooks.js').includes('onDailyCheck'));
 });
