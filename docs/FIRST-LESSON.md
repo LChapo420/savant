@@ -129,3 +129,36 @@ at 10) but 5 to 10 times over the target. What limits it: a cold level is layout
 re-read, blind check, plus the Sonnet check: about 2 minutes written alone, and a prewrite started at answer 10 of a 75 s placement cannot finish before it
 ends. Why learners placed late (230 s) still waited 31 to 115 s, and why one learner (random profile, level 10) took 542 s, was not diagnosed (I did not
 trace those writes: a missed prewrite guess or a slow fill retry are the likely causes). Simulated learners, AI-judged: not real-learner proof.
+
+## 6. Round 4: why 0 of 14 were ready, and what changed (5 Nov 2026)
+
+Traced from `WRITE_AHEAD_TRACE_FILE` (a JSONL of every write-ahead event; the 10-learner run before the fixes) plus the timing table:
+1. **No head start for short placements.** The prewrite fired from `min` answers (10 in balanced mode); the 4 strong learners (dev-key answers) end at 10 to 17 answers, so their
+   first write started at the last answer. Before this round they, and everyone who ends at `min`, got nothing. Fix: the single best guess from `min - 3` answers
+   (`PREWRITE_EARLY_ANSWERS`), two guesses from `min`. `scripts/prewrite-hit-sim.js --early 3 --top 1`: 97% of start levels written with 2.2 writes a learner (98% and
+   2.7 from `min` on; `--early 5`: 92%, `--early 6`: 88%).
+2. **Global cap of 2 prewrites at once starved 10 learners**: all 15 prewrite events came within about 6 s of each other and only 2 writes started, the next at 210 s and 316 s.
+   Fix: cap 6 (`WRITE_AHEAD_PREWRITE_CONCURRENT`), still one per learner, and the speculative fast-slot reserve 2 to 1.
+3. **A write takes 100 to 360 s under 10 learners at once** (209 and 362 s for the first two), not the 60 s of a healthy single write. A write started late cannot be ready.
+4. Levels 2 and 3 (held behind level 1 since round 3) did not show as a cause; the background fill of level 2 (352 s on Gonka) ran beside the learner's write and shares the
+   free and Gonka slots, which is unmeasured as a cause. The 'placed' trace note never appeared (not traced why), so "did the finish request join the write" is inferred from
+   a 0.1 s open, not logged.
+
+Re-measure (THINK_MS 7500, balanced mode, ~10% CPU; Grokified answered 0 / 3 / 14 calls in the 1 / 3 / 10 runs; MiniMax off):
+| run | seconds to open lesson | ready within 8 s |
+|---|---|---|
+| 1 strong (78 s placement) | 382 | 0 of 1 |
+| 3 at once | 327 (strong), 0.1 (weak, 240 s placement), 50 | 1 of 3 |
+| 10 at once | 144, 118, 0.1, 102, 112, 0.1, 609 (timeout), 0.1, 56, 0.1 | 4 of 10 |
+Share ready: 5 of 14 (36%), against 0 of 14 before; all five are 30-answer placements (220 to 240 s). Misses by cause: 4 strong learners placed after 10 to 17 answers (77 to 131 s; the
+head start is under 30 s and a write is 100 s or more), 3 slow writes under load, 1 timeout (the same cold write as before), 1 single strong learner. Median at 3 at once 50 s, worst 327 s:
+the gate is NOT met. A learner whose placement ends within about 100 s of the first guess cannot have a 100 s write ready; closing that needs either a faster cold write or an
+earlier prior guess (82% hit with 6 levels in round 1, rejected as wasteful).
+
+Cost of the prewrites (ledger deltas over each whole run on Coral, Gonka, Lyceum, Grokified, Munito: $0.09 for the 1-learner run, $0.32 for 3, $0.91 for 10): about $0.09 a learner including
+the learner's own level 1 to 3 writes and checks, so the speculative part is at most the ~$0.05 of one cold write per guess; a learner who leaves after placement cost one to two
+guesses (2.2 on average), roughly $0.05 to $0.10, with nothing further written for them (levels 2 and 3 wait for the first-level write, and a leaver triggers nothing after it).
+Not measured separately from the rest.
+
+`FACT_VERIFY_MINIMAX` (default off): the Lyceum MiniMax M3 verifier is refused unless set to `on`. With it off and grok-4.3 down, a waiting learner's fact check finds no verifier
+(never a free model), the level is not served as checked, and the background write retries on the slower slots. That retry was not traced here.

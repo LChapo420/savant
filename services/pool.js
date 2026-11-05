@@ -95,11 +95,11 @@ function promote(store) { if (store) { store.background = false; store.speculati
 
 // ── a learner waiting on a first level outranks speculative writes (owner, 5 Nov 2026) ───────────────────────────────
 // Speculative = a prewrite during placement (nobody waits on it yet). WAITING = the fast lane without that mark. Three rules:
-//   - a speculative call never takes the last POOL_SPECULATIVE_RESERVE (2) permits of a fast slot, and never starts while a waiting call is
+//   - a speculative call never takes the last POOL_SPECULATIVE_RESERVE (1) permits of a fast slot, and never starts while a waiting call is
 //     pending anywhere (queued calls: the waiting one is polled first and the speculative one stays blocked until none is pending);
 //   - a waiting call has a per-attempt deadline (POOL_WAITING_DEADLINE_MS, 45 s) after which it moves on to the next fast slot instead of
 //     sitting 340 to 465 s on a slow one; its whole call is bounded to 3 attempts' worth.
-const specReserve = () => Math.max(0, Number(process.env.POOL_SPECULATIVE_RESERVE == null || process.env.POOL_SPECULATIVE_RESERVE === '' ? 2 : process.env.POOL_SPECULATIVE_RESERVE));
+const specReserve = () => Math.max(0, Number(process.env.POOL_SPECULATIVE_RESERVE == null || process.env.POOL_SPECULATIVE_RESERVE === '' ? 1 : process.env.POOL_SPECULATIVE_RESERVE));
 const waitingDeadlineMs = () => Number(process.env.POOL_WAITING_DEADLINE_MS || 45000);
 let waitingPending = 0; // waiting-lane calls in callHedged now
 const isWaitingStore = (st) => !!(st && st.fast && st.background === false && !st.speculative);
@@ -575,6 +575,8 @@ function xkiroLearnerAllowed(slot, req) {
 
 /** Why this slot may not serve this task / data class, or null if it may. */
 function refusal(slot, req, kind) {
+  // MiniMax M3 as a fact verifier behind grok-4.3 is the owner's call (17/36 caught against 22): off until decided (FACT_VERIFY_MINIMAX=on).
+  if (slot.id === 'lyceum:minimax/minimax-m3' && String(process.env.FACT_VERIFY_MINIMAX || '').toLowerCase() !== 'on') return 'switch: FACT_VERIFY_MINIMAX is off';
   const cls = reqClass(req);
   if (slot.dataClass === 'pipeline' && cls !== 'pipeline' && !xkiroLearnerAllowed(slot, req) && !munitoLearnerAllowed(slot, req) && !coralLearnerAllowed(slot, req)) return 'data: a pipeline slot never gets learner data';
   if (!slot.supports.includes(kind)) return `does not do ${kind}`;

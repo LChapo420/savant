@@ -209,6 +209,8 @@ function aheadFor(enrollment, pace = paceFor(enrollment)) {
 
 function note(event) {
   events.push({ at: Date.now(), ...event });
+  if (process.env.WRITE_AHEAD_TRACE_FILE) { try { require('fs').appendFileSync(process.env.WRITE_AHEAD_TRACE_FILE, `${JSON.stringify({ at: Date.now(), ...event })}
+`); } catch { /* tracing never blocks */ } }
   if (events.length > 300) events.splice(0, events.length - 300);
 }
 
@@ -451,7 +453,7 @@ function enqueue({ user, step, key, enrollmentId, levelsPerHour, testDays = null
   note({ type: 'queued', key, kind, tier: step.tier, level: step.level });
 }
 
-const prewriteCap = () => num('WRITE_AHEAD_PREWRITE_CONCURRENT', 2, 1, 12);
+const prewriteCap = () => num('WRITE_AHEAD_PREWRITE_CONCURRENT', 6, 1, 12);
 /** Speculative writes running now, in all or for one learner (one at a time each: the best guess first, the next only when it is done). */
 function prewriteRunning(userId = null) { let n = 0; for (const j of running.values()) if (j.prewrite && (userId === null || j.userId === userId)) n++; return n; }
 
@@ -575,4 +577,6 @@ function reset() {
   prewritten.clear();
 }
 
-module.exports = { trigger, prewrite, triggerForUser, planFor, idle, status, reset, events, paceFor, writeMinutes, aheadFor, testDaysOf, dormant, lastActiveMs, writesToday, dailyCap };
+/** The levels already written during placement for an enrollment (trace). */
+const prewrittenLevels = (enrollmentId) => [...(prewritten.get(enrollmentId) || [])];
+module.exports = { note, prewrittenLevels, trigger, prewrite, triggerForUser, planFor, idle, status, reset, events, paceFor, writeMinutes, aheadFor, testDaysOf, dormant, lastActiveMs, writesToday, dailyCap };

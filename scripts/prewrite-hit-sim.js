@@ -43,8 +43,8 @@ for (const trackId of TRACKS) {
       const known = 1 / (1 + Math.exp(-(f - up.pointOf(q, next.unit)) / 0.3));
       const correct = holes.has(next.unit) ? rand() < guess : rand() < guess + (1 - 0.03 - guess) * known;
       answered.push({ ...next, correct }); asked++;
-      if (answered.length >= up.modeCfg(trackId, MODE).min) {
-        last = up.likelyStarts(trackId, gradeId, answered, 2);
+      if (answered.length >= Math.max(3, up.modeCfg(trackId, MODE).min - Number(arg('early', 0)))) {
+        last = up.likelyStarts(trackId, gradeId, answered, Number(arg('top', 2)));
         for (const l of last) if (written.size < MAXW) written.add(l);
       }
     }

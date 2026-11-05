@@ -196,11 +196,13 @@ router.post('/start', requireAuth, limit('placement-start', 30, 60 * 60 * 1000),
  * so a wandering belief is bounded. Nothing is written before `min` answers: a guess from the grade's first two units alone wasted the cap on
  * the start of the grade (simulated: 95% of start levels written with four, against 82% when the first two units were written at the start).
  */
-function prewriteFirstLesson(req, enrollment, answered) {
+function prewriteFirstLesson(req, enrollment, answered, minAnswers) {
   try {
     const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
     if (!grade) return;
-    const levels = unitPlacement.likelyStarts(enrollment.track_id, enrollment.grade_id, answered, 2);
+    // Before `min` answers only the single best guess (5 Nov, scripts/prewrite-hit-sim.js --early 3 --top 1: 97% of start levels written, 2.2 writes a
+    // learner, against 98% and 2.7 from `min` on): a learner who ends at `min` answers had no head start at all before.
+    const levels = unitPlacement.likelyStarts(enrollment.track_id, enrollment.grade_id, answered, answered.length >= minAnswers ? 2 : 1);
     if (levels.length) writeAhead.prewrite({ user: req.user, enrollment, grade, levels, reason: 'placement' });
   } catch (err) { console.warn(`placement: prewrite skipped (${err.message})`); }
 }
@@ -238,8 +240,9 @@ router.post('/answer', requireAuth, (req, res) => {
   );
   // From `min` answers on, the belief is narrow enough to guess where it will end: write that lesson now, while they answer the rest.
   const enrolled = db.byId('enrollments', session.enrollment_id);
-  if (enrolled && answered.length >= unitPlacement.modeCfg(session.track_id, session.unit_mode).min) {
-    prewriteFirstLesson(req, enrolled, answered.map((i) => ({ unit: i.unit, slot: i.slot, correct: !!i.correct })));
+  const minAns = unitPlacement.modeCfg(session.track_id, session.unit_mode).min;
+  if (enrolled && answered.length >= Math.max(3, minAns - Number(process.env.PREWRITE_EARLY_ANSWERS == null ? 3 : process.env.PREWRITE_EARLY_ANSWERS))) {
+    prewriteFirstLesson(req, enrolled, answered.map((i) => ({ unit: i.unit, slot: i.slot, correct: !!i.correct })), minAns);
   }
   if (!next) return res.json({ recorded: true, answered: answered.length, done: all.length === answered.length });
   const row = db.insert('items', {
@@ -315,6 +318,7 @@ router.post('/finish', requireAuth, (req, res) => {
     trackId: enrollment.track_id, placedLevel: result.placedLevel, pathLength: grade.pathLength,
   });
 
+  writeAhead.note({ type: 'placed', userId: req.user.id, enrollmentId: enrollment.id, level: result.placedLevel, prewritten: writeAhead.prewrittenLevels(enrollment.id) });
   lessons.prefetch({ userId: req.user.id, enrollment: db.byId('enrollments', enrollment.id), grade, level: result.placedLevel });
   // A new enrollment's first level, and the ones after it (write-ahead).
   writeAhead.trigger({ user: req.user, enrollment: db.byId('enrollments', enrollment.id), grade, reason: 'placed' });

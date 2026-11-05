@@ -138,7 +138,9 @@ const today = () => new Date().toISOString().slice(0, 10);
       for (const t of ['blind_mc', 'fact_claims', 'placement_key_judge', 'placement_unit_judge']) { const i = ids(t); assert.ok(i.includes(CR) && !i.includes(KIMI) && !i.includes(FLASH), `${t}: ${i}`); }
       assert.ok(!ids('lesson_write').some((i) => /^(crouton|lyceum:(moonshotai|z-ai\/glm-5.3$|deepseek\/deepseek-v4-pro))/.test(i)), 'strong slots and Crouton stay off other tasks');
       assert.ok(!['lesson_write', 'night_judge', 'blind_mc'].some((t) => ids(t).includes('lyceum:minimax/minimax-m3')), 'MiniMax M3 is for fact_verify only');
-      assert.ok(ids('fact_verify').includes('lyceum:minimax/minimax-m3'));
+      assert.ok(!ids('fact_verify').includes('lyceum:minimax/minimax-m3'), 'off by default: FACT_VERIFY_MINIMAX is the owner switch');
+      process.env.FACT_VERIFY_MINIMAX = 'on';
+      try { assert.ok(ids('fact_verify').includes('lyceum:minimax/minimax-m3')); } finally { delete process.env.FACT_VERIFY_MINIMAX; }
       const byId = Object.fromEntries(slots.map((s) => [s.id, s]));
       assert.ok(byId[CR].priceIn === 0 && byId[CR].priceOut === 0 && byId[KIMI].priceIn === 3 && byId[KIMI].priceOut === 15);
     } finally { off(); }

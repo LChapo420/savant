@@ -220,8 +220,8 @@ const cleanEnv = () => { mu._setFetch(null); for (const k of ['CORAL_API_KEY', '
       const slot = pool.makeSlot({ id: 'coral:fast-test', provider: 'coral', priceIn: 1, priceOut: 2, maxConcurrent: 4, fast: true, call: async () => ({}) });
       slot.inFlight = 1;
       assert.ok(slot.hasPermit(false, true), 'one running: a speculative call may start');
-      slot.inFlight = 2;
-      assert.ok(!slot.hasPermit(false, true), 'two of four running: the last two permits are for waiting learners');
+      slot.inFlight = 3;
+      assert.ok(!slot.hasPermit(false, true), 'three of four running: the last permit is for a waiting learner');
       assert.ok(slot.hasPermit(false, false), 'a waiting call still takes a permit');
       assert.strictEqual(pool.classify({ deadline: true, status: 0 }), 'deadline');
       for (let i = 0; i < 8; i++) slot.noteFail('deadline', { deadline: true });
