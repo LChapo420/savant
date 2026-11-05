@@ -1089,6 +1089,8 @@ function runLearner(index, mode, { population = false } = {}) {
       planner.record(item, a.readings, a.seconds);
       for (const f of planner.unlockedFree()) planner.record(f, dailyAnswer(f, planner.elapsed, onbModel).readings, 0);
     }
+    // Diagnostic: how well the planner's own posterior knows this learner (before the card's combining rules), mean absolute error over the measures with a truth.
+    { const est = planner.estimates(); const ids = STATS.map((x) => x.id).filter((id) => T[id] !== undefined && est[id]); dailyStat.ideal_mae = Number((ids.reduce((acc, id) => acc + Math.abs(est[id].value - T[id]), 0) / (ids.length || 1)).toFixed(3)); }
     dailyCheck.closeRun(userId, planner, simNow, {});
     dailyStat.runs += 1;
     dailyStat.sec += planner.elapsed;
