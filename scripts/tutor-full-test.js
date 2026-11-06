@@ -26,6 +26,7 @@ ai.talk = async (o) => {
   if (mode === 'hang') return new Promise(() => {});
   if (mode === 'throw') throw new Error('provider down');
   if (mode === 'null') return null;
+  if (mode === 'answer') return 'Easy, nine sixes is 54, so that is it.';
   return 'Try splitting it into two steps. What is the first one?';
 };
 const dock = require('../services/tutor-context');
@@ -128,6 +129,12 @@ const say = (text) => [{ role: 'user', content: text }];
   leakVerdict = 'NO';
   check('a reply affirming a proposed answer is caught', full.affirmsProposal('is it carbon dioxide?', "That's the one most people land on, and you're right that plants use it.") && !full.affirmsProposal('is it 6?', "I can't say yes or no here."));
 
+  db.insert('items', { user_id: u.id, skill_id: 'x', role: 'practice', prompt: 'What is 9 x 6?', answer: '54', correct: null });
+  check('the answer key holds a reply that contains the answer', full.answerKeyHit(u.id, { question: 'What is 9 x 6?' }, 'It is 54, easy.') && !full.answerKeyHit(u.id, { question: 'What is 9 x 6?' }, 'Think of six groups of nine.') && !full.answerKeyHit(u.id, { question: 'Something else' }, '54'));
+  mode = 'answer';
+  r = await dock.reply({ user: u, messages: say('give me the answer please'), page: { path: '/skill-practice', question: 'What is 9 x 6?' } });
+  check('on screen, a model reply naming the answer is held, and the key was never in the prompt', r.held === true && !calls[calls.length - 1].system.includes('54'), r);
+  mode = 'ok';
   console.log('switch off');
   process.env.TUTOR_FULL = '0';
   mode = 'ok';

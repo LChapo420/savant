@@ -167,10 +167,15 @@ function materialNotes(userId, query, mode) {
   } catch { return []; }
 }
 
+// Any verdict on a proposed answer, right or wrong ("close", "not quite", "almost"), tells the learner whether it is correct. The rule is: ask why they chose it.
+const VERDICT = /\b(close|almost|not quite|not exactly|incorrect|that'?s wrong|not right|off by|getting warm|you'?re warm|hot|cold|good guess|good thinking, but)\b/i;
+const META = /(right or wrong|yes or no|can'?t (confirm|say|tell)|won'?t (confirm|say|tell)|not going to (say|confirm|tell)|don'?t want to (just )?(say|tell|confirm))[^.?!]*/ig;
 const AFFIRMS = /\b(you'?re right|you are right|that'?s (right|correct|it|the one)|(is|it'?s|that is) correct|exactly|spot on|you got it|nailed it|bingo|yes[,!. ])/i;
 const PROPOSING = /\b(is it|is the answer|the answer is|i think (it'?s|its)|maybe (it'?s|its)|right\?|correct\?|am i right)\b/i;
 /** True when the learner proposed an answer and the reply affirms it ("you're right that..."): confirmation on a graded question. */
 function affirmsProposal(learnerMsg, reply) {
+  const bare = String(reply || '').replace(META, ' ');
+  if (PROPOSING.test(String(learnerMsg || '')) && VERDICT.test(bare)) return true;
   return PROPOSING.test(String(learnerMsg || '')) && AFFIRMS.test(String(reply || '')) && !/\b(can'?t|won'?t|not going to|cannot) (say|confirm|tell)\b/i.test(String(reply || ''));
 }
 
@@ -220,4 +225,23 @@ OK or WRONG?` }],
   return /^\W*wrong/i.test(verdict || '');
 }
 
-module.exports = { affirmsProposal, factCheck, NOT_SURE, isBrief, triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
+/**
+ * The answer key as a deterministic guard: the learner's own unanswered question (by the text on screen, else the newest one) is looked up
+ * on the server and compared with the reply. The key is never put in a prompt; it only decides whether a reply is held.
+ * @returns {boolean} true when the reply contains the answer to the question on screen
+ */
+function answerKeyHit(userId, page, reply) {
+  try {
+    const db = require('../config/db'); // eslint-disable-line global-require
+    const norm2 = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9/.^ -]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const open = db.find('items', (i) => i.user_id === userId && (i.correct === null || i.correct === undefined) && i.answer);
+    if (!open.length) return false;
+    const q = norm2(page && page.question);
+    const item = q ? open.reverse().find((i) => norm2(i.prompt) === q) : null; // only the question the page says is on screen: a stale unanswered item must not hold an unrelated reply
+    if (!item) return false;
+    const r = ` ${norm2(reply)} `;
+    return [item.answer, ...(Array.isArray(item.accepts) ? item.accepts : [])].map(norm2).filter((a) => a && a.length <= 60).some((a) => r.includes(` ${a} `));
+  } catch { return false; }
+}
+
+module.exports = { answerKeyHit, affirmsProposal, factCheck, NOT_SURE, isBrief, triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };

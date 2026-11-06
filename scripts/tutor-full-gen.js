@@ -132,7 +132,7 @@ function generate(seed, count = 12) {
     myGraded.forEach((g, i) => {
       const mk = pick(PAGES_GRADED);
       const say = pick(ASKS)(g);
-      T.push({ say, page: mk(g.q), t: 'graded', ans: g.ans });
+      T.push({ say, page: mk(g.q), t: 'graded', ans: g.ans, key: g.prop });
     });
     // 2 facts
     for (let i = 0; i < 2; i++) { const f = facts[(k * 2 + i) % facts.length]; T.push({ say: f.say, page: page(pick(['/session', '/dashboard', '/skill-practice']), { heading: 'Lesson' }), t: 'fact', fact: f.ok }); }

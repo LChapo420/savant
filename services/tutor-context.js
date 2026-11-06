@@ -334,6 +334,8 @@ Does the reply state the answer (to the question on the page, or to a question f
   }
   // A one-line reply with no question in it, to someone who asked for the answer, is the answer ("answer only" -> "9 x 6 is 54.").
   if (fullOn && text && !held && asked && (mode === 'method' || (page && page.question)) && text.trim().length <= 70 && !/\?/.test(text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+  // The server knows the answer to the question on screen; a reply containing it is held, whatever the model thought (the key never goes into a prompt).
+  if (fullOn && text && !held && (mode === 'method' || (page && page.question)) && full.answerKeyHit(user.id, page, text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   // Without any model: a reply that repeats the answer the learner just proposed ("is it 3/4?") is confirming it.
   if (fullOn && text && !held && last && (mode === 'method' || (page && page.question)) && (full.echoesProposal(last.content, text) || full.affirmsProposal(last.content, text))) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   // Round 2: a fast fact check before a reply is shown (services/tutor-full.js factCheck).

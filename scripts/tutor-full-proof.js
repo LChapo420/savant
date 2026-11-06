@@ -244,6 +244,8 @@ async function run() {
         if (T.page.question) prevQ = T.page.question;
         messages.push({ role: 'user', content: T.say });
         const before = messages.slice(-5, -1).map((m) => `${m.role}: ${m.content.slice(0, 220)}`);
+        // The app has the question as an unanswered item with its key (never shown to the tutor's prompt; the guard compares replies with it).
+        if (T.key && T.page.question) db1(app, u.id) && app.db.insert('items', { user_id: u.id, skill_id: 'proof', role: 'practice', prompt: T.page.question, answer: T.key, correct: null });
         const n0 = calls.length;
         const t0 = Date.now();
         let r; let err = null;
