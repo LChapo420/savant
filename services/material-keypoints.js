@@ -169,7 +169,7 @@ function specificsOf(text) {
   return out;
 }
 /** A heading written as a whole statement ("Tamsin Reef shelters the harbour") makes a point of its own; a topic label ("Types of plate boundaries") does not. */
-const CLAIM_HEADING = (t) => (t.match(/\S+/g) || []).length >= 5 && !/^(?:why|how|what|when|where|who|which|the\s+(?:role|types?|causes?|history)\b)/i.test(t) && /\b[a-z]{3,}(?:s|ed)\s+(?:the|a|an|its|their|from|to|in|on|at|by|with|all|every|most|some|no)\b|\b(?:is|are|was|were|must|cannot|never)\b/.test(t);
+const CLAIM_HEADING = (t) => (t.match(/\S+/g) || []).length >= 5 && !/^(?:why|how|what|when|where|who|which|the\s+(?:role|types?|causes?|history)\b)/i.test(t) && /\b[a-z]{3,}(?:s|ed)\s+(?:the|a|an|its|their|all|every|most|some|no)\b|\b(?:is|are|was|were|must|cannot|never)\b/.test(t);
 
 /**
  * Key points and topics from rich text. opts: { plain } (the stored text, to place each point at an offset),
@@ -276,7 +276,11 @@ function extract(rich0, opts = {}) {
     const members = [i];
     for (let j = i + 1; j < units.length; j++) {
       if (used.has(j) || units[j].terms.size < 3 || units[j].assessedItem) continue;
-      if (jaccard(units[i].terms, units[j].terms) >= 0.55) { members.push(j); used.add(j); }
+      if (jaccard(units[i].terms, units[j].terms) < 0.55) continue;
+      // The same frame with different names and numbers ("Station A holds 12", "Station B holds 30") is two facts, not one said twice.
+      const si = specificsOf(units[i].text); const sj = specificsOf(units[j].text);
+      if (si.size && sj.size && ![...si].some((x) => sj.has(x))) continue;
+      members.push(j); used.add(j);
     }
     used.add(i);
     clusters.push(members);

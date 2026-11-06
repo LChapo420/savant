@@ -41,7 +41,8 @@ function carries(k, text) {
   let n = 0; for (const x of pt) if (it.has(x)) n++;
   if (pt.size && n / pt.size < 0.6) return false;
   const low = String(text).toLowerCase();
-  return (String(k.text).match(/\d[\d,.]*\d|\d/g) || []).every((d) => low.includes(d));
+  if (!(String(k.text).match(/\d[\d,.]*\d|\d/g) || []).every((d) => low.includes(d))) return false;
+  return (String(k.text).toLowerCase().match(new RegExp(NUMBER_WORD.source, 'gi')) || []).every((w) => low.includes(w));
 }
 const stressedOf = (kps) => (kps || []).filter((k) => k.weight >= STRESS_MIN && k.text && !/\.\.\.$/.test(k.text)).sort((a, b) => b.weight - a.weight).slice(0, 40);
 
@@ -61,7 +62,7 @@ function sweepPack({ cards, quiz, test, kps, passageFor }) {
     if (!z || !p) continue;
     cards.push({ front: z.prompt, back: z.answer, passage_id: p, quote: k.text, stressed: true }); c++;
   }
-  for (const k of missing(kps, [...quiz, ...test].map((q) => `${q.prompt} ${q.answer || ''} ${(q.choices || []).join(' ')} ${q.quote || ''}`))) {
+  for (const k of missing(kps, [...quiz, ...test].map((q) => `${q.prompt} ${q.answer || ''} ${(q.choices || []).join(' ')}`))) {
     const z = clozeOf(k.text); const p = passageFor(k);
     if (!z || !p) continue;
     test.push({ type: 'short_answer', prompt: z.prompt, answer: z.answer, explanation: ANSWER_KEY(k), passage_id: p, quote: k.text, tier: 1, stressed: true }); t++;
@@ -72,7 +73,7 @@ function sweepPack({ cards, quiz, test, kps, passageFor }) {
 /** Learning path and practice test: a fill-in on the owning skill for each stressed point no question of the course carries. */
 function sweepCourse({ skills, kps, passageFor }) {
   let added = 0;
-  const all = () => skills.flatMap((s) => (s.questions || []).map((q) => `${q.prompt} ${q.answer || ''} ${q.type === 'multiple_choice' ? (q.choices || [])[q.answer_index] : ''} ${q.quote || ''}`));
+  const all = () => skills.flatMap((s) => (s.questions || []).map((q) => `${q.prompt} ${q.answer || ''} ${q.type === 'multiple_choice' ? (q.choices || [])[q.answer_index] : ''}`));
   for (const k of missing(kps, all())) {
     const z = clozeOf(k.text); const pid = passageFor(k);
     if (!z || !pid) continue;
@@ -115,4 +116,17 @@ function sweepFacts({ skills, passages, sentencesOf, capWords }) {
   return added;
 }
 
-module.exports = { enabled, onFor, clozeOf, carries, missing, stressedOf, sweepPack, sweepCourse, sweepFacts };
+/** Notes: a stressed point no bullet carries becomes a bullet of its own words, under the heading of its part. Mutates sections. */
+function sweepNotes({ sections, kps, passageFor }) {
+  let added = 0;
+  for (const k of missing(kps, sections.flatMap((s) => s.bullets.map((b) => b.text)))) {
+    const pid = passageFor(k);
+    if (!pid || !sections.length) continue;
+    const sec = sections.find((s) => s.bullets.some((b) => b.passage_id === pid)) || sections[sections.length - 1];
+    sec.bullets.push({ text: k.text, passage_id: pid, quote: k.text, stressed: true });
+    added++;
+  }
+  return added;
+}
+
+module.exports = { sweepNotes, enabled, onFor, clozeOf, carries, missing, stressedOf, sweepPack, sweepCourse, sweepFacts };

@@ -215,6 +215,11 @@ async function build(userId, materialId, opts = {}) {
       }
       for (const s of got.sections) { sections.push(s); s.bullets.forEach((b) => touched.add(b.passage_id)); }
     }
+    // What the material stresses is in the notes, in its own words if the writer left it out (services/material-stress.js).
+    const stress = require('./material-stress'); // eslint-disable-line global-require
+    if (stress.onFor(opts) && sections.length && mat.key_points && mat.key_points.length) {
+      stress.sweepNotes({ sections, kps: mat.key_points, passageFor: (k) => courses.passageOfKeypoint(k, passages) });
+    }
     sections.forEach((s, i) => { s.id = `n${i + 1}`; });
     const coverage = passages.length ? Math.round((touched.size / passages.length) * 100) : 0;
     const status = !sections.length ? 'failed' : (stopped || unanswered || factUnchecked ? 'partial' : 'ready');
