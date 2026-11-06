@@ -871,7 +871,7 @@ async function build(userId, materialId, opts = {}) {
     const all = chunk(mat.text);
     const passages = all.slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, keypoints: mat.key_points || [], passageList: passages, follow: require('./course-follow').contextFor(userId, mat), block: specBlockFor(userId, mat), questionBlock: questionBlockFor(userId, mat), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title, materialId: mat.id }), makeGuard: guardMaker(userId, mat), allowNames: interestNames(userId, mat), factOn: factOn(opts), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
+    const ctx = { unanswered: 0, llm, userId, keypoints: mat.key_points || [], passageList: passages, follow: require('./course-follow').contextFor(userId, mat), block: specBlockFor(userId, mat), questionBlock: questionBlockFor(userId, mat), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title, materialId: mat.id }), makeGuard: guardMaker(userId, mat), allowNames: interestNames(userId, mat), factOn: factOn(opts), stressOn: require('./material-stress').onFor(opts), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
     const base = {
       user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, total_chars: mat.text.length, status: 'building', started_at: new Date().toISOString(),
       passages: passages.map(({ id, start, end }) => ({ id, start, end })), truncated: all.length > passages.length,
@@ -922,7 +922,7 @@ async function build(userId, materialId, opts = {}) {
         // Every window unanswered is a provider problem, not the learner's text.
         const noAnswer = !stoppedOutline && lost.length && lost.every((l) => l.reason === 'unreadable') && !raw.length;
         persist({ status: 'failed', error: stoppedOutline ? 'token budget' : noAnswer ? 'no_answer' : 'outline', tokens_used: ctx.budget.used, finished_at: new Date().toISOString() });
-        return noAnswer ? { error: 'The AI models did not answer. Try again in a minute.', code: 'busy' } : { error: 'The material could not be turned into a course. Try a clearer or longer text.', code: 'outline_failed' };
+        return noAnswer ? { error: 'The AI models did not answer. Try again in a minute.', code: 'outline_failed', busy: true } : { error: 'The material could not be turned into a course. Try a clearer or longer text.', code: 'outline_failed' };
       }
       if (gaps) ctx.dropped.outline_parts = gaps;
       if (all.length > passages.length) {
@@ -1002,6 +1002,16 @@ async function build(userId, materialId, opts = {}) {
     if (sh(ctx) && !stopped && skills.length) {
       const sw = await factSweep(skills, passageById, ctx, passages.reduce((n, p) => n + wordCount([p.text]), 0));
       ctx.dropped.sweep = sw;
+    }
+    // What the material stresses is also practised, and no stated fact is lost: services/material-stress.js (no model, the material's own sentences).
+    if (ctx.stressOn && skills.length) {
+      const S = require('./material-stress'); // eslint-disable-line global-require
+      const pf = (k) => passageOfKeypoint(k, passages);
+      const qAdded = S.sweepCourse({ skills, kps: ctx.keypoints, passageFor: pf });
+      if (qAdded) ctx.dropped.stress_questions = qAdded;
+      const srcWords = passages.reduce((n, p) => n + wordCount([p.text]), 0);
+      const fAdded = S.sweepFacts({ skills, passages, sentencesOf: factcheck.sentencesOf, capWords: Math.round(srcWords * 0.5) });
+      if (fAdded) ctx.dropped.facts_restored = fAdded;
     }
     const keypointGap = gate ? gate.uncovered.length : 0;
     // Skills that got no model answer at all (busy or timed out) leave the course partial, so asking again builds them.

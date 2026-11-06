@@ -111,6 +111,24 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
   const b2 = await cb.build(u.id, m2.id, { llm: llm2, factcheck: true });
   check('asking again builds and checks it, and the course is ready', b2.course.status === 'ready', b2.course.status);
 
+  // Stressed points on every surface: fill-ins from the material's own sentence.
+  const St = require('../services/material-stress');
+  check('a fill-in hides the number', St.clozeOf('Salt from Ondra Flats is taxed at 7 percent.').answer === '7');
+  check('a fill-in hides the year', St.clozeOf('The Veskin treaty was signed in 1642.').prompt.includes('___'));
+  check('a fill-in hides a two-word name', St.clozeOf('Tamsin Reef shelters the eastern harbour from winter storms.').answer === 'Tamsin Reef', St.clozeOf('Tamsin Reef shelters the eastern harbour from winter storms.'));
+  check('a fill-in without a number or name hides a long word', !!St.clozeOf('The bell must be rung before any boat leaves the harbour.'));
+  const kps = [{ text: 'Salt from Ondra Flats is taxed at 7 percent.', weight: 3 }, { text: 'Plain sentence with nothing stressed in it at all.', weight: 1 }];
+  const cards = []; const test = [];
+  St.sweepPack({ cards, quiz: [], test, kps, passageFor: () => 'p1' });
+  check('a stressed point with no card gets one, and a test item; a plain one does not', cards.length === 1 && test.length === 1 && cards[0].back === '7');
+  const cards2 = [{ front: 'What is the tax on salt from Ondra Flats?', back: '7 percent' }];
+  St.sweepPack({ cards: cards2, quiz: [], test: [], kps, passageFor: () => 'p1' });
+  check('a point that already has a card is not doubled', cards2.length === 1);
+  const skills = [{ id: 'a', source: 'material', passage_ids: ['p1'], questions: [], lesson: { paragraphs: ['Nothing here.'], key_points: [] } }];
+  check('a course question is added on the skill that owns the passage', St.sweepCourse({ skills, kps, passageFor: () => 'p1' }) === 1 && skills[0].questions[0].type === 'short_answer');
+  const n = St.sweepFacts({ skills, passages: [{ id: 'p1', text: 'Goats outnumber people on Brack Island by nine to one in 1788. Plain words that say nothing special go here.' }], sentencesOf: F.sentencesOf, capWords: 100 });
+  check('a fact the lesson lost goes back as the material\'s own sentence; a plain sentence does not', n === 1 && /Brack Island/.test(skills[0].lesson.paragraphs[1]) && !/Plain words/.test(skills[0].lesson.paragraphs[1]));
+
   // The switch.
   process.env.UPLOAD_FACTCHECK = 'off';
   const m3 = materials.addPaste(u.id, 'Mix3', text).value;
