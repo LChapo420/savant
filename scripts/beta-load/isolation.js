@@ -137,9 +137,8 @@ class Who {
 
   // A deleted account's cookie: nobody home, and the id is not given to anyone else.
   const v = all[N - 1];
-  const delReply = await v.c.call('POST', '/api/account/delete', { confirm: true, password: 'load-test-password' });
-  const delReply2 = delReply.status === 404 ? await v.c.call('DELETE', '/api/account', { confirm: true, password: 'load-test-password' }) : delReply;
-  out.delete_status = delReply2.status;
+  const delReply = await v.c.call('POST', '/api/account/delete', { confirm: 'DELETE', password: 'load-test-password' });
+  out.delete_status = delReply.status; out.delete_says = String((delReply.json && delReply.json.error) || '').slice(0, 80);
   const me = await v.c.get('/api/auth/me');
   out.deleted_cookie_user = me.json && me.json.user ? me.json.user.id : null;
   const nw = new h.Client(srv.url, { ip: '10.63.0.1' });

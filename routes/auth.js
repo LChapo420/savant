@@ -83,6 +83,9 @@ router.post('/register', limit('register', 60, 60 * 60 * 1000), async (req, res)
   if (displayName.length < 2 || displayName.length > 32) {
     return res.status(400).json({ error: 'Your name should be 2 to 32 characters.' });
   }
+  // Hashed before the check, so the check and the insert have nothing between them: with the wait in between, sign-ups racing for one email
+  // all passed the check and each made an account (beta load test, Nov 2026).
+  const passwordHash = await passwords.hash(password, 10);
   if (db.findOne('users', (u) => u.email === email)) {
     return res.status(409).json({ error: 'An account with that email already exists.' });
   }
@@ -90,7 +93,7 @@ router.post('/register', limit('register', 60, 60 * 60 * 1000), async (req, res)
   const user = db.insert('users', {
     email,
     display_name: displayName,
-    password_hash: await passwords.hash(password, 10),
+    password_hash: passwordHash,
     xp: 0,
     streak: 0,
     last_active_day: null,
@@ -125,6 +128,7 @@ async function registerChild(req, res, screen, password, displayName) {
     return res.status(400).json({ error: 'Your first name or a nickname should be 2 to 32 characters.' });
   }
   if (!EMAIL.test(parentEmail)) return res.status(400).json({ error: "Enter your parent's or guardian's email address." });
+  const passwordHash = await passwords.hash(password, 10); // before the check, as above
   if (db.findOne('users', (u) => u.username === username)) {
     return res.status(409).json({ error: 'That username is taken. Try another.' });
   }
@@ -133,7 +137,7 @@ async function registerChild(req, res, screen, password, displayName) {
     email: null,
     username,
     display_name: displayName,
-    password_hash: await passwords.hash(password, 10),
+    password_hash: passwordHash,
     xp: 0,
     streak: 0,
     last_active_day: null,

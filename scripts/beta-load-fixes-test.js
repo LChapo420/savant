@@ -153,6 +153,9 @@ async function startApp(dbFile, port) {
   let logins = 0;
   for (let i = 0; i < 25; i++) if ((await http(app.base, 'POST', '/api/auth/login', { email: `c${i}@example.test`, password: 'password-password' })).status === 200) logins++;
   check('25 sign-ins from one address all work', logins === 25, logins);
+  const racers = await Promise.all(Array.from({ length: 6 }, (_, i) => http(app.base, 'POST', '/api/consent/age', { birth_year: 1990, birth_month: 2, country: 'US' }, null, `10.3.0.${i}`)));
+  const raced = await Promise.all(racers.map((r, i) => http(app.base, 'POST', '/api/auth/register', { email: 'race@example.test', password: 'password-password', display_name: 'Race' }, r.cookie, `10.3.0.${i}`)));
+  check('sign-ups racing for one email make one account', raced.filter((r) => r.status === 201).length === 1 && raced.filter((r) => r.status === 409).length === 5, raced.map((r) => r.status));
   let wrong = 0;
   for (let i = 0; i < 20; i++) if ((await http(app.base, 'POST', '/api/auth/login', { email: 'c0@example.test', password: 'wrong-wrong-wrong' }, null, `10.2.0.${i}`)).status === 429) wrong++;
   check('guessing one account is stopped even from many addresses', wrong >= 5, wrong);
