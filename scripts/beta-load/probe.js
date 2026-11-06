@@ -28,8 +28,13 @@ const realWrite = fs.writeFileSync;
 const realRename = fs.renameSync;
 const flag = process.env.PROBE_FAIL_FLAG;
 const failRe = process.env.PROBE_FAIL_MATCH ? new RegExp(process.env.PROBE_FAIL_MATCH) : null;
+const crashAt = process.env.PROBE_CRASH || '';
+const crashFlag = process.env.PROBE_CRASH_FLAG;
+const crashNow = () => crashAt && crashFlag && fs.existsSync(crashFlag);
 fs.writeFileSync = function writeFileSync(p, data, opts) {
   const isDb = String(p) === dbTmp();
+  // A kill with the temp file half written: the bytes reach the disk, then the process is gone.
+  if (isDb && crashAt === 'tmp' && crashNow()) { realWrite.call(fs, p, String(data).slice(0, Math.floor(data.length / 2)), opts); process.kill(process.pid, 'SIGKILL'); }
   const isLedger = /ledger\.json|usage\.json/.test(String(p));
   if (failRe && failRe.test(String(p)) && flag && fs.existsSync(flag)) {
     const s = typeof data === 'string' ? data.slice(0, Math.floor(data.length / 2)) : data;
@@ -44,6 +49,7 @@ fs.writeFileSync = function writeFileSync(p, data, opts) {
   return r;
 };
 fs.renameSync = function renameSync(a, b) {
+  if (String(a) === dbTmp() && crashAt === 'rename' && crashNow()) process.kill(process.pid, 'SIGKILL');
   const t = performance.now();
   const r = realRename.call(fs, a, b);
   if (String(a) === dbTmp()) cur.renameMs += performance.now() - t;
