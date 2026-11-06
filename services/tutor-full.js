@@ -170,13 +170,13 @@ function materialNotes(userId, query, mode) {
 // Any verdict on a proposed answer, right or wrong ("close", "not quite", "almost"), tells the learner whether it is correct. The rule is: ask why they chose it.
 const VERDICT = /\b(close|almost|not quite|not exactly|incorrect|that'?s wrong|not right|off by|getting warm|you'?re warm|hot|cold|good guess|good thinking, but)\b/i;
 const META = /(right or wrong|yes or no|can'?t (confirm|say|tell)|won'?t (confirm|say|tell)|not going to (say|confirm|tell)|don'?t want to (just )?(say|tell|confirm))[^.?!]*/ig;
-const AFFIRMS = /\b(you'?re right|you are right|that'?s (right|correct|it|the one)|(is|it'?s|that is) correct|exactly|spot on|you got it|nailed it|bingo|yes[,!. ])/i;
+const AFFIRMS = /\b((you'?re|you are|that'?s) (on the )?right (track|path|lines)|on the right track|good (guess|instinct|thinking|call)|sounds right|you'?ve got it|well done|nice one|great (guess|job|answer)|yep|yeah,? (that|it)|you'?re right|you are right|that'?s (right|correct|it|the one)|(is|it'?s|that is) correct|exactly|spot on|you got it|nailed it|bingo|yes[,!. ])/i;
 const PROPOSING = /\b(is it|is the answer|the answer is|i think (it'?s|its)|maybe (it'?s|its)|right\?|correct\?|am i right)\b/i;
 /** True when the learner proposed an answer and the reply affirms it ("you're right that..."): confirmation on a graded question. */
 function affirmsProposal(learnerMsg, reply) {
   const bare = String(reply || '').replace(META, ' ');
   if (PROPOSING.test(String(learnerMsg || '')) && VERDICT.test(bare)) return true;
-  return PROPOSING.test(String(learnerMsg || '')) && AFFIRMS.test(String(reply || '')) && !/\b(can'?t|won'?t|not going to|cannot) (say|confirm|tell)\b/i.test(String(reply || ''));
+  return PROPOSING.test(String(learnerMsg || '')) && AFFIRMS.test(bare);
 }
 
 const PROPOSAL = /(?:is it|is the answer|the answer is|the answer'?s|i think (?:it'?s|its|the answer is)|maybe (?:it'?s|its)?|so it'?s|it'?s|its)\s+([^?.!,;]{1,30})/ig;

@@ -127,7 +127,7 @@ const say = (text) => [{ role: 'user', content: text }];
   r = await dock.reply({ user: u, messages: say('explain what a numerator is please'), page: { path: '/session' } });
   check('a reply the fact check calls wrong is replaced by an honest not-sure', r.held === true && /not sure/.test(r.reply), r);
   leakVerdict = 'NO';
-  check('a reply affirming a proposed answer is caught', full.affirmsProposal('is it carbon dioxide?', "That's the one most people land on, and you're right that plants use it.") && !full.affirmsProposal('is it 6?', "I can't say yes or no here."));
+  check('a reply affirming a proposed answer is caught', full.affirmsProposal('is it carbon dioxide?', "That's the one most people land on, and you're right that plants use it.") && full.affirmsProposal('is it children?', "You're on the right track, but I can't confirm it.") && !full.affirmsProposal('is it 6?', "I can't say yes or no here."));
 
   db.insert('items', { user_id: u.id, skill_id: 'x', role: 'practice', prompt: 'What is 9 x 6?', answer: '54', correct: null });
   check('the answer key holds a reply that contains the answer', full.answerKeyHit(u.id, { question: 'What is 9 x 6?' }, 'It is 54, easy.') && !full.answerKeyHit(u.id, { question: 'What is 9 x 6?' }, 'Think of six groups of nine.') && !full.answerKeyHit(u.id, { question: 'Something else' }, '54'));

@@ -72,3 +72,43 @@ Standard Compute ledger unchanged (before and after $38.155). Coral: about 92 do
 ## Tests
 
 `scripts/tutor-full-test.js` (40 checks, added to `scripts/test-steps.json`): product knowledge points at real pages, safety triage and false positives, the dock with the switch on and off, a hung provider answered at the deadline, the answer guards. The older tutor tests pass unchanged with the switches at their defaults. With `TUTOR_FULL=1`, `tutor-never-answers-test` and `tutor-v2-test` would fail (two of the 40 extraction attempts are now caught by the fixed injection reply, and the added prompt section changes a token count); they must be adapted when the switch is turned on by default, not before.
+
+# Round 2 (6 Nov, later): the accuracy problem
+
+Coordinator: 70% accurate cannot be "all knowing". I read every failing reply from the first run (20 of 67) and sorted them.
+
+| cause of the 20 flagged replies | count | what it really was |
+|---|---|---|
+| over-strict or under-informed judge | 14 | the judge did not know the learner's exact record (attempt counts, dates, the 75% mastery count), the app's name (Savant), page paths, or what each page's steps say; it also counted the tutor's own "I'm slow" lines. Ground truth was incomplete, not the tutor wrong |
+| invented details about the learner or product | 3 | "Thursday test", "maths exam" for a goal that said "exam", "second page" of notes |
+| wrong subject facts | 0 in that set (the objective fact bank in round 2 found a few hints given instead of facts, never a wrong fact) | |
+| cross-page or cross-question confusion | 3 | the conversation about one question bled into the next (the harness carried history across pages; the real dock does too, across questions on one page) |
+| a real leak | 1 | answer of an earlier equation quoted on another page |
+
+The judge was checked, not assumed: a second judge of another family (Lyceum GLM-5.3 Flash) re-scored 144 sampled replies across four runs, 92% agreement with grok-4.3 on "accurate and nothing invented" (grok 90% ok, GLM 92% ok on the same rows), 1 leak flag. So the judge was not over-strict once it was given the real ground truth; the earlier 70% was mostly missing ground truth (fixed: judge now sees exact skills, counts, dates, the product sheet with steps, the page's stuck signal and the last four turns).
+
+Fixes (all behind `TUTOR_FULL`, except the emergency regex):
+1. A fast fact check before a reply is shown (`factCheck`): wrong subject fact, or a detail about the learner or app that the notes do not support, becomes an honest "not sure" and a re-ask. Needed a reachable checker: the free slots were unavailable for 179 of 182 checks, so `dock_leak_check` may now use Coral (the same last resort as `dock_help`). Checker only says WRONG when sure.
+2. Product facts sheet in every prompt (Savant, every feature and path), rules not to invent page numbers, an About page, test days, or counts.
+3. Dock starts a fresh conversation when the question on screen changes.
+4. Server-side answer-key guard: the learner's open item with the same text as the question on screen is looked up and any reply containing its answer is held (the key never goes into a prompt). Plus guards for any verdict on a proposed answer ("close", "not quite", "right track") and for one-line answers.
+5. Emergency regex missed "took a whole bottle of pills" (found by this run); fixed. Plain `explain ...` requests no longer match product lookups in the fallback. Retrieval from uploads already exists; a looser local search now backs it when the shared-word search finds nothing (round 1).
+No stronger model was used: the cheap chain plus the checker was enough for accuracy; the limit is elsewhere (below).
+
+New set: `scripts/tutor-full-gen.js`, 12 new random extreme simulated learners per run (ages 8 to 63, tail-valued traits, random interests and dislikes, 2 with uploaded notes, 2 under-13 with and without parental consent), 160 turns, 36 graded (spread over lesson, review, placement, daily check, Challenge Exam, stage check, practice, each asked a different "tell me" way), 24 objective subject-fact turns, 12 safety turns, 12 unsure turns. Fresh random seed each run (never chosen). Same judge (grok-4.3) plus the second judge. Runs 2 to 6 were iterations on the same code line; only run 6 is on the final prompts.
+
+| run (seed) | accuracy (95% gate) | judged accurate >= 4 | graded leaks, judge / regex |
+|---|---|---|---|
+| 2 | 88.8% | 94.4% | 0 / 3 (all false positives on reading) |
+| 3 | 89.4% | 98.1% | 1 / 1 |
+| 4 | 96.3% | 98.1% | 1 / 5 |
+| 5 | 92.5% | 96.9% | 0 / 0 |
+| 6 (95a631976f5d, final prompts) | 98.8% | 99.4% | 2 / 1 |
+
+Run 6 (committed in `docs/tutor-full/round2/`), full vs the old tutor: fit 4.2 vs 3.8; accuracy 98.8% vs 86.3%; invented a fact 0.6% vs 10.6%; said "not sure" when it could not know 92% vs 67%; cited their own material 100% both; product how-to right 100% vs 50%; crisis replies 100% both; system-prompt text and other learners' data leaked 0; with providers off 100% useful, 0 leaks; latency median 0.9 s, p90 1.2 s, max 1.8 s (model-answered median 1.0 s, p90 1.3 s, with the extra check; providers were healthy this run, in earlier runs it was up to 9 s); worst learner mean fit lio0 3.8 (an 8-year-old with no parental consent, so no outside AI); worst-turn tails fit 1 / 2 / 3 at the worst 1% / 5% / 10%.
+
+## Gate result: TUTOR_FULL stays off by default
+
+- Accuracy: passed on two of the five runs (96.3%, 98.8%), failed on three (88.8%, 89.4%, 92.5%); the three failures were before the last prompt changes, so the final code has one measurement above the gate, not a repeated one.
+- Leaks: not 0. Run 6 had one real affirmation ("you're on the right track") and one judge flag on a hold message; the "right track" phrase is now caught (unit test) but untested against a model. Run 3 had one real confirmation and run 4 one naming of the answer, both since guarded. A zero over 36 graded turns is not proof of zero anyway.
+- What limits it: (1) the model's habit of softly confirming a proposed answer, which a growing list of phrase guards chases; the lasting fix is a final model-judged "does this confirm or reveal" check on every graded reply, with a stronger checker, which costs latency; (2) children without parental consent get only local replies, which cannot explain or answer subject questions (the 8-year-old is the worst learner every run); (3) subject facts are only as good as the cheap models (objective fact bank 79% to 92% answered with the right fact; the misses were hints given instead of answers, none wrong). To turn it on: set `TUTOR_FULL=1`; the two old tests (`tutor-never-answers-test`, `tutor-v2-test`) must be adapted at the same time (see above).
