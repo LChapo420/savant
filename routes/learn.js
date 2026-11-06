@@ -859,12 +859,10 @@ router.post('/items/:id/coach', requireAuth, limit('coach', 120, 60 * 60 * 1000)
     .filter((m) => m && typeof m.content === 'string' && m.content.trim())
     .map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content.trim().slice(0, 800) }));
 
-  // The tutor's safety rules hold inside a question too (services/tutor-safety.js, behind TUTOR_FULL): a crisis message gets the fixed reply, not a hint.
-  if (require('../services/tutor-full').on()) { // eslint-disable-line global-require
+  // The tutor's safety rules hold inside a question too (services/tutor-safety.js; TUTOR_SAFETY, on by default for crisis messages): a crisis message gets the fixed reply, not a hint.
+  {
     const lastSaid = [...cleaned].reverse().find((m) => m.role === 'user');
-    let age = null;
-    try { age = require('../services/boosters').ageOf(req.user); } catch { age = null; } // eslint-disable-line global-require
-    const t = lastSaid ? require('../services/tutor-safety').triage(lastSaid.content, { age }) : null; // eslint-disable-line global-require
+    const t = lastSaid ? require('../services/tutor-full').triage(req.user, lastSaid.content) : null; // eslint-disable-line global-require
     if (t && t.reply) return res.json({ reply: t.reply, source: 'safety', kind: t.kind, coached: true });
   }
 

@@ -254,7 +254,7 @@ async function reply({ user, messages, page, inputMode, image }) {
   // Always-there tutor (services/tutor-full.js, switch TUTOR_FULL): safety first, then a plain how-to answered at once.
   const fullOn = full.on();
   const age = fullOn ? safeAge(user) : null;
-  const triaged = fullOn && last ? safety.triage(last.content, { age }) : null;
+  const triaged = last ? full.triage(user, last.content) : null;
   if (triaged && triaged.reply) return { reply: triaged.reply, source: 'safety', kind: triaged.kind, mode, held: false };
   if (fullOn && last) {
     const quick = howto.instant(last.content, { name: firstName(user) });

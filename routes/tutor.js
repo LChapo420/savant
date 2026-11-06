@@ -17,7 +17,6 @@ const dock = require('../services/tutor-context');
 const facts = require('../services/tutor-facts');
 const tutorMode = require('../services/tutor-mode');
 const full = require('../services/tutor-full');
-const safety = require('../services/tutor-safety');
 const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
 
@@ -28,12 +27,11 @@ const router = express.Router();
 router.post('/tutor/chat', requireAuth, limit('tutor', 150, 60 * 60 * 1000), async (req, res) => {
   const where = ['home', 'subject'].includes(req.body && req.body.where) ? req.body.where : 'home';
   try {
+    const lastSaid = [...tutor.cleanHistory(req.body && req.body.messages)].reverse().find((m) => m.role === 'user');
+    const crisis = lastSaid ? full.triage(req.user, lastSaid.content) : null;
+    if (crisis && crisis.reply) return res.json({ reply: crisis.reply, source: 'safety', kind: crisis.kind });
     if (full.on()) {
-      const last = [...tutor.cleanHistory(req.body && req.body.messages)].reverse().find((m) => m.role === 'user');
-      let age = null;
-      try { age = require('../services/boosters').ageOf(req.user); } catch { age = null; } // eslint-disable-line global-require
-      const t = last ? safety.triage(last.content, { age }) : null;
-      if (t && t.reply) return res.json({ reply: t.reply, source: 'safety', kind: t.kind });
+      const last = lastSaid;
       const out = await full.withDeadline(tutor.chat({ user: req.user, messages: req.body && req.body.messages, where }));
       return res.json(out || { ...full.fallback({ user: req.user, page: { path: where === 'home' ? '/dashboard' : '/path' }, message: last ? last.content : '', name: dock.firstName(req.user), why: 'slow' }), source: 'fallback' });
     }

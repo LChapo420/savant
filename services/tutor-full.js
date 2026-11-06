@@ -20,6 +20,22 @@ const safety = require('./tutor-safety');
 const DEFAULT_ON = '0'; // set to '1' only when the proof's gates pass (docs/TUTOR-FULL.md)
 const on = () => String(process.env.TUTOR_FULL === undefined ? DEFAULT_ON : process.env.TUTOR_FULL).trim() === '1';
 
+// The crisis replies (self-harm, emergency, abuse, a stranger asking for secrecy, a child sharing where they live) are their own,
+// smaller switch: TUTOR_SAFETY, ON by default. Gate: every one of them correct in scripts/tutor-full-test.js and in the proof run, and no
+// ordinary message caught. They only ever add a fixed reply before the model; nothing is stored. Everything else is TUTOR_FULL.
+const CRISIS = new Set(['self_harm', 'emergency', 'abuse', 'unsafe_contact', 'personal_info']);
+const safetyOn = () => String(process.env.TUTOR_SAFETY === undefined ? '1' : process.env.TUTOR_SAFETY).trim() !== '0';
+
+/** The safety reading of one message for this learner, honouring both switches. Null when there is nothing to do. */
+function triage(user, text) {
+  if (!on() && !safetyOn()) return null;
+  let age = null;
+  try { age = require('./boosters').ageOf(user); } catch { age = null; } // eslint-disable-line global-require
+  const t = safety.triage(text, { age });
+  if (!t) return null;
+  return on() || CRISIS.has(t.kind) ? t : null;
+}
+
 const DEADLINE_MS = Number(process.env.TUTOR_DEADLINE_MS) || 14000;
 
 function withDeadline(promise, ms = DEADLINE_MS) {
@@ -163,4 +179,4 @@ function echoesProposal(learnerMsg, reply) {
   return false;
 }
 
-module.exports = { echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
+module.exports = { triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
