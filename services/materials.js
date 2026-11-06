@@ -253,7 +253,11 @@ function pub(row, withText) {
   };
   out.key_point_count = (row.key_points || []).length;
   // The first useful thing, at once and with no model: what the material stresses, heaviest first.
-  out.top_points = (row.key_points || []).filter((k) => k.weight >= 2).sort((a, b) => b.weight - a.weight).slice(0, 8).map((k) => k.text);
+  const kps = (row.key_points || []).slice().sort((a, b) => b.weight - a.weight);
+  const stressed = kps.filter((k) => k.weight >= 2);
+  // Nothing stressed (plain prose): its strongest sentences, else its headings.
+  out.top_points = (stressed.length ? stressed : kps).slice(0, stressed.length ? 8 : 5).map((k) => k.text);
+  if (!out.top_points.length) out.top_points = (row.topics || []).slice(0, 8).map((t) => t.title);
   if (row.warnings && row.warnings.length) out.warnings = row.warnings;
   if (row.files) out.files = row.files;
   if (withText) { out.text = row.text; out.key_points = row.key_points || []; out.topics = row.topics || []; }

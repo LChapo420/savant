@@ -224,6 +224,6 @@ function report() {
   if (cmd === 'docs') await writeDocs();
   else if (cmd === 'exam') await runExam();
   else if (cmd === 'build') await runBuilds(Number(process.argv[3] || 1), (process.argv[4] || '').split(',').filter(Boolean));
-  else if (cmd === 'recheck') await recheck(process.argv[3], process.argv[4], process.argv[5] || 'Z');
+  else if (cmd === 'recheck') { await recheck(process.argv[3], process.argv[4], process.argv[5] || 'Z'); console.log('spend', JSON.stringify(J.spend)); }
   else report();
 })().catch((e) => { console.error(e); process.exit(1); });
