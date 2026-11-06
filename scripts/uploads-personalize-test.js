@@ -77,6 +77,13 @@ const check = (label, ok, detail) => { if (ok) console.log(`  ok   ${label}`); e
   check('dense paragraphs are split into small chunks without a word changed', F.splitDense(['One a. Two b. Three c. Four d. Five e. Six f.'], anxious).length === 3 && F.splitDense(['One a. Two b. Three c. Four d. Five e. Six f.'], anxious).join(' ') === 'One a. Two b. Three c. Four d. Five e. Six f.');
   check('a brevity learner gets a word share under 1 and an ordinary one none', F.wordShare({ course: { skillShare: 0.37 } }) > 0.3 && F.wordShare({ course: { skillShare: 0.37 } }) < 0.9 && F.wordShare({ course: { skillShare: 1 } }) === null);
   check('the follow pass is off unless UPLOAD_FOLLOW=1', F.contextFor(u.id, { title: 'Tides', id: m2.id }) === null || process.env.UPLOAD_FOLLOW === '1');
+  // round 4
+  check('a rewrite that adds a number or a name is refused', F.newClaims('Tides rise 12 metres in Paris.', 'Tides rise because of the moon.', specX).length === 2 && F.newClaims('Tides rise because of the moon. Why it matters: it helps.', 'Tides rise because of the moon.', specX).length === 0, F.newClaims('Tides rise 12 metres in Paris.', 'Tides rise because of the moon.', specX));
+  const qs = [{ prompt: 'What causes tides?', answer: 'moon gravity', explanation: 'The moon pulls on the oceans. More words here that go on and on and on and on and on and on and on and on and on.' }, { prompt: 'How long is a tidal cycle?', answer: '12 hours 25 minutes', explanation: 'Fine.' }, { prompt: 'Other', answer: 'x', explanation: 'y' }, { prompt: 'Other2', answer: 'x', explanation: 'y' }];
+  const kk = require('../services/material-keypoints');
+  const sel = F.selectQuestions(qs, [{ text: 'A tidal cycle repeats about every 12 hours and 25 minutes.', weight: 4 }, { text: 'Tides are caused by the moon gravity pulling on oceans.', weight: 3 }], kk.termSet, { min: 2, max: 3 });
+  check('one check per stressed point is kept and explanations are cut to a sentence', sel.length === 2 && sel[0].prompt === 'How long is a tidal cycle?' && sel[1].explanation === 'The moon pulls on the oceans.', sel);
+  check('a missing trait gets its form without a claim', F.applyFallbacks(['One.'], [{ id: 'adult_register' }, { id: 'stretch' }]).join('|').startsWith('Why it matters:') );
   console.log(failures ? `${failures} FAILED` : 'All checks passed.');
   process.exit(failures ? 1 : 0);
 })();

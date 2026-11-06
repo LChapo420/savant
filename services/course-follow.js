@@ -33,7 +33,9 @@ function contextFor(userId, mat) {
 function wordShare(spec) {
   const s = spec && spec.course && spec.course.skillShare;
   if (!Number.isFinite(s) || s >= 0.9) return null;
-  return Math.min(0.9, Math.max(0.3, s * 1.4));
+  // SELECT mode (UPLOAD_FOLLOW_SELECT, default on with the switch): the share is the lesson's reading budget for the whole course; what survives is chosen
+  // (short writing, then the source's own stressed sentences first), not what is left after cutting. 0.25 to 0.45 of the source's words.
+  return Math.min(0.45, Math.max(0.25, s * 1.1));
 }
 
 const TEST_WORDS = /\b(tests?|tested|testing|quizz?es|quizzed|exams?|examined|graded|grades?|scores?|scored|timed|timers?|marks?)\b/i;
@@ -98,4 +100,56 @@ function problemsOf(paragraphs, keyPoints, spec, { cap = null, own = [], testGoa
   return probs;
 }
 
-module.exports = { enabled, contextFor, wordShare, mergeDense, wantsDense, smallChunks, splitDense, needsSplit, deTest, problemsOf, TEST_WORDS, WORKED };
+/**
+ * Numbers and names a rewrite adds that neither the passages nor the lesson it replaces contain (deterministic: round 4, 6 Nov 2026). A rewrite
+ * that adds any is refused. Allowed: words of the passages, the old lesson and the skill title, the learner's own interests (analogies), and the
+ * labels this module asks for (Worked example, Why it matters, Try first, Stretch, Watch out, Quick check, Takeaway).
+ */
+const LABELS = new Set(['worked', 'example', 'why', 'matters', 'try', 'first', 'stretch', 'watch', 'out', 'quick', 'check', 'takeaway', 'step', 'think', 'imagine', 'retrieval']);
+function newClaims(newText, allowedText, spec) {
+  const allowed = String(allowedText).toLowerCase();
+  const interest = ((spec && spec.interests && spec.interests.exampleDomains) || []).join(' ').toLowerCase();
+  const added = [];
+  for (const n of String(newText).match(/\d+(?:[.,]\d+)?/g) || []) if (!new RegExp('(^|[^\\d])' + n.replace('.', '\\.') + '([^\\d]|$)').test(allowed)) added.push(n);
+  // a capitalised word in the middle of a sentence (after a lower-case word or a comma) is a name
+  for (const m of String(newText).matchAll(/[a-z,;]\s+([A-Z][a-zA-Z-]{2,})/g)) {
+    const w = m[1].toLowerCase();
+    if (LABELS.has(w) || allowed.includes(w) || interest.includes(w)) continue;
+    added.push(m[1]);
+  }
+  return [...new Set(added)];
+}
+
+/** What is added, with no model call, when a trait is still missing after the rewrites: the form only, no claim. */
+const FALLBACK = {
+  adult_register: { where: 'start', text: 'Why it matters: the next ideas build on this.' },
+  try_first: { where: 'start', text: 'Try first: before you read on, say what you already think about this.' },
+  stretch: { where: 'end', text: 'Stretch: explain this idea in your own words and give one case from the material.' },
+  traps: { where: 'end', text: 'Watch out: check each detail against the material before you rely on it.' },
+};
+function applyFallbacks(paragraphs, probs) {
+  let out = [...paragraphs];
+  for (const p of probs) {
+    const f = FALLBACK[p.id];
+    if (!f) continue;
+    out = f.where === 'start' ? [f.text, ...out] : [...out, f.text];
+  }
+  return out;
+}
+
+/** Keep one check per stressed point of a skill (the question that shares most of its words), then fill to min, at most max; shorten explanations. */
+function selectQuestions(items, kps, termSet, { min = 3, max = 5 } = {}) {
+  const chosen = []; const left = [...items];
+  const score = (q, k) => { const a = termSet(k.text); const b = termSet([q.prompt, q.answer, q.explanation, q.quote].filter(Boolean).join(' ')); let n = 0; for (const t of a) if (b.has(t)) n++; return a.size ? n / a.size : 0; };
+  for (const k of [...kps].sort((x, y) => y.weight - x.weight)) {
+    if (chosen.length >= max || !left.length) break;
+    let best = -1; let bi = -1;
+    left.forEach((q, i) => { const s = score(q, k); if (s > best) { best = s; bi = i; } });
+    if (bi >= 0 && best >= 0.3) chosen.push(left.splice(bi, 1)[0]);
+  }
+  while (chosen.length < min && left.length) chosen.push(left.shift());
+  for (const q of chosen) if (q.explanation) { const first = sentences(q.explanation)[0] || q.explanation; q.explanation = first.split(' ').slice(0, 18).join(' '); }
+  return chosen;
+}
+
+module.exports = { FALLBACK_IDS: Object.keys(FALLBACK), newClaims, applyFallbacks, selectQuestions,  enabled, contextFor, wordShare, mergeDense, wantsDense, smallChunks, splitDense, needsSplit, deTest, problemsOf, TEST_WORDS, WORKED };
