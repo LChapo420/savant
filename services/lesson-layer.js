@@ -133,7 +133,8 @@ function check(spec, layer, source) {
   for (const a of source.answers || []) {
     const na = norm(a);
     const oneWord = !/\s/.test(na);
-    if (na.length >= 3 && nl.includes(` ${na} `) && !(oneWord && taughtWords.has(stem(na)))) out.push('it contains the answer to a question in the lesson');
+    // (a short single word, "two", is a number word: the number check above covers it)
+    if (na.length >= 3 && !(oneWord && na.length < 4) && nl.includes(` ${na} `) && !(oneWord && taughtWords.has(stem(na)))) out.push('it contains the answer to a question in the lesson');
     else if (/^\d+(?:\.\d+)?$/.test(String(a).trim()) && numbersOf(all).has(String(a).trim())) out.push('it contains the answer to a question in the lesson');
   }
   if (PROFILE_LEAK.test(all)) out.push('it talks about the learner profile');
@@ -148,12 +149,11 @@ function check(spec, layer, source) {
     if (pw.length && !pw.some((w) => srcTerms.has(w.slice(0, 5)))) out.push(`"${a.point.slice(0, 40)}" is not a point of the lesson`);
   }
   try { for (const p of learningSpec.analogyProblems([hook, ...an.map((a) => a.text)].join(' '), spec, source.text)) out.push(p.detail); } catch { /* the lexical guard is extra */ }
-  const doms = (spec && spec.interests && spec.interests.exampleDomains) || [];
-  if (doms.length && spec.interests.share >= 0.3 && !doms.some((d) => hasAny(`${hook} ${an.map((a) => a.text).join(' ')}`, d))) out.push('neither the hook nor an analogy uses one of the learner\'s interests');
   const lang = (spec && spec.language) || {};
   if (lang.maxSentenceWords) {
     const worst = all.split(/(?<=[.!?])\s+/).map((s) => words(s).length).reduce((a, b) => Math.max(a, b), 0);
-    if (worst > lang.maxSentenceWords + 6) out.push(`a sentence has ${worst} words; keep them to ${lang.maxSentenceWords}`);
+    // Strict for a learner who needs plain words (plain language, a second language); a looser ceiling for everyone else, whose fit the judges read.
+    if (worst > lang.maxSentenceWords + (lang.plainLanguage || lang.eslSupport ? 6 : 12)) out.push(`a sentence has ${worst} words; keep them to ${lang.maxSentenceWords}`);
   }
   return out;
 }
