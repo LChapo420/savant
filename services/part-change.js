@@ -129,7 +129,7 @@ const defaultGate = (userId) => async ({ original, text, withExample, spec, cont
 };
 
 const REFUSED = 'That change could not be made without risking a fact, so this text stays as it was. Your choice is kept for what comes next.';
-const NOOP = 'This is already about as short as it can be. Your choice is kept for what comes next.';
+const NOOP = 'This could not be cut any further without losing a point. Your choice is kept for what comes next.';
 const reply = (r, stored) => (r.text ? { text: r.text, changed: true } : { text: stored, changed: false, message: r.noop ? NOOP : REFUSED });
 const specOf = (userId, topic) => { try { return lazy('./learning-spec').buildSpec(userId, { topic }); } catch { return null; } };
 

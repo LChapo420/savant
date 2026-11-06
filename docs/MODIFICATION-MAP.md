@@ -122,7 +122,7 @@ Gate (`docs/part-modify/pc1.json`, 34 real texts, each change; checked by DeepSe
 
 | Change | Served | Did what was asked | Independent judges clean |
 |---|---|---|---|
-| Shorter | 18/34 (6 "already short", 10 refused on facts) | mean 19% fewer words; worst 10 / 5 / 1%: 10 / 9.5 / 9.5% fewer | DeepSeek 18/18, GLM 17/18 |
+| Shorter | 18/34 (6 could not be cut, 10 refused on facts) | mean 19% fewer words; worst 10 / 5 / 1%: 10 / 9.5 / 9.5% fewer | DeepSeek 18/18, GLM 17/18 |
 | Simpler | 33/34 | reading load lower 33/33 | 33/33, 33/33 |
 | More examples | 34/34 | longer 34/34 | 34/34, 34/34 |
 | Another topic | 22/34 | topic named | 22/22, 22/22 |

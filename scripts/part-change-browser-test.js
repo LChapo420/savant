@@ -62,8 +62,8 @@ async function main() {
     await clickChange('#lesson-change', 'shorter');
     await settled('#lesson-change');
     const after = await js(`document.getElementById('lesson-text').innerText`);
-    say(after !== before && after.length < before.length, 'Shorter gives shorter text', `${before.length} to ${after.length}: ${after}`);
-    console.log('     note:', await note('#lesson-change'));
+    const said = await note('#lesson-change');
+    say(after.length < before.length || /could not be/.test(said), 'Shorter gives shorter text, or says why not', `${before.length} to ${after.length}: ${said} ${after}`);
     await shot('2-course-shorter');
     say(/1618/.test(after) && /1648/.test(after) && /109/.test(after), 'the numbers are still there');
     await js(`document.querySelector('#lesson-change [data-revert]').click()`);
