@@ -6,6 +6,8 @@
  * Switch: FACT_RECHECK=1 (default off). FACT_RECHECK_DAY_USD is the daily cap (default $1), paid from prepaid credits through the ordinary ledgers: the check is a normal
  * services/ai.js call on the background lane, so free slots go first and the learner clearances apply. At the cap the job stops until the next day. When no checker
  * answers it does not move on: the row is read again later, after a wait, and nothing is written about it. Keeps its place in `fact_recheck_state`, one row.
+ * The stored text is generated content with no learner's words in it, read with no learner attached (storedContent: the added prepaid providers may read it while their own
+ * learner switch and window are open, never a pipeline-only one). After those windows close only what is cleared for learners remains, and the job waits when that is busy.
  * Rows hold no learner id and no learner words: a reference to the stored row, the checker's quote and its reason.
  */
 const lazy = (p) => require(p); // eslint-disable-line global-require, import/no-dynamic-require
@@ -58,7 +60,7 @@ async function checkRow(kind, row, { llm = null, record = true, budgetMs = 12000
   const pieces = piecesOf(kind, row);
   if (!pieces.length) return { ran: true, pieces: 0, findings: [], usd: 0, ms: 0 };
   const source = pieces[0].context ? `Subject and topic: ${pieces[0].context}` : '';
-  const v = await pool.runBackground(() => guard.check({ pieces: pieces.map((p) => p.text), source, mode: 'general', dataClass: 'learner', budgetMs, llm }));
+  const v = await pool.runBackground(() => guard.check({ pieces: pieces.map((p) => p.text), source, mode: 'general', dataClass: 'learner', budgetMs, llm, storedContent: true }));
   const findings = (v.wrong || []).map((w) => ({ kind, ref_id: row.id, ref: (pieces[w.index] || {}).ref || '', quote: w.quote || '', why: w.why || '', model: v.model || null, day: today(), status: 'open' }));
   if (v.ran && record) { const db = lazy('../config/db'); findings.forEach((f) => db.insert(FINDINGS, f)); }
   return { ran: v.ran, pieces: pieces.length, findings, usd: v.costUsd || 0, ms: v.ms, model: v.model || null };

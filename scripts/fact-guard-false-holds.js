@@ -148,7 +148,7 @@ const rounds = {
     schema: { type: 'object', properties: { questions: { type: 'array', items: { type: 'object', properties: { prompt: { type: 'string' }, choices: { type: 'array', items: { type: 'string' } }, answerIndex: { type: 'integer' }, explanation: { type: 'string' } }, required: ['prompt', 'choices', 'answerIndex'] } } }, required: ['questions'] }, schemaName: 'game_questions',
   })),
   spanish: () => {
-    const level = { title: 'En el cafe', cefr: 'A2', scenario: { partnerName: 'Lucia', setting: 'a cafe in Madrid', goal: 'order food and chat', partnerRole: 'waiter' }, prompt: 'Describe your weekend.', focus: ['preterite'] };
+    const level = { title: 'En el cafe', cefr: 'A2', scenario: { partnerName: 'Lucia', setting: 'a cafe in Madrid', goals: ['order food', 'ask the price'], partnerRole: 'waiter', role: 'waiter' }, writing: { prompt: 'Describe your weekend.', focus: 'preterite' }, reader: { title: 'El fin de semana' }, focus: ['preterite'] };
     const turns = ['Hola, quiero un cafe por favor', 'Ayer yo fui al cine con mi amigos', 'no entiendo', 'cuanto cuesta?', 'Me gusta mucho el futbol, y a ti?'];
     return [
       ...turns.map((t) => () => spanish.conversationTurn(level, [{ who: 'partner', text: 'Hola, ¿qué desea?' }], t, sim.id)),

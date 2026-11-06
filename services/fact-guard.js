@@ -154,7 +154,7 @@ function batches(pieces) {
  * One real check. `pieces` are strings; returns { ran, wrong: [{ index, why, quote }], ms, model }. ran=false when any call could not answer: that is never a
  * pass. Goes through services/ai.js (task fact_live), so the learner's consent and the provider clearances decide who may read it.
  */
-async function check({ pieces, source = '', learnerSaid = '', mode = 'general', userId = null, writerModel = null, budgetMs = 8000, dataClass = null, waiting = false, llm = null }) {
+async function check({ pieces, source = '', learnerSaid = '', mode = 'general', userId = null, writerModel = null, budgetMs = 8000, dataClass = null, waiting = false, llm = null, storedContent = false }) {
   const t0 = Date.now();
   const list = pieces.map((p) => String(p || '').trim()).filter(Boolean);
   if (!list.length) return { ran: true, wrong: [], ms: 0, model: null };
@@ -177,7 +177,7 @@ async function check({ pieces, source = '', learnerSaid = '', mode = 'general', 
     const base = {
       role: 'fast', task: 'fact_live', system: SYSTEMS[mode] || SYSTEMS.general, user: checkUser({ pieces: batch.map((b) => b.text), source, learnerSaid, mode }),
       schema: SCHEMA, schemaName: 'submit_check', maxTokens: 700 + batch.length * 90, effort: 'off', userId,
-      ...(dataClass && !userId ? { dataClass } : {}), hedgeAfterMs: waiting ? 1800 : undefined, ...(capped ? { freeOnly: true } : {}),
+      ...(dataClass && !userId ? { dataClass } : {}), hedgeAfterMs: waiting ? 1800 : undefined, ...(capped ? { freeOnly: true } : {}), ...(storedContent ? { storedContent: true } : {}),
     };
     const go = llm || ((a) => ai.structuredDetail(a));
     const ask = async (args) => {

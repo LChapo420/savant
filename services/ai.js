@@ -201,8 +201,8 @@ async function viaPool(userId, req, role, task, outside) {
       ...req, role, task, userId: userId || null, outside,
       dataClass: userId ? 'learner' : (req.dataClass || 'learner'),
       xkiro: xkiroAllowedFor(userId),
-      munito: munitoAllowedFor(userId),
-      coral: munitoAllowedFor(userId), // same clearance; Coral learner use also needs CORAL_LEARNER=on (off by default)
+      munito: req.storedContent === true || munitoAllowedFor(userId),
+      coral: req.storedContent === true || munitoAllowedFor(userId), // same clearance; Coral learner use also needs CORAL_LEARNER=on (off by default)
     },
     // hedgeAfterMs: an interactive caller (the tutor dock) may start the backup sooner than the pool's 20 s floor.
     { timeoutMs: req.timeoutMs || undefined, hedgeAfterMs: req.hedgeAfterMs != null ? req.hedgeAfterMs : undefined, validate: (r) => !!r, trace },
@@ -289,10 +289,10 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
  *
  * @returns {Promise<{data: object, usage: object|null, model: string}|null>}
  */
-async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, factTask, factSource, factMode, factBudgetMs }) {
+async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs }) {
   const result = await withProviders(userId, (p) =>
     p.structured({ role, task, system, user, schema, schemaName, maxTokens, effort, lane, think }), role, task,
-  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, factTask, factSource, factMode, factBudgetMs });
+  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs });
   return result ? { data: result.data, usage: result.usage || null, model: result.model || null, costUsd: result.pool ? result.pool.costUsd : undefined } : null;
 }
 
