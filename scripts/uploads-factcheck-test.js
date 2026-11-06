@@ -95,7 +95,7 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
     if (a.task === 'material_lesson') return { model: 'mock', data: { lesson: { paragraphs: ['The Assembly consists of thirty-one elected Delegates. Alfred Wegener founded the Assembly in 1912.', 'Volcanoes erupt near the sea.'], key_points: ['A quorum is 20 Delegates present.'] },
       questions: [1, 2, 3, 4].map((i) => ({ type: 'short_answer', prompt: `How many Delegates are in the Assembly (${i})?`, answer: '31', tier: 1, explanation: i === 1 ? 'Alfred Wegener said so in 1912.' : 'The Assembly consists of thirty-one Delegates.', passage_id: 'p1', quote: 'The Assembly consists of thirty-one (31) elected Delegates.' })) } };
     if (a.task === 'material_verify') return { model: 'mock', data: { verdicts: [1, 2, 3, 4].map((n) => ({ n, supported: true })) } };
-    if (a.task === 'material_factcheck') return { model: 'mock', data: { verdicts: numbered(a).map((x) => (/Wegener|Volcanoes/.test(x.text) ? { n: x.n, verdict: 'not_in_source', fixed: '' } : { n: x.n, verdict: 'supported' })) } };
+    if (/^material_factcheck/.test(a.task)) return { model: 'mock', data: { verdicts: numbered(a).map((x) => (/Wegener|Volcanoes/.test(x.text) ? { n: x.n, verdict: 'not_in_source', fixed: '' } : { n: x.n, verdict: 'supported' })) } };
     return null;
   };
   const built = await cb.build(u.id, m.id, { llm, factcheck: true });
@@ -104,13 +104,13 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
   check('the built lesson has lost what it does not', !/Wegener|Volcanoes|1912/.test(JSON.stringify(s.lesson)), s.lesson);
   check('the outline summary is checked too', !/Wegener/.test(s.summary || ''), s.summary);
   check('a bad explanation becomes the quote', /^Your material says:/.test(s.questions[0].explanation) && !/Wegener/.test(JSON.stringify(s.questions)), s.questions[0]);
-  check('the check is one call per skill, learner class', calls.filter((t) => t === 'material_factcheck').length === 1 && calls.filter((t) => t === 'material_factcheck_glm').length === 1);
+  check('the check is one call per skill, learner class', calls.filter((t) => t === 'material_factcheck_deepseek').length === 1 && calls.filter((t) => t === 'material_factcheck_glm').length === 1);
   check('the course says what was checked', built.course.dropped.factcheck.sentences > 0 && built.course.dropped.factcheck.hard >= 1, built.course.dropped.factcheck);
 
   // A check that never answers leaves the course partial, and asking again checks again.
   const m2 = materials.addPaste(u.id, 'Mix2', text).value;
   let answer = false;
-  const llm2 = async (a) => { if (a.task === 'material_factcheck' && !answer) return null; return llm(a); };
+  const llm2 = async (a) => { if (/^material_factcheck/.test(a.task) && !answer) return null; return llm(a); };
   const b1 = await cb.build(u.id, m2.id, { llm: llm2, factcheck: true });
   check('no answer from the checker: partial, never ready', b1.course.status === 'partial', b1.course.status);
   check('and nothing it could not stand behind is shown', !/Wegener|Volcanoes/.test(JSON.stringify(b1.course.skills[0].lesson)));
@@ -159,12 +159,12 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
   const m3 = materials.addPaste(u.id, 'Mix3', text).value;
   calls.length = 0;
   const b3 = await cb.build(u.id, m3.id, { llm, factcheck: true });
-  check('UPLOAD_FACTCHECK=off: no check, the lesson as written', !calls.includes('material_factcheck') && /Wegener/.test(JSON.stringify(b3.course.skills[0].lesson)));
+  check('UPLOAD_FACTCHECK=off: no check, the lesson as written', !calls.some((t) => /^material_factcheck/.test(t)) && /Wegener/.test(JSON.stringify(b3.course.skills[0].lesson)));
   delete process.env.UPLOAD_FACTCHECK;
   const m4 = materials.addPaste(u.id, 'Mix4', text).value;
   calls.length = 0;
   await cb.build(u.id, m4.id, { llm });
-  check('a scripted model that did not ask for it is not asked', !calls.includes('material_factcheck'));
+  check('a scripted model that did not ask for it is not asked', !calls.some((t) => /^material_factcheck/.test(t)));
 
   try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none */ }
   if (failed) { console.log(`${failed} check(s) failed`); process.exit(1); }

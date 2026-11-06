@@ -224,7 +224,7 @@ const CHECK_SCHEMA = { type: 'object', properties: { verdicts: { type: 'array', 
  * how: 'direct' (no model), 'model', 'fixed', 'hard', 'unchecked'. Also { unchecked, calls } on the returned map's `.stats`.
  * asker: async ({system, user, schema, schemaName, maxTokens, task, role, dataClass}) -> { res } | { stopped }.
  */
-async function check(items, { idx, sourceText, asker, asker2 = null, allow = null, allowStems = null, task = 'material_factcheck' }) {
+async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = null, allow = null, allowStems = null, task = 'material_factcheck' }) {
   const out = new Map();
   // A second reader that does not answer leaves the first reader's verdicts standing; a spent budget does not stop the build here.
   const stats = { sentences: items.length, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0, stopped: false };
@@ -237,7 +237,6 @@ async function check(items, { idx, sourceText, asker, asker2 = null, allow = nul
     ask.push(it);
   }
   const answered = new Map();
-  let lastModel = null;
   /** One reader over a list of sentences, in batches, a second try for what it left unanswered. Calls `take` with each verdict. */
   const read = async (who, list, take) => {
     const batches = [];
@@ -254,7 +253,6 @@ async function check(items, { idx, sourceText, asker, asker2 = null, allow = nul
           user: `MATERIAL:\n${sourceText}${evidence.length ? `\n\nMORE OF THE SAME MATERIAL:\n${evidence.slice(0, 20).join('\n')}` : ''}\n\nSENTENCES:\n${todo.map((x, i) => `${i + 1}. ${x.text}${x.exam.hard.length ? ` [not found in the material: ${x.exam.hard.join('; ')}]` : ''}`).join('\n')}`,
         });
         if (r && r.stopped) { stats.stopped = true; return; }
-        if (r && r.res && r.res.model) lastModel = r.res.model;
         const vs = r && r.res && r.res.data && Array.isArray(r.res.data.verdicts) ? r.res.data.verdicts : [];
         for (const v of vs) { const it = v && todo[Number(v.n) - 1]; if (it && ['supported', 'no_claim', 'not_in_source'].includes(v.verdict)) { take(it, v); done.add(it.id); } }
         todo = todo.filter((x) => !done.has(x.id));
@@ -262,13 +260,16 @@ async function check(items, { idx, sourceText, asker, asker2 = null, allow = nul
     }
   };
   if (ask.length && asker) {
-    await read(asker, ask, (it, v) => answered.set(it.id, v));
-    // A second reader, from another family, sees what the first passed: either one saying "not in the source" is enough.
-    if (asker2) {
-      const passed = ask.filter((x) => { const v = answered.get(x.id); return v && v.verdict !== 'not_in_source'; });
-      const firstModel = lastModel;
-      if (passed.length) await read((args) => asker2(args, firstModel), passed, (it, v) => { if (v.verdict === 'not_in_source') { answered.set(it.id, v); stats.second_caught = (stats.second_caught || 0) + 1; } });
-    }
+    // Two readers from different families at once (no added wait): either one saying "not in the source" is enough.
+    const take = (it, v) => {
+      const had = answered.get(it.id);
+      if (!had) { answered.set(it.id, v); return; }
+      if (v.verdict === 'not_in_source' && had.verdict !== 'not_in_source') { answered.set(it.id, v); stats.second_caught = (stats.second_caught || 0) + 1; } else if (v.verdict === 'not_in_source' && !had.fixed && v.fixed) answered.set(it.id, v);
+    };
+    await Promise.all([read(asker, ask, take), asker2 ? read(asker2, ask, take) : null]);
+    // Neither answered (a learner with no slot of those families, a busy minute): any reader will do.
+    const still = ask.filter((x) => !answered.has(x.id));
+    if (still.length && askerAny && !stats.stopped) await read(askerAny, still, take);
   }
   for (const it of ask) {
     const e = it.exam;
@@ -313,14 +314,14 @@ async function check(items, { idx, sourceText, asker, asker2 = null, allow = nul
  * Check a lesson: paragraphs and key points, sentence by sentence. Returns { paragraphs, keyPoints, report }.
  * `sourceText` is what the model is shown (the skill's passages); `idx` is the index of the whole material.
  */
-async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, sourceText, asker, asker2, allow, allowStems, fallback }) {
+async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, sourceText, asker, asker2, askerAny, allow, allowStems, fallback }) {
   const items = [];
   const paraSents = (paragraphs || []).map((p, i) => sentencesOf(p).map((s, j) => { const id = `p${i}.${j}`; items.push({ id, text: s }); return id; }));
   (keyPoints || []).forEach((k, i) => items.push({ id: `k${i}`, text: k }));
   if (summary) items.push({ id: 's', text: summary });
   // A question's explanation may use the numbers and words of its own question (a worked case).
   (explanations || []).forEach((e, i) => sentencesOf(e.text).forEach((t, j) => items.push({ id: `e${i}.${j}`, text: t, extra: e.extra, exp: i })));
-  const got = await check(items, { idx, sourceText, asker, asker2, allow, allowStems });
+  const got = await check(items, { idx, sourceText, asker, asker2, askerAny, allow, allowStems });
   const byId = new Map(items.map((x) => [x.id, x]));
   const dropped = [];
   const textOf = (id) => {
@@ -364,9 +365,10 @@ async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, 
  * and the podcast (turns). { items, report }.
  */
 async function checkTexts(entries, { idx, sourceText, asker, allow }) {
+  const readers = readersFor(asker);
   const items = [];
   const perEntry = entries.map((e, i) => sentencesOf(e.text).map((s, j) => { const id = `t${i}.${j}`; items.push({ id, text: s, extra: e.extra }); return { id, s }; }));
-  const got = await check(items, { idx, sourceText, asker, allow });
+  const got = await check(items, { idx, sourceText, ...readers, allow });
   const dropped = [];
   const out = entries.map((e, i) => {
     let changed = false;
@@ -394,9 +396,17 @@ function interestWords(spec) {
   return new Set(words);
 }
 
-/** Two readers unless UPLOAD_FACTCHECK_READERS=1. */
-const twoReaders = () => String(process.env.UPLOAD_FACTCHECK_READERS || '2') !== '1';
-/** The second reader's task: the other family from whichever answered first. */
-const secondTask = (firstModel) => (/glm|zai/i.test(String(firstModel || '')) ? 'material_factcheck_deepseek' : 'material_factcheck_glm');
+/**
+ * From one asking function, the two readers (a DeepSeek and a GLM, by task) and the fallback when neither answers. UPLOAD_FACTCHECK_READERS=1 keeps one reader.
+ * Measured against one reader: docs/UPLOADS-ANY-FORMAT.md section 17.
+ */
+function readersFor(asker) {
+  if (String(process.env.UPLOAD_FACTCHECK_READERS || '2') === '1') return { asker };
+  return {
+    asker: (a) => asker({ ...a, task: 'material_factcheck_deepseek' }),
+    asker2: (a) => asker({ ...a, task: 'material_factcheck_glm' }),
+    askerAny: asker,
+  };
+}
 
-module.exports = { twoReaders, secondTask, onFor, interestWords, checkTexts, enabled, indexSource, examine, check, checkLesson, sentencesOf, numbersOf, namesOf, contentTerms, stem, CHECK_SYSTEM, CHECK_SCHEMA };
+module.exports = { readersFor, onFor, interestWords, checkTexts, enabled, indexSource, examine, check, checkLesson, sentencesOf, numbersOf, namesOf, contentTerms, stem, CHECK_SYSTEM, CHECK_SCHEMA };
