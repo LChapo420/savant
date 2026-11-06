@@ -106,6 +106,25 @@ function lcs(a, b) {
   return prev[b.length];
 }
 
+/**
+ * Lines as the author meant them. A PDF breaks a sentence wherever the page ran out, so a line that does not end a sentence runs on into the next one, unless the next is a bullet, a heading or a table row.
+ * Without this, "the material's own sentence" could be half of one (found reading a built course: "defused an early crisis April 1904 settled colonial disputes").
+ */
+function logicalLines(text) {
+  const out = [];
+  for (const para of String(text || '').split(/\n\s*\n/)) {
+    let cur = '';
+    for (const line0 of para.split('\n')) {
+      const line = line0.trim();
+      if (!line) continue;
+      const startsNew = /^(?:[-*•–]\s|\d+[.)]\s|#{1,6}\s|\|)/.test(line) || /\s\|\s/.test(line);
+      if (cur && (startsNew || /[.!?:;]["'”)\]]*$/.test(cur) || /\s\|\s/.test(cur))) { out.push(cur); cur = line; } else cur = cur ? `${cur} ${line}` : line;
+    }
+    if (cur) out.push(cur);
+  }
+  return out;
+}
+
 /** A material not written in English: the lessons are written in English, so names and words differ by translation and only the readers can judge them. */
 const EN_WORDS = new Set('the of and to in is that it for as with was on are be this by at from or an which have not but they their can more if when what there been has will all one would about'.split(' '));
 function looksForeign(text) {
@@ -123,7 +142,7 @@ function indexSource(text) {
   const src = String(text || '');
   const folded = fold(src).toLowerCase();
   const lines = [];
-  for (const line of src.split(/\n+/)) for (const s of sentencesOf(line)) {
+  for (const line of logicalLines(src)) for (const s of sentencesOf(line)) {
     lines.push({ text: s, terms: contentTerms(s), seq: tokensInOrder(s), numbers: numbersOf(s).all, lower: fold(s).toLowerCase(), neg: NEG.test(s), causal: CAUSAL.test(s) });
   }
   return { foreign: looksForeign(src), text: src, folded, lines, numbers: numbersOf(src).all, terms: contentTerms(src), words: new Set(wordsOf(src).flatMap((w) => [w, ...w.split(/[-']/)]).map(stem)) };
@@ -427,4 +446,4 @@ function readersFor(asker) {
   };
 }
 
-module.exports = { readersFor, onFor, interestWords, checkTexts, enabled, indexSource, examine, check, checkLesson, sentencesOf, numbersOf, namesOf, contentTerms, stem, CHECK_SYSTEM, CHECK_SCHEMA };
+module.exports = { logicalLines, readersFor, onFor, interestWords, checkTexts, enabled, indexSource, examine, check, checkLesson, sentencesOf, numbersOf, namesOf, contentTerms, stem, CHECK_SYSTEM, CHECK_SCHEMA };

@@ -43,6 +43,7 @@ check('a new cause is not direct', !ex('Atenolol is avoided in pregnancy because
 check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8:15 a.m. on a Tuesday. Models, e.g. MORVEL, help. Done now.').length === 3);
 
 (async () => {
+  check('a sentence broken across PDF lines is one line', F.logicalLines('The Congress met in 1878 and it\ndefused an early crisis.\nIn 1904 they signed.\n- a bullet\n- another').length === 4, F.logicalLines('The Congress met in 1878 and it\ndefused an early crisis.\nIn 1904 they signed.\n- a bullet\n- another'));
   // A material in another language: translations are for the readers, not refused by spelling.
   const esIdx = F.indexSource('El lago Vostrin se formó hace unos catorce mil años cuando un glaciar represó el valle de Orlen. Su único desagüe es el río Tarmo, que drena hacia el norte hasta el mar de Sellen. La pesca del korrin plateado se prohibió en 1987 después de que la población cayera en dos tercios. Los núcleos de sedimento de la cuenca norte registran once capas de ceniza volcánica de las erupciones de Kovar. Recuerda que el lago se renueva dos veces al año, en abril y en noviembre. Este dato será parte del examen final de este curso y debes recordarlo bien.');
   check('a Spanish material is known as foreign', esIdx.foreign === true);

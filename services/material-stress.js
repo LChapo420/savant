@@ -90,7 +90,7 @@ function sweepCourse({ skills, kps, passageFor }) {
  * Source sentences with a number or a name whose specifics no lesson states go back in as the material's own sentences (the full course's writer drops plain facts when many points are stressed; 8 planted plain facts, 1 or 2 kept).
  * Mutates the lessons. Returns the number of sentences added. `capWords` limits what is added.
  */
-function sweepFacts({ skills, passages, sentencesOf, capWords }) {
+function sweepFacts({ skills, passages, sentencesOf, capWords, linesOf = (t) => String(t).split(/\n+/) }) {
   const haveLow = () => skills.flatMap((s) => [...(s.lesson.paragraphs || []), ...(s.lesson.key_points || [])]).join(' ').toLowerCase();
   let have = haveLow();
   let added = 0; let room = capWords;
@@ -98,7 +98,7 @@ function sweepFacts({ skills, passages, sentencesOf, capWords }) {
     const owner = skills.find((s) => s.source !== 'general' && (s.passage_ids || []).includes(p.id));
     if (!owner) continue;
     const add = [];
-    for (const line of String(p.text).split(/\n+/)) {
+    for (const line of linesOf(p.text)) {
       for (const s of sentencesOf(line)) {
         const n = (s.match(/\S+/g) || []).length;
         if (n < 5 || n > 60 || /\?\s*$/.test(s)) continue;

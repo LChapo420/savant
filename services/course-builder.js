@@ -1058,7 +1058,7 @@ async function build(userId, materialId, opts = {}) {
       const qAdded = S.sweepCourse({ skills, kps: ctx.keypoints, passageFor: pf });
       if (qAdded) ctx.dropped.stress_questions = qAdded;
       const srcWords = passages.reduce((n, p) => n + wordCount([p.text]), 0);
-      const fAdded = S.sweepFacts({ skills, passages, sentencesOf: factcheck.sentencesOf, capWords: Math.round(srcWords * 0.5) });
+      const fAdded = S.sweepFacts({ skills, passages, sentencesOf: factcheck.sentencesOf, linesOf: factcheck.logicalLines, capWords: Math.round(srcWords * 0.5) });
       if (fAdded) ctx.dropped.facts_restored = fAdded;
     }
     const keypointGap = gate ? gate.uncovered.length : 0;
