@@ -60,6 +60,9 @@ const gonka = require('../services/providers/gonka').gonka;
 const zerogpu = require('../services/providers/zerogpu').zerogpu;
 const coral = require('../services/providers/coral').coral;
 const WRITER = { prov: zerogpu, model: 'z-ai/glm-5.3-flash', name: 'ZeroGPU GLM-5.3 Flash' };
+// The lesson text carries the whole spec block (about 6000 characters); the GLM writer spent its entire 7000-token output on reasoning for it (finish_reason
+// length, empty reply, measured 6 Nov), so that part is written by Coral's DeepSeek V4.1 Flash.
+const LESSON_WRITER = { prov: coral, model: 'deepseek-v4.1-flash', name: 'Coral DeepSeek V4.1 Flash' };
 const JUDGES = [
   { id: 'zerogpu-glm', family: 'glm', prov: zerogpu, model: 'z-ai/glm-5.3-flash' },
   { id: 'coral-deepseek', family: 'deepseek', prov: coral, model: 'deepseek-v4.1-flash' },
@@ -100,7 +103,13 @@ function jsonOf(text) {
   if (!m) return null;
   try { return JSON.parse(m[0]); } catch { return null; }
 }
-const writerLlm = (who = WRITER) => async ({ system, user, maxTokens }) => jsonOf(await chat(who, `${system}\nReply with JSON only.`, user, Math.max(maxTokens || 800, 3000), true));
+const writerLlm = (who = WRITER) => async ({ system, user, maxTokens }) => {
+  const text = await chat(who, `${system}
+Reply with JSON only.`, user, Math.max(maxTokens || 800, 3000), true);
+  const j = jsonOf(text);
+  if (!j && process.env.PM_DEBUG) console.log(`  writer reply not JSON: ${String(text).slice(0, 300).replace(/s+/g, ' ')}`);
+  return j;
+};
 
 // ── pool of limited concurrency ─────────────────────────────────────────────
 async function pool(tasks, n) {
@@ -153,6 +162,20 @@ async function sameFacts(j, a, b) {
   return m ? m[m.length - 1].toUpperCase().includes('YES') : null;
 }
 
+const CONFLICT_SYSTEM = 'You check a rewritten explanation against the original and the question. Say whether TEXT 2 contradicts TEXT 1 or the correct answer, or states anything factually false about the question. Wording, length, tone, analogies and re-ordering are fine; only a false or contradicting claim counts. Reply with the last line exactly "CONFLICT: YES" or "CONFLICT: NO".';
+async function conflicts(j, source, a, b) {
+  const text = await chat(j, CONFLICT_SYSTEM, `QUESTION: ${source.prompt || ''}
+CORRECT ANSWER: ${source.answer || ''}
+
+TEXT 1 (original):
+${a}
+
+TEXT 2 (rewrite):
+${b}`, 4000, true);
+  const m = String(text || '').match(/CONFLICT:s*(YES|NO)/gi);
+  return m ? m[m.length - 1].toUpperCase().includes('YES') : null;
+}
+
 // ── the rewrites per part ───────────────────────────────────────────────────
 const wordsDiff = (a, b) => {
   const wa = String(a).split(/\s+/); const wb = new Set(String(b).split(/\s+/).map((w) => w.toLowerCase()));
@@ -163,8 +186,8 @@ const wordsDiff = (a, b) => {
 async function versionsFor(part, L, k, owner = L) {
   const spec = specOf(L, part === 'lesson' ? LESSON.title : 'the topic');
   if (part === 'lesson') {
-    const paras = await pm.rewriteLesson({ spec, skill: { title: LESSON.title, lesson: { paragraphs: LESSON.paragraphs, key_points: LESSON.key_points } }, llm: writerLlm() });
-    return { stored: LESSON.paragraphs.join('\n\n'), shaped: paras ? paras.join('\n\n') : null, source: { prompt: LESSON.title }, spec };
+    const d = await pm.rewriteLessonDetail({ spec, skill: { title: LESSON.title, lesson: { paragraphs: LESSON.paragraphs, key_points: LESSON.key_points } }, llm: writerLlm(LESSON_WRITER) });
+    return { stored: LESSON.paragraphs.join('\n\n'), shaped: d.paragraphs ? d.paragraphs.join('\n\n') : null, problems: d.problems, source: { prompt: LESSON.title }, spec };
   }
   const it = pick(owner, k);
   const base = { prompt: it.prompt, choices: part === 'review' ? null : it.choices, answer: it.answer };
@@ -227,7 +250,7 @@ async function judgeRows(part, rows) {
 }
 
 async function factsFor(part, rows) {
-  const out = { declined_because: {}, checked: 0, passed: 0, declined: 0, same_yes: 0, same_asked: 0, coverage_fail: 0 };
+  const out = { conflict_yes: 0, conflict_asked: 0, declined_because: {}, checked: 0, passed: 0, declined: 0, same_yes: 0, same_asked: 0, coverage_fail: 0 };
   const jobs = [];
   for (const r of rows) {
     out.checked += 1;
@@ -237,6 +260,7 @@ async function factsFor(part, rows) {
       const c = ls.checkFollowed(r.vL, specOf(learners[r.i], LESSON.title), { keyFacts: LESSON.key_points, minShare: 0.3, own: true, interestNeed: 0 });
       if (c.problems.some((p) => p.id === 'coverage')) out.coverage_fail += 1;
     }
+    if (part !== 'tutor' && r.i % 3 === 0) jobs.push(async () => { const c = await conflicts(JUDGES[1], r.source || {}, r.stored, r.vL); if (c !== null) { out.conflict_asked += 1; if (c) out.conflict_yes += 1; } });
     if (part !== 'tutor' && r.i % 3 === 0) jobs.push(async () => { const v = await sameFacts(JUDGES[0], r.stored, r.vL); if (v !== null) { out.same_asked += 1; if (v) out.same_yes += 1; } });
   }
   await pool(jobs, CONC);
@@ -263,9 +287,10 @@ async function runTutor() {
   };
   const ITEM = { skill_id: 'add_sub', skill_name: 'Volume of prisms', level: 20, prompt: 'A rectangular prism is 3 unit cubes long, 2 wide and 4 high. What is its volume?', choices: ['9 cubic units', '10 cubic units', '20 cubic units', '24 cubic units'], answer: '24 cubic units', rationale: '3 x 2 x 4 = 24', format: 'multiple_choice', track_id: 'math', grade_id: 'volume_coordinates_and_expressions' };
   const MESSAGE = 'I am stuck on this one. I do not get how to start.';
-  const reply = async (user) => {
+  const PLAN_MESSAGE = 'How should I spend my study time on this over the next few days?';
+  const reply = async (user, message = MESSAGE) => {
     const system = ai.coachSystemFor(user.id, ITEM);
-    return chat(WRITER, system, MESSAGE, 2500, true);
+    return chat(WRITER, system, message, 2500, true);
   };
   const T = learners.slice(0, Math.min(learners.length, Number(arg('tutor-n', 20))));
   const users = T.map((L) => mk(L));
@@ -277,13 +302,15 @@ async function runTutor() {
   // The retention-goal twin: the same learner with a test in 10 days against none.
   const rg = require('../services/retention-goal');
   const goalRows = [];
-  for (const L of T.slice(0, Math.min(T.length, 12))) {
+  for (const L of T.slice(0, Math.min(T.length, 16))) {
     const u = mk(L, { goal: 1 });
     const enr = db.insert('enrollments', { user_id: u.id, track_id: 'math', grade_id: 'volume_coordinates_and_expressions', status: 'active', current_level: 20 });
     const day = new Date(Date.now() + 10 * 86400000).toISOString().slice(0, 10);
     db.update('enrollments', enr.id, { retention_goal: { horizon: 'date', test_date: day, set_on: new Date().toISOString().slice(0, 10) } });
     void rg;
     goalRows.push({ L: L.id, plain: replies[T.indexOf(L)], goal: await reply(u) });
+    const plainPlan = await reply(users[T.indexOf(L)], PLAN_MESSAGE);
+    goalRows.push({ L: L.id, plain: plainPlan, goal: await reply(u, PLAN_MESSAGE), probe: 'plan' });
   }
   return { rows, goalRows };
 }
@@ -295,7 +322,7 @@ async function judgeGoal(goalRows) {
   for (const g of goalRows) {
     if (!g.plain || !g.goal) continue;
     for (const j of JUDGES) jobs.push(async () => {
-      const flip = X.hash('goal', g.L, j.id) % 2 === 0;
+      const flip = X.hash('goal', g.L, g.probe || 'stuck', j.id) % 2 === 0;
       const A = flip ? g.goal : g.plain; const B = flip ? g.plain : g.goal;
       const text = await chat(j, GOAL_SYSTEM, `=== VERSION A ===\n${A}\n\n=== VERSION B ===\n${B}`, 6000, true);
       const m = String(text || '').match(/ANSWER:\s*(A|B|SAME)\b/gi);
@@ -388,7 +415,7 @@ function render(file) {
   console.log('| Part | Arm | Verdicts | Picked the learner\'s own version | Planted swap fooled | Control (wrong profile) picks it | Worst 10% / 5% / 1% of learners | Per judge |\n|---|---|---|---|---|---|---|---|');
   console.log(lines.join('\n'));
   console.log('\nFacts through the part\'s own gate:');
-  for (const [part, p] of Object.entries(r.parts)) console.log(`- ${part}: ${p.facts.passed}/${p.facts.checked} rewrites passed (${p.facts.declined} declined, stored text kept); judge "same facts" ${p.facts.same_yes}/${p.facts.same_asked}${p.facts.coverage_fail ? `; key-fact coverage failures ${p.facts.coverage_fail}` : ''}`);
+  for (const [part, p] of Object.entries(r.parts)) console.log(`- ${part}: ${p.facts.passed}/${p.facts.checked} rewrites passed (${p.facts.declined} declined, stored text kept); judge "same facts" ${p.facts.same_yes}/${p.facts.same_asked}, judge "contradicts or false claim" ${p.facts.conflict_yes}/${p.facts.conflict_asked}${p.facts.coverage_fail ? `; key-fact coverage failures ${p.facts.coverage_fail}` : ''}`);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

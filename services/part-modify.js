@@ -24,12 +24,19 @@ const PARTS = ['feedback', 'hint', 'review'];
 /** The fixed line a retention question carries when the writer gave no reason of its own (routes/learn.js): this is the review part. */
 const REVIEW_DEFAULT = 'Recalling it now is what moves it into next week.';
 const enabled = () => String(process.env.PART_MODIFY || DEFAULT_ON).toLowerCase() !== 'off';
-// Default: see docs/MODIFICATION-AUDIT.md section 7 (on only where the gate passed).
+// Which parts run: PART_MODIFY_PARTS (comma list of feedback, hint, review, lesson). Default: only the parts whose proof passed
+// (docs/MODIFICATION-AUDIT-PARTS.md). PART_MODIFY=off turns everything off; with PART_MODIFY=on and no list, the proven parts run.
 const DEFAULT_ON = 'off';
+const DEFAULT_PARTS = 'feedback,review,lesson';
+const partOn = (p) => new Set(String(process.env.PART_MODIFY_PARTS || DEFAULT_PARTS).split(',').map((x) => x.trim())).has(p);
 
 const lazy = (p) => require(p); // eslint-disable-line global-require, import/no-dynamic-require
 const words = (t) => (String(t || '').match(/[A-Za-zÀ-ÿ0-9'-]+/g) || []);
 const numbersOf = (t) => new Set((String(t || '').match(/\d+(?:[.,]\d+)?/g) || []).map((n) => n.replace(',', '.')));
+// List markers and step labels ("1.", "Step 2") are layout, not facts: they are not counted as new numbers.
+const WORD_NUM = { one: '1', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8', nine: '9', ten: '10', eleven: '11', twelve: '12' };
+const stripLayout = (t) => String(t || '').replace(/(^|\n)\s*\d{1,2}[.)]\s/g, '$1').replace(/\b(?:step|part|point|rule)\s+\d{1,2}\b/gi, '');
+const numbersShown = (t) => { const n = numbersOf(stripLayout(t)); for (const w of String(t || '').toLowerCase().match(/[a-z]+/g) || []) if (WORD_NUM[w]) n.add(WORD_NUM[w]); return n; };
 const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9à-ÿ ]+/g, ' ').replace(/\s+/g, ' ').trim();
 
 /** The retention goal in one clause for a tutor or review text: null for "forever" (nothing to say). */
@@ -118,9 +125,9 @@ function check(spec, part, source, text) {
   const t = String(text || '').trim();
   if (!t) return ['empty'];
   const known = new Set([...numbersOf(source.text), ...numbersOf(source.prompt), ...numbersOf(source.answer), ...numbersOf((source.choices || []).join(' '))]);
-  for (const n of numbersOf(t)) if (!known.has(n)) out.push(`the number ${n} is not in the original`);
+  for (const n of numbersOf(stripLayout(t))) if (!known.has(n)) out.push(`the number ${n} is not in the original`);
   const orig = numbersOf(source.text);
-  for (const n of orig) if (!numbersOf(t).has(n) && part === 'feedback') out.push(`the number ${n} from the original is missing`);
+  for (const n of orig) if (!numbersShown(t).has(n) && part === 'feedback') out.push(`the number ${n} from the original is missing`);
   if (part === 'feedback' && source.correct === undefined && /\b(your answer|you got it|you are (?:right|correct)|you(?:'re| are) wrong|incorrect|not quite|well done|good job|great job|nice work)\b/i.test(t)) out.push('it says whether their answer was right or wrong; the text is shown either way');
   if (part === 'feedback') {
     const cw = (x) => new Set((String(x || '').toLowerCase().match(/[a-zà-ÿ]{4,}/g) || []).filter((w) => !STOP.has(w)).map((w) => w.slice(0, 5)));
@@ -174,7 +181,7 @@ function rationaleOf(item) {
   return item ? item.rationale : item;
 }
 function hintOf(item) {
-  if (item && enabled() && item.shaped && item.shaped.hint) return item.shaped.hint;
+  if (item && enabled() && partOn('hint') && item.shaped && item.shaped.hint) return item.shaped.hint;
   return item ? item.hint : item;
 }
 
@@ -218,10 +225,10 @@ async function prepareItem(userId, item, { llm = null, spec = null } = {}) {
     const call = llm || defaultLlm(userId);
     const base = { prompt: item.prompt, choices: item.choices, answer: item.answer };
     const [fb, hint] = await Promise.all([
-      modify({ spec: sp, part: item.rationale === REVIEW_DEFAULT ? 'review' : 'feedback', source: { ...base, text: item.rationale }, llm: call, goal }),
-      item.hint ? modify({ spec: sp, part: 'hint', source: { ...base, text: item.hint }, llm: call }) : Promise.resolve(null),
+      partOn(item.rationale === REVIEW_DEFAULT ? 'review' : 'feedback') ? modify({ spec: sp, part: item.rationale === REVIEW_DEFAULT ? 'review' : 'feedback', source: { ...base, text: item.rationale }, llm: call, goal }) : Promise.resolve(null),
+      item.hint && partOn('hint') ? modify({ spec: sp, part: 'hint', source: { ...base, text: item.hint }, llm: call }) : Promise.resolve(null),
     ]);
-    const shaped = { hash, at: new Date().toISOString(), rationale: fb.source === 'ai' ? fb.text : null, hint: hint && hint.source === 'ai' ? hint.text : null };
+    const shaped = { hash, at: new Date().toISOString(), rationale: fb && fb.source === 'ai' ? fb.text : null, hint: hint && hint.source === 'ai' ? hint.text : null };
     db.update('items', item.id, { shaped });
     return shaped;
   } catch { return null; } finally { running.delete(key); }
@@ -250,7 +257,10 @@ function courseStale(course, spec, now = Date.now()) {
 }
 
 /** A rewrite of one skill's paragraphs that keeps every number and the key points; null if it cannot be held to that. */
-async function rewriteLesson({ spec, skill, llm }) {
+async function rewriteLesson(args) { return (await rewriteLessonDetail(args)).paragraphs; }
+
+/** The same, with the problems the last draft still had: { paragraphs: [..] | null, problems: [..] }. */
+async function rewriteLessonDetail({ spec, skill, llm }) {
   const orig = (skill.lesson.paragraphs || []).join('\n\n');
   const keys = skill.lesson.key_points || [];
   const block = lazy('./learning-spec').specToLines(spec, { surface: 'material' }).join('\n');
@@ -259,7 +269,7 @@ async function rewriteLesson({ spec, skill, llm }) {
       const r = await llm({
         system: 'You rewrite one lesson text for one specific learner. Keep every fact, number, definition and key point exactly as in the original; add no fact and no number. Only the delivery changes. Never mention the learner or their profile. Plain text paragraphs. Return JSON {"paragraphs": ["..."]}.',
         user: `Lesson: ${skill.title}\n\nOriginal paragraphs:\n${orig}\n\nKey points that must stay:\n${keys.map((k) => `- ${k}`).join('\n') || '- (none listed)'}\n\n${block}${note ? `\n\nYour last draft had problems; fix them:\n${note}` : ''}`,
-        schema: { type: 'object', properties: { paragraphs: { type: 'array', items: { type: 'string' } } }, required: ['paragraphs'] }, schemaName: 'submit', maxTokens: 2500,
+        schema: { type: 'object', properties: { paragraphs: { type: 'array', items: { type: 'string' } } }, required: ['paragraphs'] }, schemaName: 'submit', maxTokens: 7000,
       });
       return r && Array.isArray(r.paragraphs) ? r.paragraphs.map((p) => String(p).trim()).filter(Boolean).slice(0, 10) : null;
     } catch { return null; }
@@ -268,17 +278,17 @@ async function rewriteLesson({ spec, skill, llm }) {
     if (!paras || !paras.length) return ['empty'];
     const text = paras.join(' ');
     const out = [];
-    const have = numbersOf(text);
+    const have = numbersShown(text);
     for (const n of numbersOf(orig)) if (!have.has(n)) out.push(`the number ${n} is missing`);
-    for (const n of have) if (!numbersOf(`${orig} ${skill.title}`).has(n)) out.push(`the number ${n} is not in the original`);
-    const c = lazy('./learning-spec').checkFollowed(text, spec, { keyFacts: keys, minShare: 0.3, own: true, interestNeed: 0 });
+    for (const n of numbersOf(stripLayout(text))) if (!numbersOf(`${orig} ${skill.title}`).has(n)) out.push(`the number ${n} is not in the original`);
+    const c = lazy('./learning-spec').checkFollowed(text, spec, { keyFacts: keys, exempt: String(`${orig} ${skill.title}`).toLowerCase().match(/[a-zà-ÿ]{4,}/g) || [], minShare: 0.3, own: true, interestNeed: 0 });
     for (const p of c.problems) if (['coverage', 'profile_leak', 'avoid_domain'].includes(p.id)) out.push(p.detail);
     return out;
   };
   let paras = await ask(null);
   let problems = problemsOf(paras);
   if (problems.length) { paras = await ask(problems.join('\n')); problems = problemsOf(paras); }
-  return problems.length ? null : paras;
+  return { paragraphs: problems.length ? null : paras, problems };
 }
 
 /**
@@ -287,7 +297,7 @@ async function rewriteLesson({ spec, skill, llm }) {
  */
 async function refreshCourseLessons(userId, materialId, { llm = null, force = false } = {}) {
   const key = `${userId}:${materialId}`;
-  if (!enabled() || refreshing.has(key)) return null;
+  if (!enabled() || !partOn('lesson') || refreshing.has(key)) return null;
   const builder = lazy('./course-builder');
   const db = lazy('../config/db');
   const course = builder.get(userId, materialId);
@@ -331,12 +341,12 @@ function stampCourse(userId, course) {
 
 /** Fire and forget from a route that serves a course. */
 function maybeRefreshCourse(userId, materialId) {
-  if (!enabled()) return;
+  if (!enabled() || !partOn('lesson')) return;
   setImmediate(() => { refreshCourseLessons(userId, materialId).catch(() => {}); });
 }
 
 const hashOf = (s) => crypto.createHash('sha1').update(String(s)).digest('hex').slice(0, 10);
 
 module.exports = {
-  PARTS, REVIEW_DEFAULT, enabled, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
+  PARTS, REVIEW_DEFAULT, enabled, partOn, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, rewriteLessonDetail, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
 };

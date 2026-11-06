@@ -13,6 +13,7 @@ process.env.DB_FILE = path.join(os.tmpdir(), `part-modify-test-${process.pid}.js
 fs.writeFileSync(process.env.DB_FILE, JSON.stringify({}));
 for (const name of Object.keys(process.env)) if (/(_API_KEY|_TOKEN)$/.test(name)) process.env[name] = '';
 process.env.PART_MODIFY = 'on';
+process.env.PART_MODIFY_PARTS = 'feedback,hint,review,lesson';
 
 const ls = require('../services/learning-spec');
 const pm = require('../services/part-modify');
@@ -72,6 +73,9 @@ check('a brief learner is refused a long rewrite', pm.check(BRIEF, 'feedback', S
   const item = { id: 1, rationale: 'stored', hint: 'stored hint', shaped: { rationale: 'for them', hint: 'their hint' } };
   check('the rewrite is served when ready', pm.rationaleOf(item) === 'for them' && pm.hintOf(item) === 'their hint');
   check('the stored text is served when no rewrite is ready', pm.rationaleOf({ rationale: 'stored' }) === 'stored');
+  delete process.env.PART_MODIFY_PARTS;
+  check('by default only the proven parts run (hint is not among them)', pm.partOn('feedback') && pm.partOn('lesson') && !pm.partOn('hint') && pm.hintOf(item) === 'stored hint');
+  process.env.PART_MODIFY_PARTS = 'feedback,hint,review,lesson';
   process.env.PART_MODIFY = 'off';
   check('PART_MODIFY=off serves the stored text', pm.rationaleOf(item) === 'stored' && pm.hintOf(item) === 'stored hint');
   process.env.PART_MODIFY = 'on';
