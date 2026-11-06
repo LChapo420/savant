@@ -1380,7 +1380,8 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
     if (!terms.length) continue;
     const have = new Set(wordList(body).map(keyOf));
     const hit = terms.filter((t) => have.has(t)).length;
-    if (hit / terms.length < 0.5) missing.push(fact);
+    // A learner who chose core or test keeps every point stated outright (70% of its terms), not just mentioned (50%): the short lesson is the one a question is asked on.
+    if (hit / terms.length < (spec && spec.studyGoal && (spec.studyGoal.id === 'core' || spec.studyGoal.id === 'test') ? 0.7 : 0.5)) missing.push(fact);
   }
   stats.keyFacts = keyFacts.length;
   stats.keyFactsMissing = missing.length;

@@ -21,8 +21,8 @@ Object.assign(process.env, { NODE_ENV: 'test', PERSONALIZE_HOLDOUT: '0', PERSONA
 const P = require('./material-sensitivity-proof');
 // The test fixture blanks every key; give back only the free/cheap providers this proof uses (never the Anthropic key).
 const envFile = require('dotenv').parse(fs.readFileSync('C:/coding/claudecommittdIq/folderThing/.env'));
-for (const k of Object.keys(envFile)) if (/^(CORAL|LYCEUM|GEMINI|NVIDIA)_/.test(k)) process.env[k] = envFile[k];
-process.env.CORAL_PIPELINE = '1'; process.env.LYCEUM_PIPELINE = '1'; process.env.STUDY_GOAL_CORE = 'on'; // the proof turns the (default-off) core switch on
+for (const k of Object.keys(envFile)) if (/^(CORAL|LYCEUM|GEMINI|NVIDIA|GROKIFIED)_/.test(k)) process.env[k] = envFile[k];
+process.env.CORAL_PIPELINE = '1'; process.env.LYCEUM_PIPELINE = '1'; process.env.STUDY_GOAL_CORE = 'on'; process.env.STUDY_GOAL_TEST = 'on'; // the proof turns the (default-off) core switch on
 const X = require('./lib/extreme-learners');
 const T = require('./lib/extreme-tailor');
 
@@ -107,7 +107,7 @@ async function writeVersion(L, cell, subject, variant) {
   const ck = `sgp:${sha(JSON.stringify([L.id, L.traits, cell.gradeId, cell.level, P.WRITER, variant]))}`;
   const hit = cache.get(ck); if (hit && hit.text) return hit;
   const user = base.makeUser({ name: L.id.replace(/[^a-z0-9]/gi, ''), age: L.age, survey: T.surveyFor(L, subject), stats: L.traits, esl: L.ell });
-  const goal = variant === 'core' ? { goal: 'core', restored: [], set_on: '2026-11-05' } : undefined;
+  const gid = variant.startsWith('core') ? 'core' : variant.startsWith('test') ? 'test' : null; const goal = gid ? { goal: gid, restored: [], set_on: '2026-11-06' } : undefined;
   db.insert('enrollments', { user_id: user.id, track_id: cell.trackId, grade_id: cell.gradeId, target_level: 300, current_level: cell.level, level_items: 0, levels_completed: 0, xp: 0, status: 'active', placed_at: new Date().toISOString(), ...(goal ? { study_goal: goal } : {}) });
   let plan;
   try {
@@ -129,14 +129,14 @@ async function coreItem(L, i) {
   const subject = SUBJECTS[i % SUBJECTS.length]; const cell = pickCell(subject, i); if (!cell) return { error: 'no cell' };
   // 1. The core questions, written from the course's own objective text ALONE, before either version of the lesson exists or is seen.
   const objective = cell.ctx.split('\n').filter((l) => /^(SUBJECT|GRADE|TOPIC|TOPIC GENERALIZATION|COVERS|OBJECTIVE)/.test(l)).join('\n').slice(0, 1500);
-  const qk = `sgq2:${sha(objective)}`; let qs = cache.get(qk);
+  const qk = `${MODE === 'test' ? 'sgx3' : 'sgq3'}:${sha(objective)}`; let qs = cache.get(qk);
   if (!qs) {
-    const r = jsonOf(await JUDGES[0].call('You write exam questions. Reply with JSON only.', `From this course objective ALONE (no lesson text exists yet), write 6 short questions that test the must-know core of the objective: definitions, rules, steps, and the facts a learner has to be able to state or apply. Each has the short correct answer. JSON: {"questions":[{"q":"...","a":"..."}]}\n\n${objective}`));
-    qs = r && Array.isArray(r.questions) && r.questions.length >= 3 ? { list: r.questions.slice(0, 6) } : null; if (qs) cache.set(qk, qs);
+    const r = jsonOf(await JUDGES[0].call('You write exam questions. Reply with JSON only.', `From this course objective ALONE (no lesson text exists yet), write 8 short questions that ${MODE === 'test' ? 'a test on this objective would ask, exam style: recall of definitions and rules, applying them to a new case, and one harder question' : 'test the must-know core of the objective: definitions, rules, steps, and the facts a learner has to be able to state or apply'}. Each has the short correct answer. JSON: {"questions":[{"q":"...","a":"..."}]}\n\n${objective}`));
+    qs = r && Array.isArray(r.questions) && r.questions.length >= 4 ? { list: r.questions.slice(0, 8) } : null; if (qs) cache.set(qk, qs);
   }
   if (!qs) return { error: 'unscored: no questions' };
   // 2. Both versions of the level, then the answerers see ONE version only.
-  const full = await writeVersion(L, cell, subject, 'full'); const core = await writeVersion(L, cell, subject, 'core');
+  const full = await writeVersion(L, cell, subject, 'full'); const core = await writeVersion(L, cell, subject, MODE === 'test' ? 'test1' : 'core2'); // 'core' here means the goal version
   if (full.error || core.error) return { error: full.error || core.error };
   const answerable = {};
   for (const [name, v] of [['full', full], ['core', core]]) {
@@ -153,7 +153,7 @@ async function coreItem(L, i) {
   // 3. blind: which version is for the learner who wants only the core parts fast; one in four pairs is two copies of the same version (must be TIE)
   const planted = i % 5 === 4; const flip = sha(`${L.id}${i}`).charCodeAt(0) % 2 === 0;
   const v1 = planted ? full.text : (flip ? core.text : full.text); const v2 = planted ? full.text : (flip ? full.text : core.text);
-  const pick = jsonOf(await JUDGES[0].call('You compare two versions of one lesson. Reply with JSON only.', `Two versions (1 and 2) of the same level. Which one was written for a learner who wants ONLY THE CORE PARTS, FAST? Answer 1, 2 or "TIE" if you cannot tell them apart.\nVERSION 1:\n${v1}\n\nVERSION 2:\n${v2}\n\nJSON: {"core_is":"1"|"2"|"TIE"}`));
+  const pick = jsonOf(await JUDGES[0].call('You compare two versions of one lesson. Reply with JSON only.', `Two versions (1 and 2) of the same level. Which one was written for a learner who wants ${MODE === 'test' ? 'to be READY FOR A TEST' : 'ONLY THE CORE PARTS, FAST'}? Answer 1, 2 or "TIE" if you cannot tell them apart.\nVERSION 1:\n${v1}\n\nVERSION 2:\n${v2}\n\nJSON: {"core_is":"1"|"2"|"TIE"}`));
   const said = pick ? String(pick.core_is) : '?';
   return { id: L.id, kind: L.kind, age: L.age, subject, grade: cell.gradeId, level: cell.level, words_full: full.words, words_core: core.words, checks_full: full.checks, checks_core: core.checks, ans_full: answerable.full, ans_core: answerable.core, planted, flip, said, blind_right: planted ? said === 'TIE' : said === (flip ? '1' : '2') };
 }
@@ -181,21 +181,22 @@ async function approachItem(L, i) {
     process.env.BLOCK_APPROACH = 'on';
     await pool(learners, async (L, i) => { const { subject, cell } = cellOf(L, i); return cell ? writeVersion(L, cell, subject, 'approach-on') : null; });
   }
-  const rows = (await pool(learners, MODE === 'core' ? coreItem : approachItem)).map((r, i) => ({ i, ...r }));
+  const rows = (await pool(learners, MODE !== 'approach' ? coreItem : approachItem)).map((r, i) => ({ i, ...r }));
   const good = rows.filter((r) => !r.error);
   const summary = { mode: MODE, label: 'SIMULATED learners, AI-judged; not a result on real people', n: N, ok: good.length, unscored_or_failed: rows.filter((r) => r.error).length, errors: rows.filter((r) => r.error).map((r) => r.error).slice(0, 8), writer: P.WRITER, judges: JUDGES.map((j) => `${j.id} (${j.family})`) };
-  if (MODE === 'core') {
+  if (MODE !== 'approach') {
     const wr = good.map((r) => r.words_core / Math.max(1, r.words_full));
     const dAns = (k) => good.map((r) => (r.ans_core[k] ?? 0) - (r.ans_full[k] ?? 0));
     const minutes = (w, c) => w / 200 + c * 0.5;
     const boot = (d) => { let st = 12345; const rnd = () => { st = (st * 1664525 + 1013904223) % 4294967296; return st / 4294967296; }; const m = []; for (let b = 0; b < 2000; b++) { let t = 0; for (let k = 0; k < d.length; k++) t += d[Math.floor(rnd() * d.length)]; m.push(t / d.length); } return [pct(m, 0.025), pct(m, 0.975)]; };
     const fam = JUDGES.map((j, k) => ({ judge: j.family, ans_full: mean(good.map((r) => r.ans_full[k] ?? NaN)), ans_core: mean(good.map((r) => r.ans_core[k] ?? NaN)), mean_diff: mean(dAns(k)), diff_ci95: boot(dAns(k)), worst_drop: { p1: pct(dAns(k), 0.01), p5: pct(dAns(k), 0.05), p10: pct(dAns(k), 0.1) } }));
     const wordsFewer = 1 - mean(wr);
+    const gateOf = (wf, ok, f) => { const worst10 = f.every((x) => x.worst_drop.p10 >= -0.10 - 1e-9); const words = MODE === 'test' ? true : wf >= 0.25; return { goal: MODE, scored_learners: good.length, enough_scored: good.length >= 60, words_25pct_fewer: MODE === 'test' ? 'n/a' : wf >= 0.25, answerability_not_lower: ok, worst10_loss_within_0_10: worst10, stays_on: words && ok && worst10 && good.length >= 60 }; };
     const ansOk = fam.every((f) => f.ans_core >= f.ans_full - 1e-9);
     const sets = ['math', 'english', 'iq', 'spanish'].map((s) => { let tot = 0; let as = 0; for (const g of curriculum.getTrack(s).grades) { tot += curriculum.getGrade(s, g.id).pathLength; as += sg.coreSetAsideLevels(s, g.id).length; } return { subject: s, levels: tot, set_aside_share: as / tot }; });
     const perLevelFull = mean(good.map((r) => minutes(r.words_full, r.checks_full))); const perLevelCore = mean(good.map((r) => minutes(r.words_core, r.checks_core)));
     const share = mean(sets.map((x) => x.set_aside_share));
-    Object.assign(summary, { words_fewer: wordsFewer, words_fewer_worst: { p1: 1 - pct(wr, 0.99), p5: 1 - pct(wr, 0.95), p10: 1 - pct(wr, 0.9) }, learners_with_more_words: good.filter((r) => r.words_core > r.words_full).length, by_kind: Object.fromEntries([...new Set(good.map((r) => r.kind))].map((k) => [k, { n: good.filter((r) => r.kind === k).length, words_fewer: 1 - mean(good.filter((r) => r.kind === k).map((r) => r.words_core / Math.max(1, r.words_full))) }])), per_level_minutes: { full: perLevelFull, core: perLevelCore }, hours_ratio_core_over_full: (perLevelCore * (1 - share)) / perLevelFull, set_aside: sets, answerability: fam, gate: { words_25pct_fewer: wordsFewer >= 0.25, answerability_not_lower: ansOk, stays_on: wordsFewer >= 0.25 && ansOk },
+    Object.assign(summary, { words_fewer: wordsFewer, words_fewer_worst: { p1: 1 - pct(wr, 0.99), p5: 1 - pct(wr, 0.95), p10: 1 - pct(wr, 0.9) }, learners_with_more_words: good.filter((r) => r.words_core > r.words_full).length, by_kind: Object.fromEntries([...new Set(good.map((r) => r.kind))].map((k) => [k, { n: good.filter((r) => r.kind === k).length, words_fewer: 1 - mean(good.filter((r) => r.kind === k).map((r) => r.words_core / Math.max(1, r.words_full))) }])), per_level_minutes: { full: perLevelFull, core: perLevelCore }, hours_ratio_core_over_full: (perLevelCore * (1 - share)) / perLevelFull, set_aside: sets, answerability: fam, gate: gateOf(wordsFewer, ansOk, fam),
       blind: { real: good.filter((r) => !r.planted).length, right: good.filter((r) => !r.planted && r.blind_right).length, planted: good.filter((r) => r.planted).length, planted_tie: good.filter((r) => r.planted && r.blind_right).length } });
   } else {
     const real = good.filter((r) => !r.planted); const pl = good.filter((r) => r.planted);
