@@ -162,3 +162,52 @@ Not measured separately from the rest.
 
 `FACT_VERIFY_MINIMAX` (default off): the Lyceum MiniMax M3 verifier is refused unless set to `on`. With it off and grok-4.3 down, a waiting learner's fact check finds no verifier
 (never a free model), the level is not served as checked, and the background write retries on the slower slots. That retry was not traced here.
+
+## 6 Nov 2026 (fact-queue): part-by-part ZeroGPU fact read, hedge 8 s against 20 s, write reuse
+
+All AI-judged or simulated, small samples, a machine at 60 to 100% CPU from other agents' sims for every run (CPU recorded per run in the
+scratch files), providers shared with those agents. Not real-learner proof. Three new switches, all OFF by default; the gate was not met, so nothing is turned on.
+
+**Switches:** `FACT_VERIFY_PARTS=1` (one fact read per block and per 4 checks, all at once, `FACT_PARTS_BLOCKS`/`_CHECKS`/`_CONCURRENCY`/`_MAX_TOKENS`, a
+6 h cache of identical part texts); `WRITE_REUSE=1` (a layout or fill-out reply is reused when the whole prompt is identical to one already answered: nothing
+personal is shared, since the prompt carries all of it); `BLOCK_FILL_LENIENT=1` (a block entry without index/data no longer fails a provider's schema check
+and throws the paid reply away; seen 5 Nov as Coral Fast `$.blocks[1].index: required`, then 512 s on slow slots).
+
+**Fact read, whole level against part by part** (`scripts/fact-parts-eval.js`: each case of docs/fact-verifier-set.json put back into its stored level, one planted
+error per level, waiting-learner lane, 3 levels at once, 12 planted + 8 clean, excludeFamilies deepseek as for a Coral-written level):
+
+| setting | read | caught /12 | false alarms /8 | p50 / p90 / max s |
+|---|---|---|---|---|
+| whole level, hedge 20 s | 18 to 20 of 20 | 6, 6 | 0, 0 | 40 to 44 / 51 to 54 / 52 to 65 |
+| whole level, hedge 8 s | 20 | 5 | 0 | 29 / 42 / 42 |
+| parts, ZeroGPU 10 at once, hedge 20 s | 20 | 9 | 0 | 29 / 66 / 72 |
+| parts, ZeroGPU 10 at once, hedge 8 s | 20 | 6 | 2 | 61 / 82 / 83 |
+| parts, ZeroGPU 4 at once, 1 block a part | 20 | 6 | 2 | 63 / 88 / 114 |
+| parts, ZeroGPU 4 at once, 2 blocks a part | 20 | 7 | 2 | 40 / 64 / 68 |
+
+Why parts do not win: ZeroGPU GLM answers a single block in 14.7 s alone but fails about half of its calls with 502 once 6 or more run at once
+(`scripts/zerogpu-concurrency-probe.js`: 1 at once 1 of 1 ok; 6 at once 5 of 6; 12 at once 6 of 12; 24 at once 13 of 24, p50 19 to 25 s), so with its 4 slots
+grok-4.3 answered 154 of 186 parts (83%) and a level costs the slowest of nine grok reads, as slow as one whole read. The 502s are about concurrency, not only prompt size.
+Catch differences (5 to 9 of 12) are within the run-to-run noise of 12 cases. An 8 s hedge made parts worse (more grok duplicates) and gave one fewer catch on whole
+levels: the 20 s hedge stays.
+
+**Time to first lesson after placement** (`scripts/first-lesson-timing.js`, real models, DB copy, THINK_MS 7500, fresh adult accounts, one server per run, strong/weak/mid/random;
+"ready" = lesson open within 8 s of the end of placement; a timeout is 600 s):
+
+| run | at once | ready within 8 s | median s | worst s | CPU avg |
+|---|---|---|---|---|---|
+| main-like (fact-queue as it was) | 3 | 1 of 3 | 83 | timeout | 49% |
+| nothing on | 3 | 1 of 3 | 360 | timeout | 87% |
+| reuse + lenient fill | 1 | 0 of 1 | 157 | 157 | 60% |
+| reuse + lenient fill | 3 | 0 of 3 | 331 | 443 | 63% |
+| reuse + lenient fill | 10 | 0 of 10 | 167 | 256 | 95% |
+| nothing on | 10 | 2 of 10 | 167 | timeout | 51% |
+| parts + early prewrite + reuse + lenient | 3 | 1 of 3 | 188 | timeout | 98 to 100% |
+
+The gate (median under 15 s, worst under 60 s at 3 at once, gates on, no drop in catches) is NOT met by any setting, and nothing here beats main's 5 of 14 within 8 s
+(the nearest is 2 of 10 with nothing on). Lenient fill + reuse: no timeout in 14 runs against 4 in 19 without it (a hint, not significant); their ready-within-8-s share is lower
+(0 of 14 against 4 of 19), which tracks prewrite hits (a guess that is not the placed level), not these switches. Reuse hit 3 of 34 fill/layout calls at 10 learners
+(identical prompts are rare: interests differ).
+Prewrite starting at answer 3 (`PREWRITE_EARLY_ANSWERS=7`): one run guessed 179 first for a strong learner, whose one-prewrite-per-learner cap then held the right level (465) for 145 s: not adopted.
+The strong profile (placed on level 465 after 10 answers, 65 to 85 s): 11 such learners in 7 runs took 69 to 608 s to open, none within 8 s. In the logs the write of that level shows Coral Fast fill/layout calls needing 4 to 6 attempts (327 s once) and falling to Gonka/NVIDIA; the cause was not pinned down (a direct replay of the write outside the waiting lane did not reproduce it), and the pool's 5-invalid-answers breaker would take Coral Fast out for 2 minutes after a run of bad replies. That, not the fact read, looks like the largest delay left for fast placers.
+Cost per learner from the cost tracker (list prices): about $0.03 whole-level, $0.07 with parts (grok duplicates and ZeroGPU); ledgers are shared, so deltas there are not attributable.
