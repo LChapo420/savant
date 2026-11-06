@@ -579,6 +579,7 @@ router.post('/sessions/:id/answer', requireAuth, async (req, res) => {
     rationale: result.rationale,
     feedback: result.feedback || null,
     error_tag: result.errorTag || null,
+    ...partModify.voiceFields(req.user.id),
     ...(result.speed ? { speed: result.speed } : {}),
   });
 });

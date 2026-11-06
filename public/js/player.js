@@ -507,9 +507,10 @@
     // Colour on the first words only; the answer is said in the same line.
     const answerText = result.answer == null ? '' : String(result.answer);
     box.innerHTML = `
-      <h4 tabindex="-1"><span class="verdict-word">${correct ? 'Right.' : 'Not quite.'}</span>${correct || !answerText ? '' : ` The answer is <strong>${App.escapeHtml(answerText)}</strong>.`}</h4>
+      <h4 tabindex="-1"><span class="verdict-word">${App.escapeHtml((result.voice && (correct ? result.voice.right : result.voice.wrong)) || (correct ? 'Right.' : 'Not quite.'))}</span>${correct || !answerText ? '' : ` The answer is <strong>${App.escapeHtml(answerText)}</strong>.`}</h4>
       ${result.feedback ? `<div class="small" style="margin-bottom:6px">${App.escapeHtml(result.feedback)}</div>` : ''}
       <div class="rationale">${App.escapeHtml(result.rationale || '')}</div>
+      <div data-slot="part-change"></div>
       <div class="verdict-actions">
         <button class="btn btn-sm" type="button" data-act="ask">Ask about this</button>
         <button class="btn btn-sm" type="button" data-act="report">Report a problem</button>
@@ -561,6 +562,10 @@
     const focusTarget = box.querySelector('[data-act="next"]') || box.querySelector('h4');
     if (focusTarget) setTimeout(() => { if (focusTarget.isConnected) focusTarget.focus({ preventScroll: true }); }, 30);
     const extra = box.querySelector('[data-slot="extra"]');
+    // The learner rewords the explanation themselves (public/js/part-change.js), where the page asked for it and the question has an explanation.
+    if (opts && opts.partChange && result.rationale && item.id && window.PartChange) {
+      window.PartChange.attach(box.querySelector('[data-slot="part-change"]'), { ref: { item_id: item.id }, onResult: (r) => { if (r.text) box.querySelector('.rationale').textContent = r.text; } });
+    }
 
     box.querySelector('[data-act="ask"]').addEventListener('click', () => {
       if (extra.querySelector('.ask-box')) return;

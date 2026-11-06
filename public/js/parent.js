@@ -30,7 +30,7 @@ App.mount(async () => {
     chess_ratings: 'chess rating', chess_puzzle_attempts: 'chess puzzles', chess_rush_runs: 'chess rush runs',
     chess_drill_cards: 'chess move-trainer cards', chess_drill_runs: 'chess move-trainer sessions',
     piano_song_results: 'piano song results', ai_usage: 'daily AI use counts', remediations: 'help-me-learn records',
-    reports: 'problem reports', level_edits: 'tailored levels',
+    reports: 'problem reports', level_edits: 'tailored levels', part_changes: 'lesson text reworded on request',
   };
 
   let state = null;

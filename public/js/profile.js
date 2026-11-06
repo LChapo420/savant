@@ -478,6 +478,27 @@ App.mount(async () => {
     </div>`;
 
   mountTutorFacts(document.getElementById('tutor-facts-list'));
+  mountPartPrefs();
+
+  // What the learner asked for on a part (public/js/part-change.js): shown here so it can be undone. Nothing is drawn while the switch is off.
+  async function mountPartPrefs() {
+    const slot = document.getElementById('tutor-facts-list');
+    const host = slot && slot.closest('.card');
+    if (!host) return;
+    const names = { shorter: 'Shorter', simpler: 'Simpler', examples: 'More examples' };
+    const draw = (prefs) => {
+      const old = host.querySelector('[data-part-prefs]');
+      if (old) old.remove();
+      const list = [...Object.keys(names).filter((k) => prefs[k]).map((k) => [k, names[k]]), ...(prefs.topic ? [['topic', `Examples from ${prefs.topic}`]] : [])];
+      if (!list.length) return;
+      const box = App.el('div', { 'data-part-prefs': '1', style: 'margin-top:12px' });
+      box.innerHTML = `<div class="small" style="font-weight:600; margin-bottom:5px">What you asked for</div><p class="tiny muted" style="margin:0 0 6px">Your lessons and explanations follow these.</p>
+        <div class="row-wrap" style="gap:6px">${list.map(([k, label]) => `<button class="btn btn-sm" type="button" data-forget="${k}">${App.escapeHtml(label)} &times;</button>`).join('')}</div>`;
+      box.querySelectorAll('[data-forget]').forEach((b) => b.addEventListener('click', async () => { try { const r = await App.api.del(`/api/parts/prefs/${b.dataset.forget}`); draw(r.prefs); App.announce('Removed.'); } catch (err) { App.toast(err.message, 'error'); } }));
+      host.appendChild(box);
+    };
+    try { const s = await App.api.get('/api/parts/prefs'); if (s.on) draw(s.prefs || {}); } catch { /* nothing to show */ }
+  }
 
   // Focus history and subject focus (public/js/focus.js).
   if (window.FocusHistory) window.FocusHistory.mount(document.getElementById('focus-root'));

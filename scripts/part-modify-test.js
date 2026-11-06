@@ -34,8 +34,16 @@ const SRC = { prompt: 'A prism is 3 long, 2 wide and 4 high. What is its volume?
 console.log('rules');
 const rb = pm.rulesFor(BRIEF, 'feedback').join(' | ');
 const rf = pm.rulesFor(FULL, 'feedback').join(' | ');
-check('a brief-feedback learner is told one or two sentences', /one or two sentences/.test(rb), rb);
-check('a detailed-feedback learner is told step by step', /step by step/.test(rf), rf);
+// Wording changed on purpose (modify-all): length now follows what the original has to say, so a writer is no longer told to fill three to six lines.
+check('a brief-feedback learner is told as short as the idea allows', /as short as the idea allows/.test(rb), rb);
+check('a detailed-feedback learner is told one step per line, only the steps it has', /one step per line/.test(rf) && /Never pad/.test(rf), rf);
+check('no rule asks for a clause about a wrong choice', !/why it fails/.test(rb + rf));
+const hintFor = (n) => pm.rulesFor(mk({ hint_dependence: n, productive_struggle: 100 - n, help_seeking: n, scaffolding_need: n }), 'hint').join(' ');
+check('hint size now follows the spec (it was always small)', ls.buildSpecFrom({ metrics: {} }).scaffolding.hintSize === 'partial' && /Hint size: (small|medium|large)/.test(hintFor(50)));
+check('the review line follows the goal without a model', /your test on 2026-12-01/.test(pm.reviewLine(FULL, { status: 'date', test_date: '2026-12-01' })) && /next week/.test(pm.reviewLine(FULL, null)));
+check('an unreadable gate reply is not a pass', pm.readFactGate('sorry') === null && pm.readHintGate('{}') === null);
+check('a word the original already uses is not the rewrite bringing in a dislike', !pm.avoidedIn({ interests: { avoidDomains: ['food examples'] } }, { text: 'Plants make food.' }, 'Plants make their food, for example sugar.').length);
+check('a new word from the dislike is', pm.avoidedIn({ interests: { avoidDomains: ['food examples'] } }, { text: 'Plants grow.' }, 'Plants grow, like food in a pot.').length === 1);
 check('an anxious learner is told low stakes', /Low stakes/.test(rb));
 check('plain language for a low vocabulary ceiling', /plain everyday words/.test(rb));
 check('the two learners get different rules', rb !== rf);

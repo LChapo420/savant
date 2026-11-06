@@ -91,7 +91,7 @@ function rulesFor(spec, part, ctx = {}) {
     r.push(sc.hintSize === 'step'
       ? 'Hint size: large: name the idea to use and carry out the first step on the question\'s own numbers or words, but never the final answer.'
       : sc.hintSize === 'partial'
-        ? 'Hint size: medium: name the idea or rule to use, and stop before doing any step.'
+        ? 'Hint size: medium: name the idea or rule to use, and stop before doing any step; never the answer.'
         : 'Hint size: small: one nudge or one question about where to look, never the idea by name, never a step and never the answer.');
     r.push('Length: at most two sentences.');
   } else if (part === 'review') {
@@ -156,6 +156,31 @@ function reviewLine(spec, goal = null) {
   if (tone.correction === 'gentle' || tone.warmth >= 0.65) return `Taking a moment to recall it now is what keeps it with you for ${later}.`;
   if (tone.formality >= 0.65) return `Recalling it now is what carries it forward to ${later}.`;
   return `Recalling it now is what moves it into ${later}.`;
+}
+
+/**
+ * The verdict line after every answer ("Right." / "Not quite."), the most-seen words in the app, one for everyone until now. From templates: no model, no fact. Part `voice`.
+ * Its gate is in docs/MODIFICATION-MAP.md. Pure.
+ */
+function voiceOf(spec) {
+  const fb = (spec && spec.feedback) || {};
+  const tone = fb.tone || {};
+  const lang = (spec && spec.language) || {};
+  if (!spec || spec.isDefault) return null;
+  if (tone.correction === 'direct' || tone.praise === 'minimal') return { right: 'Correct.', wrong: 'Incorrect.' };
+  if (fb.lowStakes) return { right: 'Yes, that is it.', wrong: 'Not yet, and that is fine.' };
+  if (lang.eslSupport || lang.plainLanguage) return { right: 'Yes. That is right.', wrong: 'No, not this time.' };
+  if (tone.correction === 'gentle' || tone.warmth >= 0.65) return { right: 'Yes, that is right!', wrong: 'Not quite, and you are close to it.' };
+  if (tone.formality >= 0.65) return { right: 'That is correct.', wrong: 'That is not correct.' };
+  return null;
+}
+/** The fields an answer's reply carries when the part is on: { voice } or nothing. Never throws. */
+function voiceFields(userId) {
+  try {
+    if (!userId || !enabled(userId) || !partOn('voice')) return {};
+    const v = voiceOf(lazy('./learning-spec').buildSpec(userId, {}));
+    return v ? { voice: v } : {};
+  } catch { return {}; }
 }
 
 const STOP = new Set(['that', 'this', 'with', 'from', 'they', 'them', 'their', 'there', 'then', 'than', 'what', 'when', 'which', 'would', 'could', 'should', 'have', 'been', 'were', 'will', 'your', 'also', 'into', 'only', 'each', 'some', 'does', 'because', 'about']);
@@ -515,5 +540,5 @@ function maybeRefreshCourse(userId, materialId) {
 const hashOf = (s) => crypto.createHash('sha1').update(String(s)).digest('hex').slice(0, 10);
 
 module.exports = {
-  PARTS, REVIEW_DEFAULT, factGatePrompt, readFactGate, hintGatePrompt, readHintGate, defaultGate, avoidedIn, reviewLine, accountSetting, enabled, partOn, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, rewriteLessonDetail, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
+  PARTS, REVIEW_DEFAULT, factGatePrompt, readFactGate, hintGatePrompt, readHintGate, defaultGate, avoidedIn, reviewLine, voiceOf, voiceFields, accountSetting, enabled, partOn, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, rewriteLessonDetail, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
 };
