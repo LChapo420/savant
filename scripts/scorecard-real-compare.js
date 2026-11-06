@@ -52,7 +52,10 @@ function rowFor(held, read) {
   const per = held.map((L) => 100 - mean(ids.map((id) => Math.abs(read(L, id) - L.truth[id]))));
   const sorted = per.slice().sort((a, b) => a - b);
   const w = (p) => mean(sorted.slice(0, Math.max(1, Math.round(sorted.length * p))));
-  return { acc: mean(per), w1: w(0.01), w5: w(0.05), w10: w(0.1), per };
+  // Tailoring decisions (translate.js EDGE 20): a read at 70+ or 30- gives a lesson a direction. Of those, how many point the way the truth does, how many the opposite way; and how many of the truth's clear cases get a direction at all.
+  const side = (v) => (v >= 70 ? 1 : v <= 30 ? -1 : 0); let dirs = 0; let right = 0; let wrong = 0; let clear = 0; let found = 0; let cells = 0;
+  for (const L of held) for (const id of ids) { const a = side(read(L, id)); const t = side(L.truth[id]); cells += 1; if (t) clear += 1; if (a) { dirs += 1; if (a === t) { right += 1; found += 1; } else if (a === -t) wrong += 1; } }
+  return { acc: mean(per), w1: w(0.01), w5: w(0.05), w10: w(0.1), per, dirs: dirs / cells, right: dirs ? right / dirs : 0, wrong: dirs ? wrong / dirs : 0, recall: clear ? found / clear : 0 };
 }
 
 function evaluate(name, calP, heldP, F0) {
@@ -77,10 +80,11 @@ function main() {
       const b = out[arg('base')].rows;
       for (const k of ['S0', 'S1f']) { const d = r[k].per.map((v, i) => v - b[k].per[i]); const se = Math.sqrt(mean(d.map((x) => (x - mean(d)) ** 2)) / d.length); lines.push(`   vs ${arg('base')} ${k}: ${mean(d) >= 0 ? '+' : ''}${mean(d).toFixed(2)} +/- ${se.toFixed(2)}, ${d.filter((x) => x < -0.5).length} of ${d.length} lose over 0.5, worst change ${Math.min(...d).toFixed(2)}`); }
     }
+    if (argv.includes('--dirs')) lines.push(`   decisions S0: ${p(r.S0.dirs)} of cells, right ${p(r.S0.right)} wrong-way ${p(r.S0.wrong)} caught ${p(r.S0.recall)} | S1f: ${p(r.S1f.dirs)} of cells, right ${p(r.S1f.right)} wrong-way ${p(r.S1f.wrong)} caught ${p(r.S1f.recall)}`);
     if (argv.includes('--kinds')) lines.push(`   kinds ${Object.entries(e.byKind).sort((a, c) => a[1].S1f - c[1].S1f).map(([k, v]) => `${k}(${v.n}) ${v.guess.toFixed(1)}>${v.S1f.toFixed(1)}`).join(' ')}`);
     if (argv.includes('--classes')) lines.push(`   classes ${Object.entries(e.byClass).map(([k, v]) => `${k} ${v.guess.toFixed(1)}>${v.S1f.toFixed(1)}`).join(' ')}`);
   }
   console.log(lines.join('\n'));
-  if (arg('json')) { const slim = Object.fromEntries(Object.entries(out).map(([k, v]) => [k, { ...v, F: undefined, rows: Object.fromEntries(Object.entries(v.rows).map(([a, b]) => [a, { acc: b.acc, w1: b.w1, w5: b.w5, w10: b.w10, removed: b.removed }])) }])); fs.writeFileSync(arg('json'), JSON.stringify(slim)); }
+  if (arg('json')) { const slim = Object.fromEntries(Object.entries(out).map(([k, v]) => [k, { ...v, F: undefined, rows: Object.fromEntries(Object.entries(v.rows).map(([a, b]) => [a, { acc: b.acc, w1: b.w1, w5: b.w5, w10: b.w10, removed: b.removed, dirs: b.dirs, right: b.right, wrong: b.wrong, recall: b.recall }])) }])); fs.writeFileSync(arg('json'), JSON.stringify(slim)); }
 }
 main();
