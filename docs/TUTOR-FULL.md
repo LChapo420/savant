@@ -153,3 +153,44 @@ Frozen seed 1c8531ef275d, full tutor:
 - Children without consent (under 13, no parent's AI opt-in): no outside AI at all by the consent rule, so under any setting they get only local replies: the product answers, page tips, their own uploaded text, the fixed crisis and health replies, "not sure" for facts. Under `1` these replies are shorter and plainer for them. They are the weakest learners every run.
 - Learners of unknown age: treated as not adults under `adults`.
 Adults first is wired but I do not recommend turning it on: the gate failed.
+
+# Round 4: baseline, method coaching, and the gate (simulated learners, AI judges)
+
+## Baseline on seed 1c8531ef275d: today's tutor (switch off) against the round-3 full tutor
+| | today's tutor | full tutor (round 3 code) |
+|---|---|---|
+| accuracy (nothing invented, judged accurate) | 83.1% | 94.7% |
+| objective facts right (of 40) | 32 (80%) | 35 (87.5%) |
+| invented a fact | 12.4% | 4.5% |
+| leak flags on 60 graded: grok / GLM / either | 9 / 10 / 13 | 1 / 3 / 3 |
+| real leaks by my read of all 60 | 9 clear (confirm "right track", "you're close", narrowing ser/estar, aurum for gold, worked 9 x 5) plus about 4 borderline | 3 |
+| worst learner accuracy (1% / 5% / 10%) | 31% / 31% / 71% (dara0, an 8-year-old with no consent) | 77% / 77% / 85% |
+| fit (mean of 1-5) | 3.9 | 4.2 |
+
+Fact misses, split: today's tutor 8 of 40: 4 refusals (the old offline text, children without consent), 4 hint-instead-of-fact (three of them the old leak check holding a plain fact question with "Ha, nice try"), 0 wrong. Full tutor 5 of 40: 4 refusals (children without consent), 1 hint instead of the derivative, 0 wrong. No subject fact was wrong in any arm of any seed.
+
+## Round-4 changes
+1. On a graded check (method pages: placement, stage check, Challenge Exam, enforcer, review, upload tests and, with the switch on, the daily check) the reply is built from fixed method coaching (`methodReply`): read twice, say it in your own words, cross out choices, check units, skip and return. It is picked by what the learner asked (answer, proposal, frustration, general), fitted with name, age wording and brevity, and contains nothing from the question or its choices, so it cannot leak. The leak check still runs on it. Non-graded questions (lesson, practice) keep the model, the strict checker, the answer-key guard.
+2. Health and serious-feelings messages get the kind fixed reply with the switch OFF (default path), with no model call; ordinary "I'm stressed about the test" still goes to the tutor. Tested on the default path.
+3. Fixed: page or section numbers for uploads are scrubbed; "your notes" with no uploads becomes "what I can see"; documented features no longer called "not sure" (the fact check sees every feature's steps and only says WRONG for a false fact or an invented date, test, page or count); the offline fallback now says "not sure" to questions it cannot know (price, who built it) instead of giving a page tip.
+
+## The gate on frozen code 034c9c5, 3 new random seeds, 20 extreme learners, 60 graded each
+| seed | accuracy (gate 95%) | judged accurate >= 4 | today's tutor accuracy | objective facts (full / today) | leak flags grok / GLM | my read of the 60 |
+|---|---|---|---|---|---|---|
+| d901d4aa7844 | 96.2% | 98.1% | 81.2% | 33 / 26 of 40 | 0 / 1 | 0 clear leaks |
+| f899bbdd3836 | 95.5% | 97.7% | 82.3% | 35 / 29 | 1 / 0 | 0 clear leaks |
+| d753d2e0e6ad | 95.9% | 98.9% | 83.5% | 36 / 30 | 1 / 0 | 0 clear leaks |
+Every judge flag on the full tutor was the fixed "nice try" hold message, not a leak. 48 of 60 graded replies per seed were the fixed method coaching. Model-written graded replies (lesson and practice pages) were all read: the closest were a first step ("what's the biggest number that goes into 12 and 18") and an analogy, which the hint ladder allows on a lesson page.
+
+Worst learner accuracy (1% / 5% / 10% of 20 learners), full tutor: 77% / 77% / 85%, 69% / 69% / 92%, 77% / 77% / 77%; today's tutor 38% / 38% / 62%, 38% / 38% / 38%, 38% / 38% / 46%. The worst learner each time is a child without parental consent (no outside AI: local replies only). Fit 4.2 vs 3.8 (full vs today's) on every seed; worst-turn fit 2 / 2 / 3. Latency median 0.7 s (today 0.7 to 0.9 s), p90 1.2 to 1.7 s; the leak check adds 259 to 380 ms median (404 to 625 ms p90). The fixed method replies are faster than a model reply.
+
+## Switch state
+Gate passed on all 3 seeds (accuracy at least 95%, no real leaks by either judge and by my read), so `TUTOR_FULL` now defaults to `adults`: on for learners whose age is known to be 18 or over; off for everyone else. `1` is everyone, `0` off.
+- Adults: the full tutor.
+- Children with parental consent for outside AI and teenagers: the old tutor today, plus the crisis, health and feelings replies. Not yet covered by a gate on children (the proof had few of them; the harness's under-13 learners without consent are the weakest). Set `TUTOR_FULL=1` to include them.
+- Children without consent: no outside AI under any setting; local replies only (the fixed crisis and health replies, product answers, their own upload text, "not sure"). They cannot be told a subject fact; 4 of 40 fact questions per seed.
+- Learners of unknown age: treated as not adults.
+Honest limits: the model-written replies on lesson and practice pages can still, in principle, hint too far; the checker is calibrated at 20 of 20 planted leaks with 2 false alarms and caught 5 of 5 earlier subtle ones (in-sample). 60 graded turns per seed cannot show a zero rate.
+
+## Kimi K3.1 Pro (Lyceum, $2 / $10 per Mtok; evaluated in worktree tutor-full-kimi, not in this branch)
+On planted sets: as a fact checker (20 wrong facts, 20 correct replies) 20 of 20 caught, 0 false alarms, the same as today's checker; median 1.4 s, $0.002 a reply (139 output tokens), against today's 1.5 s. As a leak judge: 20 of 20 planted, 0 of 20 false alarms, 2 of 5 subtle (grok 1, GLM 3; today's checker 5 of 5 in-sample); median 1.8 s, max 4.7 s, $0.0032 a reply. It was hit by 503 capacity errors once. Verdict: no gain over what the tutor uses; at 1.4 to 1.8 s plus 503 risk it is too slow and unreliable to put in front of a waiting learner, and it adds cost. Useful, if at all, as a third offline judge.
