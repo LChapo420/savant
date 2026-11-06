@@ -300,7 +300,7 @@ async function build(userId, materialId, opts = {}) {
   const sig = hash(JSON.stringify([mat.text.length, hash(mat.text), skills.map((s) => [s.id, (s.questions || []).length]), packQuiz.map((q) => q.pack_qid), weak && weak.map((w) => [w.skill.id, w.due, w.wrong, w.mis])]));
   const prev = row(userId, mat.id, kind);
   if (prev && prev.version === VERSION && prev.sig === sig && prev.status === 'ready' && !opts.force) return { episode: prev, cached: true };
-  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The podcast maker is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  if (!opts.llm && !require('./ai').canBuild()) return { error: 'The podcast maker is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
 
   inflight.add(key);
   let saved = null;

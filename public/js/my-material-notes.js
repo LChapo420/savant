@@ -9,12 +9,14 @@ App.mount(async () => {
   const base = `/api/materials/${encodeURIComponent(id)}/notes`;
   const back = '<p class="small"><a href="/my-material">&larr; My material</a></p>';
 
+  let pressed = false;
   async function load(start) {
+    if (start) pressed = true;
     let out;
     try { out = start ? await App.api.post(base, {}) : await App.api.get(base); } catch (err) { root.innerHTML = `${back}<div class="notice notice-error">${esc(err.message)}</div>`; return; }
     const n = out.notes;
     if (!n && !out.started) {
-      root.innerHTML = `${back}<h1>Notes</h1><p class="muted">Notes follow your material in order and keep its own terms, numbers and definitions. Each point shows the line of your text it came from.</p><button class="btn btn-primary" type="button" id="make">Make my notes</button>`;
+      root.innerHTML = `${back}<h1>Notes</h1>${pressed ? '<div class="notice notice-error">That could not start: no model is free right now. Try again in a minute.</div>' : ''}<p class="muted">Notes follow your material in order and keep its own terms, numbers and definitions. Each point shows the line of your text it came from.</p><button class="btn btn-primary" type="button" id="make">Make my notes</button>`;
       document.getElementById('make').addEventListener('click', () => load(true));
       return;
     }
