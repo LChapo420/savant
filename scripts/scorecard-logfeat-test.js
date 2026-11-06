@@ -15,4 +15,16 @@ const f = LF.forUser(9001, now);
 assert(f && LF.FEATURES.every((k) => Number.isFinite(f[k])), 'every feature is a finite number');
 assert(Math.abs(f.acc - 0.75) < 1e-9 && f.typedGap !== 0 && f.levelsPerDay > 0, 'accuracy and the typed gap are read from the log');
 assert.strictEqual(LF.forUser(9002, now), null, 'five answers are too few to read a behaviour from');
+// the extra within-learner contrasts: a learner who is faster and worse on hard items, slow after misses, studying at night in long sittings
+{
+  const rows = []; const t0 = Date.parse('2026-01-01T23:00:00Z');
+  for (let sit = 0; sit < 6; sit++) for (let i = 0; i < 10; i++) {
+    const hard = i % 3 === 0; const mid = i % 3 === 1; rows.push({ session_id: sit, index: i, level: sit, skill_id: `s${i % 3}`, role: i < 2 ? 'review' : 'check', difficulty: hard ? 8 : mid ? 5 : 3, correct: hard ? i % 2 === 0 : true, ms: hard ? 9000 : 3000, format: 'multiple_choice', created_at: new Date(t0 + sit * 3 * 86400000 + i * 20000).toISOString() });
+  }
+  const e = LF.extraFeatures(rows);
+  assert(LF.EXTRA.every((k) => Number.isFinite(e[k])), 'every extra feature is a finite number');
+  assert(e.hardEff < -0.3, `hard items are answered worse (${e.hardEff})`);
+  assert(e.nightRate === 1 && e.sitLen > 2, 'night studying and sitting length read');
+  assert.deepStrictEqual(Object.values(LF.extraFeatures([])).filter((v) => v !== 0), [], 'an empty log reads 0 everywhere');
+}
 console.log('ok  log features: read from items and sessions, none for a thin log');

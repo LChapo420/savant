@@ -9,7 +9,8 @@
 'use strict';
 const fs = require('fs');
 const R = require('../services/scorecard/readout');
-const { FEATURES } = require('./lib/sim-gate');
+const { ALL_FEATURES } = require('../services/scorecard/log-features');
+const FEATURES = ALL_FEATURES;
 
 const argv = process.argv.slice(2);
 const arg = (n, d = '') => { const a = argv.find((x) => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
