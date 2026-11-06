@@ -19,7 +19,7 @@ const inSplit = (x) => SPLIT === 'all' || x.split === SPLIT;
 const items = [
   ...tb.clean.filter(inSplit).map((c) => ({ id: `clean:${c.level}`, level: c.level, edits: [] })),
   ...tb.plants.filter(inSplit).map((p) => ({ id: p.id, level: p.level, edits: p.edits })),
-].filter((x) => !done.has(x.id)).sort((a, b) => (L.hash(a.id) < L.hash(b.id) ? -1 : 1));
+].filter((x) => !done.has(x.id)).sort((a, b) => (L.hash(a.id) < L.hash(b.id) ? -1 : 1)).slice(0, Number(process.env.LIMIT || 1e9));
 
 (async () => {
   const t0 = Date.now(); let cost = 0; let ok = 0; let bad = 0; let stop = false;

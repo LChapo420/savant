@@ -81,7 +81,9 @@ for (const lv of levels.filter((l) => plants.some((p) => p.level === l.id))) {
 plants.forEach((p, i) => { p.id = `p${String(i).padStart(3, '0')}`; });
 const lvIds = [...new Set(plants.map((p) => p.level))];
 const split = {}; for (const id of lvIds) split[id] = parseInt(L.hash(`fact-gate-split-1|${id}`).slice(0, 6), 16) % 100 < 35 ? 'dev' : 'heldout';
-plants.forEach((p) => { p.split = split[p.level]; p.consistent = p.edits.length > 1; });
+// Marked before any held-out result was read: arguably not false on a second read. Kept in every count; reported apart too.
+const SOFT = new Set(['A44', 'A51', 'A70', 'A83', 'E57']);
+plants.forEach((p) => { p.split = split[p.level]; p.consistent = p.edits.length > 1; if (SOFT.has(p.src)) p.soft = true; });
 const clean = levels.filter((l) => split[l.id]).map((l) => ({ level: l.id, split: split[l.id] }));
 const count = (arr, f) => arr.reduce((m, x) => { m[f(x)] = (m[f(x)] || 0) + 1; return m; }, {});
 console.log(plants.length, count(plants, (p) => p.kind), count(plants, (p) => p.track), count(plants, (p) => p.split), 'clean', clean.length, count(clean, (c) => c.split), count(clean, (c) => c.level.split('/')[0]));
