@@ -18,7 +18,13 @@ const howto = require('./tutor-howto');
 const safety = require('./tutor-safety');
 
 const DEFAULT_ON = '0'; // set to '1' only when the proof's gates pass (docs/TUTOR-FULL.md)
-const on = () => String(process.env.TUTOR_FULL === undefined ? DEFAULT_ON : process.env.TUTOR_FULL).trim() === '1';
+// TUTOR_FULL=1 everyone; TUTOR_FULL=adults only a learner whose age is known and 18 or over (children and unknown ages stay on the old tutor).
+function on(user) {
+  const v = String(process.env.TUTOR_FULL === undefined ? DEFAULT_ON : process.env.TUTOR_FULL).trim().toLowerCase();
+  if (v === '1') return true;
+  if (v !== 'adults' || !user) return false;
+  try { const a = require('./boosters').ageOf(user); return a !== null && a !== undefined && a >= 18; } catch { return false; } // eslint-disable-line global-require
+}
 
 // The crisis replies (self-harm, emergency, abuse, a stranger asking for secrecy, a child sharing where they live) are their own,
 // smaller switch: TUTOR_SAFETY, ON by default. Gate: every one of them correct in scripts/tutor-full-test.js and in the proof run, and no
@@ -28,12 +34,12 @@ const safetyOn = () => String(process.env.TUTOR_SAFETY === undefined ? '1' : pro
 
 /** The safety reading of one message for this learner, honouring both switches. Null when there is nothing to do. */
 function triage(user, text) {
-  if (!on() && !safetyOn()) return null;
+  if (!on(user) && !safetyOn()) return null;
   let age = null;
   try { age = require('./boosters').ageOf(user); } catch { age = null; } // eslint-disable-line global-require
   const t = safety.triage(text, { age });
   if (!t) return null;
-  return on() || CRISIS.has(t.kind) ? t : null;
+  return on(user) || CRISIS.has(t.kind) ? t : null;
 }
 
 const DEADLINE_MS = Number(process.env.TUTOR_DEADLINE_MS) || 14000;
@@ -110,9 +116,11 @@ function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' 
     : why === 'local' ? (brief ? 'I am using only my own notes for now.' : 'I am answering from my own notes only on this account, with no outside AI, so this is shorter than a full answer.')
       : (brief ? `I'm a bit ${why === 'slow' ? 'slow' : 'busy'} right now.` : `The live tutor is ${why === 'slow' ? 'slow' : 'busy'} right now, so this is from my notes instead of a full answer.`);
   let feature;
-  const tri = safety.triage(msg, { age: null });
+  let age0 = null;
+  try { age0 = user ? require('./boosters').ageOf(require('../config/db').byId('users', user.id)) : null; } catch { age0 = null; } // eslint-disable-line global-require
+  const tri = safety.triage(msg, { age: age0 });
   if (tri && tri.reply) return { reply: tri.reply, feature }; // a crisis is the fixed reply on every path, even this one
-  if (tri && tri.kind === 'medical') parts.push(safety.FIXED.medical);
+  if (tri && tri.fixed) parts.push(tri.fixed);
   else {
     // Their own uploaded material, found locally (no model): quoted as theirs. Not on a graded page.
     let mat = [];
@@ -167,32 +175,32 @@ function materialNotes(userId, query, mode) {
   } catch { return []; }
 }
 
-// Any verdict on a proposed answer, right or wrong ("close", "not quite", "almost"), tells the learner whether it is correct. The rule is: ask why they chose it.
-const VERDICT = /\b(close|almost|not quite|not exactly|incorrect|that'?s wrong|not right|off by|getting warm|you'?re warm|hot|cold|good guess|good thinking, but)\b/i;
-const META = /(right or wrong|yes or no|can'?t (confirm|say|tell)|won'?t (confirm|say|tell)|not going to (say|confirm|tell)|don'?t want to (just )?(say|tell|confirm))[^.?!]*/ig;
-const AFFIRMS = /\b((you'?re|you are|that'?s) (on the )?right (track|path|lines)|on the right track|good (guess|instinct|thinking|call)|sounds right|you'?ve got it|well done|nice one|great (guess|job|answer)|yep|yeah,? (that|it)|you'?re right|you are right|that'?s (right|correct|it|the one)|(is|it'?s|that is) correct|exactly|spot on|you got it|nailed it|bingo|yes[,!. ])/i;
-const PROPOSING = /\b(is it|is the answer|the answer is|i think (it'?s|its)|maybe (it'?s|its)|right\?|correct\?|am i right)\b/i;
-/** True when the learner proposed an answer and the reply affirms it ("you're right that..."): confirmation on a graded question. */
-function affirmsProposal(learnerMsg, reply) {
-  const bare = String(reply || '').replace(META, ' ');
-  if (PROPOSING.test(String(learnerMsg || '')) && VERDICT.test(bare)) return true;
-  return PROPOSING.test(String(learnerMsg || '')) && AFFIRMS.test(bare);
-}
+// Round 3: the lasting fix for "does this reply give the answer away". One model reads EVERY reply to a question on screen and answers LEAK or OK. It is told the
+// ways a tutor leaks without stating the answer: confirming or rejecting a proposal ("you're right", "close", "not quite", "right track"), narrowing the
+// choices to one, giving a definition or rule that applied to the question leaves only one answer, working the identical question, or naming an option.
+const LEAK_SYSTEM = `You are a strict examiner checking a tutor reply BEFORE a learner sees it. The learner is on a question they have not answered yet. The tutor may give hints about METHOD only. Reply with exactly one word: LEAK or OK.
+LEAK if ANY of these is true:
+- the reply states the answer or the final value, in any form (a word, number, option, translation, a spelled-out or partial answer);
+- it confirms or rejects what the learner proposed, in any words ("right", "correct", "close", "almost", "not quite", "wrong", "good guess", "right track", "you've got it", "that's not it");
+- it narrows the question to a single remaining choice, for example by explaining what each option is for and then saying which one fits the learner's situation, or by saying only one of the options can be right;
+- it works the identical question (or the same numbers) through to its result;
+- it repeats the learner's proposed answer as if it were settled.
+OK only if the reply leaves the learner a real choice or a real step to do themselves: a method, a question back (such as why they chose it), a similar example with different numbers or words, a reminder of a rule that does not by itself decide the answer. When in doubt, say LEAK.`;
 
-const PROPOSAL = /(?:is it|is the answer|the answer is|the answer'?s|i think (?:it'?s|its|the answer is)|maybe (?:it'?s|its)?|so it'?s|it'?s|its)\s+([^?.!,;]{1,30})/ig;
-const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9/.:^-]+/g, ' ').trim();
-/** True when the reply repeats an answer the learner just proposed. Deterministic: no model needed. */
-function echoesProposal(learnerMsg, reply) {
-  // A sentence that is a question ("why did you pick B?") is the tutor asking for their reasoning, which is wanted, not a confirmation.
-  const sentences = String(reply || '').split(/(?<=[.!?])\s+/).filter((x) => !/\?\s*$/.test(x)).map((x) => ` ${norm(x)} `);
-  let m;
-  PROPOSAL.lastIndex = 0;
-  while ((m = PROPOSAL.exec(String(learnerMsg || ''))) !== null) {
-    const cand = norm(m[1]);
-    if (!cand || cand.length > 24 || /^(a|an|the|that|this|right|correct|wrong|like|just|not|ok|okay|so|and)$/.test(cand)) continue;
-    if (sentences.some((x) => x.includes(` ${cand} `))) return true;
-  }
-  return false;
+/** @returns {Promise<'LEAK'|'OK'|''>} '' when the check could not run (the caller holds the reply: fail closed) */
+async function leakCheck({ ai, user, question, message, text }) {
+  if (!text || !clip(question, 300)) return 'OK';
+  let verdict = '';
+  try {
+    verdict = await withDeadline(ai.talk({
+      role: 'fast', task: 'dock_leak_check', system: LEAK_SYSTEM,
+      messages: [{ role: 'user', content: `Question on screen: ${clip(question, 400)}\n\nThe learner said: ${clip(message, 300)}\n\nTutor reply: ${clip(text, 1000)}\n\nLEAK or OK?` }],
+      maxTokens: 6, userId: user && user.id, hedgeAfterMs: 2500, timeoutMs: 6000, temperature: 0,
+    }), 7000);
+  } catch { verdict = ''; }
+  if (/^\W*leak/i.test(verdict || '')) return 'LEAK';
+  if (/^\W*ok/i.test(verdict || '')) return 'OK';
+  return '';
 }
 
 const ASKS = /\?|(explain|why|what|how|who|when|which|define|meaning)/i;
@@ -244,4 +252,4 @@ function answerKeyHit(userId, page, reply) {
   } catch { return false; }
 }
 
-module.exports = { answerKeyHit, affirmsProposal, factCheck, NOT_SURE, isBrief, triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
+module.exports = { answerKeyHit, leakCheck, LEAK_SYSTEM, factCheck, NOT_SURE, isBrief, triage, safetyOn, CRISIS, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };

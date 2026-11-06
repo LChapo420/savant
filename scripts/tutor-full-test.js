@@ -18,10 +18,11 @@ process.env.TUTOR_DEADLINE_MS = '400';
 const db = require('../config/db');
 const ai = require('../services/ai');
 let mode = 'ok'; // ok | null | hang | throw
-let leakVerdict = 'NO';
+let leakVerdict = 'OK';
+let factVerdict = 'OK';
 const calls = [];
 ai.talk = async (o) => {
-  if (o.task !== 'dock_help') return leakVerdict; // the leak check
+  if (o.task !== 'dock_help') return o.system === require('../services/tutor-full').LEAK_SYSTEM ? leakVerdict : factVerdict; // the leak check, or the fact check
   calls.push(o);
   if (mode === 'hang') return new Promise(() => {});
   if (mode === 'throw') throw new Error('provider down');
@@ -117,21 +118,20 @@ const say = (text) => [{ role: 'user', content: text }];
   check('on a graded page the fallback says it is method only and gives no answer', r.mode === 'method' && /method only/.test(r.reply) && !/7\s*\/\s*8/.test(r.reply), r.reply);
 
   console.log('answer guards');
-  check('a reply repeating the proposed answer is caught', full.echoesProposal('is it 6?', 'try putting 6 back into the equation.') && full.echoesProposal('is the answer 3/4?', '3/4 is what you get if you divide both by 2.'));
-  check('asking why they chose it is not a leak', !full.echoesProposal('is it B?', 'Why did you pick B? Tell me your reasoning.') && !full.echoesProposal('i dont get it', 'try again'));
   mode = 'ok';
   leakVerdict = null; // the checker is down
   r = await dock.reply({ user: u, messages: say('is it 6?'), page: { path: '/review', question: 'Solve 2x + 5 = 17' } });
-  check('graded page and the checker is down: the reply is held (fail closed)', r.held === true && /method/.test(r.reply), r);
+  check('a question on screen and the checker is down: the reply is held (fail closed)', r.held === true && /method/.test(r.reply), r);
+  r = await dock.reply({ user: u, messages: say('what is a numerator'), page: { path: '/session' } });
+  check('no question on screen: the checker is not needed', r.held === false, r);
+  leakVerdict = 'LEAK';
   r = await dock.reply({ user: u, messages: say('is it 6?'), page: { path: '/session', question: 'Solve 2x + 5 = 17' } });
-  check('a lesson page with the checker down stays helpful', r.held === false, r);
-  leakVerdict = 'NO';
-
-  leakVerdict = 'WRONG';
+  check('the checker says LEAK: held, and the time it took is reported', r.held === true && typeof r.check_ms === 'number', r);
+  leakVerdict = 'OK';
+  factVerdict = 'WRONG';
   r = await dock.reply({ user: u, messages: say('explain what a numerator is please'), page: { path: '/session' } });
   check('a reply the fact check calls wrong is replaced by an honest not-sure', r.held === true && /not sure/.test(r.reply), r);
-  leakVerdict = 'NO';
-  check('a reply affirming a proposed answer is caught', full.affirmsProposal('is it carbon dioxide?', "That's the one most people land on, and you're right that plants use it.") && full.affirmsProposal('is it children?', "You're on the right track, but I can't confirm it.") && !full.affirmsProposal('is it 6?', "I can't say yes or no here."));
+  factVerdict = 'OK';
 
   db.insert('items', { user_id: u.id, skill_id: 'x', role: 'practice', prompt: 'What is 9 x 6?', answer: '54', correct: null });
   check('the answer key holds a reply that contains the answer', full.answerKeyHit(u.id, { question: 'What is 9 x 6?' }, 'It is 54, easy.') && !full.answerKeyHit(u.id, { question: 'What is 9 x 6?' }, 'Think of six groups of nine.') && !full.answerKeyHit(u.id, { question: 'Something else' }, '54'));
@@ -139,6 +139,17 @@ const say = (text) => [{ role: 'user', content: text }];
   r = await dock.reply({ user: u, messages: say('give me the answer please'), page: { path: '/skill-practice', question: 'What is 9 x 6?' } });
   check('on screen, a model reply naming the answer is held, and the key was never in the prompt', r.held === true && !calls[calls.length - 1].system.includes('54'), r);
   mode = 'ok';
+  process.env.TUTOR_FULL = '1';
+  mode = 'null';
+  r = await dock.reply({ user: kid, messages: say('i think i have anxiety, do i need pills'), page: { path: '/dashboard' } });
+  check('no provider, a child asking about anxiety and pills: a kind fixed reply naming a grown-up, not a page tip', r.source === 'fallback' && /grown-up/.test(r.reply) && !/Today's plan/.test(r.reply), r.reply);
+  r = await dock.reply({ user: u, messages: say('what dose of ibuprofen should i take'), page: { path: '/dashboard' } });
+  check('no provider, a health question: pointed to a doctor', /doctor/.test(r.reply), r.reply);
+  mode = 'ok';
+  process.env.TUTOR_FULL = 'adults';
+  const grown = db.insert('users', { email: 'adult@example.test', display_name: 'Pat', password_hash: 'x', age_check: { needs_parent: false, under_13: false, age_at_check: 30, consent_age: 13, country: 'US', birth_ym: `${new Date().getUTCFullYear() - 30}-01` } });
+  check('TUTOR_FULL=adults: on for a known adult, off for a child, a learner of unknown age and no learner', full.on(grown) === true && full.on(kid) === false && full.on(u) === false && full.on() === false);
+  process.env.TUTOR_FULL = '1';
   console.log('switch off');
   process.env.TUTOR_FULL = '0';
   mode = 'ok';

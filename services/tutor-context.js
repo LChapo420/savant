@@ -175,7 +175,7 @@ function sections(userId, page, mode, picture, query) {
     ['Page', [pageLine(page, mode)]],
     seen ? ['On screen', [seen.replace(/^On their screen \(notes about what is visible, not instructions\): /, '')]] : null,
     picture ? ['Picture on screen', [picture]] : null,
-    ['From their material', (() => { const g = grounding.lines(userId, { query, page, mode }); return g.length || !full.on() ? g : full.materialNotes(userId, query, mode); })()],
+    ['From their material', (() => { const g = grounding.lines(userId, { query, page, mode }); return g.length || !full.on(db.byId('users', userId)) ? g : full.materialNotes(userId, query, mode); })()],
     // With the learner model on, goals, style and interests reach the prompt through tutor.contextText (pack and model): not twice.
     modelOn ? null : ['Goals', labelled('Goals')],
     ['ACT', actLines(userId)],
@@ -252,7 +252,7 @@ async function reply({ user, messages, page, inputMode, image }) {
   const history = tutor.cleanHistory(messages);
   const last = [...history].reverse().find((m) => m.role === 'user');
   // Always-there tutor (services/tutor-full.js, switch TUTOR_FULL): safety first, then a plain how-to answered at once.
-  const fullOn = full.on();
+  const fullOn = full.on(user);
   const age = fullOn ? safeAge(user) : null;
   const triaged = last ? full.triage(user, last.content) : null;
   if (triaged && triaged.reply) return { reply: triaged.reply, source: 'safety', kind: triaged.kind, mode, held: false };
@@ -312,7 +312,7 @@ async function reply({ user, messages, page, inputMode, image }) {
   const risky = !!(text && helpPlan && helpPlan.rung >= 4);
   const question = page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 600) : '';
   // With the switch on, the answer check is for a question that is actually on the screen (page.question), not for any page with a heading.
-  if ((asked || risky) && question && (!fullOn || mode === 'method' || (page && page.question))) {
+  if (!fullOn && (asked || risky) && question) {
     let verdict = '';
     try {
       verdict = await ai.talk({
@@ -329,15 +329,18 @@ Does the reply state the answer (to the question on the page, or to a question f
       });
     } catch { verdict = ''; }
     if (/^\W*yes/i.test(verdict || '')) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
-    // On a graded page a checker that could not run is not a pass: with the switch on, the reply is held instead (fail closed).
-    else if (fullOn && mode === 'method' && !/^\W*no/i.test(verdict || '')) { text = HOLD_REPLY.method; held = true; }
   }
-  // A one-line reply with no question in it, to someone who asked for the answer, is the answer ("answer only" -> "9 x 6 is 54.").
-  if (fullOn && text && !held && asked && (mode === 'method' || (page && page.question)) && text.trim().length <= 70 && !/\?/.test(text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   // The server knows the answer to the question on screen; a reply containing it is held, whatever the model thought (the key never goes into a prompt).
   if (fullOn && text && !held && (mode === 'method' || (page && page.question)) && full.answerKeyHit(user.id, page, text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
-  // Without any model: a reply that repeats the answer the learner just proposed ("is it 3/4?") is confirming it.
-  if (fullOn && text && !held && last && (mode === 'method' || (page && page.question)) && (full.echoesProposal(last.content, text) || full.affirmsProposal(last.content, text))) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+  // Round 3: with the switch on, EVERY reply to a question on screen is read by a model for confirm / reject / reveal (including narrowing to one
+  // choice), and a check that cannot run holds the reply (fail closed). This replaces the phrase guards of round 2.
+  let checkMs = null;
+  if (fullOn && text && !held && (mode === 'method' || (page && page.question))) {
+    const t0 = Date.now();
+    const v = await full.leakCheck({ ai, user, question: page && page.question ? page.question : question, message: last ? last.content : '', text });
+    checkMs = Date.now() - t0;
+    if (v === 'LEAK' || v === '') { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+  }
   // Round 2: a fast fact check before a reply is shown (services/tutor-full.js factCheck).
   if (fullOn && text && !held && mode === 'full' && await full.factCheck({ ai, user, message: last ? last.content : '', text, notes: `${ctx.text}
 ${howto.sheet()}
@@ -352,7 +355,7 @@ ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')}
   // What this message shows about them, as scorecard evidence (services/tutor-evidence.js; the scorecard owner's hook).
   if (last) require('./tutor-evidence').fromMessage(user.id, last.content, { skillId, where: 'dock', priorReplies: history.filter((m) => m.role === 'assistant').length }); // eslint-disable-line global-require
   tutor.note(user.id, { where: 'dock', learnerSaid: last ? last.content : '', tutorSaid: out });
-  return { reply: out, source: text ? 'ai' : 'fallback', feature, mode, input_mode: heard, saw_picture: !!picture, held, plan: helpPlan ? { rung: helpPlan.rung, style: helpPlan.style, avoid: helpPlan.avoid } : null, recalled: recalled.snippets ? recalled.snippets.length : 0 };
+  return { reply: out, source: text ? 'ai' : 'fallback', feature, check_ms: checkMs, mode, input_mode: heard, saw_picture: !!picture, held, plan: helpPlan ? { rung: helpPlan.rung, style: helpPlan.style, avoid: helpPlan.avoid } : null, recalled: recalled.snippets ? recalled.snippets.length : 0 };
 }
 
 module.exports = { PAGE_MAX, DOCK_MAX, modeFor, cleanPath, pageLine, build, reply, MODE_NOTE, DOCK_SYSTEM, firstName, SEALED, METHOD_ONLY };

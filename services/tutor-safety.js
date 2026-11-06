@@ -32,6 +32,7 @@ function isEmergency(t) {
   return true;
 }
 const ABUSE = /\b((he|she|they|my (dad|mom|mother|father|stepdad|stepmom|uncle|aunt|brother|sister|boyfriend|girlfriend|teacher|coach)) (hit|hits|beat|beats|hurts?|touch(es|ed)|molest\w*|abus\w*) (me|my)|(i am|i'?m) (being )?abused|not safe at home|afraid to go home|someone is hurting me)\b/i;
+const FEELINGS = /\b(anxiety|anxious|depress(ed|ion|ing)|panic attacks?|i('| a)?m (so )?(stressed|overwhelmed|lonely)|can'?t sleep|no friends|hopeless|worthless|feel(ing)? (so )?(sad|empty|numb) (all the time|every day))\b/i;
 const MEDICAL = /\b(diagnos\w*|dos(e|es|age)|should i (take|use|try) (something|anything|a (pill|medicine|drug|supplement))|heart (races|racing|pounding)|symptoms?|dosage|how (much|many) (mg|milligrams|pills|tablets)|should i take (a |some )?(pill|medic|ibuprofen|tylenol|advil|aspirin|melatonin|adderall)|medications?|prescription|am i (sick|depressed|pregnant|anorexic|bulimic|bipolar|autistic|adhd)|do i have (adhd|anxiety|depression|cancer|diabetes|an? \w+ disorder)|rash|fever|eating disorder|stop eating|starv\w*|purg\w*)\b/i;
 // A stranger online asking for details, photos or secrecy: the same fixed reply path as abuse (grooming is the usual shape of it).
 const UNSAFE_CONTACT = /\b(don'?t tell (my )?(mom|dad|parents?|anyone)|(asked|wants|wanted|told) me (for|to send) (a |my |some )?(photos?|pics?|nudes?|selfie|address|phone number|school)|(guy|man|stranger|someone|person|adult) (online|i met online|on (discord|snapchat|instagram|roblox|tiktok))|keep (it|this) (a )?secret from)\b/i;
@@ -65,6 +66,9 @@ const FIXED = {
   injection: "I'll keep my setup to myself, but I'm glad to help with what you're learning. What are you working on?",
 };
 
+FIXED.medical_child = "That's a question for a grown-up you trust, like a parent, and for a doctor or a nurse. I can't tell what's going on in your body or what medicine to take. If it feels bad or scary, tell a grown-up right now. I'm happy to help you learn whenever you're ready.";
+FIXED.feelings_teen = "I'm sorry you're feeling that way, and I'm glad you said it. I'm a study app, so I can't tell what is going on or what would help; that is for a doctor, a school counselor or someone you trust, and it is worth telling a parent or another adult. If it ever feels like too much, you can call or text 988 any time. I'm here for your studying whenever you want it.";
+FIXED.feelings_child = "Thank you for telling me. Feelings like that matter, and a grown-up you trust, like a parent, a teacher or the school counselor, is the right person to talk to. I'm only a study app, so I can't help with this the way a person can. I'll be here when you want to learn.";
 FIXED.medical = "That's a question for a doctor, a nurse, a pharmacist or a parent, not for me: I can't tell what's going on with your body or what to take. If it feels urgent, call 911. I'm glad to help with your studying whenever you're ready.";
 
 const MEDICAL_DIRECTIVE = 'MEDICAL: this message touches on health. You are a tutor, not a doctor or a nurse. Do not diagnose, do not suggest or compare medicines or doses, and do not say a symptom is or is not serious. Say kindly that a doctor, a nurse, a pharmacist or a parent is the right person for it, and if it could be urgent, to call 911. You may help with general, school-level health facts (how the heart works for a biology class) and then bring it back to their studying.';
@@ -82,7 +86,9 @@ function triage(text, opts = {}) {
   if (isEmergency(t)) return { kind: 'emergency', reply: pick('emergency') };
   if (OTHER_ALL.test(t) || OTHER_REL.test(t) || OTHER_NAME.test(t)) return { kind: 'other_person', reply: FIXED.other_person };
   if (INJECTION.test(t)) return { kind: 'injection', reply: FIXED.injection };
-  if (MEDICAL.test(t)) return { kind: 'medical', directive: MEDICAL_DIRECTIVE };
+  // A health or feelings question gets a model reply under a directive, and, with no model, a kind fixed reply (never a page tip): `fixed`.
+  if (FEELINGS.test(t)) return { kind: 'feelings', directive: MEDICAL_DIRECTIVE, fixed: young ? FIXED.feelings_child : FIXED.feelings_teen };
+  if (MEDICAL.test(t)) return { kind: 'medical', directive: MEDICAL_DIRECTIVE, fixed: young ? FIXED.medical_child : FIXED.medical };
   return null;
 }
 
