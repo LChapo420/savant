@@ -21,6 +21,11 @@
  *
  * Switch: FACT_CHECK_ALL. 0 restores the old behaviour exactly. Default: DEFAULT_ON below.
  *
+ * The guard's own spend has two limits: FACT_GUARD_LEARNER_DAY_USD (one learner, one day, default $0.25: about four times the heaviest measured day) and FACT_GUARD_DAY_USD
+ * (the whole app, one day, default $10). Over either, a check reads on free slots only. It never skips the check: if no free slot answers, a chat gets a sentence saying
+ * so (HELD.cap) and stored text is not stored, as when a check cannot run. The counters: `ai_usage.check_usd` per learner and day (deleted and exported with ai_usage), a
+ * `_spend` row in `fact_guard_stats` for the day.
+ *
  * Plug-ins from other builds, picked up when they reach main (see `plugins`):
  *   - services/fact-code-checks.js (fact-gate): recomputed maths before the model. `recompute` runs when the module exists.
  *   - services/material-factcheck.js (uploads-perfect): sentence-by-sentence check of uploaded lessons; the registry's material rows name it.
@@ -34,6 +39,7 @@ const on = () => String(process.env.FACT_CHECK_ALL === undefined ? DEFAULT_ON : 
 const HELD = {
   wrong: 'I started to write an answer but my check found a mistake in it, so I held it back rather than risk teaching you something wrong. Could you ask that another way, or tell me which part you want to go over?',
   cant: 'I can\'t double-check my answer right now, so I would rather not guess. Please ask me again in a minute, or carry on with your lesson in the meantime.',
+  cap: 'I have reached today\'s limit for double-checking answers, and I won\'t show you one I haven\'t checked. Your lessons and saved material still open as usual, and I can answer again tomorrow.',
 };
 
 const MAX_PIECE = 1800; // one piece, in characters
@@ -85,6 +91,30 @@ function note(task, outcome, ms) {
   } catch { /* the numbers are extra */ }
 }
 
+// ── the guard's own spend ────────────────────────────────────────────────────────────────────────────────────────────────
+const limit = (name, dflt) => { const n = Number(process.env[name]); return process.env[name] !== undefined && process.env[name] !== '' && Number.isFinite(n) && n >= 0 ? n : dflt; };
+const SPEND_TASK = '_spend';
+function addSpend(userId, usd) {
+  if (!usd) return;
+  try {
+    const db = lazy('../config/db');
+    const day = today();
+    db.upsert('fact_guard_stats', (r) => r.day === day && r.task === SPEND_TASK, (r) => ({ day, task: SPEND_TASK, usd: Number((((r && r.usd) || 0) + usd).toFixed(6)) }));
+    if (userId) db.upsert('ai_usage', (u) => u.user_id === userId && u.day === day, (r) => ({ ...(r || { user_id: userId, day, cents: 0, calls: 0 }), check_usd: Number((((r && r.check_usd) || 0) + usd).toFixed(6)) }));
+  } catch { /* the check matters more than its counter */ }
+}
+/** Which limit is reached, if any: 'learner', 'day' or null. A check over a limit reads on free slots only. */
+function capReached(userId) {
+  try {
+    const db = lazy('../config/db');
+    const day = today();
+    const all = db.findOne('fact_guard_stats', (r) => r.day === day && r.task === SPEND_TASK);
+    if (all && all.usd >= limit('FACT_GUARD_DAY_USD', 10)) return 'day';
+    if (userId) { const u = db.findOne('ai_usage', (r) => r.user_id === userId && r.day === day); if (u && (u.check_usd || 0) >= limit('FACT_GUARD_LEARNER_DAY_USD', 0.25)) return 'learner'; }
+  } catch { /* no counter: the provider ledgers still hold */ }
+  return null;
+}
+
 /** The recomputed-maths first pass (fact-gate build), once it is on main: its certain findings count as wrong with no model asked. */
 function recompute(text) {
   let mod = null;
@@ -129,6 +159,8 @@ async function check({ pieces, source = '', learnerSaid = '', mode = 'general', 
   const wrong = [];
   let model = null;
   let ran = true;
+  let costUsd = 0;
+  const capped = capReached(userId);
   list.forEach((p, i) => { for (const claim of recompute(p)) wrong.push({ index: i, why: `recomputed: ${String(claim).slice(0, 120)}`, quote: '' }); });
   const ai = lazy('./ai');
   const pool = lazy('./pool');
@@ -141,7 +173,7 @@ async function check({ pieces, source = '', learnerSaid = '', mode = 'general', 
     const base = {
       role: 'fast', task: 'fact_live', system: SYSTEMS[mode] || SYSTEMS.general, user: checkUser({ pieces: batch.map((b) => b.text), source, learnerSaid, mode }),
       schema: SCHEMA, schemaName: 'submit_check', maxTokens: 450 + batch.length * 60, effort: 'off', userId,
-      ...(dataClass && !userId ? { dataClass } : {}), hedgeAfterMs: waiting ? 1800 : undefined,
+      ...(dataClass && !userId ? { dataClass } : {}), hedgeAfterMs: waiting ? 1800 : undefined, ...(capped ? { freeOnly: true } : {}),
     };
     const go = llm || ((a) => ai.structuredDetail(a));
     const ask = async (args) => {
@@ -153,8 +185,10 @@ async function check({ pieces, source = '', learnerSaid = '', mode = 'general', 
     let res = null;
     const budget = () => budgetMs - (Date.now() - t0);
     if (budget() < 500) { ran = false; return; }
-    if (exclude) res = await ask({ ...base, excludeFamilies: exclude, timeoutMs: waiting ? Math.min(budget(), Math.round(budgetMs * 0.6)) : budget() });
+    // The independent reader gets part of the time, never all of it: on stored text it used to take the whole budget, so a slow provider meant no last-resort reader and a false "could not check" (found 6 Nov: 3 of 5 debriefs lost that way).
+    if (exclude) res = await ask({ ...base, excludeFamilies: exclude, timeoutMs: Math.min(budget(), Math.round(budgetMs * 0.6)) });
     if (!(res && res.data) && budget() >= 500) res = await ask({ ...base, timeoutMs: budget() });
+    if (res && res.costUsd) { costUsd += res.costUsd; addSpend(userId, res.costUsd); }
     const data = res && res.data;
     if (!data || !Array.isArray(data.wrong)) { ran = false; return; }
     if (res.model) model = res.model;
@@ -164,7 +198,7 @@ async function check({ pieces, source = '', learnerSaid = '', mode = 'general', 
       wrong.push({ index: b ? b.index : batch[0].index, why: String((w && w.why) || '').slice(0, 200), quote: String((w && w.quote) || '').slice(0, 200) });
     }
   }));
-  return { ran, wrong, ms: Date.now() - t0, model };
+  return { ran, wrong, ms: Date.now() - t0, model, costUsd, capped };
 }
 
 /** The pieces of one answer for this task's row: a chat is one piece; structured output splits where the row says, so one bad question does not lose a batch. */
@@ -219,7 +253,7 @@ async function pass({ task, factTask = null, userId = null, req = null, result, 
   if (!v.ran) {
     note(key, 'cant', Date.now() - t0);
     console.warn(`fact-guard: no checker could read ${key}; not shown`);
-    return typeof result.text === 'string' && entry.live ? heldChat(result, 'cant') : null;
+    return typeof result.text === 'string' && entry.live ? heldChat(result, v.capped ? 'cap' : 'cant') : null;
   }
   if (!v.wrong.length) { note(key, 'passed', Date.now() - t0); return result; }
   note(key, 'wrong', Date.now() - t0);
@@ -260,6 +294,6 @@ function stats(day = today()) {
 }
 
 /** Is this reply one of the fixed sentences? A held reply is never stored as if it were written for the moment (a primed opener, say). */
-const isHeld = (text) => text === HELD.wrong || text === HELD.cant;
+const isHeld = (text) => text === HELD.wrong || text === HELD.cant || text === HELD.cap;
 
-module.exports = { on, DEFAULT_ON, pass, check, passesText, checkUser, batches, piecesOf, stats, stripHtml, isHeld, SYSTEMS, SCHEMA, HELD };
+module.exports = { on, DEFAULT_ON, capReached, addSpend, pass, check, passesText, checkUser, batches, piecesOf, stats, stripHtml, isHeld, SYSTEMS, SCHEMA, HELD };

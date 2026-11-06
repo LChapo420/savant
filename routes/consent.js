@@ -420,6 +420,7 @@ function deleteChild(consent, reason, by) {
  * scripts/consent-test.js fails when the store has one this list lacks.
  */
 const KNOWN_COLLECTIONS = [
+    'fact_recheck_findings', 'fact_recheck_state', // services/fact-recheck.js: references to stored rows, no learner in them
     'fact_guard_stats', // counts only (services/fact-guard.js): no learner in it, so nothing to delete or export
     'users', 'enrollments', 'skill_states', 'profiles', 'sessions', 'items', 'events', 'content_cache', 'themed_items', 'themed_log', 'ai_usage',
     'reports', 'lessons', 'remediations', 'streaks', 'essays', 'level_feedback', 'level_edits', 'scorecards',

@@ -174,7 +174,8 @@ function recordSpend(userId, model, usage, usedProvider, meta) {
     user_id: userId,
     day: today(),
     provider: p ? p.name : null,
-    cents: Number(((existing ? existing.cents : 0) + cents).toFixed(4)),
+    // The check is not the learner's use: neither its calls nor its cost count against their limit. Its own limit is in services/fact-guard.js.
+    cents: Number(((existing ? existing.cents : 0) + (meta && meta.task === 'fact_live' ? 0 : cents)).toFixed(4)),
     calls: (existing ? existing.calls || 0 : 0) + (meta && meta.task === 'fact_live' ? 0 : 1),
   }));
 }
@@ -288,11 +289,11 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
  *
  * @returns {Promise<{data: object, usage: object|null, model: string}|null>}
  */
-async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, factTask, factSource, factMode, factBudgetMs }) {
+async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, factTask, factSource, factMode, factBudgetMs }) {
   const result = await withProviders(userId, (p) =>
     p.structured({ role, task, system, user, schema, schemaName, maxTokens, effort, lane, think }), role, task,
-  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, factTask, factSource, factMode, factBudgetMs });
-  return result ? { data: result.data, usage: result.usage || null, model: result.model || null } : null;
+  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, factTask, factSource, factMode, factBudgetMs });
+  return result ? { data: result.data, usage: result.usage || null, model: result.model || null, costUsd: result.pool ? result.pool.costUsd : undefined } : null;
 }
 
 /**

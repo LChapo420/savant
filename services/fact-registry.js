@@ -167,4 +167,4 @@ const EXEMPT_NOTE = 'No task is exempt today: every task that shows model text g
 const lookup = (task) => (task && Object.prototype.hasOwnProperty.call(TASKS, task) ? TASKS[task] : null);
 const shown = () => Object.entries(TASKS).filter(([, e]) => e.kind === 'inline' || e.kind === 'downstream' || e.kind === 'exempt').map(([k]) => k);
 
-module.exports = { TASKS, lookup, shown, EXEMPT_NOTE };
+module.exports = { TASKS, lookup, shown, EXEMPT_NOTE, renderQuestion: q };
