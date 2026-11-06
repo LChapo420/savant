@@ -54,11 +54,11 @@ check('a brief learner is refused a long rewrite', pm.check(BRIEF, 'feedback', S
 (async () => {
   console.log('modify');
   let calls = 0;
-  const good = async () => { calls += 1; return { text: 'Multiply 3 x 2 x 4 = 24.' }; };
+  const good = async () => { calls += 1; return { text: 'Multiply the three sides: 3 x 2 x 4 = 24.' }; };
   const r1 = await pm.modify({ spec: BRIEF, part: 'feedback', source: SRC, llm: good });
   check('a good rewrite is served', r1.source === 'ai' && calls === 1, r1);
   let n = 0;
-  const bad2good = async () => { n += 1; return { text: n === 1 ? '3 x 2 x 4 = 99' : 'Multiply 3 x 2 x 4 = 24.' }; };
+  const bad2good = async () => { n += 1; return { text: n === 1 ? '3 x 2 x 4 = 99' : 'Multiply the three sides: 3 x 2 x 4 = 24.' }; };
   const r2 = await pm.modify({ spec: BRIEF, part: 'feedback', source: SRC, llm: bad2good });
   check('one revision fixes a draft', r2.source === 'ai' && n === 2, r2);
   const r3 = await pm.modify({ spec: BRIEF, part: 'feedback', source: SRC, llm: async () => ({ text: '3 x 2 x 4 = 99' }) });
@@ -79,10 +79,10 @@ check('a brief learner is refused a long rewrite', pm.check(BRIEF, 'feedback', S
   console.log('prepareItem on a stored item row');
   const db = require('../config/db');
   const row = db.insert('items', { user_id: 5, session_id: 1, skill_id: 'add_sub', skill_name: 'Volume', level: 3, prompt: SRC.prompt, choices: SRC.choices, answer: SRC.answer, rationale: SRC.text, hint: 'Think about the three sides.', track_id: 'math', grade_id: 'g' });
-  const shaped = await pm.prepareItem(5, row, { spec: BRIEF, llm: async ({ user }) => ({ text: /Think about/.test(user) ? 'Look at the three sides.' : 'Multiply 3 x 2 x 4 = 24.' }) });
-  check('the rewrite is written on the learner own item row', shaped && shaped.rationale === 'Multiply 3 x 2 x 4 = 24.' && db.byId('items', row.id).shaped.hash, shaped);
+  const shaped = await pm.prepareItem(5, row, { spec: BRIEF, llm: async ({ user }) => ({ text: /Think about/.test(user) ? 'Look at the three sides.' : 'Multiply the three sides: 3 x 2 x 4 = 24.' }) });
+  check('the rewrite is written on the learner own item row', shaped && shaped.rationale === 'Multiply the three sides: 3 x 2 x 4 = 24.' && db.byId('items', row.id).shaped.hash, shaped);
   check('the hint is rewritten too', db.byId('items', row.id).shaped.hint === 'Look at the three sides.');
-  check('served from the row afterwards', pm.rationaleOf(db.byId('items', row.id)) === 'Multiply 3 x 2 x 4 = 24.');
+  check('served from the row afterwards', pm.rationaleOf(db.byId('items', row.id)) === 'Multiply the three sides: 3 x 2 x 4 = 24.');
   const again = await pm.prepareItem(5, db.byId('items', row.id), { spec: BRIEF, llm: async () => { throw new Error('must not be called'); } });
   check('the same profile is not rewritten again', again && again.hash === db.byId('items', row.id).shaped.hash);
   check('a default spec writes nothing', (await pm.prepareItem(5, db.insert('items', { user_id: 5, session_id: 1, prompt: 'p', answer: 'a', rationale: 'r' }), { spec: ls.defaultSpec(), llm: good })) === null);

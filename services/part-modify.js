@@ -57,8 +57,9 @@ function rulesFor(spec, part, ctx = {}) {
       : fb.granularity === 'detailed'
         ? 'Length: explain step by step why the answer is right or wrong, each step on its own line, three to six lines.'
         : 'Length: two to three sentences: the reason and the fix.');
+    r.push('Add no new idea, example-fact or advice (no "next time" tips): keep to the own reasoning of the original, reworded, reordered, shortened, or with its own steps spelled out.');
     r.push('This text is shown after a right answer and after a wrong one, so never say whether their answer was right or wrong ("your answer", "you got it", "incorrect", "not quite"): explain the idea itself.');
-    if (fb.nameTheError || tone.correction === 'gentle') r.push('Name the tempting wrong idea and exactly why it fails, kindly, then the right idea.');
+    if (fb.nameTheError || tone.correction === 'gentle') r.push('If one of the listed wrong choices is a tempting mix-up, say in a clause why it fails; use only the listed choices, never invent another wrong idea.');
   } else if (part === 'hint') {
     r.push(sc.hintSize === 'generous'
       ? 'Hint size: generous: name the idea to use and show the first step, but never the final answer.'
@@ -89,6 +90,7 @@ function rulesFor(spec, part, ctx = {}) {
   return r;
 }
 
+const STOP = new Set(['that', 'this', 'with', 'from', 'they', 'them', 'their', 'there', 'then', 'than', 'what', 'when', 'which', 'would', 'could', 'should', 'have', 'been', 'were', 'will', 'your', 'also', 'into', 'only', 'each', 'some', 'does', 'because', 'about']);
 const SCHEMA = { type: 'object', properties: { text: { type: 'string' } }, required: ['text'] };
 
 function systemFor(part) {
@@ -118,6 +120,11 @@ function check(spec, part, source, text) {
   const orig = numbersOf(source.text);
   for (const n of orig) if (!numbersOf(t).has(n) && part === 'feedback') out.push(`the number ${n} from the original is missing`);
   if (part === 'feedback' && source.correct === undefined && /\b(your answer|you got it|you are (?:right|correct)|you(?:'re| are) wrong|incorrect|not quite|well done|good job|great job|nice work)\b/i.test(t)) out.push('it says whether their answer was right or wrong; the text is shown either way');
+  if (part === 'feedback') {
+    const cw = (x) => new Set((String(x || '').toLowerCase().match(/[a-zà-ÿ]{4,}/g) || []).filter((w) => !STOP.has(w)).map((w) => w.slice(0, 5)));
+    const o = cw(source.text); const g = cw(t);
+    if (o.size >= 3) { const kept = [...o].filter((w) => g.has(w)).length / o.size; if (kept < 0.55) out.push('it drops too much of the original reasoning; keep its own points'); }
+  }
   const ans = norm(source.answer);
   if (part === 'hint' && ans && ans.length >= 2 && norm(t).includes(ans)) out.push('it states the answer');
   if (part === 'feedback' && ans && ans.length >= 3 && norm(source.text).includes(ans) && !norm(t).includes(ans)) out.push('it drops the correct answer');

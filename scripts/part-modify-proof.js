@@ -227,11 +227,11 @@ async function judgeRows(part, rows) {
 }
 
 async function factsFor(part, rows) {
-  const out = { checked: 0, passed: 0, declined: 0, same_yes: 0, same_asked: 0, coverage_fail: 0 };
+  const out = { declined_because: {}, checked: 0, passed: 0, declined: 0, same_yes: 0, same_asked: 0, coverage_fail: 0 };
   const jobs = [];
   for (const r of rows) {
     out.checked += 1;
-    if (!r.vL) { out.declined += 1; continue; }
+    if (!r.vL) { out.declined += 1; for (const p of (r.problemsL || []).slice(0, 2)) { const k = String(p).replace(/d+/g, 'N').slice(0, 50); out.declined_because[k] = (out.declined_because[k] || 0) + 1; } continue; }
     out.passed += 1;
     if (part === 'lesson') {
       const c = ls.checkFollowed(r.vL, specOf(learners[r.i], LESSON.title), { keyFacts: LESSON.key_points, minShare: 0.3, own: true, interestNeed: 0 });
