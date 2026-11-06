@@ -63,10 +63,12 @@ if (!process.env.CORAL_LEARNER) process.env.CORAL_LEARNER = 'off'; // as for Mun
 if (!process.env.GLADIA_LEARNER) process.env.GLADIA_LEARNER = 'off'; // existing tests keep the local route; gladia-test turns it on itself
 if (!process.env.MUNITO_LEARNER) process.env.MUNITO_LEARNER = 'off'; // the tests pin the pipeline-only rule; learner use is checked in munito-ledger-test
 if (!process.env.LYCEUM_LEARNER) process.env.LYCEUM_LEARNER = 'off';
+if (!process.env.FACT_CHECK_ALL) process.env.FACT_CHECK_ALL = '0'; // the older tests stub one model answer, which cannot also answer as the checker; scripts/fact-coverage-test.js turns the guard on and tests it
 if (!process.env.ZEROGPU_LEARNER) process.env.ZEROGPU_LEARNER = 'off';
 if (!process.env.GONKA_LEARNER) process.env.GONKA_LEARNER = 'off'; // same for the 4 Nov credit providers (checked in credit-providers-test)
 if (!process.env.GROKIFIED_LEARNER) process.env.GROKIFIED_LEARNER = 'off';
 const fixtureSteps = [];
+const failedSteps = [];
 const sheetSteps = [];
 const skipped = [];
 for (const cmd of STEPS) {
@@ -96,9 +98,12 @@ for (const cmd of STEPS) {
   if (tmp) try { fs.unlinkSync(tmp); } catch { /* gone */ }
   if (r.status !== 0) {
     console.error(`\nFAILED: ${cmd}`);
-    process.exit(r.status || 1);
+    // TESTS_KEEP_GOING=1: carry on and list every failure at the end (used to sort failures with FACT_CHECK_ALL=1). Default: stop at the first.
+    if (!process.env.TESTS_KEEP_GOING) process.exit(r.status || 1);
+    failedSteps.push(cmd);
   }
 }
+if (failedSteps.length) { console.error(`\n${failedSteps.length} step(s) FAILED:\n  - ${failedSteps.join('\n  - ')}`); process.exit(1); }
 if (skipped.length) {
   console.log(`\n${skipped.length} step(s) SKIPPED for missing data/ files:\n  - ${skipped.join('\n  - ')}`);
   if (strict) { console.error('--strict: skips count as failures'); process.exit(1); }

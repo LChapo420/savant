@@ -29,6 +29,7 @@ const gamePayloads = require('../services/game-payloads');
 const gameAssignments = require('../config/game-assignments');
 const grading = require('../services/grading');
 const ai = require('../services/ai');
+const factGuard = require('../services/fact-guard');
 const scorecardHooks = require('../services/scorecard/hooks');
 const scorecardFootprints = require('../services/scorecard/footprints');
 const learnerRecord = require('../services/learner-record');
@@ -903,7 +904,7 @@ router.post('/items/:id/coach', requireAuth, limit('coach', 120, 60 * 60 * 1000)
 
   // Opening the coach on a question we primed costs nothing: the question is
   // already written.
-  if (!cleaned.length && item.coach_opener) {
+  if (!cleaned.length && item.coach_opener && (item.coach_opener_checked || !factGuard.on())) {
     return res.json({ reply: item.coach_opener, source: 'ai', coached: true, primed: true, provider: ai.providerName() });
   }
 
@@ -953,7 +954,7 @@ router.post('/items/:id/coach/prime', requireAuth, limit('coach-prime', 200, 60 
 
   try {
     const opener = await ai.coachReply({ item, messages: [], userId: req.user.id });
-    if (opener) db.update('items', item.id, { coach_opener: opener });
+    if (opener && !factGuard.isHeld(opener)) db.update('items', item.id, { coach_opener: opener, coach_opener_checked: factGuard.on() });
   } catch (err) {
     console.warn(`ai: priming the coach failed: ${err.message}`);
   }
@@ -976,6 +977,15 @@ router.post('/items/:id/coach/stream', requireAuth, limit('coach', 120, 60 * 60 
   const cleaned = messages
     .filter((m) => m && typeof m.content === 'string' && m.content.trim())
     .map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content.trim().slice(0, 800) }));
+
+  // As on /coach: a crisis message gets the fixed reply, not a hint, and is not kept. This is the route the session page uses first.
+  const crisisSaid = [...cleaned].reverse().find((m) => m.role === 'user');
+  const crisis = crisisSaid ? require('../services/tutor-full').triage(req.user, crisisSaid.content) : null; // eslint-disable-line global-require
+  if (crisis && crisis.reply) {
+    res.set({ 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-cache, no-transform' });
+    res.write(`data: ${JSON.stringify({ replace: crisis.reply })}\n\n`);
+    return res.end(`data: ${JSON.stringify({ done: true, source: 'safety', kind: crisis.kind })}\n\n`);
+  }
 
   if (!item.coach_used) db.update('items', item.id, { coach_used: true, coach_started_at: new Date().toISOString() });
   // What the learner said while stuck, kept for the after-level read: it is the
@@ -1000,7 +1010,7 @@ router.post('/items/:id/coach/stream', requireAuth, limit('coach', 120, 60 * 60 
   // A primed opener is already written (and was leak-checked when it was): the
   // page streams the coach, so this is where priming has to pay off. Before
   // this the stream wrote a second opener and every primed one went unused.
-  if (!cleaned.length && item.coach_opener) {
+  if (!cleaned.length && item.coach_opener && (item.coach_opener_checked || !factGuard.on())) {
     send({ delta: item.coach_opener });
     return res.end(`data: ${JSON.stringify({ done: true, source: 'ai', primed: true, provider: ai.providerName() })}\n\n`);
   }
@@ -1051,6 +1061,9 @@ router.post('/items/:id/ask', requireAuth, limit('tutor', 60, 60 * 60 * 1000), a
   }
   const question = String(req.body.question || '').trim().slice(0, 500);
   if (question.length < 3) return res.status(400).json({ error: 'Ask a question first.' });
+  // Asking after answering is the same tutor: a crisis message gets the fixed reply, not an explanation, and is not kept.
+  const crisis = require('../services/tutor-full').triage(req.user, question); // eslint-disable-line global-require
+  if (crisis && crisis.reply) return res.json({ reply: crisis.reply, source: 'safety', kind: crisis.kind });
   // What they asked after answering goes to the after-level read too: a question
   // about a question they got right is as telling as one they got wrong.
   db.update('items', item.id, { ask_log: [...(item.ask_log || []), question.slice(0, 300)].slice(-8) });

@@ -216,6 +216,7 @@ async function write({ userId, enrollment, grade, level, attempt }) {
       system: FILL_SYSTEM,
       user: `${label} at level ${level}.\n${context.text}\n\n${learner}\n\nWRITE THESE SLOTS:\n${lines}\n\nAlready asked at this level, do not reuse:\n${avoid || '(none)'}${note ? `\n\n${note}` : ''}`,
       schema: ITEMS_SCHEMA,
+      factTask: 'checkpoint_fill',
       schemaName: 'submit_quiz_items',
       maxTokens: 24000,
       userId,

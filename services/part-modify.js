@@ -163,7 +163,7 @@ async function modify({ spec, part, source, llm, goal = null }) {
   const rules = rulesFor(spec, part, { goal });
   if (!rules.length || !source.text) return stored;
   const ask = async (problems) => {
-    try { const r = await llm({ system: systemFor(part), user: userFor(part, source, rules, problems), schema: SCHEMA, schemaName: 'submit', maxTokens: 700 }); return r && typeof r.text === 'string' ? r.text.trim() : ''; } catch { return ''; }
+    try { const r = await llm({ system: systemFor(part), user: userFor(part, source, rules, problems), schema: SCHEMA, schemaName: 'submit', maxTokens: 700, factSource: [source.prompt ? `Question: ${source.prompt}` : '', source.choices && source.choices.length ? `Choices: ${source.choices.join(' | ')}` : '', source.answer ? `Correct answer: ${source.answer}` : '', `Stored text: ${source.text}`].filter(Boolean).join('\n') }); return r && typeof r.text === 'string' ? r.text.trim() : ''; } catch { return ''; }
   };
   let text = await ask(null);
   let problems = text ? check(spec, part, source, text) : ['empty'];
@@ -176,12 +176,15 @@ async function modify({ spec, part, source, llm, goal = null }) {
 }
 
 // ── serving: the stored text unless a rewrite for this learner is ready ──────
+/** A rewrite stored before the fact guard existed had rules only: with the guard on it is not served. */
+function shapedChecked(item) { return !lazy('./fact-guard').on() || !!item.shaped.fact_checked; }
+
 function rationaleOf(item) {
-  if (item && enabled() && item.shaped && item.shaped.rationale) return item.shaped.rationale;
+  if (item && enabled() && item.shaped && item.shaped.rationale && shapedChecked(item)) return item.shaped.rationale;
   return item ? item.rationale : item;
 }
 function hintOf(item) {
-  if (item && enabled() && partOn('hint') && item.shaped && item.shaped.hint) return item.shaped.hint;
+  if (item && enabled() && partOn('hint') && item.shaped && item.shaped.hint && shapedChecked(item)) return item.shaped.hint;
   return item ? item.hint : item;
 }
 
@@ -228,7 +231,7 @@ async function prepareItem(userId, item, { llm = null, spec = null } = {}) {
       partOn(item.rationale === REVIEW_DEFAULT ? 'review' : 'feedback') ? modify({ spec: sp, part: item.rationale === REVIEW_DEFAULT ? 'review' : 'feedback', source: { ...base, text: item.rationale }, llm: call, goal }) : Promise.resolve(null),
       item.hint && partOn('hint') ? modify({ spec: sp, part: 'hint', source: { ...base, text: item.hint }, llm: call }) : Promise.resolve(null),
     ]);
-    const shaped = { hash, at: new Date().toISOString(), rationale: fb && fb.source === 'ai' ? fb.text : null, hint: hint && hint.source === 'ai' ? hint.text : null };
+    const shaped = { hash, at: new Date().toISOString(), fact_checked: lazy('./fact-guard').on(), rationale: fb && fb.source === 'ai' ? fb.text : null, hint: hint && hint.source === 'ai' ? hint.text : null };
     db.update('items', item.id, { shaped });
     return shaped;
   } catch { return null; } finally { running.delete(key); }
