@@ -26,13 +26,13 @@ for (const f of files) {
   for (const line of fs.readFileSync(path.join(DIR, f), 'utf8').split('\n')) {
     if (!line) continue;
     let e; try { e = JSON.parse(line); } catch { continue; }
-    if (e.t !== 'ai' && e.kind !== 'ai' && e.ev !== 'ai') continue;
-    const task = e.task || e.tk;
-    const userId = e.u || e.userId || e.user || e.uid;
-    if (!userId || !task || e.ok === false || e.src === 'scripts' || e.bucket === 'scripts') continue;
+    if (e.t !== 'ai' || !e.ok || e.src === 'test' || e.src === 'scripts') continue;
+    const { task } = e;
+    const userId = e.u;
+    if (!userId || !task) continue;
     const row = registry.lookup(task);
     if (!row || row.kind !== 'inline') continue;
-    const written = Number(e.out || e.tokens_out || e.output_tokens || e.o || 0) || 150;
+    const written = Number(e.out) || 150;
     const src = row.live ? SOURCE_TOKENS.live : row.mode === 'material' ? SOURCE_TOKENS.material : SOURCE_TOKENS.other;
     const calls = Math.max(1, Math.ceil(written / 2300)); // MAX_CALL 9000 characters is about 2300 tokens
     const usd = calls * (SYSTEM_TOKENS + src) * PRICE_IN + written * PRICE_IN + calls * OUT_TOKENS * PRICE_OUT;

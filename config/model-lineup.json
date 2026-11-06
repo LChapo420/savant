@@ -1123,6 +1123,14 @@
           "zerogpu:z-ai/glm-5.3-flash",
           "coral:deepseek-v4.1-flash"
         ],
+        "only": [
+          "zerogpu:z-ai/glm-5.3-flash",
+          "coral:deepseek-v4.1-flash",
+          "nvidia:z-ai/glm-5.3-flash*",
+          "nvidia:nvidia/nemotron-3-ultra*",
+          "ollama:*",
+          "local:*"
+        ],
         "timeout_ms": 8000,
         "basis": "services/fact-guard.js: the check before model text reaches a learner. scripts/fact-guard-eval.js, docs/FACT-COVERAGE.md. A waiting learner goes to the paid slots first (cheap, fast); background work to the free ones first. Learner data on the added providers only until their window closes (14 Nov); then NVIDIA alone."
       }

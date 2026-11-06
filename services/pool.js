@@ -581,6 +581,9 @@ function refusal(slot, req, kind) {
   // MiniMax M3 as a fact verifier behind grok-4.3 is the owner's call (17/36 caught against 22): off until decided (FACT_VERIFY_MINIMAX=on).
   if (slot.id === 'lyceum:minimax/minimax-m3' && String(process.env.FACT_VERIFY_MINIMAX || '').toLowerCase() !== 'on') return 'switch: FACT_VERIFY_MINIMAX is off';
   const cls = reqClass(req);
+  // The check before text reaches a learner keeps to the owner's window for added providers (4 Nov: "up until november 14th"), Coral included,
+  // whose own learner switch has no end date: reading a learner's text is the same as writing it. CORAL_LEARNER_UNTIL moves it.
+  if (req.task === 'fact_live' && cls === 'learner' && slot.provider === 'coral' && Date.now() >= Date.parse(process.env.CORAL_LEARNER_UNTIL || '2026-11-14T06:00:00Z')) return 'data: the window for learner data on added providers has closed';
   if (slot.dataClass === 'pipeline' && cls !== 'pipeline' && !xkiroLearnerAllowed(slot, req) && !munitoLearnerAllowed(slot, req) && !coralLearnerAllowed(slot, req)) return 'data: a pipeline slot never gets learner data';
   if (!slot.supports.includes(kind)) return `does not do ${kind}`;
   // Coral Fast is for a learner who is waiting: background work (write-ahead, builds) never uses it.
@@ -657,7 +660,9 @@ function candidatesFor(req, opts = {}) {
     // a busy free model first (a whole level's fact read took 109 to 312 s there; grok-4.3 answered one in 67 s, a block in about 24 s).
     const fastPaid = paid.filter((s) => s.fast);
     // POOL_FIRST_WRITER=<slot id>: an experiment switch (scripts/first-lesson-writer-ab.js): that slot writes the level first, Coral Fast next.
-    const want = process.env.POOL_FIRST_WRITER && (req.task === 'block_layout' || req.task === 'block_fill') ? paid.filter((s) => s.id === process.env.POOL_FIRST_WRITER) : [];
+    // The live fact check: Coral Standard first, for speed at about the same price (scripts/fact-guard-eval.js, 6 Nov: p50 0.3 s against ZeroGPU GLM's 1.2 to 6.7 s, the same catches).
+    const want = req.task === 'fact_live' ? paid.filter((s) => s.id === 'coral:deepseek-v4.1-flash')
+      : process.env.POOL_FIRST_WRITER && (req.task === 'block_layout' || req.task === 'block_fill') ? paid.filter((s) => s.id === process.env.POOL_FIRST_WRITER) : [];
     // A waiting learner's fact check never lands on a free model (a busy free NVIDIA took minutes while grok-4.3 was down, 5 Nov): if no paid
     // verifier answers in time the level is not served as checked, the standard session opens and the write finishes in the background.
     const tail = req.task === 'fact_verify' && paid.length ? [] : free;

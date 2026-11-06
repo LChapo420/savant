@@ -33,7 +33,7 @@ const on = () => String(process.env.FACT_CHECK_ALL === undefined ? DEFAULT_ON : 
 /** Fixed sentences for a chat whose reply was held. Honest about why; they state no fact about the subject. */
 const HELD = {
   wrong: 'I started to write an answer but my check found a mistake in it, so I held it back rather than risk teaching you something wrong. Could you ask that another way, or tell me which part you want to go over?',
-  cant: 'I can\'t double-check my answer right now, so I would rather not guess. Your lesson on this page is checked, so it is the safe place to look, and if you ask again in a minute I should be able to help.',
+  cant: 'I can\'t double-check my answer right now, so I would rather not guess. Please ask me again in a minute, or carry on with your lesson in the meantime.',
 };
 
 const MAX_PIECE = 1800; // one piece, in characters
