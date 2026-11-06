@@ -690,7 +690,10 @@
         "price_in": 0.19,
         "price_out": 0.6,
         "data_class": "pipeline",
-        "price_note": "Coral promotional price. Ledger: services/coral-ledger.js, $100 hard cap. Same model family as the Munito DeepSeek V4.1 slot, cheaper output, so it sorts first among paid slots."
+        "price_note": "Coral promotional price. Ledger: services/coral-ledger.js, $100 hard cap. Same model family as the Munito DeepSeek V4.1 slot, cheaper output, so it sorts first among paid slots.",
+        "group": "coral",
+        "group_max": 5,
+        "group_reserve_bg": 2
       },
       {
         "id": "coral:deepseek-v4.1-flash-fast",
@@ -705,7 +708,9 @@
         "price_out": 1.8,
         "data_class": "pipeline",
         "fast": true,
-        "price_note": "Coral promotional price, advertised ~322 tokens/s. Only for tasks a learner waits on; never background work."
+        "price_note": "Coral promotional price, advertised ~322 tokens/s. Only for tasks a learner waits on; never background work.",
+        "group": "coral",
+        "group_max": 5
       },
       {
         "id": "lyceum:minimax/minimax-m3",
@@ -1088,6 +1093,16 @@
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731"
         ],
         "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
+      },
+      "part_layer": {
+        "allow": [
+          "coral:deepseek-v4.1-flash-fast",
+          "coral:deepseek-v4.1-flash",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731"
+        ],
+        "timeout_ms": 10000,
+        "basis": "The personal layer over a shared lesson (services/lesson-layer.js, 6 Nov 2026): a short structured answer a learner waits on, Coral Fast first on the fast lane; every answer is checked deterministically."
       }
     }
   }

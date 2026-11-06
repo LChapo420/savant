@@ -43,6 +43,7 @@ const COLLECTIONS = [
   'subject_placements',      // a learner's walk up a whole subject, and the percentages it produced
   'game_payloads',           // the questions for a game level: written once, validated, kept
   'block_plans',             // a block level's layout and content: per learner, or shared per level
+  'lesson_layers',           // the personal layer over a shared lesson (services/lesson-layer.js): text only, per learner and plan
   'assist_chats',            // chat assist on a block, a game question or a check: every turn the learner wrote
   'level_logs',              // what a learner did inside a level that has no questions of its own to record it
   'chess_ratings',           // chess puzzle trainer: one per learner, Glicko-2 rating and rush best (content/chess-trainer.js)

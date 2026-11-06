@@ -16,7 +16,21 @@
  */
 
 const SELF_HARM = /\b(kill(ing)? my ?self|(?<!\b(?:is|are|was|were|be|been|it's|that's|really|just|totally) )kill(ing)? me|end(ing)? (it all|my life|things)|suicid\w*|want(ed)? to die|wanna die|don'?t want to (be here|live|exist|be alive)|hurt(ing)? my ?self|self[- ]?harm\w*|cut(ting)? my ?self|no reason to (live|go on)|better off (dead|without me)|take my own life|wish i (was|were) dead|not wake up|disappear forever)\b/i;
-const EMERGENCY = /\b(overdos\w*|can'?t breathe|cannot breathe|chest (pain|pressure)|passing out|poison\w*|bleeding (a lot|badly|heavily|and won'?t)|seizure|allergic reaction|swallowed (a |some |the )?(bleach|pills|battery|magnet)|someone (is|was) (unconscious|not breathing))\b/i;
+const EMERGENCY = /\b(overdos\w*|took (a |the |an )?(whole |entire )?(bottle|handful|pack|box) of (pills|tablets|medicine|meds)|took (a lot of|too many|all (of )?(my|the|these|those)) (pills|tablets|medicine|meds)|took too many( of (them|my (pills|tablets|medicine|meds)))?(?=\s*[.!?]*\s*$)|can'?t breathe|cannot breathe|chest (pain|pressure)|passing out|poison(ed|ing|s)?|bleeding (a lot|badly|heavily|and won'?t)|seizure|allergic reaction|swallowed (a |some |the )?((bunch|handful|bottle|lot) of )?(bleach|pills|tablets|medicine|meds|batter(y|ies)|magnets?)|someone (is|was) (unconscious|not breathing))\b/i;
+// A study question that only names these words ("what is a poison dart frog", "why did Romeo take poison", "my essay about overdose deaths") is not an emergency.
+// Anything that points at a real person or an amount still is: when unsure, the emergency reply wins (6 Nov 2026).
+const EMERGENCY_URGENT = /\b(how (much|many)|lethal|fatal|deadly|enough to|what happens if|right now|call 911)\b/i;
+const EMERGENCY_SCHOOLWORK = /\b(essay|homework|chapter|report|quiz|worksheet|assignment|project|novel|book|story|play|poem|lesson|class|textbook|vocab\w*|definition|scene)\b/i;
+const EMERGENCY_I = /\b(i|i'?m|i'?ve|we|we'?re)\b/i;
+const EMERGENCY_ASKING = /^\s*(what|what'?s|whats|why|how|which|when|where|who|whose|does|do|did|is|are|was|were|can|could|define|explain|describe|compare|list|name|give|write|tell me about|summari[sz]e)\b|\b(vs\.?|versus|symptoms? of|causes? of|difference between|meaning of|definition of)\b/i;
+const EMERGENCY_PERSON = /\b(i|i'?m|i'?ve|we|we'?re|my|me|us|our|someone|somebody|friend|brother|sister|mom|mum|dad|mother|father|grandma|grandpa|baby|kid)\b/i;
+function isEmergency(t) {
+  if (!EMERGENCY.test(t)) return false;
+  if (EMERGENCY_URGENT.test(t)) return true;
+  if (EMERGENCY_SCHOOLWORK.test(t) && !EMERGENCY_I.test(t)) return false;
+  if (EMERGENCY_ASKING.test(t) && !EMERGENCY_PERSON.test(t)) return false;
+  return true;
+}
 const ABUSE = /\b((he|she|they|my (dad|mom|mother|father|stepdad|stepmom|uncle|aunt|brother|sister|boyfriend|girlfriend|teacher|coach)) (hit|hits|beat|beats|hurts?|touch(es|ed)|molest\w*|abus\w*) (me|my)|(i am|i'?m) (being )?abused|not safe at home|afraid to go home|someone is hurting me)\b/i;
 const MEDICAL = /\b(diagnos\w*|dos(e|es|age)|should i (take|use|try) (something|anything|a (pill|medicine|drug|supplement))|heart (races|racing|pounding)|symptoms?|dosage|how (much|many) (mg|milligrams|pills|tablets)|should i take (a |some )?(pill|medic|ibuprofen|tylenol|advil|aspirin|melatonin|adderall)|medications?|prescription|am i (sick|depressed|pregnant|anorexic|bulimic|bipolar|autistic|adhd)|do i have (adhd|anxiety|depression|cancer|diabetes|an? \w+ disorder)|rash|fever|eating disorder|stop eating|starv\w*|purg\w*)\b/i;
 // A stranger online asking for details, photos or secrecy: the same fixed reply path as abuse (grooming is the usual shape of it).
@@ -65,7 +79,7 @@ function triage(text, opts = {}) {
   if (SELF_HARM.test(t)) return { kind: 'self_harm', reply: pick('self_harm') };
   if (ABUSE.test(t)) return { kind: 'abuse', reply: pick('abuse') };
   if (UNSAFE_CONTACT.test(t)) return { kind: 'unsafe_contact', reply: pick('unsafe_contact') };
-  if (EMERGENCY.test(t)) return { kind: 'emergency', reply: pick('emergency') };
+  if (isEmergency(t)) return { kind: 'emergency', reply: pick('emergency') };
   if (OTHER_ALL.test(t) || OTHER_REL.test(t) || OTHER_NAME.test(t)) return { kind: 'other_person', reply: FIXED.other_person };
   if (INJECTION.test(t)) return { kind: 'injection', reply: FIXED.injection };
   if (MEDICAL.test(t)) return { kind: 'medical', directive: MEDICAL_DIRECTIVE };

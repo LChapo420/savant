@@ -208,9 +208,15 @@ App.mount(async () => {
       const n = document.getElementById(`course-note-${id}`);
       if (!btn || !n) return;
       if (!c) { btn.textContent = 'Learning path'; return; }
-      if (c.status === 'building') { btn.disabled = true; btn.textContent = c.activity && c.activity.queued ? 'Queued…' : 'Building…'; n.textContent = activityText(c.activity, 'learning path') || (c.planned ? `Building your course: ${c.skills.length} of ${c.planned} skills ready. You can leave this page.` : 'Planning your course from the text. This can take a few minutes; you can leave this page.');
+      if (c.status === 'building') { btn.disabled = true; btn.textContent = c.activity && c.activity.queued ? 'Queued…' : 'Building…';
+        const msg = activityText(c.activity, 'learning path') || (c.planned ? `Building your course: ${c.skills.length} of ${c.planned} skills ready. You can leave this page.` : 'Planning your course from the text. This can take a few minutes; you can leave this page.');
         // Something useful at once: the first skills open for study while the rest is still being written.
-        if (c.skills && c.skills.length) { const l = document.createElement('a'); l.className = 'btn btn-sm btn-primary'; l.href = `/my-material-study?id=${id}`; l.textContent = `Start studying the first ${c.skills.length} now`; n.appendChild(document.createTextNode(' ')); n.appendChild(l); }
+        const label = c.skills && c.skills.length ? `Start studying the first ${c.skills.length} now` : '';
+        // The poll calls this every 4 s: leave the note alone if nothing changed, so a tap on the link is never lost to a rebuild.
+        const shown = n.querySelector('a');
+        if (n.firstChild && n.firstChild.textContent.trim() === msg && (shown ? shown.textContent : '') === label) return;
+        n.textContent = msg;
+        if (label) { const l = document.createElement('a'); l.className = 'btn btn-sm btn-primary'; l.href = `/my-material-study?id=${id}`; l.textContent = label; n.appendChild(document.createTextNode(' ')); n.appendChild(l); }
         return; }
       btn.disabled = false;
       if (c.status === 'ready' || c.status === 'partial') {
