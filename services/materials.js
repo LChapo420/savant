@@ -179,8 +179,8 @@ async function extract(buf, opts = {}) {
   }
   else if (type === 'zip') {
     // Bit 0 of the first entry's flags: a password-protected ZIP. Its contents cannot be read.
-    if (buf.length > 8 && (buf.readUInt16LE(6) & 1)) return fail('That ZIP is password-protected. Unpack it on your computer and upload the files, or make a ZIP with no password.', 'encrypted');
     const listing = zipEntries(buf);
+    if (listing && buf.length > 8 && (buf.readUInt16LE(6) & 1)) return fail('That ZIP is password-protected. Unpack it on your computer and upload the files, or make a ZIP with no password.', 'encrypted');
     const has = (re) => !!listing && listing.entries.some((e) => re.test(e.name));
     const mime = listing && listing.entries.length && listing.entries[0].name === 'mimetype' ? buf.slice(38, 38 + 70).toString('latin1') : '';
     kind = has(/^ppt\/slides\/slide\d+\.xml$/) ? 'pptx' : has(/^xl\/workbook\.xml$/) ? 'xlsx' : /opendocument\.text/.test(mime) ? 'odt'
