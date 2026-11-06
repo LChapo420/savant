@@ -289,7 +289,8 @@ const call = (n, slots, opts = {}) => pool.callHedged({ kind: 'structured', n },
       assert.strictEqual(calls, 0, 'no model call was started');
     } finally { ai.structured = realStructured; }
   });
-  await check('a new material starts its notes and study pack at once, one at a time per learner, as background work', async () => {
+  await check('UPLOAD_BUILD_LANE=background: a new material starts its notes and study pack at once, one at a time per learner, as background work', async () => {
+    process.env.UPLOAD_BUILD_LANE = 'background';
     autobuild.reset();
     const order = [];
     const deps = {
@@ -303,8 +304,23 @@ const call = (n, slots, opts = {}) => pool.callHedged({ kind: 'structured', n },
     await sleep(250);
     assert.deepStrictEqual(order.map((o) => o[0]), ['notes:start', 'notes:end', 'pack:start', 'pack:end'], 'one build at a time');
     assert.ok(order.filter((o) => o[0].endsWith(':start')).every((o) => o[1] === true), 'background lane');
+    delete process.env.UPLOAD_BUILD_LANE;
+  });
+  await check('by default a new upload builds in the waiting lane (6 Nov bug sweep: notes 261 s, pack 135 s as background work on saturated free slots)', async () => {
+    autobuild.reset();
+    const seen = [];
+    const deps = {
+      ai: { isEnabled: () => true },
+      outside: () => true,
+      notes: { build: async () => { const st = pool.laneStore(); seen.push(['notes', pool.inBackground(), st && st.fast]); return {}; } },
+      packs: { buildWithRetry: async (u, id, { between }) => between(async () => { const st = pool.laneStore(); seen.push(['pack', pool.inBackground(), st && st.fast]); return {}; }) },
+    };
+    autobuild.start(990021, 5, deps);
+    await sleep(150);
+    assert.deepStrictEqual(seen, [['notes', false, true], ['pack', false, true]], 'waiting lane, fast');
   });
   await check('opening the notes or the pack while their build runs promotes it to the waiting-learner lane (walk 4 Nov: 160 s on busy free models)', async () => {
+    process.env.UPLOAD_BUILD_LANE = 'background';
     autobuild.reset();
     const seen = { notes: [], pack: [] };
     let release;
@@ -323,6 +339,7 @@ const call = (n, slots, opts = {}) => pool.callHedged({ kind: 'structured', n },
     await sleep(80);
     assert.deepStrictEqual(seen.notes, [true, false], 'notes: background at start, a waiting learner after opening');
     assert.strictEqual(autobuild.promote(990011, 3), 0, 'nothing left running to promote');
+    delete process.env.UPLOAD_BUILD_LANE;
   });
   await check('uploads: no consent, no model, over the daily cap, or switched off: nothing starts', async () => {
     autobuild.reset();

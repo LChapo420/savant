@@ -228,6 +228,7 @@ router.get('/progress', requireAuth, (req, res) => {
     // `e.track_id` here finds nothing for every enrollment and the whole map comes
     // back empty — which is indistinguishable from "no pages exist", so it fails
     // silently and looks like a working feature with nothing in it.
+    ...(require('../services/speed-levers').clientFlags(req.user.id, {}).testout ? { speed_testout: true } : {}), // eslint-disable-line global-require
     base_lessons: baseLessons.canSeeBaseLessons(req.user)
       ? enrollments.reduce((acc, e) => {
         const levels = baseLessons.levelsFor(e.track.id, e.grade.id);
@@ -288,7 +289,7 @@ const EXPORT_MORE = [
   'material_notes',
   'experiment_arms', 'choice_pairs',
   // (the daily check, services/daily-check.js, adds no collection: its day log and answers sit in the profiles row, boosters.daily and onboarding.known)
-  'footprint_events', 'recruit_applicants',
+  'footprint_events', 'recruit_applicants', 'speed_proof', 'speed_proof_blocks',
 ];
 
 router.get('/account/export', requireAuth, (req, res) => {

@@ -72,31 +72,33 @@ function sniffAudio(buf) {
   return null;
 }
 
-/** 16-bit PCM or 32-bit float WAV to 16 kHz mono Float32Array (nearest-lower linear resample). */
+/** PCM WAV (8, 16, 24 or 32 bit, also the "extensible" header) or 32-bit float WAV to 16 kHz mono Float32Array (linear resample). */
 function decodeWav(buf) {
   let pos = 12; let fmt = null; let data = null;
   while (pos + 8 <= buf.length) {
     const id = buf.slice(pos, pos + 4).toString('latin1');
     const size = buf.readUInt32LE(pos + 4);
     const body = pos + 8;
-    if (id === 'fmt ') fmt = { format: buf.readUInt16LE(body), channels: buf.readUInt16LE(body + 2), rate: buf.readUInt32LE(body + 4), bits: buf.readUInt16LE(body + 14) };
+    if (id === 'fmt ') {
+      if (body + 16 > buf.length) return fail('That WAV file is cut off before its sound starts. Export or download it again.', 'unreadable');
+      fmt = { format: buf.readUInt16LE(body), channels: buf.readUInt16LE(body + 2), rate: buf.readUInt32LE(body + 4), bits: buf.readUInt16LE(body + 14) };
+      if (fmt.format === 0xfffe && size >= 26 && body + 26 <= buf.length) fmt.format = buf.readUInt16LE(body + 24);
+    }
     if (id === 'data') { data = buf.slice(body, Math.min(buf.length, body + size)); break; }
     pos = body + size + (size % 2);
   }
-  if (!fmt || !data) return fail('That WAV file could not be read.', 'unreadable');
-  const pcm16 = fmt.format === 1 && fmt.bits === 16;
+  if (!fmt || !data) return fail('That WAV file could not be read. It may be damaged or cut off.', 'unreadable');
+  const pcm = fmt.format === 1 && [8, 16, 24, 32].includes(fmt.bits);
   const f32 = fmt.format === 3 && fmt.bits === 32;
-  if (!pcm16 && !f32) return fail('Only 16-bit or 32-bit float WAV files are supported. Export it as mp3 or m4a instead.', 'bad_type');
-  if (!fmt.channels || !fmt.rate) return fail('That WAV file could not be read.', 'unreadable');
-  const bytes = pcm16 ? 2 : 4;
+  if (!pcm && !f32) return fail('This kind of WAV file (a compressed or unusual encoding) is not supported. Export it as mp3 or m4a instead.', 'bad_type');
+  if (!fmt.channels || !fmt.rate) return fail('That WAV file could not be read. It may be damaged.', 'unreadable');
+  const bytes = fmt.bits / 8;
   const frames = Math.floor(data.length / (bytes * fmt.channels));
   const mono = new Float32Array(frames);
+  const at = (o) => (f32 ? data.readFloatLE(o) : fmt.bits === 16 ? data.readInt16LE(o) / 32768 : fmt.bits === 8 ? (data[o] - 128) / 128 : fmt.bits === 24 ? data.readIntLE(o, 3) / 8388608 : data.readInt32LE(o) / 2147483648);
   for (let i = 0; i < frames; i++) {
     let sum = 0;
-    for (let c = 0; c < fmt.channels; c++) {
-      const o = (i * fmt.channels + c) * bytes;
-      sum += pcm16 ? data.readInt16LE(o) / 32768 : data.readFloatLE(o);
-    }
+    for (let c = 0; c < fmt.channels; c++) sum += at((i * fmt.channels + c) * bytes);
     mono[i] = sum / fmt.channels;
   }
   if (fmt.rate === SAMPLE_RATE) return { samples: mono };
@@ -198,7 +200,7 @@ function sweepStale() {
 const activeIds = new Set();
 
 function pubJob(j) {
-  return { id: j.id, title: j.title, status: j.status, chunks: j.chunks, done: j.done, percent: j.chunks ? Math.round(100 * j.done / j.chunks) : 0, material_id: j.material_id || null, error: j.error || null };
+  return { id: j.id, title: j.title, what: j.what || 'transcribing', note: j.note || null, warnings: j.warnings || null, status: j.status, chunks: j.chunks, done: j.done, percent: j.chunks ? Math.round(100 * j.done / j.chunks) : 0, material_id: j.material_id || null, error: j.error || null };
 }
 
 function listJobs(userId) {
@@ -236,6 +238,22 @@ function submit(userId, buf, name, deps = {}) {
     db.update(JOBS, row.id, { status: 'failed', error: 'The transcription stopped unexpectedly.' });
     console.warn(`material-audio: ${err.message}`);
   }).then(() => { activeIds.delete(row.id); if (deps.onFinish) deps.onFinish(); });
+  return { job: pubJob(row), finished };
+}
+
+/**
+ * A slow reading of a document (a scan of many pages, a ZIP of files) shown in the same list as recordings, with its progress.
+ * run(onProgress) returns the add result ({ value } or { error, code }) as materials.addFile does. Resolves at once with { job }.
+ */
+function trackReading(userId, title, run) {
+  sweepStale();
+  const row = db.insert(JOBS, { user_id: userId, title: String(title || 'Document').slice(0, 120), what: 'reading', status: 'running', chunks: 0, done: 0, material_id: null, error: null });
+  activeIds.add(row.id);
+  const set = (patch) => { if (db.byId(JOBS, row.id)) db.update(JOBS, row.id, patch); };
+  const finished = Promise.resolve().then(() => run((done, total, note) => set({ chunks: total, done, note: note || null }))).then((out) => {
+    if (out && out.value) { const w = out.value.warnings; set({ status: 'done', material_id: out.value.id, chunks: 1, done: 1, note: null, ...(w && w.length ? { warnings: w } : {}) }); } else set({ status: 'failed', error: (out && out.error) || 'That file could not be read.' });
+    return out;
+  }).catch(() => set({ status: 'failed', error: 'That file could not be read.' })).then(() => { activeIds.delete(row.id); });
   return { job: pubJob(row), finished };
 }
 
@@ -291,10 +309,10 @@ function finish(userId, jobId, text, set) {
   if (!job) return undefined; // the learner deleted the job (or the account) meanwhile: keep nothing
   const added = materials.add(userId, { title: job.title, text, kind: 'audio', pages: null, sourceName: job.source_name });
   if (added.error) return set({ status: 'failed', error: added.error });
-  return set({ status: 'done', material_id: added.value.id });
+  return set({ status: 'done', material_id: added.value.id, ...(added.value.warnings ? { warnings: added.value.warnings } : {}) });
 }
 
 module.exports = {
   SAMPLE_RATE, CHUNK_SECONDS, MAX_SECONDS,
-  sniffAudio, gladiaOn, gladiaLines, decodeWav, decode, chunk, stamp, availability, realTranscriber, submit, listJobs, removeJob,
+  trackReading, sniffAudio, gladiaOn, gladiaLines, decodeWav, decode, chunk, stamp, availability, realTranscriber, submit, listJobs, removeJob,
 };

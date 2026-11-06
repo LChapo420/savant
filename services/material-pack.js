@@ -97,8 +97,8 @@ const VERIFY_SCHEMA = {
  * How much of each aid this learner's pack has, and the block that rebuilds it for them (services/learning-spec.js).
  * The default spec (a learner we know nothing about, or the owner) gives exactly the numbers above and no block.
  */
-function packSpec(userId, topic = null, materialId = null) {
-  const spec = learningSpec.buildSpec(userId, { topic, materialId });
+function packSpec(userId, topic = null) {
+  const spec = learningSpec.buildSpec(userId, topic && typeof topic === 'object' ? { topic: topic.title, materialId: topic.id } : { topic });
   const k = spec.isDefault ? 1 : spec.lesson.retrievalChecks / 3;
   const n = (base, lo, hi) => Math.max(lo, Math.min(hi, Math.round(base * k)));
   return {
@@ -272,7 +272,7 @@ async function build(userId, materialId, opts = {}) {
     const passages = courses.chunk(mat.text);
     const base = { user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, status: 'building', started_at: new Date().toISOString(), summary: [], cards: [], quiz: [], test: [], dropped: {}, models: [], error: null, finished_at: null };
     saved = prev ? db.update('material_packs', prev.id, base) : db.insert('material_packs', base);
-    const ps = packSpec(userId, mat.title, mat.id);
+    const ps = packSpec(userId, mat);
     const ctx = { llm, userId, title: mat.title, block: ps.block, questionBlock: ps.questionBlock, limits: ps.limits, budget: { used: 0, limit: opts.tokenBudget || TOKEN_BUDGET }, unanswered: 0, models: new Set(), dropped: { ungrounded: 0, unsupported: 0, cards: 0, analogies: 0 }, guard: learningSpec.analogyGuard(ps.spec, mat.text) };
     const all = { summary: [], cards: [], quiz: [], test: [] };
     let stopped = false;

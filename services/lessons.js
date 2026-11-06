@@ -254,7 +254,12 @@ function adaptLines(userId, enrollment, level, spec = null) {
   }
 }
 
-async function write({ userId, enrollment, grade, level, urgent }) {
+function write(args) {
+  // eslint-disable-next-line global-require
+  return require('./speed-proof').withSkill(args.userId, args.grade, args.enrollment, args.level, () => writeInner(args));
+}
+
+async function writeInner({ userId, enrollment, grade, level, urgent }) {
   const plan = curriculum.levelPlan(grade, level);
   const skillId = plan.focus;
   const profile = learner.getProfile(userId);

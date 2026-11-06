@@ -46,6 +46,8 @@ const personalize = require('../services/personalize');
 const scorecardHooks = require('../services/scorecard/hooks');
 const learnerRecord = require('../services/learner-record');
 const blockLevels = require('../services/block-levels');
+const lessonLayer = require('../services/lesson-layer');
+const personalizeArm = (userId, where) => { try { return require('../services/personalize').armFor(userId, where).arm; } catch { return null; } }; // eslint-disable-line global-require
 const levelLogs = require('../services/level-logs');
 const assist = require('../services/assist');
 const writeAhead = require('../services/write-ahead');
@@ -53,6 +55,7 @@ const { limit } = require('../utils/rate-limit');
 const crypto = require('crypto');
 
 const router = express.Router();
+router.use('/lessons/:track/:grade/:level', require('../services/speed-proof').lessonContext); // a plain-way skill (speed proof): standard page, no assistant
 
 /**
  * The inline scripts each account was served, per level, so the script route
@@ -387,6 +390,18 @@ router.get('/lessons/:track/:grade/:level/game-frame', requireAuth, async (req, 
  * this level. A lesson is finished by reading it; a practice, quiz or exam level is
  * not, and its control leads into the session instead.
  */
+/** The personal layer over this level's shared lesson, once written: { state: 'pending' | 'ready' | 'none', layer }. Polled by public/js/block-level.js. */
+router.get('/lessons/:track/:grade/:level/layer', requireAuth, (req, res) => {
+  const { track, grade } = req.params;
+  const level = Number(req.params.level);
+  res.set('Cache-Control', 'no-store, must-revalidate');
+  if (!lessonLayer.on() || !Number.isInteger(level)) return res.json({ state: 'none' });
+  const shared = blockLevels.findPlan({ userId: null, trackId: track, gradeId: grade, level });
+  if (!shared) return res.json({ state: 'none' });
+  const got = lessonLayer.get(req.user.id, shared.id);
+  return res.json({ state: got.state, layer: got.layer || null });
+});
+
 router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
   const { track, grade } = req.params;
   const level = Number(req.params.level);
@@ -414,7 +429,22 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
   // again; a level whose plan cannot be written falls through to its page below.
   const blockKind = blockLevels.kindFor(gradeRow, level);
   if ((blockKind === 'lesson' || blockKind === 'retention') && blockLevels.visibleTo(req.user)) {
-    const { plan, writing } = await blockLevels.forLevel({ user: req.user, trackId: track, gradeId: grade, level });
+    // Instant layer (INSTANT_LAYER=on, services/lesson-layer.js, 6 Nov 2026): a tailored learner whose own level is not written yet is opened on the
+    // level's shared lesson (already written and fact-checked) at once; a short personal layer is written in the background and slid over it
+    // (GET .../layer), and the personal level keeps being written for the levels after. Nothing waits on a model here.
+    let instant = null;
+    if (blockKind === 'lesson' && lessonLayer.on() && blockLevels.tailorsFor(req.user) && blockLevels.mayGenerate(req.user) && blockLevels.aiReady()
+      && !blockLevels.findPlan({ userId: req.user.id, trackId: track, gradeId: grade, level })
+      && personalizeArm(req.user.id, { trackId: track, gradeId: grade, level }) !== 'holdout') { // the holdout arm is served the shared lesson as it is
+      const shared = blockLevels.findPlan({ userId: null, trackId: track, gradeId: grade, level });
+      if (shared) {
+        instant = shared;
+        if (blockLevels.sonnetPending(shared)) blockLevels.upgrade(shared).catch(() => {}); // a base level opened on its free check gets its Sonnet check now, as on the other paths
+        blockLevels.ensure({ userId: req.user.id, trackId: track, gradeId: grade, level, tailored: true, tier: 'open' }).catch(() => {});
+        lessonLayer.start({ user: req.user, plan: shared, topic: blockLevels.levelContext(track, grade, level).topic, trackId: track, gradeId: grade, level }).catch(() => {});
+      }
+    }
+    const { plan, writing } = instant ? { plan: instant, writing: false } : await blockLevels.forLevel({ user: req.user, trackId: track, gradeId: grade, level });
     const enrollmentId = enrollmentFor(req.user.id, track, grade);
     const enrollment = enrollmentId ? db.byId('enrollments', enrollmentId) : null;
     if (enrollment) blockLevels.prefetchAhead({ user: req.user, enrollment, grade: gradeRow });
@@ -433,6 +463,7 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
           approach: plan.approach || '',
           model: plan.model || null,
           generated_at: plan.finished_at || null,
+          ...(instant ? { layer: true } : {}),
         },
         basis: 'blocks',
         kind: curriculum.levelKind(level, gradeRow.pathLength, gradeRow),

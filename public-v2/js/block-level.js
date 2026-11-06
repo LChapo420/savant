@@ -191,6 +191,59 @@
     }
 
     renderFinish();
+
+    // The personal layer (services/lesson-layer.js): the shared lesson is already open; the learner's own hook, why and analogies fill the
+    // slot reserved for them as soon as they are written, without moving what is being read (the slot keeps its height; any growth is
+    // taken up by the scroll position). Late or never: the plain lesson stays as it is.
+    if (m.layer) {
+      // The slot sits after the FIRST block (and its help slot), not above the lesson: a learner reading the top of the page (scroll 0, where the
+      // browser does not hold the position when something grows above) is not moved when the layer arrives, since nothing above or inside what they
+      // read changes. Its height is reserved at once (a skeleton the size a layer usually takes), so even the content below does not jump; the
+      // reserve stays after the fill. A slot above the viewport that grows is made up by the scroll position.
+      const slot = document.createElement('div');
+      slot.id = 'block-level-layer';
+      slot.className = 'card card-tight';
+      slot.style.cssText = `margin:0 0 14px; min-height:${window.innerWidth < 600 ? 430 : 290}px; overflow-anchor:none`;
+      slot.innerHTML = '<div class="small muted">Making this lesson yours&hellip;</div>';
+      const first = sections[0];
+      const after = first && first.nextElementSibling && first.nextElementSibling.tagName === 'DIV' && first.nextElementSibling.id !== 'block-level-layer' ? first.nextElementSibling : first;
+      if (after) after.insertAdjacentElement('afterend', slot); else host.appendChild(slot);
+      const esc = App.escapeHtml;
+      // A reader past the slot must not move when it changes size. Chrome's scroll anchoring may already hold them and Safari's does not, so measure
+      // what really moved and correct only that, before the next paint (adding the size change on top moved a phone reader 167 px, and 430 px on a drop).
+      const hold = (change) => {
+        const anchor = slot.nextElementSibling;
+        const past = !!anchor && slot.getBoundingClientRect().top < 0;
+        const y0 = past ? anchor.getBoundingClientRect().top : 0;
+        change();
+        if (!past) return;
+        const settle = () => { const moved = anchor.getBoundingClientRect().top - y0; if (Math.abs(moved) >= 1) window.scrollBy({ top: moved, behavior: 'instant' }); };
+        settle();
+        requestAnimationFrame(settle);
+      };
+      const fill = (layer) => hold(() => {
+        slot.style.minHeight = '0'; // the reserve was for the wait; a short layer doesn't keep an empty card
+        slot.innerHTML = `
+          <div class="tiny muted" style="margin-bottom:6px">For you</div>
+          ${layer.hook ? `<p style="margin:0 0 8px"><strong>${esc(layer.hook)}</strong></p>` : ''}
+          ${layer.why ? `<p class="small" style="margin:0 0 8px">${esc(layer.why)}</p>` : ''}
+          ${(layer.analogies || []).map((a) => `<p class="small" style="margin:0 0 6px"><span class="muted">${esc(a.point)}:</span> ${esc(a.text)}</p>`).join('')}`;
+        slot.setAttribute('data-layer', 'shown');
+        window.__layerShownAt = Date.now();
+      });
+      const drop = () => hold(() => slot.remove());
+      let tries = 0;
+      const tick = async () => {
+        tries += 1;
+        try {
+          const r = await App.api.get(`/api/lessons/${track}/${grade}/${level}/layer`);
+          if (r.state === 'ready' && r.layer) { fill(r.layer); return; }
+          if (r.state === 'none') { drop(); return; }
+        } catch (e) { /* ask again */ }
+        if (tries < 45) setTimeout(tick, tries < 12 ? 600 : 2000); else drop();
+      };
+      setTimeout(tick, 400);
+    }
   }
 
   /** The level is still being written: say so, and ask again until it is ready. */

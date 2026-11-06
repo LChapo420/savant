@@ -388,6 +388,15 @@ async function sessionHook() {
   process.env.ADAPTIVE_TEACHING = 'off';
 }
 
+// Bug sweep 6 Nov 2026: the dashboard asks for a grade's units 120 times a request, and each ask used to stat two files (~250 ms).
+{
+  const up = require('../services/unit-placement');
+  const realStat = fs.statSync; let stats = 0;
+  fs.statSync = (...a) => { stats++; return realStat(...a); };
+  try { for (let i = 0; i < 200; i++) up.unitsFor('math', 'add_and_subtract_within_20'); } finally { fs.statSync = realStat; }
+  check('unit-placement: 200 unit lookups read the bank file modification times at most a few times, not 400', stats <= 6, stats);
+}
+
 sessionHook().catch((err) => { failures++; console.log(`  FAIL session hook threw: ${err.stack || err.message}`); }).finally(() => {
   try { fs.unlinkSync(tmp); } catch { /* already gone */ }
   console.log(failures ? `\n${failures} FAILED` : '\nall passed');

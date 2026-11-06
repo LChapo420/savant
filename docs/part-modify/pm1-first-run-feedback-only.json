@@ -1,0 +1,316 @@
+{
+ "tag": "pm1",
+ "seed": 6106,
+ "n": 24,
+ "generated_at": "2026-11-06T08:40:32.307Z",
+ "writer": "ZeroGPU GLM-5.3 Flash",
+ "judges": [
+  {
+   "id": "zerogpu-glm",
+   "model": "z-ai/glm-5.3-flash",
+   "family": "glm"
+  },
+  {
+   "id": "coral-deepseek",
+   "model": "deepseek-v4.1-flash",
+   "family": "deepseek"
+  },
+  {
+   "id": "gonka-deepseek",
+   "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+   "family": "deepseek"
+  }
+ ],
+ "simulated": true,
+ "parts": {
+  "feedback": {
+   "part": "feedback",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 108,
+      "verdicts": 108,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 95,
+      "share": 0.8796296296296297,
+      "p_above_chance": 7.32457002463701e-17
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "coral-deepseek": {
+       "real": 0.8888888888888888,
+       "swap_fooled": null,
+       "control": null
+      },
+      "zerogpu-glm": {
+       "real": 0.9166666666666666,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": 0.8333333333333334,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": 0.9166666666666666,
+      "deepseek": 0.8611111111111112
+     },
+     "individuals": {
+      "n": 21,
+      "worst_1pct": 0.3333333333333333,
+      "worst_5pct": 0.41666666666666663,
+      "worst_10pct": 0.4444444444444444,
+      "lowest": [
+       {
+        "L": "x6106-4",
+        "share": 0.3333333333333333,
+        "n": 6
+       },
+       {
+        "L": "x6106-7",
+        "share": 0.5,
+        "n": 6
+       },
+       {
+        "L": "x6106-22",
+        "share": 0.5,
+        "n": 6
+       }
+      ],
+      "below_half": 1
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 9,
+       "share": 0.8888888888888888
+      },
+      "contradict": {
+       "n": 27,
+       "share": 0.8518518518518519
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "tail_lo": {
+       "n": 12,
+       "share": 1
+      },
+      "random": {
+       "n": 21,
+       "share": 0.9523809523809523
+      },
+      "age_young": {
+       "n": 12,
+       "share": 0.75
+      },
+      "ell": {
+       "n": 12,
+       "share": 1
+      },
+      "age_old": {
+       "n": 3,
+       "share": 1
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 93,
+      "verdicts": 93,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 60,
+      "share": 0.6451612903225806,
+      "p_above_chance": 0.0033475090671087706
+     },
+     "swap_fooled": {
+      "n": 93,
+      "verdicts": 88,
+      "empty": 5,
+      "same": 0,
+      "picks_vL": 35,
+      "share": 0.3977272727272727
+     },
+     "control_picks_vL": {
+      "n": 93,
+      "verdicts": 89,
+      "empty": 4,
+      "same": 0,
+      "picks_vL": 37,
+      "share": 0.4157303370786517
+     },
+     "per_judge": {
+      "coral-deepseek": {
+       "real": 0.6129032258064516,
+       "swap_fooled": 0.4074074074074074,
+       "control": 0.42857142857142855
+      },
+      "zerogpu-glm": {
+       "real": 0.7419354838709677,
+       "swap_fooled": 0.4,
+       "control": 0.36666666666666664
+      },
+      "gonka-deepseek": {
+       "real": 0.5806451612903226,
+       "swap_fooled": 0.3870967741935484,
+       "control": 0.45161290322580644
+      }
+     },
+     "by_family": {
+      "glm": 0.7419354838709677,
+      "deepseek": 0.5967741935483871
+     },
+     "individuals": {
+      "n": 20,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0.08333333333333333,
+      "lowest": [
+       {
+        "L": "x6106-19",
+        "share": 0,
+        "n": 6
+       },
+       {
+        "L": "x6106-4",
+        "share": 0.16666666666666666,
+        "n": 6
+       },
+       {
+        "L": "x6106-7",
+        "share": 0.16666666666666666,
+        "n": 6
+       }
+      ],
+      "below_half": 3
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 9,
+       "share": 0.7777777777777778
+      },
+      "contradict": {
+       "n": 21,
+       "share": 0.7142857142857143
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.3333333333333333
+      },
+      "tail_lo": {
+       "n": 9,
+       "share": 1
+      },
+      "random": {
+       "n": 18,
+       "share": 0.7222222222222222
+      },
+      "age_young": {
+       "n": 9,
+       "share": 0.4444444444444444
+      },
+      "ell": {
+       "n": 12,
+       "share": 0.4166666666666667
+      },
+      "age_old": {
+       "n": 3,
+       "share": 1
+      }
+     }
+    }
+   },
+   "facts": {
+    "checked": 48,
+    "passed": 36,
+    "declined": 12,
+    "same_yes": 4,
+    "same_asked": 10,
+    "coverage_fail": 0
+   },
+   "goal": null,
+   "sources": 48,
+   "declined": 12,
+   "trials": 387
+  }
+ },
+ "samples": {
+  "feedback": [
+   {
+    "learner": "x6106-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: crochet, roller derby, bird song recording. Dislikes (never wanted): competitive framing, abstract symbols without a picture.",
+    "stored": "Taking one rocket away from five leaves four, so the next number word is four.",
+    "shaped": "It can feel natural to reach for six, yet that word would fit only if a rocket were added. Like undoing a single crochet stitch, the backward count steps down from five to four.",
+    "other_learner": "Counting backward means each number word drops by one. Taking one rocket away from five leaves four, so the next word is four. Like a back step in dancing, go down one number each time a rocket leaves.",
+    "diff": {
+     "stored_words": 15,
+     "shaped_words": 34,
+     "new_words": 28,
+     "dropped_words": 9
+    }
+   },
+   {
+    "learner": "x6106-2",
+    "kind": "contradict",
+    "profile": "Age 54. Language: English. Interests: taxidermy curiosity, drone racing. Dislikes (never wanted): being rushed, cute mascots.",
+    "stored": "Re- means again, and build means to make or put together, so rebuild means to make or put together again.",
+    "shaped": "Re- means again, and build means to make or put together, so rebuild means to make or put together again. Unlock looks tempting because it also starts with a prefix, but un- means to undo, not to do again. Check the prefix meaning first, and rebuild is the only fit.",
+    "other_learner": "Unlock is sneaky, but un- means undo. Re- means again; rebuild means to build again. Think of fixing a bike a second time.",
+    "diff": {
+     "stored_words": 20,
+     "shaped_words": 50,
+     "new_words": 24,
+     "dropped_words": 0
+    }
+   },
+   {
+    "learner": "x6106-4",
+    "kind": "tail_both",
+    "profile": "Age 61. Language: English. Interests: anime drawing. Dislikes (never wanted): being praised for easy things.",
+    "stored": "An array with 4 rows of 7 squares contains 4 × 7 = 28 unit squares.",
+    "shaped": "An array is simply rows times columns, so 4 rows of 7 squares gives 4 × 7 = 28 unit squares. Picture it like laying out manga panels in a tidy grid, one row at a time. Next time, just multiply the number of rows by the squares in each row, and the total comes right out.",
+    "other_learner": "A tempting move is adding 4 + 7 to get 11, but that only counts the two numbers once. Each of the 4 rows holds 7 squares, so think 4 groups of 7: 4 × 7 = 28. It's like a monster truck rally — count the whole row of cars, not just one spot.",
+    "diff": {
+     "stored_words": 16,
+     "shaped_words": 57,
+     "new_words": 39,
+     "dropped_words": 2
+    }
+   },
+   {
+    "learner": "x6106-4",
+    "kind": "tail_both",
+    "profile": "Age 61. Language: English. Interests: anime drawing. Dislikes (never wanted): being praised for easy things.",
+    "stored": "Counting each clap in order gives 1, 2, 3, 4, so Zoe makes 4 claps.",
+    "shaped": "Counting each clap in order gives 1, 2, 3, 4, so Zoe makes 4 claps. It helps to let every clap land before moving to the next, the way an animator draws each frame in sequence. Next time, count slowly through each action in turn, and the total will come together naturally.",
+    "other_learner": "It's easy to count the three clapping moments and land on 3, but some moments hold more than one clap. Here's the friendly trick: count every single clap in order, 1, 2, 3, 4, so Zoe makes 4 claps.",
+    "diff": {
+     "stored_words": 15,
+     "shaped_words": 52,
+     "new_words": 32,
+     "dropped_words": 0
+    }
+   }
+  ]
+ }
+}

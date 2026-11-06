@@ -70,8 +70,14 @@ function holdoutBase(userOrId) {
  * "tailored vs base" compares the product with and without tailoring. Checks that are not tailoring (pass marks and skip rules,
  * the streak grace, the break nudge) ask `ownerOnly` instead, so the base arm keeps them: nobody in it gets a worse product.
  */
-function ownerBase(userOrId) {
-  return ownerOnly(userOrId) || holdoutBase(userOrId);
+function ownerBase(userOrId, skillId) {
+  if (ownerOnly(userOrId) || holdoutBase(userOrId)) return true;
+  // The speed proof's optional plain-way arm (services/speed-proof.js): a skill drawn for it is taught as the base product, for that skill only.
+  try { if (require('../services/speed-proof').plainNowFor(userOrId)) return true; } catch { /* not loaded */ } // eslint-disable-line global-require
+  if (skillId) {
+    try { const u = userOf(userOrId); return !!(u && require('../services/speed-proof').normalFor(u.id, skillId)); } catch { return false; } // eslint-disable-line global-require
+  }
+  return false;
 }
 
 /**

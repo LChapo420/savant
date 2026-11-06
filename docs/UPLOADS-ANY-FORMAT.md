@@ -233,3 +233,168 @@ Findings:
 - Builds ended "partial" in most runs (a gated or question check missed after one revision); the first attempt with xKiro/MiniMax and Munito failed (their daily
   free quotas were spent), so those numbers are discarded, not reported.
 - Spend: Gonka about $1.7 (ledger delta, other users included), NVIDIA and Gemini free tiers $0; no Anthropic key, Modelflare or Standard Compute.
+
+## 10. Shorter lessons that keep the facts (4 Nov 2026; AI-JUDGED, SIMULATED; 2 builds per document, 10 documents, same exam and judges as section 9)
+
+Rows: `docs/uploads-proof-big-results-short-rows.json` (20 builds). Causes found in section 9 and what was changed in `services/course-builder.js`:
+
+- **A 90-word floor per skill and a cap measured on whole passages**: skills share passages, so each got the whole passage's words (and 4 to 9 skills x 90 words
+  exceeded a short source). Now the budget is half the source's words, shared out by the skill's own share of each passage, with a 25-word floor; paragraphs
+  and key points count together; an over-budget lesson (1.3x) is sent back once to be cut with every fact kept (`material_shorten`).
+- **Plain facts dropped**: the writer now sees every key point of its passages (weights 1 to 5; weight only sets how many words, never whether it is kept), and the
+  instruction says every name, number, date, term and cause stays as a short clause.
+- **Builds ending "partial"**: a skill the model never answered (busy or timed out) is asked up to twice more before the build gives up on it. Most builds
+  ended "partial" before; 11 of 20 now end "ready" (the rest: one missed gated point, or a skill that stayed unanswered).
+- One skill per 700 characters (was 250): fewer, broader skills, so less repeated framing.
+
+Result (builder Gonka DeepSeek V4 Flash, judges A = Gonka GLM 5.3 Flash and B = Gemini free tier; judge B often returned nothing, so its cells have fewer answers):
+
+| | before (section 9) | after |
+|---|---|---|
+| Lesson words / source words | 2.27x (7 emphasised docs), 0.95-1.22x (3 plain) | 0.60x all 20 builds (one build 1.54x: Strunk rep 2), max otherwise 0.88x |
+| Emphasised answerable A / B (7 docs) | 96% / 92% | 89% / 89% (BELOW before; 8-question exams, 14 builds: one or two answers) |
+| Plain answerable A / B, 7 emphasised docs | 66% / 57% | 63% / 40% (NOT improved) |
+| Plain answerable A / B, 3 documents without emphasis | 58% / 58% | 88% / 81% |
+| Builds "ready" | 3 of 12 (about 1 in 4) | 11 of 20 |
+
+Honest reading: length now falls well under the source and plain facts rose a lot where nothing is stressed, but on the emphasised documents the shorter lesson answers
+slightly fewer emphasised and no more plain questions than before, so the goal "emphasised must not drop" is NOT met. A trial with a 0.65 share (not completed, stopped
+early) came out near 0.66-0.86x with no better plain-fact answers (tides 0%), so the cap was put back to 0.5. Open: a deterministic sweep that checks every
+source sentence with a number, a name or a definition against the lesson, and a measurement with more than 2 builds and more than 4 plain questions per document.
+Spend: Gonka about $1.0 (ledger delta), NVIDIA and Gemini free tiers $0; no Anthropic key, Standard Compute or Munito.
+
+## 11. Fact sweep, stronger judge, bigger exam, before re-measured (4 Nov 2026; AI-JUDGED, SIMULATED; NOT PASSED)
+
+Added to `services/course-builder.js`: after the lessons, every source sentence with a number, a name, a definition or a stated cause is checked against its skill's
+lesson (words of the lesson, key points and question text, not the question quotes); what is missing is added by one model call per skill in at most 18 words each,
+each addition kept only if it stays inside the missing sentences' own words, up to 0.8x the source's words in all (`SWEEP_CAP`); the writer's own budget is 0.55x.
+Measurement (`scripts/uploads-proof-big.js`, exam in `docs/uploads-proof-big-exam2.json`: up to 8 emphasised and 8 plain questions per document, 148 questions,
+written from the SOURCE by NVIDIA nemotron): builder Gonka DeepSeek V4 Flash; judge A Gonka GLM 5.3 Flash (one answer call plus one grading call per question);
+judge B Lyceum GLM 5.3 (`z-ai/glm-5.3`), ONE call per document and material that answers every question and then compares with the reference (the stronger judge
+costs about 2 cents a call, so per-question calls would not fit the $3 cap; the single-call form is less strict). BEFORE was re-measured with the same judges and exam
+by running main's course builder (commit 07e21f3) in the same script. Rows: `docs/uploads-proof-big-results-sweep-rows.json` (before 20 builds, after 19: one OCW build
+failed).
+
+| | before | after |
+|---|---|---|
+| Lesson words / source words (all builds) | 1.96x (max 3.99x) | 0.69x (max 0.90x) |
+| Emphasised answerable A / B (7 docs) | 92% / 95% | 89% / 93% |
+| Plain answerable A / B, 7 emphasised docs | 64% / 68% | 67% / 65% |
+| Plain answerable A / B, 3 docs without emphasis | 76% / 79% | 85% / 81% |
+| Builds "ready" | 11 of 20 | 12 of 19 |
+
+Reading: the length goal is met on every build. Emphasised coverage is 2 to 3 points BELOW the before figure on both judges (13 builds, up to 8 questions each: a handful of
+answers, so it may be noise, but the pass rule was "at or above"), and plain facts rose on three of four judge/group cells and fell 3 points on one. The pass rule is
+therefore NOT met and the branch stays unmerged. Not tried: spending more words than 0.8x, or a sweep that also re-asks the judge. Spend: Gonka and Lyceum (about 60 judge calls
+for B, roughly $1 to $2) from the shared ledgers, NVIDIA free; no Anthropic key, Standard Compute or Munito.
+
+## 12. The whole upload path driven with files (6 Nov 2026; MEASURED, synthetic fixtures; `node scripts/uploads-drive.js`)
+
+77 cases through `materials.addFile`, the recording and video jobs (real ffmpeg, real Whisper tiny.en, real tesseract.js, Windows speech voice for the spoken fixtures): all 16 text and
+Office formats, 6 picture types, a scanned PDF, a mixed ZIP, truncated / byte-flipped / header-only copies of 9 formats, empty, one byte, whitespace, 50 characters, random bytes, a
+program header, audio and video bytes sent to the document box, a blank picture, 700 KB and 5 MB of text, 21 MB, and for recordings: empty, text, a tone with no speech, a cut-off WAV,
+speech as WAV and MP3, a cut-off MP3, and for video: with speech, with no sound track, cut off, junk. Found and fixed (before: what a learner saw):
+
+| Case | Before | Now |
+|---|---|---|
+| Plain text in Windows-1252 (an old Word "save as text") or UTF-16 | refused as "unknown type" with the long format list | read; a note says it was read as Windows-1252 |
+| A program or data file starting with "MZ" and mostly control bytes | "too little text" (it passed as text) | refused as an unknown type |
+| A DOCX/PPTX/XLSX/ODT/EPUB cut off (download stopped) | "That ZIP could not be opened, or holds too many files" | "looks damaged or cut off (the end of it is missing). Download or export it again" |
+| An RTF cut off | read silently, half the document, no word | read, with a note that it ends without its closing bracket |
+| A scanned PDF of more than 40 pages | the first 40 pages read, the rest dropped silently | read, with "Only the first 40 of N pages were read. Upload the rest as a second file" |
+| Scanned pages OCR could not read, or pages with no picture | dropped silently | counted and listed in a note ("page 3, 7") |
+| A text PDF whose pages 3 and 9 are pictures of text | those pages silently missing | note: pages 3 and 9 had no readable text, with what to do |
+| Files of a ZIP that were skipped (programs, over 20 MB, unreadable, past 40) | kept in the row but never shown | listed in a note with the reason for each |
+| A recording (WAV, MP3, M4A, WebM, Ogg) or a video put in the document box | "unknown type" | sent to the recording / video route automatically (a job with progress), or a plain refusal that names the transcriber |
+| A WAV cut off before its first sound, or 24-bit / 8-bit / "extensible" WAV | "The transcription stopped unexpectedly" (a thrown offset error), or "only 16-bit supported" | a plain "cut off" message; 8, 16, 24 and 32-bit PCM and float WAV are read |
+| A 40-page scan: one request open for minutes, no progress | the page sat on "Uploading and reading it..." | after 6 s the request returns a job; the list shows "reading (page 12), 30%"; the result lands in the list; the tab can be closed |
+| A body over 20 MB | HTTP 500, "Something went wrong on our side" | a JSON 413 "too big", the limits named |
+| Spoken or photographed text that is not English (Whisper tiny.en and tesseract eng read English only) | garbage text, no warning | a note: this does not look like English; paste the text for other languages. The recording box now says English only |
+| OCR worker started per page | about 1 s extra per page | one worker is reused and released 8 s after the last page |
+
+Not fixable here and said so: a truncated MP3 or byte flips inside a legacy DOC or RTF body are not detectable (the decoder returns the part it has: the cut MP3 read 40% of the
+speech and gave no sign), and tesseract.js is an optional dependency that this folder's `node_modules` lacks (the picture and scan rows ran with it on `NODE_PATH` and its English
+data from `data/models/tesseract`): on a server without it, pictures and scans are refused with "This server cannot read text from images yet" (`npm install` installs it).
+Results from this run: 77 of 77 cases as intended; timings 0.0 to 0.6 s for text formats, 2.4 to 3.3 s per picture, 7.7 s for a 2-page scan, 12.5 s for 95 s of speech.
+
+## 13. Held-out test of short mode, a retention-goal fix, and upload build speed (6 Nov 2026; AI-JUDGED, SIMULATED; GATE NOT PASSED, short mode stays OFF)
+
+Short mode (section 10 and 11 code) is merged behind `UPLOAD_SHORT=1`, default off; with it off the builder is the full one as before. This round added: the sweep also checks every point
+the material stresses (weight 2 or more), `UPLOAD_SWEEP_CAP` for proofs, and then measured on six NEW documents (`docs/uploads-heldout-docs.json`, written after the code was frozen by
+NVIDIA nemotron, Gonka GLM 5.3 Flash and Gemini; formats docx, pdf, md, html, epub, odt; the builder never saw them). Builder Gonka DeepSeek V4 Flash. Exam written from the source by
+nemotron (up to 8 emphasised and 10 plain questions per document). Two judge families, neither the builder's: Z = Gonka GLM 5.3 Flash, G = Mistral Large via xKiro. Rows:
+`docs/uploads-heldout-results*.json`; `node scripts/uploads-heldout-proof.js report`. Partial run: 19 of 24 planned builds (a second rep on some documents did not finish; the processes were stopped).
+
+| | full (builder as it was) | short |
+|---|---|---|
+| builds, "ready" | 11, 8 | 8, 8 |
+| lesson words / source words | 2.71x (max 4.37x) | 0.81x (max 1.09x) |
+| emphasised answerable Z / G | 80% / 78% | 88% / 82% |
+| plain answerable Z / G | 91% / 89% | 78% / 76% |
+| all questions Z / G | 86% / 84% | 79% / 77% |
+| paired per document, short minus full, plain, Z | | mean -18 points, worst document -40 (h2, h5) |
+| paired, emphasised, Z | | mean +8, worst document -14 |
+
+Reading: the length goal is met (0.81x against 2.7x). The gate (coverage of emphasised AND plain at or above the full version, on held-out documents) is NOT met: plain facts fall 18
+points on both judges, worst on the history narrative with no emphasis (-40) and the invented rule-book with specifics that cannot be known from general knowledge (-40). Emphasised
+coverage rose but on 1 to 7 questions a document, with the full arm's emphasised score pulled down by builds that ended partial with one skill (h6 full r1: 1 skill). So the sweep fixed the
+emphasised side and the plain side got worse. Not tried: a sweep that covers every sentence with a stated fact rather than 12 to 16 per skill, or a 1.0x cap (still half the full length).
+Emphasised questions per document: h1 5, h2 0, h3 7, h4 1, h5 1, h6 6.
+
+**Personalisation on extreme learners: not proven.** `scripts/uploads-heldout-proof.js learners` builds one course per random extreme learner (traits at the tails, odd interests, ages 9 to
+61, ESL, test date) and has both families check each trait and list invented facts. Only 1 learner finished before the free and cheap slots saturated (full builder; 2 traits, age 9: Z found
+1 of 4 traits followed, G 2 of 4; invented claims 1 and 3). That is one learner, not a result, and it points at weak following; the run is the tool for the next round.
+
+**What was fixed for personalisation:** a test date set as a material's retention goal now makes every part built from it (lesson, questions, notes, podcast, pack, practice test)
+a "prepare for a test" spec (`services/learning-spec.js`, `materialId`); before, the date changed only the review schedule. Language: the product is English only for launch
+(PRODUCT-DECISIONS); the reading level and "English is a second language" were already in the spec. `services/study-goal.js` is another agent's and was not touched.
+
+**Upload build speed (bug sweep: notes 261 s, pack 135 s, path 421 s+ on saturated free slots).** Cause: uploads auto-built notes and the pack as BACKGROUND work, which never uses a paid
+slot and leaves one free permit, so on busy free models it waited minutes while the learner was already looking at the page. Fix (`services/material-autobuild.js`): the build runs in the
+WAITING lane on the fast lane (`pool.runForeground(..., { fast: true })`): a cleared learner's calls go to the paid fast slots first (existing consent clearance), any other call overflows
+to the cheapest paid slot after 8 s, free slots answer when they can. `UPLOAD_BUILD_LANE=background` restores the old behaviour. `services/pool.js` was not edited.
+Measured through the real pool with a simulated learner (`scripts/uploads-speed.js`), while six proof processes were loading the same providers: notes 59 s background (nemotron) -> 11 s
+waiting (served by Gonka GLM 5.3 Flash, paid, a few tenths of a cent); pack over 170 s (killed) -> 130 s. One run each: indicative, not a distribution. The learning-path build was not
+re-timed here. Progress for slow reading of scans and ZIPs is in section 12.
+
+## 14. Round 2 (6 Nov 2026; AI-JUDGED, SIMULATED): why full mode is 2.7x, a better plain-fact sweep, the path build, extreme learners
+
+**Why full mode is 2.7x the source (max 4.4x).** Not one cause: (1) one skill per 250 characters, so 8 to 15 skills for a 400 to 650-word handout; (2) a 90-word floor per skill, so
+the floor alone is 700 to 1,350 words; (3) every skill writes 2 to 5 paragraphs plus up to 6 key points that restate them, and each skill re-frames the topic; (4) the 0.75 cap is
+measured on whole passages that several skills share. Short mode removed all four and then lost plain facts (section 13).
+
+**Sweep v2/v3 (`UPLOAD_SWEEP_V2=1`, with `UPLOAD_SWEEP_CAP`, `UPLOAD_SWEEP_NEED`, in short mode only).** Every source sentence is checked, not only those with a number or name; what the model's
+short additions still leave missing is added as the source's own sentence, stressed ones first, until the cap. Held-out gate, same six documents and exam as section 13, builder Gonka DeepSeek
+V4 Flash, judges Z = Gonka GLM 5.3 Flash and N = NVIDIA nemotron (the xKiro Mistral judge hit its daily allowance), 1 build per arm and document, generated text now stored in the rows
+(`docs/uploads-heldout-r2/`). Emphasised exam questions per document: h1 5, h2 0, h3 7, h4 1, h5 1, h6 6.
+
+| arm | lesson words / source | emphasised Z / N | plain Z / N | all questions Z / N | ready |
+|---|---|---|---|---|---|
+| full | 2.70x (max 4.17) | 81% / 77% | 93% / 86% | 88% / 81% | 5 of 6 |
+| v2 (need 0.6, cap 1.0) | 0.91x | 93% / 90% | 82% / 82% | 84% / 83% | 5 of 6 |
+| v3 (need 0.85, cap 1.15) | 1.13x (max 1.20) | 87% / 90% | 88% / 87% | 87% / 87% | 5 of 6 |
+
+v3 against full, paired per document: plain Z -5 points (worst document h4: -37.5), plain N +1, emphasised +5 / +10. The gate (plain AND emphasised at or above full on held-out documents) is NOT met:
+plain on judge Z is 5 points under and one document, h4 (dense pharmacology notes, one partial build), is 25 to 37 under. The length is 2.4x shorter than full. `UPLOAD_SHORT` stays OFF. Not tried: a
+cap above 1.15, a second rep to separate h4 from a bad draw.
+
+**Extreme-learner personalisation (23 learners, 4 held-out seeds 7201 to 7204; half have a test-date goal).** Builder ZeroGPU GLM-5.3 Flash; judges Coral DeepSeek V4.1 Flash (C) and NVIDIA nemotron (N),
+6,000 output tokens each; each judge checks every stated trait against the course and lists invented facts. Traits at the tails, odd interests, ages 9 to 61, ESL.
+
+| | judge C | judge N |
+|---|---|---|
+| learners judged | 23 | 22 |
+| traits followed, mean | 62% | 66% |
+| worst 1% / 5% / 10% of learners | 14% / 29% / 40% | 14% / 40% / 40% |
+| test-date learners / others | 58% / 68% | 68% / 63% |
+| invented facts per course | 5.2 (none in 0 courses) | 1.1 (none in 13) |
+
+Most missed: "needs a worked example for everything" (19 misses), "anxious when tested: no test language" (11), age (9 and 9), "needs very plain words" (8), "cannot take dense text" (6), "wants the shortest version" (6).
+Courses for these learners are 5.0x the source's words on average, so the length traits are not met. This is a failing result, not a proof: the course follows its learner about two times in three, and the
+brevity learner gets a longer course. The next lever is the lesson prompt block (it is present and being ignored) and the brevity cap (the learner's `skillShare` only changes how many skills, not the words).
+
+**The learning-path build.** Cause of the 421 s+ wait: `material_lesson`, `material_shorten`, `material_sweep` and `material_podcast` had no `allow` list in `config/model-lineup.json` (only notes, pack,
+outline and verify did), so a learner waiting on a lesson could not overflow to a paid slot and queued behind saturated free models. They now carry the same cheap list as notes. The course route also
+runs in the waiting lane, and the page shows "Start studying the first N now" as soon as one skill exists (the study map already accepted a building course). Timed once through the real pool
+(`scripts/uploads-speed.js waiting course`, simulated learner, 440-word source, six proof processes finishing alongside): before, outline at 46 s and no skill after 12 minutes (stopped);
+after, outline 43 s, first skill 139 s, all 7 skills ready at 304 s. One run each, indicative.

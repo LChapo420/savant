@@ -43,6 +43,7 @@ const COLLECTIONS = [
   'subject_placements',      // a learner's walk up a whole subject, and the percentages it produced
   'game_payloads',           // the questions for a game level: written once, validated, kept
   'block_plans',             // a block level's layout and content: per learner, or shared per level
+  'lesson_layers',           // the personal layer over a shared lesson (services/lesson-layer.js): text only, per learner and plan
   'assist_chats',            // chat assist on a block, a game question or a check: every turn the learner wrote
   'level_logs',              // what a learner did inside a level that has no questions of its own to record it
   'chess_ratings',           // chess puzzle trainer: one per learner, Glicko-2 rating and rush best (content/chess-trainer.js)
@@ -84,6 +85,8 @@ const COLLECTIONS = [
   'experiment_arms',         // which teaching experiment (stat and arm) a learner's level was given, stored the first time (services/personalize.js)
   'choice_pairs',            // the two short versions of an explanation a "which is clearer?" choice shows, written for one learner (services/boosters.js choice)
   'reading_checks',          // the reading check: one per offer a learner took, declined or has open, its answers and result (services/reading-check.js), private to them
+  'speed_proof',             // the speed proof: one row per real learner and skill: arm (Savant or plain), minutes to understanding, delayed checks at 1/7/30 days and the chosen horizon (services/speed-proof.js)
+  'speed_proof_blocks',      // the speed proof's per-learner randomisation blocks for the optional plain-way arm (services/speed-proof.js)
   'beta_blocks',             // the beta comparison's randomisation: one permuted block of arm slots per age band and subject, used in order (services/beta-arm.js)
   'catchup_units',           // catch-up for math/english/reading: one per learner, subject and target grade: unit check, blocks, re-check (services/catchup-units.js)
   'act_guests',              // the free ACT level check: one per visitor who answered the 13+ question with yes; token hash, ref, channel, the stored estimate. No personal data until they apply (services/act-check.js)

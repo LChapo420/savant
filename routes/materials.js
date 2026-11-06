@@ -150,12 +150,38 @@ router.delete('/audio/:id', requireAuth, (req, res) => {
   res.json({ jobs: audio.listJobs(req.user.id) });
 });
 
+// A file that turns out to be a recording is sent to the recording route, and a slow reading (a scan of many pages, a big ZIP)
+// carries on in the background with a progress line, so nothing waits on an open request and nothing is a silent wait.
+const SLOW_AFTER_MS = Number(process.env.UPLOAD_SLOW_MS) || 6000;
 router.post('/', requireAuth, limit('materials-upload', 12, 60 * 60 * 1000), rawBody, async (req, res) => {
   if (!Buffer.isBuffer(req.body) || !req.body.length) return res.status(400).json({ error: 'Choose a file to upload.', code: 'empty' });
+  const name = String(req.query.name || '');
+  if (audio.sniffAudio(req.body)) {
+    const a = audio.submit(req.user.id, req.body, name, { language: langOf(req) });
+    if (a.error) return refuse(res, a);
+    a.finished.catch(() => {});
+    return res.status(202).json({ job: a.job, jobs: audio.listJobs(req.user.id) });
+  }
+  const vid = require('../services/material-video'); // eslint-disable-line global-require
+  if (vid.sniffVideo(req.body)) {
+    let v;
+    try { v = await vid.submitVideo(req.user.id, req.body, name, { deps: { language: langOf(req) } }); } catch (err) { console.error('materials video:', err.message); return res.status(400).json({ error: 'That video could not be read.', code: 'unreadable' }); }
+    if (v.error) return refuse(res, v);
+    return res.status(202).json({ job: v.job, jobs: audio.listJobs(req.user.id) });
+  }
+  let progress = () => {};
+  const work = materials.addFile(req.user.id, req.body, name, { onProgress: (...a) => progress(...a) });
   let out;
-  try { out = await materials.addFile(req.user.id, req.body, String(req.query.name || '')); } catch (err) {
+  try {
+    out = await Promise.race([work, new Promise((r) => { const t = setTimeout(() => r('slow'), SLOW_AFTER_MS); t.unref(); })]);
+  } catch (err) {
     console.error('materials upload:', err.message);
     return res.status(400).json({ error: 'That file could not be read.', code: 'unreadable' });
+  }
+  if (out === 'slow') {
+    const t = audio.trackReading(req.user.id, name.replace(/\.[A-Za-z0-9]{1,5}$/, '') || 'Document', (onProgress) => { progress = onProgress; return work; });
+    t.finished.then((o) => { if (o && o.value) autoBuild(req.user.id, o.value); }).catch(() => {});
+    return res.status(202).json({ job: t.job, jobs: audio.listJobs(req.user.id) });
   }
   if (out.error) return refuse(res, out);
   autoBuild(req.user.id, out.value);
@@ -183,12 +209,14 @@ router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1
   const existing = courses.get(userId, m.id);
   if (existing && existing.status === 'ready' && existing.version === courses.VERSION) return res.json({ course: courses.summary(existing), cached: true });
   if (courses.inflight.has(`${userId}:${m.id}`)) return res.status(202).json({ started: true, busy: true });
-  queueBuild(userId, `course:${m.id}`, () => courses.build(userId, m.id, {}).then((out) => { if (out.error && out.code !== 'busy') console.warn(`course-builder: ${out.code}`); }));
+  // The learner is waiting on this: the waiting lane on the fast lane (paid fast slots first for a cleared learner, 8 s overflow to a paid slot otherwise).
+  queueBuild(userId, `course:${m.id}`, () => require('../services/material-autobuild').runWaiting(() => courses.build(userId, m.id, {})).then((out) => { if (out.error && out.code !== 'busy') console.warn(`course-builder: ${out.code}`); }));
   res.status(202).json({ started: true });
 });
 
 router.get('/:id/course', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
+  require('../services/part-modify').maybeRefreshCourse(req.user.id, req.params.id); // eslint-disable-line global-require
   res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `course:${Number(req.params.id)}`) });
 });
 

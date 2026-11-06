@@ -78,16 +78,21 @@ const UNIT_ROUND = Number(process.env.UNIT_ROUND || 0.15);
 /** Where a unit's question sits: most of the way through its unit. */
 const UNIT_AT = 0.75;
 
+/** How long a bank or calibration file is trusted before its modification time is read again. STAT_EVERY_MS=0 reads every time. */
+const STAT_EVERY_MS = Number(process.env.UNIT_STAT_EVERY_MS === undefined ? 1000 : process.env.UNIT_STAT_EVERY_MS);
 const banks = new Map();
 function bankFor(trackId) {
+  const hit = banks.get(trackId);
+  // The file is looked at again at most every STAT_EVERY_MS: the dashboard calls this once per unit per enrollment
+  // (120 times a request), and two stat calls each cost the page ~250 ms on Windows (bug sweep, 6 Nov 2026).
+  if (hit && Date.now() - hit.checked < STAT_EVERY_MS) return hit.data;
   const file = path.join(BANK_DIR, `${trackId}.json`);
   let stamp = 0;
   try { stamp = fs.statSync(file).mtimeMs; } catch { return null; }
-  const hit = banks.get(trackId);
-  if (hit && hit.stamp === stamp) return hit.data;
+  if (hit && hit.stamp === stamp) { hit.checked = Date.now(); return hit.data; }
   let data = null;
   try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch { data = null; }
-  banks.set(trackId, { stamp, data });
+  banks.set(trackId, { stamp, data, checked: Date.now() });
   return data;
 }
 
@@ -100,14 +105,15 @@ function bankFor(trackId) {
  */
 const calibrations = new Map();
 function calibrationFor(trackId) {
+  const hit = calibrations.get(trackId);
+  if (hit && Date.now() - hit.checked < STAT_EVERY_MS) return hit.data;
   const file = path.join(__dirname, '..', 'content', 'unit-placement-calibration', `${trackId}.json`);
   let stamp = 0;
   try { stamp = fs.statSync(file).mtimeMs; } catch { return null; }
-  const hit = calibrations.get(trackId);
-  if (hit && hit.stamp === stamp) return hit.data;
+  if (hit && hit.stamp === stamp) { hit.checked = Date.now(); return hit.data; }
   let data = null;
   try { data = JSON.parse(fs.readFileSync(file, 'utf8')).points || null; } catch { data = null; }
-  calibrations.set(trackId, { stamp, data });
+  calibrations.set(trackId, { stamp, data, checked: Date.now() });
   return data;
 }
 

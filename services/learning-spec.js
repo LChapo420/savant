@@ -516,6 +516,13 @@ function gather(userId, { skillIds = [], topic = null, trackId = null, gradeId =
       if (goal) input.goal = goal.choice;
     }
   } catch { /* no goal */ }
+  // Own material: a test date set as the course's retention goal is a "prepare for a test" goal for every part made from it.
+  try {
+    if (!input.goal && materialId != null) {
+      const rg = require('./retention-goal').forMaterial(userId, materialId);
+      if (rg && rg.status === 'date') input.goal = 'test';
+    }
+  } catch { /* no retention goal */ }
   try {
     const ids = (skillIds || []).filter(Boolean).slice(0, 8);
     if (ids.length) {

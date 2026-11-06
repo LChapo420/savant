@@ -584,7 +584,7 @@ function unitsToWork(plan, units, statuses, except = -1, enrollment = null) {
  */
 function nextLevelAfter(enrollment, grade, level) {
   const next = unitNextLevelAfter(enrollment, grade, level);
-  return studyFit(enrollment, grade, goalFit(enrollment, grade, compressProven(enrollment, grade, next)));
+  return studyFit(enrollment, grade, goalFit(enrollment, grade, require('./speed-placement').stepOverSettled(enrollment, grade, compressProven(enrollment, grade, next)))); // eslint-disable-line global-require
 }
 
 /**

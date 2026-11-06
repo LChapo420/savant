@@ -22,6 +22,19 @@
   document.head.appendChild(css);
 
   const Snap = window.TutorSnapshot;
+  // Where the learner is stuck (sent with every message; the server clamps it): quiet time, wrong tries in a row, whether they already asked.
+  let lastActive = Date.now();
+  let wrongStreak = 0;
+  let askedHere = false;
+  let lastFeedback = '';
+  const touch = (e) => { if (!(e.target && e.target.closest && e.target.closest('.tdock-panel'))) lastActive = Date.now(); };
+  ['pointerdown', 'keydown', 'input'].forEach((ev) => document.addEventListener(ev, touch, true));
+  setInterval(() => {
+    const fb = [...document.querySelectorAll('[role=status], .feedback, .es-feedback, .correct, .incorrect, .wrong')].find((n) => !n.closest('.tdock-panel') && n.innerText);
+    const t = fb ? fb.innerText.slice(0, 200) : '';
+    if (t && t !== lastFeedback) { wrongStreak = /incorrect|not quite|wrong|try again|not right|missed/i.test(t) && !/^correct|^right|nice|well done/i.test(t) ? wrongStreak + 1 : 0; lastActive = Date.now(); }
+    lastFeedback = t;
+  }, 2000);
   const MODE_KEY = 'savant.tutor.mode';
   const storedMode = () => { try { const m = localStorage.getItem(MODE_KEY); return m === 'voice' || m === 'text' ? m : null; } catch { return null; } };
   const keepMode = (m) => { try { localStorage.setItem(MODE_KEY, m); } catch { /* private mode */ } };
@@ -45,6 +58,7 @@
       else if (window.Player && typeof window.Player.shown === 'function') Object.assign(info, window.Player.shown());
     } catch { /* keep the generic reading */ }
     try { info.snapshot = Snap ? Snap.build(main) : null; } catch { /* the generic reading still goes */ }
+    info.stuck = { idle_s: Math.round((Date.now() - lastActive) / 1000), wrong: wrongStreak, asked: askedHere };
     return info;
   }
 
@@ -63,6 +77,9 @@
     await loadSnapshotScript();
     let status;
     try {
+      // Signed out: no dock, and no 401 in the console (/api/auth/me answers 200 either way).
+      const me = await fetch('/api/auth/me', { credentials: 'same-origin' });
+      if (!me.ok || !(await me.json()).user) return;
       const r = await fetch(`/api/tutor/dock?path=${encodeURIComponent(location.pathname)}`, { credentials: 'same-origin' });
       if (!r.ok) return;
       status = await r.json();
@@ -88,6 +105,7 @@
       <div class="tdock-note tdock-sees">The tutor can see this page.</div>
       ${status.mode === 'method' ? '<div class="tdock-note">Hints about method only on this page, so your result is honest.</div>' : ''}
       <div class="tdock-log" aria-live="polite"></div>
+      <div class="tdock-chips" role="group" aria-label="Quick questions"><button type="button">I'm stuck</button><button type="button">How does this page work?</button><button type="button">What should I do next?</button></div>
       <form class="tdock-form">
         <input type="text" maxlength="600" placeholder="Ask anything" aria-label="Your message">
         ${Recog || canRecord ? '<button type="button" class="mic" aria-pressed="false" title="Tap to speak, tap Send when you are done" aria-label="Speak: tap to start, tap again to send">Speak</button>' : ''}
@@ -151,11 +169,19 @@
       if (canTalk && via && via !== inputMode) setMode(via, false);
       messages.push({ role: 'user', content: text });
       line('me', text);
-      const pending = line('bot', '…');
+      askedHere = true;
+      const chips = panel.querySelector('.tdock-chips');
+      if (chips) chips.hidden = true;
+      const pending = line('bot', 'Thinking…');
+      // Say what is happening instead of a dead spinner: a slow tutor says so, and the server answers from its notes at its own deadline.
+      const t1 = setTimeout(() => { if (!pending.dataset.done) pending.textContent = 'Still thinking, a little slower than usual…'; }, 4000);
+      const t2 = setTimeout(() => { if (!pending.dataset.done) pending.textContent = 'Still on it. If it takes much longer I will answer from my notes.'; }, 10000);
+      const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+      const t3 = setTimeout(() => { if (ctl) ctl.abort(); }, 26000);
       try {
         const r = await fetch('/api/tutor/dock', {
           method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ messages, page: pageInfo(), input_mode: via || inputMode }),
+          body: JSON.stringify({ messages, page: pageInfo(), input_mode: via || inputMode }), signal: ctl ? ctl.signal : undefined,
         });
         const out = await r.json();
         if (!r.ok) throw new Error(out.error || 'That did not go through.');
@@ -164,8 +190,10 @@
         pending.textContent = reply || 'No reply just now. Try again in a moment.';
         if (reply) { messages.push({ role: 'assistant', content: reply }); say(reply); }
       } catch (err) {
-        pending.textContent = err.message || 'That did not go through. Try again.';
-      } finally { busy = false; }
+        pending.textContent = err && err.name === 'AbortError' ? 'That is taking too long. Tap Send to try again; your message is still here.' : (!navigator.onLine ? 'You look offline. Reconnect and tap Send to try again.' : (err.message || 'That did not go through. Try again.'));
+        messages.pop(); // the failed message is not part of the conversation; retry resends it
+        input.value = text;
+      } finally { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); pending.dataset.done = '1'; busy = false; }
     }
 
     // Tell the server the conversation paused, so it can read what the tutor should remember (off the reply path).
@@ -183,6 +211,16 @@
       if (open) input.focus(); else { if (canSpeak) stopSpeech(); closed(); }
     });
     panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { panel.dataset.open = 'false'; btn.setAttribute('aria-expanded', 'false'); btn.focus(); } });
+    panel.querySelectorAll('.tdock-chips button').forEach((b) => b.addEventListener('click', () => ask(b.textContent, 'text')));
+    // After a long quiet spell on a page, the button offers help once. It never opens by itself.
+    let nudged = false;
+    setInterval(() => {
+      if (nudged || panel.dataset.open === 'true' || !document.hasFocus() || (Date.now() - lastActive) < 75000) return;
+      if (/^[/](dashboard|profile|boosters|curriculum|my-stats|calendar)?$/i.test(location.pathname) && wrongStreak < 2) return;
+      nudged = true;
+      btn.textContent = 'Stuck? Ask tutor';
+      btn.classList.add('tdock-nudge');
+    }, 5000);
     panel.querySelector('form').addEventListener('submit', (e) => { e.preventDefault(); const t = input.value.trim(); input.value = ''; ask(t, 'text'); });
     if (mText) { mText.addEventListener('click', () => setMode('text', true)); mVoice.addEventListener('click', () => setMode('voice', true)); }
     if (speakBtn) speakBtn.addEventListener('click', () => { speakOn = !speakOn; speakBtn.setAttribute('aria-pressed', String(speakOn)); if (!speakOn) stopSpeech(); });

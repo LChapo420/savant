@@ -1,0 +1,473 @@
+SIMULATED. Held-out seed 20261106, 160 learners. Variant: {"kloss":0,"forget":1,"lesson":1,"cold_gain":1,"skip_loss":0,"est_gain":1,"guess":0.25,"review_s":0,"review_s_all":false,"implicit":0,"speed_gain":1}
+
+=== horizon 1 week
+before 5 Nov 12.9 h, reach 0% (L 6.0 P 4.4 R 2.4), recall 0.41 | TODAY (round 3 rule, on by default) 14.7 h (L 6.0 P 4.4 R 4.3), reach 100%, recall 0.87
+  baseline dense self-study                 14.8 h, reach 72%, recall on the day 0.75, lowest recall during 0.75
+  baseline sparse self-study                13.5 h, reach 13%, recall on the day 0.58, lowest recall during 0.58
+  baseline self-study at 95% (design pick)  16.2 h, reach 99%, recall on the day 0.87, lowest recall during 0.85
+  baseline normal, fixed N                  17.4 h, reach 98%, recall on the day 0.90, lowest recall during 0.42
+  baseline typical tutor, fixed N           15.3 h, reach 99%, recall on the day 0.90, lowest recall during 0.53
+  safe: 14.6 h (median 13.5, worst 10/5/1% 22.9/30.2/34.1), L 3.8 P 6.8 R 4.0, page share 0.62, reach 100%, reach+all understood 87%, skills understood 99.1%, recall on the day 0.82, lowest recall during 0.82
+    x vs dense self-study                 mean 1.06 median 1.03 worst 10/5/1% 0.90/0.84/0.74 (n 97; baseline misses 42, arm misses 21; at 4x: 0)
+    x vs sparse self-study                mean 1.04 median 1.02 worst 10/5/1% 0.86/0.79/0.79 (n 17; baseline misses 122, arm misses 21; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.13 median 1.10 worst 10/5/1% 0.94/0.91/0.87 (n 137; baseline misses 2, arm misses 21; at 4x: 0)
+    x vs normal, fixed N                  mean 1.23 median 1.21 worst 10/5/1% 1.02/0.98/0.93 (n 136; baseline misses 3, arm misses 21; at 4x: 0)
+    x vs typical tutor, fixed N           mean 1.09 median 1.04 worst 10/5/1% 0.88/0.86/0.77 (n 138; baseline misses 1, arm misses 21; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 12.2 h / 12.6 h  x1.09 worst x0.82  dense x1.11 (n 7)  92%
+      band:30-59         n  69 12.9 h / 13.0 h  x1.04 worst x0.69  dense x1.05 (n 39)  81%
+      kind:tail_lo       n  12 13.7 h / 13.7 h  x1.01 worst x0.87  dense x1.04 (n 5)  92%
+      band:13-17         n  12 14.9 h / 14.6 h  x1.00 worst x0.86  dense x1.07 (n 7)  100%
+      kind:contradict    n  24 16.3 h / 16.3 h  x1.03 worst x0.69  dense x1.05 (n 14)  96%
+      kind:random        n  24 14.1 h / 14.2 h  x1.05 worst x0.81  dense x1.08 (n 14)  83%
+      band:8-12          n  28 18.3 h / 17.6 h  x0.98 worst x0.81  dense x0.98 (n 16)  93%
+      kind:tail_both     n  12 14.4 h / 14.6 h  x1.04 worst x0.80  dense x1.01 (n 5)  67%
+      kind:age_young     n  12 19.8 h / 18.8 h  x0.97 worst x0.85  dense x0.97 (n 8)  92%
+      kind:age_old       n  12 15.6 h / 17.2 h  x1.14 worst x0.91  dense x1.12 (n 9)  75%
+      band:60+           n  31 14.2 h / 14.9 h  x1.10 worst x0.86  dense x1.11 (n 21)  84%
+      kind:ell           n  12 15.4 h / 15.2 h  x1.01 worst x0.82  dense x1.07 (n 9)  100%
+      band:18-29         n  20 15.9 h / 16.2 h  x1.06 worst x0.80  dense x1.08 (n 14)  95%
+      kind:ordinary      n  40 12.8 h / 12.8 h  x1.04 worst x0.80  dense x1.05 (n 26)  85%
+    vs today: 14.7 h, per-learner ratio mean 1.04 worst 10% 0.88 worst 1% 0.80, slower for 68 of 160
+  end: 15.8 h (median 14.6, worst 10/5/1% 25.6/30.9/37.3), L 3.4 P 5.0 R 7.4, page share 0.57, reach 100%, reach+all understood 91%, skills understood 99.4%, recall on the day 0.87, lowest recall during 0.75
+    x vs dense self-study                 mean 0.99 median 0.96 worst 10/5/1% 0.81/0.74/0.68 (n 105; baseline misses 40, arm misses 15; at 4x: 0)
+    x vs sparse self-study                mean 0.95 median 0.95 worst 10/5/1% 0.77/0.67/0.67 (n 17; baseline misses 128, arm misses 15; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.06 median 1.02 worst 10/5/1% 0.87/0.80/0.73 (n 144; baseline misses 1, arm misses 15; at 4x: 0)
+    x vs normal, fixed N                  mean 1.16 median 1.10 worst 10/5/1% 0.93/0.88/0.78 (n 142; baseline misses 3, arm misses 15; at 4x: 0)
+    x vs typical tutor, fixed N           mean 1.02 median 0.97 worst 10/5/1% 0.81/0.74/0.68 (n 144; baseline misses 1, arm misses 15; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 13.3 h / 12.6 h  x1.04 worst x0.70  dense x1.09 (n 8)  100%
+      band:30-59         n  69 14.0 h / 13.0 h  x0.97 worst x0.59  dense x0.98 (n 44)  87%
+      kind:tail_lo       n  12 14.9 h / 13.7 h  x0.94 worst x0.82  dense x0.96 (n 6)  100%
+      band:13-17         n  12 16.3 h / 14.6 h  x0.93 worst x0.68  dense x0.98 (n 7)  100%
+      kind:contradict    n  24 17.7 h / 16.3 h  x0.97 worst x0.59  dense x0.98 (n 14)  88%
+      kind:random        n  24 15.2 h / 14.2 h  x0.98 worst x0.69  dense x0.99 (n 16)  92%
+      band:8-12          n  28 19.7 h / 17.6 h  x0.92 worst x0.69  dense x0.92 (n 17)  96%
+      kind:tail_both     n  12 15.9 h / 14.6 h  x0.95 worst x0.66  dense x0.95 (n 9)  100%
+      kind:age_young     n  12 21.3 h / 18.8 h  x0.91 worst x0.80  dense x0.94 (n 9)  100%
+      kind:age_old       n  12 16.6 h / 17.2 h  x1.08 worst x0.83  dense x1.10 (n 11)  92%
+      band:60+           n  31 15.2 h / 14.9 h  x1.05 worst x0.76  dense x1.07 (n 24)  94%
+      kind:ell           n  12 16.1 h / 15.2 h  x0.97 worst x0.72  dense x0.94 (n 7)  75%
+      band:18-29         n  20 17.1 h / 16.2 h  x0.99 worst x0.66  dense x0.97 (n 13)  85%
+      kind:ordinary      n  40 13.9 h / 12.8 h  x0.97 worst x0.68  dense x0.96 (n 25)  85%
+    vs today: 14.7 h, per-learner ratio mean 0.98 worst 10% 0.79 worst 1% 0.66, slower for 100 of 160
+
+=== horizon 1 month
+before 5 Nov 16.6 h, reach 74% (L 6.0 P 4.4 R 6.2), recall 0.74 | TODAY (round 3 rule, on by default) 17.5 h (L 6.0 P 4.4 R 7.1), reach 100%, recall 0.94
+  baseline dense self-study                 17.0 h, reach 64%, recall on the day 0.74, lowest recall during 0.72
+  baseline sparse self-study                14.8 h, reach 4%, recall on the day 0.49, lowest recall during 0.43
+  baseline self-study at 95% (design pick)  18.7 h, reach 98%, recall on the day 0.87, lowest recall during 0.83
+  baseline normal, fixed N                  19.8 h, reach 96%, recall on the day 0.84, lowest recall during 0.42
+  baseline typical tutor, fixed N           17.7 h, reach 98%, recall on the day 0.87, lowest recall during 0.53
+  safe: 16.9 h (median 15.8, worst 10/5/1% 25.3/32.6/37.2), L 3.8 P 6.8 R 6.3, page share 0.62, reach 100%, reach+all understood 100%, skills understood 100.0%, recall on the day 0.83, lowest recall during 0.82
+    x vs dense self-study                 mean 1.05 median 1.04 worst 10/5/1% 0.92/0.88/0.85 (n 102; baseline misses 58, arm misses 0; at 4x: 0)
+    x vs sparse self-study                mean 1.03 median 1.02 worst 10/5/1% 0.93/0.93/0.93 (n 6; baseline misses 154, arm misses 0; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.13 median 1.12 worst 10/5/1% 1.00/0.96/0.90 (n 157; baseline misses 3, arm misses 0; at 4x: 0)
+    x vs normal, fixed N                  mean 1.22 median 1.21 worst 10/5/1% 1.03/1.00/0.97 (n 153; baseline misses 7, arm misses 0; at 4x: 0)
+    x vs typical tutor, fixed N           mean 1.09 median 1.07 worst 10/5/1% 0.91/0.89/0.82 (n 157; baseline misses 3, arm misses 0; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 14.4 h / 15.4 h  x1.10 worst x0.91  dense x1.11 (n 6)  100%
+      band:30-59         n  69 15.0 h / 15.6 h  x1.06 worst x0.79  dense x1.05 (n 48)  100%
+      kind:tail_lo       n  12 15.8 h / 16.3 h  x1.04 worst x0.92  dense x1.02 (n 6)  100%
+      band:13-17         n  12 17.1 h / 17.3 h  x1.03 worst x0.91  dense x1.03 (n 7)  100%
+      kind:contradict    n  24 18.7 h / 19.2 h  x1.05 worst x0.79  dense x1.02 (n 13)  100%
+      kind:random        n  24 16.3 h / 17.1 h  x1.07 worst x0.90  dense x1.06 (n 16)  100%
+      band:8-12          n  28 20.8 h / 20.9 h  x1.02 worst x0.89  dense x0.99 (n 16)  100%
+      kind:tail_both     n  12 16.9 h / 17.4 h  x1.04 worst x0.86  dense x1.06 (n 8)  100%
+      kind:age_young     n  12 22.4 h / 22.1 h  x1.00 worst x0.89  dense x0.99 (n 8)  100%
+      kind:age_old       n  12 18.3 h / 20.6 h  x1.14 worst x1.00  dense x1.10 (n 9)  100%
+      band:60+           n  31 16.5 h / 17.9 h  x1.11 worst x0.94  dense x1.08 (n 20)  100%
+      kind:ell           n  12 17.5 h / 18.0 h  x1.04 worst x0.87  dense x1.05 (n 7)  100%
+      band:18-29         n  20 18.3 h / 19.1 h  x1.07 worst x0.86  dense x1.06 (n 11)  100%
+      kind:ordinary      n  40 14.9 h / 15.4 h  x1.05 worst x0.89  dense x1.04 (n 29)  100%
+    vs today: 17.5 h, per-learner ratio mean 1.06 worst 10% 0.94 worst 1% 0.86, slower for 50 of 160
+  end: 16.3 h (median 15.1, worst 10/5/1% 26.1/31.9/38.3), L 3.4 P 5.0 R 7.8, page share 0.57, reach 100%, reach+all understood 93%, skills understood 99.6%, recall on the day 0.89, lowest recall during 0.46
+    x vs dense self-study                 mean 1.10 median 1.08 worst 10/5/1% 0.88/0.81/0.73 (n 99; baseline misses 49, arm misses 12; at 4x: 0)
+    x vs sparse self-study                mean 1.18 median 1.15 worst 10/5/1% 0.91/0.91/0.91 (n 6; baseline misses 142, arm misses 12; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.20 median 1.15 worst 10/5/1% 0.98/0.93/0.82 (n 146; baseline misses 2, arm misses 12; at 4x: 0)
+    x vs normal, fixed N                  mean 1.29 median 1.24 worst 10/5/1% 1.03/0.97/0.86 (n 143; baseline misses 5, arm misses 12; at 4x: 0)
+    x vs typical tutor, fixed N           mean 1.16 median 1.10 worst 10/5/1% 0.90/0.84/0.76 (n 146; baseline misses 2, arm misses 12; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 13.7 h / 15.4 h  x1.24 worst x0.82  dense x1.29 (n 6)  100%
+      band:30-59         n  69 14.4 h / 15.6 h  x1.13 worst x0.73  dense x1.09 (n 45)  90%
+      kind:tail_lo       n  12 15.4 h / 16.3 h  x1.09 worst x0.91  dense x1.05 (n 6)  100%
+      band:13-17         n  12 16.8 h / 17.3 h  x1.08 worst x0.77  dense x1.04 (n 7)  100%
+      kind:contradict    n  24 18.2 h / 19.2 h  x1.12 worst x0.73  dense x1.03 (n 12)  88%
+      kind:random        n  24 15.7 h / 17.1 h  x1.15 worst x0.83  dense x1.09 (n 16)  92%
+      band:8-12          n  28 20.2 h / 20.9 h  x1.07 worst x0.82  dense x1.02 (n 16)  96%
+      kind:tail_both     n  12 16.3 h / 17.4 h  x1.09 worst x0.79  dense x1.09 (n 8)  100%
+      kind:age_young     n  12 21.9 h / 22.1 h  x1.04 worst x0.91  dense x1.04 (n 8)  100%
+      kind:age_old       n  12 17.2 h / 20.6 h  x1.24 worst x0.98  dense x1.18 (n 9)  92%
+      band:60+           n  31 15.7 h / 17.9 h  x1.22 worst x0.91  dense x1.18 (n 20)  94%
+      kind:ell           n  12 16.6 h / 18.0 h  x1.12 worst x0.85  dense x1.14 (n 7)  83%
+      band:18-29         n  20 17.6 h / 19.1 h  x1.14 worst x0.79  dense x1.12 (n 11)  90%
+      kind:ordinary      n  40 14.3 h / 15.4 h  x1.12 worst x0.77  dense x1.08 (n 27)  90%
+    vs today: 17.5 h, per-learner ratio mean 1.13 worst 10% 0.91 worst 1% 0.77, slower for 42 of 160
+
+=== horizon 6 months
+before 5 Nov 21.0 h, reach 100% (L 6.0 P 4.5 R 10.6), recall 0.89 | TODAY (round 3 rule, on by default) 20.9 h (L 6.0 P 4.5 R 10.5), reach 100%, recall 0.87
+  baseline dense self-study                 21.6 h, reach 50%, recall on the day 0.70, lowest recall during 0.65
+  baseline sparse self-study                17.0 h, reach 0%, recall on the day 0.23, lowest recall during 0.23
+  baseline self-study at 95% (design pick)  24.3 h, reach 98%, recall on the day 0.89, lowest recall during 0.83
+  baseline normal, fixed N                  19.8 h, reach 5%, recall on the day 0.50, lowest recall during 0.42
+  baseline typical tutor, fixed N           17.7 h, reach 13%, recall on the day 0.57, lowest recall during 0.51
+  safe: 20.6 h (median 19.7, worst 10/5/1% 29.8/38.5/42.0), L 3.8 P 6.8 R 10.0, page share 0.62, reach 100%, reach+all understood 100%, skills understood 100.0%, recall on the day 0.84, lowest recall during 0.83
+    x vs dense self-study                 mean 1.08 median 1.07 worst 10/5/1% 0.99/0.96/0.86 (n 80; baseline misses 80, arm misses 0; at 4x: 0)
+    x vs sparse self-study                mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 160, arm misses 0; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.20 median 1.19 worst 10/5/1% 1.07/1.05/1.01 (n 157; baseline misses 3, arm misses 0; at 4x: 0)
+    x vs normal, fixed N                  mean 1.14 median 1.19 worst 10/5/1% 1.02/1.02/1.02 (n 8; baseline misses 152, arm misses 0; at 4x: 0)
+    x vs typical tutor, fixed N           mean 0.99 median 0.96 worst 10/5/1% 0.90/0.88/0.85 (n 21; baseline misses 139, arm misses 0; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 17.7 h / 18.4 h  x1.05 worst x0.93  dense x1.14 (n 6)  100%
+      band:30-59         n  69 18.5 h / 18.8 h  x1.03 worst x0.85  dense x1.09 (n 40)  100%
+      kind:tail_lo       n  12 19.1 h / 19.3 h  x1.02 worst x0.93  dense x1.05 (n 3)  100%
+      band:13-17         n  12 20.6 h / 20.3 h  x1.00 worst x0.91  dense x1.07 (n 7)  100%
+      kind:contradict    n  24 22.5 h / 22.9 h  x1.03 worst x0.85  dense x1.08 (n 9)  100%
+      kind:random        n  24 20.1 h / 20.4 h  x1.03 worst x0.92  dense x1.08 (n 13)  100%
+      band:8-12          n  28 24.8 h / 24.7 h  x1.00 worst x0.90  dense x1.03 (n 11)  100%
+      kind:tail_both     n  12 20.5 h / 20.8 h  x1.02 worst x0.91  dense x1.11 (n 7)  100%
+      kind:age_young     n  12 26.7 h / 26.3 h  x0.99 worst x0.90  dense x1.02 (n 6)  100%
+      kind:age_old       n  12 22.9 h / 24.3 h  x1.06 worst x0.98  dense x1.11 (n 8)  100%
+      band:60+           n  31 20.4 h / 21.2 h  x1.06 worst x0.91  dense x1.12 (n 15)  100%
+      kind:ell           n  12 21.3 h / 21.4 h  x1.01 worst x0.91  dense x1.11 (n 5)  100%
+      band:18-29         n  20 22.3 h / 23.0 h  x1.04 worst x0.91  dense x1.09 (n 7)  100%
+      kind:ordinary      n  40 18.3 h / 18.6 h  x1.03 worst x0.91  dense x1.08 (n 23)  100%
+    vs today: 20.9 h, per-learner ratio mean 1.03 worst 10% 0.94 worst 1% 0.90, slower for 56 of 160
+  end: 16.6 h (median 15.3, worst 10/5/1% 26.7/32.3/38.8), L 3.4 P 5.0 R 8.2, page share 0.57, reach 100%, reach+all understood 91%, skills understood 99.5%, recall on the day 0.88, lowest recall during 0.12
+    x vs dense self-study                 mean 1.40 median 1.34 worst 10/5/1% 1.08/1.01/0.89 (n 77; baseline misses 69, arm misses 14; at 4x: 0)
+    x vs sparse self-study                mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 146, arm misses 14; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.53 median 1.48 worst 10/5/1% 1.18/1.14/1.00 (n 144; baseline misses 2, arm misses 14; at 4x: 0)
+    x vs normal, fixed N                  mean 1.65 median 1.56 worst 10/5/1% 1.22/1.22/1.22 (n 7; baseline misses 139, arm misses 14; at 4x: 0)
+    x vs typical tutor, fixed N           mean 1.32 median 1.26 worst 10/5/1% 0.98/0.97/0.95 (n 20; baseline misses 126, arm misses 14; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 13.9 h / 18.4 h  x1.47 worst x0.92  dense x1.69 (n 6)  100%
+      band:30-59         n  69 14.7 h / 18.8 h  x1.34 worst x0.89  dense x1.38 (n 37)  88%
+      kind:tail_lo       n  12 15.7 h / 19.3 h  x1.28 worst x1.03  dense x1.23 (n 3)  100%
+      band:13-17         n  12 17.1 h / 20.3 h  x1.26 worst x0.86  dense x1.36 (n 7)  100%
+      kind:contradict    n  24 18.6 h / 22.9 h  x1.32 worst x0.89  dense x1.38 (n 8)  88%
+      kind:random        n  24 16.1 h / 20.4 h  x1.35 worst x0.97  dense x1.37 (n 13)  92%
+      band:8-12          n  28 20.6 h / 24.7 h  x1.25 worst x0.92  dense x1.28 (n 11)  93%
+      kind:tail_both     n  12 16.7 h / 20.8 h  x1.29 worst x0.95  dense x1.41 (n 7)  100%
+      kind:age_young     n  12 22.3 h / 26.3 h  x1.22 worst x1.03  dense x1.25 (n 6)  92%
+      kind:age_old       n  12 17.6 h / 24.3 h  x1.44 worst x1.11  dense x1.46 (n 8)  92%
+      band:60+           n  31 16.0 h / 21.2 h  x1.42 worst x0.98  dense x1.54 (n 15)  94%
+      kind:ell           n  12 16.9 h / 21.4 h  x1.32 worst x1.02  dense x1.50 (n 5)  83%
+      band:18-29         n  20 17.9 h / 23.0 h  x1.35 worst x0.95  dense x1.47 (n 7)  90%
+      kind:ordinary      n  40 14.6 h / 18.6 h  x1.34 worst x0.86  dense x1.38 (n 21)  88%
+    vs today: 20.9 h, per-learner ratio mean 1.34 worst 10% 1.06 worst 1% 0.89, slower for 9 of 160
+
+=== horizon 1 year
+before 5 Nov 22.7 h, reach 100% (L 6.0 P 4.5 R 12.3), recall 0.91 | TODAY (round 3 rule, on by default) 22.6 h (L 6.0 P 4.5 R 12.1), reach 100%, recall 0.88
+  baseline dense self-study                 24.1 h, reach 52%, recall on the day 0.70, lowest recall during 0.65
+  baseline sparse self-study                19.3 h, reach 1%, recall on the day 0.43, lowest recall during 0.18
+  baseline self-study at 95% (design pick)  26.5 h, reach 96%, recall on the day 0.87, lowest recall during 0.83
+  baseline normal, fixed N                  10.4 h, reach 0%, recall on the day 0.00, lowest recall during 0.00
+  baseline typical tutor, fixed N           8.9 h, reach 0%, recall on the day 0.00, lowest recall during 0.00
+  safe: 22.1 h (median 21.1, worst 10/5/1% 32.0/40.3/44.4), L 3.8 P 6.8 R 11.5, page share 0.62, reach 100%, reach+all understood 100%, skills understood 100.0%, recall on the day 0.83, lowest recall during 0.83
+    x vs dense self-study                 mean 1.11 median 1.11 worst 10/5/1% 1.02/0.98/0.91 (n 83; baseline misses 77, arm misses 0; at 4x: 0)
+    x vs sparse self-study                mean 1.01 median 1.05 worst 10/5/1% 0.96/0.96/0.96 (n 2; baseline misses 158, arm misses 0; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.22 median 1.21 worst 10/5/1% 1.10/1.06/1.04 (n 154; baseline misses 6, arm misses 0; at 4x: 0)
+    x vs normal, fixed N                  mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 160, arm misses 0; at 4x: 0)
+    x vs typical tutor, fixed N           mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 160, arm misses 0; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 19.0 h / 19.9 h  x1.05 worst x0.93  dense x1.17 (n 5)  100%
+      band:30-59         n  69 19.9 h / 20.3 h  x1.03 worst x0.88  dense x1.12 (n 40)  100%
+      kind:tail_lo       n  12 20.6 h / 20.8 h  x1.02 worst x0.93  dense x1.09 (n 4)  100%
+      band:13-17         n  12 22.1 h / 22.0 h  x1.00 worst x0.91  dense x1.11 (n 7)  100%
+      kind:contradict    n  24 24.1 h / 24.6 h  x1.03 worst x0.88  dense x1.10 (n 8)  100%
+      kind:random        n  24 21.6 h / 22.0 h  x1.03 worst x0.93  dense x1.10 (n 14)  100%
+      band:8-12          n  28 26.5 h / 26.5 h  x1.01 worst x0.92  dense x1.07 (n 13)  100%
+      kind:tail_both     n  12 21.9 h / 22.4 h  x1.03 worst x0.93  dense x1.15 (n 7)  100%
+      kind:age_young     n  12 28.6 h / 28.2 h  x0.99 worst x0.92  dense x1.06 (n 7)  100%
+      kind:age_old       n  12 24.8 h / 26.2 h  x1.06 worst x0.99  dense x1.14 (n 8)  100%
+      band:60+           n  31 21.9 h / 22.9 h  x1.05 worst x0.92  dense x1.13 (n 14)  100%
+      kind:ell           n  12 22.9 h / 23.1 h  x1.02 worst x0.92  dense x1.14 (n 5)  100%
+      band:18-29         n  20 23.9 h / 24.8 h  x1.04 worst x0.93  dense x1.11 (n 9)  100%
+      kind:ordinary      n  40 19.6 h / 20.1 h  x1.03 worst x0.91  dense x1.10 (n 25)  100%
+    vs today: 22.6 h, per-learner ratio mean 1.03 worst 10% 0.95 worst 1% 0.91, slower for 56 of 160
+  end: 16.6 h (median 15.4, worst 10/5/1% 26.7/32.4/38.9), L 3.4 P 5.0 R 8.2, page share 0.57, reach 100%, reach+all understood 91%, skills understood 99.5%, recall on the day 0.88, lowest recall during 0.06
+    x vs dense self-study                 mean 1.55 median 1.48 worst 10/5/1% 1.17/1.10/0.96 (n 79; baseline misses 67, arm misses 14; at 4x: 0)
+    x vs sparse self-study                mean 1.44 median 1.44 worst 10/5/1% 1.44/1.44/1.44 (n 1; baseline misses 145, arm misses 14; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.68 median 1.61 worst 10/5/1% 1.29/1.22/1.07 (n 141; baseline misses 5, arm misses 14; at 4x: 0)
+    x vs normal, fixed N                  mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 146, arm misses 14; at 4x: 0)
+    x vs typical tutor, fixed N           mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 146, arm misses 14; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 14.0 h / 19.9 h  x1.58 worst x0.97  dense x1.98 (n 5)  100%
+      band:30-59         n  69 14.8 h / 20.3 h  x1.45 worst x0.95  dense x1.55 (n 37)  88%
+      kind:tail_lo       n  12 15.7 h / 20.8 h  x1.37 worst x1.10  dense x1.43 (n 4)  100%
+      band:13-17         n  12 17.2 h / 22.0 h  x1.36 worst x0.90  dense x1.51 (n 7)  100%
+      kind:contradict    n  24 18.6 h / 24.6 h  x1.42 worst x0.95  dense x1.45 (n 7)  88%
+      kind:random        n  24 16.1 h / 22.0 h  x1.46 worst x1.05  dense x1.51 (n 14)  92%
+      band:8-12          n  28 20.7 h / 26.5 h  x1.34 worst x0.97  dense x1.42 (n 12)  93%
+      kind:tail_both     n  12 16.7 h / 22.4 h  x1.39 worst x1.01  dense x1.57 (n 7)  100%
+      kind:age_young     n  12 22.4 h / 28.2 h  x1.30 worst x1.09  dense x1.42 (n 6)  92%
+      kind:age_old       n  12 17.7 h / 26.2 h  x1.55 worst x1.18  dense x1.62 (n 8)  92%
+      band:60+           n  31 16.1 h / 22.9 h  x1.53 worst x1.05  dense x1.69 (n 14)  94%
+      kind:ell           n  12 17.0 h / 23.1 h  x1.42 worst x1.09  dense x1.67 (n 5)  83%
+      band:18-29         n  20 18.0 h / 24.8 h  x1.45 worst x1.03  dense x1.55 (n 9)  90%
+      kind:ordinary      n  40 14.7 h / 20.1 h  x1.44 worst x0.90  dense x1.51 (n 23)  88%
+    vs today: 22.6 h, per-learner ratio mean 1.44 worst 10% 1.12 worst 1% 0.95, slower for 3 of 160
+
+=== no test day (3 y)
+before 5 Nov 25.2 h, reach 100% (L 6.0 P 4.5 R 14.8), recall 0.92 | TODAY (round 3 rule, on by default) 25.2 h (L 6.0 P 4.5 R 14.8), reach 100%, recall 0.92
+  baseline dense self-study                 28.9 h, reach 48%, recall on the day 0.68, lowest recall during 0.65
+  baseline sparse self-study                23.8 h, reach 0%, recall on the day 0.23, lowest recall during 0.18
+  baseline self-study at 95% (design pick)  30.5 h, reach 96%, recall on the day 0.88, lowest recall during 0.83
+  baseline normal, fixed N                  10.4 h, reach 0%, recall on the day 0.00, lowest recall during 0.00
+  baseline typical tutor, fixed N           8.9 h, reach 0%, recall on the day 0.00, lowest recall during 0.00
+  safe: 24.9 h (median 23.8, worst 10/5/1% 35.8/44.3/48.5), L 3.8 P 6.8 R 14.3, page share 0.62, reach 100%, reach+all understood 100%, skills understood 100.0%, recall on the day 0.92, lowest recall during 0.86
+    x vs dense self-study                 mean 1.17 median 1.16 worst 10/5/1% 1.09/1.05/0.99 (n 77; baseline misses 83, arm misses 0; at 4x: 0)
+    x vs sparse self-study                mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 160, arm misses 0; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.24 median 1.23 worst 10/5/1% 1.14/1.09/1.07 (n 154; baseline misses 6, arm misses 0; at 4x: 0)
+    x vs normal, fixed N                  mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 160, arm misses 0; at 4x: 0)
+    x vs typical tutor, fixed N           mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 160, arm misses 0; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 21.5 h / 22.1 h  x1.03 worst x0.91  dense x1.22 (n 5)  100%
+      band:30-59         n  69 22.5 h / 22.8 h  x1.02 worst x0.89  dense x1.18 (n 38)  100%
+      kind:tail_lo       n  12 23.2 h / 23.2 h  x1.00 worst x0.93  dense x1.12 (n 3)  100%
+      band:13-17         n  12 24.8 h / 24.5 h  x1.00 worst x0.91  dense x1.13 (n 5)  100%
+      kind:contradict    n  24 27.0 h / 27.5 h  x1.03 worst x0.89  dense x1.13 (n 6)  100%
+      kind:random        n  24 24.4 h / 24.8 h  x1.02 worst x0.93  dense x1.16 (n 14)  100%
+      band:8-12          n  28 29.6 h / 29.5 h  x1.00 worst x0.91  dense x1.14 (n 12)  100%
+      kind:tail_both     n  12 24.7 h / 24.9 h  x1.01 worst x0.94  dense x1.21 (n 6)  100%
+      kind:age_young     n  12 31.9 h / 31.5 h  x0.99 worst x0.93  dense x1.14 (n 6)  100%
+      kind:age_old       n  12 28.3 h / 29.4 h  x1.04 worst x0.99  dense x1.19 (n 8)  100%
+      band:60+           n  31 24.9 h / 25.6 h  x1.04 worst x0.94  dense x1.18 (n 14)  100%
+      kind:ell           n  12 25.7 h / 25.9 h  x1.01 worst x0.93  dense x1.20 (n 5)  100%
+      band:18-29         n  20 26.9 h / 27.6 h  x1.03 worst x0.94  dense x1.16 (n 8)  100%
+      kind:ordinary      n  40 22.2 h / 22.5 h  x1.02 worst x0.91  dense x1.16 (n 24)  100%
+    vs today: 25.2 h, per-learner ratio mean 1.02 worst 10% 0.95 worst 1% 0.91, slower for 61 of 160
+  end: 24.5 h (median 23.3, worst 10/5/1% 36.5/41.2/47.1), L 3.4 P 5.0 R 16.1, page share 0.57, reach 100%, reach+all understood 100%, skills understood 100.0%, recall on the day 0.88, lowest recall during 0.84
+    x vs dense self-study                 mean 1.19 median 1.17 worst 10/5/1% 1.11/1.08/1.05 (n 77; baseline misses 83, arm misses 0; at 4x: 0)
+    x vs sparse self-study                mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 160, arm misses 0; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.26 median 1.25 worst 10/5/1% 1.16/1.13/1.11 (n 154; baseline misses 6, arm misses 0; at 4x: 0)
+    x vs normal, fixed N                  mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 160, arm misses 0; at 4x: 0)
+    x vs typical tutor, fixed N           mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 160, arm misses 0; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 21.3 h / 22.1 h  x1.05 worst x0.96  dense x1.22 (n 5)  100%
+      band:30-59         n  69 22.0 h / 22.8 h  x1.04 worst x0.91  dense x1.19 (n 38)  100%
+      kind:tail_lo       n  12 22.6 h / 23.2 h  x1.03 worst x0.96  dense x1.17 (n 3)  100%
+      band:13-17         n  12 24.4 h / 24.5 h  x1.01 worst x0.93  dense x1.14 (n 5)  100%
+      kind:contradict    n  24 26.7 h / 27.5 h  x1.03 worst x0.94  dense x1.13 (n 6)  100%
+      kind:random        n  24 23.9 h / 24.8 h  x1.04 worst x0.91  dense x1.20 (n 14)  100%
+      band:8-12          n  28 29.1 h / 29.5 h  x1.02 worst x0.93  dense x1.15 (n 12)  100%
+      kind:tail_both     n  12 24.4 h / 24.9 h  x1.03 worst x0.97  dense x1.23 (n 6)  100%
+      kind:age_young     n  12 31.4 h / 31.5 h  x1.00 worst x0.93  dense x1.15 (n 6)  100%
+      kind:age_old       n  12 27.8 h / 29.4 h  x1.06 worst x1.00  dense x1.23 (n 8)  100%
+      band:60+           n  31 24.6 h / 25.6 h  x1.04 worst x0.99  dense x1.21 (n 14)  100%
+      kind:ell           n  12 25.2 h / 25.9 h  x1.03 worst x0.97  dense x1.22 (n 5)  100%
+      band:18-29         n  20 26.7 h / 27.6 h  x1.04 worst x0.94  dense x1.20 (n 8)  100%
+      kind:ordinary      n  40 21.8 h / 22.5 h  x1.03 worst x0.93  dense x1.17 (n 24)  100%
+    vs today: 25.2 h, per-learner ratio mean 1.03 worst 10% 0.97 worst 1% 0.93, slower for 46 of 160
+
+=== date 1 week
+before 5 Nov 15.9 h, reach 100% (L 6.0 P 4.4 R 5.5), recall 0.93 | TODAY (round 3 rule, on by default) 15.8 h (L 6.0 P 4.4 R 5.3), reach 100%, recall 0.93
+  baseline dense self-study                 14.8 h, reach 72%, recall on the day 0.75, lowest recall during 0.75
+  baseline sparse self-study                13.5 h, reach 13%, recall on the day 0.58, lowest recall during 0.58
+  baseline self-study at 95% (design pick)  16.2 h, reach 99%, recall on the day 0.87, lowest recall during 0.85
+  baseline normal, fixed N                  15.6 h, reach 99%, recall on the day 0.87, lowest recall during 0.24
+  baseline typical tutor, fixed N           13.8 h, reach 100%, recall on the day 0.90, lowest recall during 0.33
+  safe: 15.1 h (median 14.1, worst 10/5/1% 23.3/30.1/34.6), L 3.8 P 6.8 R 4.5, page share 0.62, reach 100%, reach+all understood 93%, skills understood 99.7%, recall on the day 0.83, lowest recall during 0.82
+    x vs dense self-study                 mean 1.03 median 1.02 worst 10/5/1% 0.89/0.84/0.82 (n 107; baseline misses 42, arm misses 11; at 4x: 0)
+    x vs sparse self-study                mean 1.01 median 1.00 worst 10/5/1% 0.85/0.79/0.79 (n 19; baseline misses 130, arm misses 11; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.09 median 1.08 worst 10/5/1% 0.94/0.91/0.87 (n 147; baseline misses 2, arm misses 11; at 4x: 0)
+    x vs normal, fixed N                  mean 1.07 median 1.05 worst 10/5/1% 0.91/0.88/0.84 (n 148; baseline misses 1, arm misses 11; at 4x: 0)
+    x vs typical tutor, fixed N           mean 0.95 median 0.93 worst 10/5/1% 0.79/0.77/0.71 (n 149; baseline misses 0, arm misses 11; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 12.8 h / 13.6 h  x1.11 worst x0.86  dense x1.07 (n 8)  100%
+      band:30-59         n  69 13.3 h / 14.0 h  x1.08 worst x0.77  dense x1.04 (n 47)  93%
+      kind:tail_lo       n  12 14.1 h / 14.8 h  x1.06 worst x0.92  dense x1.01 (n 6)  100%
+      band:13-17         n  12 15.4 h / 15.6 h  x1.03 worst x0.91  dense x1.02 (n 7)  100%
+      kind:contradict    n  24 16.8 h / 17.4 h  x1.07 worst x0.77  dense x1.00 (n 14)  96%
+      kind:random        n  24 14.6 h / 15.2 h  x1.07 worst x0.87  dense x1.04 (n 16)  92%
+      band:8-12          n  28 18.7 h / 18.8 h  x1.02 worst x0.86  dense x0.96 (n 16)  93%
+      kind:tail_both     n  12 15.0 h / 15.7 h  x1.07 worst x0.85  dense x1.01 (n 8)  92%
+      kind:age_young     n  12 20.2 h / 20.1 h  x1.01 worst x0.91  dense x0.95 (n 8)  92%
+      kind:age_old       n  12 16.4 h / 18.4 h  x1.14 worst x0.95  dense x1.08 (n 10)  83%
+      band:60+           n  31 14.7 h / 16.0 h  x1.12 worst x0.94  dense x1.06 (n 23)  90%
+      kind:ell           n  12 15.7 h / 16.4 h  x1.06 worst x0.90  dense x1.03 (n 9)  100%
+      band:18-29         n  20 16.5 h / 17.3 h  x1.08 worst x0.85  dense x1.02 (n 14)  95%
+      kind:ordinary      n  40 13.3 h / 13.8 h  x1.07 worst x0.89  dense x1.03 (n 28)  90%
+    vs today: 15.8 h, per-learner ratio mean 1.07 worst 10% 0.94 worst 1% 0.85, slower for 46 of 160
+  end: 13.6 h (median 12.7, worst 10/5/1% 21.0/26.9/33.1), L 3.4 P 5.0 R 5.2, page share 0.57, reach 38%, reach+all understood 26%, skills understood 97.4%, recall on the day 0.86, lowest recall during 0.19
+    x vs dense self-study                 mean 1.24 median 1.23 worst 10/5/1% 1.09/1.08/1.00 (n 31; baseline misses 11, arm misses 118; at 4x: 0)
+    x vs sparse self-study                mean 1.17 median 1.15 worst 10/5/1% 1.05/1.05/1.05 (n 7; baseline misses 35, arm misses 118; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.34 median 1.32 worst 10/5/1% 1.17/1.10/1.09 (n 41; baseline misses 1, arm misses 118; at 4x: 0)
+    x vs normal, fixed N                  mean 1.32 median 1.30 worst 10/5/1% 1.13/1.04/0.99 (n 42; baseline misses 0, arm misses 118; at 4x: 0)
+    x vs typical tutor, fixed N           mean 1.20 median 1.21 worst 10/5/1% 0.97/0.94/0.92 (n 42; baseline misses 0, arm misses 118; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 11.6 h / 13.6 h  x1.26 worst x0.92  dense x1.39 (n 3)  33%
+      band:30-59         n  69 11.9 h / 14.0 h  x1.21 worst x0.99  dense x1.18 (n 16)  29%
+      kind:tail_lo       n  12 13.1 h / 14.8 h  x1.14 worst x0.99  dense x1.12 (n 1)  25%
+      band:13-17         n  12 14.0 h / 15.6 h  x1.14 worst x0.97  dense x1.31 (n 2)  25%
+      kind:contradict    n  24 15.3 h / 17.4 h  x1.19 worst x0.99  dense x1.29 (n 4)  25%
+      kind:random        n  24 13.1 h / 15.2 h  x1.20 worst x0.91  dense x1.20 (n 6)  33%
+      band:8-12          n  28 17.1 h / 18.8 h  x1.13 worst x0.91  dense x1.20 (n 3)  25%
+      kind:tail_both     n  12 13.3 h / 15.7 h  x1.21 worst x0.99  dense x1.27 (n 3)  50%
+      kind:age_young     n  12 18.5 h / 20.1 h  x1.11 worst x0.97  dense x1.31 (n 1)  17%
+      kind:age_old       n  12 14.5 h / 18.4 h  x1.30 worst x1.08  dense x1.33 (n 3)  25%
+      band:60+           n  31 13.2 h / 16.0 h  x1.26 worst x1.00  dense x1.35 (n 7)  29%
+      kind:ell           n  12 14.1 h / 16.4 h  x1.19 worst x0.99  dense x1.20 (n 3)  25%
+      band:18-29         n  20 15.1 h / 17.3 h  x1.19 worst x0.99  dense x1.33 (n 3)  15%
+      kind:ordinary      n  40 12.0 h / 13.8 h  x1.19 worst x0.97  dense x1.17 (n 7)  18%
+    vs today: 15.8 h, per-learner ratio mean 1.20 worst 10% 1.00 worst 1% 0.92, slower for 15 of 160
+
+=== date 1 month
+before 5 Nov 18.2 h, reach 100% (L 6.0 P 4.4 R 7.8), recall 0.96 | TODAY (round 3 rule, on by default) 18.0 h (L 6.0 P 4.4 R 7.6), reach 100%, recall 0.96
+  baseline dense self-study                 17.0 h, reach 64%, recall on the day 0.74, lowest recall during 0.72
+  baseline sparse self-study                14.8 h, reach 4%, recall on the day 0.49, lowest recall during 0.43
+  baseline self-study at 95% (design pick)  18.7 h, reach 98%, recall on the day 0.87, lowest recall during 0.83
+  baseline normal, fixed N                  15.7 h, reach 99%, recall on the day 0.86, lowest recall during 0.02
+  baseline typical tutor, fixed N           14.0 h, reach 99%, recall on the day 0.89, lowest recall during 0.07
+  safe: 17.1 h (median 16.1, worst 10/5/1% 25.4/32.5/37.3), L 3.8 P 6.8 R 6.5, page share 0.62, reach 100%, reach+all understood 100%, skills understood 100.0%, recall on the day 0.83, lowest recall during 0.82
+    x vs dense self-study                 mean 1.03 median 1.02 worst 10/5/1% 0.92/0.88/0.86 (n 102; baseline misses 58, arm misses 0; at 4x: 0)
+    x vs sparse self-study                mean 1.01 median 1.00 worst 10/5/1% 0.91/0.91/0.91 (n 6; baseline misses 154, arm misses 0; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.12 median 1.11 worst 10/5/1% 0.99/0.96/0.90 (n 157; baseline misses 3, arm misses 0; at 4x: 0)
+    x vs normal, fixed N                  mean 0.95 median 0.94 worst 10/5/1% 0.82/0.79/0.78 (n 159; baseline misses 1, arm misses 0; at 4x: 0)
+    x vs typical tutor, fixed N           mean 0.85 median 0.84 worst 10/5/1% 0.73/0.71/0.67 (n 158; baseline misses 2, arm misses 0; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 14.5 h / 15.7 h  x1.11 worst x0.91  dense x1.09 (n 6)  100%
+      band:30-59         n  69 15.2 h / 16.0 h  x1.07 worst x0.82  dense x1.04 (n 48)  100%
+      kind:tail_lo       n  12 15.9 h / 16.7 h  x1.06 worst x0.96  dense x1.01 (n 6)  100%
+      band:13-17         n  12 17.3 h / 17.8 h  x1.05 worst x0.91  dense x1.02 (n 7)  100%
+      kind:contradict    n  24 18.9 h / 19.8 h  x1.07 worst x0.82  dense x1.01 (n 13)  100%
+      kind:random        n  24 16.5 h / 17.4 h  x1.08 worst x0.94  dense x1.04 (n 16)  100%
+      band:8-12          n  28 20.9 h / 21.4 h  x1.04 worst x0.91  dense x0.98 (n 16)  100%
+      kind:tail_both     n  12 17.1 h / 17.8 h  x1.06 worst x0.88  dense x1.04 (n 8)  100%
+      kind:age_young     n  12 22.5 h / 22.8 h  x1.02 worst x0.91  dense x0.98 (n 8)  100%
+      kind:age_old       n  12 18.7 h / 20.9 h  x1.13 worst x1.01  dense x1.08 (n 9)  100%
+      band:60+           n  31 16.7 h / 18.3 h  x1.12 worst x0.97  dense x1.07 (n 20)  100%
+      kind:ell           n  12 17.6 h / 18.6 h  x1.07 worst x0.94  dense x1.04 (n 7)  100%
+      band:18-29         n  20 18.5 h / 19.5 h  x1.08 worst x0.88  dense x1.04 (n 11)  100%
+      kind:ordinary      n  40 15.1 h / 15.9 h  x1.07 worst x0.91  dense x1.03 (n 29)  100%
+    vs today: 18.0 h, per-learner ratio mean 1.07 worst 10% 0.96 worst 1% 0.88, slower for 40 of 160
+  end: 14.6 h (median 13.5, worst 10/5/1% 22.7/29.0/34.6), L 3.4 P 5.0 R 6.2, page share 0.57, reach 67%, reach+all understood 55%, skills understood 98.2%, recall on the day 0.86, lowest recall during 0.15
+    x vs dense self-study                 mean 1.30 median 1.28 worst 10/5/1% 1.08/1.06/0.97 (n 55; baseline misses 33, arm misses 72; at 4x: 0)
+    x vs sparse self-study                mean 1.31 median 1.23 worst 10/5/1% 1.10/1.10/1.10 (n 5; baseline misses 83, arm misses 72; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.41 median 1.39 worst 10/5/1% 1.17/1.15/1.05 (n 85; baseline misses 3, arm misses 72; at 4x: 0)
+    x vs normal, fixed N                  mean 1.18 median 1.15 worst 10/5/1% 0.96/0.94/0.86 (n 87; baseline misses 1, arm misses 72; at 4x: 0)
+    x vs typical tutor, fixed N           mean 1.08 median 1.06 worst 10/5/1% 0.87/0.84/0.78 (n 87; baseline misses 1, arm misses 72; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 12.3 h / 15.7 h  x1.39 worst x0.95  dense x1.56 (n 3)  67%
+      band:30-59         n  69 12.8 h / 16.0 h  x1.30 worst x0.99  dense x1.28 (n 26)  57%
+      kind:tail_lo       n  12 14.0 h / 16.7 h  x1.22 worst x1.07  dense x1.25 (n 2)  58%
+      band:13-17         n  12 15.0 h / 17.8 h  x1.23 worst x0.94  dense x1.29 (n 4)  67%
+      kind:contradict    n  24 16.3 h / 19.8 h  x1.29 worst x0.99  dense x1.33 (n 5)  46%
+      kind:random        n  24 14.1 h / 17.4 h  x1.31 worst x0.98  dense x1.28 (n 11)  58%
+      band:8-12          n  28 18.2 h / 21.4 h  x1.22 worst x0.95  dense x1.24 (n 6)  50%
+      kind:tail_both     n  12 14.2 h / 17.8 h  x1.28 worst x1.00  dense x1.37 (n 4)  50%
+      kind:age_young     n  12 19.8 h / 22.8 h  x1.20 worst x1.01  dense x1.23 (n 2)  42%
+      kind:age_old       n  12 15.4 h / 20.9 h  x1.41 worst x1.10  dense x1.42 (n 4)  42%
+      band:60+           n  31 14.1 h / 18.3 h  x1.38 worst x1.07  dense x1.42 (n 10)  48%
+      kind:ell           n  12 15.1 h / 18.6 h  x1.26 worst x1.04  dense x1.40 (n 4)  58%
+      band:18-29         n  20 15.9 h / 19.5 h  x1.29 worst x1.01  dense x1.28 (n 9)  60%
+      kind:ordinary      n  40 12.8 h / 15.9 h  x1.29 worst x0.94  dense x1.22 (n 20)  63%
+    vs today: 18.0 h, per-learner ratio mean 1.29 worst 10% 1.05 worst 1% 0.95, slower for 5 of 160
+
+=== date 6 months
+before 5 Nov 22.2 h, reach 100% (L 6.0 P 4.4 R 11.7), recall 0.98 | TODAY (round 3 rule, on by default) 21.8 h (L 6.0 P 4.4 R 11.4), reach 100%, recall 0.98
+  baseline dense self-study                 21.6 h, reach 50%, recall on the day 0.70, lowest recall during 0.65
+  baseline sparse self-study                17.0 h, reach 0%, recall on the day 0.23, lowest recall during 0.23
+  baseline self-study at 95% (design pick)  24.3 h, reach 98%, recall on the day 0.89, lowest recall during 0.83
+  baseline normal, fixed N                  15.7 h, reach 99%, recall on the day 0.86, lowest recall during 0.00
+  baseline typical tutor, fixed N           14.1 h, reach 99%, recall on the day 0.89, lowest recall during 0.00
+  safe: 20.6 h (median 19.7, worst 10/5/1% 29.8/38.6/42.1), L 3.8 P 6.8 R 10.0, page share 0.62, reach 100%, reach+all understood 100%, skills understood 100.0%, recall on the day 0.84, lowest recall during 0.84
+    x vs dense self-study                 mean 1.08 median 1.07 worst 10/5/1% 0.99/0.96/0.86 (n 80; baseline misses 80, arm misses 0; at 4x: 0)
+    x vs sparse self-study                mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 160, arm misses 0; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.19 median 1.18 worst 10/5/1% 1.07/1.04/1.01 (n 157; baseline misses 3, arm misses 0; at 4x: 0)
+    x vs normal, fixed N                  mean 0.77 median 0.77 worst 10/5/1% 0.70/0.69/0.64 (n 159; baseline misses 1, arm misses 0; at 4x: 0)
+    x vs typical tutor, fixed N           mean 0.70 median 0.69 worst 10/5/1% 0.63/0.60/0.58 (n 158; baseline misses 2, arm misses 0; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 17.7 h / 19.1 h  x1.09 worst x0.96  dense x1.13 (n 6)  100%
+      band:30-59         n  69 18.5 h / 19.6 h  x1.07 worst x0.87  dense x1.08 (n 40)  100%
+      kind:tail_lo       n  12 19.2 h / 20.2 h  x1.06 worst x0.95  dense x1.05 (n 3)  100%
+      band:13-17         n  12 20.7 h / 21.3 h  x1.04 worst x0.93  dense x1.07 (n 7)  100%
+      kind:contradict    n  24 22.6 h / 23.8 h  x1.07 worst x0.87  dense x1.08 (n 9)  100%
+      kind:random        n  24 20.1 h / 21.2 h  x1.07 worst x0.94  dense x1.07 (n 13)  100%
+      band:8-12          n  28 24.9 h / 25.6 h  x1.04 worst x0.94  dense x1.03 (n 11)  100%
+      kind:tail_both     n  12 20.6 h / 21.8 h  x1.07 worst x0.94  dense x1.10 (n 7)  100%
+      kind:age_young     n  12 26.8 h / 27.2 h  x1.02 worst x0.94  dense x1.02 (n 6)  100%
+      kind:age_old       n  12 23.0 h / 25.4 h  x1.11 worst x1.04  dense x1.11 (n 8)  100%
+      band:60+           n  31 20.4 h / 22.1 h  x1.10 worst x0.94  dense x1.11 (n 15)  100%
+      kind:ell           n  12 21.3 h / 22.2 h  x1.05 worst x0.94  dense x1.10 (n 5)  100%
+      band:18-29         n  20 22.3 h / 23.7 h  x1.07 worst x0.95  dense x1.09 (n 7)  100%
+      kind:ordinary      n  40 18.3 h / 19.4 h  x1.07 worst x0.93  dense x1.07 (n 23)  100%
+    vs today: 21.8 h, per-learner ratio mean 1.07 worst 10% 0.97 worst 1% 0.93, slower for 31 of 160
+  end: 15.1 h (median 13.9, worst 10/5/1% 23.6/30.0/34.9), L 3.4 P 5.0 R 6.7, page share 0.57, reach 96%, reach+all understood 84%, skills understood 98.3%, recall on the day 0.86, lowest recall during 0.07
+    x vs dense self-study                 mean 1.55 median 1.52 worst 10/5/1% 1.22/1.15/1.10 (n 70; baseline misses 64, arm misses 26; at 4x: 0)
+    x vs sparse self-study                mean n/a median n/a worst 10/5/1% n/a/n/a/n/a (n 0; baseline misses 134, arm misses 26; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.69 median 1.61 worst 10/5/1% 1.35/1.27/1.25 (n 131; baseline misses 3, arm misses 26; at 4x: 0)
+    x vs normal, fixed N                  mean 1.09 median 1.03 worst 10/5/1% 0.89/0.85/0.81 (n 133; baseline misses 1, arm misses 26; at 4x: 0)
+    x vs typical tutor, fixed N           mean 0.99 median 0.92 worst 10/5/1% 0.77/0.75/0.73 (n 132; baseline misses 2, arm misses 26; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 12.7 h / 19.1 h  x1.67 worst x1.03  dense x1.74 (n 5)  83%
+      band:30-59         n  69 13.3 h / 19.6 h  x1.55 worst x1.02  dense x1.54 (n 33)  83%
+      kind:tail_lo       n  12 14.4 h / 20.2 h  x1.44 worst x1.25  dense x1.34 (n 3)  100%
+      band:13-17         n  12 15.6 h / 21.3 h  x1.45 worst x0.99  dense x1.58 (n 6)  92%
+      kind:contradict    n  24 16.8 h / 23.8 h  x1.52 worst x1.02  dense x1.58 (n 7)  79%
+      kind:random        n  24 14.6 h / 21.2 h  x1.55 worst x1.08  dense x1.51 (n 13)  92%
+      band:8-12          n  28 18.8 h / 25.6 h  x1.43 worst x1.03  dense x1.39 (n 11)  89%
+      kind:tail_both     n  12 14.9 h / 21.8 h  x1.52 worst x1.06  dense x1.59 (n 6)  75%
+      kind:age_young     n  12 20.4 h / 27.2 h  x1.40 worst x1.10  dense x1.35 (n 6)  92%
+      kind:age_old       n  12 15.8 h / 25.4 h  x1.69 worst x1.19  dense x1.59 (n 7)  75%
+      band:60+           n  31 14.5 h / 22.1 h  x1.64 worst x1.16  dense x1.66 (n 13)  81%
+      kind:ell           n  12 15.6 h / 22.2 h  x1.48 worst x1.16  dense x1.62 (n 5)  92%
+      band:18-29         n  20 16.3 h / 23.7 h  x1.54 worst x1.10  dense x1.60 (n 7)  80%
+      kind:ordinary      n  40 13.2 h / 19.4 h  x1.54 worst x0.99  dense x1.57 (n 18)  78%
+    vs today: 21.8 h, per-learner ratio mean 1.54 worst 10% 1.18 worst 1% 1.02, slower for 1 of 160
+
+=== date 1 year
+before 5 Nov 23.8 h, reach 100% (L 6.0 P 4.4 R 13.3), recall 0.98 | TODAY (round 3 rule, on by default) 23.4 h (L 6.0 P 4.4 R 13.0), reach 100%, recall 0.99
+  baseline dense self-study                 24.1 h, reach 52%, recall on the day 0.70, lowest recall during 0.65
+  baseline sparse self-study                19.3 h, reach 1%, recall on the day 0.43, lowest recall during 0.18
+  baseline self-study at 95% (design pick)  26.5 h, reach 96%, recall on the day 0.87, lowest recall during 0.83
+  baseline normal, fixed N                  15.7 h, reach 99%, recall on the day 0.86, lowest recall during 0.00
+  baseline typical tutor, fixed N           14.1 h, reach 99%, recall on the day 0.89, lowest recall during 0.00
+  safe: 22.1 h (median 21.1, worst 10/5/1% 32.0/40.3/44.4), L 3.8 P 6.8 R 11.5, page share 0.62, reach 100%, reach+all understood 100%, skills understood 100.0%, recall on the day 0.83, lowest recall during 0.83
+    x vs dense self-study                 mean 1.11 median 1.11 worst 10/5/1% 1.02/0.98/0.91 (n 83; baseline misses 77, arm misses 0; at 4x: 0)
+    x vs sparse self-study                mean 1.00 median 1.04 worst 10/5/1% 0.96/0.96/0.96 (n 2; baseline misses 158, arm misses 0; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.22 median 1.21 worst 10/5/1% 1.10/1.06/1.04 (n 154; baseline misses 6, arm misses 0; at 4x: 0)
+    x vs normal, fixed N                  mean 0.72 median 0.72 worst 10/5/1% 0.65/0.64/0.60 (n 159; baseline misses 1, arm misses 0; at 4x: 0)
+    x vs typical tutor, fixed N           mean 0.65 median 0.64 worst 10/5/1% 0.59/0.57/0.54 (n 158; baseline misses 2, arm misses 0; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 19.0 h / 20.6 h  x1.10 worst x0.97  dense x1.17 (n 5)  100%
+      band:30-59         n  69 19.9 h / 21.2 h  x1.07 worst x0.90  dense x1.12 (n 40)  100%
+      kind:tail_lo       n  12 20.6 h / 21.6 h  x1.05 worst x0.97  dense x1.09 (n 4)  100%
+      band:13-17         n  12 22.1 h / 22.9 h  x1.05 worst x0.95  dense x1.11 (n 7)  100%
+      kind:contradict    n  24 24.1 h / 25.6 h  x1.07 worst x0.90  dense x1.10 (n 8)  100%
+      kind:random        n  24 21.6 h / 22.8 h  x1.07 worst x0.95  dense x1.10 (n 14)  100%
+      band:8-12          n  28 26.5 h / 27.4 h  x1.04 worst x0.94  dense x1.07 (n 13)  100%
+      kind:tail_both     n  12 21.9 h / 23.4 h  x1.08 worst x0.95  dense x1.14 (n 7)  100%
+      kind:age_young     n  12 28.6 h / 29.1 h  x1.03 worst x0.94  dense x1.05 (n 7)  100%
+      kind:age_old       n  12 24.8 h / 27.4 h  x1.11 worst x1.03  dense x1.14 (n 8)  100%
+      band:60+           n  31 22.0 h / 23.7 h  x1.09 worst x0.94  dense x1.13 (n 14)  100%
+      kind:ell           n  12 22.9 h / 24.0 h  x1.06 worst x0.94  dense x1.14 (n 5)  100%
+      band:18-29         n  20 23.9 h / 25.4 h  x1.07 worst x0.96  dense x1.10 (n 9)  100%
+      kind:ordinary      n  40 19.7 h / 20.8 h  x1.07 worst x0.94  dense x1.10 (n 25)  100%
+    vs today: 23.4 h, per-learner ratio mean 1.07 worst 10% 0.98 worst 1% 0.94, slower for 27 of 160
+  end: 15.1 h (median 13.9, worst 10/5/1% 23.7/30.1/34.9), L 3.4 P 5.0 R 6.7, page share 0.57, reach 99%, reach+all understood 86%, skills understood 98.3%, recall on the day 0.86, lowest recall during 0.03
+    x vs dense self-study                 mean 1.70 median 1.65 worst 10/5/1% 1.32/1.23/1.11 (n 73; baseline misses 65, arm misses 22; at 4x: 0)
+    x vs sparse self-study                mean 1.57 median 1.57 worst 10/5/1% 1.57/1.57/1.57 (n 1; baseline misses 137, arm misses 22; at 4x: 0)
+    x vs self-study at 95% (design pick)  mean 1.85 median 1.76 worst 10/5/1% 1.39/1.34/1.21 (n 132; baseline misses 6, arm misses 22; at 4x: 0)
+    x vs normal, fixed N                  mean 1.08 median 1.02 worst 10/5/1% 0.87/0.82/0.79 (n 137; baseline misses 1, arm misses 22; at 4x: 0)
+    x vs typical tutor, fixed N           mean 0.98 median 0.92 worst 10/5/1% 0.76/0.73/0.67 (n 136; baseline misses 2, arm misses 22; at 4x: 0)
+    by group (hours, today's, ratio to today, worst learner, ratio to dense self-study, reach+understood):
+      kind:tail_hi       n  12 12.8 h / 20.6 h  x1.81 worst x1.08  dense x2.04 (n 4)  92%
+      band:30-59         n  69 13.4 h / 21.2 h  x1.67 worst x1.07  dense x1.71 (n 34)  86%
+      kind:tail_lo       n  12 14.4 h / 21.6 h  x1.54 worst x1.33  dense x1.56 (n 4)  100%
+      band:13-17         n  12 15.6 h / 22.9 h  x1.56 worst x1.04  dense x1.77 (n 6)  92%
+      kind:contradict    n  24 16.9 h / 25.6 h  x1.64 worst x1.07  dense x1.67 (n 6)  79%
+      kind:random        n  24 14.7 h / 22.8 h  x1.67 worst x1.14  dense x1.66 (n 14)  92%
+      band:8-12          n  28 18.9 h / 27.4 h  x1.53 worst x1.08  dense x1.54 (n 12)  89%
+      kind:tail_both     n  12 15.0 h / 23.4 h  x1.63 worst x1.12  dense x1.77 (n 6)  83%
+      kind:age_young     n  12 20.4 h / 29.1 h  x1.49 worst x1.15  dense x1.53 (n 6)  92%
+      kind:age_old       n  12 15.9 h / 27.4 h  x1.82 worst x1.25  dense x1.77 (n 7)  83%
+      band:60+           n  31 14.5 h / 23.7 h  x1.76 worst x1.23  dense x1.83 (n 12)  84%
+      kind:ell           n  12 15.6 h / 24.0 h  x1.60 worst x1.24  dense x1.80 (n 5)  92%
+      band:18-29         n  20 16.4 h / 25.4 h  x1.65 worst x1.17  dense x1.69 (n 9)  85%
+      kind:ordinary      n  40 13.3 h / 20.8 h  x1.66 worst x1.04  dense x1.69 (n 21)  80%
+    vs today: 23.4 h, per-learner ratio mean 1.65 worst 10% 1.25 worst 1% 1.07, slower for 0 of 160
+
+=== GATE: every goal: all learners reach the target with all material understood, the worst 10% and every kind and age band faster than today
+safe: MISSED (27): horizon 1 week: 87% reach the target with all understood; horizon 1 week: worst 10% x0.88 against today; horizon 1 week: band:13-17 14.9 h not under 14.6 h; horizon 1 week: kind:contradict 16.3 h not under 16.3 h; horizon 1 week: band:8-12 18.3 h not under 17.6 h; horizon 1 week: kind:age_young 19.8 h not under 18.8 h; horizon 1 week: kind:ell 15.4 h not under 15.2 h; horizon 1 month: worst 10% x0.94 against today; horizon 1 month: kind:age_young 22.4 h not under 22.1 h; horizon 6 months: worst 10% x0.94 against today; horizon 6 months: band:13-17 20.6 h not under 20.3 h; horizon 6 months: band:8-12 24.8 h not under 24.7 h ...
+end: MISSED (25): horizon 1 week: 91% reach the target with all understood; horizon 1 week: worst 10% x0.79 against today; horizon 1 week: mean 15.8 h not under today's 14.7 h; horizon 1 week: kind:tail_hi 13.3 h not under 12.6 h; horizon 1 week: band:30-59 14.0 h not under 13.0 h; horizon 1 week: kind:tail_lo 14.9 h not under 13.7 h; horizon 1 week: band:13-17 16.3 h not under 14.6 h; horizon 1 week: kind:contradict 17.7 h not under 16.3 h; horizon 1 week: kind:random 15.2 h not under 14.2 h; horizon 1 week: band:8-12 19.7 h not under 17.6 h; horizon 1 week: kind:tail_both 15.9 h not under 14.6 h; horizon 1 week: kind:age_young 21.3 h not under 18.8 h ...
