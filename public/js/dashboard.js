@@ -112,7 +112,8 @@ App.mount(async () => {
       // while a generated one sat there unused — the same fault the path page had,
       // in a second place, which is what happens when one decision is made in two.
       return {
-        href: hasBaseLesson(e, e.current_level) ? baseHref(e, e.current_level) : `/session?enrollment=${e.id}`,
+        // With the test-out lever on the lesson opens on its check, in the session, and the page follows only if the check calls for it.
+        href: data.speed_testout ? `/session?enrollment=${e.id}&ordinary=1` : hasBaseLesson(e, e.current_level) ? baseHref(e, e.current_level) : `/session?enrollment=${e.id}`,
         label: `Start lesson ${e.current_level}`, short: 'Continue', kind,
       };
     }

@@ -23,6 +23,7 @@ const topics = require('../content/topics');
 // a grade holds.
 const LAYOUT = require('../config/level-layout');
 const baseLessons = require('../config/base-lessons');
+const speedLevers = require('../services/speed-levers');
 const blockLevels = require('../services/block-levels');
 const gamePayloads = require('../services/game-payloads');
 const gameAssignments = require('../config/game-assignments');
@@ -174,7 +175,14 @@ function sessionShape(session) {
     track_id: session.track_id || null,
     grade_id: session.grade_id || null,
     enrollment_id: session.enrollment_id || null,
+    // The speed levers (services/speed-levers.js). Not sent at all with them off; a learner who asked for feedback at the end keeps today's flow.
+    ...speedShape(session),
   };
+}
+
+function speedShape(session) {
+  const flags = speedLevers.clientFlags(session.user_id, session);
+  return (flags.testout || flags.fast) && !holdsFeedbackByChoice(session) ? { speed: flags } : {};
 }
 
 /**
@@ -571,6 +579,7 @@ router.post('/sessions/:id/answer', requireAuth, async (req, res) => {
     rationale: result.rationale,
     feedback: result.feedback || null,
     error_tag: result.errorTag || null,
+    ...(result.speed ? { speed: result.speed } : {}),
   });
 });
 
@@ -1506,6 +1515,12 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
       pass_marks: curriculum.passMarksFor({ base: require('../config/owner').ownerOnly(req.user.id) }), // eslint-disable-line global-require
     },
     nodes: req.query.view === 'page' ? nodes.map(pageNode) : nodes,
+    // The speed levers: a lesson opens on its check, and pages a check let the learner skip are listed so nothing is lost silently. Absent with the switch off.
+    ...require('../services/speed-placement').pathView(req.user.id, enrollment, grade), // eslint-disable-line global-require
+    ...(speedLevers.clientFlags(req.user.id, {}).testout ? {
+      speed_testout: true,
+      skipped_pages: db.find('lessons', (l) => l.user_id === req.user.id && l.track_id === enrollment.track_id && l.grade_id === enrollment.grade_id && l.skipped_by_check_at).map((l) => ({ level: l.level, title: l.title })).sort((a, b) => a.level - b.level),
+    } : {}),
     progress,
     skills,
     // The Challenge Exam offer, so the path can put it in front of the learner

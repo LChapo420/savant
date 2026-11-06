@@ -210,7 +210,7 @@ App.mount(async () => {
       : isExam()
         ? `Level ${currentLevel}. No feedback until the end; pass mark ${Math.round((session.pass_mark || 0.8) * 100)}%.`
         : blockKind === 'lesson'
-          ? `Level ${currentLevel}, lesson. Read it, then ${items.length} question${items.length === 1 ? '' : 's'}.`
+          ? retrievalFirst() ? `Level ${currentLevel}, lesson. ${items.length} question${items.length === 1 ? '' : 's'} first; the page if you need it.` : `Level ${currentLevel}, lesson. Read it, then ${items.length} question${items.length === 1 ? '' : 's'}.`
           : `${items.length} questions: review, your level, and one stretch above it.`;
     // The note under the question is only for what a learner must know:
     // an exam's rules, or that feedback is held to the end.
@@ -367,9 +367,110 @@ App.mount(async () => {
         lessonTelemetry.scroll.stop();
       }
       startedAt = Date.now();
+      if (index >= items.length) { closeBlock(); return; } // reached from a skipped page or a miss on the last check: nothing left to ask
       show();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+  }
+
+  // ── the speed levers (services/speed-levers.js; only with session.speed from the server) ──────────────
+  function retrievalFirst() { return !!(session.speed && session.speed.testout && blockKind === 'lesson' && lesson && !session.preview && items.length); }
+
+  /** The first check of a lesson opened retrieval first says why there is no page yet. */
+  function speedIntro() {
+    if (retrievalFirst() && index === 0) effortNote('Get these right and you can skip the page. Miss one and we show you the part you need.', 'A quick check first.');
+  }
+
+  /** Only the parts of the page this miss calls for. The whole page is one tap away. */
+  function renderLessonParts(ids) {
+    const itemHost = document.getElementById('item');
+    host.setAttribute('data-view', 'lesson');
+    const sectionHtml = (s) => `
+      <section class="lesson-section lesson-rule card">
+        <h3 class="lesson-label">${App.escapeHtml(App.cleanTitle(s.heading))}</h3>
+        <p>${App.escapeHtml(s.body)}</p>
+        ${s.example ? `<pre class="lesson-example">${App.escapeHtml(s.example)}</pre>` : ''}
+      </section>`;
+    const html = ids.map((id) => {
+      if (id === 'worked' && lesson.worked_example) {
+        return `<section class="lesson-section lesson-worked card"><h3 class="lesson-label">Worked example</h3>
+          <pre class="lesson-example">${App.escapeHtml(lesson.worked_example.problem)}</pre>
+          <ol class="lesson-steps">${lesson.worked_example.steps.map((step) => `<li>${App.escapeHtml(step)}</li>`).join('')}</ol>
+          <p class="small"><strong>Answer:</strong> ${App.escapeHtml(lesson.worked_example.answer)}</p></section>`;
+      }
+      if (id === 'mistakes') {
+        return `<section class="lesson-section lesson-trap"><div class="lesson-trap-body"><h3 class="lesson-label">Where this usually goes wrong</h3>
+          <ul>${(lesson.common_mistakes || []).map((m) => `<li>${App.escapeHtml(m)}</li>`).join('')}</ul></div></section>`;
+      }
+      const s = (lesson.sections || [])[Number(String(id).slice(1))];
+      return s ? sectionHtml(s) : '';
+    }).join('');
+    itemHost.innerHTML = `
+      <article class="lesson">
+        <p class="lesson-meta">The part of this lesson that answer calls for.</p>
+        <h2>${App.escapeHtml(App.cleanTitle(lesson.title))}</h2>
+        ${html}
+        <div class="check-bar lesson-bar">
+          <button class="btn btn-primary btn-lg btn-block" id="speed-back" type="button">${index >= items.length ? 'Finish lesson' : 'Back to the check'}</button>
+          <button class="btn btn-block" id="speed-whole" type="button">See the whole lesson</button>
+        </div>
+      </article>`;
+    document.getElementById('speed-back').addEventListener('click', () => { startedAt = Date.now(); if (index >= items.length) closeBlock(); else show(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    document.getElementById('speed-whole').addEventListener('click', () => { renderLesson(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
+
+  /** The page was skipped: said in words, with the page one tap away. */
+  function renderPageSkipped(message) {
+    const itemHost = document.getElementById('item');
+    host.setAttribute('data-view', 'lesson');
+    itemHost.innerHTML = `
+      <article class="lesson">
+        <h2>${App.escapeHtml(App.cleanTitle(lesson.title))}</h2>
+        <p class="lesson-intro" role="status">${App.escapeHtml(message)}</p>
+        <div class="check-bar lesson-bar">
+          <button class="btn btn-primary btn-lg btn-block" id="speed-on" type="button">Carry on</button>
+          <button class="btn btn-block" id="speed-read" type="button">Read the page anyway</button>
+        </div>
+      </article>`;
+    document.getElementById('speed-on').addEventListener('click', () => closeBlock());
+    document.getElementById('speed-read').addEventListener('click', () => { renderLesson(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
+
+  /**
+   * A typed answer still being checked, on a lesson opened retrieval first: wait for the verdict, because a miss must bring its teaching. If the check takes too long the whole
+   * page is shown: not knowing is treated as a miss, so nothing is passed over on a verdict nobody has seen.
+   */
+  async function afterSpeedChecking(item) {
+    const itemHost = document.getElementById('item');
+    itemHost.innerHTML = '<div class="loading"><span class="spinner"></span>Checking your answer</div>';
+    for (let i = 0; i < 20; i++) {
+      let status = null;
+      try { status = await App.api.get(`/api/items/${item.id}/grading`); } catch { status = null; }
+      if (status && !status.checking) {
+        item.correct = status.correct === undefined ? null : status.correct;
+        return afterSpeed(status.speed || null);
+      }
+      await new Promise((resolve) => { setTimeout(resolve, 1000); });
+    }
+    return afterSpeed({ action: 'teach', whole: true });
+  }
+
+  /** What the server decided after this answer, once the learner has read the verdict. */
+  function afterSpeed(step) {
+    if (!step) return advance();
+    if (step.set_aside && step.set_aside.length) {
+      const gone = new Set(step.set_aside);
+      items = items.filter((i) => !gone.has(i.id));
+    }
+    if (step.action === 'skip_page') { index = items.length; renderPageSkipped(step.message); return undefined; }
+    if (step.action === 'teach') {
+      index++;
+      if (step.whole) renderLesson(); else renderLessonParts(step.parts || []);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return undefined;
+    }
+    if (step.action === 'stop_skill' && step.message) App.toast(step.message);
+    return advance();
   }
 
   // ── the written checkpoint ───────────────────────────────────────────────
@@ -829,7 +930,8 @@ function renderRubricResult(result) {
     progress();
     Player.render(itemHost, item, {
       // Choose, then Check; the Check button is sticky at the bottom on a phone.
-      check: isExam() || heldFeedback ? 'Next' : 'Check',
+      // SPEED_FAST_ITEM: a multiple choice answer is one tap, in practice and checks only.
+      check: isExam() || heldFeedback ? 'Next' : (session.speed && session.speed.fast ? (item.format === 'multiple_choice' ? null : 'Check') : 'Check'),
       // The role ("Focus", "Review", "Stretch") and the item's metadata are for
       // checking the content, not for the learner: shown only with ?debug=1.
       label: App.query('debug') ? roleLabel : null,
@@ -837,7 +939,7 @@ function renderRubricResult(result) {
       // Asked on about one question in three, so it stays a quick tap rather than
       // a chore — enough for the learning scorecard to learn how well this learner
       // knows what they know.
-      askConfidence: !isExam() && (maxAccuracy || index % 3 === 1),
+      askConfidence: !isExam() && (maxAccuracy || index % 3 === 1) && !(session.speed && session.speed.fast),
       onSubmit: async (answer, meta = {}) => {
         let result;
         try {
@@ -869,10 +971,16 @@ function renderRubricResult(result) {
           if (result.slow_down && index < items.length) effortNote(result.slow_down.message, 'Slow down a little.');
           return;
         }
+        // SPEED_FAST_ITEM: a right answer moves on by itself after a tick. A miss, or a step from the other levers, stops as usual.
+        if (session.speed && session.speed.fast && result.correct === true && !result.checking && !result.speed && !result.slow_down && index + 1 < items.length) {
+          App.announce('Right.');
+          setTimeout(() => advance(), 500);
+          return;
+        }
         const last = index + 1 >= items.length;
         const verdict = Player.reveal(itemHost, item, result, {
           nextLabel: last ? (isEssay() ? (essay && essay.mode === 'oral' ? 'Say it aloud' : 'Write it') : isExam() ? 'Finish and score' : `Finish level ${currentLevel}`) : 'Next question',
-          onNext: () => advance(),
+          onNext: () => (result.checking && retrievalFirst() ? afterSpeedChecking(item) : afterSpeed(result.speed)),
         });
         if (result.slow_down && verdict) {
           verdict.insertAdjacentHTML('afterbegin', `<p class="effort-note small"><strong>Slow down a little.</strong> ${App.escapeHtml(result.slow_down.message)}</p>`);
@@ -1001,6 +1109,7 @@ function renderRubricResult(result) {
     const counter = document.getElementById('counter');
     if (counter) counter.textContent = '';
     const advanced = !!outcome.level_up;
+    if (outcome.speed_skipped) App.toast(`You've shown you have this, so ${outcome.speed_skipped} more practice level${outcome.speed_skipped === 1 ? ' was' : 's were'} passed over. They are still on your path.`);
     const wasLesson = outcome.kind === 'lesson';
     const nextKind = outcome.next_kind;
     // `checkpointKinds` was never defined here, so every non-exam level close threw.
@@ -1219,6 +1328,7 @@ function renderRubricResult(result) {
     blockKind = next.kind || 'practice';
     lesson = next.lesson || null;
     essay = next.essay || null;
+    session.speed = next.speed || null;
     session.kind_label = next.kind_label || null;
     items = next.items;
     session.pass_mark = next.pass_mark || session.pass_mark;
@@ -1229,9 +1339,9 @@ function renderRubricResult(result) {
     progress();
     // A lesson level opens on the lesson, a written checkpoint opens on its
     // quick check, and everything else opens on a question.
-    if (blockKind === 'lesson' && lesson) renderLesson();
+    if (blockKind === 'lesson' && lesson && !retrievalFirst()) renderLesson();
     else if (isEssay() && !items.some((i) => !i.answered)) openEssay();
-    else show();
+    else { show(); speedIntro(); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -1504,9 +1614,12 @@ function renderRubricResult(result) {
     // A reload on a finished block goes back to the recap, because there is
     // nothing left to answer and the summary is what the sitting was for.
     await closeBlock();
-  } else if (blockKind === 'lesson' && lesson && !items.some((i) => i.answered)) {
+  } else if (blockKind === 'lesson' && lesson && !items.some((i) => i.answered) && !retrievalFirst()) {
     // A lesson level opens on the lesson itself; the check questions come after.
     renderLesson();
+  } else if (retrievalFirst() && index === 0) {
+    show();
+    speedIntro();
   } else {
     show();
   }

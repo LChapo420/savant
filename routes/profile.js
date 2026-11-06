@@ -228,6 +228,7 @@ router.get('/progress', requireAuth, (req, res) => {
     // `e.track_id` here finds nothing for every enrollment and the whole map comes
     // back empty — which is indistinguishable from "no pages exist", so it fails
     // silently and looks like a working feature with nothing in it.
+    ...(require('../services/speed-levers').clientFlags(req.user.id, {}).testout ? { speed_testout: true } : {}), // eslint-disable-line global-require
     base_lessons: baseLessons.canSeeBaseLessons(req.user)
       ? enrollments.reduce((acc, e) => {
         const levels = baseLessons.levelsFor(e.track.id, e.grade.id);
