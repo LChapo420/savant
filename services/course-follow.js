@@ -51,7 +51,7 @@ function mergeDense(paragraphs, spec) {
   if (cur.length) { if (out.length && cur.reduce((n, x) => n + sentences(x).length, 0) < 3) out[out.length - 1] += ` ${cur.join(' ')}`; else out.push(cur.join(' ')); }
   return out;
 }
-const wantsDense = (spec) => !!(spec && spec.lesson && spec.lesson.chunkSentences >= 5);
+const wantsDense = (spec) => !!(spec && spec.lesson && spec.lesson.chunkSentences >= 4);
 
 /** Split paragraphs into chunks of at most `per` sentences (a learner who cannot take dense text). No model call, no word changed. */
 function splitDense(paragraphs, spec) {

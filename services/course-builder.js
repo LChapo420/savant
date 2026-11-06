@@ -621,7 +621,7 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
     }
     const left = check(paragraphs, keyPoints);
     if (left.length) { paragraphs = F.applyFallbacks(paragraphs, left); ctx.dropped.follow_fallbacks = (ctx.dropped.follow_fallbacks || 0) + left.filter((x) => F.FALLBACK_IDS.includes(x.id)).length; }
-    if (F.wantsDense(spec)) paragraphs = F.mergeDense(paragraphs, spec);
+    if (F.wantsDense(spec)) { paragraphs = F.mergeDense([...paragraphs, ...(keyPoints.length ? [`In short: ${keyPoints.join(' ')}`] : [])], spec); keyPoints = []; }
     else if (F.needsSplit(spec) || F.smallChunks(spec)) paragraphs = F.splitDense(paragraphs, spec);
     if (spec.feedback && spec.feedback.lowStakes && F.TEST_WORDS.test([...paragraphs, ...keyPoints].join(' '))) { paragraphs = paragraphs.map(F.deTest); keyPoints = keyPoints.map(F.deTest); }
   }
