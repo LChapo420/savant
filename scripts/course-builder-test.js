@@ -256,7 +256,7 @@ function mockLlm(mode = 'good') {
       { id: 'a', title: 'Inside the cell', unit: 'U', prerequisites: [], passage_ids: ['p1'] },
       { id: 'b', title: 'Photosynthesis', unit: 'U', prerequisites: ['a'], passage_ids: ['p2'] },
     ] } };
-    if (a.task === 'material_lesson' && /Skill: Inside the cell/.test(a.user)) { aCalls++; if (aCalls <= 2) return null; }
+    if (a.task === 'material_lesson' && /Skill: Inside the cell/.test(a.user)) { aCalls++; if (aCalls <= 6) return null; }
     return v2(a);
   };
   const mr = materials.addPaste(u.id, 'Resume edges', [para(S1), para(S2)].join('\n\n')).value;
@@ -290,6 +290,10 @@ function mockLlm(mode = 'good') {
   check('route wiring: POST and GET /:id/course, rate limited, behind requireAuth', /router\.post\('\/:id\/course', requireAuth, limit\('materials-course'/.test(src) && /router\.get\('\/:id\/course', requireAuth/.test(src));
   check('the GET never returns answers (summary only)', /courses\.summary\(courses\.get/.test(src));
   check('collection registered, exported and deleted with the account', /'material_courses'/.test(read('config/db.js')) && /'materials', 'material_courses'/.test(read('routes/profile.js')) && /'materials', 'material_courses'/.test(read('routes/consent.js')));
+  const cbSrc = read('services/course-builder.js');
+  check('short mode is off by default and its switch exists', cb.isShort() === false && typeof cb.setShort === 'function');
+  check('the lesson budget is relative to the source, has no inflating floor, and an over-budget lesson is sent back once to be shortened', !/Math\.max\(90,/.test(cbSrc) && /LESSON_FLOOR = 25/.test(cbSrc) && /material_shorten/.test(cbSrc) && /ownWords\(skill, passageById, ctx\)/.test(cbSrc));
+  check('the fact sweep checks source sentences with a number, name or definition against the lesson and adds what is missing within 0.8x the source', /SWEEP_CAP = 0\.8/.test(cbSrc) && /material_sweep/.test(cbSrc) && /factSweep\(skills, passageById, ctx/.test(cbSrc));
   check('no provider name or paid call in the builder', !/openrouter|anthropic|nvidia|fetch\(/i.test(read('services/course-builder.js').replace(/^\s*\*.*$/gm, '').replace(/\/\/.*$/gm, '')));
   check('the sealed Spanish files are untouched by this slice', !/spanish-check/.test(src));
   check('the tutor reads the collection', /material_courses/.test(read('services/tutor-context.js')));

@@ -233,3 +233,57 @@ Findings:
 - Builds ended "partial" in most runs (a gated or question check missed after one revision); the first attempt with xKiro/MiniMax and Munito failed (their daily
   free quotas were spent), so those numbers are discarded, not reported.
 - Spend: Gonka about $1.7 (ledger delta, other users included), NVIDIA and Gemini free tiers $0; no Anthropic key, Modelflare or Standard Compute.
+
+## 10. Shorter lessons that keep the facts (4 Nov 2026; AI-JUDGED, SIMULATED; 2 builds per document, 10 documents, same exam and judges as section 9)
+
+Rows: `docs/uploads-proof-big-results-short-rows.json` (20 builds). Causes found in section 9 and what was changed in `services/course-builder.js`:
+
+- **A 90-word floor per skill and a cap measured on whole passages**: skills share passages, so each got the whole passage's words (and 4 to 9 skills x 90 words
+  exceeded a short source). Now the budget is half the source's words, shared out by the skill's own share of each passage, with a 25-word floor; paragraphs
+  and key points count together; an over-budget lesson (1.3x) is sent back once to be cut with every fact kept (`material_shorten`).
+- **Plain facts dropped**: the writer now sees every key point of its passages (weights 1 to 5; weight only sets how many words, never whether it is kept), and the
+  instruction says every name, number, date, term and cause stays as a short clause.
+- **Builds ending "partial"**: a skill the model never answered (busy or timed out) is asked up to twice more before the build gives up on it. Most builds
+  ended "partial" before; 11 of 20 now end "ready" (the rest: one missed gated point, or a skill that stayed unanswered).
+- One skill per 700 characters (was 250): fewer, broader skills, so less repeated framing.
+
+Result (builder Gonka DeepSeek V4 Flash, judges A = Gonka GLM 5.3 Flash and B = Gemini free tier; judge B often returned nothing, so its cells have fewer answers):
+
+| | before (section 9) | after |
+|---|---|---|
+| Lesson words / source words | 2.27x (7 emphasised docs), 0.95-1.22x (3 plain) | 0.60x all 20 builds (one build 1.54x: Strunk rep 2), max otherwise 0.88x |
+| Emphasised answerable A / B (7 docs) | 96% / 92% | 89% / 89% (BELOW before; 8-question exams, 14 builds: one or two answers) |
+| Plain answerable A / B, 7 emphasised docs | 66% / 57% | 63% / 40% (NOT improved) |
+| Plain answerable A / B, 3 documents without emphasis | 58% / 58% | 88% / 81% |
+| Builds "ready" | 3 of 12 (about 1 in 4) | 11 of 20 |
+
+Honest reading: length now falls well under the source and plain facts rose a lot where nothing is stressed, but on the emphasised documents the shorter lesson answers
+slightly fewer emphasised and no more plain questions than before, so the goal "emphasised must not drop" is NOT met. A trial with a 0.65 share (not completed, stopped
+early) came out near 0.66-0.86x with no better plain-fact answers (tides 0%), so the cap was put back to 0.5. Open: a deterministic sweep that checks every
+source sentence with a number, a name or a definition against the lesson, and a measurement with more than 2 builds and more than 4 plain questions per document.
+Spend: Gonka about $1.0 (ledger delta), NVIDIA and Gemini free tiers $0; no Anthropic key, Standard Compute or Munito.
+
+## 11. Fact sweep, stronger judge, bigger exam, before re-measured (4 Nov 2026; AI-JUDGED, SIMULATED; NOT PASSED)
+
+Added to `services/course-builder.js`: after the lessons, every source sentence with a number, a name, a definition or a stated cause is checked against its skill's
+lesson (words of the lesson, key points and question text, not the question quotes); what is missing is added by one model call per skill in at most 18 words each,
+each addition kept only if it stays inside the missing sentences' own words, up to 0.8x the source's words in all (`SWEEP_CAP`); the writer's own budget is 0.55x.
+Measurement (`scripts/uploads-proof-big.js`, exam in `docs/uploads-proof-big-exam2.json`: up to 8 emphasised and 8 plain questions per document, 148 questions,
+written from the SOURCE by NVIDIA nemotron): builder Gonka DeepSeek V4 Flash; judge A Gonka GLM 5.3 Flash (one answer call plus one grading call per question);
+judge B Lyceum GLM 5.3 (`z-ai/glm-5.3`), ONE call per document and material that answers every question and then compares with the reference (the stronger judge
+costs about 2 cents a call, so per-question calls would not fit the $3 cap; the single-call form is less strict). BEFORE was re-measured with the same judges and exam
+by running main's course builder (commit 07e21f3) in the same script. Rows: `docs/uploads-proof-big-results-sweep-rows.json` (before 20 builds, after 19: one OCW build
+failed).
+
+| | before | after |
+|---|---|---|
+| Lesson words / source words (all builds) | 1.96x (max 3.99x) | 0.69x (max 0.90x) |
+| Emphasised answerable A / B (7 docs) | 92% / 95% | 89% / 93% |
+| Plain answerable A / B, 7 emphasised docs | 64% / 68% | 67% / 65% |
+| Plain answerable A / B, 3 docs without emphasis | 76% / 79% | 85% / 81% |
+| Builds "ready" | 11 of 20 | 12 of 19 |
+
+Reading: the length goal is met on every build. Emphasised coverage is 2 to 3 points BELOW the before figure on both judges (13 builds, up to 8 questions each: a handful of
+answers, so it may be noise, but the pass rule was "at or above"), and plain facts rose on three of four judge/group cells and fell 3 points on one. The pass rule is
+therefore NOT met and the branch stays unmerged. Not tried: spending more words than 0.8x, or a sweep that also re-asks the judge. Spend: Gonka and Lyceum (about 60 judge calls
+for B, roughly $1 to $2) from the shared ledgers, NVIDIA free; no Anthropic key, Standard Compute or Munito.
