@@ -9,6 +9,7 @@
 const { makeLedger } = require('./credit-ledger');
 
 const PRICES = {
+  'moonshotai/kimi-k3.1-pro': { input: 2, output: 10 }, // read from Lyceum's model list, 6 Nov 2026; reasoning tokens bill as output
   'moonshotai/kimi-k3': { input: 3, output: 15 },
   'moonshotai/kimi-k2.7-code': { input: 1.25, output: 4.5 },
   'z-ai/glm-5.3': { input: 1.4, output: 4.4 },
