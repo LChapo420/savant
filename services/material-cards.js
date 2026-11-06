@@ -101,7 +101,7 @@ function sync(userId, materialId, now = Date.now()) {
       }
     }
   }
-  if (added) { save(r); db.flush(); }
+  if (added) { save(r); db.saveSoon(); }
   return { row: r, added };
 }
 
@@ -191,7 +191,7 @@ function review(userId, materialId, cardId, rating, now = Date.now()) {
   save(r);
   const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
   if (prog) db.update('material_progress', prog.id, { forget_m: r.forget_m || 0 });
-  db.flush();
+  db.saveSoon();
   return { card: c.id, rating, next_in_days: days, due_at: c.due };
 }
 
@@ -208,7 +208,7 @@ function add(userId, materialId, body, now = Date.now()) {
   const r = row(userId, materialId);
   const card = addCard(r, { ...f, source: 'own', now: new Date(now).toISOString() });
   if (!card) return { error: 'This deck is full.', code: 'full' };
-  save(r); db.flush();
+  save(r); db.saveSoon();
   return { card: card.id };
 }
 
@@ -223,7 +223,7 @@ function edit(userId, materialId, cardId, body) {
   const back = b.back === undefined ? c.back : clean(b.back, 600);
   if (!front || !back) return { error: 'A card needs a front and a back.', code: 'empty' };
   Object.assign(c, { front, back, edited: true });
-  save(r); db.flush();
+  save(r); db.saveSoon();
   return { card: c.id };
 }
 
@@ -235,7 +235,7 @@ function remove(userId, materialId, cardId) {
   if (!gone) return { error: 'No such card.', code: 'no_card' };
   r.cards = r.cards.filter((x) => x.id !== cardId);
   if (gone.key) r.dismissed = [...(r.dismissed || []), gone.key].slice(-500);
-  save(r); db.flush();
+  save(r); db.saveSoon();
   return { removed: n - r.cards.length };
 }
 

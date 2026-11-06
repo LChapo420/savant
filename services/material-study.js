@@ -256,7 +256,7 @@ function placementNext(userId, materialId, opts = {}) {
   if (!nx) {
     const result = finishPlacement(course, r, now);
     save(r);
-    db.flush();
+    db.saveSoon();
     return { done: true, asked: r.placement.answers.length, ...placementSummary(course, result) };
   }
   r.placement.pending = { skill: nx.skill, qid: nx.question.id, stage: nx.stage };
@@ -482,7 +482,7 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
   }
   noteAnswers(r, results, now);
   save(r);
-  db.flush();
+  db.saveSoon();
 
   const out = { mode: quiz.mode, report, overall: { right: results.filter((x) => x.ok).length, total: results.length } };
   // Remediation: for each miss, the answer, the reason, the misunderstanding behind the pick and the passage.
@@ -530,7 +530,7 @@ function checkin(userId, materialId, check, answer, opts = {}) {
   }
   out.due = st.due || null;
   save(r);
-  db.flush();
+  db.saveSoon();
   return out;
 }
 

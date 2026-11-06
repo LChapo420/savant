@@ -170,6 +170,7 @@ function collection(name) {
 
 const db = {
   all(name) { return collection(name); },
+  saveSoon() {},
   forUser(name, userId) { return collection(name).filter((r) => r.user_id === userId); },
 
   insert(name, doc) {

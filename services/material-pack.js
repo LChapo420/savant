@@ -295,7 +295,7 @@ async function build(userId, materialId, opts = {}) {
       ...all, status, spec_hash: ps.spec.isDefault ? null : learningSpec.specHash(ps.spec), dropped: ctx.dropped, models: [...ctx.models], tokens_used: ctx.budget.used,
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
-    db.flush();
+    db.saveSoon();
     // No model answered at all (busy or timed out): that is not the material's fault, so say so and let the caller retry.
     if (status === 'failed' && !stopped && ctx.unanswered) {
       db.update('material_packs', saved.id, { error: 'models_unavailable' });

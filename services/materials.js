@@ -358,7 +358,7 @@ function remove(userId, id) {
     require('./material-cards').removeForMaterial(userId, id); // eslint-disable-line global-require
     require('./material-podcast').removeForMaterial(userId, id); // eslint-disable-line global-require
     require('./material-notes').removeForMaterial(userId, id); // eslint-disable-line global-require
-    db.flush();
+    db.saveSoon();
   }
   return n > 0;
 }

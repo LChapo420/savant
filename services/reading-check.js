@@ -213,7 +213,7 @@ function finish(row, est) {
     } catch (err) { console.warn(`reading-check: scorecard not updated: ${err.message}`); }
   }
   if (row.status === 'open') db.update('reading_checks', row.id, { status: 'done', result, finished_at: new Date().toISOString() });
-  db.flush();
+  db.saveSoon();
   const stored = db.byId('reading_checks', row.id);
   return { result: stored.result };
 }

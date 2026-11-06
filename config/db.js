@@ -335,8 +335,10 @@ const db = {
     return removed;
   },
 
-  /** Force a synchronous write. Tests and scripts use this; requests do not. */
+  /** Force a synchronous write. Tests and scripts use this; requests do not: a write stops every learner while it runs. */
   flush,
+  /** A request that wants its change saved promptly: the next save, within DB_FLUSH_MAX_MS. */
+  saveSoon() { touch(); },
   saveState,
 
   path: DB_PATH,

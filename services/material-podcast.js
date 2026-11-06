@@ -366,7 +366,7 @@ async function build(userId, materialId, opts = {}) {
     if (!data) {
       // A failed rebuild leaves the last good episode as it was.
       db.update('material_podcasts', saved.id, { status: prev && prev.turns && prev.turns.length ? prev.status : 'failed', error: used ? 'nothing passed the checks' : 'token budget' });
-      db.flush();
+      db.saveSoon();
       return { error: 'An episode could not be made from that material. Try a longer or clearer text.', code: 'nothing_verified' };
     }
     const slots = checkinSlots(data.turns, spec);
@@ -374,7 +374,7 @@ async function build(userId, materialId, opts = {}) {
     saved = db.update('material_podcasts', saved.id, {
       title: data.title || mat.title, turns: data.turns, skills: weak ? weak.map((w) => ({ id: w.skill.id, title: w.skill.title })) : [], checkins, status: 'ready', models: model ? [model] : [], revised, open_problems: open, tokens_used: used, error: null, finished_at: new Date().toISOString(),
     });
-    db.flush();
+    db.saveSoon();
     return { episode: saved };
   } catch (err) {
     console.error('material-podcast:', err.message);
