@@ -356,3 +356,45 @@ to the cheapest paid slot after 8 s, free slots answer when they can. `UPLOAD_BU
 Measured through the real pool with a simulated learner (`scripts/uploads-speed.js`), while six proof processes were loading the same providers: notes 59 s background (nemotron) -> 11 s
 waiting (served by Gonka GLM 5.3 Flash, paid, a few tenths of a cent); pack over 170 s (killed) -> 130 s. One run each: indicative, not a distribution. The learning-path build was not
 re-timed here. Progress for slow reading of scans and ZIPs is in section 12.
+
+## 14. Round 2 (6 Nov 2026; AI-JUDGED, SIMULATED): why full mode is 2.7x, a better plain-fact sweep, the path build, extreme learners
+
+**Why full mode is 2.7x the source (max 4.4x).** Not one cause: (1) one skill per 250 characters, so 8 to 15 skills for a 400 to 650-word handout; (2) a 90-word floor per skill, so
+the floor alone is 700 to 1,350 words; (3) every skill writes 2 to 5 paragraphs plus up to 6 key points that restate them, and each skill re-frames the topic; (4) the 0.75 cap is
+measured on whole passages that several skills share. Short mode removed all four and then lost plain facts (section 13).
+
+**Sweep v2/v3 (`UPLOAD_SWEEP_V2=1`, with `UPLOAD_SWEEP_CAP`, `UPLOAD_SWEEP_NEED`, in short mode only).** Every source sentence is checked, not only those with a number or name; what the model's
+short additions still leave missing is added as the source's own sentence, stressed ones first, until the cap. Held-out gate, same six documents and exam as section 13, builder Gonka DeepSeek
+V4 Flash, judges Z = Gonka GLM 5.3 Flash and N = NVIDIA nemotron (the xKiro Mistral judge hit its daily allowance), 1 build per arm and document, generated text now stored in the rows
+(`docs/uploads-heldout-r2/`). Emphasised exam questions per document: h1 5, h2 0, h3 7, h4 1, h5 1, h6 6.
+
+| arm | lesson words / source | emphasised Z / N | plain Z / N | all questions Z / N | ready |
+|---|---|---|---|---|---|
+| full | 2.70x (max 4.17) | 81% / 77% | 93% / 86% | 88% / 81% | 5 of 6 |
+| v2 (need 0.6, cap 1.0) | 0.91x | 93% / 90% | 82% / 82% | 84% / 83% | 5 of 6 |
+| v3 (need 0.85, cap 1.15) | 1.13x (max 1.20) | 87% / 90% | 88% / 87% | 87% / 87% | 5 of 6 |
+
+v3 against full, paired per document: plain Z -5 points (worst document h4: -37.5), plain N +1, emphasised +5 / +10. The gate (plain AND emphasised at or above full on held-out documents) is NOT met:
+plain on judge Z is 5 points under and one document, h4 (dense pharmacology notes, one partial build), is 25 to 37 under. The length is 2.4x shorter than full. `UPLOAD_SHORT` stays OFF. Not tried: a
+cap above 1.15, a second rep to separate h4 from a bad draw.
+
+**Extreme-learner personalisation (23 learners, 4 held-out seeds 7201 to 7204; half have a test-date goal).** Builder ZeroGPU GLM-5.3 Flash; judges Coral DeepSeek V4.1 Flash (C) and NVIDIA nemotron (N),
+6,000 output tokens each; each judge checks every stated trait against the course and lists invented facts. Traits at the tails, odd interests, ages 9 to 61, ESL.
+
+| | judge C | judge N |
+|---|---|---|
+| learners judged | 23 | 22 |
+| traits followed, mean | 62% | 66% |
+| worst 1% / 5% / 10% of learners | 14% / 29% / 40% | 14% / 40% / 40% |
+| test-date learners / others | 58% / 68% | 68% / 63% |
+| invented facts per course | 5.2 (none in 0 courses) | 1.1 (none in 13) |
+
+Most missed: "needs a worked example for everything" (19 misses), "anxious when tested: no test language" (11), age (9 and 9), "needs very plain words" (8), "cannot take dense text" (6), "wants the shortest version" (6).
+Courses for these learners are 5.0x the source's words on average, so the length traits are not met. This is a failing result, not a proof: the course follows its learner about two times in three, and the
+brevity learner gets a longer course. The next lever is the lesson prompt block (it is present and being ignored) and the brevity cap (the learner's `skillShare` only changes how many skills, not the words).
+
+**The learning-path build.** Cause of the 421 s+ wait: `material_lesson`, `material_shorten`, `material_sweep` and `material_podcast` had no `allow` list in `config/model-lineup.json` (only notes, pack,
+outline and verify did), so a learner waiting on a lesson could not overflow to a paid slot and queued behind saturated free models. They now carry the same cheap list as notes. The course route also
+runs in the waiting lane, and the page shows "Start studying the first N now" as soon as one skill exists (the study map already accepted a building course). Timed once through the real pool
+(`scripts/uploads-speed.js waiting course`, simulated learner, 440-word source, six proof processes finishing alongside): before, outline at 46 s and no skill after 12 minutes (stopped);
+after, outline 43 s, first skill 139 s, all 7 skills ready at 304 s. One run each, indicative.

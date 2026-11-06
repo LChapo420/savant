@@ -62,7 +62,7 @@ const MIN_QUOTE = 20;
 const STRESS_MIN = 2.0;             // a key point at or above this weight is shown to its skill's writer
 const GATE_MIN = 3.4;               // a key point at or above this weight must be taught: the build gate
 const STRESS_SHOWN = 14;            // points shown to one skill's writer
-const LESSON_SHARE = 0.55;          // the reading part (lesson paragraphs plus key points) of the whole course is asked to stay under this share of the source's words
+const LESSON_SHARE = Number(process.env.UPLOAD_LESSON_SHARE) || 0.55;          // the reading part (lesson paragraphs plus key points) of the whole course is asked to stay under this share of the source's words
 const LESSON_FLOOR = 25;            // words: a tiny skill is not padded up to a floor (the old 90-word floor made short sources 2-4x longer)
 const SHORTEN_OVER = 1.3;           // a lesson over this many times its budget is sent back once to be cut (facts kept, filler out)
 const TOKEN_BUDGET = Number(process.env.MATERIAL_COURSE_TOKEN_BUDGET || 360000);
@@ -623,7 +623,10 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
  * this only adds words the lesson lacks. Resolves { checked, missing, added, words }.
  */
 const SWEEP_CAP = Number(process.env.UPLOAD_SWEEP_CAP) || 0.8;
-const SWEEP_NEED = 0.6;              // share of a sentence's content words the lesson must already hold
+// Sweep v2 (UPLOAD_SWEEP_V2=1): every source sentence is checked (not only facts), and what the model's short additions still leave missing is added
+// as the source's own sentence, in priority order (stressed, numbers and names first), until the cap. Coverage by construction, no model call for that step.
+const SWEEP_V2 = () => process.env.UPLOAD_SWEEP_V2 === '1';
+const SWEEP_NEED = Number(process.env.UPLOAD_SWEEP_NEED) || 0.6;              // share of a sentence's content words the lesson must already hold
 const sentencesOf = (t) => (String(t || '').replace(/\s+/g, ' ').match(/[^.!?]+[.!?]+/g) || []).map((s) => s.trim()).filter((s) => { const n = wordCount([s]); return n >= 7 && n <= 45 && !/\?\s*$/.test(s); });
 const isFact = (s) => /\d/.test(s) || /(?:^|[a-z,;]\s)[A-Z][a-z]{2,}/.test(s) || /\b(?:is|are|was|were|means|called|known as|defined|because|causes?|caused|due to|results? in)\b/i.test(s);
 async function factSweep(skills, passageById, ctx, sourceWords) {
@@ -640,14 +643,14 @@ async function factSweep(skills, passageById, ctx, sourceWords) {
       if (owner.get(id) !== sk || !passageById.get(id)) continue;
       // Facts (a number, a name, a definition, a stated cause) and every point the material stresses (weight 2 or more, whatever its form).
       const stressed = new Map((ctx.keypoints || []).filter((k) => k.weight >= STRESS_MIN && ctx.passageList && passageOfKeypoint(k, ctx.passageList) === id).map((k) => [k.text, k.weight]));
-      const cands = [...new Set([...sentencesOf(passageById.get(id).text).filter(isFact), ...stressed.keys()])];
+      const cands = [...new Set([...sentencesOf(passageById.get(id).text).filter((x) => SWEEP_V2() || isFact(x)), ...stressed.keys()])];
       for (const s of cands) {
         checked++;
         const t = keypoints.termSet(s); let n = 0; for (const x of t) if (have.has(x)) n++;
         if (t.size && n / t.size < SWEEP_NEED) miss.push({ s, id, score: (s.match(/\d+/g) || []).length * 2 + (s.match(/\b[A-Z][a-z]{2,}/g) || []).length + (stressed.get(s) || 0) * 4 });
       }
     }
-    if (miss.length) { missing += miss.length; jobs.push({ sk, miss: miss.sort((a, b) => b.score - a.score).slice(0, 16) }); }
+    if (miss.length) { missing += miss.length; jobs.push({ sk, miss: miss.sort((a, b) => b.score - a.score).slice(0, SWEEP_V2() ? 40 : 16) }); }
   }
   let room = Math.round(sourceWords * SWEEP_CAP) - readWords();
   let added = 0;
@@ -671,6 +674,23 @@ async function factSweep(skills, passageById, ctx, sourceWords) {
       }
       if (keep.length) { sk.lesson.paragraphs = [...sk.lesson.paragraphs, keep.join(' ')]; added += keep.length; }
     }));
+  }
+  if (SWEEP_V2() && jobs.length) {
+    // The model's additions are checked again; a sentence still missing goes in as the source's own words while there is room.
+    let verbatim = 0;
+    for (const { sk, miss } of jobs) {
+      const have = keypoints.termSet([...(sk.lesson.paragraphs || []), ...(sk.lesson.key_points || []), ...(sk.questions || []).flatMap((q) => [q.prompt, ...(q.choices || []), q.answer, q.explanation])].filter(Boolean).join(' '));
+      const keep = [];
+      for (const m of miss) {
+        const t = keypoints.termSet(m.s); let n = 0; for (const x of t) if (have.has(x)) n++;
+        if (t.size && n / t.size >= SWEEP_NEED) continue;
+        const fw = wordCount([m.s]);
+        if (room - fw < 0) continue;
+        keep.push(clean(m.s, 260)); room -= fw; for (const x of t) have.add(x); verbatim++;
+      }
+      if (keep.length) sk.lesson.paragraphs = [...sk.lesson.paragraphs, keep.join(' ')];
+    }
+    added += verbatim;
   }
   return { checked, missing, added, words: readWords() };
 }

@@ -28,6 +28,8 @@ const laneKey = (userId, label) => `${userId}:${label}`;
 // consent rule decides who is cleared (req.coral). UPLOAD_BUILD_LANE=background restores the old behaviour (free slots only, never pays).
 const waiting = () => String(process.env.UPLOAD_BUILD_LANE || 'waiting').toLowerCase() !== 'background';
 const runLane = (fn) => (waiting() ? pool.runForeground(fn, { fast: true }) : pool.runBackground(fn));
+/** Run a build a learner is waiting on (the learning path) in the same lane as an upload's builds. */
+const runWaiting = (fn) => (waiting() ? pool.runForeground(fn, { fast: true }) : fn());
 const inLane = (userId, label, fn) => runLane(() => {
   const key = laneKey(userId, label);
   lanes.set(key, pool.laneStore());
@@ -91,4 +93,4 @@ function start(userId, materialId, deps = {}) {
 
 function reset() { today.clear(); }
 
-module.exports = { start, reset, on, promote };
+module.exports = { start, reset, on, promote, runWaiting };

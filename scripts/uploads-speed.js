@@ -21,10 +21,12 @@ const text = 'Tides are caused mainly by the gravitational pull of the moon on t
   const m = materials.addPaste(u.id, 'Tides', text).value;
   const run = lane === 'background' ? pool.runBackground : (fn) => pool.runForeground(fn, { fast: true });
   const t0 = Date.now();
-  let out;
+  let out; let firstSkill = null; let outlineAt = null;
+  const poll = what === 'course' ? setInterval(() => { const c = require('../services/course-builder').get(u.id, m.id); if (c && c.outline && outlineAt == null) { outlineAt = Math.round((Date.now() - t0) / 1000); console.log("outline_s", outlineAt); } if (c && (c.skills || []).length && firstSkill == null) { firstSkill = Math.round((Date.now() - t0) / 1000); console.log("first_skill_s", firstSkill); } }, 500) : null;
   try {
-    out = await run(() => (what === 'pack' ? require('../services/material-pack').buildWithRetry(u.id, m.id, {}) : require('../services/material-notes').build(u.id, m.id, {})));
+    out = await run(() => (what === 'course' ? require('../services/course-builder').build(u.id, m.id, {}) : what === 'pack' ? require('../services/material-pack').buildWithRetry(u.id, m.id, {}) : require('../services/material-notes').build(u.id, m.id, {})));
   } catch (e) { out = { error: e.message }; }
-  console.log(JSON.stringify({ lane, what, seconds: Math.round((Date.now() - t0) / 1000), status: out && (out.status || out.error || 'done') }));
+  if (poll) clearInterval(poll);
+  console.log(JSON.stringify({ lane, what, outline_s: outlineAt, first_skill_s: firstSkill, seconds: Math.round((Date.now() - t0) / 1000), status: out && ((out.course && out.course.status) || out.status || out.error || 'done'), skills: out && out.course ? out.course.skills.length : undefined }));
   process.exit(0);
 })();
