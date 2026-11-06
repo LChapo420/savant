@@ -85,7 +85,7 @@ check('a brief learner is refused a long rewrite', pm.check(BRIEF, 'feedback', S
   check('the rewrite is served when ready', pm.rationaleOf(item) === 'for them' && pm.hintOf(item) === 'their hint');
   check('the stored text is served when no rewrite is ready', pm.rationaleOf({ rationale: 'stored' }) === 'stored');
   delete process.env.PART_MODIFY_PARTS;
-  check('by default only the proven parts run (hint is not among them)', pm.partOn('feedback') && pm.partOn('lesson') && !pm.partOn('hint') && pm.hintOf(item) === 'stored hint');
+  check('by default only feedback and review run (hint, lesson and voice did not pass)', pm.partOn('feedback') && pm.partOn('review') && !pm.partOn('lesson') && !pm.partOn('voice') && !pm.partOn('hint') && pm.hintOf(item) === 'stored hint');
   process.env.PART_MODIFY_PARTS = 'feedback,hint,review,lesson';
   process.env.PART_MODIFY = 'off';
   check('PART_MODIFY=off serves the stored text', pm.rationaleOf(item) === 'stored' && pm.hintOf(item) === 'stored hint');
