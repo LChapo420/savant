@@ -40,7 +40,7 @@ const G = {
   '34/q19': { explanation: 'Changing the first clause to active voice matches the second clause and restores a clear agent.' },
   '67/q7': { choice: { 2: 'AP adds the comma to prevent ambiguity; Chicago uses it in every series.' } },
   '51/q44': { explanation: 'The active verb planted gives way to the passive were mulched, so the shift sits in the second clause.' },
-  '19/q19': { prompt: 'A student wrote this fragment: Dashing toward the door, keys jangling, coat half unbuttoned, alarm still shrieking behind her. Which revision is a clear, complete sentence?', explanation: 'Only this version has a main clause of its own, with a subject and a finite verb (keys jangled), in clear natural order.' },
+  '19/q19': { prompt: 'A student wrote this fragment: Dashing toward the door, keys jangling, coat half unbuttoned, alarm still shrieking behind her. Which revision is a clear, complete sentence?', choice: { 1: 'Because the alarm shrieked, keys jangling and coat unbuttoned.' }, explanation: 'Only this version has a main clause of its own, with a subject and a finite verb (keys jangled), in clear natural order.' },
   '19/q15': { explanation: "'Because' makes this a dependent clause that leaves the thought unfinished, so it is a sentence fragment." },
   '11/q14': { explanation: "'After' makes this a dependent clause with no main clause, so it is a fragment." },
   '11/q41': { choice: { 2: 'Although tired and out of breath' } },

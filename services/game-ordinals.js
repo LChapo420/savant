@@ -42,7 +42,7 @@ const RULES = [
   // "the first option", "only the last option"
   [new RegExp(`\\bthe ${NTH} (?:option|choice)\\b`, 'gi'), 'this option'],
 ];
-const STILL = new RegExp(`\\b(?:option|choice)\\s*\\(?[0-9A-D]\\)?(?=[\\s,.;:!)]|$)|\\bthe ${NTH} (?:option|choice)\\b|(?:^|\\s)\\([0-4]\\)(?=\\s)`);
+const STILL = new RegExp(`\\b(?:option|choice)\\s*\\(?[0-9A-D]\\)?(?=[\\s,.;:!)]|$)|\\bthe ${NTH} (?:option|choice)\\b|(?:^|\\s)\\([0-4]\\)(?=\\s)`, 'i');
 
 const NEGATIVE = new RegExp(`\\b(?:option|choice)\\s*\\(?[0-9A-Da-d]\\)?[^.;]{0,40}\\b(?:wrong|incorrect|fails?|lacks?|misses|not|no such)\\b|\\bthe ${NTH} (?:option|choice)\\b[^.;]{0,40}\\b(?:wrong|incorrect|fails?|lacks?|misses|not|no such)\\b`, 'i');
 
