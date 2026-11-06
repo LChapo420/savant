@@ -46,7 +46,8 @@ function normalize(s) {
     .replace(/\$\s?(\d+(?:\.\d+)?)/g, '$1 dollars ')
     .replace(/(\d),(\d{3})(?!\d)/g, '$1$2')
     .replace(/(\d|\)|\b[a-zA-Z]+)\s+x\s+(?=[\d(])/g, '$1 * ')
-    .replace(/\b(\d+(?:\.\d+)?)\s+x\s+(?=[a-zA-Z]{2,})/g, '$1 * ');
+    .replace(/\b(\d+(?:\.\d+)?)\s+x\s+(?=[a-zA-Z]{2,})/g, '$1 * ')
+    .replace(/(\d|\)|\bpi)\s+times\s+(?=[\d(]|sqrt|cbrt|pi\b)/g, '$1 * ');
 }
 
 function tokenize(text) {
@@ -393,6 +394,7 @@ function checkWordArithmetic(sentence, push) {
     re.lastIndex = 0;
     let m;
     while ((m = re.exec(sentence))) {
+      if (/(times|plus|minus|divided by|[*+/-])\s*$/i.test(sentence.slice(0, m.index))) continue; // the tail of a longer sum
       const v = f(nw(m[1]), nw(m[2])); const c = nw(m[3]);
       const dec = (String(m[3]).split('.')[1] || '').length;
       if (Math.abs(v - c) > (dec ? 0.51 * 10 ** -dec : 1e-9)) push({ rule: 'arithmetic', certain: true, claim: m[0], truth: `it comes to ${+v.toFixed(6)}` });
@@ -495,6 +497,7 @@ function checkSteps(string, scope, push, { forceSteps = false } = {}) {
     const newline = lines.length > 1 && !between.trim();
     if (!(forceSteps || newline || STEP_LINK.test(between))) continue;
     if (OTHER_LINK.test(between)) continue;
+    if (/\b(and|or)\s*$/i.test(a.before || '')) continue; // the end of a compound statement
     const c = all[i + 1];
     if (c && /^\s*,?\s*(or|and)\b/i.test(c.before || '')) continue;
     if (/\b(false|fails?|not true|no solution)\b/i.test(b.afterText || '')) continue;
@@ -645,7 +648,7 @@ function checkChecks(checks, keyAgreement, push) {
     if (c.format === 'multiple_choice' && choices && choices.length) {
       if (!choices.some((x) => normText(x) === normText(key))) add({ rule: 'key_not_a_choice', certain: true, claim: String(key).slice(0, 200), truth: 'the marked answer is not one of the choices' });
       const seen = new Map();
-      choices.forEach((x) => { const n = normText(x); if (seen.has(n)) add({ rule: 'duplicate_choice', certain: true, claim: x, truth: 'two choices are the same' }); seen.set(n, 1); });
+      choices.forEach((x) => { const n = String(x).trim().toLowerCase(); if (seen.has(n)) add({ rule: 'duplicate_choice', certain: true, claim: x, truth: 'two choices are the same' }); seen.set(n, 1); });
     }
     const keyNum = key == null ? null : numberIn(key);
     // A prompt that can be computed
