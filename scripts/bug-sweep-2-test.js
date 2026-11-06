@@ -96,9 +96,11 @@ async function routes() {
   const learner = require('../services/learner');
   const v = db.insert('users', { email: 'v@example.test', display_name: 'Val', password_hash: 'x', xp: 0, streak: 0, onboarded: true });
   learner.saveProfile(v.id, { survey: { interests: 'basketball' } });
-  db.insert('block_plans', { track_id: 'math', grade_id: 'calculus_i', level: 18, attempt: 1, status: 'ready', kind: 'lesson', user_id: null, blocks: [], answers: {}, checks: [], check_tier: 'sonnet', verification: { status: 'verified', model: 'claude-test' } });
+  const grade = require('../config/curriculum').getGrade('math', 'calculus_i');
+  const lessonLevel = [...Array(60).keys()].map((i) => i + 11).find((l) => require('../services/block-levels').kindFor(grade, l) === 'lesson');
+  db.insert('block_plans', { track_id: 'math', grade_id: 'calculus_i', level: lessonLevel, attempt: 1, status: 'ready', kind: 'lesson', user_id: null, blocks: [], answers: {}, checks: [], check_tier: 'sonnet', verification: { status: 'verified', model: 'claude-test' } });
   const lesson = await new Promise((ok, fail) => {
-    http.get({ host: '127.0.0.1', agent: false, port, path: '/api/lessons/math/calculus_i/18', headers: { 'x-user': String(v.id) } }, (res) => { let t = ''; res.on('data', (c) => { t += c; }); res.on('end', () => ok({ status: res.statusCode, json: JSON.parse(t) })); }).on('error', fail);
+    http.get({ host: '127.0.0.1', agent: false, port, path: `/api/lessons/math/calculus_i/${lessonLevel}`, headers: { 'x-user': String(v.id) } }, (res) => { let t = ''; res.on('data', (c) => { t += c; }); res.on('end', () => ok({ status: res.statusCode, json: JSON.parse(t) })); }).on('error', fail);
   });
   check('with no writing model free, a lesson with a shared version still opens with its layer slot', lesson.status === 200 && lesson.json.meta && lesson.json.meta.layer === true, { status: lesson.status, meta: lesson.json.meta });
   await new Promise((r) => server.close(r));
