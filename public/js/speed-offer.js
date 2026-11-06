@@ -36,7 +36,7 @@
       if (!host) return;
       let st = null;
       try { st = await App.api.get('/api/speed-proof'); } catch { /* none */ }
-      if (st && !st.offer && st.check_due) { memoryCheck(host); return; }
+      if (st && !st.offer && st.check_due && st.consent && st.consent.normal_arm) { memoryCheck(host); return; } // only for a learner with a plain arm to compare against
       if (!st || !st.offer) { host.innerHTML = ''; return; }
       const esc = App.escapeHtml;
       const c = st.consent_text;
