@@ -268,6 +268,32 @@ async function runtime() {
     assert.strictEqual(out.text, 'What is the first step?');
   });
 
+  await okAsync('personal layer, the whole path: a failed or absent check stores no layer and the lesson stays', async () => {
+    const layer = require('../services/lesson-layer'); // eslint-disable-line global-require
+    const plan = { id: 'pl-1', track_id: 't', grade_id: 'g', level: 1, blocks: [{ data: { text: 'A bishop moves along diagonals.' } }], checks: [] };
+    const written = { why: 'You want your game to hold up, so this is worth your time.', hook: 'Imagine a point guard who only passes on the diagonal. How far could it go?', analogies: [] };
+    const spec = { isDefault: false, interests: { exampleDomains: ['basketball'] } };
+    const realHedged = pool.callHedged;
+    for (const [id, checker] of [['pl-1', () => ({ data: { checked: 2, wrong: [{ n: 1, why: 'x' }, { n: 2, why: 'y' }] }, model: 'glm' })], ['pl-2', () => null]]) {
+      pool.callHedged = async (req) => (req.task === 'fact_live'
+        ? (() => { const c = checker(); return c && { ...c, usage: null, pool: { provider: 'x', attempts: [], elapsedMs: 1 } }; })()
+        : { data: written, model: 'deepseek-v4.1-flash', usage: null, pool: { provider: 'x', attempts: [], elapsedMs: 1 } });
+      const u = db.insert('users', { email: `layer-${id}@savant.test`, age_check: { birth_ym: '1990-01', needs_parent: false } });
+      // eslint-disable-next-line no-await-in-loop
+      const row = await layer.start({ user: u, plan: { ...plan, id }, spec });
+      assert.strictEqual(row, null, `${id}: nothing stored as ready`);
+      assert.strictEqual(layer.get(u.id, id).state, 'none');
+    }
+    pool.callHedged = async (req) => (req.task === 'fact_live'
+      ? { data: { checked: 2, wrong: [] }, model: 'glm', usage: null, pool: { provider: 'x', attempts: [], elapsedMs: 1 } }
+      : { data: written, model: 'deepseek-v4.1-flash', usage: null, pool: { provider: 'x', attempts: [], elapsedMs: 1 } });
+    const u = db.insert('users', { email: 'layer-ok@savant.test', age_check: { birth_ym: '1990-01', needs_parent: false } });
+    const row = await layer.start({ user: u, plan: { ...plan, id: 'pl-3' }, spec });
+    pool.callHedged = realHedged;
+    assert.ok(row && row.fact_checked, 'a checked layer is stored and marked');
+    assert.strictEqual(layer.get(u.id, 'pl-3').state, 'ready');
+  });
+
   ok('a checker is a provider too: an under-13 without consent never reaches an outside slot', () => {
     const slots = pool.candidatesFor({ kind: 'structured', role: 'fast', task: 'fact_live', userId: 99, dataClass: 'learner', outside: false, munito: false, coral: false, xkiro: false });
     const providers = require('../services/providers'); // eslint-disable-line global-require

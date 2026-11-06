@@ -132,23 +132,29 @@ async function check({ pieces, source = '', learnerSaid = '', mode = 'general', 
   list.forEach((p, i) => { for (const claim of recompute(p)) wrong.push({ index: i, why: `recomputed: ${String(claim).slice(0, 120)}`, quote: '' }); });
   const ai = lazy('./ai');
   const pool = lazy('./pool');
-  // Independence: another model family than the writer, when anything outside this machine may read it. A learner on local models only has what they have.
+  // Independence: against general knowledge a model shares its own family's beliefs, so another family reads first (when anything outside this machine may read it;
+  // a learner on local models only has what they have). Comparing text with a source (overlay, material) rests on the source, so any cleared checker will do: measured
+  // 6 Nov, the same catches at 0.3 s on Coral against 6.7 s on ZeroGPU for a layer. If no other family answers in time, the same family reads it before anything is held.
   let exclude = null;
-  try { const f = writerModel ? pool.familyOfModel(writerModel) : null; if (f && ai.outsideOk(userId)) exclude = [f]; } catch { exclude = null; }
+  try { const f = writerModel && (mode === 'general' || mode === 'source') ? pool.familyOfModel(writerModel) : null; if (f && ai.outsideOk(userId)) exclude = [f]; } catch { exclude = null; }
   await Promise.all(batches(list).map(async (batch) => {
-    const left = budgetMs - (Date.now() - t0);
-    if (left < 500) { ran = false; return; }
-    const args = {
+    const base = {
       role: 'fast', task: 'fact_live', system: SYSTEMS[mode] || SYSTEMS.general, user: checkUser({ pieces: batch.map((b) => b.text), source, learnerSaid, mode }),
       schema: SCHEMA, schemaName: 'submit_check', maxTokens: 450 + batch.length * 60, effort: 'off', userId,
-      ...(dataClass && !userId ? { dataClass } : {}), timeoutMs: left, hedgeAfterMs: waiting ? 1800 : undefined, excludeFamilies: exclude || undefined,
+      ...(dataClass && !userId ? { dataClass } : {}), hedgeAfterMs: waiting ? 1800 : undefined,
+    };
+    const go = llm || ((a) => ai.structuredDetail(a));
+    const ask = async (args) => {
+      try {
+        // A learner is waiting: the fast lane, which puts the paid checkers ahead of a busy free model. Background work stays on its own lane.
+        return waiting && !pool.inBackground() ? await pool.runForeground(() => go(args), { fast: true }) : await go(args);
+      } catch { return null; }
     };
     let res = null;
-    try {
-      const go = llm || ((a) => ai.structuredDetail(a));
-      // A learner is waiting: the fast lane, which puts the paid checkers ahead of a busy free model. Background work stays on its own lane.
-      res = waiting && !pool.inBackground() ? await pool.runForeground(() => go(args), { fast: true }) : await go(args);
-    } catch { res = null; }
+    const budget = () => budgetMs - (Date.now() - t0);
+    if (budget() < 500) { ran = false; return; }
+    if (exclude) res = await ask({ ...base, excludeFamilies: exclude, timeoutMs: waiting ? Math.min(budget(), Math.round(budgetMs * 0.6)) : budget() });
+    if (!(res && res.data) && budget() >= 500) res = await ask({ ...base, timeoutMs: budget() });
     const data = res && res.data;
     if (!data || !Array.isArray(data.wrong)) { ran = false; return; }
     if (res.model) model = res.model;
