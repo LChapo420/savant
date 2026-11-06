@@ -167,6 +167,7 @@ const OUTLINE_SCHEMA = {
   required: ['skills'],
 };
 
+const FOLLOW_SCHEMA = { type: 'object', properties: { paragraphs: { type: 'array', items: { type: 'string' } }, key_points: { type: 'array', items: { type: 'string' } } }, required: ['paragraphs'] };
 const SHORTEN_SCHEMA = { type: 'object', properties: { paragraphs: { type: 'array', items: { type: 'string' } } }, required: ['paragraphs'] };
 
 const SKILL_SCHEMA = {
@@ -531,8 +532,9 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
   // Faster than the source: the whole lesson stays shorter than the passages it comes from (the first free-model proof wrote 2.9 times the
   // source's words with no cap). Measured in docs/UPLOADS-ANY-FORMAT.md.
   const srcWords = (text.match(/\S+/g) || []).length;
-  const own = SHORT ? ownWords(skill, passageById, ctx) : srcWords;
-  const lessonCap = SHORT ? Math.max(LESSON_FLOOR, Math.round(own * LESSON_SHARE * (extra ? 0.4 : 1))) : Math.max(90, Math.round(srcWords * 0.75));
+  const own = SHORT || ctx.follow ? ownWords(skill, passageById, ctx) : srcWords;
+  const capShare = ctx.follow && ctx.follow.wordShare;
+  const lessonCap = capShare ? Math.max(LESSON_FLOOR, Math.round(own * capShare * (extra ? 0.4 : 1))) : SHORT ? Math.max(LESSON_FLOOR, Math.round(own * LESSON_SHARE * (extra ? 0.4 : 1))) : Math.max(90, Math.round(srcWords * 0.75));
   const genArgs = {
     role: 'fast', task: 'material_lesson', schema: SKILL_SCHEMA, schemaName: 'material_skill', maxTokens: 7000, dataClass: 'learner',
     system: general
@@ -570,7 +572,7 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
 
   // The budget is enforced, not just requested: a lesson well over it is sent back once to be cut (facts kept, filler out); the shorter one is used only if it is shorter and not empty.
   let paragraphs = paragraphs0; let keyPoints = keyPoints0;
-  if (SHORT && !general && wordCount([...paragraphs, ...keyPoints]) > lessonCap * SHORTEN_OVER) {
+  if ((SHORT || capShare) && !general && wordCount([...paragraphs, ...keyPoints]) > lessonCap * SHORTEN_OVER) {
     const cut = await ask(ctx.llm, ctx.budget, ctx.userId, {
       role: 'fast', task: 'material_shorten', schema: SHORTEN_SCHEMA, schemaName: 'material_shorten', maxTokens: 1500, dataClass: 'learner',
       system: `You shorten a lesson. ${UNTRUSTED} Rewrite it in at most ${lessonCap} words in all (count them): keep every specific fact (names, numbers, dates, terms, definitions, causes), drop filler, repetition and transitions, and keep the more heavily stressed points in the most words. Do not add anything the lesson or the passages do not say.`,
@@ -580,6 +582,41 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
     const cd = cut.res && cut.res.data;
     const np = cd && Array.isArray(cd.paragraphs) ? cd.paragraphs.map((p) => clean(p, 700)).filter(Boolean) : [];
     if (np.length && wordCount(np) < wordCount([...paragraphs, ...keyPoints])) { paragraphs = np; keyPoints = []; ctx.dropped.shortened = (ctx.dropped.shortened || 0) + 1; }
+  }
+
+  // ROUND 3 (UPLOAD_FOLLOW=1): the written lesson is checked against this learner's spec and rewritten once or twice with the problems named.
+  const spec = ctx.follow && ctx.follow.spec;
+  if (spec && !general && !extra) {
+    const F = require('./course-follow'); // eslint-disable-line global-require
+    const own = [...keypoints.termSet(skill.title)];
+    const check = (ps, ks) => F.problemsOf(ps, ks, spec, { cap: capShare ? lessonCap : null, own });
+    const passageTerms = keypoints.termSet(text);
+    const kept0 = (ps) => { const t = keypoints.termSet(ps.join(' ')); let n = 0; for (const x of t) if (passageTerms.has(x)) n++; return n; };
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const probs = check(paragraphs, keyPoints);
+      if (!probs.length) break;
+      // eslint-disable-next-line no-await-in-loop
+      const rw = await ask(ctx.llm, ctx.budget, ctx.userId, {
+        role: 'fast', task: 'material_follow', schema: FOLLOW_SCHEMA, schemaName: 'material_follow', maxTokens: 2500, dataClass: 'learner',
+        system: `You rewrite one lesson for one learner. ${UNTRUSTED} Keep every fact, name, number and term of the passages that the lesson already states, and add none. Fix every problem listed and change nothing else. ${capShare ? `HARD LIMIT: ${lessonCap} words in all, paragraphs and key points together (count them); keep the facts that carry the most weight. ` : ''}${ctx.block}`,
+        user: `Problems to fix:\n- ${probs.map((x) => x.detail).join('\n- ')}\n\nLesson:\n${paragraphs.join('\n')}${keyPoints.length ? `\nKey points:\n${keyPoints.join('\n')}` : ''}\n\nPassages (the only source of facts):\n${text.slice(0, 3500)}`,
+      });
+      if (res_stopped(rw)) return { stopped: true };
+      const rd = rw.res && rw.res.data;
+      ctx.dropped.follow_rewrites = (ctx.dropped.follow_rewrites || 0) + 1;
+      if (!rd || !Array.isArray(rd.paragraphs) || !rd.paragraphs.length) continue;
+      let np = rd.paragraphs.map((x) => clean(x, 700)).filter(Boolean);
+      let nk = Array.isArray(rd.key_points) ? rd.key_points.map((x) => clean(x, 200)).filter(Boolean).slice(0, 6) : [];
+      if (guard) { np = np.filter((x) => guard(x)); nk = nk.filter((x) => guard(x)); }
+      if (!np.length) continue;
+      if (capShare && wordCount([...np, ...nk]) > lessonCap * 1.3) nk = [];
+      const after = check(np, nk);
+      const keep = kept0([...np, ...nk]) / Math.max(1, kept0([...paragraphs, ...keyPoints]));
+      const better = after.length < probs.length || (after.length === probs.length && wordCount([...np, ...nk]) < wordCount([...paragraphs, ...keyPoints]));
+      if (better && keep >= (capShare ? 0.5 : 0.75)) { paragraphs = np; keyPoints = nk; ctx.dropped.follow_fixed = (ctx.dropped.follow_fixed || 0) + 1; }
+    }
+    if (F.needsSplit(spec)) paragraphs = F.splitDense(paragraphs, spec);
+    if (spec.feedback && spec.feedback.lowStakes && F.TEST_WORDS.test([...paragraphs, ...keyPoints].join(' '))) { paragraphs = paragraphs.map(F.deTest); keyPoints = keyPoints.map(F.deTest); }
   }
 
   let items = [];
@@ -608,6 +645,7 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
   ctx.dropped.unsupported += items.length - kept.length;
   if (kept.length < min) { ctx.dropped.skills++; return { skipped: true }; }
   kept.forEach((q, i) => { q.id = `${skill.id}_q${(extra ? extra.offset : 0) + i + 1}`; if (general) q.source = 'general'; });
+  if (spec && spec.feedback && spec.feedback.lowStakes) { const F2 = require('./course-follow'); for (const q of kept) { q.prompt = F2.deTest(q.prompt); if (q.explanation) q.explanation = F2.deTest(q.explanation); } } // eslint-disable-line global-require
   return {
     value: {
       id: skill.id, title: skill.title, summary: skill.summary, unit: skill.unit, prerequisites: skill.prerequisites, passage_ids: skill.passage_ids,
@@ -768,7 +806,7 @@ async function build(userId, materialId, opts = {}) {
     const all = chunk(mat.text);
     const passages = all.slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, keypoints: mat.key_points || [], passageList: passages, block: specBlockFor(userId, mat), questionBlock: questionBlockFor(userId, mat), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title, materialId: mat.id }), makeGuard: guardMaker(userId, mat), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
+    const ctx = { unanswered: 0, llm, userId, keypoints: mat.key_points || [], passageList: passages, follow: require('./course-follow').contextFor(userId, mat), block: specBlockFor(userId, mat), questionBlock: questionBlockFor(userId, mat), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title, materialId: mat.id }), makeGuard: guardMaker(userId, mat), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
     const base = {
       user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, total_chars: mat.text.length, status: 'building', started_at: new Date().toISOString(),
       passages: passages.map(({ id, start, end }) => ({ id, start, end })), truncated: all.length > passages.length,
