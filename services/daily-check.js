@@ -31,7 +31,7 @@ const scorecard = require('./scorecard');
 const baseline = require('./onboarding/baseline');
 const tasks = require('./onboarding/tasks');
 const { Planner } = require('./onboarding/plan');
-const { byId, pool: ITEM_POOL } = require('./onboarding/pool');
+const { byId, passivePool: PASSIVE_POOL } = require('./onboarding/pool');
 const ipip = require('../content/ipip-items');
 const hooks = () => require('./scorecard/hooks'); // eslint-disable-line global-require
 
@@ -236,7 +236,7 @@ const markIpip = (userId, ids) => putDaily(userId, { ipip: [...new Set([...getDa
 function passiveFor(dayIndex) {
   if (process.env.DAILY_PASSIVE !== '1') return [];
   const slot = ((Math.floor(dayIndex) % 30) + 30) % 30;
-  return ITEM_POOL.filter((it) => it.passive && it.slot === slot);
+  return PASSIVE_POOL.filter((it) => it.slot === slot);
 }
 
 module.exports = { passiveFor, markIpip, enabled, offer, skip, start, answer, stop, openRun, closeRun, importanceOf, allowanceFor, getDaily, KINDS, REPEAT, FIRST_DAYS, FIRST_SEC, LATER_SEC, IPIP_PER_DAY };
