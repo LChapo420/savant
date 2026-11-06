@@ -94,6 +94,20 @@ async function learner(k, profile) {
   // Instant layer (INSTANT_LAYER=on): the lesson opened is the shared one with meta.layer; the personal layer is polled like the page does
   // (every 0.6 s), and the clock stops when it is ready. layerSec = seconds from the end of placement; a layer that never comes is 'none'/'timeout'.
   row.instant = !!(plan && plan.meta && plan.meta.layer);
+  // Part by part (COLD_FIRST_BLOCK): the lesson that opened is its first checked part(s). The rest are polled as the page does, until the level is whole.
+  row.partial = !!(plan && plan.meta && plan.meta.partial);
+  row.firstEntries = plan && plan.plan ? plan.plan.entries.length : null;
+  if (row.partial) {
+    let v = plan.meta.partial.version; let n = row.firstEntries; row.partsAt = [[n, row.toLessonSec]];
+    for (let k = 0; k < 900; k++) {
+      await sleep(1000);
+      const r = await call('GET', `/api/lessons/math/algebra_1_part_a/${row.level}/parts?v=${v}`);
+      if (r.status !== 200) continue;
+      if (r.payload.plan) { const m = r.payload.plan.entries.length; if (m !== n) { n = m; row.partsAt.push([n, Math.round((Date.now() - tEnd) / 100) / 10]); } if (r.payload.version) v = r.payload.version; }
+      if (r.payload.state === 'ready') { row.wholeSec = Math.round((Date.now() - tEnd) / 100) / 10; row.entries = n; break; }
+      if (r.payload.state === 'failed') { row.wholeSec = null; row.partsFailed = true; row.entries = n; break; }
+    }
+  }
   if (row.instant) {
     const lvl = row.level; let st = 'timeout';
     for (let k = 0; k < Number(process.env.LAYER_POLLS || 100); k++) {
@@ -113,7 +127,9 @@ async function learner(k, profile) {
   const ok = rows.filter((r) => !r.error); const opened = ok.map((r) => r.toLessonSec).sort((a, b) => a - b); const med = (a) => (a.length ? a[Math.floor(a.length / 2)] : null);
   const layered = ok.filter((r) => r.layer === 'ready').map((r) => r.layerSec).sort((a, b) => a - b);
   console.log(JSON.stringify({ learners: rows.length, failures: rows.length - ok.length, openMedianSec: med(opened), openWorstSec: opened[opened.length - 1] ?? null, personalReady: layered.length, personalMedianSec: med(layered), personalWorstSec: layered[layered.length - 1] ?? null, personalWithin8s: ok.filter((r) => r.layer === 'ready' && r.layerSec <= 8).length, layerNone: ok.filter((r) => r.layer === 'none').length, layerTimeout: ok.filter((r) => r.layer === 'timeout').length }));
-  console.table(rows.map((r) => ({ k: r.k, profile: r.profile, asked: r.asked, level: r.level, placementSec: r.placementSec, firstPoll: r.firstPoll, toLessonSec: r.toLessonSec, tailored: r.tailored, layer: r.layer, layerSec: r.layerSec, error: r.error || '' })));
+  const whole = ok.filter((r) => r.wholeSec != null).map((r) => r.wholeSec).sort((a, b) => a - b);
+  console.log(JSON.stringify({ firstPartLearners: ok.filter((r) => r.partial).length, wholeMedianSec: med(whole), wholeWorstSec: whole[whole.length - 1] ?? null, partsFailed: ok.filter((r) => r.partsFailed).length }));
+  console.table(rows.map((r) => ({ k: r.k, profile: r.profile, asked: r.asked, level: r.level, placementSec: r.placementSec, firstPoll: r.firstPoll, toLessonSec: r.toLessonSec, partial: r.partial, firstEntries: r.firstEntries, wholeSec: r.wholeSec, entries: r.entries, tailored: r.tailored, layer: r.layer, layerSec: r.layerSec, error: r.error || '' })));
   if (OUT) require('fs').writeFileSync(OUT, JSON.stringify(rows, null, 1));
   process.exit(0);
 })();

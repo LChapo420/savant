@@ -34,7 +34,7 @@
    */
   function watch(sections, { name = (s) => s.getAttribute('data-block') || 'the page', skip = () => false } = {}) {
     const now = () => Date.now();
-    const parts = sections.map((section, index) => ({
+    const partFor = (section, index) => ({
       index,
       block: name(section),
       ms: 0,
@@ -44,7 +44,8 @@
       wrong: 0,
       since: null,
       skip: skip(section),
-    }));
+    });
+    const parts = sections.map(partFor);
 
     const note = (part, text) => {
       if (!text || part.log.length >= LOG_CAP) return;
@@ -52,8 +53,9 @@
       part.log.push(text);
     };
 
+    let seen = null;
     if ('IntersectionObserver' in window) {
-      const seen = new IntersectionObserver((rows) => {
+      seen = new IntersectionObserver((rows) => {
         rows.forEach((row) => {
           const part = parts[sections.indexOf(row.target)];
           if (!part) return;
@@ -68,7 +70,7 @@
       sections.forEach((s) => seen.observe(s));
     }
 
-    sections.forEach((section, i) => {
+    const listen = (section, i) => {
       const part = parts[i];
       section.addEventListener('click', (e) => {
         part.interactions += 1;
@@ -99,9 +101,10 @@
           });
         }).observe(section, { attributes: true, attributeFilter: ['class'], subtree: true });
       }
-    });
+    };
+    sections.forEach(listen);
 
-    return function report() {
+    const report = function report() {
       return parts.map((p) => ({
         index: p.index,
         block: p.block,
@@ -112,6 +115,14 @@
         wrong: Math.min(p.wrong, 200),
       }));
     };
+    // A part that arrives after the page opened (a lesson shown part by part) joins the record.
+    report.add = (section) => {
+      sections.push(section);
+      parts.push(partFor(section, sections.length - 1));
+      if (seen) seen.observe(section);
+      listen(section, sections.length - 1);
+    };
+    return report;
   }
 
   /** Send a report even as the page closes. */

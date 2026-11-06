@@ -47,6 +47,7 @@ const scorecardHooks = require('../services/scorecard/hooks');
 const learnerRecord = require('../services/learner-record');
 const blockLevels = require('../services/block-levels');
 const lessonLayer = require('../services/lesson-layer');
+const firstBlock = require('../services/first-block');
 const personalizeArm = (userId, where) => { try { return require('../services/personalize').armFor(userId, where).arm; } catch { return null; } }; // eslint-disable-line global-require
 const levelLogs = require('../services/level-logs');
 const assist = require('../services/assist');
@@ -390,6 +391,18 @@ router.get('/lessons/:track/:grade/:level/game-frame', requireAuth, async (req, 
  * this level. A lesson is finished by reading it; a practice, quiz or exam level is
  * not, and its control leads into the session instead.
  */
+/** A lesson arriving part by part (services/first-block.js): the plan so far. Polled by public/js/block-level.js. */
+router.get('/lessons/:track/:grade/:level/parts', requireAuth, (req, res) => {
+  const { track, grade } = req.params;
+  const level = Number(req.params.level);
+  if (!blockLevels.visibleTo(req.user)) return res.status(404).json({ error: 'No such lesson.' });
+  const got = blockLevels.partsFor(req.user, track, grade, level);
+  res.set('Cache-Control', 'no-store, must-revalidate');
+  if (!got.plan) return res.json({ state: 'failed' });
+  if (String(req.query.v || '') === String(got.version || '') && got.state === 'writing') return res.json({ state: 'writing', same: true, version: got.version });
+  return res.json({ state: got.state, version: got.version || null, total_blocks: got.total_blocks || null, total_checks: got.total_checks || null, plan: blockLevels.publicPlan(got.plan, req.user.id, blockLevels.checkItems(req.user, got.plan)) });
+});
+
 /** The personal layer over this level's shared lesson, once written: { state: 'pending' | 'ready' | 'none', layer }. Polled by public/js/block-level.js. */
 router.get('/lessons/:track/:grade/:level/layer', requireAuth, (req, res) => {
   const { track, grade } = req.params;
@@ -444,7 +457,7 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
         lessonLayer.start({ user: req.user, plan: shared, topic: blockLevels.levelContext(track, grade, level).topic, trackId: track, gradeId: grade, level }).catch(() => {});
       }
     }
-    const { plan, writing } = instant ? { plan: instant, writing: false } : await blockLevels.forLevel({ user: req.user, trackId: track, gradeId: grade, level });
+    const { plan, writing, partial } = instant ? { plan: instant, writing: false } : await blockLevels.forLevel({ user: req.user, trackId: track, gradeId: grade, level });
     const enrollmentId = enrollmentFor(req.user.id, track, grade);
     const enrollment = enrollmentId ? db.byId('enrollments', enrollmentId) : null;
     if (enrollment) blockLevels.prefetchAhead({ user: req.user, enrollment, grade: gradeRow });
@@ -464,6 +477,7 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
           model: plan.model || null,
           generated_at: plan.finished_at || null,
           ...(instant ? { layer: true } : {}),
+          ...(partial ? { partial: { version: plan.partial.version, total_blocks: plan.partial.total_blocks, total_checks: plan.partial.total_checks } } : {}),
         },
         basis: 'blocks',
         kind: curriculum.levelKind(level, gradeRow.pathLength, gradeRow),
@@ -476,6 +490,8 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
         writing: true, level, block_kind: blockKind, enrollment_id: enrollmentId,
         // Where the page goes if the writing takes too long: the standard session, lesson first.
         fallback_url: enrollmentId ? standardSessionUrl(enrollmentId, level) : null,
+        // Part by part (COLD_FIRST_BLOCK): what is coming, from the curriculum, what the write is doing now, and how long the page waits before the standard session.
+        ...(firstBlock.on() ? { preview: blockLevels.previewFor({ userId: blockLevels.tailorsFor(req.user) ? req.user.id : null, trackId: track, gradeId: grade, level }), wait_ms: firstBlock.fallbackMs() } : {}),
       });
     }
   }
@@ -1048,6 +1064,7 @@ router.post('/lessons/:track/:grade/:level/block-finish', requireAuth, (req, res
   if (!blockLevels.visibleTo(req.user)) return res.status(404).json({ error: 'No such lesson.' });
   const plan = blockLevels.servedPlan(req.user, track, gradeId, level);
   if (!plan) return res.status(404).json({ error: 'No such lesson.' });
+  if (plan.partial_view) return res.status(409).json({ error: 'The rest of this lesson is still being checked.' });
 
   const grade = curriculum.getGrade(track, gradeId);
   if (!grade) return res.status(404).json({ error: 'No such subject.' });

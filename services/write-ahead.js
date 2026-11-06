@@ -510,7 +510,7 @@ function start(job) {
   Promise.resolve(work)
     .then((plan) => {
       if (job.kind === 'write') {
-        if (plan) failures.delete(job.key);
+        if (plan || require('./first-block').isParked(job.key)) failures.delete(job.key); // eslint-disable-line global-require
         else {
           const before = failures.get(job.key);
           failures.set(job.key, { n: before ? before.n + 1 : 1, at: Date.now() });

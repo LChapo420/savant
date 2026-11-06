@@ -140,7 +140,7 @@ async function postStream(body, timeoutMs, { signal = null, task = null, onText 
             const delta = choice && choice.delta && choice.delta.content;
             if (delta) {
               text += delta;
-              const said = onText(text, { model: body.model });
+              const said = onText(text, { model: body.model, call: id });
               if (said) verdict = said;
             }
           }

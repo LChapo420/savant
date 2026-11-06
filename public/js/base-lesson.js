@@ -416,9 +416,11 @@ App.mount(async () => {
       back: backLink,
       enrollmentId,
       fallbackUrl: lesson.fallback_url || null,
-      onReady: async () => {
+      preview: lesson.preview || null,
+      waitMs: lesson.wait_ms || 8000,
+      onReady: async (update) => {
         const again = await App.api.get(`/api/lessons/${track}/${grade}/${level}`);
-        if (again.writing) return false;
+        if (again.writing) { if (update) update(again); return false; }
         window.location.reload();
         return true;
       },
