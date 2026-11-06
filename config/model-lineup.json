@@ -609,6 +609,20 @@
         "price_note": "Gonka broker price (GET /v1/models, 2026-11-04). Ledger: services/gonka-ledger.js, $50 hard cap. Learner data allowed until GONKA_LEARNER_UNTIL (2026-11-14) with the consent rule; pipeline otherwise."
       },
       {
+        "id": "zerogpu:z-ai/glm-5.3-flash",
+        "provider": "zerogpu",
+        "model": "z-ai/glm-5.3-flash",
+        "label": "ZeroGPU GLM 5.3 Flash (paid, $250 credit; fact check)",
+        "family": "glm",
+        "concurrency": 4,
+        "rpm": 60,
+        "hint_ms": 15000,
+        "price_in": 0.1,
+        "price_out": 0.35,
+        "data_class": "pipeline",
+        "price_note": "ZeroGPU list price (zerogpu.ai/models, read 5 Nov 2026). Ledger: services/zerogpu-ledger.js, $245 hard cap of the $250 credit. Learner data allowed until ZEROGPU_LEARNER_UNTIL (2026-11-14) with the consent rule; pipeline otherwise. Pooled for fact_verify only: Munito and Gonka GLM are cheaper per token for other tasks, but ZeroGPU GLM is the one that cleared the fact-check bar (docs/ZEROGPU-EVALUATION.md)."
+      },
+      {
         "id": "grokified:grok-4.3",
         "provider": "grokified",
         "model": "grok-4.3",
@@ -855,6 +869,7 @@
         "allow": [
           "coral:deepseek-v4.1-flash",
           "grokified:grok-4.3",
+          "zerogpu:z-ai/glm-5.3-flash",
           "lyceum:minimax/minimax-m3"
         ],
         "basis": "scripts/fact-verifier-eval.js, 4 Nov 2026, 36 planted errors in real lesson blocks and checks + 24 clean (docs/fact-verifier-eval.json, AI-planted, not real-learner proof): grok-4.3 caught 22 (5 false alarms, p50 24 s a block); Coral DeepSeek V4.1 Standard caught 22 (11 false alarms, p50 1.2 s). Coral is DeepSeek, so the call excludes the writer's family (services/block-levels.js writerFamilies) and a DeepSeek-written level still goes to grok-4.3. Gonka DeepSeek V4 Flash 18, Gonka GLM 5.3 Flash 14 (24 of 60 answered), Lyceum GLM 5.3 14 (25 of 60 answered), Crouton Alpha answered none: below today's verifier, not added. Lyceum MiniMax M3 added behind grok-4.3 (5 Nov): 17/36 caught, 9/24 false alarms, p50 2.3 s, p95 145 s; the waiting lane's 45 s deadline moves on past a slow answer, and the waiting lane never uses free models for this task."

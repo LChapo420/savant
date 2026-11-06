@@ -38,7 +38,7 @@ function makeProvider(cfg) {
   let fetchImpl = (...args) => fetch(...args);
   const _setFetch = (fn) => { fetchImpl = fn || ((...args) => fetch(...args)); };
 
-  async function post(body, timeoutMs, { signal = null, task = null } = {}) {
+  async function postRaw(body, timeoutMs, { signal = null, task = null } = {}) {
     if (!KEY()) throw Object.assign(new Error(`${cfg.name}: no key`), { status: 403 });
     if (!pipelineOptIn() && !learnerOn()) throw Object.assign(new Error(`${cfg.name}: pipeline use only (${P}_PIPELINE=1 not set)`), { status: 403 });
     const inputChars = (body.messages || []).reduce((n, m) => n + String(m.content || '').length, 0);
@@ -83,6 +83,19 @@ function makeProvider(cfg) {
     }
   }
 
+  // Some models (ZeroGPU gpt-6-luna, 5 Nov 2026) answer 400 "temperature does not support 0": send them the default instead, remembered per model.
+  const noTemp = new Set();
+  async function post(body, timeoutMs, opts) {
+    if (noTemp.has(body.model) && 'temperature' in body) { body = { ...body }; delete body.temperature; }
+    try { return await postRaw(body, timeoutMs, opts); } catch (err) {
+      if (err.status === 400 && 'temperature' in body && /temperature/i.test(err.message)) {
+        noTemp.add(body.model);
+        const b2 = { ...body }; delete b2.temperature;
+        return postRaw(b2, timeoutMs, opts);
+      }
+      throw err;
+    }
+  }
   const reasoning = (effort) => (cfg.reasoningParam && (effort === 'high' || effort === 'max' || effort === 'medium') ? { reasoning_effort: effort === 'max' ? 'high' : effort } : {});
   const timeoutOf = (t) => t || Number(process.env[`${P}_TIMEOUT_MS`]) || 180000;
 

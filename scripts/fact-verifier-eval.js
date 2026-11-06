@@ -23,7 +23,7 @@ const ENV = 'C:/coding/claudecommittdIq/folderThing/.env';
 if (fs.existsSync(ENV)) { try { require('dotenv').config({ path: ENV }); } catch { /* rely on the environment */ } }
 require('../services/run-cap').defaultCap(5);
 const LIVE_DIR = 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data';
-for (const n of ['CORAL', 'GONKA', 'GROKIFIED', 'LYCEUM', 'MUNITO']) {
+for (const n of ['CORAL', 'GONKA', 'GROKIFIED', 'LYCEUM', 'MUNITO', 'ZEROGPU']) {
   if (!process.env[`${n}_LEDGER_FILE`]) process.env[`${n}_LEDGER_FILE`] = `${LIVE_DIR}/${n.toLowerCase()}-ledger.json`;
   process.env[`${n}_PIPELINE`] = '1';
 }
@@ -62,6 +62,12 @@ const CANDS = {
   'lyceum-glm-5.3': { prov: () => require('../services/providers/lyceum').lyceum, model: 'z-ai/glm-5.3', family: 'glm' },
   'lyceum-kimi-k3': { prov: () => require('../services/providers/lyceum').lyceum, model: 'moonshotai/kimi-k3', family: 'kimi' },
   'lyceum-minimax-m3': { prov: () => require('../services/providers/lyceum').lyceum, model: 'minimax/minimax-m3', family: 'minimax' },
+  // ZeroGPU ($250 credit, 5 Nov 2026): ledger services/zerogpu-ledger.js
+  'zerogpu-glm-5.3-flash': { prov: () => require('../services/providers/zerogpu').zerogpu, model: 'z-ai/glm-5.3-flash', family: 'glm' },
+  'zerogpu-gpt-oss-120b': { prov: () => require('../services/providers/zerogpu').zerogpu, model: 'openai/gpt-oss-120b', family: 'gpt-oss' },
+  'zerogpu-qwen3-30b': { prov: () => require('../services/providers/zerogpu').zerogpu, model: 'qwen/qwen3-30b-a3b', family: 'qwen' },
+  'zerogpu-gpt-6-luna': { prov: () => require('../services/providers/zerogpu').zerogpu, model: 'gpt-6-luna', family: 'luna' },
+  'zerogpu-gpt-5.6-luna': { prov: () => require('../services/providers/zerogpu').zerogpu, model: 'gpt-5.6-luna', family: 'luna' },
   // xKiro's key no longer lists any MiniMax model (404 "does not exist" on 5 Nov), so the free catalogue is evaluated instead (mistral-large is the planter: not used as a judge)
   'xkiro-qwen3.8-max-free': { prov: () => require('../services/providers/xkiro').xkiro, model: 'qwen/qwen3.8-max:free', family: 'qwen', extra: (m) => ({ models: [m] }) },
   'xkiro-command-a-plus': { prov: () => require('../services/providers/xkiro').xkiro, model: 'cohere/command-a-plus', family: 'cohere', extra: (m) => ({ models: [m] }) },

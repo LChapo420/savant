@@ -20,9 +20,10 @@ process.env.DB_FILE = path.join(tmp, 'db.json');
 process.env.MUNITO_LEDGER_FILE = path.join(tmp, 'munito.json');
 process.env.GONKA_LEDGER_FILE = path.join(tmp, 'gonka.json');
 process.env.GROKIFIED_LEDGER_FILE = path.join(tmp, 'grok.json');
+process.env.ZEROGPU_LEDGER_FILE = path.join(tmp, 'zerogpu.json');
 process.env.STANDARD_COMPUTE_LEDGER_FILE = path.join(tmp, 'sc.json');
 process.env.ANTHROPIC_LEDGER_FILE = path.join(tmp, 'anth.json');
-const ENVS = ['GONKA', 'GROKIFIED'].flatMap((p) => ['API_KEY', 'PIPELINE', 'LEARNER', 'LEARNER_UNTIL', 'CAP_USD', 'BASE_URL', 'MODEL'].map((s) => `${p}_${s}`))
+const ENVS = ['GONKA', 'GROKIFIED', 'ZEROGPU'].flatMap((p) => ['API_KEY', 'PIPELINE', 'LEARNER', 'LEARNER_UNTIL', 'CAP_USD', 'BASE_URL', 'MODEL'].map((s) => `${p}_${s}`))
   .concat(['MUNITO_PIPELINE', 'MUNITO_API_KEY', 'MUNITO_LEARNER', 'STANDARD_COMPUTE_PIPELINE', 'XKIRO_PIPELINE']);
 for (const k of ENVS) delete process.env[k];
 
@@ -209,6 +210,40 @@ const optIn = (v) => { process.env[`${v.pre}_API_KEY`] = 'test-key-not-real'; pr
     assert.ok(near(g.in, 0.1) && /gonka-ledger/.test(g.src), JSON.stringify(g));
     const k = ct.listPriceOf('grok-4.7');
     assert.ok(near(k.out, 3) && /grokified-ledger/.test(k.src), JSON.stringify(k));
+  });
+
+  // ZeroGPU ($250 credit, 5 Nov 2026): ledger, temperature fallback (gpt-6-luna), pool slot only on fact_verify.
+  const Z = { led: require('../services/zerogpu-ledger'), mod: require('../services/providers/zerogpu'), prov: require('../services/providers/zerogpu').zerogpu, cap: 245, model: 'z-ai/glm-5.3-flash', base: 'https://api.zerogpu.ai/v1', pre: 'ZEROGPU' };
+  await check('zerogpu: $245 cap (margin under the $250 credit), env only lowers, published prices, unknown model above every row', () => {
+    reset(Z);
+    assert.ok(Z.led.status().cap_usd === 245 && Z.led.status().spent_usd === 0);
+    process.env.ZEROGPU_CAP_USD = '9999'; assert.strictEqual(Z.led.status().cap_usd, 245); delete process.env.ZEROGPU_CAP_USD;
+    assert.ok(near(Z.led.priceOf('z-ai/glm-5.3-flash').input, 0.1) && near(Z.led.priceOf('z-ai/glm-5.3-flash').output, 0.35) && near(Z.led.priceOf('gpt-6-luna').output, 0.5) && near(Z.led.priceOf('openai/gpt-oss-120b').output, 0.6));
+    const unk = Z.led.priceOf('nobody/unknown');
+    assert.ok(Object.values(Z.led.PRICES).every((p) => unk.input >= p.input && unk.output >= p.output));
+  });
+  await check('zerogpu: a call goes to the ZeroGPU base with its key, settles in its ledger; a model that refuses temperature 0 is retried without it', async () => {
+    reset(Z); optIn(Z); seen.length = 0;
+    mockFetch(Z, { inTok: 100, outTok: 50, status: (b) => ('temperature' in b ? 400 : 200), errMsg: "Unsupported value: 'temperature' does not support 0 with this model." });
+    try {
+      const r = await Z.prov.structured({ system: 's', user: 'u', schema, maxTokens: 300, model: 'gpt-6-luna' });
+      assert.strictEqual(r.data.n, 1);
+      assert.strictEqual(seen[0].url, `${Z.base}/chat/completions`);
+      assert.ok('temperature' in seen[0].body && !('temperature' in seen[1].body), 'second try without temperature');
+      const n = seen.length;
+      await Z.prov.structured({ system: 's', user: 'u', schema, maxTokens: 300, model: 'gpt-6-luna' });
+      assert.ok(!('temperature' in seen[n].body), 'remembered per model: no second 400');
+      assert.strictEqual(seen.length, n + 1);
+      assert.ok(Z.led.status().spent_usd > 0 && Z.led.status().reserved_usd === 0);
+    } finally { clean(Z); }
+  });
+  await check('zerogpu: pool slot exists, serves fact_verify only', () => {
+    pool._reset();
+    const slot = pool.extraSlots().find((s) => s.id === 'zerogpu:z-ai/glm-5.3-flash');
+    assert.ok(slot && slot.paid && slot.family === 'glm');
+    const cfg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config', 'model-lineup.json'), 'utf8'));
+    const withIt = Object.entries(cfg.pool.tasks).filter(([, t]) => (t.allow || []).some((a) => /^zerogpu:/.test(a))).map(([k]) => k);
+    assert.deepStrictEqual(withIt, ['fact_verify']);
   });
 
   console.log(failed ? `${failed} FAILED` : 'credit providers: all checks passed');
