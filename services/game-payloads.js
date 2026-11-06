@@ -372,7 +372,9 @@ function inject(engine, payload) {
   if (!html) return null;
   if (!html.includes(MARKER)) return null;
   // `<` is escaped so a question can never close the script it is written into.
-  const json = JSON.stringify(payload).replace(/</g, '\\u003c');
+  // No explanation points at an option by its place (services/game-ordinals.js): stored rows are served clean, nothing is written back.
+  // eslint-disable-next-line global-require
+  const json = JSON.stringify(require('./game-ordinals').cleanPayload(payload)).replace(/</g, '\\u003c');
   // A function, not the string: a string replacement reads `$'`, `$&` and `` $` ``
   // inside the questions as patterns and pastes the engine's own markup into the
   // data (security review 2026-10-24, finding 8).

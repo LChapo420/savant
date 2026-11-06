@@ -45,7 +45,7 @@ const placeOf = (where) => { const m = /(block|check)\s*(\d+)/i.exec(where || ''
   for (const judge of process.argv.slice(2)) {
     const rows = [];
     // eslint-disable-next-line no-await-in-loop
-    await L.runPool([...allPl, ...allCl], 3, async ({ c, f }) => {
+    await L.runPool(process.env.BRIDGE_ROUND3 ? pick : [...allPl, ...allCl], 3, async ({ c, f }) => {
       const lv = { track: f.plan.track_id, grade: f.plan.grade_id, level: f.plan.level, blocks: f.blocks, checks: f.checks };
       let v = null;
       for (let a = 0; a < 3 && !v; a++) { try { v = await J.read(judge, lv); } catch (e) { await L.sleep(3000); } } // eslint-disable-line no-await-in-loop
