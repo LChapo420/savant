@@ -297,6 +297,9 @@ async function reply({ user, messages, page, inputMode, image }) {
       // and give up on a hung attempt after 15 s instead of the pool's 120 s.
       // temperature 0.7: a friend does not say the same sentence twice (the integrity checks do not depend on it).
       maxTokens: 400, userId: user.id, hedgeAfterMs: 4000, timeoutMs: 15000, temperature: 0.7,
+      // What the fact check (services/fact-guard.js) reads beside the reply. On the learner's own material their text decides.
+      factSource: page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 2500) : '',
+      factMode: page && /^\/my-material/.test(cleanPath(page.path)) ? 'material' : undefined,
     });
     // With the switch on the reply path never waits past the deadline: a slow model gets an honest answer from the notes instead.
     text = fullOn ? await full.withDeadline(talking) : await talking;

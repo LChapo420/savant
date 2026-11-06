@@ -191,7 +191,7 @@ async function buildPart(part, ctx) {
   const allowed = new Set(byId.keys());
   const text = part.passages.map((p) => `[${p.id}]\n${p.text}`).join('\n\n');
   const args = {
-    role: 'fast', task: 'material_pack', schema: PART_SCHEMA, schemaName: 'material_pack', maxTokens: 6000, dataClass: 'learner',
+    role: 'fast', task: 'material_pack', schema: PART_SCHEMA, schemaName: 'material_pack', maxTokens: 6000, dataClass: 'learner', factSource: text,
     system: `You make study aids for a student from their own material. ${UNTRUSTED} `
       + `Write: summary (${ctx.limits.paragraphs} short paragraphs in plain words covering this part), `
       + `flashcards (up to ${ctx.limits.cards}: front is a term or question, back is a short answer of one or two sentences), `

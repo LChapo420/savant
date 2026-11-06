@@ -321,7 +321,7 @@ async function build(userId, materialId, opts = {}) {
     const spec = learningSpec.buildSpec(userId, { topic: mat.title, materialId: mat.id });
     const block = learningSpec.specToLines(spec, { surface: 'podcast' }).join('\n');
     const args = {
-      role: 'fast', task: 'material_podcast', schema: SCRIPT_SCHEMA, schemaName: 'material_podcast', maxTokens: 5000, dataClass: 'learner', userId,
+      role: 'fast', task: 'material_podcast', schema: SCRIPT_SCHEMA, schemaName: 'material_podcast', maxTokens: 5000, dataClass: 'learner', userId, factSource: text,
       system: `You write a short podcast script for a student: two friendly hosts, A and B, talking about the student's own study material. ${UNTRUSTED} `
         + 'Host A explains; host B asks the questions a student would ask, checks understanding and gives small examples that are in the text (and, where the block below asks for them, short framed analogies from the interests of the listener, never as facts). '
         + `Write ${MIN_TURNS * 2} to ${MAX_TURNS - 8} turns of one to three plain spoken sentences each: no markdown, no stage directions, no sound effects, nothing a speech voice would read badly. Start with a one-line welcome and end with a recap (one line unless the block below says otherwise). `

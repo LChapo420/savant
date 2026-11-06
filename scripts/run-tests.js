@@ -63,6 +63,7 @@ if (!process.env.CORAL_LEARNER) process.env.CORAL_LEARNER = 'off'; // as for Mun
 if (!process.env.GLADIA_LEARNER) process.env.GLADIA_LEARNER = 'off'; // existing tests keep the local route; gladia-test turns it on itself
 if (!process.env.MUNITO_LEARNER) process.env.MUNITO_LEARNER = 'off'; // the tests pin the pipeline-only rule; learner use is checked in munito-ledger-test
 if (!process.env.LYCEUM_LEARNER) process.env.LYCEUM_LEARNER = 'off';
+if (!process.env.FACT_CHECK_ALL) process.env.FACT_CHECK_ALL = '0'; // the older tests stub one model answer, which cannot also answer as the checker; scripts/fact-coverage-test.js turns the guard on and tests it
 if (!process.env.ZEROGPU_LEARNER) process.env.ZEROGPU_LEARNER = 'off';
 if (!process.env.GONKA_LEARNER) process.env.GONKA_LEARNER = 'off'; // same for the 4 Nov credit providers (checked in credit-providers-test)
 if (!process.env.GROKIFIED_LEARNER) process.env.GROKIFIED_LEARNER = 'off';
