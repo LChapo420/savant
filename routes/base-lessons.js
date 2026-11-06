@@ -432,8 +432,9 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
     // Instant layer (INSTANT_LAYER=on, services/lesson-layer.js, 6 Nov 2026): a tailored learner whose own level is not written yet is opened on the
     // level's shared lesson (already written and fact-checked) at once; a short personal layer is written in the background and slid over it
     // (GET .../layer), and the personal level keeps being written for the levels after. Nothing waits on a model here.
-    let instant = null;
-    if (blockKind === 'lesson' && lessonLayer.on() && blockLevels.tailorsFor(req.user) && blockLevels.mayGenerate(req.user) && blockLevels.aiReady()
+    let instant = blockKind === 'lesson' ? blockLevels.openedOnShared(req.user, track, grade, level) : null; // opened on the shared lesson before: a reload stays on it
+    // (Not behind blockLevels.aiReady(): that asks about the writing models, and NVIDIA cooling down after a 429 took the layer, whose own models were fine, from whoever opened a lesson meanwhile.)
+    if (!instant && blockKind === 'lesson' && lessonLayer.on() && blockLevels.tailorsFor(req.user) && blockLevels.mayGenerate(req.user)
       && !blockLevels.findPlan({ userId: req.user.id, trackId: track, gradeId: grade, level })
       && personalizeArm(req.user.id, { trackId: track, gradeId: grade, level }) !== 'holdout') { // the holdout arm is served the shared lesson as it is
       const shared = blockLevels.findPlan({ userId: null, trackId: track, gradeId: grade, level });
@@ -463,7 +464,7 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
           approach: plan.approach || '',
           model: plan.model || null,
           generated_at: plan.finished_at || null,
-          ...(instant ? { layer: true } : {}),
+          ...(instant && lessonLayer.on() ? { layer: true } : {}),
         },
         basis: 'blocks',
         kind: curriculum.levelKind(level, gradeRow.pathLength, gradeRow),

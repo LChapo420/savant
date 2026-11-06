@@ -2907,9 +2907,21 @@ function publicPlan(plan, userId, itemIds = {}) {
   };
 }
 
-/** The plan this learner was served at this level: their own, else the shared one. */
+/**
+ * The shared plan this learner's level was opened on by the instant layer (services/lesson-layer.js), or null. Their own plan for the level keeps being
+ * written behind it and may be ready minutes later, while the page is still open: both plans number their checks c1, c2 and so on, so grading against the
+ * newer plan marked an answer against a different question and asked for its checks at the finish (bug sweep 2, 6 Nov). The level stays on the plan it was opened on.
+ */
+function openedOnShared(user, trackId, gradeId, level) {
+  const shared = findPlan({ userId: null, trackId, gradeId, level });
+  if (!shared) return null;
+  return db.findOne('lesson_layers', (r) => r.user_id === user.id && r.plan_id === shared.id) ? shared : null;
+}
+
+/** The plan this learner was served at this level: the one it was opened on, their own, else the shared one. */
 function servedPlan(user, trackId, gradeId, level) {
-  return (tailorsFor(user) && findPlan({ userId: user.id, trackId, gradeId, level }))
+  return openedOnShared(user, trackId, gradeId, level)
+    || (tailorsFor(user) && findPlan({ userId: user.id, trackId, gradeId, level }))
     || findPlan({ userId: null, trackId, gradeId, level });
 }
 
@@ -3117,6 +3129,7 @@ module.exports = {
   levelsAhead,
   publicPlan,
   servedPlan,
+  openedOnShared,
   findPlan,
   readyPlan,
   answerCheck,
