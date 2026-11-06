@@ -930,7 +930,8 @@ function renderRubricResult(result) {
     progress();
     Player.render(itemHost, item, {
       // Choose, then Check; the Check button is sticky at the bottom on a phone.
-      check: isExam() || heldFeedback ? 'Next' : 'Check',
+      // SPEED_FAST_ITEM: a multiple choice answer is one tap, in practice and checks only.
+      check: isExam() || heldFeedback ? 'Next' : (session.speed && session.speed.fast ? (item.format === 'multiple_choice' ? null : 'Check') : 'Check'),
       // The role ("Focus", "Review", "Stretch") and the item's metadata are for
       // checking the content, not for the learner: shown only with ?debug=1.
       label: App.query('debug') ? roleLabel : null,
@@ -938,7 +939,7 @@ function renderRubricResult(result) {
       // Asked on about one question in three, so it stays a quick tap rather than
       // a chore — enough for the learning scorecard to learn how well this learner
       // knows what they know.
-      askConfidence: !isExam() && (maxAccuracy || index % 3 === 1),
+      askConfidence: !isExam() && !(session.speed && session.speed.fast) && (maxAccuracy || index % 3 === 1),
       onSubmit: async (answer, meta = {}) => {
         let result;
         try {
@@ -968,6 +969,12 @@ function renderRubricResult(result) {
         if (!result.reveal) {
           advance();
           if (result.slow_down && index < items.length) effortNote(result.slow_down.message, 'Slow down a little.');
+          return;
+        }
+        // SPEED_FAST_ITEM: a right answer moves on by itself after a tick. A miss, or a step from the other levers, stops as usual.
+        if (session.speed && session.speed.fast && result.correct === true && !result.checking && !result.speed && !result.slow_down && index + 1 < items.length) {
+          App.announce('Right.');
+          setTimeout(() => advance(), 500);
           return;
         }
         const last = index + 1 >= items.length;

@@ -124,6 +124,7 @@ app.use('/api', (req, res, next) => {
 });
 
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/speed', require('./routes/speed-placement'));
 app.use('/api/consent', consent.router);
 app.use('/api', require('./routes/catalog').router);
 // The daily review (staged round 3; ADAPT_REVIEW_SESSION=on, 404 while off).

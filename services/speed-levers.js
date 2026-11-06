@@ -9,6 +9,9 @@
  *   SPEED_MASTERY_STOP=on  a practice block ends once the tracker below is confident the skill is understood; the rest of its focus items are set aside, marked, unscored.
  *   SPEED_REVIEW_TARGET=on a level review is asked only when predicted recall (understanding x memory) falls under the learner's chosen target (plus a margin) on the days
  *                          the goal covers; overshoot is not reviewed. Reads the goal through services/retention-goal.js.
+ *   SPEED_FAST_ITEM=on     less friction per item: a multiple choice answer is one tap, no optional confidence row, and a right answer moves on by itself after a tick. A miss still stops to explain.
+ *   SPEED_COMPOSITE=on     an item that names `also_skills` counts as an attempt on each of them too, each on its own. The built-in banks have no such items today, so this does nothing until they exist.
+ *   Placement by skill, implied mastery and the item at the edge: services/speed-placement.js.
  *   SPEED_ALL=off          every lever off.
  * (Prerequisite credit, an answer also reviewing what it builds on, is a simulation variant only: the built-in courses have no prerequisite graph to read it from.)
  *
@@ -18,8 +21,8 @@
 
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 
-const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET' };
-const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off' };
+const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET', fast: 'SPEED_FAST_ITEM', composite: 'SPEED_COMPOSITE' };
+const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off', fast: 'off', composite: 'off' };
 
 /** Is this lever on? SPEED_ALL=off beats everything. A base-arm learner (efficiency.forLearner) reads every lever off, as the older levers do. */
 function enabled(lever) {
@@ -66,11 +69,16 @@ function shift(tr, g) {
   }
   tr.p = out;
 }
+/** Chance of a right answer. No item: the audited model. An item { b, a }: harder or easier than the skill's average, right mostly above b, with slope a (assumed; the --edge variant). */
+function pRight(c, guess, item) {
+  const s = item ? 1 / (1 + Math.exp(-item.a * (c - item.b))) : c;
+  return s + (1 - s) * guess;
+}
 /** An answer. `recall`: the learner's predicted memory for it at this moment (1 during first learning). */
-function observe(tr, right, { guess = PARAMS.guess, recall = 1 } = {}) {
+function observe(tr, right, { guess = PARAMS.guess, recall = 1, item = null } = {}) {
   let s = 0;
   for (let i = 0; i < GRID; i++) {
-    const c = gridK[i] * recall; const pr = c + (1 - c) * guess;
+    const c = gridK[i] * recall; const pr = pRight(c, guess, item);
     tr.p[i] *= right ? pr : 1 - pr; s += tr.p[i];
   }
   if (s > 0) tr.p = tr.p.map((x) => x / s);
@@ -110,6 +118,71 @@ function nextStep(tr, state, { conf = PARAMS.conf, minAnswers = PARAMS.minAnswer
   if (tr.n >= PARAMS.maxAnswers) return 'stop';
   if (lastRight === false && state.pageLeft > 1e-9) return 'teach';
   return 'ask';
+}
+
+// ---------- placement by skill, implied mastery, the item at the learner's edge ----------
+/** The most informative item difficulty for this belief: the candidate with the largest expected fall in entropy about "understood or not". */
+function bestItem(tr, { a = 8, candidates = [0.3, 0.5, 0.7, 0.85], guess = PARAMS.guess } = {}) {
+  const ent = (p) => (p <= 0 || p >= 1 ? 0 : -(p * Math.log2(p) + (1 - p) * Math.log2(1 - p)));
+  let best = null;
+  for (const b of candidates) {
+    const item = { a, b };
+    let right = 0; let knownRight = 0; let known = 0;
+    for (let i = 0; i < GRID; i++) {
+      const pr = pRight(gridK[i], guess, item); const isKnown = gridK[i] >= PARAMS.understood - 1e-9;
+      right += tr.p[i] * pr; if (isKnown) { known += tr.p[i]; knownRight += tr.p[i] * pr; }
+    }
+    const pkR = right > 0 ? knownRight / right : 0; const pkW = right < 1 ? (known - knownRight) / (1 - right) : 0;
+    const gain = ent(known) - right * ent(pkR) - (1 - right) * ent(pkW);
+    if (!best || gain > best.gain) best = { ...item, gain };
+  }
+  return { a: best.a, b: best.b };
+}
+const PLACE = {
+  knownAt: PARAMS.conf,   // chance the skill is understood, to call it known
+  notAt: Number(process.env.SPEED_PLACE_NOT_AT || 0.15), // under this, it goes on the path with no more questions
+  maxPerSkill: 8,
+  sampleEvery: Number(process.env.SPEED_SAMPLE_EVERY || 3), // one implied skill in this many is asked, to catch a wrong inference
+};
+/**
+ * The next question of a placement by skill, or null when every skill is settled. skills: the course's order, basic first; prereqs(i): the skills i directly builds on. state[i]: { status: 'open'|'known'|'implied'|'path', asked, tr }.
+ * Most advanced open skill first, because a pass there settles what lies under it. Implied skills are sampled.
+ */
+function placementNext(state, { sampleEvery = PLACE.sampleEvery } = {}) {
+  for (let i = state.length - 1; i >= 0; i--) if (state[i].status === 'implied' && state[i].sample && !state[i].asked) return i;
+  for (let i = state.length - 1; i >= 0; i--) if (state[i].status === 'open') return i;
+  void sampleEvery;
+  return null;
+}
+/** Takes one answer on skill i. Returns what changed: { known, implied: [], revoked: [] }. */
+function placementAnswer(state, i, right, prereqs, { sampleEvery = PLACE.sampleEvery, useImplied = true, missEnds = true } = {}) {
+  const row = state[i]; row.asked = (row.asked || 0) + 1;
+  const out = { known: false, implied: [], revoked: [] };
+  if (row.status === 'implied') {
+    // the sampled confirmation: a miss revokes this one, what it implied below it, and whatever else came from the same pass
+    row.sample = false;
+    if (right) { row.status = 'known'; return out; }
+    for (let j = 0; j < state.length; j++) if (state[j].status === 'implied' && state[j].by === row.by && !state[j].asked) { state[j].status = 'path'; out.revoked.push(j); }
+    row.status = 'path'; out.revoked.push(i);
+    return out;
+  }
+  if (row.tr.n >= PARAMS.minAnswers && pKnown(row.tr) >= PLACE.knownAt) {
+    row.status = 'known'; out.known = true;
+    if (useImplied) {
+      const seen = new Set(); const stack = [...prereqs(i)]; let c = 0;
+      while (stack.length) {
+        const p = stack.pop(); if (seen.has(p) || state[p].status === 'known') continue; seen.add(p);
+        if (state[p].status === 'open' || state[p].status === 'path') {
+          if (state[p].asked) continue; // it has its own evidence
+          state[p].status = 'implied'; state[p].by = i; c++; state[p].sample = c % sampleEvery === 0; out.implied.push(p);
+        }
+        for (const q of prereqs(p)) stack.push(q);
+      }
+    }
+    return out;
+  }
+  if ((missEnds && !right) || pKnown(row.tr) < PLACE.notAt || row.asked >= PLACE.maxPerSkill) row.status = 'path'; // a plain item: one miss sends it to the path. An item at the edge may be missed by someone who knows it, so the belief decides
+  return out;
 }
 
 // ---------- reviews ----------
@@ -170,8 +243,8 @@ function partsForMiss(lesson, item, shownIds = [], chunk = PARAMS.chunk) {
 /** What the client should know up front. A preview of another level keeps today's flow. */
 function clientFlags(userId, session) {
   const on = (lever) => require('./efficiency').forLearner(userId, () => enabled(lever));
-  if (!session || session.preview) return { testout: false, short: false };
-  return { testout: on('testout'), short: on('short') };
+  if (!session || session.preview) return { testout: false, short: false, fast: false };
+  return { testout: on('testout'), short: on('short'), fast: on('fast') };
 }
 /**
  * After an answer. A lesson level's check, with retrieval first: a miss brings the part of the page it calls for (or all of it), answers that show the skill known end the
@@ -233,7 +306,8 @@ function reviewWanted(userId, skillId, recallNow, end) {
 
 module.exports = {
   SWITCH, DEFAULT, PARAMS, enabled,
-  newTracker, observe, taught, pKnown, kMean, shown, priorFromHistory, trackerFromAnswers, nextStep,
+  newTracker, observe, taught, pKnown, kMean, shown, priorFromHistory, trackerFromAnswers, nextStep, pRight,
+  PLACE, bestItem, placementNext, placementAnswer,
   reviewDue, endWindow,
   trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
 };

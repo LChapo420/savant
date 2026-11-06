@@ -1307,6 +1307,13 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
     itemId: item.id,
   });
 
+  // SPEED_COMPOSITE: an item that tests several skills is an attempt on each. No built-in item names any today.
+  if (Array.isArray(item.also_skills) && item.also_skills.length && speedLevers.enabled('composite')) {
+    for (const skillId of item.also_skills) mastery.recordAttempt({ userId, skillId, correct, difficulty: item.difficulty, levelDifficulty, latencyMs: ms, errorTag, hintUsed: !!item.coach_used, itemId: item.id });
+  }
+  // A later miss on a skill that a placement only implied puts it back on the learner's list (services/speed-placement.js).
+  if (!correct) { try { require('./speed-placement').noteAnswer(userId, item, correct); } catch (err) { console.warn(`sessions: speed placement note skipped (${err.message})`); } } // eslint-disable-line global-require
+
   // Exam answers still teach the scorecard about pace and certainty; placement
   // is left out, since it is deliberately pitched past the learner.
   if (session.kind !== 'placement') {

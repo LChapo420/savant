@@ -179,7 +179,7 @@ function sessionShape(session) {
 
 function speedShape(session) {
   const flags = speedLevers.clientFlags(session.user_id, session);
-  return flags.testout && !holdsFeedbackByChoice(session) ? { speed: flags } : {};
+  return (flags.testout || flags.fast) && !holdsFeedbackByChoice(session) ? { speed: flags } : {};
 }
 
 /**
@@ -1506,6 +1506,7 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
     },
     nodes: req.query.view === 'page' ? nodes.map(pageNode) : nodes,
     // The speed levers: a lesson opens on its check, and pages a check let the learner skip are listed so nothing is lost silently. Absent with the switch off.
+    ...require('../services/speed-placement').pathView(req.user.id, enrollment, grade), // eslint-disable-line global-require
     ...(speedLevers.clientFlags(req.user.id, {}).testout ? {
       speed_testout: true,
       skipped_pages: db.find('lessons', (l) => l.user_id === req.user.id && l.track_id === enrollment.track_id && l.grade_id === enrollment.grade_id && l.skipped_by_check_at).map((l) => ({ level: l.level, title: l.title })).sort((a, b) => a.level - b.level),

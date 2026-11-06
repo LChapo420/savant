@@ -911,6 +911,23 @@ App.mount(async () => {
     else root.appendChild(line);
   }
 
+  // The skill check (services/speed-placement.js): offered, and afterwards what it settled, each with a way in. Absent with the switch off and no check taken.
+  if (data.speed_skill_check || data.speed_settled) {
+    const line = document.createElement('p');
+    line.className = 'small';
+    line.style.cssText = 'margin:16px 0 0;max-width:640px';
+    const list = (rows) => rows.map((r) => (r.level ? `<a href="/session?enrollment=${enrollment.id}&level=${Number(r.level)}">${App.escapeHtml(r.name || r.skill)}</a>` : App.escapeHtml(r.name || r.skill))).join(', ');
+    const s = data.speed_settled;
+    line.innerHTML = data.speed_skill_check
+      ? `<strong>Know some of this already?</strong> <a href="/skill-check?enrollment=${enrollment.id}">Take a short skill check</a> and what you know comes off your path.`
+      : [s.known.length ? `<strong>Off your path, shown by your check:</strong> ${list(s.known)}.` : '', s.implied.length ? `<strong>Off your path, inferred from those:</strong> ${list(s.implied)}.` : '', s.revisit.length ? `<strong>Worth another look (a later answer missed):</strong> ${list(s.revisit)}.` : ''].filter(Boolean).join(' ');
+    if (line.innerHTML) {
+      const pathTitle = [...root.querySelectorAll('h2.section-title')].find((h) => h.textContent.trim() === 'The path');
+      if (pathTitle) pathTitle.parentNode.insertBefore(line, pathTitle);
+      else root.appendChild(line);
+    }
+  }
+
   // The speed levers: pages a check let the learner skip stay listed, so nothing is passed over silently. Absent with the switch off.
   if ((data.skipped_pages || []).length) {
     const line = document.createElement('p');
