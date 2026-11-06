@@ -87,7 +87,21 @@ Hours: levels set aside are 45-47% of math, English and IQ levels and 8.4% of Sp
 ### Lesson-opening and order lines (approach), 40 learners, 31 real pairs, 8 planted
 The line with the lines on was picked 11 times, the line with them off 19 times, TIE once (chance is half). Planted identical pairs: 8 of 8 TIE. Both versions taught the same facts in 28 of 39 scored pairs. This does not beat chance, so the lines are OFF by default (`BLOCK_APPROACH=on` enables them).
 
+### 6 Nov evening: held-out seed 929291, 80 learners drawn, judges GLM-5.3 (zai) + Grok 4.3 (xai), 8 questions written from the objective alone before either version
+
+Run B of the morning (GLM + Nemotron) was stopped: NVIDIA's free tier throttled it past two hours. Judges were then chosen for allowance (both on credit ledgers, no free-tier quota), and only 5 of 80 core pairs were unscored.
+
+Core (75 scored; changes: core and test keep every key point stated outright at 70% of its terms, an explicit line that each coverage point is asked about):
+- Words 25.8% fewer (gate 25%: passes by a hair). Worst 10% of learners 6.2% fewer; worst 5% 31% MORE; worst 1% 86% MORE; 6 of 75 learners got more words than full depth. By type: young 18%, old 16%, contradictory 17%, tail-low 20% fewer (all under 25%); random 37%, tail-both 35%.
+- Answerability: GLM full 0.882, core 0.845 (diff -0.037, CI -0.062 to -0.013); Grok full 0.790, core 0.782 (diff -0.008, CI -0.045 to +0.025). Worst 10% / 5% / 1% drop: GLM 0.125 / 0.25 / 0.375; Grok 0.25 / 0.375 / 0.375. Gate (not lower; worst 10% within 0.10): FAILS. Blind pick of core 52 of 60; planted 15 of 15 TIE.
+- Core stays OFF.
+
+Ready for a test (80 scored, no unscored; gate: exam-style answerability not lower overall, worst 10% of learners lose at most 0.10):
+- Overall diff 0.000 for both judges (GLM 0.702 vs 0.702, CI -0.042 to +0.041; Grok 0.673 vs 0.673, CI -0.048 to +0.045). Worst 10% / 5% / 1% drop: GLM 0.25 / 0.375 / 0.50; Grok 0.25 / 0.25 / 0.50. Worst-10% gate FAILS.
+- Words only 3.8% fewer, so the goal barely changes the text (blind pick 37 of 64, planted 16 of 16 TIE). A note on the gate: with 8 questions and one written sample per version, a learner can lose 2 questions to writing variance alone. No full-versus-full control was run, so how much of the worst-10% loss is noise is unmeasured; the gate was not loosened.
+- Test goal stays OFF (`STUDY_GOAL_TEST=on` enables it).
+
 ### Defaults after this run
-- Core: OFF (`STUDY_GOAL_CORE=on` enables it). The gate numbers on the scored pairs pass but the sample is 25 learners, the young, old and contradictory groups miss 25% fewer words, and the worst 5% lose a third of the questions.
+- Core: OFF (`STUDY_GOAL_CORE=on` enables it). Fails the answerability and worst-10% gates on 75 scored learners (above).
 - Approach lines: OFF.
-- Full depth (default) and Ready for a test: unchanged.
+- Ready for a test: OFF (`STUDY_GOAL_TEST=on`). With both off only Full depth exists and the profile and My material pickers are not shown.
