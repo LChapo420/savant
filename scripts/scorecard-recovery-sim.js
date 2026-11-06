@@ -123,6 +123,7 @@ if (Number(opt('active', 0)) !== 0) process.env.SCORECARD_ACTIVE = '1';
 if (opt('active-gain', '') !== '') process.env.SCORECARD_ACTIVE_MINGAIN = String(opt('active-gain', ''));
 if (Number(opt('short-form', 0)) > 0) process.env.DAILY_SHORT_FORM = String(opt('short-form', 0));
 if (Number(opt('anchor', 0)) > 0) process.env.SCORECARD_ANCHOR = String(opt('anchor', 0));
+if (Number(opt('self-worth', 0)) !== 0) process.env.SCORECARD_SELF_WORTH = '1';
 const WORLD_NAME = opt('world', 'same');
 const DAYS_OFF = Number(opt('days-off', 0));
 const SHARED_SHARE = Number(opt('shared', 0));

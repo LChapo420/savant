@@ -255,6 +255,8 @@ app.listen(PORT, () => {
   require('./services/cost-tracker').start(); // process snapshots every minute (COST_TRACKER=off stops all tracking)
   // The beta comparison (tailored vs base): writes data/beta-report.json once a day (services/beta-compare.js; BETA_REPORT_DAILY=off stops it).
   require('./services/beta-compare').startDaily();
+  // The real-tester refit of the scorecard's read-out: checks once a day whether there is enough data, and writes a candidate and a report. Never switches itself on (SCORECARD_REFIT_AUTO=1 to run).
+  require('./services/scorecard/refit-auto').startDaily();
   // Base levels shipped in content/base-levels are added if the data file lacks them.
   try {
     const shipped = require('./services/base-content').importAll();

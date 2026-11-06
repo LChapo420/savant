@@ -89,7 +89,7 @@ function readsOf(userId) {
 /** The switches of services/scorecard/active-measure.js on one planner. Nothing when they are off. */
 function withSwitches(planner, userId) {
   const short = measure.shortFormIds();
-  measure.attach(planner, userId, measure.enabled() ? readsOf(userId) : {});
+  measure.attach(planner, userId, measure.enabled() ? readsOf(userId) : {}, { dayKey: dayOf(Date.now()) });
   if (short) { const base = planner.available; planner.available = (it) => short.has(it.id) && base(it); }
   return planner;
 }

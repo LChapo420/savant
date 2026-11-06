@@ -115,8 +115,9 @@ function mergeAnchors(kept = {}, log = []) {
 }
 
 /** Set up a planner for this learner's run. `reads` from readsOf; a no-op unless a switch is set. */
-function attach(planner, userId, reads) {
-  if (anchorShare() > 0) planner.anchorFor = (item) => !item.free && isAnchor(userId, item.id);
+function attach(planner, userId, reads, { dayKey = '' } = {}) {
+  // a repeatable task is drawn per day, so a learner's span or speed reading is never all on one side
+  if (anchorShare() > 0) planner.anchorFor = (item) => !item.free && isAnchor(userId, ['span', 'speed', 'switch'].includes(item.kind) ? `${item.id}|${dayKey}` : item.id);
   if (selfWorthOn()) planner.readValidity = (stat, family, r) => r * worthOf(stat, family);
   if (!enabled()) return planner;
   const { sel, importance, conflicts } = selectionFor(planner.state, reads);
