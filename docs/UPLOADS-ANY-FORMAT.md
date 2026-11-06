@@ -461,3 +461,31 @@ about the sweep-v3 length: 1.13x of the source for the lessons alone on default 
 owner would give up "shortest is shorter than the source" (take about 1.1x lessons, 1.8x whole), to hold the length the owner would give up about 30 plain-fact points on a brevity learner (about 1 plain fact in 3 not taught). (c) Traits mean 90% and worst 10% 70% were not reached by any variant (62 to 75%); the misses left are age,
 "cannot take dense text", test-anxiety wording and plain words. (d) Invented facts on judge N rose with the rewrites even with the deterministic number and name refusal (0.42 to 2.18; judge C fell 5.6 to 5.1): the additions are not numbers or names, they look like analogies and "why it matters" claims; the judge's lists were not stored to confirm which.
 Rewrites: 474 asked, 167 accepted. Spend: ZeroGPU, Coral and Gonka cents per run, all well under the $5 run cap; ledgers are cumulative and shared.
+
+## 17. Uploads made whole (6 Nov 2026; MEASURED where a script scored it, AI-JUDGED and SIMULATED where a model read it; no real learner)
+
+**Which invented-facts judge to believe.** `scripts/uploads-judge-calibrate.js` (rows `docs/uploads-judge-calibration.json`), four documents, three to two reads each: the source's own sentences (nothing can be invented), a real course with what I flagged by hand repaired ("clean"), the same plus six planted claims (a number, a name, plain general knowledge, a why-it-matters claim, a swapped fact, an analogy with a claim), and the real course with its questions.
+
+| Judge, form | source sentences | clean | planted recall | real course (with questions) |
+|---|---|---|---|---|
+| C (Coral DeepSeek), free-form list | 0 | 0 | 88% | 6.75 |
+| N (NVIDIA nemotron), free-form list | 0 | 0 | 92% | 0.45 |
+| Z (Gonka GLM 5.3 Flash), free-form list | 0 | 0 | 100% | 3.42 |
+| K (Lyceum Kimi K3.1 Pro), free-form list | 0 | 0.25 | 100% | 3.75 |
+| C, sentence by sentence | 0 | 0.75 | 100% | |
+| N, sentence by sentence | 0 | 0 | 100% | |
+| Z, sentence by sentence | 0 | 0 | 100% | |
+| K, sentence by sentence | 0 | 0.75 | 100% | |
+
+My own read of the four real courses' lessons found 4, 7, 6 and 3 over-reaching claims: about 5 a course. So N's 0.42 misses real ones, though it finds planted ones: what is planted is easy, and what a writer really adds ("this ensures...", "selectivity is dose-dependent") is quiet. C's 5.1 was near the truth in number but counted the made-up cases of practice questions (a judge reading the questions flags "a company pays rent of $1,000"), and the rise to 2.18 on N was real rewrites. K's flags on my clean texts were real misses of mine ("only at high doses" where the source says "at high doses"), so its 0.25 to 0.75 are not false alarms. The gate judge is therefore the sentence-by-sentence form: Z and K. Kimi's real cost: $0.028 a call, 92 calls $2.55, about $0.15 per course judged; a judge, see below for why not in the build.
+
+**The fix, on by default (`services/material-factcheck.js`, `UPLOAD_FACTCHECK=off`).** Every lesson sentence, key point, skill summary and question explanation, and every note bullet, card back, pack summary, model answer and podcast turn:
+- no model first: a number, year or date nowhere in the material, or a capitalised name nowhere in it, or a purpose word ("ensures", "helps", "crucial") no matching line uses, is refused whatever a model says; a sentence whose words and numbers sit in one line of the material in the same order, with the same negation and no new cause, passes with no call;
+- the rest go to two readers at once, DeepSeek and GLM by task (`material_factcheck_deepseek`, `_glm`), with any reader as the fallback; either one saying "not in the source" is enough, and it gives the sentence with only that part cut;
+- a cut is checked again (no new words of its own); a sentence with no good cut goes, and the material's own line behind it comes back if the lesson no longer says it; a lesson with nothing left becomes the material's own sentences; a bad explanation becomes the quote; a card back or note bullet becomes its verified quote;
+- no answer at all: only what the deterministic pass can stand behind stays, and the course stays "partial" so that asking again checks it again.
+
+Other languages: a material not written in English gets an English course, as before, but the spelling rules step aside (the readers judge a translation) and the learner gets a note saying so. Before this the check cut a Spanish lesson from 321 words to 67.
+
+Which readers, measured with one judge over the same texts (C, sentence form, h1 h3 h4 h5 h6): DeepSeek alone 1.4 a course, GLM alone 1.2, Kimi alone 0.6, DeepSeek and GLM together 0.6, those two and then Kimi as a third 0.4. Kimi as the only reader cost $0.24 a course against about $0.003 for the two cheap ones and cut more (h1 1,278 to 895 words) for the same score, so it stays a judge. `UPLOAD_FACTCHECK_READERS=1` keeps one reader.
+
