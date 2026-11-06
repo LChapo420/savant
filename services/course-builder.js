@@ -565,7 +565,7 @@ function checkSkillFacts(skill, { paragraphs, keyPoints, items, text, passageByI
     paragraphs, keyPoints, summary: summaryOverride !== undefined ? summaryOverride : skill.summary,
     explanations: items.map((q) => ({ text: q.explanation || '', extra: `${q.prompt} ${(q.choices || []).join(' ')} ${q.answer || ''} ${q.quote || ''}` })),
     idx: factIndex(ctx, passageById), sourceText: text, allow: ctx.allowNames || null,
-    ...factcheck.readersFor((args) => ask(ctx.llm, ctx.budget, ctx.userId, args)), fallback: noLesson ? null : fallback,
+    ...factcheck.readersFor((args) => ask(ctx.llm, ctx.budget, ctx.userId, args)), fallback: noLesson ? null : fallback, dropQuestions: !ctx.block,
   });
 }
 

@@ -83,6 +83,9 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
   const two = await F.checkLesson({ paragraphs: ['The plates swing about all day long.'], keyPoints: [], idx, sourceText: SOURCE, asker: script((a) => numbered(a).map((x) => ({ n: x.n, verdict: 'supported' }))), asker2: script((a) => numbered(a).map((x) => ({ n: x.n, verdict: 'not_in_source', fixed: '' }))) });
   check('either of two readers saying "not in the source" is enough', !two.paragraphs.length && two.report.second_caught === 1, two.report);
 
+  r = await F.checkLesson({ paragraphs: ['Delegates vote in the Assembly. What do they vote on?'], keyPoints: [], idx, sourceText: SOURCE, dropQuestions: true, asker: script((a) => numbered(a).map((x) => ({ n: x.n, verdict: 'supported' }))) });
+  check('a question inside a lesson goes, for a default learner', !/\?/.test(r.paragraphs.join(' ')) && /Delegates/.test(r.paragraphs.join(' ')), r.paragraphs);
+
   r = await lesson(['Think of plates like rafts on a pond.'], [], script((a) => numbered(a).map((x) => ({ n: x.n, verdict: 'no_claim' }))));
   check('a framed analogy with no claim stays', r.paragraphs.length === 1);
 

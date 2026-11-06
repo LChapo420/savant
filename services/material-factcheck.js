@@ -351,9 +351,10 @@ async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = 
  * Check a lesson: paragraphs and key points, sentence by sentence. Returns { paragraphs, keyPoints, report }.
  * `sourceText` is what the model is shown (the skill's passages); `idx` is the index of the whole material.
  */
-async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, sourceText, asker, asker2, askerAny, allow, allowStems, fallback }) {
+async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, sourceText, asker, asker2, askerAny, allow, allowStems, fallback, dropQuestions }) {
   const items = [];
-  const paraSents = (paragraphs || []).map((p, i) => sentencesOf(p).map((s, j) => { const id = `p${i}.${j}`; items.push({ id, text: s }); return id; }));
+  // A writer told to write a lesson sometimes ends it with questions; the practice questions are their own part.
+  const paraSents = (paragraphs || []).map((p, i) => sentencesOf(p).filter((s) => !(dropQuestions && /\?\s*["'”)]*$/.test(s))).map((s, j) => { const id = `p${i}.${j}`; items.push({ id, text: s }); return id; }));
   (keyPoints || []).forEach((k, i) => items.push({ id: `k${i}`, text: k }));
   if (summary) items.push({ id: 's', text: summary });
   // A question's explanation may use the numbers and words of its own question (a worked case).
