@@ -120,7 +120,8 @@ function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' 
     if (!mat.length && mode !== 'method' && user) mat = looseMaterial(user.id, msg);
     const aboutMine = /\b(my|our) (notes?|material|upload\w*|course|book|pdf|slides)\b|according to my|in my (notes|material)/i.test(msg);
     const hasMaterial = (() => { try { return require('../config/db').find('material_courses', (c) => c.user_id === (user && user.id) && ['ready', 'partial'].includes(c.status)).length > 0; } catch { return false; } })(); // eslint-disable-line global-require
-    const m = howto.match(msg);
+    const explaining = /(explain|teach me|help me understand|walk me through|using something)/i.test(msg) && !/(how do i|where (is|do|can)|how to)/i.test(msg);
+    const m = explaining ? [] : howto.match(msg);
     const askingAnswer = WANTS_ANSWER.test(msg) && page && (page.question || /\/(session|skill-practice|review|placement|stage-check|skip|daily-check|enforcer|my-material-(test|study))/.test(String(path || '')));
     if (mat.length) {
       parts.push(`From your own material, "${mat[0].title || mat[0].course}": "${clip(mat[0].text, 300)}"`);

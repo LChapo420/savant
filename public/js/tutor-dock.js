@@ -121,6 +121,7 @@
     let gatewayOff = false; // set when the better voice answers no once, so later replies skip the request
     let audio = null;
     let busy = false;
+    let askedQuestion = '';
 
     function line(cls, text) {
       const d = document.createElement('div');
@@ -164,6 +165,10 @@
       busy = true;
       // A message typed or spoken sets the mode for next time; the transcript is always shown.
       if (canTalk && via && via !== inputMode) setMode(via, false);
+      // A new question on screen is a new conversation: what was said about the last one must not leak into this one.
+      const info0 = pageInfo();
+      if (info0.question && askedQuestion && info0.question !== askedQuestion) { messages.length = 0; toldAt = 0; line('bot', 'New question: starting fresh.').className = 'tdock-note'; }
+      askedQuestion = info0.question || askedQuestion;
       messages.push({ role: 'user', content: text });
       line('me', text);
       askedHere = true;

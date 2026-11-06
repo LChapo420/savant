@@ -121,7 +121,7 @@ function generate(seed, count = 12) {
     const consent = kid ? (k % 2 === 0 ? 'none' : 'ai') : undefined;
     const truthBits = [`Name ${name}, age ${age}.`, `Interests: ${interests}.`, dislike ? `Dislikes: ${dislike}.` : 'No stated dislikes.',
       `Scorecard measures (0-100): ${Object.entries(measures).map(([a, v]) => `${a.replace(/_/g, ' ')} ${v}`).join(', ')}.`,
-      `Skills: ${skills.map((s) => `${s.id.replace(/_/g, ' ')} ${Math.round(s.mastery * 100)}% over ${s.attempts} questions${s.errors ? `, ${s.errors[0].n} recent wrong answers tagged ${s.errors[0].tag.replace(/_/g, ' ')}` : ''}`).join('; ')}.`,
+      `${skills.filter((s) => s.mastery >= 0.75).length} skill(s) at or above the 75% mastery mark, ${skills.filter((s) => s.mastery < 0.75).length} still in progress.`, `Skills: ${skills.map((s) => `${s.id.replace(/_/g, ' ')} ${Math.round(s.mastery * 100)}% over ${s.attempts} questions${s.errors ? `, ${s.errors[0].n} recent wrong answers tagged ${s.errors[0].tag.replace(/_/g, ' ')}` : ''}`).join('; ')}.`,
       goal ? `Goal: ${goal}.` : 'No goal set.', material ? `Uploaded notes "${material.title}": ${material.parts.join(' ')}` : 'No uploads.',
       kid ? (consent === 'ai' ? 'Under 13 with a parent\'s consent for AI.' : 'Under 13 with NO parental consent: no outside AI, only local replies.') : '',
       `Today is ${new Date().toISOString().slice(0, 10)}. The app is called Savant.`].filter(Boolean);

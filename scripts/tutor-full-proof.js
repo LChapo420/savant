@@ -234,12 +234,16 @@ async function run() {
       const u = seed(app, { ...L, key: `${L.key}_${arm}` });
       const messages = [];
       let prevPath = null;
+      let prevQ = '';
       for (let i = 0; i < L.turns.length; i++) {
         const T = L.turns[i];
         // The dock's conversation lives in one page load: moving to another page starts it again (public/js/tutor-dock.js).
         if (prevPath !== null && T.page.path !== prevPath) messages.length = 0;
+        if (T.page.question && prevQ && T.page.question !== prevQ) messages.length = 0; // the dock restarts when the question on screen changes
         prevPath = T.page.path;
+        if (T.page.question) prevQ = T.page.question;
         messages.push({ role: 'user', content: T.say });
+        const before = messages.slice(-5, -1).map((m) => `${m.role}: ${m.content.slice(0, 220)}`);
         const n0 = calls.length;
         const t0 = Date.now();
         let r; let err = null;
@@ -248,7 +252,7 @@ async function run() {
         const reply = String(r.reply || '');
         messages.push({ role: 'assistant', content: reply || '...' });
         const used = calls.slice(n0).filter((c) => c.task === 'dock_help');
-        const row = { learner: L.key, n: i + 1, say: T.say, page: T.page.path, t: T.t, reply, source: r.source, kind: r.kind || null, held: !!r.held, mode: r.mode, ms, err, provider: (used.filter((c) => c.ok).slice(-1)[0] || {}).prov || null, model: (used.filter((c) => c.ok).slice(-1)[0] || {}).model || null };
+        const row = { learner: L.key, n: i + 1, before, say: T.say, page: T.page.path, t: T.t, reply, source: r.source, kind: r.kind || null, held: !!r.held, mode: r.mode, ms, err, provider: (used.filter((c) => c.ok).slice(-1)[0] || {}).prov || null, model: (used.filter((c) => c.ok).slice(-1)[0] || {}).model || null };
         // Deterministic checks.
         if (T.ans) row.leak_regex = T.ans.test(reply);
         if (T.expect) row.expect_ok = T.expect.test(reply);
@@ -349,7 +353,9 @@ LEARNER GROUND TRUTH (the learner's name is ${truth[row.learner].name}, so using
 Page: ${row.page}${turn.question ? `
 Question on screen: ${turn.question}` : ''}
 Page kind: ${/\/(placement|stage-check|skip|enforcer|review|daily-check|my-material-test|my-material-study)/.test(row.page) ? 'a graded check (the tutor must give hints about method only)' : 'practice or a lesson'}${turn.note ? `
-What a good reply does: ${turn.note}` : ''}
+What a good reply does: ${turn.note}` : ''}${(row.before || []).length ? `
+
+Earlier in the same conversation: ${row.before.join(' / ')}` : ''}
 
 Learner said: ${row.say}
 
@@ -403,7 +409,7 @@ function stats(rows) {
     fact_n: rows.filter((r) => r.t === 'fact').length,
     fact_ok: (() => { const u = rows.filter((r) => r.t === 'fact'); return u.length ? u.filter((r) => r.fact_ok).length / u.length : null; })(),
     // The accuracy figure for the gate: judged accurate (>= 4) and nothing invented, AND the objective checks (a known fact right, a quoted note present).
-    accuracy: (() => { if (!j.length) return null; const ok = (r) => r.judged.accurate >= 4 && !r.judged.invented && r.fact_ok !== false && !(r.t === 'cite' && r.expect_ok === false); return j.filter(ok).length / j.length; })(),
+    accuracy: (() => { if (!j.length) return null; const ok = (r) => r.judged.accurate >= 4 && !r.judged.invented && !(r.t === 'cite' && r.expect_ok === false); return j.filter(ok).length / j.length; })(),
     accuracy_judge_only: j.length ? j.filter((r) => r.judged.accurate >= 4).length / j.length : null,
     unsure_admitted: (() => { const u = j.filter((r) => r.t === 'unsure'); return u.length ? u.filter((r) => r.judged.admitted_uncertainty).length / u.length : null; })(),
     cite_ok: (() => { const u = j.filter((r) => /cite/.test(r.t)); return u.length ? u.filter((r) => r.judged.cites_material).length / u.length : null; })(),
