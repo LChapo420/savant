@@ -16,7 +16,8 @@ require('../services/run-cap').defaultCap(Number(process.env.RUN_CAP_USD || 4));
 require('dotenv').config({ path: 'C:/coding/claudecommittdIq/folderThing/.env', quiet: true });
 const LIVE = 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/';
 process.env.GONKA_PIPELINE = '1'; process.env.GONKA_LEDGER_FILE = process.env.GONKA_LEDGER_FILE || `${LIVE}gonka-ledger.json`;
-process.env.XKIRO_PIPELINE = '1'; process.env.XKIRO_USAGE_FILE = process.env.XKIRO_USAGE_FILE || path.join(os.tmpdir(), 'uploads-heldout-xkiro-usage.json');
+process.env.XKIRO_PIPELINE = '1'; process.env.ZEROGPU_PIPELINE = '1'; process.env.CORAL_PIPELINE = '1';
+for (const [k, f] of [['ZEROGPU', 'zerogpu'], ['CORAL', 'coral']]) process.env[`${k}_LEDGER_FILE`] = process.env[`${k}_LEDGER_FILE`] || `${LIVE}${f}-ledger.json`; process.env.XKIRO_USAGE_FILE = process.env.XKIRO_USAGE_FILE || path.join(os.tmpdir(), 'uploads-heldout-xkiro-usage.json');
 process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-heldout-${process.pid}.json`);
 const db = require('../config/db');
@@ -32,12 +33,15 @@ const round = (n) => (n == null ? null : Math.round(n * 1000) / 1000);
 const load = (f, d) => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : d);
 const save = (f, v) => fs.writeFileSync(f, JSON.stringify(v));
 const used = {};
+const JUDGES = (process.env.HELDOUT_JUDGES || 'Z,N').split(',');
 
 async function call(fam, { system, user, schema, schemaName, maxTokens, timeoutMs }) {
   const mt = Math.max(maxTokens || 1500, 2500);
   let r;
   if (fam === 'N') r = await require('../services/providers/nvidia').structured({ role: 'fast', task: 'uploads_proof', system, user, schema, schemaName, maxTokens: mt, timeoutMs: timeoutMs || 240000 });
   else if (fam === 'G') r = await require('../services/providers/gemini').structured({ role: 'fast', system, user, schema, schemaName, maxTokens: mt, timeoutMs: timeoutMs || 240000 });
+  else if (fam === 'Q') r = await require('../services/providers/zerogpu').zerogpu.structured({ system, user, schema, schemaName, maxTokens: mt, timeoutMs: timeoutMs || 240000 });
+  else if (fam === 'C') r = await require('../services/providers/coral').coral.structured({ system, user, schema, schemaName, maxTokens: mt, timeoutMs: timeoutMs || 240000 });
   else if (fam === 'X') r = await require('../services/providers/xkiro').xkiro.structured({ models: ['mistralai/mistral-large-2512'], system, user, schema, schemaName, maxTokens: mt, timeoutMs: timeoutMs || 240000 });
   else r = await require('../services/providers/gonka').gonka.structured({ model: fam === 'Z' ? 'zai-org/GLM-5.3-Flash' : 'deepseek-ai/DeepSeek-V4-Flash-0731', system, user, schema, schemaName, maxTokens: mt, timeoutMs: timeoutMs || 240000 });
   if (!r || !r.data) throw new Error('no data');
@@ -51,7 +55,7 @@ async function ask(fam, system, user, schema, name, maxTokens = 1200) {
   return null;
 }
 function builderLlm() {
-  const fn = async (a) => { const r = await call('M', { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: a.maxTokens, timeoutMs: 300000 }); return { data: r.data, model: r.model }; };
+  const fn = async (a) => { const r = await call(process.env.HELDOUT_BUILDER || 'M', { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: a.maxTokens, timeoutMs: 300000 }); return { data: r.data, model: r.model }; };
   return fn;
 }
 async function pool(items, n, fn) { const out = new Array(items.length); let i = 0; await Promise.all(Array.from({ length: Math.min(n, items.length) }, async () => { while (i < items.length) { const k = i++; out[k] = await fn(items[k], k); } })); return out; }
@@ -125,10 +129,10 @@ async function runArms(reps, arms) {
     if (!store.exam[d.id]) { store.exam[d.id] = await examFor(src); save(OUT_FILE, store); }
     const exam = store.exam[d.id];
     if (!store.control[d.id]) {
-      store.control[d.id] = { Z: await pool(exam, 6, (q) => answerFrom('Z', src.plain, q)), G: await pool(exam, 6, (q) => answerFrom('X', src.plain, q)) };
+      store.control[d.id] = {}; for (const f of JUDGES) store.control[d.id][f] = await pool(exam, 6, (q) => answerFrom(f, src.plain, q));
       save(OUT_FILE, store);
     }
-    log(`${d.id} (${d.fmt}, ${words(src.plain)} words): exam ${exam.filter((q) => q.kind === 'emphasised').length}e+${exam.filter((q) => q.kind === 'plain').length}p; control Z ${round(share(store.control[d.id].Z))} G ${round(share(store.control[d.id].G))}`);
+    log(`${d.id} (${d.fmt}, ${words(src.plain)} words): exam ${exam.filter((q) => q.kind === 'emphasised').length}e+${exam.filter((q) => q.kind === 'plain').length}p; control ${JUDGES.map((f) => `${f} ${round(share(store.control[d.id][f]))}`).join(' ')}`);
     for (let rep = 1; rep <= reps; rep++) {
       for (const arm of arms) {
         if (store.arms.some((r) => r.doc === d.id && r.arm === arm && r.rep === rep)) continue;
@@ -140,14 +144,14 @@ async function runArms(reps, arms) {
         try { built = await cb.build(u.id, m.value.id, { llm, force: true }); } catch (e) { built = { error: e.message }; }
         if (!built.course) { store.arms.push({ doc: d.id, arm, rep, error: String(built.error || 'no course') }); save(OUT_FILE, store); log(`${d.id} ${arm} r${rep}: build failed`); continue; }
         const gen = generatedText(built.course); const lw = words(lessonText(built.course));
-        const row = { doc: d.id, fmt: d.fmt, arm, rep, status: built.course.status, skills: built.course.skills.length, build_s: Math.round((Date.now() - t0) / 1000), source_words: words(src.plain), lesson_words: lw, lesson_share: round(lw / words(src.plain)), sweep: built.course.dropped && built.course.dropped.sweep, judges: {} };
-        for (const fam of ['Z', 'G']) {
-          const ans = await pool(exam, 6, (q) => answerFrom(fam === 'G' ? 'X' : fam, gen, q));
+        const row = { doc: d.id, fmt: d.fmt, arm, rep, status: built.course.status, skills: built.course.skills.length, build_s: Math.round((Date.now() - t0) / 1000), source_words: words(src.plain), lesson_words: lw, lesson_share: round(lw / words(src.plain)), sweep: built.course.dropped && built.course.dropped.sweep, gen, judges: {} };
+        for (const fam of JUDGES) {
+          const ans = await pool(exam, 6, (q) => answerFrom(fam, gen, q));
           const by = (kind, arr) => share(exam.map((q, i) => (q.kind === kind ? arr[i] : undefined)).filter((x) => x !== undefined));
           row.judges[fam] = { emph: by('emphasised', ans), plain: by('plain', ans), n_emph: exam.filter((q) => q.kind === 'emphasised').length, n_plain: exam.filter((q) => q.kind === 'plain').length, answers: ans };
         }
         store.arms.push(row); save(OUT_FILE, store);
-        log(`${d.id} ${arm} r${rep} ${row.build_s}s ${row.status} sk${row.skills} ${row.source_words}->${row.lesson_words} (${row.lesson_share}) | Z e ${round(row.judges.Z.emph)} p ${round(row.judges.Z.plain)} | G e ${round(row.judges.G.emph)} p ${round(row.judges.G.plain)}`);
+        log(`${d.id} ${arm} r${rep} ${row.build_s}s ${row.status} sk${row.skills} ${row.source_words}->${row.lesson_words} (${row.lesson_share}) | ${JUDGES.map((f) => `${f} e ${round(row.judges[f].emph)} p ${round(row.judges[f].plain)}`).join(' | ')}`);
       }
     }
   }
@@ -177,7 +181,7 @@ function randomLearner(seed, i) {
   }
   const interests = [pick(INTERESTS), pick(INTERESTS)].filter((x, k, a) => a.indexOf(x) === k);
   const dislike = r() < 0.5 ? pick(DISLIKES) : null;
-  const testDate = r() < 0.5 ? new Date(Date.now() + (3 + Math.floor(r() * 25)) * 86400000).toISOString().slice(0, 10) : null;
+  const testDate = (i % 2 === 0 || r() < 0.2) ? new Date(Date.now() + (3 + Math.floor(r() * 25)) * 86400000).toISOString().slice(0, 10) : null;
   const age = pick([9, 12, 15, 19, 34, 61]);
   const esl = r() < 0.3;
   return { seed, i, stats, spoken, interests, dislike, testDate, age, esl };
@@ -206,8 +210,8 @@ async function runLearners(n, seed) {
     const wants = [...L.spoken, ...(L.interests.length ? [`likes ${L.interests.join(' and ')} (examples and analogies may use them)`] : []), ...(L.dislike ? [`dislikes ${L.dislike} (must not appear)`] : []), ...(L.esl ? ['English is a second language: plain syntax, no idioms'] : []), ...(L.testDate ? [`has a test in ${Math.round((new Date(L.testDate) - Date.now()) / 86400000)} days: exam-style wording, name the traps`] : []), `is ${L.age} years old`];
     const schema = { type: 'object', properties: { traits: { type: 'array', items: { type: 'object', properties: { trait: { type: 'string' }, followed: { type: 'boolean' }, evidence: { type: 'string' } }, required: ['trait', 'followed'] } }, invented_facts: { type: 'array', items: { type: 'string' } } }, required: ['traits', 'invented_facts'] };
     const row = { seed, i, learner: L, status: built.course.status, skills: built.course.skills.length, source_words: words(src.plain), lesson_words: lw, judges: {} };
-    for (const fam of ['Z', 'G']) {
-      const j = await ask(fam === 'G' ? 'X' : fam, 'You are a strict reviewer. A learner profile, the SOURCE the learner uploaded and the COURSE built from it are given. For EACH listed trait say whether the COURSE visibly follows it (followed true/false, with a short quote or measurable reason). Also list any specific factual claim in the COURSE that is not in the SOURCE (invented_facts; an analogy that borrows from an interest is fine if it makes no new claim about the subject). Be strict: generic text is not following a trait.', `Learner:\n${wants.map((w) => `- ${w}`).join('\n')}\n\nSOURCE:\n${src.plain.slice(0, 5000)}\n\nCOURSE (lessons, key points, questions):\n${text.slice(0, 14000)}`, schema, 'review', 2500);
+    for (const fam of (process.env.HELDOUT_JUDGES || 'Z,G').split(',')) {
+      const j = await ask(fam, 'You are a strict reviewer. A learner profile, the SOURCE the learner uploaded and the COURSE built from it are given. For EACH listed trait say whether the COURSE visibly follows it (followed true/false, with a short quote or measurable reason). Also list any specific factual claim in the COURSE that is not in the SOURCE (invented_facts; an analogy that borrows from an interest is fine if it makes no new claim about the subject). Be strict: generic text is not following a trait.', `Learner:\n${wants.map((w) => `- ${w}`).join('\n')}\n\nSOURCE:\n${src.plain.slice(0, 5000)}\n\nCOURSE (lessons, key points, questions):\n${text.slice(0, 14000)}`, schema, 'review', 6000);
       if (j && Array.isArray(j.traits)) row.judges[fam] = { followed: j.traits.filter((t) => t.followed).length, of: j.traits.length, invented: (j.invented_facts || []).length, misses: j.traits.filter((t) => !t.followed).map((t) => t.trait) };
     }
     store.learners.push(row); save(OUT_FILE, store);
@@ -217,36 +221,45 @@ async function runLearners(n, seed) {
 
 // ── 5. report ────────────────────────────────────────────────────────────────────────────────────────
 function report() {
+  const J1 = JUDGES[0]; const J2 = JUDGES[1];
   const dir = path.dirname(OUT_FILE);
   const files = fs.readdirSync(dir).filter((f) => /^uploads-heldout-results.*.json$/.test(f)).map((f) => path.join(dir, f));
   const store = { exam: {}, control: {}, arms: [], learners: [] };
   for (const f of files) { const x = load(f, null); if (!x) continue; Object.assign(store.exam, x.exam); Object.assign(store.control, x.control); store.arms.push(...x.arms); }
-  Object.assign(store, { learners: load(path.join(dir, 'uploads-heldout-learners.json'), { learners: [] }).learners });
+  store.learners = fs.readdirSync(dir).filter((f) => f.startsWith('uploads-heldout-learners')).flatMap((f) => load(path.join(dir, f), { learners: [] }).learners);
   if (!store.arms.length && !store.learners.length) return log('no results');
   const ok = store.arms.filter((r) => !r.error);
   const arms = [...new Set(ok.map((r) => r.arm))];
   const pctl = (a, p) => { const v = a.filter((x) => x != null).sort((x, y) => x - y); return v.length ? v[Math.min(v.length - 1, Math.floor(p * v.length))] : null; };
-  log('arm | builds | lesson/source | Z emph | Z plain | G emph | G plain | all-questions Z | all-questions G | ready');
+  log('arm | builds | lesson/source | j1 emph | j1 plain | j2 emph | j2 plain | all-q j1 | all-q j2 | ready');
   for (const arm of arms) {
     const rs = ok.filter((r) => r.arm === arm);
     const all = (fam) => { let c = 0; let n = 0; for (const r of rs) { const ex = store.exam[r.doc]; r.judges[fam].answers.forEach((a, i) => { if (a != null && ex[i]) { n++; if (a) c++; } }); } return n ? c / n : null; };
-    log(`${arm} | ${rs.length} | ${round(mean(rs.map((r) => r.lesson_share)))} (max ${round(Math.max(...rs.map((r) => r.lesson_share)))}) | ${round(mean(rs.map((r) => r.judges.Z.emph)))} | ${round(mean(rs.map((r) => r.judges.Z.plain)))} | ${round(mean(rs.map((r) => r.judges.G.emph)))} | ${round(mean(rs.map((r) => r.judges.G.plain)))} | ${round(all('Z'))} | ${round(all('G'))} | ${rs.filter((r) => r.status === 'ready').length}`);
+    log(`${arm} | ${rs.length} | ${round(mean(rs.map((r) => r.lesson_share)))} (max ${round(Math.max(...rs.map((r) => r.lesson_share)))}) | ${round(mean(rs.map((r) => r.judges[J1].emph)))} | ${round(mean(rs.map((r) => r.judges[J1].plain)))} | ${round(mean(rs.map((r) => r.judges[J2].emph)))} | ${round(mean(rs.map((r) => r.judges[J2].plain)))} | ${round(all(J1))} | ${round(all(J2))} | ${rs.filter((r) => r.status === 'ready').length}`);
   }
-  // paired: per document, short minus full, both judges, emphasised and plain
+  // paired: per document, challenger minus full, both judges, emphasised and plain
   const docs = [...new Set(ok.map((r) => r.doc))];
-  const diffs = { emphZ: [], plainZ: [], emphG: [], plainG: [] };
-  for (const d of docs) {
-    const f = ok.filter((r) => r.doc === d && r.arm === 'full'); const s = ok.filter((r) => r.doc === d && r.arm === 'short');
-    if (!f.length || !s.length) continue;
-    const m = (rs, fam, k) => mean(rs.map((r) => r.judges[fam][k]));
-    diffs.emphZ.push(m(s, 'Z', 'emph') - m(f, 'Z', 'emph')); diffs.plainZ.push(m(s, 'Z', 'plain') - m(f, 'Z', 'plain')); diffs.emphG.push(m(s, 'G', 'emph') - m(f, 'G', 'emph')); diffs.plainG.push(m(s, 'G', 'plain') - m(f, 'G', 'plain'));
-    log(`  ${d}: short-full  Z emph ${round(m(s, 'Z', 'emph') - m(f, 'Z', 'emph'))} plain ${round(m(s, 'Z', 'plain') - m(f, 'Z', 'plain'))} | G emph ${round(m(s, 'G', 'emph') - m(f, 'G', 'emph'))} plain ${round(m(s, 'G', 'plain') - m(f, 'G', 'plain'))}`);
+  for (const ch of arms.filter((x) => x !== 'full')) {
+    const diffs = { emphZ: [], plainZ: [], emphG: [], plainG: [] };
+    for (const d of docs) {
+      const f = ok.filter((r) => r.doc === d && r.arm === 'full'); const sh = ok.filter((r) => r.doc === d && r.arm === ch);
+      if (!f.length || !sh.length) continue;
+      const m = (rs, fam, k) => mean(rs.map((r) => r.judges[fam][k]));
+      for (const [key, fam, k] of [['emphZ', J1, 'emph'], ['plainZ', J1, 'plain'], ['emphG', J2, 'emph'], ['plainG', J2, 'plain']]) diffs[key].push(m(sh, fam, k) - m(f, fam, k));
+      log(`  ${d}: ${ch}-full  Z emph ${round(m(sh, J1, 'emph') - m(f, J1, 'emph'))} plain ${round(m(sh, J1, 'plain') - m(f, J1, 'plain'))} | G emph ${round(m(sh, J2, 'emph') - m(f, J2, 'emph'))} plain ${round(m(sh, J2, 'plain') - m(f, J2, 'plain'))}`);
+    }
+    log(`mean ${ch}-full: ${Object.entries(diffs).map(([k, v]) => `${k} ${round(mean(v))} (worst doc ${round(Math.min(...v.filter((x) => x != null)))})`).join(' | ')}`);
   }
-  log(`mean short-full: ${Object.entries(diffs).map(([k, v]) => `${k} ${round(mean(v))} (worst doc ${round(Math.min(...v.filter((x) => x != null)))})`).join(' | ')}`);
   const L = store.learners.filter((r) => !r.error);
   if (L.length) {
-    const sh = (fam) => { const v = L.filter((r) => r.judges[fam]); return v.length ? { followed: round(v.reduce((a, r) => a + r.judges[fam].followed, 0) / Math.max(1, v.reduce((a, r) => a + r.judges[fam].of, 0))), invented_per_course: round(mean(v.map((r) => r.judges[fam].invented))), worst: round(Math.min(...v.map((r) => r.judges[fam].followed / Math.max(1, r.judges[fam].of)))), n: v.length } : null; };
-    log(`learners ${L.length}: Z ${JSON.stringify(sh('Z'))} | G ${JSON.stringify(sh('G'))}`);
+    const fams = [...new Set(L.flatMap((r) => Object.keys(r.judges)))];
+    for (const fam of fams) {
+      const v = L.filter((r) => r.judges[fam] && r.judges[fam].of);
+      const fr = v.map((r) => r.judges[fam].followed / r.judges[fam].of).sort((x, y) => x - y);
+      const q = (p) => round(fr[Math.min(fr.length - 1, Math.floor(p * fr.length))]);
+      const t = v.filter((r) => r.learner.testDate); const nt = v.filter((r) => !r.learner.testDate);
+      log(`learners judge ${fam}: n ${v.length}, traits followed mean ${round(mean(fr))}, worst 1% ${q(0.01)}, 5% ${q(0.05)}, 10% ${q(0.1)}; test-date learners ${t.length} mean ${round(mean(t.map((r) => r.judges[fam].followed / r.judges[fam].of)))}, others ${nt.length} mean ${round(mean(nt.map((r) => r.judges[fam].followed / r.judges[fam].of)))}; invented facts per course ${round(mean(v.map((r) => r.judges[fam].invented)))}; courses with none ${v.filter((r) => !r.judges[fam].invented).length}`);
+    }
   }
   log('models used', JSON.stringify(used));
 }
