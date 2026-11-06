@@ -87,15 +87,17 @@ function wordShare(text) {
  * the other three turns are tried and the best one wins. What is still nonsense after that is not text: { error } with what to do, never garbage presented as the learner's notes.
  */
 async function ocrUpright(png) {
+  const started = Date.now();
   const first = await ocr(png);
   if (first.error) return first;
+  const slow = Date.now() - started > 12000; // a photo of pure noise took 40 s a reading: it is not read three more times
   const good = (r) => (Number(r.confidence) || 0) * Math.max(0.2, wordShare(r.text));
   if ((Number(first.confidence) || 0) >= 55 && wordShare(first.text) >= 0.6) return first;
   if (first.confidence == null) return first; // a test's recognizer
   let best = first;
   let sharp = null;
   try { sharp = require('sharp'); } catch { /* cannot turn it */ }
-  if (sharp) {
+  if (sharp && !slow) {
     for (const deg of [90, 270, 180]) {
       // eslint-disable-next-line no-await-in-loop
       const r = await ocr(await sharp(png).rotate(deg).png().toBuffer());
