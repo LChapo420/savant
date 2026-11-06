@@ -83,3 +83,18 @@ An ad-looking "Introducing YoLearn.ai" at 4.6M may be paid views, so it isn't co
 - Test: generate one 30 s and one 60 s of the same idea, and compare retention tomorrow.
 
 Raw data for the 66 videos, with YouTube ids: docs/campaign/data/what-if-youtube-5nov.json.
+
+## Update, 6 Nov: format comparison and 7 swaps
+
+The list above measured only what-if videos, so it could not show what-if beats other formats. A comparison by format (real YouTube views, videos of 3 minutes or less, title must match the niche; 40 results a search) found what-if on top in no niche. Top formats: school, comedy or story animation (noisy: one 370M result is an animated pencil video); brain, mind tricks and tests (13.9M, 4.7M); study, techniques and tests (2.5M, 1.7M; few matches); math, comedy (147M) and interactive tricks (10.3M). Small samples, some unrelated matches, big channels, YouTube only.
+
+Swaps, keeping the what-if line the factory needs while making the video a test, trick or joke:
+- School 5: What if your pencils came alive during a test?
+- Brain 5: What if this easy question fools even top students? (bat and ball; Frederick 2005)
+- Brain 6: What if I can show you something your eyes can't see? (blind spot test)
+- Study 4: What if 4 study techniques beat rereading? (Dunlosky et al. 2013)
+- Study 6: What if you could test your memory in 30 seconds?
+- Math 5: What if I could predict your answer before you do the math? (pick a number, double it, add 10, halve it, subtract your number: always 5)
+- Math 6: What if a math teacher could walk right into the chalkboard?
+
+Make each interactive one show its steps clearly, and check that the factory keeps them correct.
