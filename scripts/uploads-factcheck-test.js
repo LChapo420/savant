@@ -159,7 +159,7 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
   const cards2 = [{ front: 'What is the tax on salt from Ondra Flats?', back: '7 percent' }];
   St.sweepPack({ cards: cards2, quiz: [], test: [], kps, passageFor: () => 'p1' });
   check('a point that already has a card is not doubled', cards2.length === 1);
-  const skills = [{ id: 'a', source: 'material', passage_ids: ['p1'], questions: [], lesson: { paragraphs: ['Nothing here.'], key_points: [] } }];
+  const skills = [{ id: 'a', source: 'material', passage_ids: ['p1'], questions: [], lesson: { paragraphs: ['Nothing here. Plain words that say nothing special go here.'], key_points: [] } }];
   check('a course question is added on the skill that owns the passage', St.sweepCourse({ skills, kps, passageFor: () => 'p1' }) === 1 && skills[0].questions[0].type === 'short_answer');
   const n = St.sweepFacts({ skills, passages: [{ id: 'p1', text: 'Goats outnumber people on Brack Island by nine to one in 1788. Plain words that say nothing special go here.' }], sentencesOf: F.sentencesOf, capWords: 100 });
   check('a fact the lesson lost goes back as the material\'s own sentence; a plain sentence does not', n === 1 && /Brack Island/.test(skills[0].lesson.paragraphs[1]) && !/Plain words/.test(skills[0].lesson.paragraphs[1]));
