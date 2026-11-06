@@ -32,6 +32,8 @@ for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|ANTHROPIC|OPENROU
 process.env.OLLAMA_ENABLED = '0';
 for (const k of ['BANK_GAMES', 'GAME_HOLDS', 'OWNER_EMAIL', 'OWNER_BASE', 'BLOCK_LEVELS', 'BLOCK_GENERATE', 'BLOCK_TAILOR_OWNER', 'LESSON_SANDBOX', 'GRADE_SKILLS', 'OBJECTIVE_ITEMS']) delete process.env[k];
 const tmp = path.join(os.tmpdir(), `bank-games-test-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(tmp); } catch { /* none there */ }
 process.env.DB_FILE = tmp;
 
 const ROOT = path.join(__dirname, '..');

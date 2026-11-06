@@ -9,6 +9,8 @@ const path = require('path');
 
 process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(os.tmpdir(), `game-fixes-test-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 delete process.env.GAME_HOLDS;
 const db = require('../config/db');
 const fixes = require('../services/game-fixes');

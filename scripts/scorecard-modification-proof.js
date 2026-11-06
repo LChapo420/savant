@@ -69,6 +69,8 @@ if (LIVE) {
 }
 process.env.OWNER_EMAIL = `proof-owner-${process.pid}@example.test`;
 const DB = path.join(os.tmpdir(), `scorecard-proof-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(DB); } catch { /* none there */ }
 process.env.DB_FILE = DB;
 process.on('exit', () => { for (const f of [DB, `${DB}.tmp`]) try { fs.unlinkSync(f); } catch { /* gone */ } });
 

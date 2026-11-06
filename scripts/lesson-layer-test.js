@@ -10,6 +10,8 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 process.env.DB_FILE = path.join(os.tmpdir(), `lesson-layer-test-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 fs.writeFileSync(process.env.DB_FILE, JSON.stringify({}));
 for (const name of Object.keys(process.env)) if (/(_API_KEY|_TOKEN)$/.test(name)) process.env[name] = '';
 

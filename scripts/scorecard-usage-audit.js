@@ -31,6 +31,8 @@ const path = require('path');
 
 process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(os.tmpdir(), `scorecard-audit-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 process.on('exit', () => { for (const f of [process.env.DB_FILE, `${process.env.DB_FILE}.tmp`]) try { fs.unlinkSync(f); } catch { /* gone */ } });
 
 const ROOT = path.join(__dirname, '..');

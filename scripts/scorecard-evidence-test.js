@@ -16,6 +16,8 @@ process.env.NODE_ENV = 'test';
 for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|ANTHROPIC|OPENROUTER|NVIDIA|GEMINI|MIMO|MODELFLARE|XKIRO/.test(k) && k !== 'NODE_ENV') process.env[k] = '';
 process.env.OLLAMA_ENABLED = '0';
 const tmp = path.join(os.tmpdir(), `${path.basename(__filename, '.js')}-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(tmp); } catch { /* none there */ }
 process.env.DB_FILE = tmp;
 const FLAGS = ['SCORECARD_DROP_RUSH_TYPED', 'SCORECARD_SOFT_STRETCH', 'SCORECARD_LENGTHEN_NEW_ONLY', 'SCORECARD_OBSERVED_PREFS',
   'SCORECARD_WORKED_HINT_TEXT', 'SCORECARD_SUBGOAL_TEXT', 'RAPID_ITEM_RELATIVE', 'COACH_LEAK_CHOICE', 'ADAPT_EFFORT', 'OBJ_RAPID_MS',

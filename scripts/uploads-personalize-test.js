@@ -6,6 +6,8 @@
 const os = require('os'); const path = require('path');
 process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-personalize-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { require('fs').unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 const db = require('../config/db');
 const materials = require('../services/materials');
 const ls = require('../services/learning-spec');

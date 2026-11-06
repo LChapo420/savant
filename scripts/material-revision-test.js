@@ -16,6 +16,8 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const tmp = path.join(os.tmpdir(), `material-revision-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(tmp); } catch { /* none there */ }
 process.env.DB_FILE = tmp;
 process.on('exit', () => { for (const f of [tmp, `${tmp}.tmp`]) try { fs.unlinkSync(f); } catch { /* gone */ } });
 

@@ -23,6 +23,8 @@ const { execFileSync } = require('child_process');
 require('dotenv').config({ path: process.env.ENV_FILE || 'C:/coding/claudecommittdIq/folderThing/.env', quiet: true });
 process.env.XKIRO_PIPELINE = '1';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-proof-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 if (!process.env.XKIRO_USAGE_FILE) process.env.XKIRO_USAGE_FILE = path.join(os.tmpdir(), 'uploads-proof-xkiro-usage.json');
 process.env.WHISPER_MODEL_DIR = process.env.WHISPER_MODEL_DIR || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/models';
 

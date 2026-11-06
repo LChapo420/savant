@@ -9,6 +9,8 @@ const os = require('os');
 const path = require('path');
 
 const tmp = path.join(os.tmpdir(), `chess-trainer-test-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(tmp); } catch { /* none there */ }
 process.env.DB_FILE = tmp;
 const C = require('../content/chess-board');
 const S = require('../content/chess-solver');

@@ -12,6 +12,8 @@ const fs = require('fs');
 
 process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(os.tmpdir(), `material-audio-test-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 
 const db = require('../config/db');
 // An empty model folder, so the "no model" check holds on a machine that has the model installed.

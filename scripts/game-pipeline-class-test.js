@@ -13,6 +13,8 @@ process.env.NODE_ENV = 'test';
 for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|ANTHROPIC|OPENROUTER|NVIDIA|GEMINI|MIMO|MODELFLARE|XKIRO/.test(k) && k !== 'NODE_ENV') process.env[k] = '';
 process.env.OLLAMA_ENABLED = '0';
 process.env.DB_FILE = path.join(os.tmpdir(), `game-pipeline-class-test-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { require('fs').unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 
 const ai = require('../services/ai');
 const gameAssignments = require('../config/game-assignments');

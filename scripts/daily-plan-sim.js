@@ -17,6 +17,8 @@ const path = require('path');
 
 // Pure planner only: no database is read; a throwaway file keeps config/db off the real one.
 process.env.DB_FILE = path.join(os.tmpdir(), `daily-plan-sim-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { require('fs').unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 const dp = require('../services/daily-plan');
 
 const DAYS = 14;

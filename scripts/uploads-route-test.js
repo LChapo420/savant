@@ -6,6 +6,8 @@
 const os = require('os'); const path = require('path'); const http = require('http');
 process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-route-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { require('fs').unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 process.env.UPLOAD_SLOW_MS = '200';
 const express = require('express');
 const db = require('../config/db');

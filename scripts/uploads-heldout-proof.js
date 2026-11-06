@@ -20,6 +20,8 @@ process.env.XKIRO_PIPELINE = '1'; process.env.ZEROGPU_PIPELINE = '1'; process.en
 for (const [k, f] of [['ZEROGPU', 'zerogpu'], ['CORAL', 'coral']]) process.env[`${k}_LEDGER_FILE`] = process.env[`${k}_LEDGER_FILE`] || `${LIVE}${f}-ledger.json`; process.env.XKIRO_USAGE_FILE = process.env.XKIRO_USAGE_FILE || path.join(os.tmpdir(), 'uploads-heldout-xkiro-usage.json');
 process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-heldout-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 const db = require('../config/db');
 const materials = require('../services/materials');
 const K = require('../services/material-keypoints');

@@ -21,6 +21,8 @@ process.env.NODE_ENV = 'test';
 const SPEC_KNOBS = { HOLE_PRIOR: '0.15', ISLAND_PRIOR: '0.3', SLIP: '0.05', LUCK: '0.15', KNOWN_AT: '0.985', LEARN_AT: '0.35' };
 for (const [name, value] of Object.entries(SPEC_KNOBS)) if (process.env[name] === undefined) process.env[name] = value;
 const tmp = path.join(os.tmpdir(), `learner-path-test-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(tmp); } catch { /* none there */ }
 process.env.DB_FILE = tmp;
 
 const express = require('express');

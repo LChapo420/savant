@@ -8,6 +8,8 @@ require('../services/run-cap').defaultCap(Number(process.env.RUN_CAP_USD || 1));
 require('dotenv').config({ path: 'C:/coding/claudecommittdIq/folderThing/.env', quiet: true });
 process.env.NODE_ENV = 'development';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-speed-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { require('fs').unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 const LIVE = 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/';
 for (const [k, f] of [['GONKA', 'gonka'], ['MUNITO', 'munito'], ['CORAL', 'coral'], ['GROKIFIED', 'grokified'], ['LYCEUM', 'lyceum']]) process.env[`${k}_LEDGER_FILE`] = process.env[`${k}_LEDGER_FILE`] || `${LIVE}${f}-ledger.json`;
 process.env.ANTHROPIC_LEDGER_FILE = `${LIVE}anthropic-ledger.json`;

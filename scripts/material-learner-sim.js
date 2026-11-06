@@ -25,6 +25,8 @@ const os = require('os');
 const path = require('path');
 
 process.env.DB_FILE = path.join(os.tmpdir(), `material-learner-sim-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none */ }
 const db = require('../config/db');
 const courses = require('../services/course-builder');

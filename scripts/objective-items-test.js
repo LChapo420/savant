@@ -18,6 +18,8 @@ const http = require('http');
 process.env.NODE_ENV = 'test';
 for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|ANTHROPIC|OPENROUTER|NVIDIA|GEMINI|MIMO|MODELFLARE|XKIRO/.test(k) && k !== 'NODE_ENV') process.env[k] = '';
 const tmp = path.join(os.tmpdir(), `${path.basename(__filename, '.js')}-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(tmp); } catch { /* none there */ }
 process.env.DB_FILE = tmp;
 for (const k of ['OBJECTIVE_ITEMS', 'COVERAGE_RULE', 'ADMIN_EMAILS', 'OWNER_EMAIL', 'ADAPT_OWNER', 'ADAPT_REVIEW_MINUTES']) delete process.env[k];
 Object.assign(process.env, { ADAPT_REVIEW_SESSION: 'on', ADAPT_REMEDIATION: 'on', ADAPT_EFFORT: 'off', ADAPTIVE_TEACHING: 'off', COVERAGE_GATE: 'shadow' });

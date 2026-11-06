@@ -11,6 +11,8 @@ require('dotenv').config({ path: 'C:/coding/claudecommittdIq/folderThing/.env', 
 process.env.XKIRO_PIPELINE = '1'; process.env.LYCEUM_PIPELINE = '1'; process.env.LYCEUM_LEDGER_FILE = process.env.LYCEUM_LEDGER_FILE || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/lyceum-ledger.json';
 const LY_CAP = Number(process.env.RUN_CAP_USD || 3); const LY_START = (() => { try { return require('../services/lyceum-ledger').status().spent_usd; } catch { return 0; } })(); process.env.GONKA_PIPELINE = '1'; process.env.GONKA_LEDGER_FILE = process.env.GONKA_LEDGER_FILE || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/gonka-ledger.json';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-big-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its rows to this run's.
+try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none there */ }
 process.env.XKIRO_USAGE_FILE = process.env.XKIRO_USAGE_FILE || path.join(os.tmpdir(), 'uploads-big-xkiro-usage.json');
 const db = require('../config/db');
 const materials = require('../services/materials');
