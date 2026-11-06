@@ -333,6 +333,9 @@ Does the reply state the answer (to the question on the page, or to a question f
   }
   // Without any model: a reply that repeats the answer the learner just proposed ("is it 3/4?") is confirming it.
   if (fullOn && text && !held && last && (mode === 'method' || (page && page.question)) && full.echoesProposal(last.content, text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+  // Round 2: a fast fact check before a reply is shown (services/tutor-full.js factCheck).
+  if (fullOn && text && !held && mode === 'full' && await full.factCheck({ ai, user, message: last ? last.content : '', text, notes: `${ctx.text}
+${howto.sheet()}`, question: page && page.question })) { text = full.NOT_SURE; held = true; }
   facts.dockEnded(user.id);
   let out = text || tutor.offlineReply(user.id);
   let feature;

@@ -182,4 +182,34 @@ function echoesProposal(learnerMsg, reply) {
   return false;
 }
 
-module.exports = { isBrief, triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
+const ASKS = /\?|(explain|why|what|how|who|when|which|define|meaning)/i;
+const NOT_SURE = "I'm not sure I have that exactly right, and I'd rather not guess. Tell me which part you're stuck on and we'll work it out step by step.";
+
+/**
+ * A fast check before a reply is shown (TUTOR_FULL): does it state a subject fact that is wrong, or a detail about the learner or the app
+ * that the notes do not support? One short call on the dock's checker slot. WRONG replaces the reply with an honest "not sure" and a re-ask.
+ * A checker that cannot run lets a lesson reply through (graded pages have their own fail-closed rule).
+ * @returns {Promise<boolean>} true when the reply should be replaced
+ */
+async function factCheck({ ai, user, message, text, notes, question }) {
+  if (!text || text.length < 40 || !ASKS.test(message || '')) return false;
+  let verdict = '';
+  try {
+    verdict = await withDeadline(ai.talk({
+      role: 'fast', task: 'dock_leak_check',
+      system: 'You fact-check a tutor reply before a learner sees it. Reply with only OK or WRONG. WRONG means: the reply states a subject fact (maths, science, language, history, geography) that is incorrect; or it states a specific detail about this learner (a number, a date, a count, a past event) or about the app that is not in the NOTES below; or it says "your notes say" something the NOTES do not. Opinions, encouragement, questions to the learner and well-established facts are OK.',
+      messages: [{ role: 'user', content: `NOTES (true): ${clip(notes, 1500)}
+
+Question on screen: ${clip(question, 200) || 'none'}
+Learner said: ${clip(message, 300)}
+
+Tutor reply: ${clip(text, 900)}
+
+OK or WRONG?` }],
+      maxTokens: 6, userId: user.id, hedgeAfterMs: 2500, timeoutMs: 5000,
+    }), 6000);
+  } catch { verdict = ''; }
+  return /^\W*wrong/i.test(verdict || '');
+}
+
+module.exports = { factCheck, NOT_SURE, isBrief, triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
