@@ -8,6 +8,7 @@
  * Sets (hand-planted or AI-planted errors with clean controls; a judge measured on them, not a real-learner result):
  *   tutor   short tutor replies, 26 with one error, 26 clean, each with the question it answers
  *   layer   personal layers over a short lesson, 12 with an added or wrong fact, 12 clean
+ *   material statements checked against a learner's own notes, 8 planted, 8 clean (including the notes' own odd claim, which is not an error here)
  *   lesson  the 36 planted + 24 clean lesson blocks of docs/fact-verifier-set.json (real lesson text)
  * A planted case counts as caught when the check flags anything in it (a live hold works that way too); a clean case flagged is a false alarm.
  */
@@ -125,6 +126,27 @@ const LAYERS = [
   [LESSON_C, 'Picture a greenhouse crew: chlorophyll, which is made of iron, is the worker who catches the light.', 1],
 ].map(([lesson, text, bad], i) => ({ id: `l${i}`, planted: !!bad, pieces: [text], source: lesson, mode: 'overlay' }));
 
+// The learner's own material is the source. The odd ones: the material itself is wrong and the text repeats it (fine: it is their material), a true fact from outside (fine), a false one (flag).
+const NOTES = 'Enzymes are proteins that speed up reactions. Each enzyme has an active site that fits one substrate. Our teacher says enzymes work best at 37 degrees Celsius and stop working above 45 degrees. Pepsin works in the stomach at about pH 2. In this course we count six mass extinctions on Earth. The Treaty of Westphalia was signed in 1648 and ended the Thirty Years War.';
+const MATERIAL = [
+  ['Enzymes are proteins that make reactions go faster.', 0],
+  ['Enzymes are proteins that slow reactions down.', 1],
+  ['Each enzyme has an active site that fits one substrate.', 0],
+  ['Each enzyme has an active site that fits any substrate.', 1],
+  ['Your teacher says enzymes work best at 37 degrees Celsius.', 0],
+  ['Your teacher says enzymes work best at 73 degrees Celsius.', 1],
+  ['Pepsin works in the stomach at about pH 2.', 0],
+  ['Pepsin works in the small intestine at about pH 8.', 1],
+  ['This course counts six mass extinctions on Earth.', 0], // their material says six: their material decides
+  ['This course counts four mass extinctions on Earth.', 1],
+  ['The Treaty of Westphalia was signed in 1648 and ended the Thirty Years War.', 0],
+  ['The Treaty of Westphalia was signed in 1748 and ended the Thirty Years War.', 1],
+  ['Water is made of hydrogen and oxygen, which is why reactions in cells happen in water.', 0], // outside the material, true
+  ['The stomach is on the right side of the knee, which is why pepsin works there.', 1], // outside the material, false
+  ['An enzyme is not used up by the reaction it speeds up.', 0], // outside, true
+  ['Enzymes are made of pure sugar, which is why they dissolve.', 1], // outside, false
+].map(([text, bad], i) => ({ id: `m${i}`, planted: !!bad, pieces: [text], source: NOTES, mode: 'material' }));
+
 function lessonSet() {
   const d = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'docs', 'fact-verifier-set.json'), 'utf8'));
   return d.fact.map((c) => ({ id: c.id, planted: !!c.planted, pieces: [JSON.stringify(c.data)], source: c.context, mode: 'general' }));
@@ -154,7 +176,7 @@ const pct = (a, p) => { if (!a.length) return null; const s = [...a].sort((x, y)
 
 async function main() {
   const o = args();
-  const sets = { tutor: TUTOR, layer: LAYERS, lesson: o.sets.includes('lesson') ? lessonSet() : [] };
+  const sets = { tutor: TUTOR, layer: LAYERS, material: MATERIAL, lesson: o.sets.includes('lesson') ? lessonSet() : [] };
   const out = { at: new Date().toISOString(), rows: [], cases: {} };
   for (const name of o.only) {
     const cand = CANDIDATES[name];
