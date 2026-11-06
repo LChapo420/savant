@@ -38,12 +38,16 @@
  *      course "partial" (never "ready") and is listed in `uncovered_keypoints`, so asking again revises again.
  * `keypoint_coverage` records the share of points, and of emphasis weight, that the course teaches.
  *
+ * Nothing invented (services/material-factcheck.js; UPLOAD_FACTCHECK=off turns it off): every lesson sentence, key point, summary and question explanation is checked against the
+ * material, by numbers, names and words first and then by a model for what is left. What the material does not say is cut out of the sentence or the sentence goes.
+ *
  * Tests pass their own `llm` (same shape as ai.structuredDetail), so no real call is made.
  */
 const crypto = require('crypto');
 const db = require('../config/db');
 const materials = require('./materials');
 const keypoints = require('./material-keypoints');
+const factcheck = require('./material-factcheck');
 
 const VERSION = 2;
 const PASSAGE_MIN = 1200;            // characters: a passage is cut at the paragraph break after this
@@ -65,7 +69,7 @@ const STRESS_SHOWN = 14;            // points shown to one skill's writer
 const LESSON_SHARE = Number(process.env.UPLOAD_LESSON_SHARE) || 0.55;          // the reading part (lesson paragraphs plus key points) of the whole course is asked to stay under this share of the source's words
 const LESSON_FLOOR = 25;            // words: a tiny skill is not padded up to a floor (the old 90-word floor made short sources 2-4x longer)
 const SHORTEN_OVER = 1.3;           // a lesson over this many times its budget is sent back once to be cut (facts kept, filler out)
-const TOKEN_BUDGET = Number(process.env.MATERIAL_COURSE_TOKEN_BUDGET || 360000);
+const TOKEN_BUDGET = Number(process.env.MATERIAL_COURSE_TOKEN_BUDGET || 520000); // raised from 360,000 with the fact check (one more call per skill); these are estimates with the answer caps counted in full
 const STALE_BUILD_MS = 30 * 60 * 1000;
 const BUILD_CONCURRENCY = Number(process.env.MATERIAL_BUILD_CONCURRENCY || 4);
 const CHARS_PER_SKILL = 700;         // at most one skill per this much text: a short note is a short course
@@ -454,6 +458,15 @@ function guardMaker(userId, topic = null) {
   return (source) => ls.analogyGuard(spec, source);
 }
 
+/** The learner's own interests may be named in an analogy without being in the material (the analogy guard and the model still judge the claim). */
+function interestNames(userId, topic = null) {
+  try {
+    const spec = require('./learning-spec').buildSpec(userId, specCtx(topic)); // eslint-disable-line global-require
+    const words = ((spec && spec.interests && spec.interests.exampleDomains) || []).join(' ').toLowerCase().normalize('NFKD').match(/\p{L}[\p{L}\p{N}]*/gu) || [];
+    return new Set(words);
+  } catch { return new Set(); }
+}
+
 /** What the writer of this learner's check questions is told about their tests: tier order, answer format, explanations, stakes. */
 function questionBlockFor(userId, topic = null) {
   // eslint-disable-next-line global-require
@@ -521,6 +534,34 @@ function ownWords(skill, passageById, ctx) {
   return n;
 }
 const wordCount = (arr) => arr.reduce((n, t) => n + (String(t).match(/\S+/g) || []).length, 0);
+
+/**
+ * Is the fact check on for this build? Always for the real model. A scripted `llm` (a unit test of something else) gets it only when it asks: `opts.factcheck` or UPLOAD_FACTCHECK=on
+ * (scripts/uploads-factcheck-test.js and the proofs do), because a script does not answer a check it was not written for.
+ */
+const factOn = (opts) => factcheck.enabled() && (!opts.llm || !!opts.factcheck || String(process.env.UPLOAD_FACTCHECK || '').toLowerCase() === 'on');
+/** The whole material's index for the fact check (the passages a build works from), once per build. */
+function factIndex(ctx, passageById) {
+  if (!ctx.factIdx) ctx.factIdx = factcheck.indexSource([...passageById.values()].map((p) => p.text).join('\n\n'));
+  return ctx.factIdx;
+}
+/** The fact check for one skill (services/material-factcheck.js). A lesson left with nothing becomes the material's own first sentences. */
+function checkSkillFacts(skill, { paragraphs, keyPoints, items, text, passageById, ctx, lessonCap }) {
+  const fallback = () => {
+    const out = []; let w = 0;
+    for (const id of skill.passage_ids) for (const s of factcheck.sentencesOf((passageById.get(id) || {}).text || '')) {
+      const n = wordCount([s]);
+      if (n >= 4 && w + n <= Math.max(60, lessonCap || 60)) { out.push(s); w += n; }
+    }
+    return out.length ? [clean(out.join(' '), 700)] : [];
+  };
+  return factcheck.checkLesson({
+    paragraphs, keyPoints, summary: skill.summary,
+    explanations: items.map((q) => ({ text: q.explanation || '', extra: `${q.prompt} ${(q.choices || []).join(' ')} ${q.answer || ''} ${q.quote || ''}` })),
+    idx: factIndex(ctx, passageById), sourceText: text, allow: ctx.allowNames || null,
+    asker: (args) => ask(ctx.llm, ctx.budget, ctx.userId, args), fallback,
+  });
+}
 
 async function buildSkill(skill, passageById, ctx, extra = null) {
   const text = skill.passage_ids.map((id) => `[${id}]\n${passageById.get(id).text}`).join('\n\n').slice(0, SKILL_TEXT_MAX);
@@ -637,6 +678,9 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
   const min = extra ? EXTRA_MIN : MIN_QUESTIONS;
   if (items.length < min) { ctx.dropped.skills++; return { skipped: true }; }
 
+  // NOTHING INVENTED: the lesson, its key points, the skill's summary and the explanations are checked sentence by sentence against the material, alongside the question check below (same wait, not added to it).
+  const wantCheck = ctx.factOn && !general && (!extra || extra.focus);
+  const checkDone = wantCheck ? checkSkillFacts(skill, { paragraphs, keyPoints, items, text, passageById, ctx, lessonCap }) : null;
   const ver = await ask(ctx.llm, ctx.budget, ctx.userId, {
     role: 'fast', task: 'material_verify', schema: VERIFY_SCHEMA, schemaName: 'material_verify', maxTokens: 800, dataClass: 'learner',
     system: general
@@ -644,7 +688,18 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
       : `You check quiz items against a passage. ${UNTRUSTED} For each numbered item say supported: true only if the passage itself clearly shows the marked answer is correct and the other choices are not. If the passage does not say it, or you are unsure, say false.`,
     user: `Passages:\n${text}\n\nItems:\n${items.map((q, i) => describeItem(q, i + 1)).join('\n')}`,
   });
-  if (res_stopped(ver)) return { stopped: true };
+  const facts = checkDone ? await checkDone : null;
+  if (res_stopped(ver) || (facts && facts.report.stopped)) return { stopped: true };
+  let skillSummary = skill.summary;
+  if (facts) {
+    if (process.env.UPLOAD_FACTCHECK_KEEP_RAW === '1') facts.raw = { paragraphs, key_points: keyPoints, summary: skill.summary, explanations: items.map((q) => q.explanation) };
+    paragraphs = facts.paragraphs; keyPoints = facts.keyPoints; skillSummary = facts.summary;
+    items.forEach((q, i) => { if (facts.badExplanations.has(i)) { q.explanation = `Your material says: "${q.quote}"`; ctx.dropped.fact_explanations = (ctx.dropped.fact_explanations || 0) + 1; } });
+    const f = ctx.dropped.factcheck = ctx.dropped.factcheck || { sentences: 0, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0, fell_back: 0, words_before: 0, words_after: 0 };
+    for (const k of Object.keys(f)) if (k !== 'fell_back') f[k] += Number(facts.report[k]) || 0;
+    if (facts.report.fell_back) f.fell_back += 1;
+    if (facts.report.unchecked) ctx.factUnchecked = (ctx.factUnchecked || 0) + 1;
+  }
   const verdicts = ver.res && ver.res.data && Array.isArray(ver.res.data.verdicts) ? ver.res.data.verdicts : null;
   if (!verdicts) { ctx.dropped.skills++; return { skipped: true }; } // fail closed: unchecked items are not kept
   const ok = new Set(verdicts.filter((v) => v && v.supported === true).map((v) => Number(v.n)));
@@ -656,8 +711,9 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
   if (spec && spec.feedback && spec.feedback.lowStakes) { const F2 = require('./course-follow'); for (const q of kept) { q.prompt = F2.deTest(q.prompt); if (q.explanation) q.explanation = F2.deTest(q.explanation); if (Array.isArray(q.choices)) q.choices = q.choices.map(F2.deTest); if (q.quote) q.quote = F2.deTest(q.quote); } } // eslint-disable-line global-require
   return {
     value: {
-      id: skill.id, title: skill.title, summary: skill.summary, unit: skill.unit, prerequisites: skill.prerequisites, passage_ids: skill.passage_ids,
+      id: skill.id, title: skill.title, summary: skillSummary, unit: skill.unit, prerequisites: skill.prerequisites, passage_ids: skill.passage_ids,
       source: general ? 'general' : 'material', lesson: { paragraphs, key_points: keyPoints }, questions: kept,
+      ...(facts ? { factcheck: { dropped: facts.report.dropped, unchecked: facts.report.unchecked, fell_back: facts.report.fell_back }, ...(facts.raw ? { raw_lesson: facts.raw } : {}) } : {}),
     },
   };
 }
@@ -814,7 +870,7 @@ async function build(userId, materialId, opts = {}) {
     const all = chunk(mat.text);
     const passages = all.slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, keypoints: mat.key_points || [], passageList: passages, follow: require('./course-follow').contextFor(userId, mat), block: specBlockFor(userId, mat), questionBlock: questionBlockFor(userId, mat), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title, materialId: mat.id }), makeGuard: guardMaker(userId, mat), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
+    const ctx = { unanswered: 0, llm, userId, keypoints: mat.key_points || [], passageList: passages, follow: require('./course-follow').contextFor(userId, mat), block: specBlockFor(userId, mat), questionBlock: questionBlockFor(userId, mat), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title, materialId: mat.id }), makeGuard: guardMaker(userId, mat), allowNames: interestNames(userId, mat), factOn: factOn(opts), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
     const base = {
       user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, total_chars: mat.text.length, status: 'building', started_at: new Date().toISOString(),
       passages: passages.map(({ id, start, end }) => ({ id, start, end })), truncated: all.length > passages.length,
@@ -877,7 +933,8 @@ async function build(userId, materialId, opts = {}) {
     ctx.sweepCap = ctx.follow && ctx.follow.wordShare;
     ctx.passageUse = new Map();
     for (const sk of outline) for (const id of sk.passage_ids) ctx.passageUse.set(id, (ctx.passageUse.get(id) || 0) + 1);
-    const built = new Map((base.skills || []).map((s) => [s.id, s]));
+    // A skill whose fact check got no answer is built again when the learner asks again.
+    const built = new Map((base.skills || []).filter((s) => !(s.factcheck && s.factcheck.unchecked)).map((s) => [s.id, s]));
     let stopped = false;
     // Skills are independent once the outline exists: build a few at a time (each still checks the budget first).
     const todo = outline.filter((s) => !built.has(s.id));
@@ -944,7 +1001,7 @@ async function build(userId, materialId, opts = {}) {
     const keypointGap = gate ? gate.uncovered.length : 0;
     // Skills that got no model answer at all (busy or timed out) leave the course partial, so asking again builds them.
     const missedNow = (saved && saved.missed) || [];
-    const status = !skills.length ? 'failed' : (stopped || ctx.unanswered || keypointGap || missedNow.some((m) => m.reason !== 'too_long') ? 'partial' : 'ready');
+    const status = !skills.length ? 'failed' : (stopped || ctx.unanswered || ctx.factUnchecked || keypointGap || missedNow.some((m) => m.reason !== 'too_long') ? 'partial' : 'ready');
     const done = persist({
       keypoint_coverage: gate ? { total: gate.total, covered: gate.covered, share: Math.round(gate.ratio * 1000) / 10, weighted: Math.round(gate.weighted * 1000) / 10 } : null,
       uncovered_keypoints: gate ? gate.uncovered.map((k) => ({ id: k.id, text: k.text, weight: k.weight, loc: k.loc })) : [],
@@ -983,7 +1040,7 @@ async function retryMissed(userId, materialId, opts = {}) {
   try {
     const passages = chunk(mat.text).slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId, mat), questionBlock: questionBlockFor(userId, mat), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title, materialId: mat.id }), makeGuard: guardMaker(userId, mat), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
+    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId, mat), questionBlock: questionBlockFor(userId, mat), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title, materialId: mat.id }), makeGuard: guardMaker(userId, mat), allowNames: interestNames(userId, mat), factOn: factOn(opts), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
     const most = Math.max(1, Math.min(MAX_SKILLS, Math.ceil(mat.text.length / charsPerSkill())));
     const raw = (course.outline || []).map((k) => ({ id: k.id, title: k.title }));
     const fresh = [];
