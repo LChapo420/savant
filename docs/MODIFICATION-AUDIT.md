@@ -54,14 +54,40 @@ Built-in levels are written by the block writer (`block-levels.js` through `bloc
 
 ## 5. What was changed (this branch)
 
-1. `services/study-goal.js` (+ route, page control, tests): a study goal per subject and per uploaded course, chosen next to the retention goal: **Full depth** (default, today's behaviour), **Core parts, fast**, **Ready for a test** (added because the audit found the practice mix and check frequency reach nothing a learner can choose). `STUDY_GOAL=off` restores today's behaviour; the goal is stored on the enrollment or material row, so account export and deletion already cover it.
+1. `services/study-goal.js` (+ route, page control, tests): a study goal per subject and per uploaded course, chosen next to the retention goal: **Full depth** (default, today's behaviour), **Core parts, fast**, **Ready for a test** (added because the audit found the practice mix and check frequency reach nothing a learner can choose). `STUDY_GOAL=off` restores today's behaviour (and core needs `STUDY_GOAL_CORE=on`, off by default); the goal is stored on the enrollment or material row, so account export and deletion already cover it.
 2. Core: extra plain practice levels (the third and later of an objective) are set aside, read from `coverage.js`'s own objectives and level map; never a lesson, retention level, unit check, summary, checkpoint, review or the grade's last level. For a course, skills that no other skill needs and that do not end a unit. Lessons are written to about 55% of the words, one example, no story or recap, never fewer than three checks. The set-aside list is shown on the profile and the course page, each item can be brought back, and `Bring all back` is one click. The coverage gate is untouched.
 3. `approachLines` in `services/block-adapt.js`: the stored hook, story, recap, why-it-matters, big-picture, order, analogy and layout fields now reach the built-in block writer (`BLOCK_APPROACH=off` removes them for comparison).
 
-Not done: Spanish has no coverage level map, so core shortens its lessons but sets no levels aside (Spanish already has its own goal fit, which was not touched); a goal change does not rewrite lessons already stored; the tutor does not read the goal; a project-style goal was not built.
+Update 6 Nov: core is now OFF by default (`STUDY_GOAL_CORE`), approach lines are OFF by default (`BLOCK_APPROACH`), Spanish core sets aside its repeat-drill rows (Game, Speaking Game; 8.4% of Spanish levels) from the coverage map's own level kinds, and the tutor is told each non-default goal (`study-goal.tutorLines`). Still not done: a goal change does not rewrite lessons already stored; a project-style goal was not built.
 
 Proof numbers are in the report of the run that produced them (`docs/MODIFICATION-AUDIT.md` section 6). Everything there is SIMULATED learners judged by models, not a result on real people.
 
-## 6. Proof (SIMULATED learners, AI-judged)
+## 6. Proof (SIMULATED learners, AI-judged; not a result on real people)
 
-See the end of this file once the run completed; if the section is empty the run did not finish and the gate counts as not met (the goal ships off the gate's evidence).
+Raw files: `_out/sg3/` of the savant-wt folder (core-runA-glm-gemini.json, approach.json; run B if present). Script: `scripts/study-goal-proof.js`. Writer: Coral DeepSeek V4.1 Flash through the real block writer. Held-out seeds 919191 (core) and 919192 (approach); extreme learners drawn by `scripts/lib/extreme-learners.js` (tails, contradictory mixes, ages 8-70, English learners). Subjects: math, English, IQ, Spanish.
+
+Changes since the 5 Nov run: the core questions are written from the course's own objective text before either version exists; the answerer sees one version only; GLM-5.3 judge gets a 24000-token cap (it returned empty text at 6000) and every judge call is retried; a pair whose answers or grades cannot be read is dropped and counted as UNSCORED (never scored zero); grades are read in whatever JSON shape the grader uses; the writer is retried when it returns an unusable reply; approach pairs are written in two phases, because the earlier run flipped a process-wide switch under concurrency.
+
+Bug found and fixed: core's old floors (120 words, 3 minutes) RAISED the budget of a short-attention or young learner whose full-depth budget was already lower, so the worst learners got more words. The core budget is now never above the learner's own full-depth number, and a core lesson over its budget (not 1.3x) is sent back once.
+
+### Core parts, fast (run A: judges GLM-5.3 + Gemini 3.5 Flash Lite, n=80 drawn, 25 scored)
+Gemini's free quota ran out mid-run: 53 of 80 pairs are unscored, so only 25 learners are in the numbers. That is too few to turn the goal on.
+
+| Measure | Gate | Result |
+|---|---|---|
+| Words, mean over scored learners | at least 25% fewer | 27.2% fewer (worst 10%: 8.4% fewer; worst 5%: 3.2%; worst 1%: 1.5% MORE; 1 of 25 learners got more words) |
+| Core-question answerability, GLM answers/grades | not lower | full 0.647, core 0.727 (diff +0.08, 95% CI -0.03 to +0.20) |
+| Same, Gemini | not lower | full 0.647, core 0.733 (diff +0.09, CI -0.02 to +0.21) |
+| Worst-learner answerability drop | report | worst 1%: 0.50; 5%: 0.33; 10%: 0.17 (one learner in ten loses a sixth of the questions) |
+| Blind pick of the core version | report | 18 of 20 real pairs; planted identical pairs 5 of 5 TIE |
+| Words by learner type | report | young 16%, old 10%, contradictory 22%, tail-high 34%, tail-low 38% fewer: the old and young learners fall short of 25% |
+
+Hours: levels set aside are 45-47% of math, English and IQ levels and 8.4% of Spanish levels (the Spanish repeat drills only); lesson minutes fall from 5.4 to 4.3 per level. With fewer levels the same grade is about 0.5 of the full-depth time. That is not 4x.
+
+### Lesson-opening and order lines (approach), 40 learners, 31 real pairs, 8 planted
+The line with the lines on was picked 11 times, the line with them off 19 times, TIE once (chance is half). Planted identical pairs: 8 of 8 TIE. Both versions taught the same facts in 28 of 39 scored pairs. This does not beat chance, so the lines are OFF by default (`BLOCK_APPROACH=on` enables them).
+
+### Defaults after this run
+- Core: OFF (`STUDY_GOAL_CORE=on` enables it). The gate numbers on the scored pairs pass but the sample is 25 learners, the young, old and contradictory groups miss 25% fewer words, and the worst 5% lose a third of the questions.
+- Approach lines: OFF.
+- Full depth (default) and Ready for a test: unchanged.

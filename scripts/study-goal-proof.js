@@ -21,7 +21,7 @@ Object.assign(process.env, { NODE_ENV: 'test', PERSONALIZE_HOLDOUT: '0', PERSONA
 const P = require('./material-sensitivity-proof');
 // The test fixture blanks every key; give back only the free/cheap providers this proof uses (never the Anthropic key).
 const envFile = require('dotenv').parse(fs.readFileSync('C:/coding/claudecommittdIq/folderThing/.env'));
-for (const k of Object.keys(envFile)) if (/^(CORAL|LYCEUM|GEMINI)_/.test(k)) process.env[k] = envFile[k];
+for (const k of Object.keys(envFile)) if (/^(CORAL|LYCEUM|GEMINI|NVIDIA)_/.test(k)) process.env[k] = envFile[k];
 process.env.CORAL_PIPELINE = '1'; process.env.LYCEUM_PIPELINE = '1'; process.env.STUDY_GOAL_CORE = 'on'; // the proof turns the (default-off) core switch on
 const X = require('./lib/extreme-learners');
 const T = require('./lib/extreme-tailor');
