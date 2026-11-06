@@ -447,7 +447,7 @@ function specBlockFor(userId, topic = null) {
 }
 
 /** For a learner with interests: a function from a skill's passage text to a check that an interest analogy adds no claim (else null). */
-function guardMaker(userId, topic = null) {
+function guardMaker(userId, topic = null, materialId = null) {
   // eslint-disable-next-line global-require
   const ls = require('./learning-spec');
   const spec = ls.buildSpec(userId, specCtx(topic));
