@@ -914,6 +914,8 @@ Rules that are never broken:
 Reply only through the tool, with one entry per block (by index) and one per check (by index).`;
 
 function fillSchema() {
+  // BLOCK_FILL_LENIENT=1: a block entry need not carry index and data to pass a provider's schema check (see below). Off by default.
+  const lenient = String(process.env.BLOCK_FILL_LENIENT || '') === '1';
   return {
     type: 'object',
     additionalProperties: false,
@@ -923,7 +925,10 @@ function fillSchema() {
         type: 'array',
         items: {
           type: 'object',
-          required: ['index', 'data'],
+          // Lenient: a provider that checks the schema throws a whole paid reply away for one block written flat (a strong learner's first
+          // lesson: Coral Fast "$.blocks[1].index: required; data: required", then 512 s on slow slots, 5 Nov); readEntry reads that shape, and a
+          // block still empty is repaired. Not shown to lift the strong-level delay on its own (6 Nov, fact-queue), so it stays off.
+          ...(lenient ? {} : { required: ['index', 'data'] }),
           properties: {
             index: { type: 'integer' },
             data: { type: 'object', description: "The block's data, matching its schema." },
@@ -1647,6 +1652,36 @@ function readVerification(data) {
  * search. Without it (BLOCK_FACT_CHECK=1, tests): the app's GLM route, no search.
  * Returns { claims, failed, blocks(i), checks(i), usage, cost, sources, model } or null.
  */
+/**
+ * Is the part-by-part fact read on? FACT_VERIFY_PARTS=1: for every read. FACT_VERIFY_PARTS=background: only where nobody is waiting (the
+ * background lane: write-ahead of later levels, shared base levels), with at most 4 parts at once (ZeroGPU fails about half its calls past about 6
+ * at once, 6 Nov probe); a learner waiting still gets the whole-level read. Off by default (docs/FIRST-LESSON.md: the gate for turning it on).
+ */
+function factPartsOn() {
+  const v = String(process.env.FACT_VERIFY_PARTS || '');
+  if (v === '1') return true;
+  if (v === 'background') { try { return require('./pool').inBackground(); } catch { return false; } } // eslint-disable-line global-require
+  return false;
+}
+function factPartsConcurrency() { return Math.max(1, Number(process.env.FACT_PARTS_CONCURRENCY || (String(process.env.FACT_VERIFY_PARTS || '') === 'background' ? 4 : 10))); }
+const factPartCache = new Map();
+const factPartStats = { hits: 0, misses: 0 };
+const FACT_PART_TTL_MS = 6 * 3600 * 1000;
+const factPartCacheOn = () => String(process.env.FACT_PARTS_CACHE || '1') !== '0';
+function factPartKey(system, user, excl) {
+  if (factPartCache.size > 2000) factPartCache.delete(factPartCache.keys().next().value);
+  return require('crypto').createHash('sha1').update(`${system}|${user}|${(excl || []).join(',')}`).digest('hex'); // eslint-disable-line global-require
+}
+/** A level's blocks and checks cut into the reads of factPartsOn: each block alone, the checks in groups of FACT_PARTS_CHECKS (4). */
+function factParts({ blocks, checks }) {
+  const per = Math.max(1, Number(process.env.FACT_PARTS_CHECKS || 4));
+  const per_b = Math.max(1, Number(process.env.FACT_PARTS_BLOCKS || 1));
+  const parts = [];
+  for (let i = 0; i < blocks.length; i += per_b) parts.push({ blocks: blocks.slice(i, i + per_b), checks: [] });
+  for (let i = 0; i < checks.length; i += per) parts.push({ blocks: [], checks: checks.slice(i, i + per) });
+  return parts;
+}
+
 /** The verification request (system, user, schema), for the verifier and for measuring others. */
 function verifyRequest({ context, blocks, checks, factSheet = null }) {
   return { system: VERIFY_SYSTEM + (FACT_NOTES[context.trackId] || ''), user: verifyPrompt({ context, blocks, checks, factSheet }), schema: VERIFY_SCHEMA };
@@ -1727,6 +1762,38 @@ This time list and verify ONLY the claims in ${part} (use the rest of the level 
   if (factReader.isConfigured() && !freeTier()) return null;
   // eslint-disable-next-line global-require
   const ai = require('./ai');
+  // Part by part (FACT_VERIFY_PARTS, 6 Nov fact-queue brief): one small read per block and per few checks, all at once, so a level
+  // takes as long as its slowest block, not the sum; ZeroGPU GLM caught as many on single blocks as on whole levels and fails far less.
+  if (factPartsOn() && (blocks.length + checks.length) > 1) {
+    const parts = factParts({ blocks, checks });
+    const replies = new Array(parts.length).fill(null);
+    const partMs = new Array(parts.length).fill(0);
+    const t0 = Date.now();
+    let next = 0;
+    await Promise.all(Array.from({ length: Math.min(factPartsConcurrency(), parts.length) }, async () => {
+      while (next < parts.length) {
+        const k = next++;
+        const partUser = verifyPrompt({ context, blocks: parts[k].blocks, checks: parts[k].checks, factSheet });
+        // The same text, read before, is not read again (a verdict depends on the text alone; no learner's name or answers are in it).
+        const ck = factPartKey(system, partUser, excludeFamilies);
+        const hit = factPartCache.get(ck);
+        if (factPartCacheOn() && hit && hit.at > Date.now() - FACT_PART_TTL_MS) { replies[k] = hit.reply; factPartStats.hits++; continue; }
+        factPartStats.misses++;
+        // eslint-disable-next-line no-await-in-loop
+        replies[k] = await ai.structuredDetail({
+          role: 'blocks', task: 'fact_verify', system, user: partUser, schema: VERIFY_SCHEMA, schemaName: 'submit_verification',
+          maxTokens: Number(process.env.FACT_PARTS_MAX_TOKENS || 6000), userId, lane: process.env.BLOCK_LANE || 'background',
+          excludeFamilies: excludeFamilies && excludeFamilies.length ? excludeFamilies : undefined,
+        }).catch((err) => { console.warn(`facts: part ${k + 1} of ${parts.length} could not be read (${String(err.message || err).slice(0, 120)})`); return null; });
+        partMs[k] = Date.now() - t0;
+        if (replies[k] && replies[k].data && factPartCacheOn()) factPartCache.set(ck, { at: Date.now(), reply: { ...replies[k], usage: null } });
+      }
+    }));
+    // A part that no verifier could read: the level has not been read (no keep on no evidence).
+    if (replies.some((r) => !r || !r.data)) return null;
+    const usage = replies.reduce((u, r) => ({ input_tokens: u.input_tokens + ((r.usage && r.usage.input_tokens) || 0), output_tokens: u.output_tokens + ((r.usage && r.usage.output_tokens) || 0) }), { input_tokens: 0, output_tokens: 0 });
+    return { ...readVerification({ claims: replies.flatMap((r) => readVerification(r.data).claims) }), usage, cost: null, sources: [], searches: 0, model: [...new Set(replies.map((r) => r.model).filter(Boolean))].join('+') || null, parts: parts.length, partMs, partModels: replies.map((r) => r.model || null) };
+  }
   const reply = await ai.structuredDetail({
     role: 'blocks', task: 'fact_verify', system, user, schema: VERIFY_SCHEMA, schemaName: 'submit_verification', maxTokens: 16000, userId, lane: process.env.BLOCK_LANE || 'background',
     excludeFamilies: excludeFamilies && excludeFamilies.length ? excludeFamilies : undefined,
@@ -2118,6 +2185,24 @@ const inFlight = new Map();
 const inFlightLane = new Map(); // plan key -> the pool lane store of the call that started the write (services/pool.js promote)
 
 /**
+ * Reuse a write's layout and fill-out between learners whose prompts are identical (WRITE_REUSE=1, 6 Nov fact-queue brief). The prompt carries
+ * everything personal (interests, spec, pace, the level's text), so an identical prompt asks for the same content and nothing personal is lost or
+ * shared: two learners with the same profile on the same level get the one write. An hour, 300 entries, in memory. The call is the one that would run.
+ */
+const reuseCache = new Map();
+const reuseStats = { hits: 0, misses: 0 };
+async function reusable(probe, call) {
+  if (String(process.env.WRITE_REUSE || '') !== '1') return call();
+  const key = require('crypto').createHash('sha1').update(JSON.stringify([probe.task, probe.system, probe.user, probe.schemaName, probe.dataClass, probe.lane])).digest('hex'); // eslint-disable-line global-require
+  const hit = reuseCache.get(key);
+  if (hit && hit.at > Date.now() - 3600000) { reuseStats.hits++; console.log(`write: reused a ${probe.task} from an identical prompt (${reuseStats.hits} reused, ${reuseStats.misses} written)`); return JSON.parse(hit.json); }
+  reuseStats.misses++;
+  const r = await call();
+  if (r && r.data) { if (reuseCache.size >= 300) reuseCache.delete(reuseCache.keys().next().value); reuseCache.set(key, { at: Date.now(), json: JSON.stringify(r) }); }
+  return r;
+}
+
+/**
  * Write the plan for one level, for one learner or for everyone.
  *
  * @returns {Promise<object|null>} the stored plan, or null when it could not be written
@@ -2173,7 +2258,7 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
   };
 
   // 1. layout
-  const layoutReply = await ai.structuredDetail({
+  const layoutArgs = {
     role: 'blocks',
     task: 'block_layout',
     system: `${LAYOUT_SYSTEM}${subjectNote(trackId, 'layout')}\n\nLIBRARY (${kind === 'retention' ? 'retention and assessment blocks' : 'lesson blocks'}):\n${catalog.map(catalogLine).join('\n')}`,
@@ -2185,7 +2270,8 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
     userId: owner,
     dataClass: poolClass(owner),
     lane: process.env.BLOCK_LANE || 'background',
-  });
+  };
+  const layoutReply = await reusable(layoutArgs, () => ai.structuredDetail(layoutArgs));
   const layoutData = layoutReply && layoutReply.data
     ? { ...layoutReply.data, blocks: readList(layoutReply.data.blocks), checks: readList(layoutReply.data.checks), coverage: readPoints(layoutReply.data.coverage) }
     : null;
@@ -2214,7 +2300,7 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
   }
 
   // 2. fill
-  const callFill = (note) => ai.structuredDetail({
+  const fillArgs = (note) => ({
     role: 'blocks',
     task: 'block_fill',
     system: FILL_SYSTEM + subjectNote(trackId, 'fill'),
@@ -2226,6 +2312,7 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
     dataClass: poolClass(owner),
     lane: process.env.BLOCK_LANE || 'background',
   });
+  const callFill = (note) => { const a = fillArgs(note); return reusable(a, () => ai.structuredDetail(a)); };
   // A tailored fill-out is checked against the learner's spec (key points kept, interests used, dislikes avoided, wording, length)
   // and written once more with the problems named when it broke them (services/block-adapt.js); everything else is one call, as before.
   const fillRun = await blockAdapt.revise(adapt, {
@@ -3037,8 +3124,7 @@ module.exports = {
   cleanCheck,
   // Making a level factual.
   researchFacts,
-  verifyLevel,
-  verifyRequest,
+  verifyRequest, verifyLevel, factParts, factPartsOn, factPartStats, reuseStats,
   VERIFY_SCHEMA,
   verifyAndRepair,
   verifyStored,
@@ -3067,5 +3153,5 @@ module.exports = {
   placeOf,
   whyRefused,
   LAYOUT_SYSTEM,
-  FILL_SYSTEM,
+  FILL_SYSTEM, fillSchema, subjectNote,
 };
