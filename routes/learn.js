@@ -963,6 +963,15 @@ router.post('/items/:id/coach/stream', requireAuth, limit('coach', 120, 60 * 60 
     .filter((m) => m && typeof m.content === 'string' && m.content.trim())
     .map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content.trim().slice(0, 800) }));
 
+  // As on /coach: a crisis message gets the fixed reply, not a hint, and is not kept. This is the route the session page uses first.
+  const crisisSaid = [...cleaned].reverse().find((m) => m.role === 'user');
+  const crisis = crisisSaid ? require('../services/tutor-full').triage(req.user, crisisSaid.content) : null; // eslint-disable-line global-require
+  if (crisis && crisis.reply) {
+    res.set({ 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-cache, no-transform' });
+    res.write(`data: ${JSON.stringify({ replace: crisis.reply })}\n\n`);
+    return res.end(`data: ${JSON.stringify({ done: true, source: 'safety', kind: crisis.kind })}\n\n`);
+  }
+
   if (!item.coach_used) db.update('items', item.id, { coach_used: true, coach_started_at: new Date().toISOString() });
   // What the learner said while stuck, kept for the after-level read: it is the
   // most direct evidence there is of where their understanding broke.
@@ -1037,6 +1046,9 @@ router.post('/items/:id/ask', requireAuth, limit('tutor', 60, 60 * 60 * 1000), a
   }
   const question = String(req.body.question || '').trim().slice(0, 500);
   if (question.length < 3) return res.status(400).json({ error: 'Ask a question first.' });
+  // Asking after answering is the same tutor: a crisis message gets the fixed reply, not an explanation, and is not kept.
+  const crisis = require('../services/tutor-full').triage(req.user, question); // eslint-disable-line global-require
+  if (crisis && crisis.reply) return res.json({ reply: crisis.reply, source: 'safety', kind: crisis.kind });
   // What they asked after answering goes to the after-level read too: a question
   // about a question they got right is as telling as one they got wrong.
   db.update('items', item.id, { ask_log: [...(item.ask_log || []), question.slice(0, 300)].slice(-8) });

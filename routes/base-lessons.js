@@ -1172,6 +1172,10 @@ router.post('/lessons/:track/:grade/:level/assist', requireAuth, limit('assist',
   const level = Number(req.params.level);
   const target = (req.body && req.body.target) || {};
   const messages = req.body && req.body.messages;
+  // Help under a lesson's parts is the same tutor: a crisis message gets the fixed reply, before any model, and is not kept.
+  const lastSaid = [...assist.clean(messages)].reverse().find((m) => m.role === 'user');
+  const crisis = lastSaid ? require('../services/tutor-full').triage(req.user, lastSaid.content) : null; // eslint-disable-line global-require
+  if (crisis && crisis.reply) return res.json({ reply: crisis.reply, source: 'safety', kind: crisis.kind });
   if (target.type === 'block') {
     if (!blockLevels.visibleTo(req.user)) return res.status(404).json({ error: 'No such lesson.' });
     const plan = blockLevels.servedPlan(req.user, track, gradeId, level);
