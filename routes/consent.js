@@ -363,6 +363,24 @@ function publicConsent(user) {
 const SHARED = new Set(['users', 'content_cache', 'themed_items', 'themed_log', 'placement_question_sets', 'fact_pools', 'parents', 'parental_consents', 'beta_blocks']);
 
 /**
+ * Accounts deleted in the last hour. A model call in flight when the account went (a chat, an after-level read, a build) finishes later and writes its rows
+ * under the old id: the learner's own words, in assist_chats and tutor_memory, came back after "deleted" (bug sweep 2, 6 Nov). The sweep takes them out again.
+ */
+const LATE_ROWS_MS = 60 * 60 * 1000;
+const deletedRecently = new Map();
+function rememberDeleted(userId, at = Date.now()) { deletedRecently.set(userId, at); }
+function sweepLateRows(now = Date.now()) {
+  let removed = 0;
+  for (const [userId, at] of deletedRecently) {
+    for (const name of collectionNames()) {
+      if (!SHARED.has(name)) removed += db.remove(name, (r) => r && r.user_id === userId);
+    }
+    if (now - at > LATE_ROWS_MS) deletedRecently.delete(userId);
+  }
+  return removed;
+}
+
+/**
  * Delete a child's account and every row tied to it, and reduce the consent
  * record to a stub (dates, method, notice version, hashed parent email).
  */
@@ -374,6 +392,8 @@ function deleteChild(consent, reason, by) {
     const n = db.remove(name, (r) => r && r.user_id === childId);
     if (n) removed[name] = n;
   }
+  require('../services/block-levels').forgetLearner(childId);
+  rememberDeleted(childId);
   const files = require('../services/upload-retention').removeForUser(childId);
   if (files) removed.spanish_upload_files = files;
   require('../services/spanish-study-tests').removeForUser(childId);
@@ -465,7 +485,7 @@ async function sendConfirmation(consent) {
  * called directly by the tests with a later `now`.
  */
 async function sweep(now = Date.now()) {
-  const out = { expired: 0, confirmed: 0, revoked_deleted: 0 };
+  const out = { expired: 0, confirmed: 0, revoked_deleted: 0, late_rows: sweepLateRows(now) };
   for (const c of db.all('parental_consents').slice()) {
     if (c.status === 'pending' && c.expires_at && Date.parse(c.expires_at) <= now) {
       deleteChild(c, 'expired', 'system');
@@ -519,7 +539,7 @@ const TEXT_FIELDS = [
  * account, whatever the opt-ins say: the research doc (section 2, the upload
  * row) prefers uploads disabled for children until a lawyer approves them.
  */
-const CHILD_MEDIA_UPLOAD = /^\/(es\/(asr|upload)|materials(\/(paste|link|transcript))?)$/;
+const CHILD_MEDIA_UPLOAD = /^\/(es\/(asr|upload)|materials(\/(paste|link|transcript|youtube|video|audio))?)$/;
 /** What a locked account can still reach. */
 const LOCKED_ALLOW = /^\/(auth\/|consent\/|health$)/;
 
@@ -540,6 +560,16 @@ function routePath(req) {
   let p = String(req.path || '');
   try { p = decodeURIComponent(p); } catch { /* malformed escapes: match as sent */ }
   return p.toLowerCase().replace(/\/{2,}/g, '/').replace(/(.)\/+$/, '$1');
+}
+
+/** What the learner just typed into a chat route, read for a crisis (services/tutor-full.js). Null when there is nothing to say. */
+function crisisIn(req) {
+  const b = req.body || {};
+  const last = Array.isArray(b.messages) ? [...b.messages].reverse().find((m) => m && m.role !== 'assistant' && typeof m.content === 'string') : null;
+  const said = last ? last.content : (typeof b.question === 'string' ? b.question : '');
+  if (!said) return null;
+  const t = require('../services/tutor-full').triage(req.user, said); // eslint-disable-line global-require
+  return t && t.reply ? t : null;
 }
 
 /** Mounted on /api before every router. */
@@ -566,6 +596,9 @@ function gate(req, res, next) {
     const outside = OUTSIDE_AI.some((re) => re.test(reqPath))
       || TEXT_FIELDS.some((t) => t.re.test(reqPath) && hasText(req.body, t.fields));
     if (outside) {
+      // A crisis message gets its fixed reply, not "this uses an outside AI service": that reply is written here and no model or outside service is involved.
+      const crisis = crisisIn(req);
+      if (crisis) return res.json({ reply: crisis.reply, source: 'safety', kind: crisis.kind, coached: true });
       return res.status(403).json({
         error: a.state === 'needs_age'
           ? 'Answer the date-of-birth question first: open Subjects to see it.'
@@ -1067,6 +1100,7 @@ module.exports = {
   deleteChild,
   collectionNames,
   SHARED,
+  rememberDeleted,
   minimumAge,
   CONSENT_AGE,
   DEFAULT_CONSENT_AGE,

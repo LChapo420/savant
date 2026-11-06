@@ -264,7 +264,7 @@ async function build(userId, materialId, opts = {}) {
   const textHash = hash(mat.text);
   const prev = row(userId, mat.id);
   if (prev && prev.version === VERSION && prev.text_hash === textHash && prev.status === 'ready' && !opts.force) return { pack: prev, cached: true };
-  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The study pack builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  if (!opts.llm && !require('./ai').canBuild()) return { error: 'The study pack builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
 
   inflight.add(key);
   let saved = null;

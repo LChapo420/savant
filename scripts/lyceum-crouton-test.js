@@ -49,6 +49,7 @@ const today = () => new Date().toISOString().slice(0, 10);
   await check('lyceum: prices from the pricing page, unknown model above every row, $250 cap that the env may only lower', () => {
     lycReset();
     assert.deepStrictEqual(lled.priceOf('moonshotai/kimi-k3'), { input: 3, output: 15 });
+    assert.deepStrictEqual(lled.priceOf('moonshotai/kimi-k3.1-pro'), { input: 2, output: 10 });
     assert.deepStrictEqual(lled.priceOf('z-ai/glm-5.3-flash'), { input: 0.2, output: 0.5 });
     assert.deepStrictEqual(lled.priceOf('deepseek/deepseek-v4-pro-0813'), { input: 2, output: 4 });
     assert.deepStrictEqual(lled.priceOf('moonshotai/kimi-k3-instant'), { input: 3, output: 15 });
