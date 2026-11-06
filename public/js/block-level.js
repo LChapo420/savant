@@ -78,6 +78,7 @@
           ${m.model ? `<br><span class="tiny">Written by ${App.escapeHtml(m.model)}${m.generated_at ? ` on ${App.escapeHtml(new Date(m.generated_at).toLocaleDateString())}` : ''}.</span>` : ''}
         </div>
       </div>
+      ${m.layer ? '<div id="block-level-layer" class="card card-tight" style="margin-bottom:14px; min-height:150px; overflow-anchor:none"><div class="small muted">Making this lesson yours&hellip;</div></div>' : ''}
       <div id="block-level-host"></div>
       <div id="block-level-progress" class="small muted" style="margin-top:16px"></div>
       <div id="block-level-finish" style="margin-top:16px"></div>`;
@@ -191,6 +192,42 @@
     }
 
     renderFinish();
+
+    // The personal layer (services/lesson-layer.js): the shared lesson is already open; the learner's own hook, why and analogies fill the
+    // slot reserved for them as soon as they are written, without moving what is being read (the slot keeps its height; any growth is
+    // taken up by the scroll position). Late or never: the plain lesson stays as it is.
+    if (m.layer) {
+      const slot = document.getElementById('block-level-layer');
+      const esc = App.escapeHtml;
+      const fill = (layer) => {
+        const before = slot.offsetHeight;
+        slot.innerHTML = `
+          <div class="tiny muted" style="margin-bottom:6px">For you</div>
+          ${layer.hook ? `<p style="margin:0 0 8px"><strong>${esc(layer.hook)}</strong></p>` : ''}
+          ${layer.why ? `<p class="small" style="margin:0 0 8px">${esc(layer.why)}</p>` : ''}
+          ${(layer.analogies || []).map((a) => `<p class="small" style="margin:0 0 6px"><span class="muted">${esc(a.point)}:</span> ${esc(a.text)}</p>`).join('')}`;
+        const grew = slot.offsetHeight - before;
+        if (grew > 0 && window.scrollY > 0) window.scrollBy(0, grew);
+        slot.setAttribute('data-layer', 'shown');
+        window.__layerShownAt = Date.now();
+      };
+      const drop = () => {
+        const h = slot.offsetHeight;
+        slot.remove();
+        if (window.scrollY > 0) window.scrollBy(0, -h);
+      };
+      let tries = 0;
+      const tick = async () => {
+        tries += 1;
+        try {
+          const r = await App.api.get(`/api/lessons/${track}/${grade}/${level}/layer`);
+          if (r.state === 'ready' && r.layer) { fill(r.layer); return; }
+          if (r.state === 'none') { drop(); return; }
+        } catch (e) { /* ask again */ }
+        if (tries < 45) setTimeout(tick, tries < 12 ? 600 : 2000); else drop();
+      };
+      setTimeout(tick, 400);
+    }
   }
 
   /** The level is still being written: say so, and ask again until it is ready. */
