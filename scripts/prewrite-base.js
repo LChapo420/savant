@@ -6,7 +6,7 @@
  * check, all as shipped), a few at a time, and reports seconds, outcome and the paid ledgers' spend per level.
  *
  *   DB_FILE=<copy of the db> node scripts/prewrite-base.js --plan plan.json [--top 20] [--keys math/algebra_1_part_a/465,...]
- *       [--concurrency 3] [--out report.json]
+ *       [--concurrency 3] [--fast] [--out report.json]
  *
  * ALWAYS a copy of the database (DB_FILE): the live server owns data/db.json. Ledgers are the live ones (same env as the app; RUN_CAP_USD applies).
  * Pipeline-class write (no learner data): cheapest capable paid slots, free first. ZeroGPU's limit of about 5 calls at once is kept by the pool.
@@ -41,7 +41,16 @@ async function worker() {
     const row = { key, kind: grade ? blockLevels.kindFor(grade, level) : null };
     try {
       if (blockLevels.findPlan({ userId: null, trackId, gradeId, level })) { row.ok = true; row.note = 'already written'; rows.push(row); continue; }
-      const plan = await blockLevels.write({ userId: null, trackId, gradeId, level, tailored: false });
+      // --fast: as a learner waiting would be served (Coral Fast first, paid fact readers, no free NVIDIA queue): minutes become seconds when the free
+      // models are rate limited by other work (6 Nov: a base level sat 35+ minutes on NVIDIA's queue); costs a few cents a level instead of $0.
+      // --tier free: the write-ahead's own way for a first level: the free check (pool fact readers: Coral, grok-4.3, ZeroGPU) passes it as servable, then
+      // its Sonnet check runs (upgrade), here straight after. Without it the owner's key does the whole gate (Sonnet fact sheet, search, verify: slow,
+      // and NVIDIA's 300 s queue for its hint read: 35+ minutes a level on 6 Nov).
+      const tier = arg('tier', null);
+      const run = () => (tier ? blockLevels.onTier(tier, () => blockLevels.write({ userId: null, trackId, gradeId, level, tailored: false })) : blockLevels.write({ userId: null, trackId, gradeId, level, tailored: false }));
+      let plan = argv.includes('--fast') ? await require('../services/pool').runForeground(run, { fast: true }) : await run();
+      row.servableSec = Math.round((Date.now() - t0) / 100) / 10;
+      if (plan && tier === 'free' && blockLevels.sonnetPending(plan) && !argv.includes('--no-upgrade')) { const up = await blockLevels.upgrade(plan).catch(() => null); row.sonnet = !!up; if (up) plan = up; row.sonnetSec = Math.round((Date.now() - t0) / 100) / 10; }
       row.ok = !!(plan && blockLevels.servable(plan));
       row.status = plan && plan.status; row.model = plan && (plan.model || plan.layout_model); row.attempt = plan && plan.attempt;
       row.checks = plan && (plan.checks || []).length; row.blocks = plan && (plan.blocks || []).length;

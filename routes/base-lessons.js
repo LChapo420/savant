@@ -437,6 +437,7 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
       const shared = blockLevels.findPlan({ userId: null, trackId: track, gradeId: grade, level });
       if (shared) {
         instant = shared;
+        if (blockLevels.sonnetPending(shared)) blockLevels.upgrade(shared).catch(() => {}); // a base level opened on its free check gets its Sonnet check now, as on the other paths
         blockLevels.ensure({ userId: req.user.id, trackId: track, gradeId: grade, level, tailored: true, tier: 'open' }).catch(() => {});
         lessonLayer.start({ user: req.user, plan: shared, topic: blockLevels.levelContext(track, grade, level).topic, trackId: track, gradeId: grade, level }).catch(() => {});
       }

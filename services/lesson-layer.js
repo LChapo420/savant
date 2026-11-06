@@ -78,7 +78,7 @@ function rules(spec, ctx = {}) {
   const r = [];
   const doms = (it.exampleDomains || []).slice(0, 3);
   if (doms.length) r.push(`Draw the hook and the analogies from these interests of the reader: ${doms.join(', ')}. Use one or two of them, in the comparison itself.`);
-  r.push('why: one or two sentences on why this lesson is worth their time, in terms of what they care about or are working towards; no promise of a result, no number.');
+  r.push('why: one or two sentences, speaking to the reader (you, your), on why this lesson is worth THEIR time: what they care about or are working towards. It says nothing about the subject itself: never how important, common, basic or central it is, what experts or strong players do, or what it decides or rewards. No promise of a result, no number.');
   r.push('hook: one or two sentences that open the lesson: a question or a short "imagine" scene from their interests that the lesson then answers. It does not answer the question.');
   r.push('analogies: zero to two. Each is a comparison ("it is like", "think of", "imagine") between one point of the lesson and something from their interests. "point" names that lesson point in its own words from the lesson text.');
   if (lang.plainLanguage || lang.eslSupport) r.push(`Words: plain everyday words${lang.maxSentenceWords ? `, sentences of ${lang.maxSentenceWords} words or fewer` : ''}${lang.avoidIdioms ? ', no idioms or phrasal verbs' : ''}.`);
@@ -105,6 +105,11 @@ const SCHEMA = {
 
 const SYSTEM = 'You add a short personal layer over a lesson that already exists and is already fact-checked. You write only: why it matters to this reader, an opening hook, and up to two analogies from their interests. You add no fact, number or name about the subject, give no answers, and never mention the reader\'s profile, scores or these rules. Output the JSON only.';
 
+// Claims about the SUBJECT dressed as a reason to care ("the piece you will use most", "the first thing stronger players check", "rewards attention more
+// than athleticism"): 15 of 182 judged layers on 6 Nov, all in the why or the hook, none caught by the number and name checks. The words that carry such a
+// claim (superlatives, universals, authorities, "decides") are refused in the why and the hook; an analogy is a marked comparison and is held to the
+// number, name and mapping checks instead.
+const CLAIM = /\b(most|least|always|never|every|everyone|everything|nobody|best|worst|only|key|essential|vital|crucial|critical|fundamental|foundation|foundational|basis|backbone|experts?|professionals?|pros|veterans?|stronger players|better players|top players|champions?|studies|research|proven|science|scientists?|decides?|determines?|rewards?|guarantee[sd]?|ensures?|ranks?|rated)\b/i;
 const MARK = /\b(like|as if|as though|imagine|picture|think of|thinking of|similar|just as|same way|same as|compare|comparable|reminds?|resembles?|works? the way|is to)\b/i;
 const PROFILE_LEAK = /\b(scorecard|your (?:learning )?(?:style|profile|score|data)|according to your|as a (?:slow|fast|visual|verbal) learner|you (?:learn|are) (?:best|a))\b/i;
 
@@ -139,6 +144,8 @@ function check(spec, layer, source) {
   }
   if (PROFILE_LEAK.test(all)) out.push('it talks about the learner profile');
   for (const d of (spec && spec.interests && spec.interests.avoidDomains) || []) if (hasAll(all, d)) out.push(`it uses ${d}, which the learner dislikes`);
+  for (const [label, t] of [['why', why], ['hook', hook]]) { const m = CLAIM.exec(t); if (m) out.push(`the ${label} says "${m[0]}": that is a claim about the subject, not a reason it matters to this reader`); }
+  if (why && !/\b(you|your|you'll|you're)\b/i.test(why)) out.push('the why does not speak to the reader (you, your)');
   // Comparisons are marked as comparisons; the hook is a question or a scene: neither can pass as a statement about the subject.
   for (const a of an) if (!MARK.test(a.text)) out.push('an analogy is not marked as a comparison (like, think of, imagine)');
   if (hook && !/\?/.test(hook) && !MARK.test(hook)) out.push('the hook is neither a question nor an "imagine" scene');

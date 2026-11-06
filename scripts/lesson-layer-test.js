@@ -41,8 +41,10 @@ const GOOD = { why: 'Equations are how you work out an unknown, the way a coach 
   check('an answer to a check is refused', layer.check(SPEC, { ...GOOD, analogies: [{ point: 'an equation is a balance', text: 'Think of chess: x + 3 = 10 gives 7.' }] }, SRC).some((p) => /answer/.test(p)));
   check('a statement that is not a comparison is refused', layer.check(SPEC, { ...GOOD, analogies: [{ point: 'an equation is a balance', text: 'Chess is the oldest strategy game that exists.' }] }, SRC).some((p) => /comparison/.test(p)));
   check('profile talk is refused', layer.check(SPEC, { ...GOOD, why: 'As a visual learner, according to your scorecard, you will like this like chess.' }, SRC).some((p) => /profile/.test(p)));
-  check('an interest is a prompt rule and a judged fit, not a fact gate: a layer without one still passes the gate', layer.check(SPEC, { why: 'It is useful.', hook: 'Imagine a mystery number: how would you find it?', analogies: [] }, SRC).length === 0);
+  check('an interest is a prompt rule and a judged fit, not a fact gate: a layer without one still passes the gate', layer.check(SPEC, { why: 'It is useful for you.', hook: 'Imagine a mystery number: how would you find it?', analogies: [] }, SRC).length === 0);
   check('too many words is refused', layer.check(SPEC, { ...GOOD, why: Array(60).fill('word').join(' ') }, SRC).some((p) => /words/.test(p)));
+  check('a claim about the subject in the why is refused ("the most", "stronger players")', layer.check(SPEC, { ...GOOD, why: 'Equations are the thing you will use most, and stronger players check them first.' }, SRC).some((p) => /claim about the subject/.test(p)));
+  check('a why that does not speak to the reader is refused', layer.check(SPEC, { ...GOOD, why: 'Equations help people work out an unknown, like a coach does.' }, SRC).some((p) => /speak to the reader/.test(p)));
   check('empty is refused', layer.check(SPEC, {}, SRC)[0] === 'empty');
 
   console.log('layer: write, store, serve');
