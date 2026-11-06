@@ -30,6 +30,7 @@ const GOALS = {
   test: { label: 'Ready for a test', short: 'Test', blurb: 'Nothing is set aside. Explanations are trimmed to what a test asks and there are more recall checks.' },
 };
 const CHOICES = Object.keys(GOALS);
+const choices = () => CHOICES.filter((id) => id !== 'core' || coreEnabled());
 const DEFAULT_GOAL = 'full';
 /** Share of the words a core lesson keeps (the gate asks for at least 25% fewer; the writer is held to this ceiling). */
 const CORE_WORD_SHARE = 0.55;
@@ -37,14 +38,21 @@ const TABLES = { enrollment: 'enrollments', material: 'materials' };
 const GATE_MIN = 3.4;
 /** Plain practice levels kept per objective; the third and later are set aside. */
 const KEEP_PRACTICE = 2;
+/** Spanish unit-row types the core goal sets aside (repeat drills); nothing else in a Spanish unit is. */
+const SPANISH_DRILLS = new Set(['Game', 'Speaking Game']);
 
 const lazy = (p) => require(p); // eslint-disable-line global-require, import/no-dynamic-require
 const enabled = () => String(process.env.STUDY_GOAL || 'on').toLowerCase() !== 'off';
+/**
+ * The core-parts goal is held OFF until its gate passes (docs/MODIFICATION-AUDIT.md section 6): STUDY_GOAL_CORE=on turns it on.
+ * Off, a stored 'core' goal behaves as full depth, the page does not offer it and the route refuses it. Test and full are unaffected.
+ */
+const coreEnabled = () => enabled() && String(process.env.STUDY_GOAL_CORE || 'off').toLowerCase() === 'on';
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
 /** A stored goal, or an empty one, as { goal, restored[] }. A goal this build does not know is full. */
 function effective(stored) {
-  if (!enabled() || !stored || !GOALS[stored.goal]) return { goal: DEFAULT_GOAL, restored: [], set_on: null };
+  if (!enabled() || !stored || !GOALS[stored.goal] || (stored.goal === 'core' && !coreEnabled())) return { goal: DEFAULT_GOAL, restored: [], set_on: null };
   return { goal: stored.goal, restored: Array.isArray(stored.restored) ? stored.restored.slice(0, 400) : [], set_on: stored.set_on || null };
 }
 
@@ -52,7 +60,7 @@ function normalize(body, current) {
   const b = body || {};
   const cur = effective(current);
   const goal = b.goal === undefined ? cur.goal : String(b.goal);
-  if (!GOALS[goal]) return { error: 'Choose full depth, core parts fast, or ready for a test.' };
+  if (!GOALS[goal] || (goal === 'core' && !coreEnabled())) return { error: coreEnabled() ? 'Choose full depth, core parts fast, or ready for a test.' : 'Choose full depth or ready for a test.' };
   let restored = goal === cur.goal ? cur.restored.slice() : []; // a new goal starts with nothing brought back
   if (b.restore === 'all') restored = ['all'];
   else if (Array.isArray(b.restore)) restored = [...new Set([...restored, ...b.restore.map((x) => (typeof x === 'number' ? x : String(x).slice(0, 80)))])].slice(0, 400);
@@ -66,11 +74,13 @@ function normalize(body, current) {
  * check and the coverage contract stay on every prompt. Mutates and returns the spec; full leaves it as it is.
  */
 function applyToSpec(spec, id) {
-  if (!spec || !enabled() || !GOALS[id] || id === 'full') return spec;
+  if (!spec || !enabled() || !GOALS[id] || id === 'full' || (id === 'core' && !coreEnabled())) return spec;
   const l = spec.lesson; const p = spec.practice;
   if (id === 'core') {
-    l.minutes = Math.max(3, Math.round(l.minutes * CORE_WORD_SHARE));
-    l.wordBudget = Math.max(120, Math.round((l.wordBudget * CORE_WORD_SHARE) / 10) * 10);
+    // Never above the learner's own full-depth numbers: the old floors (3 minutes, 120 words) RAISED the budget of a short-attention
+    // or young learner whose full budget was already below them (the worst 10% got more words than full depth, 5 Nov run).
+    l.minutes = Math.min(l.minutes, Math.max(3, Math.round(l.minutes * CORE_WORD_SHARE)));
+    l.wordBudget = Math.min(l.wordBudget, Math.max(120, Math.round((l.wordBudget * CORE_WORD_SHARE) / 10) * 10));
     l.sections = Math.min(l.sections, 3);
     l.newIdeasPerChunk = Math.min(l.newIdeasPerChunk, 2);
     l.maxNewTerms = Math.min(l.maxNewTerms, 3);
@@ -81,8 +91,8 @@ function applyToSpec(spec, id) {
     p.examplesPerIdea = 1; p.workedExamples = Math.min(p.workedExamples, 1); p.tryItems = Math.min(p.tryItems, 1);
     p.selfExplain = false; p.mistakeShown = false;
   } else if (id === 'test') {
-    l.wordBudget = Math.max(150, Math.round((l.wordBudget * 0.75) / 10) * 10);
-    l.minutes = Math.max(3, Math.round(l.minutes * 0.8));
+    l.wordBudget = Math.min(l.wordBudget, Math.max(150, Math.round((l.wordBudget * 0.75) / 10) * 10));
+    l.minutes = Math.min(l.minutes, Math.max(3, Math.round(l.minutes * 0.8)));
     l.restate = 0; l.hook = 'none'; l.storyFrame = false; l.recapAtStart = false;
     l.retrievalChecks = clamp(l.retrievalChecks + 2, 4, 8);
     l.checkEveryChunks = 1; l.quickCheckEverySection = true; l.quickCheckEvery = 1;
@@ -99,6 +109,7 @@ const LINES = {
     'STUDY GOAL (the learner chose it): the core parts, fast. Teach only what the objective needs and the learner must be able to do afterwards. Every point of the coverage below is still stated, in its shortest accurate form.',
     'Cut, in this order: the backstory, the second and third example, repeated restatements, recaps, asides, side facts. Keep every definition, rule, step and fact a check question depends on.',
     'One example per idea, the most typical one; no story frame, no hook paragraph. Keep the check questions: they are how the learner proves the core is understood.',
+    'Short is not thin: after the lesson the learner is asked one plain question on every point of the coverage (a definition, a rule, a step, a formula, a term, a named fact, a worked answer). Each of those must be stated outright in the text, in one clear sentence, so the question can be answered from it. Cut the words around the points, never a point.',
   ],
   test: [
     'STUDY GOAL (the learner chose it): ready for a test. State each point the way a test asks it, then test it straight away. No story, no recap of earlier lessons.',
@@ -120,6 +131,13 @@ function coreSetAsideLevels(trackId, gradeId) {
     const out = [];
     for (let level = 1; level < model.pathLength; level++) {
       const e = model.levelMap[level];
+      // Spanish has no per-objective practice levels: its unit rows (coverage kind 'unit') are shared by the unit's lessons. The only
+      // ones set aside are the two repeat-drill kinds (Game, Speaking Game): the input, dictation, speaking, writing, listening, unit
+      // check and checkpoint rows, which are what proves the unit, always stay. Read from the coverage map's own level kinds.
+      if (e && e.kind === 'unit' && trackId === 'spanish' && !e.retention && SPANISH_DRILLS.has(String((byLevel.get(level) || {}).type))) {
+        out.push({ level, title: (byLevel.get(level) || {}).title || `Level ${level}`, objective: Array.isArray(e.shared) ? e.shared[0] : null });
+        continue;
+      }
       if (!e || e.kind !== 'activity' || e.retention || e.direct === undefined) continue;
       const seen = (firstSeen.get(e.direct) || 0) + 1; firstSeen.set(e.direct, seen);
       if (seen <= KEEP_PRACTICE) continue;
@@ -233,10 +251,29 @@ function listFor(userId) {
     if (eff.goal === 'core') { try { aside = setAsideSkills(userId, m.id, lazy('./material-study').internals.loadCourse(userId, m.id)); } catch { aside = []; } }
     return { kind: 'material', id: m.id, title: m.title || `Material ${m.id}`, goal: eff.goal, summary: describe(eff.goal, aside), set_aside: aside.slice(0, 200), set_aside_count: aside.length, brought_back: 0 };
   });
-  return { choices: CHOICES.map((id) => ({ id, label: GOALS[id].label, blurb: GOALS[id].blurb })), enrollments, materials };
+  return { choices: choices().map((id) => ({ id, label: GOALS[id].label, blurb: GOALS[id].blurb })), enrollments, materials };
+}
+
+/**
+ * What the tutor is told: each subject or course where the learner chose something other than full depth, in plain words, and how many
+ * levels are set aside. Empty when every goal is full (or the goals are off). Never throws.
+ */
+function tutorLines(userId) {
+  if (!enabled() || !userId) return [];
+  try {
+    const l = listFor(userId);
+    return [...l.enrollments, ...l.materials].filter((x) => x.goal !== 'full').slice(0, 6).map((x) => {
+      const g = GOALS[x.goal];
+      const how = x.goal === 'core'
+        ? 'wants only the core parts, fast: keep explanations short, give one example, skip tangents, and check the key points'
+        : 'is getting ready for a test: state points the way a test asks and quiz them often';
+      const aside = x.set_aside_count ? `; ${x.set_aside_count} extra practice ${x.set_aside_count === 1 ? 'level is' : 'levels are'} set aside (they can bring them back)` : '';
+      return `${x.title}: "${g.label}" - ${how}${aside}`;
+    });
+  } catch { return []; }
 }
 
 module.exports = {
-  GOALS, CHOICES, DEFAULT_GOAL, CORE_WORD_SHARE, GATE_MIN, enabled, effective, normalize, applyToSpec, linesFor,
-  coreSetAsideLevels, coreSetAsideSkills, setAsideFor, stepOver, setAsideSkills, goalFor, describe, save, listFor,
+  GOALS, CHOICES, choices, coreEnabled, DEFAULT_GOAL, CORE_WORD_SHARE, GATE_MIN, enabled, effective, normalize, applyToSpec, linesFor,
+  coreSetAsideLevels, coreSetAsideSkills, setAsideFor, stepOver, setAsideSkills, goalFor, describe, save, listFor, tutorLines,
 };

@@ -1419,7 +1419,7 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
   // 5a. Not far over the time the learner has (the budget is a target; a lesson 50% over it is flagged, never at the cost of a key point).
   if (structure && Number.isFinite(structure.words) && spec.lesson.wordBudget) {
     stats.words = structure.words;
-    if (structure.words > spec.lesson.wordBudget * 1.3) problems.push({ id: 'too_long', detail: `the lesson is ${structure.words} words; keep it to at most about ${spec.lesson.wordBudget}: cut repeats, extra examples and padding, but not any key point` });
+    if (structure.words > spec.lesson.wordBudget * (spec.studyGoal && spec.studyGoal.id === 'core' ? 1.0 : 1.3)) problems.push({ id: 'too_long', detail: `the lesson is ${structure.words} words; keep it to at most about ${spec.lesson.wordBudget}: cut repeats, extra examples and padding, but not any key point` });
   }
   // 5c. A hard word limit (notes for a learner who needs less: see notesWordLimit): over it is always named, never given slack.
   if (structure && Number.isFinite(structure.maxWords) && Number.isFinite(structure.words)) {
