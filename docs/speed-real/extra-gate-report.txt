@@ -1,0 +1,47 @@
+SIMULATED. Held-out seed 20261111, 160 learners, frame real. Lever against off, per learner.
+
+--- range: low (--we-s=35 --we-gain=0.5 --quick-s=25)
+  W        vs none  FAILS (2)  1 wk 32.3>32.3 h ret w1 -1.1; 1 mo 33.8 h -0.4; 1 yr 37.6>37.6 h -1.1; first problem: time: saved beyond noise on only 0 of 9 goals
+  Q        vs none  passes  1 wk 32.3>31.7 h ret w1 -1.4; 1 mo 32.8 h -1.0; 1 yr 37.6>35.7 h -1.7; first problem: none
+  WF       vs F     FAILS (2)  1 wk 29.7>29.8 h ret w1 -0.6; 1 mo 31.1 h -0.7; 1 yr 34.6>34.7 h -1.0; first problem: time: saved beyond noise on only 0 of 9 goals
+  QF       vs F     passes  1 wk 29.7>29.3 h ret w1 -1.1; 1 mo 30.3 h -0.8; 1 yr 34.6>33.1 h -1.3; first problem: none
+  WQF      vs F     passes  1 wk 29.7>29.3 h ret w1 -1.1; 1 mo 30.3 h -0.8; 1 yr 34.6>33.1 h -1.4; first problem: none
+  MWQF     vs none  FAILS (9)  1 wk 32.3>13.1 h ret w1 -20.4; 1 mo 15.1 h -9.5; 1 yr 37.6>18.7 h -2.7; first problem: retention at horizon 1 week: w1 -20.4, w5 -16.0, w10 -14.6 pts
+  TSMRWQF  vs none  FAILS (13)  1 wk 32.3>12.4 h ret w1 -25.3; 1 mo 14.1 h -21.4; 1 yr 37.6>17.8 h -7.7; first problem: retention at horizon 1 week: w1 -25.3, w5 -20.2, w10 -17.5 pts
+
+--- range: mid (--we-s=26 --we-gain=0.75 --quick-s=15)
+  W        vs none  FAILS (1)  1 wk 32.3>32.3 h ret w1 -0.6; 1 mo 33.7 h -0.9; 1 yr 37.6>37.6 h -0.9; first problem: time: saved beyond noise on only 1 of 9 goals
+  Q        vs none  passes  1 wk 32.3>31.2 h ret w1 -1.6; 1 mo 31.9 h -1.0; 1 yr 37.6>33.9 h -1.7; first problem: none
+  WF       vs F     FAILS (1)  1 wk 29.7>29.7 h ret w1 -0.6; 1 mo 31.0 h -0.6; 1 yr 34.6>34.7 h -1.1; first problem: time: saved beyond noise on only 0 of 9 goals
+  QF       vs F     passes  1 wk 29.7>28.8 h ret w1 -1.6; 1 mo 29.4 h -1.2; 1 yr 34.6>31.2 h -1.7; first problem: none
+  WQF      vs F     passes  1 wk 29.7>28.8 h ret w1 -1.8; 1 mo 29.4 h -1.2; 1 yr 34.6>31.2 h -1.7; first problem: none
+  MWQF     vs none  FAILS (8)  1 wk 32.3>12.0 h ret w1 -22.1; 1 mo 13.4 h -10.0; 1 yr 37.6>15.7 h -2.6; first problem: retention at horizon 1 week: w1 -22.1, w5 -17.4, w10 -14.8 pts
+  TSMRWQF  vs none  FAILS (12)  1 wk 32.3>10.6 h ret w1 -25.5; 1 mo 11.7 h -20.9; 1 yr 37.6>14.1 h -6.9; first problem: retention at horizon 1 week: w1 -25.5, w5 -20.7, w10 -18.3 pts
+
+--- range: high (--we-s=20 --we-gain=1 --quick-s=10)
+  W        vs none  FAILS (1)  1 wk 32.3>32.3 h ret w1 -0.6; 1 mo 33.7 h -0.4; 1 yr 37.6>37.6 h -1.1; first problem: time: saved beyond noise on only 2 of 9 goals
+  Q        vs none  passes  1 wk 32.3>30.9 h ret w1 -2.3; 1 mo 31.4 h -0.9; 1 yr 37.6>32.9 h -1.6; first problem: none
+  WF       vs F     FAILS (1)  1 wk 29.7>29.7 h ret w1 -1.1; 1 mo 31.0 h -0.4; 1 yr 34.6>34.6 h -1.2; first problem: time: saved beyond noise on only 2 of 9 goals
+  QF       vs F     passes  1 wk 29.7>28.5 h ret w1 -1.6; 1 mo 29.0 h -0.7; 1 yr 34.6>30.3 h -2.4; first problem: none
+  WQF      vs F     passes  1 wk 29.7>28.5 h ret w1 -1.1; 1 mo 28.9 h -0.7; 1 yr 34.6>30.3 h -2.4; first problem: none
+  MWQF     vs none  FAILS (9)  1 wk 32.3>11.4 h ret w1 -20.9; 1 mo 12.5 h -9.3; 1 yr 37.6>14.1 h -2.7; first problem: retention at horizon 1 week: w1 -20.9, w5 -17.9, w10 -15.2 pts
+  TSMRWQF  vs none  FAILS (13)  1 wk 32.3>9.6 h ret w1 -25.3; 1 mo 10.5 h -21.1; 1 yr 37.6>12.2 h -6.9; first problem: retention at horizon 1 week: w1 -25.3, w5 -20.9, w10 -18.2 pts
+
+--- noise control, off against off: retention worst 1 / 5 / 10%
+  horizon 1 week       -2.2 / -1.3 / -0.9
+  horizon 1 month      -1.2 / -0.7 / -0.5
+  horizon 6 months     -2.0 / -1.6 / -1.2
+  horizon 1 year       -2.0 / -1.3 / -1.2
+  no test day (3 y)    -2.4 / -1.6 / -1.2
+  date 1 week          -5.9 / -4.3 / -2.5
+  date 1 month         -0.8 / -0.6 / -0.4
+  date 6 months        -0.2 / -0.2 / -0.1
+  date 1 year          -0.2 / -0.1 / -0.1
+
+--- adverse variants, middle of the range, lever against off inside the variant
+  W guess50  holds
+  Q guess50  holds
+  W cold50   holds
+  Q cold50   holds
+  W kloss50  holds
+  Q kloss50  holds

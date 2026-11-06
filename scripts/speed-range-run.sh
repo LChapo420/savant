@@ -18,11 +18,14 @@ base $DESIGN 60 20 base-design $AUDITED & base $HELD 120 40 base-h1 $AUDITED &
 base $DESIGN 60 20 cost-design $LOGGED & base $HELD 120 40 cost-h1 $LOGGED &
 base $DESIGN 60 20 readhi-design --read-h=7 & base $HELD 120 40 readhi-h1 --read-h=7 &
 base $DESIGN 60 20 readlo-design --read-h=1.6 & base $HELD 120 40 readlo-h1 --read-h=1.6 &
+base $DESIGN 60 20 costhi-design --read-h=7 $LOGGED & base $HELD 120 40 costhi-h1 --read-h=7 $LOGGED &
 wait
 # arms: low (the levers hardly work, no credit for pretesting or interleaving), mid, high, each from the published ranges and scripts/speed-calibrate.js
 arm() { mkdir -p "$OUT/$1"; node "$SIM" --seed=$HELD $COMMON --quick=1 --speed-arms="$ARMS" $2 $3 $4 $5 $6 $7 $8 $9 ${10} --out="$OUT/$1/arms.json"; }
 LOW="--we-s=35 --we-gain=0.5 --quick-s=25"; MID="--we-s=26 --we-gain=0.75 --quick-s=15 --pre-gain=1.2 --ilv-h=1.1"; HIGH="--we-s=20 --we-gain=1 --quick-s=10 --pre-gain=1.35 --ilv-h=1.2"
 arm audited-low $LOW & arm audited-mid $MID & arm audited-high $HIGH &
 wait
-arm logged-low $LOW $LOGGED & arm logged-mid $MID $LOGGED & arm logged-high $HIGH $LOGGED &
+# at logged costs an item is 15 s, so the new levers' seconds scale with it: an example 15, 11, 8 s; a one-tap review 15, 9, 6 s
+LLOW="--we-s=15 --we-gain=0.5 --quick-s=15"; LMID="--we-s=11 --we-gain=0.75 --quick-s=9 --pre-gain=1.2 --ilv-h=1.1"; LHIGH="--we-s=8 --we-gain=1 --quick-s=6 --pre-gain=1.35 --ilv-h=1.2"
+arm logged-low $LLOW $LOGGED & arm logged-mid $LMID $LOGGED & arm logged-high $LHIGH $LOGGED &
 wait

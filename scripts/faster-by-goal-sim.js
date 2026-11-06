@@ -77,6 +77,7 @@ const WE_MAX = num('we-max', 2);          // at most this many in a row, then a 
 const PRE_GAIN = num('pre-gain', 1);      // a page read after a question on it teaches this many times as much (pretesting; 1 = no credit; range from calibration on Chan et al. 2018)
 const ILV_H = num('ilv-h', 1);            // interleaving: half-life after the first pass, this many times longer, for arms with the app's mixed practice (1 = no credit; range from calibration on Brunmair and Richter 2019)
 const QUICK_S = num('quick-s', 15);       // seconds to read and answer a one-tap review question (range 25, 15, 10). Format makes little retention difference: Smith and Karpicke 2014, McDermott et al. 2014. The seconds are not measured.
+const QUICK_MEM = num('quick-mem', 1);    // ADVERSE sensitivity: a one-tap review grows memory by this power of a typed review's growth (1 = the format makes no difference, as Smith and Karpicke 2014 mostly found; their fourth experiment and McDaniel et al. 2007 point the other way)
 const PREREQ = num('prereq', 0.5);       // share of skills whose previous skill is a prerequisite (only with --implicit)
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const sigmoid = (x) => 1 / (1 + Math.exp(-x));
@@ -191,7 +192,7 @@ function simulate(L, P, arm, plan) {
     const quick = isReview && SP && SP.quick;
     const minutes = quick ? ((QUICK_S + (right ? rightS : COST.wrong_s + COST.retry_s * (R < 1 ? 1 : 0) * (QUICK_S / COST.item_s))) / 60) * P.timeMult : itemMin(R, right) * (isReview && REVIEW_S > 0 && (SP || REVIEW_S_ALL) ? REVIEW_S / COST.item_s : 1);
     const Re = memR(s.e, now);
-    memUpdate(s.m, right, R, now, 0.7, SP ? MEM_GAIN : 1);
+    memUpdate(s.m, right, R, now, 0.7, (SP ? MEM_GAIN : 1) * (quick ? QUICK_MEM : 1));
     memUpdate(s.e, right, Re, now, 0.7, SP ? MEM_GAIN : 1);
     const cold = (SP ? COLD_GAIN + (1 - COLD_GAIN) * s.seen : 1) * (SP ? SPEED_GAIN : 1); // only with --cold-gain under 1: an answer on a page not read learns less
     s.k = clamp(s.k + (1 - s.k) * LM.a * P.lr * gainMult * cold * (right ? 1 : 0.5), 0, 0.995);
@@ -556,7 +557,7 @@ function main() {
     }
     rows.push(row);
   }
-  const out = { simulated: true, hier: HIER, prior_add: PRIOR_ADD, prior_none: PRIOR_NONE, composite_c: COMPOSITE_C, item_s: ITEM_S, speed_gain: SPEED_GAIN, cold_gain: COLD_GAIN, skip_loss: SKIP_LOSS, est_gain: EST_GAIN, guess: GUESS, review_s: REVIEW_S, review_s_all: REVIEW_S_ALL, implicit: IMPLICIT, read_h: READ_H, read_mass: READ_MASS, read_space: READ_SPACE, read_k2: READ_K2, reread_time: REREAD_TIME, we_s: WE_S, we_gain: WE_GAIN, pre_gain: PRE_GAIN, ilv_h: ILV_H, quick_s: QUICK_S, run_salt: RUN_SALT, seed: SEED, forget: FORGET, lesson: LESSON, target: TARGET, minutes: MINUTES, skills: SKILLS, jit: JIT, final: FINAL, finish: FINISH, skipk: SKIPK, floor: FLOOR, goal_memory: GOAL_MEM, kloss: KLOSS, est_sd: EST_SD, n_extreme: N_EXT, n_ordinary: N_ORD, rows };
+  const out = { simulated: true, hier: HIER, prior_add: PRIOR_ADD, prior_none: PRIOR_NONE, composite_c: COMPOSITE_C, item_s: ITEM_S, speed_gain: SPEED_GAIN, cold_gain: COLD_GAIN, skip_loss: SKIP_LOSS, est_gain: EST_GAIN, guess: GUESS, review_s: REVIEW_S, review_s_all: REVIEW_S_ALL, implicit: IMPLICIT, read_h: READ_H, read_mass: READ_MASS, read_space: READ_SPACE, read_k2: READ_K2, reread_time: REREAD_TIME, we_s: WE_S, we_gain: WE_GAIN, pre_gain: PRE_GAIN, ilv_h: ILV_H, quick_s: QUICK_S, quick_mem: QUICK_MEM, run_salt: RUN_SALT, seed: SEED, forget: FORGET, lesson: LESSON, target: TARGET, minutes: MINUTES, skills: SKILLS, jit: JIT, final: FINAL, finish: FINISH, skipk: SKIPK, floor: FLOOR, goal_memory: GOAL_MEM, kloss: KLOSS, est_sd: EST_SD, n_extreme: N_EXT, n_ordinary: N_ORD, rows };
   if (args.out) { fs.mkdirSync(path.dirname(args.out), { recursive: true }); fs.writeFileSync(args.out, JSON.stringify(out)); console.log(`wrote ${args.out} (${rows.length} learners)`); }
   return out;
 }

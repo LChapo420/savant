@@ -204,7 +204,7 @@ async function runExtra() {
   fs.mkdirSync(OUT, { recursive: true });
   const jobs = Object.entries(RANGE).map(([name, a]) => ({ args: [...COMMON, `--seed=${EXTRA_SEED}`, ...a, `--speed-arms=${EXTRA_KEYS.map((k) => armSpec(k, 'real')).join(',')}`], out: path.join(OUT, `extra-${name}.json`) }));
   jobs.push({ args: [...COMMON, `--seed=${EXTRA_SEED}`, '--run-salt=noise', `--speed-arms=${armSpec('', 'real')}`], out: path.join(OUT, 'extra-noise.json') });
-  for (const [name, a] of Object.entries({ guess50: ['--guess=0.5'], cold50: ['--cold-gain=0.5'], kloss50: ['--kloss=0.5'] })) jobs.push({ args: [...COMMON, `--seed=${EXTRA_SEED}`, ...RANGE.mid, ...a, `--speed-arms=${['', 'W', 'Q'].map((k) => armSpec(k, 'real')).join(',')}`], out: path.join(OUT, `extra-var-${name}.json`) });
+  for (const [name, a] of Object.entries({ guess50: ['--guess=0.5'], cold50: ['--cold-gain=0.5'], kloss50: ['--kloss=0.5'], qmem07: ['--quick-mem=0.7'], qmem05: ['--quick-mem=0.5'] })) jobs.push({ args: [...COMMON, `--seed=${EXTRA_SEED}`, ...RANGE.mid, ...a, `--speed-arms=${['', 'W', 'Q'].map((k) => armSpec(k, 'real')).join(',')}`], out: path.join(OUT, `extra-var-${name}.json`) });
   await pool(jobs);
 }
 function reportExtra() {
@@ -222,7 +222,7 @@ function reportExtra() {
   lines.push('\n--- noise control, off against off: retention worst 1 / 5 / 10%');
   for (const g of Object.keys(mid.rows[0].goals)) { const d = mid.rows.map((r, i) => noise.rows[i].goals[g].speed[armSpec('', 'real')].recall - r.goals[g].speed[armSpec('', 'real')].recall); lines.push(`  ${g.padEnd(20)} ${pts(lowQ(d, 0.01))} / ${pts(lowQ(d, 0.05))} / ${pts(lowQ(d, 0.1))}`); }
   lines.push('\n--- adverse variants, middle of the range, lever against off inside the variant');
-  for (const name of ['guess50', 'cold50', 'kloss50']) { const set = load(path.join(OUT, `extra-var-${name}.json`)); for (const [on] of [['W'], ['Q']]) { const c = compare([set], on, '', 'real'); const v = adverseVerdict(c); res[`var:${name}:${on}`] = { why: v }; lines.push(`  ${on} ${name.padEnd(8)} ${v.length ? `FAILS (${v.length}): ${v.slice(0, 2).join('; ')}` : 'holds'}`); } }
+  for (const name of ['guess50', 'cold50', 'kloss50', 'qmem07', 'qmem05']) { const set = load(path.join(OUT, `extra-var-${name}.json`)); for (const [on] of [['W'], ['Q']]) { const c = compare([set], on, '', 'real'); const v = adverseVerdict(c); res[`var:${name}:${on}`] = { why: v }; lines.push(`  ${on} ${name.padEnd(8)} ${v.length ? `FAILS (${v.length}): ${v.slice(0, 2).join('; ')}` : 'holds'}`); } }
   console.log(lines.join('\n'));
 }
 
