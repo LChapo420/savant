@@ -838,6 +838,7 @@ function recallByskill(userId, skillIds) {
 }
 
 module.exports = {
+  moveTo,
   recallByskill,
   REVIEW_TARGET, REVIEW_MAX, predictedRecall, daysToTarget, scheduleMode,
   LEVEL_UP,

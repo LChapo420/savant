@@ -12,7 +12,7 @@ const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'speed-levers-'));
 process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(TMP, 'db.json');
 process.env.OWNER_EMAIL = 'speed-owner@example.test';
-for (const k of ['SPEED_ALL', 'SPEED_TESTOUT', 'SPEED_SHORT_LESSON', 'SPEED_MASTERY_STOP', 'SPEED_REVIEW_TARGET', 'SPEED_REVIEW_MODE', 'SR_ALL', 'SR_GOAL_REVIEW', 'SR_GOAL_BACKWARD']) delete process.env[k];
+for (const k of ['SPEED_SKILL_PLACEMENT', 'SPEED_IMPLIED', 'SPEED_EDGE', 'SPEED_FAST_ITEM', 'SPEED_COMPOSITE', 'SPEED_ALL', 'SPEED_TESTOUT', 'SPEED_SHORT_LESSON', 'SPEED_MASTERY_STOP', 'SPEED_REVIEW_TARGET', 'SPEED_REVIEW_MODE', 'SR_ALL', 'SR_GOAL_REVIEW', 'SR_GOAL_BACKWARD']) delete process.env[k];
 process.on('exit', () => { try { fs.rmSync(TMP, { recursive: true, force: true }); } catch { /* temp dir */ } });
 
 const db = require('../config/db');
@@ -29,7 +29,7 @@ async function withEnv(env, fn) {
   for (const [k, v] of Object.entries(env)) { old[k] = process.env[k]; process.env[k] = v; }
   try { return await fn(); } finally { for (const [k, v] of Object.entries(old)) { if (v === undefined) delete process.env[k]; else process.env[k] = v; } }
 }
-const ALL = { SPEED_TESTOUT: 'on', SPEED_SHORT_LESSON: 'on', SPEED_MASTERY_STOP: 'on', SPEED_REVIEW_TARGET: 'on' };
+const ALL = { SPEED_TESTOUT: 'on', SPEED_SHORT_LESSON: 'on', SPEED_MASTERY_STOP: 'on', SPEED_REVIEW_TARGET: 'on', SPEED_FAST_ITEM: 'on', SPEED_COMPOSITE: 'on' };
 let n = 0;
 const user = () => db.insert('users', { email: `sp${++n}@t.test`, display_name: `sp${n}`, password_hash: 'x', xp: 0, streak: 0, onboarded: true, birth_year: 1990 });
 const LESSON = {
@@ -43,7 +43,7 @@ const LESSON = {
     for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), false, lever);
     await withEnv({ ...ALL, SPEED_ALL: 'off' }, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), false, lever); });
     await withEnv(ALL, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), true, lever); });
-    assert.deepStrictEqual(speed.clientFlags(1, {}), { testout: false, short: false });
+    assert.deepStrictEqual(speed.clientFlags(1, {}), { testout: false, short: false, fast: false });
   });
 
   await check('the tracker: right answers raise the belief, a miss lowers it, guessing is discounted', () => {
@@ -155,7 +155,7 @@ const LESSON = {
   }));
 
   await check('a preview keeps today\'s flow', async () => withEnv(ALL, async () => {
-    assert.deepStrictEqual(speed.clientFlags(1, { preview: true }), { testout: false, short: false });
+    assert.deepStrictEqual(speed.clientFlags(1, { preview: true }), { testout: false, short: false, fast: false });
   }));
 
   await check('mastery stop: once the skill is shown, the rest of its items are set aside and marked; the level is ready; off it needs its items', async () => {
@@ -213,6 +213,97 @@ const LESSON = {
     assert.strictEqual(goal.daysToGoalEnd({ status: 'forever' }, null), null);
     assert.strictEqual(goal.daysToGoalEnd({ status: 'horizon', days: 30 }, null), null, 'not finished: end unknown');
     assert.ok(Math.abs(goal.daysToGoalEnd({ status: 'horizon', days: 30 }, new Date(0).toISOString(), 86400000 * 10) - 20) < 1e-9);
+  });
+
+  // ---- round 2 ----
+  const placement = require('../services/speed-placement'); // eslint-disable-line global-require
+  const stateOf = (n) => Array.from({ length: n }, () => ({ status: 'open', asked: 0, tr: speed.newTracker() }));
+  const rightN = (row, n) => { for (let i = 0; i < n; i++) speed.observe(row.tr, true); };
+
+  await check('placement: most advanced first; a plain miss sends a skill to the path; several rights call it known', () => {
+    const st = stateOf(3);
+    assert.strictEqual(speed.placementNext(st), 2);
+    speed.observe(st[2].tr, false);
+    speed.placementAnswer(st, 2, false, () => []);
+    assert.strictEqual(st[2].status, 'path');
+    rightN(st[1], 12);
+    speed.placementAnswer(st, 1, true, () => []);
+    assert.strictEqual(st[1].status, 'known');
+  });
+
+  await check('implied mastery: a pass settles what it builds on, every third is sampled, a sampled miss revokes the rest of that pass', () => {
+    const st = stateOf(7);
+    const line = (i) => (i > 0 ? [i - 1] : []);
+    rightN(st[6], 12);
+    const out = speed.placementAnswer(st, 6, true, line, { sampleEvery: 3 });
+    assert.strictEqual(out.implied.length, 6);
+    const sampled = st.filter((r) => r.sample);
+    assert.strictEqual(sampled.length, 2, 'one in three is asked');
+    const i = speed.placementNext(st);
+    assert.ok(st[i].sample);
+    const back = speed.placementAnswer(st, i, false, line, { sampleEvery: 3 });
+    assert.ok(back.revoked.includes(i));
+    assert.strictEqual(st.filter((r) => r.status === 'implied').length, 0, 'nothing from a wrong inference stays settled');
+    assert.strictEqual(st[6].status, 'known', 'the skill actually shown stays known');
+  });
+
+  await check('the item at the edge: a belief near the line gets a harder item than a low belief', () => {
+    const high = speed.trackerFromAnswers(Array.from({ length: 5 }, () => ({ correct: true })));
+    const low = speed.trackerFromAnswers([{ correct: false }, { correct: false }]);
+    assert.ok(speed.bestItem(high).b >= speed.bestItem(low).b);
+    assert.ok(speed.pRight(0.9, 0.25, { a: 8, b: 0.7 }) > speed.pRight(0.4, 0.25, { a: 8, b: 0.7 }));
+  });
+
+  await check('the skill check: off is a 404 and an untouched path; on it runs, tells, and steps over settled levels only', async () => {
+    const u = user(); const e = enroll(u, 1);
+    assert.strictEqual(placement.start(u.id, e, grade).status, 404);
+    assert.strictEqual(placement.stepOverSettled(e, grade, 5), 5, 'no check taken: nothing moves');
+    await withEnv({ SPEED_SKILL_PLACEMENT: 'on', SPEED_IMPLIED: 'on' }, async () => {
+      assert.ok(placement.pathView(u.id, e, grade).speed_skill_check, 'offered on the path');
+      const first = placement.start(u.id, e, grade);
+      assert.ok(first.item && first.session.kind === 'placement');
+      let item = first.item; let out = null; let guard = 0;
+      while (item && guard++ < 400) {
+        const r = await sessions.answer({ userId: u.id, session: db.byId('sessions', first.session.id), itemId: item.id, userAnswer: item.answer, ms: 9000 });
+        const step = placement.afterAnswer({ userId: u.id, session: db.byId('sessions', first.session.id), enrollment: db.byId('enrollments', e.id), grade, item: db.byId('items', item.id), correct: !!r.correct });
+        item = step.next || null; out = step.done || out;
+      }
+      assert.ok(out, 'it ends');
+      const row = db.byId('enrollments', e.id);
+      assert.ok(row.speed_placement.finished_at);
+      assert.ok(out.known.length + out.implied.length > 0, 'all right: something is settled');
+      const view = placement.pathView(u.id, row, grade);
+      assert.ok(view.speed_settled, 'listed on the path');
+      assert.ok(!view.speed_skill_check, 'not offered twice');
+      assert.strictEqual(placement.start(u.id, row, grade).status, 409);
+      const at = curriculum.levelKind(row.current_level, grade.pathLength, grade);
+      if (row.current_level < grade.pathLength) assert.ok(at !== 'practice' && at !== 'lesson' ? true : !new Set([...out.known, ...out.implied]).has(curriculum.levelPlan(grade, row.current_level).focus), 'stands on a level with something to do, or a gate');
+    });
+  });
+
+  await check('a later miss on an implied skill goes back on the list, and the path stops stepping over it', () => {
+    const u = user(); const skill = grade.skills[0];
+    const e = db.insert('enrollments', { user_id: u.id, track_id: trackId, grade_id: grade.id, status: 'active', current_level: 1, speed_placement: { known: [], implied: [skill], revisit: [], finished_at: new Date().toISOString() } });
+    const s = db.insert('sessions', { user_id: u.id, enrollment_id: e.id, kind: 'lesson', blocks: [] });
+    const it = db.insert('items', { session_id: s.id, user_id: u.id, skill_id: skill, role: 'review', block: 0, index: 0, correct: false });
+    assert.strictEqual(placement.noteAnswer(u.id, it, false), true);
+    const row = db.byId('enrollments', e.id).speed_placement;
+    assert.deepStrictEqual(row.implied, []);
+    assert.deepStrictEqual(row.revisit, [skill]);
+    assert.strictEqual(placement.noteAnswer(u.id, it, true), false);
+  });
+
+  await check('a composite item is an attempt on each skill it names, only with the switch on', async () => {
+    const u = user(); const e = enroll(u, practiceLevel); const other = grade.skills[grade.skills.length - 1];
+    const go = async () => {
+      const s = db.insert('sessions', { user_id: u.id, enrollment_id: e.id, track_id: trackId, grade_id: grade.id, level: practiceLevel, kind: 'lesson', blocks: [{ index: 0, level: practiceLevel, kind: 'practice' }] });
+      const it = db.insert('items', { session_id: s.id, user_id: u.id, skill_id: grade.skills[0], also_skills: [other], format: 'multiple_choice', prompt: 'p', answer: 'a', choices: ['a', 'b'], difficulty: 3, role: 'focus', block: 0, index: 0, correct: null, user_answer: null, level: practiceLevel });
+      await sessions.answer({ userId: u.id, session: s, itemId: it.id, userAnswer: 'a', ms: 9000 });
+    };
+    await go();
+    assert.ok(!(mastery.stateFor(u.id, other).attempts > 0), 'off: only its own skill');
+    await withEnv(ALL, go);
+    assert.ok(mastery.stateFor(u.id, other).attempts > 0, 'on: the other skill too');
   });
 
   console.log(failed ? `\n${failed} FAILED` : '\nspeed levers: all ok');

@@ -214,7 +214,7 @@ function trackerFor(userId, skillId, { lr = 0.8 } = {}) {
   for (const i of mine) { if (i.skill_id === skillId || seen.has(i.skill_id)) continue; seen.add(i.skill_id); firstN++; if (i.correct) firstRight++; }
   // lr: the app does not yet read a per-learner rate here; 0.8 is the cautious side of the simulated 0.6 to 1.5 (docs/SPEED-4X.md: est-gain variants)
   const tr = newTracker({ priorMean: priorFromHistory(firstRight, firstN), lr, gainMult: PARAMS.safety });
-  for (const i of mine) if (i.skill_id === skillId) observe(tr, !!i.correct);
+  for (const i of mine) if (i.skill_id === skillId) observe(tr, !!i.correct, { item: i.place_item || null });
   return tr;
 }
 /** Sets items aside, unscored and marked: not asked, not counted, and said so to the learner. */

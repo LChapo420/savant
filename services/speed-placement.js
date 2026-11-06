@@ -102,7 +102,8 @@ function finish({ userId, session, enrollment, grade, rows }) {
 function afterAnswer({ userId, session, enrollment, grade, item, correct }) {
   const rows = stateOf(session);
   const hyd = hydrate(userId, rows);
-  const i = rows.findIndex((r) => r.skill === item.skill_id || r.level === item.level);
+  let i = rows.findIndex((r) => r.skill === item.skill_id);
+  if (i < 0) i = rows.findIndex((r) => r.level === item.level);
   if (i >= 0) {
     const useImplied = enabledFor(userId, 'SPEED_IMPLIED');
     speed.placementAnswer(hyd, i, correct, prereqFn(grade, rows), { useImplied, missEnds: !item.place_item });
