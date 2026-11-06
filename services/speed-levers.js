@@ -294,7 +294,7 @@ function afterAnswer({ userId, session, item, correct, block, lesson }) {
       state.skipped = true; save();
       return { action: 'skip_page', set_aside: ids, message: 'You got these right, so we skipped this page to save you time. It is still here if you want it.' };
     }
-    if (session.kind === 'lesson' && enabled('stop') && ['focus', 'stretch', 'support'].includes(item.role) && correct) {
+    if ((session.kind === 'lesson' || session.kind === 'teach') && enabled('stop') && ['focus', 'stretch', 'support'].includes(item.role) && correct) {
       const rest = open.filter((i) => i.skill_id === item.skill_id && ['focus', 'stretch', 'support'].includes(i.role));
       if (!rest.length || !shown(trackerFor(userId, item.skill_id, { unit: scope() }))) return null;
       return { action: 'stop_skill', set_aside: setAside(rest, 'mastered'), message: "You've shown you have this one, so we're moving on sooner." };

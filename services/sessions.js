@@ -1326,9 +1326,11 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
     scorecardHooks.onAnswer(userId, db.byId('items', item.id), { trackId: session.track_id });
   }
 
-  if (session.kind === 'lesson' && session.enrollment_id) {
+  // A sitting opened on a lesson ('teach') runs on into the next practice level; its answers there count for that level too. Before 6 Nov they did not, so a learner who got all 14 right read "0 of 12 questions answered" and did the level again. SPEED_TEACH_COUNTS=off restores that.
+  const teachCounts = session.kind === 'teach' && String(process.env.SPEED_TEACH_COUNTS || 'on').toLowerCase() !== 'off';
+  if ((session.kind === 'lesson' || teachCounts) && session.enrollment_id) {
     const enrollment = db.byId('enrollments', session.enrollment_id);
-    if (enrollment) db.update('enrollments', enrollment.id, { level_items: (enrollment.level_items || 0) + 1 });
+    if (enrollment && (session.kind === 'lesson' || Number(item.level) === Number(enrollment.current_level))) db.update('enrollments', enrollment.id, { level_items: (enrollment.level_items || 0) + 1 });
   }
 
   // On a checkpoint, the moment the pass mark becomes unreachable the outcome is

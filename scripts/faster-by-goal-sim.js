@@ -277,8 +277,11 @@ function simulate(L, P, arm, plan) {
       speed.taught(s.tr, f);
     };
     if (!SP.testout && s.seen === 0) showPage(1); // no retrieval first: the whole page, as today
-    const trueStop = () => (SP.appN ? n >= SP.appN : s.k >= 0.85 && n >= 3); // appN: the real path's fixed answers per lesson (nine practice levels of at least twelve), no stop at all
-    while (n < (SP.appN || 25)) {
+    // appN=1, the real path (config/curriculum.js, services/coverage.js, services/learner-path.js compressProven): three check questions, then whole levels of 14 answers until the objective is proven (at most seven; true understanding stands in for the coverage belief), then its two retention levels, which are never stepped over.
+    let appPlan = 3; let appLevels = 0; let appRet = false;
+    const appStop = () => { if (n < appPlan) return false; if (appRet) return true; if (s.k >= 0.85 || appLevels >= 7) { appRet = true; appPlan = n + 28; return false; } appLevels++; appPlan = n + 14; return false; };
+    const trueStop = () => (SP.appN ? appStop() : s.k >= 0.85 && n >= 3);
+    while (n < (SP.appN ? 400 : 25)) {
       if (SP.stop) {
         const st = speed.nextStep(s.tr, { pageLeft }, { conf, minAnswers, lastRight, at: SP.firstAt });
         if (st === 'stop') break;
