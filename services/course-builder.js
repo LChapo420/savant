@@ -622,7 +622,7 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
  * (facts with numbers and names first). Each addition must stay inside its passage's own words, or it is dropped. No gate is weakened:
  * this only adds words the lesson lacks. Resolves { checked, missing, added, words }.
  */
-const SWEEP_CAP = 0.8;
+const SWEEP_CAP = Number(process.env.UPLOAD_SWEEP_CAP) || 0.8;
 const SWEEP_NEED = 0.6;              // share of a sentence's content words the lesson must already hold
 const sentencesOf = (t) => (String(t || '').replace(/\s+/g, ' ').match(/[^.!?]+[.!?]+/g) || []).map((s) => s.trim()).filter((s) => { const n = wordCount([s]); return n >= 7 && n <= 45 && !/\?\s*$/.test(s); });
 const isFact = (s) => /\d/.test(s) || /(?:^|[a-z,;]\s)[A-Z][a-z]{2,}/.test(s) || /\b(?:is|are|was|were|means|called|known as|defined|because|causes?|caused|due to|results? in)\b/i.test(s);
@@ -638,14 +638,16 @@ async function factSweep(skills, passageById, ctx, sourceWords) {
     const miss = [];
     for (const id of sk.passage_ids) {
       if (owner.get(id) !== sk || !passageById.get(id)) continue;
-      for (const s of sentencesOf(passageById.get(id).text)) {
-        if (!isFact(s)) continue;
+      // Facts (a number, a name, a definition, a stated cause) and every point the material stresses (weight 2 or more, whatever its form).
+      const stressed = new Map((ctx.keypoints || []).filter((k) => k.weight >= STRESS_MIN && ctx.passageList && passageOfKeypoint(k, ctx.passageList) === id).map((k) => [k.text, k.weight]));
+      const cands = [...new Set([...sentencesOf(passageById.get(id).text).filter(isFact), ...stressed.keys()])];
+      for (const s of cands) {
         checked++;
         const t = keypoints.termSet(s); let n = 0; for (const x of t) if (have.has(x)) n++;
-        if (t.size && n / t.size < SWEEP_NEED) miss.push({ s, id, score: (s.match(/\d+/g) || []).length * 2 + (s.match(/\b[A-Z][a-z]{2,}/g) || []).length });
+        if (t.size && n / t.size < SWEEP_NEED) miss.push({ s, id, score: (s.match(/\d+/g) || []).length * 2 + (s.match(/\b[A-Z][a-z]{2,}/g) || []).length + (stressed.get(s) || 0) * 4 });
       }
     }
-    if (miss.length) { missing += miss.length; jobs.push({ sk, miss: miss.sort((a, b) => b.score - a.score).slice(0, 12) }); }
+    if (miss.length) { missing += miss.length; jobs.push({ sk, miss: miss.sort((a, b) => b.score - a.score).slice(0, 16) }); }
   }
   let room = Math.round(sourceWords * SWEEP_CAP) - readWords();
   let added = 0;
