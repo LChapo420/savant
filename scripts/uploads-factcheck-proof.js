@@ -163,6 +163,44 @@ async function recheck(fromTag, toTag, checkerFam) {
   });
 }
 
+/** The fact sweep over finished courses' text (same code as the build, no model): the sentences go back in, and the exam and judges read the result. */
+async function resweep(fromTag, toTag) {
+  const store = load(OUT, { exam: {}, control: {}, rows: [] });
+  const S = require('../services/material-stress'); const F = require('../services/material-factcheck');
+  await J.pool(store.rows.filter((r) => r.tag === fromTag), 4, async (from) => {
+    if (store.rows.some((r) => r.tag === toTag && r.doc === from.doc)) return;
+    const d = allDocs().find((x) => x.id === from.doc);
+    const src = await extracted(d);
+    const passages = cb.chunk(src.text);
+    const blocks = from.checked.split(/\n\n(?=## )/);
+    const skills = blocks.map((b) => { const lines = b.split('\n'); return { source: 'material', passage_ids: passages.map((p) => p.id), lesson: { paragraphs: lines.filter((l) => l && !/^(## |Key: |Q: )/.test(l)), key_points: lines.filter((l) => l.startsWith('Key: ')).map((l) => l.slice(5)) }, head: lines[0], qs: lines.filter((l) => l.startsWith('Q: ')) }; });
+    const srcWords = passages.reduce((n, p) => n + words(p.text), 0);
+    const added = S.sweepFacts({ skills, passages, sentencesOf: F.sentencesOf, linesOf: F.logicalLines, capWords: Math.round(srcWords * 0.5) });
+    const row = { ...from, tag: toTag, added, checked: skills.map((s) => [s.head, ...s.lesson.paragraphs, ...s.lesson.key_points.map((k) => `Key: ${k}`), ...s.qs].join('\n')).join('\n\n') };
+    row.checked_words = words(lessonOnly(row.checked));
+    row.exam = { raw: from.exam.raw, raw2: from.exam.raw2, checked: {} };
+    const exam = store.exam[d.id] || [];
+    for (const f of EXAM_JUDGES) row.exam.checked[f] = await examRun(f, row.checked, exam);
+    row.invented = { raw: from.invented.raw, checked: {} };
+    for (const spec of FACT_JUDGES) { const [f, form] = spec.split(':'); row.invented.checked[spec] = await J.judge(f, form, src.plain, form === 'sent' ? lessonOnly(row.checked) : row.checked); }
+    store.rows.push(row); save(OUT, store);
+    console.log(`${d.id} ${toTag}: +${added} sentences, words ${from.checked_words}->${row.checked_words}; invented ${FACT_JUDGES.map((f) => (row.invented.checked[f] || []).length)}`);
+  });
+}
+
+/** Answer the exam for rows that were built before their exam existed. */
+async function reexam() {
+  const store = load(OUT, { exam: {}, control: {}, rows: [] });
+  const finals = load(path.join(__dirname, '..', 'docs', 'uploads-factcheck-proof-final.json'), { exam: {} });
+  for (const k of Object.keys(finals.exam)) if (!store.exam[k] || !store.exam[k].length) store.exam[k] = finals.exam[k];
+  await J.pool(store.rows.filter((r) => r.tag === (process.env.FACT_TAG || 'base')), 4, async (r) => {
+    const exam = store.exam[r.doc] || [];
+    for (const f of EXAM_JUDGES) { r.exam.raw[f] = await examRun(f, r.raw, exam); r.exam.raw2[f] = r.exam.raw[f]; r.exam.checked[f] = r.exam.raw[f]; }
+    console.log(`${r.doc}: ${EXAM_JUDGES.map((f) => `${f} ${r.exam.raw[f].filter(Boolean).length}/${exam.length}`).join(' ')}`);
+  });
+  save(OUT, store);
+}
+
 async function runBuilds(reps, ids) {
   const store = load(OUT, { exam: {}, control: {}, rows: [] });
   const u = db.insert('users', { email: 'factproof@example.test', display_name: 'Factproof', password_hash: 'x', xp: 0, streak: 0, onboarded: true });
@@ -229,6 +267,8 @@ process.on('exit', () => { if (Object.keys(J.spend).length) console.log('spend',
   if (cmd === 'docs') await writeDocs();
   else if (cmd === 'exam') await runExam();
   else if (cmd === 'build') await runBuilds(Number(process.argv[3] || 1), (process.argv[4] || '').split(',').filter(Boolean));
+  else if (cmd === 'reexam') await reexam();
+  else if (cmd === 'resweep') await resweep(process.argv[3], process.argv[4]);
   else if (cmd === 'recheck') { await recheck(process.argv[3], process.argv[4], process.argv[5] || 'Z'); console.log('spend', JSON.stringify(J.spend)); }
   else { report(); console.log('spend', JSON.stringify(J.spend)); }
 })().catch((e) => { console.error(e); process.exit(1); });

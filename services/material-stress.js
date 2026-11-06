@@ -87,31 +87,54 @@ function sweepCourse({ skills, kps, passageFor }) {
 }
 
 /**
- * Source sentences with a number or a name whose specifics no lesson states go back in as the material's own sentences (the full course's writer drops plain facts when many points are stressed; 8 planted plain facts, 1 or 2 kept).
- * Mutates the lessons. Returns the number of sentences added. `capWords` limits what is added.
+ * What no lesson says goes back in as the material's own sentence, so no fact is lost and nothing is invented. A source sentence counts as said when the lessons hold its numbers, most of its names, most of its
+ * words, and every word that is rare in the material (said in one sentence only: "northwest", "euvolemic"). A short course with many stressed points kept 1 or 2 of 8 plain facts before this.
+ * Mutates the lessons. Returns the number of sentences added. `capWords` limits what is added, most specific sentences first.
  */
 function sweepFacts({ skills, passages, sentencesOf, capWords, linesOf = (t) => String(t).split(/\n+/) }) {
-  const haveLow = () => skills.flatMap((s) => [...(s.lesson.paragraphs || []), ...(s.lesson.key_points || [])]).join(' ').toLowerCase();
-  let have = haveLow();
-  let added = 0; let room = capWords;
+  const lessonText = () => skills.flatMap((s) => [...(s.lesson.paragraphs || []), ...(s.lesson.key_points || [])]).join(' ');
+  let have = lessonText().toLowerCase();
+  const haveTerms = keypoints.termSet(have);
+  const all = [];
+  const df = new Map();
   for (const p of passages) {
-    const owner = skills.find((s) => s.source !== 'general' && (s.passage_ids || []).includes(p.id));
-    if (!owner) continue;
-    const add = [];
-    for (const line of linesOf(p.text)) {
-      for (const s of sentencesOf(line)) {
-        const n = (s.match(/\S+/g) || []).length;
-        if (n < 5 || n > 60 || /\?\s*$/.test(s)) continue;
-        const nums = s.match(/\d[\d,.]*\d|\d/g) || [];
-        const names = [...s.matchAll(/[a-z,;:]\s+([A-Z][\p{L}'-]{2,})/gu)].map((m) => m[1].toLowerCase());
-        if (!nums.length && !names.length) continue;
-        // Both the sentence's name and its number must be in the lessons; said twice, one of them is enough.
-        const miss = nums.some((x) => !have.includes(x.toLowerCase())) || names.filter((x) => !have.includes(x)).length > names.length / 2;
-        if (!miss || room - n < 0) continue;
-        add.push(s); have += ` ${s.toLowerCase()}`; room -= n; added++;
-      }
+    const owner = skills.find((s) => s.source !== 'general' && (s.passage_ids || []).includes(p.id)) || null;
+    for (const line of linesOf(p.text)) for (const s of sentencesOf(line)) {
+      const n = (s.match(/\S+/g) || []).length;
+      if (n < 5 || n > 60 || /\?\s*$/.test(s)) continue;
+      const terms = keypoints.termSet(s);
+      for (const t of terms) df.set(t, (df.get(t) || 0) + 1);
+      all.push({ s, n, p, owner, terms });
     }
-    if (add.length) owner.lesson.paragraphs = [...owner.lesson.paragraphs, add.join(' ')];
+  }
+  const fallbackOwner = skills.find((s) => s.source !== 'general');
+  const miss = [];
+  for (const x of all) {
+    if (!(x.owner || fallbackOwner)) continue;
+    const nums = x.s.match(/\d[\d,.]*\d|\d/g) || [];
+    const names = [...x.s.matchAll(/[a-z,;:]\s+([A-Z][\p{L}'-]{2,})/gu)].map((m) => m[1].toLowerCase());
+    const numsGone = nums.filter((d) => !have.includes(d.toLowerCase())).length;
+    const namesGone = names.filter((w) => !have.includes(w)).length;
+    let held = 0; let rareGone = 0;
+    for (const t of x.terms) { if (haveTerms.has(t)) held++; else if (df.get(t) === 1 && t.length >= 6) rareGone++; }
+    const share = x.terms.size ? held / x.terms.size : 1;
+    if (numsGone || namesGone > names.length / 2 || share < 0.7 || rareGone) miss.push({ ...x, score: numsGone * 3 + namesGone * 2 + rareGone + (1 - share) });
+  }
+  miss.sort((a, b) => b.score - a.score);
+  let room = capWords; let added = 0;
+  const byOwner = new Map();
+  for (const m of miss) {
+    if (room - m.n < 0) continue;
+    const owner = m.owner || fallbackOwner;
+    if (!byOwner.has(owner)) byOwner.set(owner, []);
+    byOwner.get(owner).push(m);
+    room -= m.n; added++;
+    have += ` ${m.s.toLowerCase()}`;
+  }
+  for (const [owner, list] of byOwner) {
+    // In the material's order, one short paragraph.
+    const order = list.sort((a, b) => all.indexOf(all.find((y) => y.s === a.s)) - all.indexOf(all.find((y) => y.s === b.s))).map((m) => m.s.replace(/^[-*•–]\s*/, ''));
+    owner.lesson.paragraphs = [...owner.lesson.paragraphs, order.join(' ')];
   }
   return added;
 }
