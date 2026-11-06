@@ -51,14 +51,13 @@ function rulesOf(asked, topic, fallbackTopic = null) {
   if (n('shorter')) r.push(n('shorter') > 1 ? 'Make it much shorter: the fewest words that still carry every point.' : 'Make it clearly shorter: cut repeats and padding, keep every point.');
   if (n('simpler')) r.push('Use plainer, everyday words and shorter sentences. Replace a hard word with a plain one; keep a term the text is teaching, and say it plainly. One idea per sentence.');
   if (n('examples')) r.push(`Keep every point, and add ${n('examples') > 1 ? 'two short examples' : 'one short example'} of the same idea right after the point it shows, following the same rule. Every step and number in the example must be correct${topic || fallbackTopic ? `; set it in ${topic || fallbackTopic}` : ''}.`);
-  if (topic && !n('examples')) r.push(`Use ${topic} for the setting of any example it has, keeping every number and step. If it has none, add one short comparison from ${topic}, given as a comparison and stating no fact of its own.`);
+  // The explanation is about the question's own objects, so they are never renamed ("two model trains are visible" for two counters): a topic adds a comparison. A topic for the example itself comes with "more examples".
+  if (topic && !n('examples')) r.push(`Keep the text as it is, its objects included, and add one short comparison from ${topic}, given as a comparison ("like ...") and stating no fact of its own.`);
   return r;
 }
 const WITH_EXAMPLE_GATE = 'You check a rewrite of a learner-facing text against its original. The learner asked for an added example, so an added example is fine. List the problems:\n- "wrong": anything in the REWRITE that is false, including a mistake in an added example\'s steps or numbers, or an example that does not show the same idea.\n- "dropped": a point the ORIGINAL makes that the REWRITE leaves out.\n- "changed": anything the REWRITE states differently from the ORIGINAL.\nReply with JSON only: {"wrong": [], "dropped": [], "changed": []}.';
 function readExampleGate(reply) {
-  const m = String(reply || '').match(/\{[\s\S]*\}/);
-  if (!m) return null;
-  let j; try { j = JSON.parse(m[0]); } catch { return null; }
+  const j = lazy('./part-modify').firstJson(reply);
   if (!j || !['wrong', 'dropped', 'changed'].some((k) => Array.isArray(j[k]))) return null;
   const problems = ['wrong', 'dropped', 'changed'].flatMap((k) => (Array.isArray(j[k]) ? j[k] : []).filter(Boolean).map((x) => `${k}: ${String(x).slice(0, 200)}`));
   return { ok: !problems.length, problems };
@@ -112,8 +111,13 @@ const defaultGate = (userId) => async ({ original, text, withExample, spec, cont
   const pm = lazy('./part-modify');
   try {
     if (withExample) {
-      const r = await lazy('./ai').structured({ role: 'fast', task: 'part_modify', system: WITH_EXAMPLE_GATE, user: `${context ? `${context}\n\n` : ''}ORIGINAL:\n${original}\n\nREWRITE:\n${text}`, schema: { type: 'object', properties: { wrong: { type: 'array', items: { type: 'string' } }, dropped: { type: 'array', items: { type: 'string' } }, changed: { type: 'array', items: { type: 'string' } } }, required: ['wrong', 'dropped', 'changed'] }, schemaName: 'submit', maxTokens: 600, userId, dataClass: 'learner', effort: 'low' });
-      return readExampleGate(JSON.stringify(r || null));
+      for (const task of ['part_gate_a', 'part_gate_b']) {
+        // eslint-disable-next-line no-await-in-loop
+        const r = await lazy('./ai').structured({ role: 'fast', task, system: WITH_EXAMPLE_GATE, user: `${context ? `${context}\n\n` : ''}ORIGINAL:\n${original}\n\nREWRITE:\n${text}`, schema: { type: 'object', properties: { wrong: { type: 'array', items: { type: 'string' } }, dropped: { type: 'array', items: { type: 'string' } }, changed: { type: 'array', items: { type: 'string' } } }, required: ['wrong', 'dropped', 'changed'] }, schemaName: 'submit', maxTokens: 600, userId, dataClass: 'learner', effort: 'low' });
+        const v = readExampleGate(JSON.stringify(r || null));
+        if (!v || !v.ok) return v;
+      }
+      return { ok: true, problems: [] };
     }
     return await pm.defaultGate(userId)('feedback', { text: original }, text, spec);
   } catch { return null; }

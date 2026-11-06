@@ -87,6 +87,12 @@ const mkItem = () => db.insert('items', { user_id: user.id, prompt: 'What is the
   process.env.PART_CHANGE = 'on';
   pc.clear(before.id);
 
+  const tapper = db.insert('users', { email: 'tap@example.test', display_name: 't', password_hash: 'x' });
+  db.insert('level_feedback', { user_id: tapper.id, length: 'long' });
+  check('one too-long tap moves nothing', ls.buildSpec(tapper.id, {}).isDefault);
+  db.insert('level_feedback', { user_id: tapper.id, length: 'long' });
+  check('two too-long taps count as asking for shorter', ls.buildSpec(tapper.id, {}).feedback.granularity === 'brief' || ls.buildSpec(tapper.id, {}).lesson.wordBudget < ls.defaultSpec().lesson.wordBudget);
+
   console.log('a lesson block');
   const plan = { id: 77, topic: 'Volume', blocks: [{ index: 0, block: 'Basic_TextBlock', data: { title: 'Volume', body: RAT } }, { index: 1, block: 'Game_TugOfWar', data: { title: 'A game about something long enough here' } }] };
   const b = await pc.changeBlock(user.id, { plan, ref: 0 }, 'shorter', null, { llm: say(short), gate: passes });

@@ -333,12 +333,20 @@ function hintOf(item) {
 const running = new Set();
 const defaultLlm = (userId) => (a) => lazy('./ai').structured({ role: 'fast', task: 'part_modify', ...a, userId, dataClass: 'learner', effort: 'low' });
 const GATE_SCHEMA = { type: 'object', properties: { new: { type: 'array', items: { type: 'string' } }, dropped: { type: 'array', items: { type: 'string' } }, changed: { type: 'array', items: { type: 'string' } }, avoided: { type: 'array', items: { type: 'string' } } }, required: ['new', 'dropped', 'changed'] };
-/** The live fact gate: the same prompt the calibration measured, through services/ai.js (consent rule included). null when it cannot be read. */
+/**
+ * The live fact gate: the prompt the calibration measured, through services/ai.js (consent rule included), read by two families (pool tasks part_gate_a, Grok first; part_gate_b,
+ * DeepSeek first). One family alone let a dropped rule through ("Volume = 8 x 5 x 3" for "Volume is length x width x height": DeepSeek clean, Grok caught it). Both must pass; one that cannot be read is not a pass.
+ */
 const defaultGate = (userId) => async (part, source, text, spec) => {
   try {
     const q = part === 'hint' ? hintGatePrompt(source, text) : factGatePrompt(source, text, (spec && spec.interests && spec.interests.avoidDomains) || []);
-    const r = await lazy('./ai').structured({ role: 'fast', task: 'part_modify', system: q.system, user: q.user, schema: part === 'hint' ? HINT_GATE_SCHEMA : GATE_SCHEMA, schemaName: 'submit', maxTokens: 600, userId, dataClass: 'learner', effort: 'low' });
-    return part === 'hint' ? readHintGate(JSON.stringify(r || null)) : readFactGate(JSON.stringify(r || null));
+    for (const task of ['part_gate_a', 'part_gate_b']) {
+      // eslint-disable-next-line no-await-in-loop
+      const r = await lazy('./ai').structured({ role: 'fast', task, system: q.system, user: q.user, schema: part === 'hint' ? HINT_GATE_SCHEMA : GATE_SCHEMA, schemaName: 'submit', maxTokens: 600, userId, dataClass: 'learner', effort: 'low' });
+      const v = part === 'hint' ? readHintGate(JSON.stringify(r || null)) : readFactGate(JSON.stringify(r || null));
+      if (!v || !v.ok) return v;
+    }
+    return { ok: true, problems: [] };
   } catch { return null; }
 };
 

@@ -80,7 +80,8 @@ const MODEL = {
 const listOf = (name, d) => String(arg(name, d)).split(',').filter(Boolean).map((x) => MODEL[x]);
 const JUDGES = listOf('judges', 'glm,deepseek,gonka');
 const FACT_JUDGES = listOf('fact-judges', 'glm,grok');
-const GATE_MODEL = arg('gate-model') ? MODEL[arg('gate-model')] : null;
+const modelsOf = (v) => (v ? String(v).split(',').map((x) => MODEL[x]) : null);
+const GATE_MODEL = modelsOf(arg('gate-model'));
 const CONTROLS = !!arg('controls');
 const N_LESSONS = Number(arg('lessons', 1));
 const CORNERS = !!arg('corners');
@@ -222,16 +223,22 @@ const wordsDiff = (a, b) => {
 };
 
 /** The versions of one source for learner L's spec; the source (item) is owner's: the same text for every learner it is compared with. */
-const gateFn = (who) => (!who ? null : async (part, source, text, spec) => {
+// The live gate reads a rewrite twice, by two families (services/part-modify.js defaultGate): both must pass.
+const gateFn = (list) => (!list ? null : async (part, source, text, spec) => {
   const q = part === 'hint' ? pm.hintGatePrompt(source, text) : pm.factGatePrompt(source, text, (spec && spec.interests && spec.interests.avoidDomains) || []);
-  const reply = await chat(who, q.system, q.user, 4000, true);
-  return part === 'hint' ? pm.readHintGate(reply) : pm.readFactGate(reply);
+  for (const who of list) {
+    // eslint-disable-next-line no-await-in-loop
+    const reply = await chat(who, q.system, q.user, 4000, true);
+    const v = part === 'hint' ? pm.readHintGate(reply) : pm.readFactGate(reply);
+    if (!v || !v.ok) return v;
+  }
+  return { ok: true, problems: [] };
 });
 async function versionsFor(part, L, k, owner = L, salt = '') {
   const lesson = part === 'lesson' ? lessonFor(owner) : null;
   const spec = specOf(L, part === 'lesson' ? lesson.title : 'the topic');
   if (part === 'lesson') {
-    const d = await pm.rewriteLessonDetail({ spec, skill: { title: lesson.title, lesson: { paragraphs: lesson.paragraphs, key_points: lesson.key_points } }, llm: writerLlm(LESSON_WRITER, salt), gate: gateFn(GATE_MODEL) });
+    const d = await pm.rewriteLessonDetail({ spec, skill: { title: lesson.title, lesson: { paragraphs: lesson.paragraphs, key_points: lesson.key_points } }, llm: writerLlm(arg('lesson-writer') ? MODEL[arg('lesson-writer')] : LESSON_WRITER, salt), gate: gateFn(arg('lesson-gate') ? modelsOf(arg('lesson-gate')) : GATE_MODEL) });
     return { stored: lesson.paragraphs.join('\n\n'), shaped: d.paragraphs ? d.paragraphs.join('\n\n') : null, problems: d.problems, attempts: d.attempts, partial: d.partial, source: { text: lesson.paragraphs.join('\n\n'), prompt: lesson.title }, lesson, spec };
   }
   const it = pick(owner, k);
@@ -278,7 +285,7 @@ async function judgeRows(part, rows) {
     if (!r.vL) continue; // the modifier declined (no rule, or the check failed): the stored text stays, nothing to judge
     const arms = [['vs_stored', r.stored], ['vs_other', r.vM]];
     if (CONTROLS && r.vL2) arms.push(['noise', r.vL2]);
-    if (CONTROLS) arms.push(['identical', r.vL]);
+    if (CONTROLS && r.i % 4 === 0) arms.push(['identical', r.vL]);
     for (const [arm, other] of arms) {
       if (!other) continue;
       if (arm === 'vs_other' && other === r.vL) continue; // two learners with the same text (a template part): nothing to tell apart

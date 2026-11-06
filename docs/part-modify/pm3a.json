@@ -1,0 +1,410 @@
+{
+ "tag": "pm3a",
+ "seed": 7207,
+ "n": 30,
+ "generated_at": "2026-11-06T20:53:29.093Z",
+ "writer": "ZeroGPU GLM-5.3 Flash",
+ "judges": [
+  {
+   "id": "gonka-deepseek",
+   "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+   "family": "deepseek"
+  },
+  {
+   "id": "grokified-grok",
+   "model": "grok-4.3",
+   "family": "grok"
+  }
+ ],
+ "simulated": true,
+ "parts": {
+  "voice": {
+   "part": "voice",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 57,
+      "verdicts": 43,
+      "empty": 0,
+      "same": 14,
+      "picks_vL": 24,
+      "share": 0.5581395348837209,
+      "p_above_chance": 0.27119200592824116
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.6428571428571429,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": 0.5172413793103449,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.6428571428571429,
+       "verdicts": 14,
+       "p": 0.21197509765625025
+      },
+      "grok": {
+       "share": 0.5172413793103449,
+       "verdicts": 29,
+       "p": 0.5000000000000007
+      }
+     },
+     "individuals": {
+      "n": 29,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-2",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-4",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-6",
+        "share": 0,
+        "n": 1
+       }
+      ],
+      "below_half": 14
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 4,
+       "share": 0.75
+      },
+      "tail_lo": {
+       "n": 3,
+       "share": 0.6666666666666666
+      },
+      "random": {
+       "n": 9,
+       "share": 0.3333333333333333
+      },
+      "contradict": {
+       "n": 10,
+       "share": 0.5
+      },
+      "tail_both": {
+       "n": 4,
+       "share": 0.5
+      },
+      "all_hi": {
+       "n": 2,
+       "share": 1
+      },
+      "age_young": {
+       "n": 6,
+       "share": 0.6666666666666666
+      },
+      "ell": {
+       "n": 4,
+       "share": 0.75
+      },
+      "age_old": {
+       "n": 1,
+       "share": 0
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 40,
+      "verdicts": 39,
+      "empty": 0,
+      "same": 1,
+      "picks_vL": 26,
+      "share": 0.6666666666666666,
+      "p_above_chance": 0.026625957048964005
+     },
+     "swap_fooled": {
+      "n": 40,
+      "verdicts": 32,
+      "empty": 0,
+      "same": 8,
+      "picks_vL": 7,
+      "share": 0.21875
+     },
+     "control_picks_vL": {
+      "n": 40,
+      "verdicts": 34,
+      "empty": 0,
+      "same": 6,
+      "picks_vL": 16,
+      "share": 0.47058823529411764
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.631578947368421,
+       "swap_fooled": 0.16666666666666666,
+       "control": 0.4666666666666667
+      },
+      "grokified-grok": {
+       "real": 0.7,
+       "swap_fooled": 0.25,
+       "control": 0.47368421052631576
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.631578947368421,
+       "verdicts": 19,
+       "p": 0.17964172363281228
+      },
+      "grok": {
+       "share": 0.7,
+       "verdicts": 20,
+       "p": 0.057659149169921764
+      }
+     },
+     "individuals": {
+      "n": 20,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-13",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-14",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-20",
+        "share": 0,
+        "n": 2
+       }
+      ],
+      "below_half": 5
+     },
+     "by_kind": {
+      "tail_lo": {
+       "n": 4,
+       "share": 1
+      },
+      "tail_hi": {
+       "n": 4,
+       "share": 0.5
+      },
+      "random": {
+       "n": 10,
+       "share": 0.6
+      },
+      "tail_both": {
+       "n": 5,
+       "share": 0.2
+      },
+      "contradict": {
+       "n": 6,
+       "share": 0.6666666666666666
+      },
+      "all_hi": {
+       "n": 2,
+       "share": 1
+      },
+      "ell": {
+       "n": 4,
+       "share": 1
+      },
+      "age_young": {
+       "n": 2,
+       "share": 1
+      },
+      "age_old": {
+       "n": 2,
+       "share": 0.5
+      }
+     }
+    },
+    "identical": {
+     "real": {
+      "n": 14,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 14,
+      "picks_vL": 0,
+      "share": null,
+      "p_above_chance": null
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "grokified-grok": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "grok": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      }
+     },
+     "individuals": {
+      "n": 0,
+      "worst_1pct": null,
+      "worst_5pct": null,
+      "worst_10pct": null,
+      "lowest": [],
+      "below_half": 0
+     },
+     "by_kind": {}
+    }
+   },
+   "facts": {
+    "conflict_yes": 1,
+    "conflict_asked": 10,
+    "declined_because": {
+     "no change for this learner": 1
+    },
+    "checked": 30,
+    "passed": 29,
+    "declined": 1,
+    "same_yes": 6,
+    "same_asked": 9,
+    "coverage_fail": 0,
+    "claims": {},
+    "strict": {},
+    "gate_attempts": {},
+    "partial": 0,
+    "flagged": []
+   },
+   "goal": null,
+   "sources": 30,
+   "declined": 1,
+   "trials": 191
+  }
+ },
+ "samples": {
+  "voice": [
+   {
+    "learner": "x7207-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: none stated. Dislikes (never wanted): sports examples.",
+    "stored": "After a right answer: Right.\nAfter a wrong answer: Not quite.",
+    "shaped": "After a right answer: Yes, that is it.\nAfter a wrong answer: Not yet, and that is fine.",
+    "other_learner": "After a right answer: Correct.\nAfter a wrong answer: Incorrect.",
+    "diff": {
+     "stored_words": 11,
+     "shaped_words": 18,
+     "new_words": 9,
+     "dropped_words": 2
+    }
+   },
+   {
+    "learner": "x7207-1",
+    "kind": "tail_lo",
+    "profile": "Age 36. Language: English. Interests: none stated. Dislikes (never wanted): cute mascots.",
+    "stored": "After a right answer: Right.\nAfter a wrong answer: Not quite.",
+    "shaped": "After a right answer: Correct.\nAfter a wrong answer: Incorrect.",
+    "other_learner": "After a right answer: Yes. That is right.\nAfter a wrong answer: No, not this time.",
+    "diff": {
+     "stored_words": 11,
+     "shaped_words": 10,
+     "new_words": 2,
+     "dropped_words": 3
+    }
+   },
+   {
+    "learner": "x7207-2",
+    "kind": "contradict",
+    "profile": "Age 25. Language: English. Interests: none stated. Dislikes (never wanted): repetition drills, being praised for easy things, being told the answer right away.",
+    "stored": "After a right answer: Right.\nAfter a wrong answer: Not quite.",
+    "shaped": "After a right answer: Yes. That is right.\nAfter a wrong answer: No, not this time.",
+    "other_learner": "After a right answer: Correct.\nAfter a wrong answer: Incorrect.",
+    "diff": {
+     "stored_words": 11,
+     "shaped_words": 16,
+     "new_words": 6,
+     "dropped_words": 1
+    }
+   },
+   {
+    "learner": "x7207-3",
+    "kind": "random",
+    "profile": "Age 59. Language: English. Interests: competitive baking shows. Dislikes (never wanted): none stated.",
+    "stored": "After a right answer: Right.\nAfter a wrong answer: Not quite.",
+    "shaped": "After a right answer: Correct.\nAfter a wrong answer: Incorrect.",
+    "other_learner": "After a right answer: Yes, that is it.\nAfter a wrong answer: Not yet, and that is fine.",
+    "diff": {
+     "stored_words": 11,
+     "shaped_words": 10,
+     "new_words": 2,
+     "dropped_words": 3
+    }
+   }
+  ]
+ }
+}

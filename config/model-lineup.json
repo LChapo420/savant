@@ -1094,6 +1094,16 @@
         ],
         "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },
+      "part_gate_a": {
+        "allow": ["grokified:grok-4.3", "grokified:grok-4.7"],
+        "timeout_ms": 30000,
+        "basis": "First reading of a rewrite against its original (services/part-modify.js defaultGate). Grok caught dropped rules DeepSeek passed; measured in docs/part-modify/judge-cal.json."
+      },
+      "part_gate_b": {
+        "allow": ["gonka:deepseek-ai/DeepSeek-V4-Flash-0731", "coral:deepseek-v4.1-flash", "munito:deepseek-ai/deepseek-v4.1-flash-1017"],
+        "timeout_ms": 30000,
+        "basis": "Second reading by another family; measured in docs/part-modify/judge-cal.json."
+      },
       "part_layer": {
         "allow": [
           "coral:deepseek-v4.1-flash-fast",

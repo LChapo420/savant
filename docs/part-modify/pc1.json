@@ -1,0 +1,660 @@
+{
+ "generated_at": "2026-11-06T21:05:21.203Z",
+ "simulated": true,
+ "n_texts": 34,
+ "by_change": {
+  "shorter": {
+   "asked": 34,
+   "served": 31,
+   "refused": 2,
+   "noop": 1,
+   "mean_cut": 0.2251700207838683,
+   "worst_1pct_cut": 0.09523809523809523,
+   "worst_5pct_cut": 0.09999999999999998,
+   "worst_10pct_cut": 0.11111111111111116,
+   "coral-deepseek": {
+    "read": 31,
+    "clean": 31
+   },
+   "grokified-grok": {
+    "read": 30,
+    "clean": 14
+   }
+  },
+  "simpler": {
+   "asked": 34,
+   "served": 34,
+   "refused": 0,
+   "noop": 0,
+   "reading_load_lower": 34,
+   "coral-deepseek": {
+    "read": 34,
+    "clean": 32
+   },
+   "grokified-grok": {
+    "read": 34,
+    "clean": 29
+   }
+  },
+  "examples": {
+   "asked": 34,
+   "served": 4,
+   "refused": 30,
+   "noop": 0,
+   "longer": 4,
+   "coral-deepseek": {
+    "read": 4,
+    "clean": 4
+   },
+   "grokified-grok": {
+    "read": 4,
+    "clean": 4
+   }
+  },
+  "topic": {
+   "asked": 34,
+   "served": 26,
+   "refused": 8,
+   "noop": 0,
+   "coral-deepseek": {
+    "read": 26,
+    "clean": 20
+   },
+   "grokified-grok": {
+    "read": 26,
+    "clean": 11
+   }
+  }
+ },
+ "flagged": [
+  {
+   "change": "shorter",
+   "original": "Volume is length × width × height: 8 × 5 × 3 = 120 cm³.",
+   "text": "Volume = 8 × 5 × 3 = 120 cm³.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: Volume is length \times width \times height"
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "Multiply the whole number by the fraction: 6 × 2/3 = 12/3 = 4 pounds.",
+   "text": "Multiply: 6 × 2/3 = 12/3 = 4 pounds.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: Multiply the whole number by the fraction"
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "Two counters are visible at once, so the child recognizes and says two without counting.",
+   "text": "The child sees two counters at once and says two without counting.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: the child recognizes (not just says two)",
+     "dropped: causal link (visible at once, so...)"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "Multiply the whole number by the fraction: 6 × 2/3 = 12/3 = 4 pounds.",
+   "text": "In a cooking recipe, six bags of oats each hold 2/3 pound. Multiply the whole number by the fraction: 6 × 2/3 = 12/3 = 4 pounds.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: In a cooking recipe, six bags of oats each hold 2/3 pound."
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "Two counters are visible at once, so the child recognizes and says two without counting.",
+   "text": "Two model trains are visible at once, so the child recognizes and says two without counting.",
+   "judges": {
+    "coral-deepseek": [
+     "changed: The original says two counters are visible; the rewrite says two model trains are visible."
+    ],
+    "grokified-grok": [
+     "changed: counters -> model trains"
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "Dividing the 25 photos equally among 5 albums gives 5 photos per album. The answer must describe one album’s photos.",
+   "text": "25 ÷ 5 = 5, so each album gets 5 photos; the answer describes one album.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "changed: 'The answer must describe one album’s photos' changed to 'the answer describes one album'"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "An array with 4 rows of 7 squares contains 4 × 7 = 28 unit squares.",
+   "text": "Picture model trains arranged in an array with 4 rows of 7 squares; the array contains 4 × 7 = 28 unit squares.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: Picture model trains arranged in an array"
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "Wednesday is day 3, and 5 books were read, so the ordered pair is (3, 5).",
+   "text": "Wednesday is day 3 with 5 books read, so the pair is (3, 5).",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: \"ordered\" (in \"ordered pair\")"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "Dividing the 25 photos equally among 5 albums gives 5 photos per album. The answer must describe one album’s photos.",
+   "text": "Aboard a spacecraft, dividing the 25 photos equally among 5 albums gives 5 photos per album. The answer must describe one album's photos.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: Aboard a spacecraft,"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "Wednesday is day 3, and 5 books were read, so the ordered pair is (3, 5).",
+   "text": "Wednesday is day 3, and 5 books were read, so the ordered pair is (3, 5). It is like football, where a play is matched to its number the same way — the pair tells you which one and how many.",
+   "judges": {
+    "coral-deepseek": [
+     "new: The football comparison adds a claim about how a play is matched to its number, which the original does not state."
+    ],
+    "grokified-grok": []
+   }
+  },
+  {
+   "change": "topic",
+   "original": "The cyclist travels 36 km and then 45 km, for 81 km total. Riding 18 km back leaves 81 − 18 = 63 km from the start.",
+   "text": "A spacecraft travels 36 km and then 45 km, for 81 km total. Moving 18 km back toward its start leaves 81 − 18 = 63 km from the start.",
+   "judges": {
+    "coral-deepseek": [
+     "changed: The subject is changed from a cyclist to a spacecraft (riding vs. moving)."
+    ],
+    "grokified-grok": [
+     "changed: cyclist changed to spacecraft",
+     "changed: \"Riding 18 km back\" changed to \"Moving 18 km back toward its start\""
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "A useful outline groups related ideas under clear topics and arranges them in a logical order.",
+   "text": "A useful outline groups related ideas under clear topics in a logical order.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: arranges them in a logical order (as a separate action)"
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "“Disaster” makes the mistakes sound serious and causes the reader to feel upset.",
+   "text": "\"Disaster\" makes the mistakes sound serious and the reader upset.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: causes the reader to feel",
+     "changed: effect on reader phrased as \"the reader upset\" instead of \"causes the reader to feel upset\""
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "This reply responds to Leo's comment and asks about the kind of pancakes his grandma makes.",
+   "text": "This reply responds to Leo and asks what kind of pancakes his grandma makes.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: responds to Leo's comment (specifically mentions the comment)"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "“Disaster” makes the mistakes sound serious and causes the reader to feel upset.",
+   "text": "\"Disaster\" makes the mistakes sound serious and causes the reader to feel upset, much like the way a crew would feel watching an alarm light flash aboard a spacecraft.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: addition of spacecraft crew/alarm light analogy"
+    ]
+   }
+  },
+  {
+   "change": "simpler",
+   "original": "This reply responds to Leo's comment and asks about the kind of pancakes his grandma makes.",
+   "text": "This reply responds to Leo. It answers what he said. Then it asks about the kind of pancakes his grandma makes.",
+   "judges": {
+    "coral-deepseek": [
+     "new: It answers what he said"
+    ],
+    "grokified-grok": [
+     "new: It answers what he said."
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "A video can show movement and include sound, while a written report relies mainly on words read by the viewer.",
+   "text": "A video can show movement and sound, while a written report relies mainly on words.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: words read by the viewer"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "This reply responds to Leo's comment and asks about the kind of pancakes his grandma makes.",
+   "text": "This reply responds to Leo's comment and asks about the kind of pancakes his grandma makes. It is like football, where a teammate answers what you said before asking about the next play.",
+   "judges": {
+    "coral-deepseek": [
+     "new: It is like football, where a teammate answers what you said before asking about the next play."
+    ],
+    "grokified-grok": []
+   }
+  },
+  {
+   "change": "simpler",
+   "original": "The exclamation points and short phrases create an excited tone, while the other choices sound calm, neutral, or unrelated.",
+   "text": "The exclamation points show strong feeling. The short phrases do too. Together they make the words sound excited. That is an excited tone. The other choices sound calm. They sound flat, with no feeling. One is not even about what happened.",
+   "judges": {
+    "coral-deepseek": [
+     "new: One is not even about what happened",
+     "dropped: the other choices sound neutral or unrelated"
+    ],
+    "grokified-grok": [
+     "new: The exclamation points show strong feeling.",
+     "new: The short phrases do too.",
+     "new: Together they make the words sound excited.",
+     "new: They sound flat, with no feeling.",
+     "new: One is not even about what happened."
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "“Their” shows possession and correctly refers to the team members who own the uniforms.",
+   "text": "\"Their\" shows possession and correctly refers to the team members who own the uniforms, just as football players speak of the team's playbook as theirs.",
+   "judges": {
+    "coral-deepseek": [
+     "new: The comparison to football players speaking of the team's playbook as theirs is an added example with facts of its own."
+    ],
+    "grokified-grok": [
+     "new: just as football players speak of the team's playbook as theirs",
+     "changed: \"Their\" to \"Theirs\""
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "Two spaces are needed: one between “I” and “can,” and one between “can” and “run.”",
+   "text": "Two spaces: one between \"I\" and \"can,\" one between \"can\" and \"run.\"",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: \"are needed\""
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "Two sides measure 4 cm, while the third measures 6 cm, so the triangle is isosceles by its sides.",
+   "text": "Two sides are 4 cm and the third is 6 cm, so the triangle is isosceles.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: by its sides"
+    ]
+   }
+  },
+  {
+   "change": "simpler",
+   "original": "The horizontal coordinate gives 8 minutes, and the vertical coordinate gives 4 miles traveled.",
+   "text": "The first coordinate is 8. That means 8 minutes traveled. The second coordinate is 4. That means 4 miles traveled.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: 8 minutes traveled",
+     "changed: horizontal coordinate",
+     "changed: vertical coordinate"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "Two sides measure 4 cm, while the third measures 6 cm, so the triangle is isosceles by its sides.",
+   "text": "A triangle drawn on a football pitch has two sides measuring 4 cm, while the third measures 6 cm, so the triangle is isosceles by its sides.",
+   "judges": {
+    "coral-deepseek": [
+     "new: A triangle drawn on a football pitch"
+    ],
+    "grokified-grok": [
+     "new: A triangle drawn on a football pitch"
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "A power with exponent 5 means multiplying 2 by itself 5 times: 2 × 2 × 2 × 2 × 2 = 32.",
+   "text": "2^5 means multiplying 2 by itself 5 times: 2 × 2 × 2 × 2 × 2 = 32.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "changed: subject changed from \"A power with exponent 5\" to \"2^5\""
+    ]
+   }
+  },
+  {
+   "change": "simpler",
+   "original": "A power with exponent 5 means multiplying 2 by itself 5 times: 2 × 2 × 2 × 2 × 2 = 32.",
+   "text": "A power with exponent 5 means we multiply 2 by itself 5 times. The exponent is 5. So we work out 2 × 2 × 2 × 2 × 2. The answer is 32.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: The exponent is 5."
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "The number 350 is made of 3 hundreds and 5 tens, so it equals 3 × 100 + 5 × 10.",
+   "text": "A spacecraft's display shows 350. That number is made of 3 hundreds and 5 tens, so it equals 3 × 100 + 5 × 10.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: A spacecraft's display shows 350."
+    ]
+   }
+  },
+  {
+   "change": "simpler",
+   "original": "Multiply the base area by the height: 54 × 4 = 216 cm³.",
+   "text": "Take the base area. Times it by the height. That gives the volume. So: 54 × 4 = 216 cm³.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: That gives the volume."
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "Multiply the base area by the height: 54 × 4 = 216 cm³.",
+   "text": "Picture a model train platform: multiply the base area by the height: 54 × 4 = 216 cm³.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: Picture a model train platform:"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "The horizontal coordinate gives 8 minutes, and the vertical coordinate gives 4 miles traveled.",
+   "text": "The horizontal coordinate gives 8 minutes, and the vertical coordinate gives 4 miles traveled, just as a point for a model train's trip would be read.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: just as a point for a model train's trip would be read"
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "Leo counts two toys. The last number word in his count is “two.”",
+   "text": "Leo counts two toys. The last number word is \"two.\"",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: in his count"
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "Divide the decimal by the whole number: 4.8 ÷ 6 = 0.8 inch.",
+   "text": "4.8 ÷ 6 = 0.8 inch.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: Divide the decimal by the whole number"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "Leo counts two toys. The last number word in his count is “two.”",
+   "text": "Leo counts two model trains. The last number word in his count is \"two.\"",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "changed: \"toys\" changed to \"model trains\""
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "The mean of a list of numbers is their sum divided by how many numbers there are. For 2, 4 and 9 the sum is 15, and 15 divided by 3 is 5.",
+   "text": "The mean is the sum divided by how many numbers there are. For 2, 4 and 9 the sum is 15, and 15 divided by 3 is 5.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: of a list of numbers",
+     "dropped: their"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "Two pairs can be made with nothing left over, so the jars hold equal amounts.",
+   "text": "Two pairs can be made with nothing left over, so the jars hold equal amounts, just as two footballs paired with two goals would leave nothing unmatched.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: just as two footballs paired with two goals would leave nothing unmatched"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "The mean of a list of numbers is their sum divided by how many numbers there are. For 2, 4 and 9 the sum is 15, and 15 divided by 3 is 5.",
+   "text": "The mean of a list of numbers is their sum divided by how many numbers there are. For a space probe logging 2, 4 and 9, the sum is 15, and 15 divided by 3 is 5.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: For a space probe logging 2, 4 and 9"
+    ]
+   }
+  },
+  {
+   "change": "shorter",
+   "original": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.",
+   "text": "Plants make their own food by photosynthesis, mostly in the leaves, inside chloroplasts containing the green pigment chlorophyll.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "dropped: chloroplasts are tiny parts"
+    ]
+   }
+  },
+  {
+   "change": "topic",
+   "original": "The median is the middle value once the list is in order. In 1, 3, 7, 8, 20 the median is 7, and the very large 20 does not change it. That is why the median is often used for incomes.",
+   "text": "The median is the middle value once the list is in order. In a football squad, five players wear the shirt numbers 1, 3, 7, 8, 20; the median is 7, and the very large 20 does not change it. That is why the median is often used for incomes.",
+   "judges": {
+    "coral-deepseek": [],
+    "grokified-grok": [
+     "new: In a football squad, five players wear the shirt numbers"
+    ]
+   }
+  }
+ ],
+ "stats": {
+  "calls": 554,
+  "empty": 0,
+  "errors": 10
+ },
+ "ledgers": {
+  "zerogpu": 11.887,
+  "gonka": 11.455,
+  "coral": 25.006,
+  "grokified": 23.905
+ },
+ "samples": [
+  {
+   "change": "shorter",
+   "original": "Volume is length × width × height: 8 × 5 × 3 = 120 cm³.",
+   "text": "Volume = 8 × 5 × 3 = 120 cm³."
+  },
+  {
+   "change": "shorter",
+   "original": "Multiply the whole number by the fraction: 6 × 2/3 = 12/3 = 4 pounds.",
+   "text": "Multiply: 6 × 2/3 = 12/3 = 4 pounds."
+  },
+  {
+   "change": "simpler",
+   "original": "Multiply the whole number by the fraction: 6 × 2/3 = 12/3 = 4 pounds.",
+   "text": "Take the whole number 6. Multiply it by the fraction 2/3. This gives 6 × 2/3 = 12/3. Then 12/3 = 4. So the total is 4 pounds."
+  },
+  {
+   "change": "shorter",
+   "original": "Two counters are visible at once, so the child recognizes and says two without counting.",
+   "text": "The child sees two counters at once and says two without counting."
+  },
+  {
+   "change": "simpler",
+   "original": "Volume is length × width × height: 8 × 5 × 3 = 120 cm³.",
+   "text": "Volume is length times width times height. Multiply 8 × 5 × 3. The volume is 120 cm³."
+  },
+  {
+   "change": "simpler",
+   "original": "Two counters are visible at once, so the child recognizes and says two without counting.",
+   "text": "Two counters can be seen at the same time. The child knows it is two right away. The child says two without counting."
+  },
+  {
+   "change": "simpler",
+   "original": "Dividing the 25 photos equally among 5 albums gives 5 photos per album. The answer must describe one album’s photos.",
+   "text": "We are dividing the 25 photos equally among 5 albums. Each album gets 5 photos. The answer must describe the photos in one album."
+  },
+  {
+   "change": "topic",
+   "original": "Volume is length × width × height: 8 × 5 × 3 = 120 cm³.",
+   "text": "Picture the prism as a football kit box. Volume is length × width × height: 8 × 5 × 3 = 120 cm³."
+  },
+  {
+   "change": "topic",
+   "original": "Multiply the whole number by the fraction: 6 × 2/3 = 12/3 = 4 pounds.",
+   "text": "In a cooking recipe, six bags of oats each hold 2/3 pound. Multiply the whole number by the fraction: 6 × 2/3 = 12/3 = 4 pounds."
+  },
+  {
+   "change": "topic",
+   "original": "Two counters are visible at once, so the child recognizes and says two without counting.",
+   "text": "Two model trains are visible at once, so the child recognizes and says two without counting."
+  },
+  {
+   "change": "shorter",
+   "original": "Dividing the 25 photos equally among 5 albums gives 5 photos per album. The answer must describe one album’s photos.",
+   "text": "25 ÷ 5 = 5, so each album gets 5 photos; the answer describes one album."
+  },
+  {
+   "change": "shorter",
+   "original": "An array with 4 rows of 7 squares contains 4 × 7 = 28 unit squares.",
+   "text": "4 rows of 7 squares: 4 × 7 = 28 unit squares."
+  }
+ ],
+ "refused_because": [
+  {
+   "change": "examples",
+   "problems": [
+    "the fact check could not be read"
+   ]
+  },
+  {
+   "change": "examples",
+   "problems": [
+    "the fact check could not be read"
+   ]
+  },
+  {
+   "change": "examples",
+   "problems": [
+    "the fact check could not be read"
+   ]
+  },
+  {
+   "change": "examples",
+   "problems": [
+    "the fact check could not be read"
+   ]
+  },
+  {
+   "change": "topic",
+   "problems": [
+    "cooking does not appear"
+   ]
+  },
+  {
+   "change": "examples",
+   "problems": [
+    "the fact check could not be read"
+   ]
+  },
+  {
+   "change": "examples",
+   "problems": [
+    "the fact check could not be read"
+   ]
+  },
+  {
+   "change": "examples",
+   "problems": [
+    "the fact check could not be read"
+   ]
+  },
+  {
+   "change": "topic",
+   "problems": [
+    "cooking does not appear"
+   ]
+  },
+  {
+   "change": "examples",
+   "problems": [
+    "the fact check could not be read"
+   ]
+  },
+  {
+   "change": "shorter",
+   "problems": [
+    "dropped: Both “the kitten chased the ball” and “the dog watched” are independent clauses."
+   ]
+  },
+  {
+   "change": "examples",
+   "problems": [
+    "the fact check could not be read"
+   ]
+  }
+ ]
+}

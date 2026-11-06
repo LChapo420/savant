@@ -428,6 +428,8 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
   const { session, items, lesson, essay } = await sessions.createSession({
     userId: req.user.id, enrollment, grade, level: atLevel,
   });
+  // A session that could not be made must not take the whole server down (an async route's throw is an unhandled rejection).
+  if (!session) return res.status(503).json({ error: 'This level could not be started. Try again in a moment.' });
   res.status(201).json({
     ...sessionShape(session),
     resumed: false,

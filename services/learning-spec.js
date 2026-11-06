@@ -522,7 +522,10 @@ function gather(userId, { skillIds = [], topic = null, trackId = null, gradeId =
     // What the learner asked for themselves on a part (services/part-change.js): their own word, and it sticks. Read only while the switch is on.
     const pc = require('./part-change');
     if (pc.on()) {
-      const stated = pc.prefsOf(userId);
+      const stated = { ...pc.prefsOf(userId) };
+      // The "too long" tap after a level says the same thing; twice in the last five levels counts as one ask (it reached the level editor's brief only).
+      const taps = db.find('level_feedback', (f) => f.user_id === userId).slice(-5);
+      if (!stated.shorter && taps.filter((f) => f.length === 'long').length >= 2) stated.shorter = 1;
       input.stated = stated;
       if (stated.topic) input.interests.unshift(...splitDomains(stated.topic));
     }
