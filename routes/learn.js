@@ -656,6 +656,14 @@ router.post('/sessions/:id/block-finish', requireAuth, async (req, res) => {
  * { id, choice, level }. Scorecard evidence only; the lesson is the same either way. Quietly ignored for an account that may not be measured more
  * (age screen unanswered, or under the consent age without a parent's agreement) and for anything but a real level of this learner's own sitting.
  */
+// A worked example read (SPEED_WORKED): nothing is scored, the item is set aside and the level goes on.
+router.post('/sessions/:id/worked', requireAuth, limit('worked', 240, 60 * 60 * 1000), (req, res) => {
+  const session = db.byId('sessions', Number(req.params.id));
+  if (!session || session.user_id !== req.user.id) return res.status(404).json({ error: 'That session is not yours.' });
+  if (!sessions.workedSeen(req.user.id, session, req.body && req.body.item_id, req.body && req.body.ms)) return res.status(400).json({ error: 'That is not a worked example.' });
+  return res.json({ ok: true });
+});
+
 router.post('/sessions/:id/footprint', requireAuth, limit('footprint', 120, 60 * 60 * 1000), (req, res) => {
   const session = loadSession(req);
   if (!session) return res.status(404).json({ error: 'Session not found.' });

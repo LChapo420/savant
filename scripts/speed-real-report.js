@@ -16,9 +16,10 @@ const pos = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const flag = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const m = a.match(/^--([^=]+)=?(.*)$/); return [m[1], m[2]]; }));
 const [BASE, ARMS] = pos;
 const load = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
-const D = load(path.join(BASE, 'base-design.json'));
-const Hs = ['h1', 'h2', 'h3'].map((h) => load(path.join(BASE, `base-${h}.json`)));
-const armFiles = fs.readdirSync(ARMS).filter((f) => f.endsWith('.json'));
+const PRE = flag.prefix || 'base-'; // --prefix=cost- reads cost-design.json and --held=h1 reads cost-h1.json
+const D = load(path.join(BASE, `${PRE}design.json`));
+const Hs = (flag.held || 'h1,h2,h3').split(',').map((h) => load(path.join(BASE, `${PRE}${h}.json`)));
+const armFiles = fs.readdirSync(ARMS).filter((f) => f.endsWith('.json') && (!flag.match || f.includes(flag.match)));
 const specs = (flag.arms || '').split(';').filter(Boolean).map((s) => { const i = s.indexOf('='); return { label: s.slice(0, i), spec: s.slice(i + 1) }; });
 const armData = armFiles.map((f) => ({ f, d: load(path.join(ARMS, f)) }));
 const mean = (a) => (a.length ? a.reduce((s, x) => s + x, 0) / a.length : NaN);
@@ -83,7 +84,7 @@ const ALL_ARMS = [{ label: 'today (audited: stops on true understanding, no app 
 for (const g of goals) {
   const cells = Hs.flatMap((h) => h.rows.map((r) => r.goals[g]));
   const kinds = Hs.flatMap((h) => h.rows.map((r) => r.kind));
-  const arms = ALL_ARMS.map((a) => { const rows = [0, 1, 2].map((i) => armRows(a.spec, g, i)); return { ...a, rows: rows.every(Boolean) ? rows.flat() : null }; }).filter((a) => a.rows);
+  const arms = ALL_ARMS.map((a) => { const rows = Hs.map((_, i) => armRows(a.spec, g, i)); return { ...a, rows: rows.every(Boolean) ? rows.flat() : null }; }).filter((a) => a.rows);
   out.goals[g] = { arms: {}, baselines: {}, habits: {} };
   lines.push(`\n=== ${g}`);
   for (const a of arms) { lines.push(`  arm ${a.label}: ${f(mean(a.rows.map((x) => x.hours)), 1)} h, recall ${f(mean(a.rows.map((x) => x.recall)))}, reach+all understood ${pct(mean(a.rows.map((x) => (strict(x) ? 1 : 0))))}`); out.goals[g].arms[a.label] = { hours: mean(a.rows.map((x) => x.hours)), recall: mean(a.rows.map((x) => x.recall)), strict: mean(a.rows.map((x) => (strict(x) ? 1 : 0))) }; }

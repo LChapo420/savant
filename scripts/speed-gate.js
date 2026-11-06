@@ -30,7 +30,7 @@ const SIM = path.join(__dirname, 'faster-by-goal-sim.js');
 const SEEDS = [20261108, 20261109, 20261110];
 const APP_N = 1;
 const R_SPEC = 'review=through:margin=0.15:endMargin=0.05';
-const LETTER = { T: 'testout=1', S: 'short=1', M: 'stop=1', R: R_SPEC, F: 'fast=1', P: 'place=1' };
+const LETTER = { T: 'testout=1', S: 'short=1', M: 'stop=1', R: R_SPEC, F: 'fast=1', P: 'place=1', W: 'worked=1', Q: 'quick=1' };
 const armSpec = (key, frame) => { const parts = [...key].map((c) => LETTER[c]); if (!parts.length) parts.push('testout=0'); if (frame === 'real') parts.push(`appN=${APP_N}`); return parts.join(':'); };
 const COMBOS = (() => { const out = []; for (const t of ['', 'T', 'TS']) for (const m of ['', 'M']) for (const r of ['', 'R']) for (const f of ['', 'F']) out.push(`${t}${m}${r}${f}`); return out; })();
 const SINGLES = [['T', ''], ['TS', 'T'], ['M', ''], ['R', ''], ['F', ''], ['P', '']];
@@ -193,6 +193,41 @@ function report() {
   const jsonOut = flagVal('json'); if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify(res));
 }
 
-if (CMD === 'run') run();
+/**
+ * The levers built after the first gate (W worked examples, Q one-tap reviews): the same margins, a seed never used before (20261111), and their effect at the low, middle and high end of the published range.
+ * W: seconds per example 35 / 26 / 20, teaching 0.5 / 0.75 / 1 of a right answer. Q: seconds per review question 25 / 15 / 10. Low end means the lever hardly works; the gate must hold there too on retention.
+ */
+const EXTRA_SEED = 20261111;
+const RANGE = { low: ['--we-s=35', '--we-gain=0.5', '--quick-s=25'], mid: ['--we-s=26', '--we-gain=0.75', '--quick-s=15'], high: ['--we-s=20', '--we-gain=1', '--quick-s=10'] };
+const EXTRA_KEYS = ['', 'F', 'W', 'Q', 'WF', 'QF', 'WQF', 'MWQF', 'TSMRF', 'TSMRWQF'];
+async function runExtra() {
+  fs.mkdirSync(OUT, { recursive: true });
+  const jobs = Object.entries(RANGE).map(([name, a]) => ({ args: [...COMMON, `--seed=${EXTRA_SEED}`, ...a, `--speed-arms=${EXTRA_KEYS.map((k) => armSpec(k, 'real')).join(',')}`], out: path.join(OUT, `extra-${name}.json`) }));
+  jobs.push({ args: [...COMMON, `--seed=${EXTRA_SEED}`, '--run-salt=noise', `--speed-arms=${armSpec('', 'real')}`], out: path.join(OUT, 'extra-noise.json') });
+  for (const [name, a] of Object.entries({ guess50: ['--guess=0.5'], cold50: ['--cold-gain=0.5'], kloss50: ['--kloss=0.5'] })) jobs.push({ args: [...COMMON, `--seed=${EXTRA_SEED}`, ...RANGE.mid, ...a, `--speed-arms=${['', 'W', 'Q'].map((k) => armSpec(k, 'real')).join(',')}`], out: path.join(OUT, `extra-var-${name}.json`) });
+  await pool(jobs);
+}
+function reportExtra() {
+  const lines = ['SIMULATED. Held-out seed 20261111, 160 learners, frame real. Lever against off, per learner.'];
+  const res = {};
+  for (const name of Object.keys(RANGE)) {
+    const set = load(path.join(OUT, `extra-${name}.json`));
+    lines.push(`\n--- range: ${name} (${RANGE[name].join(' ')})`);
+    for (const [on, off] of [['W', ''], ['Q', ''], ['WF', 'F'], ['QF', 'F'], ['WQF', 'F'], ['MWQF', ''], ['TSMRWQF', '']]) {
+      const c = compare([set], on, off, 'real'); const v = verdict(c); res[`${name}:${on}`] = { why: v, cmp: c };
+      const G = c.goals; lines.push(`  ${on.padEnd(8)} vs ${(off || 'none').padEnd(5)} ${v.length ? `FAILS (${v.length})` : 'passes'}  1 wk ${f(G['horizon 1 week'].hOff, 1)}>${f(G['horizon 1 week'].hOn, 1)} h ret w1 ${pts(G['horizon 1 week'].ret.w1)}; 1 mo ${f(G['horizon 1 month'].hOn, 1)} h ${pts(G['horizon 1 month'].ret.w1)}; 1 yr ${f(G['horizon 1 year'].hOff, 1)}>${f(G['horizon 1 year'].hOn, 1)} h ${pts(G['horizon 1 year'].ret.w1)}; first problem: ${v[0] || 'none'}`);
+    }
+  }
+  const mid = load(path.join(OUT, 'extra-mid.json')); const noise = load(path.join(OUT, 'extra-noise.json'));
+  lines.push('\n--- noise control, off against off: retention worst 1 / 5 / 10%');
+  for (const g of Object.keys(mid.rows[0].goals)) { const d = mid.rows.map((r, i) => noise.rows[i].goals[g].speed[armSpec('', 'real')].recall - r.goals[g].speed[armSpec('', 'real')].recall); lines.push(`  ${g.padEnd(20)} ${pts(lowQ(d, 0.01))} / ${pts(lowQ(d, 0.05))} / ${pts(lowQ(d, 0.1))}`); }
+  lines.push('\n--- adverse variants, middle of the range, lever against off inside the variant');
+  for (const name of ['guess50', 'cold50', 'kloss50']) { const set = load(path.join(OUT, `extra-var-${name}.json`)); for (const [on] of [['W'], ['Q']]) { const c = compare([set], on, '', 'real'); const v = adverseVerdict(c); res[`var:${name}:${on}`] = { why: v }; lines.push(`  ${on} ${name.padEnd(8)} ${v.length ? `FAILS (${v.length}): ${v.slice(0, 2).join('; ')}` : 'holds'}`); } }
+  console.log(lines.join('\n'));
+}
+
+if (CMD === 'extra') runExtra();
+else if (CMD === 'extra-report') reportExtra();
+else if (CMD === 'run') run();
 else if (CMD === 'report') report();
 else console.log('usage: speed-gate.js run|report OUT');

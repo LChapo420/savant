@@ -931,9 +931,31 @@ function renderRubricResult(result) {
     };
   };
 
+  /** SPEED_WORKED: an item shown solved. Read it, one tap, go on. Nothing is scored. */
+  function showWorked(item) {
+    const itemHost = document.getElementById('item');
+    host.setAttribute('data-view', 'question');
+    progress();
+    const steps = (item.worked_steps || []).map((s) => `<li>${App.escapeHtml(s)}</li>`).join('');
+    itemHost.innerHTML = `<section class="card lesson-worked">
+      <p class="small">Worked example. Read how it goes, then try one yourself.</p>
+      <h3>${App.escapeHtml(item.prompt || '')}</h3>
+      ${steps ? `<ol>${steps}</ol>` : ''}
+      ${item.rationale ? `<p>${App.escapeHtml(item.rationale)}</p>` : ''}
+      <p><strong>Answer: ${App.escapeHtml(String(item.answer))}</strong></p>
+      <button type="button" class="btn btn-primary btn-block" id="worked-next">Got it, next</button>
+    </section>`;
+    document.getElementById('worked-next').addEventListener('click', async () => {
+      try { await App.api.post(`/api/sessions/${session.session_id}/worked`, { item_id: item.id, ms: Date.now() - startedAt }); } catch (err) { App.toast(err.message, 'error'); return; }
+      item.answered = true; item.skipped = true;
+      advance();
+    });
+  }
+
   function show() {
     const item = items[index];
     shownItem = item;
+    if (item.present === 'worked' && !item.answered) { showWorked(item); return; }
     const itemHost = document.getElementById('item');
     const roleLabel = { review: 'Review', stretch: 'Stretch', support: 'Foundation', focus: 'Focus', exam: 'Exam', check: 'Check' }[item.role] || 'Question';
 
@@ -942,7 +964,8 @@ function renderRubricResult(result) {
     Player.render(itemHost, item, {
       // Choose, then Check; the Check button is sticky at the bottom on a phone.
       // SPEED_FAST_ITEM: a multiple choice answer is one tap, in practice and checks only.
-      check: isExam() || heldFeedback ? 'Next' : (session.speed && session.speed.fast ? (item.format === 'multiple_choice' ? null : 'Check') : 'Check'),
+      // The one question in three that asks for confidence keeps its Check button: that row feeds the scorecard, so the fast path does not take it away.
+      check: isExam() || heldFeedback ? 'Next' : (session.speed && session.speed.fast ? (item.format === 'multiple_choice' && !(maxAccuracy || index % 3 === 1) ? null : 'Check') : 'Check'),
       // The role ("Focus", "Review", "Stretch") and the item's metadata are for
       // checking the content, not for the learner: shown only with ?debug=1.
       label: App.query('debug') ? roleLabel : null,
@@ -950,7 +973,7 @@ function renderRubricResult(result) {
       // Asked on about one question in three, so it stays a quick tap rather than
       // a chore — enough for the learning scorecard to learn how well this learner
       // knows what they know.
-      askConfidence: !isExam() && (maxAccuracy || index % 3 === 1) && !(session.speed && session.speed.fast),
+      askConfidence: !isExam() && (maxAccuracy || index % 3 === 1),
       onSubmit: async (answer, meta = {}) => {
         let result;
         try {

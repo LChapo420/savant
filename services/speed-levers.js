@@ -1,6 +1,6 @@
 /**
  * Speed levers (docs/SPEED-4X.md): spend fewer of the learner's minutes on what they already have, without losing material or retention.
- * Every lever is OFF unless its switch says on, and off is today's behaviour exactly. The decision rules live here so the app and the simulation
+ * Every lever but SPEED_FAST_ITEM is OFF unless its switch says on, and off is today's behaviour exactly. The decision rules live here so the app and the simulation
  * (scripts/faster-by-goal-sim.js --speed-arms=...) run the same code.
  *
  *   SPEED_TESTOUT=on       retrieval first: a lesson level opens on its check questions; a learner whose answers show the skill is known skips the page
@@ -9,8 +9,10 @@
  *   SPEED_MASTERY_STOP=on  a practice block ends once the tracker below is confident the skill is understood; the rest of its focus items are set aside, marked, unscored.
  *   SPEED_REVIEW_TARGET=on a level review is asked only when predicted recall (understanding x memory) falls under the learner's chosen target (plus a margin) on the days
  *                          the goal covers; overshoot is not reviewed. Reads the goal through services/retention-goal.js.
- *   SPEED_FAST_ITEM=on     less friction per item: a multiple choice answer is one tap, no optional confidence row, and a right answer moves on by itself after a tick. A miss still stops to explain.
+ *   SPEED_FAST_ITEM (ON by default since 6 Nov 2026, the only lever through its gate; =off restores the old flow) less friction per item: a multiple choice answer is one tap, except the one question in three that asks for confidence, and a right answer moves on by itself after a tick. A miss still stops to explain.
  *   SPEED_COMPOSITE=on     an item that names `also_skills` counts as an attempt on each of them too, each on its own. The built-in banks have no such items today, so this does nothing until they exist.
+ *   SPEED_WORKED=on        worked examples first, with fading: while this lesson's stretch shows the learner does not have it yet (tracker under 0.55), the first practice items of a block are shown solved, one tap to go on; at most two in a row, then a problem. None for a learner who has it (expertise reversal). No retrieval and no score.
+ *   SPEED_QUICK_REVIEW=on  review questions are one tap: a typed review question with a number for an answer gets close wrong choices. Format makes little retention difference in the studies (docs/SPEED-4X.md); the seconds saved are not measured.
  *   Placement by skill, implied mastery and the item at the edge: services/speed-placement.js.
  *   SPEED_ALL=off          every lever off.
  * (Prerequisite credit, an answer also reviewing what it builds on, is a simulation variant only: the built-in courses have no prerequisite graph to read it from.)
@@ -21,8 +23,8 @@
 
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 
-const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET', fast: 'SPEED_FAST_ITEM', composite: 'SPEED_COMPOSITE' };
-const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off', fast: 'off', composite: 'off' };
+const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET', fast: 'SPEED_FAST_ITEM', composite: 'SPEED_COMPOSITE', worked: 'SPEED_WORKED', quick: 'SPEED_QUICK_REVIEW' };
+const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off', fast: 'on', composite: 'off', worked: 'off', quick: 'off' }; // fast: the only lever through its gate (docs/SPEED-4X.md, round 3), 6 Nov 2026
 
 /** Is this lever on? SPEED_ALL=off beats everything. A base-arm learner (efficiency.forLearner) reads every lever off, as the older levers do. */
 function enabled(lever) {
@@ -252,6 +254,34 @@ function partsForMiss(lesson, item, shownIds = [], chunk = PARAMS.chunk) {
   return parts.map((p, i) => ({ p, s: score(p), i })).sort((a, b) => (b.s - a.s) || (a.i - b.i)).slice(0, take).map((x) => x.p.id);
 }
 const plainHereOf = (userId, session, level) => { try { return require('./speed-proof').plainHere(userId, session, level); } catch { return null; } };
+// ---------- worked examples and one-tap reviews (round 3) ----------
+const WORKED_LINE = 0.55; const WORKED_MAX = 2;
+/**
+ * How many of a practice block's first items are shown solved for this learner, now. Reads this lesson's stretch only. The second block of a stretch gets one, a later one none: the fade.
+ * Off, on a plain lesson, or with the learner past the line: 0.
+ */
+function workedCount(userId, session, skillId, level, grade) {
+  return require('./efficiency').forLearner(userId, () => {
+    if (!enabled('worked') || !grade || !skillId || session.preview) return 0;
+    if (plainHereOf(userId, session, level)) return 0;
+    const unit = unitOf(grade, level);
+    if (kMean(trackerFor(userId, skillId, { unit })) >= WORKED_LINE) return 0;
+    const past = dbOf().find('items', (i) => i.user_id === userId && i.present === 'worked' && Number(i.level) >= unit.from && Number(i.level) <= unit.to).length;
+    return Math.max(0, WORKED_MAX - past);
+  });
+}
+/** A typed review question with a number for an answer, as one tap: the answer and three close wrong ones, fixed by the question so a reload shows the same. Anything else stays as it is. */
+function oneTap(item) {
+  if (!item || item.format === 'multiple_choice' || item.format === 'mcq') return item;
+  const ans = String(item.answer === undefined || item.answer === null ? '' : item.answer).trim();
+  if (!/^-?\d+(\.\d+)?$/.test(ans)) return item;
+  const v = Number(ans); const step = Math.max(1, Math.round(Math.abs(v) * 0.1));
+  const wrong = [...new Set([-v, v + step, v - step, v + 2 * step, v * 2].filter((w) => w !== v).map(String))].slice(0, 3);
+  let h = 0; for (const c of String(item.prompt || '')) h = (h * 31 + c.charCodeAt(0)) % 9973;
+  const choices = [ans, ...wrong];
+  for (let i = choices.length - 1; i > 0; i--) { h = (h * 31 + 7) % 9973; const j = h % (i + 1); [choices[i], choices[j]] = [choices[j], choices[i]]; }
+  return { ...item, format: 'multiple_choice', choices, quick_review: true };
+}
 /** What the client should know up front. A preview of another level keeps today's flow. */
 function clientFlags(userId, session) {
   const on = (lever) => require('./efficiency').forLearner(userId, () => enabled(lever));
@@ -325,5 +355,5 @@ module.exports = {
   newTracker, observe, taught, pKnown, kMean, shown, priorFromHistory, trackerFromAnswers, nextStep, pRight,
   PLACE, bestItem, placementNext, placementAnswer,
   reviewDue, endWindow,
-  unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
+  workedCount, oneTap, unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
 };

@@ -39,11 +39,11 @@ const LESSON = {
 };
 
 (async () => {
-  await check('every lever is off by default and with SPEED_ALL=off', async () => {
-    for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), false, lever);
+  await check('every lever but fast item is off by default (fast passed its gate, 6 Nov), and all are off with SPEED_ALL=off', async () => {
+    for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), lever === 'fast', lever);
     await withEnv({ ...ALL, SPEED_ALL: 'off' }, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), false, lever); });
-    await withEnv(ALL, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), true, lever); });
-    assert.deepStrictEqual(speed.clientFlags(1, {}), { testout: false, short: false, fast: false });
+    await withEnv({ ...ALL, SPEED_WORKED: 'on', SPEED_QUICK_REVIEW: 'on' }, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), true, lever); });
+    assert.deepStrictEqual(speed.clientFlags(1, {}), { testout: false, short: false, fast: true });
   });
 
   await check('the tracker: right answers raise the belief, a miss lowers it, guessing is discounted', () => {
@@ -208,6 +208,38 @@ const LESSON = {
     for (let i = 0; i < 12; i++) db.insert('items', { session_id: here.id, user_id: u.id, skill_id: plan.focus, role: 'focus', level: later, block: 0, index: i, correct: true, user_answer: 'x' });
     assert.strictEqual(speed.practiceShown(u.id, plan.focus, { grade, level: later }), true, 'answers in this stretch are');
   }));
+
+  await check('worked examples: none with the switch off; two for a learner without evidence, none once this stretch shows it; read is set aside unscored', async () => {
+    const later = (() => { for (let l = lessonLevel + 1; l <= grade.pathLength; l++) if (curriculum.levelKind(l, grade.pathLength, grade) === 'practice') return l; return lessonLevel; })();
+    const u = user(); const e = enroll(u, later); const plan = curriculum.levelPlan(grade, later);
+    const session = db.insert('sessions', { user_id: u.id, enrollment_id: e.id, track_id: trackId, grade_id: grade.id, level: later, kind: 'lesson', blocks: [] });
+    assert.strictEqual(speed.workedCount(u.id, session, plan.focus, later, grade), 0, 'off');
+    await withEnv({ SPEED_WORKED: 'on' }, async () => {
+      assert.strictEqual(speed.workedCount(u.id, session, plan.focus, later, grade), 2, 'a learner with no evidence');
+      const it = db.insert('items', { session_id: session.id, user_id: u.id, skill_id: plan.focus, role: 'focus', level: later, block: 0, index: 0, present: 'worked', correct: null, user_answer: null, answer: '5', rationale: 'why', prompt: 'p' });
+      assert.strictEqual(speed.workedCount(u.id, session, plan.focus, later, grade), 1, 'the fade: one left in this stretch');
+      assert.strictEqual(sessions.sanitize(it).answer, '5', 'a worked item shows its answer');
+      assert.strictEqual(sessions.workedSeen(u.id, session, it.id, 9000), true);
+      const after = db.byId('items', it.id);
+      assert.strictEqual(after.set_aside, 'worked'); assert.strictEqual(after.correct, null);
+      assert.strictEqual(sessions.sanitize(after).answer, undefined, 'once read it is an ordinary set-aside row');
+      assert.strictEqual(sessions.workedSeen(u.id, session, it.id), false, 'not twice');
+      const plainItem = db.insert('items', { session_id: session.id, user_id: u.id, skill_id: plan.focus, role: 'focus', level: later, block: 0, index: 1, correct: null, user_answer: null, answer: '6', prompt: 'q' });
+      assert.strictEqual(sessions.sanitize(plainItem).answer, undefined, 'an ordinary item never shows its answer');
+      assert.strictEqual(sessions.workedSeen(u.id, session, plainItem.id), false, 'an ordinary item is not a worked example');
+      for (let i = 0; i < 12; i++) db.insert('items', { session_id: session.id, user_id: u.id, skill_id: plan.focus, role: 'focus', level: later, block: 0, index: 2 + i, correct: true, user_answer: 'x' });
+      assert.strictEqual(speed.workedCount(u.id, session, plan.focus, later, grade), 0, 'expertise reversal: none for a learner who shows it');
+    });
+  });
+
+  await check('one-tap review: a number gets the answer and three close wrong choices, fixed for the question; anything else is untouched', async () => {
+    const a = speed.oneTap({ format: 'type_in', answer: '-15', prompt: 'f(x)' });
+    assert.strictEqual(a.format, 'multiple_choice'); assert.ok(a.choices.includes('-15')); assert.strictEqual(new Set(a.choices).size, a.choices.length); assert.ok(a.choices.length === 4);
+    assert.deepStrictEqual(speed.oneTap({ format: 'type_in', answer: '-15', prompt: 'f(x)' }).choices, a.choices, 'the same each time');
+    assert.strictEqual(speed.oneTap({ format: 'type_in', answer: 'photosynthesis', prompt: 'p' }).format, 'type_in');
+    assert.strictEqual(speed.oneTap({ format: 'multiple_choice', answer: '3', choices: ['3', '4'] }).choices.length, 2);
+    const z = speed.oneTap({ format: 'type_in', answer: '0', prompt: 'z' }); assert.ok(z.choices.includes('0') && new Set(z.choices).size === z.choices.length);
+  });
 
   await check('review target: a skill holding the target to the goal\'s last day is not asked; off it is; after the last day nothing', async () => {
     const u = user();
