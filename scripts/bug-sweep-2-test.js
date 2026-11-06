@@ -184,6 +184,19 @@ function saveFailure() {
   check('a wrong answer still says the answer', /Not quite\. The answer is: 9/.test(text(wrong)) && wrong.children[0].classList.items.includes('is-wrong'), text(wrong));
 }
 
+async function lateRows() {
+  console.log('a reply that arrives after the account is deleted does not bring it back');
+  const consent = require('../routes/consent');
+  const deletion = require('../services/account-deletion');
+  const u = db.insert('users', { email: 'late@example.test', display_name: 'Late', password_hash: 'x', account_type: 'standard', xp: 0, streak: 0 });
+  deletion.deleteAccount(u);
+  db.insert('assist_chats', { user_id: u.id, messages: [{ role: 'user', content: 'my own words' }] }); // the chat that was in flight
+  const other = db.insert('assist_chats', { user_id: 424242, messages: [] });
+  const out = await consent.sweep();
+  check('the sweep removes the late row', out.late_rows === 1 && !db.find('assist_chats', (r) => r.user_id === u.id).length, out);
+  check('and leaves everyone else alone', !!db.byId('assist_chats', other.id));
+}
+
 function accountData() {
   console.log('deleting an account reaches shared plans; the export covers every collection');
   const blockLevels = require('../services/block-levels');
@@ -212,6 +225,7 @@ function accountData() {
   buildGuard();
   saveFailure();
   accountData();
+  await lateRows();
   await routes();
   planPin();
   console.log(failures ? `\n${failures} failed` : '\nAll ok');

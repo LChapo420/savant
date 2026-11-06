@@ -35,6 +35,7 @@ function deleteAccount(user) {
     if (n) removed[name] = n;
   }
   require('./block-levels').forgetLearner(id); // eslint-disable-line global-require
+  consent.rememberDeleted(id); // a model call still in flight writes its rows later; the consent sweep takes them out
   for (const u of db.find('users', (x) => x.referred_by === id)) db.update('users', u.id, { referred_by: null });
   const files = uploadRetention.removeForUser(id);
   if (files) removed.spanish_upload_files = files;

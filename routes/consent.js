@@ -363,6 +363,24 @@ function publicConsent(user) {
 const SHARED = new Set(['users', 'content_cache', 'themed_items', 'themed_log', 'placement_question_sets', 'fact_pools', 'parents', 'parental_consents', 'beta_blocks']);
 
 /**
+ * Accounts deleted in the last hour. A model call in flight when the account went (a chat, an after-level read, a build) finishes later and writes its rows
+ * under the old id: the learner's own words, in assist_chats and tutor_memory, came back after "deleted" (bug sweep 2, 6 Nov). The sweep takes them out again.
+ */
+const LATE_ROWS_MS = 60 * 60 * 1000;
+const deletedRecently = new Map();
+function rememberDeleted(userId, at = Date.now()) { deletedRecently.set(userId, at); }
+function sweepLateRows(now = Date.now()) {
+  let removed = 0;
+  for (const [userId, at] of deletedRecently) {
+    for (const name of collectionNames()) {
+      if (!SHARED.has(name)) removed += db.remove(name, (r) => r && r.user_id === userId);
+    }
+    if (now - at > LATE_ROWS_MS) deletedRecently.delete(userId);
+  }
+  return removed;
+}
+
+/**
  * Delete a child's account and every row tied to it, and reduce the consent
  * record to a stub (dates, method, notice version, hashed parent email).
  */
@@ -375,6 +393,7 @@ function deleteChild(consent, reason, by) {
     if (n) removed[name] = n;
   }
   require('../services/block-levels').forgetLearner(childId);
+  rememberDeleted(childId);
   const files = require('../services/upload-retention').removeForUser(childId);
   if (files) removed.spanish_upload_files = files;
   require('../services/spanish-study-tests').removeForUser(childId);
@@ -466,7 +485,7 @@ async function sendConfirmation(consent) {
  * called directly by the tests with a later `now`.
  */
 async function sweep(now = Date.now()) {
-  const out = { expired: 0, confirmed: 0, revoked_deleted: 0 };
+  const out = { expired: 0, confirmed: 0, revoked_deleted: 0, late_rows: sweepLateRows(now) };
   for (const c of db.all('parental_consents').slice()) {
     if (c.status === 'pending' && c.expires_at && Date.parse(c.expires_at) <= now) {
       deleteChild(c, 'expired', 'system');
@@ -1081,6 +1100,7 @@ module.exports = {
   deleteChild,
   collectionNames,
   SHARED,
+  rememberDeleted,
   minimumAge,
   CONSENT_AGE,
   DEFAULT_CONSENT_AGE,
