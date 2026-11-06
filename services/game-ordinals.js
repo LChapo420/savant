@@ -27,7 +27,7 @@ const RULES = [
   [new RegExp(`\\b(the (?:correct|right) (?:answer|choice|option) is) (?:the )?(?:${NTH} )?(?:option|choice|answer)?\\s*${PLACE}?\\s*,\\s*(?=["“‘'])`, 'gi'), '$1 '],
   [new RegExp(`\\b(the (?:correct|right) (?:answer|choice|option) is) the ${NTH} (?:option|choice)\\b,?\\s*(?=["“‘'])`, 'gi'), '$1 '],
   // "The correct answer is option 2 The game was postponed": the option's own words follow
-  [new RegExp(`\\b(the (?:correct|right) (?:answer|choice|option) is) (?:the )?(?:option|choice|answer)\\s*${PLACE}\\s+(?=[A-Z])`, 'gi'), '$1: '],
+  [new RegExp(`\\b(the (?:correct|right) (?:answer|choice|option) is) (?:the )?(?:(?:option|choice|answer)\\s*${PLACE}|\\(?[0-9A-D]\\))\\s+`, 'gi'), (m, x, at, str) => (/[A-Z]/.test(str[at + m.length] || '') ? `${x}: ` : m)],
   // "The correct answer is (1) because" / "is option B because" -> "This answer is correct because"
   [new RegExp(`\\bthe (?:correct|right) (?:answer|choice|option) is (?:the )?(?:(?:option|choice|answer)\\s*${PLACE}|\\(?[0-9A-D]\\)|${NTH} (?:option|choice))(?=[\\s,.;:])`, 'gi'), 'This answer is correct'],
   // "The correct option, (3) it shifts focus" -> "The correct option, it shifts focus"
@@ -44,6 +44,8 @@ const RULES = [
 ];
 const STILL = new RegExp(`\\b(?:option|choice)\\s*\\(?[0-9A-D]\\)?(?=[\\s,.;:!)]|$)|\\bthe ${NTH} (?:option|choice)\\b|(?:^|\\s)\\([0-4]\\)(?=\\s)`);
 
+const NEGATIVE = new RegExp(`\\b(?:option|choice)\\s*\\(?[0-9A-Da-d]\\)?[^.;]{0,40}\\b(?:wrong|incorrect|fails?|lacks?|misses|not|no such)\\b|\\bthe ${NTH} (?:option|choice)\\b[^.;]{0,40}\\b(?:wrong|incorrect|fails?|lacks?|misses|not|no such)\\b`, 'i');
+
 /** Two different places named: it also speaks of a wrong option. Only reword when one place is named. */
 function placesNamed(text) {
   const out = new Set();
@@ -56,6 +58,8 @@ function placesNamed(text) {
 function cleanExplanation(text) {
   const before = String(text == null ? '' : text);
   if (placesNamed(before).size > 1) return { text: before, changed: false, left: true };
+  // "Option 2 is wrong", "the first option has no such clause": it means a wrong option, so "this option" would turn it false.
+  if (NEGATIVE.test(before)) return { text: before, changed: false, left: STILL.test(before) };
   let t = before;
   for (const [re, to] of RULES) t = t.replace(re, to);
   if (t === before) return { text: before, changed: false, left: STILL.test(before) };

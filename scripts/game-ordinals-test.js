@@ -20,6 +20,9 @@ for (const [a, b] of cases) assert.strictEqual(o.cleanExplanation(a).text, b, a)
 for (const s of ['A colon follows a complete sentence.', 'Plan A failed, so they chose another option.', 'In option trading a call gives a right.', 'The first sentence is complete.', '(3) is the cube root of 27.']) {
   assert.strictEqual(o.cleanExplanation(s).changed, false, s);
 }
+// A place that means a wrong option stays, for a reader.
+for (const t of ['Option 2 is wrong because it splices.', 'A fragment lacks a main clause; only the first option has no such clause.']) { const r = o.cleanExplanation(t); assert.strictEqual(r.changed, false, t); assert.strictEqual(r.left, true, t); }
+assert.strictEqual(o.cleanExplanation('The correct answer is (2) The game ended, so we left.').text, 'The correct answer is: The game ended, so we left.');
 // Two places named: left alone, reported.
 const two = o.cleanExplanation('Option 1 is a splice, while option 3 uses a semicolon.');
 assert.strictEqual(two.changed, false);
