@@ -147,11 +147,12 @@ class Metrics {
 
   overall() {
     const pct = (a, p) => (a.length ? a[Math.min(a.length - 1, Math.floor((p / 100) * a.length))] : 0);
-    const all = []; let bad = 0; let n = 0;
-    for (const r of this.routes.values()) { for (const m of r.ms) all.push(m); n += r.n; for (const [s, c] of Object.entries(r.statuses)) if (Number(s) >= 500 || Number(s) < 0) bad += c; }
-    all.sort((a, b) => a - b);
+    const all = []; const quick = []; let bad = 0; let n = 0;
+    // "(wait)" and the lesson GET hold on purpose while a level is written (up to 8 s): what the rest of the app feels like is kept apart.
+    for (const [label, r] of this.routes) { for (const m of r.ms) { all.push(m); if (!/lesson ready|GET \/api\/lessons/.test(label)) quick.push(m); } n += r.n; for (const [s, c] of Object.entries(r.statuses)) if (Number(s) >= 500 || Number(s) < 0) bad += c; }
+    all.sort((a, b) => a - b); quick.sort((a, b) => a - b);
     const secs = (Date.now() - this.t0) / 1000;
-    return { requests: n, rps: Number((n / secs).toFixed(1)), p50: Math.round(pct(all, 50)), p95: Math.round(pct(all, 95)), p99: Math.round(pct(all, 99)), max: Math.round(all[all.length - 1] || 0), server_errors: bad };
+    return { requests: n, rps: Number((n / secs).toFixed(1)), p50: Math.round(pct(all, 50)), p95: Math.round(pct(all, 95)), p99: Math.round(pct(all, 99)), max: Math.round(all[all.length - 1] || 0), server_errors: bad, without_lesson_wait: { p50: Math.round(pct(quick, 50)), p95: Math.round(pct(quick, 95)), p99: Math.round(pct(quick, 99)) } };
   }
 }
 
