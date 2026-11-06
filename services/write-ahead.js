@@ -364,7 +364,7 @@ function prewrite({ user, enrollment, grade, levels, reason = 'placement' }) {
           topGuess.set(enrollment.id, { level, n });
           if (topGuess.size > 500) topGuess.delete(topGuess.keys().next().value);
           if (n >= num('COLD_HEAD_CONTINUE', 3, 1, 30)) {
-            const step = { level, position: 0, kind, tier: 'free', tailored, rank };
+            const step = { level, position: 0, kind: bl.kindFor(g, level), tier: 'free', tailored, rank };
             enqueue({ user, step, key: k, enrollmentId: enrollment.id, levelsPerHour: 0, reason, ...where, fast: fastOn(), prewrite: true });
             steps.push(step);
           }
