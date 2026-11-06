@@ -89,7 +89,7 @@ async function rewrite({ original, context = '', asked, topic = null, spec = nul
   const specRules = spec && spec.interests && spec.interests.avoidDomains && spec.interests.avoidDomains.length ? [`Never use anything about: ${spec.interests.avoidDomains.join(', ')}.`] : [];
   const system = `You rewrite one piece of a lesson because the learner asked you to. Keep every fact, number and the answer exactly as in the original.${asked.includes('examples') ? '' : ' Add no new fact, rule, definition or tip.'} Never mention the learner. Plain text, no markdown. Return JSON {"text": "..."}.`;
   let problems = null;
-  for (let attempt = 0; attempt < 2; attempt += 1) {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
     let text = '';
     // eslint-disable-next-line no-await-in-loop
     try { const r = await llm({ system, user: `${context ? `${context}\n\n` : ''}Original:\n${original}\n\nWhat the learner asked for:\n${[...rules, ...specRules].map((x, i) => `${i + 1}. ${x}`).join('\n')}${problems ? `\n\nYour last draft had problems; fix them:\n${problems.map((p) => `- ${p}`).join('\n')}` : ''}`, schema: SCHEMA, schemaName: 'submit', maxTokens: 1500 }); text = r && typeof r.text === 'string' ? r.text.trim() : ''; } catch { text = ''; }
@@ -102,7 +102,9 @@ async function rewrite({ original, context = '', asked, topic = null, spec = nul
     }
     if (!problems.length) return { text, problems: [] };
   }
-  return { text: null, problems };
+  // Only a text that could not be cut is "already short"; a draft refused on its facts is told as that.
+  if (String(process.env.PART_CHANGE_LOG || '') === '1') console.warn(`part-change refused: ${JSON.stringify(problems).slice(0, 300)}`);
+  return { text: null, problems, noop: asked[asked.length - 1] === 'shorter' && (problems || []).some((p) => /not shorter/.test(p)) };
 }
 
 const defaultLlm = (userId) => (a) => lazy('./ai').structured({ role: 'fast', task: 'part_modify', ...a, userId, dataClass: 'learner', effort: 'low' });

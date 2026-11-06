@@ -76,7 +76,7 @@ async function main() {
     out.by_change[change] = entry;
   }
   out.flagged = rows.filter((r) => r.text && Object.values(r.judges).some((x) => x && x.length)).map((r) => ({ change: r.change, original: r.original, text: r.text, judges: r.judges }));
-  out.samples = rows.filter((r) => r.text).slice(0, 12).map((r) => ({ change: r.change, original: r.original, text: r.text }));
+  out.samples = pc.CHANGES.flatMap((c) => rows.filter((r) => r.text && r.change === c).slice(0, 8).map((r) => ({ change: r.change, original: r.original, text: r.text })));
   out.refused_because = rows.filter((r) => !r.text && !r.noop).slice(0, 12).map((r) => ({ change: r.change, problems: (r.problems || []).slice(0, 2) }));
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, JSON.stringify(out, null, 1));

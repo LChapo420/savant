@@ -118,7 +118,8 @@ async function main() {
   // ── a session question ────────────────────────────────────────────────────
   await go(`/session?enrollment=${ENROLL}&ordinary=1`);
   await sleep(3000);
-  const hasQ = await until(`!!document.querySelector('.choices button, .choices [data-choice], .answer-row input')`, 25000);
+  // A lesson level reads first: press its button whenever it is there, until a question is on screen.
+  const hasQ = await until(`(() => { const b = document.getElementById('start-checks'); if (b && !b.disabled) b.click(); return !!document.querySelector('.choices [data-choice], .answer-row input'); })()`, 90000);
   if (hasQ) {
     await js(`(() => { const c = document.querySelector('.choices [data-choice]'); if (c) { c.click(); return; } const i = document.querySelector('.answer-row input'); i.value = 'x'; i.dispatchEvent(new Event('input',{bubbles:true})); })()`);
     await sleep(400);
