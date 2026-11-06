@@ -43,6 +43,12 @@ check('a new cause is not direct', !ex('Atenolol is avoided in pregnancy because
 check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8:15 a.m. on a Tuesday. Models, e.g. MORVEL, help. Done now.').length === 3);
 
 (async () => {
+  // A material in another language: translations are for the readers, not refused by spelling.
+  const esIdx = F.indexSource('El lago Vostrin se formó hace unos catorce mil años cuando un glaciar represó el valle de Orlen. Su único desagüe es el río Tarmo, que drena hacia el norte hasta el mar de Sellen. La pesca del korrin plateado se prohibió en 1987 después de que la población cayera en dos tercios. Los núcleos de sedimento de la cuenca norte registran once capas de ceniza volcánica de las erupciones de Kovar. Recuerda que el lago se renueva dos veces al año, en abril y en noviembre. Este dato será parte del examen final de este curso y debes recordarlo bien.');
+  check('a Spanish material is known as foreign', esIdx.foreign === true);
+  check('its English translation is not refused by spelling', F.examine('Fishing for the silver korrin was banned in 1987 by Lake Vostrin.', esIdx).hard.length === 0);
+  check('an English material is not foreign', idx.foreign === false, idx.foreign);
+
   // ── model verdicts ──
   const script = (fn) => async (args) => ({ res: { data: { verdicts: fn(args) } } });
   const numbered = (args) => args.user.split('SENTENCES:\n')[1].split('\n').map((l) => { const m = /^(\d+)\. (.*)$/.exec(l); return m ? { n: Number(m[1]), text: m[2] } : null; }).filter(Boolean);

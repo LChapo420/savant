@@ -238,11 +238,15 @@ async function extract(buf, opts = {}) {
 const EN_STOP = new Set('the of and to in is that it for as with was on are be this by at from or an which have not but they their can more if when what there been has will all one would about'.split(' '));
 /** False when a long text is clearly not English (share of the commonest English words under 15%). Short texts pass. */
 function looksEnglish(text) {
+  // Most letters outside the Latin alphabet: Chinese, Arabic, Russian and so on.
+  const letters = String(text).slice(0, 200000).match(/\p{L}/gu) || [];
+  if (letters.length >= 200 && letters.filter((c) => /\p{Script=Latin}/u.test(c)).length / letters.length < 0.5) return false;
   const w = String(text).toLowerCase().match(/[a-z']+/g) || [];
   if (w.length < 80) return true;
   let n = 0; for (const x of w) if (EN_STOP.has(x)) n++;
   return n / w.length >= 0.15;
 }
+const NOT_ENGLISH_TEXT = 'This does not look like English. Savant writes lessons in English for now, so what you get is an English course taken from your text. Names and terms are checked against your text, but read them against it.';
 const NOT_ENGLISH = 'This does not look like English. The speech and picture readers on this server understand English only, so words may be wrong or missing. Paste the text instead for other languages.';
 
 function words(text) { return (text.match(/\S+/g) || []).length; }
@@ -328,7 +332,7 @@ function add(userId, { title, text, rich, kind, pages, sourceName, ocr: viaOcr, 
     ...(understood || understand(text, rich, kind)),
     ...(viaOcr ? { ocr: true } : {}),
     ...(files ? { files: files.slice(0, 40) } : {}),
-    ...(() => { const w = [...(warnings || [])]; if ((viaOcr || kind === 'audio' || kind === 'image') && !looksEnglish(text)) w.push(NOT_ENGLISH); return w.length ? { warnings: w.slice(0, 8) } : {}; })(),
+    ...(() => { const w = [...(warnings || [])]; if (!looksEnglish(text)) w.push(viaOcr || kind === 'audio' || kind === 'image' ? NOT_ENGLISH : NOT_ENGLISH_TEXT); return w.length ? { warnings: w.slice(0, 8) } : {}; })(),
   });
   return { value: pub(row, false) };
 }
