@@ -9,6 +9,8 @@ const os = require('os');
 const path = require('path');
 
 const tmp = path.join(os.tmpdir(), `focus-history-${process.pid}.json`);
+// Windows reuses process ids: an old run's file under this name would add its sessions to this run's (seen as exactly doubled minutes, 6 Nov 2026).
+try { fs.unlinkSync(tmp); } catch { /* none there */ }
 process.env.DB_FILE = tmp;
 const db = require('../config/db');
 const focus = require('../services/focus-history');
