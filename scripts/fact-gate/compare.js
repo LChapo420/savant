@@ -105,7 +105,7 @@ function line(e) {
   return `${e.spec.padEnd(34)} ${L.fmtRate(k, n).padEnd(24)} clean lv flagged ${String(fa).padStart(2)}/${e.cl.length}, false-alarm lv ${falseLv} (${e.cl.length ? L.pct(falseLv / e.cl.length) : '-'}) flags t/f/? ${trueFlags}/${falseFlags}/${unknown}  $${e.cost.toFixed(4)}/lv ${(e.ms / 1000).toFixed(0)}s`;
 }
 
-const specs = SPECS.length ? SPECS : L.fs.readdirSync(RAW).filter((f) => f.endsWith('.jsonl') && !f.includes('decisions')).map((f) => f.replace('.jsonl', '').replace(/_(hunt|claims|blind)$/, ':$1'));
+const specs = SPECS.length ? SPECS : L.fs.readdirSync(RAW).filter((f) => f.endsWith('.jsonl') && !f.includes('decisions')).map((f) => f.replace('.jsonl', '').replace(/_(hunt|claims|blind|lens)$/, ':$1'));
 const allRows = [];
 for (const s of specs) {
   const e = evaluate(s);

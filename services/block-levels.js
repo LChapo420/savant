@@ -3088,6 +3088,7 @@ function contentText(plan, userId) {
 }
 
 module.exports = {
+  REPAIR_SYSTEM, CHECK_REPAIR_SYSTEM,
   kindFor,
   isRetention,
   visibleTo,

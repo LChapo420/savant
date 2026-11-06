@@ -47,11 +47,22 @@ const HUNT_SCHEMA = {
   },
 };
 
+const LENS_SYSTEM = `You check a lesson for one kind of mistake only: statements a subject expert would object to. You get the subject, grade and level, then every block and graded check as JSON. Ignore the arithmetic and the answer keys; another checker does those. Most lessons have none of these errors.
+
+Read every general statement in the lesson, one at a time, and ask:
+1. Is this rule stated too broadly? Look hard at each rule and each "always", "never", "only", "any", "every", "whenever", "all", "must", and at rules with no such word that still drop a condition the original rule needs (positive numbers only, one grammatical case, one region or style guide). Would a learner who believes this sentence as written get a real case wrong?
+2. Is each number about the real world about right (how many, how much, how common), and each place, person, region, country and source named the right one? Check each one against what you know. Which countries and regions use a form? Which guide says what?
+3. Does each definition name the right term, and does it hold in the direction stated?
+
+Do not report style, tone, teaching choices, or text meant to be wrong (wrong options, trap text, lines marked isError true). A rule the lesson qualifies elsewhere in the same block is fine. Do not report a simplification unless a learner would really be misled.
+
+For each error give: where ("block N" or "check N", numbered as given), quote (the exact wrong words), why (what is wrong), truth (what it should say). None: an empty list.`;
+
 const BLIND_SYSTEM = `You answer the graded checks of a lesson, as an expert who has read the lesson. You get the lesson's blocks, then each check's question and, for multiple choice, its options. Work each one out carefully and give the one right answer. For multiple choice give the option's number (1 is the first). For a typed answer give the shortest correct answer.`;
 const BLIND_SCHEMA = {
   type: 'object',
   required: ['answers'],
-  properties: { answers: { type: 'array', items: { type: 'object', required: ['check', 'answer'], properties: { check: { type: 'integer' }, option: { type: 'integer' }, answer: { type: 'string' } } } } },
+  properties: { answers: { type: 'array', items: { type: 'object', required: ['check'], properties: { check: { type: 'integer' }, option: { type: 'integer' }, answer: { type: 'string' } } } } },
 };
 
 const render = (lv) => [
@@ -106,6 +117,12 @@ async function read(judge, lv) {
     const r = await callModel(m, { system: HUNT_SYSTEM, user, schema: HUNT_SCHEMA, schemaName: 'submit_errors', maxTokens: 12000 });
     const flags = (r.data.errors || []).map((e) => ({ where: String(e.where || ''), claim: String(e.quote || ''), why: String(e.why || ''), truth: String(e.truth || '') }));
     return { flags, cost: r.cost, usage: r.usage, ms: Date.now() - t, promptHash: hash(HUNT_SYSTEM + user) };
+  }
+  if (mode === 'lens') {
+    const user = render(lv);
+    const r = await callModel(m, { system: LENS_SYSTEM, user, schema: HUNT_SCHEMA, schemaName: 'submit_errors', maxTokens: 12000 });
+    const flags = (r.data.errors || []).map((e) => ({ where: String(e.where || ''), claim: String(e.quote || ''), why: String(e.why || ''), truth: String(e.truth || '') }));
+    return { flags, cost: r.cost, usage: r.usage, ms: Date.now() - t, promptHash: hash(LENS_SYSTEM + user) };
   }
   if (mode === 'claims') {
     // Today's gate: the production prompt and schema, whole level, every claim.
