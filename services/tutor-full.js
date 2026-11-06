@@ -79,7 +79,17 @@ function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' 
   const msg = String(message || '');
   const path = page && page.path;
   const parts = [];
-  const status = why === 'off' ? '' : `The live tutor is ${why === 'slow' ? 'slow' : 'busy'} right now, so this is from my notes instead of a full answer.`;
+  // Short for a child and for a learner whose record says they want it compact (services/learning-spec.js).
+  let brief = false;
+  try {
+    const u = user && require('../config/db').byId('users', user.id); // eslint-disable-line global-require
+    const age = u ? require('./boosters').ageOf(u) : null; // eslint-disable-line global-require
+    brief = (age !== null && age !== undefined && age < 13) || ((require('./learning-spec').buildSpec(user.id, {}).explain.modes || []).includes('compact')); // eslint-disable-line global-require
+  } catch { brief = false; }
+  const first = (t) => String(t || '').split(/(?<=[.!?])\s/)[0];
+  const status = why === 'off' ? ''
+    : why === 'local' ? (brief ? 'I am using only my own notes for now.' : 'I am answering from my own notes only on this account, with no outside AI, so this is shorter than a full answer.')
+      : (brief ? `I'm a bit ${why === 'slow' ? 'slow' : 'busy'} right now.` : `The live tutor is ${why === 'slow' ? 'slow' : 'busy'} right now, so this is from my notes instead of a full answer.`);
   let feature;
   const tri = safety.triage(msg, { age: null });
   if (tri && tri.reply) return { reply: tri.reply, feature }; // a crisis is the fixed reply on every path, even this one
@@ -107,14 +117,15 @@ function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' 
     } else {
       if (DISCOURAGED.test(msg)) parts.push("That sounds really frustrating, and it's okay to feel that way. One small step is enough for now.");
       const pg = howto.pageInfo(path);
-      if (!pg || !/^(what|why|who|how many|how long|is|will|does)\b/i.test(msg.trim()) || DISCOURAGED.test(msg)) parts.push(pg ? `You're on ${pg.name}. ${pg.stuck}` : howto.stuckAdvice(path));
+      if (!pg || !/^(what|why|who|how many|how long|is|will|does)\b/i.test(msg.trim()) || DISCOURAGED.test(msg)) parts.push(pg ? (brief ? pg.stuck : `You're on ${pg.name}. ${pg.stuck}`) : howto.stuckAdvice(path));
       else parts.push("I'm not sure about that one, and I can't check it right now, so I'd rather not guess.");
     }
     if (mode === 'method') parts.push('Here I can give hints about method only, so your result stays honest.');
   }
-  const fit = fitLine(user && user.id, msg);
+  const fit = brief ? '' : fitLine(user && user.id, msg);
   if (fit) parts.push(fit);
-  const body = `${parts.join(' ')} ${status} Ask me again in a moment and you'll get the full thing.`.replace(/\s+/g, ' ').trim();
+  if (brief) { const short = parts.filter(Boolean).map((p) => (p.length > 230 ? clip(p, 230) : p)); parts.length = 0; parts.push(...short.slice(0, 2)); }
+  const body = `${parts.join(' ')} ${status}${why === 'local' ? '' : brief ? ' Ask me again soon!' : " Ask me again in a moment and you'll get the full thing."}`.replace(/\s+/g, ' ').trim();
   return { reply: name ? `${name}: ${body}` : body, feature };
 }
 

@@ -129,7 +129,8 @@ function instant(q, { name } = {}) {
   if (!m.length || m[0].score < 2) return null;
   if (m[1] && m[1].score === m[0].score && m[1].f.path !== m[0].f.path) return null; // two equally good readings: let the model ask
   const f = m[0].f;
-  return { feature: f.id, path: f.path, reply: `${name ? `${name}, ` : ''}${f.title}: ${f.steps} It is at ${f.path}.` };
+  const first = String(f.steps).split(/(?<=[.!?])\s/)[0];
+  return { feature: f.id, path: f.path, reply: `${name ? `${name}, ` : ''}${f.title}: ${first} Page: ${f.path}. Ask me if you want the rest of the steps.` };
 }
 
 /** Prompt lines about the product for this question and page. */

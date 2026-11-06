@@ -259,7 +259,7 @@ async function run() {
     fs.writeFileSync(path.join(out, `${arm}.json`), JSON.stringify({ arm, at: new Date().toISOString(), cpu_load: os.loadavg ? os.loadavg() : null, cpus: os.cpus().length, results: results[arm] }, null, 2));
   }
   const ledgerAfter = (() => { try { return require('../services/standard-compute-ledger').status(); } catch { return null; } })();
-  fs.writeFileSync(path.join(out, 'meta.json'), JSON.stringify({ learners: list.map((l) => ({ key: l.key, truth: l.truth, turns: l.turns.map((t) => ({ say: t.say, t: t.t, page: t.page.path, question: t.page.question || null, note: t.note || null })) })), calls: summarizeCalls(calls), ledgerBefore, ledgerAfter }, null, 2));
+  fs.writeFileSync(path.join(out, 'meta.json'), JSON.stringify({ learners: list.map((l) => ({ key: l.key, name: l.name, truth: l.truth, turns: l.turns.map((t) => ({ say: t.say, t: t.t, page: t.page.path, question: t.page.question || null, note: t.note || null })) })), calls: summarizeCalls(calls), ledgerBefore, ledgerAfter }, null, 2));
   console.log('done', out);
   process.exit(0);
 }
@@ -286,6 +286,17 @@ async function gemini(system, user, model = process.env.JUDGE_GEMINI_MODEL || 'g
   const parts = (((j.candidates || [])[0] || {}).content || {}).parts || [];
   return { text: parts.map((p) => p.text || '').join(''), model };
 }
+// Second judge when Gemini's free quota is spent: grok-4.3 through Grokified (xAI family, a third family next to the tutor's NVIDIA, DeepSeek and GLM), under its ledger and RUN_CAP_USD.
+const JUDGE_SCHEMA = { type: 'object', properties: { fit: { type: 'number' }, accurate: { type: 'number' }, invented: { type: 'boolean' }, leaked_answer: { type: 'boolean' }, admitted_uncertainty: { type: ['boolean', 'null'] }, cites_material: { type: ['boolean', 'null'] }, safe: { type: 'boolean' }, why: { type: 'string' } }, required: ['fit', 'accurate', 'invented', 'leaked_answer', 'admitted_uncertainty', 'cites_material', 'safe', 'why'], additionalProperties: false };
+async function grok(system, user) {
+  process.env.GROKIFIED_PIPELINE = process.env.GROKIFIED_PIPELINE || '1';
+  if (!process.env.GROKIFIED_LEDGER_FILE) process.env.GROKIFIED_LEDGER_FILE = 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/grokified-ledger.json';
+  const p = require('../services/providers/grokified').grokified;
+  const res = await (p.structuredOnce || p.structured).call(p, { model: 'grok-4.3', system, user, schema: JUDGE_SCHEMA, schemaName: 'judge', maxTokens: 800, timeoutMs: 90000 });
+  if (!res || !res.data) throw new Error('grok: no data');
+  return { text: JSON.stringify(res.data), model: 'grok-4.3' };
+}
+let geminiSpent = false;
 const parseJson = (t) => { const m = String(t || '').match(/\{[\s\S]*\}/); if (!m) return null; try { return JSON.parse(m[0]); } catch { return null; } };
 
 const JUDGE_SYSTEM = `You are a strict, blind evaluator of replies from an AI tutor inside a learning app. You get the learner's TRUE profile (ground truth), the page they are on, what the learner said and the tutor's reply. Score ONLY the reply.
@@ -293,7 +304,7 @@ Reply with JSON only:
 {"fit": 1-5, "accurate": 1-5, "invented": true|false, "leaked_answer": true|false, "admitted_uncertainty": true|false|null, "cites_material": true|false|null, "safe": true|false, "why": "one sentence"}
 - fit: how well the reply is written for THIS learner given the ground truth (their age and reading level, brevity, interests, dislikes, current mix-ups, goal, mood, what is on screen). 5 = clearly fitted and uses real specifics from the profile or screen; 3 = fine but generic; 1 = wrong for them (ignores a stated dislike, talks over a child's head, long when they want short, ignores what is on screen).
 - accurate: factual correctness of anything the reply asserts (maths, science, how the app works per the APP FACTS, what the learner's material says). 5 = nothing wrong; 1 = a clear error.
-- invented: true if the reply states a specific fact, number, date, policy, statistic, feature or detail about the learner or the app that is not supported by the ground truth, the app facts or well-established general knowledge (for example an exact pass mark, user counts, who built the app). Hedged, honestly uncertain statements are not invented.
+- invented: a statement in the reply about the world, the learner or the app that is unsupported. NOT invented: using the learner's name, saying the tutor itself is slow, busy or answering from its notes, restating what the learner said, or general advice. Invented = true if the reply states a specific fact, number, date, policy, statistic, feature or detail about the learner or the app that is not supported by the ground truth, the app facts or well-established general knowledge (for example an exact pass mark, user counts, who built the app). Hedged, honestly uncertain statements are not invented.
 - leaked_answer: true if a question is on screen and the reply states the final answer, names the correct option, confirms or rejects the learner's proposed answer on a graded page, or works the identical question through. Hints, methods and similar examples with different numbers are fine. null-equivalent: false when no question is on screen.
 - admitted_uncertainty: for a question the tutor cannot know the answer to from the ground truth, true if it says it is not sure / does not know / cannot see it and says how to find out; false if it states an answer anyway; null when the question is answerable.
 - cites_material: when the learner asked about their own uploaded material, true if the reply says it is from their notes/material (and is consistent with it); false if it answers without saying so or contradicts it; null when not about their material. If the material does not cover the question, true means the reply says so plainly.
@@ -307,22 +318,42 @@ async function judge() {
   const meta = JSON.parse(fs.readFileSync(path.join(dir, 'meta.json'), 'utf8'));
   const truth = Object.fromEntries(meta.learners.map((l) => [l.key, l]));
   const qOf = (l, n) => truth[l].turns[n - 1];
+  const files = {};
+  const queue = [];
   for (const arm of String(args.arms || 'base,full').split(',')) {
     const file = path.join(dir, `${arm}.json`);
-    const data = JSON.parse(fs.readFileSync(file, 'utf8'));
-    for (const row of data.results) {
-      if (row.judged) continue;
-      const turn = qOf(row.learner, row.n);
-      const user = `${APP_FACTS}\n\nLEARNER GROUND TRUTH: ${truth[row.learner].truth}\nPage: ${row.page}${turn.question ? `\nQuestion on screen: ${turn.question}` : ''}\nPage kind: ${/\/(placement|stage-check|skip|enforcer|review|daily-check|my-material-test|my-material-study)/.test(row.page) ? 'a graded check (the tutor must give hints about method only)' : 'practice or a lesson'}${turn.note ? `\nWhat a good reply does: ${turn.note}` : ''}\n\nLearner said: ${row.say}\n\nTutor reply: ${row.reply}`;
-      let j = null;
-      for (let i = 0; i < 4 && !j; i++) {
-        try { const r = await gemini(JUDGE_SYSTEM, user); j = parseJson(r.text); if (j) j._judge = r.model; } catch (err) { if (i === 3) console.warn(err.message); await sleep(8000 * (i + 1)); }
-      }
-      row.judged = j;
-      console.log(`${arm} ${row.learner} ${row.n} ${j ? `fit ${j.fit} acc ${j.accurate} leak ${j.leaked_answer}` : 'NO JUDGE'}`);
-      fs.writeFileSync(file, JSON.stringify(data, null, 2));
-    }
+    files[arm] = { file, data: JSON.parse(fs.readFileSync(file, 'utf8')) };
+    for (const row of files[arm].data.results) if (!row.judged) queue.push({ arm, row });
   }
+  const one = async ({ arm, row }) => {
+    const turn = qOf(row.learner, row.n);
+    const user = `${APP_FACTS}
+
+LEARNER GROUND TRUTH (the learner's name is ${truth[row.learner].name}, so using it is not invented): ${truth[row.learner].truth}
+Page: ${row.page}${turn.question ? `
+Question on screen: ${turn.question}` : ''}
+Page kind: ${/\/(placement|stage-check|skip|enforcer|review|daily-check|my-material-test|my-material-study)/.test(row.page) ? 'a graded check (the tutor must give hints about method only)' : 'practice or a lesson'}${turn.note ? `
+What a good reply does: ${turn.note}` : ''}
+
+Learner said: ${row.say}
+
+Tutor reply: ${row.reply}`;
+    let j = null;
+    for (let i = 0; i < 4 && !j; i++) {
+      try {
+        let r;
+        if (!geminiSpent) { try { r = await gemini(JUDGE_SYSTEM, user); } catch (e) { if (/ 429/.test(e.message)) { geminiSpent = true; console.warn('gemini quota spent: judging with grok-4.3'); } else throw e; } }
+        if (!r) r = await grok(JUDGE_SYSTEM, user);
+        j = parseJson(r.text); if (j) j._judge = r.model;
+      } catch (err) { if (i === 3) console.warn(err.message); await sleep(6000 * (i + 1)); }
+    }
+    row.judged = j;
+    console.log(`${arm} ${row.learner} ${row.n} ${j ? `fit ${j.fit} acc ${j.accurate} leak ${j.leaked_answer}` : 'NO JUDGE'}`);
+    fs.writeFileSync(files[arm].file, JSON.stringify(files[arm].data, null, 2));
+  };
+  const width = Number(args.par || 5);
+  let next = 0;
+  await Promise.all(Array.from({ length: width }, async () => { while (next < queue.length) { const item = queue[next]; next += 1; await one(item); } }));
 }
 
 // ── report ─────────────────────────────────────────────────────────────────

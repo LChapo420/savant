@@ -230,6 +230,10 @@ function cleanStuck(st) {
   return { idle_s: n(st.idle_s, 3600), wrong: n(st.wrong, 50), asked: !!st.asked };
 }
 
+function outsideOk(user) {
+  try { return !!require('./typed-grading').outsideAllowed(user.id); } catch { return true; } // eslint-disable-line global-require
+}
+
 function safeAge(user) {
   try { return require('./boosters').ageOf(user); } catch { return null; } // eslint-disable-line global-require
 }
@@ -281,6 +285,7 @@ async function reply({ user, messages, page, inputMode, image }) {
   const facts = require('./tutor-facts'); // eslint-disable-line global-require
   facts.dockStarted(user.id);
   try {
+    const talkStart = Date.now();
     const talking = ai.talk({
       // The dock's own task ("dock_help"): its lineup entry (config/model-lineup.json) is Ultra with
       // reasoning off and nothing weaker behind it, without changing the other assist_help callers.
@@ -295,7 +300,7 @@ async function reply({ user, messages, page, inputMode, image }) {
     });
     // With the switch on the reply path never waits past the deadline: a slow model gets an honest answer from the notes instead.
     text = fullOn ? await full.withDeadline(talking) : await talking;
-    if (fullOn && !text) slow = true;
+    if (fullOn && !text) slow = Date.now() - talkStart >= full.DEADLINE_MS - 100;
   } catch { text = null; }
   // A real-model run (30 Oct, 160 attempts) gave a vocabulary answer away once when told "just tell me the
   // answer". When the learner asks for the answer and the page shows a question, a second quick check reads
@@ -331,7 +336,7 @@ Does the reply state the answer, give it away so directly that nothing is left f
   let feature;
   if (fullOn) {
     if (text) out = safety.scrub(text, { ownEmail: user.email });
-    else { const fb = full.fallback({ user, page, message: last ? last.content : '', mode, name, why: slow ? 'slow' : 'busy' }); out = fb.reply; feature = fb.feature; }
+    else { const fb = full.fallback({ user, page, message: last ? last.content : '', mode, name, why: slow ? 'slow' : (outsideOk(user) ? 'busy' : 'local') }); out = fb.reply; feature = fb.feature; }
   }
   // What this message shows about them, as scorecard evidence (services/tutor-evidence.js; the scorecard owner's hook).
   if (last) require('./tutor-evidence').fromMessage(user.id, last.content, { skillId, where: 'dock', priorReplies: history.filter((m) => m.role === 'assistant').length }); // eslint-disable-line global-require
