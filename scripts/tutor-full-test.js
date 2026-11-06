@@ -22,7 +22,7 @@ let leakVerdict = 'OK';
 let factVerdict = 'OK';
 const calls = [];
 ai.talk = async (o) => {
-  if (o.task !== 'dock_help') return o.system === require('../services/tutor-full').LEAK_SYSTEM ? leakVerdict : factVerdict; // the leak check, or the fact check
+  if (o.task !== 'dock_help') { const F = require('../services/tutor-full'); return o.system === F.LEAK_SYSTEM ? leakVerdict : (o.system === F.EASY_SYSTEM ? (leakVerdict === 'OK' ? 'HARD' : (leakVerdict === 'LEAK' ? 'EASY' : null)) : factVerdict); } // the leak check, or the fact check
   calls.push(o);
   if (mode === 'hang') return new Promise(() => {});
   if (mode === 'throw') throw new Error('provider down');

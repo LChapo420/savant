@@ -185,22 +185,22 @@ LEAK if ANY of these is true:
 - it confirms or rejects what the learner proposed, in any words ("right", "correct", "close", "almost", "not quite", "wrong", "good guess", "right track", "you've got it", "that's not it");
 - it narrows the question to a single remaining choice, for example by explaining what each option is for and then saying which one fits the learner's situation, or by saying only one of the options can be right;
 - it works the identical question (or the same numbers) through to its result;
-- it repeats the learner's proposed answer as if it were settled.
+- it repeats the learner's proposed answer as if it were settled;
+- it gives a clue that only fits the answer ("something we breathe out" for carbon dioxide, "a single-letter symbol", "the vowel changes inside", a riddle), or names the one feature that tells the options apart and says the learner's own case has it;
+- it gives a shortcut or trick and then applies it to the learner's own numbers or words ("10 times 6, then take off 6" is the question worked).
 OK only if the reply leaves the learner a real choice or a real step to do themselves: a method, a question back (such as why they chose it), a similar example with different numbers or words, a reminder of a rule that does not by itself decide the answer. When in doubt, say LEAK.`;
 
 /** @returns {Promise<'LEAK'|'OK'|''>} '' when the check could not run (the caller holds the reply: fail closed) */
 async function leakCheck({ ai, user, question, message, text }) {
   if (!text || !clip(question, 300)) return 'OK';
-  let verdict = '';
-  try {
-    verdict = await withDeadline(ai.talk({
-      role: 'fast', task: 'dock_leak_check', system: LEAK_SYSTEM,
-      messages: [{ role: 'user', content: `Question on screen: ${clip(question, 400)}\n\nThe learner said: ${clip(message, 300)}\n\nTutor reply: ${clip(text, 1000)}\n\nLEAK or OK?` }],
-      maxTokens: 6, userId: user && user.id, hedgeAfterMs: 2500, timeoutMs: 6000, temperature: 0,
-    }), 7000);
-  } catch { verdict = ''; }
-  if (/^\W*leak/i.test(verdict || '')) return 'LEAK';
-  if (/^\W*ok/i.test(verdict || '')) return 'OK';
+  const ask = (system, tail) => withDeadline(ai.talk({
+    role: 'fast', task: 'dock_leak_check', system,
+    messages: [{ role: 'user', content: `Question on screen: ${clip(question, 400)}\n\nThe learner said: ${clip(message, 300)}\n\nTutor reply: ${clip(text, 1000)}\n\n${tail}` }],
+    maxTokens: 6, userId: user && user.id, hedgeAfterMs: 2500, timeoutMs: 6000, temperature: 0,
+  }), 7000).catch(() => '');
+  const a = await ask(LEAK_SYSTEM, 'LEAK or OK?');
+  if (/^\W*leak/i.test(a || '')) return 'LEAK';
+  if (/^\W*ok/i.test(a || '')) return 'OK';
   return '';
 }
 

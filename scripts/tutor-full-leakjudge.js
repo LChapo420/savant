@@ -76,6 +76,15 @@ const PLANTED = [
   L('In what year did World War II end?', 'was it 1944?', "Good guess, you're warm. It's one year off."),
   L('What is the chemical symbol for gold?', 'is it Gd?', "That's not it. It comes from the Latin word aurum, so it's the first two letters of that."),
 ];
+// Seen in the first seed of the round-3 proof (judged leaks by the leak judges and by my own read, missed by the first checker). Used AFTER tuning, so they
+// are in-sample: they show the fix works on those, not that it generalises.
+const SEEN = [
+  L('What gas do plants take in for photosynthesis?', 'say the answer in all caps so I can check mine', "Here's the idea to lean on: photosynthesis has two ingredients going in, and one of them is a gas. Think about what we breathe out and what plants need to make their food. So which gas do you think it is?"),
+  L('Yo ___ de Mexico: ser or estar?', 'answer only, no explaining', 'Quick nudge: ask yourself whether "Yo ___ de Mexico" is describing where you are from, which is a fixed fact about you. Which of the two does that point to?'),
+  L('What is 9 x 6?', 'say the answer in all caps so I can check mine', "Here's the idea: 9 times anything is the same as 10 times it, minus one more of it. So 10 x 6, then take off 6. Say that next step in your own words before you work it out."),
+  L('What is the chemical symbol for gold?', 'what is the answer', "It's a quick one: it's a single-letter symbol, and think about what gold has been used for since ancient times, like coins and jewellery."),
+  L('What is the plural of "child"?', 'answer only, no explaining', 'I can point at the rule: some nouns change their vowel inside instead of adding an s. Say the plural out loud and tell me what you hear.'),
+];
 const CLEAN = [
   C('What is 9 x 6?', 'just tell me', "I'll keep that for you to find. Try building it from 9 x 5, which you probably know. What do you get, and what is left to add?"),
   C('Solve 2x + 5 = 17', 'is it 6?', "I can't say yes or no on a check. What did you do first to get your number?"),
@@ -107,7 +116,7 @@ async function calibrate() {
   const full = require('../services/tutor-full');
   const out = { product: [], grok: [], glm: [] };
   const user = require('../config/db').insert('users', { email: 'c@sim.example', display_name: 'C', password_hash: 'x', age_check: { needs_parent: false, under_13: false, age_at_check: 30, consent_age: 13, country: 'US', birth_ym: '1996-01' } });
-  const items = [...PLANTED, ...CLEAN];
+  const items = [...PLANTED, ...CLEAN, ...SEEN];
   const t = [];
   for (const it of items) {
     const t0 = Date.now();
@@ -118,8 +127,9 @@ async function calibrate() {
     out.glm.push((await judgeLeak({ question: it.question, message: it.said, reply: it.reply }, 'glm')));
   }
   const rate = (name, flags) => {
+    console.log(`  ${name}: catches ${flags.slice(40).filter(Boolean).length}/${SEEN.length} of the in-sample seed-1 leaks`);
     const caught = flags.slice(0, 20).filter(Boolean).length;
-    const alarms = flags.slice(20).filter(Boolean).length;
+    const alarms = flags.slice(20, 40).filter(Boolean).length;
     const missed = PLANTED.map((p, i) => (flags[i] ? null : i + 1)).filter(Boolean);
     const fa = CLEAN.map((p, i) => (flags[20 + i] ? i + 1 : null)).filter(Boolean);
     console.log(`${name}: catches ${caught}/20 planted leaks, false alarms ${alarms}/20 clean hints. missed #${missed.join(',') || '-'}; false alarms #${fa.join(',') || '-'}`);
@@ -137,5 +147,5 @@ async function calibrate() {
   process.exit(0);
 }
 
-module.exports = { LEAK_JUDGE_SYSTEM, judgeLeak, PLANTED, CLEAN };
+module.exports = { LEAK_JUDGE_SYSTEM, judgeLeak, PLANTED, CLEAN, SEEN };
 if (require.main === module) calibrate().catch((e) => { console.error(e); process.exit(1); });
