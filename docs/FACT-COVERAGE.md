@@ -183,13 +183,70 @@ Cost per check from the ledgers (`by_task.fact_live`, settled, includes the larg
 
 Credit left on the PC's ledgers: Coral about $77 of $100, ZeroGPU about $235 of $245 (the server's ledgers are separate and must be added). That is thousands of learner-days. It fits, provided those two stay cleared. `scripts/fact-guard-cost.js` gives the real figure once the tracker has real days.
 
-The check does not use up a learner's daily AI limit (`AI_DAILY_CALLS_PER_USER`). It would otherwise have halved it: found when a simulated learner hit the limit mid-run.
+The check does not use up a learner's daily AI limits (`AI_DAILY_CALLS_PER_USER`, and since 6 Nov `AI_DAILY_CENTS_PER_USER`). It would otherwise have halved it: found when a simulated learner hit the limit mid-run.
+
+## Proof of the default-on state (6 Nov, real flows, real checkers)
+
+Local server on a copy of the database, Anthropic key blank, prepaid credits only, simulated learners, sprint load (ten other builds on the same keys). Not a real-learner result. Tools: `scripts/fact-guard-tap.js` (logs every decision, and turns checkers off on the wire), `scripts/fact-guard-false-holds.js`, `scripts/fact-guard-drills.js`, `scripts/fact-guard-samefamily.js`.
+
+**Walks, switch on against off at the same time** (`scripts/learner-walk.js`, flows enroll, block, game, uploads, daily; run twice). 34 of 34 steps passed both ways, no holds. Writers vary far more than the check adds (first lesson 97 s on and 218 s off in one run, 56 s and 69 s in the other), so time added is the guard's own time from the log: sign-up and placement 4 checks, 31 s in all, in the write-ahead behind them, nothing the learner waits on; lesson 3 checks, 17 s inside a write of about a minute; games 0 in the walk (it finishes games but does not generate them; generated game questions were read in the false-hold run); upload 8 checks, 21 s across a build of 4 to 5 minutes; tutor reply 9.9 s on against 2.2 s off in the second walk.
+
+**False holds.** 261 real outputs of 24 kinds, with the final code and the one before it. I read every hold, and about 50 that passed.
+
+| | Outputs | Real error held | Right answer held, by a verdict | Right answer held, "can't check" |
+|---|---|---|---|---|
+| Tutor dock | 83 | 1 (a rook is worth "a bishop plus a pawn") | 1, fixed (a true "that's right": the check did not see the question) | 1 |
+| "Ask about this" | 28 | 2 (a wrong slope, "42" from nowhere) | 1, fixed (a mistake described as a mistake) | 1 |
+| Coach | 14 | 0 | 0 | 1 |
+| Help in a lesson | 7 | 1 (Spanish numbers changing with gender) | 0 | 0 |
+| Personal layer | 50 | 0 | 0, and 3 pieces dropped under the layer's own rule (no "how common or important" claims) | 2 |
+| Generated questions, games, debriefs, essays, rewrites, Spanish, uploads, reads | 79 | 1 (epistrophe called anaphora) | 0 | 0 |
+
+So: **right answers held by a verdict, 2 of 261 (0.8%), both causes fixed, and 0 of 26 when those paths were run again; held because no checker answered, 5 of 261 (1.9%) under this load.** Worst paths, all "can't check": coach 1 of 14, layer 2 of 50, "ask about this" 1 of 28. The first run, before the fixes, looked better and was worse: it flagged almost nothing and lost 9 of 197 outputs to "can't check".
+
+What the reading found and what changed:
+- **DeepSeek wrote its working inside the verdict.** With no reasoning budget it put a right answer in `wrong` ("987 x 654 = 645,498 is correct? ... wait"): 18 of 146 right answers flagged, against 1 of 145 for GLM. The schema now has `working` first. Coral then flagged 1 of 80, and that one was a real error (Bb5 "delivering a check"). Real errors held went up: 5 in the next run against 1 in the first, on different seeds.
+- **Stored text lost its last-resort reader.** The independent reader took the whole budget on stored paths, so a slow provider meant a false "could not check": 3 of 5 debriefs. Now 60% of the budget.
+- **A paid reader waited behind free ones.** A waiting learner's check now starts on the paid readers it lists; Coral Fast added as a further reader. "Can't check" under load 7% to 0 of 30.
+- **A check against a chat saw only the learner's last line.** It now reads the turns before the reply.
+- Tried and dropped: "a rule stated for the usual case is not false". Lesson catches fell to 26 of 71; without it 30 of 72, against 31 of 72 before all of this. Catches are otherwise unchanged: tutor 24 of 24 and layers 10 of 12 on Coral, tutor 24 of 24 on ZeroGPU; 0 false alarms on the clean controls.
+- The check's cost no longer counts against a learner's cents limit (the page said it did not; it did).
+
+**Failure drills** (checkers off on the wire, writers still on; the same with no answer at all).
+
+| Checkers off | Tutor | Lesson opening | Build from an upload | Back on |
+|---|---|---|---|---|
+| Coral | answers; 1 of 3 "can't check" (13 s) | opens | notes ready; pack slow | |
+| ZeroGPU | answers | opens | ready | |
+| NVIDIA | answers | opens | ready | |
+| All, failing at once | 3 of 3 "can't check", 1.3 to 1.7 s | shared lesson at once, no layer | notes failed, pack still building at 200 s | tutor answers again within 42 s; notes and pack finished by themselves |
+| All, no answer | 3 of 3 "can't check", 12 to 16 s | still writing at 200 s, ready later | notes still building at 200 s, ready later | |
+| Child without consent | the fixed "tutor is not connected" reply, with checkers on or off: no outside call | | | |
+
+Nothing was held for good. No stored row without a check: every output on a checked path in the logs had a check that answered, and in the all-off window nothing was stored as passed. No loop: about one writer retry per build. Fixed: a failed notes or pack build told the learner to try "a clearer text" when the check was only busy, and a failed pack had no way to try again. The child's fixed reply says the tutor is not connected, which is what it is for them.
+
+**Browser** (phone width, 375 px, on and off): tutor, a lesson with its help box, and an upload to notes all worked, with no sideways scroll. The browser pane was hidden, so this was read from the page and its layout numbers, not looked at in pixels. Seen in passing, on the writer's side, not the guard's: lesson help shows raw `\(12n+5\)` and `**`.
+
+**Tutor speed, measured on the real path, 30 replies each, same load:**
+
+| Reader for a reply DeepSeek wrote | Added p50 | p95 | Held "can't check" | Catches, tutor set | Catches, lesson set | False alarms |
+|---|---|---|---|---|---|---|
+| Today: GLM on ZeroGPU first, Coral after 4.2 s | 4.9 s | 5.6 s | 0 of 30 | 24 of 24 | 15 of 34 | 0 |
+| Same family first: Coral, `FACT_LIVE_SAME_FAMILY=1` (off) | 0.7 s | 1.6 s | 0 of 30 | 24 of 24 | 30 of 72 | 0 |
+| Munito GLM first | 4.1 s | 8.4 s | 4 of 30 | 19 of 19 | too rate limited to measure | 0 |
+| Grok 4.3 | 7.3 s | 11.9 s | not run on the path | 24 of 24 | 18 of 36 | 1 of 28, 1 of 23 |
+
+ZeroGPU missed the 4.2 s deadline on 18 of those 30, so most "independent" reads are already the same family, 4 s late. On every set I can measure, same family is not weaker. **That does not settle it:** independence guards against beliefs a model shares with itself, and DeepSeek made no real error in 150 hard answers, so there was nothing to test that with. Caching does not help (no reply text repeated), and checking while the reply is written does not either: the last sentence still waits a reader's full delay. Owner's call: same family first saves 4.2 s a reply.
+
+**Stored text.** `services/fact-recheck.js`, `FACT_RECHECK=1` (off), `FACT_RECHECK_DAY_USD` (default $1), reports only. Sample of 100 on a copy: 60 items 0 findings, 25 lessons 0 findings, 15 games 21 findings across 9 of them (749 questions), for $0.05. Full run about **$0.43**. I read all 21: most are real, and the main kind is an explanation naming the wrong option ("Option 0", "Option (3)") after the choices were reordered; some are wrong keys. The zero on lessons and items is weak evidence: this check catches about 4 in 10 subtle lesson errors.
+
+**The guard's spend.** $0.0002 to $0.0004 a check. Limits: `FACT_GUARD_LEARNER_DAY_USD` $0.25, `FACT_GUARD_DAY_USD` $10. Over either the check reads on free slots only. It never skips: if no free slot answers, a chat says it has reached today's limit and stored text is not stored.
 
 ## Open, and what the owner decides
 
 1. **After 14 Nov** (above): at least one of Coral or ZeroGPU must stay cleared for learner text for the check, or the tutor mostly holds. Ask on 10 Nov.
-2. **Text already stored before the switch** is not all re-checked. On the 3 Nov database copy: 94 game payloads, 113 generated lessons, 1,261 generated items in old sessions, 2 essays. Layers, shaped feedback, openers and cached questions are handled. A beta on a fresh database has none of these; carrying the data over needs a re-check run, which is not built.
+2. **Text already stored before the switch** is not all re-checked: `FACT_RECHECK` now reads it and reports, and is off until the owner turns it on (above). On the 3 Nov database copy: 94 game payloads, 113 generated lessons, 1,261 generated items in old sessions, 2 essays. Layers, shaped feedback, openers and cached questions are handled. A beta on a fresh database has none of these; carrying the data over needs a re-check run, which is not built.
 3. **`site/index.html` line 130** says "every lesson 100% fact-checked against credible sources". Lessons do pass a check, but checks do not always read outside sources: the free tier and this guard use model knowledge. I left the owner's page alone. Suggested wording: "every lesson fact-checked before you see it".
 4. **Switches that lift the older gate:** `BLOCK_FACT_GATE=0` and `LEVEL_SELF_CHECK=off` still lift `verifyLevel`. Neither is set in `.env` today. Left as they are because tests use them.
 5. **`TUTOR_FULL`:** its `factCheck` on the `tutor-full` branch would double the check on `dock_help`. Remove that call when it merges; its 14 s deadline (`TUTOR_DEADLINE_MS`) must also leave room for this one.
-6. **Tutor reply time.** The check adds about 3 s at p50 because the writer is usually DeepSeek, so GLM reads first. A same-family reader first would add about 0.3 s, and is weaker on exactly the beliefs a model shares with itself. Left independent, as a real check is the point. The owner may prefer the speed.
+6. **Tutor reply time.** Measured above: the independent reader adds 4.9 s at p50 and same family first adds 0.7 s, with the same catches on every set that can be measured. `FACT_LIVE_SAME_FAMILY=1` switches it. The owner decides.

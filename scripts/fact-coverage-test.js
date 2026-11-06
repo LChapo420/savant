@@ -399,8 +399,8 @@ async function spendAndRecheck() {
     process.env.FACT_GUARD_DAY_USD = '0.001';
     assert.strictEqual(guard.capReached(null), 'day');
     delete process.env.FACT_GUARD_DAY_USD;
-    const free = pool.makeSlot ? pool.refusal({ id: 'a', provider: 'nvidia', paid: true, supports: ['structured'], dataClass: 'learner' }, { task: 'fact_live', kind: 'structured', freeOnly: true, dataClass: 'pipeline' }, 'structured') : 'budget';
-    assert.ok(/budget|data/.test(String(free)));
+    const why = pool.refusal({ id: 'x', provider: 'test', paid: true, supports: ['structured'], dataClass: 'learner' }, { task: 'fact_live', kind: 'structured', freeOnly: true, dataClass: 'learner' }, 'structured');
+    assert.ok(/^budget/.test(String(why)));
   });
 
   await okAsync('a slow independent reader leaves time for the last-resort reader on stored text too', async () => {
@@ -431,6 +431,12 @@ async function spendAndRecheck() {
     assert.ok(rows.length >= 1);
     assert.ok(!rows.some((r) => 'user_id' in r));
     delete process.env.FACT_RECHECK; delete process.env.FACT_RECHECK_DAY_USD;
+  });
+
+  ok('the check reads the turns before a reply, so a true "that is right" is judged against the question that was asked', () => {
+    const ctx = guard.lastLearnerLine({ messages: [{ role: 'user', content: 'Quiz me' }, { role: 'assistant', content: 'What is the capital of Canada?' }, { role: 'user', content: 'ottawa' }] });
+    assert.ok(/Tutor: What is the capital of Canada/.test(ctx) && /Learner: ottawa/.test(ctx));
+    assert.ok(/capital of Canada/.test(guard.checkUser({ pieces: ['x'], learnerSaid: ctx })));
   });
 
   ok('the check works a statement out before it gives a verdict', () => {

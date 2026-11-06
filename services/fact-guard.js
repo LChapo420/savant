@@ -301,4 +301,4 @@ function stats(day = today()) {
 /** Is this reply one of the fixed sentences? A held reply is never stored as if it were written for the moment (a primed opener, say). */
 const isHeld = (text) => text === HELD.wrong || text === HELD.cant || text === HELD.cap;
 
-module.exports = { on, DEFAULT_ON, capReached, addSpend, pass, check, passesText, checkUser, batches, piecesOf, stats, stripHtml, isHeld, SYSTEMS, SCHEMA, HELD };
+module.exports = { on, DEFAULT_ON, capReached, addSpend, lastLearnerLine, pass, check, passesText, checkUser, batches, piecesOf, stats, stripHtml, isHeld, SYSTEMS, SCHEMA, HELD };
