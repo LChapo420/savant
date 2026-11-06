@@ -447,6 +447,8 @@ function linearRoot(st, v, scope) {
 }
 function compareSteps(a, b, scope, push, why) {
   if (a.bad || b.bad) return;
+  // A finished statement (x < 3, t = 5) has nothing further to derive: what follows is about something else.
+  if (a.sides.length === 2 && a.sides[0].k === 'v' && isLiteral(a.sides[1])) return;
   const va = [...a.vars]; const vb = [...b.vars];
   if (va.some((x) => x.endsWith('()')) || vb.some((x) => x.endsWith('()'))) return;
   if (va.length === 1 && vb.length === 1 && va[0] === vb[0]) {
@@ -648,7 +650,7 @@ function checkChecks(checks, keyAgreement, push) {
     if (c.format === 'multiple_choice' && choices && choices.length) {
       if (!choices.some((x) => normText(x) === normText(key))) add({ rule: 'key_not_a_choice', certain: true, claim: String(key).slice(0, 200), truth: 'the marked answer is not one of the choices' });
       const seen = new Map();
-      choices.forEach((x) => { const n = String(x).trim().toLowerCase(); if (seen.has(n)) add({ rule: 'duplicate_choice', certain: true, claim: x, truth: 'two choices are the same' }); seen.set(n, 1); });
+      choices.forEach((x) => { const n = String(x).trim(); if (seen.has(n)) add({ rule: 'duplicate_choice', certain: true, claim: x, truth: 'two choices are the same' }); seen.set(n, 1); });
     }
     const keyNum = key == null ? null : numberIn(key);
     // A prompt that can be computed
