@@ -57,12 +57,17 @@ const GOOD = { why: 'Equations are how you work out an unknown, the way a coach 
   check('and served', got.state === 'ready' && got.layer.hook === GOOD.hook, got);
   check('another learner has none', layer.get(4343, PLAN.id).state === 'none');
   let calls = 0;
-  const bad = await layer.start({ user: { id: 5151 }, plan: PLAN, topic: 'One-step equations', spec: SPEC, llm: async () => { calls += 1; return { data: { ...GOOD, hook: 'Imagine a basketball team scoring 82 points: how many is that?' }, model: 'stub' }; } });
+  const bad = await layer.start({ user: { id: 5151 }, plan: PLAN, topic: 'One-step equations', spec: SPEC, llm: async () => { calls += 1; return { data: { why: 'It adds up to 82 for you.', hook: 'It is 82.', analogies: [] }, model: 'stub' }; } });
   check('two bad drafts store no layer', bad === null && layer.get(5151, PLAN.id).state === 'none' && calls === 2, { calls });
   check('and the failure is kept for the record', db.findOne('lesson_layers', (r) => r.user_id === 5151).status === 'failed');
   let n = 0;
   const revised = await layer.start({ user: { id: 6161 }, plan: PLAN, topic: 'One-step equations', spec: SPEC, llm: async () => { n += 1; return { data: n === 1 ? { ...GOOD, why: 'Like a basketball season of 82 games, it adds up.' } : GOOD, model: 'stub' }; } });
-  check('a bad draft is revised once and then served', revised && revised.status === 'ready' && revised.revised === true && n === 2);
+  check('a draft with one bad piece is cut down to what passes, with no second call', revised && revised.status === 'ready' && revised.salvaged === true && n === 1 && !/82/.test(JSON.stringify(revised.layer)), revised && revised.layer);
+  let m = 0;
+  const twice = await layer.start({ user: { id: 6262 }, plan: PLAN, topic: 'One-step equations', spec: SPEC, llm: async () => { m += 1; return { data: m === 1 ? { why: 'Like basketball it adds up to 82 points.', hook: 'It is 82.', analogies: [] } : GOOD, model: 'stub' }; } });
+  check('a draft with nothing left to keep is asked again once and then served', twice && twice.status === 'ready' && twice.revised === true && m === 2);
+  const s2 = layer.salvage(SPEC, { ...GOOD, why: 'It is the thing you will use most. This is a useful skill for you.' }, SRC);
+  check('salvage drops the claim sentence and keeps the other', s2 && /useful skill for you/.test(s2.why) && !/most/.test(s2.why), s2);
   const none = await layer.start({ user: { id: 7171 }, plan: PLAN, topic: 'x', spec: { ...SPEC, isDefault: true }, llm: async () => ({ data: GOOD }) });
   check('a learner with no profile gets no layer', none === null);
 

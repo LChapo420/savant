@@ -99,12 +99,12 @@ const layerText = (l) => [l.hook, l.why, ...(l.analogies || []).map((a) => `${a.
     const t = Date.now();
     const r = await layer.compose({ spec, source, plan: c.p, call });
     c.ms = Date.now() - t; c.first = r.first; c.problems = r.problems; c.model = r.got && r.got.model; c.layer = r.problems.length ? null : r.got && r.got.layer; c.source = source; c.spec = spec;
-    c.state = c.layer ? (r.first.length ? 'revised' : 'first') : 'failed';
+    c.state = c.layer ? (!r.first.length ? 'first' : r.salvaged ? 'salvaged' : 'revised') : 'failed';
   }), CONC);
   const done = cells.filter((c) => c.layer);
   const ms = cells.map((c) => c.ms).sort((a, b) => a - b);
   const q = (a, p) => a[Math.min(a.length - 1, Math.floor(a.length * p))];
-  const write = { cells: cells.length, first_draft_passed: cells.filter((c) => c.state === 'first').length, passed_after_revision: cells.filter((c) => c.state === 'revised').length, failed: cells.filter((c) => c.state === 'failed').length, ms_p50: q(ms, 0.5), ms_p90: q(ms, 0.9), ms_max: ms[ms.length - 1], within_8s: cells.filter((c) => c.layer && c.ms <= 8000).length, models: {}, failed_because: {} };
+  const write = { cells: cells.length, first_draft_passed: cells.filter((c) => c.state === 'first').length, passed_after_salvage: cells.filter((c) => c.state === 'salvaged').length, passed_after_revision: cells.filter((c) => c.state === 'revised').length, failed: cells.filter((c) => c.state === 'failed').length, ms_p50: q(ms, 0.5), ms_p90: q(ms, 0.9), ms_max: ms[ms.length - 1], within_8s: cells.filter((c) => c.layer && c.ms <= 8000).length, models: {}, failed_because: {} };
   for (const c of cells) { if (c.model) write.models[c.model] = (write.models[c.model] || 0) + 1; if (c.state === 'failed') for (const p of (c.problems || []).slice(0, 2)) { const k = String(p).replace(/\d+/g, 'N').slice(0, 60); write.failed_because[k] = (write.failed_because[k] || 0) + 1; } }
   console.log('write', JSON.stringify(write));
   // 2. fit + planted swap

@@ -24,7 +24,7 @@ const lazy = (p) => require(p); // eslint-disable-line global-require, import/no
 const COLLECTION = 'lesson_layers';
 const on = () => String(process.env.INSTANT_LAYER || 'off').toLowerCase() === 'on';
 const BUDGET_MS = Number(process.env.INSTANT_LAYER_BUDGET_MS || 14000); // from start to a stored layer, revision included
-const HEDGE_MS = Number(process.env.INSTANT_LAYER_HEDGE_MS || 4000);
+const HEDGE_MS = Number(process.env.INSTANT_LAYER_HEDGE_MS || 2500);
 const MAX_WORDS = { hook: 45, why: 45, analogy: 40, total: 150 };
 
 const words = (t) => (String(t || '').match(/[A-Za-zÀ-ÿ0-9'-]+/g) || []);
@@ -177,6 +177,36 @@ function userPrompt(spec, source, rl, problems, plan) {
 }
 
 /**
+ * A draft that fails the check, cut down to what passes: the pieces (each sentence of the why, the hook, each analogy) are dropped one at a time, always
+ * the one whose removal leaves the fewest problems, until none are left. No model is asked, so it costs milliseconds, not a second call (6 Nov: the
+ * revision doubled the time to 10 s, and most first-draft failures were one claim sentence in the why). What is kept is exactly what the check passed;
+ * nothing is added. At least two of the three kinds (why, hook, analogies) must survive, otherwise null.
+ */
+function salvage(spec, layer, source) {
+  const sents = (t) => String(t || '').split(/(?<=[.!?])\s+/).map((x) => x.trim()).filter(Boolean);
+  let cur = { why: sents(layer.why), hook: String(layer.hook || '').trim(), analogies: (Array.isArray(layer.analogies) ? layer.analogies : []).filter((a) => a && a.text) };
+  const asLayer = (c) => ({ why: c.why.join(' '), hook: c.hook, analogies: c.analogies });
+  let problems = check(spec, asLayer(cur), source);
+  for (let round = 0; round < 8 && problems.length; round += 1) {
+    const options = [];
+    cur.why.forEach((_, i) => options.push({ ...cur, why: cur.why.filter((__, k) => k !== i) }));
+    if (cur.hook) options.push({ ...cur, hook: '' });
+    cur.analogies.forEach((_, i) => options.push({ ...cur, analogies: cur.analogies.filter((__, k) => k !== i) }));
+    let best = null; let bestProblems = problems;
+    for (const o of options) {
+      const p = check(spec, asLayer(o), source);
+      if (p[0] === 'empty') continue;
+      if (p.length < bestProblems.length) { best = o; bestProblems = p; }
+    }
+    if (!best) return null;
+    cur = best; problems = bestProblems;
+  }
+  if (problems.length) return null;
+  const kinds = [cur.why.length > 0, !!cur.hook, cur.analogies.length > 0].filter(Boolean).length;
+  return kinds >= 2 ? asLayer(cur) : null;
+}
+
+/**
  * One draft and, when the check finds problems, one revision, inside the time budget. `call({system, user, schema, ...})` resolves { data, model } or
  * null. Returns { got: { layer, model } | null, problems: [] when got may be shown, first: the problems of the first draft }. Also used by the
  * proof (scripts/lesson-layer-proof.js) with simulated learners.
@@ -194,11 +224,16 @@ async function compose({ spec, source, plan, call, t0 = Date.now(), goalClause =
   let got = await ask(null);
   let problems = got ? check(spec, got.layer, source) : ['no answer'];
   const first = problems;
+  let salvaged = false;
+  if (problems.length && got) {
+    const cut = salvage(spec, got.layer, source);
+    if (cut) { got = { ...got, layer: cut }; problems = []; salvaged = true; }
+  }
   if (problems.length && got) {
     const second = await ask(problems);
     if (second) { const p2 = check(spec, second.layer, source); if (!p2.length) { got = second; problems = []; } else problems = p2; }
   }
-  return { got, problems, first };
+  return { got, problems, first, salvaged };
 }
 
 const running = new Set();
@@ -234,7 +269,7 @@ async function start({ user, plan, topic = '', trackId, gradeId, level, llm = nu
     let goalClause = null;
     try { goalClause = lazy('./part-modify').goalClause(lazy('./retention-goal').forEnrollment(user.id, db.findOne('enrollments', (e) => e.user_id === user.id && e.track_id === (trackId || plan.track_id) && e.grade_id === (gradeId || plan.grade_id)))); } catch { /* no goal */ }
     const call = llm || ((a) => lazy('./pool').runForeground(() => lazy('./ai').structuredDetail({ role: 'fast', task: 'part_layer', ...a, userId: user.id, dataClass: 'learner', effort: 'off' }), { fast: true }));
-    const { got, problems, first } = await compose({ spec: sp, source, plan, call, t0, goalClause });
+    const { got, problems, first, salvaged } = await compose({ spec: sp, source, plan, call, t0, goalClause });
     const ms = Date.now() - t0;
     if (problems.length || !got) { db.update(COLLECTION, row.id, { status: 'failed', problems: problems.slice(0, 6), first_problems: first.slice(0, 6), ms, model: got && got.model }); return null; }
     const clean = {
@@ -242,11 +277,11 @@ async function start({ user, plan, topic = '', trackId, gradeId, level, llm = nu
       hook: String(got.layer.hook || '').trim(),
       analogies: (got.layer.analogies || []).slice(0, 2).map((a) => ({ point: String(a.point || '').trim(), text: String(a.text || '').trim() })).filter((a) => a.text),
     };
-    return db.update(COLLECTION, row.id, { status: 'ready', layer: clean, ms, model: got.model, revised: first.length > 0, finished_at: new Date().toISOString() });
+    return db.update(COLLECTION, row.id, { status: 'ready', layer: clean, ms, model: got.model, revised: first.length > 0 && !salvaged, salvaged, first_problems: first.slice(0, 6), finished_at: new Date().toISOString() });
   } catch (err) {
     try { db.update(COLLECTION, row.id, { status: 'failed', problems: [`error: ${String(err && err.message).slice(0, 80)}`], ms: Date.now() - t0 }); } catch { /* nothing */ }
     return null;
   } finally { running.delete(key); }
 }
 
-module.exports = { on, sourceOf, rules, check, compose, start, get, SCHEMA, numbersShown, COLLECTION };
+module.exports = { on, sourceOf, rules, check, salvage, compose, start, get, SCHEMA, numbersShown, COLLECTION };
