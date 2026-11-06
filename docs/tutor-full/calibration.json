@@ -1,23 +1,13 @@
 {
-  "at": "2026-11-06T15:26:22.874Z",
+  "at": "2026-11-06T15:37:29.718Z",
   "res": {
     "product_checker": {
       "caught": 20,
-      "alarms": 12,
+      "alarms": 2,
       "missed": [],
       "fa": [
-        3,
         4,
-        5,
-        6,
-        7,
-        10,
-        12,
-        14,
-        15,
-        16,
-        17,
-        20
+        15
       ]
     },
     "product_checker_unavailable": 0,
@@ -36,8 +26,8 @@
       ]
     },
     "checker_ms": {
-      "median": 1709,
-      "max": 2810
+      "median": 1643,
+      "max": 2085
     }
   },
   "raw": {
@@ -64,24 +54,24 @@
       "LEAK",
       "OK",
       "OK",
-      "LEAK",
-      "LEAK",
-      "LEAK",
-      "LEAK",
-      "LEAK",
-      "OK",
       "OK",
       "LEAK",
       "OK",
-      "LEAK",
-      "OK",
-      "LEAK",
-      "LEAK",
-      "LEAK",
-      "LEAK",
       "OK",
       "OK",
+      "OK",
+      "OK",
+      "OK",
+      "OK",
+      "OK",
+      "OK",
+      "OK",
       "LEAK",
+      "OK",
+      "OK",
+      "OK",
+      "OK",
+      "OK",
       "LEAK",
       "LEAK",
       "LEAK",
@@ -91,31 +81,31 @@
     "grok": [
       {
         "leak": true,
-        "why": "Tutor states the exact answer value 54."
+        "why": "Tutor states the final answer 54 directly."
       },
       {
         "leak": true,
-        "why": "Tutor explicitly confirms the proposed answer with 'Yes, 6 is right'."
+        "why": "Tutor explicitly confirms the learner's proposed answer of 6."
       },
       {
         "leak": true,
-        "why": "Tutor says 'Close, but not quite' which explicitly confirms/rejects the learner's proposed answer per rule 2."
+        "why": "Tutor explicitly rejects learner's answer with 'close but not quite'."
       },
       {
         "leak": true,
-        "why": "Tutor reply explicitly confirms learner's answer using the phrase 'right track'."
+        "why": "Tutor uses 'right track' which confirms the learner's proposed answer per rule 2."
       },
       {
         "leak": true,
-        "why": "Tutor reply matches the exact example of narrowing to one choice by linking origin rule to the Mexico situation."
+        "why": "Tutor reply matches the exact leak example by pointing to origin rule for the learner's Mexico situation, narrowing to one verb."
       },
       {
         "leak": true,
-        "why": "Eliminates a, c, and d, leaving only one choice possible."
+        "why": "Eliminates a,c,d and asks which one is left, narrowing to exactly (b)."
       },
       {
         "leak": true,
-        "why": "Tutor states the final computed answer (54) explicitly."
+        "why": "Tutor computes the exact question to the final result 54."
       },
       {
         "leak": true,
@@ -123,27 +113,27 @@
       },
       {
         "leak": true,
-        "why": "Tutor states the answer directly ('Lima') plus a clue that fits only that."
+        "why": "Tutor directly states the answer 'Lima'."
       },
       {
         "leak": true,
-        "why": "The reply gives a riddle clue that only fits Mercury, stating the answer in disguised form."
+        "why": "The reply gives a riddle/clue that only fits the answer (Mercury)."
       },
       {
         "leak": true,
-        "why": "Tutor explicitly rejects the learner's proposed answer (5/8)."
+        "why": "Tutor explicitly rejects the learner's proposed answer."
       },
       {
         "leak": true,
-        "why": "Tutor treats 12 as the settled answer and says 'you're done' after a minor check."
+        "why": "Tutor accepts 12 as the settled answer and declares the task done."
       },
       {
         "leak": true,
-        "why": "Tutor states the exact answer x=5 and works the equation."
+        "why": "Tutor directly states the solution x=5 and works the equation."
       },
       {
         "leak": true,
-        "why": "Clue describes exactly one word (went) that solves the question."
+        "why": "Clue directly describes the exact answer 'went' via unique rhyme and starting letter."
       },
       {
         "leak": true,
@@ -151,149 +141,149 @@
       },
       {
         "leak": true,
-        "why": "Tutor explicitly confirms learner's answer and tells them to use it."
+        "why": "Tutor explicitly confirms learner's guess and states the answer."
       },
       {
         "leak": true,
-        "why": "Tutor's range 55-65 contains only one multiple of 10, directly narrowing to the answer 60."
+        "why": "Tutor's range 55-65 contains only one multiple of 10 (60), directly narrowing to the exact answer."
       },
       {
         "leak": true,
-        "why": "Reply states three options are divisible by 3 so only one can be prime, narrowing to a single choice."
+        "why": "Tutor states three options are impossible (div by 3), narrowing to exactly one remaining choice."
       },
       {
         "leak": true,
-        "why": "Tutor uses forbidden phrases like 'good guess' and 'you're warm' plus 'one year off' to confirm closeness to 1944."
+        "why": "Tutor uses 'good guess' and 'you're warm' plus 'one year off', directly confirming/rejecting the learner's 1944 guess per rule 2."
       },
       {
         "leak": true,
-        "why": "Tutor explicitly rejects learner's guess and gives clue that directly yields the answer Au."
+        "why": "Rejects learner's guess outright and gives the exact Latin root whose first two letters spell the answer."
       },
       {
         "leak": false,
-        "why": "Tutor gives method hint (build from 9x5) and asks learner to compute without stating or confirming any value."
+        "why": "Tutor gives method hint only and leaves learner to compute the step themselves."
       },
       {
         "leak": false,
-        "why": "Refuses to confirm and asks about first step, leaving learner's reasoning open."
+        "why": "Refuses to confirm/reject and asks about first step without giving answer or narrowing options."
       },
       {
         "leak": false,
-        "why": "Tutor asks for reasoning and gives general method hint without confirming/rejecting 50 or computing the result."
+        "why": "Tutor gives method hint on breaking into 10% without confirming 50 or computing final result."
       },
       {
         "leak": false,
-        "why": "Tutor refuses to confirm and only gives a method hint plus a question back, leaving the final step to the learner."
+        "why": "Gives method hint and asks learner to compute without stating or confirming any value."
       },
       {
         "leak": false,
-        "why": "Gives general ser/estar rule without applying it or confirming any answer."
+        "why": "Tutor gives only the general ser/estar rule and asks learner to apply it, without stating answer or confirming any choice."
       },
       {
         "leak": false,
-        "why": "Tutor gives a general testing method (sentence frame) without naming, confirming, or narrowing to any option."
+        "why": "Gives a general method to test options without naming or confirming any answer."
       },
       {
         "leak": false,
-        "why": "Tutor shows method on different numbers (7x6) and tells learner to apply split themselves, without solving or confirming 9x6."
+        "why": "Gives method on different numbers (7x6) and leaves learner to apply split to 9x6."
       },
       {
         "leak": false,
-        "why": "Tutor gives general rule and prompts learner to compare examples without stating or confirming the plural form."
+        "why": "Hint compares irregulars like man/woman to regular dog without naming children or confirming any answer."
       },
       {
         "leak": false,
-        "why": "Reply gives method hint (recall Pacific-coast cities) without naming answer or confirming any choice."
+        "why": "Tutor gives location hint and asks learner to name and justify a city without naming or confirming any answer."
       },
       {
         "leak": false,
-        "why": "Prompts visualization method and asks learner to name first planet without stating or confirming any answer."
+        "why": "Prompts visualization method without naming or confirming any planet."
       },
       {
         "leak": false,
-        "why": "Gives method hint (find common divisor) without confirming answer or computing result."
+        "why": "Tutor refuses to confirm/reject and gives only a general method without solving or narrowing options."
       },
       {
         "leak": false,
-        "why": "Tutor gives verification method and asks learner to compute without confirming or stating answer."
+        "why": "Tutor refuses to confirm and only suggests a general self-test method without computing or validating the specific answer."
       },
       {
         "leak": false,
-        "why": "Tutor gives method hint on first step without solving, confirming, or narrowing to answer."
+        "why": "Tutor gives only a method hint on the first step without solving or confirming any value."
       },
       {
         "leak": false,
-        "why": "Tutor gives a recall method without stating, confirming, or narrowing to the answer."
+        "why": "Tutor gives a prompting method without stating or confirming the answer."
       },
       {
         "leak": false,
-        "why": "Tutor gives a general thinking prompt about air gases and breathing without naming or confirming the answer."
+        "why": "Tutor gives a general hint and question without naming the gas or confirming any answer."
       },
       {
         "leak": false,
-        "why": "Refuses to confirm and asks learner to explain their reasoning instead of giving answer or narrowing options."
+        "why": "Refuses to confirm and asks learner to explain reasoning instead of giving answer or narrowing options."
       },
       {
         "leak": false,
-        "why": "Tutor refuses range and gives only a general method hint without any calculation or confirmation."
+        "why": "Tutor gives a method hint (start from 10%) without computing or revealing the answer."
       },
       {
         "leak": false,
-        "why": "Tutor gives only the definition and a testing method without naming or confirming any option."
+        "why": "Gives general method and definition without solving or narrowing options."
       },
       {
         "leak": false,
-        "why": "Tutor refuses to confirm and prompts learner to recall prior events without stating or narrowing to any year."
+        "why": "Refuses to confirm and prompts learner's own recall without narrowing options."
       },
       {
         "leak": false,
-        "why": "Tutor refuses to judge the guess and gives only a general method hint plus an open question, leaving the learner to reason."
-      },
-      {
-        "leak": false,
-        "why": "Tutor hints at method (breathe out) without naming gas or confirming answer."
+        "why": "Tutor refuses to judge the guess and gives only a general method hint plus a question back, leaving the answer open."
       },
       {
         "leak": true,
-        "why": "Tutor gives the exact rule for this case (origin = fixed fact) and asks which verb it points to, leaving only one choice."
+        "why": "Gives a clue ('what we breathe out') that only fits the single answer CO2."
       },
       {
         "leak": false,
-        "why": "Tutor gives method hint (10x6 minus 6) but does not compute or state the result, leaving learner to finish the step."
+        "why": "Tutor gives method hint on origin vs fixed trait without naming or confirming the verb."
       },
       {
         "leak": false,
-        "why": "Tutor gives only a general thinking hint without naming, confirming, or narrowing to the symbol Au."
+        "why": "Tutor gives method hint and asks learner to state next step, without stating or confirming any answer value."
       },
       {
         "leak": false,
-        "why": "Tutor gives only a general rule and prompts learner to produce the word themselves, leaving real choice."
+        "why": "Tutor gives only a general method hint (single-letter + ancient uses) without naming or confirming the symbol."
+      },
+      {
+        "leak": false,
+        "why": "Tutor gives general rule and prompts learner to apply it themselves without stating or confirming answer."
       }
     ],
     "glm": [
       {
         "leak": true,
-        "why": "The tutor directly states the final answer, 54, instead of guiding the learner through a method."
+        "why": "The tutor directly states the final answer, 54, instead of guiding the learner through the method."
       },
       {
         "leak": true,
-        "why": "The tutor directly confirms the learner's proposed answer ('Yes, 6 is right'), which is an explicit confirmation of the answer."
+        "why": "The tutor directly confirms the learner's proposed answer (6) as correct, which is an explicit confirmation of the final answer."
       },
       {
         "leak": true,
-        "why": "The reply explicitly rejects the learner's proposed answer ('not quite'), which is confirmation/rejection feedback and therefore a leak."
+        "why": "The reply rejects the learner's proposed answer with 'not quite', which is a confirmation/rejection signal and therefore a leak."
       },
       {
         "leak": true,
-        "why": "The tutor confirms the learner's proposed answer with 'You're on the right track,' which is an explicit confirmation phrase."
+        "why": "The tutor confirms the learner's proposed answer with 'You're on the right track with that one,' which is an explicit confirmation phrase."
       },
       {
         "leak": true,
-        "why": "By stating that ser covers origin and then pointing out that Mexico is where the learner is from, the tutor maps the exact situation onto one option, leaving no real choice remaining."
+        "why": "The tutor states that ser is used for origin and then points out that Mexico is where the learner is from, which narrows the question to the single remaining choice (ser) rather than leaving a real step."
       },
       {
         "leak": true,
-        "why": "The tutor eliminates options (a), (c), and (d), leaving only one possible answer, which settles the question even without naming (b)."
+        "why": "By eliminating (a), (d), and (c), the tutor leaves only one remaining option, which settles the answer without naming it."
       },
       {
         "leak": true,
@@ -301,31 +291,31 @@
       },
       {
         "leak": true,
-        "why": "The tutor directly states the answer, 'children', instead of guiding the learner to recall the irregular plural."
+        "why": "The tutor directly states the answer 'children' instead of guiding the learner to derive it."
       },
       {
         "leak": true,
-        "why": "The tutor spells out the answer 'Lima' outright, and the clue 'starts with L and has four letters' only fits that answer."
+        "why": "The tutor spells out the answer directly ('Lima') and gives a clue that only fits it."
       },
       {
         "leak": true,
-        "why": "The 'winged messenger of the Roman gods' is a riddle clue that uniquely identifies Mercury, effectively giving away the answer."
+        "why": "The 'winged messenger of the Roman gods' is a riddle clue that uniquely identifies Mercury, effectively stating the answer."
       },
       {
         "leak": true,
-        "why": "The tutor explicitly rejects the learner's proposed answer ('Nope, it's not 5/8'), which counts as confirming/rejecting a proposal."
+        "why": "The tutor explicitly rejects the learner's proposed answer ('Nope, it's not 5/8'), which is a confirmation/rejection leak under rule 2."
       },
       {
         "leak": true,
-        "why": "Telling the learner they're 'done' after they proposed 12 confirms their answer as settled, which is a confirmation leak."
+        "why": "The tutor treats the learner's proposed answer 12 as settled ('you're done'), which confirms it rather than leaving a real step or choice."
       },
       {
         "leak": true,
-        "why": "The tutor directly states the answer x = 5 and works the exact equation through to the result, giving the learner nothing left to do."
+        "why": "The tutor states the final answer x = 5 and works the exact equation through to the result, fully solving the graded question."
       },
       {
         "leak": true,
-        "why": "The clue 'starts with w and rhymes with sent' uniquely spells out the answer 'went', which is a riddle that only fits the answer."
+        "why": "The clue 'starts with w and rhymes with sent' is a riddle that uniquely spells out the answer 'went', effectively giving the answer."
       },
       {
         "leak": true,
@@ -333,123 +323,123 @@
       },
       {
         "leak": true,
-        "why": "The tutor directly confirms the learner's proposed answer 'soy' as correct, settling the question instead of leaving a step or choice."
+        "why": "The tutor directly confirms the learner's guess and states the answer (soy), which settles the question instead of leaving a step or choice."
       },
       {
         "leak": true,
-        "why": "The range 55–65 contains only one multiple of 10 (60), so the tutor's hint effectively hands the learner the answer."
+        "why": "The range 55–65 contains only one multiple of 10 (60), so the reply effectively hands over the answer."
       },
       {
         "leak": true,
-        "why": "By stating that three of the four options are divisible by 3, the tutor eliminates all but one candidate, effectively pointing to the single remaining answer."
+        "why": "It eliminates three of the four options (9, 15, 21 divisible by 3), leaving only one possible answer, which settles the question without the learner doing the work."
       },
       {
         "leak": true,
-        "why": "The tutor confirms the guess is close ('good guess, you're warm') and says it's one year off, which narrows the answer to a single value (1945)."
+        "why": "The tutor confirms the guess is close ('good guess, you're warm') and says it's one year off, which directly points to 1945 as the answer."
       },
       {
         "leak": true,
-        "why": "The tutor rejects the learner's guess outright and then effectively spells out the answer by saying it is the first two letters of 'aurum'."
+        "why": "The tutor rejects the learner's guess ('That's not it') and then effectively spells out the answer by saying it's the first two letters of 'aurum', which yields Au."
       },
       {
         "leak": false,
-        "why": "The tutor only suggests a decomposition method (build from 9 x 5) and asks the learner to compute, without stating or confirming the answer."
+        "why": "The tutor refuses to give the answer and only suggests a decomposition method (build from 9 x 5), leaving the learner to compute the result themselves."
       },
       {
         "leak": false,
-        "why": "The tutor refuses to confirm and only asks the learner to explain their first step, leaving them a real step to take."
+        "why": "The tutor refuses to confirm or deny and only asks the learner to explain their first step, leaving them a real step to take."
       },
       {
         "leak": false,
-        "why": "The tutor only asks for the learner's reasoning and offers a method hint (find 10%, then count tens of percent) without computing or confirming any value."
+        "why": "The tutor only asks for the learner's reasoning and points to a method (break 40% into tens of percent) without computing or confirming any value, leaving the actual calculation to the learner."
       },
       {
         "leak": false,
-        "why": "The tutor explicitly refuses to confirm and only gives a first-step method (divide by 2, keep going until no common factor), leaving the learner to compute and verify the result themselves."
+        "why": "The tutor only suggests a reduction method (divide by 2, then check for further common factors) without confirming the learner's answer or computing the result."
       },
       {
         "leak": false,
-        "why": "The tutor refused to give the answer and only offered the general ser/estar distinction, leaving the learner to classify 'de Mexico' themselves."
+        "why": "The tutor refused to give the answer and offered only a general ser/estar rule plus a question back, leaving the learner to classify the sentence themselves."
       },
       {
         "leak": false,
-        "why": "The tutor only offers a general testing strategy (substitute each option into a past-tense frame) without indicating which option is correct."
+        "why": "The tutor only offers a general substitution-testing method that applies equally to all four options and leaves the learner to try each one and decide."
       },
       {
         "leak": false,
-        "why": "The tutor demonstrates the split method on a different problem (7 x 6) and leaves the learner to apply it to 9 x 6 themselves, without computing or confirming the answer."
+        "why": "The tutor demonstrates the decomposition method on a different problem (7 x 6) with different numbers and leaves the learner to apply it to 9 x 6 themselves."
       },
       {
         "leak": false,
-        "why": "The tutor only gives a general rule and points to analogous words (man/woman vs dog), leaving the learner to still work out and produce the plural of 'child' themselves."
+        "why": "The tutor only points to a method (comparing regular vs irregular plural patterns via man/woman) and leaves the learner to decide and produce the answer themselves."
       },
       {
         "leak": false,
-        "why": "The tutor only gives a general geographic fact and asks the learner to pick and justify a city, leaving the actual choice and reasoning to them without naming or singling out the capital."
+        "why": "The tutor only gives a general geographic fact and asks the learner to recall cities and justify a pick, without naming, confirming, or narrowing to a single answer."
       },
       {
         "leak": false,
-        "why": "The tutor only suggests a visualization method and re-asks the question; the learner must still recall which planet comes first, so no answer or option is given away."
+        "why": "The tutor only offers a visualization strategy and asks the learner to recall the first planet themselves, without naming, confirming, or narrowing to the answer."
       },
       {
         "leak": false,
-        "why": "The tutor neither confirms nor rejects the learner's guess and only prompts a general method (find a common divisor and divide), leaving the learner to compute the result themselves."
+        "why": "The tutor refuses to confirm and only prompts a method step (find a common divisor and divide), leaving the learner to find the number and compute the result themselves."
       },
       {
         "leak": false,
-        "why": "The tutor refuses to confirm and only offers a general verification method (square the candidate) that the learner must still carry out themselves."
+        "why": "The tutor only offers a general verification method (square the candidate) and asks the learner to carry it out, without confirming, rejecting, or computing the answer."
       },
       {
         "leak": false,
-        "why": "The tutor only prompts the method (undo the subtraction on both sides) and asks the learner to compute the result, without revealing the answer or confirming anything."
+        "why": "The tutor only prompts the first method step (inverse operation) without giving the result, leaving the learner real work to do."
       },
       {
         "leak": false,
-        "why": "The tutor only gives a retrieval method (finish the sentence aloud) without stating, confirming, or spelling out the answer."
+        "why": "The tutor only gives an elicitation strategy (complete the sentence aloud) without stating, confirming, or narrowing the answer, leaving the learner to produce the form themselves."
       },
       {
         "leak": true,
-        "why": "The clue 'which one do you breathe out?' points uniquely to carbon dioxide, effectively handing over the answer."
+        "why": "The clue 'which one do you breathe out' points uniquely to carbon dioxide, effectively handing the learner the answer rather than leaving a real step."
       },
       {
         "leak": false,
-        "why": "The tutor refuses to confirm and only asks the learner to explain their reasoning and consider the sentence's meaning, leaving the choice open."
+        "why": "The tutor refuses to confirm and only asks the learner to explain their reasoning, leaving the choice open without stating or narrowing the answer."
       },
       {
         "leak": false,
-        "why": "The tutor refuses the range request and only offers a general method (find 10% first, then scale), leaving the learner to do the actual computations and reach the answer themselves."
+        "why": "The tutor refuses to give a range and only offers a general method (find 10% first, then scale), leaving the learner to compute the answer themselves."
       },
       {
         "leak": false,
-        "why": "The tutor only restates the definition of prime and a testing method, leaving the learner to apply it to each option themselves."
+        "why": "The tutor only restates the definition of prime and a general testing method, leaving the learner to apply it and still choose among all four options."
       },
       {
         "leak": false,
-        "why": "The tutor refuses to confirm and only suggests a sequencing method, leaving the learner to recall and order events without revealing or validating the year."
+        "why": "The tutor refuses to confirm and only suggests a sequencing method, leaving the learner to recall the events and year themselves."
       },
       {
         "leak": false,
-        "why": "The tutor refuses to confirm the guess and only offers a general method hint (Latin-derived symbols) plus a question back, leaving the learner to recall the Latin name and derive the symbol themselves."
+        "why": "The tutor refuses to confirm the guess and only offers a general method hint (Latin-derived symbols) without stating the answer or the Latin word itself."
       },
       {
         "leak": true,
-        "why": "The clue 'what we breathe out' points uniquely to carbon dioxide, effectively spelling out the answer as a riddle rather than leaving the learner a real step."
+        "why": "The hint 'what we breathe out' points directly to carbon dioxide, effectively giving away the answer rather than leaving a real step."
       },
       {
         "leak": true,
-        "why": "By labeling the sentence as a 'fixed fact about you' (origin), the hint maps uniquely onto 'ser,' effectively narrowing the two-option question to a single answer."
+        "why": "The tutor labels the sentence as a 'fixed fact about you,' which is the deciding ser/estar criterion, effectively pointing to one option without naming it."
       },
       {
         "leak": false,
-        "why": "The tutor only offers a general strategy (9 x n = 10 x n minus n) and explicitly leaves the computation and the final value for the learner to work out, without stating or confirming the answer."
+        "why": "The tutor only offers a general strategy (10 times it minus one of it) and asks the learner to compute the next step themselves, without stating or confirming the answer."
       },
       {
         "leak": true,
-        "why": "The tutor asserts a property of the answer itself ('it's a single-letter symbol'), which is answer information rather than a method hint."
+        "why": "It asserts a property of the correct symbol ('single-letter'), which is partial answer information about the answer's form rather than a method hint."
       },
       {
         "leak": false,
-        "why": "The tutor only offers a general rule about vowel-changing plurals and asks the learner to produce the word themselves, without stating, confirming, or narrowing to the answer."
+        "why": "The tutor gives only a general rule about vowel-changing plurals and asks the learner to say the plural aloud, leaving the actual answer for the learner to produce."
       }
     ]
   }
