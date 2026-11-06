@@ -311,7 +311,8 @@ async function reply({ user, messages, page, inputMode, image }) {
   // check also runs when the plan allowed a worked example (rung 4 or 5), and it now asks about exactly that.
   const risky = !!(text && helpPlan && helpPlan.rung >= 4);
   const question = page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 600) : '';
-  if ((asked || risky) && question) {
+  // With the switch on, the answer check is for a question that is actually on the screen (page.question), not for any page with a heading.
+  if ((asked || risky) && question && (!fullOn || mode === 'method' || (page && page.question))) {
     let verdict = '';
     try {
       verdict = await ai.talk({
@@ -331,6 +332,8 @@ Does the reply state the answer (to the question on the page, or to a question f
     // On a graded page a checker that could not run is not a pass: with the switch on, the reply is held instead (fail closed).
     else if (fullOn && mode === 'method' && !/^\W*no/i.test(verdict || '')) { text = HOLD_REPLY.method; held = true; }
   }
+  // A one-line reply with no question in it, to someone who asked for the answer, is the answer ("answer only" -> "9 x 6 is 54.").
+  if (fullOn && text && !held && asked && (mode === 'method' || (page && page.question)) && text.trim().length <= 70 && !/\?/.test(text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   // Without any model: a reply that repeats the answer the learner just proposed ("is it 3/4?") is confirming it.
   if (fullOn && text && !held && last && (mode === 'method' || (page && page.question)) && full.echoesProposal(last.content, text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   // Round 2: a fast fact check before a reply is shown (services/tutor-full.js factCheck).

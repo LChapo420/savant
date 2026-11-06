@@ -789,6 +789,12 @@
         "timeout_ms": 300000,
         "basis": "same family as the lineup's hard-tier head (DeepSeek V4.1 Flash); no direct eval on lesson writing"
       },
+      "dock_leak_check": {
+        "allow": [
+          "coral:deepseek-v4.1-flash"
+        ],
+        "basis": "6 Nov proof: with the free NVIDIA slots unavailable 179 of 182 answer and fact checks got no slot, so nothing was checked; the same last resort as dock_help, one-word replies, a fraction of a cent"
+      },
       "dock_help": {
         "allow": [
           "coral:deepseek-v4.1-flash"
