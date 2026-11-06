@@ -558,6 +558,7 @@ App.mount(async () => {
         ${plannerSection()}
 
         <div id="reading-offer"></div>
+        <div id="speed-offer"></div>
         <div id="daily-offer"></div>
 
         ${!data.profile.took_style_quiz ? `
@@ -605,6 +606,7 @@ App.mount(async () => {
   // The planner's form, clear and calendar-file buttons.
   // The short reading check, when one is on offer (services/reading-check.js): quiet if not.
   if (window.ReadingOffer) window.ReadingOffer.mount(root.querySelector('#reading-offer'), { next: '/dashboard' });
+  if (window.SpeedOffer) window.SpeedOffer.mount(root.querySelector('#speed-offer')); // the optional speed-proof question, once, after placement
   // The daily check (services/daily-check.js): drawn after the page, only when on offer, skippable at one tap.
   if (window.DailyOffer) window.DailyOffer.mount(root.querySelector('#daily-offer'), { next: '/dashboard' });
 

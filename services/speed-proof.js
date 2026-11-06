@@ -265,6 +265,40 @@ function plainNowFor(userOrId) {
   return s.userId === id;
 }
 
+const PLAIN_NOTE = 'This skill is being taught the plain way (the standard lesson, read at your own pace), so there is no coach or tutor help on it. Switch it to the Savant way any time to get help.';
+
+/**
+ * Express middleware for routes that serve one level (/lessons/:track/:grade/:level/...): runs the rest of the request with the plain way
+ * fixed when that level's skill is plain for this learner (so block-level tailoring, which asks blockLevels.tailorsFor, serves the shared
+ * standard page), and refuses the lesson assistant for it.
+ */
+function lessonContext(req, res, next) {
+  try {
+    if (!req.user || !enabled()) return next();
+    const grade = lazy('../config/curriculum').getGrade(req.params.track, req.params.grade);
+    const skill = grade ? skillOfLevel(grade, Number(req.params.level)) : null;
+    if (!skill || !normalFor(req.user.id, skill)) return next();
+    if (/^\/assist/.test(req.path)) return res.status(409).json({ error: PLAIN_NOTE, plain_way: true });
+    return ambient.run({ userId: req.user.id, skillId: skill }, next);
+  } catch { return next(); }
+}
+
+/** The same for /items/:id/...: the coach and the ask-the-tutor box are off on a plain skill ("ask" gets the standard explanation). */
+function itemContext(req, res, next) {
+  try {
+    if (!req.user || !enabled()) return next();
+    const item = db.byId('items', Number(req.params.id));
+    if (!item || item.user_id !== req.user.id || !item.skill_id || !normalFor(req.user.id, item.skill_id)) return next();
+    if (/^\/ask/.test(req.path) && item.rationale && item.correct !== null && item.correct !== undefined) {
+      return res.json({ reply: `${item.rationale}
+
+The answer is ${item.answer}.`, source: 'plain_way', plain_way: true });
+    }
+    if (/^\/coach/.test(req.path) || /^\/ask/.test(req.path)) return res.status(409).json({ error: PLAIN_NOTE, plain_way: true });
+    return ambient.run({ userId: req.user.id, skillId: item.skill_id }, next);
+  } catch { return next(); }
+}
+
 /** Is the skill at the learner's current level taught the plain way? (The test-out offer is held back when it is.) */
 function plainAtLevel(userId, enrollment, grade) {
   try { const s = skillOfLevel(grade, enrollment.current_level); return !!s && normalFor(userId, s); } catch { return false; }
@@ -591,6 +625,55 @@ function verdict(g, min = minLearners()) {
   return { status: 'inconclusive', four_x_shown: false, statement: `Not shown yet. Savant is ${g.time.speedup_geomean}x faster (95% interval ${tLo}x to ${tHi}x), which includes values below ${TARGET}x; retention difference ${pts(g.retention.diff_mean)} (${pts(rLo)} to ${pts(rHi)}). More learners are needed.` };
 }
 
+const cdf = (x) => { // standard normal CDF (Abramowitz and Stegun 7.1.26)
+  const t = 1 / (1 + 0.2316419 * Math.abs(x));
+  const d = 0.3989423 * Math.exp(-x * x / 2);
+  const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+  return x > 0 ? 1 - p : p;
+};
+
+/**
+ * What a sample of n learners can detect, from the spread seen so far (sdLog: SD of per-learner log speed-up; sdRet: SD of per-learner
+ * retention difference). Approximate (normal theory): the true speed-up that clears the 4x gate about 80% of the time, the chance the
+ * retention gate is cleared when retention is truly equal, and the learners the retention gate needs for 80%.
+ */
+function detectability(n, sdLog, sdRet) {
+  if (!(n >= 3) || !(sdLog > 0) || !(sdRet > 0)) return null;
+  const t = stats.qt(0.975, n - 1);
+  const se = sdLog / Math.sqrt(n);
+  const retClear = cdf((NONINFERIORITY - t * (sdRet / Math.sqrt(n))) / (sdRet / Math.sqrt(n)));
+  const nNeeded = Math.ceil((((stats.qnorm(0.8) + 1.96) * sdRet) / NONINFERIORITY) ** 2);
+  return {
+    n,
+    speedup_cleared_80pct: r3(Math.exp(Math.log(TARGET) + (t + 0.8416) * se)),
+    retention_gate_clear_prob_if_equal: r3(retClear),
+    learners_for_retention_gate_80pct: nNeeded,
+  };
+}
+
+/**
+ * The honest early read, whatever the verdict: the estimate with its interval, and what can be claimed at this size.
+ * "At least Mx faster" uses the lower end of the 95% interval, so it is a claim we can defend; below the verdict's learner minimum it is
+ * labelled an early estimate. It never replaces the 4x verdict, which keeps its own gate.
+ */
+function estimateOf(g, min) {
+  const [tLo, tHi] = g.time.speedup_ci95;
+  const [rLo, rHi] = g.retention.diff_ci95;
+  const nT = g.time.learners_with_both_arms;
+  const pts = (v) => `${(v * 100).toFixed(1)}`;
+  if (g.time.speedup_geomean === null || tLo === null) {
+    return { n_learners: nT, point: g.time.speedup_geomean, ci95: g.time.speedup_ci95, at_least_x: null, early: true, statement: `No estimate yet: ${nT} learner${nT === 1 ? '' : 's'} with both a plain-way and a Savant-way skill understood (an interval needs at least 2).` };
+  }
+  const early = nT < min;
+  const atLeast = Math.floor(tLo * 10) / 10;
+  const ret = rLo === null ? 'Retention: no interval yet.' : `Retention difference (Savant minus plain) ${g.retention.diff_mean >= 0 ? '+' : ''}${pts(g.retention.diff_mean)} points (95% ${pts(rLo)} to ${pts(rHi)}); we can say retention is no more than ${Math.max(0, -rLo * 100).toFixed(1)} points worse.`;
+  return {
+    n_learners: nT, point: g.time.speedup_geomean, ci95: [tLo, tHi], at_least_x: atLeast, early,
+    retention_diff: g.retention.diff_mean, retention_ci95: [rLo, rHi],
+    statement: `${early ? 'Early estimate, not a verdict. ' : ''}With ${nT} learners, Savant took ${g.time.speedup_geomean}x less time than the plain way (95% interval ${tLo}x to ${tHi}x). We can say it is at least ${atLeast}x faster; we cannot say it is ${TARGET}x unless that lower end reaches ${TARGET}. ${ret}`,
+  };
+}
+
 /**
  * Build the report from per-learner rows. Pure: `learners` is [{ user_id, band, rows }]. Used by the page and by the synthetic tests.
  * opts.label is copied into the report ('SIMULATED' in tests) so a simulated report can never read as a real one.
@@ -603,7 +686,7 @@ function buildReport(learners, opts = {}) {
   for (const band of AGE_GROUPS) {
     const sub = per.filter((p) => p.band === band);
     const g = groupStats(sub);
-    byAge[band] = { ...g, verdict: verdict(g, Math.max(min, opts.minGroup || min)) };
+    byAge[band] = { ...g, verdict: verdict(g, Math.max(min, opts.minGroup || min)), estimate: estimateOf(g, Math.max(min, opts.minGroup || min)) };
   }
   return {
     generated_at: new Date(opts.now || Date.now()).toISOString(),
@@ -611,7 +694,10 @@ function buildReport(learners, opts = {}) {
     version: VERSION,
     switch: { mode: mode(), normal_share: normalShare() },
     target: { speedup: TARGET, retention_margin_points: NONINFERIORITY * 100, min_learners: min },
-    overall: { ...overall, verdict: verdict(overall, min) },
+    overall: {
+      ...overall, verdict: verdict(overall, min), estimate: estimateOf(overall, min),
+      detectability: detectability(overall.time.learners_with_both_arms, sd(per.map((x) => x.speedup).filter(Number.isFinite).map(Math.log)), sd(per.map((x) => x.retention_diff).filter(Number.isFinite))),
+    },
     by_age: byAge,
     learners: per.map((p) => ({
       user_id: p.user_id, band: p.band, savant_skills: p.savant_skills, normal_skills: p.normal_skills, speedup: r3(p.speedup),
@@ -648,10 +734,17 @@ function report(opts = {}) {
   return out;
 }
 
+/** Shown once: an eligible account that has not answered and has a placed enrolment (after the placement quiz). */
+function offerNow(user) {
+  if (ineligibleReason(user)) return false;
+  if (user.speed_proof && user.speed_proof.consent) return false;
+  return db.find('enrollments', (e) => e.user_id === user.id && e.status && e.status !== 'placement_pending').length > 0;
+}
+
 function status(user) {
   const why = ineligibleReason(user);
   return {
-    available: !why, reason: why, consent_text: CONSENT, consent: user && user.speed_proof ? user.speed_proof.consent || null : null,
+    available: !why, reason: why, offer: !why && offerNow(user), needs_parent: !!(user && user.age_check && (user.age_check.under_13 || user.age_check.needs_parent)), consent_text: CONSENT, consent: user && user.speed_proof ? user.speed_proof.consent || null : null,
     skills: why ? [] : db.find('speed_proof', (r) => r.user_id === user.id).map((r) => ({ skill_id: r.skill_id, way: r.arm === 'normal' && !r.switched_at ? 'plain' : 'savant', understood: !!r.understood_at })),
   };
 }
@@ -659,6 +752,6 @@ function status(user) {
 module.exports = {
   VERSION, CONSENT, CONSENT_VERSION, POINTS, TARGET, NONINFERIORITY, BLOCK_SIZE,
   mode, enabled, normalShare, setRandom, ineligibleReason, eligible, ageBand, inBeta,
-  setConsent, consentedNormal, assign, normalFor, withSkill, plainNowFor, plainAtLevel, skillOfLevel, switchToSavant, measure, attribute, timeCapMinutes,
-  due, dueChecks, start, answer, learnerSummary, groupStats, verdict, buildReport, report, status, meanCI, quantile,
+  setConsent, consentedNormal, assign, normalFor, withSkill, plainNowFor, lessonContext, itemContext, PLAIN_NOTE, offerNow, plainAtLevel, skillOfLevel, switchToSavant, measure, attribute, timeCapMinutes,
+  detectability, estimateOf, due, dueChecks, start, answer, learnerSummary, groupStats, verdict, buildReport, report, status, meanCI, quantile,
 };

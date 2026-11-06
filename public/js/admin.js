@@ -523,6 +523,8 @@ App.mount(async () => {
       <div class="row-between" style="margin-bottom:12px"><h1 style="margin:0">Speed proof</h1>
         <a class="btn btn-ghost btn-sm" href="#">${window.icon('arrow-left')}All users</a></div>
       <div class="notice ${o.verdict.four_x_shown ? 'notice-success' : 'notice-info'}"><strong>${esc(o.verdict.statement)}</strong></div>
+      <div class="notice notice-info"><strong>Estimate with its interval:</strong> ${esc(o.estimate.statement)}</div>
+      ${o.detectability ? `<p class="tiny muted">What this many learners can detect, from the spread so far: a true speed-up of about ${o.detectability.speedup_cleared_80pct}x clears the 4x gate 80% of the time; the retention gate is cleared ${Math.round(o.detectability.retention_gate_clear_prob_if_equal * 100)}% of the time if retention is truly equal, and needs about ${o.detectability.learners_for_retention_gate_80pct} learners for 80%.</p>` : ''}
       <p class="tiny muted">Real learners only (${esc(r.label)}). Switch: SPEED_PROOF=${esc(r.switch.mode)}, plain-way share ${Math.round(r.switch.normal_share * 100)}%. Needs at least ${r.target.min_learners} learners with both ways. Left out: ${x(r.left_out_accounts)} accounts no longer eligible.</p>
       <h2 class="section-title">${window.icon('trending-up')}Savant against the plain way, inside each learner</h2>
       <div class="card"><div class="table-scroll"><table class="data"><thead><tr><th>Group</th><th>Learners</th><th>Speed-up (geo mean)</th><th>Median</th><th>10th percentile</th><th>Retention, Savant minus plain</th><th>Median</th><th>10th percentile</th><th>Savant / plain samples</th></tr></thead><tbody>

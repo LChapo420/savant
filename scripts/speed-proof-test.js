@@ -266,6 +266,27 @@ function synth(n, seed, { speedup = 5, retGap = 0, extremeShare = 0.1, band = '1
   ok(shown(rep6bad) === 0, 'a big retention loss is never "shown"');
   ok(rep6bad.some((x) => x.overall.verdict.status === 'speed_shown_retention_worse'), 'and it is called out as speed without retention');
   ok(run(1.5, 0, 200).every((x) => x.overall.verdict.status === 'not_shown'), 'a true 1.5x is ruled out as not 4x');
+  // what 50, 100 and 250 learners can show (printed for docs/SPEED-PROOF.md); ordinary learners, then 10% extreme
+  const med = (a) => a.sort((x, y) => x - y)[a.length >> 1];
+  const table = {};
+  for (const n of [50, 100, 250]) {
+    for (const truth of [3, 4, 5, 6, 8]) {
+      const reps = run(truth, 0, n, 0.05);
+      const lows = reps.map((x) => x.overall.time.speedup_ci95[0]);
+      table[`${n}:${truth}`] = { shown: shown(reps), point: med(reps.map((x) => x.overall.time.speedup_geomean)), lo: med(lows), hi: med(reps.map((x) => x.overall.time.speedup_ci95[1])), retLo: med(reps.map((x) => x.overall.retention.diff_ci95[0])) };
+      console.log(`  n=${n} true ${truth}x (5% extreme): shown ${(shown(reps) * 100).toFixed(0)}%, median estimate ${table[`${n}:${truth}`].point}x, median 95% interval ${table[`${n}:${truth}`].lo}x to ${table[`${n}:${truth}`].hi}x, median retention lower end ${(table[`${n}:${truth}`].retLo * 100).toFixed(1)} pts`);
+    }
+  }
+  ok(table['250:6'].shown > table['100:6'].shown && table['100:6'].shown >= table['50:6'].shown, 'more learners, more often shown');
+  ok(table['50:3'].shown === 0 && table['100:3'].shown === 0 && table['250:3'].shown === 0, 'a true 3x is never shown at any size');
+  ok(table['250:3'].hi - table['250:3'].lo < table['50:3'].hi - table['50:3'].lo, 'the interval narrows with more learners');
+  const e50 = sp.buildReport(synth(50, 4242, { speedup: 5 }), label).overall;
+  ok(!e50.estimate.early && /at least \d/.test(e50.estimate.statement) && /95% interval/.test(e50.estimate.statement), 'the estimate shows the point and its interval and an "at least" claim');
+  ok(e50.estimate.at_least_x <= e50.estimate.point && e50.estimate.at_least_x <= e50.estimate.ci95[0], 'the "at least" figure is the lower end, rounded down');
+  const early = sp.buildReport(synth(8, 4243, { speedup: 5 }), label).overall;
+  ok(early.estimate.early && /^Early estimate, not a verdict/.test(early.estimate.statement) && early.verdict.status === 'not_enough_data', 'with few learners the estimate is shown but labelled early, and the verdict stays "not enough data"');
+  ok(/we cannot say it is 4x/.test(e50.estimate.statement), 'it says plainly that 4x is not claimed until the lower end reaches 4');
+  ok(e50.detectability && e50.detectability.learners_for_retention_gate_80pct > 20, `the retention gate needs ${e50.detectability && e50.detectability.learners_for_retention_gate_80pct} learners, reported from the observed spread`);
   const g = rep6[0].overall;
   ok(g.time.speedup_p10 < g.time.speedup_median && g.time.speedup_worst10_mean <= g.time.speedup_p10 + 1e-9, 'the worst 10% is below the median');
   ok(g.time.learners_below_1x >= 1, 'the extreme learners who are slower with Savant are counted, not hidden');

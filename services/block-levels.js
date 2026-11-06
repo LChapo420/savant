@@ -114,6 +114,8 @@ function visibleTo(user) {
  */
 function tailorsFor(user) {
   if (!user) return false;
+  // eslint-disable-next-line global-require
+  try { if (require('./speed-proof').plainNowFor(user)) return false; } catch { /* not loaded */ } // a plain-way skill (speed proof) is served the shared standard page
   if (isOwner(user)) return String(process.env.BLOCK_TAILOR_OWNER || '0') === '1';
   // eslint-disable-next-line global-require
   const learner = require('./learner');

@@ -41,6 +41,7 @@ const writeAhead = require('../services/write-ahead');
 const esPath = require('../services/spanish/path');
 
 const router = express.Router();
+router.use('/items/:id', require('../services/speed-proof').itemContext); // a plain-way skill (speed proof): no coach or tutor box, standard explanation
 
 /** Write ahead for this enrollment as it now stands (fire-and-forget; nothing when WRITE_AHEAD=off). */
 function aheadFor(user, enrollmentId, reason) {
