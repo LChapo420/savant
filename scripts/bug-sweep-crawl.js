@@ -45,8 +45,8 @@ async function persona(name) {
   if (name === 'teen') r = await api('POST', '/api/auth/register', { ...base, email: `sweep-teen-${STAMP}@example.com`, display_name: 'Sweep Teen', birth_year: year - 15 });
   if (name === 'child') r = await api('POST', '/api/auth/register', { ...base, username: `sweepkid${STAMP}`, parent_email: `sweep-parent-${STAMP}@example.com`, display_name: 'Sweep Kid', birth_year: year - 10 });
   if (name === 'admin') {
-    r = await api('POST', '/api/auth/register', { ...base, email: 'walk-admin@example.com', display_name: 'Walk Admin', birth_year: 1990 });
-    if (r.status === 409) r = await api('POST', '/api/auth/login', { email: 'walk-admin@example.com', password: pw });
+    r = await api('POST', '/api/auth/login', { email: 'walk-admin@example.com', password: pw });
+    if (r.status === 401) r = await api('POST', '/api/auth/register', { ...base, email: 'walk-admin@example.com', display_name: 'Walk Admin', birth_year: 1990 });
   }
   if (!r || r.status >= 300) throw new Error(`persona ${name}: ${r && r.status} ${JSON.stringify(r && r.payload)}`);
   return { cookie: r.cookie };
@@ -122,10 +122,10 @@ async function main() {
   const host = new URL(BASE).hostname;
 
   for (const pname of PERSONAS) {
-    let p; try { p = await persona(pname); } catch (e) { results.push({ persona: pname, error: String(e.message) }); continue; }
+    let p; try { p = await persona(pname); } catch (e) { results.push({ persona: pname, error: String(e.message) }); console.log('PERSONA FAIL ' + pname + ': ' + e.message); continue; }
     const { browserContextId } = await cdp.send('Target.createBrowserContext');
     for (const vp of [{ n: 'desktop', w: 1280, h: 800, dark: false }, { n: 'mobile', w: 375, h: 812, dark: false }, { n: 'mobile-dark', w: 375, h: 812, dark: true }]) {
-      if (pname !== 'adult' && pname !== 'anon' && vp.n !== 'desktop') continue; // full viewport matrix for two personas
+      if (!['adult', 'anon', 'admin'].includes(pname) && vp.n !== 'desktop') continue; // full viewport matrix for three personas
       const queue = [...list];
       const worker = async () => { for (let url; (url = queue.shift());) {
         const { targetId } = await cdp.send('Target.createTarget', { url: 'about:blank', browserContextId });
