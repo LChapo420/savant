@@ -111,6 +111,24 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
   const b2 = await cb.build(u.id, m2.id, { llm: llm2, factcheck: true });
   check('asking again builds and checks it, and the course is ready', b2.course.status === 'ready', b2.course.status);
 
+  // The lesson and the questions as two calls: the first lesson can be read at once, and each part is checked.
+  const m5 = materials.addPaste(u.id, 'Mix5', text).value;
+  const seen = [];
+  let previewAtQuestions = null;
+  let releaseQ; const qGate = new Promise((r) => { releaseQ = r; });
+  const llm5 = async (a) => {
+    seen.push(a.schemaName);
+    if (a.schemaName === 'material_questions') { await qGate; const rl = await llm({ ...a, task: 'material_lesson' }); return { model: 'mock', data: { questions: rl.data.questions } }; }
+    if (a.schemaName === 'material_lesson_text') { const rl = await llm({ ...a, task: 'material_lesson' }); setTimeout(() => { previewAtQuestions = (cb.get(u.id, m5.id) || {}).preview || null; releaseQ(); }, 60); return { model: 'mock', data: { lesson: rl.data.lesson } }; }
+    return llm(a);
+  };
+  const b5 = await cb.build(u.id, m5.id, { llm: llm5, factcheck: true, split: true, concurrency: 1 });
+  check('two calls: lesson and questions', seen.includes('material_lesson_text') && seen.includes('material_questions'));
+  check('the checked first lesson is readable before its questions are written', previewAtQuestions && /thirty-one/.test(previewAtQuestions.paragraphs[0]) && !/Wegener|Volcanoes/.test(JSON.stringify(previewAtQuestions)), previewAtQuestions);
+  const s5 = b5.course.skills[0];
+  check('the finished skill has the checked lesson and the checked explanations', !/Wegener|Volcanoes|1912/.test(JSON.stringify(s5.lesson)) && /^Your material says:/.test(s5.questions[0].explanation) && b5.course.status === 'ready', b5.course.status);
+  check('the preview is gone once skills exist', !cb.summary(b5.course).preview);
+
   // Stressed points on every surface: fill-ins from the material's own sentence.
   const St = require('../services/material-stress');
   check('a fill-in hides the number', St.clozeOf('Salt from Ondra Flats is taxed at 7 percent.').answer === '7');

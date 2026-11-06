@@ -206,6 +206,9 @@ const SKILL_SCHEMA = {
   required: ['lesson', 'questions'],
 };
 
+const LESSON_ONLY_SCHEMA = { type: 'object', properties: { lesson: SKILL_SCHEMA.properties.lesson }, required: ['lesson'] };
+const QUESTIONS_ONLY_SCHEMA = { type: 'object', properties: { questions: SKILL_SCHEMA.properties.questions }, required: ['questions'] };
+
 const VERIFY_SCHEMA = {
   type: 'object',
   properties: {
@@ -540,13 +543,14 @@ const wordCount = (arr) => arr.reduce((n, t) => n + (String(t).match(/\S+/g) || 
  * (scripts/uploads-factcheck-test.js and the proofs do), because a script does not answer a check it was not written for.
  */
 const factOn = (opts) => factcheck.onFor(opts);
+const splitOn = (opts) => String(process.env.UPLOAD_LESSON_SPLIT || '').toLowerCase() !== 'off' && (!opts.llm || !!opts.split);
 /** The whole material's index for the fact check (the passages a build works from), once per build. */
 function factIndex(ctx, passageById) {
   if (!ctx.factIdx) ctx.factIdx = factcheck.indexSource([...passageById.values()].map((p) => p.text).join('\n\n'));
   return ctx.factIdx;
 }
 /** The fact check for one skill (services/material-factcheck.js). A lesson left with nothing becomes the material's own first sentences. */
-function checkSkillFacts(skill, { paragraphs, keyPoints, items, text, passageById, ctx, lessonCap }) {
+function checkSkillFacts(skill, { paragraphs, keyPoints, items, text, passageById, ctx, lessonCap, summaryOverride }) {
   const fallback = () => {
     const out = []; let w = 0;
     for (const id of skill.passage_ids) for (const s of factcheck.sentencesOf((passageById.get(id) || {}).text || '')) {
@@ -555,11 +559,13 @@ function checkSkillFacts(skill, { paragraphs, keyPoints, items, text, passageByI
     }
     return out.length ? [clean(out.join(' '), 700)] : [];
   };
+  // An explanations-only call has no lesson to fall back for.
+  const noLesson = !(paragraphs && paragraphs.length);
   return factcheck.checkLesson({
-    paragraphs, keyPoints, summary: skill.summary,
+    paragraphs, keyPoints, summary: summaryOverride !== undefined ? summaryOverride : skill.summary,
     explanations: items.map((q) => ({ text: q.explanation || '', extra: `${q.prompt} ${(q.choices || []).join(' ')} ${q.answer || ''} ${q.quote || ''}` })),
     idx: factIndex(ctx, passageById), sourceText: text, allow: ctx.allowNames || null,
-    asker: (args) => ask(ctx.llm, ctx.budget, ctx.userId, args), fallback,
+    asker: (args) => ask(ctx.llm, ctx.budget, ctx.userId, args), fallback: noLesson ? null : fallback,
   });
 }
 
@@ -597,10 +603,39 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
   if (ctx.textShape) genArgs.system += `\n\n${ctx.textShape.line}`;
   // The same learner's tests: the questions are ordered and worded for them (tiers, answer format, explanations, stakes).
   if (ctx.questionBlock) genArgs.system += `\n\nFor the practice questions only (not the lesson paragraphs):\n${ctx.questionBlock}`;
-  // One retry: a free model that is busy or times out often answers the second time.
-  let gen = await ask(ctx.llm, ctx.budget, ctx.userId, genArgs);
-  if (!res_stopped(gen) && !(gen.res && gen.res.data && gen.res.data.lesson)) gen = await ask(ctx.llm, ctx.budget, ctx.userId, genArgs);
-  if (res_stopped(gen)) return { stopped: true };
+  // THE BIGGEST WAIT (docs/UPLOADS-ANY-FORMAT.md section 17): one call that writes the lesson and 6 to 9 questions took 67 s. So on the default path the lesson and the questions are two calls at once: the
+  // short lesson comes back in a few seconds, is fact-checked and is offered for reading straight away, while the questions are still being written. UPLOAD_LESSON_SPLIT=off restores the one call.
+  let lessonFacts = null;
+  const split = ctx.splitOn && !extra && !general && !SHORT && !capShare && !(ctx.follow && ctx.follow.spec);
+  let gen;
+  if (split) {
+    const shared = `${ctx.block ? `\n\n${ctx.block}` : ''}${ctx.textShape ? `\n\n${ctx.textShape.line}` : ''}`;
+    const lessonArgs = { ...genArgs, schema: LESSON_ONLY_SCHEMA, schemaName: 'material_lesson_text', maxTokens: 2000,
+      system: `You write one short lesson for a student, from their own study material. ${UNTRUSTED} Write 2 to 5 short lesson paragraphs in plain words, at most ${lessonCap} words in all: say what the passages say once, plainly, with no padding, and no point made twice (the student has the source open).${stress.length ? ` ${STRESS_RULE_FULL}` : ''}${shared}` };
+    const questionArgs = { ...genArgs, schema: QUESTIONS_ONLY_SCHEMA, schemaName: 'material_questions', maxTokens: 6000,
+      system: `You write practice questions for a student, from their own study material. ${UNTRUSTED} ${QUESTION_RULES} Every question needs passage_id (one of the passage ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows the answer is right. A question you cannot back with such a quote must be left out.${stress.length ? ` ${STRESS_RULE_FULL}` : ''}${ctx.block ? `\n\n${ctx.block}` : ''}${ctx.questionBlock ? `\n\nFor the practice questions:\n${ctx.questionBlock}` : ''}` };
+    const once = async (args, key) => { let r = await ask(ctx.llm, ctx.budget, ctx.userId, args); if (!res_stopped(r) && !(r.res && r.res.data && r.res.data[key])) r = await ask(ctx.llm, ctx.budget, ctx.userId, args); return r; };
+    const lessonPart = once(lessonArgs, 'lesson').then(async (r) => {
+      const d = r.res && r.res.data;
+      if (!ctx.factOn || !d || !d.lesson || !Array.isArray(d.lesson.paragraphs)) return { r };
+      const guardNow = ctx.makeGuard ? ctx.makeGuard(text) : null;
+      const ps = d.lesson.paragraphs.map((p) => clean(p, 700)).filter(Boolean).filter((p) => !guardNow || guardNow(p));
+      const ks = (d.lesson.key_points || []).map((p) => clean(p, 200)).filter(Boolean).filter((p) => !guardNow || guardNow(p)).slice(0, 6);
+      const facts = await checkSkillFacts(skill, { paragraphs: ps.slice(0, ctx.textShape ? ctx.textShape.maxParagraphs : 6), keyPoints: ks, items: [], text, passageById, ctx, lessonCap });
+      facts.rawParagraphs = ps; facts.rawKeyPoints = ks;
+      if (ctx.onPreview && facts.paragraphs.length && !facts.report.stopped && !facts.report.unchecked) ctx.onPreview(skill, facts);
+      return { r, facts };
+    });
+    const [l, q] = await Promise.all([lessonPart, once(questionArgs, 'questions')]);
+    lessonFacts = l.facts || null;
+    if (res_stopped(l.r) || res_stopped(q)) return { stopped: true };
+    gen = { res: l.r.res && l.r.res.data && l.r.res.data.lesson && q.res && q.res.data ? { model: l.r.res.model || q.res.model, data: { lesson: l.r.res.data.lesson, questions: q.res.data.questions || [] } } : null };
+  } else {
+    // One retry: a free model that is busy or times out often answers the second time.
+    gen = await ask(ctx.llm, ctx.budget, ctx.userId, genArgs);
+    if (!res_stopped(gen) && !(gen.res && gen.res.data && gen.res.data.lesson)) gen = await ask(ctx.llm, ctx.budget, ctx.userId, genArgs);
+    if (res_stopped(gen)) return { stopped: true };
+  }
   const data = gen.res && gen.res.data;
   if (!data || !data.lesson) { ctx.unanswered++; return { failed: true }; }
   if (gen.res.model) ctx.models.add(gen.res.model);
@@ -680,7 +715,17 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
 
   // NOTHING INVENTED: the lesson, its key points, the skill's summary and the explanations are checked sentence by sentence against the material, alongside the question check below (same wait, not added to it).
   const wantCheck = ctx.factOn && !general && (!extra || extra.focus);
-  const checkDone = wantCheck ? checkSkillFacts(skill, { paragraphs, keyPoints, items, text, passageById, ctx, lessonCap }) : null;
+  // With the split, the lesson has its verdicts already: only the explanations are left to check.
+  const checkDone = wantCheck ? checkSkillFacts(skill, { paragraphs: lessonFacts ? [] : paragraphs, keyPoints: lessonFacts ? [] : keyPoints, summaryOverride: lessonFacts ? '' : undefined, items, text, passageById, ctx, lessonCap }).then((f) => {
+    if (!lessonFacts) return f;
+    const merged = { ...f, paragraphs: lessonFacts.paragraphs, keyPoints: lessonFacts.keyPoints, summary: lessonFacts.summary };
+    merged.report = { ...f.report };
+    for (const k of ['sentences', 'direct', 'model_ok', 'fixed', 'dropped', 'hard', 'unchecked', 'calls']) { if (k !== 'dropped') merged.report[k] = (Number(f.report[k]) || 0) + (Number(lessonFacts.report[k]) || 0); }
+    merged.report.dropped = [...(f.report.dropped || []), ...(lessonFacts.report.dropped || [])];
+    merged.report.stopped = f.report.stopped || lessonFacts.report.stopped;
+    merged.report.fell_back = lessonFacts.report.fell_back;
+    return merged;
+  }) : null;
   const ver = await ask(ctx.llm, ctx.budget, ctx.userId, {
     role: 'fast', task: 'material_verify', schema: VERIFY_SCHEMA, schemaName: 'material_verify', maxTokens: 800, dataClass: 'learner',
     system: general
@@ -692,11 +737,11 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
   if (res_stopped(ver) || (facts && facts.report.stopped)) return { stopped: true };
   let skillSummary = skill.summary;
   if (facts) {
-    if (process.env.UPLOAD_FACTCHECK_KEEP_RAW === '1') facts.raw = { paragraphs, key_points: keyPoints, summary: skill.summary, explanations: items.map((q) => q.explanation) };
+    if (process.env.UPLOAD_FACTCHECK_KEEP_RAW === '1') facts.raw = { paragraphs: lessonFacts ? lessonFacts.rawParagraphs : paragraphs, key_points: lessonFacts ? lessonFacts.rawKeyPoints : keyPoints, summary: skill.summary, explanations: items.map((q) => q.explanation) };
     paragraphs = facts.paragraphs; keyPoints = facts.keyPoints; skillSummary = facts.summary;
     items.forEach((q, i) => { if (facts.badExplanations.has(i)) { q.explanation = `Your material says: "${q.quote}"`; ctx.dropped.fact_explanations = (ctx.dropped.fact_explanations || 0) + 1; } });
     const f = ctx.dropped.factcheck = ctx.dropped.factcheck || { sentences: 0, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0, fell_back: 0, words_before: 0, words_after: 0 };
-    for (const k of Object.keys(f)) if (k !== 'fell_back') f[k] += Number(facts.report[k]) || 0;
+    for (const k of Object.keys(f)) if (k !== 'fell_back') f[k] += (k === 'dropped' ? (Array.isArray(facts.report.dropped) ? facts.report.dropped.filter((d) => !d.fixed).length : 0) : Number(facts.report[k])) || 0;
     if (facts.report.fell_back) f.fell_back += 1;
     if (facts.report.unchecked) ctx.factUnchecked = (ctx.factUnchecked || 0) + 1;
   }
@@ -871,7 +916,7 @@ async function build(userId, materialId, opts = {}) {
     const all = chunk(mat.text);
     const passages = all.slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, keypoints: mat.key_points || [], passageList: passages, follow: require('./course-follow').contextFor(userId, mat), block: specBlockFor(userId, mat), questionBlock: questionBlockFor(userId, mat), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title, materialId: mat.id }), makeGuard: guardMaker(userId, mat), allowNames: interestNames(userId, mat), factOn: factOn(opts), stressOn: require('./material-stress').onFor(opts), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
+    const ctx = { unanswered: 0, llm, userId, keypoints: mat.key_points || [], passageList: passages, follow: require('./course-follow').contextFor(userId, mat), block: specBlockFor(userId, mat), questionBlock: questionBlockFor(userId, mat), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title, materialId: mat.id }), makeGuard: guardMaker(userId, mat), allowNames: interestNames(userId, mat), factOn: factOn(opts), splitOn: splitOn(opts), stressOn: require('./material-stress').onFor(opts), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
     const base = {
       user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, total_chars: mat.text.length, status: 'building', started_at: new Date().toISOString(),
       passages: passages.map(({ id, start, end }) => ({ id, start, end })), truncated: all.length > passages.length,
@@ -879,8 +924,11 @@ async function build(userId, materialId, opts = {}) {
     };
     let saved = prev ? db.update('material_courses', prev.id, { ...base, error: null, finished_at: null }) : db.insert('material_courses', base);
     // A material deleted during its build: the row is gone, so nothing is written back and the build stops spending.
+    // The first lesson ready, fact-checked, while its questions are still being written: the learner can read it at once.
+    ctx.onPreview = (skill, facts) => { if (ctx.previewed || (saved.skills || []).length) return; ctx.previewed = true; persist({ preview: { skill_id: skill.id, title: skill.title, paragraphs: facts.paragraphs, key_points: facts.keyPoints } }); };
     const persist = (patch) => { if (!materialExists(userId, mat.id)) { ctx.gone = true; return saved; } const u = db.update('material_courses', saved.id, patch); if (u) saved = u; return saved; };
 
+    if (saved.preview) persist({ preview: null });
     let outline = base.outline;
     if (!outline) {
       // A learner who wants the shortest version gets fewer, broader skills (spec.course.skillShare, from brevity_preference): the same
@@ -1131,6 +1179,7 @@ function summary(c) {
     failure: stale ? 'interrupted' : (c.error === 'no_answer' || c.error === 'token budget' ? 'busy' : (c.status === 'partial' && c.dropped && c.unanswered ? 'busy' : null)),
     units: c.units || [],
     planned: (c.outline || []).length,
+    preview: c.status === 'building' && !stale && !(c.skills || []).length && c.preview ? c.preview : null,
     skills: (c.skills || []).map((s) => ({
       id: s.id, title: s.title, summary: s.summary, unit_id: s.unit_id || null, level: s.level || null, source: s.source || 'material',
       prerequisites: s.prerequisites, questions: s.questions.length,

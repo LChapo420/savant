@@ -215,8 +215,15 @@ App.mount(async () => {
         const label = c.skills && c.skills.length ? `Start studying the first ${c.skills.length} now` : '';
         // The poll calls this every 4 s: leave the note alone if nothing changed, so a tap on the link is never lost to a rebuild.
         const shown = n.querySelector('a');
-        if (n.firstChild && n.firstChild.textContent.trim() === msg && (shown ? shown.textContent : '') === label) return;
+        if (n.firstChild && n.firstChild.textContent.trim() === msg && (shown ? shown.textContent : '') === label && !!n.querySelector('details') === !!(c.preview && !label)) return;
         n.textContent = msg;
+        // The first lesson can be read before its practice questions exist.
+        if (c.preview && !label) {
+          const d = document.createElement('details'); d.open = true; d.style.marginTop = '6px';
+          const sum = document.createElement('summary'); sum.className = 'small'; sum.textContent = `Read the first lesson now: ${c.preview.title}`; d.appendChild(sum);
+          for (const p of c.preview.paragraphs) { const el = document.createElement('p'); el.className = 'small'; el.textContent = p; d.appendChild(el); }
+          n.appendChild(d);
+        }
         if (label) { const l = document.createElement('a'); l.className = 'btn btn-sm btn-primary'; l.href = `/my-material-study?id=${id}`; l.textContent = label; n.appendChild(document.createTextNode(' ')); n.appendChild(l); }
         return; }
       btn.disabled = false;
