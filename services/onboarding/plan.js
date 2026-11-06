@@ -88,7 +88,7 @@ class Planner {
 
   /** Free items (no seconds of their own) whose parents are now answered. */
   unlockedFree() {
-    return pool.filter((it) => it.free && !this.used.has(it.id) && it.requires.every((id) => this.used.has(id)));
+    return pool.filter((it) => it.free && !it.passive && !this.used.has(it.id) && it.requires.every((id) => this.used.has(id)));
   }
 
   estimates() { return model.estimates(this.state, STAT_IDS); }
