@@ -17,8 +17,14 @@
 const howto = require('./tutor-howto');
 const safety = require('./tutor-safety');
 
-const DEFAULT_ON = '0'; // set to '1' only when the proof's gates pass (docs/TUTOR-FULL.md)
-const on = () => String(process.env.TUTOR_FULL === undefined ? DEFAULT_ON : process.env.TUTOR_FULL).trim() === '1';
+const DEFAULT_ON = 'adults'; // gate passed on 3 frozen seeds (docs/TUTOR-FULL.md, round 4): on for adults first; children and unknown ages keep the old tutor (plus the crisis and health replies)
+// TUTOR_FULL=1 everyone; TUTOR_FULL=adults only a learner whose age is known and 18 or over (children and unknown ages stay on the old tutor).
+function on(user) {
+  const v = String(process.env.TUTOR_FULL === undefined ? DEFAULT_ON : process.env.TUTOR_FULL).trim().toLowerCase();
+  if (v === '1') return true;
+  if (v !== 'adults' || !user) return false;
+  try { const a = require('./boosters').ageOf(user); return a !== null && a !== undefined && a >= 18; } catch { return false; } // eslint-disable-line global-require
+}
 
 // The crisis replies (self-harm, emergency, abuse, a stranger asking for secrecy, a child sharing where they live) are their own,
 // smaller switch: TUTOR_SAFETY, ON by default. Gate: every one of them correct in scripts/tutor-full-test.js and in the proof run, and no
@@ -28,12 +34,55 @@ const safetyOn = () => String(process.env.TUTOR_SAFETY === undefined ? '1' : pro
 
 /** The safety reading of one message for this learner, honouring both switches. Null when there is nothing to do. */
 function triage(user, text) {
-  if (!on() && !safetyOn()) return null;
+  if (!on(user) && !safetyOn()) return null;
   let age = null;
   try { age = require('./boosters').ageOf(user); } catch { age = null; } // eslint-disable-line global-require
   const t = safety.triage(text, { age });
   if (!t) return null;
-  return on() || CRISIS.has(t.kind) ? t : null;
+  // Health and serious-feelings messages get the kind fixed reply whatever the switch says: that is where an 8-year-old's "do I need pills" is answered today.
+  if (t.kind === 'medical' || (t.kind === 'feelings' && t.serious)) return { ...t, reply: t.fixed };
+  return on(user) || CRISIS.has(t.kind) ? t : null;
+}
+
+// A graded check (mode 'method'), round 4: the learner's reply is built from fixed method coaching and contains nothing from the question or its choices,
+// so it cannot leak. The text is chosen by what the learner asked and fitted with name, age and brevity; no model writes about the question.
+const TIPS = [
+  'Read the question twice, slowly, and say in your own words what it is asking for.',
+  'Underline the key words and numbers, and notice what the question wants at the end: a number, a word or a choice.',
+  'If there are choices, cross out the ones you are sure are wrong first.',
+  'Check the units and the form the answer should be in before you settle.',
+  'Do the first small step you are sure about, then the next one.',
+  'Make a rough estimate first, so you can tell whether your answer is sensible.',
+  'If you are stuck, skip it, answer what you can, and come back with fresh eyes.',
+  'When you have an answer, read the question once more and check that it fits.',
+];
+const TIPS_CHILD = [
+  'Read the question two times, slowly.',
+  'Say what it is asking in your own words.',
+  'If there are choices, cross out the ones that are wrong first.',
+  'Try the first small step you are sure about.',
+  'If it is too hard, skip it and come back later.',
+  'When you finish, read the question again to check.',
+];
+const PROPOSING_M = /(is it |is the answer|the answer is|i think (it'?s|its)|maybe (it'?s|its)|right\?|correct\?|am i right|my answer)/i;
+const ASKING_M = /(answer|tell me|just say|give up|teacher said|all caps|answer only|spell it)/i;
+const hashOf = (t) => [...String(t)].reduce((a, c) => ((a * 31) + c.charCodeAt(0)) >>> 0, 7);
+
+function methodReply({ user, message, name = '', brief = false, age = null }) {
+  const msg = String(message || '');
+  const child = age !== null && age !== undefined && age < 13;
+  const h = hashOf(`${msg}|${user && user.id}`);
+  const pool = child ? TIPS_CHILD : TIPS;
+  const tips = [pool[h % pool.length]];
+  if (!brief && !child) tips.push(pool[(h + 3) % pool.length]);
+  const who = name ? `${name}, ` : '';
+  let open;
+  if (PROPOSING_M.test(msg)) open = child ? `${who}I can't tell you if an answer is right or wrong on a check, so I won't say yes or no.` : `${who}I can't say whether an answer is right or wrong on a check, so I won't confirm or reject any answer, including yours.`;
+  else if (ASKING_M.test(msg)) open = child ? `${who}I can't give the answer on a check, because your result has to be yours.` : `${who}I can't give the answer on a check, because the result only means something if it is yours.`;
+  else if (DISCOURAGED.test(msg)) open = child ? `${who}that is hard, and it is okay to feel stuck.` : `${who}that sounds frustrating, and it is okay to be stuck. One small step is enough.`;
+  else open = child ? `${who}I can help with how to work on a question like this.` : `${who}I can help with how to approach a question like this, not with its content.`;
+  const close = child ? 'Tell me what you try first.' : 'Tell me what you try first and I will help with the method.';
+  return `${open} ${tips.join(' ')} ${close}`;
 }
 
 const DEADLINE_MS = Number(process.env.TUTOR_DEADLINE_MS) || 14000;
@@ -110,9 +159,11 @@ function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' 
     : why === 'local' ? (brief ? 'I am using only my own notes for now.' : 'I am answering from my own notes only on this account, with no outside AI, so this is shorter than a full answer.')
       : (brief ? `I'm a bit ${why === 'slow' ? 'slow' : 'busy'} right now.` : `The live tutor is ${why === 'slow' ? 'slow' : 'busy'} right now, so this is from my notes instead of a full answer.`);
   let feature;
-  const tri = safety.triage(msg, { age: null });
+  let age0 = null;
+  try { age0 = user ? require('./boosters').ageOf(require('../config/db').byId('users', user.id)) : null; } catch { age0 = null; } // eslint-disable-line global-require
+  const tri = safety.triage(msg, { age: age0 });
   if (tri && tri.reply) return { reply: tri.reply, feature }; // a crisis is the fixed reply on every path, even this one
-  if (tri && tri.kind === 'medical') parts.push(safety.FIXED.medical);
+  if (tri && tri.fixed) parts.push(tri.fixed);
   else {
     // Their own uploaded material, found locally (no model): quoted as theirs. Not on a graded page.
     let mat = [];
@@ -120,7 +171,8 @@ function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' 
     if (!mat.length && mode !== 'method' && user) mat = looseMaterial(user.id, msg);
     const aboutMine = /\b(my|our) (notes?|material|upload\w*|course|book|pdf|slides)\b|according to my|in my (notes|material)/i.test(msg);
     const hasMaterial = (() => { try { return require('../config/db').find('material_courses', (c) => c.user_id === (user && user.id) && ['ready', 'partial'].includes(c.status)).length > 0; } catch { return false; } })(); // eslint-disable-line global-require
-    const m = howto.match(msg);
+    const explaining = /\b(explain|teach me|help me understand|walk me through|using something)\b/i.test(msg) && !/\b(how do i|where (is|do|can)|how to)\b/i.test(msg);
+    const m = explaining ? [] : howto.match(msg);
     const askingAnswer = WANTS_ANSWER.test(msg) && page && (page.question || /\/(session|skill-practice|review|placement|stage-check|skip|daily-check|enforcer|my-material-(test|study))/.test(String(path || '')));
     if (mat.length) {
       parts.push(`From your own material, "${mat[0].title || mat[0].course}": "${clip(mat[0].text, 300)}"`);
@@ -134,9 +186,12 @@ function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' 
       feature = m[0].f.id;
       parts.push(`${m[0].f.title}: ${m[0].f.steps}`);
     } else {
+      if (explaining) parts.push("I can't explain that properly without the live tutor, and I don't want to give you a half answer. Try me again in a moment.");
       if (DISCOURAGED.test(msg)) parts.push("That sounds really frustrating, and it's okay to feel that way. One small step is enough for now.");
       const pg = howto.pageInfo(path);
-      if (!pg || !/^(what|why|who|how many|how long|is|will|does)\b/i.test(msg.trim()) || DISCOURAGED.test(msg)) parts.push(pg ? (brief ? pg.stuck : `You're on ${pg.name}. ${pg.stuck}`) : howto.stuckAdvice(path));
+      const planning = /(what should i|what do i do|what next|ten minutes|10 minutes|how am i doing|where do i start|next step)/i.test(msg);
+      const questionLike = /\?\s*$/.test(msg.trim()) || /^(what|why|who|whom|whose|how|when|where|which|is|are|will|would|does|do|did|can|could|should)\b/i.test(msg.trim());
+      if (!pg || planning || !questionLike || DISCOURAGED.test(msg)) parts.push(pg ? (brief ? pg.stuck : `You're on ${pg.name}. ${pg.stuck}`) : howto.stuckAdvice(path));
       else parts.push("I'm not sure about that one, and I can't check it right now, so I'd rather not guess.");
     }
     if (mode === 'method') parts.push('Here I can give hints about method only, so your result stays honest.');
@@ -166,20 +221,81 @@ function materialNotes(userId, query, mode) {
   } catch { return []; }
 }
 
-const PROPOSAL = /(?:is it|is the answer|the answer is|the answer'?s|i think (?:it'?s|its|the answer is)|maybe (?:it'?s|its)?|so it'?s|it'?s|its)\s+([^?.!,;]{1,30})/ig;
-const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9/.:^-]+/g, ' ').trim();
-/** True when the reply repeats an answer the learner just proposed. Deterministic: no model needed. */
-function echoesProposal(learnerMsg, reply) {
-  // A sentence that is a question ("why did you pick B?") is the tutor asking for their reasoning, which is wanted, not a confirmation.
-  const sentences = String(reply || '').split(/(?<=[.!?])\s+/).filter((x) => !/\?\s*$/.test(x)).map((x) => ` ${norm(x)} `);
-  let m;
-  PROPOSAL.lastIndex = 0;
-  while ((m = PROPOSAL.exec(String(learnerMsg || ''))) !== null) {
-    const cand = norm(m[1]);
-    if (!cand || cand.length > 24 || /^(a|an|the|that|this|right|correct|wrong|like|just|not|ok|okay|so|and)$/.test(cand)) continue;
-    if (sentences.some((x) => x.includes(` ${cand} `))) return true;
-  }
-  return false;
+// Round 3: the lasting fix for "does this reply give the answer away". One model reads EVERY reply to a question on screen and answers LEAK or OK. It is told the
+// ways a tutor leaks without stating the answer: confirming or rejecting a proposal ("you're right", "close", "not quite", "right track"), narrowing the
+// choices to one, giving a definition or rule that applied to the question leaves only one answer, working the identical question, or naming an option.
+const LEAK_SYSTEM = `You are a strict examiner checking a tutor reply BEFORE a learner sees it. The learner is on a question they have not answered yet. The tutor may give hints about METHOD only. Reply with exactly one word: LEAK or OK.
+LEAK if ANY of these is true:
+- the reply states the answer or the final value, in any form (a word, number, option, translation, a spelled-out or partial answer);
+- it confirms or rejects what the learner proposed, in any words ("right", "correct", "close", "almost", "not quite", "wrong", "good guess", "right track", "you've got it", "that's not it");
+- it narrows the question to a single remaining choice, for example by explaining what each option is for and then saying which one fits the learner's situation, or by saying only one of the options can be right;
+- it works the identical question (or the same numbers) through to its result;
+- it repeats the learner's proposed answer as if it were settled;
+- it gives a clue that only fits the answer ("something we breathe out" for carbon dioxide, "a single-letter symbol", "the vowel changes inside", a riddle), or names the one feature that tells the options apart and says the learner's own case has it;
+- it gives a shortcut or trick and then applies it to the learner's own numbers or words ("10 times 6, then take off 6" is the question worked).
+OK only if the reply leaves the learner a real choice or a real step to do themselves: a method, a question back (such as why they chose it), a similar example with different numbers or words, a reminder of a rule that does not by itself decide the answer. When in doubt, say LEAK.`;
+
+/** @returns {Promise<'LEAK'|'OK'|''>} '' when the check could not run (the caller holds the reply: fail closed) */
+async function leakCheck({ ai, user, question, message, text }) {
+  if (!text || !clip(question, 300)) return 'OK';
+  const ask = (system, tail) => withDeadline(ai.talk({
+    role: 'fast', task: 'dock_leak_check', system,
+    messages: [{ role: 'user', content: `Question on screen: ${clip(question, 400)}\n\nThe learner said: ${clip(message, 300)}\n\nTutor reply: ${clip(text, 1000)}\n\n${tail}` }],
+    maxTokens: 6, userId: user && user.id, hedgeAfterMs: 2500, timeoutMs: 6000, temperature: 0,
+  }), 7000).catch(() => '');
+  const a = await ask(LEAK_SYSTEM, 'LEAK or OK?');
+  if (/^\W*leak/i.test(a || '')) return 'LEAK';
+  if (/^\W*ok/i.test(a || '')) return 'OK';
+  return '';
 }
 
-module.exports = { isBrief, triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
+const ASKS = /\?|\b(explain|why|what|how|who|when|which|define|meaning)\b/i;
+const NOT_SURE = "I'm not sure I have that exactly right, and I'd rather not guess. Tell me which part you're stuck on and we'll work it out step by step.";
+
+/**
+ * A fast check before a reply is shown (TUTOR_FULL): does it state a subject fact that is wrong, or a detail about the learner or the app
+ * that the notes do not support? One short call on the dock's checker slot. WRONG replaces the reply with an honest "not sure" and a re-ask.
+ * A checker that cannot run lets a lesson reply through (graded pages have their own fail-closed rule).
+ * @returns {Promise<boolean>} true when the reply should be replaced
+ */
+async function factCheck({ ai, user, message, text, notes, question }) {
+  if (!text || text.length < 40) return false;
+  let verdict = '';
+  try {
+    verdict = await withDeadline(ai.talk({
+      role: 'fast', task: 'dock_leak_check',
+      system: 'You fact-check a tutor reply before a learner sees it. Reply with only OK or WRONG. WRONG means: the reply states a subject fact (maths, science, language, history, geography) that is incorrect; or it states a specific detail about this learner (a number, a date, a day of the week, a test or exam, a count of tries, a page or section number, a past event) or about the app that is not in the NOTES below; or it says "your notes say" something the NOTES do not. Opinions, encouragement, advice about what to study, questions to the learner and well-established facts are OK. A claim is NOT wrong just because the notes are silent on it when it is general encouragement or advice. Say WRONG only when you are sure: a false subject fact, an invented date, day, test, exam, page, count or event, or something that contradicts the notes; if in doubt answer OK.',
+      messages: [{ role: 'user', content: `NOTES (true): ${clip(notes, 1500)}
+
+Question on screen: ${clip(question, 200) || 'none'}
+Learner said: ${clip(message, 300)}
+
+Tutor reply: ${clip(text, 900)}
+
+OK or WRONG?` }],
+      maxTokens: 6, userId: user.id, hedgeAfterMs: 2500, timeoutMs: 5000,
+    }), 6000);
+  } catch { verdict = ''; }
+  return /^\W*wrong/i.test(verdict || '');
+}
+
+/**
+ * The answer key as a deterministic guard: the learner's own unanswered question (by the text on screen, else the newest one) is looked up
+ * on the server and compared with the reply. The key is never put in a prompt; it only decides whether a reply is held.
+ * @returns {boolean} true when the reply contains the answer to the question on screen
+ */
+function answerKeyHit(userId, page, reply) {
+  try {
+    const db = require('../config/db'); // eslint-disable-line global-require
+    const norm2 = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9/.^ -]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const open = db.find('items', (i) => i.user_id === userId && (i.correct === null || i.correct === undefined) && i.answer);
+    if (!open.length) return false;
+    const q = norm2(page && page.question);
+    const item = q ? open.reverse().find((i) => norm2(i.prompt) === q) : null; // only the question the page says is on screen: a stale unanswered item must not hold an unrelated reply
+    if (!item) return false;
+    const r = ` ${norm2(reply)} `;
+    return [item.answer, ...(Array.isArray(item.accepts) ? item.accepts : [])].map(norm2).filter((a) => a && a.length <= 60).some((a) => r.includes(` ${a} `));
+  } catch { return false; }
+}
+
+module.exports = { methodReply, answerKeyHit, leakCheck, LEAK_SYSTEM, factCheck, NOT_SURE, isBrief, triage, safetyOn, CRISIS, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
