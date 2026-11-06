@@ -65,7 +65,7 @@ App.mount(async () => {
       </div>
       <div class="card" style="margin-top:18px">
         <h2>Or add a recording</h2>
-        <p class="small">A lecture, a voice memo, a meeting: mp3, m4a, wav, webm or ogg, up to ${lim.max_mb} MB. It is turned into text on Savant's own server with an open speech model (no outside speech service), a few minutes for every ten minutes of audio. The recording is not kept, only the text with its time marks.</p>
+        <p class="small">A lecture, a voice memo, a meeting: mp3, m4a, wav, webm or ogg, up to ${lim.max_mb} MB. It is turned into text on Savant's own server with an open speech model (no outside speech service), a few minutes for every ten minutes of audio. The recording is not kept, only the text with its time marks. English only for now: other languages come out wrong, so paste a transcript for those.</p>
         <p class="small" id="audio-avail" role="status"></p>
         <input type="file" id="audio-file" accept="audio/*,.mp3,.m4a,.wav,.webm,.ogg" aria-label="Audio file">
         <div class="row-wrap" style="margin-top:8px">
@@ -88,6 +88,7 @@ App.mount(async () => {
             <div class="row-wrap" id="extend-${m.id}" style="margin:4px 0 0" hidden></div>
             <p class="tiny muted" id="pack-note-${m.id}" role="status" style="margin:4px 0 0"></p>
             <div id="rg-host-${m.id}" style="margin:4px 0 0"></div>
+            ${(m.warnings || []).map((w) => `<p class="tiny" role="status" style="margin:4px 0 0;color:#a15c00">Note: ${esc(w)}</p>`).join('')}
             <p class="tiny muted" style="margin:4px 0 0">${esc(m.preview)}…</p>
           </li>`).join('')}</ul>` : '<p class="muted">Nothing yet.</p>'}
       </div>`;
@@ -105,6 +106,7 @@ App.mount(async () => {
         const res = await fetch(`/api/materials${video ? '/video' : ''}?name=${encodeURIComponent(f.name)}`, { method: 'POST', body: f, credentials: 'same-origin', headers: { 'Content-Type': 'application/octet-stream' } });
         const payload = await res.json().catch(() => ({}));
         if (!res.ok) return note('upload-note', payload.error || `Upload failed (${res.status}).`);
+        if (res.status === 202 && payload.job) { note('upload-note', video ? 'Uploaded. The sound is being turned into text; you can leave this page and it will be in your list when it is done.' : 'Uploaded. This one takes a while to read: follow it just below (Recordings and long readings). You can leave this page.'); return audioPoll(0); }
         if (video) { note('upload-note', 'Uploaded. The sound is being turned into text; you can leave this page and it will be in your list when it is done.'); return audioPoll(0); }
         data.materials = payload.materials;
         render();
@@ -127,7 +129,7 @@ App.mount(async () => {
       if (!av || !ul) return;
       av.textContent = state.available.ready ? '' : state.available.reason;
       ul.innerHTML = state.jobs.map((j) => `<li class="small" style="padding:4px 0"><strong>${esc(j.title)}</strong>: ${
-        j.status === 'done' ? 'done, it is in your list' : j.status === 'failed' ? esc(j.error || 'failed') : j.chunks ? `transcribing, ${j.percent}%` : 'getting ready…'
+        j.status === 'done' ? `done, it is in your list${(j.warnings || []).map((w) => `<br><span class="tiny" style="color:#a15c00">Note: ${esc(w)}</span>`).join('')}` : j.status === 'failed' ? esc(j.error || 'failed') : j.chunks ? `${j.what === 'reading' ? 'reading' : 'transcribing'}${j.note ? ` (${esc(j.note)})` : ''}, ${j.percent}%` : 'getting ready…'
       } ${j.status === 'running' || j.status === 'queued' ? '' : `<button class="btn btn-sm" type="button" data-audio-del="${j.id}">Dismiss</button>`}</li>`).join('');
       ul.querySelectorAll('[data-audio-del]').forEach((b) => b.addEventListener('click', async () => {
         const out = await App.api.del(`/api/materials/audio/${b.dataset.audioDel}`).catch(() => null);

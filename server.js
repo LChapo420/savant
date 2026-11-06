@@ -240,8 +240,10 @@ app.get('*', (req, res) => {
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  console.error('unhandled:', err);
   if (res.headersSent) return;
+  if (err && (err.type === 'entity.too.large' || err.status === 413)) return res.status(413).json({ error: 'That is too big to upload. Files are limited to 20 MB (videos 200 MB); send a shorter or smaller part.', code: 'too_big' });
+  if (err && err.type === 'entity.parse.failed') return res.status(400).json({ error: 'That request could not be read.', code: 'bad_request' });
+  console.error('unhandled:', err);
   res.status(500).json({ error: 'Something went wrong on our side.' });
 });
 
