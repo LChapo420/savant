@@ -44,7 +44,7 @@ function fitMeasure(rows, featNames) {
   const n = rows.length; const y = rows.map((r) => r.y); const my = mean(y);
   const cv = (build, lam) => { let se = 0; for (let f = 0; f < 5; f++) { const tr = []; const te = []; rows.forEach((r, i) => (i % 5 === f ? te : tr).push(i)); const mod = ridge(tr.map((i) => build(rows[i])), tr.map((i) => y[i]), lam); for (const i of te) se += (y[i] - predictRidge(mod, build(rows[i]))) ** 2; } return se / n; };
   const simple = (r) => simpleCols(r.m, r.conf);
-  const hasFeat = featNames && rows.every((r) => r.feat);
+  const hasFeat = featNames && rows.every((r) => r.feat && featNames.every((k) => Number.isFinite(r.feat[k])));
   const full = (r) => [...featNames.map((k) => r.feat[k]), ...simpleCols(r.m, r.conf)];
   const cands = [{ kind: 'prior', mse: mean(y.map((v) => (v - my) ** 2)) }, { kind: 'asis', mse: mean(rows.map((r) => (y[rows.indexOf(r)] - r.m) ** 2)) }, { kind: 'simple', mse: cv(simple, 0.5) }];
   const best = cands.reduce((a, c) => (c.mse < a.mse ? c : a));
