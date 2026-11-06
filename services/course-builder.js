@@ -566,6 +566,8 @@ function checkSkillFacts(skill, { paragraphs, keyPoints, items, text, passageByI
     explanations: items.map((q) => ({ text: q.explanation || '', extra: `${q.prompt} ${(q.choices || []).join(' ')} ${q.answer || ''} ${q.quote || ''}` })),
     idx: factIndex(ctx, passageById), sourceText: text, allow: ctx.allowNames || null,
     asker: (args) => ask(ctx.llm, ctx.budget, ctx.userId, args), fallback: noLesson ? null : fallback,
+    // Two readers from different families, measured against one (docs/UPLOADS-ANY-FORMAT.md section 17). UPLOAD_FACTCHECK_READERS=1 keeps one.
+    asker2: factcheck.twoReaders() ? (args, firstModel) => ask(ctx.llm, ctx.budget, ctx.userId, { ...args, task: factcheck.secondTask(firstModel) }) : null,
   });
 }
 

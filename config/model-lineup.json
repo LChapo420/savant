@@ -1017,6 +1017,16 @@
         ],
         "basis": "the sentence-by-sentence fact check of a lesson (docs/UPLOADS-ANY-FORMAT.md section 17); runs beside material_verify while a learner waits, so the same cheap list."
       },
+      "material_factcheck_glm": {
+        "only": ["*glm*", "*GLM*"],
+        "allow": ["*glm*", "*GLM*"],
+        "basis": "second reader of the fact check when the first was another family: measured, two families left fewer invented facts than one (docs/UPLOADS-ANY-FORMAT.md section 17)."
+      },
+      "material_factcheck_deepseek": {
+        "only": ["*deepseek*", "*DeepSeek*"],
+        "allow": ["*deepseek*", "*DeepSeek*"],
+        "basis": "second reader of the fact check when the first was GLM (docs/UPLOADS-ANY-FORMAT.md section 17)."
+      },
       "essay_grade": {
         "timeout_ms": 300000
       },

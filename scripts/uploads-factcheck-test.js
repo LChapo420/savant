@@ -104,7 +104,7 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
   check('the built lesson has lost what it does not', !/Wegener|Volcanoes|1912/.test(JSON.stringify(s.lesson)), s.lesson);
   check('the outline summary is checked too', !/Wegener/.test(s.summary || ''), s.summary);
   check('a bad explanation becomes the quote', /^Your material says:/.test(s.questions[0].explanation) && !/Wegener/.test(JSON.stringify(s.questions)), s.questions[0]);
-  check('the check is one call per skill, learner class', calls.filter((t) => t === 'material_factcheck').length === 1);
+  check('the check is one call per skill, learner class', calls.filter((t) => t === 'material_factcheck').length === 1 && calls.filter((t) => t === 'material_factcheck_glm').length === 1);
   check('the course says what was checked', built.course.dropped.factcheck.sentences > 0 && built.course.dropped.factcheck.hard >= 1, built.course.dropped.factcheck);
 
   // A check that never answers leaves the course partial, and asking again checks again.

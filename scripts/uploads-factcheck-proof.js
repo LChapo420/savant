@@ -99,9 +99,9 @@ const textOf = (c, raw) => c.skills.map((s) => {
 const lessonOnly = (t) => t.split('\n').filter((l) => !l.startsWith('Q: ')).join('\n').replace(/^Key: /gm, '');
 function builderLlm() {
   return async (a) => {
-    const fam = (a.task === 'material_factcheck' && process.env.FACT_CHECKER) || process.env.FACT_BUILDER || 'M';
+    const fam = a.task === 'material_factcheck_glm' ? 'Z' : a.task === 'material_factcheck_deepseek' ? 'M' : (a.task === 'material_factcheck' && process.env.FACT_CHECKER) || process.env.FACT_BUILDER || 'M';
     for (let i = 0; i < 4; i++) {
-      try { const data = await J.call(fam, { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: Math.max(a.maxTokens || 1500, 2500) }); return { data, model: fam }; } catch (e) { await new Promise((r) => setTimeout(r, 2000 * (i + 1))); }
+      try { const data = await J.call(fam, { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: Math.max(a.maxTokens || 1500, 2500) }); return { data, model: fam === 'Z' ? 'GLM-5.3-Flash' : fam === 'M' ? 'DeepSeek-V4-Flash' : fam }; } catch (e) { await new Promise((r) => setTimeout(r, 2000 * (i + 1))); }
     }
     return null;
   };
@@ -137,7 +137,7 @@ async function recheck(fromTag, toTag, checkerFam) {
     const askerOf = (fam) => async (a) => { for (let i = 0; i < 4; i++) { try { return { res: { data: await J.call(fam, { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: Math.max(a.maxTokens, 2500) }) } }; } catch { await new Promise((r) => setTimeout(r, 2000 * (i + 1))); } } return { res: null }; };
     const [fam1, fam2] = checkerFam.split('+');
     const asker = askerOf(fam1); const asker2 = fam2 ? askerOf(fam2) : null;
-    const blocks = from.raw.split(/\n\n(?=## )/);
+    const blocks = (process.env.RECHECK_FROM === 'checked' ? from.checked : from.raw).split(/\n\n(?=## )/);
     const stats = { sentences: 0, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0 };
     const dropped = [];
     const out = new Array(blocks.length);

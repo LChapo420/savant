@@ -226,6 +226,7 @@ const CHECK_SCHEMA = { type: 'object', properties: { verdicts: { type: 'array', 
  */
 async function check(items, { idx, sourceText, asker, asker2 = null, allow = null, allowStems = null, task = 'material_factcheck' }) {
   const out = new Map();
+  // A second reader that does not answer leaves the first reader's verdicts standing; a spent budget does not stop the build here.
   const stats = { sentences: items.length, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0, stopped: false };
   out.stats = stats;
   const ask = [];
@@ -236,6 +237,7 @@ async function check(items, { idx, sourceText, asker, asker2 = null, allow = nul
     ask.push(it);
   }
   const answered = new Map();
+  let lastModel = null;
   /** One reader over a list of sentences, in batches, a second try for what it left unanswered. Calls `take` with each verdict. */
   const read = async (who, list, take) => {
     const batches = [];
@@ -252,6 +254,7 @@ async function check(items, { idx, sourceText, asker, asker2 = null, allow = nul
           user: `MATERIAL:\n${sourceText}${evidence.length ? `\n\nMORE OF THE SAME MATERIAL:\n${evidence.slice(0, 20).join('\n')}` : ''}\n\nSENTENCES:\n${todo.map((x, i) => `${i + 1}. ${x.text}${x.exam.hard.length ? ` [not found in the material: ${x.exam.hard.join('; ')}]` : ''}`).join('\n')}`,
         });
         if (r && r.stopped) { stats.stopped = true; return; }
+        if (r && r.res && r.res.model) lastModel = r.res.model;
         const vs = r && r.res && r.res.data && Array.isArray(r.res.data.verdicts) ? r.res.data.verdicts : [];
         for (const v of vs) { const it = v && todo[Number(v.n) - 1]; if (it && ['supported', 'no_claim', 'not_in_source'].includes(v.verdict)) { take(it, v); done.add(it.id); } }
         todo = todo.filter((x) => !done.has(x.id));
@@ -263,7 +266,8 @@ async function check(items, { idx, sourceText, asker, asker2 = null, allow = nul
     // A second reader, from another family, sees what the first passed: either one saying "not in the source" is enough.
     if (asker2) {
       const passed = ask.filter((x) => { const v = answered.get(x.id); return v && v.verdict !== 'not_in_source'; });
-      if (passed.length) await read(asker2, passed, (it, v) => { if (v.verdict === 'not_in_source') { answered.set(it.id, v); stats.second_caught = (stats.second_caught || 0) + 1; } });
+      const firstModel = lastModel;
+      if (passed.length) await read((args) => asker2(args, firstModel), passed, (it, v) => { if (v.verdict === 'not_in_source') { answered.set(it.id, v); stats.second_caught = (stats.second_caught || 0) + 1; } });
     }
   }
   for (const it of ask) {
@@ -390,4 +394,9 @@ function interestWords(spec) {
   return new Set(words);
 }
 
-module.exports = { onFor, interestWords, checkTexts, enabled, indexSource, examine, check, checkLesson, sentencesOf, numbersOf, namesOf, contentTerms, stem, CHECK_SYSTEM, CHECK_SCHEMA };
+/** Two readers unless UPLOAD_FACTCHECK_READERS=1. */
+const twoReaders = () => String(process.env.UPLOAD_FACTCHECK_READERS || '2') !== '1';
+/** The second reader's task: the other family from whichever answered first. */
+const secondTask = (firstModel) => (/glm|zai/i.test(String(firstModel || '')) ? 'material_factcheck_deepseek' : 'material_factcheck_glm');
+
+module.exports = { twoReaders, secondTask, onFor, interestWords, checkTexts, enabled, indexSource, examine, check, checkLesson, sentencesOf, numbersOf, namesOf, contentTerms, stem, CHECK_SYSTEM, CHECK_SCHEMA };
