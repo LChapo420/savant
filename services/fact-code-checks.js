@@ -90,7 +90,7 @@ function expandProducts(toks) {
     if (t.t === 'word' && /^[a-z]{2,3}$/.test(t.v) && !ENGLISH_SHORT.has(t.v)) {
       const p = toks[i - 1]; const n = toks[i + 1];
       const math = (x) => x && (x.t === 'rel' || (x.t === 'op' && x.v !== '/'));
-      if (math(p) || math(n)) { [...t.v].forEach((c, k) => out.push({ ...t, t: 'var', v: c, space: k === 0 ? t.space : false })); return; }
+      if (math(p) || math(n) || (p && p.t === 'num' && !t.space && !UNITS[t.v])) { [...t.v].forEach((c, k) => out.push({ ...t, t: 'var', v: c, space: k === 0 ? t.space : false })); return; }
     }
     out.push(t);
   });
@@ -707,7 +707,7 @@ function checkChecks(checks, keyAgreement, push) {
     if (c.format === 'multiple_choice' && choices && choices.length > 1 && c.rationale && keyAgreement) {
       try {
         const r = keyAgreement({ question: c.prompt, prompt: c.prompt, choices, answer: key, rationale: c.rationale, explanation: c.rationale });
-        if (r && r.flag) add({ rule: 'rationale_describes_other_option', certain: false, claim: `key "${String(key).slice(0, 80)}"`, truth: `the rationale reads closer to "${String(r.bestChoice || r.best || '').slice(0, 80)}"` });
+        if (r && r.flagged) add({ rule: 'rationale_describes_other_option', certain: false, claim: `key "${String(key).slice(0, 80)}"`, truth: `the rationale reads closer to "${String(r.pointsTo != null && choices[r.pointsTo] != null ? choices[r.pointsTo] : r.pointsTo || '').slice(0, 80)}"` });
       } catch { /* the words check is optional */ }
     }
   });
