@@ -170,7 +170,7 @@ function probeSummary(file, fromMs = 0) {
     secs_with_stall_over_200ms: rows.filter((r) => r.lag_max > 200).length, secs_with_stall_over_1s: rows.filter((r) => r.lag_max > 1000).length,
     loop_busy_median: q('elu', 0.5), proc_cpu_median: q('proc_cpu', 0.5), box_cpu_median: q('box_cpu', 0.5),
     rss_mb_end: Math.round(rows[rows.length - 1].rss / 1048576), rss_mb_max: Math.round(Math.max(...rows.map((r) => r.rss)) / 1048576), heap_mb_end: Math.round(rows[rows.length - 1].heap / 1048576),
-    save_share_of_time: Number(((sum('str_ms') + sum('w_ms') + sum('r_ms')) / (secs * 1000)).toFixed(3)),
+    save_share_of_time: Number(((sum('str_ms') + sum('w_ms') + sum('r_ms')) / (Math.max(1, rows[rows.length - 1].t - rows[0].t))).toFixed(3)),
     save_stringify_ms_per_sec: Math.round(sum('str_ms') / secs), save_write_ms_per_sec: Math.round(sum('w_ms') / secs),
     db_bytes_end: rows.map((r) => r.bytes).filter(Boolean).slice(-1)[0] || null,
     ledger_write_ms_per_sec: Math.round(sum('led_ms') / secs), ledger_writes_per_sec: Number((sum('led_n') / secs).toFixed(1)),

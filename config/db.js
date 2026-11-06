@@ -7,6 +7,13 @@
  * terms of collections and plain objects, so Phase 5 replaces the guts here with
  * Postgres without touching a route or a service.
  */
+// DB_DRIVER=sqlite hands everything to config/db-sqlite.js (same API, SQLite on disk; move the data first with
+// scripts/migrate-json-to-sqlite.js). Unset or "json" keeps this file's JSON store. See docs/BETA-LOAD.md for why and when.
+if (process.env.DB_DRIVER === 'sqlite') {
+  module.exports = require('./db-sqlite');
+  return;
+}
+
 const fs = require('fs');
 const path = require('path');
 
