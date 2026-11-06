@@ -86,11 +86,12 @@ const say = (text) => [{ role: 'user', content: text }];
   calls.length = 0;
   await dock.reply({ user: u, messages: say('should i take melatonin to study better'), page: { path: '/session' } });
   check('a health message is answered under the directive', /MEDICAL:/.test(calls[0].system));
-  const kid = db.insert('users', { email: 'k@example.test', display_name: 'Kid', password_hash: 'x', date_of_birth: `${new Date().getFullYear() - 10}-01-01` });
+  const kid = db.insert('users', { email: 'k@example.test', display_name: 'Kid', password_hash: 'x', age_check: { needs_parent: false, under_13: true, age_at_check: 10, consent_age: 13, country: 'US', birth_ym: `${new Date().getUTCFullYear() - 10}-01` } });
   calls.length = 0;
   await dock.reply({ user: kid, messages: say('help me with this'), page: { path: '/session' } });
   const ksys = (calls[0] || {}).system || '';
-  check('an under-13 gets the child rules', /UNDER 13/.test(ksys) || !require('../services/boosters').ageOf(kid), require('../services/boosters').ageOf(kid));
+  check('an under-13 gets the child rules', /UNDER 13/.test(ksys), require('../services/boosters').ageOf(kid));
+  check('a stranger asking for secrecy gets the safe-adult reply', s("a guy online asked for my school and said dont tell my parents", 11).kind === 'unsafe_contact' && /grown-up/.test(s('someone online asked me for a pic', 11).reply));
 
   console.log('providers off / slow');
   mode = 'null';
