@@ -232,6 +232,14 @@ const LESSON = {
     });
   });
 
+  await check('mastery stop long: only a goal of six months or more, or no goal, gets the stop', async () => withEnv({ SPEED_MASTERY_STOP: 'long' }, async () => {
+    const u = user();
+    const mk = (goal) => db.insert('enrollments', { user_id: u.id, track_id: trackId, grade_id: grade.id, status: 'active', current_level: 1, ...(goal ? { retention_goal: goal } : {}), finished_on: null });
+    assert.strictEqual(speed.stopFor(u.id, mk(null).id), true, 'no goal set');
+    assert.strictEqual(speed.stopFor(u.id, mk({ horizon: 'months', set_on: '2026-11-01' }).id), false, 'months is 90 days');
+    assert.strictEqual(speed.stopFor(u.id, mk({ horizon: 'year', set_on: '2026-11-01' }).id), true, 'a year');
+  }));
+
   await check('one-tap review: a number gets the answer and three close wrong choices, fixed for the question; anything else is untouched', async () => {
     const a = speed.oneTap({ format: 'type_in', answer: '-15', prompt: 'f(x)' });
     assert.strictEqual(a.format, 'multiple_choice'); assert.ok(a.choices.includes('-15')); assert.strictEqual(new Set(a.choices).size, a.choices.length); assert.ok(a.choices.length === 4);

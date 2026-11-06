@@ -31,7 +31,25 @@ function enabled(lever) {
   const efficiency = require('./efficiency'); // eslint-disable-line global-require
   if (efficiency.isSuspended && efficiency.isSuspended()) return false;
   if (String(process.env.SPEED_ALL || '').toLowerCase() === 'off') return false;
-  return String(process.env[SWITCH[lever]] || DEFAULT[lever]).toLowerCase() === 'on';
+  const v = String(process.env[SWITCH[lever]] || DEFAULT[lever]).toLowerCase();
+  return v === 'on' || (lever === 'stop' && v === 'long');
+}
+
+/**
+ * SPEED_MASTERY_STOP=long: the stop only on a goal of six months or more, or with no test day. Saves about 40% of hours there and costs at most about 5 points (docs/SPEED-4X.md). Off by default: two adverse variants miss the margin by a hair at six months. =on: every goal.
+ */
+const LONG_GOAL_DAYS = 180;
+function stopFor(userId, enrollmentId) {
+  if (!enabled('stop')) return false;
+  if (String(process.env.SPEED_MASTERY_STOP || '').toLowerCase() !== 'long') return true;
+  try {
+    const enr = enrollmentId ? dbOf().byId('enrollments', enrollmentId) : null;
+    const eff = require('./retention-goal').forEnrollment(userId, enr);
+    if (!eff) return true;
+    if (eff.status === 'horizon') return !Number.isFinite(eff.days) || eff.days >= LONG_GOAL_DAYS;
+    if (eff.status === 'date') return !Number.isFinite(eff.days_left) || eff.days_left >= LONG_GOAL_DAYS;
+    return true;
+  } catch { return false; }
 }
 
 const PARAMS = {
@@ -327,7 +345,7 @@ function afterAnswer({ userId, session, item, correct, block, lesson }) {
       state.skipped = true; save();
       return { action: 'skip_page', set_aside: ids, message: 'You got these right, so we skipped this page to save you time. It is still here if you want it.' };
     }
-    if ((session.kind === 'lesson' || session.kind === 'teach') && enabled('stop') && ['focus', 'stretch', 'support'].includes(item.role) && correct) {
+    if ((session.kind === 'lesson' || session.kind === 'teach') && stopFor(userId, session.enrollment_id) && ['focus', 'stretch', 'support'].includes(item.role) && correct) {
       const rest = open.filter((i) => i.skill_id === item.skill_id && ['focus', 'stretch', 'support'].includes(i.role));
       if (!rest.length || !shown(trackerFor(userId, item.skill_id, { unit: scope() }))) return null;
       return { action: 'stop_skill', set_aside: setAside(rest, 'mastered'), message: "You've shown you have this one, so we're moving on sooner." };
@@ -338,7 +356,7 @@ function afterAnswer({ userId, session, item, correct, block, lesson }) {
 /** Has this lesson's stretch been shown understood on its focus skill? (the mastery stop: the level is ready without its remaining items). scope: { grade, level }. */
 function practiceShown(userId, skillId, scope = null) {
   if (scope && scope.grade && plainHereOf(userId, { track_id: scope.trackId, grade_id: scope.grade.id, level: scope.level }, scope.level)) return false;
-  return require('./efficiency').forLearner(userId, () => enabled('stop') && shown(trackerFor(userId, skillId, { unit: scope && scope.grade ? unitOf(scope.grade, scope.level) : null })));
+  return require('./efficiency').forLearner(userId, () => stopFor(userId, scope && scope.enrollmentId) && shown(trackerFor(userId, skillId, { unit: scope && scope.grade ? unitOf(scope.grade, scope.level) : null })));
 }
 /** The review rule for one skill as the scheduler sees it. end: { daysToEnd, recallAtEnd } when the goal has a known last day, else null. */
 function reviewWanted(userId, skillId, recallNow, end) {
@@ -355,5 +373,5 @@ module.exports = {
   newTracker, observe, taught, pKnown, kMean, shown, priorFromHistory, trackerFromAnswers, nextStep, pRight,
   PLACE, bestItem, placementNext, placementAnswer,
   reviewDue, endWindow,
-  workedCount, oneTap, unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
+  stopFor, workedCount, oneTap, unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
 };
