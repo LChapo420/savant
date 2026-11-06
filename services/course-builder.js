@@ -423,16 +423,16 @@ async function ask(llm, budget, userId, args) {
  * The learner's own spec as a prompt block (services/learning-spec.js): empty for the owner and for a learner we know nothing about.
  * `topic` is the material's title, so a learner who dislikes a subject is eased into it when the material is that subject.
  */
-function specBlockFor(userId, topic = null) {
+function specBlockFor(userId, topic = null, materialId = null) {
   // eslint-disable-next-line global-require
-  return require('./learning-spec').linesFor(userId, { topic }, 'material').join('\n');
+  return require('./learning-spec').linesFor(userId, { topic, materialId }, 'material').join('\n');
 }
 
 /** For a learner with interests: a function from a skill's passage text to a check that an interest analogy adds no claim (else null). */
-function guardMaker(userId, topic = null) {
+function guardMaker(userId, topic = null, materialId = null) {
   // eslint-disable-next-line global-require
   const ls = require('./learning-spec');
-  const spec = ls.buildSpec(userId, { topic });
+  const spec = ls.buildSpec(userId, { topic, materialId });
   return (source) => ls.analogyGuard(spec, source);
 }
 
@@ -644,7 +644,7 @@ async function build(userId, materialId, opts = {}) {
     const all = chunk(mat.text);
     const passages = all.slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, keypoints: mat.key_points || [], passageList: passages, block: specBlockFor(userId, mat.title), questionBlock: questionBlockFor(userId, mat.title), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title }), makeGuard: guardMaker(userId, mat.title), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
+    const ctx = { unanswered: 0, llm, userId, keypoints: mat.key_points || [], passageList: passages, block: specBlockFor(userId, mat.title, mat.id), questionBlock: questionBlockFor(userId, mat.title), skillShare: require('./learning-spec').courseShareFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title }), makeGuard: guardMaker(userId, mat.title, mat.id), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
     const base = {
       user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, total_chars: mat.text.length, status: 'building', started_at: new Date().toISOString(),
       passages: passages.map(({ id, start, end }) => ({ id, start, end })), truncated: all.length > passages.length,
@@ -800,7 +800,7 @@ async function retryMissed(userId, materialId, opts = {}) {
   try {
     const passages = chunk(mat.text).slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId, mat.title), questionBlock: questionBlockFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title }), makeGuard: guardMaker(userId, mat.title), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
+    const ctx = { unanswered: 0, llm, userId, block: specBlockFor(userId, mat.title, mat.id), questionBlock: questionBlockFor(userId, mat.title), textShape: require('./learning-spec').textShapeFor(userId, { topic: mat.title }), makeGuard: guardMaker(userId, mat.title, mat.id), budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0 }, models: new Set() };
     const most = Math.max(1, Math.min(MAX_SKILLS, Math.ceil(mat.text.length / CHARS_PER_SKILL)));
     const raw = (course.outline || []).map((k) => ({ id: k.id, title: k.title }));
     const fresh = [];

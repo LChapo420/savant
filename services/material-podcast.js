@@ -318,7 +318,7 @@ async function build(userId, materialId, opts = {}) {
       : '\n\nTalk through the main ideas of the whole material in the order it teaches them.';
     const text = shown.map((p) => `[${p.id}]\n${p.text}`).join('\n\n');
     // The listener's own spec (services/learning-spec.js): wording, pace and tone; the script is still only the material's.
-    const spec = learningSpec.buildSpec(userId, { topic: mat.title });
+    const spec = learningSpec.buildSpec(userId, { topic: mat.title, materialId: mat.id });
     const block = learningSpec.specToLines(spec, { surface: 'podcast' }).join('\n');
     const args = {
       role: 'fast', task: 'material_podcast', schema: SCRIPT_SCHEMA, schemaName: 'material_podcast', maxTokens: 5000, dataClass: 'learner', userId,

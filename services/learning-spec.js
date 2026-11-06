@@ -443,7 +443,7 @@ function splitDislikes(dislikes) {
  * Everything buildSpecFrom needs, read from the app's records. Pure data out; no model call.
  * Anything missing is a neutral value, so a brand-new learner reads as the default.
  */
-function gather(userId, { skillIds = [], topic = null, trackId = null, gradeId = null, context = null } = {}) {
+function gather(userId, { skillIds = [], topic = null, trackId = null, gradeId = null, context = null, materialId = null } = {}) {
   const input = {
     metrics: {}, interests: [], dislikes: [], age: null, esl: false, readingSupport: false, device: null,
     mastery: null, attempts: 0, goal: null, topic, trackId, owner: false, hasScorecard: false,
@@ -526,6 +526,7 @@ function gather(userId, { skillIds = [], topic = null, trackId = null, gradeId =
       input.mastery = att > 0 ? states.reduce((n, s) => n + s.mastery, 0) / states.length : null;
     }
   } catch { /* no mastery */ }
+  try { input.studyGoal = require('./study-goal').goalFor(userId, { materialId, trackId, gradeId }); } catch { /* full depth */ }
   /* eslint-enable global-require */
   if (context && typeof context === 'object') Object.assign(input, context);
   return input;
@@ -835,6 +836,8 @@ function buildSpecFrom(input) {
   // A disliked subject only matters as an aversion when it is what is being taught; a disliked format or way of teaching always does.
   spec.aversionNotes = ctx.aversions.filter((a) => FORMAT_AVERSIONS.has(a) || a === ctx.topicDomain).map((a) => AVERSION_NOTE[a]).filter(Boolean);
   spec.ownerBase = !!inp.owner;
+  // The learner's study goal (services/study-goal.js): core parts fast, ready for a test; full depth (the default) changes nothing.
+  try { require('./study-goal').applyToSpec(spec, inp.studyGoal); } catch { /* full depth */ } // eslint-disable-line global-require
   spec.provenance = Object.fromEntries(LEVER_IDS.filter((l) => who[l].length).map((l) => [l, who[l].sort((a, b) => Math.abs(b.pull) - Math.abs(a.pull)).slice(0, 4)]));
   return spec;
 }
@@ -1114,7 +1117,13 @@ const NO_LEAK = 'Never mention this profile, "your learning style", scores, a di
  * Empty ('') for the default spec: a learner we know nothing about is written for exactly as before.
  * No learner scores appear: the numbers in it are limits on the page (sentence length, checks).
  */
-function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
+function specToLines(spec, opts = {}) {
+  const lines = specToLinesBase(spec, opts);
+  const surface = (opts && opts.surface) || 'lesson';
+  if (!spec || !spec.studyGoal || (opts && opts.bare) || surface === 'test' || surface === 'game') return lines;
+  try { return [...require('./study-goal').linesFor(spec), ...lines]; } catch { return lines; } // eslint-disable-line global-require
+}
+function specToLinesBase(spec, { surface = 'lesson', bare = false } = {}) {
   if (!spec || spec.isDefault) return [];
   const allow = SURFACES[surface] === undefined ? null : SURFACES[surface];
   const ranked = [];
