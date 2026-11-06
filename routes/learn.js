@@ -177,7 +177,13 @@ function sessionShape(session) {
     enrollment_id: session.enrollment_id || null,
     // The speed levers (services/speed-levers.js). Not sent at all with them off; a learner who asked for feedback at the end keeps today's flow.
     ...speedShape(session),
+    ...plainShape(session),
   };
+}
+
+/** The speed proof's plain lesson: the learner can switch it to the Savant way, as the consent wording promises. Not sent otherwise. */
+function plainShape(session) {
+  try { const p = require('../services/speed-proof').plainHere(session.user_id, session, session.level); return p ? { plain_way: p } : {}; } catch { return {}; } // eslint-disable-line global-require
 }
 
 function speedShape(session) {

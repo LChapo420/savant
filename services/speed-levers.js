@@ -251,10 +251,12 @@ function partsForMiss(lesson, item, shownIds = [], chunk = PARAMS.chunk) {
   const take = Math.max(1, Math.ceil(all * chunk));
   return parts.map((p, i) => ({ p, s: score(p), i })).sort((a, b) => (b.s - a.s) || (a.i - b.i)).slice(0, take).map((x) => x.p.id);
 }
+const plainHereOf = (userId, session, level) => { try { return require('./speed-proof').plainHere(userId, session, level); } catch { return null; } };
 /** What the client should know up front. A preview of another level keeps today's flow. */
 function clientFlags(userId, session) {
   const on = (lever) => require('./efficiency').forLearner(userId, () => enabled(lever));
   if (!session || session.preview) return { testout: false, short: false, fast: false };
+  if (plainHereOf(userId, session, session.level)) return { testout: false, short: false, fast: false }; // the speed proof's plain lesson (services/speed-proof.js) gets no lever: it is the comparison
   return { testout: on('testout'), short: on('short'), fast: on('fast') };
 }
 /**
@@ -265,6 +267,7 @@ function clientFlags(userId, session) {
 function afterAnswer({ userId, session, item, correct, block, lesson }) {
   return require('./efficiency').forLearner(userId, () => {
     if (session.preview) return null;
+    if (plainHereOf(userId, session, item.level)) return null;
     const scope = () => { try { const grade = require('../config/curriculum').getGrade(session.track_id, session.grade_id); return grade ? unitOf(grade, Number(item.level) || Number(session.level)) : null; } catch { return null; } };
     const open = block.filter((i) => i.correct === null && !i.skipped && i.id !== item.id);
     if (item.role === 'check' && lesson && (enabled('testout') || enabled('short'))) {
@@ -304,6 +307,7 @@ function afterAnswer({ userId, session, item, correct, block, lesson }) {
 }
 /** Has this lesson's stretch been shown understood on its focus skill? (the mastery stop: the level is ready without its remaining items). scope: { grade, level }. */
 function practiceShown(userId, skillId, scope = null) {
+  if (scope && scope.grade && plainHereOf(userId, { track_id: scope.trackId, grade_id: scope.grade.id, level: scope.level }, scope.level)) return false;
   return require('./efficiency').forLearner(userId, () => enabled('stop') && shown(trackerFor(userId, skillId, { unit: scope && scope.grade ? unitOf(scope.grade, scope.level) : null })));
 }
 /** The review rule for one skill as the scheduler sees it. end: { daysToEnd, recallAtEnd } when the goal has a known last day, else null. */
