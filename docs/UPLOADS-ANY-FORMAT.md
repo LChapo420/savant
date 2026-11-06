@@ -489,3 +489,51 @@ Other languages: a material not written in English gets an English course, as be
 
 Which readers, measured with one judge over the same texts (C, sentence form, h1 h3 h4 h5 h6): DeepSeek alone 1.4 a course, GLM alone 1.2, Kimi alone 0.6, DeepSeek and GLM together 0.6, those two and then Kimi as a third 0.4. Kimi as the only reader cost $0.24 a course against about $0.003 for the two cheap ones and cut more (h1 1,278 to 895 words) for the same score, so it stays a judge. `UPLOAD_FACTCHECK_READERS=1` keeps one reader.
 
+**Every format with real files (`scripts/uploads-every-format.js`, `scripts/lib/real-files.js`; MEASURED; rows `docs/uploads-every-format-results.json`).** 90 cases over the real upload route: PDFs written by Chrome (text, table, two columns, scanned, 45-page scan, a picture-only page, password-protected with pypdf, 120 and 330 pages, cut, flipped, header only), Word with tracked changes, footnotes, comments and a table, password-protected and old Office files, PowerPoint with a table, a group and notes, Excel with formulas and two sheets, CSV, TSV, RTF, HTML, EPUB, seven picture types, sideways photos, handwriting fonts (Ink Free, Segoe Script, Bradley), a blackboard, noise, blank, 9000 x 9000 pixels, Spanish, Chinese, Arabic and mixed files, empty and wrong-extension files, RAR, 7-Zip, Apple files, a protected ZIP, 850 KB to 21 MB, and audio and video through Gladia (very short clips, about 20 s). 90 of 90 as intended. Real handwriting was not available: fonts are not a hand.
+
+| Found | Before | Now |
+|---|---|---|
+| A cut-off PNG | **ended the whole server process** (tesseract.js throws outside any promise without an error handler) | "could not be read, take it again"; damaged pictures stop at the converter |
+| Two or more pictures at once | a released OCR worker left an upload stuck for good (3 of 3 scans never finished in the load test) | a queue of workers, released only when idle, 150 s limit per reading |
+| An 850 KB text | the key-point pass held the server's one thread for minutes | under a second on repeats, and any text over 100 KB is read off the main thread |
+| UTF-16 text; a HEIC photo | sent to the audio transcriber ("that audio file could not be read") | read as text; "share as JPG" |
+| Password-protected Word, Excel, PowerPoint | "not a Word document" | says it is password-protected and what to do; ZIPs too |
+| Old .xls and .ppt; RAR, 7-Zip, gzip; Apple Pages | "not a Word document" or "unknown" | each named, with what to do |
+| Chinese PDF with a text layer | "looks scanned" (words counted in Latin letters only) | read |
+| HTML and RTF tables | cells run together ("Mid Basin2123.1") | kept apart |
+| A photo on its side without its rotation tag | 0 of 8 sentences, garbage kept as notes | the other turns are tried; 8 of 8 |
+| A photo with no words | 950 words of garbage stored | refused, with what to do |
+| 9000 x 9000 pixels | "may be damaged" | read (limit 250 megapixels, then a plain message) |
+| Two columns in a PDF | key points ran across the gutter | each column read down on its own |
+| A sentence broken across PDF lines | "the material's own sentence" could be half of one | one line |
+| A video with no sound | "audio file could not be read" | "there is no sound in that file" |
+| Page copy | "no outside speech service hears it" while Gladia is the first route | says Gladia for cleared accounts, the server's own model otherwise |
+
+Still limits: a sentence may be misread in photos and handwriting fonts (recall there is by word overlap, 75% of the words of a sentence); drawn underline and highlight rectangles in a PDF are not seen (highlight and sticky-note annotations are); a real scan of a real hand, and files saved by Word itself, are untested here. Speech in other languages was not run.
+
+**What the material stresses (`scripts/uploads-emphasis-proof.js`; rows `docs/uploads-emphasis-results.json`).** One document with 12 stressed points, one device each (statement heading, bold, said three ways, "on the test" before and after, teacher's note, boxed key point, capitals, underline, highlight, summary, "Remember:"), and 8 plain facts; built as Markdown, HTML, Word (the teacher's note as a real comment), PDF and PowerPoint (notes). A point counts as surviving when its rare name and its value sit in one card, one question or one sentence.
+
+| Surface, stressed points found of 12 | Before | After |
+|---|---|---|
+| Notes | 11 to 12 | 12 |
+| Flashcards | 1 to 3 | 10 to 12 |
+| Practice test (study pack) | 2 to 6 | 10 to 12 |
+| Learning-path lessons | 10 to 12 (plain 1 to 8 of 8) | 12 (plain 8 of 8) |
+| Learning-path questions, which the practice test draws on | 4 to 7 | 10 to 12 |
+
+The extractor now sees underline, highlight (Word, HTML, Markdown, PowerPoint), capitals, teacher's notes, Word comments (the words a comment marks are stressed and the comment joins the text), PDF highlights and sticky notes, shaded or bordered Word paragraphs, statement headings, and the same name and number said again in other words; a stressed point is never lost to the cap on points. A stressed point no card or question carries becomes a fill-in-the-gap from the material's own sentence (`services/material-stress.js`, `UPLOAD_STRESS_SWEEP=off`). The two PDF misses are drawn underline and highlight.
+
+**Failure and recovery (`scripts/uploads-recovery-walk.js`, `scripts/uploads-recovery-server.js`; a real browser at 390 px, a copy of the database, a scripted model; 28 of 28).** Reload mid-build, the server dying part way, a provider down, credit out and back, two uploads at once, delete during a build. Found: a build that died showed "Building" for 30 minutes (now said at once, with "Build the rest"); a partial course had no working way to finish; a provider failure blamed the learner's text ("try a clearer or longer one"); the page stopped watching after 13 minutes; a deleted material's build ran on and spent. A provider that is down still leaves the fill-in cards of a study pack.
+
+**Speed (MEASURED; AI models real through the pool; a simulated cleared learner; this PC: 16 threads with other work running).** First useful thing: what the material stresses, on the upload's own answer, no model: 0.15 s for text, 0.5 to 0.9 s for Word and PDF, 3.7 s for a picture, about 7 s for 20 s of audio by Gladia. It is on the material list and on the notes page while the notes are written.
+
+| 24 uploads at once, median / worst | Before | After |
+|---|---|---|
+| All types | 13.9 s / 26.8 s, 3 stuck for good | 5.7 s / 17.0 s, none stuck |
+| Pictures; 3-page scans | 22 s / 27 s; never | 12 s / 15 s; 16 s / 17 s |
+| Worst hold on the server's one thread | 10.1 s | 2.7 s |
+
+The biggest wait left was the first lesson: 139 to 156 s, of which the outline 14 to 37 s and one call writing the lesson and 6 to 9 questions about 67 s (`SPEED_TRACE=1 node scripts/uploads-speed.js waiting course`). Now the lesson and the questions are two calls at once (`UPLOAD_LESSON_SPLIT=off` restores one): the first lesson is fact-checked and readable at 53, 62 and 117 s, the first full skill at 90 to 150 s, the whole course 154 to 277 s against 197 to 322 s. Three runs with other work on the providers, so indicative. Notes 28 to 35 s, study pack 75 to 209 s.
+
+**To verify on the Linux server (not reachable from here).** (1) `require('tesseract.js')` works: this checkout's `node_modules` lacks it, and without it pictures and scans are refused. (2) `data/models/tesseract/eng.traineddata`: `data/` is ignored by git, so the first OCR downloads it from a CDN; copy it, or check the server can fetch it and write there. (3) ffmpeg: `FFMPEG_PATH` or the `ffmpeg-static` binary for Linux, executable; M4A and MP3 by the local route and all video need it. (4) `data/models/Xenova` for the Whisper fallback, and `GLADIA_API_KEY`, `data/gladia-ledger.json`; one 20 s clip with a cleared account and one with an uncleared one (engine must be `whisper`). (5) `sharp`'s Linux build: read a 9000 x 9000 PNG and watch memory on the server's size; `OCR_WORKERS` defaults to 2, lower it on a small box. (6) `worker_threads` for the 100 KB key-point pass, and `os.tmpdir()` writable for M4A. (7) A Chinese PDF: character maps come with the package, check it reads. (8) The proxy in front: body limit at least 200 MB for video, 20 MB elsewhere, and the 413 reaches the page as JSON. (9) Sessions: the walk had to log in again after a restart here; check whether a server restart logs learners out. Paths are built with `path.join`; I found nothing that depends on the path separator or on file-name case.
+
