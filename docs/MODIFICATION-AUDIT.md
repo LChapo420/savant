@@ -101,6 +101,17 @@ Ready for a test (80 scored, no unscored; gate: exam-style answerability not low
 - Words only 3.8% fewer, so the goal barely changes the text (blind pick 37 of 64, planted 16 of 16 TIE). A note on the gate: with 8 questions and one written sample per version, a learner can lose 2 questions to writing variance alone. No full-versus-full control was run, so how much of the worst-10% loss is noise is unmeasured; the gate was not loosened.
 - Test goal stays OFF (`STUDY_GOAL_TEST=on` enables it).
 
+### 6 Nov night: the control (full depth against a second independent full-depth write), same 80 learners, same 8 questions, same judges
+
+SIMULATED learners, AI-judged. 73 scored. The full-depth control loses as much as the goals do:
+- Overall answerability: GLM -0.033 (CI -0.057 to -0.009), Grok -0.019 (CI -0.048 to +0.009).
+- Worst 10% / 5% / 1% drop: GLM 0.125 / 0.25 / 0.25; Grok 0.25 / 0.25 / 0.25.
+- Words: the second full write has more words than the first for 36 of 73 learners; worst 1% is 83% more.
+
+So the worst-10% gate (0.10, 8 questions, one sample per version) cannot tell two writings of the same lesson apart: the control itself loses 0.25 at the worst 10% on Grok. With 8 questions a learner's score has a standard error of about 0.14 per version, so the difference between two versions has about 0.2, and the worst-10% point of pure noise is about -0.26. To get that under 0.10 from questions alone needs roughly 55 questions per learner per version (or about 7 independent writings of 8 questions each), more once writing variance is added. The gate was not changed.
+
+Why core gave some learners more words than full depth: traced on two of the six pairs. The budget is right (core budget 300-460 words against full 540-840), but the writer ignores it (first drafts 424-763 words), the strict length check fires, and the revision call failed (no reply), so the over-long first draft was kept. The full versions in those pairs were also short by variance (control shows the same spread). Fix: a failed revision call is asked once more (`reviseOnce`; test in `learning-spec-test.js`). Core re-run with the fix (76 scored): words 25.4% fewer; answerability GLM +0.010, Grok -0.005 (both inside noise); worst 10% / 5% / 1% drop 0.125 / 0.125 / 0.25 (GLM), 0.125 / 0.25 / 0.50 (Grok); 12 of 76 learners still have more words. That equals the control's noise floor but still misses the 0.10 gate, so core stays off.
+
 ### Defaults after this run
 - Core: OFF (`STUDY_GOAL_CORE=on` enables it). Fails the answerability and worst-10% gates on 75 scored learners (above).
 - Approach lines: OFF.
