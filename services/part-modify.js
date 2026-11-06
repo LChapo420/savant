@@ -386,6 +386,8 @@ function goalFor(userId, item) {
 /** Background: write `item.shaped` for this learner. Resolves when done; routes must not await it. */
 async function prepareItem(userId, item, { llm = null, spec = null, gate = undefined } = {}) {
   if (!enabled(userId) || !userId || !item || !item.rationale) return null;
+  // Each rewrite is a write and two gate readings on the learner's daily AI budget (120 calls): background rewrites stop at half of it, so they never cost the tutor its answers.
+  if (!llm) { try { if (!lazy('./ai').budgetShareLeft(userId, 0.5)) return null; } catch { return null; } }
   const key = `${userId}:${item.id}`;
   if (running.has(key)) return null;
   running.add(key);

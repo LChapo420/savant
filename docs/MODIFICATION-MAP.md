@@ -138,6 +138,7 @@ Clicked through in a real Chrome at 375 x 812 with touch, on a temp copy of the 
 - Facts now hold: strict same facts 101/102 on feedback, against 6/15.
 - Fit is half proven: 70% and 72% against another learner, but 55% and 69% against what everyone sees now, and half of those verdicts could not tell them apart. Hints, verdict words and lessons do not pass.
 - Cost is one write and two gate readings per explanation per learner, about $0.0006 at list price: small, but for light rewording.
+- Each rewrite spends at least 3 calls of the learner's daily AI budget of 120, which my test account hit in testing (every later rewrite was then refused). Background rewrites now stop at half the budget, so the tutor keeps its room; on a heavy day the later questions keep the stored text.
 - Its gates run on Grokified and Gonka, cleared for learner data only **until 14 Nov**. After that every rewrite is refused and the stored text stays: safe, but the feature would do nothing at the beta unless the owner clears them (the 10 Nov question).
 - No real learner has seen it. None of this says anyone learns more.
 
