@@ -328,13 +328,30 @@ async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, 
   let outP = paraSents.map((ids) => ids.map(textOf).filter(Boolean).join(' ')).filter(Boolean);
   const outK = (keyPoints || []).map((_, i) => textOf(`k${i}`)).filter(Boolean);
   const outS = summary ? textOf('s') : summary;
+  // A dropped sentence often also carried a true fact: what it was based on goes back in the material's own words, when the lesson no longer says it (h4 lost "initiate only when euvolemic" this way).
+  const restored = [];
+  const keptNow = () => contentTerms([...outP, ...outK, ...restored].join(' '));
+  for (const d of dropped) {
+    if (d.fixed || d.how === 'unchecked') continue;
+    const it = items.find((x) => x.text === d.text && x.exp == null);
+    if (!it || !it.exam || !it.exam.evidence) continue;
+    const dt = contentTerms(d.text);
+    for (const line of idx.lines.filter((l) => it.exam.evidence.includes(l.text))) {
+      let shared = 0; for (const x of dt) if (line.terms.has(x)) shared++;
+      if (dt.size && shared / dt.size < 0.4) continue; // it was about something else
+      const have = keptNow();
+      let n = 0; for (const x of line.terms) if (have.has(x)) n++;
+      if (line.terms.size && n / line.terms.size < 0.75 && (line.text.match(/\S+/g) || []).length <= 60) restored.push(line.text.replace(/^[-*•]\s*/, '').replace(/\*\*/g, ''));
+    }
+  }
+  if (restored.length) { outP = [...outP, [...new Set(restored)].slice(0, 6).join(' ')]; }
   let fellBack = false;
   if (!outP.length && fallback) { outP = fallback(); fellBack = true; }
   // An explanation with any unsupported sentence is not trusted as a whole: the caller shows the quote instead.
   const badExplanations = new Set(items.filter((x) => x.exp != null && got.get(x.id) && (!got.get(x.id).keep || got.get(x.id).text)).map((x) => x.exp));
   for (const x of items) if (x.exp != null && got.get(x.id) && (!got.get(x.id).keep || got.get(x.id).text)) dropped.push({ text: x.text, why: got.get(x.id).reason, how: 'explanation' });
   const sum = (list) => list.reduce((n, x) => n + (String(x).match(/\S+/g) || []).length, 0);
-  return { paragraphs: outP, keyPoints: outK, summary: outS || '', badExplanations, report: { ...got.stats, fell_back: fellBack, words_before: sum([...(paragraphs || []), ...(keyPoints || [])]), words_after: sum([...outP, ...outK]), dropped: dropped.slice(0, 40) } };
+  return { paragraphs: outP, keyPoints: outK, summary: outS || '', badExplanations, report: { ...got.stats, restored: restored.length, fell_back: fellBack, words_before: sum([...(paragraphs || []), ...(keyPoints || [])]), words_after: sum([...outP, ...outK]), dropped: dropped.slice(0, 40) } };
 }
 
 /**

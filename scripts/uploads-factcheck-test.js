@@ -69,6 +69,13 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
   r = await lesson(['The plates sometimes swing wildly about.'], [], async () => ({ stopped: true }));
   check('a spent budget is reported, not hidden', r.report.stopped === true);
 
+  r = await F.checkLesson({ paragraphs: ['Labetalol is preferred in pregnancy, which is safest for all mothers and babies everywhere.', 'Delegates vote.'], keyPoints: [], idx, sourceText: SOURCE, asker: script((a) => numbered(a).map((x) => ({ n: x.n, verdict: /safest/.test(x.text) ? 'not_in_source' : 'supported', fixed: '' }))) });
+  check('a dropped sentence: the material\'s own line behind it goes back', /Atenolol is avoided in pregnancy \(IUGR\); labetalol is preferred\./.test(r.paragraphs.join(' ')) && !/safest/.test(r.paragraphs.join(' ')) && r.report.restored === 1, r.paragraphs);
+  r = await F.checkLesson({ paragraphs: ['Volcanoes erupt sometimes.'], keyPoints: [], idx, sourceText: SOURCE, asker: script((a) => numbered(a).map((x) => ({ n: x.n, verdict: 'not_in_source', fixed: '' }))) });
+  check('a dropped sentence about nothing in the material brings nothing back', !r.paragraphs.length, r.paragraphs);
+  const two = await F.checkLesson({ paragraphs: ['The plates swing about all day long.'], keyPoints: [], idx, sourceText: SOURCE, asker: script((a) => numbered(a).map((x) => ({ n: x.n, verdict: 'supported' }))), asker2: script((a) => numbered(a).map((x) => ({ n: x.n, verdict: 'not_in_source', fixed: '' }))) });
+  check('either of two readers saying "not in the source" is enough', !two.paragraphs.length && two.report.second_caught === 1, two.report);
+
   r = await lesson(['Think of plates like rafts on a pond.'], [], script((a) => numbered(a).map((x) => ({ n: x.n, verdict: 'no_claim' }))));
   check('a framed analogy with no claim stays', r.paragraphs.length === 1);
 
