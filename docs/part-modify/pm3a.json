@@ -2,7 +2,7 @@
  "tag": "pm3a",
  "seed": 7207,
  "n": 30,
- "generated_at": "2026-11-06T20:53:29.093Z",
+ "generated_at": "2026-11-06T21:07:29.197Z",
  "writer": "ZeroGPU GLM-5.3 Flash",
  "judges": [
   {
@@ -23,10 +23,10 @@
    "arms": {
     "vs_stored": {
      "real": {
-      "n": 57,
+      "n": 58,
       "verdicts": 43,
       "empty": 0,
-      "same": 14,
+      "same": 15,
       "picks_vL": 24,
       "share": 0.5581395348837209,
       "p_above_chance": 0.27119200592824116
@@ -109,25 +109,25 @@
        "n": 3,
        "share": 0.6666666666666666
       },
-      "random": {
-       "n": 9,
-       "share": 0.3333333333333333
-      },
       "contradict": {
        "n": 10,
        "share": 0.5
+      },
+      "random": {
+       "n": 9,
+       "share": 0.3333333333333333
       },
       "tail_both": {
        "n": 4,
        "share": 0.5
       },
-      "all_hi": {
-       "n": 2,
-       "share": 1
-      },
       "age_young": {
        "n": 6,
        "share": 0.6666666666666666
+      },
+      "all_hi": {
+       "n": 2,
+       "share": 1
       },
       "ell": {
        "n": 4,
@@ -219,13 +219,17 @@
       "below_half": 5
      },
      "by_kind": {
+      "tail_hi": {
+       "n": 4,
+       "share": 0.5
+      },
       "tail_lo": {
        "n": 4,
        "share": 1
       },
-      "tail_hi": {
-       "n": 4,
-       "share": 0.5
+      "contradict": {
+       "n": 6,
+       "share": 0.6666666666666666
       },
       "random": {
        "n": 10,
@@ -234,10 +238,6 @@
       "tail_both": {
        "n": 5,
        "share": 0.2
-      },
-      "contradict": {
-       "n": 6,
-       "share": 0.6666666666666666
       },
       "all_hi": {
        "n": 2,
@@ -284,12 +284,12 @@
       "share": null
      },
      "per_judge": {
-      "grokified-grok": {
+      "gonka-deepseek": {
        "real": null,
        "swap_fooled": null,
        "control": null
       },
-      "gonka-deepseek": {
+      "grokified-grok": {
        "real": null,
        "swap_fooled": null,
        "control": null
@@ -332,8 +332,8 @@
     "checked": 30,
     "passed": 29,
     "declined": 1,
-    "same_yes": 6,
-    "same_asked": 9,
+    "same_yes": 7,
+    "same_asked": 10,
     "coverage_fail": 0,
     "claims": {},
     "strict": {},
@@ -344,7 +344,333 @@
    "goal": null,
    "sources": 30,
    "declined": 1,
-   "trials": 191
+   "trials": 192
+  },
+  "review": {
+   "part": "review",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 60,
+      "verdicts": 56,
+      "empty": 0,
+      "same": 4,
+      "picks_vL": 51,
+      "share": 0.9107142857142857,
+      "p_above_chance": 5.851462370198857e-11
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.8846153846153846,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": 0.9333333333333333,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.8846153846153846,
+       "verdicts": 26,
+       "p": 0.00004398822784423848
+      },
+      "grok": {
+       "share": 0.9333333333333333,
+       "verdicts": 30,
+       "p": 4.339963197708146e-7
+      }
+     },
+     "individuals": {
+      "n": 30,
+      "worst_1pct": 0,
+      "worst_5pct": 0.25,
+      "worst_10pct": 0.3333333333333333,
+      "lowest": [
+       {
+        "L": "x7207-5",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-8",
+        "share": 0.5,
+        "n": 2
+       },
+       {
+        "L": "x7207-25",
+        "share": 0.5,
+        "n": 2
+       }
+      ],
+      "below_half": 1
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 5,
+       "share": 1
+      },
+      "tail_lo": {
+       "n": 6,
+       "share": 1
+      },
+      "contradict": {
+       "n": 12,
+       "share": 0.75
+      },
+      "random": {
+       "n": 11,
+       "share": 1
+      },
+      "tail_both": {
+       "n": 5,
+       "share": 1
+      },
+      "age_young": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "all_hi": {
+       "n": 2,
+       "share": 0.5
+      },
+      "ell": {
+       "n": 6,
+       "share": 1
+      },
+      "age_old": {
+       "n": 3,
+       "share": 1
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 60,
+      "verdicts": 58,
+      "empty": 0,
+      "same": 2,
+      "picks_vL": 46,
+      "share": 0.7931034482758621,
+      "p_above_chance": 0.000004109831981666237
+     },
+     "swap_fooled": {
+      "n": 60,
+      "verdicts": 55,
+      "empty": 0,
+      "same": 5,
+      "picks_vL": 4,
+      "share": 0.07272727272727272
+     },
+     "control_picks_vL": {
+      "n": 60,
+      "verdicts": 50,
+      "empty": 0,
+      "same": 10,
+      "picks_vL": 34,
+      "share": 0.68
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.7142857142857143,
+       "swap_fooled": 0.11538461538461539,
+       "control": 0.75
+      },
+      "grokified-grok": {
+       "real": 0.8666666666666667,
+       "swap_fooled": 0.034482758620689655,
+       "control": 0.6153846153846154
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.7142857142857143,
+       "verdicts": 28,
+       "p": 0.017849069088697527
+      },
+      "grok": {
+       "share": 0.8666666666666667,
+       "verdicts": 30,
+       "p": 0.000029738061130046922
+      }
+     },
+     "individuals": {
+      "n": 30,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-12",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-18",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-27",
+        "share": 0,
+        "n": 2
+       }
+      ],
+      "below_half": 4
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "tail_lo": {
+       "n": 6,
+       "share": 0.6666666666666666
+      },
+      "contradict": {
+       "n": 11,
+       "share": 0.9090909090909091
+      },
+      "random": {
+       "n": 12,
+       "share": 0.8333333333333334
+      },
+      "tail_both": {
+       "n": 6,
+       "share": 1
+      },
+      "age_young": {
+       "n": 6,
+       "share": 0.6666666666666666
+      },
+      "all_hi": {
+       "n": 2,
+       "share": 1
+      },
+      "ell": {
+       "n": 5,
+       "share": 1
+      },
+      "age_old": {
+       "n": 4,
+       "share": 0
+      }
+     }
+    },
+    "identical": {
+     "real": {
+      "n": 16,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 16,
+      "picks_vL": 0,
+      "share": null,
+      "p_above_chance": null
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "grok": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      }
+     },
+     "individuals": {
+      "n": 0,
+      "worst_1pct": null,
+      "worst_5pct": null,
+      "worst_10pct": null,
+      "lowest": [],
+      "below_half": 0
+     },
+     "by_kind": {}
+    }
+   },
+   "facts": {
+    "conflict_yes": 4,
+    "conflict_asked": 10,
+    "declined_because": {},
+    "checked": 30,
+    "passed": 30,
+    "declined": 0,
+    "same_yes": 1,
+    "same_asked": 9,
+    "coverage_fail": 0,
+    "claims": {},
+    "strict": {},
+    "gate_attempts": {},
+    "partial": 0,
+    "flagged": []
+   },
+   "goal": null,
+   "sources": 30,
+   "declined": 0,
+   "trials": 256
   }
  },
  "samples": {
@@ -403,6 +729,64 @@
      "shaped_words": 10,
      "new_words": 2,
      "dropped_words": 3
+    }
+   }
+  ],
+  "review": [
+   {
+    "learner": "x7207-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: none stated. Dislikes (never wanted): sports examples.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Think of it again now. This helps you keep it for next year.",
+    "other_learner": "Recalling it now helps keep it for the months ahead.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 13,
+     "new_words": 10,
+     "dropped_words": 7
+    }
+   },
+   {
+    "learner": "x7207-1",
+    "kind": "tail_lo",
+    "profile": "Age 36. Language: English. Interests: none stated. Dislikes (never wanted): cute mascots.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Recalling it now helps keep it for the months ahead.",
+    "other_learner": "Think of it again now. This helps you keep it for your test on 2026-11-16.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 10,
+     "new_words": 6,
+     "dropped_words": 6
+    }
+   },
+   {
+    "learner": "x7207-2",
+    "kind": "contradict",
+    "profile": "Age 25. Language: English. Interests: none stated. Dislikes (never wanted): repetition drills, being praised for easy things, being told the answer right away.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Think of it again now. This helps you keep it for your test on 2026-11-16.",
+    "other_learner": "Recalling it now helps keep it for your test on 2027-01-05.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 15,
+     "new_words": 13,
+     "dropped_words": 8
+    }
+   },
+   {
+    "learner": "x7207-3",
+    "kind": "random",
+    "profile": "Age 59. Language: English. Interests: competitive baking shows. Dislikes (never wanted): none stated.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Recalling it now helps keep it for your test on 2027-01-05.",
+    "other_learner": "No pressure here: recalling it now helps keep it with you for the months ahead.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 11,
+     "new_words": 7,
+     "dropped_words": 6
     }
    }
   ]

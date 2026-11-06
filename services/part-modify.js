@@ -424,12 +424,11 @@ function courseStale(course, spec, now = Date.now()) {
 async function rewriteLesson(args) { return (await rewriteLessonDetail(args)).paragraphs; }
 
 /**
- * The sentences of a text that carry a number: these are the ones writers lost or re-derived (14 of 24 lessons declined on 6 Nov, 9 of them on numbers: a formula added from the
- * writer's own knowledge, or a molecule count dropped), so they are handed over as text that must stay.
+ * A free rewrite of a lesson added facts whatever it was told (7 Nov, held-out: 25 of 30 refused, "Many towns and farms were damaged", "So the mean is 5"), so the writer no longer writes a lesson. It
+ * rewrites each sentence on its own, and code does the layout from the spec: how the text is cut into pieces and numbered. A sentence that loses a number goes back to the stored sentence, so a
+ * rewrite can be partial. One comparison may be offered apart from the text, and is dropped first when the gate objects.
  */
-const lockedOf = (text) => String(text || '').split(/(?<=[.!?])\s+/).map((x) => x.trim()).filter((x) => /\d/.test(x));
-
-const LESSON_SYSTEM = 'You rewrite one lesson text for one specific learner. Only the delivery changes: wording, order of emphasis, how it is cut into paragraphs, tone. Keep every fact, number, definition and key point of the original. Add nothing: no fact, no number, no formula, no symbol, no named example, no count of steps or parts that the original does not have, even if you know it to be true. A delivery note below that asks for something the original does not have (a worked example, a mistake, a story, a game) is applied only with what the original has, or left out. A comparison from another field is fine only if it is given as a comparison and states no fact of its own. Never mention the learner or their profile. Plain text paragraphs. Return JSON {"paragraphs": ["..."]}.';
+const LESSON_SYSTEM = 'You rewrite a lesson for one specific learner, sentence by sentence. You are given numbered sentences. For each one, write what that sentence says and nothing else, in the delivery asked for; you may split it into shorter sentences. Keep every fact, number, name and term it has. Add nothing: no opener, no summary, no "key idea", no question, no step label, no example, no definition, no cause or consequence, even if you know it to be true. Never mention the learner. Return JSON {"sentences": [["..."], ["...", "..."]], "comparison": ""}: "sentences" has exactly one list per numbered sentence, in order. "comparison" is one short comparison only if the delivery notes offer one and it truly has the same structure as the idea, written as a comparison ("It is like ...") with no fact of its own; otherwise "".';
 
 // The levers a rewrite of a finished text can honestly follow. The full material block also asks for mistakes, a big picture, a hook, a recap and worked cases; a rewrite has nothing of its own
 // to put there, so writers made them up, and that is what the fact gate caught (7 Nov pilot: "A common wrong idea...", "It fits into the larger picture...").
@@ -446,37 +445,52 @@ function lessonDeliveryLines(spec) {
   return out.map((x, i) => `${i + 1}. ${x}`);
 }
 
+const sentencesIn = (t) => String(t || '').split(/(?<=[.!?])\s+(?=[A-Z0-9"'“(])/).map((x) => x.trim()).filter(Boolean);
+/** The pieces a learner reads, from the spec: how many sentences to a paragraph, and numbered when they follow numbered steps. Pure. */
+function layoutLesson(spec, groups, comparison) {
+  const size = Math.max(1, Math.min(6, Number((spec.lesson || {}).chunkSentences) || 4));
+  const flat = groups.flat();
+  const paragraphs = [];
+  for (let i = 0; i < flat.length; i += size) paragraphs.push(flat.slice(i, i + size).join(' '));
+  const numbered = spec.explain && spec.explain.numberedSteps && paragraphs.length >= 2 ? paragraphs.map((p, i) => `${i + 1}. ${p}`) : paragraphs;
+  return comparison ? [...numbered, comparison] : numbered;
+}
+
 /** The same, with the problems the last draft still had: { paragraphs: [..] | null, problems: [..], attempts, partial }. */
 async function rewriteLessonDetail({ spec, skill, llm, gate = null }) {
   const stored = skill.lesson.paragraphs || [];
   const orig = stored.join('\n\n');
   const keys = skill.lesson.key_points || [];
-  const block = `How to deliver it for this learner:\n${lessonDeliveryLines(spec).join('\n')}`;
+  const units = stored.flatMap(sentencesIn);
   const source = { text: orig, title: skill.title, prompt: `Lesson: ${skill.title}` };
-  const ask = async (text, note, keysHere) => {
-    const locks = lockedOf(text);
+  const block = `How to deliver it for this learner:\n${lessonDeliveryLines(spec).join('\n')}`;
+  const ask = async (note) => {
     try {
       const r = await llm({
         system: LESSON_SYSTEM,
-        user: `Lesson: ${skill.title}\n\nOriginal paragraphs:\n${text}\n\n${locks.length ? `These statements must stay, with these exact numbers (reword around them, never drop or re-derive them):\n${locks.map((k) => `- ${k}`).join('\n')}\n\n` : ''}Key points that must stay:\n${keysHere.map((k) => `- ${k}`).join('\n') || '- (none listed)'}\n\n${block}${note ? `\n\nYour last draft had problems; fix them:\n${note}` : ''}`,
-        schema: { type: 'object', properties: { paragraphs: { type: 'array', items: { type: 'string' } } }, required: ['paragraphs'] }, schemaName: 'submit', maxTokens: 7000,
+        user: `Lesson: ${skill.title}\n\nSentences:\n${units.map((u, i) => `${i + 1}. ${u}`).join('\n')}\n\n${block}${note ? `\n\nYour last draft had problems; fix them:\n${note}` : ''}`,
+        schema: { type: 'object', properties: { sentences: { type: 'array', items: { type: 'array', items: { type: 'string' } } }, comparison: { type: 'string' } }, required: ['sentences'] }, schemaName: 'submit', maxTokens: 7000,
       });
-      return r && Array.isArray(r.paragraphs) ? r.paragraphs.map((p) => String(p).trim()).filter(Boolean).slice(0, 10) : null;
+      return r && Array.isArray(r.sentences) ? r : null;
     } catch { return null; }
   };
-  const numbersProblems = (text, paras) => {
+  const keptNumbers = (from, to) => { const have = numbersShown(to); const known = numbersOf(`${from} ${skill.title}`); return [...numbersOf(from)].every((n) => have.has(n)) && [...numbersOf(to)].every((n) => known.has(n)); };
+  /** Sentence by sentence, against its own original: a sentence that fails goes back to the stored one. */
+  const assemble = (r) => {
+    let reverted = 0;
+    const groups = units.map((u, i) => {
+      const got = Array.isArray(r.sentences[i]) ? r.sentences[i].map((x) => String(x || '').trim()).filter(Boolean) : [];
+      const joined = got.join(' ');
+      const ok = got.length && keptNumbers(u, joined) && !avoidedIn(spec, { ...source, text: u }, joined).length && joined.split(/\s+/).length <= 3 * u.split(/\s+/).length + 8;
+      if (!ok) reverted += 1;
+      return ok ? got : [u];
+    });
+    return { groups, reverted, comparison: String(r.comparison || '').trim() };
+  };
+  const problemsOf = (paras) => {
     const body = paras.join(' ');
     const out = [];
-    const have = numbersShown(body);
-    for (const n of numbersOf(text)) if (!have.has(n)) out.push(`the number ${n} is missing: keep the statement it belongs to`);
-    for (const n of numbersOf(stripLayout(body))) if (!numbersOf(`${text} ${skill.title}`).has(n)) out.push(`the number ${n} is not in the original: remove it, and any formula it is part of`);
-    return out;
-  };
-  const problemsOf = (paras, keysHere = keys, text = orig) => {
-    if (!paras || !paras.length) return ['empty'];
-    const body = paras.join(' ');
-    const out = numbersProblems(text, paras);
-    const c = lazy('./learning-spec').checkFollowed(body, spec, { keyFacts: keysHere, exempt: String(`${text} ${skill.title}`).toLowerCase().match(/[a-zà-ÿ]{4,}/g) || [], minShare: 0.3, own: true, interestNeed: 0 });
+    const c = lazy('./learning-spec').checkFollowed(body, spec, { keyFacts: keys, exempt: String(`${orig} ${skill.title}`).toLowerCase().match(/[a-zà-ÿ]{4,}/g) || [], minShare: 0.3, own: true, interestNeed: 0 });
     for (const p of c.problems) if (['coverage', 'profile_leak'].includes(p.id)) out.push(p.detail);
     for (const d of avoidedIn(spec, source, body)) out.push(`it uses ${d}, which this learner dislikes; use other examples`);
     return out;
@@ -487,31 +501,27 @@ async function rewriteLessonDetail({ spec, skill, llm, gate = null }) {
     if (!v) return ['the fact check could not be read'];
     return v.ok ? [] : v.problems;
   };
-  let paras = null;
   let problems = null;
   let attempts = 0;
   for (; attempts < 3; attempts += 1) {
     // eslint-disable-next-line no-await-in-loop
-    paras = await ask(orig, problems ? problems.join('\n') : null, keys);
+    const r = await ask(problems ? problems.join('\n') : null);
+    if (!r) { problems = ['empty']; continue; } // eslint-disable-line no-continue
+    const { groups, reverted, comparison } = assemble(r);
+    const offered = comparison && !numbersOf(comparison).size && !avoidedIn(spec, source, comparison).length ? comparison : '';
+    let paras = layoutLesson(spec, groups, offered);
     problems = problemsOf(paras);
     // eslint-disable-next-line no-await-in-loop
     if (!problems.length) problems = await gateOf(paras);
-    if (!problems.length) return { paragraphs: paras, problems: [], attempts: attempts + 1, partial: false };
-  }
-  // The whole lesson could not be held to its facts in three tries: try it paragraph by paragraph, and any paragraph that cannot be held stays as stored.
-  if (stored.length >= 2) {
-    const mixed = [];
-    let rewritten = 0;
-    for (const p of stored) {
+    if (problems.length && offered) {
+      // The comparison goes first: the text may still stand without it.
+      paras = layoutLesson(spec, groups, '');
+      const without = problemsOf(paras);
       // eslint-disable-next-line no-await-in-loop
-      const one = await ask(p, null, []);
-      if (one && one.length && !numbersProblems(p, one).length && !avoidedIn(spec, { ...source, text: p }, one.join(' ')).length) { mixed.push(...one); rewritten += 1; } else mixed.push(p);
+      if (!without.length) { const g = await gateOf(paras); if (!g.length) problems = []; else problems = g; }
     }
-    const left = problemsOf(mixed);
-    // eslint-disable-next-line no-await-in-loop
-    const gated = rewritten && !left.length ? await gateOf(mixed) : ['nothing could be rewritten'];
-    if (rewritten && !left.length && !gated.length) return { paragraphs: mixed, problems: [], attempts: attempts + 1, partial: rewritten < stored.length };
-    return { paragraphs: null, problems: left.length ? left : gated, attempts: attempts + 1, partial: false };
+    if (!problems.length && reverted >= units.length) problems = ['nothing could be rewritten'];
+    if (!problems.length) return { paragraphs: paras, problems: [], attempts: attempts + 1, partial: reverted > 0 };
   }
   return { paragraphs: null, problems, attempts, partial: false };
 }

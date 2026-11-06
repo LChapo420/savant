@@ -116,10 +116,18 @@ check('a brief learner is refused a long rewrite', pm.check(BRIEF, 'feedback', S
   check('not twice in a day', !pm.courseStale({ ...course, lessons_refreshed_at: new Date().toISOString() }, FULL));
   check('a course without a signature is left alone', !pm.courseStale({ status: 'ready' }, FULL));
   const skill = { title: 'Prisms', lesson: { paragraphs: ['A prism has 3 sides to multiply, 3 x 2 x 4 = 24.'], key_points: ['Multiply the sides.'] } };
-  const para = await pm.rewriteLesson({ spec: FULL, skill, llm: async () => ({ paragraphs: ['Multiply the sides: 3 x 2 x 4 = 24. Each side is one number in the product.'] }) });
-  check('a lesson rewrite that keeps the numbers is accepted', Array.isArray(para) && para.length === 1, para);
-  const bad = await pm.rewriteLesson({ spec: FULL, skill, llm: async () => ({ paragraphs: ['Multiply the sides: 3 x 2 x 5 = 30.'] }) });
-  check('a lesson rewrite that changes a number is refused', bad === null);
+  // The writer now answers sentence by sentence (see LESSON_SYSTEM): a sentence that loses a number goes back to the stored sentence, and nothing changed means nothing is served.
+  const para = await pm.rewriteLesson({ spec: FULL, skill, llm: async () => ({ sentences: [['Multiply the sides of the prism: it has 3 sides to multiply, 3 x 2 x 4 = 24.']] }) });
+  check('a lesson rewrite that keeps the numbers is accepted', Array.isArray(para) && /Multiply the sides of the prism/.test(para.join(' ')), para);
+  const bad = await pm.rewriteLesson({ spec: FULL, skill, llm: async () => ({ sentences: [['Multiply the sides: 3 x 2 x 5 = 30.']] }) });
+  check('a lesson rewrite that changes every number is refused', bad === null, bad);
+  const two = { title: 'Prisms', lesson: { paragraphs: ['A prism has 3 sides to multiply, 3 x 2 x 4 = 24. Volume is measured in cubes.'], key_points: [] } };
+  const mixed = await pm.rewriteLesson({ spec: FULL, skill: two, llm: async () => ({ sentences: [['It is 3 x 2 x 5 = 30.'], ['We measure volume in cubes.']] }) });
+  check('a sentence that loses a number goes back to the stored one', Array.isArray(mixed) && /3 x 2 x 4 = 24/.test(mixed.join(' ')) && /We measure volume/.test(mixed.join(' ')) && !/30/.test(mixed.join(' ')), mixed);
+  const gated = await pm.rewriteLessonDetail({ spec: FULL, skill: two, llm: async () => ({ sentences: [['A prism has 3 sides to multiply, 3 x 2 x 4 = 24.'], ['We measure volume in cubes.']], comparison: 'It is like stacking crates.' }), gate: async (part, source, text) => (/crates/.test(text) ? { ok: false, problems: ['new: crates'] } : { ok: true, problems: [] }) });
+  check('the comparison is dropped first when the gate objects', gated.paragraphs && !/crates/.test(gated.paragraphs.join(' ')), gated);
+  const never = await pm.rewriteLessonDetail({ spec: FULL, skill: two, llm: async () => ({ sentences: [['A prism has 3 sides to multiply, 3 x 2 x 4 = 24.'], ['We measure volume in cubes.']] }), gate: async () => ({ ok: false, problems: ['new: x'] }) });
+  check('a lesson the gate never passes is refused', never.paragraphs === null);
 
   try { fs.unlinkSync(process.env.DB_FILE); } catch { /* temp */ }
   console.log(failures ? `\n${failures} FAILED` : '\nall part-modify checks passed');

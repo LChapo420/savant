@@ -63,6 +63,7 @@ function readExampleGate(reply) {
   return { ok: !problems.length, problems };
 }
 const SCHEMA = { type: 'object', properties: { text: { type: 'string' } }, required: ['text'] };
+const BUDGET_MS = Number(process.env.PART_CHANGE_BUDGET_MS || 20000);
 
 /** What is mechanically wrong with a draft, given what was asked. [] means the fact gate may read it. */
 function mechanical(original, text, asked, topic) {
@@ -89,7 +90,9 @@ async function rewrite({ original, context = '', asked, topic = null, spec = nul
   const specRules = spec && spec.interests && spec.interests.avoidDomains && spec.interests.avoidDomains.length ? [`Never use anything about: ${spec.interests.avoidDomains.join(', ')}.`] : [];
   const system = `You rewrite one piece of a lesson because the learner asked you to. Keep every fact, number and the answer exactly as in the original.${asked.includes('examples') ? '' : ' Add no new fact, rule, definition or tip.'} Never mention the learner. Plain text, no markdown. Return JSON {"text": "..."}.`;
   let problems = null;
-  for (let attempt = 0; attempt < 3; attempt += 1) {
+  // The learner is waiting: no new try after the budget (a try is one write and two readings).
+  const started = Date.now();
+  for (let attempt = 0; attempt < 3 && (attempt === 0 || Date.now() - started < BUDGET_MS); attempt += 1) {
     let text = '';
     // eslint-disable-next-line no-await-in-loop
     try { const r = await llm({ system, user: `${context ? `${context}\n\n` : ''}Original:\n${original}\n\nWhat the learner asked for:\n${[...rules, ...specRules].map((x, i) => `${i + 1}. ${x}`).join('\n')}${problems ? `\n\nYour last draft had problems; fix them:\n${problems.map((p) => `- ${p}`).join('\n')}` : ''}`, schema: SCHEMA, schemaName: 'submit', maxTokens: 1500 }); text = r && typeof r.text === 'string' ? r.text.trim() : ''; } catch { text = ''; }

@@ -1,0 +1,511 @@
+{
+ "tag": "pm3l",
+ "seed": 7207,
+ "n": 30,
+ "generated_at": "2026-11-06T21:07:29.324Z",
+ "writer": "ZeroGPU GLM-5.3 Flash",
+ "judges": [
+  {
+   "id": "gonka-deepseek",
+   "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+   "family": "deepseek"
+  },
+  {
+   "id": "grokified-grok",
+   "model": "grok-4.3",
+   "family": "grok"
+  }
+ ],
+ "simulated": true,
+ "parts": {
+  "lesson": {
+   "part": "lesson",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 10,
+      "verdicts": 7,
+      "empty": 0,
+      "same": 3,
+      "picks_vL": 6,
+      "share": 0.8571428571428571,
+      "p_above_chance": 0.06250000000000003
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.75,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": 1,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.75,
+       "verdicts": 4,
+       "p": 0.31249999999999994
+      },
+      "grok": {
+       "share": 1,
+       "verdicts": 3,
+       "p": 0.12500000000000003
+      }
+     },
+     "individuals": {
+      "n": 4,
+      "worst_1pct": 0.5,
+      "worst_5pct": 0.5,
+      "worst_10pct": 0.5,
+      "lowest": [
+       {
+        "L": "x7207-29",
+        "share": 0.5,
+        "n": 2
+       },
+       {
+        "L": "x7207-15",
+        "share": 1,
+        "n": 1
+       },
+       {
+        "L": "x7207-21",
+        "share": 1,
+        "n": 2
+       }
+      ],
+      "below_half": 0
+     },
+     "by_kind": {
+      "contradict": {
+       "n": 1,
+       "share": 1
+      },
+      "tail_lo": {
+       "n": 2,
+       "share": 1
+      },
+      "ell": {
+       "n": 2,
+       "share": 0.5
+      },
+      "random": {
+       "n": 2,
+       "share": 1
+      }
+     }
+    },
+    "noise": {
+     "real": {
+      "n": 8,
+      "verdicts": 5,
+      "empty": 0,
+      "same": 3,
+      "picks_vL": 1,
+      "share": 0.2,
+      "p_above_chance": 0.96875
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.3333333333333333,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": 0,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.3333333333333333,
+       "verdicts": 3,
+       "p": 0.875
+      },
+      "grok": {
+       "share": 0,
+       "verdicts": 2,
+       "p": 1
+      }
+     },
+     "individuals": {
+      "n": 3,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-15",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-21",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-29",
+        "share": 0.5,
+        "n": 2
+       }
+      ],
+      "below_half": 2
+     },
+     "by_kind": {
+      "contradict": {
+       "n": 1,
+       "share": 0
+      },
+      "tail_lo": {
+       "n": 2,
+       "share": 0
+      },
+      "ell": {
+       "n": 2,
+       "share": 0.5
+      }
+     }
+    },
+    "identical": {
+     "real": {
+      "n": 2,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 2,
+      "picks_vL": 0,
+      "share": null,
+      "p_above_chance": null
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "grokified-grok": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "grok": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      }
+     },
+     "individuals": {
+      "n": 0,
+      "worst_1pct": null,
+      "worst_5pct": null,
+      "worst_10pct": null,
+      "lowest": [],
+      "below_half": 0
+     },
+     "by_kind": {}
+    }
+   },
+   "facts": {
+    "conflict_yes": 0,
+    "conflict_asked": 3,
+    "declined_because": {
+     "new: That is the key idea: a long war, ended by a ": 1,
+     "new: It ended with a political settlement.": 1,
+     "new: So the mean is N.": 1,
+     "new: Now try a list of your own. Explain how you f": 1,
+     "new: The mean is one way to find the middle of a l": 1,
+     "new: That is like fixing a tractor. You put all th": 1,
+     "new: This is the rule: add all numbers, then divid": 1,
+     "new: First, add the numbers. Second, count the num": 1,
+     "new: The war began because of religious difference": 1,
+     "new: It is a key event in European history.": 1,
+     "new: That is a big area in the middle of Europe.": 1,
+     "new: Many towns and farms were damaged. People suf": 1,
+     "new: leaf as factory/machinery with microscopic co": 1,
+     "new: chlorophyll captures sunlight energy (as cata": 1,
+     "new: The principle to note is that a long war can ": 1,
+     "new: Consider how the war's religious origins gave": 1,
+     "new: step-by-step breakdown of calculating the mea": 1,
+     "new: fish tank analogy for the mean (average water": 1,
+     "new: explanation of mean as equal sharing of total": 1,
+     "new: median for even count as mean of two middles": 1,
+     "new: Chlorophyll gives leaves their green color.": 1,
+     "new: The rule is that plants convert carbon dioxid": 1,
+     "new: Chlorophyll is what makes leaves green. It al": 1,
+     "new: So, photosynthesis is how plants turn light i": 1,
+     "new: That's the whole setup: one war, one peace, o": 1,
+     "new: The rule: a single 'peace' can be a bundle of": 1,
+     "new: Now you try.": 1,
+     "new: A very big income does not change the middle.": 1,
+     "new: sustains nearly all life on Earth": 1,
+     "new: not in the roots or stems": 1,
+     "new: chlorophyll gives leaves their green color": 1,
+     "new: photosynthesis is how plants get energy to li": 1,
+     "new: This settlement ended the Thirty Years' War a": 1,
+     "new: The Peace of Westphalia established a core pr": 1,
+     "new: Plants make food from air and water.": 1,
+     "new: That is the key idea.": 1,
+     "new: Think of it like a tea ceremony: each step ha": 1,
+     "new: So, the rule is simple: photosynthesis is how": 1,
+     "new: The war's conclusion in N marked a significan": 1,
+     "new: The Peace of Westphalia established a new fra": 1,
+     "new: symbol for the mean (letter with bar)": 1,
+     "new: formula written as 'mean equals sum divided b": 1,
+     "new: Chlorophyll captures light energy for photosy": 1,
+     "new: For example, a leaf exposed to sunlight produ": 1,
+     "new: That was a new thing (religion choice).": 1,
+     "new: State sovereignty means a country gets to rul": 1,
+     "new: Chlorophyll gives leaves their green color": 1,
+     "new: photosynthesis as plant's internal kitchen or": 1,
+     "new: This single operation yields a central value ": 1,
+     "new: birdwatcher example and analogy for mean and ": 1
+    },
+    "checked": 30,
+    "passed": 5,
+    "declined": 25,
+    "same_yes": 3,
+    "same_asked": 3,
+    "coverage_fail": 0,
+    "claims": {
+     "coral-deepseek": {
+      "asked": 5,
+      "ok": 4,
+      "unread": 0
+     },
+     "zerogpu-glm": {
+      "asked": 5,
+      "ok": 4,
+      "unread": 0
+     }
+    },
+    "strict": {
+     "coral-deepseek": {
+      "asked": 5,
+      "yes": 5
+     },
+     "zerogpu-glm": {
+      "asked": 5,
+      "yes": 5
+     }
+    },
+    "gate_attempts": {
+     "1": 3,
+     "2": 1,
+     "3": 1
+    },
+    "partial": 0,
+    "flagged": [
+     {
+      "L": "x7207-21",
+      "k": 0,
+      "judge": "coral-deepseek",
+      "problems": [
+       "new: Here is the rule"
+      ],
+      "stored": "The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire and started as a conflict between Catholic and Protestant states.\n\nThe peace was two treaties, signed in the cities of Osnabruck and Munster. About 109 delegations took part in the talks, which lasted around 5 years.\n\nEach ruler could now choose the religion of their own",
+      "text": "The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia.\n\nThe war was fought mostly in the Holy Roman Empire. It started as a conflict between Catholic and Protestant states.\n\nThe peace was two treaties, signed in the cities of Osnabruck and Munster.\n\nAbout 109 delegations took part in the talks, which lasted around 5 years.\n\nHere is the rule: each ruler could now choose the religion of their own land.\n\nThe treaties also recognised the independence of the Dutch Republic and of Switzerland.\n\nHistorians often use these treaties as the starting point of the idea of state sovereignty."
+     },
+     {
+      "L": "x7207-23",
+      "k": 0,
+      "judge": "zerogpu-glm",
+      "problems": [
+       "new: The rewrite presents the process as a step-by-step sequence — 'First' carbon dioxide, 'Next' water, 'Then' sunlight — asserting that the plant takes in carbon dioxide before water and that sunlight co"
+      ],
+      "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses ",
+      "text": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nFirst, the plant takes in carbon dioxide from the air through small openings called stomata. Next, it takes in water from the soil through its roots. Then, sunlight gives the energy that joins them together.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose."
+     }
+    ]
+   },
+   "goal": null,
+   "sources": 30,
+   "declined": 25,
+   "trials": 20
+  }
+ },
+ "samples": {
+  "lesson": [
+   {
+    "learner": "x7207-15",
+    "kind": "contradict",
+    "profile": "Age 48. Language: English. Interests: longboarding, 3D printing miniatures. Dislikes (never wanted): being praised for easy things, timed quizzes, cartoon characters.",
+    "stored": "The mean of a list of numbers is their sum divided by how many numbers there are. For 2, 4 and 9 the sum is 15, and 15 divided by 3 is 5.\n\nThe median is the middle value once the list is in order. In 1, 3, 7, 8, 20 the median is 7, and the very large 20 does not change it. That is why the median is often used for incomes.\n\nThe mode is the value that appears most often. In 2, 2, 5, 6 the mode is 2. A list can have more than one mode, or none at all.",
+    "shaped": "The mean is the sum of the numbers divided by how many numbers there are. For 2, 4 and 9 the sum is 15, and 15 divided by 3 is 5.\n\nThe median is the middle value once the list is in order. In 1, 3, 7, 8, 20 the median is 7, and the very large 20 does not change it. That is why the median is often used for incomes.\n\nThe mode is the value that appears most often. In 2, 2, 5, 6 the mode is 2. A list can have more than one mode, or none at all.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 104,
+     "shaped_words": 102,
+     "new_words": 0,
+     "dropped_words": 1
+    }
+   },
+   {
+    "learner": "x7207-24",
+    "kind": "tail_both",
+    "profile": "Age 25. Language: English. Interests: paper airplane engineering, ice hockey, ham-fisted woodworking. Dislikes (never wanted): being rushed.",
+    "stored": "The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire and started as a conflict between Catholic and Protestant states.\n\nThe peace was two treaties, signed in the cities of Osnabruck and Munster. About 109 delegations took part in the talks, which lasted around 5 years.\n\nEach ruler could now choose the religion of their own land, and the treaties recognised the independence of the Dutch Republic and of Switzerland. Historians often use these treaties as the starting point of the idea of state sovereignty.",
+    "shaped": "The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire and started as a conflict between Catholic and Protestant states.\n\nThe peace was two treaties, signed in the cities of Osnabruck and Munster. About 109 delegations took part in the talks, which lasted around 5 years.\n\nEach ruler could now choose the religion of their own land, and the treaties recognised the independence of the Dutch Republic and of Switzerland. Historians often use these treaties as the starting point of the idea of state sovereignty.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 100,
+     "shaped_words": 100,
+     "new_words": 0,
+     "dropped_words": 0
+    }
+   },
+   {
+    "learner": "x7207-29",
+    "kind": "ell",
+    "profile": "Age 10. Language: English is a second language (first: Spanish). Interests: weather chasing, parkour. Dislikes (never wanted): repetition drills, leaderboards, formal academic tone.",
+    "stored": "The mean of a list of numbers is their sum divided by how many numbers there are. For 2, 4 and 9 the sum is 15, and 15 divided by 3 is 5.\n\nThe median is the middle value once the list is in order. In 1, 3, 7, 8, 20 the median is 7, and the very large 20 does not change it. That is why the median is often used for incomes.\n\nThe mode is the value that appears most often. In 2, 2, 5, 6 the mode is 2. A list can have more than one mode, or none at all.",
+    "shaped": "The mean is the sum divided by the count.\n\nFor 2, 4 and 9 the sum is 15, and 15 divided by 3 is 5.\n\nSo the mean is 5.\n\nThe median is the middle value once the list is in order.\n\nIn 1, 3, 7, 8, 20 the median is 7, and the very large 20 does not change it.\n\nThat is why the median is often used for incomes.\n\nThe mode is the value that appears most often.\n\nIn 2, 2, 5, 6 the mode is 2.\n\nA list can have more than one mode, or none at all.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 104,
+     "shaped_words": 101,
+     "new_words": 2,
+     "dropped_words": 9
+    }
+   },
+   {
+    "learner": "x7207-21",
+    "kind": "tail_lo",
+    "profile": "Age 32. Language: English is a second language (first: Portuguese). Interests: K-pop dance covers, Dungeons and Dragons. Dislikes (never wanted): multiple choice trick questions.",
+    "stored": "The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire and started as a conflict between Catholic and Protestant states.\n\nThe peace was two treaties, signed in the cities of Osnabruck and Munster. About 109 delegations took part in the talks, which lasted around 5 years.\n\nEach ruler could now choose the religion of their own land, and the treaties recognised the independence of the Dutch Republic and of Switzerland. Historians often use these treaties as the starting point of the idea of state sovereignty.",
+    "shaped": "The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia.\n\nThe war was fought mostly in the Holy Roman Empire. It started as a conflict between Catholic and Protestant states.\n\nThe peace was two treaties, signed in the cities of Osnabruck and Munster.\n\nAbout 109 delegations took part in the talks, which lasted around 5 years.\n\nHere is the rule: each ruler could now choose the religion of their own land.\n\nThe treaties also recognised the independence of the Dutch Republic and of Switzerland.\n\nHistorians often use these treaties as the starting point of the idea of state sovereignty.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 100,
+     "shaped_words": 105,
+     "new_words": 6,
+     "dropped_words": 2
+    }
+   }
+  ]
+ },
+ "stats": {
+  "calls": 410,
+  "empty": 0,
+  "errors": 8,
+  "seconds": 845,
+  "cpu_load": 0,
+  "zerogpu_ledger": {
+   "ok": true,
+   "spent_usd": 12.157039,
+   "reserved_usd": 0.071712,
+   "committed_usd": 12.228751,
+   "cap_usd": 245,
+   "headroom_usd": 232.771249,
+   "calls": 14984,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/zerogpu-ledger.json"
+  },
+  "gonka_ledger": {
+   "ok": true,
+   "spent_usd": 11.811786,
+   "reserved_usd": 0.120809,
+   "committed_usd": 11.932595,
+   "cap_usd": 50,
+   "headroom_usd": 38.067405,
+   "calls": 20349,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/gonka-ledger.json"
+  },
+  "coral_ledger": {
+   "ok": true,
+   "spent_usd": 25.244278,
+   "reserved_usd": 0.055482,
+   "committed_usd": 25.29976,
+   "cap_usd": 100,
+   "headroom_usd": 74.70024,
+   "calls": 14922,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/coral-ledger.json"
+  },
+  "grokified_ledger": {
+   "ok": true,
+   "spent_usd": 24.317515,
+   "reserved_usd": 0.306977,
+   "committed_usd": 24.624492,
+   "cap_usd": 135,
+   "headroom_usd": 110.375508,
+   "calls": 12486,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/grokified-ledger.json"
+  }
+ }
+}

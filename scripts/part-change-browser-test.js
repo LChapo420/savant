@@ -128,7 +128,7 @@ async function main() {
     const row = await until(`!!document.querySelector('.verdict [data-part-change]')`, 6000);
     say(verdict && row, 'session question: verdict and the row', await js(`(document.querySelector('.verdict')||{}).innerText||''`));
     await noOverflow('session verdict');
-    await shot('8-session-verdict');
+    await js(`document.querySelector('.verdict [data-part-change]').scrollIntoView({block:'center'})`); await sleep(400); await shot('8-session-verdict');
     if (row) {
       const before = await js(`document.querySelector('.verdict .rationale').textContent`);
       await clickChange('.verdict', 'examples');
