@@ -1,0 +1,533 @@
+{
+ "tag": "pm3h",
+ "seed": 7207,
+ "n": 30,
+ "generated_at": "2026-11-06T21:07:29.516Z",
+ "writer": "ZeroGPU GLM-5.3 Flash",
+ "judges": [
+  {
+   "id": "gonka-deepseek",
+   "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+   "family": "deepseek"
+  },
+  {
+   "id": "grokified-grok",
+   "model": "grok-4.3",
+   "family": "grok"
+  }
+ ],
+ "simulated": true,
+ "parts": {
+  "hint": {
+   "part": "hint",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 106,
+      "verdicts": 105,
+      "empty": 0,
+      "same": 1,
+      "picks_vL": 50,
+      "share": 0.47619047619047616,
+      "p_above_chance": 0.7208028544173116
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.4423076923076923,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": 0.5094339622641509,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.4423076923076923,
+       "verdicts": 52,
+       "p": 0.8341251183152605
+      },
+      "grok": {
+       "share": 0.5094339622641509,
+       "verdicts": 53,
+       "p": 0.5000000000000058
+      }
+     },
+     "individuals": {
+      "n": 28,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-6",
+        "share": 0,
+        "n": 4
+       },
+       {
+        "L": "x7207-1",
+        "share": 0,
+        "n": 4
+       },
+       {
+        "L": "x7207-9",
+        "share": 0,
+        "n": 2
+       }
+      ],
+      "below_half": 8
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 12,
+       "share": 0.3333333333333333
+      },
+      "contradict": {
+       "n": 16,
+       "share": 0.4375
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "random": {
+       "n": 24,
+       "share": 0.4166666666666667
+      },
+      "tail_lo": {
+       "n": 10,
+       "share": 0.4
+      },
+      "age_young": {
+       "n": 12,
+       "share": 0.4166666666666667
+      },
+      "ell": {
+       "n": 8,
+       "share": 0.5
+      },
+      "all_hi": {
+       "n": 3,
+       "share": 1
+      },
+      "age_old": {
+       "n": 8,
+       "share": 0.625
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 96,
+      "verdicts": 96,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 60,
+      "share": 0.625,
+      "p_above_chance": 0.009216676465731823
+     },
+     "swap_fooled": {
+      "n": 96,
+      "verdicts": 96,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 34,
+      "share": 0.3541666666666667
+     },
+     "control_picks_vL": {
+      "n": 96,
+      "verdicts": 95,
+      "empty": 1,
+      "same": 0,
+      "picks_vL": 40,
+      "share": 0.42105263157894735
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.6666666666666666,
+       "swap_fooled": 0.375,
+       "control": 0.40425531914893614
+      },
+      "grokified-grok": {
+       "real": 0.5833333333333334,
+       "swap_fooled": 0.3333333333333333,
+       "control": 0.4375
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.6666666666666666,
+       "verdicts": 48,
+       "p": 0.014652473360264805
+      },
+      "grok": {
+       "share": 0.5833333333333334,
+       "verdicts": 48,
+       "p": 0.156163403736637
+      }
+     },
+     "individuals": {
+      "n": 28,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0.08333333333333333,
+      "lowest": [
+       {
+        "L": "x7207-10",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-22",
+        "share": 0,
+        "n": 4
+       },
+       {
+        "L": "x7207-0",
+        "share": 0.25,
+        "n": 4
+       }
+      ],
+      "below_half": 6
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 10,
+       "share": 0.3
+      },
+      "contradict": {
+       "n": 14,
+       "share": 0.42857142857142855
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.8333333333333334
+      },
+      "random": {
+       "n": 20,
+       "share": 0.6
+      },
+      "tail_lo": {
+       "n": 10,
+       "share": 0.7
+      },
+      "age_young": {
+       "n": 12,
+       "share": 0.8333333333333334
+      },
+      "ell": {
+       "n": 8,
+       "share": 0.625
+      },
+      "all_hi": {
+       "n": 4,
+       "share": 0.75
+      },
+      "age_old": {
+       "n": 6,
+       "share": 0.6666666666666666
+      }
+     }
+    },
+    "noise": {
+     "real": {
+      "n": 100,
+      "verdicts": 96,
+      "empty": 2,
+      "same": 2,
+      "picks_vL": 54,
+      "share": 0.5625,
+      "p_above_chance": 0.13073471814320023
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.5833333333333334,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": 0.5416666666666666,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.5833333333333334,
+       "verdicts": 48,
+       "p": 0.156163403736637
+      },
+      "grok": {
+       "share": 0.5416666666666666,
+       "verdicts": 48,
+       "p": 0.3327329060383149
+      }
+     },
+     "individuals": {
+      "n": 28,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0.08333333333333333,
+      "lowest": [
+       {
+        "L": "x7207-9",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-20",
+        "share": 0,
+        "n": 4
+       },
+       {
+        "L": "x7207-7",
+        "share": 0.25,
+        "n": 4
+       }
+      ],
+      "below_half": 5
+     },
+     "by_kind": {
+      "contradict": {
+       "n": 14,
+       "share": 0.7142857142857143
+      },
+      "tail_hi": {
+       "n": 11,
+       "share": 0.5454545454545454
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.5833333333333334
+      },
+      "random": {
+       "n": 22,
+       "share": 0.5909090909090909
+      },
+      "tail_lo": {
+       "n": 8,
+       "share": 0.5
+      },
+      "age_young": {
+       "n": 12,
+       "share": 0.4166666666666667
+      },
+      "ell": {
+       "n": 8,
+       "share": 0.5
+      },
+      "all_hi": {
+       "n": 1,
+       "share": 1
+      },
+      "age_old": {
+       "n": 8,
+       "share": 0.5
+      }
+     }
+    },
+    "identical": {
+     "real": {
+      "n": 28,
+      "verdicts": 0,
+      "empty": 1,
+      "same": 27,
+      "picks_vL": 0,
+      "share": null,
+      "p_above_chance": null
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "grok": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      }
+     },
+     "individuals": {
+      "n": 0,
+      "worst_1pct": null,
+      "worst_5pct": null,
+      "worst_10pct": null,
+      "lowest": [],
+      "below_half": 0
+     },
+     "by_kind": {}
+    }
+   },
+   "facts": {
+    "conflict_yes": 1,
+    "conflict_asked": 17,
+    "declined_because": {
+     "it gives the answer away": 5,
+     "empty": 1
+    },
+    "checked": 59,
+    "passed": 53,
+    "declined": 6,
+    "same_yes": 8,
+    "same_asked": 14,
+    "coverage_fail": 0,
+    "claims": {},
+    "strict": {},
+    "gate_attempts": {
+     "1": 40,
+     "2": 11,
+     "3": 2
+    },
+    "partial": 0,
+    "flagged": []
+   },
+   "goal": null,
+   "sources": 59,
+   "declined": 6,
+   "trials": 522
+  }
+ },
+ "samples": {
+  "hint": [
+   {
+    "learner": "x7207-2",
+    "kind": "contradict",
+    "profile": "Age 25. Language: English. Interests: none stated. Dislikes (never wanted): repetition drills, being praised for easy things, being told the answer right away.",
+    "stored": "Look at what feature the two toys in the group share, and choose a new toy that has that same feature. The sorting rule should name the feature the group is based on.",
+    "shaped": "Compare the two toys in the group and find what they share, like their color or their size. Then pick a new toy with that same feature and choose the rule that names it.",
+    "other_learner": "Identify the one attribute both toys in the group share, and select the option whose toy matches it. The rule must name that attribute, as a bake-off theme names the single element every entry must share.",
+    "diff": {
+     "stored_words": 33,
+     "shaped_words": 34,
+     "new_words": 14,
+     "dropped_words": 10
+    }
+   },
+   {
+    "learner": "x7207-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: none stated. Dislikes (never wanted): sports examples.",
+    "stored": "In an area model, the garden's share of the block comes from combining the fraction of the length with the fraction of the width, which points to multiplying the two fractions. After multiplying, remember to simplify the result to lowest terms before matching it to a choice.",
+    "shaped": "The garden fills part of the length and part of the width at the same time. Where those two shares meet is where the answer likes to hide.",
+    "other_learner": "In an area model, the garden's fraction of the block equals the product of its length fraction and its width fraction. Compute that product, then reduce it to lowest terms before selecting an option.",
+    "diff": {
+     "stored_words": 47,
+     "shaped_words": 28,
+     "new_words": 18,
+     "dropped_words": 30
+    }
+   },
+   {
+    "learner": "x7207-4",
+    "kind": "tail_both",
+    "profile": "Age 62. Language: English. Interests: birdwatching. Dislikes (never wanted): cartoon characters, sports examples.",
+    "stored": "Remember that the x-coordinate shows horizontal movement (right is positive) and the y-coordinate shows vertical movement (up is positive), starting from (0, 0). Apply each move to its corresponding coordinate.",
+    "shaped": "Use the rule that an ordered pair lists horizontal movement first and vertical movement second, with right and up as positive. Match each move in the question to its own coordinate before writing the pair.",
+    "other_learner": "Which move changes the first number in the pair, and which changes the second?",
+    "diff": {
+     "stored_words": 30,
+     "shaped_words": 35,
+     "new_words": 21,
+     "dropped_words": 18
+    }
+   },
+   {
+    "learner": "x7207-3",
+    "kind": "random",
+    "profile": "Age 59. Language: English. Interests: competitive baking shows. Dislikes (never wanted): none stated.",
+    "stored": "Follow the teacher's words in the exact order they are spoken. The word \"then\" signals that the second action happens after the first one is done.",
+    "shaped": "Attend to the sequence word 'then,' which indicates that the second action occurs only after the first is completed. Proceed as a baking-show contestant would, executing each instruction in the order it is given.",
+    "other_learner": "Focus on the order of the actions in the teacher's request. The word 'then' tells you that the second action happens only after the first one is finished.",
+    "diff": {
+     "stored_words": 26,
+     "shaped_words": 34,
+     "new_words": 20,
+     "dropped_words": 12
+    }
+   }
+  ]
+ }
+}

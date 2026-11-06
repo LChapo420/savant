@@ -428,7 +428,7 @@ async function rewriteLesson(args) { return (await rewriteLessonDetail(args)).pa
  * rewrites each sentence on its own, and code does the layout from the spec: how the text is cut into pieces and numbered. A sentence that loses a number goes back to the stored sentence, so a
  * rewrite can be partial. One comparison may be offered apart from the text, and is dropped first when the gate objects.
  */
-const LESSON_SYSTEM = 'You rewrite a lesson for one specific learner, sentence by sentence. You are given numbered sentences. For each one, write what that sentence says and nothing else, in the delivery asked for; you may split it into shorter sentences. Keep every fact, number, name and term it has. Add nothing: no opener, no summary, no "key idea", no question, no step label, no example, no definition, no cause or consequence, even if you know it to be true. Never mention the learner. Return JSON {"sentences": [["..."], ["...", "..."]], "comparison": ""}: "sentences" has exactly one list per numbered sentence, in order. "comparison" is one short comparison only if the delivery notes offer one and it truly has the same structure as the idea, written as a comparison ("It is like ...") with no fact of its own; otherwise "".';
+const LESSON_SYSTEM = 'You rewrite a lesson for one specific learner, sentence by sentence. You are given numbered sentences. For each one, write what that sentence says and nothing else, in the delivery asked for; you may split it into shorter sentences. The reader should feel this was written for them: reword every sentence to fit the delivery notes (its words, length, register, how it addresses the reader), and copy a sentence unchanged only when it already fits them. Keep every fact, number, name and term it has. Add nothing: no opener, no summary, no "key idea", no question, no step label, no example, no definition, no cause or consequence, even if you know it to be true. Never mention the learner. Return JSON {"sentences": [["..."], ["...", "..."]], "comparison": ""}: "sentences" has exactly one list per numbered sentence, in order. "comparison" is one short comparison only if the delivery notes offer one and it truly has the same structure as the idea, written as a comparison ("It is like ...") with no fact of its own; otherwise "".';
 
 // The levers a rewrite of a finished text can honestly follow. The full material block also asks for mistakes, a big picture, a hook, a recap and worked cases; a rewrite has nothing of its own
 // to put there, so writers made them up, and that is what the fact gate caught (7 Nov pilot: "A common wrong idea...", "It fits into the larger picture...").
@@ -438,9 +438,14 @@ function lessonDeliveryLines(spec) {
   const lang = spec.language || {};
   const it = spec.interests || {};
   const ranked = DELIVERY.map((l) => ({ l, lean: (spec.levers || {})[l] || 0 })).filter((x) => Math.abs(x.lean) >= ls.SHOW_AT && ls.PHRASES[x.l]).sort((a, b) => Math.abs(b.lean) - Math.abs(a.lean));
+  const tone = (spec.feedback && spec.feedback.tone) || {};
   const out = [`Language: reading grade ${lang.vocabularyGrade || 'of the original'}; most sentences ${lang.maxSentenceWords || 20} words or fewer${lang.eslSupport ? '; everyday words, no idioms or phrasal verbs' : ''}.`];
+  if (tone.formality >= 0.65) out.push('Register: formal and precise; no contractions; never "you".');
+  else if (tone.formality <= 0.35) out.push('Register: casual, as one person talking to another: contractions, and "you" where the sentence allows it.');
+  if (tone.correction === 'gentle' || tone.warmth >= 0.65) out.push('Warm and unhurried wording, without any cheering or claim.');
+  else if (tone.correction === 'direct' || tone.warmth <= 0.35) out.push('Blunt, stripped wording: the fewest words that keep each point.');
   for (const x of ranked) { const p = ls.PHRASES[x.l][x.lean > 0 ? 1 : 0]; if (p) out.push(p); }
-  if (it.exampleDomains && it.exampleDomains.length && it.share >= 0.5) out.push(`Only where it truly has the same structure as the idea, a short comparison from ${it.exampleDomains.slice(0, 2).join(' or ')}, given as a comparison and stating no fact of its own.`);
+  if (it.exampleDomains && it.exampleDomains.length && it.share >= 0.3) out.push(`Only where it truly has the same structure as the idea, a short comparison from ${it.exampleDomains.slice(0, 2).join(' or ')}, given as a comparison and stating no fact of its own.`);
   if (it.avoidDomains && it.avoidDomains.length) out.push(`Never use anything about: ${it.avoidDomains.join(', ')}.`);
   return out.map((x, i) => `${i + 1}. ${x}`);
 }
