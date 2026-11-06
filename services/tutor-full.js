@@ -210,7 +210,7 @@ async function factCheck({ ai, user, message, text, notes, question }) {
   try {
     verdict = await withDeadline(ai.talk({
       role: 'fast', task: 'dock_leak_check',
-      system: 'You fact-check a tutor reply before a learner sees it. Reply with only OK or WRONG. WRONG means: the reply states a subject fact (maths, science, language, history, geography) that is incorrect; or it states a specific detail about this learner (a number, a date, a day of the week, a test or exam, a count of tries, a page or section number, a past event) or about the app that is not in the NOTES below; or it says "your notes say" something the NOTES do not. Opinions, encouragement, questions to the learner and well-established facts are OK.',
+      system: 'You fact-check a tutor reply before a learner sees it. Reply with only OK or WRONG. WRONG means: the reply states a subject fact (maths, science, language, history, geography) that is incorrect; or it states a specific detail about this learner (a number, a date, a day of the week, a test or exam, a count of tries, a page or section number, a past event) or about the app that is not in the NOTES below; or it says "your notes say" something the NOTES do not. Opinions, encouragement, advice about what to study, questions to the learner and well-established facts are OK. Say WRONG only when you are sure; if in doubt answer OK.',
       messages: [{ role: 'user', content: `NOTES (true): ${clip(notes, 1500)}
 
 Question on screen: ${clip(question, 200) || 'none'}
