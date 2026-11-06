@@ -330,7 +330,7 @@ router.post('/account/delete', requireAuth, limit('account-delete', 10, 60 * 60 
   const why = accountDeletion.refusal(req.user);
   if (why) return res.status(403).json({ error: why });
   if (String((req.body && req.body.confirm) || '').trim() !== 'DELETE') return res.status(400).json({ error: 'Type DELETE to confirm.' });
-  const ok = await bcrypt.compare(String((req.body && req.body.password) || ''), req.user.password_hash || '');
+  const ok = await require('../services/passwords').compare(String((req.body && req.body.password) || ''), req.user.password_hash || '');
   if (!ok) return res.status(401).json({ error: 'That password is not right.' });
   accountDeletion.deleteAccount(req.user);
   const done = () => { res.clearCookie('polymath.sid'); res.json({ ok: true }); };

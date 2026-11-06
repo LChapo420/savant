@@ -120,7 +120,13 @@ function waitChange(ms) {
 let cfgCache = null;
 let cfgStamp = null;
 function lineupFile() { return process.env.MODEL_LINEUP_FILE || path.join(__dirname, '..', 'config', 'model-lineup.json'); }
+let cfgCheckedAt = 0;
 function poolConfig() {
+  // In production the file is looked at every POOL_CONFIG_CHECK_MS (5 s): this runs for every slot of every waiting call, and that stat was an
+  // eighth of the server's time at 100 learners (beta load test, Nov 2026). Elsewhere every call looks, as tests rewrite the file.
+  const every = Number(process.env.POOL_CONFIG_CHECK_MS || (process.env.NODE_ENV === 'production' ? 5000 : 0));
+  if (every && cfgCache && now() - cfgCheckedAt < every) return cfgCache;
+  cfgCheckedAt = now();
   const file = lineupFile();
   let stamp = null;
   try { stamp = `${file}:${fs.statSync(file).mtimeMs}`; } catch { stamp = `${file}:missing`; }

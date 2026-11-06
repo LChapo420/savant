@@ -12,7 +12,10 @@ const streakService = require('../services/streak');
 function attachUser(req, res, next) {
   req.user = null;
   if (req.session && req.session.userId) {
-    const user = db.byId('users', req.session.userId);
+    let user = db.byId('users', req.session.userId);
+    // Sessions outlive a crash and a crash can lose the last moments of the store, so the id on a session can come to belong to someone who
+    // signed up after the restart. The session says when its account was made, and a different account does not get in on it.
+    if (user && req.session.uc && user.created_at !== req.session.uc) user = null;
     if (user) {
       req.user = user;
       // The beta comparison draws a learner's arm once, at first use (services/beta-arm.js); a failure must never block a request.

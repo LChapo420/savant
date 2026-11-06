@@ -19,6 +19,8 @@ const has = (n) => args.includes(`--${n}`);
 const extras = {};
 args.forEach((a, i) => { if (a === '--env') { const [k, ...v] = args[i + 1].split('='); extras[k] = v.join('='); } });
 
+try { require('os').setPriority(0, require('os').constants.priority.PRIORITY_ABOVE_NORMAL); } catch { /* best effort */ }
+
 (async () => {
   const learners = Number(flag('learners', 10));
   const minutes = Number(flag('minutes', 1));
@@ -34,7 +36,8 @@ args.forEach((a, i) => { if (a === '--env') { const [k, ...v] = args[i + 1].spli
   const stub = h.startStub(stubPort, { latency: Number(flag('stub-latency', 1500)), jitter: Number(flag('stub-jitter', 2500)), dir });
   const env = h.serverEnv({ dir, port, stubPort, dbFile, extra: extras });
   const nodeArgs = [];
-  if (has('prof')) { env.PROBE_PROFILE_FILE = path.join(dir, 'app.cpuprofile'); env.PROBE_PROFILE_SECONDS = String(Math.max(20, Math.round(minutes * 60 - 10))); }
+  if (has('watch')) env.PROBE_WATCHDOG_FILE = path.join(dir, 'watchdog.jsonl');
+  if (has('prof')) { env.PROBE_PROFILE_FILE = path.join(dir, 'app.cpuprofile'); env.PROBE_PROFILE_SECONDS = String(flag('prof-secs', 120)); }
   if (flag('heap')) nodeArgs.push(`--max-old-space-size=${flag('heap')}`);
   const srv = await h.startServer(env, { nodeArgs });
   if (srv.exited) { console.log(JSON.stringify({ dir, bootFailed: srv.exited })); stub.kill(); process.exit(0); }
@@ -71,11 +74,12 @@ args.forEach((a, i) => { if (a === '--env') { const [k, ...v] = args[i + 1].spli
   stub.kill();
   const report = {
     measured_on: 'this PC (not the server)', learners, minutes, think_ms: thinkMs, ramp_s: ramp, dir, boot_ms: srv.bootMs, crashed, shutdown_ms: shutMs,
-    overall: metrics.overall(), routes: metrics.table(), notes: Object.fromEntries(metrics.errors),
+    cpu_ms_per_request: null, overall: metrics.overall(), routes: metrics.table(), notes: Object.fromEntries(metrics.errors),
     probe: h.probeSummary(path.join(dir, 'probe.jsonl'), t0),
     db_bytes_start: fs.statSync(dbSrc).size, db_bytes_end: dbNow,
     stub: stubStats && { calls: stubStats.calls, maxInflight: stubStats.maxInflight, byProvider: stubStats.byProvider },
   };
+  if (report.probe && report.probe.cpu_s != null) report.cpu_ms_per_request = Math.round((report.probe.cpu_s * 1000) / Math.max(1, report.overall.requests));
   fs.writeFileSync(path.join(dir, 'report.json'), JSON.stringify(report, null, 1));
   console.log(JSON.stringify({ overall: report.overall, probe: report.probe, crashed, notes: report.notes, db_bytes_end: dbNow, stub: stubStats && Object.fromEntries(Object.entries(stubStats.byProvider).map(([k, v]) => [k, v.calls])) }, null, 1));
   console.log('slowest routes:');

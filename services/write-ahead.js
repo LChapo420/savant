@@ -467,6 +467,7 @@ function holdBehindFirst(job) {
 }
 
 function pump() {
+  let cap = null; // globalCap() walks the pool's slots: once a pump, not once per queued job (with a long queue that was the server's busiest loop)
   queue.sort((a, b) => a.priority - b.priority || soonest(a) - soonest(b) || (b.levelsPerHour || 0) - (a.levelsPerHour || 0) || a.seq - b.seq);
   for (let i = 0; i < queue.length;) {
     const job = queue[i];
@@ -477,7 +478,7 @@ function pump() {
     // Levels 2 and 3 of a learner are written once the level they wait on is written, not beside it (they compete for the same models):
     // 5 Nov first-lesson brief. Held only while that first-level write is queued or running, so it can never hold them for long.
     if (!job.fast && holdBehindFirst(job)) { i++; continue; }
-    if (!job.fast && running.size >= globalCap()) { i++; continue; }
+    if (!job.fast && running.size >= (cap === null ? (cap = globalCap()) : cap)) { i++; continue; }
     if (running.has(job.key) || (!job.fast && (runningFor.get(job.userId) || 0) >= perUserCap())) { i++; continue; }
     queue.splice(i, 1);
     start(job);

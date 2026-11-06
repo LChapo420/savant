@@ -140,7 +140,7 @@ function totals(data) {
 /** The current state. Never throws. */
 function status() {
   try {
-    const data = read();
+    const data = require('./ledger-peek').peek(FILE(), read); // eslint-disable-line global-require
     return { ok: true, ...totals(data), calls: data.calls, refused_calls: data.refused_calls, file: FILE() };
   } catch (err) {
     return { ok: false, reason: err.message, cap_usd: capUsd(), headroom_usd: 0, file: FILE() };

@@ -11,7 +11,8 @@ const fs = require('fs');
 const os = require('os');
 const { monitorEventLoopDelay, performance } = require('perf_hooks');
 
-const out = process.env.PROBE_FILE;
+const { isMainThread } = require('worker_threads');
+const out = isMainThread ? process.env.PROBE_FILE : null;
 const dbTmp = () => `${process.env.DB_FILE}.tmp`;
 const h = monitorEventLoopDelay({ resolution: 10 }); h.enable();
 
@@ -61,6 +62,7 @@ let lastT = performance.now();
 let lastElu = performance.eventLoopUtilization();
 let lastOs = os.cpus().map((c) => c.times);
 const timer = setInterval(() => {
+  if (!isMainThread) return;
   const now = performance.now();
   const cpu = process.cpuUsage(lastCpu); lastCpu = process.cpuUsage();
   const m = process.memoryUsage();
@@ -71,6 +73,7 @@ const timer = setInterval(() => {
   lastOs = cpus;
   const line = {
     t: Date.now(),
+    cpu_ms: Math.round((process.cpuUsage().user + process.cpuUsage().system) / 1000),
     lag_p50: Math.round(h.percentile(50) / 1e6), lag_p99: Math.round(h.percentile(99) / 1e6), lag_max: Math.round(h.max / 1e6),
     elu: Number(elu.utilization.toFixed(3)),
     proc_cpu: Number(((cpu.user + cpu.system) / 1000 / (now - lastT)).toFixed(3)), box_cpu: total ? Number((busy / total).toFixed(3)) : null,
@@ -86,7 +89,7 @@ const timer = setInterval(() => {
 timer.unref();
 
 // PROBE_PROFILE_FILE + PROBE_PROFILE_SECONDS: a CPU profile of the app, taken from inside (a Windows kill gives --cpu-prof no chance to write).
-if (process.env.PROBE_PROFILE_FILE) {
+if (isMainThread && process.env.PROBE_PROFILE_FILE) {
   const inspector = require('inspector'); // eslint-disable-line global-require
   const session = new inspector.Session();
   session.connect();
@@ -94,4 +97,12 @@ if (process.env.PROBE_PROFILE_FILE) {
   setTimeout(() => {
     session.post('Profiler.stop', (err, res) => { if (!err) realWrite.call(fs, process.env.PROBE_PROFILE_FILE, realStringify(res.profile)); });
   }, Number(process.env.PROBE_PROFILE_SECONDS || 60) * 1000).unref();
+}
+
+// PROBE_WATCHDOG_FILE: a worker records the main thread's stack whenever it has not answered for 3 s.
+if (isMainThread && process.env.PROBE_WATCHDOG_FILE) {
+  const { Worker } = require('worker_threads'); // eslint-disable-line global-require
+  const w = new Worker(require('path').join(__dirname, 'watchdog.js'), { workerData: { file: process.env.PROBE_WATCHDOG_FILE, staleMs: 3000 } }); // eslint-disable-line global-require
+  w.unref();
+  setInterval(() => w.postMessage(1), 500).unref();
 }
