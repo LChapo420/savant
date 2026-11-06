@@ -33,7 +33,7 @@ for (const trackId of TRACKS) {
     const kind = i % 10 === 0 ? 'extreme-low' : i % 10 === 1 ? 'extreme-high' : 'random';
     const f = kind === 'extreme-low' ? 0 : kind === 'extreme-high' ? units.length : rand() * units.length;
     const holes = new Set(); if (kind === 'random' && rand() < 0.4) for (let u = 1; u <= Math.floor(f); u++) if (rand() < 0.15) holes.add(u);
-    const answered = []; const written = new Set(); let last = []; if (argv.includes('--prior')) { last = up.likelyStarts(trackId, gradeId, [], 2); last.forEach((l) => written.add(l)); }
+    const answered = []; const written = new Set(); const writtenAt = new Map(); let last = []; if (argv.includes('--prior')) { last = up.likelyStarts(trackId, gradeId, [], 2); last.forEach((l) => { written.add(l); writtenAt.set(l, 0); }); }
     let asked = 0; let firstHitAt = null;
     for (let k = 0; k < 60; k++) {
       const next = up.nextQuestion(trackId, gradeId, MODE, answered);
@@ -45,16 +45,17 @@ for (const trackId of TRACKS) {
       answered.push({ ...next, correct }); asked++;
       if (answered.length >= Math.max(3, up.modeCfg(trackId, MODE).min - Number(arg('early', 0)))) {
         last = up.likelyStarts(trackId, gradeId, answered, Number(arg('top', 2)));
-        for (const l of last) if (written.size < MAXW) written.add(l);
+        for (const l of last) if (written.size < MAXW && !written.has(l)) { written.add(l); writtenAt.set(l, answered.length); }
       }
     }
     const result = up.score(trackId, gradeId, answered);
-    rows.push({ trackId, kind, hit: written.has(result.placedLevel), hitFinalTop2: up.likelyStarts(trackId, gradeId, answered, 2).includes(result.placedLevel), written: written.size, asked, ahead: asked - up.modeCfg(trackId, MODE).min });
+    // --lead N: the guess must have started at least N answers before the end (a first part takes about 20 s; a person answers in about 7.5 s).
+    rows.push({ trackId, kind, hitLead: writtenAt.has(result.placedLevel) && writtenAt.get(result.placedLevel) <= asked - Number(arg('lead', 3)), hit: written.has(result.placedLevel), hitFinalTop2: up.likelyStarts(trackId, gradeId, answered, 2).includes(result.placedLevel), written: written.size, asked, ahead: asked - up.modeCfg(trackId, MODE).min });
   }
 }
 const pct = (a) => `${(100 * a.filter(Boolean).length / (a.length || 1)).toFixed(0)}%`;
 const by = {};
 for (const r of rows) (by[r.trackId] = by[r.trackId] || []).push(r);
 console.log(`mode ${MODE}, seed ${SEED}, ${rows.length} simulated learners`);
-console.table([...Object.entries(by), ['all', rows]].map(([t, g]) => ({ track: t, n: g.length, startLevelWritten: pct(g.map((x) => x.hit)), inFinalTop2: pct(g.map((x) => x.hitFinalTop2)), extremesWritten: pct(g.filter((x) => x.kind !== 'random').map((x) => x.hit)), meanWrites: (g.reduce((s, x) => s + x.written, 0) / g.length).toFixed(1) })));
+console.table([...Object.entries(by), ['all', rows]].map(([t, g]) => ({ track: t, n: g.length, startLevelWritten: pct(g.map((x) => x.hit)), startedInTime: pct(g.map((x) => x.hitLead)), writesEach: (g.reduce((n, x) => n + x.written, 0) / (g.length || 1)).toFixed(1), inFinalTop2: pct(g.map((x) => x.hitFinalTop2)), extremesWritten: pct(g.filter((x) => x.kind !== 'random').map((x) => x.hit)), meanWrites: (g.reduce((s, x) => s + x.written, 0) / g.length).toFixed(1) })));
 process.exit(0);

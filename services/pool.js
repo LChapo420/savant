@@ -854,7 +854,9 @@ async function callHedged(req, opts = {}) {
           // A preferred paid slot (the tutor's Standard Compute) starts first, as the primary, not as a last resort.
           // A hedge onto a paid slot is for speed, so never from background work. A foreground call that has waited fgHedgeMs with every free slot busy takes the paid slot as its primary.
           const fgLate = !isBg() && now() - t0 >= fgHedgeMs();
-          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && !(req.task === 'fact_live' && !isBg()) && (anyFreeRunning() || untriedFree())) continue; /* a waiting learner's check starts on the paid readers it lists first: it has seconds */ // last resort: only when every free one has failed
+          // COLD_FIRST_BLOCK: the fast lane's paid order (candidatesFor) holds, instead of every free slot being tried first: a free NVIDIA call in front cost a waiting learner 2 to 64 s.
+          const coldPaidFirst = String(process.env.COLD_FIRST_BLOCK || '').toLowerCase() === 'on' && !!(laneNow && laneNow.fast && laneNow.background === false && req.coral === true);
+          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && !coldPaidFirst && !(req.task === 'fact_live' && !isBg()) && (anyFreeRunning() || untriedFree())) continue; /* a waiting learner's check starts on the paid readers it lists first: it has seconds */ // last resort: only when every free one has failed
           if (!budgetOk(s, req, opts, spent)) continue;
         }
         const b = blocked(s, req, isBg(), isSpec());

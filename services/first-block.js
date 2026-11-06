@@ -8,14 +8,15 @@
  * This file holds the pure parts: reading blocks out of a streaming reply, telling a reply that has derailed, the switches, what is published so far and the parked heads
  * of prewrites. The write itself is services/block-levels.js writeInParts; the page is public/js/block-level.js.
  *
- * Env: COLD_FIRST_BLOCK=on, COLD_PART_READS (2, part reads at once for one level), COLD_FALLBACK_MS (30000, how long the page waits before the standard session),
+ * Env: COLD_FIRST_BLOCK=on, COLD_PART_READS (3, part reads at once for one level), COLD_FALLBACK_MS (30000, how long the page waits before the standard session),
  * COLD_HEAD_TTL_MS (30 minutes, a parked prewrite head is let go), COLD_BLOCK_MAX_CHARS (9000, a single block's text past this is a derail).
  */
 const on = () => String(process.env.COLD_FIRST_BLOCK || '').toLowerCase() === 'on';
-const partReads = () => Math.max(1, Number(process.env.COLD_PART_READS || 2));
+const partReads = () => Math.max(1, Number(process.env.COLD_PART_READS || 3));
 const fallbackMs = () => Math.max(8000, Number(process.env.COLD_FALLBACK_MS || 30000));
 const headTtlMs = () => Number(process.env.COLD_HEAD_TTL_MS || 30 * 60 * 1000);
 const maxBlockChars = () => Number(process.env.COLD_BLOCK_MAX_CHARS || 9000);
+const maxChecksChars = () => Number(process.env.COLD_CHECKS_MAX_CHARS || 9000);
 
 /**
  * Reads the complete top-level entries of the reply's "blocks" array as the text grows. A small state machine over strings, escapes and depth, not a JSON parser:
@@ -61,17 +62,19 @@ function blockReader() {
     },
     current(text) { return st.started && !st.done && st.start >= 0 ? text.length - st.start : 0; },
     finished() { return st.done; },
-    position() { return st.i; },
+    /** Characters past the end of the blocks: the checks, which are short. */
+    after(text) { return st.done ? text.length - st.i : 0; },
   };
 }
 
 /**
  * Has this streamed reply derailed? A loop (the tail repeats itself: the same run of 8 to 80 characters at least 6 times over), or one block far longer than any real block,
- * or text past the last block that is not the checks. Measured 6 to 7 Nov on Coral Fast's fills of a formula block: a loop to the output cap costs 20 to 96 s when nobody watches it.
+ * or checks far longer than any real checks. Measured 6 to 7 Nov on Coral Fast's fills of a formula block: a loop to the output cap costs 20 to 96 s when nobody watches it.
  * A long array of distinct tokens is not a loop; a table of the same short cell can be, so the run must be 8 characters or more.
  */
-function derailed(text, openChars = 0) {
+function derailed(text, openChars = 0, afterChars = 0) {
   if (openChars > maxBlockChars()) return 'one block is far too long';
+  if (afterChars > maxChecksChars()) return 'the checks are far too long';
   const n = text.length;
   if (n < 200) return null;
   const tail = text.slice(-600);
@@ -87,7 +90,9 @@ function derailed(text, openChars = 0) {
 // ── what the write is doing, for the page's honest wait ────────────────────
 const progress = new Map(); // plan key -> { stage, parts, at, published: Promise-free event list }
 const listeners = new Map(); // plan key -> resolvers waiting for the first published part
+const trace = (key, what) => { if (process.env.COLD_TRACE) console.log(`cold ${new Date().toISOString().slice(14, 23)} ${key} ${what}`); };
 function setStage(key, stage, extra = {}) {
+  trace(key, `stage ${stage}`);
   const was = progress.get(key) || {};
   progress.set(key, { ...was, ...extra, stage, at: Date.now() });
   if (progress.size > 2000) progress.delete(progress.keys().next().value);
@@ -141,4 +146,4 @@ function previewOf({ topic, covers, skillNames }) {
   return { topic: String(topic || ''), covers: String(covers || ''), skills: (skillNames || []).filter(Boolean).slice(0, 4) };
 }
 
-module.exports = { on, partReads, fallbackMs, blockReader, derailed, setStage, stageOf, clearStage, firstPublished, notifyPublished, park, takeParked, isParked, previewOf, BLOCKING_NOW, _reset };
+module.exports = { trace, on, partReads, fallbackMs, blockReader, derailed, setStage, stageOf, clearStage, firstPublished, notifyPublished, park, takeParked, isParked, previewOf, BLOCKING_NOW, _reset };

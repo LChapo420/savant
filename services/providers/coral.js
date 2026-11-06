@@ -194,7 +194,7 @@ const coralProvider = {
    */
   structured(args) {
     // A streamed fill (COLD_FIRST_BLOCK): one try here. The caller keeps the blocks that already came and asks for the rest, rather than this call starting them all over.
-    if (args && typeof args.onText === 'function') return this.structuredOnce(args);
+    if (args && typeof args.onText === 'function') return this.structuredOnce({ ...args, maxTokens: Math.min(Number(args.maxTokens) || 2048, Number(process.env.CORAL_FIRST_MAX_TOKENS || 9000)) });
     const warm = String(process.env.CORAL_WARM_RETRY || 'on').toLowerCase() !== 'off';
     if (!warm) return sj.withLengthRetry((a) => this.structuredOnce(a), args);
     const first = args && args.task === 'block_fill' ? Math.min(Number(args.maxTokens) || 2048, Number(process.env.CORAL_FIRST_MAX_TOKENS || 9000)) : args.maxTokens;

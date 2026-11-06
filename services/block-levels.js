@@ -2581,6 +2581,7 @@ async function fillStream(x, st, { note = null, temperature = null, onBlock = nu
   const lib = library();
   const readers = new Map();
   const missing = st.blocks.filter((b) => !blockOk(b));
+  let info0 = '';
   const take = (index, data) => {
     const b = st.blocks.find((y) => y.index === index);
     if (!b || blockOk(b) || !data || typeof data !== 'object') return;
@@ -2588,10 +2589,12 @@ async function fillStream(x, st, { note = null, temperature = null, onBlock = nu
     if (problems.length) { b.problems = problems; b.data = schemaCheck.prune(lib[b.block].schema, data); return; }
     b.data = schemaCheck.prune(lib[b.block].schema, data);
     b.problems = [];
+    firstBlock.trace(planKey(owner, trackId, x.gradeId, x.level), `block ${index} written (${b.block}, ${String(info0).slice(0, 12)})`);
     if (onBlock) onBlock(b);
   };
   const onText = (text, info = {}) => {
     if (info.model && !st.fillModel) st.fillModel = info.model;
+    if (!info0) { info0 = String(info.model || ''); firstBlock.trace(planKey(owner, trackId, x.gradeId, x.level), `fill first text ${info0}`); }
     const key = info.call || 'one';
     if (!readers.has(key)) readers.set(key, { reader: firstBlock.blockReader(), seen: 0 });
     const r = readers.get(key);
@@ -2602,8 +2605,8 @@ async function fillStream(x, st, { note = null, temperature = null, onBlock = nu
       if (Number.isInteger(at)) take(at, data);
     }
     if (stopAfterFirst && blockOk(st.blocks[0])) { st.stopped = true; return 'stop'; }
-    const off = firstBlock.derailed(text, r.reader.current(text));
-    if (off) { st.derails.push(off); return off; }
+    const off = firstBlock.derailed(text, r.reader.current(text), r.reader.after(text));
+    if (off) { st.derails.push(off); firstBlock.trace(planKey(owner, trackId, x.gradeId, x.level), `derail: ${off} after ${text.length} chars`); return off; }
     return null;
   };
   const args = {
@@ -2613,7 +2616,9 @@ async function fillStream(x, st, { note = null, temperature = null, onBlock = nu
     userId: owner, dataClass: poolClass(owner), lane: process.env.BLOCK_LANE || 'background',
     hedgeAfterMs: Number(process.env.COLD_FILL_HEDGE_MS || 25000), onText, ...(temperature != null ? { temperature } : {}),
   };
+  const fillT0 = Date.now();
   const reply = await ai.structuredDetail(args).catch((err) => { console.warn(`blocks: a streamed fill failed (${String(err.message || err).slice(0, 120)})`); return null; });
+  firstBlock.trace(planKey(owner, trackId, x.gradeId, x.level), `fill ended after ${Math.round((Date.now() - fillT0) / 100) / 10}s: ${reply ? reply.model : 'no reply'}${reply && reply.stopped ? ' (stopped)' : ''}, out ${reply && reply.usage ? reply.usage.output_tokens : '?'}, checks ${reply && reply.data ? readList(reply.data.checks).length : '?'}`);
   if (reply && reply.usage) st.usages.push(reply.usage);
   if (reply && reply.model && !st.fillModel) st.fillModel = reply.model;
   if (reply && reply.data && !reply.stopped) {
@@ -2672,6 +2677,7 @@ async function writeInParts(x) {
     if (!blocks.length) return; // nothing to read yet: a check is not opened on before the first block
     st.version += 1;
     if (st.first_part_s === null) st.first_part_s = Math.round((Date.now() - started) / 100) / 10;
+    firstBlock.trace(key, `published ${blocks.length} blocks ${checks.length} checks`);
     settle({ partial: { blocks, checks, version: st.version, total_blocks: layout.blocks.length, total_checks: layout.checks.length, at: new Date().toISOString() } });
     firstBlock.notifyPublished(key);
     firstBlock.setStage(key, 'reading', { shown: blocks.length, total: layout.blocks.length });
@@ -2692,6 +2698,7 @@ async function writeInParts(x) {
       // The last try runs in the background lane: slower slots, and free models, are allowed there, as for any write nobody is waiting on.
       // eslint-disable-next-line no-await-in-loop, global-require
       result = await (a === 2 ? require('./pool').runBackground(read) : read());
+      firstBlock.trace(key, `part ${part.blocks}/${part.checks} read: ${result.verification.status} by ${result.verification.model}, ${result.verification.rounds} rounds, fixed ${result.verification.blocks_fixed}, dropped ${result.verification.blocks_dropped}`);
       if (result.verification.status === 'verified') break;
     }
     for (const i of part.checks) st.items[i] = partItems[i];
@@ -2763,6 +2770,7 @@ async function writeInParts(x) {
   const fillRun = await blockAdapt.revise(adapt, {
     generate: async (note) => {
       if (!note) return composed(st.blocks, st.rawChecks);
+      firstBlock.trace(key, `spec revision: ${String(note).slice(0, 160)}`);
       const list = st.blocks.map((b) => (st.locked.has(b.index) ? b : { ...b, data: null, problems: ['no data written'] }));
       const tmp = { ...st, blocks: list, rawChecks: null };
       await fillStream(y, tmp, { note: `${note}\n\n${remainderNote(list, true)}` });
