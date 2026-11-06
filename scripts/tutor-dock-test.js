@@ -117,6 +117,7 @@ function serve(router) {
   console.log('wiring');
   const read = (f) => fs.readFileSync(path.join(root, f), 'utf8');
   check('app.js loads the dock and skips the sealed pages', /tutor-dock\.js/.test(read('public/js/app.js')) && /spanish-\(check\|listening\)/.test(read('public/js/app.js')));
+  check('the dock asks /api/auth/me before the dock status, so a signed-out page has no 401 in the console', read('public/js/tutor-dock.js').indexOf('/api/auth/me') > 0 && read('public/js/tutor-dock.js').indexOf('/api/auth/me') < read('public/js/tutor-dock.js').indexOf('fetch(`/api/tutor/dock?path'));
   check('the dock checks the sealed paths itself', /spanish-\(check\|listening\)/.test(read('public/js/tutor-dock.js')));
   check('the dock sends no data to a speech service (browser voice only)', !/fetch\([^)]*(speech|stt|tts|gateway)/i.test(read('public/js/tutor-dock.js')));
   check('the dock css uses only variables for colour (hex only as a var() fallback, for pages without the app css)', !/#[0-9a-f]{3,6}\b/i.test(read('public/css/tutor-dock.css').replace(/var\(--[a-z0-9-]+,\s*#[0-9a-f]{3,6}\)/gi, '')));
