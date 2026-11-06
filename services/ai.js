@@ -160,7 +160,7 @@ function recordSpend(userId, model, usage, usedProvider, meta) {
     day: today(),
     provider: p ? p.name : null,
     cents: Number(((existing ? existing.cents : 0) + cents).toFixed(4)),
-    calls: (existing ? existing.calls || 0 : 0) + 1,
+    calls: (existing ? existing.calls || 0 : 0) + (meta && meta.task === 'fact_live' ? 0 : 1),
   }));
 }
 
@@ -220,7 +220,8 @@ async function withProviders(userId, attempt, role = 'fast', task = null, req = 
 }
 
 async function callProviders(userId, attempt, role = 'fast', task = null, req = null) {
-  if (!withinBudget(userId)) return null;
+  // The check is not the learner's use: at their daily limit, what they are already shown is still checked, and it never eats into the limit.
+  if (task !== 'fact_live' && !withinBudget(userId)) return null;
   const outside = outsideAllowed(userId);
   if (req && poolOn(role)) return viaPool(userId, req, role, task, outside);
   // The whole chain for this role, not just the preferred provider. A failure
