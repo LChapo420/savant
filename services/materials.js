@@ -52,7 +52,7 @@ function sniff(buf) {
   for (const b of head) if (b < 9 || (b > 13 && b < 32) || b === 127) ctrl++;
   if (ctrl > head.length * 0.02) return null; // program or data bytes, not writing
   // stream: true lets a multi-byte character cut at the 8 KB edge pass
-  try { new TextDecoder('utf-8', { fatal: true }).decode(head, { stream: true }); } catch { return 'text8'; }
+  try { new TextDecoder('utf-8', { fatal: true }).decode(head, { stream: true }); } catch { let high = 0; for (const b of head) if (b > 127) high++; return high <= head.length * 0.15 ? 'text8' : null; }
   return 'text';
 }
 
