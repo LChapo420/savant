@@ -182,7 +182,7 @@ function state(userId, materialId, now = Date.now()) {
   const dues = skills.filter((s) => s.is_due);
   const upcoming = skills.filter((s) => s.status === 'mastered' && s.due && !s.is_due).map((s) => s.due).sort()[0] || null;
   return {
-    course: { title: course.title, status: course.status },
+    course: { title: course.title, status: course.status, planned: course.status === 'building' ? (course.outline || []).length || null : null },
     units: course.units || [{ id: 'u1', title: course.title, skills: course.skills.map((s) => s.id) }],
     placed: !!r.placed, skills, mastered: skills.filter((s) => s.status === 'mastered').length, total: skills.length,
     due_count: dues.length, next_due: dues.length ? 'now' : upcoming, next: nextStep(course, r, now),

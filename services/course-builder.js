@@ -806,7 +806,7 @@ async function build(userId, materialId, opts = {}) {
   const textHash = hash(mat.text);
   const prev = row(userId, mat.id);
   if (prev && prev.version === VERSION && prev.text_hash === textHash && prev.status === 'ready' && !opts.force) return { course: prev, cached: true };
-  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  if (!opts.llm && !require('./ai').canBuild()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
 
   inflight.add(key);
   try {
@@ -978,7 +978,7 @@ async function retryMissed(userId, materialId, opts = {}) {
   if (course.text_hash !== hash(mat.text)) return { error: 'The material changed since the course was built. Build the learning path again.', code: 'stale' };
   const todoParts = (course.missed || []).filter((m) => m.reason !== 'too_long' && m.passage_ids && m.passage_ids.length);
   if (!todoParts.length) return { error: 'Nothing was left out of this course.', code: 'nothing_missed' };
-  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  if (!opts.llm && !require('./ai').canBuild()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
   inflight.add(key);
   try {
     const passages = chunk(mat.text).slice(0, MAX_PASSAGES);

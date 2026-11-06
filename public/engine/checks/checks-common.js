@@ -52,6 +52,14 @@
     var old = host.querySelector('.' + CheckKit.TAG + '__verdict');
     if (old) old.remove();
     var box = CheckKit.el('div', 'verdict');
+    // Every block reports a failed save as { correct: false, answer: '' }: the answer was not marked, so it must not read as "Not quite".
+    if (!result.correct && result.answer === '') {
+      box.setAttribute('role', 'status');
+      box.appendChild(CheckKit.el('b', null, 'Not saved. Try that answer again.'));
+      if (result.rationale) box.appendChild(CheckKit.el('span', null, result.rationale));
+      host.appendChild(box);
+      return;
+    }
     box.classList.add(result.correct ? 'is-right' : 'is-wrong');
     box.setAttribute('role', 'status');
     box.appendChild(CheckKit.el('b', null, result.correct ? 'Right.' : 'Not quite. The answer is: ' + (result.answer || '')));

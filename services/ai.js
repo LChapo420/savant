@@ -60,6 +60,21 @@ function isEnabled() {
   return !!(p && p.isEnabled());
 }
 
+/**
+ * May a build (course, pack, notes, podcast) start? It runs for minutes and the pool waits out a 429, so a model that is cooling down for a minute is no reason
+ * to refuse one: every NVIDIA model set aside at the moment a learner pressed the button ended the build with nothing to show (bug sweep 2, 6 Nov).
+ * False only when no model is there at all.
+ */
+function canBuild() {
+  if (module.exports.isEnabled()) return true;
+  try {
+    const providers = require('./providers'); // eslint-disable-line global-require
+    const nvidia = providers.ALL.nvidia;
+    if (nvidia && nvidia.isConfigured() && (nvidia.status().cooling || []).length) return true;
+    return require('./pool').extraSlots().some((s) => s.isEnabled && s.isEnabled()); // eslint-disable-line global-require
+  } catch { return false; }
+}
+
 function providerName() {
   const p = provider();
   return p && p.isEnabled() ? p.name : null;
@@ -2032,6 +2047,7 @@ ${learnerBrief(userId, { skillId: area.skill_id, skillName: area.skill_name, lev
 }
 
 module.exports = {
+  canBuild,
   coachSystemFor, // the tutor's system prompt for one question (read by scripts/part-modify-proof.js)
   munitoAllowedFor,
   structuredDetail,
