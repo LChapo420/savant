@@ -203,11 +203,13 @@ App.mount(async () => {
       return '';
     };
     // Course: start the build, poll its status, then link to the study page.
-    const courseUi = (id, c) => {
+    // No row and nothing queued, after the learner pressed the button: the build ended without starting. Say so, and leave the button working.
+    const NOT_STARTED = 'That could not start: no model is free right now. Try again in a minute.';
+    const courseUi = (id, c, pressed) => {
       const btn = document.getElementById(`course-${id}`);
       const n = document.getElementById(`course-note-${id}`);
       if (!btn || !n) return;
-      if (!c) { btn.textContent = 'Learning path'; return; }
+      if (!c) { btn.textContent = 'Learning path'; btn.disabled = false; if (pressed) n.textContent = NOT_STARTED; return; }
       if (c.status === 'building') { btn.disabled = true; btn.textContent = c.activity && c.activity.queued ? 'Queued…' : 'Building…';
         const msg = activityText(c.activity, 'learning path') || (c.planned ? `Building your course: ${c.skills.length} of ${c.planned} skills ready. You can leave this page.` : 'Planning your course from the text. This can take a few minutes; you can leave this page.');
         // Something useful at once: the first skills open for study while the rest is still being written.
@@ -272,17 +274,18 @@ App.mount(async () => {
         poll(id, 0, true);
       } catch (err) { App.toast(err.message, 'error'); }
     };
-    const poll = async (id, tries, extending) => {
+    const poll = async (id, tries, extending, pressed) => {
       try {
         const out = await App.api.get(`/api/materials/${id}/course`);
         // A queued build has no row yet: show it as waiting and keep looking.
         const c = out.course || (out.activity && out.activity.queued ? { status: 'building', skills: [] } : out.course);
         if (c && out.activity) c.activity = out.activity;
-        courseUi(id, c);
+        if (!c && pressed && tries < 2) { setTimeout(() => poll(id, tries + 1, extending, pressed), 1500); return; } // a moment for the build to show its row
+        courseUi(id, c, pressed);
         // Right after a start the server may not have flagged it yet: show it busy for the first looks.
         if (extending && c && tries < 2 && !c.extending) c.extending = true;
         extendUi(id, c);
-        if (c && (c.status === 'building' || c.extending) && tries < 200) setTimeout(() => poll(id, tries + 1, extending), 4000);
+        if (c && (c.status === 'building' || c.extending) && tries < 200) setTimeout(() => poll(id, tries + 1, extending, pressed), 4000);
       } catch (err) { /* leave the note as it is */ }
     };
     root.querySelectorAll('[data-course]').forEach((b) => {
@@ -291,28 +294,29 @@ App.mount(async () => {
         if (b.dataset.study) { window.location.href = `/my-material-study?id=${b.dataset.course}`; return; }
         try {
           const out = await App.api.post(`/api/materials/${b.dataset.course}/course`, {});
-          if (out.course) courseUi(b.dataset.course, out.course); else { courseUi(b.dataset.course, { status: 'building' }); poll(b.dataset.course, 0); }
+          if (out.course) courseUi(b.dataset.course, out.course); else { courseUi(b.dataset.course, { status: 'building' }); poll(b.dataset.course, 0, false, true); }
         } catch (err) { App.toast(err.message, 'error'); }
       });
     });
     // Study pack: start the build, poll its status, then open the pack page.
-    const packUi = (id, p) => {
+    const packUi = (id, p, pressed) => {
       const btn = document.getElementById(`pack-${id}`);
       const n = document.getElementById(`pack-note-${id}`);
       if (!btn || !n) return;
-      if (!p) { btn.textContent = 'Study pack'; return; }
+      if (!p) { btn.textContent = 'Study pack'; btn.disabled = false; if (pressed) n.textContent = NOT_STARTED; return; }
       if (p.status === 'building') { btn.disabled = true; btn.textContent = p.activity && p.activity.queued ? 'Queued…' : 'Building…'; n.textContent = activityText(p.activity, 'study pack') || 'Building your study pack. You can leave this page.'; return; }
       btn.disabled = false;
       if (p.status === 'ready' || p.status === 'partial') { btn.textContent = 'Open pack'; btn.dataset.open = '1'; n.textContent = `${p.cards.length} flashcards, ${p.quiz.length} quiz questions, ${p.test.length} test questions.`; }
       else { btn.textContent = 'Try again'; n.textContent = 'The pack could not be built from this text. Try a clearer or longer one.'; }
     };
-    const pollPack = async (id, tries) => {
+    const pollPack = async (id, tries, pressed) => {
       try {
         const out = await App.api.get(`/api/materials/${id}/pack`);
         const p = out.pack || (out.activity && out.activity.queued ? { status: 'building' } : out.pack);
         if (p && out.activity) p.activity = out.activity;
-        packUi(id, p);
-        if (p && p.status === 'building' && tries < 200) setTimeout(() => pollPack(id, tries + 1), 4000);
+        if (!p && pressed && tries < 2) { setTimeout(() => pollPack(id, tries + 1, pressed), 1500); return; }
+        packUi(id, p, pressed);
+        if (p && p.status === 'building' && tries < 200) setTimeout(() => pollPack(id, tries + 1, pressed), 4000);
       } catch (err) { /* leave the note as it is */ }
     };
     root.querySelectorAll('[data-pack]').forEach((b) => {
@@ -321,7 +325,7 @@ App.mount(async () => {
         if (b.dataset.open) { window.location.href = `/my-material-pack?id=${b.dataset.pack}`; return; }
         try {
           const out = await App.api.post(`/api/materials/${b.dataset.pack}/pack`, {});
-          if (out.pack) packUi(b.dataset.pack, out.pack); else { packUi(b.dataset.pack, { status: 'building' }); pollPack(b.dataset.pack, 0); }
+          if (out.pack) packUi(b.dataset.pack, out.pack); else { packUi(b.dataset.pack, { status: 'building' }); pollPack(b.dataset.pack, 0, true); }
         } catch (err) { App.toast(err.message, 'error'); }
       });
     });

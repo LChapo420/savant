@@ -148,6 +148,23 @@ async function childGate() {
   check('only the latest message is read', earlier.status === 403, earlier);
 }
 
+function buildGuard() {
+  console.log('a model cooling down does not stop a build');
+  const providers = require('../services/providers');
+  const real = providers.ALL.nvidia;
+  const wasEnabled = ai.isEnabled;
+  ai.isEnabled = () => false;
+  check('no model at all: a build may not start', ai.canBuild() === false);
+  providers.ALL.nvidia = { ...real, isConfigured: () => true, status: () => ({ cooling: ['z-ai/glm-5.3-flash'] }), isEnabled: () => false };
+  check('every NVIDIA model set aside for a minute: it may', ai.canBuild() === true);
+  providers.ALL.nvidia = { ...real, isConfigured: () => true, status: () => ({ cooling: [] }), isEnabled: () => false };
+  check('NVIDIA stood down for a bad key, nothing cooling: it may not', ai.canBuild() === false);
+  providers.ALL.nvidia = real;
+  ai.isEnabled = wasEnabled;
+  const page = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'my-material.js'), 'utf8');
+  check('the page re-enables its buttons when a build ended with nothing to show', /if \(!c\) \{ btn\.textContent = 'Learning path'; btn\.disabled = false; if \(pressed\)/.test(page) && /if \(!p\) \{ btn\.textContent = 'Study pack'; btn\.disabled = false; if \(pressed\)/.test(page));
+}
+
 function accountData() {
   console.log('deleting an account reaches shared plans; the export covers every collection');
   const blockLevels = require('../services/block-levels');
@@ -173,6 +190,7 @@ function accountData() {
 (async () => {
   phrases();
   await childGate();
+  buildGuard();
   accountData();
   await routes();
   planPin();
