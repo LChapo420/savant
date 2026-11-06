@@ -63,9 +63,9 @@ for (const g of goals) {
   const todayShare = mean(today.map((a) => (a.pass ? 1 : 0)));
   const rule = rows.map((r) => (ruleRow.get(r.id) ? ruleRow.get(r.id).goals[g].savant : null));
   const ruleShare = rule[0] ? mean(rule.map((a) => (a.pass ? 1 : 0))) : NaN;
-  lines.push(`today ${f(mean(today.map((a) => a.hours)), 1)} h, reach ${pct(todayShare)} (L ${f(mean(today.map((a) => a.by.lesson)), 1)} P ${f(mean(today.map((a) => a.by.practice)), 1)} R ${f(mean(today.map((a) => a.by.review)), 1)}), recall ${f(mean(today.map((a) => a.recall)))}${rule[0] ? ` | round 3 rule ${f(mean(rule.map((a) => a.hours)), 1)} h, reach ${pct(ruleShare)}` : ''}`);
-  // "today" for the gate: the shipped app where it reaches the target, else the round 3 rule, the cheapest existing way that does. Both are printed.
-  const comparator = todayShare >= 0.95 || !rule[0] ? today : rule;
+  lines.push(`before 5 Nov ${f(mean(today.map((a) => a.hours)), 1)} h, reach ${pct(todayShare)} (L ${f(mean(today.map((a) => a.by.lesson)), 1)} P ${f(mean(today.map((a) => a.by.practice)), 1)} R ${f(mean(today.map((a) => a.by.review)), 1)}), recall ${f(mean(today.map((a) => a.recall)))}${rule[0] ? ` | TODAY (round 3 rule, on by default) ${f(mean(rule.map((a) => a.hours)), 1)} h (L ${f(mean(rule.map((a) => a.by.lesson)), 1)} P ${f(mean(rule.map((a) => a.by.practice)), 1)} R ${f(mean(rule.map((a) => a.by.review)), 1)}), reach ${pct(ruleShare)}, recall ${f(mean(rule.map((a) => a.recall)))}` : ''}`);
+  // "today" for the gate: the round 3 rule, which has been on by default since 5 Nov 2026 (SR_GOAL_REVIEW). The old rule is printed beside it for the record.
+  const comparator = rule[0] ? rule : today;
   for (const name of Object.keys(BASE)) {
     const bs = cells.map((c) => BASE[name](c, g));
     if (!bs[0]) continue;
@@ -102,7 +102,7 @@ for (const g of goals) {
     // the gate
     const perLearner = as.map((a, i) => comparator[i].hours / a.hours).sort((x, y) => x - y);
     A.today = { hours: mean(comparator.map((a) => a.hours)), ratioMean: mean(perLearner), ratioW10: q(perLearner, 0.1), ratioW1: q(perLearner, 0.01), slower: perLearner.filter((x) => x < 1).length };
-    lines.push(`    vs today (${todayShare >= 0.95 || !rule[0] ? 'shipped app' : 'round 3 rule: the shipped app misses the target here'}): ${f(A.today.hours, 1)} h, per-learner ratio mean ${f(A.today.ratioMean)} worst 10% ${f(A.today.ratioW10)} worst 1% ${f(A.today.ratioW1)}, slower for ${A.today.slower} of ${rows.length}`);
+    lines.push(`    vs today: ${f(A.today.hours, 1)} h, per-learner ratio mean ${f(A.today.ratioMean)} worst 10% ${f(A.today.ratioW10)} worst 1% ${f(A.today.ratioW1)}, slower for ${A.today.slower} of ${rows.length}`);
     if (A.strict < 1) fails[arm].push(`${g}: ${pct(A.strict)} reach the target with all understood`);
     if (A.today.ratioW10 < 1) fails[arm].push(`${g}: worst 10% x${f(A.today.ratioW10)} against today`);
     if (A.hours >= A.today.hours) fails[arm].push(`${g}: mean ${f(A.hours, 1)} h not under today's ${f(A.today.hours, 1)} h`);

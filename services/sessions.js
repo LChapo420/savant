@@ -142,6 +142,8 @@ function clampDifficulty(d) {
 }
 
 /** Plan one level's worth of work: an array of { skillId, difficulty, role }. */
+const speedLevers = require('./speed-levers');
+
 function planLesson(userId, enrollment, grade, params) {
   return efficiency.forLearner(userId, () => planLessonRaw(userId, enrollment, grade, params));
 }
@@ -352,8 +354,18 @@ function curveReviewsRaw(userId, enrollment, introduced, limit) {
     const cap = efficiency.reviewSlots(limit, queue.length); // SR_STOP: extra review slots when more are waiting
     const perSkill = new Map();
     const out = [];
+    const goalCtx = speedLevers.enabled('target') ? require('./retention-goal').reviewContext(userId, enrollment) : null; // eslint-disable-line global-require
+    const recallNow = goalCtx ? new Map(mastery.recallByskill(userId, introduced).map((r) => [r.skill_id, r])) : null;
     for (const q of queue) {
       if (!['memory_check', 'fading', 'durability'].includes(q.reason) || !q.skill || !allowed.has(q.skill)) continue;
+      if (goalCtx && recallNow.has(q.skill)) { // SPEED_REVIEW_TARGET: the same rule on the fitted curve's queue
+        const row = recallNow.get(q.skill);
+        const toEnd = require('./retention-goal').daysToGoalEnd(goalCtx.eff, goalCtx.finishedOn); // eslint-disable-line global-require
+        if (toEnd !== null && toEnd < 0) continue;
+        const last = Date.parse(row.state.last_seen_at);
+        const days = Number.isFinite(last) ? Math.max(0, Date.now() - last) / 86400000 : 0;
+        if (!speedLevers.reviewWanted(userId, q.skill, row.recall, toEnd === null ? null : { daysToEnd: toEnd, recallAtEnd: mastery.predictedRecall(row.state, days + Math.max(0, toEnd), null) })) continue;
+      }
       if ((perSkill.get(q.skill) || 0) >= 2) continue;
       perSkill.set(q.skill, (perSkill.get(q.skill) || 0) + 1);
       out.push({ skill_id: q.skill, objective: q.id, reason: q.reason });
@@ -1323,10 +1335,25 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
     rationale: item.rationale,
     feedback,
     errorTag,
+    // The speed levers (services/speed-levers.js): null with every switch off.
+    speed: speedAfterAnswer({ userId, session, item, correct }),
     // The stop rule (services/efficiency.js, SR_STOP): the rest of this block's focus and support items that would buy least. Advice
     // only; the session player decides whether to skip them.
     skippable: stoppableItems({ userId, session, item }),
   };
+}
+
+function speedAfterAnswer({ userId, session, item, correct }) {
+  try {
+    if (!speedLevers.enabled('testout') && !speedLevers.enabled('stop')) return null;
+    const fresh = db.byId('sessions', session.id) || session;
+    const block = itemsInBlock(session.id, item.block || 0).map((i) => (i.id === item.id ? { ...i, correct } : i));
+    const lesson = item.role === 'check' ? lessons.forSitting(fresh) : null;
+    return speedLevers.afterAnswer({ userId, session: fresh, item, correct, block, lesson });
+  } catch (err) {
+    console.warn(`sessions: speed levers skipped (${err.message})`);
+    return null;
+  }
 }
 
 /** Ids of this block's unanswered focus/support items that the stop rule would not ask now (none unless the skip half is on: SR_STOP and SR_STOP_SKIP). */
@@ -1461,6 +1488,7 @@ function resolveBlock({ userId, session, enrollment, grade, blockIndex }) {
     level_complete: !!block.level_complete,
     level_up: result.advanced ? result.level : null,
     progress: result.progress,
+    ...(result.speed_skipped ? { speed_skipped: result.speed_skipped } : {}),
     next_level: fresh.current_level,
     next_kind: nextKind,
     can_continue: fresh.status === 'active',

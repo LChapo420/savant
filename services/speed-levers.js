@@ -9,8 +9,8 @@
  *   SPEED_MASTERY_STOP=on  a practice block ends once the tracker below is confident the skill is understood; the rest of its focus items are set aside, marked, unscored.
  *   SPEED_REVIEW_TARGET=on a level review is asked only when predicted recall (understanding x memory) falls under the learner's chosen target (plus a margin) on the days
  *                          the goal covers; overshoot is not reviewed. Reads the goal through services/retention-goal.js.
- *   SPEED_IMPLICIT=on      a right answer on a skill also counts as a partial review of its stated prerequisite (needs a prerequisite in the course's data).
  *   SPEED_ALL=off          every lever off.
+ * (Prerequisite credit, an answer also reviewing what it builds on, is a simulation variant only: the built-in courses have no prerequisite graph to read it from.)
  *
  * The tracker is a small Bayes filter over a skill's understanding k: each answer is right with chance k + (1 - k) x guess, then k rises as the learning model says.
  * Its constants are ASSUMED (the audited v2 simulation's), not fitted to real learners. docs/SPEED-4X.md shows what happens when they are wrong.
@@ -18,8 +18,8 @@
 
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 
-const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET', implicit: 'SPEED_IMPLICIT' };
-const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off', implicit: 'off' };
+const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET' };
+const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off' };
 
 /** Is this lever on? SPEED_ALL=off beats everything. A base-arm learner (efficiency.forLearner) reads every lever off, as the older levers do. */
 function enabled(lever) {
@@ -41,7 +41,8 @@ const PARAMS = {
   chunk: Number(process.env.SPEED_CHUNK || 0.4),      // share of the page shown after a miss
   priorStrength: 3,
   priorMean: 0.35,
-  reviewMargin: Number(process.env.SPEED_REVIEW_MARGIN || 0.05), // above the learner's target, because the memory estimate is noisy
+  reviewMargin: Number(process.env.SPEED_REVIEW_MARGIN || 0.15), // the review line above the learner's target: predicted recall is kept over target + this (chosen on the design seed: docs/SPEED-4X.md)
+  endMargin: Number(process.env.SPEED_REVIEW_END_MARGIN || 0.05), // a skill predicted over target + this on the goal's last day is not reviewed again
   defaultTarget: 0.7,
 };
 
@@ -128,12 +129,111 @@ function reviewDue({ k, recallNow, recallAtEnd = null, daysToEnd = null, target 
 /** Days the final window needs: two full passes at this learner's own pace, at least 3. */
 function endWindow(skills, minutesPerAnswer, minutesPerDay) { return Math.max(3, Math.ceil((2 * skills * minutesPerAnswer) / Math.max(1, minutesPerDay)) + 1); }
 
-// ---------- implicit review ----------
-/** A right answer on a skill reviews its prerequisite in part: the memory gain is scaled by this (shown both ways in docs/SPEED-4X.md). */
-const IMPLICIT_CREDIT = Number(process.env.SPEED_IMPLICIT_CREDIT || 0.5);
+// ---------- the app's side: reads the learner's own answers (no new collection: items, sessions and lessons rows are already the account's, exported and deleted with it) ----------
+/* eslint-disable global-require */
+const dbOf = () => require('../config/db');
+
+/** A skill's answers so far, oldest first, and the learner's own first-answer record for the prior. A set-aside or skipped item has no answer and does not count. */
+function trackerFor(userId, skillId, { lr = 0.8 } = {}) {
+  const mine = dbOf().find('items', (i) => i.user_id === userId && i.correct !== null && i.correct !== undefined && !i.skipped && !i.reserved && !i.needs_review);
+  mine.sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
+  const seen = new Set(); let firstRight = 0; let firstN = 0;
+  for (const i of mine) { if (i.skill_id === skillId || seen.has(i.skill_id)) continue; seen.add(i.skill_id); firstN++; if (i.correct) firstRight++; }
+  // lr: the app does not yet read a per-learner rate here; 0.8 is the cautious side of the simulated 0.6 to 1.5 (docs/SPEED-4X.md: est-gain variants)
+  const tr = newTracker({ priorMean: priorFromHistory(firstRight, firstN), lr, gainMult: PARAMS.safety });
+  for (const i of mine) if (i.skill_id === skillId) observe(tr, !!i.correct);
+  return tr;
+}
+/** Sets items aside, unscored and marked: not asked, not counted, and said so to the learner. */
+function setAside(items, reason) {
+  const db = dbOf(); const at = new Date().toISOString();
+  for (const i of items) db.update('items', i.id, { skipped: true, reserved: true, set_aside: reason, skipped_at: at });
+  return items.map((i) => i.id);
+}
+/** Which parts of a lesson a miss on this question calls for: the sections sharing most words with the question and its explanation, none shown before. */
+const words = (t) => new Set(String(t || '').toLowerCase().match(/[a-z0-9]{4,}/g) || []);
+function lessonParts(lesson) {
+  const parts = (lesson.sections || []).map((s, i) => ({ id: `s${i}`, text: `${s.heading || ''} ${s.body || ''} ${s.example || ''}` }));
+  if (lesson.worked_example) parts.push({ id: 'worked', text: `${lesson.worked_example.problem || ''} ${(lesson.worked_example.steps || []).join(' ')} ${lesson.worked_example.answer || ''}` });
+  if ((lesson.common_mistakes || []).length) parts.push({ id: 'mistakes', text: lesson.common_mistakes.join(' ') });
+  return parts;
+}
+function partsForMiss(lesson, item, shownIds = [], chunk = PARAMS.chunk) {
+  const parts = lessonParts(lesson).filter((p) => !shownIds.includes(p.id));
+  if (!parts.length) return [];
+  const q = words(`${item.prompt || ''} ${item.rationale || ''} ${item.answer || ''}`);
+  const score = (p) => { let n = 0; for (const w of words(p.text)) if (q.has(w)) n++; return n; };
+  const all = lessonParts(lesson).length;
+  const take = Math.max(1, Math.ceil(all * chunk));
+  return parts.map((p, i) => ({ p, s: score(p), i })).sort((a, b) => (b.s - a.s) || (a.i - b.i)).slice(0, take).map((x) => x.p.id);
+}
+/** What the client should know up front. A preview of another level keeps today's flow. */
+function clientFlags(userId, session) {
+  const on = (lever) => require('./efficiency').forLearner(userId, () => enabled(lever));
+  if (!session || session.preview) return { testout: false, short: false };
+  return { testout: on('testout'), short: on('short') };
+}
+/**
+ * After an answer. A lesson level's check, with retrieval first: a miss brings the part of the page it calls for (or all of it), answers that show the skill known end the
+ * level with the page skipped, the learner told, and the page one tap away. A practice level: once the skill is shown understood, the rest of its items in this block are set aside.
+ * Returns null when nothing changes (every lever off, or nothing decided).
+ */
+function afterAnswer({ userId, session, item, correct, block, lesson }) {
+  return require('./efficiency').forLearner(userId, () => {
+    if (session.preview) return null;
+    const open = block.filter((i) => i.correct === null && !i.skipped && i.id !== item.id);
+    if (item.role === 'check' && lesson && (enabled('testout') || enabled('short'))) {
+      if (!enabled('testout')) return null; // the short page has no place until retrieval comes first
+      const db = dbOf();
+      const state = { parts: [], ...((session.speed_state || {})[item.block || 0] || {}) };
+      const save = () => db.update('sessions', session.id, { speed_state: { ...(session.speed_state || {}), [item.block || 0]: state } });
+      const missedAny = block.some((i) => i.correct === false) || !correct;
+      if (!correct) {
+        if (state.whole) return null;
+        if (enabled('short')) {
+          const parts = partsForMiss(lesson, item, state.parts);
+          state.parts = [...state.parts, ...parts]; save();
+          return parts.length ? { action: 'teach', parts } : null;
+        }
+        state.whole = true; save();
+        return { action: 'teach', whole: true };
+      }
+      if (missedAny || !state || state.parts.length || state.whole) return null;
+      const tr = trackerFor(userId, item.skill_id);
+      const noMoreChecks = !open.length;
+      const sure = shown(tr);
+      if (!sure && !noMoreChecks) return null;
+      // Every check right, or the tracker sure earlier: the page is skipped, and the learner is told. Noted on the lesson so the path can list it.
+      const ids = setAside(open, 'test_out');
+      db.update('lessons', lesson.id, { skipped_by_check_at: new Date().toISOString() });
+      state.skipped = true; save();
+      return { action: 'skip_page', set_aside: ids, message: 'You got these right, so we skipped this page to save you time. It is still here if you want it.' };
+    }
+    if (session.kind === 'lesson' && enabled('stop') && ['focus', 'stretch', 'support'].includes(item.role) && correct) {
+      const rest = open.filter((i) => i.skill_id === item.skill_id && ['focus', 'stretch', 'support'].includes(i.role));
+      if (!rest.length || !shown(trackerFor(userId, item.skill_id))) return null;
+      return { action: 'stop_skill', set_aside: setAside(rest, 'mastered'), message: "You've shown you have this one, so we're moving on sooner." };
+    }
+    return null;
+  });
+}
+/** Has the focus skill of a practice level been shown understood? (the mastery stop: the level is ready without its remaining items) */
+function practiceShown(userId, skillId) {
+  return require('./efficiency').forLearner(userId, () => enabled('stop') && shown(trackerFor(userId, skillId)));
+}
+/** The review rule for one skill as the scheduler sees it. end: { daysToEnd, recallAtEnd } when the goal has a known last day, else null. */
+function reviewWanted(userId, skillId, recallNow, end) {
+  const mode = String(process.env.SPEED_REVIEW_MODE || 'through') === 'end' ? 'end' : 'through';
+  return reviewDue({
+    k: kMean(trackerFor(userId, skillId)), recallNow, recallAtEnd: end ? end.recallAtEnd : null, daysToEnd: end ? end.daysToEnd : null,
+    target: PARAMS.defaultTarget, margin: PARAMS.reviewMargin, endMargin: PARAMS.endMargin, mode, window: 10,
+  });
+}
+/* eslint-enable global-require */
 
 module.exports = {
-  SWITCH, DEFAULT, PARAMS, IMPLICIT_CREDIT, enabled,
+  SWITCH, DEFAULT, PARAMS, enabled,
   newTracker, observe, taught, pKnown, kMean, shown, priorFromHistory, trackerFromAnswers, nextStep,
   reviewDue, endWindow,
+  trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
 };

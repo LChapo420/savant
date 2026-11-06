@@ -197,8 +197,16 @@ function reviewNeeded(daysToEnd, predictAt, floor = GOAL_MEMORY) {
 
 /** What the scheduler needs from an enrollment: its effective goal and when it was finished; null with both switches off (nothing changes). */
 function reviewContext(userId, enrollment, now = Date.now()) {
-  if (!goalReviewOn() && !backwardOn()) return null;
+  if (!goalReviewOn() && !backwardOn() && !require('./speed-levers').enabled('target')) return null; // eslint-disable-line global-require
   return { eff: forEnrollment(userId, enrollment, now), finishedOn: (enrollment && enrollment.finished_on) || null };
+}
+
+/** SPEED_REVIEW_TARGET: days to the goal's last day, or null when none is known yet: a horizon counts from finishing, a dated test from its date; forever has none. */
+function daysToGoalEnd(eff, finishedOn, nowMs = Date.now()) {
+  if (!eff) return null;
+  if (eff.status === 'horizon') { const fin = finishedOn ? Date.parse(finishedOn) : NaN; return Number.isFinite(fin) ? (fin + eff.days * DAY - nowMs) / DAY : null; }
+  if (eff.status === 'date') return (startOf(eff.test_date) - nowMs) / DAY;
+  return null;
 }
 
 /** How much of the usual re-teaching time a forgotten objective gets: shorter when the test is close. */
@@ -410,6 +418,6 @@ module.exports = {
   HORIZONS, CHOICES, DEFAULT_HORIZON, DEFAULT_SHOWN, SPACING, GAP_MAX, GAP_SHARE, MAX_AHEAD,
   normalize, normalizeAfter, effective, keptTypes, droppedTypes, isCalendarIntact, sizeFor, datePlan, reteachScale, reviewsWanted,
   limitInterval, describe, goalCovers, coverKeeps,
-  GOAL_MEMORY, FINAL_MAX_DAYS, BACKWARD_DAYS, goalReviewOn, backwardOn, reviewWindow, reviewTargetFor, reviewNeeded, reviewContext,
+  GOAL_MEMORY, FINAL_MAX_DAYS, BACKWARD_DAYS, goalReviewOn, backwardOn, daysToGoalEnd, reviewWindow, reviewTargetFor, reviewNeeded, reviewContext,
   todayFor, forEnrollment, forMaterial, save, listFor, headline, enforcerView,
 };

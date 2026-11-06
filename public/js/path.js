@@ -209,6 +209,8 @@ App.mount(async () => {
   // adaptive session otherwise. One function, so a row and the unit heading over
   // it cannot disagree.
   function openHrefOf(node) {
+    // With the test-out lever on, the lesson the learner stands on opens on its check; any other is opened to read.
+    if (data.speed_testout && node.kind === 'lesson' && node.level === enrollment.current_level) return `/session?enrollment=${enrollment.id}&ordinary=1`;
     return node.kind === 'lesson' && hasBaseLesson(node.level)
       ? baseHref(node.level)
       : `/session?enrollment=${enrollment.id}&level=${node.level}`;

@@ -204,6 +204,7 @@ function recordAttempt({ userId, skillId, correct, difficulty, levelDifficulty, 
  * ladder, weakest and most overdue first. A learner whose spec says they forget fast (or keep things) has the target
  * moved by up to 0.05 and the gap since the last answer stretched by up to 0.6x to 1.25x (services/learning-spec.js).
  */
+const speedLevers = () => require('./speed-levers'); // eslint-disable-line global-require
 function dueReviews(userId, skillIds, limit = REVIEW_MAX, goalCtx = null) {
   return scheduleMode() === 'fixed' ? dueReviewsFixed(userId, skillIds, limit) : dueReviewsByRecall(userId, skillIds, limit, goalCtx);
 }
@@ -239,6 +240,12 @@ function dueReviewsByRecallRaw(userId, skillIds, limit, goalCtx = null) {
       below = rg.reviewTargetFor(below, win, goalCtx.eff);
       // still above the goal's memory floor on its end day: defer (not in the final look)
       if (!win.final && goalCtx.eff.status === 'horizon' && !rg.reviewNeeded(win.daysToEnd, (more) => predictedRecall(s, days + more, rc))) continue;
+    }
+    // SPEED_REVIEW_TARGET (services/speed-levers.js): asked only when predicted recall falls under the learner's target, up to the goal's last day. Off: nothing changes.
+    if (goalCtx && speedLevers().enabled('target')) {
+      const toEnd = rg.daysToGoalEnd(goalCtx.eff, goalCtx.finishedOn, now);
+      if (speedLevers().reviewWanted(userId, id, recall, toEnd === null ? null : { daysToEnd: toEnd, recallAtEnd: predictedRecall(s, days + Math.max(0, toEnd), rc) })) out.push({ ...s, recall });
+      continue;
     }
     if (recall < below) out.push({ ...s, recall });
   }
@@ -291,7 +298,8 @@ function levelProgress(userId, enrollment, grade) {
   const avg = averageMastery(userId, skills);
   const weakest = skills.reduce((min, id) => Math.min(min, stateFor(userId, id).mastery), 1);
   const items = enrollment.level_items || 0;
-  const ready = avg >= LEVEL_UP.averageMastery && weakest >= LEVEL_UP.weakestMastery && items >= LEVEL_UP.minItems;
+  const shownUnderstood = plan.kind === 'practice' && items > 0 && speedLevers().practiceShown(userId, plan.focus); // SPEED_MASTERY_STOP: off, always false
+  const ready = shownUnderstood || (avg >= LEVEL_UP.averageMastery && weakest >= LEVEL_UP.weakestMastery && items >= LEVEL_UP.minItems);
 
   const blockers = [];
   if (avg < LEVEL_UP.averageMastery) blockers.push(`average mastery ${(avg * 100).toFixed(0)}% of ${LEVEL_UP.averageMastery * 100}%`);
@@ -402,7 +410,23 @@ function tryLevelUp(userId, enrollment, grade) {
     return { advanced: false, progress, requires: progress.kind };
   }
   if (!progress.ready) return { advanced: false, progress };
-  return { advanced: true, level: advance(enrollment, grade), progress };
+  const level = advance(enrollment, grade);
+  return { advanced: true, level, progress, ...skipShownPractice(userId, enrollment, grade) };
+}
+
+/**
+ * SPEED_MASTERY_STOP: the practice levels straight after this one, on a skill already shown understood, are passed over too. A lesson or a checkpoint always stops it: gates are
+ * never passed over. Said to the learner (speed_skipped on the level's close). Off: nothing moves and this returns nothing.
+ */
+function skipShownPractice(userId, enrollment, grade) {
+  if (!speedLevers().enabled('stop')) return {};
+  let skipped = 0; let fresh = db.byId('enrollments', enrollment.id);
+  while (fresh && fresh.status === 'active' && fresh.current_level < grade.pathLength && skipped < 50) {
+    const plan = curriculum.levelPlan(grade, fresh.current_level);
+    if (plan.kind !== 'practice' || !speedLevers().practiceShown(userId, plan.focus)) break;
+    advance(fresh, grade); skipped++; fresh = db.byId('enrollments', enrollment.id);
+  }
+  return skipped ? { speed_skipped: skipped } : {};
 }
 
 /** Called when a lesson level's lesson has been worked through. */
