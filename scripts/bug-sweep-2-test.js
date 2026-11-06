@@ -165,6 +165,21 @@ function buildGuard() {
   check('the page re-enables its buttons when a build ended with nothing to show', /if \(!c\) \{ btn\.textContent = 'Learning path'; btn\.disabled = false; if \(pressed\)/.test(page) && /if \(!p\) \{ btn\.textContent = 'Study pack'; btn\.disabled = false; if \(pressed\)/.test(page));
 }
 
+function saveFailure() {
+  console.log('a failed save is not marked wrong');
+  const vm = require('vm');
+  const node = (tag) => { const n = { tag, children: [], className: '', textContent: '', attrs: {}, classList: { items: [], add(c) { this.items.push(c); } }, setAttribute(k, v) { this.attrs[k] = v; }, appendChild(c) { this.children.push(c); return c; }, querySelector() { return null; } }; return n; };
+  const sandbox = { document: { createElement: node, getElementById: () => null }, window: {} };
+  sandbox.globalThis = sandbox;
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname, '..', 'public', 'engine', 'checks', 'checks-common.js'), 'utf8').replace('typeof window !== \'undefined\' ? window : globalThis', 'window'), sandbox);
+  const Kit = sandbox.window.PolymathCheckKit;
+  const text = (h) => JSON.stringify(h.children.map((b) => b.children.map((c) => c.textContent)));
+  const failed = node('div'); Kit.verdict(failed, { correct: false, answer: '', rationale: 'No connection.' });
+  check('a failed save says so, not "Not quite"', /Not saved/.test(text(failed)) && !/Not quite/.test(text(failed)) && !failed.children[0].classList.items.includes('is-wrong'), text(failed));
+  const wrong = node('div'); Kit.verdict(wrong, { correct: false, answer: '9', rationale: 'Because.' });
+  check('a wrong answer still says the answer', /Not quite\. The answer is: 9/.test(text(wrong)) && wrong.children[0].classList.items.includes('is-wrong'), text(wrong));
+}
+
 function accountData() {
   console.log('deleting an account reaches shared plans; the export covers every collection');
   const blockLevels = require('../services/block-levels');
@@ -191,6 +206,7 @@ function accountData() {
   phrases();
   await childGate();
   buildGuard();
+  saveFailure();
   accountData();
   await routes();
   planPin();
