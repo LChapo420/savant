@@ -29,7 +29,7 @@ App.mount(async () => {
       if (pack) setTimeout(load, 4000);
       return null;
     }
-    if (pack.status === 'failed') { root.innerHTML = `<p class="small"><a href="/my-material">&larr; My material</a></p><div class="notice notice-error">The study pack could not be built from this text. Try a clearer or longer one.</div>`; return null; }
+    if (pack.status === 'failed') { root.innerHTML = `<p class="small"><a href="/my-material">&larr; My material</a></p><div class="notice notice-error">${pack.failure === 'busy' ? "The AI models did not answer, which is not your file's fault. Try again in a minute." : pack.failure === 'interrupted' ? 'The build stopped when the server restarted. Try again.' : 'The study pack could not be built from this text. Try a clearer or longer one.'}</div><p><a class="btn" href="/my-material">Back to try again</a></p>`; return null; }
     return render();
   }
 
