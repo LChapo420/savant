@@ -70,7 +70,7 @@ const DOC = Array.from({ length: 8 }, (_, i) => `Part ${i + 1} of the lake notes
   const link = page.locator(`#course-note-${m1.id} a`);
   const hasLink = await link.count();
   check('the page offers the first skills at once', hasLink > 0, await textOf(`#course-note-${m1.id}`));
-  await shot('02-mid-build');
+  await page.locator(`#course-note-${m1.id}`).scrollIntoViewIfNeeded().catch(() => {}); await shot('02-mid-build');
 
   // ── The server dies part way
   setMode({ mode: 'ok', delayMs: 1500, dieNext: 3 });
@@ -83,7 +83,7 @@ const DOC = Array.from({ length: 8 }, (_, i) => `Part ${i + 1} of the lake notes
   await page.goto(`${B}/my-material`);
   await page.waitForSelector(`#course-${m1.id}`);
   await sleep(2000);
-  await shot('03-after-crash');
+  await page.locator(`#course-note-${m1.id}`).scrollIntoViewIfNeeded().catch(() => {}); await shot('03-after-crash');
   const btnB = await textOf(`#course-${m1.id}`); const noteB = await textOf(`#course-note-${m1.id}`);
   check('after a crash and restart the page is not stuck on Building', !/Building/.test(btnB), `${btnB} | ${noteB}`);
   check('and it says what to do next', /again|continue|finish|rest/i.test(`${btnB} ${noteB}`) || /Study/.test(btnB), `${btnB} | ${noteB}`);
@@ -109,7 +109,7 @@ const DOC = Array.from({ length: 8 }, (_, i) => `Part ${i + 1} of the lake notes
   const failedCourse = await waitFor(async () => { const c = await api('get', `/api/materials/${m2.id}/course`); return c.json.course && c.json.course.status !== 'building' ? c.json.course : null; }, 90000);
   check('provider down: the build ends instead of hanging', !!failedCourse, 'still building after 90 s');
   await sleep(4500);
-  await shot('05-provider-down');
+  await page.locator(`#course-note-${m2.id}`).scrollIntoViewIfNeeded().catch(() => {}); await shot('05-provider-down');
   const btnC = await textOf(`#course-${m2.id}`); const noteC = await textOf(`#course-note-${m2.id}`);
   check('provider down: the learner is told, in words that are not their fault', /busy|try again|could not reach|not available|moment|later/i.test(noteC) && !/clearer or longer/i.test(noteC), `${btnC} | ${noteC}`);
   check('provider down: the button can try again', !(await page.locator(`#course-${m2.id}`).isDisabled()) && /again/i.test(btnC), btnC);

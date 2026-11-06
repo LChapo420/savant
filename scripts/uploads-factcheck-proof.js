@@ -134,7 +134,9 @@ async function recheck(fromTag, toTag, checkerFam) {
     const d = allDocs().find((x) => x.id === from.doc);
     const src = await extracted(d);
     const idx = F.indexSource(src.plain);
-    const asker = async (a) => { for (let i = 0; i < 4; i++) { try { return { res: { data: await J.call(checkerFam, { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: Math.max(a.maxTokens, 2500) }) } }; } catch { await new Promise((r) => setTimeout(r, 2000 * (i + 1))); } } return { res: null }; };
+    const askerOf = (fam) => async (a) => { for (let i = 0; i < 4; i++) { try { return { res: { data: await J.call(fam, { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: Math.max(a.maxTokens, 2500) }) } }; } catch { await new Promise((r) => setTimeout(r, 2000 * (i + 1))); } } return { res: null }; };
+    const [fam1, fam2] = checkerFam.split('+');
+    const asker = askerOf(fam1); const asker2 = fam2 ? askerOf(fam2) : null;
     const blocks = from.raw.split(/\n\n(?=## )/);
     const stats = { sentences: 0, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0 };
     const dropped = [];
@@ -144,7 +146,7 @@ async function recheck(fromTag, toTag, checkerFam) {
       const paragraphs = lines.filter((l) => l && !/^(## |Key: |Q: )/.test(l));
       const keys = lines.filter((l) => l.startsWith('Key: ')).map((l) => l.slice(5));
       const qs = lines.filter((l) => l.startsWith('Q: '));
-      const r = await F.checkLesson({ paragraphs, keyPoints: keys, idx, sourceText: src.plain, asker });
+      const r = await F.checkLesson({ paragraphs, keyPoints: keys, idx, sourceText: src.plain, asker, asker2 });
       for (const k of Object.keys(stats)) stats[k] += Number(r.report[k]) || 0;
       dropped.push(...r.report.dropped);
       out[i] = [head, ...r.paragraphs, ...r.keyPoints.map((k) => `Key: ${k}`), ...qs].join('\n');

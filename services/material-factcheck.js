@@ -224,7 +224,7 @@ const CHECK_SCHEMA = { type: 'object', properties: { verdicts: { type: 'array', 
  * how: 'direct' (no model), 'model', 'fixed', 'hard', 'unchecked'. Also { unchecked, calls } on the returned map's `.stats`.
  * asker: async ({system, user, schema, schemaName, maxTokens, task, role, dataClass}) -> { res } | { stopped }.
  */
-async function check(items, { idx, sourceText, asker, allow = null, allowStems = null, task = 'material_factcheck' }) {
+async function check(items, { idx, sourceText, asker, asker2 = null, allow = null, allowStems = null, task = 'material_factcheck' }) {
   const out = new Map();
   const stats = { sentences: items.length, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0, stopped: false };
   out.stats = stats;
@@ -236,24 +236,34 @@ async function check(items, { idx, sourceText, asker, allow = null, allowStems =
     ask.push(it);
   }
   const answered = new Map();
-  if (ask.length && asker) {
+  /** One reader over a list of sentences, in batches, a second try for what it left unanswered. Calls `take` with each verdict. */
+  const read = async (who, list, take) => {
     const batches = [];
-    for (let i = 0; i < ask.length; i += 40) batches.push(ask.slice(i, i + 40));
+    for (let i = 0; i < list.length; i += 40) batches.push(list.slice(i, i + 40));
     for (const batch of batches) {
       let todo = batch;
+      const done = new Set();
       for (let attempt = 0; attempt < 2 && todo.length; attempt++) {
         const evidence = [...new Set(todo.map((x) => x.exam.evidence).filter(Boolean))].filter((l) => !String(sourceText).includes(l));
         stats.calls++;
         // eslint-disable-next-line no-await-in-loop
-        const r = await asker({
+        const r = await who({
           role: 'fast', task, schema: CHECK_SCHEMA, schemaName: 'material_factcheck', maxTokens: Math.min(5000, 400 + todo.length * 120), dataClass: 'learner', system: CHECK_SYSTEM,
           user: `MATERIAL:\n${sourceText}${evidence.length ? `\n\nMORE OF THE SAME MATERIAL:\n${evidence.slice(0, 20).join('\n')}` : ''}\n\nSENTENCES:\n${todo.map((x, i) => `${i + 1}. ${x.text}${x.exam.hard.length ? ` [not found in the material: ${x.exam.hard.join('; ')}]` : ''}`).join('\n')}`,
         });
-        if (r && r.stopped) { stats.stopped = true; break; }
+        if (r && r.stopped) { stats.stopped = true; return; }
         const vs = r && r.res && r.res.data && Array.isArray(r.res.data.verdicts) ? r.res.data.verdicts : [];
-        for (const v of vs) { const it = v && todo[Number(v.n) - 1]; if (it && ['supported', 'no_claim', 'not_in_source'].includes(v.verdict)) answered.set(it.id, v); }
-        todo = todo.filter((x) => !answered.has(x.id));
+        for (const v of vs) { const it = v && todo[Number(v.n) - 1]; if (it && ['supported', 'no_claim', 'not_in_source'].includes(v.verdict)) { take(it, v); done.add(it.id); } }
+        todo = todo.filter((x) => !done.has(x.id));
       }
+    }
+  };
+  if (ask.length && asker) {
+    await read(asker, ask, (it, v) => answered.set(it.id, v));
+    // A second reader, from another family, sees what the first passed: either one saying "not in the source" is enough.
+    if (asker2) {
+      const passed = ask.filter((x) => { const v = answered.get(x.id); return v && v.verdict !== 'not_in_source'; });
+      if (passed.length) await read(asker2, passed, (it, v) => { if (v.verdict === 'not_in_source') { answered.set(it.id, v); stats.second_caught = (stats.second_caught || 0) + 1; } });
     }
   }
   for (const it of ask) {
@@ -299,14 +309,14 @@ async function check(items, { idx, sourceText, asker, allow = null, allowStems =
  * Check a lesson: paragraphs and key points, sentence by sentence. Returns { paragraphs, keyPoints, report }.
  * `sourceText` is what the model is shown (the skill's passages); `idx` is the index of the whole material.
  */
-async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, sourceText, asker, allow, allowStems, fallback }) {
+async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, sourceText, asker, asker2, allow, allowStems, fallback }) {
   const items = [];
   const paraSents = (paragraphs || []).map((p, i) => sentencesOf(p).map((s, j) => { const id = `p${i}.${j}`; items.push({ id, text: s }); return id; }));
   (keyPoints || []).forEach((k, i) => items.push({ id: `k${i}`, text: k }));
   if (summary) items.push({ id: 's', text: summary });
   // A question's explanation may use the numbers and words of its own question (a worked case).
   (explanations || []).forEach((e, i) => sentencesOf(e.text).forEach((t, j) => items.push({ id: `e${i}.${j}`, text: t, extra: e.extra, exp: i })));
-  const got = await check(items, { idx, sourceText, asker, allow, allowStems });
+  const got = await check(items, { idx, sourceText, asker, asker2, allow, allowStems });
   const byId = new Map(items.map((x) => [x.id, x]));
   const dropped = [];
   const textOf = (id) => {
