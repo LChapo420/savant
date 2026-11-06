@@ -520,7 +520,7 @@ const TEXT_FIELDS = [
  * account, whatever the opt-ins say: the research doc (section 2, the upload
  * row) prefers uploads disabled for children until a lawyer approves them.
  */
-const CHILD_MEDIA_UPLOAD = /^\/(es\/(asr|upload)|materials(\/(paste|link|transcript))?)$/;
+const CHILD_MEDIA_UPLOAD = /^\/(es\/(asr|upload)|materials(\/(paste|link|transcript|youtube|video|audio))?)$/;
 /** What a locked account can still reach. */
 const LOCKED_ALLOW = /^\/(auth\/|consent\/|health$)/;
 

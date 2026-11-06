@@ -146,6 +146,10 @@ async function childGate() {
   check('an ordinary message is still refused, never passed on', plain.status === 403 && plain.json.code === 'parent_opt_in_required' && !plain.passed, plain);
   const earlier = await run('/tutor/chat', { messages: [{ role: 'user', content: 'i want to kill myself' }, { role: 'assistant', content: 'x' }, { role: 'user', content: 'ok what is counting' }] });
   check('only the latest message is read', earlier.status === 403, earlier);
+  for (const route of ['/materials', '/materials/paste', '/materials/link', '/materials/transcript', '/materials/youtube', '/materials/video', '/materials/audio']) {
+    const up = await run(route, { url: 'https://www.youtube.com/watch?v=x' });
+    check(`a child cannot add material through ${route}`, up.status === 403 && up.json.code === 'child_upload_off', up);
+  }
 }
 
 function buildGuard() {
