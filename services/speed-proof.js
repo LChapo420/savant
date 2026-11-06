@@ -75,7 +75,7 @@ const CONSENT = {
   title: 'Help us check, fairly, how much faster Savant is',
   body: [
     'We say Savant helps you learn the same things faster and remember them as well or better. We would like to test that on real learners, you included, rather than just claim it.',
-    'If you say yes, about 1 lesson in 8 will be taught the plain way instead of Savant\'s way: the standard lesson everyone gets, no changes for you, no skipping ahead with a test-out, and you can reread it at your own pace. It is the ordinary way of studying, so it may take you longer.',
+    'If you say yes, about 1 lesson in 8 will be taught the plain way instead of Savant\'s way: the standard lesson everyone gets, no changes for you, no skipping ahead with a test-out, and you can reread it at your own pace. It is the app without Savant\'s tailoring, so it may take you longer.',
     'We then compare, for you, how long the plain way and the Savant way each took, and how much you remembered later, using short memory checks of about 30 seconds, 1 day, 7 days and 30 days after you learn a skill, and at the time you told us you want to remember it.',
     'It is optional. If you say no, nothing else changes and you still get the full Savant way for every skill. You can switch any skill to the Savant way at any time, and if you get stuck on a plain-way skill we switch you ourselves. Results are only used added up with other learners, never shown with your name.',
     'If you are under 13, a parent must agree to the optional measurement first.',

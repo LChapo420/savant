@@ -27,7 +27,7 @@
         host.querySelectorAll('button').forEach((x) => { x.disabled = true; });
         try {
           await App.api.post('/api/speed-proof/consent', { normal_arm: yes });
-          host.innerHTML = `<section class="card rc-offer"><p class="small" role="status">${yes ? 'Thank you. Now and then one skill will be taught the plain way. You can switch it to the Savant way whenever you like.' : 'No problem. Nothing changes: you keep the full Savant way for every skill.'}</p></section>`;
+          host.innerHTML = `<section class="card rc-offer"><p class="small" role="status">${yes ? 'Thank you. Now and then one lesson will be taught the plain way. You can switch it to the Savant way whenever you like.' : 'No problem. Nothing changes: you keep the full Savant way for every skill.'}</p></section>`;
           setTimeout(() => { host.innerHTML = ''; }, 6000);
         } catch (err) {
           host.querySelectorAll('button').forEach((x) => { x.disabled = false; });

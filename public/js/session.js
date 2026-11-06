@@ -374,22 +374,22 @@ App.mount(async () => {
   }
 
   // ── the speed levers (services/speed-levers.js; only with session.speed from the server) ──────────────
-  let plainNoted = false;
+  /** The speed proof's plain lesson: says so, once per view, with the switch the consent wording promises. */
+  function plainNote() {
+    if (!session.plain_way) return;
+    const hostEl = document.getElementById('item');
+    if (!hostEl || document.getElementById('plain-switch')) return;
+    hostEl.insertAdjacentHTML('afterbegin', '<div class="notice" role="status"><strong>The plain way.</strong> This lesson is one of your plain-way lessons, the standard page with no tailoring. <button type="button" class="btn btn-secondary" id="plain-switch">Switch it to the Savant way</button></div>');
+    document.getElementById('plain-switch').addEventListener('click', async () => {
+      try { await App.api.post('/api/speed-proof/switch', { skill_id: session.plain_way.key }); location.reload(); } catch (err) { App.toast(err.message, 'error'); }
+    });
+  }
   function retrievalFirst() { return !!(session.speed && session.speed.testout && blockKind === 'lesson' && lesson && !session.preview && items.length); }
 
   /** The first check of a lesson opened retrieval first says why there is no page yet. */
   function speedIntro() {
     if (retrievalFirst() && index === 0) effortNote('Get these right and you can skip the page. Miss one and we show you the part you need.', 'A quick check first.');
-    if (session.plain_way && !plainNoted) {
-      plainNoted = true;
-      const hostEl = document.getElementById('item');
-      if (hostEl) {
-        hostEl.insertAdjacentHTML('afterbegin', '<div class="notice" role="status"><strong>The plain way.</strong> This lesson is one of your plain-way lessons, the standard page with no tailoring. <button type="button" class="btn btn-secondary" id="plain-switch">Switch it to the Savant way</button></div>');
-        document.getElementById('plain-switch').addEventListener('click', async () => {
-          try { await App.api.post('/api/speed-proof/switch', { skill_id: session.plain_way.key }); location.reload(); } catch (err) { App.toast(err.message, 'error'); }
-        });
-      }
-    }
+    plainNote();
   }
 
   /** Only the parts of the page this miss calls for. The whole page is one tap away. */
@@ -1350,7 +1350,7 @@ function renderRubricResult(result) {
     progress();
     // A lesson level opens on the lesson, a written checkpoint opens on its
     // quick check, and everything else opens on a question.
-    if (blockKind === 'lesson' && lesson && !retrievalFirst()) renderLesson();
+    if (blockKind === 'lesson' && lesson && !retrievalFirst()) { renderLesson(); plainNote(); }
     else if (isEssay() && !items.some((i) => !i.answered)) openEssay();
     else { show(); speedIntro(); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1627,7 +1627,7 @@ function renderRubricResult(result) {
     await closeBlock();
   } else if (blockKind === 'lesson' && lesson && !items.some((i) => i.answered) && !retrievalFirst()) {
     // A lesson level opens on the lesson itself; the check questions come after.
-    renderLesson();
+    renderLesson(); plainNote();
   } else if (retrievalFirst() && index === 0) {
     show();
     speedIntro();
