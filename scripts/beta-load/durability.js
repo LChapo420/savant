@@ -25,10 +25,20 @@ const WRITERS = Number(flag('writers', 20));
 const PORT = Number(flag('port', 7830));
 const SRC = path.resolve(flag('db', path.join(h.ROOT, 'data', 'db.json')));
 
+const SQLITE = args.includes('--sqlite');
 function shape(file) {
   const out = { parse_ok: false };
   let d;
-  try { d = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { out.error = e.message; return { out, d: null }; }
+  try {
+    if (SQLITE) {
+      const { DatabaseSync } = require('node:sqlite');
+      const sql = new DatabaseSync(`${file}.sqlite`);
+      d = { _counters: {} };
+      for (const c of sql.prepare('SELECT DISTINCT coll FROM rows').all()) d[c.coll] = sql.prepare('SELECT doc FROM rows WHERE coll = ?').all(c.coll).map((r) => JSON.parse(r.doc));
+      for (const c of sql.prepare('SELECT coll, value FROM counters').all()) d._counters[c.coll] = c.value;
+      sql.close();
+    } else d = JSON.parse(fs.readFileSync(file, 'utf8'));
+  } catch (e) { out.error = e.message; return { out, d: null }; }
   out.parse_ok = true;
   let dupes = 0; let badCounters = 0;
   for (const k of Object.keys(d)) {
@@ -102,6 +112,7 @@ async function round(kind, opts = {}) {
   const stub = h.startStub(PORT + 1, { latency: 300, jitter: 300, dir });
   const env = h.serverEnv({ dir, port: PORT, stubPort: PORT + 1, dbFile, extra: {
     WRITE_AHEAD: 'off',
+    ...(SQLITE ? h.migrateToSqlite(dbFile) : {}),
     PROBE_FAIL_MATCH: opts.diskFull ? 'db\\.json' : '', PROBE_FAIL_FLAG: flagFile,
     PROBE_CRASH: opts.crash || '', PROBE_CRASH_FLAG: crashFlag,
   } });
@@ -219,11 +230,13 @@ async function corruptBoot() {
   const results = [];
   const say = (r) => { results.push(r); console.log(JSON.stringify(r)); };
   for (let i = 0; i < ROUNDS; i++) say(await round('random kill'));
-  for (let i = 0; i < Math.ceil(ROUNDS / 2); i++) say(await round('mid-flush', { crash: 'tmp' }));
-  for (let i = 0; i < 2; i++) say(await round('before-rename', { crash: 'rename' }));
-  say(await round('disk full, then clears', { diskFull: true }));
-  say(await round('disk full, then killed', { diskFull: true, killWhileFull: true }));
-  say(await corruptBoot());
+  if (!SQLITE) {
+    for (let i = 0; i < Math.ceil(ROUNDS / 2); i++) say(await round('mid-flush', { crash: 'tmp' }));
+    for (let i = 0; i < 2; i++) say(await round('before-rename', { crash: 'rename' }));
+    say(await round('disk full, then clears', { diskFull: true }));
+    say(await round('disk full, then killed', { diskFull: true, killWhileFull: true }));
+    say(await corruptBoot());
+  }
   const out = flag('out');
   if (out) fs.writeFileSync(out, JSON.stringify({ measured_on: 'this PC', db_bytes: fs.statSync(SRC).size, results }, null, 1));
   const kills = results.filter((r) => r.loss);

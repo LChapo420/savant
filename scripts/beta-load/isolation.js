@@ -106,7 +106,7 @@ class Who {
   const dbFile = path.join(dir, 'db.json');
   fs.copyFileSync(SRC, dbFile); h.copyLedgers(dir);
   const stub = h.startStub(PORT + 1, { latency: 100, jitter: 200, dir });
-  const env = h.serverEnv({ dir, port: PORT, stubPort: PORT + 1, dbFile, extra: { WRITE_AHEAD: 'off' } });
+  const env = h.serverEnv({ dir, port: PORT, stubPort: PORT + 1, dbFile, extra: { WRITE_AHEAD: 'off', ...(args.includes('--sqlite') ? h.migrateToSqlite(dbFile) : {}) } });
   const srv = await h.startServer(env);
   const out = { measured_on: 'this PC', learners: N, rounds: ROUNDS };
   const all = Array.from({ length: N }, (_, i) => new Who(i + 1, srv.url));

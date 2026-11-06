@@ -61,6 +61,14 @@ function serverEnv({ dir, port, stubPort = null, dbFile, extra = {}, probe = tru
   return { ...env, ...extra };
 }
 
+/** Move a JSON store copy into SQLite (--driver sqlite in the drills). Returns the env the server needs. */
+function migrateToSqlite(dbFile) {
+  const sqlite = `${dbFile}.sqlite`;
+  const r = require('child_process').spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'migrate-json-to-sqlite.js'), '--from', dbFile, '--to', sqlite], { cwd: ROOT, env: { ...process.env, DB_FILE: dbFile, DB_SQLITE_FILE: sqlite }, encoding: 'utf8', maxBuffer: 1 << 26 });
+  if (r.status !== 0) throw new Error(`migration failed: ${String(r.stderr || r.stdout).slice(0, 200)}`);
+  return { DB_DRIVER: 'sqlite', DB_SQLITE_FILE: sqlite };
+}
+
 /** Start the app server from the worktree and wait until it answers. */
 async function startServer(env, { nodeArgs = [], logName = 'server.log', timeoutMs = 240000 } = {}) {
   const log = fs.openSync(path.join(env.TEMP, logName), 'a');
@@ -178,4 +186,4 @@ function probeSummary(file, fromMs = 0) {
   };
 }
 
-module.exports = { ROOT, LIVE_DATA, LEDGERS, STUBBED, sleep, runDir, copyLedgers, serverEnv, startServer, startStub, Client, Metrics, probeSummary };
+module.exports = { ROOT, LIVE_DATA, LEDGERS, STUBBED, sleep, runDir, copyLedgers, serverEnv, startServer, startStub, migrateToSqlite, Client, Metrics, probeSummary };
