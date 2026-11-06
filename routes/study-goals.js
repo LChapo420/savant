@@ -16,7 +16,7 @@ const { limit } = require('../utils/rate-limit');
 const router = express.Router();
 
 router.get('/study-goals', requireAuth, (req, res) => {
-  res.json({ enabled: goals.enabled(), ...goals.listFor(req.user.id) });
+  res.json({ enabled: goals.enabled() && goals.choices().length > 1, ...goals.listFor(req.user.id) });
 });
 
 router.put('/study-goals', requireAuth, limit('study-goals', 120, 60 * 60 * 1000), (req, res) => {

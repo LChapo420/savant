@@ -30,7 +30,7 @@ const GOALS = {
   test: { label: 'Ready for a test', short: 'Test', blurb: 'Nothing is set aside. Explanations are trimmed to what a test asks and there are more recall checks.' },
 };
 const CHOICES = Object.keys(GOALS);
-const choices = () => CHOICES.filter((id) => id !== 'core' || coreEnabled());
+const choices = () => CHOICES.filter((id) => goalOn(id));
 const DEFAULT_GOAL = 'full';
 /** Share of the words a core lesson keeps (the gate asks for at least 25% fewer; the writer is held to this ceiling). */
 const CORE_WORD_SHARE = 0.55;
@@ -48,11 +48,15 @@ const enabled = () => String(process.env.STUDY_GOAL || 'on').toLowerCase() !== '
  * Off, a stored 'core' goal behaves as full depth, the page does not offer it and the route refuses it. Test and full are unaffected.
  */
 const coreEnabled = () => enabled() && String(process.env.STUDY_GOAL_CORE || 'off').toLowerCase() === 'on';
+/** Same for Ready for a test: STUDY_GOAL_TEST=on (off by default until its gate passes). */
+const testEnabled = () => enabled() && String(process.env.STUDY_GOAL_TEST || 'off').toLowerCase() === 'on';
+/** Is this goal available (full always is)? */
+const goalOn = (id) => id === 'full' || (id === 'core' && coreEnabled()) || (id === 'test' && testEnabled());
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
 /** A stored goal, or an empty one, as { goal, restored[] }. A goal this build does not know is full. */
 function effective(stored) {
-  if (!enabled() || !stored || !GOALS[stored.goal] || (stored.goal === 'core' && !coreEnabled())) return { goal: DEFAULT_GOAL, restored: [], set_on: null };
+  if (!enabled() || !stored || !GOALS[stored.goal] || !goalOn(stored.goal)) return { goal: DEFAULT_GOAL, restored: [], set_on: null };
   return { goal: stored.goal, restored: Array.isArray(stored.restored) ? stored.restored.slice(0, 400) : [], set_on: stored.set_on || null };
 }
 
@@ -60,7 +64,7 @@ function normalize(body, current) {
   const b = body || {};
   const cur = effective(current);
   const goal = b.goal === undefined ? cur.goal : String(b.goal);
-  if (!GOALS[goal] || (goal === 'core' && !coreEnabled())) return { error: coreEnabled() ? 'Choose full depth, core parts fast, or ready for a test.' : 'Choose full depth or ready for a test.' };
+  if (!GOALS[goal] || !goalOn(goal)) return { error: `Choose ${choices().map((id) => GOALS[id].label.toLowerCase()).join(' or ')}.` };
   let restored = goal === cur.goal ? cur.restored.slice() : []; // a new goal starts with nothing brought back
   if (b.restore === 'all') restored = ['all'];
   else if (Array.isArray(b.restore)) restored = [...new Set([...restored, ...b.restore.map((x) => (typeof x === 'number' ? x : String(x).slice(0, 80)))])].slice(0, 400);
@@ -74,7 +78,7 @@ function normalize(body, current) {
  * check and the coverage contract stay on every prompt. Mutates and returns the spec; full leaves it as it is.
  */
 function applyToSpec(spec, id) {
-  if (!spec || !enabled() || !GOALS[id] || id === 'full' || (id === 'core' && !coreEnabled())) return spec;
+  if (!spec || !enabled() || !GOALS[id] || id === 'full' || !goalOn(id)) return spec;
   const l = spec.lesson; const p = spec.practice;
   if (id === 'core') {
     // Never above the learner's own full-depth numbers: the old floors (3 minutes, 120 words) RAISED the budget of a short-attention
@@ -274,6 +278,6 @@ function tutorLines(userId) {
 }
 
 module.exports = {
-  GOALS, CHOICES, choices, coreEnabled, DEFAULT_GOAL, CORE_WORD_SHARE, GATE_MIN, enabled, effective, normalize, applyToSpec, linesFor,
+  GOALS, CHOICES, choices, coreEnabled, testEnabled, goalOn, DEFAULT_GOAL, CORE_WORD_SHARE, GATE_MIN, enabled, effective, normalize, applyToSpec, linesFor,
   coreSetAsideLevels, coreSetAsideSkills, setAsideFor, stepOver, setAsideSkills, goalFor, describe, save, listFor, tutorLines,
 };

@@ -10,6 +10,13 @@
   const esc = (t) => (window.App ? App.escapeHtml(t) : String(t));
   const api = () => App.api;
 
+  const PHRASE = { core: 'the core parts fast', full: 'the full depth', test: 'ready for a test' };
+  function sentence(choices) {
+    const w = choices.map((c) => PHRASE[c.id] || c.label.toLowerCase());
+    const list = w.length > 1 ? `${w.slice(0, -1).join(', ')}, or ${w[w.length - 1]}` : w[0];
+    return list.charAt(0).toUpperCase() + list.slice(1);
+  }
+
   function row(item, state) {
     const id = `sg-${item.kind}-${item.id}`;
     const aside = item.set_aside || [];
@@ -37,10 +44,12 @@
   async function paint(host, only) {
     let state;
     try { state = await api().get('/api/study-goals'); } catch { return; }
-    if (!state.enabled) return;
+    // With only Full depth available there is nothing to choose: no picker at all.
+    if (!state.enabled || !Array.isArray(state.choices) || state.choices.length < 2) { host.innerHTML = ''; const card = host.closest('#study-goals-card'); if (card) card.style.display = 'none'; return; }
     const items = [...state.enrollments, ...state.materials].filter((x) => !only || (x.kind === 'material' && x.id === only));
     if (!items.length) return;
-    host.innerHTML = `${only ? '' : '<p class="small muted" style="margin-top:0">What do you want from each one? The core parts fast, the full depth, or ready for a test. Anything set aside is listed and can be brought back.</p>'}${items.map((i) => row(i, state)).join('')}`;
+    const shown = host.closest('#study-goals-card'); if (shown) shown.style.display = '';
+    host.innerHTML = `${only ? '' : `<p class="small muted" style="margin-top:0">What do you want from each one? ${esc(sentence(state.choices))}.${state.choices.some((c) => c.id === 'core') ? ' Anything set aside is listed and can be brought back.' : ''}</p>`}${items.map((i) => row(i, state)).join('')}`;
     wire(host, only);
   }
 
