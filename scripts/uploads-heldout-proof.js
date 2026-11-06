@@ -273,14 +273,18 @@ function report() {
 
 /** Round 3: per condition, traits followed (mean, worst 1/5/10%), brevity learners' length, invented facts, per judge. Files: docs/uploads-heldout-r3/*.json */
 function report3() {
-  const dir = path.join(__dirname, '..', 'docs', 'uploads-heldout-r3');
+  const dir = path.join(__dirname, '..', 'docs', process.env.HELDOUT_R3DIR || 'uploads-heldout-r3');
   const rows = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).flatMap((f) => load(path.join(dir, f), { learners: [] }).learners).filter((r) => !r.error);
   const m = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
   for (const cond of [...new Set(rows.map((r) => r.cond))]) {
     const rs = rows.filter((r) => r.cond === cond);
     const brev = rs.filter((r) => (r.learner.stats.brevity_preference || 0) >= 90);
     log(`condition ${cond}: ${rs.length} learners; words/source mean ${round(m(rs.map((r) => r.lesson_words / r.source_words)))}; shortest-version learners ${brev.length}: ${brev.map((r) => round(r.lesson_words / r.source_words)).join(', ')} (max ${round(Math.max(...brev.map((r) => r.lesson_words / r.source_words)))})`);
+    const whole = brev.filter((r) => r.gen).map((r) => r.gen.split(/s+/).length / r.source_words);
+    log(`  whole course (lesson, key points, practice questions) for shortest-version learners / source: ${whole.map(round).join(', ')} (max ${round(Math.max(...whole))})`);
+    const clash = (r) => { const t = r.learner.spoken; return (t.includes('loses focus fast: tiny chunks') && t.includes('likes dense text')) || (t.includes('holds focus a long time') && t.includes('cannot take dense text')); };
     for (const fam of [...new Set(rs.flatMap((r) => Object.keys(r.judges)))]) {
+      const nc = rs.filter((r) => r.judges[fam] && r.judges[fam].of && !clash(r)); log(`  judge ${fam} without the ${rs.filter(clash).length} learners whose own traits contradict (dense text vs chunks): n ${nc.length} followed mean ${round(m(nc.map((r) => r.judges[fam].followed / r.judges[fam].of)))}`);
       const v = rs.filter((r) => r.judges[fam] && r.judges[fam].of);
       const fr = v.map((r) => r.judges[fam].followed / r.judges[fam].of).sort((x, y) => x - y);
       const q = (p) => round(fr[Math.min(fr.length - 1, Math.floor(p * fr.length))]);
