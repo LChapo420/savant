@@ -62,6 +62,21 @@ const WRONG_S = num('wrong-s', 0);       // ... and to read feedback after a mis
 const RETRY_S = num('retry-s', 0);       // ... and the retry (0 = 38)
 const MEM_GAIN = num('mem-gain', 1);     // WHAT-IF only (never a headline): each spaced right answer grows memory by this power of the model's growth, Savant only
 const SPEED_GAIN = num('speed-gain', 1); // WHAT-IF only (never in a headline number): the speed arms learn this many times what the audited model says, per page and per answer
+// Round 3 (docs/SPEED-4X.md): how students really study. The reading-memory constants come from published restudy results; each has a range, see docs/SPEED-4X.md.
+const RUN_SALT = args['run-salt'] || '';  // noise control: the same arm on another random stream
+const READ_H = num('read-h', 2.5);        // half-life in days a read gives (times the learner's own multiplier). 1.6 to 3.6 is 0.2 to 0.45 of this model's half-life after a first pass of practice, the restudy/retrieval ratio in Roediger and Karpicke 2006; 7 is the lab's absolute figure, generous to the reader
+const READ_MASS = num('read-mass', 0.05); // a massed reread adds this share to the half-life: nearly nothing (Callender and McDaniel 2009; Roediger and Karpicke 2006)
+const READ_SPACE = num('read-space', 0.5);// a spaced reread grows memory by this power of a spaced right answer's growth (ASSUMED; spacing helps rereading, Rawson and Kintsch 2005, but less than retrieval)
+const READ_K2 = num('read-k2', 0.5);      // each further read teaches this share of the read before it (ASSUMED; Callender and McDaniel 2009: little gain from a reread)
+const REREAD_TIME = num('reread-time', 0.8); // a reread takes this share of the first read's minutes (ASSUMED)
+// Round 3 levers: effects are never assumed, every value below is swept over a published range and the sweep is shown (docs/SPEED-4X.md).
+const WE_S = num('we-s', 26);             // seconds to study one worked example (range 35, 26, 20): McLaren et al. 2016 report 46 to 69% less time than problems at equal test scores
+const WE_GAIN = num('we-gain', 0.75);     // what one worked example teaches, as a share of a right answer with feedback (range 0.5, 0.75, 1)
+const WE_LINE = num('we-line', 0.55);     // a worked example only while the tracker puts understanding under this (expertise reversal: none for a learner who has it)
+const WE_MAX = num('we-max', 2);          // at most this many in a row, then a problem (fading)
+const PRE_GAIN = num('pre-gain', 1);      // a page read after a question on it teaches this many times as much (pretesting; 1 = no credit; range from calibration on Chan et al. 2018)
+const ILV_H = num('ilv-h', 1);            // interleaving: half-life after the first pass, this many times longer, for arms with the app's mixed practice (1 = no credit; range from calibration on Brunmair and Richter 2019)
+const QUICK_S = num('quick-s', 15);       // seconds to read and answer a one-tap review question (range 25, 15, 10). Format makes little retention difference: Smith and Karpicke 2014, McDermott et al. 2014. The seconds are not measured.
 const PREREQ = num('prereq', 0.5);       // share of skills whose previous skill is a prerequisite (only with --implicit)
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const sigmoid = (x) => 1 / (1 + Math.exp(-x));
@@ -97,6 +112,15 @@ function memUpdate(m, correct, R, t, pItem = 0.7, boost = 1) {
   m.last = t;
 }
 
+/** A read or reread: restudy builds far less memory than retrieval, and massed rereading adds nearly nothing. */
+function memRead(m, t) {
+  if (m.last === null) { m.H = READ_H * m.mult; m.mass = 1; } else {
+    const days = t - m.last;
+    if (days < LM.massDays) m.H *= 1 + READ_MASS; else m.H *= (LM.sp0 + LM.sp1 * (1 - memR(m, t))) ** READ_SPACE;
+  }
+  m.last = t;
+}
+
 // ---------- learners ----------
 function rngOf(...p) { return X.rngFor(X.hash(...p)); }
 function ordinary(seed, i) {
@@ -127,7 +151,7 @@ function paramsOf(L) {
  * Returns { hours, by: {lesson, practice, review}, covered, coverDay, recall, pass, testDay }.
  */
 function simulate(L, P, arm, plan) {
-  const rnd = rngOf('run', L.id);
+  const rnd = RUN_SALT ? rngOf('run', L.id, RUN_SALT) : rngOf('run', L.id);
   const kr = rngOf('know', L.id);
   const base = X.hash('start', L.id) % 60; // absolute calendar day of the first study day (enforcer calendar position)
   const { testRel: testRel0 } = plan;
@@ -146,11 +170,13 @@ function simulate(L, P, arm, plan) {
   const prer = rngOf('prereq', L.id);
   for (let s = 1; s < SKILLS; s++) if (prer() < PREREQ) sk[s].pre = s - 1;
   const SP = arm.speed || null;
+  const TGT = arm.target === undefined ? TARGET : arm.target; // matched retention: the arm's review line follows this learner's baseline
+  const STU = arm.type === 'student' ? arm : null;
   let firstRight = 0; let firstN = 0;       // the learner's first answers so far (the tracker's prior for the next skill)
   let ansMin = 0; let ansN = 0;             // the app's running minutes per answer (for the final window)
   const tut = arm.type === 'tutor' ? arm : null;
   const pageMult = tut ? tut.page : 1;
-  const gainMult = tut ? tut.gain : 1;
+  const gainMult = tut ? tut.gain : (STU && STU.gain) || 1;
   const by = { lesson: 0, practice: 0, review: 0, place: 0 };
   let next = 0; let coverDay = null; let t = 0; let minRecall = Infinity;
 
@@ -162,13 +188,15 @@ function simulate(L, P, arm, plan) {
     s.k *= 1 - KLOSS * lapse(R);
     const p = item ? speed.pRight(s.k * R, GUESS, item) : s.k * R + (1 - s.k * R) * GUESS;
     const right = rnd() < p;
-    const minutes = itemMin(R, right) * (isReview && REVIEW_S > 0 && (SP || REVIEW_S_ALL) ? REVIEW_S / COST.item_s : 1);
+    const quick = isReview && SP && SP.quick;
+    const minutes = quick ? ((QUICK_S + (right ? rightS : COST.wrong_s + COST.retry_s * (R < 1 ? 1 : 0) * (QUICK_S / COST.item_s))) / 60) * P.timeMult : itemMin(R, right) * (isReview && REVIEW_S > 0 && (SP || REVIEW_S_ALL) ? REVIEW_S / COST.item_s : 1);
     const Re = memR(s.e, now);
     memUpdate(s.m, right, R, now, 0.7, SP ? MEM_GAIN : 1);
     memUpdate(s.e, right, Re, now, 0.7, SP ? MEM_GAIN : 1);
     const cold = (SP ? COLD_GAIN + (1 - COLD_GAIN) * s.seen : 1) * (SP ? SPEED_GAIN : 1); // only with --cold-gain under 1: an answer on a page not read learns less
     s.k = clamp(s.k + (1 - s.k) * LM.a * P.lr * gainMult * cold * (right ? 1 : 0.5), 0, 0.995);
     if (s.tr) { speed.observe(s.tr, right, { recall: isReview ? Re : 1, item }); s.kHat = speed.kMean(s.tr); }
+    if (SP && (SP.ilvH || ILV_H) !== 1 && !isReview && !s.ilvDone && right) { s.ilvDone = true; s.m.H *= SP.ilvH || ILV_H; }
     s.lastRight = right;
     if (isReview && !right && s.implied) { s.implied = false; s.relearn = true; } // an implied skill that fails a review goes back on the path
     ansMin += minutes; ansN++;
@@ -236,21 +264,21 @@ function simulate(L, P, arm, plan) {
   /** The first pass under the speed levers. Stops on the tracker (a real app has no true k), or as today (true k) when the stop lever is off. */
   function learnSpeed(s, now) {
     if (s.settled) { s.a = Math.floor(now); s.kHat = speed.kMean(s.tr); return 0; } // placement: known or implied, never entered the path
-    let used = 0; let n = s.tr ? s.tr.n : 0; let pageLeft = 1; let lastRight = s.tr && s.tr.n ? s.lastRight : null;
+    let weRun = 0; let used = 0; let n = s.tr ? s.tr.n : 0; let pageLeft = 1; let lastRight = s.tr && s.tr.n ? s.lastRight : null;
     if (!s.tr) s.tr = speed.newTracker({ priorMean: speed.priorFromHistory(firstRight, firstN), lr: P.lrHat, gainMult: EST_GAIN * (SP.safety || speed.PARAMS.safety) });
     const conf = SP.conf === undefined ? speed.PARAMS.conf : SP.conf; const minAnswers = SP.minAnswers === undefined ? speed.PARAMS.minAnswers : SP.minAnswers;
     const chunk = SP.short ? (SP.chunk || speed.PARAMS.chunk) : 1;
     const showPage = (f) => {
       const skim = rnd() < P.skim;
-      const eff = clamp((skim ? LM.pageSkim : LM.page) * P.lr, 0, 0.95);
+      const eff = clamp((skim ? LM.pageSkim : LM.page) * P.lr * (SP.testout && s.tr.n > 0 ? (SP.preGain || PRE_GAIN) : 1), 0, 0.95);
       const min = COST.page_min * P.timeMult * LESSON * (skim ? 0.4 : 1) * f; // time and learning both in proportion to the share of the page (assumed linear; a targeted part is not credited with more)
       s.k += (1 - s.k) * clamp(eff * SPEED_GAIN, 0, 0.95) * f; s.seen = Math.min(1, s.seen + f);
       by.lesson += min; used += min; pageLeft = Math.max(0, pageLeft - f);
       speed.taught(s.tr, f);
     };
     if (!SP.testout && s.seen === 0) showPage(1); // no retrieval first: the whole page, as today
-    const trueStop = () => s.k >= 0.85 && n >= 3;
-    while (n < 25) {
+    const trueStop = () => (SP.appN ? n >= SP.appN : s.k >= 0.85 && n >= 3); // appN: the real path's fixed answers per lesson (nine practice levels of at least twelve), no stop at all
+    while (n < (SP.appN || 25)) {
       if (SP.stop) {
         const st = speed.nextStep(s.tr, { pageLeft }, { conf, minAnswers, lastRight, at: SP.firstAt });
         if (st === 'stop') break;
@@ -259,6 +287,12 @@ function simulate(L, P, arm, plan) {
         if (trueStop()) break;
         if (lastRight === false && pageLeft > 1e-9) { showPage(Math.min(chunk, pageLeft)); lastRight = null; continue; }
       }
+      if (SP.worked && weRun < WE_MAX && speed.kMean(s.tr) < WE_LINE) { // a worked example in place of a problem: studied, not answered, so no retrieval and no memory update
+        const wm = (WE_S / 60) * P.timeMult; by.practice += wm; used += wm; weRun++; s.nWorked = (s.nWorked || 0) + 1;
+        s.k = clamp(s.k + (1 - s.k) * LM.a * P.lr * WE_GAIN * SPEED_GAIN, 0, 0.995); speed.taught(s.tr, (LM.a * WE_GAIN) / LM.page); s.seen = Math.max(s.seen, 0.1);
+        continue;
+      }
+      weRun = lastRight === false ? Math.min(weRun, WE_MAX - 1) : weRun;
       const rightBefore = s.tr.right;
       let m;
       const pair = SP.compositeFirst && s.pre !== null && sk[s.pre].a !== null && speed.kMean(sk[s.pre].tr) * memR(sk[s.pre].e, now + used / 1440) < 0.95 ? sk[s.pre] : null;
@@ -272,8 +306,25 @@ function simulate(L, P, arm, plan) {
     s.a = Math.floor(now);
     return used;
   }
+  /** A read or reread of a whole page: its minutes, what it teaches, and restudy's weak memory. */
+  function readPage(s, now, nth) {
+    const skim = rnd() < P.skim;
+    const eff = clamp((skim ? LM.pageSkim : LM.page) * P.lr * READ_K2 ** nth * gainMult * ((STU && STU.pageGain) || 1), 0, 0.95);
+    const min = COST.page_min * P.timeMult * LESSON * (skim ? 0.4 : 1) * (nth > 0 ? REREAD_TIME : 1);
+    s.k += (1 - s.k) * eff; s.reads = nth + 1; memRead(s.m, now); memRead(s.e, now);
+    return min;
+  }
+  /** How students really study (Karpicke, Butler and Roediger 2009; Dunlosky et al. 2013): read, reread at once, then some massed problems with no stopping rule. No retrieval until the problems, no spacing. */
+  function learnStudent(s, now) {
+    let used = 0;
+    for (let r = 0; r <= STU.rereads; r++) { const m = readPage(s, now + used / 1440, r); by.lesson += m; used += m; }
+    for (let p = 0; p < STU.problems; p++) { const m = answer(s, now + used / 1440); by.practice += m; used += m; }
+    s.a = Math.floor(now);
+    return used;
+  }
   function learn(s, now) {
     if (SP) return learnSpeed(s, now);
+    if (STU) return learnStudent(s, now);
     // lesson page
     if (s.k >= SKIPK) { let used = 0; const m = answer(s, now); by.practice += m; used += m; let n = 1; while ((s.k < 0.85 || n < 3) && n < 25) { const m2 = answer(s, now + used / 1440); by.practice += m2; used += m2; n++; } s.a = Math.floor(now); return used; }
     const skim = rnd() < P.skim;
@@ -286,7 +337,10 @@ function simulate(L, P, arm, plan) {
     s.a = Math.floor(now);
     return used;
   }
-  const reviewMin = (s, now) => { const m = answer(s, now, true); by.review += m; return m; };
+  const reviewMin = (s, now) => {
+    if (STU && STU.cram === 'reread') { const m = readPage(s, now, Math.min(3, s.reads || 1)); by.review += m; return m; }
+    const m = answer(s, now, true); by.review += m; return m;
+  };
   const recallAt = (now) => mean(sk.map((s) => { const R = memR(s.m, now); return s.cap * s.k * (1 - KLOSS * lapse(R)) * R; }));
 
   // savant policy parts
@@ -313,7 +367,7 @@ function simulate(L, P, arm, plan) {
       for (let i = 0; i < next; i++) {
         const s = sk[i]; const Re = memR(s.e, now0);
         if (SP.firstAt && !speed.shown(s.tr, { conf: SP.coverConf || speed.PARAMS.conf, minAnswers: 2 }) && s.tr.n < 40) { if (Re < (SP.learnR || 0.9)) due.push({ i, Re }); continue; }
-        if (speed.reviewDue({ k: s.kHat, recallNow: Re, recallAtEnd: known ? memR(s.e, T + 0.5) : null, daysToEnd: toEnd, target: TARGET, margin: SP.margin === undefined ? speed.PARAMS.reviewMargin : SP.margin, endMargin: SP.endMargin, mode: SP.review, window: win })) due.push({ i, Re });
+        if (speed.reviewDue({ k: s.kHat, recallNow: Re, recallAtEnd: known ? memR(s.e, T + 0.5) : null, daysToEnd: toEnd, target: TGT, margin: SP.margin === undefined ? speed.PARAMS.reviewMargin : SP.margin, endMargin: SP.endMargin, mode: SP.review, window: win })) due.push({ i, Re });
       }
     } else if (savant && arm.backward) {
       if (arm.backward.safety > 0 && d < T - arm.backward.P) for (let i = 0; i < next; i++) { const Re = memR(sk[i].e, now0); if (Re < REVIEW_TARGET && memR(sk[i].e, now0 + (T - d)) < arm.backward.safety) due.push({ i, Re }); } // safety check: a skill predicted far under target at the test is reviewed anyway
@@ -336,6 +390,7 @@ function simulate(L, P, arm, plan) {
     }
     if (arm.fixedSR) for (let i = 0; i < next; i++) if (sk[i].a !== null && d <= T - 1 && (Array.isArray(arm.fixedSR) ? arm.fixedSR : arm.fixedSR === 2 ? SR_DENSE : SR_DAYS).includes(d - sk[i].a)) due.push({ i, Re: memR(sk[i].e, now0) });
     if (arm.passes && (plan.noDate ? (coverDay !== null && d > coverDay && d <= coverDay + arm.passes) : (d >= T - arm.passes && d < T))) for (let i = 0; i < next; i++) due.push({ i, Re: memR(sk[i].e, now0) });
+    if (arm.noReviews) due.length = 0; // calibration only: what a first pass alone leaves behind
     due.sort((x, y) => x.Re - y.Re);
     const revCap = covered ? Infinity : MINUTES * REVIEW_SHARE;
     let revSpent = 0;
@@ -365,13 +420,13 @@ function simulate(L, P, arm, plan) {
     t = d;
     if (coverDay !== null && d >= coverDay && (d - coverDay) % Math.max(1, Math.floor((plan.H || 28) / 28)) === 0) { const rc = recallAt(d + 0.5); if (rc < minRecall) minRecall = rc; }
     if (plan.itemH) for (const s of sk) if (s.a !== null && s.rI === undefined && d >= s.a + plan.itemH) s.rI = s.k * (1 - KLOSS * lapse(memR(s.m, d + 0.99))) * memR(s.m, d + 0.99);
-    if (arm.oracleStop && next >= SKILLS && recallAt(T + 0.5) >= TARGET) break; // bound: stops the day the TRUE recall on the test day (with no more study) reaches the target
+    if (arm.oracleStop && next >= SKILLS && recallAt(T + 0.5) >= TGT) break; // bound: stops the day the TRUE recall on the test day (with no more study) reaches the target
   }
   const recall = recallAt(T + 0.5);
   const recallItem = plan.itemH ? mean(sk.map((s) => (s.rI === undefined ? s.k * memR(s.m, T + 0.5) : s.rI))) : null;
   const covered = coverDay !== null;
   const hours = (by.lesson + by.practice + by.review) / 60;
-  return { hours, by: { lesson: by.lesson / 60, practice: by.practice / 60, review: by.review / 60, place: by.place / 60 }, settled: sk.filter((s) => s.settled).length, covered, coverDay, recall, recallItem, passItem: recallItem !== null && coverDay !== null && recallItem >= TARGET, pass: covered && recall >= TARGET, testDay: T, meanK: mean(sk.map((s) => s.k)), understood: sk.filter((s) => s.cap * s.k >= 0.85).length / SKILLS, minRecall, pagesShown: mean(sk.map((s) => (SP ? s.seen : 1))), minK: Math.min(...sk.map((s) => s.cap * s.k)) };
+  return { hours, by: { lesson: by.lesson / 60, practice: by.practice / 60, review: by.review / 60, place: by.place / 60 }, settled: sk.filter((s) => s.settled).length, covered, coverDay, recall, recallItem, passItem: recallItem !== null && coverDay !== null && recallItem >= TARGET, pass: covered && recall >= TGT, testDay: T, worked: mean(sk.map((s) => s.nWorked || 0)), meanK: mean(sk.map((s) => s.k)), understood: sk.filter((s) => s.cap * s.k >= 0.85).length / SKILLS, minRecall, pagesShown: mean(sk.map((s) => (SP ? s.seen : 1))), minK: Math.min(...sk.map((s) => s.cap * s.k)) };
 
   function projEnd(dayRel) {
     if (coverDay !== null) return coverDay + plan.H;
@@ -407,7 +462,7 @@ const SR_DENSE = [1, 2, 4, 7, 10, 14, 21, 30, 40, 55, 75, 100, 130, 170, 220, 28
 const SR_RATIOS = args['self-r'] ? args['self-r'].split(',').map(Number) : [];
 function srSchedule(r) { const out = []; let gap = 1; let day = 1; while (day <= 2300) { out.push(Math.round(day)); gap *= r; day += Math.max(1, gap); } return [...new Set(out)]; }
 /** "testout=1:short=1:stop=1:review=through:conf=0.9:margin=0.05" */
-function parseArm(s) { const o = {}; for (const kv of s.split(':')) { const [k, v] = kv.split('='); o[k] = v === 'through' || v === 'end' ? v : Number(v); } for (const k of ['testout', 'short', 'stop', 'implicit', 'place', 'implied', 'edge', 'composite', 'compositeFirst', 'fast']) o[k] = !!o[k]; return o; }
+function parseArm(s) { const o = {}; for (const kv of s.split(':')) { const [k, v] = kv.split('='); o[k] = v === 'through' || v === 'end' ? v : Number(v); } for (const k of ['testout', 'short', 'stop', 'implicit', 'place', 'implied', 'edge', 'composite', 'compositeFirst', 'fast', 'worked', 'quick']) o[k] = !!o[k]; return o; }
 const BW_P = [7, 10, 14];
 const BW_FLOOR = [0.95];
 const BW_SAFETY = [0, 0.1, 0.2, 0.3];
@@ -450,6 +505,15 @@ const SPEED_LADDER = {
   safe_implicit: { testout: true, short: true, stop: true, review: 'through', margin: 0.15, endMargin: 0.05, implicit: true },
   end_implicit: { testout: true, short: true, stop: true, review: 'end', margin: 0.05, firstAt: 0.7, conf: 0.8, coverConf: 0.95, safety: 0.8, implicit: true },
 };
+/**
+ * How students really study. reread: read, reread once, reread again before the test. massed: read once, a block of problems with no stopping rule, massed problems before the test. mix: the two together, the usual habit.
+ * Survey basis: Karpicke, Butler and Roediger 2009 (Memory 17): about 84% list rereading, about 55% as their top strategy. Fixed plans only: never a per-learner stop on an outcome the student cannot see.
+ */
+const STUDENTS = { reread: { rereads: 1, problems: 0, cram: 'reread' }, massed: { rereads: 0, problems: 5, cram: 'practice' }, mix: { rereads: 1, problems: 3, cram: 'reread' } };
+const STUDENT_N = [0, 1, 2, 3, 5, 7, 10, 14, 21, 28, 42, 60]; // days of massed work before the test, within the daily minutes
+const STUDENT_R = [1.3, 1.5, 2, 3];
+// tutor_d037 and tutor_d079: multipliers solved by scripts/speed-calibrate.js from Nickow et al. 2020 (0.37 SD) and VanLehn 2011 (0.79 SD); no assumption that pages get shorter. d = 2 (Bloom 1984) needs over 6x in this model: the old bloom arm stays as a labelled ceiling, not derived.
+const TUTOR_D = { d037: { type: 'tutor', gain: 1.2, page: 1, pageEff: 1.2, passes: 0 }, d079: { type: 'tutor', gain: 1.4, page: 1, pageEff: 1.4, passes: 0 } };
 const TUTORS = { lo: { type: 'tutor', gain: 1.1, page: 0.9, pageEff: 1.1, passes: 0 }, typical: { type: 'tutor', gain: 1.3, page: 0.75, pageEff: 1.3, passes: 0 }, bloom: { type: 'tutor', gain: 1.8, page: 0.5, pageEff: 1.6, passes: 0 } };
 
 function main() {
@@ -478,14 +542,20 @@ function main() {
       };
       if (g.kind === 'date') { cell.bw = {}; for (const P1 of BW_P) for (const f of BW_FLOOR) for (const sf of BW_SAFETY) cell.bw[P1 + '-' + f + '-' + sf] = slim(simulate(L, P, { type: 'savant', goal: g, backward: { P: P1, floor: f, safety: sf } }, plan)); }
       if (SPEED_ARMS.length) cell.speed = speedCell();
+      if (args.students) {
+        const studentTable = (habit) => STUDENT_N.map((n) => ({ n, ...slim(simulate(L, P, { type: 'student', ...habit, passes: n }, plan)) }));
+        cell.tutorD = { d037: table(TUTOR_D.d037), d079: table(TUTOR_D.d079) };
+        cell.students = { reread: studentTable(STUDENTS.reread), massed: studentTable(STUDENTS.massed), mix: studentTable(STUDENTS.mix) };
+        cell.reread_sr = {}; for (const r of STUDENT_R) cell.reread_sr[r] = slim(simulate(L, P, { type: 'student', ...STUDENTS.reread, passes: 0, fixedSR: srSchedule(r) }, plan));
+      }
       cell.self_r = {}; for (const r of SR_RATIOS) cell.self_r[r] = slim(simulate(L, P, { type: 'normal', fixedSR: srSchedule(r) }, plan));
       row.goals[g.id] = cell;
     }
     rows.push(row);
   }
-  const out = { simulated: true, hier: HIER, prior_add: PRIOR_ADD, prior_none: PRIOR_NONE, composite_c: COMPOSITE_C, item_s: ITEM_S, speed_gain: SPEED_GAIN, cold_gain: COLD_GAIN, skip_loss: SKIP_LOSS, est_gain: EST_GAIN, guess: GUESS, review_s: REVIEW_S, review_s_all: REVIEW_S_ALL, implicit: IMPLICIT, seed: SEED, forget: FORGET, lesson: LESSON, target: TARGET, minutes: MINUTES, skills: SKILLS, jit: JIT, final: FINAL, finish: FINISH, skipk: SKIPK, floor: FLOOR, goal_memory: GOAL_MEM, kloss: KLOSS, est_sd: EST_SD, n_extreme: N_EXT, n_ordinary: N_ORD, rows };
+  const out = { simulated: true, hier: HIER, prior_add: PRIOR_ADD, prior_none: PRIOR_NONE, composite_c: COMPOSITE_C, item_s: ITEM_S, speed_gain: SPEED_GAIN, cold_gain: COLD_GAIN, skip_loss: SKIP_LOSS, est_gain: EST_GAIN, guess: GUESS, review_s: REVIEW_S, review_s_all: REVIEW_S_ALL, implicit: IMPLICIT, read_h: READ_H, read_mass: READ_MASS, read_space: READ_SPACE, read_k2: READ_K2, reread_time: REREAD_TIME, we_s: WE_S, we_gain: WE_GAIN, pre_gain: PRE_GAIN, ilv_h: ILV_H, quick_s: QUICK_S, run_salt: RUN_SALT, seed: SEED, forget: FORGET, lesson: LESSON, target: TARGET, minutes: MINUTES, skills: SKILLS, jit: JIT, final: FINAL, finish: FINISH, skipk: SKIPK, floor: FLOOR, goal_memory: GOAL_MEM, kloss: KLOSS, est_sd: EST_SD, n_extreme: N_EXT, n_ordinary: N_ORD, rows };
   if (args.out) { fs.mkdirSync(path.dirname(args.out), { recursive: true }); fs.writeFileSync(args.out, JSON.stringify(out)); console.log(`wrote ${args.out} (${rows.length} learners)`); }
   return out;
 }
 if (require.main === module) main();
-module.exports = { simulate, paramsOf, GOALS, TUTORS, SPEED_LADDER };
+module.exports = { simulate, paramsOf, ordinary, GOALS, TUTORS, STUDENTS, SPEED_LADDER };

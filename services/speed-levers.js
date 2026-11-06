@@ -206,15 +206,26 @@ function endWindow(skills, minutesPerAnswer, minutesPerDay) { return Math.max(3,
 /* eslint-disable global-require */
 const dbOf = () => require('../config/db');
 
-/** A skill's answers so far, oldest first, and the learner's own first-answer record for the prior. A set-aside or skipped item has no answer and does not count. */
-function trackerFor(userId, skillId, { lr = 0.8 } = {}) {
+/**
+ * The stretch of a course one lesson teaches: its lesson level and the practice levels up to the next lesson. A built-in grade's "skill" is coarse (about 8 across some 70 lessons, one skill
+ * can run for 40 levels), so evidence from an earlier lesson says nothing about this one: with no scope, three right answers on lesson 1 would pass over the page and the practice of every later lesson on that skill.
+ */
+function unitOf(grade, level) {
+  const curriculum = require('../config/curriculum');
+  let from = level;
+  while (from > 1 && curriculum.levelKind(from, grade.pathLength, grade) !== 'lesson') from--;
+  return { from, to: Math.max(level, curriculum.practiceUntil(grade, level) || level) };
+}
+
+/** A skill's answers so far, oldest first, and the learner's own first-answer record for the prior. A set-aside or skipped item has no answer and does not count. unit: only answers inside this lesson's stretch count as evidence (unitOf). */
+function trackerFor(userId, skillId, { lr = 0.8, unit = null } = {}) {
   const mine = dbOf().find('items', (i) => i.user_id === userId && i.correct !== null && i.correct !== undefined && !i.skipped && !i.reserved && !i.needs_review);
   mine.sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
   const seen = new Set(); let firstRight = 0; let firstN = 0;
   for (const i of mine) { if (i.skill_id === skillId || seen.has(i.skill_id)) continue; seen.add(i.skill_id); firstN++; if (i.correct) firstRight++; }
   // lr: the app does not yet read a per-learner rate here; 0.8 is the cautious side of the simulated 0.6 to 1.5 (docs/SPEED-4X.md: est-gain variants)
   const tr = newTracker({ priorMean: priorFromHistory(firstRight, firstN), lr, gainMult: PARAMS.safety });
-  for (const i of mine) if (i.skill_id === skillId) observe(tr, !!i.correct, { item: i.place_item || null });
+  for (const i of mine) if (i.skill_id === skillId && (!unit || (Number(i.level) >= unit.from && Number(i.level) <= unit.to))) observe(tr, !!i.correct, { item: i.place_item || null });
   return tr;
 }
 /** Sets items aside, unscored and marked: not asked, not counted, and said so to the learner. */
@@ -254,6 +265,7 @@ function clientFlags(userId, session) {
 function afterAnswer({ userId, session, item, correct, block, lesson }) {
   return require('./efficiency').forLearner(userId, () => {
     if (session.preview) return null;
+    const scope = () => { try { const grade = require('../config/curriculum').getGrade(session.track_id, session.grade_id); return grade ? unitOf(grade, Number(item.level) || Number(session.level)) : null; } catch { return null; } };
     const open = block.filter((i) => i.correct === null && !i.skipped && i.id !== item.id);
     if (item.role === 'check' && lesson && (enabled('testout') || enabled('short'))) {
       if (!enabled('testout')) return null; // the short page has no place until retrieval comes first
@@ -272,7 +284,7 @@ function afterAnswer({ userId, session, item, correct, block, lesson }) {
         return { action: 'teach', whole: true };
       }
       if (missedAny || !state || state.parts.length || state.whole) return null;
-      const tr = trackerFor(userId, item.skill_id);
+      const tr = trackerFor(userId, item.skill_id, { unit: scope() });
       const noMoreChecks = !open.length;
       const sure = shown(tr);
       if (!sure && !noMoreChecks) return null;
@@ -284,15 +296,15 @@ function afterAnswer({ userId, session, item, correct, block, lesson }) {
     }
     if (session.kind === 'lesson' && enabled('stop') && ['focus', 'stretch', 'support'].includes(item.role) && correct) {
       const rest = open.filter((i) => i.skill_id === item.skill_id && ['focus', 'stretch', 'support'].includes(i.role));
-      if (!rest.length || !shown(trackerFor(userId, item.skill_id))) return null;
+      if (!rest.length || !shown(trackerFor(userId, item.skill_id, { unit: scope() }))) return null;
       return { action: 'stop_skill', set_aside: setAside(rest, 'mastered'), message: "You've shown you have this one, so we're moving on sooner." };
     }
     return null;
   });
 }
-/** Has the focus skill of a practice level been shown understood? (the mastery stop: the level is ready without its remaining items) */
-function practiceShown(userId, skillId) {
-  return require('./efficiency').forLearner(userId, () => enabled('stop') && shown(trackerFor(userId, skillId)));
+/** Has this lesson's stretch been shown understood on its focus skill? (the mastery stop: the level is ready without its remaining items). scope: { grade, level }. */
+function practiceShown(userId, skillId, scope = null) {
+  return require('./efficiency').forLearner(userId, () => enabled('stop') && shown(trackerFor(userId, skillId, { unit: scope && scope.grade ? unitOf(scope.grade, scope.level) : null })));
 }
 /** The review rule for one skill as the scheduler sees it. end: { daysToEnd, recallAtEnd } when the goal has a known last day, else null. */
 function reviewWanted(userId, skillId, recallNow, end) {
@@ -309,5 +321,5 @@ module.exports = {
   newTracker, observe, taught, pKnown, kMean, shown, priorFromHistory, trackerFromAnswers, nextStep, pRight,
   PLACE, bestItem, placementNext, placementAnswer,
   reviewDue, endWindow,
-  trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
+  unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
 };

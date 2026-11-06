@@ -163,7 +163,7 @@ const LESSON = {
     const plan = curriculum.levelPlan(grade, practiceLevel);
     // enough earlier right answers on the focus skill to be sure
     const old = db.insert('sessions', { user_id: u.id, enrollment_id: e.id, track_id: trackId, grade_id: grade.id, level: practiceLevel, kind: 'lesson', blocks: [] });
-    for (let i = 0; i < 12; i++) db.insert('items', { session_id: old.id, user_id: u.id, skill_id: plan.focus, role: 'focus', block: 0, index: i, correct: true, user_answer: 'x' });
+    for (let i = 0; i < 12; i++) db.insert('items', { session_id: old.id, user_id: u.id, skill_id: plan.focus, role: 'focus', level: practiceLevel, block: 0, index: i, correct: true, user_answer: 'x' });
     db.update('enrollments', e.id, { level_items: 1 });
     assert.strictEqual(mastery.levelProgress(u.id, db.byId('enrollments', e.id), grade).ready, false, 'off: today\'s bar');
     await withEnv(ALL, async () => {
@@ -185,13 +185,28 @@ const LESSON = {
     const u = user(); const e = enroll(u, practiceLevel);
     for (const skill of grade.skills) {
       const old = db.insert('sessions', { user_id: u.id, enrollment_id: e.id, level: practiceLevel, kind: 'lesson', blocks: [] });
-      for (let i = 0; i < 12; i++) db.insert('items', { session_id: old.id, user_id: u.id, skill_id: skill, role: 'focus', block: 0, index: i, correct: true, user_answer: 'x' });
+      for (let i = 0; i < 12; i++) db.insert('items', { session_id: old.id, user_id: u.id, skill_id: skill, role: 'focus', level: practiceLevel, block: 0, index: i, correct: true, user_answer: 'x' });
     }
     db.update('enrollments', e.id, { level_items: 1 });
     const r = mastery.tryLevelUp(u.id, db.byId('enrollments', e.id), grade);
     assert.strictEqual(r.advanced, true);
     const kind = curriculum.levelKind(db.byId('enrollments', e.id).current_level, grade.pathLength, grade);
     assert.notStrictEqual(kind, 'practice', 'stands on a lesson or a checkpoint');
+  }));
+
+  await check('mastery stop: evidence comes from this lesson stretch only; right answers on an earlier lesson of the same coarse skill do not pass over this one', async () => withEnv(ALL, async () => {
+    const later = (() => { for (let l = lessonLevel + 1; l <= grade.pathLength; l++) if (curriculum.levelKind(l, grade.pathLength, grade) === 'practice') return l; return lessonLevel; })();
+    const u = user(); const e = enroll(u, later);
+    const plan = curriculum.levelPlan(grade, later);
+    const unit = speed.unitOf(grade, later);
+    assert.ok(unit.from === lessonLevel && unit.to >= later);
+    const old = db.insert('sessions', { user_id: u.id, enrollment_id: e.id, level: unit.from - 1, kind: 'lesson', blocks: [] });
+    for (let i = 0; i < 12; i++) db.insert('items', { session_id: old.id, user_id: u.id, skill_id: plan.focus, role: 'focus', level: unit.from - 1, block: 0, index: i, correct: true, user_answer: 'x' });
+    assert.strictEqual(speed.practiceShown(u.id, plan.focus, { grade, level: later }), false, 'an earlier lesson is not evidence');
+    assert.strictEqual(speed.practiceShown(u.id, plan.focus), true, 'with no scope it would have been');
+    const here = db.insert('sessions', { user_id: u.id, enrollment_id: e.id, level: later, kind: 'lesson', blocks: [] });
+    for (let i = 0; i < 12; i++) db.insert('items', { session_id: here.id, user_id: u.id, skill_id: plan.focus, role: 'focus', level: later, block: 0, index: i, correct: true, user_answer: 'x' });
+    assert.strictEqual(speed.practiceShown(u.id, plan.focus, { grade, level: later }), true, 'answers in this stretch are');
   }));
 
   await check('review target: a skill holding the target to the goal\'s last day is not asked; off it is; after the last day nothing', async () => {
