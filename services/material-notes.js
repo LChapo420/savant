@@ -211,7 +211,7 @@ async function build(userId, materialId, opts = {}) {
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     db.flush();
-    if (status === 'failed') return { error: 'Notes could not be made from that material. Try a longer or clearer text.', code: 'nothing_verified' };
+    if (status === 'failed') return { error: 'Notes could not be made from that material. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     return { notes: saved, partial: status === 'partial' };
   } catch (err) {
     console.error('material-notes:', err.message);

@@ -301,7 +301,7 @@ async function build(userId, materialId, opts = {}) {
       db.update('material_packs', saved.id, { error: 'models_unavailable' });
       return { error: 'The models were busy, so the pack could not be built yet.', code: 'models_busy' };
     }
-    if (status === 'failed') return { error: 'Nothing in that material passed the checks. Try a longer or clearer text.', code: 'nothing_verified' };
+    if (status === 'failed') return { error: 'Nothing in that material passed the checks. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     return { pack: saved, partial: status === 'partial' };
   } catch (err) {
     console.error('material-pack:', err.message);

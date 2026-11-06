@@ -953,7 +953,7 @@ async function build(userId, materialId, opts = {}) {
     });
     try { require('./part-modify').stampCourse(userId, done); } catch { /* signature only */ } // eslint-disable-line global-require
     db.flush();
-    if (status === 'failed') return { error: 'No questions in that material passed the checks. Try a longer or clearer text.', code: 'nothing_verified' };
+    if (status === 'failed') return { error: 'No questions in that material passed the checks. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     return { course: done, partial: status === 'partial' };
   } catch (err) {
     console.error('course-builder:', err.message);

@@ -367,7 +367,7 @@ async function build(userId, materialId, opts = {}) {
       // A failed rebuild leaves the last good episode as it was.
       db.update('material_podcasts', saved.id, { status: prev && prev.turns && prev.turns.length ? prev.status : 'failed', error: used ? 'nothing passed the checks' : 'token budget' });
       db.flush();
-      return { error: 'An episode could not be made from that material. Try a longer or clearer text.', code: 'nothing_verified' };
+      return { error: 'An episode could not be made from that material. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     }
     const slots = checkinSlots(data.turns, spec);
     const checkins = placeCheckins(data.turns, [...packQuiz, ...courseChecks(skills, slots.length), ...data.checkins], slots, slotSkills(data.turns, slots, skills));
