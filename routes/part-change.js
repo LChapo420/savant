@@ -1,5 +1,5 @@
 /**
- * The learner changes a part themselves (services/part-change.js). All of it is 404 while PART_CHANGE is not on.
+ * The learner changes a part themselves (services/part-change.js). All of it is 404 with PART_CHANGE=off.
  *
  *   GET    /api/parts/prefs            { on, prefs }
  *   DELETE /api/parts/prefs[/:key]     forget one choice, or all of them

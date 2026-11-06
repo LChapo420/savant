@@ -671,6 +671,484 @@
    "sources": 30,
    "declined": 0,
    "trials": 256
+  },
+  "feedback": {
+   "part": "feedback",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 102,
+      "verdicts": 51,
+      "empty": 0,
+      "same": 51,
+      "picks_vL": 32,
+      "share": 0.6274509803921569,
+      "p_above_chance": 0.0459572749079276
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.5454545454545454,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": 0.6896551724137931,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.5454545454545454,
+       "verdicts": 22,
+       "p": 0.41590595245361317
+      },
+      "grok": {
+       "share": 0.6896551724137931,
+       "verdicts": 29,
+       "p": 0.030714172869920838
+      }
+     },
+     "individuals": {
+      "n": 22,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-5",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-0",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-18",
+        "share": 0,
+        "n": 2
+       }
+      ],
+      "below_half": 6
+     },
+     "by_kind": {
+      "tail_lo": {
+       "n": 5,
+       "share": 0.6
+      },
+      "random": {
+       "n": 7,
+       "share": 0.7142857142857143
+      },
+      "contradict": {
+       "n": 14,
+       "share": 0.5714285714285714
+      },
+      "tail_hi": {
+       "n": 1,
+       "share": 0
+      },
+      "age_young": {
+       "n": 10,
+       "share": 0.5
+      },
+      "ell": {
+       "n": 7,
+       "share": 1
+      },
+      "age_old": {
+       "n": 5,
+       "share": 0.6
+      },
+      "tail_both": {
+       "n": 2,
+       "share": 0.5
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 82,
+      "verdicts": 59,
+      "empty": 0,
+      "same": 23,
+      "picks_vL": 42,
+      "share": 0.711864406779661,
+      "p_above_chance": 0.0007735834651212768
+     },
+     "swap_fooled": {
+      "n": 82,
+      "verdicts": 56,
+      "empty": 0,
+      "same": 26,
+      "picks_vL": 21,
+      "share": 0.375
+     },
+     "control_picks_vL": {
+      "n": 82,
+      "verdicts": 59,
+      "empty": 0,
+      "same": 23,
+      "picks_vL": 28,
+      "share": 0.4745762711864407
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.7037037037037037,
+       "swap_fooled": 0.48,
+       "control": 0.4444444444444444
+      },
+      "grokified-grok": {
+       "real": 0.71875,
+       "swap_fooled": 0.2903225806451613,
+       "control": 0.5
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.7037037037037037,
+       "verdicts": 27,
+       "p": 0.026119492948055396
+      },
+      "grok": {
+       "share": 0.71875,
+       "verdicts": 32,
+       "p": 0.010030803503468647
+      }
+     },
+     "individuals": {
+      "n": 25,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-0",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-5",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-15",
+        "share": 0,
+        "n": 1
+       }
+      ],
+      "below_half": 6
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 3,
+       "share": 0.3333333333333333
+      },
+      "tail_both": {
+       "n": 7,
+       "share": 0.5714285714285714
+      },
+      "contradict": {
+       "n": 13,
+       "share": 0.6923076923076923
+      },
+      "tail_lo": {
+       "n": 7,
+       "share": 0.7142857142857143
+      },
+      "random": {
+       "n": 9,
+       "share": 1
+      },
+      "ell": {
+       "n": 8,
+       "share": 0.75
+      },
+      "age_young": {
+       "n": 8,
+       "share": 0.75
+      },
+      "age_old": {
+       "n": 4,
+       "share": 0.5
+      }
+     }
+    },
+    "noise": {
+     "real": {
+      "n": 100,
+      "verdicts": 48,
+      "empty": 0,
+      "same": 52,
+      "picks_vL": 21,
+      "share": 0.4375,
+      "p_above_chance": 0.8438365962633798
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.4444444444444444,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": 0.43333333333333335,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.4444444444444444,
+       "verdicts": 18,
+       "p": 0.7596588134765605
+      },
+      "grok": {
+       "share": 0.43333333333333335,
+       "verdicts": 30,
+       "p": 0.8192026959732214
+      }
+     },
+     "individuals": {
+      "n": 25,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-6",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-12",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-13",
+        "share": 0,
+        "n": 1
+       }
+      ],
+      "below_half": 13
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 3,
+       "share": 0.3333333333333333
+      },
+      "tail_lo": {
+       "n": 8,
+       "share": 0.625
+      },
+      "contradict": {
+       "n": 10,
+       "share": 0.4
+      },
+      "tail_both": {
+       "n": 4,
+       "share": 0.25
+      },
+      "random": {
+       "n": 8,
+       "share": 0.25
+      },
+      "age_young": {
+       "n": 8,
+       "share": 0.625
+      },
+      "ell": {
+       "n": 4,
+       "share": 0.5
+      },
+      "age_old": {
+       "n": 3,
+       "share": 0.3333333333333333
+      }
+     }
+    },
+    "identical": {
+     "real": {
+      "n": 26,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 26,
+      "picks_vL": 0,
+      "share": null,
+      "p_above_chance": null
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "grok": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      }
+     },
+     "individuals": {
+      "n": 0,
+      "worst_1pct": null,
+      "worst_5pct": null,
+      "worst_10pct": null,
+      "lowest": [],
+      "below_half": 0
+     },
+     "by_kind": {}
+    }
+   },
+   "facts": {
+    "conflict_yes": 0,
+    "conflict_asked": 18,
+    "declined_because": {
+     "dropped: so compare surface areas": 1,
+     "it drops too much of the original reasoning; keep ": 1,
+     "new: A polygon is a shape with straight sides.": 1,
+     "new: It is like noting which water conditions help": 1,
+     "new: Keep noticing details like these!": 1,
+     "new: It is like counting tanks and skipping one.": 1,
+     "new: — the one doing the living": 1,
+     "new: — a well-matched pair": 1,
+     "new: This works much as a trading card conveys one": 1,
+     "new: No short u sound there.": 1
+    },
+    "checked": 60,
+    "passed": 51,
+    "declined": 9,
+    "same_yes": 9,
+    "same_asked": 9,
+    "coverage_fail": 0,
+    "claims": {
+     "coral-deepseek": {
+      "asked": 51,
+      "ok": 50,
+      "unread": 0
+     },
+     "zerogpu-glm": {
+      "asked": 51,
+      "ok": 51,
+      "unread": 0
+     }
+    },
+    "strict": {
+     "coral-deepseek": {
+      "asked": 51,
+      "yes": 51
+     },
+     "zerogpu-glm": {
+      "asked": 51,
+      "yes": 50
+     }
+    },
+    "gate_attempts": {
+     "1": 36,
+     "2": 14,
+     "3": 1
+    },
+    "partial": 0,
+    "flagged": [
+     {
+      "L": "x7207-28",
+      "k": 1,
+      "judge": "coral-deepseek",
+      "problems": [
+       "new: It is like priming a miniature before painting its details."
+      ],
+      "stored": "A broad introductory sentence should come before the specific steps in the paragraph.",
+      "text": "A broad introductory sentence should open the paragraph, coming before the specific steps. It is like priming a miniature before painting its details."
+     }
+    ]
+   },
+   "goal": null,
+   "sources": 60,
+   "declined": 9,
+   "trials": 474
   }
  },
  "samples": {
@@ -789,6 +1267,115 @@
      "dropped_words": 6
     }
    }
+  ],
+  "feedback": [
+   {
+    "learner": "x7207-3",
+    "kind": "random",
+    "profile": "Age 59. Language: English. Interests: competitive baking shows. Dislikes (never wanted): none stated.",
+    "stored": "This action completes both directions in the stated order: remove the hat and then place it on the chair.",
+    "shaped": "This action completes both directions in the stated order: remove the hat, then place it on the chair.",
+    "other_learner": "This action completes both directions in the stated order: remove the hat and then place it on the chair.",
+    "diff": {
+     "stored_words": 19,
+     "shaped_words": 18,
+     "new_words": 1,
+     "dropped_words": 2
+    }
+   },
+   {
+    "learner": "x7207-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: none stated. Dislikes (never wanted): sports examples.",
+    "stored": "The east coordinate comes first and the north coordinate comes second, so the point is (5, 2).",
+    "shaped": "The east coordinate is written first and the north coordinate comes second, so the point is (5, 2).",
+    "other_learner": "In this coordinate system, the east value is written first and the north value second; therefore the point is (5, 2).",
+    "diff": {
+     "stored_words": 17,
+     "shaped_words": 18,
+     "new_words": 1,
+     "dropped_words": 0
+    }
+   },
+   {
+    "learner": "x7207-4",
+    "kind": "tail_both",
+    "profile": "Age 62. Language: English. Interests: birdwatching. Dislikes (never wanted): cartoon characters, sports examples.",
+    "stored": "The horizontal position is 4 and the vertical position is 3, so the endpoint is (4, 3).",
+    "shaped": "The horizontal position is 4 and the vertical position is 3, so the endpoint is (4, 3).",
+    "other_learner": "The horizontal position is 4 and the vertical is 3, so the endpoint is (4, 3).",
+    "diff": {
+     "stored_words": 17,
+     "shaped_words": 17,
+     "new_words": 0,
+     "dropped_words": 0
+    }
+   },
+   {
+    "learner": "x7207-1",
+    "kind": "tail_lo",
+    "profile": "Age 36. Language: English. Interests: none stated. Dislikes (never wanted): cute mascots.",
+    "stored": "An equation has an equals sign showing that two expressions have the same value.",
+    "shaped": "An equation is identified by its equals sign, which indicates that two expressions hold the same value.",
+    "other_learner": "An equation has an equals sign showing that two expressions have the same value.",
+    "diff": {
+     "stored_words": 14,
+     "shaped_words": 17,
+     "new_words": 8,
+     "dropped_words": 4
+    }
+   }
   ]
+ },
+ "stats": {
+  "calls": 1437,
+  "empty": 0,
+  "errors": 106,
+  "seconds": 2802,
+  "cpu_load": 0,
+  "zerogpu_ledger": {
+   "ok": true,
+   "spent_usd": 12.305863,
+   "reserved_usd": 0.066589,
+   "committed_usd": 12.372452,
+   "cap_usd": 245,
+   "headroom_usd": 232.627548,
+   "calls": 15469,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/zerogpu-ledger.json"
+  },
+  "gonka_ledger": {
+   "ok": true,
+   "spent_usd": 12.269138,
+   "reserved_usd": 0.132459,
+   "committed_usd": 12.401597,
+   "cap_usd": 50,
+   "headroom_usd": 37.598403,
+   "calls": 22823,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/gonka-ledger.json"
+  },
+  "coral_ledger": {
+   "ok": true,
+   "spent_usd": 25.4483,
+   "reserved_usd": 0.05993,
+   "committed_usd": 25.50823,
+   "cap_usd": 100,
+   "headroom_usd": 74.49177,
+   "calls": 15576,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/coral-ledger.json"
+  },
+  "grokified_ledger": {
+   "ok": true,
+   "spent_usd": 24.960641,
+   "reserved_usd": 0.299098,
+   "committed_usd": 25.259739,
+   "cap_usd": 135,
+   "headroom_usd": 109.740261,
+   "calls": 13657,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/grokified-ledger.json"
+  }
  }
 }

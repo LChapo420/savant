@@ -39,10 +39,10 @@ function enabled(userId = null) {
   if (own) return own === 'on';
   return String(env || DEFAULT_ON) !== 'off';
 }
-// Which parts run: PART_MODIFY_PARTS (comma list of feedback, hint, review, lesson). Default: only the parts whose proof passed
+// Which parts run: PART_MODIFY_PARTS (comma list of feedback, hint, review, lesson, voice). Default: only the parts whose proof passed
 // (docs/MODIFICATION-AUDIT-PARTS.md). PART_MODIFY=off turns everything off; with PART_MODIFY=on and no list, the proven parts run.
 const DEFAULT_ON = 'off';
-const DEFAULT_PARTS = 'feedback,review,lesson';
+const DEFAULT_PARTS = 'feedback,review'; // lesson, voice and hint did not beat chance by both families (docs/MODIFICATION-MAP.md section 5): name them in PART_MODIFY_PARTS to try them
 const partOn = (p) => new Set(String(process.env.PART_MODIFY_PARTS || DEFAULT_PARTS).split(',').map((x) => x.trim())).has(p);
 
 const lazy = (p) => require(p); // eslint-disable-line global-require, import/no-dynamic-require

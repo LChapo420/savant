@@ -1,7 +1,7 @@
 /**
  * The learner changes a part themselves (modify-all, 7 Nov 2026): shorter, simpler, more examples, another example topic, on the part in front of them, and the choice sticks.
  *
- *   on()                         the switch: PART_CHANGE=on enables it (off by default until its gate passes, docs/MODIFICATION-MAP.md)
+ *   on()                         the switch: on by default since its gate passed (docs/MODIFICATION-MAP.md section 6); PART_CHANGE=off removes the row, the routes and the preference from the spec
  *   prefsOf / record / clear     profiles.part_prefs { shorter, simpler, examples (1 to 3), topic }: read by learning-spec.js gather, so every later lesson, feedback, notes, tutor
  *                                reply and level writer follows it. Stored on the profile row, so account export and deletion already cover it. The learner sees and clears it on the profile.
  *   rewrite({...})               one rewrite of one text: ALWAYS from the stored original, with everything the learner has asked of this text, and held to it (below). Pure but for the llm.
@@ -15,7 +15,7 @@ const crypto = require('crypto');
 
 const lazy = (p) => require(p); // eslint-disable-line global-require, import/no-dynamic-require
 const CHANGES = ['shorter', 'simpler', 'examples', 'topic'];
-const on = () => String(process.env.PART_CHANGE || 'off').toLowerCase() === 'on';
+const on = () => String(process.env.PART_CHANGE || 'on').toLowerCase() !== 'off';
 const words = (t) => (String(t || '').match(/[A-Za-zÀ-ÿ0-9'-]+/g) || []);
 const numbersOf = (t) => new Set((String(t || '').match(/\d+(?:[.,]\d+)?/g) || []).map((n) => n.replace(',', '.')));
 const WORD_NUM = { one: '1', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8', nine: '9', ten: '10', eleven: '11', twelve: '12' };
