@@ -49,15 +49,17 @@ const MAX_SOURCE = 6000;
 const SCHEMA = {
   type: 'object',
   properties: {
+    working: { type: 'string' },
     checked: { type: 'integer' },
     wrong: { type: 'array', items: { type: 'object', properties: { n: { type: 'integer' }, quote: { type: 'string' }, why: { type: 'string' } }, required: ['n', 'why'] } },
   },
   required: ['checked', 'wrong'],
 };
 
-const RULES_COMMON = `Reply with JSON only: {"checked": <how many statements of fact you read>, "wrong": [{"n": <the number of the piece>, "quote": "<its exact words>", "why": "<what is false, in a few words>"}]}. "wrong" is empty when nothing is false. Never flag something you cannot say is false.`;
+// `working` comes first on purpose (found 6 Nov): DeepSeek at no reasoning wrote its check inside `why` ("987 x 654 = 645,498 is correct? ... wait") and left the right answer in `wrong`: 18 of 146 right answers flagged.
+const RULES_COMMON = `Reply with JSON only: {"working": "<short: work out any sum or step yourself here, before any verdict>", "checked": <how many statements of fact you read>, "wrong": [{"n": <the number of the piece>, "quote": "<its exact words>", "why": "<what is false, in a few words>"}]}. Finish working a statement out before you decide. "wrong" holds only what your working found false, and is empty when nothing is false: never put a statement there to check it, and never one you found correct. Never flag something you cannot say is false.`;
 
-const NOT_CLAIMS = 'Not claims, never flag them: encouragement, study advice, plans, what the learner should do next, questions put to the learner, opinions, style, tone, wording, things left out, a true simplification fit for a beginner, and anything about the learner you cannot see. A wrong option in a multiple-choice question is meant to be wrong: judge the question, its key and its explanation.';
+const NOT_CLAIMS = 'Not claims, never flag them: encouragement, study advice, plans, what the learner should do next, questions put to the learner, opinions, style, tone, wording, things left out, a true simplification fit for a beginner, a rule stated for the usual case (an exception existing does not make it false), and anything about the learner you cannot see. A wrong option in a multiple-choice question is meant to be wrong: judge the question, its key and its explanation.';
 
 const SYSTEMS = {
   general: `You fact-check text an AI tutor wrote, before a learner sees it. Find statements about the subject that are false: wrong arithmetic or wrong steps (work them out yourself, never trust the text), wrong definitions, rules, dates, names, grammar or translations, a key that is not the right answer, a learner's answer called right when it is wrong or wrong when it is right. ${NOT_CLAIMS} An analogy or an "imagine" scene is fine unless it says something false about the subject. A REFERENCE, when given, is the question, the key or the lesson the text is about: use it to understand the text, and flag a statement that contradicts it. ${RULES_COMMON}`,
@@ -172,7 +174,7 @@ async function check({ pieces, source = '', learnerSaid = '', mode = 'general', 
   await Promise.all(batches(list).map(async (batch) => {
     const base = {
       role: 'fast', task: 'fact_live', system: SYSTEMS[mode] || SYSTEMS.general, user: checkUser({ pieces: batch.map((b) => b.text), source, learnerSaid, mode }),
-      schema: SCHEMA, schemaName: 'submit_check', maxTokens: 450 + batch.length * 60, effort: 'off', userId,
+      schema: SCHEMA, schemaName: 'submit_check', maxTokens: 700 + batch.length * 90, effort: 'off', userId,
       ...(dataClass && !userId ? { dataClass } : {}), hedgeAfterMs: waiting ? 1800 : undefined, ...(capped ? { freeOnly: true } : {}),
     };
     const go = llm || ((a) => ai.structuredDetail(a));

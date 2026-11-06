@@ -159,7 +159,7 @@ function args() {
 }
 
 async function one(cand, c) {
-  const req = { role: 'fast', task: 'fact_live', system: guard.SYSTEMS[c.mode], user: guard.checkUser({ pieces: c.pieces, source: c.source, mode: c.mode }), schema: guard.SCHEMA, schemaName: 'submit_check', maxTokens: cand.maxTokens || 510, effort: 'off' };
+  const req = { role: 'fast', task: 'fact_live', system: guard.SYSTEMS[c.mode], user: guard.checkUser({ pieces: c.pieces, source: c.source, mode: c.mode }), schema: guard.SCHEMA, schemaName: 'submit_check', maxTokens: 800 + c.pieces.length * 90, effort: 'off' };
   const t0 = Date.now();
   try {
     let r;

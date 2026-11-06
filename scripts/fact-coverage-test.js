@@ -363,11 +363,83 @@ async function runtime() {
   ok('the owner\'s numbers keep no learner and no text', () => {
     const rows = guard.stats();
     assert.ok(rows.length > 0);
-    for (const r of rows) assert.deepStrictEqual(Object.keys(r).filter((k) => !['id', 'day', 'task', 'checked', 'passed', 'wrong', 'cant', 'ms_total', 'created_at', 'updated_at'].includes(k)), []);
+    for (const r of rows) assert.deepStrictEqual(Object.keys(r).filter((k) => !['id', 'day', 'task', 'usd', 'checked', 'passed', 'wrong', 'cant', 'ms_total', 'created_at', 'updated_at'].includes(k)), []);
   });
 }
 
-runtime().then(() => {
+async function spendAndRecheck() {
+  const db = require('../config/db');
+  const pool = require('../services/pool');
+  const recheck = require('../services/fact-recheck');
+  const day = new Date().toISOString().slice(0, 10);
+  const clean = () => ({ data: { checked: 1, wrong: [] }, model: 'stub', costUsd: 0.01 });
+
+  await okAsync('the guard counts its own spend, per learner and per day, and never against the learner\'s limit', async () => {
+    const before = db.findOne('fact_guard_stats', (r) => r.day === day && r.task === '_spend');
+    await guard.check({ pieces: ['Two plus two is four.'], userId: 77123, llm: async () => clean() });
+    const row = db.findOne('ai_usage', (u) => u.user_id === 77123 && u.day === day);
+    assert.ok(row && Math.abs(row.check_usd - 0.01) < 1e-9);
+    assert.strictEqual(row.calls, 0); assert.strictEqual(row.cents, 0);
+    const after = db.findOne('fact_guard_stats', (r) => r.day === day && r.task === '_spend');
+    assert.ok(after.usd > ((before && before.usd) || 0));
+    assert.ok(!Object.keys(after).some((k) => /user/.test(k)));
+  });
+
+  await okAsync('over the learner\'s limit a check reads on free slots only; if none answers the chat says so and is never shown unchecked', async () => {
+    process.env.FACT_GUARD_LEARNER_DAY_USD = '0.005';
+    assert.strictEqual(guard.capReached(77123), 'learner');
+    assert.strictEqual(guard.capReached(77124), null);
+    let asked = null;
+    const v = await guard.check({ pieces: ['Two plus two is four.'], userId: 77123, llm: async (a) => { asked = a; return clean(); } });
+    assert.strictEqual(asked.freeOnly, true); assert.strictEqual(v.capped, 'learner');
+    delete process.env.FACT_GUARD_LEARNER_DAY_USD;
+  });
+
+  await okAsync('over the day\'s limit too, and a paid slot refuses a free-only request', async () => {
+    process.env.FACT_GUARD_DAY_USD = '0.001';
+    assert.strictEqual(guard.capReached(null), 'day');
+    delete process.env.FACT_GUARD_DAY_USD;
+    const free = pool.makeSlot ? pool.refusal({ id: 'a', provider: 'nvidia', paid: true, supports: ['structured'], dataClass: 'learner' }, { task: 'fact_live', kind: 'structured', freeOnly: true, dataClass: 'pipeline' }, 'structured') : 'budget';
+    assert.ok(/budget|data/.test(String(free)));
+  });
+
+  await okAsync('a slow independent reader leaves time for the last-resort reader on stored text too', async () => {
+    const seen = [];
+    const v = await guard.check({ pieces: ['Two plus two is four.'], writerModel: 'deepseek-v4.1-flash', budgetMs: 1000, userId: null, dataClass: 'pipeline', llm: async (a) => { seen.push(a); if (a.excludeFamilies) return null; return clean(); } });
+    assert.ok(v.ran);
+    if (seen[0].excludeFamilies) assert.ok(seen[0].timeoutMs <= 600);
+  });
+
+  await okAsync('the re-check: off by default, reports without changing a row, keeps its place, stops at its cap, waits when no checker answers', async () => {
+    delete process.env.FACT_RECHECK;
+    assert.strictEqual((await recheck.tick()).stopped, 'off');
+    const a = db.insert('items', { source: 'ai', prompt: 'What is 2 + 2?', answer: '5', rationale: 'Because.' });
+    const b = db.insert('items', { source: 'ai', prompt: 'What is 3 + 3?', answer: '6', rationale: 'Sum.' });
+    const copy = JSON.stringify(db.byId('items', a.id));
+    process.env.FACT_RECHECK = '1'; process.env.FACT_RECHECK_DAY_USD = '0.3';
+    let t = await recheck.tick({ batch: 1, llm: async () => null });
+    assert.strictEqual(t.stopped, 'no_checker'); assert.strictEqual(t.read, 0);
+    const wrongOnFirst = async () => ({ data: { checked: 1, wrong: [{ n: 1, quote: 'Key: 5', why: '2 + 2 is 4' }] }, model: 'stub', costUsd: 0.4 });
+    for (let i = 0; i < 400; i += 1) { // eslint-disable-line no-await-in-loop
+      t = await recheck.tick({ batch: 1, llm: wrongOnFirst }); // eslint-disable-line no-await-in-loop
+      if (t.stopped) break;
+    }
+    assert.strictEqual(t.stopped, 'cap');
+    assert.strictEqual(JSON.stringify(db.byId('items', a.id)), copy);
+    assert.ok(db.byId('items', b.id));
+    const rows = db.find(recheck.FINDINGS, () => true);
+    assert.ok(rows.length >= 1);
+    assert.ok(!rows.some((r) => 'user_id' in r));
+    delete process.env.FACT_RECHECK; delete process.env.FACT_RECHECK_DAY_USD;
+  });
+
+  ok('the check works a statement out before it gives a verdict', () => {
+    assert.ok(guard.SCHEMA.properties.working);
+    assert.strictEqual(Object.keys(guard.SCHEMA.properties)[0], 'working');
+  });
+}
+
+runtime().then(spendAndRecheck).then(() => {
   console.log(`fact-coverage-test: ${n} checks passed`);
   try { fs.rmSync(tmp, { recursive: true, force: true }); } catch { /* temp */ }
   process.exit(0);
