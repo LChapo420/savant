@@ -6,6 +6,7 @@
  * Throwaway db, mocked ai.talk: no model is called. Checks what goes into the context, the
  * character budget and priority order, the integrity modes by page path, the routes, and the wiring.
  */
+process.env.TUTOR_FULL = process.env.TUTOR_FULL || '0'; // this test pins the old tutor path, still there behind TUTOR_FULL=0; the full tutor is scripts/tutor-full-test.js
 const os = require('os');
 const path = require('path');
 const fs = require('fs');

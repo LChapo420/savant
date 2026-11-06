@@ -17,7 +17,7 @@
 const howto = require('./tutor-howto');
 const safety = require('./tutor-safety');
 
-const DEFAULT_ON = 'adults'; // gate passed on 3 frozen seeds (docs/TUTOR-FULL.md, round 4): on for adults first; children and unknown ages keep the old tutor (plus the crisis and health replies)
+const DEFAULT_ON = '1'; // owner, 6 Nov 2026: on for everyone after the gate passed on 3 frozen seeds (docs/TUTOR-FULL.md, round 4). Children without parental consent still get local replies only, under any setting. TUTOR_FULL=adults or 0 narrow it.
 // TUTOR_FULL=1 everyone; TUTOR_FULL=adults only a learner whose age is known and 18 or over (children and unknown ages stay on the old tutor).
 function on(user) {
   const v = String(process.env.TUTOR_FULL === undefined ? DEFAULT_ON : process.env.TUTOR_FULL).trim().toLowerCase();
