@@ -23,7 +23,7 @@ Against the plain arm, from the table below: a true 5x to 6x, and 100 to 250 lea
 
 Against normal studying, a separate group is needed, and nothing in the app supplies one:
 - Same material, same unannounced delayed test at 30 days, one group in Savant and one studying their own way, timed by a plain timer page. Randomised, not self-selected.
-- Speed gate, assuming a between-person log SD of 0.7 (assumed, no real data yet), 80% power, lower end at or above 4: a true 6x needs about 47 per group, a true 5x about 154.
+- Speed gate, assuming a between-person log SD of 0.7 (assumed, no real data yet), 80% power, lower end at or above 4: a true 6x needs about 47 per group, a true 5x about 155.
 - Retention gate, assuming an SD of 20 points: a 5-point margin needs about 250 per group, a 10-point margin about 63. **This is the slow gate.**
 - So about 250 per group, about 500 people, for a claim with these margins. About 50 per group gives an honest "at least Nx" and would catch a true 6x on speed, but says little on retention.
 

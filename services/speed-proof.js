@@ -302,7 +302,7 @@ function itemUnitKey(item) {
   const session = item && item.session_id ? db.byId('sessions', item.session_id) : null;
   const grade = session && session.track_id ? lazy('../config/curriculum').getGrade(session.track_id, session.grade_id) : null;
   const unit = grade ? unitFor(grade, Number(item.level) || Number(session.level)) : null;
-  return unit ? unit.key : null;
+  return unit && unit.skill === item.skill_id ? unit.key : null; // a review of another skill asked in this sitting is not part of the plain lesson
 }
 /** Is the lesson stretch at this level of this sitting taught the plain way? Used by the speed levers: a plain lesson gets none of them. { key } or null. */
 function plainHere(userId, session, level) {
