@@ -46,6 +46,7 @@ const IPIP_SEC = 10;
 const KINDS = new Set(['forced', 'reason', 'span', 'speed', 'switch', 'scale']);   // short, repeatable-or-single, no reading passages or mini-lessons
 const REPEAT = new Set(['span', 'speed', 'switch', 'passive']);                      // generated fresh in the browser each time, so they can come back
 const MIN_GAIN_PER_MIN = 0.05;
+const SHORT_DAY_SEC = 120;
 
 const enabled = () => process.env.SCORECARD_DAILY !== 'off';
 const dayOf = (t) => new Date(t).toISOString().slice(0, 10);
@@ -90,7 +91,12 @@ function readsOf(userId) {
 function withSwitches(planner, userId) {
   const short = measure.shortFormIds();
   measure.attach(planner, userId, measure.enabled() ? readsOf(userId) : {}, { dayKey: dayOf(Date.now()) });
-  if (short) { const base = planner.available; planner.available = (it) => short.has(it.id) && base(it); }
+  if (short) {
+    // the short form is asked once: a task on it does not come back, and a day takes at most SHORT_DAY_SEC, so the whole form is spread over about a week
+    const base = planner.available; const asked = new Set(getKnown(userId).used);
+    planner.available = (it) => short.has(it.id) && !asked.has(it.id) && base(it);
+    planner.mode = { ...planner.mode, budgetSec: Math.min(planner.mode.budgetSec, SHORT_DAY_SEC) };
+  }
   return planner;
 }
 
@@ -109,6 +115,12 @@ function offer(user, now = Date.now()) {
   if (!enabled() || !boosters.allowed(user)) return { offer: false };
   const t = today(user.id, now);
   if (t.rec.skipped || t.left < 30) return { offer: false };
+  const short = measure.shortFormIds();
+  if (short) {
+    const asked = new Set(getKnown(user.id).used); const rest = [...short].filter((id) => !asked.has(id) && byId[id]);
+    if (!rest.length) return { offer: false }; // the short form is done
+    return { offer: true, minutes: Math.max(1, Math.round(Math.min(SHORT_DAY_SEC, rest.reduce((a, id) => a + byId[id].sec, 0)) / 60)), day: t.dayIndex + 1 };
+  }
   return { offer: true, minutes: Math.max(1, Math.round(t.left / 60)), day: t.dayIndex + 1 };
 }
 
