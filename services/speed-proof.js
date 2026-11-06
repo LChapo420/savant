@@ -822,7 +822,7 @@ function offerNow(user) {
 function status(user) {
   const why = ineligibleReason(user);
   return {
-    available: !why, reason: why, offer: !why && offerNow(user), needs_parent: !!(user && user.age_check && (user.age_check.under_13 || user.age_check.needs_parent)), consent_text: CONSENT, consent: user && user.speed_proof ? user.speed_proof.consent || null : null,
+    available: !why, reason: why, offer: !why && offerNow(user), check_due: !why && due(user.id).due, needs_parent: !!(user && user.age_check && (user.age_check.under_13 || user.age_check.needs_parent)), consent_text: CONSENT, consent: user && user.speed_proof ? user.speed_proof.consent || null : null,
     skills: why ? [] : db.find('speed_proof', (r) => r.user_id === user.id).map((r) => ({ skill_id: r.skill_id, way: r.arm === 'normal' && !r.switched_at ? 'plain' : 'savant', understood: !!r.understood_at })),
   };
 }
