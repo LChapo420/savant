@@ -44,7 +44,7 @@ router.post('/tutor/chat', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
 
 // The dock on every page. The mode (full / method-only / off) comes from the page path, decided here.
 router.get('/tutor/dock', requireAuth, (req, res) => {
-  const mode = dock.modeFor(req.query.path);
+  const mode = dock.modeFor(req.query.path, { full: full.on(req.user) });
   res.json({ mode, full: full.on(req.user), input_mode: tutorMode.get(req.user.id), speech_lang: /^\/spanish/.test(dock.cleanPath(req.query.path)) ? 'es' : 'en', stt: voice.gatewayFor(req.user.id) });
 });
 

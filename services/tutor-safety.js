@@ -33,6 +33,8 @@ function isEmergency(t) {
 }
 const ABUSE = /\b((he|she|they|my (dad|mom|mother|father|stepdad|stepmom|uncle|aunt|brother|sister|boyfriend|girlfriend|teacher|coach)) (hit|hits|beat|beats|hurts?|touch(es|ed)|molest\w*|abus\w*) (me|my)|(i am|i'?m) (being )?abused|not safe at home|afraid to go home|someone is hurting me)\b/i;
 const FEELINGS = /\b(anxiety|anxious|depress(ed|ion|ing)|panic attacks?|i('| a)?m (so )?(stressed|overwhelmed|lonely)|can'?t sleep|no friends|hopeless|worthless|feel(ing)? (so )?(sad|empty|numb) (all the time|every day))\b/i;
+// Feelings that name a condition or a low place: answered with the kind fixed reply even when TUTOR_FULL is off (a model reply must not diagnose or advise on pills).
+const FEELINGS_SERIOUS = /\b(depress(ed|ion)|panic attacks?|hopeless|worthless|no friends|feel(ing)? (so )?(empty|numb)|i think i have (anxiety|depression|adhd|an? [a-z ]*disorder)|do i need (pills|medication|meds|therapy))\b/i;
 const MEDICAL = /\b(diagnos\w*|dos(e|es|age)|should i (take|use|try) (something|anything|a (pill|medicine|drug|supplement))|heart (races|racing|pounding)|symptoms?|dosage|how (much|many) (mg|milligrams|pills|tablets)|should i take (a |some )?(pill|medic|ibuprofen|tylenol|advil|aspirin|melatonin|adderall)|medications?|prescription|am i (sick|depressed|pregnant|anorexic|bulimic|bipolar|autistic|adhd)|do i have (adhd|anxiety|depression|cancer|diabetes|an? \w+ disorder)|rash|fever|eating disorder|stop eating|starv\w*|purg\w*)\b/i;
 // A stranger online asking for details, photos or secrecy: the same fixed reply path as abuse (grooming is the usual shape of it).
 const UNSAFE_CONTACT = /\b(don'?t tell (my )?(mom|dad|parents?|anyone)|(asked|wants|wanted|told) me (for|to send) (a |my |some )?(photos?|pics?|nudes?|selfie|address|phone number|school)|(guy|man|stranger|someone|person|adult) (online|i met online|on (discord|snapchat|instagram|roblox|tiktok))|keep (it|this) (a )?secret from)\b/i;
@@ -87,7 +89,7 @@ function triage(text, opts = {}) {
   if (OTHER_ALL.test(t) || OTHER_REL.test(t) || OTHER_NAME.test(t)) return { kind: 'other_person', reply: FIXED.other_person };
   if (INJECTION.test(t)) return { kind: 'injection', reply: FIXED.injection };
   // A health or feelings question gets a model reply under a directive, and, with no model, a kind fixed reply (never a page tip): `fixed`.
-  if (FEELINGS.test(t)) return { kind: 'feelings', directive: MEDICAL_DIRECTIVE, fixed: young ? FIXED.feelings_child : FIXED.feelings_teen };
+  if (FEELINGS.test(t)) return { kind: 'feelings', directive: MEDICAL_DIRECTIVE, serious: FEELINGS_SERIOUS.test(t) || young, fixed: young ? FIXED.feelings_child : FIXED.feelings_teen };
   if (MEDICAL.test(t)) return { kind: 'medical', directive: MEDICAL_DIRECTIVE, fixed: young ? FIXED.medical_child : FIXED.medical };
   return null;
 }
@@ -104,9 +106,15 @@ function directives({ age } = {}) {
 
 const EMAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
 /** A last read of a model reply. Emails that are not the learner's own are removed. */
-function scrub(text, { ownEmail } = {}) {
+function scrub(text, { ownEmail, hasMaterial } = {}) {
   const own = String(ownEmail || '').toLowerCase();
-  return String(text || '').replace(EMAIL, (m) => (own && m.toLowerCase() === own ? m : '[an email address]'));
+  let out = String(text || '').replace(EMAIL, (m) => (own && m.toLowerCase() === own ? m : '[an email address]'));
+  // Uploaded text has no pages: a page or section number for it is always invented.
+  out = out.replace(/[,;.]?\s*(?:that'?s |which is |it'?s |this is )?(?:on|from|in) (?:the )?(?:page|section|chapter) (?:[0-9]+|one|two|three|four|five|six|seven|eight|nine|ten)(?: of (?:your|the) [a-z ]+?)?(?=[.,;!?]|$)/gi, '');
+  // "Your notes" means an upload. With none, the app or the record is what is meant.
+  if (!hasMaterial) out = out.replace(/\byour (?:notes|material) (?:don'?t|do not|doesn'?t|does not) (?:cover|say|show|have|mention|list)/gi, "I can't see").replace(/\byour (?:notes|material)\b/gi, 'what I can see');
+  out = out.replace(/,?\s*(?:and|but)\s*([.!?])/gi, '$1');
+  return out;
 }
 
 module.exports = { triage, directives, scrub, FIXED, SELF_HARM, UNDER_13, TRUTH };

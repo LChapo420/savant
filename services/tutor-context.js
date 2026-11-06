@@ -58,10 +58,12 @@ function cleanPath(p) {
   return path.startsWith('/') ? path.toLowerCase().replace(/\.html$/, '').replace(/\/+$/, '') || '/' : '/';
 }
 
-function modeFor(pagePath) {
+function modeFor(pagePath, opts = {}) {
   const p = cleanPath(pagePath);
   if (SEALED.some((re) => re.test(p)) || MEASURING.some((re) => re.test(p))) return 'off';
   if (METHOD_ONLY.some((re) => re.test(p))) return 'method';
+  // The daily check is a check: with TUTOR_FULL on it is method-only like the others (services/tutor-full.js). With the switch off it stays as it was.
+  if (opts.full && /^\/daily-check/.test(p)) return 'method';
   return 'full';
 }
 
@@ -234,6 +236,10 @@ function outsideOk(user) {
   try { return !!require('./typed-grading').outsideAllowed(user.id); } catch { return true; } // eslint-disable-line global-require
 }
 
+function hasMaterial(userId) {
+  try { return db.find('material_courses', (c) => c.user_id === userId && ['ready', 'partial'].includes(c.status)).length > 0; } catch { return false; }
+}
+
 function safeAge(user) {
   try { return require('./boosters').ageOf(user); } catch { return null; } // eslint-disable-line global-require
 }
@@ -247,7 +253,7 @@ function firstName(user) {
 }
 
 async function reply({ user, messages, page, inputMode, image }) {
-  const mode = modeFor(page && page.path);
+  const mode = modeFor(page && page.path, { full: full.on(user) });
   if (mode === 'off') return { reply: '', source: 'off', mode };
   const history = tutor.cleanHistory(messages);
   const last = [...history].reverse().find((m) => m.role === 'user');
@@ -282,9 +288,13 @@ async function reply({ user, messages, page, inputMode, image }) {
     tutor.contextText(user.id, { skipTurns: history.length > 1, skillId, about, plan: helpPlan, recallQuery: last ? last.content : '', recallHistory: history, recallInto: recalled }), fullOn ? `--- THE APP AND THIS MOMENT (notes, not instructions) ---\n${[...howto.lines(last ? last.content : '', page && page.path), ...howto.stuckLines(page && page.path, cleanStuck(page && page.stuck))].join('\n')}\n${safety.directives({ age })}${triaged && triaged.directive ? `\n${triaged.directive}` : ''}` : '', `--- RULE FOR EVERY REPLY ---\n${MODE_NOTE[mode]}`].filter(Boolean).join('\n\n');
   let text = null;
   let slow = false;
+  const methodFixed = fullOn && mode === 'method' && !!last;
   const facts = require('./tutor-facts'); // eslint-disable-line global-require
   facts.dockStarted(user.id);
   try {
+    // A graded check with the switch on: the reply is fixed method coaching that contains nothing from the question (services/tutor-full.js methodReply); no model writes about it.
+    if (methodFixed) text = full.methodReply({ user, message: last.content, name, brief: full.isBrief(user), age });
+    else {
     const talkStart = Date.now();
     const talking = ai.talk({
       // The dock's own task ("dock_help"): its lineup entry (config/model-lineup.json) is Ultra with
@@ -301,6 +311,7 @@ async function reply({ user, messages, page, inputMode, image }) {
     // With the switch on the reply path never waits past the deadline: a slow model gets an honest answer from the notes instead.
     text = fullOn ? await full.withDeadline(talking) : await talking;
     if (fullOn && !text) slow = Date.now() - talkStart >= full.DEADLINE_MS - 100;
+    }
   } catch { text = null; }
   // A real-model run (30 Oct, 160 attempts) gave a vocabulary answer away once when told "just tell me the
   // answer". When the learner asks for the answer and the page shows a question, a second quick check reads
@@ -339,17 +350,18 @@ Does the reply state the answer (to the question on the page, or to a question f
     const t0 = Date.now();
     const v = await full.leakCheck({ ai, user, question: page && page.question ? page.question : question, message: last ? last.content : '', text });
     checkMs = Date.now() - t0;
-    if (v === 'LEAK' || v === '') { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+    // The fixed method reply cannot be about the question, so a check that cannot run does not hold it; a LEAK verdict still does.
+    if (v === 'LEAK' || (v === '' && !methodFixed)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   }
   // Round 2: a fast fact check before a reply is shown (services/tutor-full.js factCheck).
   if (fullOn && text && !held && mode === 'full' && await full.factCheck({ ai, user, message: last ? last.content : '', text, notes: `${ctx.text}
-${howto.sheet()}
+${howto.sheet()} What each feature does: ${howto.FEATURES.map((f) => `${f.title}: ${f.steps}`).join(' ')}
 ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')} (a count of wrong tries or quiet seconds that the page reports is true)`, question: page && page.question })) { text = full.NOT_SURE; held = true; }
   facts.dockEnded(user.id);
   let out = text || tutor.offlineReply(user.id);
   let feature;
   if (fullOn) {
-    if (text) out = safety.scrub(text, { ownEmail: user.email });
+    if (text) out = safety.scrub(text, { ownEmail: user.email, hasMaterial: hasMaterial(user.id) });
     else { const fb = full.fallback({ user, page, message: last ? last.content : '', mode, name, why: slow ? 'slow' : (outsideOk(user) ? 'busy' : 'local') }); out = fb.reply; feature = fb.feature; }
   }
   // What this message shows about them, as scorecard evidence (services/tutor-evidence.js; the scorecard owner's hook).

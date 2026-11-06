@@ -39,7 +39,50 @@ function triage(user, text) {
   try { age = require('./boosters').ageOf(user); } catch { age = null; } // eslint-disable-line global-require
   const t = safety.triage(text, { age });
   if (!t) return null;
+  // Health and serious-feelings messages get the kind fixed reply whatever the switch says: that is where an 8-year-old's "do I need pills" is answered today.
+  if (t.kind === 'medical' || (t.kind === 'feelings' && t.serious)) return { ...t, reply: t.fixed };
   return on(user) || CRISIS.has(t.kind) ? t : null;
+}
+
+// A graded check (mode 'method'), round 4: the learner's reply is built from fixed method coaching and contains nothing from the question or its choices,
+// so it cannot leak. The text is chosen by what the learner asked and fitted with name, age and brevity; no model writes about the question.
+const TIPS = [
+  'Read the question twice, slowly, and say in your own words what it is asking for.',
+  'Underline the key words and numbers, and notice what the question wants at the end: a number, a word or a choice.',
+  'If there are choices, cross out the ones you are sure are wrong first.',
+  'Check the units and the form the answer should be in before you settle.',
+  'Do the first small step you are sure about, then the next one.',
+  'Make a rough estimate first, so you can tell whether your answer is sensible.',
+  'If you are stuck, skip it, answer what you can, and come back with fresh eyes.',
+  'When you have an answer, read the question once more and check that it fits.',
+];
+const TIPS_CHILD = [
+  'Read the question two times, slowly.',
+  'Say what it is asking in your own words.',
+  'If there are choices, cross out the ones that are wrong first.',
+  'Try the first small step you are sure about.',
+  'If it is too hard, skip it and come back later.',
+  'When you finish, read the question again to check.',
+];
+const PROPOSING_M = /(is it |is the answer|the answer is|i think (it'?s|its)|maybe (it'?s|its)|right\?|correct\?|am i right|my answer)/i;
+const ASKING_M = /(answer|tell me|just say|give up|teacher said|all caps|answer only|spell it)/i;
+const hashOf = (t) => [...String(t)].reduce((a, c) => ((a * 31) + c.charCodeAt(0)) >>> 0, 7);
+
+function methodReply({ user, message, name = '', brief = false, age = null }) {
+  const msg = String(message || '');
+  const child = age !== null && age !== undefined && age < 13;
+  const h = hashOf(`${msg}|${user && user.id}`);
+  const pool = child ? TIPS_CHILD : TIPS;
+  const tips = [pool[h % pool.length]];
+  if (!brief && !child) tips.push(pool[(h + 3) % pool.length]);
+  const who = name ? `${name}, ` : '';
+  let open;
+  if (PROPOSING_M.test(msg)) open = child ? `${who}I can't tell you if an answer is right or wrong on a check, so I won't say yes or no.` : `${who}I can't say whether an answer is right or wrong on a check, so I won't confirm or reject any answer, including yours.`;
+  else if (ASKING_M.test(msg)) open = child ? `${who}I can't give the answer on a check, because your result has to be yours.` : `${who}I can't give the answer on a check, because the result only means something if it is yours.`;
+  else if (DISCOURAGED.test(msg)) open = child ? `${who}that is hard, and it is okay to feel stuck.` : `${who}that sounds frustrating, and it is okay to be stuck. One small step is enough.`;
+  else open = child ? `${who}I can help with how to work on a question like this.` : `${who}I can help with how to approach a question like this, not with its content.`;
+  const close = child ? 'Tell me what you try first.' : 'Tell me what you try first and I will help with the method.';
+  return `${open} ${tips.join(' ')} ${close}`;
 }
 
 const DEADLINE_MS = Number(process.env.TUTOR_DEADLINE_MS) || 14000;
@@ -146,7 +189,9 @@ function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' 
       if (explaining) parts.push("I can't explain that properly without the live tutor, and I don't want to give you a half answer. Try me again in a moment.");
       if (DISCOURAGED.test(msg)) parts.push("That sounds really frustrating, and it's okay to feel that way. One small step is enough for now.");
       const pg = howto.pageInfo(path);
-      if (!pg || !/^(what|why|who|how many|how long|is|will|does)\b/i.test(msg.trim()) || DISCOURAGED.test(msg)) parts.push(pg ? (brief ? pg.stuck : `You're on ${pg.name}. ${pg.stuck}`) : howto.stuckAdvice(path));
+      const planning = /(what should i|what do i do|what next|ten minutes|10 minutes|how am i doing|where do i start|next step)/i.test(msg);
+      const questionLike = /\?\s*$/.test(msg.trim()) || /^(what|why|who|whom|whose|how|when|where|which|is|are|will|would|does|do|did|can|could|should)\b/i.test(msg.trim());
+      if (!pg || planning || !questionLike || DISCOURAGED.test(msg)) parts.push(pg ? (brief ? pg.stuck : `You're on ${pg.name}. ${pg.stuck}`) : howto.stuckAdvice(path));
       else parts.push("I'm not sure about that one, and I can't check it right now, so I'd rather not guess.");
     }
     if (mode === 'method') parts.push('Here I can give hints about method only, so your result stays honest.');
@@ -219,7 +264,7 @@ async function factCheck({ ai, user, message, text, notes, question }) {
   try {
     verdict = await withDeadline(ai.talk({
       role: 'fast', task: 'dock_leak_check',
-      system: 'You fact-check a tutor reply before a learner sees it. Reply with only OK or WRONG. WRONG means: the reply states a subject fact (maths, science, language, history, geography) that is incorrect; or it states a specific detail about this learner (a number, a date, a day of the week, a test or exam, a count of tries, a page or section number, a past event) or about the app that is not in the NOTES below; or it says "your notes say" something the NOTES do not. Opinions, encouragement, advice about what to study, questions to the learner and well-established facts are OK. Say WRONG only when you are sure; if in doubt answer OK.',
+      system: 'You fact-check a tutor reply before a learner sees it. Reply with only OK or WRONG. WRONG means: the reply states a subject fact (maths, science, language, history, geography) that is incorrect; or it states a specific detail about this learner (a number, a date, a day of the week, a test or exam, a count of tries, a page or section number, a past event) or about the app that is not in the NOTES below; or it says "your notes say" something the NOTES do not. Opinions, encouragement, advice about what to study, questions to the learner and well-established facts are OK. A claim is NOT wrong just because the notes are silent on it when it is general encouragement or advice. Say WRONG only when you are sure: a false subject fact, an invented date, day, test, exam, page, count or event, or something that contradicts the notes; if in doubt answer OK.',
       messages: [{ role: 'user', content: `NOTES (true): ${clip(notes, 1500)}
 
 Question on screen: ${clip(question, 200) || 'none'}
@@ -253,4 +298,4 @@ function answerKeyHit(userId, page, reply) {
   } catch { return false; }
 }
 
-module.exports = { answerKeyHit, leakCheck, LEAK_SYSTEM, factCheck, NOT_SURE, isBrief, triage, safetyOn, CRISIS, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
+module.exports = { methodReply, answerKeyHit, leakCheck, LEAK_SYSTEM, factCheck, NOT_SURE, isBrief, triage, safetyOn, CRISIS, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
