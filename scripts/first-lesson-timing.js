@@ -24,13 +24,13 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 let seed = Number(process.env.TIMING_SEED || 20261104);
 const rand = () => { seed = (seed + 0x6D2B79F5) >>> 0; let t = seed; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 
-function client() {
+function client(ip) {
   let cookie = '';
   return async (method, path, body) => {
     const started = Date.now();
     let res;
     try {
-      res = await fetch(`${BASE}${path}`, { method, headers: { 'Content-Type': 'application/json', ...(cookie ? { Cookie: cookie } : {}), Origin: BASE }, body: body === undefined ? undefined : JSON.stringify(body), signal: AbortSignal.timeout(300000) });
+      res = await fetch(`${BASE}${path}`, { method, headers: { 'Content-Type': 'application/json', ...(ip ? { 'X-Forwarded-For': ip } : {}), ...(cookie ? { Cookie: cookie } : {}), Origin: BASE }, body: body === undefined ? undefined : JSON.stringify(body), signal: AbortSignal.timeout(300000) });
     } catch (err) { return { status: 0, payload: { error: String(err.message) }, ms: Date.now() - started }; }
     const sc = res.headers.get('set-cookie'); if (sc) cookie = sc.split(';')[0];
     let payload = null; try { payload = await res.json(); } catch { payload = null; }
@@ -39,10 +39,17 @@ function client() {
 }
 
 async function learner(k, profile) {
-  const call = client();
+  const call = client(process.env.TRUST_PROXY_TEST ? `10.77.${(STAMP.length * 7 + k) % 250}.${1 + (k % 250)}` : null);
   const row = { k, profile };
   const email = `timing-${STAMP}-${k}@example.com`;
-  const reg = await call('POST', '/api/auth/register', { email, password: 'Timing-test-pw-9', display_name: `Timing ${k}`, birth_year: 1990, birth_month: 6, country: 'US' });
+  // The app's register rate limit (per IP) stops 10 learners at once: space the starts and retry a 429 after the wait it names (this test only). With TRUST_PROXY_TEST=1 and the test server on TRUST_PROXY=1 each learner also gets its own address, since the limit is 10 an hour per address.
+  await sleep(k * Number(process.env.REGISTER_GAP_MS || 1000));
+  let reg;
+  for (let a = 0; a < 8; a++) {
+    reg = await call('POST', '/api/auth/register', { email, password: 'Timing-test-pw-9', display_name: `Timing ${k}`, birth_year: 1990, birth_month: 6, country: 'US' });
+    if (reg.status !== 429) break;
+    await sleep(Math.min(60000, 1000 * Number((reg.payload && (reg.payload.retry_after || reg.payload.retryAfter)) || 15)));
+  }
   if (![200, 201].includes(reg.status)) return { ...row, error: `register ${reg.status} ${JSON.stringify(reg.payload).slice(0, 100)}` };
   await call('POST', '/api/profile/survey', { interests: ['basketball, drawing', 'chess, music', 'cooking, trains', 'football, coding'][k % 4], hobbies: 'sketching', notes: 'short explanations please' });
   const en = await call('POST', '/api/enrollments', { selections: [{ track_id: 'math', grade_id: 'algebra_1_part_a' }] });

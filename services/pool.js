@@ -791,6 +791,8 @@ async function callHedged(req, opts = {}) {
   const waitingCall = isWaitingStore(lane.getStore()) && req.coral === true;
   const totalMs = opts.maxTotalMs || (waitingCall ? Math.min(Math.round(maxTimeout * 2.5), waitingDeadlineMs() * 3) : Math.round(maxTimeout * 2.5));
   const maxParallel = Math.max(1, opts.maxParallel || 2);
+  // A waiting learner's fact check (no free tail, see candidatesFor) queues on its paid verifiers rather than failing when they rest or are busy.
+  const queueOnly = waitingCall && req.task === 'fact_verify' && cands.length > 0 && cands.every((c) => c.paid);
   const validate = opts.validate || null;
   // Background work (write-ahead and the like) yields to a waiting learner and never pays for speed; see the lane note at the top.
   const laneNow = lane.getStore();
@@ -833,6 +835,7 @@ async function callHedged(req, opts = {}) {
     /** The next slot to start: free ones in order; a paid one only as a hedge (hedgeable) or as the last resort. */
     function pick(asHedge) {
       let waitMs = null;
+      let softWait = null;
       const breakerSkipped = [];
       for (const s of cands) {
         if (tried.has(s.id)) continue;
@@ -855,6 +858,9 @@ async function callHedged(req, opts = {}) {
           if (b.why === 'busy') waitMs = Math.min(waitMs == null ? Infinity : waitMs, 500);
           else if (b.why === 'rpm' && b.waitMs <= 15000) waitMs = Math.min(waitMs == null ? Infinity : waitMs, b.waitMs);
           else if (b.why === 'breaker' && !s.paid) breakerSkipped.push(s);
+          // A waiting learner's fact check has no free tail: a paid verifier that is only resting (breaker, a long RPM window) is
+          // waited for, up to the call's total time, instead of the call failing at 0 s with 'no slot available' (5 Nov, fact-queue brief).
+          else if (queueOnly && !asHedge && (b.why === 'breaker' || b.why === 'rpm')) softWait = Math.min(softWait == null ? Infinity : softWait, Math.min(b.waitMs || 1000, 2000));
           continue;
         }
         return { slot: s };
@@ -865,6 +871,7 @@ async function callHedged(req, opts = {}) {
         const s = breakerSkipped.sort((a, b) => a.breaker.openUntil - b.breaker.openUntil)[0];
         if (s.isEnabled() && s.hasPermit() && s.rpmWaitMs() === 0) return { slot: s };
       }
+      if (waitMs == null && softWait != null && !running.size) waitMs = softWait;
       return { slot: null, waitMs };
     }
 
@@ -898,8 +905,8 @@ async function callHedged(req, opts = {}) {
     function armHedge(slot) {
       if (hedgeTimer) { clearTimeout(hedgeTimer); timers.delete(hedgeTimer); }
       const clamp = (v) => Math.min(opts.hedgeMaxMs || HEDGE_MAX_MS(), Math.max(opts.hedgeMinMs || HEDGE_MIN_MS(), v));
-      // A waiting learner's backup starts after fgHedgeMs (8 s), not the slot's p90 (20 s floor).
-      const after = opts.hedgeAfterMs != null ? opts.hedgeAfterMs : (isBg() ? clamp(slot.p90) : Math.min(clamp(slot.p90), fgHedgeMs()));
+      // A waiting learner's backup starts after fgHedgeMs (8 s), not the slot's p90 (20 s floor); a queued fact check (ZeroGPU first, measured p50 17 s on real levels) gives its first verifier POOL_FACT_HEDGE_MS (20 s) before grok also pays.
+      const after = opts.hedgeAfterMs != null ? opts.hedgeAfterMs : (queueOnly ? Math.max(fgHedgeMs(), Number(process.env.POOL_FACT_HEDGE_MS || 20000)) : isBg() ? clamp(slot.p90) : Math.min(clamp(slot.p90), fgHedgeMs()));
       hedgeTimer = later(() => {
         hedgeTimer = null;
         if (settled || running.size >= maxParallel) return;
