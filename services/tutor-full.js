@@ -128,7 +128,7 @@ function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' 
     if (!mat.length && mode !== 'method' && user) mat = looseMaterial(user.id, msg);
     const aboutMine = /\b(my|our) (notes?|material|upload\w*|course|book|pdf|slides)\b|according to my|in my (notes|material)/i.test(msg);
     const hasMaterial = (() => { try { return require('../config/db').find('material_courses', (c) => c.user_id === (user && user.id) && ['ready', 'partial'].includes(c.status)).length > 0; } catch { return false; } })(); // eslint-disable-line global-require
-    const explaining = /(explain|teach me|help me understand|walk me through|using something)/i.test(msg) && !/(how do i|where (is|do|can)|how to)/i.test(msg);
+    const explaining = /\b(explain|teach me|help me understand|walk me through|using something)\b/i.test(msg) && !/\b(how do i|where (is|do|can)|how to)\b/i.test(msg);
     const m = explaining ? [] : howto.match(msg);
     const askingAnswer = WANTS_ANSWER.test(msg) && page && (page.question || /\/(session|skill-practice|review|placement|stage-check|skip|daily-check|enforcer|my-material-(test|study))/.test(String(path || '')));
     if (mat.length) {
@@ -143,6 +143,7 @@ function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' 
       feature = m[0].f.id;
       parts.push(`${m[0].f.title}: ${m[0].f.steps}`);
     } else {
+      if (explaining) parts.push("I can't explain that properly without the live tutor, and I don't want to give you a half answer. Try me again in a moment.");
       if (DISCOURAGED.test(msg)) parts.push("That sounds really frustrating, and it's okay to feel that way. One small step is enough for now.");
       const pg = howto.pageInfo(path);
       if (!pg || !/^(what|why|who|how many|how long|is|will|does)\b/i.test(msg.trim()) || DISCOURAGED.test(msg)) parts.push(pg ? (brief ? pg.stuck : `You're on ${pg.name}. ${pg.stuck}`) : howto.stuckAdvice(path));
@@ -203,7 +204,7 @@ async function leakCheck({ ai, user, question, message, text }) {
   return '';
 }
 
-const ASKS = /\?|(explain|why|what|how|who|when|which|define|meaning)/i;
+const ASKS = /\?|\b(explain|why|what|how|who|when|which|define|meaning)\b/i;
 const NOT_SURE = "I'm not sure I have that exactly right, and I'd rather not guess. Tell me which part you're stuck on and we'll work it out step by step.";
 
 /**
