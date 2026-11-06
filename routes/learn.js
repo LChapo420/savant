@@ -862,6 +862,13 @@ router.post('/items/:id/coach', requireAuth, limit('coach', 120, 60 * 60 * 1000)
     .filter((m) => m && typeof m.content === 'string' && m.content.trim())
     .map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content.trim().slice(0, 800) }));
 
+  // The tutor's safety rules hold inside a question too (services/tutor-safety.js; TUTOR_SAFETY, on by default for crisis messages): a crisis message gets the fixed reply, not a hint.
+  {
+    const lastSaid = [...cleaned].reverse().find((m) => m.role === 'user');
+    const t = lastSaid ? require('../services/tutor-full').triage(req.user, lastSaid.content) : null; // eslint-disable-line global-require
+    if (t && t.reply) return res.json({ reply: t.reply, source: 'safety', kind: t.kind, coached: true });
+  }
+
   if (!item.coach_used) db.update('items', item.id, { coach_used: true, coach_started_at: new Date().toISOString() });
   // What the learner said while stuck, kept for the after-level read: it is the
   // most direct evidence there is of where their understanding broke.
