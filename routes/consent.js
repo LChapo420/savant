@@ -369,6 +369,7 @@ const SHARED = new Set(['users', 'content_cache', 'themed_items', 'themed_log', 
 function deleteChild(consent, reason, by) {
   const childId = consent.child_user_id;
   const removed = {};
+  require('../services/account-deletion').clearFromSharedPlans(childId); // eslint-disable-line global-require
   for (const name of collectionNames()) {
     if (SHARED.has(name)) continue;
     const n = db.remove(name, (r) => r && r.user_id === childId);

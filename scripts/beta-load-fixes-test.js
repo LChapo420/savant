@@ -126,6 +126,15 @@ async function startApp(dbFile, port) {
   check('an old session with no mark gets in', (await who(undefined)) === owner);
   check('a session made for an earlier account with that id does not', (await who('2020-01-01T00:00:00.000Z')) === null);
 
+  console.log('a deleted account leaves nothing on the levels everyone shares');
+  const { clearFromSharedPlans } = require('../services/account-deletion');
+  const sharedPlan = db.insert('block_plans', { user_id: null, track_id: 't', grade_id: 'g', level: 1, answers: { '77:c1': { answer: 'typed words' }, '78:c1': { answer: 'other' } }, telemetry: { 77: { at: 'x' }, 78: { at: 'y' } } });
+  const ownPlan = db.insert('block_plans', { user_id: 78, track_id: 't', grade_id: 'g', level: 2, answers: { '78:c1': { answer: 'mine' } } });
+  check('one row is cleared', clearFromSharedPlans(77) === 1);
+  const after = db.byId('block_plans', sharedPlan.id);
+  check('their answers and times are gone, another learner\'s stay', !after.answers['77:c1'] && after.answers['78:c1'] && !after.telemetry[77] && after.telemetry[78]);
+  check('a second learner with a longer id sharing the start is not touched', clearFromSharedPlans(7) === 0 && !!db.byId('block_plans', sharedPlan.id).answers['78:c1'] && db.byId('block_plans', ownPlan.id).answers['78:c1'].answer === 'mine');
+
   console.log('over HTTP, in production mode');
   const dbFile = path.join(dir, 'http.json');
   const port = 7900 + (process.pid % 90);
