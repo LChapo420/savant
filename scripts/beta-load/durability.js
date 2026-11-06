@@ -54,14 +54,20 @@ class Writer {
     const r = await this.c.post('/api/auth/register', { email: `dur${this.tag}${this.i}@example.test`, password: 'load-test-password', display_name: `W ${this.i}` });
     if (r.status !== 201) throw new Error(`register ${r.status} ${JSON.stringify(r.json)}`);
     this.id = r.json.user.id;
-    const e = await this.c.post('/api/enrollments', { selections: [{ track_id: 'math', grade_id: 'algebra_1_part_a' }] });
-    this.enrollment = e.json.created[0].id;
-    this.ackAt = Date.now();
+    const cat = await this.c.get('/api/catalog');
+    this.grades = [];
+    for (const t of cat.json.tracks) if (['math', 'reading', 'iq', 'english'].includes(t.id)) for (const g of t.grades) this.grades.push({ track_id: t.id, grade_id: g.id });
   }
 
   async run() {
+    // A placement in one grade after another: real answers, each acknowledged by the server, as fast as it will take them.
+    let g = 0;
     while (!this.stop) {
-      const s = await this.c.post('/api/placement/start', { enrollment_id: this.enrollment });
+      const e = await this.c.post('/api/enrollments', { selections: [this.grades[(g++) % this.grades.length]] });
+      if (e.status === -1) return;
+      const id = e.json && e.json.created && e.json.created[0] && e.json.created[0].id;
+      if (!id) { if (g > this.grades.length) return; continue; }
+      const s = await this.c.post('/api/placement/start', { enrollment_id: id });
       if (s.status === 429 || s.status === -1 || !s.json.items) { await h.sleep(50); if (s.status === -1) return; continue; }
       for (const item of s.json.items) {
         if (this.stop) return;
@@ -104,7 +110,7 @@ async function round(kind, opts = {}) {
   const writers = Array.from({ length: WRITERS }, (_, i) => new Writer(i + 1, srv.url, Date.now() % 100000));
   await Promise.all(writers.map((w) => w.setup()));
   const runs = writers.map((w) => w.run().catch(() => {}));
-  await h.sleep(opts.warmMs || 3000 + Math.random() * 4000);
+  await h.sleep(opts.warmMs || 6000 + Math.random() * 10000);
   let exited = false;
   srv.child.once('exit', () => { exited = true; });
 
@@ -191,7 +197,8 @@ async function corruptBoot() {
   h.copyLedgers(dir);
   const env = h.serverEnv({ dir, port: PORT, dbFile });
   const srv = await h.startServer(env, { timeoutMs: 60000 }).catch((e) => ({ failed: e.message }));
-  const res = { kind: 'corrupt boot', up: !!(srv.url && !srv.exited), exited: srv.exited || null };
+  await h.sleep(1500);
+  const res = { kind: 'corrupt boot', up: !!(srv.url && !srv.exited && srv.child.exitCode === null), exited: srv.exited || (srv.child && srv.child.exitCode !== null ? { code: srv.child.exitCode } : null) };
   if (res.up) {
     await h.sleep(1500);
     const c = new h.Client(srv.url, { ip: '10.8.0.2' });
