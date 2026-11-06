@@ -12,6 +12,7 @@
 
 const model = require('./model');
 const { pool, byId } = require('./pool');
+const active = () => require('../scorecard/active-measure'); // eslint-disable-line global-require
 
 const INTRO_SEC = 15;   // reading the first screen
 
@@ -60,7 +61,8 @@ class Planner {
   /** The next item (an object from the pool), or null when the mode is done. Required items come first, in order. */
   next() {
     if (this.queue.length) return byId[this.queue[0]];
-    const hit = model.pickNext(this.state, pool, {
+    // selectionState and the discounted pool exist only behind their switches (services/scorecard/active-measure.js): a pick may know more than the state that is fed to the card.
+    const hit = model.pickNext(this.selectionState || this.state, this.selectionState || this.readValidity ? active().selectionPool(pool) : pool, {
       used: this.used,
       secondsLeft: this.secondsLeft,
       pace: this.pace * this.mode.margin,
@@ -68,7 +70,7 @@ class Planner {
       minGainPerMin: this.mode.minGainPerMin,
       only: (it) => !it.free && !(it.dailyOnly && this.mode.id !== 'daily') && (!this.available || this.available(it)),
     });
-    return hit ? hit.item : null;
+    return hit ? byId[hit.item.id] : null;
   }
 
   /**
@@ -78,8 +80,13 @@ class Planner {
   record(item, readings, seconds) {
     this.used.add(item.id);
     if (this.queue[0] === item.id) this.queue.shift();
+    const held = this.anchorFor && this.anchorFor(item); // held back from the card as an independent check for the real-tester refit (SCORECARD_ANCHOR)
     for (const i of item.informs) {
-      if (readings[i.stat] !== undefined) model.bump(this.state, i.stat, item.family, model.eff(item.family, i.r), readings[i.stat]);
+      if (readings[i.stat] === undefined) continue;
+      const r = this.readValidity ? this.readValidity(i.stat, item.family, model.eff(item.family, i.r)) : model.eff(item.family, i.r);
+      if (held) { (this.anchors || (this.anchors = [])).push({ stat: i.stat, family: item.family, x: readings[i.stat], r, item: item.id }); continue; }
+      model.bump(this.state, i.stat, item.family, r, readings[i.stat]);
+      if (this.selectionState) model.bump(this.selectionState, i.stat, item.family, r, readings[i.stat]);
     }
     if (!item.free) { this.nominal += item.sec; this.actual += seconds; }
     this.elapsed += seconds;
@@ -93,10 +100,10 @@ class Planner {
 
   estimates() { return model.estimates(this.state, STAT_IDS); }
 
-  toJSON() { return { mode: this.mode.id, state: this.state, used: [...this.used], elapsed: this.elapsed, nominal: this.nominal, actual: this.actual, queue: this.queue, log: this.log }; }
+  toJSON() { return { mode: this.mode.id, state: this.state, used: [...this.used], elapsed: this.elapsed, nominal: this.nominal, actual: this.actual, queue: this.queue, log: this.log, anchors: this.anchors }; }
   static from(json, prior = {}) {
     const p = new Planner(json.mode, prior);
-    Object.assign(p, { state: json.state, used: new Set(json.used), elapsed: json.elapsed, nominal: json.nominal, actual: json.actual, queue: json.queue, log: json.log });
+    Object.assign(p, { state: json.state, used: new Set(json.used), elapsed: json.elapsed, nominal: json.nominal, actual: json.actual, queue: json.queue, log: json.log, anchors: json.anchors });
     return p;
   }
 }

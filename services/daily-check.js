@@ -35,6 +35,7 @@ const { Planner } = require('./onboarding/plan');
 const { byId, passivePool: PASSIVE_POOL } = require('./onboarding/pool');
 const ipip = require('../content/ipip-items');
 const hooks = () => require('./scorecard/hooks'); // eslint-disable-line global-require
+const measure = require('./scorecard/active-measure');
 
 const DAY = 86400000;
 const FIRST_DAYS = Number(process.env.DAILY_FIRST_DAYS || 14);
@@ -70,6 +71,27 @@ function today(userId, now) {
   const dayIndex = Math.max(0, Math.floor((Date.parse(dayOf(now)) - Date.parse(dayOf(first))) / DAY));
   const rec = d.days[dayOf(now)] || { sec: 0, items: 0, skipped: false };
   return { d, dayIndex, rec, left: Math.max(0, allowanceFor(dayIndex) - rec.sec) };
+}
+
+/** For active measurement: per measure, how much behaviour evidence the card holds (not the daily check's own) and its number. */
+function readsOf(userId) {
+  try {
+    const card = scorecard.get(userId);
+    const out = {};
+    for (const [id, r] of Object.entries(card.stats || {})) {
+      const rd = scorecard.read(card, id, {});
+      const src = (r && r.src) || {};
+      out[id] = { mass: (src.beh || 0) + (src.exp || 0) + (src.llm || 0), value: rd.measured !== undefined ? rd.measured : rd.score };
+    }
+    return out;
+  } catch { return {}; }
+}
+/** The switches of services/scorecard/active-measure.js on one planner. Nothing when they are off. */
+function withSwitches(planner, userId) {
+  const short = measure.shortFormIds();
+  measure.attach(planner, userId, measure.enabled() ? readsOf(userId) : {});
+  if (short) { const base = planner.available; planner.available = (it) => short.has(it.id) && base(it); }
+  return planner;
 }
 
 /** How unsure the card still is about each measure: the weight a new reading on it is worth (less measured so far = more). */
@@ -117,7 +139,8 @@ function openRun(userId, now = Date.now(), { importance = importanceOf(userId) }
   const left = ipip.ITEMS.filter((i) => !t.d.ipip.includes(i.id));
   if (left.length && !boosters.get(userId).questionnaire) pre.push({ kind: 'ipip', sec: IPIP_SEC * Math.min(IPIP_PER_DAY, left.length), ids: left.slice(0, IPIP_PER_DAY).map((i) => i.id) });
   planner.available = (it) => KINDS.has(it.kind) && !!tasks.present(it, 1);
-  return { planner, pre, day: t.dayIndex };
+  withSwitches(planner, userId);
+  return { planner, pre: measure.shortFormK() ? pre.filter((p) => p.kind !== 'ipip') : pre, day: t.dayIndex };
 }
 
 /** Finish a run: feed the precision the planner added (only that) and write the day's record. */
@@ -128,6 +151,7 @@ function closeRun(userId, planner, now = Date.now(), { extraSec = 0, items = 0 }
   let fed = null;
   if (obs.length) { try { fed = hooks().onDailyCheck(userId, obs); } catch (err) { console.warn(`daily check: not applied: ${err.message}`); return { error: 'It could not be saved.', code: 'failed' }; } }
   putKnown(userId, { state: planner.state, used: [...new Set([...known.used, ...planner.used])], fed: baseline.fedAfter(est, known.fed) });
+  if (planner.anchors && planner.anchors.length) putDaily(userId, { anchors: measure.mergeAnchors(getDaily(userId).anchors, planner.anchors) });
   const t = today(userId, now);
   const sec = Math.round(planner.elapsed + extraSec);
   putDaily(userId, { first_at: t.d.first_at || new Date(now).toISOString(), days: trim({ ...t.d.days, [dayOf(now)]: { ...t.rec, sec: t.rec.sec + sec, items: t.rec.items + items + planner.log.length, skipped: false } }), active: null });
@@ -165,11 +189,11 @@ function nextStep(user, active, planner) {
 }
 const save = (userId, active, planner) => { active.planner = { ...planner.toJSON(), mode: 'quick' }; active.budget = planner.mode.budgetSec; active.importance = planner.importance; putDaily(userId, { active }); };
 /** The planner of an open run, as it was saved (its mode is the daily one; the stored copy says 'quick' only so Planner.from accepts it). */
-function restore(active) {
+function restore(active, userId) {
   const planner = Planner.from(active.planner, { importance: active.importance || null });
   planner.mode = { ...planner.mode, id: 'daily', budgetSec: active.budget, minGainPerMin: MIN_GAIN_PER_MIN, margin: 1.1, required: [] };
   planner.available = (it) => KINDS.has(it.kind) && !!tasks.present(it, 1);
-  return planner;
+  return withSwitches(planner, userId);
 }
 
 function start(user, now = Date.now()) {
@@ -189,7 +213,7 @@ function answer(user, body, now = Date.now()) {
   const d = getDaily(user.id);
   const active = d.active;
   if (!active || !body || body.session !== active.id || !active.current || active.current.id !== body.id) return { error: 'That step is not open.', code: 'stale' };
-  const planner = restore(active);
+  const planner = restore(active, user.id);
   const cur = active.current;
   const response = body.response && typeof body.response === 'object' ? body.response : {};
   if (cur.kind === 'delayed' || cur.kind === 'ipip') {
@@ -224,7 +248,7 @@ function stop(user, now = Date.now()) {
   if (!enabled() || !boosters.allowed(user)) return { error: 'Not available for this account.', code: 'not_allowed' };
   const active = getDaily(user.id).active;
   if (!active) return { error: 'No check is open.', code: 'stale' };
-  const out = closeRun(user.id, restore(active), now, { items: active.items });
+  const out = closeRun(user.id, restore(active, user.id), now, { items: active.items });
   skip(user, now); // they chose to stop: no second offer today
   return out;
 }

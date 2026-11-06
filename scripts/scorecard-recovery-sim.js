@@ -116,6 +116,17 @@ if (Number(opt('daily-tail', 0)) > 0) process.env.DAILY_TAIL_K = String(opt('dai
 const DAILY_SCN = opt('daily-scenario', 'central');
 // --passive=1: PROBE and CROSS (zero learner minutes) read through the real planner as free items, validity ASSUMED (services/daily-check.js passiveFor; docs/SCORECARD-95.md).
 if (Number(opt('passive', 0)) !== 0) process.env.DAILY_PASSIVE = '1';
+// --active=1: the daily check picks by what this learner's card still lacks (services/scorecard/active-measure.js). --active-gain=X its stop rule. --short-form=K: only the K best validated scale items.
+// --anchor=P: that share of designed items is held back from the card as an independent check for the real-tester refit. --world=alt|research: the generator differs from the reader (scripts/lib/sim-world.js).
+// --days-off=P: a day is skipped with chance P. --shared=P: a share of accounts are used by two people, day by day. --export-db=file: the learners' rows, as the app stores them, for the refit's end-to-end test.
+if (Number(opt('active', 0)) !== 0) process.env.SCORECARD_ACTIVE = '1';
+if (opt('active-gain', '') !== '') process.env.SCORECARD_ACTIVE_MINGAIN = String(opt('active-gain', ''));
+if (Number(opt('short-form', 0)) > 0) process.env.DAILY_SHORT_FORM = String(opt('short-form', 0));
+if (Number(opt('anchor', 0)) > 0) process.env.SCORECARD_ANCHOR = String(opt('anchor', 0));
+const WORLD_NAME = opt('world', 'same');
+const DAYS_OFF = Number(opt('days-off', 0));
+const SHARED_SHARE = Number(opt('shared', 0));
+const EXPORT_DB = opt('export-db', '') ? path.resolve(opt('export-db', '')) : '';
 const IPIP_R = 0.5;       // how well a validated-scale item reflects the measure it maps to (published self-report validities: about 0.3 to 0.5)
 const GAME_R = 0.6;       // how well a two-minute game reflects the trait it is a task for (a rough, assumed correlation)
 const ACT_NOISE_Z = 0.4;  // the error of a past ACT composite as a read of prior knowledge, in standard deviations
@@ -522,7 +533,8 @@ const TRUTH_MODEL = Object.fromEntries(STATS.map((s) => [s.id, truthModelOf(s.id
 const TRACK = 'math';
 const GRADE = 'sim';
 const POP_SD = 17;            // population spread of every true value (50 = typical)
-const EXP_EFFECT = 0.8;       // logits between arms for an extreme learner (~17 pp at p = 0.7)
+const WORLD = require('./lib/sim-world').make(WORLD_NAME, { seed: SEED, ids: STATS.map((s) => s.id), popSd: POP_SD });
+const EXP_EFFECT = WORLD.expEffect === null ? 0.8 : WORLD.expEffect;       // logits between arms for an extreme learner (~17 pp at p = 0.7)
 const SELF_REPORT_R = 0.4;    // how well a questionnaire answer reflects the true value
 const QUIZ_RATE = 0.7;        // share of learners who fill in the questionnaire
 const FEEDBACK_RATE = 0.3;    // share of levels the learner leaves feedback on
@@ -917,7 +929,13 @@ function runLearner(index, mode, { population = false } = {}) {
   // read's own randomness is separate, so modes are compared on the same people.
   const STRATUM = strataOf(index, population);
   const T = drawTruth(new Rng(hashSeed(SEED, `${tag}truth`, index)), STRATUM);
-  const P = paramsFor(T);
+  // In a world where the generator differs (--world), behaviour follows the expressed standing, not the trait; --shared: some accounts carry a second person, alternating by day.
+  const worldIndex = population ? 1000000 + index : index;
+  const Tx = WORLD.on ? WORLD.express(T, worldIndex) : T;
+  const sharedAccount = !population && SHARED_SHARE > 0 && new Rng(hashSeed(SEED, 'shared', index)).u() < SHARED_SHARE;
+  const secondPerson = sharedAccount ? drawTruth(new Rng(hashSeed(SEED, 'truth2', index)), null) : null;
+  const Tx2 = secondPerson ? (WORLD.on ? WORLD.express(secondPerson, worldIndex + 500000) : secondPerson) : null;
+  const P = paramsFor(Tx);
   const rng = new Rng(hashSeed(SEED, `${tag}behaviour`, index));
   const outerRng = rng;
   const llmRng = new Rng(hashSeed(SEED, `${tag}llm`, mode, index));
@@ -1055,8 +1073,10 @@ function runLearner(index, mode, { population = false } = {}) {
       const w = r * Math.sqrt(Math.max(0, 1 / (rho * rho) - 1));
       const key = `${inf.stat}:${item.family}`;
       if (dailyMethod[key] === undefined) dailyMethod[key] = dailyRng.normal();
-      const rt = r * fat;
+      // --world: the item's true validity differs from the believed one and self-report carries response styles the reader does not model
+      const rt = r * fat * (WORLD.on ? WORLD.itemScale(item.id, item.family) * WORLD.youngMult(STRATUM && STRATUM.age) : 1);
       readings[inf.stat] = rt * zOf(inf.stat) + w * dailyMethod[key] + Math.sqrt(Math.max(0, 1 - rt * rt - w * w)) * dailyRng.normal();
+      if (WORLD.on) { readings[inf.stat] += WORLD.style(worldIndex, inf.stat, inf.sign || 1, item.family); if (dailyRng.chance(WORLD.carelessP(worldIndex)) && ['scale', 'self', 'tap', 'goal'].includes(item.family)) readings[inf.stat] = dailyRng.normal(); }
     }
     return { readings, seconds: item.free ? 0 : item.sec * Math.exp(0.2 * dailyRng.normal()) };
   }
@@ -1080,7 +1100,10 @@ function runLearner(index, mode, { population = false } = {}) {
         const mapped = it.maps.filter(([stat]) => T[stat] !== undefined);
         if (!mapped.length) continue;
         const z = mapped.reduce((a, [stat, dir]) => a + dir * zOf(stat), 0) / mapped.length;
-        answers[it.id] = clamp(Math.round(3 + 1.1 * (IPIP_R * z + Math.sqrt(1 - IPIP_R ** 2) * dailyRng.normal())), 1, 5);
+        const rI = IPIP_R * (WORLD.on ? WORLD.itemScale(it.id, 'scale') * WORLD.youngMult(STRATUM && STRATUM.age) : 1);
+        let xI = rI * z + Math.sqrt(1 - rI ** 2) * dailyRng.normal();
+        if (WORLD.on) { xI += WORLD.style(worldIndex, mapped[0][0], mapped[0][1], 'scale'); if (dailyRng.chance(WORLD.carelessP(worldIndex))) xI = dailyRng.normal(); }
+        answers[it.id] = clamp(Math.round(3 + 1.1 * xI), 1, 5);
       }
       hooks.onQuestionnaire(userId, answers, ipip.ITEMS.filter((i) => answers[i.id] !== undefined));
       dailyCheck.markIpip(userId, pre.ids);
@@ -1095,7 +1118,7 @@ function runLearner(index, mode, { population = false } = {}) {
       for (const f of planner.unlockedFree()) planner.record(f, dailyAnswer(f, planner.elapsed, onbModel).readings, 0);
     }
     // Diagnostic: how well the planner's own posterior knows this learner (before the card's combining rules), mean absolute error over the measures with a truth.
-    { const est = planner.estimates(); const ids = STATS.map((x) => x.id).filter((id) => T[id] !== undefined && est[id]); dailyStat.ideal_mae = Number((ids.reduce((acc, id) => acc + Math.abs(est[id].value - T[id]), 0) / (ids.length || 1)).toFixed(3)); }
+    { const est = planner.estimates(); const ids = STATS.map((x) => x.id).filter((id) => T[id] !== undefined && est[id]); dailyStat.ideal_mae = Number((ids.reduce((acc, id) => acc + Math.abs(est[id].value - T[id]), 0) / (ids.length || 1)).toFixed(3)); dailyStat.est = Object.fromEntries(ids.map((id) => [id, [Number(est[id].value.toFixed(2)), Number(est[id].P.toFixed(3))]])); }
     dailyCheck.closeRun(userId, planner, simNow, {});
     dailyStat.runs += 1;
     dailyStat.sec += planner.elapsed;
@@ -1111,6 +1134,8 @@ function runLearner(index, mode, { population = false } = {}) {
   let stopRun = false;
   let dayIdx = 0;
   let dayBase = 0;
+  let sharedOn = false;
+  const daysOffRng = new Rng(hashSeed(SEED, 'daysoff', index));
   activeMs = 0;
 
   const out = {
@@ -1632,6 +1657,16 @@ function runLearner(index, mode, { population = false } = {}) {
       if (lastSessionEnd !== null) {
         if (activeMs - dayBase >= MIN_PER_DAY * 60000) {
           dayIdx++;
+          if (DAYS_OFF > 0 && !population) while (daysOffRng.chance(DAYS_OFF) && dayIdx < PACE_DAYS) dayIdx++;
+          // a second person's day, or the state of this day, on top of the learner's standing (only with --world or --shared)
+          if (WORLD.on || Tx2) {
+            const second = Tx2 && dayIdx % 2 === 1;
+            const base = second ? Tx2 : Tx;
+            const P2 = paramsFor(WORLD.on ? WORLD.day(base, worldIndex) : base);
+            const keep = P.theta0;
+            Object.assign(P, P2, { theta0: keep });
+            if (Tx2) { const skew = paramsFor(Tx2).theta0 - paramsFor(Tx).theta0; if (second && !sharedOn) { theta += skew; sharedOn = true; } else if (!second && sharedOn) { theta -= skew; sharedOn = false; } }
+          }
           dayBase = activeMs;
           simNow = START + dayIdx * 86400000 + Math.max(-8, Math.min(8, P.gapSd * 3 * rng.normal())) * 3600000;
         } else simNow = lastSessionEnd + 3600000 * 1.5 * Math.exp(0.35 * rng.normal()); // the rest of today's minutes: a later sitting, 1 to 2 hours on
@@ -1741,6 +1776,7 @@ function runLearner(index, mode, { population = false } = {}) {
     if (DAILY) dailyAfterSitting();
   }
   out.truth = T;
+  if (EXPORT_DB && !population) out.rows = JSON.parse(JSON.stringify(store));
   if (DEBUG.length && !population) {
     const card = scorecard.get(userId);
     realWarn(`learner ${index}: ${DEBUG.map((id) => `${id} truth ${Math.round(T[id])} standing ${JSON.stringify(scorecard.standing ? scorecard.standing(card, id, { trackId: TRACK }) : null)} rec ${JSON.stringify(card.stats[id])}`).join(' | ')}`);
@@ -2177,6 +2213,7 @@ for (const mode of MODES) {
         feat: { ...sn.feat, ...(sn.feat2 || {}) }, ind: sn.ind, daily: sn.daily, levels: sn.levels, days: sn.days, age: r.stratum ? r.stratum.age : undefined, profile: r.stratum ? r.stratum.profile : undefined, ext: r.stratum && r.stratum.ext ? { id: r.stratum.ext.id, kind: r.stratum.ext.kind, mix: r.stratum.ext.mix, age: r.stratum.ext.age, tags: r.stratum.ext.tags } : undefined,
       };
     });
+    if (EXPORT_DB) fs.writeFileSync(EXPORT_DB, JSON.stringify(have.map((r) => ({ stratum: r.stratum ? { age: r.stratum.age, kind: r.stratum.ext ? r.stratum.ext.kind : 'ordinary' } : null, truth: r.truth, rows: r.rows }))));
     fs.mkdirSync(path.dirname(DUMP), { recursive: true });
     fs.writeFileSync(DUMP, JSON.stringify({ seed: SEED, truth_factors: TRUTH_FACTORS, pop_sd: POP_SD, aliases: ALIASES, truth_models: Object.fromEntries(STATS.map((st) => [st.id, TRUTH_MODEL[st.id].model])), categories: Object.fromEntries(STATS.map((st) => [st.id, st.category])), learners }));
   }
