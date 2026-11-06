@@ -187,7 +187,7 @@ const LESSON = {
 
   await check('review target: a skill holding the target to the goal\'s last day is not asked; off it is; after the last day nothing', async () => {
     const u = user();
-    const e = db.insert('enrollments', { user_id: u.id, track_id: trackId, grade_id: grade.id, status: 'active', current_level: practiceLevel, retention_goal: { horizon: Object.keys(goal.HORIZONS).find((h) => goal.HORIZONS[h].days === 30) || goal.CHOICES[0], set_on: '2026-11-01' }, finished_on: new Date().toISOString() });
+    const e = db.insert('enrollments', { user_id: u.id, track_id: trackId, grade_id: grade.id, status: 'active', current_level: practiceLevel, retention_goal: { horizon: 'months', set_on: '2026-11-01' }, finished_on: new Date().toISOString() });
     const skill = grade.skills[0];
     const old = db.insert('sessions', { user_id: u.id, enrollment_id: e.id, level: 1, kind: 'lesson', blocks: [] });
     for (let i = 0; i < 12; i++) db.insert('items', { session_id: old.id, user_id: u.id, skill_id: skill, role: 'focus', block: 0, index: i, correct: true, user_answer: 'x' });
@@ -200,7 +200,7 @@ const LESSON = {
       const due = mastery.dueReviews(u.id, [skill], 3, ctx);
       assert.ok(Array.isArray(due));
     });
-    assert.strictEqual(goal.reviewContext(u.id, db.byId('enrollments', e.id)), null, 'off: no goal context, today\'s path');
+    await withEnv({ SR_GOAL_REVIEW: 'off' }, () => assert.strictEqual(goal.reviewContext(u.id, db.byId('enrollments', e.id)), null, 'every switch off: no goal context'));
     assert.strictEqual(goal.daysToGoalEnd({ status: 'forever' }, null), null);
     assert.strictEqual(goal.daysToGoalEnd({ status: 'horizon', days: 30 }, null), null, 'not finished: end unknown');
     assert.ok(Math.abs(goal.daysToGoalEnd({ status: 'horizon', days: 30 }, new Date(0).toISOString(), 86400000 * 10) - 20) < 1e-9);
