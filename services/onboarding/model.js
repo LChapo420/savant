@@ -40,15 +40,16 @@ const { STATS } = require('../scorecard/stats');
 const POP_SD = 17;
 
 /** Method families (best any number of items of that family could read a node) per scenario. Anchors: validity-scenarios.json. */
-const TODAY_RHO = { self: 0.45, goal: 0.5, wm: 0.85, speed: 0.8, read: 0.75, reason: 0.75, switch: 0.5, ml: 0.55, taste: 0.45, conf: 0.55, scale: 0.55, tap: 0.67 };
+const TODAY_RHO = { self: 0.45, goal: 0.5, wm: 0.85, speed: 0.8, read: 0.75, reason: 0.75, switch: 0.5, ml: 0.55, taste: 0.45, conf: 0.55, scale: 0.55, tap: 0.67, probe: 0.67, cross: 0.67 };
+// probe (3 normal items reordered to the start of a sitting and after a gap) and cross (paired lesson versions) cost no learner minutes; ceilings = sqrt of section 6's 0.45 (low 0.3): ASSUMED.
 // scale (IPIP agreement items) and tap (own-wording "which would you do next" taps) are the daily check's two designed sources: the ceilings are the square roots of
 // docs/SCORECARD-90.md section 6's reliabilities (scale 0.3, range 0.2 to 0.4; taps 0.45, range 0.3 to 0.55). ASSUMED, never measured on learners.
 const SCENARIOS = {
   pessimistic: { ...TODAY_RHO },
-  central: { self: 0.45, goal: 0.5, wm: 0.82, speed: 0.8, read: 0.75, reason: 0.75, switch: 0.5, ml: 0.42, taste: 0.45, conf: 0.55, scale: 0.55, tap: 0.67 },
-  optimistic: { self: 0.56, goal: 0.5, wm: 0.91, speed: 0.89, read: 0.75, reason: 0.85, switch: 0.71, ml: 0.56, taste: 0.45, conf: 0.55, scale: 0.63, tap: 0.74 },
+  central: { self: 0.45, goal: 0.5, wm: 0.82, speed: 0.8, read: 0.75, reason: 0.75, switch: 0.5, ml: 0.42, taste: 0.45, conf: 0.55, scale: 0.55, tap: 0.67, probe: 0.67, cross: 0.67 },
+  optimistic: { self: 0.56, goal: 0.5, wm: 0.91, speed: 0.89, read: 0.75, reason: 0.85, switch: 0.71, ml: 0.56, taste: 0.45, conf: 0.55, scale: 0.63, tap: 0.74, probe: 0.74, cross: 0.74 },
   // the LOW end of the section 6 ranges for every family the daily check uses (used for the simulated world only; the planner still believes `central`, as it would in the field)
-  low6: { self: 0.4, goal: 0.45, wm: 0.74, speed: 0.72, read: 0.7, reason: 0.68, switch: 0.45, ml: 0.38, taste: 0.4, conf: 0.5, scale: 0.45, tap: 0.55 },
+  low6: { self: 0.4, goal: 0.45, wm: 0.74, speed: 0.72, read: 0.7, reason: 0.68, switch: 0.45, ml: 0.38, taste: 0.4, conf: 0.5, scale: 0.45, tap: 0.55, probe: 0.55, cross: 0.55 },
 };
 /** Loadings of the true values on the general factor and the category factor: [g, category]. Evidence: validity-scenarios.json truth_correlation. */
 const LOADINGS = {

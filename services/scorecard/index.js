@@ -715,7 +715,19 @@ function withIndicators(card, statId, res) {
 }
 
 function read(card, statId, opts = {}) {
-  return withIndicators(card, statId, readOwn(card, statId, opts));
+  const out = withIndicators(card, statId, readOwn(card, statId, opts));
+  return readoutOn() ? recalibrated(card, statId, out, opts) : out;
+}
+
+/** The calibrated read-out (services/scorecard/readout.js), behind SCORECARD_RECAL / SCORECARD_JOINT and a fitted artifact; unchanged without both. */
+function readoutOn() { const R = require('./readout'); return R.recalOn() && !!R.load(); }
+function recalibrated(card, statId, out, opts) {
+  const R = require('./readout'); const art = R.load();
+  if (!art || !art.models[statId] || opts.trackId) return out;
+  const one = (id) => { const o = id === statId ? out : withIndicators(card, id, readOwn(card, id, opts)); return R.readS1(art, id, { m: o.measured, conf: o.confidence }); };
+  let v = one(statId);
+  if (R.jointOn() && art.s2) { const x = {}; for (const id of art.ids) if (BY_ID[id]) x[id] = one(id); v = R.readS2(art, x)[statId]; }
+  return { ...out, score: Math.round(v), raw_score: out.score };
 }
 
 /** A stat's own evidence, before the indicators. */

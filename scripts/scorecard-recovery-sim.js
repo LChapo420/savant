@@ -114,6 +114,8 @@ const DAILY_SKIP = Number(opt('daily-skip', 0));
 // --daily-tail=K: the heavier-tailed read of the daily check's data (services/onboarding/baseline.js observations tailK); 0 = off.
 if (Number(opt('daily-tail', 0)) > 0) process.env.DAILY_TAIL_K = String(opt('daily-tail', 0));
 const DAILY_SCN = opt('daily-scenario', 'central');
+// --passive=1: PROBE and CROSS (zero learner minutes) read through the real planner as free items, validity ASSUMED (services/daily-check.js passiveFor; docs/SCORECARD-95.md).
+if (Number(opt('passive', 0)) !== 0) process.env.DAILY_PASSIVE = '1';
 const IPIP_R = 0.5;       // how well a validated-scale item reflects the measure it maps to (published self-report validities: about 0.3 to 0.5)
 const GAME_R = 0.6;       // how well a two-minute game reflects the trait it is a task for (a rough, assumed correlation)
 const ACT_NOISE_Z = 0.4;  // the error of a past ACT composite as a read of prior knowledge, in standard deviations
@@ -1084,6 +1086,7 @@ function runLearner(index, mode, { population = false } = {}) {
       dailyCheck.markIpip(userId, pre.ids);
       planner.elapsed += pre.sec;
     }
+    for (const f of dailyCheck.passiveFor(run.day)) planner.record(f, dailyAnswer(f, planner.elapsed, onbModel).readings, 0);
     for (let guard = 0; guard < 400; guard++) {
       const item = planner.next();
       if (!item) break;
