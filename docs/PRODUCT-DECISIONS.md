@@ -162,3 +162,7 @@ real-world challenges, scenario role-play, self-report surveys.
 - **Learner data after Nov 14.** Ask the owner again on Nov 10.
 - **Munito and Coral.** Keep building with them while credit lasts.
 - **Evaluations.** Build one for every API we use, as long as covering all of them adds no more than 2% to overall cost.
+
+## Goals shape every part of the material (owner, 2026-11-05)
+
+Every part of lessons and other material should be changeable and follow the learner goal (for example core parts fast) and the deepest understanding of them. Keep building toward at least 95% accuracy at one month.
