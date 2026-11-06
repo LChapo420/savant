@@ -77,6 +77,9 @@
     await loadSnapshotScript();
     let status;
     try {
+      // Signed out: no dock, and no 401 in the console (/api/auth/me answers 200 either way).
+      const me = await fetch('/api/auth/me', { credentials: 'same-origin' });
+      if (!me.ok || !(await me.json()).user) return;
       const r = await fetch(`/api/tutor/dock?path=${encodeURIComponent(location.pathname)}`, { credentials: 'same-origin' });
       if (!r.ok) return;
       status = await r.json();

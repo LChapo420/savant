@@ -68,13 +68,14 @@ async function fromPdf(buf) {
     if (countWords(joined) < MIN_OCR_WORDS) {
       let images = [];
       try { images = await require('./material-formats').pdfImages(pdf); } catch { images = []; }
-      if (images.length) return { scanned: true, images, pages: pdf.numPages };
+      if (images.length) return { scanned: true, images, pages: pdf.numPages, checked: Math.min(pdf.numPages, 40) };
       return fail('That PDF looks scanned, and the pictures in it could not be pulled out to read. Upload each page as a PNG or JPG picture, or paste the text.', 'scanned');
     }
     // Headings, bold and page marks for the key-point pass; the stored text stays the plain text above.
     let rich = null;
     try { const r = await require('./material-formats').pdfRich(pdf, MAX_PAGES); rich = r && countWords(r.text) >= MIN_OCR_WORDS ? r.rich : null; } catch { rich = null; }
-    return { text: joined, rich: rich || undefined, pages: pdf.numPages };
+    const blank = text.map((pg, i) => (countWords(pg) < 3 ? i + 1 : 0)).filter(Boolean);
+    return { text: joined, rich: rich || undefined, pages: pdf.numPages, blank: blank.length && blank.length < text.length ? blank : [] };
   } catch {
     return fail('That PDF could not be read. It may be damaged.', 'unreadable');
   } finally {
@@ -336,17 +337,27 @@ async function fromHtmlFile(buf) {
 async function tesseractOcr(buf) {
   let Tesseract;
   try { Tesseract = require('tesseract.js'); } catch { return { missing: true }; }
-  let worker;
+  // One worker is kept for a few seconds and reused, so a scan of many pages does not pay the start-up cost on every page.
   try {
-    require('fs').mkdirSync(TESSERACT_CACHE, { recursive: true });
-    worker = await Tesseract.createWorker('eng', 1, { cachePath: TESSERACT_CACHE });
+    if (!sharedWorker) {
+      require('fs').mkdirSync(TESSERACT_CACHE, { recursive: true });
+      sharedWorker = Tesseract.createWorker('eng', 1, { cachePath: TESSERACT_CACHE });
+    }
+    const worker = await sharedWorker;
+    if (idleTimer) clearTimeout(idleTimer);
     const out = await worker.recognize(buf);
+    idleTimer = setTimeout(releaseWorker, 8000); idleTimer.unref();
     return { text: (out && out.data && out.data.text) || '' };
   } catch {
+    releaseWorker();
     return { failed: true };
-  } finally {
-    if (worker) { try { await worker.terminate(); } catch { /* nothing to do */ } }
   }
+}
+let sharedWorker = null; let idleTimer = null;
+function releaseWorker() {
+  const w = sharedWorker; sharedWorker = null;
+  if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+  if (w) Promise.resolve(w).then((x) => x.terminate()).catch(() => {});
 }
 
 // Tests swap the recognizer so no real OCR runs; null means the real one.

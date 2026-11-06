@@ -236,7 +236,7 @@ function difficultyShift(zPace, confidence = 1) {
 }
 
 module.exports = {
-  SWITCH, DEFAULT, enabled, forLearner,
+  SWITCH, DEFAULT, enabled, forLearner, isSuspended: () => suspended > 0,
   PERSONAL, RELEARN, STOP, INTERLEAVE, PRETEST, DIFFICULTY,
   reviewTarget, relearnDone, dueBelow,
   worthAsking, skipOn, followsStop, reviewSlots, displacedReviews,

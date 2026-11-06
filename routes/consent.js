@@ -403,7 +403,7 @@ const KNOWN_COLLECTIONS = [
     'users', 'enrollments', 'skill_states', 'profiles', 'sessions', 'items', 'events', 'content_cache', 'themed_items', 'themed_log', 'ai_usage',
     'reports', 'lessons', 'remediations', 'streaks', 'essays', 'level_feedback', 'level_edits', 'scorecards',
     'level_signals', 'learner_records', 'level_debriefs', 'placement_question_sets', 'subject_placements',
-    'game_payloads', 'block_plans', 'assist_chats', 'level_logs', 'chess_ratings', 'chess_puzzle_attempts',
+    'game_payloads', 'block_plans', 'lesson_layers', 'assist_chats', 'level_logs', 'chess_ratings', 'chess_puzzle_attempts',
   'chess_rush_runs', 'chess_drill_cards', 'chess_drill_runs', 'fact_pools', 'piano_song_results', 'parents', 'parental_consents',
   'skill_records', 'study_sessions', 'enforcers', 'learner_goals', 'tutor_memory', 'tutor_modes', 'es_path_runs', 'es_review',
   'act_profiles', 'act_scores', 'act_study', 'spanish_study', 'spanish_study_checkins', 'spanish_study_tests', 'materials', 'material_courses', 'material_progress', 'material_packs', 'material_cards', 'material_podcasts', 'material_audio_jobs',
@@ -416,6 +416,7 @@ const KNOWN_COLLECTIONS = [
   'footprint_events',
   'act_guests', 'recruit_counts', // no account behind them (services/act-check.js): a token hash and per-day totals; guests are deleted after 30 days
   'recruit_applicants', // 13+ applicants only; user_id is set when one signs up, so account deletion reaches it
+  'speed_proof', 'speed_proof_blocks', // the speed proof's rows and draw blocks, per learner (services/speed-proof.js)
   'beta_blocks', // arm slots only, no learner id (services/beta-arm.js); a child's own arm is on the user row and goes with it
 ];
 function collectionNames() {

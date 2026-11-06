@@ -1,0 +1,1485 @@
+{
+ "tag": "pm2",
+ "seed": 6106,
+ "n": 24,
+ "generated_at": "2026-11-06T10:08:01.671Z",
+ "writer": "ZeroGPU GLM-5.3 Flash",
+ "judges": [
+  {
+   "id": "zerogpu-glm",
+   "model": "z-ai/glm-5.3-flash",
+   "family": "glm"
+  },
+  {
+   "id": "coral-deepseek",
+   "model": "deepseek-v4.1-flash",
+   "family": "deepseek"
+  },
+  {
+   "id": "gonka-deepseek",
+   "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+   "family": "deepseek"
+  }
+ ],
+ "simulated": true,
+ "parts": {
+  "feedback": {
+   "part": "feedback",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 120,
+      "verdicts": 117,
+      "empty": 0,
+      "same": 3,
+      "picks_vL": 100,
+      "share": 0.8547008547008547,
+      "p_above_chance": 8.631316288499987e-16
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 0.9,
+       "swap_fooled": null,
+       "control": null
+      },
+      "coral-deepseek": {
+       "real": 0.8947368421052632,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": 0.7692307692307693,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": 0.9,
+      "deepseek": 0.8311688311688312
+     },
+     "individuals": {
+      "n": 22,
+      "worst_1pct": 0.3333333333333333,
+      "worst_5pct": 0.3666666666666667,
+      "worst_10pct": 0.41111111111111115,
+      "lowest": [
+       {
+        "L": "x6106-18",
+        "share": 0.3333333333333333,
+        "n": 6
+       },
+       {
+        "L": "x6106-0",
+        "share": 0.4,
+        "n": 5
+       },
+       {
+        "L": "x6106-23",
+        "share": 0.5,
+        "n": 4
+       }
+      ],
+      "below_half": 2
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 11,
+       "share": 0.6363636363636364
+      },
+      "contradict": {
+       "n": 24,
+       "share": 0.9583333333333334
+      },
+      "random": {
+       "n": 25,
+       "share": 0.84
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.75
+      },
+      "tail_lo": {
+       "n": 12,
+       "share": 1
+      },
+      "age_young": {
+       "n": 12,
+       "share": 1
+      },
+      "age_old": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "ell": {
+       "n": 9,
+       "share": 0.8888888888888888
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 87,
+      "verdicts": 85,
+      "empty": 1,
+      "same": 1,
+      "picks_vL": 56,
+      "share": 0.6588235294117647,
+      "p_above_chance": 0.002255820204177634
+     },
+     "swap_fooled": {
+      "n": 87,
+      "verdicts": 85,
+      "empty": 0,
+      "same": 2,
+      "picks_vL": 29,
+      "share": 0.3411764705882353
+     },
+     "control_picks_vL": {
+      "n": 87,
+      "verdicts": 83,
+      "empty": 0,
+      "same": 4,
+      "picks_vL": 31,
+      "share": 0.37349397590361444
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 0.6551724137931034,
+       "swap_fooled": 0.27586206896551724,
+       "control": 0.42857142857142855
+      },
+      "coral-deepseek": {
+       "real": 0.6071428571428571,
+       "swap_fooled": 0.39285714285714285,
+       "control": 0.32142857142857145
+      },
+      "gonka-deepseek": {
+       "real": 0.7142857142857143,
+       "swap_fooled": 0.35714285714285715,
+       "control": 0.37037037037037035
+      }
+     },
+     "by_family": {
+      "glm": 0.6551724137931034,
+      "deepseek": 0.6607142857142857
+     },
+     "individuals": {
+      "n": 19,
+      "worst_1pct": 0.3333333333333333,
+      "worst_5pct": 0.3333333333333333,
+      "worst_10pct": 0.3333333333333333,
+      "lowest": [
+       {
+        "L": "x6106-4",
+        "share": 0.3333333333333333,
+        "n": 6
+       },
+       {
+        "L": "x6106-9",
+        "share": 0.3333333333333333,
+        "n": 3
+       },
+       {
+        "L": "x6106-14",
+        "share": 0.3333333333333333,
+        "n": 3
+       }
+      ],
+      "below_half": 5
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 9,
+       "share": 0.7777777777777778
+      },
+      "contradict": {
+       "n": 12,
+       "share": 0.75
+      },
+      "random": {
+       "n": 19,
+       "share": 0.8421052631578947
+      },
+      "tail_both": {
+       "n": 9,
+       "share": 0.3333333333333333
+      },
+      "tail_lo": {
+       "n": 6,
+       "share": 0.5
+      },
+      "age_young": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "age_old": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "ell": {
+       "n": 6,
+       "share": 0.3333333333333333
+      }
+     }
+    }
+   },
+   "facts": {
+    "conflict_yes": 0,
+    "conflict_asked": 9,
+    "declined_because": {
+     "it uses word problems about money, which the learn": 1,
+     "it uses rewrites of the same idea three times, whi": 4,
+     "it is too long: one or two sentences": 1,
+     "it uses gamified points, which the learner dislike": 1,
+     "empty": 2
+    },
+    "checked": 48,
+    "passed": 40,
+    "declined": 8,
+    "same_yes": 6,
+    "same_asked": 15,
+    "coverage_fail": 0
+   },
+   "goal": null,
+   "sources": 48,
+   "declined": 8,
+   "trials": 381
+  },
+  "hint": {
+   "part": "hint",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 123,
+      "verdicts": 123,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 63,
+      "share": 0.5121951219512195,
+      "p_above_chance": 0.4284921641248786
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 0.5609756097560976,
+       "swap_fooled": null,
+       "control": null
+      },
+      "coral-deepseek": {
+       "real": 0.4634146341463415,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": 0.5121951219512195,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": 0.5609756097560976,
+      "deepseek": 0.4878048780487805
+     },
+     "individuals": {
+      "n": 22,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0.05555555555555555,
+      "lowest": [
+       {
+        "L": "x6106-3",
+        "share": 0,
+        "n": 6
+       },
+       {
+        "L": "x6106-10",
+        "share": 0,
+        "n": 3
+       },
+       {
+        "L": "x6106-4",
+        "share": 0.16666666666666666,
+        "n": 6
+       }
+      ],
+      "below_half": 7
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 15,
+       "share": 0.4666666666666667
+      },
+      "tail_lo": {
+       "n": 12,
+       "share": 0.5
+      },
+      "contradict": {
+       "n": 21,
+       "share": 0.5238095238095238
+      },
+      "random": {
+       "n": 30,
+       "share": 0.43333333333333335
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.4166666666666667
+      },
+      "age_young": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "age_old": {
+       "n": 9,
+       "share": 0.5555555555555556
+      },
+      "ell": {
+       "n": 12,
+       "share": 0.6666666666666666
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 111,
+      "verdicts": 111,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 59,
+      "share": 0.5315315315315315,
+      "p_above_chance": 0.28461011390183255
+     },
+     "swap_fooled": {
+      "n": 111,
+      "verdicts": 111,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 50,
+      "share": 0.45045045045045046
+     },
+     "control_picks_vL": {
+      "n": 111,
+      "verdicts": 111,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 44,
+      "share": 0.3963963963963964
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 0.5945945945945946,
+       "swap_fooled": 0.5405405405405406,
+       "control": 0.3783783783783784
+      },
+      "coral-deepseek": {
+       "real": 0.5135135135135135,
+       "swap_fooled": 0.3783783783783784,
+       "control": 0.4594594594594595
+      },
+      "gonka-deepseek": {
+       "real": 0.4864864864864865,
+       "swap_fooled": 0.43243243243243246,
+       "control": 0.35135135135135137
+      }
+     },
+     "by_family": {
+      "glm": 0.5945945945945946,
+      "deepseek": 0.5
+     },
+     "individuals": {
+      "n": 20,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0.08333333333333333,
+      "lowest": [
+       {
+        "L": "x6106-6",
+        "share": 0,
+        "n": 6
+       },
+       {
+        "L": "x6106-3",
+        "share": 0.16666666666666666,
+        "n": 6
+       },
+       {
+        "L": "x6106-20",
+        "share": 0.16666666666666666,
+        "n": 6
+       }
+      ],
+      "below_half": 6
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 12,
+       "share": 0.25
+      },
+      "tail_lo": {
+       "n": 6,
+       "share": 1
+      },
+      "contradict": {
+       "n": 21,
+       "share": 0.5714285714285714
+      },
+      "random": {
+       "n": 30,
+       "share": 0.36666666666666664
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "age_young": {
+       "n": 12,
+       "share": 0.5
+      },
+      "age_old": {
+       "n": 9,
+       "share": 0.6666666666666666
+      },
+      "ell": {
+       "n": 9,
+       "share": 0.7777777777777778
+      }
+     }
+    }
+   },
+   "facts": {
+    "conflict_yes": 0,
+    "conflict_asked": 14,
+    "declined_because": {
+     "it uses word problems about money, which the learn": 1,
+     "it uses rewrites of the same idea three times, whi": 4,
+     "it states the answer": 2
+    },
+    "checked": 48,
+    "passed": 41,
+    "declined": 7,
+    "same_yes": 4,
+    "same_asked": 14,
+    "coverage_fail": 0
+   },
+   "goal": null,
+   "sources": 48,
+   "declined": 7,
+   "trials": 456
+  },
+  "review": {
+   "part": "review",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 66,
+      "verdicts": 65,
+      "empty": 0,
+      "same": 1,
+      "picks_vL": 46,
+      "share": 0.7076923076923077,
+      "p_above_chance": 0.000545041902223788
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 0.7727272727272727,
+       "swap_fooled": null,
+       "control": null
+      },
+      "coral-deepseek": {
+       "real": 0.5909090909090909,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": 0.7619047619047619,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": 0.7727272727272727,
+      "deepseek": 0.6744186046511628
+     },
+     "individuals": {
+      "n": 22,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x6106-2",
+        "share": 0,
+        "n": 3
+       },
+       {
+        "L": "x6106-6",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x6106-18",
+        "share": 0,
+        "n": 3
+       }
+      ],
+      "below_half": 5
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 9,
+       "share": 0.8888888888888888
+      },
+      "tail_lo": {
+       "n": 6,
+       "share": 1
+      },
+      "contradict": {
+       "n": 12,
+       "share": 0.5
+      },
+      "random": {
+       "n": 14,
+       "share": 0.5714285714285714
+      },
+      "tail_both": {
+       "n": 6,
+       "share": 0.6666666666666666
+      },
+      "age_old": {
+       "n": 6,
+       "share": 0.5
+      },
+      "ell": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "age_young": {
+       "n": 6,
+       "share": 1
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 60,
+      "verdicts": 60,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 40,
+      "share": 0.6666666666666666,
+      "p_above_chance": 0.006744646865595943
+     },
+     "swap_fooled": {
+      "n": 60,
+      "verdicts": 59,
+      "empty": 0,
+      "same": 1,
+      "picks_vL": 16,
+      "share": 0.2711864406779661
+     },
+     "control_picks_vL": {
+      "n": 60,
+      "verdicts": 59,
+      "empty": 0,
+      "same": 1,
+      "picks_vL": 28,
+      "share": 0.4745762711864407
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 0.85,
+       "swap_fooled": 0.35,
+       "control": 0.5
+      },
+      "coral-deepseek": {
+       "real": 0.6,
+       "swap_fooled": 0.21052631578947367,
+       "control": 0.45
+      },
+      "gonka-deepseek": {
+       "real": 0.55,
+       "swap_fooled": 0.25,
+       "control": 0.47368421052631576
+      }
+     },
+     "by_family": {
+      "glm": 0.85,
+      "deepseek": 0.575
+     },
+     "individuals": {
+      "n": 20,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x6106-6",
+        "share": 0,
+        "n": 3
+       },
+       {
+        "L": "x6106-18",
+        "share": 0,
+        "n": 3
+       },
+       {
+        "L": "x6106-0",
+        "share": 0.3333333333333333,
+        "n": 3
+       }
+      ],
+      "below_half": 5
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 6,
+       "share": 0.6666666666666666
+      },
+      "tail_lo": {
+       "n": 3,
+       "share": 1
+      },
+      "contradict": {
+       "n": 12,
+       "share": 0.8333333333333334
+      },
+      "random": {
+       "n": 15,
+       "share": 0.5333333333333333
+      },
+      "tail_both": {
+       "n": 6,
+       "share": 0.5
+      },
+      "age_old": {
+       "n": 6,
+       "share": 0.3333333333333333
+      },
+      "ell": {
+       "n": 6,
+       "share": 0.6666666666666666
+      },
+      "age_young": {
+       "n": 6,
+       "share": 1
+      }
+     }
+    }
+   },
+   "facts": {
+    "conflict_yes": 0,
+    "conflict_asked": 8,
+    "declined_because": {
+     "it uses rewrites of the same idea three times, whi": 2
+    },
+    "checked": 24,
+    "passed": 22,
+    "declined": 2,
+    "same_yes": 4,
+    "same_asked": 8,
+    "coverage_fail": 0
+   },
+   "goal": null,
+   "sources": 24,
+   "declined": 2,
+   "trials": 246
+  },
+  "lesson": {
+   "part": "lesson",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 30,
+      "verdicts": 30,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 25,
+      "share": 0.8333333333333334,
+      "p_above_chance": 0.00016245711594820093
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 1,
+       "swap_fooled": null,
+       "control": null
+      },
+      "coral-deepseek": {
+       "real": 0.9,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": 0.6,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": 1,
+      "deepseek": 0.75
+     },
+     "individuals": {
+      "n": 10,
+      "worst_1pct": 0.3333333333333333,
+      "worst_5pct": 0.3333333333333333,
+      "worst_10pct": 0.3333333333333333,
+      "lowest": [
+       {
+        "L": "x6106-22",
+        "share": 0.3333333333333333,
+        "n": 3
+       },
+       {
+        "L": "x6106-4",
+        "share": 0.6666666666666666,
+        "n": 3
+       },
+       {
+        "L": "x6106-2",
+        "share": 0.6666666666666666,
+        "n": 3
+       }
+      ],
+      "below_half": 1
+     },
+     "by_kind": {
+      "tail_both": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "contradict": {
+       "n": 9,
+       "share": 0.6666666666666666
+      },
+      "age_young": {
+       "n": 3,
+       "share": 1
+      },
+      "ell": {
+       "n": 3,
+       "share": 1
+      },
+      "age_old": {
+       "n": 3,
+       "share": 0.6666666666666666
+      },
+      "tail_hi": {
+       "n": 3,
+       "share": 1
+      },
+      "tail_lo": {
+       "n": 3,
+       "share": 1
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 9,
+      "verdicts": 9,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 7,
+      "share": 0.7777777777777778,
+      "p_above_chance": 0.08984375000000007
+     },
+     "swap_fooled": {
+      "n": 9,
+      "verdicts": 9,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 3,
+      "share": 0.3333333333333333
+     },
+     "control_picks_vL": {
+      "n": 9,
+      "verdicts": 9,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 5,
+      "share": 0.5555555555555556
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 0.6666666666666666,
+       "swap_fooled": 0.3333333333333333,
+       "control": 0.6666666666666666
+      },
+      "coral-deepseek": {
+       "real": 0.6666666666666666,
+       "swap_fooled": 0.3333333333333333,
+       "control": 0.6666666666666666
+      },
+      "gonka-deepseek": {
+       "real": 1,
+       "swap_fooled": 0.3333333333333333,
+       "control": 0.3333333333333333
+      }
+     },
+     "by_family": {
+      "glm": 0.6666666666666666,
+      "deepseek": 0.8333333333333334
+     },
+     "individuals": {
+      "n": 3,
+      "worst_1pct": 0.3333333333333333,
+      "worst_5pct": 0.3333333333333333,
+      "worst_10pct": 0.3333333333333333,
+      "lowest": [
+       {
+        "L": "x6106-21",
+        "share": 0.3333333333333333,
+        "n": 3
+       },
+       {
+        "L": "x6106-4",
+        "share": 1,
+        "n": 3
+       },
+       {
+        "L": "x6106-20",
+        "share": 1,
+        "n": 3
+       }
+      ],
+      "below_half": 1
+     },
+     "by_kind": {
+      "tail_both": {
+       "n": 3,
+       "share": 1
+      },
+      "tail_hi": {
+       "n": 3,
+       "share": 1
+      },
+      "tail_lo": {
+       "n": 3,
+       "share": 0.3333333333333333
+      }
+     }
+    }
+   },
+   "facts": {
+    "conflict_yes": 0,
+    "conflict_asked": 3,
+    "declined_because": {
+     "it uses food examples, which this learner dislikes": 3,
+     "the number N is not in the original": 5,
+     "it uses told the answer right away, which this lea": 1,
+     "it uses word problems about money, which this lear": 2,
+     "it uses rewrites of the same idea three times, whi": 1,
+     "it uses stories that waste time, which this learne": 1,
+     "the number N is missing": 4,
+     "it uses abstract symbols without a picture, group ": 1
+    },
+    "checked": 24,
+    "passed": 10,
+    "declined": 14,
+    "same_yes": 2,
+    "same_asked": 3,
+    "coverage_fail": 0
+   },
+   "goal": null,
+   "sources": 24,
+   "declined": 14,
+   "trials": 57
+  },
+  "tutor": {
+   "part": "tutor",
+   "arms": {
+    "vs_other": {
+     "real": {
+      "n": 60,
+      "verdicts": 60,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 45,
+      "share": 0.75,
+      "p_above_chance": 0.00006725704046424777
+     },
+     "swap_fooled": {
+      "n": 60,
+      "verdicts": 60,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 11,
+      "share": 0.18333333333333332
+     },
+     "control_picks_vL": {
+      "n": 60,
+      "verdicts": 60,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 25,
+      "share": 0.4166666666666667
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 0.8,
+       "swap_fooled": 0.2,
+       "control": 0.45
+      },
+      "coral-deepseek": {
+       "real": 0.65,
+       "swap_fooled": 0.2,
+       "control": 0.35
+      },
+      "gonka-deepseek": {
+       "real": 0.8,
+       "swap_fooled": 0.15,
+       "control": 0.45
+      }
+     },
+     "by_family": {
+      "glm": 0.8,
+      "deepseek": 0.725
+     },
+     "individuals": {
+      "n": 20,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0.16666666666666666,
+      "lowest": [
+       {
+        "L": "x6106-18",
+        "share": 0,
+        "n": 3
+       },
+       {
+        "L": "x6106-6",
+        "share": 0.3333333333333333,
+        "n": 3
+       },
+       {
+        "L": "x6106-8",
+        "share": 0.3333333333333333,
+        "n": 3
+       }
+      ],
+      "below_half": 4
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 6,
+       "share": 1
+      },
+      "tail_lo": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "contradict": {
+       "n": 12,
+       "share": 0.8333333333333334
+      },
+      "random": {
+       "n": 12,
+       "share": 0.75
+      },
+      "tail_both": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "age_young": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "age_old": {
+       "n": 6,
+       "share": 0.16666666666666666
+      },
+      "ell": {
+       "n": 6,
+       "share": 0.6666666666666666
+      }
+     }
+    }
+   },
+   "facts": {
+    "conflict_yes": 0,
+    "conflict_asked": 0,
+    "declined_because": {},
+    "checked": 20,
+    "passed": 20,
+    "declined": 0,
+    "same_yes": 0,
+    "same_asked": 0,
+    "coverage_fail": 0
+   },
+   "goal": {
+    "part": "tutor_goal",
+    "arms": {
+     "goal_vs_none": {
+      "real": {
+       "n": 96,
+       "verdicts": 90,
+       "empty": 0,
+       "same": 6,
+       "picks_vL": 67,
+       "share": 0.7444444444444445,
+       "p_above_chance": 0.0000018975245890839657
+      },
+      "swap_fooled": {
+       "n": 0,
+       "verdicts": 0,
+       "empty": 0,
+       "same": 0,
+       "picks_vL": 0,
+       "share": null
+      },
+      "control_picks_vL": {
+       "n": 0,
+       "verdicts": 0,
+       "empty": 0,
+       "same": 0,
+       "picks_vL": 0,
+       "share": null
+      },
+      "per_judge": {
+       "zerogpu-glm": {
+        "real": 0.6774193548387096,
+        "swap_fooled": null,
+        "control": null
+       },
+       "coral-deepseek": {
+        "real": 0.75,
+        "swap_fooled": null,
+        "control": null
+       },
+       "gonka-deepseek": {
+        "real": 0.8064516129032258,
+        "swap_fooled": null,
+        "control": null
+       }
+      },
+      "by_family": {
+       "glm": 0.6774193548387096,
+       "deepseek": 0.7796610169491526
+      },
+      "individuals": {
+       "n": 16,
+       "worst_1pct": 0.5,
+       "worst_5pct": 0.5,
+       "worst_10pct": 0.5,
+       "lowest": [
+        {
+         "L": "x6106-3",
+         "share": 0.5,
+         "n": 6
+        },
+        {
+         "L": "x6106-8",
+         "share": 0.5,
+         "n": 6
+        },
+        {
+         "L": "x6106-10",
+         "share": 0.5,
+         "n": 6
+        }
+       ],
+       "below_half": 0
+      },
+      "by_kind": {
+       "x": {
+        "n": 90,
+        "share": 0.7444444444444445
+       }
+      }
+     }
+    }
+   },
+   "sources": 20,
+   "declined": 0,
+   "trials": 180
+  }
+ },
+ "samples": {
+  "feedback": [
+   {
+    "learner": "x6106-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: crochet, roller derby, bird song recording. Dislikes (never wanted): competitive framing, abstract symbols without a picture.",
+    "stored": "Taking one rocket away from five leaves four, so the next number word is four.",
+    "shaped": "Here is the idea: taking one rocket away from five leaves four, so the backward count moves from five to four.",
+    "other_learner": "Counting backward means saying one less each time. Five rockets with one taken away leave four rockets. So the number word after five, going backward, is four.",
+    "diff": {
+     "stored_words": 15,
+     "shaped_words": 21,
+     "new_words": 6,
+     "dropped_words": 3
+    }
+   },
+   {
+    "learner": "x6106-2",
+    "kind": "contradict",
+    "profile": "Age 54. Language: English. Interests: taxidermy curiosity, drone racing. Dislikes (never wanted): being rushed, cute mascots.",
+    "stored": "Re- means again, and build means to make or put together, so rebuild means to make or put together again.",
+    "shaped": "Re- means again, and build means to make or put together. Put those two parts together and rebuild means to make or put something together again. Unlock fails here because it does not start with re-, so it cannot mean doing something again.",
+    "other_learner": "Re- means again, and build means make. So rebuild means make or put together again. Rebuild does exactly what it says.",
+    "diff": {
+     "stored_words": 20,
+     "shaped_words": 43,
+     "new_words": 20,
+     "dropped_words": 1
+    }
+   },
+   {
+    "learner": "x6106-3",
+    "kind": "random",
+    "profile": "Age 10. Language: English is a second language (first: Vietnamese). Interests: fixing bicycles, lockpicking sport, quilting. Dislikes (never wanted): cartoon characters, repetition drills, food examples.",
+    "stored": "Counting the beads in the three color groups gives 1 yellow, 2 blue, and 3 red beads.",
+    "shaped": "Count the beads in each color group. That gives 1 yellow, 2 blue, 3 red. The other choices swap the beads between colors.",
+    "other_learner": "When beads are sorted by color, each group contains only the beads of that single color. Counting the beads in the three color groups gives 1 yellow, 2 blue, and 3 red beads. It is like sorting anime character parts into separate piles before drawing, where each pile keeps its own pieces.",
+    "diff": {
+     "stored_words": 17,
+     "shaped_words": 23,
+     "new_words": 10,
+     "dropped_words": 6
+    }
+   },
+   {
+    "learner": "x6106-4",
+    "kind": "tail_both",
+    "profile": "Age 61. Language: English. Interests: anime drawing. Dislikes (never wanted): being praised for easy things.",
+    "stored": "An array with 4 rows of 7 squares contains 4 × 7 = 28 unit squares.",
+    "shaped": "The total number of squares comes from multiplying the rows by the squares in each row. With 4 rows of 7, that gives 4 × 7 = 28 unit squares. Picture an anime drawing grid, where each row repeats the same count, and the idea clicks.",
+    "other_learner": "Here's the idea: an array has rows, so you multiply the rows by the squares in each row. That works out to 4 × 7 = 28 unit squares. Adding 4 and 7 gives 11, but the array needs 4 groups of 7, so multiplying is the way to go.",
+    "diff": {
+     "stored_words": 16,
+     "shaped_words": 46,
+     "new_words": 30,
+     "dropped_words": 2
+    }
+   }
+  ],
+  "hint": [
+   {
+    "learner": "x6106-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: crochet, roller derby, bird song recording. Dislikes (never wanted): competitive framing, abstract symbols without a picture.",
+    "stored": "Find the volume of each prism by multiplying its length, width, and height, then combine the two volumes. Be careful with your multiplication so the sum matches one of the choices.",
+    "shaped": "Here is the idea: each prism's dimensions may suggest a way to measure the space it occupies. Once both amounts are known, consider how they might be joined.",
+    "other_learner": "Check each prism's volume on its own before adding them for the total.",
+    "diff": {
+     "stored_words": 31,
+     "shaped_words": 28,
+     "new_words": 24,
+     "dropped_words": 25
+    }
+   },
+   {
+    "learner": "x6106-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: crochet, roller derby, bird song recording. Dislikes (never wanted): competitive framing, abstract symbols without a picture.",
+    "stored": "When counting backward, you say the numbers in reverse order, moving down by one each time. Think about which number word comes just before five in the counting sequence.",
+    "shaped": "Here is an idea: when the count moves backward, consider which number word you would say just before five.",
+    "other_learner": "You are counting backward from five. Which number word comes just before five?",
+    "diff": {
+     "stored_words": 29,
+     "shaped_words": 19,
+     "new_words": 9,
+     "dropped_words": 18
+    }
+   },
+   {
+    "learner": "x6106-1",
+    "kind": "tail_lo",
+    "profile": "Age 61. Language: English. Interests: ballroom dancing, knife sharpening. Dislikes (never wanted): none stated.",
+    "stored": "First evaluate each power separately, then subtract the second result from the first. Be careful not to subtract the bases before squaring them.",
+    "shaped": "What does the small 2 tell you to do with each number before you subtract?",
+    "other_learner": "What does the order of operations tell you to do with the exponents before you subtract?",
+    "diff": {
+     "stored_words": 23,
+     "shaped_words": 15,
+     "new_words": 11,
+     "dropped_words": 17
+    }
+   },
+   {
+    "learner": "x6106-1",
+    "kind": "tail_lo",
+    "profile": "Age 61. Language: English. Interests: ballroom dancing, knife sharpening. Dislikes (never wanted): none stated.",
+    "stored": "Find the difference between the exercise percentage and the reading percentage by subtracting the smaller value from the larger one. Remember that \"percentage points\" refers to the simple difference between the two percentages, not a percent of a percent.",
+    "shaped": "Look at the exercise percent and the reading percent on the graph. How far apart are 50% and 20%?",
+    "other_learner": "Which two sections of the graph should you compare, and what does the term percentage points actually ask for?",
+    "diff": {
+     "stored_words": 39,
+     "shaped_words": 19,
+     "new_words": 10,
+     "dropped_words": 28
+    }
+   }
+  ],
+  "review": [
+   {
+    "learner": "x6106-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: crochet, roller derby, bird song recording. Dislikes (never wanted): competitive framing, abstract symbols without a picture.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Here is the idea: recalling this volume work now, much as a crocheter repeats a stitch, keeps it available next week.",
+    "other_learner": "Recalling this now fixes it in your head, like a dance step drilled until it sticks.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 21,
+     "new_words": 16,
+     "dropped_words": 4
+    }
+   },
+   {
+    "learner": "x6106-1",
+    "kind": "tail_lo",
+    "profile": "Age 61. Language: English. Interests: ballroom dancing, knife sharpening. Dislikes (never wanted): none stated.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Calculate 6^2 − 4^2. Answer: 20. Like a quick pass on a sharpening stone, recalling it now is what keeps it sharp next week.",
+    "other_learner": "Recalling 6^2 − 4^2 = 20 now is what carries it into next week, like a drone racer repeating the same course.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 24,
+     "new_words": 16,
+     "dropped_words": 2
+    }
+   },
+   {
+    "learner": "x6106-2",
+    "kind": "contradict",
+    "profile": "Age 54. Language: English. Interests: taxidermy curiosity, drone racing. Dislikes (never wanted): being rushed, cute mascots.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Recalling it now is what moves it into next week, like a drone racer drilling a gate until it is automatic.",
+    "other_learner": "Recalling now helps; next week, recalling feels easy.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 21,
+     "new_words": 10,
+     "dropped_words": 1
+    }
+   },
+   {
+    "learner": "x6106-3",
+    "kind": "random",
+    "profile": "Age 10. Language: English is a second language (first: Vietnamese). Interests: fixing bicycles, lockpicking sport, quilting. Dislikes (never wanted): cartoon characters, repetition drills, food examples.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Remember the beads now; the beads remember you.",
+    "other_learner": "Recalling the bead groups now, like re-inking a panel you love, is what consolidates them so well for next week.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 8,
+     "new_words": 8,
+     "dropped_words": 10
+    }
+   }
+  ],
+  "lesson": [
+   {
+    "learner": "x6106-4",
+    "kind": "tail_both",
+    "profile": "Age 61. Language: English. Interests: anime drawing. Dislikes (never wanted): being praised for easy things.",
+    "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose.",
+    "shaped": "This lesson explains how plants make their own food through photosynthesis. It covers where it happens, what goes in, and what comes out.\n\nWhy it matters: photosynthesis is how plants produce glucose for energy and growth, and release oxygen into the air. Think of it like an anime drawing: just as an artist combines lines and shading to create a finished character, a plant combines carbon dioxide and water using light energy to make glucose and oxygen. The chloroplast is like the artist's workspace, and chlorophyll is like the special pen that captures the light.\n\nRule: Photosynthesis happens in chloroplasts, using chlorophyll. Plants take in carbon dioxide and water and use light energy. The products are glucose and oxygen.\n\nNow, let's see this in two forms. In words: carbon dioxide + water + light energy → glucose + oxygen. In a simple table:\n\n| Inputs | Outputs |\n\n|--------|---------|\n\n| Carbon dioxide (6 molecules) | Glucose (1 molecule) |\n\n| Water (6 molecules) | Oxygen (released) |\n\n| Light energy | |\n\nQuick check: What are the inputs of photosynthesis? (Hint: two things from the environment and one form of energy.) Type your answer.",
+    "other_learner": "This lesson is about how plants make their own food, a process called photosynthesis. It fits into the bigger picture of how living things get energy and materials to grow.\n\nBefore we start, think about a knife sharpening: you need the right tool, the right material, and energy to make it work. Photosynthesis is similar: the plant uses chloroplasts, carbon dioxide, water, and light energy to make food. But first, let's look at the details.\n\nPhotosynthesis happens mostly in the leaves, inside tiny parts called chloroplasts. Chloroplasts hold a green pigment called chlorophyll. Think of it like a knife sharpener: the sharpener is the tool (chloroplast), and the abrasive is like chlorophyll—it helps capture what's needed. But the key point is that photosynthesis happens in chloroplasts, using chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata. It takes in water from the soil through its roots. Sunlight gives the energy that joins them. So, plants take in carbon dioxide and water and use light energy.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose. The products are glucose and oxygen.\n\nA common wrong idea is that plants get their food from the soil. That fails because the soil provides water and minerals, but not the sugar glucose. The right idea is that plants make glucose using carbon dioxide, water, and light energy.\n\nLet's try a worked example. Suppose a plant has plenty of sunlight, carbon dioxide, and water. Step 1: Carbon dioxide enters through stomata. Step 2: Water enters through roots. Step 3: Light energy is captured by chlorophyll in chloroplasts. Step 4: Carbon dioxide and water are joined to make glucose and oxygen. The plant uses glucose for energy and growth, and releases oxygen. Now, you try the last step: what are the products?\n\nNow try one on your own: If a plant is kept in the dark, what happens to photosynthesis? Hint: think about the role of light energy. Type your answer.\n\nQuick check: What are the tiny parts in leaves where photosynthesis happens? Hint: they contain chlorophyll. Type your answer.\n\nAnother check: What gas do plants take in for photosynthesis? Hint: it comes from the air. Type your answer.",
+    "diff": {
+     "stored_words": 93,
+     "shaped_words": 194,
+     "new_words": 122,
+     "dropped_words": 40
+    }
+   },
+   {
+    "learner": "x6106-5",
+    "kind": "contradict",
+    "profile": "Age 40. Language: English. Interests: knife sharpening, monster truck rallies, competitive beekeeping. Dislikes (never wanted): cute mascots, repetition drills.",
+    "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose.",
+    "shaped": "This lesson is about how plants make their own food, a process called photosynthesis. It fits into the bigger picture of how living things get energy and materials to grow.\n\nBefore we start, think about a knife sharpening: you need the right tool, the right material, and energy to make it work. Photosynthesis is similar: the plant uses chloroplasts, carbon dioxide, water, and light energy to make food. But first, let's look at the details.\n\nPhotosynthesis happens mostly in the leaves, inside tiny parts called chloroplasts. Chloroplasts hold a green pigment called chlorophyll. Think of it like a knife sharpener: the sharpener is the tool (chloroplast), and the abrasive is like chlorophyll—it helps capture what's needed. But the key point is that photosynthesis happens in chloroplasts, using chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata. It takes in water from the soil through its roots. Sunlight gives the energy that joins them. So, plants take in carbon dioxide and water and use light energy.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose. The products are glucose and oxygen.\n\nA common wrong idea is that plants get their food from the soil. That fails because the soil provides water and minerals, but not the sugar glucose. The right idea is that plants make glucose using carbon dioxide, water, and light energy.\n\nLet's try a worked example. Suppose a plant has plenty of sunlight, carbon dioxide, and water. Step 1: Carbon dioxide enters through stomata. Step 2: Water enters through roots. Step 3: Light energy is captured by chlorophyll in chloroplasts. Step 4: Carbon dioxide and water are joined to make glucose and oxygen. The plant uses glucose for energy and growth, and releases oxygen. Now, you try the last step: what are the products?\n\nNow try one on your own: If a plant is kept in the dark, what happens to photosynthesis? Hint: think about the role of light energy. Type your answer.\n\nQuick check: What are the tiny parts in leaves where photosynthesis happens? Hint: they contain chlorophyll. Type your answer.\n\nAnother check: What gas do plants take in for photosynthesis? Hint: it comes from the air. Type your answer.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 93,
+     "shaped_words": 395,
+     "new_words": 181,
+     "dropped_words": 1
+    }
+   },
+   {
+    "learner": "x6106-7",
+    "kind": "age_young",
+    "profile": "Age 8. Language: English. Interests: mushroom hunting. Dislikes (never wanted): none stated.",
+    "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose.",
+    "shaped": "Plants make their own food. This is called photosynthesis. It happens mostly in the leaves.\n\nInside the leaves are tiny parts called chloroplasts. Chloroplasts hold a green pigment called chlorophyll. Chlorophyll is the green color in leaves.\n\nThink of it like a mushroom hunter's basket: the basket holds the tools. Chloroplasts hold chlorophyll. That is where photosynthesis happens.\n\nThe plant takes in carbon dioxide from the air. It comes in through small openings called stomata. Stomata are tiny holes in the leaf.\n\nThe plant also takes in water from the soil. The roots soak it up.\n\nSunlight gives the energy. The energy joins carbon dioxide and water together.\n\nThe plant makes glucose. Glucose is a sugar. The plant uses glucose for energy and growth.\n\nThe plant also makes oxygen. Oxygen is released into the air.\n\nAbout 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose. A molecule is a tiny building block.\n\nSo, photosynthesis happens in chloroplasts, using chlorophyll. Plants take in carbon dioxide and water and use light energy. The products are glucose and oxygen.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 93,
+     "shaped_words": 181,
+     "new_words": 56,
+     "dropped_words": 15
+    }
+   },
+   {
+    "learner": "x6106-9",
+    "kind": "ell",
+    "profile": "Age 51. Language: English is a second language (first: Russian). Interests: ice hockey, K-pop dance covers, spoken word poetry. Dislikes (never wanted): audio-only explanations.",
+    "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose.",
+    "shaped": "Why does a plant need food? It makes its own. The process is called photosynthesis. Say it: pho-to-syn-the-sis. It means making food with light.\n\nPhotosynthesis happens mostly in the leaves. Inside the leaves are tiny parts called chloroplasts. Chloroplasts hold a green pigment called chlorophyll. Chlorophyll is the green color that catches light.\n\nThink of it like a hockey team: the chloroplasts are the players, and chlorophyll is the jersey color that makes them easy to spot. The jersey does not play; it helps the team get noticed. In the same way, chlorophyll catches light for the chloroplast.\n\nThe plant takes in carbon dioxide from the air. Carbon dioxide is a gas in the air. It enters through small openings called stomata. Stomata are tiny holes on the leaf. The plant also takes in water from the soil through its roots.\n\nSunlight gives the energy that joins carbon dioxide and water. Energy is the power to do work. So the plant uses light energy to combine the two ingredients.\n\nThe result is glucose and oxygen. Glucose is a sugar. The plant uses glucose for energy and growth. Oxygen is a gas released into the air.\n\nHere is the recipe in numbers: about 6 molecules of carbon dioxide and 6 molecules of water make 1 molecule of glucose. A molecule is the smallest unit of a substance.\n\nLet's see it in two forms. In words: carbon dioxide plus water plus light energy gives glucose plus oxygen. In a simple list:\n\nInputs: carbon dioxide, water, light energy\n\nOutputs: glucose, oxygen",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 93,
+     "shaped_words": 258,
+     "new_words": 103,
+     "dropped_words": 11
+    }
+   }
+  ],
+  "tutor_goal": [
+   {
+    "L": "x6106-0",
+    "plain": "Volume just means how many unit cubes fit inside the box, so we build it up one layer at a time. Start with the bottom layer: it is 3 cubes long and 2 cubes wide. How many cubes sit in that bottom layer?",
+    "goal": "Volume is just a count of how many unit cubes it takes to fill the box completely — the same reasoning tells you how much a storage bin can hold. Start with the bottom layer only: it runs 3 cubes long and 2 cubes wide. How many cubes sit in that one layer?"
+   },
+   {
+    "L": "x6106-0",
+    "plain": "Here is a tight plan. Day one: nail the rule on real objects — volume is just counting cubes in layers, so length times width gives cubes per layer, and height gives how many layers. Day two: drill problems, and before committing to any choice, run the check — count one layer, multiply by the layers, and see if your answer beats the smaller options. Day three: mixed practice where you say your check out loud, since that habit separates a reasoned answer from a guess. The real-life version: a yarn bin holds however many skeins fit layer by layer, and that count is its volume.\n\nNow the one on your screen: how many cubes fit in the bottom layer, 3 long by 2 wide?",
+    "goal": "Ten days out, spend the first four or five on volume by counting cubes and layers, since that is where you are now and the test leads with it; then move to coordinates, then expressions. Keep sessions short and daily rather than one long push, and before you commit any answer, say how sure you are and why — that habit is the quickest fix for the gap between what feels right and what checks out.\n\nStart now with the prism on your screen. Its bottom layer is 3 cubes long and 2 wide — how many cubes sit in that one layer?",
+    "probe": "plan"
+   }
+  ],
+  "tutor": [
+   {
+    "learner": "x6106-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: crochet, roller derby, bird song recording. Dislikes (never wanted): competitive framing, abstract symbols without a picture.",
+    "stored": null,
+    "shaped": "Volume just means how many unit cubes fit inside the box, so we build it up one layer at a time. Start with the bottom layer: it is 3 cubes long and 2 cubes wide. How many cubes sit in that bottom layer?",
+    "other_learner": "Good news: this one is really just counting. Let's find the starting point together.\n\nYou might be asking: what does volume even mean? Volume is the amount of space inside a shape. We measure that space in cubic units.\n\nTakeaway: volume answers \"how much space is inside?\"\n\nNext idea. A unit cube is a small cube with sides of 1. Think of it as one little building block. So this question is really asking: how many of those little blocks fill the box?\n\nTakeaway: volume = count the cubes.\n\nNow the first small step, and it is an easy one. The box is 3 cubes long. Picture one single row of cubes lying along that length, like blocks in a line.\n\nHow many cubes are in that one row?",
+    "diff": null
+   },
+   {
+    "learner": "x6106-1",
+    "kind": "tail_lo",
+    "profile": "Age 61. Language: English. Interests: ballroom dancing, knife sharpening. Dislikes (never wanted): none stated.",
+    "stored": null,
+    "shaped": "Good news: this one is really just counting. Let's find the starting point together.\n\nYou might be asking: what does volume even mean? Volume is the amount of space inside a shape. We measure that space in cubic units.\n\nTakeaway: volume answers \"how much space is inside?\"\n\nNext idea. A unit cube is a small cube with sides of 1. Think of it as one little building block. So this question is really asking: how many of those little blocks fill the box?\n\nTakeaway: volume = count the cubes.\n\nNow the first small step, and it is an easy one. The box is 3 cubes long. Picture one single row of cubes lying along that length, like blocks in a line.\n\nHow many cubes are in that one row?",
+    "other_learner": "Volume means the number of unit cubes that fill the solid. A unit cube is a cube with every side 1, so it is one counting block. The rule for any rectangular prism: volume = length x width x height.\n\nHere is why that rule works, one step at a time.\n\nBecause the floor of this prism is 3 cubes long and 2 wide, one layer holds 3 x 2 = 6 cubes.\nBecause the prism is 4 cubes high, it holds 4 of those layers, like shelves in a drone parts case with the same 3 by 2 footprint on every shelf.\n\nSlow down here: do not add 3 + 2 + 4",
+    "diff": null
+   },
+   {
+    "learner": "x6106-2",
+    "kind": "contradict",
+    "profile": "Age 54. Language: English. Interests: taxidermy curiosity, drone racing. Dislikes (never wanted): being rushed, cute mascots.",
+    "stored": null,
+    "shaped": "Volume means the number of unit cubes that fill the solid. A unit cube is a cube with every side 1, so it is one counting block. The rule for any rectangular prism: volume = length x width x height.\n\nHere is why that rule works, one step at a time.\n\nBecause the floor of this prism is 3 cubes long and 2 wide, one layer holds 3 x 2 = 6 cubes.\nBecause the prism is 4 cubes high, it holds 4 of those layers, like shelves in a drone parts case with the same 3 by 2 footprint on every shelf.\n\nSlow down here: do not add 3 + 2 + 4",
+    "other_learner": "Good news: this question is only counting.\n\nVolume means the number of unit cubes inside the box. A unit cube is a small cube. Each side is 1 unit long. So the volume is just a count of cubes.\n\nPlan: count the bottom layer first. A layer is all the cubes sitting on the floor of the box. It is one cube tall. Then we count the layers above it.\n\nThe bottom layer is 3 cubes long and 2 cubes wide.\n\nHow many unit cubes sit in the bottom layer?",
+    "diff": null
+   },
+   {
+    "learner": "x6106-3",
+    "kind": "random",
+    "profile": "Age 10. Language: English is a second language (first: Vietnamese). Interests: fixing bicycles, lockpicking sport, quilting. Dislikes (never wanted): cartoon characters, repetition drills, food examples.",
+    "stored": null,
+    "shaped": "Good news: this question is only counting.\n\nVolume means the number of unit cubes inside the box. A unit cube is a small cube. Each side is 1 unit long. So the volume is just a count of cubes.\n\nPlan: count the bottom layer first. A layer is all the cubes sitting on the floor of the box. It is one cube tall. Then we count the layers above it.\n\nThe bottom layer is 3 cubes long and 2 cubes wide.\n\nHow many unit cubes sit in the bottom layer?",
+    "other_learner": "Volume just counts the unit cubes that fill the solid. Think of it like your art: a flat drawing is covered in pixels, a solid is filled with cubes — same counting idea, one dimension up.\n\nSo picture this prism as layers of cubes stacked 4 high. Start with just the bottom layer: 3 cubes long and 2 wide. How many cubes sit in that one layer?",
+    "diff": null
+   }
+  ]
+ },
+ "stats": {
+  "calls": 106,
+  "empty": 0,
+  "errors": 53,
+  "seconds": 303,
+  "cpu_load": 0,
+  "zerogpu_ledger": {
+   "ok": true,
+   "spent_usd": 4.214424,
+   "reserved_usd": 0.026067,
+   "committed_usd": 4.240491,
+   "cap_usd": 245,
+   "headroom_usd": 240.759509,
+   "calls": 3876,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/zerogpu-ledger.json"
+  },
+  "gonka_ledger": {
+   "ok": true,
+   "spent_usd": 7.770494,
+   "reserved_usd": 0.038534,
+   "committed_usd": 7.809028,
+   "cap_usd": 50,
+   "headroom_usd": 42.190972,
+   "calls": 10176,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/gonka-ledger.json"
+  },
+  "coral_ledger": {
+   "ok": true,
+   "spent_usd": 12.291168,
+   "reserved_usd": 0.081699,
+   "committed_usd": 12.372867,
+   "cap_usd": 100,
+   "headroom_usd": 87.627133,
+   "calls": 4719,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/coral-ledger.json"
+  }
+ }
+}

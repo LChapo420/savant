@@ -209,6 +209,8 @@ App.mount(async () => {
   // adaptive session otherwise. One function, so a row and the unit heading over
   // it cannot disagree.
   function openHrefOf(node) {
+    // With the test-out lever on, the lesson the learner stands on opens on its check; any other is opened to read.
+    if (data.speed_testout && node.kind === 'lesson' && node.level === enrollment.current_level) return `/session?enrollment=${enrollment.id}&ordinary=1`;
     return node.kind === 'lesson' && hasBaseLesson(node.level)
       ? baseHref(node.level)
       : `/session?enrollment=${enrollment.id}&level=${node.level}`;
@@ -904,6 +906,34 @@ App.mount(async () => {
     line.innerHTML = `<strong>${App.escapeHtml(fit.label)}.</strong> ${App.escapeHtml(fit.why)}`
       + `${fit.deferred_count ? ` <span class="muted">${fit.deferred_count} level${fit.deferred_count === 1 ? '' : 's'} saved for later.</span>` : ''}`
       + `${fit.queue && fit.queue.seen ? ` <span class="muted">Review queue: ${fit.queue.due.length} due, ${fit.queue.learned} of ${fit.queue.seen} words solid.</span>` : ''}`;
+    const pathTitle = [...root.querySelectorAll('h2.section-title')].find((h) => h.textContent.trim() === 'The path');
+    if (pathTitle) pathTitle.parentNode.insertBefore(line, pathTitle);
+    else root.appendChild(line);
+  }
+
+  // The skill check (services/speed-placement.js): offered, and afterwards what it settled, each with a way in. Absent with the switch off and no check taken.
+  if (data.speed_skill_check || data.speed_settled) {
+    const line = document.createElement('p');
+    line.className = 'small';
+    line.style.cssText = 'margin:16px 0 0;max-width:640px';
+    const list = (rows) => rows.map((r) => (r.level ? `<a href="/session?enrollment=${enrollment.id}&level=${Number(r.level)}">${App.escapeHtml(r.name || r.skill)}</a>` : App.escapeHtml(r.name || r.skill))).join(', ');
+    const s = data.speed_settled;
+    line.innerHTML = data.speed_skill_check
+      ? `<strong>Know some of this already?</strong> <a href="/skill-check?enrollment=${enrollment.id}">Take a short skill check</a> and what you know comes off your path.`
+      : [s.known.length ? `<strong>Off your path, shown by your check:</strong> ${list(s.known)}.` : '', s.implied.length ? `<strong>Off your path, inferred from those:</strong> ${list(s.implied)}.` : '', s.revisit.length ? `<strong>Worth another look (a later answer missed):</strong> ${list(s.revisit)}.` : ''].filter(Boolean).join(' ');
+    if (line.innerHTML) {
+      const pathTitle = [...root.querySelectorAll('h2.section-title')].find((h) => h.textContent.trim() === 'The path');
+      if (pathTitle) pathTitle.parentNode.insertBefore(line, pathTitle);
+      else root.appendChild(line);
+    }
+  }
+
+  // The speed levers: pages a check let the learner skip stay listed, so nothing is passed over silently. Absent with the switch off.
+  if ((data.skipped_pages || []).length) {
+    const line = document.createElement('p');
+    line.className = 'small';
+    line.style.cssText = 'margin:16px 0 0;max-width:640px';
+    line.innerHTML = `<strong>Pages you skipped after getting their checks right:</strong> ${data.skipped_pages.map((p) => `<a href="/session?enrollment=${enrollment.id}&level=${Number(p.level)}">${App.escapeHtml(App.cleanTitle(p.title || `Level ${p.level}`))}</a>`).join(', ')}.`;
     const pathTitle = [...root.querySelectorAll('h2.section-title')].find((h) => h.textContent.trim() === 'The path');
     if (pathTitle) pathTitle.parentNode.insertBefore(line, pathTitle);
     else root.appendChild(line);

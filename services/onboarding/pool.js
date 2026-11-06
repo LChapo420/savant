@@ -115,8 +115,19 @@ add('sv:why', 'goal', 20, 'survey', [inf('intrinsic_motivation', 0.28), inf('ext
   for (const it of bank.TAP_ITEMS) add(it.id, 'tap', 8, 'forced', [inf(it.measure, 0.2)], { dailyOnly: true, tap: true });
 }
 
-for (const it of pool) {
+// ── passive sources of the daily check (PROBE and CROSS; docs/SCORECARD-95.md): they cost the learner no minutes and are read from what a lesson already does (a probe =
+// normal items reordered to the start of a sitting and after a gap; a cross = paired lesson versions). One item per measure per day slot. They are free:true (zero seconds),
+// passive:true so the planner never offers or unlocks them: services/daily-check.js passiveFor(day) hands them to whoever has the day's reading. Validity ASSUMED.
+const PROBE_STATS = ['intake_baseline', 'warmup_latency', 'momentum_dependence', 'interleaving_tolerance', 'session_rhythm', 'reentry_cost'];
+const CROSS_STATS = ['chunk_granularity', 'abstraction_tolerance', 'example_density_need', 'text_density_tolerance', 'jargon_absorption', 'spatial_anchoring', 'global_framing_need', 'humor_receptivity', 'narrative_pull', 'tone_formality', 'elaboration_benefit', 'mnemonic_receptivity', 'enactive_encoding', 'generation_effect', 'step_explicitness', 'worked_example_dependence', 'feedback_granularity', 'feedback_tone_sensitivity', 'dialogic_preference', 'praise_sensitivity', 'social_framing', 'interest_transfer', 'cycle_architecture'];
+const PASSIVE_SLOTS = 30;
+const passivePool = []; // kept out of `pool` so nothing that plans or checks timed items ever sees a zero-second item
+for (const [fam, list] of [['probe', PROBE_STATS], ['cross', CROSS_STATS]]) {
+  for (const stat of list) for (let k = 0; k < PASSIVE_SLOTS; k++) { add(`ps:${fam}:${stat}:${k}`, fam, 0, 'passive', [inf(stat, 0.2)], { dailyOnly: true, free: true, passive: true, slot: k, requires: [] }); passivePool.push(pool.pop()); }
+}
+
+for (const it of [...pool, ...passivePool]) {
   for (const i of it.informs) if (i.r > RHO[it.family]) throw new Error(`pool: ${it.id} validity ${i.r} above its family ceiling`);
 }
 
-module.exports = { pool, byId: Object.fromEntries(pool.map((p) => [p.id, p])) };
+module.exports = { pool, passivePool, byId: Object.fromEntries([...pool, ...passivePool].map((p) => [p.id, p])) };

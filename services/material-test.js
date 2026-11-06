@@ -36,7 +36,7 @@ const JUDGE_WAIT_MS = 20 * 1000;
 const KEEP = 10;
 
 /** This learner's spec (services/learning-spec.js): the time a question gets and how long a test is by default. */
-function specOf(userId, topic = null) { try { return require('./learning-spec').buildSpec(userId, { topic }); } catch { return null; } } // eslint-disable-line global-require
+function specOf(userId, topic = null) { try { return require('./learning-spec').buildSpec(userId, topic && typeof topic === 'object' ? { topic: topic.title, materialId: topic.id } : { topic }); } catch { return null; } } // eslint-disable-line global-require
 
 /**
  * The tiers a test of `n` questions should have for this learner, easy first: how many tier-1 recall questions (more for a
@@ -101,7 +101,7 @@ function options(userId, materialId) {
   const course = I.loadCourse(userId, materialId);
   if (!course) return { error: 'There is no course to test yet.', code: 'no_course' };
   const r = I.row(userId, materialId);
-  const spec = specOf(userId, course.title);
+  const spec = specOf(userId, { title: course.title, id: course.material_id });
   return {
     skills: course.skills.map((s) => ({ id: s.id, title: s.title, unit: s.unit || null, questions: (s.questions || []).length, status: (r.skills[s.id] || {}).status || 'new' })),
     min: MIN_LEN, max: MAX_LEN, default: defaultLen(spec), seconds_per_question: secondsPer(spec),
@@ -127,7 +127,7 @@ function start(userId, materialId, opts = {}) {
   }
   if (!skills.length) return { error: 'The skills you picked have no questions.', code: 'empty' };
 
-  const spec = specOf(userId, course.title);
+  const spec = specOf(userId, { title: course.title, id: course.material_id });
   const n = Number.isFinite(Number(opts.length)) ? Math.round(Number(opts.length)) : defaultLen(spec);
   let want = Math.min(MAX_LEN, Math.max(MIN_LEN, n));
   // "Pick for me" (S12): only what this learner does not know yet, due, or missed, sized by how much that is.

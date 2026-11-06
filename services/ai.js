@@ -196,7 +196,7 @@ async function viaPool(userId, req, role, task, outside) {
     return null;
   }
   if (res.pool.hedged) {
-    console.log(`ai: ${role}${task ? `/${task}` : ''} answered by ${res.pool.slot} after ${Math.round(res.pool.elapsedMs / 1000)}s (${res.pool.attempts.length} attempt${res.pool.attempts.length === 1 ? '' : 's'})`);
+    console.log(`ai: ${role}${task ? `/${task}` : ''} answered by ${res.pool.slot} after ${Math.round(res.pool.elapsedMs / 1000)}s (${res.pool.attempts.length} attempt${res.pool.attempts.length === 1 ? '' : 's'})${res.pool.attempts.length > 1 ? ` [${res.pool.attempts.filter((a) => !a.ok).map((a) => `${a.slot} ${a.kind} ${Math.round((a.ms || 0) / 1000)}s${a.error ? ` ${String(a.error).slice(0, 90)}` : ''}`).join('; ')}]` : ''}`);
   }
   // Standard Compute is not in providers.ALL (it must never enter a chain); the tutor's calls to it are still recorded.
   recordSpend(userId, res.model, res.usage, providers.ALL[res.pool.provider] || (res.pool.provider === 'standard_compute' ? require('./providers/standard-compute').standardCompute : res.pool.provider === 'munito' ? require('./providers/munito').munito : res.pool.provider === 'coral' ? require('./providers/coral').coral : (res.pool.provider === 'gonka' || res.pool.provider === 'grokified' || res.pool.provider === 'lyceum' || res.pool.provider === 'zerogpu' || res.pool.provider === 'crouton') ? require(`./providers/${res.pool.provider}`)[res.pool.provider] : null),
@@ -257,10 +257,10 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
  *
  * @returns {Promise<{data: object, usage: object|null, model: string}|null>}
  */
-async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, pipelineVariant, excludeFamilies }) {
+async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies }) {
   const result = await withProviders(userId, (p) =>
     p.structured({ role, task, system, user, schema, schemaName, maxTokens, effort, lane, think }), role, task,
-  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, pipelineVariant, excludeFamilies });
+  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies });
   return result ? { data: result.data, usage: result.usage || null, model: result.model || null } : null;
 }
 
@@ -2032,6 +2032,7 @@ ${learnerBrief(userId, { skillId: area.skill_id, skillName: area.skill_name, lev
 }
 
 module.exports = {
+  coachSystemFor, // the tutor's system prompt for one question (read by scripts/part-modify-proof.js)
   munitoAllowedFor,
   structuredDetail,
   isEnabled,

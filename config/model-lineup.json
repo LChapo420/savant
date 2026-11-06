@@ -690,7 +690,10 @@
         "price_in": 0.19,
         "price_out": 0.6,
         "data_class": "pipeline",
-        "price_note": "Coral promotional price. Ledger: services/coral-ledger.js, $100 hard cap. Same model family as the Munito DeepSeek V4.1 slot, cheaper output, so it sorts first among paid slots."
+        "price_note": "Coral promotional price. Ledger: services/coral-ledger.js, $100 hard cap. Same model family as the Munito DeepSeek V4.1 slot, cheaper output, so it sorts first among paid slots.",
+        "group": "coral",
+        "group_max": 5,
+        "group_reserve_bg": 2
       },
       {
         "id": "coral:deepseek-v4.1-flash-fast",
@@ -705,7 +708,9 @@
         "price_out": 1.8,
         "data_class": "pipeline",
         "fast": true,
-        "price_note": "Coral promotional price, advertised ~322 tokens/s. Only for tasks a learner waits on; never background work."
+        "price_note": "Coral promotional price, advertised ~322 tokens/s. Only for tasks a learner waits on; never background work.",
+        "group": "coral",
+        "group_max": 5
       },
       {
         "id": "lyceum:minimax/minimax-m3",
@@ -910,6 +915,54 @@
         ],
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
       },
+      "material_lesson": {
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash",
+          "gonka:zai-org/GLM-5.3-Flash",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
+        ],
+        "timeout_ms": 300000,
+        "basis": "6 Nov bug sweep: the learning path waited 421 s+ because this task had no allow list, so a learner waiting on it could not overflow to a paid slot and queued behind saturated free models. Same list as material_notes (cheap paid slots after the 8 s hedge; background work never pays for speed)."
+      },
+      "material_shorten": {
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash",
+          "gonka:zai-org/GLM-5.3-Flash",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
+        ],
+        "timeout_ms": 300000,
+        "basis": "6 Nov bug sweep: the learning path waited 421 s+ because this task had no allow list, so a learner waiting on it could not overflow to a paid slot and queued behind saturated free models. Same list as material_notes (cheap paid slots after the 8 s hedge; background work never pays for speed)."
+      },
+      "material_sweep": {
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash",
+          "gonka:zai-org/GLM-5.3-Flash",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
+        ],
+        "timeout_ms": 300000,
+        "basis": "6 Nov bug sweep: the learning path waited 421 s+ because this task had no allow list, so a learner waiting on it could not overflow to a paid slot and queued behind saturated free models. Same list as material_notes (cheap paid slots after the 8 s hedge; background work never pays for speed)."
+      },
+      "material_podcast": {
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash",
+          "gonka:zai-org/GLM-5.3-Flash",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
+        ],
+        "timeout_ms": 300000,
+        "basis": "6 Nov bug sweep: the learning path waited 421 s+ because this task had no allow list, so a learner waiting on it could not overflow to a paid slot and queued behind saturated free models. Same list as material_notes (cheap paid slots after the 8 s hedge; background work never pays for speed)."
+      },
       "material_pack": {
         "allow": [
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
@@ -1034,6 +1087,16 @@
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731"
         ],
         "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
+      },
+      "part_layer": {
+        "allow": [
+          "coral:deepseek-v4.1-flash-fast",
+          "coral:deepseek-v4.1-flash",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731"
+        ],
+        "timeout_ms": 10000,
+        "basis": "The personal layer over a shared lesson (services/lesson-layer.js, 6 Nov 2026): a short structured answer a learner waits on, Coral Fast first on the fast lane; every answer is checked deterministically."
       }
     }
   }

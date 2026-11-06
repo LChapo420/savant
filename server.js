@@ -124,6 +124,7 @@ app.use('/api', (req, res, next) => {
 });
 
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/speed', require('./routes/speed-placement'));
 app.use('/api/consent', consent.router);
 app.use('/api', require('./routes/catalog').router);
 // The daily review (staged round 3; ADAPT_REVIEW_SESSION=on, 404 while off).
@@ -136,6 +137,7 @@ app.use('/api/placement', require('./routes/placement'));
 app.use('/api/reading-check', require('./routes/reading-check'));
 // Optional measurement channels that raise the scorecard's accuracy: questionnaire, delayed memory checks, brain games, silent signals, imports, max accuracy (services/boosters.js).
 app.use('/api/boosters', require('./routes/boosters'));
+app.use('/api/speed-proof', require('./routes/speed-proof')); // the optional plain-way comparison and its memory checks (services/speed-proof.js)
 // The daily check in the normal flow (services/daily-check.js): a few minutes of measurement a day, always skippable; SCORECARD_DAILY=off turns it off.
 app.use('/api/daily-check', require('./routes/daily-check'));
 // The baseline: Quick / Balanced / Accurate tasks and choices that give the scorecard a first, accurate picture before any material is written (services/onboarding).
@@ -240,8 +242,10 @@ app.get('*', (req, res) => {
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  console.error('unhandled:', err);
   if (res.headersSent) return;
+  if (err && (err.type === 'entity.too.large' || err.status === 413)) return res.status(413).json({ error: 'That is too big to upload. Files are limited to 20 MB (videos 200 MB); send a shorter or smaller part.', code: 'too_big' });
+  if (err && err.type === 'entity.parse.failed') return res.status(400).json({ error: 'That request could not be read.', code: 'bad_request' });
+  console.error('unhandled:', err);
   res.status(500).json({ error: 'Something went wrong on our side.' });
 });
 

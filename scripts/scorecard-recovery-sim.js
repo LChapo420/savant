@@ -114,6 +114,8 @@ const DAILY_SKIP = Number(opt('daily-skip', 0));
 // --daily-tail=K: the heavier-tailed read of the daily check's data (services/onboarding/baseline.js observations tailK); 0 = off.
 if (Number(opt('daily-tail', 0)) > 0) process.env.DAILY_TAIL_K = String(opt('daily-tail', 0));
 const DAILY_SCN = opt('daily-scenario', 'central');
+// --passive=1: PROBE and CROSS (zero learner minutes) read through the real planner as free items, validity ASSUMED (services/daily-check.js passiveFor; docs/SCORECARD-95.md).
+if (Number(opt('passive', 0)) !== 0) process.env.DAILY_PASSIVE = '1';
 const IPIP_R = 0.5;       // how well a validated-scale item reflects the measure it maps to (published self-report validities: about 0.3 to 0.5)
 const GAME_R = 0.6;       // how well a two-minute game reflects the trait it is a task for (a rough, assumed correlation)
 const ACT_NOISE_Z = 0.4;  // the error of a past ACT composite as a read of prior knowledge, in standard deviations
@@ -1084,6 +1086,7 @@ function runLearner(index, mode, { population = false } = {}) {
       dailyCheck.markIpip(userId, pre.ids);
       planner.elapsed += pre.sec;
     }
+    for (const f of dailyCheck.passiveFor(run.day)) planner.record(f, dailyAnswer(f, planner.elapsed, onbModel).readings, 0);
     for (let guard = 0; guard < 400; guard++) {
       const item = planner.next();
       if (!item) break;
@@ -1608,7 +1611,8 @@ function runLearner(index, mode, { population = false } = {}) {
         ledger: JSON.parse(JSON.stringify(ledger)),
         levels: done,
         days: Number(days.toFixed(1)),
-        // The answer log reduced to what a read-out of the same data can use (the accuracy gate's benchmark).
+        // The answer log reduced to what a read-out of the same data can use (the accuracy gate's benchmark); feat2 = the extra within-learner contrasts (services/scorecard/log-features.js).
+        feat2: require('../services/scorecard/log-features').extraFeatures(memoryDb.find('items', (r) => r.user_id === userId), []),
         feat: simGate.featuresOf(memoryDb.find('items', (r) => r.user_id === userId), { gaps: starts.slice(1).map((t, i) => (t - starts[i]) / 86400000), quits: out.quits, levels: done, days }),
         // Round 9: the learner's indicator means as the app holds them, for the ideal observer (0 where there are none).
         ind: Object.fromEntries(Object.entries(card.ind || {}).filter(([, m]) => m && m.w > 0).map(([k, m]) => [k, Number((m.s / m.w).toFixed(4))])),
@@ -2170,7 +2174,7 @@ for (const mode of MODES) {
       return {
         truth: Object.fromEntries(STATS.map((st) => [st.id, Number(truthOf(r, st.id).toFixed(3))])),
         app: Object.fromEntries(STATS.map((st) => { const e = sn.est[st.id]; return [st.id, [Number((e.measured !== undefined ? e.measured : e.score).toFixed(3)), Number((e.se === undefined ? 0 : e.se).toFixed(3)), e.confidence]]; })),
-        feat: sn.feat, ind: sn.ind, daily: sn.daily, levels: sn.levels, days: sn.days, age: r.stratum ? r.stratum.age : undefined, profile: r.stratum ? r.stratum.profile : undefined, ext: r.stratum && r.stratum.ext ? { id: r.stratum.ext.id, kind: r.stratum.ext.kind, mix: r.stratum.ext.mix, age: r.stratum.ext.age, tags: r.stratum.ext.tags } : undefined,
+        feat: { ...sn.feat, ...(sn.feat2 || {}) }, ind: sn.ind, daily: sn.daily, levels: sn.levels, days: sn.days, age: r.stratum ? r.stratum.age : undefined, profile: r.stratum ? r.stratum.profile : undefined, ext: r.stratum && r.stratum.ext ? { id: r.stratum.ext.id, kind: r.stratum.ext.kind, mix: r.stratum.ext.mix, age: r.stratum.ext.age, tags: r.stratum.ext.tags } : undefined,
       };
     });
     fs.mkdirSync(path.dirname(DUMP), { recursive: true });

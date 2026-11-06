@@ -1,0 +1,347 @@
+{
+ "tag": "pm2",
+ "seed": 6106,
+ "n": 24,
+ "generated_at": "2026-11-06T09:44:44.940Z",
+ "writer": "ZeroGPU GLM-5.3 Flash",
+ "judges": [
+  {
+   "id": "zerogpu-glm",
+   "model": "z-ai/glm-5.3-flash",
+   "family": "glm"
+  },
+  {
+   "id": "coral-deepseek",
+   "model": "deepseek-v4.1-flash",
+   "family": "deepseek"
+  },
+  {
+   "id": "gonka-deepseek",
+   "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+   "family": "deepseek"
+  }
+ ],
+ "simulated": true,
+ "parts": {
+  "lesson": {
+   "part": "lesson",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 30,
+      "verdicts": 29,
+      "empty": 1,
+      "same": 0,
+      "picks_vL": 24,
+      "share": 0.8275862068965517,
+      "p_above_chance": 0.00027305632829666127
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 1,
+       "swap_fooled": null,
+       "control": null
+      },
+      "coral-deepseek": {
+       "real": 0.8888888888888888,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": 0.6,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": 1,
+      "deepseek": 0.7368421052631579
+     },
+     "individuals": {
+      "n": 10,
+      "worst_1pct": 0.3333333333333333,
+      "worst_5pct": 0.3333333333333333,
+      "worst_10pct": 0.3333333333333333,
+      "lowest": [
+       {
+        "L": "x6106-22",
+        "share": 0.3333333333333333,
+        "n": 3
+       },
+       {
+        "L": "x6106-4",
+        "share": 0.6666666666666666,
+        "n": 3
+       },
+       {
+        "L": "x6106-2",
+        "share": 0.6666666666666666,
+        "n": 3
+       }
+      ],
+      "below_half": 1
+     },
+     "by_kind": {
+      "tail_both": {
+       "n": 5,
+       "share": 0.8
+      },
+      "contradict": {
+       "n": 9,
+       "share": 0.6666666666666666
+      },
+      "age_young": {
+       "n": 3,
+       "share": 1
+      },
+      "ell": {
+       "n": 3,
+       "share": 1
+      },
+      "age_old": {
+       "n": 3,
+       "share": 0.6666666666666666
+      },
+      "tail_hi": {
+       "n": 3,
+       "share": 1
+      },
+      "tail_lo": {
+       "n": 3,
+       "share": 1
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 9,
+      "verdicts": 8,
+      "empty": 1,
+      "same": 0,
+      "picks_vL": 6,
+      "share": 0.75,
+      "p_above_chance": 0.14453125000000006
+     },
+     "swap_fooled": {
+      "n": 9,
+      "verdicts": 9,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 3,
+      "share": 0.3333333333333333
+     },
+     "control_picks_vL": {
+      "n": 9,
+      "verdicts": 8,
+      "empty": 1,
+      "same": 0,
+      "picks_vL": 4,
+      "share": 0.5
+     },
+     "per_judge": {
+      "zerogpu-glm": {
+       "real": 0.6666666666666666,
+       "swap_fooled": 0.3333333333333333,
+       "control": 0.6666666666666666
+      },
+      "coral-deepseek": {
+       "real": 0.5,
+       "swap_fooled": 0.3333333333333333,
+       "control": 0.5
+      },
+      "gonka-deepseek": {
+       "real": 1,
+       "swap_fooled": 0.3333333333333333,
+       "control": 0.3333333333333333
+      }
+     },
+     "by_family": {
+      "glm": 0.6666666666666666,
+      "deepseek": 0.8
+     },
+     "individuals": {
+      "n": 3,
+      "worst_1pct": 0.3333333333333333,
+      "worst_5pct": 0.3333333333333333,
+      "worst_10pct": 0.3333333333333333,
+      "lowest": [
+       {
+        "L": "x6106-21",
+        "share": 0.3333333333333333,
+        "n": 3
+       },
+       {
+        "L": "x6106-4",
+        "share": 1,
+        "n": 3
+       },
+       {
+        "L": "x6106-20",
+        "share": 1,
+        "n": 2
+       }
+      ],
+      "below_half": 1
+     },
+     "by_kind": {
+      "tail_both": {
+       "n": 3,
+       "share": 1
+      },
+      "tail_lo": {
+       "n": 3,
+       "share": 0.3333333333333333
+      },
+      "tail_hi": {
+       "n": 2,
+       "share": 1
+      }
+     }
+    }
+   },
+   "facts": {
+    "conflict_yes": 0,
+    "conflict_asked": 0,
+    "declined_because": {
+     "it uses fooN examples, which this learner Nislikes": 3,
+     "the number 3 is not in the original": 1,
+     "it uses tolN the answer right away, which this lea": 1,
+     "the number 2 is not in the original": 2,
+     "the number 12 is not in the original": 2,
+     "it uses worN problems about money, which this lear": 2,
+     "it uses rewrites of the same iNea three times, whi": 1,
+     "it uses stories that waste time, which this learne": 1,
+     "the number 6 is missing": 2,
+     "the number 1 is missing": 2,
+     "it uses abstract symbols without a picture, group ": 1
+    },
+    "checked": 24,
+    "passed": 10,
+    "declined": 14,
+    "same_yes": 2,
+    "same_asked": 3,
+    "coverage_fail": 0
+   },
+   "goal": null,
+   "sources": 24,
+   "declined": 14,
+   "trials": 57
+  }
+ },
+ "samples": {
+  "lesson": [
+   {
+    "learner": "x6106-4",
+    "kind": "tail_both",
+    "profile": "Age 61. Language: English. Interests: anime drawing. Dislikes (never wanted): being praised for easy things.",
+    "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose.",
+    "shaped": "This lesson explains how plants make their own food through photosynthesis. It covers where it happens, what goes in, and what comes out.\n\nWhy it matters: photosynthesis is how plants produce glucose for energy and growth, and release oxygen into the air. Think of it like an anime drawing: just as an artist combines lines and shading to create a finished character, a plant combines carbon dioxide and water using light energy to make glucose and oxygen. The chloroplast is like the artist's workspace, and chlorophyll is like the special pen that captures the light.\n\nRule: Photosynthesis happens in chloroplasts, using chlorophyll. Plants take in carbon dioxide and water and use light energy. The products are glucose and oxygen.\n\nNow, let's see this in two forms. In words: carbon dioxide + water + light energy → glucose + oxygen. In a simple table:\n\n| Inputs | Outputs |\n\n|--------|---------|\n\n| Carbon dioxide (6 molecules) | Glucose (1 molecule) |\n\n| Water (6 molecules) | Oxygen (released) |\n\n| Light energy | |\n\nQuick check: What are the inputs of photosynthesis? (Hint: two things from the environment and one form of energy.) Type your answer.",
+    "other_learner": "This lesson is about how plants make their own food, a process called photosynthesis. It fits into the bigger picture of how living things get energy and materials to grow.\n\nBefore we start, think about a knife sharpening: you need the right tool, the right material, and energy to make it work. Photosynthesis is similar: the plant uses chloroplasts, carbon dioxide, water, and light energy to make food. But first, let's look at the details.\n\nPhotosynthesis happens mostly in the leaves, inside tiny parts called chloroplasts. Chloroplasts hold a green pigment called chlorophyll. Think of it like a knife sharpener: the sharpener is the tool (chloroplast), and the abrasive is like chlorophyll—it helps capture what's needed. But the key point is that photosynthesis happens in chloroplasts, using chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata. It takes in water from the soil through its roots. Sunlight gives the energy that joins them. So, plants take in carbon dioxide and water and use light energy.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose. The products are glucose and oxygen.\n\nA common wrong idea is that plants get their food from the soil. That fails because the soil provides water and minerals, but not the sugar glucose. The right idea is that plants make glucose using carbon dioxide, water, and light energy.\n\nLet's try a worked example. Suppose a plant has plenty of sunlight, carbon dioxide, and water. Step 1: Carbon dioxide enters through stomata. Step 2: Water enters through roots. Step 3: Light energy is captured by chlorophyll in chloroplasts. Step 4: Carbon dioxide and water are joined to make glucose and oxygen. The plant uses glucose for energy and growth, and releases oxygen. Now, you try the last step: what are the products?\n\nNow try one on your own: If a plant is kept in the dark, what happens to photosynthesis? Hint: think about the role of light energy. Type your answer.\n\nQuick check: What are the tiny parts in leaves where photosynthesis happens? Hint: they contain chlorophyll. Type your answer.\n\nAnother check: What gas do plants take in for photosynthesis? Hint: it comes from the air. Type your answer.",
+    "diff": {
+     "stored_words": 93,
+     "shaped_words": 194,
+     "new_words": 122,
+     "dropped_words": 40
+    }
+   },
+   {
+    "learner": "x6106-5",
+    "kind": "contradict",
+    "profile": "Age 40. Language: English. Interests: knife sharpening, monster truck rallies, competitive beekeeping. Dislikes (never wanted): cute mascots, repetition drills.",
+    "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose.",
+    "shaped": "This lesson is about how plants make their own food, a process called photosynthesis. It fits into the bigger picture of how living things get energy and materials to grow.\n\nBefore we start, think about a knife sharpening: you need the right tool, the right material, and energy to make it work. Photosynthesis is similar: the plant uses chloroplasts, carbon dioxide, water, and light energy to make food. But first, let's look at the details.\n\nPhotosynthesis happens mostly in the leaves, inside tiny parts called chloroplasts. Chloroplasts hold a green pigment called chlorophyll. Think of it like a knife sharpener: the sharpener is the tool (chloroplast), and the abrasive is like chlorophyll—it helps capture what's needed. But the key point is that photosynthesis happens in chloroplasts, using chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata. It takes in water from the soil through its roots. Sunlight gives the energy that joins them. So, plants take in carbon dioxide and water and use light energy.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose. The products are glucose and oxygen.\n\nA common wrong idea is that plants get their food from the soil. That fails because the soil provides water and minerals, but not the sugar glucose. The right idea is that plants make glucose using carbon dioxide, water, and light energy.\n\nLet's try a worked example. Suppose a plant has plenty of sunlight, carbon dioxide, and water. Step 1: Carbon dioxide enters through stomata. Step 2: Water enters through roots. Step 3: Light energy is captured by chlorophyll in chloroplasts. Step 4: Carbon dioxide and water are joined to make glucose and oxygen. The plant uses glucose for energy and growth, and releases oxygen. Now, you try the last step: what are the products?\n\nNow try one on your own: If a plant is kept in the dark, what happens to photosynthesis? Hint: think about the role of light energy. Type your answer.\n\nQuick check: What are the tiny parts in leaves where photosynthesis happens? Hint: they contain chlorophyll. Type your answer.\n\nAnother check: What gas do plants take in for photosynthesis? Hint: it comes from the air. Type your answer.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 93,
+     "shaped_words": 395,
+     "new_words": 181,
+     "dropped_words": 1
+    }
+   },
+   {
+    "learner": "x6106-7",
+    "kind": "age_young",
+    "profile": "Age 8. Language: English. Interests: mushroom hunting. Dislikes (never wanted): none stated.",
+    "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose.",
+    "shaped": "Plants make their own food. This is called photosynthesis. It happens mostly in the leaves.\n\nInside the leaves are tiny parts called chloroplasts. Chloroplasts hold a green pigment called chlorophyll. Chlorophyll is the green color in leaves.\n\nThink of it like a mushroom hunter's basket: the basket holds the tools. Chloroplasts hold chlorophyll. That is where photosynthesis happens.\n\nThe plant takes in carbon dioxide from the air. It comes in through small openings called stomata. Stomata are tiny holes in the leaf.\n\nThe plant also takes in water from the soil. The roots soak it up.\n\nSunlight gives the energy. The energy joins carbon dioxide and water together.\n\nThe plant makes glucose. Glucose is a sugar. The plant uses glucose for energy and growth.\n\nThe plant also makes oxygen. Oxygen is released into the air.\n\nAbout 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose. A molecule is a tiny building block.\n\nSo, photosynthesis happens in chloroplasts, using chlorophyll. Plants take in carbon dioxide and water and use light energy. The products are glucose and oxygen.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 93,
+     "shaped_words": 181,
+     "new_words": 56,
+     "dropped_words": 15
+    }
+   },
+   {
+    "learner": "x6106-9",
+    "kind": "ell",
+    "profile": "Age 51. Language: English is a second language (first: Russian). Interests: ice hockey, K-pop dance covers, spoken word poetry. Dislikes (never wanted): audio-only explanations.",
+    "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose.",
+    "shaped": "Why does a plant need food? It makes its own. The process is called photosynthesis. Say it: pho-to-syn-the-sis. It means making food with light.\n\nPhotosynthesis happens mostly in the leaves. Inside the leaves are tiny parts called chloroplasts. Chloroplasts hold a green pigment called chlorophyll. Chlorophyll is the green color that catches light.\n\nThink of it like a hockey team: the chloroplasts are the players, and chlorophyll is the jersey color that makes them easy to spot. The jersey does not play; it helps the team get noticed. In the same way, chlorophyll catches light for the chloroplast.\n\nThe plant takes in carbon dioxide from the air. Carbon dioxide is a gas in the air. It enters through small openings called stomata. Stomata are tiny holes on the leaf. The plant also takes in water from the soil through its roots.\n\nSunlight gives the energy that joins carbon dioxide and water. Energy is the power to do work. So the plant uses light energy to combine the two ingredients.\n\nThe result is glucose and oxygen. Glucose is a sugar. The plant uses glucose for energy and growth. Oxygen is a gas released into the air.\n\nHere is the recipe in numbers: about 6 molecules of carbon dioxide and 6 molecules of water make 1 molecule of glucose. A molecule is the smallest unit of a substance.\n\nLet's see it in two forms. In words: carbon dioxide plus water plus light energy gives glucose plus oxygen. In a simple list:\n\nInputs: carbon dioxide, water, light energy\n\nOutputs: glucose, oxygen",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 93,
+     "shaped_words": 258,
+     "new_words": 103,
+     "dropped_words": 11
+    }
+   }
+  ]
+ },
+ "stats": {
+  "calls": 21,
+  "empty": 0,
+  "errors": 9,
+  "seconds": 56,
+  "cpu_load": 0,
+  "zerogpu_ledger": {
+   "ok": true,
+   "spent_usd": 3.898561,
+   "reserved_usd": 0.026067,
+   "committed_usd": 3.924628,
+   "cap_usd": 245,
+   "headroom_usd": 241.075372,
+   "calls": 3630,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/zerogpu-ledger.json"
+  },
+  "gonka_ledger": {
+   "ok": true,
+   "spent_usd": 7.532893,
+   "reserved_usd": 0.034155,
+   "committed_usd": 7.567048,
+   "cap_usd": 50,
+   "headroom_usd": 42.432952,
+   "calls": 9984,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/gonka-ledger.json"
+  },
+  "coral_ledger": {
+   "ok": true,
+   "spent_usd": 10.617575,
+   "reserved_usd": 0.108437,
+   "committed_usd": 10.726012,
+   "cap_usd": 100,
+   "headroom_usd": 89.273988,
+   "calls": 4030,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/coral-ledger.json"
+  }
+ }
+}

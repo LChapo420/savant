@@ -107,16 +107,36 @@ const coralProvider = {
   describeError(err) { return err && err.message ? err.message : String(err); },
 
   /** One structured call; an answer cut off by the output cap is asked again with a larger one (structured-json.js withLengthRetry). */
-  structured(args) { return sj.withLengthRetry((a) => this.structuredOnce(a), args); },
+  /**
+   * One structured call. Level fills (block_fill) get a first output cap of CORAL_FIRST_MAX_TOKENS (9000; a real fill is 2 to 6k): at 6 Nov 2026 a
+   * strong learner's level (math, rational exponents) came back as a repetition loop that ran to the 32768 cap (96 s), or as blocks with no
+   * `checks`, in 2 of about 5 fills. Any unusable or cut-off reply is asked again at temperature 0.5, then 0.8 (a loop at temperature 0 repeats
+   * itself; replay of 12 real prompts: 3 usable at temperature 0 against 8 with one warm retry) before the pool moves on to a slow slot. CORAL_WARM_RETRY=off restores the old single try at 32768.
+   */
+  structured(args) {
+    const warm = String(process.env.CORAL_WARM_RETRY || 'on').toLowerCase() !== 'off';
+    if (!warm) return sj.withLengthRetry((a) => this.structuredOnce(a), args);
+    const first = args && args.task === 'block_fill' ? Math.min(Number(args.maxTokens) || 2048, Number(process.env.CORAL_FIRST_MAX_TOKENS || 9000)) : args.maxTokens;
+    return sj.withLengthRetry((a) => this.structuredWarm(a), { ...args, maxTokens: first }, { ceiling: Math.max(first || 0, Number(args && args.maxTokens) || 0) || undefined });
+  },
+  async structuredWarm(a) {
+    try { return await this.structuredOnce(a); } catch (err) {
+      if (!(err && (err.unusable || err.truncated || err.status === 422))) throw err;
+      try { return await this.structuredOnce({ ...a, temperature: 0.5 }); } catch (err2) {
+        if (!(err2 && (err2.unusable || err2.truncated || err2.status === 422))) throw err2;
+        return this.structuredOnce({ ...a, temperature: 0.8 });
+      }
+    }
+  },
 
-  async structuredOnce({ task = null, system, user, schema, schemaName = 'submit', maxTokens = 2048, effort = null, timeoutMs = null, signal = null, model: wanted = null }) {
+  async structuredOnce({ task = null, system, user, schema, schemaName = 'submit', maxTokens = 2048, effort = null, timeoutMs = null, signal = null, model: wanted = null, temperature = 0 }) {
     const model = modelOf(wanted);
     const messages = [
       { role: 'system', content: `${system || ''}\n\nReply with one JSON object only (no prose, no code fence) matching this JSON schema (${schemaName}):\n${JSON.stringify(schema)}`.trim() },
       { role: 'user', content: String(user || '') },
     ];
     const { payload, usage } = await post(
-      { model, messages, max_tokens: sj.outputBudget(maxTokens, effort), temperature: 0, response_format: { type: 'json_object' }, ...reasoning(effort) },
+      { model, messages, max_tokens: sj.outputBudget(maxTokens, effort), temperature, response_format: { type: 'json_object' }, ...reasoning(effort) },
       timeoutMs || Number(process.env.CORAL_TIMEOUT_MS) || 180000, { signal, task },
     );
     const msg = payload.choices && payload.choices[0] && payload.choices[0].message;
@@ -124,6 +144,13 @@ const coralProvider = {
     const checked = parsed.data !== undefined ? sj.validate(schema, parsed.data) : null;
     if (checked && !checked.errors.length) {
       return { data: checked.value, usage: { ...usage, cost_usd: ledger.costOf(model, usage) }, model, tier: 'coral' };
+    }
+    // CORAL_DEBUG_DIR (diagnosis only; 6 Nov 2026, the strong-learner fill that ran to the cap or came back unparseable): keep what a bad reply looked like.
+    if (process.env.CORAL_DEBUG_DIR) {
+      try {
+        const fsx = require('fs'); const px = require('path'); fsx.mkdirSync(process.env.CORAL_DEBUG_DIR, { recursive: true });
+        fsx.writeFileSync(px.join(process.env.CORAL_DEBUG_DIR, `bad-${Date.now()}-${task || 'x'}.json`), JSON.stringify({ task, model, schemaName, finish: payload.choices && payload.choices[0] && payload.choices[0].finish_reason, usage, userLen: messages[1].content.length, system: messages[0].content, user: messages[1].content, head: String((msg && msg.content) || '').slice(0, 2500), tail: String((msg && msg.content) || '').slice(-1500), reasoning: String((msg && (msg.reasoning_content || msg.reasoning)) || '').slice(0, 800), errors: checked && checked.errors && checked.errors.slice(0, 4) }, null, 1));
+      } catch { /* diagnosis only */ }
     }
     if (payload.choices && payload.choices[0] && payload.choices[0].finish_reason === 'length') throw sj.truncatedError(`coral: ${model} was cut off by the output cap (${schemaName})`, { usage });
     throw Object.assign(new Error(`coral: ${model} gave an unusable ${schemaName}${checked && checked.errors.length ? ` (${checked.errors.slice(0, 2).join('; ').slice(0, 160)})` : parsed.data === undefined ? ' (no JSON found)' : ''}`), { status: 422, unusable: true, usage });
