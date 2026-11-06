@@ -115,7 +115,8 @@ const generatedText = (c) => c.skills.map((s) => [`## ${s.title}`, ...(s.lesson.
 const lessonText = (c) => c.skills.flatMap((s) => [...s.lesson.paragraphs, ...(s.lesson.key_points || [])]).join(' ');
 
 async function runArms(reps, arms) {
-  const docs = load(DOCS_FILE, []);
+  const only = (process.env.HELDOUT_ONLY || '').split(',').filter(Boolean);
+  const docs = load(DOCS_FILE, []).filter((d) => !only.length || only.includes(d.id));
   const store = load(OUT_FILE, { exam: {}, control: {}, arms: [], learners: [] });
   const u = db.insert('users', { email: 'heldout@example.test', display_name: 'Heldout', password_hash: 'x', xp: 0, streak: 0, onboarded: true });
   const llm = builderLlm();
@@ -216,7 +217,12 @@ async function runLearners(n, seed) {
 
 // ── 5. report ────────────────────────────────────────────────────────────────────────────────────────
 function report() {
-  const store = load(OUT_FILE, null); if (!store) return log('no results');
+  const dir = path.dirname(OUT_FILE);
+  const files = fs.readdirSync(dir).filter((f) => /^uploads-heldout-results.*.json$/.test(f)).map((f) => path.join(dir, f));
+  const store = { exam: {}, control: {}, arms: [], learners: [] };
+  for (const f of files) { const x = load(f, null); if (!x) continue; Object.assign(store.exam, x.exam); Object.assign(store.control, x.control); store.arms.push(...x.arms); }
+  Object.assign(store, { learners: load(path.join(dir, 'uploads-heldout-learners.json'), { learners: [] }).learners });
+  if (!store.arms.length && !store.learners.length) return log('no results');
   const ok = store.arms.filter((r) => !r.error);
   const arms = [...new Set(ok.map((r) => r.arm))];
   const pctl = (a, p) => { const v = a.filter((x) => x != null).sort((x, y) => x - y); return v.length ? v[Math.min(v.length - 1, Math.floor(p * v.length))] : null; };

@@ -317,3 +317,42 @@ speech and gave no sign), and tesseract.js is an optional dependency that this f
 data from `data/models/tesseract`): on a server without it, pictures and scans are refused with "This server cannot read text from images yet" (`npm install` installs it).
 Results from this run: 77 of 77 cases as intended; timings 0.0 to 0.6 s for text formats, 2.4 to 3.3 s per picture, 7.7 s for a 2-page scan, 12.5 s for 95 s of speech.
 
+## 13. Held-out test of short mode, a retention-goal fix, and upload build speed (6 Nov 2026; AI-JUDGED, SIMULATED; GATE NOT PASSED, short mode stays OFF)
+
+Short mode (section 10 and 11 code) is merged behind `UPLOAD_SHORT=1`, default off; with it off the builder is the full one as before. This round added: the sweep also checks every point
+the material stresses (weight 2 or more), `UPLOAD_SWEEP_CAP` for proofs, and then measured on six NEW documents (`docs/uploads-heldout-docs.json`, written after the code was frozen by
+NVIDIA nemotron, Gonka GLM 5.3 Flash and Gemini; formats docx, pdf, md, html, epub, odt; the builder never saw them). Builder Gonka DeepSeek V4 Flash. Exam written from the source by
+nemotron (up to 8 emphasised and 10 plain questions per document). Two judge families, neither the builder's: Z = Gonka GLM 5.3 Flash, G = Mistral Large via xKiro. Rows:
+`docs/uploads-heldout-results*.json`; `node scripts/uploads-heldout-proof.js report`. Partial run: 19 of 24 planned builds (a second rep on some documents did not finish; the processes were stopped).
+
+| | full (builder as it was) | short |
+|---|---|---|
+| builds, "ready" | 11, 8 | 8, 8 |
+| lesson words / source words | 2.71x (max 4.37x) | 0.81x (max 1.09x) |
+| emphasised answerable Z / G | 80% / 78% | 88% / 82% |
+| plain answerable Z / G | 91% / 89% | 78% / 76% |
+| all questions Z / G | 86% / 84% | 79% / 77% |
+| paired per document, short minus full, plain, Z | | mean -18 points, worst document -40 (h2, h5) |
+| paired, emphasised, Z | | mean +8, worst document -14 |
+
+Reading: the length goal is met (0.81x against 2.7x). The gate (coverage of emphasised AND plain at or above the full version, on held-out documents) is NOT met: plain facts fall 18
+points on both judges, worst on the history narrative with no emphasis (-40) and the invented rule-book with specifics that cannot be known from general knowledge (-40). Emphasised
+coverage rose but on 1 to 7 questions a document, with the full arm's emphasised score pulled down by builds that ended partial with one skill (h6 full r1: 1 skill). So the sweep fixed the
+emphasised side and the plain side got worse. Not tried: a sweep that covers every sentence with a stated fact rather than 12 to 16 per skill, or a 1.0x cap (still half the full length).
+Emphasised questions per document: h1 5, h2 0, h3 7, h4 1, h5 1, h6 6.
+
+**Personalisation on extreme learners: not proven.** `scripts/uploads-heldout-proof.js learners` builds one course per random extreme learner (traits at the tails, odd interests, ages 9 to
+61, ESL, test date) and has both families check each trait and list invented facts. Only 1 learner finished before the free and cheap slots saturated (full builder; 2 traits, age 9: Z found
+1 of 4 traits followed, G 2 of 4; invented claims 1 and 3). That is one learner, not a result, and it points at weak following; the run is the tool for the next round.
+
+**What was fixed for personalisation:** a test date set as a material's retention goal now makes every part built from it (lesson, questions, notes, podcast, pack, practice test)
+a "prepare for a test" spec (`services/learning-spec.js`, `materialId`); before, the date changed only the review schedule. Language: the product is English only for launch
+(PRODUCT-DECISIONS); the reading level and "English is a second language" were already in the spec. `services/study-goal.js` is another agent's and was not touched.
+
+**Upload build speed (bug sweep: notes 261 s, pack 135 s, path 421 s+ on saturated free slots).** Cause: uploads auto-built notes and the pack as BACKGROUND work, which never uses a paid
+slot and leaves one free permit, so on busy free models it waited minutes while the learner was already looking at the page. Fix (`services/material-autobuild.js`): the build runs in the
+WAITING lane on the fast lane (`pool.runForeground(..., { fast: true })`): a cleared learner's calls go to the paid fast slots first (existing consent clearance), any other call overflows
+to the cheapest paid slot after 8 s, free slots answer when they can. `UPLOAD_BUILD_LANE=background` restores the old behaviour. `services/pool.js` was not edited.
+Measured through the real pool with a simulated learner (`scripts/uploads-speed.js`), while six proof processes were loading the same providers: notes 59 s background (nemotron) -> 11 s
+waiting (served by Gonka GLM 5.3 Flash, paid, a few tenths of a cent); pack over 170 s (killed) -> 130 s. One run each: indicative, not a distribution. The learning-path build was not
+re-timed here. Progress for slow reading of scans and ZIPs is in section 12.

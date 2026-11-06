@@ -22,7 +22,13 @@ const perDay = () => Math.max(0, Math.floor(Number(process.env.UPLOAD_AUTOBUILD_
 // Found by the 4 Nov walk: notes and the pack took 160 s each on busy free models even though the learner was already looking at them.
 const lanes = new Map();
 const laneKey = (userId, label) => `${userId}:${label}`;
-const inLane = (userId, label, fn) => pool.runBackground(() => {
+// A just-uploaded material is something its learner is about to wait on (6 Nov bug sweep: notes took 261 s and the pack 135 s as background
+// work on saturated free slots). So by default the build runs in the WAITING lane on the fast lane: a cleared learner's calls go to the paid
+// fast slots first, any other call overflows to the cheapest paid slot after 8 s, and free slots are used when they answer. The existing
+// consent rule decides who is cleared (req.coral). UPLOAD_BUILD_LANE=background restores the old behaviour (free slots only, never pays).
+const waiting = () => String(process.env.UPLOAD_BUILD_LANE || 'waiting').toLowerCase() !== 'background';
+const runLane = (fn) => (waiting() ? pool.runForeground(fn, { fast: true }) : pool.runBackground(fn));
+const inLane = (userId, label, fn) => runLane(() => {
   const key = laneKey(userId, label);
   lanes.set(key, pool.laneStore());
   return Promise.resolve().then(fn).finally(() => { if (lanes.get(key) === pool.laneStore()) lanes.delete(key); });
