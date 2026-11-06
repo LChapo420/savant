@@ -398,7 +398,7 @@ async function build(userId, materialId, opts = {}) {
 /** What the page gets: the script to play and read, and the quotes it came from. */
 function view(p) {
   if (!p) return null;
-  const stale = p.status === 'building' && Date.now() - Date.parse(p.started_at) > STALE_BUILD_MS && !inflight.has(`${p.user_id}:${p.material_id}:${p.kind}`);
+  const stale = p.status === 'building' && !inflight.has(`${p.user_id}:${p.material_id}:${p.kind}`); // died with a crash or a restart
   return {
     material_id: p.material_id, kind: p.kind, title: p.title, status: stale ? 'failed' : p.status,
     skills: p.skills || [], turns: (p.turns || []).map((t) => ({ host: t.host, text: t.text, quote: t.quote || null })),

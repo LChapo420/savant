@@ -153,4 +153,5 @@ function conditions(id) {
     console.log(line.join(' | '));
   }
   console.log('my own count on real lessons:', JSON.stringify(MY_COUNT));
+  console.log('real spend this run:', JSON.stringify(J.spend));
 })();

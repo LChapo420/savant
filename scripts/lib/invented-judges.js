@@ -3,16 +3,21 @@
  *   free = the free-form prompt rounds 3 and 4 used, so its numbers can be compared
  *   sent = every sentence of the course text is numbered; for each one: supported by the source or not
  */
+const spend = {};
 const call = async (fam, a) => {
   const mt = a.maxTokens || 6000;
   let r;
   if (fam === 'N') r = await require('../../services/providers/nvidia').structured({ role: 'fast', task: 'uploads_proof', ...a, maxTokens: mt, timeoutMs: 240000 });
   else if (fam === 'C') r = await require('../../services/providers/coral').coral.structured({ ...a, maxTokens: mt, timeoutMs: 240000 });
   else if (fam === 'Q') r = await require('../../services/providers/zerogpu').zerogpu.structured({ ...a, maxTokens: mt, timeoutMs: 240000 });
+  else if (fam === 'K') r = await require('../../services/providers/lyceum').lyceum.structured({ model: 'moonshotai/kimi-k3.1-pro', ...a, maxTokens: Math.max(mt, 8000), timeoutMs: 300000 });
   else if (fam === 'L') r = await require('../../services/providers/lyceum').lyceum.structured({ model: 'z-ai/glm-5.3', ...a, maxTokens: mt, timeoutMs: 240000 });
   else if (fam === 'Z') r = await require('../../services/providers/gonka').gonka.structured({ model: 'zai-org/GLM-5.3-Flash', ...a, maxTokens: mt, timeoutMs: 240000 });
   else if (fam === 'M') r = await require('../../services/providers/gonka').gonka.structured({ model: 'deepseek-ai/DeepSeek-V4-Flash-0731', ...a, maxTokens: mt, timeoutMs: 240000 });
   if (!r || !r.data) throw new Error('no data');
+  const u = r.usage || {};
+  const sp = spend[fam] = spend[fam] || { calls: 0, usd: 0, input: 0, output: 0 };
+  sp.calls++; sp.usd += Number(u.cost_usd) || 0; sp.input += Number(u.input_tokens) || 0; sp.output += Number(u.output_tokens) || 0;
   return r.data;
 };
 const askJ = async (fam, a) => {
@@ -50,4 +55,4 @@ async function judge(fam, form, source, text) {
   return flagged;
 }
 
-module.exports = { call, askJ, pool, stripMd, judge, sentencesOf, FREE_SYS, SENT_SYS, SENT_SCHEMA, FREE_SCHEMA };
+module.exports = { spend, call, askJ, pool, stripMd, judge, sentencesOf, FREE_SYS, SENT_SYS, SENT_SCHEMA, FREE_SCHEMA };

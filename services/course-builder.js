@@ -845,6 +845,7 @@ const missedEntry = (win, windows, total, reason) => ({ part: win.n, of: windows
 
 function res_stopped(r) { return !!(r && r.stopped); }
 
+const materialExists = (userId, id) => { const m = db.byId('materials', id); return !!m && m.user_id === userId; };
 function row(userId, materialId) {
   return db.findOne('material_courses', (c) => c.user_id === userId && c.material_id === Number(materialId));
 }
@@ -877,7 +878,8 @@ async function build(userId, materialId, opts = {}) {
       outline: resume ? resume.outline : null, missed: resume ? (resume.missed || []) : [], skills: resume ? resume.skills : [], dropped: ctx.dropped, tokens_used: resume ? resume.tokens_used : 0, models: [],
     };
     let saved = prev ? db.update('material_courses', prev.id, { ...base, error: null, finished_at: null }) : db.insert('material_courses', base);
-    const persist = (patch) => { saved = db.update('material_courses', saved.id, patch); return saved; };
+    // A material deleted during its build: the row is gone, so nothing is written back and the build stops spending.
+    const persist = (patch) => { if (!materialExists(userId, mat.id)) { ctx.gone = true; return saved; } const u = db.update('material_courses', saved.id, patch); if (u) saved = u; return saved; };
 
     let outline = base.outline;
     if (!outline) {
@@ -917,8 +919,10 @@ async function build(userId, materialId, opts = {}) {
       if (attached) ctx.dropped.keypoints_attached = attached;
       layout(outline);
       if (!outline.length) {
-        persist({ status: 'failed', error: stoppedOutline ? 'token budget' : 'outline', tokens_used: ctx.budget.used, finished_at: new Date().toISOString() });
-        return { error: 'The material could not be turned into a course. Try a clearer or longer text.', code: 'outline_failed' };
+        // Every window unanswered is a provider problem, not the learner's text.
+        const noAnswer = !stoppedOutline && lost.length && lost.every((l) => l.reason === 'unreadable') && !raw.length;
+        persist({ status: 'failed', error: stoppedOutline ? 'token budget' : noAnswer ? 'no_answer' : 'outline', tokens_used: ctx.budget.used, finished_at: new Date().toISOString() });
+        return noAnswer ? { error: 'The AI models did not answer. Try again in a minute.', code: 'busy' } : { error: 'The material could not be turned into a course. Try a clearer or longer text.', code: 'outline_failed' };
       }
       if (gaps) ctx.dropped.outline_parts = gaps;
       if (all.length > passages.length) {
@@ -939,7 +943,7 @@ async function build(userId, materialId, opts = {}) {
     // Skills are independent once the outline exists: build a few at a time (each still checks the budget first).
     const todo = outline.filter((s) => !built.has(s.id));
     const worker = async () => {
-      while (todo.length && !stopped) {
+      while (todo.length && !stopped && !ctx.gone && materialExists(userId, mat.id)) {
         const skill = todo.shift();
         let before = ctx.unanswered;
         let r = await buildSkill(skill, passageById, ctx);
@@ -952,6 +956,7 @@ async function build(userId, materialId, opts = {}) {
       }
     };
     await Promise.all(Array.from({ length: Math.max(1, opts.concurrency || BUILD_CONCURRENCY) }, worker));
+    if (ctx.gone || !materialExists(userId, mat.id)) return { error: 'That material was deleted.', code: 'not_found' };
     const skills = outline.filter((s) => built.has(s.id)).map((s) => built.get(s.id));
     // A skill dropped by the checks takes its edges with it: its dependents keep its own prerequisites instead.
     const kept = new Set(skills.map((s) => s.id));
@@ -1006,7 +1011,7 @@ async function build(userId, materialId, opts = {}) {
       keypoint_coverage: gate ? { total: gate.total, covered: gate.covered, share: Math.round(gate.ratio * 1000) / 10, weighted: Math.round(gate.weighted * 1000) / 10 } : null,
       uncovered_keypoints: gate ? gate.uncovered.map((k) => ({ id: k.id, text: k.text, weight: k.weight, loc: k.loc })) : [],
       skills, units, status, dropped: ctx.dropped, tokens_used: (base.tokens_used || 0) + ctx.budget.used, models: [...ctx.models],
-      error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
+      error: status === 'failed' ? (stopped ? 'token budget' : ctx.unanswered ? 'no_answer' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(), unanswered: ctx.unanswered || 0,
     });
     try { require('./part-modify').stampCourse(userId, done); } catch { /* signature only */ } // eslint-disable-line global-require
     db.flush();
@@ -1108,9 +1113,12 @@ async function retryMissed(userId, materialId, opts = {}) {
 /** What the learner may see before studying: titles and counts, no answers. */
 function summary(c) {
   if (!c) return null;
-  const stale = c.status === 'building' && Date.now() - Date.parse(c.started_at) > STALE_BUILD_MS && !inflight.has(`${c.user_id}:${c.material_id}`);
+  // A row still "building" with no build running in this process died with a crash or a restart: say so at once, not after half an hour of a spinner.
+  const stale = c.status === 'building' && !inflight.has(`${c.user_id}:${c.material_id}`);
   return {
     id: c.id, material_id: c.material_id, title: c.title, status: stale ? ((c.skills || []).length ? 'partial' : 'failed') : c.status, truncated: !!c.truncated,
+    // Why it ended: 'interrupted' (the server stopped), 'busy' (no model answered), or null, which leaves the text as the likely cause.
+    failure: stale ? 'interrupted' : (c.error === 'no_answer' || c.error === 'token budget' ? 'busy' : (c.status === 'partial' && c.dropped && c.unanswered ? 'busy' : null)),
     units: c.units || [],
     planned: (c.outline || []).length,
     skills: (c.skills || []).map((s) => ({

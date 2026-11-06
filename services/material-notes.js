@@ -220,7 +220,7 @@ async function build(userId, materialId, opts = {}) {
     const status = !sections.length ? 'failed' : (stopped || unanswered || factUnchecked ? 'partial' : 'ready');
     saved = db.update('material_notes', saved.id, {
       fact_fixed: factFixed, fact_unchecked: factUnchecked, sections, dropped, trimmed_extras: trimmed, analogies_fixed: analogiesFixed, revised_parts: revisions, open_problems: [...open], coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
-      error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
+      error: status === 'failed' ? (stopped ? 'token budget' : unanswered ? 'no_answer' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     db.flush();
     if (status === 'failed') return { error: 'Notes could not be made from that material. Try a longer or clearer text.', code: 'nothing_verified' };
@@ -236,9 +236,10 @@ async function build(userId, materialId, opts = {}) {
 
 function view(n) {
   if (!n) return null;
-  const stale = n.status === 'building' && Date.now() - Date.parse(n.started_at) > STALE_BUILD_MS && !inflight.has(`${n.user_id}:${n.material_id}`);
+  const stale = n.status === 'building' && !inflight.has(`${n.user_id}:${n.material_id}`); // died with a crash or a restart
   return {
     material_id: n.material_id, title: n.title, status: stale ? ((n.sections || []).length ? 'partial' : 'failed') : n.status,
+    failure: stale ? 'interrupted' : (n.error === 'no_answer' || n.error === 'token budget' ? 'busy' : null),
     sections: (n.sections || []).map((s) => ({ id: s.id, heading: s.heading, bullets: s.bullets.map((b) => ({ text: b.text, quote: b.quote })) })),
     coverage: n.coverage || 0, built_at: n.finished_at || null,
   };

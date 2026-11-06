@@ -222,7 +222,18 @@ App.mount(async () => {
       if (c.status === 'ready' || c.status === 'partial') {
         btn.textContent = 'Study';
         btn.dataset.study = '1';
-        n.textContent = `${c.skills.length} skills in ${(c.units || []).length || 1} unit${(c.units || []).length > 1 ? 's' : ''}${c.status === 'partial' ? ' so far (the rest can be built later; press Learning path again)' : ''}.`;
+        n.textContent = `${c.skills.length} skills in ${(c.units || []).length || 1} unit${(c.units || []).length > 1 ? 's' : ''}${c.status === 'partial' ? (c.failure === 'interrupted' ? ' so far: the build stopped part way.' : ' so far.') : ''}`;
+        // A partial course can always be finished from here: what is built stays, only the rest is written.
+        if (c.status === 'partial' && !(c.missed || []).some((m) => m.retryable)) {
+          const rest = document.createElement('button');
+          rest.type = 'button'; rest.className = 'btn btn-sm'; rest.textContent = 'Build the rest';
+          rest.addEventListener('click', async () => {
+            rest.disabled = true;
+            try { const out = await App.api.post(`/api/materials/${id}/course`, {}); if (out.course) courseUi(id, out.course); else { courseUi(id, { ...c, status: 'building', planned: c.planned }); poll(id, 0); } } catch (err) { rest.disabled = false; App.toast(err.message, 'error'); }
+          });
+          n.appendChild(document.createTextNode(' '));
+          n.appendChild(rest);
+        }
         const gone = (c.missed || []).filter((m) => m.note);
         if (gone.length) {
           n.textContent += ` ${c.coverage ? `${c.coverage.covered}% of the text is in this course. ` : ''}${gone.map((m) => m.note).join(' ')}`;
@@ -238,7 +249,10 @@ App.mount(async () => {
           }
         }
         if (c.last_retry && !c.last_retry.ok && !c.extending) n.appendChild(document.createTextNode(' The last try did not work; try again later.'));
-      } else { btn.textContent = 'Try again'; n.textContent = 'The course could not be built from this text. Try a clearer or longer one.'; }
+      } else {
+        btn.textContent = 'Try again'; delete btn.dataset.study;
+        n.textContent = c.failure === 'busy' ? 'The AI models did not answer, which is not your file\'s fault. Try again in a minute.' : c.failure === 'interrupted' ? 'The build stopped when the server restarted. Try again: it starts where it left off.' : 'The course could not be built from this text. Try a clearer or longer one.';
+      }
     };
     // Extend a path: more practice on the same skills, or join another of your materials onto it.
     const extendUi = (id, c) => {
@@ -282,8 +296,11 @@ App.mount(async () => {
         // Right after a start the server may not have flagged it yet: show it busy for the first looks.
         if (extending && c && tries < 2 && !c.extending) c.extending = true;
         extendUi(id, c);
-        if (c && (c.status === 'building' || c.extending) && tries < 200) setTimeout(() => poll(id, tries + 1, extending), 4000);
-      } catch (err) { /* leave the note as it is */ }
+        if (c && (c.status === 'building' || c.extending)) {
+          // A long build is watched for as long as it takes, more slowly after a quarter of an hour, so the page never freezes on an old count.
+          setTimeout(() => poll(id, tries + 1, extending), tries < 200 ? 4000 : 15000);
+        }
+      } catch (err) { setTimeout(() => poll(id, tries + 1, extending), 15000); /* a blip of the network or a restart: keep looking */ }
     };
     root.querySelectorAll('[data-course]').forEach((b) => {
       poll(b.dataset.course, 0);
@@ -304,7 +321,7 @@ App.mount(async () => {
       if (p.status === 'building') { btn.disabled = true; btn.textContent = p.activity && p.activity.queued ? 'Queued…' : 'Building…'; n.textContent = activityText(p.activity, 'study pack') || 'Building your study pack. You can leave this page.'; return; }
       btn.disabled = false;
       if (p.status === 'ready' || p.status === 'partial') { btn.textContent = 'Open pack'; btn.dataset.open = '1'; n.textContent = `${p.cards.length} flashcards, ${p.quiz.length} quiz questions, ${p.test.length} test questions.`; }
-      else { btn.textContent = 'Try again'; n.textContent = 'The pack could not be built from this text. Try a clearer or longer one.'; }
+      else { btn.textContent = 'Try again'; n.textContent = p.failure === 'busy' ? 'The AI models did not answer, which is not your file\'s fault. Try again in a minute.' : p.failure === 'interrupted' ? 'The build stopped when the server restarted. Try again.' : 'The pack could not be built from this text. Try a clearer or longer one.'; }
     };
     const pollPack = async (id, tries) => {
       try {
@@ -312,7 +329,7 @@ App.mount(async () => {
         const p = out.pack || (out.activity && out.activity.queued ? { status: 'building' } : out.pack);
         if (p && out.activity) p.activity = out.activity;
         packUi(id, p);
-        if (p && p.status === 'building' && tries < 200) setTimeout(() => pollPack(id, tries + 1), 4000);
+        if (p && p.status === 'building') setTimeout(() => pollPack(id, tries + 1), tries < 200 ? 4000 : 15000);
       } catch (err) { /* leave the note as it is */ }
     };
     root.querySelectorAll('[data-pack]').forEach((b) => {
