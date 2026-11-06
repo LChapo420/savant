@@ -271,3 +271,15 @@ Whole 15 of 24 with 1 false alarm in 16 clean; parts 16 of 24 with 5 in 16. One 
 - `FACT_VERIFY_PARTS`, `WRITE_REUSE`, `BLOCK_FILL_LENIENT`: unchanged, off. `FACT_VERIFY_PARTS=background`: new, off.
 - New scripts: `base-coverage.js`, `prewrite-base.js`, `lesson-layer-proof.js`, `lesson-layer-test.js` (in `npm test`), `coral-fill-replay.js`; raw results in `docs/instant-layer/`. `first-lesson-timing.js` now polls the layer and prints a summary line.
 All simulated learners and AI judges; small samples (1, 3, 10 learners per run); other agents' work was on the machine (CPU 30 to 39% average) and on Coral's key (the 429s above).
+
+## Phone width and scrolled reader (6 Nov 2026; real browser, 375 x 812, real layer texts from the proof run, model calls stubbed)
+
+The desktop check above missed these. Before the fix: a reader past the slot moved 167 px when a long layer filled and 430 px when a layer failed, because the browser's scroll anchoring and the code both corrected. A short layer kept 325 px of empty card. After: the code measures what really moved and corrects only that, and the reserve ends when the layer arrives.
+
+| case | before | after |
+|---|---|---|
+| long layer, reader past the slot | moved 167 px | 0 |
+| failed layer, reader past the slot | moved 430 px | 0 |
+| short layer, top of page | card 430 px, content 105 px | card 147 px, first block moved 0 |
+
+Tested in Chromium only. Safari has no scroll anchoring, so the same measure-and-correct path should cover it, but that has not been run.

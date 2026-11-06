@@ -209,24 +209,29 @@
       const after = first && first.nextElementSibling && first.nextElementSibling.tagName === 'DIV' && first.nextElementSibling.id !== 'block-level-layer' ? first.nextElementSibling : first;
       if (after) after.insertAdjacentElement('afterend', slot); else host.appendChild(slot);
       const esc = App.escapeHtml;
-      const fill = (layer) => {
-        const before = slot.offsetHeight;
+      // A reader past the slot must not move when it changes size. Chrome's scroll anchoring may already hold them and Safari's does not, so measure
+      // what really moved and correct only that, before the next paint (adding the size change on top moved a phone reader 167 px, and 430 px on a drop).
+      const hold = (change) => {
+        const anchor = slot.nextElementSibling;
+        const past = !!anchor && slot.getBoundingClientRect().top < 0;
+        const y0 = past ? anchor.getBoundingClientRect().top : 0;
+        change();
+        if (!past) return;
+        const settle = () => { const moved = anchor.getBoundingClientRect().top - y0; if (Math.abs(moved) >= 1) window.scrollBy({ top: moved, behavior: 'instant' }); };
+        settle();
+        requestAnimationFrame(settle);
+      };
+      const fill = (layer) => hold(() => {
+        slot.style.minHeight = '0'; // the reserve was for the wait; a short layer doesn't keep an empty card
         slot.innerHTML = `
           <div class="tiny muted" style="margin-bottom:6px">For you</div>
           ${layer.hook ? `<p style="margin:0 0 8px"><strong>${esc(layer.hook)}</strong></p>` : ''}
           ${layer.why ? `<p class="small" style="margin:0 0 8px">${esc(layer.why)}</p>` : ''}
           ${(layer.analogies || []).map((a) => `<p class="small" style="margin:0 0 6px"><span class="muted">${esc(a.point)}:</span> ${esc(a.text)}</p>`).join('')}`;
-        const grew = slot.offsetHeight - before;
-        if (grew > 0 && slot.getBoundingClientRect().top < 0) window.scrollBy(0, grew);
         slot.setAttribute('data-layer', 'shown');
         window.__layerShownAt = Date.now();
-      };
-      const drop = () => {
-        const h = slot.offsetHeight;
-        const above = slot.getBoundingClientRect().top < 0;
-        slot.remove();
-        if (above) window.scrollBy(0, -h);
-      };
+      });
+      const drop = () => hold(() => slot.remove());
       let tries = 0;
       const tick = async () => {
         tries += 1;
