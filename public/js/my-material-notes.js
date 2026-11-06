@@ -19,7 +19,10 @@ App.mount(async () => {
       return;
     }
     if (!n || n.status === 'building') {
-      root.innerHTML = `${back}<h1>Notes</h1><div class="loading"><span class="spinner"></span>Making your notes. You can leave this page.</div>`;
+      // While the notes are written, what the material stresses is already known: no model, no wait.
+      let top = [];
+      try { const list = await App.api.get('/api/materials'); const me = (list.materials || []).find((x) => String(x.id) === String(id)); top = (me && me.top_points) || []; } catch { /* the spinner is enough */ }
+      root.innerHTML = `${back}<h1>Notes</h1><div class="loading"><span class="spinner"></span>Making your notes. You can leave this page.</div>${top.length ? `<section class="card" style="margin-top:12px"><h2>What your material stresses</h2><ul style="padding-left:18px">${top.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></section>` : ''}`;
       setTimeout(() => load(false), 4000);
       return;
     }

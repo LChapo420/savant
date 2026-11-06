@@ -252,6 +252,8 @@ function pub(row, withText) {
     preview: row.text.slice(0, 400),
   };
   out.key_point_count = (row.key_points || []).length;
+  // The first useful thing, at once and with no model: what the material stresses, heaviest first.
+  out.top_points = (row.key_points || []).filter((k) => k.weight >= 2).sort((a, b) => b.weight - a.weight).slice(0, 8).map((k) => k.text);
   if (row.warnings && row.warnings.length) out.warnings = row.warnings;
   if (row.files) out.files = row.files;
   if (withText) { out.text = row.text; out.key_points = row.key_points || []; out.topics = row.topics || []; }

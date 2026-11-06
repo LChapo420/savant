@@ -18,6 +18,11 @@ const db = require('../config/db');
 const pool = require('../services/pool');
 const materials = require('../services/materials');
 const text = 'Tides are caused mainly by the gravitational pull of the moon on the oceans, and the sun adds a smaller pull. Spring tides, with the largest range, happen at new and full moon when the sun, moon and earth line up. Neap tides, with the smallest range, happen at the quarter moons. A tidal cycle repeats about every 12 hours and 25 minutes. The Bay of Fundy has the highest tides in the world, up to 16 metres. Coastal shape and the depth of the sea floor change the local tidal range. Tidal energy can be captured by barrages and turbines, and it is predictable unlike wind. '.repeat(3);
+// SPEED_TRACE=1: every model call of the build, with its time and which model answered, so the biggest wait can be named.
+if (process.env.SPEED_TRACE) {
+  const ai = require('../services/ai'); const orig = ai.structuredDetail; const t00 = Date.now();
+  ai.structuredDetail = async (a) => { const t = Date.now(); const r = await orig(a).catch((e) => { console.log(`  ${a.task} failed ${e.message.slice(0, 60)} ${Math.round((Date.now() - t) / 1000)}s`); throw e; }); console.log(`  at ${Math.round((t - t00) / 1000)}s ${a.task} ${Math.round((Date.now() - t) / 100) / 10}s ${r && r.model}`); return r; };
+}
 (async () => {
   const u = db.insert('users', { email: 'speed@example.test', display_name: 'Speed', password_hash: 'x', xp: 0, streak: 0, onboarded: true, age_check: { birth_ym: '2000-01' } });
   const m = materials.addPaste(u.id, 'Tides', text).value;

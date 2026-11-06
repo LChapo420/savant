@@ -127,7 +127,8 @@ async function weights() {
   return table;
 }
 
-function survive(p, text) { return p.key.test(text) && p.val.test(text.split(/(?<=[.!?\n])\s+/).filter((l) => p.key.test(l)).join(' ') || text); }
+/** The point's rare word and its value in one line (a card, a question) or, for running text, one sentence. */
+function survive(p, text, items) { return p.key.test(text) && p.val.test((items ? text.split('\n') : text.split(/(?<=[.!?\n])\s+/)).filter((l) => p.key.test(l)).join(' ') || text); }
 async function build(formats) {
   const cb = require('../services/course-builder'); const notes = require('../services/material-notes'); const pack = require('../services/material-pack'); const tests = require('../services/material-test');
   const llm = async (a) => { for (let i = 0; i < 4; i++) { try { const data = await J.call('M', { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: Math.max(a.maxTokens || 1500, 2500) }); return { data, model: 'M' }; } catch (e) { await new Promise((r) => setTimeout(r, 2000 * (i + 1))); } } return null; };
@@ -147,9 +148,11 @@ async function build(formats) {
     const courseQ = c.course ? c.course.skills.flatMap((s) => s.questions.map((q) => `${q.prompt} ${q.answer || (q.choices || [])[q.answer_index] || ''}`)).join('\n') : '';
     const row = { format: f, status: { notes: n.notes && n.notes.status, pack: kk.status, course: c.course && c.course.status, skills: c.course && c.course.skills.length }, surfaces: {} };
     for (const [name, text] of [['notes', nText], ['cards', cards], ['test', testT], ['path_lesson', courseT], ['path_questions', courseQ]]) {
-      row.surfaces[name] = { stressed: POINTS.filter((p) => survive(p, text)).map((p) => p.id), plain: PLAIN.filter((p) => survive(p, text)).map((p) => p.id), total_words: (text.match(/\S+/g) || []).length };
+      const items = name !== 'path_lesson' && name !== 'notes';
+      row.surfaces[name] = { stressed: POINTS.filter((p) => survive(p, text, items)).map((p) => p.id), plain: PLAIN.filter((p) => survive(p, text, items)).map((p) => p.id), total_words: (text.match(/\S+/g) || []).length };
     }
     row.m = materials.get(u.id, id, true).key_points.filter((x) => x.weight >= 2).length;
+    row.added = { pack: kk.dropped && kk.dropped.stress_added, questions: c.course && c.course.dropped.stress_questions, facts: c.course && c.course.dropped.facts_restored, checker: c.course && c.course.dropped.factcheck };
     rows.push(row);
     fs.writeFileSync(outFile, JSON.stringify(rows));
     console.log(`${f}: ${JSON.stringify(row.status)}`);
