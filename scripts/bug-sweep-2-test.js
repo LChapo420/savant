@@ -128,6 +128,26 @@ function planPin() {
   check('and another learner is not affected', blockLevels.openedOnShared(other, 'math', 'calculus_i', 10) === null);
 }
 
+async function childGate() {
+  console.log('a child with no outside AI: a crisis message is answered, everything else stays refused');
+  const consent = require('../routes/consent');
+  const kid = db.insert('users', { email: null, username: 'kidgate', display_name: 'Kid', password_hash: 'x', account_type: 'child', xp: 0, streak: 0, age_check: { needs_parent: true, under_13: true, age_at_check: 10, consent_age: 13, country: 'US', birth_ym: `${new Date().getUTCFullYear() - 10}-01` } });
+  const run = (path, body) => new Promise((ok) => {
+    const res = { code: 200, status(c) { this.code = c; return this; }, json(j) { ok({ status: this.code, json: j, passed: false }); return this; } };
+    consent.gate({ user: kid, method: 'POST', path, body }, res, () => ok({ passed: true }));
+  });
+  const crisis = await run('/tutor/chat', { messages: [{ role: 'user', content: 'i want to kill myself' }], where: 'home' });
+  check('the home chat gives a child the fixed reply, for a child', crisis.status === 200 && /grown-up/.test(crisis.json.reply) && crisis.json.source === 'safety', crisis);
+  const coach = await run('/items/5/coach/stream', { messages: [{ role: 'user', content: 'i dont want to be alive' }] });
+  check('so does the question coach', coach.status === 200 && /grown-up/.test(coach.json.reply), coach);
+  const ask = await run('/items/5/ask', { question: 'i want to kill myself' });
+  check('and asking after answering', ask.status === 200 && /grown-up/.test(ask.json.reply), ask);
+  const plain = await run('/tutor/chat', { messages: [{ role: 'user', content: 'what is counting' }], where: 'home' });
+  check('an ordinary message is still refused, never passed on', plain.status === 403 && plain.json.code === 'parent_opt_in_required' && !plain.passed, plain);
+  const earlier = await run('/tutor/chat', { messages: [{ role: 'user', content: 'i want to kill myself' }, { role: 'assistant', content: 'x' }, { role: 'user', content: 'ok what is counting' }] });
+  check('only the latest message is read', earlier.status === 403, earlier);
+}
+
 function accountData() {
   console.log('deleting an account reaches shared plans; the export covers every collection');
   const blockLevels = require('../services/block-levels');
@@ -152,6 +172,7 @@ function accountData() {
 
 (async () => {
   phrases();
+  await childGate();
   accountData();
   await routes();
   planPin();

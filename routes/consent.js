@@ -543,6 +543,16 @@ function routePath(req) {
   return p.toLowerCase().replace(/\/{2,}/g, '/').replace(/(.)\/+$/, '$1');
 }
 
+/** What the learner just typed into a chat route, read for a crisis (services/tutor-full.js). Null when there is nothing to say. */
+function crisisIn(req) {
+  const b = req.body || {};
+  const last = Array.isArray(b.messages) ? [...b.messages].reverse().find((m) => m && m.role !== 'assistant' && typeof m.content === 'string') : null;
+  const said = last ? last.content : (typeof b.question === 'string' ? b.question : '');
+  if (!said) return null;
+  const t = require('../services/tutor-full').triage(req.user, said); // eslint-disable-line global-require
+  return t && t.reply ? t : null;
+}
+
 /** Mounted on /api before every router. */
 function gate(req, res, next) {
   if (!req.user) return next();
@@ -567,6 +577,9 @@ function gate(req, res, next) {
     const outside = OUTSIDE_AI.some((re) => re.test(reqPath))
       || TEXT_FIELDS.some((t) => t.re.test(reqPath) && hasText(req.body, t.fields));
     if (outside) {
+      // A crisis message gets its fixed reply, not "this uses an outside AI service": that reply is written here and no model or outside service is involved.
+      const crisis = crisisIn(req);
+      if (crisis) return res.json({ reply: crisis.reply, source: 'safety', kind: crisis.kind, coached: true });
       return res.status(403).json({
         error: a.state === 'needs_age'
           ? 'Answer the date-of-birth question first: open Subjects to see it.'
