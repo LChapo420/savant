@@ -317,11 +317,13 @@ async function reply({ user, messages, page, inputMode, image }) {
       verdict = await ai.talk({
         role: 'fast', task: 'dock_leak_check',
         system: 'You check a tutor reply before a learner sees it. The learner must not be handed the answer to the question on their page. Reply with only YES or NO.',
-        messages: [{ role: 'user', content: `Question on the page: ${question}
+        messages: [{ role: 'user', content: `${fullOn ? `Earlier in this conversation (a question discussed there may be the one they are really after, or may come back): ${clip(history.slice(0, -1).slice(-6).map((m) => `${m.role}: ${m.content}`).join(' / '), 500) || 'nothing'}
+
+` : ''}Question on the page: ${question}
 
 Tutor reply: ${text}
 
-Does the reply state the answer, give it away so directly that nothing is left for the learner to work out, or work an example (even on different numbers) whose final result is the same as the answer to the question on the page? YES or NO.` }],
+Does the reply state the answer (to the question on the page, or to a question from earlier in the conversation), give it away so directly that nothing is left for the learner to work out, or work an example (even on different numbers) whose final result is the same as the answer to the question on the page? YES or NO.` }],
         maxTokens: 5, userId: user.id, hedgeAfterMs: 3000, timeoutMs: 8000,
       });
     } catch { verdict = ''; }
