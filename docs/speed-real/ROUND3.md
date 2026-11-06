@@ -41,7 +41,7 @@ Hours to recall 0.70 of the whole course on the day (the arm must also have ever
 | | rereader (n 95 of 160) | 4.91 | 5.96 / 4.24 (95, 95) | 10.01 / 6.46 (95, 95) | 9.44 to 13.81 | about 10 to 16 |
 | | massed problems | 0.72 | 0.88 | 1.46 | 1.38 to 2.01 | 1.43 to 2.32 |
 
-Read half-life at its generous end (7 days, logged costs, range middle): typical student x5.6 and stop x9.5 at 1 year; x2.9 and x5.9 at 1 month; on a dated test in 1 month x1.35 and x2.6 (rereader x2.3 and x4.4). **Equal-retention reading** (`baselines-report.txt`, measure 2, audited costs): a student who reads, rereads, does a few problems and spends 5 days before the test spends about 18 h and recalls 0.07 at a month. Savant then ties it on hours (x1.1) with far more retention, because the first pass already costs about as much as that habit.
+Read half-life at its generous end (7 days, logged costs, range middle): typical student x5.6 and stop x9.5 at 1 year; x2.9 and x5.9 at 1 month; on a dated test in 1 month x1.35 and x2.6 (rereader x2.3 and x4.4). **Equal-retention reading** (`baselines-report.txt`, measure 2, audited costs): a student who reads, rereads, does a few problems and spends 5 days before the test spends about 18 h and recalls 0.07 at a month. The real path takes x0.56 of that habit's speed, about 1.8x its hours. With the stop it ties it (x1.1) with far more retention. The first pass alone costs about as much as the habit.
 
 **By kind** (logged costs, middle of range): no kind stands out. Stop + worked + one-tap against the typical student at 1 month is 5.7 to 7.6 across all nine kinds and bands; against careful self-study 1.31 to 1.38. Learners who know more gain more against anyone who studies everything regardless (round 2's table still applies).
 
@@ -77,14 +77,14 @@ The gate was written into `scripts/speed-gate.js` before any held-out run. Seeds
 | SPEED_SHORT_LESSON | 33.7 | 39.1 | -2.1 / -1.0 / -0.6 | -2.9 / -1.6 / -1.3 | fails all 3 | FAIL: slower |
 | SPEED_MASTERY_STOP | 14.8 | 22.7 | -19.5 / -15.5 / -13.8 | -3.0 / -2.2 / -1.7 | fails 2 at short goals | FAIL at goals of 1 month or less, passes from 6 months |
 | SPEED_REVIEW_TARGET | 31.9 | 37.8 | -21.6 / -17.0 / -15.4 | -7.4 / -6.5 / -6.0 | fails all 3 | FAIL: gives up recall for almost no time |
-| SPEED_SKILL_PLACEMENT | 31.8 | 37.2 | -4.7 / -2.7 / -1.9 | -2.1 / -1.7 / -1.3 | fails all 3 | FAIL. Also unsafe as built: it settles coarse skills, so one check can step over dozens of lessons |
+| SPEED_SKILL_PLACEMENT | 31.8 | 37.2 | -4.7 / -2.7 / -1.9 | -2.1 / -1.7 / -1.3 | fails all 3 | FAIL. Also unsafe as built, from reading the code: it settles coarse skills, so one check can step over dozens of lessons |
 | SPEED_COMPOSITE | | | | | | not testable: no bank has such items |
 
-**Combinations** (every mix of test-out, short, stop, review, fast): only fast alone passes. All together is 13.6 h at 1 week and 20.5 h at 1 year, x2.4 and x1.85 of the real path, with recall -21 points worst 1% at 1 week. No interaction made a failing lever pass. Test-out and short only save anything together with the stop.
+**Combinations** (every mix of test-out, short, stop, review, fast): only fast alone passes. All together is 13.6 h at 1 week and 20.5 h at 1 year, x2.4 and x1.85 of the real path, with recall -21 points worst 1% at 1 week. No interaction made a failing lever pass. Test-out and short add little even with the stop: 15.0 and 14.5 h against 14.8 h at 1 week.
 
-**The mastery stop, on goals of 6 months or more only** (rule frozen in the script, then run on fresh seed 20261113): 36.8 > 21.0 h, 38.3 > 22.6 h, 40.9 > 25.3 h, x1.6 to x1.75, recall worst 1 / 5 / 10% -2.4 to -4.4 / -3.1 at most / -2.4 at most, passes the main gate. Adverse: est-gain 1.5 misses at -5.1 and guess 0.5 misses at -5.2, both at 6 months, both beyond noise at under a fifth of a point over the line. **So it stays off.** `SPEED_MASTERY_STOP=long` is built and tested. The owner may want it; see the end.
+**The mastery stop, on goals of 6 months or more only** (rule frozen in the script, then run on fresh seed 20261113): 36.8 > 21.0 h, 38.3 > 22.6 h, 40.9 > 25.3 h, x1.6 to x1.75, recall worst 1 / 5 / 10% -2.4 to -4.4 / -3.1 at most / -2.4 at most, passes the main gate. Adverse: est-gain 1.5 misses at -5.1 and guess 0.5 at -5.2, both at 6 months, over the line by 0.1 and 0.2 points. **So it stays off.** `SPEED_MASTERY_STOP=long` is built and tested. The owner may want it; see the end.
 
-The gate compares with the path as it is, whose recall at 1 week is 0.96 against a target of 0.70. So the stop "loses" 15 points against an overshoot, and still ends near 0.80. A week is not something the app even offers: the choices are a date, months, a year, years, forever. I think the margin is measuring the wrong thing at short goals, but it stays as it is: that call is the owner's.
+The gate compares with the path as it is, whose recall at 1 week is 0.96 against a target of 0.70. So the stop "loses" 15 points against an overshoot, and still ends near 0.80. A week is only reachable as a test date: the app's choices are a date, months (90 days), a year, years, forever. I think the margin is measuring the wrong thing at short goals, but it stays as it is: that call is the owner's.
 
 ## 3. In a real browser at phone width, on a local database copy, AI off
 
@@ -124,5 +124,5 @@ Nothing built changes the shape of round 2's finding: reaching 4x against carefu
 
 ## Owner decisions
 
-1. **Mastery stop.** It is the one lever that matters. `SPEED_MASTERY_STOP=long` gives about x1.7 on long goals, at a miss of under a fifth of a point on two adverse variants. It also cuts answers a lot (about 10x fewer practice answers per lesson), and **the effect on scorecard accuracy is not measured**, which is your other goal.
+1. **Mastery stop.** It is the one lever that matters. `SPEED_MASTERY_STOP=long` gives about x1.7 on long goals, at a miss of under a fifth of a point on two adverse variants. It also cuts answers a lot (practice hours fall about 7x in the model), and **the effect on scorecard accuracy is not measured**, which is your other goal.
 2. **A self-study control group.** Only that can say 4x against normal studying. See docs/SPEED-PROOF.md.
