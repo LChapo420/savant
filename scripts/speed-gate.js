@@ -226,7 +226,41 @@ function reportExtra() {
   console.log(lines.join('\n'));
 }
 
-if (CMD === 'extra') runExtra();
+/**
+ * The mastery stop for long goals only. Read off the first gate, so it is a new rule and needs a seed nobody has seen: on the first three seeds the stop failed only at goals of a month or less, on the main model and on both adverse variants.
+ * Frozen before this seed ran (20261113, 120 extreme + 40 ordinary): stop on goals of 6 months or more and with no test day; the same margins, on those five goals; M against none, MF against F.
+ */
+const LONG_SEED = 20261113;
+const LONG_GOALS = ['horizon 6 months', 'horizon 1 year', 'no test day (3 y)', 'date 6 months', 'date 1 year'];
+async function runLong() {
+  fs.mkdirSync(OUT, { recursive: true });
+  const jobs = [{ args: [...COMMON, `--seed=${LONG_SEED}`, `--speed-arms=${['', 'F', 'M', 'MF'].map((k) => armSpec(k, 'real')).join(',')}`], out: path.join(OUT, 'long-main.json') }];
+  jobs.push({ args: [...COMMON, `--seed=${LONG_SEED}`, '--run-salt=noise', `--speed-arms=${armSpec('', 'real')}`], out: path.join(OUT, 'long-noise.json') });
+  for (const [name, a] of Object.entries({ est15: ['--est-gain=1.5'], guess50: ['--guess=0.5'], kloss50: ['--kloss=0.5'], forget05: ['--forget=0.5'] })) jobs.push({ args: [...COMMON, `--seed=${LONG_SEED}`, ...a, `--speed-arms=${['', 'M'].map((k) => armSpec(k, 'real')).join(',')}`], out: path.join(OUT, `long-var-${name}.json`) });
+  await pool(jobs);
+}
+function reportLong() {
+  const set = load(path.join(OUT, 'long-main.json')); const noise = load(path.join(OUT, 'long-noise.json'));
+  const only = (c) => ({ goals: Object.fromEntries(Object.entries(c.goals).filter(([g]) => LONG_GOALS.includes(g))) });
+  const lines = ['SIMULATED. Mastery stop on long goals only, fresh held-out seed 20261113, 160 learners, frame real.'];
+  for (const [on, off] of [['M', ''], ['MF', 'F']]) {
+    const c = only(compare([set], on, off, 'real')); const why = [];
+    for (const [g, v] of Object.entries(c.goals)) {
+      if (!(v.ci[0] > 0)) why.push(`time at ${g}`);
+      for (const k of ['w1', 'w5', 'w10']) if (v.ret[k] < MARGIN) why.push(`retention ${k} at ${g}`);
+      if (v.know.w1 < MARGIN) why.push(`knowledge at ${g}`); if (v.strictOn < v.strictOff - 0.01) why.push(`reach at ${g}`);
+      lines.push(`  ${on.padEnd(3)} ${g.padEnd(19)} ${f(v.hOff, 1)} > ${f(v.hOn, 1)} h, saved ${f(v.saved)} (${f(v.ci[0])}, ${f(v.ci[1])}), retention w1/5/10/worst ${pts(v.ret.w1)}/${pts(v.ret.w5)}/${pts(v.ret.w10)}/${pts(v.ret.worst)}, knowledge w1 ${pts(v.know.w1)}, reach ${(100 * v.strictOn).toFixed(0)}/${(100 * v.strictOff).toFixed(0)}%`);
+    }
+    lines.push(`  ${on}: ${why.length ? `FAILS: ${why.join('; ')}` : 'passes'}`);
+  }
+  for (const g of LONG_GOALS) { const d = set.rows.map((r, i) => noise.rows[i].goals[g].speed[armSpec('', 'real')].recall - r.goals[g].speed[armSpec('', 'real')].recall); lines.push(`  noise ${g.padEnd(19)} ${pts(lowQ(d, 0.01))}/${pts(lowQ(d, 0.05))}/${pts(lowQ(d, 0.1))}/${pts(Math.min(...d))}`); }
+  for (const name of ['est15', 'guess50', 'kloss50', 'forget05']) { const c = only(compare([load(path.join(OUT, `long-var-${name}.json`))], 'M', '', 'real')); const v = adverseVerdict(c); lines.push(`  adverse ${name.padEnd(9)} ${v.length ? `FAILS: ${v.slice(0, 4).join('; ')}` : 'holds'}`); }
+  console.log(lines.join('\n'));
+}
+
+if (CMD === 'long') runLong();
+else if (CMD === 'long-report') reportLong();
+else if (CMD === 'extra') runExtra();
 else if (CMD === 'extra-report') reportExtra();
 else if (CMD === 'run') run();
 else if (CMD === 'report') report();
