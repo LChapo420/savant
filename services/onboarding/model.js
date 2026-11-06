@@ -72,6 +72,8 @@ const FAMILIES = {
   taste: { rho: SCENARIOS.central.taste, label: 'A/B teaching taste and recall' }, // unsupported; preference does not predict benefit well (Pashler 2008)
   scale: { rho: SCENARIOS.central.scale, label: 'IPIP scale items (agreement)' },
   tap: { rho: SCENARIOS.central.tap, label: 'which-would-you-do-next taps (own wording, not validated)' },
+  probe: { rho: SCENARIOS.central.probe, label: 'probe items reordered to the start of a sitting (passive, zero minutes)' },
+  cross: { rho: SCENARIOS.central.cross, label: 'paired lesson versions (passive, zero minutes)' },
   conf: { rho: SCENARIOS.central.conf, label: 'confidence ratings' },            // confidence is a stable trait (Pallier 2002); the coefficient is unsupported
 };
 const RHO = Object.fromEntries(Object.entries(FAMILIES).map(([k, v]) => [k, v.rho]));
