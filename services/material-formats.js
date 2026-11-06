@@ -46,6 +46,7 @@ function htmlRich(html) {
   let h = String(html).replace(/<!--[\s\S]*?-->/g, ' ').replace(/<(script|style|noscript|svg|nav|head|footer)\b[\s\S]*?<\/\1>/gi, ' ');
   h = h.replace(/<(h[1-6])\b[^>]*>([\s\S]*?)<\/\1>/gi, (m, t, inner) => `\n\n${'#'.repeat(Number(t[1]))} ${inner.replace(/<[^>]+>/g, '')}\n\n`);
   h = h.replace(/<(strong|b)\b[^>]*>([\s\S]*?)<\/\1>/gi, (m, t, inner) => (inner.trim() ? `**${inner.replace(/<[^>]+>/g, '').trim()}**` : ''));
+  h = h.replace(/<u\b[^>]*>([\s\S]*?)<\/u>/gi, (m, inner) => `==${inner.replace(/<[^>]+>/g, '').trim()}==`);
   h = h.replace(/<mark\b[^>]*>([\s\S]*?)<\/mark>/gi, (m, inner) => `==${inner.replace(/<[^>]+>/g, '').trim()}==`);
   h = h.replace(/<(blockquote|aside)\b[^>]*>([\s\S]*?)<\/\1>/gi, (m, t, inner) => `\n\n${inner.replace(/<\/?(?:p|div|br)\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '').split('\n').map((l) => l.trim()).filter(Boolean).map((l) => `> ${l}`).join('\n')}\n\n`);
   h = h.replace(/<(div|p|section|span)\b([^>]*)>([\s\S]*?)<\/\1>/gi, (m, t, attrs, inner) => (t !== 'span' && CALLOUT_CLASS.test(attrs) && !/<(div|section)\b/i.test(inner) ? `\n\n${inner.replace(/<[^>]+>/g, '').split('\n').map((l) => l.trim()).filter(Boolean).map((l) => `> ${l}`).join('\n')}\n\n` : m));
@@ -58,7 +59,7 @@ function htmlRich(html) {
 function slideBold(xml) {
   const map = new Map();
   for (const para of xml.match(/<a:p[ >][\s\S]*?<\/a:p>/g) || []) {
-    const runs = (para.match(/<a:r>[\s\S]*?<\/a:r>/g) || []).map((r) => ({ bold: /<a:rPr\b[^>]*\bb="1"/.test(r), t: unxml((r.match(/<a:t(?: [^>]*)?>([^<]*)<\/a:t>/) || [])[1] || '') }));
+    const runs = (para.match(/<a:r>[\s\S]*?<\/a:r>/g) || []).map((r) => ({ bold: /<a:rPr\b[^>]*\b(?:b="1"|u="(?!none)[^"]+")/.test(r) || /<a:highlight\b/.test(r), t: unxml((r.match(/<a:t(?: [^>]*)?>([^<]*)<\/a:t>/) || [])[1] || '') }));
     const plain = runs.map((r) => r.t).join('').trim();
     if (!plain || !runs.some((r) => r.bold)) continue;
     const marked = runs.map((r) => (r.bold && r.t.trim() ? `**${r.t.trim()}** ` : r.t)).join('').replace(/\s+/g, ' ').replace(/\*\* \*\*/g, ' ').trim();
@@ -477,16 +478,17 @@ async function toPng(buf, kind) {
   try { sharp = require('sharp'); } catch { return fail('This server cannot convert pictures yet. Upload a PNG or JPG.', 'no_ocr'); }
   try {
     // libvips has no BMP reader: uncompressed 24 and 32 bit BMPs are decoded here and handed over as raw pixels.
-    let src = buf; let opts = { limitInputPixels: 80e6, animated: false };
+    let src = buf; let opts = { limitInputPixels: 250e6, animated: false };
     if (kind === 'bmp') { const bmp = decodeBmp(buf); if (!bmp) return fail('That BMP picture could not be read. Save it as PNG or JPG and upload that.', 'unreadable'); src = bmp.data; opts = { raw: { width: bmp.width, height: bmp.height, channels: bmp.channels } }; }
     const meta = await sharp(src, opts).metadata();
     const w = meta.width || 0;
     let img = sharp(src, opts).rotate().flatten({ background: '#ffffff' }).greyscale().normalise();
     if (w && w < 1200) img = img.resize({ width: Math.min(2400, w * 2), kernel: 'lanczos3' });
-    else if (w > 3200) img = img.resize({ width: 3200 });
+    else if (w > 3200 || (meta.height || 0) > 4200) img = img.resize({ width: 3200, height: 4200, fit: 'inside' });
     return { png: await img.sharpen().withMetadata({ density: 300 }).png().toBuffer() };
-  } catch {
+  } catch (e) {
     if (kind === 'heic') return fail('This server cannot open HEIC pictures. On an iPhone, share the photo as JPG (Settings, Camera, Formats, Most Compatible), or export it as JPG, and upload that.', 'bad_type');
+    if (/pixel limit/i.test(String(e && e.message))) return fail('That picture is too large to read (over 250 megapixels). Make it smaller, or crop it to the page, and upload it again.', 'too_big');
     return fail('That picture could not be read. It may be damaged or cut off. Take it again or save it as a new JPG or PNG, then upload that.', 'unreadable');
   }
 }

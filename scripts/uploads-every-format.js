@@ -81,7 +81,7 @@ const GENERIC = /something went wrong|internal|undefined|cannot read prop|offset
         jobState = row;
         if (['done', 'failed', 'error'].includes(row.status)) break;
       }
-      out.job_status = jobState && jobState.status; out.engine = jobState && jobState.engine; out.job_error = jobState && jobState.error; out.progress_polls = progressSeen; out.total_ms = Date.now() - t;
+      out.job_status = jobState && jobState.status; out.engine = jobState && (jobState.engine || (db.findOne('material_audio_jobs', (x) => x.id === jobState.id) || {}).engine); out.job_error = jobState && jobState.error; out.progress_polls = progressSeen; out.total_ms = Date.now() - t;
       if (jobState && jobState.material_id) { const m = await call('GET', `/api/materials/${jobState.material_id}`, null, u.id); mat = m.json.material || m.json; }
       else if (jobState && jobState.status === 'done') { const l = await call('GET', '/api/materials', null, u.id); const last = (l.json.materials || []).slice(-1)[0]; if (last) { const m = await call('GET', `/api/materials/${last.id}`, null, u.id); mat = m.json.material || m.json; } }
     } else if (mat) {

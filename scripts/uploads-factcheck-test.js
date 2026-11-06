@@ -38,6 +38,7 @@ check('a swapped number is not direct', !ex('The Nazca Plate subducts beneath So
 check('a new negation is not direct', !ex('Labetalol is not preferred in pregnancy.').direct);
 check('a fact swapped between names in one line is not direct', !ex('Labetalol is avoided in pregnancy (IUGR); atenolol is preferred.').direct);
 check('two neighbouring lines are not direct', !ex('Delegates elected in South America are present.').direct);
+check('a benefit the material never states is hard', ex('Filing closes at 8:15 a.m. which ensures accuracy.').hard.some((x) => /ensures/.test(x)));
 check('a new cause is not direct', !ex('Atenolol is avoided in pregnancy because labetalol is preferred.').direct);
 check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8:15 a.m. on a Tuesday. Models, e.g. MORVEL, help. Done now.').length === 3);
 

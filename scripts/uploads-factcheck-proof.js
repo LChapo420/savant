@@ -32,8 +32,7 @@ const J = require('./lib/invented-judges');
 const OUT = process.env.FACT_OUT || path.join(__dirname, '..', 'docs', 'uploads-factcheck-proof.json');
 const DOCS = path.join(__dirname, '..', 'docs', 'uploads-heldout-docs.json');
 const NEW_DOCS = path.join(__dirname, '..', 'docs', 'uploads-factcheck-docs.json');
-const FACT_JUDGES = (process.env.FACT_JUDGES || 'Z').split(',');
-const FACT_FORM = process.env.FACT_FORM || 'sent';
+const FACT_JUDGES = (process.env.FACT_JUDGES || 'Z:sent,Z:free,C:free').split(',');
 const EXAM_JUDGES = (process.env.EXAM_JUDGES || 'Z,N').split(',');
 const load = (f, d) => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : d);
 const save = (f, v) => fs.writeFileSync(f, JSON.stringify(v));
@@ -125,10 +124,48 @@ async function runExam() {
   save(OUT, store);
 }
 
+/** Check again the lessons as first written, from a finished run's rows (same course, new checker): the check is what changes, nothing else. Skills' question parts are left as they were. */
+async function recheck(fromTag, toTag, checkerFam) {
+  const store = load(OUT, { exam: {}, control: {}, rows: [] });
+  const F = require('../services/material-factcheck');
+  const froms = store.rows.filter((r) => r.tag === fromTag);
+  await J.pool(froms, Number(process.env.FACT_CONC || 3), async (from) => {
+    if (store.rows.some((r) => r.tag === toTag && r.doc === from.doc && r.rep === from.rep)) return;
+    const d = allDocs().find((x) => x.id === from.doc);
+    const src = await extracted(d);
+    const idx = F.indexSource(src.plain);
+    const asker = async (a) => { for (let i = 0; i < 4; i++) { try { return { res: { data: await J.call(checkerFam, { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: Math.max(a.maxTokens, 2500) }) } }; } catch { await new Promise((r) => setTimeout(r, 2000 * (i + 1))); } } return { res: null }; };
+    const blocks = from.raw.split(/\n\n(?=## )/);
+    const stats = { sentences: 0, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0 };
+    const dropped = [];
+    const out = new Array(blocks.length);
+    await J.pool(blocks.map((b, i) => ({ b, i })), 4, async ({ b, i }) => {
+      const lines = b.split('\n'); const head = lines[0];
+      const paragraphs = lines.filter((l) => l && !/^(## |Key: |Q: )/.test(l));
+      const keys = lines.filter((l) => l.startsWith('Key: ')).map((l) => l.slice(5));
+      const qs = lines.filter((l) => l.startsWith('Q: '));
+      const r = await F.checkLesson({ paragraphs, keyPoints: keys, idx, sourceText: src.plain, asker });
+      for (const k of Object.keys(stats)) stats[k] += Number(r.report[k]) || 0;
+      dropped.push(...r.report.dropped);
+      out[i] = [head, ...r.paragraphs, ...r.keyPoints.map((k) => `Key: ${k}`), ...qs].join('\n');
+    });
+    const row = { tag: toTag, doc: from.doc, fmt: from.fmt, rep: from.rep, status: from.status, skills: from.skills, source_words: from.source_words, stats, dropped, raw: from.raw, checked: out.join('\n\n'), raw_words: from.raw_words };
+    row.checked_words = words(lessonOnly(row.checked));
+    const exam = store.exam[d.id] || [];
+    row.exam = { raw: from.exam.raw, raw2: from.exam.raw2, checked: {} };
+    for (const f of EXAM_JUDGES) row.exam.checked[f] = await examRun(f, row.checked, exam);
+    row.invented = { raw: from.invented.raw, checked: {} };
+    for (const spec of FACT_JUDGES) { const [f, form] = spec.split(':'); row.invented.checked[spec] = await J.judge(f, form, src.plain, form === 'sent' ? lessonOnly(row.checked) : row.checked); }
+    store.rows.push(row); save(OUT, store);
+    console.log(`${d.id} ${toTag}: words ${from.raw_words}->${row.checked_words} direct ${stats.direct} ok ${stats.model_ok} fixed ${stats.fixed} dropped ${stats.dropped} hard ${stats.hard}; invented checked ${FACT_JUDGES.map((f) => (row.invented.checked[f] || []).length)}`);
+  });
+}
+
 async function runBuilds(reps, ids) {
   const store = load(OUT, { exam: {}, control: {}, rows: [] });
   const u = db.insert('users', { email: 'factproof@example.test', display_name: 'Factproof', password_hash: 'x', xp: 0, streak: 0, onboarded: true });
   const docs = allDocs().filter((d) => !ids.length || ids.includes(d.id));
+  for (const d of docs) { const r2File = path.join(__dirname, '..', 'docs', 'uploads-heldout-r2', `uploads-heldout-results-${d.id}.json`); if (!store.exam[d.id] && fs.existsSync(r2File)) { const a = JSON.parse(fs.readFileSync(r2File, 'utf8')); store.exam[d.id] = a.exam[d.id]; store.control[d.id] = a.control[d.id]; } }
   const jobs = [];
   for (const d of docs) for (let rep = 1; rep <= reps; rep++) if (!store.rows.some((r) => r.doc === d.id && r.rep === rep && r.tag === (process.env.FACT_TAG || 'v1'))) jobs.push({ d, rep });
   console.log(`${jobs.length} builds`);
@@ -152,12 +189,13 @@ async function runBuilds(reps, ids) {
       row.exam.raw[f] = a; row.exam.raw2[f] = b; row.exam.checked[f] = cc;
     }
     row.invented = { raw: {}, checked: {} };
-    for (const f of FACT_JUDGES) {
-      const [a, b] = await Promise.all([J.judge(f, FACT_FORM, src.plain, FACT_FORM === 'sent' ? lessonOnly(row.raw) : row.raw), J.judge(f, FACT_FORM, src.plain, FACT_FORM === 'sent' ? lessonOnly(row.checked) : row.checked)]);
-      row.invented.raw[f] = a; row.invented.checked[f] = b;
+    for (const spec of FACT_JUDGES) {
+      const [f, form] = spec.split(':');
+      const [a, b] = await Promise.all([J.judge(f, form, src.plain, form === 'sent' ? lessonOnly(row.raw) : row.raw), J.judge(f, form, src.plain, form === 'sent' ? lessonOnly(row.checked) : row.checked)]);
+      row.invented.raw[spec] = a; row.invented.checked[spec] = b;
     }
     store.rows.push(row); save(OUT, store);
-    console.log(`${d.id} r${rep} ${c.status} ${c.skills.length} skills ${row.build_s}s; words ${row.raw_words}->${row.checked_words}; check ${JSON.stringify(row.stats)}; invented raw ${FACT_JUDGES.map((f) => (row.invented.raw[f] || []).length)} checked ${FACT_JUDGES.map((f) => (row.invented.checked[f] || []).length)}`);
+    console.log(`${d.id} r${rep} ${c.status} ${c.skills.length} skills ${row.build_s}s; words ${row.raw_words}->${row.checked_words}; direct ${row.stats && row.stats.direct} model ${row.stats && row.stats.model_ok} fixed ${row.stats && row.stats.fixed} dropped ${row.stats && row.stats.dropped}; invented raw ${FACT_JUDGES.map((f) => (row.invented.raw[f] || []).length)} checked ${FACT_JUDGES.map((f) => (row.invented.checked[f] || []).length)}`);
   });
 }
 
@@ -171,7 +209,7 @@ function report() {
   for (const d of [...new Set(rows.map((r) => r.doc))]) {
     for (const r of rows.filter((x) => x.doc === d)) {
       const cols = EXAM_JUDGES.flatMap((f) => ['emphasised', 'plain'].map((k) => `${f}/${k[0]} ${pct(share(part(r, 'raw', f, k)))}->${pct(share(part(r, 'checked', f, k)))} (same ${pct(share(part(r, 'raw2', f, k)))})`));
-      console.log(`${d} r${r.rep} ${r.status}; words ${r.raw_words}->${r.checked_words} (source ${r.source_words}); invented raw/checked ${FACT_JUDGES.map((f) => `${f} ${(r.invented.raw[f] || []).length}/${(r.invented.checked[f] || []).length}`).join(' ')}; ${cols.join(' | ')}`);
+      console.log(`${d} r${r.rep} ${r.status}; words ${r.raw_words}->${r.checked_words}; inv ${FACT_JUDGES.map((f) => `${f} ${(r.invented.raw[f] || []).length}/${(r.invented.checked[f] || []).length}`).join(' ')}; ${cols.join(' | ').replace(/emphasised/g, 'e')}`);
     }
   }
   for (const f of EXAM_JUDGES) for (const k of ['emphasised', 'plain', 'all']) {
@@ -186,5 +224,6 @@ function report() {
   if (cmd === 'docs') await writeDocs();
   else if (cmd === 'exam') await runExam();
   else if (cmd === 'build') await runBuilds(Number(process.argv[3] || 1), (process.argv[4] || '').split(',').filter(Boolean));
+  else if (cmd === 'recheck') await recheck(process.argv[3], process.argv[4], process.argv[5] || 'Z');
   else report();
 })().catch((e) => { console.error(e); process.exit(1); });

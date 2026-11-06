@@ -73,7 +73,38 @@ async function readPicture(buf, type) {
   if (prepared.png) work = prepared.png;
   // A picture that cannot be decoded (cut off, damaged) stops here: only a server without the converter hands PNG and JPG straight to OCR.
   else if (prepared.code !== 'no_ocr' || (type !== 'png' && type !== 'jpeg')) return prepared;
-  return ocr(work);
+  return ocrUpright(work);
+}
+
+/** How much of a reading is real words: letters-only tokens of 2+ letters that have a vowel, as a share of all tokens. Noise reads as "ST Pd :.' jj". */
+function wordShare(text) {
+  const toks = String(text).match(/\S+/g) || [];
+  if (!toks.length) return 0;
+  return toks.filter((t) => /^[\p{L}'’-]{2,}[.,;:!?)]*$/u.test(t) && /[aeiouyáéíóúàèìòùäëïöü]/i.test(t)).length / toks.length;
+}
+/**
+ * OCR, turning the page if it is on its side: a phone photo without its rotation tag reads as nonsense (it read 0 of 8 planted sentences). A confident reading with real words is taken at once; otherwise
+ * the other three turns are tried and the best one wins. What is still nonsense after that is not text: { error } with what to do, never garbage presented as the learner's notes.
+ */
+async function ocrUpright(png) {
+  const first = await ocr(png);
+  if (first.error) return first;
+  const good = (r) => (Number(r.confidence) || 0) * Math.max(0.2, wordShare(r.text));
+  if ((Number(first.confidence) || 0) >= 55 && wordShare(first.text) >= 0.6) return first;
+  if (first.confidence == null) return first; // a test's recognizer
+  let best = first;
+  let sharp = null;
+  try { sharp = require('sharp'); } catch { /* cannot turn it */ }
+  if (sharp) {
+    for (const deg of [90, 270, 180]) {
+      // eslint-disable-next-line no-await-in-loop
+      const r = await ocr(await sharp(png).rotate(deg).png().toBuffer());
+      if (!r.error && good(r) > good(best)) best = r;
+      if (!r.error && (Number(r.confidence) || 0) >= 70 && wordShare(r.text) >= 0.7) break;
+    }
+  }
+  if ((Number(best.confidence) || 0) < 30 || wordShare(best.text) < 0.35) return fail('Savant could not find readable words in that picture. If it has words on it, try a sharper, brighter photo taken straight on, or paste the text.', 'too_little');
+  return best;
 }
 
 /** Other archive formats, by their first bytes: a plain way forward instead of "unknown file". */
@@ -126,7 +157,7 @@ async function extract(buf, opts = {}) {
         const im = out.images[i];
         if (opts.onProgress) opts.onProgress(i, total, `page ${im.page}`);
         // eslint-disable-next-line no-await-in-loop
-        const got = await ocr(im.png);
+        const got = await ocrUpright(im.png);
         if (got.error) { failure = got; unread.push(im.page); if (got.code === 'no_ocr') break; continue; }
         const text = normalise(got.text);
         if (countWords(text) >= 3) pages.push({ page: im.page, text }); else unread.push(im.page);

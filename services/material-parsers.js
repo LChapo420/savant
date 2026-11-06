@@ -88,6 +88,37 @@ async function fromPdf(buf) {
   }
 }
 
+/**
+ * What Word marks but the reader does not see: highlight, underline and shaded runs become bold; a bordered or shaded paragraph becomes a key-point box; a comment becomes bold on the words it marks
+ * (a box if it says the point is for the test) and is added at the end, so the teacher's words reach the learner. Returns { buf, comments }, or the file as it was if anything is odd.
+ */
+async function docxMarks(buf) {
+  try {
+    const z = await require('jszip').loadAsync(buf);
+    const f = z.file('word/document.xml');
+    if (!f) return { buf, comments: [] };
+    let xml = await f.async('string');
+    xml = xml.replace(/<w:highlight\b[^>]*\/>/g, '<w:b/>').replace(/<w:u\s+w:val="(?!none)[^"]*"[^>]*\/>/g, '<w:b/>').replace(/(<w:rPr>(?:(?!<\/w:rPr>)[\s\S])*?)<w:shd\b[^>]*w:fill="(?!auto|FFFFFF|ffffff)[^"]*"[^>]*\/>/g, '$1<w:b/>');
+    let boxed = false;
+    xml = xml.replace(/<w:pPr>((?:(?!<\/w:pPr>)[\s\S])*?<w:(?:pBdr|shd)\b(?:(?!<\/w:pPr>)[\s\S])*?)<\/w:pPr>/g, (m, inner) => { if (/w:pStyle/.test(inner)) return m; boxed = true; return `<w:pPr><w:pStyle w:val="SavantBox"/>${inner}</w:pPr>`; });
+    z.file('word/document.xml', xml);
+    const st = z.file('word/styles.xml');
+    if (boxed && st) z.file('word/styles.xml', (await st.async('string')).replace('</w:styles>', '<w:style w:type="paragraph" w:styleId="SavantBox"><w:name w:val="Key Point"/></w:style></w:styles>'));
+    const comments = [];
+    const c = z.file('word/comments.xml');
+    if (c) {
+      const cx = await c.async('string');
+      for (const m of cx.matchAll(/<w:comment\b[^>]*w:id="(\d+)"[^>]*>([\s\S]*?)<\/w:comment>/g)) {
+        const text = unxml((m[2].match(/<w:t(?: [^>]*)?>[^<]*<\/w:t>/g) || []).map((t) => t.replace(/<[^>]+>/g, '')).join(' ')).replace(/\s+/g, ' ').trim();
+        const range = new RegExp(`<w:commentRangeStart\\b[^>]*w:id="${m[1]}"[^>]*/>([\\s\\S]*?)<w:commentRangeEnd\\b[^>]*w:id="${m[1]}"`).exec(xml);
+        const anchor = range ? unxml((range[1].match(/<w:t(?: [^>]*)?>[^<]*<\/w:t>/g) || []).map((t) => t.replace(/<[^>]+>/g, '')).join('')).replace(/\s+/g, ' ').trim() : '';
+        if (text) comments.push({ text, anchor });
+      }
+    }
+    return { buf: await z.generateAsync({ type: 'nodebuffer' }), comments };
+  } catch { return { buf, comments: [] }; }
+}
+
 async function fromDocx(buf) {
   const listing = zipEntries(buf);
   if (!listing) return fail('That file is not a Word document.', 'bad_type');
@@ -100,11 +131,25 @@ async function fromDocx(buf) {
   const mammoth = require('mammoth');
   try {
     const out = await mammoth.extractRawText({ buffer: buf });
+    const marks = await docxMarks(buf);
     let rich;
-    try { rich = require('./material-formats').htmlRich((await mammoth.convertToHtml({ buffer: buf }, { styleMap: ["p[style-name='Key Point'] => blockquote:fresh", "p[style-name='Callout'] => blockquote:fresh", "p[style-name='Important'] => blockquote:fresh", "p[style-name='Note'] => blockquote:fresh", "p[style-name='Intense Quote'] => blockquote:fresh", "p[style-name='Block Text'] => blockquote:fresh", "p[style-name='Quote'] => blockquote:fresh"] })).value); } catch { rich = undefined; }
-    return { text: normalise(out.value), rich, pages: null };
+    try { rich = require('./material-formats').htmlRich((await mammoth.convertToHtml({ buffer: marks.buf }, { styleMap: ["p[style-name='Key Point'] => blockquote:fresh", "p[style-name='Callout'] => blockquote:fresh", "p[style-name='Important'] => blockquote:fresh", "p[style-name='Note'] => blockquote:fresh", "p[style-name='Intense Quote'] => blockquote:fresh", "p[style-name='Block Text'] => blockquote:fresh", "p[style-name='Quote'] => blockquote:fresh"] })).value); } catch { rich = undefined; }
+    let text = normalise(out.value);
+    // A comment in the margin is the teacher's note: its words join the text, and the words it marks are stressed.
+    if (marks.comments.length) {
+      const lines = marks.comments.slice(0, 200).map((c) => `Comment${c.anchor ? ` on "${c.anchor.slice(0, 120)}"` : ''}: ${c.text}`);
+      text = `${text}\n\nComments in the margin\n\n${lines.join('\n')}`;
+      if (rich) {
+        for (const c of marks.comments) {
+          const stress = /\b(test|exam|quiz|final|must know|important|always miss|key)\b/i.test(c.text);
+          if (c.anchor && rich.includes(c.anchor)) rich = rich.replace(c.anchor, stress ? `\n\n> **Key point:** ${c.anchor}\n\n` : `**${c.anchor}**`);
+        }
+        rich = `${rich}\n\n## Comments in the margin\n\n${lines.join('\n')}`;
+      }
+    }
+    return { text, rich, pages: null };
   } catch {
-    return fail('That Word document could not be read. It may be damaged.', 'unreadable');
+    return fail('That Word document could not be read. It may be damaged or cut off. Open it on your computer and save it again, or save it as PDF.', 'unreadable');
   }
 }
 
@@ -354,7 +399,7 @@ async function tesseractOcr(buf) {
     if (idleTimer) clearTimeout(idleTimer);
     const out = await worker.recognize(buf);
     idleTimer = setTimeout(releaseWorker, 8000); idleTimer.unref();
-    return { text: (out && out.data && out.data.text) || '' };
+    return { text: (out && out.data && out.data.text) || '', confidence: out && out.data ? out.data.confidence : null };
   } catch {
     releaseWorker();
     return { failed: true };
@@ -374,9 +419,9 @@ function setOcr(fn) { recognizer = typeof fn === 'function' ? fn : null; }
 /** The words in a picture, read in English, with no minimum: { text } or { error, code }. */
 async function ocr(buf) {
   const out = await (recognizer || tesseractOcr)(buf);
-  if (out && out.missing) return fail('This server cannot read text from images yet (tesseract.js is not installed). Paste the text instead.', 'no_ocr');
+  if (out && out.missing) return fail('This server cannot read text from pictures right now. Paste the text instead, or upload a PDF or Word file with the words in it.', 'no_ocr');
   if (!out || out.failed) return fail('That picture could not be read. Try a clearer or larger one.', 'unreadable');
-  return { text: out.text || '' };
+  return { text: out.text || '', confidence: out.confidence };
 }
 
 /** A PNG or JPG: the words in the picture, read in English. */
