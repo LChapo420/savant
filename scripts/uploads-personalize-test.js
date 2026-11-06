@@ -12,6 +12,23 @@ const ls = require('../services/learning-spec');
 const cb = require('../services/course-builder');
 const learner = require('../services/learner');
 const scorecard = require('../services/scorecard');
+function pdf(pages) {
+  const objs = [];
+  const kids = pages.map((_, i) => `${4 + i * 2} 0 R`).join(' ');
+  objs[1] = '<< /Type /Catalog /Pages 2 0 R >>';
+  objs[2] = `<< /Type /Pages /Kids [${kids}] /Count ${pages.length} >>`;
+  objs[3] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>';
+  pages.forEach((t, i) => {
+    const stream = t ? `BT /F1 5 Tf 10 700 Td (${t}) Tj ET` : '';
+    objs[4 + i * 2] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents ${5 + i * 2} 0 R /Resources << /Font << /F1 3 0 R >> >> >>`;
+    objs[5 + i * 2] = `<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`;
+  });
+  let out = '%PDF-1.4\n'; const offs = [];
+  for (let i = 1; i < objs.length; i++) { offs[i] = out.length; out += `${i} 0 obj\n${objs[i]}\nendobj\n`; }
+  const xref = out.length;
+  out += `xref\n0 ${objs.length}\n0000000000 65535 f \n${offs.slice(1).map((o) => `${String(o).padStart(10, '0')} 00000 n \n`).join('')}trailer\n<< /Size ${objs.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+  return Buffer.from(out, 'latin1');
+}
 let failures = 0;
 const check = (label, ok, detail) => { if (ok) console.log(`  ok   ${label}`); else { failures++; console.log(`  FAIL ${label}${detail === undefined ? '' : ` — ${JSON.stringify(detail).slice(0, 300)}`}`); } };
 (async () => {
@@ -46,6 +63,9 @@ const check = (label, ok, detail) => { if (ok) console.log(`  ok   ${label}`); e
   const exe = await materials.addFile(u.id, Buffer.concat([Buffer.from('MZ'), Buffer.alloc(3000, 1)]), 'a.exe');
   check('program bytes are refused as an unknown type', exe.error && exe.code === 'bad_type', exe);
   check('a long non-English text from speech or OCR is flagged', !materials.looksEnglish('El cambio climático es un problema muy importante para todas las personas del mundo y debemos actuar ahora con decisión. '.repeat(10)) && materials.looksEnglish(text));
+  const P = 'Tides are caused mainly by the moon gravity pulling on the oceans and the sun adds a smaller pull as well in every month.';
+  const hole = await materials.addFile(u.id, pdf([P, '', P, P]), 'holes.pdf');
+  check('a text PDF with a page of pictures says which page had no text', hole.value && /Page 2 of this PDF had no readable text/.test((hole.value.warnings || []).join(' ')), hole);
   console.log(failures ? `${failures} FAILED` : 'All checks passed.');
   process.exit(failures ? 1 : 0);
 })();
