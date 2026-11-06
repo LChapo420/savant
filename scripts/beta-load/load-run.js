@@ -49,7 +49,7 @@ try { require('os').setPriority(0, require('os').constants.priority.PRIORITY_ABO
   const tasks = [];
   for (let i = 0; i < learners; i++) {
     const delay = ramp > 0 ? (i / learners) * ramp * 1000 : 0;
-    const l = new Learner(i + 1, srv.url, metrics, { thinkMs, tag: flag('tag', '') });
+    const l = new Learner(i + 1, srv.url, metrics, { thinkMs, tag: flag('tag', ''), existing: has('existing') });
     tasks.push(h.sleep(delay).then(() => l.run(until)).catch((e) => metrics.note('learner crash', e.stack)));
   }
   let crashed = false; let stopping = false;

@@ -249,8 +249,35 @@ class Learner {
     await this.get(`/api/materials/${m.id}/pack`, 'GET /api/materials/:id/pack');
   }
 
+  /** A learner who already has an account and history (a grown store, scripts/beta-load/grow-db.js). */
+  async signIn() {
+    await this.c.get('/', 'GET / (page)');
+    const r = await this.c.post('/api/auth/login', { email: `grown${this.i}@example.test`, password: this.password }, 'POST /api/auth/login');
+    if (r.status !== 200) { this.metrics.note(`login ${r.status}`, r.json); return false; }
+    this.id = r.json.user.id;
+    const e = await this.get('/api/enrollments', 'GET /api/enrollments');
+    const row = e.json && e.json.enrollments && e.json.enrollments.find((x) => x.track && x.grade);
+    if (!row) { this.metrics.note('no enrollment', e.json); return false; }
+    this.enrollment = row.id; this.track = row.track.id; this.grade = row.grade.id; this.level = row.current_level || 1;
+    return true;
+  }
+
   /** The whole visit. `until` is when the run ends: the learner keeps studying till then. */
   async run(until) {
+    if (this.opts.existing) {
+      if (!await this.signIn()) return;
+      await this.post('/api/retention/study/start', {}, 'POST /api/retention/study/start');
+      while (Date.now() < until) {
+        await this.dashboard();
+        await this.think(0.5);
+        await this.openPath();
+        await this.think(0.5);
+        await this.sitting();
+        if (this.r() < this.persona.tutor * 2) await this.tutor();
+        await this.think();
+      }
+      return;
+    }
     if (!await this.signUp()) return;
     await this.think(0.5);
     await this.dashboard();

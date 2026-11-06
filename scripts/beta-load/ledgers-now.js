@@ -12,13 +12,13 @@ const { LIVE_DATA } = require('./harness');
 const args = process.argv.slice(2);
 const i = args.indexOf('--dir');
 const dir = i >= 0 ? args[i + 1] : LIVE_DATA;
-const NAMES = { coral: 100, gonka: 50, grokified: 135, lyceum: 250, munito: 100, zerogpu: 245, gladia: 50, 'standard-compute': 39.5, anthropic: null };
+const NAMES = { coral: 100, gonka: 50, grokified: 135, lyceum: 250, munito: 100, zerogpu: 245, gladia: 50, 'standard-compute': 39.5, anthropic: 60.5 };
 const rows = [];
 for (const [n, capDefault] of Object.entries(NAMES)) {
   const f = path.join(dir, `${n}-ledger.json`);
   if (!fs.existsSync(f)) continue;
   const j = JSON.parse(fs.readFileSync(f, 'utf8'));
-  const cap = Number(j.cap_usd || j.stop_usd || capDefault);
+  const cap = Number(capDefault); // the code's cap: a ledger file's own note of it can be older
   const spent = Number(j.seed_usd || 0) + Number(j.settled_usd || 0);
   const since = Date.now() - 86400000;
   const day = (j.log || []).filter((l) => Date.parse(l.at) > since);
