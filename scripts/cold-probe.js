@@ -5,6 +5,7 @@
  *   DB_FILE=copy.json RUN_CAP_USD=2 node scripts/cold-probe.js layout|fill [levels=10,254,465] [reps=3] [out=file.json]
  *
  * layout  seconds and validity of block_layout on several slots.
+ * derail  the same layouts N times: the fill as shipped (warm retry) against the stream with its watchdog, keeping the blocks that came and asking for the rest. Usable = every block valid and at least one check.
  * fill    Coral Fast (and others) on a fixed layout: whole fill as today, against the first block alone, against the whole fill streamed (seconds to the first complete block).
  */
 const fs = require('fs');
@@ -139,6 +140,45 @@ async function streamFill(args, model, temperature) {
     }
     await parallel(jobs, Number(process.env.PROBE_PAR || 3));
     for (const v of ['whole', 'oneT0', 'oneT04', 'oneMinimax', 'stream']) { const r = rows.filter((x) => x.v === v); console.log('FILL', v, 'parsed', r.filter((x) => x.ok).length, '/', r.length, 'first block valid', r.filter((x) => x.first).length, 'p50', med(r.filter((x) => x.ok).map((x) => x.sec)), 'max', Math.max(...r.map((x) => x.sec)), v === 'stream' ? `first complete block p50 ${med(r.map((x) => (x.marks || [])[0]))}` : ''); }
+  }
+  if (WHAT === 'derail') {
+    const fb = require('../services/first-block'); // eslint-disable-line global-require
+    const jobs = [];
+    for (const lv of levels) {
+      const { layout, context } = await getLayout(lv); // eslint-disable-line no-await-in-loop
+      const base = { system: bl.FILL_SYSTEM + bl.subjectNote(TRACK, 'fill'), schema: bl.fillSchema(), schemaName: 'submit_block_content', maxTokens: 9000, task: 'block_fill', timeoutMs: 90000 };
+      const prompt = bl.fillPrompt({ context, learner: LEARNER, layout });
+      const valid = (i, data) => !!data && schemaCheck.validate(lib[layout.blocks[i].block].schema, data).length === 0;
+      for (let k = 0; k < reps; k++) {
+        jobs.push(async () => {
+          const g = await tryCall(() => coral.structured({ ...base, user: prompt, model: 'deepseek-v4.1-flash-fast' }));
+          const list = g.ok ? bl.readList(g.r.data.blocks).map((raw, p) => bl.readEntry(raw, p)) : [];
+          const n = layout.blocks.filter((b, i) => { const e = list.find((x) => x.index === i); return e && valid(i, e.data); }).length;
+          const row = { lv, v: 'shipped', usable: g.ok && n === layout.blocks.length && bl.readList(g.r.data.checks).length > 0, blocks: n, of: layout.blocks.length, sec: g.sec, err: g.err }; rows.push(row); console.log(JSON.stringify(row));
+        });
+        jobs.push(async () => {
+          const t0 = Date.now(); const have = new Map(); let checks = null; let calls = 0; let derails = 0; let firstAt = null;
+          for (let a = 0; a < 3 && (have.size < layout.blocks.length || !checks); a++) {
+            calls += 1;
+            const missing = layout.blocks.map((b, i) => i).filter((i) => !have.has(i));
+            const note = have.size ? `\n\nALREADY WRITTEN AND FIXED, the learner reads these first; do not write them again, continue from them:\n${[...have].map(([i, d]) => `BLOCK ${i}: ${JSON.stringify(d)}`).join('\n')}\n\nWrite only blocks ${missing.join(', ')} (by those BLOCK numbers) and every check now.` : '';
+            const reader = fb.blockReader(); let seen = 0; let off = null;
+            const onText = (text) => {
+              for (const raw of reader.feed(text)) { const e = bl.readEntry(raw, seen); const at = e.explicit ? e.index : missing[seen]; seen += 1; if (Number.isInteger(at) && !have.has(at) && valid(at, e.data)) { have.set(at, e.data); if (firstAt === null) firstAt = secs(t0); } }
+              off = fb.derailed(text, reader.current(text), reader.after(text));
+              if (off) derails += 1;
+              return off;
+            };
+            // eslint-disable-next-line no-await-in-loop
+            const g = await tryCall(() => coral.structured({ ...base, user: `${prompt}${note}`, model: 'deepseek-v4.1-flash-fast', onText, temperature: a === 0 ? 0 : a === 1 ? 0.4 : 0.8 }));
+            if (g.ok && !g.r.stopped) { const l = bl.readList(g.r.data.checks); if (l.length) checks = l; }
+          }
+          const row = { lv, v: 'stream', usable: have.size === layout.blocks.length && !!checks, blocks: have.size, of: layout.blocks.length, sec: secs(t0), firstAt, calls, derails }; rows.push(row); console.log(JSON.stringify(row));
+        });
+      }
+    }
+    await parallel(jobs, Number(process.env.PROBE_PAR || 2));
+    for (const lv of [...levels, 'all']) for (const v of ['shipped', 'stream']) { const r = rows.filter((x) => x.v === v && (lv === 'all' || x.lv === lv)); console.log('DERAIL', lv, v, 'usable', r.filter((x) => x.usable).length, '/', r.length, 'p50', med(r.map((x) => x.sec)), 'max', Math.max(...r.map((x) => x.sec)), v === 'stream' ? `first block p50 ${med(r.map((x) => x.firstAt))}, calls ${r.reduce((n, x) => n + x.calls, 0)}, derails ${r.reduce((n, x) => n + x.derails, 0)}` : ''); }
   }
   try { console.log('SPEND', JSON.stringify(require('../services/run-cap').summary())); } catch { /* none */ } // eslint-disable-line global-require
   if (OUT) fs.writeFileSync(OUT, JSON.stringify(rows, null, 1));

@@ -2246,7 +2246,7 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
   // A prewrite's first part is waiting for this learner: go on from it (services/first-block.js).
   if (firstBlock.on() && !retailorOf) {
     const head = firstBlock.takeParked(planKey(owner, trackId, gradeId, level));
-    if (head) return writeInParts(head);
+    if (head) { head.st.stopped = false; head.st.resumed = true; return writeInParts(head); }
     // An earlier part-by-part write that failed may have been answered on; its row is history, not written into again.
     const prior = anyRow({ userId: owner, trackId, gradeId, level });
     if (prior && prior.partial) db.update(COLLECTION, prior.id, { status: 'superseded' });
@@ -2744,7 +2744,7 @@ async function writeInParts(x) {
       note: anyOk ? remainderNote(st.blocks, !st.rawChecks) : null,
       temperature: a === 0 ? null : a === 1 ? 0.4 : 0.8,
       onBlock: startFirst,
-      stopAfterFirst: speculativeNow(),
+      stopAfterFirst: speculativeNow() && !st.resumed,
     });
     if (st.stopped) break;
   }

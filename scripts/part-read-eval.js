@@ -4,7 +4,7 @@
  * clean controls and same-against-same repeats. Not part of npm test. Not real-learner proof.
  *
  *   DB_FILE=copy.json RUN_CAP_USD=5 node scripts/part-read-eval.js run <reader> <mode> [rep=1] [par=3] [out=file.json]
- *     reader  zerogpu | grok43 | coralStd | minimax
+ *     reader  zerogpu | grok43 | coralStd | minimax | path (the shipped route: a waiting learner's lane, ZeroGPU then grok-4.3 by hedge, PATH_HEDGE_MS)
  *     mode    whole (the level as today) | part (the planted block or check alone) | ctx (it, with the blocks and checks before it as context only)
  *   DB_FILE=copy.json node scripts/part-read-eval.js build-cross [n=24] [out=docs/cold-write/cross-part-set.json]
  *     Plants an error a part CANNOT show alone: a later block made to disagree with something stated earlier in the same lesson (xKiro Mistral, a family none of the readers share).
@@ -83,6 +83,28 @@ function request(f, mode) {
   return { ...r, user: bl.partContextPrompt(r.user, earlierBlocks) };
 }
 
+/** The shipped route: verifyLevel in the waiting lane for a cleared learner, whichever verifier answers. */
+async function readPath(f, mode) {
+  const db = require('../config/db'); const pool = require('../services/pool'); // eslint-disable-line global-require
+  const user = db.insert('users', { email: `path-${Date.now()}-${Math.random()}@example.com`, birth_year: 1990, created_at: new Date().toISOString() });
+  const context = { text: `Subject: ${f.plan.track_id}, grade ${f.plan.grade_id}, level ${f.plan.level}.`, trackId: f.plan.track_id };
+  const t = f.target;
+  const part = mode !== 'whole';
+  const blockAt = f.blocks.findIndex((b) => b.index === t.index);
+  // pair: the part and the block after it read together (the last block: with the one before), to see what a larger part costs in catches.
+  const pair = mode === 'pair' && t.word === 'block' ? (blockAt + 1 < f.blocks.length ? [blockAt, blockAt + 1] : [blockAt - 1, blockAt]).filter((i) => i >= 0) : null;
+  const blocks = pair ? pair.map((i) => f.blocks[i]) : part ? (t.word === 'block' ? f.blocks.filter((b) => b.index === t.index) : []) : f.blocks;
+  const checks = part ? (t.word === 'check' ? f.checks.filter((c) => c.index === t.index) : []) : f.checks;
+  const at = t.word === 'block' ? f.blocks.findIndex((b) => b.index === t.index) : f.blocks.findIndex((b) => b.index > ((f.checks[t.index] || {}).after ?? -1));
+  const earlier = mode === 'ctx' || mode === 'pair' ? f.blocks.slice(0, pair ? pair[0] : (at < 0 ? f.blocks.length : at)) : null;
+  const t0 = Date.now();
+  const hedge = process.env.PATH_HEDGE_MS ? Number(process.env.PATH_HEDGE_MS) : null;
+  try {
+    const v = await pool.runForeground(() => bl.onTier('free', () => bl.verifyLevel({ context, blocks, checks, userId: user.id, where: null, excludeFamilies: ['deepseek'], earlier, hedgeAfterMs: hedge })), { fast: true });
+    return v ? { v, ms: Date.now() - t0, attempts: 1, usage: v.usage, model: v.model } : { v: null, err: 'no reader' };
+  } catch (e) { return { v: null, err: String(e.message).slice(0, 120) }; }
+}
+
 async function readOnce(reader, req) {
   let lastErr = null;
   for (let a = 0; a < 3; a++) {
@@ -130,6 +152,7 @@ async function buildCross() {
 (async () => {
   if (CMD === 'build-cross') { await buildCross(); process.exit(0); }
   const reader = A1; const mode = A2;
+  if (reader === 'path') process.env.COLD_FIRST_BLOCK = 'on';
   const cases = [];
   for (const c of set.fact) { const f = fixture(c); if (f) cases.push({ c, f, group: c.planted ? 'planted' : 'clean' }); }
   if (fs.existsSync(CROSS_FILE)) for (const c of JSON.parse(fs.readFileSync(CROSS_FILE, 'utf8')).cases) { const f = crossFixture(c); if (f) cases.push({ c, f, group: 'cross' }); }
@@ -141,12 +164,12 @@ async function buildCross() {
       const { c, f, group } = cases[next++];
       const req = request(f, mode);
       // eslint-disable-next-line no-await-in-loop
-      const got = await readOnce(reader, req);
+      const got = reader === 'path' ? await readPath(f, mode) : await readOnce(reader, req);
       const failed = got.v ? got.v.failed : [];
       const onTarget = failed.filter((x) => { const p = placeOf(x.where); return p && p.word === f.target.word && p.index === f.target.index; });
       // A read of one part names no other part: an unplaced failed claim counts on the target in part modes.
       const hit = mode === 'part' ? failed : onTarget;
-      rows.push({ id: c.id, group, ms: got.ms || null, read: !!got.v, attempts: got.attempts || 0, caught: c.planted ? caughtBy(hit, c.planted) : null, falseAlarm: c.planted ? null : hit.length > 0, flagged: hit.length, otherFlagged: failed.length - hit.length, inTok: got.usage && got.usage.input_tokens, outTok: got.usage && got.usage.output_tokens, err: got.err });
+      rows.push({ id: c.id, group, ms: got.ms || null, read: !!got.v, attempts: got.attempts || 0, caught: c.planted ? caughtBy(hit, c.planted) : null, falseAlarm: c.planted ? null : hit.length > 0, flagged: hit.length, otherFlagged: failed.length - hit.length, model: got.model, inTok: got.usage && got.usage.input_tokens, outTok: got.usage && got.usage.output_tokens, err: got.err });
       console.log(JSON.stringify(rows[rows.length - 1]));
     }
   }));

@@ -337,6 +337,7 @@ function trigger({ user, enrollment, grade, reason = null, passive = false }) {
  * (mayGenerate: the child's consent rule is applied inside services/ai.js on every call too). Never throws, never awaited.
  */
 const prewritten = new Map(); // enrollment id -> Set(levels already requested)
+const topGuess = new Map(); // enrollment id -> { level, n }: how many answers in a row this level was the best guess (COLD_FIRST_BLOCK)
 function prewrite({ user, enrollment, grade, levels, reason = 'placement' }) {
   try {
     const max = num('WRITE_AHEAD_PREWRITE_MAX', 4, 0, 10);
@@ -352,7 +353,24 @@ function prewrite({ user, enrollment, grade, levels, reason = 'placement' }) {
     const steps = [];
     for (const [rank, level] of levels.entries()) {
       if (done.size >= max) break;
-      if (done.has(level)) continue;
+      if (done.has(level)) {
+        // COLD_FIRST_BLOCK: a first part is parked for this level and the guess has stayed on top for COLD_HEAD_CONTINUE answers: write the rest too, in the same speculative lane,
+        // so a learner who lands here reads on without waiting. A guess that keeps moving has spent only its first part.
+        const fb = require('./first-block'); // eslint-disable-line global-require
+        const k = bl.planKey(tailored ? user.id : null, where.trackId, where.gradeId, level);
+        if (rank === 0 && fb.on() && fb.isParked(k)) {
+          const was = topGuess.get(enrollment.id);
+          const n = was && was.level === level ? was.n + 1 : 1;
+          topGuess.set(enrollment.id, { level, n });
+          if (topGuess.size > 500) topGuess.delete(topGuess.keys().next().value);
+          if (n >= num('COLD_HEAD_CONTINUE', 3, 1, 30)) {
+            const step = { level, position: 0, kind, tier: 'free', tailored, rank };
+            enqueue({ user, step, key: k, enrollmentId: enrollment.id, levelsPerHour: 0, reason, ...where, fast: fastOn(), prewrite: true });
+            steps.push(step);
+          }
+        }
+        continue;
+      }
       const kind = bl.kindFor(g, level);
       if (kind !== 'lesson' && kind !== 'retention') continue;
       done.add(level);
