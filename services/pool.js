@@ -837,6 +837,9 @@ async function callHedged(req, opts = {}) {
     const untriedFree = () => cands.some((s) => {
       if (s.paid || tried.has(s.id)) return false;
       const b = blocked(s, req, isBg(), isSpec());
+      // A free slot whose RPM window is far off (more than the 15 s pick() would wait) will not answer soon either: for a learner waiting, it does
+      // not hold the paid slot back. Otherwise the call ended at 0 s with "no slot available" (beta load test, Nov 2026). Background work still waits for free.
+      if (b && b.why === 'rpm' && b.waitMs > 15000 && !isBg()) return false;
       return !(b && (b.why === 'disabled' || b.why === 'breaker' || b.why === 'daily tokens'));
     });
 

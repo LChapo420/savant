@@ -126,6 +126,29 @@ async function startApp(dbFile, port) {
   check('an old session with no mark gets in', (await who(undefined)) === owner);
   check('a session made for an earlier account with that id does not', (await who('2020-01-01T00:00:00.000Z')) === null);
 
+  console.log('uploads in memory at once');
+  const { uploadBudget, inFlightBytes } = require('../utils/upload-budget');
+  const fakeRes = () => { const h = {}; const r = { code: 200, set() {}, status(c) { r.code = c; return { json() {} }; }, on(ev, fn) { h[ev] = fn; }, close() { h.close(); } }; return r; };
+  const up = (mb) => { const res = fakeRes(); let through = false; uploadBudget({ headers: { 'content-length': String(mb * 1048576) } }, res, () => { through = true; }); return { res, through }; };
+  const one = up(180);
+  const two = up(180);
+  check('one big upload goes through, the one that would pass the budget waits', one.through && !two.through && two.res.code === 503);
+  one.res.close();
+  check('the budget is given back', inFlightBytes() === 0 && up(10).through);
+
+  console.log('a learner waiting when the free key has used its minute');
+  const pool = require('../services/pool');
+  const answer = (who) => async () => ({ data: { by: who }, usage: { input_tokens: 5, output_tokens: 5 }, model: who });
+  const free = pool.makeSlot({ id: 'free-rpm', provider: 'free-rpm', label: 'free', maxConcurrent: 2, rpm: 1, latencyHintMs: 5, dataClass: 'learner', priceIn: 0, priceOut: 0, call: answer('free') });
+  const paid = pool.makeSlot({ id: 'paid-last', provider: 'paid-last', label: 'paid', maxConcurrent: 2, latencyHintMs: 5, dataClass: 'learner', priceIn: 1, priceOut: 1, estimateUsd: () => 0.001, costOf: () => 0.001, call: answer('paid') });
+  const ask = () => pool.callHedged({ kind: 'structured', n: 1 }, { slots: [free, paid], timeoutMs: 2000, maxTotalMs: 3000 });
+  const firstCall = await ask();
+  check('the free slot answers first', firstCall && firstCall.data.by === 'free', firstCall && firstCall.data);
+  const second = await ask();
+  check('with its minute used up, a waiting learner gets the paid slot, at once', second && second.data.by === 'paid', second && second.pool);
+  const bg = await pool.runBackground(() => ask());
+  check('background work does not pay for that', !bg || bg.data.by !== 'paid', bg && bg.data);
+
   console.log('a deleted account leaves nothing on the levels everyone shares');
   const { clearFromSharedPlans } = require('../services/account-deletion');
   const sharedPlan = db.insert('block_plans', { user_id: null, track_id: 't', grade_id: 'g', level: 1, answers: { '77:c1': { answer: 'typed words' }, '78:c1': { answer: 'other' } }, telemetry: { 77: { at: 'x' }, 78: { at: 'y' } } });
