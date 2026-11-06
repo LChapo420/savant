@@ -38,6 +38,7 @@ App.mount(async () => {
         <h1 style="margin:0">Admin</h1>
         <div class="row" style="gap:8px; flex-wrap:wrap">
           <a class="btn btn-sm" href="#metrics">${window.icon('trending-up')}Real-user metrics</a>
+          <a class="btn btn-sm" href="#speedproof">${window.icon('trending-up')}Speed proof (4x)</a>
           <a class="btn btn-sm" href="/api/admin/export.csv" download>${window.icon('chart')}Export every scorecard (CSV)</a>
         </div>
       </div>
@@ -494,9 +495,54 @@ App.mount(async () => {
     window.scrollTo({ top: 0 });
   }
 
+  async function renderSpeedProof() {
+    root.innerHTML = '<div class="loading"><span class="spinner"></span>Loading the speed proof</div>';
+    let r;
+    try {
+      r = await App.api.get('/api/admin/speed-proof');
+    } catch (err) {
+      root.innerHTML = `<div class="notice notice-error">${esc(err.message)} <a href="#">Back</a></div>`;
+      return;
+    }
+    const x = (v, s = '') => (v === null || v === undefined ? '—' : `${v}${s}`);
+    const ci = (c, s = '') => (c && c[0] !== null && c[1] !== null ? `${c[0]}${s} to ${c[1]}${s}` : 'no interval yet');
+    const pt = (v) => (v === null || v === undefined ? '—' : `${(v * 100).toFixed(1)} pts`);
+    const group = (name, g) => `<tr>
+      <td class="small"><strong>${esc(name)}</strong></td>
+      <td class="small">${g.time.learners_with_both_arms} / ${g.learners}</td>
+      <td class="small">${x(g.time.speedup_geomean, 'x')}<div class="tiny muted">95%: ${ci(g.time.speedup_ci95, 'x')}</div></td>
+      <td class="small">${x(g.time.speedup_median, 'x')}</td>
+      <td class="small">${x(g.time.speedup_p10, 'x')}<div class="tiny muted">worst 10% mean ${x(g.time.speedup_worst10_mean, 'x')}</div></td>
+      <td class="small">${pt(g.retention.diff_mean)}<div class="tiny muted">95%: ${g.retention.diff_ci95[0] === null ? 'no interval yet' : `${pt(g.retention.diff_ci95[0])} to ${pt(g.retention.diff_ci95[1])}`}</div></td>
+      <td class="small">${pt(g.retention.diff_median)}</td>
+      <td class="small">${pt(g.retention.diff_p10)}<div class="tiny muted">worst 10% mean ${pt(g.retention.diff_worst10_mean)}</div></td>
+      <td class="tiny">${g.samples.savant_skills_understood} / ${g.samples.normal_skills_understood} skills<br>${g.samples.savant_checks_answered} / ${g.samples.normal_checks_answered} checks</td></tr>`;
+    const o = r.overall;
+    const names = { under13: 'Under 13', '13to17': '13 to 17', '18plus': '18 and over' };
+    root.innerHTML = `
+      <div class="row-between" style="margin-bottom:12px"><h1 style="margin:0">Speed proof</h1>
+        <a class="btn btn-ghost btn-sm" href="#">${window.icon('arrow-left')}All users</a></div>
+      <div class="notice ${o.verdict.four_x_shown ? 'notice-success' : 'notice-info'}"><strong>${esc(o.verdict.statement)}</strong></div>
+      <p class="tiny muted">Real learners only (${esc(r.label)}). Switch: SPEED_PROOF=${esc(r.switch.mode)}, plain-way share ${Math.round(r.switch.normal_share * 100)}%. Needs at least ${r.target.min_learners} learners with both ways. Left out: ${x(r.left_out_accounts)} accounts no longer eligible.</p>
+      <h2 class="section-title">${window.icon('trending-up')}Savant against the plain way, inside each learner</h2>
+      <div class="card"><div class="table-scroll"><table class="data"><thead><tr><th>Group</th><th>Learners</th><th>Speed-up (geo mean)</th><th>Median</th><th>10th percentile</th><th>Retention, Savant minus plain</th><th>Median</th><th>10th percentile</th><th>Savant / plain samples</th></tr></thead><tbody>
+        ${group('All learners', o)}${Object.keys(names).map((k) => group(names[k], r.by_age[k])).join('')}
+      </tbody></table></div>
+      <p class="tiny muted" style="margin:8px 0 0">Speed-up is plain-way minutes divided by Savant minutes (4x or more is the target). Retention margin: lower end must stay above -${r.target.retention_margin_points} points. Plain skills switched to Savant: ${o.samples.plain_skills_switched_to_savant}. Checks missed (Savant / plain): ${o.samples.savant_checks_missed} / ${o.samples.normal_checks_missed}.</p></div>
+      <h2 class="section-title">${window.icon('list')}By age group</h2>
+      <div class="card">${Object.keys(names).map((k) => `<p class="small" style="margin:0 0 6px"><strong>${names[k]}:</strong> ${esc(r.by_age[k].verdict.statement)}</p>`).join('')}</div>
+      <h2 class="section-title">${window.icon('list')}Per learner (${r.learners.length})</h2>
+      <div class="card">${r.learners.length ? `<div class="table-scroll"><table class="data"><thead><tr><th>Learner</th><th>Age group</th><th>Skills Savant / plain</th><th>Minutes Savant / plain</th><th>Speed-up</th><th>Retention Savant / plain</th><th>Difference</th></tr></thead><tbody>
+        ${r.learners.map((l) => `<tr><td class="tiny">#${esc(l.user_id)}</td><td class="tiny">${esc(l.band)}</td><td class="tiny">${l.savant_skills} / ${l.normal_skills}</td><td class="tiny">${x(l.savant_minutes)} / ${x(l.normal_minutes)}</td><td class="tiny">${x(l.speedup, 'x')}</td><td class="tiny">${l.savant_retention === null ? '—' : App.pct(l.savant_retention)} / ${l.normal_retention === null ? '—' : App.pct(l.normal_retention)}</td><td class="tiny">${pt(l.retention_diff)}</td></tr>`).join('')}
+      </tbody></table></div>` : '<p class="small muted" style="margin:0">No learner has measured skills yet.</p>'}</div>
+      <ul class="small">${r.notes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>`;
+    window.scrollTo({ top: 0 });
+  }
+
   function route() {
     const params = new URLSearchParams(window.location.hash.slice(1));
-    if (params.has('metrics')) renderMetrics(Number(params.get('days')) || 30);
+    if (params.has('speedproof')) renderSpeedProof();
+    else if (params.has('metrics')) renderMetrics(Number(params.get('days')) || 30);
     else if (params.get('user')) renderUser(params.get('user'), params.get('track') || '');
     else renderList();
   }

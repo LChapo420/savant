@@ -84,6 +84,8 @@ const COLLECTIONS = [
   'experiment_arms',         // which teaching experiment (stat and arm) a learner's level was given, stored the first time (services/personalize.js)
   'choice_pairs',            // the two short versions of an explanation a "which is clearer?" choice shows, written for one learner (services/boosters.js choice)
   'reading_checks',          // the reading check: one per offer a learner took, declined or has open, its answers and result (services/reading-check.js), private to them
+  'speed_proof',             // the speed proof: one row per real learner and skill: arm (Savant or plain), minutes to understanding, delayed checks at 1/7/30 days and the chosen horizon (services/speed-proof.js)
+  'speed_proof_blocks',      // the speed proof's per-learner randomisation blocks for the optional plain-way arm (services/speed-proof.js)
   'beta_blocks',             // the beta comparison's randomisation: one permuted block of arm slots per age band and subject, used in order (services/beta-arm.js)
   'catchup_units',           // catch-up for math/english/reading: one per learner, subject and target grade: unit check, blocks, re-check (services/catchup-units.js)
   'act_guests',              // the free ACT level check: one per visitor who answered the 13+ question with yes; token hash, ref, channel, the stored estimate. No personal data until they apply (services/act-check.js)
