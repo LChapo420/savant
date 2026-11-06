@@ -59,7 +59,7 @@ const SCHEMA = {
 // `working` comes first on purpose (found 6 Nov): DeepSeek at no reasoning wrote its check inside `why` ("987 x 654 = 645,498 is correct? ... wait") and left the right answer in `wrong`: 18 of 146 right answers flagged.
 const RULES_COMMON = `Reply with JSON only: {"working": "<short: work out any sum or step yourself here, before any verdict>", "checked": <how many statements of fact you read>, "wrong": [{"n": <the number of the piece>, "quote": "<its exact words>", "why": "<what is false, in a few words>"}]}. Finish working a statement out before you decide. "wrong" holds only what your working found false, and is empty when nothing is false: never put a statement there to check it, and never one you found correct. Never flag something you cannot say is false.`;
 
-const NOT_CLAIMS = 'Not claims, never flag them: encouragement, study advice, plans, what the learner should do next, questions put to the learner, opinions, style, tone, wording, things left out, a true simplification fit for a beginner, a rule stated for the usual case (an exception existing does not make it false), and anything about the learner you cannot see. A wrong option in a multiple-choice question is meant to be wrong: judge the question, its key and its explanation.';
+const NOT_CLAIMS = 'Not claims, never flag them: encouragement, study advice, plans, what the learner should do next, questions put to the learner, opinions, style, tone, wording, things left out, a true simplification fit for a beginner, and anything about the learner you cannot see. A wrong option in a multiple-choice question is meant to be wrong: judge the question, its key and its explanation. Showing a mistake is not making one: "a frequent mistake gives x = -1" is false only if that mistake does not give it. "That\'s right" refers to the learner\'s answer to the question the tutor had just asked: read the conversation before judging it.';
 
 const SYSTEMS = {
   general: `You fact-check text an AI tutor wrote, before a learner sees it. Find statements about the subject that are false: wrong arithmetic or wrong steps (work them out yourself, never trust the text), wrong definitions, rules, dates, names, grammar or translations, a key that is not the right answer, a learner's answer called right when it is wrong or wrong when it is right. ${NOT_CLAIMS} An analogy or an "imagine" scene is fine unless it says something false about the subject. A REFERENCE, when given, is the question, the key or the lesson the text is about: use it to understand the text, and flag a statement that contradicts it. ${RULES_COMMON}`,
@@ -132,7 +132,7 @@ function checkUser({ pieces, source = '', learnerSaid = '', mode = 'general' }) 
   const label = mode === 'general' ? 'REFERENCE' : mode === 'overlay' ? 'LESSON' : 'SOURCE';
   return [
     source ? `${label}:\n${clip(source, MAX_SOURCE)}` : '',
-    learnerSaid ? `THE LEARNER HAD SAID (for context, not to be checked): ${clip(learnerSaid, 400)}` : '',
+    learnerSaid ? `THE CONVERSATION JUST BEFORE THIS (for context, not to be checked):\n${clip(learnerSaid, 900)}` : '',
     `TEXT TO CHECK:\n${pieces.map((p, i) => `[${i + 1}] ${clip(p, MAX_PIECE)}`).join('\n')}`,
   ].filter(Boolean).join('\n\n');
 }
@@ -224,9 +224,10 @@ function piecesOf(entry, result) {
   return { list, drops: null };
 }
 
+/** The turns just before this reply. Without the tutor's own last question a true "that's right" reads as a false claim (found 6 Nov: "ottawa" to a question about Canada, held). */
 function lastLearnerLine(req) {
-  const m = req && Array.isArray(req.messages) ? [...req.messages].reverse().find((x) => x.role === 'user') : null;
-  return m ? String(m.content || '').slice(0, 400) : '';
+  const list = req && Array.isArray(req.messages) ? req.messages.slice(-3) : [];
+  return list.map((m) => `${m.role === 'assistant' ? 'Tutor' : 'Learner'}: ${String(m.content || '').slice(0, 400)}`).join('\n');
 }
 
 const heldChat = (result, why) => ({ ...result, text: HELD[why], held: why });

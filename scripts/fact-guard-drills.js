@@ -33,7 +33,7 @@ function client() {
     } catch (err) { return { status: 0, payload: { error: err.message }, ms: Date.now() - started }; }
   };
 }
-const register = async (call, label, by = 1990) => call('POST', '/api/auth/register', { email: `drill-${label}-${STAMP}@example.com`, password: 'Walk-test-pw-9', display_name: `Drill ${label}`, birth_year: by, birth_month: 6, country: 'US' });
+const register = async (call, label, by = 1990) => call('POST', '/api/auth/register', { email: `drill-${label}-${STAMP}@example.com`, password: 'Walk-test-pw-9', display_name: `Drill ${label}`, ...(by > 2010 ? { username: `drillkid${STAMP}`, parent_email: 'drill-parent@example.com' } : {}), birth_year: by, birth_month: 6, country: 'US' });
 
 const QUESTIONS = ['What is 15% of 80?', 'Why is the sky blue?', 'What caused World War I?', 'What is the capital of Canada?', 'How do I add 1/2 and 1/3?', 'What is a metaphor?'];
 let qn = 0;
