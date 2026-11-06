@@ -757,7 +757,7 @@ router.post('/sessions/:id/finish', requireAuth, async (req, res) => {
       format: 'short_answer',
       prompt: q.prompt,
       answer: q.answer,
-      rationale: q.why || partModify.REVIEW_DEFAULT,
+      rationale: q.why || partModify.reviewLineFor(req.user.id, { track_id: session.track_id, grade_id: session.grade_id }),
       source: 'ai',
       level: (outcome.retentionPlan[i] || {}).level || session.end_level || session.level,
     }));

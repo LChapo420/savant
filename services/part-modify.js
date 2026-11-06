@@ -159,6 +159,19 @@ function reviewLine(spec, goal = null) {
 }
 
 /**
+ * The review line for one learner when a retention question is written. On by default, on its own switch: its gate passed by two families on both arms (docs/MODIFICATION-MAP.md), it calls no
+ * model and it states no fact of the subject. REVIEW_LINE=off gives the one fixed line back. Never throws.
+ */
+function reviewLineFor(userId, where) {
+  try {
+    if (String(process.env.REVIEW_LINE || 'on').toLowerCase() === 'off') return REVIEW_DEFAULT;
+    const spec = lazy('./learning-spec').buildSpec(userId, { trackId: where.track_id, gradeId: where.grade_id });
+    if (!spec || spec.isDefault) return REVIEW_DEFAULT;
+    return reviewLine(spec, goalFor(userId, where));
+  } catch { return REVIEW_DEFAULT; }
+}
+
+/**
  * The verdict line after every answer ("Right." / "Not quite."), the most-seen words in the app, one for everyone until now. From templates: no model, no fact. Part `voice`.
  * Its gate is in docs/MODIFICATION-MAP.md. Pure.
  */
@@ -589,5 +602,5 @@ function maybeRefreshCourse(userId, materialId) {
 const hashOf = (s) => crypto.createHash('sha1').update(String(s)).digest('hex').slice(0, 10);
 
 module.exports = {
-  PARTS, REVIEW_DEFAULT, factGatePrompt, readFactGate, hintGatePrompt, readHintGate, firstJson, lessonDeliveryLines, defaultGate, avoidedIn, reviewLine, voiceOf, voiceFields, accountSetting, enabled, partOn, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, rewriteLessonDetail, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
+  PARTS, REVIEW_DEFAULT, factGatePrompt, readFactGate, hintGatePrompt, readHintGate, firstJson, lessonDeliveryLines, defaultGate, avoidedIn, reviewLine, reviewLineFor, voiceOf, voiceFields, accountSetting, enabled, partOn, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, rewriteLessonDetail, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
 };

@@ -41,6 +41,7 @@ check('no rule asks for a clause about a wrong choice', !/why it fails/.test(rb 
 const hintFor = (n) => pm.rulesFor(mk({ hint_dependence: n, productive_struggle: 100 - n, help_seeking: n, scaffolding_need: n }), 'hint').join(' ');
 check('hint size now follows the spec (it was always small)', ls.buildSpecFrom({ metrics: {} }).scaffolding.hintSize === 'partial' && /Hint size: (small|medium|large)/.test(hintFor(50)));
 check('the review line follows the goal without a model', /your test on 2026-12-01/.test(pm.reviewLine(FULL, { status: 'date', test_date: '2026-12-01' })) && /next week/.test(pm.reviewLine(FULL, null)));
+check('a learner we know nothing about keeps the fixed line', pm.reviewLineFor(null, {}) === pm.REVIEW_DEFAULT);
 check('an unreadable gate reply is not a pass', pm.readFactGate('sorry') === null && pm.readHintGate('{}') === null);
 check('a word the original already uses is not the rewrite bringing in a dislike', !pm.avoidedIn({ interests: { avoidDomains: ['food examples'] } }, { text: 'Plants make food.' }, 'Plants make their food, for example sugar.').length);
 check('a new word from the dislike is', pm.avoidedIn({ interests: { avoidDomains: ['food examples'] } }, { text: 'Plants grow.' }, 'Plants grow, like food in a pot.').length === 1);
