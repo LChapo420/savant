@@ -78,7 +78,6 @@
           ${m.model ? `<br><span class="tiny">Written by ${App.escapeHtml(m.model)}${m.generated_at ? ` on ${App.escapeHtml(new Date(m.generated_at).toLocaleDateString())}` : ''}.</span>` : ''}
         </div>
       </div>
-      ${m.layer ? '<div id="block-level-layer" class="card card-tight" style="margin-bottom:14px; min-height:150px; overflow-anchor:none"><div class="small muted">Making this lesson yours&hellip;</div></div>' : ''}
       <div id="block-level-host"></div>
       <div id="block-level-progress" class="small muted" style="margin-top:16px"></div>
       <div id="block-level-finish" style="margin-top:16px"></div>`;
@@ -197,7 +196,18 @@
     // slot reserved for them as soon as they are written, without moving what is being read (the slot keeps its height; any growth is
     // taken up by the scroll position). Late or never: the plain lesson stays as it is.
     if (m.layer) {
-      const slot = document.getElementById('block-level-layer');
+      // The slot sits after the FIRST block (and its help slot), not above the lesson: a learner reading the top of the page (scroll 0, where the
+      // browser does not hold the position when something grows above) is not moved when the layer arrives, since nothing above or inside what they
+      // read changes. Its height is reserved at once (a skeleton the size a layer usually takes), so even the content below does not jump; the
+      // reserve stays after the fill. A slot above the viewport that grows is made up by the scroll position.
+      const slot = document.createElement('div');
+      slot.id = 'block-level-layer';
+      slot.className = 'card card-tight';
+      slot.style.cssText = `margin:0 0 14px; min-height:${window.innerWidth < 600 ? 430 : 290}px; overflow-anchor:none`;
+      slot.innerHTML = '<div class="small muted">Making this lesson yours&hellip;</div>';
+      const first = sections[0];
+      const after = first && first.nextElementSibling && first.nextElementSibling.tagName === 'DIV' && first.nextElementSibling.id !== 'block-level-layer' ? first.nextElementSibling : first;
+      if (after) after.insertAdjacentElement('afterend', slot); else host.appendChild(slot);
       const esc = App.escapeHtml;
       const fill = (layer) => {
         const before = slot.offsetHeight;
@@ -207,14 +217,15 @@
           ${layer.why ? `<p class="small" style="margin:0 0 8px">${esc(layer.why)}</p>` : ''}
           ${(layer.analogies || []).map((a) => `<p class="small" style="margin:0 0 6px"><span class="muted">${esc(a.point)}:</span> ${esc(a.text)}</p>`).join('')}`;
         const grew = slot.offsetHeight - before;
-        if (grew > 0 && window.scrollY > 0) window.scrollBy(0, grew);
+        if (grew > 0 && slot.getBoundingClientRect().top < 0) window.scrollBy(0, grew);
         slot.setAttribute('data-layer', 'shown');
         window.__layerShownAt = Date.now();
       };
       const drop = () => {
         const h = slot.offsetHeight;
+        const above = slot.getBoundingClientRect().top < 0;
         slot.remove();
-        if (window.scrollY > 0) window.scrollBy(0, -h);
+        if (above) window.scrollBy(0, -h);
       };
       let tries = 0;
       const tick = async () => {
