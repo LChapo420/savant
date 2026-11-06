@@ -31,6 +31,14 @@ function specSig(spec) {
     if (!value || typeof value !== 'object') return;
     for (const [key, item] of Object.entries(value)) walk(item, parts.concat(key));
   }(spec, []));
+  // The lists the numbers cannot carry (version 1 of the set keys): which interests are used, which domains are avoided, and ESL support.
+  // A signature written before this has no `sets.v` key, so its sets are never compared (no mass re-tailoring of levels already stored).
+  const slug = (x) => String(x).toLowerCase().replace(/[^a-z0-9]+/g, '_').slice(0, 40);
+  const it = spec.interests || {};
+  entries.push(['sets.v', 1]);
+  for (const d of (it.exampleDomains || []).slice(0, 8)) entries.push([`sets.use.${slug(d)}`, 1]);
+  for (const d of (it.avoidDomains || []).slice(0, 12)) entries.push([`sets.avoid.${slug(d)}`, 1]);
+  if (spec.language && spec.language.eslSupport) entries.push(['sets.esl', 1]);
   return Object.fromEntries(entries);
 }
 
@@ -56,6 +64,16 @@ function specDrift(oldSig, newSig) {
     const change = relativeChange(a, b);
     if (change >= bigAt) big++;
     else if (change >= smallAt) small++;
+  }
+  // Sets (interests used, domains avoided, ESL): a new thing to avoid is a hard constraint and moves a level alone; any other change of set is one big move.
+  if (before['sets.v'] === 1 && after['sets.v'] === 1) {
+    const keys = new Set([...Object.keys(before), ...Object.keys(after)].filter((k) => k.startsWith('sets.') && k !== 'sets.v'));
+    for (const k of keys) {
+      const had = Object.prototype.hasOwnProperty.call(before, k);
+      const has = Object.prototype.hasOwnProperty.call(after, k);
+      if (had === has) continue;
+      big += k.startsWith('sets.avoid.') && has ? Math.max(1, Number(process.env.BLOCK_RETAILOR_DRIFT || 2)) : 1;
+    }
   }
   return big + Math.floor(small / 5);
 }

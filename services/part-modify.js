@@ -21,6 +21,8 @@
 const crypto = require('crypto');
 
 const PARTS = ['feedback', 'hint', 'review'];
+/** The fixed line a retention question carries when the writer gave no reason of its own (routes/learn.js): this is the review part. */
+const REVIEW_DEFAULT = 'Recalling it now is what moves it into next week.';
 const enabled = () => String(process.env.PART_MODIFY || DEFAULT_ON).toLowerCase() !== 'off';
 // Default: see docs/MODIFICATION-AUDIT.md section 7 (on only where the gate passed).
 const DEFAULT_ON = 'off';
@@ -210,13 +212,13 @@ async function prepareItem(userId, item, { llm = null, spec = null } = {}) {
     const ls = lazy('./learning-spec');
     const sp = spec || (() => { const at = placeOf(item); return lazy('./block-adapt').specFor(userId, { trackId: at.trackId, gradeId: at.gradeId, level: item.level }, { topic: item.skill_name, skills: [item.skill_id] }); })();
     if (!sp || sp.isDefault) return null;
-    const hash = ls.specHash(sp);
+    const goal = goalFor(userId, item);
+    const hash = `${ls.specHash(sp)}${goalClause(goal) ? `:${hashOf(goalClause(goal))}` : ''}`;
     if (item.shaped && item.shaped.hash === hash) return item.shaped;
     const call = llm || defaultLlm(userId);
     const base = { prompt: item.prompt, choices: item.choices, answer: item.answer };
-    const goal = goalFor(userId, item);
     const [fb, hint] = await Promise.all([
-      modify({ spec: sp, part: 'feedback', source: { ...base, text: item.rationale }, llm: call, goal }),
+      modify({ spec: sp, part: item.rationale === REVIEW_DEFAULT ? 'review' : 'feedback', source: { ...base, text: item.rationale }, llm: call, goal }),
       item.hint ? modify({ spec: sp, part: 'hint', source: { ...base, text: item.hint }, llm: call }) : Promise.resolve(null),
     ]);
     const shaped = { hash, at: new Date().toISOString(), rationale: fb.source === 'ai' ? fb.text : null, hint: hint && hint.source === 'ai' ? hint.text : null };
@@ -336,5 +338,5 @@ function maybeRefreshCourse(userId, materialId) {
 const hashOf = (s) => crypto.createHash('sha1').update(String(s)).digest('hex').slice(0, 10);
 
 module.exports = {
-  PARTS, enabled, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
+  PARTS, REVIEW_DEFAULT, enabled, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
 };

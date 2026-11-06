@@ -87,6 +87,14 @@ check('a brief learner is refused a long rewrite', pm.check(BRIEF, 'feedback', S
   check('the same profile is not rewritten again', again && again.hash === db.byId('items', row.id).shaped.hash);
   check('a default spec writes nothing', (await pm.prepareItem(5, db.insert('items', { user_id: 5, session_id: 1, prompt: 'p', answer: 'a', rationale: 'r' }), { spec: ls.defaultSpec(), llm: good })) === null);
 
+  console.log('lists the numbers cannot carry');
+  const base = (i, d) => specSig.specSig(mk({ brevity_preference: 70 }, { interests: i, dislikes: d }));
+  check('the same interests and dislikes do not move a level', !specSig.driftedEnough(base(['chess'], []), base(['chess'], [])));
+  check('a new dislike moves a level on its own', specSig.driftedEnough(base(['chess'], []), base(['chess'], ['spiders'])));
+  check('swapping an interest moves a level', specSig.driftedEnough(base(['chess'], []), base(['jazz'], [])));
+  const oldSig = base(['chess'], []); for (const k of Object.keys(oldSig)) if (k.startsWith('sets.')) delete oldSig[k];
+  check('a signature from before the sets is not compared on them', !specSig.driftedEnough(oldSig, base(['jazz'], ['spiders'])));
+
   console.log('a stored course whose profile moved');
   const course = { status: 'ready', lesson_sig: specSig.specSig(BRIEF) };
   check('a course written for the same profile is not stale', !pm.courseStale(course, BRIEF));

@@ -744,7 +744,7 @@ router.post('/sessions/:id/finish', requireAuth, async (req, res) => {
       format: 'short_answer',
       prompt: q.prompt,
       answer: q.answer,
-      rationale: q.why || 'Recalling it now is what moves it into next week.',
+      rationale: q.why || partModify.REVIEW_DEFAULT,
       source: 'ai',
       level: (outcome.retentionPlan[i] || {}).level || session.end_level || session.level,
     }));
