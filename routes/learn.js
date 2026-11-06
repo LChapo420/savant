@@ -1508,7 +1508,7 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
     // The speed levers: a lesson opens on its check, and pages a check let the learner skip are listed so nothing is lost silently. Absent with the switch off.
     ...(speedLevers.clientFlags(req.user.id, {}).testout ? {
       speed_testout: true,
-      skipped_pages: db.find('lessons', (l) => l.user_id === req.user.id && l.enrollment_id === enrollment.id && l.skipped_by_check_at).map((l) => ({ level: l.level, title: l.title })).sort((a, b) => a.level - b.level),
+      skipped_pages: db.find('lessons', (l) => l.user_id === req.user.id && l.track_id === enrollment.track_id && l.grade_id === enrollment.grade_id && l.skipped_by_check_at).map((l) => ({ level: l.level, title: l.title })).sort((a, b) => a.level - b.level),
     } : {}),
     progress,
     skills,

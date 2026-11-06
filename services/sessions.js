@@ -1265,6 +1265,7 @@ function checkingStatus(item) {
     feedback: item.ai_feedback || null,
     errorTag: item.error_tag || null,
     graded_by: item.graded_by || null,
+    ...(item.speed_step ? { speed: item.speed_step } : {}),
   };
 }
 
@@ -1329,14 +1330,17 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
     }
   }
 
+  // The speed levers (services/speed-levers.js): null with every switch off. A typed answer settled in the background keeps its step on the item, for the client to fetch.
+  const speedStep = speedAfterAnswer({ userId, session, item, correct });
+  if (speedStep && item.grading === 'checking') db.update('items', item.id, { speed_step: speedStep });
+
   return {
     correct,
     answer: item.answer,
     rationale: item.rationale,
     feedback,
     errorTag,
-    // The speed levers (services/speed-levers.js): null with every switch off.
-    speed: speedAfterAnswer({ userId, session, item, correct }),
+    speed: speedStep,
     // The stop rule (services/efficiency.js, SR_STOP): the rest of this block's focus and support items that would buy least. Advice
     // only; the session player decides whether to skip them.
     skippable: stoppableItems({ userId, session, item }),

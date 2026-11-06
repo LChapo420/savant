@@ -210,7 +210,7 @@ App.mount(async () => {
       : isExam()
         ? `Level ${currentLevel}. No feedback until the end; pass mark ${Math.round((session.pass_mark || 0.8) * 100)}%.`
         : blockKind === 'lesson'
-          ? `Level ${currentLevel}, lesson. Read it, then ${items.length} question${items.length === 1 ? '' : 's'}.`
+          ? retrievalFirst() ? `Level ${currentLevel}, lesson. ${items.length} question${items.length === 1 ? '' : 's'} first; the page if you need it.` : `Level ${currentLevel}, lesson. Read it, then ${items.length} question${items.length === 1 ? '' : 's'}.`
           : `${items.length} questions: review, your level, and one stretch above it.`;
     // The note under the question is only for what a learner must know:
     // an exam's rules, or that feedback is held to the end.
@@ -374,7 +374,7 @@ App.mount(async () => {
   }
 
   // ── the speed levers (services/speed-levers.js; only with session.speed from the server) ──────────────
-  const retrievalFirst = () => !!(session.speed && session.speed.testout && blockKind === 'lesson' && lesson && !session.preview && items.length);
+  function retrievalFirst() { return !!(session.speed && session.speed.testout && blockKind === 'lesson' && lesson && !session.preview && items.length); }
 
   /** The first check of a lesson opened retrieval first says why there is no page yet. */
   function speedIntro() {
@@ -434,6 +434,25 @@ App.mount(async () => {
       </article>`;
     document.getElementById('speed-on').addEventListener('click', () => closeBlock());
     document.getElementById('speed-read').addEventListener('click', () => { renderLesson(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
+
+  /**
+   * A typed answer still being checked, on a lesson opened retrieval first: wait for the verdict, because a miss must bring its teaching. If the check takes too long the whole
+   * page is shown: not knowing is treated as a miss, so nothing is passed over on a verdict nobody has seen.
+   */
+  async function afterSpeedChecking(item) {
+    const itemHost = document.getElementById('item');
+    itemHost.innerHTML = '<div class="loading"><span class="spinner"></span>Checking your answer</div>';
+    for (let i = 0; i < 20; i++) {
+      let status = null;
+      try { status = await App.api.get(`/api/items/${item.id}/grading`); } catch { status = null; }
+      if (status && !status.checking) {
+        item.correct = status.correct === undefined ? null : status.correct;
+        return afterSpeed(status.speed || null);
+      }
+      await new Promise((resolve) => { setTimeout(resolve, 1000); });
+    }
+    return afterSpeed({ action: 'teach', whole: true });
   }
 
   /** What the server decided after this answer, once the learner has read the verdict. */
@@ -954,7 +973,7 @@ function renderRubricResult(result) {
         const last = index + 1 >= items.length;
         const verdict = Player.reveal(itemHost, item, result, {
           nextLabel: last ? (isEssay() ? (essay && essay.mode === 'oral' ? 'Say it aloud' : 'Write it') : isExam() ? 'Finish and score' : `Finish level ${currentLevel}`) : 'Next question',
-          onNext: () => afterSpeed(result.speed),
+          onNext: () => (result.checking && retrievalFirst() ? afterSpeedChecking(item) : afterSpeed(result.speed)),
         });
         if (result.slow_down && verdict) {
           verdict.insertAdjacentHTML('afterbegin', `<p class="effort-note small"><strong>Slow down a little.</strong> ${App.escapeHtml(result.slow_down.message)}</p>`);

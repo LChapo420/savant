@@ -911,6 +911,17 @@ App.mount(async () => {
     else root.appendChild(line);
   }
 
+  // The speed levers: pages a check let the learner skip stay listed, so nothing is passed over silently. Absent with the switch off.
+  if ((data.skipped_pages || []).length) {
+    const line = document.createElement('p');
+    line.className = 'small';
+    line.style.cssText = 'margin:16px 0 0;max-width:640px';
+    line.innerHTML = `<strong>Pages you skipped after getting their checks right:</strong> ${data.skipped_pages.map((p) => `<a href="/session?enrollment=${enrollment.id}&level=${Number(p.level)}">${App.escapeHtml(App.cleanTitle(p.title || `Level ${p.level}`))}</a>`).join(', ')}.`;
+    const pathTitle = [...root.querySelectorAll('h2.section-title')].find((h) => h.textContent.trim() === 'The path');
+    if (pathTitle) pathTitle.parentNode.insertBefore(line, pathTitle);
+    else root.appendChild(line);
+  }
+
   // Your goal for this grade (services/goals.js): shown and editable here.
   if (window.GoalPicker) {
     const goalHost = document.createElement('div');
