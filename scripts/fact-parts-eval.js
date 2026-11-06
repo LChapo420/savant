@@ -23,6 +23,10 @@ const [, , A_PL = '12', A_CL = '8', MODE = 'parts', A_PAR = '3', OUT = null] = p
 // mode: parts | whole (the waiting-learner lane) or bgparts | bgwhole (the background lane, nobody waiting; bgparts = FACT_VERIFY_PARTS=background).
 process.env.FACT_VERIFY_PARTS = MODE === 'parts' ? '1' : MODE === 'bgparts' ? 'background' : '';
 const BG = MODE.startsWith('bg');
+// mode basecheap / sonnet: the base-write path (no learner: userId null, pipeline class), the cheap pool gate (free tier: ZeroGPU, grok-4.3) against the owner's key (Sonnet read, FACT_PIPELINE=sonnet), same fixtures.
+const BASE = MODE === 'basecheap' || MODE === 'sonnet';
+if (MODE === 'sonnet') process.env.FACT_PIPELINE = 'sonnet';
+for (const l of ['CORAL', 'MUNITO', 'GONKA', 'ZEROGPU', 'GROKIFIED']) process.env[`${l}_PIPELINE`] = '1';
 if (!process.env.DB_FILE) throw new Error('DB_FILE=<copy of the database> is required (never the live one)');
 const set = require('../docs/fact-verifier-set.json');
 const bl = require('../services/block-levels');
@@ -71,8 +75,8 @@ const placeOf = (where) => { const m = /(block|check)\s*(\d+)/i.exec(where || ''
       const { c, f } = pick[next++];
       const ctx = { text: `Subject: ${f.plan.track_id}, grade ${f.plan.grade_id}, level ${f.plan.level}.`, trackId: f.plan.track_id };
       const t = Date.now(); let v = null; let err = null;
-      const runLane = (fn) => (BG ? pool.runBackground(fn) : pool.runForeground(fn, { fast: true }));
-      try { v = await runLane(() => bl.onTier('free', () => bl.verifyLevel({ context: ctx, blocks: f.blocks, checks: f.checks, userId: 90000000 + Math.floor(Math.random() * 9000000), where: null, excludeFamilies: ['deepseek'] }))); } catch (e) { err = String(e.message).slice(0, 80); }
+      const runLane = (fn) => (BASE ? fn() : BG ? pool.runBackground(fn) : pool.runForeground(fn, { fast: true }));
+      try { v = await runLane(() => bl.onTier(MODE === 'sonnet' ? 'sonnet' : 'free', () => bl.verifyLevel({ context: ctx, blocks: f.blocks, checks: f.checks, userId: BASE ? null : 90000000 + Math.floor(Math.random() * 9000000), where: null, excludeFamilies: ['deepseek'] }))); } catch (e) { err = String(e.message).slice(0, 80); }
       const failed = v ? v.failed : [];
       const onTarget = failed.filter((x) => { const p = placeOf(x.where); return p && p.word === f.target.word && p.index === f.target.index; });
       rows.push({ id: c.id, planted: !!c.planted, parts: f.blocks.length + Math.ceil(f.checks.length / 4), ms: Date.now() - t, read: !!v, caught: c.planted ? caughtBy(onTarget, c.planted) : null, falseAlarm: c.planted ? null : onTarget.length > 0, otherFailed: failed.length - onTarget.length, model: v && v.model, partMs: v && v.partMs, partModels: v && v.partModels, err });
@@ -82,6 +86,7 @@ const placeOf = (where) => { const m = /(block|check)\s*(\d+)/i.exec(where || ''
   const pl = rows.filter((r) => r.planted); const cl = rows.filter((r) => !r.planted); const ms = rows.filter((r) => r.read).map((r) => r.ms).sort((a, b) => a - b);
   const q = (p) => (ms.length ? ms[Math.min(ms.length - 1, Math.floor(ms.length * p))] : null);
   const sum = { mode: MODE, par: Number(A_PAR), hedge: process.env.POOL_FACT_HEDGE_MS || null, levels: rows.length, read: rows.filter((r) => r.read).length, planted: pl.length, caught: pl.filter((r) => r.caught).length, clean: cl.length, falseAlarms: cl.filter((r) => r.falseAlarm).length, p50: q(0.5), p90: q(0.9), max: ms[ms.length - 1] || null, wallS: Math.round((Date.now() - t00) / 1000) };
+  try { sum.processSpend = require('../services/run-cap').summary(); } catch { /* none */ }
   console.log('SUMMARY', JSON.stringify(sum));
   if (OUT) fs.writeFileSync(OUT, JSON.stringify({ sum, rows }, null, 1));
   process.exit(0);

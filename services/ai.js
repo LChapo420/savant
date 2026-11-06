@@ -192,7 +192,7 @@ async function viaPool(userId, req, role, task, outside) {
   );
   if (!res) {
     costTracker.recordAi({ userId, role, task, ok: false, ms: trace.elapsedMs || 0, tries: (trace.attempts || []).length || 1, provider: 'pool' });
-    console.warn(`ai: no slot gave a valid ${role}${task ? `/${task}` : ''} answer in ${Math.round((trace.elapsedMs || 0) / 1000)}s: ${(trace.attempts || []).map((a) => `${a.slot} ${a.kind}${a.kind === 'invalid' && a.error ? ` [${String(a.error).slice(0, 140)}]` : ''}`).join(', ') || 'no slot available'}`);
+    console.warn(`ai: no slot gave a valid ${role}${task ? `/${task}` : ''} answer in ${Math.round((trace.elapsedMs || 0) / 1000)}s: ${(trace.attempts || []).map((a) => `${a.slot} ${a.kind}${a.kind === 'invalid' && a.error ? ` [${String(a.error).slice(0, 140)}]` : ''}`).join(', ') || `no slot available${trace.blocked ? ` [${trace.blocked.join('; ')}]` : ''}`}`);
     return null;
   }
   if (res.pool.hedged) {
