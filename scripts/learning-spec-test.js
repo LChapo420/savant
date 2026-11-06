@@ -479,6 +479,14 @@ console.log('9. checking a draft against the spec');
     const r5 = await ls.reviseOnce({ generate: async () => null, textOf: (x) => x, spec, keyFacts });
     check('no draft is no draft', r5.result === null);
     void r4;
+    {
+      let n = 0;
+      const r6 = await ls.reviseOnce({ generate: async () => { n += 1; return n === 1 ? spider : n === 2 ? null : good; }, textOf: (x) => x, spec, keyFacts });
+      check('a revision call that fails once is asked again before the first draft is kept', r6.result === good && r6.revised && n === 3, [n, r6.revised]);
+      n = 0;
+      const r7 = await ls.reviseOnce({ generate: async () => { n += 1; return n === 1 ? spider : null; }, textOf: (x) => x, spec, keyFacts });
+      check('a revision that fails twice keeps the first draft, and stops', r7.result === spider && n === 3);
+    }
 
     await records();
     finish();

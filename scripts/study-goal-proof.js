@@ -136,7 +136,7 @@ async function coreItem(L, i) {
   }
   if (!qs) return { error: 'unscored: no questions' };
   // 2. Both versions of the level, then the answerers see ONE version only.
-  const full = await writeVersion(L, cell, subject, 'full'); const core = await writeVersion(L, cell, subject, MODE === 'test' ? 'test1' : 'core2'); // 'core' here means the goal version
+  const full = await writeVersion(L, cell, subject, 'full'); const core = await writeVersion(L, cell, subject, MODE === 'test' ? 'test1' : MODE === 'control' ? 'full2' : (process.env.CORE_VARIANT || 'core2')); // 'core' here means the goal version; control = a second independent full-depth write
   if (full.error || core.error) return { error: full.error || core.error };
   const answerable = {};
   for (const [name, v] of [['full', full], ['core', core]]) {

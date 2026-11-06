@@ -1534,7 +1534,9 @@ async function reviseOnce({ generate, textOf, structureOf = null, extraProblemsO
   const check1 = check(first);
   if (check1.ok) return { result: first, revised: false, problems: [], stats: check1.stats };
   let second = null;
-  try { second = await generate(revisionNote(check1.problems)); } catch { second = null; }
+  // The revision call fails now and then (a cut-off or unusable model reply): ask once more before keeping the first draft, else a length or coverage
+  // problem the check found ships unfixed (traced 6 Nov: core lessons 1.3-2.4x over their budget kept their over-long first draft this way).
+  for (let attempt = 0; attempt < 2 && !second; attempt++) { try { second = await generate(revisionNote(check1.problems)); } catch { second = null; } }
   if (!second) return { result: first, revised: false, problems: check1.problems, stats: check1.stats };
   const check2 = check(second);
   const cov1 = check1.problems.some((p) => p.id === 'coverage');
