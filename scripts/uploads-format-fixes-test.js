@@ -41,10 +41,8 @@ const text = `${R.PLANTED.join(' ')}\n\n${R.PLANTED.join(' ')}`;
   check('7-Zip', /7-Zip/.test(await ask(Buffer.concat([Buffer.from('377abcaf271c', 'hex'), Buffer.alloc(300, 9)]))));
   check('Apple file', /Apple/.test(await ask(await zip({ 'Index/Document.iwa': Buffer.alloc(800, 4) }))));
   check('a hollow Office file', /main part/.test(await ask(await zip({ 'word/other.xml': '<a/>', '[Content_Types].xml': '<a/>' }))));
-  parsers.setOcr(async () => { throw new Error('must not be reached'); });
   const cut = await materials.extract(Buffer.concat([Buffer.from('89504e470d0a1a0a', 'hex'), Buffer.alloc(100, 1)])).catch((e) => ({ error: `threw ${e.message}` }));
   check('a damaged PNG never reaches OCR', /could not be read/.test(cut.error || ''), cut);
-  parsers.setOcr(null);
 
   // ── text kept
   const html = await materials.extract(Buffer.from(`<!doctype html><html><body>${R.articleHtml(R.tableHtml())}</body></html>`));

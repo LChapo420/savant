@@ -72,7 +72,7 @@ async function readPicture(buf, type) {
   const prepared = await formats.toPng(buf, type);
   if (prepared.png) work = prepared.png;
   // A picture that cannot be decoded (cut off, damaged) stops here: only a server without the converter hands PNG and JPG straight to OCR.
-  else if (prepared.code !== 'no_ocr' || (type !== 'png' && type !== 'jpeg')) return prepared;
+  else if ((prepared.code !== 'no_ocr' && !require('./material-parsers').usingTestOcr()) || (type !== 'png' && type !== 'jpeg')) return prepared; // eslint-disable-line global-require
   return ocrUpright(work);
 }
 

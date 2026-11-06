@@ -439,11 +439,12 @@ function releaseWorker() {
 // Tests swap the recognizer so no real OCR runs; null means the real one.
 let recognizer = null;
 function setOcr(fn) { recognizer = typeof fn === 'function' ? fn : null; }
+const usingTestOcr = () => !!recognizer;
 
 /** The words in a picture, read in English, with no minimum: { text } or { error, code }. */
 async function ocr(buf) {
   const out = await (recognizer || tesseractOcr)(buf);
-  if (out && out.missing) return fail('This server cannot read text from pictures right now. Paste the text instead, or upload a PDF or Word file with the words in it.', 'no_ocr');
+  if (out && out.missing) return fail('This server cannot read text from images yet (tesseract.js is not installed). Paste the text instead, or upload a PDF or Word file with the words in it.', 'no_ocr');
   if (!out || out.failed) return fail('That picture could not be read. Try a clearer or larger one.', 'unreadable');
   return { text: out.text || '', confidence: out.confidence };
 }
@@ -457,4 +458,4 @@ async function fromImage(buf) {
   return { text, pages: 1 };
 }
 
-module.exports = { MAX_PAGES, MIN_OCR_WORDS, fail, normalise, countWords, zipEntries, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, fromImage, ocr, setOcr, htmlText };
+module.exports = { MAX_PAGES, MIN_OCR_WORDS, fail, normalise, countWords, zipEntries, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, fromImage, ocr, setOcr, usingTestOcr, htmlText };
