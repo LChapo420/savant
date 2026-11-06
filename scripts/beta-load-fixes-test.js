@@ -150,6 +150,33 @@ async function startApp(dbFile, port) {
   delete process.env.OBJ_RAPID_CACHE_MS; delete process.env.OBJ_RAPID_MIN_N;
   em.resetTypicalTimes();
 
+  console.log('the SQLite store');
+  const sqliteFile = path.join(dir, 'store.sqlite');
+  const emptyJson = path.join(dir, 'none.json');
+  const runSqlite = (code) => {
+    const r = spawnSync(process.execPath, ['-e', code], { cwd: path.join(__dirname, '..'), env: { ...process.env, NODE_ENV: 'test', DB_DRIVER: 'sqlite', DB_SQLITE_FILE: sqliteFile, DB_FILE: emptyJson, DB_SQLITE_SWEEP_MS: '200' }, encoding: 'utf8' });
+    if (r.status !== 0) console.log(r.stderr.slice(0, 400));
+    return r.stdout.trim();
+  };
+  const write1 = runSqlite(`
+    const db = require('./config/db');
+    const a = db.insert('items', { user_id: 1, n: 'a' });
+    const b = db.insert('items', { user_id: 2, n: 'b' });
+    const c = db.insert('items', { user_id: 1, n: 'c' });
+    setTimeout(() => {
+      db.update('items', b.id, { n: 'b2' });
+      db.remove('items', (r) => r.id === a.id);
+      c.n = 'changed outside the API';
+      setTimeout(() => { console.log(JSON.stringify(db.forUser('items', 1).map((r) => r.n))); process.exit(0); }, 1500);
+    }, 400);`);
+  check('a learner\'s rows through the index', write1 === '["changed outside the API"]', write1);
+  const read1 = runSqlite(`const db = require('./config/db'); console.log(JSON.stringify(db.all('items').map((r) => [r.user_id, r.n]))); process.exit(0);`);
+  check('updates, removals and a row changed outside the API all reach the file', read1 === '[[2,"b2"],[1,"changed outside the API"]]', read1);
+  const crashAfter = runSqlite(`const db = require('./config/db'); db.insert('items', { user_id: 3, n: 'd' }); setTimeout(() => process.kill(process.pid, 'SIGKILL'), 800);`);
+  void crashAfter;
+  const read2 = runSqlite(`const db = require('./config/db'); console.log(db.all('items').length); console.log(db.saveState().saving); process.exit(0);`);
+  check('a row written before a kill is there after', read2.startsWith('3'), read2);
+
   console.log('uploads in memory at once');
   const { uploadBudget, inFlightBytes } = require('../utils/upload-budget');
   const fakeRes = () => { const h = {}; const r = { code: 200, set() {}, status(c) { r.code = c; return { json() {} }; }, on(ev, fn) { h[ev] = fn; }, close() { h.close(); } }; return r; };
