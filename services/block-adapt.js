@@ -108,10 +108,11 @@ function layoutLines(spec, kind) {
 /**
  * How the lesson is opened, ordered and explained (audit gap: the hook, story, recap, why-it-matters, big-picture, rule-or-case order,
  * analogy and layout fields reached only the older lesson writer; the built-in block writer never said them). Never a fact: each line
- * moves where a thing is said, not what is said. Lessons only.
+ * moves where a thing is said, not what is said. Lessons only. OFF by default (BLOCK_APPROACH=on turns it on): the 6 Nov blind proof did not
+ * beat chance (docs/MODIFICATION-AUDIT.md section 6), so by the sprint rule it is not on until its gate passes.
  */
 function approachLines(spec, kind) {
-  if (kind !== 'lesson' || String(process.env.BLOCK_APPROACH || 'on').toLowerCase() === 'off') return [];
+  if (kind !== 'lesson' || String(process.env.BLOCK_APPROACH || 'off').toLowerCase() !== 'on') return [];
   const l = spec.lesson; const e = spec.explain; const out = [];
   if (l.hook === 'question') out.push('Open the first block with one curiosity question that the lesson then answers.');
   else if (l.hook === 'scenario') out.push('Open the first block with a two-sentence concrete scenario that the idea resolves.');

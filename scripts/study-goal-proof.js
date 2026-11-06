@@ -34,7 +34,7 @@ const { base, installWriter, cache, sha } = P;
 // large cap as scripts/lib/extreme-tailor.js (--judge-max, 24000). Every judge call is retried on an empty or failed reply, and a pair whose
 // answers or grades still cannot be read is dropped as UNSCORED (reported), never counted as a zero.
 const JUDGE_MAX = Number(arg('judge-max', 24000));
-const withRetry = (j) => ({ ...j, call: async (s, u) => { let last; for (let k = 0; k < 3; k++) { try { const t = await j.call(s, u); if (String(t || '').trim()) return t; last = new Error(`${j.id} returned no text`); } catch (e) { last = e; } } throw last; } });
+const withRetry = (j) => ({ ...j, call: async (s, u) => { let last; for (let k = 0; k < 3; k++) { try { const t = await j.call(s, u); if (String(t || '').trim() && jsonOf(t)) return t; /* an unreadable reply is asked again */ last = new Error(`${j.id} returned no text`); } catch (e) { last = e; } } throw last; } });
 const bigCap = (j) => (j.id !== 'z-ai/glm-5.3' ? j : { ...j, call: async (s, u) => {
   process.env.LYCEUM_PIPELINE = '1';
   process.env.LYCEUM_LEDGER_FILE = process.env.LYCEUM_LEDGER_FILE || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/lyceum-ledger.json';
@@ -53,8 +53,33 @@ const mean = (a) => (a.length ? a.reduce((s, v) => s + v, 0) / a.length : NaN);
 const pct = (a, p) => { const s = a.slice().sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.floor(p * s.length))] : NaN; };
 const words = (t) => (String(t).match(/[A-Za-zÀ-ÿ'-]+/g) || []).length;
 const SUBJECTS = ['math', 'english', 'iq', 'spanish'];
-const jsonOf = (t) => { try { const m = String(t || '').match(/\{[\s\S]*\}/); return m ? JSON.parse(m[0]) : null; } catch { return null; } };
+// The last balanced {...} in a reply that parses (models sometimes add prose, a code fence or a second object).
+const jsonOf = (t) => {
+  const str = String(t || ''); const found = [];
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] !== '{') continue;
+    let depth = 0; let inStr = false;
+    for (let k = i; k < str.length; k++) {
+      const ch = str[k];
+      if (inStr) { if (ch === '\\') k++; else if (ch === '"') inStr = false; continue; }
+      if (ch === '"') inStr = true; else if (ch === '{') depth++; else if (ch === '}' && --depth === 0) { try { found.push(JSON.parse(str.slice(i, k + 1))); } catch { /* not json */ } i = k; break; }
+    }
+  }
+  return found.length ? found[found.length - 1] : null;
+};
 
+// A grader's verdicts as n booleans, whatever shape it replied in ({correct:[..]}, {results:[true | {match|correct:true}]}, a bare list, or cut-off JSON).
+// Falls back to the n true/false words in the reply; null (the pair is UNSCORED) when it cannot be read as exactly n verdicts.
+const gradesOf = (raw, n) => {
+  const t = String(raw || '');
+  const asBool = (v) => (typeof v === 'boolean' ? v : (v && typeof v === 'object' ? [v.correct, v.match, v.matches, v.result, v.is_correct, v.grade].find((x) => typeof x === 'boolean') : undefined));
+  const tryList = (l) => { if (!Array.isArray(l) || l.length !== n) return null; const b = l.map(asBool); return b.every((x) => typeof x === 'boolean') ? b : null; };
+  const o = jsonOf(t);
+  if (o) { for (const v of [o.correct, o.results, o.verdicts, o.grades, o.answers, ...Object.values(o)]) { const r = tryList(v); if (r) return r; } }
+  try { const m = t.match(/\[[\s\S]*\]/); if (m) { const r = tryList(JSON.parse(m[0])); if (r) return r; } } catch { /* fall through */ }
+  const words = t.match(/(true|false)/gi) || [];
+  return words.length === n ? words.map((w) => w.toLowerCase() === 'true') : null;
+};
 function pickCell(subject, i) {
   const list = T.CELLS[subject];
   for (let k = 0; k < list.length; k++) {
@@ -84,14 +109,12 @@ async function writeVersion(L, cell, subject, variant) {
   const user = base.makeUser({ name: L.id.replace(/[^a-z0-9]/gi, ''), age: L.age, survey: T.surveyFor(L, subject), stats: L.traits, esl: L.ell });
   const goal = variant === 'core' ? { goal: 'core', restored: [], set_on: '2026-11-05' } : undefined;
   db.insert('enrollments', { user_id: user.id, track_id: cell.trackId, grade_id: cell.gradeId, target_level: 300, current_level: cell.level, level_items: 0, levels_completed: 0, xp: 0, status: 'active', placed_at: new Date().toISOString(), ...(goal ? { study_goal: goal } : {}) });
-  const prevOff = process.env.BLOCK_APPROACH;
-  if (variant === 'approach-off') process.env.BLOCK_APPROACH = 'off';
   let plan;
   try {
     for (let k = 0; k < 3 && !(plan && plan.blocks); k++) { // the writer sometimes returns an unusable or cut-off reply: write again (up to 3 tries)
       try { plan = await blockLevels.write({ userId: user.id, trackId: cell.trackId, gradeId: cell.gradeId, level: cell.level, tailored: true }); } catch { plan = null; }
     }
-  } finally { if (prevOff === undefined) delete process.env.BLOCK_APPROACH; else process.env.BLOCK_APPROACH = prevOff; }
+  } catch { plan = null; }
   if (!plan || !plan.blocks) return { error: `no level written for ${L.id}` };
   const a = { text: render(plan), words: teachWords(plan), checks: plan.checks.length }; cache.set(ck, a); return a;
 }
@@ -121,9 +144,10 @@ async function coreItem(L, i) {
     if (!ans || !Array.isArray(ans.answers)) return { error: 'unscored: answers unreadable' };
     answerable[name] = [];
     for (const j of JUDGES) {
-      const g = jsonOf(await j.call('You grade answers against a key. Reply with JSON only.', `For each item say whether the ANSWER matches the KEY in substance (true/false). "NOT IN LESSON" is false.\n${qs.list.map((x, k) => `${k + 1}. KEY: ${x.a} | ANSWER: ${ans.answers[k] || 'NOT IN LESSON'}`).join('\n')}\nJSON: {"correct":[true,false]}`));
-      if (!g || !Array.isArray(g.correct)) return { error: 'unscored: grades unreadable' };
-      answerable[name].push(g.correct.filter(Boolean).length / qs.list.length);
+      const raw = await j.call('You grade answers against a key. Reply with JSON only.', `For each item say whether the ANSWER matches the KEY in substance (true/false). "NOT IN LESSON" is false.\n${qs.list.map((x, k) => `${k + 1}. KEY: ${x.a} | ANSWER: ${ans.answers[k] || 'NOT IN LESSON'}`).join('\n')}\nJSON: {"correct":[true,false]}`);
+      const g = gradesOf(raw, qs.list.length);
+      if (!g) return { error: `unscored: grades unreadable (${j.family}: ${String(raw).replace(/\s+/g, ' ').slice(0, 160)})` };
+      answerable[name].push(g.filter(Boolean).length / qs.list.length);
     }
   }
   // 3. blind: which version is for the learner who wants only the core parts fast; one in four pairs is two copies of the same version (must be TIE)
@@ -136,7 +160,7 @@ async function coreItem(L, i) {
 
 async function approachItem(L, i) {
   const subject = SUBJECTS[i % SUBJECTS.length]; const cell = pickCell(subject, i + 1); if (!cell) return { error: 'no cell' };
-  const off = await writeVersion(L, cell, subject, 'approach-off'); const on = await writeVersion(L, cell, subject, 'full');
+  const off = await writeVersion(L, cell, subject, 'approach-off'); const on = await writeVersion(L, cell, subject, 'approach-on');
   if (off.error || on.error) return { error: off.error || on.error };
   const planted = i % 5 === 4; const flip = sha(`${L.id}a${i}`).charCodeAt(0) % 2 === 0;
   const v1 = planted ? on.text : (flip ? on.text : off.text); const v2 = planted ? on.text : (flip ? off.text : on.text);
@@ -148,6 +172,15 @@ async function approachItem(L, i) {
 (async () => {
   installWriter();
   const learners = X.generate(SEED, N, {});
+  // The approach switch is a process-wide env var: write every 'off' version first with it off, then every 'on' version with it on (never both at
+  // once: the 5 Nov run set it per call under concurrency, so its pairs may have been mixed). Core mode runs the shipping default (off).
+  process.env.BLOCK_APPROACH = 'off';
+  if (MODE === 'approach') {
+    const cellOf = (L, i) => { const subject = SUBJECTS[i % SUBJECTS.length]; return { subject, cell: pickCell(subject, i + 1) }; };
+    await pool(learners, async (L, i) => { const { subject, cell } = cellOf(L, i); return cell ? writeVersion(L, cell, subject, 'approach-off') : null; });
+    process.env.BLOCK_APPROACH = 'on';
+    await pool(learners, async (L, i) => { const { subject, cell } = cellOf(L, i); return cell ? writeVersion(L, cell, subject, 'approach-on') : null; });
+  }
   const rows = (await pool(learners, MODE === 'core' ? coreItem : approachItem)).map((r, i) => ({ i, ...r }));
   const good = rows.filter((r) => !r.error);
   const summary = { mode: MODE, label: 'SIMULATED learners, AI-judged; not a result on real people', n: N, ok: good.length, unscored_or_failed: rows.filter((r) => r.error).length, errors: rows.filter((r) => r.error).map((r) => r.error).slice(0, 8), writer: P.WRITER, judges: JUDGES.map((j) => `${j.id} (${j.family})`) };
