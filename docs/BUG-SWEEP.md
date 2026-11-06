@@ -35,6 +35,10 @@ The app was in better shape than expected. The page crawl found no console error
 - The walk's uploads flow waited 261 s for notes and 135 s for the study pack on opening, and the "build the learning path" step was still `building` after 421 s. The models in the test run (free NVIDIA tier answering 429, 450 s layout calls) were the cause, not the app; `services/pool.js` and the course builder belong to other agents. Worth a look at pool timeouts when the free tier is saturated.
 - `scripts/learner-walk.js` fails its register steps once an hour's 10 registrations are used (the crawl and the walk share one address); restart the server between runs, as its header says.
 
+## Tests
+
+`npm test` run in three parts (it stops at the first failure): steps 0-134 passed; step 135, `tutor-screen-test.js`, failed because its fake `fetch` did not know the new `/api/auth/me` call from bug 1's fix. That stub was stale, not the test's intent, so it now answers `/api/auth/me` as a signed-in learner (the only test edit); steps 135-190 then passed. The last two parts were run through a temporary slice of `scripts/test-steps.json`, restored afterwards (no diff).
+
 ## Spend
 
 Free models only. The Anthropic key was reached twice by the fact-check step of the upload flow (about $0.05 in all, through the ledger; the run cap was $1).

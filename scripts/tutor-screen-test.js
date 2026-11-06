@@ -171,6 +171,7 @@ function serve(router) {
   win.speechSynthesis = { cancel() {}, speak() {} };
   win.fetch = async (url, init) => {
     sent.push({ url, init });
+    if (/\/api\/auth\/me/.test(url)) return { ok: true, json: async () => ({ user: { id: 1 } }) }; // signed in: the dock checks before it starts
     if (/\/dock\?path/.test(url)) return { ok: true, json: async () => ({ mode: 'full', input_mode: 'voice', speech_lang: 'en' }) };
     if (/dock\/mode/.test(url)) return { ok: true, json: async () => ({}) };
     return { ok: true, json: async () => ({ reply: 'Try the common denominator.' }) };
