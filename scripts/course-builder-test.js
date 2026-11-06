@@ -294,7 +294,7 @@ function mockLlm(mode = 'good') {
   check('short mode is off by default and its switch exists', cb.isShort() === false && typeof cb.setShort === 'function');
   check('short mode is off by default and has its switch', cb.isShort() === false && typeof cb.setShort === 'function');
   check('short mode: the lesson budget is relative to the source, has no inflating floor, and an over-budget lesson is sent back once to be shortened', /LESSON_FLOOR = 25/.test(cbSrc) && /material_shorten/.test(cbSrc) && cbSrc.includes('ownWords(skill, passageById, ctx)'));
-  check('the fact sweep checks source sentences with a number, name or definition against the lesson and adds what is missing within 0.8x the source', /SWEEP_CAP = 0\.8/.test(cbSrc) && /material_sweep/.test(cbSrc) && /factSweep\(skills, passageById, ctx/.test(cbSrc));
+  check('the fact sweep checks source sentences with a number, name or definition against the lesson and adds what is missing within 0.8x the source', /SWEEP_CAP = Number\(process\.env\.UPLOAD_SWEEP_CAP\) \|\| 0\.8/.test(cbSrc) && /material_sweep/.test(cbSrc) && /factSweep\(skills, passageById, ctx/.test(cbSrc));
   check('no provider name or paid call in the builder', !/openrouter|anthropic|nvidia|fetch\(/i.test(read('services/course-builder.js').replace(/^\s*\*.*$/gm, '').replace(/\/\/.*$/gm, '')));
   check('the sealed Spanish files are untouched by this slice', !/spanish-check/.test(src));
   check('the tutor reads the collection', /material_courses/.test(read('services/tutor-context.js')));
