@@ -257,11 +257,11 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
  *
  * @returns {Promise<{data: object, usage: object|null, model: string}|null>}
  */
-async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies }) {
+async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, onText, temperature }) {
   const result = await withProviders(userId, (p) =>
     p.structured({ role, task, system, user, schema, schemaName, maxTokens, effort, lane, think }), role, task,
-  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies });
-  return result ? { data: result.data, usage: result.usage || null, model: result.model || null } : null;
+  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, ...(onText ? { onText } : {}), ...(temperature != null ? { temperature } : {}) });
+  return result ? { data: result.data, usage: result.usage || null, model: result.model || null, ...(result.stopped ? { stopped: true } : {}) } : null;
 }
 
 /**

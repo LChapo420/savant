@@ -1683,12 +1683,22 @@ function factParts({ blocks, checks }) {
   return parts;
 }
 
+/**
+ * A part's read with what the learner has already read given as context (services/first-block.js): the same request, the earlier blocks named as context only.
+ * A later block can use a value or result stated earlier, which a read of that block alone cannot judge (docs/FIRST-LESSON.md, cold write).
+ */
+function partContextPrompt(user, earlierBlocks) {
+  if (!earlierBlocks || !earlierBlocks.length) return user;
+  const before = earlierBlocks.map((b) => `EARLIER BLOCK ${b.index} ${b.block}: ${JSON.stringify(b.data)}`).join('\n');
+  return `${user}\n\nCONTEXT ONLY, already checked, what the learner has read before this part. Do not list claims from it, and flag a claim above as false if it disagrees with this:\n${before}`;
+}
+
 /** The verification request (system, user, schema), for the verifier and for measuring others. */
 function verifyRequest({ context, blocks, checks, factSheet = null }) {
   return { system: VERIFY_SYSTEM + (FACT_NOTES[context.trackId] || ''), user: verifyPrompt({ context, blocks, checks, factSheet }), schema: VERIFY_SCHEMA };
 }
 
-async function verifyLevel({ context, blocks, checks, factSheet = null, userId = null, where = null, reader = null, excludeFamilies = null }) {
+async function verifyLevel({ context, blocks, checks, factSheet = null, userId = null, where = null, reader = null, excludeFamilies = null, earlier = null }) {
   // The cascade (services/fact-cascade.js): cheap and local checks on everything,
   // Sonnet only on what they flag. Opt-in (FACT_PIPELINE=cascade); see cascadeOn.
   if (where && cascadeOn()) {
@@ -1696,7 +1706,7 @@ async function verifyLevel({ context, blocks, checks, factSheet = null, userId =
     return require('./fact-cascade').cascadeVerify({ context, blocks, checks, factSheet, ...where });
   }
   const { system, user: plain } = verifyRequest({ context, blocks, checks, factSheet });
-  let user = plain;
+  let user = earlier ? partContextPrompt(plain, earlier) : plain;
   // Thorough mode: the free checks run first, and Sonnet rules on what they flagged
   // as well as reading every claim itself (services/fact-cascade.js hintFlags).
   let hints = null;
@@ -1815,7 +1825,7 @@ This time list and verify ONLY the claims in ${part} (use the rest of the level 
  * Round 0 reads the whole level; each later round reads only what was repaired.
  * Two repair rounds at most; what is still flagged after them is dropped.
  */
-async function verifyAndRepair({ context, blocks, items, specs, validateBlock, owner = null, factSheet = null, coverage = [], where = null, excludeFamilies = null }) {
+async function verifyAndRepair({ context, blocks, items, specs, validateBlock, owner = null, factSheet = null, coverage = [], where = null, excludeFamilies = null, earlier = null }) {
   // Two repairs by GLM (at high effort: a careless repair brings new errors), then,
   // with the owner's key, a third by Claude for what GLM could not fix. Taking a
   // part out is the last resort: measured on 2026-10-21, a basketball level lost
@@ -1856,7 +1866,7 @@ async function verifyAndRepair({ context, blocks, items, specs, validateBlock, o
       if (!toRead.blocks.length && !toRead.checks.length) break;
       // eslint-disable-next-line no-await-in-loop
       // The slow local checkers run on the first full read only; later reads have Sonnet and the cheap reads.
-      const ask = (who) => verifyLevel({ context, blocks: toRead.blocks, checks: toRead.checks, factSheet, userId: owner, where: where && { ...where, localChecks: round === 0 }, reader: who, excludeFamilies })
+      const ask = (who) => verifyLevel({ context, blocks: toRead.blocks, checks: toRead.checks, factSheet, userId: owner, where: where && { ...where, localChecks: round === 0 }, reader: who, excludeFamilies, earlier })
         .catch((err) => { console.warn(`facts: verification failed (${err.message})`); return null; });
       // eslint-disable-next-line no-await-in-loop
       let v = await ask(reader);
@@ -3134,7 +3144,7 @@ module.exports = {
   cleanCheck,
   // Making a level factual.
   researchFacts,
-  verifyRequest, verifyLevel, factParts, factPartsOn, factPartStats, reuseStats,
+  verifyRequest, verifyLevel, factParts, factPartsOn, factPartStats, reuseStats, partContextPrompt,
   VERIFY_SCHEMA,
   verifyAndRepair,
   verifyStored,

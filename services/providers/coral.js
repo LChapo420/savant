@@ -88,6 +88,85 @@ async function post(body, timeoutMs, { signal = null, task = null } = {}) {
   }
 }
 
+/**
+ * The same request streamed (COLD_FIRST_BLOCK, services/first-block.js): `onText(textSoFar, { model })` sees the reply as it grows. It may return 'stop' (the caller has what it
+ * wanted: the stream ends and what came is returned, marked `stopped`) or a string reason (the reply has derailed: thrown as an unusable reply, so nobody waits out a loop to
+ * the output cap). The answer has the same shape as post()'s. An ended stream's usage is the API's own, or, when it was cut short, counted from the characters received (about 4 to a token).
+ */
+async function postStream(body, timeoutMs, { signal = null, task = null, onText }) {
+  if (!KEY() || !BASE()) throw Object.assign(new Error('coral: no key'), { status: 403 });
+  const inputChars = (body.messages || []).reduce((n, m) => n + String(m.content || '').length, 0);
+  if (!pipelineOptIn() && !learnerOn()) throw Object.assign(new Error('coral: pipeline use only (CORAL_PIPELINE=1 not set)'), { status: 403 });
+  const id = ledger.reserve({ usd: ledger.estimate({ model: body.model, inputChars, maxTokens: body.max_tokens }), task, model: body.model });
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  const onAbort = () => ctrl.abort();
+  if (signal) { if (signal.aborted) ctrl.abort(); else signal.addEventListener('abort', onAbort, { once: true }); }
+  let settled = false;
+  const settleOnce = (args) => { if (!settled) { settled = true; ledger.settle(id, args); } };
+  let text = '';
+  let usage = null;
+  let finish = null;
+  const estimated = () => ({ input_tokens: Math.ceil(inputChars / 4), output_tokens: Math.ceil(text.length / 4) });
+  try {
+    const res = await fetchImpl(`${BASE()}/chat/completions`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${KEY()}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...body, stream: true, stream_options: { include_usage: true } }),
+      signal: ctrl.signal,
+    });
+    if (!res.ok) {
+      const errText = await res.text().catch(() => '');
+      settleOnce({ outcome: 'not_billed' });
+      throw Object.assign(new Error(`coral ${res.status}: ${errText.slice(0, 200)}`), { status: res.status });
+    }
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let verdict = null;
+    for await (const chunk of res.body) {
+      buffer += decoder.decode(chunk, { stream: true });
+      let nl = buffer.indexOf('\n');
+      while (nl >= 0) {
+        const line = buffer.slice(0, nl).trim();
+        buffer = buffer.slice(nl + 1);
+        nl = buffer.indexOf('\n');
+        if (line.startsWith('data:') && line.slice(5).trim() !== '[DONE]') {
+          let j = null;
+          try { j = JSON.parse(line.slice(5).trim()); } catch { j = null; }
+          if (j) {
+            if (j.usage) usage = { input_tokens: j.usage.prompt_tokens || 0, output_tokens: j.usage.completion_tokens || 0 };
+            const choice = j.choices && j.choices[0];
+            if (choice && choice.finish_reason) finish = choice.finish_reason;
+            const delta = choice && choice.delta && choice.delta.content;
+            if (delta) {
+              text += delta;
+              const said = onText(text, { model: body.model });
+              if (said) verdict = said;
+            }
+          }
+        }
+      }
+      if (verdict) break;
+    }
+    if (verdict) ctrl.abort();
+    const used = usage || estimated();
+    settleOnce({ usd: ledger.costOf(body.model, used), outcome: 'ok', usage: used });
+    if (verdict && verdict !== 'stop') throw Object.assign(new Error(`coral: ${body.model} derailed (${String(verdict).slice(0, 80)})`), { status: 422, unusable: true, derailed: true, usage: used });
+    return { payload: { choices: [{ message: { content: text }, finish_reason: finish }] }, usage: used, stopped: verdict === 'stop' };
+  } catch (err) {
+    settleOnce({ outcome: 'unknown' });
+    if (err.name === 'AbortError') {
+      const aborted = !!(signal && signal.aborted);
+      throw Object.assign(new Error(aborted ? 'coral: aborted' : `coral: timed out after ${Math.round(timeoutMs / 1000)}s`), { status: 0, timeout: !aborted, aborted });
+    }
+    if (err.status === undefined) err.status = 0;
+    throw err;
+  } finally {
+    clearTimeout(timer);
+    if (signal) signal.removeEventListener('abort', onAbort);
+  }
+}
+
 const reasoning = (effort) => (effort === 'high' || effort === 'max' || effort === 'medium' ? { reasoning_effort: effort === 'max' ? 'high' : effort } : {});
 
 const coralProvider = {
@@ -114,6 +193,8 @@ const coralProvider = {
    * itself; replay of 12 real prompts: 3 usable at temperature 0 against 8 with one warm retry) before the pool moves on to a slow slot. CORAL_WARM_RETRY=off restores the old single try at 32768.
    */
   structured(args) {
+    // A streamed fill (COLD_FIRST_BLOCK): one try here. The caller keeps the blocks that already came and asks for the rest, rather than this call starting them all over.
+    if (args && typeof args.onText === 'function') return this.structuredOnce(args);
     const warm = String(process.env.CORAL_WARM_RETRY || 'on').toLowerCase() !== 'off';
     if (!warm) return sj.withLengthRetry((a) => this.structuredOnce(a), args);
     const first = args && args.task === 'block_fill' ? Math.min(Number(args.maxTokens) || 2048, Number(process.env.CORAL_FIRST_MAX_TOKENS || 9000)) : args.maxTokens;
@@ -129,16 +210,18 @@ const coralProvider = {
     }
   },
 
-  async structuredOnce({ task = null, system, user, schema, schemaName = 'submit', maxTokens = 2048, effort = null, timeoutMs = null, signal = null, model: wanted = null, temperature = 0 }) {
+  async structuredOnce({ task = null, system, user, schema, schemaName = 'submit', maxTokens = 2048, effort = null, timeoutMs = null, signal = null, model: wanted = null, temperature = 0, onText = null }) {
     const model = modelOf(wanted);
     const messages = [
       { role: 'system', content: `${system || ''}\n\nReply with one JSON object only (no prose, no code fence) matching this JSON schema (${schemaName}):\n${JSON.stringify(schema)}`.trim() },
       { role: 'user', content: String(user || '') },
     ];
-    const { payload, usage } = await post(
-      { model, messages, max_tokens: sj.outputBudget(maxTokens, effort), temperature, response_format: { type: 'json_object' }, ...reasoning(effort) },
-      timeoutMs || Number(process.env.CORAL_TIMEOUT_MS) || 180000, { signal, task },
-    );
+    const body = { model, messages, max_tokens: sj.outputBudget(maxTokens, effort), temperature, response_format: { type: 'json_object' }, ...reasoning(effort) };
+    const limit = timeoutMs || Number(process.env.CORAL_TIMEOUT_MS) || 180000;
+    const sent = onText ? await postStream(body, limit, { signal, task, onText }) : await post(body, limit, { signal, task });
+    const { payload, usage } = sent;
+    // Stopped on purpose after what the caller wanted (a prewrite's first block): the rest of the reply was never written, so it is not read as an answer.
+    if (sent.stopped) return { data: { blocks: [], checks: [] }, stopped: true, usage: { ...usage, cost_usd: ledger.costOf(model, usage) }, model, tier: 'coral' };
     const msg = payload.choices && payload.choices[0] && payload.choices[0].message;
     const parsed = sj.parseStructured(msg, schemaName);
     const checked = parsed.data !== undefined ? sj.validate(schema, parsed.data) : null;

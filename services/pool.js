@@ -361,7 +361,7 @@ function effortHint(effort) {
 function chainArgs(req, kind, ctx, extra = {}) {
   const base = kind === 'chat'
     ? { role: req.role, task: req.task, system: req.system, messages: req.messages, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, ...(req.temperature != null ? { temperature: req.temperature } : {}) }
-    : { role: req.role, task: req.task, system: req.system, user: req.user, schema: req.schema, schemaName: req.schemaName, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, think: req.think };
+    : { role: req.role, task: req.task, system: req.system, user: req.user, schema: req.schema, schemaName: req.schemaName, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, think: req.think, ...(req.onText ? { onText: req.onText } : {}), ...(req.temperature != null ? { temperature: req.temperature } : {}) };
   return { ...base, timeoutMs: ctx.timeoutMs, signal: ctx.signal, ...extra };
 }
 
