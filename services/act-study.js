@@ -56,7 +56,7 @@ function cleanJoin(body) {
 }
 
 function getEntry(userId) {
-  return db.findOne('act_study', (r) => r.user_id === userId && !r.left_at) || null;
+  return (db.forUser('act_study', userId).find((r) => !r.left_at) || null) || null;
 }
 
 function join(userId, value, now = Date.now()) {

@@ -54,7 +54,7 @@ function cleanJoin(body) {
   return { value: { age_group: b.age_group, parent_aware: b.age_group === 'teen', no_recent_spanish: true } };
 }
 
-const getEntry = (userId) => db.findOne('spanish_study', (r) => r.user_id === userId && !r.left_at) || null;
+const getEntry = (userId) => (db.forUser('spanish_study', userId).find((r) => !r.left_at) || null) || null;
 
 /** Join and be assigned. `beaconFn` is injectable so tests never touch the network. */
 async function join(userId, value, { now = Date.now(), beaconFn = () => external.fetchBeacon() } = {}) {
@@ -94,7 +94,7 @@ function checkin(userId, body, now = Date.now()) {
   const minutes = Number(body && body.minutes);
   if (!Number.isFinite(minutes) || minutes < 0 || minutes > MAX_DAY_MINUTES) return { error: `Minutes must be between 0 and ${MAX_DAY_MINUTES}.`, status: 400 };
   const shot = body && body.screenshot === true;
-  const prior = db.findOne('spanish_study_checkins', (r) => r.user_id === userId && r.day === day);
+  const prior = (db.forUser('spanish_study_checkins', userId).find((r) => r.day === day) || null);
   const row = { user_id: userId, day, minutes: Math.round(minutes), screenshot: shot, created_at: new Date(now).toISOString() };
   return { value: prior ? db.update('spanish_study_checkins', prior.id, row) : db.insert('spanish_study_checkins', row) };
 }
@@ -104,7 +104,7 @@ function recordTest(userId, { test, phase, correct, n, chance, taken_at }) {
   if (!TESTS.includes(test) || !PHASES.includes(phase)) throw new Error('bad test or phase');
   if (!Number.isInteger(correct) || !Number.isInteger(n) || n <= 0 || correct < 0 || correct > n) throw new Error('bad score');
   if (!(chance >= 0 && chance < 1)) throw new Error('bad chance rate');
-  const prior = db.findOne('spanish_study_tests', (r) => r.user_id === userId && r.test === test && r.phase === phase);
+  const prior = (db.forUser('spanish_study_tests', userId).find((r) => r.test === test && r.phase === phase) || null);
   if (prior) return prior;   // one sitting per test per phase: a repeat never overwrites
   return db.insert('spanish_study_tests', { user_id: userId, test, phase, correct, n, chance, taken_at: taken_at || new Date().toISOString() });
 }
@@ -157,18 +157,18 @@ function minSamplePerArm(sdv, delta) {
 function minutesFor(e) {
   const w = windowOf(e);
   if (e.arm === 'savant') {
-    const rows = db.find('study_sessions', (s) => s.user_id === e.user_id && s.started_at && s.started_at.slice(0, 10) >= w.from && s.started_at.slice(0, 10) <= w.to);
+    const rows = db.forUser('study_sessions', e.user_id).filter((s) => s.started_at && s.started_at.slice(0, 10) >= w.from && s.started_at.slice(0, 10) <= w.to);
     const days = new Set(rows.map((s) => s.started_at.slice(0, 10)));
     return { minutes: Math.round(rows.reduce((t, s) => t + (s.active_ms || 0), 0) / 60000), days_with_study: days.size, source: 'app clock', screenshots: null };
   }
-  const rows = db.find('spanish_study_checkins', (r) => r.user_id === e.user_id);
+  const rows = db.forUser('spanish_study_checkins', e.user_id).slice();
   return { minutes: rows.reduce((t, r) => t + r.minutes, 0), days_with_study: rows.filter((r) => r.minutes > 0).length, source: 'self-report', screenshots: rows.filter((r) => r.screenshot).length };
 }
 
 /** Gain on one test (post minus pre, chance-corrected), or null if either sitting is missing. */
 function gainOn(userId, test) {
-  const pre = db.findOne('spanish_study_tests', (r) => r.user_id === userId && r.test === test && r.phase === 'pre');
-  const post = db.findOne('spanish_study_tests', (r) => r.user_id === userId && r.test === test && r.phase === 'post');
+  const pre = (db.forUser('spanish_study_tests', userId).find((r) => r.test === test && r.phase === 'pre') || null);
+  const post = (db.forUser('spanish_study_tests', userId).find((r) => r.test === test && r.phase === 'post') || null);
   return pre && post ? corrected(post) - corrected(pre) : null;
 }
 
@@ -246,8 +246,8 @@ function mine(userId, now = Date.now()) {
   const e = getEntry(userId);
   if (!e) return { joined: false };
   const w = windowOf(e);
-  const tests = db.find('spanish_study_tests', (r) => r.user_id === userId).map((t) => ({ test: t.test, phase: t.phase }));
-  const checkins = e.arm === 'duolingo' ? db.find('spanish_study_checkins', (r) => r.user_id === userId).map((r) => ({ day: r.day, minutes: r.minutes, screenshot: r.screenshot })) : undefined;
+  const tests = db.forUser('spanish_study_tests', userId).slice().map((t) => ({ test: t.test, phase: t.phase }));
+  const checkins = e.arm === 'duolingo' ? db.forUser('spanish_study_checkins', userId).slice().map((r) => ({ day: r.day, minutes: r.minutes, screenshot: r.screenshot })) : undefined;
   return { joined: true, arm: e.arm, start_date: w.from, end_date: w.to, days: DAYS, daily_minutes: DAILY_MINUTES, today: isoDay(now), tests_done: tests, checkins };
 }
 

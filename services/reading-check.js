@@ -121,9 +121,9 @@ function pickNext(row, theta) {
 
 // ── the slots: when a check is offered ───────────────────────────────────────
 function levelsDone(userId) {
-  return db.find('enrollments', (e) => e.user_id === userId).reduce((n, e) => n + (e.levels_completed || 0), 0);
+  return db.forUser('enrollments', userId).slice().reduce((n, e) => n + (e.levels_completed || 0), 0);
 }
-const rowsOf = (userId) => db.find('reading_checks', (r) => r.user_id === userId);
+const rowsOf = (userId) => db.forUser('reading_checks', userId).slice();
 const usedSlots = (userId) => rowsOf(userId).filter((r) => r.status === 'done' || r.status === 'declined').length;
 
 /** { offer: 'onboarding' | 'periodic' | null, taken, last } for the screens that offer it. */

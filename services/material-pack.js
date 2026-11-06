@@ -248,7 +248,7 @@ async function buildPart(part, ctx) {
 }
 
 function row(userId, materialId) {
-  return db.findOne('material_packs', (c) => c.user_id === userId && c.material_id === Number(materialId));
+  return (db.forUser('material_packs', userId).find((c) => c.material_id === Number(materialId)) || null);
 }
 
 /**
@@ -380,7 +380,7 @@ function forLearner(userId, materialId, now = Date.now()) {
   const p = row(userId, materialId);
   if (!p) return null;
   const course = courses.get(userId, materialId);
-  const prog = db.findOne('material_progress', (r) => r.user_id === userId && r.material_id === Number(materialId));
+  const prog = (db.forUser('material_progress', userId).find((r) => r.material_id === Number(materialId)) || null);
   const known = new Set(course ? adapt.plan(course, prog, now).skipped : []);
   const skillOf = (pid) => { const s = ((course && course.skills) || []).find((x) => (x.passage_ids || []).includes(pid)); return s ? s.id : null; };
   const ids = new Set();

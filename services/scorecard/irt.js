@@ -328,7 +328,7 @@ function attempt({ userId, skillId, state, itemId, difficulty, latencyMs, correc
  * context on the same skill from the last two minutes.
  */
 function contextFor(userId, item) {
-  const card = db.findOne('scorecards', (r) => r.user_id === userId);
+  const card = (db.forUser('scorecards', userId)[0] || null);
   if (!card || !card.ability || !item) return null;
   const recent = (card.ability.recent || []).map(unpack);
   // A block level's check is recorded under "block:<plan>:<check>" (block-levels.js answerCheck).
@@ -358,7 +358,7 @@ function contextsFor(userId, items) {
 
 /** The learner's current ability on a skill, in logits (theta + d), for reports. */
 function abilityOn(userId, skillState) {
-  const card = db.findOne('scorecards', (r) => r.user_id === userId);
+  const card = (db.forUser('scorecards', userId)[0] || null);
   return ((card && card.ability && card.ability.theta) || 0) + ((skillState && skillState.elo && skillState.elo.d) || 0);
 }
 

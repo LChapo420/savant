@@ -740,7 +740,7 @@ function learnerText(userId, where, { tailored, experiment }) {
   // eslint-disable-next-line global-require
   const adaptation = require('./adaptation');
   if (adaptation.mode() === 'on') {
-    const enrollment = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === where.trackId && e.grade_id === where.gradeId);
+    const enrollment = (db.forUser('enrollments', userId).find((e) => e.track_id === where.trackId && e.grade_id === where.gradeId) || null);
     const lines = adaptation.promptLines(enrollment ? adaptation.planForLevel({ userId, enrollment, level: where.level }) : null);
     if (lines.length) text = `${text}\n${lines.join('\n')}`;
   }
@@ -2930,7 +2930,7 @@ function servedPlan(user, trackId, gradeId, level) {
  */
 function checkItems(user, plan) {
   const out = {};
-  const existing = db.find('items', (i) => i.user_id === user.id && i.plan_id === plan.id && i.check_id);
+  const existing = db.forUser('items', user.id).filter((i) => i.plan_id === plan.id && i.check_id);
   for (const check of plan.checks || []) {
     let item = existing.find((i) => i.check_id === check.id);
     if (!item) {

@@ -1769,7 +1769,7 @@ function chooseGrade(userId, trackId, gradeId) {
   if (!gradeIds.includes(String(gradeId || ''))) return { error: 'That grade is not part of this subject.', status: 400 };
   const grade = curriculum.getGrade(trackId, gradeId);
   if (!grade) return { error: 'That grade is not available.', status: 400 };
-  let enrollment = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === trackId && e.grade_id === gradeId);
+  let enrollment = (db.forUser('enrollments', userId).find((e) => e.track_id === trackId && e.grade_id === gradeId) || null);
   const created = !enrollment;
   if (!enrollment) {
     enrollment = db.insert('enrollments', {

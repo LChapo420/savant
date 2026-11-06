@@ -790,7 +790,7 @@ const missedEntry = (win, windows, total, reason) => ({ part: win.n, of: windows
 function res_stopped(r) { return !!(r && r.stopped); }
 
 function row(userId, materialId) {
-  return db.findOne('material_courses', (c) => c.user_id === userId && c.material_id === Number(materialId));
+  return (db.forUser('material_courses', userId).find((c) => c.material_id === Number(materialId)) || null);
 }
 
 /**

@@ -46,7 +46,7 @@ function objectiveItems(trackId, gradeId) {
 /** Everything this learner has been asked on these skills, so a review does not repeat a recent question. */
 function askedBefore(userId, skills) {
   const wanted = new Set(skills);
-  return new Set(db.find('items', (i) => i.user_id === userId && wanted.has(i.skill_id)).slice(-600).map((i) => bank.itemKey(i)));
+  return new Set(db.forUser('items', userId).filter((i) => wanted.has(i.skill_id)).slice(-600).map((i) => bank.itemKey(i)));
 }
 
 /** One question on one objective: a written-for-it item when there is one not yet asked, else the bank's. */

@@ -22,13 +22,13 @@ const iso = () => new Date().toISOString();
 
 /** Close the sittings left open on an enrollment: moved past, not quit. A placement is cancelled. */
 function closeOpen(userId, enrollmentId) {
-  for (const s of db.find('sessions', (x) => x.user_id === userId && x.enrollment_id === enrollmentId && !x.ended_at)) {
+  for (const s of db.forUser('sessions', userId).filter((x) => x.enrollment_id === enrollmentId && !x.ended_at)) {
     db.update('sessions', s.id, { ended_at: iso(), abandoned: true, closed_by: 'owner_skip', ...(s.kind === 'placement' ? { cancelled: true } : {}) });
   }
 }
 
 function enrollmentFor(userId, trackId, gradeId) {
-  return db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === trackId && e.grade_id === gradeId) || null;
+  return (db.forUser('enrollments', userId).find((e) => e.track_id === trackId && e.grade_id === gradeId) || null) || null;
 }
 
 /**

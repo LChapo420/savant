@@ -81,7 +81,7 @@ const dueOf = (st, now) => st && st.status === 'mastered' && st.due && Date.pars
 function weakSkills(userId, materialId, now = Date.now()) {
   const course = courses.get(userId, materialId);
   if (!course || !Array.isArray(course.skills) || !course.skills.length) return [];
-  const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
+  const prog = (db.forUser('material_progress', userId).find((p) => p.material_id === Number(materialId)) || null);
   if (!prog) return [];
   const rows = [];
   const known = new Set(adapt.plan(course, prog, now).skipped); // 07-M3/M9: known and not due is never a weak spot
@@ -261,7 +261,7 @@ function packChecks(userId, materialId, course, limit) {
   return out;
 }
 
-const row = (userId, materialId, kind) => db.findOne('material_podcasts', (c) => c.user_id === userId && c.material_id === Number(materialId) && c.kind === kind);
+const row = (userId, materialId, kind) => (db.forUser('material_podcasts', userId).find((c) => c.material_id === Number(materialId) && c.kind === kind) || null);
 
 /** A check-in of one of the learner's episodes, with its key, for grading on the server. Null when there is none. */
 function checkinOf(userId, materialId, qid) {

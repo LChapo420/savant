@@ -207,7 +207,7 @@ function supports(gradeId, level) {
 const BOX_HOURS = [0, 1 / 6, 4, 24, 72, 168, 384];
 
 function reviewRows(userId) {
-  return db.find('es_review', (r) => r.user_id === userId);
+  return db.forUser('es_review', userId).slice();
 }
 
 function noteReview(userId, pid, correct, now = Date.now()) {
@@ -699,7 +699,7 @@ const isRunId = (id) => typeof id === 'string' && id.startsWith(RUN_PREFIX);
 
 function pruneRuns(userId) {
   const cutoff = Date.now() - 7 * 24 * 3600 * 1000;
-  const mine = db.find('es_path_runs', (r) => r.user_id === userId).sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
+  const mine = db.forUser('es_path_runs', userId).slice().sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
   const drop = new Set(mine.filter((r, i) => i >= 30 || Date.parse(r.created_at) < cutoff).map((r) => r.id));
   if (drop.size) db.remove('es_path_runs', (r) => drop.has(r.id));
 }
@@ -710,7 +710,7 @@ function pruneRuns(userId) {
  */
 function startRun({ user, enrollment, level }) {
   writeAhead(enrollment.grade_id, level);
-  const attempt = db.find('es_path_runs', (r) => r.user_id === user.id && r.enrollment_id === enrollment.id && r.level === level).length + 1;
+  const attempt = db.forUser('es_path_runs', user.id).filter((r) => r.enrollment_id === enrollment.id && r.level === level).length + 1;
   const runId = `${RUN_PREFIX}${crypto.randomBytes(9).toString('hex')}`;
   // A catch-up block's lesson recycles phrases from the skills already caught up (services/spanish/catch-up.js).
   const mixIn = catchUp().mixInFor(user.id, enrollment.grade_id, level);

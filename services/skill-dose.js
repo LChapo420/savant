@@ -114,7 +114,7 @@ function minutesByDay(userId, subject, now = Date.now()) {
   const today = dayOf(now);
   const days = new Map();
   for (let d = today - 6; d <= today; d++) days.set(d, { logged: 0, derived: 0, sat: 0 });
-  for (const e of db.find('enrollments', (x) => x.user_id === userId && x.track_id === subject)) {
+  for (const e of db.forUser('enrollments', userId).filter((x) => x.track_id === subject)) {
     for (const [d, m] of Object.entries(e.skill_load || {})) if (days.has(Number(d))) days.get(Number(d)).logged += Number(m) || 0;
   }
   const isCourt = courtTest(checksPart(), subject);
@@ -138,7 +138,7 @@ function minutesByDay(userId, subject, now = Date.now()) {
  */
 function logLoad(userId, subject, minutes, now = Date.now()) {
   if (!LOAD_SUBJECTS.includes(subject) || !(minutes > 0)) return null;
-  const list = db.find('enrollments', (x) => x.user_id === userId && x.track_id === subject);
+  const list = db.forUser('enrollments', userId).filter((x) => x.track_id === subject);
   const e = list.find((x) => x.status === 'active') || list[list.length - 1];
   if (!e) return null;
   const day = dayOf(now);

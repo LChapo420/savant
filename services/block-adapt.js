@@ -156,7 +156,7 @@ function goalLine(userId, where) {
   try {
     const rg = require('./retention-goal'); // eslint-disable-line global-require
     const db = require('../config/db'); // eslint-disable-line global-require
-    const e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === where.trackId && x.grade_id === where.gradeId);
+    const e = (db.forUser('enrollments', userId).find((x) => x.track_id === where.trackId && x.grade_id === where.gradeId) || null);
     if (!e) return null;
     const g = rg.forEnrollment(userId, e);
     if (g.status === 'date' && g.days_left <= 30) return `They have a test on ${g.test_date} (${g.days_left} days): after each idea give the one thing to be able to recall for it, and keep side points out; every fact stays.`;

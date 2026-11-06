@@ -153,7 +153,7 @@ const consentedNormal = (user) => !!(user && user.speed_proof && user.speed_proo
 
 // ── assignment ───────────────────────────────────────────────────────────────
 
-const rowOf = (userId, skillId) => db.findOne('speed_proof', (r) => r.user_id === userId && r.skill_id === skillId) || null;
+const rowOf = (userId, skillId) => (db.forUser('speed_proof', userId).find((r) => r.skill_id === skillId) || null) || null;
 
 function newBlockSlots(share, size = BLOCK_SIZE) {
   const nNormal = Math.round(share * size);
@@ -163,7 +163,7 @@ function newBlockSlots(share, size = BLOCK_SIZE) {
 }
 
 function nextSlot(userId, stratum) {
-  let block = db.findOne('speed_proof_blocks', (b) => b.user_id === userId && b.stratum === stratum && b.next < b.slots.length);
+  let block = (db.forUser('speed_proof_blocks', userId).find((b) => b.stratum === stratum && b.next < b.slots.length) || null);
   if (!block) block = db.insert('speed_proof_blocks', { user_id: userId, stratum, share: normalShare(), slots: newBlockSlots(normalShare()), next: 0 });
   const arm = block.slots[block.next];
   db.update('speed_proof_blocks', block.id, { next: block.next + 1 });
@@ -179,7 +179,7 @@ function medianOf(a) {
 
 /** Minutes after which a plain-way skill is switched: max(30, 3 x the learner's median Savant time to understanding). */
 function timeCapMinutes(userId) {
-  const done = db.find('speed_proof', (r) => r.user_id === userId && r.arm === 'savant' && Number.isFinite(r.minutes) && r.understood_at).map((r) => r.minutes);
+  const done = db.forUser('speed_proof', userId).filter((r) => r.arm === 'savant' && Number.isFinite(r.minutes) && r.understood_at).map((r) => r.minutes);
   const med = done.length >= 3 ? medianOf(done) : null;
   return Math.max(30, med ? 3 * med : 0);
 }
@@ -187,7 +187,7 @@ function timeCapMinutes(userId) {
 function testDateSoon(userId, trackId, now) {
   try {
     const goals = lazy('./retention-goal');
-    const enr = db.find('enrollments', (e) => e.user_id === userId && (!trackId || e.track_id === trackId))[0];
+    const enr = db.forUser('enrollments', userId).filter((e) => (!trackId || e.track_id === trackId))[0];
     const eff = goals.forEnrollment(userId, enr || null, now);
     return !!(eff && eff.status === 'date' && Number.isFinite(eff.days_left) && eff.days_left <= TEST_DATE_BLOCK_DAYS);
   } catch { return false; }
@@ -211,7 +211,7 @@ function assign(userId, skillId, ctx = {}, now = Date.now()) {
   if (consentedNormal(user)) {
     const slot = nextSlot(userId, stratum); // the draw is always taken, so the block stays balanced whatever the guards do
     if (slot === 'normal') {
-      const open = db.find('speed_proof', (r) => r.user_id === userId && r.arm === 'normal' && !r.switched_at && !r.understood_at);
+      const open = db.forUser('speed_proof', userId).filter((r) => r.arm === 'normal' && !r.switched_at && !r.understood_at);
       if (open.length) held = 'one_plain_skill_open';
       else if (testDateSoon(userId, trackId, now)) held = 'test_date_soon';
       else arm = 'normal';
@@ -319,11 +319,11 @@ const answeredAt = (i) => Date.parse(i.updated_at || i.created_at);
 
 /** Minutes each answered item took: the study-session active time shared by gaps between activity, or the item's own recorded time. */
 function attribute(userId) {
-  const items = db.find('items', (i) => i.user_id === userId && i.skill_id && i.user_answer !== undefined && i.user_answer !== null && !NOT_LEARNING.has(i.role) && Number.isFinite(answeredAt(i)));
+  const items = db.forUser('items', userId).filter((i) => i.skill_id && i.user_answer !== undefined && i.user_answer !== null && !NOT_LEARNING.has(i.role) && Number.isFinite(answeredAt(i)));
   items.sort((a, b) => answeredAt(a) - answeredAt(b) || a.id - b.id);
   const ms = new Map();
   const claimed = new Set();
-  for (const s of db.find('study_sessions', (r) => r.user_id === userId && r.active_ms > 0)) {
+  for (const s of db.forUser('study_sessions', userId).filter((r) => r.active_ms > 0)) {
     const start = Date.parse(s.started_at);
     const end = Date.parse(s.ended_at || s.last_activity_at || s.started_at);
     if (!Number.isFinite(start) || !Number.isFinite(end)) continue;
@@ -346,10 +346,10 @@ function attribute(userId) {
  * a struggling plain-way skill back to Savant. Idempotent; never writes anything but speed_proof rows. Returns the rows.
  */
 function measure(userId, now = Date.now()) {
-  const rows = db.find('speed_proof', (r) => r.user_id === userId);
+  const rows = db.forUser('speed_proof', userId).slice();
   if (!rows.length) return rows;
   const { items, ms } = attribute(userId);
-  const events = new Map(db.find('events', (e) => e.user_id === userId).map((e) => [e.item_id, e]));
+  const events = new Map(db.forUser('events', userId).slice().map((e) => [e.item_id, e]));
   const bySkill = new Map();
   for (const i of items) { if (!bySkill.has(i.skill_id)) bySkill.set(i.skill_id, []); bySkill.get(i.skill_id).push(i); }
   for (const row of rows) {
@@ -378,7 +378,7 @@ function measure(userId, now = Date.now()) {
       else if (patch.minutes !== null && patch.minutes > timeCapMinutes(userId)) switchToSavant(userId, row.skill_id, 'time_cap', now);
     }
   }
-  return db.find('speed_proof', (r) => r.user_id === userId);
+  return db.forUser('speed_proof', userId).slice();
 }
 
 // ── delayed retention checks ─────────────────────────────────────────────────
@@ -387,7 +387,7 @@ function measure(userId, now = Date.now()) {
 function goalDays(userId, trackId, understoodMs) {
   try {
     const goals = lazy('./retention-goal');
-    const enr = db.find('enrollments', (e) => e.user_id === userId && (!trackId || e.track_id === trackId))[0];
+    const enr = db.forUser('enrollments', userId).filter((e) => (!trackId || e.track_id === trackId))[0];
     const eff = goals.forEnrollment(userId, enr || null, understoodMs);
     if (!eff) return null;
     if (eff.status === 'horizon' && Number.isFinite(eff.days)) return eff.days;
@@ -399,7 +399,7 @@ function goalDays(userId, trackId, understoodMs) {
 /** The points of a row that are due now (open window, not answered). Fills in the row's schedule the first time its skill is understood. */
 function dueChecks(userId, now = Date.now()) {
   const out = [];
-  for (const row of db.find('speed_proof', (r) => r.user_id === userId && r.understood_at)) {
+  for (const row of db.forUser('speed_proof', userId).filter((r) => r.understood_at)) {
     const u = Date.parse(row.understood_at);
     let checks = row.checks;
     if (!checks.length) {
@@ -436,7 +436,7 @@ function start(user, now = Date.now()) {
   if (st.open && now - Date.parse(st.open.at) < 30 * MIN) return view(st.open);
   const picks = [];
   for (const d of dueChecks(user.id, now)) {
-    const rows = db.find('items', (i) => i.user_id === user.id && i.skill_id === d.skill_id && i.correct === true && Array.isArray(i.choices) && i.choices.length >= 3 && typeof i.answer === 'string' && i.prompt);
+    const rows = db.forUser('items', user.id).filter((i) => i.skill_id === d.skill_id && i.correct === true && Array.isArray(i.choices) && i.choices.length >= 3 && typeof i.answer === 'string' && i.prompt);
     if (!rows.length) continue;
     picks.push({ ...d, item: rows[rows.length - 1] });
     if (picks.length >= MAX_CHECK_QUESTIONS) break;
@@ -738,14 +738,14 @@ function report(opts = {}) {
 function offerNow(user) {
   if (ineligibleReason(user)) return false;
   if (user.speed_proof && user.speed_proof.consent) return false;
-  return db.find('enrollments', (e) => e.user_id === user.id && e.status && e.status !== 'placement_pending').length > 0;
+  return db.forUser('enrollments', user.id).filter((e) => e.status && e.status !== 'placement_pending').length > 0;
 }
 
 function status(user) {
   const why = ineligibleReason(user);
   return {
     available: !why, reason: why, offer: !why && offerNow(user), needs_parent: !!(user && user.age_check && (user.age_check.under_13 || user.age_check.needs_parent)), consent_text: CONSENT, consent: user && user.speed_proof ? user.speed_proof.consent || null : null,
-    skills: why ? [] : db.find('speed_proof', (r) => r.user_id === user.id).map((r) => ({ skill_id: r.skill_id, way: r.arm === 'normal' && !r.switched_at ? 'plain' : 'savant', understood: !!r.understood_at })),
+    skills: why ? [] : db.forUser('speed_proof', user.id).slice().map((r) => ({ skill_id: r.skill_id, way: r.arm === 'normal' && !r.switched_at ? 'plain' : 'savant', understood: !!r.understood_at })),
   };
 }
 

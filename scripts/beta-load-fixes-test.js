@@ -126,6 +126,30 @@ async function startApp(dbFile, port) {
   check('an old session with no mark gets in', (await who(undefined)) === owner);
   check('a session made for an earlier account with that id does not', (await who('2020-01-01T00:00:00.000Z')) === null);
 
+  console.log('typical times on a big store');
+  const em = require('../services/effort-monitor');
+  const item = { prompt: 'typical times test', answer: '4', format: 'type_in' };
+  for (let i = 0; i < 40; i++) db.insert('items', { ...item, user_id: 500 + i, ms: 1000, correct: true });
+  process.env.OBJ_RAPID_MIN_N = '5';
+  process.env.OBJ_RAPID_CACHE_MS = '0';
+  em.resetTypicalTimes();
+  const line1 = em.itemLine(item);
+  const builds1 = em.typicalBuildCount();
+  check('a small store builds at once', builds1 >= 1 && line1 > 0, { line1, builds1 });
+  for (let i = 0; i < 200; i++) db.insert('items', { ...item, user_id: 600 + i, ms: 9000, correct: true });
+  process.env.OBJ_RAPID_BIG_STORE = '1';
+  const line2 = em.itemLine(item);
+  check('a big store answers from the last map, nothing built in this tick', line2 === line1 && em.typicalBuildCount() === builds1, { line2, line1 });
+  for (let i = 0; i < 50 && em.typicalBuildCount() === builds1; i++) await sleep(5);
+  check('the rebuild finishes between requests', em.typicalBuildCount() > builds1);
+  process.env.OBJ_RAPID_CACHE_MS = '600000';
+  await sleep(20);
+  delete process.env.OBJ_RAPID_BIG_STORE;
+  em.resetTypicalTimes();
+  check('and gives the same answer a full build does', em.itemLine(item) > line1);
+  delete process.env.OBJ_RAPID_CACHE_MS; delete process.env.OBJ_RAPID_MIN_N;
+  em.resetTypicalTimes();
+
   console.log('uploads in memory at once');
   const { uploadBudget, inFlightBytes } = require('../utils/upload-budget');
   const fakeRes = () => { const h = {}; const r = { code: 200, set() {}, status(c) { r.code = c; return { json() {} }; }, on(ev, fn) { h[ev] = fn; }, close() { h.close(); } }; return r; };

@@ -190,7 +190,7 @@ function blankProfile(userId) {
 }
 
 function getProfile(userId) {
-  return db.findOne('profiles', (p) => p.user_id === userId) || blankProfile(userId);
+  return (db.forUser('profiles', userId)[0] || null) || blankProfile(userId);
 }
 
 function saveProfile(userId, patch) {
@@ -259,7 +259,7 @@ function observedPrefsShadow() {
 // The contract's gated sides for a learner, re-read only when their card changes.
 const gatedMemo = new Map();
 function gatedSides(userId) {
-  const card = db.findOne('scorecards', (r) => r.user_id === userId);
+  const card = (db.forUser('scorecards', userId)[0] || null);
   if (!card) return {};
   // The population moves the standing gate too, so a hit also expires after a minute.
   const key = `${card.updated_at || ''}:${card.updates || 0}:${(card.log || []).length}`;
@@ -336,7 +336,7 @@ function effective(profile, dim, fallback = 0.5) {
 /** A scorecard stat as 0..1, or null when the app is not yet confident about it. */
 function stat(userId, statId, minConfidence = 40) {
   if (!userId) return null;
-  const card = db.findOne('scorecards', (r) => r.user_id === userId);
+  const card = (db.forUser('scorecards', userId)[0] || null);
   if (!card) return null;
   // Session settings follow what was measured, not what a model read suggested.
   const { measured, confidence } = scorecard.read(card, statId);
@@ -549,7 +549,7 @@ function teachingBrief(userId, { skillId, skillName, level, trackName, noSpec = 
 
     // How they have answered this skill lately, which is more current than the
     // rolling mastery number.
-    const recent = db.find('items', (i) => i.user_id === userId && i.skill_id === skillId && i.correct !== null).slice(-6);
+    const recent = db.forUser('items', userId).filter((i) => i.skill_id === skillId && i.correct !== null).slice(-6);
     if (recent.length >= 3) {
       const right = recent.filter((i) => i.correct).length;
       const coached = recent.filter((i) => i.coach_used).length;

@@ -212,7 +212,7 @@ function buildEditorPrompt(userId, where, basis, baseHtml, experiment = null) {
   if (adaptation.mode() === 'on') {
     // eslint-disable-next-line global-require
     const db = require('../config/db');
-    const enrollment = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === where.trackId && e.grade_id === where.gradeId);
+    const enrollment = (db.forUser('enrollments', userId).find((e) => e.track_id === where.trackId && e.grade_id === where.gradeId) || null);
     const adapted = enrollment ? adaptation.planForLevel({ userId, enrollment, level: where.level }) : null;
     howLines = adaptation.promptLines(adapted);
   }

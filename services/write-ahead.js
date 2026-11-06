@@ -114,8 +114,8 @@ function lastActiveMs(user) {
   const db = require('../config/db');
   const t = (v) => { const n = Date.parse(v); return Number.isFinite(n) ? n : 0; };
   let last = Math.max(t(user.created_at), touched.get(user.id) || 0);
-  for (const row of db.find('sessions', (r) => r.user_id === user.id)) last = Math.max(last, t(row.ended_at), t(row.started_at));
-  for (const row of db.find('enrollments', (r) => r.user_id === user.id)) last = Math.max(last, t(row.updated_at), t(row.created_at));
+  for (const row of db.forUser('sessions', user.id).slice()) last = Math.max(last, t(row.ended_at), t(row.started_at));
+  for (const row of db.forUser('enrollments', user.id).slice()) last = Math.max(last, t(row.updated_at), t(row.created_at));
   return last;
 }
 /** No activity for dormantDays: nothing is written ahead for them until they act (a request-driven trigger counts as acting). */
@@ -391,7 +391,7 @@ function triggerForUser({ user, reason = 'dashboard' }) {
     if (!on() || !user) return;
     // eslint-disable-next-line global-require
     const db = require('../config/db');
-    const rows = db.find('enrollments', (e) => e.user_id === user.id && e.status !== 'graduated' && e.status !== 'placement_pending')
+    const rows = db.forUser('enrollments', user.id).filter((e) => e.status !== 'graduated' && e.status !== 'placement_pending')
       .sort((a, b) => String(b.updated_at || b.created_at || '').localeCompare(String(a.updated_at || a.created_at || '')))
       .slice(0, num('WRITE_AHEAD_ENROLLMENTS', 4, 0, 20));
     for (const enrollment of rows) trigger({ user, enrollment, reason });

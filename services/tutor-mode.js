@@ -14,7 +14,7 @@ const DEFAULT = 'text';
 const valid = (m) => (MODES.includes(m) ? m : null);
 
 function get(userId) {
-  const row = db.findOne('tutor_modes', (r) => r.user_id === userId);
+  const row = (db.forUser('tutor_modes', userId)[0] || null);
   return row && valid(row.mode) ? row.mode : DEFAULT;
 }
 

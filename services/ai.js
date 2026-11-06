@@ -71,7 +71,7 @@ function today() {
 }
 
 function usageToday(userId) {
-  return db.findOne('ai_usage', (u) => u.user_id === userId && u.day === today())
+  return (db.forUser('ai_usage', userId).find((u) => u.day === today()) || null)
     || { cents: 0, calls: 0 };
 }
 
@@ -390,7 +390,7 @@ function cacheKey(skillId, difficulty) {
 
 /** Items this learner has already been served, so the cache does not repeat. */
 function seenPrompts(userId, limit = 400) {
-  const rows = db.find('items', (i) => i.user_id === userId);
+  const rows = db.forUser('items', userId).slice();
   return new Set(rows.slice(-limit).map((i) => i.prompt));
 }
 

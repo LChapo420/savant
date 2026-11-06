@@ -106,7 +106,7 @@ function loadCourse(userId, materialId) {
 
 function row(userId, materialId) {
   const mid = Number(materialId);
-  let r = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === mid);
+  let r = (db.forUser('material_progress', userId).find((p) => p.material_id === mid) || null);
   if (!r) {
     r = db.insert('material_progress', {
       user_id: userId, material_id: mid, skills: {}, placed: false, placement: { answers: [], pending: null }, pending: null,
@@ -547,10 +547,10 @@ function dueSummary(userId, now = Date.now()) {
   const items = [];
   const seen = new Set();
   const cardsDue = (materialId) => {
-    const deck = db.findOne('material_cards', (c) => c.user_id === userId && c.material_id === materialId);
+    const deck = (db.forUser('material_cards', userId).find((c) => c.material_id === materialId) || null);
     return deck ? deck.cards.filter((c) => !c.due || Date.parse(c.due) <= now).length : 0;
   };
-  for (const r of db.find('material_progress', (p) => p.user_id === userId)) {
+  for (const r of db.forUser('material_progress', userId).slice()) {
     const course = loadCourse(userId, r.material_id);
     if (!course) continue;
     seen.add(r.material_id);
@@ -559,8 +559,8 @@ function dueSummary(userId, now = Date.now()) {
     if (due || cards) items.push({ material_id: r.material_id, title: course.title, due_count: due, cards_due: cards });
   }
   // A deck for a material the learner has not started the path of (study pack only).
-  for (const d of db.find('material_cards', (c) => c.user_id === userId && !seen.has(c.material_id))) {
-    const m = db.findOne('materials', (x) => x.user_id === userId && x.id === d.material_id);
+  for (const d of db.forUser('material_cards', userId).filter((c) => !seen.has(c.material_id))) {
+    const m = (db.forUser('materials', userId).find((x) => x.id === d.material_id) || null);
     const cards = m ? cardsDue(d.material_id) : 0;
     if (cards) items.push({ material_id: d.material_id, title: m.title, due_count: 0, cards_due: cards });
   }

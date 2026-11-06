@@ -235,15 +235,16 @@ function saveState() {
 const byOwner = new Map(); // collection -> Map(user_id -> rows, in insertion order)
 function ownerIndex(name) {
   let ix = byOwner.get(name);
-  if (!ix) {
-    ix = new Map();
+  // A count that does not match means something changed the array directly (tests do): build again.
+  if (!ix || ix.count !== store[name].length) {
+    ix = { map: new Map(), count: store[name].length };
     for (const r of store[name]) {
-      const list = ix.get(r.user_id);
-      if (list) list.push(r); else ix.set(r.user_id, [r]);
+      const list = ix.map.get(r.user_id);
+      if (list) list.push(r); else ix.map.set(r.user_id, [r]);
     }
     byOwner.set(name, ix);
   }
-  return ix;
+  return ix.map;
 }
 
 for (const signal of ['exit', 'SIGINT', 'SIGTERM']) {
@@ -269,7 +270,7 @@ const db = {
     const row = { id, created_at: new Date().toISOString(), ...doc };
     collection(name).push(row);
     const ix = byOwner.get(name);
-    if (ix) { const list = ix.get(row.user_id); if (list) list.push(row); else ix.set(row.user_id, [row]); }
+    if (ix) { const list = ix.map.get(row.user_id); if (list) list.push(row); else ix.map.set(row.user_id, [row]); ix.count++; }
     touch();
     return row;
   },

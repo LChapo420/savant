@@ -112,7 +112,7 @@ function trimToLimit(sections, limit, { always = false, maxAnalogies = null, kee
 }
 
 function row(userId, materialId) {
-  return db.findOne('material_notes', (c) => c.user_id === userId && c.material_id === Number(materialId));
+  return (db.forUser('material_notes', userId).find((c) => c.material_id === Number(materialId)) || null);
 }
 
 /** Build (or return the cached) notes for one of the learner's materials. Resolves { notes } or { error, code }. Never throws. */
