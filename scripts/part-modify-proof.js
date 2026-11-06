@@ -172,7 +172,7 @@ ${a}
 
 TEXT 2 (rewrite):
 ${b}`, 4000, true);
-  const m = String(text || '').match(/CONFLICT:s*(YES|NO)/gi);
+  const m = String(text || '').match(/CONFLICT:\s*(YES|NO)/gi);
   return m ? m[m.length - 1].toUpperCase().includes('YES') : null;
 }
 
@@ -254,7 +254,7 @@ async function factsFor(part, rows) {
   const jobs = [];
   for (const r of rows) {
     out.checked += 1;
-    if (!r.vL) { out.declined += 1; for (const p of (r.problemsL || []).slice(0, 2)) { const k = String(p).replace(/d+/g, 'N').slice(0, 50); out.declined_because[k] = (out.declined_because[k] || 0) + 1; } continue; }
+    if (!r.vL) { out.declined += 1; for (const p of (r.problemsL || []).slice(0, 2)) { const k = String(p).replace(/\d+/g, 'N').slice(0, 50); out.declined_because[k] = (out.declined_because[k] || 0) + 1; } continue; }
     out.passed += 1;
     if (part === 'lesson') {
       const c = ls.checkFollowed(r.vL, specOf(learners[r.i], LESSON.title), { keyFacts: LESSON.key_points, minShare: 0.3, own: true, interestNeed: 0 });

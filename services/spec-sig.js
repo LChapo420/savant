@@ -35,6 +35,7 @@ function specSig(spec) {
   // A signature written before this has no `sets.v` key, so its sets are never compared (no mass re-tailoring of levels already stored).
   const slug = (x) => String(x).toLowerCase().replace(/[^a-z0-9]+/g, '_').slice(0, 40);
   const it = spec.interests || {};
+  if (String(process.env.SPEC_SIG_SETS || 'on').toLowerCase() === 'off') return Object.fromEntries(entries);
   entries.push(['sets.v', 1]);
   for (const d of (it.exampleDomains || []).slice(0, 8)) entries.push([`sets.use.${slug(d)}`, 1]);
   for (const d of (it.avoidDomains || []).slice(0, 12)) entries.push([`sets.avoid.${slug(d)}`, 1]);

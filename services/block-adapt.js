@@ -149,10 +149,10 @@ function checkpointLines(spec, trackId) {
 /**
  * How long the learner wants to remember this subject (services/retention-goal.js) as one line for the lesson writer: a test close by asks for
  * the shortest route to recall; a horizon of months or longer asks for the one thing to carry away from each idea. Nothing for "forever" (the
- * default) or when BLOCK_GOAL=off. Never throws.
+ * default), and nothing unless BLOCK_GOAL=on (not yet proven at lesson level). Never throws.
  */
 function goalLine(userId, where) {
-  if (String(process.env.BLOCK_GOAL || 'on').toLowerCase() === 'off') return null;
+  if (String(process.env.BLOCK_GOAL || 'off').toLowerCase() !== 'on') return null; // off until a lesson-level proof passes (docs/MODIFICATION-AUDIT-PARTS.md)
   try {
     const rg = require('./retention-goal'); // eslint-disable-line global-require
     const db = require('../config/db'); // eslint-disable-line global-require

@@ -209,7 +209,7 @@ function goalItems(userId, facts, now, intent) {
     out.push({ text: `${where}: ${g.label}${when}${g.text ? ` (their words: "${clip(g.text, 80)}")` : ''}`, score: (soon ? 2.6 : 1.3) * (intent === 'plan' ? 1.5 : 1), short: g.label });
   }
   // How long they want to remember each subject or course (services/retention-goal.js): a test date or a horizon changes what a reply stresses.
-  const rgs = safe(() => require('./retention-goal').listFor(userId, now), null); // eslint-disable-line global-require
+  const rgs = String(process.env.TUTOR_GOAL || 'on').toLowerCase() === 'off' ? null : safe(() => require('./retention-goal').listFor(userId, now), null); // eslint-disable-line global-require
   for (const x of rgs ? [...rgs.enrollments, ...rgs.materials] : []) {
     const g = x.goal || {};
     if (g.status !== 'date' && g.status !== 'horizon' && !g.horizon) continue;

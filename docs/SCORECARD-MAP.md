@@ -85,7 +85,7 @@ Columns: **meaning** (a low score, then a high one); **channels before**; **spec
 | Metric | Meaning (low / high) | Before | Spec: levers, evidence, fields moved | Readers |
 |---|---|---|---|---|
 | `stimulus_envelope` | narrow band of novelty before overload or boredom / wide tolerable range of intensity | lesson text | +novelty; no mechanism; engagement.novelty, depth.measures | scorecard/indicators.js:48; content/daily-check/scale-items.js:35 |
-| `novelty_hunger` | prefers familiar formats / needs constant variety | lesson text, experiment | +novelty; no mechanism; engagement.novelty, depth.measures | onboarding/pool.js:106; personalize.js:188; scorecard/indicators.js:53; tutor-learner-model.js:315 |
+| `novelty_hunger` | prefers familiar formats / needs constant variety | lesson text, experiment | +novelty; no mechanism; engagement.novelty, depth.measures | onboarding/pool.js:106; personalize.js:188; scorecard/indicators.js:53; tutor-learner-model.js:325 |
 | `humor_receptivity` | humor distracts / humor boosts engagement and recall | lesson text, coach text, tutor plan, experiment | +humor; no mechanism; feedback.tone.humor, depth.measures | onboarding/pool.js:101; personalize.js:158; scorecard/indicators.js:46; tutor-learner-model.js:89 |
 | `narrative_pull` | stories are fluff to them / story framing drives engagement | lesson text, experiment | +story; no mechanism; lesson.hook, lesson.storyFrame, explain.modes, depth.measures | onboarding/pool.js:101; personalize.js:134; scorecard/indicators.js:93; scorecard/translate.js:132 |
 | `gamification_response` | points and streaks do nothing / strongly motivated by them | **dead** | +gamification; no mechanism; engagement.gamification, depth.measures | scorecard/indicators.js:47 |
@@ -254,7 +254,7 @@ Each spec group, its fields, and whether a generator reads the field in code (`c
 | `language.avoidIdioms` | block-adapt.js | 0 |
 | `language.eslSupport` | block-adapt.js | 0 |
 | `interests.exampleDomains` | block-adapt.js, item-theme.js | 0 |
-| `interests.avoidDomains` | prompt only | 0 |
+| `interests.avoidDomains` | part-modify.js | 0 |
 | `interests.share` | block-adapt.js, item-theme.js | 1 |
 | `interests.people` | prompt only | 1 |
 | `interests.identity` | prompt only | 1 |
