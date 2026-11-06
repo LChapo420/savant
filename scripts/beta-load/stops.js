@@ -30,6 +30,7 @@ const CASES = {
   nvidia_down: { stub: { down: ['nvidia'] } },
   all_down: { stub: { mode: 'down' } },
   all_hang: { stub: { mode: 'slow' }, env: { POOL_TIMEOUT_MS: '30000' } },
+  all_hang_default: { stub: { mode: 'slow' } },
   nov14: { env: { GONKA_LEARNER_UNTIL: PAST, GROKIFIED_LEARNER_UNTIL: PAST, LYCEUM_LEARNER_UNTIL: PAST, ZEROGPU_LEARNER_UNTIL: PAST, MUNITO_CHILD_UNTIL: PAST } },
   nov14_strict: { env: { GONKA_LEARNER_UNTIL: PAST, GROKIFIED_LEARNER_UNTIL: PAST, LYCEUM_LEARNER_UNTIL: PAST, ZEROGPU_LEARNER_UNTIL: PAST, MUNITO_CHILD_UNTIL: PAST, MUNITO_LEARNER: 'off', CORAL_LEARNER: 'off', NVIDIA_API_KEY: '' } },
 };
