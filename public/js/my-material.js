@@ -224,7 +224,17 @@ App.mount(async () => {
       if (c.status === 'ready' || c.status === 'partial') {
         btn.textContent = 'Study';
         btn.dataset.study = '1';
-        n.textContent = `${c.skills.length} skills in ${(c.units || []).length || 1} unit${(c.units || []).length > 1 ? 's' : ''}${c.status === 'partial' ? ' so far (the rest can be built later; press Learning path again)' : ''}.`;
+        n.textContent = `${c.skills.length} skills in ${(c.units || []).length || 1} unit${(c.units || []).length > 1 ? 's' : ''}${c.status === 'partial' ? ' so far' : ''}.`;
+        if (c.status === 'partial' && !(c.missed || []).some((m) => m.note && m.retryable)) {
+          const rest = document.createElement('button');
+          rest.type = 'button'; rest.className = 'btn btn-sm'; rest.textContent = 'Build the rest';
+          rest.addEventListener('click', async () => {
+            rest.disabled = true;
+            try { await App.api.post(`/api/materials/${id}/course`, {}); courseUi(id, { ...c, status: 'building', planned: c.planned || c.skills.length }); poll(id, 0, false, true); } catch (err) { rest.disabled = false; App.toast(err.message, 'error'); }
+          });
+          n.appendChild(document.createTextNode(' '));
+          n.appendChild(rest);
+        }
         const gone = (c.missed || []).filter((m) => m.note);
         if (gone.length) {
           n.textContent += ` ${c.coverage ? `${c.coverage.covered}% of the text is in this course. ` : ''}${gone.map((m) => m.note).join(' ')}`;
