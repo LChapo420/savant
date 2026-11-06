@@ -51,7 +51,11 @@ const FEATURES = [
     steps: 'After a question you got wrong, Work on what went wrong reads your attempt, shows the idea you missed and gives you a fresh question on it.' },
   { id: 'my-stats', title: 'My stats', path: '/my-stats', words: 'my stats|statistics|how (am i|fast am i)|scorecard|progress|numbers|accuracy|speed',
     steps: 'My stats shows your averages and day by day numbers. Your scorecard is the set of measures about how you learn, and it keeps updating from everything you do.' },
-  { id: 'profile', title: 'Your profile and settings', path: '/profile', words: 'settings?|profile|change (my )?(name|password|email|look|theme|subjects?|focus)|delete (my )?account|export (my )?data|download my data|privacy|dark mode|my subjects',
+  { id: 'account-delete', title: 'Delete your account', path: '/profile', words: 'delete (my |your )?account|close (my )?account|remove (my )?account|delete everything',
+    steps: 'Open your profile and use Delete account. It deletes your account and everything tied to it: your profile, your answers, your uploads and what the tutor remembers. You can export your data first.' },
+  { id: 'data-export', title: 'Export your data', path: '/profile', words: 'export (my )?data|download my data|get my data|copy of my data',
+    steps: 'Open your profile and use Export your data to download everything Savant holds about you.' },
+  { id: 'profile', title: 'Your profile and settings', path: '/profile', words: 'settings?|profile|change (my )?(name|password|email|look|theme|subjects?|focus)|privacy|dark mode|my subjects',
     steps: 'Open your profile for settings: subjects, look, focus and your account. You can export your data or delete your account and everything tied to it there.' },
   { id: 'extras', title: 'Extras (boosters)', path: '/boosters', words: 'extras?|boosters?|study habits|memory check|brain games?|quiet signals|past results',
     steps: 'Extras holds optional measures: a study habits questionnaire, a reading check, a memory check, brain games and quiet signals. All optional; each one helps Savant fit itself to you.' },
@@ -96,6 +100,17 @@ function pageInfo(path) {
   return PAGES.find((x) => x.re.test(p)) || null;
 }
 
+/** Split a word list on '|' outside parentheses ("delete (my )?account|export" is two alternatives, not three). */
+function splitAlts(list) {
+  const out = []; let depth = 0; let cur = '';
+  for (const ch of String(list)) {
+    if (ch === '(') depth += 1; else if (ch === ')') depth -= 1;
+    if (ch === '|' && depth === 0) { out.push(cur); cur = ''; } else cur += ch;
+  }
+  if (cur) out.push(cur);
+  return out;
+}
+
 const STOP = new Set('the a an i me my to do how can where what is it of in on for and or with you your this that about just please'.split(' '));
 
 /** The features a question is about, best first: [{ f, score }]. */
@@ -106,7 +121,7 @@ function match(q) {
   const out = [];
   for (const f of FEATURES) {
     let score = 0;
-    for (const alt of f.words.split('|')) {
+    for (const alt of splitAlts(f.words)) {
       let re;
       try { re = new RegExp(alt.includes('\\') || /[()?]/.test(alt) ? alt : `\\b${alt}`, 'i'); } catch { continue; }
       if (re.test(text)) score += alt.length > 6 ? 2 : 1;
@@ -122,15 +137,15 @@ const HOWTO_ASK = /\b(how (do|can|could|would|should) (i|we|you)|how to|where (i
 const OWN_WORK = /\b(answer|solve|equation|fraction|what is \d|the question|this question|\d\s*[-+*/x]\s*\d|translate|essay|paragraph|why is|explain)\b/i;
 
 /** A complete answer for a plain how-to question, with no model (instant and free). Null when it is not one. */
-function instant(q, { name } = {}) {
+function instant(q, { name, brief } = {}) {
   const text = String(q || '');
   if (!HOWTO_ASK.test(text) || OWN_WORK.test(text) || text.length > 200) return null;
   const m = match(text);
   if (!m.length || m[0].score < 2) return null;
   if (m[1] && m[1].score === m[0].score && m[1].f.path !== m[0].f.path) return null; // two equally good readings: let the model ask
   const f = m[0].f;
-  const first = String(f.steps).split(/(?<=[.!?])\s/)[0];
-  return { feature: f.id, path: f.path, reply: `${name ? `${name}, ` : ''}${f.title}: ${first} Page: ${f.path}. Ask me if you want the rest of the steps.` };
+  const steps = brief ? String(f.steps).split(/(?<=[.!?])\s/)[0] : f.steps; // a child or a compact learner gets the first step; everyone else the whole answer
+  return { feature: f.id, path: f.path, reply: `${name ? `${name}, ` : ''}${f.title}: ${steps} Page: ${f.path}.${brief ? ' Ask me for the rest.' : ''}` };
 }
 
 /** Prompt lines about the product for this question and page. */

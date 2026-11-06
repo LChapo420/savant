@@ -60,6 +60,15 @@ function fitLine(userId, message) {
   return '';
 }
 
+/** Short answers for a child and for a learner whose record says they want it compact (services/learning-spec.js). */
+function isBrief(user) {
+  try {
+    const u = user && require('../config/db').byId('users', user.id); // eslint-disable-line global-require
+    const age = u ? require('./boosters').ageOf(u) : null; // eslint-disable-line global-require
+    return (age !== null && age !== undefined && age < 13) || ((require('./learning-spec').buildSpec(user.id, {}).explain.modes || []).includes('compact')); // eslint-disable-line global-require
+  } catch { return false; }
+}
+
 const DISCOURAGED = /\b(give up|giving up|hate this|everything sucks|too hard|useless|dumb|stupid|i quit|can'?t do this|too old|frustrat\w+|so tired|anxious|nervous|panic\w*|going to fail|gonna fail|i'?m lost|i don'?t get it|dont get it)\b/i;
 const WANTS_ANSWER = /\b(just tell|tell me the answer|the answer|what is the answer|give me the answer|is it\b|is the answer|just say it|say it)\b/i;
 
@@ -92,16 +101,10 @@ function looseMaterial(userId, msg) {
 }
 
 function fallback({ user, page, message, mode = 'full', name = '', why = 'busy' }) {
+  const brief = isBrief(user);
   const msg = String(message || '');
   const path = page && page.path;
   const parts = [];
-  // Short for a child and for a learner whose record says they want it compact (services/learning-spec.js).
-  let brief = false;
-  try {
-    const u = user && require('../config/db').byId('users', user.id); // eslint-disable-line global-require
-    const age = u ? require('./boosters').ageOf(u) : null; // eslint-disable-line global-require
-    brief = (age !== null && age !== undefined && age < 13) || ((require('./learning-spec').buildSpec(user.id, {}).explain.modes || []).includes('compact')); // eslint-disable-line global-require
-  } catch { brief = false; }
   const first = (t) => String(t || '').split(/(?<=[.!?])\s/)[0];
   const status = why === 'off' ? ''
     : why === 'local' ? (brief ? 'I am using only my own notes for now.' : 'I am answering from my own notes only on this account, with no outside AI, so this is shorter than a full answer.')
@@ -179,4 +182,4 @@ function echoesProposal(learnerMsg, reply) {
   return false;
 }
 
-module.exports = { triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
+module.exports = { isBrief, triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };

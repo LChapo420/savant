@@ -257,7 +257,7 @@ async function reply({ user, messages, page, inputMode, image }) {
   const triaged = last ? full.triage(user, last.content) : null;
   if (triaged && triaged.reply) return { reply: triaged.reply, source: 'safety', kind: triaged.kind, mode, held: false };
   if (fullOn && last) {
-    const quick = howto.instant(last.content, { name: firstName(user) });
+    const quick = howto.instant(last.content, { name: firstName(user), brief: full.isBrief(user) });
     if (quick) {
       tutor.note(user.id, { where: 'dock', learnerSaid: last.content, tutorSaid: quick.reply });
       return { reply: quick.reply, source: 'instant', feature: quick.feature, mode, held: false };

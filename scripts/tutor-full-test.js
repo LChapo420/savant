@@ -75,7 +75,7 @@ const say = (text) => [{ role: 'user', content: text }];
   let r = await dock.reply({ user: u, messages: say('I want to kill myself'), page });
   check('a crisis never reaches the model', calls.length === 0 && r.source === 'safety' && /988/.test(r.reply));
   r = await dock.reply({ user: u, messages: say('how do I upload my notes?'), page });
-  check('a how-to is instant and costs no model call', calls.length === 0 && r.source === 'instant' && /My material/.test(r.reply) && r.reply.length < 260, r);
+  check('a how-to is instant and costs no model call', calls.length === 0 && r.source === 'instant' && /My material/.test(r.reply), r);
   r = await dock.reply({ user: u, messages: say('I am lost on this one'), page });
   const sys = (calls[0] || {}).system || '';
   check('stuck signal, page purpose and truth rules reach the prompt', /They look stuck: quiet for about 95 seconds, 3 wrong tries in a row/.test(sys) && /This page is a lesson/.test(sys) && /never invent a fact/.test(sys), sys.slice(-900));
