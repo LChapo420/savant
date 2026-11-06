@@ -49,7 +49,7 @@ function htmlRich(html) {
   h = h.replace(/<mark\b[^>]*>([\s\S]*?)<\/mark>/gi, (m, inner) => `==${inner.replace(/<[^>]+>/g, '').trim()}==`);
   h = h.replace(/<(blockquote|aside)\b[^>]*>([\s\S]*?)<\/\1>/gi, (m, t, inner) => `\n\n${inner.replace(/<\/?(?:p|div|br)\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '').split('\n').map((l) => l.trim()).filter(Boolean).map((l) => `> ${l}`).join('\n')}\n\n`);
   h = h.replace(/<(div|p|section|span)\b([^>]*)>([\s\S]*?)<\/\1>/gi, (m, t, attrs, inner) => (t !== 'span' && CALLOUT_CLASS.test(attrs) && !/<(div|section)\b/i.test(inner) ? `\n\n${inner.replace(/<[^>]+>/g, '').split('\n').map((l) => l.trim()).filter(Boolean).map((l) => `> ${l}`).join('\n')}\n\n` : m));
-  h = h.replace(/<li\b[^>]*>/gi, '\n- ').replace(/<\/?(p|div|section|article|br|ul|ol|tr|table|pre)\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '');
+  h = h.replace(/<\/t[dh]>\s*<t[dh]\b[^>]*>/gi, ' | ').replace(/<li\b[^>]*>/gi, '\n- ').replace(/<\/?(p|div|section|article|br|ul|ol|tr|table|pre)\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '');
   const lines = unxml(h.replace(/&nbsp;/g, ' ')).replace(/[ \t ]+/g, ' ').split('\n').map((l) => l.trim());
   return normalise(lines.join('\n')).replace(/\*\*\s*\*\*/g, '').replace(/\*\* \*\*/g, ' ');
 }
@@ -316,6 +316,10 @@ function cfbStreams(buf) {
 function fromDoc(buf) {
   let streams;
   try { streams = cfbStreams(buf); } catch { streams = null; }
+  // The same old container holds password-protected new Office files and the old Excel and PowerPoint formats: say which, and what to do.
+  if (streams && (streams.has('EncryptedPackage') || streams.has('EncryptionInfo'))) return fail('That file is password-protected. Open it, remove the password (File, Info, Protect) and upload it again, or save a copy as PDF.', 'encrypted');
+  if (streams && (streams.has('Workbook') || streams.has('Book'))) return fail('That is an old Excel file (.xls). Open it and save it as .xlsx or .csv, then upload that.', 'bad_type');
+  if (streams && streams.has('PowerPoint Document')) return fail('That is an old PowerPoint file (.ppt). Open it and save it as .pptx or PDF, then upload that.', 'bad_type');
   const wd = streams && streams.get('WordDocument');
   if (!wd || wd.length < 0x1a8 || wd.readUInt16LE(0) !== 0xa5ec) return fail('That file is not a Word document this reader understands. Save it as .docx and upload that.', 'bad_type');
   if (wd.readUInt16LE(11) & 0x01) return fail('That Word document is encrypted. Remove the password and upload it again.', 'encrypted');
@@ -483,7 +487,7 @@ async function toPng(buf, kind) {
     return { png: await img.sharpen().withMetadata({ density: 300 }).png().toBuffer() };
   } catch {
     if (kind === 'heic') return fail('This server cannot open HEIC pictures. On an iPhone, share the photo as JPG (Settings, Camera, Formats, Most Compatible), or export it as JPG, and upload that.', 'bad_type');
-    return fail('That picture could not be read. It may be damaged.', 'unreadable');
+    return fail('That picture could not be read. It may be damaged or cut off. Take it again or save it as a new JPG or PNG, then upload that.', 'unreadable');
   }
 }
 

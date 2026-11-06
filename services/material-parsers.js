@@ -48,7 +48,12 @@ function normalise(text) {
 
 /** Words with a letter or digit in them; lone punctuation and page furniture do not count. */
 function countWords(text) {
-  return (String(text || '').match(/[A-Za-z0-9][A-Za-z0-9'’-]*/g) || []).length;
+  // Any script. Chinese, Japanese and Thai have no spaces, so a run of those counts one word per two characters (without this a Chinese PDF with a full text layer was called "scanned").
+  const t = String(text || '');
+  const spaced = (t.match(/[\p{L}\p{N}][\p{L}\p{M}\p{N}'’-]*/gu) || []);
+  let n = 0;
+  for (const w of spaced) n += /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}]/u.test(w) ? Math.ceil(w.length / 2) : 1;
+  return n;
 }
 
 async function fromPdf(buf) {
@@ -58,7 +63,7 @@ async function fromPdf(buf) {
     pdf = await getDocumentProxy(new Uint8Array(buf), { isEvalSupported: false, useSystemFonts: false, verbosity: 0, fontExtraProperties: true });
   } catch (err) {
     if (/password/i.test(String(err && (err.name + err.message)))) return fail('That PDF is password-protected. Remove the password and upload it again.', 'encrypted');
-    return fail('That PDF could not be read. It may be damaged.', 'unreadable');
+    return fail('That PDF could not be read. It may be damaged or cut off. Download or export it again, or paste the text.', 'unreadable');
   }
   try {
     if (pdf.numPages > MAX_PAGES) return fail(`That PDF has ${pdf.numPages} pages. The limit is ${MAX_PAGES}. Upload a part of it.`, 'too_many_pages');
@@ -77,7 +82,7 @@ async function fromPdf(buf) {
     const blank = text.map((pg, i) => (countWords(pg) < 3 ? i + 1 : 0)).filter(Boolean);
     return { text: joined, rich: rich || undefined, pages: pdf.numPages, blank: blank.length && blank.length < text.length ? blank : [] };
   } catch {
-    return fail('That PDF could not be read. It may be damaged.', 'unreadable');
+    return fail('That PDF could not be read. It may be damaged or cut off. Download or export it again, or paste the text.', 'unreadable');
   } finally {
     try { await pdf.destroy(); } catch { /* nothing to do */ }
   }
@@ -90,7 +95,7 @@ async function fromDocx(buf) {
   const unpacked = listing.entries.reduce((s, e) => s + e.size, 0);
   if (unpacked > MAX_ZIP_UNPACKED) return fail('That document unpacks to far more than the size limit.', 'too_big');
   if (!listing.entries.some((e) => e.name === 'word/document.xml')) {
-    return fail('Only PDF, Word (.docx), text and Markdown files are supported.', 'bad_type');
+    return fail('That looks like an Office file, but its main part is missing, so it may be damaged. Open it on your computer, save it again and upload the new copy, or save it as PDF.', 'unreadable');
   }
   const mammoth = require('mammoth');
   try {
@@ -181,7 +186,8 @@ async function fromOdt(buf) {
 /** HTML to plain text: scripts, styles and navigation removed, block tags become line breaks. */
 function htmlText(html) {
   const h = String(html).replace(/<!--[\s\S]*?-->/g, ' ').replace(/<(script|style|noscript|svg|nav|head)\b[\s\S]*?<\/\1>/gi, ' ');
-  const text = h.replace(/<\/?(p|div|section|article|br|li|ul|ol|tr|table|blockquote|pre|h[1-6])\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '');
+  // Table cells stay apart ("Mid Basin | 212 | 3.1"), as they do for the other formats.
+  const text = h.replace(/<\/t[dh]>\s*<t[dh]\b[^>]*>/gi, ' | ').replace(/<\/?(p|div|section|article|br|li|ul|ol|tr|table|blockquote|pre|h[1-6])\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '');
   return normalise(unxml(text.replace(/&nbsp;/g, ' ')).replace(/[ \t ]+/g, ' ').split('\n').map((l) => l.trim()).join('\n'));
 }
 
@@ -321,7 +327,7 @@ function fromRtf(buf) {
   if (!s.startsWith('{\\rtf')) return fail('That file is not a usable RTF document.', 'bad_type');
   // Drop destinations that are not body text (fonts, colours, styles, pictures, headers) with their groups.
   for (let i = 0; i < 6; i++) s = s.replace(/\{(?:\\\*)?\\(?:fonttbl|colortbl|stylesheet|info|pict|header|footer|themedata|colorschememapping|latentstyles|datastore)[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g, '');
-  s = s.replace(/\\par[d]?(?![a-z])/g, '\n').replace(/\\(?:line|row)(?![a-z])/g, '\n').replace(/\\tab(?![a-z])/g, '\t')
+  s = s.replace(/\\par[d]?(?![a-z])/g, '\n').replace(/\\cell(?![a-z])\s*(?=\\row)/g, '').replace(/\\cell(?![a-z])/g, ' | ').replace(/\\(?:line|row)(?![a-z])/g, '\n').replace(/\\tab(?![a-z])/g, '\t')
     .replace(/\\'([0-9a-f]{2})/gi, (m, h) => String.fromCharCode(parseInt(h, 16)))
     .replace(/\\u(-?\d+)\??/g, (m, n) => String.fromCharCode(Number(n) < 0 ? Number(n) + 65536 : Number(n)))
     .replace(/\\\*?[a-z]+-?\d* ?/gi, '').replace(/\\([\\{}])/g, '$1').replace(/[{}]/g, '');
@@ -341,7 +347,8 @@ async function tesseractOcr(buf) {
   try {
     if (!sharedWorker) {
       require('fs').mkdirSync(TESSERACT_CACHE, { recursive: true });
-      sharedWorker = Tesseract.createWorker('eng', 1, { cachePath: TESSERACT_CACHE });
+      // errorHandler: without one tesseract.js THROWS a worker error in a message handler, outside any promise, and that ends the whole server process (a cut-off PNG did exactly that).
+      sharedWorker = Tesseract.createWorker('eng', 1, { cachePath: TESSERACT_CACHE, errorHandler: (e) => { console.warn(`ocr: ${String(e && e.message ? e.message : e).slice(0, 120)}`); } });
     }
     const worker = await sharedWorker;
     if (idleTimer) clearTimeout(idleTimer);

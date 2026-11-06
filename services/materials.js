@@ -71,8 +71,21 @@ async function readPicture(buf, type) {
   let work = buf;
   const prepared = await formats.toPng(buf, type);
   if (prepared.png) work = prepared.png;
-  else if (type !== 'png' && type !== 'jpeg') return prepared;
+  // A picture that cannot be decoded (cut off, damaged) stops here: only a server without the converter hands PNG and JPG straight to OCR.
+  else if (prepared.code !== 'no_ocr' || (type !== 'png' && type !== 'jpeg')) return prepared;
   return ocr(work);
+}
+
+/** Other archive formats, by their first bytes: a plain way forward instead of "unknown file". */
+function archiveKind(buf) {
+  if (buf.length < 8) return null;
+  const hex = buf.slice(0, 6).toString('hex');
+  if (buf.slice(0, 4).toString('latin1') === 'Rar!') return 'RAR';
+  if (hex === '377abcaf271c') return '7-Zip';
+  if (hex.startsWith('1f8b')) return 'gzip';
+  if (hex.startsWith('425a68')) return 'bzip2';
+  if (hex.startsWith('fd377a585a00')) return 'XZ';
+  return null;
 }
 
 const pageMarks = (pages) => pages.map((p) => `[[p${p.page}]]\n${p.text}`).join('\n\n');
@@ -84,6 +97,7 @@ const pageMarks = (pages) => pages.map((p) => `[[p${p.page}]]\n${p.text}`).join(
 async function extract(buf, opts = {}) {
   if (!Buffer.isBuffer(buf) || !buf.length) return fail('The file is empty.', 'empty');
   if (buf.length > MAX_BYTES) return fail('That file is over 20 MB.', 'too_big');
+  if (!opts.inner && archiveKind(buf)) return fail(`That is a ${archiveKind(buf)} archive, which Savant cannot open. Unpack it and upload the files, or make a ZIP of them.`, 'bad_type');
   const type = sniff(buf);
   const warnings = [];
   let out;
@@ -131,6 +145,8 @@ async function extract(buf, opts = {}) {
     }
   }
   else if (type === 'zip') {
+    // Bit 0 of the first entry's flags: a password-protected ZIP. Its contents cannot be read.
+    if (buf.length > 8 && (buf.readUInt16LE(6) & 1)) return fail('That ZIP is password-protected. Unpack it on your computer and upload the files, or make a ZIP with no password.', 'encrypted');
     const listing = zipEntries(buf);
     const has = (re) => !!listing && listing.entries.some((e) => re.test(e.name));
     const mime = listing && listing.entries.length && listing.entries[0].name === 'mimetype' ? buf.slice(38, 38 + 70).toString('latin1') : '';
@@ -142,6 +158,8 @@ async function extract(buf, opts = {}) {
       if (opts.inner) return fail('A ZIP inside a ZIP is not opened. Unpack it and upload the files.', 'bad_type');
       if (!listing) return fail('That ZIP, or Office file, looks damaged or cut off (the end of it is missing). Download or export it again and upload the new copy.', 'unreadable');
       let n = 0;
+      if (listing.entries.some((e) => /\.iwa$/i.test(e.name))) return fail('That is an Apple Pages, Keynote or Numbers file, which Savant cannot read. Export it as PDF, Word or PowerPoint (File, Export To) and upload that.', 'bad_type');
+      if (!listing.entries.filter((e) => !/\/$/.test(e.name)).length) return fail('That ZIP is empty.', 'empty');
       out = await formats.fromZipFiles(buf, async (data, name) => {
         if (opts.onProgress) opts.onProgress(n++, listing.entries.length, name);
         return extract(data, { inner: true });
@@ -171,6 +189,7 @@ async function extract(buf, opts = {}) {
   }
   else if (!opts.inner && require('./material-audio').sniffAudio(buf)) return fail('That is an audio recording. Use the Audio box on this page (or upload it here again: recordings are sent there automatically) and it is turned into text.', 'is_audio');
   else if (!opts.inner && require('./material-video').sniffVideo(buf)) return fail('That is a video file. Upload it in the file box with its .mp4, .mov, .webm or .mkv name and its sound is turned into text.', 'is_video');
+  else if (!opts.inner && archiveKind(buf)) return fail(`That is a ${archiveKind(buf)} archive, which Savant cannot open. Unpack it and upload the files, or make a ZIP of them.`, 'bad_type');
   else return fail('Savant could not tell what kind of file that is. Supported: PDF (text or scanned), Word (.docx, .doc), PowerPoint, Excel, OpenDocument (text, slides, sheets), EPUB, RTF, HTML, LaTeX, Jupyter notebooks, subtitles (SRT, VTT), text, Markdown, CSV, source files, pictures (PNG, JPG, WEBP, GIF, BMP, TIFF), ZIPs of these, and audio or video as recordings. If it should be one of these, it may be damaged or renamed: open it on your computer first, or paste the text.', 'bad_type');
   if (out.error) return out;
   // A picture's reader has already applied its own 20-word rule; a file inside a ZIP only has to say something.

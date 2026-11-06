@@ -36,6 +36,8 @@ check('American spelling of a British word is the same word', !ex('Hypoglycemia 
 check('a sentence inside one line is direct', ex('The Nazca Plate subducts beneath South America at about 8 cm per year.').direct);
 check('a swapped number is not direct', !ex('The Nazca Plate subducts beneath South America at about 5 cm per year.').direct);
 check('a new negation is not direct', !ex('Labetalol is not preferred in pregnancy.').direct);
+check('a fact swapped between names in one line is not direct', !ex('Labetalol is avoided in pregnancy (IUGR); atenolol is preferred.').direct);
+check('two neighbouring lines are not direct', !ex('Delegates elected in South America are present.').direct);
 check('a new cause is not direct', !ex('Atenolol is avoided in pregnancy because labetalol is preferred.').direct);
 check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8:15 a.m. on a Tuesday. Models, e.g. MORVEL, help. Done now.').length === 3);
 

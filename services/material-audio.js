@@ -67,8 +67,13 @@ function sniffAudio(buf) {
   if (s4 === 'RIFF' && buf.slice(8, 12).toString('latin1') === 'WAVE') return 'wav';
   if (s4 === 'OggS') return 'ogg';
   if (buf[0] === 0x1a && buf[1] === 0x45 && buf[2] === 0xdf && buf[3] === 0xa3) return 'webm';
-  if (buf.slice(4, 8).toString('latin1') === 'ftyp') return 'm4a';
-  if (s4.slice(0, 3) === 'ID3' || (buf[0] === 0xff && (buf[1] & 0xe0) === 0xe0)) return 'mp3';
+  if (buf.slice(4, 8).toString('latin1') === 'ftyp') return /^(?:heic|heix|hevc|hevx|heim|heis|mif1|msf1|avif|avis)$/.test(buf.slice(8, 12).toString('latin1')) ? null : 'm4a'; // a phone photo (HEIC, AVIF) shares the box
+  if (s4.slice(0, 3) === 'ID3') return 'mp3';
+  // An MP3 frame header: sync bits, then a valid version, layer, bitrate and rate. UTF-16 text starts FF FE, which is also 11 sync bits, so the header is read in full and text is ruled out.
+  if (buf[0] === 0xff && (buf[1] & 0xe0) === 0xe0 && ((buf[1] >> 3) & 3) !== 1 && ((buf[1] >> 1) & 3) !== 0 && (buf[2] >> 4) !== 15 && (buf[2] >> 4) !== 0 && ((buf[2] >> 2) & 3) !== 3) {
+    if (buf[1] === 0xfe) { const t = buf.slice(2, 402).toString('utf16le'); let ok = 0; for (const ch of t) if (/[\p{L}\p{N}\p{P}\s]/u.test(ch)) ok++; if (ok / Math.max(1, t.length) > 0.85) return null; }
+    return 'mp3';
+  }
   return null;
 }
 

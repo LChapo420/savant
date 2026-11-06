@@ -85,7 +85,22 @@ function sentencesOf(text) {
   const raw = String(text || '').replace(/\s+/g, ' ').trim();
   if (!raw) return [];
   const guarded = raw.replace(/\b(e\.g|i\.e|etc|vs|cf|al|Dr|Mr|Mrs|Ms|Prof|Sir|St|No|Fig|approx|a\.m|p\.m)\./gi, (m) => m.replace(/\./g, '\u0002')).replace(/\b([A-Z])\.(?=\s*[A-Z]\b)/g, '$1\u0002');
-  return guarded.replace(/([.!?]["'”)\]]*)\s+(?=["'“(]?[\p{Lu}\p{N}β])/gu, '$1\u0001').split('\u0001').map((x) => x.replace(/\u0002/g, '.').trim()).filter(Boolean);
+  return guarded.replace(/([。！？])\s*/g, '$1\u0001').replace(/([.!?]["'”)\]]*)\s+(?=["'“(¿¡]?[\p{Lu}\p{Lo}\p{N}β])/gu, '$1\u0001').split('\u0001').map((x) => x.replace(/\u0002/g, '.').trim()).filter(Boolean);
+}
+
+/** Content words and numbers in the order they come: a swapped fact has the same words in another order. */
+function tokensInOrder(s) {
+  return (fold(s).toLowerCase().match(/[\p{L}][\p{L}\p{N}']*|\d[\d,]*(?:\.\d+)?/gu) || []).flatMap((w) => w.split(/[-']/)).filter((w) => /^\d/.test(w) || (w.length > 2 && !STOP.has(w))).map((w) => (/^\d/.test(w) ? w.replace(/,/g, '') : stem(w)));
+}
+/** Longest common subsequence of two token lists. */
+function lcs(a, b) {
+  let prev = new Uint16Array(b.length + 1);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = new Uint16Array(b.length + 1);
+    for (let j = 1; j <= b.length; j++) cur[j] = a[i - 1] === b[j - 1] ? prev[j - 1] + 1 : Math.max(prev[j], cur[j - 1]);
+    prev = cur;
+  }
+  return prev[b.length];
 }
 
 /** Everything the checks need about the material: numbers, words, lines. Lines come from each sentence of each line, so a bullet in dense notes is its own place. */
@@ -94,7 +109,7 @@ function indexSource(text) {
   const folded = fold(src).toLowerCase();
   const lines = [];
   for (const line of src.split(/\n+/)) for (const s of sentencesOf(line)) {
-    lines.push({ text: s, terms: contentTerms(s), numbers: numbersOf(s).all, lower: fold(s).toLowerCase(), neg: NEG.test(s), causal: CAUSAL.test(s) });
+    lines.push({ text: s, terms: contentTerms(s), seq: tokensInOrder(s), numbers: numbersOf(s).all, lower: fold(s).toLowerCase(), neg: NEG.test(s), causal: CAUSAL.test(s) });
   }
   return { text: src, folded, lines, numbers: numbersOf(src).all, terms: contentTerms(src), words: new Set(wordsOf(src).flatMap((w) => [w, ...w.split(/[-']/)]).map(stem)) };
 }
@@ -166,16 +181,20 @@ function examine(sentence, idx, opts = {}) {
   if (novel.length) soft.push(`words ${novel.slice(0, 6).join(', ')}`);
   const overlap = terms.size ? (terms.size - novel.length) / terms.size : 1;
   const win = terms.size ? bestWindow(terms, idx) : null;
+  // Direct: one line of the material holds its words and numbers IN THE SAME ORDER, with the same negation and no new cause. Two lines, or another order, go to the model: that is how a swapped fact reads.
   let direct = false;
-  if (!hard.length && !soft.length && win) {
-    const inWin = win.n / terms.size;
-    const winNums = new Set(win.lines.flatMap((l) => [...l.numbers]));
-    const numsThere = [...nums.all].every((n) => winNums.has(n));
-    const winLower = win.lines.map((l) => l.lower).join(' ');
-    const namesThere = [...namesOf(s)].every((n) => winLower.includes(fold(n).toLowerCase()));
-    const sameNeg = NEG.test(s) === win.lines.some((l) => l.neg);
-    const noNewCause = !CAUSAL.test(s) || win.lines.some((l) => l.causal);
-    direct = inWin >= 0.8 && numsThere && namesThere && sameNeg && noNewCause;
+  if (!hard.length && !soft.length && terms.size) {
+    const seq = tokensInOrder(s);
+    const lowerS = [...namesOf(s)].map((n) => fold(n).toLowerCase());
+    for (const l of idx.lines) {
+      let shared = 0; for (const x of terms) if (l.terms.has(x)) shared++;
+      if (shared / terms.size < 0.8) continue;
+      if (![...nums.all].every((n) => l.numbers.has(n))) continue;
+      if (!lowerS.every((n) => l.lower.includes(n))) continue;
+      if (NEG.test(s) !== l.neg) continue;
+      if (CAUSAL.test(s) && !l.causal) continue;
+      if (seq.length && lcs(seq, l.seq) / seq.length >= 0.85) { direct = true; break; }
+    }
   }
   return { hard, soft, direct, overlap, evidence: win ? win.lines.map((l) => l.text).join(' ') : null };
 }
