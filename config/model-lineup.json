@@ -317,6 +317,24 @@
     },
     "spanish_reaction": {
       "tier": "light"
+    },
+    "fact_live": {
+      "tier": "light",
+      "only": true,
+      "models": [
+        {
+          "model": "z-ai/glm-5.3-flash",
+          "effort": "off"
+        },
+        {
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "effort": "off"
+        },
+        {
+          "model": "deepseek-ai/deepseek-v4.1-flash",
+          "effort": "off"
+        }
+      ]
     }
   },
   "jev": {
@@ -1109,6 +1127,25 @@
         ],
         "timeout_ms": 10000,
         "basis": "The personal layer over a shared lesson (services/lesson-layer.js, 6 Nov 2026): a short structured answer a learner waits on, Coral Fast first on the fast lane; every answer is checked deterministically."
+      },
+      "fact_live": {
+        "allow": [
+          "zerogpu:z-ai/glm-5.3-flash",
+          "coral:deepseek-v4.1-flash-fast",
+          "coral:deepseek-v4.1-flash"
+        ],
+        "only": [
+          "zerogpu:z-ai/glm-5.3-flash",
+          "coral:deepseek-v4.1-flash-fast",
+          "coral:deepseek-v4.1-flash",
+          "nvidia:z-ai/glm-5.3-flash*",
+          "nvidia:nvidia/nemotron-3-ultra*",
+          "ollama:*",
+          "local:*",
+          "nvidia:deepseek-ai/deepseek-v4.1-flash*"
+        ],
+        "timeout_ms": 8000,
+        "basis": "services/fact-guard.js: the check before model text reaches a learner. scripts/fact-guard-eval.js, docs/FACT-COVERAGE.md. A waiting learner goes to the paid slots first (cheap, fast); background work to the free ones first. Learner data on the added providers only until their window closes (14 Nov); then NVIDIA alone."
       }
     }
   }

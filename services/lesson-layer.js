@@ -4,8 +4,8 @@
  * Writing a whole personal lesson and checking its facts takes minutes. So when a learner reaches a level, the level's shared lesson (already
  * written and fact-checked, `block_plans` with no user) opens at once, and within seconds a short layer written for this learner is put over
  * it: why this matters to them, an opening hook and a couple of analogies drawn from their interests, in their word level. The layer may add
- * NO number and NO claim about the subject: it is checked here, deterministically (`check`), and a layer that fails twice is not shown (the
- * plain lesson stays). The full personal level keeps being written in the background and is what the learner opens at the next level.
+ * NO number and NO claim about the subject: it is held to the rules here (`check`) and then read against the lesson by a real fact check (services/fact-guard.js,
+ * task part_layer); a layer that fails is not shown, and a late or failed check means no layer (the plain lesson stays). The full personal level keeps being written in the background and is what the learner opens at the next level.
  *
  *   on()                       the switch: INSTANT_LAYER=off turns it off (on by default: its gate passed, docs/FIRST-LESSON.md)
  *   sourceOf(plan)             the text of the shared lesson: block text, check prompts and choices; the check answers apart
@@ -24,6 +24,7 @@ const lazy = (p) => require(p); // eslint-disable-line global-require, import/no
 const COLLECTION = 'lesson_layers';
 // ON by default since its gate passed (docs/FIRST-LESSON.md, 6 Nov round 2); INSTANT_LAYER=off removes it. With no shared lesson for a level nothing changes.
 const on = () => String(process.env.INSTANT_LAYER || 'on').toLowerCase() !== 'off';
+const factGuard = () => lazy('./fact-guard');
 const BUDGET_MS = Number(process.env.INSTANT_LAYER_BUDGET_MS || 14000); // from start to a stored layer, revision included
 const HEDGE_MS = Number(process.env.INSTANT_LAYER_HEDGE_MS || 2500);
 const MAX_WORDS = { hook: 45, why: 50, analogy: 40, total: 160 };
@@ -245,6 +246,8 @@ function get(userId, planId) {
   const db = lazy('../config/db');
   const row = db.findOne(COLLECTION, (r) => r.user_id === userId && r.plan_id === planId);
   if (!row) return { state: running.has(keyOf(userId, planId)) ? 'pending' : 'none' };
+  // A layer stored before the guard existed has had no real check: it is written again, not shown.
+  if (row.status === 'ready' && factGuard().on() && !row.fact_checked) return { state: 'none' };
   if (row.status === 'ready') return { state: 'ready', layer: row.layer, ms: row.ms, model: row.model };
   if (row.status === 'writing') return { state: running.has(keyOf(userId, planId)) ? 'pending' : 'none' };
   return { state: 'none', problems: row.problems || [] };
@@ -260,7 +263,8 @@ async function start({ user, plan, topic = '', trackId, gradeId, level, llm = nu
   if (running.has(key)) return null;
   const db = lazy('../config/db');
   const have = db.findOne(COLLECTION, (r) => r.user_id === user.id && r.plan_id === plan.id);
-  if (have && (have.status === 'ready' || have.status === 'failed')) return have;
+  if (have && have.status === 'failed') return have;
+  if (have && have.status === 'ready' && (have.fact_checked || !factGuard().on())) return have;
   running.add(key);
   const t0 = Date.now();
   const row = have || db.insert(COLLECTION, { user_id: user.id, plan_id: plan.id, track_id: trackId || plan.track_id, grade_id: gradeId || plan.grade_id, level: level || plan.level, status: 'writing', created_at: new Date().toISOString() });
@@ -270,7 +274,8 @@ async function start({ user, plan, topic = '', trackId, gradeId, level, llm = nu
     const source = sourceOf(plan, topic);
     let goalClause = null;
     try { goalClause = lazy('./part-modify').goalClause(lazy('./retention-goal').forEnrollment(user.id, db.findOne('enrollments', (e) => e.user_id === user.id && e.track_id === (trackId || plan.track_id) && e.grade_id === (gradeId || plan.grade_id)))); } catch { /* no goal */ }
-    const call = llm || ((a) => lazy('./pool').runForeground(() => lazy('./ai').structuredDetail({ role: 'fast', task: 'part_layer', ...a, userId: user.id, dataClass: 'learner', effort: 'off' }), { fast: true }));
+    // factSource: the fact check (services/fact-guard.js, task part_layer) reads the layer against this lesson before it is stored. Wrong piece: dropped. No check: no layer.
+    const call = llm || ((a) => lazy('./pool').runForeground(() => lazy('./ai').structuredDetail({ role: 'fast', task: 'part_layer', ...a, userId: user.id, dataClass: 'learner', effort: 'off', factSource: source.text }), { fast: true }));
     const { got, problems, first, salvaged } = await compose({ spec: sp, source, plan, call, t0, goalClause });
     const ms = Date.now() - t0;
     if (problems.length || !got) { db.update(COLLECTION, row.id, { status: 'failed', problems: problems.slice(0, 6), first_problems: first.slice(0, 6), ms, model: got && got.model }); return null; }
@@ -279,7 +284,7 @@ async function start({ user, plan, topic = '', trackId, gradeId, level, llm = nu
       hook: String(got.layer.hook || '').trim(),
       analogies: (got.layer.analogies || []).slice(0, 2).map((a) => ({ point: String(a.point || '').trim(), text: String(a.text || '').trim() })).filter((a) => a.text),
     };
-    return db.update(COLLECTION, row.id, { status: 'ready', layer: clean, ms, model: got.model, revised: first.length > 0 && !salvaged, salvaged, first_problems: first.slice(0, 6), finished_at: new Date().toISOString() });
+    return db.update(COLLECTION, row.id, { status: 'ready', layer: clean, ms, model: got.model, fact_checked: factGuard().on(), revised: first.length > 0 && !salvaged, salvaged, first_problems: first.slice(0, 6), finished_at: new Date().toISOString() });
   } catch (err) {
     try { db.update(COLLECTION, row.id, { status: 'failed', problems: [`error: ${String(err && err.message).slice(0, 80)}`], ms: Date.now() - t0 }); } catch { /* nothing */ }
     return null;

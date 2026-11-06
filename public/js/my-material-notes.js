@@ -25,7 +25,7 @@ App.mount(async () => {
       setTimeout(() => load(false), 4000);
       return;
     }
-    if (n.status === 'failed') { root.innerHTML = `${back}<div class="notice notice-error">Notes could not be made from this text. Try a clearer or longer one.</div><button class="btn" type="button" id="make">Try again</button>`; document.getElementById('make').addEventListener('click', () => load(true)); return; }
+    if (n.status === 'failed') { root.innerHTML = `${back}<div class="notice notice-error">Notes could not be made or checked just now. Try again in a minute. If it keeps happening, use a clearer or longer text.</div><button class="btn" type="button" id="make">Try again</button>`; document.getElementById('make').addEventListener('click', () => load(true)); return; }
     root.innerHTML = `${back}<h1>${esc(n.title)}</h1>
       <p class="small muted">${n.status === 'partial' ? 'Some parts of the material could not be turned into notes. ' : ''}These notes touch about ${n.coverage}% of your material's sections.</p>
       ${n.sections.map((s) => `<section class="card" style="margin-top:12px"><h2>${esc(s.heading)}</h2><ul style="padding-left:18px">${s.bullets.map((b) => `<li>${esc(b.text)}<details><summary class="tiny muted">Show where</summary><p class="tiny muted">“${esc(b.quote)}”</p></details></li>`).join('')}</ul></section>`).join('')}`;

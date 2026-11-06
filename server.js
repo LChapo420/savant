@@ -253,6 +253,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   // The after-level reads run in the background, one at a time.
   require('./services/learner-record').start();
+  require('./services/fact-recheck').start(); // off unless FACT_RECHECK=1: reads old stored text, reports only
   require('./services/cost-tracker').start(); // process snapshots every minute (COST_TRACKER=off stops all tracking)
   // The beta comparison (tailored vs base): writes data/beta-report.json once a day (services/beta-compare.js; BETA_REPORT_DAILY=off stops it).
   require('./services/beta-compare').startDaily();
