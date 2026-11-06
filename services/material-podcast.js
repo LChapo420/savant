@@ -369,6 +369,16 @@ async function build(userId, materialId, opts = {}) {
       db.flush();
       return { error: 'An episode could not be made from that material. Try a longer or clearer text.', code: 'nothing_verified' };
     }
+    // Nothing invented (services/material-factcheck.js): each turn is checked against the material; an unsupported sentence goes, and a turn with nothing left goes.
+    if (require('./material-factcheck').onFor(opts)) { // eslint-disable-line global-require
+      const F = require('./material-factcheck'); // eslint-disable-line global-require
+      const fc = await F.checkTexts(data.turns.map((t) => ({ text: t.text, fallback: t.quote ? clean(t.quote, 400) : '' })), {
+        idx: F.indexSource(mat.text), sourceText: shown.map((p) => p.text).join('\n\n'), allow: F.interestWords(spec),
+        asker: async (a) => { const c = estTokens(a.system, a.user) + a.maxTokens; used += c; let res = null; try { res = await llm({ ...a, userId }); } catch { res = null; } return { res }; },
+      });
+      fc.items.forEach((r, i) => { if (r.changed) data.turns[i].text = r.text; });
+      data.turns = data.turns.filter((t) => t.text);
+    }
     const slots = checkinSlots(data.turns, spec);
     const checkins = placeCheckins(data.turns, [...packQuiz, ...courseChecks(skills, slots.length), ...data.checkins], slots, slotSkills(data.turns, slots, skills));
     saved = db.update('material_podcasts', saved.id, {

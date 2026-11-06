@@ -23,6 +23,7 @@ const courses = require('./course-builder');
 const study = require('./material-study');
 const adapt = require('./material-adapt');
 const learningSpec = require('./learning-spec');
+const factcheck = require('./material-factcheck');
 
 const VERSION = 1;
 const PART_CHARS = 9000;             // characters of passage text shown to one call
@@ -244,6 +245,19 @@ async function buildPart(part, ctx) {
   }
   const kept = items.filter((k) => k.item.type === 'written' || ok.has(toCheck.indexOf(k) + 1));
   ctx.dropped.unsupported += items.length - kept.length;
+  // Nothing invented (services/material-factcheck.js): the summary, the back of each card, each explanation and each model answer are checked; what the material does not back goes, or becomes its verified quote.
+  if (ctx.factOn) {
+    const entries = [
+      ...summary.map((p) => ({ text: p, set: (t) => { const at = summary.indexOf(p); if (at >= 0) { if (t) summary[at] = t; else summary.splice(at, 1); } } })),
+      ...cards.map((c) => ({ text: c.back, extra: c.front, fallback: clean(c.quote, 400), set: (t) => { c.back = t; } })),
+      ...kept.filter((k) => k.item.explanation).map((k) => ({ text: k.item.explanation, extra: `${k.item.prompt} ${(k.item.choices || []).join(' ')} ${k.item.answer || ''}`, fallback: `Your material says: "${k.item.quote}"`, set: (t) => { k.item.explanation = t; } })),
+      ...kept.filter((k) => k.item.type === 'written' && k.item.answer).map((k) => ({ text: k.item.answer, extra: k.item.prompt, fallback: clean(k.item.quote, 400), set: (t) => { k.item.answer = t; } })),
+    ];
+    const fc = await factcheck.checkTexts(entries, { idx: ctx.factIdx, sourceText: text, allow: ctx.allowNames, asker: (a) => ask(ctx.llm, ctx.budget, ctx.userId, a) });
+    if (fc.report.stopped) return { stopped: true };
+    fc.items.forEach((r, i) => { if (r.changed) { entries[i].set(r.text); ctx.dropped.fact_fixed = (ctx.dropped.fact_fixed || 0) + 1; } });
+    if (fc.report.unchecked) ctx.dropped.fact_unchecked = (ctx.dropped.fact_unchecked || 0) + fc.report.unchecked;
+  }
   return { value: { summary, cards, quiz: kept.filter((k) => k.where === 'quiz').map((k) => k.item), test: kept.filter((k) => k.where === 'test').map((k) => k.item) } };
 }
 
@@ -274,6 +288,8 @@ async function build(userId, materialId, opts = {}) {
     saved = prev ? db.update('material_packs', prev.id, base) : db.insert('material_packs', base);
     const ps = packSpec(userId, mat);
     const ctx = { llm, userId, title: mat.title, block: ps.block, questionBlock: ps.questionBlock, limits: ps.limits, budget: { used: 0, limit: opts.tokenBudget || TOKEN_BUDGET }, unanswered: 0, models: new Set(), dropped: { ungrounded: 0, unsupported: 0, cards: 0, analogies: 0 }, guard: learningSpec.analogyGuard(ps.spec, mat.text) };
+    ctx.factOn = factcheck.onFor(opts);
+    if (ctx.factOn) { ctx.factIdx = factcheck.indexSource(mat.text); ctx.allowNames = factcheck.interestWords(ps.spec); }
     const all = { summary: [], cards: [], quiz: [], test: [] };
     let stopped = false;
     for (const part of partsOf(passages)) {
@@ -290,7 +306,7 @@ async function build(userId, materialId, opts = {}) {
     all.quiz.forEach((q, i) => { q.id = `z${i + 1}`; });
     all.test.forEach((q, i) => { q.id = `t${i + 1}`; });
     const useful = all.cards.length || all.quiz.length || all.test.length;
-    const status = !useful ? 'failed' : (stopped || ctx.unanswered ? 'partial' : 'ready');
+    const status = !useful ? 'failed' : (stopped || ctx.unanswered || ctx.dropped.fact_unchecked ? 'partial' : 'ready');
     saved = db.update('material_packs', saved.id, {
       ...all, status, spec_hash: ps.spec.isDefault ? null : learningSpec.specHash(ps.spec), dropped: ctx.dropped, models: [...ctx.models], tokens_used: ctx.budget.used,
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),

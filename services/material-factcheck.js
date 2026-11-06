@@ -308,4 +308,40 @@ async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, 
   return { paragraphs: outP, keyPoints: outK, summary: outS || '', badExplanations, report: { ...got.stats, fell_back: fellBack, words_before: sum([...(paragraphs || []), ...(keyPoints || [])]), words_after: sum([...outP, ...outK]), dropped: dropped.slice(0, 40) } };
 }
 
-module.exports = { enabled, indexSource, examine, check, checkLesson, sentencesOf, numbersOf, namesOf, contentTerms, stem, CHECK_SYSTEM, CHECK_SCHEMA };
+/**
+ * Check short texts that each have a safe stand-in: [{ text, fallback?, extra? }] -> the same order of { text, changed }. A text with an unsupported sentence keeps its supported sentences, or
+ * becomes its `fallback` (a verified quote of the material); with no fallback and nothing left, text is ''. Used by the notes (bullets), the study pack (summary, card backs, explanations, model answers)
+ * and the podcast (turns). { items, report }.
+ */
+async function checkTexts(entries, { idx, sourceText, asker, allow }) {
+  const items = [];
+  const perEntry = entries.map((e, i) => sentencesOf(e.text).map((s, j) => { const id = `t${i}.${j}`; items.push({ id, text: s, extra: e.extra }); return { id, s }; }));
+  const got = await check(items, { idx, sourceText, asker, allow });
+  const dropped = [];
+  const out = entries.map((e, i) => {
+    let changed = false;
+    const kept = [];
+    for (const { id, s } of perEntry[i]) {
+      const r = got.get(id);
+      if (!r || !r.keep) { changed = true; dropped.push({ text: s, why: r && r.reason, how: r && r.how }); continue; }
+      if (r.text) { changed = true; dropped.push({ text: s, fixed: r.text, why: r.reason, how: 'fixed' }); }
+      kept.push(r.text || s);
+    }
+    if (!changed) return { text: e.text, changed: false };
+    // A mostly unsupported text is not kept in pieces when a verified stand-in exists.
+    const left = kept.join(' ');
+    if (e.fallback && (!left || (left.match(/\S+/g) || []).length < 0.5 * (e.text.match(/\S+/g) || []).length)) return { text: e.fallback, changed: true };
+    return { text: left || e.fallback || '', changed: true };
+  });
+  return { items: out, report: { ...got.stats, dropped: dropped.slice(0, 40) } };
+}
+
+/** On for the real model; a scripted `llm` (a unit test of something else) gets it only when it asks: `opts.factcheck` or UPLOAD_FACTCHECK=on. */
+const onFor = (opts = {}) => enabled() && (!opts.llm || !!opts.factcheck || String(process.env.UPLOAD_FACTCHECK || '').toLowerCase() === 'on');
+/** The learner's interests may be named in an analogy without being in the material. */
+function interestWords(spec) {
+  const words = ((spec && spec.interests && spec.interests.exampleDomains) || []).join(' ').toLowerCase().normalize('NFKD').match(/\p{L}[\p{L}\p{N}]*/gu) || [];
+  return new Set(words);
+}
+
+module.exports = { onFor, interestWords, checkTexts, enabled, indexSource, examine, check, checkLesson, sentencesOf, numbersOf, namesOf, contentTerms, stem, CHECK_SYSTEM, CHECK_SCHEMA };

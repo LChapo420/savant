@@ -125,13 +125,16 @@ function ffmpegPath() {
 /** Any container to 16 kHz mono float samples, through ffmpeg (stdin to stdout, nothing on disk). */
 function decodeWithFfmpeg(buf, bin, file) {
   return new Promise((resolve) => {
-    const p = spawn(bin, ['-v', 'error', '-i', file || 'pipe:0', '-vn', '-ac', '1', '-ar', String(SAMPLE_RATE), '-t', String(MAX_SECONDS + 1), '-f', 'f32le', 'pipe:1'], { stdio: ['pipe', 'pipe', 'ignore'] });
+    const p = spawn(bin, ['-v', 'error', '-i', file || 'pipe:0', '-vn', '-ac', '1', '-ar', String(SAMPLE_RATE), '-t', String(MAX_SECONDS + 1), '-f', 'f32le', 'pipe:1'], { stdio: ['pipe', 'pipe', 'pipe'] });
     const parts = [];
+    let errText = '';
     p.stdout.on('data', (d) => parts.push(d));
+    p.stderr.on('data', (d) => { if (errText.length < 2000) errText += d; });
     p.on('error', () => resolve(fail('The audio decoder could not start.', 'no_decoder')));
     p.on('close', (code) => {
       const raw = Buffer.concat(parts);
-      if (code !== 0 || raw.length < 4) return resolve(fail('That audio file could not be read. It may be damaged.', 'unreadable'));
+      if (/does not contain any stream|Stream map|no audio|matches no streams/i.test(errText) || (code === 0 && raw.length < 4)) return resolve(fail('There is no sound in that file, so there is nothing to turn into text.', 'no_audio'));
+      if (code !== 0 || raw.length < 4) return resolve(fail('That recording could not be read. It may be damaged or cut off. Download or export it again and upload the new copy.', 'unreadable'));
       const copy = Buffer.from(raw);
       resolve({ samples: new Float32Array(copy.buffer, copy.byteOffset, Math.floor(copy.length / 4)) });
     });

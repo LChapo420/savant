@@ -539,7 +539,7 @@ const wordCount = (arr) => arr.reduce((n, t) => n + (String(t).match(/\S+/g) || 
  * Is the fact check on for this build? Always for the real model. A scripted `llm` (a unit test of something else) gets it only when it asks: `opts.factcheck` or UPLOAD_FACTCHECK=on
  * (scripts/uploads-factcheck-test.js and the proofs do), because a script does not answer a check it was not written for.
  */
-const factOn = (opts) => factcheck.enabled() && (!opts.llm || !!opts.factcheck || String(process.env.UPLOAD_FACTCHECK || '').toLowerCase() === 'on');
+const factOn = (opts) => factcheck.onFor(opts);
 /** The whole material's index for the fact check (the passages a build works from), once per build. */
 function factIndex(ctx, passageById) {
   if (!ctx.factIdx) ctx.factIdx = factcheck.indexSource([...passageById.values()].map((p) => p.text).join('\n\n'));
