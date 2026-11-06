@@ -136,4 +136,20 @@ function materialNotes(userId, query, mode) {
   } catch { return []; }
 }
 
-module.exports = { materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
+const PROPOSAL = /(?:is it|is the answer|the answer is|the answer'?s|i think (?:it'?s|its|the answer is)|maybe (?:it'?s|its)?|so it'?s|it'?s|its)\s+([^?.!,;]{1,30})/ig;
+const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9/.:^-]+/g, ' ').trim();
+/** True when the reply repeats an answer the learner just proposed. Deterministic: no model needed. */
+function echoesProposal(learnerMsg, reply) {
+  // A sentence that is a question ("why did you pick B?") is the tutor asking for their reasoning, which is wanted, not a confirmation.
+  const sentences = String(reply || '').split(/(?<=[.!?])\s+/).filter((x) => !/\?\s*$/.test(x)).map((x) => ` ${norm(x)} `);
+  let m;
+  PROPOSAL.lastIndex = 0;
+  while ((m = PROPOSAL.exec(String(learnerMsg || ''))) !== null) {
+    const cand = norm(m[1]);
+    if (!cand || cand.length > 24 || /^(a|an|the|that|this|right|correct|wrong|like|just|not|ok|okay|so|and)$/.test(cand)) continue;
+    if (sentences.some((x) => x.includes(` ${cand} `))) return true;
+  }
+  return false;
+}
+
+module.exports = { echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };

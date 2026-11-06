@@ -221,12 +221,14 @@ async function run() {
   const list = learners().filter((l) => !only || only.has(l.key));
   const ledgerBefore = (() => { try { return require('../services/standard-compute-ledger').status(); } catch { return null; } })();
 
-  for (const arm of arms) {
+  // Interleaved: one learner through every arm before the next learner, so each arm meets the same provider health (free slots cool down).
+  const results = Object.fromEntries(arms.map((a) => [a, []]));
+  for (const L of list) for (const arm of arms) {
     const dead = /dead/.test(arm);
     process.env.TUTOR_FULL = arm.startsWith('full') ? '1' : '0';
     app.ai.talk = dead ? async () => null : realTalk;
-    const result = [];
-    for (const L of list) {
+    const result = results[arm];
+    {
       const u = seed(app, { ...L, key: `${L.key}_${arm}` });
       const messages = [];
       for (let i = 0; i < L.turns.length; i++) {
@@ -252,7 +254,9 @@ async function run() {
         if (!dead && !/safety|instant/.test(r.source)) await sleep(Number(args.gap || 800));
       }
     }
-    fs.writeFileSync(path.join(out, `${arm}.json`), JSON.stringify({ arm, at: new Date().toISOString(), cpu_load: os.loadavg ? os.loadavg() : null, cpus: os.cpus().length, results: result }, null, 2));
+  }
+  for (const arm of arms) {
+    fs.writeFileSync(path.join(out, `${arm}.json`), JSON.stringify({ arm, at: new Date().toISOString(), cpu_load: os.loadavg ? os.loadavg() : null, cpus: os.cpus().length, results: results[arm] }, null, 2));
   }
   const ledgerAfter = (() => { try { return require('../services/standard-compute-ledger').status(); } catch { return null; } })();
   fs.writeFileSync(path.join(out, 'meta.json'), JSON.stringify({ learners: list.map((l) => ({ key: l.key, truth: l.truth, turns: l.turns.map((t) => ({ say: t.say, t: t.t, page: t.page.path, question: t.page.question || null, note: t.note || null })) })), calls: summarizeCalls(calls), ledgerBefore, ledgerAfter }, null, 2));

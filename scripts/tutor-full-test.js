@@ -18,9 +18,10 @@ process.env.TUTOR_DEADLINE_MS = '400';
 const db = require('../config/db');
 const ai = require('../services/ai');
 let mode = 'ok'; // ok | null | hang | throw
+let leakVerdict = 'NO';
 const calls = [];
 ai.talk = async (o) => {
-  if (o.task !== 'dock_help') return 'NO'; // the leak check
+  if (o.task !== 'dock_help') return leakVerdict; // the leak check
   calls.push(o);
   if (mode === 'hang') return new Promise(() => {});
   if (mode === 'throw') throw new Error('provider down');
@@ -109,6 +110,17 @@ const say = (text) => [{ role: 'user', content: text }];
   mode = 'null';
   r = await dock.reply({ user: u, messages: say('help'), page: { path: '/placement' } });
   check('on a graded page the fallback says it is method only and gives no answer', r.mode === 'method' && /method only/.test(r.reply) && !/7\s*\/\s*8/.test(r.reply), r.reply);
+
+  console.log('answer guards');
+  check('a reply repeating the proposed answer is caught', full.echoesProposal('is it 6?', 'try putting 6 back into the equation.') && full.echoesProposal('is the answer 3/4?', '3/4 is what you get if you divide both by 2.'));
+  check('asking why they chose it is not a leak', !full.echoesProposal('is it B?', 'Why did you pick B? Tell me your reasoning.') && !full.echoesProposal('i dont get it', 'try again'));
+  mode = 'ok';
+  leakVerdict = null; // the checker is down
+  r = await dock.reply({ user: u, messages: say('is it 6?'), page: { path: '/review', question: 'Solve 2x + 5 = 17' } });
+  check('graded page and the checker is down: the reply is held (fail closed)', r.held === true && /method/.test(r.reply), r);
+  r = await dock.reply({ user: u, messages: say('is it 6?'), page: { path: '/session', question: 'Solve 2x + 5 = 17' } });
+  check('a lesson page with the checker down stays helpful', r.held === false, r);
+  leakVerdict = 'NO';
 
   console.log('switch off');
   process.env.TUTOR_FULL = '0';

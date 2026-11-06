@@ -321,7 +321,11 @@ Does the reply state the answer, give it away so directly that nothing is left f
       });
     } catch { verdict = ''; }
     if (/^\W*yes/i.test(verdict || '')) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+    // On a graded page a checker that could not run is not a pass: with the switch on, the reply is held instead (fail closed).
+    else if (fullOn && mode === 'method' && !/^\W*no/i.test(verdict || '')) { text = HOLD_REPLY.method; held = true; }
   }
+  // Without any model: a reply that repeats the answer the learner just proposed ("is it 3/4?") is confirming it.
+  if (fullOn && text && !held && last && (mode === 'method' || (page && page.question)) && full.echoesProposal(last.content, text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   facts.dockEnded(user.id);
   let out = text || tutor.offlineReply(user.id);
   let feature;
