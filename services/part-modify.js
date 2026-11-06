@@ -151,10 +151,10 @@ function reviewLine(spec, goal = null) {
     ? (fb.lowStakes ? goal.test_date : `your test on ${goal.test_date}`)
     : goal && goal.horizon ? ({ months: 'the months ahead', year: 'next year', years: 'the years ahead' }[goal.horizon] || 'next week') : 'next week';
   if (lang.eslSupport || lang.plainLanguage) return `Think of it again now. This helps you keep it for ${later}.`;
-  if (tone.correction === 'direct' || tone.praise === 'minimal') return `Recalling it now keeps it for ${later}.`;
-  if (fb.lowStakes) return `No pressure here: recalling it now is what keeps it with you for ${later}.`;
-  if (tone.correction === 'gentle' || tone.warmth >= 0.65) return `Taking a moment to recall it now is what keeps it with you for ${later}.`;
-  if (tone.formality >= 0.65) return `Recalling it now is what carries it forward to ${later}.`;
+  if (tone.correction === 'direct' || tone.praise === 'minimal') return `Recalling it now helps keep it for ${later}.`;
+  if (fb.lowStakes) return `No pressure here: recalling it now helps keep it with you for ${later}.`;
+  if (tone.correction === 'gentle' || tone.warmth >= 0.65) return `Taking a moment to recall it now helps keep it with you for ${later}.`;
+  if (tone.formality >= 0.65) return `Recalling it now helps carry it forward to ${later}.`;
   return `Recalling it now is what moves it into ${later}.`;
 }
 
@@ -258,18 +258,29 @@ function hintGatePrompt(source, text) {
   };
 }
 function readHintGate(reply) {
-  const m = String(reply || '').match(/\{[\s\S]*\}/);
-  if (!m) return null;
-  let j; try { j = JSON.parse(m[0]); } catch { return null; }
+  const j = firstJson(reply);
   if (!j || typeof j.gives_answer !== 'boolean' || !Array.isArray(j.false_claims)) return null;
   const problems = [...(j.gives_answer ? ['it gives the answer away'] : []), ...j.false_claims.filter(Boolean).map((x) => `false: ${String(x).slice(0, 200)}`)];
   return { ok: problems.length === 0, problems };
 }
+/** The first whole JSON object in a reply: some models say it, then say it again, or add a note after it. null when there is none. */
+function firstJson(reply) {
+  const t = String(reply || '');
+  const start = t.indexOf('{');
+  if (start < 0) return null;
+  let depth = 0; let quoted = false;
+  for (let i = start; i < t.length; i += 1) {
+    const c = t[i];
+    if (quoted) { if (c === '\\') i += 1; else if (c === '"') quoted = false; continue; }
+    if (c === '"') quoted = true;
+    else if (c === '{') depth += 1;
+    else if (c === '}') { depth -= 1; if (!depth) { try { return JSON.parse(t.slice(start, i + 1)); } catch { return null; } } }
+  }
+  return null;
+}
 /** A judge's reply as { ok, problems } or null when it cannot be read (which is never a pass). */
 function readFactGate(reply) {
-  const m = String(reply || '').match(/\{[\s\S]*\}/);
-  if (!m) return null;
-  let j; try { j = JSON.parse(m[0]); } catch { return null; }
+  const j = firstJson(reply);
   if (!j || typeof j !== 'object' || !['new', 'dropped', 'changed'].some((k) => Array.isArray(j[k]))) return null;
   const problems = ['new', 'dropped', 'changed', 'avoided'].flatMap((k) => (Array.isArray(j[k]) ? j[k] : []).filter((x) => String(x || '').trim()).map((x) => `${k}: ${String(x).slice(0, 200)}`));
   return { ok: problems.length === 0, problems };
@@ -412,12 +423,27 @@ const lockedOf = (text) => String(text || '').split(/(?<=[.!?])\s+/).map((x) => 
 
 const LESSON_SYSTEM = 'You rewrite one lesson text for one specific learner. Only the delivery changes: wording, order of emphasis, how it is cut into paragraphs, tone. Keep every fact, number, definition and key point of the original. Add nothing: no fact, no number, no formula, no symbol, no named example, no count of steps or parts that the original does not have, even if you know it to be true. A delivery note below that asks for something the original does not have (a worked example, a mistake, a story, a game) is applied only with what the original has, or left out. A comparison from another field is fine only if it is given as a comparison and states no fact of its own. Never mention the learner or their profile. Plain text paragraphs. Return JSON {"paragraphs": ["..."]}.';
 
+// The levers a rewrite of a finished text can honestly follow. The full material block also asks for mistakes, a big picture, a hook, a recap and worked cases; a rewrite has nothing of its own
+// to put there, so writers made them up, and that is what the fact gate caught (7 Nov pilot: "A common wrong idea...", "It fits into the larger picture...").
+const DELIVERY = ['chunk', 'density', 'structure', 'warmth', 'formality', 'humor', 'praise', 'gentleness', 'pressure', 'ruleFirst', 'notation', 'instructions', 'length'];
+function lessonDeliveryLines(spec) {
+  const ls = lazy('./learning-spec');
+  const lang = spec.language || {};
+  const it = spec.interests || {};
+  const ranked = DELIVERY.map((l) => ({ l, lean: (spec.levers || {})[l] || 0 })).filter((x) => Math.abs(x.lean) >= ls.SHOW_AT && ls.PHRASES[x.l]).sort((a, b) => Math.abs(b.lean) - Math.abs(a.lean));
+  const out = [`Language: reading grade ${lang.vocabularyGrade || 'of the original'}; most sentences ${lang.maxSentenceWords || 20} words or fewer${lang.eslSupport ? '; everyday words, no idioms or phrasal verbs' : ''}.`];
+  for (const x of ranked) { const p = ls.PHRASES[x.l][x.lean > 0 ? 1 : 0]; if (p) out.push(p); }
+  if (it.exampleDomains && it.exampleDomains.length && it.share >= 0.5) out.push(`Only where it truly has the same structure as the idea, a short comparison from ${it.exampleDomains.slice(0, 2).join(' or ')}, given as a comparison and stating no fact of its own.`);
+  if (it.avoidDomains && it.avoidDomains.length) out.push(`Never use anything about: ${it.avoidDomains.join(', ')}.`);
+  return out.map((x, i) => `${i + 1}. ${x}`);
+}
+
 /** The same, with the problems the last draft still had: { paragraphs: [..] | null, problems: [..], attempts, partial }. */
 async function rewriteLessonDetail({ spec, skill, llm, gate = null }) {
   const stored = skill.lesson.paragraphs || [];
   const orig = stored.join('\n\n');
   const keys = skill.lesson.key_points || [];
-  const block = lazy('./learning-spec').specToLines(spec, { surface: 'material' }).join('\n');
+  const block = `How to deliver it for this learner:\n${lessonDeliveryLines(spec).join('\n')}`;
   const source = { text: orig, title: skill.title, prompt: `Lesson: ${skill.title}` };
   const ask = async (text, note, keysHere) => {
     const locks = lockedOf(text);
@@ -540,5 +566,5 @@ function maybeRefreshCourse(userId, materialId) {
 const hashOf = (s) => crypto.createHash('sha1').update(String(s)).digest('hex').slice(0, 10);
 
 module.exports = {
-  PARTS, REVIEW_DEFAULT, factGatePrompt, readFactGate, hintGatePrompt, readHintGate, defaultGate, avoidedIn, reviewLine, voiceOf, voiceFields, accountSetting, enabled, partOn, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, rewriteLessonDetail, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
+  PARTS, REVIEW_DEFAULT, factGatePrompt, readFactGate, hintGatePrompt, readHintGate, firstJson, lessonDeliveryLines, defaultGate, avoidedIn, reviewLine, voiceOf, voiceFields, accountSetting, enabled, partOn, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, rewriteLessonDetail, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
 };

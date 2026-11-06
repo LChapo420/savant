@@ -154,6 +154,7 @@ const itemFiles = fs.readdirSync(path.join(ROOT, 'content', 'objective-items')).
 const POOL = itemFiles.flatMap((f) => (require(path.join(ROOT, 'content', 'objective-items', f)).items || []).filter((i) => i.kept !== false && i.format === 'multiple_choice' && String(i.rationale || '').length >= 30 && (i.choices || []).length >= 3));
 const pick = (L, k) => POOL[X.hash('src', L.id, k) % POOL.length];
 
+const VOICE_STORED = 'After a right answer: Right.\nAfter a wrong answer: Not quite.';
 const REVIEW_STORED = 'Recalling it now is what moves it into next week.';
 const LESSONS = [{
   title: 'How plants make food',
@@ -243,15 +244,16 @@ async function versionsFor(part, L, k, owner = L, salt = '') {
     if (!text) return { stored: null, shaped: null, source: base, spec };
   }
   const src = { ...base, text };
+  if (part === 'voice') { const v = pm.voiceOf(spec); return { stored: VOICE_STORED, shaped: v ? `After a right answer: ${v.right}\nAfter a wrong answer: ${v.wrong}` : null, problems: v ? [] : ['no change for this learner'], source: src, spec }; }
   if (part === 'review' && !arg('review-llm')) return { stored: text, shaped: pm.reviewLine(spec, goalOf(L)), problems: [], source: src, spec, item_id: it.id };
   const r = await pm.modify({ spec, part, source: src, llm: writerLlm(WRITER, salt), gate: gateFn(GATE_MODEL) });
   return { stored: text, shaped: r.source === 'ai' ? r.text : null, problems: r.problems, attempts: r.attempts, source: src, spec, item_id: it.id };
 }
-const WHAT = { feedback: 'the explanation shown right after the learner answers a check question', hint: 'the hint shown when the learner asks for help on a check question', review: 'one line shown with a review question', lesson: 'the lesson text of a course built from their own study material', tutor: 'the tutor reply to the learner' };
+const WHAT = { voice: 'the words shown right after the learner answers a question', feedback: 'the explanation shown right after the learner answers a check question', hint: 'the hint shown when the learner asks for help on a check question', review: 'one line shown with a review question', lesson: 'the lesson text of a course built from their own study material', tutor: 'the tutor reply to the learner' };
 
 // ── the trial grid for one part ─────────────────────────────────────────────
 async function runPart(part) {
-  const nSrc = part === 'lesson' || part === 'review' ? 1 : ITEMS;
+  const nSrc = part === 'lesson' || part === 'review' || part === 'voice' ? 1 : ITEMS;
   const rows = [];
   const jobs = [];
   for (let i = 0; i < learners.length; i += 1) {
@@ -259,7 +261,7 @@ async function runPart(part) {
       const L = learners[i]; const M = learners[(i + 1) % learners.length]; const Z = learners[(i + 7) % learners.length];
       const vl = await versionsFor(part, L, k);
       const same = await versionsFor(part, M, k, L);
-      const again = CONTROLS && vl.shaped && part !== 'review' ? await versionsFor(part, L, k, L, '2') : null;
+      const again = CONTROLS && vl.shaped && part !== 'review' && part !== 'voice' ? await versionsFor(part, L, k, L, '2') : null;
       const withGoal = (X2) => (part === 'review' ? `${profileText(X2)}\nRetention goal: ${goalText(goalOf(X2))}.` : profileText(X2));
       rows.push({ i, k, L: L.id, M: M.id, Z: Z.id, kind: L.kind, stored: vl.stored, vL: vl.shaped, vM: same.shaped, vL2: again ? again.shaped : null, attempts: vl.attempts, partial: vl.partial, problemsL: vl.problems || [], profL: withGoal(L), profM: withGoal(M), profZ: withGoal(Z), diff: vl.shaped ? wordsDiff(vl.stored, vl.shaped) : null, source: vl.source });
     });
@@ -315,7 +317,7 @@ async function factsFor(part, rows) {
       if (c.problems.some((p) => p.id === 'coverage')) out.coverage_fail += 1;
     }
     // Every served rewrite, by two families that did not guard it: the claim-by-claim judge and the old strict judge. A hint is not meant to keep the same facts.
-    if (part !== 'tutor' && part !== 'hint' && arg('fact-all')) {
+    if (part !== 'tutor' && part !== 'hint' && part !== 'review' && part !== 'voice' && arg('fact-all')) {
       for (const j of FACT_JUDGES) {
         jobs.push(async () => {
           const q = pm.factGatePrompt({ ...(part === 'lesson' ? {} : r.source || {}), text: r.stored }, r.vL);
@@ -443,6 +445,35 @@ function summarize(part, trials) {
   return out;
 }
 
+/** Does the hint rule do what it says? Hints written for each size on the same item; a judge rates how much each gives away, blind to the size. */
+async function hintDose(n = 16) {
+  const items = learners.slice(0, n).map((L) => pick(L, 0));
+  const SYS = 'Rate one hint for a question: how much does it give away? 1 = only says where to look; 2 = names the idea or rule to use; 3 = also starts the work; 4 = does most of the work; 5 = gives the answer. Think briefly, then the last line exactly "RATE: n".';
+  const base = specOf(learners[0], 'the topic');
+  const sizes = ['nudge', 'partial', 'step'];
+  const rows = [];
+  await pool(items.map((it) => async () => {
+    const src = { prompt: it.prompt, choices: it.choices, answer: it.answer, text: 'Think about what the question asks.' };
+    const row = { id: it.id, hints: {}, rate: {} };
+    for (const hintSize of sizes) {
+      const spec = { ...base, interests: { ...base.interests, exampleDomains: [], avoidDomains: [] }, scaffolding: { ...base.scaffolding, hintSize } };
+      const r = await pm.modify({ spec, part: 'hint', source: src, llm: writerLlm(), gate: gateFn(GATE_MODEL) });
+      if (r.source !== 'ai') continue;
+      row.hints[hintSize] = r.text;
+      for (const j of JUDGES) {
+        const t = await chat(j, SYS, `Question: ${it.prompt}\nChoices: ${(it.choices || []).join(' | ')}\nHint: ${r.text}`, 3000, true);
+        const m = String(t || '').match(/RATE:\s*([1-5])/g);
+        if (m) (row.rate[hintSize] = row.rate[hintSize] || []).push(Number(m[m.length - 1].replace(/\D/g, '')));
+      }
+    }
+    rows.push(row);
+  }), CONC);
+  const mean = (s) => { const v = rows.flatMap((r) => r.rate[s] || []); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+  const avg = (r, s) => { const v = r.rate[s] || []; return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+  const both = rows.filter((r) => avg(r, 'nudge') !== null && avg(r, 'step') !== null);
+  return { n: rows.length, mean: Object.fromEntries(sizes.map((s) => [s, mean(s)])), step_above_nudge: both.filter((r) => avg(r, 'step') > avg(r, 'nudge')).length, compared: both.length, samples: rows.slice(0, 4) };
+}
+
 async function main() {
   const t0 = Date.now();
   console.log(`part-modify proof: seed ${SEED}, ${N} learners, parts ${PARTS.join(',')}, writer ${WRITER.name}, judges ${JUDGES.map((j) => j.id).join(' + ')}${MOCK ? ' (MOCK: no model calls)' : ''}`);
@@ -465,8 +496,9 @@ async function main() {
     const a = result.parts[part].arms.vs_other || result.parts[part].arms.vs_stored;
     if (a) console.log(`  ${part}: vs_stored ${((result.parts[part].arms.vs_stored || {}).real || {}).share}, vs_other ${((result.parts[part].arms.vs_other || {}).real || {}).share}, noise ${((result.parts[part].arms.noise || {}).real || {}).share}, facts ${JSON.stringify({ ...facts, flagged: facts.flagged.length })}`);
   }
+  if (arg('hint-dose')) { result.hint_dose = await hintDose(); console.log('hint dose', JSON.stringify({ ...result.hint_dose, samples: undefined })); }
   result.stats = { ...stats, seconds: Math.round((Date.now() - t0) / 1000), cpu_load: os.loadavg()[0] };
-  for (const [name, ledger] of [['zerogpu', '../services/zerogpu-ledger'], ['gonka', '../services/gonka-ledger'], ['coral', '../services/coral-ledger']]) { try { result.stats[`${name}_ledger`] = require(ledger).status(); } catch { /* none */ } }
+  for (const [name, ledger] of [['zerogpu', '../services/zerogpu-ledger'], ['gonka', '../services/gonka-ledger'], ['coral', '../services/coral-ledger'], ['grokified', '../services/grokified-ledger']]) { try { result.stats[`${name}_ledger`] = require(ledger).status(); } catch { /* none */ } }
   fs.writeFileSync(OUT, JSON.stringify(result, null, 1));
   saveCache();
   console.log(`done in ${result.stats.seconds}s; calls ${stats.calls}, empty ${stats.empty}, errors ${stats.errors}; wrote ${OUT}`);
