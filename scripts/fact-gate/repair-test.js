@@ -21,7 +21,7 @@ const OUT = L.path.join(RAW, `repair-${MODEL}.jsonl`);
 const safe = (j) => j.replace(/[:/]/g, '_');
 const raw = new Map(JUDGES.map((j) => [j, new Map(L.readJsonl(L.path.join(RAW, `${safe(j)}.jsonl`)).filter((r) => r.read).map((r) => [r.id, r]))]));
 const done = new Set(L.readJsonl(OUT).map((r) => r.id));
-const lib = () => require('../../config/lesson-blocks.json');
+
 
 const BLOCK_SCHEMA = { type: 'object', required: ['blocks'], properties: { blocks: { type: 'array', items: { type: 'object', required: ['index', 'data'], properties: { index: { type: 'integer' }, data: { type: 'object' } } } } } };
 const CHECK_SCHEMA = { type: 'object', required: ['checks'], properties: { checks: { type: 'array', items: { type: 'object', required: ['index', 'prompt', 'answer', 'rationale'], properties: { index: { type: 'integer' }, prompt: { type: 'string' }, choices: { type: 'array', items: { type: 'string' } }, answer: { type: 'string' }, rationale: { type: 'string' } } } } } };

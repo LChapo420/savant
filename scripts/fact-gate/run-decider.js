@@ -42,6 +42,7 @@ const flagsOf = (j, id, level, edits) => {
 const inSplit = (x) => SPLIT === 'all' || x.split === SPLIT;
 const fixtures = SPLIT === 'clean'
   ? tb.clean.map((c) => ({ id: `clean:${c.level}`, level: c.level, edits: [] }))
+  : SPLIT === 'audit' ? [...levels.values()].map((l) => ({ id: `clean:${l.id}`, level: l.id, edits: [] }))
   : [...tb.clean.filter(inSplit).map((c) => ({ id: `clean:${c.level}`, level: c.level, edits: [] })), ...tb.plants.filter(inSplit).map((p) => ({ id: p.id, level: p.level, edits: p.edits }))];
 
 const work = [];
