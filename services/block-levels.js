@@ -1689,6 +1689,12 @@ function verifyRequest({ context, blocks, checks, factSheet = null }) {
 }
 
 async function verifyLevel({ context, blocks, checks, factSheet = null, userId = null, where = null, reader = null, excludeFamilies = null }) {
+  // The measured gate (services/fact-gate.js, FACT_GATE=on, off by default): a shared level only; a learner's own level keeps this read, so nobody waits on it.
+  if (require('./fact-gate').appliesTo({ userId })) { // eslint-disable-line global-require
+    const g = await require('./fact-gate').read({ context, blocks, checks, excludeFamilies, gradeId: where && where.gradeId }); // eslint-disable-line global-require
+    if (!g) return null;
+    return { ...readVerification({ claims: g.claims }), usage: g.usage, cost: g.cost, sources: [], searches: 0, model: g.model, stages: g.stages };
+  }
   // The cascade (services/fact-cascade.js): cheap and local checks on everything,
   // Sonnet only on what they flag. Opt-in (FACT_PIPELINE=cascade); see cascadeOn.
   if (where && cascadeOn()) {
