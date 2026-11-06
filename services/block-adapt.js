@@ -147,6 +147,26 @@ function checkpointLines(spec, trackId) {
 }
 
 /**
+ * How long the learner wants to remember this subject (services/retention-goal.js) as one line for the lesson writer: a test close by asks for
+ * the shortest route to recall; a horizon of months or longer asks for the one thing to carry away from each idea. Nothing for "forever" (the
+ * default), and nothing unless BLOCK_GOAL=on (not yet proven at lesson level). Never throws.
+ */
+function goalLine(userId, where) {
+  if (String(process.env.BLOCK_GOAL || 'off').toLowerCase() !== 'on') return null; // off until a lesson-level proof passes (docs/MODIFICATION-AUDIT-PARTS.md)
+  try {
+    const rg = require('./retention-goal'); // eslint-disable-line global-require
+    const db = require('../config/db'); // eslint-disable-line global-require
+    const e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === where.trackId && x.grade_id === where.gradeId);
+    if (!e) return null;
+    const g = rg.forEnrollment(userId, e);
+    if (g.status === 'date' && g.days_left <= 30) return `They have a test on ${g.test_date} (${g.days_left} days): after each idea give the one thing to be able to recall for it, and keep side points out; every fact stays.`;
+    if (g.status === 'date') return `They want to keep this for a test on ${g.test_date}: end each idea with the one thing to be able to recall later.`;
+    if (g.status === 'horizon') return 'They want to remember this for the long run: end each idea with the one thing to carry away, said once, plainly.';
+    return null;
+  } catch { return null; }
+}
+
+/**
  * Everything one level write needs from the spec.
  * @returns {{active: boolean, spec: object|null, layout: string, fill: string, game: string, checkpoint: string}}
  */
@@ -160,8 +180,11 @@ function begin({ userId, where, kind, context }) {
   const head = 'FOR THIS LEARNER AT THIS LEVEL (from their full learning profile; the numbers are limits on the page; never mention the profile; where this conflicts with an earlier note it wins, and the coverage and every fact stay as they are)';
   try {
     if (kind === 'lesson' || kind === 'retention') {
+      const fill = fillLines(spec, kind, trackId);
+      const goal = goalLine(userId, where);
+      if (goal) fill.push(goal);
       return {
-        active: true, spec, layout: block(head, layoutLines(spec, kind)), fill: block(head, fillLines(spec, kind, trackId)), game: '', checkpoint: '',
+        active: true, spec, layout: block(head, layoutLines(spec, kind)), fill: block(head, fill), game: '', checkpoint: '',
       };
     }
     if (kind === 'game') return { active: true, spec, layout: '', fill: '', game: block(head, gameLines(spec, trackId)), checkpoint: '' };
@@ -202,4 +225,4 @@ async function revise(a, { generate, parts, keyFacts = [], topic = '', wordLimit
   return { result: run.result, revised: !!run.revised, problems: (run.problems || []).map((p) => p.id), before: (run.before || []).map((p) => p.id), checked: true, stats: run.stats || null };
 }
 
-module.exports = { begin, revise, textOf, wordCount, specFor, subjectLines, layoutLines, fillLines, gameLines, checkpointLines, KINDS };
+module.exports = { begin, goalLine, revise, textOf, wordCount, specFor, subjectLines, layoutLines, fillLines, gameLines, checkpointLines, KINDS };

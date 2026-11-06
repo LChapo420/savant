@@ -189,6 +189,7 @@ router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1
 
 router.get('/:id/course', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
+  require('../services/part-modify').maybeRefreshCourse(req.user.id, req.params.id); // eslint-disable-line global-require
   res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `course:${Number(req.params.id)}`) });
 });
 

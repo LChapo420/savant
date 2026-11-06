@@ -20,6 +20,7 @@
  * learners at the same level get different sessions.
  */
 const db = require('../config/db');
+const partModify = require('./part-modify');
 const curriculum = require('../config/curriculum');
 const gradeSkills = require('../config/grade-skills');
 const bank = require('../content/bank');
@@ -1145,7 +1146,7 @@ async function answer({ userId, session, itemId, userAnswer, ms, confidence = nu
       already: true,
       correct: item.correct,
       answer: item.answer,
-      rationale: item.rationale,
+      rationale: partModify.rationaleOf(item),
       errorTag: item.error_tag || null,
     };
   }
@@ -1254,7 +1255,7 @@ function checkingStatus(item) {
     checking: false,
     correct: item.correct,
     answer: item.answer,
-    rationale: item.rationale,
+    rationale: partModify.rationaleOf(item),
     feedback: item.ai_feedback || null,
     errorTag: item.error_tag || null,
     graded_by: item.graded_by || null,
@@ -1325,7 +1326,7 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
   return {
     correct,
     answer: item.answer,
-    rationale: item.rationale,
+    rationale: partModify.rationaleOf(item),
     feedback,
     errorTag,
     // The stop rule (services/efficiency.js, SR_STOP): the rest of this block's focus and support items that would buy least. Advice

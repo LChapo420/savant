@@ -769,6 +769,7 @@ async function build(userId, materialId, opts = {}) {
       skills, units, status, dropped: ctx.dropped, tokens_used: (base.tokens_used || 0) + ctx.budget.used, models: [...ctx.models],
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
+    try { require('./part-modify').stampCourse(userId, done); } catch { /* signature only */ } // eslint-disable-line global-require
     db.flush();
     if (status === 'failed') return { error: 'No questions in that material passed the checks. Try a longer or clearer text.', code: 'nothing_verified' };
     return { course: done, partial: status === 'partial' };

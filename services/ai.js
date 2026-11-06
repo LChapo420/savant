@@ -2032,6 +2032,7 @@ ${learnerBrief(userId, { skillId: area.skill_id, skillName: area.skill_name, lev
 }
 
 module.exports = {
+  coachSystemFor, // the tutor's system prompt for one question (read by scripts/part-modify-proof.js)
   munitoAllowedFor,
   structuredDetail,
   isEnabled,

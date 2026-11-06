@@ -1,0 +1,1220 @@
+{
+ "tag": "pm2",
+ "seed": 6106,
+ "n": 24,
+ "generated_at": "2026-11-06T08:54:34.289Z",
+ "writer": "ZeroGPU GLM-5.3 Flash",
+ "judges": [
+  {
+   "id": "zerogpu-glm",
+   "model": "z-ai/glm-5.3-flash",
+   "family": "glm"
+  },
+  {
+   "id": "coral-deepseek",
+   "model": "deepseek-v4.1-flash",
+   "family": "deepseek"
+  },
+  {
+   "id": "gonka-deepseek",
+   "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+   "family": "deepseek"
+  }
+ ],
+ "simulated": true,
+ "parts": {
+  "feedback": {
+   "part": "feedback",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 120,
+      "verdicts": 118,
+      "empty": 0,
+      "same": 2,
+      "picks_vL": 102,
+      "share": 0.864406779661017,
+      "p_above_chance": 8.277214049751263e-17
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "coral-deepseek": {
+       "real": 0.8974358974358975,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": 0.7948717948717948,
+       "swap_fooled": null,
+       "control": null
+      },
+      "zerogpu-glm": {
+       "real": 0.9,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": 0.9,
+      "deepseek": 0.8461538461538461
+     },
+     "individuals": {
+      "n": 22,
+      "worst_1pct": 0.3333333333333333,
+      "worst_5pct": 0.41666666666666663,
+      "worst_10pct": 0.4444444444444444,
+      "lowest": [
+       {
+        "L": "x6106-18",
+        "share": 0.3333333333333333,
+        "n": 6
+       },
+       {
+        "L": "x6106-0",
+        "share": 0.5,
+        "n": 6
+       },
+       {
+        "L": "x6106-23",
+        "share": 0.5,
+        "n": 4
+       }
+      ],
+      "below_half": 1
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "tail_lo": {
+       "n": 12,
+       "share": 1
+      },
+      "contradict": {
+       "n": 24,
+       "share": 0.9583333333333334
+      },
+      "random": {
+       "n": 25,
+       "share": 0.88
+      },
+      "age_old": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "age_young": {
+       "n": 12,
+       "share": 1
+      },
+      "ell": {
+       "n": 9,
+       "share": 0.8888888888888888
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.75
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 87,
+      "verdicts": 85,
+      "empty": 1,
+      "same": 1,
+      "picks_vL": 56,
+      "share": 0.6588235294117647,
+      "p_above_chance": 0.002255820204177634
+     },
+     "swap_fooled": {
+      "n": 87,
+      "verdicts": 85,
+      "empty": 0,
+      "same": 2,
+      "picks_vL": 29,
+      "share": 0.3411764705882353
+     },
+     "control_picks_vL": {
+      "n": 87,
+      "verdicts": 84,
+      "empty": 0,
+      "same": 3,
+      "picks_vL": 33,
+      "share": 0.39285714285714285
+     },
+     "per_judge": {
+      "coral-deepseek": {
+       "real": 0.6785714285714286,
+       "swap_fooled": 0.42857142857142855,
+       "control": 0.35714285714285715
+      },
+      "gonka-deepseek": {
+       "real": 0.6785714285714286,
+       "swap_fooled": 0.32142857142857145,
+       "control": 0.39285714285714285
+      },
+      "zerogpu-glm": {
+       "real": 0.6206896551724138,
+       "swap_fooled": 0.27586206896551724,
+       "control": 0.42857142857142855
+      }
+     },
+     "by_family": {
+      "glm": 0.6206896551724138,
+      "deepseek": 0.6785714285714286
+     },
+     "individuals": {
+      "n": 19,
+      "worst_1pct": 0.3333333333333333,
+      "worst_5pct": 0.3333333333333333,
+      "worst_10pct": 0.3333333333333333,
+      "lowest": [
+       {
+        "L": "x6106-9",
+        "share": 0.3333333333333333,
+        "n": 3
+       },
+       {
+        "L": "x6106-4",
+        "share": 0.3333333333333333,
+        "n": 6
+       },
+       {
+        "L": "x6106-14",
+        "share": 0.3333333333333333,
+        "n": 3
+       }
+      ],
+      "below_half": 6
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 9,
+       "share": 0.7777777777777778
+      },
+      "tail_lo": {
+       "n": 6,
+       "share": 0.5
+      },
+      "contradict": {
+       "n": 12,
+       "share": 0.75
+      },
+      "random": {
+       "n": 19,
+       "share": 0.8421052631578947
+      },
+      "age_old": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "age_young": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "ell": {
+       "n": 6,
+       "share": 0.3333333333333333
+      },
+      "tail_both": {
+       "n": 9,
+       "share": 0.3333333333333333
+      }
+     }
+    }
+   },
+   "facts": {
+    "declined_because": {
+     "it uses worN problems about money, which the learn": 1,
+     "it uses rewrites of the same iNea three times, whi": 4,
+     "it is too long: one or two sentences": 1,
+     "empty": 2,
+     "it uses gamifieN points, which the learner Nislike": 1
+    },
+    "checked": 48,
+    "passed": 40,
+    "declined": 8,
+    "same_yes": 6,
+    "same_asked": 15,
+    "coverage_fail": 0
+   },
+   "goal": null,
+   "sources": 48,
+   "declined": 8,
+   "trials": 381
+  },
+  "hint": {
+   "part": "hint",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 122,
+      "verdicts": 122,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 62,
+      "share": 0.5081967213114754,
+      "p_above_chance": 0.46395539980279416
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "coral-deepseek": {
+       "real": 0.43902439024390244,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": 0.5121951219512195,
+       "swap_fooled": null,
+       "control": null
+      },
+      "zerogpu-glm": {
+       "real": 0.575,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": 0.575,
+      "deepseek": 0.47560975609756095
+     },
+     "individuals": {
+      "n": 22,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x6106-3",
+        "share": 0,
+        "n": 6
+       },
+       {
+        "L": "x6106-6",
+        "share": 0,
+        "n": 6
+       },
+       {
+        "L": "x6106-10",
+        "share": 0,
+        "n": 3
+       }
+      ],
+      "below_half": 7
+     },
+     "by_kind": {
+      "tail_lo": {
+       "n": 12,
+       "share": 0.5
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.4166666666666667
+      },
+      "tail_hi": {
+       "n": 14,
+       "share": 0.5
+      },
+      "contradict": {
+       "n": 21,
+       "share": 0.5238095238095238
+      },
+      "random": {
+       "n": 30,
+       "share": 0.4
+      },
+      "age_young": {
+       "n": 12,
+       "share": 0.6666666666666666
+      },
+      "age_old": {
+       "n": 9,
+       "share": 0.5555555555555556
+      },
+      "ell": {
+       "n": 12,
+       "share": 0.6666666666666666
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 110,
+      "verdicts": 110,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 57,
+      "share": 0.5181818181818182,
+      "p_above_chance": 0.38750149141536133
+     },
+     "swap_fooled": {
+      "n": 111,
+      "verdicts": 111,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 49,
+      "share": 0.44144144144144143
+     },
+     "control_picks_vL": {
+      "n": 111,
+      "verdicts": 110,
+      "empty": 1,
+      "same": 0,
+      "picks_vL": 43,
+      "share": 0.39090909090909093
+     },
+     "per_judge": {
+      "coral-deepseek": {
+       "real": 0.4864864864864865,
+       "swap_fooled": 0.40540540540540543,
+       "control": 0.43243243243243246
+      },
+      "gonka-deepseek": {
+       "real": 0.4864864864864865,
+       "swap_fooled": 0.40540540540540543,
+       "control": 0.40540540540540543
+      },
+      "zerogpu-glm": {
+       "real": 0.5833333333333334,
+       "swap_fooled": 0.5135135135135135,
+       "control": 0.3333333333333333
+      }
+     },
+     "by_family": {
+      "glm": 0.5833333333333334,
+      "deepseek": 0.4864864864864865
+     },
+     "individuals": {
+      "n": 20,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0.08333333333333333,
+      "lowest": [
+       {
+        "L": "x6106-6",
+        "share": 0,
+        "n": 6
+       },
+       {
+        "L": "x6106-3",
+        "share": 0.16666666666666666,
+        "n": 6
+       },
+       {
+        "L": "x6106-20",
+        "share": 0.16666666666666666,
+        "n": 6
+       }
+      ],
+      "below_half": 6
+     },
+     "by_kind": {
+      "tail_lo": {
+       "n": 6,
+       "share": 1
+      },
+      "tail_both": {
+       "n": 12,
+       "share": 0.5
+      },
+      "tail_hi": {
+       "n": 12,
+       "share": 0.25
+      },
+      "contradict": {
+       "n": 20,
+       "share": 0.6
+      },
+      "random": {
+       "n": 30,
+       "share": 0.36666666666666664
+      },
+      "age_young": {
+       "n": 12,
+       "share": 0.5
+      },
+      "age_old": {
+       "n": 9,
+       "share": 0.6666666666666666
+      },
+      "ell": {
+       "n": 9,
+       "share": 0.7777777777777778
+      }
+     }
+    }
+   },
+   "facts": {
+    "declined_because": {
+     "it uses rewrites of the same iNea three times, whi": 4,
+     "it uses worN problems about money, which the learn": 1,
+     "it states the answer": 2
+    },
+    "checked": 48,
+    "passed": 41,
+    "declined": 7,
+    "same_yes": 2,
+    "same_asked": 10,
+    "coverage_fail": 0
+   },
+   "goal": null,
+   "sources": 48,
+   "declined": 7,
+   "trials": 454
+  },
+  "review": {
+   "part": "review",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 63,
+      "verdicts": 62,
+      "empty": 0,
+      "same": 1,
+      "picks_vL": 48,
+      "share": 0.7741935483870968,
+      "p_above_chance": 0.00000871426130081569
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "coral-deepseek": {
+       "real": 0.7142857142857143,
+       "swap_fooled": null,
+       "control": null
+      },
+      "gonka-deepseek": {
+       "real": 0.75,
+       "swap_fooled": null,
+       "control": null
+      },
+      "zerogpu-glm": {
+       "real": 0.8571428571428571,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": 0.8571428571428571,
+      "deepseek": 0.7317073170731707
+     },
+     "individuals": {
+      "n": 21,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0.2222222222222222,
+      "lowest": [
+       {
+        "L": "x6106-12",
+        "share": 0,
+        "n": 3
+       },
+       {
+        "L": "x6106-18",
+        "share": 0,
+        "n": 3
+       },
+       {
+        "L": "x6106-9",
+        "share": 0.6666666666666666,
+        "n": 3
+       }
+      ],
+      "below_half": 2
+     },
+     "by_kind": {
+      "ell": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "tail_hi": {
+       "n": 9,
+       "share": 0.8888888888888888
+      },
+      "tail_lo": {
+       "n": 6,
+       "share": 1
+      },
+      "age_young": {
+       "n": 6,
+       "share": 1
+      },
+      "tail_both": {
+       "n": 6,
+       "share": 0.6666666666666666
+      },
+      "age_old": {
+       "n": 6,
+       "share": 0.5
+      },
+      "random": {
+       "n": 11,
+       "share": 0.8181818181818182
+      },
+      "contradict": {
+       "n": 12,
+       "share": 0.5833333333333334
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 55,
+      "verdicts": 55,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 42,
+      "share": 0.7636363636363637,
+      "p_above_chance": 0.000056805301603459346
+     },
+     "swap_fooled": {
+      "n": 57,
+      "verdicts": 56,
+      "empty": 0,
+      "same": 1,
+      "picks_vL": 20,
+      "share": 0.35714285714285715
+     },
+     "control_picks_vL": {
+      "n": 57,
+      "verdicts": 56,
+      "empty": 0,
+      "same": 1,
+      "picks_vL": 30,
+      "share": 0.5357142857142857
+     },
+     "per_judge": {
+      "coral-deepseek": {
+       "real": 0.7894736842105263,
+       "swap_fooled": 0.2222222222222222,
+       "control": 0.42105263157894735
+      },
+      "gonka-deepseek": {
+       "real": 0.631578947368421,
+       "swap_fooled": 0.42105263157894735,
+       "control": 0.5555555555555556
+      },
+      "zerogpu-glm": {
+       "real": 0.8823529411764706,
+       "swap_fooled": 0.42105263157894735,
+       "control": 0.631578947368421
+      }
+     },
+     "by_family": {
+      "glm": 0.8823529411764706,
+      "deepseek": 0.7105263157894737
+     },
+     "individuals": {
+      "n": 19,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0.16666666666666666,
+      "lowest": [
+       {
+        "L": "x6106-18",
+        "share": 0,
+        "n": 3
+       },
+       {
+        "L": "x6106-16",
+        "share": 0.3333333333333333,
+        "n": 3
+       },
+       {
+        "L": "x6106-5",
+        "share": 0.5,
+        "n": 2
+       }
+      ],
+      "below_half": 2
+     },
+     "by_kind": {
+      "ell": {
+       "n": 6,
+       "share": 0.6666666666666666
+      },
+      "tail_lo": {
+       "n": 2,
+       "share": 1
+      },
+      "age_young": {
+       "n": 6,
+       "share": 1
+      },
+      "tail_both": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "age_old": {
+       "n": 6,
+       "share": 0.3333333333333333
+      },
+      "random": {
+       "n": 12,
+       "share": 0.75
+      },
+      "contradict": {
+       "n": 11,
+       "share": 0.7272727272727273
+      },
+      "tail_hi": {
+       "n": 6,
+       "share": 1
+      }
+     }
+    }
+   },
+   "facts": {
+    "declined_because": {
+     "it uses rewrites of the same iNea three times, whi": 2,
+     "a sentence has 19 worNs; keep them to 10": 1
+    },
+    "checked": 24,
+    "passed": 21,
+    "declined": 3,
+    "same_yes": 3,
+    "same_asked": 7,
+    "coverage_fail": 0
+   },
+   "goal": null,
+   "sources": 24,
+   "declined": 3,
+   "trials": 232
+  },
+  "lesson": {
+   "part": "lesson",
+   "arms": {},
+   "facts": {
+    "declined_because": {},
+    "checked": 24,
+    "passed": 0,
+    "declined": 24,
+    "same_yes": 0,
+    "same_asked": 0,
+    "coverage_fail": 0
+   },
+   "goal": null,
+   "sources": 24,
+   "declined": 24,
+   "trials": 0
+  },
+  "tutor": {
+   "part": "tutor",
+   "arms": {
+    "vs_other": {
+     "real": {
+      "n": 60,
+      "verdicts": 59,
+      "empty": 1,
+      "same": 0,
+      "picks_vL": 45,
+      "share": 0.7627118644067796,
+      "p_above_chance": 0.00003265315222456729
+     },
+     "swap_fooled": {
+      "n": 60,
+      "verdicts": 60,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 11,
+      "share": 0.18333333333333332
+     },
+     "control_picks_vL": {
+      "n": 60,
+      "verdicts": 60,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 25,
+      "share": 0.4166666666666667
+     },
+     "per_judge": {
+      "coral-deepseek": {
+       "real": 0.65,
+       "swap_fooled": 0.2,
+       "control": 0.35
+      },
+      "gonka-deepseek": {
+       "real": 0.8,
+       "swap_fooled": 0.15,
+       "control": 0.45
+      },
+      "zerogpu-glm": {
+       "real": 0.8421052631578947,
+       "swap_fooled": 0.2,
+       "control": 0.45
+      }
+     },
+     "by_family": {
+      "glm": 0.8421052631578947,
+      "deepseek": 0.725
+     },
+     "individuals": {
+      "n": 20,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0.16666666666666666,
+      "lowest": [
+       {
+        "L": "x6106-18",
+        "share": 0,
+        "n": 3
+       },
+       {
+        "L": "x6106-6",
+        "share": 0.3333333333333333,
+        "n": 3
+       },
+       {
+        "L": "x6106-19",
+        "share": 0.3333333333333333,
+        "n": 3
+       }
+      ],
+      "below_half": 3
+     },
+     "by_kind": {
+      "tail_hi": {
+       "n": 6,
+       "share": 1
+      },
+      "tail_lo": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "contradict": {
+       "n": 12,
+       "share": 0.8333333333333334
+      },
+      "random": {
+       "n": 12,
+       "share": 0.75
+      },
+      "tail_both": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "age_young": {
+       "n": 6,
+       "share": 0.8333333333333334
+      },
+      "age_old": {
+       "n": 5,
+       "share": 0.2
+      },
+      "ell": {
+       "n": 6,
+       "share": 0.6666666666666666
+      }
+     }
+    }
+   },
+   "facts": {
+    "declined_because": {},
+    "checked": 20,
+    "passed": 20,
+    "declined": 0,
+    "same_yes": 0,
+    "same_asked": 0,
+    "coverage_fail": 0
+   },
+   "goal": {
+    "part": "tutor_goal",
+    "arms": {
+     "goal_vs_none": {
+      "real": {
+       "n": 36,
+       "verdicts": 32,
+       "empty": 0,
+       "same": 4,
+       "picks_vL": 15,
+       "share": 0.46875,
+       "p_above_chance": 0.7016925520729295
+      },
+      "swap_fooled": {
+       "n": 0,
+       "verdicts": 0,
+       "empty": 0,
+       "same": 0,
+       "picks_vL": 0,
+       "share": null
+      },
+      "control_picks_vL": {
+       "n": 0,
+       "verdicts": 0,
+       "empty": 0,
+       "same": 0,
+       "picks_vL": 0,
+       "share": null
+      },
+      "per_judge": {
+       "coral-deepseek": {
+        "real": 0.5,
+        "swap_fooled": null,
+        "control": null
+       },
+       "gonka-deepseek": {
+        "real": 0.5454545454545454,
+        "swap_fooled": null,
+        "control": null
+       },
+       "zerogpu-glm": {
+        "real": 0.36363636363636365,
+        "swap_fooled": null,
+        "control": null
+       }
+      },
+      "by_family": {
+       "glm": 0.36363636363636365,
+       "deepseek": 0.5238095238095238
+      },
+      "individuals": {
+       "n": 12,
+       "worst_1pct": 0,
+       "worst_5pct": 0,
+       "worst_10pct": 0,
+       "lowest": [
+        {
+         "L": "x6106-3",
+         "share": 0,
+         "n": 3
+        },
+        {
+         "L": "x6106-10",
+         "share": 0,
+         "n": 3
+        },
+        {
+         "L": "x6106-11",
+         "share": 0,
+         "n": 3
+        }
+       ],
+       "below_half": 6
+      },
+      "by_kind": {
+       "x": {
+        "n": 32,
+        "share": 0.46875
+       }
+      }
+     }
+    }
+   },
+   "sources": 20,
+   "declined": 0,
+   "trials": 180
+  }
+ },
+ "samples": {
+  "feedback": [
+   {
+    "learner": "x6106-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: crochet, roller derby, bird song recording. Dislikes (never wanted): competitive framing, abstract symbols without a picture.",
+    "stored": "Taking one rocket away from five leaves four, so the next number word is four.",
+    "shaped": "Here is the idea: taking one rocket away from five leaves four, so the backward count moves from five to four.",
+    "other_learner": "Counting backward means saying one less each time. Five rockets with one taken away leave four rockets. So the number word after five, going backward, is four.",
+    "diff": {
+     "stored_words": 15,
+     "shaped_words": 21,
+     "new_words": 6,
+     "dropped_words": 3
+    }
+   },
+   {
+    "learner": "x6106-1",
+    "kind": "tail_lo",
+    "profile": "Age 61. Language: English. Interests: ballroom dancing, knife sharpening. Dislikes (never wanted): none stated.",
+    "stored": "The difference between 50% and 20% is 30 percentage points.",
+    "shaped": "Subtract the reading share from the exercise share: 50% minus 20%. That difference is 30 percentage points. Like counting beats between two dance steps, just take one number from the other.",
+    "other_learner": "The exercise part is 50% and the reading part is 20%, so subtract: 50 minus 20 gives 30 percentage points. Picking 20 percentage points mistakes the reading share itself for the gap between the two parts.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 31,
+     "new_words": 21,
+     "dropped_words": 2
+    }
+   },
+   {
+    "learner": "x6106-1",
+    "kind": "tail_lo",
+    "profile": "Age 61. Language: English. Interests: ballroom dancing, knife sharpening. Dislikes (never wanted): none stated.",
+    "stored": "Evaluate each square first: 6^2 = 36 and 4^2 = 16. Then subtract: 36 − 16 = 20.",
+    "shaped": "Work out each square on its own first: 6^2 is 36 and 4^2 is 16. Then subtract the two results: 36 − 16 = 20.",
+    "other_learner": "Square each number first, then subtract: 6^2 = 36 and 4^2 = 16, so 36 − 16 = 20. The order is the point: both powers get evaluated before the subtraction step. Choice 52 fails because it adds 36 and 16 instead of subtracting them.",
+    "diff": {
+     "stored_words": 18,
+     "shaped_words": 25,
+     "new_words": 11,
+     "dropped_words": 2
+    }
+   },
+   {
+    "learner": "x6106-5",
+    "kind": "contradict",
+    "profile": "Age 40. Language: English. Interests: knife sharpening, monster truck rallies, competitive beekeeping. Dislikes (never wanted): cute mascots, repetition drills.",
+    "stored": "The prefix un- means not, and the suffix -able means able to be, so unbreakable means not able to be broken.",
+    "shaped": "Here's the idea: un- at the start means not, and -able at the end means able to be. Put them together, and unbreakable means not able to be broken. Unbroken might seem close, but with no -able it just means not broken.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 21,
+     "shaped_words": 42,
+     "new_words": 19,
+     "dropped_words": 4
+    }
+   }
+  ],
+  "hint": [
+   {
+    "learner": "x6106-1",
+    "kind": "tail_lo",
+    "profile": "Age 61. Language: English. Interests: ballroom dancing, knife sharpening. Dislikes (never wanted): none stated.",
+    "stored": "Find the difference between the exercise percentage and the reading percentage by subtracting the smaller value from the larger one. Remember that \"percentage points\" refers to the simple difference between the two percentages, not a percent of a percent.",
+    "shaped": "Look at the exercise percent and the reading percent on the graph. How far apart are 50% and 20%?",
+    "other_learner": "Which two sections of the graph should you compare, and what does the term percentage points actually ask for?",
+    "diff": {
+     "stored_words": 39,
+     "shaped_words": 19,
+     "new_words": 10,
+     "dropped_words": 28
+    }
+   },
+   {
+    "learner": "x6106-1",
+    "kind": "tail_lo",
+    "profile": "Age 61. Language: English. Interests: ballroom dancing, knife sharpening. Dislikes (never wanted): none stated.",
+    "stored": "First evaluate each power separately, then subtract the second result from the first. Be careful not to subtract the bases before squaring them.",
+    "shaped": "What does the small 2 tell you to do with each number before you subtract?",
+    "other_learner": "What does the order of operations tell you to do with the exponents before you subtract?",
+    "diff": {
+     "stored_words": 23,
+     "shaped_words": 15,
+     "new_words": 11,
+     "dropped_words": 17
+    }
+   },
+   {
+    "learner": "x6106-4",
+    "kind": "tail_both",
+    "profile": "Age 61. Language: English. Interests: anime drawing. Dislikes (never wanted): being praised for easy things.",
+    "stored": "Hint: The total number of squares can be found by combining the equal groups, one group for each row. Multiplying the number of rows by the number of squares in each row gives the total.",
+    "shaped": "You're doing great by picturing the array first. Can you spot how the rows work as equal groups you could join to find the total?",
+    "other_learner": "Here's an idea: each row is one equal group of squares. What could you do with equal groups like that to find the total?",
+    "diff": {
+     "stored_words": 35,
+     "shaped_words": 25,
+     "new_words": 18,
+     "dropped_words": 25
+    }
+   },
+   {
+    "learner": "x6106-4",
+    "kind": "tail_both",
+    "profile": "Age 61. Language: English. Interests: anime drawing. Dislikes (never wanted): being praised for easy things.",
+    "stored": "Add up the claps from each step: the first clap, the two more claps, and the final clap. Combining these amounts gives the total number of claps Zoe makes.",
+    "shaped": "Look at each clap Zoe makes: the first clap, the two more claps, and the final clap. What do you get when you bring these amounts together?",
+    "other_learner": "Zoe claps once, then two more times, then once more. Where could you look to catch every clap she makes?",
+    "diff": {
+     "stored_words": 29,
+     "shaped_words": 27,
+     "new_words": 12,
+     "dropped_words": 12
+    }
+   }
+  ],
+  "review": [
+   {
+    "learner": "x6106-9",
+    "kind": "ell",
+    "profile": "Age 51. Language: English is a second language (first: Russian). Interests: ice hockey, K-pop dance covers, spoken word poetry. Dislikes (never wanted): audio-only explanations.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Recalling the separate sounds in pen now keeps the separate sounds ready for next week.",
+    "other_learner": "Here is the idea: thinking of these sounds today helps them stick with you next week.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 15,
+     "new_words": 11,
+     "dropped_words": 6
+    }
+   },
+   {
+    "learner": "x6106-10",
+    "kind": "tail_hi",
+    "profile": "Age 13. Language: English. Interests: fishing, pottery. Dislikes (never wanted): word problems about money, audio-only explanations, cute mascots.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Here is the idea: thinking back to Sara's picture now helps you keep it next week.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 16,
+     "new_words": 11,
+     "dropped_words": 4
+    }
+   },
+   {
+    "learner": "x6106-1",
+    "kind": "tail_lo",
+    "profile": "Age 61. Language: English. Interests: ballroom dancing, knife sharpening. Dislikes (never wanted): none stated.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Calculate 6^2 − 4^2. Answer: 20. Like a quick pass on a sharpening stone, recalling it now is what keeps it sharp next week.",
+    "other_learner": "Recalling 6^2 − 4^2 = 20 now is what carries it into next week, like a drone racer repeating the same course.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 24,
+     "new_words": 16,
+     "dropped_words": 2
+    }
+   },
+   {
+    "learner": "x6106-7",
+    "kind": "age_young",
+    "profile": "Age 8. Language: English. Interests: mushroom hunting. Dislikes (never wanted): none stated.",
+    "stored": "Recalling it now is what moves it into next week.",
+    "shaped": "Saying three now helps you remember it next week.",
+    "other_learner": "Recalling the counting word now keeps it ready, and recalling works like cleaning a tractor part early.",
+    "diff": {
+     "stored_words": 10,
+     "shaped_words": 9,
+     "new_words": 5,
+     "dropped_words": 5
+    }
+   }
+  ],
+  "lesson": [],
+  "tutor_goal": [
+   {
+    "L": "x6106-0",
+    "plain": "Volume just means how many unit cubes fit inside the box, so we build it up one layer at a time. Start with the bottom layer: it is 3 cubes long and 2 cubes wide. How many cubes sit in that bottom layer?",
+    "goal": "Volume is just a count of how many unit cubes it takes to fill the box completely — the same reasoning tells you how much a storage bin can hold. Start with the bottom layer only: it runs 3 cubes long and 2 cubes wide. How many cubes sit in that one layer?"
+   },
+   {
+    "L": "x6106-1",
+    "plain": "Good news: this one is really just counting. Let's find the starting point together.\n\nYou might be asking: what does volume even mean? Volume is the amount of space inside a shape. We measure that space in cubic units.\n\nTakeaway: volume answers \"how much space is inside?\"\n\nNext idea. A unit cube is a small cube with sides of 1. Think of it as one little building block. So this question is really asking: how many of those little blocks fill the box?\n\nTakeaway: volume = count the cubes.\n\nNow the first small step, and it is an easy one. The box is 3 cubes long. Picture one single row of cubes lying along that length, like blocks in a line.\n\nHow many cubes are in that one row?",
+    "goal": "Good news: this one is easier to start than it looks.\n\nFirst, one idea. Volume just means: how many unit cubes fit inside the shape? A unit cube is a little cube, 1 wide, 1 deep, 1 tall. So the question is really asking how many little cubes fill this box.\n\nYou do not have to picture all of them at once. Count one layer, then use the height. It is like counting floor tiles: one row at a time.\n\nSo, step 1, just the bottom layer. The box is 3 cubes long and 2 cubes wide.\n\nHow many cubes sit on that bottom layer?\n\nHint: each row has 3 cubes, and there are 2 rows."
+   }
+  ],
+  "tutor": [
+   {
+    "learner": "x6106-0",
+    "kind": "tail_hi",
+    "profile": "Age 58. Language: English. Interests: crochet, roller derby, bird song recording. Dislikes (never wanted): competitive framing, abstract symbols without a picture.",
+    "stored": null,
+    "shaped": "Volume just means how many unit cubes fit inside the box, so we build it up one layer at a time. Start with the bottom layer: it is 3 cubes long and 2 cubes wide. How many cubes sit in that bottom layer?",
+    "other_learner": "Good news: this one is really just counting. Let's find the starting point together.\n\nYou might be asking: what does volume even mean? Volume is the amount of space inside a shape. We measure that space in cubic units.\n\nTakeaway: volume answers \"how much space is inside?\"\n\nNext idea. A unit cube is a small cube with sides of 1. Think of it as one little building block. So this question is really asking: how many of those little blocks fill the box?\n\nTakeaway: volume = count the cubes.\n\nNow the first small step, and it is an easy one. The box is 3 cubes long. Picture one single row of cubes lying along that length, like blocks in a line.\n\nHow many cubes are in that one row?",
+    "diff": null
+   },
+   {
+    "learner": "x6106-1",
+    "kind": "tail_lo",
+    "profile": "Age 61. Language: English. Interests: ballroom dancing, knife sharpening. Dislikes (never wanted): none stated.",
+    "stored": null,
+    "shaped": "Good news: this one is really just counting. Let's find the starting point together.\n\nYou might be asking: what does volume even mean? Volume is the amount of space inside a shape. We measure that space in cubic units.\n\nTakeaway: volume answers \"how much space is inside?\"\n\nNext idea. A unit cube is a small cube with sides of 1. Think of it as one little building block. So this question is really asking: how many of those little blocks fill the box?\n\nTakeaway: volume = count the cubes.\n\nNow the first small step, and it is an easy one. The box is 3 cubes long. Picture one single row of cubes lying along that length, like blocks in a line.\n\nHow many cubes are in that one row?",
+    "other_learner": "Volume means the number of unit cubes that fill the solid. A unit cube is a cube with every side 1, so it is one counting block. The rule for any rectangular prism: volume = length x width x height.\n\nHere is why that rule works, one step at a time.\n\nBecause the floor of this prism is 3 cubes long and 2 wide, one layer holds 3 x 2 = 6 cubes.\nBecause the prism is 4 cubes high, it holds 4 of those layers, like shelves in a drone parts case with the same 3 by 2 footprint on every shelf.\n\nSlow down here: do not add 3 + 2 + 4",
+    "diff": null
+   },
+   {
+    "learner": "x6106-2",
+    "kind": "contradict",
+    "profile": "Age 54. Language: English. Interests: taxidermy curiosity, drone racing. Dislikes (never wanted): being rushed, cute mascots.",
+    "stored": null,
+    "shaped": "Volume means the number of unit cubes that fill the solid. A unit cube is a cube with every side 1, so it is one counting block. The rule for any rectangular prism: volume = length x width x height.\n\nHere is why that rule works, one step at a time.\n\nBecause the floor of this prism is 3 cubes long and 2 wide, one layer holds 3 x 2 = 6 cubes.\nBecause the prism is 4 cubes high, it holds 4 of those layers, like shelves in a drone parts case with the same 3 by 2 footprint on every shelf.\n\nSlow down here: do not add 3 + 2 + 4",
+    "other_learner": "Good news: this question is only counting.\n\nVolume means the number of unit cubes inside the box. A unit cube is a small cube. Each side is 1 unit long. So the volume is just a count of cubes.\n\nPlan: count the bottom layer first. A layer is all the cubes sitting on the floor of the box. It is one cube tall. Then we count the layers above it.\n\nThe bottom layer is 3 cubes long and 2 cubes wide.\n\nHow many unit cubes sit in the bottom layer?",
+    "diff": null
+   },
+   {
+    "learner": "x6106-3",
+    "kind": "random",
+    "profile": "Age 10. Language: English is a second language (first: Vietnamese). Interests: fixing bicycles, lockpicking sport, quilting. Dislikes (never wanted): cartoon characters, repetition drills, food examples.",
+    "stored": null,
+    "shaped": "Good news: this question is only counting.\n\nVolume means the number of unit cubes inside the box. A unit cube is a small cube. Each side is 1 unit long. So the volume is just a count of cubes.\n\nPlan: count the bottom layer first. A layer is all the cubes sitting on the floor of the box. It is one cube tall. Then we count the layers above it.\n\nThe bottom layer is 3 cubes long and 2 cubes wide.\n\nHow many unit cubes sit in the bottom layer?",
+    "other_learner": "Volume just counts the unit cubes that fill the solid. Think of it like your art: a flat drawing is covered in pixels, a solid is filled with cubes — same counting idea, one dimension up.\n\nSo picture this prism as layers of cubes stacked 4 high. Start with just the bottom layer: 3 cubes long and 2 wide. How many cubes sit in that one layer?",
+    "diff": null
+   }
+  ]
+ },
+ "stats": {
+  "calls": 2145,
+  "empty": 0,
+  "errors": 470,
+  "seconds": 2490,
+  "cpu_load": 0,
+  "zerogpu_ledger": {
+   "ok": true,
+   "spent_usd": 3.838101,
+   "reserved_usd": 0.026067,
+   "committed_usd": 3.864168,
+   "cap_usd": 245,
+   "headroom_usd": 241.135832,
+   "calls": 3585,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/zerogpu-ledger.json"
+  },
+  "gonka_ledger": {
+   "ok": true,
+   "spent_usd": 7.487546,
+   "reserved_usd": 0.027829,
+   "committed_usd": 7.515375,
+   "cap_usd": 50,
+   "headroom_usd": 42.484625,
+   "calls": 9927,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/gonka-ledger.json"
+  },
+  "coral_ledger": {
+   "ok": true,
+   "spent_usd": 10.387577,
+   "reserved_usd": 0.02721,
+   "committed_usd": 10.414787,
+   "cap_usd": 100,
+   "headroom_usd": 89.585213,
+   "calls": 3731,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/coral-ledger.json"
+  }
+ }
+}
