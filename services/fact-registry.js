@@ -74,9 +74,9 @@ const TASKS = {
     kind: 'inline', mode: 'general', budgetMs: 45000, what: 'A bank question restyled to an interest (also re-solved blind twice)', source: 'general knowledge, plus two blind re-solves in services/item-theme.js', ifHeld: 'the plain bank question',
   },
   grade_free_response: { kind: 'downstream', by: 'services/ai.js gradeFreeResponse: the judges vote on the verdict, and their feedback goes through fact-guard passesText', file: 'services/ai.js', symbol: 'passesText', what: 'Grading of a typed answer, and its feedback', source: 'the question, the reference answer and the learner\'s answer', ifHeld: 'the verdict stands; the feedback is dropped and the stored explanation shows' },
-  spanish_partner_turn: { kind: 'inline', mode: 'general', budgetMs: LIVE_MS, what: 'The Spanish conversation partner', source: 'general knowledge of Spanish', ifHeld: 'the fixed partner line for that level' },
+  spanish_partner_turn: { kind: 'inline', mode: 'general', live: true, budgetMs: LIVE_MS, what: 'The Spanish conversation partner', source: 'general knowledge of Spanish', ifHeld: 'the fixed partner line for that level' },
   spanish_rubric: { kind: 'inline', mode: 'general', budgetMs: 30000, what: 'Marking and priorities on Spanish writing and speaking', source: 'general knowledge of Spanish', ifHeld: 'the rule-based mark' },
-  spanish_reaction: { kind: 'inline', mode: 'general', budgetMs: LIVE_MS, what: 'The short reaction on a Spanish activity', source: 'general knowledge of Spanish', ifHeld: 'no reaction, or the fixed one' },
+  spanish_reaction: { kind: 'inline', mode: 'general', live: true, budgetMs: LIVE_MS, what: 'The short reaction on a Spanish activity', source: 'general knowledge of Spanish', ifHeld: 'no reaction, or the fixed one' },
   spanish_write_ahead: { kind: 'downstream', by: 'services/spanish/unit-writer.js: a review pass (verdicts) keeps only what it passes', file: 'services/spanish/unit-writer.js', symbol: 'REVIEW_SCHEMA', what: 'Spanish units written ahead', source: 'a second model re-reading each item', ifHeld: 'the item is dropped' },
 
   // ── lessons and levels ─────────────────────────────────────────────────────────────────────────────────────

@@ -93,6 +93,32 @@ ok('every model call names its task, or passes one through from a caller that do
   assert.deepStrictEqual(unnamed, [], `model calls with no task:\n${unnamed.join('\n')}`);
 });
 
+ok('nothing reaches a model around services/ai.js unless it is listed here with its reason', () => {
+  // A call that skips services/ai.js skips the guard, so each file that does it has to be named, and none of them writes text a learner reads unchecked.
+  const ALLOWED = {
+    'services/ai.js': 'the choke point itself',
+    'services/pool.js': 'the slots the choke point calls',
+    'services/block-levels.js': 'the level verifier and its repairs; what they lead to passes verifyLevel before it is served',
+    'services/fact-cascade.js': 'the level verifier',
+    'services/fact-check-anthropic.js': 'the level verifier on the owner\'s key',
+    'services/item-theme.js': 'blind judges of a themed question: verdicts read by code',
+    'services/key-gate.js': 'blind judges of keys: verdicts read by code',
+    'services/offline-pool.js': 'the verifier\'s research sheet',
+    'services/spanish/unit-writer.js': 'writes Spanish units ahead, keeps only what its review pass passes (registry: spanish_write_ahead)',
+    'services/typed-grading.js': 'grading judges: verdicts read by code; the feedback line passes the guard in ai.gradeFreeResponse',
+    'services/tutor-vision.js': 'a description of the page for the tutor, whose reply is checked',
+    'services/subject-placement.js': 'an optional writer that calls the guard itself (placementStructured)',
+  };
+  const re = /\b(nvidia|p|local|factReader|lyceum|gonka|zerogpu|coral|munito|grokified|xkiro|ollama|mimo|anthropic|standardCompute|provider|prov)\.(structured|structuredStream|chat|chatStream|ask)\s*\(|\bcallHedged\s*\(|\brunBatch\s*\(|\.messages\.(create|stream)\s*\(|providers\/\w+'\)\.\w*[sS]tructured\w*\(/;
+  const found = [];
+  for (const f of SOURCES) {
+    const name = rel(f);
+    if (name.startsWith('services/providers/') || ALLOWED[name]) continue;
+    fs.readFileSync(f, 'utf8').split('\n').forEach((line, i) => { if (re.test(line) && !/^\s*(\*|\/\/)/.test(line)) found.push(`${name}:${i + 1}`); });
+  }
+  assert.deepStrictEqual(found, [], `model calls that skip services/ai.js and the guard:\n${found.join('\n')}`);
+});
+
 ok('every shown task is in the owner\'s table, and every row says who checks what', () => {
   const doc = fs.readFileSync(path.join(ROOT, 'docs', 'FACT-COVERAGE.md'), 'utf8');
   const absent = registry.shown().filter((k) => !doc.includes(`\`${k}\``));
