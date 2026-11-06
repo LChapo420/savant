@@ -398,3 +398,66 @@ outline and verify did), so a learner waiting on a lesson could not overflow to 
 runs in the waiting lane, and the page shows "Start studying the first N now" as soon as one skill exists (the study map already accepted a building course). Timed once through the real pool
 (`scripts/uploads-speed.js waiting course`, simulated learner, 440-word source, six proof processes finishing alongside): before, outline at 46 s and no skill after 12 minutes (stopped);
 after, outline 43 s, first skill 139 s, all 7 skills ready at 304 s. One run each, indicative.
+
+## 15. Round 3: a course that follows its learner (6 Nov 2026; AI-JUDGED, SIMULATED; GATE NOT PASSED, `UPLOAD_FOLLOW` stays OFF)
+
+Behind `UPLOAD_FOLLOW=1` (`services/course-follow.js`, hook in `services/course-builder.js`): after each skill's lesson is written it is checked against the learner's spec and rewritten up to twice with the problems named
+(task `material_follow`, same cheap paid overflow list as the other material tasks), keeping the better draft and at least 75% of the passage's terms (50% under a word cap). Checks: the spec's own (sentence length, long words, interests,
+avoided domains) and added ones: worked example, no test language (anxious learner; question prompts also lose "test/quiz/exam"), tiny chunks or full paragraphs (done by splitting or merging, no model call), stretch line, "Try first" line,
+adult and young registers, a "Watch out" line for a test date (all restating only the passage). A learner with a brevity preference gets a real word budget per skill (a share of its passages' words, `skillShare` x 1.4, 0.3 to 0.9) enforced by the
+shorten pass. Which of the two moves matters (switchable with `UPLOAD_FOLLOW_PARTS=cap,checks`), seed 7301, 6 learners each:
+
+| condition | traits followed, judge C / N | shortest-version learner lesson words / source |
+|---|---|---|
+| base (today) | 62% / 57% (24 learners) | 2.0 to 3.6x (9 learners) |
+| cap only | 55% / 48% | 0.91x (1 learner) |
+| checks only | 73% / 60% | 7.4x (1 learner) |
+| both | 73% / 77% (24 learners) | 0.55 to 1.16x (9 learners; 6 of 9 at or under 1.0) |
+
+So the word budget moves length and nothing else, the checked rewrite moves the traits and nothing about length; neither alone is enough. Builder ZeroGPU GLM-5.3 Flash, judges Coral DeepSeek V4.1 Flash (C) and NVIDIA nemotron (N), 6,000 output tokens,
+new held-out seeds 7301 to 7304, 6 learners each (24; N returned nothing for some courses so n is 21 and 19 there), half with a test date. The judge list no longer holds the contradictory pair "ignores interests" and "likes X": the earlier proof (section 14)
+asked both of one course; this changes the harness, so base was re-measured under it.
+
+| gate | required | base | both | met |
+|---|---|---|---|---|
+| traits followed, mean | 90% | 62% / 57% | 73% / 77% | NO |
+| worst 10% of learners | 70% | 33% / 33% | 38% / 50% | NO |
+| shortest-version learner at or under the source's length (lesson and key points) | all | 0 of 9 | 6 of 9 (max 1.16x) | NO |
+| same, whole course with practice questions | all | 4.0 to 6.2x | 2.7 to 4.5x | NO |
+| invented facts per course, C / N | no higher than base | 4.9 / 0.38 | 4.1 / 0.42 | C yes, N +0.04 (no) |
+| emphasised and plain exam score vs today's full mode, held-out documents, brevity persona | not lower | | emphasised -34 / -29 points, plain -14 / -23 (11 of 12 builds) | NO |
+
+The exam gate is unchanged by the switch for a learner with the default spec (the pass does nothing for them); for a learner who wants the shortest version it costs coverage by construction, which is the real tension between "shortest" and "no
+lower than full" and is not resolved here. Most missed traits with the switch on: age (34 and 61: the "Why it matters" line was added but judges often did not credit a register), "likes dense text", "wants the shortest version" (courses are still 2.7x+ with
+the practice questions), anxiety (test words survive in question choices and quotes), "holds focus a long time". Rewrites made: 305, accepted: 172. Not tried: shrinking the question set and their explanations for a brevity learner, a rewrite of the questions
+themselves, a per-trait second pass on the courses that still miss. Rows with the full course text: `docs/uploads-heldout-r3/`; first version of the checks: `docs/uploads-heldout-r3-v1/`; persona exam rows: `docs/uploads-heldout-r3x/`.
+
+## 16. Round 4: select instead of cut, questions, registers, invented facts (6 Nov 2026; AI-JUDGED, SIMULATED; GATES NOT ALL PASSED, `UPLOAD_FOLLOW` stays OFF)
+
+**What was built (behind `UPLOAD_FOLLOW=1`; select mode is on with it, `UPLOAD_FOLLOW_SELECT=off` turns it off).** For a learner who wants it short, the course is no longer written long and cut: it is written short (all stressed points shown to the
+writer, a reading budget of 0.25 to 0.45 of the source), then the round-2 sweep adds the source's OWN stressed sentences first and then other sentences with numbers or names, until the budget is spent; the practice set keeps one question per stressed
+point (at least 3, at most 5) with a one-sentence explanation. Anxious learners: test words are also removed from question choices and from the quote shown. A third rewrite attempt plus a form-only fallback line ("Why it matters: the next ideas build on this.",
+"Try first", "Stretch", "Watch out") when a trait is still missing. Any rewrite that adds a number or a name not in the passages, the old lesson or the learner's interests is refused (deterministic, `newClaims`). Dense-text lovers get merged prose (key points folded in).
+
+**Reading the courses (item 3).** I read the courses of three 34 and 61-year-olds. They do contain "Why it matters" lines (8 to 10 per course), so the judge's "is 61 years old" miss is partly a judge that has no test for age. But the courses also deserved some of
+it: the line was the same sentence in every skill, and a learner who "needs very plain words" got "kinematic framework" and "ductile asthenosphere". The judge was not changed. Two things in the harness make some misses unwinnable and were counted, not hidden: 6 of 24
+learners carry contradictory traits (tiny chunks AND likes dense text; holds focus a long time AND cannot take dense text). Leaving them out moves the mean by under 1 point (base 63.9 / 64.1 on 20 learners; both 74.0 / 75.3 on 18), so contradictions do not explain the gap.
+"Likes dense text": the threshold for merged prose was 5 sentences per chunk and the spec gave 4; chunks and the fixed Takeaway / Quick check lines were fragmenting the text (mean paragraph 12 to 23 words for learners who like dense text). Fixed (threshold 4, key points folded in); the effect on that trait was not isolated.
+
+| gate (new seeds 7501 to 7504, 24 base, 22 with the switch; N failed to answer on some) | required | base C / N | switch on C / N | met |
+|---|---|---|---|---|
+| traits followed, mean | 90% | 63% / 62% | 74% / 75% | NO |
+| worst 1% / 5% / 10% of learners | 10%: 70% | 25 / 25 / 29% and 25 / 30 / 43% | 30 / 33 / 38% and 40 / 43 / 43% | NO |
+| shortest-version learner, whole course incl. questions, at or under the source | all | 1.8 to 2.8x (3 learners) | 0.69 to 0.84x (3 learners; lessons 0.76 to 0.91x) | YES on 3 learners (small n) |
+| invented facts per course, C / N | no higher than base | 5.6 / 0.42 | 5.1 / 2.18 | C yes, N NO (+1.8) |
+| emphasised and plain exam vs full mode, brevity persona, 6 held-out documents | not lower | | see below | NO |
+
+Persona exam (brevity 95, plain words, anxious, worked examples, small chunks; builder Gonka DeepSeek V4 Flash; judges GLM Z and nemotron N; `docs/uploads-heldout-r4x/`): full mode emphasised 89 / 88, plain 96 / 94. Round 3 (cut after writing): emphasised 55 / 61, plain 80 / 69.
+Select mode: emphasised 89 / 74 (GLM equal to full; nemotron -13, from h1 where one judge answered 1 of 3), plain 68 / 60, lesson 0.85x (max 1.79 on h4), whole course 1.2 to 2.4x. So selecting recovered the emphasised points on one judge (from -34 to 0) and halved the plain loss
+only partly (-28 / -35 points). h4 (dense pharmacology notes with doses and drug names): plain 50% against 100% and 88%: its facts are a list of small specifics, each needing a sentence of its own, and at 0.45 of the source's words they do not fit.
+
+**Which gates cannot be reached together, and the price in numbers.** (a) Shortest-version at or under the source WHOLE (0.7 to 0.84x) is reached; with it, plain facts fall 28 to 35 points under full mode and emphasised stays level on one judge and falls 13 on the other. (b) Plain at or above full needs
+about the sweep-v3 length: 1.13x of the source for the lessons alone on default learners (plain -5 / +1, emphasised +5 / +10, section 14), which is over the source; the whole course would be 1.8x or more. So for the same learner "at or under the source" and "no plain loss" cannot both hold with this machinery; to hold plain the
+owner would give up "shortest is shorter than the source" (take about 1.1x lessons, 1.8x whole), to hold the length the owner would give up about 30 plain-fact points on a brevity learner (about 1 plain fact in 3 not taught). (c) Traits mean 90% and worst 10% 70% were not reached by any variant (62 to 75%); the misses left are age,
+"cannot take dense text", test-anxiety wording and plain words. (d) Invented facts on judge N rose with the rewrites even with the deterministic number and name refusal (0.42 to 2.18; judge C fell 5.6 to 5.1): the additions are not numbers or names, they look like analogies and "why it matters" claims; the judge's lists were not stored to confirm which.
+Rewrites: 474 asked, 167 accepted. Spend: ZeroGPU, Coral and Gonka cents per run, all well under the $5 run cap; ledgers are cumulative and shared.

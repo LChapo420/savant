@@ -126,6 +126,13 @@ async function runArms(reps, arms) {
   const store = load(OUT_FILE, { exam: {}, control: {}, arms: [], learners: [] });
   const u = db.insert('users', { email: 'heldout@example.test', display_name: 'Heldout', password_hash: 'x', xp: 0, streak: 0, onboarded: true });
   const llm = builderLlm();
+  if (process.env.HELDOUT_PERSONA) { // an extreme learner instead of the default one: brevity, plain words, anxious when tested, worked examples, small chunks, interests
+    const learner = require('../services/learner'); const scorecard = require('../services/scorecard');
+    learner.saveProfile(u.id, { survey: learner.cleanSurvey({ interests: 'falconry, K-pop dance', notes: 'I do not like long reading.' }), subscription: 'pro' });
+    const card = scorecard.get(u.id);
+    for (const [id, sc] of Object.entries({ brevity_preference: 95, vocabulary_ceiling: 6, evaluation_anxiety: 94, worked_example_dependence: 94, text_density_tolerance: 6, attention_runway: 8 })) card.stats[id] = { ...card.stats[id], s: sc, m: sc, w: 8, mw: 8, n: 40, evv: 40, evx: 40, evk: 'value' };
+    db.update('scorecards', card.id, { stats: card.stats });
+  }
   for (const d of docs) {
     const src = await extracted(d);
     if (!store.exam[d.id]) { store.exam[d.id] = await examFor(src); save(OUT_FILE, store); }
@@ -138,7 +145,7 @@ async function runArms(reps, arms) {
     for (let rep = 1; rep <= reps; rep++) {
       for (const arm of arms) {
         if (store.arms.some((r) => r.doc === d.id && r.arm === arm && r.rep === rep)) continue;
-        cb.setShort(arm !== 'full');
+        cb.setShort(!arm.startsWith('full')); process.env.UPLOAD_FOLLOW = arm === 'fullfollow' ? '1' : '';
         const m = materials.addPaste(u.id, `${d.title} ${arm}${rep}`, src.plain); if (m.error) { log('add failed', m.error); continue; }
         const kps = K.extract(src.rich, { plain: src.plain });
         db.update('materials', m.value.id, { key_points: kps.key_points, topics: kps.topics, assessed: kps.assessed });
@@ -209,9 +216,9 @@ async function runLearners(n, seed) {
     let built; try { built = await cb.build(user.id, m.id, { llm, force: true }); } catch (e) { built = { error: e.message }; }
     if (!built.course) { store.learners.push({ seed, i, error: String(built.error) }); save(OUT_FILE, store); log(`learner ${i}: build failed`); continue; }
     const text = generatedText(built.course); const lw = words(lessonText(built.course));
-    const wants = [...L.spoken, ...(L.interests.length ? [`likes ${L.interests.join(' and ')} (examples and analogies may use them)`] : []), ...(L.dislike ? [`dislikes ${L.dislike} (must not appear)`] : []), ...(L.esl ? ['English is a second language: plain syntax, no idioms'] : []), ...(L.testDate ? [`has a test in ${Math.round((new Date(L.testDate) - Date.now()) / 86400000)} days: exam-style wording, name the traps`] : []), `is ${L.age} years old`];
+    const wants = [...L.spoken, ...(L.interests.length && !(L.stats.interest_transfer < 50) ? [`likes ${L.interests.join(' and ')} (examples and analogies may use them)`] : []), ...(L.dislike ? [`dislikes ${L.dislike} (must not appear)`] : []), ...(L.esl ? ['English is a second language: plain syntax, no idioms'] : []), ...(L.testDate ? [`has a test in ${Math.round((new Date(L.testDate) - Date.now()) / 86400000)} days: exam-style wording, name the traps`] : []), `is ${L.age} years old`];
     const schema = { type: 'object', properties: { traits: { type: 'array', items: { type: 'object', properties: { trait: { type: 'string' }, followed: { type: 'boolean' }, evidence: { type: 'string' } }, required: ['trait', 'followed'] } }, invented_facts: { type: 'array', items: { type: 'string' } } }, required: ['traits', 'invented_facts'] };
-    const row = { seed, i, learner: L, status: built.course.status, skills: built.course.skills.length, source_words: words(src.plain), lesson_words: lw, judges: {} };
+    const row = { follow: { rewrites: built.course.dropped && built.course.dropped.follow_rewrites, fixed: built.course.dropped && built.course.dropped.follow_fixed }, sample: text.slice(0, 3000), gen: text, cond: process.env.HELDOUT_COND || 'base', seed, i, learner: L, status: built.course.status, skills: built.course.skills.length, source_words: words(src.plain), lesson_words: lw, judges: {} };
     for (const fam of (process.env.HELDOUT_JUDGES || 'Z,G').split(',')) {
       const j = await ask(fam, 'You are a strict reviewer. A learner profile, the SOURCE the learner uploaded and the COURSE built from it are given. For EACH listed trait say whether the COURSE visibly follows it (followed true/false, with a short quote or measurable reason). Also list any specific factual claim in the COURSE that is not in the SOURCE (invented_facts; an analogy that borrows from an interest is fine if it makes no new claim about the subject). Be strict: generic text is not following a trait.', `Learner:\n${wants.map((w) => `- ${w}`).join('\n')}\n\nSOURCE:\n${src.plain.slice(0, 5000)}\n\nCOURSE (lessons, key points, questions):\n${text.slice(0, 14000)}`, schema, 'review', 6000);
       if (j && Array.isArray(j.traits)) row.judges[fam] = { followed: j.traits.filter((t) => t.followed).length, of: j.traits.length, invented: (j.invented_facts || []).length, misses: j.traits.filter((t) => !t.followed).map((t) => t.trait) };
@@ -266,12 +273,35 @@ function report() {
   log('models used', JSON.stringify(used));
 }
 
+/** Round 3: per condition, traits followed (mean, worst 1/5/10%), brevity learners' length, invented facts, per judge. Files: docs/uploads-heldout-r3/*.json */
+function report3() {
+  const dir = path.join(__dirname, '..', 'docs', process.env.HELDOUT_R3DIR || 'uploads-heldout-r3');
+  const rows = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).flatMap((f) => load(path.join(dir, f), { learners: [] }).learners).filter((r) => !r.error);
+  const m = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
+  for (const cond of [...new Set(rows.map((r) => r.cond))]) {
+    const rs = rows.filter((r) => r.cond === cond);
+    const brev = rs.filter((r) => (r.learner.stats.brevity_preference || 0) >= 90);
+    log(`condition ${cond}: ${rs.length} learners; words/source mean ${round(m(rs.map((r) => r.lesson_words / r.source_words)))}; shortest-version learners ${brev.length}: ${brev.map((r) => round(r.lesson_words / r.source_words)).join(', ')} (max ${round(Math.max(...brev.map((r) => r.lesson_words / r.source_words)))})`);
+    const whole = brev.filter((r) => r.gen).map((r) => r.gen.split(/s+/).length / r.source_words);
+    log(`  whole course (lesson, key points, practice questions) for shortest-version learners / source: ${whole.map(round).join(', ')} (max ${round(Math.max(...whole))})`);
+    const clash = (r) => { const t = r.learner.spoken; return (t.includes('loses focus fast: tiny chunks') && t.includes('likes dense text')) || (t.includes('holds focus a long time') && t.includes('cannot take dense text')); };
+    for (const fam of [...new Set(rs.flatMap((r) => Object.keys(r.judges)))]) {
+      const nc = rs.filter((r) => r.judges[fam] && r.judges[fam].of && !clash(r)); log(`  judge ${fam} without the ${rs.filter(clash).length} learners whose own traits contradict (dense text vs chunks): n ${nc.length} followed mean ${round(m(nc.map((r) => r.judges[fam].followed / r.judges[fam].of)))}`);
+      const v = rs.filter((r) => r.judges[fam] && r.judges[fam].of);
+      const fr = v.map((r) => r.judges[fam].followed / r.judges[fam].of).sort((x, y) => x - y);
+      const q = (p) => round(fr[Math.min(fr.length - 1, Math.floor(p * fr.length))]);
+      log(`  judge ${fam}: n ${v.length} followed mean ${round(m(fr))} worst1% ${q(0.01)} 5% ${q(0.05)} 10% ${q(0.1)}; invented/course ${round(m(v.map((r) => r.judges[fam].invented)))}; misses ${JSON.stringify(Object.entries(v.flatMap((r) => r.judges[fam].misses || []).reduce((o, x) => ({ ...o, [x]: (o[x] || 0) + 1 }), {})).sort((a, b) => b[1] - a[1]).slice(0, 6))}`);
+    }
+  }
+}
+
 (async () => {
   const cmd = process.argv[2];
   if (cmd === 'docs') await writeDocs();
   else if (cmd === 'arms') await runArms(+(process.argv[3] || 2), process.argv.slice(4).length ? process.argv.slice(4) : ['full', 'short']);
   else if (cmd === 'learners') await runLearners(+(process.argv[3] || 8), +(process.argv[4] || 7101));
   else if (cmd === 'report') report();
+  else if (cmd === 'report3') report3();
   else log('usage: docs | arms <reps> [full] [short] | learners <n> [seed] | report');
   if (cmd !== 'report') report();
   process.exit(0);

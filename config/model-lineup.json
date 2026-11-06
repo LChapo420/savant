@@ -957,6 +957,18 @@
         "timeout_ms": 300000,
         "basis": "6 Nov bug sweep: the learning path waited 421 s+ because this task had no allow list, so a learner waiting on it could not overflow to a paid slot and queued behind saturated free models. Same list as material_notes (cheap paid slots after the 8 s hedge; background work never pays for speed)."
       },
+      "material_follow": {
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash",
+          "gonka:zai-org/GLM-5.3-Flash",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
+        ],
+        "timeout_ms": 300000,
+        "basis": "round 3 (6 Nov 2026): the checked rewrite of a lesson for its learner; a learner waits on it, so the same cheap paid overflow list as material_lesson."
+      },
       "material_pack": {
         "allow": [
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",

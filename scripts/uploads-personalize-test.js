@@ -68,6 +68,24 @@ const check = (label, ok, detail) => { if (ok) console.log(`  ok   ${label}`); e
   const P = 'Tides are caused mainly by the moon gravity pulling on the oceans and the sun adds a smaller pull as well in every month.';
   const hole = await materials.addFile(u.id, pdf([P, '', P, P]), 'holes.pdf');
   check('a text PDF with a page of pictures says which page had no text', hole.value && /Page 2 of this PDF had no readable text/.test((hole.value.warnings || []).join(' ')), hole);
+  // round 3: checks for a lesson written for its learner (services/course-follow.js)
+  const F = require('../services/course-follow');
+  const specX = ls.buildSpec(u.id, { topic: 'Tides', materialId: m2.id });
+  const anxious = { isDefault: false, course: { skillShare: 0.4 }, feedback: { lowStakes: true }, practice: { workedExamples: 2, workedToPractice: 1.5 }, lesson: { chunkSentences: 2 }, language: { maxSentenceWords: 30, vocabularyGrade: 12 }, interests: { exampleDomains: [], avoidDomains: [], share: 0 } };
+  const pr = F.problemsOf(['Tides move water. This will be on the test.'], [], anxious, { cap: null, own: [] });
+  check('a lesson with test language and no worked example is flagged for an anxious learner who needs examples', pr.some((x) => x.id === 'test_language') && pr.some((x) => x.id === 'worked_example'), pr);
+  check('a lesson with a worked example and no test words passes those checks', !F.problemsOf(['Worked example: step 1 find the moon. Tides move water.'], [], anxious, { cap: null, own: [] }).some((x) => ['test_language', 'worked_example'].includes(x.id)));
+  check('test words in a question become practice words', F.deTest('Which quiz item is tested on the exam?') === 'Which practice item is checked on the check?', F.deTest('Which quiz item is tested on the exam?'));
+  check('dense paragraphs are split into small chunks without a word changed', F.splitDense(['One a. Two b. Three c. Four d. Five e. Six f.'], anxious).length === 3 && F.splitDense(['One a. Two b. Three c. Four d. Five e. Six f.'], anxious).join(' ') === 'One a. Two b. Three c. Four d. Five e. Six f.');
+  check('a brevity learner gets a word share under 1 and an ordinary one none', F.wordShare({ course: { skillShare: 0.37 } }) > 0.3 && F.wordShare({ course: { skillShare: 0.37 } }) < 0.9 && F.wordShare({ course: { skillShare: 1 } }) === null);
+  check('the follow pass is off unless UPLOAD_FOLLOW=1', F.contextFor(u.id, { title: 'Tides', id: m2.id }) === null || process.env.UPLOAD_FOLLOW === '1');
+  // round 4
+  check('a rewrite that adds a number or a name is refused', F.newClaims('Tides rise 12 metres in Paris.', 'Tides rise because of the moon.', specX).length === 2 && F.newClaims('Tides rise because of the moon. Why it matters: it helps.', 'Tides rise because of the moon.', specX).length === 0, F.newClaims('Tides rise 12 metres in Paris.', 'Tides rise because of the moon.', specX));
+  const qs = [{ prompt: 'What causes tides?', answer: 'moon gravity', explanation: 'The moon pulls on the oceans. More words here that go on and on and on and on and on and on and on and on and on.' }, { prompt: 'How long is a tidal cycle?', answer: '12 hours 25 minutes', explanation: 'Fine.' }, { prompt: 'Other', answer: 'x', explanation: 'y' }, { prompt: 'Other2', answer: 'x', explanation: 'y' }];
+  const kk = require('../services/material-keypoints');
+  const sel = F.selectQuestions(qs, [{ text: 'A tidal cycle repeats about every 12 hours and 25 minutes.', weight: 4 }, { text: 'Tides are caused by the moon gravity pulling on oceans.', weight: 3 }], kk.termSet, { min: 2, max: 3 });
+  check('one check per stressed point is kept and explanations are cut to a sentence', sel.length === 2 && sel[0].prompt === 'How long is a tidal cycle?' && sel[1].explanation === 'The moon pulls on the oceans.', sel);
+  check('a missing trait gets its form without a claim', F.applyFallbacks(['One.'], [{ id: 'adult_register' }, { id: 'stretch' }]).join('|').startsWith('Why it matters:') );
   console.log(failures ? `${failures} FAILED` : 'All checks passed.');
   process.exit(failures ? 1 : 0);
 })();
