@@ -165,7 +165,7 @@ function specificsOf(text) {
   const out = new Set();
   for (const m of String(text).matchAll(/[a-z,;:]\s+([A-Z][\p{L}'-]{2,})/gu)) out.add(m[1].toLowerCase());
   for (const m of String(text).matchAll(/\b[A-Z][\p{L}'-]{2,}(?=\s+[a-z]+\s)/gu)) if (m.index > 0) out.add(m[0].toLowerCase());
-  for (const m of String(text).matchAll(/\d[\d,.]*\d|\d/g)) out.add(m[0]);
+  for (const m of String(text).matchAll(/(?<![\p{L}\d])\d[\d,.]*\d|(?<![\p{L}\d])\d(?![\d\p{L}])/gu)) out.add(m[0]);
   return out;
 }
 /** A heading written as a whole statement ("Tamsin Reef shelters the harbour") makes a point of its own; a topic label ("Types of plate boundaries") does not. */
@@ -268,17 +268,26 @@ function extract(rich0, opts = {}) {
     }
   });
 
-  // Restated elsewhere: near-duplicate units merge into one point with a repeat count.
+  // Restated elsewhere: near-duplicate units merge into one point with a repeat count. Compared only with units that share a rare word (Jaccard 0.55 means one of the rarest 45% of a unit's words
+  // must be shared), so a long document stays fast: all pairs held the server's one thread for minutes on 850 KB of text.
   const used = new Set();
   const clusters = [];
+  const postings = new Map();
+  units.forEach((u, idx) => { if (u.terms.size < 3 || u.assessedItem) return; for (const t of u.terms) { if (!postings.has(t)) postings.set(t, []); postings.get(t).push(idx); } });
+  units.forEach((u) => { u.specifics = specificsOf(u.text); });
+  const specPost = new Map();
+  units.forEach((u, idx) => { if (u.assessedItem) return; for (const x of u.specifics) { if (!specPost.has(x)) specPost.set(x, []); specPost.get(x).push(idx); } });
   for (let i = 0; i < units.length; i++) {
     if (used.has(i) || units[i].terms.size < 3 || units[i].assessedItem) continue;
     const members = [i];
-    for (let j = i + 1; j < units.length; j++) {
-      if (used.has(j) || units[j].terms.size < 3 || units[j].assessedItem) continue;
+    const rare = [...units[i].terms].sort((x, y) => postings.get(x).length - postings.get(y).length).slice(0, Math.floor(units[i].terms.size * 0.45) + 1);
+    const cand = new Set();
+    for (const t of rare) { const list = postings.get(t); if (list.length > 2500 && t !== rare[0]) continue; for (const j of list) if (j > i) cand.add(j); }
+    for (const j of [...cand].sort((x, y) => x - y)) {
+      if (used.has(j)) continue;
       if (jaccard(units[i].terms, units[j].terms) < 0.55) continue;
       // The same frame with different names and numbers ("Station A holds 12", "Station B holds 30") is two facts, not one said twice.
-      const si = specificsOf(units[i].text); const sj = specificsOf(units[j].text);
+      const si = units[i].specifics; const sj = units[j].specifics;
       if (si.size && sj.size && ![...si].some((x) => sj.has(x))) continue;
       members.push(j); used.add(j);
     }
@@ -301,10 +310,12 @@ function extract(rich0, opts = {}) {
     for (const g of group) for (const [k, v] of Object.entries(g.signals)) signals[k] = Math.max(signals[k] || 0, v);
     if (group.length > 1) signals.repeated = Math.min(2.0, 0.9 * (group.length - 1));
     // Said again in other words: other sentences that share two of its specifics (a name and a number) count as restatements.
-    const repSpec = specificsOf(rep.text);
+    const repSpec = rep.specifics;
     if (repSpec.size >= 2) {
+      const shared = new Map();
+      for (const x of repSpec) for (const vi of specPost.get(x) || []) shared.set(vi, (shared.get(vi) || 0) + 1);
       let again = 0;
-      units.forEach((v, vi) => { if (members.includes(vi) || v.assessedItem) return; const vs = specificsOf(v.text); let n = 0; for (const x of vs) if (repSpec.has(x)) n++; if (n >= 2) again++; });
+      for (const [vi, n] of shared) if (n >= 2 && !members.includes(vi)) { again++; if (again >= 3) break; }
       if (again) signals.repeated = Math.min(2.0, (signals.repeated || 0) + 0.9 * again);
     }
     if (rep.section !== 'example' && !rep.assessedItem) {
@@ -325,7 +336,7 @@ function extract(rich0, opts = {}) {
   points.sort((a, b) => b.score - a.score || a.order - b.order);
   // The cap is for plain sentences only: a point with a real signal (weight 2 or more) is never cut, or a short handout that stresses many things loses some of them.
   const stressedN = points.filter((p) => 1 + 0.85 * p.score >= 2).length;
-  const kept = points.slice(0, Math.max(cap, stressedN)).sort((a, b) => a.order - b.order);
+  const kept = points.slice(0, Math.max(cap, Math.min(stressedN, 1500))).sort((a, b) => a.order - b.order);
   const key_points = kept.map((p, i) => ({
     id: `k${i + 1}`, text: p.text, weight: round1(Math.min(5, 1 + 0.85 * p.score)), signals: p.signals,
     loc: p.loc, at: opts.plain ? locate(opts.plain, p.full) : null, repeats: p.repeats,

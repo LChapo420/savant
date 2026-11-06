@@ -29,7 +29,7 @@ if (process.env.SPEED_TRACE) {
   const run = lane === 'background' ? pool.runBackground : (fn) => pool.runForeground(fn, { fast: true });
   const t0 = Date.now();
   let out; let firstSkill = null; let outlineAt = null;
-  const poll = what === 'course' ? setInterval(() => { const c = require('../services/course-builder').get(u.id, m.id); if (c && c.outline && outlineAt == null) { outlineAt = Math.round((Date.now() - t0) / 1000); console.log("outline_s", outlineAt); } if (c && (c.skills || []).length && firstSkill == null) { firstSkill = Math.round((Date.now() - t0) / 1000); console.log("first_skill_s", firstSkill); } }, 500) : null;
+  const poll = what === 'course' ? setInterval(() => { const c = require('../services/course-builder').get(u.id, m.id); if (c && c.preview && !global.pv) { global.pv = 1; console.log('  first_lesson_readable_s', Math.round((Date.now() - t0) / 1000)); } if (c && c.outline && outlineAt == null) { outlineAt = Math.round((Date.now() - t0) / 1000); console.log("outline_s", outlineAt); } if (c && (c.skills || []).length && firstSkill == null) { firstSkill = Math.round((Date.now() - t0) / 1000); console.log("first_skill_s", firstSkill); } }, 500) : null;
   try {
     out = await run(() => (what === 'course' ? require('../services/course-builder').build(u.id, m.id, {}) : what === 'pack' ? require('../services/material-pack').buildWithRetry(u.id, m.id, {}) : require('../services/material-notes').build(u.id, m.id, {})));
   } catch (e) { out = { error: e.message }; }

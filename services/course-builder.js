@@ -723,7 +723,7 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
     for (const k of ['sentences', 'direct', 'model_ok', 'fixed', 'dropped', 'hard', 'unchecked', 'calls']) { if (k !== 'dropped') merged.report[k] = (Number(f.report[k]) || 0) + (Number(lessonFacts.report[k]) || 0); }
     merged.report.dropped = [...(f.report.dropped || []), ...(lessonFacts.report.dropped || [])];
     merged.report.stopped = f.report.stopped || lessonFacts.report.stopped;
-    merged.report.fell_back = lessonFacts.report.fell_back;
+    merged.report.fell_back = lessonFacts.report.fell_back; merged.report.words_before = lessonFacts.report.words_before; merged.report.words_after = lessonFacts.report.words_after;
     return merged;
   }) : null;
   const ver = await ask(ctx.llm, ctx.budget, ctx.userId, {

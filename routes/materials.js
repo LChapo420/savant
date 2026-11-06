@@ -83,9 +83,10 @@ router.get('/', requireAuth, (req, res) => {
 // Home page: how many of the learner's own-material skills are due for review (before '/:id').
 router.get('/review-due', requireAuth, (req, res) => res.json(study.dueSummary(req.user.id)));
 
-router.post('/paste', requireAuth, limit('materials-paste', 20, 60 * 60 * 1000), pasteBody, (req, res) => {
+router.post('/paste', requireAuth, limit('materials-paste', 20, 60 * 60 * 1000), pasteBody, async (req, res) => {
   const b = req.body || {};
-  const out = materials.addPaste(req.user.id, b.title, b.text);
+  const understood = typeof b.text === 'string' ? await materials.understandAsync(b.text, null, 'paste') : null;
+  const out = materials.addPaste(req.user.id, b.title, b.text, { understood });
   if (out.error) return refuse(res, out);
   autoBuild(req.user.id, out.value);
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });

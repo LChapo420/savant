@@ -388,28 +388,52 @@ async function fromHtmlFile(buf) {
 async function tesseractOcr(buf) {
   let Tesseract;
   try { Tesseract = require('tesseract.js'); } catch { return { missing: true }; }
-  // One worker is kept for a few seconds and reused, so a scan of many pages does not pay the start-up cost on every page.
+  return new Promise((resolve) => { ocrQueue.push({ buf, resolve, Tesseract }); pumpOcr(); });
+}
+// A few workers, reused while there is work and released 8 s after the last page. Pictures wait their turn here: a worker reads one at a time, and the earlier single worker could be released under a page
+// another learner was still waiting on, which left that upload stuck for good (found by 24 uploads at once). Every reading has a time limit.
+const OCR_WORKERS = () => Math.max(1, Number(process.env.OCR_WORKERS) || Math.min(2, Math.max(1, require('os').cpus().length - 1)));
+const OCR_JOB_MS = () => Number(process.env.OCR_JOB_MS) || 150000;
+const ocrQueue = [];
+const ocrFree = [];
+let ocrLive = 0; let ocrBusy = 0; let idleTimer = null;
+function newOcrWorker(Tesseract) {
+  require('fs').mkdirSync(TESSERACT_CACHE, { recursive: true });
+  ocrLive++;
+  // errorHandler: without one tesseract.js THROWS a worker error in a message handler, outside any promise, and that ends the whole server process (a cut-off PNG did exactly that).
+  return Tesseract.createWorker('eng', 1, { cachePath: TESSERACT_CACHE, errorHandler: (e) => { console.warn(`ocr: ${String(e && e.message ? e.message : e).slice(0, 120)}`); } });
+}
+function pumpOcr() {
+  while (ocrQueue.length && (ocrFree.length || ocrLive < OCR_WORKERS())) {
+    const job = ocrQueue.shift();
+    const workerP = ocrFree.length ? Promise.resolve(ocrFree.pop()) : Promise.resolve().then(() => newOcrWorker(job.Tesseract));
+    ocrBusy++;
+    if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+    runOcrJob(workerP, job);
+  }
+  if (!ocrBusy && !ocrQueue.length && ocrFree.length && !idleTimer) { idleTimer = setTimeout(releaseWorker, 8000); idleTimer.unref(); }
+}
+async function runOcrJob(workerP, job) {
+  let worker = null; let timer = null; let good = false;
   try {
-    if (!sharedWorker) {
-      require('fs').mkdirSync(TESSERACT_CACHE, { recursive: true });
-      // errorHandler: without one tesseract.js THROWS a worker error in a message handler, outside any promise, and that ends the whole server process (a cut-off PNG did exactly that).
-      sharedWorker = Tesseract.createWorker('eng', 1, { cachePath: TESSERACT_CACHE, errorHandler: (e) => { console.warn(`ocr: ${String(e && e.message ? e.message : e).slice(0, 120)}`); } });
-    }
-    const worker = await sharedWorker;
-    if (idleTimer) clearTimeout(idleTimer);
-    const out = await worker.recognize(buf);
-    idleTimer = setTimeout(releaseWorker, 8000); idleTimer.unref();
-    return { text: (out && out.data && out.data.text) || '', confidence: out && out.data ? out.data.confidence : null };
+    worker = await workerP;
+    const out = await Promise.race([worker.recognize(job.buf), new Promise((_, no) => { timer = setTimeout(() => no(new Error('ocr time limit')), OCR_JOB_MS()); })]);
+    good = true;
+    job.resolve({ text: (out && out.data && out.data.text) || '', confidence: out && out.data ? out.data.confidence : null });
   } catch {
-    releaseWorker();
-    return { failed: true };
+    job.resolve({ failed: true });
+  } finally {
+    if (timer) clearTimeout(timer);
+    ocrBusy--;
+    if (good) ocrFree.push(worker);
+    else { ocrLive--; if (worker) Promise.resolve(worker.terminate()).catch(() => {}); }
+    pumpOcr();
   }
 }
-let sharedWorker = null; let idleTimer = null;
 function releaseWorker() {
-  const w = sharedWorker; sharedWorker = null;
-  if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
-  if (w) Promise.resolve(w).then((x) => x.terminate()).catch(() => {});
+  idleTimer = null;
+  if (ocrBusy || ocrQueue.length) return;
+  for (const w of ocrFree.splice(0)) { ocrLive--; Promise.resolve(w.terminate()).catch(() => {}); }
 }
 
 // Tests swap the recognizer so no real OCR runs; null means the real one.

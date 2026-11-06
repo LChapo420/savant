@@ -295,7 +295,24 @@ function understand(text, rich, kind) {
   }
 }
 
-function add(userId, { title, text, rich, kind, pages, sourceName, ocr: viaOcr, files, warnings }) {
+/** The same pass off the main thread for a large text, so one big upload never holds up every other learner. Falls back to the plain pass if a worker cannot start. */
+const UNDERSTAND_OFF_THREAD_CHARS = 100000;
+function understandAsync(text, rich, kind) {
+  if (String(rich || text).length < UNDERSTAND_OFF_THREAD_CHARS) return Promise.resolve(null);
+  return new Promise((resolve) => {
+    let done = false;
+    const end = (v) => { if (!done) { done = true; resolve(v); } };
+    try {
+      const { Worker } = require('worker_threads'); // eslint-disable-line global-require
+      const w = new Worker(require('path').join(__dirname, 'material-understand-worker.js'), { workerData: { text, rich, spoken: SPOKEN.has(kind) } });
+      const timer = setTimeout(() => { w.terminate(); end({ key_points: [], topics: [], assessed: [] }); }, 90000);
+      w.on('message', (m) => { clearTimeout(timer); end(m.error ? null : m); w.terminate(); });
+      w.on('error', () => { clearTimeout(timer); end(null); });
+    } catch { end(null); }
+  });
+}
+
+function add(userId, { title, text, rich, kind, pages, sourceName, ocr: viaOcr, files, warnings, understood }) {
   const mine = db.find('materials', (m) => m.user_id === userId);
   if (mine.length >= MAX_ITEMS) return fail(`You can keep ${MAX_ITEMS} materials. Delete one first.`, 'limit');
   if (mine.reduce((s, m) => s + m.chars, 0) + text.length > MAX_TOTAL_CHARS) return fail('That would take you over your storage limit. Delete a material first.', 'limit');
@@ -308,7 +325,7 @@ function add(userId, { title, text, rich, kind, pages, sourceName, ocr: viaOcr, 
     words: words(text),
     chars: text.length,
     text,
-    ...understand(text, rich, kind),
+    ...(understood || understand(text, rich, kind)),
     ...(viaOcr ? { ocr: true } : {}),
     ...(files ? { files: files.slice(0, 40) } : {}),
     ...(() => { const w = [...(warnings || [])]; if ((viaOcr || kind === 'audio' || kind === 'image') && !looksEnglish(text)) w.push(NOT_ENGLISH); return w.length ? { warnings: w.slice(0, 8) } : {}; })(),
@@ -320,16 +337,17 @@ async function addFile(userId, buf, name, opts = {}) {
   const got = await extract(buf, { onProgress: opts.onProgress });
   if (got.error) return got;
   const base = String(name || '').replace(/^.*[\\/]/, '').replace(/\.[A-Za-z0-9]{1,5}$/, '');
-  return add(userId, { title: base, text: got.text, rich: got.rich, kind: got.kind, pages: got.pages, sourceName: name, ocr: got.ocr, files: got.files, warnings: got.warnings });
+  const understood = await understandAsync(got.text, got.rich, got.kind);
+  return add(userId, { title: base, text: got.text, rich: got.rich, kind: got.kind, pages: got.pages, sourceName: name, ocr: got.ocr, files: got.files, warnings: got.warnings, understood });
 }
 
-function addPaste(userId, title, text) {
+function addPaste(userId, title, text, opts = {}) {
   if (typeof text !== 'string') return fail('Paste some text first.', 'empty');
   if (text.length > MAX_CHARS * 2) return fail('That is too long to paste. Upload it as a file or paste a part.', 'too_long');
   const t = normalise(text);
   if (t.length < MIN_CHARS) return fail('There is too little text there to build a course from.', 'too_little');
   if (t.length > MAX_CHARS) return fail('That is over the limit of about 300 pages. Paste a part of it.', 'too_long');
-  return add(userId, { title, text: t, kind: 'paste', pages: null });
+  return add(userId, { title, text: t, kind: 'paste', pages: null, understood: opts.understood });
 }
 
 /** A public web page the learner names: the server fetches it and keeps the article text only. */
@@ -423,5 +441,5 @@ function remove(userId, id) {
 
 module.exports = {
   MAX_BYTES, MAX_PAGES, MAX_CHARS, decodeText, looksEnglish, MIN_CHARS, MAX_ITEMS, MAX_TOTAL_CHARS,
-  sniff, extract, add, list, get, textOf, addFile, addPaste, addLink, addGoogleLink, addYoutube, addTranscript, cleanTranscript, remove, zipEntries,
+  understandAsync, sniff, extract, add, list, get, textOf, addFile, addPaste, addLink, addGoogleLink, addYoutube, addTranscript, cleanTranscript, remove, zipEntries,
 };
