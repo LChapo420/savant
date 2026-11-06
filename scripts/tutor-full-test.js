@@ -122,6 +122,12 @@ const say = (text) => [{ role: 'user', content: text }];
   check('a lesson page with the checker down stays helpful', r.held === false, r);
   leakVerdict = 'NO';
 
+  leakVerdict = 'WRONG';
+  r = await dock.reply({ user: u, messages: say('explain what a numerator is please'), page: { path: '/session' } });
+  check('a reply the fact check calls wrong is replaced by an honest not-sure', r.held === true && /not sure/.test(r.reply), r);
+  leakVerdict = 'NO';
+  check('a reply affirming a proposed answer is caught', full.affirmsProposal('is it carbon dioxide?', "That's the one most people land on, and you're right that plants use it.") && !full.affirmsProposal('is it 6?', "I can't say yes or no here."));
+
   console.log('switch off');
   process.env.TUTOR_FULL = '0';
   mode = 'ok';

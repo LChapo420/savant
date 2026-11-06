@@ -335,10 +335,11 @@ Does the reply state the answer (to the question on the page, or to a question f
   // A one-line reply with no question in it, to someone who asked for the answer, is the answer ("answer only" -> "9 x 6 is 54.").
   if (fullOn && text && !held && asked && (mode === 'method' || (page && page.question)) && text.trim().length <= 70 && !/\?/.test(text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   // Without any model: a reply that repeats the answer the learner just proposed ("is it 3/4?") is confirming it.
-  if (fullOn && text && !held && last && (mode === 'method' || (page && page.question)) && full.echoesProposal(last.content, text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+  if (fullOn && text && !held && last && (mode === 'method' || (page && page.question)) && (full.echoesProposal(last.content, text) || full.affirmsProposal(last.content, text))) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   // Round 2: a fast fact check before a reply is shown (services/tutor-full.js factCheck).
   if (fullOn && text && !held && mode === 'full' && await full.factCheck({ ai, user, message: last ? last.content : '', text, notes: `${ctx.text}
-${howto.sheet()}`, question: page && page.question })) { text = full.NOT_SURE; held = true; }
+${howto.sheet()}
+${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')} (a count of wrong tries or quiet seconds that the page reports is true)`, question: page && page.question })) { text = full.NOT_SURE; held = true; }
   facts.dockEnded(user.id);
   let out = text || tutor.offlineReply(user.id);
   let feature;

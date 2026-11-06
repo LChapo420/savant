@@ -167,6 +167,13 @@ function materialNotes(userId, query, mode) {
   } catch { return []; }
 }
 
+const AFFIRMS = /\b(you'?re right|you are right|that'?s (right|correct|it|the one)|(is|it'?s|that is) correct|exactly|spot on|you got it|nailed it|bingo|yes[,!. ])/i;
+const PROPOSING = /\b(is it|is the answer|the answer is|i think (it'?s|its)|maybe (it'?s|its)|right\?|correct\?|am i right)\b/i;
+/** True when the learner proposed an answer and the reply affirms it ("you're right that..."): confirmation on a graded question. */
+function affirmsProposal(learnerMsg, reply) {
+  return PROPOSING.test(String(learnerMsg || '')) && AFFIRMS.test(String(reply || '')) && !/\b(can'?t|won'?t|not going to|cannot) (say|confirm|tell)\b/i.test(String(reply || ''));
+}
+
 const PROPOSAL = /(?:is it|is the answer|the answer is|the answer'?s|i think (?:it'?s|its|the answer is)|maybe (?:it'?s|its)?|so it'?s|it'?s|its)\s+([^?.!,;]{1,30})/ig;
 const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9/.:^-]+/g, ' ').trim();
 /** True when the reply repeats an answer the learner just proposed. Deterministic: no model needed. */
@@ -193,12 +200,12 @@ const NOT_SURE = "I'm not sure I have that exactly right, and I'd rather not gue
  * @returns {Promise<boolean>} true when the reply should be replaced
  */
 async function factCheck({ ai, user, message, text, notes, question }) {
-  if (!text || text.length < 40 || !ASKS.test(message || '')) return false;
+  if (!text || text.length < 40) return false;
   let verdict = '';
   try {
     verdict = await withDeadline(ai.talk({
       role: 'fast', task: 'dock_leak_check',
-      system: 'You fact-check a tutor reply before a learner sees it. Reply with only OK or WRONG. WRONG means: the reply states a subject fact (maths, science, language, history, geography) that is incorrect; or it states a specific detail about this learner (a number, a date, a count, a past event) or about the app that is not in the NOTES below; or it says "your notes say" something the NOTES do not. Opinions, encouragement, questions to the learner and well-established facts are OK.',
+      system: 'You fact-check a tutor reply before a learner sees it. Reply with only OK or WRONG. WRONG means: the reply states a subject fact (maths, science, language, history, geography) that is incorrect; or it states a specific detail about this learner (a number, a date, a day of the week, a test or exam, a count of tries, a page or section number, a past event) or about the app that is not in the NOTES below; or it says "your notes say" something the NOTES do not. Opinions, encouragement, questions to the learner and well-established facts are OK.',
       messages: [{ role: 'user', content: `NOTES (true): ${clip(notes, 1500)}
 
 Question on screen: ${clip(question, 200) || 'none'}
@@ -213,4 +220,4 @@ OK or WRONG?` }],
   return /^\W*wrong/i.test(verdict || '');
 }
 
-module.exports = { factCheck, NOT_SURE, isBrief, triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };
+module.exports = { affirmsProposal, factCheck, NOT_SURE, isBrief, triage, safetyOn, CRISIS, echoesProposal, materialNotes, looseMaterial, on, DEFAULT_ON, DEADLINE_MS, withDeadline, fallback, fitLine };

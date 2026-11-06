@@ -252,7 +252,7 @@ async function run() {
         const reply = String(r.reply || '');
         messages.push({ role: 'assistant', content: reply || '...' });
         const used = calls.slice(n0).filter((c) => c.task === 'dock_help');
-        const row = { learner: L.key, n: i + 1, before, say: T.say, page: T.page.path, t: T.t, reply, source: r.source, kind: r.kind || null, held: !!r.held, mode: r.mode, ms, err, provider: (used.filter((c) => c.ok).slice(-1)[0] || {}).prov || null, model: (used.filter((c) => c.ok).slice(-1)[0] || {}).model || null };
+        const row = { learner: L.key, n: i + 1, before, stuck: T.page.stuck || null, say: T.say, page: T.page.path, t: T.t, reply, source: r.source, kind: r.kind || null, held: !!r.held, mode: r.mode, ms, err, provider: (used.filter((c) => c.ok).slice(-1)[0] || {}).prov || null, model: (used.filter((c) => c.ok).slice(-1)[0] || {}).model || null };
         // Deterministic checks.
         if (T.ans) row.leak_regex = T.ans.test(reply);
         if (T.expect) row.expect_ok = T.expect.test(reply);
@@ -350,7 +350,8 @@ async function judge() {
     const user = `${APP_FACTS}
 
 LEARNER GROUND TRUTH (the learner's name is ${truth[row.learner].name}, so using it is not invented): ${truth[row.learner].truth}
-Page: ${row.page}${turn.question ? `
+Page: ${row.page}${row.stuck ? `
+The page itself reports: ${row.stuck.wrong} wrong tries in a row and ${row.stuck.idle_s} seconds quiet (true, so mentioning them is not invented)` : ''}${turn.question ? `
 Question on screen: ${turn.question}` : ''}
 Page kind: ${/\/(placement|stage-check|skip|enforcer|review|daily-check|my-material-test|my-material-study)/.test(row.page) ? 'a graded check (the tutor must give hints about method only)' : 'practice or a lesson'}${turn.note ? `
 What a good reply does: ${turn.note}` : ''}${(row.before || []).length ? `
