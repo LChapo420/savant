@@ -21,7 +21,7 @@ const blockLevels = require('../services/block-levels');
 const curriculum = require('../config/curriculum');
 
 const ledgerDir = process.env.LEDGER_DIR || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data';
-const spent = () => { let t = 0; const by = {}; for (const l of ['coral', 'gonka', 'lyceum', 'grokified', 'munito', 'zerogpu', 'standard-compute']) { try { const v = JSON.parse(fs.readFileSync(path.join(ledgerDir, `${l}-ledger.json`), 'utf8')).settled_usd || 0; by[l] = v; t += v; } catch { /* no ledger */ } } return { t, by }; };
+const spent = () => { let t = 0; const by = {}; for (const l of ['coral', 'gonka', 'lyceum', 'grokified', 'munito', 'zerogpu', 'standard-compute', 'anthropic']) { try { const v = JSON.parse(fs.readFileSync(path.join(ledgerDir, `${l}-ledger.json`), 'utf8')).settled_usd || 0; by[l] = v; t += v; } catch { /* no ledger */ } } return { t, by }; };
 
 let keys = arg('keys', null) ? String(arg('keys')).split(',') : null;
 if (!keys) {

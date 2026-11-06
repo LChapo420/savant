@@ -20,7 +20,9 @@ require('../services/run-cap').defaultCap(3);
 const LIVE = 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data';
 for (const n of ['CORAL', 'GONKA', 'GROKIFIED', 'LYCEUM', 'MUNITO', 'ZEROGPU']) if (!process.env[`${n}_LEDGER_FILE`]) process.env[`${n}_LEDGER_FILE`] = `${LIVE}/${n.toLowerCase()}-ledger.json`;
 const [, , A_PL = '12', A_CL = '8', MODE = 'parts', A_PAR = '3', OUT = null] = process.argv;
-process.env.FACT_VERIFY_PARTS = MODE === 'parts' ? '1' : '';
+// mode: parts | whole (the waiting-learner lane) or bgparts | bgwhole (the background lane, nobody waiting; bgparts = FACT_VERIFY_PARTS=background).
+process.env.FACT_VERIFY_PARTS = MODE === 'parts' ? '1' : MODE === 'bgparts' ? 'background' : '';
+const BG = MODE.startsWith('bg');
 if (!process.env.DB_FILE) throw new Error('DB_FILE=<copy of the database> is required (never the live one)');
 const set = require('../docs/fact-verifier-set.json');
 const bl = require('../services/block-levels');
@@ -69,7 +71,8 @@ const placeOf = (where) => { const m = /(block|check)\s*(\d+)/i.exec(where || ''
       const { c, f } = pick[next++];
       const ctx = { text: `Subject: ${f.plan.track_id}, grade ${f.plan.grade_id}, level ${f.plan.level}.`, trackId: f.plan.track_id };
       const t = Date.now(); let v = null; let err = null;
-      try { v = await pool.runForeground(() => bl.onTier('free', () => bl.verifyLevel({ context: ctx, blocks: f.blocks, checks: f.checks, userId: 90000000 + Math.floor(Math.random() * 9000000), where: null, excludeFamilies: ['deepseek'] })), { fast: true }); } catch (e) { err = String(e.message).slice(0, 80); }
+      const runLane = (fn) => (BG ? pool.runBackground(fn) : pool.runForeground(fn, { fast: true }));
+      try { v = await runLane(() => bl.onTier('free', () => bl.verifyLevel({ context: ctx, blocks: f.blocks, checks: f.checks, userId: 90000000 + Math.floor(Math.random() * 9000000), where: null, excludeFamilies: ['deepseek'] }))); } catch (e) { err = String(e.message).slice(0, 80); }
       const failed = v ? v.failed : [];
       const onTarget = failed.filter((x) => { const p = placeOf(x.where); return p && p.word === f.target.word && p.index === f.target.index; });
       rows.push({ id: c.id, planted: !!c.planted, parts: f.blocks.length + Math.ceil(f.checks.length / 4), ms: Date.now() - t, read: !!v, caught: c.planted ? caughtBy(onTarget, c.planted) : null, falseAlarm: c.planted ? null : onTarget.length > 0, otherFailed: failed.length - onTarget.length, model: v && v.model, partMs: v && v.partMs, partModels: v && v.partModels, err });

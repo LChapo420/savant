@@ -91,13 +91,29 @@ async function learner(k, profile) {
   }
   row.firstPoll = first; row.toLessonSec = Math.round((Date.now() - tEnd) / 100) / 10; row.tailored = !!(plan && plan.meta && plan.meta.tailored);
   row.model = plan && plan.meta && (plan.meta.model || plan.meta.layout_model) || null;
+  // Instant layer (INSTANT_LAYER=on): the lesson opened is the shared one with meta.layer; the personal layer is polled like the page does
+  // (every 0.6 s), and the clock stops when it is ready. layerSec = seconds from the end of placement; a layer that never comes is 'none'/'timeout'.
+  row.instant = !!(plan && plan.meta && plan.meta.layer);
+  if (row.instant) {
+    const lvl = row.level; let st = 'timeout';
+    for (let k = 0; k < Number(process.env.LAYER_POLLS || 100); k++) {
+      const r = await call('GET', `/api/lessons/math/algebra_1_part_a/${lvl}/layer`);
+      if (r.status === 200 && r.payload.state === 'ready') { st = 'ready'; row.layerSec = Math.round((Date.now() - tEnd) / 100) / 10; break; }
+      if (r.status === 200 && r.payload.state === 'none') { st = 'none'; row.layerSec = Math.round((Date.now() - tEnd) / 100) / 10; break; }
+      await sleep(600);
+    }
+    row.layer = st;
+  }
   return row;
 }
 
 (async () => {
   const jobs = Array.from({ length: N }, (_, k) => learner(k, PROFILES[k % PROFILES.length]));
   const rows = await Promise.all(jobs);
-  console.table(rows.map((r) => ({ k: r.k, profile: r.profile, asked: r.asked, level: r.level, placementSec: r.placementSec, firstPoll: r.firstPoll, toLessonSec: r.toLessonSec, tailored: r.tailored, error: r.error || '' })));
+  const ok = rows.filter((r) => !r.error); const opened = ok.map((r) => r.toLessonSec).sort((a, b) => a - b); const med = (a) => (a.length ? a[Math.floor(a.length / 2)] : null);
+  const layered = ok.filter((r) => r.layer === 'ready').map((r) => r.layerSec).sort((a, b) => a - b);
+  console.log(JSON.stringify({ learners: rows.length, failures: rows.length - ok.length, openMedianSec: med(opened), openWorstSec: opened[opened.length - 1] ?? null, personalReady: layered.length, personalMedianSec: med(layered), personalWorstSec: layered[layered.length - 1] ?? null, personalWithin8s: ok.filter((r) => r.layer === 'ready' && r.layerSec <= 8).length, layerNone: ok.filter((r) => r.layer === 'none').length, layerTimeout: ok.filter((r) => r.layer === 'timeout').length }));
+  console.table(rows.map((r) => ({ k: r.k, profile: r.profile, asked: r.asked, level: r.level, placementSec: r.placementSec, firstPoll: r.firstPoll, toLessonSec: r.toLessonSec, tailored: r.tailored, layer: r.layer, layerSec: r.layerSec, error: r.error || '' })));
   if (OUT) require('fs').writeFileSync(OUT, JSON.stringify(rows, null, 1));
   process.exit(0);
 })();

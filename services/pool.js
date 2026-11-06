@@ -167,6 +167,7 @@ class Slot {
     this.rpm = spec.rpm || null;
     this.rpmGroup = spec.rpmGroup || spec.id;
     this.group = spec.group || null; // shared concurrency group (NVIDIA's key)
+    this.groupReserveBg = spec.groupReserveBg || 0; // permits of the group a background call on this slot leaves free for waiting learners (paid slots too)
     this.dailyTokens = spec.dailyTokens || null; // () => tokens left today, or null
     this.timeoutMs = spec.timeoutMs || null;
     this.latencyHintMs = spec.latencyHintMs || 30000;
@@ -285,7 +286,7 @@ class Slot {
     if (this.inFlight >= this.maxConcurrent - spare) return false;
     if (this.group) {
       const cap = groupCaps.get(this.group) || Infinity;
-      const gspare = background && !this.paid && Number.isFinite(cap) ? Math.min(fgReserve(), cap - 1) : 0;
+      const gspare = background && Number.isFinite(cap) ? (!this.paid ? Math.min(fgReserve(), cap - 1) : Math.min(this.groupReserveBg, cap - 1)) : 0;
       if ((groupInFlight.get(this.group) || 0) >= cap - gspare) return false;
     }
     return true;
@@ -453,6 +454,7 @@ function extraSlots() {
       priceIn: e.price_in || 0, priceOut: e.price_out || 0, dataClass: e.data_class === 'learner' ? 'learner' : 'pipeline',
       maxConcurrent: e.concurrency || 1, rpm: e.rpm || null, rpmGroup: e.rpm_group || e.id, latencyHintMs: e.hint_ms || 30000,
       supports: e.supports || adapter.supports, hedgeable: e.hedgeable !== false, fast: !!e.fast, timeoutMs: e.timeout_ms || null, family: e.family || null,
+      group: e.group || null, groupMax: e.group_max || null, groupReserveBg: e.group_reserve_bg || 0, // an account-wide concurrency cap shared by several slots (Coral: 5 in flight in all, 6 Nov 2026)
       dailyTokens: adapter.dailyTokens ? () => adapter.dailyTokens(e) : null,
       enabled: () => adapter.enabled(e),
       call: (rq, ctx) => adapter.call(e, rq, ctx),

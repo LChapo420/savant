@@ -284,6 +284,31 @@ const cleanEnv = () => { mu._setFetch(null); for (const k of ['CORAL_API_KEY', '
     assert.ok(near(ct.listPriceOf(DS).out, 0.6));
   });
 
+  await check('warm retry (6 Nov): a fill that comes back unusable is asked again warmer, with a 9000-token first cap; off restores one try', async () => {
+    resetLedger(); optIn();
+    const fillSchema = { type: 'object', properties: { blocks: { type: 'array', items: { type: 'object' } }, checks: { type: 'array' } }, required: ['blocks', 'checks'] };
+    const replies = ['{"blocks":[{"a":1},"index=0 placeholder"],"checks":[]}', '{"blocks":[{"a":1},{"b":2}],"checks":[]}'];
+    let n = 0;
+    mu._setFetch(async (url, init) => {
+      const body = JSON.parse(init.body); seen.push({ url, body }); n += 1;
+      return { ok: true, status: 200, statusText: 'OK', text: async () => JSON.stringify({ choices: [{ message: { content: replies[Math.min(n - 1, replies.length - 1)] }, finish_reason: 'stop' }], usage: { prompt_tokens: 10, completion_tokens: 10 } }) };
+    });
+    const r = await mu.coral.structured({ task: 'block_fill', system: 's', user: 'u', schema: fillSchema, schemaName: 'submit_block_content', maxTokens: 32000, model: FAST });
+    assert.ok(r && r.data.blocks.length === 2, 'the second, warmer try is served');
+    const tail = seen.slice(-2);
+    assert.strictEqual(tail[0].body.temperature, 0); assert.strictEqual(tail[1].body.temperature, 0.5);
+    assert.ok(tail[0].body.max_tokens <= 9000 + 4096, 'first cap is 9000 plus headroom, not 32768: ' + tail[0].body.max_tokens);
+    n = 0; process.env.CORAL_WARM_RETRY = 'off';
+    let threw = false; try { await mu.coral.structured({ task: 'block_fill', system: 's', user: 'u', schema: fillSchema, schemaName: 'submit_block_content', maxTokens: 32000, model: FAST }); } catch { threw = true; }
+    assert.ok(threw && n === 1, 'off: one try, then the error');
+    delete process.env.CORAL_WARM_RETRY;
+  });
+
+  await check('the Coral slots share one account cap of 5 in flight', () => {
+    const slots = pool.extraSlots().filter((x) => x.provider === 'coral');
+    assert.ok(slots.length >= 2 && slots.every((x) => x.group === 'coral'), slots.map((x) => x.group).join(','));
+  });
+
   cleanEnv();
   console.log(failed ? `${failed} FAILED` : 'coral: all checks passed');
   process.exit(failed ? 1 : 0);

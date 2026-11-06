@@ -151,6 +151,31 @@ function userPrompt(spec, source, rl, problems, plan) {
   ].filter(Boolean).join('\n\n');
 }
 
+/**
+ * One draft and, when the check finds problems, one revision, inside the time budget. `call({system, user, schema, ...})` resolves { data, model } or
+ * null. Returns { got: { layer, model } | null, problems: [] when got may be shown, first: the problems of the first draft }. Also used by the
+ * proof (scripts/lesson-layer-proof.js) with simulated learners.
+ */
+async function compose({ spec, source, plan, call, t0 = Date.now(), goalClause = null, budgetMs = BUDGET_MS }) {
+  const rl = rules(spec, { goalClause });
+  const ask = async (problems) => {
+    const left = budgetMs - (Date.now() - t0);
+    if (left < 2500) return null;
+    try {
+      const r = await call({ system: SYSTEM, user: userPrompt(spec, source, rl, problems, plan), schema: SCHEMA, schemaName: 'submit', maxTokens: 600, timeoutMs: Math.min(left, 10000), hedgeAfterMs: HEDGE_MS });
+      return r && r.data ? { layer: r.data, model: r.model || null } : null;
+    } catch { return null; }
+  };
+  let got = await ask(null);
+  let problems = got ? check(spec, got.layer, source) : ['no answer'];
+  const first = problems;
+  if (problems.length && got) {
+    const second = await ask(problems);
+    if (second) { const p2 = check(spec, second.layer, source); if (!p2.length) { got = second; problems = []; } else problems = p2; }
+  }
+  return { got, problems, first };
+}
+
 const running = new Set();
 const keyOf = (userId, planId) => `${userId}:${planId}`;
 
@@ -183,23 +208,8 @@ async function start({ user, plan, topic = '', trackId, gradeId, level, llm = nu
     const source = sourceOf(plan, topic);
     let goalClause = null;
     try { goalClause = lazy('./part-modify').goalClause(lazy('./retention-goal').forEnrollment(user.id, db.findOne('enrollments', (e) => e.user_id === user.id && e.track_id === (trackId || plan.track_id) && e.grade_id === (gradeId || plan.grade_id)))); } catch { /* no goal */ }
-    const rl = rules(sp, { goalClause });
     const call = llm || ((a) => lazy('./pool').runForeground(() => lazy('./ai').structuredDetail({ role: 'fast', task: 'part_layer', ...a, userId: user.id, dataClass: 'learner', effort: 'off' }), { fast: true }));
-    const ask = async (problems) => {
-      const left = BUDGET_MS - (Date.now() - t0);
-      if (left < 2500) return null;
-      try {
-        const r = await call({ system: SYSTEM, user: userPrompt(sp, source, rl, problems, plan), schema: SCHEMA, schemaName: 'submit', maxTokens: 600, timeoutMs: Math.min(left, 10000), hedgeAfterMs: HEDGE_MS });
-        return r && r.data ? { layer: r.data, model: r.model || null } : null;
-      } catch { return null; }
-    };
-    let got = await ask(null);
-    let problems = got ? check(sp, got.layer, source) : ['no answer'];
-    const first = problems;
-    if (problems.length && got) {
-      const second = await ask(problems);
-      if (second) { const p2 = check(sp, second.layer, source); if (!p2.length) { got = second; problems = []; } else problems = p2; }
-    }
+    const { got, problems, first } = await compose({ spec: sp, source, plan, call, t0, goalClause });
     const ms = Date.now() - t0;
     if (problems.length || !got) { db.update(COLLECTION, row.id, { status: 'failed', problems: problems.slice(0, 6), first_problems: first.slice(0, 6), ms, model: got && got.model }); return null; }
     const clean = {
@@ -214,4 +224,4 @@ async function start({ user, plan, topic = '', trackId, gradeId, level, llm = nu
   } finally { running.delete(key); }
 }
 
-module.exports = { on, sourceOf, rules, check, start, get, SCHEMA, numbersShown, COLLECTION };
+module.exports = { on, sourceOf, rules, check, compose, start, get, SCHEMA, numbersShown, COLLECTION };

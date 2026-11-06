@@ -1652,9 +1652,18 @@ function readVerification(data) {
  * search. Without it (BLOCK_FACT_CHECK=1, tests): the app's GLM route, no search.
  * Returns { claims, failed, blocks(i), checks(i), usage, cost, sources, model } or null.
  */
-/** Is the part-by-part fact read on (FACT_VERIFY_PARTS=1)? */
-function factPartsOn() { return String(process.env.FACT_VERIFY_PARTS || '') === '1'; }
-function factPartsConcurrency() { return Math.max(1, Number(process.env.FACT_PARTS_CONCURRENCY || 10)); }
+/**
+ * Is the part-by-part fact read on? FACT_VERIFY_PARTS=1: for every read. FACT_VERIFY_PARTS=background: only where nobody is waiting (the
+ * background lane: write-ahead of later levels, shared base levels), with at most 4 parts at once (ZeroGPU fails about half its calls past about 6
+ * at once, 6 Nov probe); a learner waiting still gets the whole-level read. Off by default (docs/FIRST-LESSON.md: the gate for turning it on).
+ */
+function factPartsOn() {
+  const v = String(process.env.FACT_VERIFY_PARTS || '');
+  if (v === '1') return true;
+  if (v === 'background') { try { return require('./pool').inBackground(); } catch { return false; } } // eslint-disable-line global-require
+  return false;
+}
+function factPartsConcurrency() { return Math.max(1, Number(process.env.FACT_PARTS_CONCURRENCY || (String(process.env.FACT_VERIFY_PARTS || '') === 'background' ? 4 : 10))); }
 const factPartCache = new Map();
 const factPartStats = { hits: 0, misses: 0 };
 const FACT_PART_TTL_MS = 6 * 3600 * 1000;
@@ -3144,5 +3153,5 @@ module.exports = {
   placeOf,
   whyRefused,
   LAYOUT_SYSTEM,
-  FILL_SYSTEM,
+  FILL_SYSTEM, fillSchema, subjectNote,
 };
