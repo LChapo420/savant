@@ -163,7 +163,7 @@ const BODY = 'Mitochondria make most of the cell\'s ATP through oxidative phosph
 
   console.log('Wiring');
   const read = (p) => fs.readFileSync(path.join(__dirname, '..', p), 'utf8');
-  check('child accounts cannot use link or transcript', /materials\(\\\/\(paste\|link\|transcript\)\)\?/.test(read('routes/consent.js')));
+  check('child accounts cannot use link or transcript', /materials\(\\\/\(paste\|link\|transcript[|)]/.test(read('routes/consent.js')));
   check('routes are registered before /:id', read('routes/materials.js').indexOf("post('/link'") < read('routes/materials.js').indexOf("post('/:id/course'"));
   check('privacy page names web pages and transcripts', /web page/.test(read('public/privacy.html')) && /transcript/.test(read('public/privacy.html')));
   check('My material page tells the learner where a link goes', /opens that page once/.test(read('public/js/my-material.js')));

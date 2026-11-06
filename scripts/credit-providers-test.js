@@ -237,13 +237,13 @@ const optIn = (v) => { process.env[`${v.pre}_API_KEY`] = 'test-key-not-real'; pr
       assert.ok(Z.led.status().spent_usd > 0 && Z.led.status().reserved_usd === 0);
     } finally { clean(Z); }
   });
-  await check('zerogpu: pool slot exists, serves fact_verify only', () => {
+  await check('zerogpu: pool slot exists, serves the fact checks only (fact_verify, and fact_live since the fact guard, 6 Nov)', () => {
     pool._reset();
     const slot = pool.extraSlots().find((s) => s.id === 'zerogpu:z-ai/glm-5.3-flash');
     assert.ok(slot && slot.paid && slot.family === 'glm');
     const cfg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config', 'model-lineup.json'), 'utf8'));
     const withIt = Object.entries(cfg.pool.tasks).filter(([, t]) => (t.allow || []).some((a) => /^zerogpu:/.test(a))).map(([k]) => k);
-    assert.deepStrictEqual(withIt, ['fact_verify']);
+    assert.deepStrictEqual(withIt.sort(), ['fact_live', 'fact_verify']);
   });
 
   console.log(failed ? `${failed} FAILED` : 'credit providers: all checks passed');

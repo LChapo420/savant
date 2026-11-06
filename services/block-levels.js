@@ -3294,9 +3294,21 @@ function publicPlan(plan, userId, itemIds = {}) {
   };
 }
 
-/** The plan this learner was served at this level: their own, else the shared one. */
+/**
+ * The shared plan this learner's level was opened on by the instant layer (services/lesson-layer.js), or null. Their own plan for the level keeps being
+ * written behind it and may be ready minutes later, while the page is still open: both plans number their checks c1, c2 and so on, so grading against the
+ * newer plan marked an answer against a different question and asked for its checks at the finish (bug sweep 2, 6 Nov). The level stays on the plan it was opened on.
+ */
+function openedOnShared(user, trackId, gradeId, level) {
+  const shared = findPlan({ userId: null, trackId, gradeId, level });
+  if (!shared) return null;
+  return db.findOne('lesson_layers', (r) => r.user_id === user.id && r.plan_id === shared.id) ? shared : null;
+}
+
+/** The plan this learner was served at this level: the one it was opened on, their own, else the shared one. */
 function servedPlan(user, trackId, gradeId, level) {
-  return (tailorsFor(user) && findPlan({ userId: user.id, trackId, gradeId, level }))
+  return openedOnShared(user, trackId, gradeId, level)
+    || (tailorsFor(user) && findPlan({ userId: user.id, trackId, gradeId, level }))
     || partialFor({ userId: tailorsFor(user) ? user.id : null, trackId, gradeId, level })
     || findPlan({ userId: null, trackId, gradeId, level });
 }
@@ -3408,6 +3420,23 @@ function answerCheck({ user, plan, checkId, answer, ms }) {
   return { correct, answer: check.answer, rationale: check.rationale };
 }
 
+/**
+ * Take a learner off every plan when their account goes: a shared plan keeps each reader's answers (what they typed) and block telemetry under their id,
+ * on a row with no user_id, so deleting the account's rows left them behind (bug sweep 2, 6 Nov).
+ */
+function forgetLearner(userId) {
+  const prefix = `${userId}:`;
+  let plans = 0;
+  for (const plan of db.find(COLLECTION, (p) => p && (p.answers || p.telemetry))) {
+    const answers = Object.fromEntries(Object.entries(plan.answers || {}).filter(([k]) => !k.startsWith(prefix)));
+    const telemetry = Object.fromEntries(Object.entries(plan.telemetry || {}).filter(([k]) => k !== String(userId)));
+    if (Object.keys(answers).length === Object.keys(plan.answers || {}).length && Object.keys(telemetry).length === Object.keys(plan.telemetry || {}).length) continue;
+    db.update(COLLECTION, plan.id, { answers, telemetry });
+    plans += 1;
+  }
+  return plans;
+}
+
 /** This learner's answers on a plan, as item ids, for the after-level read. */
 function itemIdsFor(user, plan) {
   return Object.entries(plan.answers || {})
@@ -3506,6 +3535,8 @@ module.exports = {
   levelsAhead,
   publicPlan,
   servedPlan,
+  openedOnShared,
+  forgetLearner,
   findPlan,
   readyPlan,
   answerCheck,

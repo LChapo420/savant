@@ -70,7 +70,7 @@ async function more(userId, materialId, opts = {}) {
   if (cb.inflight.has(key)) return { error: 'This course is being changed right now.', code: 'busy' };
   const course = courseRow(userId, materialId);
   if (!usable(course)) return { error: 'There is no course to extend yet.', code: 'no_course' };
-  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  if (!opts.llm && !require('./ai').canBuild()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
   cb.inflight.add(key);
   try {
     const want = Array.isArray(opts.skillIds) && opts.skillIds.length ? new Set(opts.skillIds.map(String)) : null;

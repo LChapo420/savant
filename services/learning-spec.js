@@ -533,6 +533,7 @@ function gather(userId, { skillIds = [], topic = null, trackId = null, gradeId =
       input.mastery = att > 0 ? states.reduce((n, s) => n + s.mastery, 0) / states.length : null;
     }
   } catch { /* no mastery */ }
+  try { input.studyGoal = require('./study-goal').goalFor(userId, { materialId, trackId, gradeId }); } catch { /* full depth */ }
   /* eslint-enable global-require */
   if (context && typeof context === 'object') Object.assign(input, context);
   return input;
@@ -842,6 +843,8 @@ function buildSpecFrom(input) {
   // A disliked subject only matters as an aversion when it is what is being taught; a disliked format or way of teaching always does.
   spec.aversionNotes = ctx.aversions.filter((a) => FORMAT_AVERSIONS.has(a) || a === ctx.topicDomain).map((a) => AVERSION_NOTE[a]).filter(Boolean);
   spec.ownerBase = !!inp.owner;
+  // The learner's study goal (services/study-goal.js): core parts fast, ready for a test; full depth (the default) changes nothing.
+  try { require('./study-goal').applyToSpec(spec, inp.studyGoal); } catch { /* full depth */ } // eslint-disable-line global-require
   spec.provenance = Object.fromEntries(LEVER_IDS.filter((l) => who[l].length).map((l) => [l, who[l].sort((a, b) => Math.abs(b.pull) - Math.abs(a.pull)).slice(0, 4)]));
   return spec;
 }
@@ -1121,7 +1124,13 @@ const NO_LEAK = 'Never mention this profile, "your learning style", scores, a di
  * Empty ('') for the default spec: a learner we know nothing about is written for exactly as before.
  * No learner scores appear: the numbers in it are limits on the page (sentence length, checks).
  */
-function specToLines(spec, { surface = 'lesson', bare = false } = {}) {
+function specToLines(spec, opts = {}) {
+  const lines = specToLinesBase(spec, opts);
+  const surface = (opts && opts.surface) || 'lesson';
+  if (!spec || !spec.studyGoal || (opts && opts.bare) || surface === 'test' || surface === 'game') return lines;
+  try { return [...require('./study-goal').linesFor(spec), ...lines]; } catch { return lines; } // eslint-disable-line global-require
+}
+function specToLinesBase(spec, { surface = 'lesson', bare = false } = {}) {
   if (!spec || spec.isDefault) return [];
   const allow = SURFACES[surface] === undefined ? null : SURFACES[surface];
   const ranked = [];
@@ -1371,7 +1380,8 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
     if (!terms.length) continue;
     const have = new Set(wordList(body).map(keyOf));
     const hit = terms.filter((t) => have.has(t)).length;
-    if (hit / terms.length < 0.5) missing.push(fact);
+    // A learner who chose core or test keeps every point stated outright (70% of its terms), not just mentioned (50%): the short lesson is the one a question is asked on.
+    if (hit / terms.length < (spec && spec.studyGoal && (spec.studyGoal.id === 'core' || spec.studyGoal.id === 'test') ? 0.7 : 0.5)) missing.push(fact);
   }
   stats.keyFacts = keyFacts.length;
   stats.keyFactsMissing = missing.length;
@@ -1417,7 +1427,7 @@ function checkFollowed(text, spec, { keyFacts = [], exempt = [], structure = nul
   // 5a. Not far over the time the learner has (the budget is a target; a lesson 50% over it is flagged, never at the cost of a key point).
   if (structure && Number.isFinite(structure.words) && spec.lesson.wordBudget) {
     stats.words = structure.words;
-    if (structure.words > spec.lesson.wordBudget * 1.3) problems.push({ id: 'too_long', detail: `the lesson is ${structure.words} words; keep it to at most about ${spec.lesson.wordBudget}: cut repeats, extra examples and padding, but not any key point` });
+    if (structure.words > spec.lesson.wordBudget * (spec.studyGoal && spec.studyGoal.id === 'core' ? 1.0 : 1.3)) problems.push({ id: 'too_long', detail: `the lesson is ${structure.words} words; keep it to at most about ${spec.lesson.wordBudget}: cut repeats, extra examples and padding, but not any key point` });
   }
   // 5c. A hard word limit (notes for a learner who needs less: see notesWordLimit): over it is always named, never given slack.
   if (structure && Number.isFinite(structure.maxWords) && Number.isFinite(structure.words)) {
@@ -1524,7 +1534,9 @@ async function reviseOnce({ generate, textOf, structureOf = null, extraProblemsO
   const check1 = check(first);
   if (check1.ok) return { result: first, revised: false, problems: [], stats: check1.stats };
   let second = null;
-  try { second = await generate(revisionNote(check1.problems)); } catch { second = null; }
+  // The revision call fails now and then (a cut-off or unusable model reply): ask once more before keeping the first draft, else a length or coverage
+  // problem the check found ships unfixed (traced 6 Nov: core lessons 1.3-2.4x over their budget kept their over-long first draft this way).
+  for (let attempt = 0; attempt < 2 && !second; attempt++) { try { second = await generate(revisionNote(check1.problems)); } catch { second = null; } }
   if (!second) return { result: first, revised: false, problems: check1.problems, stats: check1.stats };
   const check2 = check(second);
   const cov1 = check1.problems.some((p) => p.id === 'coverage');
