@@ -77,10 +77,10 @@ async function fromPdf(buf) {
       return fail('That PDF looks scanned, and the pictures in it could not be pulled out to read. Upload each page as a PNG or JPG picture, or paste the text.', 'scanned');
     }
     // Headings, bold and page marks for the key-point pass; the stored text stays the plain text above.
-    let rich = null;
-    try { const r = await require('./material-formats').pdfRich(pdf, MAX_PAGES); rich = r && countWords(r.text) >= MIN_OCR_WORDS ? r.rich : null; } catch { rich = null; }
+    let rich = null; let comments = [];
+    try { const r = await require('./material-formats').pdfRich(pdf, MAX_PAGES); rich = r && countWords(r.text) >= MIN_OCR_WORDS ? r.rich : null; comments = (r && r.comments) || []; } catch { rich = null; }
     const blank = text.map((pg, i) => (countWords(pg) < 3 ? i + 1 : 0)).filter(Boolean);
-    return { text: joined, rich: rich || undefined, pages: pdf.numPages, blank: blank.length && blank.length < text.length ? blank : [] };
+    return { text: comments.length ? `${joined}\n\nComments in the margin\n\n${comments.join('\n')}` : joined, rich: rich || undefined, pages: pdf.numPages, blank: blank.length && blank.length < text.length ? blank : [] };
   } catch {
     return fail('That PDF could not be read. It may be damaged or cut off. Download or export it again, or paste the text.', 'unreadable');
   } finally {

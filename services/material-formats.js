@@ -360,6 +360,34 @@ const BOLD_FONT = /bold|black|heavy|semibold|demi|[-,]bd\b|-b$/i;
  * Rich text for a pdfjs document: lines from the text layer, headings by type size against the body size, bold by font name.
  * Pages are marked [[pN]]. Returns { rich, text } or null when the document has no text layer.
  */
+/** The x of the gutter when a page is set in two columns (almost no text crosses it and both sides hold text), else null. */
+function gutterOf(items, width) {
+  const xs = items.filter((it) => it.str && it.str.trim() && it.transform);
+  if (xs.length < 12 || !width) return null;
+  let best = null; let bestCross = Infinity;
+  for (let x = width * 0.35; x <= width * 0.65; x += width * 0.01) {
+    let cross = 0; let left = 0; let right = 0;
+    for (const it of xs) {
+      const a = it.transform[4]; const b = a + (it.width || 0);
+      if (a < x && b > x) cross++; else if (b <= x) left++; else right++;
+    }
+    if (left >= xs.length * 0.2 && right >= xs.length * 0.2 && cross < bestCross) { bestCross = cross; best = x; }
+  }
+  return best != null && bestCross <= Math.max(1, xs.length * 0.03) ? best : null;
+}
+/** Highlights and underlines a reader added (as rectangles) and the text of sticky notes on a page. */
+async function pdfMarks(page) {
+  const marks = []; const notes = [];
+  try {
+    for (const a of await page.getAnnotations()) {
+      const text = String((a.contentsObj && a.contentsObj.str) || a.contents || '').trim();
+      if (['Highlight', 'Underline', 'Squiggly'].includes(a.subtype) && a.rect) marks.push(a.rect);
+      if (text && ['Text', 'FreeText', 'Highlight', 'Underline', 'Squiggly', 'Popup', 'StrikeOut'].includes(a.subtype) && a.subtype !== 'Popup') notes.push(text);
+    }
+  } catch { /* a PDF without readable annotations */ }
+  return { marks, notes: [...new Set(notes)] };
+}
+
 async function pdfRich(pdf, maxPages) {
   const pages = [];
   const sizes = new Map();
@@ -368,20 +396,30 @@ async function pdfRich(pdf, maxPages) {
     const page = await pdf.getPage(n);
     const tc = await page.getTextContent();
     try { await page.getOperatorList(); } catch { /* fonts stay unnamed: bold is not detected */ }
-    const rows = [];
+    let pageWidth = 0;
+    try { pageWidth = page.getViewport({ scale: 1 }).width; } catch { /* no gutter check */ }
+    const gutter = gutterOf(tc.items, pageWidth);
+    const { marks, notes } = await pdfMarks(page);
+    const inMark = (x, y) => marks.some((r) => x >= r[0] - 1 && x <= r[2] + 1 && y >= r[1] - 2 && y <= r[3] + 2);
+    let rows = [];
+    const rightRows = [];
     for (const it of tc.items) {
       if (!it.str || !it.transform) continue;
       const size = Math.round(Math.hypot(it.transform[2], it.transform[3]) * 10) / 10 || it.height || 0;
       let name = '';
       try { const f = page.commonObjs.has(it.fontName) ? page.commonObjs.get(it.fontName) : null; name = (f && (f.name || f.loadedName)) || ''; } catch { /* unnamed */ }
       const y = it.transform[5];
-      let row = rows.find((r) => Math.abs(r.y - y) < size * 0.4);
-      if (!row) { row = { y, runs: [] }; rows.push(row); }
-      row.runs.push({ x: it.transform[4], str: it.str, size, bold: BOLD_FONT.test(name), eol: it.hasEOL });
+      // Two columns: each is read down on its own, or a line would run across the gutter into the other column's sentence.
+      const col = gutter != null && it.transform[4] >= gutter ? rightRows : rows;
+      let row = col.find((r) => Math.abs(r.y - y) < size * 0.4);
+      if (!row) { row = { y, runs: [] }; col.push(row); }
+      row.runs.push({ x: it.transform[4], str: it.str, size, bold: BOLD_FONT.test(name) || inMark(it.transform[4] + 1, y), eol: it.hasEOL });
       if (it.str.trim()) sizes.set(size, (sizes.get(size) || 0) + it.str.length);
     }
     rows.sort((a, b) => b.y - a.y);
-    pages.push({ n, rows });
+    rightRows.sort((a, b) => b.y - a.y);
+    rows = [...rows, ...rightRows];
+    pages.push({ n, rows, notes, columns: gutter != null });
     if (typeof page.cleanup === 'function') page.cleanup();
   }
   if (!sizes.size) return null;
@@ -393,6 +431,7 @@ async function pdfRich(pdf, maxPages) {
     let paraLines = []; let lastY = null; let lastSize = body;
     const flush = () => { if (paraLines.length) out.push(paraLines.join(' ')); paraLines = []; };
     for (const row of pg.rows) {
+      if (lastY != null && row.y > lastY + 40) { flush(); lastY = null; } // the top of the next column
       row.runs.sort((a, b) => a.x - b.x);
       const str = row.runs.map((r) => r.str).join('').replace(/\s+/g, ' ').trim();
       if (!str) continue;
@@ -422,9 +461,12 @@ async function pdfRich(pdf, maxPages) {
       lastY = row.y; lastSize = size;
     }
     flush();
+    // A sticky note is the reader's or the teacher's own remark: it counts like speaker notes, and its words reach the learner.
+    for (const note of pg.notes || []) out.push(`Speaker notes: ${note.replace(/\s+/g, ' ')}`);
   }
+  const allNotes = pages.flatMap((p) => (p.notes || []).map((t) => `Comment on page ${p.n}: ${t.replace(/\s+/g, ' ')}`));
   const rich = normalise(out.join('\n').replace(/\*\*\s*\*\*/g, ' ').replace(/(\*\*)\s+(\*\*)/g, ' '));
-  return { rich, text: plainOf(rich) };
+  return { rich, text: plainOf(rich), comments: allNotes };
 }
 
 /**
