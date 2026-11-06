@@ -6,7 +6,7 @@
  * check, all as shipped), a few at a time, and reports seconds, outcome and the paid ledgers' spend per level.
  *
  *   DB_FILE=<copy of the db> node scripts/prewrite-base.js --plan plan.json [--top 20] [--keys math/algebra_1_part_a/465,...]
- *       [--concurrency 3] [--fast] [--out report.json]
+ *       [--concurrency 3] [--fast] [--base-gate pool] [--out report.json]
  *
  * ALWAYS a copy of the database (DB_FILE): the live server owns data/db.json. Ledgers are the live ones (same env as the app; RUN_CAP_USD applies).
  * Pipeline-class write (no learner data): cheapest capable paid slots, free first. ZeroGPU's limit of about 5 calls at once is kept by the pool.
@@ -17,6 +17,7 @@ require('dotenv').config({ path: process.env.DOTENV_CONFIG_PATH || path.join(__d
 if (!process.env.DB_FILE) { console.error('DB_FILE must point at a COPY of the database'); process.exit(2); }
 const argv = process.argv.slice(2);
 const arg = (n, d) => { const i = argv.indexOf(`--${n}`); return i < 0 ? d : argv[i + 1]; };
+if (argv.includes('--base-gate')) process.env.BASE_GATE = arg('base-gate', 'pool');
 const blockLevels = require('../services/block-levels');
 const curriculum = require('../config/curriculum');
 
@@ -40,6 +41,15 @@ async function worker() {
     const t0 = Date.now();
     const row = { key, kind: grade ? blockLevels.kindFor(grade, level) : null };
     try {
+      // --upgrade-only: the Sonnet check (blockLevels.upgrade) of a level already written on the free check; nothing is written.
+      if (argv.includes('--upgrade-only')) {
+        const have = blockLevels.findPlan({ userId: null, trackId, gradeId, level });
+        const up = have && blockLevels.sonnetPending(have) ? await blockLevels.upgrade(have).catch(() => null) : null;
+        const after = blockLevels.readyPlan({ userId: null, trackId, gradeId, level });
+        row.ok = !!(have && (up || !blockLevels.sonnetPending(have))); row.sec = Math.round((Date.now() - t0) / 100) / 10;
+        row.verification = after && after.verification ? { status: after.verification.status, model: after.verification.model, rounds: after.verification.rounds, claims: (after.verification.claims || []).length, notVerified: (after.verification.claims || []).filter((c) => c.verdict !== 'verified').length, tier: after.check_tier } : null;
+        row.blocksNow = after && (after.blocks || []).length; row.checksNow = after && (after.checks || []).length; rows.push(row); continue;
+      }
       if (blockLevels.findPlan({ userId: null, trackId, gradeId, level })) { row.ok = true; row.note = 'already written'; rows.push(row); continue; }
       // --fast: as a learner waiting would be served (Coral Fast first, paid fact readers, no free NVIDIA queue): minutes become seconds when the free
       // models are rate limited by other work (6 Nov: a base level sat 35+ minutes on NVIDIA's queue); costs a few cents a level instead of $0.
@@ -66,6 +76,7 @@ async function worker() {
   const after = spent();
   const written = rows.filter((r) => r.ok && !r.note).length;
   const out = { levels: keys.length, written, failed: rows.filter((r) => !r.ok).length, wallSec: Math.round((Date.now() - t0) / 1000), spendUsd: Number((after.t - before.t).toFixed(4)), perWrittenLevelUsd: written ? Number(((after.t - before.t) / written).toFixed(4)) : null, secPerLevelMedian: rows.map((r) => r.sec).filter(Boolean).sort((a, b) => a - b)[Math.floor(rows.length / 2)], rows };
+  try { out.processSpend = require('../services/run-cap').summary(); } catch { /* none */ }
   console.log(JSON.stringify({ ...out, rows: undefined }));
   if (arg('out', null)) fs.writeFileSync(arg('out'), JSON.stringify(out, null, 1));
   process.exit(0);

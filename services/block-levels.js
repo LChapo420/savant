@@ -1179,7 +1179,7 @@ async function repairCall({ system, user, schema, schemaName, maxTokens, userId,
   }
   // eslint-disable-next-line global-require
   const ai = require('./ai');
-  return ai.structuredDetail({ role: 'blocks', task: 'fact_repair', system, user, schema, schemaName, maxTokens, userId, effort, lane: process.env.BLOCK_LANE || 'background' });
+  return ai.structuredDetail({ role: 'blocks', task: 'fact_repair', system, user, schema, schemaName, maxTokens, userId, effort, dataClass: poolClass(userId), lane: process.env.BLOCK_LANE || 'background' });
 }
 
 async function repairBlocks(broken, { userId, context = null, coverage = [], effort = null, writer = 'glm' }) {
@@ -1506,6 +1506,7 @@ function sonnetChecked(plan) {
 
 /** Served on its free check under the gate, with the Sonnet check still to run. */
 function sonnetPending(plan) {
+  if (plan && plan.base_gate === 'pool' && !plan.user_id && String(process.env.BASE_GATE_SONNET || '').toLowerCase() !== 'on') return false; // a base level checked on the pool gate stays there
   return !!(plan && plan.status === 'ready' && gateOn() && writeAheadOn() && !sonnetChecked(plan) && selfCheckPassed(plan));
 }
 
@@ -1782,7 +1783,7 @@ This time list and verify ONLY the claims in ${part} (use the rest of the level 
         // eslint-disable-next-line no-await-in-loop
         replies[k] = await ai.structuredDetail({
           role: 'blocks', task: 'fact_verify', system, user: partUser, schema: VERIFY_SCHEMA, schemaName: 'submit_verification',
-          maxTokens: Number(process.env.FACT_PARTS_MAX_TOKENS || 6000), userId, lane: process.env.BLOCK_LANE || 'background',
+          maxTokens: Number(process.env.FACT_PARTS_MAX_TOKENS || 6000), userId, dataClass: poolClass(userId), lane: process.env.BLOCK_LANE || 'background',
           excludeFamilies: excludeFamilies && excludeFamilies.length ? excludeFamilies : undefined,
         }).catch((err) => { console.warn(`facts: part ${k + 1} of ${parts.length} could not be read (${String(err.message || err).slice(0, 120)})`); return null; });
         partMs[k] = Date.now() - t0;
@@ -1795,7 +1796,7 @@ This time list and verify ONLY the claims in ${part} (use the rest of the level 
     return { ...readVerification({ claims: replies.flatMap((r) => readVerification(r.data).claims) }), usage, cost: null, sources: [], searches: 0, model: [...new Set(replies.map((r) => r.model).filter(Boolean))].join('+') || null, parts: parts.length, partMs, partModels: replies.map((r) => r.model || null) };
   }
   const reply = await ai.structuredDetail({
-    role: 'blocks', task: 'fact_verify', system, user, schema: VERIFY_SCHEMA, schemaName: 'submit_verification', maxTokens: 16000, userId, lane: process.env.BLOCK_LANE || 'background',
+    role: 'blocks', task: 'fact_verify', system, user, schema: VERIFY_SCHEMA, schemaName: 'submit_verification', maxTokens: 16000, userId, dataClass: poolClass(userId), lane: process.env.BLOCK_LANE || 'background',
     excludeFamilies: excludeFamilies && excludeFamilies.length ? excludeFamilies : undefined,
   });
   if (!reply || !reply.data) return null;
@@ -2207,7 +2208,15 @@ async function reusable(probe, call) {
  *
  * @returns {Promise<object|null>} the stored plan, or null when it could not be written
  */
+/**
+ * BASE_GATE=pool (off by default): a shared (base) level is written on the free tier's gate, the pool's own fact readers (ZeroGPU, grok-4.3; the
+ * calls carry the pipeline class: before 6 Nov they did not, so a base write found no slot once NVIDIA was rate limited), and is NOT then sent to the
+ * owner's key for a Sonnet check. Measured against that Sonnet check on planted errors: docs/FIRST-LESSON.md round 3.
+ */
+const basePoolGate = () => String(process.env.BASE_GATE || '').toLowerCase() === 'pool';
+
 async function write({ userId, trackId, gradeId, level, tailored, retailorOf = null }) {
+  if (!tailored && !freeTier() && basePoolGate()) return onTier('free', () => write({ userId, trackId, gradeId, level, tailored, retailorOf }));
   // eslint-disable-next-line global-require
   const ai = require('./ai');
   // eslint-disable-next-line global-require
@@ -2518,6 +2527,7 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
     verification,
     self_check: selfChecked ? selfCheckRecord(selfChecked) : null,
     check_tier: checkTierNow(),
+    base_gate: !owner && freeTier() && basePoolGate() ? 'pool' : undefined,
     fact_sheet: factSheet ? { facts: factSheet.facts, misconceptions: factSheet.misconceptions, sources: factSheet.sources, cost: factSheet.cost, model: factSheet.model, pool_key: factSheet.pool_key || null } : null,
     model: fillReply.model || null,
     layout_model: layoutReply ? layoutReply.model : null,

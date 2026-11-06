@@ -924,7 +924,8 @@ async function callHedged(req, opts = {}) {
       const next = pick(false);
       if (next.slot) { launch(next.slot, tried.size === 0 ? 'primary' : 'fallback'); armHedge(next.slot); return; }
       if (next.waitMs != null && now() - t0 < totalMs) { later(() => advance(), Math.min(next.waitMs, 1000)); return; }
-      // Nothing more can be tried (or the only ones are still resting): give up.
+      // Nothing more can be tried (or the only ones are still resting): give up. Why, per slot, goes in the trace (ai.js prints it when no slot ran).
+      trace.blocked = cands.map((s) => { if (tried.has(s.id)) return `${s.id} tried`; const b = blocked(s, req, isBg(), isSpec()); return `${s.id} ${b ? b.why : (s.paid && !tried.size ? 'paid last resort' : 'ok')}`; });
       finish(null);
     }
 
