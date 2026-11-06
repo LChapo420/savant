@@ -360,7 +360,7 @@ function publicConsent(user) {
 // ── deletion ─────────────────────────────────────────────────────────────────
 
 /** Collections that hold no learner's rows (shared content), or are handled apart. */
-const SHARED = new Set(['users', 'content_cache', 'themed_items', 'themed_log', 'placement_question_sets', 'fact_pools', 'parents', 'parental_consents', 'beta_blocks']);
+const SHARED = new Set(['fact_guard_stats', 'fact_recheck_findings', 'fact_recheck_state', 'users', 'content_cache', 'themed_items', 'themed_log', 'placement_question_sets', 'fact_pools', 'parents', 'parental_consents', 'beta_blocks']);
 
 /**
  * Accounts deleted in the last hour. A model call in flight when the account went (a chat, an after-level read, a build) finishes later and writes its rows
