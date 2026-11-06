@@ -10,7 +10,7 @@ const fs = require('fs');
 const R = require('../services/scorecard/readout');
 const { ALL_FEATURES } = require('../services/scorecard/log-features');
 const { STATS } = require('../services/scorecard/stats');
-const { ceilings } = require('../services/scorecard/ceilings');
+const { ceilings, vNeeded } = require('../services/scorecard/ceilings');
 
 const mean = (a) => (a.length ? a.reduce((s, v) => s + v, 0) / a.length : 0);
 const sd = (a) => { const m = mean(a); return Math.sqrt(mean(a.map((v) => (v - m) ** 2))); };
@@ -25,7 +25,13 @@ function fitReadout(cal, ids) {
   return (L, id, feat) => R.readS1({ models, featNames: ALL_FEATURES }, id, { m: L.app[id][0], conf: L.app[id][2], feat: feat ? L.feat : undefined });
 }
 
-function analyse(cal, held) {
+/** A measure's accuracy with the read-out, in another run. */
+function perMeasure(cal, held, ids) {
+  const read = fitReadout(cal, ids);
+  return Object.fromEntries(ids.map((id) => [id, { acc: 100 - mean(held.map((L) => Math.abs(read(L, id, true) - L.truth[id]))), s0: 100 - mean(held.map((L) => Math.abs(L.app[id][0] - L.truth[id]))) }]));
+}
+
+function analyse(cal, held, { off = null, world = null } = {}) {
   const ids = STATS.map((s) => s.id).filter((id) => cal.every((L) => L.app[id] && L.truth[id] !== undefined));
   const read = fitReadout(cal, ids);
   const guessOf = Object.fromEntries(ids.map((id) => [id, mean(cal.map((L) => L.truth[id]))]));
@@ -40,7 +46,14 @@ function analyse(cal, held) {
     const c = C[id] || {};
     return { id, group: STATS.find((s) => s.id === id).category, cls: c.cls, guess, s0: mae(S0), s1: mae(S1), s1f: mae(S1f), r0, rf, bias2Share: bias2 / mse, slopeShare: slope2 / mse, noiseShare: noise2 / mse, conf: mean(held.map((L) => L.app[id][2])), hiConfN: hiConf.length, hiConfMae: mean(hiConf), ceilV: c.v, ceilPts: c.v === undefined ? null : 100 - guess * Math.sqrt(1 - c.v * c.v), ceilRemoved: c.v === undefined ? null : 1 - Math.sqrt(1 - c.v * c.v) };
   });
+  const offM = off ? perMeasure(off.cal, off.held, ids) : null;
+  const worldM = world ? perMeasure(world.cal, world.held, ids) : null;
+  const Cl = ceilings(0); const Ch = ceilings(2);
   rows.forEach((r) => {
+    r.behaviourOnly = offM ? offM[r.id].acc : null; r.worldAcc = worldM ? worldM[r.id].acc : null; r.worldS0 = worldM ? worldM[r.id].s0 : null;
+    r.ceilLow = 100 - r.guess * Math.sqrt(1 - Cl[r.id].v ** 2); r.ceilHigh = 100 - r.guess * Math.sqrt(1 - Ch[r.id].v ** 2);
+    r.vFor95 = vNeeded(95, r.guess); r.can95 = Ch[r.id].v >= r.vFor95;
+    r.aboveCeiling = r.s1f > 0 && 100 - r.s1f > r.ceilHigh;
     r.removedS0 = 1 - r.s0 / r.guess; r.removedS1f = 1 - r.s1f / r.guess;
     r.diagnosis = (r.s0 > r.guess * 1.02 || r.bias2Share + r.slopeShare > 0.33) ? 'misread' : (Math.abs(r.rf) < 0.3 ? 'thin' : 'read');
     r.misreadFixed = r.diagnosis === 'misread' ? r.s1f < r.guess * 0.98 : null;
@@ -65,6 +78,11 @@ function analyse(cal, held) {
   const sorted = perLearner.slice().sort((a, b) => a.s1f - b.s1f);
   const worst = (p) => mean(sorted.slice(0, Math.max(1, Math.round(sorted.length * p))).map((x) => x.s1f));
   const all = roll(rows, 'all');
+  const ceilAt = (scn) => { const c = ceilings(scn); return { acc: mean(rows.map((r) => 100 - r.guess * Math.sqrt(1 - c[r.id].v ** 2))), removed: 1 - mean(rows.map((r) => r.guess * Math.sqrt(1 - c[r.id].v ** 2))) / mean(rows.map((r) => r.guess)) }; };
+  all.ceilings = [ceilAt(0), ceilAt(1), ceilAt(2)];
+  // the same ceiling for each kind of learner: their own guess error, shrunk by each class's residual
+  const C1 = ceilings(1);
+  for (const k of kinds) { const H = held.filter((L) => kindOf(L) === k.kind); const gi = (id) => mean(H.map((L) => Math.abs(guessOf[id] - L.truth[id]))); k.ceil = 100 - mean(ids.map((id) => gi(id) * Math.sqrt(1 - C1[id].v ** 2))); k.removedCeil = (k.ceil - k.guess) / (100 - k.guess); k.vFor95 = vNeeded(95, 100 - k.guess); }
   return { all, rows, groups, classes, kinds, worst: { w1: worst(0.01), w5: worst(0.05), w10: worst(0.1) }, ideal: mean(perLearner.map((p) => p.ideal)), n: held.length };
 }
 
@@ -72,21 +90,25 @@ const f1 = (v) => (v === null || v === undefined ? '' : v.toFixed(1));
 const pc = (v) => (v === null || v === undefined ? '' : `${Math.round(v * 100)}%`);
 function markdown(a) {
   const L = [`SIMULATED, ${a.n} held-out learners, day 30, daily check on. Guess ${f1(a.all.guess)}, card ${f1(a.all.s0)} (removed ${pc(a.all.removedS0)}), read-out with log features ${f1(a.all.s1f)} (removed ${pc(a.all.removedS1f)}); worst 1/5/10% ${f1(a.worst.w1)} / ${f1(a.worst.w5)} / ${f1(a.worst.w10)}. Planner's own posterior before the card's combining rules: ${f1(a.ideal)}.`, ''];
+  if (a.all.ceilings) L.push(`Research ceiling for the whole card at a month, this mix of learners: low ${f1(a.all.ceilings[0].acc)} (${pc(a.all.ceilings[0].removed)} removed), central ${f1(a.all.ceilings[1].acc)} (${pc(a.all.ceilings[1].removed)}), high ${f1(a.all.ceilings[2].acc)} (${pc(a.all.ceilings[2].removed)}).`, '');
   L.push('By how a trait can be read:', '', '| class | measures | guess | card | read-out | removed | ceiling (research) | ceiling removed | misread | thin |', '|---|---|---|---|---|---|---|---|---|---|');
   for (const g of a.classes) L.push(`| ${g.name} | ${g.n} | ${f1(g.guess)} | ${f1(g.s0)} | ${f1(g.s1f)} | ${pc(g.removedS1f)} | ${f1(g.ceil)} | ${pc(g.removedCeil)} | ${g.misread} | ${g.thin} |`);
   L.push('', 'By scorecard category:', '', '| category | guess | card | read-out | removed | ceiling | misread | thin |', '|---|---|---|---|---|---|---|---|');
   for (const g of a.groups) L.push(`| ${g.name} | ${f1(g.guess)} | ${f1(g.s0)} | ${f1(g.s1f)} | ${pc(g.removedS1f)} | ${f1(g.ceil)} | ${g.misread} | ${g.thin} |`);
-  L.push('', 'By kind of learner:', '', '| kind | n | guess | card | read-out | removed | measures >20 pts off |', '|---|---|---|---|---|---|---|');
-  for (const k of a.kinds.slice().sort((x, y) => x.s1f - y.s1f)) L.push(`| ${k.kind} | ${k.n} | ${f1(k.guess)} | ${f1(k.s0)} | ${f1(k.s1f)} | ${pc(k.removedS1f)} | ${pc(k.farShare)} |`);
-  L.push('', 'Every measure, weakest first (S0 = card, Sf = read-out with log features; shares of the card\'s squared error; ceiling = research ceiling in points on this mix of learners):', '', '| measure | class | guess | S0 | Sf | r(card) | r(Sf) | removed Sf | bias | slope | no signal | diagnosis | ceiling |', '|---|---|---|---|---|---|---|---|---|---|---|---|---|');
-  for (const r of a.rows.slice().sort((x, y) => x.removedS1f - y.removedS1f)) L.push(`| ${r.id} | ${r.cls || ''} | ${f1(100 - r.guess)} | ${f1(100 - r.s0)} | ${f1(100 - r.s1f)} | ${r.r0.toFixed(2)} | ${r.rf.toFixed(2)} | ${pc(r.removedS1f)} | ${pc(r.bias2Share)} | ${pc(r.slopeShare)} | ${pc(r.noiseShare)} | ${r.diagnosis} | ${f1(r.ceilPts)} |`);
+  L.push('', 'By kind of learner (ceiling = research central):', '', '| kind | n | guess | card | read-out | removed | measures >20 pts off | ceiling | correlation 95 would need |', '|---|---|---|---|---|---|---|---|---|');
+  for (const k of a.kinds.slice().sort((x, y) => x.s1f - y.s1f)) L.push(`| ${k.kind} | ${k.n} | ${f1(k.guess)} | ${f1(k.s0)} | ${f1(k.s1f)} | ${pc(k.removedS1f)} | ${pc(k.farShare)} | ${f1(k.ceil)} | ${k.vFor95 ? k.vFor95.toFixed(2) : ''} |`);
+  L.push('', 'Every measure, weakest first. guess, S0 (card), Sf (read-out with log features), behaviour (Sf with no daily check), harsher world (Sf when the generator differs, research world) are accuracy in points. bias, slope, no signal: shares of the squared error of the card. ceiling: research low to high at a month. * means the simulated read beats even the high ceiling, so the simulation flatters that measure. correlation for 95: what 95 would need; no measure reaches it even at its high ceiling unless marked yes.', '', '| measure | class | guess | S0 | Sf | behaviour | harsher world | r(Sf) | removed Sf | bias | slope | no signal | diagnosis | ceiling | correlation for 95 | 95 possible? |', '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|');
+  for (const r of a.rows.slice().sort((x, y) => x.removedS1f - y.removedS1f)) L.push(`| ${r.id} | ${r.cls || ''} | ${f1(100 - r.guess)} | ${f1(100 - r.s0)} | ${f1(100 - r.s1f)}${r.aboveCeiling ? '*' : ''} | ${f1(r.behaviourOnly)} | ${f1(r.worldAcc)} | ${r.rf.toFixed(2)} | ${pc(r.removedS1f)} | ${pc(r.bias2Share)} | ${pc(r.slopeShare)} | ${pc(r.noiseShare)} | ${r.diagnosis} | ${f1(r.ceilLow)}-${f1(r.ceilHigh)} | ${r.vFor95.toFixed(2)} | ${r.can95 ? 'yes' : 'no'} |`);
   return L.join('\n');
 }
 
 if (require.main === module) {
   const argv = process.argv.slice(2);
   const arg = (n, d = '') => { const x = argv.find((s) => s.startsWith(`--${n}=`)); return x ? x.slice(n.length + 3) : d; };
-  const a = analyse(load(arg('cal')), load(arg('held')));
+  const opt2 = {};
+  if (arg('off-cal')) opt2.off = { cal: load(arg('off-cal')), held: load(arg('off-held')) };
+  if (arg('world-held')) opt2.world = { cal: load(arg('cal')), held: load(arg('world-held')) };
+  const a = analyse(load(arg('cal')), load(arg('held')), opt2);
   if (arg('json')) fs.writeFileSync(arg('json'), JSON.stringify(a));
   const md = markdown(a);
   if (arg('md')) fs.writeFileSync(arg('md'), md);

@@ -1777,7 +1777,7 @@ function runLearner(index, mode, { population = false } = {}) {
     if (DAILY) dailyAfterSitting();
   }
   out.truth = T;
-  if (EXPORT_DB && !population) out.rows = JSON.parse(JSON.stringify(store));
+  if (EXPORT_DB && !population) { out.rows = JSON.parse(JSON.stringify(store)); out.shared = sharedAccount; }
   if (DEBUG.length && !population) {
     const card = scorecard.get(userId);
     realWarn(`learner ${index}: ${DEBUG.map((id) => `${id} truth ${Math.round(T[id])} standing ${JSON.stringify(scorecard.standing ? scorecard.standing(card, id, { trackId: TRACK }) : null)} rec ${JSON.stringify(card.stats[id])}`).join(' | ')}`);
@@ -2214,7 +2214,7 @@ for (const mode of MODES) {
         feat: { ...sn.feat, ...(sn.feat2 || {}) }, ind: sn.ind, daily: sn.daily, levels: sn.levels, days: sn.days, age: r.stratum ? r.stratum.age : undefined, profile: r.stratum ? r.stratum.profile : undefined, ext: r.stratum && r.stratum.ext ? { id: r.stratum.ext.id, kind: r.stratum.ext.kind, mix: r.stratum.ext.mix, age: r.stratum.ext.age, tags: r.stratum.ext.tags } : undefined,
       };
     });
-    if (EXPORT_DB) fs.writeFileSync(EXPORT_DB, JSON.stringify(have.map((r) => ({ stratum: r.stratum ? { age: r.stratum.age, kind: r.stratum.ext ? r.stratum.ext.kind : 'ordinary' } : null, truth: r.truth, rows: r.rows }))));
+    if (EXPORT_DB) fs.writeFileSync(EXPORT_DB, JSON.stringify(have.map((r) => ({ shared: !!r.shared, stratum: r.stratum ? { age: r.stratum.age, kind: r.stratum.ext ? r.stratum.ext.kind : 'ordinary' } : null, truth: r.truth, rows: r.rows }))));
     fs.mkdirSync(path.dirname(DUMP), { recursive: true });
     fs.writeFileSync(DUMP, JSON.stringify({ seed: SEED, truth_factors: TRUTH_FACTORS, pop_sd: POP_SD, aliases: ALIASES, truth_models: Object.fromEntries(STATS.map((st) => [st.id, TRUTH_MODEL[st.id].model])), categories: Object.fromEntries(STATS.map((st) => [st.id, st.category])), learners }));
   }

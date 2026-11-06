@@ -110,11 +110,30 @@ function main() {
   const e = (f, cls) => mean(held.map((r) => mean(stats.filter((s) => !cls || INDEX[s] === cls).map((s) => Math.abs(f(r, s) - truth[r.userId].truth[s])))));
   const guessOf = Object.fromEntries(stats.map((s) => [s, mean(records.filter((r) => !A.isHeld(r.userId)).map((r) => truth[r.userId].truth[s]))]));
   const asis = (r, s) => r.reads[s].m; const cnd = (r, s) => R.readS1(ev.art, s, { m: r.reads[s].m, conf: r.reads[s].conf }); const gue = (r, s) => guessOf[s];
-  const row = (cls) => ({ guess: 100 - e(gue, cls), asis: 100 - e(asis, cls), candidate: 100 - e(cnd, cls), reported: cls ? ev.result.byClass[cls] : ev.result.overall });
+  const row = (cls) => { const g = e(gue, cls); const a = e(asis, cls); const c = e(cnd, cls); return { guess: 100 - g, asis: 100 - a, candidate: 100 - c, removedAsis: 1 - a / g, removedCandidate: 1 - c / g, reported: cls ? ev.result.byClass[cls] : ev.result.overall }; };
   out.truth = { all: row(null), classes: Object.fromEntries(Object.keys(ev.result.byClass).map((c) => [c, row(c)])) };
   const perL = held.map((r) => mean(stats.map((s) => Math.abs(asis(r, s) - truth[r.userId].truth[s]))) - mean(stats.map((s) => Math.abs(cnd(r, s) - truth[r.userId].truth[s]))));
   out.truth.helped = { held: held.length, better: perL.filter((d) => d > 0).length, worseOver05: perL.filter((d) => d < -0.5).length, worstChange: Math.min(...perL) };
   out.measuresRefit = stats.length; out.classLabel = Object.fromEntries(Object.keys(ev.result.byClass).map((c) => [c, CLASSES[c].label]));
+
+  // power: plant a real fault (the card's spread 1.8 times too wide) and see, at each number of testers, whether the check catches it and whether the fix helps against the truth.
+  // No such fault exists in this world, so an unplanted run above is the control.
+  const planted = (recs) => recs.map((r) => ({ ...r, reads: Object.fromEntries(Object.entries(r.reads).map(([s, v]) => [s, { ...v, m: Math.max(2, Math.min(98, 50 + 1.8 * (v.m - 50))) }])) }));
+  out.power = [];
+  for (const n of [40, 60, 80, records.length]) {
+    let pass = 0; let tried = 0; const gains = []; const noPass = [];
+    for (let t = 0; t < (n === records.length ? 1 : 12); t++) {
+      const pick = records.slice().sort((a, b) => ((a.userId * 2654435761 + t * 97) % 1000) - ((b.userId * 2654435761 + t * 97) % 1000)).slice(0, n);
+      const pl = planted(pick); const v = A.evaluate(pl, null, { featNames: [] }); tried += 1;
+      if (!v.result) { noPass.push('no anchors'); continue; }
+      if (v.result.pass) pass += 1;
+      const H = pl.filter((r) => A.isHeld(r.userId)); const ss = Object.keys(v.art.models);
+      if (H.length && ss.length) { const err = (fn) => mean(H.map((r) => mean(ss.map((s) => Math.abs(fn(r, s) - truth[r.userId].truth[s]))))); gains.push(err((r, s) => r.reads[s].m) - err((r, s) => R.readS1(v.art, s, { m: r.reads[s].m, conf: r.reads[s].conf }))); }
+    }
+    out.power.push({ testers: n, passes: pass, tried, trueGainPoints: +mean(gains).toFixed(2) });
+  }
+  // the control: the same draws with no fault planted: how often does the check pass a change that has nothing to fix?
+  out.control = []; for (const n of [40, 60, 80]) { let pass = 0; for (let t = 0; t < 12; t++) { const pick = records.slice().sort((a, b) => ((a.userId * 2654435761 + t * 97) % 1000) - ((b.userId * 2654435761 + t * 97) % 1000)).slice(0, n); const v = A.evaluate(pick, null, { featNames: [] }); if (v.result && v.result.pass) pass += 1; } out.control.push({ testers: n, passes: pass, tried: 12 }); }
 
   // promote: refused if not passed, accepted if passed; the read-out then uses it through the live switch
   const p = runAuto(dbFile, {}, ['--promote']);
@@ -139,6 +158,8 @@ function main() {
   console.log(`status: ${out.status}; used ${out.used}; left out ${JSON.stringify(out.counts)}`);
   console.log(`truth all: guess ${f(out.truth.all.guess)} as-is ${f(out.truth.all.asis)} candidate ${f(out.truth.all.candidate)} | reported: guess ${f(out.truth.all.reported.guess)} in-force ${f(out.truth.all.reported.current)} candidate ${f(out.truth.all.reported.candidate)}`);
   for (const [c, v] of Object.entries(out.truth.classes)) console.log(`  ${c}: truth guess ${f(v.guess)} as-is ${f(v.asis)} cand ${f(v.candidate)} | reported ${f(v.reported.guess)} ${f(v.reported.current)} ${f(v.reported.candidate)}`);
+  console.log(`truth removed: as-is ${(100 * out.truth.all.removedAsis).toFixed(1)}% candidate ${(100 * out.truth.all.removedCandidate).toFixed(1)}% | reported: in force ${(100 * (out.truth.all.reported.removedCurrent || 0)).toFixed(1)}% candidate ${(100 * (out.truth.all.reported.removedCandidate || 0)).toFixed(1)}%`);
+  console.log(`planted fault: ${JSON.stringify(out.power)}`); console.log(`no fault (false passes): ${JSON.stringify(out.control)}`);
   console.log(`held-out: ${out.truth.helped.better} of ${out.truth.helped.held} better against the truth, ${out.truth.helped.worseOver05} lose over 0.5 (worst ${f(out.truth.helped.worstChange)}); promote: ${out.promote.slice(0, 80)}`);
 }
 main();

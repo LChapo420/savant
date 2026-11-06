@@ -95,7 +95,9 @@ function check(heldRecs, scales, art, prevArt, { boot = BOOT, seed = 12345 } = {
   }
   const q = (arr, p) => { const s = arr.slice().sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.floor(p * s.length))] : 0; };
   const toMae = (mse) => 0.8 * Math.sqrt(Math.max(0, mse));
-  const rowOf = (v) => (v ? { n: v.n, guess: 100 - toMae(v.g), current: 100 - toMae(v.c0), candidate: 100 - toMae(v.c1), removedCurrent: v.g > 0 ? 1 - Math.sqrt(Math.max(0, v.c0)) / Math.sqrt(v.g) : null, removedCandidate: v.g > 0 ? 1 - Math.sqrt(Math.max(0, v.c1)) / Math.sqrt(v.g) : null } : null);
+  // a cell whose error, once the anchor's noise is taken out, is not above zero can't be estimated: the anchor is too noisy for it. It is left blank rather than shown as 100.
+  const fine = (v) => v.g > 1 && v.c0 > 1 && v.c1 > 1;
+  const rowOf = (v) => (v ? (fine(v) ? { n: v.n, guess: 100 - toMae(v.g), current: 100 - toMae(v.c0), candidate: 100 - toMae(v.c1), removedCurrent: 1 - Math.sqrt(v.c0) / Math.sqrt(v.g), removedCandidate: 1 - Math.sqrt(v.c1) / Math.sqrt(v.g) } : { n: v.n, guess: null, current: null, candidate: null, removedCurrent: null, removedCandidate: null }) : null);
   const byClass = Object.fromEntries(classes.map((c) => [c, { ...rowOf(agg(perLearner, (x) => x.cls === c)), gainLo: q(boots[c], 0.05), gainHi: q(boots[c], 0.95) }]));
   const lo = q(boots.all, 0.05); const hi = q(boots.all, 0.95);
   const worse = classes.filter((c) => byClass[c].gainHi < 0);
@@ -126,7 +128,7 @@ function report({ status, counts, usableLearners, ev, stability, label = 'REAL t
   L.push(`Fit group ${ev.fitN}, held-out group ${ev.heldN} (a fixed 30%, never seen by the fit).`, '');
   if (!r) { L.push('No measure has a usable anchor yet, so nothing was fitted. Check that SCORECARD_ANCHOR is set: without held-back items there is nothing independent to check against.'); return L.join('\n'); }
   const o = r.overall;
-  L.push('What these numbers are: error against an independent anchor (designed items held back from the card), with the anchor\'s own noise taken out, on measures that have an anchor. Accuracy = 100 - mean absolute error, taking it as 0.8 x the root mean square. They cover only the measures below, and they read a self-view for attitude measures. The share removed is the number to read: a guess scores high on this ruler.', '');
+  L.push('What these numbers are: error against an independent anchor (designed items held back from the card), with the anchor\'s own noise taken out, on measures that have an anchor. Accuracy = 100 - mean absolute error, taking it as 0.8 x the root mean square, and it assumes the true spread is 17 points: the anchor cannot tell the real spread, so the accuracy columns are only roughly right (in the synthetic test a guess read 5 points too high when the learners were more varied than that). The share removed is the number to read, and the guess column is the baseline for it. These cover only the measures below, and they read a self-view for attitude measures. A blank cell means the anchor is too noisy to estimate it.', '');
   L.push('## Held-out learners', '', '| | guess | card as in force | candidate | error removed, in force | error removed, candidate |', '|---|---|---|---|---|---|');
   L.push(`| all checked measures (${o.n} readings, ${r.learners} learners) | ${f1(o.guess)} | ${f1(o.current)} | ${f1(o.candidate)} | ${pc(o.removedCurrent)} | ${pc(o.removedCandidate)} |`);
   for (const [c, v] of Object.entries(r.byClass)) L.push(`| ${CLASSES[c].label} (${v.n}) | ${f1(v.guess)} | ${f1(v.current)} | ${f1(v.candidate)} | ${pc(v.removedCurrent)} | ${pc(v.removedCandidate)} |`);

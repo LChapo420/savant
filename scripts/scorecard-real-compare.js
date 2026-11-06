@@ -18,10 +18,11 @@ const argv = process.argv.slice(2);
 const arg = (n, d = '') => { const x = argv.find((s) => s.startsWith(`--${n}=`)); return x ? x.slice(n.length + 3) : d; };
 const DIR = arg('dir', '.');
 const mean = (a) => (a.length ? a.reduce((s, v) => s + v, 0) / a.length : 0);
-function load(prefix) {
+function load(spec) {
   const out = [];
+  for (const prefix of spec.split('+'))
   for (let i = 0; ; i++) { const f = path.join(DIR, `${prefix}-${i}.json`); if (!fs.existsSync(f)) break; out.push(...JSON.parse(fs.readFileSync(f, 'utf8')).learners); }
-  if (!out.length) throw new Error(`no dump ${prefix}`);
+  if (!out.length) throw new Error(`no dump ${spec}`);
   return out;
 }
 const ids = STATS.map((s) => s.id);
