@@ -16,6 +16,8 @@ const tutor = require('../services/tutor');
 const dock = require('../services/tutor-context');
 const facts = require('../services/tutor-facts');
 const tutorMode = require('../services/tutor-mode');
+const full = require('../services/tutor-full');
+const safety = require('../services/tutor-safety');
 const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
 
@@ -26,6 +28,15 @@ const router = express.Router();
 router.post('/tutor/chat', requireAuth, limit('tutor', 150, 60 * 60 * 1000), async (req, res) => {
   const where = ['home', 'subject'].includes(req.body && req.body.where) ? req.body.where : 'home';
   try {
+    if (full.on()) {
+      const last = [...tutor.cleanHistory(req.body && req.body.messages)].reverse().find((m) => m.role === 'user');
+      let age = null;
+      try { age = require('../services/boosters').ageOf(req.user); } catch { age = null; } // eslint-disable-line global-require
+      const t = last ? safety.triage(last.content, { age }) : null;
+      if (t && t.reply) return res.json({ reply: t.reply, source: 'safety', kind: t.kind });
+      const out = await full.withDeadline(tutor.chat({ user: req.user, messages: req.body && req.body.messages, where }));
+      return res.json(out || { ...full.fallback({ user: req.user, page: { path: where === 'home' ? '/dashboard' : '/path' }, message: last ? last.content : '', name: dock.firstName(req.user), why: 'slow' }), source: 'fallback' });
+    }
     res.json(await tutor.chat({ user: req.user, messages: req.body && req.body.messages, where }));
   } catch (err) {
     console.warn(`tutor: ${err.message}`);
@@ -53,7 +64,13 @@ router.post('/tutor/dock', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
     res.json(await dock.reply({ user: req.user, messages: body.messages, page: body.page, inputMode: body.input_mode, image: body.image }));
   } catch (err) {
     console.warn(`tutor dock: ${err.message}`);
-    res.json({ reply: tutor.offlineReply(req.user.id), source: 'fallback', mode: dock.modeFor(body.page && body.page.path) });
+    const mode = dock.modeFor(body.page && body.page.path);
+    // With TUTOR_FULL on, a failure is still a useful answer (the product, this page, the learner's own record), never a dead end.
+    if (full.on()) {
+      const last = [...tutor.cleanHistory(body.messages)].reverse().find((m) => m.role === 'user');
+      return res.json({ ...full.fallback({ user: req.user, page: body.page, message: last ? last.content : '', mode, name: dock.firstName(req.user) }), source: 'fallback', mode });
+    }
+    res.json({ reply: tutor.offlineReply(req.user.id), source: 'fallback', mode });
   }
 });
 
