@@ -38,6 +38,20 @@ function numbersShown(t) {
   return n;
 }
 
+// Word-level matching for the learner's interests and dislikes: stems of 5 letters, and for a dislike only its distinctive words (all of them): the
+// shared learning-spec `mentions` counts ANY word of 4 letters, so "jokes in lessons" matched every layer that said "lesson" (6 Nov: 15 of 96 layers
+// refused for it). Generic words of a dislike ("lessons", "time", "waste") are not what is disliked.
+const stem = (w) => String(w).toLowerCase().slice(0, 5);
+const GENERIC = new Set(['lesson', 'lessons', 'class', 'classes', 'school', 'teacher', 'teachers', 'learning', 'time', 'waste', 'wastes', 'same', 'idea', 'ideas', 'three', 'times', 'that', 'this', 'with', 'without', 'from', 'they', 'them', 'work', 'long', 'much', 'many', 'every', 'about', 'when', 'what', 'more', 'less', 'very', 'like', 'dont', 'never', 'hate', 'hates']);
+const tokens = (t) => (String(t || '').toLowerCase().match(/[a-zà-ÿ]{4,}/g) || []);
+const hasAll = (text, phrase) => {
+  const need = [...new Set(tokens(phrase).filter((w) => !GENERIC.has(w)).map(stem))];
+  if (!need.length) return false;
+  const have = new Set(tokens(text).map(stem));
+  return need.every((w) => have.has(w));
+};
+const hasAny = (text, phrase) => { const have = new Set(tokens(text).map(stem)); return tokens(phrase).some((w) => have.has(stem(w))); };
+
 const strings = (v, out = []) => {
   if (typeof v === 'string') out.push(v);
   else if (Array.isArray(v)) v.forEach((x) => strings(x, out));
@@ -49,9 +63,10 @@ const strings = (v, out = []) => {
 function sourceOf(plan, topic = '') {
   const parts = [topic];
   for (const b of plan.blocks || []) parts.push(...strings(b.data));
+  const taught = parts.filter(Boolean).join(String.fromCharCode(10)); // what the blocks teach, apart from the questions
   for (const c of plan.checks || []) { parts.push(c.prompt || ''); parts.push(...strings(c.choices || [])); }
   const answers = (plan.checks || []).map((c) => c.answer).filter((a) => a !== undefined && a !== null).map(String);
-  return { text: parts.filter(Boolean).join('\n'), answers, topic };
+  return { text: parts.filter(Boolean).join('\n'), taught, answers, topic };
 }
 
 /** The rules a layer is written under. Every line is something the learner can see in the text; none talks about the learner. */
@@ -113,13 +128,16 @@ function check(spec, layer, source) {
   for (const n of numbersShown(all)) if (!known.has(n)) out.push(`the number ${n} is not in the lesson`);
   // Never an answer to a check: a word-bounded match of any answer of length 3+ (or a number) in the layer.
   const nl = ` ${norm(all)} `;
+  // A single-word answer that is also a word the lesson teaches (a subject term) may appear in a hook or an analogy; a phrase or a number may not.
+  const taughtWords = new Set(tokens(source.taught || '').map(stem));
   for (const a of source.answers || []) {
     const na = norm(a);
-    if (na.length >= 3 && nl.includes(` ${na} `)) out.push('it contains the answer to a question in the lesson');
+    const oneWord = !/\s/.test(na);
+    if (na.length >= 3 && nl.includes(` ${na} `) && !(oneWord && taughtWords.has(stem(na)))) out.push('it contains the answer to a question in the lesson');
     else if (/^\d+(?:\.\d+)?$/.test(String(a).trim()) && numbersOf(all).has(String(a).trim())) out.push('it contains the answer to a question in the lesson');
   }
   if (PROFILE_LEAK.test(all)) out.push('it talks about the learner profile');
-  for (const d of (spec && spec.interests && spec.interests.avoidDomains) || []) if (learningSpec.mentions(all, d)) out.push(`it uses ${d}, which the learner dislikes`);
+  for (const d of (spec && spec.interests && spec.interests.avoidDomains) || []) if (hasAll(all, d)) out.push(`it uses ${d}, which the learner dislikes`);
   // Comparisons are marked as comparisons; the hook is a question or a scene: neither can pass as a statement about the subject.
   for (const a of an) if (!MARK.test(a.text)) out.push('an analogy is not marked as a comparison (like, think of, imagine)');
   if (hook && !/\?/.test(hook) && !MARK.test(hook)) out.push('the hook is neither a question nor an "imagine" scene');
@@ -131,7 +149,7 @@ function check(spec, layer, source) {
   }
   try { for (const p of learningSpec.analogyProblems([hook, ...an.map((a) => a.text)].join(' '), spec, source.text)) out.push(p.detail); } catch { /* the lexical guard is extra */ }
   const doms = (spec && spec.interests && spec.interests.exampleDomains) || [];
-  if (doms.length && spec.interests.share >= 0.3 && !doms.some((d) => learningSpec.mentions(`${hook} ${an.map((a) => a.text).join(' ')}`, d))) out.push('neither the hook nor an analogy uses one of the learner\'s interests');
+  if (doms.length && spec.interests.share >= 0.3 && !doms.some((d) => hasAny(`${hook} ${an.map((a) => a.text).join(' ')}`, d))) out.push('neither the hook nor an analogy uses one of the learner\'s interests');
   const lang = (spec && spec.language) || {};
   if (lang.maxSentenceWords) {
     const worst = all.split(/(?<=[.!?])\s+/).map((s) => words(s).length).reduce((a, b) => Math.max(a, b), 0);
