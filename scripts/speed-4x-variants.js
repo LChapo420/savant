@@ -37,16 +37,16 @@ const line = (name, H, R, arm, g) => {
   const toToday = as.map((a, i) => today[i].hours / a.hours);
   const toLow = toToday.slice().sort((x, y) => x - y);
   return `${name.padEnd(14)} ${arm.padEnd(14)} ${g.padEnd(18)} ${f(mean(as.map((a) => a.hours))).padStart(5)} h (today ${f(mean(today.map((a) => a.hours)))}, reach ${f(100 * mean(today.map((a) => (a.pass ? 1 : 0))), 0)}%) `
-    + `reach ${f(100 * mean(as.map((a) => (a.pass ? 1 : 0))), 0)}% +understood ${f(100 * mean(as.map((a) => (strict(a) ? 1 : 0))), 0)}% recall ${f(mean(as.map((a) => a.recall)), 2)} low ${f(mean(as.map((a) => (Number.isFinite(a.minRecall) ? a.minRecall : 0))), 2)} | `
+    + `L ${f(mean(as.map((a) => a.by.lesson)))} P ${f(mean(as.map((a) => a.by.practice)))} R ${f(mean(as.map((a) => a.by.review)))} settled ${f(mean(as.map((a) => a.settled || 0)))} reach ${f(100 * mean(as.map((a) => (a.pass ? 1 : 0))), 0)}% +understood ${f(100 * mean(as.map((a) => (strict(a) ? 1 : 0))), 0)}% recall ${f(mean(as.map((a) => a.recall)), 2)} low ${f(mean(as.map((a) => (Number.isFinite(a.minRecall) ? a.minRecall : 0))), 2)} | `
     + `x today ${f(mean(toToday), 2)} (w10 ${f(q(toLow, 0.1), 2)}) | x dense ${f(mean(dense), 2)} (med ${f(q(dense, 0.5), 2)}, w10 ${f(q(dense.slice().sort((a, b) => a - b), 0.1), 2)}, n ${dense.length}, 4x: ${dense.filter((x) => x >= 4).length}) | x self95 ${f(mean(s95), 2)} (n ${s95.length}, 4x: ${s95.filter((x) => x >= 4).length}) | x fixedN ${f(mean(norm), 2)} (n ${norm.length})`;
 };
 const held = read('held.json'); const rule = read('rule.json');
-console.log('SIMULATED. Ladder, held-out seed 20261106 (160 learners).');
+console.log(`SIMULATED. Ladder, held-out seed ${held.seed} (160 learners).`);
 for (const g of GOALS) for (const arm of Object.keys(held.rows[0].goals[g].speed)) console.log(line('ladder', held, rule, arm, g));
 console.log('\nVariants: each changes one assumption for every arm in that run; today is the round 3 rule in the same variant.');
 for (const n of fs.readdirSync(dir).filter((x) => /^v-/.test(x)).sort()) {
   const name = n.replace(/^v-|\.json$/g, '');
   const H = read(n); const R = read(`vr-${name}.json`);
-  const arms = /implicit/.test(name) ? ['safe_implicit', 'end_implicit'] : ['safe', 'end'];
+  const arms = process.env.SPEED_ARMS ? process.env.SPEED_ARMS.split(',') : /implicit/.test(name) ? ['safe_implicit', 'end_implicit'] : ['safe', 'end'];
   for (const g of GOALS) for (const arm of arms) console.log(line(name, H, R, arm, g));
 }

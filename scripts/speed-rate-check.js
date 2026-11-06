@@ -4,7 +4,7 @@
  * prints only counts, quantiles and fitted slopes, never an email, an answer or a row. Never reads the owner's learner account or a test-looking account.
  *   node scripts/speed-rate-check.js DB.json
  * Slope: an additive factors fit (Cen, Koedinger and Junker 2006; used by Koedinger et al. 2023): logit P(right) = learner + skill + slope x earlier answers on that skill.
- * Compare with the simulation: its audited rate goes from 50% to 89% right in about 7 answers, about 0.3 logits an answer, against about 0.1 reported across 27 datasets.
+ * Compare with the simulation: its audited rate goes from 50% to 89% right in about 8 answers, about 0.26 logits an answer, against about 0.1 reported across 27 datasets (secondary sources, docs/SPEED-4X.md).
  */
 const fs = require('fs');
 

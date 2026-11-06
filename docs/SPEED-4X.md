@@ -2,9 +2,127 @@
 
 Owner, 6 Nov 2026: at least 4 times faster learning the same material, with equal or more retention, than normal studying.
 
-**Answer: no. Not reached, and not reachable in this learning model.** The levers are built in the real code, each behind a switch, all off. On held-out seed 20261106 (160 learners: 120 extreme, 40 ordinary) the best configuration that keeps recall up throughout is 1.03x to 1.17x against dense self-study. The configuration that lets recall fall and rebuilds it at the end reaches 1.70x at most against dense self-study, and 1.85x against a schedule most learners complete. **No learner reaches 4x in any headline run.** The gate is missed. Not merge-ready.
+**Answer: no. Not reached, and not reachable in this learning model.** Round 2 is below; this paragraph is round 1. The levers are built in the real code, each behind a switch, all off. On held-out seed 20261106 (160 learners: 120 extreme, 40 ordinary) the best configuration that keeps recall up throughout is 1.03x to 1.17x against dense self-study. The configuration that lets recall fall and rebuilds it at the end reaches 1.70x at most against dense self-study, and 1.85x against a schedule most learners complete. **No learner reaches 4x in any headline run.** The gate is missed. Not merge-ready.
 
-## The measure
+## Round 2: attacking the floor (SIMULATED; gate MISSED)
+
+**Straight answer: more levers will not close this. The model cannot show 4x without assuming it.** Everything added on the audited model takes a 1-year goal from x1.12 to x1.22 against dense self-study (safe arm, real stop). With an oracle stop and no pages at all, which nobody can run, it reaches x1.41. Reaching 4x needs the model's learning rate raised about 5x and its memory growth cubed, and only in that unrunnable arm. Those are the claim itself, not levers.
+
+Held-out seed 20261107 (160 learners: 120 extreme, 40 ordinary), new because round 1's seed had been read. Arms frozen on design seed 777002 first. The rate per practice is unchanged in every headline run. `end` stays off and is not in these tables.
+
+### The same table (mean, per learner)
+
+safe3 = safe + one-tap items + two-skill review items. **It cannot run today: the banks have no two-skill items.** safe_fast is what the built code offers now, and its time saving is assumed.
+
+| goal | today h | safe h | safe_fast h | safe3 h | safe3 x dense: mean / median / worst 10, 5, 1% (n) | safe3 x self-study at 95% | at 4x |
+|---|---|---|---|---|---|---|---|
+| 1 week | 15.1 | 14.9 | 14.1 | 13.7 | 1.14 / 1.13 / 0.94, 0.87, 0.75 (108) | 1.23 | 0 |
+| 1 month | 17.9 | 17.3 | 16.3 | 15.8 | 1.14 / 1.13 / 0.98, 0.93, 0.89 (107) | 1.24 | 0 |
+| 6 months | 21.4 | 21.1 | 19.8 | 19.3 | 1.19 / 1.18 / 1.05, 1.01, 0.92 (88) | 1.31 | 0 |
+| 1 year | 23.1 | 22.6 | 21.2 | 20.7 | 1.22 / 1.21 / 1.09, 1.06, 0.97 (89) | 1.34 | 0 |
+| no test day (3 y) | 25.8 | 25.5 | 23.8 | 23.4 | 1.28 / 1.28 / 1.16, 1.13, 1.05 (84) | 1.36 | 0 |
+| dated test, 1 year | 24.0 | 22.6 | 21.2 | 20.7 | 1.22 / 1.21 / 1.09, 1.06, 0.97 (89) | 1.33 | 0 |
+
+By kind and age band at 1 year, safe3: x dense 1.16 to 1.26 across kinds and 1.21 to 1.26 across bands; x today 1.08 to 1.15 and 1.11 to 1.14. On a dated test at 1 year, fixed-N cram (x0.78) and the typical tutor (x0.71) are still faster, in a model where understanding never fades. Every goal and arm: `docs/speed-4x/round2-report.txt`.
+
+**Gate: MISSED, 8 misses for safe3, 8 for safe_fast, 32 for safe.** For safe3:
+
+- All learners reach the target with all understood: 90% at 1 week, 98% at 1 month, 95% dated 1 week, 98% dated 1 month.
+- Worst 10% against today: x0.95 at 1 week, x1.00 at 1 month and dated 1 week, which is not faster.
+- tail_both at 1 week is no faster than today.
+- From 6 months up, safe3 and safe_fast pass.
+
+### Each lever at 1 year
+
+| lever | h | x dense | all understood at 1 week | verdict |
+|---|---|---|---|---|
+| safe (baseline) | 22.6 | 1.12 | 88% | |
+| 3. placement by skill | 23.0 | 1.10 | 85% | **slower** |
+| 1. + implied mastery | 23.0 | 1.10 | 73% | **slower**, and wrong inferences slip past the sampling |
+| 4. item at the edge | 23.3 | 1.08 | 88% | **slower** |
+| 2. two-skill review items | 22.0 | 1.14 | 88% | small, and it needs items the banks do not have |
+| 5. less friction (assumed 2 s + 2 s) | 21.2 | 1.19 | 89% | the largest; unmeasured |
+| 2 + 5 (safe3) | 20.7 | 1.22 | 90% | |
+| all of them (safe2) | 21.4 | 1.18 | 81% | worse than 2 + 5 |
+
+**Why placement does not help.** Test-out already asks before teaching, so moving those questions to the start saves nothing, and hard-pitched items cost more misses. A skill that is known still has to be remembered. Review hours do not move.
+
+### How much it depends on what learners already know
+
+Every arm changes, baselines included. A 1-year goal:
+
+| learners know | first-pass floor h (oracle, no pages) | today h | safe h (x dense) | safe3 h (x dense) | placement + implied h (x dense) | floor arm h (x dense) |
+|---|---|---|---|---|---|---|
+| nothing | 11.5 | 25.4 | 26.3 (1.03) | 24.2 (1.11) | 26.4 (1.02) | 21.7 (1.25) |
+| less (-1) | 10.1 | 24.5 | 25.1 (1.06) | 23.0 (1.15) | 25.3 (1.04) | 20.3 (1.30) |
+| audited | 7.8 | 23.1 | 22.6 (1.12) | 20.7 (1.22) | 23.0 (1.10) | 17.9 (1.41) |
+| more (+1) | 4.8 | 21.2 | 18.8 (1.25) | 17.1 (1.39) | 19.2 (1.24) | 14.7 (1.59) |
+| much more (+2) | 2.7 | 19.7 | 15.2 (1.46) | 13.6 (1.63) | 15.7 (1.42) | 12.3 (1.78) |
+| nearly all (+3) | 1.9 | 19.1 | 13.5 (1.56) | 11.8 (1.77) | 13.8 (1.54) | 11.3 (1.87) |
+| audited, hierarchical | 6.9 | 22.5 | 21.5 (1.15) | 19.7 (1.25) | 22.0 (1.13) | 16.9 (1.46) |
+| +1, hierarchical | 4.0 | 20.6 | 17.5 (1.32) | 15.8 (1.47) | 18.1 (1.29) | 13.8 (1.66) |
+
+Knowing more helps a lot, but a learner who knows nearly everything still spends about 10 h keeping it for a year. Placement beats plain test-out at no level. With no prior knowledge, safe is slower than today (26.3 h against 25.4 h).
+
+### The new floor
+
+| | first pass | total at 1 year, recall kept throughout | x dense |
+|---|---|---|---|
+| round 1 floor (oracle stop, no pages) | 7.3 h | 19.6 h | 1.29 |
+| round 2 floor (+ two-skill items, less friction) | 7.8 h, which now also carries review | 17.9 h | 1.41 |
+
+The first-pass floor did not fall. Two-skill first-pass items move review work into it. Review fell from 12.3 h to 10.1 h. The target of 4x of 24.6 h is about 6 h, and review alone is 10 h.
+
+The cost per answer is the assumption that matters most (every arm): at 12 s per step the floor total is 6.0 h (x2.33), safe3 9.5 h (x1.47), today 12.7 h. Pages then dominate the baselines, so cutting them pays. At 20 s and 15 s: safe3 13.3 h (x1.33), floor 10.0 h (x1.77).
+
+### Measured time: nothing usable yet
+
+The logs hold 3,938 answers from 79 test-looking accounts, 96% at round half-seconds, so scripted. One other account has 298 answers (157 over 1.5 s, median about 8 s, p90 about 25 s), and the logged time does not include reading feedback. One person, possibly trying the app, is not evidence. So no measured value goes into a headline. **The 35 s may be far too high, and the sim's "right answer" time is a guess.** `scripts/speed-rate-check.js` reports this from a database copy, with the owner's learner account and test accounts left out.
+
+### What rate 4x would need (what-ifs, never headlines)
+
+Against dense self-study at 1 year. "Rate" is what a page or answer teaches; "memory" is a power on growth per spaced right answer (2 means x1.6 becomes x2.6).
+
+| assumed for Savant only | safe3 (runnable) | floor (unrunnable) | floor learners at 4x |
+|---|---|---|---|
+| audited | 1.22 | 1.41 | 0 |
+| rate x3 | 1.60 | 2.00 | 0 |
+| rate x10 | 1.75 | 2.19 | 0 |
+| memory power 2 | 1.65 | 1.98 | 0 |
+| rate x3, memory 2 | 2.25 | 3.12 | 0 |
+| rate x5, memory 2 | 2.42 | 3.40 | 1 of 89 |
+| rate x5, memory 3 | 2.78 | 4.18 | 62 of 89 |
+| rate x10, memory 3 | 2.90 | 4.36 | 74 of 89 |
+| 12 s items, rate x2 | 1.87 | 3.01 | 0 |
+| 12 s items, rate x3, memory 2 | 2.70 | 5.19 | 84 of 84 |
+
+The runnable column understates these what-ifs, because its tracker is not told about the higher rate and keeps asking. A refitted tracker would land between the two columns. **Rate alone never reaches 4x, even at x10**, because review time is untouched.
+
+**What would justify it.** The model already goes from 50% to 89% right in about 8 answers, about 0.26 logits per answer. Koedinger et al. 2023 (PNAS) reported about 0.1 logits per practice across 27 datasets, and about 7 to 8 attempts from 65% to 80%, with students' rates strikingly similar ([Stanford abstract](https://psychology.stanford.edu/events/colloquium-36), [Hechinger](https://hechingerreport.org/proof-points-the-myth-of-the-quick-learner/); the paper itself was not read). A [2026 re-analysis](https://arxiv.org/pdf/2605.01690) disputes how similar those rates are, not their size. So the model is already about 2.6x that figure, and rate x5 would be about 13x it. I found no evidence for that, or for cubing memory growth. It would take a controlled study showing it, not another lever.
+
+**How real testers would check it** (needs 30 or more real learners, no simulation):
+
+1. Rate: `scripts/speed-rate-check.js` fits gain per answer. Compare with 0.26 and 0.1.
+2. Seconds: real seconds per answer from `items.ms`. Time on feedback is not logged yet and has to be added. With SPEED_FAST_ITEM on and off in random groups, the difference is the real saving.
+3. Memory: delayed probes at 7, 30 and 90 days, unannounced, to fit growth per spaced right answer.
+4. Skips: learners who skipped a page against those who read it, on later checkpoints and delayed probes, by item. This is what round 1 found to be the biggest risk.
+5. The claim itself: hours to a delayed test against a control group studying the same material their own way. Only that can say 4x. The base-arm holdout (`services/beta-arm.js`) can supply the Savant comparison; a self-study group has to be recruited.
+
+### Built in round 2 (all off; off is today's behaviour)
+
+- `SPEED_SKILL_PLACEMENT=on` (`services/speed-placement.js`, `routes/speed-placement.js`, `/skill-check`): a check offered on the path. Settled levels are stepped over, never a checkpoint, and they are listed on the path with a way in.
+- `SPEED_IMPLIED=on`: a pass settles what the skill builds on. One in three of those is asked, and a miss revokes that pass; a later miss puts the skill on a revisit list. **The built-in grades state no graph, so the previous skill in the grade stands in, and the one look taken inferred "shapes" from a number skill.** Uploaded courses have a real graph and already place on it (`services/material-path.js`). Not recommended on this evidence.
+- `SPEED_EDGE=on`: picks difficulty by expected information. The mapping from the bank's 1 to 10 scale is assumed.
+- `SPEED_COMPOSITE=on`: an item naming `also_skills` counts as an attempt on each. **No bank item names any, so it does nothing until such items are written.** The 12 word-problem skill slots in math are not mapped to the skills they use.
+- `SPEED_FAST_ITEM=on`: one-tap multiple choice, no confidence row, and a right answer moves on after a tick. It removes a scorecard signal (stated confidence), and that cost is not measured. One-tap was not seen working in the browser, because the items shown were typed.
+
+Tested: `scripts/speed-levers-test.js` (20 checks), and the skill check driven in the browser on a temp database. The two-skill items in the sim update each skill exactly as two separate answers would; only reading time is shared (half an item time, assumed; x1.20 and x1.21 at no saving and at a quarter).
+
+Reproduce: `bash scripts/speed-4x-run2.sh RAW`, then `node scripts/speed-4x-report.js RAW/design.json RAW/held.json RAW/rule.json --arms=safe,safe_fast,safe3` and `SPEED_ARMS=safe,safe3,safe_implied,floor_first,floor_first2 node scripts/speed-4x-variants.js RAW`.
+
+## Round 1
+
+### The measure
 
 Per learner: hours until all 50 skills are understood (k >= 0.85) and mean recall at the chosen horizon is at least 0.70. Ratio = baseline hours / Savant hours. It is counted only where both reach the target, and the Savant arm must also have every skill truly understood. A baseline that misses the target is never counted as a win.
 
