@@ -128,8 +128,31 @@ function planPin() {
   check('and another learner is not affected', blockLevels.openedOnShared(other, 'math', 'calculus_i', 10) === null);
 }
 
+function accountData() {
+  console.log('deleting an account reaches shared plans; the export covers every collection');
+  const blockLevels = require('../services/block-levels');
+  const deletion = require('../services/account-deletion');
+  const u = db.insert('users', { email: 'del@example.test', display_name: 'Del', password_hash: 'x', account_type: 'standard', xp: 0, streak: 0 });
+  const keep = 99999;
+  const shared = db.insert('block_plans', { track_id: 'math', grade_id: 'x', level: 1, status: 'ready', user_id: null, answers: { [`${u.id}:c1`]: { correct: false, answer: 'SECRET typed answer' }, [`${keep}:c1`]: { correct: true, answer: 'other' } }, telemetry: { [u.id]: { blocks: [] }, [keep]: { blocks: [] } } });
+  deletion.deleteAccount(u);
+  const after = db.byId('block_plans', shared.id);
+  check('what they typed on a shared plan goes with the account', !JSON.stringify(after).includes('SECRET'), after.answers);
+  check('their telemetry goes too, another learner\'s stays', !after.telemetry[u.id] && !!after.telemetry[keep] && !!after.answers[`${keep}:c1`], after.telemetry);
+  const src = fs.readFileSync(path.join(__dirname, '..', 'routes', 'profile.js'), 'utf8');
+  const exported = new Set([...src.match(/const EXPORT_MORE = \[([\s\S]*?)\];/)[1].matchAll(/'([a-z_]+)'/g)].map((x) => x[1]));
+  ['enrollments', 'skill_states', 'sessions', 'items', 'events', 'level_feedback', 'scorecards', 'level_signals', 'profiles'].forEach((n) => exported.add(n));
+  ['lessons', 'level_edits', 'block_plans', 'game_payloads'].forEach((n) => exported.add(n)); // pages written for the learner: left out on purpose (routes/profile.js)
+  ['act_guests', 'recruit_counts'].forEach((n) => exported.add(n)); // no account behind them (routes/consent.js)
+  const consent = require('../routes/consent');
+  const known = [...fs.readFileSync(path.join(__dirname, '..', 'routes', 'consent.js'), 'utf8').match(/const KNOWN_COLLECTIONS = \[([\s\S]*?)\];/)[1].matchAll(/'([a-z_]+)'/g)].map((x) => x[1]);
+  const missing = known.filter((n) => !consent.SHARED.has(n) && !exported.has(n));
+  check('every learner collection is in the account export', !missing.length, missing);
+}
+
 (async () => {
   phrases();
+  accountData();
   await routes();
   planPin();
   console.log(failures ? `\n${failures} failed` : '\nAll ok');

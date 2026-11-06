@@ -374,6 +374,7 @@ function deleteChild(consent, reason, by) {
     const n = db.remove(name, (r) => r && r.user_id === childId);
     if (n) removed[name] = n;
   }
+  require('../services/block-levels').forgetLearner(childId);
   const files = require('../services/upload-retention').removeForUser(childId);
   if (files) removed.spanish_upload_files = files;
   require('../services/spanish-study-tests').removeForUser(childId);

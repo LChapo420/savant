@@ -3032,6 +3032,23 @@ function answerCheck({ user, plan, checkId, answer, ms }) {
   return { correct, answer: check.answer, rationale: check.rationale };
 }
 
+/**
+ * Take a learner off every plan when their account goes: a shared plan keeps each reader's answers (what they typed) and block telemetry under their id,
+ * on a row with no user_id, so deleting the account's rows left them behind (bug sweep 2, 6 Nov).
+ */
+function forgetLearner(userId) {
+  const prefix = `${userId}:`;
+  let plans = 0;
+  for (const plan of db.find(COLLECTION, (p) => p && (p.answers || p.telemetry))) {
+    const answers = Object.fromEntries(Object.entries(plan.answers || {}).filter(([k]) => !k.startsWith(prefix)));
+    const telemetry = Object.fromEntries(Object.entries(plan.telemetry || {}).filter(([k]) => k !== String(userId)));
+    if (Object.keys(answers).length === Object.keys(plan.answers || {}).length && Object.keys(telemetry).length === Object.keys(plan.telemetry || {}).length) continue;
+    db.update(COLLECTION, plan.id, { answers, telemetry });
+    plans += 1;
+  }
+  return plans;
+}
+
 /** This learner's answers on a plan, as item ids, for the after-level read. */
 function itemIdsFor(user, plan) {
   return Object.entries(plan.answers || {})
@@ -3130,6 +3147,7 @@ module.exports = {
   publicPlan,
   servedPlan,
   openedOnShared,
+  forgetLearner,
   findPlan,
   readyPlan,
   answerCheck,

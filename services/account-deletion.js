@@ -34,6 +34,7 @@ function deleteAccount(user) {
     const n = db.remove(name, (r) => r && r.user_id === id);
     if (n) removed[name] = n;
   }
+  require('./block-levels').forgetLearner(id); // eslint-disable-line global-require
   for (const u of db.find('users', (x) => x.referred_by === id)) db.update('users', u.id, { referred_by: null });
   const files = uploadRetention.removeForUser(id);
   if (files) removed.spanish_upload_files = files;
