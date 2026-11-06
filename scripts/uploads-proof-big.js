@@ -8,17 +8,18 @@
 const fs = require('fs'); const os = require('os'); const path = require('path');
 require('../services/run-cap').defaultCap(5); // hard per-process spend cap across every paid ledger; --run-cap N or RUN_CAP_USD overrides
 require('dotenv').config({ path: 'C:/coding/claudecommittdIq/folderThing/.env', quiet: true });
-process.env.XKIRO_PIPELINE = '1'; process.env.GONKA_PIPELINE = '1'; process.env.GONKA_LEDGER_FILE = process.env.GONKA_LEDGER_FILE || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/gonka-ledger.json';
+process.env.XKIRO_PIPELINE = '1'; process.env.LYCEUM_PIPELINE = '1'; process.env.LYCEUM_LEDGER_FILE = process.env.LYCEUM_LEDGER_FILE || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/lyceum-ledger.json';
+const LY_CAP = Number(process.env.RUN_CAP_USD || 3); const LY_START = (() => { try { return require('../services/lyceum-ledger').status().spent_usd; } catch { return 0; } })(); process.env.GONKA_PIPELINE = '1'; process.env.GONKA_LEDGER_FILE = process.env.GONKA_LEDGER_FILE || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/gonka-ledger.json';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-big-${process.pid}.json`);
 process.env.XKIRO_USAGE_FILE = process.env.XKIRO_USAGE_FILE || path.join(os.tmpdir(), 'uploads-big-xkiro-usage.json');
 const db = require('../config/db');
 const materials = require('../services/materials');
 const K = require('../services/material-keypoints');
-const cb = require('../services/course-builder');
+const cb = require(process.env.CB_PATH || '../services/course-builder');
 const fx = require('./lib/upload-fixtures');
 const IN = 'C:/coding/savant-wt/_proof-inputs';
 const OUT = path.join(__dirname, '..', 'docs', 'uploads-proof-big-results.json');
-const CACHE = path.join(__dirname, '..', 'docs', 'uploads-proof-big-exam.json');
+const CACHE = path.join(__dirname, '..', 'docs', process.env.EXAM_FILE || 'uploads-proof-big-exam2.json');
 const log = (...a) => console.log(...a);
 const words = (t) => (String(t).match(/\S+/g) || []).length;
 const round = (n) => Math.round(n * 1000) / 1000;
@@ -31,7 +32,7 @@ async function call(fam, { system, user, schema, schemaName, maxTokens, timeoutM
   const r = fam === 'N'
     ? await require('../services/providers/nvidia').structured({ role: 'fast', task: 'uploads_proof', system, user, schema, schemaName, maxTokens: Math.max(maxTokens || 1500, 2500), timeoutMs: timeoutMs || 240000 })
     : fam === 'B'
-    ? await require('../services/providers/gemini').structured({ role: 'fast', system, user, schema, schemaName, maxTokens: Math.max(maxTokens || 1500, 2500), timeoutMs: timeoutMs || 240000 })
+    ? await (async () => { return require('../services/providers/lyceum').lyceum.structured({ model: 'z-ai/glm-5.3', system, user, schema, schemaName, maxTokens: Math.max(maxTokens || 1500, 2500), timeoutMs: timeoutMs || 240000 }); })()
     : await mu.gonka.structured({ model: fam === 'A' ? 'zai-org/GLM-5.3-Flash' : 'deepseek-ai/DeepSeek-V4-Flash-0731', system, user, schema, schemaName, maxTokens: Math.max(maxTokens || 1500, 1500), timeoutMs: timeoutMs || 240000 });
   if (!r || !r.data) throw new Error('no data');
   used[r.model || fam] = (used[r.model || fam] || 0) + 1;
@@ -92,11 +93,11 @@ async function loadDocs() {
 function sentences(plain) { return (plain.replace(/\s+/g, ' ').match(/[^.!?]+[.!?]+/g) || []).map((s) => s.trim()).filter((s) => words(s) >= 9 && words(s) <= 45); }
 async function examFor(doc) {
   const kps = K.extract(doc.rich, { plain: doc.plain, spoken: doc.spoken }).key_points;
-  const emph = [...kps].filter((k) => k.weight >= 2.5).sort((a, b) => b.weight - a.weight).slice(0, 5).map((k) => ({ text: k.text, kind: 'emphasised', weight: k.weight }));
+  const emph = [...kps].filter((k) => k.weight >= 2.5).sort((a, b) => b.weight - a.weight).slice(0, 8).map((k) => ({ text: k.text, kind: 'emphasised', weight: k.weight }));
   const taken = kps.filter((k) => k.weight >= 1.8).map((k) => K.termSet(k.text));
   const plainPool = sentences(doc.plain).filter((s) => !/\?/.test(s) && !taken.some((t) => { const u = K.termSet(s); let n = 0; for (const x of u) if (t.has(x)) n++; return u.size && n / u.size > 0.6; }));
-  const step = Math.max(1, Math.floor(plainPool.length / 4));
-  const plainPick = [0, 1, 2, 3].map((i) => plainPool[Math.min(plainPool.length - 1, i * step + 1)]).filter((s, i, a) => s && a.indexOf(s) === i);
+  const NP = 8; const step = Math.max(1, Math.floor(plainPool.length / NP));
+  const plainPick = Array.from({ length: NP }, (_, i) => i).map((i) => plainPool[Math.min(plainPool.length - 1, i * step + 1)]).filter((s, i, a) => s && a.indexOf(s) === i);
   const items = [...emph, ...plainPick.map((t) => ({ text: t, kind: 'plain', weight: 1 }))];
   const qs = await pool(items, 3, async (it) => {
     const r = await ask('N', 'Write one exam question that can be answered only from the given sentence (no outside knowledge, no mention of "the text"), and a short model answer.', `Sentence: ${it.text}`, { type: 'object', properties: { question: { type: 'string' }, answer: { type: 'string' } }, required: ['question', 'answer'] }, 'exam_item', 400);
@@ -109,6 +110,24 @@ async function answerFrom(fam, material, q) {
   if (!r) return null; if (!r.found || !r.answer) return false;
   const g = await ask(fam, 'You grade a student answer against a reference answer. correct=true only if it gives the same facts (wording may differ).', `Question: ${q.question}\nReference answer: ${q.reference}\nStudent answer: ${r.answer}`, { type: 'object', properties: { correct: { type: 'boolean' } }, required: ['correct'] }, 'grade', 200);
   return g ? !!g.correct : null;
+}
+// Judge B (Lyceum GLM 5.3, about 2 cents a call): ONE call per document and material answers every question (answer first, then compare with the reference), so the $3 cap holds.
+let LY_CALLS = 0;
+async function answerBatch(material, exam) {
+  const schema = { type: 'object', properties: { results: { type: 'array', items: { type: 'object', properties: { n: { type: 'integer' }, found: { type: 'boolean' }, answer: { type: 'string' }, correct: { type: 'boolean' } }, required: ['n', 'found', 'answer', 'correct'] } } }, required: ['results'] };
+  const user = `Material:
+${material.slice(0, 20000)}
+
+Questions, each with the reference answer used only for grading:
+${exam.map((q, i) => `${i + 1}. ${q.question}
+   Reference: ${q.reference}`).join('\n')}`;
+  for (let i = 0; i < 3; i++) {
+    if (LY_CALLS >= +(process.env.LY_MAX_CALLS || 14)) return exam.map(() => null);
+    LY_CALLS++;
+    const r = await ask('B', 'You are a student with ONLY the study material. For each numbered question, FIRST write the answer using nothing but the material (found=false and an empty answer when the material does not contain what is needed), THEN compare it with the reference: correct=true only if your answer gives the same facts (wording may differ), and always false when found=false. Never copy the reference.', user, schema, 'batch', 4000);
+    if (r && Array.isArray(r.results)) return exam.map((_, i) => { const x = r.results.find((y) => +y.n === i + 1); return x ? !!(x.found && x.answer && x.correct) : null; });
+  }
+  return exam.map(() => null);
 }
 const generatedText = (c) => c.skills.map((s) => [`## ${s.title}`, ...(s.lesson.paragraphs || []), ...(s.lesson.key_points || []).map((k) => `Key: ${k}`),
   ...(s.questions || []).map((q) => `Q: ${q.prompt} A: ${q.type === 'short_answer' ? q.answer : (q.choices || [])[q.answer_index]}. ${q.explanation || ''}`)].join('\n')).join('\n\n');
@@ -129,9 +148,9 @@ const mean = (a) => { const v = a.filter((x) => x != null); return v.length ? ro
   const docs = cache.docs.filter((d) => !only.length || only.includes(d.id));
   const control = cache.control || (cache.control = {});
   for (const d of docs) {
-    if (control[d.id] && control[d.id].B2) { log(`control ${d.id}: cached`); continue; }
-    control[d.id] = { B2: 1 };
-    for (const fam of ['A', 'B']) control[d.id][fam] = await pool(d.exam, 4, (q) => answerFrom(fam, d.plain, q));
+    if (control[d.id] && control[d.id].B3) { log(`control ${d.id}: cached`); continue; }
+    control[d.id] = { B3: 1 };
+    control[d.id].A = await pool(d.exam, 4, (q) => answerFrom('A', d.plain, q)); control[d.id].B = await answerBatch(d.plain, d.exam);
     fs.writeFileSync(CACHE, JSON.stringify(cache));
     log(`control ${d.id}: A ${round(share(control[d.id].A))} B ${round(share(control[d.id].B))}`);
   }
@@ -143,10 +162,10 @@ const mean = (a) => { const v = a.filter((x) => x != null); return v.length ? ro
       const t0 = Date.now(); let built;
       try { built = await cb.build(u.id, m.value.id, { llm, force: true }); } catch (e) { built = { error: e.message }; }
       if (!built.course) { rows.push({ doc: d.id, rep, error: String(built.error || 'no course') }); log(`${d.id} r${rep}: build failed ${built.error}`); continue; }
-      const gen = generatedText(built.course); const lw = words(lessonText(built.course));
+      const gen = generatedText(built.course); try { fs.writeFileSync(path.join(os.tmpdir(), `gen-${arm}-${d.id}-r${rep}.txt`), gen); } catch { /* optional */ } const lw = words(lessonText(built.course));
       const row = { doc: d.id, rep, status: built.course.status, skills: built.course.skills.length, build_s: Math.round((Date.now() - t0) / 1000), source_words: words(d.plain), lesson_words: lw, lesson_share: round(lw / words(d.plain)), gate: built.course.keypoint_coverage, judges: {} };
       for (const fam of ['A', 'B']) {
-        const ans = await pool(d.exam, 4, (q) => answerFrom(fam, gen, q));
+        const ans = fam === 'B' ? await answerBatch(gen, d.exam) : await pool(d.exam, 4, (q) => answerFrom(fam, gen, q));
         const by = (kind, arr) => share(d.exam.map((q, i) => (q.kind === kind ? arr[i] : undefined)).filter((x) => x !== undefined));
         row.judges[fam] = { gen_emph: by('emphasised', ans), gen_plain: by('plain', ans), src_emph: by('emphasised', control[d.id][fam]), src_plain: by('plain', control[d.id][fam]), n_emph: d.exam.filter((q) => q.kind === 'emphasised').length, n_plain: d.exam.filter((q) => q.kind === 'plain').length };
       }
@@ -159,7 +178,7 @@ const mean = (a) => { const v = a.filter((x) => x != null); return v.length ? ro
   const agg = { rows_ok: ok.length, builds_failed: rows.length - ok.length, lesson_share: mean(ok.map((r) => r.lesson_share)), ready: ok.filter((r) => r.status === 'ready').length };
   for (const fam of ['A', 'B']) for (const k of ['gen_emph', 'gen_plain', 'src_emph', 'src_plain']) agg[`${fam}_${k}`] = mean(ok.map((r) => r.judges[fam][k]));
   const res = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : {};
-  res[arm] = { when: new Date().toISOString().slice(0, 10), label: 'AI-JUDGED and SIMULATED: builder Gonka DeepSeek V4 Flash, judge A Gonka GLM 5.3 Flash, judge B Gemini free tier (flash-lite), exam writer NVIDIA nemotron; not real learners', reps, models_used: used, builder_calls: llm.calls.n, agg, rows };
+  res[arm] = { when: new Date().toISOString().slice(0, 10), label: 'AI-JUDGED and SIMULATED: builder Gonka DeepSeek V4 Flash, judge A Gonka GLM 5.3 Flash, judge B Lyceum GLM 5.3 (z-ai/glm-5.3), exam writer NVIDIA nemotron; not real learners', reps, models_used: used, builder_calls: llm.calls.n, agg, rows };
   fs.writeFileSync(OUT, `${JSON.stringify(res, null, 1)}\n`);
   log('AGG', JSON.stringify(agg)); log('models', JSON.stringify(used));
   try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none */ }

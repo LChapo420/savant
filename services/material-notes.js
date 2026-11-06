@@ -137,7 +137,7 @@ async function build(userId, materialId, opts = {}) {
     const limit = opts.tokenBudget || TOKEN_BUDGET;
     // This learner's notes (services/learning-spec.js): bullet size and density follow how they take things in;
     // every bullet still needs its quote, and the coverage figure below is unchanged.
-    const spec = learningSpec.buildSpec(userId, { topic: mat.title });
+    const spec = learningSpec.buildSpec(userId, { topic: mat.title, materialId: mat.id });
     const block = learningSpec.specToLines(spec, { surface: 'notes' }).join('\n');
     const guard = learningSpec.analogyGuard(spec, mat.text);
     const maxBullets = spec.isDefault ? MAX_BULLETS : Math.max(3, Math.min(MAX_BULLETS, spec.lesson.chunkSentences + 2));
