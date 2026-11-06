@@ -86,7 +86,7 @@ function request(f, mode) {
 /** The shipped route: verifyLevel in the waiting lane for a cleared learner, whichever verifier answers. */
 async function readPath(f, mode) {
   const db = require('../config/db'); const pool = require('../services/pool'); // eslint-disable-line global-require
-  const user = db.insert('users', { email: `path-${Date.now()}-${Math.random()}@example.com`, birth_year: 1990, created_at: new Date().toISOString() });
+  const user = db.insert('users', { email: `path-${Date.now()}-${Math.random()}@example.com`, birth_year: 1990, age_check: { needs_parent: false }, created_at: new Date().toISOString() });
   const context = { text: `Subject: ${f.plan.track_id}, grade ${f.plan.grade_id}, level ${f.plan.level}.`, trackId: f.plan.track_id };
   const t = f.target;
   const part = mode !== 'whole';

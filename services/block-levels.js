@@ -3150,7 +3150,7 @@ async function forLevel({ user, trackId, gradeId, level }) {
     const lanes = require('./pool'); // eslint-disable-line global-require
     const running = lanes.runForeground(() => ensure({ userId, trackId, gradeId, level, tailored, tier: 'open' }), { fast: true });
     running.catch(() => {});
-    const got = partialFor({ userId: owner, trackId, gradeId, level }) || await Promise.race([running, firstBlock.firstPublished(planKey(owner, trackId, gradeId, level), WAIT_MS)]);
+    const got = partialFor({ userId: owner, trackId, gradeId, level }) || await Promise.race([running, firstBlock.firstPublished(planKey(owner, trackId, gradeId, level), Number(process.env.COLD_REQUEST_WAIT_MS || 700))]);
     const partial = partialFor({ userId: owner, trackId, gradeId, level });
     if (partial) return { plan: partial, writing: false, partial: true };
     if (got && got.id) return { plan: got, writing: false };
