@@ -96,6 +96,7 @@ ${tutor.contextText(user.id, { exceptWhere: tutorWhere(about) })}`,
     maxTokens: 500,
     effort: 'low',
     userId: user.id,
+    factSource: content,
   });
   const text = reply || 'Look again at the first thing this part asks you to do, and tell me what you think it wants. The live tutor is not connected right now, so I can only point you back to it.';
   remember({
@@ -129,6 +130,7 @@ ${tutor.contextText(user.id, { exceptWhere: tutorWhere('the lesson page') })}`,
     maxTokens: 500,
     effort: 'low',
     userId: user.id,
+    factSource: pageText(html).slice(0, 5000),
   });
   const text = reply || 'Tell me which part of the page you are on and what it asks you to do. The live tutor is not connected right now.';
   remember({ user, trackId, gradeId, level, ref: 'page', about: 'the lesson page', answered: false, messages: history, reply: text });

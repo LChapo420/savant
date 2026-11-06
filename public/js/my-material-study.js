@@ -22,7 +22,7 @@ App.mount(async () => {
       review: [`${s.due_count} to review`, 'Due now, so you keep what you learned.', 'Start review'],
       lesson: [n.remediation ? `Fix: ${n.title || ''}` : `Next: ${n.title || ''}`, n.remediation ? 'Go over what tripped you up, then try the check again.' : 'Read the lesson and try a few questions.', n.remediation ? 'Go over it again' : 'Start the lesson'],
       quiz: [`Check: ${n.title || ''}`, 'Score 75% or more to master it.', 'Take the check'],
-      done: ['Every skill mastered', s.next_due ? `Next review: ${String(s.next_due).slice(0, 10)}.` : 'Nice work.', ''],
+      done: [s.course.status === 'building' ? 'Every skill so far mastered' : 'Every skill mastered', s.next_due ? `Next review: ${String(s.next_due).slice(0, 10)}.` : 'Nice work.', ''],
       wait: ['Nothing open right now', 'Come back when a review is due.', ''],
     }[n.kind] || ['', '', ''];
     return `<div class="card" id="next-card"><h2>${esc(label[0])}</h2><p class="small">${esc(label[1])}</p>${label[2] ? `<button class="btn btn-primary" id="go" type="button">${esc(label[2])}</button>` : ''}</div>`;
@@ -46,6 +46,7 @@ App.mount(async () => {
       <p class="small"><a href="/my-material">&larr; My material</a></p>
       <h1>${esc(s.course.title)}</h1>
       <p class="muted">${s.mastered} of ${s.total} skills mastered. Your path skips what you know and comes back to things just before you would forget them.</p>
+      ${s.course.status === 'building' ? `<div class="notice" role="status" style="margin-bottom:12px">The rest of this course is still being written${s.course.planned ? `: ${s.total} of ${s.course.planned} skills are ready` : ''}. Reload this page to see new ones.</div>` : ''}
       ${nextCard(s)}
       <p class="small" style="margin-top:12px"><a href="/my-material-test?id=${encodeURIComponent(id)}">Take a practice test</a> on the skills you pick, timed or not.</p>${units}`;
     root.querySelectorAll('[data-skill]').forEach((b) => b.addEventListener('click', () => lesson(b.dataset.skill)));
@@ -145,10 +146,13 @@ App.mount(async () => {
     root.innerHTML = `<h1>${title}</h1><p class="small muted">${mode === 'mastery' ? `Tier ${q.tier} of 3. 75% masters the skill; one question may come from an earlier skill. ` : 'Mixed from the skills that are due. '}No feedback until you finish.</p>
       ${q.questions.map((x, i) => qHtml(x, i, 'q')).join('')}
       <p style="margin-top:12px"><button class="btn btn-primary" id="submit" type="button">Finish</button></p>`;
-    document.getElementById('submit').addEventListener('click', async () => {
+    document.getElementById('submit').addEventListener('click', async (ev) => {
+      const btn = ev.currentTarget;
+      if (btn.disabled) return;
+      btn.disabled = true;
       const answers = {};
       q.questions.forEach((x, i) => { const a = readAnswer(root.querySelector(`[data-q="${x.id}"]`), x, i, 'q'); if (a !== null && a !== '') answers[x.id] = a; });
-      try { result(await App.api.post(`${base}/submit`, { quiz_id: q.quiz_id, answers })); } catch (err) { App.toast(err.message, 'error'); }
+      try { result(await App.api.post(`${base}/submit`, { quiz_id: q.quiz_id, answers })); } catch (err) { btn.disabled = false; App.toast(err.message, 'error'); }
     });
     return null;
   }

@@ -6,6 +6,7 @@
  * Throwaway db, mocked ai.talk: no model is called. Checks which passages are picked, privacy between learners,
  * method-only pages, the character budget, and that the hint-ladder rule is still in the system prompt.
  */
+process.env.TUTOR_FULL = process.env.TUTOR_FULL || '0'; // this test pins the old tutor path, still there behind TUTOR_FULL=0; the full tutor is scripts/tutor-full-test.js
 const os = require('os');
 const path = require('path');
 const fs = require('fs');

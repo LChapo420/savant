@@ -295,6 +295,7 @@ async function ensure({ userId, enrollment, grade, level }) {
       system: 'You write and revise interactive teaching pages. You return only the '
         + 'complete page, with no commentary before or after it.',
       messages: [{ role: 'user', content: prompt }],
+      factSource: base && base.html ? require('./fact-guard').stripHtml(base.html) : '', // eslint-disable-line global-require
     });
 
     // No answer, over budget, or the model off: the learner gets what they would

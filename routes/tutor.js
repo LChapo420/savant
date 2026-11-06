@@ -30,7 +30,7 @@ router.post('/tutor/chat', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
     const lastSaid = [...tutor.cleanHistory(req.body && req.body.messages)].reverse().find((m) => m.role === 'user');
     const crisis = lastSaid ? full.triage(req.user, lastSaid.content) : null;
     if (crisis && crisis.reply) return res.json({ reply: crisis.reply, source: 'safety', kind: crisis.kind });
-    if (full.on()) {
+    if (full.on(req.user)) {
       const last = lastSaid;
       const out = await full.withDeadline(tutor.chat({ user: req.user, messages: req.body && req.body.messages, where }));
       return res.json(out || { ...full.fallback({ user: req.user, page: { path: where === 'home' ? '/dashboard' : '/path' }, message: last ? last.content : '', name: dock.firstName(req.user), why: 'slow' }), source: 'fallback' });
@@ -44,8 +44,8 @@ router.post('/tutor/chat', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
 
 // The dock on every page. The mode (full / method-only / off) comes from the page path, decided here.
 router.get('/tutor/dock', requireAuth, (req, res) => {
-  const mode = dock.modeFor(req.query.path);
-  res.json({ mode, input_mode: tutorMode.get(req.user.id), speech_lang: /^\/spanish/.test(dock.cleanPath(req.query.path)) ? 'es' : 'en', stt: voice.gatewayFor(req.user.id) });
+  const mode = dock.modeFor(req.query.path, { full: full.on(req.user) });
+  res.json({ mode, full: full.on(req.user), input_mode: tutorMode.get(req.user.id), speech_lang: /^\/spanish/.test(dock.cleanPath(req.query.path)) ? 'es' : 'en', stt: voice.gatewayFor(req.user.id) });
 });
 
 // The learner flips the toggle: remembered right away, so the next page opens in the same mode.
@@ -64,7 +64,7 @@ router.post('/tutor/dock', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
     console.warn(`tutor dock: ${err.message}`);
     const mode = dock.modeFor(body.page && body.page.path);
     // With TUTOR_FULL on, a failure is still a useful answer (the product, this page, the learner's own record), never a dead end.
-    if (full.on()) {
+    if (full.on(req.user)) {
       const last = [...tutor.cleanHistory(body.messages)].reverse().find((m) => m.role === 'user');
       return res.json({ ...full.fallback({ user: req.user, page: body.page, message: last ? last.content : '', mode, name: dock.firstName(req.user) }), source: 'fallback', mode });
     }

@@ -6,12 +6,18 @@
 (function () {
   const api = {
     async request(method, path, body) {
-      const res = await fetch(path, {
-        method,
-        headers: body ? { 'Content-Type': 'application/json' } : undefined,
-        body: body ? JSON.stringify(body) : undefined,
-        credentials: 'same-origin',
-      });
+      let res;
+      try {
+        res = await fetch(path, {
+          method,
+          headers: body ? { 'Content-Type': 'application/json' } : undefined,
+          body: body ? JSON.stringify(body) : undefined,
+          credentials: 'same-origin',
+        });
+      } catch {
+        // The browser's own words here are "Failed to fetch", shown as they are on every page that prints err.message.
+        throw new Error('No connection. Check your internet and try again.');
+      }
       let payload = null;
       try { payload = await res.json(); } catch { payload = null; }
       if (!res.ok) {

@@ -149,8 +149,13 @@ function instant(q, { name, brief } = {}) {
 }
 
 /** Prompt lines about the product for this question and page. */
+/** A compact sheet of every feature (the product is called Savant), so any answer about the app is grounded and never guessed. */
+function sheet() {
+  return `The app is called Savant. Its pages: ${FEATURES.map((f) => `${f.title} (${f.path})`).join('; ')}.`;
+}
+
 function lines(q, path) {
-  const out = [];
+  const out = [sheet()];
   const pg = pageInfo(path);
   if (pg) out.push(`This page is ${pg.name}${pg.graded ? ' (a graded or retrieval sitting)' : ''}.`);
   for (const { f } of match(q).slice(0, 2)) out.push(`${f.title} (${f.path}): ${f.steps}`);
@@ -175,4 +180,4 @@ function stuckAdvice(path) {
   return pg ? pg.stuck : 'Tell me what you are trying to do and I will say where it is.';
 }
 
-module.exports = { FEATURES, PAGES, match, instant, lines, stuckLines, stuckAdvice, pageInfo, clip };
+module.exports = { sheet, FEATURES, PAGES, match, instant, lines, stuckLines, stuckAdvice, pageInfo, clip };
