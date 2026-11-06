@@ -215,19 +215,49 @@ async function changeBlock(userId, { plan, ref }, change, topic = null, { llm = 
   const useTopic = change === 'topic' ? cleanTopic(topic) : (row && row.topic) || null;
   const spec = specOf(userId, null);
   const context = `Lesson topic: ${plan.topic || ''}`;
-  // Each string of the block is one rewrite, so its shape (a card's title and body, a list of steps) stays what the renderer reads. Only the longest strings carry an example or a topic.
+  // One write for the whole block, one string for one string, so its shape (a card's title and body, a list of steps) stays what the renderer reads. An example or a topic goes on the longest string only;
+  // a string that fails its own check stays as stored; the gate reads the block as a whole.
   const longest = parts.reduce((a, b) => (b.text.length > a.text.length ? b : a));
+  const started = Date.now();
+  const call = llm || defaultLlm(userId);
+  const check = gate || defaultGate(userId);
+  const original = parts.map((p) => p.text).join('\n');
   let data = block.data;
   let done = 0;
   let problems = [];
-  for (const p of parts) {
-    const here = p === longest ? asked : asked.filter((a) => a !== 'examples');
-    if (!here.length || (p !== longest && here.every((a) => a === 'topic'))) continue;
-    // eslint-disable-next-line no-await-in-loop
-    const r = await rewrite({ original: p.text, context, asked: here, topic: p === longest ? useTopic : null, spec, llm: llm || defaultLlm(userId), gate: gate || defaultGate(userId), fallbackTopic: prefs.topic });
-    if (r.text) { data = put(data, p.path, r.text); done += 1; } else if (!r.noop) problems = r.problems;
+  for (let attempt = 0; attempt < 2 && (attempt === 0 || Date.now() - started < BUDGET_MS); attempt += 1) {
+    let list = null;
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      const r = await call({ system: `You rewrite the pieces of one lesson block because the learner asked you to. Rewrite each numbered piece on its own, keeping every fact, number and term it has.${asked.includes('examples') ? '' : ' Add no new fact, rule, definition or tip.'} Never mention the learner. Plain text, no markdown. Return JSON {"pieces": ["..."]} with exactly one string per numbered piece, in order.`, user: `${context}\n\nPieces:\n${parts.map((p, i) => `${i + 1}.${p === longest ? ' (the longest)' : ''} ${p.text}`).join('\n')}\n\nWhat the learner asked for:\n${rulesOf(asked, useTopic, prefs.topic).map((x, i) => `${i + 1}. ${x}${/example|comparison/i.test(x) ? ' Put this in the longest piece only.' : ''}`).join('\n')}${problems.length ? `\n\nYour last draft had problems; fix them:\n${problems.map((p) => `- ${p}`).join('\n')}` : ''}`, schema: { type: 'object', properties: { pieces: { type: 'array', items: { type: 'string' } } }, required: ['pieces'] }, schemaName: 'submit', maxTokens: 3000 });
+      list = r && Array.isArray(r.pieces) ? r.pieces : null;
+    } catch { list = null; }
+    data = block.data;
+    done = 0;
+    const out = [];
+    parts.forEach((p, i) => {
+      const got = String((list && list[i]) || '').trim();
+      const here = p === longest ? asked : asked.filter((a) => a !== 'examples' && a !== 'topic');
+      const ok = got && got !== p.text && !mechanical(p.text, got, here.filter((a) => a === 'examples' || a === 'simpler'), null).length;
+      data = put(data, p.path, ok ? got : p.text);
+      out.push(ok ? got : p.text);
+      if (ok) done += 1;
+    });
+    problems = done ? [] : ['empty'];
+    const whole = out.join('\n');
+    if (done && asked.includes('shorter') && !asked.includes('examples') && words(whole).length > 0.95 * words(original).length) problems = ['it is not shorter than the original: cut more'];
+    if (done && !problems.length) {
+      // eslint-disable-next-line no-await-in-loop
+      const v = await check({ original, text: whole, withExample: asked.includes('examples'), spec, context });
+      if (!v) problems = ['the fact check could not be read'];
+      else if (!v.ok) problems = v.problems;
+    }
+    if (!problems.length) break;
   }
-  if (!done) return { data: row ? row.data : block.data, changed: false, message: problems.length ? REFUSED : NOOP, prefs };
+  if (problems.length) {
+    if (String(process.env.PART_CHANGE_LOG || '') === '1') console.warn(`part-change block refused: ${JSON.stringify(problems).slice(0, 300)}`);
+    return { data: row ? row.data : block.data, changed: false, message: problems.some((p) => /not shorter/.test(p)) ? NOOP : REFUSED, prefs };
+  }
   const fields = { user_id: userId, plan_id: plan.id, ref: block.index, source_hash: hashOf(block.data), data, asked, topic: useTopic, at: new Date().toISOString() };
   if (row) db.update(COLLECTION, row.id, fields); else db.insert(COLLECTION, fields);
   return { data, changed: true, prefs };

@@ -16,12 +16,14 @@
     row.innerHTML = `
       <span class="tiny muted">Change this:</span>
       ${CHOICES.map(([k, label]) => `<button class="btn btn-sm" type="button" data-change="${k}">${label}</button>`).join('')}
-      <button class="btn btn-sm" type="button" data-revert hidden>Put back</button>
+      <button class="btn btn-sm" type="button" data-revert style="display:none">Put back</button>
       <span class="tiny muted" data-note aria-live="polite" style="flex-basis:100%"></span>`;
     slot.appendChild(row);
     const note = row.querySelector('[data-note]');
     const revert = row.querySelector('[data-revert]');
-    revert.hidden = !changed;
+    // The page's buttons set their own display, so the hidden attribute does not hide them.
+    const showRevert = (on) => { revert.style.display = on ? '' : 'none'; };
+    showRevert(changed);
     const busy = (b) => row.querySelectorAll('button').forEach((x) => { x.disabled = b; });
     const send = async (url, body, done) => {
       busy(true);
@@ -30,7 +32,7 @@
         const r = await App.api.post(url, { ...ref, ...body });
         onResult(r);
         note.textContent = r.message || done(r);
-        revert.hidden = !r.changed && !revert.dataset.kept;
+        showRevert(r.changed || !!revert.dataset.kept);
         if (r.changed) revert.dataset.kept = '1';
       } catch (err) { note.textContent = err.message || 'That did not work. The text is unchanged.'; }
       busy(false);

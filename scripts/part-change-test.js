@@ -24,7 +24,7 @@ const check = (label, cond, detail) => {
   if (cond) console.log(`  ok   ${label}`);
   else { failures += 1; console.log(`  FAIL ${label}${detail !== undefined ? ` ${JSON.stringify(detail).slice(0, 300)}` : ''}`); }
 };
-const say = (text) => async () => ({ text });
+const say = (text) => async () => ({ text, pieces: [text] });
 const passes = async () => ({ ok: true, problems: [] });
 const user = db.insert('users', { email: 'pc@example.test', display_name: 'pc', password_hash: 'x', xp: 0, streak: 0, onboarded: true });
 const RAT = 'Count all the unit cubes in the prism, layer by layer, and then multiply: 3 × 2 × 4 = 24 cubic units, which is the volume of the whole prism.';

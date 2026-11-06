@@ -507,7 +507,7 @@
     // Colour on the first words only; the answer is said in the same line.
     const answerText = result.answer == null ? '' : String(result.answer);
     box.innerHTML = `
-      <h4 tabindex="-1"><span class="verdict-word">${App.escapeHtml((result.voice && (correct ? result.voice.right : result.voice.wrong)) || (correct ? 'Right.' : 'Not quite.'))}</span>${correct || !answerText ? '' : ` The answer is <strong>${App.escapeHtml(answerText)}</strong>.`}</h4>
+      <h4 tabindex="-1"><span class="verdict-word">${App.escapeHtml((result.voice && (correct ? result.voice.right : result.voice.wrong)) || (correct ? 'Right.' : 'Not quite.'))}</span>${correct || !answerText ? '' : ` The answer is <strong>${App.escapeHtml(answerText)}</strong>${/[.!?]$/.test(answerText) ? '' : '.'}`}</h4>
       ${result.feedback ? `<div class="small" style="margin-bottom:6px">${App.escapeHtml(result.feedback)}</div>` : ''}
       <div class="rationale">${App.escapeHtml(result.rationale || '')}</div>
       <div data-slot="part-change"></div>

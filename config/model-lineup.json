@@ -1094,6 +1094,11 @@
         ],
         "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },
+      "part_modify": {
+        "allow": ["gonka:deepseek-ai/DeepSeek-V4-Flash-0731", "zerogpu:z-ai/glm-5.3-flash", "coral:deepseek-v4.1-flash", "munito:deepseek-ai/deepseek-v4.1-flash-1017"],
+        "timeout_ms": 30000,
+        "basis": "Rewrites of one stored text for one learner (services/part-modify.js, part-change.js): cheap writers on prepaid credit, each draft held to the gate; the models the proofs used (docs/part-modify)."
+      },
       "part_gate_a": {
         "allow": ["grokified:grok-4.3", "grokified:grok-4.7"],
         "timeout_ms": 30000,
