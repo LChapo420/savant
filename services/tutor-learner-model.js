@@ -208,6 +208,16 @@ function goalItems(userId, facts, now, intent) {
     const soon = g.days_left !== null && g.days_left <= 60;
     out.push({ text: `${where}: ${g.label}${when}${g.text ? ` (their words: "${clip(g.text, 80)}")` : ''}`, score: (soon ? 2.6 : 1.3) * (intent === 'plan' ? 1.5 : 1), short: g.label });
   }
+  // How long they want to remember each subject or course (services/retention-goal.js): a test date or a horizon changes what a reply stresses.
+  const rgs = String(process.env.TUTOR_GOAL || 'on').toLowerCase() === 'off' ? null : safe(() => require('./retention-goal').listFor(userId, now), null); // eslint-disable-line global-require
+  for (const x of rgs ? [...rgs.enrollments, ...rgs.materials] : []) {
+    const g = x.goal || {};
+    if (g.status !== 'date' && g.status !== 'horizon' && !g.horizon) continue;
+    if (g.status === 'forever' || g.is_default) continue;
+    const close = g.status === 'date' && g.days_left !== null && g.days_left <= 21;
+    const clause = g.status === 'date' ? `a test on ${g.test_date} (${g.days_left} days)` : `remembering it for ${({ months: 'a few months', year: 'a year', years: 'years' })[g.horizon] || g.horizon}`;
+    out.push({ text: `${x.title}: wants ${clause}${close ? ': stress what the test asks for and the shortest way to recall it' : ': long-term recall matters more than speed'}`, score: close ? 2.8 : 1.4, short: 'memory goal' });
+  }
   const act = safe(() => require('./act-scores').summary(userId, now), null); // eslint-disable-line global-require
   if (act && act.profile && act.profile.test_date) {
     out.push({ text: `ACT test date ${act.profile.test_date}${act.days_to_test !== null && act.days_to_test !== undefined ? ` (${act.days_to_test} days)` : ''}${act.profile.target ? `, target ${act.profile.target}` : ''}${act.latest_composite !== null && act.latest_composite !== undefined ? `, latest composite ${act.latest_composite}` : ''}`, score: 2.4 * (intent === 'plan' ? 1.5 : 1), short: 'ACT' });

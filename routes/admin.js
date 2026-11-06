@@ -279,6 +279,15 @@ router.get('/beta-report', (req, res) => {
   res.json(report);
 });
 
+/**
+ * The speed proof (services/speed-proof.js, docs/SPEED-PROOF.md): per learner and by age group, how much faster Savant is than the plain way
+ * and the retention difference, with intervals, sample sizes, medians, the worst 10%, and a plain statement of whether 4x has been shown.
+ * Real learners only (owner, 6689, admins, tests excluded). Admin only.
+ */
+router.get('/speed-proof', (req, res) => {
+  res.json(require('../services/speed-proof').report()); // eslint-disable-line global-require
+});
+
 router.get('/metrics.csv', (req, res) => {
   const table = typeof req.query.table === 'string' ? req.query.table : 'daily';
   if (!realMetrics.TABLES.includes(table)) return res.status(400).json({ error: `table must be one of ${realMetrics.TABLES.join(', ')}` });

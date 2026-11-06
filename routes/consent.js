@@ -416,6 +416,7 @@ const KNOWN_COLLECTIONS = [
   'footprint_events',
   'act_guests', 'recruit_counts', // no account behind them (services/act-check.js): a token hash and per-day totals; guests are deleted after 30 days
   'recruit_applicants', // 13+ applicants only; user_id is set when one signs up, so account deletion reaches it
+  'speed_proof', 'speed_proof_blocks', // the speed proof's rows and draw blocks, per learner (services/speed-proof.js)
   'beta_blocks', // arm slots only, no learner id (services/beta-arm.js); a child's own arm is on the user row and goes with it
 ];
 function collectionNames() {

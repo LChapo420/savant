@@ -4,6 +4,7 @@
  * per-item coach, the post-answer explainer, and the bad-item report.
  */
 const express = require('express');
+const partModify = require('../services/part-modify');
 const db = require('../config/db');
 const curriculum = require('../config/curriculum');
 const sessions = require('../services/sessions');
@@ -41,6 +42,7 @@ const writeAhead = require('../services/write-ahead');
 const esPath = require('../services/spanish/path');
 
 const router = express.Router();
+router.use('/items/:id', require('../services/speed-proof').itemContext); // a plain-way skill (speed proof): no coach or tutor box, standard explanation
 
 /** Write ahead for this enrollment as it now stands (fire-and-forget; nothing when WRITE_AHEAD=off). */
 function aheadFor(user, enrollmentId, reason) {
@@ -128,7 +130,7 @@ function heldReview(session, items) {
       skipped: !!it.skipped,
       correct: it.skipped ? null : !!it.correct,
       answer: it.answer,
-      rationale: it.rationale || '',
+      rationale: partModify.rationaleOf(it) || '',
       feedback: it.ai_feedback || null,
       error_tag: it.error_tag || null,
     }));
@@ -142,6 +144,7 @@ function heldReview(session, items) {
  */
 function itemForPage(session, item) {
   const shown = sessions.sanitize(item);
+  if (shown.correct === null && item.user_id) partModify.prepareItems(item.user_id, [item]); // background: this learner's wording of the feedback, ready by the time they answer
   if (shown.correct === null) return shown;
   const revealsAlways = item.role === 'retention' || item.role === 'drill';
   const exam = curriculum.isCheckpoint(session.kind) || session.kind === 'skip';
@@ -742,7 +745,7 @@ router.post('/sessions/:id/finish', requireAuth, async (req, res) => {
       format: 'short_answer',
       prompt: q.prompt,
       answer: q.answer,
-      rationale: q.why || 'Recalling it now is what moves it into next week.',
+      rationale: q.why || partModify.REVIEW_DEFAULT,
       source: 'ai',
       level: (outcome.retentionPlan[i] || {}).level || session.end_level || session.level,
     }));
@@ -882,9 +885,9 @@ router.post('/items/:id/coach', requireAuth, limit('coach', 120, 60 * 60 * 1000)
   // a coach that names the answer is not a coach. Fall back to a prompt that
   // asks rather than tells, and use the authored hint only if it stays quiet
   // about the answer too.
-  const hintIsSafe = item.hint && !grading.normalize(item.hint).includes(grading.normalize(item.answer));
+  const hintIsSafe = partModify.hintOf(item) && !grading.normalize(partModify.hintOf(item)).includes(grading.normalize(item.answer));
   const nudge = hintIsSafe
-    ? item.hint
+    ? partModify.hintOf(item)
     : item.format === 'multiple_choice'
       ? 'Read what the question is asking for, then take the choices one at a time: which can you rule out, and on what grounds?'
       : 'Say what the question is asking you to produce, then write down the first step you are confident about. What does that step give you?';
@@ -995,9 +998,9 @@ router.post('/items/:id/coach/stream', requireAuth, limit('coach', 120, 60 * 60 
 
   // No provider, no budget, or the stream failed before it started: fall back to
   // the same nudge the non-streaming route uses.
-  const hintIsSafe = item.hint && !grading.normalize(item.hint).includes(grading.normalize(item.answer));
+  const hintIsSafe = partModify.hintOf(item) && !grading.normalize(partModify.hintOf(item)).includes(grading.normalize(item.answer));
   const nudge = hintIsSafe
-    ? item.hint
+    ? partModify.hintOf(item)
     : item.format === 'multiple_choice'
       ? 'Read what the question is asking for, then take the choices one at a time: which can you rule out, and on what grounds?'
       : 'Say what the question is asking you to produce, then write down the first step you are confident about. What does that step give you?';

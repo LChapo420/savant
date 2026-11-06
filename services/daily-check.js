@@ -27,11 +27,12 @@
 const crypto = require('crypto');
 const learner = require('./learner');
 const boosters = require('./boosters');
+const speedProof = require('./speed-proof');
 const scorecard = require('./scorecard');
 const baseline = require('./onboarding/baseline');
 const tasks = require('./onboarding/tasks');
 const { Planner } = require('./onboarding/plan');
-const { byId } = require('./onboarding/pool');
+const { byId, passivePool: PASSIVE_POOL } = require('./onboarding/pool');
 const ipip = require('../content/ipip-items');
 const hooks = () => require('./scorecard/hooks'); // eslint-disable-line global-require
 
@@ -42,7 +43,7 @@ const LATER_SEC = Number(process.env.DAILY_LATER_SEC || 180);
 const IPIP_PER_DAY = 4;
 const IPIP_SEC = 10;
 const KINDS = new Set(['forced', 'reason', 'span', 'speed', 'switch', 'scale']);   // short, repeatable-or-single, no reading passages or mini-lessons
-const REPEAT = new Set(['span', 'speed', 'switch']);                      // generated fresh in the browser each time, so they can come back
+const REPEAT = new Set(['span', 'speed', 'switch', 'passive']);                      // generated fresh in the browser each time, so they can come back
 const MIN_GAIN_PER_MIN = 0.05;
 
 const enabled = () => process.env.SCORECARD_DAILY !== 'off';
@@ -109,7 +110,10 @@ function openRun(userId, now = Date.now(), { importance = importanceOf(userId) }
   planner.queue = [];
   planner.elapsed = 0;
   const pre = [];
-  try { if (boosters.delayed.due(userId, now).due) pre.push({ kind: 'delayed', sec: 30 }); } catch { /* none */ }
+  try {
+    if (boosters.delayed.due(userId, now).due) pre.push({ kind: 'delayed', sec: 30 });
+    else if (speedProof.due(userId, now).due) pre.push({ kind: 'delayed', sec: 30, proof: true }); // the speed proof's 1/7/30-day and chosen-horizon checks (services/speed-proof.js)
+  } catch { /* none */ }
   const left = ipip.ITEMS.filter((i) => !t.d.ipip.includes(i.id));
   if (left.length && !boosters.get(userId).questionnaire) pre.push({ kind: 'ipip', sec: IPIP_SEC * Math.min(IPIP_PER_DAY, left.length), ids: left.slice(0, IPIP_PER_DAY).map((i) => i.id) });
   planner.available = (it) => KINDS.has(it.kind) && !!tasks.present(it, 1);
@@ -143,9 +147,9 @@ function nextStep(user, active, planner) {
   const pre = (active.pre || [])[0];
   if (pre) {
     if (pre.kind === 'delayed') {
-      const v = boosters.delayed.start(user);
+      const v = pre.proof ? speedProof.start(user) : boosters.delayed.start(user);
       if (v.error) { active.pre.shift(); return nextStep(user, active, planner); }
-      active.current = { id: 'delayed', kind: 'delayed', at: Date.now(), check_id: v.check_id, sec: pre.sec };
+      active.current = { id: 'delayed', kind: 'delayed', at: Date.now(), check_id: v.check_id, sec: pre.sec, proof: !!pre.proof };
       return { step: { id: 'delayed', kind: 'delayed', check_id: v.check_id, questions: v.questions }, progress: progressOf(planner, active) };
     }
     active.current = { id: 'ipip', kind: 'ipip', at: Date.now(), ids: pre.ids, sec: pre.sec };
@@ -192,7 +196,7 @@ function answer(user, body, now = Date.now()) {
     active.pre.shift();
     active.extra += cur.sec;
     planner.elapsed += cur.sec;
-    if (!body.skip && cur.kind === 'delayed') boosters.delayed.answer(user, cur.check_id, response.answers || {});
+    if (!body.skip && cur.kind === 'delayed') (cur.proof ? speedProof : boosters.delayed).answer(user, cur.check_id, response.answers || {});
     if (!body.skip && cur.kind === 'ipip') {
       const answers = {};
       for (const id of cur.ids) { const v = Number(response.answers && response.answers[id]); if (v >= 1 && v <= 5) answers[id] = v; }
@@ -228,4 +232,15 @@ function stop(user, now = Date.now()) {
 /** The simulation's way of recording that these questionnaire items were asked (the real flow does it in answer()). */
 const markIpip = (userId, ids) => putDaily(userId, { ipip: [...new Set([...getDaily(userId).ipip, ...ids])] });
 
-module.exports = { markIpip, enabled, offer, skip, start, answer, stop, openRun, closeRun, importanceOf, allowanceFor, getDaily, KINDS, REPEAT, FIRST_DAYS, FIRST_SEC, LATER_SEC, IPIP_PER_DAY };
+/**
+ * The passive (zero-minute) items of one day: a PROBE and a CROSS item per measure they read (docs/SCORECARD-95.md). Off unless DAILY_PASSIVE=1, so every baseline reproduces.
+ * The caller that has the day's reading (a lesson hook comparing the probe items, or the paired-version outcome) turns it into a standardised, sign-adjusted reading
+ * per item and calls planner.record(item, { [stat]: x }, 0). Nothing here invents a reading.
+ */
+function passiveFor(dayIndex) {
+  if (process.env.DAILY_PASSIVE !== '1') return [];
+  const slot = ((Math.floor(dayIndex) % 30) + 30) % 30;
+  return PASSIVE_POOL.filter((it) => it.slot === slot);
+}
+
+module.exports = { passiveFor, markIpip, enabled, offer, skip, start, answer, stop, openRun, closeRun, importanceOf, allowanceFor, getDaily, KINDS, REPEAT, FIRST_DAYS, FIRST_SEC, LATER_SEC, IPIP_PER_DAY };

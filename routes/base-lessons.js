@@ -53,6 +53,7 @@ const { limit } = require('../utils/rate-limit');
 const crypto = require('crypto');
 
 const router = express.Router();
+router.use('/lessons/:track/:grade/:level', require('../services/speed-proof').lessonContext); // a plain-way skill (speed proof): standard page, no assistant
 
 /**
  * The inline scripts each account was served, per level, so the script route

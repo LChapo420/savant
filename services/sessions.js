@@ -20,6 +20,7 @@
  * learners at the same level get different sessions.
  */
 const db = require('../config/db');
+const partModify = require('./part-modify');
 const curriculum = require('../config/curriculum');
 const gradeSkills = require('../config/grade-skills');
 const bank = require('../content/bank');
@@ -705,7 +706,12 @@ async function buildBlock({ userId, session, enrollment, grade, level, blockInde
  * preview of a level ahead neither advances anyone nor marks anything cleared.
  * `preview` on the session row is what keeps the recap honest about it.
  */
-async function createSession({ userId, enrollment, grade, level: atLevel }) {
+function createSession(args) {
+  // eslint-disable-next-line global-require
+  return require('./speed-proof').withSkill(args.userId, args.grade, args.enrollment, args.level, () => createSessionInner(args));
+}
+
+async function createSessionInner({ userId, enrollment, grade, level: atLevel }) {
   // An unfinished sitting on this enrollment is returned as it stands, rather
   // than replaced by a new one.
   //
@@ -1140,7 +1146,7 @@ async function answer({ userId, session, itemId, userAnswer, ms, confidence = nu
       already: true,
       correct: item.correct,
       answer: item.answer,
-      rationale: item.rationale,
+      rationale: partModify.rationaleOf(item),
       errorTag: item.error_tag || null,
     };
   }
@@ -1249,7 +1255,7 @@ function checkingStatus(item) {
     checking: false,
     correct: item.correct,
     answer: item.answer,
-    rationale: item.rationale,
+    rationale: partModify.rationaleOf(item),
     feedback: item.ai_feedback || null,
     errorTag: item.error_tag || null,
     graded_by: item.graded_by || null,
@@ -1320,7 +1326,7 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
   return {
     correct,
     answer: item.answer,
-    rationale: item.rationale,
+    rationale: partModify.rationaleOf(item),
     feedback,
     errorTag,
     // The stop rule (services/efficiency.js, SR_STOP): the rest of this block's focus and support items that would buy least. Advice
