@@ -1,0 +1,3616 @@
+{
+ "built": "2026-11-06",
+ "planted_by": "Lyceum MiniMax M3 (most), xKiro Mistral Large (first 23), human (H*), code (S*); every one read and kept or rejected by a human before any judge ran",
+ "plants": [
+  {
+   "src": "A0",
+   "level": "math/calculus_i/30",
+   "track": "math",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "the average velocity on [1, 1 + h] equals 2 + h. As h shrinks toward 0 that value approaches 2",
+     "wrong": "the average velocity on [1, 1 + h] equals 2 + h. As h grows toward 0 that value approaches 2"
+    }
+   ],
+   "truth": "h shrinks (not grows) toward 0, and the limit is the value the averages approach as h gets smaller.",
+   "id": "p000",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A1",
+   "level": "math/calculus_i/30",
+   "track": "math",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 6,
+     "original": "s(t) = t^2 meters",
+     "wrong": "s(t) = t^3 meters"
+    }
+   ],
+   "truth": "The position function in the lesson is s(t) = t^2, not t^3, so the average velocity formula and limit would differ.",
+   "id": "p001",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A2",
+   "level": "math/calculus_i/30",
+   "track": "math",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "For s(t) = t^2 meters, the average velocity from t = 1 to t = 3 is (s(3) − s(1))/(3 − 1) = (9 − 1)/2 = 4 m/s",
+     "wrong": "For s(t) = t^2 meters, the average velocity from t = 1 to t = 3 is (s(3) + s(1))/(3 − 1) = (9 + 1)/2 = 5 m/s"
+    }
+   ],
+   "truth": "Average velocity is (change in position)/(change in time), so subtraction (not addition) is required in the numerator.",
+   "id": "p002",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A3",
+   "level": "math/calculus_i/10",
+   "track": "math",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 9,
+     "original": "(f(b) - f(a)) / (b - a): change in output divided by change in input.",
+     "wrong": "(f(a) - f(b)) / (b - a): change in output divided by change in input."
+    }
+   ],
+   "truth": "The average rate of change is (f(b) - f(a)) / (b - a), not (f(a) - f(b)) / (b - a), because the order of subtraction matters for the sign of the rate.",
+   "id": "p003",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A4",
+   "level": "math/calculus_i/10",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "From t = 2 s to t = 5 s the car moves 50 - 20 = 30 m in 3 s, so the average speed there is 30/3 = 10 m/s.",
+     "wrong": "From t = 2 s to t = 5 s the car moves 50 - 20 = 30 m in 3 s, so the average speed there is 30/4 = 7.5 m/s."
+    }
+   ],
+   "truth": "The time elapsed from t = 2 s to t = 5 s is 3 seconds, not 4, so the average speed is 30/3 = 10 m/s, not 7.5 m/s.",
+   "id": "p004",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A5",
+   "level": "math/calculus_i/10",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "original": "Change in position = 50 - 32 = 18 m. Change in time = 5 - 3 = 2 s. Average speed = 18/2 = 9 m/s.",
+     "wrong": "Change in position = 50 - 32 = 18 m. Change in time = 5 - 3 = 2 s. Average speed = 16/2 = 8 m/s."
+    }
+   ],
+   "truth": "The change in position from t = 3 s to t = 5 s is 18 m (50 - 32), not 16 m, so the average speed is 9 m/s, not 8 m/s.",
+   "id": "p005",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A6",
+   "level": "math/calculus_i/18",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "check",
+     "index": 2,
+     "original": "160 - 40 = 120 m",
+     "wrong": "160 - 40 = 100 m"
+    }
+   ],
+   "truth": "The change in position is 120 m (160 - 40), not 100 m, so the average speed is 4 m/s, not 10/3 m/s.",
+   "id": "p006",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A7",
+   "level": "math/calculus_i/20",
+   "track": "math",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "Its sign says whether the net change was an increase, a decrease, or nothing at all.",
+     "wrong": "Its sign is always positive for any function."
+    }
+   ],
+   "truth": "The sign of the average rate of change can be positive, negative, or zero, depending on whether the net change is an increase, decrease, or no change.",
+   "id": "p007",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A8",
+   "level": "math/calculus_i/19",
+   "track": "math",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "The area is a triangle: 1/2 x base x height = 1/2 x 4 s x 8 m/s = 16 m.",
+     "wrong": "The area is a triangle: base x height = 4 s x 8 m/s = 32 m."
+    }
+   ],
+   "truth": "The area of a triangle is 1/2 x base x height; omitting the 1/2 overstates the distance traveled.",
+   "id": "p008",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A9",
+   "level": "math/calculus_i/19",
+   "track": "math",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 5,
+     "original": "The rate at a single instant is the value that average rates approach as the interval shrinks toward an instant; the total accumulated change is the area under the rate curve.",
+     "wrong": "The total accumulated change is the value that average rates approach as the interval shrinks toward an instant; the rate at a single instant is the area under the rate curve."
+    }
+   ],
+   "truth": "The rate at an instant is the limit of average rates, and the total accumulation is the area under the rate curve; the edited version reverses these relationships.",
+   "id": "p009",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A12",
+   "level": "math/numbers_to_20_and_teen_numbers/20",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "A ten-frame holds exactly ten objects, one in each slot.",
+     "wrong": "A ten-frame holds exactly twelve objects, one in each slot."
+    },
+    {
+     "word": "check",
+     "index": 0,
+     "original": "A ten‑frame has ten slots, one for each object.",
+     "wrong": "A ten‑frame has twelve slots, one for each object."
+    }
+   ],
+   "truth": "A ten-frame holds exactly ten objects, not twelve.",
+   "id": "p010",
+   "split": "dev",
+   "consistent": true
+  },
+  {
+   "src": "A14",
+   "level": "math/calculus_i/29",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "f(1) = 1 - 3 = -2 and f(4) = 16 - 12 = 4. Then (f(4) - f(1)) / (4 - 1) = (4 - (-2)) / 3 = 6 / 3 = 2",
+     "wrong": "f(1) = 1 - 3 = -2 and f(4) = 16 - 12 = 4. Then (f(4) - f(1)) / (4 - 1) = (4 - (-2)) / 3 = 6 / 3 = 3"
+    }
+   ],
+   "truth": "The correct average rate of change for f(x) = x^2 - 3x from x = 1 to x = 4 is 2, not 3.",
+   "id": "p011",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A15",
+   "level": "math/algebra_1_part_a/465",
+   "track": "math",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "a^(m/n) is the nth root of a raised to the m.",
+     "wrong": "a^(m/n) is the mth root of a raised to the n."
+    }
+   ],
+   "truth": "The denominator of the exponent defines the root, and the numerator defines the power, so a^(m/n) is the nth root of a raised to the m, not the other way around.",
+   "id": "p012",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A17",
+   "level": "math/algebra_1_part_a/465",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "original": "sqrt(4) = 2, which is rational.",
+     "wrong": "sqrt(4) = 1.414, which is rational."
+    }
+   ],
+   "truth": "The square root of 4 is 2, not 1.414 (which is approximately sqrt(2)), and 2 is rational.",
+   "id": "p013",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A18",
+   "level": "math/algebra_1_part_a/423",
+   "track": "math",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "The region shaded by all inequalities at once",
+     "wrong": "The region shaded by any of the inequalities"
+    }
+   ],
+   "truth": "The solution is the overlap (intersection) of all half-planes, not the union.",
+   "id": "p014",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A19",
+   "level": "math/algebra_1_part_a/423",
+   "track": "math",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 8,
+     "original": "y > mx + b shades above and y < mx + b shades below",
+     "wrong": "y > mx + b shades below and y < mx + b shades above"
+    }
+   ],
+   "truth": "For y isolated with a positive coefficient, > shades above the line and < shades below.",
+   "id": "p015",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A22",
+   "level": "math/algebra_1_part_a/52",
+   "track": "math",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "a(b + c) = ab + ac",
+     "wrong": "a(b + c) = ab + 2ac"
+    }
+   ],
+   "truth": "The Distributive Property states a(b + c) = ab + ac, not ab + 2ac, which would incorrectly double the second term.",
+   "id": "p016",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A24",
+   "level": "math/algebra_1_part_a/254",
+   "track": "math",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Negating a number means changing its sign: the negative of 3/2 is -3/2.",
+     "wrong": "Negating a number means changing its sign: the negative of 3/2 is 3/2."
+    }
+   ],
+   "truth": "Negating 3/2 gives -3/2, not 3/2; the edited prerequisite states the opposite of the rule it is meant to teach.",
+   "id": "p017",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A25",
+   "level": "math/algebra_1_part_a/254",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "original": "y = 3/2 x - 8, and 3/2(6) - 8 = 1, so the point (6, 1) checks out.",
+     "wrong": "y = 3/2 x - 8, and 3/2(6) - 8 = 9, so the point (6, 1) checks out."
+    }
+   ],
+   "truth": "3/2(6) - 8 = 9 - 8 = 1, not 9; the edited verification arithmetic is wrong even though the equation itself is correct.",
+   "id": "p018",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A26",
+   "level": "math/algebra_1_part_a/137",
+   "track": "math",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "A number is a solution if it makes either inequality true. It counts even if it makes both true.",
+     "wrong": "A number is a solution only if it makes exactly one inequality true. It does not count if it makes both true."
+    }
+   ],
+   "truth": "An 'or' compound inequality is satisfied when at least one part is true, including when both are true; the lesson's original statement is correct and the edit reverses the rule.",
+   "id": "p019",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A27",
+   "level": "math/algebra_1_part_a/137",
+   "track": "math",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 7,
+     "original": "-3x > 6 becomes x < -2.",
+     "wrong": "-3x > 6 becomes x > -2."
+    }
+   ],
+   "truth": "Dividing -3x > 6 by the negative -3 flips the inequality sign, giving x < -2; the edit keeps the sign unflipped, which is the classic error the lesson warns about.",
+   "id": "p020",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A28",
+   "level": "math/algebra_1_part_a/137",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "x - (-4) < 1 becomes x + 4 < 1, then x < -3. The sign stays <.",
+     "wrong": "x - (-4) < 1 becomes x + 4 < 1, then x < 3. The sign stays <."
+    }
+   ],
+   "truth": "Subtracting -4 adds 4, giving x + 4 < 1, and then subtracting 4 gives x < -3, not x < 3; the edit drops the sign when moving the constant.",
+   "id": "p021",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A29",
+   "level": "math/algebra_1_part_a/10",
+   "track": "math",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 7,
+     "original": "Terms are separated by + or - signs, and each sign stays with its term.",
+     "wrong": "Terms are separated by + or - signs, and each sign stays with the term before it."
+    }
+   ],
+   "truth": "A sign written between two terms belongs to the term that follows it, not the term before it, so the mnemonic expansion now states the rule backwards.",
+   "id": "p022",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A30",
+   "level": "math/algebra_1_part_a/10",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "original": "The term -2y has factors -2 and y, so its coefficient is -2.",
+     "wrong": "The term -2y has factors 2 and y, so its coefficient is 2."
+    },
+    {
+     "word": "block",
+     "index": 4,
+     "original": "4y^3 - 2y + 9 has three terms: 4y^3 with coefficient 4, -2y with coefficient -2, and the constant 9.",
+     "wrong": "4y^3 - 2y + 9 has three terms: 4y^3 with coefficient 4, -2y with coefficient 2, and the constant 9."
+    }
+   ],
+   "truth": "The minus sign in -2y travels with the term, so its coefficient is -2, not 2; the worked example now drops the sign and its summary sentence repeats the error.",
+   "id": "p023",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "A31",
+   "level": "math/algebra_1_part_a/10",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "original": "The terms are 4y^3, -2y, and 9. There are three terms.",
+     "wrong": "The terms are 4y^3, -2y, and 9. There are two terms."
+    }
+   ],
+   "truth": "The expression 4y^3 - 2y + 9 has three terms, so the stated count of two is wrong.",
+   "id": "p024",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A32",
+   "level": "math/algebra_1_part_a/179",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "f(2) = -(2)^2 + 4(2) = -4 + 8 = 4, so the maximum value of f is 4.",
+     "wrong": "f(2) = -(2)^2 + 4(2) = -4 + 8 = 2, so the maximum value of f is 2."
+    }
+   ],
+   "truth": "For f(x) = -x^2 + 4x, f(2) = -4 + 8 = 4, so the maximum value is 4, not 2; the edited arithmetic and conclusion are wrong.",
+   "id": "p025",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A33",
+   "level": "math/algebra_1_part_a/296",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "For a tank filling for 12 minutes at 4 gallons per minute: domain 0 <= x <= 12, range 0 <= y <= 48.",
+     "wrong": "For a tank filling for 12 minutes at 4 gallons per minute: domain 0 <= x <= 12, range 0 <= y <= 24."
+    }
+   ],
+   "truth": "12 minutes at 4 gallons per minute gives 48 gallons, so the range should be 0 <= y <= 48, not 0 <= y <= 24.",
+   "id": "p026",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A34",
+   "level": "math/algebra_1_part_a/380",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "(2x + 3y) + (5x - 3y) = 12 + 9 gives 7x = 21.",
+     "wrong": "(2x + 3y) + (5x - 3y) = 12 + 9 gives 7x = 22."
+    },
+    {
+     "word": "block",
+     "index": 3,
+     "original": "x = 3, so 2(3) + 3y = 12 gives 3y = 6 and y = 2.",
+     "wrong": "x = 22/7, so 2(22/7) + 3y = 12 gives 3y = 58/7 and y = 58/21."
+    }
+   ],
+   "truth": "Adding 2x + 3y = 12 and 5x - 3y = 9 gives 7x = 21, so x = 3 and y = 2; the edited steps wrongly add the constants to 22 and then back-substitute the wrong x.",
+   "id": "p027",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "A35",
+   "level": "math/algebra_1_part_a/380",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 6,
+     "original": "Multiply 2x + y = 11 by 2 to get 4x + 2y = 22. Add it to 3x - 2y = 6: the y-terms cancel and 7x = 28, so x = 4. Then 2(4) + y = 11 gives y = 3. Check in the second equation: 3(4) - 2(3) = 12 - 6 = 6. The solution is (4, 3).",
+     "wrong": "Multiply 2x + y = 11 by 2 to get 4x + 2y = 22. Add it to 3x - 2y = 6: the y-terms cancel and 7x = 28, so x = 4. Then 2(4) + y = 11 gives y = 3. Check in the second equation: 3(4) - 2(3) = 12 - 6 = 6. The solution is (4, 2)."
+    }
+   ],
+   "truth": "The system's solution is (4, 3): 2(4) + 3 = 11 and 3(4) - 2(3) = 6, so the worked example's final ordered pair was changed to a value that does not satisfy the equations.",
+   "id": "p028",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A36",
+   "level": "math/algebra_1_part_a/380",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "8x = 24, so x = 3. Then 3(3) + 2y = 16 gives y = 3.5.",
+     "wrong": "8x = 24, so x = 3. Then 3(3) + 2y = 16 gives y = 2.5."
+    }
+   ],
+   "truth": "With x = 3, 3(3) + 2y = 16 gives 2y = 7, so y = 3.5; the edited value 2.5 does not satisfy 3x + 2y = 16.",
+   "id": "p029",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A37",
+   "level": "piano/piano_keyboard_explorer/32",
+   "track": "piano",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 5,
+     "original": "your thumb is finger number 1",
+     "wrong": "your thumb is finger number 5"
+    }
+   ],
+   "truth": "The thumb is finger 1 in standard piano fingering; calling it finger 5 is wrong.",
+   "id": "p030",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A38",
+   "level": "piano/piano_keyboard_explorer/32",
+   "track": "piano",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Find the two-group, then slide up to the three-group, just above the middle of the keyboard.",
+     "wrong": "Find the three-group, then slide up to the two-group, just above the middle of the keyboard."
+    }
+   ],
+   "truth": "On the keyboard the group of two (C#4, D#4) comes first, then the group of three (F#4, G#4, A#4) above it; the lesson's order is correct and the edit reverses it.",
+   "id": "p031",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A39",
+   "level": "basketball/basketball_junior_club_player/706",
+   "track": "basketball",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "original": "The cue is d2, the corner shooter's defender, stepping up to stop your drive.",
+     "wrong": "The cue is d3, the corner shooter's defender, stepping up to stop your drive."
+    }
+   ],
+   "truth": "In the play, d2 is the defender who steps up to stop o1's drive and leaves the right corner open; d3 stays home, so calling it d3 is wrong.",
+   "id": "p032",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A40",
+   "level": "basketball/basketball_junior_club_player/706",
+   "track": "basketball",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Eyes up: you can only see the helper step if you look up at the defence, not down at the ball.",
+     "wrong": "Eyes up: you can only see the helper step if you look down at the ball, not up at the defence."
+    }
+   ],
+   "truth": "Looking up at the defence is what lets you see the helper step up; looking down at the ball hides the help, so the original statement is correct and the edit reverses it.",
+   "id": "p033",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A42",
+   "level": "chess/chess_board_explorer/42",
+   "track": "chess",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "Rd4-d8 rolls up the file, four squares, in one move.",
+     "wrong": "Rd4-d8 rolls up the file, five squares, in one move."
+    }
+   ],
+   "truth": "From d4 to d8 the rook travels four squares (d5, d6, d7, d8), not five.",
+   "id": "p034",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A43",
+   "level": "chess/chess_board_explorer/42",
+   "track": "chess",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "Stop ON the first enemy piece in its path and take it.",
+     "wrong": "Stop just BEFORE the first enemy piece in its path and take it."
+    }
+   ],
+   "truth": "A rook capturing lands ON the square of the first enemy piece it meets; stopping before it would not be a capture.",
+   "id": "p035",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A44",
+   "level": "math/algebra_1_part_a/338",
+   "track": "math",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "The symbol a stands for a positive number here. If a is negative, the rule needs a separate look, which comes later in this lesson.",
+     "wrong": "The symbol a stands for a positive number here, so the rule always applies."
+    }
+   ],
+   "truth": "The rule |x| < a only gives -a < x < a when a is positive; for negative a the solution set is empty (|x| < -3 has no solution), so the condition cannot be dropped.",
+   "id": "p036",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A45",
+   "level": "math/algebra_1_part_a/338",
+   "track": "math",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "A less-than symbol (or less-than-or-equal) means BETWEEN, so you build an AND chain. A greater-than symbol means OUTSIDE, so you build two rays joined by OR.",
+     "wrong": "A less-than symbol (or less-than-or-equal) means OUTSIDE, so you build two rays joined by OR. A greater-than symbol means BETWEEN, so you build an AND chain."
+    }
+   ],
+   "truth": "The direction is reversed: a less-than symbol means the solution lies between the endpoints (AND chain), while a greater-than symbol means the solution lies outside them (OR pair).",
+   "id": "p037",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A46",
+   "level": "math/algebra_1_part_a/338",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 7,
+     "original": "Suppose a quality standard allows the actual amount x in a 500 mg tablet to differ from 500 mg by at most 5 mg, or the tablet is rejected.",
+     "wrong": "Suppose a quality standard allows the actual amount x in a 500 mg tablet to differ from 500 mg by at most 50 mg, or the tablet is rejected."
+    }
+   ],
+   "truth": "The tolerance in the example is 5 mg, giving the window 495 mg to 505 mg; changing it to 50 mg contradicts the stated window and the metric of a 10 mg width.",
+   "id": "p038",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A47",
+   "level": "english/proficient/124",
+   "track": "english",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "‘phil’ (love) + ‘anthropy’ (humanity) = philanthropy.",
+     "wrong": "‘phil’ (humanity) + ‘anthropy’ (love) = philanthropy."
+    },
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Philanthropy is love of humanity.",
+     "wrong": "Philanthropy is the love of books."
+    }
+   ],
+   "truth": "The Greek root 'phil' means love and 'anthropy' means humanity, so philanthropy means love of humanity; the swapped glosses are wrong.",
+   "id": "p039",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "A48",
+   "level": "english/proficient/124",
+   "track": "english",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "A periodic sentence holds the main clause until the end.",
+     "wrong": "A periodic sentence reveals the main clause at the start and holds the subordinate clause until the end."
+    },
+    {
+     "word": "block",
+     "index": 3,
+     "original": "The periodic sentence delays the main clause until the end, creating suspense.",
+     "wrong": "The periodic sentence reveals the main clause at the start and delays the subordinate clause until the end, creating suspense."
+    }
+   ],
+   "truth": "A periodic sentence postpones the main clause until the end (building suspense); the edited text reverses this, describing a loose/fronted structure instead.",
+   "id": "p040",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "A49",
+   "level": "english/proficient/124",
+   "track": "english",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "‘biblio’ (book) + ‘graphy’ (writing) = bibliography.",
+     "wrong": "‘biblio’ (writing) + ‘graphy’ (book) = bibliography."
+    },
+    {
+     "word": "block",
+     "index": 1,
+     "original": "A bibliography is a list of books.",
+     "wrong": "A bibliography is a list of writings."
+    }
+   ],
+   "truth": "'biblio' means book and 'graphy' means writing; the edited glosses reverse the morpheme meanings, so the worked example no longer shows how the word is built.",
+   "id": "p041",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "A50",
+   "level": "english/proficient/39",
+   "track": "english",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Fronting puts the moved phrase FIRST; the point saved for last is the periodic pattern.",
+     "wrong": "Fronting puts the moved phrase LAST; the point saved for last is the periodic pattern."
+    },
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Fronting means moving a word or phrase to the start of the sentence to spotlight it.",
+     "wrong": "Fronting means moving a word or phrase to the end of the sentence to spotlight it."
+    }
+   ],
+   "truth": "Fronting moves a word or phrase to the START of the sentence to spotlight it; saving the point for the end is periodic order, so the edited feedback reverses the direction of the rule.",
+   "id": "p042",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "A51",
+   "level": "english/proficient/125",
+   "track": "english",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 7,
+     "original": "The root 'enorm-' suggests size, but in literary usage enormity has shifted to mean 'extreme wickedness'; context ('crime shocked the town') signals a moral judgment, not physical size.",
+     "wrong": "The root 'enorm-' suggests size, but in literary usage enormity always means 'extreme wickedness'; context ('crime shocked the town') signals a moral judgment, not physical size."
+    }
+   ],
+   "truth": "Enormity has not always meant 'extreme wickedness'; it can still mean great size or magnitude (e.g. 'the enormity of the task'), so 'always' overstates the literary shift.",
+   "id": "p043",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A55",
+   "level": "english/proficient/20",
+   "track": "english",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Periodic builds suspense and lands the point at the end; cumulative leads with the point and lets the detail pile up.",
+     "wrong": "Periodic leads with the point and lets the detail pile up; cumulative builds suspense and lands the point at the end."
+    }
+   ],
+   "truth": "This reverses the two patterns: periodic sentences delay the main clause to the end (creating suspense), while cumulative sentences lead with the main clause and add detail afterward.",
+   "id": "p044",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A57",
+   "level": "english/proficient/29",
+   "track": "english",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Wherever the main clause sits — first, middle, or last — that position is what the reader notices most.",
+     "wrong": "The main clause always carries the most emphasis, wherever it sits — first, middle, or last."
+    }
+   ],
+   "truth": "Emphasis depends on position: a main clause placed last (as in a periodic sentence) gets the final punch, while one placed first (as in a cumulative sentence) leads rather than closes; the edited flat rule wrongly claims position never matters.",
+   "id": "p045",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A58",
+   "level": "english/proficient/48",
+   "track": "english",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Passive voice here is on purpose: the machine (not the person) is the point, and the passive keeps the subject consistent.",
+     "wrong": "Passive voice here is on purpose: the machine (not the person) is the point, and the passive keeps the subject inconsistent."
+    },
+    {
+     "word": "block",
+     "index": 4,
+     "original": "Passive is a legitimate tool when the receiver matters more than the doer.",
+     "wrong": "Passive is a legitimate tool when the receiver matters less than the doer."
+    }
+   ],
+   "truth": "Passive voice is a legitimate tool when the receiver (the thing acted upon) matters more than the doer, and it keeps the sentence's subject focus consistent; the edited feedback reverses that reason.",
+   "id": "p046",
+   "split": "dev",
+   "consistent": true
+  },
+  {
+   "src": "A59",
+   "level": "english/proficient/48",
+   "track": "english",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "This is the error: 'Please arrive early' is a command (imperative mood) jammed into a paragraph of statements, with no signal that the writer meant to switch. Fix it by staying consistent: 'New members should arrive ten minutes early.'",
+     "wrong": "This is the error: 'New members are always welcome' is a command (imperative mood) jammed into a paragraph of statements, with no signal that the writer meant to switch. Fix it by staying consistent: 'New members should arrive ten minutes early.'"
+    },
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Clean: consistent voice and mood.",
+     "wrong": "Clean: consistent voice and indicative mood."
+    }
+   ],
+   "truth": "Line 4's error is the unmarked imperative 'please arrive ten minutes early' inside a paragraph of indicative statements; 'New members are always welcome' is a statement, not a command, so the edited explanation misidentifies the offending phrase.",
+   "id": "p047",
+   "split": "dev",
+   "consistent": true
+  },
+  {
+   "src": "A63",
+   "level": "english/proficient/40",
+   "track": "english",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Active voice usually reads more direct and energetic; passive voice puts the spotlight on the receiver of the action.",
+     "wrong": "Passive voice usually reads more direct and energetic; active voice puts the spotlight on the receiver of the action."
+    }
+   ],
+   "truth": "Active voice is the direct, energetic form and keeps the doer in focus; passive voice shifts the spotlight to the receiver, so the edit reverses the two.",
+   "id": "p048",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A64",
+   "level": "english/proficient/10",
+   "track": "english",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 5,
+     "original": "'We lost the game; our bench was tired.'",
+     "wrong": "'We lost the game, our bench was tired.'"
+    },
+    {
+     "word": "block",
+     "index": 5,
+     "original": "Use a semicolon when the second clause follows closely from the first and no connecting word fits.",
+     "wrong": "Use a semicolon when the second clause follows closely from the first, even if a connecting word fits."
+    }
+   ],
+   "truth": "The worked example for step 3b wrongly shows a comma instead of a semicolon, and the rule is wrongly broadened to allow a semicolon even when a connecting word fits, which would produce comma splices.",
+   "id": "p049",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "A65",
+   "level": "english/proficient/10",
+   "track": "english",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 7,
+     "original": "The trap is assuming every 'because' chunk is a fragment.",
+     "wrong": "Any sentence that starts with 'because' is a fragment."
+    }
+   ],
+   "truth": "The lesson's own trap is the opposite: a sentence beginning with an independent clause and ending with a 'because' clause is complete, so the flat rule that any sentence starting with 'because' is a fragment is false.",
+   "id": "p050",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A66",
+   "level": "english/proficient/91",
+   "track": "english",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Older handbooks banned it; most modern guides allow it.",
+     "wrong": "Older handbooks banned it; most modern guides forbid it."
+    },
+    {
+     "word": "block",
+     "index": 3,
+     "original": "Chicago says it is fine to split; many school handbooks still say avoid it.",
+     "wrong": "Chicago says it is fine to split; many school handbooks still say avoid splitting it."
+    }
+   ],
+   "truth": "The split infinitive is allowed by most modern guides (including Chicago), so the edited text wrongly claims modern guides forbid it.",
+   "id": "p051",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "A67",
+   "level": "english/proficient/91",
+   "track": "english",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 5,
+     "original": "Because AP and Chicago give different answers, the deciding factor is which guide the publication adopts",
+     "wrong": "Because AP and Chicago give different answers, the deciding factor is which guide the publication does not adopt"
+    }
+   ],
+   "truth": "The publication's own adopted guide is what decides the call; the edited text reverses the direction of the rule.",
+   "id": "p052",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A70",
+   "level": "english/proficient/38",
+   "track": "english",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "A fragment is acceptable only when the writer uses it deliberately, with control, and the context makes the emphasis clear.",
+     "wrong": "A fragment is acceptable whenever the writer uses it deliberately."
+    }
+   ],
+   "truth": "The lesson teaches that a deliberate fragment must also be controlled and clearly used for emphasis in context; dropping the control and context conditions makes it sound like any deliberate fragment is fine.",
+   "id": "p053",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A71",
+   "level": "english/proficient/92",
+   "track": "english",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Passive is deliberate and correct when the doer is unknown, unimportant, or when the receiver matters more: 'My bike was stolen last night.'",
+     "wrong": "Passive is always the correct choice when the receiver matters more: 'My bike was stolen last night.'"
+    }
+   ],
+   "truth": "The lesson says passive voice is a deliberate, correct option in certain cases (doer unknown, unimportant, or receiver more important), not that it is always the correct choice whenever the receiver matters more; the added 'always' overstates a preference as a rule.",
+   "id": "p054",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A73",
+   "level": "english/proficient/52",
+   "track": "english",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "The situation is not real, so English uses were, even with I, he, or she.",
+     "wrong": "The situation is not real, so English uses was, even with I, he, or she."
+    }
+   ],
+   "truth": "In the subjunctive, contrary-to-fact and unreal if-clauses take 'were' with every subject (I, he, she, it); the edit changes the rule to 'was', which is the very error the lesson and its cheat sheet warn against.",
+   "id": "p055",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A76",
+   "level": "english/proficient/61",
+   "track": "english",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "original": "Choose active voice when the doer of the action deserves the spotlight; choose passive voice when the receiver of the action, or the action itself, matters more than who did it.",
+     "wrong": "Choose passive voice when the doer of the action deserves the spotlight; choose active voice when the receiver of the action, or the action itself, matters more than who did it."
+    }
+   ],
+   "truth": "The rule is reversed: active voice puts the doer in the spotlight and passive voice puts the receiver or the action there; the edit swaps the two.",
+   "id": "p056",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A80",
+   "level": "english/proficient/49",
+   "track": "english",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Line 3 is where the voice flips from active to passive with no signal to the reader.",
+     "wrong": "Line 4 is where the voice flips from active to passive with no signal to the reader."
+    }
+   ],
+   "truth": "The flagged line in the audit is line 3 ('A plaque was awarded to the team at the assembly.'), which is the passive clause; line 4 is active voice and is marked clean.",
+   "id": "p057",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A82",
+   "level": "spanish/entry/16",
+   "track": "spanish",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "After puedo, quiero or necesito, the next verb stays in its base form (it ends in -ar, -er or -ir).",
+     "wrong": "After puedo, quiero or necesito, the next verb takes the -o ending (it ends in -o, -a or -e)."
+    }
+   ],
+   "truth": "The rule is wrong: after puedo, quiero and necesito the following verb stays in its infinitive/base form (-ar, -er, -ir), as in puedo pagar; it does not take an -o ending.",
+   "id": "p058",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A83",
+   "level": "spanish/entry/4",
+   "track": "spanish",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "Spanish and English share thousands of words from Latin and from each other.",
+     "wrong": "Spanish and English share hundreds of words from Latin and from each other."
+    }
+   ],
+   "truth": "Spanish and English share thousands of cognates, not hundreds, so the count in the prerequisite line is understated.",
+   "id": "p059",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A84",
+   "level": "spanish/entry/4",
+   "track": "spanish",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "Spanish words do not start with s + consonant, so an e is added.",
+     "wrong": "Spanish words do not start with s + consonant, so the s is dropped."
+    }
+   ],
+   "truth": "The rule is that an e is added in front of s + consonant (student → estudiante); the s is not dropped, so the stated effect is reversed.",
+   "id": "p060",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A85",
+   "level": "spanish/entry/65",
+   "track": "spanish",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "These instructions are said to the whole class (ustedes), which is why they end in -n.",
+     "wrong": "These instructions are said to one person (usted), which is why they end in -n."
+    }
+   ],
+   "truth": "The -n ending (escuchen, repitan, abran) marks the plural usted form used when addressing a group; the lesson's own feedback in block 5 says \"said to the class\", so attributing it to singular usted reverses the rule.",
+   "id": "p061",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A86",
+   "level": "spanish/intermediate/27",
+   "track": "spanish",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "In most of Latin America, people who meet socially greet with one light kiss on the cheek.",
+     "wrong": "In Latin America, people who meet socially always greet with one light kiss on the cheek."
+    },
+    {
+     "word": "block",
+     "index": 7,
+     "original": "One cheek kiss in most of Latin America, two in Spain",
+     "wrong": "One cheek kiss in Latin America, two in Spain"
+    }
+   ],
+   "truth": "The lesson states the one-kiss custom is the usual practice in most of Latin America and that people vary (Argentina and Uruguay, and business settings, differ), so \"always\"/\"in Latin America\" as a flat rule is false.",
+   "id": "p062",
+   "split": "dev",
+   "consistent": true
+  },
+  {
+   "src": "A88",
+   "level": "spanish/entry/81",
+   "track": "spanish",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "There are two families of titles: don and doña, which go with a first name, and professional titles, which go with a surname.",
+     "wrong": "There are two families of titles: don and doña, which go with a surname, and professional titles, which go with a first name."
+    }
+   ],
+   "truth": "Don and doña go with the first name (don Manuel, doña Rosa) and professional titles go with the surname (licenciada Ruiz); the block reverses both, contradicting blocks 1, 5, 6 and check 1.",
+   "id": "p063",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A90",
+   "level": "spanish/intermediate/81",
+   "track": "spanish",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Questions with a question word usually fall at the end, not rise.",
+     "wrong": "Questions with a question word usually rise at the end, not fall."
+    }
+   ],
+   "truth": "In Spanish, questions with a question word typically have falling intonation (the pitch falls at the end), so the cue note reverses the direction of the intonation.",
+   "id": "p064",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A91",
+   "level": "spanish/intermediate/122",
+   "track": "spanish",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "-ous → -oso",
+     "wrong": "-ous → -osa"
+    },
+    {
+     "word": "block",
+     "index": 6,
+     "original": "-ous becomes -oso (which agrees: famosa, famosos)",
+     "wrong": "-ous becomes -osa (which agrees: famosa, famosos)"
+    }
+   ],
+   "truth": "The suffix -ous becomes -oso, not -osa; the -o/-a gender and number agreement happens after the suffix (famoso, famosa, famosos, famosas).",
+   "id": "p065",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "A93",
+   "level": "spanish/advanced/54",
+   "track": "spanish",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "Guadalupe → Lupe → Lupita.",
+     "wrong": "Guadalupe → Lupita → Lupe."
+    }
+   ],
+   "truth": "The derivation runs from the full name to the shorter form and then to the affectionate form: Guadalupe → Lupe → Lupita; the edited order reverses the last two steps.",
+   "id": "p066",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A94",
+   "level": "spanish/advanced/105",
+   "track": "spanish",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "Un poco softens a trait people might not like. With a compliment, use muy or bastante.",
+     "wrong": "Un poco softens a compliment. With a trait people might not like, use muy or bastante."
+    }
+   ],
+   "truth": "The lesson teaches the opposite: un poco is used with less positive traits (e.g. un poco tímido), while compliments take muy or bastante.",
+   "id": "p067",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A95",
+   "level": "spanish/advanced/84",
+   "track": "spanish",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "After hablar the article is usually dropped.",
+     "wrong": "After hablar the article is always dropped."
+    }
+   ],
+   "truth": "The article after hablar is usually, not always, dropped: it is kept in emphatic or contrastive uses such as \"Hablo el inglés y el español\" when distinguishing languages.",
+   "id": "p068",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A96",
+   "level": "spanish/advanced/84",
+   "track": "spanish",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 5,
+     "original": "Y becomes e before a word starting with an i sound: español e inglés.",
+     "wrong": "Y becomes e before a word starting with an i sound: español y inglés."
+    }
+   ],
+   "truth": "Before a word beginning with the i sound, Spanish y changes to e, so it is \"español e inglés\", not \"español y inglés\".",
+   "id": "p069",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A97",
+   "level": "spanish/advanced/28",
+   "track": "spanish",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Describe the job and the article comes back: Es un profesor excelente.",
+     "wrong": "Describe the job and the article comes back: Es un profesor excelente, but a bare job after ser takes an article."
+    }
+   ],
+   "truth": "Adding a description brings the article back (Es un profesor excelente); a bare profession after ser takes no article, so the added clause reverses the rule.",
+   "id": "p070",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A98",
+   "level": "spanish/advanced/28",
+   "track": "spanish",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 6,
+     "original": "Un, una, unos, unas mean a and some, but a bare job after ser and the word otro take no article: Es médico; otro café.",
+     "wrong": "Un, una, unos, unas mean a and some, but a job after ser and the word otro take no article: Es médico; otro café."
+    }
+   ],
+   "truth": "The rule is that a profession on its own after ser takes no article; a described job does take one (Es un profesor excelente), so dropping \"bare\" turns a conditional rule into a false flat one.",
+   "id": "p071",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A99",
+   "level": "spanish/advanced/80",
+   "track": "spanish",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "Exception: nationalities ending in a consonant, and -or adjectives like trabajador, add -a: española, trabajadora (but mayor, menor, mejor and peor never change).",
+     "wrong": "Exception: nationalities ending in a vowel, and -or adjectives like trabajador, add -a: española, trabajadora (but mayor, menor, mejor and peor never change)."
+    }
+   ],
+   "truth": "Nationalities ending in a consonant (not a vowel) add -a for the feminine, e.g. español/española, inglés/inglesa.",
+   "id": "p072",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A100",
+   "level": "spanish/advanced/80",
+   "track": "spanish",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 6,
+     "original": "Inteligente, fácil, joven and azul have one singular form and add -s or -es for the plural; nationalities and -or adjectives still add -a.",
+     "wrong": "Inteligente, fácil, joven and azul have one singular form and add -s or -es for the plural; nationalities and -or adjectives still add -o."
+    }
+   ],
+   "truth": "Nationalities and -or adjectives add -a for the feminine (española, trabajadora), not -o.",
+   "id": "p073",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A101",
+   "level": "spanish/advanced/104",
+   "track": "spanish",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "ser + adjective (what the person is)",
+     "wrong": "ser + adjective (what the person has)"
+    },
+    {
+     "word": "block",
+     "index": 3,
+     "original": "tener + feature (what the person has)",
+     "wrong": "tener + feature (what the person is)"
+    }
+   ],
+   "truth": "The contrast is reversed: ser is used for what someone is (height, build, hair/eye colour as identity-like adjectives), tener for features they have (hair length, eye colour, beard, glasses).",
+   "id": "p074",
+   "split": "dev",
+   "consistent": true
+  },
+  {
+   "src": "A102",
+   "level": "spanish/advanced/69",
+   "track": "spanish",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Medir changes e to i (mido, mides, mide); costar changes o to ue (cuesta, cuestan).",
+     "wrong": "Medir changes e to i (mido, mides, mide); costar changes o to u (custo, cuestan)."
+    }
+   ],
+   "truth": "Costar is an o-to-ue stem-changing verb (cuesto, cuestan), not o-to-u, so the stated conjugation pattern is wrong.",
+   "id": "p075",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A103",
+   "level": "spanish/advanced/3",
+   "track": "spanish",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Keep the pronoun for contrast: Yo soy de Texas y él es de Chile.",
+     "wrong": "Drop the pronoun for contrast: Yo soy de Texas y él es de Chile."
+    }
+   ],
+   "truth": "The pronoun is kept for contrast, not dropped; the lesson's rule is that the pronoun is dropped because the verb ending already shows who is acting, and it is kept when contrasting.",
+   "id": "p076",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "A81",
+   "level": "spanish/entry/16",
+   "track": "spanish",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "Four of them end in -o (quiero, tengo, puedo, necesito) and voy ends in -oy",
+     "wrong": "Three of them end in -o (quiero, tengo, puedo, necesito) and voy ends in -oy"
+    }
+   ],
+   "truth": "The unit label and the count of -o verbs are wrong: the lesson is Unit 1.2, and four of the five chunks (quiero, tengo, puedo, necesito) end in -o, not three.",
+   "id": "p077",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A87",
+   "level": "spanish/entry/81",
+   "track": "spanish",
+   "kind": "misleading_simplification",
+   "edits": [
+    {
+     "word": "block",
+     "index": 7,
+     "original": "Don and doña go with the first name; licenciado, ingeniero, doctor and arquitecto go with the surname",
+     "wrong": "Don and doña go with the first name; every professional title goes with the surname"
+    }
+   ],
+   "truth": "The lesson states that maestro/maestra means a teacher and, in Mexico, also someone with a master's degree; it does not call it the most common title for any schoolteacher, and the takeaway deliberately lists specific professional titles rather than claiming all professional titles take a surname.",
+   "id": "p078",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "A89",
+   "level": "spanish/entry/81",
+   "track": "spanish",
+   "kind": "formula_step",
+   "edits": [
+    {
+     "word": "block",
+     "index": 6,
+     "original": "Speaking to her, leave out la.",
+     "wrong": "Speaking to her, add la."
+    }
+   ],
+   "truth": "When speaking about someone with a professional title you add el or la (la licenciada Ruiz); los is not used for a single person, and when addressing a woman directly you leave out the article (Buenos días, ingeniera Méndez).",
+   "id": "p079",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "E0",
+   "level": "math/calculus_i/20",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "That is 33 - 12 = 21 miles in 3 - 1 = 2 hours, so the average rate is 21 / 2 = 10.5 miles per hour.",
+     "wrong": "That is 33 - 12 = 21 miles in 3 - 1 = 2 hours, so the average rate is 21 / 2 = 12.5 miles per hour."
+    }
+   ],
+   "truth": "21 / 2 = 10.5, not 12.5, so the stated average rate in the table footnote is arithmetically wrong.",
+   "id": "p080",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "E1",
+   "level": "math/calculus_i/20",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "original": "Correct. f(4) = 16 and f(1) = 1, so the top is 15. The bottom is 4 - 1 = 3, and 15 / 3 = 5.",
+     "wrong": "Correct. f(4) = 16 and f(1) = 1, so the top is 15. The bottom is 4 - 1 = 3, and 15 / 3 = 4."
+    },
+    {
+     "word": "block",
+     "index": 4,
+     "original": "f(4) - f(1) = 16 - 1 = 15 and 4 - 1 = 3, so the average rate of change is 15 / 3 = 5. Since f is increasing on [1, 4], the secant line slopes upward with slope 5.",
+     "wrong": "f(4) - f(1) = 16 - 1 = 15 and 4 - 1 = 3, so the average rate of change is 15 / 3 = 4. Since f is increasing on [1, 4], the secant line slopes upward with slope 4."
+    }
+   ],
+   "truth": "For f(x) = x^2 on [1, 4], the average rate of change is (16 - 1) / (4 - 1) = 15 / 3 = 5, so the worked solution's final value of 4 is wrong (and inconsistent with the accepted answer 5).",
+   "id": "p081",
+   "split": "dev",
+   "consistent": true
+  },
+  {
+   "src": "E2",
+   "level": "math/calculus_i/30",
+   "track": "math",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "At t = 1 the average velocity on [1, 1 + h] equals 2 + h. As h shrinks toward 0 that value approaches 2, so the instantaneous velocity at t = 1 is 2 m/s — the slope of the tangent line there.",
+     "wrong": "At t = 1 the average velocity on [1, 1 + h] equals 2 + h. As h shrinks toward 0 that value approaches 2, so the instantaneous velocity at t = 1 is 2 m/s — the slope of the secant line there."
+    },
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Equals the slope of the tangent line at that point",
+     "wrong": "Equals the slope of the secant line at that point"
+    }
+   ],
+   "truth": "The instantaneous rate is the slope of the tangent line, not the secant line; the secant slope is the average rate.",
+   "id": "p082",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "E3",
+   "level": "math/calculus_i/30",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "over [1, 1.5] it is 2.5 m/s; over [1, 1.1] it is 2.1 m/s",
+     "wrong": "over [1, 1.5] it is 2.5 m/s; over [1, 1.1] it is 2.2 m/s"
+    },
+    {
+     "word": "block",
+     "index": 4,
+     "original": "With h = 2, 1, 0.5, 0.1 and 0.01 the slopes are 4, 3, 2.5, 2.1 and 2.01.",
+     "wrong": "With h = 2, 1, 0.5, 0.1 and 0.01 the slopes are 4, 3, 2.5, 2.2 and 2.02."
+    },
+    {
+     "word": "check",
+     "index": 2,
+     "original": "the average velocities on [1, 1 + h] are 2.5, 2.1 and 2.01 m/s when h is 0.5, 0.1 and 0.01",
+     "wrong": "the average velocities on [1, 1 + h] are 2.5, 2.2 and 2.02 m/s when h is 0.5, 0.1 and 0.01"
+    }
+   ],
+   "truth": "For s(t) = t^2 the average velocity on [1, 1 + h] is exactly 2 + h, so h = 0.1 gives 2.1 m/s and h = 0.01 gives 2.01 m/s, not 2.2 or 2.02.",
+   "id": "p083",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "E8",
+   "level": "math/algebra_1_part_a/52",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "since 14 - 6 = 8",
+     "wrong": "since 14 - 6 = 6"
+    }
+   ],
+   "truth": "14 - 6 = 8, not 6; the step from 2x + 6 = 14 to 2x = 8 is correct only because subtracting 6 from 14 gives 8.",
+   "id": "p084",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "E10",
+   "level": "math/algebra_1_part_a/423",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "20 hours at $15 earns $300",
+     "wrong": "20 hours at $15 earns $250"
+    },
+    {
+     "word": "block",
+     "index": 0,
+     "original": "10 hours at each job earns $100 + $150 = $250",
+     "wrong": "10 hours at each job earns $100 + $150 = $200"
+    }
+   ],
+   "truth": "Job A at $15/hour for 20 hours earns $300, and 10 hours at each job earns $100 + $150 = $250, so the edited totals understate the earnings.",
+   "id": "p085",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "E11",
+   "level": "math/algebra_1_part_a/179",
+   "track": "math",
+   "kind": "reversed_cause",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "The graph shows f(x) = -x^2 + 4x, a parabola that opens downward.",
+     "wrong": "The graph shows f(x) = -x^2 + 4x, a parabola that opens upward."
+    }
+   ],
+   "truth": "The parabola f(x) = -x^2 + 4x has a negative leading coefficient, so it opens downward, not upward.",
+   "id": "p086",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "E12",
+   "level": "math/algebra_1_part_a/179",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "This graph has two x-intercepts: (0, 0) and (4, 0), so its zeros are x = 0 and x = 4.",
+     "wrong": "This graph has two x-intercepts: (0, 0) and (2, 0), so its zeros are x = 0 and x = 2."
+    }
+   ],
+   "truth": "Setting -x^2 + 4x = 0 gives x = 0 and x = 4, so the zeros are 0 and 4, not 0 and 2.",
+   "id": "p087",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "E15",
+   "level": "math/algebra_1_part_a/221",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "original": "Multiply m by each term inside the parentheses: y - 5 = 3x - 6.",
+     "wrong": "Multiply m by each term inside the parentheses: y - 5 = 3x + 6."
+    },
+    {
+     "word": "block",
+     "index": 4,
+     "original": "Watch the sign: 3 times -2 is -6, not +6.",
+     "wrong": "Watch the sign: 3 times -2 is +6, not -6."
+    },
+    {
+     "word": "block",
+     "index": 4,
+     "original": "Add 5 to both sides: y = 3x - 1.",
+     "wrong": "Add 5 to both sides: y = 3x + 11."
+    },
+    {
+     "word": "block",
+     "index": 4,
+     "original": "Now the slope 3 and the y-intercept -1 are both visible.",
+     "wrong": "Now the slope 3 and the y-intercept 11 are both visible."
+    },
+    {
+     "word": "block",
+     "index": 4,
+     "original": "From y = 3x - 1, subtract 3x from both sides: -3x + y = -1.",
+     "wrong": "From y = 3x + 11, subtract 3x from both sides: -3x + y = 11."
+    },
+    {
+     "word": "block",
+     "index": 4,
+     "original": "-3x + y = -1 becomes 3x - y = 1. Same line, A = 3.",
+     "wrong": "-3x + y = 11 becomes 3x - y = -11. Same line, A = 3."
+    },
+    {
+     "word": "block",
+     "index": 4,
+     "original": "3(2) - 5 = 1, so (2, 5) works in 3x - y = 1.",
+     "wrong": "3(2) - 5 = -11, so (2, 5) works in 3x - y = -11."
+    }
+   ],
+   "truth": "Distributing 3 over (x - 2) gives 3x - 6, not 3x + 6, so the correct chain is y = 3x - 1, -3x + y = -1, and 3x - y = 1; the edited example wrongly distributes the negative and then carries the wrong constant through every later step.",
+   "id": "p088",
+   "split": "dev",
+   "consistent": true
+  },
+  {
+   "src": "E16",
+   "level": "math/algebra_1_part_a/221",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "y = 3x - 1 shows slope 3 and y-intercept -1.",
+     "wrong": "y = 3x - 1 shows slope 3 and y-intercept 1."
+    }
+   ],
+   "truth": "In y = mx + b, b is the y-intercept, so for y = 3x - 1 the y-intercept is -1, not 1.",
+   "id": "p089",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "E18",
+   "level": "math/algebra_1_part_a/95",
+   "track": "math",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "1 US cup ≈ 236.6 mL",
+     "wrong": "1 US cup ≈ 264.2 mL"
+    }
+   ],
+   "truth": "One US cup is about 236.6 mL (a US legal/standard cup is 236.588 mL); 264.2 mL is the size of a UK imperial cup, so the conversion figure is wrong.",
+   "id": "p090",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "E19",
+   "level": "math/algebra_1_part_a/380",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "8x = 24, so x = 3",
+     "wrong": "8x = 24, so x = 4"
+    }
+   ],
+   "truth": "Adding 3x + 2y = 16 and 5x - 2y = 8 gives 8x = 24, so x = 3, not 4.",
+   "id": "p091",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "E20",
+   "level": "math/algebra_1_part_a/380",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "(2x + 3y) + (5x - 3y) = 12 + 9 gives 7x = 21.",
+     "wrong": "(2x + 3y) + (5x - 3y) = 12 + 9 gives 7x = 22."
+    },
+    {
+     "word": "block",
+     "index": 3,
+     "original": "x = 3, so 2(3) + 3y = 12 gives 3y = 6 and y = 2.",
+     "wrong": "x = 22/7, so 2(22/7) + 3y = 12 gives 3y = 12 - 44/7 = 40/7 and y = 40/21."
+    },
+    {
+     "word": "block",
+     "index": 3,
+     "original": "(3, 2): 2(3) + 3(2) = 12 and 5(3) - 3(2) = 9. Both hold.",
+     "wrong": "(22/7, 40/21): 2(22/7) + 3(40/21) = 44/7 + 40/7 = 12 and 5(22/7) - 3(40/21) = 110/7 - 40/7 = 10, not 9. The first holds but the second does not."
+    }
+   ],
+   "truth": "Adding the equations gives 7x = 21, so x = 3 and y = 2; the edited steps wrongly produce 7x = 22 and a solution that fails the second equation.",
+   "id": "p092",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "E21",
+   "level": "math/algebra_1_part_a/338",
+   "track": "math",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "3|x - 2| + 1 ≤ 13 becomes 3|x - 2| ≤ 12, then |x - 2| ≤ 4.",
+     "wrong": "3|x - 2| + 1 ≤ 13 becomes 3|x - 2| ≤ 12, then |x - 2| ≤ 3."
+    },
+    {
+     "word": "block",
+     "index": 3,
+     "original": "-4 ≤ x - 2 ≤ 4.",
+     "wrong": "-3 ≤ x - 2 ≤ 3."
+    },
+    {
+     "word": "block",
+     "index": 3,
+     "original": "Add 2 to all three parts: -2 ≤ x ≤ 6. No division by a negative, so no flip.",
+     "wrong": "Add 2 to all three parts: -1 ≤ x ≤ 5. No division by a negative, so no flip."
+    },
+    {
+     "word": "block",
+     "index": 3,
+     "original": "x = 0 gives 3|0 - 2| + 1 = 7 ≤ 13, true. x = 8 gives 3|8 - 2| + 1 = 19 ≤ 13, false.",
+     "wrong": "x = 0 gives 3|0 - 2| + 1 = 7 ≤ 13, true. x = 6 gives 3|6 - 2| + 1 = 13 ≤ 13, true."
+    }
+   ],
+   "truth": "The worked example divides 12 by 3 incorrectly: 3|x - 2| ≤ 12 gives |x - 2| ≤ 4, so the chain is -4 ≤ x - 2 ≤ 4 and the solution is -2 ≤ x ≤ 6, not the edited values.",
+   "id": "p093",
+   "split": "dev",
+   "consistent": true
+  },
+  {
+   "src": "E27",
+   "level": "english/proficient/30",
+   "track": "english",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "Winston Churchill, speech to the House of Commons, June 4, 1940",
+     "wrong": "Winston Churchill, speech to the House of Commons, June 4, 1941"
+    }
+   ],
+   "truth": "Churchill's 'We shall fight' speech was delivered to the House of Commons on 4 June 1940, not 1941.",
+   "id": "p094",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "E44",
+   "level": "english/proficient/61",
+   "track": "english",
+   "kind": "wrong_worked_example",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "It should read: 'If the storm were worse, the season would end early.'",
+     "wrong": "It should read: 'If the storm was worse, the season would end early.'"
+    }
+   ],
+   "truth": "The correction must restore the subjunctive 'were' in the hypothetical if-clause; changing it to 'was' leaves the faulty sentence uncorrected and contradicts the explanation that 'was' is the error.",
+   "id": "p095",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "E48",
+   "level": "spanish/entry/84",
+   "track": "spanish",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "About 65 million people in the US are Hispanic or Latino.",
+     "wrong": "About 55 million people in the US are Hispanic or Latino."
+    },
+    {
+     "word": "block",
+     "index": 5,
+     "original": "the Hispanic population (about 65 million) is a different count.",
+     "wrong": "the Hispanic population (about 55 million) is a different count."
+    }
+   ],
+   "truth": "The US Hispanic or Latino population is about 65 million (roughly 62-67 million per the Census), not 55 million; the lesson's two mentions are changed consistently.",
+   "id": "p096",
+   "split": "heldout",
+   "consistent": true
+  },
+  {
+   "src": "E50",
+   "level": "spanish/intermediate/122",
+   "track": "spanish",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "-ico, -oso: four forms",
+     "wrong": "-ico, -oso: three forms"
+    }
+   ],
+   "truth": "-ico and -oso each have four forms (masculine singular, feminine singular, masculine plural, feminine plural), so the heading should say four forms, not three.",
+   "id": "p097",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "E57",
+   "level": "spanish/advanced/3",
+   "track": "spanish",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "Argentina, Uruguay, Paraguay and much of Central America use vos for tú.",
+     "wrong": "Argentina, Uruguay, Paraguay and much of South America use vos for tú."
+    }
+   ],
+   "truth": "vos for tú is used in Argentina, Uruguay, Paraguay and much of Central America, not much of South America (which includes countries like Brazil and Chile that use você or tú).",
+   "id": "p098",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "E60",
+   "level": "spanish/advanced/69",
+   "track": "spanish",
+   "kind": "wrong_number",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Un metro ochenta is 1.80 m, about 5 feet 11 inches.",
+     "wrong": "Un metro ochenta is 1.80 m, about 6 feet 1 inches."
+    }
+   ],
+   "truth": "1.80 m is about 5 feet 11 inches (5 ft 11 in ≈ 1.80 m); the edited conversion of 6 feet 1 inches is wrong.",
+   "id": "p099",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "K39",
+   "level": "math/algebra_1_part_a/465",
+   "track": "math",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 0,
+     "set": {
+      "answer": "the fourth root of 5, squared",
+      "rationale": "The denominator 4 is the root and the numerator 3 is the power, so 5^(3/4) means the fourth root of 5 raised to the second power (squared)."
+     },
+     "marker": "the fourth root of 5, squared"
+    }
+   ],
+   "truth": "The numerator 3 is the power, so 5^(3/4) is the fourth root of 5 cubed, not squared.",
+   "old_answer": "the fourth root of 5, cubed",
+   "id": "p100",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K41",
+   "level": "math/algebra_1_part_a/52",
+   "track": "math",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 0,
+     "set": {
+      "answer": "Subtraction Property of Equality",
+      "rationale": "Both sides were reduced by the same amount, 5, so the step is the Subtraction Property of Equality: 5x - 5 = 35 - 5 leaves x on the left and 30 on the right."
+     },
+     "marker": "Subtraction Property of Equality"
+    }
+   ],
+   "truth": "The step divides both sides by 5, so it is the Division Property of Equality, not the Subtraction Property of Equality.",
+   "old_answer": "Division Property of Equality",
+   "id": "p101",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "K43",
+   "level": "math/algebra_1_part_a/296",
+   "track": "math",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "{0, 1, 2, 3, 4, 5}",
+      "rationale": "Books are counted in whole numbers, and the shelf holds at most 6, so the possible counts are the whole numbers from 0 through 5.",
+      "accepts": [
+       "{0, 1, 2, 3, 4, 5}"
+      ]
+     },
+     "marker": "{0, 1, 2, 3, 4, 5}"
+    }
+   ],
+   "truth": "The shelf holds at most 6 books, so 6 is a possible count and the domain must include 6: {0, 1, 2, 3, 4, 5, 6}.",
+   "old_answer": "{0, 1, 2, 3, 4, 5, 6}",
+   "id": "p102",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "K45",
+   "level": "math/algebra_1_part_a/254",
+   "track": "math",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "-5/2",
+      "rationale": "Flip -2/5 to -5/2, then change the sign to get 5/2. Check: (-2/5)(5/2) = -1."
+     },
+     "marker": "-5/2"
+    }
+   ],
+   "truth": "The perpendicular slope of -2/5 is 5/2, since (-2/5)(5/2) = -1; -5/2 is only the flipped fraction without the sign change, giving a product of 1.",
+   "old_answer": "5/2",
+   "id": "p103",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K47",
+   "level": "math/algebra_1_part_a/423",
+   "track": "math",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 0,
+     "set": {
+      "answer": "A dashed line with the region above it shaded",
+      "rationale": "The sign is <, so the boundary is dashed, and with y isolated the < sign means shade above the line."
+     },
+     "marker": "A dashed line with the region above it shaded"
+    }
+   ],
+   "truth": "The inequality y < 3x - 2 has a strict sign, so its boundary line must be dashed, and with y isolated the < sign shades the region below the line. The marked answer 'A dashed line with the region below it shaded' is correct; the new answer reverses the shading direction and is wrong.",
+   "old_answer": "A dashed line with the region below it shaded",
+   "id": "p104",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K49",
+   "level": "math/algebra_1_part_a/338",
+   "track": "math",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 0,
+     "set": {
+      "answer": "x < -7 or x > 7",
+      "rationale": "A less-than symbol means the distance from x to 0 is under 7, so x lies outside the two endpoints -7 and 7. That is the OR pair x < -7 or x > 7, two rays joined by OR."
+     },
+     "marker": "x < -7 or x > 7"
+    }
+   ],
+   "truth": "The correct answer is -7 < x < 7; a less-than symbol gives the AND chain between the endpoints, not the outside OR form.",
+   "old_answer": "-7 < x < 7",
+   "id": "p105",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "K51",
+   "level": "math/algebra_1_part_a/380",
+   "track": "math",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "Add the equations, because the y-coefficients are both 5",
+      "rationale": "The deciding step is comparing signs: the y-coefficients are both 5, so adding them together cancels the y-terms and leaves 8x = 32, which gives x = 4."
+     },
+     "marker": "Add the equations, because the y-coefficients are both 5"
+    }
+   ],
+   "truth": "Adding 6x + 5y = 20 and 2x + 5y = 12 gives 8x + 10y = 32, which does not eliminate y; subtracting is required.",
+   "old_answer": "Subtract the second equation from the first, because the y-coefficients are both 5",
+   "id": "p106",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K2",
+   "level": "english/proficient/20",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "It delays the main clause so the reader feels suspense",
+      "rationale": "The sentence holds back the payoff of its second half until the reader has committed to the first, so the reader waits to hear where the thought lands — that delayed delivery is what gives the line its charge."
+     },
+     "marker": "It delays the main clause so the reader feels suspense"
+    }
+   ],
+   "truth": "The sentence is balanced: both halves share the same subject + verb + object shape, which is what gives the two ideas equal weight.",
+   "old_answer": "Its two halves share the same grammatical shape, giving both ideas equal weight",
+   "id": "p107",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K8",
+   "level": "english/proficient/52",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 0,
+     "set": {
+      "answer": "Passive, because active voice is too casual for news",
+      "rationale": "News writing favors a formal, detached register, and passive voice keeps the focus on the event itself rather than on any one person, so a writer working in a news style would reach for passive here."
+     },
+     "marker": "Passive, because active voice is too casual for news"
+    }
+   ],
+   "truth": "The sentence 'The senior class raised $2,000 at the car wash.' is active voice: the subject performs the action. The lesson teaches that active voice is used to credit and emphasize the doer, and passive is not chosen because active is 'too casual.'",
+   "old_answer": "Active, because it makes the doer lead the sentence and emphasizes who acted",
+   "id": "p108",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K10",
+   "level": "english/proficient/29",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "Placing it first makes the idea land as a final punch",
+      "rationale": "Whatever the reader reads first sits in memory with the most weight, so a main clause placed first delivers the strongest punch; placing it last ends the thought, and the middle has the least emphasis of the three spots."
+     },
+     "marker": "Placing it first makes the idea land as a final punch"
+    }
+   ],
+   "truth": "The original key is correct: emphasis lands on what comes last, so a main clause placed last delivers the final punch. The planted key swaps 'last' for 'first,' which contradicts the lesson's rule that word order controls emphasis and that the main clause's position is the main lever.",
+   "old_answer": "Placing it last makes the idea land as a final punch",
+   "id": "p109",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K12",
+   "level": "english/proficient/39",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 0,
+     "set": {
+      "answer": "Balanced sentence",
+      "rationale": "The three clauses mirror one another in shape and length, so the line reads as a balanced sentence — the parallelism carries the rhythm, and the commas simply mark the pauses between the matched clauses."
+     },
+     "marker": "Balanced sentence"
+    }
+   ],
+   "truth": "The item is a run-on: three complete independent clauses joined only by commas, with no punctuation or connector between them.",
+   "old_answer": "Run-on",
+   "id": "p110",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K20",
+   "level": "english/proficient/71",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "Fix it by adding a colon between the two thoughts.",
+      "rationale": "A run-on joins two complete sentences without correct punctuation; a colon between the two thoughts gives the second one a clear introduction, so the fix works."
+     },
+     "marker": "Fix it by adding a colon between the two thoughts."
+    }
+   ],
+   "truth": "A colon cannot join two independent clauses; the run-on needs a semicolon or period.",
+   "old_answer": "Fix it by separating the two complete thoughts with a semicolon or a period.",
+   "id": "p111",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K36",
+   "level": "english/proficient/125",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 0,
+     "set": {
+      "answer": "Tone clue",
+      "rationale": "The phrase 'a gloomy hush over the fields' sets a mournful mood around the word, so the surrounding atmosphere signals lugubrious means deeply sad rather than merely opposite of bright.",
+      "accepts": [
+       "Tone clue"
+      ]
+     },
+     "marker": "Tone clue"
+    }
+   ],
+   "truth": "The sentence uses 'Unlike' to set up a contrast between the bright sunrise and the lugubrious evening, so the clue type is contrast.",
+   "old_answer": "Contrast clue",
+   "id": "p112",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K26",
+   "level": "spanish/intermediate/81",
+   "track": "spanish",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 0,
+     "set": {
+      "answer": "¿Cómo cuesta?",
+      "rationale": "Cómo asks how, so ¿Cómo cuesta? asks the price of the shirt."
+     },
+     "marker": "¿Cómo cuesta?"
+    }
+   ],
+   "truth": "¿Cuánto cuesta? is the correct way to ask a price; cuánto means how much.",
+   "old_answer": "¿Cuánto cuesta?",
+   "id": "p113",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K28",
+   "level": "spanish/intermediate/122",
+   "track": "spanish",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "Ella es turisa.",
+      "rationale": "-ista has one form for a man or a woman, so a woman is also turisa; turística is an adjective (touristic)."
+     },
+     "marker": "Ella es turisa."
+    }
+   ],
+   "truth": "The correct answer is \"Ella es turista.\" The -ist suffix becomes -ista, and the ending does not change for gender.",
+   "old_answer": "Ella es turista.",
+   "id": "p114",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K30",
+   "level": "spanish/advanced/3",
+   "track": "spanish",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "vosotros",
+      "rationale": "Vosotros is the plural you for a group you speak to, and it is the form used in Mexico for two coworkers; ellos means they and nosotros means we."
+     },
+     "marker": "vosotros"
+    }
+   ],
+   "truth": "In Mexico (and Latin America generally) the plural you is ustedes; vosotros is used in Spain. The lesson's footnote says Spain also uses vosotros, and the table lists ustedes for any group, formal or not.",
+   "old_answer": "ustedes",
+   "id": "p115",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "K32",
+   "level": "spanish/advanced/54",
+   "track": "spanish",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "Pedro",
+      "rationale": "Pepe is the traditional nickname for Pedro, dropping the final syllable of the full name."
+     },
+     "marker": "Pedro"
+    }
+   ],
+   "truth": "Pepe is the traditional nickname for José, as stated in Block 0 and the nickname table.",
+   "old_answer": "José",
+   "id": "p116",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K33",
+   "level": "spanish/advanced/69",
+   "track": "spanish",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 0,
+     "set": {
+      "answer": "El bebé mide cuatro kilos.",
+      "rationale": "Weight uses medir: mide cuatro kilos. Pesa is for height or length, and cuesta for price."
+     },
+     "marker": "El bebé mide cuatro kilos."
+    }
+   ],
+   "truth": "The correct answer is \"El bebé pesa cuatro kilos.\" Weight takes pesar (pesa), not medir (mide); the new key confuses the verb for weight with the verb for height/length.",
+   "old_answer": "El bebé pesa cuatro kilos.",
+   "id": "p117",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "K18",
+   "level": "chess/chess_board_explorer/42",
+   "track": "chess",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 3,
+     "set": {
+      "answer": "Rook to g3",
+      "rationale": "From c3, the squares c6, f6 and a3 all sit on straight lines (same file or same row), but g3 is on a slanted diagonal — and the rook never moves diagonally."
+     },
+     "marker": "Rook to g3"
+    }
+   ],
+   "truth": "g3 is on the same row as c3, so the rook CAN move there; the illegal move is f6.",
+   "old_answer": "Rook to f6",
+   "id": "p118",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K24",
+   "level": "basketball/basketball_junior_club_player/706",
+   "track": "basketball",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "A high lob over the defence that gives the shooter time to set",
+      "rationale": "A high lob over the defence gives the shooter time to set their feet and get the shot away cleanly, and it clears the recovering defender's reach so the catch stays clean. The other options either force the shooter to bend down, telegraph the pass, or leave the passer standing still for the defence to read."
+     },
+     "marker": "A high lob over the defence that gives the shooter time to set"
+    }
+   ],
+   "truth": "The lesson's Theory_ContrastSplit block explicitly lists a high lob as what a kick-out is NOT: 'A looping pass over the defence hangs in the air and gives the recovering defender time to close out.'",
+   "old_answer": "A firm low pass to the shooter's pocket, thrown while the dribble is live",
+   "id": "p119",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K1",
+   "level": "english/proficient/40",
+   "track": "english",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 3,
+     "set": {
+      "answer": "are",
+      "rationale": "The requirement clause should keep the same indicative form as the surrounding sentences, so 'are' stays as it is and the mood remains consistent throughout.",
+      "accepts": [
+       "are"
+      ]
+     },
+     "marker": "are"
+    }
+   ],
+   "truth": "be",
+   "old_answer": "be",
+   "id": "p120",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K3",
+   "level": "english/proficient/20",
+   "track": "english",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 3,
+     "set": {
+      "answer": "Cumulative",
+      "rationale": "A cumulative sentence leads with the main clause and then keeps adding modifiers after it, so the reader gets the point right away and the detail piles on afterward — the opposite of withholding the payoff.",
+      "accepts": [
+       "Cumulative"
+      ]
+     },
+     "marker": "Cumulative"
+    }
+   ],
+   "truth": "The lesson states that a periodic sentence delays the main clause until the end, which is what creates suspense and end-emphasis.",
+   "old_answer": "Periodic",
+   "id": "p121",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K7",
+   "level": "english/proficient/82",
+   "track": "english",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "Only the first is correct, because strict rules always ban split infinitives",
+      "rationale": "The 1950 guides were right to ban split infinitives, and that ban is the settled standard, so the older judgment is the correct one to follow today."
+     },
+     "marker": "Only the first is correct, because strict rules always ban split infinitives"
+    }
+   ],
+   "truth": "The lesson's takeaway says usage usually wins and guides update, so the 1950 ban is no longer the standard; both the old and new judgments can be correct within their own systems.",
+   "old_answer": "Both can be correct, depending on which style guide you follow",
+   "id": "p122",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K9",
+   "level": "english/proficient/52",
+   "track": "english",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 4,
+     "set": {
+      "answer": "Whenever a sentence needs more words to sound formal",
+      "rationale": "Passive voice adds the be-verb and the by-phrase, which lengthens the sentence and gives it a more formal, official tone, so it is the right choice when a writer wants a sentence to sound more formal."
+     },
+     "marker": "Whenever a sentence needs more words to sound formal"
+    }
+   ],
+   "truth": "The lesson states passive is right when the doer is unknown, when you want tact, or when the receiver matters more — not when you want more words or a formal tone. Word count and formality are not reasons to choose passive.",
+   "old_answer": "When the doer is unknown or when you want to emphasize the receiver",
+   "id": "p123",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K11",
+   "level": "english/proficient/29",
+   "track": "english",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 3,
+     "set": {
+      "answer": "Periodic",
+      "rationale": "A periodic sentence opens with the main clause and then adds modifying phrases that pile on detail, which is exactly what this sentence does.",
+      "accepts": [
+       "Periodic"
+      ]
+     },
+     "marker": "Periodic"
+    }
+   ],
+   "truth": "The lesson states that a cumulative sentence leads with the main clause and then piles on detail, and the example sentence 'The climb was brutal, every muscle burning, the wind screaming past our ears.' does exactly that. The planted key calls it periodic, contradicting the block's definition.",
+   "old_answer": "Cumulative",
+   "id": "p124",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K13",
+   "level": "english/proficient/39",
+   "track": "english",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 3,
+     "set": {
+      "answer": "Cumulative",
+      "rationale": "The sentence opens with the supporting detail ('Although the storm knocked out the power and flooded the roads') and then delivers the main point ('the town never stopped working') — point first, details after, which is the definition of cumulative order.",
+      "accepts": [
+       "Cumulative"
+      ]
+     },
+     "marker": "Cumulative"
+    }
+   ],
+   "truth": "The lesson's matrix defines the periodic sentence as 'Builds suspense; the reader waits for the point, which lands with force at the end,' and the check's own sentence delays its main clause to the end, so the correct answer is 'Periodic.'",
+   "old_answer": "Periodic",
+   "id": "p125",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K17",
+   "level": "english/proficient/49",
+   "track": "english",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 2,
+     "set": {
+      "answer": "was",
+      "rationale": "The if-clause states a real, factual condition about the speaker's actual role, so the ordinary past-tense form is the correct one here: was, not were.",
+      "accepts": [
+       "was"
+      ]
+     },
+     "marker": "was"
+    }
+   ],
+   "truth": "The if-clause imagines an unreal condition (\"If I were the director\"), which calls for the subjunctive mood and the form \"were.\" The lesson's block on the three moods assigns \"imagines or wishes\" to the subjunctive, so \"was\" is wrong.",
+   "old_answer": "were",
+   "id": "p126",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K21",
+   "level": "english/proficient/71",
+   "track": "english",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 4,
+     "set": {
+      "answer": "it's",
+      "rationale": "The blank stands in for \"it is,\" so the contraction \"it's\" is the correct word to fill in here.",
+      "accepts": [
+       "it's"
+      ]
+     },
+     "marker": "it's"
+    }
+   ],
+   "truth": "The dog owns the tail, so the possessive \"its\" is correct, not the contraction \"it's\".",
+   "old_answer": "its",
+   "id": "p127",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K23",
+   "level": "english/proficient/91",
+   "track": "english",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 2,
+     "set": {
+      "answer": "It is a fragment, because the second part has no subject.",
+      "rationale": "The deciding fact is the sentence's structure: 'The debate ended' stands as a complete clause, and 'the editor finally agreed' has no subject of its own, so the second part is a dependent fragment rather than a second independent clause — a structural flaw, not a disputed style choice.",
+      "accepts": [
+       "It is a fragment, because the second part has no subject."
+      ]
+     },
+     "marker": "It is a fragment, because the second part has no subject."
+    }
+   ],
+   "truth": "The lesson's mixed recall grid states that 'The debate ended the editor finally agreed.' is a run-on (a comma splice) to be fixed with a period, semicolon, or a joining word; the second part does have a subject ('the editor'), so calling it a subjectless fragment contradicts the lesson.",
+   "old_answer": "It is a run-on sentence — two independent clauses fused with no punctuation between them.",
+   "id": "p128",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K25",
+   "level": "basketball/basketball_junior_club_player/706",
+   "track": "basketball",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 0,
+     "set": {
+      "answer": "Kick to o2 in the right corner",
+      "rationale": "d2, the corner shooter's defender, stepped up right in your lane to stop the drive, so o2 is now open in the right corner. d5 stayed home on o5, so the left wing is still covered.",
+      "accepts": [
+       "Kick to o2 in the right corner"
+      ]
+     },
+     "marker": "Kick to o2 in the right corner"
+    }
+   ],
+   "truth": "The lesson's Basketball_Play block states the answer is 'corner' — kicking to o2 in the right corner — because d2 stepped up and left o2 open. The check's original key (kick to o5 on the left wing) contradicts the lesson; the new key matches the lesson, so the mismatch is between the check's stated scenario and the lesson's answer.",
+   "old_answer": "Kick to o5 on the left wing",
+   "id": "p129",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K27",
+   "level": "spanish/intermediate/81",
+   "track": "spanish",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "Where is the meeting?",
+      "rationale": "Dónde means where, so ¿Cuándo es la reunión? asks where the meeting is held."
+     },
+     "marker": "Where is the meeting?"
+    }
+   ],
+   "truth": "¿Cuándo es la reunión? means \"When is the meeting?\"; dónde means where.",
+   "old_answer": "When is the meeting?",
+   "id": "p130",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K29",
+   "level": "spanish/intermediate/122",
+   "track": "spanish",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 2,
+     "set": {
+      "answer": "fantástico",
+      "rationale": "The adjective keeps the same ending as the noun it describes, so \"Las playas son fantástico.\""
+     },
+     "marker": "fantástico"
+    }
+   ],
+   "truth": "The correct answer is \"fantásticas\": -ico adjectives agree in gender and number, and \"playas\" is feminine plural.",
+   "old_answer": "fantásticas",
+   "id": "p131",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K31",
+   "level": "spanish/advanced/3",
+   "track": "spanish",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 2,
+     "set": {
+      "answer": "nosotros",
+      "rationale": "Nosotros is the pronoun for we, used when the group includes men or is mixed; it is the general form for a group of people."
+     },
+     "marker": "nosotros"
+    }
+   ],
+   "truth": "The table states that nosotras is used only for a group of all women, so the marked answer 'nosotras' was correct and 'nosotros' is wrong for an all-female group.",
+   "old_answer": "nosotras",
+   "id": "p132",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "K35",
+   "level": "spanish/advanced/105",
+   "track": "spanish",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "Mi hermana es muy trabajador.",
+      "rationale": "Mi hermana es muy trabajador is right: -or adjectives keep the -o form when the noun is feminine in this pattern, and personality uses ser."
+     },
+     "marker": "Mi hermana es muy trabajador."
+    }
+   ],
+   "truth": "The marked answer contradicts the lesson's stated correct sentence \"Mi hermana es muy trabajadora.\" (feminine -or adjectives take -a: trabajadora).",
+   "old_answer": "Mi hermana es muy trabajadora.",
+   "id": "p133",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K40",
+   "level": "math/algebra_1_part_a/465",
+   "track": "math",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 1,
+     "set": {
+      "answer": "18",
+      "rationale": "The cube root of 27 is 3, and 3 times 3 times 3 = 27, so 27^(2/3) = 18.",
+      "accepts": [
+       "18"
+      ]
+     },
+     "marker": "18"
+    }
+   ],
+   "truth": "27^(2/3) = 9, since the cube root of 27 is 3 and 3^2 = 9.",
+   "old_answer": "9",
+   "id": "p134",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K42",
+   "level": "math/algebra_1_part_a/52",
+   "track": "math",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 3,
+     "set": {
+      "answer": "Subtraction Property of Equality",
+      "rationale": "Subtracting 12 from both sides cancels the -12 on the left, giving 6x = 42 on the right, so the step is the Subtraction Property of Equality.",
+      "accepts": [
+       "Subtraction Property of Equality"
+      ]
+     },
+     "marker": "Subtraction Property of Equality"
+    }
+   ],
+   "truth": "Adding 12 to both sides of 6x - 12 = 30 gives 6x = 42, so the step is the Addition Property of Equality, as the lesson states for the parallel step in 4(x - 1) = 20.",
+   "old_answer": "Addition Property of Equality",
+   "id": "p135",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "K44",
+   "level": "math/algebra_1_part_a/296",
+   "track": "math",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 2,
+     "set": {
+      "answer": "0 < g < 50",
+      "rationale": "Gallons can be any amount strictly between empty and the cap of 50, since the pool is never completely empty and never exactly full while it is being filled, so the domain is 0 < g < 50."
+     },
+     "marker": "0 < g < 50"
+    }
+   ],
+   "truth": "The lesson states both endpoints are possible, so the domain is 0 <= g <= 50; the strict inequality 0 < g < 50 wrongly excludes 0 and 50.",
+   "old_answer": "0 <= g <= 50",
+   "id": "p136",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "K46",
+   "level": "math/algebra_1_part_a/254",
+   "track": "math",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 2,
+     "set": {
+      "answer": "3x + 1",
+      "rationale": "The parallel line keeps slope 3. Point-slope gives y - 5 = 3(x - 2), which simplifies to y = 3x - 1, and 3(2) - 1 = 5 checks the point.",
+      "accepts": [
+       "3x + 1"
+      ]
+     },
+     "marker": "3x + 1"
+    }
+   ],
+   "truth": "A parallel line through (2, 5) with slope 3 is y = 3x - 1; y = 3x + 1 is the original line and does not pass through (2, 5), since 3(2) + 1 = 7.",
+   "old_answer": "3x - 1",
+   "id": "p137",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K48",
+   "level": "math/algebra_1_part_a/423",
+   "track": "math",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 3,
+     "set": {
+      "answer": "30",
+      "rationale": "Evaluate P at each vertex: 0, 18, 20 + 12 = 32, and 30. The largest is 30, at (6,0)."
+     },
+     "marker": "30"
+    }
+   ],
+   "truth": "At (4,4), P = 5(4) + 3(4) = 20 + 12 = 32, which is larger than P = 30 at (6,0), so the maximum is 32. The new key of 30 is wrong.",
+   "old_answer": "32",
+   "id": "p138",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "K50",
+   "level": "math/algebra_1_part_a/338",
+   "track": "math",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 3,
+     "set": {
+      "answer": "246 < w < 254",
+      "rationale": "The inequality says the distance from w to 250 is at most 4, so w is between 250 - 4 = 246 and 250 + 4 = 254. The endpoints are excluded, giving 246 < w < 254."
+     },
+     "marker": "246 < w < 254"
+    }
+   ],
+   "truth": "The lesson's tolerance rule uses a non-strict inequality (≤), so the endpoints are included: 246 ≤ w ≤ 254, not the open interval 246 < w < 254.",
+   "old_answer": "246 ≤ w ≤ 254",
+   "id": "p139",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "K52",
+   "level": "math/algebra_1_part_a/380",
+   "track": "math",
+   "kind": "key_lesson_mismatch",
+   "edits": [
+    {
+     "word": "check",
+     "index": 2,
+     "set": {
+      "answer": "(6, 1)",
+      "rationale": "The y-coefficients are already opposites, so adding gives 4x = 24 and x = 6; back-substituting into x - 2y = 8 gives 6 - 2y = 8, so y = 1.",
+      "accepts": [
+       "(6, 1)"
+      ]
+     },
+     "marker": "(6, 1)"
+    }
+   ],
+   "truth": "The pair (6, 1) does not satisfy the system: 3(6) + 2(1) = 20, not 16, and 6 - 2(1) = 4, not 8.",
+   "old_answer": "(6, -1)",
+   "id": "p140",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "H0",
+   "level": "english/proficient/30",
+   "track": "english",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "Winston Churchill, speech",
+     "wrong": "Neville Chamberlain, speech"
+    },
+    {
+     "word": "block",
+     "index": 0,
+     "original": "\"speaker\":\"Winston Churchill\"",
+     "wrong": "\"speaker\":\"Neville Chamberlain\""
+    },
+    {
+     "word": "block",
+     "index": 0,
+     "original": "and Churchill plants",
+     "wrong": "and Chamberlain plants"
+    }
+   ],
+   "truth": "The June 1940 'we shall never surrender' speech is Churchill's.",
+   "id": "p141",
+   "split": "dev",
+   "consistent": true
+  },
+  {
+   "src": "H1",
+   "level": "english/proficient/82",
+   "track": "english",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Chicago says: use the Oxford comma. AP says: leave it out.",
+     "wrong": "AP says: use the Oxford comma. Chicago says: leave it out."
+    }
+   ],
+   "truth": "Chicago keeps the Oxford comma; AP generally omits it.",
+   "id": "p142",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "H2",
+   "level": "english/proficient/91",
+   "track": "english",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "AP drops the Oxford comma; Chicago keeps it",
+     "wrong": "Chicago drops the Oxford comma; AP keeps it"
+    }
+   ],
+   "truth": "AP omits it, Chicago keeps it.",
+   "id": "p143",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "H3",
+   "level": "spanish/advanced/84",
+   "track": "spanish",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Ella es porteña, de Buenos Aires.",
+     "wrong": "Ella es limeña, de Buenos Aires."
+    }
+   ],
+   "truth": "A woman from Buenos Aires is porteña; limeña is from Lima.",
+   "id": "p144",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "H4",
+   "level": "spanish/advanced/84",
+   "track": "spanish",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "chilango / chilanga",
+     "wrong": "madrileño / madrileña"
+    }
+   ],
+   "truth": "A person from Mexico City is chilango/chilanga.",
+   "id": "p145",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "H5",
+   "level": "spanish/advanced/3",
+   "track": "spanish",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 0,
+     "original": "Spain also uses vosotros",
+     "wrong": "Mexico also uses vosotros"
+    }
+   ],
+   "truth": "Vosotros is used in Spain, not Mexico.",
+   "id": "p146",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "H6",
+   "level": "math/algebra_1_part_a/52",
+   "track": "math",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Subtraction Property of Equality: subtract 6 from both sides",
+     "wrong": "Distributive Property: subtract 6 from both sides"
+    }
+   ],
+   "truth": "Subtracting from both sides is the Subtraction Property of Equality.",
+   "id": "p147",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "H7",
+   "level": "math/algebra_1_part_a/221",
+   "track": "math",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "original": "Point-slope form is y - y1 = m(x - x1)",
+     "wrong": "Slope-intercept form is y - y1 = m(x - x1)"
+    }
+   ],
+   "truth": "y - y1 = m(x - x1) is point-slope form.",
+   "id": "p148",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "H8",
+   "level": "chess/chess_board_explorer/42",
+   "track": "chess",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "original": "Slanted lines belong to the bishop (and the queen)",
+     "wrong": "Slanted lines belong to the knight (and the queen)"
+    }
+   ],
+   "truth": "Diagonal lines belong to the bishop and queen.",
+   "id": "p149",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "H9",
+   "level": "english/proficient/10",
+   "track": "english",
+   "kind": "date_name",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "original": "That's a comma splice: two full clauses",
+     "wrong": "That's a sentence fragment: two full clauses"
+    }
+   ],
+   "truth": "Two full clauses with only a comma is a comma splice, not a fragment.",
+   "id": "p150",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S1",
+   "level": "english/proficient/10",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "path": "correctOptionId",
+     "value": "a",
+     "marker": "Our bench fell silent."
+    }
+   ],
+   "truth": "The key of Interact_MultipleChoice was moved to a wrong option.",
+   "id": "p151",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S2",
+   "level": "english/proficient/40",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "path": "correctOptionId",
+     "value": "a",
+     "marker": "Maria finished the poster, and she printed it on glossy paper."
+    }
+   ],
+   "truth": "The key of Interact_MultipleChoice was moved to a wrong option.",
+   "id": "p152",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S3",
+   "level": "english/proficient/82",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "path": "correctOptionId",
+     "value": "a",
+     "marker": "affected"
+    }
+   ],
+   "truth": "The key of Interact_MultipleChoice was moved to a wrong option.",
+   "id": "p153",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S4",
+   "level": "english/proficient/29",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "path": "correctId",
+     "value": "alwaysEnd",
+     "marker": "The most emphatic position is always at the end, no matter which sentence pattern you use."
+    }
+   ],
+   "truth": "The key of Ret_MisconceptionTrap was moved to a wrong option.",
+   "id": "p154",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S5",
+   "level": "english/proficient/38",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "path": "correctId",
+     "value": "a",
+     "marker": "A fragment is always an error, even when the writer uses it on purpose."
+    }
+   ],
+   "truth": "The key of Ret_MisconceptionTrap was moved to a wrong option.",
+   "id": "p155",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "S6",
+   "level": "english/proficient/39",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "path": "correctId",
+     "value": "opt1",
+     "marker": "Delete the period: 'Fear is a reasonable response to danger panic is not.' — keep it as one flowing sentence."
+    }
+   ],
+   "truth": "The key of Ret_MisconceptionTrap was moved to a wrong option.",
+   "id": "p156",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S7",
+   "level": "english/proficient/48",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "path": "correctId",
+     "value": "all_passive",
+     "marker": "Every sentence should avoid the passive voice completely, so rewrite it as 'The relay team finished the race, and the victory was celebrated by everyone.'"
+    }
+   ],
+   "truth": "The key of Ret_MisconceptionTrap was moved to a wrong option.",
+   "id": "p157",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "S8",
+   "level": "english/proficient/49",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 4,
+     "path": "correctId",
+     "value": "a",
+     "marker": "An inappropriate shift — the mood changes mid-sentence, so it should be rewritten to stay indicative throughout."
+    }
+   ],
+   "truth": "The key of Ret_MisconceptionTrap was moved to a wrong option.",
+   "id": "p158",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S9",
+   "level": "english/proficient/61",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 1,
+     "path": "correctId",
+     "value": "o1",
+     "marker": "\"Passive voice is always bad writing. Every sentence you write in the passive voice is an error you should fix.\""
+    }
+   ],
+   "truth": "The key of Ret_MisconceptionTrap was moved to a wrong option.",
+   "id": "p159",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S10",
+   "level": "english/proficient/71",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 3,
+     "path": "correctId",
+     "value": "semicolon",
+     "marker": "Semicolon"
+    }
+   ],
+   "truth": "The key of Ret_MisconceptionTrap was moved to a wrong option.",
+   "id": "p160",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S11",
+   "level": "english/proficient/91",
+   "track": "english",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 2,
+     "path": "correctId",
+     "value": "a",
+     "marker": "Both are outright errors that no careful writer would ever make"
+    }
+   ],
+   "truth": "The key of Ret_MisconceptionTrap was moved to a wrong option.",
+   "id": "p161",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S12",
+   "level": "chess/chess_board_explorer/42",
+   "track": "chess",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 6,
+     "path": "correctOptionId",
+     "value": "b",
+     "marker": "Only b7 and h7, two far diagonal squares"
+    }
+   ],
+   "truth": "The key of Interact_MultipleChoice was moved to a wrong option.",
+   "id": "p162",
+   "split": "heldout",
+   "consistent": false
+  },
+  {
+   "src": "S13",
+   "level": "spanish/entry/65",
+   "track": "spanish",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 5,
+     "path": "correctOptionId",
+     "value": "a",
+     "marker": "Read the book."
+    }
+   ],
+   "truth": "The key of Interact_MultipleChoice was moved to a wrong option.",
+   "id": "p163",
+   "split": "dev",
+   "consistent": false
+  },
+  {
+   "src": "S14",
+   "level": "spanish/entry/81",
+   "track": "spanish",
+   "kind": "wrong_answer_key",
+   "edits": [
+    {
+     "word": "block",
+     "index": 6,
+     "path": "correctOptionId",
+     "value": "a",
+     "marker": "Buenos días, doña Méndez."
+    }
+   ],
+   "truth": "The key of Interact_MultipleChoice was moved to a wrong option.",
+   "id": "p164",
+   "split": "heldout",
+   "consistent": false
+  }
+ ],
+ "clean": [
+  {
+   "level": "english/proficient/10",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/20",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/30",
+   "split": "dev"
+  },
+  {
+   "level": "english/proficient/40",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/52",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/82",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/92",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/29",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/38",
+   "split": "dev"
+  },
+  {
+   "level": "english/proficient/39",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/48",
+   "split": "dev"
+  },
+  {
+   "level": "english/proficient/49",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/61",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/71",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/91",
+   "split": "heldout"
+  },
+  {
+   "level": "chess/chess_board_explorer/42",
+   "split": "heldout"
+  },
+  {
+   "level": "piano/piano_keyboard_explorer/32",
+   "split": "heldout"
+  },
+  {
+   "level": "basketball/basketball_junior_club_player/706",
+   "split": "heldout"
+  },
+  {
+   "level": "spanish/entry/4",
+   "split": "dev"
+  },
+  {
+   "level": "spanish/entry/16",
+   "split": "heldout"
+  },
+  {
+   "level": "spanish/entry/65",
+   "split": "dev"
+  },
+  {
+   "level": "spanish/entry/81",
+   "split": "heldout"
+  },
+  {
+   "level": "spanish/entry/84",
+   "split": "heldout"
+  },
+  {
+   "level": "spanish/intermediate/27",
+   "split": "dev"
+  },
+  {
+   "level": "spanish/intermediate/81",
+   "split": "heldout"
+  },
+  {
+   "level": "spanish/intermediate/122",
+   "split": "heldout"
+  },
+  {
+   "level": "spanish/advanced/3",
+   "split": "dev"
+  },
+  {
+   "level": "spanish/advanced/28",
+   "split": "heldout"
+  },
+  {
+   "level": "spanish/advanced/54",
+   "split": "heldout"
+  },
+  {
+   "level": "spanish/advanced/69",
+   "split": "dev"
+  },
+  {
+   "level": "spanish/advanced/80",
+   "split": "dev"
+  },
+  {
+   "level": "spanish/advanced/84",
+   "split": "heldout"
+  },
+  {
+   "level": "spanish/advanced/104",
+   "split": "dev"
+  },
+  {
+   "level": "spanish/advanced/105",
+   "split": "heldout"
+  },
+  {
+   "level": "math/calculus_i/10",
+   "split": "heldout"
+  },
+  {
+   "level": "math/calculus_i/20",
+   "split": "dev"
+  },
+  {
+   "level": "math/calculus_i/30",
+   "split": "heldout"
+  },
+  {
+   "level": "math/calculus_i/18",
+   "split": "heldout"
+  },
+  {
+   "level": "math/calculus_i/19",
+   "split": "heldout"
+  },
+  {
+   "level": "math/calculus_i/29",
+   "split": "heldout"
+  },
+  {
+   "level": "english/proficient/124",
+   "split": "heldout"
+  },
+  {
+   "level": "math/numbers_to_20_and_teen_numbers/20",
+   "split": "dev"
+  },
+  {
+   "level": "english/proficient/125",
+   "split": "heldout"
+  },
+  {
+   "level": "math/algebra_1_part_a/465",
+   "split": "heldout"
+  },
+  {
+   "level": "math/algebra_1_part_a/10",
+   "split": "heldout"
+  },
+  {
+   "level": "math/algebra_1_part_a/423",
+   "split": "heldout"
+  },
+  {
+   "level": "math/algebra_1_part_a/52",
+   "split": "dev"
+  },
+  {
+   "level": "math/algebra_1_part_a/95",
+   "split": "dev"
+  },
+  {
+   "level": "math/algebra_1_part_a/137",
+   "split": "heldout"
+  },
+  {
+   "level": "math/algebra_1_part_a/179",
+   "split": "dev"
+  },
+  {
+   "level": "math/algebra_1_part_a/221",
+   "split": "dev"
+  },
+  {
+   "level": "math/algebra_1_part_a/254",
+   "split": "heldout"
+  },
+  {
+   "level": "math/algebra_1_part_a/296",
+   "split": "dev"
+  },
+  {
+   "level": "math/algebra_1_part_a/338",
+   "split": "dev"
+  },
+  {
+   "level": "math/algebra_1_part_a/380",
+   "split": "heldout"
+  }
+ ]
+}
