@@ -25,7 +25,7 @@ const COLLECTION = 'lesson_layers';
 const on = () => String(process.env.INSTANT_LAYER || 'off').toLowerCase() === 'on';
 const BUDGET_MS = Number(process.env.INSTANT_LAYER_BUDGET_MS || 14000); // from start to a stored layer, revision included
 const HEDGE_MS = Number(process.env.INSTANT_LAYER_HEDGE_MS || 2500);
-const MAX_WORDS = { hook: 45, why: 45, analogy: 40, total: 150 };
+const MAX_WORDS = { hook: 45, why: 50, analogy: 40, total: 160 };
 
 const words = (t) => (String(t || '').match(/[A-Za-zÀ-ÿ0-9'-]+/g) || []);
 const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9à-ÿ ]+/g, ' ').replace(/\s+/g, ' ').trim();
@@ -89,7 +89,7 @@ function rules(spec, ctx = {}) {
   if (fb.lowStakes) r.push('Never say test, graded, score or fail.');
   if (ctx.goalClause) r.push(`They want to keep this for ${ctx.goalClause}: the why may say so once.`);
   if (it.avoidDomains && it.avoidDomains.length) r.push(`Never use anything about: ${it.avoidDomains.join(', ')}.`);
-  r.push('Hard limits: state NO number, no figure, no name and no fact about the subject that the lesson text does not give; define nothing; never give an answer to a question in the lesson. Short: hook and why 45 words or fewer each, an analogy 40 or fewer.');
+  r.push('Hard limits: state NO number, no figure, no name and no fact about the subject that the lesson text does not give; define nothing; never give an answer to a question in the lesson. Short: hook 40 words or fewer, why 40 or fewer, an analogy 35 or fewer.');
   return r;
 }
 
@@ -110,6 +110,7 @@ const SYSTEM = 'You add a short personal layer over a lesson that already exists
 // claim (superlatives, universals, authorities, "decides") are refused in the why and the hook; an analogy is a marked comparison and is held to the
 // number, name and mapping checks instead.
 const CLAIM = /\b(most|least|always|never|every|everyone|everything|nobody|best|worst|only|key|essential|vital|crucial|critical|fundamental|foundation|foundational|basis|backbone|experts?|professionals?|pros|veterans?|stronger players|better players|top players|champions?|studies|research|proven|science|scientists?|decides?|determines?|rewards?|guarantee[sd]?|ensures?|ranks?|rated)\b/i;
+const CLAIM_HOOK = /\b(most|least|best|worst|experts?|professionals?|pros|veterans?|stronger players|better players|top players|champions?|studies|research|proven|science|scientists?|rewards?|guarantee[sd]?|ranks?|rated)\b/i;
 const MARK = /\b(like|as if|as though|imagine|picture|think of|thinking of|similar|just as|same way|same as|compare|comparable|reminds?|resembles?|works? the way|is to)\b/i;
 const PROFILE_LEAK = /\b(scorecard|your (?:learning )?(?:style|profile|score|data)|according to your|as a (?:slow|fast|visual|verbal) learner|you (?:learn|are) (?:best|a))\b/i;
 
@@ -144,7 +145,7 @@ function check(spec, layer, source) {
   }
   if (PROFILE_LEAK.test(all)) out.push('it talks about the learner profile');
   for (const d of (spec && spec.interests && spec.interests.avoidDomains) || []) if (hasAll(all, d)) out.push(`it uses ${d}, which the learner dislikes`);
-  for (const [label, t] of [['why', why], ['hook', hook]]) { const m = CLAIM.exec(t); if (m) out.push(`the ${label} says "${m[0]}": that is a claim about the subject, not a reason it matters to this reader`); }
+  for (const [label, t, re] of [['why', why, CLAIM], ['hook', hook, CLAIM_HOOK]]) { const m = re.exec(t); if (m) out.push(`the ${label} says "${m[0]}": that is a claim about the subject, not a reason it matters to this reader`); }
   if (why && !/\b(you|your|you'll|you're)\b/i.test(why)) out.push('the why does not speak to the reader (you, your)');
   // Comparisons are marked as comparisons; the hook is a question or a scene: neither can pass as a statement about the subject.
   for (const a of an) if (!MARK.test(a.text)) out.push('an analogy is not marked as a comparison (like, think of, imagine)');
