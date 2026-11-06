@@ -7,7 +7,7 @@
  * NO number and NO claim about the subject: it is checked here, deterministically (`check`), and a layer that fails twice is not shown (the
  * plain lesson stays). The full personal level keeps being written in the background and is what the learner opens at the next level.
  *
- *   on()                       the switch: INSTANT_LAYER=on (default off until its gate passes; docs/FIRST-LESSON.md)
+ *   on()                       the switch: INSTANT_LAYER=off turns it off (on by default: its gate passed, docs/FIRST-LESSON.md)
  *   sourceOf(plan)             the text of the shared lesson: block text, check prompts and choices; the check answers apart
  *   rules(spec, ctx)           the rules one layer is written under, from the learner's spec
  *   check(spec, layer, source) the problems a layer is held to; [] means it may be shown
@@ -22,7 +22,8 @@ const learningSpec = require('./learning-spec');
 
 const lazy = (p) => require(p); // eslint-disable-line global-require, import/no-dynamic-require
 const COLLECTION = 'lesson_layers';
-const on = () => String(process.env.INSTANT_LAYER || 'off').toLowerCase() === 'on';
+// ON by default since its gate passed (docs/FIRST-LESSON.md, 6 Nov round 2); INSTANT_LAYER=off removes it. With no shared lesson for a level nothing changes.
+const on = () => String(process.env.INSTANT_LAYER || 'on').toLowerCase() !== 'off';
 const BUDGET_MS = Number(process.env.INSTANT_LAYER_BUDGET_MS || 14000); // from start to a stored layer, revision included
 const HEDGE_MS = Number(process.env.INSTANT_LAYER_HEDGE_MS || 2500);
 const MAX_WORDS = { hook: 45, why: 50, analogy: 40, total: 160 };

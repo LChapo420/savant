@@ -33,7 +33,7 @@ const GOOD = { why: 'Equations are how you work out an unknown, the way a coach 
 
 (async () => {
   console.log('layer: the gate');
-  check('off by default', !layer.on());
+  check('on by default, off with INSTANT_LAYER=off', layer.on() && (() => { process.env.INSTANT_LAYER = 'off'; const off = !layer.on(); delete process.env.INSTANT_LAYER; return off; })());
   check('a good layer passes', layer.check(SPEC, GOOD, SRC).length === 0, layer.check(SPEC, GOOD, SRC));
   check('a new number is refused', layer.check(SPEC, { ...GOOD, hook: 'Imagine a basketball team scoring 82 points: how would you find 30 of them?' }, SRC).some((p) => /number 82/.test(p)));
   check('a number word is a number', layer.check(SPEC, { ...GOOD, why: 'Like a basketball team of nine, you balance things out.' }, SRC).some((p) => /number 9/.test(p)));
@@ -48,8 +48,7 @@ const GOOD = { why: 'Equations are how you work out an unknown, the way a coach 
   check('empty is refused', layer.check(SPEC, {}, SRC)[0] === 'empty');
 
   console.log('layer: write, store, serve');
-  process.env.INSTANT_LAYER = 'on';
-  check('the switch turns it on', layer.on());
+  check('the switch is on', layer.on());
   const user = { id: 4242 };
   const ok = await layer.start({ user, plan: PLAN, topic: 'One-step equations', spec: SPEC, llm: async () => ({ data: GOOD, model: 'stub' }) });
   check('a good draft is stored', ok && ok.status === 'ready');

@@ -47,6 +47,7 @@ const scorecardHooks = require('../services/scorecard/hooks');
 const learnerRecord = require('../services/learner-record');
 const blockLevels = require('../services/block-levels');
 const lessonLayer = require('../services/lesson-layer');
+const personalizeArm = (userId, where) => { try { return require('../services/personalize').armFor(userId, where).arm; } catch { return null; } }; // eslint-disable-line global-require
 const levelLogs = require('../services/level-logs');
 const assist = require('../services/assist');
 const writeAhead = require('../services/write-ahead');
@@ -433,7 +434,8 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
     // (GET .../layer), and the personal level keeps being written for the levels after. Nothing waits on a model here.
     let instant = null;
     if (blockKind === 'lesson' && lessonLayer.on() && blockLevels.tailorsFor(req.user) && blockLevels.mayGenerate(req.user) && blockLevels.aiReady()
-      && !blockLevels.findPlan({ userId: req.user.id, trackId: track, gradeId: grade, level })) {
+      && !blockLevels.findPlan({ userId: req.user.id, trackId: track, gradeId: grade, level })
+      && personalizeArm(req.user.id, { trackId: track, gradeId: grade, level }) !== 'holdout') { // the holdout arm is served the shared lesson as it is
       const shared = blockLevels.findPlan({ userId: null, trackId: track, gradeId: grade, level });
       if (shared) {
         instant = shared;
