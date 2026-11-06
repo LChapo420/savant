@@ -27,6 +27,10 @@ async function login(kind) {
   if (kind === 'child') Object.assign(body, { username: `sweepapik${stamp}`, parent_email: `sp-${stamp}@example.com`, birth_year: year - 10 });
   if (kind === 'admin') Object.assign(body, { email: 'walk-admin@example.com', birth_year: 1990 });
   if (kind === 'anon') return '';
+  if (kind === 'admin') {
+    const l = await fetch(BASE + '/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: BASE }, body: JSON.stringify({ email: body.email, password: body.password }) });
+    if (l.headers.get('set-cookie')) return l.headers.get('set-cookie').split(';')[0];
+  }
   let r = await fetch(BASE + '/api/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: BASE }, body: JSON.stringify(body) });
   if (r.status === 409) r = await fetch(BASE + '/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: BASE }, body: JSON.stringify({ email: body.email, password: body.password }) });
   const sc = r.headers.get('set-cookie'); if (!sc) throw new Error(kind + ' ' + r.status);
@@ -35,7 +39,7 @@ async function login(kind) {
 (async () => {
   console.log(routes.size, 'GET routes');
   let bad = 0;
-  for (const kind of ['anon', 'adult', 'teen', 'child', 'admin']) {
+  for (const kind of (process.env.PERSONAS || 'anon,adult,teen,child,admin').split(',')) {
     const cookie = await login(kind);
     for (const p of routes) {
       const t = Date.now();
@@ -44,7 +48,7 @@ async function login(kind) {
       const notes = [];
       if (r.status >= 500) notes.push('5xx ' + txt.slice(0, 150));
       if (r.status < 500 && /\/api\//.test(p) && !/json|octet|audio|image|text\/(plain|csv|calendar)|zip|pdf/.test(ct)) notes.push('non-json ' + ct);
-      if (ms > 2000) notes.push('slow ' + ms + 'ms');
+      if (ms > Number(process.env.SLOW_MS || 2000)) notes.push('slow ' + ms + 'ms');
       if (notes.length) { bad++; console.log(`[${kind}] GET ${p} -> ${r.status} ${notes.join(' | ')}`); }
     }
   }
