@@ -584,6 +584,8 @@ function skipOffer(userId, enrollment, grade) {
     && !streak.taken_at
     && enrollment.status === 'active';
   if (!standing) return { ...base, offered: false };
+  // The speed proof's plain-way skill has no test-out (services/speed-proof.js): the standard way is to work through it.
+  try { if (require('./speed-proof').plainAtLevel(userId, enrollment, grade)) return { ...base, offered: false, held: 'plain_way' }; } catch { /* not loaded */ } // eslint-disable-line global-require
   return {
     ...base,
     offered: true,

@@ -27,6 +27,7 @@
 const crypto = require('crypto');
 const learner = require('./learner');
 const boosters = require('./boosters');
+const speedProof = require('./speed-proof');
 const scorecard = require('./scorecard');
 const baseline = require('./onboarding/baseline');
 const tasks = require('./onboarding/tasks');
@@ -109,7 +110,10 @@ function openRun(userId, now = Date.now(), { importance = importanceOf(userId) }
   planner.queue = [];
   planner.elapsed = 0;
   const pre = [];
-  try { if (boosters.delayed.due(userId, now).due) pre.push({ kind: 'delayed', sec: 30 }); } catch { /* none */ }
+  try {
+    if (boosters.delayed.due(userId, now).due) pre.push({ kind: 'delayed', sec: 30 });
+    else if (speedProof.due(userId, now).due) pre.push({ kind: 'delayed', sec: 30, proof: true }); // the speed proof's 1/7/30-day and chosen-horizon checks (services/speed-proof.js)
+  } catch { /* none */ }
   const left = ipip.ITEMS.filter((i) => !t.d.ipip.includes(i.id));
   if (left.length && !boosters.get(userId).questionnaire) pre.push({ kind: 'ipip', sec: IPIP_SEC * Math.min(IPIP_PER_DAY, left.length), ids: left.slice(0, IPIP_PER_DAY).map((i) => i.id) });
   planner.available = (it) => KINDS.has(it.kind) && !!tasks.present(it, 1);
@@ -143,9 +147,9 @@ function nextStep(user, active, planner) {
   const pre = (active.pre || [])[0];
   if (pre) {
     if (pre.kind === 'delayed') {
-      const v = boosters.delayed.start(user);
+      const v = pre.proof ? speedProof.start(user) : boosters.delayed.start(user);
       if (v.error) { active.pre.shift(); return nextStep(user, active, planner); }
-      active.current = { id: 'delayed', kind: 'delayed', at: Date.now(), check_id: v.check_id, sec: pre.sec };
+      active.current = { id: 'delayed', kind: 'delayed', at: Date.now(), check_id: v.check_id, sec: pre.sec, proof: !!pre.proof };
       return { step: { id: 'delayed', kind: 'delayed', check_id: v.check_id, questions: v.questions }, progress: progressOf(planner, active) };
     }
     active.current = { id: 'ipip', kind: 'ipip', at: Date.now(), ids: pre.ids, sec: pre.sec };
@@ -192,7 +196,7 @@ function answer(user, body, now = Date.now()) {
     active.pre.shift();
     active.extra += cur.sec;
     planner.elapsed += cur.sec;
-    if (!body.skip && cur.kind === 'delayed') boosters.delayed.answer(user, cur.check_id, response.answers || {});
+    if (!body.skip && cur.kind === 'delayed') (cur.proof ? speedProof : boosters.delayed).answer(user, cur.check_id, response.answers || {});
     if (!body.skip && cur.kind === 'ipip') {
       const answers = {};
       for (const id of cur.ids) { const v = Number(response.answers && response.answers[id]); if (v >= 1 && v <= 5) answers[id] = v; }

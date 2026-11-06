@@ -705,7 +705,12 @@ async function buildBlock({ userId, session, enrollment, grade, level, blockInde
  * preview of a level ahead neither advances anyone nor marks anything cleared.
  * `preview` on the session row is what keeps the recap honest about it.
  */
-async function createSession({ userId, enrollment, grade, level: atLevel }) {
+function createSession(args) {
+  // eslint-disable-next-line global-require
+  return require('./speed-proof').withSkill(args.userId, args.grade, args.enrollment, args.level, () => createSessionInner(args));
+}
+
+async function createSessionInner({ userId, enrollment, grade, level: atLevel }) {
   // An unfinished sitting on this enrollment is returned as it stands, rather
   // than replaced by a new one.
   //
