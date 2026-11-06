@@ -7,7 +7,7 @@ const fs = require('fs');
 const load = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 const v1 = load('docs/uploads-factcheck-proof-v1.json');
 const base = load('docs/uploads-factcheck-proof-base.json');
-const fin = load('docs/uploads-factcheck-proof-final.json');
+const fin = load(process.env.FACT_OUT || 'docs/uploads-factcheck-proof-final.json');
 const today = [...v1.rows.filter((r) => r.tag === 'v1'), ...base.rows.filter((r) => r.tag === 'base')];
 const now = fin.rows.filter((r) => r.tag === (process.env.FACT_TAG || 'final'));
 const exams = { ...v1.exam, ...base.exam, ...fin.exam };

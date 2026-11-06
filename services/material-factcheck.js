@@ -303,7 +303,9 @@ async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = 
       if (!had) { answered.set(it.id, v); return; }
       if (v.verdict === 'not_in_source' && had.verdict !== 'not_in_source') { answered.set(it.id, v); stats.second_caught = (stats.second_caught || 0) + 1; } else if (v.verdict === 'not_in_source' && !had.fixed && v.fixed) answered.set(it.id, v);
     };
-    await Promise.all([read(asker, ask, take), asker2 ? read(asker2, ask, take) : null]);
+    // Each family reads twice, all at once: a reader misses different sentences each time, and a second reading took the independent judge's count to zero (docs/UPLOADS-ANY-FORMAT.md section 17).
+    const twice = asker2 && String(process.env.UPLOAD_FACTCHECK_READS || '2') !== '1';
+    await Promise.all([read(asker, ask, take), asker2 ? read(asker2, ask, take) : null, twice ? read(asker, ask, take) : null, twice ? read(asker2, ask, take) : null]);
     // Neither answered (a learner with no slot of those families, a busy minute): any reader will do.
     const still = ask.filter((x) => !answered.has(x.id));
     if (still.length && askerAny && !stats.stopped) await read(askerAny, still, take);
