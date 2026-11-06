@@ -30,7 +30,9 @@ const LABELS = new Set('key why think try watch stretch quick level takeaway not
 const CAUSAL = /\b(?:because|since|therefore|thus|hence|so that|causes?|caused|causing|leads? to|led to|leading to|results? in|resulted in|due to|as a result|which means|this means|in order to|matters?|encourag\w+|embolden\w+|prevents?|ensures?|helps?)\b/i;
 const NEG = /\b(?:not|no|never|none|without|cannot|can't|isn't|aren't|won't|doesn't|don't|except|unless|nor|neither)\b|n't\b/i;
 // Purpose and benefit claims: what a writer adds when it explains why, in plain words the material may never use. The measured leak (docs/UPLOADS-ANY-FORMAT.md section 17).
-const PURPOSE = /\b(helps?|helping|ensures?|ensuring|provides?|providing|supports?|supporting|allows?|allowing|enables?|enabling|improves?|maintains?|maintaining|prevents?|preventing|avoids?|avoiding|crucial|essential|vital|critical|important|necessary|useful|valuable|powerful|key to|so (?:you|that|it|they|we)|in order to|matters?|this (?:means|makes|lets|is why|ensures)|which (?:means|makes|lets)|encourag\w+|embolden\w+|because)\b/gi;
+const PURPOSE = /\b(helps?|helping|ensures?|ensuring|provides?|providing|supports?|supporting|allows?|allowing|enables?|enabling|improves?|maintains?|maintaining|crucial|essential|vital|critical|important|necessary|useful|valuable|powerful|key to|this (?:means|makes|lets|is why|ensures|matters)|which (?:means|makes|lets)|encourag\w+|embolden\w+)\b/gi;
+// Softer: often a fair rewording of the material ("taper to avoid rebound"), so these only force the model to look, with the word named.
+const REASON = /\b(because|avoids?|avoiding|prevents?|preventing|so (?:you|that|it|they|we)|in order to|why)\b/gi;
 
 const foldDash = (s) => String(s).replace(/[‐-―−]/g, '-');
 const fold = (s) => foldDash(String(s)).replace(/[αβγδεκλμπστφωΔΣ]/g, (c) => ` ${GREEK[c] || c} `.trim()).normalize('NFKD').replace(/[̀-ͯ]/g, '');
@@ -183,6 +185,10 @@ function examine(sentence, idx, opts = {}) {
   if (purposes.length && !(extra && purposes.every((w) => fold(extra).toLowerCase().includes(w)))) {
     const near = idx.lines.filter((l) => { let n = 0; for (const x of terms) if (l.terms.has(x)) n++; return n >= Math.min(2, terms.size); }).map((l) => l.lower).join(' ');
     for (const w of purposes) if (!near.includes(w) && !near.includes(stem(w))) hard.push(`claim "${w}"`);
+    for (const w of [...new Set((s.match(REASON) || []).map((x) => x.toLowerCase()))]) if (!near.includes(w) && !near.includes(stem(w))) soft.push(`reason "${w}"`);
+  } else {
+    const near = idx.lines.filter((l) => { let n = 0; for (const x of terms) if (l.terms.has(x)) n++; return n >= Math.min(2, terms.size); }).map((l) => l.lower).join(' ');
+    for (const w of [...new Set((s.match(REASON) || []).map((x) => x.toLowerCase()))]) if (!near.includes(w) && !near.includes(stem(w))) soft.push(`reason "${w}"`);
   }
   const novel = [...terms].filter((t) => !idx.terms.has(t) && !idx.words.has(t) && !(extraWords && extraWords.has(t)) && !(opts.allowStems && opts.allowStems.has(t)));
   if (novel.length) soft.push(`words ${novel.slice(0, 6).join(', ')}`);
@@ -261,7 +267,13 @@ async function check(items, { idx, sourceText, asker, allow = null, allowStems =
       continue;
     }
     const tryFix = () => {
-      const f = String(v.fixed || '').replace(/\s+/g, ' ').trim();
+      // The model gave no fix for a sentence with an unsupported purpose word: cut the clause that starts with it ("..., which helps refine models" goes; what comes before stays).
+      let f0 = String(v.fixed || '').replace(/\s+/g, ' ').trim();
+      if (!f0 && e.hard.length && e.hard.every((h) => h.startsWith('claim'))) {
+        const m = /[,;:]\s*(?:which\s+|and\s+|so\s+|this\s+|that\s+)?(?:helps?|helping|ensures?|ensuring|provides?|providing|supports?|supporting|allows?|allowing|enables?|enabling|improves?|maintains?|maintaining|means|makes|lets|encourag\w+|embolden\w+)\b/i.exec(it.text);
+        if (m) f0 = `${it.text.slice(0, m.index).trim()}.`;
+      }
+      const f = f0;
       if (!f || f === it.text || (f.match(/\S+/g) || []).length < 3) return null;
       const fe = examine(f, idx, { allow, allowStems, extra: it.extra });
       if (fe.hard.length) return null;
