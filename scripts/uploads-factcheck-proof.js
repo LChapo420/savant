@@ -99,7 +99,7 @@ const textOf = (c, raw) => c.skills.map((s) => {
 const lessonOnly = (t) => t.split('\n').filter((l) => !l.startsWith('Q: ')).join('\n').replace(/^Key: /gm, '');
 function builderLlm() {
   return async (a) => {
-    const fam = process.env.FACT_BUILDER || 'M';
+    const fam = (a.task === 'material_factcheck' && process.env.FACT_CHECKER) || process.env.FACT_BUILDER || 'M';
     for (let i = 0; i < 4; i++) {
       try { const data = await J.call(fam, { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: Math.max(a.maxTokens || 1500, 2500) }); return { data, model: fam }; } catch (e) { await new Promise((r) => setTimeout(r, 2000 * (i + 1))); }
     }
@@ -175,7 +175,7 @@ async function runBuilds(reps, ids) {
     const add = materials.addFile(u.id, await fx.build(d.fmt, { id: d.id, title: d.title, md: d.md, kps: [] }), `${d.id}.${d.fmt}`);
     const got = await add;
     if (got.error) { console.log(`${d.id}: ${got.error}`); return; }
-    const built = await cb.build(u.id, got.value.id, { llm: builderLlm(), force: true, factcheck: true });
+    const built = await cb.build(u.id, got.value.id, { llm: builderLlm(), force: true, factcheck: true, split: process.env.UPLOAD_LESSON_SPLIT !== 'off' });
     if (!built.course) { console.log(`${d.id} r${rep}: build failed ${built.error}`); return; }
     const c = built.course;
     // raw explanations: stored in raw_lesson by index before verification; only used for the raw arm's text
@@ -191,9 +191,11 @@ async function runBuilds(reps, ids) {
     row.invented = { raw: {}, checked: {} };
     for (const spec of FACT_JUDGES) {
       const [f, form] = spec.split(':');
-      const [a, b] = await Promise.all([J.judge(f, form, src.plain, form === 'sent' ? lessonOnly(row.raw) : row.raw), J.judge(f, form, src.plain, form === 'sent' ? lessonOnly(row.checked) : row.checked)]);
+      // The dearer judge reads only the checked text.
+      const [a, b] = await Promise.all([f === 'K' ? null : J.judge(f, form, src.plain, form === 'sent' ? lessonOnly(row.raw) : row.raw), J.judge(f, form, src.plain, form === 'sent' ? lessonOnly(row.checked) : row.checked)]);
       row.invented.raw[spec] = a; row.invented.checked[spec] = b;
     }
+    row.spend = JSON.parse(JSON.stringify(J.spend));
     store.rows.push(row); save(OUT, store);
     console.log(`${d.id} r${rep} ${c.status} ${c.skills.length} skills ${row.build_s}s; words ${row.raw_words}->${row.checked_words}; direct ${row.stats && row.stats.direct} model ${row.stats && row.stats.model_ok} fixed ${row.stats && row.stats.fixed} dropped ${row.stats && row.stats.dropped}; invented raw ${FACT_JUDGES.map((f) => (row.invented.raw[f] || []).length)} checked ${FACT_JUDGES.map((f) => (row.invented.checked[f] || []).length)}`);
   });
@@ -219,11 +221,12 @@ function report() {
   for (const f of FACT_JUDGES) console.log(`invented per course ${f}: raw ${(rows.reduce((n, r) => n + (r.invented.raw[f] || []).length, 0) / rows.length).toFixed(2)} checked ${(rows.reduce((n, r) => n + (r.invented.checked[f] || []).length, 0) / rows.length).toFixed(2)}; courses with none after ${rows.filter((r) => !(r.invented.checked[f] || []).length).length}/${rows.length}`);
 }
 
+process.on('exit', () => { if (Object.keys(J.spend).length) console.log('spend', JSON.stringify(J.spend)); });
 (async () => {
   const cmd = process.argv[2];
   if (cmd === 'docs') await writeDocs();
   else if (cmd === 'exam') await runExam();
   else if (cmd === 'build') await runBuilds(Number(process.argv[3] || 1), (process.argv[4] || '').split(',').filter(Boolean));
   else if (cmd === 'recheck') { await recheck(process.argv[3], process.argv[4], process.argv[5] || 'Z'); console.log('spend', JSON.stringify(J.spend)); }
-  else report();
+  else { report(); console.log('spend', JSON.stringify(J.spend)); }
 })().catch((e) => { console.error(e); process.exit(1); });

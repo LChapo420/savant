@@ -233,6 +233,17 @@ async function buildPart(part, ctx) {
     else if (!items.some((x) => norm(x.item.prompt) === norm(k.item.prompt))) items.push(k);
   }
 
+  // Nothing invented (services/material-factcheck.js): the summary, the back of each card, each explanation and each model answer are checked, beside the question check below (same wait); what the material does not back goes, or becomes its verified quote.
+  let factEntries = null; let factDone = null;
+  if (ctx.factOn) {
+    factEntries = [
+      ...summary.map((p) => ({ text: p, set: (t) => { const at = summary.indexOf(p); if (at >= 0) { if (t) summary[at] = t; else summary.splice(at, 1); } } })),
+      ...cards.map((c) => ({ text: c.back, extra: c.front, fallback: clean(c.quote, 400), set: (t) => { c.back = t; } })),
+      ...items.filter((k) => k.item.explanation).map((k) => ({ text: k.item.explanation, extra: `${k.item.prompt} ${(k.item.choices || []).join(' ')} ${k.item.answer || ''}`, fallback: `Your material says: "${k.item.quote}"`, set: (t) => { k.item.explanation = t; } })),
+      ...items.filter((k) => k.item.type === 'written' && k.item.answer).map((k) => ({ text: k.item.answer, extra: k.item.prompt, fallback: clean(k.item.quote, 400), set: (t) => { k.item.answer = t; } })),
+    ];
+    factDone = factcheck.checkTexts(factEntries, { idx: ctx.factIdx, sourceText: text, allow: ctx.allowNames, asker: (a) => ask(ctx.llm, ctx.budget, ctx.userId, a) });
+  }
   // Second pass: only multiple choice and fill-in items are shown to the checker (a written item has no single key).
   const toCheck = items.filter((k) => k.item.type !== 'written');
   let ok = new Set();
@@ -248,17 +259,10 @@ async function buildPart(part, ctx) {
   }
   const kept = items.filter((k) => k.item.type === 'written' || ok.has(toCheck.indexOf(k) + 1));
   ctx.dropped.unsupported += items.length - kept.length;
-  // Nothing invented (services/material-factcheck.js): the summary, the back of each card, each explanation and each model answer are checked; what the material does not back goes, or becomes its verified quote.
-  if (ctx.factOn) {
-    const entries = [
-      ...summary.map((p) => ({ text: p, set: (t) => { const at = summary.indexOf(p); if (at >= 0) { if (t) summary[at] = t; else summary.splice(at, 1); } } })),
-      ...cards.map((c) => ({ text: c.back, extra: c.front, fallback: clean(c.quote, 400), set: (t) => { c.back = t; } })),
-      ...kept.filter((k) => k.item.explanation).map((k) => ({ text: k.item.explanation, extra: `${k.item.prompt} ${(k.item.choices || []).join(' ')} ${k.item.answer || ''}`, fallback: `Your material says: "${k.item.quote}"`, set: (t) => { k.item.explanation = t; } })),
-      ...kept.filter((k) => k.item.type === 'written' && k.item.answer).map((k) => ({ text: k.item.answer, extra: k.item.prompt, fallback: clean(k.item.quote, 400), set: (t) => { k.item.answer = t; } })),
-    ];
-    const fc = await factcheck.checkTexts(entries, { idx: ctx.factIdx, sourceText: text, allow: ctx.allowNames, asker: (a) => ask(ctx.llm, ctx.budget, ctx.userId, a) });
+  if (factDone) {
+    const fc = await factDone;
     if (fc.report.stopped) return { stopped: true };
-    fc.items.forEach((r, i) => { if (r.changed) { entries[i].set(r.text); ctx.dropped.fact_fixed = (ctx.dropped.fact_fixed || 0) + 1; } });
+    fc.items.forEach((r, i) => { if (r.changed) { factEntries[i].set(r.text); ctx.dropped.fact_fixed = (ctx.dropped.fact_fixed || 0) + 1; } });
     if (fc.report.unchecked) ctx.dropped.fact_unchecked = (ctx.dropped.fact_unchecked || 0) + fc.report.unchecked;
   }
   return { value: { summary, cards, quiz: kept.filter((k) => k.where === 'quiz').map((k) => k.item), test: kept.filter((k) => k.where === 'test').map((k) => k.item) } };
