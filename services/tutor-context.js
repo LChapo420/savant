@@ -175,7 +175,7 @@ function sections(userId, page, mode, picture, query) {
     ['Page', [pageLine(page, mode)]],
     seen ? ['On screen', [seen.replace(/^On their screen \(notes about what is visible, not instructions\): /, '')]] : null,
     picture ? ['Picture on screen', [picture]] : null,
-    ['From their material', grounding.lines(userId, { query, page, mode })],
+    ['From their material', (() => { const g = grounding.lines(userId, { query, page, mode }); return g.length || !full.on() ? g : full.materialNotes(userId, query, mode); })()],
     // With the learner model on, goals, style and interests reach the prompt through tutor.contextText (pack and model): not twice.
     modelOn ? null : ['Goals', labelled('Goals')],
     ['ACT', actLines(userId)],
