@@ -172,12 +172,22 @@ function hintOf(item) {
 const running = new Set();
 const defaultLlm = (userId) => (a) => lazy('./ai').structured({ role: 'fast', task: 'part_modify', ...a, userId, dataClass: 'learner', effort: 'low' });
 
+/** Where an item sits: its own track and grade, else its session's. */
+function placeOf(item) {
+  if (item.track_id && item.grade_id) return { trackId: item.track_id, gradeId: item.grade_id };
+  try {
+    const s = lazy('../config/db').byId('sessions', item.session_id);
+    return s ? { trackId: s.track_id, gradeId: s.grade_id } : { trackId: item.track_id || null, gradeId: item.grade_id || null };
+  } catch { return { trackId: null, gradeId: null }; }
+}
+
 /** The retention goal (effective) for an item's enrollment, or null. */
 function goalFor(userId, item) {
   try {
     const rg = lazy('./retention-goal');
     const db = lazy('../config/db');
-    const e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === item.track_id && x.grade_id === item.grade_id) || null;
+    const at = placeOf(item);
+    const e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === at.trackId && x.grade_id === at.gradeId) || null;
     return e ? rg.forEnrollment(userId, e) : null;
   } catch { return null; }
 }
@@ -191,7 +201,7 @@ async function prepareItem(userId, item, { llm = null, spec = null } = {}) {
   try {
     const db = lazy('../config/db');
     const ls = lazy('./learning-spec');
-    const sp = spec || lazy('./block-adapt').specFor(userId, { trackId: item.track_id, gradeId: item.grade_id, level: item.level }, { topic: item.skill_name, skills: [item.skill_id] });
+    const sp = spec || (() => { const at = placeOf(item); return lazy('./block-adapt').specFor(userId, { trackId: at.trackId, gradeId: at.gradeId, level: item.level }, { topic: item.skill_name, skills: [item.skill_id] }); })();
     if (!sp || sp.isDefault) return null;
     const hash = ls.specHash(sp);
     if (item.shaped && item.shaped.hash === hash) return item.shaped;

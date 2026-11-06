@@ -76,6 +76,17 @@ check('a brief learner is refused a long rewrite', pm.check(BRIEF, 'feedback', S
   check('PART_MODIFY=off serves the stored text', pm.rationaleOf(item) === 'stored' && pm.hintOf(item) === 'stored hint');
   process.env.PART_MODIFY = 'on';
 
+  console.log('prepareItem on a stored item row');
+  const db = require('../config/db');
+  const row = db.insert('items', { user_id: 5, session_id: 1, skill_id: 'add_sub', skill_name: 'Volume', level: 3, prompt: SRC.prompt, choices: SRC.choices, answer: SRC.answer, rationale: SRC.text, hint: 'Think about the three sides.', track_id: 'math', grade_id: 'g' });
+  const shaped = await pm.prepareItem(5, row, { spec: BRIEF, llm: async ({ user }) => ({ text: /Think about/.test(user) ? 'Look at the three sides.' : 'Multiply 3 x 2 x 4 = 24.' }) });
+  check('the rewrite is written on the learner own item row', shaped && shaped.rationale === 'Multiply 3 x 2 x 4 = 24.' && db.byId('items', row.id).shaped.hash, shaped);
+  check('the hint is rewritten too', db.byId('items', row.id).shaped.hint === 'Look at the three sides.');
+  check('served from the row afterwards', pm.rationaleOf(db.byId('items', row.id)) === 'Multiply 3 x 2 x 4 = 24.');
+  const again = await pm.prepareItem(5, db.byId('items', row.id), { spec: BRIEF, llm: async () => { throw new Error('must not be called'); } });
+  check('the same profile is not rewritten again', again && again.hash === db.byId('items', row.id).shaped.hash);
+  check('a default spec writes nothing', (await pm.prepareItem(5, db.insert('items', { user_id: 5, session_id: 1, prompt: 'p', answer: 'a', rationale: 'r' }), { spec: ls.defaultSpec(), llm: good })) === null);
+
   console.log('a stored course whose profile moved');
   const course = { status: 'ready', lesson_sig: specSig.specSig(BRIEF) };
   check('a course written for the same profile is not stale', !pm.courseStale(course, BRIEF));
