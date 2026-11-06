@@ -589,7 +589,7 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
   if (spec && !general && !extra) {
     const F = require('./course-follow'); // eslint-disable-line global-require
     const own = [...keypoints.termSet(skill.title)];
-    const check = (ps, ks) => F.problemsOf(ps, ks, spec, { cap: capShare ? lessonCap : null, own });
+    const check = (ps, ks) => F.problemsOf(ps, ks, spec, { cap: capShare ? lessonCap : null, own, testGoal: !!ctx.follow.testGoal });
     const passageTerms = keypoints.termSet(text);
     const kept0 = (ps) => { const t = keypoints.termSet(ps.join(' ')); let n = 0; for (const x of t) if (passageTerms.has(x)) n++; return n; };
     for (let attempt = 0; attempt < 2; attempt++) {
@@ -615,7 +615,8 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
       const better = after.length < probs.length || (after.length === probs.length && wordCount([...np, ...nk]) < wordCount([...paragraphs, ...keyPoints]));
       if (better && keep >= (capShare ? 0.5 : 0.75)) { paragraphs = np; keyPoints = nk; ctx.dropped.follow_fixed = (ctx.dropped.follow_fixed || 0) + 1; }
     }
-    if (F.needsSplit(spec)) paragraphs = F.splitDense(paragraphs, spec);
+    if (F.wantsDense(spec)) paragraphs = F.mergeDense(paragraphs, spec);
+    else if (F.needsSplit(spec) || F.smallChunks(spec)) paragraphs = F.splitDense(paragraphs, spec);
     if (spec.feedback && spec.feedback.lowStakes && F.TEST_WORDS.test([...paragraphs, ...keyPoints].join(' '))) { paragraphs = paragraphs.map(F.deTest); keyPoints = keyPoints.map(F.deTest); }
   }
 
