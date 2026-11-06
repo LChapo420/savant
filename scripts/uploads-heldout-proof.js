@@ -8,7 +8,7 @@
  *   node scripts/uploads-heldout-proof.js report          summary table
  *
  * Families: builder = Gonka DeepSeek V4 Flash (M). Documents written by NVIDIA nemotron (N), Gonka GLM 5.3 Flash (Z), Gemini (G).
- * The exam is written from the SOURCE by NVIDIA nemotron. Judges: Z = Gonka GLM 5.3 Flash, G = Gemini flash-lite. Two families, neither the builder's.
+ * The exam is written from the SOURCE by NVIDIA nemotron. Judges: Z = Gonka GLM 5.3 Flash (Zhipu), G = Mistral Large via xKiro $0 (Mistral; reported as G). Two families, neither the builder's.
  * The documents were written after the short-mode code was frozen and the builder never saw them.
  */
 const fs = require('fs'); const os = require('os'); const path = require('path');
@@ -16,7 +16,7 @@ require('../services/run-cap').defaultCap(Number(process.env.RUN_CAP_USD || 4));
 require('dotenv').config({ path: 'C:/coding/claudecommittdIq/folderThing/.env', quiet: true });
 const LIVE = 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/';
 process.env.GONKA_PIPELINE = '1'; process.env.GONKA_LEDGER_FILE = process.env.GONKA_LEDGER_FILE || `${LIVE}gonka-ledger.json`;
-process.env.XKIRO_PIPELINE = '1';
+process.env.XKIRO_PIPELINE = '1'; process.env.XKIRO_USAGE_FILE = process.env.XKIRO_USAGE_FILE || path.join(os.tmpdir(), 'uploads-heldout-xkiro-usage.json');
 process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-heldout-${process.pid}.json`);
 const db = require('../config/db');
@@ -25,7 +25,7 @@ const K = require('../services/material-keypoints');
 const cb = require('../services/course-builder');
 const fx = require('./lib/upload-fixtures');
 const DOCS_FILE = path.join(__dirname, '..', 'docs', 'uploads-heldout-docs.json');
-const OUT_FILE = path.join(__dirname, '..', 'docs', 'uploads-heldout-results.json');
+const OUT_FILE = process.env.HELDOUT_OUT || path.join(__dirname, '..', 'docs', 'uploads-heldout-results.json');
 const log = (...a) => console.log(...a);
 const words = (t) => (String(t).match(/\S+/g) || []).length;
 const round = (n) => (n == null ? null : Math.round(n * 1000) / 1000);
@@ -38,6 +38,7 @@ async function call(fam, { system, user, schema, schemaName, maxTokens, timeoutM
   let r;
   if (fam === 'N') r = await require('../services/providers/nvidia').structured({ role: 'fast', task: 'uploads_proof', system, user, schema, schemaName, maxTokens: mt, timeoutMs: timeoutMs || 240000 });
   else if (fam === 'G') r = await require('../services/providers/gemini').structured({ role: 'fast', system, user, schema, schemaName, maxTokens: mt, timeoutMs: timeoutMs || 240000 });
+  else if (fam === 'X') r = await require('../services/providers/xkiro').xkiro.structured({ models: ['mistralai/mistral-large-2512'], system, user, schema, schemaName, maxTokens: mt, timeoutMs: timeoutMs || 240000 });
   else r = await require('../services/providers/gonka').gonka.structured({ model: fam === 'Z' ? 'zai-org/GLM-5.3-Flash' : 'deepseek-ai/DeepSeek-V4-Flash-0731', system, user, schema, schemaName, maxTokens: mt, timeoutMs: timeoutMs || 240000 });
   if (!r || !r.data) throw new Error('no data');
   used[r.model || fam] = (used[r.model || fam] || 0) + 1;
@@ -123,7 +124,7 @@ async function runArms(reps, arms) {
     if (!store.exam[d.id]) { store.exam[d.id] = await examFor(src); save(OUT_FILE, store); }
     const exam = store.exam[d.id];
     if (!store.control[d.id]) {
-      store.control[d.id] = { Z: await pool(exam, 4, (q) => answerFrom('Z', src.plain, q)), G: await pool(exam, 3, (q) => answerFrom('G', src.plain, q)) };
+      store.control[d.id] = { Z: await pool(exam, 6, (q) => answerFrom('Z', src.plain, q)), G: await pool(exam, 6, (q) => answerFrom('X', src.plain, q)) };
       save(OUT_FILE, store);
     }
     log(`${d.id} (${d.fmt}, ${words(src.plain)} words): exam ${exam.filter((q) => q.kind === 'emphasised').length}e+${exam.filter((q) => q.kind === 'plain').length}p; control Z ${round(share(store.control[d.id].Z))} G ${round(share(store.control[d.id].G))}`);
@@ -140,7 +141,7 @@ async function runArms(reps, arms) {
         const gen = generatedText(built.course); const lw = words(lessonText(built.course));
         const row = { doc: d.id, fmt: d.fmt, arm, rep, status: built.course.status, skills: built.course.skills.length, build_s: Math.round((Date.now() - t0) / 1000), source_words: words(src.plain), lesson_words: lw, lesson_share: round(lw / words(src.plain)), sweep: built.course.dropped && built.course.dropped.sweep, judges: {} };
         for (const fam of ['Z', 'G']) {
-          const ans = await pool(exam, fam === 'Z' ? 4 : 3, (q) => answerFrom(fam, gen, q));
+          const ans = await pool(exam, 6, (q) => answerFrom(fam === 'G' ? 'X' : fam, gen, q));
           const by = (kind, arr) => share(exam.map((q, i) => (q.kind === kind ? arr[i] : undefined)).filter((x) => x !== undefined));
           row.judges[fam] = { emph: by('emphasised', ans), plain: by('plain', ans), n_emph: exam.filter((q) => q.kind === 'emphasised').length, n_plain: exam.filter((q) => q.kind === 'plain').length, answers: ans };
         }
@@ -205,7 +206,7 @@ async function runLearners(n, seed) {
     const schema = { type: 'object', properties: { traits: { type: 'array', items: { type: 'object', properties: { trait: { type: 'string' }, followed: { type: 'boolean' }, evidence: { type: 'string' } }, required: ['trait', 'followed'] } }, invented_facts: { type: 'array', items: { type: 'string' } } }, required: ['traits', 'invented_facts'] };
     const row = { seed, i, learner: L, status: built.course.status, skills: built.course.skills.length, source_words: words(src.plain), lesson_words: lw, judges: {} };
     for (const fam of ['Z', 'G']) {
-      const j = await ask(fam, 'You are a strict reviewer. A learner profile, the SOURCE the learner uploaded and the COURSE built from it are given. For EACH listed trait say whether the COURSE visibly follows it (followed true/false, with a short quote or measurable reason). Also list any specific factual claim in the COURSE that is not in the SOURCE (invented_facts; an analogy that borrows from an interest is fine if it makes no new claim about the subject). Be strict: generic text is not following a trait.', `Learner:\n${wants.map((w) => `- ${w}`).join('\n')}\n\nSOURCE:\n${src.plain.slice(0, 5000)}\n\nCOURSE (lessons, key points, questions):\n${text.slice(0, 14000)}`, schema, 'review', 2500);
+      const j = await ask(fam === 'G' ? 'X' : fam, 'You are a strict reviewer. A learner profile, the SOURCE the learner uploaded and the COURSE built from it are given. For EACH listed trait say whether the COURSE visibly follows it (followed true/false, with a short quote or measurable reason). Also list any specific factual claim in the COURSE that is not in the SOURCE (invented_facts; an analogy that borrows from an interest is fine if it makes no new claim about the subject). Be strict: generic text is not following a trait.', `Learner:\n${wants.map((w) => `- ${w}`).join('\n')}\n\nSOURCE:\n${src.plain.slice(0, 5000)}\n\nCOURSE (lessons, key points, questions):\n${text.slice(0, 14000)}`, schema, 'review', 2500);
       if (j && Array.isArray(j.traits)) row.judges[fam] = { followed: j.traits.filter((t) => t.followed).length, of: j.traits.length, invented: (j.invented_facts || []).length, misses: j.traits.filter((t) => !t.followed).map((t) => t.trait) };
     }
     store.learners.push(row); save(OUT_FILE, store);

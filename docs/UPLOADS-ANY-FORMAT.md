@@ -287,3 +287,33 @@ Reading: the length goal is met on every build. Emphasised coverage is 2 to 3 po
 answers, so it may be noise, but the pass rule was "at or above"), and plain facts rose on three of four judge/group cells and fell 3 points on one. The pass rule is
 therefore NOT met and the branch stays unmerged. Not tried: spending more words than 0.8x, or a sweep that also re-asks the judge. Spend: Gonka and Lyceum (about 60 judge calls
 for B, roughly $1 to $2) from the shared ledgers, NVIDIA free; no Anthropic key, Standard Compute or Munito.
+
+## 12. The whole upload path driven with files (6 Nov 2026; MEASURED, synthetic fixtures; `node scripts/uploads-drive.js`)
+
+77 cases through `materials.addFile`, the recording and video jobs (real ffmpeg, real Whisper tiny.en, real tesseract.js, Windows speech voice for the spoken fixtures): all 16 text and
+Office formats, 6 picture types, a scanned PDF, a mixed ZIP, truncated / byte-flipped / header-only copies of 9 formats, empty, one byte, whitespace, 50 characters, random bytes, a
+program header, audio and video bytes sent to the document box, a blank picture, 700 KB and 5 MB of text, 21 MB, and for recordings: empty, text, a tone with no speech, a cut-off WAV,
+speech as WAV and MP3, a cut-off MP3, and for video: with speech, with no sound track, cut off, junk. Found and fixed (before: what a learner saw):
+
+| Case | Before | Now |
+|---|---|---|
+| Plain text in Windows-1252 (an old Word "save as text") or UTF-16 | refused as "unknown type" with the long format list | read; a note says it was read as Windows-1252 |
+| A program or data file starting with "MZ" and mostly control bytes | "too little text" (it passed as text) | refused as an unknown type |
+| A DOCX/PPTX/XLSX/ODT/EPUB cut off (download stopped) | "That ZIP could not be opened, or holds too many files" | "looks damaged or cut off (the end of it is missing). Download or export it again" |
+| An RTF cut off | read silently, half the document, no word | read, with a note that it ends without its closing bracket |
+| A scanned PDF of more than 40 pages | the first 40 pages read, the rest dropped silently | read, with "Only the first 40 of N pages were read. Upload the rest as a second file" |
+| Scanned pages OCR could not read, or pages with no picture | dropped silently | counted and listed in a note ("page 3, 7") |
+| A text PDF whose pages 3 and 9 are pictures of text | those pages silently missing | note: pages 3 and 9 had no readable text, with what to do |
+| Files of a ZIP that were skipped (programs, over 20 MB, unreadable, past 40) | kept in the row but never shown | listed in a note with the reason for each |
+| A recording (WAV, MP3, M4A, WebM, Ogg) or a video put in the document box | "unknown type" | sent to the recording / video route automatically (a job with progress), or a plain refusal that names the transcriber |
+| A WAV cut off before its first sound, or 24-bit / 8-bit / "extensible" WAV | "The transcription stopped unexpectedly" (a thrown offset error), or "only 16-bit supported" | a plain "cut off" message; 8, 16, 24 and 32-bit PCM and float WAV are read |
+| A 40-page scan: one request open for minutes, no progress | the page sat on "Uploading and reading it..." | after 6 s the request returns a job; the list shows "reading (page 12), 30%"; the result lands in the list; the tab can be closed |
+| A body over 20 MB | HTTP 500, "Something went wrong on our side" | a JSON 413 "too big", the limits named |
+| Spoken or photographed text that is not English (Whisper tiny.en and tesseract eng read English only) | garbage text, no warning | a note: this does not look like English; paste the text for other languages. The recording box now says English only |
+| OCR worker started per page | about 1 s extra per page | one worker is reused and released 8 s after the last page |
+
+Not fixable here and said so: a truncated MP3 or byte flips inside a legacy DOC or RTF body are not detectable (the decoder returns the part it has: the cut MP3 read 40% of the
+speech and gave no sign), and tesseract.js is an optional dependency that this folder's `node_modules` lacks (the picture and scan rows ran with it on `NODE_PATH` and its English
+data from `data/models/tesseract`): on a server without it, pictures and scans are refused with "This server cannot read text from images yet" (`npm install` installs it).
+Results from this run: 77 of 77 cases as intended; timings 0.0 to 0.6 s for text formats, 2.4 to 3.3 s per picture, 7.7 s for a 2-page scan, 12.5 s for 95 s of speech.
+
