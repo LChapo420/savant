@@ -667,6 +667,8 @@ function candidatesFor(req, opts = {}) {
     // A waiting learner's fact check never lands on a free model (a busy free NVIDIA took minutes while grok-4.3 was down, 5 Nov): if no paid
     // verifier answers in time the level is not served as checked, the standard session opens and the write finishes in the background.
     const tail = req.task === 'fact_verify' && paid.length ? [] : free;
+    // The check has seconds, not minutes: a preferred free slot in front of the paid readers used up the last-resort reader's time (2 of 30 replies held as "can't check", 6 Nov).
+    if (req.task === 'fact_live' && (want.length || fastPaid.length || paid.length)) return [...want, ...fastPaid.filter((s) => !want.includes(s)), ...paid.filter((s) => !s.fast && !want.includes(s)), ...first, ...free];
     if (fastPaid.length || paid.length) return [...first, ...want, ...fastPaid.filter((s) => !want.includes(s)), ...paid.filter((s) => !s.fast && !want.includes(s)), ...tail];
   }
   return [...first, ...free, ...paid];
@@ -852,7 +854,7 @@ async function callHedged(req, opts = {}) {
           // A preferred paid slot (the tutor's Standard Compute) starts first, as the primary, not as a last resort.
           // A hedge onto a paid slot is for speed, so never from background work. A foreground call that has waited fgHedgeMs with every free slot busy takes the paid slot as its primary.
           const fgLate = !isBg() && now() - t0 >= fgHedgeMs();
-          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && (anyFreeRunning() || untriedFree())) continue; // last resort: only when every free one has failed
+          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && !(req.task === 'fact_live' && !isBg()) && (anyFreeRunning() || untriedFree())) continue; /* a waiting learner's check starts on the paid readers it lists first: it has seconds */ // last resort: only when every free one has failed
           if (!budgetOk(s, req, opts, spent)) continue;
         }
         const b = blocked(s, req, isBg(), isSpec());
