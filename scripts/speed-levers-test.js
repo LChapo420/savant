@@ -145,6 +145,15 @@ const LESSON = {
     assert.strictEqual(first.speed && first.speed.whole, true);
   }));
 
+  await check("a learner who chose feedback at the end keeps today's flow: nothing set aside, no page marked skipped", async () => withEnv(ALL, async () => {
+    const u = user(); const e = enroll(u, lessonLevel);
+    const s = await sessions.createSession({ userId: u.id, enrollment: e, grade });
+    db.update('sessions', s.session.id, { params: { ...(s.session.params || {}), immediateFeedback: false } });
+    const items = db.find('items', (i) => i.session_id === s.session.id).sort((a, b) => a.index - b.index);
+    for (const it of items) { const r = await answerRight(s.session, it); assert.ok(!r.speed); }
+    assert.strictEqual(db.find('lessons', (l) => l.user_id === u.id && l.skipped_by_check_at).length, 0);
+  }));
+
   await check('a preview keeps today\'s flow', async () => withEnv(ALL, async () => {
     assert.deepStrictEqual(speed.clientFlags(1, { preview: true }), { testout: false, short: false });
   }));

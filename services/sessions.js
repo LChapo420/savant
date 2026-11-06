@@ -1350,6 +1350,7 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
 function speedAfterAnswer({ userId, session, item, correct }) {
   try {
     if (!speedLevers.enabled('testout') && !speedLevers.enabled('stop')) return null;
+    if (session.params && session.params.immediateFeedback === false) return null; // feedback held to the end by the learner's choice: today's flow, nothing is decided mid-level
     const fresh = db.byId('sessions', session.id) || session;
     const block = itemsInBlock(session.id, item.block || 0).map((i) => (i.id === item.id ? { ...i, correct } : i));
     const lesson = item.role === 'check' ? lessons.forSitting(fresh) : null;

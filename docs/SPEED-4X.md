@@ -115,7 +115,7 @@ None in the headline runs. The learning code is unchanged, and baselines and tod
 - `SPEED_REVIEW_TARGET=on` (`SPEED_REVIEW_MODE=through` by default): reviews only under target + margin, up to the goal's last day, on both the recall queue and the fitted-curve queue.
 - `SPEED_ALL=off` turns all of them off. A base-arm learner reads them all off. A learner who chose feedback at the end keeps today's flow.
 
-Tested: `scripts/speed-levers-test.js` (13 checks), and driven by hand on a temp database in the browser and over HTTP (skip, miss with a part, path list, read a skipped page).
+Tested: `scripts/speed-levers-test.js` (14 checks), and driven by hand on a temp database in the browser and over HTTP (skip, miss with a part, path list, read a skipped page).
 
 **Not done or not proven:**
 
