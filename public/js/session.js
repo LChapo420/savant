@@ -939,7 +939,7 @@ function renderRubricResult(result) {
       // Asked on about one question in three, so it stays a quick tap rather than
       // a chore — enough for the learning scorecard to learn how well this learner
       // knows what they know.
-      askConfidence: !isExam() && !(session.speed && session.speed.fast) && (maxAccuracy || index % 3 === 1),
+      askConfidence: !isExam() && (maxAccuracy || index % 3 === 1) && !(session.speed && session.speed.fast),
       onSubmit: async (answer, meta = {}) => {
         let result;
         try {
