@@ -210,7 +210,7 @@ router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1
   if (existing && existing.status === 'ready' && existing.version === courses.VERSION) return res.json({ course: courses.summary(existing), cached: true });
   if (courses.inflight.has(`${userId}:${m.id}`)) return res.status(202).json({ started: true, busy: true });
   // The learner is waiting on this: the waiting lane on the fast lane (paid fast slots first for a cleared learner, 8 s overflow to a paid slot otherwise).
-  queueBuild(userId, `course:${m.id}`, () => require('../services/pool').runForeground(() => courses.build(userId, m.id, {}), { fast: String(process.env.UPLOAD_BUILD_LANE || 'waiting') !== 'background' }).then((out) => { if (out.error && out.code !== 'busy') console.warn(`course-builder: ${out.code}`); }));
+  queueBuild(userId, `course:${m.id}`, () => require('../services/material-autobuild').runWaiting(() => courses.build(userId, m.id, {})).then((out) => { if (out.error && out.code !== 'busy') console.warn(`course-builder: ${out.code}`); }));
   res.status(202).json({ started: true });
 });
 
