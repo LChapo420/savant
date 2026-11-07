@@ -900,7 +900,7 @@ async function callHedged(req, opts = {}) {
       const rq = slot.dataClass === 'pipeline' && req.pipelineVariant ? { ...req, ...req.pipelineVariant } : req;
       const est = slot.paid ? (slot.estimateUsd ? slot.estimateUsd(rq) : 0) : 0;
       spent.reserved += est;
-      attempt(slot, rq, { validate, timeoutMs: Math.min(timeout(slot), Math.max(1000, totalMs - (now() - t0))), signal: ctrl.signal, deadline: waitingCall && timeout(slot) <= waitingDeadlineMs() }).then((o) => {
+      attempt(slot, rq, { validate, timeoutMs: Math.min(timeout(slot), Math.max(1000, totalMs - (now() - t0))), signal: ctrl.signal, deadline: (waitingCall || (req.task === 'fact_verify' && isSpec())) && timeout(slot) <= waitingDeadlineMs() }).then((o) => {
         running.delete(no);
         spent.reserved -= est;
         spent.usd += o.usd || 0;
