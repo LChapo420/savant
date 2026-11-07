@@ -8,6 +8,7 @@
 #   sqlite-drill.sh load <learners> <minutes> json|sqlite [tag]
 #   sqlite-drill.sh grow <learners> <days> <out.sqlite>|<out.json>
 #   sqlite-drill.sh ladder <args for size-ladder.js>
+#   sqlite-drill.sh ladder-backup <args for size-ladder.js>   the same, with a backup set and its restore test taken 60 s in, while learners write
 #   sqlite-drill.sh clean                               delete everything
 #
 # Account 6689 is removed from the copy every instance boots on (base.json), so nothing can write its rows or sign in as it. Only migrate-and-compare reads
@@ -184,6 +185,28 @@ case "${1:-}" in
     if [[ "$o" == *.sqlite ]]; then a=(--sqlite "$o"); else a=(--out "$o"); fi
     MEM=30G guarded /usr/bin/node --no-warnings --max-old-space-size=24000 scripts/beta-load/grow-db.js --run "$r" --base "$DIR/base.json" --learners "$n" --days "$d" --minutes-in-run "${MINUTES_IN_RUN:-5}" "${a[@]}" ;;
   ladder) shift; guarded /usr/bin/node --no-warnings scripts/beta-load/size-ladder.js "$@" ;;
+  ladder-backup)
+    shift
+    (
+      sleep 60
+      d=$(ls -td "$RUNS"/beta-load/ladder-sqlite-* | head -1)
+      # Wait for the app to be up on it.
+      for _ in $(seq 1 200); do [ -s "$d/probe.jsonl" ] && break; sleep 3; done
+      sleep 45
+      b=$DIR/tmp/under-load-sets; T=$(now)
+      cd "$APP" && nice -n 15 ionice -c3 runuser -u savant -- env DB_DRIVER=sqlite DB_SQLITE_FILE="$d/db.sqlite" BACKUP_DIR="$b" BACKUP_EXTRA= BACKUP_MIN_FREE_MB=20480 node --no-warnings scripts/backup-db.js 2>&1 | cut -c1-200
+      echo "backup under load, measured: $(since "$T") s"; T=$(now)
+      nice -n 15 ionice -c3 runuser -u savant -- env DB_DRIVER=sqlite DB_SQLITE_FILE="$d/db.sqlite" BACKUP_DIR="$b" node --no-warnings scripts/backup-db.js --restore-test 2>&1 | cut -c1-200
+      echo "restore test, measured: $(since "$T") s"; du -sm "$b"
+      if [ -f scripts/backup-db-old.js ]; then
+        T=$(now); nice -n 15 ionice -c3 runuser -u savant -- env DB_DRIVER=sqlite DB_SQLITE_FILE="$d/db.sqlite" BACKUP_DIR="$b-old" BACKUP_EXTRA= TMPDIR="$DIR/tmp" node --no-warnings scripts/backup-db-old.js 2>&1 | cut -c1-200
+        echo "the old backup tool, exit ${PIPESTATUS[0]}: $(since "$T") s"
+      fi
+      rm -rf "$b" "$b-old"
+    ) &
+    bg=$!
+    guarded /usr/bin/node --no-warnings scripts/beta-load/size-ladder.js "$@"
+    wait "$bg" ;;
   clean)
     systemctl stop savant-load rehearse 2>/dev/null
     rm -rf "$DIR"; echo "removed $DIR" ;;
