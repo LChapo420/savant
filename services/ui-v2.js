@@ -38,8 +38,15 @@ function inject(html, page) {
 /** /start's HTML with the look's additions. js/ui2/start.js goes first, so it is there when js/start.js runs. */
 function injectStart(html) {
   return html
-    .replace(/<html\b/, '<html data-ui2="on"')
-    .replace('</head>', '  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/look.css">\n  <link rel="stylesheet" href="/css/ui2/start.css">\n  <script src="/js/ui2/look.js"></script>\n  <script src="/js/ui2/start.js"></script>\n</head>');
+    .replace(/<html\b/, `<html data-ui2="on" data-welcome="${welcome()}"`)
+    .replace('</head>', '  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/look.css">\n  <link rel="stylesheet" href="/css/ui2/start.css">\n  <link rel="stylesheet" href="/css/ui2/welcome.css">\n  <script src="/js/ui2/look.js"></script>\n  <script src="/js/ui2/welcome.js"></script>\n  <script src="/js/ui2/start.js"></script>\n</head>');
+}
+
+/** /start's first screen: UI_V2_WELCOME picks one of js/ui2/welcome.js's designs, each with its block in css/ui2/welcome.css. "card" (H, the owner's pick) unless set. */
+const WELCOMES = ['card', 'giraffe'];
+function welcome() {
+  const asked = String(process.env.UI_V2_WELCOME || '').trim().toLowerCase();
+  return WELCOMES.includes(asked) ? asked : 'card';
 }
 
 /** The hooks js/ui2/start.js needs in /js/start.js. Every "from" must be in the file exactly once. */
@@ -131,4 +138,4 @@ function middleware(req, res, next) {
   });
 }
 
-module.exports = { enabled, inject, injectStart, patchStart, injectOffline, patchWorker, sendNotFound, pageOf, middleware, PAGES };
+module.exports = { enabled, welcome, WELCOMES, inject, injectStart, patchStart, injectOffline, patchWorker, sendNotFound, pageOf, middleware, PAGES };

@@ -107,7 +107,7 @@
 
     wrap('welcome', (v) => ({
       ...v,
-      html: '<div class="ob-welcome"><h1>From zero to Savant.</h1><p class="ob-lead">Lessons built around you.</p></div>',
+      html: window.U2Welcome.html, // the chosen first screen (js/ui2/welcome.js)
       alt: v.alt ? { ...v.alt, label: 'I have an account' } : v.alt,
     }));
     wrap('hello', (v) => ({
@@ -234,6 +234,7 @@
   function rendered(step) {
     dressShell();
     const ob = X.$('#ob');
+    root.dataset.obScreen = step; // so the page around the flow can follow the step (the card welcome's pattern, css/ui2/welcome.css)
     cropNow();
     delete ob.dataset.talk;
     // Words that aren't in the question and must be seen: the bubble keeps them under it.

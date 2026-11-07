@@ -538,9 +538,9 @@ async function main() {
       await at(page, 'welcome');
       const w = await page.evaluate(() => ({ flag: document.documentElement.getAttribute('data-ui2'), bg: getComputedStyle(document.body).backgroundColor, h: getComputedStyle(document.querySelector('.ob-welcome h1')).fontFamily, text: document.querySelector('.ob-welcome').innerText, svg: document.querySelector('#tutor svg').getAttribute('viewBox'), coat: getComputedStyle(document.querySelector('#tutor .t-coat')).fill, alt: document.getElementById('alt').textContent, edge: getComputedStyle(document.getElementById('next')).boxShadow, radius: parseFloat(getComputedStyle(document.getElementById('next')).borderRadius) }));
       assert.strictEqual(w.flag, 'on');
-      assert.strictEqual(w.bg, 'rgb(255, 255, 255)');
+      assert.strictEqual(w.bg, 'rgb(244, 245, 247)'); // the card welcome sits on the well, with the subjects' pattern (css/ui2/welcome.css)
       assert(/DM Serif/.test(w.h));
-      assert(/From zero to Savant\./.test(w.text));
+      assert(/Learn it properly, from the start\./.test(w.text)); // the giraffe welcome (UI_V2_WELCOME=giraffe) is checked in scripts/ui-v2-welcome-test.js
       assert.strictEqual(w.svg, '-135 -250 270 425');
       assert.strictEqual(w.alt, 'I have an account');
       assert(w.radius >= 28 && /6px 0px/.test(w.edge), `pill ${w.radius} ${w.edge}`);

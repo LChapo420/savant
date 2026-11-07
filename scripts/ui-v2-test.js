@@ -112,7 +112,7 @@ async function main() {
     for (const f of ['public/start.html', 'public/js/start.js', 'public/js/start-tutor.js', 'public/css/screens/start.css']) assert(!out.includes(f), `${f} is untouched`);
   });
   ok('app.css, look.css, pages.css and start.css have no colour of their own: every one is a token', () => {
-    for (const f of ['app.css', 'look.css', 'pages.css', 'start.css']) {
+    for (const f of ['app.css', 'look.css', 'pages.css', 'start.css', 'welcome.css']) {
       const css = fs.readFileSync(path.join(ROOT, 'public', 'css', 'ui2', f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
       assert.deepStrictEqual(css.match(/#[0-9a-fA-F]{3,8}\b(?![^{]*\{)|rgba?\(|oklch\(/g) || [], [], f);
     }
