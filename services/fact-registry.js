@@ -147,6 +147,7 @@ const TASKS = {
   // ── never shown ────────────────────────────────────────────────────────────────────────────────────────────
   fact_live: { kind: 'internal', why: 'This is the check itself (services/fact-guard.js).' },
   fact_verify: { kind: 'internal', why: 'The level verifier.' },
+  fact_gate: { kind: 'internal', why: 'The measured gate for shared levels (services/fact-gate.js), off by default.' },
   fact_read: { kind: 'internal', why: 'The level verifier.' },
   fact_claims: { kind: 'internal', why: 'The level verifier.' },
   fact_research: { kind: 'internal', why: 'The level verifier\'s research sheet: read by the verifier, not by a learner.' },

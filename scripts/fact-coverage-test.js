@@ -96,6 +96,7 @@ ok('every model call names its task, or passes one through from a caller that do
 ok('nothing reaches a model around services/ai.js unless it is listed here with its reason', () => {
   // A call that skips services/ai.js skips the guard, so each file that does it has to be named, and none of them writes text a learner reads unchecked.
   const ALLOWED = {
+  'services/fact-gate.js': 'A checker, as services/fact-check-anthropic.js is: it reads levels, shows nothing, each provider through its own ledger (FACT_GATE, off).',
     'services/ai.js': 'the choke point itself',
     'services/pool.js': 'the slots the choke point calls',
     'services/block-levels.js': 'the level verifier and its repairs; what they lead to passes verifyLevel before it is served',
