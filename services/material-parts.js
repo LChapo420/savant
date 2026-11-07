@@ -497,8 +497,16 @@ async function change(userId, materialId, ref, what, opts = {}) {
   const wantsLine = asked.includes('examples') || asked.includes('topic');
   let refusedReport = null;
   if (forModel.length) {
-    const rw = await rewriteLeaves({ base: working, asked: forModel, custom: useCustom, spec, llm, mat, keyPoints, started });
+    let rw = await rewriteLeaves({ base: working, asked: forModel, custom: useCustom, spec, llm, mat, keyPoints, started });
     refusedReport = rw.report;
+    // A point lost: one more try, naming it, while the learner's wait allows. Most refusals in the real run were this (docs/UPLOADS-ANY-FORMAT.md section 18).
+    if (rw.leaves.size && Date.now() - started < BUDGET_MS) {
+      const firstTry = base.leaves.map((l) => (rw.leaves.has(l.key) ? rw.leaves.get(l.key) : leavesMade && leavesMade.has(l.key) ? leavesMade.get(l.key) : l.text)).join('
+');
+      const lostNow = lostPoints(baseText, firstTry, keyPoints, asked.some((a) => a === 'simpler' || a === 'custom') ? 0.15 : 0.6);
+      if (lostNow.length) rw = await rewriteLeaves({ base: working, asked: forModel, custom: useCustom, spec, llm, mat, keyPoints, started, problems0: lostNow.slice(0, 6).map((k) => `This point was lost; it must stay, with every number and name: ${k.text}`) });
+      refusedReport = rw.report;
+    }
     if (rw.leaves.size) {
       const after = base.leaves.map((l) => (rw.leaves.has(l.key) ? rw.leaves.get(l.key) : leavesMade && leavesMade.has(l.key) ? leavesMade.get(l.key) : l.text)).join('\n');
       // Rewording may change the words of a point, but never its numbers or names, and two readers must find it still there. Only cutting asked: the words themselves must stay.

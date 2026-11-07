@@ -217,7 +217,13 @@ router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1
   if (courses.inflight.has(`${userId}:${m.id}`)) return res.status(202).json({ started: true, busy: true });
   // The learner is waiting on this: the waiting lane on the fast lane (paid fast slots first for a cleared learner, 8 s overflow to a paid slot otherwise).
   courseBuildErrors.delete(`${userId}:${m.id}`);
-  queueBuild(userId, `course:${m.id}`, () => require('../services/material-autobuild').runWaiting(() => courses.build(userId, m.id, {})).then((out) => {
+  queueBuild(userId, `course:${m.id}`, () => require('../services/material-autobuild').runWaiting(async () => {
+    const first = await courses.build(userId, m.id, {});
+    // The outline is one call that everything hangs on: when no model or checker answered it, one more try after a moment, before telling the learner (the real run lost 1 course in 12 this way). UPLOAD_OUTLINE_RETRY=off removes it.
+    if (first.code !== 'outline_failed' || String(process.env.UPLOAD_OUTLINE_RETRY || 'on').toLowerCase() === 'off') return first;
+    await new Promise((r) => setTimeout(r, Number(process.env.UPLOAD_OUTLINE_RETRY_MS || 15000)));
+    return courses.build(userId, m.id, {});
+  }).then((out) => {
     if (out.error && out.code !== 'busy') {
       console.warn(`course-builder: ${out.code}`);
       if (courseBuildErrors.size > 2000) courseBuildErrors.clear();

@@ -23,6 +23,7 @@ if (MODE === 'real') {
 } else if (MODE === 'scripted' || MODE === 'load') {
   process.env.NODE_ENV = 'test';
   for (const name of Object.keys(process.env)) if (/(_API_KEY|_TOKEN)$/.test(name)) process.env[name] = '';
+  process.env.UPLOAD_OUTLINE_RETRY_MS = '50';
   process.env.FACT_CHECK_ALL = '0'; process.env.UPLOAD_FACTCHECK = 'on'; process.env.UPLOAD_FACTCHECK_QUOTES = 'off'; process.env.UPLOAD_FACTCHECK_READERS = '1';
 }
 if (MODE !== 'report') {
