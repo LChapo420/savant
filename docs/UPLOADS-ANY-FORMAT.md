@@ -552,3 +552,117 @@ The biggest wait left was the first lesson: 139 to 156 s, of which the outline 1
 The two on h2, read by me: "Bismarck secured the new Reich by isolating France" (the source says he sought to) and "the Moroccan Crisis and Algeciras ended in humiliation" (the source says Algeciras did). Those are real, small over-reaches of a word or a scope, in a history narrative; nothing fabricated. So the gate of zero is not reached: about 1 course in 9 still has such a sentence by the calibrated judge. My own read of a checked h4 and part of n3 found no invented claim, and found two defects now fixed: questions written into lessons, and Markdown marks in restored sentences. A sentence supported by no reader goes back to the source's own words, so most of the length gain is verbatim material. Practice questions may still set up a made-up case to apply a rule ("a company pays rent of $1,000"): the free-form judges count these; they are not checked as claims, and are left as they are.
 
 Cost per course (real, from the providers' usage): the fact check with two families and two readings about 1 cent; Kimi K3.1 Pro as the judge $0.13 a course. Kimi spent $11.40 in all here, across calibration, three comparisons and three judged runs, before the $3 per run limit; none of it is in the build.
+
+## 18. Full modification and optimization for the beta (7 Nov 2026; branch `uploads-beta`; MEASURED where a script scored it, AI-JUDGED and SIMULATED where a model read it; no real learner, no real upload)
+
+**What was built, all behind switches, all off by default.**
+
+- `UPLOAD_PARTS` (`services/material-parts.js`, routes in `routes/part-change.js`, row in `public/js/part-change.js`): every part built from an upload can be changed: lesson with key points and summary line, a question's wording, choices and explanation, deck card, pack card, notes section, pack summary, pack quiz and test item, podcast script, practice test (shorter, longer, easier, harder). Changes: Shorter, Simpler, More examples, Another topic, More detail, Say how. A change is a row laid over the stored text; put back deletes it, so the original comes back exactly. Before a row can exist: numbers, names and negations by rule, leaf by leaf; every key point the text carried still there (rule, then two families for rewording); every changed sentence read against the material by two families; a question's new wording read against its key; an asked-for example kept apart, labelled as made up, read by two families. A row without the check's receipt is not served (tested).
+- `UPLOAD_OPTIMIZE` (`services/material-optimize.js`): full, core and test as readings of one built course, with no model and no rebuild. Fact survival is bookkeeping: every sentence of the material is a ledger entry with its emphasis. Full keeps the checked lesson, drops repeats and adds back what no sentence carries. A learner who wants less gets "lean": the material's own facts in its own order, each once. Core reads the stressed facts and what they lean on; the rest is on the page behind "More from your material".
+- `UPLOAD_GOALS`: opens Core and Test on uploads only. `STUDY_GOAL_CORE` and `STUDY_GOAL_TEST` still govern built-in subjects, unchanged and off.
+- `UPLOAD_PARTS_FOLLOW`: a learner's spec shapes the served lesson with no model (chunks, test words, form lines), and parts are rewritten in the background when the spec drifts. A part the learner changed or put back is never rewritten.
+- `UPLOAD_OWN_BUDGET`: an upload's model calls get their own daily ceiling (`AI_DAILY_UPLOAD_CALLS_PER_USER` 1500, `AI_DAILY_UPLOAD_CENTS_PER_USER` 200).
+
+**Why the old switches failed, as far as this round found out.**
+
+| Switch | Why it failed | What happened here |
+|---|---|---|
+| `UPLOAD_FOLLOW` | **The proof harness was wrong for three traits.** `scripts/uploads-heldout-proof.js` told the judge "needs very plain words", "loses focus fast" and "cannot take dense text" for learners scored HIGH on vocabulary, attention and density tolerance, the opposite of their scorecard. So rounds 2 to 4 (sections 14 to 16) understate following, and section 16's "a learner who needs plain words got kinematic framework" was that bug. Fixed in that script and the new one | Not re-run in its old form; replaced by the served path below. Stays off |
+| `UPLOAD_SHORT` | Survival of plain facts was left to a writer told to write less | Superseded by the lean reading. Stays off |
+| `STUDY_GOAL_CORE`, `STUDY_GOAL_TEST` | Built-in lessons: the worst-10% gate sits at the noise floor of 8 questions (section 6 of `docs/MODIFICATION-AUDIT.md`) | Built-in gates **not re-run**. Stay off |
+| `PART_MODIFY` | Half passes on feedback; lessons did not beat chance | **Not re-run.** Stays off. Its lesson refresh stands aside when `UPLOAD_PARTS_FOLLOW` is on |
+
+Also found by the real runs and fixed: one upload took 100 to 220 calls against a learner's daily 120, so its course came out partial, changes were refused in under a second and the tutor went quiet (`UPLOAD_OWN_BUDGET`, must be on with `UPLOAD_PARTS`). `material_factcheck_glm` fell through to `lyceum:z-ai/glm-5.3`, about 8 cents a call, $4.81 in one run and a run-cap stop (now flash GLM or Grok 4.3; Grok 4.3 replaces 4.7 in the upload lists). The fallback reader's answers were thrown away because `material_factcheck` had no registry row. A sentence cut by a page break ("the invasion of Belgium, whose"). A change refused if a reader could not quote it, which plain words cannot do: these were false alarms.
+
+**Exam gate (AI-JUDGED; 7 of the planned 10 held-out documents when the run was stopped; 4 to 7 per arm; judges N = NVIDIA nemotron, G = Grok 4.3; rows `docs/uploads-beta/gate-exam.json`). Today's whole course includes its questions; every new arm is scored on lesson text alone, which is harder.**
+
+| Arm | Words / source | Emphasised N / G | Plain N / G | Note |
+|---|---|---|---|---|
+| Today, lessons and questions | 7.56x | 89 / 90 | 90 / 90 | the bar |
+| Today, lessons only | 3.13x | 83 / 93 | 86 / 84 | same text again: 93 / 93, 94 / 84 |
+| Full reading | 2.06x | 93 / 93 | 98 / 93 | plain worst document -10 on G |
+| Lean reading | 1.01x | 95 / 95 | 97 / 93 | plain worst document -10 on G (one question in 10) |
+| Test reading | 2.32x | 89 / 95 | 95 / 90 | emphasised -7 on N, worst -14 |
+| Core reading | 0.61x | **77** / 91 | 45 / 38 | **emphasised falls 12 points on N.** Plain falls by design |
+| Core with what it set aside | 2.62x | 75 / 93 | 92 / 94 | N's 75 on the fuller text points at noise (few emphasised questions), not proven |
+
+Reading: lean meets the old `UPLOAD_SHORT` gate on these documents at about a third of today's lesson words. Core does not cleanly pass: judge G says level, judge N says 12 points lower, and n is small. All-document means and paired means differ because not every arm finished every document.
+
+**Rule-counted over all 10 built courses (MEASURED, `node scripts/uploads-beta-stats.js`):** lean holds every ledger fact at 0.82x to 1.06x of the source, core every stressed fact. The "core at 0.5x to 0.7x" range was measured just before the final ownership change; the final code's figures are the 0.61x above.
+
+**Follow gate, fixed harness (AI-JUDGED, SIMULATED; 24 extreme and random learners, new seeds 7621 to 7624; same document; rewrites by Coral DeepSeek, readers DeepSeek and GLM; judges G and N; `docs/uploads-beta/learners-summary.txt`).**
+
+| Gate | Required | Stored course | Served course | Met |
+|---|---|---|---|---|
+| Traits followed, mean, G / N | 90% | 58 / 62% | 60 / 60% | **NO** |
+| Worst 10%, G / N | 70% | 33 / 33% | 29 / 33% | **NO** |
+| Shortest-version learner, lesson at or under source (7 learners) | all | 2.44x to 3.58x | 0.81x to 1.43x; 1 of 7 under | **NO** |
+| Same, whole course with questions | all | | 1.43x to 2.32x | **NO** |
+| Invented per course, G / N | not higher | 0.08 / 0.08 | 0.13 / 0.41 | **NO** on N |
+| Blind pick against another learner's course, C / G | beat chance | | 21 of 24, 21 of 23 (p 1e-4, 3e-5) | yes |
+| Blind pick against the stored course, C / G | beat chance | | 14 of 24, 15 of 24 (p .27, .15) | **NO** |
+| Identical pair said SAME | | | 5 of 8, 8 of 8 | control holds |
+
+So following is real against another learner and not shown against what the learner would have had anyway. Most missed: age (38), interests (11), shortest version (11), long and full (9), test date wording (9). 77 of 131 lesson and 345 of 503 question rewrites were made. The earlier 74% of section 16 is not comparable: other harness, other judges.
+
+**Every part, end to end, on real models through the real routes (MEASURED; `node scripts/uploads-beta-e2e.js real`, `report`).** Twelve files (epub, docx, pdf, html, odt, md with three subjects, pptx, a scanned PDF through OCR, Spanish, about 12,800 words of text, 23 words, random bytes), with ordinary and extreme learners, 3 at once. **10 of 12 reached a finished course; the 23 words and the random bytes were refused in plain words, as intended.** 3 of the 10 courses ended partial (the long text, three subjects, one pdf). The changes in this final run were made before the "no sentence of your own" rule.
+
+| Part / change, 10 uploads | Made | Reached the served route | Put back exact | Time p50 / worst |
+|---|---|---|---|---|
+| Lesson, simpler | 7 | 10 | 10 | 40 s / 84 s |
+| Lesson, shorter | 7 | 10 | 10 | 0 s / 68 s |
+| Lesson, examples | 5 | 10 | 10 | 16 s / 35 s |
+| Lesson, more detail | 7 | 10 | 10 | 0 s / 0 s |
+| Lesson, "say how" | 7 | 10 | 10 | 28 s / 121 s |
+| Question, simpler | 9 | 10 | 10 | 18 s / 54 s |
+| Deck card, simpler | 9 | 10 | 10 | 11 s / 50 s |
+| Pack card, examples | 5 | 10 | 10 | 23 s / 32 s |
+| Notes, simpler | 8 | 10 | 10 | 16 s / 69 s |
+| Summary, shorter | 5 | 10 | 10 | 21 s / 55 s |
+| Pack question, simpler | 7 | 10 | 10 | 10 s / 40 s |
+| Test, harder (no text) | 10 | 10 | 10 | |
+| **All** | **86 of 120** | **120 of 120** | **120 of 120** | |
+
+Not made means refused in plain words with the text unchanged; "reached" then means the text stayed. Not exercised over real models: Another topic on a lesson (scripted only), a podcast change (scripted only).
+
+**Independent judges on those changes (AI-JUDGED; 76 changes judged, N and G did not guard them; wrong answer choices, labelled lines and form lines left out; `docs/uploads-beta/e2e-judged.json`).**
+
+| Part / change | n | Words after / before | Did what was asked N, G | No point lost N, G | No invented claim N, G | Stressed kept (rule) |
+|---|---|---|---|---|---|---|
+| Lesson, simpler | 7 | 1.03 | 7/7, 7/7 | 7/7, 7/7 | 5/7, 6/7 | 7/7 |
+| Lesson, shorter | 7 | 0.69 | 1/7, 0/7 | 1/7, 1/7 | 5/7, 6/7 | 7/7 |
+| Lesson, examples | 5 | 1.27 | 4/5, 4/5 | 4/5, 5/5 | 2/5, 3/5 | 5/5 |
+| Lesson, more detail | 7 | 1.19 | 4/7, 4/7 | 7/7, 7/7 | 6/7, 5/7 | 7/7 |
+| Lesson, say how | 7 | 1.03 | 3/7, 4/7 | 6/7, 7/7 | 6/7, 6/7 | 7/7 |
+| Question, simpler | 9 | 1.02 | 6/8, 8/9 | 8/8, 9/9 | 7/8, 7/9 | 9/9 |
+| Deck card, simpler | 9 | 1.11 | 8/8, 9/9 | 8/8, 9/9 | 7/8, 8/9 | 9/9 |
+| Pack card, examples | 5 | 3.02 | 4/4, 5/5 | 4/4, 5/5 | 5/5, 4/5 | 5/5 |
+| Notes, simpler | 8 | 1.04 | 8/8, 8/8 | 8/8, 8/8 | 6/8, 7/8 | 8/8 |
+| Summary, shorter | 5 | 0.86 | 4/5, 4/5 | 4/5, 4/5 | 5/5, 5/5 | 5/5 |
+| Pack question, simpler | 7 | 1.03 | 5/7, 6/7 | 7/7, 7/7 | 4/6, 6/7 | 6/7 |
+
+Read these honestly. **Lesson, shorter is scored on visible text only:** what it takes out moves behind "More from your material" on the same page, which the judges did not see, so 1 of 7 here means the visible text no longer says every point, not that the point is gone; stressed points stayed 7 of 7. **One stressed point was lost by rule on a pack question (6/7): the bar is zero, so this is a known defect.** **The invented column is not zero**, and part of it is a judge reading a hard reworded question or a label. I read only the first 30 flags, of an earlier, unfiltered pass; the rows are stored and not fully read. "That is correct" and "There is no rush" were real writer additions, now refused by rule, after this run. So "never invent a fact" is held by the checks but is not proven at zero.
+
+The check on hand-written pairs (`scripts/uploads-beta-check-eval.js`; AI-JUDGED): 12 of 12 clean rewordings passed, 12 of 12 planted errors caught. **It was tuned on this same set** (before tuning 10 of 12 each way), so it is not a held-out figure.
+
+**Build time and cost per upload (MEASURED; 3 at once, real pool, other builds on the same keys).**
+
+| | Median over 10 finished | Range |
+|---|---|---|
+| Notes | about 160 s | 78 to 259 s |
+| Study pack | about 260 s | 188 to 695 s |
+| Learning path | about 250 s | 84 to 545 s |
+| Cost tracker, whole upload with all goals and every change above | $0.127 | $0.044 to $0.378 |
+| Ledgers for the same run | about $0.36 an upload | $3.59 over 10 |
+
+The ledgers are the conservative figure: they count a call cut by a deadline at its estimate, and other builds may have used upload tasks in that window. A goal switch is under 0.2 s, no model.
+
+**Load (MEASURED, scripted model, so this is the server's own work and not provider load; this PC with other builds running; `node scripts/uploads-beta-e2e.js load 30`).** 30 testers at once through the whole path: all finished, none crashed, every change reached and put back exactly; event-loop lag p50 53 ms, p95 326 ms, p99 598 ms, worst 748 ms; memory 820 MB; upload p50 1.6 s; goal switch p50 0.8 s; change p50 0.3 s. Not measured: 30 at once on real models, or anything on the server itself. Three at once on real models took 2 to 9 minutes a course.
+
+**Time to the end of a goal (ESTIMATED, not measured on anyone: 230 words a minute, 35 s a question, the app's own review intervals, every review right; `node scripts/uploads-beta-time.js`; 10 documents, mean 620 words).** First pass: today 46 min, full 33, core 20, lean 15. To 1 month: 94, 81, 67, 63. To 1 year: 305, 292, 278, 273. Reading the material five times: 13.5.
+
+**The 4x goal is not shown.** Lean's first pass is about 3x today's own course, and nothing here measures what anyone remembers. Beyond the first pass reviews are most of the time: `material-path.intervalDays` saturates at 15 days, so a skill is reviewed about 27 times in a year, and a short handout is cut into 8 skills. Neither was changed; each needs its own proof.
+
+**Still open.** Whether a real person follows these readings. A blind read rated all arms low on an earlier version (G, 1 to 5, n 10: today 1.6, full 2.0, lean 2.1, core 2.0) and was not repeated on the final code. Some facts still land under a skill that does not name them. `docs/UPLOADS-ANY-FORMAT.md` section 17's server checks are now a script (`node scripts/uploads-server-check.js`) and **have not been run on the server**. No browser click-through with real models: the phone-width walk (`scripts/material-parts-browser.js`, 28 of 28) used a scripted model.
+
+Tests: 41 of 41 test files touching this work pass, run on the last commit. Full `npm test` not run, by instruction.

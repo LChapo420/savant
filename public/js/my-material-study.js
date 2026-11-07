@@ -46,6 +46,7 @@ App.mount(async () => {
       <p class="small"><a href="/my-material">&larr; My material</a></p>
       <h1>${esc(s.course.title)}</h1>
       <p class="muted">${s.mastered} of ${s.total} skills mastered. Your path skips what you know and comes back to things just before you would forget them.</p>
+      ${s.reading ? `<p class="small muted">${esc(s.reading.label)}: about ${s.reading.minutes} minutes for the first pass, with ${s.reading.checks} checks (an estimate).${s.reading.aside ? ` ${s.reading.aside} words are set aside, one tap away on each lesson.` : ''}</p>` : ''}
       ${s.course.status === 'building' ? `<div class="notice" role="status" style="margin-bottom:12px">The rest of this course is still being written${s.course.planned ? `: ${s.total} of ${s.course.planned} skills are ready` : ''}. Reload this page to see new ones.</div>` : ''}
       ${nextCard(s)}
       <p class="small" style="margin-top:12px"><a href="/my-material-test?id=${encodeURIComponent(id)}">Take a practice test</a> on the skills you pick, timed or not.</p>${units}`;
@@ -116,12 +117,21 @@ App.mount(async () => {
       ${s.source === 'general' ? `<p>${GENERAL}</p>` : ''}
       ${fix}
       <div class="card"><div id="lesson-text">${s.lesson.paragraphs.map((p) => `<p>${esc(p)}</p>`).join('')}</div><div id="lesson-change"></div>
-        ${s.lesson.key_points && s.lesson.key_points.length ? `<h2>Key points</h2><ul>${s.lesson.key_points.map((k) => `<li>${esc(k)}</li>`).join('')}</ul>` : ''}</div>
+        <div id="lesson-aside">${asideHtml(s.lesson.aside)}</div>
+        <div id="lesson-keys">${keysHtml(s.lesson.key_points)}</div>
+        ${s.lesson.origin === 'follow' ? '<p class="tiny muted" style="margin-top:8px">Reworded to fit how you have been learning. "Put back" returns the original.</p>' : ''}
+        <div data-part="lesson:${esc(skillId)}" data-changed="${s.lesson.changed ? 1 : 0}"></div></div>
       <h2 style="margin-top:18px">Practice</h2><p class="small muted">Answer one at a time. This does not count toward mastery.</p>
       ${s.practice.map((q, i) => qHtml(q, i, 'p')).join('')}
-      <div class="card" style="margin-top:18px"><h2>Ready?</h2><p class="small">The check has about 5 questions at tier ${s.tier} of 3, with no feedback until the end. 75% masters the skill.</p><button class="btn btn-primary" id="mastery" type="button">Take the check</button></div>`;
+      <div class="card" style="margin-top:18px"><h2>Ready?</h2><p class="small">The check has about ${s.check_size || 5} questions at tier ${s.tier} of 3, with no feedback until the end. 75% masters the skill.</p><button class="btn btn-primary" id="mastery" type="button">Take the check</button></div>`;
     document.getElementById('back').addEventListener('click', (e) => { e.preventDefault(); map(); });
     document.getElementById('mastery').addEventListener('click', () => quiz('mastery', skillId));
+    if (window.PartChange) window.PartChange.wire(root, id, (r) => {
+      if (!r.part) return;
+      if (r.part.paragraphs) document.getElementById('lesson-text').innerHTML = r.part.paragraphs.map((p) => `<p>${esc(p)}</p>`).join('');
+      if (r.part.key_points) document.getElementById('lesson-keys').innerHTML = keysHtml(r.part.key_points);
+      if (r.part.aside) document.getElementById('lesson-aside').innerHTML = asideHtml(r.part.aside);
+    });
     if (window.PartChange) window.PartChange.attach(document.getElementById('lesson-change'), { ref: { material_id: id, skill_id: skillId }, changed: !!s.lesson.prev, onResult: (r) => { if (r.paragraphs) document.getElementById('lesson-text').innerHTML = r.paragraphs.map((p) => `<p>${esc(p)}</p>`).join(''); } });
     s.practice.forEach((q, i) => {
       const card = root.querySelector(`[data-q="${q.id}"]`);
@@ -133,12 +143,20 @@ App.mount(async () => {
         if (answer === null || answer === '') return;
         try {
           const fb = await App.api.post(`${base}/practice`, { skill: skillId, question: q.id, answer });
-          card.querySelector('[data-fb]').innerHTML = `<strong>${fb.correct ? 'Correct.' : `Not quite. The answer: ${esc(fb.answer)}.`}</strong>${fb.misconception ? ` <span>That choice usually comes from this mix-up: ${esc(fb.misconception)}.</span>` : ''} ${esc(fb.explanation)}<br><em>${fb.source === 'general' ? 'Where your file names it' : 'From your material'}: &ldquo;${esc(fb.quote)}&rdquo;</em>`;
+          card.querySelector('[data-fb]').innerHTML = `<strong>${fb.correct ? 'Correct.' : `Not quite. The answer: ${esc(fb.answer)}.`}</strong>${fb.misconception ? ` <span>That choice usually comes from this mix-up: ${esc(fb.misconception)}.</span>` : ''} <span data-exp>${esc(fb.explanation)}</span><br><em>${fb.source === 'general' ? 'Where your file names it' : 'From your material'}: &ldquo;${esc(fb.quote)}&rdquo;</em>`;
+          const fbSlot = document.createElement('div'); fbSlot.className = 'fb-part'; fbSlot.dataset.part = `q:${skillId}:${q.id}`; fbSlot.dataset.changed = q.changed ? '1' : '0'; card.querySelector('[data-fb]').appendChild(fbSlot);
+          if (window.PartChange) window.PartChange.wire(card, id, (o, part, slot) => { if (o.part && o.part.explanation !== undefined) { const box = card.querySelector('[data-exp]'); if (box) box.textContent = o.part.explanation; } });
         } catch (err) { App.toast(err.message, 'error'); }
       });
     });
     return null;
   }
+
+  /** What the goal or a "shorter" left out: on the page, one tap away. */
+  function asideHtml(aside) {
+    return aside && aside.length ? `<details style="margin-top:10px"><summary class="small">More from your material (${aside.length})</summary>${aside.map((t) => `<p class="small">${esc(t)}</p>`).join('')}</details>` : '';
+  }
+  function keysHtml(keys) { return keys && keys.length ? `<h2>Key points</h2><ul>${keys.map((k) => `<li>${esc(k)}</li>`).join('')}</ul>` : ''; }
 
   async function quiz(mode, skillId) {
     let q;
@@ -165,9 +183,10 @@ App.mount(async () => {
       return k.passed ? ` · mastered, next review in ${days(k.next_in_days)}` : ' · not yet: go over it again';
     };
     const lines = r.report.map((k) => `<li><strong>${esc(k.title)}</strong>: ${k.right} of ${k.total}${verdict(k)}</li>`).join('');
-    const rem = (r.remediation || []).map((x) => `<div class="card" style="margin-top:12px"><p><strong>${esc(x.prompt)}</strong></p><p class="small">${x.your_answer ? `You said: ${esc(x.your_answer)}. ` : ''}The answer: ${esc(x.correct_answer)}.</p>${x.misconception ? `<p class="small">The mix-up behind your answer: ${esc(x.misconception)}.</p>` : ''}<p class="small">${esc(x.explanation)}</p><p class="small"><em>${x.source === 'general' ? 'Where your file names it' : 'From your material'}: &ldquo;${esc(x.from_your_material)}&rdquo;</em></p></div>`).join('');
+    const rem = (r.remediation || []).map((x) => `<div class="card" style="margin-top:12px"><p><strong>${esc(x.prompt)}</strong></p><p class="small">${x.your_answer ? `You said: ${esc(x.your_answer)}. ` : ''}The answer: ${esc(x.correct_answer)}.</p>${x.misconception ? `<p class="small">The mix-up behind your answer: ${esc(x.misconception)}.</p>` : ''}<p class="small"><span data-exp>${esc(x.explanation)}</span></p><p class="small"><em>${x.source === 'general' ? 'Where your file names it' : 'From your material'}: &ldquo;${esc(x.from_your_material)}&rdquo;</em></p>${x.skill ? `<div data-part="q:${esc(x.skill)}:${esc(x.id)}" data-changed="0"></div>` : ''}</div>`).join('');
     root.innerHTML = `<h1>${r.overall.right} of ${r.overall.total}</h1><ul>${lines}</ul>${rem ? `<h2>What to look at again</h2>${rem}` : ''}<p style="margin-top:18px"><button class="btn btn-primary" id="done" type="button">Back to your path</button></p>`;
     document.getElementById('done').addEventListener('click', map);
+    if (window.PartChange) window.PartChange.wire(root, id, (o, part, slot) => { if (o.part && o.part.explanation !== undefined) { const box = slot.parentElement.querySelector('[data-exp]'); if (box) box.textContent = o.part.explanation; } });
   }
 
   if (!id) return fail(new Error('No material chosen.'));

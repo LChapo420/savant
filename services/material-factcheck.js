@@ -285,7 +285,7 @@ function quoteHolds(it, quote, idx) {
   return !terms.size || held / terms.size >= 0.6 || terms.size - held <= 2;
 }
 
-async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = null, needQuote = false, allow = null, allowStems = null, task = 'material_factcheck' }) {
+async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = null, needQuote = false, allow = null, allowStems = null, task = 'material_factcheck', once = false, system = null, alwaysRead = false }) {
   const out = new Map();
   // A second reader that does not answer leaves the first reader's verdicts standing; a spent budget does not stop the build here.
   const stats = { sentences: items.length, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0, stopped: false };
@@ -294,7 +294,8 @@ async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = 
   for (const it of items) {
     const e = examine(it.text, idx, { allow, allowStems, extra: it.extra });
     it.exam = e;
-    if (e.direct) { out.set(it.id, { keep: true, how: 'direct' }); stats.direct++; continue; }
+    // A rewording keeps the same words by design, so its words being in the material says nothing ("sought to isolate" became "isolated"): with alwaysRead a model reads it anyway.
+    if (e.direct && !alwaysRead) { out.set(it.id, { keep: true, how: 'direct' }); stats.direct++; continue; }
     ask.push(it);
   }
   const answered = new Map();
@@ -311,7 +312,7 @@ async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = 
         stats.calls++;
         // eslint-disable-next-line no-await-in-loop
         const r = await who({
-          role: 'fast', task, schema: CHECK_SCHEMA, schemaName: 'material_factcheck', maxTokens: Math.min(5000, 400 + todo.length * 120), dataClass: 'learner', system: CHECK_SYSTEM,
+          role: 'fast', task, schema: CHECK_SCHEMA, schemaName: 'material_factcheck', maxTokens: Math.min(5000, 400 + todo.length * 120), dataClass: 'learner', system: system || CHECK_SYSTEM,
           user: `MATERIAL:\n${sourceText}${evidence.length ? `\n\nMORE OF THE SAME MATERIAL:\n${evidence.slice(0, 20).join('\n')}` : ''}\n\nSENTENCES:\n${todo.map((x, i) => `${i + 1}. ${x.text}${x.exam.hard.length ? ` [not found in the material: ${x.exam.hard.join('; ')}]` : ''}`).join('\n')}`,
         });
         if (r && r.stopped) { stats.stopped = true; return; }
@@ -332,7 +333,7 @@ async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = 
       if (v.verdict === 'not_in_source' && had.verdict !== 'not_in_source') { answered.set(it.id, v); stats.second_caught = (stats.second_caught || 0) + 1; } else if (v.verdict === 'not_in_source' && !had.fixed && v.fixed) answered.set(it.id, v);
     };
     // Each family reads twice, all at once: a reader misses different sentences each time, and a second reading took the independent judge's count to zero (docs/UPLOADS-ANY-FORMAT.md section 17).
-    const twice = asker2 && String(process.env.UPLOAD_FACTCHECK_READS || '2') !== '1';
+    const twice = asker2 && !once && String(process.env.UPLOAD_FACTCHECK_READS || '2') !== '1';
     await Promise.all([read(asker, ask, take), asker2 ? read(asker2, ask, take) : null, twice ? read(asker, ask, take) : null, twice ? read(asker2, ask, take) : null]);
     // Neither answered (a learner with no slot of those families, a busy minute): any reader will do.
     const still = ask.filter((x) => !answered.has(x.id));

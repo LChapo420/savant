@@ -98,10 +98,26 @@ function spentToday(userId) {
  * Two ceilings, because two kinds of provider need two kinds of limit: a paid
  * API is bounded by money, a free tier by call count.
  */
-function withinBudget(userId) {
+function withinBudget(userId, task = null) {
   if (!userId) return true;
   const usage = usageToday(userId);
+  if (uploadBucket(task)) return (usage.upload_cents || 0) < UPLOAD_DAILY_CENTS() && (usage.upload_calls || 0) < UPLOAD_DAILY_CALLS();
   return usage.cents < DAILY_CENTS && usage.calls < DAILY_CALLS;
+}
+/**
+ * One upload built whole takes 100 to 150 calls and 10 to 25 cents (measured, docs/UPLOADS-ANY-FORMAT.md section 18), so it used up the learner's whole day of 120 calls: the rest of its own course came out partial, every change to it was
+ * refused and the tutor went quiet until tomorrow. With UPLOAD_OWN_BUDGET=on what an upload's parts cost has its own daily ceiling, set well above one upload, and leaves the tutor's alone. Off, it is as it was.
+ */
+const uploadBudgetOn = () => String(process.env.UPLOAD_OWN_BUDGET || 'off').toLowerCase() === 'on';
+const uploadBucket = (task) => uploadBudgetOn() && /^material_/.test(String(task || ''));
+const UPLOAD_DAILY_CALLS = () => Number(process.env.AI_DAILY_UPLOAD_CALLS_PER_USER || 1500);
+const UPLOAD_DAILY_CENTS = () => Number(process.env.AI_DAILY_UPLOAD_CENTS_PER_USER || 200);
+/** Has this learner used less than this share of today's upload budget? For rewrites nobody is waiting on. */
+function uploadShareLeft(userId, share = 0.5) {
+  if (!userId) return true;
+  if (!uploadBudgetOn()) return budgetShareLeft(userId, share);
+  const usage = usageToday(userId);
+  return (usage.upload_cents || 0) < UPLOAD_DAILY_CENTS() * share && (usage.upload_calls || 0) < UPLOAD_DAILY_CALLS() * share;
 }
 
 /** Has this learner used less than this share of today's AI budget? For background extras, which must leave the tutor its room. */
@@ -182,8 +198,10 @@ function recordSpend(userId, model, usage, usedProvider, meta) {
     day: today(),
     provider: p ? p.name : null,
     // The check is not the learner's use: neither its calls nor its cost count against their limit. Its own limit is in services/fact-guard.js.
-    cents: Number(((existing ? existing.cents : 0) + (meta && meta.task === 'fact_live' ? 0 : cents)).toFixed(4)),
-    calls: (existing ? existing.calls || 0 : 0) + (meta && meta.task === 'fact_live' ? 0 : 1),
+    cents: Number(((existing ? existing.cents : 0) + (meta && (meta.task === 'fact_live' || uploadBucket(meta.task)) ? 0 : cents)).toFixed(4)),
+    calls: (existing ? existing.calls || 0 : 0) + (meta && (meta.task === 'fact_live' || uploadBucket(meta.task)) ? 0 : 1),
+    upload_cents: Number(((existing ? existing.upload_cents || 0 : 0) + (meta && uploadBucket(meta.task) ? cents : 0)).toFixed(4)),
+    upload_calls: (existing ? existing.upload_calls || 0 : 0) + (meta && uploadBucket(meta.task) ? 1 : 0),
   }));
 }
 
@@ -246,7 +264,7 @@ async function withProviders(userId, attempt, role = 'fast', task = null, req = 
 
 async function callProviders(userId, attempt, role = 'fast', task = null, req = null) {
   // The check is not the learner's use: at their daily limit, what they are already shown is still checked, and it never eats into the limit.
-  if (task !== 'fact_live' && !withinBudget(userId)) return null;
+  if (task !== 'fact_live' && !withinBudget(userId, task)) return null;
   const outside = outsideAllowed(userId);
   if (req && poolOn(role)) return viaPool(userId, req, role, task, outside);
   // The whole chain for this role, not just the preferred provider. A failure
@@ -2095,6 +2113,7 @@ ${learnerBrief(userId, { skillId: area.skill_id, skillName: area.skill_name, lev
 
 module.exports = {
   budgetShareLeft,
+  uploadShareLeft,
   outsideOk: (userId) => (userId ? outsideAllowed(userId) : true),
   canBuild,
   coachSystemFor, // the tutor's system prompt for one question (read by scripts/part-modify-proof.js)

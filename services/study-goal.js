@@ -30,7 +30,7 @@ const GOALS = {
   test: { label: 'Ready for a test', short: 'Test', blurb: 'Nothing is set aside. Explanations are trimmed to what a test asks and there are more recall checks.' },
 };
 const CHOICES = Object.keys(GOALS);
-const choices = () => CHOICES.filter((id) => goalOn(id));
+const choices = (kind = null) => CHOICES.filter((id) => goalOn(id, kind));
 const DEFAULT_GOAL = 'full';
 /** Share of the words a core lesson keeps (the gate asks for at least 25% fewer; the writer is held to this ceiling). */
 const CORE_WORD_SHARE = 0.55;
@@ -50,21 +50,26 @@ const enabled = () => String(process.env.STUDY_GOAL || 'on').toLowerCase() !== '
 const coreEnabled = () => enabled() && String(process.env.STUDY_GOAL_CORE || 'off').toLowerCase() === 'on';
 /** Same for Ready for a test: STUDY_GOAL_TEST=on (off by default until its gate passes). */
 const testEnabled = () => enabled() && String(process.env.STUDY_GOAL_TEST || 'off').toLowerCase() === 'on';
-/** Is this goal available (full always is)? */
-const goalOn = (id) => id === 'full' || (id === 'core' && coreEnabled()) || (id === 'test' && testEnabled());
+/**
+ * Uploaded courses have their own switch (uploads-beta, 7 Nov 2026): with UPLOAD_GOALS=on the two goals are open for a material through services/material-optimize.js, whose gate is its own
+ * (docs/UPLOADS-ANY-FORMAT.md section 18), while a built-in subject stays behind STUDY_GOAL_CORE and STUDY_GOAL_TEST.
+ */
+const uploadsOpen = () => enabled() && String(process.env.UPLOAD_GOALS || 'off').toLowerCase() === 'on';
+/** Is this goal available (full always is)? kind: 'material' for an uploaded course. */
+const goalOn = (id, kind = null) => id === 'full' || (id === 'core' && coreEnabled()) || (id === 'test' && testEnabled()) || (kind === 'material' && (id === 'core' || id === 'test') && uploadsOpen());
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
 /** A stored goal, or an empty one, as { goal, restored[] }. A goal this build does not know is full. */
-function effective(stored) {
-  if (!enabled() || !stored || !GOALS[stored.goal] || !goalOn(stored.goal)) return { goal: DEFAULT_GOAL, restored: [], set_on: null };
+function effective(stored, kind = null) {
+  if (!enabled() || !stored || !GOALS[stored.goal] || !goalOn(stored.goal, kind)) return { goal: DEFAULT_GOAL, restored: [], set_on: null };
   return { goal: stored.goal, restored: Array.isArray(stored.restored) ? stored.restored.slice(0, 400) : [], set_on: stored.set_on || null };
 }
 
-function normalize(body, current) {
+function normalize(body, current, kind = null) {
   const b = body || {};
-  const cur = effective(current);
+  const cur = effective(current, kind);
   const goal = b.goal === undefined ? cur.goal : String(b.goal);
-  if (!GOALS[goal] || !goalOn(goal)) return { error: `Choose ${choices().map((id) => GOALS[id].label.toLowerCase()).join(' or ')}.` };
+  if (!GOALS[goal] || !goalOn(goal, kind)) return { error: `Choose ${choices(kind).map((id) => GOALS[id].label.toLowerCase()).join(' or ')}.` };
   let restored = goal === cur.goal ? cur.restored.slice() : []; // a new goal starts with nothing brought back
   if (b.restore === 'all') restored = ['all'];
   else if (Array.isArray(b.restore)) restored = [...new Set([...restored, ...b.restore.map((x) => (typeof x === 'number' ? x : String(x).slice(0, 80)))])].slice(0, 400);
@@ -77,8 +82,8 @@ function normalize(body, current) {
  * Change a spec's numbers for the goal. Only how much and how it is said changes, never what must be covered: the key-fact
  * check and the coverage contract stay on every prompt. Mutates and returns the spec; full leaves it as it is.
  */
-function applyToSpec(spec, id) {
-  if (!spec || !enabled() || !GOALS[id] || id === 'full' || !goalOn(id)) return spec;
+function applyToSpec(spec, id, kind = null) {
+  if (!spec || !enabled() || !GOALS[id] || id === 'full' || !goalOn(id, kind)) return spec;
   const l = spec.lesson; const p = spec.practice;
   if (id === 'core') {
     // Never above the learner's own full-depth numbers: the old floors (3 minutes, 120 words) RAISED the budget of a short-attention
@@ -162,7 +167,7 @@ function coreSetAsideSkills(course) {
     const byUnit = new Map();
     for (const s of skills) byUnit.set(s.unit_id || s.unit || '_', s);
     for (const s of byUnit.values()) lastOfUnit.add(s.id);
-    const heavy = new Set((course.keypoint_gate_skills || []));
+    const heavy = new Set([...(course.keypoint_gate_skills || []), ...skills.filter((s) => s.stressed).map((s) => s.id)]); // a skill the optimizer found a stressed fact on stays
     return skills.filter((s) => !needed.has(s.id) && !lastOfUnit.has(s.id) && !heavy.has(s.id) && s.source !== 'remediation').map((s) => ({ id: s.id, title: s.title }));
   } catch { return []; }
 }
@@ -194,7 +199,7 @@ function setAsideSkills(userId, materialId, course) {
   try {
     const m = lazy('../config/db').byId('materials', materialId);
     if (!m || m.user_id !== userId) return [];
-    const eff = effective(m.study_goal);
+    const eff = effective(m.study_goal, 'material');
     if (eff.goal !== 'core') return [];
     return coreSetAsideSkills(course).filter((x) => !brought(eff, x.id));
   } catch { return []; }
@@ -207,7 +212,7 @@ function goalFor(userId, { materialId = null, trackId = null, gradeId = null } =
     const db = lazy('../config/db');
     if (materialId) {
       const m = db.byId('materials', materialId);
-      return m && m.user_id === userId ? effective(m.study_goal).goal : DEFAULT_GOAL;
+      return m && m.user_id === userId ? effective(m.study_goal, 'material').goal : DEFAULT_GOAL;
     }
     if (trackId) {
       const e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === trackId && (!gradeId || x.grade_id === gradeId));
@@ -232,7 +237,7 @@ function save(userId, kind, id, body) {
   if (!table) return { error: 'Choose a subject or a course.', status: 400 };
   const row = db.byId(table, Number(id));
   if (!row || row.user_id !== userId) return { error: 'Not found.', status: 404 };
-  const n = normalize(body, row.study_goal);
+  const n = normalize(body, row.study_goal, kind === 'material' ? 'material' : null);
   if (n.error) return { error: n.error, status: 400 };
   db.update(table, row.id, { study_goal: n.goal });
   return { goal: n.goal, row: db.byId(table, row.id) };
@@ -250,10 +255,10 @@ function listFor(userId) {
     return { kind: 'enrollment', id: e.id, title: `${track ? track.name : e.track_id}${grade ? `: ${grade.name}` : ''}`, goal: eff.goal, summary: describe(eff.goal, aside), set_aside: aside.slice(0, 200), set_aside_count: aside.length, brought_back: offered === null ? 0 : offered - aside.length };
   });
   const materials = db.find('materials', (m) => m.user_id === userId).map((m) => {
-    const eff = effective(m.study_goal);
+    const eff = effective(m.study_goal, 'material');
     let aside = [];
     if (eff.goal === 'core') { try { aside = setAsideSkills(userId, m.id, lazy('./material-study').internals.loadCourse(userId, m.id)); } catch { aside = []; } }
-    return { kind: 'material', id: m.id, title: m.title || `Material ${m.id}`, goal: eff.goal, summary: describe(eff.goal, aside), set_aside: aside.slice(0, 200), set_aside_count: aside.length, brought_back: 0 };
+    return { kind: 'material', id: m.id, title: m.title || `Material ${m.id}`, goal: eff.goal, summary: describe(eff.goal, aside), set_aside: aside.slice(0, 200), set_aside_count: aside.length, brought_back: 0, choices: choices('material').map((id) => ({ id, label: GOALS[id].label, blurb: GOALS[id].blurb })) };
   });
   return { choices: choices().map((id) => ({ id, label: GOALS[id].label, blurb: GOALS[id].blurb })), enrollments, materials };
 }
@@ -278,6 +283,6 @@ function tutorLines(userId) {
 }
 
 module.exports = {
-  GOALS, CHOICES, choices, coreEnabled, testEnabled, goalOn, DEFAULT_GOAL, CORE_WORD_SHARE, GATE_MIN, enabled, effective, normalize, applyToSpec, linesFor,
+  GOALS, CHOICES, choices, coreEnabled, testEnabled, uploadsOpen, goalOn, DEFAULT_GOAL, CORE_WORD_SHARE, GATE_MIN, enabled, effective, normalize, applyToSpec, linesFor,
   coreSetAsideLevels, coreSetAsideSkills, setAsideFor, stepOver, setAsideSkills, goalFor, describe, save, listFor, tutorLines,
 };

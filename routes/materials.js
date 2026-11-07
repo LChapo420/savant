@@ -217,7 +217,13 @@ router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1
   if (courses.inflight.has(`${userId}:${m.id}`)) return res.status(202).json({ started: true, busy: true });
   // The learner is waiting on this: the waiting lane on the fast lane (paid fast slots first for a cleared learner, 8 s overflow to a paid slot otherwise).
   courseBuildErrors.delete(`${userId}:${m.id}`);
-  queueBuild(userId, `course:${m.id}`, () => require('../services/material-autobuild').runWaiting(() => courses.build(userId, m.id, {})).then((out) => {
+  queueBuild(userId, `course:${m.id}`, () => require('../services/material-autobuild').runWaiting(async () => {
+    const first = await courses.build(userId, m.id, {});
+    // The outline is one call that everything hangs on: when no model or checker answered it, one more try after a moment, before telling the learner (the real run lost 1 course in 12 this way). UPLOAD_OUTLINE_RETRY=off removes it.
+    if (first.code !== 'outline_failed' || String(process.env.UPLOAD_OUTLINE_RETRY || 'on').toLowerCase() === 'off') return first;
+    await new Promise((r) => setTimeout(r, Number(process.env.UPLOAD_OUTLINE_RETRY_MS || 15000)));
+    return courses.build(userId, m.id, {});
+  }).then((out) => {
     if (out.error && out.code !== 'busy') {
       console.warn(`course-builder: ${out.code}`);
       if (courseBuildErrors.size > 2000) courseBuildErrors.clear();
@@ -289,6 +295,7 @@ router.get('/:id/pack', requireAuth, (req, res) => {
     const mine = packs.forLearner(req.user.id, req.params.id);
     return res.json(mine ? { pack: mine.pack, shown: mine.ids, skipped_known: mine.skipped_known } : { pack: null });
   }
+  { const prow = packs.get(req.user.id, req.params.id); if (prow && prow.status === 'ready') followParts(req, ['summary', ...(prow.cards || []).slice(0, 6).map((c) => `packcard:${c.id}`), ...(prow.quiz || []).slice(0, 4).map((q) => `pack:quiz:${q.id}`)]); }
   res.json({ pack: packs.view(packs.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `pack:${Number(req.params.id)}`, packs.activity(req.user.id, req.params.id)) });
 });
 
@@ -299,7 +306,9 @@ router.post('/:id/pack/grade', requireAuth, ownMaterial, limit('materials-pack-g
   res.json(out);
 });
 
-router.get('/:id/notes', requireAuth, ownMaterial, (req, res) => { promoteBuilds(req.user.id, req.params.id, ['notes']); return res.json({ notes: notes.view(notes.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `notes:${Number(req.params.id)}`) }); });
+/** Parts a learner just opened, rewritten in the background if they have moved since they were written (services/material-parts.js; UPLOAD_PARTS_FOLLOW, off by default). Never waits, never throws. */
+const followParts = (req, refs) => { try { require('../services/material-parts').maybeFollow(req.user.id, Number(req.params.id), refs); } catch { /* the stored text stands */ } }; // eslint-disable-line global-require
+router.get('/:id/notes', requireAuth, ownMaterial, (req, res) => { promoteBuilds(req.user.id, req.params.id, ['notes']); const nrow = notes.get(req.user.id, req.params.id); if (nrow && nrow.status === 'ready') followParts(req, (nrow.sections || []).slice(0, 8).map((s) => `note:${s.id}`)); return res.json({ notes: notes.view(notes.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `notes:${Number(req.params.id)}`) }); });
 router.post('/:id/notes', requireAuth, ownMaterial, limit('materials-notes', 6, 60 * 60 * 1000), (req, res) => {
   const existing = notes.get(req.user.id, req.params.id);
   if (existing && existing.status === 'ready' && existing.version === notes.VERSION) return res.json({ notes: notes.view(existing), cached: true });
@@ -334,7 +343,7 @@ function cardReply(res, out) {
   return res.json(out);
 }
 const cardBody = express.json({ limit: '16kb' });
-router.get('/:id/cards', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.deck(req.user.id, req.params.id)));
+router.get('/:id/cards', requireAuth, ownMaterial, (req, res) => { const d = cards.deck(req.user.id, req.params.id); if (!d.error) followParts(req, d.cards.filter((c) => c.due && c.source !== 'own' && !c.edited).slice(0, 8).map((c) => `card:${c.id}`)); return cardReply(res, d); });
 router.get('/:id/cards/pick', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.pick(req.user.id, req.params.id, Number(req.query.limit) || 20)));
 router.get('/:id/cards/due', requireAuth, ownMaterial, (req, res) => cardReply(res, cards.due(req.user.id, req.params.id, Number(req.query.limit) || 20)));
 router.post('/:id/cards/review', requireAuth, ownMaterial, limit('materials-cards-review', 600, 60 * 60 * 1000), cardBody, (req, res) => {

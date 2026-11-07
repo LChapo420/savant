@@ -101,8 +101,11 @@ function loadCourse(userId, materialId) {
   const c = courses.get(userId, materialId);
   // 'building' with skills: a partial course being resumed (or a build that died) stays studyable meanwhile.
   if (!c || !['ready', 'partial', 'building'].includes(c.status) || !(c.skills || []).length) return null;
-  return c;
+  // The goal's reading and the learner's own changes (services/material-parts.js; both off by default): one choke point, so the lesson, practice, checks, reviews, remediation and the practice test all serve it.
+  return require('./material-parts').viewCourse(userId, c); // eslint-disable-line global-require
 }
+/** A question of a skill by id, also when the goal has set it aside: an answer already on its way must still be marked. */
+const qOf = (skill, id) => skill && (skill.all_questions || skill.questions || []).find((x) => x.id === id);
 
 function row(userId, materialId) {
   const mid = Number(materialId);
@@ -172,6 +175,15 @@ function nextStep(course, r, now) {
   return { kind: st.read && !st.remediate ? 'quiz' : 'lesson', skill: s.id, title: s.title, remediation: !!st.remediate };
 }
 
+/** What the goal makes of the first pass, in the learner's terms; null unless the optimizer is on. An estimate (services/material-optimize.js estimateMinutes), said to be one on the page. */
+function readingOf(course) {
+  const o = course.optimized;
+  if (!o) return null;
+  const est = require('./material-optimize').estimateMinutes(o, 1, course.skills.length); // eslint-disable-line global-require
+  const label = { full: 'Full depth', core: 'Core parts, fast', test: 'Ready for a test' }[o.goal] || 'Full depth';
+  return { goal: o.goal, label, minutes: Math.max(1, Math.round(est.total)), checks: est.questions, words: o.reading_words, aside: o.aside_words };
+}
+
 /** The map: units, every skill (level, tier, status, open, due), the next step and the learner's counts. */
 function state(userId, materialId, now = Date.now()) {
   const course = loadCourse(userId, materialId);
@@ -191,7 +203,7 @@ function state(userId, materialId, now = Date.now()) {
   return {
     course: { title: course.title, status: course.status, planned: course.status === 'building' ? (course.outline || []).length || null : null },
     units: course.units || [{ id: 'u1', title: course.title, skills: course.skills.map((s) => s.id) }],
-    placed: !!r.placed, skills, mastered: skills.filter((s) => s.status === 'mastered').length, total: skills.length,
+    reading: readingOf(course), placed: !!r.placed, skills, mastered: skills.filter((s) => s.status === 'mastered').length, total: skills.length,
     due_count: dues.length, next_due: dues.length ? 'now' : upcoming, next: nextStep(course, r, now),
     steps: r.steps, pace: Math.round((r.pace || 0) * 100) / 100,
   };
@@ -256,7 +268,7 @@ function placementNext(userId, materialId, opts = {}) {
   if (r.placement.pending) {
     const p = r.placement.pending;
     const skill = course.skills.find((s) => s.id === p.skill);
-    const q = skill && skill.questions.find((x) => x.id === p.qid);
+    const q = qOf(skill, p.qid);
     if (q) return { done: false, question: publicQ(q, skill.id), stage: p.stage, asked: r.placement.answers.length, most };
   }
   const nx = path.nextPlacement(course, r.placement.answers, placementAskable(course, r, rnd), seedOf(userId, materialId));
@@ -280,7 +292,7 @@ function placementAnswer(userId, materialId, qid, answer, opts = {}) {
   const p = r.placement.pending;
   if (!p || p.qid !== String(qid || '')) return { error: 'That question is not open any more.', code: 'no_quiz' };
   const skill = course.skills.find((s) => s.id === p.skill);
-  const q = skill && skill.questions.find((x) => x.id === p.qid);
+  const q = qOf(skill, p.qid);
   if (!q) return { error: 'No such question.', code: 'not_found' };
   const correct = isCorrect(q, answer);
   r.placement.answers.push({ skill: p.skill, qid: q.id, correct, guess: path.guessOf(q), stage: p.stage });
@@ -312,9 +324,11 @@ function lesson(userId, materialId, skillId, opts = {}) {
   st.practice_ids = practiceQs.map((q) => q.id);
   r.steps.lessons++;
   save(r);
+  // This lesson and its questions, rewritten in the background if the learner has moved since they were written (services/material-parts.js maybeFollow; off by default).
+  require('./material-parts').maybeFollow(userId, materialId, [`lesson:${skill.id}`, ...practiceQs.map((q) => `q:${skill.id}:${q.id}`)]); // eslint-disable-line global-require
   return {
     skill: {
-      id: skill.id, title: skill.title, source: skill.source || 'material', tier: st.tier, lesson: skill.lesson,
+      id: skill.id, title: skill.title, source: skill.source || 'material', tier: st.tier, lesson: skill.lesson, check_size: skill.quiz_size || QUIZ_SIZE,
       practice: practiceQs.map((q) => publicQ(q, skill.id)),
       remediation: remediating ? { misconceptions: st.misconceptions.slice(-3).map((m) => (typeof m === 'object' ? m.text : m)) } : null,
     },
@@ -326,7 +340,7 @@ function practice(userId, materialId, skillId, qid, answer) {
   const course = loadCourse(userId, materialId);
   if (!course) return { error: 'There is no course to study yet.', code: 'no_course' };
   const skill = course.skills.find((s) => s.id === skillId);
-  const q = skill && skill.questions.find((x) => x.id === qid);
+  const q = qOf(skill, qid);
   if (!q) return { error: 'No such question.', code: 'not_found' };
   const r = row(userId, materialId);
   if (!unlocked(course, r, skill)) return { error: 'Master the earlier skills first.', code: 'locked' };
@@ -348,7 +362,7 @@ function pickQuestions(course, r, mode, skillId, now, rnd) {
   if (mode === 'mastery') {
     const skill = course.skills.find((s) => s.id === skillId);
     const st = skillState(r, skillId);
-    const main = path.pickForTier(skill, st.tier, QUIZ_SIZE, st.wrong, st.practice_ids, rnd).map((q) => ({ skill, q, role: 'main' }));
+    const main = path.pickForTier(skill, st.tier, skill.quiz_size || QUIZ_SIZE, st.wrong, st.practice_ids, rnd).map((q) => ({ skill, q, role: 'main' }));
     // Interleave one question from an earlier mastered skill: the one closest to falling due.
     const earlier = course.skills.filter((s) => s.id !== skillId && (r.skills[s.id] || {}).status === 'mastered')
       .sort((a, b) => String(r.skills[a.id].due || '').localeCompare(String(r.skills[b.id].due || '')))[0];
@@ -431,7 +445,7 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
   const results = [];
   for (const [sid, qid, role] of quiz.qids) {
     const skill = course.skills.find((s) => s.id === sid);
-    const q = skill && skill.questions.find((x) => x.id === qid);
+    const q = qOf(skill, qid);
     if (!q) continue;
     const ok = isCorrect(q, given[qid]);
     r.pace = path.updatePace(r.pace, q.tier || 2, ok);
@@ -580,7 +594,7 @@ function dueSummary(userId, now = Date.now()) {
 }
 
 module.exports = {
-  internals: { row, skillState, save, loadCourse, scheduleReview, noteAnswers, publicQ, correctText, misconceptionOf, shuffle },
+  internals: { qOf, row, skillState, save, loadCourse, scheduleReview, noteAnswers, publicQ, correctText, misconceptionOf, shuffle },
   dueSummary, PASS, QUIZ_SIZE, gradeShort, isCorrect, misconceptionOf, state, nextStep, lesson, practice,
   placementNext, placementAnswer, startQuiz, submit, checkin, removeForMaterial,
 };

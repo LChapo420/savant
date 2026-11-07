@@ -213,7 +213,7 @@
           </div>
           <div class="card" id="checkin" role="group" aria-live="polite" style="display:none"></div>
           <h2 style="margin-top:16px">Script</h2>
-          <ol style="list-style:none;padding:0;margin:0">${ep.turns.map((turn, i) => `<li data-turn="${i}" style="padding:6px 0"><strong>${turn.host === 'A' ? 'Alex' : 'Sam'}:</strong> ${esc(turn.text)}${turn.quote ? ` <details style="display:inline"><summary class="tiny muted">From your material</summary><span class="tiny muted">“${esc(turn.quote)}”</span></details>` : ''}</li>${checkins().filter((c) => c.after === i).map((c) => `<li class="tiny muted" data-checkin-after="${i}" style="padding:2px 0 6px"><em>Check-in${c.skill_title ? ` · ${esc(c.skill_title)}` : ''}: a quick question here, tap an answer.</em></li>`).join('')}`).join('')}</ol>
+          <ol style="list-style:none;padding:0;margin:0">${ep.turns.map((turn, i) => `<li data-turn="${i}" style="padding:6px 0"><strong>${turn.host === 'A' ? 'Alex' : 'Sam'}:</strong> ${esc(turn.text)}${turn.quote ? ` <details style="display:inline"><summary class="tiny muted">From your material</summary><span class="tiny muted">“${esc(turn.quote)}”</span></details>` : ''}</li>${checkins().filter((c) => c.after === i).map((c) => `<li class="tiny muted" data-checkin-after="${i}" style="padding:2px 0 6px"><em>Check-in${c.skill_title ? ` · ${esc(c.skill_title)}` : ''}: a quick question here, tap an answer.</em></li>`).join('')}`).join('')}</ol><div data-part="podcast:${esc(ep.kind)}" data-changed="0"></div>
           <p class="tiny muted">The voices are your browser's own. Nothing is recorded, and no voice service is used.</p>`;
       } else {
         const weakNote = kind === 'weak' ? (data.weak_spots.length
@@ -223,6 +223,7 @@
           <button type="button" class="btn btn-primary" id="make"${kind === 'weak' && !data.weak_spots.length ? ' disabled' : ''}>Make the episode</button></div>`;
       }
       rootEl.innerHTML = `<p class="small"><a href="/my-material">&larr; My material</a></p><h1>Podcast</h1>
+      if (window.PartChange) window.PartChange.wire(rootEl, id, () => { window.location.reload(); });
         <p class="muted">A short two-host talk made only from your own text. It is read aloud by your browser's voice.</p>
         <div class="row-wrap" style="gap:8px;margin:12px 0">${tabs}</div>${body}`;
       rootEl.querySelectorAll('[data-kind]').forEach((b) => b.addEventListener('click', () => { pause(); clearCheck(); kind = b.dataset.kind; pos = 0; doneChecks.clear(); render(); }));

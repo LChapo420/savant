@@ -323,7 +323,8 @@ async function build(userId, materialId, opts = {}) {
     const useful = all.cards.length || all.quiz.length || all.test.length;
     const status = !useful ? 'failed' : (stopped || ctx.unanswered || ctx.dropped.fact_unchecked ? 'partial' : 'ready');
     saved = db.update('material_packs', saved.id, {
-      ...all, status, spec_hash: ps.spec.isDefault ? null : learningSpec.specHash(ps.spec), dropped: ctx.dropped, models: [...ctx.models], tokens_used: ctx.budget.used,
+      ...all, status, spec_hash: ps.spec.isDefault ? null : learningSpec.specHash(ps.spec), spec_sig: ps.spec.isDefault ? null : require('./spec-sig').specSig(ps.spec), // eslint-disable-line global-require
+      dropped: ctx.dropped, models: [...ctx.models], tokens_used: ctx.budget.used,
       error: status === 'failed' ? (stopped ? 'token budget' : ctx.unanswered ? 'no_answer' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     db.saveSoon();
@@ -387,6 +388,7 @@ const publicItem = (q) => {
 };
 
 /** What the learner may see: the summary and the cards in full (they are the study aids), the questions without keys. */
+const parts = () => require('./material-parts'); // eslint-disable-line global-require
 function view(p, only) {
   if (!p) return null;
   const keep = (list) => (only ? list.filter((q) => only.has(q.id)) : list);
@@ -394,10 +396,10 @@ function view(p, only) {
   return {
     material_id: p.material_id, title: p.title, status: stale ? ((p.cards || []).length ? 'partial' : 'failed') : p.status,
     failure: stale ? 'interrupted' : (p.error === 'no_answer' || p.error === 'token budget' ? 'busy' : null),
-    summary: p.summary || [],
-    cards: (p.cards || []).map((c) => ({ id: c.id, front: c.front, back: c.back, quote: c.quote })),
-    quiz: keep(p.quiz || []).map(publicItem),
-    test: keep(p.test || []).map(publicItem),
+    summary: parts().overlaySummary(p.user_id, p.material_id, p.summary || []),
+    cards: parts().overlayPackCards(p.user_id, p.material_id, (p.cards || []).map((c) => ({ id: c.id, front: c.front, back: c.back, quote: c.quote }))),
+    quiz: parts().overlayPackItems(p.user_id, p.material_id, 'quiz', keep(p.quiz || []).map(publicItem)),
+    test: parts().overlayPackItems(p.user_id, p.material_id, 'test', keep(p.test || []).map(publicItem)),
     built_at: p.finished_at || null,
   };
 }
@@ -441,13 +443,16 @@ function grade(userId, materialId, section, answers, only) {
     if (shown && !shown.has(q.id)) continue;
     const a = Object.prototype.hasOwnProperty.call(given, q.id) ? given[q.id] : null;
     if (q.type === 'written') {
-      results.push({ id: q.id, type: 'written', answered: typeof a === 'string' && !!a.trim(), model_answer: q.answer, key_points: q.key_points, quote: q.quote, explanation: q.explanation });
+      const ow = parts().on() ? parts().served(userId, materialId, `pack:${section}:${q.id}`) : null;
+      results.push({ id: q.id, type: 'written', answered: typeof a === 'string' && !!a.trim(), model_answer: (ow && ow.changed && ow.answer) || q.answer, key_points: q.key_points, quote: q.quote, explanation: (ow && ow.changed && ow.explanation) || q.explanation });
       continue;
     }
     const ok = study.isCorrect({ type: q.type === 'multiple_choice' ? 'multiple_choice' : 'short_answer', prompt: q.prompt, answer: q.answer, answer_index: q.answer_index }, a);
     marked++;
     if (ok) right++;
-    results.push({ id: q.id, type: q.type, correct: ok, correct_answer: q.type === 'multiple_choice' ? q.choices[q.answer_index] : q.answer, quote: q.quote, explanation: q.explanation });
+    const ov = parts().on() ? parts().served(userId, materialId, `pack:${section}:${q.id}`) : null;
+    const shownChoices = ov && ov.changed && ov.choices ? ov.choices : q.choices;
+    results.push({ id: q.id, type: q.type, correct: ok, correct_answer: q.type === 'multiple_choice' ? shownChoices[q.answer_index] : q.answer, quote: q.quote, explanation: (ov && ov.changed && ov.explanation) || q.explanation });
   }
   return { section, right, marked, results };
 }
