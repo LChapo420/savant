@@ -172,3 +172,9 @@ Everything Savant makes and puts out is 100% fact checked before it is shown. "1
 
 ## Name, domain and after design (owner, 2026-11-06)
 The name is Savant; the domain is savantedu.com. Goal: savant.edu through a partner school, or Savant's own accreditation. After the design work: study groups (chat online or offline, see what members are actively doing) and leaderboards across friends and across study groups. Other languages and credentials are put off. The voice tutor should already exist.
+
+## Onboarding, uploads and the character (owner, 7 Nov 2026)
+
+- Character: the Sunny-coloured giraffe in the flat mascot style, "for now", so work can move on to the rest of the UI. It may become customizable later.
+- Onboarding "should just ask the same things it does": the test that gets a general understanding of their learning style, their interests, the subject(s), then the grade they want or the placement. Age and the agreement stay in front, as law and the owner require. It should have "a clean ui look like Duolingo and brilliant".
+- Full modification and optimization of uploaded material is to be built alongside everything else, for the beta on Nov 15.

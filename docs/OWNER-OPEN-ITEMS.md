@@ -7,7 +7,7 @@ Things put off or waiting for a decision. Nothing here is forgotten or solved. U
 |---|---|
 | **Children without parental consent** | Owner, 6 Nov: not tending to them for now; think about it later. They get safe but weak fixed replies, and no outside AI. A small local model isn't the answer unless it can do it right. |
 | Privacy fix for under-age testers before investors | Tester-phase access is allowed for now; a fix is needed before investors. Linked to the item above. |
-| Tutor character | Owner, 6 Nov: a giraffe, one base character, colouring near the first three, maybe customizable, flat chunky mascot style. Round two is in design-refs/giraffes/giraffes-v2.png; awaiting a pick. |
+| Tutor character | Owner, 7 Nov: the Sunny-coloured giraffe in the flat mascot style, for now. In the new onboarding on its branch. Name and customizable colours are later. |
 | Logo font | Logo is serif (DM Serif Display), the app is Atkinson. "Worry about that later". |
 | Mass video ideation | To do with the owner, starting from first video numbers. |
 | Whole-app UI redesign | Onboarding is first; the rest follows once its look is approved. |
