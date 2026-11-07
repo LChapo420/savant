@@ -20,7 +20,7 @@ On the real routes, MEASURED on 16 held-out grades (80 walks, 575 to 640 lessons
 
 **The largest cause was bugs and order, not teaching.** Three plain bugs and one order mistake made up most of it.
 
-**Every multiple above leans on one assumption that looks false today: that the app's questions practise the lesson.** The model credits every answer as teaching the lesson's topic. AI-judged on 58 held-out first practice levels, <<ONTOPIC>> of their questions do, and my own reading of a sample agrees: "Average Rate of Change and Difference Quotients" practises range and median, "Rows, Columns and Diagonal Slides" asks square colours. In the model, if half the questions are on topic the recommended set falls to x0.70 at 1 month and x0.85 at 1 year; at a quarter, x0.51 and x0.48; at a tenth, recall 0.70 is out of reach at a month. So **the real path's largest sink is still there**: most of its answers teach little about the lesson, and the fix is new questions, not code. Questions written per objective exist on 8 of 219 grades. See section 7.
+**Every multiple above leans on one assumption that looks false today: that the app's questions practise the lesson.** The model credits every answer as teaching the lesson's topic. AI-judged on 58 held-out first practice levels, 4.9% of their questions do (17 of 348; 1.4% before this round), and my own reading of a sample agrees: "Average Rate of Change and Difference Quotients" practises range and median, "Rows, Columns and Diagonal Slides" asks square colours. In the model, if half the questions are on topic the recommended set falls to x0.70 at 1 month and x0.85 at 1 year; at a quarter, x0.51 and x0.48; at a tenth, recall 0.70 is out of reach at a month. So **the real path's largest sink is still there**: most of its answers teach little about the lesson, and the fix is new questions, not code. Questions written per objective exist on 8 of 219 grades. Where they exist, turning them on takes the same check from 11% to 59%. See section 7.
 
 **One decision is yours.** The one form of spaced retention that passes the gate, `=long`, makes short goals slower than long ones (14 h at 1 week, 9.7 h at 1 year), against your rule that lower goals be fastest. The form that keeps your rule, `=on`, fails the gate at the 1-week horizon and when a learner studies only every third day. See section 7.
 
@@ -49,7 +49,7 @@ Main before this round, held-out grades, 575 lessons, 41,646 answers. MEASURED c
 2. **The retention levels are massed (order).** Each stretch ends on "Free Recall and Mixed Review" and "Spaced Recall: a delayed check". Both come straight after the practice, with no gap at all: 30 more answers, 99% right, and up to 61% of all answers for a learner who proves early. The review queue already asks the real memory checks a day and a week later. A real retention page is worse where one is written: 1,455 visible words on average against 725 for a written lesson (MEASURED, 21 and 72 shared pages), about 7 minutes of reading each.
 3. **Skills no lesson had taught held the level and filled its slots (plain bugs).** `levelProgress` averaged every "introduced" skill, and that list is the grade's skill order, not the lesson order. On ACT grade 1, a learner with every answer right stayed on level 21 for 26 sittings, objective already proven. The same list fed the support and interleaved slots, and a skill never met has mastery 0, so it ranked weakest: a lesson on independent clauses asked fractions.
 4. **Proof could only come from a lesson's checks or a game.** An ordinary practice answer never counts as aligned evidence (`OBJ_MIN_ALIGNED`), so a learner who missed two of three lesson checks walked every level left, however well they did. On ACT, a re-tag gave a lesson one skill and its activities another, so right answers spoke for no objective (plain bug, fixed).
-5. **Off-topic questions (not fixed; the largest thing left).** Even on the right coarse skill, the bank's questions are rarely about the lesson: after "Transformations of Functions" it asks "If f(x) = 4x - 3, what is f(-5)?". <<TOPIC>> Questions written for one objective exist on 8 of 219 grades. 50% of answers repeat a question stem (numbers aside) from earlier in the same stretch, and 48% repeat one already answered right (MEASURED). It needs new questions.
+5. **Off-topic questions (not fixed; the largest thing left).** Even on the right coarse skill, the bank's questions are rarely about the lesson: after "Transformations of Functions" it asks "If f(x) = 4x - 3, what is f(-5)?". AI-JUDGED by a free NVIDIA model told to be strict, held-out grades, first practice level: 5 of 360 questions (1.4%) practised the lesson's own topic before this round, and 17 of 348 (4.9%) after the plain fixes, which put 53 of 58 levels on the lesson's skill against 13 of 60. A sample I read myself agrees. Questions written for one objective exist on 8 of 219 grades. 50% of answers repeat a question stem (numbers aside) from earlier in the same stretch, and 48% repeat one already answered right (MEASURED). It needs new questions.
 6. **Level close.** Up to four optional questions sat above Continue. There is also one quick recall after each level, optional and not counted in the walk: at 15 s it would add about 8% in both the before and after columns.
 7. **Waits are small once a level is written.** Server, real routes in process on a stripped database, this PC under other load (MEASURED, held-out): opening a level p50 29 ms, p95 70 ms; an answer p50 1 ms, p95 3 ms. The real wait is cold writing. docs/FIRST-LESSON.md measured 70 to 605 s from the end of placement to an open lesson, once per learner, under 100% CPU; another build owns it and I did not re-measure it. A level not written ahead waits at most 8 s and then shows "still writing": with no model here I could not measure how often that happens.
 8. **Pages are not the sink.** Real AI lesson rows average 538 words (n 113, MEASURED), about 2.7 minutes at 200 words a minute. The walker's bank pages are shorter, so written pages weigh a little more than the table shows.
@@ -67,7 +67,7 @@ Main before this round, held-out grades, 575 lessons, 41,646 answers. MEASURED c
 - `SPEED_SPACE_RETENTION=on|long`: once an objective is proven, its two retention levels are stepped over and the review queue asks the memory checks instead. An unproven objective keeps them. The learner is told, the levels stay open behind them, and graduation still needs every objective retained. `long`: only on goals of 6 months or more, or with no test day.
 - `SPEED_PROOF_PASSES`: a practice level with its answers is passed once its objective is proven, whatever the coarse average says.
 - `SPEED_RECHECK`: a practice level on an unproven objective opens on the lesson checks the learner missed, after at least 5 practice answers. The bar is unchanged, but **this is the same question a second time, weaker evidence than a new one.** The code's own comment says being re-asked teaches recognition. Its effect on proof quality is not measured.
-- `SPEED_OBJECTIVE_PRACTICE`: a practice level's focus questions are the ones written for its lesson's objective, where a grade has them, and then the bank's. Only 8 grades can use it today. <<OBJ>>
+- `SPEED_OBJECTIVE_PRACTICE`: a practice level's focus questions are the ones written for its lesson's objective, where a grade has them, and then the bank's. Only 8 grades can use it today. AI-JUDGED on five of them, 30 levels, 180 questions each way: on topic 11.1% off, 58.9% on. Support slots stay the bank's.
 - `SPEED_ONE_PROMPT`: Continue comes first, with one optional question per level, taking turns. Scorecard taps of that kind fall by three quarters.
 - `SPEED_TIGHT_PAGE`: the intro and recap (block plans: hook, takeaway, cheat sheet) start folded behind "See the whole page". **The AI-judged check below says it drops content. Leave it off.**
 
@@ -79,7 +79,7 @@ Main before this round, held-out grades, 575 lessons, 41,646 answers. MEASURED c
 |---|---|---|
 | main before this round | 18.0 / 64 / 20% | 20.1 / 72 / 26% |
 | plain bug fixes | 13.6 / 48 / 6% (72 of 75 walks; 3 cut by a time limit) | 13.9 / 48 / 7% |
-| + space + proof + recheck | <<DESIGNREC>> | 6.0 / 18 / 0% |
+| + space + proof + recheck | 5.7 / 17 / 0% | 6.0 / 18 / 0% |
 
 Held-out, answers per lesson by learner (expert, strong, mid, random, weak): before 62, 63, 78, 71, 88; plain fixes 38, 39, 51, 49, 63; with the switches 14, 15, 19, 18, 23. Stuck walks (25 sittings on one level): 10 of 80 before, 0 after the plain fixes.
 
@@ -187,10 +187,10 @@ SIMULATED. Recommended set, one assumption moved at a time, 80 learners a row. F
 | share of questions on topic | main before, 1 month | recommended, 1 month | main before, 1 year | recommended, 1 year |
 |---|---|---|---|---|
 | 1 (the headline tables) | 17.5 h, x0.44 | 8.0 h, x0.97 | 18.9 h, x0.69 | 9.8 h, x1.35 |
-| 0.5 | 20.9 h, x0.38 | 11.4 h, x0.70 | 24.4 h, x0.54 | 15.8 h, x0.85 |
+| 0.5 (objective items reach 0.59 on the grades that have them) | 20.9 h, x0.38 | 11.4 h, x0.70 | 24.4 h, x0.54 | 15.8 h, x0.85 |
 | 0.25 | 25.6 h, x0.31, 91% reach | 16.1 h, x0.51, 60% reach | 35.5 h, x0.38 | 28.3 h, x0.48 |
 | 0.1 | 33.8 h, 0% reach | 24.5 h, 0% reach | 72.6 h, x0.19 | 65.0 h, x0.21, 89% reach |
-| 0.034 (the first AI-judged share) | 40.1 h, recall 0.18, 0% reach | 34.2 h, recall 0.22, 0% reach | 111 h, recall 0.34, 0% reach | 101 h, recall 0.37, 1% reach |
+| 0.034 (near the AI-judged share, 0.049) | 40.1 h, recall 0.18, 0% reach | 34.2 h, recall 0.22, 0% reach | 111 h, recall 0.34, 0% reach | 101 h, recall 0.37, 1% reach |
 
 Do not read the bottom row as a forecast: pages teach more than the model's share, a bank question on the same coarse skill may help somewhat, and the judge was told to be strict. Read it as direction. **The whole multiple depends on this more than on anything else tested,** and fixing it is worth more than every switch here.
 
@@ -199,7 +199,7 @@ Do not read the bottom row as a forecast: pages teach more than the model's shar
 - **The walk's right or wrong rests on the same model**, so "levels until proven" is simulated on the real rules.
 - **Learners answer every question and come back on schedule.** No attrition. Every-third-day above is the one test of it.
 - **Checks prove what the page taught.** With off-topic bank checks, a right answer may prove little.
-- **Rates from the walker were measured with AI off**, on bank pages and bank items. A tailored account gets written pages and may differ. Re-running with the held-out walker's rates left the recommended arm's rate about the same (stay 0.08 against 0.09) and made main before slower: 18.5 to 21.2 h, x0.32 to x0.73.
+- **Rates from the walker were measured with AI off**, on bank pages and bank items. A tailored account gets written pages and may differ. Re-running with the held-out walker's rates left the recommended arm's rate about the same (0.06 repeated sittings a lesson against 0.09) and made main before slower: 18.5 to 21.2 h, x0.32 to x0.73.
 
 ## 6. What would have to be true for 4x
 
@@ -233,7 +233,7 @@ To scale: 4x against careful self-study means 2.0 h at 1 month and 3.3 h at 1 ye
 | `SPEED_SPACE_RETENTION` | **your call between two; I would pick `=on` on half the testers** | See below |
 | `SPEED_PROOF_PASSES` | **on** | Ends repeated sittings on a proven objective. Its bar is stricter than the average it replaces. Part of the gated set |
 | `SPEED_RECHECK` | **on, with the caveat** | The one big cut for weak and mid learners (never proven 9% to 0%, with weak learners most helped). The same question twice is weaker proof. **The real fix is on-objective questions.** Off once those exist |
-| `SPEED_OBJECTIVE_PRACTICE` | **on** | On-topic questions where they exist, and real evidence for proof. <<OBJ2>> |
+| `SPEED_OBJECTIVE_PRACTICE` | **on** | On-topic share 11% to 59% where it applies (AI-JUDGED, n 180 each way), and real evidence for proof. It only reaches 8 of 219 grades. Unit-tested; not in the walks or the simulated set |
 | `SPEED_ONE_PROMPT` | **your call** | Under 0.1 h in the model, at an assumed 3 s saved per level, and it takes three quarters of those taps from the scorecard, your other goal. It is not in the recommended numbers |
 | `SPEED_TIGHT_PAGE` | **off** | The AI-judged check found points only in the folded text on 29 of 52 pages. Against "all the information". A rewrite that keeps every point is the honest way to a shorter page, and that is not built |
 | `SPEED_MASTERY_STOP` and the older levers | **off** | Still fail at short goals, and add little on top of spaced retention (about 0.6 h at 1 year) |
@@ -253,7 +253,7 @@ The app has no 1-week horizon except as a dated test, and "test in 1 week" passe
 ## 8. Tests, exact
 
 Run one at a time, not the full suite, as asked. All of these exit 0:
-`speed-r4-test` 12 passed; `speed-levers-test` all ok (updated: the exact-shape asserts now carry the new flags); `coverage-test`, `act-curriculum-test`, `curriculum-evidence-test`, `goal-path-test`, `grade-skills-test`, `learner-path-test`, `owner-base-test` 63, `review-schedule-test`, `speed-retention-test`, `study-goal-test`, `bank-games-test` 100, `self-test`, `spanish-path-test`, `speed-proof-test` 120, `speed-proof-http-test` 13, `block-adapt-test`, `block-levels-test`, `daily-plan-test` 78, `first-block-test`, `gap-scan-test`, `instant-test`, `objective-items-test`, `placement-choice-test`, `qa4-fixes-test`, `catchup-review-queue-test`, `learner-followups-test`.
+`speed-r4-test` 14 passed; `speed-levers-test` all ok (updated: the exact-shape asserts now carry the new flags); `coverage-test`, `act-curriculum-test`, `curriculum-evidence-test`, `goal-path-test`, `grade-skills-test`, `learner-path-test`, `owner-base-test` 63, `review-schedule-test`, `speed-retention-test`, `study-goal-test`, `bank-games-test` 100, `self-test`, `spanish-path-test`, `speed-proof-test` 120, `speed-proof-http-test` 13, `block-adapt-test`, `block-levels-test`, `daily-plan-test` 78, `first-block-test`, `gap-scan-test`, `instant-test`, `objective-items-test`, `placement-choice-test`, `qa4-fixes-test`, `catchup-review-queue-test`, `learner-followups-test`.
 
 **One fails, and not because of this branch:** `learning-spec-wiring-test` has 6 FAIL lines here and the same 6 at the branch's base commit 47c76d2.
 
@@ -261,7 +261,7 @@ Run one at a time, not the full suite, as asked. All of these exit 0:
 
 ## 9. Spending
 
-$0. Only NVIDIA free models, for the AI-judged checks. Nothing went through the Anthropic key, Standard Compute, Lyceum, Coral, Gonka, Munito, Grokified, ZeroGPU, OpenRouter paid models, Modelflare or Higgsfield. The local browser check ran with no keys in its folder; its log shows free-model slots failing for lack of one. Account 6689 was not logged into and has no rows written: the database copy is read only for shared levels and aggregates, and the AI checks exclude it.
+$0. Only NVIDIA free models, for the AI-judged checks (about 300 calls, some rate-limited; the on-topic runs also set off a few free background level writes for their synthetic account). Nothing went through the Anthropic key, Standard Compute, Lyceum, Coral, Gonka, Munito, Grokified, ZeroGPU, OpenRouter paid models, Modelflare or Higgsfield. The local browser check ran with no keys in its folder; its log shows free-model slots failing for lack of one. Account 6689 was not logged into and has no rows written: the database copy is read only for shared levels and aggregates, and the AI checks exclude it.
 
 ## 10. What I could not verify
 
@@ -275,6 +275,7 @@ $0. Only NVIDIA free models, for the AI-judged checks. Nothing went through the 
 - **The closing recall question.** Not in the walk.
 - **`SPEED_SPACE_RETENTION=long` on the walker** has no goal set, so it reads as on. The goal branch is code-read and not exercised end to end. `SPEED_RECHECK` on block-page lessons is unit-tested only on ordinary items.
 - **The AI check's "only in the folded text" list** was not reviewed point by point. I read a sample of 12: most are real points, some are not.
+- **The on-topic judge.** One free model at a time, no second judge, first practice level only, strict wording. A question on the right coarse skill may still help a learner. The share could be several times higher under a looser judge, and the direction would not change. Written pages, games and later levels were not judged. Tailored accounts may see other items at some levels: `ai.generateItems` is keyed by coarse skill, so I would not expect it to change much, but I did not walk one with models on.
 - **Sources.** No new study was read. Citations are as in ROUND3.md, with its own confirmed and unconfirmed marks.
 
 ## Reproduce
