@@ -111,7 +111,7 @@ const keyOf = (t) => `${t.type}:${t.value}`;
 /** The allowed set from facts (strings or { text }), plus any extra words the caller permits (a learner's hobby, the app's own UI words). */
 function allowedFrom(facts, track = '', extra = []) {
   const allowed = new Set();
-  const addText = (t) => { for (const w of String(t || '').toLowerCase().match(/p{L}{3,}/gu) || []) allowed.add(`name:${w}`); /* a capitalised title word is not a name when the bank uses it as a word */ for (const tk of tokensOf(t, track)) { allowed.add(keyOf(tk)); if (tk.type === 'formula') for (const inner of tokensOf(tk.raw.replace(/[=≈≤≥]/g, ' = '), '')) if (inner.type === 'number') allowed.add(keyOf(inner)); if (tk.type === 'year') allowed.add(`number:${tk.value}`); } };
+  const addText = (t) => { for (const w of String(t || '').toLowerCase().match(/\p{L}{3,}/gu) || []) allowed.add(`name:${w}`); /* a capitalised title word is not a name when the bank uses it as a word */ for (const tk of tokensOf(t, track)) { allowed.add(keyOf(tk)); if (tk.type === 'formula') for (const inner of tokensOf(tk.raw.replace(/[=≈≤≥]/g, ' = '), '')) if (inner.type === 'number') allowed.add(keyOf(inner)); if (tk.type === 'year') allowed.add(`number:${tk.value}`); } };
   for (const f of facts) addText(typeof f === 'string' ? f : f.text);
   for (const w of extra) { allowed.add(`name:${String(w).toLowerCase()}`); }
   return allowed;
