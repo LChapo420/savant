@@ -305,3 +305,42 @@ Seconds to a usable personal level (strong learners are placed on 465 after 10 a
 - after, 3 strong at once: 41.8, 166.9, 340.5: median 167, worst 340.5.
 - after, 6 at once (3 strong, weak, random, mid): strong 357.7, 40.8, 213.5; weak 278.8, random 139.0, mid 153.7: median 213.5, worst 357.7.
 No timeout, no failure (against 2 timeouts in 5). Slots (cost tracker of each server): Coral Fast fills 9 calls in 13 attempts (6 in 7 in the 3-run), against 4 to 6 attempts a fill before; one bad Coral reply kept in all of it. Cost: $0.075 (3 learners) and $0.159 (6) at list price, about $0.025 a learner. Still slow: some layouts still fell to Gonka or NVIDIA after a Coral 429 (the account's 5 in flight is shared with other work) at 106 to 234 s, and a fact read at 45 s hedged to grok. The gate (median under 15 s) is NOT met on this path: the personal level takes minutes; what removes the wait is the instant layer, which needs a base lesson at the landing level.
+
+
+## 7 Nov 2026: cold write, part by part (`COLD_FIRST_BLOCK=on`, default OFF)
+
+**Where this stands (PC restart, 6 Nov evening): code committed on branch cold-write, merged with main's fact guard. To finish: rerun `first-lesson-timing.js` with COLD_FIRST_BLOCK=on at 1, 3 (twice, strong and random mixes) and 10 learners on the last commit (only f3c has the read deadline fix; f10 not run), click the "could not be checked" and slow-part notes at phone width, run rest-steps, decide the default.**
+
+All AI-planted or simulated, not real-learner proof. Other agents on the machine and on the same provider keys throughout.
+
+**What it does.** The fill is streamed (Coral Fast); the first block goes to its own fact read the moment it is written, the page opens when that read passes, later parts appear below in order as each passes, with the earlier blocks as context. Each part goes through verifyAndRepair, key gate and blind re-solve; block_fill stays "downstream" of verifyLevel in the fact guard. A prewrite stops after the first part and parks (about a cent a guess, not five); a guess on top for 3 answers writes the rest. Nothing unchecked is shown (`scripts/first-block-test.js`). The wait shows the curriculum's topic and skills and the real stage, from no model.
+
+**Part read against whole level** (`scripts/part-read-eval.js`, `docs/cold-write/part-read-summary.json`; 36 planted, 24 cross-part planted (only visible against an earlier block), 24 clean; same-against-same in the reps):
+
+| route | planted /36 | cross /24 | false alarms /24 | p50 s |
+|---|---|---|---|---|
+| shipped route, whole level | 20 | 15 | 1 | 37 |
+| shipped route, part with context, hedge 6 s | 24 | 21 | 5 | 19 |
+| shipped route, part with context, hedge 20 s | 24 | 21 | 7 | 27 |
+| grok-4.3 whole, twice | 20, 22 | 16, 15 | 2, 1 | 14, 19 |
+| grok-4.3 part alone, twice | 21, 23 | 21, 19 | 9, 6 | 19, 8 |
+| grok-4.3 part with context | 25 | 22 | 8 | 12 |
+| ZeroGPU part alone, twice | 21, 27 | 21, 22 | 1, 2 | 20, 20 |
+| ZeroGPU part with context | 25 | 22 | 1 | 7 (p90 50) |
+| ZeroGPU whole | 8 (25 of 84 read) | 1 | 0 | 43 |
+
+Paired on the shipped route: parts caught 11 to 12 errors the whole read missed, the whole read caught 1 to 2 parts missed. What must be true: one read at a time per part (ZeroGPU fails past about 5 at once, which is why `FACT_VERIFY_PARTS` lost), earlier blocks given as context, a read that fails holds the part back. The cost is false alarms, 21 to 29% against 4%: each is a repair and a re-read, so the later parts are slower, not weaker.
+
+**Timing, seconds from end of placement** (strong 465 after 10 answers, THINK_MS 7500, real models). Gate: open median under 15, worst under 60 at 3 at once.
+
+| run | learners | open each | whole level each | CPU avg |
+|---|---|---|---|---|
+| before this work (6 Nov) | 3 strong / 6 mixed | median 167 / 213, worst 340 / 358 | same | |
+| f1 | strong | 16.1 | 453 | 44% |
+| f3a (before read deadline) | strong, weak, mid | 96.3, 0.1, 0.1 | 200, 37, 32 | 29% |
+| f3b (before read deadline) | strong, random, random | 0.3, 0.3, 0.2 | 107, 170, 64 | 50% |
+| f3c | 3 strong | 0.2, 27.4, 0.3 | 404, 153+, 119 | 37% |
+
+Not yet measured: 10 learners on the last commit. Still slow: after the first part the next can take 2 to 4 minutes under load (reads 30 to 60 s on grok-4.3 at capacity, repairs), so the page says so after 45 s and offers the standard session.
+
+**Also tested.** Coral derailing: stream with watchdog stops a loop at about 1000 characters instead of the cap and keeps the blocks already written; 465 replay 11 of 12 usable, first block 0.7 s, against the shipped warm retry 12 of 12 at 8 s on the same layout (this layout derailed little, so the 8 of 12 was not reproduced). Plan first: Coral Fast layout 2.6 s and first block 1 s, so writing is not the limit, the read is. Placement guesses: the rule on main already starts the level in time for 95% (simulated, 3 answers ahead, 2.3 guesses); from answer 3 with up to 10 guesses 99% for 6.0: not adopted. MiniMax writer with Coral Standard reader: 3.6 s, but flagged 8 of 9 clean first blocks: not adopted. Phone width, real browser (375 x 812): first block did not move when parts arrived at scroll 0 and at scroll 300; answering mid-way works, early finish refused, finish works.
