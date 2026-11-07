@@ -25,8 +25,8 @@ Written 7 Nov 2026 on branch `modify-all`, by reading the code that serves learn
 | **Retention enforcer explanation** | `enforcers.js` | Nothing: `pick.rationale`, stored | Open: not wired |
 | **Base-lesson page's own questions** | `routes/base-lessons.js` | Nothing: `question.explanation` | Open (level editor covers a tailored page) |
 | **Uploaded course: lesson** | `course-builder.js`; `part-modify.js` | Spec at build; on drift `PART_MODIFY` part `lesson` | Reworked here (section 4) |
-| **Uploaded course: questions and their explanations, tests, cards' backs** | `course-builder.js`, `material-test.js`, `material-cards.js` | Spec at build; test size and start from the spec | Never refreshed on drift |
-| **Notes, podcast, pack** | `material-notes.js`, `material-podcast.js`, `material-pack.js` | Spec at build, one revision; pack carries `spec_hash` | Never refreshed on drift; a preference reaches the next build |
+| **Uploaded course: questions and their explanations, tests, cards' backs** | `course-builder.js`, `material-test.js`, `material-cards.js` | Spec at build; test size and start from the spec. With `UPLOAD_PARTS`: the learner changes each one and puts it back. With `UPLOAD_PARTS_FOLLOW`: rewritten when the spec drifts | Filled behind switches (section 9); following does not beat the stored text |
+| **Notes, podcast, pack** | `material-notes.js`, `material-podcast.js`, `material-pack.js` | Spec at build, one revision; pack carries `spec_hash`. With `UPLOAD_PARTS`: each section, summary, card, item and script can be changed and put back; notes, summary, cards and quiz also refresh on drift with `UPLOAD_PARTS_FOLLOW` | Podcast is changed by the learner only, not refreshed on drift |
 | **Tutor** | `tutor*.js`, `ai.js` | The fullest: scorecard directives, spec, facts, goals, retention goal | Preference reaches it through the spec |
 | **After-session reading** ("Analyzed by the AI tutor") | `ai.js` | Model with the brief | |
 | **Session summary, level-close lines** ("You got 3 of 4 checks right") | `session.js`, `block-level.js`, fixed | Nothing | Open: facts and numbers, low value; not filled |
@@ -116,7 +116,7 @@ Before: `level_edits` is a whole page the app prefetches; the learner cannot ask
 
 Now (`services/part-change.js`, `routes/part-change.js`, `public/js/part-change.js`; `PART_CHANGE=off` removes it): a row **Shorter, Simpler, More examples, Another topic, Put back** under a question's explanation (session, review, a lesson's check), a built-in lesson's reading block and an uploaded course's lesson. Always rewritten from the stored original with everything asked so far, under the same two-family gate. A refusal says so and the text stays. **It sticks:** `profiles.part_prefs` feeds `learning-spec.js` (four new context rules), so later feedback, lessons, notes, tutor and writers follow it; two "too long" taps after levels count as asking for shorter. It is listed on the profile, removable, and covered by export and deletion (`part_changes` registered).
 
-Not reached by the row: notes, podcast, pack, game and interactive blocks, cards, tests. They follow the preference only at their next build.
+Not reached by this row: game and interactive blocks. Notes, podcast, pack, cards and tests of an upload have their own row with `UPLOAD_PARTS` (section 9).
 
 Gate (`docs/part-modify/pc1.json`, 34 real texts, each change; checked by DeepSeek at Coral and GLM, which did not guard it. DeepSeek is the family of one guard):
 
@@ -150,4 +150,10 @@ Since the proofs ran, main added the app-wide fact guard (`services/fact-guard.j
 
 ## 8. Still open
 
-Enforcer explanations and base-lesson questions serve stored text. Course question explanations, cards, notes, podcast and pack do not refresh on drift. Summary lines, plan reasons and progress screens read nothing from the learner. No text differs by which wrong answer was chosen. The 36 unread spec fields in section 2 remain.
+Enforcer explanations and base-lesson questions serve stored text. Course question explanations, cards, notes and pack refresh on drift only with `UPLOAD_PARTS_FOLLOW` (off); the podcast does not. Summary lines, plan reasons and progress screens read nothing from the learner. No text differs by which wrong answer was chosen. The 36 unread spec fields in section 2 remain.
+
+## 9. Uploaded parts (7 Nov 2026, branch `uploads-beta`; SIMULATED or AI-JUDGED where a model read it; full numbers: `docs/UPLOADS-ANY-FORMAT.md` section 18)
+
+Every part built from an upload has a reference, a row of changes and a put back: lesson, question, deck card, pack card, notes section, summary, pack item, podcast, practice test (`services/material-parts.js`). The stored text is never written over. Over the real routes on real models, 10 uploads: 86 of 120 changes made, the rest refused in plain words; 120 of 120 reached the route that serves the part; 120 of 120 put back exactly.
+
+A spec shapes what is served and, on drift, parts are rewritten (`UPLOAD_PARTS_FOLLOW`). Blind picks: against another learner's course 21 of 24 and 21 of 23; against the stored course 14 of 24 and 15 of 24, which does not beat chance. So this does not change section 5's reading: what can be done without adding anything is small against what the learner already has. Not fixed here: a stressed point lost on 1 of 76 judged changes, and the invented column is not zero.
