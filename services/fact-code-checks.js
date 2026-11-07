@@ -75,7 +75,7 @@ function tokenize(text) {
       else if (UNITS[w] && w.length > 1) toks.push({ ...base, t: 'unit', v: w });
       else if (SPEEDS[w]) toks.push({ ...base, t: 'unit', v: w });
       else if (w === 'per') toks.push({ ...base, t: 'per' });
-      else if (w.length === 1 || /^[a-z]\d$/.test(w)) toks.push({ ...base, t: 'var', v: w });
+      else if (w.length === 1 || /^[a-z]\d$/.test(w) || /^[a-zA-Z]'+$/.test(w)) toks.push({ ...base, t: 'var', v: w });
       else toks.push({ ...base, t: 'word', v: w });
     } else toks.push({ ...base, t: 'sep', v: m[6] });
     space = false;
@@ -156,7 +156,7 @@ function parse(tokens, scope = {}) {
     if (a.t === 'var') {
       i++;
       const n = peek();
-      if (n && n.t === 'lp' && !n.space && (!FN_NOT.has(a.v) || scope[a.v])) {
+      if (n && n.t === 'lp' && !n.space && (!FN_NOT.has(a.v) || scope[a.v] || a.v.includes("'"))) {
         i++;
         const e = expr();
         if (!peek() || peek().t !== 'rp') throw new Fail('rp');
@@ -340,6 +340,11 @@ function checkArithmetic(sentence, scope, push) {
     const before = sentence.slice(0, run.at);
     if (CUE_BEFORE.test(before)) continue;
     if (/\b(false|fails?|not true|untrue|wrong|impossible|never|contradiction|no solution|not a solution)\b/i.test(sentence.slice(run.end, run.end + 40))) continue;
+    // The run starts mid-expression: "sin(1/2) = ..." (a word touches its bracket), "x + 6 = 16" with the x out of reach, "78 / 7 = 11 remainder 1".
+    if (/[\p{L}'`^]$/u.test(sentence.slice(0, run.at))) continue;
+    const head = run.toks[0];
+    if (head.t === 'op' && (head.v !== '-' || /[\p{L}\d)]\s*$/u.test(sentence.slice(0, run.at)))) continue;
+    if (/^\s*(?:r\b|rem\b|remainder|with a remainder|left over)/i.test(sentence.slice(run.end))) continue;
     const { segs, rels, raw } = sidesOf(run, scope);
     const sides = trimmed(segs, raw, scope);
     // an ordered pair or an interval such as [1, 3] is words and separators here, so nothing to do
@@ -351,6 +356,7 @@ function checkArithmetic(sentence, scope, push) {
       if (raws === null) { lastGood = null; continue; }
       if (lastGood && lastK === k - 1) {
         const A = lastGood; const B = s; const rel = rels[k - 1];
+        if (isLiteral(A) && isLiteral(B) && !hasUnit(A) && !hasUnit(B) && !hasPct(A) && !hasPct(B)) { lastGood = s; lastK = k; continue; }
         if (rel === '=' || rel === '≈') {
           let ok; let unitBad = false;
           const bothUnits = hasUnit(A) && hasUnit(B);
@@ -397,6 +403,7 @@ function checkWordArithmetic(sentence, push) {
       if (/(times|plus|minus|divided by|[*+/-])\s*$/i.test(sentence.slice(0, m.index))) continue; // the tail of a longer sum
       const v = f(nw(m[1]), nw(m[2])); const c = nw(m[3]);
       const dec = (String(m[3]).split('.')[1] || '').length;
+      if (/^\s*(%|percent)/i.test(sentence.slice(m.index + m[0].length)) && Math.abs(v * 100 - c) <= 0.51) continue;
       if (Math.abs(v - c) > (dec ? 0.51 * 10 ** -dec : 1e-9)) push({ rule: 'arithmetic', certain: true, claim: m[0], truth: `it comes to ${+v.toFixed(6)}` });
     }
   }
@@ -429,7 +436,7 @@ const holds = (st, x, v, scope) => {
   for (let k = 0; k < st.rels.length; k++) {
     const a = num(st.sides[k], { [v]: x }, scope); const b = num(st.sides[k + 1], { [v]: x }, scope);
     if (!a || !b) return null;
-    if (st.rels[k] === '=' || st.rels[k] === '≈') { if (Math.abs(a.v - b.v) > 1e-6 * Math.max(1, Math.abs(a.v), Math.abs(b.v))) return false; } else if (!REL[st.rels[k]](a.v, b.v)) return false;
+    if (st.rels[k] === '=' || st.rels[k] === '≈') { const d = Math.max(maxDec(st.sides[k]), maxDec(st.sides[k + 1])); if (Math.abs(a.v - b.v) > Math.max(1e-6 * Math.max(1, Math.abs(a.v), Math.abs(b.v)), d ? 0.51 * 10 ** -d : 0)) return false; } else if (!REL[st.rels[k]](a.v, b.v)) return false;
   }
   return true;
 };
