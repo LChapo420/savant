@@ -1036,13 +1036,15 @@ App.mount(async () => {
   const resuming = !again && running && !running.finished_at && ((running.scores || []).length || running.draft);
   // The optional goal step for the whole subject (once); the mode picker then marks the
   // length the goal suggests.
-  if (!resuming && window.GoalPicker) {
+  // Home's "Take the placement" for a subject picked in the onboarding (?mode=quick, docs/ONBOARDING-V2.md): the Quick walk, as the onboarding ran it, with no goal or length step first.
+  const quick = String(App.query('mode') || '') === 'quick';
+  if (!resuming && !quick && window.GoalPicker) {
     try {
       const saved = await window.GoalPicker.ask(host, { trackId, title: opening.track_name || '' });
       if (saved) opening.suggested_mode = (await App.api.get(`/api/subject-placement/${trackId}`)).suggested_mode;
     } catch { /* optional: never block the placement on it */ }
   }
-  const choice = resuming ? {} : await chooseMode(opening);
+  const choice = resuming ? {} : (quick ? { mode: 'quick' } : await chooseMode(opening));
   const started = await App.api.post(`/api/subject-placement/${trackId}/start`, { restart: again || !resuming, ...choice });
   if (!started.questions.length) {
     return fail('The questions for this subject are not ready yet.');

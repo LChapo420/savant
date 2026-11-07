@@ -7,6 +7,7 @@
  *   POST /api/ob2/answers        keep the answers so far on a guest row
  *   POST /api/ob2/first-lesson   { track, grade_id? } stand on lesson 1 and set the goals
  *   POST /api/ob2/lesson-opened  the learner went into the lesson
+ *   POST /api/ob2/to-home        private beta, UI_V2: the flow ends after the subjects; they wait on Home (GET /api/ui2/waiting)
  *   POST /api/ob2/claim          the guest row gains credentials; a failure changes nothing
  *
  * In the private beta (ob.privateBeta) no guest is ever made: /agree and a logged-out /begin refuse, and these same routes serve an account with no subject yet.
@@ -62,7 +63,7 @@ router.post('/begin', limit('ob2-begin', 30, HOUR), async (req, res) => {
   const body = req.body || {};
   if (req.user && !req.user.guest) {
     if (!ob.inFlow(req)) return res.status(409).json({ error: 'You already have an account.', code: 'account', go: ob.accountHome(req.user) });
-    ob.saveAnswers(req.user, body.answers);
+    ob.saveAnswers(req.user, body.answers, { hidden: ob.hiddenSubjects(req) });
     ob.applyInterest(req.user);
     // An account that has just said it is under the consent age: the parent is told before anything else is stored. The same request as routes/consent.js.
     if (!(req.user.age_check && req.user.age_check.needs_parent) || req.user.consent_id || body.parent_email === undefined) return res.json({ user: userView(req.user), resumed: true });
@@ -110,10 +111,16 @@ router.post('/begin', limit('ob2-begin', 30, HOUR), async (req, res) => {
 });
 
 router.post('/answers', inTheFlow, limit('ob2-answers', 240, HOUR), (req, res) => {
-  ob.saveAnswers(req.user, req.body);
+  ob.saveAnswers(req.user, req.body, { hidden: ob.hiddenSubjects(req) });
   ob.applyInterest(req.user);
   ob.touch(req.user);
   res.json({ ok: true });
+});
+
+/** The private beta under UI_V2: the flow ends after the subjects. Each picked subject waits on Home for a placement or a picked grade (ob.toHome). */
+router.post('/to-home', inTheFlow, limit('ob2-to-home', 60, HOUR), (req, res) => {
+  if (req.user.guest) return res.status(409).json({ error: 'Save your account first.', code: 'guest' });
+  res.json(ob.toHome(req.user, { hidden: ob.hiddenSubjects(req) }));
 });
 
 router.post('/first-lesson', inTheFlow, limit('ob2-first-lesson', 60, HOUR), (req, res) => {

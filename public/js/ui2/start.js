@@ -5,6 +5,11 @@
  *   - adds the step "How do you want to learn?" before the subjects, stored with the onboarding answers as `how`. Under the consent age there is no such step: child accounts can't upload (routes/consent.js)
  *   - takes "My own notes" off the subjects. `notes` stays the answer it always was: true for "own" and "both"
  * Own material: upload, then home, with no subject or grade. Both: subject and grade, then upload. On the public flow a guest can't upload until the account is saved, so saving comes first.
+ *
+ * The private beta (an account already, `signedIn()`), owner 7 Nov: "after picking the subjects it takes you to the homepage with a take placement button and a pick my grade
+ * button, instead of having to do all those in the main onboarding". So here the flow ends at the subjects: POST /api/ob2/to-home, then upload (own material or both) or home,
+ * where each picked subject waits with "Take the placement" and "Pick my grade" (js/ui2/home.js). The grade, placement, pick-a-grade, building and first-lesson steps are
+ * not reached. Age, the parent's email, the consent gates and a child's own steps come from js/start.js's guard as before.
  */
 (function () {
   const root = document.documentElement;
@@ -48,10 +53,16 @@
   const hasHow = () => !!(X.S.a.how || (X.server.answers && X.server.answers.how));
   const howNow = () => { if (!X.S.a.how && X.server.answers && X.server.answers.how) X.S.a.how = X.server.answers.how; return X.S.a.how; };
 
+  /** The private beta: the flow ends at the subjects (above). */
+  const trim = () => X.signedIn();
+  const TRIMMED = ['grade', 'pick', 'level', 'result', 'building', 'ready'];
+
   /** The step order, on top of js/start.js's own guard, which runs first and decides everything about age and consent. */
   function guard(step, base) {
-    const out = base(step);
+    let out = base(step);
     howNow();
+    // js/start.js's guard has already sent anyone missing the test, interests or subjects back to them, so this only stops the steps after the subjects.
+    if (trim() && !X.server.enrollment && TRIMMED.includes(out)) out = 'learn';
     if (X.isChild()) return out === 'how' ? 'learn' : out;
     if (out === 'how' && X.server.enrollment) return 'ready';
     if (X.server.enrollment) return out;
@@ -59,12 +70,14 @@
     return out;
   }
 
-  async function toUpload() {
-    await X.api('POST', '/api/ob2/lesson-opened', {}).catch(() => {});
+  /** The end of the private beta's flow: the server keeps the picked subjects waiting for Home, then upload or home. A failure shows, and nothing moves. */
+  async function toHome({ upload = false } = {}) {
+    await X.api('POST', '/api/ob2/to-home', {});
     X.forget();
-    window.location.href = UPLOAD;
+    window.location.href = upload ? UPLOAD : '/dashboard';
     return new Promise(() => {}); // stays busy until the page goes
   }
+  const toUpload = () => toHome({ upload: true });
 
   /** Change one step's view, keeping everything js/start.js gave it. */
   function wrap(name, fn) {
@@ -119,16 +132,21 @@
     wrap('learn', (v) => {
       const okNow = () => X.S.a.tracks.length > 0;
       const bind = v.bind;
+      const ends = trim();
+      if (ends) FILL.learn = 90;
       return {
         ...v,
         back: X.isChild() ? 'into' : 'how',
         ok: okNow,
         html: v.html
           .replace(/<label class="opt subject">\s*<input type="checkbox" name="notes"[\s\S]*?<\/label>/, '')
-          .replace('Pick one or a few. You start with number 1.', 'Pick one or more.'),
+          .replace('Pick one or a few. You start with number 1.', ends ? 'Pick one or more. You choose where to start on your home page.' : 'Pick one or more.'),
+        // Upload first for "both"; home for the rest.
+        ...(ends ? { next: async () => { await X.saveAnswers(); return toHome({ upload: X.S.a.how === 'both' }); } } : {}),
         bind: () => {
           bind();
-          const many = () => { const f = X.$('.subjects'); if (f) f.classList.toggle('u2-many', X.S.a.tracks.length > 1); };
+          // Numbers say which comes first; with every subject waiting on Home, none does, so a tick each.
+          const many = () => { const f = X.$('.subjects'); if (f) f.classList.toggle('u2-many', !ends && X.S.a.tracks.length > 1); };
           many();
           X.$$('input[name="track"]').forEach((b) => b.addEventListener('change', () => { many(); X.ready(okNow()); }));
         },

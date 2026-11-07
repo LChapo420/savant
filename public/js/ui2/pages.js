@@ -347,6 +347,22 @@
     if (offer) { const f = fold('Optional extras', [offer]); f.classList.add('u2-maybe-empty'); head.after(f); }
   }
 
+  /** Home's "Pick my grade" (/onboarding?track=X&pick=1): that subject's grade list opens, rather than the placement button js/onboarding.js puts the cursor on. */
+  let picked = false;
+  function openPick() {
+    if (picked) return;
+    const q = new URLSearchParams(location.search);
+    if (q.get('pick') !== '1' || !q.get('track') || q.get('grade')) { picked = true; return; }
+    const card = document.querySelector(`.track-card[data-subject="${CSS.escape(q.get('track'))}"]`);
+    const list = card && card.querySelector('details.grade-pick');
+    if (!list) return;
+    picked = true;
+    list.open = true;
+    const summary = list.querySelector('summary');
+    card.scrollIntoView({ block: 'start' });
+    if (summary) summary.focus({ preventScroll: true });
+  }
+
   // ── a page that isn't there ──
   function dressNotFound() {
     const h1 = document.querySelector('main.page .wrap > h1');
@@ -366,7 +382,7 @@
     if (PAGE === '/my-material') dressMaterial();
     if (/^\/my-material-/.test(PAGE)) dressMaterialSub();
     if (PAGE === '/calendar') dressCalendar();
-    if (PAGE === '/onboarding') dressAdd();
+    if (PAGE === '/onboarding') { dressAdd(); openPick(); }
     if (root.dataset.ui2Page === 'not-found') dressNotFound();
     if (PAGE === '/path') dressPath();
     if (PAGE === '/base-lesson') dressLesson();

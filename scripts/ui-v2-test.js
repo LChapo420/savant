@@ -68,6 +68,97 @@ async function withServer(flag, port, fn) {
 }
 const fetchBytes = async (url) => { const r = await fetch(url, { redirect: 'manual' }); return { status: r.status, bytes: Buffer.from(await r.arrayBuffer()), type: r.headers.get('content-type') }; };
 
+/**
+ * js/ui2/signed-out.js in a sandbox: a page that has seen an account and then gets a 401 or the private beta's refusal (signin-only CLOSED, beta-gate not_invited)
+ * goes to /login?next=<page>&why=signed_out, once the server confirms nobody is signed in, and the call never settles, so no "not taking new accounts" shows.
+ * A wrong-password 401 with the account still signed in, and a visitor who was never signed in, are left alone.
+ */
+async function signedOutChecks() {
+  const vm = require('vm'); // eslint-disable-line global-require
+  const src = fs.readFileSync(path.join(ROOT, 'public', 'js', 'ui2', 'signed-out.js'), 'utf8');
+  const CLOSED = require('../middleware/signin-only').CLOSED; // eslint-disable-line global-require
+  assert.strictEqual(CLOSED.beta, 'closed', 'the refusal the page watches for');
+  const reply = (status, body) => ({ ok: status < 400, status, json: async () => body, clone() { return reply(status, body); } });
+  function page(where, routes) {
+    const u = new URL(where, 'http://x.test');
+    const loc = { href: u.href, origin: u.origin, pathname: u.pathname, search: u.search, hash: u.hash, to: null, replace(to) { this.to = to; } };
+    const state = { me: { user: { id: 7 } } };
+    const win = { fetch: async (input) => { const p = new URL(input, u.href).pathname; return p === '/api/auth/me' ? reply(200, state.me) : routes(p, state); } };
+    vm.runInNewContext(src, { window: win, location: loc, URL });
+    const settles = (p) => Promise.race([p.then(() => true), delay(200).then(() => false)]);
+    return { win, loc, state, settles };
+  }
+  const told = (loc, next) => assert.strictEqual(loc.to, `/login?next=${encodeURIComponent(next)}&why=signed_out`);
+
+  // /start: an account in the flow, then the session is lost and "Take the placement" (begin) gets the beta refusal.
+  const a = page('/start#grade', (p, s) => (p === '/api/ob2/state' ? reply(200, { account: true, onboarding: true }) : (s.me = { user: null }, reply(403, CLOSED))));
+  await a.win.fetch('/api/ob2/state');
+  assert.strictEqual(await a.settles(a.win.fetch('/api/ob2/begin', { method: 'POST' })), false, 'the refused call never settles, so its words never show');
+  told(a.loc, '/start#grade');
+
+  // /start: the answers saved on the way to the next step meet the flow's own 409 for nobody signed in.
+  const a2 = page('/start#learn', (p, s) => (p === '/api/ob2/state' ? reply(200, { account: true, onboarding: true }) : (s.me = { user: null }, reply(409, { error: 'This is only for a learner setting up.', code: 'not_in_flow' }))));
+  await a2.win.fetch('/api/ob2/state');
+  assert.strictEqual(await a2.settles(a2.win.fetch('/api/ob2/answers', { method: 'POST' })), false);
+  told(a2.loc, '/start#learn');
+  // A 409 that isn't about being signed out (the flow already ended) goes through.
+  const a3 = page('/start', (p) => (p === '/api/ob2/state' ? reply(200, { account: true, onboarding: true }) : reply(409, { error: 'You already have an account.', code: 'account' })));
+  await a3.win.fetch('/api/ob2/state');
+  assert.strictEqual((await a3.win.fetch('/api/ob2/begin', { method: 'POST' })).status, 409);
+  assert.strictEqual(a3.loc.to, null);
+
+  // Home: signed in, then a 401.
+  const h = page('/dashboard', (p, s) => (p === '/api/ui2/waiting' ? (s.me = { user: null }, reply(401, { error: 'Sign in first.' })) : reply(200, {})));
+  await h.win.fetch('/api/auth/me');
+  assert.strictEqual(await h.settles(h.win.fetch('/api/ui2/waiting')), false);
+  told(h.loc, '/dashboard');
+
+  // The placement page: beta-gate's not_invited is the same story.
+  const sp = page('/subject-placement?track=math&mode=quick', (p, s) => (s.me = { user: null }, reply(403, { error: 'Savant is in a private beta for invited testers.', beta: 'not_invited' })));
+  await sp.win.fetch('/api/auth/me');
+  sp.state.me = { user: { id: 7 } };
+  await sp.win.fetch('/api/auth/me');
+  await sp.settles(sp.win.fetch('/api/subject-placement/math/start', { method: 'POST' }));
+  told(sp.loc, '/subject-placement?track=math&mode=quick');
+
+  // /api/auth/me itself says nobody, after it said somebody.
+  const m = page('/profile', () => reply(200, {}));
+  await m.win.fetch('/api/auth/me');
+  m.state.me = { user: null };
+  await m.settles(m.win.fetch('/api/auth/me'));
+  told(m.loc, '/profile');
+
+  // A wrong password: 401, but still signed in. Untouched.
+  const w = page('/profile', () => reply(401, { error: 'That password is not right.' }));
+  await w.win.fetch('/api/auth/me');
+  const wr = await w.win.fetch('/api/account/delete', { method: 'POST' });
+  assert.strictEqual(wr.status, 401);
+  assert.strictEqual(w.loc.to, null, 'a wrong password is not a sign-out');
+
+  // Never signed in (the public flow's visitor, or the beta signed out from the start): the refusal goes through, and the page does what it always did.
+  const n = page('/start', (p, s) => (p === '/api/ob2/state' ? reply(200, { signed_out: true, go: '/login?next=/start' }) : (s.me = { user: null }, reply(403, CLOSED))));
+  n.state.me = { user: null };
+  await n.win.fetch('/api/ob2/state');
+  assert.strictEqual((await n.win.fetch('/api/ob2/begin', { method: 'POST' })).status, 403);
+  assert.strictEqual(n.loc.to, null);
+
+  // Sign-in calls are never touched.
+  const l = page('/start', () => reply(401, { error: 'That email or username and password do not match.' }));
+  await l.win.fetch('/api/auth/me');
+  assert.strictEqual((await l.win.fetch('/api/auth/login', { method: 'POST' })).status, 401);
+  assert.strictEqual(l.loc.to, null);
+
+  const line = fs.readFileSync(path.join(ROOT, 'public', 'js', 'auth.js'), 'utf8');
+  assert(line.includes("App.query('why') === 'signed_out'") && line.includes('You were signed out. Sign in to carry on.'), 'the sign-in page says it plainly');
+  for (const out of [ui.inject('<html><head></head><body><script src="/js/app.js"></script></body></html>', 'dashboard'), ui.injectStart('<html><head></head><body></body></html>')]) {
+    const at = out.indexOf('/js/ui2/signed-out.js');
+    assert(at > 0 && at < out.indexOf('</head>'), 'in <head> on Home and /start');
+    assert(at < out.indexOf(out.includes('/js/ui2/start.js') ? '/js/ui2/start.js' : '/js/ui2/boot.js'), 'before the look\'s scripts');
+  }
+  passed++;
+  console.log('  ok  signed out mid-page: /start, Home and the placement go to sign-in with "You were signed out", never the new-account refusal; a wrong password and a never-signed-in visitor are untouched');
+}
+
 async function main() {
   ok('off unless UI_V2 says on', () => {
     const was = process.env.UI_V2;
@@ -107,7 +198,10 @@ async function main() {
     const git = (cmd) => execSync(cmd, { cwd: ROOT, encoding: 'utf8' }).trim();
     const out = git(`git diff --name-status ${BASE_COMMIT()} -- public spanish-check spanish-check-lc spanish-dictation routes`);
     const giraffe = new Set(git(`git diff --name-only ${TUTOR_GIRAFFE_MERGE}~1 ${TUTOR_GIRAFFE_MERGE}`).split(/\r?\n/));
-    const changed = out ? out.split(/\r?\n/).filter((l) => !l.startsWith('A')).map((l) => l.split(/\s+/).pop()).filter((f) => !giraffe.has(f) && !f.startsWith('public/js/ui2/') && !f.startsWith('public/css/ui2/')) : []; // the flag's own files may change as the work goes on
+    // Owner, 7 Nov (branch ob-trim): the beta's hidden subjects and the onboarding ending at the subjects are server decisions (catalog, ob2 routes); Home's two buttons need
+    // two opt-in hooks, ?mode=quick on the placement and ?why=signed_out on sign-in. Each changes nothing without its parameter. Every other existing file still must not change.
+    const OB_TRIM = new Set(['routes/catalog.js', 'routes/onboarding-v2.js', 'public/js/subject-placement.js', 'public/js/auth.js']);
+    const changed = out ? out.split(/\r?\n/).filter((l) => !l.startsWith('A')).map((l) => l.split(/\s+/).pop()).filter((f) => !giraffe.has(f) && !OB_TRIM.has(f) && !f.startsWith('public/js/ui2/') && !f.startsWith('public/css/ui2/')) : []; // the flag's own files may change as the work goes on
     assert.deepStrictEqual(changed, []);
     for (const f of ['public/start.html', 'public/js/start.js', 'public/js/start-tutor.js', 'public/css/screens/start.css']) assert(!out.includes(f), `${f} is untouched`);
   });
@@ -165,6 +259,8 @@ async function main() {
     fs.rmSync(process.env.DB_FILE, { force: true });
   });
 
+  await signedOutChecks();
+
   await withServer(null, 6841, async (base) => {
     const health = await fetchBytes(`${base}/api/health`);
     assert.strictEqual(health.status, 200, 'server up');
@@ -175,6 +271,7 @@ async function main() {
       assert(!r.bytes.includes('data-ui2'), `flag off: /${p} has no flag`);
     }
     assert.strictEqual((await fetchBytes(`${base}/api/ui2/material-progress`)).status, 404, 'flag off: no such endpoint');
+    assert.strictEqual((await fetchBytes(`${base}/api/ui2/waiting`)).status, 404, 'flag off: no such endpoint');
     for (const [url, file] of [['/start', 'start.html'], ['/js/start.js', 'js/start.js'], ['/css/screens/start.css', 'css/screens/start.css']]) {
       const r = await fetchBytes(base + url); // eslint-disable-line no-await-in-loop
       assert.strictEqual(sha(r.bytes), sha(fs.readFileSync(path.join(ROOT, 'public', file))), `flag off: ${url} is the file on disk`);
@@ -196,6 +293,7 @@ async function main() {
       assert(!r.bytes.includes('data-ui2'), `flag on: /${p} is left alone`);
     }
     assert.strictEqual((await fetchBytes(`${base}/api/ui2/material-progress`)).status, 401, 'flag on: signed in only');
+    assert.strictEqual((await fetchBytes(`${base}/api/ui2/waiting`)).status, 401, 'flag on: signed in only');
     const start = await fetchBytes(`${base}/start`);
     assert.strictEqual(start.bytes.toString('utf8'), ui.injectStart(fs.readFileSync(path.join(ROOT, 'public', 'start.html'), 'utf8')), 'flag on: /start is the file plus the additions');
     const js = await fetchBytes(`${base}/js/start.js`);

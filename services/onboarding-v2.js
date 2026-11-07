@@ -40,7 +40,20 @@ const MAX_TRACKS = 6;
 const enabled = () => /^(1|on|true)$/i.test(String(process.env.ONBOARDING_V2 || ''));
 /** Invite or sign-in only: accounts come from the application, so nobody is a guest here. The public flow shows only with both off. */
 function privateBeta(req) {
-  return require('../middleware/signin-only').active(req) || require('../middleware/beta-gate').enabled();
+  return require('../middleware/signin-only').active(req || { socket: {}, headers: {} }) || require('../middleware/beta-gate').enabled();
+}
+
+/**
+ * Owner, 7 Nov: "we haven't really fully built those so don't have those in the onboarding in the beta". Subjects kept out of every place a private-beta
+ * tester picks one: /start's subjects, the add-a-subject page and the Everything menu's "Add a subject" (both /onboarding, which reads /api/catalog?view=grades).
+ * BETA_HIDDEN_SUBJECTS is the one place to change it (comma-separated ids; empty shows everything). Nothing is deleted: the subjects, their pages and any
+ * enrollment someone already has stay as they are, and interests (basketball as a hobby) are a different list.
+ */
+const HIDDEN_IN_BETA = 'basketball,chess,piano';
+function hiddenSubjects(req) {
+  if (!privateBeta(req)) return new Set();
+  const raw = process.env.BETA_HIDDEN_SUBJECTS === undefined ? HIDDEN_IN_BETA : process.env.BETA_HIDDEN_SUBJECTS;
+  return new Set(String(raw).split(',').map((x) => x.trim().toLowerCase()).filter(Boolean));
 }
 /* eslint-disable global-require */
 const consent = () => require('../routes/consent');
@@ -54,10 +67,10 @@ function gradeNameOf(trackId, gradeId) {
 }
 
 /** Keep only what is known. A child's typed words are never kept: tap choices only (`child`). */
-function cleanAnswers(raw, { child = false } = {}) {
+function cleanAnswers(raw, { child = false, hidden = null } = {}) {
   const r = raw && typeof raw === 'object' ? raw : {};
   const out = {};
-  const known = new Set(require('../config/curriculum').catalogue().map((t) => t.id));
+  const known = new Set(require('../config/curriculum').catalogue().map((t) => t.id).filter((id) => !(hidden && hidden.has(id))));
   if (Array.isArray(r.tracks)) out.tracks = [...new Set(r.tracks.map(String).filter((t) => known.has(t)))].slice(0, MAX_TRACKS);
   if (typeof r.notes === 'boolean') out.notes = !child && r.notes;
   // "How do you want to learn?" (UI_V2 only: docs/ONBOARDING-V2.md). A child account can't upload, so it never has an answer here.
@@ -77,9 +90,9 @@ function cleanAnswers(raw, { child = false } = {}) {
   return out;
 }
 
-function saveAnswers(user, raw) {
+function saveAnswers(user, raw, { hidden = null } = {}) {
   const child = !!(user.age_check && user.age_check.needs_parent);
-  const clean = cleanAnswers(raw, { child });
+  const clean = cleanAnswers(raw, { child, hidden });
   const row = rowOf(user.id);
   if (row) return db.update(ANSWERS, row.id, { ...clean, updated_at: iso() });
   return db.insert(ANSWERS, { user_id: user.id, ...clean });
@@ -124,7 +137,7 @@ function inFlow(req, user = req.user) {
   if (!enabled() || !user || user.guest || !privateBeta(req)) return false;
   if (consent().access(user).locked) return false;
   const row = rowOf(user.id);
-  if (row && row.lesson_opened_at) return false;
+  if (row && (row.lesson_opened_at || row.home_at)) return false;
   if (row && row.first_enrollment_id) return !!db.byId('enrollments', row.first_enrollment_id);
   return redoOnce(user) || !db.findOne('enrollments', (e) => e.user_id === user.id);
 }
@@ -143,7 +156,40 @@ function accountHome(user) {
   const a = consent().access(user);
   if (a.locked) return '/parent-needed';
   if (a.state === 'needs_age') return '/onboarding';
-  return db.findOne('enrollments', (e) => e.user_id === user.id) ? '/dashboard' : '/onboarding';
+  const row = rowOf(user.id);
+  return db.findOne('enrollments', (e) => e.user_id === user.id) || (row && row.home_at) ? '/dashboard' : '/onboarding';
+}
+
+/**
+ * Owner, 7 Nov: "after picking the subjects it takes you to the homepage with a take placement button and a pick my grade button, instead of having to do all
+ * those in the main onboarding". The flow ends here (UI_V2, private beta: public/js/ui2/start.js). An enrollment always has a grade (services/subject-placement.js
+ * chooseGrade), so a subject without one can't be an enrollment, even a placement_pending one: the picked subjects wait on this row as `waiting`, and Home shows
+ * each with "Take the placement" and "Pick my grade" until it has an enrollment, made the usual way by either. `home_at` ends the flow (inFlow), so the
+ * redo-once account onboards once, as before. Subjects it already has aren't waiting: they carry on as they are.
+ */
+function toHome(user, { hidden = null } = {}) {
+  try { require('./onboarding').closeOpen(user); } catch (err) { console.warn(`onboarding-v2: test not closed: ${err.message}`); }
+  const row = saveAnswers(user, {});
+  const have = new Set(db.find('enrollments', (e) => e.user_id === user.id).map((e) => e.track_id));
+  const waiting = (row.tracks || []).filter((t) => !(hidden && hidden.has(t)) && !have.has(t));
+  db.update(ANSWERS, row.id, { waiting, home_at: row.home_at || iso() });
+  applyInterest(user);
+  return { go: '/dashboard', waiting };
+}
+
+/** Home's subjects that still need a start: picked in the flow, not hidden now, and with no enrollment yet. Read only. */
+function waitingFor(user, { hidden = null } = {}) {
+  if (!enabled() || !user || user.guest) return [];
+  const row = rowOf(user.id);
+  if (!row || !row.home_at || !Array.isArray(row.waiting)) return [];
+  const have = new Set(db.find('enrollments', (e) => e.user_id === user.id).map((e) => e.track_id));
+  const cat = require('../config/curriculum').catalogue();
+  return row.waiting.filter((t) => !have.has(t) && !(hidden && hidden.has(t))).map((t) => {
+    const track = cat.find((x) => x.id === t);
+    if (!track) return null;
+    const q = encodeURIComponent(t);
+    return { track: { id: t, name: track.name, icon: track.icon, color: track.color }, placement_href: `/subject-placement?track=${q}&mode=quick`, pick_href: `/onboarding?track=${q}&pick=1` };
+  }).filter(Boolean);
 }
 
 /** Where the level the learner stands on opens: the same rule as the path page. */
@@ -419,5 +465,5 @@ function sweep(now = Date.now()) {
 }
 
 module.exports = {
-  ANSWERS, AGREEMENTS, AGREEMENT_VERSION, SIGNUP_AGREEMENT, privateBeta, inFlow, recordAgreement, INTERESTS, WHY, enabled, cleanAnswers, saveAnswers, createGuest, stateFor, firstLesson, settleStart, gradeForAge, applyInterest, absorbGuest, sweep, accountHome, touch, rowOf,
+  ANSWERS, AGREEMENTS, AGREEMENT_VERSION, SIGNUP_AGREEMENT, privateBeta, hiddenSubjects, HIDDEN_IN_BETA, toHome, waitingFor, inFlow, recordAgreement, INTERESTS, WHY, enabled, cleanAnswers, saveAnswers, createGuest, stateFor, firstLesson, settleStart, gradeForAge, applyInterest, absorbGuest, sweep, accountHome, touch, rowOf,
 };

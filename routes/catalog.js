@@ -23,7 +23,9 @@ router.get('/catalog', (req, res) => {
     return res.json({ tracks: tracks.map((t) => ({ id: t.id, name: t.name, icon: t.icon, color: t.color, blurb: t.blurb, grade_count: t.grades.length })) });
   }
   if (req.query.view === 'grades') {
-    return res.json({ tracks: tracks.map((t) => ({ ...t, grades: t.grades.map(({ skills, ...g }) => g) })) });
+    // The pickers' view (/start, /onboarding). In the private beta, subjects not fully built stay out of it (services/onboarding-v2.js hiddenSubjects).
+    const hidden = require('../services/onboarding-v2').hiddenSubjects(req); // eslint-disable-line global-require
+    return res.json({ tracks: tracks.filter((t) => !hidden.has(t.id)).map((t) => ({ ...t, grades: t.grades.map(({ skills, ...g }) => g) })) });
   }
   res.json({ tracks });
 });

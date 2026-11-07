@@ -21,6 +21,16 @@ App.mount(async () => {
   }
   function clearError() { errorBox.classList.add('hidden'); }
 
+  // A page that found itself signed out sends the learner here (js/ui2/signed-out.js): say so plainly, never anything about new accounts.
+  if (!isRegister && App.query('why') === 'signed_out' && errorBox) {
+    const line = document.createElement('p');
+    line.className = 'notice';
+    line.id = 'signed-out';
+    line.setAttribute('role', 'status');
+    line.textContent = 'You were signed out. Sign in to carry on.';
+    errorBox.before(line);
+  }
+
   /** The subject a landing page asked to start with (/act), as an onboarding address. A plain id only. */
   const wanted = /^[a-z0-9_-]{1,40}$/.test(App.query('track') || '') ? App.query('track') : '';
   const onboarding = wanted ? `/onboarding?track=${wanted}` : '/onboarding';
