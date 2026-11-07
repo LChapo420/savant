@@ -175,6 +175,7 @@ App.mount(async () => {
           try {
             result = await App.api.post(`/api/sessions/${round.session_id}/answer`, { item_id: item.id, answer, ms: Date.now() - askedAt });
           } catch (err) {
+            Player.unlock(box);
             App.toast(err.message, 'error');
             return;
           }
@@ -488,6 +489,7 @@ App.mount(async () => {
               item_id: item.id, answer, ms: Date.now() - askedAt,
             });
           } catch (err) {
+            Player.unlock(box);
             App.toast(err.message, 'error');
             return;
           }

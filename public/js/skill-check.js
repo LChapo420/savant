@@ -23,7 +23,7 @@
       coach: false,
       onSubmit: async (answer) => {
         let r;
-        try { r = await App.api.post(`/api/speed/skill-check/${sessionId}/answer`, { item_id: item.id, answer, ms: Date.now() - startedAt }); } catch (err) { App.toast(err.message, 'error'); return; }
+        try { r = await App.api.post(`/api/speed/skill-check/${sessionId}/answer`, { item_id: item.id, answer, ms: Date.now() - startedAt }); } catch (err) { Player.unlock(host); App.toast(err.message, 'error'); return; }
         const verdict = { reveal: true, ...r };
         Player.reveal(host, item, verdict, {
           nextLabel: r.done ? 'See the result' : 'Next question',

@@ -105,6 +105,7 @@ App.mount(async () => {
     try {
       reply = await App.api.post('/api/reading-check/answer', { session_id: sessionId, item_id: item.id, choice, ms: Date.now() - startedAt });
     } catch (err) {
+      window.Player.unlock(document.getElementById('item'));
       App.toast(err.message, 'error');
       if (dont) dont.disabled = false;
       return;

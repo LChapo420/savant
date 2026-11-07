@@ -176,6 +176,7 @@ App.mount(async () => {
             ms: Date.now() - startedAt,
           });
         } catch (err) {
+          Player.unlock(itemHost);
           App.toast(err.message, 'error');
           return;
         }

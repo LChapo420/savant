@@ -106,6 +106,8 @@ App.mount(async () => {
     // walk has moved on — so the button ends exactly where the grade does.
     const prev = document.getElementById('prevq');
     if (prev) prev.style.display = state.index > 0 ? '' : 'none';
+    // A question starts at its top: the page keeps the scroll of the card just pressed, which on a phone hid the start of the question under the sticky bar.
+    window.scrollTo(0, 0);
     Player.render(document.getElementById('item'), question, {
       onSubmit: (answer) => submit(answer),
       // Coming back to a question shows the answer already given, ready to keep
@@ -750,6 +752,7 @@ App.mount(async () => {
         // A stale answer (a second tab, a double click) comes back with the
         // question actually being asked, so the page redraws on that instead.
         if (err.payload && (err.payload.question || err.payload.done)) return gapStep(result, scan, err.payload);
+        Player.unlock(document.getElementById('item'));
         App.toast(err.message, 'error');
         busy = false;
         return;
@@ -950,6 +953,7 @@ App.mount(async () => {
    */
   function chooseMode(opening) {
     return new Promise((resolve) => {
+      window.scrollTo(0, 0); // the goal screen before this one can be scrolled down to its Continue
       const modes = opening.modes || {};
       const card = (key, title, blurb, icon) => `
         <button class="option-card mode-card${opening.suggested_mode === key ? ' is-suggested' : ''}" type="button" data-mode="${key}">

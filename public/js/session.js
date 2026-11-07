@@ -985,6 +985,7 @@ function renderRubricResult(result) {
             changes: meta.changes || 0,
           });
         } catch (err) {
+          Player.unlock(itemHost);
           App.toast(err.message, 'error');
           return;
         }
@@ -1296,6 +1297,7 @@ function renderRubricResult(result) {
             });
             Player.reveal(card, outcome.retention, result, {});
           } catch (err) {
+            Player.unlock(card);
             App.toast(err.message, 'error');
           }
         },
@@ -1615,6 +1617,7 @@ function renderRubricResult(result) {
               ms: Date.now() - askedAt,
             });
           } catch (err) {
+            Player.unlock(box);
             App.toast(err.message, 'error');
             return;
           }

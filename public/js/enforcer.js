@@ -219,6 +219,7 @@ App.mount(async () => {
             item_id: item.id, answer, ms: Date.now() - askedAt, confidence: meta.confidence || null, changes: meta.changes || 0,
           });
         } catch (err) {
+          Player.unlock(itemHost);
           App.toast(err.message, 'error');
           return;
         }

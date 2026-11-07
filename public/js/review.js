@@ -230,6 +230,7 @@ App.mount(async () => {
             changes: meta.changes || 0,
           });
         } catch (err) {
+          Player.unlock(itemHost);
           App.toast(err.message, 'error');
           return;
         }

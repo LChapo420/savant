@@ -716,7 +716,10 @@ App.mount(async () => {
       }
     });
   }
-  const action0 = consolidation && consolidation.active ? consolidationAction(consolidation) : enrollment.status === 'graduated'
+  // A grade waiting on its placement quiz: the session route refuses it, so "Start level 1" only led to an error.
+  const action0 = enrollment.status === 'placement_pending'
+    ? `<a class="btn btn-primary btn-lg" href="/placement?enrollment=${enrollment.id}">Take the placement quiz</a>`
+    : consolidation && consolidation.active ? consolidationAction(consolidation) : enrollment.status === 'graduated'
     ? `<p class="path-done-line">${window.mark('tick')}You graduated this track.</p> <a class="btn btn-primary" href="/onboarding">Pick the next one</a>`
     : checkpoint
       ? (failed
@@ -1140,6 +1143,7 @@ App.mount(async () => {
               state = err.payload;
               return ask(state.question);
             }
+            Player.unlock(document.getElementById('item'));
             App.toast(err.message, 'error');
             return;
           }

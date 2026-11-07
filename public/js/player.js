@@ -153,6 +153,17 @@
       });
       host.appendChild(choices);
       handles = { container: host, choices };
+      host.playerUnlock = () => {
+        [...choices.children].forEach((c) => { c.disabled = false; });
+        const picked = choices.querySelector('.choice.selected');
+        if (opts.check) {
+          if (picked) markChoice(picked, 'selected');
+          if (checkBtn) checkBtn.disabled = !picked;
+        } else if (picked) {
+          picked.classList.remove('selected');
+          markChoice(picked, '');
+        }
+      };
       if (opts.check) {
         checkBar = App.el('div', { class: 'check-bar' });
         checkBtn = App.el('button', { class: 'btn btn-primary btn-lg btn-block', type: 'button', 'data-act': 'check' }, App.escapeHtml(opts.check));
@@ -215,6 +226,7 @@
         lastLength = input.value.length;
       });
 
+      host.playerUnlock = () => { input.disabled = false; button.disabled = false; input.focus({ preventScroll: true }); };
       const submit = () => {
         const value = input.value.trim();
         if (!value) { input.focus(); return; }
@@ -230,7 +242,8 @@
           submit();
         }
       });
-      setTimeout(() => input.focus(), 30);
+      // preventScroll: under a tall board the box is below the fold, and scrolling to it put the start of the question under the sticky bar.
+      setTimeout(() => input.focus({ preventScroll: true }), 30);
       handles = { container: host, input, button };
     }
 
@@ -627,5 +640,11 @@
     return box;
   }
 
-  window.Player = { render, reveal, shown };
+  /**
+   * The answer did not get through (a dropped connection, a 5xx, a limit): the controls come back, with the answer still there, so it can be sent again.
+   * Every caller's catch calls this. Without it the box and the button stayed grey and only a reload got the learner out.
+   */
+  function unlock(host) { if (host && host.playerUnlock) host.playerUnlock(); }
+
+  window.Player = { render, reveal, shown, unlock };
 })();

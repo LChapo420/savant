@@ -154,6 +154,7 @@ App.mount(async () => {
         ms: Date.now() - startedAt,
       });
     } catch (err) {
+      Player.unlock(document.getElementById('item'));
       App.toast(err.message, 'error');
       return;
     }
@@ -170,9 +171,9 @@ App.mount(async () => {
     // The placement by unit shows no difficulty chip (its questions are pitched by
     // unit, not on the 1-10 scale) and no coach, for the reason the subject
     // placement gives: a coach would talk a learner into answers they do not have.
-    Player.render(document.getElementById('item'), item, adaptive
-      ? { onSubmit: (answer) => submit(answer), coach: false }
-      : { onSubmit: (answer) => submit(answer) });
+    // The fixed-length quiz too: the server refuses the coach on any placement item, so offering it only showed a refusal.
+    window.scrollTo(0, 0);
+    Player.render(document.getElementById('item'), item, { onSubmit: (answer) => submit(answer), coach: false });
   }
 
   async function finish() {
@@ -446,6 +447,7 @@ App.mount(async () => {
               state = err.payload;
               return ask(state.question);
             }
+            Player.unlock(document.getElementById('item'));
             App.toast(err.message, 'error');
             return;
           }
@@ -569,6 +571,7 @@ App.mount(async () => {
               state = err.payload;
               return ask(state.question);
             }
+            Player.unlock(document.getElementById('item'));
             App.toast(err.message, 'error');
             return;
           }
