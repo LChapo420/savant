@@ -86,6 +86,7 @@ const MODELS = {
   ds_flash_gonka: { p: 'gonka', model: 'deepseek-ai/DeepSeek-V4-Flash-0731', family: 'deepseek' },
   ds41_coral: { p: 'coral', model: 'deepseek-v4.1-flash', family: 'deepseek' },
   ds41_munito: { p: 'munito', model: 'deepseek-ai/deepseek-v4.1-flash-1017', family: 'deepseek' },
+  glm_flash_munito: { p: 'munito', model: 'zai-org/glm-5.3-flash', family: 'glm' },
   grok43: { p: 'grokified', model: 'grok-4.3', family: 'grok' },
   grok47: { p: 'grokified', model: 'grok-4.7', family: 'grok' },
   glm53: { p: 'lyceum', model: 'z-ai/glm-5.3', family: 'glm' },
