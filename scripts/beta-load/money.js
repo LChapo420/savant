@@ -25,8 +25,18 @@ const START = new Date(`${flag('start', '2026-11-15')}T00:00:00Z`);
 const TODAY = new Date();
 
 const ledgers = JSON.parse(execFileSync(process.execPath, [path.join(__dirname, 'ledgers-now.js'), '--json']).toString());
-const agg = {};
-for (const r of ledgers) for (const [t, v] of Object.entries(r.tasks)) { const a = agg[t] || (agg[t] = { c: 0, u: 0 }); a.c += v.calls; a.u += v.usd; }
+// Real cost per call by task, from the ledgers as they stood on 6 Nov before the power-off: the five ledgers rebuilt after it have no reliable
+// per-task figures. --live-units reads them from the ledgers instead.
+const UNITS = {
+  block_layout: { c: 1684, u: 4.12 }, block_fill: { c: 3321, u: 19.59 }, fact_verify: { c: 3796, u: 11.23 }, fact_repair: { c: 321, u: 0.62 },
+  dock_help: { c: 676, u: 0.37 }, tutor_memory_fold: { c: 459, u: 0.14 }, material_outline: { c: 48, u: 0.19 }, material_lesson: { c: 426, u: 2.32 },
+  material_verify: { c: 238, u: 0.30 }, material_notes: { c: 267, u: 0.10 }, material_pack: { c: 25, u: 0.06 },
+};
+let agg = UNITS;
+if (args.includes('--live-units')) {
+  agg = {};
+  for (const r of ledgers) for (const [t, v] of Object.entries(r.tasks)) { const x = agg[t] || (agg[t] = { c: 0, u: 0 }); x.c += v.calls; x.u += v.usd; }
+}
 const per = (t) => (agg[t] && agg[t].c ? agg[t].u / agg[t].c : 0);
 const ratio = (t) => (agg.block_layout && agg[t] ? agg[t].c / agg.block_layout.c : 0);
 
@@ -37,7 +47,7 @@ const level = {
   fact_verify: ratio('fact_verify') * per('fact_verify'),
   fact_repair: ratio('fact_repair') * per('fact_repair'),
 };
-const levelUsd = Object.values(level).reduce((a, b) => a + b, 0);
+const levelUsd = Object.values(level).reduce((x, y) => x + y, 0);
 const tutorUsd = 20 * per('dock_help') + 2 * per('tutor_memory_fold');
 const uploadUsd = 0.15 * (per('material_outline') + 12 * per('material_lesson') + 3 * per('material_verify') + per('material_notes') + per('material_pack'));
 const perLearnerDay = LEVELS * levelUsd + tutorUsd + uploadUsd;
