@@ -121,7 +121,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File C:\coding\savant-backups\pul
 
 ## The disk on the server
 
-315 GB, 181 GB free at the last check, `/srv/wiki` 111 GB (`wikipedia.sqlite` is 57 GB, and its indexer was still running at 28% CPU during this work), `/srv/savant-backups` 383 MB.
+315 GB, 176 GB free at the last check, down from 187 GB five hours earlier as the wiki indexers wrote (`/srv/wiki` was 111 GB at the start), `/srv/savant-backups` 387 MB.
 
 Rotation was **not working at all**: the same dead cron line was the only thing that deleted anything. There are 27 full deploy copies from 4 days, uncompressed. That is nothing at 11 to 15 MB each, but at a 1.9 GB store (simulated: 250 learners, 30 days) and the same 7 deploys a day it would be about 186 GB in 14 days: **more than the disk has free**.
 

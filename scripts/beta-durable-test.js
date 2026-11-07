@@ -188,7 +188,11 @@ async function main() {
   check('a good ledger here is kept: it may be newer', settled('munito') === 99);
   check('a damaged one is replaced, and kept aside', settled('coral') === 2 && fs.readdirSync(rDir).some((f) => f.startsWith('coral-ledger.json.damaged-')));
   check('the restored store is the backed-up one', JSON.parse(fs.readFileSync(path.join(rDir, 'db.json'), 'utf8')).users.length === 1);
-  if (process.getuid && process.getuid() === 0) console.log('  (running as root: the refusal below is not meaningful)');
+  // As root the files would belong to root, and the app couldn't read them. The Node on this machine may not have getuid, so it is given one.
+  const asRoot = path.join(dir, 'as-root.js');
+  fs.writeFileSync(asRoot, 'process.getuid = () => 0;');
+  const r2 = spawnSync(process.execPath, ['--no-warnings', '-r', asRoot, path.join(ROOT, 'scripts', 'backup-db.js'), '--restore', path.join(bDir, useable.file), '--to', path.join(rDir, 'as-root.json')], { cwd: ROOT, env: { ...process.env, ...bEnv }, encoding: 'utf8' });
+  check('a restore run as root stops and says why, writing nothing', r2.status === 1 && /runuser -u savant/.test(r2.stderr) && !fs.existsSync(path.join(rDir, 'as-root.json')), r2.stderr);
 
   // ---------------------------------------------------------------------------
   console.log('SQLite sets, while the app writes');

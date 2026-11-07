@@ -33,6 +33,9 @@ const heapArgs = args.includes('--no-heap') ? [] : [`--max-old-space-size=${HEAP
   if (!SQLITE_FILE) fs.copyFileSync(DB, dbFile);
   h.copyLedgers(dir);
   const extra = { WRITE_AHEAD: 'off' };
+  args.forEach((a, i) => { if (a === '--env') { const [k, ...v] = args[i + 1].split('='); extra[k] = v.join('='); } });
+  const profOut = flag('prof-out');
+  if (profOut) { extra.PROBE_PROFILE_FILE = profOut; extra.PROBE_PROFILE_SECONDS = String(flag('prof-secs', 120)); }
   if (SQLITE_FILE) {
     const sqlite = path.join(dir, 'db.sqlite');
     fs.copyFileSync(SQLITE_FILE, sqlite);
