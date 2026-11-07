@@ -365,7 +365,7 @@
         if (at && again && again.preview) at.textContent = stageText(again.preview.stage);
       }).catch(() => null);
       if (ready) return;
-      if (fallback && Date.now() - startedAt >= waitMs) { window.location.replace(fallback); return; }
+      if (fallback && Date.now() - startedAt >= 8000 && Date.now() - startedAt >= waitMs) { window.location.replace(fallback); return; }
       if (tries < 90) setTimeout(tick, preview ? 1000 : fallback ? 2000 : 4000);
     };
     setTimeout(tick, preview ? 800 : 2000);

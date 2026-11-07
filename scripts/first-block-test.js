@@ -56,7 +56,7 @@ function fake(s, seed) {
 
   // ── the stream ─────────────────────────────────────────────────────────
   {
-    process.env.CORAL_API_KEY = 'test'; process.env.CORAL_BASE_URL = 'http://coral.test';
+    process.env.CORAL_API_KEY = 'test'; process.env.CORAL_BASE_URL = 'http://coral.test'; process.env.CORAL_PIPELINE = '1';
     const { coral, _setFetch } = require('../services/providers/coral'); // eslint-disable-line global-require
     const sse = (parts) => ({ ok: true, status: 200, body: (async function* gen() { for (const p of parts) yield Buffer.from(`data: ${JSON.stringify({ choices: [{ delta: { content: p } }] })}\n\n`); }()) });
     const loop = '"do_not_use_this_key_'.repeat(40);
