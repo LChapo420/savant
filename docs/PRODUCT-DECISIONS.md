@@ -198,3 +198,7 @@ Structure A, "One next thing": no tab bar, home shows one task and one button, a
 ## Home and Past (owner, 7 Nov 2026)
 
 Home shows: continue any subject, upload their own material, continue unfinished uploads. A separate page holds previous things: uploads and learning paths or activities already completed. This replaces the one-task home in structure A. Look: design-refs/ui-v4-mockups.
+
+## First screen (owner, 7 Nov 2026)
+
+H, a framed card on a faint subject pattern, "for now": "we might end up switching that out in the future". Kept swappable. Options: design-refs/first-screen/sheet.png, sheet-2.png. The owner said A, C and D read as first screens; B and E don't.
