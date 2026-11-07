@@ -130,11 +130,22 @@ function child({ consent = null, ai: aiOn = false }) {
   // Through ai.talk and the pool: Standard Compute answers first; when it fails, the free lineup (here a stand-in slot) answers.
   const providers = require('../services/providers');
   const freeCalls = [];
+  // The fact guard (FACT_CHECK_ALL, on by default since 6 Nov) reads every reply on its own slots, none of which has a key here: a stand-in checker passes the reply,
+  // and everything else goes through the real pool. What the guard does with a wrong reply or no checker is scripts/fact-coverage-test.js.
+  const factChecks = [];
+  const realHedged = pool.callHedged;
+  pool.callHedged = async (r, ...rest) => {
+    if (r.task !== 'fact_live') return realHedged(r, ...rest);
+    factChecks.push(r);
+    return { data: { working: '', checked: 1, wrong: [] }, model: 'checker', usage: null, pool: { provider: 'checker', attempts: [], elapsedMs: 1 } };
+  };
   const realChain = providers.chain;
   providers.chain = () => [{ name: 'nvidia', isEnabled: () => true, local: false, modelFor: () => 'free-model', costCents: () => 0, chat: async (args) => { freeCalls.push(args); return { text: 'free answer', usage: { input_tokens: 10, output_tokens: 5 }, model: 'free-model' }; }, isConfigured: () => true }];
   nextStatus = 200;
   const viaPool = await ai.talk({ role: 'fast', task: 'dock_help', system: 'sys', messages: [{ role: 'user', content: 'hello' }], maxTokens: 100, userId: a.id, hedgeAfterMs: 4000, timeoutMs: 15000, temperature: 0.7 });
   check('ai.talk for the dock goes to Standard Compute first (the free model is not called)', viaPool === 'Hey, what did you try so far?' && freeCalls.length === 0);
+  if (String(process.env.FACT_CHECK_ALL === undefined ? '1' : process.env.FACT_CHECK_ALL).trim() === '1') check('with the fact guard on, that reply was checked before the learner saw it', factChecks.length > 0, factChecks.length);
+  else check('with the fact guard off, nothing was checked', factChecks.length === 0, factChecks.length);
   nextStatus = 500;
   const failedOver = await ai.talk({ role: 'fast', task: 'dock_help', system: 'sys', messages: [{ role: 'user', content: 'hello' }], maxTokens: 100, userId: a.id, hedgeAfterMs: 4000, timeoutMs: 15000 });
   check('when Standard Compute errors the free lineup answers and the learner sees no error', failedOver === 'free answer' && freeCalls.length === 1);
@@ -150,6 +161,7 @@ function child({ consent = null, ai: aiOn = false }) {
   const slow = await ai.talk({ role: 'fast', task: 'dock_help', system: 'sys', messages: [{ role: 'user', content: 'hello' }], maxTokens: 100, userId: a.id, hedgeAfterMs: 300, timeoutMs: 5000 });
   check('a slow Standard Compute is hedged by the free lineup after the hedge delay', slow === 'free answer' && Date.now() - t0 < 2500, { slow, ms: Date.now() - t0 });
   providers.chain = realChain;
+  pool.callHedged = realHedged;
   const priv = read('public/privacy.html');
   check('the privacy page names Standard Compute as a processor for tutor chats, with the under-13 exception', /Standard Compute/.test(priv) && /under 13/i.test(priv.slice(priv.indexOf('Standard Compute') - 200, priv.indexOf('Standard Compute') + 900)));
   check('the tutor panel tells the learner how many exchanges it can search, and the memory route returns it', /earlier exchanges/.test(read('public/js/tutor-chat.js')) && /tutor-archive/.test(read('routes/tutor.js')));

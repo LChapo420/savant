@@ -112,13 +112,17 @@ const goodLesson = (extra = {}) => ({
     ai.isEnabled = real.on;
   }
 
+  const guardOn = () => String(process.env.FACT_CHECK_ALL === undefined ? '1' : process.env.FACT_CHECK_ALL).trim() === '1';
   console.log('2. ai.generateLesson with a fake provider: the block is in the prompt, revised once, key facts kept');
   {
     const calls = [];
+    const factChecks = []; // the fact guard's own calls (FACT_CHECK_ALL, on by default since 6 Nov): answered here and kept apart, so `calls` is still the writer's
     let script = [];
     const fake = {
       name: 'mock', isEnabled: () => true, costCents: () => 0,
-      structured: async (req) => { calls.push(req); const r = script[Math.min(calls.length - 1, script.length - 1)]; return r ? { data: r, model: 'mock', usage: null } : null; },
+      structured: async (req) => {
+        if (req.task === 'fact_live') { factChecks.push(req); return { data: { working: '', checked: 1, wrong: [] }, model: 'mock', usage: null }; }
+        calls.push(req); const r = script[Math.min(calls.length - 1, script.length - 1)]; return r ? { data: r, model: 'mock', usage: null } : null; },
     };
     providers.chain = () => [fake];
     providers.isOutside = () => false;
@@ -132,6 +136,7 @@ const goodLesson = (extra = {}) => ({
     let lesson = await ai.generateLesson(base(specKid));
     check('the first call carries the block in the learner\'s prompt', calls.length === 1 && calls[0].user.includes(HEAD) && /minecraft/i.test(calls[0].user), calls[0] && calls[0].user.slice(0, 200));
     check('a good draft is kept after one call', !!lesson && calls.length === 1 && lesson.spec_check && lesson.spec_check.revised === false);
+    check(guardOn() ? 'with the fact guard on, that lesson was checked' : 'with the fact guard off, nothing was checked', guardOn() ? factChecks.length > 0 : factChecks.length === 0, factChecks.length);
 
     calls.length = 0;
     script = [withMinecraft(withSpider), withMinecraft(goodLesson())];
