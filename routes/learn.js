@@ -435,6 +435,8 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
   const { session, items, lesson, essay } = await sessions.createSession({
     userId: req.user.id, enrollment, grade, level: atLevel,
   });
+  // A session that could not be made must not take the whole server down (an async route's throw is an unhandled rejection).
+  if (!session) return res.status(503).json({ error: 'This level could not be started. Try again in a moment.' });
   res.status(201).json({
     ...sessionShape(session),
     resumed: false,
@@ -586,6 +588,7 @@ router.post('/sessions/:id/answer', requireAuth, async (req, res) => {
     rationale: result.rationale,
     feedback: result.feedback || null,
     error_tag: result.errorTag || null,
+    ...partModify.voiceFields(req.user.id),
     ...(result.speed ? { speed: result.speed } : {}),
   });
 });
@@ -769,7 +772,7 @@ router.post('/sessions/:id/finish', requireAuth, async (req, res) => {
       format: 'short_answer',
       prompt: q.prompt,
       answer: q.answer,
-      rationale: q.why || partModify.REVIEW_DEFAULT,
+      rationale: q.why || partModify.reviewLineFor(req.user.id, { track_id: session.track_id, grade_id: session.grade_id }),
       source: 'ai',
       level: (outcome.retentionPlan[i] || {}).level || session.end_level || session.level,
     }));

@@ -149,6 +149,7 @@ app.use('/api', require('./routes/review'));
 app.use('/api', require('./routes/retention')); // study sessions, retention enforcers, the calendar (RETENTION_ENFORCERS)
 app.use('/api', require('./routes/study-goals')); // what the learner wants out of each subject and course: core parts fast, full depth, ready for a test (services/study-goal.js)
 app.use('/api', require('./routes/retention-goals')); // how long to remember each subject and course (services/retention-goal.js)
+app.use('/api', require('./routes/part-change')); // the learner changes a part themselves (services/part-change.js; PART_CHANGE=on)
 app.use('/api', require('./routes/daily-plan')); // today's plan across every subject (services/daily-plan.js)
 app.use('/api/placement', require('./routes/placement'));
 // The reading check: a few minutes of vocabulary and passages that measure language level for the scorecard (services/reading-check.js).

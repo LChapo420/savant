@@ -1013,6 +1013,7 @@ function renderRubricResult(result) {
         }
         const last = index + 1 >= items.length;
         const verdict = Player.reveal(itemHost, item, result, {
+          partChange: !isExam(),
           nextLabel: last ? (isEssay() ? (essay && essay.mode === 'oral' ? 'Say it aloud' : 'Write it') : isExam() ? 'Finish and score' : `Finish level ${currentLevel}`) : 'Next question',
           onNext: () => (result.checking && retrievalFirst() ? afterSpeedChecking(item) : afterSpeed(result.speed)),
         });

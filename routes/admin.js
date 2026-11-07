@@ -107,6 +107,16 @@ router.get('/users', (req, res) => {
   });
 });
 
+/** One account's own part-modify switch (services/part-modify.js): 'on', 'off', or null to follow the default. */
+router.post('/users/:id/part-modify', (req, res) => {
+  const user = db.byId('users', req.params.id);
+  if (!user) return res.status(404).json({ error: 'No such user.' });
+  const v = req.body && req.body.value;
+  if (!['on', 'off', null].includes(v)) return res.status(400).json({ error: 'value must be on, off or null.' });
+  db.update('users', user.id, { part_modify: v });
+  return res.json({ id: user.id, part_modify: v, effective: require('../services/part-modify').enabled(user.id) });
+});
+
 /** Everything about one learner. */
 router.get('/users/:id', (req, res) => {
   const user = db.byId('users', req.params.id);

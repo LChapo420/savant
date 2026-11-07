@@ -303,6 +303,14 @@ const RULE_OF = new Map(METRIC_RULES.map((r) => [r.metric, r]));
  * (ctx) -> [[lever, pull], ...] where pull is added to the lever's sum (already in lean units).
  */
 const CONTEXT_RULES = [
+  { id: 'stated_shorter', ev: null, reads: 'part_prefs.shorter', rule: 'The learner asked for this themselves (services/part-change.js): shorter, stronger each time they ask.',
+    pulls: (c) => { const n = Number(c.stated && c.stated.shorter) || 0; return n ? [['length', -0.5 * n], ['density', -0.2 * n], ['feedbackDetail', -0.4 * n]] : []; } },
+  { id: 'stated_simpler', ev: null, reads: 'part_prefs.simpler', rule: 'The learner asked for this themselves: plainer words and shorter sentences.',
+    pulls: (c) => { const n = Number(c.stated && c.stated.simpler) || 0; return n ? [['vocab', -0.5 * n], ['sentence', -0.4 * n], ['defineTerms', 0.3 * n]] : []; } },
+  { id: 'stated_examples', ev: null, reads: 'part_prefs.examples', rule: 'The learner asked for this themselves: more examples.',
+    pulls: (c) => { const n = Number(c.stated && c.stated.examples) || 0; return n ? [['exampleCount', 0.6 * n], ['worked', 0.3 * n]] : []; } },
+  { id: 'stated_topic', ev: null, reads: 'part_prefs.topic', rule: 'The learner named a topic for examples: it goes first among their interests, and interests are used more.',
+    pulls: (c) => (c.stated && c.stated.topic ? [['interestUse', 0.6]] : []) },
   { id: 'age_young', ev: null, reads: 'age <= 11', rule: 'Young learners: short sentences, plain words, small chunks, warm tone, short sessions.',
     pulls: (c) => (c.age !== null && c.age <= 11 ? [['vocab', -0.5], ['sentence', -0.5], ['chunk', -0.3], ['warmth', 0.3], ['sessionLen', -0.5], ['gamification', 0.2], ['formality', -0.4], ['pace', -0.15], ['density', -0.4]] : []) },
   { id: 'age_child_under_9', ev: null, reads: 'age <= 8', rule: 'Under 9: one idea per piece, concrete first, story or play framing.',
@@ -511,6 +519,18 @@ function gather(userId, { skillIds = [], topic = null, trackId = null, gradeId =
     }
   } catch { /* no record */ }
   try {
+    // What the learner asked for themselves on a part (services/part-change.js): their own word, and it sticks. Read only while the switch is on.
+    const pc = require('./part-change');
+    if (pc.on()) {
+      const stated = { ...pc.prefsOf(userId) };
+      // The "too long" tap after a level says the same thing; twice in the last five levels counts as one ask (it reached the level editor's brief only).
+      const taps = db.find('level_feedback', (f) => f.user_id === userId).slice(-5);
+      if (!stated.shorter && taps.filter((f) => f.length === 'long').length >= 2) stated.shorter = 1;
+      input.stated = stated;
+      if (stated.topic) input.interests.unshift(...splitDomains(stated.topic));
+    }
+  } catch { /* none */ }
+  try {
     if (trackId) {
       const goal = require('./goals').forGrade(userId, trackId, gradeId);
       if (goal) input.goal = goal.choice;
@@ -577,6 +597,7 @@ function contextOf(input) {
     mastery: Number.isFinite(input.mastery) ? input.mastery : null,
     attempts: Number(input.attempts) || 0,
     goal: input.goal || null,
+    stated: input.stated || null,
     aversions,
     topicDomain,
     dislikes,

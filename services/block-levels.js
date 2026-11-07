@@ -39,6 +39,8 @@ const path = require('path');
 const crypto = require('crypto');
 
 const db = require('../config/db');
+const partModify = require('./part-modify');
+const partChange = require('./part-change');
 const curriculum = require('../config/curriculum');
 const LAYOUT = require('../config/level-layout');
 const subscriptions = require('../config/subscriptions');
@@ -2857,7 +2859,8 @@ function publicPlan(plan, userId, itemIds = {}) {
   });
   checksAfter(-1).forEach(pushCheck);
   (plan.blocks || []).forEach((b) => {
-    entries.push({ block: b.block, data: b.data, ref: b.index });
+    // The learner's own wording of this block, when they asked for one (services/part-change.js).
+    entries.push({ block: b.block, data: partChange.blockData(userId, plan, b), ref: b.index, changeable: partChange.on() && partChange.changeable(b.block) });
     checksAfter(b.index).forEach(pushCheck);
   });
   // A check whose block was dropped still has to be asked.
@@ -2893,7 +2896,7 @@ function publicPlan(plan, userId, itemIds = {}) {
     .filter(([k]) => k.startsWith(prefix))
     .map(([k, a]) => {
       const check = (plan.checks || []).find((c) => c.id === k.slice(prefix.length)) || {};
-      return [k.slice(prefix.length), { correct: !!a.correct, choice: a.answer, answer: check.answer, rationale: check.rationale }];
+      return [k.slice(prefix.length), { correct: !!a.correct, choice: a.answer, answer: check.answer, rationale: rationaleFor(a.item_id, check) }];
     }));
   return {
     id: plan.id,
@@ -2916,6 +2919,12 @@ function openedOnShared(user, trackId, gradeId, level) {
   const shared = findPlan({ userId: null, trackId, gradeId, level });
   if (!shared) return null;
   return db.findOne('lesson_layers', (r) => r.user_id === user.id && r.plan_id === shared.id) ? shared : null;
+}
+
+/** A check's explanation for this learner: their own rewrite when there is one (on their item row), else the plan's. */
+function rationaleFor(itemId, check) {
+  const item = itemId ? db.byId('items', itemId) : null;
+  return (item && partModify.rationaleOf(item)) || check.rationale;
 }
 
 /** The plan this learner was served at this level: the one it was opened on, their own, else the shared one. */
@@ -2942,6 +2951,7 @@ function servedPlan(user, trackId, gradeId, level) {
  */
 function checkItems(user, plan) {
   const out = {};
+  const made = [];
   const existing = db.forUser('items', user.id).filter((i) => i.plan_id === plan.id && i.check_id);
   for (const check of plan.checks || []) {
     let item = existing.find((i) => i.check_id === check.id);
@@ -2976,7 +2986,11 @@ function checkItems(user, plan) {
       });
     }
     out[check.id] = item.id;
+    made.push(item);
   }
+  // A shared plan's explanations were written for nobody: rewrite them for this learner in the background (services/part-modify.js; off unless switched on). The rewrite is on
+  // their own item row, and answerCheck serves it. Before this, PART_MODIFY never reached a lesson's checks. A plan written for this learner already follows their spec.
+  if (!plan.user_id) partModify.prepareItems(user.id, made);
   return out;
 }
 
@@ -2998,7 +3012,7 @@ function answerCheck({ user, plan, checkId, answer, ms }) {
   const answers = { ...(plan.answers || {}) };
   const key = `${user.id}:${check.id}`;
   const mine = answers[key];
-  if (mine) return { correct: mine.correct, answer: check.answer, rationale: check.rationale, repeat: true };
+  if (mine) return { correct: mine.correct, answer: check.answer, rationale: rationaleFor(mine.item_id, check), item_id: mine.item_id, repeat: true };
 
   const itemId = checkItems(user, plan)[check.id];
   const pending = db.byId('items', itemId);
@@ -3029,7 +3043,7 @@ function answerCheck({ user, plan, checkId, answer, ms }) {
   const enrollment = db.findOne('enrollments', (e) => e.user_id === user.id
     && e.track_id === plan.track_id && e.grade_id === plan.grade_id);
   if (enrollment) db.update('enrollments', enrollment.id, { level_items: (enrollment.level_items || 0) + 1 });
-  return { correct, answer: check.answer, rationale: check.rationale };
+  return { correct, answer: check.answer, rationale: partModify.rationaleOf(item) || check.rationale, item_id: item.id, ...partModify.voiceFields(user.id) };
 }
 
 /**

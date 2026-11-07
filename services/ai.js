@@ -104,6 +104,13 @@ function withinBudget(userId) {
   return usage.cents < DAILY_CENTS && usage.calls < DAILY_CALLS;
 }
 
+/** Has this learner used less than this share of today's AI budget? For background extras, which must leave the tutor its room. */
+function budgetShareLeft(userId, share = 0.5) {
+  if (!userId) return true;
+  const usage = usageToday(userId);
+  return usage.cents < DAILY_CENTS * share && usage.calls < DAILY_CALLS * share;
+}
+
 /**
  * Claude, the last resort, is bounded by the key's TOTAL spend, not by a daily
  * ceiling (owner, 2026-10-23: never more than $25 in total, about $11.20 already
@@ -2085,6 +2092,7 @@ ${learnerBrief(userId, { skillId: area.skill_id, skillName: area.skill_name, lev
 }
 
 module.exports = {
+  budgetShareLeft,
   outsideOk: (userId) => (userId ? outsideAllowed(userId) : true),
   canBuild,
   coachSystemFor, // the tutor's system prompt for one question (read by scripts/part-modify-proof.js)
