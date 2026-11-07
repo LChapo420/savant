@@ -102,7 +102,7 @@ async function runOne(L0, src, store, file) {
   const served = study.internals.loadCourse(user.id, m.id).skills;
   const followS = Math.round((Date.now() - t1) / 1000);
   const wants = [...L0.spoken, ...(L0.interests.length && !(L0.stats.interest_transfer < 50) ? [`likes ${L0.interests.join(' and ')} (examples and analogies may use them)`] : []), ...(L0.dislike ? [`dislikes ${L0.dislike} (must not appear)`] : []), ...(L0.esl ? ['English is a second language: plain syntax, no idioms'] : []), ...(L0.testDate ? [`has a test in ${Math.round((new Date(L0.testDate) - Date.now()) / 86400000)} days: exam-style wording, name the traps`] : []), `is ${L0.age} years old`];
-  const row = { seed: L0.seed, i: L0.i, learner: L0, wants, status: built.course.status, skills: raw.length, build_s: buildS, follow_s: followS, results, source_words: L.words(src.plain), base_lesson: L.words(lessonText(raw)), base_whole: L.words(textOf(raw)), served_lesson: L.words(lessonText(served)), served_whole: L.words(textOf(served)), base: {}, served: {}, served_text: textOf(served) };
+  const row = { seed: L0.seed, i: L0.i, learner: L0, wants, status: built.course.status, skills: raw.length, build_s: buildS, follow_s: followS, results, source_words: L.words(src.plain), base_lesson: L.words(lessonText(raw)), base_whole: L.words(textOf(raw)), served_lesson: L.words(lessonText(served)), served_whole: L.words(textOf(served)), base: {}, served: {}, served_text: textOf(served), base_text: textOf(raw) };
   for (const fam of (process.env.UB_JUDGES || 'C,N').split(',')) {
     // eslint-disable-next-line no-await-in-loop
     row.base[fam] = await judge(fam, wants, src.plain, textOf(raw));
