@@ -1,0 +1,318 @@
+{
+ "built": "2026-11-07",
+ "note": "AI-planted (xKiro Mistral) cross-part errors: a later block made to disagree with an earlier one. Plan ids refer to the DB copy used; not real-learner proof.",
+ "cases": [
+  {
+   "id": "x0",
+   "kind": "cross",
+   "plan_id": 121,
+   "track": "spanish",
+   "block_index": 7,
+   "earlier_block": 1,
+   "planted": {
+    "original": "two in Spain",
+    "wrong": "three in Spain"
+   },
+   "why": "Block 1 states that in Spain the greeting is two kisses. Block 7's takeaway repeats this as \"two in Spain\". Changing it to \"three in Spain\" introduces a factual error while still reading naturally."
+  },
+  {
+   "id": "x1",
+   "kind": "cross",
+   "plan_id": 227,
+   "track": "math",
+   "block_index": 5,
+   "earlier_block": 2,
+   "planted": {
+    "original": "10 dots",
+    "wrong": "12 dots"
+   },
+   "why": "Block 2 defines a ten‑frame as holding exactly ten objects. Block 5's passage restates this by saying a full ten‑frame has \"10 dots\". Changing it to \"12 dots\" makes the later block contradict the earlier definition while still reading plausibly on its own."
+  },
+  {
+   "id": "x2",
+   "kind": "cross",
+   "plan_id": 1,
+   "track": "english",
+   "block_index": 5,
+   "earlier_block": 2,
+   "planted": {
+    "original": "two subject-verb pairs with nothing (or only a comma) between them",
+    "wrong": "two subject-verb pairs with a period between them"
+   },
+   "why": "Block 2 defines a run‑on (fused) as two independent clauses with no punctuation, and a comma splice as only a comma between them. Block 5’s step 1 restates this by saying the clue is “two subject‑verb pairs with nothing (or only a comma) between them.” Changing “nothing (or only a comma)” to “a peri"
+  },
+  {
+   "id": "x3",
+   "kind": "cross",
+   "plan_id": 130,
+   "track": "spanish",
+   "block_index": 7,
+   "earlier_block": 4,
+   "planted": {
+    "original": "Spanish has no subject pronoun for \\\"it\\\"",
+    "wrong": "Spanish has a subject pronoun for \\\"it\\\""
+   },
+   "why": "Block 4 states there is no subject pronoun for \"it\". Block 7 restates this in its takeaway. Changing \"no\" to \"a\" makes the later block contradict the earlier rule while still reading plausibly."
+  },
+  {
+   "id": "x4",
+   "kind": "cross",
+   "plan_id": 110,
+   "track": "spanish",
+   "block_index": 8,
+   "earlier_block": 0,
+   "planted": {
+    "original": "20 countries",
+    "wrong": "21 countries"
+   },
+   "why": "Block 8 restates the fact from Block 0 that Spanish is an official language in 20 countries. Changing \"20 countries\" to \"21 countries\" creates a direct numeric contradiction while still reading naturally."
+  },
+  {
+   "id": "x5",
+   "kind": "cross",
+   "plan_id": 216,
+   "track": "math",
+   "block_index": 5,
+   "earlier_block": 1,
+   "planted": {
+    "original": "the two central questions take over",
+    "wrong": "the three central questions take over"
+   },
+   "why": "Block 1 states that calculus answers two questions. Block 5’s footnote restates this as “the two central questions”. Changing “two” to “three” makes the later block claim there are three central questions, directly contradicting the earlier definition."
+  },
+  {
+   "id": "x6",
+   "kind": "cross",
+   "plan_id": 2,
+   "track": "english",
+   "block_index": 9,
+   "earlier_block": 6,
+   "planted": {
+    "original": "Two equal ideas in the same grammatical shape",
+    "wrong": "Two unequal ideas in different grammatical shapes"
+   },
+   "why": "Block 9's cheat‑sheet restates Block 6's definition of a balanced sentence (\"Two equal ideas are written in the same grammatical shape, so the halves mirror each other\"). Changing \"equal … same\" to \"unequal … different\" makes the later block contradict the earlier definition while still reading plau"
+  },
+  {
+   "id": "x7",
+   "kind": "cross",
+   "plan_id": 217,
+   "track": "math",
+   "block_index": 9,
+   "earlier_block": 1,
+   "planted": {
+    "original": "For t = 1 with d = 12 and t = 3 with d = 33: (33 - 12) / (3 - 1) = 10.5 miles per hour.",
+    "wrong": "For t = 1 with d = 12 and t = 3 with d = 33: (33 - 12) / (3 - 1) = 10.0 miles per hour."
+   },
+   "why": "Changed the computed average rate from 10.5 to 10.0 to create a statement that contradicts the earlier block's correct value."
+  },
+  {
+   "id": "x8",
+   "kind": "cross",
+   "plan_id": 111,
+   "track": "spanish",
+   "block_index": 7,
+   "earlier_block": 3,
+   "planted": {
+    "original": "look past st- to est-",
+    "wrong": "look past st- to st-"
+   },
+   "why": "The earlier Block 3 defines the pattern st- → est-, but this statement changes est- to st-, contradicting that rule."
+  },
+  {
+   "id": "x9",
+   "kind": "cross",
+   "plan_id": 112,
+   "track": "spanish",
+   "block_index": 3,
+   "earlier_block": 0,
+   "planted": {
+    "original": "The -o means \\\"I\\\"; no yo is needed.",
+    "wrong": "The -o means \\\"we\\\"; no yo is needed."
+   },
+   "why": "To test the fact checker by subtly changing the meaning of the -o ending from \\\"I\\\" to \\\"we\\\", which disagrees with Block 0’s rule that the -o means \\\"I\\\"."
+  },
+  {
+   "id": "x10",
+   "kind": "cross",
+   "plan_id": 132,
+   "track": "spanish",
+   "block_index": 6,
+   "earlier_block": 2,
+   "planted": {
+    "original": "ustedes takes son",
+    "wrong": "ustedes takes somos"
+   },
+   "why": "Block 2 states that ustedes takes the form \"son\". Changing Block 6's takeaway to say \"ustedes takes somos\" directly contradicts that rule."
+  },
+  {
+   "id": "x11",
+   "kind": "cross",
+   "plan_id": 218,
+   "track": "math",
+   "block_index": 8,
+   "earlier_block": 1,
+   "planted": {
+    "original": "the average over [1, 3] is 4 m/s",
+    "wrong": "the average over [1, 3] is 5 m/s"
+   },
+   "why": "Block 8's feedback restates the average velocity over [1,3] from Block 1 (4 m/s). Changing it to 5 m/s makes the later block contradict the earlier correct value while still reading plausibly on its own."
+  },
+  {
+   "id": "x12",
+   "kind": "cross",
+   "plan_id": 123,
+   "track": "spanish",
+   "block_index": 7,
+   "earlier_block": 0,
+   "planted": {
+    "original": "me gustaría is polite",
+    "wrong": "me gustaría is direct"
+   },
+   "why": "Block 7's takeaway restates Block 0's definition of \"me gustaría\" as polite; changing \"polite\" to \"direct\" makes the later block contradict the earlier definition while still reading plausibly on its own."
+  },
+  {
+   "id": "x13",
+   "kind": "cross",
+   "plan_id": 4,
+   "track": "english",
+   "block_index": 8,
+   "earlier_block": 5,
+   "planted": {
+    "original": "was scored",
+    "wrong": "was missed"
+   },
+   "why": "Block 5 states the winning goal \"was scored\" as an intentional passive construction. In Block 8 the correct answer option for the first blank is \"was scored\", directly echoing that phrase. Changing the option to \"was missed\" makes the later block contradict the earlier block's factual claim while st"
+  },
+  {
+   "id": "x14",
+   "kind": "cross",
+   "plan_id": 124,
+   "track": "spanish",
+   "block_index": 7,
+   "earlier_block": 0,
+   "planted": {
+    "original": "Voy a, vas a or vamos a",
+    "wrong": "Voy al, vas a or vamos a"
+   },
+   "why": "Block 0 defines the plan chunk as \"voy a\" (and \"vamos a\") plus a base verb. Block 7's takeaway restates this rule; changing \"Voy a\" to \"Voy al\" makes the takeaway claim an incorrect plan form, contradicting the earlier definition while still reading plausibly."
+  },
+  {
+   "id": "x15",
+   "kind": "cross",
+   "plan_id": 219,
+   "track": "math",
+   "block_index": 4,
+   "earlier_block": 0,
+   "planted": {
+    "original": "how much has accumulated",
+    "wrong": "how much has decreased"
+   },
+   "why": "Block 0 defines the two central questions of calculus as \"how fast ... changing right now\" and \"how much has accumulated\". Block 4's rule restates this definition, but the altered phrase changes the accumulation question to a decrease question, contradicting the earlier block while still reading pla"
+  },
+  {
+   "id": "x16",
+   "kind": "cross",
+   "plan_id": 113,
+   "track": "spanish",
+   "block_index": 2,
+   "earlier_block": 0,
+   "planted": {
+    "original": "When you count, say uno",
+    "wrong": "When you count, say dos"
+   },
+   "why": "Block 0 lists \"uno\" as the Spanish word for 1. Block 2's grammar note restates this by saying \"When you count, say uno\". Changing \"uno\" to \"dos\" makes the later block contradict the earlier correct vocabulary while still reading plausibly."
+  },
+  {
+   "id": "x17",
+   "kind": "cross",
+   "plan_id": 134,
+   "track": "spanish",
+   "block_index": 6,
+   "earlier_block": 0,
+   "planted": {
+    "original": "Greek -ma words are masculine",
+    "wrong": "Greek -ma words are feminine"
+   },
+   "why": "Block 0 states that Greek -ma words are masculine; the altered takeaway in Block 6 now claims they are feminine, creating a direct contradiction."
+  },
+  {
+   "id": "x18",
+   "kind": "cross",
+   "plan_id": 133,
+   "track": "spanish",
+   "block_index": 6,
+   "earlier_block": 0,
+   "planted": {
+    "original": "Most -o nouns are masculine (el libro)",
+    "wrong": "Most -o nouns are feminine (el libro)"
+   },
+   "why": "Block 0 states that most nouns ending in -o are masculine (e.g., el libro). Block 6 restates this as \"Most -o nouns are masculine (el libro)\". Changing \"masculine\" to \"feminine\" makes the later block contradict the earlier rule while still reading plausibly."
+  },
+  {
+   "id": "x19",
+   "kind": "cross",
+   "plan_id": 125,
+   "track": "spanish",
+   "block_index": 6,
+   "earlier_block": 2,
+   "planted": {
+    "original": "Without la, mañana is tomorrow",
+    "wrong": "Without la, mañana is yesterday"
+   },
+   "why": "Block2 defines 'mañana' as tomorrow; Block6's correctReasoning restates that rule. Changing 'tomorrow' to 'yesterday' makes the later block contradict the earlier definition."
+  },
+  {
+   "id": "x20",
+   "kind": "cross",
+   "plan_id": 5,
+   "track": "english",
+   "block_index": 8,
+   "earlier_block": 2,
+   "planted": {
+    "original": "Subject + finite verb + complete thought",
+    "wrong": "Subject + finite verb + incomplete thought"
+   },
+   "why": "The cheat‑sheet row restates the definition of a complete sentence from the Model Summary. Changing \"complete thought\" to \"incomplete thought\" makes the later block contradict the earlier definition."
+  },
+  {
+   "id": "x21",
+   "kind": "cross",
+   "plan_id": 220,
+   "track": "math",
+   "block_index": 3,
+   "earlier_block": 2,
+   "planted": {
+    "original": "16 m. Totaling",
+    "wrong": "12 m. Totaling"
+   },
+   "why": "Block 2 computes a change in position of 16 m (19 m − 3 m). Block 3’s revealNote repeats that numeric result (“16 m”) when describing the distance traveled. Changing it to “12 m” makes the later block disagree with the earlier worked example while still reading plausibly."
+  },
+  {
+   "id": "x22",
+   "kind": "cross",
+   "plan_id": 115,
+   "track": "spanish",
+   "block_index": 5,
+   "earlier_block": 0,
+   "planted": {
+    "original": "Son doce dólares.",
+    "wrong": "Son quince dólares."
+   },
+   "why": "Block 0 defines \"doce\" as 12. Block 5's question says the cashier says \"Son doce dólares.\" Changing it to \"Son quince dólares.\" makes the later block claim the cashier said 15 dollars, contradicting the earlier definition that doce = 12."
+  },
+  {
+   "id": "x23",
+   "kind": "cross",
+   "plan_id": 135,
+   "track": "spanish",
+   "block_index": 5,
+   "earlier_block": 0,
+   "planted": {
+    "original": "Spanish spelling normally changes z to c before e",
+    "wrong": "Spanish spelling normally changes z to s before e"
+   },
+   "why": "Block 5 restates the rule from Block 0 that Spanish changes z to c before e when forming plurals; the alteration changes c to s, contradicting the earlier rule."
+  }
+ ]
+}

@@ -367,7 +367,7 @@ function effortHint(effort) {
 function chainArgs(req, kind, ctx, extra = {}) {
   const base = kind === 'chat'
     ? { role: req.role, task: req.task, system: req.system, messages: req.messages, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, ...(req.temperature != null ? { temperature: req.temperature } : {}) }
-    : { role: req.role, task: req.task, system: req.system, user: req.user, schema: req.schema, schemaName: req.schemaName, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, think: req.think };
+    : { role: req.role, task: req.task, system: req.system, user: req.user, schema: req.schema, schemaName: req.schemaName, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, think: req.think, ...(req.onText ? { onText: req.onText } : {}), ...(req.temperature != null ? { temperature: req.temperature } : {}) };
   return { ...base, timeoutMs: ctx.timeoutMs, signal: ctx.signal, ...extra };
 }
 
@@ -684,6 +684,9 @@ function timeoutFor(slot, req, opts) {
   const t = taskConfig(req.task);
   const ms = opts.timeoutMs || req.timeoutMs || slot.timeoutMs || t.timeout_ms || DEFAULT_TIMEOUT_MS();
   const cap = Math.min(ms, Number(process.env.POOL_MAX_TIMEOUT_MS || 600000));
+  // COLD_FIRST_BLOCK: a part's fact read, a prewrite's too (a learner may land on it any second, and a call started while speculative kept no deadline: 115 s on a slow slot, 6 Nov): past this the next slot takes it.
+  const stNow = lane.getStore();
+  if (String(process.env.COLD_FIRST_BLOCK || '').toLowerCase() === 'on' && req.task === 'fact_verify' && req.coral === true && stNow && stNow.fast && stNow.background === false) return Math.min(cap, Number(process.env.COLD_READ_DEADLINE_MS || 45000));
   return isWaitingStore(lane.getStore()) && req.coral === true && opts.noDeadline !== true ? Math.min(cap, waitingDeadlineMs()) : cap;
 }
 
@@ -863,7 +866,9 @@ async function callHedged(req, opts = {}) {
           // A preferred paid slot (the tutor's Standard Compute) starts first, as the primary, not as a last resort.
           // A hedge onto a paid slot is for speed, so never from background work. A foreground call that has waited fgHedgeMs with every free slot busy takes the paid slot as its primary.
           const fgLate = !isBg() && now() - t0 >= fgHedgeMs();
-          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && !(req.task === 'fact_live' && !isBg()) && (anyFreeRunning() || untriedFree())) continue; /* a waiting learner's check starts on the paid readers it lists first: it has seconds */ // last resort: only when every free one has failed
+          // COLD_FIRST_BLOCK: the fast lane's paid order (candidatesFor) holds, instead of every free slot being tried first: a free NVIDIA call in front cost a waiting learner 2 to 64 s.
+          const coldPaidFirst = String(process.env.COLD_FIRST_BLOCK || '').toLowerCase() === 'on' && !!(laneNow && laneNow.fast && laneNow.background === false && req.coral === true);
+          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && !coldPaidFirst && !(req.task === 'fact_live' && !isBg()) && (anyFreeRunning() || untriedFree())) continue; /* a waiting learner's check starts on the paid readers it lists first: it has seconds */ // last resort: only when every free one has failed
           if (!budgetOk(s, req, opts, spent)) continue;
         }
         const b = blocked(s, req, isBg(), isSpec());
@@ -904,7 +909,7 @@ async function callHedged(req, opts = {}) {
       const rq = slot.dataClass === 'pipeline' && req.pipelineVariant ? { ...req, ...req.pipelineVariant } : req;
       const est = slot.paid ? (slot.estimateUsd ? slot.estimateUsd(rq) : 0) : 0;
       spent.reserved += est;
-      attempt(slot, rq, { validate, timeoutMs: Math.min(timeout(slot), Math.max(1000, totalMs - (now() - t0))), signal: ctrl.signal, deadline: waitingCall && timeout(slot) <= waitingDeadlineMs() }).then((o) => {
+      attempt(slot, rq, { validate, timeoutMs: Math.min(timeout(slot), Math.max(1000, totalMs - (now() - t0))), signal: ctrl.signal, deadline: (waitingCall || (req.task === 'fact_verify' && isSpec())) && timeout(slot) <= waitingDeadlineMs() }).then((o) => {
         running.delete(no);
         spent.reserved -= est;
         spent.usd += o.usd || 0;

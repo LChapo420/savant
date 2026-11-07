@@ -52,6 +52,7 @@ const chessChecks = require('./chess-checks');
 const pianoChecks = require('./piano-checks');
 const basketballChecks = require('./basketball-checks');
 const factReader = require('./fact-check-anthropic');
+const firstBlock = require('./first-block');
 const grading = require('./grading');
 
 const ROOT = path.join(__dirname, '..');
@@ -1685,12 +1686,22 @@ function factParts({ blocks, checks }) {
   return parts;
 }
 
+/**
+ * A part's read with what the learner has already read given as context (services/first-block.js): the same request, the earlier blocks named as context only.
+ * A later block can use a value or result stated earlier, which a read of that block alone cannot judge (docs/FIRST-LESSON.md, cold write).
+ */
+function partContextPrompt(user, earlierBlocks) {
+  if (!earlierBlocks || !earlierBlocks.length) return user;
+  const before = earlierBlocks.map((b) => `EARLIER BLOCK ${b.index} ${b.block}: ${JSON.stringify(b.data)}`).join('\n');
+  return `${user}\n\nCONTEXT ONLY, already checked, what the learner has read before this part. Do not list claims from it, and flag a claim above as false if it disagrees with this:\n${before}`;
+}
+
 /** The verification request (system, user, schema), for the verifier and for measuring others. */
 function verifyRequest({ context, blocks, checks, factSheet = null }) {
   return { system: VERIFY_SYSTEM + (FACT_NOTES[context.trackId] || ''), user: verifyPrompt({ context, blocks, checks, factSheet }), schema: VERIFY_SCHEMA };
 }
 
-async function verifyLevel({ context, blocks, checks, factSheet = null, userId = null, where = null, reader = null, excludeFamilies = null }) {
+async function verifyLevel({ context, blocks, checks, factSheet = null, userId = null, where = null, reader = null, excludeFamilies = null, earlier = null, hedgeAfterMs = null }) {
   // The measured gate (services/fact-gate.js, FACT_GATE=on, off by default): a shared level only; a learner's own level keeps this read, so nobody waits on it.
   if (require('./fact-gate').appliesTo({ userId })) { // eslint-disable-line global-require
     const g = await require('./fact-gate').read({ context, blocks, checks, excludeFamilies, gradeId: where && where.gradeId }); // eslint-disable-line global-require
@@ -1704,7 +1715,7 @@ async function verifyLevel({ context, blocks, checks, factSheet = null, userId =
     return require('./fact-cascade').cascadeVerify({ context, blocks, checks, factSheet, ...where });
   }
   const { system, user: plain } = verifyRequest({ context, blocks, checks, factSheet });
-  let user = plain;
+  let user = earlier ? partContextPrompt(plain, earlier) : plain;
   // Thorough mode: the free checks run first, and Sonnet rules on what they flagged
   // as well as reading every claim itself (services/fact-cascade.js hintFlags).
   let hints = null;
@@ -1806,6 +1817,7 @@ This time list and verify ONLY the claims in ${part} (use the rest of the level 
   const reply = await ai.structuredDetail({
     role: 'blocks', task: 'fact_verify', system, user, schema: VERIFY_SCHEMA, schemaName: 'submit_verification', maxTokens: 16000, userId, dataClass: poolClass(userId), lane: process.env.BLOCK_LANE || 'background',
     excludeFamilies: excludeFamilies && excludeFamilies.length ? excludeFamilies : undefined,
+    ...(hedgeAfterMs ? { hedgeAfterMs } : {}),
   });
   if (!reply || !reply.data) return null;
   return { ...readVerification(reply.data), usage: reply.usage, cost: null, sources: [], searches: 0, model: reply.model || null };
@@ -1823,7 +1835,7 @@ This time list and verify ONLY the claims in ${part} (use the rest of the level 
  * Round 0 reads the whole level; each later round reads only what was repaired.
  * Two repair rounds at most; what is still flagged after them is dropped.
  */
-async function verifyAndRepair({ context, blocks, items, specs, validateBlock, owner = null, factSheet = null, coverage = [], where = null, excludeFamilies = null }) {
+async function verifyAndRepair({ context, blocks, items, specs, validateBlock, owner = null, factSheet = null, coverage = [], where = null, excludeFamilies = null, earlier = null, hedgeAfterMs = null }) {
   // Two repairs by GLM (at high effort: a careless repair brings new errors), then,
   // with the owner's key, a third by Claude for what GLM could not fix. Taking a
   // part out is the last resort: measured on 2026-10-21, a basketball level lost
@@ -1864,7 +1876,7 @@ async function verifyAndRepair({ context, blocks, items, specs, validateBlock, o
       if (!toRead.blocks.length && !toRead.checks.length) break;
       // eslint-disable-next-line no-await-in-loop
       // The slow local checkers run on the first full read only; later reads have Sonnet and the cheap reads.
-      const ask = (who) => verifyLevel({ context, blocks: toRead.blocks, checks: toRead.checks, factSheet, userId: owner, where: where && { ...where, localChecks: round === 0 }, reader: who, excludeFamilies })
+      const ask = (who) => verifyLevel({ context, blocks: toRead.blocks, checks: toRead.checks, factSheet, userId: owner, where: where && { ...where, localChecks: round === 0 }, reader: who, excludeFamilies, earlier, hedgeAfterMs })
         .catch((err) => { console.warn(`facts: verification failed (${err.message})`); return null; });
       // eslint-disable-next-line no-await-in-loop
       let v = await ask(reader);
@@ -2239,6 +2251,15 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
   if (tailored && arm === 'holdout') return ensureShared({ trackId, gradeId, level });
   const owner = tailored ? userId : null;
 
+  // A prewrite's first part is waiting for this learner: go on from it (services/first-block.js).
+  if (firstBlock.on() && !retailorOf) {
+    const head = firstBlock.takeParked(planKey(owner, trackId, gradeId, level));
+    if (head) { head.st.stopped = false; head.st.resumed = true; return writeInParts(head); }
+    // An earlier part-by-part write that failed may have been answered on; its row is history, not written into again.
+    const prior = anyRow({ userId: owner, trackId, gradeId, level });
+    if (prior && prior.partial) db.update(COLLECTION, prior.id, { status: 'superseded' });
+  }
+
   const context = levelContext(trackId, gradeId, level);
   const catalog = catalogFor(kind, trackId);
   const formats = checkFormats(trackId);
@@ -2314,6 +2335,11 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
     // eslint-disable-next-line global-require
     factSheet = (await require('./offline-pool').offlineFirst({ context, coverage: layout.coverage || [], maxFacts: 25, research: researchFacts }))
       || await researchFacts({ context, coverage: layout.coverage || [] });
+  }
+
+  // Part by part for a learner waiting, or a prewrite (COLD_FIRST_BLOCK): the first block is shown as soon as its own check passes.
+  if (firstBlock.on() && kind === 'lesson' && !retailorOf && partsLane()) {
+    return writeInParts({ owner, trackId, gradeId, level, kind, tailored, arm, experiment, context, learner, learnerFill, adapt, layout, layoutReply, factSheet, settle, row, started, blockAdapt, ai });
   }
 
   // 2. fill
@@ -2548,6 +2574,376 @@ async function write({ userId, trackId, gradeId, level, tailored, retailorOf = n
   });
 }
 
+// ── a cold lesson, part by part (COLD_FIRST_BLOCK, services/first-block.js) ──
+/** A waiting learner or a prewrite's lane, on the free check (a Sonnet-tier write stays whole). */
+function partsLane() {
+  const st = require('./pool').laneStore(); // eslint-disable-line global-require
+  return !!(st && st.fast && st.background === false) && !keyReady();
+}
+const speculativeNow = () => { const st = require('./pool').laneStore(); return !!(st && st.speculative); }; // eslint-disable-line global-require
+const blockOk = (b) => !!b && !!b.data && !b.problems.length;
+
+/** One fill call, streamed where the slot can: blocks are taken as they complete. A call that derails ends early and what came is kept. */
+async function fillStream(x, st, { note = null, temperature = null, onBlock = null, stopAfterFirst = false } = {}) {
+  const { owner, context, learnerFill, layout, factSheet, trackId, ai, validate } = x;
+  const lib = library();
+  const readers = new Map();
+  const missing = st.blocks.filter((b) => !blockOk(b));
+  let info0 = '';
+  const take = (index, data) => {
+    const b = st.blocks.find((y) => y.index === index);
+    if (!b || blockOk(b) || !data || typeof data !== 'object') return;
+    const problems = validate(b.block, data);
+    if (problems.length) { b.problems = problems; b.data = schemaCheck.prune(lib[b.block].schema, data); return; }
+    b.data = schemaCheck.prune(lib[b.block].schema, data);
+    b.problems = [];
+    firstBlock.trace(planKey(owner, trackId, x.gradeId, x.level), `block ${index} written (${b.block}, ${String(info0).slice(0, 12)})`);
+    if (onBlock) onBlock(b);
+  };
+  const onText = (text, info = {}) => {
+    if (info.model && !st.fillModel) st.fillModel = info.model;
+    if (!info0) { info0 = String(info.model || ''); firstBlock.trace(planKey(owner, trackId, x.gradeId, x.level), `fill first text ${info0}`); }
+    const key = info.call || 'one';
+    if (!readers.has(key)) readers.set(key, { reader: firstBlock.blockReader(), seen: 0 });
+    const r = readers.get(key);
+    for (const raw of r.reader.feed(text)) {
+      const { index, data, explicit } = readEntry(raw, r.seen);
+      const at = explicit ? index : (missing[r.seen] && missing[r.seen].index);
+      r.seen += 1;
+      if (Number.isInteger(at)) take(at, data);
+    }
+    if (stopAfterFirst && blockOk(st.blocks[0])) { st.stopped = true; return 'stop'; }
+    const off = firstBlock.derailed(text, r.reader.current(text), r.reader.after(text));
+    if (off) { st.derails.push(off); firstBlock.trace(planKey(owner, trackId, x.gradeId, x.level), `derail: ${off} after ${text.length} chars`); return off; }
+    return null;
+  };
+  const args = {
+    role: 'blocks', task: 'block_fill', system: FILL_SYSTEM + subjectNote(trackId, 'fill'),
+    user: `${fillPrompt({ context, learner: learnerFill, layout, factSheet })}${note ? `\n\n${note}` : ''}`,
+    schema: fillSchema(), schemaName: 'submit_block_content', maxTokens: Number(process.env.BLOCK_FILL_MAX_TOKENS || 32000),
+    userId: owner, dataClass: poolClass(owner), lane: process.env.BLOCK_LANE || 'background',
+    hedgeAfterMs: Number(process.env.COLD_FILL_HEDGE_MS || 25000), timeoutMs: Number(process.env.COLD_FILL_TIMEOUT_MS || 45000), onText, ...(temperature != null ? { temperature } : {}),
+  };
+  const fillT0 = Date.now();
+  const reply = await ai.structuredDetail(args).catch((err) => { console.warn(`blocks: a streamed fill failed (${String(err.message || err).slice(0, 120)})`); return null; });
+  firstBlock.trace(planKey(owner, trackId, x.gradeId, x.level), `fill ended after ${Math.round((Date.now() - fillT0) / 100) / 10}s: ${reply ? reply.model : 'no reply'}${reply && reply.stopped ? ' (stopped)' : ''}, out ${reply && reply.usage ? reply.usage.output_tokens : '?'}, checks ${reply && reply.data ? readList(reply.data.checks).length : '?'}`);
+  if (reply && reply.usage) st.usages.push(reply.usage);
+  if (reply && reply.model && !st.fillModel) st.fillModel = reply.model;
+  if (reply && reply.data && !reply.stopped) {
+    const entries = readList(reply.data.blocks).map((raw, position) => readEntry(raw, position));
+    const shift = oneBased(entries.map((e) => e.index), layout.blocks.length) ? 1 : 0;
+    entries.forEach((e, position) => {
+      const at = e.explicit ? e.index - shift : (missing[position] && missing[position].index);
+      if (Number.isInteger(at)) take(at, e.data);
+    });
+    const list = readList(reply.data.checks);
+    if (list.length && !st.rawChecks) st.rawChecks = list;
+  }
+  return reply;
+}
+
+const remainderNote = (blocks, needChecks) => {
+  const have = blocks.filter(blockOk);
+  const missing = blocks.filter((b) => !blockOk(b)).map((b) => b.index);
+  return [
+    have.length ? `ALREADY WRITTEN AND FIXED, the learner reads these first; do not write them again, continue from them:\n${have.map((b) => `BLOCK ${b.index}: ${JSON.stringify(b.data)}`).join('\n')}\n` : '',
+    `Write only ${missing.length ? `blocks ${missing.join(', ')} (by those BLOCK numbers)` : 'no blocks'}${needChecks ? ' and every check' : ''} now.`,
+  ].join('\n');
+};
+
+/**
+ * Write and check a cold lesson part by part, showing each part only once its own check has finished (services/first-block.js has the why). The checks are the level's own:
+ * verifyAndRepair (fact read, repairs, re-read) and the key gate and blind re-solve, on each part, with what the learner has read before it as context. A prewrite stops after its first part and parks.
+ */
+async function writeInParts(x) {
+  const { owner, trackId, gradeId, level, kind, tailored, arm, experiment, context, learner, learnerFill, adapt, layout, layoutReply, factSheet, settle, row, started, blockAdapt, ai } = x;
+  const key = planKey(owner, trackId, gradeId, level);
+  const where = { trackId, gradeId, level };
+  const lib = library();
+  const validate = (block, data) => schemaCheck.validate(lib[block].schema, data).concat(
+    chessChecks.blockProblems(block, data), pianoChecks.blockProblems(block, data, { gradeId, topic: context.topic }),
+    trackId === 'basketball' ? basketballChecks.blockProblems(block, data) : [],
+  );
+  const y = { ...x, validate };
+  const st = x.st || {
+    blocks: layout.blocks.map((b, i) => ({ ...b, index: i, data: null, problems: ['no data written'] })), rawChecks: null, items: null, repairedChecks: new Set(), brokenChecks: [],
+    fillModel: null, usages: [], derails: [], parts: [], next: 0, version: 0, locked: new Set(), first_part_s: null, stopped: false,
+  };
+  const families = () => writerFamilies(st.fillModel, layoutReply && layoutReply.model);
+  const checkRow = (spec, i) => {
+    const item = st.items && st.items[i];
+    return item ? { ...item, id: `c${i + 1}`, after: Math.max(0, Number(spec.after) || 0), focus: spec.focus, ...(st.repairedChecks.has(i) ? { repaired: true } : {}) } : null;
+  };
+
+  const publish = () => {
+    let moved = false;
+    while (st.next < st.parts.length && st.parts[st.next].result && st.parts[st.next].result.passed) { st.next += 1; moved = true; }
+    if (!moved) return;
+    const shown = st.parts.slice(0, st.next);
+    const blocks = shown.flatMap((p) => p.blocks).map((i) => st.blocks[i]).filter(blockOk).map((b) => ({ block: b.block, purpose: b.purpose, data: b.data, repaired: !!b.repaired, index: b.index }));
+    const checks = shown.flatMap((p) => p.checks).map((i) => checkRow(layout.checks[i], i)).filter(Boolean);
+    if (!blocks.length) return; // nothing to read yet: a check is not opened on before the first block
+    st.version += 1;
+    if (st.first_part_s === null) st.first_part_s = Math.round((Date.now() - started) / 100) / 10;
+    firstBlock.trace(key, `published ${blocks.length} blocks ${checks.length} checks`);
+    settle({ partial: { blocks, checks, version: st.version, total_blocks: layout.blocks.length, total_checks: layout.checks.length, at: new Date().toISOString() } });
+    firstBlock.notifyPublished(key);
+    firstBlock.setStage(key, 'reading', { shown: blocks.length, total: layout.blocks.length });
+  };
+
+  const readPart = async (part, { first = false } = {}) => {
+    const partBlocks = part.blocks.map((i) => st.blocks[i]).filter(blockOk);
+    const partItems = (st.items || []).map((it, i) => (part.checks.includes(i) ? it : null));
+    const upto = part.blocks.length ? part.blocks[0] : part.after + 1;
+    const earlier = st.blocks.filter((b) => blockOk(b) && b.index < upto).map((b) => ({ index: b.index, block: b.block, data: b.data }));
+    if (!partBlocks.length && !partItems.some(Boolean)) { part.result = { passed: true }; return; }
+    let result = null;
+    // A learner is reading this page: every try stays in their lane, on the paid readers. No free model reads a part they will see next, and no reader in time means the part is not shown.
+    for (let a = 0; a < 4; a++) {
+      const read = () => verifyAndRepair({
+        context, blocks: partBlocks, items: partItems, specs: layout.checks, validateBlock: validate, owner, factSheet, coverage: layout.coverage || [], where, excludeFamilies: families(), earlier,
+        hedgeAfterMs: first ? Number(process.env.COLD_FIRST_HEDGE_MS || 6000) : null,
+      });
+      // eslint-disable-next-line no-await-in-loop
+      result = await read();
+      firstBlock.trace(key, `part ${part.blocks}/${part.checks} read: ${result.verification.status} by ${result.verification.model}, ${result.verification.rounds} rounds, fixed ${result.verification.blocks_fixed}, dropped ${result.verification.blocks_dropped}`);
+      if (result.verification.status === 'verified') break;
+    }
+    for (const i of part.checks) st.items[i] = partItems[i];
+    if (result.usage) st.usages.push(result.usage);
+    for (const [index, reason] of result.dropReasons) st.brokenChecks.push({ index, spec: layout.checks[index], raw: null, reason });
+    for (const i of result.verification.checks_fixed) st.repairedChecks.add(i);
+    // eslint-disable-next-line global-require
+    const keyGate = require('./key-gate');
+    const mc = part.checks.map((i) => ({ it: st.items[i], i })).filter((c) => c.it && c.it.format === 'multiple_choice' && Array.isArray(c.it.choices));
+    if (mc.length) {
+      const rejected = await keyGate.rejectedByKeyGate(mc.map((c) => ({ prompt: c.it.prompt, choices: c.it.choices, answer: c.it.answer, rationale: c.it.rationale })), { excludeFamilies: families() });
+      for (const r of rejected) { const i = mc[r.index].i; st.items[i] = null; partItems[i] = null; st.brokenChecks.push({ index: i, spec: layout.checks[i], raw: null, reason: `key gate: ${r.reason}` }); }
+    }
+    let self = null;
+    if (selfCheckRun() && partItems.some(Boolean)) {
+      self = await selfCheck({ items: partItems, verification: result.verification, excludeFamilies: families() });
+      for (const d of self.dropped) { st.items[d.index] = null; st.brokenChecks.push({ index: d.index, spec: layout.checks[d.index], raw: null, reason: d.why }); }
+    }
+    part.result = { passed: result.verification.status === 'verified' && !(self && self.mc_unjudged), verification: result.verification, self };
+  };
+
+  // 1. The fill. The first block goes to its check the moment it has been written; a prewrite stops the stream there.
+  firstBlock.setStage(key, 'writing', { total: layout.blocks.length });
+  const startFirst = (b) => {
+    if (st.p0 || b.index !== 0) return;
+    // The spec checks that can be judged on one block run before it goes out; the ones about the whole level run on the whole fill below.
+    if (adapt && adapt.active) {
+      // eslint-disable-next-line global-require
+      const seen = require('./learning-spec').checkFollowed(blockAdapt.textOf([{ index: 0, data: b.data }]).join(' '), adapt.spec, { keyFacts: [], minShare: 0 });
+      if (seen.problems.some((p) => firstBlock.BLOCKING_NOW.has(p.id))) return;
+    }
+    st.p0 = { blocks: [0], checks: [] };
+    st.parts.push(st.p0);
+    st.locked.add(0);
+    firstBlock.setStage(key, 'checking', { total: layout.blocks.length });
+    st.p0.promise = readPart(st.p0, { first: true }).catch((err) => { console.warn(`blocks: first part read failed (${err.message})`); st.p0.result = { passed: false }; }).then(publish);
+  };
+  const needFill = () => st.blocks.some((b) => !blockOk(b)) || !st.rawChecks;
+  const parkHead = () => firstBlock.park(key, { ...x, st }, () => { settle({ status: 'failed', reason: 'a prewritten first part nobody came to', partial: null, finished_at: new Date().toISOString() }); });
+  for (let a = 0; a < 3 && needFill() && !st.stopped; a++) {
+    const anyOk = st.blocks.some(blockOk);
+    // eslint-disable-next-line no-await-in-loop
+    const filled = await fillStream(y, st, {
+      note: anyOk ? remainderNote(st.blocks, !st.rawChecks) : null,
+      temperature: a === 0 ? null : a === 1 ? 0.4 : 0.8,
+      onBlock: startFirst,
+      stopAfterFirst: speculativeNow() && !st.resumed,
+    });
+    if (st.stopped) break;
+    // A prewrite going on with a likely level, with no fast slot free: it waits parked for the learner, rather than holding a write open on a slow one.
+    if (!filled && st.resumed && speculativeNow() && st.p0 && st.p0.result && st.p0.result.passed) { parkHead(); return null; }
+  }
+  if (!st.blocks.some(blockOk) && !st.p0) {
+    settle({ status: 'failed', reason: 'the fill-out call returned nothing', finished_at: new Date().toISOString() });
+    firstBlock.clearStage(key);
+    return null;
+  }
+  // A head: the first part alone, until the learner lands here. Nothing more is spent on a guess that may be wrong.
+  if (st.p0 && st.p0.promise) await st.p0.promise;
+  if (st.stopped && speculativeNow() && st.p0 && st.p0.result && st.p0.result.passed) {
+    parkHead();
+    return null;
+  }
+  st.stopped = false;
+  for (let a = 0; a < 3 && needFill(); a++) {
+    // eslint-disable-next-line no-await-in-loop
+    await fillStream(y, st, { note: remainderNote(st.blocks, !st.rawChecks), temperature: a === 0 ? null : a === 1 ? 0.4 : 0.8, onBlock: startFirst });
+  }
+
+  // 2. The level as a whole against the learner's spec: rewrites anything not yet with its check. As write() does.
+  const composed = (list, raw) => ({ data: { blocks: list.filter(blockOk).map((b) => ({ index: b.index, data: b.data })), checks: raw || [] }, list, raw });
+  const fillRun = await blockAdapt.revise(adapt, {
+    generate: async (note) => {
+      if (!note) return composed(st.blocks, st.rawChecks);
+      firstBlock.trace(key, `spec revision: ${String(note).slice(0, 160)}`);
+      const list = st.blocks.map((b) => (st.locked.has(b.index) ? b : { ...b, data: null, problems: ['no data written'] }));
+      const tmp = { ...st, blocks: list, rawChecks: null };
+      await fillStream(y, tmp, { note: `${note}\n\n${remainderNote(list, true)}` });
+      return composed(list, tmp.rawChecks);
+    },
+    parts: (r) => ({
+      teach: blockAdapt.textOf(readList(r && r.data && r.data.blocks)),
+      checks: blockAdapt.textOf(readList(r && r.data && r.data.checks).map((c) => (c && typeof c === 'object' ? { prompt: c.prompt, rationale: c.rationale, hint: c.hint } : null))),
+    }),
+    keyFacts: layout.coverage || [],
+    topic: context.topic,
+  });
+  if (fillRun.result && fillRun.result.list) { st.blocks = fillRun.result.list; st.rawChecks = fillRun.result.raw || st.rawChecks; }
+
+  // 3. What the fill left unusable is repaired as in write().
+  const broken = st.blocks.filter((b) => !blockOk(b));
+  const batches = [];
+  for (let at = 0; at < broken.length; at += 4) batches.push(broken.slice(at, at + 4));
+  const repaired = await Promise.all(batches.map((batch) => repairBlocks(batch, { userId: owner, context, coverage: layout.coverage || [] }).then((fixed) => ({ batch, fixed })).catch(() => ({ batch, fixed: null }))));
+  for (const { batch, fixed } of repaired) {
+    if (fixed && fixed.usage) st.usages.push(fixed.usage);
+    readList(fixed && fixed.data && fixed.data.blocks).forEach((raw, position) => {
+      const { index, data } = readEntry(raw, batch[position] ? batch[position].index : position);
+      const b = st.blocks.find((z) => z.index === index && !blockOk(z));
+      if (b && data && !validate(b.block, data).length) { b.data = schemaCheck.prune(lib[b.block].schema, data); b.problems = []; b.repaired = true; }
+    });
+  }
+  let checkList = readList(st.rawChecks);
+  if (!checkList.length && layout.checks.length) {
+    const only = await writeChecksOnly({ context, learner: learnerFill, layout, userId: owner });
+    if (only && only.usage) st.usages.push(only.usage);
+    checkList = readList(only && only.data && only.data.checks);
+  }
+  const checkIndexes = checkList.map((c, position) => { const i = c ? readIndex(c.index) : null; return i === null ? position : i; });
+  const checkShift = oneBased(checkIndexes, layout.checks.length) ? 1 : 0;
+  const checkByIndex = new Map();
+  checkList.forEach((c, position) => { const index = checkIndexes[position] - checkShift; if (c && !checkByIndex.has(index)) checkByIndex.set(index, c); });
+  st.items = layout.checks.map((spec, i) => cleanCheck(checkByIndex.get(i), spec, context.difficulty));
+  const brokenChecks = layout.checks.map((spec, i) => ({ index: i, spec, raw: checkByIndex.get(i) })).filter((c) => !st.items[c.index]);
+  if (brokenChecks.length) {
+    const fixed = await repairChecks(brokenChecks, { userId: owner, context, coverage: layout.coverage || [] }).catch(() => null);
+    if (fixed && fixed.usage) st.usages.push(fixed.usage);
+    readList(fixed && fixed.data && fixed.data.checks).forEach((raw, position) => {
+      const at = raw ? readIndex(raw.index) : null;
+      const target = brokenChecks.find((c) => c.index === at) || brokenChecks[position];
+      if (!target || st.items[target.index]) return;
+      const item = cleanCheck(raw, target.spec, context.difficulty);
+      if (item) { st.items[target.index] = item; st.repairedChecks.add(target.index); } else target.raw = raw;
+    });
+    st.brokenChecks.push(...brokenChecks);
+  }
+
+  // 4. The parts, in lesson order: a block and the checks that follow it. The rest are read with at most COLD_PART_READS at once and published in order as they pass.
+  const lastBlock = st.blocks.length - 1;
+  const checksFor = (i) => layout.checks.map((spec, j) => ({ j, after: Math.min(lastBlock, Math.max(0, Number(spec.after) || 0)) })).filter((c) => c.after === i && st.items[c.j]).map((c) => c.j);
+  for (let i = 0; i < st.blocks.length; i++) {
+    if (i === 0 && st.p0) {
+      if (checksFor(0).length) st.parts.push({ blocks: [], checks: checksFor(0), after: 0 });
+    } else st.parts.push({ blocks: blockOk(st.blocks[i]) ? [i] : [], checks: checksFor(i), after: i });
+  }
+  firstBlock.setStage(key, st.p0 ? 'reading' : 'checking', { total: layout.blocks.length });
+  const todo = st.parts.filter((p) => p !== st.p0 && !p.result);
+  let nextPart = 0;
+  await Promise.all(Array.from({ length: Math.min(firstBlock.partReads(), todo.length) }, async () => {
+    while (nextPart < todo.length) {
+      const part = todo[nextPart++];
+      // eslint-disable-next-line no-await-in-loop
+      await readPart(part, { first: !st.p0 && part.blocks[0] === 0 }).catch((err) => { console.warn(`blocks: a part read failed (${err.message})`); part.result = { passed: false }; });
+      publish();
+    }
+  }));
+  if (st.p0 && st.p0.promise) await st.p0.promise;
+  publish();
+
+  // 5. The level as the rest of the app knows it. A part no verifier could read fails the level: its row is not served as checked; the page offers the standard session.
+  const results = st.parts.map((p) => p.result).filter(Boolean);
+  const allRead = st.parts.every((p) => p.result && p.result.passed);
+  const verifs = results.map((r) => r.verification).filter(Boolean);
+  const sources = new Map();
+  for (const v of verifs) for (const s of v.sources || []) sources.set(s.url, s.title || '');
+  const verification = {
+    status: allRead && verifs.length ? 'verified' : 'unverified', method: 'parts', parts: st.parts.length, model: (verifs.find((v) => v.model) || {}).model || null,
+    rounds: verifs.reduce((n, v) => n + (v.rounds || 0), 0), searches: 0, cost: 0, checked_at: new Date().toISOString(), claims: verifs.flatMap((v) => v.claims || []),
+    sources: [...sources].map(([url, title]) => ({ url, title })).slice(0, 60), stages: [],
+    blocks_fixed: verifs.flatMap((v) => v.blocks_fixed), blocks_dropped: verifs.flatMap((v) => v.blocks_dropped), checks_fixed: verifs.flatMap((v) => v.checks_fixed), checks_dropped: verifs.flatMap((v) => v.checks_dropped),
+  };
+  const selves = results.map((r) => r.self).filter(Boolean);
+  const kept = st.blocks.filter(blockOk);
+  const checks = [];
+  const droppedChecks = [];
+  layout.checks.forEach((spec, i) => {
+    const c = checkRow(spec, i);
+    if (c) { checks.push(c); return; }
+    const last = [...st.brokenChecks].reverse().find((b) => b.index === i);
+    droppedChecks.push({ index: i, why: (last && last.reason) || whyRefused(last ? last.raw : null, spec) });
+  });
+  const selfRecord = selfCheckRun() ? {
+    status: verification.status === 'verified' && !selves.some((s) => s.mc_unjudged) && checks.length > 0 ? 'passed' : 'failed',
+    method: 'claim read on the app route, part by part + blind re-solve of every multiple-choice check',
+    claim_read: verification.status, mc_checked: selves.reduce((n, s) => n + s.mc_checked, 0), mc_agreed: selves.reduce((n, s) => n + s.mc_agreed, 0),
+    mc_dropped: selves.reduce((n, s) => n + s.mc_dropped, 0), mc_unjudged: selves.reduce((n, s) => n + s.mc_unjudged, 0), checked_at: new Date().toISOString(),
+  } : null;
+  const dropped = st.blocks.filter((b) => !blockOk(b)).map((b) => ({ block: b.block, problems: b.problems.slice(0, 4) }));
+  firstBlock.clearStage(key);
+  const teaches = kept.some((b) => lib[b.block].category === 'Foundational' || lib[b.block].family === 'retention');
+  if (!allRead || kept.length < 2 || !teaches || !checks.length || tooMuchRemoved(verification, st.blocks.length)) {
+    settle({
+      status: 'failed', reason: allRead ? `too little survived the checks (${kept.length} blocks, ${checks.length} checks)` : 'a part could not be read by any verifier',
+      dropped, dropped_checks: droppedChecks, verification, finished_at: new Date().toISOString(),
+    });
+    return null;
+  }
+  const answers = (db.byId(COLLECTION, row.id) || {}).answers || {};
+  return settle({
+    status: 'ready', kind, arm: tailored ? arm : 'shared', experiment: experiment || null, approach: layout.approach, coverage: layout.coverage || [], layout_fallback: !!layout.fallback,
+    blocks: kept.map((b) => ({ block: b.block, purpose: b.purpose, data: b.data, repaired: !!b.repaired, index: b.index })), checks, dropped, dropped_checks: droppedChecks,
+    verification, self_check: selfRecord, check_tier: checkTierNow(), fact_sheet: factSheet ? { facts: factSheet.facts, misconceptions: factSheet.misconceptions, sources: factSheet.sources, cost: factSheet.cost, model: factSheet.model, pool_key: factSheet.pool_key || null } : null,
+    model: st.fillModel || null, layout_model: layoutReply ? layoutReply.model : null, usage: usageSum(layoutReply && layoutReply.usage, ...st.usages), seconds: Math.round((Date.now() - started) / 1000),
+    brief_hash: tailored ? hash(learner) : null, spec_check: fillRun.checked ? { revised: fillRun.revised, before: fillRun.before, open: fillRun.problems } : null,
+    finished_at: new Date().toISOString(), answers, partial: null, parts_write: { first_part_s: st.first_part_s, parts: st.parts.length, derails: st.derails.length },
+  });
+}
+
+/** The published parts of a level still being written, as a plan the page and the check route can use. Null when nothing is live. */
+function partialFor({ userId, trackId, gradeId, level }) {
+  if (!firstBlock.on()) return null;
+  const row = anyRow({ userId, trackId, gradeId, level });
+  if (!row || row.status !== 'writing' || !row.partial || !(row.partial.blocks || []).length) return null;
+  const key = planKey(userId, trackId, gradeId, level);
+  if (!inFlight.has(key) && !firstBlock.isParked(key)) return null; // left by a server that stopped
+  return { ...row, blocks: row.partial.blocks, checks: row.partial.checks, partial_view: true };
+}
+
+/** The partial plan this learner reads: their own, or, for a learner in the holdout arm (whose write is the shared level, write() above), the shared one. */
+function partialServed(user, tailored, { trackId, gradeId, level }) {
+  const owner = tailored ? user.id : null;
+  const mine = partialFor({ userId: owner, trackId, gradeId, level });
+  if (mine || !tailored) return mine;
+  // eslint-disable-next-line global-require
+  const { arm } = require('./personalize').armFor(user.id, { trackId, gradeId, level });
+  return arm === 'holdout' ? partialFor({ userId: null, trackId, gradeId, level }) : null;
+}
+
+/** What the page polls while a lesson arrives part by part: the plan so far, its version, and whether it is whole. */
+function partsFor(user, trackId, gradeId, level) {
+  const tailored = tailorsFor(user);
+  const owner = tailored ? user.id : null;
+  const ready = findPlan({ userId: owner, trackId, gradeId, level }) || (tailored && require('./personalize').armFor(user.id, { trackId, gradeId, level }).arm === 'holdout' ? findPlan({ userId: null, trackId, gradeId, level }) : null); // eslint-disable-line global-require
+  if (ready) return { state: 'ready', plan: ready };
+  const partial = partialServed(user, tailored, { trackId, gradeId, level });
+  if (partial) return { state: 'writing', plan: partial, version: partial.partial.version, total_blocks: partial.partial.total_blocks, total_checks: partial.partial.total_checks };
+  return { state: 'failed', plan: null };
+}
+
+/** What the wait can truthfully show: the curriculum's own words for this level, and what the write is doing now. */
+function previewFor({ userId, trackId, gradeId, level }) {
+  const grade = curriculum.getGrade(trackId, gradeId);
+  const entry = LAYOUT.entryFor(grade, level) || {};
+  const context = levelContext(trackId, gradeId, level);
+  return { ...firstBlock.previewOf({ topic: context.topic, covers: entry.covers, skillNames: (context.skills || []).map((s) => curriculum.skillName(s)) }), stage: firstBlock.stageOf(planKey(userId, trackId, gradeId, level)) };
+}
+
 function hash(text) {
   return crypto.createHash('sha1').update(String(text)).digest('hex').slice(0, 16);
 }
@@ -2769,6 +3165,18 @@ async function forLevel({ user, trackId, gradeId, level }) {
     // Only what already exists: the level's base version, written ahead.
     return { plan: findPlan({ userId: null, trackId, gradeId, level }), writing: false };
   }
+  // Part by part (COLD_FIRST_BLOCK): the page opens as soon as the first part has passed its check, and the rest arrive below it. A learner opening a level is waiting: fast lane.
+  if (firstBlock.on()) {
+    const owner = tailored ? userId : null;
+    const lanes = require('./pool'); // eslint-disable-line global-require
+    const running = lanes.runForeground(() => ensure({ userId, trackId, gradeId, level, tailored, tier: 'open' }), { fast: true });
+    running.catch(() => {});
+    const got = partialServed(user, tailored, { trackId, gradeId, level }) || await Promise.race([running, firstBlock.firstPublished(planKey(owner, trackId, gradeId, level), Number(process.env.COLD_REQUEST_WAIT_MS || 700))]);
+    const partial = partialServed(user, tailored, { trackId, gradeId, level });
+    if (partial) return { plan: partial, writing: false, partial: true };
+    if (got && got.id) return { plan: got, writing: false };
+    if (got === false) return { plan: null, writing: true };
+  }
   // A tailored learner in the holdout, or one whose plan failed, reads the shared plan.
   // With the write-ahead on under the key, a level opened cold is written on the
   // free check, served once that passes, and then Sonnet-checked (tier 'open').
@@ -2937,6 +3345,7 @@ function rationaleFor(itemId, check) {
 function servedPlan(user, trackId, gradeId, level) {
   return openedOnShared(user, trackId, gradeId, level)
     || (tailorsFor(user) && findPlan({ userId: user.id, trackId, gradeId, level }))
+    || partialServed(user, tailorsFor(user), { trackId, gradeId, level })
     || findPlan({ userId: null, trackId, gradeId, level });
 }
 
@@ -3157,6 +3566,7 @@ module.exports = {
   defaultLayout,
   fillPrompt,
   write,
+  partialFor, partsFor, previewFor,
   ensure,
   ensureShared,
   isWriting,
@@ -3186,7 +3596,7 @@ module.exports = {
   cleanCheck,
   // Making a level factual.
   researchFacts,
-  verifyRequest, verifyLevel, factParts, factPartsOn, factPartStats, reuseStats,
+  verifyRequest, verifyLevel, factParts, factPartsOn, factPartStats, reuseStats, partContextPrompt,
   VERIFY_SCHEMA,
   verifyAndRepair,
   verifyStored,

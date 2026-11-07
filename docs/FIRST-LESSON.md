@@ -305,3 +305,49 @@ Seconds to a usable personal level (strong learners are placed on 465 after 10 a
 - after, 3 strong at once: 41.8, 166.9, 340.5: median 167, worst 340.5.
 - after, 6 at once (3 strong, weak, random, mid): strong 357.7, 40.8, 213.5; weak 278.8, random 139.0, mid 153.7: median 213.5, worst 357.7.
 No timeout, no failure (against 2 timeouts in 5). Slots (cost tracker of each server): Coral Fast fills 9 calls in 13 attempts (6 in 7 in the 3-run), against 4 to 6 attempts a fill before; one bad Coral reply kept in all of it. Cost: $0.075 (3 learners) and $0.159 (6) at list price, about $0.025 a learner. Still slow: some layouts still fell to Gonka or NVIDIA after a Coral 429 (the account's 5 in flight is shared with other work) at 106 to 234 s, and a fact read at 45 s hedged to grok. The gate (median under 15 s) is NOT met on this path: the personal level takes minutes; what removes the wait is the instant layer, which needs a base lesson at the landing level.
+
+
+## 7 Nov 2026: cold write, part by part (`COLD_FIRST_BLOCK=on`, default OFF)
+
+All AI-planted or simulated, not real-learner proof. Other agents on the machine and on the same provider keys throughout.
+
+**What it does.** The fill is streamed (Coral Fast); the first block goes to its own fact read the moment it is written, the page opens when that read passes, later parts appear below in order as each passes, with the earlier blocks as context. Each part goes through verifyAndRepair, key gate and blind re-solve; block_fill stays "downstream" of verifyLevel in the fact guard. A prewrite stops after the first part and parks (about a cent a guess, not five); a guess on top for 3 answers writes the rest. Nothing unchecked is shown (`scripts/first-block-test.js`). The wait shows the curriculum's topic and skills and the real stage, from no model.
+
+**Part read against whole level** (`scripts/part-read-eval.js`, `docs/cold-write/part-read-summary.json`; 36 planted, 24 cross-part planted (only visible against an earlier block), 24 clean; same-against-same in the reps):
+
+| route | planted /36 | cross /24 | false alarms /24 | p50 s |
+|---|---|---|---|---|
+| shipped route, whole level | 20 | 15 | 1 | 37 |
+| shipped route, part with context, hedge 6 s | 24 | 21 | 5 | 19 |
+| shipped route, part with context, hedge 20 s | 24 | 21 | 7 | 27 |
+| grok-4.3 whole, twice | 20, 22 | 16, 15 | 2, 1 | 14, 19 |
+| grok-4.3 part alone, twice | 21, 23 | 21, 19 | 9, 6 | 19, 8 |
+| grok-4.3 part with context | 25 | 22 | 8 | 12 |
+| ZeroGPU part alone, twice | 21, 27 | 21, 22 | 1, 2 | 20, 20 |
+| ZeroGPU part with context | 25 | 22 | 1 | 7 (p90 50) |
+| ZeroGPU whole | 8 (25 of 84 read) | 1 | 0 | 43 |
+
+Paired on the shipped route: parts caught 11 to 12 errors the whole read missed, the whole read caught 1 to 2 parts missed. What must be true: one read at a time per part (ZeroGPU fails past about 5 at once, which is why `FACT_VERIFY_PARTS` lost), earlier blocks given as context, a read that fails holds the part back. The cost is false alarms, 21 to 29% against 4%: each is a repair and a re-read, so the later parts are slower, not weaker.
+
+**Timing, seconds from end of placement to the first checked part open** (real models, a copy of the database with no shared Algebra 1 Part A lessons, strong learners at 465 after 10 answers, weak at 10, random 5 to 95% right, THINK_MS 7500, held-out timing seeds 20261117 to 22). Gate: median under 15, worst under 60, 3 at once.
+
+| run | learners | open each | median, worst | next part appears, median | whole level, median, worst | CPU avg |
+|---|---|---|---|---|---|---|
+| before (6 Nov, whole level) | 3 strong; 6 mixed | | 167, 340; 213, 358 | | same | |
+| h1 | strong (placed at 423) | 0.1 | 0.1 | 105 | 143 | 27% |
+| h3a | strong, weak, mid | 0.1, 0, 15.8 | 0.1, 15.8 | 34 | 98 to 161 | 37% |
+| h3b | strong, 2 random | 28, 12.7, 22.9 | **22.9**, 28 | 162 | 209 to 236 | 30% |
+| h3c | 3 strong | 7.3, 0.6, 19.6 | 7.3, 19.6 | 139 | 104 to 299 | 36% |
+| i10 | strong, weak, mid, random | 0 to 38.5 | 22.7, 38.5 | 85 | 180, 259 | 31% |
+
+At 3 at once, 9 learners pooled: median 12.7, worst 28; one run of three misses the median alone. All 20 learners, per individual: median 10.4, worst 10% 28, worst 5% 31.9, worst 38.5 (n = 20, so worst 1% is the worst). No failure in these runs and no part shown unread. **Not met, stated plainly:** the next part. After the first part the learner can wait about 1 to 3 minutes (median 90.1 s, worst 172 s), most of it fact reads of 30 to 45 s on grok-4.3 with other agents on the same keys, and false alarms (each a repair and a re-read). Single reads measured alone: 8 to 12 s. So the page says so after 45 s and offers the standard session.
+
+Cost: ledger deltas over each run, shared with other agents, so upper bounds: $0.17 (1), $0.38 to $0.50 (3), about $1.57 (10): about $0.16 a learner, including levels 2 and 3 written ahead, against about $0.09 for whole levels before; a wrong guess costs a layout, one small fill and one read, about a cent. All prepaid credits.
+
+Causes found and fixed in these runs: the fast lane tried free NVIDIA first despite its paid order (2 to 64 s); checks that run to the output cap; a derail thrown to slow slots (112 s); a prewrite's read with no deadline (115 s), and a prewrite's fill sitting on a free slot (304 s); part reads falling to a free model in the background lane, now never for a part a learner will see; a holdout learner, whose write is the shared level, not seeing its parts (228 s). None of these is a change to what a check tests.
+
+**Onboarding v2:** it opens lesson 1 of the found grade at once. A guest (no account yet) has no outside-AI consent, so this path does not run for them: `mayGenerate` and the consent rule send them to the standard session, unchanged, and that was read in the code, not run, because the branch is not merged. Those 150 or so lesson 1 levels are also the most predictable levels in the app: a shared lesson on each would open instantly for everyone, at $0.05 to $0.43 a level. That is a bulk build, the owner's decision.
+
+**Default: OFF.** `COLD_FIRST_BLOCK=on` turns it on. The gate passes pooled and in two of three runs at 3 at once, so it stays off under the rule; recommended on for the beta: the alternative for these learners is the standard session at 8 s. Limits: 60 planted errors are AI-planted (some weak, 4 of 12 read earlier), Chromium only, small samples. Not real-learner proof.
+
+**Also tested.** Coral derailing: stream with watchdog stops a loop at about 1000 characters instead of the cap and keeps the blocks already written; 465 replay 11 of 12 usable, first block 0.7 s, against the shipped warm retry 12 of 12 at 8 s on the same layout (this layout derailed little, so the 8 of 12 was not reproduced). Plan first: Coral Fast layout 2.6 s and first block 1 s, so writing is not the limit, the read is. Placement guesses: the rule on main already starts the level in time for 95% (simulated, 3 answers ahead, 2.3 guesses); from answer 3 with up to 10 guesses 99% for 6.0: not adopted. MiniMax writer with Coral Standard reader: 3.6 s, but flagged 8 of 9 clean first blocks: not adopted. Phone width, real browser (375 x 812, Chromium): the first block did not move when parts arrived at scroll 0 and at scroll 300; answering mid-way works, early finish refused, finish works; the slow-part note appeared at 45 s without moving the page; the failed notice was shown with the poll stubbed, not from a real failure.
