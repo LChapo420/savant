@@ -238,15 +238,31 @@
   const head = (q, sub) => `<h1 class="ob-q">${esc(q)}</h1>${sub ? `<p class="ob-sub">${marked(sub)}</p>` : ''}`;
   const STEP_DOT = '<span class="step-dot"><svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg></span>';
 
-  /** A little burst of giraffe spots when the lesson is ready. Decorative; reduced motion shows none. */
+  /**
+   * A little burst of giraffe spots when the lesson is ready. Decorative; reduced motion shows none.
+   * It goes off in the empty space between the words and the button and stays inside it, because a dot flying across the heading or the card is hard to read through (owner, 7 Nov). No room on this screen: no burst.
+   */
   function spots() {
-    if (calm()) return '';
+    if (calm()) return;
+    const view = $('#panel .ob-view');
+    const foot = $('#foot');
+    if (!view || !foot) return;
+    const box = view.getBoundingClientRect();
+    const gap = foot.getBoundingClientRect().top - box.bottom;
+    if (gap < 96) return;
     const dots = Array.from({ length: 14 }, (_, i) => {
       const a = (i / 14) * Math.PI * 2;
-      const d = 90 + (i % 3) * 34;
-      return `<i style="--x:${Math.round(Math.cos(a) * d)}px;--y:${Math.round(Math.sin(a) * d)}px;--s:${8 + (i % 4) * 3}px;animation-delay:${(i % 4) * 40}ms"></i>`;
+      const d = 0.6 + (i % 3) * 0.2; // of the room each way, leaving the biggest dot's width clear
+      const x = Math.cos(a) * d * (Math.min(box.width, 320) / 2 - 18);
+      const y = Math.sin(a) * d * (gap / 2 - 18);
+      return `<i style="--x:${Math.round(x)}px;--y:${Math.round(y)}px;--s:${8 + (i % 4) * 3}px;animation-delay:${(i % 4) * 40}ms"></i>`;
     }).join('');
-    return `<div class="spots" aria-hidden="true">${dots}</div>`;
+    const host = document.createElement('div');
+    host.className = 'spots';
+    host.setAttribute('aria-hidden', 'true');
+    host.style.top = `${box.height + gap / 2}px`;
+    host.innerHTML = dots;
+    view.appendChild(host);
   }
 
   /* ── the steps ──────────────────────────────────────────── */
@@ -676,7 +692,8 @@
         bubble: signedIn() ? 'Ready when you are. **Let\'s go.**' : 'Ready when you are. Your answers are **safe here** while you do it.',
         mood: 'cheer',
         cta: 'Open my first lesson',
-        html: `${spots()}${head('Your first lesson is ready.')}
+        bind: spots,
+        html: `${head('Your first lesson is ready.')}
           <div class="lesson-card">
             <div class="lc-tag"><span>${I[e.track_id] || I.other}</span>${esc((trackOf(e.track_id) || {}).name || '')}</div>
             <h2>${esc(name)}</h2>
