@@ -14,6 +14,7 @@ const flag = (k, d) => { const m = process.argv.find((a) => a.startsWith(`--${k}
 process.env.DB_FILE = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'r4-ontopic-')), 'db.json');
 process.env.NODE_ENV = 'test';
 process.env.PRACTICE_FOLLOWS_LESSON = flag('follows', 'on');
+for (const kv of String(flag('env', '')).split(',').filter(Boolean)) { const [k, v] = kv.split('='); process.env[k] = v; }
 const keep = process.env.NVIDIA_API_KEY; for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|_TOKEN$/.test(k) && k !== 'NVIDIA_API_KEY') delete process.env[k]; process.env.NVIDIA_API_KEY = keep;
 const OUT = process.argv.slice(2).find((a) => !a.startsWith('--'));
 const N = Number(flag('n', 60)); const WIDTH = Number(flag('width', 2));
@@ -35,7 +36,7 @@ const SCHEMA = { type: 'object', properties: { on_topic: { type: 'array', items:
   for (const tr of Object.values(curriculum.TRACKS)) {
     if (tr.id === 'spanish') continue;
     for (const g of tr.grades) {
-      if (!heldOut(tr.id, g.id)) continue;
+      if (flag('only') ? !flag('only').split(',').includes(tr.id + '/' + g.id) : !heldOut(tr.id, g.id)) continue;
       const m = coverage.modelFor(tr.id, g.id); if (!m) continue;
       for (const o of m.objectives) if (o.practice && o.practice.length) candidates.push({ track: tr.id, grade: g.id, o });
     }
