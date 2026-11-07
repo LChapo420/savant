@@ -294,14 +294,16 @@ app.use(express.static(path.join(__dirname, 'public'), {
 app.get('*', (req, res) => {
   // Sign-in only: a missing file is a 404, not the app shell (which is the landing page).
   if (!req.user && signinOnly.active(req)) return res.status(404).type('text/plain').send('Not found');
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  // A missing file is never the landing page: a mistyped address showed a signed-in learner the marketing page, a missing script came back as HTML with a 200.
+  if (path.extname(req.path) && !/[.]html$/i.test(req.path)) return res.status(404).type('text/plain').send('Not found');
+  res.status(404).sendFile(path.join(__dirname, 'public', 'not-found.html'));
 });
 
 app.use(errorLog.expressHandler);
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (res.headersSent) return;
-  if (err && (err.type === 'entity.too.large' || err.status === 413)) return res.status(413).json({ error: 'That is too big to upload. Files are limited to 20 MB (videos 200 MB); send a shorter or smaller part.', code: 'too_big' });
+  if (err && (err.type === 'entity.too.large' || err.status === 413)) return res.status(413).json({ error: !req.path.startsWith('/api/materials') ? 'That is too long to send. Shorten it and try again.' : 'That is too big to upload. Files are limited to 20 MB (videos 200 MB); send a shorter or smaller part.', code: 'too_big' });
   if (err && err.type === 'entity.parse.failed') return res.status(400).json({ error: 'That request could not be read.', code: 'bad_request' });
   console.error('unhandled:', err);
   res.status(500).json({ error: 'Something went wrong on our side.' });

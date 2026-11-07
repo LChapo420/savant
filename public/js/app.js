@@ -586,8 +586,13 @@
     const run = () => Promise.resolve().then(fn).catch((err) => {
       console.error(err);
       const main = document.querySelector('main') || document.body;
-      main.prepend(el('div', { class: 'notice notice-error' },
-        `${escapeHtml(err.message || 'Something went wrong.')}`));
+      // The page never drew: without this the message sat above a spinner that went on forever (a dropped connection or a 5xx on the first load).
+      main.querySelectorAll('.loading').forEach((n) => n.remove());
+      const box = el('div', { class: 'notice notice-error' }, escapeHtml(err.message || 'Something went wrong.'));
+      const again = el('button', { class: 'btn btn-sm', type: 'button', style: 'display:block;margin-top:10px' }, 'Try again');
+      again.addEventListener('click', () => window.location.reload());
+      box.appendChild(again);
+      main.prepend(box);
     });
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
     else run();
