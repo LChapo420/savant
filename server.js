@@ -157,6 +157,8 @@ app.use('/api', (req, res, next) => {
   next();
 });
 
+// Home's "Your material" under UI_V2 (services/ui-v2-material.js). Off, it is an unknown endpoint like any other.
+app.get('/api/ui2/material-progress', (req, res, next) => (require('./services/ui-v2').enabled() ? require('./services/ui-v2-material').reply(req, res) : next()));
 app.use('/api/auth/password-reset', passwordReset.router);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/speed', require('./routes/speed-placement'));

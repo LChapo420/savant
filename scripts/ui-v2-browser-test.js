@@ -261,7 +261,7 @@ async function main() {
       const set = (state, word, mouth) => page.evaluate(([st, w, m]) => { const g = document.querySelector('.tdock-g'); if (st) g.dataset.voice = st; else delete g.dataset.voice; g.dataset.mouth = m || ''; g.querySelector('.tdock-g-status').textContent = w || ''; document.documentElement.classList.toggle('tdock-in-call', !!st); }, [state, word, mouth]);
       await set('talking', 'Talking', 'talk');
       await page.waitForSelector('#u2-call:not([hidden])');
-      const stage = await page.evaluate(() => { const r = document.querySelector('.u2-call-g').getBoundingClientRect(); return { h: r.height, mouth: getComputedStyle(document.querySelector('#u2-call .t-mouth')).animationName, how: document.getElementById('u2-call-how').textContent, word: document.getElementById('u2-call-word').textContent }; });
+      const stage = await page.evaluate(() => { const r = document.querySelector('.u2-call-g').getBoundingClientRect(); return { h: r.height, mouth: getComputedStyle(document.querySelector('#u2-call .t-mouth-happy')).animationName, how: document.getElementById('u2-call-how').textContent, word: document.getElementById('u2-call-word').textContent }; });
       assert(stage.h >= 380, `the giraffe is the focus: ${stage.h}px`);
       assert.strictEqual(stage.mouth, 'u2-talk');
       assert(/Tap me.*end the call.*Hold me.*chat/.test(stage.how));

@@ -65,10 +65,11 @@ html[data-ui2] #u2-call[data-state="listening"] .u2-call-ring { border-color: va
 html[data-ui2] #u2-call[data-state="thinking"] .u2-call-ring { border-color: var(--line-strong); border-style: dashed; animation: u2-ring-turn 4s linear infinite; }
 html[data-ui2] #u2-call[data-state="talking"] .u2-call-ring { border-color: var(--right); }
 @keyframes u2-ring-turn { from { transform: translateX(-50%) rotate(0); } to { transform: translateX(-50%) rotate(360deg); } }
-/* Its talking mouth, wide open at this size, so it reads as the giraffe talking. Speech-synced shapes (js/tutor-giraffe.js mouthDriver) set data-mouth="driven" instead, which turns this off. */
-html[data-ui2] #u2-call .t-mouth { transform-box: fill-box; transform-origin: 50% 0; }
-html[data-ui2] #u2-call[data-mouth="talk"] .t-mouth { animation: u2-talk .26s ease-in-out infinite alternate; }
-@keyframes u2-talk { from { transform: scaleY(.45); } to { transform: scaleY(1.5); } }
+/* Its talking mouth: the drawing's own open mouth, opening and closing, so it reads as the giraffe talking at this size. Speech-synced shapes (js/tutor-giraffe.js mouthDriver) set data-mouth="driven" instead, which turns this off. */
+html[data-ui2] #u2-call .t-mouth-happy { transform-box: fill-box; transform-origin: 50% 0; }
+html[data-ui2] #u2-call[data-mouth="talk"] .t-mouth { display: none; }
+html[data-ui2] #u2-call[data-mouth="talk"] .t-mouth-happy { display: block; animation: u2-talk .26s ease-in-out infinite alternate; }
+@keyframes u2-talk { from { transform: scaleY(.4); } to { transform: scaleY(1.15); } }
 html[data-ui2] .u2-call-how { margin: 0; max-width: 300px; color: var(--ink-2); font-size: 17px; line-height: 1.35; }
 html[data-ui2] .u2-call-how[hidden] { display: none; }
 html[data-ui2] .u2-call-how b { color: var(--ink); font-weight: 700; }
@@ -113,7 +114,6 @@ html[data-ui2] .tdock-form button.go { margin-bottom: 6px; padding: 0 18px; bord
 html[data-ui2] .tdock-form button.go:hover { background: var(--act-hover); }
 html[data-ui2] .tdock-form button.go:active { transform: translateY(6px); box-shadow: none; }
 @media (prefers-reduced-motion: reduce) {
-  html[data-ui2] #u2-call .t-mouth, html[data-ui2] .u2-call-ring { animation: none !important; transition: none; }
-  html[data-ui2] #u2-call[data-mouth="talk"] .t-mouth { transform: scaleY(1.4); }
+  html[data-ui2] #u2-call .t-mouth-happy, html[data-ui2] .u2-call-ring { animation: none !important; transition: none; }
   html[data-ui2] .tdock-form button.go, html[data-ui2] .tdock-chips button { transition: none; }
 }
