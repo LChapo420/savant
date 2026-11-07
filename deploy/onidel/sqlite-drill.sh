@@ -159,7 +159,8 @@ proof() {
 }
 
 load() {
-  local n=$1 min=$2 driver=$3 tag=${4:-$driver}
+  local n=$1 min=$2 driver=$3
+  local tag=${4:-$driver}
   local args=(--no-warnings scripts/beta-load/load-run.js --learners "$n" --minutes "$min" --think 8000 --ramp 60 --db "$DIR/base.json" --tag "$tag" --driver "$driver" --port 7810)
   guarded /usr/bin/node "${args[@]}" > "$OUT/load-$n-$tag.txt" 2>&1
   local code=$?
