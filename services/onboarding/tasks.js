@@ -193,7 +193,10 @@ function score(item, response, server) {
     return res;
   }
   if (item.kind === 'survey') {
-    const len = words(r.text);
+    // The interests tiles in the new onboarding (public/js/start.js): a tap picks from a list, so its length says nothing about the learner and it reads nothing. Only words they typed themselves ("Something else") are read.
+    const tiles = r.tapped === true && item.survey === 'interests';
+    if (tiles && !words(r.typed)) return {};
+    const len = words(tiles ? r.typed : r.text);
     return each(item, clamp(len === 0 ? -0.6 : z(len, 12, 14), -1, 1.5) * 0.7);
   }
   if (item.kind === 'minilesson') return scoreMiniLesson(item, r, server);

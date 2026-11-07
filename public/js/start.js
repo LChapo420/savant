@@ -808,7 +808,7 @@
     } finally { busy = false; }
     go('into', { replace: true });
   }
-  /** The last question of the test is the interests screen. Its words go through the same scoring as the box on /baseline. */
+  /** The last question of the test is the interests screen. A tile is a tap, not a short answer, so only what they typed under "Something else" is read (services/onboarding/tasks.js). */
   async function handInInterests() {
     if (!server.test || !server.test.pending) return;
     const words = S.a.interests.map((id) => {
@@ -819,7 +819,8 @@
     try {
       const open = await api('POST', '/api/onboarding/start', { mode: 'quick', resume: true, interests_last: true });
       if (open.step && open.step.id === 'sv:interests') {
-        const out = await api('POST', '/api/onboarding/answer', { session: open.session, id: 'sv:interests', response: { text: words }, ms: Date.now() - T.interestsShown });
+        const typed = S.a.interests.includes('other') && !isChild() ? S.a.interest_text.trim() : '';
+        const out = await api('POST', '/api/onboarding/answer', { session: open.session, id: 'sv:interests', response: { text: words, tapped: true, typed }, ms: Date.now() - T.interestsShown });
         testResult(out);
       }
     } catch (err) {
