@@ -1452,6 +1452,13 @@ function blockRetentionItem({ userId, session, blockIndex }) {
  * the level is finished, level the learner up if it is, and hand back the one
  * recall question for that level.
  */
+/** SPEED_SPACE_RETENTION: did this move step over a retention level? The learner is told (session.js). */
+function spacedRetentionBetween(enrollment, grade, from, to) {
+  if (!speedLevers.spaceOn(enrollment.user_id) || !(to > from + 1)) return false;
+  for (let l = from + 1; l < to; l++) if (blockLevels.kindFor(grade, l) === 'retention') return true;
+  return false;
+}
+
 function resolveBlock({ userId, session, enrollment, grade, blockIndex }) {
   const blocks = [...(session.blocks || [])];
   const block = blocks.find((b) => b.index === blockIndex) || { index: blockIndex, level: session.level };
@@ -1532,6 +1539,7 @@ function resolveBlock({ userId, session, enrollment, grade, blockIndex }) {
     level_up: result.advanced ? result.level : null,
     progress: result.progress,
     ...(result.speed_skipped ? { speed_skipped: result.speed_skipped } : {}),
+    ...(spacedRetentionBetween(enrollment, grade, block.level, fresh.current_level) ? { spaced_retention: true } : {}),
     next_level: fresh.current_level,
     next_kind: nextKind,
     can_continue: fresh.status === 'active',

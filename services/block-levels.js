@@ -3255,6 +3255,14 @@ function prefetchAhead({ user, enrollment, grade }) {
  * The plan for the browser: block data, and checks as questions without
  * answers, placed where the layout put them. Plus the files to load.
  */
+/** SPEED_TIGHT_PAGE (services/speed-levers.js; off by default): a lesson's warm-up and recap blocks start folded, one tap away. A retention level keeps everything. */
+function tightAside(plan, userId, block) {
+  if (plan.kind !== 'lesson') return false;
+  // eslint-disable-next-line global-require
+  const speed = require('./speed-levers');
+  return speed.asideBlock(block) && require('./efficiency').forLearner(userId, () => speed.enabled('tight')); // eslint-disable-line global-require
+}
+
 function publicPlan(plan, userId, itemIds = {}) {
   if (!plan) return null;
   const lib = library();
@@ -3274,7 +3282,7 @@ function publicPlan(plan, userId, itemIds = {}) {
   checksAfter(-1).forEach(pushCheck);
   (plan.blocks || []).forEach((b) => {
     // The learner's own wording of this block, when they asked for one (services/part-change.js).
-    entries.push({ block: b.block, data: partChange.blockData(userId, plan, b), ref: b.index, changeable: partChange.on() && partChange.changeable(b.block) });
+    entries.push({ block: b.block, data: partChange.blockData(userId, plan, b), ref: b.index, changeable: partChange.on() && partChange.changeable(b.block), ...(tightAside(plan, userId, b) ? { aside: true } : {}) });
     checksAfter(b.index).forEach(pushCheck);
   });
   // A check whose block was dropped still has to be asked.

@@ -189,7 +189,7 @@ function plainShape(session) {
 
 function speedShape(session) {
   const flags = speedLevers.clientFlags(session.user_id, session);
-  return (flags.testout || flags.fast) && !holdsFeedbackByChoice(session) ? { speed: flags } : {};
+  return (flags.testout || flags.fast || flags.one_prompt || flags.tight) && !holdsFeedbackByChoice(session) ? { speed: flags } : {};
 }
 
 /**

@@ -151,6 +151,17 @@
       });
     }
     window.LessonCompiler.compile(host, plan.entries);
+    // SPEED_TIGHT_PAGE: warm-up and recap blocks start folded, and the whole page is one tap away.
+    if (plan.entries.some((e) => e.aside)) {
+      const folded = [];
+      [...host.querySelectorAll('section[data-block]')].forEach((section, i) => { if (plan.entries[i] && plan.entries[i].aside) { section.hidden = true; folded.push(section); } });
+      if (folded.length) {
+        const more = document.createElement('button');
+        more.type = 'button'; more.className = 'btn btn-sm'; more.textContent = 'See the whole page';
+        more.addEventListener('click', () => { folded.forEach((s) => { s.hidden = false; }); more.remove(); });
+        host.parentNode.insertBefore(more, host.nextSibling);
+      }
+    }
     const sections = Array.from(host.querySelectorAll('section[data-block]'));
     sections.forEach((section, i) => {
       section.setAttribute('data-index', String(i));
