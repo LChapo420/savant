@@ -332,6 +332,21 @@
     }
   }
 
+  // ── add a subject: the giraffe asks; the long notes and the optional extras fold ──
+  function dressAdd() {
+    const step = document.getElementById('subjects-step');
+    const head = step && step.querySelector('.ob-head');
+    if (!head || head.dataset.u2) return;
+    head.dataset.u2 = '1';
+    root.classList.add('u2-add');
+    const h1 = head.querySelector('h1');
+    const lede = head.querySelector('.lede');
+    const offer = document.getElementById('reading-offer');
+    if (h1) { h1.classList.add('u2-vh'); head.prepend(pageGuide(h1.textContent.trim())); }
+    if (lede) head.appendChild(fold('How this works', [lede]));
+    if (offer) { const f = fold('Optional extras', [offer]); f.classList.add('u2-maybe-empty'); head.after(f); }
+  }
+
   let queued = false;
   function tick() {
     queued = false;
@@ -339,6 +354,7 @@
     if (PAGE === '/my-material') dressMaterial();
     if (/^\/my-material-/.test(PAGE)) dressMaterialSub();
     if (PAGE === '/calendar') dressCalendar();
+    if (PAGE === '/onboarding') dressAdd();
     if (PAGE === '/path') dressPath();
     if (PAGE === '/base-lesson') dressLesson();
     if (PAGE === '/review') dressReview();
