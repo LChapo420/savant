@@ -2,7 +2,8 @@
  * The new onboarding's API (services/onboarding-v2.js, docs/ONBOARDING-V2.md). 404 unless ONBOARDING_V2 is on.
  *
  *   GET  /api/ob2/state          where this visitor stands: account (go), guest (answers, enrollment), or just the age route
- *   POST /api/ob2/begin          create the guest row for the level check; under the consent age also { nickname, parent_email }
+ *   POST /api/ob2/agree          { decision: 'agree', version } the terms, privacy and outside AI, at or over the consent age: makes the guest row and records it
+ *   POST /api/ob2/begin          bring the guest row up to date; under the consent age, create it with { nickname, parent_email }
  *   POST /api/ob2/answers        keep the answers from steps 4 to 6 on a guest row
  *   POST /api/ob2/first-lesson   { track, grade_id? } stand on lesson 1 and set the goals
  *   POST /api/ob2/lesson-opened  the learner went into the lesson
@@ -31,15 +32,33 @@ const guestOnly = (req, res, next) => {
 
 router.get('/state', (req, res) => res.json(ob.stateFor(req)));
 
+/** A real choice, never assumed: declining sends nothing here, and a child cannot agree for themselves. */
+router.post('/agree', limit('ob2-agree', 30, HOUR), async (req, res) => {
+  if (req.user && !req.user.guest) return res.status(409).json({ error: 'You already have an account.', code: 'account', go: ob.accountHome(req.user) });
+  const body = req.body || {};
+  const screen = req.user ? req.user.age_check : consent.screenFromSession(req);
+  if (!screen) return res.status(400).json({ error: 'Tell us when you were born first.', code: 'age_needed' });
+  if (screen.needs_parent) return res.status(403).json({ error: 'A parent or guardian decides this for you.', code: 'parent_decides' });
+  if (body.decision !== 'agree') return res.status(400).json({ error: 'Choose whether you agree first.', code: 'no_decision' });
+  if (body.version !== ob.AGREEMENT_VERSION) return res.status(409).json({ error: 'These words have changed. Reload the page and read them again.', code: 'stale' });
+  const fresh = !req.user;
+  const user = req.user || ob.createGuest(screen);
+  const updated = ob.recordAgreement(user, consent.POLICY_VERSION);
+  if (fresh) await startSession(req, updated);
+  res.status(fresh ? 201 : 200).json({ user: userView(db.byId('users', user.id)) });
+});
+
 router.post('/begin', limit('ob2-begin', 30, HOUR), async (req, res) => {
   if (req.user && !req.user.guest) return res.status(409).json({ error: 'You already have an account.', code: 'account', go: ob.accountHome(req.user) });
   const body = req.body || {};
   if (req.user) {
     ob.saveAnswers(req.user, body.answers);
+    ob.applyInterest(req.user);
     return res.json({ user: userView(req.user), resumed: true });
   }
   const screen = consent.screenFromSession(req);
   if (!screen) return res.status(400).json({ error: 'Tell us when you were born first.', code: 'age_needed' });
+  if (!screen.needs_parent) return res.status(403).json({ error: 'Agree to the terms first.', code: 'agreement_needed' });
 
   let nickname = null;
   let parentEmail = null;
@@ -67,6 +86,7 @@ router.post('/begin', limit('ob2-begin', 30, HOUR), async (req, res) => {
 
 router.post('/answers', guestOnly, limit('ob2-answers', 240, HOUR), (req, res) => {
   ob.saveAnswers(req.user, req.body);
+  ob.applyInterest(req.user);
   ob.touch(req.user);
   res.json({ ok: true });
 });
@@ -89,6 +109,7 @@ router.post('/claim', guestOnly, limit('register', 10, HOUR), async (req, res) =
   const password = String(body.password || '');
   const weak = checkPassword(password);
   const child = !!(guest.age_check && guest.age_check.needs_parent);
+  if (!child && !guest.agreed_at) return res.status(403).json({ error: 'Agree to the terms first.', code: 'agreement_needed' });
   let patch;
   if (child) {
     // No child email, whatever the request carries (312.5(c)(1); routes/auth.js registerChild).

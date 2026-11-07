@@ -5,13 +5,18 @@
  * `onboarding_answers` row per learner holding what they said on the way in. Everything else is the app's own: the walk, the enrollment,
  * the lesson, the goals. A guest becoming an account is the same row gaining credentials, so progress cannot be lost in the move.
  *
- * Consent: a guest has agreed to nothing yet, so routes/consent.js access() gives them `ai_free_text: false` (services/ai.js then uses local
- * models only), no camera or mic, and no uploads. An under-consent-age learner is created here as today's limited child account, with the
- * parent's request sent at once; only the username and password wait.
+ * Consent (owner, 7 Nov): everyone agrees before they get access. A learner at or over their country's consent age makes a real choice right after
+ * the age screen (terms, privacy, outside AI); the guest row is created by agreeing, and recordAgreement keeps what was agreed and when. From there
+ * routes/consent.js access() treats them as any consenting learner. A row with no agreement stays limited. An under-consent-age learner cannot agree
+ * for themselves: they are today's limited child account with the parent's request sent, and only the username and password wait.
  */
 const db = require('../config/db');
 
 const ANSWERS = 'onboarding_answers';
+const AGREEMENTS = 'learner_agreements';
+/** Bump when the words on the agreement screen (public/js/start-content.js AGREEMENT) change. */
+const AGREEMENT_VERSION = '2026-11-07.1';
+const AGREEMENT_COVERS = ['beta_terms', 'privacy_policy', 'outside_ai'];
 const DAY = 24 * 3600 * 1000;
 const GUEST_DAYS = () => Number(process.env.ONBOARDING_GUEST_DAYS || 30);
 
@@ -83,6 +88,14 @@ function createGuest(screen, { nickname = null } = {}) {
   });
 }
 
+/** Keep what was agreed and when. Exported and deleted with the account (routes/profile.js EXPORT_MORE, routes/consent.js KNOWN_COLLECTIONS). */
+function recordAgreement(user, policyVersion) {
+  if (user.agreed_at) return user;
+  const at = iso();
+  db.insert(AGREEMENTS, { user_id: user.id, version: AGREEMENT_VERSION, policy_version: policyVersion, covers: AGREEMENT_COVERS, agreed_at: at, via: 'onboarding_v2' });
+  return db.update('users', user.id, { agreed_at: at, agreement_version: AGREEMENT_VERSION });
+}
+
 /** Where an account (not a guest) belongs when it opens this flow: never through it again. */
 function accountHome(user) {
   const a = consent().access(user);
@@ -118,6 +131,7 @@ function stateFor(req) {
     return {
       guest: true,
       route: child ? 'parent' : 'self',
+      agreed: !!user.agreed_at,
       nickname: child ? user.display_name : null,
       consent: c.publicConsent(user).consent,
       answers: {
@@ -175,23 +189,31 @@ function firstLesson(user, { track, grade_id: gradeId }) {
   const row = saveAnswers(user, {});
   const goal = applyGoals(user, e, row);
   db.update(ANSWERS, row.id, { first_enrollment_id: e.id, first_at: row.first_at || iso() });
+  applyInterest(user);
+  // A learner who has agreed gets their first lesson started as soon as the level is known, as after any placement.
+  if (consent().access(user).ai_free_text) {
+    try { require('./write-ahead').trigger({ user, enrollment: e, reason: 'onboarding v2 first lesson' }); } catch (err) { console.warn(`onboarding-v2: write-ahead not started: ${err.message}`); }
+  }
   return { enrollment: enrollmentView(user, e), goal };
 }
 
-/** The interest from step 6 goes into the survey the lesson writers read, only once this account's consent covers outside AI. */
+/** The interest from step 6 goes into the survey the lesson writers read, only once this account's consent covers outside AI. Changing it replaces what this flow wrote. */
 function applyInterest(user) {
   try {
-    if (!user || user.guest || !consent().access(user).ai_free_text) return false;
+    if (!user || !consent().access(user).ai_free_text) return false;
     const row = rowOf(user.id);
-    if (!row || row.interest_applied_at || !row.interest) return false;
+    if (!row || !row.interest) return false;
     const said = row.interest === 'other' ? String(row.interest_text || '').trim() : INTERESTS[row.interest];
-    db.update(ANSWERS, row.id, { interest_applied_at: iso() });
-    if (!said) return false;
+    if (!said || row.interest_applied === said) return false;
     const learner = require('./learner');
     const survey = learner.cleanSurvey(learner.getProfile(user.id).survey || {});
-    if (survey.interests.toLowerCase().includes(said.toLowerCase())) return false;
-    survey.interests = survey.interests ? `${survey.interests}, ${said}` : said;
+    const before = row.interest_applied || '';
+    let text = survey.interests;
+    if (before && text.includes(before)) text = text.replace(before, said);
+    else if (!text.toLowerCase().includes(said.toLowerCase())) text = text ? `${text}, ${said}` : said;
+    survey.interests = text;
     learner.saveProfile(user.id, { survey, survey_at: iso() });
+    db.update(ANSWERS, row.id, { interest_applied: said, interest_applied_at: iso() });
     return true;
   } catch (err) {
     console.warn(`onboarding-v2: interest not carried: ${err.message}`);
@@ -237,13 +259,13 @@ function sweep(now = Date.now()) {
     require('./account-deletion').deleteAccount(u);
     out.guests_deleted++;
   }
-  for (const r of db.find(ANSWERS, (x) => x.interest && !x.interest_applied_at)) {
+  for (const r of db.find(ANSWERS, (x) => x.interest && !x.interest_applied)) {
     const u = db.byId('users', r.user_id);
-    if (u && !u.guest && applyInterest(u)) out.interests_applied++;
+    if (u && applyInterest(u)) out.interests_applied++;
   }
   return out;
 }
 
 module.exports = {
-  ANSWERS, INTERESTS, WHY, enabled, cleanAnswers, saveAnswers, createGuest, stateFor, firstLesson, applyInterest, absorbGuest, sweep, accountHome, touch, rowOf,
+  ANSWERS, AGREEMENTS, AGREEMENT_VERSION, recordAgreement, INTERESTS, WHY, enabled, cleanAnswers, saveAnswers, createGuest, stateFor, firstLesson, applyInterest, absorbGuest, sweep, accountHome, touch, rowOf,
 };

@@ -45,7 +45,8 @@ const EDITING_TIERS = ['pro', 'school'];
  * @returns {boolean}
  */
 function canEditLevels(user, profile) {
-  if (!user || !user.email) return false;
+  // An agreed guest (onboarding v2) has no email until they save, and is tailored like any tester.
+  if (!user || (!user.email && !(user.guest === true && user.agreed_at))) return false;
   if (owner.isOwner(user)) return false;
   // Tester phase (owner, 2026-10-25): every tester gets levels written for them,
   // whatever tier is picked. TESTER_TAILORING=off goes back to the tier deciding.

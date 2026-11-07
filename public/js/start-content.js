@@ -39,6 +39,7 @@
     back: line('<path d="M15 5l-7 7 7 7"/>'),
     eye: line('<path d="M2.500 12S6 5.500 12 5.500 21.500 12 21.500 12 18 18.500 12 18.500 2.500 12 2.500 12Z"/><circle cx="12" cy="12" r="2.800"/>'),
     arrow: line('<path d="M5 12h14M13 6l6 6-6 6"/>'),
+    chat: line('<path d="M4 5.500h16v11H10l-4.500 3.500v-3.500H4v-11Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/>'),
   };
 
   /** Short subject lines. A subject with none falls back to the catalogue's first sentence. */
@@ -65,6 +66,16 @@
     piano: '**Piano.** Lovely. Hands ready.',
     basketball: '**Basketball.** Let\'s get on the court.',
     notes: '**Your own notes.** Good. I can build lessons from them once you\'ve saved your progress.',
+  };
+
+  /** The agreement screen. Version with services/onboarding-v2.js AGREEMENT_VERSION: a change to these words needs a new version. */
+  const AGREEMENT = {
+    version: '2026-11-07.1',
+    items: [
+      { icon: 'test', title: 'The beta terms', text: 'Savant is a beta for approved testers. Things may change or break. Lessons are fact checked, but fact checked doesn\'t mean always right, so don\'t rely on it alone for anything that matters.' },
+      { icon: 'eye', title: 'Your privacy', text: 'We keep your answers and progress to teach you. We never sell your data, and you can export it any time.', link: { href: '/privacy', label: 'Privacy policy' } },
+      { icon: 'chat', title: 'Outside AI services', text: 'To write lessons around you, what you tell me, your answers and your interests go to outside AI companies.', link: { href: '/privacy#vendors', label: 'See which companies' } },
+    ],
   };
 
   const WHY = [
@@ -183,5 +194,5 @@
 
   function ideaFor(trackId) { return IDEAS[IDEA_OF[trackId]] || IDEAS.fractions; }
 
-  window.ObContent = { ICONS, TRACK_LINES, TRACK_REPLY, WHY, HORIZONS, INTERESTS, IDEAS, IDEA_OF, ideaFor };
+  window.ObContent = { AGREEMENT, ICONS, TRACK_LINES, TRACK_REPLY, WHY, HORIZONS, INTERESTS, IDEAS, IDEA_OF, ideaFor };
 }());

@@ -100,6 +100,13 @@ async function answerAge(page, { month = '3', year, country = 'US' }) {
   await page.selectOption('#c', country);
   await shot(page, '03-age');
   await next(page);
+  if (year > new Date().getFullYear() - 13) { await at(page, 'learn'); assert.equal(await page.locator('input[name="agree"]').count(), 0); return; }
+  await at(page, 'agree');
+  assert.equal(await isDisabled(page), true, 'agree: Continue is off until a choice');
+  assert.equal(await page.locator('input[name="agree"]:checked').count(), 0, 'nothing is ticked');
+  await shot(page, '03b-agree');
+  await page.locator('input[name="agree"][value="agree"]').check();
+  await next(page);
   await at(page, 'learn');
 }
 
@@ -127,6 +134,9 @@ async function toMoment(page, { tracks = ['math'], why = 'school', horizon = 'ye
   await next(page);
   await at(page, 'moment');
   await shot(page, '08-moment');
+  // The note must be readable, not behind the button.
+  const clear = await page.evaluate(() => { const n = document.querySelector('.ex-note').getBoundingClientRect(); return n.bottom <= document.getElementById('next').getBoundingClientRect().top; });
+  if (!clear) problems.push(`${page.persona} moment: the note is behind the button`);
 }
 
 /** Answer until the walk ends, or until `stopAfter` questions and then stop. */
@@ -304,6 +314,7 @@ async function returning(browser, opts) {
   await made.evaluate(async (e) => {
     const p = (u, b) => fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) });
     await p('/api/consent/age', { birth_month: 1, birth_year: 1985, country: 'US' });
+    await p('/api/ob2/agree', { decision: 'agree', version: '2026-11-07.1' });
     await p('/api/ob2/begin', { answers: { tracks: ['math'] } });
     const grades = (await (await fetch('/api/catalog?view=grades')).json()).tracks.find((t) => t.id === 'math').grades;
     await p('/api/ob2/first-lesson', { track: 'math', grade_id: grades[3].id });
@@ -415,6 +426,7 @@ async function failedSignUp(browser, opts) {
   await other.evaluate(async (e) => {
     const p = (u, b) => fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) });
     await p('/api/consent/age', { birth_month: 1, birth_year: 1985, country: 'US' });
+    await p('/api/ob2/agree', { decision: 'agree', version: '2026-11-07.1' });
     await p('/api/ob2/begin', { answers: { tracks: ['math'] } });
     await p('/api/ob2/claim', { display_name: 'First Person', email: e, password: 'longenough1' });
   }, email);
@@ -460,7 +472,7 @@ async function noExample(browser, opts) {
   await toMoment(page, { interest: 'other', other: 'pottery' });
   const said = await page.locator('#bubble-text').textContent();
   assert.match(said, /pottery/);
-  assert.match(said, /won't fake it/);
+  assert.match(said, /real lessons will use pottery/);
   // The typed word doesn't leave the device before the level check, and only the guest row holds it then.
   const pills = page.locator('.pill');
   await pills.nth(1).click();
@@ -515,6 +527,7 @@ async function everySubject(browser) {
       const out = await p.evaluate(async ({ id, g }) => {
         const post = async (u, b) => { const r = await fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }); return { status: r.status, body: await r.json() }; };
         await post('/api/consent/age', { birth_month: 1, birth_year: 1990, country: 'US' });
+        await post('/api/ob2/agree', { decision: 'agree', version: '2026-11-07.1' });
         await post('/api/ob2/begin', { answers: { tracks: [id] } });
         const walk = await post(`/api/subject-placement/${id}/start`, { mode: 'quick' });
         const first = await post('/api/ob2/first-lesson', { track: id, grade_id: g });
@@ -542,6 +555,7 @@ async function guestPages(browser, opts) {
   const e = await page.evaluate(async () => {
     const post = async (u, b) => (await fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) })).json();
     await post('/api/consent/age', { birth_month: 1, birth_year: 1990, country: 'US' });
+    await post('/api/ob2/agree', { decision: 'agree', version: '2026-11-07.1' });
     await post('/api/ob2/begin', { answers: { tracks: ['math'], interest: 'soccer' } });
     const grades = (await (await fetch('/api/catalog?view=grades')).json()).tracks.find((x) => x.id === 'math').grades;
     return (await post('/api/ob2/first-lesson', { track: 'math', grade_id: grades[5].id })).enrollment;
@@ -570,6 +584,33 @@ async function guestPages(browser, opts) {
   await page.context().close();
 }
 
+/** Declining is a real answer: a clear stop, the privacy link, no account, and the way back. */
+async function declines(browser, opts) {
+  const page = await open(browser, 'decline', opts);
+  await toAge(page);
+  await page.waitForFunction(() => document.querySelectorAll('#c option').length > 5);
+  await page.selectOption('#m', '3');
+  await page.selectOption('#y', '1990');
+  await page.selectOption('#c', 'US');
+  await next(page);
+  await at(page, 'agree');
+  await page.locator('input[name="agree"][value="decline"]').check();
+  await next(page);
+  await at(page, 'declined');
+  await shot(page, '03c-declined');
+  assert.match(await page.locator('h1').first().textContent(), /can't use the beta without this/);
+  assert.ok(await page.locator('.ob-panel a[href="/privacy"]').count(), 'the privacy link is there');
+  const me = await page.evaluate(async () => (await (await fetch('/api/auth/me')).json()).user);
+  assert.equal(me, null, 'declining makes no account');
+  await page.goto(`${BASE}/start#learn`);
+  await at(page, 'agree');
+  await page.locator('input[name="agree"][value="agree"]').check();
+  await next(page);
+  await at(page, 'learn');
+  results.push(`${page.persona}: declining stops with the privacy link, makes no account, can't be skipped, and can be changed`);
+  await page.context().close();
+}
+
 async function keyboard(browser) {
   const page = await open(browser, 'keyboard', { viewport: PHONE });
   await page.goto(`${BASE}/start`);
@@ -592,6 +633,10 @@ async function keyboard(browser) {
   await page.locator('#c').selectOption('US');
   await page.locator('#next').focus();
   await page.keyboard.press('Enter');
+  await at(page, 'agree');
+  await page.locator('input[name="agree"]').first().focus();
+  await page.keyboard.press('Space');
+  await page.locator('input[name="agree"]').first().press('Enter');
   await at(page, 'learn');
   await page.locator('input[name="track"]').first().focus();
   await page.keyboard.press('Space');
@@ -648,6 +693,7 @@ async function main() {
     other: async () => { await noExample(browser, { viewport: PHONE, scheme: 'light' }); await noExample(browser, { viewport: DESK, scheme: 'dark' }); },
     notes: async () => { await notes(browser, { viewport: PHONE, scheme: 'light' }); },
     keyboard: () => keyboard(browser),
+    decline: async () => { await declines(browser, { viewport: PHONE, scheme: 'light' }); await declines(browser, { viewport: DESK, scheme: 'dark' }); },
     guestpages: async () => { await guestPages(browser, { viewport: PHONE, scheme: 'light' }); await guestPages(browser, { viewport: DESK, scheme: 'dark' }); },
     subjects: () => everySubject(browser),
     motion: () => reducedMotion(browser),

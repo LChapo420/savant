@@ -20,6 +20,7 @@ const dbFile = path.join(dir, 'db.json');
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 let passed = 0;
 const ok = (name) => { passed += 1; console.log(`  ok ${name}`); };
+const ob2Version = fs.readFileSync(path.join(ROOT, 'services/onboarding-v2.js'), 'utf8').match(/AGREEMENT_VERSION = '([^']+)'/)[1];
 
 function client(base) {
   let cookie = '';
@@ -77,6 +78,7 @@ function contentChecks() {
     const [yo, tu] = [...t.matchAll(/\*\*(.+?)\*\*/g)].map((m) => m[1].toLowerCase());
     assert.ok(yo.endsWith('o') && tu.endsWith('as') && yo.slice(0, -1) === tu.slice(0, -2), `${k}: regular -ar forms (${yo}, ${tu})`);
   }
+  assert.equal(C.AGREEMENT.version, ob2Version, 'the words and the version move together');
   const all = JSON.stringify(C).toLowerCase();
   assert.ok(!all.includes('learning style'), 'no "learning styles"');
   ok('pre-written examples: every interest, every idea, the sums and the verb forms');
@@ -114,18 +116,26 @@ async function main() {
   assert.equal(secondAnswer.data.locked, true);
   ok('age: same endpoint, first answer stands');
 
+  // Nothing exists until they choose, and only agreeing goes on.
+  assert.equal((await c('POST', '/api/ob2/begin', { answers: {} })).data.code, 'agreement_needed');
+  assert.equal((await c('POST', '/api/ob2/agree', { decision: 'decline', version: ob2Version })).data.code, 'no_decision');
+  assert.equal((await c('POST', '/api/ob2/agree', { version: ob2Version })).data.code, 'no_decision');
+  assert.equal((await c('GET', '/api/auth/me')).data.user, null, 'declining makes no account');
+  assert.equal((await c('POST', '/api/ob2/agree', { decision: 'agree', version: 'old' })).data.code, 'stale');
+  const agreed = await c('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version });
+  assert.equal(agreed.status, 201);
+  assert.equal(agreed.data.user.guest, true);
+  assert.equal(agreed.data.user.consent.state, 'full', 'an agreed guest counts as consenting');
+  assert.equal(agreed.data.user.consent.ai_free_text, true);
   const begun = await c('POST', '/api/ob2/begin', { answers: { tracks: ['math', 'chess'], why: 'test', horizon: 'year', interest: 'other', interest_text: 'pottery' } });
-  assert.equal(begun.status, 201);
-  assert.equal(begun.data.user.guest, true);
-  assert.equal(begun.data.user.consent.ai_free_text, false);
-  assert.equal(begun.data.user.consent.camera_mic, false);
-  assert.equal(begun.data.user.consent.state, 'guest');
-
-  // Nothing typed or uploaded reaches a model.
-  assert.equal((await c('POST', '/api/tutor/chat', { messages: [{ role: 'user', content: 'hello' }] })).data.code, 'guest_save_first');
-  assert.equal((await c('POST', '/api/profile/survey', { interests: 'pottery' })).data.code, 'guest_save_first');
-  assert.equal((await c('POST', '/api/materials/paste', { text: 'notes' })).data.code, 'guest_save_first');
-  ok('guest: chat, survey text and uploads are refused before saving');
+  assert.equal(begun.status, 200);
+  const early = await c('GET', '/api/profile');
+  assert.ok(String(early.data.survey.interests).includes('pottery'), 'the interest reaches the lesson writers once they have agreed');
+  await c('POST', '/api/ob2/answers', { interest: 'other', interest_text: 'pots and glazes' });
+  const changed = await c('GET', '/api/profile');
+  assert.ok(String(changed.data.survey.interests).includes('pots and glazes') && !String(changed.data.survey.interests).includes('pottery'), 'changing it replaces it');
+  await c('POST', '/api/ob2/answers', { interest: 'other', interest_text: 'pottery' });
+  ok('agreement: a real choice, nothing without it, and it opens tailoring for the guest');
 
   const started = await c('POST', '/api/subject-placement/math/start', { mode: 'quick' });
   assert.ok(started.data.questions.length > 0, 'the walk runs for a guest');
@@ -169,6 +179,10 @@ async function main() {
   assert.ok(String(profile.data.survey.interests).includes('pottery'), 'the interest reaches the survey once they have saved');
   const exported = await c('GET', '/api/account/export');
   assert.equal(exported.data.onboarding_answers.length, 1, 'export covers the answers');
+  assert.equal(exported.data.learner_agreements.length, 1, 'export covers what was agreed');
+  assert.equal(exported.data.learner_agreements[0].version, ob2Version);
+  assert.ok(exported.data.learner_agreements[0].agreed_at, 'and when');
+  assert.deepEqual(exported.data.learner_agreements[0].covers, ['beta_terms', 'privacy_policy', 'outside_ai']);
   assert.equal(exported.data.onboarding_answers[0].why, 'test');
   const home = await c('GET', '/api/ob2/state');
   assert.equal(home.data.account, true);
@@ -184,6 +198,7 @@ async function main() {
   // A guest signing in to that account: the level check comes along if the account has none for the subject.
   const g = client(base);
   await g('POST', '/api/consent/age', { birth_month: 3, birth_year: 1991, country: 'US' });
+  await g('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version });
   await g('POST', '/api/ob2/begin', { answers: { tracks: ['chess'] } });
   await g('POST', '/api/ob2/first-lesson', { track: 'chess', grade_id: 'board_explorer' }).catch(() => {});
   const grades = (await g('GET', '/api/catalog?view=grades')).data.tracks.find((t) => t.id === 'chess').grades;
@@ -199,6 +214,7 @@ async function main() {
   const k = client(base);
   const kAge = await k('POST', '/api/consent/age', { birth_month: 6, birth_year: new Date().getFullYear() - 10, country: 'US' });
   assert.equal(kAge.data.route, 'parent');
+  assert.equal((await k('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version })).data.code, 'parent_decides', 'a child cannot agree for themselves');
   const noParent = await k('POST', '/api/ob2/begin', { nickname: 'Sam', answers: {} });
   assert.equal(noParent.status, 400);
   assert.equal(noParent.data.field, 'parent_email');
@@ -225,12 +241,22 @@ async function main() {
   const ob = require('../services/onboarding-v2'); // eslint-disable-line global-require
   const consent = require('../routes/consent'); // eslint-disable-line global-require
   assert.ok(consent.collectionNames().includes('onboarding_answers'), 'deletion knows the collection');
+  assert.ok(consent.collectionNames().includes('learner_agreements'), 'deletion knows what was agreed');
+  const limited = ob.createGuest({ country: 'US', needs_parent: false, under_13: false, birth_ym: '1990-01', checked_at: new Date().toISOString() });
+  assert.equal(consent.access(limited).state, 'guest', 'a row with no agreement stays limited');
+  assert.equal(consent.access(limited).ai_free_text, false);
+  const yes = ob.recordAgreement(limited, 'p');
+  assert.equal(consent.access(yes).state, 'full');
+  assert.equal(require('../config/subscriptions').canEditLevels(yes, {}), true, 'an agreed guest is tailored'); // eslint-disable-line global-require
+  assert.equal(db.find('learner_agreements', (r) => r.user_id === limited.id).length, 1);
+  db.update('users', limited.id, { guest_expires_at: new Date(Date.now() - 1000).toISOString() });
   const old = ob.createGuest({ country: 'US', needs_parent: false, under_13: false, birth_ym: '1990-01', checked_at: new Date().toISOString() });
   ob.saveAnswers(old, { why: 'work' });
   db.update('users', old.id, { guest_expires_at: new Date(Date.now() - 1000).toISOString() });
   const swept = ob.sweep();
   assert.ok(swept.guests_deleted >= 1);
   assert.equal(db.byId('users', old.id), null);
+  assert.equal(db.find('learner_agreements', (r) => r.user_id === limited.id).length, 0, 'what was agreed goes with the guest');
   assert.equal(ob.rowOf(old.id) || null, null, 'the answers go with the guest');
   ok('sweep: an idle guest and its answers are deleted');
 

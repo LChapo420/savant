@@ -44,7 +44,7 @@
   const gradeParts = (name) => String(name || '').split(/\s+[—–]\s+/);
 
   /* ── the shell ──────────────────────────────────────────── */
-  const ORDER = ['welcome', 'hello', 'age', 'learn', 'why', 'when', 'into', 'moment', 'parent', 'intro', 'level', 'result', 'building', 'ready', 'save', 'remind', 'done'];
+  const ORDER = ['welcome', 'hello', 'age', 'agree', 'declined', 'learn', 'why', 'when', 'into', 'moment', 'parent', 'intro', 'level', 'result', 'building', 'ready', 'save', 'remind', 'done'];
   const RULED = ORDER.filter((s) => s !== 'welcome');
 
   function shell() {
@@ -149,6 +149,8 @@
     const at = ORDER.indexOf(step);
     if (at < 0) return 'welcome';
     if (at > ORDER.indexOf('age') && !server.route) return 'age';
+    if ((step === 'agree' || step === 'declined') && (isChild() || server.agreed)) return 'learn';
+    if (at > ORDER.indexOf('declined') && !isChild() && !server.agreed) return 'agree';
     if (at > ORDER.indexOf('learn') && !S.a.tracks.length && !S.a.notes) return 'learn';
     if (at > ORDER.indexOf('moment') && !S.a.interest) return 'into';
     if (step === 'parent' && (!isChild() || server.guest)) return 'intro';
@@ -240,7 +242,7 @@
           back: 'hello',
           bubble: 'You already answered this one, so **we\'ll keep that answer.**',
           html: `${head('When were you born?')}<p class="ob-sub">Your first answer stands. <a href="/privacy">Privacy policy</a></p>`,
-          next: () => go('learn'),
+          next: () => go(isChild() || server.agreed ? 'learn' : 'agree'),
         };
       }
       return {
@@ -276,10 +278,49 @@
           server.route = out.route;
           S.route = out.route;
           keep();
-          go('learn');
+          go(out.route === 'parent' ? 'learn' : 'agree');
         },
       };
     },
+
+    /* A real choice: neither answer is picked, and either one is one tap. A child never sees this; their parent decides (routes/consent.js). */
+    agree: () => {
+      let pick = null;
+      return {
+        back: 'hello',
+        bubble: 'Before anything else, **this is your call.**',
+        ok: () => false,
+        html: `${head('Do you agree to these?')}
+          <div class="terms ob-body">
+            ${C.AGREEMENT.items.map((t) => `<div class="term"><span class="opt-icon">${I[t.icon]}</span><div><h2>${esc(t.title)}</h2><p>${esc(t.text)}${t.link ? ` <a href="${esc(t.link.href)}">${esc(t.link.label)}</a>` : ''}</p></div></div>`).join('')}
+          </div>
+          <fieldset class="opts ob-body"><legend class="sr">Your answer</legend>
+            ${opt({ type: 'radio', name: 'agree', value: 'agree', title: 'I agree to all three', cls: 'choice' })}
+            ${opt({ type: 'radio', name: 'agree', value: 'decline', title: 'I don\'t agree', cls: 'choice' })}
+          </fieldset>`,
+        bind: () => $$('input[name="agree"]').forEach((r) => r.addEventListener('change', () => { pick = r.value; ready(true); })),
+        next: async () => {
+          if (pick !== 'agree') return go('declined');
+          const out = await api('POST', '/api/ob2/agree', { decision: 'agree', version: C.AGREEMENT.version });
+          server.guest = true;
+          server.agreed = true;
+          server.route = 'self';
+          S.user = out.user && out.user.id;
+          keep();
+          return go('learn');
+        },
+      };
+    },
+
+    declined: () => ({
+      back: 'agree',
+      bubble: 'That\'s okay. **It\'s your choice.**',
+      cta: 'Leave',
+      alt: { label: 'I\'d like to choose again', run: () => go('agree') },
+      html: `${head('You can\'t use the beta without this.')}
+        <p class="ob-sub">Savant writes lessons with outside AI services, so it can't teach you without your agreement. Nothing about you has been saved to an account. <a href="/privacy">Read the privacy policy</a></p>`,
+      next: () => { forget(); location.href = '/'; return new Promise(() => {}); },
+    }),
 
     learn: () => ({
       back: 'hello',
@@ -392,7 +433,10 @@
           const other = $('#other');
           if (other) other.addEventListener('input', () => { S.a.interest_text = other.value; keep(); ready(okNow()); });
         },
-        next: () => go('moment'),
+        next: async () => {
+          if (server.guest && server.agreed) await api('POST', '/api/ob2/answers', S.a);
+          go('moment');
+        },
       };
     },
 
@@ -402,9 +446,9 @@
       const shownId = S.shown && C.INTERESTS.find((i) => i.id === S.shown) ? S.shown : (known ? known.id : 'soccer');
       const said = S.a.interest === 'other' ? (S.a.interest_text || '').trim() : '';
       const fallbackLine = said
-        ? `I don't have one written for ${said} yet, and I won't fake it. **Here's the idea with soccer,** so you can see what I mean.`
-        : "I don't have one written for that yet, and I won't fake it. **Here's the idea with soccer,** so you can see what I mean.";
-      const others = C.INTERESTS.filter((i) => i.id !== shownId).slice(0, 3);
+        ? `I haven't got one ready for ${said}, so here's soccer. **Your real lessons will use ${said}.**`
+        : "I haven't got one ready for that, so **here's soccer,** to show you what I mean.";
+      const others = C.INTERESTS.filter((i) => i.id !== shownId).slice(0, 2);
       return {
         back: 'into',
         bubble: known ? 'Same idea. **Written for you.** Tap another one to see it change.' : fallbackLine,
@@ -412,12 +456,12 @@
         cta: notesOnly() ? 'Save my progress' : 'Find my level',
         html: `${head('Same idea. Your version.')}
           <div class="ex" id="ex"></div>
-          <div class="ex-try"><span class="ex-try-label">See it with something else:</span>
-            ${[...C.INTERESTS.filter((i) => i.id === shownId), ...others].map((i) => `<button type="button" class="pill" data-id="${i.id}" aria-pressed="${i.id === shownId}">${I[i.icon]}${esc(i.title)}</button>`).join('')}
-          </div>
-          <p class="ob-fine">I wrote this one ahead of time, for this screen. ${isChild()
+          <p class="ob-fine ex-note">Written ahead of time for this screen. ${isChild()
             ? 'Once a parent allows it, your lessons can use what you\'re into too.'
-            : 'Nothing you\'ve told me has gone to an outside AI. Once you save your progress, your lessons can use what you\'re into too.'}</p>`,
+            : 'Your real lessons are written around what you\'re into.'}</p>
+          <div class="ex-try"><span class="ex-try-label">Try another:</span>
+            ${[...C.INTERESTS.filter((i) => i.id === shownId), ...others].map((i) => `<button type="button" class="pill" data-id="${i.id}" aria-pressed="${i.id === shownId}">${I[i.icon]}${esc(i.title)}</button>`).join('')}
+          </div>`,
         bind: () => {
           const show = (id) => {
             const pick = C.INTERESTS.find((i) => i.id === id);
@@ -727,7 +771,7 @@
     const e = server.enrollment || S.enrollment;
     return {
       back: hasLesson ? null : 'moment',
-      bubble: hasLesson ? 'Good work. Let\'s make sure it\'s **still here tomorrow.**' : 'Your notes go through an outside AI to become lessons, so **I need you to save first.**',
+      bubble: hasLesson ? 'Good work. Let\'s make sure it\'s **still here tomorrow.**' : 'Your notes stay with your account, so **save first,** then upload.',
       cta: 'Save my progress',
       ok: () => false,
       alt: { label: hasLesson ? 'Not yet, keep learning' : 'I already have an account', run: () => { location.href = hasLesson ? `/path?enrollment=${e.id}` : '/login?next=/start'; } },
@@ -737,7 +781,7 @@
           <label class="field"><span class="field-label">Email</span><input class="input" type="email" name="email" autocomplete="email" inputmode="email"></label>
           ${passwordField()}
         </div>
-        <p class="ob-fine">By saving you agree to how Savant uses your data, set out in the <a href="/privacy">privacy policy</a>.</p>
+        <p class="ob-fine">What you agreed to stays the same. <a href="/privacy">Privacy policy</a></p>
         ${hasLesson ? '<p class="ob-fine">Already have an account? <a href="/login?next=/start">Sign in</a>. Your level check comes with you, but this lesson\'s answers stay here and aren\'t added.</p>' : ''}`,
       bind: () => {
         bindPassword();
@@ -955,8 +999,7 @@
     if (server.guest) {
       if (server.lesson_opened) return 'save';
       if (server.enrollment) return 'ready';
-      if (notesOnly()) return 'save';
-      return 'intro';
+      return S.step && ORDER.includes(S.step) ? S.step : 'learn';
     }
     return S.step && ORDER.includes(S.step) ? S.step : 'welcome';
   }
