@@ -65,7 +65,7 @@ def parse(text):
         if name in ALLOWED:
             local[name] = ALLOWED[name]
             return name + paren
-        if len(name) > 3:
+        if len(name) > 2:
             raise ValueError("name not allowed: " + name)
         for ch in name:
             local[ch] = ALLOWED[ch] if ch in ("e", "E") else sp.Symbol(ch, real=True)

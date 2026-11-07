@@ -53,7 +53,7 @@ async function rule(sentence, facts) {
   const t0 = Date.now(); let pairsRun = 0;
   for (const r of rows) {
     const facts = factsOf(r.level); const lv = levels.get(r.level);
-    const bank = [...facts, ...lessonText(lv)];
+    const bank = [...facts, ...lessonText(lv).flatMap(S.sentencesOf)]; // sentences, so a passage stays short: whole blocks cost 3 s a pair and read worse
     const sents = sentences(r.bankText);
     const docs = sents.map((s) => ({ doc: S.fromBank(s, bank, 5).map((x) => x.text).join(' ') || 'none', claim: s }));
     const sc = await S.stage1(docs); pairsRun += docs.length; // eslint-disable-line no-await-in-loop

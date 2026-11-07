@@ -53,7 +53,7 @@ const rand = seeded(20261107);
 const res = { calibration: {}, groups: {} };
 
 const sets = [['dev', ['kimi31', 'grok43', 'glm_flash_zgpu']]];
-if (process.argv[2] !== 'dev') sets.push(['heldout', ['kimi31', 'grok43', 'glm_flash_gonka']]);
+if (process.argv[2] !== 'dev') sets.push(['heldout', ['kimi31', 'grok43', 'ds41_coral']]);
 for (const [set, readers] of sets) {
   const rows = plantedRows(set, readers);
   const seen = rows.filter((r) => r.a || r.b);
