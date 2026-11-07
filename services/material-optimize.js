@@ -305,6 +305,8 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
     // Test goal: stressed facts first, and what the material warns about, in its own words.
     const myFacts = factsOf.get(skill.id) || [];
     const traps = goal === 'test' ? myFacts.filter((f) => /\b(?:trap|mistake|never|not to be confused|common error|do not|don't|careful|avoid|beware|contraindicat)/i.test(f.text)).slice(0, 2).map((f) => `Watch out: ${f.text}`) : [];
+    // Nothing the material warns about here: what it stresses instead, said as what it is.
+    if (!traps.length && goal === 'test') { const top = myFacts.filter(stressedFact).sort((x, y) => y.weight - x.weight)[0]; if (top) traps.push(`Your material stresses this: ${top.text}`); }
     if (traps.length) paragraphs = [...paragraphs, ...traps];
     const stressedCount = myFacts.filter(stressedFact).length;
     const distinct = goal === 'core' ? myFacts.filter((f) => coreFacts.has(f.i)).length : myFacts.length;

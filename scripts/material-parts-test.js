@@ -100,7 +100,7 @@ function model({ rewrite = plain, facts = 'supported', example = 'Say two friend
     const everything = `${reading} ${[...v.skills.values()].flatMap((s) => s.aside).join(' ')}`;
     const missing = led.facts.filter((f) => !f.nums.size || [...f.nums].every((n) => everything.includes(n))).filter((f) => { const have = K.termSet(everything); return [...f.terms].filter((x) => !have.has(x)).length / f.terms.size > 0.3; });
     check(`${goal}: every fact of the material is in the reading or set aside on the page`, !missing.length, missing.map((f) => f.text));
-    const sents = [...v.skills.values()].flatMap((s) => [...s.paragraphs, ...s.key_points]).flatMap((p) => require('../services/material-factcheck').sentencesOf(p)).map((s) => s.replace(/^Watch out: /, ''));
+    const sents = [...v.skills.values()].flatMap((s) => [...s.paragraphs, ...s.key_points]).flatMap((p) => require('../services/material-factcheck').sentencesOf(p)).map((s) => s.replace(/^(?:Watch out|Your material stresses this): /, ''));
     check(`${goal}: every sentence served was already in the checked lesson or is the material's own`, sents.every(allowed), sents.filter((s) => !allowed(s)));
     if (goal !== 'core') check(`${goal}: every fact is in the reading itself`, v.stats.facts_in_reading === v.stats.facts, v.stats);
     check(`${goal}: every stressed fact is in the reading`, v.stats.stressed_in_reading === v.stats.stressed && v.stats.stressed > 0, v.stats);
