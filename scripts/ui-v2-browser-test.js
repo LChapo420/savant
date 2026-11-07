@@ -236,10 +236,16 @@ async function main() {
       await desk.page.mouse.up();
       await desk.page.waitForFunction(() => document.documentElement.classList.contains('tdock-in-call') || document.querySelector('.tdock-g.has-status') || document.documentElement.dataset.tdock, null, { timeout: 5000 });
       await desk.ctx.close();
-      const other = await open(ada, PHONE, `/path?enrollment=${ada.enrollment}`);
+      const other = await open(ada, PHONE, '/calendar');
       await other.page.waitForSelector('.site-header .tdock-g-btn');
       assert(await other.page.isVisible('.site-header .tdock-g-btn'), 'where no big giraffe stands, the small one stays in the top bar');
       await other.ctx.close();
+      const subject = await open(ada, PHONE, `/path?enrollment=${ada.enrollment}`);
+      await subject.page.waitForSelector('.u2-page-guide .u2-gh');
+      await subject.page.waitForSelector('.tdock-g-btn', { state: 'attached' });
+      await subject.page.tap('.u2-page-guide .u2-gh');
+      await subject.page.waitForFunction(() => document.documentElement.dataset.tdock);
+      await subject.ctx.close();
     });
 
     await t('The chat in the look: thin-border choice of top or bottom, the Send pill; a call fills the screen with the giraffe, talking mouth, and says how to end and switch (states set directly)', async () => {
