@@ -79,7 +79,8 @@ const post = (path, body, headers = {}) => get(path, {
 
   console.log('\nPages');
   const home = await get('/');
-  check('/ serves the app page', home.status === 200 && /<html/i.test(home.text));
+  // Sign-in only (BETA_SIGNIN_ONLY, on by default) sends a logged-out visitor to /login.
+  check('/ serves the app page, or goes to sign-in', (home.status === 200 && /<html/i.test(home.text)) || (home.status === 302 && /^\/login/.test(home.headers.get('location') || '')), `${home.status}`);
   const login = await get('/login');
   check('/login serves the sign-in page', login.status === 200 && /<html/i.test(login.text));
   check('security headers are on (CSP, nosniff)', !!home.headers.get('content-security-policy') && home.headers.get('x-content-type-options') === 'nosniff');
