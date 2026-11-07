@@ -961,6 +961,7 @@ function renderRubricResult(result) {
 
     host.setAttribute('data-view', 'question');
     progress();
+    window.scrollTo(0, 0); // a question starts at its top: under a tall board or a long verdict the page kept its scroll and hid the start of the next question
     Player.render(itemHost, item, {
       // Choose, then Check; the Check button is sticky at the bottom on a phone.
       // SPEED_FAST_ITEM: a multiple choice answer is one tap, in practice and checks only.

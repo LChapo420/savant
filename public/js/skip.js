@@ -162,6 +162,7 @@ App.mount(async () => {
     progress();
 
     const last = index >= items.length - 1;
+    window.scrollTo(0, 0);
     Player.render(itemHost, item, {
       label: 'Exam',
       // The coach stays off. It would walk someone to the answer, and a band

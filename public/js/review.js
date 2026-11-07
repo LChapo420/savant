@@ -215,6 +215,7 @@ App.mount(async () => {
     const itemHost = document.getElementById('item');
     progress();
     askedAt = Date.now();
+    window.scrollTo(0, 0);
     Player.render(itemHost, item, {
       label: WHY[item.review_reason] || null,
       // A memory check is answered unaided; the coach would turn it into a lesson.
