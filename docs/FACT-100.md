@@ -213,4 +213,6 @@ The recommended gate needs `FACT_GATE=on`, `FACT_CONFIRM=on`, `FACT_COMPUTE=on`,
 - Scoring is strict word matching, so a real catch can be missed. A pilot bank writer is one cheap model, not the production personal writers.
 - Spent about $14 on prepaid credit: Lyceum $10.60 (Kimi $9.80), Coral about $1.70, Grokified about $1, Munito and ZeroGPU about $0.40. Nothing on the Anthropic key.
 
+Checks: `node scripts/fact-100-test.js`, in the suite. Full suite: 214 steps, 1 failure, `consent-test` (a one-time link had already expired, cause not found). It passed twice alone with the suite's environment and this work doesn't touch consent. Nothing here is learner-facing, so there was nothing to click through.
+
 Evidence: `docs/fact-100/` (`heldout.json`, `confirm-heldout.json`, `rewrite-curve-heldout.json`, `parts.json`, `capture-recapture.json`, `real-recall.json`, `source-share.json`, `bank-coverage.json`, `bank-rewrite.json`, `bank-pilot.json`, `overlap.json`). Scripts: `scripts/fact-100/`.
