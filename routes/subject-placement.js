@@ -13,6 +13,7 @@
 const express = require('express');
 const curriculum = require('../config/curriculum');
 const rules = require('../config/subject-placement');
+const onboardingV2 = require('../services/onboarding-v2');
 const subjectPlacement = require('../services/subject-placement');
 const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
@@ -134,7 +135,7 @@ router.post('/:track/quit', requireAuth, limit('subject-placement-quit', 30, 60 
 
   const updated = await subjectPlacement.recommend(req.user.id, trackId);
   if (!updated) return res.status(503).json({ error: 'Your answers were saved, but the recommendation could not be written yet.' });
-  res.json({ already: false, quit: true, ...subjectPlacement.resultFor(trackId, updated) });
+  res.json({ already: false, quit: true, ...subjectPlacement.resultFor(trackId, onboardingV2.settleStart(req.user, trackId, updated)) });
 });
 
 /**
@@ -219,7 +220,7 @@ router.post('/:track/finish', requireAuth, limit('subject-placement-finish', 30,
     });
   }
 
-  res.json({ already: false, ...subjectPlacement.resultFor(trackId, updated) });
+  res.json({ already: false, ...subjectPlacement.resultFor(trackId, onboardingV2.settleStart(req.user, trackId, updated)) });
 });
 
 /**

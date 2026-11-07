@@ -1735,6 +1735,7 @@ function resultFor(trackId, placement) {
     chosen_grade_id: placement.chosen_grade_id || null,
     basis: basisOf(trackId, placement),
     walk_grade_id: placement.walk_grade_id || placement.recommended_grade_id || null,
+    from_age: !!placement.age_start && !(placement.adjustments || []).length, // onboarding-v2 settleStart: placed by age, and the learner hasn't moved it
     adjustments: (placement.adjustments || []).map((a) => ({ said: a.said, from: a.from, to: a.to, at: a.at })),
     grades: (placement.grade_ids || []).map((id) => ({ grade_id: id, name: rules.gradeName(trackId, id) })),
     scores: placement.scores || [],

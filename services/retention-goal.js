@@ -253,6 +253,25 @@ function limitInterval(eff, days, nowMs = Date.now(), finishedOn = null) {
   return { days: wanted, done: false };
 }
 
+/** How long each horizon lasts, in the words of plainGoal. */
+const HOW_LONG = { months: 'a few months', year: 'a year', years: 'about three years' };
+const longDate = (date) => new Date(startOf(date)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+
+/**
+ * One plain sentence about the goal a learner just picked, for the screen that opens their first lesson: what their reviews do for them, without
+ * the calendar's names. It says only what the plan does (datePlan's last two reviews; a horizon is counted from finishing when SR_GOAL_REVIEW is on).
+ */
+function plainGoal(eff) {
+  if (eff.status === 'forever') return 'Your reviews keep coming back over time to help you remember this for good.';
+  if (eff.status === 'horizon') return `Your reviews are timed to help you remember this for ${HOW_LONG[eff.horizon]}${goalReviewOn() ? ' after you finish' : ''}.`;
+  if (eff.status === 'date') {
+    if (eff.days_left === 0) return 'Your test is today, so no reviews are scheduled after it.';
+    if (eff.days_left === 1) return 'Your test is tomorrow, so you get one short review on the day.';
+    return `Your reviews are planned around your test on ${longDate(eff.test_date)}, with a last one the day before and a short one on the day.`;
+  }
+  return describe(eff).text;
+}
+
 /** What the learner is told: one plain sentence and the calendar types dropped, with why. */
 function describe(eff, { trackName = null } = {}) {
   const what = trackName ? `${trackName}: ` : '';
@@ -269,7 +288,7 @@ function describe(eff, { trackName = null } = {}) {
   }
   const list = dropped.map((t) => names[t]);
   const head = `${what}${HORIZONS[eff.horizon].label}.`;
-  if (!dropped.length) return { text: `${head} Your goal is long enough that every review on the long-term schedule still helps, so none is dropped.`, dropped: [] };
+  if (!dropped.length) return { text: `${what}${plainGoal(eff)}`, dropped: [] };
   return { text: `${head} The ${list.join(' and ')} review${list.length > 1 ? 's are' : ' is'} dropped: ${list.length > 1 ? 'they are' : 'it is'} spaced wider than this goal needs.`, dropped };
 }
 
@@ -417,7 +436,7 @@ function enforcerView(userId, anchor, now = Date.now()) {
 module.exports = {
   HORIZONS, CHOICES, DEFAULT_HORIZON, DEFAULT_SHOWN, SPACING, GAP_MAX, GAP_SHARE, MAX_AHEAD,
   normalize, normalizeAfter, effective, keptTypes, droppedTypes, isCalendarIntact, sizeFor, datePlan, reteachScale, reviewsWanted,
-  limitInterval, describe, goalCovers, coverKeeps,
+  limitInterval, describe, plainGoal, goalCovers, coverKeeps,
   GOAL_MEMORY, FINAL_MAX_DAYS, BACKWARD_DAYS, goalReviewOn, backwardOn, daysToGoalEnd, reviewWindow, reviewTargetFor, reviewNeeded, reviewContext,
   todayFor, forEnrollment, forMaterial, save, listFor, headline, enforcerView,
 };

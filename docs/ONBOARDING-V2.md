@@ -45,6 +45,12 @@ Changes, each forced:
 2. **Own notes only: step 7 and 8 do not happen before the account.** Uploads stay with an account, so those learners go 1 to 6, save, then upload. Child accounts do not see this option (`CHILD_MEDIA_UPLOAD`).
 3. **The in-grade placement comes after the first lesson, as an offer, rather than before it.** Step 8 says the lesson opens right away, and the old chain asked a second quiz first. The learner starts at the first teaching level of the grade the walk found (level 10 in most grades; levels 1 to 9 are practice, and nothing is marked cleared on the way, as with a placement). The last screen links to the existing retake ("skip what you know in this grade").
 4. **Only the Quick walk runs inside the flow.** Balanced and Accurate remain on `/subject-placement`.
+5. **A level check with too little to go on starts at the learner's age, not at an end of the scale.** The walk opens on the subject's first question and its belief is wide until it has answers, so "Stop here" or "I don't know" after a few questions put a 36-year-old on Preschool math, and one right answer then Stop put them on Senior Scholar. `settleStart` in `services/onboarding-v2.js` runs on the walk's result for learners in this flow; the walk itself is unchanged and its answer stays on the row as `walk_grade_id`.
+   - Enough to place someone: 6 real tries (not "I don't know"), or 3 right among 6 answers. Six is the number the walk wants before it calls someone a beginner.
+   - Not enough, 13 or older: the first grade of their school year (age minus 5), capped at 9th grade. The tutor says so on the result screen, and "Too easy", "Too hard" and picking a grade all still work.
+   - Not enough, under 13: a low result stays; a result above their age comes down to their age.
+   - Only subjects with school years in their grade names (math, English, reading). A beginner in Spanish, chess, piano, basketball, IQ or ACT starts at the start at any age.
+   - With the switch off, or for an account not in this flow, nothing changes: the old page still gives the walk's own result.
 
 ## 3. Under-13s and other under-consent-age learners
 
@@ -101,3 +107,4 @@ Not checked: Safari, Firefox and real phones (Chromium only); a real email reach
 - A guest signing in to an existing account keeps the level check but not lesson answers.
 - The agreement's wording needs reading; there is no separate terms page.
 - Turn on `COLD_FIRST_BLOCK` and `CORAL_LEARNER` with `ONBOARDING_V2`: "built around you" depends on them.
+- Starting level with too little evidence (section 2, item 5): the 9th-grade cap for adults, and six "I don't know" counting as no evidence rather than as a beginner, are judgement calls.

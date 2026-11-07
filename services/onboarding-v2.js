@@ -167,7 +167,7 @@ function applyGoals(user, e, row) {
       const saved = goals.save(user.id, 'enrollment', e.id, { horizon: row.horizon, test_date: row.test_date });
       if (!saved.error) {
         out.horizon = row.horizon;
-        out.summary = goals.describe(goals.effective(saved.row.retention_goal, goals.todayFor(user.id))).text;
+        out.summary = goals.plainGoal(goals.effective(saved.row.retention_goal, goals.todayFor(user.id)));
       } else out.error = saved.error;
     }
     const study = require('./study-goal');
@@ -180,6 +180,65 @@ function applyGoals(user, e, row) {
     out.error = 'not set';
   }
   return out;
+}
+
+// ── a level check that had too little to go on (docs/ONBOARDING-V2.md section 2) ─────────
+// The walk opens on the subject's first question and its belief starts wide, so a learner who stops after a few answers is placed at an end of the
+// scale on almost nothing. The walk is not changed: it still measures the same way and its own answer stays on the row (walk_grade_id). This only
+// decides whether the answers are enough to overrule the learner's age.
+/** Real tries (not "I don't know") that can overrule age: as many as the walk itself wants before it calls someone a beginner. */
+const ENOUGH_TRIES = 6;
+/** Or this many right, with "I don't know" above them: that is a real edge, as long as there are ENOUGH_TRIES answers in all. */
+const ENOUGH_RIGHT = 3;
+/** From this age the start follows age when the answers can't place them. Younger learners keep a low result: their age doesn't argue with it. */
+const TEEN_AGE = 13;
+/** The highest school year age alone starts anyone at: past it, not everyone has met the material, and "too easy" is one tap. */
+const START_YEAR_CAP = 9;
+
+/** The school year in a grade's name ("9th Grade, first half" is 9, "7th to 8th Grade" is 8), or null. Subjects with none aren't tied to age. */
+function schoolYearOf(name) {
+  const m = /(\d+)(?:st|nd|rd|th)(?:\s+to\s+(\d+)(?:st|nd|rd|th))?\s+Grade/i.exec(String(name || ''));
+  return m ? Number(m[2] || m[1]) : null;
+}
+
+/** The grade a learner of this age starts at when nothing else says where: the first of their school year, or null for a subject with no school years. */
+function gradeForAge(trackId, age) {
+  const rules = require('../config/subject-placement');
+  const ids = rules.gradesFor(trackId);
+  const years = ids.map((id) => schoolYearOf(rules.gradeName(trackId, id)));
+  if (!Number.isFinite(age) || !years.some((y) => y != null)) return null;
+  const year = Math.min(age - 5, START_YEAR_CAP); // a 6-year-old is in 1st grade
+  if (year < 1) return ids[0];
+  return ids[years.findIndex((y) => y != null && y >= year)] || null;
+}
+
+function enoughToPlace(evidence) {
+  const tries = evidence.filter((a) => !a.idk).length;
+  const right = evidence.filter((a) => a.correct).length;
+  return tries >= ENOUGH_TRIES || (right >= ENOUGH_RIGHT && evidence.length >= ENOUGH_TRIES);
+}
+
+/**
+ * Called on a walk's new result, for learners in this flow. With too little to go on: a teen or adult starts at the grade for their age; a younger
+ * learner keeps a low result and is only brought down from one above their age. Answers that really place someone, low or high, stand.
+ * Returns the placement to show.
+ */
+function settleStart(user, trackId, placement) {
+  if (!enabled() || !placement || !placement.recommended_grade_id || !rowOf(user.id)) return placement;
+  const sp = require('./subject-placement');
+  const ids = placement.grade_ids || [];
+  const walk = placement.recommended_grade_id;
+  const age = require('./boosters').ageOf(user);
+  const forAge = enoughToPlace(sp.evidenceOf(trackId, placement)) ? null : gradeForAge(trackId, age);
+  const moveTo = forAge && forAge !== walk && (age >= TEEN_AGE || ids.indexOf(forAge) < ids.indexOf(walk)) ? forAge : null;
+  if (!moveTo) return placement.age_start ? db.update('subject_placements', placement.id, { age_start: null }) : placement;
+  const name = require('../config/subject-placement').gradeName(trackId, moveTo);
+  return db.update('subject_placements', placement.id, {
+    recommended_grade_id: moveTo,
+    walk_grade_id: walk,
+    age_start: { from: walk, to: moveTo, age, at: iso() },
+    headline: `Start at ${name}. There weren't enough answers to place you, so this is based on your age, and the first lessons will check it.`,
+  });
 }
 
 /** The grade's first teaching level (a summary doesn't count), or null when it has none. */
@@ -293,5 +352,5 @@ function sweep(now = Date.now()) {
 }
 
 module.exports = {
-  ANSWERS, AGREEMENTS, AGREEMENT_VERSION, recordAgreement, INTERESTS, WHY, enabled, cleanAnswers, saveAnswers, createGuest, stateFor, firstLesson, applyInterest, absorbGuest, sweep, accountHome, touch, rowOf,
+  ANSWERS, AGREEMENTS, AGREEMENT_VERSION, recordAgreement, INTERESTS, WHY, enabled, cleanAnswers, saveAnswers, createGuest, stateFor, firstLesson, settleStart, gradeForAge, applyInterest, absorbGuest, sweep, accountHome, touch, rowOf,
 };

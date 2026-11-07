@@ -5,7 +5,8 @@
  *
  * Checks: off means nothing new is reachable; a guest has no outside-AI, upload or boosters access; a walk, an enrollment and goals survive a
  * failed and then a good claim on the same row; a child gives no email and gets the consent request first; export and deletion cover the new
- * data; an existing account is not sent through the flow; the pre-written examples are complete.
+ * data; an existing account is not sent through the flow; the pre-written examples are complete; a level check with too little to go on starts a
+ * teen or adult at their age, and real answers (and really young learners) keep the low level; the goal line is plain for every goal.
  */
 const assert = require('node:assert/strict');
 const fs = require('fs');
@@ -84,9 +85,148 @@ function contentChecks() {
   ok('pre-written examples: every interest, every idea, the sums and the verb forms');
 }
 
+/** A birth month and year that make this age today, in any month of the year. */
+function bornAged(age) {
+  const now = new Date();
+  return now.getUTCMonth() === 0
+    ? { birth_month: 12, birth_year: now.getUTCFullYear() - age - 1 }
+    : { birth_month: 1, birth_year: now.getUTCFullYear() - age };
+}
+
+/**
+ * One learner through the real check over HTTP, as the page does it: age, agreement (or the parent's email), then the Quick walk.
+ * `how` is 'right', 'wrong' or 'idk' ("I don't know" sends an empty answer), or a function of the answer's number. `stop` presses "Stop here" after that many.
+ */
+async function walkAs(base, { age, how, stop = null, track = 'math', retakeBy = null }) {
+  const sp = require('../services/subject-placement'); // eslint-disable-line global-require
+  const who = retakeBy || client(base);
+  const route = retakeBy ? null : (await who('POST', '/api/consent/age', { ...bornAged(age), country: 'US' })).data.route;
+  if (retakeBy) {
+    // the same learner, starting the check again
+  } else if (route === 'self') {
+    assert.equal((await who('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version })).status, 201);
+    await who('POST', '/api/ob2/begin', { answers: { tracks: [track] } });
+  } else {
+    assert.equal((await who('POST', '/api/ob2/begin', { nickname: 'Sam', parent_email: 'parent@example.test', answers: { tracks: [track] } })).status, 201);
+  }
+  const say = (grade, q, n) => {
+    const kind = typeof how === 'function' ? how(n) : how;
+    if (kind === 'idk') return '';
+    const stored = sp.questionsFor(track, grade)[q.index];
+    return kind === 'right' ? stored.answer : (q.choices || []).find((c) => c !== stored.answer) || 'not this';
+  };
+  const path = (rest) => `/api/subject-placement/${track}/${rest}`;
+  let out = (await who('POST', path('start'), { mode: 'quick', restart: !!retakeBy })).data;
+  let grade = out.grade_id;
+  let n = 0;
+  for (;;) {
+    const given = [];
+    for (const q of out.questions) {
+      if (stop != null && n >= stop) return { who, asked: n, result: (await who('POST', path('quit'), { grade_id: grade, answers: given })).data };
+      given.push({ index: q.index, answer: say(grade, q, n) });
+      n += 1;
+    }
+    const handed = (await who('POST', path('grade'), { grade_id: grade, answers: given })).data;
+    if (stop != null && n >= stop && handed.next_grade_id) return { who, asked: n, result: (await who('POST', path('quit'), { grade_id: handed.next_grade_id, answers: [] })).data };
+    if (handed.stopped || !handed.next_grade_id) return { who, asked: n, result: (await who('POST', path('finish'), {})).data };
+    out = handed;
+    grade = handed.next_grade_id;
+  }
+}
+
+async function startingLevelChecks(base) {
+  const FIRST = 'sense_of_quantity'; // Math, Preschool, ages 3-4
+  const ALGEBRA = 'algebra_1_part_a'; // Math, 9th Grade: where age alone starts an adult
+  const check = async (what, opts, expected, fromAge) => {
+    const out = await walkAs(base, opts);
+    assert.equal(out.result.recommended_grade_id, expected, `${what}: placed at ${out.result.recommended_grade_name} after ${out.asked}`);
+    assert.equal(out.result.from_age, fromAge, `${what}: says whether age placed them`);
+    return out;
+  };
+
+  // The screenshot's path: an adult, a few answers, "Stop here and see my level".
+  const stopped = await check('adult, 3 wrong, stop', { age: 36, how: 'wrong', stop: 3 }, ALGEBRA, true);
+  assert.equal(stopped.result.walk_grade_id, FIRST, 'what the walk found stays on the record');
+  const opened = await stopped.who('POST', '/api/ob2/first-lesson', { track: 'math', grade_id: stopped.result.recommended_grade_id });
+  assert.ok(!/preschool/i.test(opened.data.enrollment.grade_name), 'and the first lesson is not a preschool one');
+  const harder = await stopped.who('POST', '/api/subject-placement/math/adjust', { said: 'too_hard' });
+  assert.equal(harder.data.recommended_grade_id, 'transformations_pythagorean_theorem_and_data_models', '"too hard" still moves it');
+  assert.equal(harder.data.from_age, false, 'and the learner\'s word replaces "based on your age"');
+  await check('adult, one wrong, stop', { age: 36, how: 'wrong', stop: 1 }, ALGEBRA, true);
+  await check('adult, "I don\'t know", stop', { age: 36, how: 'idk', stop: 2 }, ALGEBRA, true);
+  await check('adult, "I don\'t know" until the walk ends', { age: 36, how: 'idk' }, ALGEBRA, true);
+  await check('adult, one right, stop (was Senior Scholar)', { age: 36, how: 'right', stop: 1 }, ALGEBRA, true);
+  await check('teen of 15, 2 wrong, stop', { age: 15, how: 'wrong', stop: 2 }, ALGEBRA, true);
+  await check('teen of 13, 2 wrong, stop', { age: 13, how: 'wrong', stop: 2 }, 'exponents_linear_functions_and_systems', true);
+  await check('adult in English, stop', { age: 36, how: 'wrong', stop: 2, track: 'english' }, 'proficient', true);
+  ok('a teen or adult with little or no evidence starts at their age, on the same API the page uses');
+
+  // Answers that really place someone low stand, whatever their age.
+  await check('adult, wrong until the walk ends', { age: 36, how: 'wrong' }, FIRST, false);
+  const someRight = await walkAs(base, { age: 36, how: (n) => (n < 4 ? 'right' : 'idk') });
+  const ids = someRight.result.grades.map((g) => g.grade_id);
+  assert.ok(ids.indexOf(someRight.result.recommended_grade_id) < ids.indexOf(ALGEBRA), `four right then "I don't know" stays low: ${someRight.result.recommended_grade_name}`);
+  assert.equal(someRight.result.from_age, false);
+  const strong = await walkAs(base, { age: 36, how: 'right' });
+  assert.equal(strong.result.recommended_grade_id, 'senior_scholar', 'and all right to the end still reaches the top');
+  assert.equal(strong.result.from_age, false);
+  ok('real answers keep their result: an adult who gets them wrong stays low, one who gets them right goes to the top');
+
+  // Really young learners keep the low level.
+  await check('a 4-year-old, 3 wrong, stop', { age: 4, how: 'wrong', stop: 3 }, FIRST, false);
+  await check('a 9-year-old, 2 wrong, stop', { age: 9, how: 'wrong', stop: 2 }, FIRST, false);
+  await check('a 12-year-old, wrong to the end', { age: 12, how: 'wrong' }, FIRST, false);
+  await check('an 8-year-old, one right, stop (was Senior Scholar)', { age: 8, how: 'right', stop: 1 }, 'multiplication_and_division', true);
+  ok('under 13: a low result stays; one lucky answer no longer jumps past their age');
+
+  // Subjects with no school years aren't tied to age: a beginner at any age starts at the start.
+  await check('adult beginner in Spanish, stop', { age: 36, how: 'idk', stop: 2, track: 'spanish' }, 'entry', false);
+  const ob = require('../services/onboarding-v2'); // eslint-disable-line global-require
+  for (const t of ['iq', 'act', 'chess', 'piano', 'basketball', 'spanish']) assert.equal(ob.gradeForAge(t, 36), null, `${t} is not tied to age`);
+  assert.equal(ob.gradeForAge('reading', 36), 'proficient_reader');
+  assert.equal(ob.gradeForAge('math', 4), FIRST);
+  // A retake with real answers takes "based on your age" away again.
+  const retake = await walkAs(base, { how: 'wrong', retakeBy: stopped.who });
+  assert.equal(retake.result.recommended_grade_id, FIRST);
+  assert.equal(retake.result.from_age, false);
+  // A learner's own pick is theirs.
+  const own = await stopped.who('POST', '/api/ob2/first-lesson', { track: 'math', grade_id: FIRST });
+  assert.equal(own.data.enrollment.grade_id, FIRST);
+  ok('Spanish beginners start at the start, and picking a grade by hand still works');
+}
+
+function goalWordingChecks() {
+  const goals = require('../services/retention-goal'); // eslint-disable-line global-require
+  const today = '2026-11-07';
+  const line = (goal) => goals.plainGoal(goals.effective({ set_on: today, ...goal }, today));
+  const lines = {
+    months: line({ horizon: 'months' }),
+    year: line({ horizon: 'year' }),
+    years: line({ horizon: 'years' }),
+    forever: line({ horizon: 'forever' }),
+    date: line({ horizon: 'date', test_date: '2027-02-06' }),
+    tomorrow: line({ horizon: 'date', test_date: '2026-11-08' }),
+    today: line({ horizon: 'date', test_date: today }),
+  };
+  assert.equal(lines.year, 'Your reviews are timed to help you remember this for a year after you finish.');
+  assert.equal(lines.months, 'Your reviews are timed to help you remember this for a few months after you finish.');
+  assert.equal(lines.years, 'Your reviews are timed to help you remember this for about three years after you finish.');
+  assert.equal(lines.forever, 'Your reviews keep coming back over time to help you remember this for good.');
+  assert.equal(lines.date, 'Your reviews are planned around your test on February 6, 2027, with a last one the day before and a short one on the day.');
+  for (const [name, text] of Object.entries(lines)) {
+    assert.equal((text.match(/[.!?]/g) || []).length, 1, `${name}: one sentence: ${text}`);
+    assert.ok(!/dropped|long-term|schedule\b.*helps|semi-weekly|bi-weekly|compressed/i.test(text), `${name}: no calendar talk: ${text}`);
+  }
+  // The same line reaches the settings page, where a goal drops nothing.
+  assert.equal(goals.describe(goals.effective({ set_on: today, horizon: 'year' }, today)).text, lines.year);
+  assert.deepEqual(goals.describe(goals.effective({ set_on: today, horizon: 'year' }, today)).dropped, []);
+  ok('goal line: one plain sentence for every goal');
+}
+
 async function main() {
   if (fs.existsSync(path.join(ROOT, 'data', 'db.json'))) fs.copyFileSync(path.join(ROOT, 'data', 'db.json'), dbFile);
   contentChecks();
+  goalWordingChecks();
 
   // ── off ──
   let child = await server(6891, { ONBOARDING_V2: '' });
@@ -149,6 +289,7 @@ async function main() {
   const again = await c('POST', '/api/ob2/first-lesson', { track: 'math', grade_id: quit.data.recommended_grade_id });
   assert.equal(again.data.enrollment.id, first.data.enrollment.id, 'a double tap makes one enrollment');
   assert.equal(first.data.goal.horizon, 'year');
+  assert.equal(first.data.goal.summary, 'Your reviews are timed to help you remember this for a year after you finish.');
   const state = await c('GET', '/api/ob2/state');
   assert.equal(state.data.enrollment.id, first.data.enrollment.id);
   assert.equal(state.data.answers.interest_text, 'pottery');
@@ -233,6 +374,8 @@ async function main() {
   assert.equal(kClaim.data.user.email, null, 'a child email is never kept');
   assert.equal(kClaim.data.user.consent.state, 'pending');
   ok('child: parent asked first, no email, no free text, gates hold before and after the login is made');
+
+  await startingLevelChecks(base);
 
   await stop(child);
 

@@ -581,7 +581,9 @@
       const pct = grades.length > 1 ? (at / (grades.length - 1)) * 100 : 50;
       return {
         back: null,
-        bubble: 'Your first lessons **check this too,** so it doesn\'t have to be perfect.',
+        bubble: r.from_age
+          ? 'I didn\'t get enough answers to place you, so this is **based on your age.** Your first lessons check it.'
+          : 'Your first lessons **check this too,** so it doesn\'t have to be perfect.',
         mood: 'happy',
         cta: 'That works',
         html: `<span class="ob-eyebrow">${esc(trackName())}</span>${head(`Start at ${name || 'the beginning'}.`, band || '')}
