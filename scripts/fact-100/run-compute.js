@@ -16,7 +16,7 @@ const call = async (system, user, schema, schemaName, maxTokens) => { const r = 
 (async () => {
   await C.runChecker(name, SET, async (lv) => {
     const r = await F.check({ context: L.contextOf(lv), blocks: lv.blocks, checks: lv.checks, call });
-    return { flags: r.flags, cost: r.cost, statements: r.statements, tally: r.tally, blindTried: r.blindTried, ms: r.ms };
+    return { flags: r.flags, cost: r.cost, statements: r.statements, tally: r.tally, blindTried: r.blindTried, ms: r.ms, falseStatements: r.falseStatements };
   }, { par: Number(PAR), filter: (x) => x.track === 'math', limit: Number(LIMIT) });
   const raw = C.readRaw(name, SET).filter((r) => r.read);
   const tb = C.loadSet(SET);

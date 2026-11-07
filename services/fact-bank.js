@@ -134,7 +134,7 @@ function illustrationCheck(text, { allowedNames = [], allowed = new Set() } = {}
       if (t.type === 'year') problems.push({ span: span.slice(0, 120), problem: `a year (${t.raw}) in an illustration` });
       if (t.type === 'name' && !names.has(t.value) && !allowed.has(keyOf(t))) problems.push({ span: span.slice(0, 120), problem: `a name not in the bank or the learner's interests (${t.raw})` });
     }
-    if (/\b(always|never|every|all|in fact|studies show|research|scientists|historically|the world's|the largest|the first|invented|discovered)\b/i.test(span)) problems.push({ span: span.slice(0, 120), problem: 'a general claim in an illustration' });
+    if (/\b(always|never|in fact|studies show|research|scientists|historically|the world's|invented|discovered)\b/i.test(span)) problems.push({ span: span.slice(0, 120), problem: 'a general claim in an illustration' });
   }
   return problems;
 }

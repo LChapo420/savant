@@ -45,7 +45,7 @@ ALLOWED = {
 SAFE_CHARS = re.compile(r"^[0-9A-Za-z+\-*/^().,\s%]*$")
 NAME = re.compile(r"[A-Za-z]+")
 TRANSFORMS = standard_transformations + (implicit_multiplication_application, convert_xor)
-TIMEOUT_NOTE = "unknown"
+FUNC_CALL = re.compile(r"\b[fghspqvFGHP]\s*\(")
 
 
 def clean(text):
@@ -167,7 +167,12 @@ def check(st):
             return None
         return same(a, b, bool(st.get("approx")), st["rhs"])
     if k == "identity":  # a general rule, true for every value of its letters
-        return same(parse(st["lhs"]), parse(st["rhs"]))
+        if FUNC_CALL.search(str(st["lhs"]) + " " + str(st["rhs"])):
+            return None  # f(x), s(1 + h): a function named in the lesson, which this language cannot see inside
+        a, b = parse(st["lhs"]), parse(st["rhs"])
+        if a.is_Symbol or b.is_Symbol:
+            return None  # new = old * 1.2, m = rise / run: a definition of a letter, not a claim about values
+        return same(a, b)
     if k == "compare":
         a, b = parse(st["a"]), parse(st["b"])
         op = str(st["op"]).replace("≤", "<=").replace("≥", ">=").replace("==", "=")
@@ -175,6 +180,8 @@ def check(st):
         return {"<": d < 0, ">": d > 0, "<=": d <= 0, ">=": d >= 0, "=": abs(d) < 1e-20, "!=": abs(d) >= 1e-20}[op]
     if k == "substitute":
         vals = {sp.Symbol(n, real=True): parse(v) for n, v in st["values"].items()}
+        if FUNC_CALL.search(str(st["expr"])) or (parse(st["expr"]).free_symbols - set(vals)):
+            return None  # the expression still has an unknown in it
         return same(parse(st["expr"]).subs(vals), parse(st["result"]), bool(st.get("approx")), st["result"])
     if k == "solve":
         got = real_set(st["equation"], st.get("var", "x"))

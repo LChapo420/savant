@@ -119,7 +119,8 @@ async function blindChecks(answers, checks) {
     const key = keyText(c);
     if (!key) continue;
     const opts = optionTexts(c);
-    const candidates = [{ text: key, isKey: true }, ...opts.filter((o) => o && o !== key).map((text) => ({ text, isKey: false }))];
+    if (numbersIn(key).length !== 1) continue; // "1 ten and 3 ones" is not the number 1: only a key with one plain number can be compared
+    const candidates = [{ text: key, isKey: true }, ...opts.filter((o) => o && o !== key && numbersIn(o).length === 1).map((text) => ({ text, isKey: false }))];
     candidates.forEach((cand, n) => {
       numbersIn(cand.text).slice(0, 6).forEach((num, m) => {
         if (a.value) stmts.push({ id: `${a.check}:${n}:${m}`, type: 'equal', lhs: a.value, rhs: String(num), approx: /\./.test(String(num)), check: Number(a.check), isKey: cand.isKey, text: cand.text });
@@ -144,6 +145,20 @@ async function blindChecks(answers, checks) {
   return { flags, tried: byCheck.size, statements: stmts.length };
 }
 
+/** Text the lesson marks as wrong on purpose (an audit line with isError true): a transcriber sometimes lists it anyway. */
+function meantWrong(blocks, quote) {
+  const q = String(quote || '').toLowerCase().slice(0, 40);
+  if (!q) return false;
+  let found = false;
+  const walk = (o) => {
+    if (found || !o || typeof o !== 'object') return;
+    if (o.isError === true && JSON.stringify(o).toLowerCase().includes(q)) { found = true; return; }
+    for (const v of Object.values(o)) walk(v);
+  };
+  for (const b of blocks || []) walk(b.data);
+  return found;
+}
+
 /** `call(system, user, schema, schemaName, maxTokens)` is the cheap model, passed in by the caller so its ledger counts it. */
 async function check({ context, blocks, checks, call }) {
   const t0 = Date.now();
@@ -158,13 +173,13 @@ async function check({ context, blocks, checks, call }) {
   const flags = [];
   statements.forEach((s, i) => {
     const r = results[i] || {};
-    if (r.verdict === 'false') flags.push({ where: s.where, claim: s.quote, why: `Recomputed by SymPy: this ${s.type} does not hold (${JSON.stringify({ lhs: s.lhs, rhs: s.rhs, expr: s.expr, result: s.result, equation: s.equation, solutions: s.solutions, a: s.a, b: s.b })})`, truth: '', certain: true, rule: `compute_${s.type}` });
+    if (r.verdict === 'false' && !meantWrong(blocks, s.quote)) flags.push({ where: s.where, claim: s.quote, why: `Recomputed by SymPy: this ${s.type} does not hold (${JSON.stringify({ lhs: s.lhs, rhs: s.rhs, expr: s.expr, result: s.result, equation: s.equation, solutions: s.solutions, a: s.a, b: s.b })})`, truth: '', certain: true, rule: `compute_${s.type}` });
   });
   const blind = await blindChecks((bl.data && bl.data.answers) || [], checks || []);
   flags.push(...blind.flags);
   const tally = { true: 0, false: 0, unknown: 0 };
   results.forEach((r) => { tally[r.verdict] = (tally[r.verdict] || 0) + 1; });
-  return { flags, statements: statements.length, tally, blindTried: blind.tried, cost, ms: Date.now() - t0 };
+  return { flags, statements: statements.length, tally, blindTried: blind.tried, cost, ms: Date.now() - t0, falseStatements: statements.filter((s, i) => (results[i] || {}).verdict === 'false') };
 }
 
 module.exports = { isOn, check, compute, render, renderBlind, TRANSCRIBE_SYSTEM, BLIND_SYSTEM, TRANSCRIBE_SCHEMA, BLIND_SCHEMA };
