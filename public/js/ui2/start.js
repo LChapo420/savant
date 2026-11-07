@@ -167,7 +167,8 @@
     X.$('.ob-top').appendChild(count);
     X.$('#wordmark').innerHTML = window.U2Look.wordmark(30);
     X.$('#wordmark').setAttribute('aria-label', 'Savant');
-    // Each copy of the giraffe its own clip id, as on the app's pages.
+    // Its own clip id: the tutor dock adds a second copy of the giraffe higher up the page, and the first id on a page is the one that counts.
+    window.U2Look.giraffe(tutorEl());
     window.U2Look.bind(tutorEl(), {
       noTutor: () => {
         // No tutor for this learner yet (a guest, or the server says off). Say so, once, rather than do nothing.
@@ -243,6 +244,8 @@
         if (!SUBJECT_ICONS.includes(b.value)) return;
         const slot = b.closest('label').querySelector('.opt-icon');
         if (slot) { slot.innerHTML = icon(b.value, 22); slot.style.setProperty('--subject', `var(--s-${b.value})`); }
+        const title = b.closest('label').querySelector('.opt-title');
+        if (title && title.textContent === 'Mathematics') title.textContent = 'Math'; // the mockup's word; the pill has no room for the long one
       });
     }
     syncTask();

@@ -138,6 +138,8 @@
     }
     const ask = box.querySelector('[data-act="ask"]');
     if (ask) ask.textContent = 'Why?';
+    const go = box.querySelector('[data-act="next"]');
+    if (go && go.textContent.trim() === 'Next question') go.textContent = 'Next';
     const report = box.querySelector('[data-act="report"]');
     if (report) {
       report.setAttribute('aria-label', 'Report a problem');
@@ -300,6 +302,7 @@
 
   function start() {
     if (window.MutationObserver) new MutationObserver(queue).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+    window.addEventListener('resize', queue);
     queue();
   }
   if (document.body) start(); else document.addEventListener('DOMContentLoaded', start);

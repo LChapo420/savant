@@ -158,7 +158,7 @@ html[data-ui2] .u2-a { display: inline-block; padding: 6px 0; font-size: 15px; f
 html[data-ui2] #tutor-host .assist-chat { display: none; }
 
 /* A subject: the real card from js/dashboard.js, as one raised row. The whole row opens the subject; its catch-up rows and check links stay their own targets. */
-html[data-ui2] .subject-cards { display: grid; gap: 10px; }
+html[data-ui2] .subject-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 html[data-ui2] .subject-card { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr) 72px 18px; gap: 0 12px; align-items: center; min-height: 58px; padding: 8px 12px 8px 14px; background: var(--page); border: 1.5px solid var(--line); border-radius: 18px; box-shadow: 0 4px 0 var(--opt-edge); margin: 0; transition: transform .07s, box-shadow .07s; }
 html[data-ui2] .subject-card:hover { background: var(--page); transform: none; box-shadow: 0 4px 0 var(--opt-edge); }
 html[data-ui2] .subject-card:active { transform: translateY(4px); box-shadow: none; }
@@ -262,6 +262,9 @@ html[data-ui2] .choices:has(.correct) .choice:not(.correct):not(.wrong) { color:
   html[data-ui2] .choice:not(.correct):not(.wrong):not(.selected) .key { color: var(--ink-3); font-family: var(--num); font-size: 13px; }
 }
 
+/* The coach's offer: a second action, thin border. */
+html[data-ui2] .player [data-act="coach"] { min-height: 44px; height: auto; margin-top: 14px; padding: 8px 16px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--page); color: var(--ink); box-shadow: none; font: 700 15px/1.2 var(--font); }
+
 /* The answer's words are in the giraffe's bubble; the box under the page keeps the buttons. On a screen with no giraffe (no player head), it stays a tinted sheet. */
 html[data-ui2] .verdict:has(.verdict-actions) { position: relative; margin: 14px 0 0; padding: 16px 20px; border: 0; border-radius: 18px; background: var(--well); color: var(--ink); box-shadow: none; }
 html[data-ui2] .verdict-correct:has(.verdict-actions) { background: var(--right-tint); }
@@ -305,7 +308,7 @@ html[data-ui2] .session-player .check-bar, html[data-ui2] .player .check-bar { b
 html[data-ui2] .session-player .check-bar .btn { min-height: 56px; border-radius: 999px; }
 
 /* "Go to home" on the upload page when a learner comes from the onboarding. */
-html[data-ui2] #u2-after-upload { position: sticky; bottom: 0; z-index: 10; margin: 18px -20px 0; padding: 14px 24px 20px; background: var(--page); }
+html[data-ui2] #u2-after-upload { position: sticky; bottom: 0; z-index: 10; margin: 18px 0 0; padding: 14px 16px 20px; background: var(--page); }
 
 /* ── tablet and desktop (design-refs/ui-v4-mockups/sheet-large.png): one centred column, 640 then 960 px; buttons 260 to 360 px, never full width; options in a grid by width. ── */
 @media (min-width: 768px) {
@@ -338,6 +341,7 @@ html[data-ui2] #u2-after-upload { position: sticky; bottom: 0; z-index: 10; marg
 }
 @media (min-width: 1025px) {
   html[data-ui2] main.page:has(.player) .wrap { max-width: 960px; }
+  html[data-ui2] .player, html[data-ui2] .session-player { max-width: none; }
   /* Home: the giraffe beside the one task, nothing else. */
   html[data-ui2] .u2-focus { flex-direction: row; justify-content: center; align-items: center; gap: 44px; max-width: 960px; padding: 0 24px 24px; }
   html[data-ui2] .u2-big { flex: none; width: 360px; height: min(70vh, 560px); max-height: none; }

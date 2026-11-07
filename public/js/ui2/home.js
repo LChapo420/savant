@@ -71,6 +71,7 @@
       path: whole ? whole.getAttribute('href') : null,
     };
   };
+  const shortName = (name) => (name === 'Mathematics' ? 'Math' : name);
   const capital = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 
   async function focusOf() {
@@ -114,11 +115,11 @@
     const note = sameAsLead && lead.detail && !/^0 of /.test(lead.detail) ? ` ${lead.detail}` : '';
     return {
       icon: symbol,
-      eyebrow: `${e ? `${e.track.name}, ` : ''}${first.kind === 'catchup' ? 'catch-up ' : ''}level ${first.level}`,
+      eyebrow: `${e ? `${shortName(e.track.name)}, ` : ''}${first.kind === 'catchup' ? 'catch-up ' : ''}level ${first.level}`,
       title,
       detail: note.trim(),
       href: first.href,
-      label,
+      label: label.replace(/^Start lesson \d+$/, 'Start lesson'),
       strong: true,
       path,
       block: first,
@@ -129,7 +130,7 @@
   /** The line under the button: what comes after, in the mockup's few words. */
   const nextWords = (b) => {
     const e = ((progress && progress.enrollments) || []).find((x) => x.id === b.enrollmentId);
-    return b.kind !== 'break' && b.kind !== 'review' && !b.enforcer && !b.placement && e ? e.track.name : stepName(b);
+    return b.kind !== 'break' && b.kind !== 'review' && !b.enforcer && !b.placement && e ? shortName(e.track.name) : stepName(b);
   };
   let homeGiraffe = null;
   function giraffeInto(slot) {

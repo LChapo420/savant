@@ -1,6 +1,6 @@
 /**
- * UI_V2 (docs/UI-V2.md), without a browser: with the flag off every touched page is the file on disk, byte for byte; with it on only the three additions appear;
- * pages outside the list are never changed; no existing file under public/ differs from the branch's base; every token pair passes its contrast minimum.
+ * UI_V2 (docs/UI-V2.md), without a browser: with the flag off every touched page, /start and its script are the files on disk, byte for byte; with it on only the additions appear;
+ * pages outside the list are never changed; no existing file under public/ differs from main; every token pair passes its contrast minimum; every hook still fits js/start.js.
  *
  *   node scripts/ui-v2-test.js
  *
@@ -14,7 +14,8 @@ const crypto = require('crypto');
 const { spawn, execSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
-const BASE_COMMIT = '34c90a2'; // where this work started: main plus tutor-giraffe
+const TUTOR_GIRAFFE_MERGE = '34c90a2'; // this branch took tutor-giraffe before main did
+const BASE_COMMIT = () => execSync('git merge-base HEAD main', { cwd: ROOT, encoding: 'utf8' }).trim(); // what this branch last took from main
 const ui = require('../services/ui-v2');
 
 let passed = 0;
@@ -25,18 +26,27 @@ const sha = (b) => crypto.createHash('sha256').update(b).digest('hex');
 function contrast() {
   const css = fs.readFileSync(path.join(ROOT, 'public', 'css', 'ui2', 'tokens.css'), 'utf8');
   const blocks = css.split(':root[data-ui2][data-mode="dark"]');
-  const read = (txt) => Object.fromEntries([...txt.matchAll(/--([a-z0-9-]+):\s*(#[0-9a-f]{6})\s*;/g)].map((m) => [m[1], m[2]]));
+  const read = (txt) => Object.fromEntries([...txt.matchAll(/--([a-z0-9-]+):\s*(#[0-9a-f]{6}|oklch\([^)]*\)|var\(--[a-z0-9-]+\))\s*;/g)].map((m) => [m[1], m[2]]));
   const light = read(blocks[0]);
   const dark = { ...light, ...read(blocks.slice(1).join(' ')) };
-  const lum = (hex) => {
-    const v = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
-    return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+  const linear = (c, set) => {
+    const v = /^var\(--([a-z0-9-]+)\)$/.exec(c);
+    if (v) return linear(set[v[1]], set);
+    if (c[0] === '#') return [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16) / 255).map((x) => (x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4));
+    const [L, C, H] = c.match(/[\d.]+/g).map(Number);
+    const p = C * Math.cos((H * Math.PI) / 180);
+    const q = C * Math.sin((H * Math.PI) / 180);
+    const l = (L + 0.3963377774 * p + 0.2158037573 * q) ** 3;
+    const m = (L - 0.1055613458 * p - 0.0638541728 * q) ** 3;
+    const k = (L - 0.0894841775 * p - 1.291485548 * q) ** 3;
+    return [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * k, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * k, -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * k].map((x) => Math.min(1, Math.max(0, x)));
   };
-  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
-  const PAIRS = [['ink', 'page', 4.5], ['ink', 'card', 4.5], ['ink', 'well', 4.5], ['ink-2', 'page', 4.5], ['ink-2', 'card', 4.5], ['ink-2', 'well', 4.5], ['ink-3', 'page', 4.5], ['ink-3', 'card', 4.5], ['ink', 'sel', 4.5], ['on-action', 'action', 4.5], ['good', 'good-wash', 4.5], ['bad', 'bad-wash', 4.5], ['ink', 'good-wash', 4.5], ['ink', 'bad-wash', 4.5], ['ink-2', 'good-wash', 3], ['ink-2', 'bad-wash', 3], ['bar-fill', 'bar-track', 3], ['sel-line', 'card', 3], ['on-mark', 'good', 3], ['on-mark', 'bad', 3], ['focus', 'page', 3]];
+  const lum = (c, set) => { const v = linear(c, set); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
+  const ratio = (a, b, set) => { const [x, y] = [lum(a, set), lum(b, set)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+  const PAIRS = [['ink', 'page', 4.5], ['ink', 'card', 4.5], ['ink', 'well', 4.5], ['ink-2', 'page', 4.5], ['ink-2', 'card', 4.5], ['ink-2', 'well', 4.5], ['ink-3', 'page', 4.5], ['ink-3', 'card', 4.5], ['ink', 'sel', 4.5], ['on-action', 'action', 4.5], ['good', 'good-wash', 4.5], ['bad', 'bad-wash', 4.5], ['ink', 'good-wash', 4.5], ['ink', 'bad-wash', 4.5], ['ink-2', 'good-wash', 3], ['ink-2', 'bad-wash', 3], ['bar-fill', 'bar-track', 3], ['sel-line', 'card', 3], ['on-mark', 'good', 3], ['on-mark', 'bad', 3], ['focus', 'page', 3], ['act-text', 'act-tint', 4.5], ['right-text', 'right-tint', 4.5], ['wrong-text', 'wrong-tint', 4.5], ['ink', 'right-tint', 4.5], ['ink', 'wrong-tint', 4.5], ['on-act', 'act', 4.5], ['ink-3', 'well-2', 3], ['act', 'page', 3], ['act-edge', 'page', 3]];
   for (const [mode, set] of [['light', light], ['dark', dark]]) {
     for (const [fg, bg, min] of PAIRS) {
-      const r = ratio(set[fg], set[bg]);
+      const r = ratio(set[fg], set[bg], set);
       assert(r >= min, `${mode}: ${fg} on ${bg} is ${r.toFixed(2)}, needs ${min}`);
     }
   }
@@ -44,7 +54,7 @@ function contrast() {
 
 async function withServer(flag, port, fn) {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ui2-test-'));
-  const env = { ...process.env, PORT: String(port), NODE_ENV: 'development', DB_FILE: path.join(tmp, 'db.json'), HOLDOUT_DIR: tmp, XKIRO_LEARNER_UNTIL: '2000-01-01T00:00:00Z', FACT_CHECK_ALL: '0', MUNITO_LEARNER: 'off', CORAL_LEARNER: 'off', GLADIA_LEARNER: 'off', LYCEUM_LEARNER: 'off', GONKA_LEARNER: 'off', GROKIFIED_LEARNER: 'off', UPLOAD_AUTOBUILD: 'off', SPANISH_WRITE_AHEAD: 'off' };
+  const env = { ...process.env, ONBOARDING_V2: 'on', BETA_GATE: '', BETA_SIGNIN_ONLY: '', PORT: String(port), NODE_ENV: 'development', DB_FILE: path.join(tmp, 'db.json'), HOLDOUT_DIR: tmp, XKIRO_LEARNER_UNTIL: '2000-01-01T00:00:00Z', FACT_CHECK_ALL: '0', MUNITO_LEARNER: 'off', CORAL_LEARNER: 'off', GLADIA_LEARNER: 'off', LYCEUM_LEARNER: 'off', GONKA_LEARNER: 'off', GROKIFIED_LEARNER: 'off', UPLOAD_AUTOBUILD: 'off', SPANISH_WRITE_AHEAD: 'off' };
   if (flag === null) delete env.UI_V2; else env.UI_V2 = flag;
   const server = spawn(process.execPath, ['server.js'], { cwd: ROOT, env, stdio: 'ignore' });
   try {
@@ -93,14 +103,27 @@ async function main() {
     assert.strictEqual(ui.pageOf('/../server'), null);
     assert.strictEqual(ui.pageOf('/js/app.js'), null);
   });
-  ok('no existing file under public/ or the sealed folders differs from the base commit: only new files', () => {
-    const out = execSync(`git diff --name-status ${BASE_COMMIT} -- public spanish-check spanish-check-lc spanish-dictation routes`, { cwd: ROOT, encoding: 'utf8' }).trim();
-    const changed = out ? out.split('\n').filter((l) => !l.startsWith('A')) : [];
+  ok('no existing file under public/ or the sealed folders differs from main, apart from what the tutor-giraffe merge brought in: only new files', () => {
+    const git = (cmd) => execSync(cmd, { cwd: ROOT, encoding: 'utf8' }).trim();
+    const out = git(`git diff --name-status ${BASE_COMMIT()} -- public spanish-check spanish-check-lc spanish-dictation routes`);
+    const giraffe = new Set(git(`git diff --name-only ${TUTOR_GIRAFFE_MERGE}^1 ${TUTOR_GIRAFFE_MERGE}`).split(/\r?\n/));
+    const changed = out ? out.split(/\r?\n/).filter((l) => !l.startsWith('A')).map((l) => l.split(/\s+/).pop()).filter((f) => !giraffe.has(f)) : [];
     assert.deepStrictEqual(changed, []);
+    for (const f of ['public/start.html', 'public/js/start.js', 'public/js/start-tutor.js', 'public/css/screens/start.css']) assert(!out.includes(f), `${f} is untouched`);
   });
-  ok('app.css has no colour of its own: every one is a token', () => {
-    const css = fs.readFileSync(path.join(ROOT, 'public', 'css', 'ui2', 'app.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
-    assert.deepStrictEqual(css.match(/#[0-9a-fA-F]{3,8}\b(?![^{]*\{)|rgba?\(/g) || [], []);
+  ok('app.css, look.css and start.css have no colour of their own: every one is a token', () => {
+    for (const f of ['app.css', 'look.css', 'start.css']) {
+      const css = fs.readFileSync(path.join(ROOT, 'public', 'css', 'ui2', f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+      assert.deepStrictEqual(css.match(/#[0-9a-fA-F]{3,8}\b(?![^{]*\{)|rgba?\(|oklch\(/g) || [], [], f);
+    }
+  });
+  ok('the hooks still fit js/start.js, and the giraffe in js/start-tutor.js is the original', () => {
+    const src = fs.readFileSync(path.join(ROOT, 'public', 'js', 'start.js'), 'utf8');
+    const out = ui.patchStart(src);
+    assert(out.includes('window.ObLook.guard(step, guard)') && out.includes('window.ObLook.rendered(step)') && out.includes('window.ObLook.install('));
+    assert.throws(() => ui.patchStart('nothing here'), /no longer fits/);
+    const was = execSync(`git show ${BASE_COMMIT()}:public/js/start-tutor.js`, { cwd: ROOT, encoding: 'utf8' }).replace(/\r\n/g, '\n');
+    assert.strictEqual(fs.readFileSync(path.join(ROOT, 'public', 'js', 'start-tutor.js'), 'utf8').replace(/\r\n/g, '\n'), was);
   });
   ok('colour pairs pass their contrast minimum, light and dark', contrast);
 
@@ -113,8 +136,12 @@ async function main() {
       assert.strictEqual(sha(r.bytes), sha(disk), `flag off: /${p} is the file on disk`);
       assert(!r.bytes.includes('data-ui2'), `flag off: /${p} has no flag`);
     }
+    for (const [url, file] of [['/start', 'start.html'], ['/js/start.js', 'js/start.js'], ['/css/screens/start.css', 'css/screens/start.css']]) {
+      const r = await fetchBytes(base + url); // eslint-disable-line no-await-in-loop
+      assert.strictEqual(sha(r.bytes), sha(fs.readFileSync(path.join(ROOT, 'public', file))), `flag off: ${url} is the file on disk`);
+    }
     passed++;
-    console.log(`  ok  flag off: ${ui.PAGES.size + 3} pages served byte for byte as the files on disk`);
+    console.log(`  ok  flag off: ${ui.PAGES.size + 3} pages, /start and its script served byte for byte as the files on disk`);
   });
 
   await withServer('on', 6842, async (base) => {
@@ -129,6 +156,10 @@ async function main() {
       const r = await fetchBytes(`${base}/${p}`); // eslint-disable-line no-await-in-loop
       assert(!r.bytes.includes('data-ui2'), `flag on: /${p} is left alone`);
     }
+    const start = await fetchBytes(`${base}/start`);
+    assert.strictEqual(start.bytes.toString('utf8'), ui.injectStart(fs.readFileSync(path.join(ROOT, 'public', 'start.html'), 'utf8')), 'flag on: /start is the file plus the additions');
+    const js = await fetchBytes(`${base}/js/start.js`);
+    assert.strictEqual(js.bytes.toString('utf8'), ui.patchStart(fs.readFileSync(path.join(ROOT, 'public', 'js', 'start.js'), 'utf8')), 'flag on: /js/start.js is the file plus the hooks');
     passed++;
     console.log('  ok  flag on: listed pages are the file plus the additions; public and sealed pages are left alone');
   });

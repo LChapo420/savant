@@ -64,6 +64,12 @@ function contentChecks() {
   const C = sandbox.window.ObContent;
   process.env.DB_FILE = dbFile;
   process.env.CONSENT_SWEEP = 'off';
+  const clean = require('../services/onboarding-v2').cleanAnswers; // eslint-disable-line global-require
+  assert.equal(clean({ how: 'own' }).how, 'own');
+  assert.equal(clean({ how: 'both' }).how, 'both');
+  assert.equal(clean({ how: 'curriculum' }).how, 'curriculum');
+  assert.equal(clean({ how: 'nonsense' }).how, undefined, 'only the three answers');
+  assert.equal(clean({ how: 'own' }, { child: true }).how, undefined, 'never for a child');
   const keys = Object.keys(require('../services/onboarding-v2').INTERESTS).sort(); // eslint-disable-line global-require
   assert.deepEqual([...C.INTERESTS.map((i) => i.id)].sort(), keys, 'the page and the server list the same interests');
   assert.equal(C.AGREEMENT.version, ob2Version, 'the words and the version move together');
@@ -388,8 +394,9 @@ async function betaChecks() {
   assert.equal((await k.c('POST', '/api/onboarding/start', { mode: 'quick' })).data.code, 'not_allowed');
   assert.equal((await k.c('GET', '/api/account/export')).data.learner_agreements.length, 0, 'a child doesn\'t agree for themselves');
   assert.equal((await k.c('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version })).status, 403);
-  await k.c('POST', '/api/ob2/answers', { interests: ['other'], interest_text: 'my school name', notes: true });
+  await k.c('POST', '/api/ob2/answers', { interests: ['other'], interest_text: 'my school name', notes: true, how: 'own' });
   const ka = (await k.c('GET', '/api/ob2/state')).data.answers;
+  assert.equal(ka.how, null, 'a child account has no "how do you want to learn": it can\'t upload');
   assert.equal(ka.interest_text, '', 'no typed words kept');
   assert.equal(ka.notes, false, 'no uploads');
   assert.equal((await k.c('POST', '/api/tutor/chat', { messages: [{ role: 'user', content: 'hi' }] })).data.code, 'parent_opt_in_required');
