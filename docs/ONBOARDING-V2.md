@@ -75,7 +75,13 @@ Atkinson Hyperlegible, near-monochrome tokens from `site/assets/site.css`, plus 
 
 The tutor is one component, `public/js/start-tutor.js`: an SVG placeholder with moods. Swap the file to swap the character. `Tutor.NAME` is null and copy never names it.
 
-## 7. Decisions for the owner
+## 7. What was checked, and what wasn't
+
+`scripts/onboarding-v2-test.js` (in the suite) covers the API. `scripts/onboarding-v2-browser.js` (needs playwright, not in the suite) walked Chromium on a local copy of the store, at 375 px and 1366 px, light and dark: adult, teen, under-13 with a parent who agrees, under-13 with no consent yet, returning account, reload at each stage, browser and in-page back, skipping by address, double taps, a taken email, an interest with no example, own notes, keyboard only, reduced motion, and a guest on the path, home and lesson pages. It fails on a console error, a CSP violation, sideways scrolling or a small target. All 9 subjects were opened at the first and middle grade, with no model keys, as a guest in production would have no outside AI.
+
+Not checked: Safari, Firefox and real phones (Chromium only); a real email reaching a parent (the dev outbox was read); a run with model keys present; finishing a whole first lesson by hand, so the lesson-done prompt was tested with the finish call simulated; real learners, so nothing here says the flow converts or teaches better.
+
+## 8. Decisions for the owner
 
 - Reminders: none are sent today. Step 10 stores a plan and offers a calendar file. Email for adults would need building.
 - A guest signing in to an existing account keeps the level check but not lesson answers.

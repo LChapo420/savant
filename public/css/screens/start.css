@@ -216,7 +216,7 @@ button.opt { width: 100%; font: inherit; text-align: left; color: inherit; }
 .len { flex: none; position: relative; width: 42px; height: 42px; border-radius: 10px; background: var(--well); transition: background .18s var(--ease); overflow: hidden; }
 .len i { position: absolute; left: 7px; right: 7px; top: 20px; height: 2px; background: var(--line-strong); }
 .len b { position: absolute; left: 7px; top: 18px; height: 6px; border-radius: 3px; background: var(--ink); }
-.opt:has(input:checked) .len { background: var(--mark); }
+.opt:has(input:checked) .len, .opt.is-on .len { background: var(--mark); }
 .opt:has(input:checked) .len i { background: rgba(21, 23, 27, .3); }
 .opt:has(input:checked) .len b { background: var(--mark-ink); }
 

@@ -75,6 +75,7 @@
     Tutor.mount($('#tutor'));
     $('#back').addEventListener('click', goBack);
     $('#panel').addEventListener('submit', (e) => { e.preventDefault(); submit(); });
+    $('#panel').addEventListener('change', syncOn);
     $('#alt').addEventListener('click', () => { if (view && view.alt && !busy) view.alt.run(); });
   }
 
@@ -187,10 +188,14 @@
     alt.hidden = !view.alt;
     if (view.alt) alt.textContent = view.alt.label;
     if (view.bind) view.bind();
+    syncOn();
     window.scrollTo(0, 0);
     const h = $('h1', panel);
     if (h && dir !== 'none') { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
   }
+
+  /** The selected look, for a browser without CSS :has(). */
+  function syncOn() { $$('label.opt').forEach((l) => { const i = l.querySelector('input'); l.classList.toggle('is-on', !!(i && i.checked)); }); }
 
   /* ── pieces of markup ───────────────────────────────────── */
   const TICK = '<svg class="opt-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg>';
@@ -923,6 +928,10 @@
       keep();
       await breath();
       mark('grade', 'is-done');
+      if (out.goal && out.goal.error) {
+        const li = $('.step[data-s="goal"]');
+        if (li) li.lastChild.textContent = 'Keeping the full review calendar for now';
+      }
       mark('goal', 'is-now');
       await breath();
       mark('goal', 'is-done');
