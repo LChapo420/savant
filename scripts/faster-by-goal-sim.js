@@ -78,13 +78,23 @@ const PRE_GAIN = num('pre-gain', 1);      // a page read after a question on it 
 const ILV_H = num('ilv-h', 1);            // interleaving: half-life after the first pass, this many times longer, for arms with the app's mixed practice (1 = no credit; range from calibration on Brunmair and Richter 2019)
 const QUICK_S = num('quick-s', 15);       // seconds to read and answer a one-tap review question (range 25, 15, 10). Format makes little retention difference: Smith and Karpicke 2014, McDermott et al. 2014. The seconds are not measured.
 const QUICK_MEM = num('quick-mem', 1);    // ADVERSE sensitivity: a one-tap review grows memory by this power of a typed review's growth (1 = the format makes no difference, as Smith and Karpicke 2014 mostly found; their fourth experiment and McDaniel et al. 2007 point the other way)
+// Round 4 (docs/speed-real/ROUND4.md).
+const SCREEN_S = num('screen-s', 0);      // the speed arms only: seconds the level's closing screen costs (the real path has one per level; a person's seconds, ASSUMED)
+const ONE_S = num('one-s', 3);            // the same with SPEED_ONE_PROMPT: Continue on top, one optional question (ASSUMED)
+const CKPT_ANS = num('ckpt-answers', 0);  // the speed arms only: checkpoint answers per lesson on the real path (MEASURED by scripts/speed-r4-walk.js: about 2 a lesson). Time only, no learning credit, which is conservative
+const SPACE_DAYS = String(args['space-days'] || '1,7').split(',').map(Number); // SPEED_SPACE_RETENTION: the memory checks that replace the massed retention levels, days after learning (the real queue: adaptation.reviewQueue RETAIN_DAYS and RETAIN_SPAN_DAYS)
+const EVERY = num('every', 1);            // ADVERSE sensitivity, every arm: the learner studies only every Nth day (a real learner does not come back daily)
+const MASS2 = num('mass2', 0.03);         // ADVERSE sensitivity, every arm: what each massed right answer past the fifth adds to the half-life (0.03 audited). Higher favours massed retention levels
+const ON_TOPIC = num('on-topic', 1);       // ADVERSE sensitivity, the speed arms only: share of the app's questions on the skill's own topic. An off-topic answer takes its time and teaches and tests nothing here (AI-JUDGED share on held-out levels: docs/speed-real/ROUND4.md)
+const TIGHT_GAIN = num('tight-gain', 1);  // ADVERSE sensitivity: what the tight page teaches, as a share of the whole page's teaching (1 = every key point kept teaches as much in fewer words)
+const SELF_OVER = num('self-over', 0);    // sensitivity for the careful self-studier: stops practising this much under true understanding (0 = stops exactly at 0.85, an oracle no person has)
 const PREREQ = num('prereq', 0.5);       // share of skills whose previous skill is a prerequisite (only with --implicit)
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const sigmoid = (x) => 1 / (1 + Math.exp(-x));
 const mean = (xs) => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0);
 
 // v2 learning constants (scripts/scorecard-recovery-sim.js LM, literature set)
-const LM = { mass1: 0.3, massN: 5, mass2: 0.03, massDays: 0.25, sp0: 1.3, sp1: 1.5, h0: 2.8, missH: 1.5, miss: 0.4, a: 0.2, page: 0.5, pageSkim: 0.15, priorShift: 0.5, dd: 0.5 };
+const LM = { mass1: 0.3, massN: 5, mass2: MASS2, massDays: 0.25, sp0: 1.3, sp1: 1.5, h0: 2.8, missH: 1.5, miss: 0.4, a: 0.2, page: 0.5, pageSkim: 0.15, priorShift: 0.5, dd: 0.5 };
 const COST = { page_min: 7, item_s: ITEM_S || 35, right_s: 3, wrong_s: WRONG_S || 25, retry_s: RETRY_S || 38 }; // goal-sim's review costs (services/retention-goal-sim.js); a 7-minute page, so lesson pages are about 45% of first-pass hours (the owner: about half; the table reports the measured split)
 const GUESS = GUESS_ARG;
 /** Depth of a lapse: 0 while memory recall is at least 0.5, up to 1 when it is gone. A deep lapse costs understanding too (the --kloss sensitivity). */
@@ -170,7 +180,7 @@ function simulate(L, P, arm, plan) {
   }
   const prer = rngOf('prereq', L.id);
   for (let s = 1; s < SKILLS; s++) if (prer() < PREREQ) sk[s].pre = s - 1;
-  const SP = arm.speed || null;
+  const SP = arm.speed && arm.speed.spaceLong && arm.goal && arm.goal.H < 180 ? { ...arm.speed, space: false, stay: arm.speed.stayOff, stuck: arm.speed.stuckOff } : (arm.speed || null); // SPEED_SPACE_RETENTION=long: on a short goal, the levels stay and so do the rates measured with them
   const TGT = arm.target === undefined ? TARGET : arm.target; // matched retention: the arm's review line follows this learner's baseline
   const STU = arm.type === 'student' ? arm : null;
   let firstRight = 0; let firstN = 0;       // the learner's first answers so far (the tracker's prior for the next skill)
@@ -184,7 +194,9 @@ function simulate(L, P, arm, plan) {
   const FAST = arm.speed && arm.speed.fast; // real friction only: two taps fewer and no verdict screen on a right answer (assumed 2 s + 2 s; nothing else is faster)
   const itemS = COST.item_s - (FAST ? 2 : 0); const rightS = FAST ? 1 : COST.right_s;
   const itemMin = (R, right) => (right ? (itemS + rightS) : (itemS + COST.wrong_s + COST.retry_s * (R < 1 ? 1 : 0))) / 60 * P.timeMult;
+  const topicRnd = rngOf('topic', L.id);
   function answer(s, now, isReview = false, item = null) {
+    if (SP && ON_TOPIC < 1 && topicRnd() >= ON_TOPIC) { const off = itemMin(1, topicRnd() < 0.9); ansMin += off; ansN++; return off; }
     const R = memR(s.m, now);
     s.k *= 1 - KLOSS * lapse(R);
     const p = item ? speed.pRight(s.k * R, GUESS, item) : s.k * R + (1 - s.k * R) * GUESS;
@@ -271,16 +283,17 @@ function simulate(L, P, arm, plan) {
     const chunk = SP.short ? (SP.chunk || speed.PARAMS.chunk) : 1;
     const showPage = (f) => {
       const skim = rnd() < P.skim;
-      const eff = clamp((skim ? LM.pageSkim : LM.page) * P.lr * (SP.testout && s.tr.n > 0 ? (SP.preGain || PRE_GAIN) : 1), 0, 0.95);
-      const min = COST.page_min * P.timeMult * LESSON * (skim ? 0.4 : 1) * f; // time and learning both in proportion to the share of the page (assumed linear; a targeted part is not credited with more)
+      const eff = clamp((skim ? LM.pageSkim : LM.page) * P.lr * (SP.testout && s.tr.n > 0 ? (SP.preGain || PRE_GAIN) : 1) * (SP.tight ? TIGHT_GAIN : 1), 0, 0.95);
+      const min = COST.page_min * P.timeMult * LESSON * (skim ? 0.4 : 1) * f * (SP.tight || 1); // time and learning both in proportion to the share of the page (assumed linear; a targeted part is not credited with more)
       s.k += (1 - s.k) * clamp(eff * SPEED_GAIN, 0, 0.95) * f; s.seen = Math.min(1, s.seen + f);
       by.lesson += min; used += min; pageLeft = Math.max(0, pageLeft - f);
       speed.taught(s.tr, f);
     };
     if (!SP.testout && s.seen === 0) showPage(1); // no retrieval first: the whole page, as today
     // appN=1, the real path (config/curriculum.js, services/coverage.js, services/learner-path.js compressProven): three check questions, then whole levels of 14 answers until the objective is proven (at most seven; true understanding stands in for the coverage belief), then its two retention levels, which are never stepped over.
-    let appPlan = 3; let appLevels = 0; let appRet = false;
-    const appStop = () => { if (n < appPlan) return false; if (appRet) return true; if (s.k >= 0.85 || appLevels >= 7) { appRet = true; appPlan = n + 28; return false; } appLevels++; appPlan = n + 14; return false; };
+    let appPlan = 3 + Math.round((SP.stay || 0) * 14); let appLevels = 0; let appRet = false; // stay: sittings repeated on one level per lesson, MEASURED by scripts/speed-r4-walk.js; time and massed answers
+    const stuckHere = SP.appN && SP.stuck ? rngOf('stuck', L.id, sk.indexOf(s))() < SP.stuck : false; // stuck: stretches the real proof never closes (ordinary practice answers cannot prove an objective), MEASURED by the walker; they walk every level left
+    const appStop = () => { if (n < appPlan) return false; if (appRet) return true; if ((s.k >= 0.85 && !stuckHere) || appLevels >= 7) { appRet = true; appPlan = n + (SP.space && s.k >= 0.85 ? 0 : 28); return false; } appLevels++; appPlan = n + 14; return false; };
     const trueStop = () => (SP.appN ? appStop() : s.k >= 0.85 && n >= 3);
     while (n < (SP.appN ? 400 : 25)) {
       if (SP.stop) {
@@ -306,6 +319,12 @@ function simulate(L, P, arm, plan) {
       if (n === 1) { firstN++; if (lastRight) firstRight++; }
     }
     s.kHat = speed.kMean(s.tr);
+    if (SP.space || SP.stop) s.spaceAt = SP.space ? SPACE_DAYS.map((x) => Math.floor(now) + x) : null;
+    { // the real path's friction beyond the answers: a closing screen per level, and its checkpoints (time only)
+      const levels = 1 + Math.ceil(Math.max(0, n - 3) / 14);
+      const fr = ((levels * (SP.onePrompt ? ONE_S : SCREEN_S)) / 60) * P.timeMult + (CKPT_ANS * itemS / 60) * P.timeMult;
+      if (SCREEN_S > 0 || CKPT_ANS > 0) { by.practice += fr; used += fr; }
+    }
     if (SKIP_LOSS > 0) s.cap = 1 - SKIP_LOSS * (1 - s.seen) * (1 - s.k0); // the part of the unread page the checks never tested stays at what the learner knew
     s.a = Math.floor(now);
     return used;
@@ -337,7 +356,7 @@ function simulate(L, P, arm, plan) {
     s.k = s.k + (1 - s.k) * pageEff;
     by.lesson += pageMin;
     let used = pageMin; let n = 0;
-    while ((s.k < 0.85 || n < 3) && n < 25) { const m = answer(s, now + used / 1440); by.practice += m; used += m; n++; }
+    while ((s.k < 0.85 - SELF_OVER || n < 3) && n < 25) { const m = answer(s, now + used / 1440); by.practice += m; used += m; n++; }
     s.a = Math.floor(now);
     return used;
   }
@@ -357,7 +376,7 @@ function simulate(L, P, arm, plan) {
   const savant = arm.type === 'savant';
 
   for (let d = 0; d <= T; d++) {
-    let budget = MINUTES; let spent = 0; const abs = base + d;
+    let budget = EVERY > 1 && d % EVERY !== 0 ? 0 : MINUTES; let spent = 0; const abs = base + d;
     if (d === 0 && SP && SP.place) spent += placeBySkill();
     if (SP) for (let i = 0; i < next; i++) if (sk[i].relearn && spent < budget) { sk[i].relearn = false; sk[i].settled = false; spent += learnSpeed(sk[i], d + spent / 1440); }
     const covered = next >= SKILLS;
@@ -394,6 +413,10 @@ function simulate(L, P, arm, plan) {
     }
     if (arm.fixedSR) for (let i = 0; i < next; i++) if (sk[i].a !== null && d <= T - 1 && (Array.isArray(arm.fixedSR) ? arm.fixedSR : arm.fixedSR === 2 ? SR_DENSE : SR_DAYS).includes(d - sk[i].a)) due.push({ i, Re: memR(sk[i].e, now0) });
     if (arm.passes && (plan.noDate ? (coverDay !== null && d > coverDay && d <= coverDay + arm.passes) : (d >= T - arm.passes && d < T))) for (let i = 0; i < next; i++) due.push({ i, Re: memR(sk[i].e, now0) });
+    if (SP && SP.space) for (let i = 0; i < next; i++) {
+      const s = sk[i];
+      if (s.spaceAt && s.spaceAt.length && s.spaceAt[0] <= d && (coverDay === null || d <= T)) { const hit = due.find((x) => x.i === i); if (hit) hit.Re = -1; else due.push({ i, Re: -1 }); }
+    }
     if (arm.noReviews) due.length = 0; // calibration only: what a first pass alone leaves behind
     due.sort((x, y) => x.Re - y.Re);
     const revCap = covered ? Infinity : MINUTES * REVIEW_SHARE;
@@ -406,6 +429,7 @@ function simulate(L, P, arm, plan) {
       let m;
       if (pi !== null) { pairedOff.add(pi); pairedOff.add(q.i); m = answerPair(sk[q.i], sk[pi], d + spent / 1440, true); by.review += m; }
       else m = reviewMin(sk[q.i], d + spent / 1440);
+      if (SP && SP.space && sk[q.i].spaceAt && sk[q.i].spaceAt[0] <= d) sk[q.i].spaceAt.shift();
       spent += m; revSpent += m;
     }
     // ----- new material -----
@@ -466,7 +490,7 @@ const SR_DENSE = [1, 2, 4, 7, 10, 14, 21, 30, 40, 55, 75, 100, 130, 170, 220, 28
 const SR_RATIOS = args['self-r'] ? args['self-r'].split(',').map(Number) : [];
 function srSchedule(r) { const out = []; let gap = 1; let day = 1; while (day <= 2300) { out.push(Math.round(day)); gap *= r; day += Math.max(1, gap); } return [...new Set(out)]; }
 /** "testout=1:short=1:stop=1:review=through:conf=0.9:margin=0.05" */
-function parseArm(s) { const o = {}; for (const kv of s.split(':')) { const [k, v] = kv.split('='); o[k] = v === 'through' || v === 'end' ? v : Number(v); } for (const k of ['testout', 'short', 'stop', 'implicit', 'place', 'implied', 'edge', 'composite', 'compositeFirst', 'fast', 'worked', 'quick']) o[k] = !!o[k]; return o; }
+function parseArm(s) { const o = {}; for (const kv of s.split(':')) { const [k, v] = kv.split('='); o[k] = v === 'through' || v === 'end' ? v : Number(v); } for (const k of ['testout', 'short', 'stop', 'implicit', 'place', 'implied', 'edge', 'composite', 'compositeFirst', 'fast', 'worked', 'quick', 'space', 'onePrompt', 'spaceLong']) o[k] = !!o[k]; return o; }
 const BW_P = [7, 10, 14];
 const BW_FLOOR = [0.95];
 const BW_SAFETY = [0, 0.1, 0.2, 0.3];

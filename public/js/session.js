@@ -302,6 +302,7 @@ App.mount(async () => {
 
   function renderLesson() {
     const itemHost = document.getElementById('item');
+    const tight = !!(session.speed && session.speed.tight); // SPEED_TIGHT_PAGE: the teaching first, the intro and the recap one tap away
     host.setAttribute('data-view', 'lesson');
     progress();
     if (lessonTelemetry && lessonTelemetry.scroll) lessonTelemetry.scroll.stop();
@@ -340,14 +341,14 @@ App.mount(async () => {
       <article class="lesson">
         <p class="lesson-meta">Lesson${lesson.skill_name ? `, ${App.escapeHtml(lesson.skill_name).toLowerCase()}` : ''}${lesson.base_written ? '. The base lesson, the same for everyone on this course.' : lesson.source === 'ai' ? '. Written for you.' : ''}</p>
         <h2>${App.escapeHtml(App.cleanTitle(lesson.title))}</h2>
-        <p class="lesson-intro">${App.escapeHtml(lesson.intro)}</p>
+        ${tight ? '' : `<p class="lesson-intro">${App.escapeHtml(lesson.intro)}</p>`}
         ${sections}
         ${worked}
         ${mistakes}
-        <section class="lesson-section lesson-summary">
+        ${tight ? `<details class="lesson-why"><summary class="small">See the whole page: the intro and the recap</summary><p class="small">${App.escapeHtml(lesson.intro || '')}</p><p class="small">${App.escapeHtml(lesson.summary || '')}</p></details>` : `<section class="lesson-section lesson-summary">
           <h3 class="lesson-label">In short</h3>
           <p>${App.escapeHtml(lesson.summary)}</p>
-        </section>
+        </section>`}
         <div class="check-bar lesson-bar">
           <button class="btn btn-primary btn-lg btn-block" id="start-checks" type="button">
             Check what stuck (${items.length} question${items.length === 1 ? '' : 's'})
@@ -1152,6 +1153,8 @@ function renderRubricResult(result) {
     // `checkpointKinds` was never defined here, so every non-exam level close threw.
     const nextIsCheckpoint = App.isCheckpointLevel(nextKind);
     const p = outcome.progress || {};
+    const onePrompt = !!(session.speed && session.speed.one_prompt);
+    if (outcome.spaced_retention) App.toast('You have this one for now. We will ask it again tomorrow, when asking helps it stick.');
 
     // On a preview, `advanced` is always false by design, so the wording has to
     // come from somewhere else — otherwise every preview ends on "not settled
@@ -1195,13 +1198,16 @@ function renderRubricResult(result) {
         <div class="meter meter-lg ${advanced ? 'meter-success' : ''}"><span style="width:${Math.min(1, p.average || 0) * 100}%"></span></div>`}
         ${heldReviewHtml(outcome.review)}
         <div id="level-retention" style="margin-top:16px"></div>
+        ${onePrompt ? '<div class="row-wrap" id="level-actions" style="margin-top:16px"></div>' : ''}
         <div id="level-depth" style="margin-top:16px"></div>
         <div id="level-extras" style="margin-top:16px"></div>
-        <div class="row-wrap" id="level-actions" style="margin-top:16px"></div>
+        ${onePrompt ? '' : '<div class="row-wrap" id="level-actions" style="margin-top:16px"></div>'}
       </div>`;
 
     // Optional: go deeper on this, or move on. The next level is the same either way; the pick only helps Savant fit how deep the lessons go.
-    if (session.footprint_choices && !session.preview) {
+    // SPEED_ONE_PROMPT: Continue comes first, and of the four optional questions one is asked, taking turns by level.
+    const promptTurn = Number(outcome.level || 0) % 4;
+    if (session.footprint_choices && !session.preview && (!onePrompt || promptTurn === 0)) {
       const depth = document.getElementById('level-depth');
       depth.appendChild(App.el('p', { class: 'small muted', style: 'margin:0 0 6px' }, 'How would you like to go on? Either way the next level is the same. Your pick helps fit how deep your lessons go.'));
       const row = App.el('div', { class: 'row-wrap' });
@@ -1220,7 +1226,10 @@ function renderRubricResult(result) {
     // sent as a number only (no text is kept) and changes nothing about the next level except what the plain line under it says.
     if (session.footprint_choices && !session.preview) {
       const extras = document.getElementById('level-extras');
+      let turn = 0;
       const ask = (id, line, options) => {
+        turn += 1;
+        if (onePrompt && promptTurn !== turn) return;
         const box = App.el('div', { style: 'margin-bottom:12px' });
         box.appendChild(App.el('p', { class: 'small muted', style: 'margin:0 0 6px' }, line));
         const r = App.el('div', { class: 'row-wrap' });

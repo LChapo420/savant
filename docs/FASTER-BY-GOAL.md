@@ -4,6 +4,8 @@ Owner, 5 Nov 2026: "faster means they get all the information they normally woul
 
 **Round 1 answer (see Round 2 below, which corrects its baselines): no.** Assumption (a) (lower goal, fewer hours) holds for all 160 held-out learners. Assumption (b) (every goal faster than the baselines) fails for every learner on every dated goal at the default forgetting model, and holds only where the baseline cannot reach the target at all (goals with no known test day). Nothing here is a marketing claim.
 
+**Latest numbers against every baseline, per goal: `docs/speed-real/ROUND4.md` (7 Nov).**
+
 ## Round 3: the short-horizon rule, built behind two switches (SIMULATED; gate met on the main model, missed on one variant)
 
 **The bug.** Round 2 found that "remember 1 week" left 0% of learners recalling the whole course, and "remember 1 month" 76% to 78%, because reviews of each skill ended H days after it was learned. In the real code the same family of problem is: `limitInterval` (uploaded courses) ended a horizon at `set_on + H`, and enrollments' level reviews never read the goal at all (`mastery.dueReviewsByRecallRaw` uses a flat 0.85).

@@ -584,7 +584,7 @@ function unitsToWork(plan, units, statuses, except = -1, enrollment = null) {
  */
 function nextLevelAfter(enrollment, grade, level) {
   const next = unitNextLevelAfter(enrollment, grade, level);
-  return studyFit(enrollment, grade, goalFit(enrollment, grade, require('./speed-placement').stepOverSettled(enrollment, grade, compressProven(enrollment, grade, next)))); // eslint-disable-line global-require
+  return studyFit(enrollment, grade, goalFit(enrollment, grade, require('./speed-placement').stepOverSettled(enrollment, grade, spaceRetention(enrollment, grade, compressProven(enrollment, grade, next))))); // eslint-disable-line global-require
 }
 
 /**
@@ -642,6 +642,40 @@ function compressProven(enrollment, grade, next) {
     return at;
   } catch (err) {
     console.warn(`learner-path: compress failed: ${err.message}`);
+    return next;
+  }
+}
+
+/**
+ * SPEED_SPACE_RETENTION (services/speed-levers.js; off by default; docs/speed-real/ROUND4.md): the retention levels of an objective that is proven are stepped over, because worked straight after
+ * the practice they are thirty more answers on what was just answered right, with no gap. The spaced retrieval they stand for is the review queue's: a memory check at least a day after the proof and
+ * again at least a week after it (adaptation.reviewQueue), which is what the coverage gate waits on, so graduation still needs every objective retained. An objective not proven keeps its levels.
+ * The owner's account follows the sheet, as compressProven does. Nothing is marked cleared and the levels stay open behind the learner.
+ */
+function spaceRetention(enrollment, grade, next) {
+  if (!enrollment || !enrollment.user_id) return next;
+  // eslint-disable-next-line global-require
+  const speed = require('./speed-levers');
+  if (!speed.spaceOn(enrollment.user_id, enrollment.id)) return next;
+  try {
+    // eslint-disable-next-line global-require
+    if (require('./adaptation').ownerSkips(enrollment.user_id)) return next;
+    // eslint-disable-next-line global-require
+    const report = require('./coverage').forEnrollment(enrollment.user_id, enrollment);
+    if (!report) return next;
+    let at = next;
+    for (let guard = 0; guard < 60; guard++) {
+      const e = report.model.levelMap[at];
+      if (!e || e.kind !== 'activity' || !e.retention) break;
+      const s = report.states[e.direct];
+      if (!(s.status === 'proven' || s.status === 'retained')) break;
+      const after = unitNextLevelAfter(enrollment, grade, at);
+      if (after <= at) break;
+      at = compressProven(enrollment, grade, after);
+    }
+    return at;
+  } catch (err) {
+    console.warn(`learner-path: space retention failed: ${err.message}`);
     return next;
   }
 }

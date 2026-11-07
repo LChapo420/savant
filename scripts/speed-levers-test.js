@@ -42,8 +42,8 @@ const LESSON = {
   await check('every lever but fast item is off by default (fast passed its gate, 6 Nov), and all are off with SPEED_ALL=off', async () => {
     for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), lever === 'fast', lever);
     await withEnv({ ...ALL, SPEED_ALL: 'off' }, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), false, lever); });
-    await withEnv({ ...ALL, SPEED_WORKED: 'on', SPEED_QUICK_REVIEW: 'on' }, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), true, lever); });
-    assert.deepStrictEqual(speed.clientFlags(1, {}), { testout: false, short: false, fast: true });
+    await withEnv({ ...ALL, SPEED_WORKED: 'on', SPEED_QUICK_REVIEW: 'on', SPEED_SPACE_RETENTION: 'on', SPEED_PROOF_PASSES: 'on', SPEED_RECHECK: 'on', SPEED_OBJECTIVE_PRACTICE: 'on', SPEED_ONE_PROMPT: 'on', SPEED_TIGHT_PAGE: 'on' }, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), true, lever); });
+    assert.deepStrictEqual(speed.clientFlags(1, {}), { testout: false, short: false, fast: true, one_prompt: false, tight: false });
   });
 
   await check('the tracker: right answers raise the belief, a miss lowers it, guessing is discounted', () => {
@@ -155,7 +155,7 @@ const LESSON = {
   }));
 
   await check('a preview keeps today\'s flow', async () => withEnv(ALL, async () => {
-    assert.deepStrictEqual(speed.clientFlags(1, { preview: true }), { testout: false, short: false, fast: false });
+    assert.deepStrictEqual(speed.clientFlags(1, { preview: true }), { testout: false, short: false, fast: false, one_prompt: false, tight: false });
   }));
 
   await check('mastery stop: once the skill is shown, the rest of its items are set aside and marked; the level is ready; off it needs its items', async () => {

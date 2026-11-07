@@ -13,6 +13,12 @@
  *   SPEED_COMPOSITE=on     an item that names `also_skills` counts as an attempt on each of them too, each on its own. The built-in banks have no such items today, so this does nothing until they exist.
  *   SPEED_WORKED=on        worked examples first, with fading: while this lesson's stretch shows the learner does not have it yet (tracker under 0.55), the first practice items of a block are shown solved, one tap to go on; at most two in a row, then a problem. None for a learner who has it (expertise reversal). No retrieval and no score.
  *   SPEED_QUICK_REVIEW=on  review questions are one tap: a typed review question with a number for an answer gets close wrong choices. Format makes little retention difference in the studies (docs/SPEED-4X.md); the seconds saved are not measured.
+ *   SPEED_SPACE_RETENTION=on the two "(retention)" levels of a lesson's stretch are stepped over once its objective is proven, instead of being worked in the same minute: both of them, 30 answers on what was just answered right, called "spaced" and asked with no gap at all. The memory checks they stand for come from the review queue a day later and a week later (adaptation.reviewQueue), which is what the coverage gate reads anyway. The level stays open behind the learner. docs/speed-real/ROUND4.md.
+ *   SPEED_PROOF_PASSES=on  a practice level whose objective is already proven (services/coverage.js, its own and stricter bar) and that has its answers is passed, whatever the average of the grade's coarse skills reads. Measured on the real routes: most sittings repeated on the same level had the objective proven and answers right.
+ *   SPEED_RECHECK=on       a practice level on an objective still unproven opens on the lesson's check questions the learner missed, asked again after at least one level of practice. An ordinary practice answer can never prove an objective (coverage: OBJ_MIN_ALIGNED), so a learner who missed two lesson checks walked every level left however well they did. The proof's bar is unchanged, but this is the same question a second time, a weaker reading than a new one: docs/speed-real/ROUND4.md says so.
+ *   SPEED_OBJECTIVE_PRACTICE=on a practice level's focus questions are the ones written for its lesson's objective, where any exist (services/objective-items.js: 8 grades of 219), and only then the bank's. docs/speed-real/ROUND4.md: most bank questions are off the lesson's topic.
+ *   SPEED_ONE_PROMPT=on    a level's closing card: Continue first, and at most one optional question, taking turns level by level, instead of up to four above the button. Fewer scorecard taps: docs/speed-real/ROUND4.md counts them.
+ *   SPEED_TIGHT_PAGE=on    a lesson page shows its teaching first: no intro and no recap (a block plan: no hook, no takeaway badge, no cheat sheet), the rest one tap away. Nothing is rewritten and no key point is dropped. docs/speed-real/ROUND4.md has the AI-judged check.
  *   Placement by skill, implied mastery and the item at the edge: services/speed-placement.js.
  *   SPEED_ALL=off          every lever off.
  * (Prerequisite credit, an answer also reviewing what it builds on, is a simulation variant only: the built-in courses have no prerequisite graph to read it from.)
@@ -23,8 +29,8 @@
 
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 
-const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET', fast: 'SPEED_FAST_ITEM', composite: 'SPEED_COMPOSITE', worked: 'SPEED_WORKED', quick: 'SPEED_QUICK_REVIEW' };
-const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off', fast: 'on', composite: 'off', worked: 'off', quick: 'off' }; // fast: the only lever through its gate (docs/SPEED-4X.md, round 3), 6 Nov 2026
+const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET', fast: 'SPEED_FAST_ITEM', composite: 'SPEED_COMPOSITE', worked: 'SPEED_WORKED', quick: 'SPEED_QUICK_REVIEW', space: 'SPEED_SPACE_RETENTION', proofPasses: 'SPEED_PROOF_PASSES', recheck: 'SPEED_RECHECK', objectivePractice: 'SPEED_OBJECTIVE_PRACTICE', onePrompt: 'SPEED_ONE_PROMPT', tight: 'SPEED_TIGHT_PAGE' };
+const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off', fast: 'on', composite: 'off', worked: 'off', quick: 'off', space: 'off', proofPasses: 'off', recheck: 'off', objectivePractice: 'off', onePrompt: 'off', tight: 'off' }; // fast: the only lever through its gate (docs/SPEED-4X.md, round 3), 6 Nov 2026
 
 /** Is this lever on? SPEED_ALL=off beats everything. A base-arm learner (efficiency.forLearner) reads every lever off, as the older levers do. */
 function enabled(lever) {
@@ -32,7 +38,7 @@ function enabled(lever) {
   if (efficiency.isSuspended && efficiency.isSuspended()) return false;
   if (String(process.env.SPEED_ALL || '').toLowerCase() === 'off') return false;
   const v = String(process.env[SWITCH[lever]] || DEFAULT[lever]).toLowerCase();
-  return v === 'on' || (lever === 'stop' && v === 'long');
+  return v === 'on' || ((lever === 'stop' || lever === 'space') && v === 'long');
 }
 
 /**
@@ -300,12 +306,82 @@ function oneTap(item) {
   for (let i = choices.length - 1; i > 0; i--) { h = (h * 31 + 7) % 9973; const j = h % (i + 1); [choices[i], choices[j]] = [choices[j], choices[i]]; }
   return { ...item, format: 'multiple_choice', choices, quick_review: true };
 }
+// ---------- round 4: spaced retention, the tight page ----------
+/** SPEED_SPACE_RETENTION for this learner: a base-arm learner reads it off (efficiency.forLearner, as the other levers do). =long: only on a goal of six months or more, or with no test day (docs/speed-real/ROUND4.md has the gate for each). */
+function spaceOn(userId, enrollmentId = null) {
+  return require('./efficiency').forLearner(userId, () => {
+    if (!enabled('space')) return false;
+    if (String(process.env.SPEED_SPACE_RETENTION || '').toLowerCase() !== 'long') return true;
+    try {
+      const enr = enrollmentId ? dbOf().byId('enrollments', enrollmentId) : null;
+      const eff = require('./retention-goal').forEnrollment(userId, enr);
+      if (!eff) return true;
+      if (eff.status === 'horizon') return !Number.isFinite(eff.days) || eff.days >= LONG_GOAL_DAYS;
+      if (eff.status === 'date') return !Number.isFinite(eff.days_left) || eff.days_left >= LONG_GOAL_DAYS;
+      return true;
+    } catch { return false; }
+  });
+}
+/** SPEED_PROOF_PASSES: is this level's own objective proven? Reads the coverage model, the same record the path's stepping reads. False for anything else, and always with the switch off. */
+function proofPasses(userId, enrollment, level) {
+  return require('./efficiency').forLearner(userId, () => {
+    if (!enabled('proofPasses')) return false;
+    try {
+      if (require('./adaptation').ownerSkips(userId)) return false;
+      const report = require('./coverage').forEnrollment(userId, enrollment);
+      const e = report && report.model.levelMap[level];
+      if (!e || e.direct === undefined) return false;
+      const s = report.states[e.direct];
+      return s.status === 'proven' || s.status === 'retained';
+    } catch { return false; }
+  });
+}
+const RECHECK_MIN_PRACTICE = 5; const RECHECK_MAX = 2;
+/** SPEED_RECHECK: the missed lesson checks to ask again at this practice level, as new items in the same words. Empty unless the switch is on, the objective is unproven, and some practice has come first. */
+function recheckItems(userId, enrollment, grade, level) {
+  return require('./efficiency').forLearner(userId, () => {
+    if (!enabled('recheck')) return [];
+    try {
+      if (require('./adaptation').ownerSkips(userId)) return [];
+      const report = require('./coverage').forEnrollment(userId, enrollment);
+      const e = report && report.model.levelMap[level];
+      if (!e || e.direct === undefined) return [];
+      const state = report.states[e.direct];
+      if (state.status === 'proven' || state.status === 'retained') return [];
+      const unit = unitOf(grade, level);
+      const mine = dbOf().find('items', (i) => i.user_id === userId && Number(i.level) >= unit.from && Number(i.level) <= unit.to && i.correct !== null && i.correct !== undefined);
+      if (mine.filter((i) => i.role !== 'check').length < RECHECK_MIN_PRACTICE) return [];
+      const key = (i) => String(i.prompt || '');
+      const rightOnce = new Set(mine.filter((i) => i.role === 'check' && i.correct).map(key));
+      const seen = new Set(); const out = [];
+      for (const i of mine) {
+        if (i.role !== 'check' || i.correct || rightOnce.has(key(i)) || seen.has(key(i))) continue;
+        seen.add(key(i));
+        out.push({ skill_id: i.skill_id, skill_name: i.skill_name, difficulty: i.difficulty, format: i.format, prompt: i.prompt, choices: i.choices || null, answer: i.answer, accepts: i.accepts || [], rationale: i.rationale, role: 'check', recheck: true, source: 'recheck' });
+        if (out.length >= RECHECK_MAX) break;
+      }
+      return out;
+    } catch { return []; }
+  });
+}
+const PAGE_ASIDE_BLOCK = /^(Hook_|Concept_TakeawayBadge$|Memory_CheatSheet$)/;
+/** The blocks of a plan that only warm up or recap: shown one tap away with the tight page. A block a check question depends on stays. */
+function asideBlock(block) { return !!block && PAGE_ASIDE_BLOCK.test(String(block.block || '')); }
+/** What the tight page sets aside on an ordinary lesson row: the intro and the recap. The sections, the worked example and the common mistakes stay, in their order. */
+function tightLesson(lesson) {
+  if (!lesson) return lesson;
+  const aside = {};
+  if (lesson.intro) aside.intro = lesson.intro;
+  if (lesson.summary) aside.summary = lesson.summary;
+  return { ...lesson, tight: { aside } };
+}
+
 /** What the client should know up front. A preview of another level keeps today's flow. */
 function clientFlags(userId, session) {
   const on = (lever) => require('./efficiency').forLearner(userId, () => enabled(lever));
-  if (!session || session.preview) return { testout: false, short: false, fast: false };
-  if (plainHereOf(userId, session, session.level)) return { testout: false, short: false, fast: false }; // the speed proof's plain lesson (services/speed-proof.js) gets no lever: it is the comparison
-  return { testout: on('testout'), short: on('short'), fast: on('fast') };
+  if (!session || session.preview) return { testout: false, short: false, fast: false, one_prompt: false, tight: false };
+  if (plainHereOf(userId, session, session.level)) return { testout: false, short: false, fast: false, one_prompt: false, tight: false }; // the speed proof's plain lesson (services/speed-proof.js) gets no lever: it is the comparison
+  return { testout: on('testout'), short: on('short'), fast: on('fast'), one_prompt: on('onePrompt'), tight: on('tight') };
 }
 /**
  * After an answer. A lesson level's check, with retrieval first: a miss brings the part of the page it calls for (or all of it), answers that show the skill known end the
@@ -373,5 +449,5 @@ module.exports = {
   newTracker, observe, taught, pKnown, kMean, shown, priorFromHistory, trackerFromAnswers, nextStep, pRight,
   PLACE, bestItem, placementNext, placementAnswer,
   reviewDue, endWindow,
-  stopFor, workedCount, oneTap, unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
+  stopFor, spaceOn, proofPasses, recheckItems, asideBlock, tightLesson, workedCount, oneTap, unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
 };

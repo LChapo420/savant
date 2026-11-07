@@ -992,10 +992,18 @@ function levelPlan(grade, level) {
     const row = LAYOUT.entryFor(grade, level);
     if (row && row.skill && skills.includes(row.skill)) focus = row.skill;
   }
+  // A practice level practises what its lesson taught (speed round 4, docs/speed-real/ROUND4.md). The sheet names the row's skill and the coverage model reads answers against
+  // it, but only a lesson, Spanish and ACT read it here. Everywhere else the focus came from the level's position in the skill bands, so most practice levels asked another
+  // skill's questions and their answers counted for no one's proof. PRACTICE_FOLLOWS_LESSON=off restores the old reading.
+  const follows = kind === 'practice' && String(process.env.PRACTICE_FOLLOWS_LESSON || 'on').toLowerCase() !== 'off';
+  if (follows) {
+    const row = LAYOUT.entryFor(grade, level);
+    if (row && row.skill && skills.includes(row.skill)) focus = row.skill;
+  }
 
   const introducedThrough = grade.trackId === 'act' && skills.includes(focus)
     ? skills.indexOf(focus)
-    : focusIndex;
+    : follows && skills.includes(focus) ? Math.max(focusIndex, skills.indexOf(focus)) : focusIndex;
 
   return {
     level,

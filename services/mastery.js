@@ -294,12 +294,17 @@ function averageMastery(userId, skillIds) {
  */
 function levelProgress(userId, enrollment, grade) {
   const plan = curriculum.levelPlan(grade, enrollment.current_level);
-  const skills = plan.introduced;
+  // "Everything the learner has met by now" (levelPlan): the list is the grade's skill order, not the order lessons teach them, so it holds skills no lesson has reached yet. Each of those
+  // counted as mastery 0 in the gate: on ACT grade 1 a learner with every answer right stayed on level 21 for 26 sittings (docs/speed-real/ROUND4.md). The gate now reads the skills the learner
+  // has met, plus this level's focus. LEVEL_GATE_MET=off restores the old reading.
+  const met = String(process.env.LEVEL_GATE_MET || 'on').toLowerCase() !== 'off';
+  const skills = met ? plan.introduced.filter((id) => id === plan.focus || stateFor(userId, id).attempts > 0) : plan.introduced;
   const avg = averageMastery(userId, skills);
   const weakest = skills.reduce((min, id) => Math.min(min, stateFor(userId, id).mastery), 1);
   const items = enrollment.level_items || 0;
   const shownUnderstood = plan.kind === 'practice' && items > 0 && speedLevers().practiceShown(userId, plan.focus, { grade, trackId: enrollment.track_id, enrollmentId: enrollment.id, level: enrollment.current_level }); // SPEED_MASTERY_STOP: off, always false
-  const ready = shownUnderstood || (avg >= LEVEL_UP.averageMastery && weakest >= LEVEL_UP.weakestMastery && items >= LEVEL_UP.minItems);
+  const proofDone = plan.kind === 'practice' && items >= LEVEL_UP.minItems && speedLevers().proofPasses(userId, enrollment, enrollment.current_level); // SPEED_PROOF_PASSES: off, always false
+  const ready = shownUnderstood || proofDone || (avg >= LEVEL_UP.averageMastery && weakest >= LEVEL_UP.weakestMastery && items >= LEVEL_UP.minItems);
 
   const blockers = [];
   if (avg < LEVEL_UP.averageMastery) blockers.push(`average mastery ${(avg * 100).toFixed(0)}% of ${LEVEL_UP.averageMastery * 100}%`);
