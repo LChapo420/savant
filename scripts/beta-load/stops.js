@@ -85,10 +85,10 @@ async function walk(c, { upload = true } = {}) {
     if (mid) {
       await c.post(`/api/materials/${mid}/course`, {});
       let g = null;
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < Number(process.env.STOPS_COURSE_POLLS || 18); i++) {
         await h.sleep(5000);
         g = await c.get(`/api/materials/${mid}/course`);
-        const st = g.json && g.json.course && g.json.course.status;
+        const st = g.json && g.json.course && g.json.course.status; out.course_activity = g.json && g.json.activity;
         if (st && st !== 'building' && st !== 'queued') break;
       }
       const cj = g && g.json && g.json.course;
