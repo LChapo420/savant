@@ -202,6 +202,13 @@ router.get('/progress', requireAuth, (req, res) => {
   const week = ended
     .filter((s) => Date.parse(s.ended_at) >= weekAgo && (work.get(s.id) || {}).answered > 0)
     .map((s) => ({ ended_at: s.ended_at, answered: work.get(s.id).answered }));
+  // A sitting still open counts too: someone who answered 40 questions and closed the tab was told "No sessions in the last 7 days yet".
+  const open = db.forUser('sessions', req.user.id).filter((s) => !s.ended_at && Date.parse(s.updated_at || s.created_at) >= weekAgo);
+  const openWork = sessions.workDone(open);
+  for (const s of open) {
+    const done = openWork.get(s.id);
+    if (done && done.answered > 0) week.push({ ended_at: s.updated_at || s.created_at, answered: done.answered });
+  }
 
   // Reviews that have come due, across every track, weakest first: this is the
   // list the email reminders in Phase 4 are built from.

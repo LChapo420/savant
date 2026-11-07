@@ -18,6 +18,8 @@
         // The browser's own words here are "Failed to fetch", shown as they are on every page that prints err.message.
         throw new Error('No connection. Check your internet and try again.');
       }
+      // The connection is back: its message, which stays until dismissed, is no longer true.
+      if (toastHost) toastHost.querySelectorAll('.toast-stay').forEach((n) => { if (/^No connection/.test(n.dataset.text || '')) n.remove(); });
       let payload = null;
       try { payload = await res.json(); } catch { payload = null; }
       if (!res.ok) {

@@ -1837,6 +1837,8 @@ table.data td .meter { min-width: 60px; }
   pointer-events: none; /* it sits over the page's buttons: a message must not stop the tap that answers it (Check, Delete my account) */
 }
 .toast-stay { pointer-events: auto; }
+/* In a question the sticky Check or Next bar sits at the very bottom: a message that stays must not sit on the button that retries. */
+body:has(.check-bar) .toast-host, body:has(.player-foot) .toast-host { bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
 .toast { background: var(--ink); color: var(--page); padding: 12px 18px; border-radius: var(--r-btn); box-shadow: var(--shadow-lg); font-size: 0.9rem; font-weight: var(--w-strong); }
 .toast-error { background: var(--incorrect); color: #fff; }
 :root[data-theme="dark"] .toast-error, :root[data-mode="dark"] .toast-error { color: var(--page); }
