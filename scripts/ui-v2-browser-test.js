@@ -182,13 +182,13 @@ async function main() {
       await page.waitForURL(/dashboard/);
       await page.goto(`${BASE}/dashboard#everything`);
       await page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything' && document.documentElement.classList.contains('u2-ready'));
-      assert(await page.isVisible('#u2-all-title') === false || true);
       assert(await page.isVisible('#u2-signout'));
       await ctx.close();
     });
 
     await t('Theme and sign out still do what the old header buttons did', async () => {
-      const { ctx, page } = await open(ada, PHONE, '/dashboard#everything', { colorScheme: 'light' });
+      const sam = await account(browser, 'sam@example.com', 'Sam Signout', [['math', 'algebra_1_part_a']]); // signing out ends this learner's session
+      const { ctx, page } = await open(sam, PHONE, '/dashboard#everything', { colorScheme: 'light' });
       await page.waitForSelector('#u2-theme');
       const before = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       await page.click('#u2-theme');

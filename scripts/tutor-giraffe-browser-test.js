@@ -198,7 +198,7 @@ async function main() {
       await touchTap(page); await delay(450);
       check('a new device opens it on the remembered side', await page.evaluate(() => document.querySelector('.tdock-panel').dataset.place === 'top'));
       await page.click('.s-bottom'); await delay(400);
-      geo = await page.evaluate(() => { const p = document.querySelector('.tdock-panel').getBoundingClientRect(); const t = document.getElementById('tabbar').getBoundingClientRect(); return { pBottom: p.bottom, tTop: t.top }; });
+      geo = await page.evaluate(() => { const p = document.querySelector('.tdock-panel').getBoundingClientRect(); const t = document.getElementById('tabbar'); return { pBottom: p.bottom, tTop: t ? t.getBoundingClientRect().top : window.innerHeight /* UI_V2 has no tab bar */ }; });
       check('with a tab bar, the bottom chat sits above it', Math.abs(geo.pBottom - geo.tTop) <= 1, geo);
       await page.click('.tdock-close'); await delay(350);
       const clean = await page.evaluate(() => ({ pad: document.documentElement.style.paddingBottom, moved: [...document.querySelectorAll('.check-bar')].filter((n) => n.style.bottom).length, open: document.querySelector('.tdock-panel').dataset.open, vis: getComputedStyle(document.querySelector('.tdock-panel')).visibility }));
