@@ -451,6 +451,51 @@ async function betaChecks() {
   await stop(child);
 }
 
+/** Owner, 7 Nov: one named account goes through the flow once more on its next login, keeping what it has. */
+async function redoChecks() {
+  const invitesFile = path.join(dir, 'invites-redo.json');
+  process.env.BETA_INVITES_FILE = invitesFile;
+  const invites = require('../services/beta-invites'); // eslint-disable-line global-require
+  const now = Date.now();
+  const named = `redo-${now}@example.test`;
+  const child = await server(6896, { ONBOARDING_V2: 'on', BETA_GATE: 'invite', BETA_SIGNIN_ONLY: 'off', BETA_INVITES_FILE: invitesFile, ONBOARDING_REDO_EMAILS: named });
+  const base = 'http://localhost:6896';
+  const make = async (email) => {
+    const c = client(base);
+    await c('POST', '/api/consent/age', { birth_month: 3, birth_year: 1990, country: 'US' });
+    const { code } = invites.approve(email);
+    const out = await c('POST', '/api/auth/register', { invite_code: code, email, password: 'longenough1', display_name: 'Tess' });
+    assert.equal(out.status, 201, JSON.stringify(out.data).slice(0, 160));
+    return c;
+  };
+  const cat = (await fetch(`${base}/api/catalog`).then((r) => r.json())).tracks;
+  const gradeOf = (t) => cat.find((x) => x.id === t).grades[0].id;
+  const had = await make(named);
+  const other = await make(`other-${now}@example.test`);
+  for (const c of [had, other]) {
+    const e = await c('POST', '/api/enrollments', { selections: [{ track_id: 'english', grade_id: gradeOf('english') }] });
+    assert.equal(e.status, 201, `enrolled: ${JSON.stringify(e.data).slice(0, 160)}`);
+  }
+  const home = async (c) => (await c('GET', '/dashboard')).headers.get('location');
+  assert.equal(await home(other), null, 'anyone else with a subject keeps their dashboard');
+  assert.match(await home(had), /^\/start/, 'the named account goes to the flow');
+  const english = async () => { const d = (await had('GET', '/api/enrollments')).data; return (d.enrollments || d).find((e) => (e.track_id || (e.track && e.track.id)) === 'english'); };
+  const before = await english();
+  assert.ok(before, 'it has its subject');
+  assert.ok((await had('POST', '/api/ob2/begin', { answers: { tracks: ['math'] } })).status < 300, 'it may answer');
+  const first = await had('POST', '/api/ob2/first-lesson', { track: 'math', grade_id: gradeOf('math') });
+  assert.ok(first.status < 300, JSON.stringify(first.data).slice(0, 160));
+  const after = await english();
+  assert.equal(after.id, before.id, 'the subject it had is still there');
+  assert.equal(after.current_level, before.current_level, 'at the same level');
+  assert.equal(JSON.stringify(after.grade_id || after.grade), JSON.stringify(before.grade_id || before.grade), 'in the same grade');
+  assert.equal(await home(had), null, 'once its first lesson is made, the dashboard opens');
+  await had('POST', '/api/ob2/lesson-opened', {});
+  assert.equal(await home(had), null, 'and it never comes back');
+  await stop(child);
+  ok('one named account onboards once, keeping its subjects; nobody else does');
+}
+
 async function main() {
   if (fs.existsSync(path.join(ROOT, 'data', 'db.json'))) fs.copyFileSync(path.join(ROOT, 'data', 'db.json'), dbFile);
   contentChecks();
@@ -693,6 +738,7 @@ async function main() {
   await stop(child);
 
   await betaChecks();
+  await redoChecks();
 
   // ── the sweep and deletion, in this process on the same file ──
   const db = require('../config/db'); // eslint-disable-line global-require

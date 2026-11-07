@@ -124,7 +124,16 @@ function inFlow(req, user = req.user) {
   const row = rowOf(user.id);
   if (row && row.lesson_opened_at) return false;
   if (row && row.first_enrollment_id) return !!db.byId('enrollments', row.first_enrollment_id);
-  return !db.findOne('enrollments', (e) => e.user_id === user.id);
+  return redoOnce(user) || !db.findOne('enrollments', (e) => e.user_id === user.id);
+}
+
+/**
+ * Owner, 7 Nov: "make it so I onboard when I log in". An account named here goes through the flow one time even with subjects already, until it opens the
+ * flow's first lesson. Its enrollments and progress stay: firstLesson keeps a learner already on an enrollment where they are. Empty the list to turn it off.
+ */
+function redoOnce(user) {
+  const list = process.env.ONBOARDING_REDO_EMAILS === undefined ? 'landon@savantedu.com' : process.env.ONBOARDING_REDO_EMAILS;
+  return list.split(',').map((x) => x.trim().toLowerCase()).filter(Boolean).includes(String(user.email || '').toLowerCase());
 }
 
 /** Where an account (not a guest) belongs when it opens this flow: never through it again. */
