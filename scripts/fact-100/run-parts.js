@@ -98,7 +98,7 @@ const renderPart = (lv, index) => {
   for (const stack of [readers.join('+'), ...readers]) {
     const members = stack.split('+'); out.stacks[stack] = {};
     console.log(`\n${stack}: clean parts ${cleanRows.length}, plants ${plantRows.length}`);
-    for (const policy of ['any', 'one_ruling', 'all_rulings', 'two_rulings', 'independent', 'hard_only', 'hard_or_independent', 'hard_or_two_rulings', 'independent_and_ruling']) {
+    for (const policy of Object.keys(CF.POLICIES)) {
       const survives = (f) => { const v = { ...f, raisers: f.raisers.filter((x) => members.includes(x)) }; return v.raisers.length > 0 && CF.decide(v, policy).act; };
       const caught = plantRows.filter((r) => { const base = baseFor(r); const p = byPlant.get(r.plant); return r.flags.some((f) => survives(f) && f.sources.some((s) => members.includes(s.r) && !base.has(C.flagKey(s)) && C.catches(s, p))); }).length;
       const fa = cleanRows.filter((r) => r.flags.some(survives)).length;

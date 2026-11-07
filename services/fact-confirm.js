@@ -21,21 +21,24 @@ const familyOf = (name) => { const m = String(name).toLowerCase(); return m.incl
 const outside = (f) => Object.entries(f.rulings || {}).filter(([fam]) => !(f.raisers || []).map(familyOf).includes(familyOf(fam)));
 const yes = (f) => outside(f).filter(([, v]) => v === true).length;
 const heard = (f) => outside(f).length;
+/** Model families that believe it: those that raised it, and those that ruled it real. */
+const families = (f) => new Set([...(f.raisers || []).map(familyOf).filter((x) => x !== 'compute' && x !== 'code'), ...outside(f).filter(([, v]) => v === true).map(([k]) => familyOf(k))]).size;
 const independent = (f) => new Set((f.raisers || []).map(familyOf).filter((x) => x !== 'compute' && x !== 'code')).size >= 2;
 
 const POLICIES = {
   any: () => ({ act: true, by: ['raised'] }),
   one_ruling: (f) => ({ act: yes(f) >= 1, by: ['ruling'] }),
   all_rulings: (f) => ({ act: heard(f) >= 1 && yes(f) === heard(f), by: ['rulings'] }),
-  two_rulings: (f) => ({ act: yes(f) >= 2, by: ['two rulings'] }),
+  three_families: (f) => ({ act: families(f) >= 3, by: ['three families'] }),
   independent: (f) => ({ act: independent(f), by: ['independent'] }),
   hard_only: (f) => ({ act: f.recompute === 'false' || f.source === 'contradicted', by: [f.recompute === 'false' ? 'recompute' : 'source'] }),
   hard_or_independent: (f) => ({ act: f.recompute === 'false' || f.source === 'contradicted' || independent(f), by: ['hard or independent'] }),
-  hard_or_two_rulings: (f) => ({ act: f.recompute === 'false' || f.source === 'contradicted' || yes(f) >= 2, by: ['hard or two rulings'] }),
+  hard_or_three_families: (f) => ({ act: f.recompute === 'false' || f.source === 'contradicted' || families(f) >= 3, by: ['hard or three families'] }),
+  hard_or_all_rulings: (f) => ({ act: f.recompute === 'false' || f.source === 'contradicted' || (heard(f) >= 1 && yes(f) === heard(f)), by: ['hard or all rulings'] }),
   independent_and_ruling: (f) => ({ act: f.recompute === 'false' || f.source === 'contradicted' || (independent(f) && yes(f) >= 1), by: ['independent and a ruling'] }),
 };
 
-function decide(flag, policy = 'hard_or_two_rulings') {
+function decide(flag, policy = 'hard_or_three_families') {
   if (flag.recompute === 'true' && !(flag.source === 'contradicted')) return { act: false, by: ['recomputed: it holds'] };
   const p = POLICIES[policy];
   if (!p) throw new Error(`no confirm policy ${policy}`);
