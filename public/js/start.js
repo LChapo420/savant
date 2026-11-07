@@ -67,6 +67,7 @@
         </header>
         <form class="ob-panel" id="panel" novalidate></form>
         <div class="ob-foot" id="foot">
+          <p class="ob-error" id="err" role="alert" hidden></p>
           <button class="btn" id="next" type="submit" form="panel">Continue</button>
           <button class="link-btn" id="alt" type="button" hidden></button>
         </div>
@@ -175,7 +176,8 @@
     setRuler(step, view.within);
     say(view.bubble || '', view.mood || 'idle');
     const panel = $('#panel');
-    panel.innerHTML = `<div class="ob-view" data-dir="${dir}">${view.html}<p class="ob-error" id="err" role="alert" hidden></p></div>`;
+    panel.innerHTML = `<div class="ob-view" data-dir="${dir}">${view.html}</div>`;
+    showError('');
     const next = $('#next');
     next.textContent = view.cta || 'Continue';
     $('#foot').hidden = view.noFoot === true;
@@ -222,7 +224,7 @@
       mood: 'wave',
       bubble: `${Tutor.greeting()} A few questions, then your first lesson is **built around you.**`,
       cta: 'Sounds good',
-      html: '<h1 class="hello-h">Let\'s get you set up.</h1><p class="hello-sub">It takes a few minutes. Nothing to install, nothing to pay.</p>',
+      html: '<h1 class="hello-h">Let\'s get you set up.</h1><p class="hello-sub">It takes a few minutes, and you can stop any time.</p>',
       next: () => go('age'),
     }),
 
@@ -592,7 +594,7 @@
             ${band ? `<p>${esc(band)}</p>` : ''}
             ${S.goalSummary ? `<p>${esc(S.goalSummary)}</p>` : ''}
           </div>
-          <p class="ob-fine">This browser keeps your progress for ${isChild() ? 'as long as your account waits for a parent' : '30 days'}. Save it after the lesson so it's yours for good.</p>`,
+          <p class="ob-fine">${isChild() ? 'This browser keeps your progress while your account waits for a parent.' : 'This browser keeps your progress for 30 days.'} Save it after the lesson so it's yours for good.</p>`,
         next: async () => {
           await api('POST', '/api/ob2/lesson-opened', {}).catch(() => {});
           location.href = e.href;

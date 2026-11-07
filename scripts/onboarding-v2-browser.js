@@ -238,7 +238,8 @@ async function childWalk(browser, opts, withParent, label) {
   await shot(page, '09a-parent');
   assert.equal(await page.locator('input[name="email"]').count(), 0, 'no child email');
   await page.fill('input[name="nickname"]', 'Sam');
-  await page.fill('input[name="parent_email"]', `parent-${unique()}@example.test`);
+  const parentAddress = `parent-${unique()}@example.test`;
+  await page.fill('input[name="parent_email"]', parentAddress);
   await next(page);
   await at(page, 'intro');
   await shot(page, '09-intro');
@@ -263,8 +264,31 @@ async function childWalk(browser, opts, withParent, label) {
   assert.equal(me.consent.state, 'pending');
   assert.equal(me.consent.ai_free_text, false);
   if (withParent) {
-    // The parent's link is in the mail; here the parent's agreement is the existing page's job (scripts/consent-test.js covers it).
-    results.push(`${page.persona}: consent request sent at the parent step, account pending, parent page unchanged`);
+    // The parent opens the link from the email, in their own browser, on the existing page.
+    const outbox = path.join(dir, 'outbox');
+    const mail = fs.readdirSync(outbox).map((f) => fs.readFileSync(path.join(outbox, f), 'utf8')).filter((m) => m.includes(parentAddress)).pop();
+    assert.ok(mail, 'the parent got the email');
+    assert.match(mail, /Sam/, 'the email names the nickname');
+    const token = decodeURIComponent(mail.match(/parent-consent\?token=([^\s"\\]+)/)[1]);
+    const parent = await open(browser, 'parent', { viewport: PHONE, scheme: 'light' });
+    await parent.goto(`${BASE}/parent-consent?token=${encodeURIComponent(token)}`);
+    await parent.waitForLoadState('domcontentloaded');
+    const out = await parent.evaluate(async (tk) => {
+      const view = await (await fetch(`/api/consent/request/${encodeURIComponent(tk)}`)).json();
+      const res = await fetch(`/api/consent/request/${encodeURIComponent(tk)}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ decision: 'agree', notice_version: view.notice_version, i_am_parent: true, password: 'parentpass1' }),
+      });
+      return { status: res.status, body: await res.json() };
+    }, token);
+    await parent.context().close();
+    assert.equal(out.status < 300, true, `the parent's agreement went through: ${JSON.stringify(out.body).slice(0, 160)}`);
+    await page.reload();
+    await at(page, 'done');
+    const after = await page.evaluate(async () => (await (await fetch('/api/auth/me')).json()).user);
+    assert.equal(after.consent.state, 'active', 'the child account is active after the parent agrees');
+    assert.equal(after.consent.ai_free_text, false, 'outside AI still needs its own opt-in');
+    results.push(`${page.persona}: parent got the email, agreed on the existing page; child active, outside AI still off, login made in v2 still works`);
   } else {
     results.push(`${page.persona}: limited account before consent, no outside AI`);
   }
@@ -474,6 +498,77 @@ async function notes(browser, opts) {
   await page.context().close();
 }
 
+/** Every subject: a guest gets questions and lands in a first lesson that shows something. This run has no model keys, like a guest in production: outside AI is off for them. */
+async function everySubject(browser) {
+  const seen = [];
+  const page = await open(browser, 'subjects', { viewport: PHONE });
+  await page.goto(`${BASE}/start`);
+  const tracks = (await page.evaluate(async () => (await (await fetch('/api/catalog?view=grades')).json()).tracks.map((x) => ({ id: x.id, grades: x.grades.map((g) => g.id) }))));
+  for (const track of tracks) {
+    for (const pos of [0, 0.5]) {
+      const ctx = await browser.newContext({ viewport: PHONE });
+      const p = await ctx.newPage();
+      p.persona = `subjects/${track.id}/${pos}`;
+      await p.goto(`${BASE}/start`);
+      const grade = track.grades[Math.floor(track.grades.length * pos)];
+      const out = await p.evaluate(async ({ id, g }) => {
+        const post = async (u, b) => { const r = await fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }); return { status: r.status, body: await r.json() }; };
+        await post('/api/consent/age', { birth_month: 1, birth_year: 1990, country: 'US' });
+        await post('/api/ob2/begin', { answers: { tracks: [id] } });
+        const walk = await post(`/api/subject-placement/${id}/start`, { mode: 'quick' });
+        const first = await post('/api/ob2/first-lesson', { track: id, grade_id: g });
+        return { questions: (walk.body.questions || []).length, status: first.status, href: first.body.enrollment && first.body.enrollment.href, error: first.body.error };
+      }, { id: track.id, g: grade });
+      let showed = 'no href';
+      if (out.href) {
+        await p.goto(BASE + out.href);
+        await delay(2500);
+        showed = (await p.evaluate(() => { const r = document.querySelector('main, #root, #player, body'); return (r ? r.innerText : '').replace(/\s+/g, ' ').slice(0, 90); })) || 'empty';
+      }
+      seen.push(`${track.id}@${pos}: q=${out.questions} ${out.status} ${(out.href || '').slice(0, 40)} -> ${showed}`);
+      await ctx.close();
+    }
+  }
+  await page.context().close();
+  seen.forEach((s) => console.log(`  ${s}`));
+  results.push(`every subject: ${seen.length} hand-offs tried`);
+}
+
+/** A guest out on the app's own pages: the line is there, the prompt appears when a lesson finishes, and refused AI says why. */
+async function guestPages(browser, opts) {
+  const page = await open(browser, 'guestpages', opts);
+  await page.goto(`${BASE}/start`);
+  const e = await page.evaluate(async () => {
+    const post = async (u, b) => (await fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) })).json();
+    await post('/api/consent/age', { birth_month: 1, birth_year: 1990, country: 'US' });
+    await post('/api/ob2/begin', { answers: { tracks: ['math'], interest: 'soccer' } });
+    const grades = (await (await fetch('/api/catalog?view=grades')).json()).tracks.find((x) => x.id === 'math').grades;
+    return (await post('/api/ob2/first-lesson', { track: 'math', grade_id: grades[5].id })).enrollment;
+  });
+  await page.goto(`${BASE}/path?enrollment=${e.id}`);
+  await page.waitForSelector('#ob2-bar');
+  await delay(600);
+  await check(page, 'path');
+  await page.goto(`${BASE}/dashboard`);
+  await page.waitForSelector('#ob2-bar');
+  await page.goto(BASE + e.href);
+  await page.waitForSelector('#ob2-bar');
+  await delay(1200);
+  await page.evaluate(async () => {
+    const real = window.fetch;
+    window.fetch = async () => new Response('{}', { status: 200, headers: { 'Content-Type': 'application/json' } });
+    await window.App.api.post('/api/sessions/1/finish', {});
+    window.fetch = real;
+  });
+  await page.waitForSelector('#ob2-sheet[open]');
+  await delay(200);
+  await shot(page, '14b-lesson-done');
+  await page.locator('#ob2-sheet a').click();
+  await at(page, 'save');
+  results.push(`${page.persona}: save line on path, home and lesson; lesson-done prompt leads to save`);
+  await page.context().close();
+}
+
 async function keyboard(browser) {
   const page = await open(browser, 'keyboard', { viewport: PHONE });
   await page.goto(`${BASE}/start`);
@@ -494,7 +589,8 @@ async function keyboard(browser) {
   await page.locator('#m').selectOption('5');
   await page.locator('#y').selectOption('1990');
   await page.locator('#c').selectOption('US');
-  await page.locator('#c').press('Enter');
+  await page.locator('#next').focus();
+  await page.keyboard.press('Enter');
   await at(page, 'learn');
   await page.locator('input[name="track"]').first().focus();
   await page.keyboard.press('Space');
@@ -525,7 +621,7 @@ async function main() {
   fs.copyFileSync(path.join(ROOT, 'data', 'db.json'), dbFile);
   const child = spawn(process.execPath, ['server.js'], {
     cwd: ROOT,
-    env: { ...process.env, PORT: String(PORT), DB_FILE: dbFile, ONBOARDING_V2: 'on', CONSENT_SWEEP: 'off', SESSION_SECRET: 'y'.repeat(40), RATE_LIMIT_OFF: '1' },
+    env: { ...process.env, PORT: String(PORT), DB_FILE: dbFile, ONBOARDING_V2: 'on', CONSENT_SWEEP: 'off', SESSION_SECRET: 'y'.repeat(40), MAIL_OUTBOX_DIR: path.join(dir, 'outbox') },
     stdio: ['ignore', 'ignore', 'ignore'],
   });
   for (let i = 0; i < 120; i += 1) {
@@ -551,6 +647,8 @@ async function main() {
     other: async () => { await noExample(browser, { viewport: PHONE, scheme: 'light' }); await noExample(browser, { viewport: DESK, scheme: 'dark' }); },
     notes: async () => { await notes(browser, { viewport: PHONE, scheme: 'light' }); },
     keyboard: () => keyboard(browser),
+    guestpages: async () => { await guestPages(browser, { viewport: PHONE, scheme: 'light' }); await guestPages(browser, { viewport: DESK, scheme: 'dark' }); },
+    subjects: () => everySubject(browser),
     motion: () => reducedMotion(browser),
   };
   let failed = 0;
