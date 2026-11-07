@@ -123,7 +123,7 @@ App.mount(async () => {
         <div data-part="lesson:${esc(skillId)}" data-changed="${s.lesson.changed ? 1 : 0}"></div></div>
       <h2 style="margin-top:18px">Practice</h2><p class="small muted">Answer one at a time. This does not count toward mastery.</p>
       ${s.practice.map((q, i) => qHtml(q, i, 'p')).join('')}
-      <div class="card" style="margin-top:18px"><h2>Ready?</h2><p class="small">The check has about 5 questions at tier ${s.tier} of 3, with no feedback until the end. 75% masters the skill.</p><button class="btn btn-primary" id="mastery" type="button">Take the check</button></div>`;
+      <div class="card" style="margin-top:18px"><h2>Ready?</h2><p class="small">The check has about ${s.check_size || 5} questions at tier ${s.tier} of 3, with no feedback until the end. 75% masters the skill.</p><button class="btn btn-primary" id="mastery" type="button">Take the check</button></div>`;
     document.getElementById('back').addEventListener('click', (e) => { e.preventDefault(); map(); });
     document.getElementById('mastery').addEventListener('click', () => quiz('mastery', skillId));
     if (window.PartChange) window.PartChange.wire(root, id, (r) => {
@@ -132,7 +132,7 @@ App.mount(async () => {
       if (r.part.key_points) document.getElementById('lesson-keys').innerHTML = keysHtml(r.part.key_points);
       if (r.part.aside) document.getElementById('lesson-aside').innerHTML = asideHtml(r.part.aside);
     });
-    if (window.PartChange && !s.lesson.aside && s.lesson.changed === undefined) window.PartChange.attach(document.getElementById('lesson-change'), { ref: { material_id: id, skill_id: skillId }, changed: !!s.lesson.prev, onResult: (r) => { if (r.paragraphs) document.getElementById('lesson-text').innerHTML = r.paragraphs.map((p) => `<p>${esc(p)}</p>`).join(''); } });
+    if (window.PartChange) window.PartChange.attach(document.getElementById('lesson-change'), { ref: { material_id: id, skill_id: skillId }, changed: !!s.lesson.prev, onResult: (r) => { if (r.paragraphs) document.getElementById('lesson-text').innerHTML = r.paragraphs.map((p) => `<p>${esc(p)}</p>`).join(''); } });
     s.practice.forEach((q, i) => {
       const card = root.querySelector(`[data-q="${q.id}"]`);
       const btn = document.createElement('button');

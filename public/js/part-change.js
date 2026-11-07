@@ -12,6 +12,7 @@
   async function attach(slot, { ref, onResult, changed = false }) {
     const s = await load();
     if (!s.on || !slot.isConnected) return;
+    if (s.material && ref && ref.material_id !== undefined) return; // an upload's parts have their own row (wire, below)
     const row = App.el('div', { class: 'row-wrap', style: 'margin-top:10px; gap:6px; align-items:center', 'data-part-change': '1' });
     row.innerHTML = `
       <span class="tiny muted">Change this:</span>
@@ -66,6 +67,14 @@
       const revert = row.querySelector('[data-revert]');
       const showRevert = (on) => { revert.style.display = on ? '' : 'none'; };
       showRevert(slot.dataset.changed === '1');
+      // On a phone a row under every card or question would be most of the page: small parts start closed behind one small button.
+      if (!/^(lesson:|test$)/.test(part) && slot.dataset.changed !== '1') {
+        row.style.display = 'none';
+        const open = App.el('button', { class: 'btn btn-sm', type: 'button', 'data-part-toggle': '1', style: 'margin-top:8px' });
+        open.textContent = 'Change this';
+        open.addEventListener('click', () => { row.style.display = ''; open.remove(); });
+        slot.insertBefore(open, row);
+      }
       const busy = (b) => row.querySelectorAll('button').forEach((x) => { x.disabled = b; });
       const send = async (url, body, done) => {
         busy(true);

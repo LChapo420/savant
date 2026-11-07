@@ -65,7 +65,7 @@ const DOC = `# Tides\n\nTides are the regular rise and fall of the sea. The Moon
   await page.locator('[data-skill]').first().click();
   await page.waitForSelector('#lesson-text', { timeout: 15000 });
   const lessonBefore = await page.textContent('#lesson-text');
-  check('the lesson shows the row', await page.locator('[data-part^="lesson:"] [data-change="simpler"]').count() === 1);
+  check('the lesson shows the row, once', await page.locator('[data-part^="lesson:"] [data-change="simpler"]').count() === 1 && await page.locator('#lesson-change [data-change]').count() === 0);
   await noSide('lesson');
   await shot('1-lesson');
   const n1 = await press('[data-part^="lesson:"]', 'simpler');
@@ -111,6 +111,7 @@ const DOC = `# Tides\n\nTides are the regular rise and fall of the sea. The Moon
   if (await radio.count()) { await radio.check(); await card.locator('button:has-text("Check")').click(); await card.locator('[data-exp]').first().waitFor({ timeout: 10000 }); }
   const expBefore = await card.locator('[data-exp]').first().textContent().catch(() => '');
   check('the explanation after a practice answer has its row', await card.locator('[data-part] [data-change="simpler"]').count() === 1);
+  await card.locator('[data-part-toggle]').click();
   const fbRow = card.locator('[data-part-change]').first();
   await fbRow.locator('[data-change="simpler"]').click();
   await waitFor(async () => { const t = (await fbRow.locator('[data-note]').textContent()) || ''; return t && !/Working on it/.test(t) ? t : null; }, 30000);
@@ -125,6 +126,8 @@ const DOC = `# Tides\n\nTides are the regular rise and fall of the sea. The Moon
   await page.waitForSelector('[data-part^="note:"] [data-change]', { timeout: 15000 });
   const notesBefore = await page.locator('section.card').first().textContent();
   await noSide('notes');
+  check('notes: small parts start closed behind one button', await page.locator('[data-part^="note:"] [data-part-toggle]').count() > 0);
+  await page.locator('[data-part^="note:"] [data-part-toggle]').first().click();
   await page.locator('[data-part^="note:"] [data-change="simpler"]').first().click();
   await waitFor(async () => { const t = (await page.locator('section.card').first().textContent()) || ''; return /\bthat\b/.test(t.replace(/Change this[\s\S]*/, '')) && !/\bthat\b/.test(notesBefore.replace(/Change this[\s\S]*/, '')) ? t : null; }, 20000);
   const notesAfter = await page.locator('section.card').first().textContent();
@@ -147,7 +150,7 @@ const DOC = `# Tides\n\nTides are the regular rise and fall of the sea. The Moon
   check('pack: the summary has the row', true);
   await page.click('[data-tab="cards"]');
   const firstCard = page.locator('[data-card]').first();
-  if (await firstCard.count()) { await firstCard.click(); check('pack: an open card has the row', await page.locator('[data-part^="packcard:"] [data-change]').count() >= 1); }
+  if (await firstCard.count()) { await firstCard.click(); check('pack: an open card has the row', await page.locator('[data-part^="packcard:"] [data-part-toggle]').count() >= 1); }
 
   // ── practice test
   await page.goto(`${B}/my-material-test?id=${id}`);

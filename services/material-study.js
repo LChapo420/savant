@@ -328,7 +328,7 @@ function lesson(userId, materialId, skillId, opts = {}) {
   require('./material-parts').maybeFollow(userId, materialId, [`lesson:${skill.id}`, ...practiceQs.map((q) => `q:${skill.id}:${q.id}`)]); // eslint-disable-line global-require
   return {
     skill: {
-      id: skill.id, title: skill.title, source: skill.source || 'material', tier: st.tier, lesson: skill.lesson,
+      id: skill.id, title: skill.title, source: skill.source || 'material', tier: st.tier, lesson: skill.lesson, check_size: skill.quiz_size || QUIZ_SIZE,
       practice: practiceQs.map((q) => publicQ(q, skill.id)),
       remediation: remediating ? { misconceptions: st.misconceptions.slice(-3).map((m) => (typeof m === 'object' ? m.text : m)) } : null,
     },
