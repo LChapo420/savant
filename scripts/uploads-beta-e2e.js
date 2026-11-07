@@ -208,7 +208,7 @@ async function runCase(c) {
 /** A lesson put back is the stored reading, with nothing shaped on top: what the course says for this goal. */
 function storedLesson(uid, mid, ref) {
   const b = require('../services/material-parts').baseOf(uid, mid, ref);
-  return JSON.stringify([b.leaves.filter((l) => /^pd/.test(l.key)).map((l) => l.text), b.leaves.filter((l) => /^kd/.test(l.key)).map((l) => l.text)]);
+  return JSON.stringify([b.leaves.filter((l) => /^p[0-9]/.test(l.key)).map((l) => l.text), b.leaves.filter((l) => /^k[0-9]/.test(l.key)).map((l) => l.text)]);
 }
 function costOf(uid) {
   try {
