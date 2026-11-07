@@ -4,7 +4,7 @@
  *   - puts each step's question in the giraffe's bubble, shows the giraffe the mockup's way, and swaps icons and a few words to the mockup's
  *   - adds the step "How do you want to learn?" before the subjects, stored with the onboarding answers as `how`. Under the consent age there is no such step: child accounts can't upload (routes/consent.js)
  *   - takes "My own notes" off the subjects. `notes` stays the answer it always was: true for "own" and "both"
- * Own material: upload, then home, with no subject or grade. Both: subject and grade, then upload. On the public flow a guest can't upload until the account is saved, so saving comes first.
+ * Own material: straight to Home, with no subject or grade (Home's Your material has the upload). Both: subjects, then Home. No upload screen in onboarding (owner, 7 Nov).
  *
  * The private beta (an account already, `signedIn()`), owner 7 Nov: "after picking the subjects it takes you to the homepage with a take placement button and a pick my grade
  * button, instead of having to do all those in the main onboarding". So here the flow ends at the subjects: POST /api/ob2/to-home, then upload (own material or both) or home,
@@ -45,7 +45,6 @@
   /** Short enough to stand in the bubble. */
   const ASK_MAX = 110;
   const AFTER_STEPS = ['learn', 'grade', 'pick', 'level', 'result', 'building'];
-  const UPLOAD = '/my-material?from=start';
 
   let X = null; // js/start.js's internals
 
@@ -71,13 +70,12 @@
   }
 
   /** The end of the private beta's flow: the server keeps the picked subjects waiting for Home, then upload or home. A failure shows, and nothing moves. */
-  async function toHome({ upload = false } = {}) {
+  async function toHome() {
     await X.api('POST', '/api/ob2/to-home', {});
     X.forget();
-    window.location.href = upload ? UPLOAD : '/dashboard';
+    window.location.href = '/dashboard';
     return new Promise(() => {}); // stays busy until the page goes
   }
-  const toUpload = () => toHome({ upload: true });
 
   /** Change one step's view, keeping everything js/start.js gave it. */
   function wrap(name, fn) {
@@ -113,7 +111,7 @@
         X.keep();
         await X.saveAnswers();
         if (how !== 'own') return X.go('learn');
-        if (X.signedIn()) return toUpload();
+        if (X.signedIn()) return toHome();
         return X.go('save');
       },
     });
@@ -142,7 +140,7 @@
           .replace(/<label class="opt subject">\s*<input type="checkbox" name="notes"[\s\S]*?<\/label>/, '')
           .replace('Pick one or a few. You start with number 1.', ends ? 'Pick one or more. You choose where to start on your home page.' : 'Pick one or more.'),
         // Upload first for "both"; home for the rest.
-        ...(ends ? { next: async () => { await X.saveAnswers(); return toHome({ upload: X.S.a.how === 'both' }); } } : {}),
+        ...(ends ? { next: async () => { await X.saveAnswers(); return toHome(); } } : {}),
         bind: () => {
           bind();
           // Numbers say which comes first; with every subject waiting on Home, none does, so a tick each.
@@ -153,19 +151,7 @@
       };
     });
     wrap('ready', (v) => {
-      if (X.S.a.how === 'both' && X.signedIn()) {
-        return { ...v, cta: 'Upload my material', next: toUpload };
-      }
       return { ...v, cta: 'Start lesson' };
-    });
-    wrap('done', (v) => {
-      if (X.isChild() || !['own', 'both'].includes(X.S.a.how)) return v;
-      return {
-        ...v,
-        cta: 'Upload my material',
-        html: v.html.replace(/<a class="opt" href="\/my-material">[\s\S]*?<\/a>/, ''),
-        next: () => { X.forget(); window.location.href = UPLOAD; return new Promise(() => {}); },
-      };
     });
   }
 

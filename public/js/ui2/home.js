@@ -28,6 +28,8 @@
   let pastBuilt = false;
   /** Subjects picked in the private beta's onboarding that still need a start (GET /api/ui2/waiting, services/onboarding-v2.js waitingFor). */
   let waiting = [];
+  /** What the learner chose at "How do you want to learn?" (curriculum, own, both), from /api/ui2/waiting. */
+  let how = null;
 
   // ── small pieces ─────────────────────────────────────────────────────────
   const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
@@ -87,9 +89,9 @@
       return { icon: lead.symbol, eyebrow: 'Up next', title: capital(lead.heading), detail: lead.detail, href: lead.href, label: lead.label, strong: lead.strong, path: lead.path };
     }
     const about = `about ${Math.round(first.estMinutes)} ${Math.round(first.estMinutes) === 1 ? 'minute' : 'minutes'}`;
-    if (first.enforcer) return { icon: `<span class="u2-tile u2-lg">${ic('target')}</span>`, eyebrow: 'Up next', title: stepName(first), detail: first.why || capital(about), href: first.href, label: 'Start', strong: true, path: lead && lead.path, block: first };
+    if (first.enforcer) return { icon: `<span class="u2-square u2-lg">${ic('target')}</span>`, eyebrow: 'Up next', title: stepName(first), detail: first.why || capital(about), href: first.href, label: 'Start', strong: true, path: lead && lead.path, block: first };
     if (first.kind === 'review') {
-      return { icon: `<span class="u2-tile u2-lg">${ic('loop')}</span>`, eyebrow: 'Up next', title: stepName(first), detail: first.why ? `${first.why}. ${capital(about)}.`.replace(/\.\./g, '.') : capital(about), href: first.href, label: 'Start the review', strong: true, path: first.enrollmentId ? `/path?enrollment=${first.enrollmentId}` : (lead && lead.path), block: first };
+      return { icon: `<span class="u2-square u2-lg">${ic('loop')}</span>`, eyebrow: 'Up next', title: stepName(first), detail: first.why ? `${first.why}. ${capital(about)}.`.replace(/\.\./g, '.') : capital(about), href: first.href, label: 'Start the review', strong: true, path: first.enrollmentId ? `/path?enrollment=${first.enrollmentId}` : (lead && lead.path), block: first };
     }
     const e = ((progress && progress.enrollments) || []).find((x) => x.id === first.enrollmentId);
     const symbol = e ? App.symbol(e.track, { size: 'lg' }) : (lead ? lead.symbol : '');
@@ -140,6 +142,10 @@
   const hrefOf = (e) => { const c = cardOf(e); const a = c && c.querySelector('.subject-card-act a.btn'); return a ? a.getAttribute('href') : `/path?enrollment=${e.id}`; };
   const mini = (pct, id) => `<span class="u2-mini" aria-hidden="true"><i style="width:${pct}%${id ? `;background:var(--s-${esc(id)}, var(--act))` : ''}"></i></span>`;
   const subjectRow = (e) => `<a class="u2-opt u2-s-row" href="${esc(hrefOf(e))}" data-enrollment="${e.id}">${App.symbol(e.track)}<span class="u2-o-t"><b>${esc(e.track.name)}</b><small>${esc(levelWords(e))}</small></span>${mini(shareOf(e), e.track.id)}${ic('chev-r', 'u2-mute')}</a>`;
+  /** Two or more subjects: square raised tiles, two to a row. A waiting subject opens its placement / pick-a-grade choice under the grid. */
+  const tileWords = (e) => (e.status === 'placement_pending' ? 'Needs a start' : `Level ${e.current_level}`);
+  const subjectTile = (e) => `<a class="u2-opt u2-square" href="${esc(hrefOf(e))}" data-enrollment="${e.id}">${App.symbol(e.track)}<b>${esc(e.track.name)}</b><small>${esc(tileWords(e))}</small>${mini(shareOf(e), e.track.id)}</a>`;
+  const waitTile = (w) => `<button type="button" class="u2-opt u2-square" data-wait-tile="${esc(w.track.id)}" aria-expanded="false">${App.symbol(w.track)}<b>${esc(w.track.name)}</b><small>Needs a start</small></button>`;
   const materialWords = (m) => {
     if (m.status === 'none') return 'Not started';
     if (m.status === 'building' && !m.total) return 'Being built';
@@ -188,10 +194,12 @@
     const nothing = !subjects.length && !mats.materials.length;
     let main = '';
     const waitFirst = !subjects.length && waiting.length > 0;
+    const squares = subjects.length + waiting.length > 1;
+    const grid = `<div class="u2-squares" id="u2-subjects">${subjects.map(subjectTile).join('')}${waiting.map(waitTile).join('')}</div><div id="u2-wait-open" class="u2-waits" aria-live="polite"></div>`;
     if (waitFirst) {
       main = `<h1 class="u2-t1 u2-wait-title" tabindex="-1" id="u2-title">Choose where to start</h1>
         <p class="u2-m u2-detail">A short placement finds your level, or pick it yourself.</p>
-        <div class="u2-waits">${waiting.map(waitCard).join('')}</div>`;
+        ${squares ? grid : `<div class="u2-waits">${waiting.map(waitCard).join('')}</div>`}`;
     } else if (focus && focus.href && (subjects.length || !unfinished.length)) {
       // The one strong button: the plan's next step.
       main = `<div class="u2-feature">
@@ -207,6 +215,8 @@
         <h1 class="u2-t1" tabindex="-1" id="u2-title">${esc(m.title)}</h1>
         <a class="u2-btn" id="u2-start" href="${materialHref(m)}">${m.total ? 'Continue' : 'Make a learning path'}</a>
       </div>`;
+    } else if ((nothing || !subjects.length) && how === 'own') {
+      main = ''; // own material: Your material below has the way on
     } else if (nothing || !subjects.length) {
       main = `<div class="u2-feature"><h1 class="u2-t1" tabindex="-1" id="u2-title">Pick your first subject</h1><a class="u2-btn" id="u2-start" href="/onboarding">Choose subjects</a></div>`;
     }
@@ -218,8 +228,9 @@
         <section class="u2-h-sec" id="u2-continue" aria-label="Continue">
           ${subjects.length ? '<h2 class="u2-h">Continue</h2>' : ''}
           ${main}
-          ${rest.length ? `<div class="u2-rows">${rest.map(subjectRow).join('')}</div>` : ''}
-          ${subjects.length && waiting.length ? `<h2 class="u2-h">Choose where to start</h2><div class="u2-waits">${waiting.map(waitCard).join('')}</div>` : ''}
+          ${squares && subjects.length ? grid : ''}
+          ${!squares && rest.length ? `<div class="u2-rows">${rest.map(subjectRow).join('')}</div>` : ''}
+          ${!squares && subjects.length && waiting.length ? `<h2 class="u2-h">Choose where to start</h2><div class="u2-waits">${waiting.map(waitCard).join('')}</div>` : ''}
           ${!subjects.length && !waiting.length && mats.materials.length ? `<a class="u2-opt u2-s-row" id="u2-add-subject" href="/onboarding">${ic('plus')}<b>Add a subject</b></a>` : ''}
           ${canPlan ? `<div class="u2-quiet">
             <button type="button" class="u2-chip-t" id="u2-minutes" aria-haspopup="dialog" aria-label="${plan.minutes} minutes today. Change">${ic('clock')}${plan.minutes} min${ic('chev-d')}</button>
@@ -247,7 +258,14 @@
         await drawHome();
       });
     }
-    guideInto(host, finished ? 'Done for today.' : waitFirst ? 'Where should we start?' : focus || mats.materials.length ? 'Ready when you are.' : 'Let\'s get you started.', 'u2-giraffe');
+    guideInto(host, finished ? 'Done for today.' : waitFirst ? 'Where should we start?' : (how === 'own' || how === 'both') && !mats.materials.length ? "Add your notes when you're ready." : focus || mats.materials.length ? 'Ready when you are.' : 'Let\'s get you started.', 'u2-giraffe');
+    host.querySelectorAll('[data-wait-tile]').forEach((b) => b.addEventListener('click', () => {
+      const w = waiting.find((x) => x.track.id === b.dataset.waitTile);
+      const slot = host.querySelector('#u2-wait-open');
+      if (!w || !slot) return;
+      host.querySelectorAll('[data-wait-tile]').forEach((x) => { x.classList.toggle('on', x === b); x.setAttribute('aria-expanded', String(x === b)); });
+      slot.innerHTML = waitCard(w);
+    }));
     // The empty page's other first steps (the style quiz, the survey) stay on the page, under the sections. Not while subjects wait: its "Choose subjects" would ask again.
     const empty = root.querySelector('.empty-state');
     if (empty && !waitFirst) host.querySelector('.u2-home-body').appendChild(empty);
@@ -524,7 +542,7 @@
     try { plan = planReply ? await planReply : null; } catch { plan = null; }
     try { mats = await App.api.get('/api/ui2/material-progress'); } catch { mats = { can_upload: false, materials: [] }; }
     try { today = await App.api.get('/api/ui2/today'); } catch { today = null; }
-    try { waiting = (await App.api.get('/api/ui2/waiting')).subjects || []; } catch { waiting = []; }
+    try { const w = await App.api.get('/api/ui2/waiting'); waiting = w.subjects || []; how = w.how || null; } catch { waiting = []; how = null; }
     const host = document.createElement('div');
     host.id = 'u2-home';
     root.insertBefore(host, root.firstChild);

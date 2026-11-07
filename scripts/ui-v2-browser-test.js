@@ -17,7 +17,7 @@ const ROOT = path.join(__dirname, '..');
 const PORT = 6851;
 const BASE = `http://localhost:${PORT}`;
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
-const PHONE = { viewport: { width: 375, height: 812 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 };
+const PHONE = { viewport: { width: 375, height: 420 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 };
 const SMALL = { viewport: { width: 320, height: 568 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 };
 const DESK = { viewport: { width: 1280, height: 800 } };
 
@@ -119,9 +119,9 @@ async function main() {
       assert(!/\bXP\b|day streak|in a row/i.test(await page.innerText('#u2-home')));
       assert((await page.$$('#u2-home .u2-btn')).length === 1);
       assert(await page.isVisible('#u2-giraffe .tutor-svg'), 'the giraffe at the top');
-      const rows = await page.$$eval('#u2-continue .u2-rows a', (a) => a.map((x) => x.getAttribute('href')));
-      assert.strictEqual(rows.length, 1, 'the other subject has its own row');
-      assert(rows[0].includes(String(plan.blocks.find((b) => b.kind !== 'break' && b.href).enrollmentId)) === false, 'not the same subject as the button');
+      const squares = await page.$$eval('#u2-subjects a', (a) => a.map((x) => x.getAttribute('href')));
+      assert.strictEqual(squares.length, 2, 'two subjects: a square each, two to a row');
+      assert(squares.some((h) => !h.includes(String(first.enrollmentId))), 'the other subject has its own square');
       assert(await page.isVisible('#u2-upload'), 'upload your own');
       assert.strictEqual(await page.getAttribute('#u2-upload', 'href'), '/my-material');
       assert(await page.isVisible('#u2-minutes') && await page.isVisible('#u2-peek'), 'time and today\'s plan stay');
@@ -265,19 +265,41 @@ async function main() {
       await page.click('.tdock-close');
       await page.waitForFunction(() => !document.documentElement.dataset.tdock);
       const set = (state, word, mouth) => page.evaluate(([st, w, m]) => { const g = document.querySelector('.tdock-g'); if (st) g.dataset.voice = st; else delete g.dataset.voice; g.dataset.mouth = m || ''; g.querySelector('.tdock-g-status').textContent = w || ''; document.documentElement.classList.toggle('tdock-in-call', !!st); }, [state, word, mouth]);
+      const shots = [];
+      const grab = async () => { if (process.env.OB_CALL_SHOT) { await delay(250); shots.push((await page.screenshot({ clip: { x: 0, y: 0, width: 375, height: 420 } })).toString('base64')); } };
+      await set('listening', 'Listening');
+      await page.waitForSelector('#u2-call:not([hidden])');
+      await grab();
+      await set('thinking', 'Thinking');
+      await delay(200); await grab();
       await set('talking', 'Talking', 'talk');
       await page.waitForSelector('#u2-call:not([hidden])');
-      const stage = await page.evaluate(() => { const r = document.querySelector('.u2-call-g').getBoundingClientRect(); return { h: r.height, mouth: getComputedStyle(document.querySelector('#u2-call .t-mouth-happy')).animationName, how: document.getElementById('u2-call-how').textContent, word: document.getElementById('u2-call-word').textContent }; });
-      assert(stage.h >= 380, `the giraffe is the focus: ${stage.h}px`);
-      assert.strictEqual(stage.mouth, 'u2-talk');
-      assert(/Tap me.*end the call.*Hold me.*chat/.test(stage.how));
+      await delay(100); await grab();
+      // The page stays: no full-screen stage, the label is small, and the giraffe on the page talks with the existing mouth.
+      const stage = await page.evaluate(() => { const r = document.getElementById('u2-call').getBoundingClientRect(); const m = [...document.querySelectorAll('.u2-guide .t-mouth-happy, .site-header .tdock-g .t-mouth-happy')].map((x) => getComputedStyle(x).animationName); return { w: r.width, h: r.height, vw: innerWidth, mouth: m, how: document.getElementById('u2-call-how').textContent, word: document.getElementById('u2-call-word').textContent, up: document.documentElement.dataset.u2Call }; });
+      assert(stage.w < stage.vw * 0.8 && stage.h < 70, `a small label, not a stage: ${stage.w}x${stage.h}`);
+      assert(stage.mouth.includes('u2-talk'), `the giraffe's own mouth moves: ${stage.mouth}`);
+      assert.strictEqual(stage.how, 'Tap to end, hold for chat');
       assert.strictEqual(stage.word, 'Talking');
+      assert.strictEqual(stage.up, 'talking');
+      assert(await page.evaluate(() => [...document.querySelectorAll('.u2-guide .tutor, .site-header .tdock-g .tutor')].filter((x) => x.checkVisibility({ visibilityProperty: true }) && x.getBoundingClientRect().width > 20 && x.getBoundingClientRect().height > 20 && !x.closest('.tdock-g[style*="hidden"]')).length === 1), 'exactly one giraffe shows, where it was');
+      await set('listening', 'Listening');
+      await page.waitForFunction(() => document.documentElement.dataset.u2Call === 'listening');
       await set('thinking', 'Thinking');
-      await page.waitForFunction(() => document.querySelector('#u2-call .tutor').dataset.mood === 'think');
+      await page.waitForFunction(() => document.documentElement.dataset.u2Call === 'thinking' && [...document.querySelectorAll('.u2-guide .tutor, .site-header .tdock-g .tutor')].some((x) => x.dataset.mood === 'think'));
       await set('', 'The call ended.');
-      await page.waitForFunction(() => document.querySelector('#u2-call').dataset.state === 'ended');
-      await page.click('#u2-call-done');
-      await page.waitForSelector('#u2-call', { state: 'hidden' });
+      await page.waitForFunction(() => document.getElementById('u2-call').dataset.state === 'ended');
+      if (process.env.OB_CALL_SHOT) { await delay(250); shots.push((await page.screenshot({ clip: { x: 0, y: 0, width: 375, height: 420 } })).toString('base64')); }
+      await page.waitForSelector('#u2-call', { state: 'hidden', timeout: 8000 });
+      assert(!await page.evaluate(() => document.documentElement.dataset.u2Call), 'ended: back to normal');
+      if (process.env.OB_CALL_SHOT) {
+        const sheet = await ctx.newPage();
+        await sheet.setViewportSize({ width: 1520, height: 420 });
+        await sheet.setContent(`<body style="margin:0;display:flex;gap:6px;background:#888">${shots.map((b) => `<img width="375" src="data:image/png;base64,${b}">`).join('')}</body>`);
+        fs.mkdirSync(path.dirname(process.env.OB_CALL_SHOT), { recursive: true });
+        await sheet.screenshot({ path: process.env.OB_CALL_SHOT });
+        await sheet.close();
+      }
       await ctx.close();
     });
 
@@ -486,7 +508,7 @@ async function main() {
     });
 
     await t('Keyboard: tab reaches menu, Start session, giraffe, Start, minutes, today\'s plan, in order and with a visible focus ring', async () => {
-      const { ctx, page } = await open(ada, { viewport: { width: 375, height: 812 } }, '/dashboard');
+      const { ctx, page } = await open(ada, { viewport: { width: 375, height: 420 } }, '/dashboard');
       await page.waitForSelector('#u2-start');
       await delay(400);
       const seen = [];
@@ -658,7 +680,7 @@ async function main() {
       await at(page, 'how');
     };
 
-    await t('Beta: "My own material" goes to upload, then home, with no subject or grade; the giraffe on /start opens the tutor', async () => {
+    await t('Beta: "My own material" goes straight to home, with no subject or grade; the giraffe on /start opens the tutor', async () => {
       const { ctx, page } = await invited('own@example.com');
       await toHow(page);
       await page.waitForSelector('.tdock-g-btn', { state: 'attached', timeout: 10000 });
@@ -668,14 +690,14 @@ async function main() {
       await page.waitForFunction(() => !document.documentElement.dataset.tdock);
       await page.check('input[name="how"][value="own"]', { force: true });
       await page.click('#next');
-      await page.waitForURL(/\/my-material\?from=start/);
-      await page.waitForSelector('#u2-after-upload a');
-      assert(await page.isVisible('#u2-after-upload a'));
-      assert(await noOverflow(page));
-      await page.click('#u2-after-upload a');
-      await page.waitForURL(/\/dashboard/);
+      await page.waitForURL(/\/dashboard/); // straight to home: no upload screen in onboarding
       await page.waitForSelector('#u2-upload');
-      assert(/\/dashboard/.test(page.url()), 'home, not back to /start');
+      assert(!/my-material|\/start/.test(page.url()), 'home, not an upload page or /start');
+      const first = await page.$eval('#u2-material .u2-rows', (r) => r.firstElementChild.id);
+      assert.strictEqual(first, 'u2-upload', 'Upload your own comes first in Your material');
+      assert(/Add your notes when you.re ready\./.test(await page.textContent('.u2-bubble')), 'the giraffe says when to add notes');
+      assert(await noOverflow(page));
+      if (process.env.OB_NOUPLOAD_SHOT) { fs.mkdirSync(path.dirname(process.env.OB_NOUPLOAD_SHOT), { recursive: true }); await page.screenshot({ path: process.env.OB_NOUPLOAD_SHOT }); }
       await ctx.close();
     });
 
@@ -683,9 +705,16 @@ async function main() {
     // OB_TRIM_SHOTS=<dir> writes the phone screenshots (375, light) and their sheet.
     const SHOTS = process.env.OB_TRIM_SHOTS || '';
     const snap = async (page, name) => { if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: true }); await page.screenshot({ path: path.join(SHOTS, `${name}.png`) }); } };
+    const waitInfo = (c) => ({ id: c.dataset.waiting, place: c.querySelector('a[data-start="placement"]').getAttribute('href'), placeText: c.querySelector('a[data-start="placement"]').textContent.trim(), placeCls: c.querySelector('a[data-start="placement"]').className, pick: c.querySelector('a[data-start="pick"]').getAttribute('href'), pickText: c.querySelector('a[data-start="pick"]').textContent.trim(), pickCls: c.querySelector('a[data-start="pick"]').className });
+    // One waiting subject shows its card; two or more are squares, and a tap opens that subject's card under the grid.
+    const openWait = async (page, id) => { await page.click(`[data-wait-tile="${id}"]`); await page.waitForSelector(`.u2-wait[data-waiting="${id}"]`); };
     const homeWaiting = async (page) => {
-      await page.waitForSelector('.u2-wait');
-      return page.$$eval('.u2-wait', (cards) => cards.map((c) => ({ id: c.dataset.waiting, place: c.querySelector('a[data-start="placement"]').getAttribute('href'), placeText: c.querySelector('a[data-start="placement"]').textContent.trim(), placeCls: c.querySelector('a[data-start="placement"]').className, pick: c.querySelector('a[data-start="pick"]').getAttribute('href'), pickText: c.querySelector('a[data-start="pick"]').textContent.trim(), pickCls: c.querySelector('a[data-start="pick"]').className })));
+      await page.waitForSelector('.u2-wait, [data-wait-tile]');
+      const ids = await page.$$eval('[data-wait-tile]', (xs) => xs.map((x) => x.dataset.waitTile));
+      if (!ids.length) return page.$$eval('.u2-wait', (cards, f) => cards.map(new Function(`return ${f}`)()), waitInfo.toString());
+      const out = [];
+      for (const id of ids) { await openWait(page, id); out.push(await page.$eval(`.u2-wait[data-waiting="${id}"]`, new Function(`return ${waitInfo.toString()}`)())); }
+      return out;
     };
 
     await t('Beta: "Savant\'s curriculum": subjects (no basketball, chess or piano), then home with each subject\'s placement and pick-a-grade buttons; both lead to the existing pages', async () => {
@@ -702,13 +731,18 @@ async function main() {
       assert(/where to start on your home page/.test(await c.page.innerText('.ob-sub')));
       await c.page.check('input[name="track"][value="math"]', { force: true });
       await c.page.check('input[name="track"][value="english"]', { force: true });
+      if (process.env.OB_SQUARES_SHOT) await c.page.check('input[name="track"][value="reading"]', { force: true });
       assert.strictEqual(await c.page.$('.subjects.u2-many'), null, 'ticks, not numbers: no subject comes first');
       assert(await noOverflow(c.page));
       await snap(c.page, '1-subjects');
       await c.page.click('#next');
       await c.page.waitForURL(/\/dashboard/);
       const cards = await homeWaiting(c.page);
-      assert.deepStrictEqual(cards.map((x) => x.id), ['math', 'english']);
+      assert.deepStrictEqual(cards.map((x) => x.id), process.env.OB_SQUARES_SHOT ? ['math', 'english', 'reading'] : ['math', 'english']);
+      if (process.env.OB_SQUARES_SHOT) { await c.page.click('#u2-subjects'); await c.page.evaluate(() => window.scrollTo(0, 0)); fs.mkdirSync(path.dirname(process.env.OB_SQUARES_SHOT), { recursive: true }); await c.page.screenshot({ path: process.env.OB_SQUARES_SHOT }); }
+      // Two subjects: square tiles, two to a row, equal sides, centred.
+      const sq = await c.page.$$eval('.u2-squares > *', (xs) => xs.map((x) => { const r = x.getBoundingClientRect(); return { l: Math.round(r.left), w: Math.round(r.width), h: Math.round(r.height) }; }));
+      assert.strictEqual(sq.length, process.env.OB_SQUARES_SHOT ? 3 : 2); assert(Math.abs(sq[0].w - sq[0].h) <= 2, 'square'); assert.strictEqual(sq[0].l === sq[1].l, false, 'side by side');
       assert.strictEqual(cards[0].placeText, 'Take the placement');
       assert.strictEqual(cards[0].pickText, 'Pick my grade');
       assert.strictEqual(cards[0].placeCls, 'u2-btn', 'the main 3D pill');
@@ -721,6 +755,7 @@ async function main() {
       assert(await noOverflow(c.page));
       await snap(c.page, '2-home');
       // "Take the placement": the subject placement, Quick, straight to a question (no goal or length step).
+      await openWait(c.page, 'math');
       await c.page.click('.u2-wait[data-waiting="math"] a[data-start="placement"]');
       await c.page.waitForURL(/\/subject-placement\?track=math&mode=quick/);
       await c.page.waitForSelector('a.player-close', { timeout: 30000 }); // the walk's own player, which opens only once a mode is running
@@ -731,6 +766,7 @@ async function main() {
       // "Pick my grade": the add-a-subject page, that subject's grade list open.
       await c.page.goto(`${BASE}/dashboard`);
       await homeWaiting(c.page);
+      await openWait(c.page, 'english');
       await c.page.click('.u2-wait[data-waiting="english"] a[data-start="pick"]');
       await c.page.waitForURL(/\/onboarding\?track=english&pick=1/);
       await c.page.waitForFunction(() => { const d = document.querySelector('.track-card[data-subject="english"] details.grade-pick'); return d && d.open; }, null, { timeout: 15000 });
@@ -744,13 +780,13 @@ async function main() {
       await c.page.waitForURL(/\/placement\?enrollment=/);
       await c.page.goto(`${BASE}/dashboard`);
       await c.page.waitForSelector('#u2-home');
-      const left = await c.page.$$eval('.u2-wait', (xs) => xs.map((x) => x.dataset.waiting));
-      assert.deepStrictEqual(left, ['math'], 'English has started; math still waits');
+      const left = await c.page.$$eval('[data-wait-tile]', (xs) => xs.map((x) => x.dataset.waitTile));
+      assert.deepStrictEqual(left, process.env.OB_SQUARES_SHOT ? ['math', 'reading'] : ['math'], 'English has started; the others still wait');
       assert.deepStrictEqual(errs, []);
       await c.ctx.close();
     });
 
-    await t('Beta: "Both": subjects, then upload, then home with the subjects waiting', async () => {
+    await t('Beta: "Both": subjects, then home (no upload screen) with the subjects waiting', async () => {
       const a = await invited('both@example.com');
       await toHow(a.page);
       await a.page.check('input[name="how"][value="both"]', { force: true });
@@ -759,11 +795,9 @@ async function main() {
       assert(await a.page.isDisabled('#next'), 'a subject is still needed');
       await a.page.check('input[name="track"][value="math"]', { force: true });
       await a.page.click('#next');
-      await a.page.waitForURL(/\/my-material\?from=start/);
-      await a.page.waitForSelector('#u2-after-upload a');
-      await a.page.click('#u2-after-upload a');
-      await a.page.waitForURL(/\/dashboard/);
+      await a.page.waitForURL(/\/dashboard/); // no upload screen in onboarding
       assert.deepStrictEqual((await homeWaiting(a.page)).map((x) => x.id), ['math']);
+      assert.strictEqual(await a.page.$eval('#u2-material .u2-rows', (r) => r.firstElementChild.id), 'u2-upload', 'Upload your own first for "both"');
       await a.page.goto(`${BASE}/start`);
       await a.page.waitForURL(/\/dashboard/);
       assert(!/\/start/.test(a.page.url()), 'never back through the flow');

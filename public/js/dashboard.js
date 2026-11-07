@@ -48,7 +48,6 @@ App.mount(async () => {
         ${data.profile && !data.profile.took_style_quiz
           ? '<p style="margin-top:14px"><a class="btn btn-text" href="/baseline?next=/onboarding">First, show Savant how you learn (Quick takes under 5 minutes)</a></p>'
           : '<p style="margin-top:14px" id="survey-step" hidden><a class="btn btn-text" href="/survey?next=/onboarding">First, tell us your interests</a></p>'}
-        ${user.id === 6689 ? '<p style="margin-top:14px"><a class="btn btn-text" href="/spanish-check">Open Spanish progress (take the daily test before any Spanish)</a> <a class="btn btn-text" href="/spanish-listening">Spanish listening test</a></p>' : ''}
       </div>`;
     // The interests survey is the step after the quiz; the dashboard data does not
     // say whether it was filled in, the profile does.
@@ -578,13 +577,6 @@ App.mount(async () => {
             <p class="tiny muted" style="margin:10px 0 0">From ${data.profile.evidence_count} analyzed session${data.profile.evidence_count === 1 ? '' : 's'}. <a href="/profile">See your full profile</a>.</p>
           </section>` : ''}
 
-        ${user.id === 6689 ? `
-          <section class="card">
-            <h2>Spanish progress</h2>
-            <p class="small muted">The daily, timed Spanish check and its progress chart.</p>
-            <a class="btn btn-text" href="/spanish-check">Open Spanish progress</a>
-            <a class="btn btn-text" href="/spanish-listening">Spanish listening test</a>
-          </section>` : ''}
 
         ${user.is_admin ? `
           <section>

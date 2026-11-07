@@ -52,31 +52,29 @@ html[data-ui2] .u2-tailwrap::before { content: ""; position: absolute; z-index: 
 html[data-ui2] .u2-wm { display: block; flex: none; fill: var(--ink); }
 
 /* ── The voice call: the giraffe is the screen ─────────────────────────── */
-html[data-ui2] #u2-call { position: fixed; inset: 0; z-index: 44; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px; background: var(--page); color: var(--ink); text-align: center; }
+/* The call: the page stays. A small quiet label under the bar; the giraffe already on the page shows the state on itself. */
+html[data-ui2] #u2-call { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); transform: translateX(-50%); z-index: 44; display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 5px 14px 6px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--page); color: var(--ink); font-size: 14px; line-height: 1.2; text-align: center; pointer-events: none; white-space: nowrap; }
 html[data-ui2] #u2-call[hidden] { display: none; }
-html[data-ui2] #u2-call-word { font-size: 23px; padding: 12px 26px; max-width: 320px; }
-html[data-ui2] #u2-call[data-state="ended"] #u2-call-word { font-size: 20px; }
-html[data-ui2] .u2-call-g { position: relative; flex: 0 1 auto; min-height: 0; height: min(58vh, 58dvh, 520px); aspect-ratio: 270 / 425; margin: 8px 0 4px; padding: 0; border: 0; background: none; }
-html[data-ui2] .u2-call-host { display: block; width: 100%; height: 100%; }
-html[data-ui2] .u2-call-host .tutor-svg { position: relative; display: block; width: 100%; height: 100%; overflow: visible; }
-html[data-ui2] .u2-call-ring { position: absolute; left: 50%; top: 2%; width: 92%; aspect-ratio: 1; transform: translateX(-50%) scale(calc(1 + var(--tdock-level, 0) * .14)); border-radius: 50%; border: 3px solid transparent; pointer-events: none; transition: transform .09s linear; }
-html[data-ui2] #u2-call[data-state="listening"] .u2-call-ring { border-color: var(--act); }
-html[data-ui2] #u2-call[data-state="thinking"] .u2-call-ring { border-color: var(--line-strong); border-style: dashed; animation: u2-ring-turn 4s linear infinite; }
-html[data-ui2] #u2-call[data-state="talking"] .u2-call-ring { border-color: var(--right); }
-@keyframes u2-ring-turn { from { transform: translateX(-50%) rotate(0); } to { transform: translateX(-50%) rotate(360deg); } }
-/* Its talking mouth: the drawing's own open mouth, opening and closing, so it reads as the giraffe talking at this size. Speech-synced shapes (js/tutor-giraffe.js mouthDriver) set data-mouth="driven" instead, which turns this off. */
-html[data-ui2] #u2-call .t-mouth-happy { transform-box: fill-box; transform-origin: 50% 0; }
-html[data-ui2] #u2-call[data-mouth="talk"] .t-mouth { display: none; }
-html[data-ui2] #u2-call[data-mouth="talk"] .t-mouth-happy { display: block; animation: u2-talk .26s ease-in-out infinite alternate; }
+html[data-ui2] .u2-call-word { font-weight: 700; }
+html[data-ui2] .u2-call-how { font-size: 12px; color: var(--ink-2); }
+html[data-ui2] .u2-call-how:empty { display: none; }
+/* The ring: on the guide on Home, on the bar's giraffe elsewhere. Grows with the voice while it listens. */
+html[data-ui2][data-u2-call] .u2-guide > button, html[data-ui2][data-u2-call] .site-header .tdock-g-btn { border-radius: 50%; box-shadow: 0 0 0 3px var(--u2-ring, transparent); transition: box-shadow .09s linear, transform .09s linear; }
+html[data-ui2][data-u2-call="listening"] { --u2-ring: var(--act); }
+html[data-ui2][data-u2-call="thinking"] { --u2-ring: var(--line-strong); }
+html[data-ui2][data-u2-call="talking"] { --u2-ring: var(--right); }
+html[data-ui2][data-u2-call="listening"] .u2-guide > button, html[data-ui2][data-u2-call="listening"] .site-header .tdock-g-btn { transform: scale(calc(1.04 + var(--tdock-level, 0) * .12)); }
+html[data-ui2][data-u2-call="thinking"] .u2-guide .t-pupils, html[data-ui2][data-u2-call="thinking"] .site-header .tdock-g .t-pupils { transform: translate(6px, -9px); }
+html[data-ui2][data-u2-call="listening"] .u2-guide .t-pupils, html[data-ui2][data-u2-call="listening"] .site-header .tdock-g .t-pupils { transform: translate(0, -5px); }
+html[data-ui2][data-u2-call]:not([data-u2-call="ended"]) .site-header .tdock-g-btn { width: 52px; height: 52px; }
+/* On Home the guide is the one that shows the state; the bar's small one stays out of the way (tdock-in-call would otherwise show it too). Elsewhere the bar's giraffe is the one. */
+html[data-ui2].u2-has-guide.u2-calling.tdock-in-call .site-header .tdock-g { position: absolute; width: 0; height: 0; overflow: hidden; visibility: hidden; }
+html[data-ui2].u2-has-guide.u2-calling .site-header .tdock-g-alt:focus { visibility: visible; }
+html[data-ui2].u2-calling:not(.u2-has-guide) .site-header .tdock-g { position: relative; width: auto; height: auto; overflow: visible; visibility: visible; }
+/* Its talking mouth: the drawing's own open mouth, opening and closing. Speech-synced shapes (js/tutor-giraffe.js mouthDriver) set data-u2-mouth="driven" instead, which leaves the mouth to the driver. */
+html[data-ui2][data-u2-call="talking"][data-u2-mouth="talk"] .u2-guide .t-mouth-happy, html[data-ui2][data-u2-call="talking"][data-u2-mouth="talk"] .site-header .tdock-g .t-mouth-happy { transform-box: fill-box; transform-origin: 50% 0; display: block; animation: u2-talk .26s ease-in-out infinite alternate; }
+html[data-ui2][data-u2-call="talking"][data-u2-mouth="talk"] .u2-guide .t-mouth, html[data-ui2][data-u2-call="talking"][data-u2-mouth="talk"] .site-header .tdock-g .t-mouth { display: none; }
 @keyframes u2-talk { from { transform: scaleY(.4); } to { transform: scaleY(1.15); } }
-html[data-ui2] .u2-call-how { margin: 0; max-width: 300px; color: var(--ink-2); font-size: 17px; line-height: 1.35; }
-html[data-ui2] .u2-call-how[hidden] { display: none; }
-html[data-ui2] .u2-call-how b { color: var(--ink); font-weight: 700; }
-html[data-ui2] #u2-call-done { display: flex; align-items: center; justify-content: center; width: 200px; min-height: 56px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--page); color: var(--ink); font: 700 17px/1 var(--font); cursor: pointer; }
-html[data-ui2] #u2-call-done[hidden] { display: none; }
-/* While the stage is up the small giraffe and its word have nothing to add. */
-html[data-ui2].u2-calling .tdock-g { position: absolute; width: 0; height: 0; overflow: hidden; visibility: hidden; }
-html[data-ui2].u2-calling .tdock-g-alt:focus { visibility: visible; }
 
 /* ── The chat, in the look ─────────────────────────────────────────────── */
 html[data-ui2] .tdock-panel { background: var(--page); color: var(--ink); font-family: var(--font); }
@@ -113,6 +111,6 @@ html[data-ui2] .tdock-form button.go { margin-bottom: 6px; padding: 0 18px; bord
 html[data-ui2] .tdock-form button.go:hover { background: var(--act-hover); }
 html[data-ui2] .tdock-form button.go:active { transform: translateY(6px); box-shadow: none; }
 @media (prefers-reduced-motion: reduce) {
-  html[data-ui2] #u2-call .t-mouth-happy, html[data-ui2] .u2-call-ring { animation: none !important; transition: none; }
+  html[data-ui2][data-u2-call] .t-mouth-happy, html[data-ui2][data-u2-call] .u2-guide > button, html[data-ui2][data-u2-call] .site-header .tdock-g-btn { animation: none !important; transition: none; transform: none !important; }
   html[data-ui2] .tdock-form button.go, html[data-ui2] .tdock-chips button { transition: none; }
 }

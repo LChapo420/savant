@@ -516,7 +516,7 @@ async function trimChecks() {
   delete process.env.BETA_HIDDEN_SUBJECTS;
   assert.equal(ob.hiddenSubjects(local).size, 0, 'public: nothing hidden');
   process.env.BETA_GATE = 'invite';
-  assert.deepEqual([...ob.hiddenSubjects(local)].sort(), ['basketball', 'chess', 'piano'], 'beta: the three by default');
+  assert.deepEqual([...ob.hiddenSubjects(local)].sort(), ['basketball', 'chess', 'piano', 'spanish'], 'beta: the four by default');
   process.env.BETA_HIDDEN_SUBJECTS = 'chess';
   assert.deepEqual([...ob.hiddenSubjects(local)], ['chess'], 'one setting changes it');
   process.env.BETA_HIDDEN_SUBJECTS = '';
@@ -568,6 +568,7 @@ async function trimChecks() {
   assert.equal((await a('GET', '/onboarding')).status, 200);
   assert.equal((await a('GET', '/api/enrollments')).data.enrollments.length, 0, 'no enrollment made without a grade');
   assert.equal((await a('POST', '/api/ob2/to-home', {})).status, 409, 'once');
+  assert.equal((await a('GET', '/api/ui2/waiting')).data.how, 'curriculum', 'Home is told what they chose');
   let w = (await a('GET', '/api/ui2/waiting')).data.subjects;
   assert.deepEqual(w.map((x) => x.track.id), ['math', 'english']);
   assert.equal(w[0].placement_href, '/subject-placement?track=math&mode=quick');
@@ -602,6 +603,7 @@ async function trimChecks() {
   assert.match((await r('GET', '/dashboard')).headers.get('location') || '', /^\/start/, 'the named account goes to the flow');
   assert.equal((await r('POST', '/api/ob2/answers', { tracks: ['english', 'math'] })).status, 200);
   assert.deepEqual((await r('POST', '/api/ob2/to-home', {})).data.waiting, ['math']);
+  assert.ok(ob.HIDDEN_IN_BETA.split(',').includes('spanish'), 'Spanish is not offered in the beta (owner, 7 Nov)');
   assert.equal((await r('GET', '/dashboard')).status, 200, 'then home');
   assert.equal((await r('GET', '/api/ob2/state')).data.go, '/dashboard', 'and it never comes back');
   assert.equal((await r('GET', '/api/enrollments')).data.enrollments.length, 1, 'its subject is still there');

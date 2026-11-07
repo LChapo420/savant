@@ -84,48 +84,47 @@
     return `<svg class="u2-wm" viewBox="137.5 150.5 1084 216.5" style="height:${h}px;width:${(h * 1084) / 216.5}px" role="img" aria-label="Savant"><rect x="157.7" y="333.1" width="164.5" height="13.7"/><rect x="166.9" y="273.7" width="21.9" height="64"/><rect x="229" y="228" width="21.9" height="109.7"/><rect x="291.2" y="173.2" width="21.9" height="164.5"/><path d="${WORD}"/></svg>`;
   }
 
-  // ── The voice call, full screen ──────────────────────────────────────────
-  let stage = null;
+  // ── The voice call: the page stays; the giraffe shows the state on itself ──
+  // Owner, 7 Nov: "don't make the giraffe take the whole screen, just have him look like he's listening when he is and talking when he is". The giraffe that is already on the
+  // page (the guide on Home, else the bar's) gets the state through <html data-u2-call> and CSS: a ring, eyes up when thinking, the existing open mouth moving when talking
+  // (data-u2-mouth="talk"; "driven" is js/tutor-giraffe.js mouthDriver and CSS leaves the mouth alone). A small quiet label says the state; "Tap to end, hold for chat" sits under it.
+  let stage = null; // the label
   let stageShown = null; // the state on screen
   let endTimer = null;
   let level = 0;
+  const root = document.documentElement;
+  const HOW = 'Tap to end, hold for chat';
   function buildStage() {
     stage = document.createElement('div');
     stage.id = 'u2-call';
-    stage.setAttribute('role', 'group');
-    stage.setAttribute('aria-label', 'Voice call with your tutor');
+    stage.setAttribute('role', 'status');
     stage.hidden = true;
-    stage.innerHTML = `<div class="u2-bubble u2-down" id="u2-call-word" aria-hidden="true"></div>
-      <button type="button" class="u2-call-g"><span class="u2-call-ring" aria-hidden="true"></span><span class="u2-call-host"></span></button>
-      <p class="u2-call-how" id="u2-call-how"><b>Tap me</b> to end the call. <b>Hold me</b> to switch to chat.</p>
-      <button type="button" class="u2-btn2" id="u2-call-done" hidden>Back</button>`;
+    stage.innerHTML = '<span class="u2-call-word" id="u2-call-word"></span><small class="u2-call-how" id="u2-call-how"></small>';
     document.body.appendChild(stage);
-    giraffe(stage.querySelector('.u2-call-host'), { crop: 'full' });
-    bind(stage.querySelector('.u2-call-g'));
-    stage.querySelector('.u2-call-g').setAttribute('aria-label', 'Tap to end the call. Press and hold to switch to chat.');
-    stage.querySelector('.u2-call-g').title = '';
-    stage.querySelector('#u2-call-done').addEventListener('click', hideStage);
   }
+  const callGiraffes = () => [...document.querySelectorAll('.u2-guide .tutor, .site-header .tdock-g .tutor')];
   function hideStage() {
     clearTimeout(endTimer);
     stageShown = null;
     if (stage) stage.hidden = true;
-    document.documentElement.classList.remove('u2-calling');
+    delete root.dataset.u2Call;
+    delete root.dataset.u2Mouth;
+    root.classList.remove('u2-calling');
+    root.style.removeProperty('--tdock-level');
   }
   function showState(state, word, mouth) {
     if (!stage) buildStage();
     stage.hidden = false;
     stage.dataset.state = state;
-    stage.dataset.mouth = mouth || '';
-    document.documentElement.classList.add('u2-calling');
-    const w = stage.querySelector('#u2-call-word');
+    root.dataset.u2Call = state;
+    root.dataset.u2Mouth = mouth || '';
+    root.classList.add('u2-calling');
     const text = word || { listening: 'Listening', thinking: 'Thinking', talking: 'Talking' }[state] || '';
+    const w = stage.querySelector('#u2-call-word');
     if (w.textContent !== text) w.textContent = text;
-    stage.querySelector('#u2-call-how').hidden = state === 'ended';
-    stage.querySelector('#u2-call-done').hidden = state !== 'ended';
-    const host = stage.querySelector('.u2-call-host');
+    stage.querySelector('#u2-call-how').textContent = state === 'ended' ? '' : HOW;
     const mood = state === 'thinking' ? 'think' : state === 'ended' ? 'wave' : 'idle';
-    if (host.dataset.mood !== mood && window.Tutor) window.Tutor.mood(host, mood);
+    callGiraffes().forEach((h) => { if (h.dataset.mood !== mood && window.Tutor) window.Tutor.mood(h, mood); });
     stageShown = state;
   }
   function syncCall() {
@@ -137,7 +136,7 @@
       clearTimeout(endTimer);
       showState(voice, word, g.dataset.mouth);
     } else if (stageShown && stageShown !== 'ended') {
-      // The call is over. If the giraffe says why (not on the way to the chat), it says so here for a moment.
+      // The call is over. If the giraffe says why (not on the way to the chat), it says so for a moment.
       if (word) {
         showState('ended', word, '');
         endTimer = setTimeout(hideStage, 4000);
@@ -145,7 +144,7 @@
     }
     if (stage && !stage.hidden && voice === 'listening') {
       const v = parseFloat(g.style.getPropertyValue('--tdock-level')) || 0;
-      if (v !== level) { level = v; stage.style.setProperty('--tdock-level', String(v)); }
+      if (v !== level) { level = v; root.style.setProperty('--tdock-level', String(v)); }
     }
   }
   // ── The chat's head: the giraffe, the title ──────────────────────────────

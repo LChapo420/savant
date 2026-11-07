@@ -164,7 +164,8 @@ app.get('/api/ui2/waiting', (req, res, next) => {
   if (!req.user) return res.status(401).json({ error: 'Sign in first.' });
   const ob = require('./services/onboarding-v2');
   res.setHeader('Cache-Control', 'no-store');
-  return res.json({ subjects: ob.waitingFor(req.user, { hidden: ob.hiddenSubjects(req) }) });
+  const mine = ob.rowOf(req.user.id);
+  return res.json({ subjects: ob.waitingFor(req.user, { hidden: ob.hiddenSubjects(req) }), how: (mine && mine.how) || null });
 });
 app.get('/api/ui2/today',(req, res, next) => (require('./services/ui-v2').enabled() ? require('./services/ui-v2-today').reply(req, res) : next()));
 app.use('/api/auth/password-reset', passwordReset.router);
