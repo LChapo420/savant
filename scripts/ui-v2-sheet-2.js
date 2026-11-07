@@ -3,7 +3,7 @@
  *
  *   node scripts/ui-v2-sheet-2.js [--out=<dir>] [--port=6833] [--only=path,lesson,review,...] [--mode=light|dark]
  *
- * Writes <out>/contact-sheet-2.png. Own server, temporary database, synthetic learners only, every outside AI off, no keys. One browser. Stubbed replies are named on the sheet.
+ * Writes <out>/contact-sheet-2.png. Open '/about-none' waits to navigate until stubs are set. Own server, temporary database, synthetic learners only, every outside AI off, no keys. One browser. Stubbed replies are named on the sheet.
  */
 const fs = require('fs');
 const os = require('os');
@@ -72,7 +72,7 @@ async function main() {
     page.on('pageerror', (e) => problems.push(`${url}: ${e.message}`));
     page.on('console', (m) => { if (m.type() === 'error' && !/favicon|404|401|403/.test(m.text())) problems.push(`${url}: ${m.text()}`); });
     if (stubs) await stubs(page);
-    await page.goto(BASE + url);
+    if (url !== '/about-none') await page.goto(BASE + url);
     return { ctx, page };
   };
   const snap = async (page, name, label, note = '', full = false) => {
@@ -161,11 +161,129 @@ async function main() {
       await q.ctx.close();
     }
 
+    const apiCall = async (who, m, u, d) => {
+      const c = await browser.newContext({ storageState: who.storage });
+      const r = await c.request.fetch(BASE + u, { method: m, headers: { Origin: BASE, 'Content-Type': 'application/json' }, data: d ? JSON.stringify(d) : undefined });
+      const json = await r.json().catch(() => null);
+      await c.close();
+      return { status: r.status(), json };
+    };
+    if (want('profile')) {
+      const { ctx, page } = await open(ada, '/profile');
+      await page.waitForSelector('.pf', { timeout: 25000 });
+      await delay(1200);
+      await snap(page, 'profile-top', 'Profile');
+      await page.evaluate(() => window.scrollBy(0, 640));
+      await snap(page, 'profile-mid', 'Profile, further down');
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await snap(page, 'profile-end', 'Profile, its end');
+      await page.evaluate(() => { const d = [...document.querySelectorAll('.u2-row-fold')].find((x) => /data and plan/i.test(x.textContent)); if (d) { d.open = true; d.scrollIntoView(); window.scrollBy(0, -60); } });
+      await snap(page, 'profile-open', 'Profile, a row opened');
+      await ctx.close();
+      const d = await open(ada, '/profile', DESK);
+      await delay(2000);
+      await snap(d.page, 'profile-desk', 'Desktop: profile');
+      await d.ctx.close();
+    }
+    if (want('material')) {
+      const text = 'The Moon causes most tides. Gravity from the Moon pulls the ocean toward it. '.repeat(30);
+      const made = await apiCall(ada, 'POST', '/api/materials/paste', { title: 'Chapter 4: The tides', text });
+      const mid = made.json && made.json.materials && made.json.materials[0] && made.json.materials[0].id;
+      const { ctx, page } = await open(ada, '/my-material');
+      await page.waitForSelector('#upload', { timeout: 25000 });
+      await delay(900);
+      await snap(page, 'material-top', 'My material');
+      await page.evaluate(() => { const c = [...document.querySelectorAll('.u2-tile')].find((x) => /Paste/.test(x.textContent)); if (c) c.click(); });
+      await snap(page, 'material-paste', 'My material: paste');
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await snap(page, 'material-list', 'My material: the list');
+      await ctx.close();
+      const d = await open(ada, '/my-material', DESK);
+      await delay(1500);
+      await snap(d.page, 'material-desk', 'Desktop: my material');
+      await d.ctx.close();
+      const STUDY = { course: { title: 'Chapter 4: The tides', status: 'ready' }, mastered: 1, total: 3, reading: { label: 'Full depth', minutes: 12, checks: 6 }, next: { kind: 'lesson', title: 'What causes tides', skill: 's2' }, units: [{ title: 'The Moon and the sea', skills: ['s1', 's2', 's3'] }], skills: [{ id: 's1', title: 'Gravity pulls the sea', level: 1, status: 'mastered', tier: 1, tier_name: 'recall', open: true, summary: 'The pull is strongest on the near side.' }, { id: 's2', title: 'What causes tides', level: 2, status: 'learning', tier: 1, tier_name: 'recall', open: true }, { id: 's3', title: 'Spring and neap tides', level: 3, status: 'new', open: false }] };
+      const st = await open(ada, `/my-material-study?id=${mid}`, PHONE, (p) => p.route(/\/api\/materials\/\d+\/study$/, (r) => r.fulfill({ json: STUDY })));
+      await delay(1500);
+      await snap(st.page, 'material-study-map', 'My material: a course', 'Reply stubbed: no build here');
+      await st.ctx.close();
+      for (const sub of ['pack', 'notes', 'study', 'test', 'cards', 'podcast']) {
+        const o = await open(ada, `/my-material-${sub}?id=${mid}`); // eslint-disable-line no-await-in-loop
+        await delay(1800); // eslint-disable-line no-await-in-loop
+        await snap(o.page, `material-${sub}`, `My material: ${sub}`, 'No build here: what a learner sees before one'); // eslint-disable-line no-await-in-loop
+        await o.ctx.close(); // eslint-disable-line no-await-in-loop
+      }
+    }
+    if (want('calendar')) {
+      const { ctx, page } = await open(ada, '/calendar');
+      await page.waitForSelector('.cal-grid, .notice', { timeout: 25000 });
+      await delay(700);
+      await snap(page, 'calendar', 'Calendar');
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await snap(page, 'calendar-end', 'Calendar, its end');
+      await ctx.close();
+      const d = await open(ada, '/calendar', DESK);
+      await delay(1500);
+      await snap(d.page, 'calendar-desk', 'Desktop: calendar');
+      await d.ctx.close();
+    }
+    if (want('past')) {
+      const UPLOADS = { can_upload: true, materials: [{ id: 4, title: 'Photosynthesis notes', kind: 'text', status: 'ready', mastered: 6, total: 6, due: 1, started: true, complete: true }] };
+      const { ctx, page } = await open(ada, '/dashboard#past', PHONE, (p) => p.route('**/api/ui2/material-progress', (route) => route.fulfill({ json: UPLOADS })));
+      await delay(2500);
+      await snap(page, 'past', 'Past', 'Upload stubbed');
+      await ctx.close();
+    }
+    if (want('add')) {
+      const { ctx, page } = await open(ada, '/onboarding');
+      await delay(2000);
+      await snap(page, 'add', 'Add a subject');
+      await page.evaluate(() => window.scrollBy(0, 500));
+      await snap(page, 'add-2', 'Add a subject, further down');
+      await ctx.close();
+      const d = await open(ada, '/onboarding', DESK);
+      await delay(2000);
+      await snap(d.page, 'add-desk', 'Desktop: add a subject');
+      await d.ctx.close();
+    }
+    if (want('done')) {
+      const STUB = { spent: 50, goal: 45, done: true, date: '2026-11-07' };
+      const { ctx, page } = await open(ada, '/about-none', PHONE, (p) => p.route('**/api/ui2/today', (route) => route.fulfill({ json: STUB })));
+      await page.goto(`${BASE}/dashboard`);
+      await delay(2500);
+      await snap(page, 'done', 'Done for today', 'Minutes stubbed');
+      const k = await page.$('#u2-keep-going');
+      if (k) { await k.click(); await delay(400); await snap(page, 'done-keep', 'After Keep going'); }
+      await ctx.close();
+    }
+
+    if (want('states')) {
+      const slow = await open(ada, '/about-none', PHONE, (p) => p.route('**/api/path/**', async () => { /* never answers */ })).catch(() => null);
+      if (slow) { slow.page.goto(`${BASE}/path?enrollment=${en}`).catch(() => {}); await delay(1500); await snap(slow.page, 'state-loading', 'Loading'); await slow.ctx.close(); }
+      const bad = await open(ada, '/about-none', PHONE, (p) => p.route('**/api/path/**', (route) => route.fulfill({ status: 500, json: { error: 'Something went wrong on our side.' } })));
+      await bad.page.goto(`${BASE}/path?enrollment=${en}`).catch(() => {});
+      await delay(1500);
+      await snap(bad.page, 'state-error', 'Error on load', 'Reply stubbed');
+      await bad.ctx.close();
+      const nf = await open(ada, '/no-such-page');
+      await delay(1200);
+      await snap(nf.page, 'state-404', 'Not found');
+      await nf.ctx.close();
+      const off = await open(ada, '/dashboard');
+      await off.page.waitForFunction(() => navigator.serviceWorker && navigator.serviceWorker.ready.then(() => true), null, { timeout: 15000 }).catch(() => {});
+      await delay(2500);
+      server.kill(); // the page's own offline switch doesn't reach a service worker; a server that is gone does
+      await delay(800);
+      await off.page.goto(`${BASE}/path?enrollment=${en}`).catch(() => {});
+      await delay(1500);
+      await snap(off.page, 'state-offline', 'Offline', 'Really offline: from the service worker');
+      await off.ctx.close();
+    }
     const ctx = await browser.newContext({ viewport: { width: 1400, height: 1000 } });
     const page = await ctx.newPage();
     const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
     const b64 = (f) => `data:image/png;base64,${fs.readFileSync(f).toString('base64')}`;
-    await page.setContent(`<!doctype html><meta charset="utf-8"><style>body{margin:0;padding:28px 34px;background:#f4f5f7;font:15px system-ui;color:#15171b;width:max-content}h1{margin:0 0 18px;font-size:24px}.g{display:grid;grid-template-columns:repeat(5,300px);gap:24px 26px;align-items:start}.w{grid-column:span 2}.l{height:26px;font-weight:700;white-space:nowrap;overflow:hidden}.l span{font-weight:400;color:#666b75;font-size:13px;margin-left:6px}img{display:block;width:100%;border-radius:22px;box-shadow:0 0 0 1px #e3e5e9;background:#fff}</style><h1>Savant, the real app with UI_V2=on: lesson, subject page, review. Phone 375 x 760, desktop 1280 x 800, ${MODE}. Synthetic learners, no outside AI.</h1><div class="g">${cells.map((c, i) => `<div class="${c.wide ? 'w' : ''}"><div class="l">${i + 1}. ${esc(c.label)}<span>${esc(c.note || '')}</span></div><img src="${b64(c.f)}"></div>`).join('')}</div>`);
+    await page.setContent(`<!doctype html><meta charset="utf-8"><style>body{margin:0;padding:28px 34px;background:#f4f5f7;font:15px system-ui;color:#15171b;width:max-content}h1{margin:0 0 18px;font-size:24px}.g{display:grid;grid-template-columns:repeat(5,300px);gap:24px 26px;align-items:start}.w{grid-column:span 2}.l{height:26px;font-weight:700;white-space:nowrap;overflow:hidden}.l span{font-weight:400;color:#666b75;font-size:13px;margin-left:6px}img{display:block;width:100%;border-radius:22px;box-shadow:0 0 0 1px #e3e5e9;background:#fff}</style><h1>Savant, the real app with UI_V2=on: the later pages. Phone 375 x 760, desktop 1280 x 800, ${MODE}. Synthetic learners, no outside AI.</h1><div class="g">${cells.map((c, i) => `<div class="${c.wide ? 'w' : ''}"><div class="l">${i + 1}. ${esc(c.label)}<span>${esc(c.note || '')}</span></div><img src="${b64(c.f)}"></div>`).join('')}</div>`);
     await delay(300);
     await page.screenshot({ path: path.join(OUT, 'contact-sheet-2.png'), fullPage: true });
     console.log('sheet contact-sheet-2.png');

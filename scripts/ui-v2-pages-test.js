@@ -21,10 +21,10 @@ let failed = 0; let passed = 0;
 const check = (name, ok, extra) => { if (ok) passed += 1; else failed += 1; console.log(`${ok ? '  ok  ' : '  FAIL'} ${name}${!ok && extra !== undefined ? ` ${JSON.stringify(extra).slice(0, 400)}` : ''}`); };
 
 /** Every link and button a learner can see on the page: "a /path?enrollment=1" or "button Skip this level". */
-const visibleControls = (skipBack) => [...document.querySelectorAll('main a[href], main button, #header a[href]')]
+const visibleControls = (skipBack) => { document.querySelectorAll('details').forEach((d) => { d.open = true; }); return [...document.querySelectorAll('main a[href], main button, #header a[href]')]
   .filter((n) => { const r = n.getBoundingClientRect(); return r.width > 1 && r.height > 1 && getComputedStyle(n).visibility !== 'hidden'; })
   .filter((n) => !n.closest('.u2-guide') && !n.closest('summary') && !(skipBack && n.id === 'u2-back')) // the top bar's back moves to where the page's own back link went
-  .map((n) => (n.tagName === 'A' ? `a ${n.getAttribute('href')}` : `button ${(n.getAttribute('aria-label') || n.textContent).trim().replace(/^(Show|Hide) /, '')}`));
+  .map((n) => (n.tagName === 'A' ? `a ${n.getAttribute('href')}` : `button ${(n.getAttribute('aria-label') || n.textContent).trim().replace(/^(Show|Hide) /, '')}`)); };
 
 (async () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ui2-pages-'));
@@ -66,6 +66,10 @@ const visibleControls = (skipBack) => [...document.querySelectorAll('main a[href
       { name: 'subject page, chess links', url: `/path?enrollment=${chess}`, ready: '.path-top', dressed: '.u2-page-guide' },
       { name: 'lesson page', url: `/base-lesson?track=math&grade=algebra_1_part_a&level=1&enrollment=${en}`, ready: '#base-lesson-host', dressed: '.u2-lesson-note', stub: stubs.lesson },
       { name: 'review, nothing due', url: `/review?enrollment=${en}`, ready: '.review-top', dressed: '.u2-page-guide' },
+      { name: 'profile', url: '/profile', ready: '.pf', dressed: '.u2-pf-rows' },
+      { name: 'My material', url: '/my-material', ready: '#upload', dressed: '.u2-tiles', ways: true },
+      { name: 'calendar', url: '/calendar', ready: '.cal-bar, .notice', dressed: '.u2-fold' },
+      { name: 'add a subject', url: '/onboarding', ready: '#tracks .track-card', dressed: '.u2-fold' },
       { name: 'review, a plan', url: `/review?enrollment=${en}`, ready: '.review-top', dressed: '.u2-page-guide', stub: stubs.review },
     ];
     const open = async (p, blockPages, size) => {
@@ -85,9 +89,11 @@ const visibleControls = (skipBack) => [...document.querySelectorAll('main a[href
       console.log(p.name);
       for (const size of [{ width: 375, height: 760 }, { width: 1280, height: 800 }]) {
         const a = await open(p, true, size); // eslint-disable-line no-await-in-loop
+        const showAll = (pg) => pg.evaluate(() => { document.querySelectorAll('.u2-way').forEach((w) => { w.hidden = false; }); });
         const before = await a.page.evaluate(visibleControls, true); // eslint-disable-line no-await-in-loop
         await a.ctx.close(); // eslint-disable-line no-await-in-loop
         const b = await open(p, false, size); // eslint-disable-line no-await-in-loop
+        await showAll(b.page); // eslint-disable-line no-await-in-loop
         const after = await b.page.evaluate(visibleControls, false); // eslint-disable-line no-await-in-loop
         const missing = before.filter((c) => !after.includes(c));
         check(`${size.width} px: every link and button is still there (${before.length})`, !missing.length, missing);
@@ -108,10 +114,47 @@ const visibleControls = (skipBack) => [...document.querySelectorAll('main a[href
     check('the notes are in the fold', /Diamonds are checkpoints/.test(await page.locator('.u2-fold').first().textContent()));
     check('the top bar names the subject', (await page.locator('#u2-tb-t').textContent()).trim() === 'Mathematics');
     await ctx.close();
-    const r = await open(PAGES[4], false, { width: 375, height: 760 });
+    const r = await open(PAGES.find((p) => p.name === 'review, a plan'), false, { width: 375, height: 760 });
     check('review: the bubble says how much, from the page', /1 question, about 2 minutes\./.test(await r.page.locator('.u2-page-guide .u2-bubble').textContent()));
     check('review: back goes to the path', (await r.page.locator('#u2-back').getAttribute('href')).startsWith('/path?enrollment='));
     await r.ctx.close();
+    // Done for today: the chosen minutes met, Keep going brings the same Continue back; the plan isn't written to.
+    const dctx = await browser.newContext({ storageState: storage, viewport: { width: 375, height: 760 } });
+    const dp = await dctx.newPage();
+    const writes = [];
+    dp.on('request', (q) => { if (q.method() !== 'GET' && /\/api\/plan/.test(q.url())) writes.push(q.url()); });
+    let planBefore = null;
+    dp.on('response', async (q) => { if (/\/api\/plan\/today/.test(q.url())) planBefore = await q.json().catch(() => null); });
+    await dp.goto(`${BASE}/dashboard`);
+    await dp.waitForSelector('#u2-start', { timeout: 25000 });
+    check('not done yet: Continue, no done screen', !(await dp.$('#u2-done')));
+    const startHref = await dp.getAttribute('#u2-start', 'href');
+    await dp.route('**/api/ui2/today', (route) => route.fulfill({ json: { date: '2026-11-07', spent: 500, goal: 45, done: true } }));
+    await dp.reload();
+    await dp.waitForSelector('#u2-done', { timeout: 25000 });
+    check('minutes met: done for today, the next step put away', await dp.isVisible('#u2-keep-going') && !(await dp.isVisible('#u2-start')));
+    await dp.click('#u2-keep-going');
+    await dp.waitForSelector('#u2-start');
+    check('Keep going: the same next step as before', await dp.getAttribute('#u2-start', 'href') === startHref);
+    await dp.reload();
+    await dp.waitForSelector('#u2-start', { timeout: 25000 });
+    check('it stays open for the day once asked', !(await dp.$('#u2-done')));
+    check('nothing written to the plan', !writes.length && !!planBefore, writes);
+    await dctx.close();
+    const m = await open(PAGES.find((p) => p.name === 'My material'), false, { width: 375, height: 760 });
+    check('My material: one way open, the others a tap away', await m.page.isVisible('#upload') && !(await m.page.isVisible('#paste')));
+    await m.page.locator('.u2-tile', { hasText: 'Paste' }).click();
+    check('My material: the paste tile opens paste', await m.page.isVisible('#paste') && !(await m.page.isVisible('#upload')));
+    await m.page.locator('.u2-fold summary', { hasText: 'Where it goes' }).click();
+    check('My material: the privacy words are there, whole, one tap away', /The file itself is not kept/.test(await m.page.locator('.u2-fold', { hasText: 'Where it goes' }).textContent()));
+    await m.ctx.close();
+    const pr = await browser.newContext({ storageState: storage, viewport: { width: 375, height: 760 } });
+    const pp = await pr.newPage();
+    await pp.goto(`${BASE}/profile#retention-goals-card`);
+    await pp.waitForSelector('.u2-pf-rows');
+    await delay(500);
+    check('profile: a link to a card inside a row opens the row', await pp.isVisible('#retention-goals-card'));
+    await pr.close();
     const l = await open(PAGES[2], false, { width: 375, height: 760 });
     check('lesson: back goes to the path', (await l.page.locator('#u2-back').getAttribute('href')).startsWith('/path?enrollment='));
     await l.ctx.close();

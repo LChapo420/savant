@@ -60,11 +60,11 @@ Status: **done** is built and tested in structure A. **Colours** means the page 
 | This week: days studied, questions | Dashboard hero | Desktop side column; the profile in slice 3 (phone) | 1, 3 | desktop done; **phone: not on Home by design, profile next** |
 | Streak and XP | Header, hero | Profile only, hideable there (the setting exists today) | 3 | off Home and bar; profile keeps them |
 | Subject list, level meters | Dashboard cards | Everything: Your subjects | 1 | moved |
-| Add a subject | Dashboard, nav | Everything | 1 | done; `/onboarding` colours |
+| Add a subject | Dashboard, nav | Everything | 1 | done. The long notes and the optional extras fold; the giraffe asks |
 | Retake placement, retake dialog | Dashboard card and path | Subject page (the same server answer); dialog unchanged | 2 | path has it; dialog restyle not yet |
 | Recent sessions | Dashboard | Everything, folded | 1 | moved |
 | Next study time planner, calendar file | Dashboard | Everything, folded with the calendar link | 1 | moved |
-| Calendar | Nav, `/calendar` | Everything row | 4 | colours |
+| Calendar | Nav, `/calendar` | Everything row | 4 | done. The month first; how it counts and what the marks mean fold |
 | Offers: reading check, speed, daily check | Dashboard aside | Everything: "Your tutor and optional extras", folded | 1 | moved. **Owner to confirm**: they no longer show on Home |
 | Preferences quiz offer | Dashboard aside | Same fold | 1 | moved |
 | What the tutor has noticed | Dashboard aside | Same fold; full version on the profile | 1, 3 | moved |
@@ -115,30 +115,30 @@ Status: **done** is built and tested in structure A. **Colours** means the page 
 
 | What a learner has today | Today's place | Where it lives in A | Slice | Status |
 |---|---|---|---|---|
-| Profile, scorecard, streak, XP, hide setting | `/profile` | Header, scorecard card, rows | 3 | colours |
-| See all measures | `/profile` | Under the scorecard | 3 | colours |
-| Goals, how long to remember | `/profile` | Row, its own view | 3 | colours |
-| What the tutor has learned, what your tutor remembers | `/profile` | Row | 3 | colours |
-| Latest evidence | `/profile` | Under the scorecard | 3 | colours |
-| Details report | `/profile` | Row | 3 | colours |
-| Plan picker, your plan | `/profile` | "Your data and plan" row | 3 | colours |
-| Your data, delete account | `/profile` | Same row | 3 | colours |
-| Focus history and subject focus | `/profile`, `focus.js` | Row. Its heat map has its own greens: **to become tokens** | 3 | colours in part |
-| Invite a friend | `/profile` | Row | 3 | colours |
-| Display and wellbeing, break line setting | `/profile` | "Look and colours" row | 3 | colours |
+| Profile, scorecard, streak, XP, hide setting | `/profile` | Header, scorecard card, rows | 3 | done. Header and numbers, the scorecard, then one row per thing, opening in place |
+| See all measures | `/profile` | Under the scorecard | 3 | done, a fold under the scorecard |
+| Goals, how long to remember | `/profile` | Row, its own view | 3 | done, a row. A link to a card inside a row opens the row |
+| What the tutor has learned, what your tutor remembers | `/profile` | Row | 3 | done |
+| Latest evidence | `/profile` | Under the scorecard | 3 | done |
+| Details report | `/profile` | Row | 3 | done |
+| Plan picker, your plan | `/profile` | "Your data and plan" row | 3 | done, the row "Your data and plan" |
+| Your data, delete account | `/profile` | Same row | 3 | done, same row, wording unchanged |
+| Focus history and subject focus | `/profile`, `focus.js` | Row. Its heat map has its own greens: **to become tokens** | 3 | done, a row. The heat map keeps its own greens: **to become tokens** |
+| Invite a friend | `/profile` | Row | 3 | done, a row, gone when there is no link |
+| Display and wellbeing, break line setting | `/profile` | "Look and colours" row | 3 | done, in the row "Settings". Not named "Look and colours" yet |
 | Style picker (whole looks) | `/profile` | **Decision for the owner**: under UI v2 the look is Sunny, so the picker does nothing visible until the colour picker replaces it | 3 | open |
-| My material list, upload | `/my-material` | Everything row; the page as in the mockup. Upload logic not touched | 4 | colours |
-| Study pack, notes, podcast, cards, study, test | `/my-material-*` | Same pages, back goes to the list | 4 | colours |
+| My material list, upload | `/my-material` | Everything row; the page as in the mockup. Upload logic not touched | 4 | done. Six raised tiles, one way open at a time; the list; each thing's options fold. "Where it goes" keeps its whole wording, one tap away |
+| Study pack, notes, podcast, cards, study, test | `/my-material-*` | Same pages, back goes to the list | 4 | done in the look, back in the top bar; a course's map has what is next first. Checked before a build; only the map with a built course, stubbed |
 | Curriculum browser | `/curriculum` | Everything row | 4 | colours |
 
 ### States
 
 | State | Status |
 |---|---|
-| Loading | Home has its own line while it builds. Other pages keep today's spinner in new colours. Slice 4 |
-| Error on load | `App.mount`'s notice and Try again, new colours. Not forced in a test yet. Slice 4 |
-| Offline | `/offline.html`: not under the flag yet, it is cached by the service worker. Slice 4 |
-| Not found | `not-found.html`: not under the flag yet. Slice 4 |
+| Loading | done. Home has its own line while it builds; other pages the same spinner, in the look |
+| Error on load | done. `App.mount`'s notice and Try again, in the look; forced on the sheet with a stubbed 500 |
+| Offline | done. `/offline.html` with the giraffe, and `/sw.js` under the flag keeps what it needs (one exact-string hook, tested). Seen by stopping the server: the browser's offline switch doesn't reach a service worker |
+| Not found | done, under the flag from the 404 in `server.js` |
 | Keyboard, focus ring | Tested on Home and the sheet |
 | Reduced motion | Tested on the sheet and dialogs |
 | Light and dark | Tokens for both, contrast tested; dark checked on screen on Home, Everything and a question |
@@ -157,10 +157,11 @@ Landing, sign-in, register, privacy, the sealed Spanish tests, the ACT pages, pa
 - **Report a problem and "Change this":** a small flag in the corner of the bubble, and one small link over the buttons.
 - **Home's day dots, greeting and "This week":** gone. The steps sheet opens from "Today's plan".
 
-- **"1 of 6 done, about 36 min left":** the plan never empties. `services/daily-plan.js` does not take off what was already done today, so after each sitting it fills the chosen minutes again. Home shows today's finished sittings as filled dots, so the count is true, but the queue grows and there is no "done for today" screen. A placement counts as a sitting. Changing this needs a change to the plan, which this work leaves alone.
+- **"1 of 6 done, about 36 min left":** the plan never empties: `services/daily-plan.js` fills the chosen minutes again after each sitting, and that is left alone. So Home counts apart from it: **Done for today** (`services/ui-v2-today.js`, `GET /api/ui2/today`, read only) shows once the chosen minutes are met, with an optional **Keep going** that brings the same Continue back for the rest of that day. Time spent is the larger of the study timer and the day's finished sittings, each capped at 45 minutes. A lesson page read with no timer running leaves no time, so that learner sees it late. Choosing more minutes opens the day again.
 - **"A lesson of about 13 minutes, then 3 questions":** the plan does not know the question count before the session opens, so Home says only the minutes.
 - **Level titles for later subjects** come from one extra read of that subject's path, the same read the dashboard makes for its lead.
 
 ## Found on the way
 
+- `js/my-material-podcast.js` line 226: a line of code sits inside the page's template, so the podcast page shows it as text and `PartChange.wire` never runs there (the podcast's "Change this"). With the flag off it stays, by the byte rule. Under the flag the text is taken off the screen; the wiring still needs the real fix.
 - `dashboard.js` looks for `.dash-aside` to show own material due. The class is `.home-aside`, so that section has never appeared. With the flag off it stays as it is. With it on, the My material row shows the count.

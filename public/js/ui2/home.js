@@ -220,7 +220,18 @@
         </section>` : ''}
         ${hasPast ? `<a class="u2-btn2" id="u2-past-link" href="#past">Past</a>` : ''}
       </div>`;
-    guideInto(host, focus || mats.materials.length ? 'Ready when you are.' : 'Let\'s get you started.', 'u2-giraffe');
+    const finished = doneForToday(canPlan);
+    if (finished) {
+      const go = host.querySelector('#u2-continue');
+      go.hidden = true;
+      go.insertAdjacentHTML('beforebegin', `<section class="u2-h-sec" id="u2-done" aria-label="Done for today"><div class="u2-feature"><h1 class="u2-t1" tabindex="-1" id="u2-title">Done for today</h1><p class="u2-m u2-detail" style="margin:0 auto">${today.spent} of your ${plan.minutes} minutes.</p><button type="button" class="u2-btn2" id="u2-keep-going">Keep going</button></div></section>`);
+      host.querySelector('#u2-keep-going').addEventListener('click', async () => {
+        try { sessionStorage.setItem(`u2-keep-${today.date}`, '1'); } catch { /* it just asks again next load */ }
+        keptGoing = true;
+        await drawHome();
+      });
+    }
+    guideInto(host, finished ? 'Done for today.' : focus || mats.materials.length ? 'Ready when you are.' : 'Let\'s get you started.', 'u2-giraffe');
     // The empty page's other first steps (the style quiz, the survey) stay on the page, under the sections.
     const empty = root.querySelector('.empty-state');
     if (empty) host.querySelector('.u2-home-body').appendChild(empty);
@@ -477,6 +488,15 @@
   };
   window.addEventListener('hashchange', () => { applyView(true); });
 
+  /** The chosen minutes are met and the learner hasn't asked for more. Reads services/ui-v2-today.js against the plan's minutes, so choosing more minutes opens the day again. The plan itself is not touched. */
+  let today = null;
+  let keptGoing = false;
+  function doneForToday(canPlan) {
+    if (!canPlan || !today || keptGoing || !(today.spent >= plan.minutes)) return false;
+    try { if (sessionStorage.getItem(`u2-keep-${today.date}`)) return false; } catch { /* no storage: asks each load */ }
+    return true;
+  }
+
   // ── when js/dashboard.js has drawn ───────────────────────────────────────
   async function build() {
     if (built) return;
@@ -487,6 +507,7 @@
     const planReply = gets.get('/api/plan/today');
     try { plan = planReply ? await planReply : null; } catch { plan = null; }
     try { mats = await App.api.get('/api/ui2/material-progress'); } catch { mats = { can_upload: false, materials: [] }; }
+    try { today = await App.api.get('/api/ui2/today'); } catch { today = null; }
     const host = document.createElement('div');
     host.id = 'u2-home';
     root.insertBefore(host, root.firstChild);

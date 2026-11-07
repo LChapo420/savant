@@ -107,7 +107,7 @@ async function main() {
     const git = (cmd) => execSync(cmd, { cwd: ROOT, encoding: 'utf8' }).trim();
     const out = git(`git diff --name-status ${BASE_COMMIT()} -- public spanish-check spanish-check-lc spanish-dictation routes`);
     const giraffe = new Set(git(`git diff --name-only ${TUTOR_GIRAFFE_MERGE}~1 ${TUTOR_GIRAFFE_MERGE}`).split(/\r?\n/));
-    const changed = out ? out.split(/\r?\n/).filter((l) => !l.startsWith('A')).map((l) => l.split(/\s+/).pop()).filter((f) => !giraffe.has(f)) : [];
+    const changed = out ? out.split(/\r?\n/).filter((l) => !l.startsWith('A')).map((l) => l.split(/\s+/).pop()).filter((f) => !giraffe.has(f) && !f.startsWith('public/js/ui2/') && !f.startsWith('public/css/ui2/')) : []; // the flag's own files may change as the work goes on
     assert.deepStrictEqual(changed, []);
     for (const f of ['public/start.html', 'public/js/start.js', 'public/js/start-tutor.js', 'public/css/screens/start.css']) assert(!out.includes(f), `${f} is untouched`);
   });
@@ -116,6 +116,27 @@ async function main() {
       const css = fs.readFileSync(path.join(ROOT, 'public', 'css', 'ui2', f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
       assert.deepStrictEqual(css.match(/#[0-9a-fA-F]{3,8}\b(?![^{]*\{)|rgba?\(|oklch\(/g) || [], [], f);
     }
+  });
+  ok('offline under the flag: the worker keeps what the page needs, off nothing changes', () => {
+    const sw = fs.readFileSync(path.join(ROOT, 'public', 'sw.js'), 'utf8');
+    const patched = ui.patchWorker(sw);
+    for (const f of ['/css/ui2/tokens.css', '/css/styles/chunky.css', '/css/ui2/pages.css', '/js/start-tutor.js', '/js/ui2/look.js', '/js/ui2/offline.js', '/js/style-boot.js']) {
+      assert(patched.includes(`'${f}'`), f);
+      assert(fs.existsSync(path.join(ROOT, 'public', f)), `${f} exists, or the worker's install would fail`);
+    }
+    const page = ui.injectOffline(fs.readFileSync(path.join(ROOT, 'public', 'offline.html'), 'utf8'));
+    for (const m of page.match(/(?:href|src)="(\/(?:css|js)\/[^"]+)"/g).map((x) => x.split('"')[1])) assert(patched.includes(`'${m}'`) || ['/css/style.css', '/js/app.js', '/js/offline.js'].includes(m), `the offline page needs ${m}, not cached`);
+    const was = process.env.UI_V2;
+    delete process.env.UI_V2;
+    for (const p of ['/sw.js', '/offline.html']) {
+      let nexted = false;
+      ui.middleware({ method: 'GET', path: p }, {}, () => { nexted = true; });
+      assert(nexted, `${p} passes through with the flag off`);
+    }
+    let sent = null;
+    ui.sendNotFound({ status(code) { sent = code; return this; }, sendFile(f) { sent = `${sent} ${f}`; } }, 'x.html');
+    assert.strictEqual(sent, '404 x.html');
+    if (was !== undefined) process.env.UI_V2 = was;
   });
   ok('the hooks still fit js/start.js, and the giraffe in js/start-tutor.js is the original', () => {
     const src = fs.readFileSync(path.join(ROOT, 'public', 'js', 'start.js'), 'utf8');
