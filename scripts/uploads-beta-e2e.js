@@ -48,6 +48,12 @@ function fakeModel(ai) {
     const items = () => ss.slice(0, 6).map((s, i) => ({ type: 'multiple_choice', prompt: `Which line is from the material (${i + 1})?`, choices: [s.slice(0, 150), `Not this one ${i}`, `Nor this one ${i}`], answer_index: 0, tier: (i % 3) + 1, misconceptions: ['', 'a mix-up', 'a mix-up'], explanation: s, passage_id: first.id, quote: first.text.slice(0, 40) }));
     if (a.task === 'material_lesson') return { lesson: { paragraphs: [ss.slice(0, 2).join(' ') || first.text.slice(0, 300), ss.slice(2, 4).join(' ') || first.text.slice(0, 100)], key_points: ss.slice(4, 5) }, questions: items() };
     if (a.task === 'material_verify') return { verdicts: Array.from({ length: 12 }, (_, i) => ({ n: i + 1, supported: true })), supported: true, gives_away: false };
+    if (a.task === 'material_part_read_a' || a.task === 'material_part_read_b') {
+      if (/POINTS:/.test(a.user)) return { verdicts: [...a.user.split('REWORDED TEXT:')[0].matchAll(/^(\d+)\. /gm)].map((m) => ({ n: Number(m[1]), stated: true })) };
+      if (/ADDED LINE:/.test(a.user)) return { wrong: [], other: [] };
+      if (/Marked answer/.test(a.user)) return { supported: true, gives_away: false };
+      return { verdicts: [...String(a.user).split('SENTENCES:')[1].matchAll(/^(\d+)\. (.*)$/gm)].map((m) => ({ n: Number(m[1]), verdict: 'supported', quote: m[2] })) };
+    }
     if (/^material_factcheck/.test(a.task)) return { verdicts: [...String(a.user).split('SENTENCES:')[1].matchAll(/^(\d+)\. (.*)$/gm)].map((m) => ({ n: Number(m[1]), verdict: 'supported', quote: m[2] })) };
     if (a.task === 'material_notes') return { sections: [{ heading: 'Main points', bullets: ss.slice(0, 5).map((s) => ({ text: s, passage_id: first.id, quote: first.text.slice(0, 60) })) }] };
     if (a.task === 'material_pack') return { summary: [ss.slice(0, 2).join(' ')], flashcards: ss.slice(0, 5).map((s, i) => ({ front: `Card ${i + 1}`, back: s, passage_id: first.id, quote: first.text.slice(0, 60) })), quiz: items().slice(0, 2).map((q) => ({ ...q, type: 'multiple_choice' })), test: [] };

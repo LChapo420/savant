@@ -71,6 +71,7 @@ function model({ rewrite = plain, facts = 'supported', example = 'Say two friend
   const log = [];
   const llm = async (a) => {
     log.push(a.task);
+    if (a.task === 'material_part_read_a' || a.task === 'material_part_read_b') a = { ...a, task: /POINTS:/.test(a.user) || /ADDED LINE:/.test(a.user) ? 'part_gate_a' : /Marked answer/.test(a.user) ? 'material_verify' : 'material_factcheck' };
     if (a.task === 'material_part_change') { const pieces = [...a.user.matchAll(/^(\d+)\. (.*)$/gm)].filter((m) => a.user.indexOf('Pieces:') < m.index && m.index < a.user.indexOf('What the learner asked for')).map((m) => rewrite(m[2])); return { data: { pieces } }; }
     if (/^material_factcheck/.test(a.task)) { const ns = [...a.user.split('SENTENCES:')[1].matchAll(/^(\d+)\. /gm)].map((m) => Number(m[1])); return { data: { verdicts: ns.map((n) => ({ n, verdict: typeof facts === 'function' ? facts(a.user, n) : facts, fixed: '' })) } }; }
     if (a.task === 'material_part_example') return { data: { text: example } };

@@ -995,24 +995,22 @@
       },
       "material_part_change": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "munito:zai-org/glm-5.3-flash",
-          "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7",
-          "coral:deepseek-v4.1-flash"
+          "gonka:zai-org/GLM-5.3-Flash"
         ],
         "timeout_ms": 45000,
         "basis": "uploads-beta (7 Nov 2026): a learner is waiting on a change to a part of their upload; the same cheap paid list as material_lesson, with a short deadline."
       },
       "material_part_example": {
         "allow": [
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast",
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",
-          "munito:zai-org/glm-5.3-flash",
-          "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7",
-          "coral:deepseek-v4.1-flash"
+          "gonka:zai-org/GLM-5.3-Flash"
         ],
         "timeout_ms": 30000,
         "basis": "uploads-beta (7 Nov 2026): a labelled made-up example a learner asked for."
@@ -1066,13 +1064,25 @@
         "basis": "the sentence-by-sentence fact check of a lesson (docs/UPLOADS-ANY-FORMAT.md section 17); runs beside material_verify while a learner waits, so the same cheap list."
       },
       "material_factcheck_glm": {
-        "only": ["*glm*", "*GLM*"],
-        "allow": ["*glm*", "*GLM*"],
+        "only": [
+          "*glm*",
+          "*GLM*"
+        ],
+        "allow": [
+          "*glm*",
+          "*GLM*"
+        ],
         "basis": "second reader of the fact check when the first was another family: measured, two families left fewer invented facts than one (docs/UPLOADS-ANY-FORMAT.md section 17)."
       },
       "material_factcheck_deepseek": {
-        "only": ["*deepseek*", "*DeepSeek*"],
-        "allow": ["*deepseek*", "*DeepSeek*"],
+        "only": [
+          "*deepseek*",
+          "*DeepSeek*"
+        ],
+        "allow": [
+          "*deepseek*",
+          "*DeepSeek*"
+        ],
         "basis": "second reader of the fact check when the first was GLM (docs/UPLOADS-ANY-FORMAT.md section 17)."
       },
       "essay_grade": {
@@ -1166,20 +1176,42 @@
         "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },
       "part_modify": {
-        "only": ["gonka:deepseek-ai/DeepSeek-V4-Flash-0731","coral:deepseek-v4.1-flash","munito:deepseek-ai/deepseek-v4.1-flash-1017"],
-        "allow": ["gonka:deepseek-ai/DeepSeek-V4-Flash-0731", "coral:deepseek-v4.1-flash", "munito:deepseek-ai/deepseek-v4.1-flash-1017"],
+        "only": [
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "coral:deepseek-v4.1-flash",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017"
+        ],
+        "allow": [
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "coral:deepseek-v4.1-flash",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017"
+        ],
         "timeout_ms": 30000,
         "basis": "Rewrites of one stored text for one learner (services/part-modify.js, part-change.js): cheap writers on prepaid credit, each draft held to the gate; the models the proofs used (docs/part-modify)."
       },
       "part_gate_a": {
-        "only": ["grokified:grok-4.3","grokified:grok-4.7"],
-        "allow": ["grokified:grok-4.3", "grokified:grok-4.7"],
+        "only": [
+          "grokified:grok-4.3",
+          "grokified:grok-4.7"
+        ],
+        "allow": [
+          "grokified:grok-4.3",
+          "grokified:grok-4.7"
+        ],
         "timeout_ms": 30000,
         "basis": "First reading of a rewrite against its original (services/part-modify.js defaultGate). Grok caught dropped rules DeepSeek passed; measured in docs/part-modify/judge-cal.json."
       },
       "part_gate_b": {
-        "only": ["gonka:deepseek-ai/DeepSeek-V4-Flash-0731","coral:deepseek-v4.1-flash","munito:deepseek-ai/deepseek-v4.1-flash-1017"],
-        "allow": ["gonka:deepseek-ai/DeepSeek-V4-Flash-0731", "coral:deepseek-v4.1-flash", "munito:deepseek-ai/deepseek-v4.1-flash-1017"],
+        "only": [
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "coral:deepseek-v4.1-flash",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017"
+        ],
+        "allow": [
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "coral:deepseek-v4.1-flash",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017"
+        ],
         "timeout_ms": 30000,
         "basis": "Second reading by another family; measured in docs/part-modify/judge-cal.json."
       },
@@ -1211,6 +1243,26 @@
         ],
         "timeout_ms": 8000,
         "basis": "services/fact-guard.js: the check before model text reaches a learner. scripts/fact-guard-eval.js, docs/FACT-COVERAGE.md. A waiting learner goes to the paid slots first (cheap, fast); background work to the free ones first. Learner data on the added providers only until their window closes (14 Nov); then NVIDIA alone."
+      },
+      "material_part_read_a": {
+        "allow": [
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731"
+        ],
+        "timeout_ms": 30000,
+        "basis": "uploads-beta (7 Nov 2026): first reader of a change a learner waits on, DeepSeek family, fastest slots."
+      },
+      "material_part_read_b": {
+        "allow": [
+          "grokified:grok-4.3",
+          "zerogpu:z-ai/glm-5.3-flash",
+          "gonka:zai-org/GLM-5.3-Flash",
+          "munito:zai-org/glm-5.3-flash"
+        ],
+        "timeout_ms": 30000,
+        "basis": "uploads-beta (7 Nov 2026): second reader of a change a learner waits on: another family, Grok first because GLM took 55 s under load in the probe."
       }
     }
   }

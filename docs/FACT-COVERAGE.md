@@ -78,6 +78,9 @@ Found by following `services/ai.js` call sites and every `task:` in `services/` 
 - `part_gate_a`: First reading of a rewrite against its original (services/part-modify.js defaultGate). A verdict; nothing of it is shown.
 - `part_gate_b`: Second reading of a rewrite by another family. A verdict; nothing of it is shown.
 - `block_layout`: A plan of which blocks to use. No text of it is shown; what it leads to is block_fill.
+- `material_factcheck`: The upload fact check when neither named reader answered (services/material-factcheck.js readersFor askerAny): its verdicts are read by code, never shown.
+- `material_part_read_a`: First reader of a change to an upload part (services/material-parts.js): verdicts read by code, never shown.
+- `material_part_read_b`: Second reader of a change to an upload part, another family: verdicts read by code, never shown.
 - `material_verify`: The support check on upload questions: its verdicts are read by code, never shown.
 - `material_factcheck_deepseek`: First reader in the upload fact check (services/material-factcheck.js): its verdicts are read by code, never shown.
 - `material_factcheck_glm`: Second reader in the upload fact check, another family: its verdicts are read by code, never shown.

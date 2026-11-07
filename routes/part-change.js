@@ -39,7 +39,8 @@ router.post('/parts/change', requireAuth, gated, limit('part-change', 60, 60 * 6
   const mref = materialRef(b);
   if (mref) {
     if (mref !== 'test' && !materialParts.CHANGES.includes(change)) return res.status(400).json({ error: 'That change does not exist.' });
-    return send(res, await materialParts.change(req.user.id, b.material_id, mref, change, { topic: b.topic, custom: b.custom }));
+    // A learner is waiting: the waiting lane on the fast lane, as for a build they asked for (paid fast slots first for a cleared learner).
+    return send(res, await require('../services/material-autobuild').runWaiting(() => materialParts.change(req.user.id, b.material_id, mref, change, { topic: b.topic, custom: b.custom })));
   }
   if (!parts.CHANGES.includes(change)) return res.status(400).json({ error: 'That change does not exist.' });
   const topic = change === 'topic' ? parts.cleanTopic(b.topic) : null;
