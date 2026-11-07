@@ -1,10 +1,11 @@
 {
  "built": "2026-11-06",
  "not_applied": true,
- "how": "Confirmed by two rulers; repaired with the production prompt on GLM-5.3 Flash; read again by Kimi K3.1 Pro. certain: same shape, re-read clean. Keyed by level and part. For review.",
+ "how": "Confirmed by two rulers; repaired with the production prompt (GLM-5.3 Flash, then grok-4.3 for what was left); level read again by Kimi K3.1 Pro. certain: changed, same shape, re-read clean. A corrected fact is a model's: read before applying. Keyed by level and part. About a dozen read by hand; two moved to not_certain.",
  "certain": [
   {
    "key": "english/proficient/10|block 4",
+   "round": 1,
    "reasons": [
     "false: \"For q4, \"Does a second full clause get glued on with no punctuation (or just a comma)?\", the edges are \"no\" to \"fix\" and \"yes\" to \"complete\".\" → Connect q4 \"yes\" to \"fix\" and q4 \"no\" to \"complete\".",
     "false: \"from q4 label \"no\" to \"fix\"; from q4 label \"yes\" to \"complete\"\" → from q4 label \"yes\" to \"fix\"; from q4 label \"no\" to \"complete\""
@@ -291,7 +292,67 @@
    }
   },
   {
+   "key": "english/proficient/10|block 7",
+   "round": 2,
+   "reasons": [
+    "false: \"The chunk has one subject (the alarm) and one finite verb (didn't go off).\" → The sentence has an independent clause, \"The alarm didn't go off,\" followed by the dependent clause \"because the power had gone out overnight,\" with its own subject and finite verb. It is complete because the independent clause can stand alone and the dependent clause is correctly attached."
+   ],
+   "before": {
+    "choices": [
+     "Fragment — it needs a period after the first clause",
+     "Complete sentence — the clause ends the thought",
+     "Run-on — two independent clauses fused with no punctuation",
+     "Comma splice — the comma is trying to join two full clauses"
+    ],
+    "commonErrorLabel": "Assuming every sentence with 'because' in it is a fragment",
+    "correctIndex": 1,
+    "context": "The alarm didn't go off because the power had gone out overnight.",
+    "correctReasoning": "The chunk has one subject (the alarm) and one finite verb (didn't go off). 'Because the power had gone out overnight' answers why the alarm failed and then the sentence stops — no second independent clause is fused on. It sounds long, but it's one complete thought.",
+    "difficulty": "Trap",
+    "recoveryTip": "After any sentence, ask: 'Is the listener waiting for more?' If the answer is no, it's complete — even if it's long or starts with because, when, although, or that.",
+    "question": "Is this sentence complete, or does it have an error?",
+    "trapChoiceIndexes": [
+     0,
+     2,
+     3
+    ],
+    "trapReasons": {
+     "0": "The long 'because' clause tricks you into expecting a missing piece.",
+     "2": "Two clauses feel like too much, but only one clause here is independent.",
+     "3": "There is no comma at all, so nothing is splicing two full clauses together."
+    },
+    "whyIntuitionFailed": "Your ear hears a long sentence with 'because' in it and assumes something is missing. But a sentence starting with an independent clause that ENDS with a dependent clause is complete — the dependent clause just answers 'why.' The trap is assuming every 'because' chunk is a fragment."
+   },
+   "after": {
+    "choices": [
+     "Fragment — it needs a period after the first clause",
+     "Complete sentence — the clause ends the thought",
+     "Run-on — two independent clauses fused with no punctuation",
+     "Comma splice — the comma is trying to join two full clauses"
+    ],
+    "commonErrorLabel": "Assuming every sentence with 'because' in it is a fragment",
+    "correctIndex": 1,
+    "context": "The alarm didn't go off because the power had gone out overnight.",
+    "correctReasoning": "The sentence has an independent clause, 'The alarm didn't go off,' which can stand alone, followed by the dependent clause 'because the power had gone out overnight' that explains why. It is complete because there is one independent clause and the dependent clause is correctly attached.",
+    "difficulty": "Trap",
+    "recoveryTip": "After any sentence, ask: 'Does it have exactly one independent clause that can stand alone, with any dependent clauses properly attached?' If yes, it's complete — even if it's long or starts with because, when, although, or that.",
+    "question": "Is this sentence complete, or does it have an error?",
+    "trapChoiceIndexes": [
+     0,
+     2,
+     3
+    ],
+    "trapReasons": {
+     "0": "The long 'because' clause tricks you into expecting a missing piece.",
+     "2": "Two clauses feel like too much, but only one clause here is independent.",
+     "3": "There is no comma at all, so nothing is splicing two full clauses together."
+    },
+    "whyIntuitionFailed": "Your ear hears a long sentence with 'because' in it and assumes something is missing. But a sentence starting with an independent clause that ENDS with a dependent clause is complete — the dependent clause just answers 'why.' The trap is assuming every 'because' chunk is a fragment."
+   }
+  },
+  {
    "key": "english/proficient/10|block 5",
+   "round": 1,
    "reasons": [
     "false: \"a explained-by/but link\" → It should read 'an explained-by/but link'."
    ],
@@ -360,6 +421,7 @@
   },
   {
    "key": "english/proficient/18|block 5",
+   "round": 1,
    "reasons": [
     "false: \"Two problems are hiding in it: a fused run-on, and a subordinate clause left standing alone.\" → Identify a comma splice and a fused run-on, plus the missing comma after the introductory Although-clause if counting a third issue. Replace the fragment diagnosis with: “Although the stage was crowded” is already attached to “the soloist found her spotlight”; add a comma after “crowded” to mark the"
    ],
@@ -456,6 +518,7 @@
   },
   {
    "key": "english/proficient/20|block 0",
+   "round": 1,
    "reasons": [
     "false: \"Same words, same meaning — different order.\" → As written, describe the options as differing in wording, detail, and structure. To make the intended point about order, rewrite both options with the same content and use a note such as \"Same facts, different order.\"",
     "false: \"Withheld, then delivered\" → Either retitle the current option something like \"Short and direct,\" or replace its body with a periodic version such as \"After months of practice, wanting this more than anything, she dribbled past two defenders and finally scored the winning goal.\""
@@ -501,6 +564,7 @@
   },
   {
    "key": "english/proficient/20|block 8",
+   "round": 1,
    "reasons": [
     "false: \"Choice D is a run-on: two complete thoughts are jammed together with only a comma.\" → Choice D is a run-on: two independent clauses are jammed together with no punctuation or coordinating conjunction between them."
    ],
@@ -549,6 +613,7 @@
   },
   {
    "key": "english/proficient/20|block 9",
+   "round": 1,
    "reasons": [
     "false: \"Missing a subject or a verb — not a complete sentence, even if it sounds stylish.\" → A fragment is a word group punctuated as a sentence that lacks a complete independent clause. It may be missing a subject or finite verb, or it may consist only of a dependent clause or phrase; complete it or attach it to an independent clause."
    ],
@@ -639,6 +704,7 @@
   },
   {
    "key": "english/proficient/29|block 3",
+   "round": 1,
    "reasons": [
     "false: \"Clean. One subject (the coach) and one verb (blew) — a complete sentence.\" → Clean. Two independent clauses — “The whistle blew” and “the players froze at the line” — are correctly joined by a comma plus the conjunction “and.”",
     "false: \"Clean. One independent clause with a compound predicate.\" → Clean. One independent clause with a single predicate: “The gun went off.”"
@@ -738,6 +804,7 @@
   },
   {
    "key": "english/proficient/28|block 0",
+   "round": 1,
    "reasons": [
     "false: \"Round 4: three ways to fix a run-on\" → Consistently call this four ways to fix a run-on and refer to all four fixes, or remove one required solution chunk if only three fixes are intended."
    ],
@@ -1156,6 +1223,7 @@
   },
   {
    "key": "english/proficient/28|block 2",
+   "round": 1,
    "reasons": [
     "false: \"Audit complete. One fragment, one comma splice, one fused run-on — every error found and the fixes known.\" → Audit complete. Two fragments, one comma splice, and one fused run-on — every error found and the fixes known.",
     "false: \"No finite verb anywhere\" → Line 7 is a fragment because \"which everyone will devour in about four minutes\" is a dependent relative clause standing alone. Attach it to an independent clause, for example: \"We are bringing lemon cake, which everyone will devour in about four minutes.\""
@@ -1283,6 +1351,7 @@
   },
   {
    "key": "english/proficient/19|block 5",
+   "round": 1,
    "reasons": [
     "false: \"the bake sale and the funds going to the science trip\" → Also check that your new sentence keeps both facts: the bake sale is this Saturday and volunteers are needed for two shifts.",
     "false: \"The annual bake sale is this Saturday. We need volunteers for two shifts.\" → Do not list this period repair as satisfying the stated one-sentence task; retain the semicolon and comma-plus-so alternatives, or change the prompt to allow two sentences."
@@ -1387,7 +1456,48 @@
    }
   },
   {
+   "key": "english/proficient/19|check 4",
+   "round": 2,
+   "reasons": [
+    "false: \"\"accepts\":[\"semicolon\",\"period, semicolon\",\"a semicolon\",\"period or semicolon\",\"a period or a semicolon\"]\" → Remove those two incomplete accepted answers; require both the period and the semicolon, allowing wording variants that contain both."
+   ],
+   "before": {
+    "index": 4,
+    "format": "type_in",
+    "prompt": "Name the two run-on repairs that require no added word — only punctuation.",
+    "answer": "a period and a semicolon",
+    "rationale": "A period and a semicolon separate the independent clauses using punctuation alone, while the other repairs (comma plus a FANBOYS word, or a subordinating word) require adding a word.",
+    "hint": "Which two repairs need no extra word at all?",
+    "accepts": [
+     "a period and a semicolon",
+     "period and semicolon",
+     "the period and the semicolon",
+     "period, semicolon",
+     "a semicolon and a period",
+     "semicolon and period",
+     "period or semicolon",
+     "a period or a semicolon"
+    ]
+   },
+   "after": {
+    "index": 4,
+    "format": "type_in",
+    "prompt": "Name the two run-on repairs that require no added word — only punctuation.",
+    "answer": "a period and a semicolon",
+    "rationale": "A period and a semicolon separate the independent clauses using punctuation alone, while the other repairs (comma plus a FANBOYS word, or a subordinating word) require adding a word.",
+    "hint": "Which two repairs need no extra word at all?",
+    "accepts": [
+     "a period and a semicolon",
+     "period and semicolon",
+     "the period and the semicolon",
+     "a semicolon and a period",
+     "semicolon and period"
+    ]
+   }
+  },
+  {
    "key": "english/proficient/30|block 2",
+   "round": 1,
    "reasons": [
     "false: \"'Silence, never again.'\" → Use a complete example such as 'Never again will we be silent.' Here 'Never again' is fronted, with the required subject–auxiliary inversion."
    ],
@@ -1508,6 +1618,7 @@
   },
   {
    "key": "english/proficient/30|block 5",
+   "round": 1,
    "reasons": [
     "false: \"Wrinkled. Stained. Perfect anyway. (three fragments with no preceding full sentence)\" → Make the rule consistent. To retain the lesson's stated test, use a setup such as 'The coat was old. Wrinkled. Stained. Perfect anyway.' Alternatively, keep the standalone advertising example but revise the later 'only after' wording to explain that following and echoing a complete sentence is a rel",
     "false: \"These three errors are the ways 'artistic license' turns into an actual mistake.\" → It should say 'these four errors' (or the list should be reduced to three)."
@@ -1595,6 +1706,7 @@
   },
   {
    "key": "english/proficient/39|block 0",
+   "round": 1,
    "reasons": [
     "false: \"No verb anywhere — 'over the fence' has no action, so it cannot stand alone.\" → 'Flying' is a non-finite participle; the item has no finite main verb, so it cannot stand alone as a complete sentence."
    ],
@@ -1777,6 +1889,7 @@
   },
   {
    "key": "english/proficient/39|block 4",
+   "round": 1,
    "reasons": [
     "false: \"Clean parallelism: three matching verb phrases ('closing', 'moving', 'asking'). Rhythm and credibility intact.\" → Clean parallelism: three matching base-form verb phrases after 'should'—'close the achievement gap,' 'update the curriculum,' and 'ask the students themselves.'"
    ],
@@ -1876,7 +1989,43 @@
    }
   },
   {
+   "key": "english/proficient/39|check 0",
+   "round": 2,
+   "reasons": [
+    "false: \"three comma splices make this a run-on\" → The three complete clauses are joined only by commas, creating two comma splices and making the whole item a run-on."
+   ],
+   "before": {
+    "index": 0,
+    "format": "multiple_choice",
+    "prompt": "Classify this item: 'The concert sold out instantly, fans camped outside for tickets, nobody complained about the price.'",
+    "choices": [
+     "Fragment",
+     "Run-on",
+     "Deliberate fragment",
+     "Balanced sentence"
+    ],
+    "answer": "Run-on",
+    "rationale": "Every clause is complete, and they're joined only by commas — the two comma splices make this a run-on, not a fragment or a deliberate stylistic break.",
+    "hint": "Ask: could each half stand alone as a sentence? If yes and they're fused, you know the answer."
+   },
+   "after": {
+    "index": 0,
+    "format": "multiple_choice",
+    "prompt": "Classify this item: 'The concert sold out instantly, fans camped outside for tickets, nobody complained about the price.'",
+    "choices": [
+     "Fragment",
+     "Run-on",
+     "Deliberate fragment",
+     "Balanced sentence"
+    ],
+    "answer": "Run-on",
+    "rationale": "The three complete clauses are joined only by commas, creating two comma splices and making the whole item a run-on.",
+    "hint": "Ask: could each half stand alone as a sentence? If yes and they're fused, you know the answer."
+   }
+  },
+  {
    "key": "english/proficient/38|block 0",
+   "round": 1,
    "reasons": [
     "false: \"Fix 4 of 3 — the three repairs\" → Fix 3 of 3 — the three repairs"
    ],
@@ -2211,6 +2360,7 @@
   },
   {
    "key": "english/proficient/40|block 0",
+   "round": 1,
    "reasons": [
     "false: \"\"The steady version\" / \"The jolting version\"\" → Option A should be titled \"The jolting version\" with caution tone, and Option B should be titled \"The steady version\" with success tone.",
     "false: \"title\":\"The steady version\"\" → title\":\"The jolting version\"",
@@ -2258,6 +2408,7 @@
   },
   {
    "key": "english/proficient/52|block 4",
+   "round": 1,
    "reasons": [
     "false: \"If we win Friday's game, we would make the playoffs.\" → Use \"If we win Friday's game, we will make the playoffs.\" Alternatively, for a hypothetical version, use \"If we won Friday's game, we would make the playoffs.\"",
     "false: \"correctChipId:\"conditional\" ... label:\"If we win Friday's game, we would make the playoffs.\"\" → The sentence should read \"If we win Friday's game, we will make the playoffs.\" to match the conditional definition, or be changed to past + would if intended as hypothetical."
@@ -2397,6 +2548,7 @@
   },
   {
    "key": "english/proficient/50|block 4",
+   "round": 1,
    "reasons": [
     "false: \"Two runs-on and a splice in one sentence.\" → One fused run-on and one comma splice in one sentence."
    ],
@@ -2493,6 +2645,7 @@
   },
   {
    "key": "english/proficient/50|block 5",
+   "round": 1,
    "reasons": [
     "false: \"\"Through the fog, under the floodlights, took the field.\" — no subject, no verb.\" → Keep the example but change the annotation to “no subject” and explain that it is a fragment because its subject is missing. Alternatively, replace it with an example that genuinely lacks both a subject and a verb."
    ],
@@ -2612,7 +2765,43 @@
    }
   },
   {
+   "key": "english/proficient/50|check 2",
+   "round": 2,
+   "reasons": [
+    "false: \"Which revision fixes the inappropriate mood shift in: \"If you finish your homework, you will call me before dinner.\"?\" → No revision is required on mood grounds. To preserve the keyed answer, ask “Which revision makes the instruction a direct command?” and explain that “call me” makes the main clause imperative while the if-clause remains indicative."
+   ],
+   "before": {
+    "index": 2,
+    "format": "multiple_choice",
+    "prompt": "Which revision makes the instruction in \"If you finish your homework, you will call me before dinner.\" a direct command?",
+    "choices": [
+     "If you finish your homework, you will call me before dinner.",
+     "Your homework was finished, and call me before dinner.",
+     "If you finish your homework, call me before dinner.",
+     "You finish your homework, and you will call me before dinner."
+    ],
+    "answer": "If you finish your homework, call me before dinner.",
+    "rationale": "Replacing \"you will call me\" with the imperative \"call me\" turns the main clause into a direct command while the if-clause \"If you finish your homework\" stays indicative, and this is the only revision that keeps the conditional structure intact.",
+    "hint": "The first clause is an if-clause setting a condition; the command that follows should stay in the imperative."
+   },
+   "after": {
+    "index": 2,
+    "format": "multiple_choice",
+    "prompt": "Which revision makes the instruction in \"If you finish your homework, you will call me before dinner.\" a direct command?",
+    "choices": [
+     "If you finish your homework, you will call me before dinner.",
+     "Your homework was finished, and call me before dinner.",
+     "If you finish your homework, call me before dinner.",
+     "You finish your homework, and you will call me before dinner."
+    ],
+    "answer": "If you finish your homework, call me before dinner.",
+    "rationale": "\"call me\" makes the main clause imperative while the if-clause remains indicative.",
+    "hint": "The first clause is an if-clause setting a condition; the command that follows should stay in the imperative."
+   }
+  },
+  {
    "key": "english/proficient/70|block 4",
+   "round": 1,
    "reasons": [
     "false: \"True — 'was' is the subjunctive form in this hypothetical.\" → True — 'were' is the subjunctive form in this hypothetical."
    ],
@@ -2715,6 +2904,7 @@
   },
   {
    "key": "english/proficient/71|block 4",
+   "round": 1,
    "reasons": [
     "false: \"Caught it. The sentence before a colon must be complete; semicolons cannot introduce lists.\" → Caught it. In line 4, 'its' should be 'it's' ('it is'); 'its' without an apostrophe shows possession."
    ],
@@ -2815,6 +3005,7 @@
   },
   {
    "key": "english/proficient/49|block 2",
+   "round": 1,
    "reasons": [
     "false: \"Clean again: back to active voice. But the damage is done in line 3.\" → Either acknowledge the additional passive construction or rewrite line 4 actively, for example: “Everyone cheered when the announcer read the name aloud.”",
     "false: \"Clean again: back to active voice.\" → Line 4's main clause is active ('Everyone cheered'), but the subordinate clause is passive ('was read aloud'); the explanation should not claim the line is fully back to active voice."
@@ -2899,7 +3090,73 @@
    }
   },
   {
+   "key": "english/proficient/49|block 4",
+   "round": 2,
+   "reasons": [
+    "false: \"Tempting, because 'Now.' is a fragment. But a deliberate fragment after a dash is a common emphasis device\" → Reject option d because its premise is false: “act now” is an imperative clause, not a fragment. The marked indicative-to-imperative change is acceptable."
+   ],
+   "before": {
+    "correctId": "b",
+    "notQuiteMessage": "That's the trap.",
+    "options": [
+     {
+      "id": "a",
+      "text": "An inappropriate shift — the mood changes mid-sentence, so it should be rewritten to stay indicative throughout.",
+      "whyNot": "Tempting, because a mood change is happening. But the writer marked it deliberately with a dash and an urgent fragment to grab the parent's attention — that's an acceptable shift for emphasis, not a careless slip."
+     },
+     {
+      "id": "b",
+      "text": "An acceptable, deliberate shift — the writer changes mood on purpose for emphasis, and the dash signals it.",
+      "whyNot": "It survives scrutiny: the dash is an explicit signal that the writer is switching gears for effect, so the reader is never confused about who is doing what."
+     },
+     {
+      "id": "c",
+      "text": "A run-on sentence — two independent clauses are jammed together with no correct punctuation.",
+      "whyNot": "Tempting, because the ending is short and punchy. But the dash correctly separates the clauses, so this is not a run-on — the issue to judge is the mood change, and that one is marked."
+     },
+     {
+      "id": "d",
+      "text": "A sentence fragment — 'Now.' has no subject or verb, so it must be merged into the first clause.",
+      "whyNot": "Tempting, because 'Now.' is a fragment. But a deliberate fragment after a dash is a common emphasis device, and the real question — is the mood shift marked and purposeful — has a clear yes as its answer."
+     }
+    ],
+    "prompt": "A student writes: 'The flyer says tickets are available online — but act now.' Is the change from indicative ('says', 'are') to imperative ('act') an inappropriate shift or an acceptable one?",
+    "successMessage": "Survives scrutiny.",
+    "title": "Trap Check: Shift or Strategy?"
+   },
+   "after": {
+    "correctId": "b",
+    "notQuiteMessage": "That's the trap.",
+    "options": [
+     {
+      "id": "a",
+      "text": "An inappropriate shift — the mood changes mid-sentence, so it should be rewritten to stay indicative throughout.",
+      "whyNot": "Tempting, because a mood change is happening. But the writer marked it deliberately with a dash and an urgent imperative to grab the parent's attention — that's an acceptable shift for emphasis, not a careless slip."
+     },
+     {
+      "id": "b",
+      "text": "An acceptable, deliberate shift — the writer changes mood on purpose for emphasis, and the dash signals it.",
+      "whyNot": "It survives scrutiny: the dash is an explicit signal that the writer is switching gears for effect, so the reader is never confused about who is doing what."
+     },
+     {
+      "id": "c",
+      "text": "A run-on sentence — two independent clauses are jammed together with no correct punctuation.",
+      "whyNot": "Tempting, because the ending is short and punchy. But the dash correctly separates the clauses, so this is not a run-on — the issue to judge is the mood change, and that one is marked."
+     },
+     {
+      "id": "d",
+      "text": "An inappropriate shift to imperative — 'act now' breaks the indicative mood and must be rewritten to match.",
+      "whyNot": "Tempting, because the ending is short and punchy. But the dash correctly signals the switch to imperative for emphasis, so the mood change is marked and acceptable."
+     }
+    ],
+    "prompt": "A student writes: 'The flyer says tickets are available online — but act now.' Is the change from indicative ('says', 'are') to imperative ('act') an inappropriate shift or an acceptable one?",
+    "successMessage": "Survives scrutiny.",
+    "title": "Trap Check: Shift or Strategy?"
+   }
+  },
+  {
    "key": "english/proficient/82|block 3",
+   "round": 1,
    "reasons": [
     "false: \"Chicago dropped its ban in 2014\" → Say that Chicago had rejected a blanket ban by 1993 and that most modern guides allow a split infinitive when it improves clarity or avoids awkwardness. Remove the unsupported 2014 turning point."
    ],
@@ -2946,6 +3203,7 @@
   },
   {
    "key": "english/proficient/82|block 8",
+   "round": 1,
    "reasons": [
     "false: \"Once banned, now accepted: Chicago dropped its ban in 2014, AP never enforced it strictly.\" → Once widely condemned, split infinitives are now accepted: Chicago had rejected a blanket ban by 1993, and AP allows splitting when needed to avoid awkwardness or ambiguity.",
     "false: \"Chicago dropped its ban in 2014, AP never enforced it strictly.\" → Chicago has long allowed split infinitives; no 2014 policy change occurred.",
@@ -3062,6 +3320,7 @@
   },
   {
    "key": "english/proficient/81|block 3",
+   "round": 1,
    "reasons": [
     "false: \"Clean. Commas set off the mild appositive.\" → Clean. Commas set off the nonrestrictive relative clause \"who lives in Denver.\""
    ],
@@ -3148,6 +3407,7 @@
   },
   {
    "key": "english/proficient/81|block 4",
+   "round": 1,
    "reasons": [
     "false: \"Missing a subject or verb — e.g., Because it was raining.\" → A dependent clause or incomplete thought presented as a sentence — e.g., \"Because it was raining.\" Fix this example by attaching it to an independent clause, as in \"We stayed inside because it was raining,\" or by removing \"because.\""
    ],
@@ -3367,7 +3627,81 @@
    }
   },
   {
+   "key": "english/proficient/81|check 3",
+   "round": 2,
+   "reasons": [
+    "false: \"The sentence is a fragment because the dash leaves it without a complete subject and verb\" → The sentence is a fragment because it contains a dependent clause and no independent clause; the dash is not the problem."
+   ],
+   "before": {
+    "index": 3,
+    "format": "multiple_choice",
+    "prompt": "A student writes: \"When we finally got to the theater — sold out, every showing.\" What's the real problem, and what is it?",
+    "choices": [
+     "It's a run-on, so add a semicolon before the dash",
+     "It's a fragment because it contains a dependent clause and no independent clause; the dash is not the problem",
+     "It's correct — a dash always excuses an incomplete sentence",
+     "It's a fragment, so replace the dash with an ellipsis"
+    ],
+    "answer": "It's a fragment because it contains a dependent clause and no independent clause; the dash is not the problem",
+    "rationale": "\"When we finally got to the theater\" is a dependent clause with no independent clause anywhere in the sentence, so it is a fragment. The dash and the aside are fine; the missing independent clause is the problem.",
+    "hint": "Check what comes before the dash: does that part stand on its own as a sentence?"
+   },
+   "after": {
+    "index": 3,
+    "format": "multiple_choice",
+    "prompt": "A student writes: \"When we finally got to the theater — sold out, every showing.\" What's the real problem, and what is it?",
+    "choices": [
+     "It's a run-on, so add a semicolon before the dash",
+     "It's a fragment because it contains a dependent clause and no independent clause; the dash is not the problem",
+     "It's correct — a dash always excuses an incomplete sentence",
+     "It's a fragment, so replace the dash with an ellipsis"
+    ],
+    "answer": "It's a fragment because it contains a dependent clause and no independent clause; the dash is not the problem",
+    "rationale": "\"When we finally got to the theater\" is a dependent clause with no independent clause anywhere in the sentence, so it is a fragment. The dash and the aside are fine; the missing independent clause is the problem.",
+    "hint": "Check what comes before the dash: does that part stand on its own as a sentence?",
+    "accepts": [
+     "It's a fragment because it contains a dependent clause and no independent clause; the dash is not the problem"
+    ]
+   }
+  },
+  {
+   "key": "english/proficient/80|check 3",
+   "round": 2,
+   "reasons": [
+    "false: \"the other options either keep the shift or create a fragment\" → The third option also fixes the shift by making both clauses passive, but it is awkward and less direct. The second option keeps the shift, and the fourth creates a fragment; the active revision remains the best fix."
+   ],
+   "before": {
+    "index": 3,
+    "format": "multiple_choice",
+    "prompt": "A student wrote: \"When you write the essay, your spelling should be checked carefully.\" The first part is active, the second passive, and the shift feels accidental. Which fix is best?",
+    "choices": [
+     "Fix the shift to passive by writing 'When you write the essay, you should check your spelling carefully.'",
+     "Keep it as is — mixing voices is always fine",
+     "Fix it by writing 'When the essay is being written, spelling should be checked by you.'",
+     "Fix it by splitting it into a fragment: 'When you write the essay. Checking spelling carefully.'"
+    ],
+    "answer": "Fix the shift to passive by writing 'When you write the essay, you should check your spelling carefully.'",
+    "rationale": "The inappropriate shift is active to passive with no reason. The active revision fixes it most directly; the passive revision also removes the shift but is awkward and less direct, while the other options keep the shift or create a fragment.",
+    "hint": "One fix keeps the same voice in both parts and stays a complete sentence."
+   },
+   "after": {
+    "index": 3,
+    "format": "multiple_choice",
+    "prompt": "A student wrote: \"When you write the essay, your spelling should be checked carefully.\" The first part is active, the second passive, and the shift feels accidental. Which fix is best?",
+    "choices": [
+     "Fix the shift by writing 'When you write the essay, you should check your spelling carefully.'",
+     "Keep it as is — mixing voices is always fine",
+     "Fix it by writing 'When the essay is being written, spelling should be checked by you.'",
+     "Fix it by splitting it into a fragment: 'When you write the essay. Checking spelling carefully.'"
+    ],
+    "answer": "Fix the shift by writing 'When you write the essay, you should check your spelling carefully.'",
+    "rationale": "The inappropriate shift is active to passive with no reason. The active revision fixes it most directly and naturally; the passive revision also removes the shift but is awkward, while the other options keep the shift or create a fragment.",
+    "hint": "One fix keeps the same voice in both parts and stays a complete sentence."
+   }
+  },
+  {
    "key": "english/proficient/72|block 6",
+   "round": 1,
    "reasons": [
     "false: \"The dash is fine when you want a sharp aside, but here the plain period is the cleanest end mark — and the dash version still needs a period for the fragment.\" → Acknowledge that option 3 is also correct, or revise the question to ask which option exactly reproduces the supplied two-sentence version. Alternatively, change option 3 so that it contains a genuine punctuation error."
    ],
@@ -3421,7 +3755,66 @@
    }
   },
   {
+   "key": "english/proficient/92|block 5",
+   "round": 2,
+   "reasons": [
+    "false: \"The comma is the everyday default, but here it creates a comma splice — two independent ideas glued with too weak a mark.\" → The comma is the everyday default, but here it does not properly introduce the explanation of the rule; use a colon. This is not a comma splice because \"no trash talking allowed\" is not an independent clause.",
+    "false: \"here it creates a comma splice — two independent ideas glued with too weak a mark\" → The comma version is wrong because a comma is too weak a mark to introduce the explanation of the rule — a colon (or dash) is needed. It is not a comma splice, since the second part is not an independent clause."
+   ],
+   "before": {
+    "choices": [
+     "The tournament has one strict rule; no trash talking allowed.",
+     "The tournament has one strict rule, no trash talking allowed.",
+     "The tournament has one strict rule: no trash talking allowed.",
+     "The tournament has one strict rule - no trash talking allowed."
+    ],
+    "commonErrorLabel": "Semicolon where a colon is needed",
+    "context": "\"The tournament has one strict rule; no trash talking allowed.\"",
+    "correctIndex": 2,
+    "correctReasoning": "The sentence introduces an explanation of the rule, so it needs a colon. 'The tournament has one strict rule' is a complete sentence on its own, which is exactly the requirement a colon has before it. The colon signals 'here it comes' — and the rule follows.",
+    "difficulty": "Trap",
+    "question": "Which revision uses punctuation correctly?",
+    "recoveryTip": "Before any punctuation, ask: am I introducing something (colon) or joining two full sentences (semicolon)? If a list or explanation follows, reach for the colon.",
+    "standardTag": "Punctuation for Effect",
+    "trapChoiceIndexes": [
+     0,
+     1
+    ],
+    "trapReasons": {
+     "0": "The semicolon looks formal and 'fancy', so it feels right even though nothing is being joined.",
+     "1": "The comma is the everyday default, but here it creates a comma splice — two independent ideas glued with too weak a mark."
+    },
+    "whyIntuitionFailed": "The semicolon feels sophisticated, so it seems like the 'smart' choice. But a semicolon's only job is to join two closely related complete sentences. Here, 'no trash talking allowed' is not a complete sentence, so there is nothing to join — the sentence is introducing an explanation instead."
+   },
+   "after": {
+    "choices": [
+     "The tournament has one strict rule; no trash talking allowed.",
+     "The tournament has one strict rule, no trash talking allowed.",
+     "The tournament has one strict rule: no trash talking allowed.",
+     "The tournament has one strict rule - no trash talking allowed."
+    ],
+    "commonErrorLabel": "Semicolon where a colon is needed",
+    "context": "\"The tournament has one strict rule; no trash talking allowed.\"",
+    "correctIndex": 2,
+    "correctReasoning": "The sentence introduces an explanation of the rule, so it needs a colon. 'The tournament has one strict rule' is a complete sentence on its own, which is exactly the requirement a colon has before it. The colon signals 'here it comes' — and the rule follows.",
+    "difficulty": "Trap",
+    "question": "Which revision uses punctuation correctly?",
+    "recoveryTip": "Before any punctuation, ask: am I introducing something (colon) or joining two full sentences (semicolon)? If a list or explanation follows, reach for the colon.",
+    "standardTag": "Punctuation for Effect",
+    "trapChoiceIndexes": [
+     0,
+     1
+    ],
+    "trapReasons": {
+     "0": "The semicolon looks formal and 'fancy', so it feels right even though nothing is being joined.",
+     "1": "The comma is the everyday default, but here it does not properly introduce the explanation of the rule; use a colon. This is not a comma splice because \"no trash talking allowed\" is not an independent clause."
+    },
+    "whyIntuitionFailed": "The semicolon feels sophisticated, so it seems like the 'smart' choice. But joining independent clauses is not a semicolon's only use. Semicolons also separate items in a series when the items contain internal commas. Here, 'no trash talking allowed' is not a complete sentence, so there is nothing to join — the sentence is introducing an explanation instead."
+   }
+  },
+  {
    "key": "english/proficient/95|block 2",
+   "round": 1,
    "reasons": [
     "false: \"Got appears three times — it could mean bought, received, found, or reached.\" → Got appears twice in the vague draft. In \"got some stuff,\" it could mean bought, received, or found; in \"got a lot done,\" it means accomplished or completed."
    ],
@@ -3530,6 +3923,7 @@
   },
   {
    "key": "english/proficient/95|block 7",
+   "round": 1,
    "reasons": [
     "false: \"When our fewer players showed up than we expected\" → Use either \"When fewer players showed up than we expected\" or \"When fewer of our players showed up than we expected.\""
    ],
@@ -3720,6 +4114,7 @@
   },
   {
    "key": "english/proficient/95|block 9",
+   "round": 1,
    "reasons": [
     "false: \"There are four.\" → Either mark \"stuff\" as an additional error (and \"bunch\" too, if targeting the informal phrase \"a bunch of\") and update the count and maxErrors, or replace that phrase so the paragraph contains exactly the four intended targets."
    ],
@@ -4131,7 +4526,84 @@
    }
   },
   {
+   "key": "english/proficient/95|check 0",
+   "round": 2,
+   "reasons": [
+    "false: \"All four words could loosely describe checking work twice\" → Diligent fits because it means showing careful, persistent effort. Lazy contradicts Maya's behavior, slow concerns speed rather than effort, and picky suggests being hard to please rather than simply thorough."
+   ],
+   "before": {
+    "index": 0,
+    "format": "multiple_choice",
+    "prompt": "Your teacher praises Maya in a note home: Maya is very ______ about her homework — she checks every answer twice before turning it in. Which word fits the blank and carries the right connotation?",
+    "choices": [
+     "Lazy",
+     "Diligent",
+     "Slow",
+     "Picky"
+    ],
+    "answer": "Diligent",
+    "rationale": "Diligent means showing careful, persistent effort, which matches checking every answer twice and carries the approving tone the note needs. Lazy contradicts Maya's behavior, slow concerns speed rather than effort, and picky suggests being hard to please rather than simply thorough.",
+    "hint": "Both lazy and slow describe low effort. The blank praises Maya — pick the praise word."
+   },
+   "after": {
+    "index": 0,
+    "format": "multiple_choice",
+    "prompt": "Your teacher praises Maya in a note home: Maya is very ______ about her homework — she checks every answer twice before turning it in. Which word fits the blank and carries the right connotation?",
+    "choices": [
+     "Lazy",
+     "Diligent",
+     "Slow",
+     "Picky"
+    ],
+    "answer": "Diligent",
+    "rationale": "Diligent means showing careful, persistent effort, which matches checking every answer twice and carries the approving tone the note needs.",
+    "hint": "Both lazy and slow describe low effort. The blank praises Maya — pick the praise word."
+   }
+  },
+  {
+   "key": "english/proficient/95|check 4",
+   "round": 2,
+   "reasons": [
+    "false: \"Type the letter of your choice.\" → Provide the A–D revisions, with B being the precise version described in the rationale, or rewrite the check as a self-contained question whose answer can be typed."
+   ],
+   "before": {
+    "index": 4,
+    "format": "type_in",
+    "prompt": "A student's first draft says: The speech was really something. Which revised version uses the most precise, audience-appropriate diction for a formal report? Type the letter of your choice.\nA. The speech was absolutely mind-blowing and unforgettable.\nB. The speech was passionate, with long pauses that let key points sink in.\nC. The speech was very good and quite interesting.\nD. The speech was really something else entirely.",
+    "answer": "B",
+    "rationale": "Option B names a specific quality (passion) with concrete evidence (the pauses), fitting a formal report; the vague and overwrought options name nothing a reader can picture or check.",
+    "hint": "Ignore how impressive the words sound. Ask: which one gives a fact a reader could picture or check?",
+    "accepts": [
+     "B"
+    ],
+    "choices": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "after": {
+    "index": 4,
+    "format": "type_in",
+    "prompt": "A student's first draft says: The speech was really something. Which revised version uses the most precise, audience-appropriate diction for a formal report?\nA. The speech was absolutely mind-blowing and unforgettable.\nB. The speech was passionate, with long pauses that let key points sink in.\nC. The speech was very good and quite interesting.\nD. The speech was really something else entirely.",
+    "answer": "B",
+    "rationale": "Option B names a specific quality (passion) with concrete evidence (the pauses), fitting a formal report; the vague and overwrought options name nothing a reader can picture or check.",
+    "hint": "Ignore how impressive the words sound. Ask: which one gives a fact a reader could picture or check?",
+    "accepts": [
+     "B"
+    ],
+    "choices": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   }
+  },
+  {
    "key": "english/proficient/91|block 4",
+   "round": 1,
    "reasons": [
     "false: \"'Honestly' at the front is just an informal opener, not a mistake.\" → Remove this sentence from line 5’s feedback, or move it to line 3. Line 5’s feedback should discuss that line itself, for example that it is correctly constructed and that “in their own words” is appropriately set off with commas."
    ],
@@ -4231,7 +4703,50 @@
    }
   },
   {
+   "key": "english/proficient/91|check 4",
+   "round": 2,
+   "reasons": [
+    "false: \"'She asked for the vote and every student raised a hand and the chair counted them.'\" → Replace the keyed option with an actual run-on, such as \"She asked for the vote every student raised a hand,\" and explain that those two independent clauses are fused without punctuation or a conjunction. Alternatively, add another option containing a genuine grammatical error and key that option."
+   ],
+   "before": {
+    "index": 4,
+    "format": "multiple_choice",
+    "prompt": "Which of these is a genuine error, not just a difference between style guides?",
+    "choices": [
+     "'Chicago adds a comma before the final item in a series; AP leaves it out.'",
+     "'Hopefully, the meeting will end on time, according to most modern editors.'",
+     "'She asked for the vote every student raised a hand.'",
+     "'We split the infinitive to boldly list the rules, and our guide allows it.'"
+    ],
+    "answer": "'She asked for the vote every student raised a hand.'",
+    "rationale": "This is a fused run-on: two independent clauses are joined with no punctuation or conjunction, which is a grammatical error under every style guide. The other options are disputed style choices that different guides answer differently.",
+    "hint": "Style-guide choices change from one guide to another; a real error breaks grammar in every guide.",
+    "accepts": [
+     "She asked for the vote every student raised a hand.",
+     "They are two independent clauses fused with no punctuation or conjunction"
+    ]
+   },
+   "after": {
+    "index": 4,
+    "format": "multiple_choice",
+    "prompt": "Which of these is a genuine error, not just a difference between style guides?",
+    "choices": [
+     "'Chicago adds a comma before the final item in a series; AP leaves it out.'",
+     "'Hopefully, the meeting will end on time, according to most modern editors.'",
+     "'She asked for the vote every student raised a hand.'",
+     "'We split the infinitive to boldly list the rules, and our guide allows it.'"
+    ],
+    "answer": "'She asked for the vote every student raised a hand.'",
+    "rationale": "This is a fused run-on: the two independent clauses are joined with no punctuation or conjunction, which is a grammatical error under every style guide.",
+    "hint": "Style-guide choices change from one guide to another; a real error breaks grammar in every guide.",
+    "accepts": [
+     "She asked for the vote every student raised a hand."
+    ]
+   }
+  },
+  {
    "key": "spanish/advanced/108|block 5",
+   "round": 1,
    "reasons": [
     "false: \"Both muy and mucho translate as \"very much\" or \"a lot\", so they get swapped.\" → Muy means \"very\" and is used before adjectives. Mucho means \"much\" or \"a lot\" and can also translate as \"very much\" in contexts such as Me gusta mucho. Learners may confuse the two words, but they do not both mean \"very much\" or \"a lot.\""
    ],
@@ -4280,6 +4795,7 @@
   },
   {
    "key": "spanish/advanced/163|block 0",
+   "round": 1,
    "reasons": [
     "false: \"The pattern is always the same: Name + es + nationality. Es + profession, with no un or una.\" → The no-article rule applies only to a bare profession (es cantante). When the profession is modified by an adjective, the indefinite article is used and agrees: es una cantante colombiana. Block 0 should present the pattern for bare professions, not as an always-rule without exception."
    ],
@@ -4310,6 +4826,7 @@
   },
   {
    "key": "spanish/entry/16|block 4",
+   "round": 1,
    "reasons": [
     "false: \"All five chunks are in the right place.\" → All four chunks are in the right place."
    ],
@@ -4468,6 +4985,7 @@
   },
   {
    "key": "spanish/advanced/80|block 5",
+   "round": 1,
    "reasons": [
     "false: \"Only -o adjectives, consonant-ending nationalities and -or adjectives like trabajador change to -a.\" → Use a non-exhaustive rule that includes all these patterns: adjectives in -o, consonant-ending nationality adjectives, many -or adjectives such as trabajador, and adjectives ending in -án, -ón or -ín can form the feminine with -a. Fácil itself remains invariable in gender."
    ],
@@ -4513,26 +5031,84 @@
     "recoveryTip": "Many adjectives can form the feminine with -a: adjectives in -o, consonant-ending nationality adjectives, many -or adjectives such as trabajador, and adjectives ending in -án, -ón or -ín. Fácil itself stays the same for both genders.",
     "difficulty": "Trap"
    }
+  },
+  {
+   "key": "spanish/entry/42|check 1",
+   "round": 2,
+   "reasons": [
+    "false: \"\"accepts\":[\"diez y ocho\"]\" → The only accepted answer should be 'dieciocho' (common misspellings like 'dieciocho' variants aside, no two-word 'diez y ocho' variant should be accepted)."
+   ],
+   "before": {
+    "index": 1,
+    "format": "type_in",
+    "prompt": "Type the number 18 as one Spanish word.",
+    "answer": "dieciocho",
+    "rationale": "Eighteen is ten and eight: dieci + ocho = dieciocho, written as a single word.",
+    "hint": "dieci + the word for 8.",
+    "accepts": [
+     "diez y ocho"
+    ]
+   },
+   "after": {
+    "index": 1,
+    "format": "type_in",
+    "prompt": "Type the number 18 as one Spanish word.",
+    "answer": "dieciocho",
+    "rationale": "Eighteen is ten and eight: dieci + ocho = dieciocho, written as a single word.",
+    "hint": "dieci + the word for 8.",
+    "accepts": [
+     "dieciocho"
+    ]
+   }
+  },
+  {
+   "key": "spanish/intermediate/97|check 2",
+   "round": 2,
+   "reasons": [
+    "false: \"qué día es\" → Remove \"qué día es\" from \"accepts\". Accepted variants should retain \"hoy\", for example \"qué día es hoy\", alongside punctuation and capitalization variants of \"¿Qué día es hoy?\""
+   ],
+   "before": {
+    "index": 2,
+    "format": "type_in",
+    "prompt": "Type the question \"What day is it today?\" in Spanish.",
+    "answer": "¿Qué día es hoy?",
+    "rationale": "The correct translation of \"What day is it today?\" is ¿Qué día es hoy?. Accepted variants must keep all three words including hoy, allowing only differences in accents, capitalization, and punctuation.",
+    "hint": "Qué + día + es + hoy.",
+    "accepts": [
+     "¿Qué día es hoy?",
+     "qué día es hoy",
+     "¿Qué día es hoy",
+     "que dia es hoy",
+     "¿que dia es hoy?"
+    ]
+   },
+   "after": {
+    "index": 2,
+    "format": "type_in",
+    "prompt": "Type the question \"What day is it today?\" in Spanish.",
+    "answer": "¿Qué día es hoy?",
+    "rationale": "The correct translation of \"What day is it today?\" is ¿Qué día es hoy?. Accepted variants must keep all four words including hoy, allowing only differences in accents, capitalization, and punctuation.",
+    "hint": "Qué + día + es + hoy.",
+    "accepts": [
+     "¿Qué día es hoy?",
+     "qué día es hoy",
+     "¿Qué día es hoy",
+     "que dia es hoy",
+     "¿que dia es hoy?"
+    ]
+   }
   }
  ],
  "not_certain": [
-  {
-   "key": "english/proficient/10|block 7",
-   "why": "re-read flagged",
-   "reasons": [
-    "false: \"The chunk has one subject (the alarm) and one finite verb (didn't go off).\" → The sentence has an independent clause, \"The alarm didn't go off,\" followed by the dependent clause \"because the power had gone out overnight,\" with its own subject and finite verb. It is complete because the independent clause can stand alone and the dependent clause is correctly attached."
-   ],
-   "reread_flags": [
-    "After any sentence, ask: 'Is the listener waiting for more?' If the answer is no, it's complete — even if it's long or s :: Not waiting for more establishes only that the thought finishes; it does not establish that the sentence is error-free. For example, \"We lost the game our bench was tired\" leaves n"
-   ]
-  },
   {
    "key": "english/proficient/124|block 1",
    "why": "shape changed",
    "reasons": [
     "false: \"‘duct’ (lead) + ‘or’ (agent) = conductor.\" → Add a “con” chunk and set the solution to [\"con\",\"duct\",\"or\"]. The feedback should explain that con- + duct + -or assembles “conductor.”"
    ],
-   "reread_flags": []
+   "reread_flags": [
+    "\"incorrect\":\"Both misplaced.\" :: This feedback belongs to Word 7, 'conductor', whose solution has three chunks: 'con', 'duct', and 'or'. 'Both' means two, so the feedback gives the learner the wrong count when no "
+   ]
   },
   {
    "key": "english/proficient/124|block 4",
@@ -4542,7 +5118,7 @@
     "false: \"Thermophilic bacteria thrive under extreme barometric pressure\" → The revision should use a term like 'hydrostatic pressure' (or simply 'extreme pressure'); the baro- root could be kept only if the context were atmospheric."
    ],
    "reread_flags": [
-    "Replacing 'strong' with a vague adjective misses the precise root‑based term; choose thermophilic and barometric. :: At a deep-sea hydrothermal vent, the relevant water pressure is hydrostatic pressure; “barometric” refers to atmospheric pressure. This also contradicts the target answer and ratio"
+    "\"decisionKeywords\":[\"thermophilic\",\"barometric\",\"semicolon\",\"synthesize\",\"novel enzymes\"],\"rationaleKeywords\":[\"thermo\", :: The pressure keywords contradict the target answer and rationale, which use 'hydrostatic' and 'hydro- + -static'; the misconception note also says to choose 'hydrostatic'. The refe"
    ]
   },
   {
@@ -4552,8 +5128,24 @@
     "false: \"Fix with a semicolon or 'and the'.\" → Fix with a semicolon, or add “and” after the comma: “The wifi went down, and everyone groaned at once.”"
    ],
    "reread_flags": [
-    "Fragment: no verb — 'racing toward the finish line' cannot stand alone. :: The card does contain verbs: “racing,” “burning,” and “screaming” are all non-finite verb forms. It is a fragment because it has no finite main verb and therefore no independent cl"
+    "Fragment: a phrase, not a sentence — no subject doing a verb. :: This misdiagnoses card c8. The fragment does contain a subject and a finite verb in its relative clause: \"that,\" referring to \"the thunderstorm,\" is the subject of \"rolled.\" The ca"
    ]
+  },
+  {
+   "key": "english/proficient/28|check 4",
+   "why": "the repair changed nothing",
+   "reasons": [
+    "false: \"We came to cheer, we stayed to sweat. Which pattern and effect does this show?\" → The example must use correct punctuation (e.g., semicolon) to illustrate a balanced sentence, or the answer must identify it as broken."
+   ],
+   "reread_flags": []
+  },
+  {
+   "key": "english/proficient/19|check 2",
+   "why": "the repair changed nothing",
+   "reasons": [
+    "false: \"\"answer\":\"run-on\"\" → Set the answer to \"comma splice\" and accept only wording variants of \"comma splice.\""
+   ],
+   "reread_flags": []
   },
   {
    "key": "english/proficient/40|block 6",
@@ -4583,6 +5175,16 @@
    "reread_flags": []
   },
   {
+   "key": "english/proficient/62|check 3",
+   "why": "re-read flagged",
+   "reasons": [
+    "false: \"the other options are a fragment, an illegal semicolon, and a colon misused.\" → The dash is the mark for abrupt dramatic emphasis; the other options contain a capitalization error and an undramatic period, an illegal semicolon, and a misused colon, respectively."
+   ],
+   "reread_flags": [
+    "the other options are a fragment, an illegal semicolon, and a colon misused, respectively :: The first option, “The final whistle blew. we had won.”, is not a fragment: both “The final whistle blew” and “we had won” are complete independent clauses. Its mechanical error is"
+   ]
+  },
+  {
    "key": "english/proficient/50|block 9",
    "why": "shape changed",
    "reasons": [
@@ -4592,75 +5194,42 @@
    "reread_flags": []
   },
   {
-   "key": "english/proficient/49|block 4",
-   "why": "re-read flagged",
+   "key": "english/proficient/70|check 3",
+   "why": "the repair changed nothing",
    "reasons": [
-    "false: \"Tempting, because 'Now.' is a fragment. But a deliberate fragment after a dash is a common emphasis device\" → Reject option d because its premise is false: “act now” is an imperative clause, not a fragment. The marked indicative-to-imperative change is acceptable."
+    "false: \"Sentence 1 is fine as a colon introducing a list, and Sentence 2 is passive but works because who arranged them doesn't matter.\" → Revise Sentence 1 so its setup and list agree, for example: 'The storm knocked down three trees: an oak, a maple, and a pine.' The existing keyed choice and rationale would then be accurate."
    ],
-   "reread_flags": [
-    "But the writer marked it deliberately with a dash and an urgent fragment to grab the parent's attention :: \"Act now\" is not a fragment: \"act\" is a verb and its subject is an implied \"you,\" making it an imperative clause. Option d's feedback correctly states this, so the block also contr"
-   ]
+   "reread_flags": []
   },
   {
    "key": "english/proficient/49|check 2",
-   "why": "the repair changed nothing",
+   "why": "re-read flagged",
    "reasons": [
     "false: \"\"accepts\":[\"were\",\"was\"]\" → For this exercise, accept “were” and do not include “was” in the accepted answers.",
     "false: \"In subjunctive mood, plural subjects take the base plural verb form even for imaginary situations.\" → In an imaginary condition such as this, use “were” with “I”: “If I were the director, I would shoot the final scene in one take.”"
    ],
    "reread_flags": [
-    "In subjunctive mood, plural subjects take the base plural verb form even for imaginary situations. :: The subject in the prompt is the singular \"I,\" so this hint gives an irrelevant and misleading rule. More generally, present subjunctive uses the base form for all subjects, while "
+    "In subjunctive mood, plural subjects take the base plural verb form even for imaginary situations. :: The subject here is singular \"I,\" and \"were\" is not being selected through plural agreement; the base form of \"be\" is \"be,\" not \"were.\" The hint therefore gives an irrelevant and i"
    ]
   },
   {
    "key": "english/proficient/81|block 5",
-   "why": "shape changed",
+   "why": "re-read flagged",
    "reasons": [
     "false: \"Same seven words, two completely different vibes — that's punctuation doing the talking.\" → The first version has five words; the second has seven because it adds the tag \"did you.\" Both the wording and the punctuation change. Alternatively, redesign the solutions so they use identical wording if only punctuation is meant to change."
    ],
    "reread_flags": [
-    "Same seven words, same wording — only the punctuation changes, and the tone flips entirely. :: Both solutions use “You did that on purpose,” followed by either a period or a question mark. That is five words: You (1), did (2), that (3), on (4), purpose (5). Seven is the numb"
+    "Notice how only the punctuation changes. :: Round 1 produces \"You did that on purpose.\" but the keyed Round 2 solution produces \"You did that on purpose, did you?\" The second version adds the words \"did you,\" so the wording "
    ]
   },
   {
    "key": "english/proficient/80|check 2",
-   "why": "the repair changed nothing",
+   "why": "re-read flagged",
    "reasons": [
     "false: \"one needs a full sentence before it and a list after it\" → A colon generally follows a complete clause and can introduce a list or an explanation. Here, choose the dash for the requested sharp emphasis, not because a colon requires a list."
    ],
    "reread_flags": [
-    "one needs a full sentence before it and a list after it. :: This describes the colon as requiring a list, but a colon can also introduce an explanation after a complete sentence, exactly as block 3 teaches. In this sentence, \"the goalie mad"
-   ]
-  },
-  {
-   "key": "english/proficient/80|check 3",
-   "why": "the repair changed nothing",
-   "reasons": [
-    "false: \"the other options either keep the shift or create a fragment\" → The third option also fixes the shift by making both clauses passive, but it is awkward and less direct. The second option keeps the shift, and the fourth creates a fragment; the active revision remains the best fix."
-   ],
-   "reread_flags": [
-    "Fix the shift to passive by writing 'When you write the essay, you should check your spelling carefully.' :: The quoted revision is active in both clauses (\"you write\" and \"you should check\"), so it does not fix anything \"to passive.\" It repairs the original active-to-passive shift by mak"
-   ]
-  },
-  {
-   "key": "english/proficient/92|block 5",
-   "why": "re-read flagged",
-   "reasons": [
-    "false: \"The comma is the everyday default, but here it creates a comma splice — two independent ideas glued with too weak a mark.\" → The comma is the everyday default, but here it does not properly introduce the explanation of the rule; use a colon. This is not a comma splice because \"no trash talking allowed\" is not an independent clause.",
-    "false: \"here it creates a comma splice — two independent ideas glued with too weak a mark\" → The comma version is wrong because a comma is too weak a mark to introduce the explanation of the rule — a colon (or dash) is needed. It is not a comma splice, since the second part is not an independent clause."
-   ],
-   "reread_flags": [
-    "But a semicolon's only job is to join two closely related complete sentences. :: Joining independent clauses is not a semicolon's only use. Semicolons also separate items in a series when the items contain internal commas, as in \"The speakers were Ana Ruiz, a d"
-   ]
-  },
-  {
-   "key": "english/proficient/95|check 0",
-   "why": "the repair changed nothing",
-   "reasons": [
-    "false: \"All four words could loosely describe checking work twice\" → Diligent fits because it means showing careful, persistent effort. Lazy contradicts Maya's behavior, slow concerns speed rather than effort, and picky suggests being hard to please rather than simply thorough."
-   ],
-   "reread_flags": [
-    "Both lazy and slow describe low effort. :: Slow describes speed, not necessarily effort; someone can work slowly while making careful, persistent effort. The hint therefore contradicts the rationale, which correctly says th"
+    "one needs a full sentence before it and a list after it :: This incorrectly says that a colon must be followed by a list, contradicting both block 3 and this check's own rationale. A colon can follow an independent clause to introduce an e"
    ]
   },
   {
@@ -4670,7 +5239,7 @@
     "false: \"A fragment is missing its subject or its verb.\" → A fragment fails to form a complete independent clause. It may lack a subject or main verb, or it may contain both while remaining only a dependent clause."
    ],
    "reread_flags": [
-    "A fragment is missing its subject or its verb. :: A fragment can contain both a subject and a verb. Option A has the subject \"the stadium lights\" and the verb \"flickered,\" but \"Because\" makes it a subordinate clause that cannot st"
+    "A fragment is missing its subject or its verb. :: This definition is too narrow and contradicts the item itself. Option A, \"Because the stadium lights flickered during the storm,\" has both a subject (\"the stadium lights\") and a fi"
    ]
   },
   {
@@ -4679,28 +5248,28 @@
    "reasons": [
     "false: \"\"answer\":\"Not always. Real errors break grammar or confuse meaning; style-guide choices are defensible either way.\",\"colId\":\"word_pairs\",\"rowId\":\"affect_effect\"\" → The final cell should have \"colId\":\"usage_debates\" and \"rowId\":\"misconception\"."
    ],
-   "reread_flags": [
-    "It is a run-on (a comma splice) — fix it with a period, semicolon, or a joining word like 'and' or 'but'. :: This equates two different structures. A comma splice joins independent clauses with only a comma; a fused run-on joins them with no punctuation or conjunction, which is the struct"
+   "reread_flags": []
+  },
+  {
+   "key": "english/proficient/91|check 1",
+   "why": "the repair changed nothing",
+   "reasons": [
+    "false: \"An introductory word writers may place a comma after in some guides\" → Replace it with a genuine paraphrase of the keyed answer, such as \"Sentence-initial hopefully, once widely criticized and now widely accepted.\""
+   ],
+   "reread_flags": []
+  },
+  {
+   "key": "english/proficient/52|check 2",
+   "why": "on reading: the key still repeats the passive; only the rationale moved",
+   "reasons": [
+    "false: \"the tickets are collected by an usher\" → Key an active rewrite such as \"an usher collects it,\" producing: \"At the theater, you show your ticket, and then an usher collects it.\""
    ]
   },
   {
-   "key": "spanish/entry/42|check 1",
-   "why": "the repair changed nothing",
+   "key": "english/proficient/80|check 1",
+   "why": "on reading: only the quotation marks changed",
    "reasons": [
-    "false: \"\"accepts\":[\"diez y ocho\"]\" → The only accepted answer should be 'dieciocho' (common misspellings like 'dieciocho' variants aside, no two-word 'diez y ocho' variant should be accepted)."
-   ],
-   "reread_flags": [
-    "\"accepts\":[\"diez y ocho\"] :: The prompt asks for 18 as one Spanish word, but \"diez y ocho\" is three words and is an outdated form, not a modern standard alternative. Accepting it also contradicts block 2, whic"
-   ]
-  },
-  {
-   "key": "spanish/intermediate/97|check 2",
-   "why": "the repair changed nothing",
-   "reasons": [
-    "false: \"qué día es\" → Remove \"qué día es\" from \"accepts\". Accepted variants should retain \"hoy\", for example \"qué día es hoy\", alongside punctuation and capitalization variants of \"¿Qué día es hoy?\""
-   ],
-   "reread_flags": [
-    "Accepted variants must keep all three words including hoy, allowing only differences in accents, capitalization, and pun :: “¿Qué día es hoy?” has four words: Qué, día, es, and hoy. Every accepted variant retains all four, and the hint also lists four components."
+    "false: \"She asked, \"Are you coming...? ....\"\" → For omission within the question, use \"She asked, 'Are you coming ...?'\". If separately marking an omission after a complete question, use a question mark followed by three dots, never \"? ....\"."
    ]
   }
  ]

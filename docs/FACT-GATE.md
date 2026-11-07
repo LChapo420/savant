@@ -77,10 +77,53 @@ Free, about 20 ms a level. Recomputes arithmetic, unit and percent chains, solve
 - The recompute settled the stored re-check's "x = 7, not 17" as a checker mistake.
 
 ## Audit of what is written (`scripts/fact-gate/audit.js`, `docs/fact-gate/audit-live.json`; a copy, nothing written)
-AUDIT_PLACEHOLDER
+Readers: Kimi K3.1 Pro, grok-4.3, GLM-5.3 Flash. Rulers: Sonnet and GLM-5.3. **Confirmed means both rulers call it real.** About 60 findings read by hand, including every one Sonnet ruled false among Kimi's.
+
+**93 live shared levels: 33 hold at least one confirmed error, 101 confirmed errors in all** (a further 17 had one ruler, 11 were false alarms). The 12 Algebra 1 export levels (not live): 0.
+
+| grade | levels | passed a check before | levels with an error | confirmed errors |
+|---|---|---|---|---|
+| english/proficient | 29 | 2 | **26** | **94** |
+| spanish/advanced | 33 | 33 | 3 | 3 |
+| spanish/entry | 11 | 11 | 2 | 2 |
+| spanish/intermediate | 9 | 9 | 1 | 1 |
+| math/numbers_to_20 | 1 | 1 | 1 | 1 |
+| math/calculus_i | 7 | 7 | 0 | 0 |
+| chess, piano, basketball | 3 | 3 | 0 | 0 |
+
+**The finding: nearly all errors sit in lessons that never had their own fact check.** 27 of the 29 English levels were imported with no verification record (16 carry a rewrite stamp). The 66 levels that passed a check hold 10 errors; the 27 that did not hold 91. Checks work; these skipped them.
+Per level (confirmed): English level 49: 10, 40: 9, 50: 8, 95: 6, 19: 5; 10, 20, 28, 52, 80, 81, 82, 91: 4; 29, 30, 39, 70, 124: 3; 92: 2; 18, 38, 48, 62, 71, 72, 90: 1. Spanish advanced 80, 108, 163; entry 16, 42; intermediate 97; math numbers_to_20 level 20: 1 each. Each finding with its quote: `docs/fact-gate/audit-live.json`.
+Mostly feedback that quotes or describes the wrong text, keys that do not fit their own question, and rule statements that do not hold: "Fix 4 of 3", "duct + or = conductor", a decision branch reversed, a model answer that breaks the rule it teaches. No arithmetic error in any of it: the code pass flags nothing on these levels.
+
+**Fixes for review, nothing applied: `docs/fact-gate/audit-fixes.json`.** Repaired with the production prompt, GLM-5.3 Flash then grok-4.3, level read again by Kimi: **48 of 67 parts changed, same shape, read clean**; 19 are left for a person or a rewrite, on 15 levels. **Repair is weaker on real errors than on planted ones**: the first round fixed only 35 of 67 (planted: 95%), and 20 came back unchanged; a blunter instruction and grok-4.3 took it to 50. A corrected fact is a model's, so read it before applying; two I read were weak and were moved out. Cost $0.108 a level for the first round, $0.12 for the second, mostly Kimi's re-read, about 2 to 2.5 minutes a level.
+The planted test measures the reader, not the loop: the first re-reads also raised 25 new flags elsewhere in those levels, so a level is not finished after one pass.
 
 ## Is the base "the most optimal broadly"? (`scripts/fact-gate/base-ready.js`)
-BASE_PLACEHOLDER
+**Verdict: not ready, and "most optimal" cannot be shown today.** No real learner has used these lessons, so nothing here measures learning or retention; the beta on 15 Nov can. What can be tested today, on the 105 shared levels, computed and AI-judged, not real-learner proof. The pass marks are mine, for the owner to change:
+
+| test | pass mark | today | |
+|---|---|---|---|
+| Right: no confirmed error (best gate) | all levels | 60 of 93 live | fail |
+| Checked: passed a fact check | all levels | 66 of 93 live | fail |
+| Reachable: start levels of the grades with 5+ enrolments exist | 227 | 7 | fail |
+| Teaching, two families, mean of 7 criteria out of 5 | at least 4 in both | DeepSeek 3.19, grok 3.86 | fail |
+| Worked examples before practice | at least 3.5 in both | 2.4, 3.0 | fail |
+| Checks test what was taught | at least 3.5 in both | 3.1, 4.4 | split |
+| Every part needed | at least 3.5 in both | 2.8, 3.9 | split |
+| Extreme learners: worst 5% of learner-levels | at least 2 | 2, 1 | split |
+
+Six learner profiles in every read: a young weak reader, a second-language adult, a bored strong learner, an attention-limited skimmer, a career changer, a random mix. Worst are the weak reader (1.7, 1.8) and the bored strong learner (2.0, 1.8). Levels with a learner under 2: 27 and 67 of 105; worst 1% scores 1 in both, median 3. The base is not meant to fit them alone (the personal layer does), but it starts them low.
+**The judge, measured before believing it:** same text twice moves a score 0.07 and 0.19. Checks from another level: validity drops 3.3 to 0.9 and 4.4 to 0.6, seen in 31 of 32. Teaching blocks removed: "covers" drops only 0.4 to 0.5, seen in 25 of 38. Blocks shuffled: seen in 14 of 34, drop near zero. **So this rubric sees bad checks, half-sees missing teaching, and cannot see bad order. It can say what is wrong, not that a level is optimal.**
+Computed: median words and minutes a level: English 1,867 and 16.7, calculus 1,637 and 15.8, Algebra 1 1,508 and 11.9, Spanish 412 to 569 and 5.7 to 6.8. Flesch-Kincaid about 8 for English, 7 for math. Against the 4x goal, 17 minutes a level needs a real measure.
+
+**Fix first, in order:**
+1. **The English levels.** Review `audit-fixes.json`, then run all 29 through the gate: about $5.50 on Lyceum and Grokified. Almost all known errors are here.
+2. **Worked examples.** The fix both judges name most (91 and 33 of 105). Change the writer's rule, then test on 5 levels with the rubric before anything is built.
+3. **Spanish "advanced".** Its first levels teach subject pronouns and ser, and grok-4.3 scores them lowest as beginner material under an advanced label; no enrolment uses it yet. This may be a label only: an owner or curriculum call.
+4. **A pilot, not the 220.** Build the 20 most-enrolled start levels through the gate and put them in the beta.
+
+**True price of the 220 under the best gate** (measured a level: writing $0.016, Kimi and grok-4.3 reads $0.067, rulings about $0.03, first repair round $0.108, second $0.12 on about 60% of levels): **about $0.22 a level with one repair round, about $0.29 with the second: $48 to $64,** if every new level needs repair as the stored English ones did. Against $11 at $0.05 for the old cheap gate (GLM-5.3 Flash or grok-4.3 alone catch 73-79% here) and $95 at $0.43 for the Sonnet gate. All on prepaid credit: Lyceum has about $79 left, so it could carry this and little else; Grokified $116. Time: about 5 minutes a level; at 4 at once, about 5 hours, longer when Lyceum answers 503. On these repairs 15 of 33 levels still had a part left for a person. A pilot of 20 costs about $5.
+**Recommendation for the owner:** hold the 220. Do 1 to 4; decide on the remaining 200 with beta results.
 
 ## Stored re-check of 6 Nov (`docs/fact-gate/recheck-fixes.json`)
 90 findings sorted by reading each row: 84 real (22 stale option labels, fixed in code; 62 wrong text, corrections in the file), 4 checker mistakes, 2 unclear. The shared cause: `shuffleKey` in the English rewrite scripts moves the right option after the model writes "Option 0..."; some writers also number options. `services/game-ordinals.js` removes the place words and any numbering inside `inject()`, the one way a stored set reaches a learner: 74 stored questions served clean, nothing written, key and order unchanged. A place that means a wrong option is left alone and reported. The two plain-math findings (lesson 424) are deliberate wrong examples, loosely worded; the checker's "x = 7" is wrong.
