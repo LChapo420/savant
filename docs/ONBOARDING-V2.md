@@ -93,7 +93,7 @@ Pre-written, in `public/js/start-content.js`: 4 ideas (a fraction, a main idea, 
 
 Atkinson Hyperlegible, near-monochrome tokens from `site/assets/site.css`, plus one accent: a highlighter yellow. It marks what is selected or important, the way a student marks a page, which fits the app's "Measured and marked" system and is none of the reference apps' brand colours. It is only ever a background behind dark text, so it passes contrast in both modes and never competes with right and wrong. The progress bar is the site's ruler with a marker on it.
 
-The tutor is one component, `public/js/start-tutor.js`: an SVG placeholder with moods. Swap the file to swap the character. `Tutor.NAME` is null and copy never names it.
+The tutor is one component, `public/js/start-tutor.js`: the Sunny giraffe (owner, 7 Nov: "for now"), an SVG with moods. Swap this file and the .tutor block in start.css to swap the character. `Tutor.NAME` is null and copy never names it.
 
 ## 7. What was checked, and what wasn't
 

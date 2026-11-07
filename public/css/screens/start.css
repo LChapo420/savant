@@ -124,22 +124,27 @@ h1, h2, p { margin: 0; }
 
 /* ── the tutor ──────────────────────────────────────────────── */
 .tutor { flex: none; width: 64px; }
+/* The agreement has to show both answers without scrolling on a phone, so the giraffe gives up height there. */
+.ob[data-screen="agree"] .tutor { width: 46px; }
 .tutor-svg { display: block; width: 100%; height: auto; overflow: visible; }
 .t-shadow { fill: var(--t-shadow); }
-.t-body { fill: var(--t-body); }
-.t-collar { fill: var(--t-collar); }
-.t-tip { fill: var(--mark); }
-.t-eye { fill: var(--t-eye); }
-.t-pupil { fill: var(--t-pupil); }
+/* The Sunny giraffe. Its colours are fixed so it stays the same character in light and dark. */
+.t-coat { fill: #F6B93B; }
+.t-shade, .t-tail { fill: #E5A225; }
+.t-tail { fill: none; stroke: #E5A225; stroke-width: 20; stroke-linecap: round; }
+.t-spot { fill: #B8691B; }
+.t-light { fill: #FFE7B0; }
+.t-foot { fill: #8A4E14; }
+.t-eye { fill: #fff; }
+.t-pupil { fill: #2A1C12; }
 .t-glint { fill: #fff; }
-.t-cheek { fill: var(--mark); opacity: .55; }
-.t-arm { fill: none; stroke: var(--t-body); stroke-width: 7; stroke-linecap: round; }
-.t-mouth, .t-eyes-happy path { fill: none; stroke: var(--t-line); stroke-width: 3.5; stroke-linecap: round; }
-.t-mouth-happy { fill: var(--mark); stroke: var(--t-line); stroke-width: 2.5; stroke-linejoin: round; }
+.t-mouth-in { fill: #8E3B2E; }
+.t-tongue { fill: #F2857A; }
+.t-eyes-happy path { fill: none; stroke: #2A1C12; stroke-width: 10; stroke-linecap: round; }
 .t-eyes-happy, .t-mouth-happy { display: none; }
 .tutor[data-mood="happy"] .t-eyes, .tutor[data-mood="happy"] .t-mouth { display: none; }
 .tutor[data-mood="happy"] .t-eyes-happy, .tutor[data-mood="happy"] .t-mouth-happy { display: block; }
-.tutor[data-mood="think"] .t-pupils { transform: translate(2.5px, -4px); }
+.tutor[data-mood="think"] .t-pupils { transform: translate(6px, -9px); }
 .t-pupils { transition: transform .25s var(--ease); }
 .t-eyes { transform-box: fill-box; transform-origin: center; animation: t-blink 5.200s infinite; }
 .t-whole { transform-box: fill-box; transform-origin: 50% 100%; }
@@ -149,7 +154,7 @@ h1, h2, p { margin: 0; }
 .tutor[data-mood="think"] .t-whole { animation: t-sway 1.800s ease-in-out infinite; }
 @keyframes t-blink { 0%, 95%, 100% { transform: scaleY(1); } 97.500% { transform: scaleY(.08); } }
 @keyframes t-wave { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-24deg); } }
-@keyframes t-bounce { 0% { transform: scale(1, 1); } 35% { transform: scale(1.05, .93); } 70% { transform: scale(.97, 1.05) translateY(-5px); } 100% { transform: scale(1, 1); } }
+@keyframes t-bounce { 0% { transform: scale(1, 1); } 35% { transform: scale(1.05, .93); } 70% { transform: scale(.97, 1.05) translateY(-12px); } 100% { transform: scale(1, 1); } }
 @keyframes t-sway { 0%, 100% { transform: rotate(-1.500deg); } 50% { transform: rotate(1.500deg); } }
 
 /* ── the speech bubble ──────────────────────────────────────── */
