@@ -191,7 +191,7 @@ async function buildPart(part, ctx) {
   const allowed = new Set(byId.keys());
   const text = part.passages.map((p) => `[${p.id}]\n${p.text}`).join('\n\n');
   const args = {
-    role: 'fast', task: 'material_pack', schema: PART_SCHEMA, schemaName: 'material_pack', maxTokens: 6000, dataClass: 'learner',
+    role: 'fast', task: 'material_pack', schema: PART_SCHEMA, schemaName: 'material_pack', maxTokens: 6000, dataClass: 'learner', factSource: text,
     system: `You make study aids for a student from their own material. ${UNTRUSTED} `
       + `Write: summary (${ctx.limits.paragraphs} short paragraphs in plain words covering this part), `
       + `flashcards (up to ${ctx.limits.cards}: front is a term or question, back is a short answer of one or two sentences), `
@@ -301,7 +301,7 @@ async function build(userId, materialId, opts = {}) {
       db.update('material_packs', saved.id, { error: 'models_unavailable' });
       return { error: 'The models were busy, so the pack could not be built yet.', code: 'models_busy' };
     }
-    if (status === 'failed') return { error: 'Nothing in that material passed the checks. Try a longer or clearer text.', code: 'nothing_verified' };
+    if (status === 'failed') return { error: 'Nothing in that material passed the checks. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     return { pack: saved, partial: status === 'partial' };
   } catch (err) {
     console.error('material-pack:', err.message);

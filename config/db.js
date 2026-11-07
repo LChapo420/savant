@@ -45,6 +45,9 @@ const COLLECTIONS = [
   'block_plans',             // a block level's layout and content: per learner, or shared per level
   'part_changes',            // a learner's own wording of one lesson block, asked for by them (services/part-change.js)
   'lesson_layers',           // the personal layer over a shared lesson (services/lesson-layer.js): text only, per learner and plan
+  'fact_recheck_findings',   // what the background re-check of old stored text found (services/fact-recheck.js): a reference, a quote and a reason, no learner
+  'fact_recheck_state',      // where that job has got to, one row
+  'fact_guard_stats',        // counts of what the fact guard read, one row a day and task (services/fact-guard.js): no learner, no text
   'assist_chats',            // chat assist on a block, a game question or a check: every turn the learner wrote
   'level_logs',              // what a learner did inside a level that has no questions of its own to record it
   'chess_ratings',           // chess puzzle trainer: one per learner, Glicko-2 rating and rush best (content/chess-trainer.js)

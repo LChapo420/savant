@@ -22,6 +22,7 @@
   document.head.appendChild(css);
 
   const Snap = window.TutorSnapshot;
+  let fullOn = false; // set from the server's dock status (TUTOR_FULL for this learner)
   // Where the learner is stuck (sent with every message; the server clamps it): quiet time, wrong tries in a row, whether they already asked.
   let lastActive = Date.now();
   let wrongStreak = 0;
@@ -58,7 +59,7 @@
       else if (window.Player && typeof window.Player.shown === 'function') Object.assign(info, window.Player.shown());
     } catch { /* keep the generic reading */ }
     try { info.snapshot = Snap ? Snap.build(main) : null; } catch { /* the generic reading still goes */ }
-    info.stuck = { idle_s: Math.round((Date.now() - lastActive) / 1000), wrong: wrongStreak, asked: askedHere };
+    if (fullOn) info.stuck = { idle_s: Math.round((Date.now() - lastActive) / 1000), wrong: wrongStreak, asked: askedHere };
     return info;
   }
 
@@ -85,6 +86,8 @@
       status = await r.json();
     } catch { return; }
     if (status.mode === 'off') return;
+    // Everything added for the always-there tutor (chips, the stuck nudge, restarting on a new question, the slow-reply ladder) is for the learners the server says TUTOR_FULL covers; all others see the dock as before.
+    fullOn = !!status.full;
     // Better listening only for accounts the server put on the gateway list; everyone else keeps the browser recognizer.
     const canRecord = !!status.stt && !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) && 'MediaRecorder' in window;
     const canTalk = (!!Recog || canRecord) && canSpeak;
@@ -105,7 +108,7 @@
       <div class="tdock-note tdock-sees">The tutor can see this page.</div>
       ${status.mode === 'method' ? '<div class="tdock-note">Hints about method only on this page, so your result is honest.</div>' : ''}
       <div class="tdock-log" aria-live="polite"></div>
-      <div class="tdock-chips" role="group" aria-label="Quick questions"><button type="button">I'm stuck</button><button type="button">How does this page work?</button><button type="button">What should I do next?</button></div>
+      <div class="tdock-chips" role="group" aria-label="Quick questions"${fullOn ? '' : ' hidden'}><button type="button">I'm stuck</button><button type="button">How does this page work?</button><button type="button">What should I do next?</button></div>
       <form class="tdock-form">
         <input type="text" maxlength="600" placeholder="Ask anything" aria-label="Your message">
         ${Recog || canRecord ? '<button type="button" class="mic" aria-pressed="false" title="Tap to speak, tap Send when you are done" aria-label="Speak: tap to start, tap again to send">Speak</button>' : ''}
@@ -124,6 +127,7 @@
     let gatewayOff = false; // set when the better voice answers no once, so later replies skip the request
     let audio = null;
     let busy = false;
+    let askedQuestion = '';
 
     function line(cls, text) {
       const d = document.createElement('div');
@@ -167,16 +171,20 @@
       busy = true;
       // A message typed or spoken sets the mode for next time; the transcript is always shown.
       if (canTalk && via && via !== inputMode) setMode(via, false);
+      // A new question on screen is a new conversation: what was said about the last one must not leak into this one.
+      const info0 = pageInfo();
+      if (fullOn && info0.question && askedQuestion && info0.question !== askedQuestion) { messages.length = 0; toldAt = 0; line('bot', 'New question: starting fresh.').className = 'tdock-note'; }
+      askedQuestion = info0.question || askedQuestion;
       messages.push({ role: 'user', content: text });
       line('me', text);
       askedHere = true;
       const chips = panel.querySelector('.tdock-chips');
       if (chips) chips.hidden = true;
-      const pending = line('bot', 'Thinking…');
+      const pending = line('bot', fullOn ? 'Thinking…' : '…');
       // Say what is happening instead of a dead spinner: a slow tutor says so, and the server answers from its notes at its own deadline.
-      const t1 = setTimeout(() => { if (!pending.dataset.done) pending.textContent = 'Still thinking, a little slower than usual…'; }, 4000);
-      const t2 = setTimeout(() => { if (!pending.dataset.done) pending.textContent = 'Still on it. If it takes much longer I will answer from my notes.'; }, 10000);
-      const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+      const t1 = !fullOn ? 0 : setTimeout(() => { if (!pending.dataset.done) pending.textContent = 'Still thinking, a little slower than usual…'; }, 4000);
+      const t2 = !fullOn ? 0 : setTimeout(() => { if (!pending.dataset.done) pending.textContent = 'Still on it. If it takes much longer I will answer from my notes.'; }, 10000);
+      const ctl = fullOn && typeof AbortController === 'function' ? new AbortController() : null;
       const t3 = setTimeout(() => { if (ctl) ctl.abort(); }, 26000);
       try {
         const r = await fetch('/api/tutor/dock', {
@@ -191,8 +199,7 @@
         if (reply) { messages.push({ role: 'assistant', content: reply }); say(reply); }
       } catch (err) {
         pending.textContent = err && err.name === 'AbortError' ? 'That is taking too long. Tap Send to try again; your message is still here.' : (!navigator.onLine ? 'You look offline. Reconnect and tap Send to try again.' : (err.message || 'That did not go through. Try again.'));
-        messages.pop(); // the failed message is not part of the conversation; retry resends it
-        input.value = text;
+        if (fullOn) { messages.pop(); input.value = text; } // the failed message is not part of the conversation; retry resends it
       } finally { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); pending.dataset.done = '1'; busy = false; }
     }
 
@@ -215,7 +222,7 @@
     // After a long quiet spell on a page, the button offers help once. It never opens by itself.
     let nudged = false;
     setInterval(() => {
-      if (nudged || panel.dataset.open === 'true' || !document.hasFocus() || (Date.now() - lastActive) < 75000) return;
+      if (!fullOn || nudged || panel.dataset.open === 'true' || !document.hasFocus() || (Date.now() - lastActive) < 75000) return;
       if (/^[/](dashboard|profile|boosters|curriculum|my-stats|calendar)?$/i.test(location.pathname) && wrongStreak < 2) return;
       nudged = true;
       btn.textContent = 'Stuck? Ask tutor';

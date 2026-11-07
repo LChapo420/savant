@@ -146,6 +146,8 @@ Clicked through in a real Chrome at 375 x 812 with touch, on a temp copy of the 
 
 Also fixed: `PART_MODIFY` never reached a built-in lesson's checks, the main surface. `answerCheck` served `check.rationale` directly and nothing prepared those items. It does now, for shared plans.
 
+Since the proofs ran, main added the app-wide fact guard (`services/fact-guard.js`): every `part_modify` write now also passes that check before this branch's gate reads it. So live rewrites face one more refusal than the numbers above; the proofs did not include it.
+
 ## 8. Still open
 
 Enforcer explanations and base-lesson questions serve stored text. Course question explanations, cards, notes, podcast and pack do not refresh on drift. Summary lines, plan reasons and progress screens read nothing from the learner. No text differs by which wrong answer was chosen. The 36 unread spec fields in section 2 remain.

@@ -29,6 +29,7 @@ const gamePayloads = require('../services/game-payloads');
 const gameAssignments = require('../config/game-assignments');
 const grading = require('../services/grading');
 const ai = require('../services/ai');
+const factGuard = require('../services/fact-guard');
 const scorecardHooks = require('../services/scorecard/hooks');
 const scorecardFootprints = require('../services/scorecard/footprints');
 const learnerRecord = require('../services/learner-record');
@@ -177,7 +178,13 @@ function sessionShape(session) {
     enrollment_id: session.enrollment_id || null,
     // The speed levers (services/speed-levers.js). Not sent at all with them off; a learner who asked for feedback at the end keeps today's flow.
     ...speedShape(session),
+    ...plainShape(session),
   };
+}
+
+/** The speed proof's plain lesson: the learner can switch it to the Savant way, as the consent wording promises. Not sent otherwise. */
+function plainShape(session) {
+  try { const p = require('../services/speed-proof').plainHere(session.user_id, session, session.level); return p ? { plain_way: p } : {}; } catch { return {}; } // eslint-disable-line global-require
 }
 
 function speedShape(session) {
@@ -653,6 +660,14 @@ router.post('/sessions/:id/block-finish', requireAuth, async (req, res) => {
  * { id, choice, level }. Scorecard evidence only; the lesson is the same either way. Quietly ignored for an account that may not be measured more
  * (age screen unanswered, or under the consent age without a parent's agreement) and for anything but a real level of this learner's own sitting.
  */
+// A worked example read (SPEED_WORKED): nothing is scored, the item is set aside and the level goes on.
+router.post('/sessions/:id/worked', requireAuth, limit('worked', 240, 60 * 60 * 1000), (req, res) => {
+  const session = db.byId('sessions', Number(req.params.id));
+  if (!session || session.user_id !== req.user.id) return res.status(404).json({ error: 'That session is not yours.' });
+  if (!sessions.workedSeen(req.user.id, session, req.body && req.body.item_id, req.body && req.body.ms)) return res.status(400).json({ error: 'That is not a worked example.' });
+  return res.json({ ok: true });
+});
+
 router.post('/sessions/:id/footprint', requireAuth, limit('footprint', 120, 60 * 60 * 1000), (req, res) => {
   const session = loadSession(req);
   if (!session) return res.status(404).json({ error: 'Session not found.' });
@@ -892,7 +907,7 @@ router.post('/items/:id/coach', requireAuth, limit('coach', 120, 60 * 60 * 1000)
 
   // Opening the coach on a question we primed costs nothing: the question is
   // already written.
-  if (!cleaned.length && item.coach_opener) {
+  if (!cleaned.length && item.coach_opener && (item.coach_opener_checked || !factGuard.on())) {
     return res.json({ reply: item.coach_opener, source: 'ai', coached: true, primed: true, provider: ai.providerName() });
   }
 
@@ -942,7 +957,7 @@ router.post('/items/:id/coach/prime', requireAuth, limit('coach-prime', 200, 60 
 
   try {
     const opener = await ai.coachReply({ item, messages: [], userId: req.user.id });
-    if (opener) db.update('items', item.id, { coach_opener: opener });
+    if (opener && !factGuard.isHeld(opener)) db.update('items', item.id, { coach_opener: opener, coach_opener_checked: factGuard.on() });
   } catch (err) {
     console.warn(`ai: priming the coach failed: ${err.message}`);
   }
@@ -998,7 +1013,7 @@ router.post('/items/:id/coach/stream', requireAuth, limit('coach', 120, 60 * 60 
   // A primed opener is already written (and was leak-checked when it was): the
   // page streams the coach, so this is where priming has to pay off. Before
   // this the stream wrote a second opener and every primed one went unused.
-  if (!cleaned.length && item.coach_opener) {
+  if (!cleaned.length && item.coach_opener && (item.coach_opener_checked || !factGuard.on())) {
     send({ delta: item.coach_opener });
     return res.end(`data: ${JSON.stringify({ done: true, source: 'ai', primed: true, provider: ai.providerName() })}\n\n`);
   }

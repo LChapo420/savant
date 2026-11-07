@@ -122,6 +122,7 @@ function budgetShareLeft(userId, share = 0.5) {
  */
 const ledger = require('./anthropic-ledger');
 const pool = require('./pool');
+const factGuard = require('./fact-guard');
 
 /**
  * The model pool (services/pool.js) runs every call of a role through the chain's slots
@@ -180,8 +181,9 @@ function recordSpend(userId, model, usage, usedProvider, meta) {
     user_id: userId,
     day: today(),
     provider: p ? p.name : null,
-    cents: Number(((existing ? existing.cents : 0) + cents).toFixed(4)),
-    calls: (existing ? existing.calls || 0 : 0) + 1,
+    // The check is not the learner's use: neither its calls nor its cost count against their limit. Its own limit is in services/fact-guard.js.
+    cents: Number(((existing ? existing.cents : 0) + (meta && meta.task === 'fact_live' ? 0 : cents)).toFixed(4)),
+    calls: (existing ? existing.calls || 0 : 0) + (meta && meta.task === 'fact_live' ? 0 : 1),
   }));
 }
 
@@ -206,8 +208,8 @@ async function viaPool(userId, req, role, task, outside) {
       ...req, role, task, userId: userId || null, outside,
       dataClass: userId ? 'learner' : (req.dataClass || 'learner'),
       xkiro: xkiroAllowedFor(userId),
-      munito: munitoAllowedFor(userId),
-      coral: munitoAllowedFor(userId), // same clearance; Coral learner use also needs CORAL_LEARNER=on (off by default)
+      munito: req.storedContent === true || munitoAllowedFor(userId),
+      coral: req.storedContent === true || munitoAllowedFor(userId), // same clearance; Coral learner use also needs CORAL_LEARNER=on (off by default)
     },
     // hedgeAfterMs: an interactive caller (the tutor dock) may start the backup sooner than the pool's 20 s floor.
     { timeoutMs: req.timeoutMs || undefined, hedgeAfterMs: req.hedgeAfterMs != null ? req.hedgeAfterMs : undefined, validate: (r) => !!r, trace },
@@ -226,8 +228,23 @@ async function viaPool(userId, req, role, task, outside) {
   return res;
 }
 
+/**
+ * THE choke point (FACT_CHECK_ALL, services/fact-guard.js): every answer of every model call in the app passes the fact guard here, by task, on its way to
+ * the caller. Callers cannot opt out; a task with no row in services/fact-registry.js shows nothing.
+ */
 async function withProviders(userId, attempt, role = 'fast', task = null, req = null) {
-  if (!withinBudget(userId)) return null;
+  const result = await callProviders(userId, attempt, role, task, req);
+  if (!result) return result;
+  // A chat that a check finds wrong gets one more try on the pool, with what the checker found.
+  const rerun = req && req.kind === 'chat' && poolOn(role)
+    ? (note) => callProviders(userId, attempt, role, task, { ...req, system: `${req.system || ''}\n\n${note}`, timeoutMs: Math.min(req.timeoutMs || 15000, 10000) })
+    : null;
+  return factGuard.pass({ task, userId, req, result, rerun });
+}
+
+async function callProviders(userId, attempt, role = 'fast', task = null, req = null) {
+  // The check is not the learner's use: at their daily limit, what they are already shown is still checked, and it never eats into the limit.
+  if (task !== 'fact_live' && !withinBudget(userId)) return null;
   const outside = outsideAllowed(userId);
   if (req && poolOn(role)) return viaPool(userId, req, role, task, outside);
   // The whole chain for this role, not just the preferred provider. A failure
@@ -265,10 +282,10 @@ async function withProviders(userId, attempt, role = 'fast', task = null, req = 
  * measured NVIDIA model for that work, where the role alone would pick its tier's
  * default. Providers that do not know tasks ignore it.
  */
-async function structured({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, pipelineVariant }) {
+async function structured({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, pipelineVariant, factTask, factSource, factMode, factBudgetMs }) {
   const result = await withProviders(userId, (p) =>
     p.structured({ role, task, system, user, schema, schemaName, maxTokens, effort, lane, think }), role, task,
-  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, pipelineVariant });
+  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, pipelineVariant, factTask, factSource, factMode, factBudgetMs });
   return result ? result.data : null;
 }
 
@@ -279,11 +296,11 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
  *
  * @returns {Promise<{data: object, usage: object|null, model: string}|null>}
  */
-async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies }) {
+async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs }) {
   const result = await withProviders(userId, (p) =>
     p.structured({ role, task, system, user, schema, schemaName, maxTokens, effort, lane, think }), role, task,
-  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies });
-  return result ? { data: result.data, usage: result.usage || null, model: result.model || null } : null;
+  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs });
+  return result ? { data: result.data, usage: result.usage || null, model: result.model || null, costUsd: result.pool ? result.pool.costUsd : undefined } : null;
 }
 
 /**
@@ -310,11 +327,11 @@ async function talk(args) {
  *
  * @returns {Promise<{text: string, model: string}|null>}
  */
-async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature }) {
+async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs }) {
   const result = await withProviders(userId, (p) => p.chat({
     role, task, system, messages, maxTokens, effort, lane, temperature,
-  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature });
-  return result ? { text: result.text, model: result.model } : null;
+  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs });
+  return result ? { text: result.text, model: result.model, held: result.held || null } : null;
 }
 
 // ── item authoring ─────────────────────────────────────────────────────────
@@ -444,6 +461,7 @@ Vary the format across the items you write: use multiple_choice for judgment and
       skill_id: skillId,
       difficulty,
       payload: validated,
+      fact_checked: factGuard.on(),
       uses: 0,
       provider: providerName(),
     });
@@ -488,7 +506,7 @@ function generateItems({ entries, userId }) {
 
   const pool = {};
   for (const [key, group] of Object.entries(byKey)) {
-    const cached = db.find('content_cache', (c) => c.key === key)
+    const cached = db.find('content_cache', (c) => c.key === key && (c.fact_checked || !factGuard.on()))
       .flatMap((c) => {
         db.update('content_cache', c.id, { uses: (c.uses || 0) + 1 });
         return c.payload || [];
@@ -886,10 +904,14 @@ async function gradeFreeResponse({ item, userAnswer, userId, budgetMs = null }) 
   if (r.status === 'checking') {
     return { correct: null, error_tag: null, feedback: null, by: 'pending', status: 'checking', settle: r.settle };
   }
+  // The judges call their providers directly, so their feedback line is read here. The verdict stands either way: a dropped line leaves the stored explanation.
+  const feedbackOk = !r.feedback || await factGuard.passesText({
+    task: 'grade_free_response', text: r.feedback, userId, waiting: true, budgetMs: 6000, source: `Question: ${item.prompt}\nReference answer: ${item.answer}`, learnerSaid: String(userAnswer || ''),
+  });
   return {
     correct: r.correct === true,
     error_tag: r.correct === true ? null : r.error_tag || null,
-    feedback: r.feedback || null,
+    feedback: feedbackOk ? (r.feedback || null) : null,
     by: r.by,
     status: r.status,
     votes: r.votes,
@@ -1152,6 +1174,7 @@ ${String(submitted || '').trim()}`,
     maxTokens: 5000,
     effort: 'low',
     userId,
+    factSource: `Task: ${essay.prompt}\n\nWhat they wrote:\n${String(submitted || '').trim()}`,
   });
   if (!payload) return null;
   return validateEssayGrade(payload, (essay.criteria || []).length);
@@ -1505,6 +1528,11 @@ function coachConversation(item, messages) {
 /** The line used when a reply would have given the answer away. */
 const COACH_REDIRECT = 'Let me put that differently rather than hand it to you. What is the question actually asking you to produce, and which part of it can you already rule out?';
 
+/** What a check of a reply about one question reads beside it. */
+function itemSource(item) {
+  return [`Question: ${item.prompt || ''}`, Array.isArray(item.choices) && item.choices.length ? `Choices: ${item.choices.join(' | ')}` : '', item.answer !== undefined && item.answer !== null ? `Correct answer: ${item.answer}` : '', item.rationale ? `Stored explanation: ${item.rationale}` : ''].filter(Boolean).join('\n');
+}
+
 async function coachReply({ item, messages, userId }) {
   const { conversation, history } = coachConversation(item, messages);
   const resolved = learnerReachedAnswer(item, history);
@@ -1517,6 +1545,7 @@ async function coachReply({ item, messages, userId }) {
     maxTokens: 500,
     effort: 'low',
     userId,
+    factSource: itemSource(item),
   });
   if (!reply) return null;
   const guarded = leakGuard(reply, item, history);
@@ -1537,6 +1566,13 @@ async function coachReply({ item, messages, userId }) {
  * caller's signal to use the non-streaming path.
  */
 async function coachReplyStream({ item, messages, userId, onDelta }) {
+  // Text on screen cannot be taken back, so a checked reply is never streamed: null sends the route to the plain call (coachReply), which the guard reads whole.
+  if (factGuard.on()) {
+    const whole = await coachReply({ item, messages, userId });
+    if (!whole) return null;
+    onDelta(whole);
+    return { text: whole, replaced: false };
+  }
   const streamT0 = Date.now();
   if (!withinBudget(userId)) return null;
   const outside = outsideAllowed(userId);
@@ -1713,6 +1749,7 @@ Their question: ${question}`,
     maxTokens: 1024,
     effort: 'low',
     userId,
+    factSource: itemSource(item),
   });
 }
 
@@ -2050,11 +2087,13 @@ ${learnerBrief(userId, { skillId: area.skill_id, skillName: area.skill_name, lev
     maxTokens: 600,
     effort: 'low',
     userId,
+    factSource: [area.headline, area.diagnosis, area.misconception, ...(area.missed || []).slice(0, 4).map((m) => `Asked: ${m.prompt} Correct: ${m.answer}`)].filter(Boolean).join('\n'),
   });
 }
 
 module.exports = {
   budgetShareLeft,
+  outsideOk: (userId) => (userId ? outsideAllowed(userId) : true),
   canBuild,
   coachSystemFor, // the tutor's system prompt for one question (read by scripts/part-modify-proof.js)
   munitoAllowedFor,

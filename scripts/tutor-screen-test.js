@@ -6,6 +6,7 @@
  *
  * Throwaway db, mocked ai.talk and a mocked pool: no model is called, nothing is spent.
  */
+process.env.TUTOR_FULL = process.env.TUTOR_FULL || '0'; // this test pins the old tutor path, still there behind TUTOR_FULL=0; the full tutor is scripts/tutor-full-test.js
 const os = require('os');
 const path = require('path');
 const fs = require('fs');

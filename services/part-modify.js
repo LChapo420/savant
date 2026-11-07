@@ -308,7 +308,7 @@ async function modify({ spec, part, source, llm, goal = null, gate = null }) {
   const rules = rulesFor(spec, part, { goal });
   if (!rules.length || !source.text) return stored;
   const ask = async (problems) => {
-    try { const r = await llm({ system: systemFor(part), user: userFor(part, source, rules, problems), schema: SCHEMA, schemaName: 'submit', maxTokens: 700 }); return r && typeof r.text === 'string' ? r.text.trim() : ''; } catch { return ''; }
+    try { const r = await llm({ system: systemFor(part), user: userFor(part, source, rules, problems), schema: SCHEMA, schemaName: 'submit', maxTokens: 700, factSource: [source.prompt ? `Question: ${source.prompt}` : '', source.choices && source.choices.length ? `Choices: ${source.choices.join(' | ')}` : '', source.answer ? `Correct answer: ${source.answer}` : '', `Stored text: ${source.text}`].filter(Boolean).join('\n') }); return r && typeof r.text === 'string' ? r.text.trim() : ''; } catch { return ''; }
   };
   // The mechanical check, then the fact gate; two revisions at most, each told what was wrong; whatever still fails is refused and the stored text stays.
   let problems = null;
@@ -331,15 +331,18 @@ async function modify({ spec, part, source, llm, goal = null, gate = null }) {
 }
 
 // ── serving: the stored text unless a rewrite for this learner is ready ──────
+/** A rewrite stored before the fact guard existed had rules only: with the guard on it is not served. */
+function shapedChecked(item) { return !lazy('./fact-guard').on() || !!item.shaped.fact_checked; }
+
 function rationaleOf(item) {
   if (!item) return item;
-  // What the learner asked for themselves comes first (services/part-change.js); it has its own switch.
+  // What the learner asked for themselves comes first (services/part-change.js); it has its own switch, and its own fact gate.
   if (item.changed && item.changed.rationale && lazy('./part-change').on()) return item.changed.rationale;
-  if (enabled(item.user_id) && item.shaped && item.shaped.rationale) return item.shaped.rationale;
+  if (enabled(item.user_id) && item.shaped && item.shaped.rationale && shapedChecked(item)) return item.shaped.rationale;
   return item.rationale;
 }
 function hintOf(item) {
-  if (item && enabled(item.user_id) && partOn('hint') && item.shaped && item.shaped.hint) return item.shaped.hint;
+  if (item && enabled(item.user_id) && partOn('hint') && item.shaped && item.shaped.hint && shapedChecked(item)) return item.shaped.hint;
   return item ? item.hint : item;
 }
 
@@ -407,7 +410,7 @@ async function prepareItem(userId, item, { llm = null, spec = null, gate = undef
       isReview && partOn('review') ? Promise.resolve({ source: 'ai', text: reviewLine(sp, goal) }) : !isReview && partOn('feedback') ? modify({ spec: sp, part: 'feedback', source: { ...base, text: item.rationale }, llm: call, goal, gate: verify }) : Promise.resolve(null),
       item.hint && partOn('hint') ? modify({ spec: sp, part: 'hint', source: { ...base, text: item.hint }, llm: call, gate: verify }) : Promise.resolve(null),
     ]);
-    const shaped = { hash, at: new Date().toISOString(), rationale: fb && fb.source === 'ai' ? fb.text : null, hint: hint && hint.source === 'ai' ? hint.text : null };
+    const shaped = { hash, at: new Date().toISOString(), fact_checked: lazy('./fact-guard').on(), rationale: fb && fb.source === 'ai' ? fb.text : null, hint: hint && hint.source === 'ai' ? hint.text : null };
     db.update('items', item.id, { shaped });
     return shaped;
   } catch { return null; } finally { running.delete(key); }
@@ -489,7 +492,7 @@ async function rewriteLessonDetail({ spec, skill, llm, gate = null }) {
       const r = await llm({
         system: LESSON_SYSTEM,
         user: `Lesson: ${skill.title}\n\nSentences:\n${units.map((u, i) => `${i + 1}. ${u}`).join('\n')}\n\n${block}${note ? `\n\nYour last draft had problems; fix them:\n${note}` : ''}`,
-        schema: { type: 'object', properties: { sentences: { type: 'array', items: { type: 'array', items: { type: 'string' } } }, comparison: { type: 'string' } }, required: ['sentences'] }, schemaName: 'submit', maxTokens: 7000,
+        schema: { type: 'object', properties: { sentences: { type: 'array', items: { type: 'array', items: { type: 'string' } } }, comparison: { type: 'string' } }, required: ['sentences'] }, schemaName: 'submit', maxTokens: 7000, factSource: `Lesson: ${skill.title}\n\n${orig}`,
       });
       return r && Array.isArray(r.sentences) ? r : null;
     } catch { return null; }
