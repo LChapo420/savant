@@ -9,7 +9,8 @@ works each statement out with SymPy. A statement it cannot parse or decide is "u
 Input: {"statements": [{"id": 1, "type": "equal", ...}]}. Output: {"results": [{"id": 1, "verdict": "true"|"false"|"unknown", "detail": "..."}]}
 
 Statement types:
-    equal        lhs, rhs, approx?       two expressions are the same (identically, for every value of any variable)
+    equal        lhs, rhs, approx?       two number expressions are the same (with letters: unknown)
+    identity     lhs, rhs                a general rule, true for every value of its letters
     compare      a, op, b                a < b and so on, numbers only
     substitute   expr, values{x:..}, result   expr at those values is result
     solve        equation, var, solutions[]   the full real solution set of an equation
@@ -23,6 +24,8 @@ Statement types:
     factor       expr, result             result multiplies out to expr
     percent      percent, of, result      percent% of "of" is result
     convert      value, from, to, result  a unit conversion, in the table below
+
+Any statement may carry negated: true when the lesson says it fails ("x = 0 does not work").
 
 The input is untrusted model output. Nothing is evaluated until it passes a whitelist of characters and names, and SymPy's own parser only sees what is left.
 """
@@ -158,8 +161,13 @@ UNITS = {
 
 def check(st):
     k = st.get("type")
-    if k == "equal":
-        return same(parse(st["lhs"]), parse(st["rhs"]), bool(st.get("approx")), st["rhs"])
+    if k == "equal":  # numbers only: an equation with letters is not claimed to hold for every value
+        a, b = parse(st["lhs"]), parse(st["rhs"])
+        if a.free_symbols or b.free_symbols:
+            return None
+        return same(a, b, bool(st.get("approx")), st["rhs"])
+    if k == "identity":  # a general rule, true for every value of its letters
+        return same(parse(st["lhs"]), parse(st["rhs"]))
     if k == "compare":
         a, b = parse(st["a"]), parse(st["b"])
         op = str(st["op"]).replace("≤", "<=").replace("≥", ">=").replace("==", "=")
@@ -192,6 +200,13 @@ def check(st):
     if k == "inequality":
         return bool(real_set(st["inequality"], st.get("var", "x")) == real_set(st["solution"], st.get("var", "x")))
     if k == "equivalent":
+        syms = set()
+        for side in (st["a"], st["b"]):
+            for piece in REL.split(str(side)):
+                if piece and not REL.fullmatch(piece):
+                    syms |= {str(x) for x in parse(piece).free_symbols}
+        if syms - {st.get("var", "x")}:
+            return None  # more than one letter: an elimination step, or a value from an earlier line; not decidable as one set
         return bool(real_set(st["a"], st.get("var", "x")) == real_set(st["b"], st.get("var", "x")))
     if k == "derivative":
         x = sp.Symbol(st.get("var", "x"), real=True)
@@ -223,6 +238,8 @@ def run(statements):
         t0 = time.time()
         try:
             v = check(st)
+            if v is not None and st.get("negated"):
+                v = not bool(v)  # the lesson says this one fails, as in "x = 0 fails"
             verdict = "unknown" if v is None else ("true" if bool(v) else "false")
             out.append({"id": st.get("id"), "verdict": verdict, "ms": int((time.time() - t0) * 1000)})
         except Exception as e:  # anything it cannot work out is silence, not a flag

@@ -7,7 +7,8 @@
 const L = require('../fact-gate/lib');
 const { lyceum } = require('../../services/providers/lyceum');
 
-const OUT = L.path.join(L.TMP, 'fact-100-candidates.jsonl');
+const ROUND2 = process.env.PLANT_ROUND === '2';
+const OUT = L.path.join(L.TMP, ROUND2 ? 'fact-100-candidates2.jsonl' : 'fact-100-candidates.jsonl');
 const KINDS = {
   misleading_simplification: 'A qualified, correct statement (or a rule with an exception) is turned into a neat flat one that would really mislead a learner of this level on a later problem: a condition dropped, "usually" turned into "always", a special case stated as the general case, a typical case presented as the only one. It must be FALSE as stated, with a counterexample you can name in the truth field, not a fair teaching simplification.',
   wrong_plausible_fact: 'A specific fact is replaced by a common misconception or a confusable neighbour, so that it sounds exactly right to someone half-remembering: the rule of a nearby topic, the meaning of a look-alike word (false friends), the wrong person or term that people often confuse, a popular myth. Nothing in the lesson itself should contradict it (edit every place that states it). A subject expert must agree it is false.',
@@ -25,7 +26,7 @@ Rules for each error:
 - The result must be genuinely WRONG (a subject expert would agree), not a matter of taste, not merely a typo, and not depending on a made-up scenario detail.
 - Where the same fact appears again elsewhere in the lesson, edit those too, so the lesson agrees with itself.
 - Do not edit ids, block types, timing fields or colours: only what a learner reads.
-Return one error per kind asked for. If a kind truly cannot fit this lesson, skip it.`;
+${ROUND2 ? 'Be subtle. Do NOT use the words always, never, only, every, all, any, must or no one: an expert should have to think. Quietly drop a condition, state a typical case as the rule, swap in a near neighbour term, or state a popular misconception in the calm voice of the lesson. Never add nonsense and never create text that contradicts itself in the next sentence. ' : ''}Return one error per kind asked for. If a kind truly cannot fit this lesson, skip it.`;
 const SCHEMA = { type: 'object', required: ['plants'], properties: { plants: { type: 'array', items: { type: 'object', required: ['kind', 'edits', 'truth'], properties: { kind: { type: 'string' }, edits: { type: 'array', items: { type: 'object', required: ['where', 'original', 'wrong'], properties: { where: { type: 'string' }, original: { type: 'string' }, wrong: { type: 'string' } } } }, truth: { type: 'string', description: 'One short sentence: what is actually true, and the counterexample or why the edited text is wrong.' } } } } } };
 const render = (lv) => [L.contextOf(lv), ...lv.blocks.map((b) => `BLOCK ${b.index} ${b.block}: ${JSON.stringify(b.data)}`), ...lv.checks.map((c) => `CHECK ${c.index} (${c.format}): ${JSON.stringify(c)}`)].join('\n');
 function seeded(seed) { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
@@ -42,7 +43,7 @@ function seeded(seed) { let s = seed >>> 0; return () => { s = (s * 1664525 + 10
   console.log(`${pick.length} levels, ${done.size} already planted`);
   const extra = ['reversed_cause', 'wrong_number', 'wrong_worked_example', 'wrong_answer_key', 'formula_step']; let rot = 0;
   await L.runPool(pick.filter((l) => !done.has(l.id)), Number(process.argv[2] || 3), async (lv) => {
-    const kinds = ['misleading_simplification', 'wrong_plausible_fact', extra[rot++ % extra.length]];
+    const kinds = ROUND2 ? ['misleading_simplification', 'wrong_plausible_fact'] : ['misleading_simplification', 'wrong_plausible_fact', extra[rot++ % extra.length]];
     const user = `Kinds of error to insert:\n${kinds.map((k) => `- ${k}: ${KINDS[k]}`).join('\n')}\n\nTHE LESSON\n${render(lv)}`;
     for (let a = 0; a < 3; a++) {
       try {
