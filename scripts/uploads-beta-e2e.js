@@ -4,6 +4,7 @@
  *
  *   node scripts/uploads-beta-e2e.js real [case ...]        real models through the real pool and ledgers (rows: <OUT_DIR>/e2e-real.json, resumes)
  *   node scripts/uploads-beta-e2e.js scripted               a scripted model, free: the route-level test, run by npm test
+ *   node scripts/uploads-beta-e2e.js load <testers>         many testers at once through the whole path, scripted model (no provider, so the load is this server's own work): event-loop lag, memory, slowest route
  *   node scripts/uploads-beta-e2e.js report
  */
 const fs = require('fs'); const os = require('os'); const path = require('path'); const http = require('http');
@@ -19,7 +20,7 @@ if (MODE === 'real') {
   process.env.ANTHROPIC_API_KEY = ''; // the paid key is not needed here
   for (const k of Object.keys(process.env)) if (/^MODELFLARE/.test(k) || /^STANDARD_COMPUTE.*KEY/.test(k)) process.env[k] = '';
   process.env.NODE_ENV = 'development';
-} else if (MODE === 'scripted') {
+} else if (MODE === 'scripted' || MODE === 'load') {
   process.env.NODE_ENV = 'test';
   for (const name of Object.keys(process.env)) if (/(_API_KEY|_TOKEN)$/.test(name)) process.env[name] = '';
   process.env.FACT_CHECK_ALL = '0'; process.env.UPLOAD_FACTCHECK = 'on'; process.env.UPLOAD_FACTCHECK_QUOTES = 'off'; process.env.UPLOAD_FACTCHECK_READERS = '1';
@@ -70,7 +71,7 @@ async function bootstrap() {
   const express = require('express');
   mk.db = require('../config/db');
   mk.ai = require('../services/ai');
-  if (MODE === 'scripted') mk.down = fakeModel(mk.ai);
+  if (MODE === 'scripted' || MODE === 'load') mk.down = fakeModel(mk.ai);
   const app = express(); app.set('trust proxy', true);
   app.use((req, res, next) => { req.user = mk.db.byId('users', Number(req.headers['x-user'])) || null; next(); });
   app.use('/api/materials', require('../routes/materials'));
@@ -103,7 +104,7 @@ function newLearner(c, i) {
 async function readPart(uid, mid, ref, ctx) {
   const [kind, a, b] = ref.split(':');
   if (kind === 'lesson') { const r = await call('GET', `/api/materials/${mid}/study/lesson/${a}`, uid); const l = r.json.skill.lesson; return JSON.stringify([l.paragraphs, l.key_points]); }
-  if (kind === 'q') { const r = await call('GET', `/api/materials/${mid}/study/lesson/${a}`, uid); const q = r.json.skill.practice.find((x) => x.id === b); ctx.lastQ = q; return JSON.stringify(q ? [q.prompt, q.choices] : null); }
+  if (kind === 'q') { const r = await call('POST', `/api/materials/${mid}/test`, uid, { skills: [a], length: 40 }); const q = (r.json.questions || []).find((x) => x.id === b); ctx.lastQ = q; return JSON.stringify(q ? [q.prompt, q.choices] : null); }
   if (kind === 'card') { const r = await call('GET', `/api/materials/${mid}/cards`, uid); const c = r.json.cards.find((x) => x.id === a); return JSON.stringify(c ? [c.front, c.back] : null); }
   if (kind === 'note') { const r = await call('GET', `/api/materials/${mid}/notes`, uid); const s = r.json.notes.sections.find((x) => x.id === a); return JSON.stringify(s ? [s.heading, s.bullets.map((x) => x.text)] : null); }
   if (kind === 'summary') { const r = await call('GET', `/api/materials/${mid}/pack`, uid); return JSON.stringify(r.json.pack.summary); }
@@ -182,7 +183,7 @@ async function runCase(c) {
     const reached = r.json.changed ? after !== before : after === before;
     const back = await call('POST', '/api/parts/revert', uid, { material_id: mid, part: ref });
     const restored = await readPart(uid, mid, ref, ctx);
-    row.changes.push({ part, ref, change, http: r.status, changed: !!r.json.changed, message: r.json.message || null, ms, reached, restored: restored === before, revert_http: back.status, before: before.slice(0, 4000), after: r.json.changed ? after.slice(0, 4000) : null });
+    row.changes.push({ part, ref, change, http: r.status, changed: !!r.json.changed, message: r.json.message || null, ms, reached, restored: restored === before || (part === 'lesson' && restored === storedLesson(uid, mid, ref)), revert_http: back.status, before: before.slice(0, 4000), after: r.json.changed ? after.slice(0, 4000) : null });
     // Clear the pin so the next change on this part starts clean.
     mk.db.remove('material_part_changes', (x) => x.user_id === uid && x.material_id === mid && x.ref === ref);
   }
@@ -202,6 +203,11 @@ async function runCase(c) {
   row.cost = costOf(uid);
   if (c.del) { const del = await call('DELETE', `/api/materials/${mid}`, uid); row.steps.delete_http = del.status; row.steps.rows_left = mk.db.find('material_part_changes', (x) => x.user_id === uid).length; }
   return row;
+}
+/** A lesson put back is the stored reading, with nothing shaped on top: what the course says for this goal. */
+function storedLesson(uid, mid, ref) {
+  const b = require('../services/material-parts').baseOf(uid, mid, ref);
+  return JSON.stringify([b.leaves.filter((l) => /^pd/.test(l.key)).map((l) => l.text), b.leaves.filter((l) => /^kd/.test(l.key)).map((l) => l.text)]);
 }
 function costOf(uid) {
   try {
@@ -278,6 +284,37 @@ function report() {
   if (usd.length) console.log(`\ncost per upload (build everything, all goals, every change above), n ${usd.length}: median $${q(usd, 0.5)}, worst $${Math.max(...usd)}`);
 }
 
+// ── load: many testers at once ─
+async function loadRun(n) {
+  const L = require('./lib/uploads-beta-lib'); const fx = require('./lib/upload-fixtures');
+  const docs = L.allDocs();
+  const kinds = [];
+  for (const [id, fmt] of [['h1', 'docx'], ['h2', 'pdf'], ['h3', 'md'], ['h4', 'html'], ['h5', 'epub'], ['h6', 'odt']]) { const d = docs.find((x) => x.id === id); kinds.push({ id, fmt, bytes: await fx.build(fmt, { id, title: d.title, md: d.md || d.markdown, kps: [] }) }); }
+  const long = Buffer.from(docs.map((x) => x.md || x.markdown).join('\n\n').repeat(6));
+  let lagMax = 0; let last = Date.now(); const lags = [];
+  const timer = setInterval(() => { const now = Date.now(); const lag = Math.max(0, now - last - 50); lagMax = Math.max(lagMax, lag); lags.push(lag); last = now; }, 50);
+  const cpu0 = process.cpuUsage(); const T0 = Date.now(); let rssMax = 0;
+  const memT = setInterval(() => { rssMax = Math.max(rssMax, process.memoryUsage().rss); }, 500);
+  const stats = ['full', 'brevity', 'plain', 'random'];
+  const cases = Array.from({ length: n }, (_, i) => { const k = i % 10 === 9 ? { id: 'long', fmt: 'txt', bytes: long } : kinds[i % kinds.length]; const flavour = stats[i % stats.length]; return { id: `load${i}`, kind: k.fmt, name: `f${i}.${k.fmt}`, bytes: k.bytes, label: flavour, buildMs: 600000, stats: flavour === 'brevity' ? { brevity_preference: 95 } : flavour === 'plain' ? { vocabulary_ceiling: 5, text_density_tolerance: 5 } : flavour === 'random' ? { attention_runway: 3 + (i * 7) % 90, challenge_appetite: 5 + (i * 13) % 90 } : null }; });
+  const rows = await Promise.all(cases.map((c) => runCase(c).catch((e) => ({ id: c.id, outcome: `crashed: ${e.message}` }))));
+  clearInterval(timer); clearInterval(memT);
+  const wall = (Date.now() - T0) / 1000; const cpu = process.cpuUsage(cpu0);
+  const q = (a, p) => { const s = a.slice().sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
+  const out = {
+    testers: n, wall_s: Math.round(wall), finished: rows.filter((r) => r.outcome === 'finished').length, crashed: rows.filter((r) => /crashed/.test(r.outcome || '')).map((r) => r.outcome),
+    lag_ms: { p50: q(lags, 0.5), p95: q(lags, 0.95), p99: q(lags, 0.99), max: lagMax }, rss_mb: Math.round(rssMax / 1048576), main_cpu_pct: Math.round((100 * (cpu.user + cpu.system)) / 1e6 / wall),
+    upload_ms: { p50: q(rows.filter((r) => r.steps).map((r) => r.steps.upload_ms), 0.5), max: Math.max(...rows.filter((r) => r.steps).map((r) => r.steps.upload_ms)) },
+    goal_switch_ms: { p50: q(rows.filter((r) => r.goals && r.goals.core).map((r) => r.goals.core.ms), 0.5), max: Math.max(...rows.filter((r) => r.goals && r.goals.core).map((r) => r.goals.core.ms)) },
+    change_ms: (() => { const v = rows.flatMap((r) => r.changes || []).filter((c) => c.ms).map((c) => c.ms); return { n: v.length, p50: q(v, 0.5), p95: q(v, 0.95), max: Math.max(...v) }; })(),
+    reached: rows.flatMap((r) => r.changes || []).filter((c) => !c.skipped).every((c) => c.reached), restored: rows.flatMap((r) => r.changes || []).filter((c) => !c.skipped).every((c) => c.restored),
+    not_reached: rows.flatMap((r) => (r.changes || []).filter((c) => !c.skipped && (!c.reached || !c.restored)).map((c) => [r.id, c.part, c.change, c.changed, c.reached, c.restored, c.message])).slice(0, 8),
+  };
+  console.log(JSON.stringify(out, null, 1));
+  fs.writeFileSync(path.join(OUT_DIR, `load-${n}.json`), JSON.stringify(out));
+  process.exit(0);
+}
+
 // ── scripted: the route test ─────────────────────────────────────────────────
 async function scripted() {
   let failures = 0; let passes = 0;
@@ -352,6 +389,7 @@ async function scripted() {
   if (MODE === 'report') { report(); process.exit(0); }
   await bootstrap();
   if (MODE === 'scripted') { await scripted(); return; }
+  if (MODE === 'load') { await loadRun(Number(process.argv[3] || 30)); return; }
   await runReal(process.argv.slice(3));
   console.log('done');
   require('../config/db').flush();

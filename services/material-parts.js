@@ -556,9 +556,9 @@ function revert(userId, materialId, ref) {
   if (ref === 'test') { if (row) db.remove(COLLECTION, (r) => r.id === row.id); return { changed: false, part: { ref: 'test', scale: 1, tier: 0 } }; }
   const base = baseOf(userId, materialId, ref);
   if (!base) return { error: 'That part was not found.', status: 404 };
+  if (!row) return { changed: false, part: served(userId, materialId, ref) }; // never changed: nothing to put back
   // Remembered: nothing rewrites or reshapes it again until the learner asks. A pin has no text, so what is served is what was stored.
-  if (row) db.update(COLLECTION, row.id, { pinned: true, data: null, fact_checked: false, asked: [], origin: 'learner' });
-  else db.insert(COLLECTION, { user_id: userId, material_id: Number(materialId), ref, pinned: true, data: null, fact_checked: false, asked: [], origin: 'learner', at: new Date().toISOString() });
+  db.update(COLLECTION, row.id, { pinned: true, data: null, fact_checked: false, asked: [], origin: 'learner' });
   db.saveSoon();
   return { changed: false, part: served(userId, materialId, ref) };
 }
