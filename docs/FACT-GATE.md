@@ -136,3 +136,7 @@ Computed: median words and minutes a level: English 1,867 and 16.7, calculus 1,6
 
 ## Not proven
 Planted errors come from models and one human, so a real writer's errors may be harder. The adjudicator is Sonnet, itself a checker that reached 84% here. Web search was off throughout; dates and rare facts rest on what each model knows.
+
+## Checks on this work
+`node scripts/fact-gate-test.js`, `node scripts/game-ordinals-test.js`, in the suite. Suite: 209 steps, 1 failure, `fact-coverage-test` (the new `fact_gate` task and direct calls), then fixed with a registry row and an allow-list entry for this checker, and passing alone; the full suite was not run again after that change. The bingo game with a cleaned set was loaded at phone width in a browser with the app's assets and no script errors, and the baked page holds the cleaned text; it was not played through to that question.
+Spent: Lyceum about $34 (Kimi and GLM-5.3), Grokified about $2, Anthropic $2.13 of the $5 budget, ZeroGPU $0.60, Coral $0.48, Gonka $0.02.
