@@ -143,6 +143,7 @@ app.use('/api/speed-proof', require('./routes/speed-proof')); // the optional pl
 app.use('/api/daily-check', require('./routes/daily-check'));
 // The baseline: Quick / Balanced / Accurate tasks and choices that give the scorecard a first, accurate picture before any material is written (services/onboarding).
 app.use('/api/onboarding', require('./routes/onboarding'));
+app.use('/api/ob2', require('./routes/onboarding-v2'));
 // The subject-level quiz: one walk up a whole subject, ending in a recommended
 // percentage per grade for the learner who does not know where to start.
 app.use('/api/subject-placement', require('./routes/subject-placement'));
@@ -221,6 +222,17 @@ app.use(['/cost-tracker', '/cost-tracker.html'], (req, res, next) => (require('.
 // The recruiting page (services/act-check.js stats): admin only.
 app.use(['/recruit', '/recruit.html'], (req, res, next) => (require('./middleware/auth').isAdmin(req.user) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
 app.use(['/my-stats', '/my-stats.html'], (req, res, next) => (require('./middleware/auth').isAdmin(req.user) || require('./config/owner').isOwnerLearner(req.user) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
+
+// Onboarding v2 (docs/ONBOARDING-V2.md). Off: /start is an unknown page like any other and /register is today's page.
+app.get(['/start', '/start.html'], (req, res, next) => {
+  if (require('./services/onboarding-v2').enabled()) return next();
+  return res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.get(['/register', '/register.html'], (req, res, next) => {
+  if (!require('./services/onboarding-v2').enabled()) return next();
+  const at = req.originalUrl.indexOf('?');
+  return res.redirect(302, `/start${at >= 0 ? req.originalUrl.slice(at) : ''}`);
+});
 
 app.use(express.static(path.join(__dirname, 'public'), {
   extensions: ['html'],

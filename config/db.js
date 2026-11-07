@@ -18,6 +18,7 @@ const TMP_PATH = DB_PATH + '.tmp';
 
 const COLLECTIONS = [
   'users',
+  'onboarding_answers', // onboarding v2: what a learner said on the way in (services/onboarding-v2.js)
   'enrollments',     // one per user per (track, grade) they signed up for
   'skill_states',    // per user per skill: mastery, ease, review schedule
   'profiles',        // learner profile: style vector, pacing, format preferences

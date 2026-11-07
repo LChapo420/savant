@@ -32,6 +32,7 @@ function allowed(user) {
   if (!user) return false;
   const check = user.age_check;
   if (!check) return false;
+  if (user.guest === true) return false; // onboarding v2: nothing extra is measured before an account is saved
   if (!check.needs_parent && !check.under_13) return true;
   const consent = user.consent_id ? db.byId('parental_consents', user.consent_id) : null;
   return !!(consent && consent.status === 'active' && consent.scopes && consent.scopes.measurement_extras && consent.scopes.measurement_extras.active);

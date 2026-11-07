@@ -16,7 +16,7 @@ function attachUser(req, res, next) {
     if (user) {
       req.user = user;
       // The beta comparison draws a learner's arm once, at first use (services/beta-arm.js); a failure must never block a request.
-      if (!user.beta_arm && user.age_check) {
+      if (!user.beta_arm && user.age_check && !user.guest) {
         try { require('../services/beta-arm').ensure(user); } catch (err) { console.warn(`beta-arm: not drawn: ${err.message}`); } // eslint-disable-line global-require
       }
     } else req.session.destroy(() => {}); // the account is gone; the cookie should be too
@@ -121,6 +121,7 @@ function publicUser(user, profile) {
     under_13: !!(user.age_check && user.age_check.under_13),
     ux: uxFlags.flagsFor(user),
     onboarded: !!user.onboarded,
+    ...(user.guest === true ? { guest: true } : {}),
     // Whether to draw the skip controls, and nothing more. The routes that act
     // on them ask canSkip again, so a client that ignores this gains nothing.
     can_skip: canSkip(user),

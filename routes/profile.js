@@ -280,6 +280,7 @@ router.get('/mastery/:enrollmentId', requireAuth, (req, res) => {
  * one route and means the answer to "what do you have on me" is always a link.
  */
 const EXPORT_MORE = [
+  'onboarding_answers',
   'essays', 'assist_chats', 'level_logs', 'learner_records', 'level_debriefs', 'subject_placements', 'remediations',
   'streaks', 'reports', 'ai_usage', 'chess_ratings', 'chess_puzzle_attempts', 'chess_rush_runs', 'chess_drill_cards',
   'chess_drill_runs', 'piano_song_results', 'learner_goals', 'tutor_memory', 'es_path_runs', 'es_review',

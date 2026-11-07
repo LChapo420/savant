@@ -154,6 +154,7 @@ async function registerChild(req, res, screen, password, displayName) {
 }
 
 router.post('/login', limit('login', 20, 15 * 60 * 1000), async (req, res) => {
+  const wasGuest = req.user && req.user.guest ? req.user : null; // onboarding v2: an unsaved learner signing in to an account they already have
   // One box takes an email or a child account's username.
   const login = normalizeEmail(req.body.email || req.body.username);
   const password = String(req.body.password || '');
@@ -169,6 +170,7 @@ router.post('/login', limit('login', 20, 15 * 60 * 1000), async (req, res) => {
   if (!user || !ok) return res.status(401).json({ error: 'That email or username and password do not match.' });
 
   await startSession(req, user);
+  if (wasGuest) require('../services/onboarding-v2').absorbGuest(wasGuest, user); // eslint-disable-line global-require
   res.json({ user: userView(user) });
 });
 
@@ -183,5 +185,7 @@ router.post('/logout', (req, res) => {
 router.get('/me', (req, res) => {
   res.json({ user: userView(req.user) });
 });
+
+router.helpers = { startSession, userView, normalizeEmail, checkPassword, EMAIL };
 
 module.exports = router;

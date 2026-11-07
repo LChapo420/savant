@@ -317,6 +317,8 @@ function access(user) {
   if (!user) return null;
   const check = user.age_check;
   if (!check) return { state: 'needs_age', locked: false, camera_mic: false, ai_free_text: false };
+  // Onboarding v2: a learner who has not saved an account has agreed to nothing yet (services/onboarding-v2.js).
+  if (user.guest === true && !check.needs_parent) return { state: 'guest', locked: false, camera_mic: false, ai_free_text: false };
   if (!check.needs_parent) return { state: 'full', locked: false, camera_mic: true, ai_free_text: true };
   const consent = user.consent_id ? db.byId('parental_consents', user.consent_id) : null;
   if (!consent || consent.status === 'pending') {
@@ -439,6 +441,7 @@ const KNOWN_COLLECTIONS = [
   'act_guests', 'recruit_counts', // no account behind them (services/act-check.js): a token hash and per-day totals; guests are deleted after 30 days
   'recruit_applicants', // 13+ applicants only; user_id is set when one signs up, so account deletion reaches it
   'speed_proof', 'speed_proof_blocks', // the speed proof's rows and draw blocks, per learner (services/speed-proof.js)
+  'onboarding_answers', // what a learner said on the way in (services/onboarding-v2.js), with the account
   'beta_blocks', // arm slots only, no learner id (services/beta-arm.js); a child's own arm is on the user row and goes with it
 ];
 function collectionNames() {
@@ -488,6 +491,7 @@ async function sendConfirmation(consent) {
  */
 async function sweep(now = Date.now()) {
   const out = { expired: 0, confirmed: 0, revoked_deleted: 0, late_rows: sweepLateRows(now) };
+  try { out.onboarding = require('../services/onboarding-v2').sweep(now); } catch (err) { console.warn('onboarding sweep:', err.message); } // eslint-disable-line global-require
   for (const c of db.all('parental_consents').slice()) {
     if (c.status === 'pending' && c.expires_at && Date.parse(c.expires_at) <= now) {
       deleteChild(c, 'expired', 'system');
@@ -543,7 +547,7 @@ const TEXT_FIELDS = [
  */
 const CHILD_MEDIA_UPLOAD = /^\/(es\/(asr|upload)|materials(\/(paste|link|transcript|youtube|video|audio))?)$/;
 /** What a locked account can still reach. */
-const LOCKED_ALLOW = /^\/(auth\/|consent\/|health$)/;
+const LOCKED_ALLOW = /^\/(auth\/|consent\/|ob2\/(state|claim)$|health$)/;
 
 function hasText(body, fields) {
   if (!body || typeof body !== 'object') return false;
@@ -594,6 +598,9 @@ function gate(req, res, next) {
       code: 'child_upload_off',
     });
   }
+  if (a.state === 'guest' && req.method === 'POST' && CHILD_MEDIA_UPLOAD.test(reqPath)) {
+    return res.status(403).json({ error: 'Save your progress first: turning a file into lessons uses an outside AI service.', code: 'guest_save_first' });
+  }
   if (!a.ai_free_text && req.method !== 'GET') {
     const outside = OUTSIDE_AI.some((re) => re.test(reqPath))
       || TEXT_FIELDS.some((t) => t.re.test(reqPath) && hasText(req.body, t.fields));
@@ -601,6 +608,7 @@ function gate(req, res, next) {
       // A crisis message gets its fixed reply, not "this uses an outside AI service": that reply is written here and no model or outside service is involved.
       const crisis = crisisIn(req);
       if (crisis) return res.json({ reply: crisis.reply, source: 'safety', kind: crisis.kind, coached: true });
+      if (a.state === 'guest') return res.status(403).json({ error: 'This uses an outside AI service. Save your progress first, then it opens.', code: 'guest_save_first' });
       return res.status(403).json({
         error: a.state === 'needs_age'
           ? 'Answer the date-of-birth question first: open Subjects to see it.'

@@ -69,6 +69,7 @@ function isReservedDomain(domain) {
  */
 function classify(user, r, parentEmail = '') {
   const kind = norm(user.account_kind);
+  if (user.guest === true) return { group: 'test', rule: 'unsaved guest' }; // onboarding v2
   if (user.is_demo === true || kind === 'demo') return { group: 'demo', rule: 'flagged demo' };
   if (user.is_test === true || kind === 'test') return { group: 'test', rule: 'flagged test' };
   const email = norm(user.email);
