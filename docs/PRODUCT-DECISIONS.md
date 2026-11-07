@@ -178,3 +178,10 @@ The name is Savant; the domain is savantedu.com. Goal: savant.edu through a part
 - Character: the Sunny-coloured giraffe in the flat mascot style, "for now", so work can move on to the rest of the UI. It may become customizable later.
 - Onboarding "should just ask the same things it does": the test that gets a general understanding of their learning style, their interests, the subject(s), then the grade they want or the placement. Age and the agreement stay in front, as law and the owner require. It should have "a clean ui look like Duolingo and brilliant".
 - Full modification and optimization of uploaded material is to be built alongside everything else, for the beta on Nov 15.
+
+## The tutor, reached through the giraffe (owner, 7 Nov 2026)
+
+- No floating bottom-right button: it covers things. Tap the giraffe and the chat opens.
+- On a phone the chat comes from the top or the bottom, the learner's choice, and the original page stays scrollable in the window above or below it.
+- Press and hold the giraffe to start a voice call. It just listens and talks, with no buttons. Tap to end the call. Hold to switch the audio to chat, and the window slides in.
+- Later, after the design is finished: a tutorial that includes this. Later, once the final character is decided: animate its mouth to the sounds being spoken, not just open and close.
