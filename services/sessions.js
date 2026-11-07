@@ -718,8 +718,11 @@ async function buildBlock({ userId, session, enrollment, grade, level, blockInde
     }
   }
 
-  const items = await materialize({ userId, session, entries, params, level, blockIndex, fresh, avoidAlso });
-  return { kind, items, lesson: null, prepared: true, attempt: retry ? enrollment.checkpoint_attempts + 1 : 1 };
+  // SPEED_RECHECK: on an objective still unproven, the lesson checks they missed come first. The level's size stays the same.
+  const rechecks = !checkpoint && !session.preview ? speedLevers.recheckItems(userId, enrollment, grade, level) : [];
+  const first = rechecks.length ? insertItems({ userId, session, items: rechecks, level, blockIndex }) : [];
+  const items = await materialize({ userId, session, entries: rechecks.length ? entries.slice(0, Math.max(1, entries.length - rechecks.length)) : entries, params, level, blockIndex, fresh, avoidAlso });
+  return { kind, items: [...first, ...items], lesson: null, prepared: true, attempt: retry ? enrollment.checkpoint_attempts + 1 : 1 };
 }
 
 /**

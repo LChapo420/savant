@@ -15,6 +15,7 @@
  *   SPEED_QUICK_REVIEW=on  review questions are one tap: a typed review question with a number for an answer gets close wrong choices. Format makes little retention difference in the studies (docs/SPEED-4X.md); the seconds saved are not measured.
  *   SPEED_SPACE_RETENTION=on the two "(retention)" levels of a lesson's stretch are stepped over once its objective is proven, instead of being worked in the same minute: both of them, 30 answers on what was just answered right, called "spaced" and asked with no gap at all. The memory checks they stand for come from the review queue a day later and a week later (adaptation.reviewQueue), which is what the coverage gate reads anyway. The level stays open behind the learner. docs/speed-real/ROUND4.md.
  *   SPEED_PROOF_PASSES=on  a practice level whose objective is already proven (services/coverage.js, its own and stricter bar) and that has its answers is passed, whatever the average of the grade's coarse skills reads. Measured on the real routes: most sittings repeated on the same level had the objective proven and answers right.
+ *   SPEED_RECHECK=on       a practice level on an objective still unproven opens on the lesson's check questions the learner missed, asked again after at least one level of practice. An ordinary practice answer can never prove an objective (coverage: OBJ_MIN_ALIGNED), so a learner who missed two lesson checks walked every level left however well they did. The proof's bar is unchanged, but this is the same question a second time, a weaker reading than a new one: docs/speed-real/ROUND4.md says so.
  *   SPEED_ONE_PROMPT=on    a level's closing card: Continue first, and at most one optional question, taking turns level by level, instead of up to four above the button. Fewer scorecard taps: docs/speed-real/ROUND4.md counts them.
  *   SPEED_TIGHT_PAGE=on    a lesson page shows its teaching first: no intro and no recap (a block plan: no hook, no takeaway badge, no cheat sheet), the rest one tap away. Nothing is rewritten and no key point is dropped. docs/speed-real/ROUND4.md has the AI-judged check.
  *   Placement by skill, implied mastery and the item at the edge: services/speed-placement.js.
@@ -27,8 +28,8 @@
 
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 
-const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET', fast: 'SPEED_FAST_ITEM', composite: 'SPEED_COMPOSITE', worked: 'SPEED_WORKED', quick: 'SPEED_QUICK_REVIEW', space: 'SPEED_SPACE_RETENTION', proofPasses: 'SPEED_PROOF_PASSES', onePrompt: 'SPEED_ONE_PROMPT', tight: 'SPEED_TIGHT_PAGE' };
-const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off', fast: 'on', composite: 'off', worked: 'off', quick: 'off', space: 'off', proofPasses: 'off', onePrompt: 'off', tight: 'off' }; // fast: the only lever through its gate (docs/SPEED-4X.md, round 3), 6 Nov 2026
+const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET', fast: 'SPEED_FAST_ITEM', composite: 'SPEED_COMPOSITE', worked: 'SPEED_WORKED', quick: 'SPEED_QUICK_REVIEW', space: 'SPEED_SPACE_RETENTION', proofPasses: 'SPEED_PROOF_PASSES', recheck: 'SPEED_RECHECK', onePrompt: 'SPEED_ONE_PROMPT', tight: 'SPEED_TIGHT_PAGE' };
+const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off', fast: 'on', composite: 'off', worked: 'off', quick: 'off', space: 'off', proofPasses: 'off', recheck: 'off', onePrompt: 'off', tight: 'off' }; // fast: the only lever through its gate (docs/SPEED-4X.md, round 3), 6 Nov 2026
 
 /** Is this lever on? SPEED_ALL=off beats everything. A base-arm learner (efficiency.forLearner) reads every lever off, as the older levers do. */
 function enabled(lever) {
@@ -321,6 +322,34 @@ function proofPasses(userId, enrollment, level) {
     } catch { return false; }
   });
 }
+const RECHECK_MIN_PRACTICE = 5; const RECHECK_MAX = 2;
+/** SPEED_RECHECK: the missed lesson checks to ask again at this practice level, as new items in the same words. Empty unless the switch is on, the objective is unproven, and some practice has come first. */
+function recheckItems(userId, enrollment, grade, level) {
+  return require('./efficiency').forLearner(userId, () => {
+    if (!enabled('recheck')) return [];
+    try {
+      if (require('./adaptation').ownerSkips(userId)) return [];
+      const report = require('./coverage').forEnrollment(userId, enrollment);
+      const e = report && report.model.levelMap[level];
+      if (!e || e.direct === undefined) return [];
+      const state = report.states[e.direct];
+      if (state.status === 'proven' || state.status === 'retained') return [];
+      const unit = unitOf(grade, level);
+      const mine = dbOf().find('items', (i) => i.user_id === userId && Number(i.level) >= unit.from && Number(i.level) <= unit.to && i.correct !== null && i.correct !== undefined);
+      if (mine.filter((i) => i.role !== 'check').length < RECHECK_MIN_PRACTICE) return [];
+      const key = (i) => String(i.prompt || '');
+      const rightOnce = new Set(mine.filter((i) => i.role === 'check' && i.correct).map(key));
+      const seen = new Set(); const out = [];
+      for (const i of mine) {
+        if (i.role !== 'check' || i.correct || rightOnce.has(key(i)) || seen.has(key(i))) continue;
+        seen.add(key(i));
+        out.push({ skill_id: i.skill_id, skill_name: i.skill_name, difficulty: i.difficulty, format: i.format, prompt: i.prompt, choices: i.choices || null, answer: i.answer, accepts: i.accepts || [], rationale: i.rationale, role: 'check', recheck: true, source: 'recheck' });
+        if (out.length >= RECHECK_MAX) break;
+      }
+      return out;
+    } catch { return []; }
+  });
+}
 const PAGE_ASIDE_BLOCK = /^(Hook_|Concept_TakeawayBadge$|Memory_CheatSheet$)/;
 /** The blocks of a plan that only warm up or recap: shown one tap away with the tight page. A block a check question depends on stays. */
 function asideBlock(block) { return !!block && PAGE_ASIDE_BLOCK.test(String(block.block || '')); }
@@ -406,5 +435,5 @@ module.exports = {
   newTracker, observe, taught, pKnown, kMean, shown, priorFromHistory, trackerFromAnswers, nextStep, pRight,
   PLACE, bestItem, placementNext, placementAnswer,
   reviewDue, endWindow,
-  stopFor, spaceOn, proofPasses, asideBlock, tightLesson, workedCount, oneTap, unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
+  stopFor, spaceOn, proofPasses, recheckItems, asideBlock, tightLesson, workedCount, oneTap, unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
 };
