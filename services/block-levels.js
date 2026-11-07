@@ -2909,13 +2909,23 @@ function partialFor({ userId, trackId, gradeId, level }) {
   return { ...row, blocks: row.partial.blocks, checks: row.partial.checks, partial_view: true };
 }
 
+/** The partial plan this learner reads: their own, or, for a learner in the holdout arm (whose write is the shared level, write() above), the shared one. */
+function partialServed(user, tailored, { trackId, gradeId, level }) {
+  const owner = tailored ? user.id : null;
+  const mine = partialFor({ userId: owner, trackId, gradeId, level });
+  if (mine || !tailored) return mine;
+  // eslint-disable-next-line global-require
+  const { arm } = require('./personalize').armFor(user.id, { trackId, gradeId, level });
+  return arm === 'holdout' ? partialFor({ userId: null, trackId, gradeId, level }) : null;
+}
+
 /** What the page polls while a lesson arrives part by part: the plan so far, its version, and whether it is whole. */
 function partsFor(user, trackId, gradeId, level) {
   const tailored = tailorsFor(user);
   const owner = tailored ? user.id : null;
-  const ready = findPlan({ userId: owner, trackId, gradeId, level });
+  const ready = findPlan({ userId: owner, trackId, gradeId, level }) || (tailored && require('./personalize').armFor(user.id, { trackId, gradeId, level }).arm === 'holdout' ? findPlan({ userId: null, trackId, gradeId, level }) : null); // eslint-disable-line global-require
   if (ready) return { state: 'ready', plan: ready };
-  const partial = partialFor({ userId: owner, trackId, gradeId, level });
+  const partial = partialServed(user, tailored, { trackId, gradeId, level });
   if (partial) return { state: 'writing', plan: partial, version: partial.partial.version, total_blocks: partial.partial.total_blocks, total_checks: partial.partial.total_checks };
   return { state: 'failed', plan: null };
 }
@@ -3155,8 +3165,8 @@ async function forLevel({ user, trackId, gradeId, level }) {
     const lanes = require('./pool'); // eslint-disable-line global-require
     const running = lanes.runForeground(() => ensure({ userId, trackId, gradeId, level, tailored, tier: 'open' }), { fast: true });
     running.catch(() => {});
-    const got = partialFor({ userId: owner, trackId, gradeId, level }) || await Promise.race([running, firstBlock.firstPublished(planKey(owner, trackId, gradeId, level), Number(process.env.COLD_REQUEST_WAIT_MS || 700))]);
-    const partial = partialFor({ userId: owner, trackId, gradeId, level });
+    const got = partialServed(user, tailored, { trackId, gradeId, level }) || await Promise.race([running, firstBlock.firstPublished(planKey(owner, trackId, gradeId, level), Number(process.env.COLD_REQUEST_WAIT_MS || 700))]);
+    const partial = partialServed(user, tailored, { trackId, gradeId, level });
     if (partial) return { plan: partial, writing: false, partial: true };
     if (got && got.id) return { plan: got, writing: false };
     if (got === false) return { plan: null, writing: true };
@@ -3329,7 +3339,7 @@ function rationaleFor(itemId, check) {
 function servedPlan(user, trackId, gradeId, level) {
   return openedOnShared(user, trackId, gradeId, level)
     || (tailorsFor(user) && findPlan({ userId: user.id, trackId, gradeId, level }))
-    || partialFor({ userId: tailorsFor(user) ? user.id : null, trackId, gradeId, level })
+    || partialServed(user, tailorsFor(user), { trackId, gradeId, level })
     || findPlan({ userId: null, trackId, gradeId, level });
 }
 
