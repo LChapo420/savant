@@ -64,6 +64,28 @@ function patchStart(src) {
   return out;
 }
 
+/** /offline.html with the look. It has to work with no network, so everything it needs goes in the service worker's list (patchWorker). */
+const OFFLINE_FILES = ['/css/ui2/tokens.css', '/css/styles/chunky.css', '/css/ui2/look.css', '/css/ui2/pages.css', '/js/style-boot.js', '/js/ui2/boot.js', '/js/start-tutor.js', '/js/ui2/look.js', '/js/ui2/offline.js'];
+function injectOffline(html) {
+  return html
+    .replace(/<html\b/, '<html data-ui2="on" data-ui2-page="offline"')
+    .replace('</head>', '  <script src="/js/style-boot.js"></script>\n  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/look.css">\n  <link rel="stylesheet" href="/css/ui2/pages.css">\n  <script src="/js/ui2/boot.js"></script>\n  <script src="/js/start-tutor.js"></script>\n  <script src="/js/ui2/look.js"></script>\n  <script src="/js/ui2/offline.js"></script>\n</head>');
+}
+/** /sw.js with the offline page's files in its list. One exact-string hook, checked by scripts/ui-v2-test.js. */
+function patchWorker(src) {
+  const from = "const SHELL = ['/offline.html',";
+  if (src.split(from).length !== 2) throw new Error('ui-v2: /sw.js has changed, its hook no longer fits');
+  return src.replace(from, () => `${from} ${OFFLINE_FILES.map((f) => `'${f}'`).join(', ')},`);
+}
+/** The not-found page, as the 404 at the end of server.js sends it: with the flag off, the file. */
+function sendNotFound(res, file) {
+  if (!enabled()) return res.status(404).sendFile(file);
+  return fs.readFile(file, 'utf8', (err, html) => {
+    if (err) return res.status(404).sendFile(file);
+    return res.status(404).type('html').send(inject(html, 'not-found').replace('<html data-ui2="on"', '<html data-ui2="on" data-ui2-page="not-found"'));
+  });
+}
+
 function pageOf(urlPath) {
   const m = /^\/([a-z-]+)(?:\.html)?$/.exec(urlPath);
   return m && PAGES.has(m[1]) ? m[1] : null;
@@ -86,6 +108,20 @@ function middleware(req, res, next) {
       return res.type('application/javascript').send(patchStart(src));
     });
   }
+  if (req.path === '/offline.html') {
+    return fs.readFile(path.join(PUBLIC, 'offline.html'), 'utf8', (err, html) => {
+      if (err) return next();
+      res.setHeader('Cache-Control', 'no-cache');
+      return res.type('html').send(injectOffline(html));
+    });
+  }
+  if (req.path === '/sw.js') {
+    return fs.readFile(path.join(PUBLIC, 'sw.js'), 'utf8', (err, src) => {
+      if (err) return next();
+      res.setHeader('Cache-Control', 'no-cache');
+      return res.type('application/javascript').send(patchWorker(src));
+    });
+  }
   const page = pageOf(req.path);
   if (!page) return next();
   return fs.readFile(path.join(PUBLIC, `${page}.html`), 'utf8', (err, html) => {
@@ -95,4 +131,4 @@ function middleware(req, res, next) {
   });
 }
 
-module.exports = { enabled, inject, injectStart, patchStart, pageOf, middleware, PAGES };
+module.exports = { enabled, inject, injectStart, patchStart, injectOffline, patchWorker, sendNotFound, pageOf, middleware, PAGES };

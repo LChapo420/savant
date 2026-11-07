@@ -347,6 +347,18 @@
     if (offer) { const f = fold('Optional extras', [offer]); f.classList.add('u2-maybe-empty'); head.after(f); }
   }
 
+  // ── a page that isn't there ──
+  function dressNotFound() {
+    const h1 = document.querySelector('main.page .wrap > h1');
+    if (!h1 || h1.dataset.u2) return;
+    h1.dataset.u2 = '1';
+    root.classList.add('u2-state');
+    const wrap = h1.parentElement;
+    h1.classList.add('u2-vh');
+    wrap.prepend(pageGuide(h1.textContent.trim()));
+    setTitle('Savant');
+  }
+
   let queued = false;
   function tick() {
     queued = false;
@@ -355,6 +367,7 @@
     if (/^\/my-material-/.test(PAGE)) dressMaterialSub();
     if (PAGE === '/calendar') dressCalendar();
     if (PAGE === '/onboarding') dressAdd();
+    if (root.dataset.ui2Page === 'not-found') dressNotFound();
     if (PAGE === '/path') dressPath();
     if (PAGE === '/base-lesson') dressLesson();
     if (PAGE === '/review') dressReview();

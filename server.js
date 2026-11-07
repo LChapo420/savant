@@ -159,6 +159,7 @@ app.use('/api', (req, res, next) => {
 
 // Home's "Your material" under UI_V2 (services/ui-v2-material.js). Off, it is an unknown endpoint like any other.
 app.get('/api/ui2/material-progress', (req, res, next) => (require('./services/ui-v2').enabled() ? require('./services/ui-v2-material').reply(req, res) : next()));
+app.get('/api/ui2/today', (req, res, next) => (require('./services/ui-v2').enabled() ? require('./services/ui-v2-today').reply(req, res) : next()));
 app.use('/api/auth/password-reset', passwordReset.router);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/speed', require('./routes/speed-placement'));
@@ -318,7 +319,7 @@ app.get('*', (req, res) => {
   if (!req.user && signinOnly.active(req)) return res.status(404).type('text/plain').send('Not found');
   // A missing file is never the landing page: a mistyped address showed a signed-in learner the marketing page, a missing script came back as HTML with a 200.
   if (path.extname(req.path) && !/[.]html$/i.test(req.path)) return res.status(404).type('text/plain').send('Not found');
-  res.status(404).sendFile(path.join(__dirname, 'public', 'not-found.html'));
+  require('./services/ui-v2').sendNotFound(res, path.join(__dirname, 'public', 'not-found.html'));
 });
 
 app.use(errorLog.expressHandler);

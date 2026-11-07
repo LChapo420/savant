@@ -408,3 +408,18 @@ html[data-ui2].u2-add .ob-foot .btn-primary { width: auto; min-width: 180px; }
   html[data-ui2].u2-add #tracks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+/* ── a page that isn't there, and offline ─────────────────────────────── */
+html[data-ui2].u2-state main.page { padding-top: 0; }
+html[data-ui2].u2-state .u2-tb-t { visibility: hidden; }
+html[data-ui2].u2-state main.page .wrap { max-width: 640px; padding: 0 24px 32px; text-align: center; }
+html[data-ui2].u2-state main.page .wrap > p { margin: 16px 0; font-size: 16px; line-height: 23px; }
+html[data-ui2].u2-state main.page .btn-primary { width: 100%; max-width: 360px; margin-inline: auto; }
+html[data-ui2][data-ui2-page="offline"] body { background: var(--page); color: var(--ink); font-family: var(--font); margin: 0; }
+html[data-ui2][data-ui2-page="offline"] main section { max-width: 640px !important; margin: 0 auto; padding: 24px !important; text-align: center; }
+html[data-ui2][data-ui2-page="offline"] .u2-off-g { margin: 0 auto 8px; width: 200px; height: 300px; }
+html[data-ui2][data-ui2-page="offline"] .u2-off-g svg { width: 200px; height: 300px; }
+html[data-ui2][data-ui2-page="offline"] h1 { font: 400 32px/1.1 var(--serif); margin: 0 0 8px; }
+html[data-ui2][data-ui2-page="offline"] p { font-size: 16px; line-height: 23px; color: var(--ink-2); margin: 0 0 10px; }
+html[data-ui2][data-ui2-page="offline"] #retry { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 360px; min-height: 56px; margin: 16px auto 6px; border: 0; border-radius: 999px; background: var(--act); color: var(--on-act); font: 700 18px/1.15 var(--font); box-shadow: 0 6px 0 var(--act-edge); cursor: pointer; }
+html[data-ui2][data-ui2-page="offline"] #retry:active { transform: translateY(6px); box-shadow: none; }
+
