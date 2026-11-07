@@ -33,7 +33,7 @@ async function start(extra = {}) {
   for (const key of Object.keys(env)) if (env[key] === undefined) delete env[key];
   child = spawn(process.execPath, ['server.js'], { cwd: path.join(__dirname, '..'), env, stdio: 'ignore' });
   for (let i = 0; i < 300; i += 1) {
-    try { if ((await ask('GET', '/healthz', { direct: true })).status === 200) return; } catch { /* still starting */ }
+    try { if ((await ask('GET', '/api/auth/me', { direct: true })).status === 200) return; } catch { /* still starting */ }
     await sleep(200);
   }
   throw new Error('server did not start');

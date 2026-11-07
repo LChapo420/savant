@@ -192,7 +192,14 @@ async function runtime() {
     assert.strictEqual(s.calls.length, 1);
     assert.strictEqual(s.calls[0].task, 'fact_live');
     assert.ok(s.calls[0].user.includes('A reply.') && s.calls[0].user.includes('the page') && s.calls[0].user.includes('is it 3/4?'));
-    assert.deepStrictEqual(s.calls[0].excludeFamilies, ['deepseek'], 'another family than the writer checks');
+    // The same-family reader is the default for a waiting learner since 6 Nov 2026: the fast path, with the old one a switch away.
+    assert.ok(!s.calls[0].excludeFamilies, 'a waiting learner gets the fastest reader, even the writer\'s family');
+    process.env.FACT_LIVE_SAME_FAMILY = '0';
+    const s2 = stubChecker(() => CLEAN);
+    await guard.pass({ task: 'dock_help', req: { kind: 'chat', factSource: 'the page', messages: [{ role: 'user', content: 'is it 3/4?' }] }, userId: null, result: chat() });
+    s2.restore();
+    delete process.env.FACT_LIVE_SAME_FAMILY;
+    assert.deepStrictEqual(s2.calls[0].excludeFamilies, ['deepseek'], 'FACT_LIVE_SAME_FAMILY=0: another family than the writer checks');
   });
 
   await okAsync('tutor: wrong, then a checked second try is shown', async () => {
