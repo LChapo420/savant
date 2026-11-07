@@ -902,7 +902,7 @@ test('api: only the health check, the beacons and the form posts exist; any othe
     if (p === '/api/*') defined.add('ANY /api/*');
     else for (const m of Object.keys(layer.route.methods)) defined.add(`${m.toUpperCase()} ${p}`);
   }
-  assert.deepStrictEqual([...defined].sort(), ['GET /api/health', ...POSTS.map((n) => `POST /api/${n}`), 'ANY /api/*'].sort(), 'no other /api route exists');
+  assert.deepStrictEqual([...defined].sort(), ['GET /api/health', 'GET /api/signup-count', ...POSTS.map((n) => `POST /api/${n}`), 'ANY /api/*'].sort(), 'no other /api route exists');
   const catchAll = A.app._router.stack.filter((l) => l.route && l.route.path === '/api/*');
   assert.strictEqual(catchAll.length, 1);
   assert.ok(A.app._router.stack.indexOf(catchAll[0]) > Math.max(...A.app._router.stack.filter((l) => l.route && l.route.path.startsWith('/api/') && l !== catchAll[0]).map((l) => A.app._router.stack.indexOf(l))), 'the catch-all comes after every real /api route');
