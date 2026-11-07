@@ -55,15 +55,29 @@
   // voice would read the line in its default (English) voice, which teaches the
   // wrong sounds, so then nothing is spoken: a small notice offers a retry of the
   // server audio instead, and listening activities can be skipped without penalty
-  // ("Can't listen now", see session.js).
+  // ("Can't listen now", see session.js). Shown once in a sitting, not on every exercise: it goes when the next line comes up (a new exercise: the page has moved anyway, so nothing jumps under a finger), and does not come back.
   const NOTICE_TEXT = "Spanish audio isn't available right now. Tap to try again.";
   let lastLine = null;
   function hideNotice() {
     const n = document.querySelector('.es-audio-notice');
     if (n) n.remove();
   }
+  let noticeShown = false;
+  let noticeFor = null; // the line it came up on, and when: two lines spoken together on one screen must not take it away before it can be read
+  let noticeAt = 0;
+  function noticeAlreadyShown() {
+    if (noticeShown) return true;
+    try { return sessionStorage.getItem('es-audio-notice-shown') === '1'; } catch { return false; }
+  }
   function showNotice() {
-    if (document.querySelector('.es-audio-notice')) return;
+    if (noticeAlreadyShown()) {
+      if (noticeFor !== null && lastLine && lastLine.text !== noticeFor && Date.now() - noticeAt > 3000) hideNotice();
+      return;
+    }
+    noticeShown = true;
+    noticeFor = lastLine ? lastLine.text : null;
+    noticeAt = Date.now();
+    try { sessionStorage.setItem('es-audio-notice-shown', '1'); } catch { /* this page load still remembers */ }
     const host = document.getElementById('lesson-body') || document.getElementById('app') || document.body;
     const n = document.createElement('button');
     n.type = 'button'; n.className = 'es-audio-notice'; n.setAttribute('role', 'status');

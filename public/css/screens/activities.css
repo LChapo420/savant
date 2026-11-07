@@ -335,9 +335,9 @@
 /* ── 10. Spanish audio unavailable (no server voice, no Spanish browser voice) ── */
 .es-audio-notice {
   display: block; width: 100%; margin: 0 0 var(--es-space-3, 12px); padding: 10px 14px; text-align: left;
-  border: var(--es-border-width, 2px) solid var(--es-gold, #c90); border-radius: var(--es-radius-md, 12px);
-  background: color-mix(in srgb, var(--es-gold, #fc0) 16%, var(--es-bg, #fff)); color: var(--es-text, #111);
-  font: inherit; font-size: var(--es-text-sm, 15px); font-weight: var(--es-weight-sm, 700); cursor: pointer;
+  border: 1px solid var(--es-border, #ddd); border-radius: var(--es-radius-md, 12px);
+  background: transparent; color: var(--es-text-muted, #555);
+  font: inherit; font-size: var(--es-text-sm, 15px); font-weight: var(--es-weight-base, 400); cursor: pointer;
 }
 .es-audio-notice:hover { filter: brightness(.97); }
 
