@@ -81,7 +81,7 @@ async function examFor(src) {
   return out;
 }
 async function answerFrom(fam, material, q) {
-  const r = await J.askJ(fam, { system: 'You are a student with ONLY the study material below. Answer the question using nothing else. If the material does not contain what is needed, set found=false and leave the answer empty.', user: `Material:\n${material.slice(0, 20000)}\n\nQuestion: ${q.question}`, schema: { type: 'object', properties: { found: { type: 'boolean' }, answer: { type: 'string' } }, required: ['found', 'answer'] }, schemaName: 'exam_a', maxTokens: 2500 });
+  const r = await J.askJ(fam, { system: 'You are a student with ONLY the study material below. Answer the question using nothing else. If the material does not contain what is needed, set found=false and leave the answer empty.', user: `Material:\n${material.slice(0, 60000)}\n\nQuestion: ${q.question}`, schema: { type: 'object', properties: { found: { type: 'boolean' }, answer: { type: 'string' } }, required: ['found', 'answer'] }, schemaName: 'exam_a', maxTokens: 2500 });
   if (!r) return null; if (!r.found || !r.answer) return false;
   const g = await J.askJ(fam, { system: 'You grade a student answer against a reference answer. correct=true only if it gives the same facts (wording may differ).', user: `Question: ${q.question}\nReference answer: ${q.reference}\nStudent answer: ${r.answer}`, schema: { type: 'object', properties: { correct: { type: 'boolean' } }, required: ['correct'] }, schemaName: 'exam_g', maxTokens: 2500 });
   return g ? !!g.correct : null;
@@ -195,8 +195,12 @@ async function reexam() {
   for (const k of Object.keys(finals.exam)) if (!store.exam[k] || !store.exam[k].length) store.exam[k] = finals.exam[k];
   await J.pool(store.rows.filter((r) => r.tag === (process.env.FACT_TAG || 'base')), 4, async (r) => {
     const exam = store.exam[r.doc] || [];
-    for (const f of EXAM_JUDGES) { r.exam.raw[f] = await examRun(f, r.raw, exam); r.exam.raw2[f] = r.exam.raw[f]; r.exam.checked[f] = r.exam.raw[f]; }
-    console.log(`${r.doc}: ${EXAM_JUDGES.map((f) => `${f} ${r.exam.raw[f].filter(Boolean).length}/${exam.length}`).join(' ')}`);
+    // The exam reads the whole course: an earlier cap of 20,000 characters cut off the end of the longer ones.
+    for (const f of EXAM_JUDGES) {
+      if (process.env.REEXAM_ARM === 'checked') r.exam.checked[f] = await examRun(f, r.checked, exam);
+      else { r.exam.raw[f] = await examRun(f, r.raw, exam); r.exam.raw2[f] = r.exam.raw[f]; if (process.env.FACT_TAG === 'base') r.exam.checked[f] = r.exam.raw[f]; }
+    }
+    console.log(`${r.doc}: ${EXAM_JUDGES.map((f) => `${f} ${(r.exam[process.env.REEXAM_ARM === 'checked' ? 'checked' : 'raw'][f] || []).filter(Boolean).length}/${exam.length}`).join(' ')}`);
   });
   save(OUT, store);
 }
