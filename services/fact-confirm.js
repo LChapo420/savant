@@ -40,6 +40,7 @@ const POLICIES = {
 
 function decide(flag, policy = 'hard_or_three_families') {
   if (policy === 'any') return POLICIES.any(flag);
+  if (policy === 'any') return POLICIES.any(flag);
   if (flag.recompute === 'true' && !(flag.source === 'contradicted')) return { act: false, by: ['recomputed: it holds'] };
   const p = POLICIES[policy];
   if (!p) throw new Error(`no confirm policy ${policy}`);
