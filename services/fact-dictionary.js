@@ -100,6 +100,31 @@ async function passagesFor(sentence, language = 'Spanish', k = 3) {
   return out;
 }
 
+const ARTICLE = /(?:^|[\s"'(¿¡])(el|la|los|las|un|una)\s+(\p{L}{3,})/giu;
+/**
+ * Free and deterministic: article and noun pairs against Wiktionary's gender. Spanish lessons only. A flag is a suspicion to rule on: a noun can have two genders.
+ * A plain-pattern "word is meaning" check was tried and dropped: on the dev set it caught 0 of 40 plants and flagged all 16 clean levels. Word meanings go through checkPair and passagesFor instead.
+ */
+async function checkText(text) {
+  const flags = []; const seen = new Set();
+  const t = String(text || '');
+  for (const m of t.matchAll(ARTICLE)) {
+    const art = m[1].toLowerCase(); const noun = m[2].toLowerCase(); const key = `${art} ${noun}`;
+    if (seen.has(key) || /^(de|que|con|por|para|una|uno|muy|más|mas|misma|mismo|otra|otro)$/.test(noun)) continue;
+    seen.add(key);
+    const plural = /^(los|las)$/.test(art);
+    const entry = await lookup(noun, 'Spanish'); // eslint-disable-line no-await-in-loop
+    if (!entry || plural) continue;
+    if (!/\b(noun|masculine|feminine|\bm\b|\bf\b)/i.test(entry)) continue;
+    const says = /^(el|un)$/.test(art) ? 'masculine' : 'feminine';
+    const hasM = /\bmasculine\b/i.test(entry); const hasF = /\bfeminine\b/i.test(entry);
+    if (!(hasM || hasF) || (hasM && hasF)) continue;
+    if (says === 'masculine' && hasF && /^h?[aá]/.test(noun)) continue; // el agua, un hacha: feminine nouns with a stressed first a
+    if ((says === 'masculine' && hasF) || (says === 'feminine' && hasM)) flags.push({ claim: key, why: `Wiktionary marks ${noun} as ${hasF ? 'feminine' : 'masculine'}, the lesson uses ${art}.`, truth: `${hasF ? 'la' : 'el'} ${noun}`, rule: 'dictionary_gender' });
+  }
+  return flags;
+}
+
 async function isUp() { const h = await get(`${KIWIX()}/catalog/v2/entries`); return !!h; }
 
-module.exports = { isOn, lookup, checkPair, checkForm, passagesFor, isUp };
+module.exports = { isOn, lookup, checkPair, checkForm, checkText, passagesFor, isUp };
