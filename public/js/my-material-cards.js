@@ -44,7 +44,7 @@ App.mount(async () => {
       <div class="card" role="group" aria-label="Flashcard">
         <p class="tiny muted" style="margin:0 0 6px">${esc(SOURCE[c.source] || '')}${c.skill_title ? ` · ${esc(c.skill_title)}` : ''}</p>
         <p style="font-size:1.1em"><strong>${esc(c.front)}</strong></p>
-        ${shown ? `<p>${esc(c.back)}</p>${c.misconception ? `<p class="small">Watch out: ${esc(c.misconception)}</p>` : ''}${c.quote ? `<p class="tiny muted">From your material: “${esc(c.quote)}”</p>` : ''}` : ''}
+        ${shown ? `<p>${esc(c.back)}</p>${c.misconception ? `<p class="small">Watch out: ${esc(c.misconception)}</p>` : ''}${c.quote ? `<p class="tiny muted">From your material: “${esc(c.quote)}”</p>` : ''}${c.source !== 'own' ? `<div data-part="card:${esc(c.id)}" data-changed="${c.part_changed ? 1 : 0}"></div>` : ''}` : ''}
       </div>
       ${shown
     ? `<div style="display:flex;gap:8px;flex-wrap:wrap" role="group" aria-label="How well did you know it?">${[['again', 'Again'], ['hard', 'Hard'], ['good', 'Good'], ['easy', 'Easy']].map(([k, l]) => `<button class="btn" type="button" data-rate="${k}" style="flex:1;min-width:70px">${l}</button>`).join('')}</div>`
@@ -55,7 +55,8 @@ App.mount(async () => {
     const rows = deck.cards.map((c) => `<li class="card" style="list-style:none;margin-bottom:8px">
       <p style="margin:0"><strong>${esc(c.front)}</strong></p><p class="small" style="margin:4px 0">${esc(c.back)}</p>
       <p class="tiny muted" style="margin:0 0 6px">${esc(SOURCE[c.source] || '')}${c.edited ? ' · edited' : ''}${c.skill_title ? ` · ${esc(c.skill_title)}` : ''} · ${c.due ? 'due now' : `due ${when(c.due_at)}`}</p>
-      <button class="btn btn-sm" type="button" data-edit="${esc(c.id)}">Edit</button> <button class="btn btn-sm" type="button" data-del="${esc(c.id)}">Delete</button></li>`).join('');
+      ${c.set_aside ? '<p class="tiny muted" style="margin:0 0 6px">Set aside by your goal: it stays here and is not due.</p>' : ''}
+      <button class="btn btn-sm" type="button" data-edit="${esc(c.id)}">Edit</button> <button class="btn btn-sm" type="button" data-del="${esc(c.id)}">Delete</button>${c.source !== 'own' ? `<div data-part="card:${esc(c.id)}" data-changed="${c.part_changed ? 1 : 0}"></div>` : ''}</li>`).join('');
     return `<ul style="padding:0;margin:0">${rows || '<li class="muted" style="list-style:none">No cards yet.</li>'}</ul>`;
   }
 
@@ -63,7 +64,7 @@ App.mount(async () => {
     root.innerHTML = `<p class="small"><a href="/my-material">&larr; My material</a> · <a href="/my-material-pack?id=${encodeURIComponent(id)}">Study pack</a></p>
       <h1>Flashcards</h1>
       <p class="small muted">${deck.total} cards, ${deck.due_count} due. Cards are timed to your forgetting curve, the same way the learning path schedules its skills. Cards and edits stay private to you and are deleted with the material.</p>
-      <div role="tablist" style="display:flex;gap:8px;margin:12px 0">
+      <div role="tablist" style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0">
         <button class="btn btn-sm${mode === 'review' ? ' btn-primary' : ''}" type="button" data-mode="review">Review</button>
         <button class="btn btn-sm${mode === 'deck' ? ' btn-primary' : ''}" type="button" data-mode="deck">All cards</button>
         <button class="btn btn-sm" type="button" data-edit="new">Add a card</button>
@@ -71,6 +72,7 @@ App.mount(async () => {
       ${pickNote ? `<p class="small muted">${esc(pickNote)}</p>` : ''}
       ${editing ? cardForm(editing === 'new' ? null : byId(editing)) : (mode === 'review' ? reviewHtml() : deckHtml())}`;
     root.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => { mode = b.dataset.mode; editing = null; render(); }));
+    if (window.PartChange) window.PartChange.wire(root, id, async (r) => { if (!r.part) return; const c = byId(r.part.ref.slice(5)); if (c) { c.front = r.part.front; c.back = r.part.back; c.part_changed = r.part.changed; render(); } });
     root.querySelectorAll('[data-edit]').forEach((b) => b.addEventListener('click', () => { editing = b.dataset.edit; render(); }));
     const pickBtn = document.getElementById('pick');
     if (pickBtn) pickBtn.addEventListener('click', async () => {

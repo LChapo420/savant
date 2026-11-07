@@ -401,7 +401,7 @@ function view(p) {
   const stale = p.status === 'building' && !inflight.has(`${p.user_id}:${p.material_id}:${p.kind}`); // died with a crash or a restart
   return {
     material_id: p.material_id, kind: p.kind, title: p.title, status: stale ? 'failed' : p.status,
-    skills: p.skills || [], turns: (p.turns || []).map((t) => ({ host: t.host, text: t.text, quote: t.quote || null })),
+    skills: p.skills || [], turns: require('./material-parts').overlayTurns(p.user_id, p.material_id, p.kind, (p.turns || []).map((t) => ({ host: t.host, text: t.text, quote: t.quote || null }))), // eslint-disable-line global-require
     checkins: (p.checkins || []).map((c) => ({ id: c.id, after: c.after, skill: c.skill, skill_title: c.skill_title, prompt: c.prompt, choices: c.choices, source: c.source })),
     built_at: p.finished_at || null,
   };

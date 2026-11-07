@@ -47,9 +47,9 @@ App.mount(async () => {
     if (r && r.type === 'written') {
       verdict = `<p class="small"><strong>Model answer:</strong> ${esc(r.model_answer)}</p><p class="small">A good answer covers: ${r.key_points.map(esc).join('; ')}.</p><p class="tiny muted">From your material: “${esc(r.quote)}”. Check your own answer against this.</p>`;
     } else if (r) {
-      verdict = `<p class="small"><strong>${r.correct ? 'Right.' : `Not quite. The answer is: ${esc(r.correct_answer)}.`}</strong> ${esc(r.explanation || '')}</p><p class="tiny muted">From your material: “${esc(r.quote)}”</p>`;
+      verdict = `<p class="small"><strong>${r.correct ? 'Right.' : `Not quite. The answer is: ${esc(r.correct_answer)}.`}</strong> ${esc(r.explanation || '')}</p><p class="tiny muted">From your material: “${esc(r.quote)}”</p><div data-part="pack:${esc(tabName)}:${esc(r.id)}" data-changed="0"></div>`;
     }
-    return `<li style="padding:10px 0"><p><strong>${i + 1}.</strong> ${esc(q.prompt)}</p>${input}${verdict}</li>`;
+    return `<li style="padding:10px 0"><p><strong>${i + 1}.</strong> ${esc(q.prompt)}</p>${input}${verdict}${r ? `<div data-part="pack:${esc(section)}:${esc(q.id)}" data-changed="${q.part_changed ? 1 : 0}"></div>` : ""}</li>`;
   }
 
   function section(name) {
@@ -64,13 +64,13 @@ App.mount(async () => {
 
   function body() {
     if (tab === 'summary') {
-      return `<div class="card">${pack.summary.length ? pack.summary.map((p) => `<p>${esc(p)}</p>`).join('') : '<p class="muted">No summary was written for this material.</p>'}</div>`;
+      return `<div class="card">${pack.summary.length ? pack.summary.map((p) => `<p>${esc(p)}</p>`).join('') : '<p class="muted">No summary was written for this material.</p>'}${pack.summary.length ? '<div data-part="summary" data-changed="0"></div>' : ''}</div>`;
     }
     if (tab === 'cards') {
       if (!pack.cards.length) return '<p class="muted">No flashcards passed the checks for this material.</p>';
       return `<p class="small muted">${pack.cards.length} cards. Tap a card to flip it. <a href="/my-material-cards?id=${encodeURIComponent(id)}">Review, edit and add cards (spaced)</a></p><div>${pack.cards.map((c) => {
         const open = flipped.has(c.id);
-        return `<button type="button" class="card" data-card="${esc(c.id)}" aria-expanded="${open}" style="display:block;width:100%;text-align:left;margin-bottom:10px"><strong>${esc(c.front)}</strong>${open ? `<p style="margin:8px 0 0">${esc(c.back)}</p><p class="tiny muted" style="margin:6px 0 0">From your material: “${esc(c.quote)}”</p>` : ''}</button>`;
+        return `<button type="button" class="card" data-card="${esc(c.id)}" aria-expanded="${open}" style="display:block;width:100%;text-align:left;margin-bottom:10px"><strong>${esc(c.front)}</strong>${open ? `<p style="margin:8px 0 0">${esc(c.back)}</p><p class="tiny muted" style="margin:6px 0 0">From your material: “${esc(c.quote)}”</p>` : ''}</button>${open ? `<div data-part="packcard:${esc(c.id)}" data-changed="${c.part_changed ? 1 : 0}"></div>` : ''}`;
       }).join('')}</div>`;
     }
     return section(tab);
@@ -84,6 +84,7 @@ App.mount(async () => {
       <div class="row-wrap" role="tablist" style="gap:8px;margin:12px 0">${TABS.map(([k, label]) => `<button type="button" class="btn btn-sm${k === tab ? ' btn-primary' : ''}" role="tab" aria-selected="${k === tab}" data-tab="${k}">${label}</button>`).join('')}</div>
       <div id="tab-body">${body()}</div>`;
     root.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => { tab = b.dataset.tab; render(); }));
+    if (window.PartChange) window.PartChange.wire(root, id, () => { load(); });
     root.querySelectorAll('[data-card]').forEach((b) => b.addEventListener('click', () => { const k = b.dataset.card; if (flipped.has(k)) flipped.delete(k); else flipped.add(k); render(); }));
     const mineBox = document.getElementById('mine');
     if (mineBox) mineBox.addEventListener('change', () => { mine = mineBox.checked; delete marked.quiz; delete marked.test; load(); });

@@ -52,7 +52,7 @@ const COLLECTIONS = [
   'subject_placements',      // a learner's walk up a whole subject, and the percentages it produced
   'game_payloads',           // the questions for a game level: written once, validated, kept
   'block_plans',             // a block level's layout and content: per learner, or shared per level
-  'part_changes',            // a learner's own wording of one lesson block, asked for by them (services/part-change.js)
+  'material_part_changes', 'part_changes',            // a learner's own wording of one lesson block, asked for by them (services/part-change.js)
   'lesson_layers',           // the personal layer over a shared lesson (services/lesson-layer.js): text only, per learner and plan
   'fact_recheck_findings',   // what the background re-check of old stored text found (services/fact-recheck.js): a reference, a quote and a reason, no learner
   'fact_recheck_state',      // where that job has got to, one row

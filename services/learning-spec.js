@@ -865,7 +865,7 @@ function buildSpecFrom(input) {
   spec.aversionNotes = ctx.aversions.filter((a) => FORMAT_AVERSIONS.has(a) || a === ctx.topicDomain).map((a) => AVERSION_NOTE[a]).filter(Boolean);
   spec.ownerBase = !!inp.owner;
   // The learner's study goal (services/study-goal.js): core parts fast, ready for a test; full depth (the default) changes nothing.
-  try { require('./study-goal').applyToSpec(spec, inp.studyGoal); } catch { /* full depth */ } // eslint-disable-line global-require
+  try { require('./study-goal').applyToSpec(spec, inp.studyGoal, inp.materialId ? 'material' : null); } catch { /* full depth */ } // eslint-disable-line global-require
   spec.provenance = Object.fromEntries(LEVER_IDS.filter((l) => who[l].length).map((l) => [l, who[l].sort((a, b) => Math.abs(b.pull) - Math.abs(a.pull)).slice(0, 4)]));
   return spec;
 }

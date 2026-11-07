@@ -122,7 +122,11 @@ function deck(userId, materialId, now = Date.now()) {
   const course = courses.get(userId, materialId);
   const titles = {};
   for (const s of (course && course.skills) || []) titles[s.id] = s.title;
-  const cards = r.cards.map((c) => viewCard(c, now, titles));
+  // A learner's change to a card (services/material-parts.js) is laid over the stored card; the goal's core reading sets some pack cards aside without taking them off the deck.
+  const parts = require('./material-parts'); // eslint-disable-line global-require
+  const stored = r.cards.map((c) => viewCard(c, now, titles));
+  const keeps = parts.goalKeeps(userId, materialId, stored.map((c) => `${c.front} ${c.back}`));
+  const cards = parts.overlayCards(userId, materialId, stored).map((c, i) => (keeps[i] || c.source !== 'pack' ? c : { ...c, set_aside: true }));
   const upcoming = r.cards.filter((c) => !isDue(c, now)).map((c) => Date.parse(c.due)).sort((a, b) => a - b)[0];
   return { cards, total: cards.length, due_count: cards.filter((c) => c.due).length, next_due_at: upcoming ? new Date(upcoming).toISOString() : null, added };
 }
@@ -131,7 +135,7 @@ function deck(userId, materialId, now = Date.now()) {
 function due(userId, materialId, limit = 20, now = Date.now()) {
   const d = deck(userId, materialId, now);
   if (d.error) return d;
-  const cards = d.cards.filter((c) => c.due).sort((a, b) => (Date.parse(a.due_at) || 0) - (Date.parse(b.due_at) || 0)).slice(0, Math.max(1, Math.min(50, limit)));
+  const cards = d.cards.filter((c) => c.due && !c.set_aside).sort((a, b) => (Date.parse(a.due_at) || 0) - (Date.parse(b.due_at) || 0)).slice(0, Math.max(1, Math.min(50, limit)));
   return { cards, due_count: d.due_count, total: d.total };
 }
 
@@ -153,7 +157,7 @@ function pick(userId, materialId, limit = 20, now = Date.now()) {
   let skipped = 0;
   const chosen = [];
   for (const c of d.cards) {
-    if (!c.due) continue;
+    if (!c.due || c.set_aside) continue;
     if (c.reviews === 0 && c.skill && known.has(c.skill)) { skipped++; continue; }
     chosen.push(c);
   }

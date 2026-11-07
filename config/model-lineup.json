@@ -928,7 +928,7 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7",
+          "grokified:grok-4.3",
           "coral:deepseek-v4.1-flash"
         ],
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
@@ -939,7 +939,7 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7",
+          "grokified:grok-4.3",
           "coral:deepseek-v4.1-flash"
         ],
         "timeout_ms": 300000,
@@ -951,7 +951,7 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7",
+          "grokified:grok-4.3",
           "coral:deepseek-v4.1-flash"
         ],
         "timeout_ms": 300000,
@@ -963,7 +963,7 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7",
+          "grokified:grok-4.3",
           "coral:deepseek-v4.1-flash"
         ],
         "timeout_ms": 300000,
@@ -975,7 +975,7 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7",
+          "grokified:grok-4.3",
           "coral:deepseek-v4.1-flash"
         ],
         "timeout_ms": 300000,
@@ -987,11 +987,33 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7",
+          "grokified:grok-4.3",
           "coral:deepseek-v4.1-flash"
         ],
         "timeout_ms": 300000,
         "basis": "round 3 (6 Nov 2026): the checked rewrite of a lesson for its learner; a learner waits on it, so the same cheap paid overflow list as material_lesson."
+      },
+      "material_part_change": {
+        "allow": [
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "gonka:zai-org/GLM-5.3-Flash"
+        ],
+        "timeout_ms": 45000,
+        "basis": "uploads-beta (7 Nov 2026): a learner is waiting on a change to a part of their upload; the same cheap paid list as material_lesson, with a short deadline."
+      },
+      "material_part_example": {
+        "allow": [
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "gonka:zai-org/GLM-5.3-Flash"
+        ],
+        "timeout_ms": 30000,
+        "basis": "uploads-beta (7 Nov 2026): a labelled made-up example a learner asked for."
       },
       "material_pack": {
         "allow": [
@@ -999,7 +1021,7 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7",
+          "grokified:grok-4.3",
           "coral:deepseek-v4.1-flash"
         ],
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
@@ -1010,7 +1032,7 @@
           "munito:zai-org/glm-5.3-flash",
           "gonka:zai-org/GLM-5.3-Flash",
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
-          "grokified:grok-4.7",
+          "grokified:grok-4.3",
           "coral:deepseek-v4.1-flash"
         ],
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed."
@@ -1023,7 +1045,6 @@
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
           "grokified:grok-4.3",
           "coral:deepseek-v4.1-flash",
-          "lyceum:z-ai/glm-5.3",
           "crouton:stealth/crouton-alpha"
         ],
         "basis": "a learner waiting on it overflows to Munito after 8 s (owner, 3 Nov 2026, instant); same DeepSeek V4.1 Flash / GLM as lesson_write, capability by tier, not measured on this task. Background work never uses it for speed.; Lyceum by value (owner, 2026-11-04, real cost per Mtok: GLM-5.3 $3.3 with 98% planted-swap catch, Kimi K3 $8.4 at 94.5%, DeepSeek V4 Pro $3 at 88%, Qwen 2.4T $4.7 mostly errors): GLM-5.3 only, Kimi K3 kept as the second-family judge (it sorts last on price)"
@@ -1036,19 +1057,32 @@
           "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
           "grokified:grok-4.3",
           "coral:deepseek-v4.1-flash",
-          "lyceum:z-ai/glm-5.3",
           "crouton:stealth/crouton-alpha"
         ],
         "basis": "the sentence-by-sentence fact check of a lesson (docs/UPLOADS-ANY-FORMAT.md section 17); runs beside material_verify while a learner waits, so the same cheap list."
       },
       "material_factcheck_glm": {
-        "only": ["*glm*", "*GLM*"],
-        "allow": ["*glm*", "*GLM*"],
-        "basis": "second reader of the fact check when the first was another family: measured, two families left fewer invented facts than one (docs/UPLOADS-ANY-FORMAT.md section 17)."
+        "only": [
+          "*glm-5.3-flash*",
+          "*GLM-5.3-Flash*",
+          "grokified:grok-4.3"
+        ],
+        "allow": [
+          "*glm-5.3-flash*",
+          "*GLM-5.3-Flash*",
+          "grokified:grok-4.3"
+        ],
+        "basis": "second reader of the fact check when the first was another family: measured, two families left fewer invented facts than one (docs/UPLOADS-ANY-FORMAT.md section 17). uploads-beta (7 Nov 2026): a real upload run spent $4.81 in 114 calls here on lyceum:z-ai/glm-5.3 (about 8 cents each, counted at the estimate when a deadline cut it): every other GLM was past its deadline. Flash only, and Grok 4.3 (about a tenth of a cent) as the other family."
       },
       "material_factcheck_deepseek": {
-        "only": ["*deepseek*", "*DeepSeek*"],
-        "allow": ["*deepseek*", "*DeepSeek*"],
+        "only": [
+          "*deepseek*",
+          "*DeepSeek*"
+        ],
+        "allow": [
+          "*deepseek*",
+          "*DeepSeek*"
+        ],
         "basis": "second reader of the fact check when the first was GLM (docs/UPLOADS-ANY-FORMAT.md section 17)."
       },
       "essay_grade": {
@@ -1142,20 +1176,42 @@
         "basis": "Munito DeepSeek V4 Flash for a lighter task (owner, 3 Nov: the most price-efficient capable model; capability by tier, not measured)"
       },
       "part_modify": {
-        "only": ["gonka:deepseek-ai/DeepSeek-V4-Flash-0731","coral:deepseek-v4.1-flash","munito:deepseek-ai/deepseek-v4.1-flash-1017"],
-        "allow": ["gonka:deepseek-ai/DeepSeek-V4-Flash-0731", "coral:deepseek-v4.1-flash", "munito:deepseek-ai/deepseek-v4.1-flash-1017"],
+        "only": [
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "coral:deepseek-v4.1-flash",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017"
+        ],
+        "allow": [
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "coral:deepseek-v4.1-flash",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017"
+        ],
         "timeout_ms": 30000,
         "basis": "Rewrites of one stored text for one learner (services/part-modify.js, part-change.js): cheap writers on prepaid credit, each draft held to the gate; the models the proofs used (docs/part-modify)."
       },
       "part_gate_a": {
-        "only": ["grokified:grok-4.3","grokified:grok-4.7"],
-        "allow": ["grokified:grok-4.3", "grokified:grok-4.7"],
+        "only": [
+          "grokified:grok-4.3",
+          "grokified:grok-4.7"
+        ],
+        "allow": [
+          "grokified:grok-4.3",
+          "grokified:grok-4.7"
+        ],
         "timeout_ms": 30000,
         "basis": "First reading of a rewrite against its original (services/part-modify.js defaultGate). Grok caught dropped rules DeepSeek passed; measured in docs/part-modify/judge-cal.json."
       },
       "part_gate_b": {
-        "only": ["gonka:deepseek-ai/DeepSeek-V4-Flash-0731","coral:deepseek-v4.1-flash","munito:deepseek-ai/deepseek-v4.1-flash-1017"],
-        "allow": ["gonka:deepseek-ai/DeepSeek-V4-Flash-0731", "coral:deepseek-v4.1-flash", "munito:deepseek-ai/deepseek-v4.1-flash-1017"],
+        "only": [
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "coral:deepseek-v4.1-flash",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017"
+        ],
+        "allow": [
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "coral:deepseek-v4.1-flash",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017"
+        ],
         "timeout_ms": 30000,
         "basis": "Second reading by another family; measured in docs/part-modify/judge-cal.json."
       },
@@ -1187,6 +1243,26 @@
         ],
         "timeout_ms": 8000,
         "basis": "services/fact-guard.js: the check before model text reaches a learner. scripts/fact-guard-eval.js, docs/FACT-COVERAGE.md. A waiting learner goes to the paid slots first (cheap, fast); background work to the free ones first. Learner data on the added providers only until their window closes (14 Nov); then NVIDIA alone."
+      },
+      "material_part_read_a": {
+        "allow": [
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast",
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731"
+        ],
+        "timeout_ms": 30000,
+        "basis": "uploads-beta (7 Nov 2026): first reader of a change a learner waits on, DeepSeek family, fastest slots."
+      },
+      "material_part_read_b": {
+        "allow": [
+          "grokified:grok-4.3",
+          "zerogpu:z-ai/glm-5.3-flash",
+          "gonka:zai-org/GLM-5.3-Flash",
+          "munito:zai-org/glm-5.3-flash"
+        ],
+        "timeout_ms": 30000,
+        "basis": "uploads-beta (7 Nov 2026): second reader of a change a learner waits on: another family, Grok first because GLM took 55 s under load in the probe."
       }
     }
   }
