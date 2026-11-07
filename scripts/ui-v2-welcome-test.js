@@ -119,7 +119,7 @@ async function main() {
               assert.deepStrictEqual(m.clipped, []);
               for (const p of m.parts) assert(p.w > 0 && p.l >= 0 && p.r <= m.vw + 0.5, `${p.s} runs off the side`);
               // Owner, 7 Nov: the wordmark sat right of centre (the invisible back button still took its space).
-              { const wm = m.parts[0]; const mid = (wm.l + wm.r) / 2; const frame = welcome === 'card' ? (m.card.l + m.card.r) / 2 : m.vw / 2; assert(Math.abs(mid - frame) <= 1.5, `wordmark is ${(mid - frame).toFixed(1)} px off centre`); }
+              { const wm = m.parts[0]; const mid = (wm.l + wm.r) / 2; const frame = (m.card.l + m.card.r) / 2; assert(Math.abs(mid - frame) <= 1.5, `wordmark is ${(mid - frame).toFixed(1)} px off centre`); }
               if (welcome === 'card') {
                 assert(!m.giraffe, 'no giraffe on the card');
                 assert(m.pattern && m.pattern.mask && m.pattern.opacity <= 0.25, 'a faint pattern');

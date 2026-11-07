@@ -42,7 +42,7 @@ html[data-ui2] .ob[data-layout="hero"] .bubble { flex: none; order: 0; align-sel
 html[data-ui2] .ob[data-layout="hero"] .bubble::before { left: calc(50% - 6.5px); top: auto; bottom: -7.5px; border: 0; border-right: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line); }
 html[data-ui2] .ob[data-layout="hero"] .bubble .m { display: block; font-size: 23px; line-height: 1.26; }
 html[data-ui2] .ob[data-screen="hello"] .bubble-text { font-weight: 400; font-size: 18px; line-height: 1.3; }
-html[data-ui2] .ob[data-screen="welcome"] .ob-top { justify-content: center; height: 60px; padding-top: 22px; }
+html[data-ui2] .ob[data-screen="welcome"] .ob-top { justify-content: center; gap: 0; height: 60px; padding: 22px 16px 0; }
 /* On the welcome the back button is only made invisible (start.js), so it still took 40 px plus the gap and pushed the wordmark off centre. */
 html[data-ui2] .ob[data-screen="welcome"] .ob-top .ob-back, html[data-ui2] .ob[data-screen="welcome"] .ob-top .bar { display: none; }
 html[data-ui2] .ob[data-screen="welcome"] .bubble { display: none; }
