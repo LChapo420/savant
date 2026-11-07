@@ -86,7 +86,7 @@ function today() {
 }
 
 function usageToday(userId) {
-  return db.findOne('ai_usage', (u) => u.user_id === userId && u.day === today())
+  return (db.forUser('ai_usage', userId).find((u) => u.day === today()) || null)
     || { cents: 0, calls: 0 };
 }
 
@@ -102,6 +102,13 @@ function withinBudget(userId) {
   if (!userId) return true;
   const usage = usageToday(userId);
   return usage.cents < DAILY_CENTS && usage.calls < DAILY_CALLS;
+}
+
+/** Has this learner used less than this share of today's AI budget? For background extras, which must leave the tutor its room. */
+function budgetShareLeft(userId, share = 0.5) {
+  if (!userId) return true;
+  const usage = usageToday(userId);
+  return usage.cents < DAILY_CENTS * share && usage.calls < DAILY_CALLS * share;
 }
 
 /**
@@ -422,7 +429,7 @@ function cacheKey(skillId, difficulty) {
 
 /** Items this learner has already been served, so the cache does not repeat. */
 function seenPrompts(userId, limit = 400) {
-  const rows = db.find('items', (i) => i.user_id === userId);
+  const rows = db.forUser('items', userId).slice();
   return new Set(rows.slice(-limit).map((i) => i.prompt));
 }
 
@@ -2085,6 +2092,7 @@ ${learnerBrief(userId, { skillId: area.skill_id, skillName: area.skill_name, lev
 }
 
 module.exports = {
+  budgetShareLeft,
   outsideOk: (userId) => (userId ? outsideAllowed(userId) : true),
   canBuild,
   coachSystemFor, // the tutor's system prompt for one question (read by scripts/part-modify-proof.js)

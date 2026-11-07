@@ -336,7 +336,7 @@ function gapDaysOf(userId, ids, enrollments, now, tz) {
   const schedule = lazy('./retention-schedule');
   const today = schedule.dateNumber(schedule.localDate(now, tz));
   let last = 0;
-  for (const s of db.find('sessions', (x) => x.user_id === userId && ids.has(x.enrollment_id))) {
+  for (const s of db.forUser('sessions', userId).filter((x) => ids.has(x.enrollment_id))) {
     const t = Date.parse(s.ended_at || s.started_at || 0);
     if (Number.isFinite(t) && t > last && t <= now) last = t;
   }
@@ -405,7 +405,7 @@ function enforcerState(userId, now) {
   const schedule = lazy('./retention-schedule');
   try {
     const validity = params.load().validity_ms;
-    for (const row of db.find('enforcers', (x) => x.user_id === userId && (x.status === 'running' || x.status === 'choosing'))) {
+    for (const row of db.forUser('enforcers', userId).filter((x) => (x.status === 'running' || x.status === 'choosing'))) {
       // An end-of-session offer lapses after 24 hours, an end-of-day one after 48 (enforcers.expire retires them; read-only here).
       if (!enforcers.SCHEDULED.has(row.scope) && now - (Date.parse(row.offered_at || row.created_at) || now) > (row.scope === 'day' ? validity.day : validity.session)) continue;
       let est = 4;
@@ -453,7 +453,7 @@ function gather(userId, { now = Date.now(), minutes = DEFAULT_MINUTES, paces = n
   let session = { minutes: 20, breakEveryMinutes: 15, breakMinutes: 3 };
   try { const spec = lazy('./learning-spec').buildSpec(userId, {}); if (spec && spec.session) session = spec.session; } catch { /* the default stands */ }
 
-  const rows = db.find('enrollments', (e) => e.user_id === userId && (e.status === 'active' || e.status === 'placement_pending'));
+  const rows = db.forUser('enrollments', userId).filter((e) => (e.status === 'active' || e.status === 'placement_pending'));
   // Catch-up enrollments hang under the grade they lead to, in the route's order.
   const parentOf = new Map();
   const routes = new Map();

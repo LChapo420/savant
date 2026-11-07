@@ -115,13 +115,14 @@ App.mount(async () => {
       <h1>${esc(s.title)}</h1>
       ${s.source === 'general' ? `<p>${GENERAL}</p>` : ''}
       ${fix}
-      <div class="card">${s.lesson.paragraphs.map((p) => `<p>${esc(p)}</p>`).join('')}
+      <div class="card"><div id="lesson-text">${s.lesson.paragraphs.map((p) => `<p>${esc(p)}</p>`).join('')}</div><div id="lesson-change"></div>
         ${s.lesson.key_points && s.lesson.key_points.length ? `<h2>Key points</h2><ul>${s.lesson.key_points.map((k) => `<li>${esc(k)}</li>`).join('')}</ul>` : ''}</div>
       <h2 style="margin-top:18px">Practice</h2><p class="small muted">Answer one at a time. This does not count toward mastery.</p>
       ${s.practice.map((q, i) => qHtml(q, i, 'p')).join('')}
       <div class="card" style="margin-top:18px"><h2>Ready?</h2><p class="small">The check has about 5 questions at tier ${s.tier} of 3, with no feedback until the end. 75% masters the skill.</p><button class="btn btn-primary" id="mastery" type="button">Take the check</button></div>`;
     document.getElementById('back').addEventListener('click', (e) => { e.preventDefault(); map(); });
     document.getElementById('mastery').addEventListener('click', () => quiz('mastery', skillId));
+    if (window.PartChange) window.PartChange.attach(document.getElementById('lesson-change'), { ref: { material_id: id, skill_id: skillId }, changed: !!s.lesson.prev, onResult: (r) => { if (r.paragraphs) document.getElementById('lesson-text').innerHTML = r.paragraphs.map((p) => `<p>${esc(p)}</p>`).join(''); } });
     s.practice.forEach((q, i) => {
       const card = root.querySelector(`[data-q="${q.id}"]`);
       const btn = document.createElement('button');

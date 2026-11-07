@@ -1,0 +1,264 @@
+{
+ "measured_on": "this PC",
+ "db_bytes": 182705572,
+ "results": [
+  {
+   "kind": "random kill",
+   "boot_ms": 5303,
+   "after": {
+    "parse_ok": true,
+    "orphan_items": 0,
+    "orphan_enrollments": 1,
+    "dup_ids": 0,
+    "bad_counters": 0,
+    "users": 228,
+    "items": 100283
+   },
+   "loss": {
+    "acked": 140,
+    "lost": 60,
+    "oldest_lost_ms": 6904
+   },
+   "tmp_left": false,
+   "restart": {
+    "boot_ms": 6315,
+    "up": true,
+    "still_signed_in": true,
+    "login_status": 200
+   }
+  },
+  {
+   "kind": "random kill",
+   "boot_ms": 5237,
+   "after": {
+    "parse_ok": true,
+    "orphan_items": 0,
+    "orphan_enrollments": 1,
+    "dup_ids": 0,
+    "bad_counters": 0,
+    "users": 228,
+    "items": 100283
+   },
+   "loss": {
+    "acked": 100,
+    "lost": 20,
+    "oldest_lost_ms": 930
+   },
+   "tmp_left": false,
+   "restart": {
+    "boot_ms": 5356,
+    "up": true,
+    "still_signed_in": true,
+    "login_status": 200
+   }
+  },
+  {
+   "kind": "random kill",
+   "boot_ms": 4630,
+   "after": {
+    "parse_ok": true,
+    "orphan_items": 0,
+    "orphan_enrollments": 1,
+    "dup_ids": 0,
+    "bad_counters": 0,
+    "users": 208,
+    "items": 100123
+   },
+   "loss": {
+    "acked": 100,
+    "lost": 100,
+    "oldest_lost_ms": 6642
+   },
+   "tmp_left": false,
+   "restart": {
+    "boot_ms": 5419,
+    "up": true,
+    "still_signed_in": false,
+    "login_status": 401
+   }
+  },
+  {
+   "kind": "mid-flush",
+   "boot_ms": 6023,
+   "after": {
+    "parse_ok": true,
+    "orphan_items": 0,
+    "orphan_enrollments": 1,
+    "dup_ids": 0,
+    "bad_counters": 0,
+    "users": 228,
+    "items": 100243
+   },
+   "crashed_as_planned": true,
+   "loss": {
+    "acked": 120,
+    "lost": 60,
+    "oldest_lost_ms": 6992
+   },
+   "tmp_left": true,
+   "restart": {
+    "boot_ms": 7872,
+    "up": true,
+    "still_signed_in": true,
+    "login_status": 200
+   }
+  },
+  {
+   "kind": "mid-flush",
+   "boot_ms": 7848,
+   "after": {
+    "parse_ok": true,
+    "orphan_items": 0,
+    "orphan_enrollments": 1,
+    "dup_ids": 0,
+    "bad_counters": 0,
+    "users": 228,
+    "items": 100245
+   },
+   "crashed_as_planned": true,
+   "loss": {
+    "acked": 123,
+    "lost": 63,
+    "oldest_lost_ms": 7825
+   },
+   "tmp_left": true,
+   "restart": {
+    "boot_ms": 7878,
+    "up": true,
+    "still_signed_in": true,
+    "login_status": 200
+   }
+  },
+  {
+   "kind": "before-rename",
+   "boot_ms": 7982,
+   "after": {
+    "parse_ok": true,
+    "orphan_items": 0,
+    "orphan_enrollments": 1,
+    "dup_ids": 0,
+    "bad_counters": 0,
+    "users": 208,
+    "items": 100123
+   },
+   "crashed_as_planned": true,
+   "loss": {
+    "acked": 60,
+    "lost": 60,
+    "oldest_lost_ms": 8052
+   },
+   "tmp_left": true,
+   "restart": {
+    "boot_ms": 8523,
+    "up": true,
+    "still_signed_in": false,
+    "login_status": 401
+   }
+  },
+  {
+   "kind": "before-rename",
+   "boot_ms": 7890,
+   "after": {
+    "parse_ok": true,
+    "orphan_items": 0,
+    "orphan_enrollments": 1,
+    "dup_ids": 0,
+    "bad_counters": 0,
+    "users": 228,
+    "items": 100243
+   },
+   "crashed_as_planned": true,
+   "loss": {
+    "acked": 120,
+    "lost": 60,
+    "oldest_lost_ms": 8360
+   },
+   "tmp_left": true,
+   "restart": {
+    "boot_ms": 8562,
+    "up": true,
+    "still_signed_in": true,
+    "login_status": 200
+   }
+  },
+  {
+   "kind": "disk full, then clears",
+   "boot_ms": 8144,
+   "during_full": {
+    "answers_acknowledged": 20,
+    "server_up": true,
+    "health_says_ok": true,
+    "tmp_exists": true,
+    "tmp_bytes": 91685451,
+    "live_file_parses": true
+   },
+   "after": {
+    "parse_ok": true,
+    "orphan_items": 0,
+    "orphan_enrollments": 1,
+    "dup_ids": 0,
+    "bad_counters": 0,
+    "users": 208,
+    "items": 100123
+   },
+   "loss": {
+    "acked": 80,
+    "lost": 80,
+    "oldest_lost_ms": 32060
+   },
+   "log": [
+    "db: save failed (ENOSPC); retrying"
+   ],
+   "tmp_left": true,
+   "restart": {
+    "boot_ms": 8524,
+    "up": true,
+    "still_signed_in": false,
+    "login_status": 401
+   }
+  },
+  {
+   "kind": "disk full, then killed",
+   "boot_ms": 7904,
+   "during_full": {
+    "answers_acknowledged": 60,
+    "server_up": true,
+    "health_says_ok": true,
+    "tmp_exists": false,
+    "live_file_parses": true
+   },
+   "after": {
+    "parse_ok": true,
+    "orphan_items": 0,
+    "orphan_enrollments": 1,
+    "dup_ids": 0,
+    "bad_counters": 0,
+    "users": 228,
+    "items": 100283
+   },
+   "loss": {
+    "acked": 140,
+    "lost": 60,
+    "oldest_lost_ms": 9342
+   },
+   "tmp_left": true,
+   "restart": {
+    "boot_ms": 8189,
+    "up": true,
+    "still_signed_in": true,
+    "login_status": 200
+   }
+  },
+  {
+   "kind": "corrupt boot",
+   "up": false,
+   "exited": {
+    "code": 1,
+    "sig": null
+   },
+   "log": [
+    "Refusing to start: C:\\Users\\admin\\AppData\\Local\\Temp\\beta-load\\dur-corrupt-1794002486503\\db.json cannot be read (Unterminated string in JSON at position 91338746 (line 1 column 91338747)). Nothing was"
+   ]
+  }
+ ]
+}

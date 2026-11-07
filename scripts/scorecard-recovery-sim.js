@@ -226,6 +226,8 @@ const memoryDb = {
   },
   insertMany(name, docs) { return docs.map((d) => memoryDb.insert(name, d)); },
   find: (name, predicate) => rowsFor(name).filter(predicate),
+  forUser: (name, userId) => memoryDb.find(name, (r) => r.user_id === userId), // the same as the real store
+
   findOne: (name, predicate) => col(name).find(predicate) || (POP_READ.has(name) ? popRows[name].find(predicate) : null) || null,
   byId: (name, id) => col(name).find((r) => r.id === Number(id)) || null,
   update(name, id, patch) {

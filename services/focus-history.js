@@ -31,8 +31,8 @@ const subject = (id) => ({ id, name: trackName(id), color: COLORS[id] || '#7a8a9
 
 function real(userId) {
   const days = {};
-  for (const s of db.all('sessions')) {
-    if (s.user_id !== userId || !s.started_at || !s.track_id) continue;
+  for (const s of db.forUser('sessions', userId)) {
+    if (!s.started_at || !s.track_id) continue;
     const start = Date.parse(s.started_at);
     const end = Date.parse(s.ended_at || s.updated_at || s.started_at);
     if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) continue;

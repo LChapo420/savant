@@ -2,6 +2,8 @@
 
 Owner, 6 Nov 2026: at least 4 times faster learning the same material, with equal or more retention, than normal studying.
 
+**Round 3, 6 Nov, is the latest: `docs/speed-real/ROUND3.md`. It corrects "today" below: the real path takes about 2x the hours these rounds assumed, baselines now include rereaders, a typical student and tutors from published effect sizes, each lever has its own gate, and only SPEED_FAST_ITEM is on by default.**
+
 **Answer: no. Not reached, and not reachable in this learning model.** Round 2 is below; this paragraph is round 1. The levers are built in the real code, each behind a switch, all off. On held-out seed 20261106 (160 learners: 120 extreme, 40 ordinary) the best configuration that keeps recall up throughout is 1.03x to 1.17x against dense self-study. The configuration that lets recall fall and rebuilds it at the end reaches 1.70x at most against dense self-study, and 1.85x against a schedule most learners complete. **No learner reaches 4x in any headline run.** The gate is missed. Not merge-ready.
 
 ## Round 2: attacking the floor (SIMULATED; gate MISSED)

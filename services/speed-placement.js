@@ -60,7 +60,7 @@ function nextItem({ userId, session, enrollment, grade, rows }) {
   const plan = curriculum.levelPlan(grade, row.level);
   const item = enabledFor(userId, 'SPEED_EDGE') ? speed.bestItem(hyd[i].tr) : null;
   const entry = require('../config/grade-skills').fitEntry(grade, { skillId: row.skill, difficulty: difficultyFor(plan.difficulty, item), role: 'drill' }); // eslint-disable-line global-require
-  const avoid = new Set(db.find('items', (x) => x.user_id === userId).slice(-600).map((x) => bank.itemKey(x)));
+  const avoid = new Set(db.forUser('items', userId).slice().slice(-600).map((x) => bank.itemKey(x)));
   const q = require('./sessions').generateWithPreference(entry, false, avoid); // eslint-disable-line global-require
   const count = db.find('items', (x) => x.session_id === session.id).length;
   return db.insert('items', { ...q, session_id: session.id, user_id: userId, skill_id: q.skill_id || row.skill, role: 'drill', level: row.level, block: 0, index: count, place_item: item || null, user_answer: null, correct: null, ms: null, coach_used: false });
@@ -71,7 +71,7 @@ function start(userId, enrollment, grade) {
   if (!on(userId)) return { error: 'Not available.', status: 404 };
   if (enrollment.track_id === 'spanish') return { error: 'Not available on this course.', status: 400 };
   if (enrollment.speed_placement && enrollment.speed_placement.finished_at) return { error: 'You have already done this check.', status: 409 };
-  const open = db.findOne('sessions', (s) => s.user_id === userId && s.enrollment_id === enrollment.id && s.speed_place && !s.ended_at);
+  const open = (db.forUser('sessions', userId).find((s) => s.enrollment_id === enrollment.id && s.speed_place && !s.ended_at) || null);
   if (open) {
     const item = db.find('items', (x) => x.session_id === open.id && x.correct === null && !x.skipped).sort((a, b) => a.index - b.index)[0];
     if (item) return { session: open, item };

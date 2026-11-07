@@ -119,7 +119,7 @@ router.post('/start', requireAuth, limit('placement-start', 30, 60 * 60 * 1000),
   // one the learner chose (or chose for the subject's placement), Balanced if
   // none.
   const unitBank = unitPlacement.available(enrollment.track_id, enrollment.grade_id);
-  const subjectWalk = db.findOne('subject_placements', (p) => p.user_id === req.user.id && p.track_id === enrollment.track_id);
+  const subjectWalk = (db.forUser('subject_placements', req.user.id).find((p) => p.track_id === enrollment.track_id) || null);
   const mode = unitPlacement.MODES[req.body.mode] ? req.body.mode
     : unitPlacement.MODES[subjectWalk && subjectWalk.mode] ? subjectWalk.mode
       // No mode chosen anywhere: the learner's goal for this grade picks the length
@@ -641,7 +641,7 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
 router.get('/paths', requireAuth, (req, res) => {
   const want = req.query.ids ? new Set(String(req.query.ids).split(',').map(Number).filter(Boolean)) : null;
   const out = {};
-  for (const e of db.find('enrollments', (x) => x.user_id === req.user.id && (!want || want.has(x.id)))) {
+  for (const e of db.forUser('enrollments', req.user.id).filter((x) => (!want || want.has(x.id)))) {
     try { out[e.id] = pathReply(req.user.id, e); } catch (err) { console.warn('[placement] plan not read for', e.id, err && err.message); }
   }
   res.json(out);

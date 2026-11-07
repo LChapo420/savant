@@ -76,7 +76,7 @@ function enrollmentView(userId, enrollment) {
 }
 
 router.get('/enrollments', requireAuth, (req, res) => {
-  const rows = db.find('enrollments', (e) => e.user_id === req.user.id)
+  const rows = db.forUser('enrollments', req.user.id).slice()
     .map((e) => enrollmentView(req.user.id, e))
     .filter(Boolean);
   res.json({ enrollments: rows });

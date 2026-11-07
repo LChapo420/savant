@@ -184,7 +184,7 @@ function nextLevel(userId, trackId, targetGradeId, now = Date.now()) {
   const pos = engineFor(trackId).position(state);
   if (!pos.block) return { error: 'Every block is done.', status: 409 };
   const skill = skillByKey(trackId, pos.block.key);
-  let e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === trackId && x.grade_id === skill.grade_id);
+  let e = (db.forUser('enrollments', userId).find((x) => x.track_id === trackId && x.grade_id === skill.grade_id) || null);
   if (!e) {
     const g = curriculum.getGrade(trackId, skill.grade_id);
     e = db.insert('enrollments', { user_id: userId, track_id: trackId, grade_id: skill.grade_id, target_level: g.pathLength, current_level: 1, level_items: 0, levels_completed: 0, xp: 0, status: 'active', pending_checkpoint: null, placed_at: new Date(now).toISOString(), placed_by: 'catch_up' });

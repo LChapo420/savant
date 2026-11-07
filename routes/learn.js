@@ -178,7 +178,13 @@ function sessionShape(session) {
     enrollment_id: session.enrollment_id || null,
     // The speed levers (services/speed-levers.js). Not sent at all with them off; a learner who asked for feedback at the end keeps today's flow.
     ...speedShape(session),
+    ...plainShape(session),
   };
+}
+
+/** The speed proof's plain lesson: the learner can switch it to the Savant way, as the consent wording promises. Not sent otherwise. */
+function plainShape(session) {
+  try { const p = require('../services/speed-proof').plainHere(session.user_id, session, session.level); return p ? { plain_way: p } : {}; } catch { return {}; } // eslint-disable-line global-require
 }
 
 function speedShape(session) {
@@ -429,6 +435,8 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
   const { session, items, lesson, essay } = await sessions.createSession({
     userId: req.user.id, enrollment, grade, level: atLevel,
   });
+  // A session that could not be made must not take the whole server down (an async route's throw is an unhandled rejection).
+  if (!session) return res.status(503).json({ error: 'This level could not be started. Try again in a moment.' });
   res.status(201).json({
     ...sessionShape(session),
     resumed: false,
@@ -580,6 +588,7 @@ router.post('/sessions/:id/answer', requireAuth, async (req, res) => {
     rationale: result.rationale,
     feedback: result.feedback || null,
     error_tag: result.errorTag || null,
+    ...partModify.voiceFields(req.user.id),
     ...(result.speed ? { speed: result.speed } : {}),
   });
 });
@@ -651,6 +660,14 @@ router.post('/sessions/:id/block-finish', requireAuth, async (req, res) => {
  * { id, choice, level }. Scorecard evidence only; the lesson is the same either way. Quietly ignored for an account that may not be measured more
  * (age screen unanswered, or under the consent age without a parent's agreement) and for anything but a real level of this learner's own sitting.
  */
+// A worked example read (SPEED_WORKED): nothing is scored, the item is set aside and the level goes on.
+router.post('/sessions/:id/worked', requireAuth, limit('worked', 240, 60 * 60 * 1000), (req, res) => {
+  const session = db.byId('sessions', Number(req.params.id));
+  if (!session || session.user_id !== req.user.id) return res.status(404).json({ error: 'That session is not yours.' });
+  if (!sessions.workedSeen(req.user.id, session, req.body && req.body.item_id, req.body && req.body.ms)) return res.status(400).json({ error: 'That is not a worked example.' });
+  return res.json({ ok: true });
+});
+
 router.post('/sessions/:id/footprint', requireAuth, limit('footprint', 120, 60 * 60 * 1000), (req, res) => {
   const session = loadSession(req);
   if (!session) return res.status(404).json({ error: 'Session not found.' });
@@ -755,7 +772,7 @@ router.post('/sessions/:id/finish', requireAuth, async (req, res) => {
       format: 'short_answer',
       prompt: q.prompt,
       answer: q.answer,
-      rationale: q.why || partModify.REVIEW_DEFAULT,
+      rationale: q.why || partModify.reviewLineFor(req.user.id, { track_id: session.track_id, grade_id: session.grade_id }),
       source: 'ai',
       level: (outcome.retentionPlan[i] || {}).level || session.end_level || session.level,
     }));
@@ -846,7 +863,7 @@ function primesFor(user) {
   if (process.env.COACH_PRIME === 'off' || !user) return false;
   const windowSize = Number(process.env.COACH_PRIME_WINDOW || 30);
   const rate = Number(process.env.COACH_PRIME_RATE || 0.25);
-  const recent = db.find('items', (i) => i.user_id === user.id && i.correct !== null && i.role !== 'exam').slice(-windowSize);
+  const recent = db.forUser('items', user.id).filter((i) => i.correct !== null && i.role !== 'exam').slice(-windowSize);
   if (recent.length < 5) return false;
   return recent.filter((i) => i.coach_used).length / recent.length >= rate;
 }
@@ -1532,7 +1549,7 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
     ...require('../services/speed-placement').pathView(req.user.id, enrollment, grade), // eslint-disable-line global-require
     ...(speedLevers.clientFlags(req.user.id, {}).testout ? {
       speed_testout: true,
-      skipped_pages: db.find('lessons', (l) => l.user_id === req.user.id && l.track_id === enrollment.track_id && l.grade_id === enrollment.grade_id && l.skipped_by_check_at).map((l) => ({ level: l.level, title: l.title })).sort((a, b) => a.level - b.level),
+      skipped_pages: db.forUser('lessons', req.user.id).filter((l) => l.track_id === enrollment.track_id && l.grade_id === enrollment.grade_id && l.skipped_by_check_at).map((l) => ({ level: l.level, title: l.title })).sort((a, b) => a.level - b.level),
     } : {}),
     progress,
     skills,
@@ -1594,7 +1611,7 @@ router.get('/curriculum', requireAuth, (req, res) => {
       // enrollment on this track, so the position shows whether or not the view
       // has been narrowed to one grade.
       const byGrade = new Map();
-      for (const e of db.find('enrollments', (x) => x.user_id === req.user.id && x.track_id === track.id)) {
+      for (const e of db.forUser('enrollments', req.user.id).filter((x) => x.track_id === track.id)) {
         byGrade.set(e.grade_id, e);
       }
 

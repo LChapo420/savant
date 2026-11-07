@@ -104,7 +104,12 @@ function timeoutFor(effort, override) {
 let lineupCache = null;
 let lineupStamp = null;
 
+let lineupCheckedAt = 0;
 function readLineup() {
+  // As in services/pool.js poolConfig: in production the file is looked at every 5 s, not on every call.
+  const every = Number(process.env.POOL_CONFIG_CHECK_MS || (process.env.NODE_ENV === 'production' ? 5000 : 0));
+  if (every && lineupCache && Date.now() - lineupCheckedAt < every) return lineupCache;
+  lineupCheckedAt = Date.now();
   const file = LINEUP_FILE();
   let stamp = null;
   try { stamp = `${file}:${fs.statSync(file).mtimeMs}`; } catch { stamp = `${file}:missing`; }

@@ -78,7 +78,7 @@ function blankState(userId, skillId) {
 }
 
 function stateFor(userId, skillId) {
-  return db.findOne('skill_states', (s) => s.user_id === userId && s.skill_id === skillId)
+  return (db.forUser('skill_states', userId).find((s) => s.skill_id === skillId) || null)
     || blankState(userId, skillId);
 }
 
@@ -298,7 +298,7 @@ function levelProgress(userId, enrollment, grade) {
   const avg = averageMastery(userId, skills);
   const weakest = skills.reduce((min, id) => Math.min(min, stateFor(userId, id).mastery), 1);
   const items = enrollment.level_items || 0;
-  const shownUnderstood = plan.kind === 'practice' && items > 0 && speedLevers().practiceShown(userId, plan.focus); // SPEED_MASTERY_STOP: off, always false
+  const shownUnderstood = plan.kind === 'practice' && items > 0 && speedLevers().practiceShown(userId, plan.focus, { grade, trackId: enrollment.track_id, enrollmentId: enrollment.id, level: enrollment.current_level }); // SPEED_MASTERY_STOP: off, always false
   const ready = shownUnderstood || (avg >= LEVEL_UP.averageMastery && weakest >= LEVEL_UP.weakestMastery && items >= LEVEL_UP.minItems);
 
   const blockers = [];
@@ -423,7 +423,7 @@ function skipShownPractice(userId, enrollment, grade) {
   let skipped = 0; let fresh = db.byId('enrollments', enrollment.id);
   while (fresh && fresh.status === 'active' && fresh.current_level < grade.pathLength && skipped < 50) {
     const plan = curriculum.levelPlan(grade, fresh.current_level);
-    if (plan.kind !== 'practice' || !speedLevers().practiceShown(userId, plan.focus)) break;
+    if (plan.kind !== 'practice' || !speedLevers().practiceShown(userId, plan.focus, { grade, trackId: enrollment.track_id, enrollmentId: enrollment.id, level: fresh.current_level })) break;
     advance(fresh, grade); skipped++; fresh = db.byId('enrollments', enrollment.id);
   }
   return skipped ? { speed_skipped: skipped } : {};
@@ -511,7 +511,7 @@ function clearCheckpoint(enrollment, grade, kind) {
  * the strongest offer in the app.
  */
 function streakFor(userId, enrollmentId) {
-  return db.findOne('streaks', (s) => s.user_id === userId && s.enrollment_id === enrollmentId)
+  return (db.forUser('streaks', userId).find((s) => s.enrollment_id === enrollmentId) || null)
     || {
       user_id: userId,
       enrollment_id: enrollmentId,
@@ -629,7 +629,7 @@ function skipOffer(userId, enrollment, grade) {
  * looking like an exam still sitting there waiting to be retaken.
  */
 function spendOffer(userId, enrollmentId) {
-  const row = db.findOne('streaks', (s) => s.user_id === userId && s.enrollment_id === enrollmentId);
+  const row = (db.forUser('streaks', userId).find((s) => s.enrollment_id === enrollmentId) || null);
   if (row) db.update('streaks', row.id, { taken_at: new Date().toISOString() });
   return null;
 }

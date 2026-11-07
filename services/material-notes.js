@@ -112,7 +112,7 @@ function trimToLimit(sections, limit, { always = false, maxAnalogies = null, kee
 }
 
 function row(userId, materialId) {
-  return db.findOne('material_notes', (c) => c.user_id === userId && c.material_id === Number(materialId));
+  return (db.forUser('material_notes', userId).find((c) => c.material_id === Number(materialId)) || null);
 }
 
 /** Build (or return the cached) notes for one of the learner's materials. Resolves { notes } or { error, code }. Never throws. */
@@ -210,7 +210,7 @@ async function build(userId, materialId, opts = {}) {
       sections, dropped, trimmed_extras: trimmed, analogies_fixed: analogiesFixed, revised_parts: revisions, open_problems: [...open], coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
-    db.flush();
+    db.saveSoon();
     if (status === 'failed') return { error: 'Notes could not be made from that material. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     return { notes: saved, partial: status === 'partial' };
   } catch (err) {

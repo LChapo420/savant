@@ -68,7 +68,7 @@ function weight(f, now = Date.now()) {
 }
 
 function rows(userId) {
-  return db.find('tutor_facts', (f) => f.user_id === userId);
+  return db.forUser('tutor_facts', userId).slice();
 }
 
 /** The facts still alive, strongest first. */
@@ -527,7 +527,7 @@ function relevant(userId, { skillId = null, text = '' } = {}, { budget = FACTS_B
  */
 function sinceNote(userId, f) {
   if (!f.skill_id || (f.kind !== 'hard' && f.kind !== 'misconception')) return '';
-  const s = db.findOne('skill_states', (r) => r.user_id === userId && r.skill_id === f.skill_id);
+  const s = (db.forUser('skill_states', userId).find((r) => r.skill_id === f.skill_id) || null);
   if (!s || !(s.attempts >= 5) || !(s.mastery >= 0.8)) return '';
   if (!(Date.parse(s.last_seen_at) > Date.parse(f.last_confirmed_at || f.first_at))) return '';
   return `; but their answers since show it solid now (${Math.round(s.mastery * 100)}% over ${s.attempts})`;
@@ -536,7 +536,7 @@ function sinceNote(userId, f) {
 /** Current mastery on a skill as one plain line, or '' when they have not tried it. */
 function masteryLine(userId, skillId) {
   if (!skillId) return '';
-  const s = db.findOne('skill_states', (r) => r.user_id === userId && r.skill_id === skillId);
+  const s = (db.forUser('skill_states', userId).find((r) => r.skill_id === skillId) || null);
   if (!s || !(s.attempts > 0)) return '';
   return `Mastery on ${curriculum.skillName(skillId)} right now: ${Math.round(s.mastery * 100)}% over ${s.attempts} question${s.attempts === 1 ? '' : 's'}`;
 }

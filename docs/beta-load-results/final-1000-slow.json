@@ -1,0 +1,612 @@
+{
+ "measured_on": "this PC (not the server)",
+ "learners": 1000,
+ "minutes": 4,
+ "think_ms": 30000,
+ "ramp_s": 300,
+ 
+ "boot_ms": 5973,
+ "crashed": false,
+ "shutdown_ms": 106,
+ "cpu_ms_per_request": 18,
+ "overall": {
+  "requests": 30908,
+  "rps": 64.2,
+  "p50": 3775,
+  "p95": 15977,
+  "p99": 107986,
+  "max": 185433,
+  "server_errors": 820,
+  "without_lesson_wait": {
+   "p50": 3287,
+   "p95": 12079,
+   "p99": 30222
+  }
+ },
+ "routes": [
+  {
+   "route": "(wait) lesson ready",
+   "n": 417,
+   "p50": 121999,
+   "p95": 155116,
+   "p99": 169403,
+   "max": 185433,
+   "statuses": {
+    "202": 350,
+    "-1": 67
+   }
+  },
+  {
+   "route": "POST /api/tutor/dock",
+   "n": 79,
+   "p50": 25212,
+   "p95": 43915,
+   "p99": 54000,
+   "max": 54000,
+   "statuses": {
+    "200": 73,
+    "-1": 6
+   }
+  },
+  {
+   "route": "POST /api/materials/paste",
+   "n": 51,
+   "p50": 4110,
+   "p95": 29754,
+   "p99": 32270,
+   "max": 32270,
+   "statuses": {
+    "201": 46,
+    "-1": 5
+   }
+  },
+  {
+   "route": "GET / (page)",
+   "n": 1000,
+   "p50": 6891,
+   "p95": 21876,
+   "p99": 39402,
+   "max": 48729,
+   "statuses": {
+    "200": 976,
+    "-1": 24
+   }
+  },
+  {
+   "route": "GET /api/lessons/:t/:g/:l",
+   "n": 2727,
+   "p50": 13092,
+   "p95": 21134,
+   "p99": 39977,
+   "max": 44273,
+   "statuses": {
+    "202": 2660,
+    "-1": 67
+   }
+  },
+  {
+   "route": "GET /api/tutor/dock",
+   "n": 1464,
+   "p50": 2890,
+   "p95": 18967,
+   "p99": 32708,
+   "max": 35782,
+   "statuses": {
+    "200": 1404,
+    "-1": 60
+   }
+  },
+  {
+   "route": "POST /api/items/:id/coach",
+   "n": 26,
+   "p50": 4294,
+   "p95": 18886,
+   "p99": 20077,
+   "max": 20077,
+   "statuses": {
+    "403": 26
+   }
+  },
+  {
+   "route": "GET /api/retention/state",
+   "n": 1464,
+   "p50": 2889,
+   "p95": 17798,
+   "p99": 32480,
+   "max": 35781,
+   "statuses": {
+    "200": 1400,
+    "-1": 64
+   }
+  },
+  {
+   "route": "GET /api/materials/review-due",
+   "n": 1464,
+   "p50": 3090,
+   "p95": 14216,
+   "p99": 32034,
+   "max": 35460,
+   "statuses": {
+    "200": 1406,
+    "-1": 58
+   }
+  },
+  {
+   "route": "GET /api/placement/paths",
+   "n": 1464,
+   "p50": 3089,
+   "p95": 13960,
+   "p99": 32134,
+   "max": 35774,
+   "statuses": {
+    "200": 1412,
+    "-1": 52
+   }
+  },
+  {
+   "route": "GET /api/plan/today",
+   "n": 1464,
+   "p50": 3091,
+   "p95": 13049,
+   "p99": 31432,
+   "max": 35773,
+   "statuses": {
+    "200": 1417,
+    "-1": 47
+   }
+  },
+  {
+   "route": "POST /api/auth/register",
+   "n": 1000,
+   "p50": 4590,
+   "p95": 11696,
+   "p99": 12520,
+   "max": 26687,
+   "statuses": {
+    "201": 972,
+    "400": 1,
+    "-1": 27
+   }
+  },
+  {
+   "route": "GET /api/review/:id",
+   "n": 492,
+   "p50": 2503,
+   "p95": 8840,
+   "p99": 31000,
+   "max": 35837,
+   "statuses": {
+    "200": 469,
+    "-1": 23
+   }
+  },
+  {
+   "route": "GET /api/placement/path/:id",
+   "n": 492,
+   "p50": 2403,
+   "p95": 8735,
+   "p99": 28367,
+   "max": 33546,
+   "statuses": {
+    "200": 470,
+    "-1": 22
+   }
+  },
+  {
+   "route": "POST /api/sessions/:id/next-block",
+   "n": 32,
+   "p50": 4219,
+   "p95": 6722,
+   "p99": 16922,
+   "max": 16922,
+   "statuses": {
+    "201": 32
+   }
+  },
+  {
+   "route": "GET /api/path/:id",
+   "n": 492,
+   "p50": 2495,
+   "p95": 6487,
+   "p99": 29302,
+   "max": 33545,
+   "statuses": {
+    "200": 474,
+    "-1": 18
+   }
+  },
+  {
+   "route": "POST /api/sessions",
+   "n": 492,
+   "p50": 3710,
+   "p95": 6458,
+   "p99": 31084,
+   "max": 33871,
+   "statuses": {
+    "200": 417,
+    "201": 38,
+    "409": 16,
+    "-1": 21
+   }
+  },
+  {
+   "route": "GET /api/catalog",
+   "n": 1244,
+   "p50": 2797,
+   "p95": 6410,
+   "p99": 32848,
+   "max": 36039,
+   "statuses": {
+    "200": 1215,
+    "-1": 29
+   }
+  },
+  {
+   "route": "GET /api/materials/:id",
+   "n": 46,
+   "p50": 3923,
+   "p95": 6384,
+   "p99": 34079,
+   "max": 34079,
+   "statuses": {
+    "200": 46
+   }
+  },
+  {
+   "route": "POST /api/consent/age",
+   "n": 1000,
+   "p50": 2784,
+   "p95": 6313,
+   "p99": 22938,
+   "max": 35576,
+   "statuses": {
+    "200": 981,
+    "-1": 19
+   }
+  },
+  {
+   "route": "GET /api/progress",
+   "n": 1464,
+   "p50": 3125,
+   "p95": 6248,
+   "p99": 23780,
+   "max": 35779,
+   "statuses": {
+    "200": 1428,
+    "-1": 36
+   }
+  },
+  {
+   "route": "POST /api/sessions/:id/answer",
+   "n": 234,
+   "p50": 3707,
+   "p95": 6247,
+   "p99": 30329,
+   "max": 36143,
+   "statuses": {
+    "200": 227,
+    "-1": 7
+   }
+  },
+  {
+   "route": "POST /api/placement/start",
+   "n": 959,
+   "p50": 3763,
+   "p95": 6228,
+   "p99": 17283,
+   "max": 33531,
+   "statuses": {
+    "201": 943,
+    "-1": 16
+   }
+  },
+  {
+   "route": "POST /api/sessions/:id/block-finish",
+   "n": 38,
+   "p50": 4334,
+   "p95": 6195,
+   "p99": 6401,
+   "max": 6401,
+   "statuses": {
+    "200": 32,
+    "409": 5,
+    "-1": 1
+   }
+  },
+  {
+   "route": "GET /api/materials",
+   "n": 46,
+   "p50": 4236,
+   "p95": 6170,
+   "p99": 29178,
+   "max": 29178,
+   "statuses": {
+    "200": 46
+   }
+  },
+  {
+   "route": "POST /api/retention/study/start",
+   "n": 951,
+   "p50": 3115,
+   "p95": 6141,
+   "p99": 31581,
+   "max": 36139,
+   "statuses": {
+    "201": 928,
+    "-1": 23
+   }
+  },
+  {
+   "route": "GET /api/consent/config",
+   "n": 1000,
+   "p50": 2653,
+   "p95": 6062,
+   "p99": 20784,
+   "max": 22960,
+   "statuses": {
+    "200": 979,
+    "-1": 21
+   }
+  },
+  {
+   "route": "POST /api/sessions/:id/finish",
+   "n": 6,
+   "p50": 3988,
+   "p95": 6009,
+   "p99": 6009,
+   "max": 6009,
+   "statuses": {
+    "200": 5,
+    "-1": 1
+   }
+  },
+  {
+   "route": "POST /api/materials/:id/course",
+   "n": 46,
+   "p50": 3926,
+   "p95": 5985,
+   "p99": 13992,
+   "max": 13992,
+   "statuses": {
+    "202": 44,
+    "-1": 2
+   }
+  },
+  {
+   "route": "GET /api/materials/:id/course",
+   "n": 36,
+   "p50": 2851,
+   "p95": 5971,
+   "p99": 13029,
+   "max": 13029,
+   "statuses": {
+    "200": 35,
+    "-1": 1
+   }
+  },
+  {
+   "route": "GET /api/auth/me",
+   "n": 972,
+   "p50": 3417,
+   "p95": 5783,
+   "p99": 6942,
+   "max": 7217,
+   "statuses": {
+    "200": 959,
+    "-1": 13
+   }
+  },
+  {
+   "route": "POST /api/placement/finish",
+   "n": 932,
+   "p50": 3315,
+   "p95": 5767,
+   "p99": 7184,
+   "max": 33745,
+   "statuses": {
+    "200": 922,
+    "-1": 10
+   }
+  },
+  {
+   "route": "POST /api/placement/answer",
+   "n": 5392,
+   "p50": 2248,
+   "p95": 5746,
+   "p99": 8863,
+   "max": 36145,
+   "statuses": {
+    "200": 5332,
+    "-1": 60
+   }
+  },
+  {
+   "route": "POST /api/enrollments",
+   "n": 972,
+   "p50": 3507,
+   "p95": 5714,
+   "p99": 6376,
+   "max": 27884,
+   "statuses": {
+    "201": 959,
+    "-1": 13
+   }
+  },
+  {
+   "route": "POST /api/retention/study/end",
+   "n": 901,
+   "p50": 3703,
+   "p95": 5125,
+   "p99": 16109,
+   "max": 21346,
+   "statuses": {
+    "200": 879,
+    "409": 15,
+    "-1": 7
+   }
+  },
+  {
+   "route": "GET /api/materials/:id/pack",
+   "n": 36,
+   "p50": 2274,
+   "p95": 5123,
+   "p99": 5195,
+   "max": 5195,
+   "statuses": {
+    "200": 36
+   }
+  },
+  {
+   "route": "POST /api/retention/study/beat",
+   "n": 13,
+   "p50": 10,
+   "p95": 280,
+   "p99": 280,
+   "max": 280,
+   "statuses": {
+    "200": 13
+   }
+  }
+ ],
+ "notes": {
+  "sessions 409": {
+   "n": 16,
+   "sample": {
+    "error": "Take the placement quiz for this subject first."
+   }
+  },
+  "enrol -1": {
+   "n": 13,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "sessions -1": {
+   "n": 21,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "placement start -1": {
+   "n": 16,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "register -1": {
+   "n": 27,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "paste -1": {
+   "n": 5,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "placement finish -1": {
+   "n": 10,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "register 400": {
+   "n": 1,
+   "sample": {
+    "error": "Enter a valid email address."
+   }
+  }
+ },
+ "probe": {
+  "secs": 305,
+  "wall_s": 480,
+  "cpu_s": 567,
+  "lag_p99_median_ms": 154,
+  "lag_p99_p95_ms": 1369,
+  "lag_max_ms": 2189,
+  "secs_with_stall_over_200ms": 135,
+  "secs_with_stall_over_1s": 49,
+  "loop_busy_median": 1,
+  "proc_cpu_median": 1.104,
+  "box_cpu_median": 0.986,
+  "rss_mb_end": 614,
+  "rss_mb_max": 734,
+  "heap_mb_end": 230,
+  "save_share_of_time": 0.082,
+  "save_stringify_ms_per_sec": 84,
+  "save_write_ms_per_sec": 43,
+  "db_bytes_end": 38823897,
+  "ledger_write_ms_per_sec": 21,
+  "ledger_writes_per_sec": 14.9
+ },
+ "db_bytes_start": 15164659,
+ "db_bytes_end": 38823897,
+ "stub": {
+  "calls": 2399,
+  "maxInflight": 48,
+  "byProvider": {
+   "nvidia": {
+    "calls": 280,
+    "in": 540581,
+    "out": 401460,
+    "failed": 0,
+    "models": {
+     "deepseek-ai/deepseek-v4.1-flash": 153,
+     "z-ai/glm-5.3-flash": 94,
+     "nvidia/nemotron-3-ultra-550b-a55b": 33
+    }
+   },
+   "grokified": {
+    "calls": 548,
+    "in": 896619,
+    "out": 814500,
+    "failed": 0,
+    "models": {
+     "grok-4.3": 370,
+     "grok-4.7": 178
+    }
+   },
+   "coral": {
+    "calls": 312,
+    "in": 735966,
+    "out": 402060,
+    "failed": 0,
+    "models": {
+     "deepseek-v4.1-flash-fast": 231,
+     "deepseek-v4.1-flash": 81
+    }
+   },
+   "gonka": {
+    "calls": 582,
+    "in": 1713895,
+    "out": 852000,
+    "failed": 0,
+    "models": {
+     "zai-org/GLM-5.3-Flash": 314,
+     "deepseek-ai/DeepSeek-V4-Flash-0731": 268
+    }
+   },
+   "munito": {
+    "calls": 611,
+    "in": 2013728,
+    "out": 895500,
+    "failed": 0,
+    "models": {
+     "deepseek-ai/deepseek-v4-flash": 165,
+     "zai-org/glm-5.3-flash": 246,
+     "deepseek-ai/deepseek-v4.1-flash-1017": 200
+    }
+   },
+   "zerogpu": {
+    "calls": 66,
+    "in": 68899,
+    "out": 99000,
+    "failed": 0,
+    "models": {
+     "z-ai/glm-5.3-flash": 66
+    }
+   }
+  }
+ }
+}

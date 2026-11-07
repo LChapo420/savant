@@ -106,16 +106,17 @@ const mk = (extra = {}) => { seq++; return db.insert('users', { email: `l${seq}@
 
   console.log('2. a plain-way skill');
   const grade = require('../config/curriculum').getGrade('math', 'algebra_1_part_a');
-  const skill = sp.skillOfLevel(grade, 1);
+  const unit = sp.unitFor(grade, 1); const skill = unit.key; // the arm is drawn per lesson stretch since 6 Nov, not per coarse skill
   const p = mk();
   db.insert('enrollments', { user_id: p.id, track_id: 'math', grade_id: 'algebra_1_part_a', current_level: 1, status: 'active' });
   sp.setConsent(db.byId('users', p.id), true);
   process.env.SPEED_PROOF_NORMAL_SHARE = '0.5'; sp.setRandom(() => 0);
-  const row = sp.assign(p.id, skill, { trackId: 'math', gradeId: 'algebra_1_part_a' });
+  const row = sp.assign(p.id, skill, { trackId: 'math', gradeId: 'algebra_1_part_a', unit });
   sp.setRandom(null); delete process.env.SPEED_PROOF_NORMAL_SHARE;
   assert.strictEqual(row.arm, 'normal');
-  const plainItem = db.insert('items', { user_id: p.id, skill_id: skill, prompt: 'q', answer: 'a', rationale: 'Because standard.', correct: false, user_answer: 'b' });
-  const otherItem = db.insert('items', { user_id: p.id, skill_id: 'some_other_skill', prompt: 'q', answer: 'a', rationale: 'r', correct: false, user_answer: 'b' });
+  const plainSession = db.insert('sessions', { user_id: p.id, track_id: 'math', grade_id: 'algebra_1_part_a', level: 1, kind: 'lesson', blocks: [] });
+  const plainItem = db.insert('items', { session_id: plainSession.id, level: 1, user_id: p.id, skill_id: unit.skill, prompt: 'q', answer: 'a', rationale: 'Because standard.', correct: false, user_answer: 'b' });
+  const otherItem = db.insert('items', { session_id: plainSession.id, level: 1, user_id: p.id, skill_id: 'some_other_skill', prompt: 'q', answer: 'a', rationale: 'r', correct: false, user_answer: 'b' });
   await check('ask-the-tutor on a plain skill gets the standard explanation, not the tutor', async () => {
     const r = await call('POST', `/api/items/${plainItem.id}/ask`, p.id, { question: 'why?' });
     assert.strictEqual(r.status, 200); assert.strictEqual(r.json.source, 'plain_way'); assert.ok(/Because standard/.test(r.json.reply));

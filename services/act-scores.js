@@ -80,7 +80,7 @@ function cleanScore(body, now = Date.now()) {
 }
 
 function getProfile(userId) {
-  const r = db.findOne('act_profiles', (p) => p.user_id === userId);
+  const r = (db.forUser('act_profiles', userId)[0] || null);
   return { test_date: r ? r.test_date || null : null, target: r ? r.target || null : null };
 }
 
@@ -91,7 +91,7 @@ function setProfile(userId, patch) {
 
 /** A learner's scores, oldest first. */
 function listScores(userId) {
-  return db.find('act_scores', (r) => r.user_id === userId)
+  return db.forUser('act_scores', userId).slice()
     .sort((a, b) => (a.taken_on < b.taken_on ? -1 : a.taken_on > b.taken_on ? 1 : a.id - b.id))
     .map(view);
 }
@@ -103,7 +103,7 @@ function view(r) {
 }
 
 function addScore(userId, row) {
-  if (db.find('act_scores', (r) => r.user_id === userId).length >= MAX_SCORES) return { error: `You can keep up to ${MAX_SCORES} scores. Delete one first.` };
+  if (db.forUser('act_scores', userId).slice().length >= MAX_SCORES) return { error: `You can keep up to ${MAX_SCORES} scores. Delete one first.` };
   return { value: view(db.insert('act_scores', { user_id: userId, ...row })) };
 }
 

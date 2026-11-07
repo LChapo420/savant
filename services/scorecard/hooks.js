@@ -57,7 +57,7 @@ function upsertLevelRow(userId, where, patch) {
  */
 function errorTagsBefore(userId, firstItemId) {
   const tags = {};
-  for (const item of db.find('items', (i) => i.user_id === userId && i.error_tag && i.id < firstItemId)) {
+  for (const item of db.forUser('items', userId).filter((i) => i.error_tag && i.id < firstItemId)) {
     (tags[item.skill_id] = tags[item.skill_id] || []).push(item.error_tag);
   }
   return tags;
@@ -336,7 +336,7 @@ function onTutorActivity(userId) {
  */
 function textSweep(userId) {
   return safely('text sweep', () => {
-    const row = db.findOne('tutor_archive', (r) => r.user_id === userId);
+    const row = (db.forUser('tutor_archive', userId)[0] || null);
     const entries = (row && row.entries) || [];
     const card = scorecard.get(userId);
     const cursor = card.text_cursor || '';
@@ -397,11 +397,11 @@ function usageSweep(userId, { now = Date.now() } = {}) {
     const spread = hourSpread(db.find('sessions', (s) => mine(s) && Date.parse(s.started_at || 0) >= now - 14 * DAY_MS)
       .map((s) => new Date(s.started_at).getHours() + new Date(s.started_at).getMinutes() / 60));
     if (spread !== null) batch['use.hour'] = { mean: spread, n: 1 };
-    const arch = db.findOne('tutor_archive', (r) => r.user_id === userId);
+    const arch = (db.forUser('tutor_archive', userId)[0] || null);
     const said = ((arch && arch.entries) || []).filter((e) => e && e.learner && Date.parse(e.at || 0) >= since).length;
     batch['use.chat'] = { mean: Math.log(1 + said / sessions.length), n: 1 };
     try {
-      const uploads = db.find('materials', (m) => m.user_id === userId && Date.parse(m.created_at || 0) >= since).length;
+      const uploads = db.forUser('materials', userId).filter((m) => Date.parse(m.created_at || 0) >= since).length;
       batch['use.uploads'] = { mean: Math.log(1 + uploads), n: 1 };
     } catch { /* no materials table */ }
     try {
@@ -445,7 +445,7 @@ function onSessionAbandoned(userId, session, items) {
  */
 function returnGapDays(userId, session, kind) {
   if (!session || session.id === undefined || session.kind === 'placement' || ['lesson', 'block_lesson'].includes(kind)) return null;
-  const earlier = db.find('level_signals', (r) => r.user_id === userId && r.session_id === session.id && r.kind !== 'session');
+  const earlier = db.forUser('level_signals', userId).filter((r) => r.session_id === session.id && r.kind !== 'session');
   if (earlier.length) return null;
   const started = Date.parse(session.started_at || 0);
   if (!started) return null;

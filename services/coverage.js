@@ -596,13 +596,11 @@ function gate(model, states, rule = gateRule()) {
 function answersFor(userId, enrollment) {
   // eslint-disable-next-line global-require
   const db = require('../config/db');
-  const sessions = new Map(db.find('sessions', (s) => s.user_id === userId
-    && s.track_id === enrollment.track_id && s.grade_id === enrollment.grade_id).map((s) => [s.id, s]));
+  const sessions = new Map(db.forUser('sessions', userId).filter((s) => s.track_id === enrollment.track_id && s.grade_id === enrollment.grade_id).map((s) => [s.id, s]));
   // An answer set aside as too fast to count on a scored sitting (round 3,
   // ADAPT_EFFORT: it is never graded) is still read, as a rapid answer: fold()
   // counts it toward the learner's effort record and takes nothing from it.
-  const rows = db.find('items', (i) => i.user_id === userId
-    && ((i.correct !== null && i.correct !== undefined) || (i.reserved && Number(i.ms) > 0))
+  const rows = db.forUser('items', userId).filter((i) => ((i.correct !== null && i.correct !== undefined) || (i.reserved && Number(i.ms) > 0))
     && (sessions.has(i.session_id) || (i.session_id == null && i.track_id === enrollment.track_id && i.grade_id === enrollment.grade_id)));
   const out = [];
   for (const i of rows) {
