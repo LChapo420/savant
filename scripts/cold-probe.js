@@ -6,6 +6,7 @@
  *
  * layout  seconds and validity of block_layout on several slots.
  * derail  the same layouts N times: the fill as shipped (warm retry) against the stream with its watchdog, keeping the blocks that came and asking for the rest. Usable = every block valid and at least one check.
+ * alt     not adopted, for the owner: the first block written by MiniMax M3 and read by Coral Standard (another family, 1.7 s a read), against Coral Fast written and read by grok-4.3 or ZeroGPU. Seconds, and how often a clean first block is flagged (each flag is a repair).
  * fill    Coral Fast (and others) on a fixed layout: whole fill as today, against the first block alone, against the whole fill streamed (seconds to the first complete block).
  */
 const fs = require('fs');
@@ -179,6 +180,30 @@ async function streamFill(args, model, temperature) {
     }
     await parallel(jobs, Number(process.env.PROBE_PAR || 2));
     for (const lv of [...levels, 'all']) for (const v of ['shipped', 'stream']) { const r = rows.filter((x) => x.v === v && (lv === 'all' || x.lv === lv)); console.log('DERAIL', lv, v, 'usable', r.filter((x) => x.usable).length, '/', r.length, 'p50', med(r.map((x) => x.sec)), 'max', Math.max(...r.map((x) => x.sec)), v === 'stream' ? `first block p50 ${med(r.map((x) => x.firstAt))}, calls ${r.reduce((n, x) => n + x.calls, 0)}, derails ${r.reduce((n, x) => n + x.derails, 0)}` : ''); }
+  }
+  if (WHAT === 'alt') {
+    const jobs = [];
+    for (const lv of levels) {
+      const { layout, context } = await getLayout(lv); // eslint-disable-line no-await-in-loop
+      const whole = { system: bl.FILL_SYSTEM + bl.subjectNote(TRACK, 'fill'), schema: { ...bl.fillSchema(), required: ['blocks'] }, schemaName: 'submit_block_content', maxTokens: 3000, task: 'block_fill', timeoutMs: 60000, user: onePrompt(context, layout, [0]).user };
+      for (let k = 0; k < reps; k++) {
+        for (const [v, writer, reader] of [['minimax+coralStd', 'minimax', 'coralStd'], ['coralFast+grok', 'coralFast', 'grok43'], ['coralFast+zerogpu', 'coralFast', 'zerogpu']]) {
+          jobs.push(async () => {
+            const t0 = Date.now();
+            const w = await tryCall(() => slots[writer](whole));
+            const list = w.ok ? bl.readList(w.r.data.blocks).map((raw, p) => bl.readEntry(raw, p)) : [];
+            const e = list[0];
+            if (!e || !e.data) { const row = { lv, v, ok: false, sec: secs(t0), err: w.err || 'no block' }; rows.push(row); console.log(JSON.stringify(row)); return; }
+            const req = bl.verifyRequest({ context, blocks: [{ index: 0, block: layout.blocks[0].block, data: e.data }], checks: [] });
+            const r = await tryCall(() => slots[reader]({ task: 'fact_verify', system: req.system, user: req.user, schema: req.schema, schemaName: 'submit_verification', maxTokens: 6000, timeoutMs: 90000 }));
+            const flagged = r.ok ? bl.readVerification(r.r.data).failed.length : null;
+            const row = { lv, v, ok: r.ok, writeSec: w.sec, readSec: r.sec, sec: secs(t0), flagged, err: r.err }; rows.push(row); console.log(JSON.stringify(row));
+          });
+        }
+      }
+    }
+    await parallel(jobs, 3);
+    for (const v of ['minimax+coralStd', 'coralFast+grok', 'coralFast+zerogpu']) { const r = rows.filter((x) => x.v === v); console.log('ALT', v, 'read', r.filter((x) => x.ok).length, '/', r.length, 'write p50', med(r.map((x) => x.writeSec)), 'read p50', med(r.map((x) => x.readSec)), 'read max', Math.max(...r.map((x) => x.readSec || 0)), 'total p50', med(r.filter((x) => x.ok).map((x) => x.sec)), 'flagged', r.filter((x) => x.flagged).length); }
   }
   try { console.log('SPEND', JSON.stringify(require('../services/run-cap').summary())); } catch { /* none */ } // eslint-disable-line global-require
   if (OUT) fs.writeFileSync(OUT, JSON.stringify(rows, null, 1));
