@@ -95,7 +95,7 @@ const joinP = (p) => p.map((x) => x.text).join('\n');
       L.appendJsonl(OUT, {
         level: id, track: lv.track, learner: learner.id, facts: facts.length, firstMissing, retried, finalMissing: finalBank.mech.missing.map((m) => m.raw), finalIll: finalBank.ill.map((x) => x.problem), freeMissing: freeT.mech.missing.map((m) => m.raw), tokensBank: finalBank.mech.tokens, tokensFree: freeT.mech.tokens,
         egCount: B.egSpans(joinP(bank.passages)).length, wordsBank: joinP(bank.passages).split(/\s+/).length, wordsFree: joinP(free.passages).split(/\s+/).length, wordsOrig: passages.map((p) => p.text).join(' ').split(/\s+/).length,
-        errorsBank: hBank, errorsFree: hFree, errorsFree2: hFree2, scores, cost, sampleBank: joinP(bank.passages).slice(0, 700), sampleFree: joinP(free.passages).slice(0, 700),
+        errorsBank: hBank, errorsFree: hFree, errorsFree2: hFree2, scores, cost, bankText: joinP(bank.passages), freeText: joinP(free.passages),
       });
       console.log(id, learner.id, 'first', firstMissing, 'final', finalBank.mech.missing.length + finalBank.ill.length, 'free', freeT.mech.missing.length, `$${cost.toFixed(4)}`);
     } catch (e) { console.log('fail', id, learner.id, String(e.message).slice(0, 120)); }
