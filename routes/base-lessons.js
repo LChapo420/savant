@@ -492,7 +492,8 @@ router.get('/lessons/:track/:grade/:level', requireAuth, async (req, res) => {
         // Where the page goes if the writing takes too long: the standard session, lesson first.
         fallback_url: enrollmentId ? standardSessionUrl(enrollmentId, level) : null,
         // Part by part (COLD_FIRST_BLOCK): what is coming, from the curriculum, what the write is doing now, and how long the page waits before the standard session.
-        ...(firstBlock.on() ? { preview: blockLevels.previewFor({ userId: blockLevels.tailorsFor(req.user) ? req.user.id : null, trackId: track, gradeId: grade, level }), wait_ms: firstBlock.fallbackMs() } : {}),
+        ...(firstBlock.on() ? { preview: blockLevels.previewFor({ userId: blockLevels.tailorsFor(req.user) ? req.user.id : null, trackId: track, gradeId: grade, level }), // A learner the fast providers may not serve (no outside-AI consent, a guest) is not kept 30 s: the old 8 s stands.
+          wait_ms: require('../services/typed-grading').outsideAllowed(req.user.id) ? firstBlock.fallbackMs() : 8000 } : {}),
       });
     }
   }
