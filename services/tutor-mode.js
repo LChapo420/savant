@@ -26,4 +26,18 @@ function set(userId, mode) {
   return m;
 }
 
-module.exports = { MODES, DEFAULT, get, set, valid };
+// Where the chat sits on a phone, top or bottom (owner, 7 Nov 2026: "users choice"): on the same row, so it follows the learner across devices and leaves with their data.
+const SIDES = ['top', 'bottom'];
+const validSide = (s) => (SIDES.includes(s) ? s : null);
+function getSide(userId) {
+  const row = (db.forUser('tutor_modes', userId)[0] || null);
+  return row && validSide(row.side) ? row.side : 'bottom';
+}
+function setSide(userId, side) {
+  const s = validSide(side);
+  if (!s) return getSide(userId);
+  db.upsert('tutor_modes', (r) => r.user_id === userId, (row) => ({ user_id: userId, mode: (row && row.mode) || DEFAULT, switches: (row && row.switches) || 0, side: s }));
+  return s;
+}
+
+module.exports = { MODES, DEFAULT, get, set, valid, SIDES, getSide, setSide, validSide };

@@ -247,7 +247,7 @@ const MIME = { wav: 'audio/wav', mp3: 'audio/mpeg', ogg: 'audio/ogg', m4a: 'audi
  * @param {Buffer} buf
  * @param {string} [kind] wav | mp3 | ogg | m4a | flac
  */
-async function asrGateway(buf, kind, lang = 'es', userId = null) {
+async function asrGateway(buf, kind, lang = 'es', userId = null, seconds = null) {
   if (Date.now() < gatewayCoolUntil) throw Object.assign(new Error('gateway speech cooling down'), { status: 429 });
   const model = GATEWAY_STT_MODEL();
   const form = new FormData();
@@ -255,7 +255,7 @@ async function asrGateway(buf, kind, lang = 'es', userId = null) {
   form.append('model', model);
   form.append('language', lang);
   try {
-    return await billed({ kind: 'stt', model, bytes: buf.length, userId }, async () => {
+    return await billed({ kind: 'stt', model, bytes: buf.length, seconds, userId }, async () => {
       const res = await gatewayFetch('/audio/transcriptions', { method: 'POST', body: form }, 45000);
       const json = await res.json();
       return String((json && (json.text != null ? json.text : json.transcript)) || '').trim();
@@ -331,7 +331,7 @@ function audioKind(buf) {
   return null;
 }
 /** Transcribe a push-to-talk clip. Throws with status 400 (not audio), 503 (not on the list / cooling down), 429 (daily bytes), 402 (the $5 ledger). */
-async function tutorTranscribe(buf, { userId, lang = 'en' } = {}) {
+async function tutorTranscribe(buf, { userId, lang = 'en', seconds = null, callCapped = false } = {}) {
   const kind = audioKind(buf);
   if (!kind) throw Object.assign(new Error('not an audio recording'), { status: 400 });
   if (!gatewayFor(userId)) throw Object.assign(new Error('gateway listening is not on for this account'), { status: 503 });
@@ -339,10 +339,11 @@ async function tutorTranscribe(buf, { userId, lang = 'en' } = {}) {
   const key = `${new Date().toISOString().slice(0, 10)}:${userId}`;
   for (const k of tutorHeard.keys()) if (!k.startsWith(key.slice(0, 11))) tutorHeard.delete(k);
   const used = tutorHeard.get(key) || 0;
-  if (used + buf.length > TUTOR_STT_DAILY_BYTES()) throw Object.assign(new Error('daily tutor listening used'), { status: 429 });
-  tutorHeard.set(key, used + buf.length);
+  // A voice call's clips are limited by its own per-learner dollars and minutes (services/tutor-call.js, kept in the database); 16 kHz WAV would use this count up in a minute.
+  if (!callCapped && used + buf.length > TUTOR_STT_DAILY_BYTES()) throw Object.assign(new Error('daily tutor listening used'), { status: 429 });
+  if (!callCapped) tutorHeard.set(key, used + buf.length);
   try {
-    return await asrGateway(buf, kind, lang === 'es' ? 'es' : 'en', userId);
+    return await asrGateway(buf, kind, lang === 'es' ? 'es' : 'en', userId, seconds);
   } catch (err) {
     tutorHeard.set(key, used);
     if (err.code === 'LEDGER_STOP') err.status = 402;
@@ -350,4 +351,4 @@ async function tutorTranscribe(buf, { userId, lang = 'en' } = {}) {
   }
 }
 
-module.exports = { tutorTranscribe, audioKind, tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };
+module.exports = { tutorTtsModel: GATEWAY_TTS_MODEL, tutorSttModel: GATEWAY_STT_MODEL, tutorTranscribe, audioKind, tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };

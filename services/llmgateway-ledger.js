@@ -26,7 +26,8 @@
  *
  * Speech-to-text is billed by audio length, which the server only has as a byte count; it is
  * estimated at 4,000 bytes per second (32 kbit/s, the thinnest audio the app records), so
- * WAV (which is far heavier per second) is over-counted, never under-counted.
+ * WAV (which is far heavier per second) is over-counted, never under-counted. A caller that has read the clip's real length
+ * from its WAV header (the tutor's voice call, services/tutor-call.js) passes `seconds` and is counted at that.
  */
 const fs = require('fs');
 const path = require('path');
@@ -53,14 +54,16 @@ function capUsd() {
 }
 
 /** What a call costs (the same number is reserved and, when it succeeds, settled). */
-function costOf({ kind, model, chars = 0, bytes = 0 }) {
+function costOf({ kind, model, chars = 0, bytes = 0, seconds = null }) {
   if (kind === 'tts') {
     const per1k = PRICES.tts[model] != null ? PRICES.tts[model] : CEILING.tts;
     return (Number(chars) / 1000) * per1k * MARGIN;
   }
   if (kind === 'stt') {
     const perHour = PRICES.stt[model] != null ? PRICES.stt[model] : CEILING.stt;
-    return Math.max(MIN_CALL_USD, ((Number(bytes) / BYTES_PER_SECOND) / 3600) * perHour * MARGIN);
+    // A WAV's real length, read from its header by the caller, beats the estimate from its size.
+    const secs = Number.isFinite(Number(seconds)) && seconds !== null ? Number(seconds) : Number(bytes) / BYTES_PER_SECOND;
+    return Math.max(MIN_CALL_USD, (secs / 3600) * perHour * MARGIN);
   }
   throw new Error(`llmgateway ledger: unknown kind "${kind}" (only tts and stt; the gateway is not used for text)`);
 }

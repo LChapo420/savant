@@ -11,7 +11,7 @@
   else root.TutorSnapshot = factory();
 }(typeof self !== 'undefined' ? self : this, function () {
   const LIMITS = { block: 400, blocks: 8, choices: 8, choice: 120, inputs: 6, feedback: 3, visuals: 4 };
-  const SKIP = 'script, style, noscript, template, nav, header, footer, .tdock-panel, .tdock-btn, [aria-hidden="true"], [hidden]';
+  const SKIP = 'script, style, noscript, template, nav, header, footer, .tdock-panel, .tdock-g, .tdock-bar, [aria-hidden="true"], [hidden]';
   const FEEDBACK = '[role="alert"], [role="status"], [aria-live], .feedback, .correct, .wrong, .incorrect, .result, .explain, .explanation';
   const CHOICE = '[role="radio"], [role="option"], [role="checkbox"], .choice, .option, .answer-option, button[data-choice], label:has(input[type=radio]), label:has(input[type=checkbox])';
   const VISUAL = 'canvas, svg, img, [role="img"], .chessboard, .board, .piano, .keyboard';

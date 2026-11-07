@@ -21,6 +21,7 @@ const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
 
 const voice = require('../services/spanish/voice');
+const call = require('../services/tutor-call');
 
 const router = express.Router();
 
@@ -45,7 +46,15 @@ router.post('/tutor/chat', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
 // The dock on every page. The mode (full / method-only / off) comes from the page path, decided here.
 router.get('/tutor/dock', requireAuth, (req, res) => {
   const mode = dock.modeFor(req.query.path, { full: full.on(req.user) });
-  res.json({ mode, full: full.on(req.user), input_mode: tutorMode.get(req.user.id), speech_lang: /^\/spanish/.test(dock.cleanPath(req.query.path)) ? 'es' : 'en', stt: voice.gatewayFor(req.user.id) });
+  const callInfo = call.info(req.user);
+  res.json({ mode, full: full.on(req.user), input_mode: tutorMode.get(req.user.id), side: tutorMode.getSide(req.user.id), speech_lang: /^\/spanish/.test(dock.cleanPath(req.query.path)) ? 'es' : 'en', stt: voice.gatewayFor(req.user.id) && callInfo.mic, mic: callInfo.mic, call: callInfo });
+});
+
+// Top or bottom on a phone: the learner's choice, kept on the account.
+router.put('/tutor/dock/side', requireAuth, (req, res) => {
+  const s = tutorMode.validSide(req.body && req.body.side);
+  if (!s) return res.status(400).json({ error: 'Side must be top or bottom.' });
+  res.json({ side: tutorMode.setSide(req.user.id, s) });
 });
 
 // The learner flips the toggle: remembered right away, so the next page opens in the same mode.
@@ -59,16 +68,22 @@ router.post('/tutor/dock', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
   const body = req.body || {};
   if (dock.modeFor(body.page && body.page.path) === 'off') return res.status(403).json({ error: 'The tutor is off on this page.' });
   try {
-    res.json(await dock.reply({ user: req.user, messages: body.messages, page: body.page, inputMode: body.input_mode, image: body.image }));
+    const out = await dock.reply({ user: req.user, messages: body.messages, page: body.page, inputMode: body.input_mode, image: body.image });
+    call.noteReply(req.user.id, out.reply); // these words passed safety and the fact check: a voice call may speak them
+    res.json(out);
   } catch (err) {
     console.warn(`tutor dock: ${err.message}`);
     const mode = dock.modeFor(body.page && body.page.path);
     // With TUTOR_FULL on, a failure is still a useful answer (the product, this page, the learner's own record), never a dead end.
     if (full.on(req.user)) {
       const last = [...tutor.cleanHistory(body.messages)].reverse().find((m) => m.role === 'user');
-      return res.json({ ...full.fallback({ user: req.user, page: body.page, message: last ? last.content : '', mode, name: dock.firstName(req.user) }), source: 'fallback', mode });
+      const fb = full.fallback({ user: req.user, page: body.page, message: last ? last.content : '', mode, name: dock.firstName(req.user) });
+      call.noteReply(req.user.id, fb.reply);
+      return res.json({ ...fb, source: 'fallback', mode });
     }
-    res.json({ reply: tutor.offlineReply(req.user.id), source: 'fallback', mode });
+    const offline = tutor.offlineReply(req.user.id);
+    call.noteReply(req.user.id, offline);
+    res.json({ reply: offline, source: 'fallback', mode });
   }
 });
 
@@ -102,6 +117,30 @@ router.post('/tutor/transcribe', requireAuth, limit('tutor-transcribe', 60, 60 *
   } catch (err) {
     res.status(err.status === 400 ? 400 : 503).json({ error: 'Browser listening.' });
   }
+});
+
+// The voice call (services/tutor-call.js, js/tutor-call.js). A refusal carries plain words for the learner.
+const callError = (res, err) => res.status(err.status || 503).json({ error: err.why || 'Voice is not available right now.', code: err.code || null });
+const callAudio = express.raw({ type: () => true, limit: 1536 * 1024 }); // 45 s of 16 kHz mono, the longest clip a call sends
+router.post('/tutor/call/start', requireAuth, limit('tutor-call', 40, 60 * 60 * 1000), (req, res) => {
+  try { res.set('Cache-Control', 'no-store').json(call.start(req.user)); } catch (err) { callError(res, err); }
+});
+router.post('/tutor/call/hear', requireAuth, limit('tutor-call-hear', 240, 60 * 60 * 1000), callAudio, async (req, res) => {
+  try {
+    const out = await call.hear(req.user, String(req.query.call || ''), Buffer.isBuffer(req.body) ? req.body : null, { lang: req.query.lang === 'es' ? 'es' : 'en' });
+    res.set('Cache-Control', 'private, no-store').json(out);
+  } catch (err) { callError(res, err); }
+});
+router.post('/tutor/call/say', requireAuth, limit('tutor-call-say', 300, 60 * 60 * 1000), async (req, res) => {
+  const body = req.body || {};
+  try {
+    const mp3 = await call.say(req.user, String(body.call || ''), body.text, { lang: body.lang === 'es' ? 'es' : 'en' });
+    res.set('Content-Type', 'audio/mpeg').set('Cache-Control', 'private, no-store').send(mp3);
+  } catch (err) { callError(res, err); }
+});
+router.post('/tutor/call/end', requireAuth, (req, res) => {
+  const body = req.body || {};
+  res.json(call.end(req.user, String(body.call || ''), body));
 });
 
 router.get('/tutor/memory', requireAuth, (req, res) => {
