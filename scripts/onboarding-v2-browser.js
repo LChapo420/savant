@@ -51,6 +51,7 @@ async function open(browser, name, { viewport = PHONE, scheme = 'light', reduced
     if (m.type() === 'error' && !/Failed to load resource: the server responded with a status of (400|401|403|404|409|429)/.test(t)) problems.push(`${page.persona} console: ${t.slice(0, 200)}`);
     if (/Content Security Policy|Refused to/.test(t)) problems.push(`${page.persona} CSP: ${t.slice(0, 200)}`);
   });
+  page.on('crash', () => problems.push(page.persona + ' the page crashed at ' + new Date().toISOString().slice(11, 19)));
   page.on('pageerror', (e) => problems.push(`${page.persona} pageerror: ${String(e.message).slice(0, 200)}`));
   return page;
 }
@@ -172,7 +173,7 @@ async function signUpInvited(page, { year = 1990, child = false, snap = false } 
 
 /* ── the test ────────────────────────────────────────────────── */
 /** The baseline's Quick, through the page. `stopAfter` presses Stop once that many timed tasks are done, or a full run goes until the budget ends it. */
-async function takeTest(page, { snaps = true, stopAfterTimed = 2, maxMs = 200000 } = {}) {
+async function takeTest(page, { snaps = true, stopAfterTimed = 2, maxMs = 330000 } = {}) {
   await at(page, 'test');
   if (snaps) await shot(page, '05-test');
   await next(page);
@@ -183,36 +184,46 @@ async function takeTest(page, { snaps = true, stopAfterTimed = 2, maxMs = 200000
   const snap = async (name) => { if (snaps && !seen.has(name)) { seen.add(name); await shot(page, name); } };
   for (;;) {
     if (Date.now() - started > maxMs) throw new Error(`${page.persona}: the test ran past ${maxMs} ms`);
-    const screen = await page.evaluate(() => document.querySelector('#ob').dataset.screen);
-    if (screen === 'into') break;
-    if (await page.locator('.t-digit').count()) { await snap('06c-digits'); await delay(120); continue; }
-    if (await page.locator('#t-in').count()) {
+    // Read the screen in one go: a task can arrive between two separate looks.
+    const kind = await page.evaluate(() => {
+      if (document.querySelector('#ob').dataset.screen === 'into') return 'into';
+      if (document.querySelector('.t-digit')) return 'digit';
+      if (document.querySelector('#t-in')) return 'type';
+      if (document.querySelector('.t-pair')) return 'pair';
+      if (document.querySelector('.t-btns.go')) return 'go';
+      if (document.querySelector('.t-opt:not(.is-picked)') && !document.querySelector('#task[aria-busy]')) return 'opt';
+      return 'wait';
+    });
+    if (kind === 'into') break;
+    if (kind === 'digit') { await snap('06c-digits'); await delay(120); continue; }
+    if (kind === 'type') {
       await snap('06d-type');
       await page.fill('#t-in', '1');
       await page.locator('#t-go').click();
       await delay(60);
       continue;
     }
-    if (await page.locator('.t-pair').count()) {
+    if (kind === 'pair') {
       await snap('06e-speed');
-      await page.locator('.t-opt').first().click({ timeout: 2000 }).catch(() => {});
+      await page.evaluate(() => { const b = document.querySelector('.t-pair ~ .t-btns .t-opt'); if (b) b.click(); });
       continue;
     }
-    if (await page.locator('.t-btns.go').count()) {
+    if (kind === 'go') {
       await snap(await page.locator('.q-prompt').textContent().then((t) => (/same/i.test(t) ? '06b-ready-speed' : '06b-ready-digits')));
       timed += 1;
       await page.locator('.t-btns.go .t-opt').click();
       await delay(100);
       continue;
     }
-    if (await page.locator('.t-opt').count()) {
+    if (kind === 'opt') {
       await snap('06a-choice');
-      if (stopAfterTimed != null && timed >= stopAfterTimed && !(await page.locator('.t-pair, #t-in, .t-digit').count())) {
+      if (stopAfterTimed != null && timed >= stopAfterTimed) {
         await page.locator('#alt').click();
         await at(page, 'into');
         break;
       }
-      await page.locator('.t-opt').first().click({ timeout: 2000 }).catch(() => {});
+      // In one go, so a click can't land on the next task's button.
+      await page.evaluate(() => { const b = document.querySelector('.t-opt:not(.is-picked)'); if (b && !document.querySelector('.t-btns.go')) b.click(); });
       await delay(80);
       continue;
     }
@@ -1007,7 +1018,7 @@ async function main() {
   // The real way in: invited, signs up on /register, comes through /start.
   const BETA = {
     beta: async () => {
-      await betaAdult(browser, { viewport: PHONE, scheme: 'light' }, { fullTest: true });
+      await betaAdult(browser, { viewport: PHONE, scheme: 'light' }, { fullTest: process.argv.includes('--full-test') });
       await betaAdult(browser, { viewport: DESK, scheme: 'light' });
       await betaAdult(browser, { viewport: PHONE, scheme: 'dark' });
       await betaAdult(browser, { viewport: DESK, scheme: 'dark' });

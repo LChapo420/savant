@@ -363,6 +363,7 @@ a.opt { color: inherit; text-decoration: none; }
 .t-side { padding: 12px 14px; border-radius: var(--r-md); background: var(--well); line-height: 1.32; }
 .t-side b { display: block; margin-bottom: 2px; color: var(--ink-3); font-size: .875rem; }
 /* While a timed task is on screen the tutor steps aside, so nothing competes with the numbers. */
+.ob[data-focus] { grid-template-rows: auto 1fr auto; }
 .ob[data-focus] .ob-side { display: none; }
 .ob[data-focus] .ob-panel { padding-top: 8px; }
 

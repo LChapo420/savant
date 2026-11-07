@@ -194,6 +194,11 @@ App.mount(async () => {
       ? 'Your account is made, but the email to your parent could not be sent. You can send it again from your account.'
       : `We emailed your parent or guardian${sentTo ? ` at ${sentTo}` : ''}.`;
     App.header(out.user, null);
+    // The private beta's onboarding: the child's next step is /start, as for any account with no subject.
+    try {
+      const flow = await App.api.get('/api/ob2/state');
+      if (flow && flow.onboarding) document.getElementById('sent-next').href = '/start';
+    } catch { /* the usual way */ }
     show('sent');
   });
 });

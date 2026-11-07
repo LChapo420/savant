@@ -763,6 +763,7 @@
         const task = $('#task');
         if (task) task.setAttribute('aria-busy', 'true');
         out = await api('POST', '/api/onboarding/answer', { session, id: out.step.id, response, ms: Date.now() - t, skip: response === null ? true : undefined });
+        if (task) task.removeAttribute('aria-busy');
       }
       if (!alive()) return;
       testResult(out);

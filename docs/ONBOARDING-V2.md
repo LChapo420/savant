@@ -2,7 +2,26 @@
 
 Switch: `ONBOARDING_V2=on`. Off (the default) means today's flow, unchanged: `/start` behaves like any unknown page and `/api/ob2/*` is 404.
 
-## 1. Inventory: what the current flow does and collects
+## The flow now (owner, 7 Nov)
+
+"Onboarding should just ask the same things it does which is the test that gets a general understanding of their learning style, their interests, and then the subject(s) they want to learn, and the grade they want to learn or they take the placement." And: "the sign up and beta terms and stuff aren't on the onboarding they're on the application, so remove that for the beta so it doesn't confuse them."
+
+**Private beta** (`BETA_SIGNIN_ONLY` on, or `BETA_GATE=invite`): the learner already has an account.
+Welcome, tutor hello, age (only if none is on record), short test, interests, subjects, grade (pick it, or take the placement), building, first lesson ready, the lesson, then the dashboard.
+
+**Public launch** (both off): welcome, tutor hello, age, agreement (or the parent's email), short test, interests, subjects, grade, building, first lesson ready, the lesson, saving the account, all set.
+
+Off the path, kept in the data and APIs, so any of it can come back (the screens are in git at 6b3e0f9):
+
+| Removed from the path | What still works |
+| --- | --- |
+| "What's this for?" | `onboarding_answers.why`, `/api/study-goals`. The default study goal is full depth |
+| "How long do you want to remember it?" | `onboarding_answers.horizon`, `/api/retention-goals`, the profile page's goals card. The default is forever (`DEFAULT_HORIZON`): the full review calendar. The first-lesson card says so in one line, and that it can be changed |
+| Reminders and the calendar file | `POST /api/prefs` `next_study` |
+| "Same idea, your version" | Removed: it would need a subject before it, and it is a stop on the way to the real lesson. The owner asked for the flow to just ask. Its pre-written examples left `start-content.js` |
+| The optional baseline and "tell me more" links on the last screen | The test is now in the flow; a learner who skipped it gets the link back. `/survey` still works |
+
+## 1. Inventory: what the old flow did and collected (step numbers are from the first version)
 
 | What | Where today | Stored in | Depends on it | In v2 |
 | --- | --- | --- | --- | --- |
@@ -17,8 +36,8 @@ Switch: `ONBOARDING_V2=on`. Off (the default) means today's flow, unchanged: `/s
 | Friend's share link `?ref=` | `register`, `services/referrals.js` | `users.referred_by` | referral counts | Kept through the redirect, attached at claim |
 | Landing page subject `?track=` and `?next=` | `auth.js` | none | `/act` landing | `?track=` preselects the subject; `?next=` is honoured after claim |
 | ACT check result carries over | `services/act-check.js` `carry` | `subject_placements` | ACT applicants | Called at claim, as at register |
-| Baseline (Quick, Balanced, Accurate tasks) | `/baseline`, `routes/onboarding.js` | `onboarding_*`, scorecard | scorecard's first picture | Offered on the last screen, after the first lesson; same page, same `allowed` rule, same fallback to the style quiz |
-| Style quiz | `/style-quiz`, `POST /api/profile/style-quiz` | `profiles.style_vector` | scorecard prior | Same fallback from the baseline page, for accounts the baseline is closed to |
+| Baseline (Quick, Balanced, Accurate tasks) | `/baseline`, `routes/onboarding.js` | `onboarding_*`, scorecard | scorecard's first picture | In the flow, Quick (section 3) |
+| Style quiz | `/style-quiz`, `POST /api/profile/style-quiz` | `profiles.style_vector` | scorecard prior | In the flow, for accounts the baseline is closed to (section 3) |
 | About-you survey (5 free-text boxes) | `/survey`, `POST /api/profile/survey` | `profiles.survey` | lesson writers | `interests` comes from step 6 at claim, when consent allows. The rest is on the last screen |
 | Subject and grade picker, several at once | `/onboarding`, `POST /api/enrollments` | `enrollments` | path | Step 4 several subjects. The first goes straight on; the others are links on the last screen. Pick-a-grade-yourself stays at step 7. `/onboarding` still works as "add a subject" |
 | Subject placement walk, Quick/Balanced/Accurate | `/subject-placement`, its API | `subject_placements` | recommended grade | Step 7 uses the same API in Quick. Balanced and Accurate stay on the old page, linked from the result |
@@ -33,37 +52,60 @@ Switch: `ONBOARDING_V2=on`. Off (the default) means today's flow, unchanged: `/s
 
 Should be there and was not: why they are learning; a retention goal at the start; a way to try before an account; reminders of any kind. Nothing sends email or push reminders today (`routes/prefs.js`: "It sends nothing to anyone"), so step 10 stores the plan and offers a calendar file.
 
-## 2. The order, and where it differs from the approved one
+## 2. Decisions in the order
 
-Approved order kept: Welcome, tutor, age, learn, why and by when, interests and the rewrite, level, first lesson, save, reminders.
-
-Added by the owner, 7 Nov: an agreement step right after age (section 4).
-
-Changes, each forced:
-
-1. **Under-consent-age learners give a nickname and a parent's email just before step 7, not at step 9.** The law and the code: today nothing past the age screen opens for a child until a parent's email is on file (`js/onboarding.js ageStep`), and the level check is the first thing stored against them on the server. Steps 4 to 6 stay on the device only, so nothing about the child reaches the server before the parent has been told. Username and password stay at step 9. No child email is ever asked for.
-2. **Own notes only: step 7 and 8 do not happen before the account.** Uploads stay with an account, so those learners go 1 to 6, save, then upload. Child accounts do not see this option (`CHILD_MEDIA_UPLOAD`).
-3. **The in-grade placement comes after the first lesson, as an offer, rather than before it.** Step 8 says the lesson opens right away, and the old chain asked a second quiz first. The learner starts at the first teaching level of the grade the walk found (level 10 in most grades; levels 1 to 9 are practice, and nothing is marked cleared on the way, as with a placement). The last screen links to the existing retake ("skip what you know in this grade").
+1. **Under the consent age, the parent's email comes before the test**, in the agreement's place. The law and the code: nothing past the age screen opens for a child until a parent's email is on file (`js/onboarding.js ageStep`), and the test is now the first thing stored about them. Username and password stay at the save step on the public flow. No child email is ever asked for.
+2. **Own notes only: no grade or first lesson.** Public: save, then upload. Beta: straight to `/materials`. Child accounts don't see this option (`CHILD_MEDIA_UPLOAD`).
+3. **The in-grade placement comes after the first lesson, as an offer, rather than before it.** The learner starts at the first teaching level of the grade (level 10 in most grades; levels 1 to 9 are practice, and nothing is marked cleared on the way, as with a placement).
 4. **Only the Quick walk runs inside the flow.** Balanced and Accurate remain on `/subject-placement`.
-5. **A level check with too little to go on starts at the learner's age, not at an end of the scale.** The walk opens on the subject's first question and its belief is wide until it has answers, so "Stop here" or "I don't know" after a few questions put a 36-year-old on Preschool math, and one right answer then Stop put them on Senior Scholar. `settleStart` in `services/onboarding-v2.js` runs on the walk's result for learners in this flow; the walk itself is unchanged and its answer stays on the row as `walk_grade_id`.
+5. **Several subjects: the first goes straight on.** The others are links on the first-lesson screen (beta) or the last screen (public). Asking a grade for each in turn would be a longer flow; a decision for the owner.
+6. **Several interests are allowed**: "their interests". `onboarding_answers.interests` holds them all, `interest` the first; all of them reach the lesson writers once consent allows.
+7. **A level check with too little to go on starts at the learner's age, not at an end of the scale.** The walk opens on the subject's first question and its belief is wide until it has answers, so "Stop here" or "I don't know" after a few questions put a 36-year-old on Preschool math, and one right answer then Stop put them on Senior Scholar. `settleStart` in `services/onboarding-v2.js` runs on the walk's result for learners in this flow; the walk itself is unchanged and its answer stays on the row as `walk_grade_id`.
    - Enough to place someone: 6 real tries (not "I don't know"), or 3 right among 6 answers. Six is the number the walk wants before it calls someone a beginner.
    - Not enough, 13 or older: the first grade of their school year (age minus 5), capped at 9th grade. The tutor says so on the result screen, and "Too easy", "Too hard" and picking a grade all still work.
    - Not enough, under 13: a low result stays; a result above their age comes down to their age.
    - Only subjects with school years in their grade names (math, English, reading). A beginner in Spanish, chess, piano, basketball, IQ or ACT starts at the start at any age.
    - With the switch off, or for an account not in this flow, nothing changes: the old page still gives the walk's own result.
 
-## 3. Under-13s and other under-consent-age learners
+## 3. The short test
+
+The same test as `/baseline`: the same items, the same scoring (`services/onboarding/tasks.js`) and the same stored data (`profiles.onboarding`), through the same `/api/onboarding` routes. `public/js/start-test.js` only draws it in this flow's look, and sends what `public/js/baseline.js` sends. `/baseline` itself is unchanged and still works.
+
+**What Quick really is.** Run it and read the steps: a required interests question, two timed tasks (30 seconds of same-or-different on five digits, forward digit span) and forced choices between two statements, about 16 steps at the usual pace, more for someone quick, because the budget is time (285 seconds of the learner's own pace). It has no reasoning, reading or mini-lesson items at this length. So the old page's "How do you learn best?", "it learns how you take things in and what helps you" and "It never grades you" were more than it can say, and the screen now says what it is: remember some numbers, spot which match, tap what sounds more like you, "a rough first picture, not a score or a diagnosis", and that lessons start from it and correct it. Nothing here calls it a learning-styles test, because it isn't one and the style quiz's own page says teaching to a style doesn't raise scores. docs/ONBOARDING-MODES.md has the simulated accuracy of Quick (it removes a small share of the error); no real-learner numbers exist.
+
+**Time:** "About 5 minutes". 4.65 minutes at the median and 4.73 at p90 in the simulation (docs/ONBOARDING-MODES.md), not measured on people. The budget caps it for the median learner; a slow one gets fewer items.
+
+**Who takes it.** `mayTake()`: `boosters.allowed`, plus an agreed guest on the public flow (only this test: boosters, the daily check and the other channels stay closed to guests). An account the baseline is closed to (under the consent age without the parent's `measurement_extras`) takes the style quiz: 20 questions, one a screen, the same scale and `POST /api/profile/style-quiz`, "about 2 minutes".
+
+**Interests moved to the end of the test, without changing it.** Quick's required first question is interests. Asking it there and again on the owner's next screen would be the same question twice, so the flow opens the session with `interests_last`: that question is held to the end, its time stays reserved so the same tasks fit, and the interests screen's words go through the same scoring as the box on `/baseline`. Stopping early still brings it up, so the answer counts. `/baseline` doesn't pass the option.
+
+Measured, `scripts/onboarding-v2-test.js` (12 scripted learners, 2 extreme and 10 mixed, on all 100 measures, each taking each item's usual time; simulated, not people): the same items 12 of 12, mean difference on the 0-100 scale 0.000, worst 0.000. Someone who would have typed faster than the 25 seconds reserved can lose an item or two at the end. And a tile tap is always a short answer: this scoring reads word count on three measures (relevance demand, interest transfer, curiosity hook), so "Soccer, Music" reads the same as those words typed, and lower than a long typed sentence. That is the existing rule, not a new one, and it is a weak one.
+
+**Carry-over.** A guest's test is on the guest row, so saving the account keeps it. A guest signing in to an existing account brings the test across only if that account has none, fed to its scorecard (`moveToAccount`). An open session closes when the first lesson is made or the account is saved. A reload carries on at the same step (`resume`). Skipping is allowed ("Skip for now", as `/baseline` always allowed), and the last screen offers it again.
+
+## 3b. Under-13s and other under-consent-age learners
 
 - Age screen: same endpoint, same neutrality. First answer holds.
-- Steps 4 to 6: on the device only. Tap choices only: no free-text interest box, because a child's typed words are not collected before consent.
-- Before step 7: nickname and parent's email create a limited child row, and `requestConsent` emails the parent. A failed email is shown, not hidden, and can be retried.
-- Steps 7 and 8: same limited account as today (`pending`): no outside AI, no camera or mic, no uploads. `CONSENT_PENDING_ACCESS=locked` still locks and sends them to `/parent-needed`.
-- Step 9: username and password. If nobody answers in 14 days the existing sweep deletes the account, unchanged.
-- The chosen interest reaches `profiles.survey` only once `ai_free_text` is true; until then it stays in `onboarding_answers`, which export and deletion cover.
+- Next, on the public flow: nickname and parent's email create a limited child row, and `requestConsent` emails the parent. A failed email is shown, not hidden, and can be retried. Nothing about the child reaches the server before this.
+- Then the style quiz, interests by tap only (no free-text box, because a child's typed words are not collected before consent), subjects without "My own notes", grade or placement.
+- The same limited account as today (`pending`): no outside AI, no camera or mic, no uploads. `CONSENT_PENDING_ACCESS=locked` still locks and sends them to `/parent-needed`.
+- Public: username and password at the save step. If nobody answers in 14 days the existing sweep deletes the account, unchanged.
+- The chosen interests reach `profiles.survey` only once `ai_free_text` is true; until then they stay in `onboarding_answers`, which export and deletion cover.
+
+**In the private beta:**
+- An invited under-13 signs up on `/register` as today: age, then the child form (username, password, nickname, the parent's email, which is the address the invite was sent to). `registerChild` emails the parent there. Then `/start`: no age screen, no parent screen, no agreement, the style quiz, tap-only interests, subjects, grade, and a standard first lesson, with the limits above. They never agree for themselves: no `learner_agreements` row; the parent's answer on `/parent-consent` is the record.
+- A signed-in account with no age on record that answers under the consent age on `/start` gets one screen for the parent's email (`/api/ob2/begin`, the same `requestConsent`) before the test. Its account keeps whatever email it was made with.
+- A parent never comes through `/start`: parents are a separate table with their own sign-in, and their pages are untouched. An adult parent who signs up for themselves is an ordinary adult account.
 
 ## 4. Agreement and guest data
 
-**Everyone agrees before they get access (owner, 7 Nov).** Right after age, a learner at or over their country's consent age sees the beta terms, privacy and outside AI services, and chooses `I agree to all three` or `I don't agree`. Neither is picked and Continue is off until one is. Declining stops with "You can't use the beta without this", the privacy link and a way to choose again; it creates nothing on the server. No step past it can be reached without agreeing. An under-consent-age learner never sees it: their parent decides, as today. There is no separate terms page yet, so the terms are the words on the screen (`AGREEMENT` in `public/js/start-content.js`). They need the owner's or a lawyer's reading.
+**The private beta (owner, 7 Nov): the agreement is not on the onboarding.** Testers are approved applicants. The application form's only required tick is emails, so it covers neither the terms nor outside AI, and the agreement is recorded where the account is made: `POST /api/auth/register`, when `public/register.html` sends the version of the line it showed (`SIGNUP_AGREEMENT` in `services/onboarding-v2.js`; a test checks the page and the server have the same words). One `learner_agreements` row, `via: 'sign_up'`, with the words. `access()` is not changed: it reads the age as before, so an account with no row still counts as full.
+
+The way in is `scripts/beta-invites.js approve --send`, the emailed `/join?invite=CODE`, `/register`. That needs `BETA_SIGNIN_ONLY=off` and `BETA_GATE=invite` (the deploy kit's own note: "Set BETA_SIGNIN_ONLY=off when testers start signing up"), because sign-in only allows no new account at all. So "the beta" here means either switch: with only `BETA_SIGNIN_ONLY` as the test, every tester signing up by invite would have met the guest and agreement flow, and the guest routes would have let anyone past the invite. With `BETA_GATE=invite` or sign-in only: `/agree` and a logged-out `/begin` refuse, so no guest row can be made; `/register` stays the sign-up page; `/start` signed out goes to sign-in; `/dashboard` and `/onboarding` send an account with no subject (not an admin) to `/start`; an account with a subject goes home.
+
+Not covered: accounts that already exist (the owner's, the demo) have no row and never see the line. They keep working, since `access()` doesn't look at rows.
+
+**On the public flow, everyone agrees before they get access (owner, 7 Nov).** Right after age, a learner at or over their country's consent age sees the beta terms, privacy and outside AI services, and chooses `I agree to all three` or `I don't agree`. Neither is picked and Continue is off until one is. Declining stops with "You can't use the beta without this", the privacy link and a way to choose again; it creates nothing on the server. No step past it can be reached without agreeing. An under-consent-age learner never sees it: their parent decides, as today. There is no separate terms page yet, so the terms are the words on the screen (`AGREEMENT` in `public/js/start-content.js`). They need the owner's or a lawyer's reading.
 
 **Agreeing creates the guest:** a real `users` row with `guest: true`, no email and no password. `POST /api/ob2/agree` records one `learner_agreements` row (version, policy version, what it covers, when), in `KNOWN_COLLECTIONS` and `EXPORT_MORE`, and sets `users.agreed_at`. A change of wording needs a new `AGREEMENT_VERSION`.
 
@@ -85,26 +127,27 @@ Changes, each forced:
 
 Four earlier runs were not true: the page gave up at 30 s and opened the generic standard lesson. The causes, all fixed: level 1 is practice, not a lesson; the session route started a background write of the same level, which the learner then waited on; and the page's wait is shorter than a cold write. So the building screen now really waits for the first checked part, up to 150 s, then says it is starting with the standard lesson. Both switches must be on in production, and without them the wait is longer or falls back.
 
-## 5. Step 6 content
-
-Pre-written, in `public/js/start-content.js`: 4 ideas (a fraction, a main idea, a Spanish verb ending, practising the hard part) times 12 interests. No model is called and nothing is sent anywhere. `scripts/onboarding-v2-test.js` checks that every cell exists and that the fraction cells are about 3 of 4. They are not run through the fact pipeline: they are scenarios, not claims about the world, and the Spanish forms are regular verbs checked by hand. The screen says these are written ahead of time. An interest with no example says so and shows another one.
-
 ## 6. Look
 
-Atkinson Hyperlegible, near-monochrome tokens from `site/assets/site.css`, plus one accent: a highlighter yellow. It marks what is selected or important, the way a student marks a page, which fits the app's "Measured and marked" system and is none of the reference apps' brand colours. It is only ever a background behind dark text, so it passes contrast in both modes and never competes with right and wrong. The progress bar is the site's ruler with a marker on it.
+Owner, 7 Nov: "a clean ui look like Duolingo and brilliant". The spirit only, from the reference screens in `design-refs/pixlpin`: one question per screen, generous space, big friendly type, large rounded answer cards with a thicker bottom edge that sinks when pressed, a chunky button, a simple filled bar, the tutor with a speech bubble. Nothing is copied: no art, wording or brand colours. Everything is built from the Sunny giraffe's palette: cream page, the giraffe's amber for action with dark brown text, its spot brown for what is chosen, Atkinson Hyperlegible throughout. On desktop the giraffe has a warm side of its own. The browser test measures the contrast of every piece of text on every screen it visits (AA), in both modes.
+
+The agreement's two answers sit in the footer, so both show without scrolling on any phone. During a timed task the tutor steps aside. **Awaiting the owner's approval of the design: this look is a proposal.**
 
 The tutor is one component, `public/js/start-tutor.js`: the Sunny giraffe (owner, 7 Nov: "for now"), an SVG with moods. Swap this file and the .tutor block in start.css to swap the character. `Tutor.NAME` is null and copy never names it.
 
 ## 7. What was checked, and what wasn't
 
-`scripts/onboarding-v2-test.js` (in the suite) covers the API. `scripts/onboarding-v2-browser.js` (needs playwright, not in the suite) walked Chromium on a local copy of the store, at 375 px and 1366 px, light and dark: adult, teen, under-13 with a parent who agrees, under-13 with no consent yet, returning account, reload at each stage, browser and in-page back, skipping by address, double taps, a taken email, an interest with no example, own notes, keyboard only, reduced motion, and a guest on the path, home and lesson pages. It fails on a console error, a CSP violation, sideways scrolling or a small target. All 9 subjects were opened at the first and middle grade, with no model keys, as a guest in production would have no outside AI.
+`scripts/onboarding-v2-test.js` (in the suite) covers the API, on the public flow, the invite gate and sign-in only. `scripts/onboarding-v2-browser.js` (needs playwright, not in the suite) walks Chromium on a local copy of the store. It fails on a console error, a CSP violation, sideways scrolling, low contrast, a small target, or a word about signing up on a beta screen. Personas: beta adult and under-13 through the real invite, an account with no age under sign-in only, the public adult and child, returning, reload, a taken email, typed interests, own notes, declining, keyboard only, reduced motion, a guest on the app's pages, and every subject.
 
-Not checked: Safari, Firefox and real phones (Chromium only); a real email reaching a parent (the dev outbox was read); a run with model keys present; finishing a whole first lesson by hand, so the lesson-done prompt was tested with the finish call simulated; real learners, so nothing here says the flow converts or teaches better.
+Not checked: Safari, Firefox and real phones (Chromium only); a real email reaching a parent (the dev outbox was read); a run with model keys present or outside AI on (these runs have it off, so the first lesson is the standard one; the wait for an own lesson is unchanged and was last measured before this rework); finishing a whole first lesson by hand; real learners, so nothing here says the flow converts or teaches better. Times are estimates and simulations.
 
 ## 8. Decisions for the owner
 
-- Reminders: none are sent today. Step 10 stores a plan and offers a calendar file. Email for adults would need building.
+- Reminders: none are sent, and the flow no longer asks for a plan.
 - A guest signing in to an existing account keeps the level check but not lesson answers.
-- The agreement's wording needs reading; there is no separate terms page.
+- The agreement's wording and the sign-up line need reading; there is no separate terms page, so the line says what the terms are.
+- Existing accounts have no agreement row.
+- Several subjects: only the first gets a grade in the flow.
+- A tile tap reads as a short answer on three measures (section 3).
 - Turn on `COLD_FIRST_BLOCK` and `CORAL_LEARNER` with `ONBOARDING_V2`: "built around you" depends on them.
 - Starting level with too little evidence (section 2, item 5): the 9th-grade cap for adults, and six "I don't know" counting as no evidence rather than as a beginner, are judgement calls.
