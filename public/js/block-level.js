@@ -200,6 +200,14 @@
       const shown = new Set(plan.entries.map(keyOf));
       const loaded = new Set(plan.files);
       let version = m.partial.version;
+      let lastNew = Date.now();
+      // Waiting a long time for the next part: say so, and offer the standard session. It sits under the lesson, so it moves nothing the learner is reading.
+      const slowNote = () => {
+        const at = document.getElementById('block-level-slow');
+        if (stillComing && enrollmentId && Date.now() - lastNew > 45000) {
+          if (!at) { const d = document.createElement('p'); d.id = 'block-level-slow'; d.className = 'small muted'; d.style.margin = '8px 0 0'; d.innerHTML = `The next part is taking longer than usual to check. Rather not wait? <a href="/session?enrollment=${enrollmentId}&ordinary=1">Do the standard session for this level instead</a>.`; progress.insertAdjacentElement('afterend', d); }
+        } else if (at) at.remove();
+      };
       const addEntry = (entry) => {
         const section = document.createElement('section');
         section.setAttribute('data-block', entry.block || '');
@@ -226,7 +234,7 @@
           const fresh = r.plan.files.filter((f) => !loaded.has(f));
           fresh.forEach((f) => loaded.add(f));
           if (fresh.length) await loadScripts(fresh);
-          r.plan.entries.filter((e) => !shown.has(keyOf(e))).forEach((e) => { shown.add(keyOf(e)); addEntry(e); });
+          r.plan.entries.filter((e) => !shown.has(keyOf(e))).forEach((e) => { shown.add(keyOf(e)); addEntry(e); lastNew = Date.now(); });
           Object.assign(answered, r.plan.answered || {});
           if (r.version) version = r.version;
           if (r.total_checks) checkCount = r.total_checks;
@@ -234,6 +242,7 @@
           renderFinish();
           window.__partsShown = plan.entries.length;
         }
+        slowNote();
         if (stillComing) setTimeout(tick, 1500);
       };
       setTimeout(tick, 1000);
