@@ -192,7 +192,9 @@ function leafProblems(base, text, asked) {
   const out = [];
   const hb = hardNums(base); const ht = hardNums(t);
   for (const n of hb) if (!ht.has(n)) out.push(`the number ${n} is missing`);
-  for (const n of ht) if (!hb.has(n)) out.push(`the number ${n} is new`);
+  // "Three things" over a list of three is a fair count in words, as in the upload check; a figure has to be there.
+  const spelled = F.numbersOf(t).spelled;
+  for (const n of ht) if (!hb.has(n) && !(spelled.has(n) && Number(n) <= 12)) out.push(`the number ${n} is new`);
   const nb = F.namesOf(base); const nt = F.namesOf(t);
   for (const n of nt) if (!nb.has(n) && ![...nb].some((x) => x.toLowerCase() === n.toLowerCase()) && !String(base).toLowerCase().includes(String(n).toLowerCase())) out.push(`the name ${n} is new`);
   // A capital after a dash or colon is not a name ("Pre-existing faults"); a real name has no lower-case form in the same text.
@@ -262,7 +264,9 @@ async function checkAgainstMaterial({ changed, baseMap, mat, passageIds, llm, sp
   const idsOf = new Map();
   for (const [key, text] of changed) {
     const ids = [];
-    F.sentencesOf(text).forEach((s, j) => { const id = `${key}.${j}`; items.push({ id, text: s, extra: baseMap.get(key) }); ids.push({ id, s }); });
+    const baseSentences = new Set(F.sentencesOf(baseMap.get(key) || ''));
+    // A sentence the rewrite left exactly as it was has been checked already.
+    F.sentencesOf(text).forEach((s, j) => { const id = `${key}.${j}`; if (!baseSentences.has(s)) items.push({ id, text: s, extra: baseMap.get(key) }); ids.push({ id, s, same: baseSentences.has(s) }); });
     idsOf.set(key, ids);
   }
   const report = { sentences: items.length, failed: [], unchecked: 0 };
@@ -272,13 +276,14 @@ async function checkAgainstMaterial({ changed, baseMap, mat, passageIds, llm, sp
   const readers = String(process.env.UPLOAD_FACTCHECK_READERS || '2') === '1'
     ? { asker }
     : { asker: (a) => asker({ ...a, task: 'material_part_read_a', timeoutMs: READ_MS }), asker2: (a) => asker({ ...a, task: 'material_part_read_b', timeoutMs: READ_MS }), askerAny: (a) => asker({ ...a, task: 'material_part_read_a', timeoutMs: READ_MS * 2 }) };
-  const got = await F.check(items, { idx: indexFor(mat), sourceText: sourceFor(mat, passageIds), ...readers, needQuote: false, once: true, system: REWORD_SYSTEM, allow: F.interestWords(spec) });
+  const got = await F.check(items, { idx: indexFor(mat), sourceText: sourceFor(mat, passageIds), ...readers, needQuote: false, once: true, alwaysRead: true, system: REWORD_SYSTEM, allow: F.interestWords(spec) });
   report.unchecked = got.stats ? got.stats.unchecked : 0;
   const out = new Map();
   for (const [key, ids] of idsOf) {
     const kept = [];
     let bad = false;
-    for (const { id, s } of ids) {
+    for (const { id, s, same } of ids) {
+      if (same) { kept.push(s); continue; }
       const r = got.get(id);
       if (!r || !r.keep || r.how === 'unchecked') { bad = true; report.failed.push({ text: s, why: (r && (r.reason || r.how)) || 'no answer' }); break; }
       kept.push(r.text || s);

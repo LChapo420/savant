@@ -285,7 +285,7 @@ function quoteHolds(it, quote, idx) {
   return !terms.size || held / terms.size >= 0.6 || terms.size - held <= 2;
 }
 
-async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = null, needQuote = false, allow = null, allowStems = null, task = 'material_factcheck', once = false, system = null }) {
+async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = null, needQuote = false, allow = null, allowStems = null, task = 'material_factcheck', once = false, system = null, alwaysRead = false }) {
   const out = new Map();
   // A second reader that does not answer leaves the first reader's verdicts standing; a spent budget does not stop the build here.
   const stats = { sentences: items.length, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0, stopped: false };
@@ -294,7 +294,8 @@ async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = 
   for (const it of items) {
     const e = examine(it.text, idx, { allow, allowStems, extra: it.extra });
     it.exam = e;
-    if (e.direct) { out.set(it.id, { keep: true, how: 'direct' }); stats.direct++; continue; }
+    // A rewording keeps the same words by design, so its words being in the material says nothing ("sought to isolate" became "isolated"): with alwaysRead a model reads it anyway.
+    if (e.direct && !alwaysRead) { out.set(it.id, { keep: true, how: 'direct' }); stats.direct++; continue; }
     ask.push(it);
   }
   const answered = new Map();

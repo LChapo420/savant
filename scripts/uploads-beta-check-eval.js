@@ -60,7 +60,7 @@ async function one(id, base, rewrite) {
   const idx = F.indexSource(`${c.plain}\n${base}`);
   const asker = async (a) => { let res = null; try { res = await llm(a); } catch { res = null; } return { res }; };
   const got = await F.check([{ id: 'x', text: rewrite, extra: base }], {
-    idx, sourceText: `${c.plain.slice(0, 15000)}\n${base}`, needQuote: false, once: true, system: P.REWORD_SYSTEM,
+    idx, sourceText: `${c.plain.slice(0, 15000)}\n${base}`, needQuote: false, once: true, alwaysRead: true, system: P.REWORD_SYSTEM,
     asker: (a) => asker({ ...a, task: 'material_part_read_a' }), asker2: (a) => asker({ ...a, task: 'material_part_read_b' }), askerAny: (a) => asker({ ...a, task: 'material_part_read_a' }),
   });
   const v = got.get('x');
