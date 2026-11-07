@@ -600,6 +600,8 @@ function stampCourse(userId, course) {
 
 /** Fire and forget from a route that serves a course. */
 function maybeRefreshCourse(userId, materialId) {
+  // With the part layer following the learner (services/material-parts.js) this older rewrite, which writes over the stored lesson, must not run as well.
+  try { if (lazy('./material-parts').followOn()) return; } catch { /* the older path stands */ }
   if (!enabled(userId) || !partOn('lesson')) return;
   setImmediate(() => { refreshCourseLessons(userId, materialId).catch(() => {}); });
 }
