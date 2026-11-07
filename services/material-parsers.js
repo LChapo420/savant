@@ -56,11 +56,24 @@ function countWords(text) {
   return n;
 }
 
+/**
+ * Character maps for PDFs whose font is not embedded and uses a predefined encoding (older Chinese, Japanese and Korean PDFs): without them pdfjs reads no text at all from
+ * those fonts, and the page looks scanned. unpdf bundles pdfjs but not the maps, so they come from the optional pdfjs-dist package, at the version unpdf bundles. Absent, nothing changes.
+ * pdfjs wants forward slashes and a trailing slash here, and refuses a file:// address.
+ */
+function cMapOptions() {
+  try {
+    const path = require('path'); // eslint-disable-line global-require
+    const dir = path.join(path.dirname(require.resolve('pdfjs-dist/package.json')), 'cmaps');
+    return require('fs').existsSync(dir) ? { cMapUrl: `${dir.split(path.sep).join('/')}/`, cMapPacked: true } : {}; // eslint-disable-line global-require
+  } catch { return {}; }
+}
+
 async function fromPdf(buf) {
   const { getDocumentProxy, extractText } = await import('unpdf');
   let pdf;
   try {
-    pdf = await getDocumentProxy(new Uint8Array(buf), { isEvalSupported: false, useSystemFonts: false, verbosity: 0, fontExtraProperties: true });
+    pdf = await getDocumentProxy(new Uint8Array(buf), { isEvalSupported: false, useSystemFonts: false, verbosity: 0, fontExtraProperties: true, ...cMapOptions() });
   } catch (err) {
     if (/password/i.test(String(err && (err.name + err.message)))) return fail('That PDF is password-protected. Remove the password and upload it again.', 'encrypted');
     return fail('That PDF could not be read. It may be damaged or cut off. Download or export it again, or paste the text.', 'unreadable');
@@ -458,4 +471,4 @@ async function fromImage(buf) {
   return { text, pages: 1 };
 }
 
-module.exports = { MAX_PAGES, MIN_OCR_WORDS, fail, normalise, countWords, zipEntries, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, fromImage, ocr, setOcr, usingTestOcr, htmlText };
+module.exports = { MAX_PAGES, MIN_OCR_WORDS, fail, normalise, countWords, zipEntries, cMapOptions, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, fromImage, ocr, setOcr, usingTestOcr, htmlText };
