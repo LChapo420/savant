@@ -763,7 +763,8 @@ function asksFromSpec(spec, kind) {
   const it = spec.interests || {};
   const pr = spec.practice || {};
   const asked = [];
-  if (O.leanFor(spec) && ['lesson', 'note', 'summary'].includes(kind)) asked.push('shorter');
+  // With the optimizer on, a lean learner's lesson is lean already: its reading is the facts and nothing else, so there is nothing more to cut.
+  if (O.leanFor(spec) && (['note', 'summary'].includes(kind) || (kind === 'lesson' && !O.enabled()))) asked.push('shorter');
   if (lang.plainLanguage || lang.eslSupport || (lang.vocabularyGrade && lang.vocabularyGrade <= 6)) asked.push('simpler');
   if ((pr.workedExamples || 0) >= 2 && (pr.workedToPractice || 0) >= 1.2 && kind === 'lesson') asked.push('examples', 'worked');
   let topic = null;

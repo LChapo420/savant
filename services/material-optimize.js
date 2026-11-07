@@ -34,10 +34,20 @@ const hardOf = (t) => { const nums = F.numbersOf(t).all; const out = new Set(); 
 const hasAll = (need, have) => { for (const x of need) if (!have.has(x)) return false; return true; };
 
 /** Sentences of a material, in order, as a learner should read them. */
+/** A sentence a page break cut in two: a line that stops with no end mark, on a word that cannot end a sentence, and a next line that starts in lower case. Read in a real PDF: "the invasion of Belgium, whose" / "neutrality Britain had guaranteed". */
+function joinBroken(lines) {
+  const out = [];
+  for (const line of lines) {
+    const prev = out[out.length - 1];
+    if (prev && !/[.!?:;]["'”)\]]*\s*$/.test(prev) && !isTableLine(prev) && /^[\p{Ll}]/u.test(line.trim())) out[out.length - 1] = `${prev} ${line.trim()}`;
+    else out.push(line);
+  }
+  return out;
+}
 function sourceSentences(text) {
   const out = [];
   let header = null;
-  for (const line of F.logicalLines(text)) {
+  for (const line of joinBroken(F.logicalLines(text))) {
     const plain = F.plainSentence(line);
     if (!plain || /^\[\[[^\]]*\]\]$/.test(plain)) continue;
     // A table row is read with its header, as a sentence the page can show: "Divergent: Relative motion, Plates pull apart; Typical seismic style, Normal-fault earthquakes."
@@ -131,21 +141,40 @@ function lessonSentences(course) {
 }
 
 /** The skill a fact belongs to: the one whose passages hold it, or whose lesson shares most of its words. */
-function ownerOf(fact, course, passageOf, sents, idx, titles, owned) {
-  const pid = passageOf(fact.text);
+function assignOwners(facts, course, passageOf, sents, idx, titles) {
   const skills = course.skills || [];
-  const holders = pid ? skills.filter((s) => (s.passage_ids || []).includes(pid)) : [];
-  if (holders.length === 1) return holders[0].id;
-  const pool = holders.length ? holders : skills;
-  // The skill that talks about it most, and whose title names it. Not simply the first to mention it, or the first skill would take every fact and the others would read as scraps.
-  const score = new Map(pool.map((s) => [s.id, overlap(titles.get(s.id), fact.terms) * 1.5 - 0.04 * (owned.get(s.id) || 0)]));
-  const bestHere = new Map();
-  for (const n of candidates(fact, idx)) { const s = sents[n]; if (score.has(s.skill)) { const o = overlap(fact.terms, s.terms); if (o > (bestHere.get(s.skill) || 0)) bestHere.set(s.skill, o); } }
-  for (const [id, o] of bestHere) score.set(id, score.get(id) + o);
-  let best = pool[0] ? pool[0].id : null; let v = -Infinity;
-  for (const [id, x] of score) if (x > v) { best = id; v = x; }
-  owned.set(best, (owned.get(best) || 0) + 1);
-  return best;
+  if (!skills.length || !facts.length) return;
+  const at = new Map(skills.map((s, i) => [s.id, i]));
+  // How well each fact fits each skill: the skill's closest sentence, its title, and whether its passages hold the fact.
+  const score = facts.map((f, fi) => {
+    const row = new Float32Array(skills.length);
+    skills.forEach((s, i) => { row[i] = overlap(titles.get(s.id), f.terms) * 1.5; });
+    const pid = passageOf(f.text);
+    if (pid) skills.forEach((s, i) => { if ((s.passage_ids || []).includes(pid)) row[i] += 0.3; });
+    const best = new Float32Array(skills.length);
+    for (const n of candidates(f, idx)) { const s = sents[n]; const i = at.get(s.skill); if (i === undefined) continue; const o = overlap(f.terms, s.terms); if (o > best[i]) best[i] = o; }
+    for (let i = 0; i < skills.length; i += 1) row[i] += best[i];
+    // A gentle pull toward an even spread, so a skill whose lesson is only a recap of the others still gets its stretch of the material.
+    const place = fi / Math.max(1, facts.length - 1);
+    for (let i = 0; i < skills.length; i += 1) row[i] += 1.5 * (1 - 2 * Math.abs(place - (i + 0.5) / skills.length));
+    return row;
+  });
+  // The material teaches in order, and so does a path: the facts are cut into runs, one run to a skill, in order, so that each fact sits best overall. A section then reads as a stretch of the material, not as scraps of it.
+  const S = skills.length;
+  let prev = new Float32Array(S);
+  const back = facts.map(() => new Int16Array(S));
+  facts.forEach((_, fi) => {
+    const cur = new Float32Array(S);
+    let bestBefore = -Infinity; let bestAt = 0;
+    for (let s = 0; s < S; s += 1) {
+      if (prev[s] > bestBefore) { bestBefore = prev[s]; bestAt = s; }
+      cur[s] = bestBefore + score[fi][s];
+      back[fi][s] = bestAt;
+    }
+    prev = cur;
+  });
+  let s = 0; for (let i = 1; i < S; i += 1) if (prev[i] > prev[s]) s = i;
+  for (let fi = facts.length - 1; fi >= 0; fi -= 1) { facts[fi].owner = skills[s].id; s = back[fi][s]; }
 }
 /** Every sentence of this skill that says the fact, best first; failing that, the best sentence anywhere. */
 function carriersOf(fact, sents, idx) {
@@ -181,22 +210,7 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
   const carrier = new Map();
   const carries = new Map();
   const titles = new Map((course.skills || []).map((s) => [s.id, K.termSet(s.title)]));
-  const ownedCount = new Map();
-  for (const f of facts) f.owner = ownerOf(f, course, passageOf, sents, idx, titles, ownedCount);
-  // What the material says side by side stays side by side: a sentence between two of another skill's joins them, and the rows of one table stay together.
-  for (let pass = 0; pass < 2; pass += 1) {
-    for (let i = 1; i < facts.length - 1; i += 1) if (facts[i - 1].owner === facts[i + 1].owner && facts[i].owner !== facts[i - 1].owner) facts[i].owner = facts[i - 1].owner;
-  }
-  const rowOf = (f) => /^[^:;]{1,60}: [^;]+, [^;]+(?:; [^;]+, [^;]+)*\.$/.test(f.text);
-  for (let i = 0; i < facts.length;) {
-    if (!rowOf(facts[i])) { i += 1; continue; }
-    let j = i; while (j + 1 < facts.length && rowOf(facts[j + 1])) j += 1;
-    const votes = new Map(); for (let k = i; k <= j; k += 1) votes.set(facts[k].owner, (votes.get(facts[k].owner) || 0) + 1);
-    const byTitle = (course.skills || []).map((s) => ({ id: s.id, v: overlap(titles.get(s.id), new Set(facts.slice(i, j + 1).flatMap((x) => [...x.terms]))) })).sort((a, b) => b.v - a.v)[0];
-    const owner = byTitle && byTitle.v >= 0.5 ? byTitle.id : [...votes.entries()].sort((a, b) => b[1] - a[1])[0][0];
-    for (let k = i; k <= j; k += 1) facts[k].owner = owner;
-    i = j + 1;
-  }
+  assignOwners(facts, course, passageOf, sents, idx, titles);
   for (const f of facts) {
     const ns = carriersOf(f, sents, idx);
     if (ns.length) carrier.set(f.i, ns[0]);
@@ -254,7 +268,7 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
     for (const f of facts) {
       if (!needed(f)) continue;
       let text = f.text;
-      for (const [n, list] of carries) { if (list.includes(f) && sents[n].skill === f.owner && sents[n].kind === 'p' && wc(sents[n].text) <= 0.8 * wc(text) && overlap(f.terms, sents[n].terms) >= 0.85) text = sents[n].text; }
+      for (const [n, list] of carries) { if (list.includes(f) && sents[n].skill === f.owner && sents[n].kind === 'p' && wc(sents[n].text) <= 0.6 * wc(text) && overlap(f.terms, sents[n].terms) >= 0.85) text = sents[n].text; }
       pick.set(f.i, text);
       coveredFacts.add(f.i);
     }
