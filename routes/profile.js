@@ -290,7 +290,7 @@ const EXPORT_MORE = [
   'experiment_arms', 'choice_pairs',
   // (the daily check, services/daily-check.js, adds no collection: its day log and answers sit in the profiles row, boosters.daily and onboarding.known)
   'footprint_events', 'recruit_applicants', 'speed_proof', 'speed_proof_blocks',
-  'lesson_layers', 'part_changes', 'skill_records', 'study_sessions', 'enforcers', 'material_audio_jobs', 'reading_checks',
+  'lesson_layers', 'part_changes', 'material_part_changes', 'skill_records', 'study_sessions', 'enforcers', 'material_audio_jobs', 'reading_checks',
 ];
 
 router.get('/account/export', requireAuth, (req, res) => {

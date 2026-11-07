@@ -993,6 +993,30 @@
         "timeout_ms": 300000,
         "basis": "round 3 (6 Nov 2026): the checked rewrite of a lesson for its learner; a learner waits on it, so the same cheap paid overflow list as material_lesson."
       },
+      "material_part_change": {
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash",
+          "gonka:zai-org/GLM-5.3-Flash",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
+        ],
+        "timeout_ms": 45000,
+        "basis": "uploads-beta (7 Nov 2026): a learner is waiting on a change to a part of their upload; the same cheap paid list as material_lesson, with a short deadline."
+      },
+      "material_part_example": {
+        "allow": [
+          "munito:deepseek-ai/deepseek-v4.1-flash-1017",
+          "munito:zai-org/glm-5.3-flash",
+          "gonka:zai-org/GLM-5.3-Flash",
+          "gonka:deepseek-ai/DeepSeek-V4-Flash-0731",
+          "grokified:grok-4.7",
+          "coral:deepseek-v4.1-flash"
+        ],
+        "timeout_ms": 30000,
+        "basis": "uploads-beta (7 Nov 2026): a labelled made-up example a learner asked for."
+      },
       "material_pack": {
         "allow": [
           "munito:deepseek-ai/deepseek-v4.1-flash-1017",

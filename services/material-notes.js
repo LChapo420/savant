@@ -239,13 +239,28 @@ async function build(userId, materialId, opts = {}) {
   }
 }
 
+/** The sections as this learner sees them: the goal's choice of bullets (the rest stay under "aside" on the section), then their changes (services/material-parts.js; both off by default). */
+function goalSections(n) {
+  const parts = require('./material-parts'); // eslint-disable-line global-require
+  const all = (n.sections || []).map((s) => ({ id: s.id, heading: s.heading, bullets: s.bullets.map((b) => ({ text: b.text, quote: b.quote })) }));
+  const flat = all.flatMap((s) => s.bullets.map((b) => b.text));
+  const keeps = parts.goalKeeps(n.user_id, n.material_id, flat);
+  let at = 0;
+  const chosen = all.map((s) => {
+    const bullets = []; const aside = [];
+    for (const b of s.bullets) { if (keeps[at]) bullets.push(b); else aside.push(b.text); at += 1; }
+    return { ...s, bullets: bullets.length ? bullets : s.bullets.slice(0, 1), ...(aside.length ? { aside: bullets.length ? aside : aside.slice(1) } : {}) };
+  });
+  return parts.overlaySections(n.user_id, n.material_id, chosen);
+}
+
 function view(n) {
   if (!n) return null;
   const stale = n.status === 'building' && !inflight.has(`${n.user_id}:${n.material_id}`); // died with a crash or a restart
   return {
     material_id: n.material_id, title: n.title, status: stale ? ((n.sections || []).length ? 'partial' : 'failed') : n.status,
     failure: stale ? 'interrupted' : (n.error === 'no_answer' || n.error === 'token budget' ? 'busy' : null),
-    sections: (n.sections || []).map((s) => ({ id: s.id, heading: s.heading, bullets: s.bullets.map((b) => ({ text: b.text, quote: b.quote })) })),
+    sections: goalSections(n),
     coverage: n.coverage || 0, built_at: n.finished_at || null,
   };
 }

@@ -129,7 +129,9 @@ function start(userId, materialId, opts = {}) {
 
   const spec = specOf(userId, { title: course.title, id: course.material_id });
   const n = Number.isFinite(Number(opts.length)) ? Math.round(Number(opts.length)) : defaultLen(spec);
-  let want = Math.min(MAX_LEN, Math.max(MIN_LEN, n));
+  // The learner's own choice for this course's tests, and how the goal counts checks (services/material-parts.js).
+  const tp = require('./material-parts').testPrefs(userId, materialId); // eslint-disable-line global-require
+  let want = Math.min(MAX_LEN, Math.max(MIN_LEN, Number.isFinite(Number(opts.length)) ? n : Math.round(n * tp.scale)));
   // "Pick for me" (S12): only what this learner does not know yet, due, or missed, sized by how much that is.
   let planned = null;
   if (opts.adapt) {
@@ -145,11 +147,12 @@ function start(userId, materialId, opts = {}) {
   const queues = I.shuffle(skills, rnd).map((s) => {
     const wrong = new Set((r.skills[s.id] || {}).wrong || []);
     if (planned) return adapt.pickFor(s, planned.get(s.id), [...wrong], rnd).map((q) => [s.id, q.id]);
-    const qs = I.shuffle(s.questions, rnd);
+    let qs = I.shuffle(s.questions, rnd);
+    if (tp.tier) qs = qs.slice().sort((a, b) => ((a.tier || 2) - (b.tier || 2)) * -tp.tier);
     return qs.filter((q) => wrong.has(q.id)).concat(qs.filter((q) => !wrong.has(q.id))).map((q) => [s.id, q.id]);
   });
   const byId = new Map(course.skills.map((s) => [s.id, s]));
-  const tierOf = ([sid, qid]) => { const q = (byId.get(sid).questions || []).find((x) => x.id === qid); return (q && q.tier) || 2; };
+  const tierOf = ([sid, qid]) => { const q = I.qOf(byId.get(sid), qid); return (q && q.tier) || 2; };
   const plan = planned ? null : tierPlan(Math.min(want, queues.reduce((n, q) => n + q.length, 0)), spec);
   const picked = plan ? pickByPlan(queues, want, plan, tierOf) : [];
   while (picked.length < want && queues.some((q) => q.length)) {
@@ -163,7 +166,7 @@ function start(userId, materialId, opts = {}) {
   I.save(r);
   return {
     test_id: id, timed, seconds, ends_at: timed ? new Date(now + seconds * 1000).toISOString() : null,
-    questions: order.map(([sid, qid]) => I.publicQ(byId.get(sid).questions.find((x) => x.id === qid), sid)),
+    questions: order.map(([sid, qid]) => I.publicQ(I.qOf(byId.get(sid), qid), sid)),
   };
 }
 
@@ -208,7 +211,7 @@ async function submit(userId, materialId, testId, answers, opts = {}) {
   const items = [];
   for (const [sid, qid] of test.qids) {
     const skill = course.skills.find((s) => s.id === sid);
-    const q = skill && skill.questions.find((x) => x.id === qid);
+    const q = I.qOf(skill, qid);
     if (!q) continue;
     const a = Object.prototype.hasOwnProperty.call(given, qid) ? given[qid] : null;
     const answered = !isBlank(a);
