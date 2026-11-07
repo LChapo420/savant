@@ -209,9 +209,9 @@ async function startApp(dbFile, port) {
   const copies = fs.existsSync(bdir) ? fs.readdirSync(bdir).filter((n) => n.startsWith('lyceum-ledger.')) : [];
   check('a ledger write leaves a copy beside it', copies.length >= 1, copies);
   delete process.env.LEDGER_BACKUP_MINUTES;
-  for (let i = 0; i < 30; i++) fs.writeFileSync(path.join(bdir, `old-ledger.202611${String((i % 28) + 1).padStart(2, '0')}T${String(i).padStart(2, '0')}00.json`), '{}');
+  for (let i = 0; i < 30; i++) fs.writeFileSync(path.join(bdir, `old-ledger.202601${String((i % 28) + 1).padStart(2, '0')}T${String(i).padStart(2, '0')}00.json`), '{}');
   durable.prune(bdir, 'old-ledger');
-  check('old copies are pruned', fs.readdirSync(bdir).filter((n) => n.startsWith('old-ledger.')).length <= 26);
+  check('old copies are pruned', fs.readdirSync(bdir).filter((n) => n.startsWith('old-ledger.')).length === 12);
   // The crash: the ledger is zero bytes. It refuses, then the tool puts back the copy and adds an estimate.
   const spentBefore = lyceum.status().spent_usd;
   fs.writeFileSync(lfile, '');
@@ -220,7 +220,7 @@ async function startApp(dbFile, port) {
   check('the restore tool finds it and changes nothing without --write', /lyceum-ledger\.json: EMPTY/.test(tool([])) && fs.statSync(lfile).size === 0);
   tool(['--write']);
   const backNow = lyceum.status();
-  check('--write restores it, not below the copy, and says so', backNow.ok && backNow.spent_usd >= 0.5 && backNow.spent_usd <= spentBefore + 1 && /restored from/.test(fs.readFileSync(lfile, 'utf8')), backNow);
+  check('--write restores it, not below the copy, and says so', backNow.ok && backNow.committed_usd >= 0.5 && backNow.spent_usd <= spentBefore + 1 && /restored from/.test(fs.readFileSync(lfile, 'utf8')), backNow);
   delete process.env.LEDGER_BACKUP;
 
   console.log('uploads in memory at once');

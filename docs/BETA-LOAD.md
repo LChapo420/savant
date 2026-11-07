@@ -42,6 +42,10 @@ __LADDER__
 ## 2. Durability
 __DURABILITY__
 
+**The 6 Nov power-off on this PC.** A hard restart left five ledgers, git indexes and other recent files as zero bytes. No writer flushed to disk before renaming, so "temp file then rename" protected against a crash of the program but not of the machine. Now: `services/durable-file.js` flushes the temp file before the rename and the folder after it (Linux), for the JSON store, every ledger and the invite list. The SQLite store runs `synchronous=FULL`. Cost on this PC: 1.8 ms instead of 1.0 ms for a 250 KB ledger write, so nothing to notice at 10 writes a second; a slower server disk will cost more. The order is tested; a real power cut was not repeated.
+
+**Ledgers now have copies**, which they did not: every 10 minutes in `ledger-backups/` beside them, the last 12 plus one a day for 14 days, on the same disk (the nightly backup also takes them if `BACKUP_EXTRA` is left at its default: copy that off the box). A zero-byte or unreadable ledger still refuses every call, as it should. `node scripts/ledger-restore.js --dir data` says which are damaged, and `--write` puts back the newest good copy and adds an estimate of what was spent since, from the copy's last hour, so it errs toward stopping early.
+
 **Restore drill** (`restore-drill.js`, on a copy): backup, test the backup, wreck the live file (the app refuses to start on it), restore, boot, compare rows. 15 MB: 10 s in all. 174 MB: 35 s. Rows matched both times.
 
 **Still open:** the server's daily backup is on the same disk (`onidel-server` note), so losing that disk loses the backups: copy them off. Nothing here cut the power: fsync before the rename is what protects against that, and it was added, but it wasn't tested.
