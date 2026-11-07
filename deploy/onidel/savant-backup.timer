@@ -1,0 +1,11 @@
+# NOT INSTALLED: an option for the owner (docs/RESTORE.md). /etc/systemd/system/savant-backup.timer : every 6 hours. Persistent: a run missed while the server was off happens at the next boot.
+[Unit]
+Description=Savant backup every 6 hours
+
+[Timer]
+OnCalendar=*-*-* 00/6:17:00 UTC
+RandomizedDelaySec=2m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

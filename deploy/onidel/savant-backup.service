@@ -1,0 +1,21 @@
+# NOT INSTALLED: an option for the owner (docs/RESTORE.md). /etc/systemd/system/savant-backup.service : one backup set and its restore test.
+# Run by savant-backup.timer. Does not touch the savant service. /usr/local/sbin/savant-backup is deploy/onidel/savant-backup.sh.
+[Unit]
+Description=Savant backup set, restore test, rotation
+
+[Service]
+Type=oneshot
+User=savant
+Group=savant
+UMask=0077
+WorkingDirectory=/srv/savant
+Environment=NODE_ENV=production
+ExecStart=/usr/local/sbin/savant-backup
+Nice=15
+IOSchedulingClass=idle
+# Nothing here needs the network, and nothing here may change the app: only the backup folder is writable.
+IPAddressDeny=any
+ProtectSystem=strict
+ReadWritePaths=/srv/savant-backups
+PrivateTmp=true
+SyslogIdentifier=savant-backup
