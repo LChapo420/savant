@@ -185,3 +185,7 @@ The name is Savant; the domain is savantedu.com. Goal: savant.edu through a part
 - On a phone the chat comes from the top or the bottom, the learner's choice, and the original page stays scrollable in the window above or below it.
 - Press and hold the giraffe to start a voice call. It just listens and talks, with no buttons. Tap to end the call. Hold to switch the audio to chat, and the window slides in.
 - Later, after the design is finished: a tutorial that includes this. Later, once the final character is decided: animate its mouth to the sounds being spoken, not just open and close.
+
+## The rest of the app (owner, 7 Nov 2026)
+
+Structure A, "One next thing": no tab bar, home shows one task and one button, and a menu opens everything else. Mockups: design-refs/ui-v2-mockups (private). Scrolling lesson for now, since lessons aren't split into parts.
