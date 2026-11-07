@@ -130,6 +130,8 @@ const TASKS = {
     pieces: (d) => each(d, 'turns', (t) => t.text), atLeast: (d) => { compact(d, 'turns'); return (d.turns || []).length > 0; },
   },
   material_verify: { kind: 'internal', why: 'The support check on upload questions: its verdicts are read by code, never shown.' },
+  material_factcheck_deepseek: { kind: 'internal', why: 'First reader in the upload fact check (services/material-factcheck.js): its verdicts are read by code, never shown.' },
+  material_factcheck_glm: { kind: 'internal', why: 'Second reader in the upload fact check, another family: its verdicts are read by code, never shown.' },
 
   // ── placement ──────────────────────────────────────────────────────────────────────────────────────────────
   placement_write: {
