@@ -312,12 +312,33 @@
     }
   }
 
+  // ── the calendar: the month first; how it is counted and what the marks mean in a fold ──
+  function dressCalendar() {
+    const host = document.getElementById('calendar');
+    const head = host && host.querySelector('.enf-head');
+    if (!head || head.dataset.u2) return;
+    head.dataset.u2 = '1';
+    root.classList.add('u2-cal');
+    const h1 = head.querySelector('h1');
+    setTitle(h1 && h1.textContent.trim());
+    if (h1) h1.classList.add('u2-vh');
+    const lede = head.querySelector('.enf-lede');
+    const legend = host.querySelector('.cal-legend');
+    if (legend || lede) {
+      const f = fold('What the marks mean', [lede, legend]);
+      const grid = host.querySelector('.cal-grid');
+      const at = grid ? (grid.closest('.table-scroll') || grid) : head;
+      at.after(f);
+    }
+  }
+
   let queued = false;
   function tick() {
     queued = false;
     if (PAGE === '/profile') dressProfile();
     if (PAGE === '/my-material') dressMaterial();
     if (/^\/my-material-/.test(PAGE)) dressMaterialSub();
+    if (PAGE === '/calendar') dressCalendar();
     if (PAGE === '/path') dressPath();
     if (PAGE === '/base-lesson') dressLesson();
     if (PAGE === '/review') dressReview();

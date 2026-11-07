@@ -363,3 +363,29 @@ html[data-ui2].u2-material-sub #root li[data-row] { padding: 10px 0 !important; 
 html[data-ui2].u2-material-sub #root li[data-row]:first-child { border-top: 0; }
 html[data-ui2].u2-material-sub #root li[data-row] strong { display: block; font-size: 15.5px; line-height: 20px; }
 
+/* ── the calendar ─────────────────────────────────────────────────────── */
+html[data-ui2].u2-cal main.page { padding-top: 0; }
+html[data-ui2].u2-cal main.page .wrap { max-width: 640px; padding: 8px 24px 32px; }
+html[data-ui2].u2-cal .enf-head { margin: 0; }
+html[data-ui2].u2-cal .cal-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 8px; }
+html[data-ui2].u2-cal .cal-month { font: 400 24px/1.15 var(--serif); margin: 0; }
+html[data-ui2].u2-cal .cal-bar .btn { width: 40px; height: 40px; min-height: 40px; padding: 0; border-radius: 50%; }
+html[data-ui2].u2-cal .cal-grid th { font: 400 13px/18px var(--font); color: var(--ink-3); background: none; border: 0; }
+html[data-ui2].u2-cal .cal-grid td { border-color: var(--line); background: var(--page); }
+html[data-ui2].u2-cal .cal-day.is-today { background: var(--act-tint); }
+html[data-ui2].u2-cal .cal-day.is-today .cal-n { color: var(--act-text); font-weight: 700; }
+html[data-ui2].u2-cal .cal-n { font: 400 14px/18px var(--num); color: var(--ink); }
+html[data-ui2].u2-cal .cal-day.is-past .cal-n { color: var(--ink-3); }
+html[data-ui2].u2-cal .cal-legend { display: grid; gap: 8px; margin: 0; font-size: 14px; line-height: 20px; color: var(--ink-2); }
+html[data-ui2].u2-cal .cal-legend > div { display: flex; gap: 10px; align-items: baseline; }
+html[data-ui2].u2-cal .cal-legend dd { margin: 0; }
+html[data-ui2].u2-cal .enf-lede { font-size: 14px; line-height: 20px; color: var(--ink-2); margin: 0; }
+html[data-ui2].u2-cal .review-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+html[data-ui2].u2-cal .review-row { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 8px 14px; border: 1.5px solid var(--line); border-radius: 18px; }
+html[data-ui2].u2-cal .review-title { font: 700 15.5px/20px var(--font); color: var(--ink); }
+html[data-ui2].u2-cal .review-why { font-size: 13.5px; line-height: 18px; color: var(--ink-2); }
+html[data-ui2].u2-cal .review-kind { flex: none; font-size: 13.5px; color: var(--ink-2); }
+@media (min-width: 1025px) {
+  html[data-ui2].u2-cal main.page .wrap { max-width: 960px; }
+}
+
