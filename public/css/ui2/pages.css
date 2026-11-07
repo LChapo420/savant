@@ -158,3 +158,53 @@ html[data-ui2].u2-path .data td { border-bottom: 1px solid var(--line); color: v
   html[data-ui2].u2-path .unit-group { transition: none; }
 }
 
+/* ── the lesson: one scrolling page. The frame is the lesson; the title over it, what to do after it under it. ── */
+html[data-ui2].u2-lesson main.page { padding-top: 0; }
+html[data-ui2].u2-lesson #root { max-width: 640px; margin: 0 auto; padding: 8px 24px 32px; }
+html[data-ui2].u2-lesson #root > .row-between > a.btn { display: none; }
+html[data-ui2].u2-lesson #root > .row-between { margin-bottom: 18px !important; }
+html[data-ui2].u2-lesson #root > .row-between h1 { font: 400 32px/1.1 var(--serif); letter-spacing: -.005em; color: var(--ink); margin: 0 0 6px !important; }
+html[data-ui2].u2-lesson #root > .row-between .tiny { font-size: 14px; line-height: 18px; color: var(--ink-2); }
+html[data-ui2].u2-lesson #base-lesson-host { font-size: 17px; line-height: 26px; }
+html[data-ui2].u2-lesson #base-lesson-finish .card { display: grid; gap: 8px; padding: 16px; }
+html[data-ui2].u2-lesson #base-lesson-finish .card-title svg { width: 20px; height: 20px; color: var(--ink-2); }
+html[data-ui2].u2-lesson #base-lesson-finish .card-title { font: 400 24px/1.15 var(--serif); }
+html[data-ui2].u2-lesson #base-lesson-finish .row-wrap { display: grid; gap: 10px; margin-top: 6px; }
+html[data-ui2].u2-lesson #base-lesson-finish .row-wrap .btn { width: 100%; }
+html[data-ui2].u2-lesson #base-lesson-finish .small { font-size: 15px; line-height: 21px; color: var(--ink-2); }
+html[data-ui2].u2-lesson .assist-chat .btn, html[data-ui2].u2-lesson .assist-chat button { font-family: var(--font); }
+html[data-ui2].u2-lesson .u2-lesson-note .small, html[data-ui2].u2-lesson .u2-lesson-note .tiny { font-size: 14px; line-height: 20px; color: var(--ink-2); }
+html[data-ui2].u2-lesson .u2-lesson-note .card { border: 0; padding: 0; margin: 0 !important; }
+@media (min-width: 768px) {
+  html[data-ui2].u2-lesson #base-lesson-finish .row-wrap { display: flex; flex-wrap: wrap; align-items: center; }
+  html[data-ui2].u2-lesson #base-lesson-finish .row-wrap .btn { width: auto; }
+  html[data-ui2].u2-lesson #base-lesson-finish .row-wrap .btn-primary { min-width: 260px; margin: 0 0 6px; }
+}
+@media (min-width: 1025px) {
+  html[data-ui2].u2-lesson #root { max-width: 760px; }
+}
+
+/* The standard lesson, inside a session: the same page and the same words, in the look. */
+html[data-ui2] .session-player .lesson-meta { font: 400 14px/18px var(--font); color: var(--ink-2); letter-spacing: 0; text-transform: none; margin: 8px 0 2px; }
+html[data-ui2] .session-player .lesson h2 { font: 400 32px/1.1 var(--serif); letter-spacing: -.005em; color: var(--ink); margin: 0 0 12px; }
+html[data-ui2] .session-player .lesson-intro { font: 400 17px/26px var(--font); color: var(--ink); margin: 0 0 16px; }
+html[data-ui2] .session-player .lesson-section.card { background: var(--page); border: 1.5px solid var(--line); border-radius: 18px; box-shadow: none; padding: 14px 16px 16px; margin: 0 0 12px; }
+html[data-ui2] .session-player .lesson-section p { font-size: 17px; line-height: 25px; color: var(--ink); margin: 0; }
+html[data-ui2] .session-player .lesson-label { font: 700 15px/20px var(--font); color: var(--ink-2); letter-spacing: 0; text-transform: none; margin: 0 0 6px; }
+html[data-ui2] .session-player .lesson-example { font: 700 17px/25px var(--font); color: var(--ink); background: var(--well); border: 0; border-radius: 12px; padding: 12px 14px; margin: 10px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+html[data-ui2] .session-player .lesson-steps { font-size: 16px; line-height: 24px; }
+html[data-ui2] .session-player .lesson-steps li::before { background: var(--act-tint); color: var(--act-text); }
+html[data-ui2] .session-player .lesson-why summary { padding: 8px 0; font-size: 15px; font-weight: 700; color: var(--ink-2); cursor: pointer; }
+html[data-ui2] .session-player .lesson-trap { display: flex; gap: 10px; margin: 0 0 12px; padding: 14px 16px; background: var(--well); border: 0; border-radius: 18px; box-shadow: none; transform: none; }
+html[data-ui2] .session-player .lesson-trap-ic { flex: none; width: 22px; height: 22px; background: none; color: var(--ink-2); box-shadow: none; }
+html[data-ui2] .session-player .lesson-trap .lesson-label { color: var(--ink); font-size: 15px; letter-spacing: 0; text-transform: none; }
+html[data-ui2] .session-player .lesson-trap ul { font-size: 16px; line-height: 23px; font-weight: 400; color: var(--ink); }
+html[data-ui2] .session-player .lesson-summary { margin: 18px 0 0; padding: 0; border: 0; }
+html[data-ui2] .session-player .lesson-summary p { font: 400 17px/25px var(--font); color: var(--ink); }
+html[data-ui2] .session-player .lesson .notice { margin: 0 0 12px; }
+@media (min-width: 768px) {
+  html[data-ui2] .session-player .lesson { max-width: 640px; margin-inline: auto; }
+  html[data-ui2] .session-player .lesson-bar { background: none; padding: 0; }
+  html[data-ui2] .session-player .lesson-bar .btn-primary { max-width: 360px; margin-inline: auto; }
+}
+

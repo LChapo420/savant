@@ -112,10 +112,28 @@
     }
   }
 
+  // ── the lesson: title over the frame, the way back in the top bar, how it was made in a fold under it ──
+  function dressLesson() {
+    const host = document.getElementById('root');
+    const headRow = host && host.querySelector(':scope > .row-between');
+    if (!headRow || !document.getElementById('base-lesson-host') || headRow.dataset.u2) return;
+    headRow.dataset.u2 = '1';
+    root.classList.add('u2-lesson');
+    const back = headRow.querySelector(':scope > a.btn');
+    setTitle('Lesson', back && back.getAttribute('href'));
+    const note = [...host.querySelectorAll(':scope > .card')].find((c) => c.nextElementSibling && c.nextElementSibling.id === 'base-lesson-host');
+    if (note) {
+      const f = fold('About this lesson', [note]);
+      f.classList.add('u2-lesson-note');
+      host.appendChild(f);
+    }
+  }
+
   let queued = false;
   function tick() {
     queued = false;
     if (PAGE === '/path') dressPath();
+    if (PAGE === '/base-lesson') dressLesson();
   }
   function queue() { if (!queued) { queued = true; requestAnimationFrame(tick); } }
   function start() {
