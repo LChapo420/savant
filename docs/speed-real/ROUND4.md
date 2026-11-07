@@ -44,7 +44,7 @@ Main before this round, held-out grades, 575 lessons, 41,646 answers. MEASURED c
 **What was found, largest first:**
 
 1. **Practice levels asked another skill's questions (plain bug).** `curriculum.levelPlan` took a practice level's focus from the level's position in the skill bands, and only lessons, Spanish and ACT read the sheet. On the first practice level of 8,902 of 11,671 objectives (76%, MEASURED across all grades), the focus was not the lesson's skill. Example: after "Touch and Count One Thing at a Time", practice on shapes. Those answers did not count toward the objective's proof, so the path could not step over the rest. 20% of design stretches and 26% of held-out stretches were never proven, and those walked all seven levels: 139 answers against 56.
-2. **The retention levels are massed (order).** Each stretch ends on "Free Recall and Mixed Review" and "Spaced Recall: a delayed check". Both come straight after the practice, with no gap at all: 30 more answers, 98% right, and up to 62% of all answers for a learner who proves early. The review queue already asks the real memory checks a day and a week later. A real retention page is worse where one is written: 1,455 visible words on average against 725 for a written lesson (MEASURED, 21 and 72 shared pages), about 7 minutes of reading each.
+2. **The retention levels are massed (order).** Each stretch ends on "Free Recall and Mixed Review" and "Spaced Recall: a delayed check". Both come straight after the practice, with no gap at all: 30 more answers, 99% right, and up to 61% of all answers for a learner who proves early. The review queue already asks the real memory checks a day and a week later. A real retention page is worse where one is written: 1,455 visible words on average against 725 for a written lesson (MEASURED, 21 and 72 shared pages), about 7 minutes of reading each.
 3. **The level gate counted skills no lesson had taught (plain bug).** `levelProgress` averaged every "introduced" skill, and that list is the grade's skill order, not the lesson order. On ACT grade 1, a learner with every answer right stayed on level 21 for 26 sittings, objective already proven.
 4. **Proof could only come from a lesson's checks or a game.** An ordinary practice answer never counts as aligned evidence (`OBJ_MIN_ALIGNED`), so a learner who missed two of three lesson checks walked every level left, however well they did. On ACT, a re-tag gave a lesson one skill and its activities another, so right answers spoke for no objective (plain bug, fixed).
 5. **Off-topic questions.** Even on the right coarse skill, the bank's questions are often not about the lesson: after "Transformations of Functions" it asks "If f(x) = 4x - 3, what is f(-5)?". Questions written for one objective exist on 8 of 219 grades. <<TOPIC>> 50% of answers repeat a question stem (numbers aside) from earlier in the same stretch, and 48% repeat one already answered right (MEASURED). This is **not fixed**: it needs new questions. It is the largest thing left.
@@ -52,7 +52,7 @@ Main before this round, held-out grades, 575 lessons, 41,646 answers. MEASURED c
 7. **Waits are small once a level is written.** Server, real routes in process on a stripped database, this PC under other load (MEASURED, held-out): opening a level p50 29 ms, p95 70 ms; an answer p50 1 ms, p95 3 ms. The real wait is cold writing. docs/FIRST-LESSON.md measured 70 to 605 s from the end of placement to an open lesson, once per learner, under 100% CPU; another build owns it and I did not re-measure it. A level not written ahead waits at most 8 s and then shows "still writing": with no model here I could not measure how often that happens.
 8. **Pages are not the sink.** Real AI lesson rows average 538 words (n 113, MEASURED), about 2.7 minutes at 200 words a minute. The walker's bank pages are shorter, so written pages weigh a little more than the table shows.
 
-**Review scheduling:** reviews are not the sink until the massed levels go (about 20% of hours on the real path at 1 year). `SR_GOAL_REVIEW` is on by default, so nothing there needed changing. With the massed levels gone they become the largest block at long goals (3.9 of 9.9 h at 1 year), and in the model they earn their time.
+**Review scheduling:** reviews are not the sink until the massed levels go (2.5 of 18.9 h on the real path at 1 year). `SR_GOAL_REVIEW` is on by default, so nothing there needed changing. With the massed levels gone they become the largest block at long goals (3.9 of 9.9 h at 1 year), and in the model they earn their time.
 
 ## 2. What changed
 
@@ -214,13 +214,13 @@ To scale: 4x against careful self-study means 2.0 h at 1 month and 3.3 h at 1 ye
 
 | switch | recommendation | why |
 |---|---|---|
-| `PRACTICE_FOLLOWS_LESSON`, `LEVEL_GATE_MET` | **on (default)** | Plain bugs. Real-route cuts of about 25%, in every kind of learner |
+| `PRACTICE_FOLLOWS_LESSON`, `LEVEL_GATE_MET` | **on (default)** | Plain bugs. Real-route cuts of 20% to 25%, in every kind of learner |
 | `SPEED_SPACE_RETENTION` | **your call between two; I would pick `=on` on half the testers** | See below |
 | `SPEED_PROOF_PASSES` | **on** | Ends repeated sittings on a proven objective. Its bar is stricter than the average it replaces. Part of the gated set |
 | `SPEED_RECHECK` | **on, with the caveat** | The one big cut for weak and mid learners (never proven 9% to 0%, with weak learners most helped). The same question twice is weaker proof. **The real fix is on-objective questions.** Off once those exist |
-| `SPEED_ONE_PROMPT` | **your call** | About 3 s a level by assumption, 0.4 h with the tight page, but it takes three quarters of those taps from the scorecard, your other goal. It is not in the recommended numbers |
+| `SPEED_ONE_PROMPT` | **your call** | Under 0.1 h in the model, at an assumed 3 s saved per level, and it takes three quarters of those taps from the scorecard, your other goal. It is not in the recommended numbers |
 | `SPEED_TIGHT_PAGE` | **off** | The AI-judged check found points only in the folded text on 29 of 52 pages. Against "all the information". A rewrite that keeps every point is the honest way to a shorter page, and that is not built |
-| `SPEED_MASTERY_STOP` and the older levers | **off** | Still fail at short goals, and add little on top of spaced retention (about 1 h at 1 year) |
+| `SPEED_MASTERY_STOP` and the older levers | **off** | Still fail at short goals, and add little on top of spaced retention (about 0.6 h at 1 year) |
 
 **`SPEED_SPACE_RETENTION`, the choice:**
 
