@@ -170,7 +170,7 @@ function serve(router) {
     const src = read(f);
     check(`${f} reports what is on screen to the dock (no answer key)`, /window\.tutorPageInfo\s*=/.test(src) && !/tutorPageInfo[\s\S]{0,700}(answer_key|correct_answer|\.answer\b)/.test(src));
   }
-  check('the shared question player reports the question on screen to the dock (no answer key), for placement, review, enforcer and the rest', /shown\s*\}/.test(read('public/js/player.js')) && !/function shown[\s\S]{0,500}(answer_key|correct_answer|\.answer\b)/.test(read('public/js/player.js')) && /Player\.shown/.test(read('public/js/tutor-dock.js')));
+  check('the shared question player reports the question on screen to the dock (no answer key), for placement, review, enforcer and the rest', /window\.Player\s*=\s*\{[^}]*\bshown\b[^}]*\}/.test(read('public/js/player.js')) && !/function shown[\s\S]{0,500}(answer_key|correct_answer|\.answer\b)/.test(read('public/js/player.js')) && /Player\.shown/.test(read('public/js/tutor-dock.js')));
   {
     // Run Player.shown in a stub DOM: it reports prompt, passage and choice text of the last rendered item and nothing else.
     const src = read('public/js/player.js');
