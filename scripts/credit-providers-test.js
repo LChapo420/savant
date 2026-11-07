@@ -162,7 +162,7 @@ const optIn = (v) => { process.env[`${v.pre}_API_KEY`] = 'test-key-not-real'; pr
     const ids = (task) => pool.candidatesFor({ role: 'blocks', task, kind: 'structured', dataClass: 'pipeline' }, { chain }).map((s) => s.id);
     for (const task of ['lesson_write', 'night_write', 'block_fill', 'block_layout', 'level_editor', 'material_pack', 'author_items', 'game_questions', 'night_judge', 'material_verify']) {
       const l = ids(task).filter((i) => !/^(lyceum|crouton):/.test(i)); // Lyceum's strong slots sort by price among the paid ones (lyceum-crouton-test)
-      const gk = /judge|verify/.test(task) ? GJ : GK; // judges get grok-4.3, hard writing grok-4.7
+      const gk = /judge|verify|material_pack/.test(task) ? GJ : GK; // judges and the upload lists get grok-4.3 (Nov 7: cheaper), hard writing grok-4.7
       assert.ok(l.includes(GD) && l.includes(GL) && l.includes(gk) && (gk === GJ ? !l.includes(GK) : !l.includes(GJ)), `${task}: ${l}`);
       assert.ok(l.indexOf(GD) < l.indexOf(MD) && l.indexOf(GL) < l.indexOf(MD), `${task}: Gonka ahead of Munito`);
       assert.strictEqual(l.indexOf(gk), l.length - 1, `${task}: Grok last`);
@@ -237,13 +237,13 @@ const optIn = (v) => { process.env[`${v.pre}_API_KEY`] = 'test-key-not-real'; pr
       assert.ok(Z.led.status().spent_usd > 0 && Z.led.status().reserved_usd === 0);
     } finally { clean(Z); }
   });
-  await check('zerogpu: pool slot exists, serves the fact checks only (fact_verify, and fact_live since the fact guard, 6 Nov)', () => {
+  await check('zerogpu: pool slot exists, serves the fact checks only (fact_verify, fact_live since the fact guard, 6 Nov, and the upload parts\' second read, 7 Nov)', () => {
     pool._reset();
     const slot = pool.extraSlots().find((s) => s.id === 'zerogpu:z-ai/glm-5.3-flash');
     assert.ok(slot && slot.paid && slot.family === 'glm');
     const cfg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config', 'model-lineup.json'), 'utf8'));
     const withIt = Object.entries(cfg.pool.tasks).filter(([, t]) => (t.allow || []).some((a) => /^zerogpu:/.test(a))).map(([k]) => k);
-    assert.deepStrictEqual(withIt.sort(), ['fact_live', 'fact_verify']);
+    assert.deepStrictEqual(withIt.sort(), ['fact_live', 'fact_verify', 'material_part_read_b']);
   });
 
   console.log(failed ? `${failed} FAILED` : 'credit providers: all checks passed');
