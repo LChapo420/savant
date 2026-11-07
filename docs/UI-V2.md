@@ -26,7 +26,9 @@ The chat keeps `js/tutor-dock.js` and `js/tutor-split.js` as they are; `css/ui2/
 - Every colour is a token in `css/ui2/tokens.css`; `look.css`, `app.css` and `start.css` have none of their own (tested), so a colour picker can come last. The older component tokens point at the new ones, so pages not yet rearranged already have the new colours and buttons. They wait on the owner's look at the real screens.
 - Everything is a view of `/dashboard` (`/dashboard#everything`). It holds the real subject cards, planner, recent sessions and offers, moved rather than copied. Other pages link to it, so there is no second copy of any decision.
 
-Tests: `node scripts/ui-v2-test.js`, `node scripts/ui-v2-browser-test.js`. Owner's look: `node scripts/ui-v2-sheet.js` writes `design-refs/ui-v4-shots/contact-sheet.png` and `contact-sheet-large.png`.
+The later pages: `js/ui2/pages.js` moves what each page's script drew, and `css/ui2/pages.css` styles it. The mockup has no lesson, subject or review screen, so these follow its parts: the giraffe and bubble at the head, the serif title, one strong button, raised rows.
+
+Tests: `node scripts/ui-v2-test.js`, `node scripts/ui-v2-browser-test.js`, `node scripts/ui-v2-pages-test.js` (opens each later page with and without `js/ui2/pages.js`; every link and button seen without it must be there with it). Owner's look: `node scripts/ui-v2-sheet.js` writes `design-refs/ui-v4-shots/contact-sheet.png` and `contact-sheet-large.png`; `node scripts/ui-v2-sheet-2.js` writes `contact-sheet-2.png`.
 
 ## Slices
 
@@ -90,15 +92,16 @@ Status: **done** is built and tested in structure A. **Colours** means the page 
 | Checking your answer, a written answer being marked | Verdict | Inline tinted card | 1 | restyled, not shown on the sheet |
 | Exam: no feedback until the end | `/session` | Rules line stays under the bar | 1 | restyled, not shown on the sheet |
 | Session recap | `/session` | Colours now; design in slice 4 | 4 | colours |
-| Lesson | `/base-lesson`, model-written HTML in a sandboxed frame | One scrolling page, restyled. Not split | 4 | colours; the frame's own colours not yet matched |
-| Subject page, path, level summary | `/path` | Back, title, summary and whole-grade view | 2 | colours |
-| Mastery meters, skills table | `/path` and profile | Subject page | 2 | colours |
+| Lesson in a session (the usual one) | `/session` | One scrolling page, restyled, same words | 4 | done |
+| Lesson page | `/base-lesson`, model-written HTML in a sandboxed frame | Title over the frame, back in the top bar, how it was made in a fold | 4 | done, shown with a stubbed body. A stored page in the frame keeps its own colours (the ones on disk are dark): not reachable from a synthetic account at a low level, not looked at |
+| Subject page, path, level summary | `/path` | Back, title, giraffe with the level, the next thing, meters and ruler, whole-grade view as raised rows, skills, notes in a fold | 2 | done |
+| Mastery meters, skills table | `/path` and profile | Subject page: the table is one line and a meter per skill on a phone | 2 | done on `/path`; profile not yet |
 | Test-out | `/session` with the lever on | Same flow, restyled | 4 | colours |
 | Master quiz, Grand, Final | `/session` | Same player; intro and result restyled | 4 | colours |
 | Written task | `/session` with `editor.js`, oral with `say-aloud.js` | Same page, restyled | 4 | colours |
 | Help me learn after a failed quiz | `/help` | Same page | 4 | colours |
 | Challenge exam | `/skip` | Same page | 4 | colours |
-| Review | `/review` | Back, intro as in the mockup | 4 | colours |
+| Review | `/review` | Giraffe says how much, one button, what is in it, Learn again, own material due. The sitting is the player | 4 | done, with a stubbed plan; a real plan needs days of history |
 | Retention enforcer | `/enforcer` | Same page | 4 | colours |
 | Graduation held | `/held` | Same page | 4 | colours |
 | Catch me up | `/catchup`, `/spanish/catch-up` | Same page | 4 | colours; Spanish's own shell not yet |

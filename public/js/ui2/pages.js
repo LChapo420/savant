@@ -129,11 +129,36 @@
     }
   }
 
+  // ── review: the giraffe says how much; the page has the one button and what is in it ──
+  let reviewDrawn = null;
+  function dressReview() {
+    const host = document.getElementById('review');
+    const top = host && host.querySelector(':scope > .review-top');
+    if (!top || top === reviewDrawn) return;
+    reviewDrawn = top;
+    root.classList.add('u2-review');
+    const back = top.querySelector('.back-link');
+    const h1 = top.querySelector('h1');
+    setTitle(h1 && h1.textContent.trim(), back && back.getAttribute('href'));
+    const lede = host.querySelector('.review-lede');
+    const done = host.querySelector('.path-done-line');
+    let words = '';
+    if (done) { words = done.textContent.trim(); done.hidden = true; }
+    if (lede) {
+      const said = lede.textContent.trim();
+      const m = /^([^.]+\.)\s*(.*)$/.exec(said);
+      if (!words && m) { words = m[1]; lede.textContent = m[2]; if (!m[2]) lede.hidden = true; }
+      else if (/^Nothing is due/.test(said)) lede.hidden = true;
+    }
+    host.prepend(pageGuide(words || (h1 ? h1.textContent.trim() : 'Review.')));
+  }
+
   let queued = false;
   function tick() {
     queued = false;
     if (PAGE === '/path') dressPath();
     if (PAGE === '/base-lesson') dressLesson();
+    if (PAGE === '/review') dressReview();
   }
   function queue() { if (!queued) { queued = true; requestAnimationFrame(tick); } }
   function start() {

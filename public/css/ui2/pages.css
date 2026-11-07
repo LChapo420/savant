@@ -208,3 +208,61 @@ html[data-ui2] .session-player .lesson .notice { margin: 0 0 12px; }
   html[data-ui2] .session-player .lesson-bar .btn-primary { max-width: 360px; margin-inline: auto; }
 }
 
+/* ── review: how much, one strong button, what is in it ───────────────── */
+html[data-ui2].u2-review main.page { padding-top: 0; }
+html[data-ui2].u2-review main.page .wrap { max-width: 640px; padding: 0 24px 32px; }
+html[data-ui2].u2-review .review-top .back-link { display: none; }
+html[data-ui2].u2-review .review-top { display: block; margin-top: 14px; }
+html[data-ui2].u2-review .review-top .track-heading { display: block; }
+html[data-ui2].u2-review .review-top .symbol { display: none; }
+html[data-ui2].u2-review .review-top h1 { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+html[data-ui2].u2-review .review-top .tiny { font-size: 15px; line-height: 20px; font-weight: 400; color: var(--ink-2); }
+html[data-ui2].u2-review .review-now { display: block; margin-top: 6px; }
+html[data-ui2].u2-review .review-lede { font-size: 15px; line-height: 21px; color: var(--ink-2); margin: 0 0 14px; }
+html[data-ui2].u2-review .review-lede[hidden], html[data-ui2].u2-review .path-done-line[hidden] { display: none; }
+html[data-ui2].u2-review .review-facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+html[data-ui2].u2-review .review-facts > div { display: flex; flex-direction: row; align-items: center; gap: 6px; min-height: 34px; padding: 0 12px; border: 1.5px solid var(--line); border-radius: 99px; }
+html[data-ui2].u2-review .review-facts dt { margin: 0; font: 400 14px/18px var(--font); color: var(--ink-2); text-transform: none; letter-spacing: 0; }
+html[data-ui2].u2-review .review-facts dd { margin: 0; width: auto; font: 700 15px/18px var(--num); color: var(--ink); }
+html[data-ui2].u2-review .path-actions { display: grid; gap: 8px; margin: 0; }
+html[data-ui2].u2-review .path-actions .btn-primary { width: 100%; }
+html[data-ui2].u2-review .path-actions .small { display: block; font-size: 13.5px; line-height: 18px; color: var(--ink-3); text-align: center; margin: 0; }
+html[data-ui2].u2-review .path-actions .btn-text { justify-self: center; }
+html[data-ui2].u2-review .review-now > div > .tiny { display: block; margin: 8px 0 0; font-size: 13.5px; color: var(--ink-3); text-align: center; }
+html[data-ui2].u2-review .review-now .small { font-size: 15px; line-height: 21px; color: var(--ink-2); }
+html[data-ui2].u2-review .hero-body { margin: 22px 0 0; padding: 16px; border: 1.5px solid var(--line); border-radius: 18px; }
+html[data-ui2].u2-review .hero-body:empty { display: none; }
+html[data-ui2].u2-review .review-section { margin-top: 26px; }
+html[data-ui2].u2-review .review-section .section-title { margin-top: 0; }
+html[data-ui2].u2-review .review-note { font-size: 14px; line-height: 20px; color: var(--ink-2); margin: 0 0 12px; }
+html[data-ui2].u2-review .review-list { display: grid; gap: 10px; }
+html[data-ui2].u2-review .review-row { display: flex; align-items: center; gap: 10px; min-height: 58px; padding: 10px 14px; border: 1.5px solid var(--line); border-radius: 18px; background: var(--page); }
+html[data-ui2].u2-review .review-title { font: 700 16px/21px var(--font); color: var(--ink); }
+html[data-ui2].u2-review a.review-title { text-decoration: underline; text-underline-offset: 3px; }
+html[data-ui2].u2-review .review-why { font-size: 13.5px; line-height: 18px; color: var(--ink-2); max-width: none; }
+html[data-ui2].u2-review .review-kind { flex: none; padding: 3px 10px; border-radius: 99px; background: var(--well); color: var(--ink-2); font-size: 13px; line-height: 18px; font-weight: 700; }
+html[data-ui2].u2-review .review-row .btn { flex: none; }
+@media (max-width: 479px) {
+  html[data-ui2].u2-review .review-row { flex-wrap: wrap; }
+  html[data-ui2].u2-review .review-row .btn { width: 100%; }
+}
+@media (min-width: 768px) {
+  html[data-ui2].u2-review .path-actions .btn-primary { max-width: 360px; }
+  html[data-ui2].u2-review .path-actions .small, html[data-ui2].u2-review .path-actions .btn-text { justify-self: start; text-align: left; }
+  html[data-ui2].u2-review .review-now > div > .tiny { text-align: left; }
+}
+@media (min-width: 1025px) {
+  html[data-ui2].u2-review main.page .wrap { max-width: 960px; }
+  html[data-ui2].u2-review #review { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 6px 36px; align-items: start; padding-top: 12px; }
+  html[data-ui2].u2-review #review > * { grid-column: 2; }
+  html[data-ui2].u2-review #review > .notice { grid-column: 1 / -1; }
+  html[data-ui2].u2-review #review > .player, html[data-ui2].u2-review #review > .loading { grid-column: 1 / -1; }
+  html[data-ui2].u2-review #review:has(> .player) { display: block; padding-top: 0; }
+  html[data-ui2].u2-review #review > .u2-page-guide { display: contents; }
+  html[data-ui2].u2-review #review > .u2-page-guide .u2-gh { grid-column: 1; grid-row: 1 / span 4; justify-self: center; }
+  html[data-ui2].u2-review #review > .u2-page-guide .tutor, html[data-ui2].u2-review #review > .u2-page-guide .tutor-svg { width: 240px; height: 360px; }
+  html[data-ui2].u2-review #review > .u2-page-guide .u2-tailwrap { grid-column: 2; justify-self: start; margin-top: 8px; }
+  html[data-ui2].u2-review .review-now { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px 36px; align-items: start; }
+  html[data-ui2].u2-review .hero-body { margin: 0; }
+  html[data-ui2].u2-review .review-section { max-width: none; }
+}
