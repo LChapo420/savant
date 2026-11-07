@@ -34,6 +34,7 @@ fs.mkdirSync(SHOTS, { recursive: true });
 const PHONE = { width: 375, height: 760 };
 const DESK = { width: 1366, height: 860 };
 const problems = [];
+const interestAnswers = [];
 const results = [];
 let seq = 0;
 const unique = () => `${Date.now().toString(36)}${(seq += 1)}`;
@@ -50,6 +51,14 @@ async function open(browser, name, { viewport = PHONE, scheme = 'light', reduced
     const t = m.text();
     if (m.type() === 'error' && !/Failed to load resource: the server responded with a status of (400|401|403|404|409|429)/.test(t)) problems.push(`${page.persona} console: ${t.slice(0, 200)}`);
     if (/Content Security Policy|Refused to/.test(t)) problems.push(`${page.persona} CSP: ${t.slice(0, 200)}`);
+  });
+  // The interests screen's answer is a tap, not a short answer (services/onboarding/tasks.js): the page has to say so, and hand over only what was typed as typed.
+  page.on('request', (r) => {
+    if (!r.url().endsWith('/api/onboarding/answer') || r.method() !== 'POST') return;
+    const b = r.postDataJSON() || {};
+    if (b.id !== 'sv:interests') return;
+    interestAnswers.push(b.response);
+    if (!b.response || b.response.tapped !== true) problems.push(`${page.persona} the interests answer does not say it was tapped: ${JSON.stringify(b.response)}`);
   });
   page.on('crash', () => problems.push(page.persona + ' the page crashed at ' + new Date().toISOString().slice(11, 19)));
   page.on('pageerror', (e) => problems.push(`${page.persona} pageerror: ${String(e.message).slice(0, 200)}`));
@@ -1093,6 +1102,7 @@ async function main() {
 
   await browser.close();
   results.forEach((r) => console.log(`ok ${r}`));
+  console.log(`interests answers sent: ${JSON.stringify(interestAnswers)}`);
   problems.forEach((p) => console.log(`PROBLEM ${p}`));
   console.log(`onboarding-v2-browser: ${results.length} walks ok, ${failed} failed, ${problems.length} problems`);
   process.exit(failed || problems.length ? 1 : 0);
