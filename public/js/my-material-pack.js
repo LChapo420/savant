@@ -29,7 +29,7 @@ App.mount(async () => {
       if (pack) setTimeout(load, 4000);
       return null;
     }
-    if (pack.status === 'failed') { root.innerHTML = `<p class="small"><a href="/my-material">&larr; My material</a></p><div class="notice notice-error">The study pack could not be built or checked just now. Try again in a minute. If it keeps happening, use a clearer or longer text.</div><button class="btn" type="button" id="make">Try again</button>`; document.getElementById('make').addEventListener('click', async () => { try { await App.api.post(base, {}); } catch { /* load shows what happened */ } load(); }); return null; }
+    if (pack.status === 'failed') { root.innerHTML = `<p class="small"><a href="/my-material">&larr; My material</a></p><div class="notice notice-error">${pack.failure === 'busy' ? "The AI models did not answer, which is not your file's fault. Try again in a minute." : pack.failure === 'interrupted' ? 'The build stopped when the server restarted. Try again.' : 'The study pack could not be built or checked just now. Try again in a minute. If it keeps happening, use a clearer or longer text.'}</div><button class="btn" type="button" id="make">Try again</button>`; document.getElementById('make').addEventListener('click', async () => { try { await App.api.post(base, {}); } catch { /* load shows what happened */ } load(); }); return null; }
     return render();
   }
 

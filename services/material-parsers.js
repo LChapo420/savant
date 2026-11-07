@@ -48,7 +48,12 @@ function normalise(text) {
 
 /** Words with a letter or digit in them; lone punctuation and page furniture do not count. */
 function countWords(text) {
-  return (String(text || '').match(/[A-Za-z0-9][A-Za-z0-9'’-]*/g) || []).length;
+  // Any script. Chinese, Japanese and Thai have no spaces, so a run of those counts one word per two characters (without this a Chinese PDF with a full text layer was called "scanned").
+  const t = String(text || '');
+  const spaced = (t.match(/[\p{L}\p{N}][\p{L}\p{M}\p{N}'’-]*/gu) || []);
+  let n = 0;
+  for (const w of spaced) n += /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}]/u.test(w) ? Math.ceil(w.length / 2) : 1;
+  return n;
 }
 
 async function fromPdf(buf) {
@@ -58,7 +63,7 @@ async function fromPdf(buf) {
     pdf = await getDocumentProxy(new Uint8Array(buf), { isEvalSupported: false, useSystemFonts: false, verbosity: 0, fontExtraProperties: true });
   } catch (err) {
     if (/password/i.test(String(err && (err.name + err.message)))) return fail('That PDF is password-protected. Remove the password and upload it again.', 'encrypted');
-    return fail('That PDF could not be read. It may be damaged.', 'unreadable');
+    return fail('That PDF could not be read. It may be damaged or cut off. Download or export it again, or paste the text.', 'unreadable');
   }
   try {
     if (pdf.numPages > MAX_PAGES) return fail(`That PDF has ${pdf.numPages} pages. The limit is ${MAX_PAGES}. Upload a part of it.`, 'too_many_pages');
@@ -72,15 +77,46 @@ async function fromPdf(buf) {
       return fail('That PDF looks scanned, and the pictures in it could not be pulled out to read. Upload each page as a PNG or JPG picture, or paste the text.', 'scanned');
     }
     // Headings, bold and page marks for the key-point pass; the stored text stays the plain text above.
-    let rich = null;
-    try { const r = await require('./material-formats').pdfRich(pdf, MAX_PAGES); rich = r && countWords(r.text) >= MIN_OCR_WORDS ? r.rich : null; } catch { rich = null; }
+    let rich = null; let comments = [];
+    try { const r = await require('./material-formats').pdfRich(pdf, MAX_PAGES); rich = r && countWords(r.text) >= MIN_OCR_WORDS ? r.rich : null; comments = (r && r.comments) || []; } catch { rich = null; }
     const blank = text.map((pg, i) => (countWords(pg) < 3 ? i + 1 : 0)).filter(Boolean);
-    return { text: joined, rich: rich || undefined, pages: pdf.numPages, blank: blank.length && blank.length < text.length ? blank : [] };
+    return { text: comments.length ? `${joined}\n\nComments in the margin\n\n${comments.join('\n')}` : joined, rich: rich || undefined, pages: pdf.numPages, blank: blank.length && blank.length < text.length ? blank : [] };
   } catch {
-    return fail('That PDF could not be read. It may be damaged.', 'unreadable');
+    return fail('That PDF could not be read. It may be damaged or cut off. Download or export it again, or paste the text.', 'unreadable');
   } finally {
     try { await pdf.destroy(); } catch { /* nothing to do */ }
   }
+}
+
+/**
+ * What Word marks but the reader does not see: highlight, underline and shaded runs become bold; a bordered or shaded paragraph becomes a key-point box; a comment becomes bold on the words it marks
+ * (a box if it says the point is for the test) and is added at the end, so the teacher's words reach the learner. Returns { buf, comments }, or the file as it was if anything is odd.
+ */
+async function docxMarks(buf) {
+  try {
+    const z = await require('jszip').loadAsync(buf);
+    const f = z.file('word/document.xml');
+    if (!f) return { buf, comments: [] };
+    let xml = await f.async('string');
+    xml = xml.replace(/<w:highlight\b[^>]*\/>/g, '<w:b/>').replace(/<w:u\s+w:val="(?!none)[^"]*"[^>]*\/>/g, '<w:b/>').replace(/(<w:rPr>(?:(?!<\/w:rPr>)[\s\S])*?)<w:shd\b[^>]*w:fill="(?!auto|FFFFFF|ffffff)[^"]*"[^>]*\/>/g, '$1<w:b/>');
+    let boxed = false;
+    xml = xml.replace(/<w:pPr>((?:(?!<\/w:pPr>)[\s\S])*?<w:(?:pBdr|shd)\b(?:(?!<\/w:pPr>)[\s\S])*?)<\/w:pPr>/g, (m, inner) => { if (/w:pStyle/.test(inner)) return m; boxed = true; return `<w:pPr><w:pStyle w:val="SavantBox"/>${inner}</w:pPr>`; });
+    z.file('word/document.xml', xml);
+    const st = z.file('word/styles.xml');
+    if (boxed && st) z.file('word/styles.xml', (await st.async('string')).replace('</w:styles>', '<w:style w:type="paragraph" w:styleId="SavantBox"><w:name w:val="Key Point"/></w:style></w:styles>'));
+    const comments = [];
+    const c = z.file('word/comments.xml');
+    if (c) {
+      const cx = await c.async('string');
+      for (const m of cx.matchAll(/<w:comment\b[^>]*w:id="(\d+)"[^>]*>([\s\S]*?)<\/w:comment>/g)) {
+        const text = unxml((m[2].match(/<w:t(?: [^>]*)?>[^<]*<\/w:t>/g) || []).map((t) => t.replace(/<[^>]+>/g, '')).join(' ')).replace(/\s+/g, ' ').trim();
+        const range = new RegExp(`<w:commentRangeStart\\b[^>]*w:id="${m[1]}"[^>]*/>([\\s\\S]*?)<w:commentRangeEnd\\b[^>]*w:id="${m[1]}"`).exec(xml);
+        const anchor = range ? unxml((range[1].match(/<w:t(?: [^>]*)?>[^<]*<\/w:t>/g) || []).map((t) => t.replace(/<[^>]+>/g, '')).join('')).replace(/\s+/g, ' ').trim() : '';
+        if (text) comments.push({ text, anchor });
+      }
+    }
+    return { buf: await z.generateAsync({ type: 'nodebuffer' }), comments };
+  } catch { return { buf, comments: [] }; }
 }
 
 async function fromDocx(buf) {
@@ -90,16 +126,30 @@ async function fromDocx(buf) {
   const unpacked = listing.entries.reduce((s, e) => s + e.size, 0);
   if (unpacked > MAX_ZIP_UNPACKED) return fail('That document unpacks to far more than the size limit.', 'too_big');
   if (!listing.entries.some((e) => e.name === 'word/document.xml')) {
-    return fail('Only PDF, Word (.docx), text and Markdown files are supported.', 'bad_type');
+    return fail('That looks like an Office file, but its main part is missing, so it may be damaged. Open it on your computer, save it again and upload the new copy, or save it as PDF.', 'unreadable');
   }
   const mammoth = require('mammoth');
   try {
     const out = await mammoth.extractRawText({ buffer: buf });
+    const marks = await docxMarks(buf);
     let rich;
-    try { rich = require('./material-formats').htmlRich((await mammoth.convertToHtml({ buffer: buf }, { styleMap: ["p[style-name='Key Point'] => blockquote:fresh", "p[style-name='Callout'] => blockquote:fresh", "p[style-name='Important'] => blockquote:fresh", "p[style-name='Note'] => blockquote:fresh", "p[style-name='Intense Quote'] => blockquote:fresh", "p[style-name='Block Text'] => blockquote:fresh", "p[style-name='Quote'] => blockquote:fresh"] })).value); } catch { rich = undefined; }
-    return { text: normalise(out.value), rich, pages: null };
+    try { rich = require('./material-formats').htmlRich((await mammoth.convertToHtml({ buffer: marks.buf }, { styleMap: ["p[style-name='Key Point'] => blockquote:fresh", "p[style-name='Callout'] => blockquote:fresh", "p[style-name='Important'] => blockquote:fresh", "p[style-name='Note'] => blockquote:fresh", "p[style-name='Intense Quote'] => blockquote:fresh", "p[style-name='Block Text'] => blockquote:fresh", "p[style-name='Quote'] => blockquote:fresh"] })).value); } catch { rich = undefined; }
+    let text = normalise(out.value);
+    // A comment in the margin is the teacher's note: its words join the text, and the words it marks are stressed.
+    if (marks.comments.length) {
+      const lines = marks.comments.slice(0, 200).map((c) => `Comment${c.anchor ? ` on "${c.anchor.slice(0, 120)}"` : ''}: ${c.text}`);
+      text = `${text}\n\nComments in the margin\n\n${lines.join('\n')}`;
+      if (rich) {
+        for (const c of marks.comments) {
+          const stress = /\b(test|exam|quiz|final|must know|important|always miss|key)\b/i.test(c.text);
+          if (c.anchor && rich.includes(c.anchor)) rich = rich.replace(c.anchor, stress ? `\n\n> **Key point:** ${c.anchor}\n\n` : `**${c.anchor}**`);
+        }
+        rich = `${rich}\n\n## Comments in the margin\n\n${lines.join('\n')}`;
+      }
+    }
+    return { text, rich, pages: null };
   } catch {
-    return fail('That Word document could not be read. It may be damaged.', 'unreadable');
+    return fail('That Word document could not be read. It may be damaged or cut off. Open it on your computer and save it again, or save it as PDF.', 'unreadable');
   }
 }
 
@@ -181,7 +231,8 @@ async function fromOdt(buf) {
 /** HTML to plain text: scripts, styles and navigation removed, block tags become line breaks. */
 function htmlText(html) {
   const h = String(html).replace(/<!--[\s\S]*?-->/g, ' ').replace(/<(script|style|noscript|svg|nav|head)\b[\s\S]*?<\/\1>/gi, ' ');
-  const text = h.replace(/<\/?(p|div|section|article|br|li|ul|ol|tr|table|blockquote|pre|h[1-6])\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '');
+  // Table cells stay apart ("Mid Basin | 212 | 3.1"), as they do for the other formats.
+  const text = h.replace(/<\/t[dh]>\s*<t[dh]\b[^>]*>/gi, ' | ').replace(/<\/?(p|div|section|article|br|li|ul|ol|tr|table|blockquote|pre|h[1-6])\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '');
   return normalise(unxml(text.replace(/&nbsp;/g, ' ')).replace(/[ \t ]+/g, ' ').split('\n').map((l) => l.trim()).join('\n'));
 }
 
@@ -321,7 +372,7 @@ function fromRtf(buf) {
   if (!s.startsWith('{\\rtf')) return fail('That file is not a usable RTF document.', 'bad_type');
   // Drop destinations that are not body text (fonts, colours, styles, pictures, headers) with their groups.
   for (let i = 0; i < 6; i++) s = s.replace(/\{(?:\\\*)?\\(?:fonttbl|colortbl|stylesheet|info|pict|header|footer|themedata|colorschememapping|latentstyles|datastore)[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g, '');
-  s = s.replace(/\\par[d]?(?![a-z])/g, '\n').replace(/\\(?:line|row)(?![a-z])/g, '\n').replace(/\\tab(?![a-z])/g, '\t')
+  s = s.replace(/\\par[d]?(?![a-z])/g, '\n').replace(/\\cell(?![a-z])\s*(?=\\row)/g, '').replace(/\\cell(?![a-z])/g, ' | ').replace(/\\(?:line|row)(?![a-z])/g, '\n').replace(/\\tab(?![a-z])/g, '\t')
     .replace(/\\'([0-9a-f]{2})/gi, (m, h) => String.fromCharCode(parseInt(h, 16)))
     .replace(/\\u(-?\d+)\??/g, (m, n) => String.fromCharCode(Number(n) < 0 ? Number(n) + 65536 : Number(n)))
     .replace(/\\\*?[a-z]+-?\d* ?/gi, '').replace(/\\([\\{}])/g, '$1').replace(/[{}]/g, '');
@@ -337,39 +388,65 @@ async function fromHtmlFile(buf) {
 async function tesseractOcr(buf) {
   let Tesseract;
   try { Tesseract = require('tesseract.js'); } catch { return { missing: true }; }
-  // One worker is kept for a few seconds and reused, so a scan of many pages does not pay the start-up cost on every page.
+  return new Promise((resolve) => { ocrQueue.push({ buf, resolve, Tesseract }); pumpOcr(); });
+}
+// A few workers, reused while there is work and released 8 s after the last page. Pictures wait their turn here: a worker reads one at a time, and the earlier single worker could be released under a page
+// another learner was still waiting on, which left that upload stuck for good (found by 24 uploads at once). Every reading has a time limit.
+const OCR_WORKERS = () => Math.max(1, Number(process.env.OCR_WORKERS) || Math.min(2, Math.max(1, require('os').cpus().length - 1)));
+const OCR_JOB_MS = () => Number(process.env.OCR_JOB_MS) || 150000;
+const ocrQueue = [];
+const ocrFree = [];
+let ocrLive = 0; let ocrBusy = 0; let idleTimer = null;
+function newOcrWorker(Tesseract) {
+  require('fs').mkdirSync(TESSERACT_CACHE, { recursive: true });
+  ocrLive++;
+  // errorHandler: without one tesseract.js THROWS a worker error in a message handler, outside any promise, and that ends the whole server process (a cut-off PNG did exactly that).
+  return Tesseract.createWorker('eng', 1, { cachePath: TESSERACT_CACHE, errorHandler: (e) => { console.warn(`ocr: ${String(e && e.message ? e.message : e).slice(0, 120)}`); } });
+}
+function pumpOcr() {
+  while (ocrQueue.length && (ocrFree.length || ocrLive < OCR_WORKERS())) {
+    const job = ocrQueue.shift();
+    const workerP = ocrFree.length ? Promise.resolve(ocrFree.pop()) : Promise.resolve().then(() => newOcrWorker(job.Tesseract));
+    ocrBusy++;
+    if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+    runOcrJob(workerP, job);
+  }
+  if (!ocrBusy && !ocrQueue.length && ocrFree.length && !idleTimer) { idleTimer = setTimeout(releaseWorker, 8000); idleTimer.unref(); }
+}
+async function runOcrJob(workerP, job) {
+  let worker = null; let timer = null; let good = false;
   try {
-    if (!sharedWorker) {
-      require('fs').mkdirSync(TESSERACT_CACHE, { recursive: true });
-      sharedWorker = Tesseract.createWorker('eng', 1, { cachePath: TESSERACT_CACHE });
-    }
-    const worker = await sharedWorker;
-    if (idleTimer) clearTimeout(idleTimer);
-    const out = await worker.recognize(buf);
-    idleTimer = setTimeout(releaseWorker, 8000); idleTimer.unref();
-    return { text: (out && out.data && out.data.text) || '' };
+    worker = await workerP;
+    const out = await Promise.race([worker.recognize(job.buf), new Promise((_, no) => { timer = setTimeout(() => no(new Error('ocr time limit')), OCR_JOB_MS()); })]);
+    good = true;
+    job.resolve({ text: (out && out.data && out.data.text) || '', confidence: out && out.data ? out.data.confidence : null });
   } catch {
-    releaseWorker();
-    return { failed: true };
+    job.resolve({ failed: true });
+  } finally {
+    if (timer) clearTimeout(timer);
+    ocrBusy--;
+    if (good) ocrFree.push(worker);
+    else { ocrLive--; if (worker) Promise.resolve(worker.terminate()).catch(() => {}); }
+    pumpOcr();
   }
 }
-let sharedWorker = null; let idleTimer = null;
 function releaseWorker() {
-  const w = sharedWorker; sharedWorker = null;
-  if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
-  if (w) Promise.resolve(w).then((x) => x.terminate()).catch(() => {});
+  idleTimer = null;
+  if (ocrBusy || ocrQueue.length) return;
+  for (const w of ocrFree.splice(0)) { ocrLive--; Promise.resolve(w.terminate()).catch(() => {}); }
 }
 
 // Tests swap the recognizer so no real OCR runs; null means the real one.
 let recognizer = null;
 function setOcr(fn) { recognizer = typeof fn === 'function' ? fn : null; }
+const usingTestOcr = () => !!recognizer;
 
 /** The words in a picture, read in English, with no minimum: { text } or { error, code }. */
 async function ocr(buf) {
   const out = await (recognizer || tesseractOcr)(buf);
-  if (out && out.missing) return fail('This server cannot read text from images yet (tesseract.js is not installed). Paste the text instead.', 'no_ocr');
+  if (out && out.missing) return fail('This server cannot read text from images yet (tesseract.js is not installed). Paste the text instead, or upload a PDF or Word file with the words in it.', 'no_ocr');
   if (!out || out.failed) return fail('That picture could not be read. Try a clearer or larger one.', 'unreadable');
-  return { text: out.text || '' };
+  return { text: out.text || '', confidence: out.confidence };
 }
 
 /** A PNG or JPG: the words in the picture, read in English. */
@@ -381,4 +458,4 @@ async function fromImage(buf) {
   return { text, pages: 1 };
 }
 
-module.exports = { MAX_PAGES, MIN_OCR_WORDS, fail, normalise, countWords, zipEntries, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, fromImage, ocr, setOcr, htmlText };
+module.exports = { MAX_PAGES, MIN_OCR_WORDS, fail, normalise, countWords, zipEntries, fromPdf, fromDocx, fromPptx, fromOdt, fromEpub, fromXlsx, fromRtf, fromHtmlFile, fromImage, ocr, setOcr, usingTestOcr, htmlText };

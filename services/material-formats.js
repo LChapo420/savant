@@ -46,10 +46,11 @@ function htmlRich(html) {
   let h = String(html).replace(/<!--[\s\S]*?-->/g, ' ').replace(/<(script|style|noscript|svg|nav|head|footer)\b[\s\S]*?<\/\1>/gi, ' ');
   h = h.replace(/<(h[1-6])\b[^>]*>([\s\S]*?)<\/\1>/gi, (m, t, inner) => `\n\n${'#'.repeat(Number(t[1]))} ${inner.replace(/<[^>]+>/g, '')}\n\n`);
   h = h.replace(/<(strong|b)\b[^>]*>([\s\S]*?)<\/\1>/gi, (m, t, inner) => (inner.trim() ? `**${inner.replace(/<[^>]+>/g, '').trim()}**` : ''));
+  h = h.replace(/<u\b[^>]*>([\s\S]*?)<\/u>/gi, (m, inner) => `==${inner.replace(/<[^>]+>/g, '').trim()}==`);
   h = h.replace(/<mark\b[^>]*>([\s\S]*?)<\/mark>/gi, (m, inner) => `==${inner.replace(/<[^>]+>/g, '').trim()}==`);
   h = h.replace(/<(blockquote|aside)\b[^>]*>([\s\S]*?)<\/\1>/gi, (m, t, inner) => `\n\n${inner.replace(/<\/?(?:p|div|br)\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '').split('\n').map((l) => l.trim()).filter(Boolean).map((l) => `> ${l}`).join('\n')}\n\n`);
   h = h.replace(/<(div|p|section|span)\b([^>]*)>([\s\S]*?)<\/\1>/gi, (m, t, attrs, inner) => (t !== 'span' && CALLOUT_CLASS.test(attrs) && !/<(div|section)\b/i.test(inner) ? `\n\n${inner.replace(/<[^>]+>/g, '').split('\n').map((l) => l.trim()).filter(Boolean).map((l) => `> ${l}`).join('\n')}\n\n` : m));
-  h = h.replace(/<li\b[^>]*>/gi, '\n- ').replace(/<\/?(p|div|section|article|br|ul|ol|tr|table|pre)\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '');
+  h = h.replace(/<\/t[dh]>\s*<t[dh]\b[^>]*>/gi, ' | ').replace(/<li\b[^>]*>/gi, '\n- ').replace(/<\/?(p|div|section|article|br|ul|ol|tr|table|pre)\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '');
   const lines = unxml(h.replace(/&nbsp;/g, ' ')).replace(/[ \t ]+/g, ' ').split('\n').map((l) => l.trim());
   return normalise(lines.join('\n')).replace(/\*\*\s*\*\*/g, '').replace(/\*\* \*\*/g, ' ');
 }
@@ -58,7 +59,7 @@ function htmlRich(html) {
 function slideBold(xml) {
   const map = new Map();
   for (const para of xml.match(/<a:p[ >][\s\S]*?<\/a:p>/g) || []) {
-    const runs = (para.match(/<a:r>[\s\S]*?<\/a:r>/g) || []).map((r) => ({ bold: /<a:rPr\b[^>]*\bb="1"/.test(r), t: unxml((r.match(/<a:t(?: [^>]*)?>([^<]*)<\/a:t>/) || [])[1] || '') }));
+    const runs = (para.match(/<a:r>[\s\S]*?<\/a:r>/g) || []).map((r) => ({ bold: /<a:rPr\b[^>]*\b(?:b="1"|u="(?!none)[^"]+")/.test(r) || /<a:highlight\b/.test(r), t: unxml((r.match(/<a:t(?: [^>]*)?>([^<]*)<\/a:t>/) || [])[1] || '') }));
     const plain = runs.map((r) => r.t).join('').trim();
     if (!plain || !runs.some((r) => r.bold)) continue;
     const marked = runs.map((r) => (r.bold && r.t.trim() ? `**${r.t.trim()}** ` : r.t)).join('').replace(/\s+/g, ' ').replace(/\*\* \*\*/g, ' ').trim();
@@ -316,6 +317,10 @@ function cfbStreams(buf) {
 function fromDoc(buf) {
   let streams;
   try { streams = cfbStreams(buf); } catch { streams = null; }
+  // The same old container holds password-protected new Office files and the old Excel and PowerPoint formats: say which, and what to do.
+  if (streams && (streams.has('EncryptedPackage') || streams.has('EncryptionInfo'))) return fail('That file is password-protected. Open it, remove the password (File, Info, Protect) and upload it again, or save a copy as PDF.', 'encrypted');
+  if (streams && (streams.has('Workbook') || streams.has('Book'))) return fail('That is an old Excel file (.xls). Open it and save it as .xlsx or .csv, then upload that.', 'bad_type');
+  if (streams && streams.has('PowerPoint Document')) return fail('That is an old PowerPoint file (.ppt). Open it and save it as .pptx or PDF, then upload that.', 'bad_type');
   const wd = streams && streams.get('WordDocument');
   if (!wd || wd.length < 0x1a8 || wd.readUInt16LE(0) !== 0xa5ec) return fail('That file is not a Word document this reader understands. Save it as .docx and upload that.', 'bad_type');
   if (wd.readUInt16LE(11) & 0x01) return fail('That Word document is encrypted. Remove the password and upload it again.', 'encrypted');
@@ -355,6 +360,34 @@ const BOLD_FONT = /bold|black|heavy|semibold|demi|[-,]bd\b|-b$/i;
  * Rich text for a pdfjs document: lines from the text layer, headings by type size against the body size, bold by font name.
  * Pages are marked [[pN]]. Returns { rich, text } or null when the document has no text layer.
  */
+/** The x of the gutter when a page is set in two columns (almost no text crosses it and both sides hold text), else null. */
+function gutterOf(items, width) {
+  const xs = items.filter((it) => it.str && it.str.trim() && it.transform);
+  if (xs.length < 12 || !width) return null;
+  let best = null; let bestCross = Infinity;
+  for (let x = width * 0.35; x <= width * 0.65; x += width * 0.01) {
+    let cross = 0; let left = 0; let right = 0;
+    for (const it of xs) {
+      const a = it.transform[4]; const b = a + (it.width || 0);
+      if (a < x && b > x) cross++; else if (b <= x) left++; else right++;
+    }
+    if (left >= xs.length * 0.2 && right >= xs.length * 0.2 && cross < bestCross) { bestCross = cross; best = x; }
+  }
+  return best != null && bestCross <= Math.max(1, xs.length * 0.03) ? best : null;
+}
+/** Highlights and underlines a reader added (as rectangles) and the text of sticky notes on a page. */
+async function pdfMarks(page) {
+  const marks = []; const notes = [];
+  try {
+    for (const a of await page.getAnnotations()) {
+      const text = String((a.contentsObj && a.contentsObj.str) || a.contents || '').trim();
+      if (['Highlight', 'Underline', 'Squiggly'].includes(a.subtype) && a.rect) marks.push(a.rect);
+      if (text && ['Text', 'FreeText', 'Highlight', 'Underline', 'Squiggly', 'Popup', 'StrikeOut'].includes(a.subtype) && a.subtype !== 'Popup') notes.push(text);
+    }
+  } catch { /* a PDF without readable annotations */ }
+  return { marks, notes: [...new Set(notes)] };
+}
+
 async function pdfRich(pdf, maxPages) {
   const pages = [];
   const sizes = new Map();
@@ -363,20 +396,30 @@ async function pdfRich(pdf, maxPages) {
     const page = await pdf.getPage(n);
     const tc = await page.getTextContent();
     try { await page.getOperatorList(); } catch { /* fonts stay unnamed: bold is not detected */ }
-    const rows = [];
+    let pageWidth = 0;
+    try { pageWidth = page.getViewport({ scale: 1 }).width; } catch { /* no gutter check */ }
+    const gutter = gutterOf(tc.items, pageWidth);
+    const { marks, notes } = await pdfMarks(page);
+    const inMark = (x, y) => marks.some((r) => x >= r[0] - 1 && x <= r[2] + 1 && y >= r[1] - 2 && y <= r[3] + 2);
+    let rows = [];
+    const rightRows = [];
     for (const it of tc.items) {
       if (!it.str || !it.transform) continue;
       const size = Math.round(Math.hypot(it.transform[2], it.transform[3]) * 10) / 10 || it.height || 0;
       let name = '';
       try { const f = page.commonObjs.has(it.fontName) ? page.commonObjs.get(it.fontName) : null; name = (f && (f.name || f.loadedName)) || ''; } catch { /* unnamed */ }
       const y = it.transform[5];
-      let row = rows.find((r) => Math.abs(r.y - y) < size * 0.4);
-      if (!row) { row = { y, runs: [] }; rows.push(row); }
-      row.runs.push({ x: it.transform[4], str: it.str, size, bold: BOLD_FONT.test(name), eol: it.hasEOL });
+      // Two columns: each is read down on its own, or a line would run across the gutter into the other column's sentence.
+      const col = gutter != null && it.transform[4] >= gutter ? rightRows : rows;
+      let row = col.find((r) => Math.abs(r.y - y) < size * 0.4);
+      if (!row) { row = { y, runs: [] }; col.push(row); }
+      row.runs.push({ x: it.transform[4], str: it.str, size, bold: BOLD_FONT.test(name) || inMark(it.transform[4] + 1, y), eol: it.hasEOL });
       if (it.str.trim()) sizes.set(size, (sizes.get(size) || 0) + it.str.length);
     }
     rows.sort((a, b) => b.y - a.y);
-    pages.push({ n, rows });
+    rightRows.sort((a, b) => b.y - a.y);
+    rows = [...rows, ...rightRows];
+    pages.push({ n, rows, notes, columns: gutter != null });
     if (typeof page.cleanup === 'function') page.cleanup();
   }
   if (!sizes.size) return null;
@@ -388,6 +431,7 @@ async function pdfRich(pdf, maxPages) {
     let paraLines = []; let lastY = null; let lastSize = body;
     const flush = () => { if (paraLines.length) out.push(paraLines.join(' ')); paraLines = []; };
     for (const row of pg.rows) {
+      if (lastY != null && row.y > lastY + 40) { flush(); lastY = null; } // the top of the next column
       row.runs.sort((a, b) => a.x - b.x);
       const str = row.runs.map((r) => r.str).join('').replace(/\s+/g, ' ').trim();
       if (!str) continue;
@@ -417,9 +461,12 @@ async function pdfRich(pdf, maxPages) {
       lastY = row.y; lastSize = size;
     }
     flush();
+    // A sticky note is the reader's or the teacher's own remark: it counts like speaker notes, and its words reach the learner.
+    for (const note of pg.notes || []) out.push(`Speaker notes: ${note.replace(/\s+/g, ' ')}`);
   }
+  const allNotes = pages.flatMap((p) => (p.notes || []).map((t) => `Comment on page ${p.n}: ${t.replace(/\s+/g, ' ')}`));
   const rich = normalise(out.join('\n').replace(/\*\*\s*\*\*/g, ' ').replace(/(\*\*)\s+(\*\*)/g, ' '));
-  return { rich, text: plainOf(rich) };
+  return { rich, text: plainOf(rich), comments: allNotes };
 }
 
 /**
@@ -473,17 +520,18 @@ async function toPng(buf, kind) {
   try { sharp = require('sharp'); } catch { return fail('This server cannot convert pictures yet. Upload a PNG or JPG.', 'no_ocr'); }
   try {
     // libvips has no BMP reader: uncompressed 24 and 32 bit BMPs are decoded here and handed over as raw pixels.
-    let src = buf; let opts = { limitInputPixels: 80e6, animated: false };
+    let src = buf; let opts = { limitInputPixels: 250e6, animated: false };
     if (kind === 'bmp') { const bmp = decodeBmp(buf); if (!bmp) return fail('That BMP picture could not be read. Save it as PNG or JPG and upload that.', 'unreadable'); src = bmp.data; opts = { raw: { width: bmp.width, height: bmp.height, channels: bmp.channels } }; }
     const meta = await sharp(src, opts).metadata();
     const w = meta.width || 0;
     let img = sharp(src, opts).rotate().flatten({ background: '#ffffff' }).greyscale().normalise();
     if (w && w < 1200) img = img.resize({ width: Math.min(2400, w * 2), kernel: 'lanczos3' });
-    else if (w > 3200) img = img.resize({ width: 3200 });
+    else if (w > 3200 || (meta.height || 0) > 4200) img = img.resize({ width: 3200, height: 4200, fit: 'inside' });
     return { png: await img.sharpen().withMetadata({ density: 300 }).png().toBuffer() };
-  } catch {
+  } catch (e) {
     if (kind === 'heic') return fail('This server cannot open HEIC pictures. On an iPhone, share the photo as JPG (Settings, Camera, Formats, Most Compatible), or export it as JPG, and upload that.', 'bad_type');
-    return fail('That picture could not be read. It may be damaged.', 'unreadable');
+    if (/pixel limit/i.test(String(e && e.message))) return fail('That picture is too large to read (over 250 megapixels). Make it smaller, or crop it to the page, and upload it again.', 'too_big');
+    return fail('That picture could not be read. It may be damaged or cut off. Take it again or save it as a new JPG or PNG, then upload that.', 'unreadable');
   }
 }
 

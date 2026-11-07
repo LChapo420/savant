@@ -21,6 +21,7 @@ function sniffVideo(buf) {
   if (!Buffer.isBuffer(buf) || buf.length < 12) return null;
   if (buf.slice(4, 8).toString('latin1') === 'ftyp') {
     const brand = buf.slice(8, 12).toString('latin1');
+    if (/^(?:heic|heix|hevc|hevx|heim|heis|mif1|msf1|avif|avis)$/.test(brand)) return null; // a picture, not a video
     return brand === 'qt  ' ? 'mov' : 'mp4';
   }
   if (buf[0] === 0x1a && buf[1] === 0x45 && buf[2] === 0xdf && buf[3] === 0xa3) {

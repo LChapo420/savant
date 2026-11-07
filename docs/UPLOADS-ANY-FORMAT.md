@@ -461,3 +461,94 @@ about the sweep-v3 length: 1.13x of the source for the lessons alone on default 
 owner would give up "shortest is shorter than the source" (take about 1.1x lessons, 1.8x whole), to hold the length the owner would give up about 30 plain-fact points on a brevity learner (about 1 plain fact in 3 not taught). (c) Traits mean 90% and worst 10% 70% were not reached by any variant (62 to 75%); the misses left are age,
 "cannot take dense text", test-anxiety wording and plain words. (d) Invented facts on judge N rose with the rewrites even with the deterministic number and name refusal (0.42 to 2.18; judge C fell 5.6 to 5.1): the additions are not numbers or names, they look like analogies and "why it matters" claims; the judge's lists were not stored to confirm which.
 Rewrites: 474 asked, 167 accepted. Spend: ZeroGPU, Coral and Gonka cents per run, all well under the $5 run cap; ledgers are cumulative and shared.
+
+## 17. Uploads made whole (6 Nov 2026; MEASURED where a script scored it, AI-JUDGED and SIMULATED where a model read it; no real learner)
+
+**Which invented-facts judge to believe.** `scripts/uploads-judge-calibrate.js` (rows `docs/uploads-judge-calibration.json`), four documents, three to two reads each: the source's own sentences (nothing can be invented), a real course with what I flagged by hand repaired ("clean"), the same plus six planted claims (a number, a name, plain general knowledge, a why-it-matters claim, a swapped fact, an analogy with a claim), and the real course with its questions.
+
+| Judge, form | source sentences | clean | planted recall | real course (with questions) |
+|---|---|---|---|---|
+| C (Coral DeepSeek), free-form list | 0 | 0 | 88% | 6.75 |
+| N (NVIDIA nemotron), free-form list | 0 | 0 | 92% | 0.45 |
+| Z (Gonka GLM 5.3 Flash), free-form list | 0 | 0 | 100% | 3.42 |
+| K (Lyceum Kimi K3.1 Pro), free-form list | 0 | 0.25 | 100% | 3.75 |
+| C, sentence by sentence | 0 | 0.75 | 100% | |
+| N, sentence by sentence | 0 | 0 | 100% | |
+| Z, sentence by sentence | 0 | 0 | 100% | |
+| K, sentence by sentence | 0 | 0.75 | 100% | |
+
+My own read of the four real courses' lessons found 4, 7, 6 and 3 over-reaching claims: about 5 a course. So N's 0.42 misses real ones, though it finds planted ones: what is planted is easy, and what a writer really adds ("this ensures...", "selectivity is dose-dependent") is quiet. C's 5.1 was near the truth in number but counted the made-up cases of practice questions (a judge reading the questions flags "a company pays rent of $1,000"), and the rise to 2.18 on N was real rewrites. K's flags on my clean texts were real misses of mine ("only at high doses" where the source says "at high doses"), so its 0.25 to 0.75 are not false alarms. The gate judge is therefore the sentence-by-sentence form: Z and K. Kimi's real cost: $0.028 a call, 92 calls $2.55, about $0.15 per course judged; a judge, see below for why not in the build.
+
+**The fix, on by default (`services/material-factcheck.js`, `UPLOAD_FACTCHECK=off`).** Every lesson sentence, key point, skill summary and question explanation, and every note bullet, card back, pack summary, model answer and podcast turn:
+- no model first: a number, year or date nowhere in the material, or a capitalised name nowhere in it, or a purpose word ("ensures", "helps", "crucial") no matching line uses, is refused whatever a model says; a sentence whose words and numbers sit in one line of the material in the same order, with the same negation and no new cause, passes with no call;
+- the rest go to four readings at once, a DeepSeek and a GLM twice each by task (`material_factcheck_deepseek`, `_glm`), with any reader as the fallback; any one saying "not in the source" is enough, and it gives the sentence with only that part cut; a reader saying "supported" must quote the material, and the code checks that the quote is really there and carries the sentence's figures and most of its words (`UPLOAD_FACTCHECK_QUOTES=off`, `UPLOAD_FACTCHECK_READS=1`);
+- a cut is checked again (no new words of its own); a sentence with no good cut goes, and the material's own line behind it comes back if the lesson no longer says it; a lesson with nothing left becomes the material's own sentences; a bad explanation becomes the quote; a card back or note bullet becomes its verified quote;
+- no answer at all: only what the deterministic pass can stand behind stays, and the course stays "partial" so that asking again checks it again.
+
+Other languages: a material not written in English gets an English course, as before, but the spelling rules step aside (the readers judge a translation) and the learner gets a note saying so. Before this the check cut a Spanish lesson from 321 words to 67.
+
+Which readers, measured with one judge over the same texts (C, sentence form, h1 h3 h4 h5 h6): DeepSeek alone 1.4 a course, GLM alone 1.2, Kimi alone 0.6, DeepSeek and GLM together 0.6, those two and then Kimi as a third 0.4. Kimi as the only reader cost $0.24 a course against about $0.003 for the two cheap ones and cut more (h1 1,278 to 895 words) for the same score, so it stays a judge. `UPLOAD_FACTCHECK_READERS=1` keeps one reader.
+
+**Every format with real files (`scripts/uploads-every-format.js`, `scripts/lib/real-files.js`; MEASURED; rows `docs/uploads-every-format-results.json`).** 90 cases over the real upload route: PDFs written by Chrome (text, table, two columns, scanned, 45-page scan, a picture-only page, password-protected with pypdf, 120 and 330 pages, cut, flipped, header only), Word with tracked changes, footnotes, comments and a table, password-protected and old Office files, PowerPoint with a table, a group and notes, Excel with formulas and two sheets, CSV, TSV, RTF, HTML, EPUB, seven picture types, sideways photos, handwriting fonts (Ink Free, Segoe Script, Bradley), a blackboard, noise, blank, 9000 x 9000 pixels, Spanish, Chinese, Arabic and mixed files, empty and wrong-extension files, RAR, 7-Zip, Apple files, a protected ZIP, 850 KB to 21 MB, and audio and video through Gladia (very short clips, about 20 s). 90 of 90 as intended. Real handwriting was not available: fonts are not a hand.
+
+| Found | Before | Now |
+|---|---|---|
+| A cut-off PNG | **ended the whole server process** (tesseract.js throws outside any promise without an error handler) | "could not be read, take it again"; damaged pictures stop at the converter |
+| Two or more pictures at once | a released OCR worker left an upload stuck for good (3 of 3 scans never finished in the load test) | a queue of workers, released only when idle, 150 s limit per reading |
+| An 850 KB text | the key-point pass held the server's one thread for minutes | under a second on repeats, and any text over 100 KB is read off the main thread |
+| UTF-16 text; a HEIC photo | sent to the audio transcriber ("that audio file could not be read") | read as text; "share as JPG" |
+| Password-protected Word, Excel, PowerPoint | "not a Word document" | says it is password-protected and what to do; ZIPs too |
+| Old .xls and .ppt; RAR, 7-Zip, gzip; Apple Pages | "not a Word document" or "unknown" | each named, with what to do |
+| Chinese PDF with a text layer | "looks scanned" (words counted in Latin letters only) | read |
+| HTML and RTF tables | cells run together ("Mid Basin2123.1") | kept apart |
+| A photo on its side without its rotation tag | 0 of 8 sentences, garbage kept as notes | the other turns are tried; 8 of 8 |
+| A photo with no words | 950 words of garbage stored | refused, with what to do |
+| 9000 x 9000 pixels | "may be damaged" | read (limit 250 megapixels, then a plain message) |
+| Two columns in a PDF | key points ran across the gutter | each column read down on its own |
+| A sentence broken across PDF lines | "the material's own sentence" could be half of one | one line |
+| A video with no sound | "audio file could not be read" | "there is no sound in that file" |
+| Page copy | "no outside speech service hears it" while Gladia is the first route | says Gladia for cleared accounts, the server's own model otherwise |
+
+Still limits: a sentence may be misread in photos and handwriting fonts (recall there is by word overlap, 75% of the words of a sentence); drawn underline and highlight rectangles in a PDF are not seen (highlight and sticky-note annotations are); a real scan of a real hand, and files saved by Word itself, are untested here. Speech in other languages was not run.
+
+**What the material stresses (`scripts/uploads-emphasis-proof.js`; rows `docs/uploads-emphasis-results.json`).** One document with 12 stressed points, one device each (statement heading, bold, said three ways, "on the test" before and after, teacher's note, boxed key point, capitals, underline, highlight, summary, "Remember:"), and 8 plain facts; built as Markdown, HTML, Word (the teacher's note as a real comment), PDF and PowerPoint (notes). A point counts as surviving when its rare name and its value sit in one card, one question or one sentence.
+
+| Surface, stressed points found of 12 | Before | After |
+|---|---|---|
+| Notes | 11 to 12 | 12 |
+| Flashcards | 1 to 3 | 10 to 12 |
+| Practice test (study pack) | 2 to 6 | 10 to 12 |
+| Learning-path lessons | 10 to 12 (plain 1 to 8 of 8) | 12 (plain 8 of 8) |
+| Learning-path questions, which the practice test draws on | 4 to 7 | 10 to 12 |
+
+The extractor now sees underline, highlight (Word, HTML, Markdown, PowerPoint), capitals, teacher's notes, Word comments (the words a comment marks are stressed and the comment joins the text), PDF highlights and sticky notes, shaded or bordered Word paragraphs, statement headings, and the same name and number said again in other words; a stressed point is never lost to the cap on points. A stressed point no card or question carries becomes a fill-in-the-gap from the material's own sentence (`services/material-stress.js`, `UPLOAD_STRESS_SWEEP=off`). The two PDF misses are drawn underline and highlight.
+
+**Failure and recovery (`scripts/uploads-recovery-walk.js`, `scripts/uploads-recovery-server.js`; a real browser at 390 px, a copy of the database, a scripted model; 28 of 28).** Reload mid-build, the server dying part way, a provider down, credit out and back, two uploads at once, delete during a build. Found: a build that died showed "Building" for 30 minutes (now said at once, with "Build the rest"); a partial course had no working way to finish; a provider failure blamed the learner's text ("try a clearer or longer one"); the page stopped watching after 13 minutes; a deleted material's build ran on and spent. A provider that is down still leaves the fill-in cards of a study pack.
+
+**Speed (MEASURED; AI models real through the pool; a simulated cleared learner; this PC: 16 threads with other work running).** First useful thing: what the material stresses, on the upload's own answer, no model: 0.15 s for text, 0.5 to 0.9 s for Word and PDF, 3.7 s for a picture, about 7 s for 20 s of audio by Gladia. It is on the material list and on the notes page while the notes are written.
+
+| 24 uploads at once, median / worst | Before | After |
+|---|---|---|
+| All types | 13.9 s / 26.8 s, 3 stuck for good | 5.7 s / 17.0 s, none stuck |
+| Pictures; 3-page scans | 22 s / 27 s; never | 12 s / 15 s; 16 s / 17 s |
+| Worst hold on the server's one thread | 10.1 s | 2.7 s |
+
+The biggest wait left was the first lesson: 139 to 156 s, of which the outline 14 to 37 s and one call writing the lesson and 6 to 9 questions about 67 s (`SPEED_TRACE=1 node scripts/uploads-speed.js waiting course`). Now the lesson and the questions are two calls at once (`UPLOAD_LESSON_SPLIT=off` restores one): the first lesson is fact-checked and readable at 53, 62 and 117 s, the first full skill at 90 to 150 s, the whole course 154 to 277 s against 197 to 322 s. Three runs with other work on the providers, so indicative. Notes 28 to 35 s, study pack 75 to 209 s.
+
+**To verify on the Linux server (not reachable from here).** (1) `require('tesseract.js')` works: this checkout's `node_modules` lacks it, and without it pictures and scans are refused. (2) `data/models/tesseract/eng.traineddata`: `data/` is ignored by git, so the first OCR downloads it from a CDN; copy it, or check the server can fetch it and write there. (3) ffmpeg: `FFMPEG_PATH` or the `ffmpeg-static` binary for Linux, executable; M4A and MP3 by the local route and all video need it. (4) `data/models/Xenova` for the Whisper fallback, and `GLADIA_API_KEY`, `data/gladia-ledger.json`; one 20 s clip with a cleared account and one with an uncleared one (engine must be `whisper`). (5) `sharp`'s Linux build: read a 9000 x 9000 PNG and watch memory on the server's size; `OCR_WORKERS` defaults to 2, lower it on a small box. (6) `worker_threads` for the 100 KB key-point pass, and `os.tmpdir()` writable for M4A. (7) A Chinese PDF: character maps come with the package, check it reads. (8) The proxy in front: body limit at least 200 MB for video, 20 MB elsewhere, and the 413 reaches the page as JSON. (9) Sessions: the walk had to log in again after a restart here; check whether a server restart logs learners out. Paths are built with `path.join`; I found nothing that depends on the path separator or on file-name case.
+
+**The gate (AI-JUDGED, SIMULATED; never a real learner).** Today's builder (all switches off, same exam, the exam reads the whole course) against the checked default path, one build per document, nine documents of which four written after the code (n1 to n4; n4 was lost to a PC crash). The exam was asked of the course, not of a learner. Rows: `docs/uploads-factcheck-proof-v1.json`, `-base.json`, `-b.json` (full builds), `-q.json` (the same courses through the final checker and the wider fact sweep, tags `q1`, `q2`: the checker and sweep code, not a fresh build, because credits ran short). Scripts: `scripts/uploads-factcheck-proof.js`, `scripts/uploads-factcheck-compare.js`, `scripts/uploads-factcheck-rejudge.js`.
+
+| | Today | New | Gate |
+|---|---|---|---|
+| Exam, emphasised (judge Z, 9 documents) | 91% | 95% | not lower: met |
+| Exam, plain (judge Z) | 94% | 94% | not lower: met |
+| Same text answered twice (noise) | | 89% against 89%, 78% against 81% | |
+| h4, dense notes, plain (judge Z) | 88% | 75% (one question of 8) | MISSED by one question |
+| Lesson words (h1, h4, n3) | 1,278, 1,347, 1,230 | 1,439, 1,644, 1,582 | no gate; about 1.2x today |
+| Invented per course, judge Z, sentence form | 3.83 | 0.22: none in 8 of 9; h2 has 2 | 0: NOT MET |
+| Invented, judge K (independent family), h1 h2 h5 n2 only | | 0, 2, 0, 0 | 0: NOT MET |
+
+The two on h2, read by me: "Bismarck secured the new Reich by isolating France" (the source says he sought to) and "the Moroccan Crisis and Algeciras ended in humiliation" (the source says Algeciras did). Those are real, small over-reaches of a word or a scope, in a history narrative; nothing fabricated. So the gate of zero is not reached: about 1 course in 9 still has such a sentence by the calibrated judge. My own read of a checked h4 and part of n3 found no invented claim, and found two defects now fixed: questions written into lessons, and Markdown marks in restored sentences. A sentence supported by no reader goes back to the source's own words, so most of the length gain is verbatim material. Practice questions may still set up a made-up case to apply a rule ("a company pays rent of $1,000"): the free-form judges count these; they are not checked as claims, and are left as they are.
+
+Cost per course (real, from the providers' usage): the fact check with two families and two readings about 1 cent; Kimi K3.1 Pro as the judge $0.13 a course. Kimi spent $11.40 in all here, across calibration, three comparisons and three judged runs, before the $3 per run limit; none of it is in the build.
