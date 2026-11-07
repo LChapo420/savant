@@ -588,7 +588,7 @@ Also found by the real runs and fixed: one upload took 100 to 220 calls against 
 
 Reading: lean meets the old `UPLOAD_SHORT` gate on these documents at about a third of today's lesson words. Core does not cleanly pass: judge G says level, judge N says 12 points lower, and n is small. All-document means and paired means differ because not every arm finished every document.
 
-**Rule-counted over all 10 built courses (MEASURED, `node scripts/uploads-beta-stats.js`):** lean holds every ledger fact at 0.85x to 1.09x of the source, core every stressed fact. The "core at 0.5x to 0.7x" range was measured just before the final ownership change; the final code's figures are the 0.61x above.
+**Rule-counted over all 10 built courses (MEASURED, `node scripts/uploads-beta-stats.js`):** lean holds every ledger fact at 0.82x to 1.06x of the source, core every stressed fact. The "core at 0.5x to 0.7x" range was measured just before the final ownership change; the final code's figures are the 0.61x above.
 
 **Follow gate, fixed harness (AI-JUDGED, SIMULATED; 24 extreme and random learners, new seeds 7621 to 7624; same document; rewrites by Coral DeepSeek, readers DeepSeek and GLM; judges G and N; `docs/uploads-beta/learners-summary.txt`).**
 
@@ -641,7 +641,7 @@ Not made means refused in plain words with the text unchanged; "reached" then me
 | Summary, shorter | 5 | 0.86 | 4/5, 4/5 | 4/5, 4/5 | 5/5, 5/5 | 5/5 |
 | Pack question, simpler | 7 | 1.03 | 5/7, 6/7 | 7/7, 7/7 | 4/6, 6/7 | 6/7 |
 
-Read these honestly. **Lesson, shorter is scored on visible text only:** what it takes out moves behind "More from your material" on the same page, which the judges did not see, so 1 of 7 here means the visible text no longer says every point, not that the point is gone; stressed points stayed 7 of 7. **One stressed point was lost by rule on a pack question (6/7): the bar is zero, so this is a known defect.** **The invented column is not zero**, and part of it is a judge reading a hard reworded question or a label. I read only the first 40 flags, of an earlier, unfiltered pass; the rows are stored and not fully read. "That is correct" and "There is no rush" were real writer additions, now refused by rule, after this run. So "never invent a fact" is held by the checks but is not proven at zero.
+Read these honestly. **Lesson, shorter is scored on visible text only:** what it takes out moves behind "More from your material" on the same page, which the judges did not see, so 1 of 7 here means the visible text no longer says every point, not that the point is gone; stressed points stayed 7 of 7. **One stressed point was lost by rule on a pack question (6/7): the bar is zero, so this is a known defect.** **The invented column is not zero**, and part of it is a judge reading a hard reworded question or a label. I read only the first 30 flags, of an earlier, unfiltered pass; the rows are stored and not fully read. "That is correct" and "There is no rush" were real writer additions, now refused by rule, after this run. So "never invent a fact" is held by the checks but is not proven at zero.
 
 The check on hand-written pairs (`scripts/uploads-beta-check-eval.js`; AI-JUDGED): 12 of 12 clean rewordings passed, 12 of 12 planted errors caught. **It was tuned on this same set** (before tuning 10 of 12 each way), so it is not a held-out figure.
 
@@ -650,7 +650,7 @@ The check on hand-written pairs (`scripts/uploads-beta-check-eval.js`; AI-JUDGED
 | | Median over 10 finished | Range |
 |---|---|---|
 | Notes | about 160 s | 78 to 259 s |
-| Study pack | about 240 s | 188 to 695 s |
+| Study pack | about 260 s | 188 to 695 s |
 | Learning path | about 250 s | 84 to 545 s |
 | Cost tracker, whole upload with all goals and every change above | $0.127 | $0.044 to $0.378 |
 | Ledgers for the same run | about $0.36 an upload | $3.59 over 10 |

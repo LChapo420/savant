@@ -141,7 +141,7 @@ The learner's material is the source. `material_*` rows use mode `material`: a s
 
 Slot for the `uploads-perfect` build: its `services/material-factcheck.js` (sentence by sentence, with deterministic passes first) is stronger on lesson paragraphs. When it reaches main, keep the guard row for anything its own calls do not cover, and take care not to pay twice for the same sentence.
 
-A change to an upload part (`material_part_change`, `material_part_example`, `services/material-parts.js`; `UPLOAD_PARTS`, off by default): each changed sentence is read against the material by two families, always by a model, since a rewording keeps the same words by design. A row with no receipt is not served. A hard stop on hand-written pairs: 12 of 12 clean passed and 12 of 12 planted caught, tuned on that set. Independent judges on real changes did not find zero: `docs/UPLOADS-ANY-FORMAT.md` section 18.
+A change to an upload part (`material_part_change`, `material_part_example`, `services/material-parts.js`; `UPLOAD_PARTS`, off by default): each changed sentence is read against the material by two families, always by a model, since a rewording keeps the same words by design. A row with no receipt is not served. On hand-written pairs: 12 of 12 clean passed and 12 of 12 planted caught, tuned on that set. Independent judges on real changes did not find zero: `docs/UPLOADS-ANY-FORMAT.md` section 18.
 
 ## 14 November
 
