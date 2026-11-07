@@ -103,7 +103,7 @@ html[data-tdock="bottom"] body.has-tabbar .tdock-form, .tdock-panel[data-place="
 .tdock-form button[aria-pressed="true"] { background: var(--well-2, #e7e9ec); border-color: var(--action, #2b5fd9); }
 .tdock-form button.go { background: var(--action, #2b5fd9); color: var(--on-action, #fff); border-color: var(--action, #2b5fd9); }
 /* The lesson's top bar stays in the flow on its own; this keeps its first row (with the giraffe) in reach once the page has scrolled. Height and margin come from js/tutor-split.js. */
-.player .player-head.tdock-slim { position: sticky; top: 0; z-index: 20; overflow: hidden; }
+.player .player-head.tdock-slim { position: sticky; top: 0; z-index: 20; overflow: hidden; background: var(--page, #fff); border-bottom: 1px solid var(--line, #d5d8dd); }
 /* A very small or sideways screen: the tab bar steps aside while the chat is open, and the words get the room. */
 body.tdock-compact .tabbar { display: none; }
 html[data-tdock="top"] .tdock-sees, html[data-tdock="bottom"] .tdock-sees { padding-bottom: 4px; }

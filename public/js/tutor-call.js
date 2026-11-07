@@ -543,7 +543,7 @@
       } else hiddenAt = 0;
       if (state !== 'listening' || inSpeech) return;
       const quiet = (now - quietSince) / 1000;
-      if (quiet >= (Number(info.silence_end_s) || 35)) { hangUp(info.notices.ending_quiet, 'It went quiet, so the call ended. Hold the giraffe to talk again.', 'quiet'); return; }
+      if (quiet >= (Number(info.silence_end_s) || 35)) { hangUp(info.notices.ending_quiet, 'It went quiet, so the call ended.', 'quiet'); return; }
       if (!warned && quiet >= (Number(info.silence_warn_s) || 20)) {
         warned = true;
         giraffe.say('Still there?', 6000);

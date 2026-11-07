@@ -171,6 +171,7 @@ async function main() {
       check('scrolled down a long lesson it is still there, in the kept first row of the bar', await isHit());
       const headH = await page.evaluate(() => document.querySelector('.player-head').getBoundingClientRect().height);
       check('that row is slim', headH < 70, headH);
+      check('and solid: the lesson does not show through it', await page.evaluate(() => { const c = getComputedStyle(document.querySelector('.player-head')).backgroundColor; return !/rgba\(0, 0, 0, 0\)|transparent/.test(c); }));
       await page.evaluate(() => window.scrollTo(0, 0)); await delay(300);
       await touchTap(page); await delay(400);
       check('a tap opens the chat', await open(page));

@@ -84,7 +84,7 @@ async function main() {
     await snap(page, '06-voice-thinking', 'Voice call: thinking.');
     await state(page, 'talking', 'Talking'); await delay(170);
     await snap(page, '07-voice-talking', 'Voice call: talking. A simple mouth for now, with one place for synced shapes later.');
-    await state(page, '', 'It went quiet, so the call ended. Hold the giraffe to talk again.'); await delay(150);
+    await state(page, '', 'It went quiet, so the call ended.'); await delay(150);
     await snap(page, '07b-voice-ended', 'A quiet call hangs up by itself and says so, aloud and in words.');
     await ctx.close();
 

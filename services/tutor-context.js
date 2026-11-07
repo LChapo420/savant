@@ -310,7 +310,10 @@ ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')}
     if (methodFixed) text = full.methodReply({ user, message: last.content, name, brief: full.isBrief(user), age });
     else {
     const talkStart = Date.now();
-    const talkArgs = {
+    // In a voice call the learner is listening to silence: the pool's fast lane, the same one a level being written for a waiting learner uses. It may use a fast paid slot, for a
+    // learner cleared for one (the pool checks that, as for any request); the fact guard's own check rides this lane already.
+    const inLane = heard === 'voice' ? (fn) => require('./pool').runForeground(fn, { fast: true }) : (fn) => fn(); // eslint-disable-line global-require
+    const talking = inLane(() => ai.talk({
       // The dock's own task ("dock_help"): its lineup entry (config/model-lineup.json) is Ultra with
       // reasoning off and nothing weaker behind it, without changing the other assist_help callers.
       role: 'fast', task: 'dock_help', system,
@@ -325,10 +328,7 @@ ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')}
       factSource: page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 2500) : '',
       factMode: page && /^\/my-material/.test(cleanPath(page.path)) ? 'material' : undefined,
       onDraft,
-    };
-    // In a voice call the learner is listening to silence: the pool's fast lane, the same one a level being written for a waiting learner uses. It may use a fast paid slot, for a
-    // learner cleared for one (the pool checks that, as for any request); the fact guard's own check rides this lane already.
-    const talking = heard === 'voice' ? require('./pool').runForeground(() => ai.talk(talkArgs), { fast: true }) : ai.talk(talkArgs); // eslint-disable-line global-require
+    }));
     // With the switch on the reply path never waits past the deadline: a slow model gets an honest answer from the notes instead.
     text = fullOn ? await full.withDeadline(talking) : await talking;
     if (fullOn && !text) slow = Date.now() - talkStart >= full.DEADLINE_MS - 100;
