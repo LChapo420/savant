@@ -108,7 +108,9 @@ const DOC = `# Tides\n\nTides are the regular rise and fall of the sea. The Moon
   await page.waitForSelector('[data-q]');
   const card = page.locator('[data-q]').first();
   const radio = card.locator('input[type=radio]').first();
-  if (await radio.count()) { await radio.check(); await card.locator('button:has-text("Check")').click(); await card.locator('[data-exp]').first().waitFor({ timeout: 10000 }); }
+  if (await radio.count()) await radio.check(); else await card.locator('input[type=text]').first().fill('an answer');
+  await card.locator('button:has-text("Check")').click();
+  await card.locator('[data-exp]').first().waitFor({ timeout: 10000 });
   const expBefore = await card.locator('[data-exp]').first().textContent().catch(() => '');
   check('the explanation after a practice answer has its row', await card.locator('[data-part] [data-change="simpler"]').count() === 1);
   await card.locator('[data-part-toggle]').click();
