@@ -31,7 +31,7 @@ const expiry = () => new Date(Date.now() + GUEST_DAYS() * DAY).toISOString();
 
 function rowOf(userId) { return db.findOne(ANSWERS, (r) => r.user_id === userId); }
 function gradeNameOf(trackId, gradeId) {
-  const g = require('../content/curriculum').getGrade(trackId, gradeId);
+  const g = require('../config/curriculum').getGrade(trackId, gradeId);
   return g ? g.name : '';
 }
 
@@ -39,7 +39,7 @@ function gradeNameOf(trackId, gradeId) {
 function cleanAnswers(raw, { child = false } = {}) {
   const r = raw && typeof raw === 'object' ? raw : {};
   const out = {};
-  const known = new Set(require('../content/curriculum').catalogue().map((t) => t.id));
+  const known = new Set(require('../config/curriculum').catalogue().map((t) => t.id));
   if (Array.isArray(r.tracks)) out.tracks = [...new Set(r.tracks.map(String).filter((t) => known.has(t)))].slice(0, MAX_TRACKS);
   if (typeof r.notes === 'boolean') out.notes = !child && r.notes;
   if (WHY.includes(r.why)) out.why = r.why;
@@ -93,7 +93,7 @@ function accountHome(user) {
 
 /** Where the level the learner stands on opens: the same rule as the path page. */
 function lessonHref(user, e) {
-  const base = require('./base-lessons');
+  const base = require('../config/base-lessons');
   const at = e.current_level || 1;
   if (base.canSeeBaseLessons(user) && (base.levelsFor(e.track_id, e.grade_id) || []).includes(at)) {
     return `/base-lesson?track=${encodeURIComponent(e.track_id)}&grade=${encodeURIComponent(e.grade_id)}&level=${at}&enrollment=${e.id}`;

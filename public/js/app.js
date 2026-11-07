@@ -539,6 +539,13 @@
     }
     if (user && consentDetour(user)) return null;
     if (user) applyUx(user);
+    // Onboarding v2: a learner who has not saved an account yet gets the line offering to (js/ob2-guest.js).
+    if (user && user.guest && !document.getElementById('ob2-guest-js')) {
+      const s = document.createElement('script');
+      s.id = 'ob2-guest-js';
+      s.src = '/js/ob2-guest.js';
+      document.head.appendChild(s);
+    }
     return user;
   }
 
