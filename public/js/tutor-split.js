@@ -28,6 +28,39 @@
     spacer.setAttribute('aria-hidden', 'true');
     const moved = new Map(); // element -> its inline style before we touched it, plus its own computed offsets
 
+    // ── The lesson's top bar ───────────────────────────────────────────────
+    // A session's bar is tall on a phone and scrolls away with the page, and the giraffe is in it. Once the page has scrolled, or when the chat comes from the top, only the bar's
+    // first row stays, stuck to the top; the margin keeps the page exactly where it was, so nothing jumps.
+    let slimForced = false;
+    function slimHead() {
+      const head = document.querySelector('.player .player-head');
+      if (!head) return;
+      const slim = head.classList.contains('tdock-slim');
+      if (!slim) {
+        if (getComputedStyle(head).position === 'sticky') return; // this player's bar sticks by itself
+        const r = head.getBoundingClientRect();
+        head.dataset.tdockTop = String(r.top + window.scrollY);
+        head.dataset.tdockFull = String(r.height);
+      }
+      const want = slimForced || window.scrollY > Number(head.dataset.tdockTop || 0) + 4;
+      if (want === slim) return;
+      if (want) {
+        const row = head.querySelector('.tdock-g') || head.querySelector('.player-chips');
+        const headTop = head.getBoundingClientRect().top;
+        const rowH = row ? Math.ceil(row.getBoundingClientRect().bottom - headTop + 6) : 56;
+        const full = Number(head.dataset.tdockFull || rowH);
+        head.dataset.tdockMargin = getComputedStyle(head).marginBottom;
+        head.classList.add('tdock-slim');
+        head.style.height = `${rowH}px`;
+        head.style.setProperty('margin-bottom', `calc(${head.dataset.tdockMargin} + ${slimForced ? 0 : Math.max(0, full - rowH)}px)`, 'important');
+      } else {
+        head.classList.remove('tdock-slim');
+        head.style.height = '';
+        head.style.removeProperty('margin-bottom');
+      }
+    }
+    window.addEventListener('scroll', slimHead, { passive: true });
+
     function topBar() {
       for (const n of [document.querySelector('.player .player-head'), document.querySelector('.tdock-bar'), document.querySelector('.site-header')]) {
         if (!n) continue;
@@ -55,6 +88,7 @@
         const width = Math.round(W >= 900 ? Math.min(420, Math.max(340, W * 0.3)) : W * 0.46);
         return { place: 'right', chat: 0, width, vvH, vvTop, H, W, keyboard, topOff: 0, botOff: 0 };
       }
+      if (current === 'top' && !slimForced && isOpen) { slimForced = true; slimHead(); }
       const bar = topBar();
       const tabs = keyboard ? null : tabBar();
       const barH = bar ? bar.offsetHeight : 0;
@@ -75,9 +109,11 @@
       panel.dataset.place = geo.place;
       if (geo.place === 'right') {
         s.top = `${geo.vvTop}px`; s.bottom = 'auto'; s.left = 'auto'; s.right = '0'; s.width = `${geo.width}px`; s.height = `${geo.vvH}px`;
+        panel.dataset.tight = String(geo.vvH < 420);
         return;
       }
       s.left = '0'; s.right = '0'; s.width = 'auto'; s.height = `${geo.chat}px`;
+      panel.dataset.tight = String(geo.chat < 300); // no room for the notes and chips: the words and the typing box come first
       if (geo.place === 'top') { s.top = `${geo.topOff}px`; s.bottom = 'auto'; } else { s.bottom = `${geo.botOff}px`; s.top = 'auto'; }
     }
 
@@ -89,6 +125,7 @@
       html.style.scrollPaddingTop = open && geo.place === 'top' ? `${geo.chat + geo.topOff + 12}px` : '';
       html.dataset.tdock = open ? geo.place : '';
       document.body.classList.toggle('tdock-compact', open && geo.place !== 'right' && geo.H < 520);
+      if (slimForced !== (open && geo.place === 'top')) { slimForced = open && geo.place === 'top'; const h = document.querySelector('.player .player-head.tdock-slim'); if (h) { h.classList.remove('tdock-slim'); h.style.height = ''; h.style.removeProperty('margin-bottom'); } slimHead(); }
       if (open && geo.place === 'top') {
         const bar = geo.bar;
         const anchor = bar && bar.parentElement ? bar : null;

@@ -122,7 +122,10 @@ function serve(router) {
   check('app.js loads the dock and skips the sealed pages', /tutor-dock\.js/.test(read('public/js/app.js')) && /spanish-\(check\|listening\)/.test(read('public/js/app.js')));
   check('the dock asks /api/auth/me before the dock status, so a signed-out page has no 401 in the console', read('public/js/tutor-dock.js').indexOf('/api/auth/me') > 0 && read('public/js/tutor-dock.js').indexOf('/api/auth/me') < read('public/js/tutor-dock.js').indexOf('fetch(`/api/tutor/dock?path'));
   check('the dock checks the sealed paths itself', /spanish-\(check\|listening\)/.test(read('public/js/tutor-dock.js')));
-  check('the dock sends no data to a speech service (browser voice only)', !/fetch\([^)]*(speech|stt|tts|gateway)/i.test(read('public/js/tutor-dock.js')));
+  check('the dock itself calls no speech service by name; a voice call goes only through the server\'s own routes', !/fetch\([^)]*(speech|stt|tts|gateway)/i.test(read('public/js/tutor-dock.js')) && !/llmgateway|elevenlabs|api\.x\.ai/i.test(read('public/js/tutor-call.js')));
+  check('no floating button: nothing of the tutor is fixed over the page except the chat panel, and the panel is given room by tutor-split.js', !/tdock-btn/.test(read('public/js/tutor-dock.js')) && !/tdock-btn/.test(read('public/css/tutor-dock.css')) && (read('public/css/tutor-dock.css').match(/position:\s*fixed/g) || []).length === 1 && /paddingBottom/.test(read('public/js/tutor-split.js')));
+  check('the giraffe and the chat place are server-remembered', /tutor\/dock\/side/.test(read('public/js/tutor-dock.js')) && /tutor\/dock\/side/.test(read('routes/tutor.js')));
+  check('a call speaks only what ask() got back from POST /api/tutor/dock', /ask: \(text\) => ask\(text, 'voice'\)/.test(read('public/js/tutor-dock.js')) && !/fetch\([^)]*\/api\/tutor\/dock/.test(read('public/js/tutor-call.js')));
   check('the dock css uses only variables for colour (hex only as a var() fallback, for pages without the app css)', !/#[0-9a-f]{3,6}\b/i.test(read('public/css/tutor-dock.css').replace(/var\(--[a-z0-9-]+,\s*#[0-9a-f]{3,6}\)/gi, '')));
   const pages = [...fs.readdirSync(path.join(root, 'public')).filter((f) => f.endsWith('.html')).map((f) => `public/${f}`),
     ...fs.readdirSync(path.join(root, 'public/spanish')).filter((f) => f.endsWith('.html') && f !== 'design.html').map((f) => `public/spanish/${f}`)]
@@ -191,7 +194,7 @@ function serve(router) {
   check('full mode has the hints-not-answers rule', /HINTS, NOT ANSWERS/.test(dock.MODE_NOTE.full) && /just tell me/.test(dock.MODE_NOTE.full));
   const src = read('services/tutor-context.js');
   check('the answer rule comes after the notes in the prompt', src.indexOf('RULE FOR EVERY REPLY') > src.indexOf('WHAT YOU KNOW (notes'));
-  check('the dock asks for a 4 s hedge, a 15 s cap and no extra effort', /hedgeAfterMs: 4000, timeoutMs: 15000/.test(src) && !/effort: 'low'/.test(src));
+  check('the dock asks for a 4 s hedge, a 15 s cap and no extra effort; 2 s when someone is listening to silence in a call', /hedgeAfterMs: 4000, timeoutMs: 15000/.test(src) && /heard === 'voice' \? \{ hedgeAfterMs: 2000 \}/.test(src) && !/effort: 'low'/.test(src));
   check('a proposed answer gets "why?", not right or wrong', /is it B\?/.test(dock.MODE_NOTE.full));
   const nvPlan = require('../services/providers/nvidia').plan;
   const plan = nvPlan('fast', 'dock_help');

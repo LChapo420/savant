@@ -17,6 +17,7 @@
  *
  * Prices (published by the gateway; checked 2026-10-28):
  *   eleven-v3     $0.11 per 1K characters of input text   https://llmgateway.io/models/eleven-v3
+ *   eleven-flash-v2-5, eleven-turbo-v2-5  $0.055 per 1K characters   https://llmgateway.io/models/eleven-flash-v2-5 (read 2026-11-07; the tutor's voice call)
  *   grok-stt-1-0  $0.10 per hour of input audio           https://llmgateway.io/models/grok-stt-1-0
  * The gateway publishes no price for any other speech model that voice.js could be pointed at
  * (SPANISH_GATEWAY_TTS_MODEL / SPANISH_GATEWAY_STT_MODEL), so an unlisted model is priced at a
@@ -40,7 +41,7 @@ const FILE = () => process.env.LLMGATEWAY_LEDGER_FILE || path.join(__dirname, '.
 
 /** Published prices: tts per 1K characters, stt per hour of audio. */
 const PRICES = {
-  tts: { 'eleven-v3': 0.11 },
+  tts: { 'eleven-v3': 0.11, 'eleven-flash-v2-5': 0.055, 'eleven-turbo-v2-5': 0.055 },
   stt: { 'grok-stt-1-0': 0.1 },
 };
 /** Used for a model the gateway has no published price for here. */

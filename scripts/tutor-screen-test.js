@@ -167,6 +167,7 @@ function serve(router) {
   console.log('the dock in a page (jsdom)');
   const dockSrc = fs.readFileSync(path.join(root, 'public/js/tutor-dock.js'), 'utf8');
   const snapSrc = fs.readFileSync(path.join(root, 'public/js/tutor-snapshot.js'), 'utf8');
+  const extraSrc = ['start-tutor', 'tutor-giraffe', 'tutor-split'].map((f) => fs.readFileSync(path.join(root, `public/js/${f}.js`), 'utf8'));
   const sent = [];
   const win = new JSDOM(HTML.replace('<html lang="en">', '<html lang="en">'), { url: 'https://savant.test/session', runScripts: 'outside-only', pretendToBeVisual: true }).window;
   win.SpeechRecognition = function Rec() { this.start = () => {}; this.stop = () => {}; };
@@ -175,23 +176,25 @@ function serve(router) {
   win.fetch = async (url, init) => {
     sent.push({ url, init });
     if (/\/api\/auth\/me/.test(url)) return { ok: true, json: async () => ({ user: { id: 1 } }) }; // signed in: the dock checks before it starts
-    if (/\/dock\?path/.test(url)) return { ok: true, json: async () => ({ mode: 'full', input_mode: 'voice', speech_lang: 'en' }) };
-    if (/dock\/mode/.test(url)) return { ok: true, json: async () => ({}) };
+    if (/\/dock\?path/.test(url)) return { ok: true, json: async () => ({ mode: 'full', input_mode: 'voice', speech_lang: 'en', side: 'top', mic: true, call: { allowed: false, why: 'Not in this test.' } }) };
+    if (/dock\/side/.test(url)) return { ok: true, json: async () => ({}) };
     return { ok: true, json: async () => ({ reply: 'Try the common denominator.' }) };
   };
   win.eval(snapSrc);
+  extraSrc.forEach((src) => win.eval(src));
   win.eval(dockSrc);
   await new Promise((r) => setTimeout(r, 50));
   const panel = win.document.querySelector('.tdock-panel[aria-label="Your tutor"]');
   check('the dock appears and says the tutor can see this page', panel && /The tutor can see this page\./.test(panel.textContent));
-  check('it opens in the remembered mode (voice)', panel && panel.dataset.mode === 'voice' && panel.querySelector('.m-voice').getAttribute('aria-pressed') === 'true');
-  panel.querySelector('.m-text').click();
-  check('the toggle switches to text and tells the server', panel.dataset.mode === 'text' && sent.some((s) => /dock\/mode/.test(s.url) && /"text"/.test(s.init.body)));
-  check('the choice is kept locally for the next page', win.localStorage.getItem('savant.tutor.mode') === 'text');
+  // The Type and Talk switch is gone (owner, 7 Nov): tap the giraffe to chat, hold it for a voice call. What is remembered now is where the chat sits.
+  check('it is closed until the giraffe is tapped, and that opens it on the remembered side', panel.dataset.open === 'false' && !win.document.querySelector('.tdock-btn') && (win.document.querySelector('.tdock-g-btn').click(), panel.dataset.open === 'true') && panel.querySelector('.s-top').getAttribute('aria-pressed') === 'true');
+  panel.querySelector('.s-bottom').click();
+  check('the control moves it and tells the server', panel.querySelector('.s-bottom').getAttribute('aria-pressed') === 'true' && sent.some((s) => /dock\/side/.test(s.url) && /"bottom"/.test(s.init.body)));
+  check('the choice is kept locally for the next page', win.localStorage.getItem('savant.tutor.side') === 'bottom');
   panel.querySelector('input').value = 'is it 5/6?';
   panel.querySelector('form').dispatchEvent(new win.Event('submit', { cancelable: true }));
   await new Promise((r) => setTimeout(r, 20));
-  const post = sent.find((s) => s.init && s.init.method === 'POST');
+  const post = sent.find((s) => s.init && s.init.method === 'POST' && /tutor\/dock$/.test(s.url));
   const body = post && JSON.parse(post.init.body);
   check('a typed message sends input_mode text and a page snapshot', body && body.input_mode === 'text' && body.page.snapshot && body.page.snapshot.choices.length === 3, body && Object.keys(body));
   check('the reply shows in the transcript', /common denominator/.test(panel.querySelector('.tdock-log').textContent));
@@ -202,7 +205,7 @@ function serve(router) {
   check('the snapshot builder never touches other tabs or the device screen', !/getDisplayMedia|chrome\.tabs|captureVisibleTab/.test(read('public/js/tutor-snapshot.js')));
   check('the speech path still sends nothing to a speech service', !/fetch\([^)]*(speech|stt|tts|gateway)/i.test(read('public/js/tutor-dock.js')));
   check('no provider or price is named in the new services', !/openrouter|anthropic\.com|api\.openai|llmgateway/i.test(['tutor-mode', 'tutor-screen', 'tutor-vision'].map((f) => read(`services/${f}.js`)).join('')));
-  check('my dock css additions use only variables for colour', !/#[0-9a-f]{3,6}\b/i.test(read('public/css/tutor-dock.css').split('\n').filter((l) => /tdock-modes|data-mode/.test(l)).join('\n')));
+  check('the dock css uses only variables for colour, on the new rules too', !/#[0-9a-f]{3,6}\b/i.test(read('public/css/tutor-dock.css').replace(/var\(--[a-z0-9-]+,\s*#[0-9a-f]{3,6}\)/gi, '')));
 
   try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none written */ }
   console.log(failures ? `\n${failures} check(s) failed` : '\nAll checks passed');

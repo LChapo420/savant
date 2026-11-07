@@ -10,11 +10,11 @@
 }
 .tdock-g-btn:hover { background: var(--well-2, #e7e9ec); }
 .tdock-g-btn:focus-visible { outline: 3px solid var(--focus, #2b5fd9); outline-offset: 2px; }
-.tdock-g-btn[aria-expanded="true"] { background: var(--sel, #e6edfb); }
+.tdock-g-btn[aria-expanded="true"] { background: var(--well-2, #e7e9ec); }
 .tdock-g-face { display: block; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; pointer-events: none; }
 .tdock-g-face .tutor-svg { display: block; width: 100%; height: 100%; overflow: hidden; }
 .tdock-g-ring { position: absolute; inset: -3px; border-radius: 50%; border: 2.500px solid transparent; pointer-events: none; }
-.tdock-g-status { font-size: var(--t-meta, .8125rem); font-weight: 600; color: var(--ink-2, #5b616b); white-space: nowrap; display: none; }
+.tdock-g-status { max-width: min(46vw, 210px); font-size: var(--t-meta, .8125rem); line-height: 1.2; font-weight: 600; text-align: right; color: var(--ink-2, #5b616b); display: none; }
 .tdock-g.has-status .tdock-g-status { display: inline; }
 /* The keyboard and screen-reader way to do what the hold does: invisible until focused. */
 .tdock-g-alt { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; background: var(--page, #fff); color: var(--ink, #1c1f24); font: inherit; font-size: var(--t-meta, .8125rem); }
@@ -46,7 +46,6 @@
 .tdock-g[data-voice="thinking"] .tdock-g-ring { border-color: var(--line-strong, #8a8f98); border-style: dashed; animation: tdock-turn 3s linear infinite; }
 .tdock-g[data-voice="thinking"] .t-pupils { transform: translate(6px, -9px); }
 .tdock-g[data-voice="talking"] .tdock-g-ring { border-color: var(--correct, #1a7f4b); }
-.tdock-g[data-voice="talking"] .tdock-g-btn { background: var(--sel, #e6edfb); }
 /* The simple talking mouth. Speech-synced shapes plug in through TutorGiraffe.mouthDriver (js/tutor-giraffe.js), which turns this off. */
 .tdock-g[data-mouth="talk"] .t-mouth { animation: tdock-talk .26s ease-in-out infinite alternate; }
 @keyframes tdock-turn { to { transform: rotate(360deg); } }
@@ -83,15 +82,16 @@ html.tdock-in-call .site-header .header-stats { display: none; }
 .tdock-icon svg { width: 20px; height: 20px; }
 .tdock-icon:hover { background: var(--well, #f1f2f4); color: var(--ink, #1c1f24); }
 .tdock-icon:focus-visible, .tdock-form button:focus-visible, .tdock-chips button:focus-visible { outline: 3px solid var(--focus, #2b5fd9); outline-offset: 1px; }
-.tdock-icon[aria-pressed="true"] { background: var(--sel, #e6edfb); color: var(--sel-ink, var(--ink, #1c1f24)); }
+.tdock-icon[aria-pressed="true"] { background: var(--well-2, #e7e9ec); color: var(--ink, #1c1f24); }
 .tdock-sides { display: inline-flex; margin-right: 2px; }
 .tdock-panel[data-place="right"] .tdock-sides { display: none; }
 .tdock-note { flex: none; padding: 0 16px 6px; font-size: var(--t-meta, .8125rem); color: var(--ink-3, #5b616b); }
 .tdock-log { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; gap: 8px; padding: 8px 16px; font-size: var(--t-ui-s, .95rem); line-height: 1.45; }
-.tdock-log .me { align-self: flex-end; max-width: 85%; padding: 8px 12px; border-radius: 14px 14px 4px 14px; background: var(--sel, #e6edfb); color: var(--sel-ink, var(--ink, #1c1f24)); }
+.tdock-log .me { align-self: flex-end; max-width: 85%; padding: 8px 12px; border-radius: 14px 14px 4px 14px; background: var(--well-2, #e7e9ec); color: var(--ink, #1c1f24); }
 .tdock-log .bot { align-self: flex-start; max-width: 92%; white-space: pre-wrap; }
 .tdock-log .tdock-note { padding: 0; }
-.tdock-chips { flex: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 8px; }
+.tdock-chips { flex: none; display: flex; gap: 6px; padding: 0 16px 8px; overflow-x: auto; scrollbar-width: none; }
+.tdock-chips button { flex: none; }
 .tdock-chips[hidden] { display: none; }
 .tdock-chips button { min-height: 36px; padding: 0 12px; border: 1px solid var(--line, #cfd3da); border-radius: 18px; background: transparent; color: inherit; font: inherit; font-size: .88em; cursor: pointer; }
 .tdock-form { flex: none; display: flex; gap: 6px; padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)); padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); border-top: 1px solid var(--line, #d5d8dd); }
@@ -100,12 +100,17 @@ html[data-tdock="bottom"] body.has-tabbar .tdock-form, .tdock-panel[data-place="
 .tdock-form input { flex: 1 1 auto; min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid var(--line-strong, #8a8f98); border-radius: 12px; background: var(--page, #fff); color: var(--ink, #1c1f24); font: inherit; font-size: 16px; }
 .tdock-form input::placeholder { color: var(--ink-3, #5b616b); }
 .tdock-form button { flex: none; min-height: 44px; min-width: 44px; padding: 0 14px; border: 1px solid var(--line-strong, #8a8f98); border-radius: 12px; background: transparent; color: var(--ink, #1c1f24); font: inherit; font-weight: 600; cursor: pointer; }
-.tdock-form button[aria-pressed="true"] { background: var(--sel, #e6edfb); border-color: var(--sel-line, var(--action, #2b5fd9)); }
+.tdock-form button[aria-pressed="true"] { background: var(--well-2, #e7e9ec); border-color: var(--action, #2b5fd9); }
 .tdock-form button.go { background: var(--action, #2b5fd9); color: var(--on-action, #fff); border-color: var(--action, #2b5fd9); }
+/* The lesson's top bar stays in the flow on its own; this keeps its first row (with the giraffe) in reach once the page has scrolled. Height and margin come from js/tutor-split.js. */
+.player .player-head.tdock-slim { position: sticky; top: 0; z-index: 20; overflow: hidden; }
 /* A very small or sideways screen: the tab bar steps aside while the chat is open, and the words get the room. */
 body.tdock-compact .tabbar { display: none; }
 html[data-tdock="top"] .tdock-sees, html[data-tdock="bottom"] .tdock-sees { padding-bottom: 4px; }
-@media (max-height: 560px) { .tdock-sees { display: none; } }
+.tdock-panel[data-tight="true"] .tdock-note { display: none; }
+.tdock-panel[data-tight="true"] .tdock-log .tdock-note { display: block; }
+.tdock-panel[data-tight="true"] .tdock-chips { display: none; }
+.tdock-panel[data-tight="true"] .tdock-head { padding-block: 0; }
 
 /* The page's room for the chat, set by js/tutor-split.js, moves with the slide. */
 html { transition: padding-right .22s ease; }

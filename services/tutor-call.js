@@ -11,12 +11,12 @@
  *     Everyone else who may call uses the browser's own speech, which costs nothing.
  *
  * What it costs, paid speech only (prices in services/llmgateway-ledger.js, x1.15 margin, 7 Nov 2026):
- *   the tutor talking: eleven-v3, $0.11 per 1K characters. About 14 characters a second is about $0.106 per minute of the tutor talking.
+ *   the tutor talking: eleven-flash-v2-5, $0.055 per 1K characters. About 14 characters a second is about $0.053 per minute of the tutor talking.
  *   the learner talking: grok-stt-1-0, $0.10 per hour, $0.0019 per minute. Only speech is sent; silence is never uploaded.
  *   Every call still goes through the $5 total ledger first and shows in the cost tracker on the learner's account. The tutor's model calls cost what chat costs.
  *
  * The limits (env can lower them, the caps are in LIMITS):
- *   one call: 10 minutes. One learner, one day (UTC): 30 minutes of calls, $0.50 of paid speech (about 4.5 minutes of the tutor talking), then the call carries on with
+ *   one call: 10 minutes. One learner, one day (UTC): 30 minutes of calls, $0.50 of paid speech (about 9 minutes of the tutor talking), then the call carries on with
  *   the browser's voice if there is one. A call quiet for 20 s gets a warning and ends at 35 s. Silence costs nothing either way, but an open microphone should not stay open.
  *   One open call per learner: a new one closes the old one. The server checks all of this on every /hear and /say, so a page that keeps going is refused.
  *
@@ -209,7 +209,7 @@ async function say(user, callId, text, { lang = 'en' } = {}) {
   if (!voice.gatewayFor(user.id)) throw refuse(503, 'The voice is the browser\'s on this account.');
   const cost = ledger.costOf({ kind: 'tts', model: voice.tutorTtsModel(), chars: line.length });
   if (usage(user.id).usd + cost > limits().day_usd) throw refuse(429, 'Today\'s paid voice is used up.');
-  const mp3 = await voice.tutorSpeak(line, { userId: user.id, lang });
+  const mp3 = await voice.tutorSpeak(line, { userId: user.id, lang, callCapped: true });
   addUsage(user.id, { usd: cost, chars: line.length });
   return mp3;
 }

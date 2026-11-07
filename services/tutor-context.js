@@ -306,7 +306,7 @@ async function reply({ user, messages, page, inputMode, image }) {
       // A chat must feel live: start the backup model after 4 s instead of the pool's 20 s floor,
       // and give up on a hung attempt after 15 s instead of the pool's 120 s.
       // temperature 0.7: a friend does not say the same sentence twice (the integrity checks do not depend on it).
-      maxTokens: 400, userId: user.id, hedgeAfterMs: 4000, timeoutMs: 15000, temperature: 0.7,
+      maxTokens: 400, userId: user.id, hedgeAfterMs: 4000, timeoutMs: 15000, ...(heard === 'voice' ? { hedgeAfterMs: 2000 } : {}), temperature: 0.7,
       // What the fact check (services/fact-guard.js) reads beside the reply. On the learner's own material their text decides.
       factSource: page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 2500) : '',
       factMode: page && /^\/my-material/.test(cleanPath(page.path)) ? 'material' : undefined,

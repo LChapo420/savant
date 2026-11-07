@@ -252,7 +252,6 @@
       if (split.isOpen()) closeChat({ refocus: false });
       giraffe.say('Connecting');
       giraffe.setVoice('thinking');
-      // Sound has to be unlocked inside a gesture: the first one that reaches this file holds the unlocker until tutor-call.js is here.
       await loadScript('/js/tutor-call.js', () => !!window.TutorCall);
       if (!window.TutorCall) { fallBackToChat('The voice call did not load. You can type here instead.'); return; }
       const c = window.TutorCall.create({
@@ -284,7 +283,9 @@
       onAlt() { if (call) call.toChat(); else startCall(); },
     });
     labelsIdle();
-    panel.querySelector('.tdock-call-btn').addEventListener('click', () => startCall());
+    // Ready before the first hold: a phone wants sound unlocked in the gesture that started the call.
+    if (callInfo.allowed) loadScript('/js/tutor-call.js', () => !!window.TutorCall);
+    panel.querySelector('.tdock-call-btn').addEventListener('click', () => { startCall(); });
     panel.querySelector('.tdock-close').addEventListener('click', () => closeChat());
     panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeChat(); });
     panel.querySelectorAll('.tdock-chips button').forEach((b) => b.addEventListener('click', () => ask(b.textContent, 'text')));

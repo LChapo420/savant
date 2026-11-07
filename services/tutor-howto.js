@@ -74,7 +74,7 @@ const FEATURES = [
   { id: 'curriculum', title: 'The whole curriculum', path: '/curriculum', words: 'curriculum|all subjects|what can i learn|what subjects',
     steps: 'The curriculum page lists every subject and level so you can see the whole map.' },
   { id: 'tutor', title: 'The tutor', path: '/dashboard', words: 'tutor|what can you do|who are you|how do you work|what do you know|memory|forget|voice',
-    steps: 'The tutor is the Ask tutor button on every page. It knows your goals, what you got wrong and what is on screen, and gives hints instead of answers while you are working a question. You can type or talk. "What does my tutor know?" on the dashboard shows what it remembers and lets you delete any of it.' },
+    steps: 'The tutor is the small giraffe at the top of every page (on a computer, in the sidebar). Tap it to chat; the chat opens beside the page, and on a phone you choose top or bottom. Press and hold it for a voice call: it listens and talks with no buttons, tap it to hang up, hold it again to switch to the chat. It knows your goals, what you got wrong and what is on screen, and gives hints instead of answers while you are working a question. "What does my tutor know?" on the dashboard shows what it remembers and lets you delete any of it.' },
   { id: 'parent', title: 'Parent consent', path: '/parent-needed', words: 'parent|guardian|consent|under 13|my mom|my dad|permission',
     steps: 'Under 13, a parent or guardian agrees by email before the camera, microphone and AI chat open. Until then the rest of the app works.' },
   { id: 'graduation', title: 'Graduation', path: '/held', words: 'graduat|held|finished (a )?subject',

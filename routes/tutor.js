@@ -95,17 +95,6 @@ router.post('/tutor/dock/closed', requireAuth, limit('tutor-closed', 60, 60 * 60
   res.status(204).end();
 });
 
-// Better voice for a reply. Any failure is a 503 with no audio: the dock then uses the browser voice (the free default).
-router.post('/tutor/speak', requireAuth, limit('tutor-speak', 60, 60 * 60 * 1000), async (req, res) => {
-  const body = req.body || {};
-  try {
-    const mp3 = await voice.tutorSpeak(body.text, { userId: req.user.id, lang: body.lang === 'es' ? 'es' : 'en' });
-    res.set('Content-Type', 'audio/mpeg').set('Cache-Control', 'private, no-store').send(mp3);
-  } catch (err) {
-    res.status(err.status === 400 ? 400 : 503).json({ error: 'Browser voice.' });
-  }
-});
-
 // Better listening for push-to-talk: the recording is the raw request body (at most 1 MB, about a minute), transcribed and dropped.
 // Any failure is a 503 with no text: the dock then uses the browser recognizer (the free default).
 const audioBody = express.raw({ type: () => true, limit: 1024 * 1024 });
@@ -120,7 +109,10 @@ router.post('/tutor/transcribe', requireAuth, limit('tutor-transcribe', 60, 60 *
 });
 
 // The voice call (services/tutor-call.js, js/tutor-call.js). A refusal carries plain words for the learner.
-const callError = (res, err) => res.status(err.status || 503).json({ error: err.why || 'Voice is not available right now.', code: err.code || null });
+const callError = (res, err) => {
+  if (!err.why) console.warn(`tutor call: ${err.message}`);
+  res.status(err.status || 503).json({ error: err.why || 'Voice is not available right now.' });
+};
 const callAudio = express.raw({ type: () => true, limit: 1536 * 1024 }); // 45 s of 16 kHz mono, the longest clip a call sends
 router.post('/tutor/call/start', requireAuth, limit('tutor-call', 40, 60 * 60 * 1000), (req, res) => {
   try { res.set('Cache-Control', 'no-store').json(call.start(req.user)); } catch (err) { callError(res, err); }

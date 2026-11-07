@@ -28,7 +28,9 @@ for (const label of ['Your subjects', 'Recent sessions']) {
 check('dashboard has "skills due"', doc.includes('skills due**') && /skill(s|\$\{[^}]*\}) due/.test(dash));
 check('dashboard has "Start level"', dash.includes('Start level') && doc.includes('Start level N'));
 const dock = js('tutor-dock.js');
-for (const label of ['Ask tutor', 'Type', 'Talk', 'Speak', 'Send']) {
+// The floating Ask tutor button and the Type and Talk switch are gone (owner, 7 Nov): the giraffe opens the chat, a hold starts a voice call.
+check('the script says to tap the giraffe', doc.includes('**giraffe**') && js('tutor-giraffe.js').includes('Open the tutor chat'));
+for (const label of ['Speak', 'Send']) {
   check(`tutor dock has "${label}"`, doc.includes(`**${label}**`) && dock.includes(label));
 }
 const mat = js('my-material.js');
