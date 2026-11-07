@@ -3,9 +3,9 @@
  *
  * Off, this file does nothing: the middleware calls next() before reading anything, so every page comes from express.static exactly as before.
  *
- * On, the signed-in app pages listed below get three things added to their HTML as it is served, and nothing else changes:
+ * On, the signed-in app pages listed below get a few things added to their HTML as it is served, and nothing else changes:
  *   - data-ui2="on" on <html>, which the stylesheets key on
- *   - css/ui2/tokens.css and css/ui2/app.css, last in <head>, so they restyle what is there
+ *   - css/ui2/tokens.css, css/ui2/app.css and js/ui2/boot.js, last in <head>, so they restyle what is there
  *   - js/ui2/shell.js right after js/app.js (it rearranges the header), and js/ui2/home.js before js/dashboard.js on Home
  * No page's logic, API, gating, consent rule, scoring, player or fact-check path is edited: the existing scripts still draw the page, and the new ones move and restyle it.
  *
@@ -26,7 +26,7 @@ const PAGES = new Set([
 function inject(html, page) {
   let out = html
     .replace(/<html\b/, '<html data-ui2="on"')
-    .replace('</head>', '  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/app.css">\n</head>')
+    .replace('</head>', '  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/app.css">\n  <script src="/js/ui2/boot.js"></script>\n</head>')
     .replace('<script src="/js/app.js"></script>', '<script src="/js/app.js"></script>\n  <script src="/js/ui2/shell.js"></script>');
   if (page === 'dashboard') out = out.replace('<script src="/js/dashboard.js"></script>', '<script src="/js/ui2/home.js"></script>\n  <script src="/js/dashboard.js"></script>');
   return out;

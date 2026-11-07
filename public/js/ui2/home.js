@@ -201,7 +201,7 @@
         ${ic('chev-u', 'u2-mute')}
       </button>` : ''}
       <aside class="u2-side" aria-label="More about today">
-        <div><h2 class="u2-eyebrow">Then</h2><ul>${(after.length ? after : []).slice(0, 5).map((b) => `<li>${esc(stepName(b))}, ${mins(b.estMinutes)}</li>`).join('') || '<li>Nothing else today</li>'}</ul></div>
+        <div><h2 class="u2-eyebrow">Then</h2><ul>${(after.length ? after : []).slice(0, 5).map((b) => `<li>${esc(stepName(b))}, ${mins(b.estMinutes)}</li>`).join('') || '<li>Nothing else today</li>'}</ul>${blocks.length ? '<button type="button" class="u2-link-q" id="u2-steps-wide" aria-haspopup="dialog">All of today\'s steps</button>' : ''}</div>
         <div><h2 class="u2-eyebrow">This week</h2><ul><li>${week.days ? `${plural(week.days, 'day')} studied in the last 7` : 'No sessions in the last 7 days yet'}</li>${week.answered ? `<li>${plural(week.answered, 'question')} answered</li>` : ''}</ul></div>
         <div><h2 class="u2-eyebrow">Your subjects</h2><ul>${subjects.slice(0, 5).map((e) => `<li><a href="/path?enrollment=${e.id}">${esc(e.track.name)}${e.status === 'placement_pending' ? ', not placed yet' : `, level ${e.current_level}`}</a></li>`).join('')}</ul></div>
       </aside>`;
@@ -260,7 +260,7 @@
     if (pick) { setMinutes(Number(pick.getAttribute('data-minutes')), pick.closest('dialog')); return; }
     const minutes = ev.target.closest('#u2-minutes');
     if (minutes) { const d = openSheet('Minutes you have today', picker(), minutes); d.dataset.kind = 'minutes'; return; }
-    const peek = ev.target.closest('#u2-peek');
+    const peek = ev.target.closest('#u2-peek, #u2-steps-wide');
     if (peek) { const d = openSheet('Today\'s plan', stepsBody(), peek); d.dataset.kind = 'steps'; }
   });
 

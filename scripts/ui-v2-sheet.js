@@ -129,7 +129,7 @@ async function main() {
     if (want('home')) {
       const { ctx, page } = await open('ada', '/dashboard', '#u2-start');
       await snap(page, 'home', 'Home: one task, one button, the day as dots');
-      await page.click('#u2-peek');
+      await page.click(W < 1025 ? '#u2-peek' : '#u2-steps-wide');
       await delay(350);
       await snap(page, 'home-steps', 'Tap the bar at the bottom: all of today\'s steps');
       await page.keyboard.press('Escape');
@@ -138,8 +138,8 @@ async function main() {
       await snap(page, 'home-minutes', 'Tap "45 min": how long you have today');
       await page.keyboard.press('Escape');
       await delay(150);
-      await page.click('#u2-menu');
-      await page.waitForSelector('#u2-all-title', { state: 'attached' });
+      await page.click(W < 1025 ? '#u2-menu' : '.u2-all-link');
+      await page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
       await delay(300);
       await snap(page, 'all', 'The menu: Everything');
       await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
@@ -149,6 +149,11 @@ async function main() {
       await page.click('#u2-fold-calendar summary');
       await delay(200);
       await snap(page, 'all-planner', 'Everything: next study time opened');
+      await page.click('#u2-fold-calendar summary');
+      await page.click('#u2-fold-extras summary');
+      await page.locator('#u2-fold-extras').scrollIntoViewIfNeeded();
+      await delay(250);
+      await snap(page, 'all-extras', 'Everything: your tutor and the optional extras opened');
       await ctx.close();
     }
     if (want('question')) {
@@ -193,7 +198,7 @@ async function main() {
     if (want('question')) {
       // The chat, on a question not yet answered: tap the giraffe. A fresh learner, because the first has answered on past the end of a sitting.
       const { ctx, page } = await open('eve2', `/session?enrollment=${acc.eve2.enrollment}&ordinary=1`, '.player-head .tdock-g-btn');
-      await page.waitForSelector('.choice, .answer-row input', { timeout: 15000 });
+      await page.waitForSelector('.choice, .answer-row input', { timeout: 8000 }).catch(() => {}); // or a lesson's page, which is fine here
       await delay(400);
       await page.click('.tdock-g-btn');
       await page.waitForSelector('.tdock-panel', { timeout: 10000 });

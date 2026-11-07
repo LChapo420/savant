@@ -320,6 +320,7 @@ async function main() {
       await page.waitForSelector('#u2-start');
       const c = await page.evaluate(() => ({ mode: document.documentElement.dataset.mode, bg: getComputedStyle(document.body).backgroundColor, ink: getComputedStyle(document.getElementById('u2-title')).color }));
       assert.strictEqual(c.mode, 'dark');
+      assert.strictEqual(await page.evaluate(() => document.documentElement.dataset.style), 'chunky', 'the older night style does not apply');
       assert.strictEqual(c.bg, 'rgb(28, 22, 16)');
       assert.strictEqual(c.ink, 'rgb(255, 246, 230)');
       await ctx.close();

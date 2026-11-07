@@ -4,7 +4,7 @@ The owner's chosen app structure, from `design-refs/ui-v2-mockups/` (`sheet.png`
 
 ## How it is built
 
-- `services/ui-v2.js`: when the flag is on, adds to each listed page's HTML: `data-ui2="on"`, `css/ui2/tokens.css`, `css/ui2/app.css`, `js/ui2/shell.js`, and on Home `js/ui2/home.js`. Off, it only calls `next()`, so every page is the same file as before. `scripts/ui-v2-test.js` checks the bytes.
+- `services/ui-v2.js`: when the flag is on, adds to each listed page's HTML: `data-ui2="on"`, `css/ui2/tokens.css`, `css/ui2/app.css`, `js/ui2/boot.js`, `js/ui2/shell.js`, and on Home `js/ui2/home.js`. Off, it only calls `next()`, so every page is the same file as before. `scripts/ui-v2-test.js` checks the bytes.
 - No existing file under `public/` is edited. The existing scripts still draw every page, with all their decisions, gating, consent rules, scoring, player and fact-check paths. The new files move and restyle what they drew.
 - Every colour is a token in `css/ui2/tokens.css`; `app.css` has none of its own (tested), so a colour picker can come last. The older component tokens point at the new ones, so pages not yet rearranged already have the Sunny colours.
 - Everything is a view of `/dashboard` (`/dashboard#everything`). It holds the real subject cards, planner, recent sessions and offers, moved rather than copied. Other pages link to it, so there is no second copy of any decision.

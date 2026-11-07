@@ -226,7 +226,7 @@ html[data-ui2] .choice .key .mark { width: 15px; height: 15px; color: var(--on-m
 html[data-ui2] .verdict:has(.verdict-actions) { position: relative; margin: 14px 0 0; padding: 16px 20px; border: 0; border-radius: 16px; background: var(--well); color: var(--ink); box-shadow: none; }
 html[data-ui2] .verdict-correct:has(.verdict-actions) { background: var(--good-wash); }
 html[data-ui2] .verdict-wrong:has(.verdict-actions) { background: var(--bad-wash); }
-html[data-ui2] .verdict:has([data-act="next"]) { position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; margin: 0 auto; max-width: 720px; max-height: 70vh; max-height: 70dvh; overflow: auto; padding: 16px 20px calc(22px + env(safe-area-inset-bottom)); border-radius: 22px 22px 0 0; animation: u2-rise .22s var(--ease, ease-out); }
+html[data-ui2] .verdict:has([data-act="next"]) { position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; margin: 0 auto; max-width: 640px; max-height: 70vh; max-height: 70dvh; overflow: auto; padding: 16px 20px calc(22px + env(safe-area-inset-bottom)); border-radius: 22px 22px 0 0; animation: u2-rise .22s var(--ease, ease-out); }
 html[data-ui2].u2-sheet .player { padding-bottom: calc(var(--u2-sheet-h, 0px) + 16px); }
 html[data-ui2] body:has(.verdict [data-act="next"]) main.page { padding-bottom: 0; }
 html[data-ui2]:has(.verdict [data-act="next"]) { scroll-padding-bottom: calc(var(--u2-sheet-h, 0px) + 16px); }
@@ -250,7 +250,7 @@ html[data-ui2] .verdict .verdict-actions [data-act="report"] .u2-ic { width: 19p
 html[data-ui2] .verdict .verdict-actions:not(:has([data-act="next"])) { grid-template-columns: auto; justify-content: start; }
 /* "Change this" (js/part-change.js), folded to one small link so the sheet stays one idea and one button. */
 html[data-ui2] .verdict [data-part-change] { margin-top: 4px !important; }
-html[data-ui2] .verdict [data-part-change] > .tiny:first-child { display: none; }
+html[data-ui2] .verdict [data-part-change] > .tiny:not([data-note]) { display: none; }
 html[data-ui2] .verdict [data-part-change]:not(.u2-open) .btn { display: none; }
 html[data-ui2] .verdict [data-part-change] .btn { min-height: 36px; height: 36px; padding: 0 10px; border-radius: 12px; font-size: 13.5px; font-weight: 600; background: var(--card); border: 1.5px solid var(--line-strong); box-shadow: none; color: var(--ink); }
 html[data-ui2] .verdict .u2-pc-toggle { font-size: 13.5px; line-height: 18px; }
@@ -281,8 +281,9 @@ html[data-ui2] .session-player .check-bar .btn { min-height: 54px; border-radius
   html[data-ui2] .u2-peek { display: none; }
   html[data-ui2] .u2-side { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 18px 20px 28px; border-top: 1px solid var(--line); margin-top: auto; }
   html[data-ui2] .u2-side ul { list-style: none; margin: 6px 0 0; padding: 0; font-size: 14.5px; line-height: 22px; color: var(--ink-2); }
-  html[data-ui2] .u2-side a { color: inherit; text-decoration: none; }
+  html[data-ui2] .u2-side a { color: inherit; font-weight: 400; text-decoration: none; }
   html[data-ui2] .u2-side a:hover { text-decoration: underline; }
+  html[data-ui2] .u2-side .u2-link-q { padding: 4px 0; margin: 2px 0 0; font-size: 14.5px; }
   html[data-ui2] .u2-dialog { margin: auto; width: 480px; max-width: calc(100vw - 32px); border-radius: 22px; }
   html[data-ui2] #u2-all { padding-top: 20px; }
 }
