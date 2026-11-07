@@ -110,8 +110,8 @@ const mkItem = () => db.insert('items', { user_id: user.id, prompt: 'What is the
   check('off by default', pm.enabled() === false && pm.enabled(user.id) === false);
   db.update('users', user.id, { part_modify: 'on' });
   check('one account can be on', pm.enabled(user.id) === true && pm.enabled(other.id) === false);
-  const shaped = db.insert('items', { user_id: user.id, rationale: 'stored', shaped: { rationale: 'mine', hash: 'x' } });
-  const shapedOther = db.insert('items', { user_id: other.id, rationale: 'stored', shaped: { rationale: 'mine', hash: 'x' } });
+  const shaped = db.insert('items', { user_id: user.id, rationale: 'stored', shaped: { rationale: 'mine', hash: 'x', fact_checked: true } });
+  const shapedOther = db.insert('items', { user_id: other.id, rationale: 'stored', shaped: { rationale: 'mine', hash: 'x', fact_checked: true } });
   check('that account is served its rewrite, another is not', pm.rationaleOf(shaped) === 'mine' && pm.rationaleOf(shapedOther) === 'stored');
   process.env.PART_MODIFY = 'on';
   db.update('users', other.id, { part_modify: 'off' });

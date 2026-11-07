@@ -81,7 +81,7 @@ check('a brief learner is refused a long rewrite', pm.check(BRIEF, 'feedback', S
   check('a learner we know nothing about is never rewritten', r5.source === 'stored');
 
   console.log('serving');
-  const item = { id: 1, rationale: 'stored', hint: 'stored hint', shaped: { rationale: 'for them', hint: 'their hint' } };
+  const item = { id: 1, rationale: 'stored', hint: 'stored hint', shaped: { rationale: 'for them', hint: 'their hint', fact_checked: true } };
   check('the rewrite is served when ready', pm.rationaleOf(item) === 'for them' && pm.hintOf(item) === 'their hint');
   check('the stored text is served when no rewrite is ready', pm.rationaleOf({ rationale: 'stored' }) === 'stored');
   delete process.env.PART_MODIFY_PARTS;
