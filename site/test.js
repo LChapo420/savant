@@ -117,6 +117,31 @@ test('updates: consent and email are required', async () => {
   assert.ok(empty.json.errors.email.startsWith('Enter'));
 });
 
+test('signup count: a number for the token, minus the offset; nothing for anyone else', async () => {
+  const token = 'test-count-token';
+  const saved = { h: process.env.COUNT_TOKEN_SHA256, o: process.env.COUNT_OFFSET };
+  process.env.COUNT_TOKEN_SHA256 = require('crypto').createHash('sha256').update(token).digest('hex');
+  try {
+    const rows = require('./server').readAll('beta').length;
+    const get = (h) => fetch(`${base}/api/signup-count`, { headers: h || {} });
+    for (const h of [undefined, { Authorization: 'Bearer wrong' }, { Authorization: '' }]) {
+      const r = await get(h);
+      assert.strictEqual(r.status, 404, 'no token, no answer');
+      assert.ok(!(await r.text()).includes('"count"'));
+    }
+    process.env.COUNT_OFFSET = '0';
+    assert.deepStrictEqual(await (await get({ Authorization: `Bearer ${token}` })).json(), { count: rows });
+    delete process.env.COUNT_OFFSET;
+    const offset = await (await get({ Authorization: `Bearer ${token}` })).json();
+    assert.deepStrictEqual(offset, { count: Math.max(0, rows - 10) }, 'ten by default, never below zero');
+    process.env.COUNT_OFFSET = '-5';
+    assert.deepStrictEqual(await (await get({ Authorization: `Bearer ${token}` })).json(), { count: rows + 5 });
+  } finally {
+    if (saved.h === undefined) delete process.env.COUNT_TOKEN_SHA256; else process.env.COUNT_TOKEN_SHA256 = saved.h;
+    if (saved.o === undefined) delete process.env.COUNT_OFFSET; else process.env.COUNT_OFFSET = saved.o;
+  }
+});
+
 test('beta: every rule is checked', async () => {
   const r = await post('/api/beta', { email: 'b@example.com', name: '', role: 'admin', ...human });
   assert.strictEqual(r.status, 400);
