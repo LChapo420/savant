@@ -1,0 +1,27 @@
+walks 80, lessons 568, answers 30107, errors 11. Costs ASSUMED: page 200 wpm, item 15 s, miss +12 s, level close screen 6 s.
+stage | minutes per lesson | share | answers per lesson | levels per lesson
+practice_ordinary | 6.0 | 40% | 23.4 | 1.76
+retention_ordinary | 6.0 | 39% | 23.7 | 1.58
+lesson_page | 1.0 | 7% | 0.0 | 0.00
+lesson_checks | 0.9 | 6% | 3.0 | 1.00
+checkpoint | 0.6 | 4% | 2.1 | 0.17
+level_screens | 0.5 | 3% | 0.0 | 0.00
+game | 0.2 | 1% | 0.8 | 0.06
+retention_page | 0.0 | 0% | 0.0 | 0.00
+total minutes per lesson 15.1; lesson page median words per lesson (mean) 210
+near-repeat questions (same stem, numbers aside, earlier in this stretch): 52% of answers; after that stem was answered right: 50%. Stay-on-level sittings: 348.
+by learner: kind | stretches | answers per lesson | right | share of answers in retention levels | proven within first N levels of the stretch: median, p90 | stretches never proven on the walk | stay-on-level
+expert | 115 | 41 | 99% | 58% | 2, 2 | 23 | 61
+mid | 108 | 60 | 97% | 39% | 2, 2 | 31 | 85
+random | 115 | 53 | 97% | 45% | 2, 2 | 33 | 61
+strong | 115 | 41 | 99% | 57% | 2, 2 | 23 | 59
+weak | 115 | 71 | 93% | 34% | 2, 5 | 43 | 82
+server, real routes in process on a stripped database (MEASURED, this PC under other load):
+  open_level: n 2594, p50 27 ms, p95 71 ms, max 353 ms
+  answer: n 29655, p50 1 ms, p95 3 ms, max 375 ms
+  block_finish: n 2464, p50 5 ms, p95 10 ms, max 60 ms
+  finish: n 2553, p50 2 ms, p95 8 ms, max 26 ms
+  game_answer: n 432, p50 2 ms, p95 3 ms, max 21 ms
+  game_finish: n 36, p50 3 ms, p95 5 ms, max 17 ms
+  page: n 5, p50 33 ms, p95 43 ms, max 46 ms
+  check: n 20, p50 4 ms, p95 6 ms, max 10 ms

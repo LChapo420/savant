@@ -266,7 +266,7 @@ function build(trackId, grade) {
     if (r.type === 'Activity') {
       const i = activityLesson(r, byTitle, lastLesson);
       if (i === null || i === undefined) continue;
-      levelMap[L] = { direct: i, kind: 'activity', retention: /\(retention\)/i.test(String(r.title || '')) };
+      levelMap[L] = { direct: i, kind: 'activity', retention: /\(retention\)/i.test(String(r.title || '')), skill: r.skill || null };
       objectives[i].levels.push(L);
       objectives[i].practice.push(L);
       if (levelMap[L].retention) objectives[i].retention.push(L);
@@ -396,7 +396,9 @@ function attribute(model, answer) {
   const together = (list) => list.map((i) => ({ i, w: 1 / list.length, direct: false }));
   if (entry && entry.direct !== undefined) {
     const o = model.objectives[entry.direct];
-    if (['check', 'game'].includes(answer.role) || !answer.skill || onSkill(o, answer.skill)) return [{ i: entry.direct, w: 1, direct: true }];
+    // A level's practice on the skill the sheet names for that very row is this objective's too, when a re-tag gave the row another skill than its lesson (ACT: an "Independent Clauses" lesson tagged verb_tense, its activities sentence_struct: right answers there spoke for no one, docs/speed-real/ROUND4.md). PRACTICE_FOLLOWS_LESSON=off restores the old reading.
+    const ownRow = !!entry.skill && entry.skill === answer.skill && String(process.env.PRACTICE_FOLLOWS_LESSON || 'on').toLowerCase() !== 'off';
+    if (['check', 'game'].includes(answer.role) || !answer.skill || onSkill(o, answer.skill) || ownRow) return [{ i: entry.direct, w: 1, direct: true }];
     const earlier = model.objectives.map((x, i) => i).filter((i) => onSkill(model.objectives[i], answer.skill)
       && model.objectives[i].lesson_level < (answer.level || 0));
     return earlier.length ? together(earlier) : [];

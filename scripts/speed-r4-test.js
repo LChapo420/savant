@@ -69,6 +69,15 @@ const GRADE = ['math', 'algebra_2_part_a'];
     assert.ok(total > 100); assert.ok(moved > 0, 'the fix changes something');
   });
 
+  await check('plain fix: a practice answer on the skill its own row names counts for the objective of that row, even when a re-tag gave the lesson another skill', async () => {
+    const m = coverage.modelFor('act', 'act_grade_2'); const o2 = m.objectives.find((x) => x.lesson_level === 20); const lv = o2.practice[0];
+    assert.notStrictEqual(m.levelMap[lv].skill, o2.skill, 'the mismatch this fixes still exists in the sheet');
+    const a = { level: lv, skill: m.levelMap[lv].skill, role: 'focus', correct: true };
+    assert.deepStrictEqual(coverage.attribute(m, a).map((x) => [x.i, x.direct]), [[m.objectives.indexOf(o2), true]]);
+    const old = await withEnv({ PRACTICE_FOLLOWS_LESSON: 'off' }, () => coverage.attribute(m, a));
+    assert.ok(!old.some((x) => x.i === m.objectives.indexOf(o2) && x.direct));
+  });
+
   await check('plain fix: a skill the learner never met does not hold the level; LEVEL_GATE_MET=off restores the old gate', async () => {
     const g = curriculum.getGrade('act', 'act_grade_1'); const u = user(); const e = enroll(u, 'act', 'act_grade_1', 21);
     const plan = curriculum.levelPlan(g, 21); assert.ok(plan.introduced.length > 3);
