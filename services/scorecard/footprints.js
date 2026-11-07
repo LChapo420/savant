@@ -164,7 +164,7 @@ function onRetentionGoal(userId, goal) {
 function skipRow(userId, sessions) {
   const ids = new Set(sessions.filter((s) => !s.preview && !NOT_PRACTICE.has(s.kind)).map((s) => s.id));
   if (!ids.size) return null;
-  const items = db.find('items', (i) => i.user_id === userId && ids.has(i.session_id) && i.role !== 'retention' && (i.skipped || (i.user_answer !== null && i.user_answer !== undefined)));
+  const items = db.forUser('items', userId).filter((i) => ids.has(i.session_id) && i.role !== 'retention' && (i.skipped || (i.user_answer !== null && i.user_answer !== undefined)));
   if (items.length < 5) return null;
   return { ind: 'fp.skip_rate', x: items.filter((i) => i.skipped).length / items.length, n: Math.min(items.length, 100) };
 }
@@ -173,7 +173,7 @@ const QUESTION_RE = /\?\s*$|^\s*(why|how|what|when|where|which|who|can|could|doe
 
 /** The learner's tutor messages since `since`: share that are questions, leaving out replies to a question the tutor just asked. */
 function askRow(userId, since) {
-  const row = db.findOne('tutor_archive', (r) => r.user_id === userId);
+  const row = (db.forUser('tutor_archive', userId)[0] || null);
   const list = (row && row.entries) || [];
   let n = 0;
   let q = 0;
@@ -263,7 +263,7 @@ function extraPracticeRows(sessions, { goalMinutes, tz }) {
 /** The daily-plan goal kept: study days under a goal the learner chose (PUT /api/plan/minutes), active minutes against 80% of it. */
 function planKeptRow(userId, since, goalMinutes) {
   if (!goalMinutes) return null;
-  const rows = db.find('study_sessions', (s) => s.user_id === userId && Date.parse(s.started_at || 0) >= since);
+  const rows = db.forUser('study_sessions', userId).filter((s) => Date.parse(s.started_at || 0) >= since);
   const byDay = {};
   for (const s of rows) byDay[s.local_day] = (byDay[s.local_day] || 0) + (Number(s.active_ms) || 0) / 60000;
   const days = Object.values(byDay).filter((m) => m > 0);
@@ -279,7 +279,7 @@ function retryRow(userId, sessions, { from, to, now }) {
   const mine = sessions.filter((s) => !s.preview && !NOT_PRACTICE.has(s.kind));
   if (!mine.length) return null;
   const ids = new Set(mine.map((s) => s.id));
-  const items = db.find('items', (i) => i.user_id === userId && ids.has(i.session_id) && i.role !== 'retention');
+  const items = db.forUser('items', userId).filter((i) => ids.has(i.session_id) && i.role !== 'retention');
   const span = new Map();
   for (const i of items) {
     const k = `${i.session_id}:${i.block || 0}`;
@@ -320,7 +320,7 @@ function weeklySweep(userId, { now = Date.now() } = {}) {
     const card = sc.get(userId);
     if (card.fp_at && now - Date.parse(card.fp_at) < 7 * DAY) return null;
     const since = now - 7 * DAY;
-    const all = db.find('sessions', (s) => s.user_id === userId && s.kind !== 'placement' && Date.parse(s.started_at || 0) >= now - 30 * DAY);
+    const all = db.forUser('sessions', userId).filter((s) => s.kind !== 'placement' && Date.parse(s.started_at || 0) >= now - 30 * DAY);
     const recent = all.filter((s) => Date.parse(s.started_at || 0) >= since);
     if (!recent.length) return null;
     const user = db.byId('users', userId);
@@ -333,7 +333,7 @@ function weeklySweep(userId, { now = Date.now() } = {}) {
       planKeptRow(userId, since, goalExplicit),
       skipRow(userId, recent),
       askRow(userId, since),
-      topicPickRow(db.find('enrollments', (e) => e.user_id === userId), statedPhrases(userId), since),
+      topicPickRow(db.forUser('enrollments', userId).slice(), statedPhrases(userId), since),
       rewardsRow(user),
       retryRow(userId, all, { from: Math.max(Date.parse(card.fp_retry_to || 0) || 0, now - 9 * DAY), to: now - 2 * DAY, now }),
     ].filter(Boolean);

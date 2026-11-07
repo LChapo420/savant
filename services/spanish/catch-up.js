@@ -308,7 +308,7 @@ function gradesBelow(recommended) {
 function workedSkills(userId, grades) {
   const out = new Set();
   for (const gradeId of grades) {
-    const passed = new Set(db.find('es_path_runs', (r) => r.user_id === userId && r.grade_id === gradeId && r.outcome && r.outcome.passed).map((r) => r.level));
+    const passed = new Set(db.forUser('es_path_runs', userId).filter((r) => r.grade_id === gradeId && r.outcome && r.outcome.passed).map((r) => r.level));
     if (!passed.size) continue;
     for (const s of skillsOfGrade(gradeId)) {
       if (s.levels.length && s.levels.every((l) => passed.has(l))) out.add(s.key);
@@ -321,7 +321,7 @@ function workedSkills(userId, grades) {
 function oldRoute(userId, row) {
   // eslint-disable-next-line global-require
   const gapScan = require('../gap-scan');
-  const main = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === TRACK && e.grade_id === row.recommended_grade_id);
+  const main = (db.forUser('enrollments', userId).find((e) => e.track_id === TRACK && e.grade_id === row.recommended_grade_id) || null);
   const plan = main ? learnerPath.planFor(main) : null;
   const accepted = plan && Array.isArray(plan.catch_up) ? plan.catch_up.filter((e) => e.status === 'accepted' || e.status === 'done') : [];
   const scan = row.gap_scan && row.gap_scan.kind === 'catch_up' ? row.gap_scan : null;
@@ -333,7 +333,7 @@ function oldRoute(userId, row) {
     questions_asked: scan ? (scan.asked || []).length : 0,
     steps: (route ? route.steps : []).map((s) => ({ grade_id: s.grade_id, unit_count: s.unit_count, minutes: s.minutes, enrollment_id: s.enrollment_id, status: s.status })),
     total_minutes: route ? route.total_minutes : 0,
-    enrollments: db.find('enrollments', (e) => e.user_id === userId && e.track_id === TRACK).map((e) => ({ id: e.id, grade_id: e.grade_id, current_level: e.current_level, status: e.status })),
+    enrollments: db.forUser('enrollments', userId).filter((e) => e.track_id === TRACK).map((e) => ({ id: e.id, grade_id: e.grade_id, current_level: e.current_level, status: e.status })),
   };
 }
 
@@ -381,7 +381,7 @@ function grade(q, given) {
 
 /** The grade's enrollment the block is played on: the learner's own, else a new one. */
 function blockEnrollment(userId, gradeId, now = Date.now()) {
-  const existing = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === TRACK && e.grade_id === gradeId);
+  const existing = (db.forUser('enrollments', userId).find((e) => e.track_id === TRACK && e.grade_id === gradeId) || null);
   if (existing) {
     if (existing.status === 'placement_pending') db.update('enrollments', existing.id, { status: 'active', placed_by: existing.placed_by || 'catch_up' });
     return db.byId('enrollments', existing.id);
@@ -449,7 +449,7 @@ function mixInFor(userId, gradeId, level, now = Date.now()) {
   const done = [...earlier, ...blocks.filter((b, k) => k > i && b.status === 'done')];
   const pids = done.flatMap((b) => { const u = engineUnit(skillByKey(b.key)); return u ? u.phrases.map((p) => p.id) : []; });
   if (!pids.length) return [];
-  const rows = new Map(db.find('es_review', (r) => r.user_id === userId).map((r) => [r.pid, r]));
+  const rows = new Map(db.forUser('es_review', userId).slice().map((r) => [r.pid, r]));
   const rank = (pid) => { const r = rows.get(pid); return r ? Date.parse(r.due_at) : now + 1e12; };
   return pids.sort((a, b) => rank(a) - rank(b) || hashOf(`${level}|${a}`) - hashOf(`${level}|${b}`)).slice(0, MIX_IN);
 }
@@ -461,7 +461,7 @@ function seedReview(userId, skill, now) {
   const { BOX_HOURS } = esPath();
   let n = 0;
   for (const p of unit.phrases) {
-    if (db.findOne('es_review', (r) => r.user_id === userId && r.pid === p.id)) continue;
+    if ((db.forUser('es_review', userId).find((r) => r.pid === p.id) || null)) continue;
     db.insert('es_review', {
       user_id: userId, pid: p.id, unit: unit.unit, grade_id: unit.grade, box: 1, seen: 0, right: 0, wrong: 0,
       first_at: new Date(now).toISOString(), last_at: new Date(now).toISOString(),
@@ -492,7 +492,7 @@ function onRunFinished({ userId, gradeId, level, passed, now = Date.now() }) {
   let next = null;
   if (state.phase === 'route' && pos.block) {
     const nextSkill = skillByKey(pos.block.key);
-    const e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === TRACK && x.grade_id === nextSkill.grade_id);
+    const e = (db.forUser('enrollments', userId).find((x) => x.track_id === TRACK && x.grade_id === nextSkill.grade_id) || null);
     next = e ? { url: levelUrl(e.id, pos.level), label: pos.block.key === b.key ? 'Continue catch-up' : `Next: catch-up ${pos.k} of ${pos.n}` } : { url: '/spanish/catch-up', label: 'Continue catch-up' };
   } else if (state.phase === 'recheck') next = { url: '/spanish/catch-up', label: 'Take the final check' };
   return { k: state.blocks.indexOf(b) + 1, n: state.blocks.length, skill: skill.title, block_done: blockDone, recheck: state.phase === 'recheck', next };
@@ -575,7 +575,7 @@ function reviewOf(userId, skill, now) {
   const unit = engineUnit(skill);
   if (!unit) return null;
   const ids = new Set(unit.phrases.map((p) => p.id));
-  const rows = db.find('es_review', (r) => r.user_id === userId && ids.has(r.pid));
+  const rows = db.forUser('es_review', userId).filter((r) => ids.has(r.pid));
   if (!rows.length) return { phrases: unit.phrases.length, in_review: 0, due_now: 0, next_due_at: null };
   const due = rows.filter((r) => Date.parse(r.due_at) <= now);
   const upcoming = rows.map((r) => r.due_at).filter((d) => Date.parse(d) > now).sort();
@@ -587,7 +587,7 @@ function view(userId, now = Date.now()) {
   const got = ensure(userId, { now });
   if (got.error) return { available: false, error: got.error, none: !!got.none };
   const { state, row } = got;
-  const main = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === TRACK && e.grade_id === row.recommended_grade_id);
+  const main = (db.forUser('enrollments', userId).find((e) => e.track_id === TRACK && e.grade_id === row.recommended_grade_id) || null);
   const base = {
     available: true,
     version: VERSION,
@@ -674,7 +674,7 @@ function routeShape(userId) {
   const state = activeRow(userId);
   if (!state) return null;
   const row = placementRow(userId);
-  const main = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === TRACK && e.grade_id === row.recommended_grade_id);
+  const main = (db.forUser('enrollments', userId).find((e) => e.track_id === TRACK && e.grade_id === row.recommended_grade_id) || null);
   const pos = position(state);
   const mainName = (curriculum.getGrade(TRACK, row.recommended_grade_id) || {}).name || row.recommended_grade_id;
   const steps = (state.blocks || []).map((b) => {

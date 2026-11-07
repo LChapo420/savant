@@ -50,7 +50,7 @@ async function cacheAudio(a) {
       const buf = Buffer.from(await r.arrayBuffer());
       if (buf.length < 500) throw new Error('audio too small');
       fs.writeFileSync(`${file}.part`, buf);
-      fs.renameSync(`${file}.part`, file);
+      require('../services/durable-file').commit(`${file}.part`, file); // eslint-disable-line global-require
       return file;
     } catch (e) { lastErr = e; }
   }

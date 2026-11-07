@@ -213,7 +213,7 @@ function knowledgeFor(userId, subject) {
   // eslint-disable-next-line global-require
   const coverage = require('./coverage');
   return (gradeId) => {
-    const e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === subject && x.grade_id === gradeId);
+    const e = (db.forUser('enrollments', userId).find((x) => x.track_id === subject && x.grade_id === gradeId) || null);
     if (!e) return { complete: false, why: 'not enrolled' };
     if (e.status === 'graduated') return { complete: true, why: 'graduated' };
     try {

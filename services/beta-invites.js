@@ -52,7 +52,7 @@ function save(store) {
   const file = storeFile();
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(`${file}.tmp`, JSON.stringify(store, null, 2), { mode: 0o600 });
-  fs.renameSync(`${file}.tmp`, file);
+  require('./durable-file').commit(`${file}.tmp`, file); // eslint-disable-line global-require
 }
 
 const normEmail = (e) => String(e || '').trim().toLowerCase();

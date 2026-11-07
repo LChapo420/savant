@@ -112,7 +112,7 @@ function planLines(userId) {
   try {
     // eslint-disable-next-line global-require
     const review = require('./review-session');
-    const enrolls = db.find('enrollments', (e) => e.user_id === userId && e.status !== 'placement_pending').slice(0, 3);
+    const enrolls = db.forUser('enrollments', userId).filter((e) => e.status !== 'placement_pending').slice(0, 3);
     for (const e of enrolls) {
       const track = curriculum.getTrack(e.track_id);
       const name = track ? track.name : e.track_id;
@@ -125,7 +125,7 @@ function planLines(userId) {
 }
 
 function masteryLines(userId) {
-  const states = db.find('skill_states', (s) => s.user_id === userId && (s.attempts || 0) >= 2);
+  const states = db.forUser('skill_states', userId).filter((s) => (s.attempts || 0) >= 2);
   const strong = states.filter((s) => s.mastery >= 0.75).length;
   const learning = states.filter((s) => s.mastery < 0.75).length;
   return states.length ? [`${strong} skill${strong === 1 ? '' : 's'} at the 75% mastery mark, ${learning} still in progress`] : [];
@@ -133,7 +133,7 @@ function masteryLines(userId) {
 
 function misconceptionLines(userId) {
   const counts = {};
-  for (const i of db.find('items', (x) => x.user_id === userId && x.correct === false && x.error_tag)) {
+  for (const i of db.forUser('items', userId).filter((x) => x.correct === false && x.error_tag)) {
     counts[i.error_tag] = (counts[i.error_tag] || 0) + 1;
   }
   // A mix-up their answers since show fixed is named as fixed, not as current (tutor-depth: no stale reads).
@@ -151,7 +151,7 @@ function materialLines(userId) {
   try {
     // eslint-disable-next-line global-require
     const study = require('./material-study');
-    return db.find('material_courses', (c) => c.user_id === userId && ['ready', 'partial'].includes(c.status)).slice(0, 3).map((c) => {
+    return db.forUser('material_courses', userId).filter((c) => ['ready', 'partial'].includes(c.status)).slice(0, 3).map((c) => {
       const s = study.state(userId, c.material_id);
       if (s.error) return clip(c.title, 60);
       return `${clip(c.title, 60)}: ${s.mastered} of ${s.total} skills mastered${s.due_count ? `, ${s.due_count} due for review` : ''}`;

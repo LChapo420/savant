@@ -47,7 +47,7 @@ function nextGrade(userId, enrollment) {
   const at = track.grades.findIndex((g) => g.id === enrollment.grade_id);
   const next = at >= 0 ? track.grades[at + 1] : null;
   if (!next) return null;
-  const mine = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === enrollment.track_id && e.grade_id === next.id);
+  const mine = (db.forUser('enrollments', userId).find((e) => e.track_id === enrollment.track_id && e.grade_id === next.id) || null);
   return { id: next.id, name: next.name, enrollment_id: mine ? mine.id : null, status: mine ? mine.status : null };
 }
 

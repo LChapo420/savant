@@ -1,0 +1,255 @@
+SIMULATED. Held-out seeds 20261108, 20261109, 20261110. Hours are means per learner. Retention and knowledge in points, lever minus off, per learner.
+
+========== frame: real ==========
+noise control (off against off, another random stream): retention worst 1 / 5 / 10% / single worst, knowledge worst 1%, hours
+  horizon 1 week       -2.4 / -1.2 / -0.9 / -4.1   +0.0   -0.05 h
+  horizon 1 month      -1.0 / -0.7 / -0.6 / -1.5   +0.0   0.02 h
+  horizon 6 months     -2.2 / -1.6 / -1.3 / -2.8   +0.0   -0.02 h
+  horizon 1 year       -2.1 / -1.5 / -1.1 / -2.7   +0.0   -0.02 h
+  no test day (3 y)    -2.1 / -1.5 / -1.1 / -2.6   +0.0   0.00 h
+  date 1 week          -7.2 / -4.3 / -2.8 / -8.4   -10.0   0.03 h
+  date 1 month         -0.6 / -0.4 / -0.3 / -0.8   +0.0   0.01 h
+  date 6 months        -0.2 / -0.2 / -0.1 / -0.4   +0.0   -0.04 h
+  date 1 year          -0.2 / -0.1 / -0.1 / -0.3   +0.0   -0.03 h
+
+--- T: FAILS main (5)
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         32.5   33.4  -0.87 (-0.96, -0.78)-2.2/-1.2/-0.9/-3.3         +0.0     100/100%
+  horizon 1 month        34.0   34.9  -0.86 (-0.95, -0.77)-1.0/-0.7/-0.6/-1.4         +0.0     100/100%
+  horizon 6 months       36.5   37.3  -0.88 (-0.98, -0.79)-2.2/-1.4/-1.2/-3.1         +0.0     100/100%
+  horizon 1 year         37.9   38.8  -0.90 (-1.00, -0.80)-2.2/-1.5/-1.2/-2.4         +0.0     100/100%
+  no test day (3 y)      40.5   41.4  -0.90 (-1.00, -0.80)-2.3/-1.5/-1.2/-3.2         +0.0     100/100%
+  date 1 week            28.3   28.5  -0.13 (-0.25, -0.01)-11.1/-7.2/-4.3/-15.0       -16.0    19/26%
+  date 1 month           33.7   34.5  -0.84 (-0.93, -0.75)-0.6/-0.4/-0.3/-1.6         +0.0     100/100%
+  date 6 months          37.2   38.0  -0.84 (-0.94, -0.75)-0.2/-0.1/-0.1/-0.4         +0.0     100/100%
+  date 1 year            38.7   39.6  -0.89 (-0.99, -0.80)-0.2/-0.1/-0.1/-0.3         +0.0     100/100%
+  why: time: saved beyond noise on only 0 of 9 goals; time: slower at horizon 1 week, horizon 1 month, horizon 6 months, horizon 1 year, no test day (3 y), date 1 week, date 1 month, date 6 months, date 1 year; retention at date 1 week: w1 -11.1, w5 -7.2 pts; knowledge at date 1 week: worst 1% -16.0 pts; reach with all understood at date 1 week: +19.0 against +26.0
+
+--- TS against T: FAILS main (5)
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         33.4   33.7  -0.36 (-0.48, -0.24)-2.1/-1.0/-0.6/-4.8         +0.0     100/100%
+  horizon 1 month        34.9   35.2  -0.34 (-0.45, -0.22)-1.3/-0.7/-0.5/-1.6         +0.0     100/100%
+  horizon 6 months       37.3   37.7  -0.34 (-0.46, -0.23)-2.3/-1.7/-1.3/-4.0         +0.0     100/100%
+  horizon 1 year         38.8   39.1  -0.34 (-0.46, -0.23)-2.9/-1.6/-1.3/-3.2         +0.0     100/100%
+  no test day (3 y)      41.4   41.7  -0.31 (-0.43, -0.20)-2.0/-1.4/-1.1/-2.5         +0.0     100/100%
+  date 1 week            28.5   28.6  -0.16 (-0.27, -0.04)-9.9/-5.2/-3.3/-16.0        -14.0    17/19%
+  date 1 month           34.5   34.8  -0.32 (-0.43, -0.20)-0.7/-0.4/-0.3/-0.9         +0.0     100/100%
+  date 6 months          38.0   38.3  -0.34 (-0.46, -0.22)-0.2/-0.2/-0.1/-0.3         +0.0     100/100%
+  date 1 year            39.6   39.9  -0.32 (-0.43, -0.20)-0.2/-0.1/-0.1/-0.2         +0.0     100/100%
+  why: time: saved beyond noise on only 0 of 9 goals; time: slower at horizon 1 week, horizon 1 month, horizon 6 months, horizon 1 year, no test day (3 y), date 1 week, date 1 month, date 6 months, date 1 year; retention at date 1 week: w1 -9.9, w5 -5.2 pts; knowledge at date 1 week: worst 1% -14.0 pts; reach with all understood at date 1 week: +17.3 against +19.0
+
+--- M: FAILS main (6)
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         32.5   14.8  17.67 (17.20, 18.15)-19.5/-15.5/-13.8/-25.2     -22.0    82/100%
+  horizon 1 month        34.0   17.7  16.27 (15.82, 16.71)-8.4/-6.0/-5.1/-8.6         +0.0     99/100%
+  horizon 6 months       36.5   21.1  15.35 (14.92, 15.78)-4.0/-3.0/-2.6/-4.8         +0.0     100/100%
+  horizon 1 year         37.9   22.7  15.16 (14.73, 15.58)-3.0/-2.2/-1.7/-3.4         +0.0     100/100%
+  no test day (3 y)      40.5   25.4  15.08 (14.66, 15.50)-2.6/-2.0/-1.6/-3.5         +0.0     100/100%
+  date 1 week            28.3   15.9  12.44 (12.15, 12.73)-8.3/-5.4/-3.9/-9.9         -4.0     95/26%
+  date 1 month           33.7   18.2  15.50 (15.08, 15.92)-5.8/-4.3/-3.6/-7.4         +0.0     100/100%
+  date 6 months          37.2   22.0  15.17 (14.75, 15.58)-2.6/-1.9/-1.5/-3.6         +0.0     100/100%
+  date 1 year            38.7   23.6  15.07 (14.65, 15.48)-1.8/-1.3/-1.0/-2.6         +0.0     100/100%
+  why: retention at horizon 1 week: w1 -19.5, w5 -15.5, w10 -13.8 pts; knowledge at horizon 1 week: worst 1% -22.0 pts; reach with all understood at horizon 1 week: +81.9 against +100.0; retention at horizon 1 month: w1 -8.4, w5 -6.0, w10 -5.1 pts; retention at date 1 week: w1 -8.3, w5 -5.4 pts; retention at date 1 month: w1 -5.8 pts
+
+--- R: FAILS main (10)
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         32.5   31.9  0.63 (0.60, 0.66)   -21.6/-17.0/-15.4/-25.6     +0.0     99/100%
+  horizon 1 month        34.0   33.2  0.76 (0.71, 0.80)   -21.9/-18.9/-17.0/-23.9     +0.0     100/100%
+  horizon 6 months       36.5   36.4  0.11 (0.05, 0.16)   -7.7/-6.2/-5.8/-9.1         +0.0     100/100%
+  horizon 1 year         37.9   37.8  0.09 (0.04, 0.15)   -7.4/-6.5/-6.0/-8.5         +0.0     100/100%
+  no test day (3 y)      40.5   40.6  -0.13 (-0.19, -0.08)-2.5/-1.7/-1.2/-3.9         +0.0     100/100%
+  date 1 week            28.3   28.1  0.18 (0.08, 0.28)   -19.7/-15.6/-14.4/-21.9     -8.0     35/26%
+  date 1 month           33.7   32.7  0.95 (0.90, 0.99)   -23.4/-19.4/-18.2/-27.7     +0.0     100/100%
+  date 6 months          37.2   36.2  0.93 (0.89, 0.97)   -20.0/-18.8/-18.0/-20.6     +0.0     100/100%
+  date 1 year            38.7   37.7  0.97 (0.93, 1.01)   -19.6/-18.4/-17.7/-21.1     +0.0     100/100%
+  why: time: slower at no test day (3 y); retention at horizon 1 week: w1 -21.6, w5 -17.0, w10 -15.4 pts; retention at horizon 1 month: w1 -21.9, w5 -18.9, w10 -17.0 pts; retention at horizon 6 months: w1 -7.7, w5 -6.2, w10 -5.8 pts; retention at horizon 1 year: w1 -7.4, w5 -6.5, w10 -6.0 pts; retention at date 1 week: w1 -19.7, w5 -15.6, w10 -14.4 pts; knowledge at date 1 week: worst 1% -8.0 pts; retention at date 1 month: w1 -23.4, w5 -19.4, w10 -18.2 pts ...
+
+--- F: passes main
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         32.5   29.9  2.59 (2.51, 2.67)   -1.8/-1.0/-0.7/-2.3         +0.0     100/100%
+  horizon 1 month        34.0   31.3  2.70 (2.62, 2.79)   -1.2/-0.7/-0.5/-2.6         +0.0     100/100%
+  horizon 6 months       36.5   33.6  2.90 (2.80, 2.99)   -1.9/-1.4/-1.1/-3.5         +0.0     100/100%
+  horizon 1 year         37.9   34.9  3.01 (2.92, 3.11)   -2.1/-1.4/-1.2/-2.8         +0.0     100/100%
+  no test day (3 y)      40.5   37.2  3.23 (3.13, 3.32)   -2.1/-1.3/-1.0/-2.7         +0.0     100/100%
+  date 1 week            28.3   27.7  0.68 (0.49, 0.86)   -0.6/-0.3/-0.1/-0.8         +0.0     46/26%
+  date 1 month           33.7   31.1  2.62 (2.54, 2.70)   -0.4/-0.2/-0.1/-0.5         +0.0     100/100%
+  date 6 months          37.2   34.3  2.92 (2.83, 3.00)   -0.2/-0.1/-0.1/-0.2         +0.0     100/100%
+  date 1 year            38.7   35.7  3.05 (2.96, 3.14)   -0.2/-0.1/-0.1/-0.4         +0.0     100/100%
+
+--- P: FAILS main (3)
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         32.5   31.8  0.72 (0.47, 0.98)   -4.7/-2.7/-1.9/-7.1         -2.0     98/100%
+  horizon 1 month        34.0   33.3  0.70 (0.46, 0.94)   -1.5/-1.0/-0.8/-1.7         +0.0     99/100%
+  horizon 6 months       36.5   35.8  0.71 (0.48, 0.93)   -2.4/-1.7/-1.3/-3.9         +0.0     100/100%
+  horizon 1 year         37.9   37.2  0.71 (0.48, 0.93)   -2.1/-1.7/-1.3/-3.3         +0.0     100/100%
+  no test day (3 y)      40.5   39.8  0.70 (0.48, 0.92)   -2.4/-1.6/-1.2/-2.6         +0.0     100/100%
+  date 1 week            28.3   28.0  0.34 (0.17, 0.51)   -16.9/-12.6/-10.1/-20.2     -10.0    32/26%
+  date 1 month           33.7   33.0  0.70 (0.47, 0.93)   -1.1/-0.6/-0.4/-1.3         +0.0     100/100%
+  date 6 months          37.2   36.5  0.70 (0.47, 0.92)   -0.4/-0.2/-0.2/-0.6         +0.0     100/100%
+  date 1 year            38.7   38.0  0.70 (0.47, 0.92)   -0.3/-0.2/-0.1/-0.4         +0.0     100/100%
+  why: reach with all understood at horizon 1 week: +97.9 against +100.0; retention at date 1 week: w1 -16.9, w5 -12.6, w10 -10.1 pts; knowledge at date 1 week: worst 1% -10.0 pts
+
+--- every combination against none (hours at 1 week / 1 month / 1 year / no test day; passes or not)
+  F      29.9 / 31.3 / 34.9 / 37.2  passes
+  R      31.9 / 33.2 / 37.8 / 40.6  fails (10): time: slower at no test day (3 y)
+  RF     29.4 / 30.6 / 34.8 / 37.4  fails (8): retention at horizon 1 week: w1 -21.1, w5 -17.1, w10 -15.6 pts
+  M      14.8 / 17.7 / 22.7 / 25.4  fails (6): retention at horizon 1 week: w1 -19.5, w5 -15.5, w10 -13.8 pts
+  MF     14.1 / 16.8 / 21.4 / 23.9  fails (6): retention at horizon 1 week: w1 -19.9, w5 -16.4, w10 -14.2 pts
+  MR     14.7 / 17.1 / 22.4 / 25.3  fails (13): retention at horizon 1 week: w1 -22.4, w5 -19.7, w10 -18.2 pts
+  MRF    14.0 / 16.3 / 21.2 / 23.8  fails (13): retention at horizon 1 week: w1 -22.9, w5 -20.0, w10 -18.0 pts
+  T      33.4 / 34.9 / 38.8 / 41.4  fails (5): time: saved beyond noise on only 0 of 9 goals
+  TF     30.7 / 32.0 / 35.7 / 38.0  fails (1): knowledge at date 1 week: worst 1% -6.0 pts
+  TR     32.8 / 34.1 / 38.7 / 41.5  fails (11): time: saved beyond noise on only 1 of 9 goals
+  TRF    30.1 / 31.4 / 35.6 / 38.2  fails (8): retention at horizon 1 week: w1 -20.2, w5 -17.2, w10 -15.6 pts
+  TM     15.0 / 17.8 / 22.8 / 25.5  fails (6): retention at horizon 1 week: w1 -19.1, w5 -14.3, w10 -13.1 pts
+  TMF    14.2 / 16.9 / 21.4 / 23.9  fails (6): retention at horizon 1 week: w1 -19.1, w5 -14.8, w10 -13.4 pts
+  TMR    14.9 / 17.3 / 22.5 / 25.3  fails (11): retention at horizon 1 week: w1 -20.9, w5 -18.2, w10 -17.0 pts
+  TMRF   14.2 / 16.3 / 21.1 / 23.7  fails (12): retention at horizon 1 week: w1 -21.6, w5 -18.4, w10 -17.0 pts
+  TS     33.7 / 35.2 / 39.1 / 41.7  fails (5): time: saved beyond noise on only 0 of 9 goals
+  TSF    30.9 / 32.3 / 35.9 / 38.2  fails (2): retention at date 1 week: w1 -7.3 pts
+  TSR    33.1 / 34.4 / 39.1 / 41.8  fails (11): time: saved beyond noise on only 0 of 9 goals
+  TSRF   30.3 / 31.6 / 35.8 / 38.4  fails (9): retention at horizon 1 week: w1 -21.3, w5 -17.1, w10 -15.9 pts
+  TSM    14.5 / 17.3 / 22.3 / 24.9  fails (6): retention at horizon 1 week: w1 -18.1, w5 -14.1, w10 -12.6 pts
+  TSMF   13.7 / 16.3 / 20.9 / 23.3  fails (6): retention at horizon 1 week: w1 -18.6, w5 -14.6, w10 -12.5 pts
+  TSMR   14.5 / 16.8 / 22.0 / 24.8  fails (10): retention at horizon 1 week: w1 -20.1, w5 -18.1, w10 -16.8 pts
+  TSMRF  13.6 / 15.7 / 20.5 / 23.1  fails (12): retention at horizon 1 week: w1 -21.0, w5 -18.0, w10 -16.8 pts
+  (none: 32.5 / 34.0 / 37.9 / 40.5)
+
+========== frame: oracle ==========
+noise control (off against off, another random stream): retention worst 1 / 5 / 10% / single worst, knowledge worst 1%, hours
+  horizon 1 week       -4.3 / -2.9 / -2.1 / -6.3   +0.0   0.00 h
+  horizon 1 month      -2.0 / -1.0 / -0.8 / -2.4   +0.0   0.01 h
+  horizon 6 months     -2.3 / -1.6 / -1.3 / -2.7   +0.0   -0.04 h
+  horizon 1 year       -2.2 / -1.6 / -1.2 / -3.3   +0.0   -0.04 h
+  no test day (3 y)    -2.0 / -1.5 / -1.1 / -2.3   +0.0   -0.04 h
+  date 1 week          -1.9 / -1.0 / -0.7 / -3.2   +0.0   -0.00 h
+  date 1 month         -0.7 / -0.5 / -0.4 / -1.1   +0.0   -0.01 h
+  date 6 months        -0.3 / -0.2 / -0.1 / -0.5   +0.0   -0.04 h
+  date 1 year          -0.3 / -0.2 / -0.1 / -0.4   +0.0   -0.05 h
+
+--- T: FAILS main (1)
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         14.6   14.1  0.53 (0.43, 0.62)   -5.2/-3.5/-2.6/-9.9         +0.0     100/100%
+  horizon 1 month        17.5   17.0  0.45 (0.36, 0.54)   -1.5/-1.0/-0.7/-2.1         +0.0     100/100%
+  horizon 6 months       20.9   20.5  0.36 (0.28, 0.45)   -2.1/-1.6/-1.2/-2.8         +0.0     100/100%
+  horizon 1 year         22.5   22.1  0.37 (0.28, 0.45)   -2.5/-1.6/-1.3/-3.5         +0.0     100/100%
+  no test day (3 y)      25.2   24.8  0.38 (0.29, 0.46)   -2.0/-1.6/-1.2/-2.2         +0.0     100/100%
+  date 1 week            15.6   15.3  0.36 (0.28, 0.43)   -1.4/-0.9/-0.6/-2.0         +0.0     100/100%
+  date 1 month           18.0   17.6  0.37 (0.29, 0.45)   -0.5/-0.4/-0.3/-0.7         +0.0     100/100%
+  date 6 months          21.8   21.4  0.37 (0.28, 0.46)   -0.3/-0.2/-0.1/-0.5         +0.0     100/100%
+  date 1 year            23.4   23.1  0.35 (0.26, 0.44)   -0.2/-0.2/-0.1/-0.4         +0.0     100/100%
+  why: retention at horizon 1 week: w1 -5.2 pts
+
+--- TS against T: FAILS main (1)
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         14.1   13.4  0.69 (0.62, 0.75)   -5.1/-3.0/-2.4/-14.5        +0.0     100/100%
+  horizon 1 month        17.0   16.4  0.60 (0.53, 0.67)   -1.6/-1.1/-0.8/-2.8         +0.0     100/100%
+  horizon 6 months       20.5   20.0  0.54 (0.47, 0.61)   -2.1/-1.7/-1.3/-3.1         +0.0     100/100%
+  horizon 1 year         22.1   21.6  0.53 (0.46, 0.60)   -2.2/-1.7/-1.3/-2.8         +0.0     100/100%
+  no test day (3 y)      24.8   24.3  0.54 (0.47, 0.61)   -2.1/-1.5/-1.1/-2.6         +0.0     100/100%
+  date 1 week            15.3   14.8  0.53 (0.48, 0.59)   -1.5/-0.9/-0.7/-1.9         +0.0     100/100%
+  date 1 month           17.6   17.0  0.56 (0.50, 0.63)   -0.7/-0.5/-0.4/-1.2         +0.0     100/100%
+  date 6 months          21.4   20.8  0.56 (0.49, 0.63)   -0.3/-0.2/-0.1/-0.5         +0.0     100/100%
+  date 1 year            23.1   22.5  0.57 (0.49, 0.64)   -0.3/-0.2/-0.1/-0.3         +0.0     100/100%
+  why: retention at horizon 1 week: w1 -5.1 pts
+
+--- M: FAILS main (7)
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         14.6   14.8  -0.22 (-0.33, -0.10)-8.7/-5.3/-4.0/-14.4        -22.0    82/100%
+  horizon 1 month        17.5   17.7  -0.25 (-0.34, -0.15)-3.1/-1.6/-1.2/-4.0         +0.0     99/100%
+  horizon 6 months       20.9   21.1  -0.23 (-0.31, -0.15)-2.4/-1.7/-1.3/-3.2         +0.0     100/100%
+  horizon 1 year         22.5   22.7  -0.23 (-0.31, -0.14)-2.1/-1.5/-1.2/-2.2         +0.0     100/100%
+  no test day (3 y)      25.2   25.4  -0.20 (-0.28, -0.12)-2.1/-1.5/-1.2/-2.7         +0.0     100/100%
+  date 1 week            15.6   15.9  -0.25 (-0.33, -0.16)-3.1/-2.0/-1.3/-5.0         -6.0     95/100%
+  date 1 month           18.0   18.2  -0.23 (-0.31, -0.14)-1.8/-1.1/-0.6/-2.3         +0.0     100/100%
+  date 6 months          21.8   22.0  -0.23 (-0.31, -0.15)-0.9/-0.4/-0.3/-1.3         +0.0     100/100%
+  date 1 year            23.4   23.6  -0.23 (-0.31, -0.15)-0.6/-0.2/-0.2/-1.1         +0.0     100/100%
+  why: time: saved beyond noise on only 0 of 9 goals; time: slower at horizon 1 week, horizon 1 month, horizon 6 months, horizon 1 year, no test day (3 y), date 1 week, date 1 month, date 6 months, date 1 year; retention at horizon 1 week: w1 -8.7, w5 -5.3 pts; knowledge at horizon 1 week: worst 1% -22.0 pts; reach with all understood at horizon 1 week: +81.9 against +100.0; knowledge at date 1 week: worst 1% -6.0 pts; reach with all understood at date 1 week: +94.8 against +100.0
+
+--- R: FAILS main (8)
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         14.6   14.6  0.04 (-0.01, 0.09)  -11.1/-9.3/-8.0/-15.0       +0.0     100/100%
+  horizon 1 month        17.5   16.9  0.54 (0.49, 0.59)   -16.0/-14.6/-14.0/-18.7     +0.0     100/100%
+  horizon 6 months       20.9   20.7  0.20 (0.15, 0.25)   -6.4/-5.2/-4.7/-7.6         +0.0     100/100%
+  horizon 1 year         22.5   22.2  0.32 (0.26, 0.37)   -7.1/-6.4/-5.9/-7.5         +0.0     100/100%
+  no test day (3 y)      25.2   25.0  0.15 (0.10, 0.21)   -2.1/-1.4/-0.8/-2.7         +0.0     100/100%
+  date 1 week            15.6   15.0  0.63 (0.58, 0.67)   -16.4/-14.4/-13.6/-17.6     +0.0     100/100%
+  date 1 month           18.0   17.1  0.84 (0.79, 0.89)   -18.2/-16.3/-15.6/-21.5     +0.0     100/100%
+  date 6 months          21.8   20.7  1.07 (1.01, 1.12)   -17.8/-16.8/-16.5/-18.4     +0.0     100/100%
+  date 1 year            23.4   22.2  1.21 (1.15, 1.27)   -18.3/-17.5/-17.1/-19.2     +0.0     100/100%
+  why: retention at horizon 1 week: w1 -11.1, w5 -9.3, w10 -8.0 pts; retention at horizon 1 month: w1 -16.0, w5 -14.6, w10 -14.0 pts; retention at horizon 6 months: w1 -6.4, w5 -5.2 pts; retention at horizon 1 year: w1 -7.1, w5 -6.4, w10 -5.9 pts; retention at date 1 week: w1 -16.4, w5 -14.4, w10 -13.6 pts; retention at date 1 month: w1 -18.2, w5 -16.3, w10 -15.6 pts; retention at date 6 months: w1 -17.8, w5 -16.8, w10 -16.5 pts; retention at date 1 year: w1 -18.3, w5 -17.5, w10 -17.1 pts
+
+--- F: passes main
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         14.6   13.9  0.68 (0.64, 0.71)   -3.4/-1.9/-1.4/-5.4         +0.0     100/100%
+  horizon 1 month        17.5   16.6  0.89 (0.84, 0.93)   -1.4/-0.9/-0.6/-1.6         +0.0     100/100%
+  horizon 6 months       20.9   19.8  1.12 (1.07, 1.18)   -2.1/-1.6/-1.3/-3.1         +0.0     100/100%
+  horizon 1 year         22.5   21.3  1.26 (1.20, 1.31)   -2.1/-1.3/-1.1/-2.6         +0.0     100/100%
+  no test day (3 y)      25.2   23.7  1.48 (1.42, 1.54)   -1.9/-1.3/-1.0/-2.4         +0.0     100/100%
+  date 1 week            15.6   15.0  0.67 (0.64, 0.70)   -1.1/-0.5/-0.4/-1.9         +0.0     100/100%
+  date 1 month           18.0   17.1  0.89 (0.85, 0.94)   -0.5/-0.3/-0.2/-0.6         +0.0     100/100%
+  date 6 months          21.8   20.6  1.22 (1.16, 1.27)   -0.3/-0.2/-0.1/-0.3         +0.0     100/100%
+  date 1 year            23.4   22.0  1.37 (1.32, 1.42)   -0.2/-0.1/-0.1/-0.4         +0.0     100/100%
+
+--- P: FAILS main (3)
+  goal                  off h   on h    saved (95%)         ret w1/w5/w10/worst        know w1   reach all understood on/off
+  horizon 1 week         14.6   14.9  -0.28 (-0.36, -0.20)-5.0/-3.1/-2.2/-13.7        -2.0     97/100%
+  horizon 1 month        17.5   17.8  -0.34 (-0.42, -0.27)-2.0/-1.3/-0.8/-2.7         +0.0     100/100%
+  horizon 6 months       20.9   21.3  -0.38 (-0.46, -0.30)-2.4/-1.7/-1.3/-2.8         +0.0     100/100%
+  horizon 1 year         22.5   22.9  -0.38 (-0.46, -0.30)-2.2/-1.7/-1.3/-2.5         +0.0     100/100%
+  no test day (3 y)      25.2   25.6  -0.38 (-0.45, -0.30)-2.1/-1.5/-1.1/-2.6         +0.0     100/100%
+  date 1 week            15.6   16.0  -0.35 (-0.42, -0.29)-1.6/-0.9/-0.7/-2.2         +0.0     99/100%
+  date 1 month           18.0   18.3  -0.35 (-0.42, -0.28)-0.8/-0.5/-0.4/-0.9         +0.0     100/100%
+  date 6 months          21.8   22.1  -0.36 (-0.44, -0.28)-0.4/-0.2/-0.2/-0.6         +0.0     100/100%
+  date 1 year            23.4   23.8  -0.35 (-0.43, -0.27)-0.3/-0.2/-0.1/-0.5         +0.0     100/100%
+  why: time: saved beyond noise on only 0 of 9 goals; time: slower at horizon 1 week, horizon 1 month, horizon 6 months, horizon 1 year, no test day (3 y), date 1 week, date 1 month, date 6 months, date 1 year; reach with all understood at horizon 1 week: +97.3 against +100.0
+
+--- every combination against none (hours at 1 week / 1 month / 1 year / no test day; passes or not)
+  F      13.9 / 16.6 / 21.3 / 23.7  passes
+  R      14.6 / 16.9 / 22.2 / 25.0  fails (8): retention at horizon 1 week: w1 -11.1, w5 -9.3, w10 -8.0 pts
+  RF     13.9 / 16.1 / 20.9 / 23.6  fails (8): retention at horizon 1 week: w1 -10.4, w5 -9.1, w10 -8.0 pts
+  M      14.8 / 17.7 / 22.7 / 25.4  fails (7): time: saved beyond noise on only 0 of 9 goals
+  MF     14.1 / 16.8 / 21.4 / 23.9  fails (4): retention at horizon 1 week: w1 -8.8, w5 -5.7 pts
+  MR     14.7 / 17.1 / 22.4 / 25.3  fails (15): time: slower at no test day (3 y)
+  MRF    14.0 / 16.3 / 21.2 / 23.8  fails (14): retention at horizon 1 week: w1 -12.6, w5 -10.4, w10 -9.2 pts
+  T      14.1 / 17.0 / 22.1 / 24.8  fails (1): retention at horizon 1 week: w1 -5.2 pts
+  TF     13.4 / 16.2 / 20.9 / 23.3  fails (1): retention at horizon 1 week: w1 -5.5 pts
+  TR     14.3 / 16.6 / 21.8 / 24.6  fails (8): retention at horizon 1 week: w1 -10.2, w5 -8.6, w10 -7.6 pts
+  TRF    13.5 / 15.8 / 20.5 / 23.1  fails (8): retention at horizon 1 week: w1 -10.7, w5 -8.5, w10 -7.6 pts
+  TM     15.0 / 17.8 / 22.8 / 25.5  fails (6): time: saved beyond noise on only 0 of 9 goals
+  TMF    14.2 / 16.9 / 21.4 / 23.9  fails (4): retention at horizon 1 week: w1 -9.3, w5 -5.3 pts
+  TMR    14.9 / 17.3 / 22.5 / 25.3  fails (13): time: slower at horizon 1 week, horizon 6 months, no test day (3 y)
+  TMRF   14.2 / 16.3 / 21.1 / 23.7  fails (14): retention at horizon 1 week: w1 -11.8, w5 -9.6, w10 -8.2 pts
+  TS     13.4 / 16.4 / 21.6 / 24.3  fails (1): retention at horizon 1 week: w1 -6.0 pts
+  TSF    12.7 / 15.5 / 20.3 / 22.7  fails (1): retention at horizon 1 week: w1 -6.0 pts
+  TSR    13.6 / 16.0 / 21.2 / 24.0  fails (8): retention at horizon 1 week: w1 -11.8, w5 -8.9, w10 -7.7 pts
+  TSRF   12.9 / 15.1 / 19.9 / 22.4  fails (8): retention at horizon 1 week: w1 -10.9, w5 -8.7, w10 -8.0 pts
+  TSM    14.5 / 17.3 / 22.3 / 24.9  fails (4): retention at horizon 1 week: w1 -8.0, w5 -5.3 pts
+  TSMF   13.7 / 16.3 / 20.9 / 23.3  fails (4): retention at horizon 1 week: w1 -8.3, w5 -5.1 pts
+  TSMR   14.5 / 16.8 / 22.0 / 24.8  fails (12): retention at horizon 1 week: w1 -11.5, w5 -9.4, w10 -8.1 pts
+  TSMRF  13.6 / 15.7 / 20.5 / 23.1  fails (13): retention at horizon 1 week: w1 -11.1, w5 -9.4, w10 -8.2 pts
+  (none: 14.6 / 17.5 / 22.5 / 25.2)
+
+========== adverse variants (frame real, seed 20261108, lever against off inside the variant) ==========
+  T   skip20    FAILS (19): knowledge at horizon 1 week: worst 1% -10.0; reach all understood at horizon 1 week: +70.6 vs +100.0; knowledge at horizon 1 month: worst 1% -6.0  (1 yr: saved -0.87 h, ret worst 1% -3.4, reach 69/100%)
+  T   cold50    FAILS (3): retention at date 1 week: w1 -14.2, w5 -9.6, w10 -6.9; knowledge at date 1 week: worst 1% -18.0; reach all understood at date 1 week: +15.0 vs +25.0  (1 yr: saved -2.17 h, ret worst 1% -2.3, reach 100/100%)
+  T   guess50   FAILS (3): retention at date 1 week: w1 -10.8, w5 -5.6; knowledge at date 1 week: worst 1% -16.0; reach all understood at date 1 week: +21.9 vs +25.0  (1 yr: saved -0.61 h, ret worst 1% -2.1, reach 100/100%)
+  TS  skip20    FAILS (12): reach all understood at horizon 1 week: +67.5 vs +70.6; knowledge at horizon 1 month: worst 1% -6.0; reach all understood at horizon 1 month: +63.7 vs +72.5  (1 yr: saved -0.36 h, ret worst 1% -5.0, reach 68/69%)
+  TS  cold50    FAILS (3): retention at date 1 week: w1 -18.1, w5 -7.8; knowledge at date 1 week: worst 1% -24.0; reach all understood at date 1 week: +11.3 vs +15.0  (1 yr: saved -0.99 h, ret worst 1% -1.8, reach 100/100%)
+  TS  guess50   FAILS (2): retention at date 1 week: w1 -11.8; knowledge at date 1 week: worst 1% -16.0  (1 yr: saved 0.26 h, ret worst 1% -2.4, reach 100/100%)
+  P   skip20    FAILS (3): reach all understood at horizon 1 month: +98.8 vs +100.0; retention at date 1 week: w1 -15.4, w5 -11.9, w10 -9.3; knowledge at date 1 week: worst 1% -8.0  (1 yr: saved 0.75 h, ret worst 1% -2.1, reach 100/100%)
+  P   cold50    FAILS (12): retention at horizon 1 week: w1 -5.8; knowledge at horizon 1 week: worst 1% -10.0; reach all understood at horizon 1 week: +73.8 vs +100.0  (1 yr: saved -0.26 h, ret worst 1% -2.7, reach 99/100%)
+  P   guess50   FAILS (7): retention at horizon 1 week: w1 -5.7; knowledge at horizon 1 week: worst 1% -8.0; reach all understood at horizon 1 week: +86.3 vs +100.0  (1 yr: saved 4.82 h, ret worst 1% -3.0, reach 100/100%)
+  M   est15     FAILS (10): retention at horizon 1 week: w1 -29.9, w5 -19.9, w10 -18.6; knowledge at horizon 1 week: worst 1% -82.0; reach all understood at horizon 1 week: +57.5 vs +100.0  (1 yr: saved 15.34 h, ret worst 1% -3.4, reach 99/100%)
+  M   guess50   FAILS (9): retention at horizon 1 week: w1 -17.6, w5 -14.5, w10 -13.7; knowledge at horizon 1 week: worst 1% -50.0; reach all understood at horizon 1 week: +62.5 vs +100.0  (1 yr: saved 16.50 h, ret worst 1% -4.2, reach 99/100%)
+  R   kloss50   FAILS (8): retention at horizon 1 week: w1 -19.4, w5 -17.0, w10 -16.3; retention at horizon 1 month: w1 -21.6, w5 -18.3, w10 -17.3; retention at horizon 6 months: w1 -6.9, w5 -6.1, w10 -5.9  (1 yr: saved 0.06 h, ret worst 1% -7.4, reach 100/100%)
+  R   forget05  FAILS (9): retention at horizon 1 week: w1 -20.4, w5 -15.3, w10 -13.7; retention at horizon 1 month: w1 -19.1, w5 -17.3, w10 -16.0; retention at horizon 6 months: w1 -7.5, w5 -6.0, w10 -5.7  (1 yr: saved 0.01 h, ret worst 1% -7.2, reach 100/100%)
+  R   estsd06   FAILS (11): retention at horizon 1 week: w1 -36.5, w5 -24.1, w10 -21.1; reach all understood at horizon 1 week: +93.8 vs +100.0; retention at horizon 1 month: w1 -34.2, w5 -26.0, w10 -22.5  (1 yr: saved 0.07 h, ret worst 1% -6.9, reach 100/100%)
+
+========== verdicts (primary frame: real) ==========
+  T   FAIL  main problems 5, adverse problems 25. (oracle frame: fails, 1)
+  TS  FAIL  main problems 5, adverse problems 17. (oracle frame: fails, 1)
+  M   FAIL  main problems 6, adverse problems 19. (oracle frame: fails, 7)
+  R   FAIL  main problems 10, adverse problems 28. (oracle frame: fails, 8)
+  F   PASS  main problems 0, adverse problems 0. (oracle frame: passes)
+  P   FAIL  main problems 3, adverse problems 22. (oracle frame: fails, 3)

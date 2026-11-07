@@ -12,14 +12,16 @@
  * 84-99 ms plus 47-51 ms to write and rename, about 150 ms of blocked event loop
  * per flush, up to four flushes a second under load, and it grows with the store.
  * This driver keeps the same in-memory arrays (so every route and service works
- * unchanged, synchronous as today) and, on flush, writes only the rows whose
- * JSON changed, in one transaction, to a WAL-mode SQLite file.
+ * unchanged, synchronous as today) and, on flush, writes the rows the API changed,
+ * in one transaction, to a WAL-mode SQLite file. (It used to re-serialise every row
+ * of a touched collection on each flush and keep a copy of each row's JSON, which on
+ * a grown store cost nearly what the JSON driver did: beta load test, Nov 2026.)
  *
  * Rows changed outside the API (a caller that edits a row object it got from
  * find() and never calls update) are still saved: every DB_SQLITE_SWEEP_MS
- * (default 60000) and at exit, every collection is compared, not only the ones
- * the API touched. The JSON driver saves those only when something else writes,
- * so this is no less durable.
+ * (default 60000) a sweep compares every row against a hash of what was written, a
+ * slice at a time between requests, and a full compare runs at exit. The JSON
+ * driver saves those only when something else writes, so this is no less durable.
  *
  * Why not Postgres: every caller uses this API synchronously (db.find(...) inside
  * request handlers, no await). A network database means making hundreds of call
@@ -50,13 +52,33 @@ if (!fs.existsSync(DB_PATH)) {
   fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
 }
 
-const sql = open(DB_PATH, { readOnly: READONLY });
+// A power-off can leave the file with nothing in it, and SQLite opens that as a new, empty database: every account would seem to have gone. Refuse
+// instead, as config/db.js does for a damaged JSON store. DB_ALLOW_FRESH=1 starts empty.
+if (fs.existsSync(DB_PATH) && fs.statSync(DB_PATH).size === 0 && process.env.DB_ALLOW_FRESH !== '1') {
+  console.error(`Refusing to start: ${DB_PATH} is empty. Nothing was changed. Restore it from the newest backup: node scripts/backup-db.js --list, then --restore <file> --to ${DB_PATH} --force`);
+  process.exit(1);
+}
+
+let sql;
+try {
+  sql = open(DB_PATH, { readOnly: READONLY });
+} catch (err) {
+  console.error(`Refusing to start: ${DB_PATH} cannot be read (${err.message}). Nothing was changed. Restore it from the newest backup: node scripts/backup-db.js --list`);
+  process.exit(1);
+}
 
 const store = { _counters: {} };
-const written = new Map(); // coll -> Map(id -> JSON last written)
+const written = new Map(); // coll -> Map(id -> hash of the JSON last written)
 const position = new Map(); // coll -> Map(id -> pos)
 const maxPos = new Map();
 const writtenCounters = {};
+
+/** FNV-1a: a small number per row instead of a copy of its text. A collision costs one row until it next changes through the API. */
+function hashOf(text) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+  return h | 0;
+}
 
 (function load() {
   const rowsOf = sql.prepare('SELECT id, pos, doc FROM rows WHERE coll = ? ORDER BY pos');
@@ -68,7 +90,7 @@ const writtenCounters = {};
     let top = 0;
     for (const r of rowsOf.all(name)) {
       rows.push(JSON.parse(r.doc));
-      w.set(r.id, r.doc);
+      w.set(r.id, hashOf(r.doc));
       p.set(r.id, r.pos);
       if (r.pos > top) top = r.pos;
     }
@@ -83,8 +105,13 @@ const writtenCounters = {};
   }
 }());
 
-const dirty = new Set();
+const dirty = new Set(); // collections with a counter or rows to write
+const changedRows = new Map(); // coll -> Map(id -> row) changed through the API since the last flush
+const removedIds = new Map(); // coll -> Set(id) removed through the API since the last flush
 let flushTimer = null;
+let flushFailures = 0;
+let firstFailureAt = null;
+let lastSavedAt = Date.now();
 const stats = { flushes: 0, last_ms: 0, last_rows: 0, last_at: null };
 
 let stmts = null;
@@ -99,7 +126,7 @@ function statements() {
   return stmts;
 }
 
-/** Write what changed. `all` compares every collection, not only the touched ones. */
+/** Write what changed. `all` compares every row of every collection (exit, tests, a forced save), not only what the API touched. */
 function flush(all = false) {
   if (flushTimer) { clearTimeout(flushTimer); flushTimer = null; }
   if (READONLY) return 0;
@@ -114,20 +141,28 @@ function flush(all = false) {
       const rows = store[name];
       const w = written.get(name);
       const p = position.get(name);
-      const seen = new Set();
-      for (const row of rows) {
+      const writeRow = (row) => {
         const id = row.id;
-        seen.add(id);
         const doc = JSON.stringify(row);
-        if (w.get(id) === doc) continue;
+        const h = hashOf(doc);
+        if (w.get(id) === h) return;
         let pos = p.get(id);
         if (pos === undefined) { pos = maxPos.get(name) + 1; maxPos.set(name, pos); p.set(id, pos); }
         q.upsert.run(name, id, pos, doc);
-        w.set(id, doc);
+        w.set(id, h);
         changed++;
-      }
-      for (const id of [...w.keys()]) {
-        if (!seen.has(id)) { q.del.run(name, id); w.delete(id); p.delete(id); changed++; }
+      };
+      if (all) {
+        const seen = new Set();
+        for (const row of rows) { seen.add(row.id); writeRow(row); }
+        for (const id of [...w.keys()]) {
+          if (!seen.has(id)) { q.del.run(name, id); w.delete(id); p.delete(id); changed++; }
+        }
+      } else {
+        const gone = removedIds.get(name);
+        if (gone) for (const id of gone) { q.del.run(name, id); w.delete(id); p.delete(id); changed++; }
+        const touched = changedRows.get(name);
+        if (touched) for (const row of touched.values()) writeRow(row);
       }
       if (store._counters[name] !== writtenCounters[name]) {
         q.counter.run(name, store._counters[name]);
@@ -135,24 +170,66 @@ function flush(all = false) {
       }
     }
     sql.exec('COMMIT');
+    for (const name of names) { changedRows.delete(name); removedIds.delete(name); }
+    flushFailures = 0; firstFailureAt = null; lastSavedAt = Date.now();
   } catch (err) {
     sql.exec('ROLLBACK');
-    // Put the names back so the next flush tries again.
+    // Put the names back so the next flush tries again. What was changed is still in changedRows and removedIds.
     for (const n of names) dirty.add(n);
+    flushFailures++;
+    if (!firstFailureAt) firstFailureAt = Date.now();
     throw err;
   }
+  stats.last_ms = Date.now() - started;
   stats.flushes++; stats.last_ms = Date.now() - started; stats.last_rows = changed; stats.last_at = new Date().toISOString();
   return changed;
 }
 
-function touch(name) {
+function touch(name, row = null, removedId = null) {
   if (READONLY) return;
   dirty.add(name);
-  if (!flushTimer) flushTimer = setTimeout(() => { try { flush(); } catch (err) { console.error('db-sqlite flush failed:', err.message); } }, 250);
+  if (row) { let m = changedRows.get(name); if (!m) { m = new Map(); changedRows.set(name, m); } m.set(row.id, row); }
+  if (removedId !== null) {
+    let s = removedIds.get(name); if (!s) { s = new Set(); removedIds.set(name, s); } s.add(removedId);
+    const m = changedRows.get(name); if (m) m.delete(removedId);
+  }
+  if (!flushTimer) flushTimer = setTimeout(flushNow, flushFailures ? Math.min(5000, 250 * 2 ** Math.min(flushFailures, 5)) : 250);
+}
+
+function flushNow() {
+  flushTimer = null;
+  try { flush(); } catch (err) {
+    if (flushFailures === 1 || flushFailures % 20 === 0) console.warn(`db: save failed (${err.code || err.message}); retrying`);
+    if (!flushTimer) flushTimer = setTimeout(flushNow, Math.min(5000, 250 * 2 ** Math.min(flushFailures, 5)));
+  }
+}
+
+/** The sweep: every row compared with what was written, a slice at a time, so a row changed outside the API is saved without stopping anyone. */
+function sweepInSlices() {
+  const names = [...COLLECTIONS];
+  let name = names.shift();
+  let at = 0;
+  const step = () => {
+    let budget = 2000;
+    while (name && budget > 0) {
+      const rows = store[name];
+      const w = written.get(name);
+      for (; at < rows.length && budget > 0; at++, budget--) {
+        const row = rows[at];
+        if (row && w.get(row.id) !== hashOf(JSON.stringify(row))) touch(name, row);
+      }
+      if (at >= rows.length) {
+        if (w.size > rows.length) { const now = new Set(rows.map((r) => r.id)); for (const id of w.keys()) if (!now.has(id)) touch(name, null, id); }
+        name = names.shift(); at = 0;
+      }
+    }
+    if (name) setImmediate(step);
+  };
+  setImmediate(step);
 }
 
 if (!READONLY && SWEEP_MS > 0) {
-  setInterval(() => { try { flush(true); } catch (err) { console.error('db-sqlite sweep failed:', err.message); } }, SWEEP_MS).unref();
+  setInterval(sweepInSlices, SWEEP_MS).unref();
 }
 
 for (const signal of ['exit', 'SIGINT', 'SIGTERM']) {
@@ -168,15 +245,34 @@ function collection(name) {
   return rows;
 }
 
+const byOwner = new Map(); // coll -> { map: user_id -> rows, count }
+
 const db = {
   all(name) { return collection(name); },
+  saveSoon() { if (!READONLY && !flushTimer && dirty.size) flushTimer = setTimeout(flushNow, 250); },
+  /** As in config/db.js: one learner's rows, without reading everyone's. The array is shared: filter or copy it. */
+  forUser(name, userId) {
+    const rows = collection(name);
+    let ix = byOwner.get(name);
+    if (!ix || ix.count !== rows.length) {
+      ix = { map: new Map(), count: rows.length };
+      for (const r of rows) { const l = ix.map.get(r.user_id); if (l) l.push(r); else ix.map.set(r.user_id, [r]); }
+      byOwner.set(name, ix);
+    }
+    return ix.map.get(userId) || [];
+  },
+  saveState() {
+    return { saving: !flushFailures, failed_attempts: flushFailures, failing_for_s: firstFailureAt ? Math.round((Date.now() - firstFailureAt) / 1000) : 0, last_saved_s_ago: Math.round((Date.now() - lastSavedAt) / 1000), last_save_ms: stats.last_ms };
+  },
 
   insert(name, doc) {
     collection(name);
     const id = ++store._counters[name];
     const row = { id, created_at: new Date().toISOString(), ...doc };
     collection(name).push(row);
-    touch(name);
+    const ix = byOwner.get(name);
+    if (ix) { const l = ix.map.get(row.user_id); if (l) l.push(row); else ix.map.set(row.user_id, [row]); ix.count++; }
+    touch(name, row);
     return row;
   },
 
@@ -188,22 +284,28 @@ const db = {
 
   byId(name, id) {
     const numeric = Number(id);
-    return collection(name).find((r) => r.id === numeric) || null;
+    const rows = collection(name);
+    let lo = 0; let hi = rows.length - 1; // ids only go up: a miss reads the whole collection, in case something is out of order
+    while (lo <= hi) { const mid = (lo + hi) >> 1; const at = rows[mid].id; if (at === numeric) return rows[mid]; if (at < numeric) lo = mid + 1; else hi = mid - 1; }
+    return rows.find((r) => r.id === numeric) || null;
   },
 
   update(name, id, patch) {
     const row = db.byId(name, id);
     if (!row) return null;
+    if (patch && patch.user_id !== undefined && patch.user_id !== row.user_id) byOwner.delete(name);
     Object.assign(row, patch, { updated_at: new Date().toISOString() });
-    touch(name);
+    touch(name, row);
     return row;
   },
 
   upsert(name, predicate, build) {
     const existing = db.findOne(name, predicate);
     if (existing) {
+      const owner = existing.user_id;
       Object.assign(existing, build(existing), { updated_at: new Date().toISOString() });
-      touch(name);
+      if (existing.user_id !== owner) byOwner.delete(name);
+      touch(name, existing);
       return existing;
     }
     return db.insert(name, build(null));
@@ -213,9 +315,9 @@ const db = {
     const rows = collection(name);
     let removed = 0;
     for (let i = rows.length - 1; i >= 0; i--) {
-      if (predicate(rows[i])) { rows.splice(i, 1); removed++; }
+      if (predicate(rows[i])) { touch(name, null, rows[i].id); rows.splice(i, 1); removed++; }
     }
-    if (removed) touch(name);
+    if (removed) byOwner.delete(name);
     return removed;
   },
 

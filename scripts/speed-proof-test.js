@@ -122,7 +122,7 @@ const fresh = (u) => db.byId('users', u.id);
 {
   // the real curriculum: a level's skill, and withSkill fixing the plain way for everything built inside it
   const grade = require('../config/curriculum').getGrade('math', 'algebra_1_part_a');
-  const skill = sp.skillOfLevel(grade, 1);
+  const skill = sp.unitFor(grade, 1).key; // the arm is drawn per lesson stretch since 6 Nov, not per coarse skill
   ok(typeof skill === 'string' && skill.length > 0, `a real level has a skill (${skill})`);
   process.env.SPEED_PROOF_NORMAL_SHARE = '0.5';
   sp.setRandom(() => 0);

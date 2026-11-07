@@ -148,7 +148,7 @@ function read() {
 function write(data) {
   const tmp = `${FILE()}.${process.pid}.tmp`;
   fs.writeFileSync(tmp, JSON.stringify(data, null, 1));
-  fs.renameSync(tmp, FILE());
+  require('./durable-file').commit(tmp, FILE(), { backup: true }); // eslint-disable-line global-require
 }
 
 function reservedUsd(data) {
@@ -176,7 +176,7 @@ function totals(data) {
 /** The current state, for the health endpoint and the reports. Never throws. */
 function status() {
   try {
-    const data = read();
+    const data = require('./ledger-peek').peek(FILE(), read); // eslint-disable-line global-require
     return { ok: true, ...totals(data), calls: data.calls, refused_calls: data.refused_calls, file: FILE() };
   } catch (err) {
     return { ok: false, reason: err.message, stop_usd: stopUsd(), headroom_usd: 0, file: FILE() };

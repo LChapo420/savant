@@ -121,9 +121,9 @@ function pickNext(row, theta) {
 
 // ── the slots: when a check is offered ───────────────────────────────────────
 function levelsDone(userId) {
-  return db.find('enrollments', (e) => e.user_id === userId).reduce((n, e) => n + (e.levels_completed || 0), 0);
+  return db.forUser('enrollments', userId).slice().reduce((n, e) => n + (e.levels_completed || 0), 0);
 }
-const rowsOf = (userId) => db.find('reading_checks', (r) => r.user_id === userId);
+const rowsOf = (userId) => db.forUser('reading_checks', userId).slice();
 const usedSlots = (userId) => rowsOf(userId).filter((r) => r.status === 'done' || r.status === 'declined').length;
 
 /** { offer: 'onboarding' | 'periodic' | null, taken, last } for the screens that offer it. */
@@ -213,7 +213,7 @@ function finish(row, est) {
     } catch (err) { console.warn(`reading-check: scorecard not updated: ${err.message}`); }
   }
   if (row.status === 'open') db.update('reading_checks', row.id, { status: 'done', result, finished_at: new Date().toISOString() });
-  db.flush();
+  db.saveSoon();
   const stored = db.byId('reading_checks', row.id);
   return { result: stored.result };
 }

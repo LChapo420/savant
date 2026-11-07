@@ -136,7 +136,7 @@ function dailyCap(transport, { cap, stateFile, name = transport.providerName || 
     try {
       fs.mkdirSync(path.dirname(stateFile), { recursive: true });
       fs.writeFileSync(`${stateFile}.tmp`, JSON.stringify(state));
-      fs.renameSync(`${stateFile}.tmp`, stateFile);
+      require('../services/durable-file').commit(`${stateFile}.tmp`, stateFile); // eslint-disable-line global-require
     } catch { /* a counter that cannot be saved must not stop the mail */ }
   };
   const fn = async (message) => {

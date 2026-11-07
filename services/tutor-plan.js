@@ -115,9 +115,9 @@ function specShift(spec) {
 /** This learner's recent record on the skill: mastery, attempts, the miss streak and the most common mix-up. */
 function recordOn(userId, skillId) {
   const out = { mastery: null, attempts: 0, streak: 0, recentMisses: 0, topError: null };
-  const state = skillId ? db.findOne('skill_states', (r) => r.user_id === userId && r.skill_id === skillId) : null;
+  const state = skillId ? (db.forUser('skill_states', userId).find((r) => r.skill_id === skillId) || null) : null;
   if (state && state.attempts > 0) { out.mastery = state.mastery; out.attempts = state.attempts; }
-  const mine = db.find('items', (i) => i.user_id === userId && i.role !== 'placement' && typeof i.correct === 'boolean' && (!skillId || i.skill_id === skillId)).slice(-30);
+  const mine = db.forUser('items', userId).filter((i) => i.role !== 'placement' && typeof i.correct === 'boolean' && (!skillId || i.skill_id === skillId)).slice(-30);
   for (let i = mine.length - 1; i >= 0 && mine[i].correct === false; i--) out.streak += 1;
   const misses = mine.filter((i) => i.correct === false);
   out.recentMisses = misses.length;

@@ -238,6 +238,7 @@ App.mount(async () => {
         progress();
         const last = index + 1 >= items.length;
         Player.reveal(itemHost, item, result, {
+          partChange: true,
           nextLabel: last ? 'Finish the review' : 'Next question',
           onNext: () => { index += 1; if (index >= items.length) finish(); else show(); },
         });

@@ -248,7 +248,7 @@ async function buildPart(part, ctx) {
 }
 
 function row(userId, materialId) {
-  return db.findOne('material_packs', (c) => c.user_id === userId && c.material_id === Number(materialId));
+  return (db.forUser('material_packs', userId).find((c) => c.material_id === Number(materialId)) || null);
 }
 
 /**
@@ -295,7 +295,7 @@ async function build(userId, materialId, opts = {}) {
       ...all, status, spec_hash: ps.spec.isDefault ? null : learningSpec.specHash(ps.spec), dropped: ctx.dropped, models: [...ctx.models], tokens_used: ctx.budget.used,
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
-    db.flush();
+    db.saveSoon();
     // No model answered at all (busy or timed out): that is not the material's fault, so say so and let the caller retry.
     if (status === 'failed' && !stopped && ctx.unanswered) {
       db.update('material_packs', saved.id, { error: 'models_unavailable' });
@@ -380,7 +380,7 @@ function forLearner(userId, materialId, now = Date.now()) {
   const p = row(userId, materialId);
   if (!p) return null;
   const course = courses.get(userId, materialId);
-  const prog = db.findOne('material_progress', (r) => r.user_id === userId && r.material_id === Number(materialId));
+  const prog = (db.forUser('material_progress', userId).find((r) => r.material_id === Number(materialId)) || null);
   const known = new Set(course ? adapt.plan(course, prog, now).skipped : []);
   const skillOf = (pid) => { const s = ((course && course.skills) || []).find((x) => (x.passage_ids || []).includes(pid)); return s ? s.id : null; };
   const ids = new Set();

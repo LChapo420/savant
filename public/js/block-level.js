@@ -97,6 +97,18 @@
         });
         answered[id] = { ...result, choice: answer };
         renderFinish();
+        // The explanation a check just showed can be reworded too; the engine has drawn its verdict by the next tick.
+        if (result.item_id && result.rationale && window.PartChange) {
+          setTimeout(() => {
+            const entryAt = plan.entries.findIndex((e) => e.data && e.data.id === id);
+            const section = host.querySelector(`section[data-index="${entryAt}"]`);
+            const said = section && section.querySelector('[class*="verdict"] span:last-child');
+            if (!said || section.querySelector('[data-part-change]')) return;
+            const slot = document.createElement('div');
+            said.parentElement.insertAdjacentElement('afterend', slot);
+            window.PartChange.attach(slot, { ref: { item_id: result.item_id }, onResult: (r) => { if (r.text) said.textContent = r.text; } });
+          }, 0);
+        }
         return result;
       },
       shownAt: {},
@@ -121,6 +133,23 @@
       if (!scrolledBack && furthest - y > gap) { scrolledBack = true; scrollBacks += 1; } else if (scrolledBack && furthest - y < 80) scrolledBack = false;
     }, { passive: true });
     readScrollBacks = () => scrollBacks;
+    // The learner rewords a reading block themselves (public/js/part-change.js): the block is drawn again from the text that comes back.
+    function attachChange(section, entry) {
+      const slot = document.createElement('div');
+      slot.style.margin = '-10px 0 18px';
+      section.insertAdjacentElement('afterend', slot);
+      let current = section;
+      window.PartChange.attach(slot, {
+        ref: { track, grade, level, ref: entry.ref },
+        onResult: (r) => {
+          if (!r.data) return;
+          const draft = document.createElement('div');
+          window.LessonCompiler.compile(draft, [{ ...entry, data: r.data }]);
+          const fresh = draft.querySelector('section[data-block]');
+          if (fresh) { fresh.setAttribute('data-index', current.getAttribute('data-index')); current.replaceWith(fresh); current = fresh; }
+        },
+      });
+    }
     window.LessonCompiler.compile(host, plan.entries);
     const sections = Array.from(host.querySelectorAll('section[data-block]'));
     sections.forEach((section, i) => {
@@ -128,6 +157,7 @@
       const entry = plan.entries[i];
       if (entry && /^Check_/.test(entry.block)) window.PolymathChecks.shownAt[entry.data.id] = Date.now();
       if (entry && window.AssistChat) attachAssist(section, entry);
+      if (entry && entry.changeable && window.PartChange) attachChange(section, entry);
     });
     const report = window.LevelCapture.watch(sections.slice(), {
       // Checks are graded on the server already; their answers are items.

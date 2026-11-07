@@ -1,5 +1,7 @@
 # Modification audit, section 7: part by part, what changes it, and what is proven
 
+**7 Nov: read `docs/MODIFICATION-MAP.md` first.** It re-measures this table with a calibrated fact judge: the feedback figures below (85% / 66%) were mostly added material, and no longer stand.
+
 Written 6 Nov 2026 on branch `mod-wiring`. This is the table the owner asked for ("every single little bit can be changed"), meant to be **appended as section 7 of `docs/MODIFICATION-AUDIT.md`** (that file lives on branch `lesson-goals`; it is kept apart here so the two branches merge without a conflict). It continues that audit's section 4 ("measures that reach nothing, and parts no measure reaches").
 
 Everything below is **SIMULATED learners (`scripts/lib/extreme-learners.js`, held-out seed 6106, 24 learners: tails, contradictory mixes, ages 8 to 70, English learners, unusual hobbies and dislikes) judged blind by AI models. It is not a result on real people.** Run: `node scripts/part-modify-proof.js --parts feedback,hint,review,lesson,tutor --n 24 --items 2 --tag pm2`; numbers in `docs/part-modify/pm2-final.json` (first, feedback-only run before two fixes: `pm1-first-run-feedback-only.json`).
