@@ -39,6 +39,7 @@
     ball: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3 12h18M12 3v18M5.8 5.5c2.5 2 3.8 4 3.8 6.5s-1.3 4.5-3.8 6.5M18.2 5.5c-2.5 2-3.8 4-3.8 6.5s1.3 4.5 3.8 6.5',
     pencil: 'M4 20l1-4.5L16.500 4a2 2 0 0 1 3 0l.5.5a2 2 0 0 1 0 3L8.500 19zM14.500 6l3.500 3.500',
     chat: 'M5.500 4.500h13A2 2 0 0 1 20.500 6.500v9a2 2 0 0 1-2 2H11l-4.500 3.500V17.500h-1a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z',
+    upload: 'M6 3h8l4 4v14H6zM14 3v4h4M12 17.500v-6M9.500 14 12 11.500l2.500 2.500',
     clock: 'M12 3.500a8.500 8.500 0 1 0 0 17 8.500 8.500 0 0 0 0-17zM12 7.500V12l3 2',
     settings: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19 12a7 7 0 0 0-.1-1.200l2-1.500-2-3.400-2.300 1a7 7 0 0 0-2.100-1.200L14 3.500h-4l-.4 2.200a7 7 0 0 0-2.100 1.200l-2.300-1-2 3.400 2 1.500a7 7 0 0 0 0 2.400l-2 1.500 2 3.400 2.300-1a7 7 0 0 0 2.100 1.200l.4 2.200h4l.4-2.200a7 7 0 0 0 2.100-1.200l2.300 1 2-3.400-2-1.500c.1-.4.1-.8.1-1.200z',
   };
@@ -285,6 +286,10 @@
     placeStudy();
     watchSheet();
     dressQuestion();
+    document.querySelectorAll('.u2-guide .tutor').forEach((t) => {
+      const rail = t.closest('#u2-all') && window.matchMedia('(min-width: 1025px)').matches;
+      Look.crop(t, wholeGiraffe() && !rail ? 'full' : 'bust');
+    });
     dressPartChange();
     afterUpload();
   }
@@ -303,6 +308,7 @@
   function start() {
     if (window.MutationObserver) new MutationObserver(queue).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
     window.addEventListener('resize', queue);
+    Look.watchTutor();
     queue();
   }
   if (document.body) start(); else document.addEventListener('DOMContentLoaded', start);

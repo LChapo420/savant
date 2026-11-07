@@ -80,33 +80,41 @@ html[data-ui2].u2-home-page main.page { padding: 0; }
 html[data-ui2].u2-home-page #root { max-width: none; width: 100%; padding: 0; }
 html[data-ui2].u2-home-page .home { display: none; }
 html[data-ui2].u2-home-page:not(.u2-ready) #root::before { content: "Loading your day"; display: block; padding: 40px 20px; text-align: center; color: var(--ink-2); font-size: 15px; }
-html[data-ui2] #u2-home { display: flex; flex-direction: column; height: calc(100vh - 52px); height: calc(100dvh - 52px); min-height: 500px; }
-html[data-ui2][data-u2-view="everything"] #u2-home, html[data-ui2][data-u2-view="everything"] .empty-state { display: none; }
-html[data-ui2][data-u2-view="everything"] .site-header .study-strip { display: none; }
-html[data-ui2][data-u2-view="home"] #u2-all { display: none; }
-html[data-ui2] .u2-focus { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 6px 24px 0; min-height: 0; }
-html[data-ui2] .u2-focus #u2-title:focus { outline: none; }
-html[data-ui2] .u2-tx { display: contents; }
-html[data-ui2] .u2-focus .u2-bubble { order: -1; }
-html[data-ui2] .u2-focus .u2-bubble { margin-bottom: 8px; }
-html[data-ui2] .u2-big { flex: 1 1 0; min-height: 90px; width: 100%; display: flex; align-items: center; justify-content: center; container-type: size; }
-html[data-ui2] .u2-big .u2-g { height: min(100cqh, 340px); aspect-ratio: 270 / 425; }
-html[data-ui2] .u2-big .tutor { display: block; width: 100%; height: 100%; }
-html[data-ui2] .u2-big .tutor-svg { width: 100%; height: 100%; overflow: visible; }
-html[data-ui2] .u2-meta { margin: 0 0 4px; color: var(--ink-2); font-size: 16px; line-height: 20px; }
-html[data-ui2] .u2-detail { margin: 0 0 10px; max-width: 34em; }
+html[data-ui2][data-u2-view="everything"] #u2-home, html[data-ui2][data-u2-view="past"] #u2-home { display: none; }
+html[data-ui2][data-u2-view="everything"] .site-header .study-strip, html[data-ui2][data-u2-view="past"] .site-header .study-strip { display: none; }
+html[data-ui2][data-u2-view="home"] #u2-all, html[data-ui2][data-u2-view="past"] #u2-all { display: none; }
+html[data-ui2]:not([data-u2-view="past"]) #u2-past { display: none; }
+html[data-ui2] #u2-home, html[data-ui2] #u2-past { padding-bottom: 28px; }
+html[data-ui2] .u2-home-body { padding: 14px 24px 0; display: grid; gap: 22px; }
+html[data-ui2] .u2-h-sec { display: grid; gap: 10px; min-width: 0; }
+html[data-ui2] .u2-h-sec[hidden] { display: none; }
+html[data-ui2] .u2-h { margin: 0; font: 400 24px/1.15 var(--serif); letter-spacing: -.005em; color: var(--ink); }
+html[data-ui2] .u2-rows { display: grid; gap: 10px; min-width: 0; }
+html[data-ui2] .u2-feature { display: grid; gap: 12px; padding: 16px 16px 14px; border: 1.5px solid var(--line); border-radius: 18px; background: var(--page); }
+html[data-ui2] .u2-feature .u2-t1 { margin: 0; font-size: 28px; }
+html[data-ui2] .u2-feature .u2-t1:focus { outline: none; }
+html[data-ui2] .u2-feature .u2-btn { margin-bottom: 6px; }
+html[data-ui2] .u2-f-top { display: flex; align-items: center; gap: 12px; min-width: 0; }
+html[data-ui2] .u2-o-t { display: block; flex: 1; min-width: 0; }
+html[data-ui2] .u2-o-t b { display: block; font-size: 16px; line-height: 1.2; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html[data-ui2] .u2-o-t small { display: block; font-size: 13.5px; line-height: 18px; font-weight: 400; color: var(--ink-2); }
+html[data-ui2] .u2-mini { flex: none; width: 72px; height: 6px; border-radius: 99px; background: var(--well-2); overflow: hidden; }
+html[data-ui2] .u2-mini i { display: block; height: 100%; border-radius: 99px; background: var(--act); }
+html[data-ui2] .u2-s-row { min-height: 58px; gap: 12px; }
+html[data-ui2] .u2-s-row > .u2-ic:first-child { color: var(--ink-2); }
+html[data-ui2] .u2-quiet { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+html[data-ui2] .u2-detail { margin: 0; max-width: 34em; }
 html[data-ui2] .u2-chip-t { display: inline-flex; align-items: center; gap: 6px; height: 38px; margin: 0; padding: 0 12px; border: 1.5px solid var(--line); border-radius: 99px; background: var(--page); color: var(--ink); font: 700 15px/1 var(--font); cursor: pointer; }
 html[data-ui2] .u2-chip-t .u2-ic { width: 17px; height: 17px; color: var(--ink-2); }
-html[data-ui2] .u2-go { flex: none; width: 100%; padding: 14px 0 0; }
-html[data-ui2] .u2-next { display: block; width: 100%; margin: 0; padding: 6px 0 14px; border: 0; background: none; color: var(--ink-3); font: 400 15px/20px var(--font); text-align: center; cursor: pointer; }
+html[data-ui2] .u2-next { margin: 0; padding: 8px 0 8px 8px; border: 0; background: none; color: var(--ink-2); font: 400 15px/20px var(--font); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+html[data-ui2] .u2-past-filter { flex-wrap: nowrap; }
+html[data-ui2] .u2-past-filter .u2-chip { padding: 0 4px; }
+html[data-ui2] #u2-past .u2-guide { margin: 0; }
 
-/* A learner with no subject yet. */
-html[data-ui2] .empty-state { display: flex; flex-direction: column; align-items: center; min-height: calc(100dvh - 52px); padding: 6px 24px 20px; text-align: center; background: none; border: 0; box-shadow: none; }
-html[data-ui2] .empty-state h1 { font-size: 32px; line-height: 1.1; margin: 0 0 6px; }
-html[data-ui2] .empty-state > p { color: var(--ink-2); font-size: 16px; line-height: 22px; margin: 0 0 10px; }
-html[data-ui2] .empty-state .btn-primary { width: 100%; max-width: 420px; }
-html[data-ui2] .empty-state .u2-btn2 { max-width: 420px; }
-html[data-ui2] .empty-state .btn-text { white-space: normal; height: auto; line-height: 20px; padding: 6px 4px; }
+/* The empty page's other first steps, under the sections. */
+html[data-ui2] #u2-home .empty-state { display: block; padding: 0; min-height: 0; text-align: center; background: none; border: 0; box-shadow: none; }
+html[data-ui2] #u2-home .empty-state > h1, html[data-ui2] #u2-home .empty-state > p:first-of-type, html[data-ui2] #u2-home .empty-state > .btn-primary { display: none; }
+html[data-ui2] #u2-home .empty-state .btn-text { white-space: normal; height: auto; line-height: 20px; padding: 6px 4px; }
 
 /* The two sheets: the day's steps, and the minutes. */
 html[data-ui2] .u2-dialog { margin: auto 0 0; width: 100%; max-width: 100%; max-height: 80vh; border: 0; padding: 0; border-radius: 22px 22px 0 0; background: var(--page); color: var(--ink); overflow: hidden; }
@@ -314,11 +322,10 @@ html[data-ui2] #u2-after-upload { position: sticky; bottom: 0; z-index: 10; marg
 @media (min-width: 768px) {
   html[data-ui2] .u2-btn, html[data-ui2] .u2-btn2, html[data-ui2] .btn-primary.btn-block, html[data-ui2] .btn-primary.btn-lg { width: 100%; max-width: 360px; min-width: 260px; margin-left: auto; margin-right: auto; }
   html[data-ui2] .u2-tb-wm { position: static; transform: none; margin-left: 4px; }
-  html[data-ui2] #u2-home { height: calc(100dvh - 52px); }
-  html[data-ui2] .u2-focus { width: 100%; max-width: 640px; margin: 0 auto; }
-  html[data-ui2] .u2-big { max-height: 480px; }
-  html[data-ui2] .u2-big .u2-g { height: min(100cqh, 480px); }
-  html[data-ui2] .u2-go { max-width: 408px; margin: 0 auto; }
+  html[data-ui2] #u2-home > .u2-guide, html[data-ui2] #u2-past > .u2-guide { max-width: 640px; margin: 8px auto 0; padding: 0 24px; }
+  html[data-ui2] .u2-home-body { max-width: 640px; margin: 0 auto; }
+  html[data-ui2] #u2-home > .u2-guide .u2-tailwrap, html[data-ui2] #u2-past > .u2-guide .u2-tailwrap { flex: 0 1 auto; }
+  html[data-ui2] #u2-past-link { justify-self: center; }
   /* The giraffe stands whole beside its words; no line under it. */
   html[data-ui2] .u2-guide { border-bottom: 0; padding: 0; align-items: center; gap: 12px; }
   html[data-ui2] .u2-guide .tutor { width: 140px; height: 220px; }
@@ -342,21 +349,16 @@ html[data-ui2] #u2-after-upload { position: sticky; bottom: 0; z-index: 10; marg
 @media (min-width: 1025px) {
   html[data-ui2] main.page:has(.player) .wrap { max-width: 960px; }
   html[data-ui2] .player, html[data-ui2] .session-player { max-width: none; }
-  /* Home: the giraffe beside the one task, nothing else. */
-  html[data-ui2] .u2-focus { flex-direction: row; justify-content: center; align-items: center; gap: 44px; max-width: 960px; padding: 0 24px 24px; }
-  html[data-ui2] .u2-big { flex: none; width: 360px; height: min(70vh, 560px); max-height: none; }
-  html[data-ui2] .u2-big .u2-g { height: min(100cqh, 560px); }
-  html[data-ui2] .u2-tx { display: flex; flex-direction: column; align-items: flex-start; width: 408px; text-align: left; }
-  html[data-ui2] .u2-focus .u2-bubble { order: 0; margin-bottom: 20px; }
-  html[data-ui2] .u2-focus .u2-bubble.u2-down { text-align: left; padding: 12px 18px; }
-  html[data-ui2] .u2-focus .u2-bubble.u2-down::before { left: -7.5px; bottom: auto; top: calc(50% - 7px); border: 0; border-left: 1.5px solid var(--u2-bl, var(--line)); border-bottom: 1.5px solid var(--u2-bl, var(--line)); }
-  html[data-ui2] .u2-t1 { font-size: 52px; line-height: 1.05; }
-  html[data-ui2] .u2-go { width: 100%; margin: 0; padding: 22px 0 0; max-width: 360px; }
-  html[data-ui2] .u2-next { max-width: 360px; }
+  /* Home: a centred grid. */
+  html[data-ui2] #u2-home > .u2-guide, html[data-ui2] #u2-past > .u2-guide { max-width: 960px; }
+  html[data-ui2] #u2-home .u2-home-body, html[data-ui2] #u2-past .u2-home-body { max-width: 960px; }
+  html[data-ui2] #u2-home .u2-home-body { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px; align-items: start; }
+  html[data-ui2] #u2-home .u2-home-body > #u2-past-link, html[data-ui2] #u2-home .u2-home-body > .empty-state { grid-column: 1 / -1; }
+  html[data-ui2] #u2-home .u2-home-body > #u2-continue:only-of-type { grid-column: 1 / -1; }
+  html[data-ui2] #u2-past [data-past-group] .u2-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* Everything: a quiet rail beside what you were doing, closed until asked. */
-  html[data-ui2][data-u2-view="everything"] #u2-home, html[data-ui2][data-u2-view="everything"] .empty-state { display: flex; margin-left: 340px; width: auto; }
-  html[data-ui2][data-u2-view="everything"] .u2-big { width: 280px; }
-  html[data-ui2][data-u2-view="everything"] .u2-t1 { font-size: 44px; }
+  html[data-ui2][data-u2-view="everything"] #u2-home { display: block; margin-left: 340px; width: auto; }
+  html[data-ui2][data-u2-view="everything"] .u2-home-body { grid-template-columns: minmax(0, 1fr); max-width: 620px; }
   html[data-ui2] #u2-all { position: fixed; z-index: 20; top: 52px; left: 0; bottom: 0; width: 340px; max-width: none; margin: 0; padding: 0 0 24px; overflow: auto; background: var(--page); border-right: 1px solid var(--line); }
   html[data-ui2] #u2-all .u2-guide { padding: 0 14px; border-bottom: 1px solid var(--line); gap: 6px; align-items: flex-end; }
   html[data-ui2] #u2-all .u2-guide .tutor, html[data-ui2] #u2-all .u2-guide .tutor-svg { width: 100px; height: 104px; }

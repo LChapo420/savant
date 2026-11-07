@@ -47,6 +47,14 @@ async function main() {
   const problems = [];
   const device = { viewport: PHONE, deviceScaleFactor: 2, colorScheme: MODE };
 
+  // A course can't be built with no outside AI, so these shots have their upload progress stubbed. The look is what is being checked; scripts/ui-v2-test.js checks the working out.
+  const UPLOADS = { can_upload: true, materials: [
+    { id: 1, title: 'Chapter 4: The cell', kind: 'pdf', status: 'ready', mastered: 3, total: 8, due: 0, started: true, complete: false },
+    { id: 2, title: 'Spanish verbs handout', kind: 'text', status: 'ready', mastered: 0, total: 5, due: 0, started: false, complete: false },
+    { id: 3, title: 'History lecture notes', kind: 'text', status: 'none', mastered: 0, total: 0, due: 0, started: false, complete: false },
+    { id: 4, title: 'Photosynthesis notes', kind: 'text', status: 'ready', mastered: 6, total: 6, due: 1, started: true, complete: true },
+  ] };
+  const stubUploads = (page) => page.route('**/api/ui2/material-progress', (route) => route.fulfill({ json: UPLOADS }));
   const account = async (email, name, enrol) => {
     const ctx = await browser.newContext(device);
     const call = (m, u, d) => ctx.request.fetch(BASE + u, { method: m, headers: { Origin: BASE, 'Content-Type': 'application/json' }, data: d ? JSON.stringify(d) : undefined }).then(async (r) => ({ status: r.status(), json: await r.json().catch(() => null) }));
@@ -78,7 +86,7 @@ async function main() {
     page.on('pageerror', (e) => problems.push(`${url}: ${e.message}`));
     page.on('console', (m) => { if (m.type() === 'error' && !/favicon|404|401|403/.test(m.text())) problems.push(`${url}: ${m.text()}`); });
     await page.route('**/api/tutor/dock', async (route) => (route.request().method() === 'POST' ? route.fulfill({ json: { reply: 'x is what you are counting. 3 of them plus 2 of them is 5 of them.', source: 'ai', mode: 'full' } }) : route.continue()));
-    await page.goto(BASE + url);
+    if (url !== '/about-none') await page.goto(BASE + url);
     return { ctx, page };
   };
   const overflow = (page) => page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -183,9 +191,14 @@ async function main() {
 
     // ── the app ──
     const ada = await account('ada@example.com', 'Ada Tester', [['math', 'algebra_1_part_a'], ['chess', 'chess_rules_learner']]);
-    const { ctx: hctx, page: h } = await open(ada, '/dashboard');
+    const { ctx: hctx, page: h } = await open(ada, '/about-none');
+    await stubUploads(h);
+    await h.goto(`${BASE}/dashboard`);
     await h.waitForSelector('#u2-start', { timeout: 25000 });
-    await snap(h, '20-home', 'Home');
+    await snap(h, '20-home', 'Home', 'Several subjects, uploads stubbed');
+    await h.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await snap(h, '20b-home-scrolled', 'Home, scrolled');
+    await h.evaluate(() => window.scrollTo(0, 0));
     await snapLarge(h, DESK, 'home-desk', 'Desktop: Home');
     await snapLarge(h, TAB, 'home-tab', 'Tablet: Home');
     await snapLarge(h, LAND, 'home-land', 'Landscape: Home');
@@ -201,7 +214,88 @@ async function main() {
     await snap(h, '22-menu', 'Everything menu');
     await snapLarge(h, DESK, 'menu-desk', 'Desktop: menu as a rail');
     await snapLarge(h, TAB, 'menu-tab', 'Tablet: menu as a page');
+    await h.click('#u2-row-past');
+    await h.waitForFunction(() => document.documentElement.dataset.u2View === 'past');
+    await h.waitForSelector('#u2-past .u2-opt, .u2-past-none');
+    await snap(h, '22b-past', 'Past', 'Upload stubbed; the rest real');
+    await snapLarge(h, DESK, 'past-desk', 'Desktop: Past');
     await hctx.close();
+
+    // The chat, from the bottom and from the top, with the top-or-bottom choice.
+    const { ctx: cctx, page: c } = await open(ada, '/about-none');
+    await stubUploads(c);
+    await c.goto(`${BASE}/dashboard`);
+    await c.waitForSelector('#u2-giraffe', { timeout: 25000 });
+    await c.waitForSelector('.tdock-g-btn', { state: 'attached', timeout: 15000 });
+    await c.click('#u2-giraffe');
+    await c.waitForFunction(() => document.documentElement.dataset.tdock);
+    await c.click('.tdock-panel .s-bottom');
+    await delay(300);
+    await c.fill('.tdock-form input', 'Why does the x stay?');
+    await c.click('.tdock-form .go');
+    await c.waitForSelector('.tdock-log .bot', { timeout: 10000 }).catch(() => problems.push('chat: no reply'));
+    await snap(c, '26-chat-bottom', 'Chat from the bottom', 'Page scrolls above it; choice top right. Reply stubbed');
+    await c.evaluate(() => window.scrollTo(0, 300));
+    await snap(c, '26b-chat-bottom-scrolled', 'Chat: the page scrolled above it');
+    await c.evaluate(() => window.scrollTo(0, 0));
+    await c.click('.tdock-panel .s-top');
+    await delay(400);
+    await snap(c, '27-chat-top', 'Chat from the top', 'The page below it');
+    await snapLarge(c, DESK, 'chat-home-desk', 'Desktop: chat beside Home');
+    await c.click('.tdock-panel .s-bottom').catch(() => {});
+    await c.click('.tdock-close');
+    await c.waitForFunction(() => !document.documentElement.dataset.tdock);
+    // The voice call. A real call needs a microphone and a voice provider, so these four set the states directly on the giraffe, the attributes js/tutor-giraffe.js writes in a live call.
+    const voice = (state, word, mouth) => c.evaluate(([st, w, m]) => {
+      const g = document.querySelector('.tdock-g');
+      if (st) g.dataset.voice = st; else delete g.dataset.voice;
+      g.dataset.mouth = m || '';
+      g.querySelector('.tdock-g-status').textContent = w || '';
+      document.documentElement.classList.toggle('tdock-in-call', !!st);
+    }, [state, word, mouth]);
+    await voice('listening', 'Listening');
+    await snap(c, '28-call-listening', 'Call: listening', 'State set directly, not a live call');
+    await voice('thinking', 'Thinking');
+    await snap(c, '29-call-thinking', 'Call: thinking', 'State set directly, not a live call');
+    await voice('talking', 'Talking', 'talk');
+    await delay(130);
+    await snap(c, '30-call-talking', 'Call: talking', 'State set directly; mouth animating');
+    await voice('', 'The call ended.');
+    await snap(c, '31-call-ended', 'Call: ended', 'State set directly, not a live call');
+    await cctx.close();
+
+    // The empty home, uploads only, and a child waiting for consent.
+    const out = async (email, name) => {
+      const who = await account(email, name, null);
+      const c = await browser.newContext({ ...device, storageState: who.storage });
+      await c.request.fetch(`${BASE}/api/ob2/lesson-opened`, { method: 'POST', headers: { Origin: BASE, 'Content-Type': 'application/json' }, data: '{}' });
+      return c;
+    };
+    const emptyCtx = await out('empty@example.com', 'Emi Empty');
+    const e1 = await emptyCtx.newPage();
+    await e1.goto(`${BASE}/dashboard`);
+    await e1.waitForSelector('#u2-start', { timeout: 20000 });
+    await snap(e1, '22c-empty', 'Home: nothing yet');
+    await emptyCtx.close();
+    const onlyCtx = await out('only@example.com', 'Oli Upload');
+    await onlyCtx.request.fetch(`${BASE}/api/materials/paste`, { method: 'POST', headers: { Origin: BASE, 'Content-Type': 'application/json' }, data: JSON.stringify({ title: 'Chapter 4: The cell', text: 'The cell is the basic unit of life. '.repeat(40) }) });
+    const o1 = await onlyCtx.newPage();
+    await o1.goto(`${BASE}/dashboard`);
+    await o1.waitForSelector('#u2-start', { timeout: 20000 });
+    await snap(o1, '22d-only-uploads', 'Home: uploads only', 'Real paste, no path yet');
+    await onlyCtx.close();
+    const kidCtx = await browser.newContext(device);
+    const kcall = (u, d) => kidCtx.request.fetch(BASE + u, { method: 'POST', headers: { Origin: BASE, 'Content-Type': 'application/json' }, data: JSON.stringify(d) });
+    await kcall('/api/consent/age', { birth_month: 5, birth_year: new Date().getFullYear() - 10, country: 'US' });
+    const kreg = await kcall('/api/auth/register', { username: 'samsheet', password: 'test-password-123', display_name: 'Sam', parent_email: 'parent@example.com', invite_code: invites.approve('parent@example.com').code });
+    if (kreg.status() >= 300) problems.push(`child register ${kreg.status()}`);
+    await kcall('/api/ob2/lesson-opened', {});
+    await kcall('/api/enrollments', { selections: [{ track_id: 'math', grade_id: 'algebra_1_part_a' }] });
+    const k1 = await kidCtx.newPage();
+    await k1.goto(`${BASE}/dashboard`);
+    await k1.waitForSelector('#u2-home', { timeout: 20000 }).catch(() => problems.push('child: no home'));
+    await snap(k1, '22e-child', 'Home: a child, no consent', 'No upload, no Your material');
+    await kidCtx.close();
 
     // ── a question: right and wrong, on tap-an-answer English ──
     const seen = { q: false, right: false, wrong: false };

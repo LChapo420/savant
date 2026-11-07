@@ -187,6 +187,7 @@
     const sc = document.createElement('script');
     sc.src = '/js/tutor-dock.js';
     document.body.appendChild(sc);
+    window.U2Look.watchTutor();
   }
 
   function cropNow() {

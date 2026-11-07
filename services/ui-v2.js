@@ -72,6 +72,7 @@ function pageOf(urlPath) {
 const PUBLIC = path.join(__dirname, '..', 'public');
 function middleware(req, res, next) {
   if (!enabled() || (req.method !== 'GET' && req.method !== 'HEAD')) return next();
+  if (req.path === '/api/ui2/material-progress') return require('./ui-v2-material').reply(req, res); // eslint-disable-line global-require
   if (req.path === '/start' || req.path === '/start.html') {
     return fs.readFile(path.join(PUBLIC, 'start.html'), 'utf8', (err, html) => {
       if (err) return next();

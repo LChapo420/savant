@@ -126,6 +126,23 @@ async function main() {
     assert.strictEqual(fs.readFileSync(path.join(ROOT, 'public', 'js', 'start-tutor.js'), 'utf8').replace(/\r\n/g, '\n'), was);
   });
   ok('colour pairs pass their contrast minimum, light and dark', contrast);
+  ok('an upload is complete when its path is fully built and every part is mastered or set aside; a due review keeps it complete; nothing else counts', () => {
+    process.env.DB_FILE = path.join(os.tmpdir(), `ui2-unit-${process.pid}.json`); // this file loads the database module: never the real one
+    const { summarize } = require('../services/ui-v2-material'); // eslint-disable-line global-require
+    const course = (status, ids) => ({ status, skills: ids.map((id) => ({ id })) });
+    const row = (done, extra = {}) => ({ placed: true, skills: Object.fromEntries(done.map((id) => [id, { status: 'mastered', ...extra }])) });
+    assert.deepStrictEqual(summarize(null, null), { status: 'none', mastered: 0, total: 0, due: 0, started: false, complete: false });
+    assert.strictEqual(summarize(course('ready', ['a', 'b']), row(['a'])).complete, false);
+    assert.strictEqual(summarize(course('ready', ['a', 'b']), row(['a', 'b'])).complete, true);
+    assert.strictEqual(summarize(course('partial', ['a']), row(['a'])).complete, false, 'a part-built path is not complete');
+    assert.strictEqual(summarize(course('ready', []), row([])).complete, false, 'no parts');
+    assert.strictEqual(summarize(course('ready', ['a', 'b']), row(['a']), ['b']).complete, true, 'set aside by the goal');
+    const due = summarize(course('ready', ['a']), row(['a'], { due: '2000-01-01T00:00:00Z' }));
+    assert.strictEqual(due.complete, true);
+    assert.strictEqual(due.due, 1);
+    assert.strictEqual(summarize(course('ready', ['a']), null).started, false, 'read without a progress row');
+    fs.rmSync(process.env.DB_FILE, { force: true });
+  });
 
   await withServer(null, 6841, async (base) => {
     const health = await fetchBytes(`${base}/api/health`);
@@ -136,6 +153,7 @@ async function main() {
       assert.strictEqual(sha(r.bytes), sha(disk), `flag off: /${p} is the file on disk`);
       assert(!r.bytes.includes('data-ui2'), `flag off: /${p} has no flag`);
     }
+    assert.strictEqual((await fetchBytes(`${base}/api/ui2/material-progress`)).status, 404, 'flag off: no such endpoint');
     for (const [url, file] of [['/start', 'start.html'], ['/js/start.js', 'js/start.js'], ['/css/screens/start.css', 'css/screens/start.css']]) {
       const r = await fetchBytes(base + url); // eslint-disable-line no-await-in-loop
       assert.strictEqual(sha(r.bytes), sha(fs.readFileSync(path.join(ROOT, 'public', file))), `flag off: ${url} is the file on disk`);
@@ -156,6 +174,7 @@ async function main() {
       const r = await fetchBytes(`${base}/${p}`); // eslint-disable-line no-await-in-loop
       assert(!r.bytes.includes('data-ui2'), `flag on: /${p} is left alone`);
     }
+    assert.strictEqual((await fetchBytes(`${base}/api/ui2/material-progress`)).status, 401, 'flag on: signed in only');
     const start = await fetchBytes(`${base}/start`);
     assert.strictEqual(start.bytes.toString('utf8'), ui.injectStart(fs.readFileSync(path.join(ROOT, 'public', 'start.html'), 'utf8')), 'flag on: /start is the file plus the additions');
     const js = await fetchBytes(`${base}/js/start.js`);

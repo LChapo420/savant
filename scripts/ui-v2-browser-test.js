@@ -107,7 +107,7 @@ async function main() {
       return false;
     };
 
-    await t('Home: one strong button, the same first step as GET /api/plan/today, no tab bar, no streak or XP, the big giraffe, the approved look', async () => {
+    await t('Home: one strong button on the same first step as GET /api/plan/today, a row with its own link for each other subject, upload, no tab bar, no streak or XP, the approved look', async () => {
       const { ctx, page, errors } = await open(ada, PHONE, '/dashboard');
       await page.waitForSelector('#u2-start');
       const plan = await page.evaluate(() => fetch('/api/plan/today').then((r) => r.json()));
@@ -118,7 +118,13 @@ async function main() {
       assert.strictEqual(await page.$('.header-stats'), null);
       assert(!/\bXP\b|day streak|in a row/i.test(await page.innerText('#u2-home')));
       assert((await page.$$('#u2-home .u2-btn')).length === 1);
-      assert(await page.isVisible('#u2-giraffe .tutor-svg'), 'the big giraffe beside the task');
+      assert(await page.isVisible('#u2-giraffe .tutor-svg'), 'the giraffe at the top');
+      const rows = await page.$$eval('#u2-continue .u2-rows a', (a) => a.map((x) => x.getAttribute('href')));
+      assert.strictEqual(rows.length, 1, 'the other subject has its own row');
+      assert(rows[0].includes(String(plan.blocks.find((b) => b.kind !== 'break' && b.href).enrollmentId)) === false, 'not the same subject as the button');
+      assert(await page.isVisible('#u2-upload'), 'upload your own');
+      assert.strictEqual(await page.getAttribute('#u2-upload', 'href'), '/my-material');
+      assert(await page.isVisible('#u2-minutes') && await page.isVisible('#u2-peek'), 'time and today\'s plan stay');
       assert(!await page.isVisible('.site-header .tdock-g-btn'), 'the big one does the small one\'s work');
       assert(await page.isVisible('.site-header [data-study="start"]'), 'Start session in the bar');
       const start = await page.evaluate(() => { const c = getComputedStyle(document.getElementById('u2-start')); return { radius: parseFloat(c.borderRadius), edge: c.boxShadow }; });
@@ -156,6 +162,7 @@ async function main() {
       await page.waitForSelector('#u2-start');
       await page.click('#u2-menu');
       await page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
+      assert(await page.isVisible('#u2-row-past'));
       const text = await page.innerText('#u2-all');
       for (const want of ['Your subjects', 'Mathematics', 'Chess', 'Add a subject', 'Time today', 'Review', 'My material', 'Calendar', 'Sessions', 'Profile', 'Tutor', 'Sign out']) assert(text.includes(want), want);
       assert(await page.isVisible('#u2-all-guide .tutor-svg'), 'the giraffe stays with you');
@@ -235,6 +242,39 @@ async function main() {
       await other.ctx.close();
     });
 
+    await t('The chat in the look: thin-border choice of top or bottom, the Send pill; a call fills the screen with the giraffe, talking mouth, and says how to end and switch (states set directly)', async () => {
+      const { ctx, page } = await open(ada, PHONE, '/dashboard');
+      await page.waitForSelector('#u2-giraffe');
+      await page.waitForSelector('.tdock-g-btn', { state: 'attached' });
+      await page.tap('#u2-giraffe');
+      await page.waitForFunction(() => document.documentElement.dataset.tdock);
+      const css = await page.evaluate(() => { const g = getComputedStyle(document.querySelector('.tdock-form .go')); return { radius: parseFloat(g.borderRadius), edge: g.boxShadow, title: getComputedStyle(document.querySelector('.tdock-title')).fontFamily, giraffe: !!document.querySelector('.tdock-head .tutor-svg') }; });
+      assert(css.radius >= 20 && /6px 0px/.test(css.edge), `Send ${css.radius} ${css.edge}`);
+      assert(/DM Serif/.test(css.title));
+      assert(css.giraffe, 'the giraffe in the chat head');
+      await page.click('.tdock-panel .s-top');
+      await page.waitForFunction(() => document.documentElement.dataset.tdock === 'top');
+      await page.click('.tdock-panel .s-bottom');
+      await page.waitForFunction(() => document.documentElement.dataset.tdock === 'bottom');
+      await page.click('.tdock-close');
+      await page.waitForFunction(() => !document.documentElement.dataset.tdock);
+      const set = (state, word, mouth) => page.evaluate(([st, w, m]) => { const g = document.querySelector('.tdock-g'); if (st) g.dataset.voice = st; else delete g.dataset.voice; g.dataset.mouth = m || ''; g.querySelector('.tdock-g-status').textContent = w || ''; document.documentElement.classList.toggle('tdock-in-call', !!st); }, [state, word, mouth]);
+      await set('talking', 'Talking', 'talk');
+      await page.waitForSelector('#u2-call:not([hidden])');
+      const stage = await page.evaluate(() => { const r = document.querySelector('.u2-call-g').getBoundingClientRect(); return { h: r.height, mouth: getComputedStyle(document.querySelector('#u2-call .t-mouth')).animationName, how: document.getElementById('u2-call-how').textContent, word: document.getElementById('u2-call-word').textContent }; });
+      assert(stage.h >= 380, `the giraffe is the focus: ${stage.h}px`);
+      assert.strictEqual(stage.mouth, 'u2-talk');
+      assert(/Tap me.*end the call.*Hold me.*chat/.test(stage.how));
+      assert.strictEqual(stage.word, 'Talking');
+      await set('thinking', 'Thinking');
+      await page.waitForFunction(() => document.querySelector('#u2-call .tutor').dataset.mood === 'think');
+      await set('', 'The call ended.');
+      await page.waitForFunction(() => document.querySelector('#u2-call').dataset.state === 'ended');
+      await page.click('#u2-call-done');
+      await page.waitForSelector('#u2-call', { state: 'hidden' });
+      await ctx.close();
+    });
+
     await t('Question: the giraffe asks, the answer shows in its tinted bubble, it reacts, Next has focus and goes on, the flag reports', async () => {
       const e1 = await eve(1);
       const { ctx, page } = await open(e1, PHONE, `/session?enrollment=${e1.enrollment}&ordinary=1`);
@@ -298,22 +338,78 @@ async function main() {
 
     await t('Empty home and placement pending', async () => {
       const a = await open(nia, PHONE, '/dashboard');
-      await a.page.waitForSelector('.empty-state');
+      await a.page.waitForSelector('#u2-start');
       await a.page.waitForFunction(() => document.documentElement.classList.contains('u2-ready'));
-      assert(await a.page.isVisible('.empty-state a[href="/onboarding"]'));
-      assert(await a.page.isVisible('.empty-state .tutor-svg'), 'the giraffe');
-      assert(await a.page.isVisible('.empty-state a[href="/my-material"]'));
+      assert.strictEqual(await a.page.getAttribute('#u2-start', 'href'), '/onboarding');
+      assert(await a.page.isVisible('#u2-giraffe .tutor-svg'), 'the giraffe');
+      assert(await a.page.isVisible('#u2-upload'));
+      assert.strictEqual(await a.page.$('#u2-past-link'), null, 'no Past with nothing in it');
       assert(await noOverflow(a.page));
       await a.page.click('#u2-menu');
       await a.page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
       assert(await a.page.isVisible('#u2-signout'));
-      assert(!await a.page.isVisible('.empty-state'));
+      assert(!await a.page.isVisible('#u2-start'));
       await a.ctx.close();
       const b = await open(pat, PHONE, '/dashboard');
       await b.page.waitForSelector('#u2-start');
       assert(/\/placement\?enrollment=/.test(await b.page.getAttribute('#u2-start', 'href')));
       assert.strictEqual((await b.page.innerText('#u2-start')).trim(), 'Take the placement quiz');
       await b.ctx.close();
+    });
+
+    await t('Home with only uploads: the upload gets the one strong button; Past holds finished work with a way back and a simple filter', async () => {
+      const oli = await account(browser, 'oli@example.com', 'Oli Upload', null);
+      const c = await browser.newContext({ ...PHONE, storageState: oli.storage });
+      const paste = await c.request.fetch(`${BASE}/api/materials/paste`, { method: 'POST', headers: { Origin: BASE, 'Content-Type': 'application/json' }, data: JSON.stringify({ title: 'Chapter 4', text: 'The cell is the basic unit of life. '.repeat(40) }) });
+      assert(paste.status() < 300, `paste ${paste.status()}`);
+      const page = await c.newPage();
+      await page.goto(`${BASE}/dashboard`);
+      await page.waitForSelector('#u2-start');
+      assert.strictEqual((await page.innerText('#u2-start')).trim(), 'Make a learning path');
+      assert.strictEqual(await page.getAttribute('#u2-start', 'href'), '/my-material');
+      assert(await page.isVisible('#u2-add-subject'));
+      assert((await page.$$('#u2-home .u2-btn')).length === 1, 'one strong button');
+      const reply = await page.evaluate(() => fetch('/api/ui2/material-progress').then((r) => r.json()));
+      assert.strictEqual(reply.can_upload, true);
+      assert.strictEqual(reply.materials[0].status, 'none');
+      assert.strictEqual(reply.materials[0].complete, false);
+      await c.close();
+      const e5 = await eve(5);
+      const q = await open(e5, PHONE, `/session?enrollment=${e5.enrollment}&ordinary=1`);
+      await q.page.waitForSelector('.player-head');
+      assert(await answerUntilSheet(q.page));
+      await q.page.locator('.verdict [data-act="next"]').click();
+      await delay(800);
+      await q.page.goto(`${BASE}/dashboard`);
+      await q.page.waitForSelector('#u2-past-link');
+      await q.page.click('#u2-past-link');
+      await q.page.waitForFunction(() => document.documentElement.dataset.u2View === 'past');
+      await q.page.waitForSelector('#u2-past [data-past="sessions"]');
+      assert(/\/path\?enrollment=/.test(await q.page.getAttribute('#u2-past [data-past="sessions"]', 'href')), 'a way back');
+      assert(await noOverflow(q.page));
+      await q.page.click('#u2-menu');
+      await q.page.waitForFunction(() => document.documentElement.dataset.u2View === 'home');
+      await q.page.click('#u2-menu');
+      await q.page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
+      assert(await q.page.isVisible('#u2-row-past'), 'in the Everything menu');
+      await q.ctx.close();
+    });
+
+    await t('A child account: no upload action, no Your material, and the endpoint agrees', async () => {
+      const c = await browser.newContext(PHONE);
+      const call = (u, d) => c.request.fetch(BASE + u, { method: 'POST', headers: { Origin: BASE, 'Content-Type': 'application/json' }, data: JSON.stringify(d) });
+      await call('/api/consent/age', { birth_month: 5, birth_year: new Date().getFullYear() - 10, country: 'US' });
+      const reg = await call('/api/auth/register', { username: 'samhome', password: 'test-password-123', display_name: 'Sam', parent_email: 'parent@example.com' });
+      assert(reg.status() < 300, `register ${reg.status()}`);
+      const page = await c.newPage();
+      await page.goto(`${BASE}/dashboard`);
+      await page.waitForSelector('#u2-home');
+      assert.strictEqual(await page.$('#u2-upload'), null);
+      assert.strictEqual(await page.$('#u2-material'), null);
+      assert.strictEqual(await page.$('#u2-row-material'), null);
+      const reply = await page.evaluate(() => fetch('/api/ui2/material-progress').then((r) => r.json()));
+      assert.deepStrictEqual(reply, { can_upload: false, materials: [] });
+      await c.close();
     });
 
     await t('320 px: no sideways scrolling on Home, Everything or a question; the button is on screen', async () => {
@@ -339,16 +435,17 @@ async function main() {
       await q.ctx.close();
     });
 
-    await t('Desktop: the giraffe beside the one task, no side columns, a button 260 to 360 px, the menu a rail beside the page; tablet: centred, the menu a full page', async () => {
+    await t('Desktop: a centred grid, a button 260 to 360 px, the menu a rail beside the page; tablet: centred, the menu a full page', async () => {
       const { ctx, page } = await open(ada, DESK, '/dashboard');
       await page.waitForSelector('#u2-start');
       assert(await page.isVisible('#u2-menu'));
       assert(await page.isVisible('.u2-tb-wm'));
       assert.strictEqual(await page.$('.u2-side'), null, 'no side columns');
-      const g = await page.locator('#u2-giraffe').boundingBox();
       const b = await page.locator('#u2-start').boundingBox();
-      assert(b.x > g.x + g.width - 1, 'the task is beside the giraffe');
       assert(b.width >= 260 && b.width <= 360, `button ${b.width}`);
+      const col1 = await page.locator('#u2-continue').boundingBox();
+      const col2 = await page.locator('#u2-material').boundingBox();
+      assert(col2.x > col1.x + col1.width - 1 && Math.abs(col1.y - col2.y) < 2, 'two columns, side by side');
       assert.strictEqual(await page.evaluate(() => getComputedStyle(document.body).paddingLeft), '0px');
       await page.click('#u2-menu');
       await page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
@@ -382,7 +479,7 @@ async function main() {
       await ctx.close();
     });
 
-    await t('Keyboard: tab reaches menu, Start session, giraffe, minutes, Start, next steps, in order and with a visible focus ring', async () => {
+    await t('Keyboard: tab reaches menu, Start session, giraffe, Start, minutes, today\'s plan, in order and with a visible focus ring', async () => {
       const { ctx, page } = await open(ada, { viewport: { width: 375, height: 812 } }, '/dashboard');
       await page.waitForSelector('#u2-start');
       await delay(400);
@@ -391,7 +488,7 @@ async function main() {
         await page.keyboard.press('Tab'); // eslint-disable-line no-await-in-loop
         seen.push(await page.evaluate(() => { const a = document.activeElement; return a.id || a.getAttribute('data-study') || a.className || a.tagName; })); // eslint-disable-line no-await-in-loop
       }
-      const order = ['u2-menu', 'start', 'u2-giraffe', 'u2-minutes', 'u2-start', 'u2-peek'].map((k) => seen.findIndex((s) => String(s).includes(k)));
+      const order = ['u2-menu', 'start', 'u2-giraffe', 'u2-start', 'u2-minutes', 'u2-peek'].map((k) => seen.findIndex((s) => String(s).includes(k)));
       assert(order.every((x) => x >= 0), `missing in ${seen.join(', ')}`);
       assert.deepStrictEqual([...order].sort((a, b) => a - b), order, `order ${seen.join(', ')}`);
       await page.focus('#u2-start');
@@ -569,7 +666,7 @@ async function main() {
       assert(await noOverflow(page));
       await page.click('#u2-after-upload a');
       await page.waitForURL(/\/dashboard/);
-      await page.waitForSelector('.empty-state');
+      await page.waitForSelector('#u2-upload');
       assert(/\/dashboard/.test(page.url()), 'home, not back to /start');
       await ctx.close();
     });

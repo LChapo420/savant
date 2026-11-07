@@ -3,8 +3,9 @@
  * js/dashboard.js runs untouched and draws today's page into #root, with every decision it always made: placement, checkpoints, a held Final, catch-ups, retake, the planner, the offers.
  * This file then shows that work two ways, on the one page:
  *
- *   Home        one task and one strong button, the giraffe beside it. Read from GET /api/plan/today, the same reply and the same first step as today's "Start" button;
- *               with no step (nothing due, the plan unavailable) it falls back to the lead card js/dashboard.js drew, with that card's own wording and link.
+ *   Home        Continue: a row per subject, each with its own next step from the card js/dashboard.js drew, and the one strong button on the plan's first step (GET /api/plan/today, the same reply and
+ *               first step as today's "Start" button; with no step, the lead card's own wording and link). Your material: upload, then unfinished uploads. A link to Past. The time picker and the day's plan stay, quietly.
+ *   Past        /dashboard#past: finished uploads, finished paths and levels, past sessions, each with a way to reopen it. Read only.
  *   Everything  /dashboard#everything: the real subject cards, planner, recent sessions, offers and the rest, moved into one menu. Moved, not copied, so their listeners keep working.
  *               Other pages link here rather than keep a second copy of any of it.
  *
@@ -23,6 +24,8 @@
   let built = false;
   let focusReq = 0;
   let cameFromHome = false;
+  let mats = { can_upload: false, materials: [] };
+  let pastBuilt = false;
 
   // ── small pieces ─────────────────────────────────────────────────────────
   const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
@@ -71,7 +74,6 @@
       path: whole ? whole.getAttribute('href') : null,
     };
   };
-  const shortName = (name) => (name === 'Mathematics' ? 'Math' : name);
   const capital = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 
   async function focusOf() {
@@ -115,7 +117,7 @@
     const note = sameAsLead && lead.detail && !/^0 of /.test(lead.detail) ? ` ${lead.detail}` : '';
     return {
       icon: symbol,
-      eyebrow: `${e ? `${shortName(e.track.name)}, ` : ''}${first.kind === 'catchup' ? 'catch-up ' : ''}level ${first.level}`,
+      eyebrow: `${e ? `${e.track.name}, ` : ''}${first.kind === 'catchup' ? 'catch-up ' : ''}level ${first.level}`,
       title,
       detail: note.trim(),
       href: first.href,
@@ -127,54 +129,149 @@
   }
 
   // ── Home ─────────────────────────────────────────────────────────────────
-  /** The line under the button: what comes after, in the mockup's few words. */
-  const nextWords = (b) => {
-    const e = ((progress && progress.enrollments) || []).find((x) => x.id === b.enrollmentId);
-    return b.kind !== 'break' && b.kind !== 'review' && !b.enforcer && !b.placement && e ? shortName(e.track.name) : stepName(b);
+  // ── pieces of Home ───────────────────────────────────────────────────────
+  const active = () => ((progress && progress.enrollments) || []).filter((e) => e.status !== 'graduated');
+  const shareOf = (e) => { const total = Number(e.grade && e.grade.pathLength) || 0; return e.status === 'placement_pending' || !total ? 0 : Math.max(2, Math.min(100, Math.round(((e.current_level - 1) / total) * 100))); };
+  const levelWords = (e) => (e.status === 'placement_pending' ? 'Not placed yet' : `Level ${e.current_level}`);
+  const cardOf = (e) => { const a = root.querySelector(`.subject-card a[href="/path?enrollment=${e.id}"]`); return a ? a.closest('.subject-card') : null; };
+  /** A subject's own way on: the link js/dashboard.js worked out for its card, and the card's note if it has one. */
+  const hrefOf = (e) => { const c = cardOf(e); const a = c && c.querySelector('.subject-card-act a.btn'); return a ? a.getAttribute('href') : `/path?enrollment=${e.id}`; };
+  const mini = (pct, id) => `<span class="u2-mini" aria-hidden="true"><i style="width:${pct}%${id ? `;background:var(--s-${esc(id)}, var(--act))` : ''}"></i></span>`;
+  const subjectRow = (e) => `<a class="u2-opt u2-s-row" href="${esc(hrefOf(e))}" data-enrollment="${e.id}">${App.symbol(e.track)}<span class="u2-o-t"><b>${esc(e.track.name)}</b><small>${esc(levelWords(e))}</small></span>${mini(shareOf(e), e.track.id)}${ic('chev-r', 'u2-mute')}</a>`;
+  const materialWords = (m) => {
+    if (m.status === 'none') return 'Not started';
+    if (m.status === 'building' && !m.total) return 'Being built';
+    if (!m.mastered && !m.started) return `${plural(m.total, 'part')}, not started`;
+    return `${m.mastered} of ${plural(m.total, 'part')}`;
   };
-  let homeGiraffe = null;
-  function giraffeInto(slot) {
-    if (!slot) return;
-    if (!homeGiraffe) {
-      homeGiraffe = document.createElement('button');
-      homeGiraffe.type = 'button';
-      homeGiraffe.id = 'u2-giraffe';
-      const host = document.createElement('span');
-      homeGiraffe.appendChild(host);
-      App.ui2.look.giraffe(host, { crop: 'full', mood: 'idle' });
-      App.ui2.look.bind(homeGiraffe);
-    }
-    slot.appendChild(homeGiraffe);
+  const materialHref = (m) => (m.total ? `/my-material-study?id=${m.id}` : '/my-material');
+  const materialRow = (m) => `<a class="u2-opt u2-s-row" href="${materialHref(m)}" data-material="${m.id}">${ic('note')}<span class="u2-o-t"><b>${esc(m.title)}</b><small>${esc(materialWords(m))}</small></span>${m.total ? mini(Math.round((m.mastered / m.total) * 100)) : ''}${ic('chev-r', 'u2-mute')}</a>`;
+
+  function guideInto(slot, words, id) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    if (id) btn.id = id;
+    const host = document.createElement('span');
+    btn.appendChild(host);
+    App.ui2.look.giraffe(host, { crop: window.matchMedia('(min-width: 768px)').matches ? 'full' : 'bust', mood: 'idle' });
+    App.ui2.look.bind(btn);
+    const guide = document.createElement('div');
+    guide.className = 'u2-guide';
+    guide.appendChild(btn);
+    guide.insertAdjacentHTML('beforeend', `<div class="u2-tailwrap"><div class="u2-bubble">${esc(words)}</div></div>`);
+    slot.prepend(guide);
     document.documentElement.classList.add('u2-has-guide');
   }
+
   async function drawHome() {
     const host = document.getElementById('u2-home');
     if (!host) return;
     const req = ++focusReq;
     const focus = await focusOf();
     if (req !== focusReq) return;
-    const blocks = (plan && plan.blocks) || [];
-    const at = focus && focus.block ? blocks.indexOf(focus.block) : -1;
-    const after = at >= 0 ? blocks.slice(at + 1) : [];
-    const nextUp = after[0] || null;
-    const say = focus ? 'Ready when you are.' : 'Nothing is due today.';
-    host.innerHTML = `
-      <div class="u2-focus">
-        <div class="u2-big" id="u2-big"></div>
-        <div class="u2-tx">
-          <div class="u2-bubble u2-down"><b>${esc(say)}</b></div>
-          ${focus ? `
-            <p class="u2-meta">${esc(focus.eyebrow)}</p>
-            <h1 class="u2-t1" tabindex="-1" id="u2-title">${esc(focus.title)}</h1>
-            ${focus.detail ? `<p class="u2-m u2-detail">${esc(focus.detail)}</p>` : ''}` : ''}
-          ${plan ? `<button type="button" class="u2-chip-t" id="u2-minutes" aria-haspopup="dialog" aria-label="${plan.minutes} minutes today. Change">${ic('clock')}${plan.minutes} min${ic('chev-d')}</button>` : ''}
-          <div class="u2-go">
-            ${focus && focus.href ? `<a class="${focus.strong ? 'u2-btn' : 'u2-btn2'}" id="u2-start" href="${esc(focus.href)}">${esc(focus.label)}</a>` : ''}
-            ${blocks.length ? `<button type="button" class="u2-next" id="u2-peek" aria-haspopup="dialog">${nextUp ? `Next: ${esc(nextWords(nextUp))}, ${mins(nextUp.estMinutes)}` : 'Nothing else planned today'}</button>` : ''}
-          </div>
-        </div>
+    const subjects = active();
+    const unfinished = mats.materials.filter((m) => !m.complete);
+    const hasPast = !!(mats.materials.some((m) => m.complete) || ((progress && progress.recent) || []).length || ((progress && progress.enrollments) || []).some((e) => e.status === 'graduated'));
+    const leadId = focus && focus.block ? focus.block.enrollmentId : (leadCard() ? leadCard().id : null);
+    const lead = subjects.find((e) => e.id === leadId) || null;
+    const rest = subjects.filter((e) => e !== lead);
+    const nothing = !subjects.length && !mats.materials.length;
+    let main = '';
+    if (focus && focus.href && (subjects.length || !unfinished.length)) {
+      // The one strong button: the plan's next step.
+      main = `<div class="u2-feature">
+        ${lead ? `<div class="u2-f-top">${App.symbol(lead.track)}<span class="u2-o-t"><b>${esc(lead.track.name)}</b><small>${esc(levelWords(lead))}</small></span>${mini(shareOf(lead), lead.track.id)}</div>` : ''}
+        <h1 class="u2-t1" tabindex="-1" id="u2-title">${esc(focus.title)}</h1>
+        ${focus.detail ? `<p class="u2-m u2-detail">${esc(focus.detail)}</p>` : ''}
+        <a class="${focus.strong ? 'u2-btn' : 'u2-btn2'}" id="u2-start" href="${esc(focus.href)}">${esc(focus.label)}</a>
       </div>`;
-    giraffeInto(document.getElementById('u2-big'));
+    } else if (!subjects.length && unfinished.length && mats.can_upload) {
+      const m = unfinished[0];
+      main = `<div class="u2-feature">
+        <div class="u2-f-top">${ic('note')}<span class="u2-o-t"><b>Your material</b><small>${esc(materialWords(m))}</small></span>${m.total ? mini(Math.round((m.mastered / m.total) * 100)) : ''}</div>
+        <h1 class="u2-t1" tabindex="-1" id="u2-title">${esc(m.title)}</h1>
+        <a class="u2-btn" id="u2-start" href="${materialHref(m)}">${m.total ? 'Continue' : 'Make a learning path'}</a>
+      </div>`;
+    } else if (nothing || !subjects.length) {
+      main = `<div class="u2-feature"><h1 class="u2-t1" tabindex="-1" id="u2-title">Pick your first subject</h1><a class="u2-btn" id="u2-start" href="/onboarding">Choose subjects</a></div>`;
+    }
+    const leadMaterial = !subjects.length && unfinished.length && mats.can_upload ? unfinished[0] : null;
+    const listed = unfinished.filter((m) => m !== leadMaterial);
+    const canPlan = !!(plan && subjects.length);
+    host.innerHTML = `
+      <div class="u2-home-body">
+        <section class="u2-h-sec" id="u2-continue" aria-label="Continue">
+          ${subjects.length ? '<h2 class="u2-h">Continue</h2>' : ''}
+          ${main}
+          ${rest.length ? `<div class="u2-rows">${rest.map(subjectRow).join('')}</div>` : ''}
+          ${!subjects.length && mats.materials.length ? `<a class="u2-opt u2-s-row" id="u2-add-subject" href="/onboarding">${ic('plus')}<b>Add a subject</b></a>` : ''}
+          ${canPlan ? `<div class="u2-quiet">
+            <button type="button" class="u2-chip-t" id="u2-minutes" aria-haspopup="dialog" aria-label="${plan.minutes} minutes today. Change">${ic('clock')}${plan.minutes} min${ic('chev-d')}</button>
+            ${(plan.blocks || []).length ? '<button type="button" class="u2-next" id="u2-peek" aria-haspopup="dialog">Today\'s plan</button>' : ''}
+          </div>` : ''}
+        </section>
+        ${mats.can_upload ? `
+        <section class="u2-h-sec" id="u2-material" aria-label="Your material">
+          <h2 class="u2-h">Your material</h2>
+          <div class="u2-rows">
+            <a class="u2-opt u2-s-row" id="u2-upload" href="/my-material">${ic('upload')}<b>Upload your own</b></a>
+            ${listed.map(materialRow).join('')}
+          </div>
+        </section>` : ''}
+        ${hasPast ? `<a class="u2-btn2" id="u2-past-link" href="#past">Past</a>` : ''}
+      </div>`;
+    guideInto(host, focus || mats.materials.length ? 'Ready when you are.' : 'Let\'s get you started.', 'u2-giraffe');
+    // The empty page's other first steps (the style quiz, the survey) stay on the page, under the sections.
+    const empty = root.querySelector('.empty-state');
+    if (empty) host.querySelector('.u2-home-body').appendChild(empty);
+  }
+
+  // ── Past ─────────────────────────────────────────────────────────────────
+  const dayWords = (iso) => { const d = new Date(iso); return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); };
+  const KIND = { placement: 'Placement', session: 'Session', checkpoint: 'Checkpoint', skip: 'Challenge exam', lesson: 'Lesson', spanish: 'Activities' };
+  const pastRow = (group, href, icon, title, sub) => `<a class="u2-opt u2-s-row" data-past="${group}" href="${esc(href)}">${icon}<span class="u2-o-t"><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</span>${ic('chev-r', 'u2-mute')}</a>`;
+  async function buildPast() {
+    if (pastBuilt) return;
+    pastBuilt = true;
+    const past = document.createElement('div');
+    past.id = 'u2-past';
+    past.innerHTML = '<h1 class="u2-vh" tabindex="-1" id="u2-past-title">Past</h1><div class="u2-home-body" id="u2-past-body"><p class="u2-m">Loading</p></div>';
+    root.appendChild(past);
+    guideInto(past, 'What you have finished.');
+    const all = (progress && progress.enrollments) || [];
+    const uploads = mats.materials.filter((m) => m.complete).map((m) => pastRow('uploads', `/my-material-study?id=${m.id}`, ic('note'), m.title, `All ${plural(m.total, 'part')} done${m.due ? `, ${plural(m.due, 'review')} due` : ''}`));
+    const paths = all.filter((e) => e.status === 'graduated').map((e) => pastRow('subjects', `/path?enrollment=${e.id}`, App.symbol(e.track), `${e.track.name}, ${App.gradeParts(e.grade.name)[0]}`, 'Path finished'));
+    // Levels finished: what the path itself marks done. Placed or skipped past isn't finished, and set-aside levels aren't counted.
+    const levels = [];
+    await Promise.all(all.filter((e) => e.status !== 'graduated' && e.status !== 'placement_pending').map(async (e) => {
+      const url = `/api/path/${e.id}?view=ticks`;
+      try {
+        const reply = await (gets.get(url) || App.api.get(url));
+        const done = (reply.nodes || []).filter((n) => n.state === 'done' && !['known', 'unseen'].includes(n.unit_status) && !n.deferred);
+        if (done.length) levels.push(pastRow('subjects', `/path?enrollment=${e.id}`, App.symbol(e.track), e.track.name, `${plural(done.length, 'level')} finished`));
+      } catch { /* nothing to show for this subject */ }
+    }));
+    const byTrack = (id) => all.find((e) => e.track.id === id);
+    const sessions = ((progress && progress.recent) || []).map((r) => {
+      const e = byTrack(r.track_id);
+      const lv = (r.levels && r.levels.length ? r.levels : [r.level]).filter(Boolean);
+      const where = r.kind === 'placement' || !lv.length ? '' : `, level ${lv.length > 1 ? `${lv[0]} to ${lv[lv.length - 1]}` : lv[0]}`;
+      const score = r.score == null || !r.answered ? '' : `, ${Math.round(r.score * r.answered)} of ${r.answered}`;
+      return pastRow('sessions', e ? `/path?enrollment=${e.id}` : '/dashboard', e ? App.symbol(e.track) : ic('history'), `${e ? e.track.name : KIND[r.kind] || 'Session'}${where}`, `${dayWords(r.ended_at)}, ${KIND[r.kind] || 'Session'}${score}`);
+    });
+    const groups = [['uploads', 'Uploads', uploads], ['subjects', 'Subjects', [...paths, ...levels]], ['sessions', 'Sessions', sessions]].filter((g) => g[2].length);
+    const body = document.getElementById('u2-past-body');
+    if (!groups.length) { body.innerHTML = '<p class="u2-m u2-past-none">Nothing here yet. What you finish will show up here.</p>'; return; }
+    body.innerHTML = `
+      ${groups.length > 1 ? `<div class="u2-picker u2-past-filter" role="group" aria-label="Show"><button type="button" class="u2-chip on" data-past-show="all" aria-pressed="true">All</button>${groups.map((g) => `<button type="button" class="u2-chip" data-past-show="${g[0]}" aria-pressed="false">${g[1]}</button>`).join('')}</div>` : ''}
+      ${groups.map((g) => `<section class="u2-h-sec" data-past-group="${g[0]}"><h2 class="u2-h">${g[1]}</h2><div class="u2-rows">${g[2].join('')}</div></section>`).join('')}`;
+    body.addEventListener('click', (ev) => {
+      const b = ev.target.closest('[data-past-show]');
+      if (!b) return;
+      const want = b.dataset.pastShow;
+      body.querySelectorAll('[data-past-show]').forEach((x) => { const on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', String(on)); });
+      body.querySelectorAll('[data-past-group]').forEach((g) => { g.hidden = want !== 'all' && g.dataset.pastGroup !== want; });
+    });
   }
 
   // ── sheets: the day's steps, and the minutes ─────────────────────────────
@@ -258,7 +355,8 @@
           <h2 class="u2-vh">Everything else</h2>
           <div class="u2-grid">
             ${reviewHref ? tile(reviewHref, 'loop', 'Review', due.length ? `<span class="u2-count" aria-label="${plural(due.length, 'skill')} due">${due.length}</span>` : '') : ''}
-            ${tile('/my-material', 'note', 'My material', '', 'id="u2-row-material"')}
+            ${mats.can_upload ? tile('/my-material', 'note', 'My material', '', 'id="u2-row-material"') : ''}
+            ${tile('/dashboard#past', 'history', 'Past', '', 'id="u2-row-past"')}
             ${tileBtn('u2-t-calendar', 'calendar', 'Calendar', opens('u2-panel-calendar'))}
             ${recent ? tileBtn('u2-t-recent', 'history', 'Sessions', opens('u2-panel-recent')) : ''}
             ${tile('/profile', 'user', 'Profile')}
@@ -341,18 +439,19 @@
 
   // ── which view ───────────────────────────────────────────────────────────
   function applyView(moveFocus) {
-    const everything = location.hash === '#everything';
-    document.documentElement.dataset.u2View = everything ? 'everything' : 'home';
+    const view = location.hash === '#everything' ? 'everything' : location.hash === '#past' ? 'past' : 'home';
+    if (view === 'past' && document.documentElement.classList.contains('u2-ready')) buildPast();
+    document.documentElement.dataset.u2View = view;
     const menu = document.getElementById('u2-menu');
     if (menu) {
-      menu.innerHTML = ic(everything ? 'x' : 'menu');
-      menu.setAttribute('aria-label', everything ? 'Close everything' : 'Open everything');
-      menu.setAttribute('href', everything ? '/dashboard' : '/dashboard#everything');
+      menu.innerHTML = ic(view === 'home' ? 'menu' : 'x');
+      menu.setAttribute('aria-label', view === 'home' ? 'Open everything' : view === 'past' ? 'Close past' : 'Close everything');
+      menu.setAttribute('href', view === 'home' ? '/dashboard#everything' : '/dashboard');
     }
-    document.title = everything ? 'Everything | Savant' : 'Home | Savant';
+    document.title = view === 'everything' ? 'Everything | Savant' : view === 'past' ? 'Past | Savant' : 'Home | Savant';
     if (moveFocus) {
       window.scrollTo(0, 0);
-      const target = document.getElementById(everything ? 'u2-all-title' : 'u2-title');
+      const target = document.getElementById(view === 'everything' ? 'u2-all-title' : view === 'past' ? 'u2-past-title' : 'u2-title');
       if (target) target.focus({ preventScroll: true });
     }
   }
@@ -361,7 +460,10 @@
     const menu = document.getElementById('u2-menu');
     if (menu) {
       menu.addEventListener('click', (ev) => {
-        if (location.hash === '#everything') {
+        if (location.hash === '#past') {
+          ev.preventDefault();
+          location.hash = '';
+        } else if (location.hash === '#everything') {
           ev.preventDefault();
           if (cameFromHome) history.back();
           else location.hash = '';
@@ -384,23 +486,14 @@
     try { progress = progressReply ? await progressReply : null; } catch { progress = null; }
     const planReply = gets.get('/api/plan/today');
     try { plan = planReply ? await planReply : null; } catch { plan = null; }
-    const empty = root.querySelector('.empty-state');
-    if (!empty) {
-      const host = document.createElement('div');
-      host.id = 'u2-home';
-      root.insertBefore(host, root.firstChild);
-      await drawHome();
-    } else {
-      const big = document.createElement('div');
-      big.className = 'u2-big';
-      empty.insertBefore(big, empty.firstChild);
-      giraffeInto(big);
-      const main = empty.querySelector('.btn-primary');
-      if (main) main.insertAdjacentHTML('afterend', '<a class="u2-btn2" href="/my-material">My material</a>');
-    }
+    try { mats = await App.api.get('/api/ui2/material-progress'); } catch { mats = { can_upload: false, materials: [] }; }
+    const host = document.createElement('div');
+    host.id = 'u2-home';
+    root.insertBefore(host, root.firstChild);
+    await drawHome();
     buildAll();
-    applyView(false);
     document.documentElement.classList.add('u2-ready');
+    applyView(false);
   }
   const check = () => { if (root.querySelector('.home, .empty-state')) build(); };
   if (window.MutationObserver) new MutationObserver(check).observe(root, { childList: true });
