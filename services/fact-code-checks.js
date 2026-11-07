@@ -344,7 +344,9 @@ function checkArithmetic(sentence, scope, push) {
     if (/[\p{L}'`^]$/u.test(sentence.slice(0, run.at))) continue;
     const head = run.toks[0];
     if (head.t === 'op' && (head.v !== '-' || /[\p{L}\d)]\s*$/u.test(sentence.slice(0, run.at)))) continue;
-    if (/^\s*(?:r\b|rem\b|remainder|with a remainder|left over)/i.test(sentence.slice(run.end))) continue;
+    if (/^\s*(?:r\b|rem\b|remainder|with a remainder|left over|full\b)|\b(?:left over|remainder)\b/i.test(sentence.slice(run.end, run.end + 40))) continue;
+    if (/^\s*[a-zA-Z]{1,3}\/[a-zA-Z]{1,3}\b/.test(sentence.slice(run.end))) continue; // "100 = 100pi dr/dt"
+    if (/\b(?:minus|plus|times|over|divided by|by|of|to the)\s*$/i.test(sentence.slice(0, run.at))) continue; // "5 times 5 minus 3 = 25 - 3"
     const { segs, rels, raw } = sidesOf(run, scope);
     const sides = trimmed(segs, raw, scope);
     // an ordered pair or an interval such as [1, 3] is words and separators here, so nothing to do

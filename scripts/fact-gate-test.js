@@ -84,9 +84,9 @@ assert.strictEqual(gate.appliesTo({ userId: 7 }), false, 'a learner keeps today\
     return { data: { rulings: [{ flag: 0, real: true, reason: 'r' }, { flag: 1, real: false, reason: 'f' }] }, cost: 0.02, model: slot.model };
   };
   const r = await gate.read({ context, blocks, checks: [], call });
-  assert.strictEqual(r.claims.filter((c) => c.by === 'code').length, 1, 'the code finding goes through with no ruling');
+  assert.strictEqual(r.claims.filter((c) => c.by === 'code').length, 1, 'a code finding the decider did not rule out stands');
   assert.deepStrictEqual(r.claims.filter((c) => c.by === 'reader').map((c) => c.claim), ['Plain words'], 'duplicate merged, ruled-false dropped');
-  assert.strictEqual(r.stages.raised, 2);
+  assert.strictEqual(r.stages.raised, 3);
   assert.ok(Math.abs(r.cost - 0.04) < 1e-9);
 
   // Writer's family skipped, unless that leaves nobody.

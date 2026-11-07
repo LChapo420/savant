@@ -5,7 +5,8 @@
  *   FACT_GATE=off    (default) nothing changes
  *
  * One read, three stages:
- *   1. the code pass (services/fact-code-checks.js): free, 20 ms, recomputes what can be recomputed. Its certain findings go straight to repair;
+ *   1. the code pass (services/fact-code-checks.js): free, 20 ms, recomputes what can be recomputed. Its findings go to the decider with the rest: on 6,346 unseen stored rows its first
+ *      48 "certain" flags were all false alarms (now fixed), so a recomputation is not a verdict either;
  *   2. readers, each in its own model family, hunt for errors (only the errors, so a read costs a tenth of the claim-by-claim list). Families the writer belongs to are skipped;
  *   3. a decider rules on what the readers and the code's suspicions raised, so a false alarm does not cost a repair.
  * Readers and decider come from FACT_GATE_READERS and FACT_GATE_DECIDER as `provider:model,...`. The defaults are in DEFAULTS; a reader that cannot answer does not sink the read
@@ -111,7 +112,7 @@ async function read({ context, blocks, checks, excludeFamilies = null, call = de
     }
   });
   if (!stages.read) return null;
-  for (const s of suspects) if (!seen.has(flagKey(s))) seen.set(flagKey(s), { where: s.where, claim: s.claim, why: s.rule, truth: s.truth });
+  for (const s of [...suspects, ...certain]) if (!seen.has(flagKey(s))) seen.set(flagKey(s), { where: s.where, claim: s.claim, why: `${s.rule}${s.certain ? ' (recomputed by code)' : ''}`, truth: s.truth, code: !!s.certain });
   const raised = [...seen.values()];
   stages.raised = raised.length;
   let kept = raised;
@@ -125,7 +126,7 @@ async function read({ context, blocks, checks, excludeFamilies = null, call = de
     }
   }
   stages.kept = kept.length;
-  const claims = [...certain.map((f) => ({ where: f.where, claim: f.claim, kind: 'fact', verdict: 'false', evidence: 'computed', truth: f.truth, by: 'code' })), ...kept.map((f) => ({ where: f.where, claim: f.claim, kind: 'fact', verdict: 'false', evidence: 'knowledge', truth: f.truth || f.why, by: 'reader' }))];
+  const claims = kept.map((f) => ({ where: f.where, claim: f.claim, kind: 'fact', verdict: 'false', evidence: f.code ? 'computed' : 'knowledge', truth: f.truth || f.why, by: f.code ? 'code' : 'reader' }));
   return { claims, cost, usage, model: [...new Set(models)].join('+') || 'code', stages };
 }
 
