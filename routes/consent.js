@@ -1108,6 +1108,7 @@ module.exports = {
   evaluateAge,
   screenFromSession,
   requestConsent,
+  originOf,
   sweep,
   deleteChild,
   collectionNames,

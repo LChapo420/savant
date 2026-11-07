@@ -16,6 +16,8 @@ function attachUser(req, res, next) {
     // Sessions outlive a crash and a crash can lose the last moments of the store, so the id on a session can come to belong to someone who
     // signed up after the restart. The session says when its account was made, and a different account does not get in on it.
     if (user && req.session.uc && user.created_at !== req.session.uc) user = null;
+    // A password reset (routes/password-reset.js) moves the account's epoch on, which ends every session signed in before it. An account never reset has none.
+    if (user && (req.session.ep || 0) !== (user.session_epoch || 0)) user = null;
     if (user) {
       req.user = user;
       // The beta comparison draws a learner's arm once, at first use (services/beta-arm.js); a failure must never block a request.

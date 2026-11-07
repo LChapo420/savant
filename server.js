@@ -116,6 +116,10 @@ app.use(attachUser);
 app.use(require('./middleware/beta-gate').betaGate({ db: require('./config/db'), isAdmin: require('./middleware/auth').isAdmin }));
 // Logged-out visitors get the sign-in page and the few public pages only (BETA_SIGNIN_ONLY, middleware/signin-only.js). Runs before every page and static file.
 const signinOnly = require('./middleware/signin-only');
+// Forgot password (routes/password-reset.js, PASSWORD_RESET=on): its pages and the link on the sign-in page, ahead of the gate that would send them to sign-in. Off, they are 404.
+const passwordReset = require('./routes/password-reset');
+passwordReset.setup();
+app.use(passwordReset.pages);
 app.use(signinOnly.gate);
 // Age screen and parental consent (routes/consent.js). The permissions gate turns
 // the camera and microphone off in the browser for an account that may not use
@@ -144,6 +148,7 @@ app.use('/api', (req, res, next) => {
   next();
 });
 
+app.use('/api/auth/password-reset', passwordReset.router);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/speed', require('./routes/speed-placement'));
 app.use('/api/consent', consent.router);

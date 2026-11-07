@@ -44,6 +44,22 @@ function limit(name, max, windowMs, opts = {}) {
   };
 }
 
+/**
+ * The same count, asked rather than enforced: true while this key is within its allowance. For a limit the caller must not show, such as how
+ * many reset emails one address may get: a visible refusal there would say something about that address.
+ */
+function take(name, key, max, windowMs) {
+  const bucket = `${name}:${key}`;
+  const now = Date.now();
+  const entry = buckets.get(bucket);
+  if (!entry || now > entry.resetAt) {
+    buckets.set(bucket, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  entry.count++;
+  return entry.count <= max;
+}
+
 // Counters for addresses that have gone quiet are dropped every ten minutes, so
 // the map cannot grow without bound.
 setInterval(() => {
@@ -51,4 +67,4 @@ setInterval(() => {
   for (const [key, entry] of buckets) if (now > entry.resetAt) buckets.delete(key);
 }, 10 * 60 * 1000).unref();
 
-module.exports = { limit };
+module.exports = { limit, take };

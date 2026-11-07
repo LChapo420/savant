@@ -43,12 +43,13 @@ const pageOf = (p) => (p.toLowerCase().replace(/\/+$/, '').replace(/\.html?$/, '
 const isAsset = (p) => /\.[a-z0-9]{1,12}$/i.test(p) && !/\.html?$/i.test(p);
 
 const marked = new Map();
-/** The page with its mark, and on the sign-in page without the block that offers sign-up. A deploy restarts the process, so a file read once stays right. */
+/** A page's HTML with the mark, and without the block that offers sign-up. */
+function markHtml(html) {
+  return html.replace(/<!-- sign-up -->[\s\S]*?<!-- \/sign-up -->\s*/, '').replace('<body ', '<body data-signin-only="1" ');
+}
+/** The page with its mark. A deploy restarts the process, so a file read once stays right. */
 function markedPage(page) {
-  if (!marked.has(page)) {
-    const html = fs.readFileSync(path.join(PUBLIC_DIR, `${page.slice(1)}.html`), 'utf8');
-    marked.set(page, html.replace(/<!-- sign-up -->[\s\S]*?<!-- \/sign-up -->\s*/, '').replace('<body ', '<body data-signin-only="1" '));
-  }
+  if (!marked.has(page)) marked.set(page, markHtml(fs.readFileSync(path.join(PUBLIC_DIR, `${page.slice(1)}.html`), 'utf8')));
   return marked.get(page);
 }
 
@@ -78,4 +79,4 @@ function refuseSignUp(req, res, next) {
   return active(req) ? res.status(403).json(CLOSED) : next();
 }
 
-module.exports = { gate, active, refuseSignUp, PUBLIC_PAGES, CLOSED };
+module.exports = { gate, active, refuseSignUp, markHtml, PUBLIC_PAGES, CLOSED };

@@ -48,6 +48,7 @@ function startSession(req, user, { remember } = {}) {
       if (err) return reject(err);
       req.session.userId = user.id;
       req.session.uc = user.created_at; // whose id this is: see middleware/auth.js attachUser
+      if (user.session_epoch) req.session.ep = user.session_epoch; // moved on by a password reset, which ends older sessions: see attachUser
       // Kept with the session, so the rolling cookie keeps this length. Unticked: no expiry, so the cookie ends with the browser and the
       // store drops the row a day after the last visit. A caller that does not say keeps the default in server.js.
       if (remember === true) req.session.cookie.maxAge = REMEMBER_MS;
