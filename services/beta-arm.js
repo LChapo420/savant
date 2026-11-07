@@ -61,7 +61,7 @@ function bandOf(user) {
 
 /** The subject of the learner's first enrolment ('none' before they have one). */
 function subjectOf(userId) {
-  const rows = db.find('enrollments', (e) => e.user_id === userId);
+  const rows = db.forUser('enrollments', userId).slice();
   if (!rows.length) return 'none';
   rows.sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)) || a.id - b.id);
   return String(rows[0].track_id || 'none');

@@ -1,0 +1,329 @@
+{
+ "generated_at": "2026-11-06T22:02:10.618Z",
+ "simulated": true,
+ "n_texts": 34,
+ "by_change": {
+  "shorter": {
+   "asked": 34,
+   "served": 18,
+   "refused": 10,
+   "noop": 6,
+   "mean_cut": 0.19123254487236085,
+   "worst_1pct_cut": 0.09523809523809523,
+   "worst_5pct_cut": 0.09523809523809523,
+   "worst_10pct_cut": 0.09999999999999998,
+   "coral-deepseek": {
+    "read": 18,
+    "clean": 18
+   },
+   "zerogpu-glm": {
+    "read": 18,
+    "clean": 17
+   }
+  },
+  "simpler": {
+   "asked": 34,
+   "served": 33,
+   "refused": 1,
+   "noop": 0,
+   "reading_load_lower": 33,
+   "coral-deepseek": {
+    "read": 33,
+    "clean": 33
+   },
+   "zerogpu-glm": {
+    "read": 33,
+    "clean": 33
+   }
+  },
+  "examples": {
+   "asked": 34,
+   "served": 34,
+   "refused": 0,
+   "noop": 0,
+   "longer": 34,
+   "coral-deepseek": {
+    "read": 34,
+    "clean": 34
+   },
+   "zerogpu-glm": {
+    "read": 34,
+    "clean": 34
+   }
+  },
+  "topic": {
+   "asked": 34,
+   "served": 22,
+   "refused": 12,
+   "noop": 0,
+   "coral-deepseek": {
+    "read": 22,
+    "clean": 22
+   },
+   "zerogpu-glm": {
+    "read": 22,
+    "clean": 22
+   }
+  }
+ },
+ "flagged": [
+  {
+   "change": "shorter",
+   "original": "The quick look shows two counters, so the matching group contains two counters.",
+   "text": "Two counters are seen, so the matching group has two counters.",
+   "judges": {
+    "coral-deepseek": [],
+    "zerogpu-glm": [
+     "dropped: the quick look"
+    ]
+   }
+  }
+ ],
+ "stats": {
+  "calls": 38,
+  "empty": 0,
+  "errors": 4
+ },
+ "ledgers": {
+  "zerogpu": 12.322,
+  "gonka": 12.346,
+  "coral": 25.481,
+  "grokified": 24.967
+ },
+ "samples": [
+  {
+   "change": "shorter",
+   "original": "An array with 4 rows of 7 squares contains 4 × 7 = 28 unit squares.",
+   "text": "4 rows of 7 squares: 4 × 7 = 28 unit squares."
+  },
+  {
+   "change": "shorter",
+   "original": "A rectangle has four right angles, and a rhombus has four equal sides. A square has both properties.",
+   "text": "A rectangle has four right angles, a rhombus four equal sides, and a square has both."
+  },
+  {
+   "change": "shorter",
+   "original": "The cyclist travels 36 km and then 45 km, for 81 km total. Riding 18 km back leaves 81 − 18 = 63 km from the start.",
+   "text": "36 km + 45 km = 81 km; riding 18 km back leaves 63 km from the start."
+  },
+  {
+   "change": "shorter",
+   "original": "A square has 4 equal sides and 4 corners. Turning it or changing its size does not change its shape.",
+   "text": "A square has 4 equal sides and 4 corners. Turning or resizing it does not change its shape."
+  },
+  {
+   "change": "shorter",
+   "original": "Two upright triangles form the ends, while one upside-down triangle fills the space between them to complete the trapezoid.",
+   "text": "Two upright triangles form the ends; one upside-down triangle fills between them, completing the trapezoid."
+  },
+  {
+   "change": "shorter",
+   "original": "A useful outline groups related ideas under clear topics and arranges them in a logical order.",
+   "text": "A good outline groups related ideas under clear topics and orders them logically."
+  },
+  {
+   "change": "shorter",
+   "original": "This reply responds to Leo's comment and asks about the kind of pancakes his grandma makes.",
+   "text": "It responds to Leo's comment and asks what kind of pancakes his grandma makes."
+  },
+  {
+   "change": "shorter",
+   "original": "A video can show movement and include sound, while a written report relies mainly on words read by the viewer.",
+   "text": "A video can show movement and sound; a written report relies mainly on words read by the viewer."
+  },
+  {
+   "change": "simpler",
+   "original": "Two counters are visible at once, so the child recognizes and says two without counting.",
+   "text": "Two counters can be seen at the same time. The child knows it is two right away. The child says two without counting."
+  },
+  {
+   "change": "simpler",
+   "original": "Volume is length × width × height: 8 × 5 × 3 = 120 cm³.",
+   "text": "Volume is length times width times height. Multiply 8 × 5 × 3. The volume is 120 cm³."
+  },
+  {
+   "change": "simpler",
+   "original": "Multiply the whole number by the fraction: 6 × 2/3 = 12/3 = 4 pounds.",
+   "text": "Take the whole number 6. Multiply it by the fraction 2/3. This gives 6 × 2/3 = 12/3. Then 12/3 = 4. So the total is 4 pounds."
+  },
+  {
+   "change": "simpler",
+   "original": "Dividing the 25 photos equally among 5 albums gives 5 photos per album. The answer must describe one album’s photos.",
+   "text": "We are dividing the 25 photos equally among 5 albums. Each album gets 5 photos. The answer must describe the photos in one album."
+  },
+  {
+   "change": "simpler",
+   "original": "An array with 4 rows of 7 squares contains 4 × 7 = 28 unit squares.",
+   "text": "The array has 4 rows. Each row has 7 squares. So the array has 4 × 7 = 28 unit squares."
+  },
+  {
+   "change": "simpler",
+   "original": "Wednesday is day 3, and 5 books were read, so the ordered pair is (3, 5).",
+   "text": "Wednesday is day 3. On that day, 5 books were read. So the ordered pair is (3, 5)."
+  },
+  {
+   "change": "simpler",
+   "original": "A rectangle has four right angles, and a rhombus has four equal sides. A square has both properties.",
+   "text": "A rectangle has four right angles. A rhombus has four equal sides. A square has both of these."
+  },
+  {
+   "change": "simpler",
+   "original": "The cyclist travels 36 km and then 45 km, for 81 km total. Riding 18 km back leaves 81 − 18 = 63 km from the start.",
+   "text": "The cyclist rides 36 km first. Then the cyclist rides 45 km. That is 81 km in total. The cyclist rides 18 km back. So the cyclist is 81 - 18 = 63 km from the start."
+  },
+  {
+   "change": "examples",
+   "original": "Volume is length × width × height: 8 × 5 × 3 = 120 cm³.",
+   "text": "Volume is length × width × height: 8 × 5 × 3 = 120 cm³. Example: a box measuring 4 cm by 2 cm by 6 cm has volume 4 × 2 × 6 = 48 cm³."
+  },
+  {
+   "change": "examples",
+   "original": "Multiply the whole number by the fraction: 6 × 2/3 = 12/3 = 4 pounds.",
+   "text": "Multiply the whole number by the fraction: 6 × 2/3 = 12/3 = 4 pounds. Example of the same rule: 5 × 2/5 = 10/5 = 2."
+  },
+  {
+   "change": "examples",
+   "original": "Two counters are visible at once, so the child recognizes and says two without counting.",
+   "text": "Two counters are visible at once, so the child recognizes and says two without counting. For example, the teacher briefly shows two counters side by side and then hides them, and the child says two right away without counting them one by one."
+  },
+  {
+   "change": "examples",
+   "original": "Dividing the 25 photos equally among 5 albums gives 5 photos per album. The answer must describe one album’s photos.",
+   "text": "Dividing the 25 photos equally among 5 albums gives 5 photos per album. For example, sharing 12 stickers equally among 3 friends gives 12 ÷ 3 = 4 stickers per friend. The answer must describe one album's photos. For example, 'Each friend has 4 stickers' describes one friend's share, just as 'Each album has 5 photos' describes one album's photos."
+  },
+  {
+   "change": "examples",
+   "original": "An array with 4 rows of 7 squares contains 4 × 7 = 28 unit squares.",
+   "text": "An array with 4 rows of 7 squares contains 4 × 7 = 28 unit squares. For example, an array with 3 rows of 5 squares contains 3 × 5 = 15 unit squares."
+  },
+  {
+   "change": "examples",
+   "original": "Wednesday is day 3, and 5 books were read, so the ordered pair is (3, 5).",
+   "text": "Wednesday is day 3, and 5 books were read, so the ordered pair is (3, 5). For example, Tuesday is day 2, and 6 books were read, so the ordered pair is (2, 6)."
+  },
+  {
+   "change": "examples",
+   "original": "A rectangle has four right angles, and a rhombus has four equal sides. A square has both properties.",
+   "text": "A rectangle has four right angles. For example, a 6 cm by 4 cm rectangle has four right angles. A rhombus has four equal sides. For example, a rhombus with sides of 5 cm, 5 cm, 5 cm, and 5 cm has four equal sides. A square has both properties. For example, a 3 cm square has four right angles and four sides of 3 cm, so it is both a rectangle and a rhombus."
+  },
+  {
+   "change": "examples",
+   "original": "The cyclist travels 36 km and then 45 km, for 81 km total. Riding 18 km back leaves 81 − 18 = 63 km from the start.",
+   "text": "The cyclist travels 36 km and then 45 km, for 81 km total. For example, riding 2 hours at 8 km per hour and then 3 hours at 9 km per hour gives 16 + 27 = 43 km total. Riding 18 km back leaves 81 − 18 = 63 km from the start. For example, riding 5 km back from 43 km out leaves 43 − 5 = 38 km from the start."
+  },
+  {
+   "change": "topic",
+   "original": "Two counters are visible at once, so the child recognizes and says two without counting.",
+   "text": "Two counters are visible at once, so the child recognizes and says two without counting, like spotting two model trains at a single glance."
+  },
+  {
+   "change": "topic",
+   "original": "Dividing the 25 photos equally among 5 albums gives 5 photos per album. The answer must describe one album’s photos.",
+   "text": "Dividing the 25 photos equally among 5 albums gives 5 photos per album, like supplies split evenly among a spacecraft's storage bays. The answer must describe one album's photos."
+  },
+  {
+   "change": "topic",
+   "original": "An array with 4 rows of 7 squares contains 4 × 7 = 28 unit squares.",
+   "text": "An array with 4 rows of 7 squares contains 4 × 7 = 28 unit squares, like model train cars arranged in neat rows."
+  },
+  {
+   "change": "topic",
+   "original": "Wednesday is day 3, and 5 books were read, so the ordered pair is (3, 5).",
+   "text": "Wednesday is day 3, and 5 books were read, so the ordered pair is (3, 5), like a football striker scoring in the third match."
+  },
+  {
+   "change": "topic",
+   "original": "The cyclist travels 36 km and then 45 km, for 81 km total. Riding 18 km back leaves 81 − 18 = 63 km from the start.",
+   "text": "The cyclist travels 36 km and then 45 km, for 81 km total. Riding 18 km back, like a spacecraft retracing its route, leaves 81 − 18 = 63 km from the start."
+  },
+  {
+   "change": "topic",
+   "original": "A square has 4 equal sides and 4 corners. Turning it or changing its size does not change its shape.",
+   "text": "A square has 4 equal sides and 4 corners. Turning it or changing its size does not change its shape, like a model train that is still the same train when you turn it or make it smaller."
+  },
+  {
+   "change": "topic",
+   "original": "Two upright triangles form the ends, while one upside-down triangle fills the space between them to complete the trapezoid.",
+   "text": "Two upright triangles form the ends, while one upside-down triangle fills the space between them to complete the trapezoid, like footballers filling the gaps in a formation."
+  },
+  {
+   "change": "topic",
+   "original": "A useful outline groups related ideas under clear topics and arranges them in a logical order.",
+   "text": "A useful outline groups related ideas under clear topics and arranges them in a logical order, like a recipe that lays out ingredients and steps before cooking."
+  }
+ ],
+ "refused_because": [
+  {
+   "change": "topic",
+   "problems": [
+    "cooking does not appear"
+   ]
+  },
+  {
+   "change": "topic",
+   "problems": [
+    "cooking does not appear"
+   ]
+  },
+  {
+   "change": "topic",
+   "problems": [
+    "space travel does not appear"
+   ]
+  },
+  {
+   "change": "topic",
+   "problems": [
+    "new: like a football team calling the shared huddle its own"
+   ]
+  },
+  {
+   "change": "topic",
+   "problems": [
+    "cooking does not appear"
+   ]
+  },
+  {
+   "change": "topic",
+   "problems": [
+    "space travel does not appear"
+   ]
+  },
+  {
+   "change": "shorter",
+   "problems": [
+    "dropped: \"are needed\""
+   ]
+  },
+  {
+   "change": "topic",
+   "problems": [
+    "cooking does not appear"
+   ]
+  },
+  {
+   "change": "topic",
+   "problems": [
+    "space travel does not appear"
+   ]
+  },
+  {
+   "change": "shorter",
+   "problems": [
+    "dropped: Multiply the whole number by the fraction"
+   ]
+  },
+  {
+   "change": "topic",
+   "problems": [
+    "football does not appear"
+   ]
+  },
+  {
+   "change": "shorter",
+   "problems": [
+    "dropped: by its sides"
+   ]
+  }
+ ]
+}

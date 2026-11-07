@@ -55,6 +55,8 @@ const cards = require('../services/material-cards');
 const podcast = require('../services/material-podcast');
 const notes = require('../services/material-notes');
 
+const { uploadBudget } = require('../utils/upload-budget');
+
 const router = express.Router();
 
 // A material starts building its notes and study pack as soon as it is added, so they are ready when opened (services/material-autobuild.js).
@@ -83,9 +85,10 @@ router.get('/', requireAuth, (req, res) => {
 // Home page: how many of the learner's own-material skills are due for review (before '/:id').
 router.get('/review-due', requireAuth, (req, res) => res.json(study.dueSummary(req.user.id)));
 
-router.post('/paste', requireAuth, limit('materials-paste', 20, 60 * 60 * 1000), pasteBody, (req, res) => {
+router.post('/paste', requireAuth, limit('materials-paste', 20, 60 * 60 * 1000), pasteBody, async (req, res) => {
   const b = req.body || {};
-  const out = materials.addPaste(req.user.id, b.title, b.text);
+  const understood = typeof b.text === 'string' ? await materials.understandAsync(b.text, null, 'paste') : null;
+  const out = materials.addPaste(req.user.id, b.title, b.text, { understood });
   if (out.error) return refuse(res, out);
   autoBuild(req.user.id, out.value);
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
@@ -117,7 +120,7 @@ router.post('/youtube', requireAuth, limit('materials-youtube', 10, 60 * 60 * 10
 });
 
 // A video file: the audio is pulled out here, the video is deleted, and S8's background job transcribes it.
-router.post('/video', requireAuth, limit('materials-video', 6, 60 * 60 * 1000), videoBody, async (req, res) => {
+router.post('/video', requireAuth, limit('materials-video', 6, 60 * 60 * 1000), uploadBudget, videoBody, async (req, res) => {
   if (!Buffer.isBuffer(req.body) || !req.body.length) return res.status(400).json({ error: 'Choose a video to upload.', code: 'empty' });
   let out;
   try { out = await require('../services/material-video').submitVideo(req.user.id, req.body, String(req.query.name || ''), { deps: { language: langOf(req) } }); } catch (err) { // eslint-disable-line global-require
@@ -139,7 +142,7 @@ router.post('/transcript', requireAuth, limit('materials-transcript', 20, 60 * 6
 // Audio recordings (S8): transcribed on this server with an open Whisper model, in the background.
 const audio = require('../services/material-audio');
 router.get('/audio', requireAuth, (req, res) => res.json({ available: audio.availability(), jobs: audio.listJobs(req.user.id) }));
-router.post('/audio', requireAuth, limit('materials-audio', 6, 60 * 60 * 1000), rawBody, (req, res) => {
+router.post('/audio', requireAuth, limit('materials-audio', 6, 60 * 60 * 1000), uploadBudget, rawBody, (req, res) => {
   const out = audio.submit(req.user.id, req.body, String(req.query.name || ''), { language: langOf(req) });
   if (out.error) return refuse(res, out);
   out.finished.catch(() => {});
@@ -153,7 +156,7 @@ router.delete('/audio/:id', requireAuth, (req, res) => {
 // A file that turns out to be a recording is sent to the recording route, and a slow reading (a scan of many pages, a big ZIP)
 // carries on in the background with a progress line, so nothing waits on an open request and nothing is a silent wait.
 const SLOW_AFTER_MS = Number(process.env.UPLOAD_SLOW_MS) || 6000;
-router.post('/', requireAuth, limit('materials-upload', 12, 60 * 60 * 1000), rawBody, async (req, res) => {
+router.post('/', requireAuth, limit('materials-upload', 12, 60 * 60 * 1000), uploadBudget, rawBody, async (req, res) => {
   if (!Buffer.isBuffer(req.body) || !req.body.length) return res.status(400).json({ error: 'Choose a file to upload.', code: 'empty' });
   const name = String(req.query.name || '');
   if (audio.sniffAudio(req.body)) {
@@ -202,6 +205,9 @@ const activityOf = (userId, label, extra = {}) => {
   return { ...extra, ...(queued ? { queued: { behind: st.running || null, ahead: st.waiting.indexOf(label) } } : {}) };
 };
 
+// A build that ended before it made a course row (no model can answer) leaves nothing for the page to read: the button went back with no word
+// to the learner (beta load test, Nov 2026). The reason is kept here until the next try.
+const courseBuildErrors = new Map();
 router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1000), (req, res) => {
   const m = materials.get(req.user.id, req.params.id, false);
   if (!m) return res.status(404).json({ error: 'No such material.' });
@@ -210,14 +216,21 @@ router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1
   if (existing && existing.status === 'ready' && existing.version === courses.VERSION) return res.json({ course: courses.summary(existing), cached: true });
   if (courses.inflight.has(`${userId}:${m.id}`)) return res.status(202).json({ started: true, busy: true });
   // The learner is waiting on this: the waiting lane on the fast lane (paid fast slots first for a cleared learner, 8 s overflow to a paid slot otherwise).
-  queueBuild(userId, `course:${m.id}`, () => require('../services/material-autobuild').runWaiting(() => courses.build(userId, m.id, {})).then((out) => { if (out.error && out.code !== 'busy') console.warn(`course-builder: ${out.code}`); }));
+  courseBuildErrors.delete(`${userId}:${m.id}`);
+  queueBuild(userId, `course:${m.id}`, () => require('../services/material-autobuild').runWaiting(() => courses.build(userId, m.id, {})).then((out) => {
+    if (out.error && out.code !== 'busy') {
+      console.warn(`course-builder: ${out.code}`);
+      if (courseBuildErrors.size > 2000) courseBuildErrors.clear();
+      courseBuildErrors.set(`${userId}:${m.id}`, out.error);
+    }
+  }));
   res.status(202).json({ started: true });
 });
 
 router.get('/:id/course', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
   require('../services/part-modify').maybeRefreshCourse(req.user.id, req.params.id); // eslint-disable-line global-require
-  res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `course:${Number(req.params.id)}`) });
+  res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `course:${Number(req.params.id)}`), build_error: courseBuildErrors.get(`${req.user.id}:${Number(req.params.id)}`) || null });
 });
 
 router.post('/:id/course/retry', requireAuth, limit('materials-course-retry', 6, 60 * 60 * 1000), (req, res) => {

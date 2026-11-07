@@ -137,7 +137,7 @@ function looseMaterial(userId, msg) {
     const q = new Set((String(msg).toLowerCase().match(/[a-z]{4,}/g) || []).filter((w) => !stop.has(w)).map(stem));
     if (!q.size) return [];
     let best = null;
-    for (const c of db.find('material_courses', (x) => x.user_id === userId && ['ready', 'partial'].includes(x.status)).slice(0, 3)) {
+    for (const c of db.forUser('material_courses', userId).filter((x) => ['ready', 'partial'].includes(x.status)).slice(0, 3)) {
       const m = db.byId('materials', c.material_id);
       if (!m || !m.text) continue;
       for (const sent of String(m.text).split(/(?<=[.!?])\s+/)) {
@@ -212,7 +212,7 @@ function materialNotes(userId, query, mode) {
   if (mode === 'method') return [];
   try {
     const db = require('../config/db'); // eslint-disable-line global-require
-    const courses = db.find('material_courses', (c) => c.user_id === userId && ['ready', 'partial'].includes(c.status)).slice(0, 3);
+    const courses = db.forUser('material_courses', userId).filter((c) => ['ready', 'partial'].includes(c.status)).slice(0, 3);
     if (!courses.length) return [];
     const hit = looseMaterial(userId, query)[0];
     const titles = courses.map((c) => `"${clip(c.title, 50)}"`).join(', ');

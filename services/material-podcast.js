@@ -81,7 +81,7 @@ const dueOf = (st, now) => st && st.status === 'mastered' && st.due && Date.pars
 function weakSkills(userId, materialId, now = Date.now()) {
   const course = courses.get(userId, materialId);
   if (!course || !Array.isArray(course.skills) || !course.skills.length) return [];
-  const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
+  const prog = (db.forUser('material_progress', userId).find((p) => p.material_id === Number(materialId)) || null);
   if (!prog) return [];
   const rows = [];
   const known = new Set(adapt.plan(course, prog, now).skipped); // 07-M3/M9: known and not due is never a weak spot
@@ -261,7 +261,7 @@ function packChecks(userId, materialId, course, limit) {
   return out;
 }
 
-const row = (userId, materialId, kind) => db.findOne('material_podcasts', (c) => c.user_id === userId && c.material_id === Number(materialId) && c.kind === kind);
+const row = (userId, materialId, kind) => (db.forUser('material_podcasts', userId).find((c) => c.material_id === Number(materialId) && c.kind === kind) || null);
 
 /** A check-in of one of the learner's episodes, with its key, for grading on the server. Null when there is none. */
 function checkinOf(userId, materialId, qid) {
@@ -366,15 +366,25 @@ async function build(userId, materialId, opts = {}) {
     if (!data) {
       // A failed rebuild leaves the last good episode as it was.
       db.update('material_podcasts', saved.id, { status: prev && prev.turns && prev.turns.length ? prev.status : 'failed', error: used ? 'nothing passed the checks' : 'token budget' });
-      db.flush();
+      db.saveSoon();
       return { error: 'An episode could not be made from that material. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
+    }
+    // Nothing invented (services/material-factcheck.js): each turn is checked against the material; an unsupported sentence goes, and a turn with nothing left goes.
+    if (require('./material-factcheck').onFor(opts)) { // eslint-disable-line global-require
+      const F = require('./material-factcheck'); // eslint-disable-line global-require
+      const fc = await F.checkTexts(data.turns.map((t) => ({ text: t.text, fallback: t.quote ? clean(t.quote, 400) : '' })), {
+        idx: F.indexSource(mat.text), sourceText: shown.map((p) => p.text).join('\n\n'), allow: F.interestWords(spec),
+        asker: async (a) => { const c = estTokens(a.system, a.user) + a.maxTokens; used += c; let res = null; try { res = await llm({ ...a, userId }); } catch { res = null; } return { res }; },
+      });
+      fc.items.forEach((r, i) => { if (r.changed) data.turns[i].text = r.text; });
+      data.turns = data.turns.filter((t) => t.text);
     }
     const slots = checkinSlots(data.turns, spec);
     const checkins = placeCheckins(data.turns, [...packQuiz, ...courseChecks(skills, slots.length), ...data.checkins], slots, slotSkills(data.turns, slots, skills));
     saved = db.update('material_podcasts', saved.id, {
       title: data.title || mat.title, turns: data.turns, skills: weak ? weak.map((w) => ({ id: w.skill.id, title: w.skill.title })) : [], checkins, status: 'ready', models: model ? [model] : [], revised, open_problems: open, tokens_used: used, error: null, finished_at: new Date().toISOString(),
     });
-    db.flush();
+    db.saveSoon();
     return { episode: saved };
   } catch (err) {
     console.error('material-podcast:', err.message);
@@ -388,7 +398,7 @@ async function build(userId, materialId, opts = {}) {
 /** What the page gets: the script to play and read, and the quotes it came from. */
 function view(p) {
   if (!p) return null;
-  const stale = p.status === 'building' && Date.now() - Date.parse(p.started_at) > STALE_BUILD_MS && !inflight.has(`${p.user_id}:${p.material_id}:${p.kind}`);
+  const stale = p.status === 'building' && !inflight.has(`${p.user_id}:${p.material_id}:${p.kind}`); // died with a crash or a restart
   return {
     material_id: p.material_id, kind: p.kind, title: p.title, status: stale ? 'failed' : p.status,
     skills: p.skills || [], turns: (p.turns || []).map((t) => ({ host: t.host, text: t.text, quote: t.quote || null })),

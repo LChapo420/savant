@@ -71,7 +71,7 @@ router.get('/profile', requireAuth, (req, res) => {
     survey_answered: learner.surveyAnswered(profile.survey),
     survey_at: profile.survey_at || null,
     conclusions: profile.feedback_conclusions || [],
-    feedback_recent: db.find('level_feedback', (f) => f.user_id === req.user.id)
+    feedback_recent: db.forUser('level_feedback', req.user.id).slice()
       .sort((a, b) => Date.parse(b.submitted_at) - Date.parse(a.submitted_at))
       .slice(0, 8)
       .map((f) => ({
@@ -161,7 +161,7 @@ router.post('/profile/style-quiz', requireAuth, (req, res) => {
 /** Everything the dashboard needs in one request. */
 router.get('/progress', requireAuth, (req, res) => {
   writeAhead.triggerForUser({ user: req.user, reason: 'dashboard' });
-  const enrollments = db.find('enrollments', (e) => e.user_id === req.user.id)
+  const enrollments = db.forUser('enrollments', req.user.id).slice()
     .map((e) => enrollmentView(req.user.id, e))
     .filter(Boolean);
 
@@ -173,7 +173,7 @@ router.get('/progress', requireAuth, (req, res) => {
   // at 42 used to be listed as level 43. Candidates are read in one batch (the
   // newest few dozen) so this stays one pass over the items, however many
   // empty sittings there are.
-  const ended = db.find('sessions', (s) => s.user_id === req.user.id && s.ended_at)
+  const ended = db.forUser('sessions', req.user.id).filter((s) => s.ended_at)
     .sort((a, b) => Date.parse(b.ended_at) - Date.parse(a.ended_at))
     .slice(0, 60);
   const work = sessions.workDone(ended);
@@ -291,7 +291,7 @@ const EXPORT_MORE = [
   'experiment_arms', 'choice_pairs',
   // (the daily check, services/daily-check.js, adds no collection: its day log and answers sit in the profiles row, boosters.daily and onboarding.known)
   'footprint_events', 'recruit_applicants', 'speed_proof', 'speed_proof_blocks',
-  'lesson_layers', 'skill_records', 'study_sessions', 'enforcers', 'material_audio_jobs', 'reading_checks',
+  'lesson_layers', 'part_changes', 'skill_records', 'study_sessions', 'enforcers', 'material_audio_jobs', 'reading_checks',
 ];
 
 router.get('/account/export', requireAuth, (req, res) => {
@@ -302,18 +302,18 @@ router.get('/account/export', requireAuth, (req, res) => {
     exported_at: new Date().toISOString(),
     user: publicUser(req.user, profile),
     profile,
-    enrollments: db.find('enrollments', (e) => e.user_id === userId),
-    skill_states: db.find('skill_states', (s) => s.user_id === userId),
-    sessions: db.find('sessions', (s) => s.user_id === userId),
-    items: db.find('items', (i) => i.user_id === userId),
-    events: db.find('events', (e) => e.user_id === userId),
+    enrollments: db.forUser('enrollments', userId).slice(),
+    skill_states: db.forUser('skill_states', userId).slice(),
+    sessions: db.forUser('sessions', userId).slice(),
+    items: db.forUser('items', userId).slice(),
+    events: db.forUser('events', userId).slice(),
     // What they told us about levels, which is theirs in their own words. Their
     // tailored level pages are deliberately not here: they are derived from these
     // plus the base pages, they run to tens of megabytes across a course, and the
     // base pages they were made from are not exported either.
-    level_feedback: db.find('level_feedback', (f) => f.user_id === userId),
-    scorecard: db.findOne('scorecards', (r) => r.user_id === userId),
-    level_signals: db.find('level_signals', (r) => r.user_id === userId),
+    level_feedback: db.forUser('level_feedback', userId).slice(),
+    scorecard: (db.forUser('scorecards', userId)[0] || null),
+    level_signals: db.forUser('level_signals', userId).slice(),
     // Everything else the store keeps about this account, in its own words or
     // about it (security review 2026-10-24, finding 7: the export stopped at the
     // collections above while essays, chat turns, the after-level reads and the
@@ -332,7 +332,7 @@ router.post('/account/delete', requireAuth, limit('account-delete', 10, 60 * 60 
   const why = accountDeletion.refusal(req.user);
   if (why) return res.status(403).json({ error: why });
   if (String((req.body && req.body.confirm) || '').trim() !== 'DELETE') return res.status(400).json({ error: 'Type DELETE to confirm.' });
-  const ok = await bcrypt.compare(String((req.body && req.body.password) || ''), req.user.password_hash || '');
+  const ok = await require('../services/passwords').compare(String((req.body && req.body.password) || ''), req.user.password_hash || '');
   if (!ok) return res.status(401).json({ error: 'That password is not right.' });
   accountDeletion.deleteAccount(req.user);
   const done = () => { res.clearCookie('polymath.sid'); res.json({ ok: true }); };

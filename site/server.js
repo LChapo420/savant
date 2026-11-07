@@ -375,6 +375,17 @@ function createApp(opts = {}) {
 
   app.get('/api/health', (req, res) => res.set('Cache-Control', 'no-store').json({ ok: true }));
 
+  // The owner's live display: how many beta applications, as a number and nothing else, for a holder of the token. Only the token's SHA-256 is here.
+  // COUNT_OFFSET applications are the owner's own and don't count (they stay on file). A wrong or missing token sees the same 404 as a route that isn't there.
+  const COUNT_TOKEN_SHA256 = () => process.env.COUNT_TOKEN_SHA256 || '230ebb0ac803e3d0401aae0f4861753162b09752a7df8f2a220b4c5b8dbe7823';
+  const COUNT_OFFSET = () => { const n = Number(process.env.COUNT_OFFSET); return Number.isFinite(n) && process.env.COUNT_OFFSET !== undefined ? n : 10; };
+  app.get('/api/signup-count', (req, res) => {
+    const got = crypto.createHash('sha256').update(String(req.get('authorization') || '').replace(/^Bearer\s+/i, '')).digest();
+    const want = Buffer.from(COUNT_TOKEN_SHA256(), 'hex');
+    if (got.length !== want.length || !crypto.timingSafeEqual(got, want)) return res.status(404).sendFile(path.join(ROOT, '404.html'));
+    return res.set('Cache-Control', 'no-store').json({ count: Math.max(0, readAll('beta').length - COUNT_OFFSET()) });
+  });
+
   // 16 KB: room for the longest answers in non-Latin scripts (a form post
   // percent-encodes each such character as up to 9 bytes), still small.
   const json = express.json({ limit: '16kb', strict: true });

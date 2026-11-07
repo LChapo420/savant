@@ -94,16 +94,18 @@ function betaGate({ db = null, isAdmin = () => false } = {}) {
 
   return function gate(req, res, next) {
     if (!enabled()) return next();
+    // The router ignores case and a trailing slash, so these checks must too, or /api/auth/REGISTER walks past the gate.
+    const where = req.path.toLowerCase().replace(/\/+$/, '');
 
-    if (req.method === 'GET' && req.path === '/join') {
+    if (req.method === 'GET' && where === '/join') {
       const code = invites.normCode(req.query.invite);
       if (code && req.session) req.session.beta_invite = code;
       return res.redirect(303, '/register');
     }
-    if (req.method === 'POST' && req.path === '/api/auth/register') {
+    if (req.method === 'POST' && where === '/api/auth/register') {
       return limitRegister(req, res, () => registerGate(req, res, next));
     }
-    if (req.method === 'POST' && req.path === '/api/auth/login' && process.env.BETA_GATE_LOGIN === '1' && db) {
+    if (req.method === 'POST' && where === '/api/auth/login' && process.env.BETA_GATE_LOGIN === '1' && db) {
       return loginGate(req, res, next);
     }
     return next();

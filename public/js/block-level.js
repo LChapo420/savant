@@ -58,7 +58,9 @@
     const plan = lesson.plan;
     const m = lesson.meta || {};
     const retention = m.block_kind === 'retention';
-    const checkCount = plan.entries.filter((e) => /^Check_/.test(e.block)).length;
+    // A lesson arriving part by part (services/first-block.js): what has passed its check so far; the rest come below it (m.partial).
+    let checkCount = m.partial ? m.partial.total_checks : plan.entries.filter((e) => /^Check_/.test(e.block)).length;
+    let stillComing = !!m.partial;
     const answered = { ...(plan.answered || {}) };
     let openedAt = Date.now();
     let readScrollBacks = () => null;
@@ -95,6 +97,18 @@
         });
         answered[id] = { ...result, choice: answer };
         renderFinish();
+        // The explanation a check just showed can be reworded too; the engine has drawn its verdict by the next tick.
+        if (result.item_id && result.rationale && window.PartChange) {
+          setTimeout(() => {
+            const entryAt = plan.entries.findIndex((e) => e.data && e.data.id === id);
+            const section = host.querySelector(`section[data-index="${entryAt}"]`);
+            const said = section && section.querySelector('[class*="verdict"] span:last-child');
+            if (!said || section.querySelector('[data-part-change]')) return;
+            const slot = document.createElement('div');
+            said.parentElement.insertAdjacentElement('afterend', slot);
+            window.PartChange.attach(slot, { ref: { item_id: result.item_id }, onResult: (r) => { if (r.text) said.textContent = r.text; } });
+          }, 0);
+        }
         return result;
       },
       shownAt: {},
@@ -119,6 +133,23 @@
       if (!scrolledBack && furthest - y > gap) { scrolledBack = true; scrollBacks += 1; } else if (scrolledBack && furthest - y < 80) scrolledBack = false;
     }, { passive: true });
     readScrollBacks = () => scrollBacks;
+    // The learner rewords a reading block themselves (public/js/part-change.js): the block is drawn again from the text that comes back.
+    function attachChange(section, entry) {
+      const slot = document.createElement('div');
+      slot.style.margin = '-10px 0 18px';
+      section.insertAdjacentElement('afterend', slot);
+      let current = section;
+      window.PartChange.attach(slot, {
+        ref: { track, grade, level, ref: entry.ref },
+        onResult: (r) => {
+          if (!r.data) return;
+          const draft = document.createElement('div');
+          window.LessonCompiler.compile(draft, [{ ...entry, data: r.data }]);
+          const fresh = draft.querySelector('section[data-block]');
+          if (fresh) { fresh.setAttribute('data-index', current.getAttribute('data-index')); current.replaceWith(fresh); current = fresh; }
+        },
+      });
+    }
     window.LessonCompiler.compile(host, plan.entries);
     const sections = Array.from(host.querySelectorAll('section[data-block]'));
     sections.forEach((section, i) => {
@@ -126,8 +157,9 @@
       const entry = plan.entries[i];
       if (entry && /^Check_/.test(entry.block)) window.PolymathChecks.shownAt[entry.data.id] = Date.now();
       if (entry && window.AssistChat) attachAssist(section, entry);
+      if (entry && entry.changeable && window.PartChange) attachChange(section, entry);
     });
-    const report = window.LevelCapture.watch(sections, {
+    const report = window.LevelCapture.watch(sections.slice(), {
       // Checks are graded on the server already; their answers are items.
       skip: (section) => /^Check_/.test(section.getAttribute('data-block') || ''),
     });
@@ -138,11 +170,11 @@
       const done = Object.keys(answered).length;
       const left = Math.max(0, checkCount - done);
       progress.textContent = checkCount
-        ? `${done} of ${checkCount} checks answered${left ? ' — answer them all to finish.' : '.'}`
+        ? `${done} of ${checkCount} checks answered${left ? ' — answer them all to finish.' : '.'}${stillComing ? ' The next part appears below once its facts are checked.' : ''}`
         : '';
       if (finishHost.getAttribute('data-finished')) return;
       finishHost.innerHTML = `
-        <button class="btn btn-primary btn-lg" id="block-level-finish-btn" ${left ? 'disabled' : ''}>
+        <button class="btn btn-primary btn-lg" id="block-level-finish-btn" ${left || stillComing ? 'disabled' : ''}>
           ${window.icon('check-circle')}Finish ${retention ? 'the retention check' : 'the lesson'}</button>`;
       const btn = document.getElementById('block-level-finish-btn');
       if (btn) btn.addEventListener('click', finish);
@@ -191,6 +223,62 @@
     }
 
     renderFinish();
+
+    // Later parts arrive below what is on the page, once their own check has passed: nothing above them changes, so the reader does not move wherever they are.
+    if (m.partial) {
+      const keyOf = (e) => (/^Check_/.test(e.block) ? `check:${e.data.id}` : `block:${e.ref}`);
+      const shown = new Set(plan.entries.map(keyOf));
+      const loaded = new Set(plan.files);
+      let version = m.partial.version;
+      let lastNew = Date.now();
+      // Waiting a long time for the next part: say so, and offer the standard session. It sits under the lesson, so it moves nothing the learner is reading.
+      const slowNote = () => {
+        const at = document.getElementById('block-level-slow');
+        if (stillComing && enrollmentId && Date.now() - lastNew > 45000) {
+          if (!at) { const d = document.createElement('p'); d.id = 'block-level-slow'; d.className = 'small muted'; d.style.margin = '8px 0 0'; d.innerHTML = `The next part is taking longer than usual to check. Rather not wait? <a href="/session?enrollment=${enrollmentId}&ordinary=1">Do the standard session for this level instead</a>.`; progress.insertAdjacentElement('afterend', d); }
+        } else if (at) at.remove();
+      };
+      const addEntry = (entry) => {
+        const section = document.createElement('section');
+        section.setAttribute('data-block', entry.block || '');
+        section.style.margin = '0 0 18px';
+        host.appendChild(section);
+        window.LessonCompiler.renderBlock(section, entry);
+        section.setAttribute('data-index', String(sections.length));
+        sections.push(section);
+        plan.entries.push(entry);
+        if (/^Check_/.test(entry.block)) window.PolymathChecks.shownAt[entry.data.id] = Date.now();
+        if (window.AssistChat) attachAssist(section, entry);
+        if (report.add) report.add(section);
+      };
+      const tick = async () => {
+        let r = null;
+        try { r = await App.api.get(`/api/lessons/${track}/${grade}/${level}/parts?v=${version}`); } catch (e) { r = null; }
+        if (r && r.state === 'failed') {
+          stillComing = false;
+          renderFinish();
+          slowNote();
+          progress.textContent = '';
+          finishHost.innerHTML = `<div class="notice notice-warn">The rest of this lesson could not be checked, so it is not shown.${enrollmentId ? ` <a class="notice-link" href="/session?enrollment=${enrollmentId}&ordinary=1">Do the standard session for this level</a>.` : ''}</div>`;
+          return;
+        }
+        if (r && r.plan) {
+          const fresh = r.plan.files.filter((f) => !loaded.has(f));
+          fresh.forEach((f) => loaded.add(f));
+          if (fresh.length) await loadScripts(fresh);
+          r.plan.entries.filter((e) => !shown.has(keyOf(e))).forEach((e) => { shown.add(keyOf(e)); addEntry(e); lastNew = Date.now(); });
+          Object.assign(answered, r.plan.answered || {});
+          if (r.version) version = r.version;
+          if (r.total_checks) checkCount = r.total_checks;
+          if (r.state === 'ready') { stillComing = false; checkCount = plan.entries.filter((e) => /^Check_/.test(e.block)).length; }
+          renderFinish();
+          window.__partsShown = plan.entries.length;
+        }
+        slowNote();
+        if (stillComing) setTimeout(tick, 1500);
+      };
+      setTimeout(tick, 1000);
+    }
 
     // The personal layer (services/lesson-layer.js): the shared lesson is already open; the learner's own hook, why and analogies fill the
     // slot reserved for them as soon as they are written, without moving what is being read (the slot keeps its height; any growth is
@@ -246,8 +334,14 @@
     }
   }
 
+  /** What the write is doing now, in words: said only because it is what the server reports. */
+  function stageText(stage) {
+    if (stage === 'checking' || stage === 'reading') return 'The first part is written. Its facts are being checked; it opens as soon as they pass.';
+    return 'Writing the first part of this lesson for you. It opens as soon as its facts are checked.';
+  }
+
   /** The level is still being written: say so, and ask again until it is ready. */
-  function waiting({ root, retention, back, onReady, enrollmentId, fallbackUrl }) {
+  function waiting({ root, retention, back, onReady, enrollmentId, fallbackUrl, preview = null, waitMs = 8000 }) {
     let tries = 0;
     const startedAt = Date.now();
     root.innerHTML = `
@@ -255,7 +349,10 @@
         <h1 style="margin:0">${retention ? 'Your retention check' : 'Your lesson'}</h1>${back}
       </div>
       <div class="card">
-        <div class="loading"><span class="spinner"></span>Laying out and writing this level for you. This usually takes under a minute.</div>
+        ${preview ? `<p style="margin:0 0 8px"><strong>${App.escapeHtml(preview.topic)}</strong></p>
+        ${preview.covers ? `<p class="small" style="margin:0 0 8px">${App.escapeHtml(preview.covers)}</p>` : ''}
+        ${(preview.skills || []).length ? `<p class="small muted" style="margin:0 0 12px">You will work on: ${preview.skills.map(App.escapeHtml).join(', ')}.</p>` : ''}
+        <div class="loading"><span class="spinner"></span><span id="block-level-stage">${stageText(preview.stage)}</span></div>` : '<div class="loading"><span class="spinner"></span>Laying out and writing this level for you. This usually takes under a minute.</div>'}
         ${enrollmentId ? `<p class="small muted" style="margin:12px 0 0">Rather not wait? <a href="${fallbackUrl || `/session?enrollment=${enrollmentId}&ordinary=1`}">Do the standard session for this level instead</a>.</p>` : ''}
       </div>`;
     // Owner, 2026-11-04: nothing a learner reaches should keep them waiting. Still writing after about 8 s: open the standard
@@ -263,12 +360,15 @@
     const fallback = fallbackUrl || (enrollmentId ? `/session?enrollment=${enrollmentId}&ordinary=1` : null);
     const tick = async () => {
       tries += 1;
-      const ready = await onReady().catch(() => null);
+      const ready = await onReady((again) => {
+        const at = document.getElementById('block-level-stage');
+        if (at && again && again.preview) at.textContent = stageText(again.preview.stage);
+      }).catch(() => null);
       if (ready) return;
-      if (fallback && Date.now() - startedAt >= 8000) { window.location.replace(fallback); return; }
-      if (tries < 90) setTimeout(tick, fallback ? 2000 : 4000);
+      if (fallback && Date.now() - startedAt >= 8000 && Date.now() - startedAt >= waitMs) { window.location.replace(fallback); return; }
+      if (tries < 90) setTimeout(tick, preview ? 1000 : fallback ? 2000 : 4000);
     };
-    setTimeout(tick, 2000);
+    setTimeout(tick, preview ? 800 : 2000);
   }
 
   window.BlockLevel = { mount, waiting };

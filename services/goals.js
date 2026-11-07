@@ -103,7 +103,7 @@ function gradeKey(gradeId) {
 
 function rowFor(userId, trackId, gradeId) {
   const g = gradeKey(gradeId);
-  return db.findOne('learner_goals', (r) => r.user_id === userId && r.track_id === trackId && (r.grade_id || null) === g) || null;
+  return (db.forUser('learner_goals', userId).find((r) => r.track_id === trackId && (r.grade_id || null) === g) || null) || null;
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -208,7 +208,7 @@ function set(userId, { trackId, gradeId = null, choice = null, text = '', skippe
 }
 
 function listFor(userId) {
-  return db.find('learner_goals', (r) => r.user_id === userId && r.choice).map((r) => view(r));
+  return db.forUser('learner_goals', userId).filter((r) => r.choice).map((r) => view(r));
 }
 
 /** Does a goal change this account's product? Not the owner's (base product). */

@@ -17,6 +17,7 @@ const materials = require('./materials');
 const courses = require('./course-builder');
 const pack = require('./material-pack');
 const learningSpec = require('./learning-spec');
+const factcheck = require('./material-factcheck');
 
 const VERSION = 1;
 const MAX_SECTIONS_PART = 5;
@@ -112,7 +113,7 @@ function trimToLimit(sections, limit, { always = false, maxAnalogies = null, kee
 }
 
 function row(userId, materialId) {
-  return db.findOne('material_notes', (c) => c.user_id === userId && c.material_id === Number(materialId));
+  return (db.forUser('material_notes', userId).find((c) => c.material_id === Number(materialId)) || null);
 }
 
 /** Build (or return the cached) notes for one of the learner's materials. Resolves { notes } or { error, code }. Never throws. */
@@ -144,6 +145,7 @@ async function build(userId, materialId, opts = {}) {
     // Analogy bullets (a learner with interests) come on top of the point bullets, so a section may keep up to twice the limit.
     const keepMax = guard ? MAX_BULLETS * 2 : MAX_BULLETS;
     let used = 0; let stopped = false; let unanswered = 0; let dropped = 0; let analogiesFixed = 0; let revisions = 0; let trimmed = 0;
+    const factOn = factcheck.onFor(opts); let factIdx = null; let factFixed = 0; let factUnchecked = 0;
     const open = new Set();
     const sections = [];
     const touched = new Set();
@@ -201,16 +203,31 @@ async function build(userId, materialId, opts = {}) {
       analogiesFixed += got.fixed;
       // A short version carries no scene or harder-question bullet, and loses its analogy too if it is still over the limit after the revision; never a bullet that carries a point.
       if (wordLimit) { const t = trimToLimit(got.sections, wordLimit, { always: true, maxAnalogies: 1, keepFirstAnalogy: learningSpec.ownInterestNeed(spec, partSource.length, 'notes') >= 1 }); got.sections = t.sections; trimmed += t.removed; }
+      // Nothing invented (services/material-factcheck.js): a bullet the material does not back becomes its own verified quote.
+      if (factOn) {
+        const flat = got.sections.flatMap((s) => s.bullets);
+        const fc = await factcheck.checkTexts(flat.map((b) => ({ text: b.text, fallback: clean(b.quote, 400) })), {
+          idx: factIdx || (factIdx = factcheck.indexSource(mat.text)), sourceText: partSource, allow: factcheck.interestWords(spec),
+          asker: async (a) => { const c = estTokens(a.system, a.user) + a.maxTokens; if (used + c > limit + 8000) return { stopped: true }; used += c; let res = null; try { res = await llm({ ...a, userId }); } catch { res = null; } return { res }; },
+        });
+        fc.items.forEach((r, i) => { if (r.changed) { flat[i].text = r.text; factFixed++; } });
+        if (fc.report.unchecked) factUnchecked += fc.report.unchecked;
+      }
       for (const s of got.sections) { sections.push(s); s.bullets.forEach((b) => touched.add(b.passage_id)); }
+    }
+    // What the material stresses is in the notes, in its own words if the writer left it out (services/material-stress.js).
+    const stress = require('./material-stress'); // eslint-disable-line global-require
+    if (stress.onFor(opts) && sections.length && mat.key_points && mat.key_points.length) {
+      stress.sweepNotes({ sections, kps: mat.key_points, passageFor: (k) => courses.passageOfKeypoint(k, passages) });
     }
     sections.forEach((s, i) => { s.id = `n${i + 1}`; });
     const coverage = passages.length ? Math.round((touched.size / passages.length) * 100) : 0;
-    const status = !sections.length ? 'failed' : (stopped || unanswered ? 'partial' : 'ready');
+    const status = !sections.length ? 'failed' : (stopped || unanswered || factUnchecked ? 'partial' : 'ready');
     saved = db.update('material_notes', saved.id, {
-      sections, dropped, trimmed_extras: trimmed, analogies_fixed: analogiesFixed, revised_parts: revisions, open_problems: [...open], coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
-      error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
+      fact_fixed: factFixed, fact_unchecked: factUnchecked, sections, dropped, trimmed_extras: trimmed, analogies_fixed: analogiesFixed, revised_parts: revisions, open_problems: [...open], coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
+      error: status === 'failed' ? (stopped ? 'token budget' : unanswered ? 'no_answer' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
-    db.flush();
+    db.saveSoon();
     if (status === 'failed') return { error: 'Notes could not be made from that material. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     return { notes: saved, partial: status === 'partial' };
   } catch (err) {
@@ -224,9 +241,10 @@ async function build(userId, materialId, opts = {}) {
 
 function view(n) {
   if (!n) return null;
-  const stale = n.status === 'building' && Date.now() - Date.parse(n.started_at) > STALE_BUILD_MS && !inflight.has(`${n.user_id}:${n.material_id}`);
+  const stale = n.status === 'building' && !inflight.has(`${n.user_id}:${n.material_id}`); // died with a crash or a restart
   return {
     material_id: n.material_id, title: n.title, status: stale ? ((n.sections || []).length ? 'partial' : 'failed') : n.status,
+    failure: stale ? 'interrupted' : (n.error === 'no_answer' || n.error === 'token budget' ? 'busy' : null),
     sections: (n.sections || []).map((s) => ({ id: s.id, heading: s.heading, bullets: s.bullets.map((b) => ({ text: b.text, quote: b.quote })) })),
     coverage: n.coverage || 0, built_at: n.finished_at || null,
   };

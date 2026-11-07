@@ -114,8 +114,8 @@ function lastActiveMs(user) {
   const db = require('../config/db');
   const t = (v) => { const n = Date.parse(v); return Number.isFinite(n) ? n : 0; };
   let last = Math.max(t(user.created_at), touched.get(user.id) || 0);
-  for (const row of db.find('sessions', (r) => r.user_id === user.id)) last = Math.max(last, t(row.ended_at), t(row.started_at));
-  for (const row of db.find('enrollments', (r) => r.user_id === user.id)) last = Math.max(last, t(row.updated_at), t(row.created_at));
+  for (const row of db.forUser('sessions', user.id).slice()) last = Math.max(last, t(row.ended_at), t(row.started_at));
+  for (const row of db.forUser('enrollments', user.id).slice()) last = Math.max(last, t(row.updated_at), t(row.created_at));
   return last;
 }
 /** No activity for dormantDays: nothing is written ahead for them until they act (a request-driven trigger counts as acting). */
@@ -337,6 +337,7 @@ function trigger({ user, enrollment, grade, reason = null, passive = false }) {
  * (mayGenerate: the child's consent rule is applied inside services/ai.js on every call too). Never throws, never awaited.
  */
 const prewritten = new Map(); // enrollment id -> Set(levels already requested)
+const topGuess = new Map(); // enrollment id -> { level, n }: how many answers in a row this level was the best guess (COLD_FIRST_BLOCK)
 function prewrite({ user, enrollment, grade, levels, reason = 'placement' }) {
   try {
     const max = num('WRITE_AHEAD_PREWRITE_MAX', 4, 0, 10);
@@ -352,7 +353,24 @@ function prewrite({ user, enrollment, grade, levels, reason = 'placement' }) {
     const steps = [];
     for (const [rank, level] of levels.entries()) {
       if (done.size >= max) break;
-      if (done.has(level)) continue;
+      if (done.has(level)) {
+        // COLD_FIRST_BLOCK: a first part is parked for this level and the guess has stayed on top for COLD_HEAD_CONTINUE answers: write the rest too, in the same speculative lane,
+        // so a learner who lands here reads on without waiting. A guess that keeps moving has spent only its first part.
+        const fb = require('./first-block'); // eslint-disable-line global-require
+        const k = bl.planKey(tailored ? user.id : null, where.trackId, where.gradeId, level);
+        if (rank === 0 && fb.on() && fb.isParked(k)) {
+          const was = topGuess.get(enrollment.id);
+          const n = was && was.level === level ? was.n + 1 : 1;
+          topGuess.set(enrollment.id, { level, n });
+          if (topGuess.size > 500) topGuess.delete(topGuess.keys().next().value);
+          if (n >= num('COLD_HEAD_CONTINUE', 3, 1, 30)) {
+            const step = { level, position: 0, kind: bl.kindFor(g, level), tier: 'free', tailored, rank };
+            enqueue({ user, step, key: k, enrollmentId: enrollment.id, levelsPerHour: 0, reason, ...where, fast: fastOn(), prewrite: true });
+            steps.push(step);
+          }
+        }
+        continue;
+      }
       const kind = bl.kindFor(g, level);
       if (kind !== 'lesson' && kind !== 'retention') continue;
       done.add(level);
@@ -391,7 +409,7 @@ function triggerForUser({ user, reason = 'dashboard' }) {
     if (!on() || !user) return;
     // eslint-disable-next-line global-require
     const db = require('../config/db');
-    const rows = db.find('enrollments', (e) => e.user_id === user.id && e.status !== 'graduated' && e.status !== 'placement_pending')
+    const rows = db.forUser('enrollments', user.id).filter((e) => e.status !== 'graduated' && e.status !== 'placement_pending')
       .sort((a, b) => String(b.updated_at || b.created_at || '').localeCompare(String(a.updated_at || a.created_at || '')))
       .slice(0, num('WRITE_AHEAD_ENROLLMENTS', 4, 0, 20));
     for (const enrollment of rows) trigger({ user, enrollment, reason });
@@ -467,6 +485,7 @@ function holdBehindFirst(job) {
 }
 
 function pump() {
+  let cap = null; // globalCap() walks the pool's slots: once a pump, not once per queued job (with a long queue that was the server's busiest loop)
   queue.sort((a, b) => a.priority - b.priority || soonest(a) - soonest(b) || (b.levelsPerHour || 0) - (a.levelsPerHour || 0) || a.seq - b.seq);
   for (let i = 0; i < queue.length;) {
     const job = queue[i];
@@ -477,7 +496,7 @@ function pump() {
     // Levels 2 and 3 of a learner are written once the level they wait on is written, not beside it (they compete for the same models):
     // 5 Nov first-lesson brief. Held only while that first-level write is queued or running, so it can never hold them for long.
     if (!job.fast && holdBehindFirst(job)) { i++; continue; }
-    if (!job.fast && running.size >= globalCap()) { i++; continue; }
+    if (!job.fast && running.size >= (cap === null ? (cap = globalCap()) : cap)) { i++; continue; }
     if (running.has(job.key) || (!job.fast && (runningFor.get(job.userId) || 0) >= perUserCap())) { i++; continue; }
     queue.splice(i, 1);
     start(job);
@@ -510,7 +529,7 @@ function start(job) {
   Promise.resolve(work)
     .then((plan) => {
       if (job.kind === 'write') {
-        if (plan) failures.delete(job.key);
+        if (plan || require('./first-block').isParked(job.key)) failures.delete(job.key); // eslint-disable-line global-require
         else {
           const before = failures.get(job.key);
           failures.set(job.key, { n: before ? before.n + 1 : 1, at: Date.now() });

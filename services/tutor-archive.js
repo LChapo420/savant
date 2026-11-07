@@ -122,7 +122,7 @@ function terms(text) {
 // ── storage ────────────────────────────────────────────────────────────────
 
 function rowOf(userId) {
-  return db.findOne('tutor_archive', (r) => r.user_id === userId);
+  return (db.forUser('tutor_archive', userId)[0] || null);
 }
 
 const norm = (t) => String(t || '').replace(/\s+/g, ' ').trim().toLowerCase();

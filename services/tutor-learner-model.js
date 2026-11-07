@@ -110,7 +110,7 @@ function skillStates(userId, now) {
   // eslint-disable-next-line global-require
   const mastery = require('./mastery');
   const rc = recallCurve(userId);
-  return db.find('skill_states', (s) => s.user_id === userId && (s.attempts || 0) > 0).map((s) => {
+  return db.forUser('skill_states', userId).filter((s) => (s.attempts || 0) > 0).map((s) => {
     const last = Date.parse(s.last_seen_at);
     const days = Number.isFinite(last) ? Math.max(0, now - last) / DAY : null;
     const recall = days === null ? null : safe(() => mastery.predictedRecall(s, days, rc), null);
@@ -120,7 +120,7 @@ function skillStates(userId, now) {
 
 /** Error tags on their answers per skill: count, last date, and whether answers since show it fixed. */
 function errorTags(userId, statesById) {
-  const items = db.find('items', (i) => i.user_id === userId && i.role !== 'placement' && typeof i.correct === 'boolean');
+  const items = db.forUser('items', userId).filter((i) => i.role !== 'placement' && typeof i.correct === 'boolean');
   const bySkill = {};
   for (const i of items) (bySkill[i.skill_id] = bySkill[i.skill_id] || []).push(i);
   const out = [];
@@ -145,7 +145,7 @@ function survey(userId) {
 }
 
 function recordFacts(userId) {
-  const rec = db.findOne('learner_records', (r) => r.user_id === userId);
+  const rec = (db.forUser('learner_records', userId)[0] || null);
   return ((rec && rec.facts) || []).filter((f) => f.status !== 'superseded');
 }
 
@@ -237,7 +237,7 @@ function measureItems(userId, intent) {
   const scorecard = require('./scorecard');
   const { STATS } = require('./scorecard/stats');
   /* eslint-enable global-require */
-  const card = db.findOne('scorecards', (r) => r.user_id === userId);
+  const card = (db.forUser('scorecards', userId)[0] || null);
   if (!card) return { items: [], summary: '' };
   const cats = INTENT_CATS[intent] || [];
   const reads = STATS.map((s) => ({ s, r: safe(() => scorecard.read(card, s.id, {}), null) })).filter((x) => x.r);
@@ -546,7 +546,7 @@ function block(userId, opts = {}) {
 
 /** Error tags on their answers that their answers since show fixed (for the dock's own misconception line). */
 function fixedTags(userId) {
-  const states = db.find('skill_states', (s) => s.user_id === userId);
+  const states = db.forUser('skill_states', userId).slice();
   const byId = Object.fromEntries(states.map((s) => [s.skill_id, s]));
   return errorTags(userId, byId).filter((t) => t.fixed).map((t) => t.tag);
 }

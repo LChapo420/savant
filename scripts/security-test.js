@@ -158,6 +158,7 @@ async function startServer(extraEnv = {}) {
   const env = {
     ...process.env,
     NODE_ENV: 'test',
+    BETA_SIGNIN_ONLY: 'off', // the host-header checks sign up under a made-up site name, which the sign-in-only default would refuse before they test anything
     PORT: String(port),
     DB_FILE: dbFile,
     MAIL_OUTBOX_DIR: path.join(dir, 'outbox'),

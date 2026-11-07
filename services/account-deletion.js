@@ -26,9 +26,31 @@ function refusal(user) {
 }
 
 /** Remove the account and its rows. Returns how many rows went from each collection. */
+/**
+ * What a learner did on a level everyone shares sits on that level's row: their typed answers (keyed "<id>:<check>") and per-block times. A
+ * row with an owner goes with its owner; a shared row stays, so these are taken out of it.
+ */
+function clearFromSharedPlans(id) {
+  const prefix = `${id}:`;
+  let cleared = 0;
+  for (const plan of db.find('block_plans', (p) => p && !p.user_id && (p.answers || p.telemetry))) {
+    const answers = Object.fromEntries(Object.entries(plan.answers || {}).filter(([k]) => !k.startsWith(prefix)));
+    const telemetry = { ...(plan.telemetry || {}) };
+    const hadAnswers = Object.keys(answers).length !== Object.keys(plan.answers || {}).length;
+    const hadTelemetry = telemetry[id] !== undefined;
+    if (!hadAnswers && !hadTelemetry) continue;
+    delete telemetry[id];
+    db.update('block_plans', plan.id, { ...(plan.answers ? { answers } : {}), ...(plan.telemetry ? { telemetry } : {}) });
+    cleared++;
+  }
+  return cleared;
+}
+
 function deleteAccount(user) {
   const id = user.id;
   const removed = {};
+  const shared = clearFromSharedPlans(id);
+  if (shared) removed.shared_plan_rows_cleared = shared;
   for (const name of consent.collectionNames()) {
     if (consent.SHARED.has(name)) continue;
     const n = db.remove(name, (r) => r && r.user_id === id);
@@ -44,4 +66,4 @@ function deleteAccount(user) {
   return removed;
 }
 
-module.exports = { enabled, refusal, deleteAccount };
+module.exports = { enabled, refusal, deleteAccount, clearFromSharedPlans };

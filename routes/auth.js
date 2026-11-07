@@ -13,17 +13,19 @@
  * until the age question is answered on the next page it opens.
  */
 const express = require('express');
-const bcrypt = require('bcryptjs');
+const passwords = require('../services/passwords');
 const db = require('../config/db');
 const learner = require('../services/learner');
 const { limit } = require('../utils/rate-limit');
 const { publicUser } = require('../middleware/auth');
 const consent = require('./consent');
 const referrals = require('../services/referrals');
+const signinOnly = require('../middleware/signin-only');
 
 const router = express.Router();
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const REMEMBER_MS = 365 * 24 * 3600 * 1000; // "Remember me": a year from the last visit, since the cookie rolls with every response
 
 function normalizeEmail(raw) {
   return String(raw || '').trim().toLowerCase();
@@ -38,12 +40,17 @@ function userView(user) {
 /** Sign the user in by rotating the session id first: reusing the id the visitor
  *  arrived with would let someone who planted it ride along on the login. The age
  *  screen answer is carried across, so it cannot be answered again by signing in. */
-function startSession(req, user) {
+function startSession(req, user, { remember } = {}) {
   const screen = req.session && req.session.age_screen;
   return new Promise((resolve, reject) => {
     req.session.regenerate((err) => {
       if (err) return reject(err);
       req.session.userId = user.id;
+      req.session.uc = user.created_at; // whose id this is: see middleware/auth.js attachUser
+      // Kept with the session, so the rolling cookie keeps this length. Unticked: no expiry, so the cookie ends with the browser and the
+      // store drops the row a day after the last visit. A caller that does not say keeps the default in server.js.
+      if (remember === true) req.session.cookie.maxAge = REMEMBER_MS;
+      else if (remember === false) req.session.cookie.expires = false;
       if (screen) req.session.age_screen = screen;
       req.session.save((saveErr) => (saveErr ? reject(saveErr) : resolve()));
     });
@@ -56,7 +63,10 @@ function checkPassword(password) {
   return null;
 }
 
-router.post('/register', limit('register', 10, 60 * 60 * 1000), async (req, res) => {
+// Sign-ups and sign-ins carry no account yet, so they count by address, and a classroom shares one: 60 sign-ups an hour and 120 sign-ins per
+// 15 minutes fit a whole class arriving at once (it was 10 and 20). The guess a limit exists to stop is many tries at ONE account, which
+// the per-account sign-in limit below stops at 15 per 15 minutes wherever they come from. The invite gate (BETA_GATE) is what keeps strangers out.
+router.post('/register', signinOnly.refuseSignUp, limit('register', 60, 60 * 60 * 1000), async (req, res) => {
   const password = String(req.body.password || '');
   const displayName = String(req.body.display_name || '').trim();
 
@@ -79,6 +89,9 @@ router.post('/register', limit('register', 10, 60 * 60 * 1000), async (req, res)
   if (displayName.length < 2 || displayName.length > 32) {
     return res.status(400).json({ error: 'Your name should be 2 to 32 characters.' });
   }
+  // Hashed before the check, so the check and the insert have nothing between them: with the wait in between, sign-ups racing for one email
+  // all passed the check and each made an account (beta load test, Nov 2026).
+  const passwordHash = await passwords.hash(password, 10);
   if (db.findOne('users', (u) => u.email === email)) {
     return res.status(409).json({ error: 'An account with that email already exists.' });
   }
@@ -86,7 +99,7 @@ router.post('/register', limit('register', 10, 60 * 60 * 1000), async (req, res)
   const user = db.insert('users', {
     email,
     display_name: displayName,
-    password_hash: await bcrypt.hash(password, 10),
+    password_hash: passwordHash,
     xp: 0,
     streak: 0,
     last_active_day: null,
@@ -121,6 +134,7 @@ async function registerChild(req, res, screen, password, displayName) {
     return res.status(400).json({ error: 'Your first name or a nickname should be 2 to 32 characters.' });
   }
   if (!EMAIL.test(parentEmail)) return res.status(400).json({ error: "Enter your parent's or guardian's email address." });
+  const passwordHash = await passwords.hash(password, 10); // before the check, as above
   if (db.findOne('users', (u) => u.username === username)) {
     return res.status(409).json({ error: 'That username is taken. Try another.' });
   }
@@ -129,7 +143,7 @@ async function registerChild(req, res, screen, password, displayName) {
     email: null,
     username,
     display_name: displayName,
-    password_hash: await bcrypt.hash(password, 10),
+    password_hash: passwordHash,
     xp: 0,
     streak: 0,
     last_active_day: null,
@@ -153,7 +167,7 @@ async function registerChild(req, res, screen, password, displayName) {
   res.status(201).json({ user: userView(db.byId('users', user.id)), consent_email_sent: sent });
 }
 
-router.post('/login', limit('login', 20, 15 * 60 * 1000), async (req, res) => {
+router.post('/login', limit('login', 120, 15 * 60 * 1000), limit('login-account', 15, 15 * 60 * 1000, { by: (req) => normalizeEmail(req.body && (req.body.email || req.body.username)) }), async (req, res) => {
   const wasGuest = req.user && req.user.guest ? req.user : null; // onboarding v2: an unsaved learner signing in to an account they already have
   // One box takes an email or a child account's username.
   const login = normalizeEmail(req.body.email || req.body.username);
@@ -166,10 +180,10 @@ router.post('/login', limit('login', 20, 15 * 60 * 1000), async (req, res) => {
   // response time does not reveal which emails are registered. It must be a real
   // 60-character hash: bcryptjs returns at once for a malformed one.
   const hash = user ? user.password_hash : consent.DUMMY_HASH;
-  const ok = await bcrypt.compare(password, hash);
+  const ok = await passwords.compare(password, hash);
   if (!user || !ok) return res.status(401).json({ error: 'That email or username and password do not match.' });
 
-  await startSession(req, user);
+  await startSession(req, user, { remember: req.body.remember });
   if (wasGuest) require('../services/onboarding-v2').absorbGuest(wasGuest, user); // eslint-disable-line global-require
   res.json({ user: userView(user) });
 });

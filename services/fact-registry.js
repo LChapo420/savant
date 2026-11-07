@@ -81,6 +81,8 @@ const TASKS = {
 
   // ── lessons and levels ─────────────────────────────────────────────────────────────────────────────────────
   block_fill: { kind: 'downstream', by: 'services/block-levels.js verifyLevel: claim-by-claim read and repairs; a level that has not passed is not served', file: 'services/block-levels.js', symbol: 'verifyLevel', what: 'Lessons and levels: the block text and graded checks', source: 'the subject fact sheet and the verifier\'s own working', ifHeld: 'the bank lesson (the ordinary session)' },
+  part_gate_a: { kind: 'internal', why: 'First reading of a rewrite against its original (services/part-modify.js defaultGate). A verdict; nothing of it is shown.' },
+  part_gate_b: { kind: 'internal', why: 'Second reading of a rewrite by another family. A verdict; nothing of it is shown.' },
   block_layout: { kind: 'internal', why: 'A plan of which blocks to use. No text of it is shown; what it leads to is block_fill.' },
   fact_repair: { kind: 'downstream', by: 'services/block-levels.js verifyAndRepair: a repair is read again before the level can pass', file: 'services/block-levels.js', symbol: 'verifyAndRepair', what: 'Repairs of a level the verifier flagged', source: 'the verifier\'s finding', ifHeld: 'the level is not served' },
   lesson_write: { kind: 'inline', mode: 'general', budgetMs: 120000, what: 'The older single-page generated lesson (only while aiLessonsAllowed)', source: 'general knowledge; also math and key gates', ifHeld: 'the bank lesson' },
@@ -128,6 +130,8 @@ const TASKS = {
     pieces: (d) => each(d, 'turns', (t) => t.text), atLeast: (d) => { compact(d, 'turns'); return (d.turns || []).length > 0; },
   },
   material_verify: { kind: 'internal', why: 'The support check on upload questions: its verdicts are read by code, never shown.' },
+  material_factcheck_deepseek: { kind: 'internal', why: 'First reader in the upload fact check (services/material-factcheck.js): its verdicts are read by code, never shown.' },
+  material_factcheck_glm: { kind: 'internal', why: 'Second reader in the upload fact check, another family: its verdicts are read by code, never shown.' },
 
   // ── placement ──────────────────────────────────────────────────────────────────────────────────────────────
   placement_write: {
@@ -145,6 +149,7 @@ const TASKS = {
   // ── never shown ────────────────────────────────────────────────────────────────────────────────────────────
   fact_live: { kind: 'internal', why: 'This is the check itself (services/fact-guard.js).' },
   fact_verify: { kind: 'internal', why: 'The level verifier.' },
+  fact_gate: { kind: 'internal', why: 'The measured gate for shared levels (services/fact-gate.js), off by default.' },
   fact_read: { kind: 'internal', why: 'The level verifier.' },
   fact_claims: { kind: 'internal', why: 'The level verifier.' },
   fact_research: { kind: 'internal', why: 'The level verifier\'s research sheet: read by the verifier, not by a learner.' },

@@ -20,6 +20,10 @@ for (const flag of ['XKIRO_PIPELINE', 'UNOROUTER_PIPELINE']) {
   }
 }
 
+// Errors go to a local, rotated log (LOG_DIR). A promise nobody handled is recorded instead of ending the process for every learner signed in.
+const errorLog = require('./services/error-log');
+errorLog.install();
+
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -81,8 +85,20 @@ if (isProduction && (!secret || secret.length < 32)) {
   console.error('Refusing to start: SESSION_SECRET must be at least 32 characters in production.');
   process.exit(1);
 }
+// Sessions on disk, so a restart or a deploy does not sign every learner out and memory does not grow with every visitor (express-session's MemoryStore
+// does both). On wherever the signing key is stable, whatever NODE_ENV says: without one, a restart ends every session anyway. SESSION_STORE=memory keeps
+// the old behaviour, and so does a Node without node:sqlite. The file lives in data/, which a deploy keeps. /api/health tells an admin which is in use.
+let sessionStore;
+if ((process.env.SESSION_STORE || (isProduction || secret ? 'sqlite' : 'memory')) === 'sqlite') {
+  try {
+    sessionStore = new (require('./services/session-store').SqliteSessionStore)();
+  } catch (err) {
+    console.warn(`Sessions stay in memory (a restart signs everyone out): ${err.message}`);
+  }
+}
 app.use(session({
   name: 'polymath.sid',
+  store: sessionStore,
   secret: secret || crypto.randomBytes(48).toString('base64url'),
   resave: false,
   saveUninitialized: false,
@@ -96,6 +112,11 @@ app.use(session({
 }));
 
 app.use(attachUser);
+// The private beta: with BETA_GATE=invite only an approved tester's invite code makes an account (middleware/beta-gate.js). Off by default.
+app.use(require('./middleware/beta-gate').betaGate({ db: require('./config/db'), isAdmin: require('./middleware/auth').isAdmin }));
+// Logged-out visitors get the sign-in page and the few public pages only (BETA_SIGNIN_ONLY, middleware/signin-only.js). Runs before every page and static file.
+const signinOnly = require('./middleware/signin-only');
+app.use(signinOnly.gate);
 // Age screen and parental consent (routes/consent.js). The permissions gate turns
 // the camera and microphone off in the browser for an account that may not use
 // them; the API gate keeps a child account's free text away from outside models
@@ -132,6 +153,7 @@ app.use('/api', require('./routes/review'));
 app.use('/api', require('./routes/retention')); // study sessions, retention enforcers, the calendar (RETENTION_ENFORCERS)
 app.use('/api', require('./routes/study-goals')); // what the learner wants out of each subject and course: core parts fast, full depth, ready for a test (services/study-goal.js)
 app.use('/api', require('./routes/retention-goals')); // how long to remember each subject and course (services/retention-goal.js)
+app.use('/api', require('./routes/part-change')); // the learner changes a part themselves (services/part-change.js; PART_CHANGE=on)
 app.use('/api', require('./routes/daily-plan')); // today's plan across every subject (services/daily-plan.js)
 app.use('/api/placement', require('./routes/placement'));
 // The reading check: a few minutes of vocabulary and passages that measure language level for the scorecard (services/reading-check.js).
@@ -191,8 +213,16 @@ app.use('/spanish-media', express.static(path.join(__dirname, 'data', 'spanish-m
 }));
 
 app.get('/api/health', (req, res) => {
-  res.json({
-    ok: true,
+  const store = require('./config/db').saveState ? require('./config/db').saveState() : null;
+  // The provider list holds spend and file paths: in production it is for admins only.
+  const adminAsking = !isProduction || require('./middleware/auth').isAdmin(req.user);
+  // Saving has been failing for a while (a full disk, say): the app still answers, and everything since the last save goes at the next restart.
+  const unsaved = !!(store && store.failing_for_s > 30);
+  if (!adminAsking) return res.status(unsaved ? 503 : 200).json({ ok: !unsaved });
+  return res.status(unsaved ? 503 : 200).json({
+    ok: !unsaved,
+    store,
+    sessions: sessionStore ? 'disk' : 'memory', // memory means a restart signs everyone out
     ai: require('./services/ai').isEnabled(),
     // Which provider is actually answering, and why the preferred one is not.
     providers: require('./services/providers').status(),
@@ -239,6 +269,8 @@ app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: isProduction ? '1h' : 0,
   setHeaders: (res, file) => {
     if (!isProduction) res.setHeader('Cache-Control', 'no-store, must-revalidate');
+    // Sign-in only: a page kept for an hour would show after signing out without asking the gate above.
+    else if (/\.html$/i.test(file) && signinOnly.active(res.req)) res.setHeader('Cache-Control', 'no-cache');
     // The typefaces are also read by the sandboxed lesson frames (routes/base-lessons.js),
     // whose opaque origin makes a font load a cross-origin request. Public files only.
     if (/\.woff2?$/i.test(file)) res.setHeader('Access-Control-Allow-Origin', '*');
@@ -250,9 +282,12 @@ app.use(express.static(path.join(__dirname, 'public'), {
 
 // Anything else is a client-side route: serve the app shell.
 app.get('*', (req, res) => {
+  // Sign-in only: a missing file is a 404, not the app shell (which is the landing page).
+  if (!req.user && signinOnly.active(req)) return res.status(404).type('text/plain').send('Not found');
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.use(errorLog.expressHandler);
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (res.headersSent) return;
@@ -269,6 +304,8 @@ app.listen(PORT, () => {
   require('./services/cost-tracker').start(); // process snapshots every minute (COST_TRACKER=off stops all tracking)
   // The beta comparison (tailored vs base): writes data/beta-report.json once a day (services/beta-compare.js; BETA_REPORT_DAILY=off stops it).
   require('./services/beta-compare').startDaily();
+  // The real-tester refit of the scorecard's read-out: checks once a day whether there is enough data, and writes a candidate and a report. Never switches itself on (SCORECARD_REFIT_AUTO=1 to run).
+  require('./services/scorecard/refit-auto').startDaily();
   // Base levels shipped in content/base-levels are added if the data file lacks them.
   try {
     const shipped = require('./services/base-content').importAll();

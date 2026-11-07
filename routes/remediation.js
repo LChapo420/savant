@@ -169,7 +169,7 @@ router.post('/remediation/:id/recall', requireAuth, limit('remediation-drill', 6
     analysis: null,
     xp_awarded: 0,
   });
-  const avoid = new Set(db.find('items', (i) => i.user_id === req.user.id).slice(-600).map((i) => bank.itemKey(i)));
+  const avoid = new Set(db.forUser('items', req.user.id).slice().slice(-600).map((i) => bank.itemKey(i)));
   const shapes = new Set();
   const items = list.map((o, index) => {
     const plan = curriculum.levelPlan(grade, o.lesson_level);

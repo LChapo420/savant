@@ -1,0 +1,4 @@
+const r=require(process.argv[2]);const p=r.probe||{};console.log(JSON.stringify(r.overall),'crashed',JSON.stringify(r.crashed));
+console.log('cpu_s',p.cpu_s,'wall_s',p.wall_s,'cpu/req',r.cpu_ms_per_request);console.log('lagP99med',p.lag_p99_median_ms,'lagMax',p.lag_max_ms,'stall>1s secs',p.secs_with_stall_over_1s,'/',p.secs,'busy',p.loop_busy_median,'boxcpu',p.box_cpu_median,'rssMax',p.rss_mb_max,'save%',p.save_share_of_time,'dbEnd',r.db_bytes_end,'ledgerW/s',p.ledger_writes_per_sec,p.ledger_write_ms_per_sec);
+console.log('notes',JSON.stringify(r.notes).slice(0,300));console.log('stub',JSON.stringify(r.stub&&Object.fromEntries(Object.entries(r.stub.byProvider).map(([k,v])=>[k,v.calls]))));
+for(const x of r.routes.slice(0,+process.argv[3]||12))console.log(x.route.slice(0,36).padEnd(36),x.n,x.p50,x.p95,x.p99,JSON.stringify(x.statuses));

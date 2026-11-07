@@ -7,6 +7,13 @@
  * terms of collections and plain objects, so Phase 5 replaces the guts here with
  * Postgres without touching a route or a service.
  */
+// DB_DRIVER=sqlite hands everything to config/db-sqlite.js (same API, SQLite on disk; move the data first with
+// scripts/migrate-json-to-sqlite.js). Unset or "json" keeps this file's JSON store. See docs/BETA-LOAD.md for why and when.
+if (process.env.DB_DRIVER === 'sqlite') {
+  module.exports = require('./db-sqlite');
+  return;
+}
+
 const fs = require('fs');
 const path = require('path');
 
@@ -44,6 +51,7 @@ const COLLECTIONS = [
   'subject_placements',      // a learner's walk up a whole subject, and the percentages it produced
   'game_payloads',           // the questions for a game level: written once, validated, kept
   'block_plans',             // a block level's layout and content: per learner, or shared per level
+  'part_changes',            // a learner's own wording of one lesson block, asked for by them (services/part-change.js)
   'lesson_layers',           // the personal layer over a shared lesson (services/lesson-layer.js): text only, per learner and plan
   'fact_recheck_findings',   // what the background re-check of old stored text found (services/fact-recheck.js): a reference, a quote and a reason, no learner
   'fact_recheck_state',      // where that job has got to, one row
@@ -119,6 +127,13 @@ function load() {
   try {
     parsed = JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
   } catch (err) {
+    // In production an unreadable store stops the app: starting empty looks like a working site where every learner's account has
+    // gone, and new sign-ups would then be mixed in with ids the restore brings back (durability drill, Nov 2026). The file is left
+    // exactly as it is. DB_ALLOW_FRESH=1 goes back to starting empty.
+    if (process.env.NODE_ENV === 'production' && process.env.DB_ALLOW_FRESH !== '1') {
+      console.error(`Refusing to start: ${DB_PATH} cannot be read (${err.message}). Nothing was changed. Restore it: node scripts/backup-db.js --list, then --restore <file> --to ${DB_PATH} --force`);
+      process.exit(1);
+    }
     // A truncated file would otherwise take the whole app down on boot. Keep the
     // damaged copy for inspection rather than silently deleting someone's data.
     const backup = `${DB_PATH}.corrupt-${Date.now()}`;
@@ -146,18 +161,39 @@ let dirty = false;
 let flushTimer = null;
 
 let flushFailures = 0;
+let lastFlushMs = 0;
+let lastSavedAt = Date.now();
+let firstFailureAt = null;
+
+/**
+ * Saving stops everything else, so at most about a tenth of the time goes on it: the wait before a save is DB_FLUSH_RATIO (9) times what
+ * the last save took, between 250 ms and DB_FLUSH_MAX_MS (5 s). A crash loses what happened in that wait; beta load test, Nov 2026: at 100
+ * learners on a 20 MB store saving took 48% of the time with a fixed 250 ms. DB_FLUSH_RATIO=0 goes back to 250 ms.
+ */
+function flushDelay() {
+  const ratio = Number(process.env.DB_FLUSH_RATIO === undefined ? 9 : process.env.DB_FLUSH_RATIO);
+  const most = Number(process.env.DB_FLUSH_MAX_MS || 5000);
+  return Math.min(most, Math.max(250, (ratio || 0) * lastFlushMs));
+}
+
 
 function flush() {
   flushTimer = null;
   if (!dirty) return;
   dirty = false;
+  const t0 = Date.now();
   // Write beside the target and rename, so a crash mid-write cannot leave a
   // half-written db.json behind.
   try {
-    fs.writeFileSync(TMP_PATH, JSON.stringify(store, null, 2), 'utf8');
-    fs.renameSync(TMP_PATH, DB_PATH);
+    // One line (DB_PRETTY=1 for the indented form): a quarter smaller and quicker to write, and no script here reads it by eye.
+    fs.writeFileSync(TMP_PATH, process.env.DB_PRETTY === '1' ? JSON.stringify(store, null, 2) : JSON.stringify(store), 'utf8');
+    // On the disk before it is the live file: a hard power-off left files of zero bytes on 6 Nov 2026 (services/durable-file.js).
+    require('../services/durable-file').commit(TMP_PATH, DB_PATH); // eslint-disable-line global-require
     if (flushFailures) console.warn(`db: saved after ${flushFailures} failed attempt(s)`);
     flushFailures = 0;
+    firstFailureAt = null;
+    lastFlushMs = Date.now() - t0;
+    lastSavedAt = Date.now();
   } catch (err) {
     // On Windows the rename fails for a moment (EPERM, EBUSY, EACCES) while another
     // program holds db.json open: a backup, an antivirus scan, a script copying it.
@@ -165,6 +201,7 @@ function flush() {
     // memory, so keep them dirty and try again shortly, backing off to 5 s.
     dirty = true;
     flushFailures++;
+    if (!firstFailureAt) firstFailureAt = Date.now();
     if (flushFailures === 1 || flushFailures % 20 === 0) console.warn(`db: save failed (${err.code || err.message}); retrying`);
     if (!flushTimer) flushTimer = setTimeout(flush, Math.min(5000, 250 * 2 ** Math.min(flushFailures, 5)));
   }
@@ -178,7 +215,35 @@ const READONLY = process.env.DB_READONLY === '1';
 function touch() {
   if (READONLY) return;
   dirty = true;
-  if (!flushTimer) flushTimer = setTimeout(flush, 250);
+  if (!flushTimer) flushTimer = setTimeout(flush, flushDelay());
+}
+
+/** How saving is going, for /api/health: an app that cannot save still answers every request, and all of it is lost at the next restart. */
+function saveState() {
+  return {
+    saving: !flushFailures,
+    failed_attempts: flushFailures,
+    failing_for_s: firstFailureAt ? Math.round((Date.now() - firstFailureAt) / 1000) : 0,
+    last_saved_s_ago: Math.round((Date.now() - lastSavedAt) / 1000),
+    last_save_ms: lastFlushMs,
+  };
+}
+
+// Rows by owner, built the first time a collection is asked and kept up to date after that, so "this learner's answers" does not read
+// every learner's. Cleared whenever rows leave or change owner.
+const byOwner = new Map(); // collection -> Map(user_id -> rows, in insertion order)
+function ownerIndex(name) {
+  let ix = byOwner.get(name);
+  // A count that does not match means something changed the array directly (tests do): build again.
+  if (!ix || ix.count !== store[name].length) {
+    ix = { map: new Map(), count: store[name].length };
+    for (const r of store[name]) {
+      const list = ix.map.get(r.user_id);
+      if (list) list.push(r); else ix.map.set(r.user_id, [r]);
+    }
+    byOwner.set(name, ix);
+  }
+  return ix.map;
 }
 
 for (const signal of ['exit', 'SIGINT', 'SIGTERM']) {
@@ -203,6 +268,8 @@ const db = {
     const id = ++store._counters[name];
     const row = { id, created_at: new Date().toISOString(), ...doc };
     collection(name).push(row);
+    const ix = byOwner.get(name);
+    if (ix) { const list = ix.map.get(row.user_id); if (list) list.push(row); else ix.map.set(row.user_id, [row]); ix.count++; }
     touch();
     return row;
   },
@@ -219,14 +286,34 @@ const db = {
     return collection(name).find(predicate) || null;
   },
 
+  /**
+   * One learner's rows of a collection: the same rows, in the same order, as find(name, (r) => r.user_id === userId), without reading
+   * everyone's. The array is shared with the index: filter or copy it, never change it.
+   */
+  forUser(name, userId) {
+    collection(name);
+    return ownerIndex(name).get(userId) || [];
+  },
+
   byId(name, id) {
     const numeric = Number(id);
-    return collection(name).find((r) => r.id === numeric) || null;
+    const rows = collection(name);
+    // Ids only go up and rows are only added at the end, so this is a binary search. A miss still reads the whole collection, in case
+    // something in an old file is out of order.
+    let lo = 0; let hi = rows.length - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      const at = rows[mid].id;
+      if (at === numeric) return rows[mid];
+      if (at < numeric) lo = mid + 1; else hi = mid - 1;
+    }
+    return rows.find((r) => r.id === numeric) || null;
   },
 
   update(name, id, patch) {
     const row = db.byId(name, id);
     if (!row) return null;
+    if (patch && patch.user_id !== undefined && patch.user_id !== row.user_id) byOwner.delete(name);
     Object.assign(row, patch, { updated_at: new Date().toISOString() });
     touch();
     return row;
@@ -236,7 +323,9 @@ const db = {
   upsert(name, predicate, build) {
     const existing = db.findOne(name, predicate);
     if (existing) {
+      const owner = existing.user_id;
       Object.assign(existing, build(existing), { updated_at: new Date().toISOString() });
+      if (existing.user_id !== owner) byOwner.delete(name);
       touch();
       return existing;
     }
@@ -249,12 +338,15 @@ const db = {
     for (let i = rows.length - 1; i >= 0; i--) {
       if (predicate(rows[i])) { rows.splice(i, 1); removed++; }
     }
-    if (removed) touch();
+    if (removed) { byOwner.delete(name); touch(); }
     return removed;
   },
 
-  /** Force a synchronous write. Tests and scripts use this; requests do not. */
+  /** Force a synchronous write. Tests and scripts use this; requests do not: a write stops every learner while it runs. */
   flush,
+  /** A request that wants its change saved promptly: the next save, within DB_FLUSH_MAX_MS. */
+  saveSoon() { touch(); },
+  saveState,
 
   path: DB_PATH,
 };

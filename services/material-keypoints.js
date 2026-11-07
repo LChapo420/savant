@@ -33,13 +33,15 @@ const SAY_AGAIN = /\b(i(?:'ll| will) say (?:that|it|this) again|let me repeat|on
 const DEFINITION = /^[A-Za-z][^.:;?!]{1,60}?\b(?:is|are|means|refers to|is defined as|is called|are called|is known as)\b\s+\S/;
 const FORMULA = /[A-Za-z)\]]\s*=\s*[-\w(\\]/;
 // A box that a format cannot mark (a PDF drawing, a slide) usually carries a label: "KEY POINT: ...", "Important - ...".
-const LABEL_BOX = /^(?:key (?:point|idea|takeaway|fact)s?|important|remember|definition|theorem|rule|warning|note|must know|exam tip)\s*[:\u2014-]\s*\S/i;
-const CUE_ONLY = new RegExp(`${KEY_CUES.source}|${TEST_CUES.source}|${SAY_AGAIN.source}`, 'i');
+const LABEL_BOX = /^(?:key (?:point|idea|takeaway|fact)s?|important|remember|definition|theorem|rule|warning|note|must know|exam tip|exam trap|teacher'?s note|teacher note|tutor'?s note|professor'?s note|note to students|common (?:mistake|error|trap))\s*[:\u2014-]\s*\S/i;
+// What a teacher says about a point rather than the point: "Teacher's note: students always miss this one." It stresses the sentence it is about (usually the next one).
+const TEACHER_CUE = /\b(teacher'?s note|teacher note|tutor'?s note|professor'?s note|note to students|students? (?:always|often|usually|tend to|commonly|never) (?:miss|forget|confuse|get|mix)|common (?:mistake|error|trap|pitfall)|exam trap|pay (?:close )?attention|watch out for|be careful)\b/i;
+const CUE_ONLY = new RegExp(`${KEY_CUES.source}|${TEST_CUES.source}|${SAY_AGAIN.source}|${TEACHER_CUE.source}`, 'i');
 // Words that carry no subject of their own: a cue sentence made only of these ("This will be on the exam, so write it down.") is about the sentence before it.
 const GENERIC = new Set('idea point thing things today write down part remember important exam test quiz know need sure make again say repeat stress attention pay everything come comes question questions set problem problems time sets single most one every this that these those'.split(' '));
 const DEICTIC_CUE = /^(?:(?:and|so|now|but|okay|ok)[ ,]+)?(?:(?:remember|note|keep in mind|don'?t forget|make sure you (?:know|remember|understand)|you need to (?:know|remember))\s+(?:that|this|these|those|it)\b|(?:this|that|these|those|it)\b)/i;
 function anaphoric(text) {
-  const stripped = [KEY_CUES, TEST_CUES, SAY_AGAIN].reduce((t, re) => t.replace(new RegExp(re.source, 'gi'), ' '), text);
+  const stripped = [TEACHER_CUE, KEY_CUES, TEST_CUES, SAY_AGAIN].reduce((t, re) => t.replace(new RegExp(re.source, 'gi'), ' '), text);
   const own = terms(stripped).filter((t) => !GENERIC.has(t)).length;
   return own <= 1 || (own <= 2 && DEICTIC_CUE.test(text.trim()));
 }
@@ -93,7 +95,8 @@ function markedFraction(raw) {
 
 /** Split one block into sentence units (a list item or callout line is one unit). */
 function sentences(raw) {
-  const parts = raw.split(/(?<=[.!?])\s+(?=[A-Z0-9"“(\[*=])/);
+  // A sentence may end inside its mark: "**It is so.** The next one."
+  const parts = raw.split(/(?<=[.!?](?:\*\*|==)?)\s+(?=[A-Z0-9"“(\[*=])/);
   return parts.map((s) => s.trim()).filter(Boolean);
 }
 
@@ -157,20 +160,38 @@ function locate(plain, text) {
 
 const round1 = (n) => Math.round(n * 10) / 10;
 
+/** The specifics of a sentence: names (capitalised in mid-sentence) and numbers. Two sentences that share two of them say the same thing, however the rest is worded. */
+function specificsOf(text) {
+  const out = new Set();
+  for (const m of String(text).matchAll(/[a-z,;:]\s+([A-Z][\p{L}'-]{2,})/gu)) out.add(m[1].toLowerCase());
+  for (const m of String(text).matchAll(/\b[A-Z][\p{L}'-]{2,}(?=\s+[a-z]+\s)/gu)) if (m.index > 0) out.add(m[0].toLowerCase());
+  for (const m of String(text).matchAll(/(?<![\p{L}\d])\d[\d,.]*\d|(?<![\p{L}\d])\d(?![\d\p{L}])/gu)) out.add(m[0]);
+  return out;
+}
+/** A heading written as a whole statement ("Tamsin Reef shelters the harbour") makes a point of its own; a topic label ("Types of plate boundaries") does not. */
+const CLAIM_HEADING = (t) => (t.match(/\S+/g) || []).length >= 5 && !/^(?:why|how|what|when|where|who|which|the\s+(?:role|types?|causes?|history)\b)/i.test(t) && /\b[a-z]{3,}(?:s|ed)\s+(?:the|a|an|its|their|all|every|most|some|no)\b|\b(?:is|are|was|were|must|cannot|never)\b/.test(t);
+
 /**
  * Key points and topics from rich text. opts: { plain } (the stored text, to place each point at an offset),
  * { spoken: true } to count a repeat as emphasis more strongly.
  * Returns { key_points, topics, assessed, stats }.
  */
-function extract(rich, opts = {}) {
+function extract(rich0, opts = {}) {
+  // Underline and highlight count like a mark, and so does a sentence written all in capitals.
+  const rich = String(rich0 || '').replace(/<(u|mark)>([^<]*)<\/\1>/gi, '==$2==');
   const blocks = parseBlocks(rich);
   const units = [];
   const notesCues = [];
   const headings = [];
   let lastHeading = null;
   let afterHeading = false;
+  let pendingNext = null; // a cue that points forward ("This will be on the test:", "Teacher's note: students always miss this one.") stresses the next sentence
   for (const b of blocks) {
-    if (b.kind === 'heading') { lastHeading = { title: b.raw, level: b.level, loc: b.loc }; headings.push({ ...lastHeading, section: b.section, first: units.length }); afterHeading = true; continue; }
+    if (b.kind === 'heading') {
+      lastHeading = { title: b.raw, level: b.level, loc: b.loc }; headings.push({ ...lastHeading, section: b.section, first: units.length }); afterHeading = true;
+      if (b.level >= 2 && CLAIM_HEADING(b.raw)) units.push({ notes: false, raw: b.raw, text: b.raw, words: (b.raw.match(/\S+/g) || []).length, kind: 'list', labelled: false, loc: b.loc, section: b.section, heading: b.raw, topic: false, terms: termSet(b.raw), signals: { claim_heading: 1.2 }, spoken: false });
+      continue;
+    }
     const list = b.kind === 'para' ? sentences(b.raw) : [b.raw];
     list.forEach((raw, i) => {
       const plainText = stripMarks(raw).replace(/^(?:KEY (?:POINT|IDEA|TAKEAWAY|FACT)S?|IMPORTANT|NOTE|REMEMBER|DEFINITION|THEOREM|WARNING|TIP|RULE|MUST KNOW|EXAM TIP)\s*[:.\u2014-]\s*/i, '');
@@ -180,7 +201,10 @@ function extract(rich, opts = {}) {
       if (b.notes && CUE_ONLY.test(plainText)) { notesCues.push({ loc: b.loc, text: plainText }); return; }
       // A short cue on its own ("Remember this.", "That will be on the exam.") stresses the sentence before it.
       if (n < MIN_UNIT_WORDS || (n <= 18 && CUE_ONLY.test(plainText) && anaphoric(plainText))) {
+        const forward = CUE_ONLY.test(plainText) && (/:\s*$/.test(plainText) || TEACHER_CUE.test(plainText) || /\b(?:the next|next one|following|coming up)\b/i.test(plainText));
+        if (forward) { pendingNext = { test: TEST_CUES.test(plainText), teacher: TEACHER_CUE.test(plainText), key: KEY_CUES.test(plainText) }; return; }
         if (prev && !prev.notes && CUE_ONLY.test(plainText)) {
+          if (TEACHER_CUE.test(plainText)) prev.signals.teacher = 2.0;
           if (TEST_CUES.test(plainText)) prev.signals.test_cue = 2.5;
           if (KEY_CUES.test(plainText)) prev.signals.key_cue = Math.max(prev.signals.key_cue || 0, 1.0);
           if (SAY_AGAIN.test(plainText)) prev.signals.say_again = 1.5;
@@ -188,6 +212,7 @@ function extract(rich, opts = {}) {
         return;
       }
       units.push({ notes: !!b.notes, raw, text: plainText, words: n, kind: b.kind, labelled: LABEL_BOX.test(stripMarks(raw)), loc: b.loc, section: b.section, heading: lastHeading && lastHeading.title, topic: afterHeading && i === 0 && b.kind === 'para', terms: termSet(plainText), signals: {}, spoken: !!b.spoken || !!opts.spoken });
+      if (pendingNext) { const nu = units[units.length - 1]; if (pendingNext.test) nu.signals.test_cue = 2.5; if (pendingNext.teacher) nu.signals.teacher = 2.0; if (pendingNext.key) nu.signals.key_cue = 1.0; pendingNext = null; }
     });
     afterHeading = false;
   }
@@ -198,8 +223,11 @@ function extract(rich, opts = {}) {
     const m = markedFraction(u.raw);
     if (u.kind === 'callout' || u.labelled) s.callout = 2.0;
     if (u.topic && u.section !== 'example') s.topic_sentence = 0.6;
-    if (m.frac >= 0.6 && u.kind !== 'callout' && !u.labelled) s.bold_sentence = 1.6;
+    const letters = u.text.replace(/[^\p{L}]/gu, '');
+    const caps = u.words >= 4 && letters.length >= 12 && letters.replace(/[^\p{Lu}]/gu, '').length / letters.length >= 0.9;
+    if ((m.frac >= 0.6 || caps) && u.kind !== 'callout' && !u.labelled) s.bold_sentence = 1.6;
     else if (m.any) s.bold_term = 0.9;
+    if (TEACHER_CUE.test(u.text)) s.teacher = 2.0;
     if (TEST_CUES.test(u.text)) s.test_cue = 2.5;
     if (KEY_CUES.test(u.text)) s.key_cue = 1.0;
     if (SAY_AGAIN.test(u.text)) s.say_again = 1.5;
@@ -215,13 +243,20 @@ function extract(rich, opts = {}) {
     let best = null;
     for (const u of units) if (!u.notes && u.loc && c.loc && u.loc.value === c.loc.value && u.loc.kind === c.loc.kind && (!best || sum(u) > sum(best))) best = u;
     if (!best) continue;
-    if (TEST_CUES.test(c.text)) best.signals.test_cue = 2.5;
-    if (KEY_CUES.test(c.text)) best.signals.key_cue = Math.max(best.signals.key_cue || 0, 1.0);
-    if (SAY_AGAIN.test(c.text)) best.signals.say_again = 1.5;
+    // The points of this slide the note names ("the salt tax and the treaty date"); if it names none, the slide's strongest point.
+    const noteTerms = termSet(c.text);
+    const slide = units.filter((u) => !u.notes && u.loc && c.loc && u.loc.value === c.loc.value && u.loc.kind === c.loc.kind);
+    const named = slide.filter((u) => [...u.terms].some((t) => noteTerms.has(t) && !GENERIC.has(t)));
+    for (const u of named.length ? named : [best]) {
+      if (TEST_CUES.test(c.text)) u.signals.test_cue = 2.5;
+      if (KEY_CUES.test(c.text)) u.signals.key_cue = Math.max(u.signals.key_cue || 0, 1.0);
+      if (SAY_AGAIN.test(c.text)) u.signals.say_again = 1.5;
+      if (TEACHER_CUE.test(c.text)) u.signals.teacher = 2.0;
+    }
   }
 
   // A cue sentence about something ("Make sure you can explain why boosters are needed.") stresses the nearby sentence it is about.
-  const cueKeys = ['key_cue', 'test_cue', 'say_again'];
+  const cueKeys = ['key_cue', 'test_cue', 'say_again', 'teacher'];
   units.forEach((u, i) => {
     if (!cueKeys.some((k) => u.signals[k])) return;
     for (let j = i - 1; j >= Math.max(0, i - 3); j--) {
@@ -233,15 +268,28 @@ function extract(rich, opts = {}) {
     }
   });
 
-  // Restated elsewhere: near-duplicate units merge into one point with a repeat count.
+  // Restated elsewhere: near-duplicate units merge into one point with a repeat count. Compared only with units that share a rare word (Jaccard 0.55 means one of the rarest 45% of a unit's words
+  // must be shared), so a long document stays fast: all pairs held the server's one thread for minutes on 850 KB of text.
   const used = new Set();
   const clusters = [];
+  const postings = new Map();
+  units.forEach((u, idx) => { if (u.terms.size < 3 || u.assessedItem) return; for (const t of u.terms) { if (!postings.has(t)) postings.set(t, []); postings.get(t).push(idx); } });
+  units.forEach((u) => { u.specifics = specificsOf(u.text); });
+  const specPost = new Map();
+  units.forEach((u, idx) => { if (u.assessedItem) return; for (const x of u.specifics) { if (!specPost.has(x)) specPost.set(x, []); specPost.get(x).push(idx); } });
   for (let i = 0; i < units.length; i++) {
     if (used.has(i) || units[i].terms.size < 3 || units[i].assessedItem) continue;
     const members = [i];
-    for (let j = i + 1; j < units.length; j++) {
-      if (used.has(j) || units[j].terms.size < 3 || units[j].assessedItem) continue;
-      if (jaccard(units[i].terms, units[j].terms) >= 0.55) { members.push(j); used.add(j); }
+    const rare = [...units[i].terms].sort((x, y) => postings.get(x).length - postings.get(y).length).slice(0, Math.floor(units[i].terms.size * 0.45) + 1);
+    const cand = new Set();
+    for (const t of rare) { const list = postings.get(t); if (list.length > 2500 && t !== rare[0]) continue; for (const j of list) if (j > i) cand.add(j); }
+    for (const j of [...cand].sort((x, y) => x - y)) {
+      if (used.has(j)) continue;
+      if (jaccard(units[i].terms, units[j].terms) < 0.55) continue;
+      // The same frame with different names and numbers ("Station A holds 12", "Station B holds 30") is two facts, not one said twice.
+      const si = units[i].specifics; const sj = units[j].specifics;
+      if (si.size && sj.size && ![...si].some((x) => sj.has(x))) continue;
+      members.push(j); used.add(j);
     }
     used.add(i);
     clusters.push(members);
@@ -261,6 +309,15 @@ function extract(rich, opts = {}) {
     const signals = {};
     for (const g of group) for (const [k, v] of Object.entries(g.signals)) signals[k] = Math.max(signals[k] || 0, v);
     if (group.length > 1) signals.repeated = Math.min(2.0, 0.9 * (group.length - 1));
+    // Said again in other words: other sentences that share two of its specifics (a name and a number) count as restatements.
+    const repSpec = rep.specifics;
+    if (repSpec.size >= 2) {
+      const shared = new Map();
+      for (const x of repSpec) for (const vi of specPost.get(x) || []) shared.set(vi, (shared.get(vi) || 0) + 1);
+      let again = 0;
+      for (const [vi, n] of shared) if (n >= 2 && !members.includes(vi)) { again++; if (again >= 3) break; }
+      if (again) signals.repeated = Math.min(2.0, (signals.repeated || 0) + 0.9 * again);
+    }
     if (rep.section !== 'example' && !rep.assessedItem) {
       const linked = assessedTerms.some((t, idx) => assessed[idx] !== rep && [...rep.terms].filter((x) => t.has(x)).length >= 3 && [...rep.terms].filter((x) => t.has(x)).length / Math.max(1, Math.min(rep.terms.size, t.size)) >= 0.3);
       if (linked) signals.assessed = 0.8;
@@ -277,7 +334,9 @@ function extract(rich, opts = {}) {
   const words = units.reduce((n, u) => n + u.words, 0);
   const cap = Math.max(12, Math.min(400, Math.round(words / 30)));
   points.sort((a, b) => b.score - a.score || a.order - b.order);
-  const kept = points.slice(0, cap).sort((a, b) => a.order - b.order);
+  // The cap is for plain sentences only: a point with a real signal (weight 2 or more) is never cut, or a short handout that stresses many things loses some of them.
+  const stressedN = points.filter((p) => 1 + 0.85 * p.score >= 2).length;
+  const kept = points.slice(0, Math.max(cap, Math.min(stressedN, 1500))).sort((a, b) => a.order - b.order);
   const key_points = kept.map((p, i) => ({
     id: `k${i + 1}`, text: p.text, weight: round1(Math.min(5, 1 + 0.85 * p.score)), signals: p.signals,
     loc: p.loc, at: opts.plain ? locate(opts.plain, p.full) : null, repeats: p.repeats,

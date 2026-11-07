@@ -83,11 +83,11 @@ const CHECK_ITEMS = 3;
 function delayedCandidates(userId, now = Date.now()) {
   const taken = new Set(get(userId).delayed.taken.map((t) => `${t.skill}:${t.horizon}`));
   const out = [];
-  for (const s of db.find('skill_states', (r) => r.user_id === userId && r.attempts > 0 && r.last_seen_at)) {
+  for (const s of db.forUser('skill_states', userId).filter((r) => r.attempts > 0 && r.last_seen_at)) {
     const days = (now - Date.parse(s.last_seen_at)) / DAY;
     const h = HORIZONS.find((x) => days >= x.days);
     if (!h || taken.has(`${s.skill_id}:${h.id}`)) continue;
-    const rows = db.find('items', (i) => i.user_id === userId && i.skill_id === s.skill_id && i.correct === true && Array.isArray(i.choices) && i.choices.length >= 3 && typeof i.answer === 'string' && i.prompt);
+    const rows = db.forUser('items', userId).filter((i) => i.skill_id === s.skill_id && i.correct === true && Array.isArray(i.choices) && i.choices.length >= 3 && typeof i.answer === 'string' && i.prompt);
     if (!rows.length) continue;
     out.push({ skill: s.skill_id, horizon: h.id, days, state: s, item: rows[rows.length - 1] });
   }
@@ -273,7 +273,7 @@ const choiceInFlight = new Map();
 const PICKS = new Set(['a', 'b', 'same', 'skip']);
 const dayOf = (t) => new Date(t).toISOString().slice(0, 10);
 const choiceOn = () => process.env.BOOSTER_CHOICE !== 'off';
-const pairFor = (userId, where) => db.findOne('choice_pairs', (r) => r.user_id === userId && r.track_id === where.trackId && r.grade_id === where.gradeId && r.level === where.level);
+const pairFor = (userId, where) => (db.forUser('choice_pairs', userId).find((r) => r.track_id === where.trackId && r.grade_id === where.gradeId && r.level === where.level) || null);
 
 const choice = {
   /** May this account be asked now? Rate limits included. */

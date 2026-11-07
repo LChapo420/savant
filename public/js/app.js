@@ -432,7 +432,9 @@
     applyUx(user);
     consentLine(user);
     const navs = user ? navFor(user) : null;
-    const guestNav = [['how', 'How it works', '/#how'], ['subjects', 'Subjects', '/#subjects']];
+    // Sign-in only (middleware/signin-only.js marks the page): nothing that leads to the landing page or sign-up.
+    const signinOnly = !user && !!document.body.dataset.signinOnly;
+    const guestNav = signinOnly ? [] : [['how', 'How it works', '/#how'], ['subjects', 'Subjects', '/#subjects']];
     const tabKey = coreKey(active);
 
     // A streak or XP of zero is not an achievement, so it is not shown.
@@ -474,8 +476,8 @@
         ` : `
           <div class="header-actions">
             ${toggleBtn}
-            <a class="btn btn-ghost btn-sm" href="/login">Sign in</a>
-            <a class="btn btn-primary btn-sm" href="/register">Find your level</a>
+            ${signinOnly && document.body.classList.contains('ob-login') ? '' : '<a class="btn btn-ghost btn-sm" href="/login">Sign in</a>'}
+            ${signinOnly ? '' : '<a class="btn btn-primary btn-sm" href="/register">Find your level</a>'}
           </div>
         `}
       </div>`;

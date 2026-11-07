@@ -55,7 +55,7 @@ function reserve() {
     d.count += 1;
     const tmp = `${FILE()}.${process.pid}.tmp`;
     fs.writeFileSync(tmp, JSON.stringify(d));
-    fs.renameSync(tmp, FILE());
+    require('./durable-file').commit(tmp, FILE(), { backup: true }); // eslint-disable-line global-require
     return `c${d.count}`;
   });
 }

@@ -78,7 +78,7 @@ function view(s, now = Date.now()) {
 }
 
 function openOf(userId) {
-  return db.findOne('study_sessions', (s) => s.user_id === userId && (s.status === 'running' || s.status === 'paused')) || null;
+  return (db.forUser('study_sessions', userId).find((s) => (s.status === 'running' || s.status === 'paused')) || null) || null;
 }
 
 /** Count the time since the last sign of activity (capped), and move the mark. */
@@ -207,7 +207,7 @@ function touch(userId, { now = Date.now() } = {}) {
 
 /** Sessions whose local day is in [fromDate, toDate] (dates inclusive). */
 function inDays(userId, fromDate, toDate) {
-  return db.find('study_sessions', (s) => s.user_id === userId && s.local_day >= fromDate && s.local_day <= toDate);
+  return db.forUser('study_sessions', userId).filter((s) => s.local_day >= fromDate && s.local_day <= toDate);
 }
 
 module.exports = {

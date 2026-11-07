@@ -62,7 +62,8 @@
     }
     box.classList.add(result.correct ? 'is-right' : 'is-wrong');
     box.setAttribute('role', 'status');
-    box.appendChild(CheckKit.el('b', null, result.correct ? 'Right.' : 'Not quite. The answer is: ' + (result.answer || '')));
+    var said = result.voice || {};
+    box.appendChild(CheckKit.el('b', null, result.correct ? (said.right || 'Right.') : (said.wrong || 'Not quite.') + ' The answer is: ' + (result.answer || '')));
     if (result.rationale) box.appendChild(CheckKit.el('span', null, result.rationale));
     host.appendChild(box);
   };

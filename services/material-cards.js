@@ -35,13 +35,13 @@ const norm = (s) => String(s || '').toLowerCase().replace(/[“”„"‘’']/g
 
 function row(userId, materialId) {
   const mid = Number(materialId);
-  let r = db.findOne('material_cards', (c) => c.user_id === userId && c.material_id === mid);
+  let r = (db.forUser('material_cards', userId).find((c) => c.material_id === mid) || null);
   if (!r) {
-    const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === mid);
+    const prog = (db.forUser('material_progress', userId).find((p) => p.material_id === mid) || null);
     r = db.insert('material_cards', { user_id: userId, material_id: mid, cards: [], forget_m: (prog && prog.forget_m) || 0, seq: 0, created_at: new Date().toISOString() });
   } else {
     // The course's multiplier is the shared one: pick up whatever its reviews have learned since.
-    const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === mid);
+    const prog = (db.forUser('material_progress', userId).find((p) => p.material_id === mid) || null);
     if (prog && prog.forget_m != null) r.forget_m = prog.forget_m;
   }
   return r;
@@ -76,14 +76,14 @@ function sync(userId, materialId, now = Date.now()) {
   const skills = (course && course.skills) || [];
   const skillOfPassage = (pid) => { const s = skills.find((x) => (x.passage_ids || []).includes(pid)); return s ? s.id : null; };
 
-  const pack = db.findOne('material_packs', (p) => p.user_id === userId && p.material_id === Number(materialId));
+  const pack = (db.forUser('material_packs', userId).find((p) => p.material_id === Number(materialId)) || null);
   for (const c of (pack && pack.cards) || []) {
     const key = `pack:${c.passage_id}:${norm(c.front)}`;
     if (keys.has(key) || have.has(norm(c.front))) continue;
     if (addCard(r, { front: c.front, back: c.back, quote: c.quote, passage_id: c.passage_id, skill: skillOfPassage(c.passage_id), source: 'pack', key, now: iso })) { added++; have.add(norm(c.front)); keys.add(key); }
   }
 
-  const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
+  const prog = (db.forUser('material_progress', userId).find((p) => p.material_id === Number(materialId)) || null);
   if (prog && course) {
     for (const s of skills) {
       const st = (prog.skills || {})[s.id];
@@ -101,7 +101,7 @@ function sync(userId, materialId, now = Date.now()) {
       }
     }
   }
-  if (added) { save(r); db.flush(); }
+  if (added) { save(r); db.saveSoon(); }
   return { row: r, added };
 }
 
@@ -145,7 +145,7 @@ function pick(userId, materialId, limit = 20, now = Date.now()) {
   const d = deck(userId, materialId, now);
   if (d.error) return d;
   const course = courses.get(userId, materialId);
-  const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
+  const prog = (db.forUser('material_progress', userId).find((p) => p.material_id === Number(materialId)) || null);
   const plan = course ? adapt.plan(course, prog, now) : { skills: [], skipped: [] };
   const known = new Set(plan.skipped);
   const need = new Map(plan.skills.map((x) => [x.id, x.need]));
@@ -189,9 +189,9 @@ function review(userId, materialId, cardId, rating, now = Date.now()) {
   c.interval_days = days;
   c.last = new Date(now).toISOString();
   save(r);
-  const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
+  const prog = (db.forUser('material_progress', userId).find((p) => p.material_id === Number(materialId)) || null);
   if (prog) db.update('material_progress', prog.id, { forget_m: r.forget_m || 0 });
-  db.flush();
+  db.saveSoon();
   return { card: c.id, rating, next_in_days: days, due_at: c.due };
 }
 
@@ -208,7 +208,7 @@ function add(userId, materialId, body, now = Date.now()) {
   const r = row(userId, materialId);
   const card = addCard(r, { ...f, source: 'own', now: new Date(now).toISOString() });
   if (!card) return { error: 'This deck is full.', code: 'full' };
-  save(r); db.flush();
+  save(r); db.saveSoon();
   return { card: card.id };
 }
 
@@ -223,7 +223,7 @@ function edit(userId, materialId, cardId, body) {
   const back = b.back === undefined ? c.back : clean(b.back, 600);
   if (!front || !back) return { error: 'A card needs a front and a back.', code: 'empty' };
   Object.assign(c, { front, back, edited: true });
-  save(r); db.flush();
+  save(r); db.saveSoon();
   return { card: c.id };
 }
 
@@ -235,7 +235,7 @@ function remove(userId, materialId, cardId) {
   if (!gone) return { error: 'No such card.', code: 'no_card' };
   r.cards = r.cards.filter((x) => x.id !== cardId);
   if (gone.key) r.dismissed = [...(r.dismissed || []), gone.key].slice(-500);
-  save(r); db.flush();
+  save(r); db.saveSoon();
   return { removed: n - r.cards.length };
 }
 

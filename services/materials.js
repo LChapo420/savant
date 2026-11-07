@@ -71,8 +71,54 @@ async function readPicture(buf, type) {
   let work = buf;
   const prepared = await formats.toPng(buf, type);
   if (prepared.png) work = prepared.png;
-  else if (type !== 'png' && type !== 'jpeg') return prepared;
-  return ocr(work);
+  // A picture that cannot be decoded (cut off, damaged) stops here: only a server without the converter hands PNG and JPG straight to OCR.
+  else if ((prepared.code !== 'no_ocr' && !require('./material-parsers').usingTestOcr()) || (type !== 'png' && type !== 'jpeg')) return prepared; // eslint-disable-line global-require
+  return ocrUpright(work);
+}
+
+/** How much of a reading is real words: letters-only tokens of 2+ letters that have a vowel, as a share of all tokens. Noise reads as "ST Pd :.' jj". */
+function wordShare(text) {
+  const toks = String(text).match(/\S+/g) || [];
+  if (!toks.length) return 0;
+  return toks.filter((t) => /^[\p{L}'’-]{2,}[.,;:!?)]*$/u.test(t) && /[aeiouyáéíóúàèìòùäëïöü]/i.test(t)).length / toks.length;
+}
+/**
+ * OCR, turning the page if it is on its side: a phone photo without its rotation tag reads as nonsense (it read 0 of 8 planted sentences). A confident reading with real words is taken at once; otherwise
+ * the other three turns are tried and the best one wins. What is still nonsense after that is not text: { error } with what to do, never garbage presented as the learner's notes.
+ */
+async function ocrUpright(png) {
+  const started = Date.now();
+  const first = await ocr(png);
+  if (first.error) return first;
+  const slow = Date.now() - started > 12000; // a photo of pure noise took 40 s a reading: it is not read three more times
+  const good = (r) => (Number(r.confidence) || 0) * Math.max(0.2, wordShare(r.text));
+  if ((Number(first.confidence) || 0) >= 55 && wordShare(first.text) >= 0.6) return first;
+  if (first.confidence == null) return first; // a test's recognizer
+  let best = first;
+  let sharp = null;
+  try { sharp = require('sharp'); } catch { /* cannot turn it */ }
+  if (sharp && !slow) {
+    for (const deg of [90, 270, 180]) {
+      // eslint-disable-next-line no-await-in-loop
+      const r = await ocr(await sharp(png).rotate(deg).png().toBuffer());
+      if (!r.error && good(r) > good(best)) best = r;
+      if (!r.error && (Number(r.confidence) || 0) >= 70 && wordShare(r.text) >= 0.7) break;
+    }
+  }
+  if ((Number(best.confidence) || 0) < 30 || wordShare(best.text) < 0.35) return fail('Savant could not find readable words in that picture. If it has words on it, try a sharper, brighter photo taken straight on, or paste the text.', 'too_little');
+  return best;
+}
+
+/** Other archive formats, by their first bytes: a plain way forward instead of "unknown file". */
+function archiveKind(buf) {
+  if (buf.length < 8) return null;
+  const hex = buf.slice(0, 6).toString('hex');
+  if (buf.slice(0, 4).toString('latin1') === 'Rar!') return 'RAR';
+  if (hex === '377abcaf271c') return '7-Zip';
+  if (hex.startsWith('1f8b')) return 'gzip';
+  if (hex.startsWith('425a68')) return 'bzip2';
+  if (hex.startsWith('fd377a585a00')) return 'XZ';
+  return null;
 }
 
 const pageMarks = (pages) => pages.map((p) => `[[p${p.page}]]\n${p.text}`).join('\n\n');
@@ -84,6 +130,7 @@ const pageMarks = (pages) => pages.map((p) => `[[p${p.page}]]\n${p.text}`).join(
 async function extract(buf, opts = {}) {
   if (!Buffer.isBuffer(buf) || !buf.length) return fail('The file is empty.', 'empty');
   if (buf.length > MAX_BYTES) return fail('That file is over 20 MB.', 'too_big');
+  if (!opts.inner && archiveKind(buf)) return fail(`That is a ${archiveKind(buf)} archive, which Savant cannot open. Unpack it and upload the files, or make a ZIP of them.`, 'bad_type');
   const type = sniff(buf);
   const warnings = [];
   let out;
@@ -112,7 +159,7 @@ async function extract(buf, opts = {}) {
         const im = out.images[i];
         if (opts.onProgress) opts.onProgress(i, total, `page ${im.page}`);
         // eslint-disable-next-line no-await-in-loop
-        const got = await ocr(im.png);
+        const got = await ocrUpright(im.png);
         if (got.error) { failure = got; unread.push(im.page); if (got.code === 'no_ocr') break; continue; }
         const text = normalise(got.text);
         if (countWords(text) >= 3) pages.push({ page: im.page, text }); else unread.push(im.page);
@@ -131,7 +178,9 @@ async function extract(buf, opts = {}) {
     }
   }
   else if (type === 'zip') {
+    // Bit 0 of the first entry's flags: a password-protected ZIP. Its contents cannot be read.
     const listing = zipEntries(buf);
+    if (listing && buf.length > 8 && (buf.readUInt16LE(6) & 1)) return fail('That ZIP is password-protected. Unpack it on your computer and upload the files, or make a ZIP with no password.', 'encrypted');
     const has = (re) => !!listing && listing.entries.some((e) => re.test(e.name));
     const mime = listing && listing.entries.length && listing.entries[0].name === 'mimetype' ? buf.slice(38, 38 + 70).toString('latin1') : '';
     kind = has(/^ppt\/slides\/slide\d+\.xml$/) ? 'pptx' : has(/^xl\/workbook\.xml$/) ? 'xlsx' : /opendocument\.text/.test(mime) ? 'odt'
@@ -142,6 +191,8 @@ async function extract(buf, opts = {}) {
       if (opts.inner) return fail('A ZIP inside a ZIP is not opened. Unpack it and upload the files.', 'bad_type');
       if (!listing) return fail('That ZIP, or Office file, looks damaged or cut off (the end of it is missing). Download or export it again and upload the new copy.', 'unreadable');
       let n = 0;
+      if (listing.entries.some((e) => /\.iwa$/i.test(e.name))) return fail('That is an Apple Pages, Keynote or Numbers file, which Savant cannot read. Export it as PDF, Word or PowerPoint (File, Export To) and upload that.', 'bad_type');
+      if (!listing.entries.filter((e) => !/\/$/.test(e.name)).length) return fail('That ZIP is empty.', 'empty');
       out = await formats.fromZipFiles(buf, async (data, name) => {
         if (opts.onProgress) opts.onProgress(n++, listing.entries.length, name);
         return extract(data, { inner: true });
@@ -171,6 +222,7 @@ async function extract(buf, opts = {}) {
   }
   else if (!opts.inner && require('./material-audio').sniffAudio(buf)) return fail('That is an audio recording. Use the Audio box on this page (or upload it here again: recordings are sent there automatically) and it is turned into text.', 'is_audio');
   else if (!opts.inner && require('./material-video').sniffVideo(buf)) return fail('That is a video file. Upload it in the file box with its .mp4, .mov, .webm or .mkv name and its sound is turned into text.', 'is_video');
+  else if (!opts.inner && archiveKind(buf)) return fail(`That is a ${archiveKind(buf)} archive, which Savant cannot open. Unpack it and upload the files, or make a ZIP of them.`, 'bad_type');
   else return fail('Savant could not tell what kind of file that is. Supported: PDF (text or scanned), Word (.docx, .doc), PowerPoint, Excel, OpenDocument (text, slides, sheets), EPUB, RTF, HTML, LaTeX, Jupyter notebooks, subtitles (SRT, VTT), text, Markdown, CSV, source files, pictures (PNG, JPG, WEBP, GIF, BMP, TIFF), ZIPs of these, and audio or video as recordings. If it should be one of these, it may be damaged or renamed: open it on your computer first, or paste the text.', 'bad_type');
   if (out.error) return out;
   // A picture's reader has already applied its own 20-word rule; a file inside a ZIP only has to say something.
@@ -186,11 +238,15 @@ async function extract(buf, opts = {}) {
 const EN_STOP = new Set('the of and to in is that it for as with was on are be this by at from or an which have not but they their can more if when what there been has will all one would about'.split(' '));
 /** False when a long text is clearly not English (share of the commonest English words under 15%). Short texts pass. */
 function looksEnglish(text) {
+  // Most letters outside the Latin alphabet: Chinese, Arabic, Russian and so on.
+  const letters = String(text).slice(0, 200000).match(/\p{L}/gu) || [];
+  if (letters.length >= 200 && letters.filter((c) => /\p{Script=Latin}/u.test(c)).length / letters.length < 0.5) return false;
   const w = String(text).toLowerCase().match(/[a-z']+/g) || [];
   if (w.length < 80) return true;
   let n = 0; for (const x of w) if (EN_STOP.has(x)) n++;
   return n / w.length >= 0.15;
 }
+const NOT_ENGLISH_TEXT = 'This does not look like English. Savant writes lessons in English for now, so what you get is an English course taken from your text. Names and terms are checked against your text, but read them against it.';
 const NOT_ENGLISH = 'This does not look like English. The speech and picture readers on this server understand English only, so words may be wrong or missing. Paste the text instead for other languages.';
 
 function words(text) { return (text.match(/\S+/g) || []).length; }
@@ -202,6 +258,12 @@ function pub(row, withText) {
     preview: row.text.slice(0, 400),
   };
   out.key_point_count = (row.key_points || []).length;
+  // The first useful thing, at once and with no model: what the material stresses, heaviest first.
+  const kps = (row.key_points || []).slice().sort((a, b) => b.weight - a.weight);
+  const stressed = kps.filter((k) => k.weight >= 2);
+  // Nothing stressed (plain prose): its strongest sentences, else its headings.
+  out.top_points = (stressed.length ? stressed : kps).slice(0, stressed.length ? 8 : 5).map((k) => k.text);
+  if (!out.top_points.length) out.top_points = (row.topics || []).slice(0, 8).map((t) => t.title);
   if (row.warnings && row.warnings.length) out.warnings = row.warnings;
   if (row.files) out.files = row.files;
   if (withText) { out.text = row.text; out.key_points = row.key_points || []; out.topics = row.topics || []; }
@@ -209,7 +271,7 @@ function pub(row, withText) {
 }
 
 function list(userId) {
-  return db.find('materials', (m) => m.user_id === userId).map((m) => pub(m, false));
+  return db.forUser('materials', userId).slice().map((m) => pub(m, false));
 }
 
 function get(userId, id, withText) {
@@ -237,8 +299,25 @@ function understand(text, rich, kind) {
   }
 }
 
-function add(userId, { title, text, rich, kind, pages, sourceName, ocr: viaOcr, files, warnings }) {
-  const mine = db.find('materials', (m) => m.user_id === userId);
+/** The same pass off the main thread for a large text, so one big upload never holds up every other learner. Falls back to the plain pass if a worker cannot start. */
+const UNDERSTAND_OFF_THREAD_CHARS = 100000;
+function understandAsync(text, rich, kind) {
+  if (String(rich || text).length < UNDERSTAND_OFF_THREAD_CHARS) return Promise.resolve(null);
+  return new Promise((resolve) => {
+    let done = false;
+    const end = (v) => { if (!done) { done = true; resolve(v); } };
+    try {
+      const { Worker } = require('worker_threads'); // eslint-disable-line global-require
+      const w = new Worker(require('path').join(__dirname, 'material-understand-worker.js'), { workerData: { text, rich, spoken: SPOKEN.has(kind) } });
+      const timer = setTimeout(() => { w.terminate(); end({ key_points: [], topics: [], assessed: [] }); }, 90000);
+      w.on('message', (m) => { clearTimeout(timer); end(m.error ? null : m); w.terminate(); });
+      w.on('error', () => { clearTimeout(timer); end(null); });
+    } catch { end(null); }
+  });
+}
+
+function add(userId, { title, text, rich, kind, pages, sourceName, ocr: viaOcr, files, warnings, understood }) {
+  const mine = db.forUser('materials', userId).slice();
   if (mine.length >= MAX_ITEMS) return fail(`You can keep ${MAX_ITEMS} materials. Delete one first.`, 'limit');
   if (mine.reduce((s, m) => s + m.chars, 0) + text.length > MAX_TOTAL_CHARS) return fail('That would take you over your storage limit. Delete a material first.', 'limit');
   const row = db.insert('materials', {
@@ -250,10 +329,10 @@ function add(userId, { title, text, rich, kind, pages, sourceName, ocr: viaOcr, 
     words: words(text),
     chars: text.length,
     text,
-    ...understand(text, rich, kind),
+    ...(understood || understand(text, rich, kind)),
     ...(viaOcr ? { ocr: true } : {}),
     ...(files ? { files: files.slice(0, 40) } : {}),
-    ...(() => { const w = [...(warnings || [])]; if ((viaOcr || kind === 'audio' || kind === 'image') && !looksEnglish(text)) w.push(NOT_ENGLISH); return w.length ? { warnings: w.slice(0, 8) } : {}; })(),
+    ...(() => { const w = [...(warnings || [])]; if (!looksEnglish(text)) w.push(viaOcr || kind === 'audio' || kind === 'image' ? NOT_ENGLISH : NOT_ENGLISH_TEXT); return w.length ? { warnings: w.slice(0, 8) } : {}; })(),
   });
   return { value: pub(row, false) };
 }
@@ -262,16 +341,17 @@ async function addFile(userId, buf, name, opts = {}) {
   const got = await extract(buf, { onProgress: opts.onProgress });
   if (got.error) return got;
   const base = String(name || '').replace(/^.*[\\/]/, '').replace(/\.[A-Za-z0-9]{1,5}$/, '');
-  return add(userId, { title: base, text: got.text, rich: got.rich, kind: got.kind, pages: got.pages, sourceName: name, ocr: got.ocr, files: got.files, warnings: got.warnings });
+  const understood = await understandAsync(got.text, got.rich, got.kind);
+  return add(userId, { title: base, text: got.text, rich: got.rich, kind: got.kind, pages: got.pages, sourceName: name, ocr: got.ocr, files: got.files, warnings: got.warnings, understood });
 }
 
-function addPaste(userId, title, text) {
+function addPaste(userId, title, text, opts = {}) {
   if (typeof text !== 'string') return fail('Paste some text first.', 'empty');
   if (text.length > MAX_CHARS * 2) return fail('That is too long to paste. Upload it as a file or paste a part.', 'too_long');
   const t = normalise(text);
   if (t.length < MIN_CHARS) return fail('There is too little text there to build a course from.', 'too_little');
   if (t.length > MAX_CHARS) return fail('That is over the limit of about 300 pages. Paste a part of it.', 'too_long');
-  return add(userId, { title, text: t, kind: 'paste', pages: null });
+  return add(userId, { title, text: t, kind: 'paste', pages: null, understood: opts.understood });
 }
 
 /** A public web page the learner names: the server fetches it and keeps the article text only. */
@@ -358,12 +438,12 @@ function remove(userId, id) {
     require('./material-cards').removeForMaterial(userId, id); // eslint-disable-line global-require
     require('./material-podcast').removeForMaterial(userId, id); // eslint-disable-line global-require
     require('./material-notes').removeForMaterial(userId, id); // eslint-disable-line global-require
-    db.flush();
+    db.flush(); // a deleted upload's text leaves the disk now, not at the next save
   }
   return n > 0;
 }
 
 module.exports = {
   MAX_BYTES, MAX_PAGES, MAX_CHARS, decodeText, looksEnglish, MIN_CHARS, MAX_ITEMS, MAX_TOTAL_CHARS,
-  sniff, extract, add, list, get, textOf, addFile, addPaste, addLink, addGoogleLink, addYoutube, addTranscript, cleanTranscript, remove, zipEntries,
+  understandAsync, sniff, extract, add, list, get, textOf, addFile, addPaste, addLink, addGoogleLink, addYoutube, addTranscript, cleanTranscript, remove, zipEntries,
 };

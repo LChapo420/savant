@@ -78,7 +78,7 @@ function blankState(userId, skillId) {
 }
 
 function stateFor(userId, skillId) {
-  return db.findOne('skill_states', (s) => s.user_id === userId && s.skill_id === skillId)
+  return (db.forUser('skill_states', userId).find((s) => s.skill_id === skillId) || null)
     || blankState(userId, skillId);
 }
 
@@ -511,7 +511,7 @@ function clearCheckpoint(enrollment, grade, kind) {
  * the strongest offer in the app.
  */
 function streakFor(userId, enrollmentId) {
-  return db.findOne('streaks', (s) => s.user_id === userId && s.enrollment_id === enrollmentId)
+  return (db.forUser('streaks', userId).find((s) => s.enrollment_id === enrollmentId) || null)
     || {
       user_id: userId,
       enrollment_id: enrollmentId,
@@ -629,7 +629,7 @@ function skipOffer(userId, enrollment, grade) {
  * looking like an exam still sitting there waiting to be retaken.
  */
 function spendOffer(userId, enrollmentId) {
-  const row = db.findOne('streaks', (s) => s.user_id === userId && s.enrollment_id === enrollmentId);
+  const row = (db.forUser('streaks', userId).find((s) => s.enrollment_id === enrollmentId) || null);
   if (row) db.update('streaks', row.id, { taken_at: new Date().toISOString() });
   return null;
 }
