@@ -90,7 +90,7 @@ async function main() {
     const out = ui.inject(page, 'dashboard');
     assert(out.includes('<html data-ui2="on" lang="en">'));
     assert(out.includes('/css/ui2/tokens.css') && out.includes('/css/ui2/app.css'));
-    assert(out.indexOf('/js/app.js') < out.indexOf('/js/ui2/shell.js'));
+    assert(out.indexOf('/js/app.js') < out.indexOf('/js/ui2/shell.js')); assert(out.indexOf('/js/ui2/shell.js') < out.indexOf('/js/ui2/pages.js') && out.includes('/css/ui2/pages.css'));
     assert(out.indexOf('/js/ui2/shell.js') < out.indexOf('/js/ui2/home.js'));
     assert(out.indexOf('/js/ui2/home.js') < out.indexOf('/js/dashboard.js'));
     assert(!ui.inject(page, 'profile').includes('/js/ui2/home.js'));
@@ -111,8 +111,8 @@ async function main() {
     assert.deepStrictEqual(changed, []);
     for (const f of ['public/start.html', 'public/js/start.js', 'public/js/start-tutor.js', 'public/css/screens/start.css']) assert(!out.includes(f), `${f} is untouched`);
   });
-  ok('app.css, look.css and start.css have no colour of their own: every one is a token', () => {
-    for (const f of ['app.css', 'look.css', 'start.css']) {
+  ok('app.css, look.css, pages.css and start.css have no colour of their own: every one is a token', () => {
+    for (const f of ['app.css', 'look.css', 'pages.css', 'start.css']) {
       const css = fs.readFileSync(path.join(ROOT, 'public', 'css', 'ui2', f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
       assert.deepStrictEqual(css.match(/#[0-9a-fA-F]{3,8}\b(?![^{]*\{)|rgba?\(|oklch\(/g) || [], [], f);
     }

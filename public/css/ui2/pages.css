@@ -1,0 +1,160 @@
+/* The later pages under UI_V2 (docs/UI-V2.md), in the look of design-refs/ui-v4-mockups. Only when UI_V2 is on: every rule starts from html[data-ui2]. No colour of its own: every colour is a token from css/ui2/tokens.css.
+ * js/ui2/pages.js moves what each page drew; this styles it. Phone first; tablet from 768 px, a 640 px column; desktop from 1025 px, a 960 px column.
+ */
+
+/* ── what every page shares: the font on buttons, plain cards, section heads, notices, meters, folds ── */
+html[data-ui2] .btn, html[data-ui2] .btn-text, html[data-ui2] .btn-ghost, html[data-ui2] button.btn { font-family: var(--font); }
+html[data-ui2] main.page .btn:not(.btn-primary):not(.btn-text) { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; height: auto; padding: 8px 16px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--page); color: var(--ink); box-shadow: none; font-weight: 700; font-size: 15px; line-height: 1.2; transform: none; text-decoration: none; }
+html[data-ui2] main.page .btn:not(.btn-primary):not(.btn-text):active { background: var(--well); }
+html[data-ui2] .btn.btn-danger { color: var(--wrong-text); border-color: var(--wrong); }
+html[data-ui2] .btn-text { color: var(--ink-2); font-weight: 400; font-size: 15px; text-decoration: underline; text-underline-offset: 3px; }
+html[data-ui2] .btn-primary svg, html[data-ui2] .btn svg { flex: none; }
+html[data-ui2] .section-title { font: 400 24px/1.15 var(--serif); letter-spacing: -.005em; color: var(--ink); margin: 28px 0 12px; border: 0; padding: 0; text-transform: none; }
+html[data-ui2] main.page .card { background: var(--page); border: 1.5px solid var(--line); border-radius: 18px; box-shadow: none; padding: 14px 16px; }
+html[data-ui2] .card-title { font: 700 16px/22px var(--font); color: var(--ink); display: flex; gap: 8px; align-items: center; }
+html[data-ui2] .notice { border: 1.5px solid var(--line); border-radius: 18px; background: var(--well); color: var(--ink); padding: 14px 16px; font-size: 15px; line-height: 20px; }
+html[data-ui2] .notice-error { border-color: var(--wrong); background: var(--wrong-tint); color: var(--wrong-text); }
+html[data-ui2] .notice-warn { background: var(--well); }
+html[data-ui2] .notice a, html[data-ui2] .notice-link { color: inherit; font-weight: 700; }
+html[data-ui2] .notice-link { display: inline; min-height: 0; }
+html[data-ui2] .loading { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 40px 20px; color: var(--ink-2); font-size: 15px; }
+html[data-ui2] .tmeter-head { font-size: 15px; color: var(--ink-2); }
+html[data-ui2] .tmeter-head .num { font-size: 14px; }
+html[data-ui2] .tmeter-bar { height: 8px; border-radius: 99px; background: var(--well-2); }
+html[data-ui2] .tmeter-fill { border-radius: 99px; background: var(--act); }
+html[data-ui2] .tmeter.is-met .tmeter-fill { background: var(--right); }
+html[data-ui2] .tmeter-mark { background: var(--ink-3); top: -3px; bottom: -3px; }
+html[data-ui2] .u2-fold { margin: 16px 0 0; border-top: 1px solid var(--line); }
+html[data-ui2] .u2-fold summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 48px; font-size: 15px; font-weight: 700; color: var(--ink-2); cursor: pointer; list-style: none; }
+html[data-ui2] .u2-fold summary::-webkit-details-marker { display: none; }
+html[data-ui2] .u2-fold summary .u2-ic { width: 18px; height: 18px; }
+html[data-ui2] .u2-fold[open] summary .u2-ic { transform: rotate(180deg); }
+html[data-ui2] .u2-fold-body { padding: 0 0 10px; display: grid; gap: 8px; }
+html[data-ui2] .u2-fold-body p { margin: 0; font-size: 14px; line-height: 20px; color: var(--ink-2); max-width: 64ch; }
+
+/* A giraffe at the head of a page: full bleed on a phone, as on a question. It does the small one's work (js/ui2/look.js), so the small one steps away unless a call is on. */
+html[data-ui2]:has(.u2-page-guide):not(.tdock-in-call) .tdock-g { position: absolute; width: 0; height: 0; overflow: hidden; visibility: hidden; }
+html[data-ui2] .u2-page-guide { margin: 0 -24px; padding: 0 24px; }
+html[data-ui2] .u2-page-guide .u2-bubble { font-size: 18px; line-height: 24px; font-weight: 700; }
+
+/* ── the subject page ─────────────────────────────────────────────────── */
+html[data-ui2].u2-path main.page { padding-top: 0; }
+html[data-ui2].u2-path #root { max-width: 640px; margin: 0 auto; padding: 0 24px 32px; }
+html[data-ui2].u2-path .path-top { display: block; }
+html[data-ui2].u2-path .path-top > div:empty { display: none; }
+html[data-ui2].u2-path .back-link { display: none; }
+html[data-ui2].u2-path .u2-lead { display: grid; gap: 14px; }
+/* The subject's name is in the top bar, so here it is the quiet line over the title. */
+html[data-ui2].u2-path .track-heading { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+html[data-ui2].u2-path .track-heading .symbol { --size: 18px; width: 18px; height: 18px; }
+html[data-ui2].u2-path .track-heading h1 { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+html[data-ui2].u2-path .track-heading .tiny { font-size: 14px; line-height: 18px; font-weight: 400; color: var(--ink-2); }
+html[data-ui2].u2-path .path-hero { display: block; margin: 0; padding: 0; background: none; border: 0; box-shadow: none; }
+html[data-ui2].u2-path .path-hero .now-kind { display: block; margin: 0 0 2px; padding: 0; background: none; border: 0; font: 400 15px/20px var(--font); color: var(--ink-2); letter-spacing: 0; text-transform: none; }
+html[data-ui2].u2-path .path-hero h2 { font: 400 30px/1.12 var(--serif); letter-spacing: -.005em; color: var(--ink); margin: 0 0 8px; }
+html[data-ui2].u2-path .path-hero .now-detail { font-size: 15px; line-height: 21px; color: var(--ink-2); margin: 0 0 14px; }
+html[data-ui2].u2-path .path-hero .path-actions { display: grid; gap: 8px; margin-top: 14px; }
+html[data-ui2].u2-path .path-hero .path-actions .btn-primary { width: 100%; }
+html[data-ui2].u2-path .path-hero .path-actions .btn:not(.btn-primary), html[data-ui2].u2-path .path-hero .path-actions .btn-text { justify-self: center; background: none; border: 0; min-height: 40px; color: var(--ink-2); font-weight: 400; text-decoration: underline; text-underline-offset: 3px; }
+html[data-ui2].u2-path .path-hero .path-actions .small { display: block; font-size: 13.5px; line-height: 18px; color: var(--ink-3); text-align: center; margin: 0; }
+html[data-ui2].u2-path .owner-skips { padding-top: 8px; }
+html[data-ui2].u2-path .u2-path-facts { display: grid; gap: 18px; margin: 22px 0 0; padding: 16px; border: 1.5px solid var(--line); border-radius: 18px; }
+html[data-ui2].u2-path .u2-path-facts .hero-body h3 { font: 700 15px/20px var(--font) !important; color: var(--ink) !important; margin: 0 0 12px !important; }
+html[data-ui2].u2-path .u2-path-facts .tmeters { gap: 14px; }
+html[data-ui2].u2-path .u2-path-facts .u2-fold { margin: 0; border: 0; }
+html[data-ui2].u2-path .u2-path-facts .u2-fold summary { min-height: 32px; font-weight: 400; font-size: 14px; }
+html[data-ui2].u2-path .path-done-line { display: flex; align-items: center; gap: 8px; margin: 0; font-weight: 700; color: var(--right-text); }
+/* The ruler keeps its marks; ink and the subject's colour are the tokens'. */
+html[data-ui2].u2-path .scale figcaption { font-size: 14px; line-height: 19px; margin-top: 4px; color: var(--ink-2); }
+html[data-ui2].u2-path .scale-rule { margin-top: 20px; }
+html[data-ui2].u2-path .u2-path-links { margin: 14px 0 0; gap: 10px; }
+html[data-ui2].u2-path .u2-path-links nav { display: grid; gap: 10px; }
+html[data-ui2].u2-path .u2-path-links .u2-ic:first-child { color: var(--ink-2); }
+html[data-ui2].u2-path .u2-path-links .u2-o-t b { white-space: normal; }
+html[data-ui2].u2-path .catch-banner { margin: 14px 0 0; padding: 14px 16px; background: var(--act-tint); border: 1.5px solid var(--act); border-radius: 18px; }
+html[data-ui2].u2-path #root > .section { margin-top: 14px; }
+html[data-ui2].u2-path .plan-card { display: grid; gap: 4px; }
+html[data-ui2].u2-path .plan-card .plan-card-title { font-size: 15px; line-height: 20px; color: var(--ink-2); }
+html[data-ui2].u2-path .plan-card .plan-card-title strong { color: var(--ink); }
+html[data-ui2].u2-path .plan-card > .meter { display: none; }
+html[data-ui2].u2-path .unit-cells { margin-top: 24px; }
+html[data-ui2].u2-path .unit-cell { border-radius: 5px; }
+html[data-ui2].u2-path .unit-strip figcaption { font-size: 13.5px; margin-top: 22px; }
+
+/* The whole grade: a unit is a raised row; open, it sinks and holds its levels. */
+html[data-ui2].u2-path .path-units { display: grid; gap: 12px; }
+html[data-ui2].u2-path .path-units > .node-review { padding: 10px 14px; border: 1.5px solid var(--line); border-radius: 18px; box-shadow: 0 4px 0 var(--opt-edge); margin: 0; }
+html[data-ui2].u2-path .unit-group { position: relative; border: 1.5px solid var(--line); border-radius: 18px; background: var(--page); box-shadow: 0 4px 0 var(--opt-edge); transition: box-shadow .07s; }
+html[data-ui2].u2-path .unit-group:has(> .unit-head .unit-toggle[aria-expanded="true"]) { box-shadow: none; border-color: var(--line-strong); }
+html[data-ui2].u2-path .unit-group.is-current { border-color: var(--act); }
+html[data-ui2].u2-path .unit-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; align-items: center; min-height: 58px; padding: 10px 8px 10px 14px; cursor: pointer; }
+html[data-ui2].u2-path .unit-head-title { grid-column: 1; grid-row: 1; font: 700 16px/21px var(--font); color: var(--ink); }
+html[data-ui2].u2-path .unit-head-sub { font: 400 13.5px/18px var(--font); color: var(--ink-2); margin-top: 2px; }
+html[data-ui2].u2-path .unit-group.is-current .unit-head-sub { color: var(--act-text); font-weight: 700; }
+html[data-ui2].u2-path .unit-head-range { grid-column: 1; grid-row: 2; text-align: left; font: 400 13px/16px var(--num); color: var(--ink-3); }
+html[data-ui2].u2-path .unit-head-side { grid-column: 2; grid-row: 1 / span 2; gap: 8px; }
+html[data-ui2].u2-path .unit-toggle { width: 40px; height: 40px; border: 0; background: none; box-shadow: none; }
+html[data-ui2].u2-path .unit-ticks { display: none; }
+html[data-ui2].u2-path .unit-actions { padding: 0 14px 12px; }
+html[data-ui2].u2-path .unit-body { padding: 0 14px 6px; border-top: 1px solid var(--line); }
+/* A level: its number, a tick when done, the title; its one action at the side. */
+html[data-ui2].u2-path .node { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 2px 10px; min-height: 52px; padding: 8px 0; }
+html[data-ui2].u2-path .node .badge { display: flex; align-items: center; justify-content: flex-start; gap: 2px; min-width: 0; height: auto; padding: 0; border: 0 !important; background: none; color: var(--ink-3); font: 400 14px/18px var(--num); text-align: left; box-shadow: none; }
+html[data-ui2].u2-path .node .badge .mark { width: 16px; height: 16px; color: var(--right); }
+html[data-ui2].u2-path .node .title { font: 400 15.5px/20px var(--font); color: var(--ink); display: block; }
+html[data-ui2].u2-path .node .kind { font: 400 13px/18px var(--font); color: var(--ink-3); margin-left: 6px; text-transform: none; letter-spacing: 0; }
+html[data-ui2].u2-path .node .detail { display: block; font-size: 13.5px; line-height: 18px; color: var(--ink-2); }
+html[data-ui2].u2-path .node .spacer { display: none; }
+html[data-ui2].u2-path .node .row-wrap { justify-content: flex-end; }
+html[data-ui2].u2-path .node .btn:not(.btn-primary) { min-height: 36px; padding: 4px 12px; font-size: 14px; }
+html[data-ui2].u2-path .node .btn-primary { min-height: 44px; padding: 6px 16px; font-size: 15px; box-shadow: 0 4px 0 var(--act-edge); margin: 0 0 4px; }
+html[data-ui2].u2-path .node-current { margin: 4px -8px; padding: 10px 8px; border: 0 !important; background: var(--act-tint); border-radius: 12px; }
+html[data-ui2].u2-path .node-current + .node { border-top: 0; }
+html[data-ui2].u2-path .node-current .badge, html[data-ui2].u2-path .node-current .title { color: var(--act-text); font-weight: 700; }
+html[data-ui2].u2-path .node-current::before, html[data-ui2].u2-path .node-current::after { content: none; display: none; }
+html[data-ui2].u2-path .node-current .badge { flex-direction: column; align-items: flex-start; gap: 0; }
+html[data-ui2].u2-path .node > .row-wrap { grid-column: 3; grid-row: 1 / span 2; }
+
+/* Skills at this level: on a phone each skill is one line and its meter. */
+html[data-ui2].u2-path .data { width: 100%; border-collapse: collapse; font-size: 15px; }
+html[data-ui2].u2-path .data th { font: 400 13.5px/18px var(--font); color: var(--ink-3); text-transform: none; letter-spacing: 0; background: none; border-bottom: 1px solid var(--line); }
+html[data-ui2].u2-path .data td { border-bottom: 1px solid var(--line); color: var(--ink); }
+@media (max-width: 767px) {
+  html[data-ui2].u2-path .data thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  html[data-ui2].u2-path .data, html[data-ui2].u2-path .data tbody { display: block; }
+  html[data-ui2].u2-path .data tr { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 2px 14px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  html[data-ui2].u2-path .data td { display: block; padding: 0; border: 0; width: auto !important; }
+  html[data-ui2].u2-path .data td:nth-child(1) { grid-column: 1 / -1; font-weight: 700; }
+  html[data-ui2].u2-path .data td:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+  html[data-ui2].u2-path .data td:nth-child(3) { grid-column: 2; grid-row: 3; text-align: right; font-size: 13.5px; color: var(--ink-3); }
+  html[data-ui2].u2-path .data td:nth-child(3)::before { content: "Seen "; font-family: var(--font); }
+  html[data-ui2].u2-path .data td:nth-child(4) { grid-column: 1; grid-row: 3; font-size: 13.5px; }
+  html[data-ui2].u2-path .data td:nth-child(4)::before { content: "Next review: "; }
+  html[data-ui2].u2-path .data .tmeter { min-width: 0 !important; }
+}
+
+@media (min-width: 768px) {
+  html[data-ui2] .u2-page-guide { margin: 0; padding: 0; }
+  html[data-ui2].u2-path .path-hero .path-actions .btn-primary { max-width: 360px; justify-self: start; margin-left: 0; }
+  html[data-ui2].u2-path .path-hero .path-actions .small, html[data-ui2].u2-path .path-hero .path-actions .btn:not(.btn-primary) { justify-self: start; text-align: left; padding-left: 0; }
+}
+@media (min-width: 1025px) {
+  /* The giraffe beside the one task, as on the mockup's Home. */
+  html[data-ui2].u2-path #root { max-width: 960px; }
+  html[data-ui2].u2-path .u2-lead { grid-template-columns: 280px minmax(0, 1fr); gap: 6px 36px; align-items: start; padding-top: 12px; }
+  html[data-ui2].u2-path .u2-lead .u2-page-guide { display: contents; }
+  html[data-ui2].u2-path .u2-lead .u2-gh { grid-column: 1; grid-row: 1 / span 3; justify-self: center; }
+  html[data-ui2].u2-path .u2-lead .u2-page-guide .tutor, html[data-ui2].u2-path .u2-lead .u2-page-guide .tutor-svg { width: 240px; height: 360px; }
+  html[data-ui2].u2-path .u2-lead .u2-tailwrap { grid-column: 2; grid-row: 1; justify-self: start; margin-top: 8px; }
+  html[data-ui2].u2-path .u2-lead .track-heading { grid-column: 2; grid-row: 2; margin-top: 8px; }
+  html[data-ui2].u2-path .u2-lead .path-hero { grid-column: 2; grid-row: 3; }
+  html[data-ui2].u2-path .path-hero h2 { font-size: 40px; }
+  html[data-ui2].u2-path .u2-path-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 36px; }
+  html[data-ui2].u2-path .u2-path-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html[data-ui2].u2-path .u2-path-links nav { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  html[data-ui2].u2-path .path-units { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui2].u2-path .unit-group { transition: none; }
+}
+
