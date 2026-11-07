@@ -235,6 +235,8 @@ async function viaPool(userId, req, role, task, outside) {
 async function withProviders(userId, attempt, role = 'fast', task = null, req = null) {
   const result = await callProviders(userId, attempt, role, task, req);
   if (!result) return result;
+  // The draft exists: a caller with checks of its own may start them now, beside the guard, instead of after it (the tutor dock: a learner is waiting). Nothing is shown from here.
+  if (req && typeof req.onDraft === 'function') { try { req.onDraft(result.text); } catch { /* its checks run later instead */ } }
   // A chat that a check finds wrong gets one more try on the pool, with what the checker found.
   const rerun = req && req.kind === 'chat' && poolOn(role)
     ? (note) => callProviders(userId, attempt, role, task, { ...req, system: `${req.system || ''}\n\n${note}`, timeoutMs: Math.min(req.timeoutMs || 15000, 10000) })
@@ -327,10 +329,10 @@ async function talk(args) {
  *
  * @returns {Promise<{text: string, model: string}|null>}
  */
-async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs }) {
+async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft }) {
   const result = await withProviders(userId, (p) => p.chat({
     role, task, system, messages, maxTokens, effort, lane, temperature,
-  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs });
+  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft });
   return result ? { text: result.text, model: result.model, held: result.held || null } : null;
 }
 

@@ -154,8 +154,7 @@ function track(spend, userId, t0, ok) {
   require('../cost-tracker').recordAi({ userId, provider: 'llmgateway', model: spend.model, role: 'voice', task: `voice_${spend.kind}`, costUsd: usd, listUsd: usd, ms: Date.now() - t0, ok });
 }
 
-async function gatewaySpeak(voice, line, lang = 'es', userId = null) {
-  const model = GATEWAY_TTS_MODEL();
+async function gatewaySpeak(voice, line, lang = 'es', userId = null, model = GATEWAY_TTS_MODEL()) {
   return billed({ kind: 'tts', model, chars: line.length, userId }, async () => {
     const res = await gatewayFetch('/audio/speech', {
       method: 'POST',
@@ -247,7 +246,7 @@ const MIME = { wav: 'audio/wav', mp3: 'audio/mpeg', ogg: 'audio/ogg', m4a: 'audi
  * @param {Buffer} buf
  * @param {string} [kind] wav | mp3 | ogg | m4a | flac
  */
-async function asrGateway(buf, kind, lang = 'es', userId = null) {
+async function asrGateway(buf, kind, lang = 'es', userId = null, seconds = null) {
   if (Date.now() < gatewayCoolUntil) throw Object.assign(new Error('gateway speech cooling down'), { status: 429 });
   const model = GATEWAY_STT_MODEL();
   const form = new FormData();
@@ -255,7 +254,7 @@ async function asrGateway(buf, kind, lang = 'es', userId = null) {
   form.append('model', model);
   form.append('language', lang);
   try {
-    return await billed({ kind: 'stt', model, bytes: buf.length, userId }, async () => {
+    return await billed({ kind: 'stt', model, bytes: buf.length, seconds, userId }, async () => {
       const res = await gatewayFetch('/audio/transcriptions', { method: 'POST', body: form }, 45000);
       const json = await res.json();
       return String((json && (json.text != null ? json.text : json.transcript)) || '').trim();
@@ -287,13 +286,15 @@ async function asr(buf, kind = 'wav', opts = {}) {
 // ── The tutor's voice (services/tutor.js dock): the same gateway, ledger and opt-in list ──
 // Replies are personal, so nothing is cached on disk: the audio goes straight back to the one learner.
 const TUTOR_DAILY_CHARS = () => Number(process.env.TUTOR_GATEWAY_DAILY_CHARS || 3000);
+// The tutor talks back in a conversation, so the low-latency voice: measured 7 Nov, one sentence in 0.3 s against 1.4 to 1.7 s for eleven-v3, at half the price.
+const TUTOR_TTS_MODEL = () => process.env.TUTOR_GATEWAY_TTS_MODEL || 'eleven-flash-v2-5';
 const tutorSpent = new Map(); // `${day}:${userId}` -> characters
 /**
  * Speak a tutor reply with the gateway voice. Returns an mp3 Buffer, or throws (status 503 when this
  * account is not on the gateway list or the gateway is cooling down, 429 past the learner's daily
  * characters, 402 past the $5 ledger) and the page speaks with the browser's own voice instead.
  */
-async function tutorSpeak(text, { userId, lang = 'en' } = {}) {
+async function tutorSpeak(text, { userId, lang = 'en', callCapped = false } = {}) {
   const line = String(text || '').trim().slice(0, 600);
   if (!line) throw Object.assign(new Error('nothing to say'), { status: 400 });
   if (!gatewayFor(userId)) throw Object.assign(new Error('gateway voice is not on for this account'), { status: 503 });
@@ -301,12 +302,13 @@ async function tutorSpeak(text, { userId, lang = 'en' } = {}) {
   const key = `${new Date().toISOString().slice(0, 10)}:${userId}`;
   for (const k of tutorSpent.keys()) if (!k.startsWith(key.slice(0, 11))) tutorSpent.delete(k);
   const used = tutorSpent.get(key) || 0;
-  if (used + line.length > TUTOR_DAILY_CHARS()) throw Object.assign(new Error('daily tutor voice used'), { status: 429 });
-  tutorSpent.set(key, used + line.length);
+  // A voice call has its own per-learner limit in dollars, kept in the database (services/tutor-call.js).
+  if (!callCapped && used + line.length > TUTOR_DAILY_CHARS()) throw Object.assign(new Error('daily tutor voice used'), { status: 429 });
+  if (!callCapped) tutorSpent.set(key, used + line.length);
   try {
-    return await gatewaySpeak(lang === 'es' ? ((VOICES.narrator || {}).eleven || 'Aria') : 'Aria', line, lang === 'es' ? 'es' : 'en', userId);
+    return await gatewaySpeak(lang === 'es' ? ((VOICES.narrator || {}).eleven || 'Aria') : 'Aria', line, lang === 'es' ? 'es' : 'en', userId, TUTOR_TTS_MODEL());
   } catch (err) {
-    tutorSpent.set(key, used);
+    if (!callCapped) tutorSpent.set(key, used);
     noteGatewayFailure(err);
     if (err.code === 'LEDGER_STOP') err.status = 402;
     throw err;
@@ -331,7 +333,7 @@ function audioKind(buf) {
   return null;
 }
 /** Transcribe a push-to-talk clip. Throws with status 400 (not audio), 503 (not on the list / cooling down), 429 (daily bytes), 402 (the $5 ledger). */
-async function tutorTranscribe(buf, { userId, lang = 'en' } = {}) {
+async function tutorTranscribe(buf, { userId, lang = 'en', seconds = null, callCapped = false } = {}) {
   const kind = audioKind(buf);
   if (!kind) throw Object.assign(new Error('not an audio recording'), { status: 400 });
   if (!gatewayFor(userId)) throw Object.assign(new Error('gateway listening is not on for this account'), { status: 503 });
@@ -339,10 +341,11 @@ async function tutorTranscribe(buf, { userId, lang = 'en' } = {}) {
   const key = `${new Date().toISOString().slice(0, 10)}:${userId}`;
   for (const k of tutorHeard.keys()) if (!k.startsWith(key.slice(0, 11))) tutorHeard.delete(k);
   const used = tutorHeard.get(key) || 0;
-  if (used + buf.length > TUTOR_STT_DAILY_BYTES()) throw Object.assign(new Error('daily tutor listening used'), { status: 429 });
-  tutorHeard.set(key, used + buf.length);
+  // A voice call's clips are limited by its own per-learner dollars and minutes (services/tutor-call.js, kept in the database); 16 kHz WAV would use this count up in a minute.
+  if (!callCapped && used + buf.length > TUTOR_STT_DAILY_BYTES()) throw Object.assign(new Error('daily tutor listening used'), { status: 429 });
+  if (!callCapped) tutorHeard.set(key, used + buf.length);
   try {
-    return await asrGateway(buf, kind, lang === 'es' ? 'es' : 'en', userId);
+    return await asrGateway(buf, kind, lang === 'es' ? 'es' : 'en', userId, seconds);
   } catch (err) {
     tutorHeard.set(key, used);
     if (err.code === 'LEDGER_STOP') err.status = 402;
@@ -350,4 +353,4 @@ async function tutorTranscribe(buf, { userId, lang = 'en' } = {}) {
   }
 }
 
-module.exports = { tutorTranscribe, audioKind, tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };
+module.exports = { tutorTtsModel: TUTOR_TTS_MODEL, tutorSttModel: GATEWAY_STT_MODEL, tutorTranscribe, audioKind, tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };

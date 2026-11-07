@@ -69,15 +69,14 @@ async function fails(p) { try { await p; return null; } catch (e) { return e; } 
     req.end(data);
   });
   global.fetch = realFetch; // the route uses the mock above; http.request is unaffected
-  const ok = await post('7', { text: 'Nice work.', lang: 'en' });
-  check('route: audio/mpeg for an opted-in learner', ok.status === 200 && /audio\/mpeg/.test(ok.type), ok.status);
-  const no = await post('8', { text: 'Nice work.' });
-  check('route: 503 for everyone else (the browser voice takes over)', no.status === 503);
+  // The route that spoke any text (/api/tutor/speak) is gone: a voice call speaks through /api/tutor/call/say, which takes only the tutor's own checked words (scripts/tutor-call-test.js).
+  check('route: the old unguarded speak route is gone', (await post('7', { text: 'Nice work.', lang: 'en' })).status === 404);
   const none = await post(null, { text: 'x' });
-  check('route: signed-out is refused', none.status === 401 || none.status === 403, none.status);
+  check('route: signed-out gets nothing from it', [401, 403, 404].includes(none.status), none.status);
 
   const dockSrc = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'tutor-dock.js'), 'utf8');
-  check('dock asks for the better voice and falls back to the browser one', /\/api\/tutor\/speak/.test(dockSrc) && /browserSay\(text\)/.test(dockSrc));
+  const callSrc = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'tutor-call.js'), 'utf8');
+  check('a call asks for the better voice and falls back to the browser one', /\/api\/tutor\/call\/say/.test(callSrc) && /speakBrowser\(/.test(callSrc));
 
   // Speech to text (push-to-talk).
   const wav = (n) => Buffer.concat([Buffer.from('RIFF'), Buffer.alloc(4), Buffer.from('WAVE'), Buffer.alloc(n)]);
