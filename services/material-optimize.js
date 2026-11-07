@@ -25,7 +25,7 @@ const COVER_NEED = 0.7;      // share of a fact's terms a sentence must hold to 
 const PAIR_NEED = 0.85;      // two sentences side by side may carry a fact between them, at a higher bar
 const DUP_NEED = 0.85;       // a sentence whose terms were all said already says nothing new
 const FULL_QUIZ = 5;
-const FILLER = /^(?:in this (?:chapter|section|handout|lesson|unit|document)\b|this (?:chapter|section|handout|lesson|unit|document) (?:will|covers|explains|looks)|we will (?:now|look|see|cover)|let'?s\b|as (?:we|you) (?:saw|said|will see)|see (?:above|below)|see (?:page|section|figure)\b|next,? we\b|for more\b|good luck\b|thanks?\b)/i;
+const FILLER = /^(?:in this (?:chapter|section|handout|lesson|unit|document)\b|this (?:chapter|section|handout|lesson|unit|document) (?:will|covers|explains|looks)|we will (?:now|look|see|cover)|let'?s\b|as (?:we|you) (?:saw|said|will see)|see (?:above|below)|see (?:page|section|figure)\b|next,? we\b|for more\b|good luck\b|thanks?\b|prepared (?:for|by)\b|use (?:this|it )?as a quick reference\b|for (?:more|further) (?:information|reading)\b)/i;
 
 const wc = (t) => (String(t || '').match(/\S+/g) || []).length;
 const wcAll = (a) => a.reduce((n, t) => n + wc(t), 0);
@@ -36,14 +36,36 @@ const hasAll = (need, have) => { for (const x of need) if (!have.has(x)) return 
 /** Sentences of a material, in order, as a learner should read them. */
 function sourceSentences(text) {
   const out = [];
+  let header = null;
   for (const line of F.logicalLines(text)) {
     const plain = F.plainSentence(line);
     if (!plain || /^\[\[[^\]]*\]\]$/.test(plain)) continue;
+    // A table row is read with its header, as a sentence the page can show: "Divergent: Relative motion, Plates pull apart; Typical seismic style, Normal-fault earthquakes."
+    if (isTableLine(plain)) {
+      if (isRule(plain)) continue;
+      const cells = cellsOf(plain);
+      if (!header || cells.length !== header.length) { header = cells; continue; }
+      out.push(`${cells[0]}: ${cells.slice(1).map((c, i) => `${header[i + 1]}, ${c}`).join('; ')}.`);
+      continue;
+    }
+    header = null;
     for (const s of F.sentencesOf(plain)) out.push(s);
   }
   return out;
 }
-const isHeading = (s) => wc(s) <= 8 && !/[.!?:;]["'”)\]]*$/.test(s) && !/\d/.test(s);
+/** A line that names what follows rather than saying something: short, no end mark, and mostly capitalised words, or a label such as "Example 2 - Depths". A short list item ("contraindicated in asthma") is a fact. */
+function isHeading(s) {
+  if (wc(s) > 8) return false;
+  if (/[.!?;]["'”)\]]*$/.test(s)) return false;
+  if (/:\s*$/.test(s)) return true;
+  if (/^(?:example|figure|table|part|section|chapter|unit|step|question|exercise)\s+\d+\b/i.test(s)) return true;
+  if (/\d/.test(s)) return false;
+  const ws = s.split(/\s+/).filter((w) => /[\p{L}]/u.test(w) && !/^(?:of|the|and|or|in|on|at|to|for|a|an|by|with|vs)$/i.test(w));
+  return ws.length > 0 && ws.filter((w) => /^["'(]?\p{Lu}/u.test(w)).length / ws.length >= 0.75;
+}
+const cellsOf = (line) => line.replace(/^\s*\|/, '').replace(/\|\s*$/, '').split('|').map((c) => c.trim());
+const isTableLine = (line) => (line.match(/\|/g) || []).length >= 2;
+const isRule = (line) => /^[\s|:\-–—]+$/.test(line);
 
 /**
  * The facts of the material: [{ i, text, terms, nums, weight, cues, repeats }]. A heading or a sentence that only steers the reader is not a fact (kept in `skipped`, for the count).
@@ -109,17 +131,37 @@ function lessonSentences(course) {
 }
 
 /** The skill a fact belongs to: the one whose passages hold it, or whose lesson shares most of its words. */
-function ownerOf(fact, course, passageOf, sents, idx) {
+function ownerOf(fact, course, passageOf, sents, idx, titles, owned) {
   const pid = passageOf(fact.text);
   const skills = course.skills || [];
   const holders = pid ? skills.filter((s) => (s.passage_ids || []).includes(pid)) : [];
   if (holders.length === 1) return holders[0].id;
   const pool = holders.length ? holders : skills;
-  const score = new Map(pool.map((s) => [s.id, 0]));
-  for (const n of candidates(fact, idx)) { const s = sents[n]; if (score.has(s.skill)) score.set(s.skill, score.get(s.skill) + overlap(fact.terms, s.terms)); }
-  let best = pool[0] ? pool[0].id : null; let v = -1;
+  // The skill that talks about it most, and whose title names it. Not simply the first to mention it, or the first skill would take every fact and the others would read as scraps.
+  const score = new Map(pool.map((s) => [s.id, overlap(titles.get(s.id), fact.terms) * 1.5 - 0.04 * (owned.get(s.id) || 0)]));
+  const bestHere = new Map();
+  for (const n of candidates(fact, idx)) { const s = sents[n]; if (score.has(s.skill)) { const o = overlap(fact.terms, s.terms); if (o > (bestHere.get(s.skill) || 0)) bestHere.set(s.skill, o); } }
+  for (const [id, o] of bestHere) score.set(id, score.get(id) + o);
+  let best = pool[0] ? pool[0].id : null; let v = -Infinity;
   for (const [id, x] of score) if (x > v) { best = id; v = x; }
+  owned.set(best, (owned.get(best) || 0) + 1);
   return best;
+}
+/** Every sentence of this skill that says the fact, best first; failing that, the best sentence anywhere. */
+function carriersOf(fact, sents, idx) {
+  const own = []; let elsewhere = -1; let bestElse = 0;
+  for (const n of candidates(fact, idx)) {
+    const s = sents[n];
+    const here = overlap(fact.terms, s.terms);
+    if (here >= COVER_NEED && hasAll(fact.nums, s.nums)) {
+      if (s.skill === fact.owner) own.push(n);
+      else if (here > bestElse) { elsewhere = n; bestElse = here; }
+    }
+  }
+  if (own.length) return own;
+  if (elsewhere >= 0) return [elsewhere];
+  const pair = carrierOf(fact, sents, idx);
+  return pair >= 0 ? [pair] : [];
 }
 
 const leanFor = (spec) => !!(spec && !spec.isDefault && ((spec.course && Number.isFinite(spec.course.skillShare) && spec.course.skillShare < 0.9) || (spec.lesson && spec.lesson.keepShort)));
@@ -138,10 +180,13 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
   // Which sentence carries which fact.
   const carrier = new Map();
   const carries = new Map();
+  const titles = new Map((course.skills || []).map((s) => [s.id, K.termSet(s.title)]));
+  const ownedCount = new Map();
   for (const f of facts) {
-    const n = carrierOf(f, sents, idx);
-    if (n >= 0) { carrier.set(f.i, n); if (!carries.has(n)) carries.set(n, []); carries.get(n).push(f); }
-    f.owner = ownerOf(f, course, passageOf, sents, idx);
+    f.owner = ownerOf(f, course, passageOf, sents, idx, titles, ownedCount);
+    const ns = carriersOf(f, sents, idx);
+    if (ns.length) carrier.set(f.i, ns[0]);
+    for (const n of ns) { if (!carries.has(n)) carries.set(n, []); carries.get(n).push(f); }
   }
   const stressedFact = (f) => f.weight >= STRESS_MIN;
   // With no emphasis in the material at all, what is core is what the rest leans on: facts whose terms recur, with a number, a name or a definition.
@@ -152,6 +197,7 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
   // The reading each sentence would add in the order it comes. Greedy: a sentence stays when it carries a fact nothing kept has, or (not lean) when it is teaching talk that does not repeat what was said.
   const kept = new Set();
   const coveredFacts = new Set();
+  const coveredBySentence = new Map();
   const asideOf = new Map();
   const put = (id, t) => { if (!asideOf.has(id)) asideOf.set(id, []); asideOf.get(id).push(t); };
   // What has been said so far, by term, so "does this repeat" looks only at sentences that share its rarest terms.
@@ -186,14 +232,28 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
   }
   const needed = (f) => (goal === 'core' ? coreFacts.has(f.i) : true);
 
+  // Where words are being saved, the reading IS the facts: the material's own sentences, each once, on the skill that owns it, in the order the material teaches them, or a checked lesson sentence when it says the
+  // same fact in clearly fewer words. So it can never run longer than the material, and it reads in the material's order, not as what was left of a longer lesson.
+  const savingWords = useLean || goal === 'core';
+  const pick = new Map();
+  if (savingWords) {
+    for (const f of facts) {
+      if (!needed(f)) continue;
+      let text = f.text;
+      for (const [n, list] of carries) { if (list.includes(f) && sents[n].skill === f.owner && sents[n].kind === 'p' && wc(sents[n].text) <= 0.8 * wc(text) && overlap(f.terms, sents[n].terms) >= 0.85) text = sents[n].text; }
+      pick.set(f.i, text);
+      coveredFacts.add(f.i);
+    }
+  }
   sents.forEach((s, n) => {
+    if (savingWords) { if (s.kind === 'p' && !repeats(s)) { addSaid(s); put(s.skill, s.text); } return; }
     const mine = (carries.get(n) || []).filter((f) => needed(f) && !coveredFacts.has(f.i));
     const talk = !(carries.get(n) || []).length;
     let keep = mine.length > 0;
     // Where words are what is being saved, a sentence earns its place only if it is about as short as the material's own sentences for what it adds: otherwise those come in instead, by the sweep below.
     if (keep && (useLean || goal === 'core') && s.kind === 'p' && wc(s.text) > 1.2 * mine.reduce((w, f) => w + wc(f.text), 0)) keep = false;
     if (!keep && goal !== 'core' && !useLean && talk && !repeats(s) && s.kind === 'p') keep = true; // teaching talk the ledger has no line for: it was fact-checked at build, and it stays unless it repeats
-    if (keep) { kept.add(n); addSaid(s); for (const f of mine) coveredFacts.add(f.i); } else if (s.kind === 'p' && !repeats(s) && !mine.length) put(s.skill, s.text);
+    if (keep) { kept.add(n); addSaid(s); for (const f of mine) { coveredFacts.add(f.i); coveredBySentence.set(f.i, n); } } else if (s.kind === 'p' && !repeats(s) && !mine.length) put(s.skill, s.text);
   });
 
   // What no kept sentence carries, in the material's own words, on the skill that owns it.
@@ -201,7 +261,7 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
   for (const f of facts) {
     if (coveredFacts.has(f.i)) continue;
     if (!f.owner) continue;
-    if (needed(f)) { if (!added.has(f.owner)) added.set(f.owner, []); added.get(f.owner).push(f); coveredFacts.add(f.i); } else put(f.owner, f.text);
+    if (needed(f) && !savingWords) { if (!added.has(f.owner)) added.set(f.owner, []); added.get(f.owner).push(f); coveredFacts.add(f.i); } else put(f.owner, f.text);
   }
 
   // Put the skills together.
@@ -216,10 +276,18 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
     for (const { s } of mineKept) if (s.kind === 'p') { if (!paras.has(s.pi)) paras.set(s.pi, []); paras.get(s.pi).push(s.text); }
     let paragraphs = [...paras.keys()].sort((a, b) => a - b).map((k) => paras.get(k).join(' '));
     const own = added.get(skill.id) || [];
-    if (own.length) paragraphs.push(own.map((f) => f.text).join(' '));
-    // Keep a lesson's key points only when a kept sentence is not already saying them; a stressed one stays when the learner has room for a recap.
-    const key_points = mineKept.filter(({ s }) => s.kind === 'k').map(({ s }) => s.text);
-    if (!paragraphs.length && key_points.length) paragraphs = [key_points.shift()];
+    let key_points = mineKept.filter(({ s }) => s.kind === 'k').map(({ s }) => s.text);
+    if (savingWords) {
+      const mine = (factsOf.get(skill.id) || []).filter((x) => pick.has(x.i)).map((x) => pick.get(x.i));
+      paragraphs = [];
+      for (let i = 0; i < mine.length; i += 3) paragraphs.push(mine.slice(i, i + 3).join(' '));
+      // A skill the material gives no fact of its own (a recap): its first checked sentence, the rest on the page.
+      if (!paragraphs.length) { const first = sents.find((s) => s.skill === skill.id && s.kind === 'p'); if (first) paragraphs = [first.text]; }
+      key_points = [];
+    } else {
+      if (own.length) paragraphs.push(own.map((f) => f.text).join(' '));
+      if (!paragraphs.length && key_points.length) paragraphs = [key_points.shift()];
+    }
     // Test goal: stressed facts first, and what the material warns about, in its own words.
     const myFacts = factsOf.get(skill.id) || [];
     const traps = goal === 'test' ? myFacts.filter((f) => /\b(?:trap|mistake|never|not to be confused|common error|do not|don't|careful|avoid|beware|contraindicat)/i.test(f.text)).slice(0, 2).map((f) => `Watch out: ${f.text}`) : [];
@@ -232,7 +300,7 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
     skills.set(skill.id, {
       paragraphs: paragraphs.length ? paragraphs : (skill.lesson && skill.lesson.paragraphs) || [],
       key_points,
-      aside: [...new Set(asideOf.get(skill.id) || [])],
+      aside: asideFor(asideOf.get(skill.id) || [], paragraphs),
       lean: useLean,
       added: own.length,
       checks,
@@ -254,6 +322,12 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
     checks: [...skills.values()].reduce((n, s) => n + s.checks, 0),
   };
   return { skills, stats, facts };
+}
+
+/** What is set aside, without what the reading already says. */
+function asideFor(list, paragraphs) {
+  const have = K.termSet(paragraphs.join(' '));
+  return [...new Set(list)].filter((t) => { const x = K.termSet(t); return x.size && overlap(x, have) < 0.85; });
 }
 
 /** The ids of the questions that test these facts, the ones on the heaviest facts first; at least two when there are two. */

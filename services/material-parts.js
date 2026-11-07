@@ -78,9 +78,16 @@ function viewOf(userId, course, materialId) {
     // A test date on this material means the test's reading, unless the learner chose otherwise.
     const dated = (() => { try { const rg = lazy('./retention-goal').forMaterial(userId, mat.id); return !!(rg && rg.status === 'date'); } catch { return false; } })();
     const goalNow = goal === 'core' && restored.includes('all') ? 'full' : goal === 'full' && dated && lazy('./study-goal').uploadsOpen() ? 'test' : goal;
-    let lean = false;
-    try { const spec = lazy('./learning-spec').buildSpec(userId, { topic: course.title, materialId: mat.id }); lean = O.leanFor(spec); } catch { lean = false; }
-    if (!lean) { try { lean = Number((lazy('./part-change').prefsOf(userId) || {}).shorter) > 0; } catch { /* no choice stored */ } }
+    // Lean or not stays put while the learner has changes on this material: their rows were made from this reading, and text should not reshuffle under someone mid-study. A "shorter" tap changes that part;
+    // two of them, or a measured brevity, make the next material lean, and this one once it has no changes of theirs.
+    let lean = !!mat.reading_lean;
+    const mine = lazy('../config/db').findOne(COLLECTION, (r) => r.user_id === userId && r.material_id === mat.id);
+    if (!mine) {
+      lean = false;
+      try { const spec = lazy('./learning-spec').buildSpec(userId, { topic: course.title, materialId: mat.id }); lean = O.leanFor(spec) && !(Number((lazy('./part-change').prefsOf(userId) || {}).shorter) === 1 && !measuredBrevity(userId)); } catch { lean = false; }
+      if (!lean) { try { lean = Number((lazy('./part-change').prefsOf(userId) || {}).shorter) >= 2; } catch { /* no choice stored */ } }
+      if (lean !== !!mat.reading_lean) lazy('../config/db').update('materials', mat.id, { reading_lean: lean });
+    }
     const key = `${course.id}:${course.finished_at || ''}:${(course.skills || []).length}:${hashOf((course.skills || []).map((s) => (s.lesson && s.lesson.paragraphs) || []))}:${goalNow}:${lean ? 1 : 0}`;
     if (VIEW_CACHE.has(key)) { const v = VIEW_CACHE.get(key); VIEW_CACHE.delete(key); VIEW_CACHE.set(key, v); return v; }
     const v = O.optimize({ course, text: mat.text, keyPoints: mat.key_points || [], goal: goalNow, lean });
@@ -94,6 +101,10 @@ function viewOf(userId, course, materialId) {
   }
 }
 
+/** Does the scorecard itself say this learner wants less reading, as opposed to one tap of "shorter"? */
+function measuredBrevity(userId) {
+  try { const c = lazy('./scorecard').get(userId); const s = c && c.stats && c.stats.brevity_preference; return !!(s && s.n > 0 && s.s >= 60); } catch { return false; }
+}
 const leavesFromList = (prefix, list) => (list || []).map((text, i) => ({ key: `${prefix}${i}`, text }));
 
 /**
