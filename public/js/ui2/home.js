@@ -26,6 +26,8 @@
   let cameFromHome = false;
   let mats = { can_upload: false, materials: [] };
   let pastBuilt = false;
+  /** Subjects picked in the private beta's onboarding that still need a start (GET /api/ui2/waiting, services/onboarding-v2.js waitingFor). */
+  let waiting = [];
 
   // ── small pieces ─────────────────────────────────────────────────────────
   const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
@@ -145,6 +147,14 @@
     return `${m.mastered} of ${plural(m.total, 'part')}`;
   };
   const materialHref = (m) => (m.total ? `/my-material-study?id=${m.id}` : '/my-material');
+  /** A subject from the onboarding with no start yet: the placement (Quick, the strong pill) or a grade picked from the list. Either makes the enrollment the usual way. */
+  const waitCard = (w) => `<div class="u2-feature u2-wait" data-waiting="${esc(w.track.id)}">
+      <div class="u2-f-top">${App.symbol(w.track)}<span class="u2-o-t"><b>${esc(w.track.name)}</b><small>Not started yet</small></span></div>
+      <div class="u2-wait-acts">
+        <a class="u2-btn" href="${esc(w.placement_href)}" data-start="placement">Take the placement</a>
+        <a class="u2-btn2" href="${esc(w.pick_href)}" data-start="pick">Pick my grade</a>
+      </div>
+    </div>`;
   const materialRow = (m) => `<a class="u2-opt u2-s-row" href="${materialHref(m)}" data-material="${m.id}">${ic('note')}<span class="u2-o-t"><b>${esc(m.title)}</b><small>${esc(materialWords(m))}</small></span>${m.total ? mini(Math.round((m.mastered / m.total) * 100)) : ''}${ic('chev-r', 'u2-mute')}</a>`;
 
   function guideInto(slot, words, id) {
@@ -177,7 +187,12 @@
     const rest = subjects.filter((e) => e !== lead);
     const nothing = !subjects.length && !mats.materials.length;
     let main = '';
-    if (focus && focus.href && (subjects.length || !unfinished.length)) {
+    const waitFirst = !subjects.length && waiting.length > 0;
+    if (waitFirst) {
+      main = `<h1 class="u2-t1 u2-wait-title" tabindex="-1" id="u2-title">Choose where to start</h1>
+        <p class="u2-m u2-detail">A short placement finds your level, or pick it yourself.</p>
+        <div class="u2-waits">${waiting.map(waitCard).join('')}</div>`;
+    } else if (focus && focus.href && (subjects.length || !unfinished.length)) {
       // The one strong button: the plan's next step.
       main = `<div class="u2-feature">
         ${lead ? `<div class="u2-f-top">${App.symbol(lead.track)}<span class="u2-o-t"><b>${esc(lead.track.name)}</b><small>${esc(levelWords(lead))}</small></span>${mini(shareOf(lead), lead.track.id)}</div>` : ''}
@@ -195,7 +210,7 @@
     } else if (nothing || !subjects.length) {
       main = `<div class="u2-feature"><h1 class="u2-t1" tabindex="-1" id="u2-title">Pick your first subject</h1><a class="u2-btn" id="u2-start" href="/onboarding">Choose subjects</a></div>`;
     }
-    const leadMaterial = !subjects.length && unfinished.length && mats.can_upload ? unfinished[0] : null;
+    const leadMaterial = !waitFirst && !subjects.length && unfinished.length && mats.can_upload ? unfinished[0] : null;
     const listed = unfinished.filter((m) => m !== leadMaterial);
     const canPlan = !!(plan && subjects.length);
     host.innerHTML = `
@@ -204,7 +219,8 @@
           ${subjects.length ? '<h2 class="u2-h">Continue</h2>' : ''}
           ${main}
           ${rest.length ? `<div class="u2-rows">${rest.map(subjectRow).join('')}</div>` : ''}
-          ${!subjects.length && mats.materials.length ? `<a class="u2-opt u2-s-row" id="u2-add-subject" href="/onboarding">${ic('plus')}<b>Add a subject</b></a>` : ''}
+          ${subjects.length && waiting.length ? `<h2 class="u2-h">Choose where to start</h2><div class="u2-waits">${waiting.map(waitCard).join('')}</div>` : ''}
+          ${!subjects.length && !waiting.length && mats.materials.length ? `<a class="u2-opt u2-s-row" id="u2-add-subject" href="/onboarding">${ic('plus')}<b>Add a subject</b></a>` : ''}
           ${canPlan ? `<div class="u2-quiet">
             <button type="button" class="u2-chip-t" id="u2-minutes" aria-haspopup="dialog" aria-label="${plan.minutes} minutes today. Change">${ic('clock')}${plan.minutes} min${ic('chev-d')}</button>
             ${(plan.blocks || []).length ? '<button type="button" class="u2-next" id="u2-peek" aria-haspopup="dialog">Today\'s plan</button>' : ''}
@@ -231,10 +247,10 @@
         await drawHome();
       });
     }
-    guideInto(host, finished ? 'Done for today.' : focus || mats.materials.length ? 'Ready when you are.' : 'Let\'s get you started.', 'u2-giraffe');
-    // The empty page's other first steps (the style quiz, the survey) stay on the page, under the sections.
+    guideInto(host, finished ? 'Done for today.' : waitFirst ? 'Where should we start?' : focus || mats.materials.length ? 'Ready when you are.' : 'Let\'s get you started.', 'u2-giraffe');
+    // The empty page's other first steps (the style quiz, the survey) stay on the page, under the sections. Not while subjects wait: its "Choose subjects" would ask again.
     const empty = root.querySelector('.empty-state');
-    if (empty) host.querySelector('.u2-home-body').appendChild(empty);
+    if (empty && !waitFirst) host.querySelector('.u2-home-body').appendChild(empty);
   }
 
   // ── Past ─────────────────────────────────────────────────────────────────
@@ -508,6 +524,7 @@
     try { plan = planReply ? await planReply : null; } catch { plan = null; }
     try { mats = await App.api.get('/api/ui2/material-progress'); } catch { mats = { can_upload: false, materials: [] }; }
     try { today = await App.api.get('/api/ui2/today'); } catch { today = null; }
+    try { waiting = (await App.api.get('/api/ui2/waiting')).subjects || []; } catch { waiting = []; }
     const host = document.createElement('div');
     host.id = 'u2-home';
     root.insertBefore(host, root.firstChild);

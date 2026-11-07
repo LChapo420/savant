@@ -159,7 +159,14 @@ app.use('/api', (req, res, next) => {
 
 // Home's "Your material" under UI_V2 (services/ui-v2-material.js). Off, it is an unknown endpoint like any other.
 app.get('/api/ui2/material-progress', (req, res, next) => (require('./services/ui-v2').enabled() ? require('./services/ui-v2-material').reply(req, res) : next()));
-app.get('/api/ui2/today', (req, res, next) => (require('./services/ui-v2').enabled() ? require('./services/ui-v2-today').reply(req, res) : next()));
+app.get('/api/ui2/waiting', (req, res, next) => {
+  if (!require('./services/ui-v2').enabled()) return next();
+  if (!req.user) return res.status(401).json({ error: 'Sign in first.' });
+  const ob = require('./services/onboarding-v2');
+  res.setHeader('Cache-Control', 'no-store');
+  return res.json({ subjects: ob.waitingFor(req.user, { hidden: ob.hiddenSubjects(req) }) });
+});
+app.get('/api/ui2/today',(req, res, next) => (require('./services/ui-v2').enabled() ? require('./services/ui-v2-today').reply(req, res) : next()));
 app.use('/api/auth/password-reset', passwordReset.router);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/speed', require('./routes/speed-placement'));

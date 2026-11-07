@@ -390,11 +390,13 @@ async function betaAdult(browser, opts, { fullTest = false } = {}) {
   const test = await takeTest(page, { stopAfterTimed: fullTest ? null : 2 });
   if (fullTest) results.push(`${page.persona}: a scripted click-through of the whole Quick test took ${Math.round(test.ms / 1000)} s (a script, not a person)`);
   await answerInterests(page);
-  await answerSubjects(page, ['math', 'chess']);
+  // Owner, 7 Nov: subjects not fully built aren't offered in the beta (BETA_HIDDEN_SUBJECTS, services/onboarding-v2.js).
+  for (const hidden of ['basketball', 'chess', 'piano']) assert.equal(await page.locator(`input[name="track"][value="${hidden}"]`).count(), 0, `${hidden} is not offered in the beta`);
+  await answerSubjects(page, ['math', 'english']);
   await placement(page);
   await throughBuilding(page);
   assert.match(await page.locator('.lesson-card').textContent(), /for good/, 'the default goal is said');
-  assert.ok(await page.locator('.ob-fine a[href*="track=chess"]').count(), 'the second subject is offered');
+  assert.ok(await page.locator('.ob-fine a[href*="track=english"]').count(), 'the second subject is offered');
   await page.reload();
   await at(page, 'ready');
   await openLesson(page, { banner: false });

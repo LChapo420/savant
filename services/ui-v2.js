@@ -25,11 +25,14 @@ const PAGES = new Set([
   'my-material', 'my-material-cards', 'my-material-notes', 'my-material-pack', 'my-material-podcast', 'my-material-study', 'my-material-test',
 ]);
 
+/** First in <head> on /start and every app page: a page that finds itself signed out goes to sign-in rather than show the new-account refusal (js/ui2/signed-out.js). */
+const SIGNED_OUT = '<script src="/js/ui2/signed-out.js"></script>';
+
 /** A page's HTML with the three additions. Pure, so the test can check it without a server. */
 function inject(html, page) {
   let out = html
     .replace(/<html\b/, '<html data-ui2="on"')
-    .replace('</head>', '  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/look.css">\n  <link rel="stylesheet" href="/css/ui2/app.css">\n  <link rel="stylesheet" href="/css/ui2/pages.css">\n  <script src="/js/ui2/boot.js"></script>\n</head>')
+    .replace('</head>', `  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/look.css">\n  <link rel="stylesheet" href="/css/ui2/app.css">\n  <link rel="stylesheet" href="/css/ui2/pages.css">\n  ${SIGNED_OUT}\n  <script src="/js/ui2/boot.js"></script>\n</head>`)
     .replace('<script src="/js/app.js"></script>', '<script src="/js/app.js"></script>\n  <script src="/js/start-tutor.js"></script>\n  <script src="/js/ui2/look.js"></script>\n  <script src="/js/ui2/shell.js"></script>\n  <script src="/js/ui2/pages.js"></script>');
   if (page === 'dashboard') out = out.replace('<script src="/js/dashboard.js"></script>', '<script src="/js/ui2/home.js"></script>\n  <script src="/js/dashboard.js"></script>');
   return out;
@@ -39,7 +42,7 @@ function inject(html, page) {
 function injectStart(html) {
   return html
     .replace(/<html\b/, `<html data-ui2="on" data-welcome="${welcome()}"`)
-    .replace('</head>', '  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/look.css">\n  <link rel="stylesheet" href="/css/ui2/start.css">\n  <link rel="stylesheet" href="/css/ui2/welcome.css">\n  <script src="/js/ui2/look.js"></script>\n  <script src="/js/ui2/welcome.js"></script>\n  <script src="/js/ui2/start.js"></script>\n</head>');
+    .replace('</head>', `  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/look.css">\n  <link rel="stylesheet" href="/css/ui2/start.css">\n  <link rel="stylesheet" href="/css/ui2/welcome.css">\n  ${SIGNED_OUT}\n  <script src="/js/ui2/look.js"></script>\n  <script src="/js/ui2/welcome.js"></script>\n  <script src="/js/ui2/start.js"></script>\n</head>`);
 }
 
 /** /start's first screen: UI_V2_WELCOME picks one of js/ui2/welcome.js's designs, each with its block in css/ui2/welcome.css. "card" (H, the owner's pick) unless set. */

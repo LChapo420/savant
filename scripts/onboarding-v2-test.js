@@ -503,6 +503,112 @@ async function redoChecks() {
   ok('one named account onboards once, keeping its subjects; nobody else does');
 }
 
+/**
+ * Owner, 7 Nov: basketball, chess and piano out of the beta's choices; and the flow ends at the subjects, each waiting on Home for "Take the placement" or "Pick my grade".
+ * Under UI_V2 in the private beta (public/js/ui2/start.js calls /to-home; Home reads /api/ui2/waiting).
+ */
+async function trimChecks() {
+  const ob = require('../services/onboarding-v2'); // eslint-disable-line global-require
+  const was = { gate: process.env.BETA_GATE, only: process.env.BETA_SIGNIN_ONLY, hidden: process.env.BETA_HIDDEN_SUBJECTS };
+  const local = { socket: { remoteAddress: '127.0.0.1' }, headers: { host: 'localhost' } };
+  process.env.BETA_SIGNIN_ONLY = 'off';
+  process.env.BETA_GATE = '';
+  delete process.env.BETA_HIDDEN_SUBJECTS;
+  assert.equal(ob.hiddenSubjects(local).size, 0, 'public: nothing hidden');
+  process.env.BETA_GATE = 'invite';
+  assert.deepEqual([...ob.hiddenSubjects(local)].sort(), ['basketball', 'chess', 'piano'], 'beta: the three by default');
+  process.env.BETA_HIDDEN_SUBJECTS = 'chess';
+  assert.deepEqual([...ob.hiddenSubjects(local)], ['chess'], 'one setting changes it');
+  process.env.BETA_HIDDEN_SUBJECTS = '';
+  assert.equal(ob.hiddenSubjects(local).size, 0, 'empty shows everything');
+  for (const [k, v] of [['BETA_GATE', was.gate], ['BETA_SIGNIN_ONLY', was.only], ['BETA_HIDDEN_SUBJECTS', was.hidden]]) { if (v === undefined) delete process.env[k]; else process.env[k] = v; }
+
+  const invitesFile = path.join(dir, 'invites-trim.json');
+  process.env.BETA_INVITES_FILE = invitesFile;
+  const invites = require('../services/beta-invites'); // eslint-disable-line global-require
+  const now = Date.now();
+  const named = `trim-redo-${now}@example.test`;
+  const child = await server(6897, { ONBOARDING_V2: 'on', UI_V2: 'on', BETA_GATE: 'invite', BETA_SIGNIN_ONLY: 'off', BETA_INVITES_FILE: invitesFile, ONBOARDING_REDO_EMAILS: named });
+  const base = 'http://localhost:6897';
+  const make = async (email) => {
+    const c = client(base);
+    await c('POST', '/api/consent/age', { birth_month: 3, birth_year: 1990, country: 'US' });
+    const { code } = invites.approve(email);
+    const out = await c('POST', '/api/auth/register', { invite_code: code, email, password: 'longenough1', display_name: 'Tess' });
+    assert.equal(out.status, 201, JSON.stringify(out.data).slice(0, 160));
+    return c;
+  };
+  const anon = client(base);
+  const all = (await anon('GET', '/api/catalog')).data.tracks.map((t) => t.id);
+  const shown = (await anon('GET', '/api/catalog?view=grades')).data.tracks.map((t) => t.id);
+  for (const t of ['basketball', 'chess', 'piano']) {
+    assert.ok(all.includes(t), `${t} still exists`);
+    assert.ok(!shown.includes(t), `${t} is not offered on /start or /onboarding in the beta`);
+  }
+  assert.ok(shown.includes('math') && shown.includes('english'));
+  ok('beta: basketball, chess and piano leave the subject pickers (one setting, BETA_HIDDEN_SUBJECTS); the subjects themselves stay');
+
+  // An approved adult: picks subjects, the flow ends, Home has them waiting.
+  const a = await make(`trim-${now}@example.test`);
+  const gradeOf = async (t) => { const r = (await a('GET', '/api/catalog')).data.tracks.find((x) => x.id === t); return r.grades[0].id; };
+  const chessGrade = await gradeOf('chess');
+  assert.equal((await a('POST', '/api/ob2/answers', { interests: ['basketball'], tracks: ['math', 'chess', 'english'], how: 'curriculum' })).status, 200);
+  const s1 = (await a('GET', '/api/ob2/state')).data;
+  assert.deepEqual(s1.answers.tracks, ['math', 'english'], 'a hidden subject is not kept as a pick');
+  assert.deepEqual(s1.answers.interests, ['basketball'], 'basketball as an interest stays');
+  assert.equal((await anon('POST', '/api/ob2/to-home', {})).status, 409, 'signed out: nothing');
+  const done = await a('POST', '/api/ob2/to-home', {});
+  assert.equal(done.status, 200, JSON.stringify(done.data).slice(0, 200));
+  assert.deepEqual(done.data.waiting, ['math', 'english']);
+  assert.equal(done.data.go, '/dashboard');
+  const s2 = (await a('GET', '/api/ob2/state')).data;
+  assert.equal(s2.onboarding, undefined, 'out of the flow');
+  assert.equal(s2.go, '/dashboard', 'home, not the add-a-subject page');
+  assert.equal((await a('GET', '/dashboard')).status, 200, 'the dashboard opens with no enrollment yet');
+  assert.equal((await a('GET', '/onboarding')).status, 200);
+  assert.equal((await a('GET', '/api/enrollments')).data.enrollments.length, 0, 'no enrollment made without a grade');
+  assert.equal((await a('POST', '/api/ob2/to-home', {})).status, 409, 'once');
+  let w = (await a('GET', '/api/ui2/waiting')).data.subjects;
+  assert.deepEqual(w.map((x) => x.track.id), ['math', 'english']);
+  assert.equal(w[0].placement_href, '/subject-placement?track=math&mode=quick');
+  assert.equal(w[0].pick_href, '/onboarding?track=math&pick=1');
+  assert.equal(w[0].track.name, 'Mathematics');
+  // "Take the placement": the same walk, Quick; a few answers then Stop still starts an adult at their age (settleStart).
+  const walked = await walkAs(base, { age: 36, how: 'wrong', stop: 3, retakeBy: a });
+  assert.equal(walked.result.recommended_grade_id, 'algebra_1_part_a', `settleStart after the flow: ${walked.result.recommended_grade_name}`);
+  assert.equal(walked.result.from_age, true);
+  const chose = await a('POST', '/api/subject-placement/math/choose', { grade_id: walked.result.recommended_grade_id });
+  assert.ok(chose.status < 300, JSON.stringify(chose.data).slice(0, 160));
+  w = (await a('GET', '/api/ui2/waiting')).data.subjects;
+  assert.deepEqual(w.map((x) => x.track.id), ['english'], 'a started subject leaves the waiting list');
+  // "Pick my grade": the add-a-subject page's enrollment, as today.
+  const eng = await a('POST', '/api/enrollments', { selections: [{ track_id: 'english', grade_id: await gradeOf('english') }] });
+  assert.equal(eng.status, 201);
+  assert.deepEqual((await a('GET', '/api/ui2/waiting')).data.subjects, [], 'nothing waits once both have started');
+  ok('beta, UI_V2: the flow ends after the subjects with no enrollment; Home lists each with the placement (Quick) and pick-a-grade; settleStart still applies; either start clears it');
+
+  // An enrollment in a hidden subject is untouched, and doesn't wait.
+  const b = await make(`trim-chess-${now}@example.test`);
+  const ce = await b('POST', '/api/enrollments', { selections: [{ track_id: 'chess', grade_id: chessGrade }] });
+  assert.equal(ce.status, 201, 'an existing way in for an existing subject still works');
+  const bHome = (await b('GET', '/api/ob2/state')).data;
+  assert.equal(bHome.go, '/dashboard', 'an account with a subject is not sent through the flow');
+  assert.equal((await b('GET', '/api/enrollments')).data.enrollments[0].track.id, 'chess', 'the chess enrollment stays');
+  ok('beta: an existing enrollment in a hidden subject stays as it is');
+
+  // The redo-once account: through the flow once more, keeping its subject; the picked one it already has doesn't wait.
+  const r = await make(named);
+  assert.equal((await r('POST', '/api/enrollments', { selections: [{ track_id: 'english', grade_id: await gradeOf('english') }] })).status, 201);
+  assert.match((await r('GET', '/dashboard')).headers.get('location') || '', /^\/start/, 'the named account goes to the flow');
+  assert.equal((await r('POST', '/api/ob2/answers', { tracks: ['english', 'math'] })).status, 200);
+  assert.deepEqual((await r('POST', '/api/ob2/to-home', {})).data.waiting, ['math']);
+  assert.equal((await r('GET', '/dashboard')).status, 200, 'then home');
+  assert.equal((await r('GET', '/api/ob2/state')).data.go, '/dashboard', 'and it never comes back');
+  assert.equal((await r('GET', '/api/enrollments')).data.enrollments.length, 1, 'its subject is still there');
+  ok('redo-once: the named account goes through once, ends at home with its subject kept, and only the new subject waits');
+  await stop(child);
+}
+
 async function main() {
   if (fs.existsSync(path.join(ROOT, 'data', 'db.json'))) fs.copyFileSync(path.join(ROOT, 'data', 'db.json'), dbFile);
   contentChecks();
@@ -746,6 +852,7 @@ async function main() {
 
   await betaChecks();
   await redoChecks();
+  await trimChecks();
 
   // ── the sweep and deletion, in this process on the same file ──
   const db = require('../config/db'); // eslint-disable-line global-require

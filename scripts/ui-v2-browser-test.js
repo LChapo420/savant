@@ -633,6 +633,8 @@ async function main() {
     // ── /start in the private beta: an account, from the application ──
     const tmp3 = fs.mkdtempSync(path.join(os.tmpdir(), 'ui2-browser-beta-'));
     fs.mkdirSync(path.join(tmp3, 'media'));
+    // A copy of the store, for the subjects' placement questions ("Take the placement" opens the real walk). Only new synthetic accounts sign in.
+    if (fs.existsSync(path.join(ROOT, 'data', 'db.json'))) fs.copyFileSync(path.join(ROOT, 'data', 'db.json'), path.join(tmp3, 'db.json'));
     process.env.BETA_INVITES_FILE = path.join(tmp3, 'invites.json');
     const invites = require('../services/beta-invites'); // eslint-disable-line global-require
     serverBeta = start('on', tmp3, { BETA_GATE: 'invite', BETA_INVITES_FILE: path.join(tmp3, 'invites.json') });
@@ -677,7 +679,78 @@ async function main() {
       await ctx.close();
     });
 
-    await t('Beta: "Both" goes through subject and grade, then upload; "Savant\'s curriculum" goes on to the lesson as today', async () => {
+    // Owner, 7 Nov: after the subjects, home, with "Take the placement" and "Pick my grade" on each; basketball, chess and piano not offered in the beta.
+    // OB_TRIM_SHOTS=<dir> writes the phone screenshots (375, light) and their sheet.
+    const SHOTS = process.env.OB_TRIM_SHOTS || '';
+    const snap = async (page, name) => { if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: true }); await page.screenshot({ path: path.join(SHOTS, `${name}.png`) }); } };
+    const homeWaiting = async (page) => {
+      await page.waitForSelector('.u2-wait');
+      return page.$$eval('.u2-wait', (cards) => cards.map((c) => ({ id: c.dataset.waiting, place: c.querySelector('a[data-start="placement"]').getAttribute('href'), placeText: c.querySelector('a[data-start="placement"]').textContent.trim(), placeCls: c.querySelector('a[data-start="placement"]').className, pick: c.querySelector('a[data-start="pick"]').getAttribute('href'), pickText: c.querySelector('a[data-start="pick"]').textContent.trim(), pickCls: c.querySelector('a[data-start="pick"]').className })));
+    };
+
+    await t('Beta: "Savant\'s curriculum": subjects (no basketball, chess or piano), then home with each subject\'s placement and pick-a-grade buttons; both lead to the existing pages', async () => {
+      const c = await invited('cur@example.com');
+      const errs = [];
+      c.page.on('pageerror', (e) => errs.push(e.message));
+      await toHow(c.page);
+      await c.page.check('input[name="how"][value="curriculum"]', { force: true });
+      await c.page.click('#next');
+      await at(c.page, 'learn');
+      const offered = await c.page.$$eval('input[name="track"]', (xs) => xs.map((x) => x.value));
+      for (const hidden of ['basketball', 'chess', 'piano']) assert(!offered.includes(hidden), `${hidden} is not offered in the beta`);
+      assert(offered.includes('math') && offered.includes('english'));
+      assert(/where to start on your home page/.test(await c.page.innerText('.ob-sub')));
+      await c.page.check('input[name="track"][value="math"]', { force: true });
+      await c.page.check('input[name="track"][value="english"]', { force: true });
+      assert.strictEqual(await c.page.$('.subjects.u2-many'), null, 'ticks, not numbers: no subject comes first');
+      assert(await noOverflow(c.page));
+      await snap(c.page, '1-subjects');
+      await c.page.click('#next');
+      await c.page.waitForURL(/\/dashboard/);
+      const cards = await homeWaiting(c.page);
+      assert.deepStrictEqual(cards.map((x) => x.id), ['math', 'english']);
+      assert.strictEqual(cards[0].placeText, 'Take the placement');
+      assert.strictEqual(cards[0].pickText, 'Pick my grade');
+      assert.strictEqual(cards[0].placeCls, 'u2-btn', 'the main 3D pill');
+      assert.strictEqual(cards[0].pickCls, 'u2-btn2', 'the secondary pill');
+      assert.strictEqual(cards[0].place, '/subject-placement?track=math&mode=quick');
+      assert.strictEqual(cards[1].pick, '/onboarding?track=english&pick=1');
+      assert.strictEqual((await c.page.innerText('#u2-title')).trim(), 'Choose where to start');
+      const edge = await c.page.$eval('.u2-wait a.u2-btn', (a) => getComputedStyle(a).boxShadow);
+      assert(/6px 0px/.test(edge), `3D edge: ${edge}`);
+      assert(await noOverflow(c.page));
+      await snap(c.page, '2-home');
+      // "Take the placement": the subject placement, Quick, straight to a question (no goal or length step).
+      await c.page.click('.u2-wait[data-waiting="math"] a[data-start="placement"]');
+      await c.page.waitForURL(/\/subject-placement\?track=math&mode=quick/);
+      await c.page.waitForSelector('a.player-close', { timeout: 30000 }); // the walk's own player, which opens only once a mode is running
+      assert.strictEqual(await c.page.$('.mode-card'), null, 'no mode picker: Quick');
+      assert(/Quick/.test(await c.page.innerText('body')), 'the Quick walk');
+      await delay(400);
+      await snap(c.page, '3-placement');
+      // "Pick my grade": the add-a-subject page, that subject's grade list open.
+      await c.page.goto(`${BASE}/dashboard`);
+      await homeWaiting(c.page);
+      await c.page.click('.u2-wait[data-waiting="english"] a[data-start="pick"]');
+      await c.page.waitForURL(/\/onboarding\?track=english&pick=1/);
+      await c.page.waitForFunction(() => { const d = document.querySelector('.track-card[data-subject="english"] details.grade-pick'); return d && d.open; }, null, { timeout: 15000 });
+      const hiddenThere = await c.page.$$eval('.track-card', (xs) => xs.map((x) => x.dataset.subject).filter((s) => ['basketball', 'chess', 'piano'].includes(s)));
+      assert.deepStrictEqual(hiddenThere, [], 'the add-a-subject page hides them too');
+      await delay(400);
+      await snap(c.page, '4-pick');
+      // Picking a grade there enrolls as today, and the subject stops waiting.
+      await c.page.check('.track-card[data-subject="english"] input[data-track="english"] >> nth=0', { force: true });
+      await c.page.click('#start');
+      await c.page.waitForURL(/\/placement\?enrollment=/);
+      await c.page.goto(`${BASE}/dashboard`);
+      await c.page.waitForSelector('#u2-home');
+      const left = await c.page.$$eval('.u2-wait', (xs) => xs.map((x) => x.dataset.waiting));
+      assert.deepStrictEqual(left, ['math'], 'English has started; math still waits');
+      assert.deepStrictEqual(errs, []);
+      await c.ctx.close();
+    });
+
+    await t('Beta: "Both": subjects, then upload, then home with the subjects waiting', async () => {
       const a = await invited('both@example.com');
       await toHow(a.page);
       await a.page.check('input[name="how"][value="both"]', { force: true });
@@ -686,37 +759,61 @@ async function main() {
       assert(await a.page.isDisabled('#next'), 'a subject is still needed');
       await a.page.check('input[name="track"][value="math"]', { force: true });
       await a.page.click('#next');
-      await at(a.page, 'grade');
-      await a.page.check('input[name="way"][value="know"]', { force: true });
-      await a.page.click('#next');
-      await at(a.page, 'pick');
-      await a.page.check('input[name="grade"] >> nth=2', { force: true });
-      await a.page.click('#next');
-      await at(a.page, 'ready');
-      assert.strictEqual((await a.page.innerText('#next')).trim(), 'Upload my material');
-      await a.page.click('#next');
       await a.page.waitForURL(/\/my-material\?from=start/);
       await a.page.waitForSelector('#u2-after-upload a');
       await a.page.click('#u2-after-upload a');
-      await a.page.waitForSelector('#u2-start');
+      await a.page.waitForURL(/\/dashboard/);
+      assert.deepStrictEqual((await homeWaiting(a.page)).map((x) => x.id), ['math']);
+      await a.page.goto(`${BASE}/start`);
+      await a.page.waitForURL(/\/dashboard/);
+      assert(!/\/start/.test(a.page.url()), 'never back through the flow');
       await a.ctx.close();
-      const c = await invited('cur@example.com');
-      await toHow(c.page);
-      await c.page.check('input[name="how"][value="curriculum"]', { force: true });
-      await c.page.click('#next');
-      await at(c.page, 'learn');
-      await c.page.check('input[name="track"][value="math"]', { force: true });
-      await c.page.click('#next');
-      await at(c.page, 'grade');
-      await c.page.check('input[name="way"][value="know"]', { force: true });
-      await c.page.click('#next');
-      await at(c.page, 'pick');
-      await c.page.check('input[name="grade"] >> nth=2', { force: true });
-      await c.page.click('#next');
-      await at(c.page, 'ready');
-      assert.strictEqual((await c.page.innerText('#next')).trim(), 'Start lesson');
-      await c.ctx.close();
     });
+
+    await t('Beta: signed out mid-flow (a lost session): sign-in with "You were signed out", never the new-account message', async () => {
+      const s = await invited('lost@example.com');
+      await toHow(s.page);
+      await s.page.check('input[name="how"][value="curriculum"]', { force: true });
+      await s.page.click('#next');
+      await at(s.page, 'learn');
+      await s.page.check('input[name="track"][value="math"]', { force: true });
+      await s.ctx.clearCookies(); // the session is gone, as after a restart without a stable secret
+      await s.page.click('#next');
+      await s.page.waitForURL(/\/login\?next=/);
+      assert(/why=signed_out/.test(s.page.url()));
+      assert.strictEqual(decodeURIComponent(new URL(s.page.url()).searchParams.get('next')), '/start#learn');
+      await s.page.waitForSelector('#signed-out');
+      const text = await s.page.innerText('main');
+      assert(/You were signed out\. Sign in to carry on\./.test(text));
+      assert(!/not taking new accounts/i.test(text), 'never the new-account refusal');
+      await s.ctx.close();
+      const h = await invited('lost-home@example.com');
+      await toHow(h.page);
+      await h.page.check('input[name="how"][value="curriculum"]', { force: true });
+      await h.page.click('#next');
+      await at(h.page, 'learn');
+      await h.page.check('input[name="track"][value="math"]', { force: true });
+      await h.page.click('#next');
+      await h.page.waitForURL(/\/dashboard/);
+      await homeWaiting(h.page);
+      await h.page.waitForLoadState('networkidle'); // a response still on its way would set the rolling session cookie again
+      await h.ctx.clearCookies();
+      await h.page.evaluate(() => { fetch('/api/ui2/waiting'); }); // not awaited: the page goes before the call settles, by design
+      await h.page.waitForURL(/\/login\?next=%2Fdashboard/);
+      assert(/You were signed out/.test(await h.page.innerText('main')));
+      await h.ctx.close();
+    });
+
+    if (SHOTS) {
+      // The sheet: the four phone screens side by side, at their real size.
+      const ctx = await b3.newContext({ viewport: { width: 4 * 375 + 5 * 24, height: 812 + 2 * 24 + 40 }, deviceScaleFactor: 1 });
+      const page = await ctx.newPage();
+      const names = [['1-subjects', 'Subjects'], ['2-home', 'Home: two waiting'], ['3-placement', 'Take the placement'], ['4-pick', 'Pick my grade']];
+      const img = (n) => `data:image/png;base64,${fs.readFileSync(path.join(SHOTS, `${n}.png`)).toString('base64')}`;
+      await page.setContent(`<body style="margin:0;padding:24px;display:flex;gap:24px;background:#e9eaee;font:600 15px system-ui">${names.map(([n, l]) => `<figure style="margin:0"><figcaption style="height:30px">${l}</figcaption><img src="${img(n)}" style="width:375px;height:812px;display:block;border-radius:12px;box-shadow:0 1px 4px #0003"></figure>`).join('')}</body>`);
+      await page.screenshot({ path: path.join(SHOTS, 'sheet.png'), fullPage: true });
+      await ctx.close();
+    }
     await b3.close();
     serverBeta.kill();
     await delay(600);
