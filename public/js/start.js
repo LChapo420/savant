@@ -545,7 +545,7 @@
             // Only their own notes, and the account already exists: straight to uploading.
             await api('POST', '/api/ob2/lesson-opened', {}).catch(() => {});
             forget();
-            location.href = '/materials';
+            location.href = '/my-material';
             return new Promise(() => {});
           }
           return go(notesOnly() ? 'save' : 'grade');
@@ -701,7 +701,7 @@
       const extra = [];
       const rest = S.a.tracks.slice(1);
       const e = S.enrollment || {};
-      if (S.a.notes && !isChild()) extra.push(link('/materials', I.notes, 'Upload your notes', 'Turn your files into lessons'));
+      if (S.a.notes && !isChild()) extra.push(link('/my-material', I.notes, 'Upload your notes', 'Turn your files into lessons'));
       rest.forEach((id) => { const t = trackOf(id); if (t) extra.push(link(`/subject-placement?track=${encodeURIComponent(id)}`, I[id] || I.other, `Start ${t.name}`, 'The subject you also picked')); });
       if (e.id) extra.push(link(`/placement?enrollment=${e.id}&retake=1`, I.arrow, 'Skip what you already know', 'A short check inside this grade'));
       if (e.id) extra.push(link('/profile#retention-goals-card', I.calendar, 'How long do you want to remember it?', 'Set to for good. Change it any time.'));

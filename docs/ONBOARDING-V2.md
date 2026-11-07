@@ -47,7 +47,7 @@ Off the path, kept in the data and APIs, so any of it can come back (the screens
 | Reading check offer | `reading-offer.js` on `/onboarding` | `reading_check*` | language level | Link on the last screen, and the dashboard's own offer is unchanged |
 | Retention goal | `/api/retention-goals` (set later, per subject) | `enrollments.retention_goal` | review schedule | New: step 5 sets it, applied when the enrollment exists |
 | Study goal (full, core, test) | `/api/study-goals` | `enrollments.study_goal` | lesson writers | A test answer at step 5 sets `test`, when that goal is switched on. Others stay full |
-| Upload own notes | `/materials` | `materials` | courses | Step 4 option for accounts that may upload. Uploading is after step 9 (section 2) |
+| Upload own notes | `/my-material` | `materials` | courses | Step 4 option for accounts that may upload. Uploading is after step 9 (section 2) |
 | Next study plan | `POST /api/prefs` `next_study` | `users.next_study` | shown in app | Step 10 |
 
 Should be there and was not: why they are learning; a retention goal at the start; a way to try before an account; reminders of any kind. Nothing sends email or push reminders today (`routes/prefs.js`: "It sends nothing to anyone"), so step 10 stores the plan and offers a calendar file.
@@ -55,7 +55,7 @@ Should be there and was not: why they are learning; a retention goal at the star
 ## 2. Decisions in the order
 
 1. **Under the consent age, the parent's email comes before the test**, in the agreement's place. The law and the code: nothing past the age screen opens for a child until a parent's email is on file (`js/onboarding.js ageStep`), and the test is now the first thing stored about them. Username and password stay at the save step on the public flow. No child email is ever asked for.
-2. **Own notes only: no grade or first lesson.** Public: save, then upload. Beta: straight to `/materials`. Child accounts don't see this option (`CHILD_MEDIA_UPLOAD`).
+2. **Own notes only: no grade or first lesson.** Public: save, then upload. Beta: straight to `/my-material`. Child accounts don't see this option (`CHILD_MEDIA_UPLOAD`).
 3. **The in-grade placement comes after the first lesson, as an offer, rather than before it.** The learner starts at the first teaching level of the grade (level 10 in most grades; levels 1 to 9 are practice, and nothing is marked cleared on the way, as with a placement).
 4. **Only the Quick walk runs inside the flow.** Balanced and Accurate remain on `/subject-placement`.
 5. **Several subjects: the first goes straight on.** The others are links on the first-lesson screen (beta) or the last screen (public). Asking a grade for each in turn would be a longer flow; a decision for the owner.

@@ -524,7 +524,7 @@ async function betaEdges(browser, opts) {
   // Only their own notes: there is no save step, straight to uploading.
   await signed.locator('input[name="notes"]').check();
   await next(signed);
-  await signed.waitForURL('**/materials*', { timeout: 15000 });
+  await signed.waitForURL('**/my-material*', { timeout: 15000 });
   await signed.goto(`${BASE}/start`);
   await signed.waitForFunction(() => !location.pathname.startsWith('/start'), null, { timeout: 15000 });
   results.push(`${signed.persona}: no guest row, closed screens, resume mid-test, stop keeps the answers, notes go straight to upload, no loop back`);
@@ -810,7 +810,7 @@ async function notes(browser, opts) {
   await page.fill('input[name="password"]', 'longenough1');
   await next(page);
   await at(page, 'done');
-  assert.ok(await page.locator('a.opt[href="/materials"]').count(), 'upload is offered after saving');
+  assert.ok(await page.locator('a.opt[href="/my-material"]').count(), 'upload is offered after saving');
   assert.ok(await page.locator('a.opt[href^="/baseline"]').count(), 'and the test they skipped');
   results.push(`${page.persona}: own notes go to save, then upload`);
   await page.context().close();
