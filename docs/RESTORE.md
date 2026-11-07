@@ -17,7 +17,7 @@ A set is `db-<stamp>.json.gz` (or `.sqlite.gz`), `db-<stamp>.extra.<name>.gz` fo
 
 Not in a set, and needed on a new server:
 - **`.env`.** All 78 variable names on the server also exist in the PC's `.env`; the values were not compared. A lost `SESSION_SECRET` only signs people out.
-- **`data/*.csv`, `.xlsx`, `data/models/`.** Not in git. The 11 CSV, xlsx and holdout files match the PC's live folder by checksum (measured). `data/models` was not compared.
+- **`data/*.csv`, `.xlsx`, `data/models/`.** Not in git. The 11 CSV, xlsx and holdout files and 7 of 8 model files match the PC's live folder by checksum (measured). The eighth, `models/tesseract/eng.traineddata` (OCR), is only on the server: get it again from the tesseract project or copy it now.
 - **`/etc/systemd/system/savant.service.d/onboarding.conf`:** `ONBOARDING_V2=on`, `COLD_FIRST_BLOCK=on`. They aren't in `.env`.
 - **The code** (git), `/srv/wiki` (rebuildable, 111 GB), `data/cost-tracker/` (logs).
 - **`data/sessions.sqlite`.** Without it learners sign in again. Nothing else is lost.
