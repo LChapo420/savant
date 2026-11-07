@@ -64,7 +64,7 @@ App.mount(async () => {
     root.innerHTML = `<p class="small"><a href="/my-material">&larr; My material</a> · <a href="/my-material-pack?id=${encodeURIComponent(id)}">Study pack</a></p>
       <h1>Flashcards</h1>
       <p class="small muted">${deck.total} cards, ${deck.due_count} due. Cards are timed to your forgetting curve, the same way the learning path schedules its skills. Cards and edits stay private to you and are deleted with the material.</p>
-      <div role="tablist" style="display:flex;gap:8px;margin:12px 0">
+      <div role="tablist" style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0">
         <button class="btn btn-sm${mode === 'review' ? ' btn-primary' : ''}" type="button" data-mode="review">Review</button>
         <button class="btn btn-sm${mode === 'deck' ? ' btn-primary' : ''}" type="button" data-mode="deck">All cards</button>
         <button class="btn btn-sm" type="button" data-edit="new">Add a card</button>

@@ -28,6 +28,9 @@ function fake(a) {
   if (/^material_factcheck/.test(a.task)) return { verdicts: [...String(a.user).split('SENTENCES:\n')[1].matchAll(/^(\d+)\. (.*)$/gm)].map((m) => ({ n: Number(m[1]), verdict: 'supported', quote: m[2] })) };
   if (a.task === 'material_notes') return { sections: [{ heading: 'Main points', bullets: ss.slice(0, 5).map((s) => ({ text: s, passage_id: first.id, quote: first.text.slice(0, 60) })) }] };
   if (a.task === 'material_pack') return { summary: [ss.slice(0, 2).join(' ')], flashcards: ss.slice(0, 5).map((s, i) => ({ front: `Card ${i + 1}`, back: s, passage_id: first.id, quote: first.text.slice(0, 60) })), questions: ss.slice(0, 6).map((s, i) => ({ for: i % 2 ? 'quiz' : 'test', type: 'multiple_choice', prompt: `Which is from the material (${i + 1})?`, choices: [s.slice(0, 150), `No ${i}`, `Not ${i}`], answer_index: 0, explanation: s, passage_id: first.id, quote: first.text.slice(0, 60) })) };
+  if (a.task === 'material_part_change') return { pieces: [...a.user.split('What the learner asked for')[0].matchAll(/^(\d+)\. (.*)$/gm)].map((m) => m[2].replace(/\bthe\b/, 'that')) };
+  if (a.task === 'material_part_example') return { text: 'Say two friends share a job: each does part of it, in the order the text gives.' };
+  if (a.task === 'part_gate_a' || a.task === 'part_gate_b') return /POINTS:/.test(a.user) ? { verdicts: [...a.user.split('REWORDED TEXT:')[0].matchAll(/^(\d+)\. /gm)].map((m) => ({ n: Number(m[1]), stated: true })) } : { wrong: [], other: [] };
   if (a.task === 'material_podcast') return { title: 'Episode', turns: ss.slice(0, 8).map((s, i) => ({ host: i % 2 ? 'B' : 'A', text: s })), checkins: [] };
   return {};
 }
