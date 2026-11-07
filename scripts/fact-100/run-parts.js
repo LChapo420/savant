@@ -16,6 +16,8 @@ const D = require('../../services/fact-dictionary');
 
 const [, , READERS = 'ds41_coral,glm_flash_munito', PAR = '3'] = process.argv;
 const readers = READERS.split(',');
+const GLM_VIA = process.env.GLM_VIA || 'glm_flash_munito'; // the same model on another provider, when Munito's daily free limit is reached
+const viaOf = (r) => (r === 'glm_flash_munito' ? GLM_VIA : r);
 const RULERS = ['ds41_coral', 'glm_flash_munito', 'grok43'];
 const OUT = L.path.join(C.RAW, 'parts.jsonl');
 const HUNT = `${G.HUNT_SYSTEM}\n\nThis read covers one part of the lesson. Earlier parts are given as context under EARLIER; check only the part under THIS PART, and report as block N.`;
@@ -55,7 +57,7 @@ const renderPart = (lv, index) => {
     let cost = 0; const t0 = Date.now();
     try {
       const flags = [];
-      const reads = await Promise.all(readers.map(async (r) => { const x = await J.callModel(r, { system: HUNT, user, schema: HUNT_SCHEMA, schemaName: 'submit_errors', maxTokens: 4000 }); cost += x.cost || 0; return { r, errors: (x.data && x.data.errors) || [] }; }));
+      const reads = await Promise.all(readers.map(async (r) => { const x = await J.callModel(viaOf(r), { system: HUNT, user, schema: HUNT_SCHEMA, schemaName: 'submit_errors', maxTokens: 4000 }); cost += x.cost || 0; return { r, errors: (x.data && x.data.errors) || [] }; }));
       for (const { r, errors } of reads) {
         for (const e of errors) {
           const q = words(e.quote);
@@ -69,7 +71,7 @@ const renderPart = (lv, index) => {
         const list = flags.map((f, i) => `FLAG ${i} at ${f.where}: "${f.claim.slice(0, 300)}": ${f.why.slice(0, 300)} ${f.truth ? `(suggested truth: ${f.truth.slice(0, 200)})` : ''}`).join('\n');
         await Promise.all(RULERS.map(async (ruler) => {
           try {
-            const r = await J.callModel(ruler, { system: G.DECIDE_SYSTEM, user: `${user}\n\nFLAGS\n${list}`, schema: DECIDE_SCHEMA, schemaName: 'submit_rulings', maxTokens: 3000 });
+            const r = await J.callModel(viaOf(ruler), { system: G.DECIDE_SYSTEM, user: `${user}\n\nFLAGS\n${list}`, schema: DECIDE_SCHEMA, schemaName: 'submit_rulings', maxTokens: 3000 });
             cost += r.cost || 0;
             (r.data.rulings || []).forEach((x, i) => { const k = Number.isInteger(x.flag) ? x.flag : i; if (flags[k]) flags[k].rulings[ruler] = !!x.real; });
           } catch (e) { /* a ruler that cannot answer does not count either way */ }
