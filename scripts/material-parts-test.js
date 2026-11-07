@@ -9,7 +9,7 @@ process.env.DB_FILE = path.join(os.tmpdir(), `material-parts-test-${process.pid}
 try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none */ }
 fs.writeFileSync(process.env.DB_FILE, JSON.stringify({}));
 for (const name of Object.keys(process.env)) if (/(_API_KEY|_TOKEN)$/.test(name)) process.env[name] = '';
-process.env.UPLOAD_PARTS = 'on'; process.env.UPLOAD_PARTS_FOLLOW = 'on'; process.env.UPLOAD_OPTIMIZE = 'on'; process.env.UPLOAD_GOALS = 'on'; process.env.UPLOAD_FACTCHECK_QUOTES = 'off'; process.env.UPLOAD_FACTCHECK_READERS = '1';
+process.env.UPLOAD_PARTS = 'on'; process.env.UPLOAD_PARTS_FOLLOW = 'on'; process.env.UPLOAD_OPTIMIZE = 'on'; process.env.UPLOAD_GOALS = 'on'; process.env.UPLOAD_GOAL_CORE = 'on'; process.env.UPLOAD_FACTCHECK_QUOTES = 'off'; process.env.UPLOAD_FACTCHECK_READERS = '1';
 process.env.UPLOAD_AUTOBUILD = 'off'; process.env.FACT_CHECK_ALL = '0';
 delete process.env.PART_MODIFY;
 
@@ -245,7 +245,14 @@ function model({ rewrite = plain, facts = 'supported', example = 'Say two friend
 
   console.log('goals: nothing to rebuild, and switching back is exact');
   const fullLesson = study.lesson(uid, mid, 's1').skill.lesson.paragraphs;
-  check('a goal is open on an upload with UPLOAD_GOALS on', goals.save(uid, 'material', mid, { goal: 'core' }).goal.goal === 'core');
+  process.env.UPLOAD_GOAL_CORE = 'off';
+  check('core is shut on an upload without UPLOAD_GOAL_CORE, even with UPLOAD_GOALS and STUDY_GOAL_CORE on', (() => { process.env.STUDY_GOAL_CORE = 'on'; const shut = !goals.goalOn('core', 'material') && !goals.choices('material').includes('core') && !!goals.normalize({ goal: 'core' }, null, 'material').error; delete process.env.STUDY_GOAL_CORE; return shut; })());
+  check('test stays open on an upload under UPLOAD_GOALS alone', goals.goalOn('test', 'material') && goals.choices('material').join() === 'full,test');
+  check('a core goal stored on an upload reads as full depth while the switch is off', goals.effective({ goal: 'core', restored: [] }, 'material').goal === 'full');
+  process.env.UPLOAD_GOAL_CORE = 'on'; process.env.UPLOAD_GOALS = 'off';
+  check('UPLOAD_GOAL_CORE opens core alone, not test', goals.goalOn('core', 'material') && !goals.goalOn('test', 'material'));
+  process.env.UPLOAD_GOALS = 'on';
+  check('core opens on an upload with UPLOAD_GOAL_CORE on', goals.save(uid, 'material', mid, { goal: 'core' }).goal.goal === 'core');
   const coreLesson = study.lesson(uid, mid, 's1').skill.lesson;
   check('core changes what the lesson says, with no build', !same(coreLesson.paragraphs, fullLesson), coreLesson);
   const coreQ = study.internals.loadCourse(uid, mid).skills[0];
@@ -308,7 +315,7 @@ function model({ rewrite = plain, facts = 'supported', example = 'Say two friend
   check('deleting a material removes its changes', !db.find(P.COLLECTION, (x) => x.user_id === follower && x.material_id === fm).length);
 
   console.log('with the switches off, everything is as it was');
-  process.env.UPLOAD_PARTS = 'off'; process.env.UPLOAD_OPTIMIZE = 'off'; process.env.UPLOAD_GOALS = 'off'; process.env.UPLOAD_PARTS_FOLLOW = 'off';
+  process.env.UPLOAD_PARTS = 'off'; process.env.UPLOAD_OPTIMIZE = 'off'; process.env.UPLOAD_GOALS = 'off'; process.env.UPLOAD_GOAL_CORE = 'off'; process.env.UPLOAD_PARTS_FOLLOW = 'off';
   const c = require('../services/course-builder').get(uid, mid);
   check('the stored course is returned, the same object', P.viewCourse(uid, c) === c);
   check('no goal is open', goals.effective({ goal: 'core' }, 'material').goal === 'full');

@@ -27,7 +27,7 @@ if (MODE === 'real') {
   process.env.FACT_CHECK_ALL = '0'; process.env.UPLOAD_FACTCHECK = 'on'; process.env.UPLOAD_FACTCHECK_QUOTES = 'off'; process.env.UPLOAD_FACTCHECK_READERS = '1';
 }
 if (MODE !== 'report') {
-  process.env.UPLOAD_PARTS = 'on'; process.env.UPLOAD_PARTS_FOLLOW = 'on'; process.env.UPLOAD_OPTIMIZE = 'on'; process.env.UPLOAD_GOALS = 'on';
+  process.env.UPLOAD_PARTS = 'on'; process.env.UPLOAD_PARTS_FOLLOW = 'on'; process.env.UPLOAD_OPTIMIZE = 'on'; process.env.UPLOAD_GOALS = 'on'; process.env.UPLOAD_GOAL_CORE = 'on';
   process.env.UPLOAD_OWN_BUDGET = process.env.UPLOAD_OWN_BUDGET || 'on';
   process.env.UPLOAD_PARTS_FOLLOW_BG = 'off'; // the background rewrite is its own test (material-parts-test, learners gate): here each read must show only the change just asked for
   process.env.DB_FILE = path.join(os.tmpdir(), `uploads-beta-e2e-${process.pid}.json`);

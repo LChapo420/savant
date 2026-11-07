@@ -14,7 +14,7 @@ for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|ANTHROPIC|OPENROU
 process.env.DB_FILE = path.join(os.tmpdir(), `study-goal-test-${process.pid}.json`);
 
 // Core is off by default (the gate has not passed); this test exercises it with the switch on, and checks the off state below.
-process.env.STUDY_GOAL_CORE = 'on'; process.env.STUDY_GOAL_TEST = 'on';
+process.env.STUDY_GOAL_CORE = 'on'; process.env.STUDY_GOAL_TEST = 'on'; process.env.UPLOAD_GOAL_CORE = 'on';
 const db = require('../config/db');
 const curriculum = require('../config/curriculum');
 const coverage = require('../services/coverage');

@@ -51,12 +51,18 @@ const coreEnabled = () => enabled() && String(process.env.STUDY_GOAL_CORE || 'of
 /** Same for Ready for a test: STUDY_GOAL_TEST=on (off by default until its gate passes). */
 const testEnabled = () => enabled() && String(process.env.STUDY_GOAL_TEST || 'off').toLowerCase() === 'on';
 /**
- * Uploaded courses have their own switch (uploads-beta, 7 Nov 2026): with UPLOAD_GOALS=on the two goals are open for a material through services/material-optimize.js, whose gate is its own
+ * Uploaded courses have their own switches (uploads-beta, 7 Nov 2026): with UPLOAD_GOALS=on Ready for a test is open for a material through services/material-optimize.js, whose gate is its own
  * (docs/UPLOADS-ANY-FORMAT.md section 18), while a built-in subject stays behind STUDY_GOAL_CORE and STUDY_GOAL_TEST.
+ * Core parts on an upload needs UPLOAD_GOAL_CORE=on and nothing else opens it (owner, 7 Nov 2026: learning less doesn't count). Off, a stored 'core' on a material behaves as full depth.
  */
 const uploadsOpen = () => enabled() && String(process.env.UPLOAD_GOALS || 'off').toLowerCase() === 'on';
+const uploadsCoreOpen = () => enabled() && String(process.env.UPLOAD_GOAL_CORE || 'off').toLowerCase() === 'on';
 /** Is this goal available (full always is)? kind: 'material' for an uploaded course. */
-const goalOn = (id, kind = null) => id === 'full' || (id === 'core' && coreEnabled()) || (id === 'test' && testEnabled()) || (kind === 'material' && (id === 'core' || id === 'test') && uploadsOpen());
+const goalOn = (id, kind = null) => {
+  if (id === 'full') return true;
+  if (id === 'core') return kind === 'material' ? uploadsCoreOpen() : coreEnabled();
+  return id === 'test' && (testEnabled() || (kind === 'material' && uploadsOpen()));
+};
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
 /** A stored goal, or an empty one, as { goal, restored[] }. A goal this build does not know is full. */
@@ -283,6 +289,6 @@ function tutorLines(userId) {
 }
 
 module.exports = {
-  GOALS, CHOICES, choices, coreEnabled, testEnabled, uploadsOpen, goalOn, DEFAULT_GOAL, CORE_WORD_SHARE, GATE_MIN, enabled, effective, normalize, applyToSpec, linesFor,
+  GOALS, CHOICES, choices, coreEnabled, testEnabled, uploadsOpen, uploadsCoreOpen, goalOn, DEFAULT_GOAL, CORE_WORD_SHARE, GATE_MIN, enabled, effective, normalize, applyToSpec, linesFor,
   coreSetAsideLevels, coreSetAsideSkills, setAsideFor, stepOver, setAsideSkills, goalFor, describe, save, listFor, tutorLines,
 };

@@ -10,7 +10,7 @@ const fs = require('fs'); const path = require('path');
 const L = require('./lib/uploads-beta-lib');
 
 L.setup('learners');
-process.env.UPLOAD_PARTS = 'on'; process.env.UPLOAD_PARTS_FOLLOW = 'on'; process.env.UPLOAD_OPTIMIZE = 'on'; process.env.UPLOAD_GOALS = 'on'; process.env.UPLOAD_AUTOBUILD = 'off'; process.env.FACT_CHECK_ALL = '0';
+process.env.UPLOAD_PARTS = 'on'; process.env.UPLOAD_PARTS_FOLLOW = 'on'; process.env.UPLOAD_OPTIMIZE = 'on'; process.env.UPLOAD_GOALS = 'on'; process.env.UPLOAD_GOAL_CORE = 'on'; process.env.UPLOAD_AUTOBUILD = 'off'; process.env.FACT_CHECK_ALL = '0';
 const db = require('../config/db');
 const materials = require('../services/materials');
 const K = require('../services/material-keypoints');
