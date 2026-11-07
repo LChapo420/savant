@@ -185,6 +185,7 @@ function model({ rewrite = plain, facts = 'supported', example = 'Say two friend
   check('a changed number is refused', !r.changed && stored() === was, r);
   r = await P.change(uid, mid, 'lesson:s1', 'simpler', { llm: model({ rewrite: (x) => x.replace('Earth', 'Mars') }) });
   check('a new name is refused', !r.changed && stored() === was, r);
+  check('a sentence of the writer\'s own is caught by rule', P.leafProblems('The Moon causes most of the tide.', 'The Moon makes most of the tide. There is no rush.', ['simpler']).some((x) => /adds nothing/.test(x)));
   r = await P.change(uid, mid, 'lesson:s1', 'simpler', { llm: model({ facts: 'not_in_source' }) });
   check('what the material does not back is refused, and the learner is told', !r.changed && stored() === was && /could not be made|could not run/.test(r.message), r);
   r = await P.change(uid, mid, 'lesson:s1', 'simpler', { llm: model({ rewrite: () => 'Tides move.' }) });

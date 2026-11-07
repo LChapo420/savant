@@ -22,7 +22,13 @@ const SOURCES = {
 const askG = async (a) => { for (let i = 0; i < 4; i += 1) { try { const r = await require('../services/providers/grokified').grokified.structured({ model: 'grok-4.3', ...a, maxTokens: 5000, timeoutMs: 180000 }); if (r && r.data) return r.data; } catch (e) { await new Promise((res) => setTimeout(res, 2000 * (i + 1))); } } return null; };
 const ask = (fam, a) => (fam === 'G' ? askG(a) : J.askJ(fam, { ...a, maxTokens: 5000 }));
 const flat = (json) => { const out = []; const walk = (x) => { if (typeof x === 'string') out.push(x); else if (Array.isArray(x)) x.forEach(walk); }; try { walk(JSON.parse(json)); } catch { out.push(String(json)); } return out; };
-const made = (t) => /^(?:Made-up example|A comparison|Worked example, made up)/.test(t);
+const LABELS = /(?:Made-up example, not from your material:|A comparison, not from your material:|Worked example, made up and not from your material:)[\s\S]*$/;
+/** What says something as coming from the material: not the wrong choices of a question (wrong on purpose), not a labelled made-up line, not a form line with no claim of its own (a course-structure line, "Try first"). */
+function claims(part, json) {
+  let v; try { v = JSON.parse(json); } catch { return [String(json)]; }
+  const list = (part === 'question' || part === 'pack question') && Array.isArray(v) ? [v[0], v[2]] : flat(json);
+  return list.filter((x) => typeof x === 'string').map((x) => x.replace(LABELS, '').trim()).filter((x) => x && !/^(?:Why it matters: "|Try first:|Stretch:)/.test(x));
+}
 
 (async () => {
   const store = L.load(path.join(L.OUT_DIR, 'e2e-real.json'), { rows: [] });
@@ -33,8 +39,8 @@ const made = (t) => /^(?:Made-up example|A comparison|Worked example, made up)/.
     if (out.rows.some((x) => x.case === c.case && x.ref === c.ref && x.change === c.change)) return;
     const source = (SOURCES[c.case] || (() => ''))();
     const before = flat(c.before); const after = flat(c.after);
-    const text = after.filter((t) => !made(t)).join('\n');
-    const row = { case: c.case, part: c.part, ref: c.ref, change: c.change, words_before: L.words(before.join(' ')), words_after: L.words(after.join(' ')), labelled: after.some(made) };
+    const text = claims(c.part, c.after).join('\n');
+    const row = { case: c.case, part: c.part, ref: c.ref, change: c.change, words_before: L.words(before.join(' ')), words_after: L.words(after.join(' ')), labelled: LABELS.test(after.join(' ')) };
     const hit = K.extract(source, { plain: source }).key_points;
     row.lost_points = P.lostPoints(before.join(' '), after.join(' '), hit, 0.3).map((k) => k.text.slice(0, 120));
     row.lost_stressed = P.lostPoints(before.join(' '), after.join(' '), hit.filter((k) => k.weight >= 2), 0.3).length;
