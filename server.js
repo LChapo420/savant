@@ -291,6 +291,9 @@ app.get(['/dashboard', '/dashboard.html', '/onboarding', '/onboarding.html'], (r
   return res.redirect(302, `/start${at >= 0 ? req.originalUrl.slice(at) : ''}`);
 });
 
+// The new app structure (services/ui-v2.js, docs/UI-V2.md). Off by default, and off it does nothing.
+app.use(require('./services/ui-v2').middleware);
+
 app.use(express.static(path.join(__dirname, 'public'), {
   extensions: ['html'],
   maxAge: isProduction ? '1h' : 0,

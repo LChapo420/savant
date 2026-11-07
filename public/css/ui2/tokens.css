@@ -1,0 +1,166 @@
+/* The new app's colours and shapes (docs/UI-V2.md). The same Sunny set as the onboarding at /start (css/screens/start.css), so going from one to the other feels like one product.
+ *
+ * Every colour on an app screen comes from here, so a learner can later pick all their own (the owner's wish; the picker comes last): css/ui2/app.css has no colour of its own.
+ * The first block is the new tokens. The blocks under it point the older component tokens (css/style.css, css/styles/*) at them, so pages not yet rearranged get the same colours.
+ * :root[data-ui2][data-style] outranks the style files' :root[data-style] whatever the load order. data-mode is set by js/style-boot.js in every case: the sun/moon choice, or the system's.
+ *
+ * Contrast (WCAG AA, scripts/ui-v2-test.js checks these): body text pairs at least 4.5:1, the button's text 8:1, bars and selected borders at least 3:1, both modes.
+ */
+:root[data-ui2][data-style], :root[data-ui2] {
+  color-scheme: light;
+  --page: #fffbf3;
+  --card: #ffffff;
+  --well: #fbefd9;
+  --well-2: #f4e5ca;
+  --line: #eadfca;
+  --line-strong: #d9c9ac;
+  --control: #8d7a60;
+  --ink: #3b2410;
+  --ink-2: #5c4631;
+  --ink-3: #6b5540;
+  --action: #f6b93b;
+  --action-hover: #f9c550;
+  --action-edge: #c98a14;
+  --on-action: #3b2410;
+  --sel: #fff1cf;
+  --sel-line: #a85f10;
+  --bar-track: #f1e6d2;
+  --bar-fill: #a85f10;
+  --good: #22663f;
+  --good-wash: #e8f4ec;
+  --bad: #b3261e;
+  --bad-wash: #fdecea;
+  --focus: #7a4a12;
+  --scrim: rgba(59, 36, 16, .32);
+  --on-mark: #ffffff;
+
+  /* the older tokens */
+  --card-bg: var(--card);
+  --card-line: var(--line);
+  --field-bg: var(--card);
+  --nav-bg: var(--page);
+  --action-tint: var(--sel);
+  --action-mid: var(--line-strong);
+  --action-ink: var(--ink);
+  --reward: var(--action);
+  --reward-edge: var(--action-edge);
+  --reward-tint: var(--sel);
+  --reward-line: var(--line-strong);
+  --on-reward: var(--on-action);
+  --reward-ink: var(--ink);
+  --flame: var(--bar-fill);
+  --flame-core: var(--action);
+  --correct: var(--good);
+  --correct-wash: var(--good-wash);
+  --correct-edge: var(--good);
+  --incorrect: var(--bad);
+  --incorrect-wash: var(--bad-wash);
+  --incorrect-edge: var(--bad);
+  --warn: var(--bar-fill);
+  --off-bg: var(--well-2);
+  --off-ink: var(--ink-3);
+  --off-edge: var(--line-strong);
+  --focus-ring: var(--line-strong);
+  --chip-bg: var(--well);
+  --chip-ink: var(--ink-2);
+  --chip-line: transparent;
+  --btn2-bg: var(--card);
+  --btn2-line: var(--line-strong);
+  --btn2-ink: var(--ink);
+  --sel-bg: var(--sel);
+  --sel-edge: var(--sel-line);
+  --sel-ink: var(--ink);
+  --sel-key-bg: var(--sel-line);
+  --sel-key-ink: var(--on-mark);
+  --hl-line: var(--line-strong);
+  --bar-bg: var(--bar-track);
+  --bar-fill-2: var(--bar-fill);
+  --bar-shine: transparent;
+  --tab-on-bg: var(--sel);
+  --tab-on-ink: var(--ink);
+  --tab-on-line: var(--line-strong);
+  --brand-color: var(--ink);
+  --hero-bg: var(--card);
+  --ring-track: var(--bar-track);
+  --subj: var(--ink);
+  --subj-wash: var(--well);
+  --subj-line: var(--line);
+  --shadow-lg: 0 2px 0 var(--scrim), 0 12px 28px -8px var(--scrim);
+
+  /* type and shape, as on /start */
+  --font: "Atkinson Hyperlegible Next", ui-sans-serif, "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --display: var(--font);
+  --read-font: var(--font);
+  --num: "Atkinson Hyperlegible Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --w-body: 400;
+  --w-strong: 700;
+  --w-head: 700;
+  --w-btn: 700;
+  --w-label: 700;
+  --tracking-head: -0.005em;
+  --eyebrow-font: var(--font);
+  --eyebrow-size: 0.84375rem;
+  --eyebrow-weight: 700;
+  --icon-sw: 2;
+  --t-meta: 0.84375rem;
+  --t-ui-s: 0.90625rem;
+  --t-ui: 1rem;
+  --t-read: 1rem;
+  --t-stem: 1.1875rem;
+  --t-h3: 1.125rem;
+  --t-h2: 1.5rem;
+  --t-h1: 1.875rem;
+  --r-card: 16px;
+  --r-btn: 16px;
+  --r-input: 14px;
+  --r-choice: 14px;
+  --r-chip: 10px;
+  --r-bar: 3px;
+  --r-icon: 12px;
+  --bw-card: 1px;
+  --bw-card-edge: 1px;
+  --bw-control: 1.5px;
+  --bw-nav: 1px;
+  --btn1-bw: 0px;
+  --btn1-edge-w: 3px;
+  --btn2-bw: 1.5px;
+  --btn2-edge-w: 1.5px;
+  --press: 2px;
+  --btn-h: 48px;
+  --btn-h-lg: 54px;
+  --btn-h-sm: 42px;
+  --btn-size: 1rem;
+  --btn-size-lg: 1.0625rem;
+  --choice-h: 48px;
+  --key-size: 26px;
+  --bar-h: 6px;
+  --bar-h-sm: 6px;
+}
+:root[data-ui2][data-mode="dark"][data-style], :root[data-ui2][data-mode="dark"] {
+  color-scheme: dark;
+  --page: #1c1610;
+  --card: #2a2219;
+  --well: #3a3024;
+  --well-2: #43372a;
+  --line: #43372a;
+  --line-strong: #5e4f3d;
+  --control: #8f7d65;
+  --ink: #fff6e6;
+  --ink-2: #d8c9b2;
+  --ink-3: #b9a88f;
+  --action: #f6b93b;
+  --action-hover: #f9c550;
+  --action-edge: #a8761a;
+  --on-action: #2a1c12;
+  --sel: #3d2c12;
+  --sel-line: #f6b93b;
+  --bar-track: #3a3024;
+  --bar-fill: #f6b93b;
+  --good: #7fd3a1;
+  --good-wash: #1c3026;
+  --bad: #ff9c92;
+  --bad-wash: #3d1f1b;
+  --focus: #f6b93b;
+  --scrim: rgba(0, 0, 0, .5);
+  --on-mark: #2a1c12;
+}
