@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * The staged beta-launch wiring for server.js, config/db.js and package.json
- * (curriculum-build/BETA-LAUNCH-KIT.md). STAGED: nothing here has been applied.
+ * (curriculum-build/BETA-LAUNCH-KIT.md). STAGED: deploy/beta/release.sh applies it to a release.
  *
  *   node curriculum-build/staged/beta-launch/apply.js --check
  *        say whether every anchor is still found in the current files (they are
@@ -15,16 +15,17 @@
  * the server.js of the day. server.js.patch and config-db.js.patch beside this
  * file are the same change as plain diffs, for reading.
  *
- * Every change is off by default or only acts in production:
- *   - error log + process hooks (always on once applied; writes logs/errors.jsonl)
- *   - mail provider from MAIL_PROVIDER (unset = today's dev outbox)
+ * What is left staged, all of it acting only where it is applied:
  *   - production refuses to start without MAIL_PROVIDER and an https APP_ORIGIN
- *   - SQLite session store (default in production; SESSION_STORE=memory to opt out)
- *   - the beta gate (BETA_GATE=invite to turn on)
- *   - /healthz and /api/ops/* (new paths)
- *   - /api/health shows providers to admins only, in production
- *   - a body the parser refuses is a 400/413, not a 500
+ *     (kept out of server.js: a server deployed without this kit, as the live beta
+ *     is, must not stop starting because mail is not set up yet)
  *   - DB_DRIVER=sqlite hands config/db.js to config/db-sqlite.js (unset = JSON)
+ *   - the test chain and npm scripts in package.json
+ *
+ * The rest of the first kit now lives in server.js itself and is no longer patched:
+ * the error log, the mail provider, the SQLite session store, the beta gate, /healthz
+ * and /api/ops, /api/health for admins only, a refused body as a 400 or 413. Patching
+ * those again would declare them twice and the server would not start.
  */
 const fs = require('fs');
 const path = require('path');
@@ -42,16 +43,6 @@ function replacer(text) {
 function patchServer(original) {
   const crlf = original.includes('\r\n');
   const r = replacer(toLF(original));
-  r.rep("require('dotenv').config();\n", `require('dotenv').config();
-
-// Beta launch (curriculum-build/BETA-LAUNCH-KIT.md): errors go to a local,
-// rotated log (no third-party tracker), and the real mail provider is plugged
-// into utils/mailer.js when MAIL_PROVIDER is set.
-const errorLog = require('./services/error-log');
-errorLog.install();
-const mailProvider = require('./utils/mail-transports').installFromEnv();
-`, 'dotenv');
-
   r.rep("const isProduction = process.env.NODE_ENV === 'production';\n", `const isProduction = process.env.NODE_ENV === 'production';
 
 // Production refuses to start without what a parent or tester would otherwise
@@ -68,48 +59,6 @@ if (isProduction) {
   }
 }
 `, 'isProduction');
-
-  r.rep(`app.use(session({
-  name: 'polymath.sid',`, `// Sessions survive a restart and do not grow in memory (express-session's
-// MemoryStore does both). SESSION_STORE=memory keeps the old behaviour.
-const sessionStore = (process.env.SESSION_STORE || (isProduction ? 'sqlite' : 'memory')) === 'sqlite'
-  ? new (require('./services/session-store').SqliteSessionStore)()
-  : undefined;
-app.use(session({
-  name: 'polymath.sid',
-  store: sessionStore,`, 'session');
-
-  r.rep('app.use(attachUser);\n', `app.use(attachUser);
-// The private beta: with BETA_GATE=invite only an approved tester's invite code
-// makes an account (middleware/beta-gate.js). Off by default.
-app.use(require('./middleware/beta-gate').betaGate({ db: require('./config/db'), isAdmin: require('./middleware/auth').isAdmin }));
-`, 'attachUser');
-
-  r.rep(`app.get('/api/health', (req, res) => {
-  res.json({`, `// /healthz (public, ok or not) and /api/ops/* (admins): routes/ops.js.
-app.use(require('./routes/ops').router);
-
-app.get('/api/health', (req, res) => {
-  // In production the provider list (and free memory) is for admins only.
-  if (isProduction && !require('./middleware/auth').isAdmin(req.user)) return res.json({ ok: true });
-  res.json({`, 'health');
-
-  r.rep(`// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  console.error('unhandled:', err);`, `app.use(errorLog.expressHandler);
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  // A body the parser refused (broken JSON, over the limit) is a 400 or 413 for
-  // the client to fix, not a 500 "something went wrong on our side".
-  const status = Number(err && (err.status || err.statusCode));
-  if (status >= 400 && status < 500 && !res.headersSent) {
-    return res.status(status).json({ error: status === 413 ? 'That request is too large.' : 'That request could not be read.' });
-  }
-  console.error('unhandled:', err);`, 'error handler');
-
-  r.rep('  console.log(`Polymath listening on http://localhost:${PORT}`);',
-    "  console.log(`Polymath listening on http://localhost:${PORT}`);\n  console.log(`  mail: ${mailProvider || 'dev outbox (no MAIL_PROVIDER)'}; sessions: ${sessionStore ? 'sqlite' : 'memory'}; beta gate: ${process.env.BETA_GATE || 'off'}`);",
-    'listening line');
   const out = r.get();
   return { text: crlf ? out.split(NL).join('\r\n') : out, missing: r.missing };
 }
@@ -164,7 +113,7 @@ if (require.main === module) {
   const results = files.map(([rel, fn]) => {
     const file = path.join(ROOT, rel);
     const original = fs.readFileSync(file, 'utf8');
-    const already = rel === 'server.js' ? original.includes("require('./utils/mail-transports')")
+    const already = rel === 'server.js' ? original.includes('Refusing to start in production:')
       : rel.endsWith('db.js') ? original.includes("require('./db-sqlite')") : original.includes('beta-launch-test.js');
     const { text, missing } = fn(original);
     if (already) console.log(`${rel}: already patched`);

@@ -1,8 +1,7 @@
 /**
  * Operations endpoints for the hosted beta.
  *
- * STAGED (2026-10-24, curriculum-build/BETA-LAUNCH-KIT.md section 2). Mounted
- * only by the server.js patch in curriculum-build/staged/beta-launch/.
+ * Built for curriculum-build/BETA-LAUNCH-KIT.md section 2; server.js mounts it.
  *
  *   GET /healthz          public, for the host's health check and an uptime
  *                         pinger: 200 { ok: true } or 503 { ok: false }, and

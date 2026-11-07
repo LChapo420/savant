@@ -1,9 +1,8 @@
 /**
  * Real email delivery for utils/mailer.js, over the providers' HTTP APIs.
  *
- * STAGED (2026-10-24, curriculum-build/BETA-LAUNCH-KIT.md section 3). Nothing
- * loads this file until server.js calls `installFromEnv()` at start-up (the
- * one-line wiring is in curriculum-build/staged/beta-launch/server.js.patch).
+ * Built for curriculum-build/BETA-LAUNCH-KIT.md section 3. server.js calls
+ * `installFromEnv()` at start-up; with MAIL_PROVIDER unset that does nothing.
  *
  * Two providers, both free tiers checked on 2026-10-24:
  *   resend  POST https://api.resend.com/emails, `Authorization: Bearer <key>`.

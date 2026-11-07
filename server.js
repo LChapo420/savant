@@ -24,6 +24,15 @@ for (const flag of ['XKIRO_PIPELINE', 'UNOROUTER_PIPELINE']) {
 const errorLog = require('./services/error-log');
 errorLog.install();
 
+// Real email: the provider MAIL_PROVIDER names (utils/mail-transports.js) replaces the dev outbox in utils/mailer.js. Unset, nothing changes.
+// Set but unusable (no key, no MAIL_FROM, an unknown name): the app still starts, as PASSWORD_RESET=on already did, and says which setting. In production mail is then refused, not pretended (utils/mailer.js).
+let mailProvider = null;
+try {
+  mailProvider = require('./utils/mail-transports').installFromEnv();
+} catch (err) {
+  console.error(`Mail is not set up, MAIL_PROVIDER could not be used: ${err.message}`);
+}
+
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -217,6 +226,9 @@ app.use('/spanish-media', express.static(path.join(__dirname, 'data', 'spanish-m
   immutable: true, maxAge: '365d', fallthrough: false,
 }));
 
+// /healthz (public, ok or not, for an uptime check) and /api/ops/* (admins only, 404 for everyone else): routes/ops.js.
+app.use(require('./routes/ops').router);
+
 app.get('/api/health', (req, res) => {
   const store = require('./config/db').saveState ? require('./config/db').saveState() : null;
   // The provider list holds spend and file paths: in production it is for admins only.
@@ -343,6 +355,7 @@ app.listen(PORT, () => {
   const ai = require('./services/ai');
   const providers = require('./services/providers');
   console.log(`Polymath listening on http://localhost:${PORT}`);
+  console.log(`  mail: ${mailProvider || 'dev outbox (no MAIL_PROVIDER)'}; sessions: ${sessionStore ? 'sqlite' : 'memory'}; beta gate: ${process.env.BETA_GATE || 'off'}`);
   if (ai.isEnabled()) {
     // Each kind of work can be on a different vendor, so say all three rather
     // than implying one model is doing everything.

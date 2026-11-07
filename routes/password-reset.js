@@ -63,7 +63,7 @@ function active() {
   return switchedOn() && canSend();
 }
 
-/** At start-up: plug in the mail provider the environment names, which nothing else in the app does, and say so if it cannot send. Off, it does nothing. */
+/** At start-up: plug in the mail provider the environment names (server.js has too; a script that loads this alone gets the same), and say so if it cannot send. Off, it does nothing. */
 function setup() {
   if (!switchedOn()) return;
   try {

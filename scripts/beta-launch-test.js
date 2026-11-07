@@ -37,6 +37,8 @@ const crypto = require('crypto');
 const { spawn, spawnSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
+// The store the copies are made from: only ever read. npm test on a fresh clone hands in its synthetic one through DB_FILE.
+const SOURCE_DB = process.env.DB_FILE || path.join(ROOT, 'data', 'db.json');
 const WORK = fs.mkdtempSync(path.join(os.tmpdir(), 'beta-launch-test-'));
 const cleanups = [];
 process.on('exit', () => {
@@ -319,7 +321,7 @@ async function sqliteTests() {
   check('the refusal created no SQLite file', !fs.existsSync(path.join(dir, 'missing.sqlite')));
 
   // The real data, on a copy.
-  const real = path.join(ROOT, 'data', 'db.json');
+  const real = SOURCE_DB;
   if (!fs.existsSync(real)) { check('data/db.json exists for the migration check', false); return; }
   const copy = path.join(dir, 'real-copy.json');
   fs.copyFileSync(real, copy);
@@ -354,7 +356,7 @@ function backupTests(sqlite) {
   const dir = path.join(WORK, 'bk');
   fs.mkdirSync(dir);
   const src = path.join(dir, 'db.json');
-  fs.copyFileSync(path.join(ROOT, 'data', 'db.json'), src);
+  fs.copyFileSync(SOURCE_DB, src);
   fs.writeFileSync(path.join(dir, 'beta-invites.json'), JSON.stringify({ version: 1, invites: [] }));
   const bdir = path.join(dir, 'backups');
   const env = { ...process.env, DB_FILE: src, BACKUP_DIR: bdir, DB_DRIVER: '' };
@@ -380,6 +382,8 @@ function backupTests(sqlite) {
     fs.writeFileSync(path.join(bdir, `${id}.json.gz`), zlib.gzipSync('{}'));
     fs.writeFileSync(path.join(bdir, `${id}.manifest.json`), JSON.stringify({ id, kind: 'json', file: `${id}.json.gz`, created_at: new Date(Date.now() - days * 86400000).toISOString(), collections: {}, extras: [] }));
   }
+  // Backups are named by the second: on a small store the first one can finish inside it, and a second backup would then take its name.
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1100);
   const b2 = run();
   const left = fs.readdirSync(bdir).filter((f) => f.endsWith('.manifest.json')).sort();
   check('prune: past 28 days removed, newest 3 kept', b2.status === 0 && left.length === 3 && !left.some((f) => /20260901|20260902|20260903/.test(f)), left);
@@ -489,7 +493,7 @@ Module._resolveFilename=function(req,parent,...rest){const r=orig.call(this,req,
   const dir = path.join(WORK, 'srv');
   fs.mkdirSync(dir);
   const dbFile = path.join(dir, 'db.json');
-  const store = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'db.json'), 'utf8'));
+  const store = JSON.parse(fs.readFileSync(SOURCE_DB, 'utf8'));
   const bcrypt = require('bcryptjs');
   const hash = bcrypt.hashSync('outsider-pass-1', 4);
   store._counters = store._counters || {};
