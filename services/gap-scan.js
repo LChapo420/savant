@@ -305,7 +305,7 @@ function slotsFor(unit, unitNumber, seen, gradeId) {
  */
 function seenQuestions(userId, trackId, row) {
   const seen = new Set(row && Array.isArray(row.gap_seen) ? row.gap_seen : []);
-  const enrollments = db.find('enrollments', (e) => e.user_id === userId && e.track_id === trackId);
+  const enrollments = db.forUser('enrollments', userId).filter((e) => e.track_id === trackId);
   for (const e of enrollments) {
     const plan = e.unit_plan && e.unit_plan.units ? e.unit_plan : null;
     const units = plan ? unitPlacement.unitsFor(trackId, e.grade_id) || [] : [];
@@ -315,7 +315,7 @@ function seenQuestions(userId, trackId, row) {
         if (Number.isInteger(a.slot)) seen.add(`${e.grade_id}:${i + 1}:${a.slot}`);
       }
     });
-    const sessions = db.find('sessions', (s) => s.user_id === userId && s.enrollment_id === e.id && s.kind === 'placement');
+    const sessions = db.forUser('sessions', userId).filter((s) => s.enrollment_id === e.id && s.kind === 'placement');
     const ids = new Set(sessions.map((s) => s.id));
     if (!ids.size) continue;
     for (const it of db.find('items', (i) => ids.has(i.session_id) && Number.isInteger(i.unit) && Number.isInteger(i.slot))) {
@@ -542,7 +542,7 @@ function currentScan(row) {
 
 /** The recommended grade's enrollment, if the learner has one. */
 function mainEnrollment(userId, trackId, gradeId) {
-  return db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === trackId && e.grade_id === gradeId) || null;
+  return (db.forUser('enrollments', userId).find((e) => e.track_id === trackId && e.grade_id === gradeId) || null) || null;
 }
 
 /**
@@ -769,7 +769,7 @@ function catchUpCandidates(userId, trackId, gradeIndex, evidence, seen, carried 
   for (let gi = 0; gi < gradeIndex; gi++) {
     const units = unitPlacement.unitsFor(trackId, gradeIds[gi]);
     if (!units) continue;
-    const own = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === trackId && e.grade_id === gradeIds[gi]);
+    const own = (db.forUser('enrollments', userId).find((e) => e.track_id === trackId && e.grade_id === gradeIds[gi]) || null);
     const ownPlan = own ? learnerPath().planFor(own) : null;
     units.forEach((u, i) => {
       const n = i + 1;
@@ -1070,7 +1070,7 @@ function startExtended(userId, { trackId, gradeId }, now = Date.now()) {
 
   const seen = seenQuestions(userId, trackId, { gap_seen: [...(row.gap_seen || []), ...askedKeys(scan)] });
   // A unit the learner's own enrollment in that grade has already settled is not asked about again.
-  const own = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === trackId && e.grade_id === gradeIds[gi]);
+  const own = (db.forUser('enrollments', userId).find((e) => e.track_id === trackId && e.grade_id === gradeIds[gi]) || null);
   const ownPlan = own ? learnerPath().planFor(own) : null;
   const misses = placementMisses(trackId, scan.grade_index, placementEvidence(trackId, row));
   const candidates = [];
@@ -1237,7 +1237,7 @@ function refreshOffers(userId, trackId, row) {
  * has placed it, so it starts active rather than waiting for a placement.
  */
 function catchUpEnrollment(userId, trackId, gradeId, now) {
-  const existing = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === trackId && e.grade_id === gradeId);
+  const existing = (db.forUser('enrollments', userId).find((e) => e.track_id === trackId && e.grade_id === gradeId) || null);
   if (existing) return { enrollment: existing, created: false };
   const grade = curriculum.getGrade(trackId, gradeId);
   const enrollment = db.insert('enrollments', {

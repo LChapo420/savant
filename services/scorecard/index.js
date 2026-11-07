@@ -317,7 +317,7 @@ function forgettingCurve({ userId = null, trackId = null } = {}) {
     const pop = populationCache.memory || null;
     let rows = null;
     if (userId && pop && pop.curve) {
-      const card = db.findOne('scorecards', (r) => r.user_id === userId);
+      const card = (db.forUser('scorecards', userId)[0] || null);
       const memory = (card && card.memory) || {};
       rows = trackId ? memory[trackId] || [] : Object.values(memory).flat().sort((a, b) => a[6] - b[6]).slice(-forgetting.KEEP);
     }
@@ -398,7 +398,7 @@ function migrate(card) {
 
 /** The scorecard for a user, created on first use. */
 function get(userId) {
-  const existing = db.findOne('scorecards', (r) => r.user_id === userId);
+  const existing = (db.forUser('scorecards', userId)[0] || null);
   if (existing) {
     if ((existing.version || 1) < 2) {
       migrate(existing);
@@ -1645,7 +1645,7 @@ const DIMENSION_STAT = {
 function forDimension(userId, dim) {
   const map = DIMENSION_STAT[dim];
   if (!map) return null;
-  const card = db.findOne('scorecards', (r) => r.user_id === userId);
+  const card = (db.forUser('scorecards', userId)[0] || null);
   if (!card) return null;
   // Session settings follow what was measured, not what a model suggested.
   const { measured, confidence } = read(card, map[0]);

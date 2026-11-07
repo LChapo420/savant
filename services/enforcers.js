@@ -94,9 +94,9 @@ function answeredAt(i) {
  * skipped, set-aside and unanswered questions are not answers.
  */
 function windowItems(userId, win, tz) {
-  const sessions = new Map(db.find('sessions', (s) => s.user_id === userId).map((s) => [s.id, s]));
+  const sessions = new Map(db.forUser('sessions', userId).slice().map((s) => [s.id, s]));
   const out = [];
-  for (const i of db.find('items', (x) => x.user_id === userId && x.correct !== null && x.correct !== undefined)) {
+  for (const i of db.forUser('items', userId).filter((x) => x.correct !== null && x.correct !== undefined)) {
     if (i.enforcer_id || i.skipped || i.reserved || i.dropped) continue;
     const s = i.session_id != null ? sessions.get(i.session_id) : null;
     if (s && (s.kind === 'placement' || s.kind === 'skip' || s.kind === 'enforcer')) continue;
@@ -143,7 +143,7 @@ function costModel(userId, base = isBase(userId), now = Date.now()) {
   if (!base) {
     const rapid = coverage.knobs().RAPID_MS;
     const by = {};
-    for (const i of db.find('items', (x) => x.user_id === userId && x.correct !== null && x.correct !== undefined && Number(x.ms) > rapid && answeredAt(x) >= now - 60 * DAY)) {
+    for (const i of db.forUser('items', userId).filter((x) => x.correct !== null && x.correct !== undefined && Number(x.ms) > rapid && answeredAt(x) >= now - 60 * DAY)) {
       const f = i.format || 'other';
       (by[f] = by[f] || []).push(Number(i.ms));
     }
@@ -174,7 +174,7 @@ function recordCache(userId) {
   return (trackId, gradeId) => {
     const key = `${trackId}/${gradeId}`;
     if (cache.has(key)) return cache.get(key);
-    const enrollment = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === trackId && e.grade_id === gradeId);
+    const enrollment = (db.forUser('enrollments', userId).find((e) => e.track_id === trackId && e.grade_id === gradeId) || null);
     let rec = null;
     try {
       if (enrollment) rec = adaptation.recordFor(userId, enrollment);
@@ -233,7 +233,7 @@ function unitsFrom(userId, rows) {
 function recentlyKept(userId, now) {
   const since = now - params.load().selection.recent_enforcer_ms;
   const out = new Set();
-  for (const i of db.find('items', (x) => x.user_id === userId && x.enforcer_id && x.correct === true && !x.requeue_of && answeredAt(x) >= since)) {
+  for (const i of db.forUser('items', userId).filter((x) => x.enforcer_id && x.correct === true && !x.requeue_of && answeredAt(x) >= since)) {
     out.add(i.objective_id ? `${i.track_id}/${i.grade_id}/o:${i.objective_id}` : `${i.track_id}/${i.grade_id}/s:${i.skill_id}`);
   }
   return out;
@@ -248,7 +248,7 @@ function recentlyKept(userId, now) {
  */
 function leftOutCounts(userId, exclude = null) {
   if (!params.on('ENFORCER_LEFT_OUT_FLAG')) return null;
-  const planned = db.find('enforcers', (e) => e.user_id === userId && e.id !== exclude && Array.isArray(e.left_out))
+  const planned = db.forUser('enforcers', userId).filter((e) => e.id !== exclude && Array.isArray(e.left_out))
     .sort((a, b) => b.id - a.id).slice(0, 20);
   const runs = new Map();
   for (const e of planned) {
@@ -430,7 +430,7 @@ function spread(list, n) {
 function spentToday(userId, now) {
   const tz = study.zoneFor(userId);
   const today = schedule.localDate(now, tz);
-  return db.find('enforcers', (e) => e.user_id === userId && e.local_day === today && e.elapsed_ms)
+  return db.forUser('enforcers', userId).filter((e) => e.local_day === today && e.elapsed_ms)
     .reduce((s, e) => s + (e.elapsed_ms || 0), 0);
 }
 
@@ -519,7 +519,7 @@ function defaultTier(enf) {
   const wrong = pool.filter((u) => u.last_wrong).length;
   const meanH = pool.length ? pool.reduce((s, u) => s + u.p_h, 0) / pool.length : 1;
   if (!enf.base && (wrong >= p.full_wrong_objectives || meanH < p.full_mean_p_h)) want = 'full';
-  const lastThree = db.find('enforcers', (e) => e.user_id === enf.user_id && e.id !== enf.id && e.tier && e.tier !== 'none').slice(-3);
+  const lastThree = db.forUser('enforcers', enf.user_id).filter((e) => e.id !== enf.id && e.tier && e.tier !== 'none').slice(-3);
   if ((enf.scope === 'session' && (enf.base_active_ms || 0) < p.quick_below_ms) || (lastThree.length === 3 && lastThree.every((e) => e.tier === 'quick'))) want = 'quick';
   if (opts.includes(want)) return want;
   return opts[opts.length - 1];
@@ -528,7 +528,7 @@ function defaultTier(enf) {
 // ── questions ─────────────────────────────────────────────────────────────
 
 function askedBefore(userId) {
-  return new Set(db.find('items', (i) => i.user_id === userId).slice(-600).map((i) => bank.itemKey(i)));
+  return new Set(db.forUser('items', userId).slice().slice(-600).map((i) => bank.itemKey(i)));
 }
 
 function difficultyAt(trackId, gradeId, level, fallback = 5) {
@@ -907,7 +907,7 @@ function onSessionEnded(userId, row, { scope = 'session', auto = false, now = Da
       const day = row.local_day;
       const sameDay = study.inDays(userId, day, day);
       // The day's own session enforcers still waiting are folded into the day's.
-      for (const e of db.find('enforcers', (x) => x.user_id === userId && x.scope === 'session' && x.status === 'choosing' && x.local_day === day)) {
+      for (const e of db.forUser('enforcers', userId).filter((x) => x.scope === 'session' && x.status === 'choosing' && x.local_day === day)) {
         db.update('enforcers', e.id, { status: 'merged', merged_at: iso(now), drafts: null });
       }
       // A scheduled day: its end-of-day enforcer is part of the scheduled one (the widest absorbs the rest).
@@ -936,7 +936,7 @@ function onSessionEnded(userId, row, { scope = 'session', auto = false, now = Da
  */
 function expire(userId, now) {
   const v = params.load().validity_ms;
-  for (const e of db.find('enforcers', (x) => x.user_id === userId && (x.status === 'choosing' || x.status === 'running') && !SCHEDULED.has(x.scope))) {
+  for (const e of db.forUser('enforcers', userId).filter((x) => (x.status === 'choosing' || x.status === 'running') && !SCHEDULED.has(x.scope))) {
     const limit = e.scope === 'day' ? v.day : v.session;
     if (now - (Date.parse(e.offered_at || e.created_at) || now) > limit) {
       if (e.status === 'running') {
@@ -964,7 +964,7 @@ function goalToday(userId, at, now) {
 
 /** Rows that already speak for a scheduled occurrence (a retention goal's own review is told apart by its enrollment). */
 function rowFor(userId, type, day, goalEnrollment = null) {
-  return db.findOne('enforcers', (e) => e.user_id === userId && Array.isArray(e.covers) && e.covers.some((c) => c.type === type && c.day === day && (c.enrollment_id || null) === goalEnrollment)) || null;
+  return (db.forUser('enforcers', userId).find((e) => Array.isArray(e.covers) && e.covers.some((c) => c.type === type && c.day === day && (c.enrollment_id || null) === goalEnrollment)) || null) || null;
 }
 
 /**
@@ -1038,7 +1038,7 @@ function scheduledOffer(userId, now, { includeToday = false } = {}) {
       consider(c);
     }
   }
-  const open = db.findOne('enforcers', (e) => e.user_id === userId && SCHEDULED.has(e.scope) && (e.status === 'choosing' || e.status === 'running'));
+  const open = (db.forUser('enforcers', userId).find((e) => SCHEDULED.has(e.scope) && (e.status === 'choosing' || e.status === 'running')) || null);
   if (!due.length) return open;
   if (open && open.status === 'running') {
     // A half-done one is finished first; what came due since waits for it.
@@ -1061,7 +1061,7 @@ function scheduledOffer(userId, now, { includeToday = false } = {}) {
 function offers(userId, { now = Date.now() } = {}) {
   if (!enabled()) return [];
   expire(userId, now);
-  const mine = db.find('enforcers', (e) => e.user_id === userId && (e.status === 'running' || e.status === 'choosing'));
+  const mine = db.forUser('enforcers', userId).filter((e) => (e.status === 'running' || e.status === 'choosing'));
   const running = mine.filter((e) => e.status === 'running' && !SCHEDULED.has(e.scope));
   const choosing = mine.filter((e) => e.status === 'choosing' && !SCHEDULED.has(e.scope));
   const scheduled = scheduledOffer(userId, now);
@@ -1346,7 +1346,7 @@ function calendar(userId, { month = null, now = Date.now() } = {}) {
   const [y, m] = ym.split('-').map(Number);
   const last = new Date(Date.UTC(y, m, 0)).toISOString().slice(0, 10);
   const t = schedule.dayIndex(anchor, today);
-  const rows = db.find('enforcers', (e) => e.user_id === userId);
+  const rows = db.forUser('enforcers', userId).slice();
   const gv = goalView(userId, real, now);
   // Days with answered work, for "missed" against "nothing to cover".
   const worked = new Set();

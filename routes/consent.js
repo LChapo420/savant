@@ -387,6 +387,7 @@ function sweepLateRows(now = Date.now()) {
 function deleteChild(consent, reason, by) {
   const childId = consent.child_user_id;
   const removed = {};
+  require('../services/account-deletion').clearFromSharedPlans(childId); // eslint-disable-line global-require
   for (const name of collectionNames()) {
     if (SHARED.has(name)) continue;
     const n = db.remove(name, (r) => r && r.user_id === childId);
@@ -706,7 +707,7 @@ router.get('/config', (req, res) => {
  * stands for a day); for a signed-in account with no age on file it is stored on
  * the account at once. Answers `route: 'self' | 'parent'`, never the threshold.
  */
-router.post('/age', limit('age-screen', 30, 60 * 60 * 1000), (req, res) => {
+router.post('/age', limit('age-screen', 120, 60 * 60 * 1000), (req, res) => {
   if (req.user && req.user.age_check) {
     return res.json({ route: req.user.age_check.needs_parent ? 'parent' : 'self', locked: true });
   }
@@ -803,7 +804,7 @@ router.post('/request/:token', limit('consent-answer', 20, 60 * 60 * 1000), asyn
   const password = String(body.password || '');
   if (parent) {
     const signedIn = req.parent && req.parent.id === parent.id;
-    if (!signedIn && !(await bcrypt.compare(password, parent.password_hash))) {
+    if (!signedIn && !(await require('../services/passwords').compare(password, parent.password_hash))) {
       return res.status(401).json({ error: 'That password does not match your parent account.' });
     }
   } else {
@@ -856,7 +857,7 @@ router.post('/parent/login', limit('parent-login', 20, 15 * 60 * 1000), async (r
   const password = String(req.body.password || '');
   const parent = db.findOne('parents', (p) => p.email === email);
   const hash = parent ? parent.password_hash : DUMMY_HASH;
-  const ok = await bcrypt.compare(password, hash);
+  const ok = await require('../services/passwords').compare(password, hash);
   if (!parent || !ok) return res.status(401).json({ error: 'That email and password do not match a parent account.' });
   await startParentSession(req, parent);
   res.json({ ok: true });

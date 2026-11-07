@@ -863,7 +863,7 @@ function primesFor(user) {
   if (process.env.COACH_PRIME === 'off' || !user) return false;
   const windowSize = Number(process.env.COACH_PRIME_WINDOW || 30);
   const rate = Number(process.env.COACH_PRIME_RATE || 0.25);
-  const recent = db.find('items', (i) => i.user_id === user.id && i.correct !== null && i.role !== 'exam').slice(-windowSize);
+  const recent = db.forUser('items', user.id).filter((i) => i.correct !== null && i.role !== 'exam').slice(-windowSize);
   if (recent.length < 5) return false;
   return recent.filter((i) => i.coach_used).length / recent.length >= rate;
 }
@@ -1549,7 +1549,7 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
     ...require('../services/speed-placement').pathView(req.user.id, enrollment, grade), // eslint-disable-line global-require
     ...(speedLevers.clientFlags(req.user.id, {}).testout ? {
       speed_testout: true,
-      skipped_pages: db.find('lessons', (l) => l.user_id === req.user.id && l.track_id === enrollment.track_id && l.grade_id === enrollment.grade_id && l.skipped_by_check_at).map((l) => ({ level: l.level, title: l.title })).sort((a, b) => a.level - b.level),
+      skipped_pages: db.forUser('lessons', req.user.id).filter((l) => l.track_id === enrollment.track_id && l.grade_id === enrollment.grade_id && l.skipped_by_check_at).map((l) => ({ level: l.level, title: l.title })).sort((a, b) => a.level - b.level),
     } : {}),
     progress,
     skills,
@@ -1611,7 +1611,7 @@ router.get('/curriculum', requireAuth, (req, res) => {
       // enrollment on this track, so the position shows whether or not the view
       // has been narrowed to one grade.
       const byGrade = new Map();
-      for (const e of db.find('enrollments', (x) => x.user_id === req.user.id && x.track_id === track.id)) {
+      for (const e of db.forUser('enrollments', req.user.id).filter((x) => x.track_id === track.id)) {
         byGrade.set(e.grade_id, e);
       }
 

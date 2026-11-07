@@ -80,10 +80,10 @@ const TTL = 60000;
 function forUser(userId, now = Date.now()) {
   const hit = cache.get(userId);
   if (hit && now - hit.at < TTL) return hit.feat;
-  const mine = db.find('items', (r) => r.user_id === userId && r.correct !== null && r.correct !== undefined && r.role !== 'retention' && !r.preview);
+  const mine = db.forUser('items', userId).filter((r) => r.correct !== null && r.correct !== undefined && r.role !== 'retention' && !r.preview);
   if (mine.length < 20) { cache.set(userId, { at: now, feat: null }); return null; } // too little to read a behaviour from
   const rows = mine.map((r) => ({ ...r, format: r.format && r.format !== 'multiple_choice' ? 'typed' : 'multiple_choice' }));
-  const sessions = db.find('sessions', (s) => s.user_id === userId && !s.preview && s.kind !== 'placement' && s.kind !== 'skip');
+  const sessions = db.forUser('sessions', userId).filter((s) => !s.preview && s.kind !== 'placement' && s.kind !== 'skip');
   const starts = sessions.map((s) => Date.parse(s.started_at)).filter(Number.isFinite).sort((a, b) => a - b);
   const levels = new Set(mine.map((r) => `${r.track_id || ''}:${r.level}`)).size || sessions.length;
   const quits = sessions.filter((s) => !s.ended_at && now - Date.parse(s.started_at) > 12 * 3600000).length;

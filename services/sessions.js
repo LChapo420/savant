@@ -411,7 +411,7 @@ function planCheckpoint(enrollment, grade, kind) {
  * failed is not a retest.
  */
 function examPromptsSeen(userId, level) {
-  return db.find('items', (i) => i.user_id === userId && i.level === level && i.role === 'exam')
+  return db.forUser('items', userId).filter((i) => i.level === level && i.role === 'exam')
     .map((i) => bank.itemKey(i));
 }
 
@@ -898,7 +898,7 @@ async function createDrillSession({ userId, enrollment, grade, area, count = 5 }
 
   const avoidAlso = [
     ...examPromptsSeen(userId, level),
-    ...db.find('items', (i) => i.user_id === userId && i.role === 'drill' && i.skill_id === area.skill_id)
+    ...db.forUser('items', userId).filter((i) => i.role === 'drill' && i.skill_id === area.skill_id)
       .map((i) => bank.itemKey(i)),
   ];
   const items = await materialize({

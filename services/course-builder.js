@@ -790,7 +790,7 @@ const missedEntry = (win, windows, total, reason) => ({ part: win.n, of: windows
 function res_stopped(r) { return !!(r && r.stopped); }
 
 function row(userId, materialId) {
-  return db.findOne('material_courses', (c) => c.user_id === userId && c.material_id === Number(materialId));
+  return (db.forUser('material_courses', userId).find((c) => c.material_id === Number(materialId)) || null);
 }
 
 /**
@@ -952,7 +952,7 @@ async function build(userId, materialId, opts = {}) {
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     try { require('./part-modify').stampCourse(userId, done); } catch { /* signature only */ } // eslint-disable-line global-require
-    db.flush();
+    db.saveSoon();
     if (status === 'failed') return { error: 'No questions in that material passed the checks. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     return { course: done, partial: status === 'partial' };
   } catch (err) {
@@ -1037,7 +1037,7 @@ async function retryMissed(userId, materialId, opts = {}) {
       tokens_used: (live.tokens_used || 0) + ctx.budget.used, models: [...new Set([...(live.models || []), ...ctx.models])],
       last_retry: { at: new Date().toISOString(), ok: add.length > 0, skills: add.length, remaining: stillMissed.length },
     });
-    db.flush();
+    db.saveSoon();
     if (!add.length) return { error: 'Those parts still could not be read into the course. Try again later.', code: 'still_missed', added: 0, remaining: stillMissed.length };
     return { added: add.length, remaining: stillMissed.length, course: done };
   } catch (err) {

@@ -61,6 +61,7 @@ const memoryDb = {
   insert(n, doc) { counters[n] = (counters[n] || 0) + 1; const row = { id: counters[n], created_at: new Date().toISOString(), ...doc }; col(n).push(row); return row; },
   insertMany(n, docs) { return docs.map((d) => memoryDb.insert(n, d)); },
   find: (n, p) => col(n).filter(p),
+  forUser: (n, userId) => col(n).filter((r) => r.user_id === userId), // the same as the real store
   findOne: (n, p) => col(n).find(p) || null,
   byId: (n, id) => col(n).find((r) => r.id === Number(id)) || null,
   update(n, id, patch) { const r = memoryDb.byId(n, id); if (!r) return null; Object.assign(r, patch); return r; },

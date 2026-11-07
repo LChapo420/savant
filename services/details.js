@@ -45,7 +45,7 @@ const LIMITS = {
 
 /** The learner's feedback, newest first. */
 function feedbackFor(userId, limit) {
-  return db.find('level_feedback', (f) => f.user_id === userId)
+  return db.forUser('level_feedback', userId).slice()
     .sort((a, b) => Date.parse(b.submitted_at) - Date.parse(a.submitted_at))
     .slice(0, limit);
 }

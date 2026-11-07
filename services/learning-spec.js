@@ -462,7 +462,7 @@ function gather(userId, { skillIds = [], topic = null, trackId = null, gradeId =
   const db = require('../config/db');
   try { if (require('../config/owner').ownerBase(userId)) { input.owner = true; return input; } } catch { /* ordinary learner */ }
   try {
-    const card = db.findOne('scorecards', (r) => r.user_id === userId);
+    const card = (db.forUser('scorecards', userId)[0] || null);
     if (card) {
       const scorecard = require('./scorecard');
       input.hasScorecard = true;
@@ -508,7 +508,7 @@ function gather(userId, { skillIds = [], topic = null, trackId = null, gradeId =
     }
   } catch { /* no facts */ }
   try {
-    const rec = db.findOne('learner_records', (r) => r.user_id === userId);
+    const rec = (db.forUser('learner_records', userId)[0] || null);
     for (const f of (rec && rec.facts) || []) {
       if (f.status === 'superseded') continue;
       if (f.kind === 'dislike') input.dislikes.push(...splitDomains(f.text));

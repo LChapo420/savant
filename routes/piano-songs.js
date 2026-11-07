@@ -25,7 +25,7 @@ function rowFor(userId, songId) {
 
 /** The learner's current piano grade, from their enrollment, or null. */
 function currentGrade(userId) {
-  const e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === 'piano');
+  const e = (db.forUser('enrollments', userId).find((x) => x.track_id === 'piano') || null);
   return e ? e.grade_id : null;
 }
 

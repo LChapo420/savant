@@ -124,7 +124,7 @@ function onTutorObservation(userId, obs = {}, now = Date.now()) {
       where: String(obs.where || '').slice(0, 60), style: obs.style || null, outcome: obs.outcome || null,
       note: String(obs.note || '').replace(/\s+/g, ' ').slice(0, 120), at: new Date(now).toISOString(), bridged: false,
     });
-    const mine = db.find('tutor_observations', (r) => r.user_id === userId);
+    const mine = db.forUser('tutor_observations', userId).slice();
     if (mine.length > MAX_ROWS) {
       const drop = new Set(mine.slice(0, mine.length - MAX_ROWS).map((r) => r.id));
       db.remove('tutor_observations', (r) => drop.has(r.id));
@@ -158,7 +158,7 @@ function fromMessage(userId, text, { skillId = null, where = '', priorReplies = 
 }
 
 function pending(userId, { since = null } = {}) {
-  return db.find('tutor_observations', (r) => r.user_id === userId && (!since || r.at >= since));
+  return db.forUser('tutor_observations', userId).filter((r) => (!since || r.at >= since));
 }
 
 /** The proposed scorecard.observe form of stored rows (the owner's starting point; not applied here). */

@@ -790,9 +790,9 @@ function finish(userId, enrollment, metricId, now = Date.now()) {
     if (!res.done) return { status: 409, error: 'Play every part first.' };
   } else if (open.how === 'puzzles') {
     const started = new Date(open.started_at).toISOString();
-    const done = db.find('chess_puzzle_attempts', (a) => a.user_id === userId && a.rated && a.status !== 'open' && String(a.started_at) >= started).length;
+    const done = db.forUser('chess_puzzle_attempts', userId).filter((a) => a.rated && a.status !== 'open' && String(a.started_at) >= started).length;
     if (done < open.min) return { status: 409, error: `${open.min - done} more rated puzzle${open.min - done === 1 ? '' : 's'} first.`, done };
-    const r = db.findOne('chess_ratings', (x) => x.user_id === userId) || { rating: 0, rd: 999 };
+    const r = (db.forUser('chess_ratings', userId)[0] || null) || { rating: 0, rd: 999 };
     res = { pass: r.rating >= open.cut && r.rd <= open.rd, score: Math.round(r.rating), n: done, source: 'board', detail: { rating: Math.round(r.rating), rd: Math.round(r.rd), cut: open.cut } };
   } else if (playedHere(open.how)) {
     res = CS.result(open, CS.defFor(metricId));

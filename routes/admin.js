@@ -29,7 +29,7 @@ const router = express.Router();
 router.use(requireAuth, requireAdmin);
 
 function lastActive(userId) {
-  return db.find('sessions', (s) => s.user_id === userId)
+  return db.forUser('sessions', userId).slice()
     .map((s) => s.ended_at || s.started_at || s.created_at)
     .filter(Boolean)
     .sort()
@@ -37,7 +37,7 @@ function lastActive(userId) {
 }
 
 function accuracyOf(userId) {
-  const answered = db.find('items', (i) => i.user_id === userId && i.correct !== null && i.correct !== undefined);
+  const answered = db.forUser('items', userId).filter((i) => i.correct !== null && i.correct !== undefined);
   return {
     answered: answered.length,
     accuracy: answered.length ? answered.filter((i) => i.correct).length / answered.length : null,
@@ -79,14 +79,14 @@ router.get('/users', (req, res) => {
       is_admin: isAdmin(user),
       plan: profile.subscription || 'standard',
       last_active: lastActive(user.id),
-      sessions: db.find('sessions', (s) => s.user_id === user.id && s.kind !== 'placement').length,
+      sessions: db.forUser('sessions', user.id).filter((s) => s.kind !== 'placement').length,
       answered,
       accuracy,
-      subjects: db.find('enrollments', (e) => e.user_id === user.id).map(subjectRow),
+      subjects: db.forUser('enrollments', user.id).slice().map(subjectRow),
       interests: interestsOf(profile),
       scorecard_confidence: card ? scorecard.overallConfidence(card) : 0,
       top_traits: sum ? sum.strongest.slice(0, 3).map((t) => t.reads) : [],
-      tailored_pages: db.find('level_edits', (e) => e.user_id === user.id && !e.problem).length,
+      tailored_pages: db.forUser('level_edits', user.id).filter((e) => !e.problem).length,
     };
   }).sort((a, b) => String(b.last_active || b.created_at).localeCompare(String(a.last_active || a.created_at)));
 
@@ -124,7 +124,7 @@ router.get('/users/:id', (req, res) => {
   const profile = learner.getProfile(user.id);
   const card = scorecard.get(user.id);
   const trackId = typeof req.query.track === 'string' && req.query.track ? req.query.track : null;
-  const enrollments = db.find('enrollments', (e) => e.user_id === user.id);
+  const enrollments = db.forUser('enrollments', user.id).slice();
 
   // The brief the level editor would send for this learner's current level, on
   // the course chosen (or their most recent one): the exact text, not a summary.
@@ -168,7 +168,7 @@ router.get('/users/:id', (req, res) => {
       }).filter((s) => s.attempts > 0) : [];
       return row;
     }),
-    tailored_pages: db.find('level_edits', (e) => e.user_id === user.id)
+    tailored_pages: db.forUser('level_edits', user.id).slice()
       .sort((a, b) => b.level - a.level).slice(0, 30)
       .map((e) => ({
         track_id: e.track_id,
@@ -183,11 +183,11 @@ router.get('/users/:id', (req, res) => {
         problem: e.problem || null,
         generated_at: e.generated_at || e.created_at,
       })),
-    levels: db.find('level_signals', (r) => r.user_id === user.id).slice(-40).reverse()
+    levels: db.forUser('level_signals', user.id).slice().slice(-40).reverse()
       .map((r) => ({ level: r.level, track_id: r.track_id, kind: r.kind, accuracy: r.accuracy, conclusion: r.conclusion || null, said: r.said || null, arm: r.arm || null })),
-    feedback: db.find('level_feedback', (f) => f.user_id === user.id).slice(-20).reverse()
+    feedback: db.forUser('level_feedback', user.id).slice().slice(-20).reverse()
       .map((f) => ({ level: f.level, track_id: f.track_id, liked: f.liked, disliked: f.disliked, comments: f.comments || '', pace: f.pace || null, length: f.length || null, difficulty: f.difficulty || null, at: f.submitted_at })),
-    sessions: db.find('sessions', (s) => s.user_id === user.id)
+    sessions: db.forUser('sessions', user.id).slice()
       .sort((a, b) => String(b.started_at || b.created_at).localeCompare(String(a.started_at || a.created_at)))
       .slice(0, 25)
       .map((s) => ({
@@ -205,7 +205,7 @@ router.get('/users/:id', (req, res) => {
         conclusions: rec.conclusions.slice(-15).reverse(),
       };
     })(),
-    reads: db.find('level_debriefs', (d) => d.user_id === user.id).slice(-25).reverse()
+    reads: db.forUser('level_debriefs', user.id).slice().slice(-25).reverse()
       .map((d) => ({
         level: d.level, track_id: d.track_id, kind: d.kind, source: d.source, status: d.status, mode: d.mode || null,
         reason: d.reason || null, due_at: d.due_at, finished_at: d.finished_at || null, conclusion: d.conclusion || null,
@@ -215,7 +215,7 @@ router.get('/users/:id', (req, res) => {
     // fill-out), tailored checkpoints, and tailored game question sets — with the
     // model that wrote each one and what it spent.
     block_levels: [
-      ...db.find('block_plans', (p) => p.user_id === user.id).map((p) => ({
+      ...db.forUser('block_plans', user.id).slice().map((p) => ({
         kind: p.kind === 'checkpoint' ? (p.checkpoint_kind || 'checkpoint') : p.kind,
         track_id: p.track_id,
         level: p.level,
@@ -237,7 +237,7 @@ router.get('/users/:id', (req, res) => {
         seconds: p.seconds || null,
         at: p.finished_at || p.started_at || null,
       })),
-      ...db.find('game_payloads', (g) => g.user_id === user.id).map((g) => ({
+      ...db.forUser('game_payloads', user.id).slice().map((g) => ({
         kind: `game (${g.engine_id})`,
         track_id: g.track_id,
         level: g.level,
@@ -319,7 +319,7 @@ router.get('/export.csv', (req, res) => {
   const rows = [header.join(',')];
   for (const user of db.all('users')) {
     const profile = learner.getProfile(user.id);
-    const card = db.findOne('scorecards', (c) => c.user_id === user.id);
+    const card = (db.forUser('scorecards', user.id)[0] || null);
     const cells = [user.id, user.email, user.display_name, user.created_at, profile.subscription || 'standard',
       interestsOf(profile), card ? scorecard.overallConfidence(card) : 0];
     for (const s of scorecard.STATS) {

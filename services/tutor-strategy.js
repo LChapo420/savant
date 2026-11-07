@@ -31,7 +31,7 @@ const META = '_meta';
 const LOW = 0.4;
 const HIGH = 0.7;
 
-const rowsOf = (userId) => db.find('tutor_strategies', (r) => r.user_id === userId);
+const rowsOf = (userId) => db.forUser('tutor_strategies', userId).slice();
 const rowFor = (userId, style) => rowsOf(userId).find((r) => r.style === style) || null;
 
 function prior(style, mastery) {
@@ -43,7 +43,7 @@ function prior(style, mastery) {
 
 function masteryOf(userId, skillId) {
   if (!skillId) return null;
-  const s = db.findOne('skill_states', (r) => r.user_id === userId && r.skill_id === skillId);
+  const s = (db.forUser('skill_states', userId).find((r) => r.skill_id === skillId) || null);
   return s && s.attempts > 0 ? s.mastery : null;
 }
 
