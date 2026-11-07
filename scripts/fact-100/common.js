@@ -7,7 +7,7 @@ const { catches, placeOf, words } = require('../fact-gate/scoring');
 
 const RAW = L.path.join(L.TMP, 'raw-100');
 L.fs.mkdirSync(RAW, { recursive: true });
-const SETS = { dev: L.path.join(L.DOCS, 'testbed.json'), heldout: L.path.join(L.DOCS, '..', 'fact-100', 'heldout.json') };
+const SETS = { dev: L.path.join(L.DOCS, 'testbed.json'), heldout: L.path.join(L.DOCS, '..', 'fact-100', 'heldout.json'), real: L.path.join(L.DOCS, '..', 'fact-100', 'real-set.json') };
 const loadSet = (name) => L.readJson(SETS[name]);
 const levelMap = () => new Map(L.loadLevels().map((l) => [l.id, l]));
 const flagKey = (f) => `${placeOf(f.where) ? `${placeOf(f.where).word}${placeOf(f.where).index}` : '?'}|${words(f.claim).slice(0, 8).join(' ')}`;
