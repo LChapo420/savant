@@ -83,6 +83,8 @@ const SCREEN_S = num('screen-s', 0);      // the speed arms only: seconds the le
 const ONE_S = num('one-s', 3);            // the same with SPEED_ONE_PROMPT: Continue on top, one optional question (ASSUMED)
 const CKPT_ANS = num('ckpt-answers', 0);  // the speed arms only: checkpoint answers per lesson on the real path (MEASURED by scripts/speed-r4-walk.js: about 2 a lesson). Time only, no learning credit, which is conservative
 const SPACE_DAYS = String(args['space-days'] || '1,7').split(',').map(Number); // SPEED_SPACE_RETENTION: the memory checks that replace the massed retention levels, days after learning (the real queue: adaptation.reviewQueue RETAIN_DAYS and RETAIN_SPAN_DAYS)
+const EVERY = num('every', 1);            // ADVERSE sensitivity, every arm: the learner studies only every Nth day (a real learner does not come back daily)
+const MASS2 = num('mass2', 0.03);         // ADVERSE sensitivity, every arm: what each massed right answer past the fifth adds to the half-life (0.03 audited). Higher favours massed retention levels
 const TIGHT_GAIN = num('tight-gain', 1);  // ADVERSE sensitivity: what the tight page teaches, as a share of the whole page's teaching (1 = every key point kept teaches as much in fewer words)
 const SELF_OVER = num('self-over', 0);    // sensitivity for the careful self-studier: stops practising this much under true understanding (0 = stops exactly at 0.85, an oracle no person has)
 const PREREQ = num('prereq', 0.5);       // share of skills whose previous skill is a prerequisite (only with --implicit)
@@ -91,7 +93,7 @@ const sigmoid = (x) => 1 / (1 + Math.exp(-x));
 const mean = (xs) => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0);
 
 // v2 learning constants (scripts/scorecard-recovery-sim.js LM, literature set)
-const LM = { mass1: 0.3, massN: 5, mass2: 0.03, massDays: 0.25, sp0: 1.3, sp1: 1.5, h0: 2.8, missH: 1.5, miss: 0.4, a: 0.2, page: 0.5, pageSkim: 0.15, priorShift: 0.5, dd: 0.5 };
+const LM = { mass1: 0.3, massN: 5, mass2: MASS2, massDays: 0.25, sp0: 1.3, sp1: 1.5, h0: 2.8, missH: 1.5, miss: 0.4, a: 0.2, page: 0.5, pageSkim: 0.15, priorShift: 0.5, dd: 0.5 };
 const COST = { page_min: 7, item_s: ITEM_S || 35, right_s: 3, wrong_s: WRONG_S || 25, retry_s: RETRY_S || 38 }; // goal-sim's review costs (services/retention-goal-sim.js); a 7-minute page, so lesson pages are about 45% of first-pass hours (the owner: about half; the table reports the measured split)
 const GUESS = GUESS_ARG;
 /** Depth of a lapse: 0 while memory recall is at least 0.5, up to 1 when it is gone. A deep lapse costs understanding too (the --kloss sensitivity). */
@@ -286,8 +288,9 @@ function simulate(L, P, arm, plan) {
     };
     if (!SP.testout && s.seen === 0) showPage(1); // no retrieval first: the whole page, as today
     // appN=1, the real path (config/curriculum.js, services/coverage.js, services/learner-path.js compressProven): three check questions, then whole levels of 14 answers until the objective is proven (at most seven; true understanding stands in for the coverage belief), then its two retention levels, which are never stepped over.
-    let appPlan = 3; let appLevels = 0; let appRet = false;
-    const appStop = () => { if (n < appPlan) return false; if (appRet) return true; if (s.k >= 0.85 || appLevels >= 7) { appRet = true; appPlan = n + (SP.space && s.k >= 0.85 ? 0 : 28); return false; } appLevels++; appPlan = n + 14; return false; };
+    let appPlan = 3 + Math.round((SP.stay || 0) * 14); let appLevels = 0; let appRet = false; // stay: sittings repeated on one level per lesson, MEASURED by scripts/speed-r4-walk.js; time and massed answers
+    const stuckHere = SP.appN && SP.stuck ? rngOf('stuck', L.id, sk.indexOf(s))() < SP.stuck : false; // stuck: stretches the real proof never closes (ordinary practice answers cannot prove an objective), MEASURED by the walker; they walk every level left
+    const appStop = () => { if (n < appPlan) return false; if (appRet) return true; if ((s.k >= 0.85 && !stuckHere) || appLevels >= 7) { appRet = true; appPlan = n + (SP.space && s.k >= 0.85 ? 0 : 28); return false; } appLevels++; appPlan = n + 14; return false; };
     const trueStop = () => (SP.appN ? appStop() : s.k >= 0.85 && n >= 3);
     while (n < (SP.appN ? 400 : 25)) {
       if (SP.stop) {
@@ -370,7 +373,7 @@ function simulate(L, P, arm, plan) {
   const savant = arm.type === 'savant';
 
   for (let d = 0; d <= T; d++) {
-    let budget = MINUTES; let spent = 0; const abs = base + d;
+    let budget = EVERY > 1 && d % EVERY !== 0 ? 0 : MINUTES; let spent = 0; const abs = base + d;
     if (d === 0 && SP && SP.place) spent += placeBySkill();
     if (SP) for (let i = 0; i < next; i++) if (sk[i].relearn && spent < budget) { sk[i].relearn = false; sk[i].settled = false; spent += learnSpeed(sk[i], d + spent / 1440); }
     const covered = next >= SKILLS;
