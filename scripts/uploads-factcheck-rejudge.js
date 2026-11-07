@@ -22,7 +22,7 @@ const lessonOnly = (t) => t.split('\n').filter((l) => !l.startsWith('Q: ')).join
   const results = {};
   for (const spec of process.argv.slice(3)) {
     const [file, tag] = spec.split(':');
-    const rows = JSON.parse(fs.readFileSync(file, 'utf8')).rows.filter((r) => r.tag === tag);
+    const rows = JSON.parse(fs.readFileSync(file, 'utf8')).rows.filter((r) => r.tag === tag && (!process.env.DOCS || process.env.DOCS.split(',').includes(r.doc)));
     results[tag] = {};
     await J.pool(rows, 4, async (r) => {
       const d = docs.find((x) => x.id === r.doc);
