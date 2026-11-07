@@ -541,14 +541,14 @@ The biggest wait left was the first lesson: 139 to 156 s, of which the outline 1
 
 | | Today | New | Gate |
 |---|---|---|---|
-| Exam, emphasised (judge Z, 8 documents) | 89% | 94% | not lower: met |
+| Exam, emphasised (judge Z, 9 documents) | 91% | 95% | not lower: met |
 | Exam, plain (judge Z) | 94% | 94% | not lower: met |
-| Same text answered twice (noise) | | 86% against 86%, 85% against 87% | |
+| Same text answered twice (noise) | | 89% against 89%, 78% against 81% | |
 | h4, dense notes, plain (judge Z) | 88% | 75% (one question of 8) | MISSED by one question |
 | Lesson words (h1, h4, n3) | 1,278, 1,347, 1,230 | 1,439, 1,644, 1,582 | no gate; about 1.2x today |
-| Invented per course, judge Z, sentence form | 3.83 | 0.25: none in 7 of 8; h2 has 2 | 0: NOT MET |
+| Invented per course, judge Z, sentence form | 3.83 | 0.22: none in 8 of 9; h2 has 2 | 0: NOT MET |
 | Invented, judge K (independent family), h1 h2 h5 n2 only | | 0, 2, 0, 0 | 0: NOT MET |
 
-The two on h2, read by me: "Bismarck secured the new Reich by isolating France" (the source says he sought to) and "the Moroccan Crisis and Algeciras ended in humiliation" (the source says Algeciras did). Those are real, small over-reaches of a word or a scope, in a history narrative; nothing fabricated. So the gate of zero is not reached: about 1 course in 8 still has such a sentence by the calibrated judge. My own read of a checked h4 and part of n3 found no invented claim, and found two defects now fixed: questions written into lessons, and Markdown marks in restored sentences. A sentence supported by no reader goes back to the source's own words, so most of the length gain is verbatim material. Practice questions may still set up a made-up case to apply a rule ("a company pays rent of $1,000"): the free-form judges count these; they are not checked as claims, and are left as they are.
+The two on h2, read by me: "Bismarck secured the new Reich by isolating France" (the source says he sought to) and "the Moroccan Crisis and Algeciras ended in humiliation" (the source says Algeciras did). Those are real, small over-reaches of a word or a scope, in a history narrative; nothing fabricated. So the gate of zero is not reached: about 1 course in 9 still has such a sentence by the calibrated judge. My own read of a checked h4 and part of n3 found no invented claim, and found two defects now fixed: questions written into lessons, and Markdown marks in restored sentences. A sentence supported by no reader goes back to the source's own words, so most of the length gain is verbatim material. Practice questions may still set up a made-up case to apply a rule ("a company pays rent of $1,000"): the free-form judges count these; they are not checked as claims, and are left as they are.
 
 Cost per course (real, from the providers' usage): the fact check with two families and two readings about 1 cent; Kimi K3.1 Pro as the judge $0.13 a course. Kimi spent $11.40 in all here, across calibration, three comparisons and three judged runs, before the $3 per run limit; none of it is in the build.
