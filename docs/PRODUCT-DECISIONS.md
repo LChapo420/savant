@@ -189,3 +189,12 @@ The name is Savant; the domain is savantedu.com. Goal: savant.edu through a part
 ## The rest of the app (owner, 7 Nov 2026)
 
 Structure A, "One next thing": no tab bar, home shows one task and one button, and a menu opens everything else. Mockups: design-refs/ui-v2-mockups (private). Scrolling lesson for now, since lessons aren't split into parts.
+
+## Audience and the first choice (owner, 7 Nov 2026)
+
+- The look is for people from 5 to 30, not just kids, closer to Duolingo and Brilliant.
+- Before choosing a subject, learners choose: Savant's curriculum, upload their own material, or both.
+
+## Home and Past (owner, 7 Nov 2026)
+
+Home shows: continue any subject, upload their own material, continue unfinished uploads. A separate page holds previous things: uploads and learning paths or activities already completed. This replaces the one-task home in structure A. Look: design-refs/ui-v4-mockups.
