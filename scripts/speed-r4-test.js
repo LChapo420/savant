@@ -78,6 +78,40 @@ const GRADE = ['math', 'algebra_2_part_a'];
     assert.ok(!old.some((x) => x.i === m.objectives.indexOf(o2) && x.direct));
   });
 
+  await check('plain fix: support and interleaved slots draw on skills the learner has met, never a skill no lesson has reached', async () => {
+    const g = curriculum.getGrade('act', 'act_grade_2'); const u = user(); const e = enroll(u, 'act', 'act_grade_2', 21);
+    const plan = curriculum.levelPlan(g, 21);
+    const out = await sessions.createSession({ userId: u.id, enrollment: e, grade: g });
+    const skills = new Set(out.items.map((i) => db.byId('items', i.id).skill_id));
+    assert.deepStrictEqual([...skills], [plan.focus], 'a new learner gets only the focus');
+    const old = await withEnv({ PRACTICE_FOLLOWS_LESSON: 'off' }, async () => { const u2 = user(); const e2 = enroll(u2, 'act', 'act_grade_2', 21); const o2 = await sessions.createSession({ userId: u2.id, enrollment: e2, grade: g }); return new Set(o2.items.map((i) => db.byId('items', i.id).skill_id)); });
+    assert.ok(old.size > 1, 'the old reading mixed in others');
+  });
+
+  await check('objective practice: off, the bank; on, questions written for the objective where a grade has them, tagged, and a grade without them is unchanged', async () => {
+    const objectiveItems = require('../services/objective-items'); // eslint-disable-line global-require
+    let track = null; let gid = null; let ob = null;
+    for (const [t, id] of [['math', 'counting_and_comparing'], ['english', 'grammar'], ['reading', 'foundations'], ['math', 'sense_of_quantity']]) {
+      const m = coverage.modelFor(t, id); const by = objectiveItems.forGrade(t, id);
+      const g = curriculum.getGrade(t, id);
+      ob = m.objectives.find((x) => (by.get(x.id) || []).length >= 3 && x.practice.some((l) => !x.retention.includes(l) && curriculum.levelPlan(g, l).focus === x.skill));
+      if (ob) { track = t; gid = id; break; }
+    }
+    assert.ok(ob, 'a grade with objective items');
+    const g = curriculum.getGrade(track, gid); const lv = ob.practice.find((l) => !ob.retention.includes(l) && curriculum.levelPlan(g, l).focus === ob.skill);
+    const u = user(); const e = enroll(u, track, gid, lv);
+    const off = await sessions.createSession({ userId: u.id, enrollment: e, grade: g });
+    assert.strictEqual(off.items.filter((i) => db.byId('items', i.id).objective_id === ob.id).length, 0);
+    await withEnv({ SPEED_OBJECTIVE_PRACTICE: 'on' }, async () => {
+      const u2 = user(); const e2 = enroll(u2, track, gid, lv);
+      const on = await sessions.createSession({ userId: u2.id, enrollment: e2, grade: g });
+      assert.ok(on.items.filter((i) => db.byId('items', i.id).objective_id === ob.id).length >= 1);
+      const u3 = user(); const gOther = curriculum.getGrade('math', 'algebra_2_part_a'); const e3 = enroll(u3, 'math', 'algebra_2_part_a', firstPlain);
+      const other = await sessions.createSession({ userId: u3.id, enrollment: e3, grade: gOther });
+      assert.strictEqual(other.items.filter((i) => db.byId('items', i.id).objective_id).length, 0);
+    });
+  });
+
   await check('plain fix: a skill the learner never met does not hold the level; LEVEL_GATE_MET=off restores the old gate', async () => {
     const g = curriculum.getGrade('act', 'act_grade_1'); const u = user(); const e = enroll(u, 'act', 'act_grade_1', 21);
     const plan = curriculum.levelPlan(g, 21); assert.ok(plan.introduced.length > 3);

@@ -42,7 +42,7 @@ const LESSON = {
   await check('every lever but fast item is off by default (fast passed its gate, 6 Nov), and all are off with SPEED_ALL=off', async () => {
     for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), lever === 'fast', lever);
     await withEnv({ ...ALL, SPEED_ALL: 'off' }, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), false, lever); });
-    await withEnv({ ...ALL, SPEED_WORKED: 'on', SPEED_QUICK_REVIEW: 'on', SPEED_SPACE_RETENTION: 'on', SPEED_PROOF_PASSES: 'on', SPEED_RECHECK: 'on', SPEED_ONE_PROMPT: 'on', SPEED_TIGHT_PAGE: 'on' }, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), true, lever); });
+    await withEnv({ ...ALL, SPEED_WORKED: 'on', SPEED_QUICK_REVIEW: 'on', SPEED_SPACE_RETENTION: 'on', SPEED_PROOF_PASSES: 'on', SPEED_RECHECK: 'on', SPEED_OBJECTIVE_PRACTICE: 'on', SPEED_ONE_PROMPT: 'on', SPEED_TIGHT_PAGE: 'on' }, () => { for (const lever of Object.keys(speed.SWITCH)) assert.strictEqual(speed.enabled(lever), true, lever); });
     assert.deepStrictEqual(speed.clientFlags(1, {}), { testout: false, short: false, fast: true, one_prompt: false, tight: false });
   });
 

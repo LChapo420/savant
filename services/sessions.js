@@ -220,7 +220,11 @@ function planLessonRaw(userId, enrollment, grade, params) {
   const curve = curveReviews(userId, enrollment, plan.introduced, reviewLimit);
   const goalCtx = require('./retention-goal').reviewContext(userId, enrollment); // eslint-disable-line global-require
   const due = curve || mastery.dueReviews(userId, plan.introduced, reviewLimit, goalCtx);
-  const weak = mastery.weakSkills(userId, plan.introduced);
+  // "Introduced" is the grade's skill order, so it holds skills no lesson has reached: a brand-new one has mastery 0, is the weakest, and took the support slots and the interleaved ones
+  // (a lesson on independent clauses asked fractions; docs/speed-real/ROUND4.md). Only skills the learner has met, plus this level's focus. PRACTICE_FOLLOWS_LESSON=off restores the old reading.
+  const follows = String(process.env.PRACTICE_FOLLOWS_LESSON || 'on').toLowerCase() !== 'off';
+  const metSkills = follows ? plan.introduced.filter((id) => id === plan.focus || mastery.stateFor(userId, id).attempts > 0) : plan.introduced;
+  const weak = mastery.weakSkills(userId, metSkills);
   const mix = interleaveMode(userId, enrollment, grade);
 
   const entries = [];
@@ -248,7 +252,7 @@ function planLessonRaw(userId, enrollment, grade, params) {
   // weakest of the earlier skills first, then the earliest introduced, in turn.
   // (A brand-new focus topic has mastery 0, so it is also the weakest skill;
   // taking weak[0] made the "earlier topic" an item on the focus itself.)
-  const earlier = plan.introduced.filter((s) => s !== plan.focus);
+  const earlier = metSkills.filter((s) => s !== plan.focus);
   const altEvery = mix && mix.since >= 3 ? 2 : 3;
   // SR_INTERLEAVE=on (default off, docs/SPEED-RETENTION.md): only skills past first mastery are woven in, lowest predicted recall first, and none when there are none
   // (the new topic stays blocked). Off, the earlier behaviour below (INTERLEAVE_SESSIONS) applies.
@@ -519,6 +523,17 @@ async function materialize({ userId, session, entries, params, level, blockIndex
     const plan = grade && curriculum.levelKind(level, grade.pathLength, grade) === 'practice' ? curriculum.levelPlan(grade, level) : null;
     if (plan) { workedSkill = plan.focus; workedLeft = speedLevers.workedCount(userId, session, plan.focus, level, grade); }
   } catch (err) { workedLeft = 0; }
+  let practiceObjective = null; let practiceFocus = null;
+  try {
+    if (speedLevers.enabled('objectivePractice') && !session.preview) {
+      const g = curriculum.getGrade(session.track_id, session.grade_id);
+      if (g && curriculum.levelKind(level, g.pathLength, g) === 'practice') {
+        const m = require('./coverage').modelFor(session.track_id, session.grade_id); // eslint-disable-line global-require
+        const e = m && m.levelMap[level];
+        if (e && e.direct !== undefined) { practiceObjective = m.objectives[e.direct].id; practiceFocus = curriculum.levelPlan(g, level).focus; }
+      }
+    }
+  } catch { practiceObjective = null; }
   for (let slot = 0; slot < entries.length; slot++) {
     const entry = entries[slot];
     let item = fresh[slot] || null;
@@ -534,6 +549,14 @@ async function materialize({ userId, session, entries, params, level, blockIndex
       try {
         // eslint-disable-next-line global-require
         item = require('./objective-items').pick({ trackId: session.track_id, gradeId: session.grade_id, objectiveId: entry.objective, avoid, difficulty: entry.difficulty });
+      } catch { item = null; }
+    }
+    // SPEED_OBJECTIVE_PRACTICE: on a practice level, a question written for this lesson's objective when one is left (8 grades of 219 have them). Tagged, so a right answer is real evidence for its proof.
+    if (!item && practiceObjective && (entry.role === 'focus' || entry.role === 'stretch') && entry.skillId === practiceFocus) {
+      try {
+        // eslint-disable-next-line global-require
+        item = require('./objective-items').pick({ trackId: session.track_id, gradeId: session.grade_id, objectiveId: practiceObjective, avoid, difficulty: entry.difficulty });
+        if (item) { entry.objective = practiceObjective; entry.reviewReason = null; }
       } catch { item = null; }
     }
     if (!item && themeDomain && entry.role !== 'review' && !entry.objective) {

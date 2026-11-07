@@ -85,6 +85,7 @@ const CKPT_ANS = num('ckpt-answers', 0);  // the speed arms only: checkpoint ans
 const SPACE_DAYS = String(args['space-days'] || '1,7').split(',').map(Number); // SPEED_SPACE_RETENTION: the memory checks that replace the massed retention levels, days after learning (the real queue: adaptation.reviewQueue RETAIN_DAYS and RETAIN_SPAN_DAYS)
 const EVERY = num('every', 1);            // ADVERSE sensitivity, every arm: the learner studies only every Nth day (a real learner does not come back daily)
 const MASS2 = num('mass2', 0.03);         // ADVERSE sensitivity, every arm: what each massed right answer past the fifth adds to the half-life (0.03 audited). Higher favours massed retention levels
+const ON_TOPIC = num('on-topic', 1);       // ADVERSE sensitivity, the speed arms only: share of the app's questions on the skill's own topic. An off-topic answer takes its time and teaches and tests nothing here (AI-JUDGED share on held-out levels: docs/speed-real/ROUND4.md)
 const TIGHT_GAIN = num('tight-gain', 1);  // ADVERSE sensitivity: what the tight page teaches, as a share of the whole page's teaching (1 = every key point kept teaches as much in fewer words)
 const SELF_OVER = num('self-over', 0);    // sensitivity for the careful self-studier: stops practising this much under true understanding (0 = stops exactly at 0.85, an oracle no person has)
 const PREREQ = num('prereq', 0.5);       // share of skills whose previous skill is a prerequisite (only with --implicit)
@@ -193,7 +194,9 @@ function simulate(L, P, arm, plan) {
   const FAST = arm.speed && arm.speed.fast; // real friction only: two taps fewer and no verdict screen on a right answer (assumed 2 s + 2 s; nothing else is faster)
   const itemS = COST.item_s - (FAST ? 2 : 0); const rightS = FAST ? 1 : COST.right_s;
   const itemMin = (R, right) => (right ? (itemS + rightS) : (itemS + COST.wrong_s + COST.retry_s * (R < 1 ? 1 : 0))) / 60 * P.timeMult;
+  const topicRnd = rngOf('topic', L.id);
   function answer(s, now, isReview = false, item = null) {
+    if (SP && ON_TOPIC < 1 && topicRnd() >= ON_TOPIC) { const off = itemMin(1, topicRnd() < 0.9); ansMin += off; ansN++; return off; }
     const R = memR(s.m, now);
     s.k *= 1 - KLOSS * lapse(R);
     const p = item ? speed.pRight(s.k * R, GUESS, item) : s.k * R + (1 - s.k * R) * GUESS;
