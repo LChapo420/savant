@@ -101,6 +101,8 @@ async function startApp(dbFile, port) {
   const h1 = await passwords.hash('secret-word', 4);
   check('a worker hash checks out with the library, and the reverse', await bcrypt.compare('secret-word', h1) && await passwords.compare('secret-word', await bcrypt.hash('secret-word', 4)));
   check('a wrong password is false', !(await passwords.compare('other', h1)));
+  const quits = spawnSync(process.execPath, ['-e', "require('./services/passwords').hash('x', 4).then((h) => console.log(h.length))"], { cwd: path.join(__dirname, '..'), encoding: 'utf8', timeout: 20000 });
+  check('a script that only hashes finishes, with the answer', quits.status === 0 && quits.stdout.trim() === '60', { status: quits.status, out: quits.stdout });
 
   console.log('the ledger peek');
   const gonka = require('../services/gonka-ledger');

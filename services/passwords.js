@@ -10,6 +10,9 @@ const waiting = new Map();
 let seq = 0;
 let workers = null;
 let next = 0;
+// A timer holds the process open while answers are due, or a script awaiting only this would end early; the workers themselves never do.
+let keepAlive = null;
+function settle() { if (!waiting.size && keepAlive) { clearInterval(keepAlive); keepAlive = null; } }
 
 function start() {
   if (workers) return workers;
@@ -20,14 +23,15 @@ function start() {
     const { Worker } = require('worker_threads'); // eslint-disable-line global-require
     for (let i = 0; i < n; i++) {
       const w = new Worker(path.join(__dirname, 'passwords-worker.js'));
-      w.unref();
       w.on('message', ({ id, value, error }) => {
         const job = waiting.get(id);
         if (!job) return;
         waiting.delete(id);
+        settle();
         if (error) job.inline(); else job.resolve(value);
       });
-      w.on('error', () => { workers = workers.filter((x) => x !== w); for (const job of waiting.values()) if (job.w === w) { waiting.delete(job.id); job.inline(); } });
+      w.on('error', () => { workers = workers.filter((x) => x !== w); for (const job of waiting.values()) if (job.w === w) { waiting.delete(job.id); job.inline(); } settle(); });
+      w.unref(); // after the listeners: adding one takes a hold on the process again
       workers.push(w);
     }
   } catch { workers = []; }
@@ -42,6 +46,7 @@ function run(op, a, b) {
     const id = ++seq;
     const w = pool[next++ % pool.length];
     waiting.set(id, { id, w, resolve, inline: () => inline().then(resolve, reject) });
+    if (!keepAlive) keepAlive = setInterval(() => {}, 1000);
     w.postMessage({ id, op, a, b });
   });
 }
