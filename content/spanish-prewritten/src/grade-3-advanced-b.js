@@ -500,7 +500,7 @@ module.exports = [
         trapReasons: { 1: 'Feminine nouns often take -a adjectives, so -a seems needed.' },
         why: 'After learning alto / alta, learners add -a everywhere.',
         reasoning: 'Fácil ends in a consonant and has one singular form: una pregunta fácil. Plural: preguntas fáciles.',
-        tip: 'Only -o adjectives, consonant-ending nationalities and -or adjectives like trabajador change to -a.',
+        tip: 'Many adjectives can form the feminine with -a: adjectives in -o, consonant-ending nationality adjectives, many -or adjectives such as trabajador, and adjectives ending in -án, -ón or -ín. Fácil itself stays the same for both genders.',
       }),
       takeaway('Closes with the rule and its exceptions.', {
         topic: 'Adjectives in -e or a consonant',
@@ -1515,7 +1515,7 @@ module.exports = [
         traps: [1],
         label: 'Mucho for "very"',
         trapReasons: { 1: 'Mucho means a lot, which feels like very.' },
-        why: 'Both muy and mucho translate as "very much" or "a lot", so they get swapped.',
+        why: 'Muy means "very" and is used before adjectives, while mucho means "much" or "a lot" and can also translate as "very much" in phrases like Me gusta mucho. Because the two words can feel interchangeable in English, learners swap them.',
         reasoning: 'Before an adjective, use muy, which never changes: muy grande. Mucho goes with nouns: muchas casas.',
         tip: 'Muy + adjective. Mucho + noun.',
       }),
@@ -2187,7 +2187,7 @@ module.exports = [
         sections: [
           { paragraphs: [
             'You can now say who someone is, where they are from and what they do, with every word agreeing. In this lesson you use those sentences on well-known people from music, sport, law, science and film.',
-            'The pattern is always the same: Name + es + nationality. Es + profession, with no un or una.',
+            'The pattern is: Name + es + nationality. Es + profession, with no un or una when the profession stands alone: es cantante. When an adjective describes the profession, the indefinite article appears and agrees: es una cantante colombiana.',
           ] },
         ],
       }),

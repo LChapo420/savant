@@ -130,6 +130,8 @@ Computed: median words and minutes a level: English 1,867 and 16.7, calculus 1,6
 ## Stored re-check of 6 Nov (`docs/fact-gate/recheck-fixes.json`)
 90 findings sorted by reading each row: 84 real (22 stale option labels, fixed in code; 62 wrong text, corrections in the file), 4 checker mistakes, 2 unclear. The shared cause: `shuffleKey` in the English rewrite scripts moves the right option after the model writes "Option 0..."; some writers also number options. `services/game-ordinals.js` removes the place words and any numbering inside `inject()`, the one way a stored set reaches a learner: 74 stored questions served clean, nothing written, key and order unchanged. A place that means a wrong option is left alone and reported. The two plain-math findings (lesson 424) are deliberate wrong examples, loosely worded; the checker's "x = 7" is wrong.
 
+**Review of those fixes, 7 Nov:** `docs/fact-gate/fix-review.md`: 100 approved (23 corrected first), 1 rejected as stale, 7 per-learner rows not applied. Applied only by `scripts/apply-content-fixes.js`.
+
 ## Switches
 - `FACT_GATE=on`: a shared level is read by `services/fact-gate.js` instead of the claim read. A learner's own level keeps today's read. Off. Scheduling stays with `cold-write`.
 - `FACT_GATE_READERS`, `FACT_GATE_DECIDER`: `provider:model` lists. Defaults are the cheap pair, so nothing touches Kimi unless these are set.
