@@ -13,6 +13,9 @@
  *   SPEED_COMPOSITE=on     an item that names `also_skills` counts as an attempt on each of them too, each on its own. The built-in banks have no such items today, so this does nothing until they exist.
  *   SPEED_WORKED=on        worked examples first, with fading: while this lesson's stretch shows the learner does not have it yet (tracker under 0.55), the first practice items of a block are shown solved, one tap to go on; at most two in a row, then a problem. None for a learner who has it (expertise reversal). No retrieval and no score.
  *   SPEED_QUICK_REVIEW=on  review questions are one tap: a typed review question with a number for an answer gets close wrong choices. Format makes little retention difference in the studies (docs/SPEED-4X.md); the seconds saved are not measured.
+ *   SPEED_SPACE_RETENTION=on the two "(retention)" levels of a lesson's stretch are stepped over once its objective is proven, instead of being worked in the same minute: both of them, 30 answers on what was just answered right, called "spaced" and asked with no gap at all. The memory checks they stand for come from the review queue a day later and a week later (adaptation.reviewQueue), which is what the coverage gate reads anyway. The level stays open behind the learner. docs/speed-real/ROUND4.md.
+ *   SPEED_ONE_PROMPT=on    a level's closing card: Continue first, and at most one optional question, taking turns level by level, instead of up to four above the button. Fewer scorecard taps: docs/speed-real/ROUND4.md counts them.
+ *   SPEED_TIGHT_PAGE=on    a lesson page shows its teaching first: no intro and no recap (a block plan: no hook, no takeaway badge, no cheat sheet), the rest one tap away. Nothing is rewritten and no key point is dropped. docs/speed-real/ROUND4.md has the AI-judged check.
  *   Placement by skill, implied mastery and the item at the edge: services/speed-placement.js.
  *   SPEED_ALL=off          every lever off.
  * (Prerequisite credit, an answer also reviewing what it builds on, is a simulation variant only: the built-in courses have no prerequisite graph to read it from.)
@@ -23,8 +26,8 @@
 
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 
-const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET', fast: 'SPEED_FAST_ITEM', composite: 'SPEED_COMPOSITE', worked: 'SPEED_WORKED', quick: 'SPEED_QUICK_REVIEW' };
-const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off', fast: 'on', composite: 'off', worked: 'off', quick: 'off' }; // fast: the only lever through its gate (docs/SPEED-4X.md, round 3), 6 Nov 2026
+const SWITCH = { testout: 'SPEED_TESTOUT', short: 'SPEED_SHORT_LESSON', stop: 'SPEED_MASTERY_STOP', target: 'SPEED_REVIEW_TARGET', fast: 'SPEED_FAST_ITEM', composite: 'SPEED_COMPOSITE', worked: 'SPEED_WORKED', quick: 'SPEED_QUICK_REVIEW', space: 'SPEED_SPACE_RETENTION', onePrompt: 'SPEED_ONE_PROMPT', tight: 'SPEED_TIGHT_PAGE' };
+const DEFAULT = { testout: 'off', short: 'off', stop: 'off', target: 'off', fast: 'on', composite: 'off', worked: 'off', quick: 'off', space: 'off', onePrompt: 'off', tight: 'off' }; // fast: the only lever through its gate (docs/SPEED-4X.md, round 3), 6 Nov 2026
 
 /** Is this lever on? SPEED_ALL=off beats everything. A base-arm learner (efficiency.forLearner) reads every lever off, as the older levers do. */
 function enabled(lever) {
@@ -300,12 +303,27 @@ function oneTap(item) {
   for (let i = choices.length - 1; i > 0; i--) { h = (h * 31 + 7) % 9973; const j = h % (i + 1); [choices[i], choices[j]] = [choices[j], choices[i]]; }
   return { ...item, format: 'multiple_choice', choices, quick_review: true };
 }
+// ---------- round 4: spaced retention, the tight page ----------
+/** SPEED_SPACE_RETENTION for this learner: a base-arm learner, and a level the speed proof keeps plain, reads it off (efficiency.forLearner, as the other levers do). */
+function spaceOn(userId) { return require('./efficiency').forLearner(userId, () => enabled('space')); }
+const PAGE_ASIDE_BLOCK = /^(Hook_|Concept_TakeawayBadge$|Memory_CheatSheet$)/;
+/** The blocks of a plan that only warm up or recap: shown one tap away with the tight page. A block a check question depends on stays. */
+function asideBlock(block) { return !!block && PAGE_ASIDE_BLOCK.test(String(block.block || '')); }
+/** What the tight page sets aside on an ordinary lesson row: the intro and the recap. The sections, the worked example and the common mistakes stay, in their order. */
+function tightLesson(lesson) {
+  if (!lesson) return lesson;
+  const aside = {};
+  if (lesson.intro) aside.intro = lesson.intro;
+  if (lesson.summary) aside.summary = lesson.summary;
+  return { ...lesson, tight: { aside } };
+}
+
 /** What the client should know up front. A preview of another level keeps today's flow. */
 function clientFlags(userId, session) {
   const on = (lever) => require('./efficiency').forLearner(userId, () => enabled(lever));
-  if (!session || session.preview) return { testout: false, short: false, fast: false };
-  if (plainHereOf(userId, session, session.level)) return { testout: false, short: false, fast: false }; // the speed proof's plain lesson (services/speed-proof.js) gets no lever: it is the comparison
-  return { testout: on('testout'), short: on('short'), fast: on('fast') };
+  if (!session || session.preview) return { testout: false, short: false, fast: false, one_prompt: false, tight: false };
+  if (plainHereOf(userId, session, session.level)) return { testout: false, short: false, fast: false, one_prompt: false, tight: false }; // the speed proof's plain lesson (services/speed-proof.js) gets no lever: it is the comparison
+  return { testout: on('testout'), short: on('short'), fast: on('fast'), one_prompt: on('onePrompt'), tight: on('tight') };
 }
 /**
  * After an answer. A lesson level's check, with retrieval first: a miss brings the part of the page it calls for (or all of it), answers that show the skill known end the
@@ -373,5 +391,5 @@ module.exports = {
   newTracker, observe, taught, pKnown, kMean, shown, priorFromHistory, trackerFromAnswers, nextStep, pRight,
   PLACE, bestItem, placementNext, placementAnswer,
   reviewDue, endWindow,
-  stopFor, workedCount, oneTap, unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
+  stopFor, spaceOn, asideBlock, tightLesson, workedCount, oneTap, unitOf, trackerFor, setAside, lessonParts, partsForMiss, clientFlags, afterAnswer, practiceShown, reviewWanted,
 };
