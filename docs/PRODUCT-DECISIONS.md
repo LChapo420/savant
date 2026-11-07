@@ -202,3 +202,8 @@ Home shows: continue any subject, upload their own material, continue unfinished
 ## First screen (owner, 7 Nov 2026)
 
 H, a framed card on a faint subject pattern, "for now": "we might end up switching that out in the future". Kept swappable. Options: design-refs/first-screen/sheet.png, sheet-2.png. The owner said A, C and D read as first screens; B and E don't.
+
+## Beta subjects and where grade is chosen (owner, 7 Nov 2026)
+
+- Basketball, chess and piano aren't fully built, so they're hidden from beta onboarding.
+- Onboarding ends after picking subjects (and uploading, if chosen). Home then offers each new subject "Take the placement" or "Pick my grade", instead of doing those inside onboarding.
