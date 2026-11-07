@@ -179,7 +179,7 @@ function simulate(L, P, arm, plan) {
   }
   const prer = rngOf('prereq', L.id);
   for (let s = 1; s < SKILLS; s++) if (prer() < PREREQ) sk[s].pre = s - 1;
-  const SP = arm.speed || null;
+  const SP = arm.speed && arm.speed.spaceLong && arm.goal && arm.goal.H < 180 ? { ...arm.speed, space: false, stay: arm.speed.stayOff, stuck: arm.speed.stuckOff } : (arm.speed || null); // SPEED_SPACE_RETENTION=long: on a short goal, the levels stay and so do the rates measured with them
   const TGT = arm.target === undefined ? TARGET : arm.target; // matched retention: the arm's review line follows this learner's baseline
   const STU = arm.type === 'student' ? arm : null;
   let firstRight = 0; let firstN = 0;       // the learner's first answers so far (the tracker's prior for the next skill)
@@ -487,7 +487,7 @@ const SR_DENSE = [1, 2, 4, 7, 10, 14, 21, 30, 40, 55, 75, 100, 130, 170, 220, 28
 const SR_RATIOS = args['self-r'] ? args['self-r'].split(',').map(Number) : [];
 function srSchedule(r) { const out = []; let gap = 1; let day = 1; while (day <= 2300) { out.push(Math.round(day)); gap *= r; day += Math.max(1, gap); } return [...new Set(out)]; }
 /** "testout=1:short=1:stop=1:review=through:conf=0.9:margin=0.05" */
-function parseArm(s) { const o = {}; for (const kv of s.split(':')) { const [k, v] = kv.split('='); o[k] = v === 'through' || v === 'end' ? v : Number(v); } for (const k of ['testout', 'short', 'stop', 'implicit', 'place', 'implied', 'edge', 'composite', 'compositeFirst', 'fast', 'worked', 'quick', 'space', 'onePrompt']) o[k] = !!o[k]; return o; }
+function parseArm(s) { const o = {}; for (const kv of s.split(':')) { const [k, v] = kv.split('='); o[k] = v === 'through' || v === 'end' ? v : Number(v); } for (const k of ['testout', 'short', 'stop', 'implicit', 'place', 'implied', 'edge', 'composite', 'compositeFirst', 'fast', 'worked', 'quick', 'space', 'onePrompt', 'spaceLong']) o[k] = !!o[k]; return o; }
 const BW_P = [7, 10, 14];
 const BW_FLOOR = [0.95];
 const BW_SAFETY = [0, 0.1, 0.2, 0.3];

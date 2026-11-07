@@ -37,7 +37,7 @@ function enabled(lever) {
   if (efficiency.isSuspended && efficiency.isSuspended()) return false;
   if (String(process.env.SPEED_ALL || '').toLowerCase() === 'off') return false;
   const v = String(process.env[SWITCH[lever]] || DEFAULT[lever]).toLowerCase();
-  return v === 'on' || (lever === 'stop' && v === 'long');
+  return v === 'on' || ((lever === 'stop' || lever === 'space') && v === 'long');
 }
 
 /**
@@ -306,8 +306,21 @@ function oneTap(item) {
   return { ...item, format: 'multiple_choice', choices, quick_review: true };
 }
 // ---------- round 4: spaced retention, the tight page ----------
-/** SPEED_SPACE_RETENTION for this learner: a base-arm learner, and a level the speed proof keeps plain, reads it off (efficiency.forLearner, as the other levers do). */
-function spaceOn(userId) { return require('./efficiency').forLearner(userId, () => enabled('space')); }
+/** SPEED_SPACE_RETENTION for this learner: a base-arm learner reads it off (efficiency.forLearner, as the other levers do). =long: only on a goal of six months or more, or with no test day (docs/speed-real/ROUND4.md has the gate for each). */
+function spaceOn(userId, enrollmentId = null) {
+  return require('./efficiency').forLearner(userId, () => {
+    if (!enabled('space')) return false;
+    if (String(process.env.SPEED_SPACE_RETENTION || '').toLowerCase() !== 'long') return true;
+    try {
+      const enr = enrollmentId ? dbOf().byId('enrollments', enrollmentId) : null;
+      const eff = require('./retention-goal').forEnrollment(userId, enr);
+      if (!eff) return true;
+      if (eff.status === 'horizon') return !Number.isFinite(eff.days) || eff.days >= LONG_GOAL_DAYS;
+      if (eff.status === 'date') return !Number.isFinite(eff.days_left) || eff.days_left >= LONG_GOAL_DAYS;
+      return true;
+    } catch { return false; }
+  });
+}
 /** SPEED_PROOF_PASSES: is this level's own objective proven? Reads the coverage model, the same record the path's stepping reads. False for anything else, and always with the switch off. */
 function proofPasses(userId, enrollment, level) {
   return require('./efficiency').forLearner(userId, () => {

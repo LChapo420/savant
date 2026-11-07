@@ -656,7 +656,7 @@ function spaceRetention(enrollment, grade, next) {
   if (!enrollment || !enrollment.user_id) return next;
   // eslint-disable-next-line global-require
   const speed = require('./speed-levers');
-  if (!speed.spaceOn(enrollment.user_id)) return next;
+  if (!speed.spaceOn(enrollment.user_id, enrollment.id)) return next;
   try {
     // eslint-disable-next-line global-require
     if (require('./adaptation').ownerSkips(enrollment.user_id)) return next;

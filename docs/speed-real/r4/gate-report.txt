@@ -1,0 +1,103 @@
+SIMULATED. Held-out seeds 20261121, 20261122 (120 extreme + 40 ordinary each, 320 learners). Off: main with the two plain bug fixes. Costs: words (538 words at 200 wpm, 15 s item). Margins as scripts/speed-gate.js.
+noise control seed 20261121, the same arm on another random stream, worst 1%: horizon 1 week -2.5; horizon 1 month -1.5; horizon 6 months -1.9; horizon 1 year -1.9; no test day (3 y) -2.2; date 1 week -1.8; date 1 month -0.6; date 6 months -0.3; date 1 year -0.2
+noise control seed 20261122, the same arm on another random stream, worst 1%: horizon 1 week -2.8; horizon 1 month -1.0; horizon 6 months -2.4; horizon 1 year -1.9; no test day (3 y) -2.1; date 1 week -0.9; date 1 month -0.7; date 6 months -0.3; date 1 year -0.2
+
+== space against off
+  horizon 1 week     14.0 > 8.8 h (saved ci 5.0 to 5.4); recall mean -1.6 worst 1/5/10% -6.3 -4.9 -4.1, single worst -7.1; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 1 month    14.6 > 9.5 h (saved ci 5.0 to 5.3); recall mean -0.7 worst 1/5/10% -2.9 -2.4 -2.0, single worst -3.1; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 6 months   15.6 > 10.5 h (saved ci 4.9 to 5.2); recall mean -0.1 worst 1/5/10% -2.8 -1.9 -1.6, single worst -4.0; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 1 year     16.2 > 11.1 h (saved ci 4.9 to 5.2); recall mean -0.2 worst 1/5/10% -2.6 -1.9 -1.5, single worst -3.0; knowledge w1 +0.0; reach +100.0 vs +100.0
+  no test day (3 y)  17.1 > 12.1 h (saved ci 4.9 to 5.2); recall mean +0.1 worst 1/5/10% -2.2 -1.5 -1.1, single worst -3.4; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 week        13.8 > 8.9 h (saved ci 4.8 to 5.1); recall mean -0.4 worst 1/5/10% -3.4 -2.8 -2.3, single worst -4.7; knowledge w1 +0.0; reach +100.0 vs +92.5
+  date 1 month       14.6 > 9.6 h (saved ci 4.9 to 5.2); recall mean -0.4 worst 1/5/10% -2.2 -1.8 -1.5, single worst -2.5; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 6 months      15.9 > 10.8 h (saved ci 4.9 to 5.3); recall mean -0.1 worst 1/5/10% -1.0 -0.8 -0.6, single worst -1.2; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 year        16.5 > 11.4 h (saved ci 4.9 to 5.3); recall mean -0.1 worst 1/5/10% -0.7 -0.5 -0.4, single worst -0.7; knowledge w1 +0.0; reach +100.0 vs +100.0
+  MAIN: FAIL: recall at horizon 1 week: w1 -6.3
+  adverse est15: FAIL: recall at horizon 1 week: w1 -7.1
+  adverse estsd06: FAIL: recall at horizon 1 week: w1 -7.4, w5 -5.3; recall at horizon 6 months: w1 -5.5
+  adverse every3: FAIL: recall at horizon 1 week: w1 -16.7, w5 -13.5, w10 -11.5; recall at horizon 1 month: w1 -11.9, w5 -7.5, w10 -6.6; recall at date 1 month: w1 -9.8, w5 -5.3
+  adverse forget05: FAIL: recall at horizon 1 week: w1 -11.5, w5 -9.3, w10 -6.6; recall at date 1 week: w1 -5.4
+  adverse guess50: FAIL: recall at horizon 1 week: w1 -5.3
+  adverse kloss50: FAIL: recall at horizon 1 week: w1 -8.8, w5 -5.8; knowledge at horizon 1 week: -8.0; recall at date 1 week: w1 -5.3; knowledge at date 1 week: -10.0
+  adverse mass10: FAIL: recall at horizon 1 week: w1 -8.6, w5 -6.7, w10 -5.7
+  adverse tight85: FAIL: recall at horizon 1 week: w1 -7.1
+
+== space + proof + recheck against off
+  horizon 1 week     14.0 > 7.2 h (saved ci 6.5 to 7.0); recall mean -2.8 worst 1/5/10% -6.9 -5.5 -4.9, single worst -8.6; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 1 month    14.6 > 8.0 h (saved ci 6.4 to 6.8); recall mean -0.9 worst 1/5/10% -2.7 -2.4 -2.0, single worst -3.5; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 6 months   15.6 > 9.2 h (saved ci 6.2 to 6.6); recall mean -0.1 worst 1/5/10% -3.0 -2.2 -1.8, single worst -4.6; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 1 year     16.2 > 9.8 h (saved ci 6.2 to 6.6); recall mean -0.3 worst 1/5/10% -2.7 -2.2 -1.7, single worst -3.3; knowledge w1 +0.0; reach +100.0 vs +100.0
+  no test day (3 y)  17.1 > 10.7 h (saved ci 6.1 to 6.6); recall mean +0.0 worst 1/5/10% -2.5 -1.5 -1.3, single worst -2.9; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 week        13.8 > 7.4 h (saved ci 6.2 to 6.6); recall mean -0.8 worst 1/5/10% -3.1 -2.8 -2.5, single worst -3.6; knowledge w1 +0.0; reach +100.0 vs +92.5
+  date 1 month       14.6 > 8.2 h (saved ci 6.2 to 6.7); recall mean -0.4 worst 1/5/10% -1.9 -1.7 -1.4, single worst -2.3; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 6 months      15.9 > 9.5 h (saved ci 6.2 to 6.6); recall mean -0.1 worst 1/5/10% -0.9 -0.7 -0.6, single worst -1.1; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 year        16.5 > 10.1 h (saved ci 6.2 to 6.6); recall mean -0.1 worst 1/5/10% -0.6 -0.5 -0.4, single worst -0.8; knowledge w1 +0.0; reach +100.0 vs +100.0
+  MAIN: FAIL: recall at horizon 1 week: w1 -6.9, w5 -5.5
+  adverse est15: FAIL: recall at horizon 1 week: w1 -6.2, w5 -5.4
+  adverse estsd06: FAIL: recall at horizon 1 week: w1 -6.6, w5 -5.2
+  adverse every3: FAIL: recall at horizon 1 week: w1 -20.8, w5 -17.5, w10 -14.1; recall at horizon 1 month: w1 -14.4, w5 -13.0, w10 -9.8; recall at date 1 week: w1 -6.1; recall at date 1 month: w1 -11.0, w5 -7.5, w10 -5.5
+  adverse forget05: FAIL: recall at horizon 1 week: w1 -14.8, w5 -10.7, w10 -7.9
+  adverse guess50: FAIL: recall at horizon 1 week: w1 -5.0; recall at horizon 6 months: w1 -5.5
+  adverse kloss50: FAIL: recall at horizon 1 week: w1 -8.6, w5 -5.8, w10 -5.4; knowledge at horizon 1 week: -8.0; recall at date 1 week: w1 -5.5; knowledge at date 1 week: -8.0
+  adverse mass10: FAIL: recall at horizon 1 week: w1 -8.4, w5 -7.7, w10 -6.8
+  adverse tight85: FAIL: recall at horizon 1 week: w1 -6.2, w5 -5.4
+
+== beta set: + one prompt + tight page against off
+  horizon 1 week     14.0 > 6.8 h (saved ci 7.0 to 7.5); recall mean -2.9 worst 1/5/10% -7.2 -5.6 -4.8, single worst -8.8; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 1 month    14.6 > 7.6 h (saved ci 6.8 to 7.3); recall mean -0.9 worst 1/5/10% -2.8 -2.4 -2.1, single worst -3.3; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 6 months   15.6 > 8.7 h (saved ci 6.6 to 7.1); recall mean -0.2 worst 1/5/10% -3.4 -2.3 -1.9, single worst -4.4; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 1 year     16.2 > 9.3 h (saved ci 6.6 to 7.1); recall mean -0.2 worst 1/5/10% -2.9 -2.0 -1.6, single worst -3.6; knowledge w1 +0.0; reach +100.0 vs +100.0
+  no test day (3 y)  17.1 > 10.3 h (saved ci 6.6 to 7.1); recall mean +0.1 worst 1/5/10% -2.4 -1.6 -1.3, single worst -2.5; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 week        13.8 > 7.0 h (saved ci 6.6 to 7.0); recall mean -0.8 worst 1/5/10% -3.2 -2.8 -2.4, single worst -3.4; knowledge w1 +0.0; reach +100.0 vs +92.5
+  date 1 month       14.6 > 7.7 h (saved ci 6.7 to 7.1); recall mean -0.4 worst 1/5/10% -2.1 -1.7 -1.4, single worst -2.3; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 6 months      15.9 > 9.0 h (saved ci 6.7 to 7.1); recall mean -0.1 worst 1/5/10% -0.9 -0.7 -0.6, single worst -1.2; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 year        16.5 > 9.6 h (saved ci 6.7 to 7.1); recall mean -0.1 worst 1/5/10% -0.7 -0.5 -0.4, single worst -0.9; knowledge w1 +0.0; reach +100.0 vs +100.0
+  MAIN: FAIL: recall at horizon 1 week: w1 -7.2, w5 -5.6
+  adverse est15: FAIL: recall at horizon 1 week: w1 -5.9, w5 -5.2
+  adverse estsd06: FAIL: recall at horizon 1 week: w1 -6.1, w5 -5.2
+  adverse every3: FAIL: recall at horizon 1 week: w1 -21.1, w5 -17.2, w10 -13.8; recall at horizon 1 month: w1 -14.8, w5 -11.7, w10 -9.0; recall at date 1 week: w1 -5.9; recall at date 1 month: w1 -12.0, w5 -6.7, w10 -5.1
+  adverse forget05: FAIL: recall at horizon 1 week: w1 -15.3, w5 -10.4, w10 -8.3; recall at horizon 1 month: w1 -6.8
+  adverse guess50: FAIL: recall at horizon 1 week: w1 -5.0; recall at horizon 6 months: w1 -5.7
+  adverse kloss50: FAIL: recall at horizon 1 week: w1 -9.1, w5 -5.8, w10 -5.0; knowledge at horizon 1 week: -12.0; knowledge at date 1 week: -10.0
+  adverse mass10: FAIL: recall at horizon 1 week: w1 -9.3, w5 -7.5, w10 -6.5
+  adverse tight85: FAIL: recall at horizon 1 week: w1 -7.0, w5 -5.5, w10 -5.0
+
+== beta set + mastery stop against off
+  horizon 1 week     14.0 > 5.6 h (saved ci 8.1 to 8.6); recall mean -8.0 worst 1/5/10% -19.5 -15.8 -14.0, single worst -22.4; knowledge w1 -24.0; reach +84.7 vs +100.0
+  horizon 1 month    14.6 > 6.8 h (saved ci 7.6 to 8.1); recall mean -2.5 worst 1/5/10% -7.7 -5.8 -4.9, single worst -11.0; knowledge w1 +0.0; reach +99.4 vs +100.0
+  horizon 6 months   15.6 > 8.1 h (saved ci 7.3 to 7.8); recall mean -0.5 worst 1/5/10% -3.7 -2.8 -2.4, single worst -4.1; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 1 year     16.2 > 8.7 h (saved ci 7.2 to 7.7); recall mean -0.4 worst 1/5/10% -3.1 -2.3 -1.9, single worst -3.6; knowledge w1 +0.0; reach +100.0 vs +100.0
+  no test day (3 y)  17.1 > 9.7 h (saved ci 7.2 to 7.7); recall mean -0.2 worst 1/5/10% -2.8 -2.0 -1.5, single worst -3.1; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 week        13.8 > 6.1 h (saved ci 7.5 to 8.0); recall mean -2.8 worst 1/5/10% -9.5 -7.2 -5.7, single worst -10.7; knowledge w1 -2.0; reach +96.6 vs +92.5
+  date 1 month       14.6 > 7.0 h (saved ci 7.4 to 7.9); recall mean -1.5 worst 1/5/10% -5.8 -4.1 -3.3, single worst -7.2; knowledge w1 +0.0; reach +99.4 vs +100.0
+  date 6 months      15.9 > 8.4 h (saved ci 7.2 to 7.7); recall mean -0.5 worst 1/5/10% -2.8 -1.9 -1.3, single worst -3.3; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 year        16.5 > 9.0 h (saved ci 7.2 to 7.7); recall mean -0.3 worst 1/5/10% -1.9 -1.3 -0.9, single worst -2.2; knowledge w1 +0.0; reach +100.0 vs +100.0
+  MAIN: FAIL: recall at horizon 1 week: w1 -19.5, w5 -15.8, w10 -14.0; knowledge at horizon 1 week: -24.0; reach at horizon 1 week: +84.7 against +100.0; recall at horizon 1 month: w1 -7.7, w5 -5.8; recall at date 1 week: w1 -9.5, w5 -7.2, w10 -5.7; recall at date 1 month: w1 -5.8
+  adverse est15: FAIL: recall at horizon 1 week: w1 -27.5, w5 -21.3, w10 -18.7; knowledge at horizon 1 week: -68.0; recall at horizon 1 month: w1 -10.9, w5 -8.2, w10 -7.2; recall at date 1 week: w1 -13.6, w5 -10.1, w10 -8.6; knowledge at date 1 week: -28.0; recall at date 1 month: w1 -7.8, w5 -5.9; knowledge at date 1 month: -6.0
+  adverse estsd06: FAIL: recall at horizon 1 week: w1 -19.1, w5 -14.8, w10 -13.2; knowledge at horizon 1 week: -26.0; recall at horizon 1 month: w1 -7.6, w5 -6.0; recall at date 1 week: w1 -9.3, w5 -6.6, w10 -5.6; recall at date 1 month: w1 -6.1
+  adverse every3: FAIL: recall at horizon 1 week: w1 -45.1, w5 -32.8, w10 -27.5; knowledge at horizon 1 week: -50.0; recall at horizon 1 month: w1 -26.4, w5 -22.8, w10 -18.4; knowledge at horizon 1 month: -8.0; recall at date 1 week: w1 -18.0, w5 -9.4, w10 -5.9; recall at date 1 month: w1 -19.9, w5 -12.5, w10 -9.5
+  adverse forget05: FAIL: recall at horizon 1 week: w1 -28.1, w5 -23.8, w10 -20.0; knowledge at horizon 1 week: -16.0; recall at horizon 1 month: w1 -8.0, w5 -5.4; recall at date 1 week: w1 -13.1, w5 -9.9, w10 -7.6
+  adverse guess50: FAIL: recall at horizon 1 week: w1 -18.6, w5 -14.1, w10 -11.4; knowledge at horizon 1 week: -36.0; recall at horizon 1 month: w1 -8.9, w5 -6.8, w10 -5.9; knowledge at horizon 1 month: -10.0; recall at horizon 6 months: w1 -5.3; recall at horizon 1 year: w1 -5.1; recall at date 1 week: w1 -10.4, w5 -7.7, w10 -6.4; knowledge at date 1 week: -12.0; recall at date 1 month: w1 -7.1, w5 -5.8
+  adverse kloss50: FAIL: recall at horizon 1 week: w1 -22.3, w5 -17.9, w10 -14.5; knowledge at horizon 1 week: -32.0; recall at horizon 1 month: w1 -10.0, w5 -6.9, w10 -5.1; knowledge at horizon 1 month: -8.0; recall at date 1 week: w1 -19.1, w5 -8.5, w10 -7.1; knowledge at date 1 week: -32.0; recall at date 1 month: w1 -6.1
+  adverse mass10: FAIL: recall at horizon 1 week: w1 -21.5, w5 -16.0, w10 -14.6; knowledge at horizon 1 week: -24.0; recall at horizon 1 month: w1 -8.7, w5 -6.8, w10 -5.4; recall at date 1 week: w1 -9.4, w5 -7.4, w10 -6.2; recall at date 1 month: w1 -6.5
+  adverse tight85: FAIL: recall at horizon 1 week: w1 -19.1, w5 -15.2, w10 -13.2; knowledge at horizon 1 week: -20.0; recall at horizon 1 month: w1 -7.1, w5 -6.0; recall at date 1 week: w1 -9.2, w5 -7.1, w10 -5.8; knowledge at date 1 week: -6.0; recall at date 1 month: w1 -5.8
+
+== everything: + test-out, short, worked, one-tap against off
+  horizon 1 week     14.0 > 5.8 h (saved ci 8.0 to 8.5); recall mean -7.1 worst 1/5/10% -18.0 -14.3 -12.0, single worst -19.3; knowledge w1 -8.0; reach +93.8 vs +100.0
+  horizon 1 month    14.6 > 7.0 h (saved ci 7.4 to 7.9); recall mean -2.3 worst 1/5/10% -7.6 -5.2 -4.4, single worst -8.9; knowledge w1 +0.0; reach +99.7 vs +100.0
+  horizon 6 months   15.6 > 8.4 h (saved ci 6.9 to 7.4); recall mean -0.5 worst 1/5/10% -3.6 -2.7 -2.2, single worst -3.8; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 1 year     16.2 > 9.1 h (saved ci 6.8 to 7.3); recall mean -0.4 worst 1/5/10% -3.1 -2.4 -1.9, single worst -3.6; knowledge w1 +0.0; reach +100.0 vs +100.0
+  no test day (3 y)  17.1 > 10.2 h (saved ci 6.6 to 7.1); recall mean -0.1 worst 1/5/10% -2.1 -1.7 -1.3, single worst -2.6; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 week        13.8 > 6.3 h (saved ci 7.3 to 7.8); recall mean -2.4 worst 1/5/10% -8.9 -6.4 -5.4, single worst -9.6; knowledge w1 +0.0; reach +99.4 vs +92.5
+  date 1 month       14.6 > 7.2 h (saved ci 7.2 to 7.7); recall mean -1.3 worst 1/5/10% -5.1 -3.7 -3.1, single worst -6.5; knowledge w1 +0.0; reach +99.7 vs +100.0
+  date 6 months      15.9 > 8.8 h (saved ci 6.9 to 7.3); recall mean -0.4 worst 1/5/10% -2.4 -1.6 -1.3, single worst -2.6; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 year        16.5 > 9.5 h (saved ci 6.8 to 7.2); recall mean -0.2 worst 1/5/10% -1.7 -1.1 -0.8, single worst -1.9; knowledge w1 +0.0; reach +100.0 vs +100.0
+  MAIN: FAIL: recall at horizon 1 week: w1 -18.0, w5 -14.3, w10 -12.0; knowledge at horizon 1 week: -8.0; reach at horizon 1 week: +93.8 against +100.0; recall at horizon 1 month: w1 -7.6, w5 -5.2; recall at date 1 week: w1 -8.9, w5 -6.4, w10 -5.4; recall at date 1 month: w1 -5.1
+  adverse est15: FAIL: recall at horizon 1 week: w1 -26.2, w5 -20.1, w10 -17.7; knowledge at horizon 1 week: -60.0; recall at horizon 1 month: w1 -10.1, w5 -7.8, w10 -6.6; recall at date 1 week: w1 -11.5, w5 -9.4, w10 -7.8; knowledge at date 1 week: -14.0; recall at date 1 month: w1 -6.9, w5 -5.7
+  adverse estsd06: FAIL: recall at horizon 1 week: w1 -17.3, w5 -14.3, w10 -11.4; knowledge at horizon 1 week: -14.0; recall at horizon 1 month: w1 -7.8, w5 -5.2; recall at date 1 week: w1 -8.5, w5 -6.3, w10 -5.1; recall at date 1 month: w1 -5.2
+  adverse every3: FAIL: recall at horizon 1 week: w1 -43.2, w5 -31.7, w10 -25.7; knowledge at horizon 1 week: -52.0; recall at horizon 1 month: w1 -27.3, w5 -23.2, w10 -17.8; recall at date 1 week: w1 -15.5, w5 -11.0, w10 -5.7; recall at date 1 month: w1 -20.7, w5 -13.8, w10 -9.3
+  adverse forget05: FAIL: recall at horizon 1 week: w1 -32.5, w5 -22.4, w10 -18.7; knowledge at horizon 1 week: -8.0; recall at horizon 1 month: w1 -6.2; recall at date 1 week: w1 -12.2, w5 -8.1, w10 -6.1
+  adverse guess50: FAIL: recall at horizon 1 week: w1 -15.4, w5 -12.7, w10 -10.7; knowledge at horizon 1 week: -18.0; recall at horizon 1 month: w1 -8.9, w5 -6.5, w10 -5.5; recall at horizon 6 months: w1 -5.1; recall at date 1 week: w1 -9.4, w5 -7.0, w10 -5.9; knowledge at date 1 week: -10.0; recall at date 1 month: w1 -6.7, w5 -5.5
+  adverse kloss50: FAIL: recall at horizon 1 week: w1 -28.5, w5 -16.6, w10 -12.7; knowledge at horizon 1 week: -32.0; recall at horizon 1 month: w1 -10.2, w5 -6.3; recall at date 1 week: w1 -13.7, w5 -8.9, w10 -6.4; knowledge at date 1 week: -24.0; recall at date 1 month: w1 -6.6; knowledge at date 1 month: -6.0
+  adverse mass10: FAIL: recall at horizon 1 week: w1 -21.1, w5 -16.3, w10 -13.6; knowledge at horizon 1 week: -6.0; recall at horizon 1 month: w1 -8.3, w5 -6.0, w10 -5.3; recall at horizon 6 months: w1 -5.1; recall at date 1 week: w1 -8.9, w5 -7.3, w10 -5.9; recall at date 1 month: w1 -6.0
+  adverse tight85: FAIL: recall at horizon 1 week: w1 -19.0, w5 -14.1, w10 -11.6; knowledge at horizon 1 week: -12.0; recall at horizon 1 month: w1 -6.7; recall at date 1 week: w1 -8.7, w5 -6.3, w10 -5.7; recall at date 1 month: w1 -5.3

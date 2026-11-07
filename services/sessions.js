@@ -1457,7 +1457,7 @@ function blockRetentionItem({ userId, session, blockIndex }) {
  */
 /** SPEED_SPACE_RETENTION: did this move step over a retention level? The learner is told (session.js). */
 function spacedRetentionBetween(enrollment, grade, from, to) {
-  if (!speedLevers.spaceOn(enrollment.user_id) || !(to > from + 1)) return false;
+  if (!speedLevers.spaceOn(enrollment.user_id, enrollment.id) || !(to > from + 1)) return false;
   for (let l = from + 1; l < to; l++) if (blockLevels.kindFor(grade, l) === 'retention') return true;
   return false;
 }

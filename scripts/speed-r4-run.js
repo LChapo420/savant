@@ -17,7 +17,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 const SIM = path.join(__dirname, 'faster-by-goal-sim.js');
-const DESIGN = 777003; const HELD = [20261121, 20261122];
+const DESIGN = 777003; const HELD = [20261121, 20261122]; const FRESH = 20261123; // FRESH: only the =long rule, frozen after reading HELD, reads it
 const pos = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const flag = (k, d) => { const m = process.argv.find((a) => a.startsWith(`--${k}=`)); return m ? m.split('=').slice(1).join('=') : d; };
 const [CMD, OUT] = pos;
@@ -28,6 +28,7 @@ const ARMS = {
   'space': 'space=1:appN=1:fast=1:stuck=0.06:stay=0.59',
   'space + proof + recheck': 'space=1:appN=1:fast=1:stuck=0:stay=0.09',
   'beta set: + one prompt + tight page': 'space=1:appN=1:fast=1:stuck=0:stay=0.09:onePrompt=1:tight=0.85',
+  'space, long goals only, + one prompt + tight page': 'space=1:spaceLong=1:stayOff=0.43:stuckOff=0.06:appN=1:fast=1:stuck=0:stay=0.09:onePrompt=1:tight=0.85',
   'beta set + mastery stop': 'stop=1:space=1:appN=1:fast=1:stuck=0:stay=0.09:onePrompt=1:tight=0.85',
   'everything: + test-out, short, worked, one-tap': 'testout=1:short=1:stop=1:worked=1:quick=1:space=1:appN=1:fast=1:stuck=0:stay=0.09:onePrompt=1:tight=0.85',
 };
@@ -87,6 +88,16 @@ async function run() {
       jobs.push({ args: [`--seed=${HELD[0]}`, ...COMMON, '--quick=1', `--speed-arms=${armList}`, ...COST.words, ...a], out: path.join(dir, `var-${name}.json`) });
     }
   }
+  if (only.includes('long')) {
+    const dir = path.join(OUT, 'long'); fs.mkdirSync(dir, { recursive: true });
+    const arms = [OFF, ARMS['space, long goals only, + one prompt + tight page']].join(',');
+    jobs.push({ args: [`--seed=${FRESH}`, ...COMMON, '--quick=1', `--speed-arms=${arms}`, ...COST.words], out: path.join(dir, `h-${FRESH}.json`) });
+    for (const [name, a] of Object.entries({ kloss50: ['--kloss=0.5'], forget05: ['--forget=0.5'], estsd06: ['--est-sd=0.6'], every3: ['--every=3'], mass10: ['--mass2=0.1'], tight85: ['--tight-gain=0.85'], guess50: ['--guess=0.5'], est15: ['--est-gain=1.5'] })) jobs.push({ args: [`--seed=${FRESH}`, ...COMMON, '--quick=1', `--speed-arms=${arms}`, ...COST.words, ...a], out: path.join(dir, `var-${name}.json`) });
+  }
+  if (only.includes('whatif')) {
+    const dir = path.join(OUT, 'whatif'); fs.mkdirSync(dir, { recursive: true });
+    for (const g of [1, 1.5, 2, 3, 5]) for (const m of [1, 1.5, 2, 3]) { jobs.push({ args: [`--seed=${HELD[0]}`, ...COMMON, '--quick=1', `--speed-arms=${ARMS['beta set: + one prompt + tight page']}`, ...COST.words, `--speed-gain=${g}`, `--mem-gain=${m}`], out: path.join(dir, `g${g}-m${m}.json`) }); }
+  }
   if (only.includes('sens')) for (const [name, a] of Object.entries(SENS)) {
     const dir = path.join(OUT, 'sens', slug(name)); fs.mkdirSync(path.join(dir, 'arms'), { recursive: true });
     const args = [...COST.words, ...a];
@@ -126,6 +137,13 @@ function gate() {
   const sets = HELD.map((s, i) => load(path.join(OUT, 'words', 'arms', `h${i + 1}-${s}.json`)));
   for (const s of HELD) { const n = load(path.join(OUT, 'gate', `noise-${s}.json`)); const base = sets[HELD.indexOf(s)]; const dr = {}; for (const g of Object.keys(n.rows[0].goals)) { const d = n.rows.map((r, i) => r.goals[g].speed[OFF].recall - base.rows[i].goals[g].speed[OFF].recall); dr[g] = lowQ(d, 0.01); } lines.push(`noise control seed ${s}, the same arm on another random stream, worst 1%: ${Object.entries(dr).map(([g, v]) => `${g} ${pts(v)}`).join('; ')}`); }
   const levers = ['space', 'space + proof + recheck', 'beta set: + one prompt + tight page', 'beta set + mastery stop', 'everything: + test-out, short, worked, one-tap'];
+  { // the =long rule, frozen after reading the two held-out seeds above, on a fresh seed
+    const L = 'space, long goals only, + one prompt + tight page'; const set = [load(path.join(OUT, 'long', `h-${FRESH}.json`))]; const cmp = compare(set, ARMS[L], OFF); const w = why(cmp, true);
+    lines.push(`\n== ${L} against off, fresh seed ${FRESH}, 160 learners`);
+    for (const [g, v] of Object.entries(cmp)) lines.push(`  ${g.padEnd(18)} ${v.hOff.toFixed(1)} > ${v.hOn.toFixed(1)} h (saved ci ${v.ci[0].toFixed(1)} to ${v.ci[1].toFixed(1)}); recall mean ${pts(v.mean)} worst 1/5/10% ${pts(v.w1)} ${pts(v.w5)} ${pts(v.w10)}; knowledge w1 ${pts(v.k1)}; reach ${pts(v.sOn)} vs ${pts(v.sOff)}`);
+    lines.push(`  MAIN: ${w.length ? `FAIL: ${w.join('; ')}` : 'PASS'}`);
+    for (const f of fs.readdirSync(path.join(OUT, 'long')).filter((x) => x.startsWith('var-'))) { const name = f.replace(/^var-|\.json$/g, ''); const a = why(compare([load(path.join(OUT, 'long', f))], ARMS[L], OFF), false); lines.push(`  adverse ${name}: ${a.length ? `FAIL: ${a.join('; ')}` : 'pass'}`); }
+  }
   const out = {};
   for (const lever of levers) {
     const cmp = compare(sets, ARMS[lever], OFF); const w = why(cmp, true);

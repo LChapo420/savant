@@ -202,6 +202,8 @@ const SEC = { item: 15, wrong: 12 }; // only to run the clock; never reported as
   }
   led.path_days = (offset - startOffset) / DAY;
   led.final_level = db.byId('enrollments', enr.id).current_level;
+  try { const rep = coverage.forEnrollment(user.id, db.byId('enrollments', enr.id)); const tally = {}; for (const st2 of rep.states) tally[st2.status] = (tally[st2.status] || 0) + 1; led.coverage = tally; } catch { led.coverage = null; }
+  led.review_answers = led.levels.reduce((n, r) => n + (r.roles.review || 0), 0);
   // Whole-stretch view
   const stretchRows = new Map();
   for (const r of led.levels) { const L = lessonOf(r.level); const s = stretchRows.get(L) || { lesson: L, levels: 0, practice: 0, retention: 0, game: 0, answers: 0, right: 0, status: null, provenAfterLevels: null }; s.levels++; s.answers += r.answers; s.right += r.right; if (r.retention) s.retention++; else if (r.route !== 'session' && r.kind === 'practice') s.game++; else if (r.kind === 'practice') s.practice++; s.status = r.status; if (s.provenAfterLevels === null && (r.status === 'proven' || r.status === 'retained')) s.provenAfterLevels = s.levels; stretchRows.set(L, s); }
