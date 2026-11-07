@@ -1,7 +1,8 @@
 /* The later pages under UI_V2 (docs/UI-V2.md): the lesson, the subject page, review. Loaded after js/ui2/shell.js by services/ui-v2.js.
  *
  * Each page's own script still draws it, with all its decisions, links and listeners. This only moves what was drawn, puts the giraffe at the head, and folds long notes.
- * A node that moves is the node itself, so nothing is copied and every listener stays. Words in a bubble are read from the page, never written here.
+ * A node that moves is the node itself, so nothing is copied and every listener stays, and a script that fills a node by its id still finds it inside a fold.
+ * The bubble's words are read from the page where the page says it; a few short ones are written here, and no agreement or privacy wording is touched, only placed.
  */
 (function () {
   if (!window.App || !App.ui2 || !document.documentElement.hasAttribute('data-ui2')) return;
@@ -153,9 +154,91 @@
     host.prepend(pageGuide(words || (h1 ? h1.textContent.trim() : 'Review.')));
   }
 
+  // ── the profile: who, the numbers, the scorecard first, then one row per thing ──
+  const PF_GROUP = { 'Your goals': 'Goals', 'How long to remember': 'Goals', 'Your plan': 'Your data and plan', 'Your data': 'Your data and plan' };
+  const PF_ORDER = ['Your week and subjects', 'Mastery by subject', 'Goals', 'How Savant sees you', 'What your tutor remembers', 'Your details report', 'Focus', 'My material', 'Invite a friend', 'Look', 'Settings', 'Your data and plan'];
+  function openTarget() {
+    const id = location.hash.slice(1);
+    const t = id && /^[a-z0-9-]+$/i.test(id) ? document.getElementById(id) : null;
+    if (!t) return;
+    for (let d = t.closest('details'); d; d = d.parentElement && d.parentElement.closest('details')) d.open = true;
+    t.scrollIntoView();
+  }
+  function dressProfile() {
+    const pf = document.querySelector('#root > .pf');
+    if (!pf || pf.dataset.u2) return;
+    pf.dataset.u2 = '1';
+    root.classList.add('u2-profile');
+    const segs = [];
+    let cur = null;
+    [...pf.children].forEach((n) => {
+      if (n.matches('.pf-head, .pf-stats')) return;
+      if (n.matches('.sec-head, h2.section-title')) {
+        const name = (n.querySelector('h2') || n).textContent.trim();
+        if (cur && !cur.nodes.length && cur.opener) { cur.nodes.push(n); return; } // "How Savant sees you" holds the heading after it
+        cur = { name, nodes: [], opener: n.matches('.sec-head'), head: n };
+        segs.push(cur);
+      } else if (n.id === 'invite-host') {
+        segs.push({ name: 'Invite a friend', nodes: [n] });
+      } else if (n.matches('.pf-grid')) {
+        segs.push({ name: 'Your week and subjects', nodes: [n] });
+      } else if (cur) cur.nodes.push(n);
+    });
+    const score = segs.find((s) => s.name === 'Your learning scorecard');
+    const rows = new Map();
+    segs.forEach((s) => {
+      if (s === score) return;
+      const name = PF_GROUP[s.name] || s.name;
+      if (!rows.has(name)) rows.set(name, []);
+      const merged = !!PF_GROUP[s.name];
+      if (s.head) { if (merged) rows.get(name).push(s.head); else s.head.remove(); }
+      rows.get(name).push(...s.nodes);
+    });
+    const list = el('div', 'u2-rows u2-pf-rows');
+    const names = [...PF_ORDER.filter((n) => rows.has(n)), ...[...rows.keys()].filter((n) => !PF_ORDER.includes(n))];
+    names.forEach((name) => {
+      const d = el('details', 'u2-row-fold');
+      if (rows.get(name).some((n) => n.id === 'invite-host')) d.classList.add('u2-maybe-empty');
+      d.appendChild(el('summary', 'u2-opt u2-s-row', `<b>${App.escapeHtml(name)}</b>${ic('chev-d', 'u2-mute')}`));
+      const body = el('div', 'u2-row-body');
+      rows.get(name).forEach((n) => body.appendChild(n));
+      d.appendChild(body);
+      list.appendChild(d);
+    });
+    if (score) {
+      const box = el('section', 'u2-score');
+      score.head.className = 'u2-h';
+      box.appendChild(score.head);
+      score.nodes.forEach((n) => box.appendChild(n));
+      pf.appendChild(box);
+      const cats = box.querySelectorAll('.sc-category');
+      if (cats.length) {
+        const holder = cats[0].parentElement;
+        const all = fold('See all measures', []);
+        holder.before(all);
+        all.querySelector('.u2-fold-body').appendChild(holder);
+      }
+      const first = score.nodes[0];
+      const conf = first && first.querySelector('.stat-block');
+      const headline = first && first.querySelector('p.small strong');
+      if (conf && headline) {
+        const lead = el('div', 'u2-score-lead');
+        lead.appendChild(conf);
+        lead.appendChild(headline.parentElement);
+        const rest = [...first.children];
+        first.prepend(lead);
+        first.appendChild(fold('What this means', rest));
+      }
+    }
+    pf.appendChild(list);
+    openTarget();
+    window.addEventListener('hashchange', openTarget);
+  }
+
   let queued = false;
   function tick() {
     queued = false;
+    if (PAGE === '/profile') dressProfile();
     if (PAGE === '/path') dressPath();
     if (PAGE === '/base-lesson') dressLesson();
     if (PAGE === '/review') dressReview();

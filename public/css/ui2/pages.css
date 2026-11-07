@@ -266,3 +266,62 @@ html[data-ui2].u2-review .review-row .btn { flex: none; }
   html[data-ui2].u2-review .hero-body { margin: 0; }
   html[data-ui2].u2-review .review-section { max-width: none; }
 }
+
+/* ── what the pages not yet rearranged share too: fields, headings in cards ── */
+html[data-ui2] main.page h1 { font-family: var(--serif); font-weight: 400; }
+html[data-ui2] main.page .field input, html[data-ui2] main.page .field textarea, html[data-ui2] main.page .field select, html[data-ui2] main.page .input, html[data-ui2] main.page select { min-height: 48px; border: 1.5px solid var(--line-strong); border-radius: 14px; background: var(--page); color: var(--ink); font: 400 16px/22px var(--font); padding: 10px 14px; box-shadow: none; }
+html[data-ui2] main.page .field > span { font-size: 14px; line-height: 19px; color: var(--ink-2); font-weight: 400; }
+html[data-ui2] main.page .card > h2, html[data-ui2] main.page .card h3 { font: 700 17px/23px var(--font); color: var(--ink); margin: 0 0 8px; }
+html[data-ui2] main.page .small { font-size: 14px; line-height: 20px; }
+html[data-ui2] main > .notice { margin: 16px 24px; }
+html[data-ui2] .spinner { border-color: var(--well-2); border-top-color: var(--act); }
+html[data-ui2] .u2-fold .card { margin: 0; }
+html[data-ui2] .u2-maybe-empty:has(#invite-host:empty), html[data-ui2] .u2-maybe-empty:has(#reading-offer:empty) { display: none; }
+
+/* A row that opens in place: raised, sinking when open. */
+html[data-ui2] .u2-row-fold > summary { list-style: none; justify-content: space-between; }
+html[data-ui2] .u2-row-fold > summary::-webkit-details-marker { display: none; }
+html[data-ui2] .u2-row-fold[open] > summary { box-shadow: none; transform: translateY(4px); border-color: var(--line-strong); }
+html[data-ui2] .u2-row-fold[open] > summary .u2-ic { transform: rotate(180deg); }
+html[data-ui2] .u2-row-body { padding: 16px 0 8px; display: grid; gap: 12px; min-width: 0; }
+html[data-ui2] .u2-row-body > * { margin-top: 0 !important; min-width: 0; }
+html[data-ui2] .u2-row-body .section-title { font: 700 17px/23px var(--font); margin: 8px 0 0; }
+html[data-ui2] .u2-row-body .section-title svg { display: none; }
+
+/* ── the profile ──────────────────────────────────────────────────────── */
+html[data-ui2].u2-profile #root { max-width: 640px; margin: 0 auto; padding: 8px 24px 32px; }
+html[data-ui2].u2-profile .pf { display: grid; gap: 18px; min-width: 0; }
+html[data-ui2].u2-profile .pf > * { margin: 0; min-width: 0; }
+html[data-ui2].u2-profile .pf-head { display: flex; align-items: center; gap: 12px; padding: 0; background: none; border: 0; }
+html[data-ui2].u2-profile .pf-avatar { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--act-tint); color: var(--act-text); font: 400 26px/1 var(--serif); box-shadow: none; border: 0; }
+html[data-ui2].u2-profile .pf-who h1 { font-size: 28px; line-height: 1.1; margin: 0; }
+html[data-ui2].u2-profile .pf-who p { font-size: 14px; line-height: 19px; color: var(--ink-2); margin: 2px 0 0; }
+html[data-ui2].u2-profile .pf-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; }
+html[data-ui2].u2-profile .pf-stats > div { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 10px; align-items: center; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 18px; background: var(--page); box-shadow: none; text-align: left; }
+html[data-ui2].u2-profile .pf-stats > div.hidden { display: none; }
+html[data-ui2].u2-profile .pf-stats svg { grid-row: 1 / span 2; width: 22px; height: 22px; color: var(--ink-2); }
+html[data-ui2].u2-profile .pf-stats dd { grid-column: 2; margin: 0; font: 700 20px/24px var(--num); color: var(--ink); }
+html[data-ui2].u2-profile .pf-stats dt { grid-column: 2; margin: 0; font: 400 13.5px/18px var(--font); color: var(--ink-2); text-transform: none; letter-spacing: 0; }
+html[data-ui2].u2-profile .u2-score { display: grid; gap: 12px; min-width: 0; }
+html[data-ui2].u2-profile .u2-score > .card { margin: 0 !important; }
+html[data-ui2].u2-profile .u2-score svg.icon { display: none; }
+html[data-ui2].u2-profile .u2-score-lead { display: grid; gap: 6px; }
+html[data-ui2].u2-profile .u2-score-lead .stat-block { text-align: left !important; display: flex; align-items: baseline; gap: 10px; }
+html[data-ui2].u2-profile .u2-score-lead .value { font: 400 44px/1 var(--serif); color: var(--ink); }
+html[data-ui2].u2-profile .u2-score-lead .label { font-size: 15px; color: var(--ink-2); text-transform: none; letter-spacing: 0; }
+html[data-ui2].u2-profile .u2-score-lead p { margin: 0 !important; font-size: 16px; line-height: 22px; }
+html[data-ui2].u2-profile .u2-pf-rows { gap: 12px; }
+html[data-ui2].u2-profile .sec-head { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; }
+html[data-ui2].u2-profile .sec-head h2 { font: 700 17px/23px var(--font); margin: 0; }
+html[data-ui2].u2-profile .sec-head span { font-size: 13.5px; color: var(--ink-3); }
+html[data-ui2].u2-profile .pf-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+html[data-ui2].u2-profile .sc-category { border-top: 1px solid var(--line); }
+html[data-ui2].u2-profile .sc-category summary { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 700; cursor: pointer; }
+html[data-ui2].u2-profile .table-scroll { overflow-x: auto; }
+@media (min-width: 1025px) {
+  html[data-ui2].u2-profile #root { max-width: 960px; }
+  html[data-ui2].u2-profile .pf-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  html[data-ui2].u2-profile .pf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html[data-ui2].u2-profile .u2-row-fold:not([open]) { max-width: none; }
+}
+
