@@ -2,7 +2,8 @@
 # children's. They stay in this folder, readable only by this Windows user, and are never put in git or on any other service.
 #
 #   powershell -NoProfile -ExecutionPolicy Bypass -File pull-backups.ps1              pull what is missing, verify it, rotate
-#   powershell -NoProfile -ExecutionPolicy Bypass -File pull-backups.ps1 -Install     make the folder, restrict it, copy this script in, schedule it every 6 hours
+#   powershell -NoProfile -ExecutionPolicy Bypass -File pull-backups.ps1 -Install     make the folder, restrict it to this user, copy these scripts in
+#   powershell -NoProfile -ExecutionPolicy Bypass -File C:\coding\savant-backups\pull-backups.ps1 -Schedule     run every 6 hours and at sign-in (the owner's step)
 #
 # Each pull first makes a fresh set on the server, by sending savant-backup.sh (kept beside this script) over ssh as user savant: one run, nothing left running
 # or scheduled there. So with this PC off no new sets are made, and the server's own copies stop too. -NoFreshSet only pulls what is there.
@@ -13,6 +14,7 @@
 [CmdletBinding()]
 param(
   [switch]$Install,
+  [switch]$Schedule,
   [switch]$NoFreshSet,
   [string]$Dest = 'C:\coding\savant-backups',
   [string]$RemoteHost = 'root@192.209.63.151',
@@ -40,13 +42,15 @@ function Log([string]$Message) {
 function Restrict-Folder {
   # Only this user: inheritance off, every other entry gone. Applied again on each run in case something widened it.
   $me = "$env:USERDOMAIN\$env:USERNAME"
-  & icacls $Dest /inheritance:r /grant:r "${me}:(OI)(CI)F" /T /C /Q | Out-Null
+  & icacls $Dest /inheritance:r /grant:r "${me}:(OI)(CI)F" /C /Q | Out-Null
   if ($LASTEXITCODE -ne 0) { throw "icacls failed ($LASTEXITCODE) on $Dest" }
+  # Everything inside takes the folder's rule and nothing else. (Not /T on the grant: that strips a file's inherited rights and leaves it unreadable to all.)
+  & icacls "$Dest\*" /reset /T /C /Q | Out-Null
 }
 
 if ($Install) {
   New-Item -ItemType Directory -Force -Path $Dest, $Sets | Out-Null
-  $inGit = & git -C $Dest rev-parse --is-inside-work-tree 2>$null
+  $inGit = & cmd /c "git -C `"$Dest`" rev-parse --is-inside-work-tree 2>nul"
   if ($inGit -eq 'true') { throw "$Dest is inside a git repository. It must not be." }
   Restrict-Folder
   $target = Join-Path $Dest 'pull-backups.ps1'
@@ -55,7 +59,14 @@ if ($Install) {
     # bash on the server refuses CRLF, and a Windows checkout can make it so.
     [System.IO.File]::WriteAllText((Join-Path $Dest 'savant-backup.sh'), [System.IO.File]::ReadAllText((Join-Path $PSScriptRoot 'savant-backup.sh')).Replace("`r`n", "`n"))
   }
-  & icacls $Dest /inheritance:r /grant:r "$env:USERDOMAIN\${env:USERNAME}:(OI)(CI)F" /T /C /Q | Out-Null
+  Restrict-Folder
+  Write-Output "Ready: $Dest, only $env:USERNAME can read it."
+  exit 0
+}
+
+if ($Schedule) {
+  $target = Join-Path $Dest 'pull-backups.ps1'
+  if (-not (Test-Path $target)) { throw "Run -Install first." }
   $action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$target`""
   $now = (Get-Date).Date.AddHours(1)
   $triggers = @(
@@ -65,6 +76,7 @@ if ($Install) {
   $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -RunOnlyIfNetworkAvailable -MultipleInstances IgnoreNew -ExecutionTimeLimit (New-TimeSpan -Hours 2) -Priority 7
   $principal = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType Interactive -RunLevel Limited
   Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $triggers -Settings $settings -Principal $principal -Force | Out-Null
+
   Write-Output "Scheduled '$TaskName' every 6 hours and at sign-in; it runs from $target."
   exit 0
 }
