@@ -89,9 +89,8 @@ async function post(body, timeoutMs, { signal = null, task = null } = {}) {
 }
 
 /**
- * The same request streamed (COLD_FIRST_BLOCK, services/first-block.js): `onText(textSoFar, { model })` sees the reply as it grows. It may return 'stop' (the caller has what it
- * wanted: the stream ends and what came is returned, marked `stopped`) or a string reason (the reply has derailed: thrown as an unusable reply, so nobody waits out a loop to
- * the output cap). The answer has the same shape as post()'s. An ended stream's usage is the API's own, or, when it was cut short, counted from the characters received (about 4 to a token).
+ * The same request streamed (COLD_FIRST_BLOCK, services/first-block.js): `onText(textSoFar, { model })` sees the reply as it grows. It may return anything truthy to end the stream: the caller
+ * has what it wanted, or has seen the reply derail, and keeps what came (marked `stopped`, so the pool does not move on and nobody waits out a loop to the output cap). The answer has the same shape as post()'s. An ended stream's usage is the API's own, or, when it was cut short, counted from the characters received (about 4 to a token).
  */
 async function postStream(body, timeoutMs, { signal = null, task = null, onText }) {
   if (!KEY() || !BASE()) throw Object.assign(new Error('coral: no key'), { status: 403 });
@@ -151,8 +150,8 @@ async function postStream(body, timeoutMs, { signal = null, task = null, onText 
     if (verdict) ctrl.abort();
     const used = usage || estimated();
     settleOnce({ usd: ledger.costOf(body.model, used), outcome: 'ok', usage: used });
-    if (verdict && verdict !== 'stop') throw Object.assign(new Error(`coral: ${body.model} derailed (${String(verdict).slice(0, 80)})`), { status: 422, unusable: true, derailed: true, usage: used });
-    return { payload: { choices: [{ message: { content: text }, finish_reason: finish }] }, usage: used, stopped: verdict === 'stop' };
+    // A derail ends as stopped too: the caller keeps the blocks that came and asks for the rest. Thrown, the pool moved on to slow slots (112 s on Munito, 6 Nov).
+    return { payload: { choices: [{ message: { content: text }, finish_reason: finish }] }, usage: used, stopped: !!verdict };
   } catch (err) {
     settleOnce({ outcome: 'unknown' });
     if (err.name === 'AbortError') {

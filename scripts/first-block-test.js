@@ -54,6 +54,19 @@ function fake(s, seed) {
   const tokens = Array.from({ length: 200 }, (_, i) => `{"text":"x_${i}","color":"#${(i * 4099).toString(16).padStart(6, '0')}"}`).join(',');
   check('a long list of different tokens has not derailed', !fb.derailed(`{"tokens":[${tokens}`), fb.derailed(`{"tokens":[${tokens}`));
 
+  // ── the stream ─────────────────────────────────────────────────────────
+  {
+    process.env.CORAL_API_KEY = 'test'; process.env.CORAL_BASE_URL = 'http://coral.test';
+    const { coral, _setFetch } = require('../services/providers/coral'); // eslint-disable-line global-require
+    const sse = (parts) => ({ ok: true, status: 200, body: (async function* gen() { for (const p of parts) yield Buffer.from(`data: ${JSON.stringify({ choices: [{ delta: { content: p } }] })}\n\n`); }()) });
+    const loop = '"do_not_use_this_key_'.repeat(40);
+    _setFetch(async () => sse(['{"blocks":[{"index":0,"data":{"a":1}},', loop, loop]));
+    let seen = 0;
+    const got2 = await coral.structured({ task: 'block_fill', system: 's', user: 'u', schema: { type: 'object' }, schemaName: 'x', maxTokens: 100, model: 'deepseek-v4.1-flash-fast', timeoutMs: 5000, onText: (t) => { seen += 1; return fb.derailed(t, 0, 0); } });
+    check('a derailed stream ends as stopped, not as a failure the pool would move on from', got2.stopped === true && seen >= 1, got2);
+    _setFetch(null);
+  }
+
   // ── the flag ───────────────────────────────────────────────────────────
   delete process.env.COLD_FIRST_BLOCK;
   check('off by default', !fb.on());
