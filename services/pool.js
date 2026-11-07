@@ -686,7 +686,7 @@ function timeoutFor(slot, req, opts) {
   const cap = Math.min(ms, Number(process.env.POOL_MAX_TIMEOUT_MS || 600000));
   // COLD_FIRST_BLOCK: a part's fact read, a prewrite's too (a learner may land on it any second, and a call started while speculative kept no deadline: 115 s on a slow slot, 6 Nov): past this the next slot takes it.
   const stNow = lane.getStore();
-  if (String(process.env.COLD_FIRST_BLOCK || '').toLowerCase() === 'on' && req.task === 'fact_verify' && req.coral === true && stNow && stNow.fast && stNow.background === false) return Math.min(cap, Number(process.env.COLD_READ_DEADLINE_MS || 30000));
+  if (String(process.env.COLD_FIRST_BLOCK || '').toLowerCase() === 'on' && req.task === 'fact_verify' && req.coral === true && stNow && stNow.fast && stNow.background === false) return Math.min(cap, Number(process.env.COLD_READ_DEADLINE_MS || 45000));
   return isWaitingStore(lane.getStore()) && req.coral === true && opts.noDeadline !== true ? Math.min(cap, waitingDeadlineMs()) : cap;
 }
 

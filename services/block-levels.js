@@ -2692,14 +2692,14 @@ async function writeInParts(x) {
     const earlier = st.blocks.filter((b) => blockOk(b) && b.index < upto).map((b) => ({ index: b.index, block: b.block, data: b.data }));
     if (!partBlocks.length && !partItems.some(Boolean)) { part.result = { passed: true }; return; }
     let result = null;
-    for (let a = 0; a < 3; a++) {
+    // A learner is reading this page: every try stays in their lane, on the paid readers. No free model reads a part they will see next, and no reader in time means the part is not shown.
+    for (let a = 0; a < 4; a++) {
       const read = () => verifyAndRepair({
         context, blocks: partBlocks, items: partItems, specs: layout.checks, validateBlock: validate, owner, factSheet, coverage: layout.coverage || [], where, excludeFamilies: families(), earlier,
         hedgeAfterMs: first ? Number(process.env.COLD_FIRST_HEDGE_MS || 6000) : null,
       });
-      // The last try runs in the background lane: slower slots, and free models, are allowed there, as for any write nobody is waiting on.
-      // eslint-disable-next-line no-await-in-loop, global-require
-      result = await (a === 2 ? require('./pool').runBackground(read) : read());
+      // eslint-disable-next-line no-await-in-loop
+      result = await read();
       firstBlock.trace(key, `part ${part.blocks}/${part.checks} read: ${result.verification.status} by ${result.verification.model}, ${result.verification.rounds} rounds, fixed ${result.verification.blocks_fixed}, dropped ${result.verification.blocks_dropped}`);
       if (result.verification.status === 'verified') break;
     }
