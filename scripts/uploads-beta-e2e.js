@@ -208,6 +208,7 @@ async function runCase(c) {
   row.total_s = Math.round((Date.now() - T0) / 1000);
   // What this upload cost, from the cost tracker's own rows for this learner.
   row.cost = costOf(uid);
+  row.window = { from: new Date(T0).toISOString(), to: new Date().toISOString() };
   if (c.del) { const del = await call('DELETE', `/api/materials/${mid}`, uid); row.steps.delete_http = del.status; row.steps.rows_left = mk.db.find('material_part_changes', (x) => x.user_id === uid).length; }
   return row;
 }
@@ -215,6 +216,17 @@ async function runCase(c) {
 function storedLesson(uid, mid, ref) {
   const b = require('../services/material-parts').baseOf(uid, mid, ref);
   return JSON.stringify([b.leaves.filter((l) => /^p[0-9]/.test(l.key)).map((l) => l.text), b.leaves.filter((l) => /^k[0-9]/.test(l.key)).map((l) => l.text)]);
+}
+/** What the ledgers recorded for upload tasks since this process started: the conservative figure, since a call cut by a deadline is counted at its estimate. Other builds may add to it. */
+const START = Date.now();
+function ledgerWindow() {
+  const out = { window_usd: 0, by: {} };
+  const LIVE = 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/';
+  for (const f of ['coral', 'gonka', 'grokified', 'munito', 'zerogpu', 'lyceum']) {
+    try { const j = JSON.parse(fs.readFileSync(`${LIVE}${f}-ledger.json`, 'utf8')); let usd = 0; for (const e of j.log || []) if (Date.parse(e.at) >= START && /^(material_|part_|fact_live)/.test(e.task || '')) usd += e.usd || 0; out.by[f] = Math.round(usd * 1e4) / 1e4; out.window_usd += usd; } catch { /* no ledger */ }
+  }
+  out.window_usd = Math.round(out.window_usd * 1e4) / 1e4;
+  return out;
 }
 function costOf(uid) {
   try {
@@ -398,7 +410,7 @@ async function scripted() {
   if (MODE === 'scripted') { await scripted(); return; }
   if (MODE === 'load') { await loadRun(Number(process.argv[3] || 30)); return; }
   await runReal(process.argv.slice(3));
-  console.log('done');
+  console.log('done', JSON.stringify(ledgerWindow()));
   require('../config/db').flush();
   process.exit(0);
 })().catch((e) => { console.error(e); process.exit(1); });
