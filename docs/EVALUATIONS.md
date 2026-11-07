@@ -28,3 +28,6 @@ Not given a doc: **Modelflare** is banned (owner, 3 Nov): no calls, no doc. **LL
 
 ## Limits of the whole round
 Small samples (24 to 60 cases per row, 8 for Kimi), single runs, 4 parallel calls, one afternoon with Grokified, NVIDIA and xKiro congested; several rows are floors, not capabilities. Cost per task for lessons and other app tasks is in each provider's ledger section, not re-measured.
+
+## Fact checking of whole lessons (6 Nov 2026, docs/FACT-GATE.md)
+Held-out 117 planted errors and 87 clean levels, AI-judged. Kimi K3.1 Pro on Lyceum: 96% caught (90-98), 10% false-alarm levels, $0.065 to $0.073 a level (5,900 billed output tokens a read, reasoning included), 67 s, frequent 503s when Lyceum is busy. GLM-5.3 on Lyceum 95% (84-99, 42 plants), $0.057. Haiku 5.5 86%, $0.0015, 8 s. GLM-5.3 Flash on ZeroGPU 79%, $0.0008. DeepSeek V4.1 Flash on Coral 77%, 46% false alarms, 1 s. grok-4.3 73%, $0.002. DeepSeek V4 Flash on Gonka 30% (dev). Best gate: Kimi plus grok-4.3 with GLM-5.3 ruling, 96%, 8% false alarms. Kimi belongs on the shared-level build's read, nowhere a learner waits; not added to a live task. Crouton Alpha could not be measured: its key answered 401, expired.

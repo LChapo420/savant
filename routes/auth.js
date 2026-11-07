@@ -20,10 +20,12 @@ const { limit } = require('../utils/rate-limit');
 const { publicUser } = require('../middleware/auth');
 const consent = require('./consent');
 const referrals = require('../services/referrals');
+const signinOnly = require('../middleware/signin-only');
 
 const router = express.Router();
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const REMEMBER_MS = 365 * 24 * 3600 * 1000; // "Remember me": a year from the last visit, since the cookie rolls with every response
 
 function normalizeEmail(raw) {
   return String(raw || '').trim().toLowerCase();
@@ -38,13 +40,17 @@ function userView(user) {
 /** Sign the user in by rotating the session id first: reusing the id the visitor
  *  arrived with would let someone who planted it ride along on the login. The age
  *  screen answer is carried across, so it cannot be answered again by signing in. */
-function startSession(req, user) {
+function startSession(req, user, { remember } = {}) {
   const screen = req.session && req.session.age_screen;
   return new Promise((resolve, reject) => {
     req.session.regenerate((err) => {
       if (err) return reject(err);
       req.session.userId = user.id;
       req.session.uc = user.created_at; // whose id this is: see middleware/auth.js attachUser
+      // Kept with the session, so the rolling cookie keeps this length. Unticked: no expiry, so the cookie ends with the browser and the
+      // store drops the row a day after the last visit. A caller that does not say keeps the default in server.js.
+      if (remember === true) req.session.cookie.maxAge = REMEMBER_MS;
+      else if (remember === false) req.session.cookie.expires = false;
       if (screen) req.session.age_screen = screen;
       req.session.save((saveErr) => (saveErr ? reject(saveErr) : resolve()));
     });
@@ -60,7 +66,7 @@ function checkPassword(password) {
 // Sign-ups and sign-ins carry no account yet, so they count by address, and a classroom shares one: 60 sign-ups an hour and 120 sign-ins per
 // 15 minutes fit a whole class arriving at once (it was 10 and 20). The guess a limit exists to stop is many tries at ONE account, which
 // the per-account sign-in limit below stops at 15 per 15 minutes wherever they come from. The invite gate (BETA_GATE) is what keeps strangers out.
-router.post('/register', limit('register', 60, 60 * 60 * 1000), async (req, res) => {
+router.post('/register', signinOnly.refuseSignUp, limit('register', 60, 60 * 60 * 1000), async (req, res) => {
   const password = String(req.body.password || '');
   const displayName = String(req.body.display_name || '').trim();
 
@@ -176,7 +182,7 @@ router.post('/login', limit('login', 120, 15 * 60 * 1000), limit('login-account'
   const ok = await passwords.compare(password, hash);
   if (!user || !ok) return res.status(401).json({ error: 'That email or username and password do not match.' });
 
-  await startSession(req, user);
+  await startSession(req, user, { remember: req.body.remember });
   res.json({ user: userView(user) });
 });
 

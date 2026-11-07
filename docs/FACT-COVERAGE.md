@@ -232,7 +232,7 @@ Nothing was held for good. No stored row without a check: every output on a chec
 | Reader for a reply DeepSeek wrote | Added p50 | p95 | Held "can't check" | Catches, tutor set | Catches, lesson set | False alarms |
 |---|---|---|---|---|---|---|
 | Today: GLM on ZeroGPU first, Coral after 4.2 s | 4.9 s | 5.6 s | 0 of 30 | 24 of 24 | 15 of 34 | 0 |
-| Same family first: Coral, `FACT_LIVE_SAME_FAMILY=1` (off) | 0.7 s | 1.6 s | 0 of 30 | 24 of 24 | 30 of 72 | 0 |
+| Same family first: Coral (the default since 6 Nov; `FACT_LIVE_SAME_FAMILY=0` turns it off) | 0.7 s | 1.6 s | 0 of 30 | 24 of 24 | 30 of 72 | 0 |
 | Munito GLM first | 4.1 s | 8.4 s | 4 of 30 | 19 of 19 | too rate limited to measure | 0 |
 | Grok 4.3 | 7.3 s | 11.9 s | not run on the path | 24 of 24 | 18 of 36 | 1 of 28, 1 of 23 |
 
@@ -249,4 +249,4 @@ ZeroGPU missed the 4.2 s deadline on 18 of those 30, so most "independent" reads
 3. **`site/index.html` line 130** says "every lesson 100% fact-checked against credible sources". Lessons do pass a check, but checks do not always read outside sources: the free tier and this guard use model knowledge. I left the owner's page alone. Suggested wording: "every lesson fact-checked before you see it".
 4. **Switches that lift the older gate:** `BLOCK_FACT_GATE=0` and `LEVEL_SELF_CHECK=off` still lift `verifyLevel`. Neither is set in `.env` today. Left as they are because tests use them.
 5. **`TUTOR_FULL`:** its `factCheck` on the `tutor-full` branch would double the check on `dock_help`. Remove that call when it merges; its 14 s deadline (`TUTOR_DEADLINE_MS`) must also leave room for this one.
-6. **Tutor reply time.** Measured above: the independent reader adds 4.9 s at p50 and same family first adds 0.7 s, with the same catches on every set that can be measured. `FACT_LIVE_SAME_FAMILY=1` switches it. The owner decides.
+6. **Tutor reply time.** Measured above: the independent reader adds 4.9 s at p50 and same family first adds 0.7 s, with the same catches on every set that can be measured. Same family first is now the default for a waiting learner (6 Nov 2026): tutor replies had reached 11 to 12 s with the cross-family check, and the owner is the only user until Nov 15. `FACT_LIVE_SAME_FAMILY=0` turns it off. Worth another look before real learners arrive: the reader shares the writer's family, so it can share blind spots the planted errors don't cover.

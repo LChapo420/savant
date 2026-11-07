@@ -28,7 +28,7 @@ App.mount(async () => {
   /** Where a new or returning account lands. */
   async function land(user, fresh) {
     const next = App.query('next');
-    if (next && next.startsWith('/') && !next.startsWith('//')) {
+    if (next && next.startsWith('/') && !next.startsWith('//') && !next.includes('\\')) {
       window.location.href = next;
       return;
     }
@@ -83,6 +83,7 @@ App.mount(async () => {
         out = await App.api.post('/api/auth/login', {
           email: login.value.trim(),
           password: document.getElementById('password').value,
+          remember: document.getElementById('remember').checked,
         });
       } catch (err) {
         return fail(err.message, submit);

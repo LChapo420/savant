@@ -170,8 +170,8 @@ async function check({ pieces, source = '', learnerSaid = '', mode = 'general', 
   // a learner on local models only has what they have). Comparing text with a source (overlay, material) rests on the source, so any cleared checker will do: measured
   // 6 Nov, the same catches at 0.3 s on Coral against 6.7 s on ZeroGPU for a layer. If no other family answers in time, the same family reads it before anything is held.
   let exclude = null;
-  try { // FACT_LIVE_SAME_FAMILY=1 (owner's call, off): a waiting learner's check takes the fastest reader even if it shares the writer's family: p50 0.7 s against 3.6 s, with the same catches measured on planted errors (docs/FACT-COVERAGE.md).
-    const sameOk = waiting && String(process.env.FACT_LIVE_SAME_FAMILY || '') === '1';
+  try { // A waiting learner's check takes the fastest reader even if it shares the writer's family: p50 0.7 s against 3.6 s, with the same catches measured on planted errors (docs/FACT-COVERAGE.md). Default since 6 Nov 2026 (tutor replies had reached 11 to 12 s with the cross-family check); FACT_LIVE_SAME_FAMILY=0 turns it off.
+    const sameOk = waiting && String(process.env.FACT_LIVE_SAME_FAMILY || '').trim() !== '0';
     const f = !sameOk && writerModel && (mode === 'general' || mode === 'source') ? pool.familyOfModel(writerModel) : null; if (f && ai.outsideOk(userId)) exclude = [f]; } catch { exclude = null; }
   await Promise.all(batches(list).map(async (batch) => {
     const base = {

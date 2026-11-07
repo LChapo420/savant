@@ -334,13 +334,13 @@ Paired on the shipped route: parts caught 11 to 12 errors the whole read missed,
 | run | learners | open each | median, worst | next part appears, median | whole level, median, worst | CPU avg |
 |---|---|---|---|---|---|---|
 | before (6 Nov, whole level) | 3 strong; 6 mixed | | 167, 340; 213, 358 | | same | |
-| h1 | strong | 0.1 | 0.1 | 105 | 143 | 27% |
+| h1 | strong (placed at 423) | 0.1 | 0.1 | 105 | 143 | 27% |
 | h3a | strong, weak, mid | 0.1, 0, 15.8 | 0.1, 15.8 | 34 | 98 to 161 | 37% |
 | h3b | strong, 2 random | 28, 12.7, 22.9 | **22.9**, 28 | 162 | 209 to 236 | 30% |
 | h3c | 3 strong | 7.3, 0.6, 19.6 | 7.3, 19.6 | 139 | 104 to 299 | 36% |
 | i10 | strong, weak, mid, random | 0 to 38.5 | 22.7, 38.5 | 85 | 180, 259 | 31% |
 
-At 3 at once, 9 learners pooled: median 12.7, worst 28; one run of three misses the median alone. All 22 learners, per individual: median 10.4, worst 10% 28, worst 5% 31.9, worst 38.5 (n = 22, so worst 1% is the worst). No failure in these runs and no part shown unread. **Not met, stated plainly:** the next part. After the first part the learner can wait about 1 to 3 minutes (median 90.1 s, worst 172 s), most of it fact reads of 30 to 45 s on grok-4.3 with other agents on the same keys, and false alarms (each a repair and a re-read). Single reads measured alone: 8 to 12 s. So the page says so after 45 s and offers the standard session.
+At 3 at once, 9 learners pooled: median 12.7, worst 28; one run of three misses the median alone. All 20 learners, per individual: median 10.4, worst 10% 28, worst 5% 31.9, worst 38.5 (n = 20, so worst 1% is the worst). No failure in these runs and no part shown unread. **Not met, stated plainly:** the next part. After the first part the learner can wait about 1 to 3 minutes (median 90.1 s, worst 172 s), most of it fact reads of 30 to 45 s on grok-4.3 with other agents on the same keys, and false alarms (each a repair and a re-read). Single reads measured alone: 8 to 12 s. So the page says so after 45 s and offers the standard session.
 
 Cost: ledger deltas over each run, shared with other agents, so upper bounds: $0.17 (1), $0.38 to $0.50 (3), about $1.57 (10): about $0.16 a learner, including levels 2 and 3 written ahead, against about $0.09 for whole levels before; a wrong guess costs a layout, one small fill and one read, about a cent. All prepaid credits.
 
