@@ -152,7 +152,7 @@ function crowd(n, { slope = 1.8, itemsPerHalf = 6, r = 0.5, seed = 3 } = {}) {
   assert(Math.abs(fair.result.overall.candidate - trueBest) < 3, `estimate ${fair.result.overall.candidate.toFixed(1)} against ${trueBest.toFixed(1)}`);
   assert(Math.abs(fair.result.overall.guess - (100 - 0.8 * 17)) < 2.5, `guess ${fair.result.overall.guess.toFixed(1)}`);
   // an anchor that is pure noise: no usable anchors, nothing fitted
-  const none = crowd(240); for (const rec of none) for (const id of IDS) { const g = () => rngOf(rec.userId * 7 + id.length)(); rec.rawAnchor[id].a = Math.random(); rec.rawAnchor[id].b = Math.random(); rec.rawAnchor[id].c = g(); }
+  const noiseRng = rngOf(41); const none = crowd(240); for (const rec of none) for (const id of IDS) { rec.rawAnchor[id].a = noiseRng(); rec.rawAnchor[id].b = noiseRng(); rec.rawAnchor[id].c = noiseRng(); }
   const sc = RR.anchorScale(none.filter((x) => !A.isHeld(x.userId)));
   assert(Object.values(sc).filter((x) => x.usable).length <= 2, 'noise anchors are refused');
   console.log(`ok  refit on a crowd: gain interval ${ev.result.gainLo.toFixed(0)} to ${ev.result.gainHi.toFixed(0)}, beta ${b.toFixed(2)}, estimate ${fair.result.overall.candidate.toFixed(1)} against ${trueBest.toFixed(1)}`);

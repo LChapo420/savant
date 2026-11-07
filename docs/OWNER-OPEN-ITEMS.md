@@ -7,7 +7,7 @@ Things put off or waiting for a decision. Nothing here is forgotten or solved. U
 |---|---|
 | **Children without parental consent** | Owner, 6 Nov: not tending to them for now; think about it later. They get safe but weak fixed replies, and no outside AI. A small local model isn't the answer unless it can do it right. |
 | Privacy fix for under-age testers before investors | Tester-phase access is allowed for now; a fix is needed before investors. Linked to the item above. |
-| Tutor character | Not chosen. 30+ ideas given, none landed yet. Placeholder in onboarding. One base character first, outfits later. |
+| Tutor character | Owner, 6 Nov: a giraffe, one base character, colouring near the first three, maybe customizable, flat chunky mascot style. Round two is in design-refs/giraffes/giraffes-v2.png; awaiting a pick. |
 | Logo font | Logo is serif (DM Serif Display), the app is Atkinson. "Worry about that later". |
 | Mass video ideation | To do with the owner, starting from first video numbers. |
 | Whole-app UI redesign | Onboarding is first; the rest follows once its look is approved. |
@@ -54,3 +54,6 @@ Things put off or waiting for a decision. Nothing here is forgotten or solved. U
 - Copy ledger and DB backups off the server; run one backup restore on the server.
 - Move the server to SQLite before any big wave; JSON store fails near 512 MB.
 - Clean old worktrees.
+- Turn on `COLD_FIRST_BLOCK` for the beta (recommended; gate passes pooled, one 3-learner run missed the median).
+- Resume the factuality build (branch fact-100, paused for pacing) after the 05:30 UTC reset.
+- Onboarding v2 agreement step is in progress on branch onboarding-v2; not merged. 

@@ -98,8 +98,11 @@ function anchorScale(records) {
   for (const s of stats) {
     const rows = records.filter((r) => r.rawAnchor && r.rawAnchor[s]).map((r) => r.rawAnchor[s]);
     if (rows.length < MIN_ANCHOR_N) { out[s] = { usable: false, n: rows.length, reason: 'too few learners' }; continue; }
-    const rel = sb(corr(rows.map((x) => x.a), rows.map((x) => x.b)));
-    if (rel < MIN_REL) { out[s] = { usable: false, n: rows.length, rel, reason: 'anchor too unreliable' }; continue; }
+    const r = corr(rows.map((x) => x.a), rows.map((x) => x.b));
+    const rel = sb(r);
+    // Sampling noise alone clears MIN_REL often (about 1 anchor in 5 at n=150), so the halves must also agree beyond chance: one-sided 95% on Fisher's z.
+    const beyondChance = Math.abs(r) < 1 && Math.atanh(r) - 1.645 / Math.sqrt(rows.length - 3) > 0;
+    if (rel < MIN_REL || !beyondChance) { out[s] = { usable: false, n: rows.length, rel, reason: 'anchor too unreliable' }; continue; }
     out[s] = { usable: true, n: rows.length, rel: Math.min(0.98, rel), mean: mean(rows.map((x) => x.c)), sd: sd(rows.map((x) => x.c)) };
   }
   return out;
