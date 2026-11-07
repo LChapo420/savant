@@ -325,3 +325,41 @@ html[data-ui2].u2-profile .table-scroll { overflow-x: auto; }
   html[data-ui2].u2-profile .u2-row-fold:not([open]) { max-width: none; }
 }
 
+/* ── My material ──────────────────────────────────────────────────────── */
+html[data-ui2].u2-material main.page { padding-top: 0; }
+html[data-ui2].u2-material #root { max-width: 640px; margin: 0 auto; padding: 0 24px 32px; display: block; }
+html[data-ui2] .u2-tiles { margin: 14px 0 0; }
+html[data-ui2] .u2-tile { min-height: 56px; }
+html[data-ui2] .u2-tile .u2-ic { color: var(--ink-2); }
+html[data-ui2] .u2-tile.on .u2-ic { color: var(--act-text); }
+html[data-ui2] .u2-way-panels { margin: 14px 0 0; }
+html[data-ui2].u2-material .card.u2-way { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 14px 16px; }
+html[data-ui2].u2-material .card.u2-way[hidden] { display: none; }
+html[data-ui2].u2-material .u2-way input[type="file"] { max-width: 100%; }
+html[data-ui2].u2-material .u2-way p, html[data-ui2].u2-material .u2-way .field { margin: 0; }
+html[data-ui2].u2-material .u2-way .btn-primary { width: 100%; }
+html[data-ui2].u2-material .u2-way p:empty { display: none; }
+html[data-ui2].u2-material .u2-mat-list.card { border: 0; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; }
+html[data-ui2].u2-material .u2-mat-list ul { display: grid; gap: 12px; }
+html[data-ui2].u2-material .u2-mat-list li { padding: 14px 16px !important; border: 1.5px solid var(--line); border-radius: 18px; }
+html[data-ui2].u2-material .u2-mat-list li > .row-between { display: grid; gap: 10px; }
+html[data-ui2].u2-material .u2-mat-list li > .row-between > span:first-child strong { display: block; font-size: 17px; line-height: 22px; }
+html[data-ui2].u2-material .u2-mat-list li > .row-between > span:last-child { display: flex; flex-wrap: wrap; gap: 8px; }
+html[data-ui2].u2-material .u2-mat-list [data-course] { order: -1; flex: 1 0 100%; width: 100%; }
+html[data-ui2].u2-material .u2-mat-list [data-del] { color: var(--ink-2); border: 0; background: none; text-decoration: underline; text-underline-offset: 3px; font-weight: 400; }
+html[data-ui2].u2-material .u2-mat-list .u2-fold { margin-top: 10px; }
+html[data-ui2].u2-material .u2-mat-list .u2-fold summary { min-height: 40px; font-weight: 400; font-size: 14px; }
+html[data-ui2].u2-material-sub main.page { padding-top: 0; }
+html[data-ui2].u2-material-sub #root { max-width: 640px; margin: 0 auto; padding: 12px 24px 32px; }
+html[data-ui2].u2-material-sub #root > p.small:has(> a[href="/my-material"]:only-child) { display: none; }
+html[data-ui2].u2-material-sub #root > h1 { font-size: 32px; line-height: 1.1; margin: 0 0 8px; }
+html[data-ui2].u2-material-sub #root > .muted { font-size: 15px; line-height: 21px; color: var(--ink-2); }
+html[data-ui2].u2-material-sub #root a:not(.btn):not(.u2-opt) { color: var(--ink); }
+html[data-ui2].u2-material-sub #next-card { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 16px; margin: 14px 0 0; }
+html[data-ui2].u2-material-sub #next-card h2 { font: 400 26px/1.15 var(--serif); margin: 0; }
+html[data-ui2].u2-material-sub #next-card .btn-primary { width: 100%; margin-top: 8px; }
+html[data-ui2].u2-material-sub #root > .card:not(#next-card) { margin-top: 12px !important; }
+html[data-ui2].u2-material-sub #root li[data-row] { padding: 10px 0 !important; border-top: 1px solid var(--line); }
+html[data-ui2].u2-material-sub #root li[data-row]:first-child { border-top: 0; }
+html[data-ui2].u2-material-sub #root li[data-row] strong { display: block; font-size: 15.5px; line-height: 20px; }
+

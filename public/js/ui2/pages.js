@@ -235,10 +235,89 @@
     window.addEventListener('hashchange', openTarget);
   }
 
+  // ── My material: six ways in as tiles, one open at a time; the list; each thing's notes in a fold ──
+  const WAYS = [[/^Upload a file/, 'upload', 'File'], [/paste text/i, 'note', 'Paste text'], [/web page/i, 'book', 'Web page'], [/YouTube/, 'target', 'YouTube'], [/transcript/i, 'pencil', 'Transcript'], [/recording/i, 'clock', 'Recording']];
+  let wayOpen = 0;
+  function dressMaterial() {
+    const host = document.getElementById('root');
+    const h1 = host && host.querySelector(':scope > h1');
+    if (!h1 || h1.dataset.u2 || !document.getElementById('upload')) return;
+    h1.dataset.u2 = '1';
+    root.classList.add('u2-material');
+    h1.classList.add('u2-vh');
+    const cards = [...host.querySelectorAll(':scope > .card')];
+    const titleOf = (c) => { const h = c.querySelector(':scope > h2'); return h ? h.textContent.trim() : ''; };
+    const tiles = el('div', 'u2-grid u2-tiles');
+    tiles.setAttribute('role', 'group');
+    tiles.setAttribute('aria-label', 'Ways to add');
+    const panels = el('div', 'u2-way-panels');
+    const ways = [];
+    WAYS.forEach(([re, icon, name]) => {
+      const card = cards.find((c) => re.test(titleOf(c)));
+      if (!card) return;
+      const t = el('button', 'u2-opt u2-tile', `${ic(icon)}<b>${name}</b>`);
+      t.type = 'button';
+      card.querySelector(':scope > h2').classList.add('u2-vh');
+      card.removeAttribute('style');
+      card.classList.add('u2-way');
+      const n = ways.length;
+      const show = () => {
+        wayOpen = n;
+        ways.forEach((w, i) => { w.t.classList.toggle('on', i === n); w.t.setAttribute('aria-expanded', String(i === n)); w.card.hidden = i !== n; });
+      };
+      t.addEventListener('click', show);
+      ways.push({ t, card, show });
+      tiles.appendChild(t);
+      panels.appendChild(card);
+    });
+    const guide = pageGuide('What do you want to study?');
+    host.prepend(guide);
+    guide.after(tiles);
+    tiles.after(panels);
+    if (ways[wayOpen]) ways[wayOpen].show();
+    const intro = host.querySelector(':scope > p.muted');
+    const where = cards.find((c) => /^Where it goes/.test(titleOf(c)));
+    if (where) {
+      where.querySelector(':scope > h2').remove();
+      const f = fold('Where it goes', [where]);
+      panels.after(f);
+      if (intro) f.after(fold('How it works', [intro]));
+    }
+    const listCard = cards.find((c) => /^Your material/.test(titleOf(c)));
+    if (listCard) {
+      listCard.removeAttribute('style');
+      listCard.classList.add('u2-mat-list');
+      listCard.querySelector(':scope > h2').className = 'u2-h';
+      listCard.querySelectorAll(':scope > ul > li').forEach((li) => {
+        const rg = li.querySelector('[id^="rg-host-"]');
+        const sg = li.querySelector('[id^="sg-host-"]');
+        const stress = li.querySelector(':scope > details');
+        const preview = [...li.querySelectorAll(':scope > p.tiny.muted')].find((p) => !p.id);
+        li.appendChild(fold('Options and notes', [rg, sg, stress, preview]));
+      });
+    }
+  }
+  /** The sub-pages: the top bar has the way back, so the page's own link to the list goes. A stray line of code in the podcast page's words (js/my-material-podcast.js) is not shown. */
+  function dressMaterialSub() {
+    root.classList.add('u2-material-sub');
+    const host = document.getElementById('root');
+    if (!host) return;
+    host.childNodes.forEach((n) => { if (n.nodeType === 3 && /window\.PartChange/.test(n.textContent)) n.textContent = ''; });
+    // The course's map: what is next stands out; the sentences about the path fold.
+    const next = host.querySelector(':scope > #next-card');
+    if (next && !next.dataset.u2) {
+      next.dataset.u2 = '1';
+      const notes = [...host.querySelectorAll(':scope > p.muted, :scope > p.small.muted')];
+      if (notes.length) next.after(fold('About this course', notes));
+    }
+  }
+
   let queued = false;
   function tick() {
     queued = false;
     if (PAGE === '/profile') dressProfile();
+    if (PAGE === '/my-material') dressMaterial();
+    if (/^\/my-material-/.test(PAGE)) dressMaterialSub();
     if (PAGE === '/path') dressPath();
     if (PAGE === '/base-lesson') dressLesson();
     if (PAGE === '/review') dressReview();
