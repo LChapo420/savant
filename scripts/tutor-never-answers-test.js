@@ -15,6 +15,7 @@
  *     turn and after a long wearing-down, and lets through a reply confirming an answer the learner said.
  * Whether a real model keeps to the rules is queue item T7 (run on the owner's machine).
  */
+process.env.TUTOR_FULL = process.env.TUTOR_FULL || '0'; // this test pins the old tutor path, still there behind TUTOR_FULL=0; the full tutor is scripts/tutor-full-test.js
 const fs = require('fs');
 const os = require('os');
 const path = require('path');

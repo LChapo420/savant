@@ -65,6 +65,8 @@ function sanitize(item, index) {
     // A chess position the question is set on: the page draws it on a board.
     fen: item.fen || null,
     choices: item.choices || null,
+    // SPEED_WORKED: an item shown solved (only an item that was set up that way, and only until it is read).
+    ...(item.present === 'worked' && !item.skipped && item.correct === null ? { present: 'worked', answer: item.answer, rationale: item.rationale || '' } : {}),
     role: item.role || 'focus',
     level: item.level || null,
     block: item.block === undefined ? 0 : item.block,
@@ -511,6 +513,12 @@ async function materialize({ userId, session, entries, params, level, blockIndex
   if (themeDomain) itemTheme.writeAhead({ userId, domain: themeDomain, entries });
 
   const rows = [];
+  let workedSkill = null; let workedLeft = 0;
+  try {
+    const grade = speedLevers.enabled('worked') ? curriculum.getGrade(session.track_id, session.grade_id) : null;
+    const plan = grade && curriculum.levelKind(level, grade.pathLength, grade) === 'practice' ? curriculum.levelPlan(grade, level) : null;
+    if (plan) { workedSkill = plan.focus; workedLeft = speedLevers.workedCount(userId, session, plan.focus, level, grade); }
+  } catch (err) { workedLeft = 0; }
   for (let slot = 0; slot < entries.length; slot++) {
     const entry = entries[slot];
     let item = fresh[slot] || null;
@@ -533,8 +541,13 @@ async function materialize({ userId, session, entries, params, level, blockIndex
     }
     if (!item) item = generateWithPreference(entry, params.preferTypeIn, avoid);
     avoid.add(bank.itemKey(item));
+    // SPEED_QUICK_REVIEW and SPEED_WORKED (services/speed-levers.js): off, neither changes anything.
+    if (entry.role === 'review' && speedLevers.enabled('quick')) item = speedLevers.oneTap(item);
+    let present = null;
+    if (workedLeft > 0 && (entry.role === 'support' || entry.role === 'focus') && entry.skillId === workedSkill) { present = 'worked'; workedLeft--; }
     rows.push(db.insert('items', {
       ...item,
+      ...(present ? { present } : {}),
       ...(entry.objective ? { objective_id: entry.objective, review_reason: entry.reviewReason || null } : {}),
       session_id: session.id,
       user_id: userId,
@@ -1075,6 +1088,16 @@ function itemsFor(sessionId) {
   return db.find('items', (i) => i.session_id === sessionId).sort((a, b) => a.index - b.index);
 }
 
+/**
+ * A worked example the learner has read (SPEED_WORKED): set aside, unscored, marked, so the level goes on. Returns false for anything else.
+ */
+function workedSeen(userId, session, itemId, ms = null) {
+  const item = db.byId('items', Number(itemId));
+  if (!item || item.user_id !== userId || item.session_id !== session.id || item.present !== 'worked' || item.correct !== null || item.skipped) return false;
+  db.update('items', item.id, { skipped: true, reserved: true, set_aside: 'worked', worked_ms: Number(ms) || null, skipped_at: new Date().toISOString() });
+  return true;
+}
+
 function itemsInBlock(sessionId, blockIndex) {
   return itemsFor(sessionId).filter((i) => (i.block || 0) === blockIndex && i.role !== 'retention');
 }
@@ -1326,9 +1349,11 @@ function recordAnswer({ userId, session, item, userAnswer, ms, confidence, chang
     scorecardHooks.onAnswer(userId, db.byId('items', item.id), { trackId: session.track_id });
   }
 
-  if (session.kind === 'lesson' && session.enrollment_id) {
+  // A sitting opened on a lesson ('teach') runs on into the next practice level; its answers there count for that level too. Before 6 Nov they did not, so a learner who got all 14 right read "0 of 12 questions answered" and did the level again. SPEED_TEACH_COUNTS=off restores that.
+  const teachCounts = session.kind === 'teach' && String(process.env.SPEED_TEACH_COUNTS || 'on').toLowerCase() !== 'off';
+  if ((session.kind === 'lesson' || teachCounts) && session.enrollment_id) {
     const enrollment = db.byId('enrollments', session.enrollment_id);
-    if (enrollment) db.update('enrollments', enrollment.id, { level_items: (enrollment.level_items || 0) + 1 });
+    if (enrollment && (session.kind === 'lesson' || Number(item.level) === Number(enrollment.current_level))) db.update('enrollments', enrollment.id, { level_items: (enrollment.level_items || 0) + 1 });
   }
 
   // On a checkpoint, the moment the pass mark becomes unreachable the outcome is
@@ -2032,6 +2057,7 @@ async function finish({ userId, session }) {
 }
 
 module.exports = {
+  workedSeen,
   createSession,
   createDrillSession,
   createSkipExamSession,

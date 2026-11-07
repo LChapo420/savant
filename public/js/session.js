@@ -374,11 +374,22 @@ App.mount(async () => {
   }
 
   // ── the speed levers (services/speed-levers.js; only with session.speed from the server) ──────────────
+  /** The speed proof's plain lesson: says so, once per view, with the switch the consent wording promises. */
+  function plainNote() {
+    if (!session.plain_way) return;
+    const hostEl = document.getElementById('item');
+    if (!hostEl || document.getElementById('plain-switch')) return;
+    hostEl.insertAdjacentHTML('afterbegin', '<div class="notice" role="status"><strong>The plain way.</strong> This lesson is one of your plain-way lessons, the standard page with no tailoring. <button type="button" class="btn btn-secondary" id="plain-switch">Switch it to the Savant way</button></div>');
+    document.getElementById('plain-switch').addEventListener('click', async () => {
+      try { await App.api.post('/api/speed-proof/switch', { skill_id: session.plain_way.key }); location.reload(); } catch (err) { App.toast(err.message, 'error'); }
+    });
+  }
   function retrievalFirst() { return !!(session.speed && session.speed.testout && blockKind === 'lesson' && lesson && !session.preview && items.length); }
 
   /** The first check of a lesson opened retrieval first says why there is no page yet. */
   function speedIntro() {
     if (retrievalFirst() && index === 0) effortNote('Get these right and you can skip the page. Miss one and we show you the part you need.', 'A quick check first.');
+    plainNote();
   }
 
   /** Only the parts of the page this miss calls for. The whole page is one tap away. */
@@ -920,9 +931,31 @@ function renderRubricResult(result) {
     };
   };
 
+  /** SPEED_WORKED: an item shown solved. Read it, one tap, go on. Nothing is scored. */
+  function showWorked(item) {
+    const itemHost = document.getElementById('item');
+    host.setAttribute('data-view', 'question');
+    progress();
+    const steps = (item.worked_steps || []).map((s) => `<li>${App.escapeHtml(s)}</li>`).join('');
+    itemHost.innerHTML = `<section class="card lesson-worked">
+      <p class="small">Worked example. Read how it goes, then try one yourself.</p>
+      <h3>${App.escapeHtml(item.prompt || '')}</h3>
+      ${steps ? `<ol>${steps}</ol>` : ''}
+      ${item.rationale ? `<p>${App.escapeHtml(item.rationale)}</p>` : ''}
+      <p><strong>Answer: ${App.escapeHtml(String(item.answer))}</strong></p>
+      <button type="button" class="btn btn-primary btn-block" id="worked-next">Got it, next</button>
+    </section>`;
+    document.getElementById('worked-next').addEventListener('click', async () => {
+      try { await App.api.post(`/api/sessions/${session.session_id}/worked`, { item_id: item.id, ms: Date.now() - startedAt }); } catch (err) { App.toast(err.message, 'error'); return; }
+      item.answered = true; item.skipped = true;
+      advance();
+    });
+  }
+
   function show() {
     const item = items[index];
     shownItem = item;
+    if (item.present === 'worked' && !item.answered) { showWorked(item); return; }
     const itemHost = document.getElementById('item');
     const roleLabel = { review: 'Review', stretch: 'Stretch', support: 'Foundation', focus: 'Focus', exam: 'Exam', check: 'Check' }[item.role] || 'Question';
 
@@ -931,7 +964,8 @@ function renderRubricResult(result) {
     Player.render(itemHost, item, {
       // Choose, then Check; the Check button is sticky at the bottom on a phone.
       // SPEED_FAST_ITEM: a multiple choice answer is one tap, in practice and checks only.
-      check: isExam() || heldFeedback ? 'Next' : (session.speed && session.speed.fast ? (item.format === 'multiple_choice' ? null : 'Check') : 'Check'),
+      // The one question in three that asks for confidence keeps its Check button: that row feeds the scorecard, so the fast path does not take it away.
+      check: isExam() || heldFeedback ? 'Next' : (session.speed && session.speed.fast ? (item.format === 'multiple_choice' && !(maxAccuracy || index % 3 === 1) ? null : 'Check') : 'Check'),
       // The role ("Focus", "Review", "Stretch") and the item's metadata are for
       // checking the content, not for the learner: shown only with ?debug=1.
       label: App.query('debug') ? roleLabel : null,
@@ -939,7 +973,7 @@ function renderRubricResult(result) {
       // Asked on about one question in three, so it stays a quick tap rather than
       // a chore — enough for the learning scorecard to learn how well this learner
       // knows what they know.
-      askConfidence: !isExam() && (maxAccuracy || index % 3 === 1) && !(session.speed && session.speed.fast),
+      askConfidence: !isExam() && (maxAccuracy || index % 3 === 1),
       onSubmit: async (answer, meta = {}) => {
         let result;
         try {
@@ -1339,7 +1373,7 @@ function renderRubricResult(result) {
     progress();
     // A lesson level opens on the lesson, a written checkpoint opens on its
     // quick check, and everything else opens on a question.
-    if (blockKind === 'lesson' && lesson && !retrievalFirst()) renderLesson();
+    if (blockKind === 'lesson' && lesson && !retrievalFirst()) { renderLesson(); plainNote(); }
     else if (isEssay() && !items.some((i) => !i.answered)) openEssay();
     else { show(); speedIntro(); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1616,7 +1650,7 @@ function renderRubricResult(result) {
     await closeBlock();
   } else if (blockKind === 'lesson' && lesson && !items.some((i) => i.answered) && !retrievalFirst()) {
     // A lesson level opens on the lesson itself; the check questions come after.
-    renderLesson();
+    renderLesson(); plainNote();
   } else if (retrievalFirst() && index === 0) {
     show();
     speedIntro();

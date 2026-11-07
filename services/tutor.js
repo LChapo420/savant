@@ -152,6 +152,7 @@ function pack(userId) {
   const lines = [];
   const g = goalLines(userId);
   if (g.length) lines.push(`Goals they set: ${g.join(' | ')}`);
+  try { const sgl = require('./study-goal').tutorLines(userId); if (sgl.length) lines.push(`What they want from each subject (their choice): ${sgl.join(' | ')}`); } catch { /* no study goal */ } // eslint-disable-line global-require
   const interests = interestLine(userId);
   if (interests) lines.push(`Interests, in their words: ${interests}`);
   const how = scorecardLines(userId);

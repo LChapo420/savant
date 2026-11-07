@@ -341,7 +341,10 @@ async function placementStructured(args) {
     const reply = await require('./providers/mimo').structuredStream({
       role: 'placement', system: args.system, user: args.user, schema: args.schema, schemaName: args.schemaName, maxTokens: Math.min(args.maxTokens || 32000, 64000),
     }).catch((err) => { console.warn(`subject-placement: MiMo could not write (${String(err.message || err).slice(0, 160)})`); return null; });
-    return reply && reply.data ? reply.data : null;
+    if (!reply || !reply.data) return null;
+    // This writer does not come through services/ai.js, so the guard is called here.
+    const passed = await require('./fact-guard').pass({ task: null, factTask: args.factTask, userId: args.userId || null, req: { kind: 'structured', dataClass: args.dataClass }, result: { data: reply.data, model: 'mimo-v2.6-pro' } }); // eslint-disable-line global-require
+    return passed ? passed.data : null;
   }
   return ai.structured(args);
 }
@@ -440,6 +443,7 @@ async function repairChoices(items, userId = null, role = 'placement') {
     user: repairUserPrompt(items),
     schema: REPAIR_SCHEMA,
     schemaName: 'submit_repaired_choices',
+    factTask: 'placement_repair',
     // Room for the thinking as well as the options: a reply cut off before the
     // tool call is a reply that repairs nothing, and the thinking is not small.
     maxTokens: Math.min(50000, 3000 + items.length * 340),
@@ -595,6 +599,7 @@ async function writeBatch(trackId, allGradeIds, batchGradeIds, written, userId) 
       }),
       schema: QUESTION_SCHEMA,
       schemaName: 'submit_placement_questions',
+      factTask: 'placement_write',
       maxTokens: tokenBudget(wanted.length),
       userId,
       // A minutes-long authoring call must not sit in the lane a coach turn is
@@ -1637,6 +1642,7 @@ async function recommend(userId, trackId, options = {}) {
       user: recommendUserPrompt(trackId, placement, options),
       schema: RECOMMEND_SCHEMA,
       schemaName: 'submit_placement_recommendation',
+      factTask: 'placement_recommend',
       maxTokens: 6000,
       userId,
       lane: 'background',

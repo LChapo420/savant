@@ -57,7 +57,7 @@ function start(userId, materialId, deps = {}) {
     if (!on()) { out.skipped = 'off'; return out; }
     // eslint-disable-next-line global-require
     const ai = deps.ai || require('./ai');
-    if (!ai.isEnabled()) { out.skipped = 'no model'; return out; }
+    if (!(ai.canBuild || ai.isEnabled)()) { out.skipped = 'no model'; return out; }
     // eslint-disable-next-line global-require
     const outside = deps.outside || require('./typed-grading').outsideAllowed;
     if (!outside(userId)) { out.skipped = 'no consent'; return out; }

@@ -4,7 +4,9 @@
  *
  * Simulated or AI-judged results are never read here: only rows written for real accounts, and the report says so.
  *
- * What is measured, per real learner and skill (a row in `speed_proof`):
+ * The unit is one lesson's stretch (its lesson level and practice levels up to the next lesson; speed-levers unitOf), not the grade's coarse skill: a grade has about 8 coarse skills over 70 lessons, so per coarse skill a
+ * tester would meet a plain arm about once a grade, and the coarse skill's mastery, once high, would call every later lesson "understood" on its third answer. Rows keep their key in skill_id ("functions@20") with skill, from, to.
+ * What is measured, per real learner and lesson (a row in `speed_proof`):
  *   - active minutes to understanding: the learner's study-session active time (services/study-sessions.js active_ms) is shared out over
  *     the answers they gave in that session, each answer taking the time since the previous sign of activity (capped at the 5 minute idle cap),
  *     so reading before an answer counts for the skill answered next. Answers outside any session count their own recorded time (items.ms,
@@ -73,7 +75,7 @@ const CONSENT = {
   title: 'Help us check, fairly, how much faster Savant is',
   body: [
     'We say Savant helps you learn the same things faster and remember them as well or better. We would like to test that on real learners, you included, rather than just claim it.',
-    'If you say yes, about 1 skill in 8 will be taught the plain way instead of Savant\'s way: the standard lesson everyone gets, no changes for you, no skipping ahead with a test-out, and you can reread it at your own pace. It is the ordinary way of studying, so it may take you longer.',
+    'If you say yes, about 1 lesson in 8 will be taught the plain way instead of Savant\'s way: the standard lesson everyone gets, no changes for you, no skipping ahead with a test-out, and you can reread it at your own pace. It is the app without Savant\'s tailoring, so it may take you longer.',
     'We then compare, for you, how long the plain way and the Savant way each took, and how much you remembered later, using short memory checks of about 30 seconds, 1 day, 7 days and 30 days after you learn a skill, and at the time you told us you want to remember it.',
     'It is optional. If you say no, nothing else changes and you still get the full Savant way for every skill. You can switch any skill to the Savant way at any time, and if you get stuck on a plain-way skill we switch you ourselves. Results are only used added up with other learners, never shown with your name.',
     'If you are under 13, a parent must agree to the optional measurement first.',
@@ -219,6 +221,7 @@ function assign(userId, skillId, ctx = {}, now = Date.now()) {
   }
   return db.insert('speed_proof', {
     user_id: userId, skill_id: skillId, track_id: trackId, grade_id: ctx.gradeId || null, stratum, arm, held_back: held, band: ageBand(user),
+    ...(ctx.unit ? { skill: ctx.unit.skill, from: ctx.unit.from, to: ctx.unit.to } : {}),
     assigned_at: new Date(now).toISOString(), switched_at: null, switch_reason: null, understood_at: null, minutes: null, answers: 0, difficulty: null,
     checks: [], v: VERSION,
   });
@@ -236,6 +239,15 @@ function normalFor(userId, skillId) {
 const { AsyncLocalStorage } = require('async_hooks');
 const ambient = new AsyncLocalStorage();
 
+/** The lesson stretch a level belongs to: { key, skill, from, to }, or null. */
+function unitFor(grade, level) {
+  try {
+    const skill = lazy('../config/curriculum').levelPlan(grade, level).focus;
+    if (!skill) return null;
+    const { from, to } = lazy('./speed-levers').unitOf(grade, level);
+    return { key: `${skill}@${from}`, skill, from, to };
+  } catch { return null; }
+}
 /** The skill a level teaches (what a lesson or practice sitting at that level is about), or null. */
 function skillOfLevel(grade, level) {
   try { return lazy('../config/curriculum').levelPlan(grade, level).focus || null; } catch { return null; }
@@ -250,8 +262,9 @@ function skillOfLevel(grade, level) {
 function withSkill(userId, grade, enrollment, level, fn) {
   let skillId = null;
   try {
-    skillId = skillOfLevel(grade, level === undefined || level === null ? enrollment.current_level : level);
-    if (skillId) assign(userId, skillId, { trackId: enrollment.track_id, gradeId: enrollment.grade_id });
+    const unit = unitFor(grade, level === undefined || level === null ? enrollment.current_level : level);
+    skillId = unit ? unit.key : null;
+    if (skillId) assign(userId, skillId, { trackId: enrollment.track_id, gradeId: enrollment.grade_id, unit });
   } catch (err) { console.warn(`speed-proof: not applied: ${err.message}`); skillId = null; }
   if (!skillId || !normalFor(userId, skillId)) return fn();
   return ambient.run({ userId, skillId }, fn);
@@ -276,11 +289,29 @@ function lessonContext(req, res, next) {
   try {
     if (!req.user || !enabled()) return next();
     const grade = lazy('../config/curriculum').getGrade(req.params.track, req.params.grade);
-    const skill = grade ? skillOfLevel(grade, Number(req.params.level)) : null;
+    const unit = grade ? unitFor(grade, Number(req.params.level)) : null;
+    const skill = unit ? unit.key : null;
     if (!skill || !normalFor(req.user.id, skill)) return next();
     if (/^\/assist/.test(req.path)) return res.status(409).json({ error: PLAIN_NOTE, plain_way: true });
     return ambient.run({ userId: req.user.id, skillId: skill }, next);
   } catch { return next(); }
+}
+
+/** The stretch an item was asked in, from its session's grade and its own level. */
+function itemUnitKey(item) {
+  const session = item && item.session_id ? db.byId('sessions', item.session_id) : null;
+  const grade = session && session.track_id ? lazy('../config/curriculum').getGrade(session.track_id, session.grade_id) : null;
+  const unit = grade ? unitFor(grade, Number(item.level) || Number(session.level)) : null;
+  return unit && unit.skill === item.skill_id ? unit.key : null; // a review of another skill asked in this sitting is not part of the plain lesson
+}
+/** Is the lesson stretch at this level of this sitting taught the plain way? Used by the speed levers: a plain lesson gets none of them. { key } or null. */
+function plainHere(userId, session, level) {
+  if (!enabled() || !session || !session.track_id) return null;
+  try {
+    const grade = lazy('../config/curriculum').getGrade(session.track_id, session.grade_id);
+    const unit = grade ? unitFor(grade, Number(level) || Number(session.level)) : null;
+    return unit && normalFor(userId, unit.key) ? { key: unit.key } : null;
+  } catch { return null; }
 }
 
 /** The same for /items/:id/...: the coach and the ask-the-tutor box are off on a plain skill ("ask" gets the standard explanation). */
@@ -288,7 +319,9 @@ function itemContext(req, res, next) {
   try {
     if (!req.user || !enabled()) return next();
     const item = db.byId('items', Number(req.params.id));
-    if (!item || item.user_id !== req.user.id || !item.skill_id || !normalFor(req.user.id, item.skill_id)) return next();
+    if (!item || item.user_id !== req.user.id || !item.skill_id) return next();
+    const unitKey = itemUnitKey(item);
+    if (!unitKey || !normalFor(req.user.id, unitKey)) return next();
     if (/^\/ask/.test(req.path) && item.rationale && item.correct !== null && item.correct !== undefined) {
       return res.json({ reply: `${item.rationale}
 
@@ -301,7 +334,7 @@ The answer is ${item.answer}.`, source: 'plain_way', plain_way: true });
 
 /** Is the skill at the learner's current level taught the plain way? (The test-out offer is held back when it is.) */
 function plainAtLevel(userId, enrollment, grade) {
-  try { const s = skillOfLevel(grade, enrollment.current_level); return !!s && normalFor(userId, s); } catch { return false; }
+  try { const u = unitFor(grade, enrollment.current_level); return !!u && normalFor(userId, u.key); } catch { return false; }
 }
 
 /** The learner (or a guard) moves a skill to the Savant way. The row keeps its assigned arm for the analysis. */
@@ -341,6 +374,17 @@ function attribute(userId) {
   return { items, ms };
 }
 
+/** When the app's own coverage model proved this lesson's objective (ms), or null. Same rule for both arms. */
+function proofAt(userId, row) {
+  try {
+    const enr = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === row.track_id && e.grade_id === row.grade_id);
+    const report = enr ? lazy('./coverage').forEnrollment(userId, enr) : null;
+    const e = report && report.model && report.model.levelMap ? report.model.levelMap[row.from] : null;
+    const s = e && report.states ? report.states[e.direct] : null;
+    return s && Number.isFinite(s.proven_at) ? s.proven_at : null;
+  } catch { return null; }
+}
+
 /**
  * Recompute a learner's rows from what the app recorded: minutes to understanding, understanding time, difficulty, and the guards that move
  * a struggling plain-way skill back to Savant. Idempotent; never writes anything but speed_proof rows. Returns the rows.
@@ -353,24 +397,39 @@ function measure(userId, now = Date.now()) {
   const bySkill = new Map();
   for (const i of items) { if (!bySkill.has(i.skill_id)) bySkill.set(i.skill_id, []); bySkill.get(i.skill_id).push(i); }
   for (const row of rows) {
-    const own = (bySkill.get(row.skill_id) || []).filter((i) => answeredAt(i) >= Date.parse(row.assigned_at) - 1000);
+    const isUnit = row.from !== undefined && row.from !== null;
+    const own = (bySkill.get(isUnit ? row.skill : row.skill_id) || []).filter((i) => answeredAt(i) >= Date.parse(row.assigned_at) - 1000 && (!isUnit || (Number(i.level) >= row.from && Number(i.level) <= row.to)));
     if (!own.length) continue; // nothing recorded for it (yet): leave the row as it is
     let understoodAt = null;
     let upTo = -1;
-    own.forEach((i, k) => {
-      if (understoodAt || k + 1 < MIN_ANSWERS) return;
-      const ev = events.get(i.id);
-      if (ev && Number(ev.mastery_after) >= MASTERY_LINE) { understoodAt = new Date(answeredAt(i)).toISOString(); upTo = k; }
-    });
+    if (isUnit) {
+      // Understood: the app's own proof for this lesson's objective (services/coverage.js; the same rule in both arms), else the tracker on this stretch's answers alone. Once set it stays, even if a later lapse clears the proof.
+      const firstAt = row.understood_at ? Date.parse(row.understood_at) : proofAt(userId, row);
+      const speed = lazy('./speed-levers');
+      own.forEach((i, k) => {
+        if (understoodAt || k + 1 < MIN_ANSWERS) return;
+        const byProof = firstAt && answeredAt(i) >= firstAt;
+        const byTracker = !firstAt && speed.shown(speed.trackerFromAnswers(own.slice(0, k + 1).map((a) => ({ correct: a.correct }))));
+        if (byProof || byTracker) { understoodAt = new Date(answeredAt(i)).toISOString(); upTo = k; }
+      });
+    } else {
+      own.forEach((i, k) => {
+        if (understoodAt || k + 1 < MIN_ANSWERS) return;
+        const ev = events.get(i.id);
+        if (ev && Number(ev.mastery_after) >= MASTERY_LINE) { understoodAt = new Date(answeredAt(i)).toISOString(); upTo = k; }
+      });
+    }
     const used = upTo >= 0 ? own.slice(0, upTo + 1) : own;
     const minutes = used.reduce((a, i) => a + (ms.get(i.id) || 0), 0) / MIN;
     const diffs = used.map((i) => Number(i.difficulty)).filter(Number.isFinite);
+    const minutesTotal = own.reduce((a, i) => a + (ms.get(i.id) || 0), 0) / MIN;
     const patch = {
+      minutes_total: Number(Math.max(minutesTotal, MIN_MINUTES).toFixed(3)), answers_total: own.length,
       understood_at: understoodAt, answers: used.length, minutes: Number(Math.max(minutes, MIN_MINUTES).toFixed(3)),
       difficulty: diffs.length ? Number((diffs.reduce((a, b) => a + b, 0) / diffs.length).toFixed(2)) : null,
     };
     if (!understoodAt && !used.length) patch.minutes = null;
-    if (JSON.stringify([row.understood_at, row.answers, row.minutes, row.difficulty]) !== JSON.stringify([patch.understood_at, patch.answers, patch.minutes, patch.difficulty])) db.update('speed_proof', row.id, patch);
+    if (JSON.stringify([row.understood_at, row.answers, row.minutes, row.difficulty, row.minutes_total]) !== JSON.stringify([patch.understood_at, patch.answers, patch.minutes, patch.difficulty, patch.minutes_total])) db.update('speed_proof', row.id, patch);
     // The harm guards: a plain-way skill on which the learner is stuck moves to Savant.
     if (row.arm === 'normal' && !row.switched_at && !understoodAt) {
       const lastN = own.slice(-WRONG_RUN_SWITCH);
@@ -413,12 +472,13 @@ function dueChecks(userId, now = Date.now()) {
     const next = checks.map((c) => {
       if (c.done_at) return c;
       if (now > Date.parse(c.closes_at)) { if (c.missed) return c; changed = true; return { ...c, missed: true }; }
-      if (now >= Date.parse(c.due_at)) out.push({ row_id: row.id, skill_id: row.skill_id, point: c.point, due_at: c.due_at });
+      if (now >= Date.parse(c.due_at)) out.push({ row_id: row.id, skill_id: row.skill_id, skill: row.skill || row.skill_id, from: row.from, to: row.to, plain: row.arm === 'normal', point: c.point, due_at: c.due_at });
       return c;
     });
     if (changed) db.update('speed_proof', row.id, { checks: next });
   }
-  return out.sort((a, b) => Date.parse(a.due_at) - Date.parse(b.due_at));
+  // Plain-way lessons first: they are 1 in 8, and at 3 questions a day first-come would leave them starved. No outcome is read, so this adds no bias between arms; it buys power.
+  return out.sort((a, b) => (b.plain ? 1 : 0) - (a.plain ? 1 : 0) || Date.parse(a.due_at) - Date.parse(b.due_at));
 }
 
 function due(userId, now = Date.now()) {
@@ -436,9 +496,17 @@ function start(user, now = Date.now()) {
   if (st.open && now - Date.parse(st.open.at) < 30 * MIN) return view(st.open);
   const picks = [];
   for (const d of dueChecks(user.id, now)) {
-    const rows = db.forUser('items', user.id).filter((i) => i.skill_id === d.skill_id && i.correct === true && Array.isArray(i.choices) && i.choices.length >= 3 && typeof i.answer === 'string' && i.prompt);
-    if (!rows.length) continue;
-    picks.push({ ...d, item: rows[rows.length - 1] });
+    // Most items are typed (about 3 in 4 in the logs), and a typed one has no choices: other answers this learner met on the same skill stand in as choices, so the check stays one tap and no lesson is left unasked.
+    const stretch = db.forUser('items', user.id).filter((i) => i.skill_id === d.skill && i.correct === true && typeof i.answer === 'string' && i.prompt && (d.from === undefined || d.from === null || (Number(i.level) >= d.from && Number(i.level) <= d.to)));
+    const mc = stretch.filter((i) => Array.isArray(i.choices) && i.choices.length >= 3);
+    let pick = mc.length ? mc[mc.length - 1] : null;
+    if (!pick) {
+      const typed = stretch[stretch.length - 1];
+      const others = typed ? [...new Set(db.forUser('items', user.id).filter((i) => i.skill_id === d.skill && typeof i.answer === 'string' && i.answer).map((i) => i.answer))].filter((a) => a !== typed.answer).slice(-3) : [];
+      if (typed && others.length >= 2) pick = { ...typed, choices: [typed.answer, ...others] };
+    }
+    if (!pick) continue;
+    picks.push({ ...d, item: pick });
     if (picks.length >= MAX_CHECK_QUESTIONS) break;
   }
   if (!picks.length) return { error: 'Nothing to check yet.', code: 'nothing_due' };
@@ -534,6 +602,9 @@ function learnerSummary(rows) {
     savant_minutes: S.length ? geomean(S.map((r) => r.minutes)) : null,
     normal_minutes: N.length ? geomean(N.map((r) => r.minutes)) : null,
     speedup: S.length && N.length ? geomean(N.map((r) => r.minutes)) / geomean(S.map((r) => r.minutes)) : null,
+    // All the minutes logged on each lesson so far, retention levels included. The verdict's number stops at understanding; the owner's claim counts the whole road, so this is shown beside it. Reviews asked later under other levels are not in either.
+    speedup_total: (() => { const a = rows.filter((r) => r.arm === 'savant' && r.understood_at && Number.isFinite(r.minutes_total)).map((r) => r.minutes_total); const b = rows.filter((r) => r.arm === 'normal' && r.understood_at && Number.isFinite(r.minutes_total)).map((r) => r.minutes_total); return a.length && b.length ? geomean(b) / geomean(a) : null; })(),
+    time_capped: rows.filter((r) => r.arm === 'normal' && r.switch_reason === 'time_cap').length,
     savant_retention: tS.answered ? tS.right / tS.answered : null,
     normal_retention: tN.answered ? tN.right / tN.answered : null,
     retention_diff: tS.answered && tN.answered ? tS.right / tS.answered - tN.right / tN.answered : null,
@@ -555,6 +626,8 @@ function groupStats(sums) {
   const tci = meanCI(logs);
   const rd = sums.map((s) => s.retention_diff).filter((v) => Number.isFinite(v));
   const rci = meanCI(rd);
+  const totals = sums.map((s) => s.speedup_total).filter((v) => Number.isFinite(v));
+  const tot = meanCI(totals.map((v) => Math.log(v)));
   const k = Math.max(1, Math.ceil(sp.length * 0.1));
   const sortedSp = [...sp].sort((a, b) => a - b);
   const sortedRd = [...rd].sort((a, b) => a - b);
@@ -566,6 +639,8 @@ function groupStats(sums) {
       learners_with_both_arms: sp.length,
       speedup_geomean: sp.length ? r3(Math.exp(tci.mean)) : null,
       speedup_ci95: [r3(tci.lo === null ? null : Math.exp(tci.lo)), r3(tci.hi === null ? null : Math.exp(tci.hi))],
+      speedup_total_geomean: totals.length ? r3(Math.exp(tot.mean)) : null,
+      speedup_total_ci95: [r3(tot.lo === null ? null : Math.exp(tot.lo)), r3(tot.hi === null ? null : Math.exp(tot.hi))],
       speedup_median: r3(quantile(sp, 0.5)),
       speedup_p10: r3(quantile(sp, 0.1)),
       speedup_worst10_mean: sp.length ? r3(mean(sortedSp.slice(0, k))) : null,
@@ -592,6 +667,7 @@ function groupStats(sums) {
       savant_checks_answered: sums.reduce((a, s) => a + s.savant_checks.answered, 0), normal_checks_answered: sums.reduce((a, s) => a + s.normal_checks.answered, 0),
       savant_checks_missed: sums.reduce((a, s) => a + s.savant_checks.missed, 0), normal_checks_missed: sums.reduce((a, s) => a + s.normal_checks.missed, 0),
       plain_skills_switched_to_savant: sum('switched'),
+      plain_skills_stopped_by_time_cap: sum('time_capped'),
     },
     balance: {
       mean_item_difficulty_savant: sums.filter((s) => s.difficulty_savant !== null).length ? r3(mean(sums.filter((s) => s.difficulty_savant !== null).map((s) => s.difficulty_savant))) : null,
@@ -708,6 +784,8 @@ function buildReport(learners, opts = {}) {
       'Only real learners: the owner, 6689, admins, test, demo and team accounts are left out; simulated and AI-judged results are never added here.',
       'Plain-way skills are random per learner, track and grade; a skill switched to Savant stays in the plain arm (intention to treat), which works against the 4x claim.',
       'Speed-up is plain minutes divided by Savant minutes inside each learner (geometric means), then averaged on the log scale across learners.',
+      'Plain here is NOT normal studying: it is the app itself without tailoring or speed levers, with the same questions, proof rule and reviews. So this measures what tailoring and the levers add, and it says nothing against a student rereading a textbook. Only a separately recruited self-study group can say that.',
+      "A plain lesson past its time cap (max(30 min, 3x the median Savant time)) moves to Savant and its plain minutes stop, so a learner's speed-up tops out near 4x once their median Savant lesson passes about 10 minutes. samples.plain_skills_stopped_by_time_cap counts how often this bit. The verdict is not changed by it; read it beside the result.",
     ],
   };
 }
@@ -744,7 +822,7 @@ function offerNow(user) {
 function status(user) {
   const why = ineligibleReason(user);
   return {
-    available: !why, reason: why, offer: !why && offerNow(user), needs_parent: !!(user && user.age_check && (user.age_check.under_13 || user.age_check.needs_parent)), consent_text: CONSENT, consent: user && user.speed_proof ? user.speed_proof.consent || null : null,
+    available: !why, reason: why, offer: !why && offerNow(user), check_due: !why && due(user.id).due, needs_parent: !!(user && user.age_check && (user.age_check.under_13 || user.age_check.needs_parent)), consent_text: CONSENT, consent: user && user.speed_proof ? user.speed_proof.consent || null : null,
     skills: why ? [] : db.forUser('speed_proof', user.id).slice().map((r) => ({ skill_id: r.skill_id, way: r.arm === 'normal' && !r.switched_at ? 'plain' : 'savant', understood: !!r.understood_at })),
   };
 }
@@ -752,6 +830,6 @@ function status(user) {
 module.exports = {
   VERSION, CONSENT, CONSENT_VERSION, POINTS, TARGET, NONINFERIORITY, BLOCK_SIZE,
   mode, enabled, normalShare, setRandom, ineligibleReason, eligible, ageBand, inBeta,
-  setConsent, consentedNormal, assign, normalFor, withSkill, plainNowFor, lessonContext, itemContext, PLAIN_NOTE, offerNow, plainAtLevel, skillOfLevel, switchToSavant, measure, attribute, timeCapMinutes,
+  unitFor, plainHere, itemUnitKey, setConsent, consentedNormal, assign, normalFor, withSkill, plainNowFor, lessonContext, itemContext, PLAIN_NOTE, offerNow, plainAtLevel, skillOfLevel, switchToSavant, measure, attribute, timeCapMinutes,
   detectability, estimateOf, due, dueChecks, start, answer, learnerSummary, groupStats, verdict, buildReport, report, status, meanCI, quantile,
 };

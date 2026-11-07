@@ -166,3 +166,6 @@ real-world challenges, scenario role-play, self-report surveys.
 ## Goals shape every part of the material (owner, 2026-11-05)
 
 Every part of lessons and other material should be changeable and follow the learner goal (for example core parts fast) and the deepest understanding of them. Keep building toward at least 95% accuracy at one month.
+
+## Fact checking (owner, 2026-11-06)
+Everything Savant makes and puts out is 100% fact checked before it is shown. "100% fact checked" and "100% true" are different things: the first is the standard and may be claimed, the second may not.

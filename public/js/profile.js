@@ -380,6 +380,7 @@ App.mount(async () => {
 
     <h2 class="section-title">${window.icon('edit')}How long to remember</h2>
     <div class="card" id="retention-goals-card"></div>
+    <div class="card" id="study-goals-card"><h3 style="margin-top:0">What you want from each subject</h3><div id="study-goals-host"></div></div>
 
     <h2 class="section-title">${window.icon('edit')}Your details report</h2>
     <div class="card">
@@ -605,6 +606,7 @@ App.mount(async () => {
 
   if (window.GoalPicker) window.GoalPicker.list(document.getElementById('goals-card'));
   if (window.RetentionGoal) window.RetentionGoal.list(document.getElementById('retention-goals-card'));
+  if (window.StudyGoal) window.StudyGoal.list(document.getElementById('study-goals-host'));
 
   const masteryHost = document.getElementById('mastery');
   for (const enrollment of progress.enrollments) {

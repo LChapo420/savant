@@ -70,6 +70,9 @@ router.post('/remediation/:id/teach', requireAuth, limit('remediation-teach', 24
   if (!area) return res.status(404).json({ error: 'No such area.' });
 
   const said = String(req.body.message || '').trim().slice(0, 2000);
+  // The teaching chat is the same tutor: a crisis message gets the fixed reply, before any model, and is not kept.
+  const crisis = said ? require('../services/tutor-full').triage(req.user, said) : null; // eslint-disable-line global-require
+  if (crisis && crisis.reply) return res.json({ reply: crisis.reply, messages: [...(area.messages || []), { role: 'user', content: said }, { role: 'assistant', content: crisis.reply }], source: 'safety', kind: crisis.kind });
   const history = [...(area.messages || [])];
   if (said) history.push({ role: 'user', content: said });
 

@@ -584,7 +584,7 @@ function unitsToWork(plan, units, statuses, except = -1, enrollment = null) {
  */
 function nextLevelAfter(enrollment, grade, level) {
   const next = unitNextLevelAfter(enrollment, grade, level);
-  return goalFit(enrollment, grade, require('./speed-placement').stepOverSettled(enrollment, grade, compressProven(enrollment, grade, next))); // eslint-disable-line global-require
+  return studyFit(enrollment, grade, goalFit(enrollment, grade, require('./speed-placement').stepOverSettled(enrollment, grade, compressProven(enrollment, grade, next)))); // eslint-disable-line global-require
 }
 
 /**
@@ -594,6 +594,12 @@ function nextLevelAfter(enrollment, grade, level) {
  * docs/spanish-replica/GOAL-FIT.md). Never a checkpoint, a unit check or the
  * grade's last level.
  */
+/** The learner's study goal (services/study-goal.js): with core parts fast, the extra practice levels are stepped over and listed. */
+function studyFit(enrollment, grade, next) {
+  if (!enrollment || !enrollment.study_goal) return next;
+  return require('./study-goal').stepOver(enrollment, grade, next); // eslint-disable-line global-require
+}
+
 function goalFit(enrollment, grade, next) {
   if (!enrollment || enrollment.track_id !== 'spanish') return next;
   try {
