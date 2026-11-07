@@ -183,6 +183,7 @@ async function runCase(c) {
     const reached = r.json.changed ? after !== before : after === before;
     const back = await call('POST', '/api/parts/revert', uid, { material_id: mid, part: ref });
     const restored = await readPart(uid, mid, ref, ctx);
+    if (process.env.DBG_R && part === 'lesson' && restored !== before && restored !== storedLesson(uid, mid, ref)) console.error('MISMATCH', change, 'B:', before.slice(0, 300), 'R:', restored.slice(0, 300), 'S:', storedLesson(uid, mid, ref).slice(0, 300));
     row.changes.push({ part, ref, change, http: r.status, changed: !!r.json.changed, message: r.json.message || null, ms, reached, restored: restored === before || (part === 'lesson' && restored === storedLesson(uid, mid, ref)), revert_http: back.status, before: before.slice(0, 4000), after: r.json.changed ? after.slice(0, 4000) : null });
     // Clear the pin so the next change on this part starts clean.
     mk.db.remove('material_part_changes', (x) => x.user_id === uid && x.material_id === mid && x.ref === ref);
