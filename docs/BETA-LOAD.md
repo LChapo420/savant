@@ -104,7 +104,7 @@ All keep behaviour the same; tests in `scripts/beta-load-fixes-test.js`, which i
 
 | Step | Fix |
 |---|---|
-| Whole store written every 250 ms | One line instead of indented; the wait is 9x the last save's time, 250 ms to 5 s; 10 services stopped forcing saves on requests (`db.saveSoon`) |
+| Whole store written every 250 ms | One line instead of indented; the wait is 9x the last save's time, 250 ms to 5 s; 10 services stopped forcing saves on requests (`db.saveSoon`), though deleting an upload still saves at once |
 | `stat` per slot per waiting call | Once per 5 s in production (`POOL_CONFIG_CHECK_MS`) |
 | `globalCap()` per queued job in the write-ahead pump | Once per pump |
 | Ledger read and parse on each "is there room?" | Reused until the file changes (`services/ledger-peek.js`). Reservations still read under the lock, so a stale peek can't pass a cap |
