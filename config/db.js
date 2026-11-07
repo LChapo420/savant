@@ -171,12 +171,6 @@ function flushDelay() {
   return Math.min(most, Math.max(250, (ratio || 0) * lastFlushMs));
 }
 
-/** The bytes have to be on the disk before the rename makes them the live file, or a power cut can leave a short file under the real name. */
-function syncToDisk(file) {
-  if (process.env.DB_FSYNC === 'off') return;
-  const fd = fs.openSync(file, 'r+');
-  try { fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
-}
 
 function flush() {
   flushTimer = null;
@@ -188,8 +182,8 @@ function flush() {
   try {
     // One line (DB_PRETTY=1 for the indented form): a quarter smaller and quicker to write, and no script here reads it by eye.
     fs.writeFileSync(TMP_PATH, process.env.DB_PRETTY === '1' ? JSON.stringify(store, null, 2) : JSON.stringify(store), 'utf8');
-    syncToDisk(TMP_PATH);
-    fs.renameSync(TMP_PATH, DB_PATH);
+    // On the disk before it is the live file: a hard power-off left files of zero bytes on 6 Nov 2026 (services/durable-file.js).
+    require('../services/durable-file').commit(TMP_PATH, DB_PATH); // eslint-disable-line global-require
     if (flushFailures) console.warn(`db: saved after ${flushFailures} failed attempt(s)`);
     flushFailures = 0;
     firstFailureAt = null;

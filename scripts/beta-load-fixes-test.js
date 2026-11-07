@@ -177,6 +177,52 @@ async function startApp(dbFile, port) {
   const read2 = runSqlite(`const db = require('./config/db'); console.log(db.all('items').length); console.log(db.saveState().saving); process.exit(0);`);
   check('a row written before a kill is there after', read2.startsWith('3'), read2);
 
+  console.log('a power cut: bytes on the disk before the rename, ledgers copied');
+  const durable = require('../services/durable-file');
+  const order = [];
+  const realFsync = fs.fsyncSync; const realRename = fs.renameSync;
+  fs.fsyncSync = (fd) => { order.push('fsync'); return realFsync.call(fs, fd); };
+  fs.renameSync = (a, b) => { order.push(`rename ${path.basename(String(b))}`); return realRename.call(fs, a, b); };
+  db.insert('reports', { user_id: 1 });
+  db.flush();
+  check('the store is flushed to disk before it is renamed', order.indexOf('fsync') >= 0 && order.indexOf('fsync') < order.findIndex((o) => o.startsWith('rename')), order);
+  order.length = 0;
+  const munito = require('../services/munito-ledger');
+  const mid = munito.reserve({ usd: 0.01, task: 't', model: 'x' });
+  munito.settle(mid, { usd: 0.01, outcome: 'ok', usage: { input_tokens: 1, output_tokens: 1 } });
+  check('a ledger is flushed to disk before each rename', order.length >= 4 && order[0] === 'fsync' && order[1].startsWith('rename'), order.slice(0, 4));
+  order.length = 0;
+  const realInvites = process.env.BETA_INVITES_FILE;
+  fs.fsyncSync = realFsync; fs.renameSync = realRename;
+  void realInvites;
+  // Copies: every interval, kept to 12 plus one a day.
+  process.env.LEDGER_BACKUP = 'on'; process.env.LEDGER_BACKUP_MINUTES = '0.0001';
+  const lfile = path.join(dir, 'lyceum-ledger.json');
+  process.env.LYCEUM_LEDGER_FILE = lfile;
+  const lyceum = require('../services/lyceum-ledger');
+  const lid = lyceum.reserve({ usd: 0.5, task: 't', model: 'x' });
+  lyceum.settle(lid, { usd: 0.5, outcome: 'ok', usage: { input_tokens: 1, output_tokens: 1 } });
+  await sleep(50);
+  const lid2 = lyceum.reserve({ usd: 0.25, task: 't', model: 'x' });
+  lyceum.settle(lid2, { usd: 0.25, outcome: 'ok', usage: { input_tokens: 1, output_tokens: 1 } });
+  const bdir = durable.backupDir(lfile);
+  const copies = fs.existsSync(bdir) ? fs.readdirSync(bdir).filter((n) => n.startsWith('lyceum-ledger.')) : [];
+  check('a ledger write leaves a copy beside it', copies.length >= 1, copies);
+  delete process.env.LEDGER_BACKUP_MINUTES;
+  for (let i = 0; i < 30; i++) fs.writeFileSync(path.join(bdir, `old-ledger.202611${String((i % 28) + 1).padStart(2, '0')}T${String(i).padStart(2, '0')}00.json`), '{}');
+  durable.prune(bdir, 'old-ledger');
+  check('old copies are pruned', fs.readdirSync(bdir).filter((n) => n.startsWith('old-ledger.')).length <= 26);
+  // The crash: the ledger is zero bytes. It refuses, then the tool puts back the copy and adds an estimate.
+  const spentBefore = lyceum.status().spent_usd;
+  fs.writeFileSync(lfile, '');
+  check('a zero-byte ledger refuses every call', lyceum.canSpend(0) === false);
+  const tool = (extra) => spawnSync(process.execPath, [path.join(__dirname, 'ledger-restore.js'), '--dir', dir, ...extra], { encoding: 'utf8', env: { ...process.env, LEDGER_BACKUP: 'on' } }).stdout;
+  check('the restore tool finds it and changes nothing without --write', /lyceum-ledger\.json: EMPTY/.test(tool([])) && fs.statSync(lfile).size === 0);
+  tool(['--write']);
+  const backNow = lyceum.status();
+  check('--write restores it, not below the copy, and says so', backNow.ok && backNow.spent_usd >= 0.5 && backNow.spent_usd <= spentBefore + 1 && /restored from/.test(fs.readFileSync(lfile, 'utf8')), backNow);
+  delete process.env.LEDGER_BACKUP;
+
   console.log('uploads in memory at once');
   const { uploadBudget, inFlightBytes } = require('../utils/upload-budget');
   const fakeRes = () => { const h = {}; const r = { code: 200, set() {}, status(c) { r.code = c; return { json() {} }; }, on(ev, fn) { h[ev] = fn; }, close() { h.close(); } }; return r; };

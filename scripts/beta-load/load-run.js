@@ -19,8 +19,6 @@ const has = (n) => args.includes(`--${n}`);
 const extras = {};
 args.forEach((a, i) => { if (a === '--env') { const [k, ...v] = args[i + 1].split('='); extras[k] = v.join('='); } });
 
-try { require('os').setPriority(0, require('os').constants.priority.PRIORITY_ABOVE_NORMAL); } catch { /* best effort */ }
-
 (async () => {
   const learners = Number(flag('learners', 10));
   const minutes = Number(flag('minutes', 1));

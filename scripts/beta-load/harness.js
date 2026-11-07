@@ -74,8 +74,6 @@ async function startServer(env, { nodeArgs = [], logName = 'server.log', timeout
   const log = fs.openSync(path.join(env.TEMP, logName), 'a');
   const args = [...nodeArgs, ...(env.PROBE_FILE ? ['-r', path.join(__dirname, 'probe.js')] : []), 'server.js'];
   const child = spawn(process.execPath, args, { cwd: ROOT, env, stdio: ['ignore', log, log] });
-  // Other agents share this PC: above normal keeps the measurement about this app rather than about them, for the short length of a run.
-  try { os.setPriority(child.pid, os.constants.priority.PRIORITY_ABOVE_NORMAL); } catch { /* best effort */ }
   const url = `http://127.0.0.1:${env.PORT}`;
   const t0 = Date.now();
   let exited = null;

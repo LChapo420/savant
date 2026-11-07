@@ -109,7 +109,7 @@ function read() {
 function write(data) {
   const tmp = `${FILE()}.${process.pid}.tmp`;
   fs.writeFileSync(tmp, JSON.stringify(data, null, 1));
-  fs.renameSync(tmp, FILE());
+  require('./durable-file').commit(tmp, FILE(), { backup: true }); // eslint-disable-line global-require
 }
 
 const reservedUsd = (data) => Object.values(data.reservations || {}).reduce((a, r) => a + (Number(r.usd) || 0), 0);
