@@ -55,7 +55,7 @@
   };
 
   const TRACK_REPLY = {
-    math: '**Math.** Everything in it builds on something, so finding where you are really matters.',
+    math: '**Math.** It all builds on itself, so finding where you are really matters.',
     english: '**English.** Good one. It helps with everything else you read and write.',
     reading: '**Reading.** Nice. Every other subject gets easier with this one.',
     iq: '**IQ training.** Patterns and puzzles. Fun ones, I promise.',
@@ -77,7 +77,7 @@
 
   /** The retention goal's choices (services/retention-goal.js): the words say what the choice really does. `len` draws the small ruler. */
   const HORIZONS = [
-    { id: 'date', title: 'Until a test date', sub: 'Pick the day', len: 0, reply: 'Then your reviews get **packed in before that date,** ending the day before and on the day itself.' },
+    { id: 'date', title: 'Until a test date', sub: 'Pick the day', len: 0, reply: 'Your reviews get **packed in before that date,** right up to the day itself.' },
     { id: 'months', title: 'A few months', sub: 'About 90 days', len: 20, reply: 'A few months. I\'ll **skip the reviews you\'d only need after that.**' },
     { id: 'year', title: 'A year', sub: '365 days', len: 45, reply: 'A year. Your reviews **spread out to fit it.**' },
     { id: 'years', title: 'Years', sub: 'About 3 years', len: 75, reply: 'Years. Reviews **keep coming back, further apart.**' },

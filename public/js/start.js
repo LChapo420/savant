@@ -171,7 +171,7 @@
     ob.dataset.screen = step;
     ob.dataset.layout = view.hero ? 'hero' : 'question';
     $('#back').style.visibility = view.back === null ? 'hidden' : 'visible';
-    $('#ruler').hidden = false;
+    $('#wordmark').hidden = step !== 'welcome';
     setRuler(step, view.within);
     say(view.bubble || '', view.mood || 'idle');
     const panel = $('#panel');
@@ -220,9 +220,9 @@
       hero: true,
       back: 'welcome',
       mood: 'wave',
-      bubble: `${Tutor.greeting()} A few questions, then **your first lesson is built around you.**`,
+      bubble: `${Tutor.greeting()} A few questions, then your first lesson is **built around you.**`,
       cta: 'Sounds good',
-      html: '<h1 class="sr">Meet your tutor</h1>',
+      html: '<h1 class="hello-h">Let\'s get you set up.</h1><p class="hello-sub">It takes a few minutes. Nothing to install, nothing to pay.</p>',
       next: () => go('age'),
     }),
 
@@ -307,7 +307,7 @@
         back: 'learn',
         bubble: had ? had.reply : 'Knowing why helps me **get the plan right.**',
         ok: () => !!S.a.why,
-        html: `${head(S.a.tracks.length === 1 ? `What's ${trackName()} for?` : "What's this for?")}
+        html: `${head("What's this for?")}
           <fieldset class="opts ob-body"><legend class="sr">Why you are learning this</legend>
             ${C.WHY.map((w) => opt({ type: 'radio', name: 'why', value: w.id, checked: S.a.why === w.id, icon: I[w.icon], title: w.title })).join('')}
           </fieldset>`,
@@ -530,7 +530,7 @@
       const pct = grades.length > 1 ? (at / (grades.length - 1)) * 100 : 50;
       return {
         back: null,
-        bubble: 'Your first lessons will **check this too,** so it doesn\'t have to be perfect.',
+        bubble: 'Your first lessons **check this too,** so it doesn\'t have to be perfect.',
         mood: 'happy',
         cta: 'That works',
         html: `<span class="ob-eyebrow">${esc(trackName())}</span>${head(`Start at ${name || 'the beginning'}.`, band || '')}
@@ -582,7 +582,7 @@
       const [name, band] = gradeParts(e.grade_name);
       return {
         back: null,
-        bubble: 'Ready when you are. **Your answers are safe here** while you do it.',
+        bubble: 'Ready when you are. Your answers are **safe here** while you do it.',
         mood: 'happy',
         cta: 'Open my first lesson',
         html: `${head('Your first lesson is ready.')}
@@ -607,7 +607,7 @@
       const days = [{ d: 1, t: 'Tomorrow' }, { d: 2, t: 'In 2 days' }, { d: 3, t: 'In 3 days' }];
       return {
         back: null,
-        bubble: 'A set time means **one less thing to decide.** Your next step will be waiting.',
+        bubble: 'A set time means **one less decision.** Your next step will be waiting.',
         mood: 'happy',
         cta: 'Set it',
         ok: () => !!S.remindDay,
@@ -720,7 +720,7 @@
     const e = server.enrollment || S.enrollment;
     return {
       back: hasLesson ? null : 'moment',
-      bubble: hasLesson ? 'Good work. **Let\'s make sure it\'s still here tomorrow.**' : 'Your notes go through an outside AI to become lessons, so **I need you to save first.**',
+      bubble: hasLesson ? 'Good work. Let\'s make sure it\'s **still here tomorrow.**' : 'Your notes go through an outside AI to become lessons, so **I need you to save first.**',
       cta: 'Save my progress',
       ok: () => false,
       alt: { label: hasLesson ? 'Not yet, keep learning' : 'I already have an account', run: () => { location.href = hasLesson ? `/path?enrollment=${e.id}` : '/login?next=/start'; } },
@@ -800,7 +800,7 @@
   const walkPath = (rest) => `/api/subject-placement/${encodeURIComponent(firstTrack())}/${rest}`;
 
   function loadBlock(out) {
-    W.grade = out.grade_id || out.next_grade_id;
+    W.grade = out.next_grade_id || out.grade_id;
     W.questions = out.questions || [];
     W.answers = [];
     W.i = 0;

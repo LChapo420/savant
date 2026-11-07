@@ -83,7 +83,7 @@ function contentChecks() {
 }
 
 async function main() {
-  fs.copyFileSync(path.join(ROOT, 'data', 'db.json'), dbFile);
+  if (fs.existsSync(path.join(ROOT, 'data', 'db.json'))) fs.copyFileSync(path.join(ROOT, 'data', 'db.json'), dbFile);
   contentChecks();
 
   // ── off ──
@@ -147,8 +147,11 @@ async function main() {
   // A failed sign-up changes nothing.
   const bad = await c('POST', '/api/ob2/claim', { display_name: 'Ada', email: 'nope', password: 'longenough1' });
   assert.equal(bad.status, 400);
-  const taken = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'db.json'), 'utf8')).users.find((u) => u.email && u.id !== 6689);
-  const dup = await c('POST', '/api/ob2/claim', { display_name: 'Ada', email: taken.email, password: 'longenough1' });
+  const someone = client(base);
+  const takenEmail = `taken-${Date.now()}@example.test`;
+  await someone('POST', '/api/consent/age', { birth_month: 1, birth_year: 1980, country: 'US' });
+  await someone('POST', '/api/auth/register', { email: takenEmail, password: 'longenough1', display_name: 'Someone' });
+  const dup = await c('POST', '/api/ob2/claim', { display_name: 'Ada', email: takenEmail, password: 'longenough1' });
   assert.equal(dup.status, 409);
   assert.equal(dup.data.code, 'email_taken');
   assert.equal((await c('GET', '/api/ob2/state')).data.enrollment.id, first.data.enrollment.id);

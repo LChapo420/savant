@@ -6,7 +6,7 @@ Switch: `ONBOARDING_V2=on`. Off (the default) means today's flow, unchanged: `/s
 
 | What | Where today | Stored in | Depends on it | In v2 |
 | --- | --- | --- | --- | --- |
-| Sign-up: name, email, password | `register.html`, `POST /api/auth/register` | `users` | everything | Step 9, `POST /api/auth/claim`, same checks |
+| Sign-up: name, email, password | `register.html`, `POST /api/auth/register` | `users` | everything | Step 9, `POST /api/ob2/claim`, same checks |
 | Sign in by email or username | `login.html`, `POST /api/auth/login` | `users`, session | everything | Unchanged page. Linked from Welcome and Save. A guest who signs in brings the level check (section 4) |
 | Age screen: month, year, country, no defaults, first answer holds for a day | `age-screen.js`, `POST /api/consent/age` | session `age_screen`, then `users.age_check` | every consent gate, `audience: kids`, beta arm, boosters | Step 3, the same endpoint and the same three neutral fields. The server still picks the route; the page never knows a threshold |
 | Child account: nickname, username, password, parent's email, no child email | `registerChild` | `users` (`account_type: child`), `parental_consents` | `gate`, `access`, sweep (deleted after 14 days unanswered) | Split: nickname and parent's email before the level check, username and password at step 9. See section 3 |
@@ -58,7 +58,7 @@ Changes, each forced:
 A self-route visitor gets a real `users` row with `guest: true`, no email, no password, and `access().state === 'guest'`, created at step 7 and not before. Steps 3 to 6 live in the session and on the device.
 
 - Why a row and not a side table: the placement, enrollment, session and lesson code all key on a user id. Forking them is how progress gets lost. The ACT check's `guest:<id>` walk keeps one thing; here a whole lesson has to survive.
-- Carry-over: `POST /api/auth/claim` adds credentials to the same row, so nothing moves and nothing can be lost. A failed claim changes nothing.
+- Carry-over: `POST /api/ob2/claim` adds credentials to the same row, so nothing moves and nothing can be lost. A failed claim changes nothing.
 - Limits: `ai_free_text: false`, `camera_mic: false`, uploads refused, no boosters, no beta arm or speed-proof draw, classed as non-real in metrics. `services/ai.js` sends a guest's calls only to local models.
 - Answers: `onboarding_answers`, in `KNOWN_COLLECTIONS` and `EXPORT_MORE`.
 - Expiry: a guest idle for `ONBOARDING_GUEST_DAYS` (30) is deleted by the consent sweep, the whole row set.

@@ -60,13 +60,21 @@ async function check(page, label) {
 }
 
 async function shot(page, label) {
-  await check(page, label);
   await delay(420);
+  await check(page, label);
   const name = `${page.persona.replace(/\//g, '-')}-${label}.png`;
   await page.screenshot({ path: path.join(SHOTS, name), fullPage: false });
 }
 
-const at = (page, step) => page.waitForFunction((s) => location.hash === `#${s}` && document.querySelector('#ob') && document.querySelector('#ob').dataset.screen === s, step, { timeout: 15000 });
+async function at(page, step) {
+  try {
+    await page.waitForFunction((s) => location.hash === `#${s}` && document.querySelector('#ob') && document.querySelector('#ob').dataset.screen === s, step, { timeout: 15000 });
+  } catch (err) {
+    const where = await page.evaluate(() => [location.href, (document.querySelector('#ob') || { dataset: {} }).dataset.screen, (document.querySelector('#err') || {}).textContent].join(' | ')).catch(() => '');
+    await page.screenshot({ path: path.join(SHOTS, `FAIL-${page.persona.replace(/\//g, '-')}-${step}.png`) }).catch(() => {});
+    throw new Error(`${page.persona} wanted ${step}, at ${where}`);
+  }
+}
 const next = (page) => page.locator('#next').click();
 const isDisabled = (page) => page.locator('#next').isDisabled();
 
@@ -97,20 +105,20 @@ async function answerAge(page, { month = '3', year, country = 'US' }) {
 
 async function toMoment(page, { tracks = ['math'], why = 'school', horizon = 'year', interest = 'soccer', other = null }) {
   assert.equal(await isDisabled(page), true, 'learn: Continue is off until answered');
-  for (const t of tracks) await page.locator(`input[name="track"][value="${t}"]`).check({ force: true });
+  for (const t of tracks) await page.locator(`input[name="track"][value="${t}"]`).check();
   await shot(page, '04-learn');
   await next(page);
   await at(page, 'why');
   assert.equal(await isDisabled(page), true);
-  await page.locator(`input[name="why"][value="${why}"]`).check({ force: true });
+  await page.locator(`input[name="why"][value="${why}"]`).check();
   await shot(page, '05-why');
   await next(page);
   await at(page, 'when');
-  await page.locator(`input[name="horizon"][value="${horizon}"]`).check({ force: true });
+  await page.locator(`input[name="horizon"][value="${horizon}"]`).check();
   await shot(page, '06-when');
   await next(page);
   await at(page, 'into');
-  await page.locator(`input[name="interest"][value="${interest}"]`).check({ force: true });
+  await page.locator(`input[name="interest"][value="${interest}"]`).check();
   if (other) {
     assert.equal(await isDisabled(page), true, 'other: a box to fill first');
     await page.fill('#other', other);
@@ -128,7 +136,7 @@ async function walk(page, stopAfter = 3, shotIt = true) {
   for (let i = 0; i < stopAfter; i += 1) {
     await page.waitForSelector('.q-prompt');
     const first = page.locator('#walk input[type="radio"]').first();
-    if (await first.count()) await first.check({ force: true });
+    if (await first.count()) await first.check();
     else await page.fill('#typed', 'x');
     await next(page);
     await delay(150);
@@ -183,7 +191,7 @@ async function adult(browser, opts, label = 'adult') {
   await next(page);
   await at(page, 'remind');
   await shot(page, '16-remind');
-  await page.locator('input[name="day"][value="1"]').check({ force: true });
+  await page.locator('input[name="day"][value="1"]').check();
   await next(page);
   await at(page, 'done');
   await shot(page, '17-done');
@@ -301,12 +309,12 @@ async function reloadAndBack(browser, opts) {
   await page.reload();
   await at(page, 'age');
   await answerAge(page, { year: 1990 });
-  await page.locator('input[name="track"][value="math"]').check({ force: true });
+  await page.locator('input[name="track"][value="math"]').check();
   await next(page);
   await at(page, 'why');
   await page.reload();
   await at(page, 'why');
-  await page.locator('input[name="why"][value="work"]').check({ force: true });
+  await page.locator('input[name="why"][value="work"]').check();
   await next(page);
   await at(page, 'when');
   // Back through the browser, then the screen's own back, and every answer is still there.
@@ -331,13 +339,13 @@ async function reloadAndBack(browser, opts) {
   await at(page, 'why');
   await next(page);
   await at(page, 'when');
-  await page.locator('input[name="horizon"][value="date"]').check({ force: true });
+  await page.locator('input[name="horizon"][value="date"]').check();
   assert.equal(await isDisabled(page), true, 'a test date is needed');
   const soon = new Date(Date.now() + 40 * 86400000).toISOString().slice(0, 10);
   await page.fill('#test-date', soon);
   await next(page);
   await at(page, 'into');
-  await page.locator('input[name="interest"][value="cooking"]').check({ force: true });
+  await page.locator('input[name="interest"][value="cooking"]').check();
   await next(page);
   await at(page, 'moment');
   await next(page);
@@ -346,7 +354,7 @@ async function reloadAndBack(browser, opts) {
   await at(page, 'level');
   await page.waitForSelector('.q-prompt');
   const before = await page.locator('.ob-eyebrow').textContent();
-  await page.locator('#walk input[type="radio"]').first().check({ force: true });
+  await page.locator('#walk input[type="radio"]').first().check();
   await next(page);
   await delay(300);
   await page.waitForSelector('.q-prompt');
@@ -357,7 +365,7 @@ async function reloadAndBack(browser, opts) {
   const after = await page.locator('.ob-eyebrow').textContent();
   assert.notEqual(after, 'Question 1', `walk resumes after reload (was ${before}, then ${second}, now ${after})`);
   // Double taps: a burst on Continue moves one question and one only.
-  await page.locator('#walk input[type="radio"]').first().check({ force: true });
+  await page.locator('#walk input[type="radio"]').first().check();
   const n = Number(after.replace(/\D/g, ''));
   await page.evaluate(() => { const b = document.getElementById('next'); b.click(); b.click(); b.click(); });
   await delay(600);
@@ -441,16 +449,16 @@ async function notes(browser, opts) {
   const page = await open(browser, 'notes', opts);
   await toAge(page);
   await answerAge(page, { year: 1990 });
-  await page.locator('input[name="notes"]').check({ force: true });
+  await page.locator('input[name="notes"]').check();
   await next(page);
   await at(page, 'why');
-  await page.locator('input[name="why"][value="school"]').check({ force: true });
+  await page.locator('input[name="why"][value="school"]').check();
   await next(page);
   await at(page, 'when');
-  await page.locator('input[name="horizon"][value="year"]').check({ force: true });
+  await page.locator('input[name="horizon"][value="year"]').check();
   await next(page);
   await at(page, 'into');
-  await page.locator('input[name="interest"][value="art"]').check({ force: true });
+  await page.locator('input[name="interest"][value="art"]').check();
   await next(page);
   await at(page, 'moment');
   await next(page);
