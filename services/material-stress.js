@@ -91,7 +91,7 @@ function sweepCourse({ skills, kps, passageFor }) {
  * words, and every word that is rare in the material (said in one sentence only: "northwest", "euvolemic"). A short course with many stressed points kept 1 or 2 of 8 plain facts before this.
  * Mutates the lessons. Returns the number of sentences added. `capWords` limits what is added, most specific sentences first.
  */
-function sweepFacts({ skills, passages, sentencesOf, capWords, linesOf = (t) => String(t).split(/\n+/) }) {
+function sweepFacts({ skills, passages, sentencesOf, capWords, linesOf = (t) => String(t).split(/\n+/), clean = (t) => t }) {
   const lessonText = () => skills.flatMap((s) => [...(s.lesson.paragraphs || []), ...(s.lesson.key_points || [])]).join(' ');
   let have = lessonText().toLowerCase();
   const haveTerms = keypoints.termSet(have);
@@ -133,7 +133,7 @@ function sweepFacts({ skills, passages, sentencesOf, capWords, linesOf = (t) => 
   }
   for (const [owner, list] of byOwner) {
     // In the material's order, one short paragraph.
-    const order = list.sort((a, b) => all.indexOf(all.find((y) => y.s === a.s)) - all.indexOf(all.find((y) => y.s === b.s))).map((m) => m.s.replace(/^[-*•–]\s*/, ''));
+    const order = list.sort((a, b) => all.indexOf(all.find((y) => y.s === a.s)) - all.indexOf(all.find((y) => y.s === b.s))).map((m) => clean(m.s));
     owner.lesson.paragraphs = [...owner.lesson.paragraphs, order.join(' ')];
   }
   return added;

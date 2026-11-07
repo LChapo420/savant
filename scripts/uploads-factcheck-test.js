@@ -45,6 +45,8 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
 
 (async () => {
   check('a sentence broken across PDF lines is one line', F.logicalLines('The Congress met in 1878 and it\ndefused an early crisis.\nIn 1904 they signed.\n- a bullet\n- another').length === 4, F.logicalLines('The Congress met in 1878 and it\ndefused an early crisis.\nIn 1904 they signed.\n- a bullet\n- another'));
+  check('a heading line is not run into its sentence', F.logicalLines('Why circles matter\nVelocity is a vector and it has a direction.').length === 2);
+  check('the material\'s own sentence reads without marks', F.plainSentence('- The **centripetal** force is *real* here.') === 'The centripetal force is real here.', F.plainSentence('- The **centripetal** force is *real* here.'));
   // A reader must show its evidence.
   const quoted = async (q) => F.check([{ id: 'a', text: 'The Nazca Plate subducts beneath South America at about 9 cm yearly in spring.' }], { idx, sourceText: SOURCE, needQuote: true, asker: async () => ({ res: { data: { verdicts: [{ n: 1, verdict: 'supported', quote: q }] } } }) });
   check('no quote: not supported', !(await quoted('')).get('a').keep);

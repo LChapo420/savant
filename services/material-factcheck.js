@@ -118,12 +118,17 @@ function logicalLines(text) {
       const line = line0.trim();
       if (!line) continue;
       const startsNew = /^(?:[-*•–]\s|\d+[.)]\s|#{1,6}\s|\|)/.test(line) || /\s\|\s/.test(line);
-      if (cur && (startsNew || /[.!?:;]["'”)\]]*$/.test(cur) || /\s\|\s/.test(cur))) { out.push(cur); cur = line; } else cur = cur ? `${cur} ${line}` : line;
+      // A short line with no end mark before a line that opens a sentence is a heading, not a wrapped sentence.
+      const heading = cur && (cur.match(/\S+/g) || []).length <= 8 && /^["'“(]?[\p{Lu}\p{N}]/u.test(line);
+      if (cur && (startsNew || heading || /[.!?:;]["'”)\]]*$/.test(cur) || /\s\|\s/.test(cur))) { out.push(cur); cur = line; } else cur = cur ? `${cur} ${line}` : line;
     }
     if (cur) out.push(cur);
   }
   return out;
 }
+
+/** The material's own sentence as a learner should read it: no Markdown marks. */
+const plainSentence = (t) => String(t).replace(/^\s*(?:[-*•–]\s+|#{1,6}\s+|>\s?)/, '').replace(/\*\*|==|__/g, '').replace(/(^|[\s(])\*(?=\S)|(?<=\S)\*(?=[\s.,;:)]|$)/g, '$1').replace(/\s+/g, ' ').trim();
 
 /** A material not written in English: the lessons are written in English, so names and words differ by translation and only the readers can judge them. */
 const EN_WORDS = new Set('the of and to in is that it for as with was on are be this by at from or an which have not but they their can more if when what there been has will all one would about'.split(' '));
@@ -411,7 +416,7 @@ async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, 
       if (dt.size && shared / dt.size < 0.4) continue; // it was about something else
       const have = keptNow();
       let n = 0; for (const x of line.terms) if (have.has(x)) n++;
-      if (line.terms.size && n / line.terms.size < 0.75 && (line.text.match(/\S+/g) || []).length <= 60) restored.push(line.text.replace(/^[-*•]\s*/, '').replace(/\*\*/g, ''));
+      if (line.terms.size && n / line.terms.size < 0.75 && (line.text.match(/\S+/g) || []).length <= 60) restored.push(plainSentence(line.text));
     }
   }
   if (restored.length) { outP = [...outP, [...new Set(restored)].slice(0, 6).join(' ')]; }
@@ -475,4 +480,4 @@ function readersFor(asker) {
   };
 }
 
-module.exports = { logicalLines, readersFor, onFor, interestWords, checkTexts, enabled, indexSource, examine, check, checkLesson, sentencesOf, numbersOf, namesOf, contentTerms, stem, CHECK_SYSTEM, CHECK_SCHEMA };
+module.exports = { plainSentence, logicalLines, readersFor, onFor, interestWords, checkTexts, enabled, indexSource, examine, check, checkLesson, sentencesOf, numbersOf, namesOf, contentTerms, stem, CHECK_SYSTEM, CHECK_SCHEMA };
