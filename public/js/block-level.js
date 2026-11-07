@@ -257,6 +257,8 @@
         if (r && r.state === 'failed') {
           stillComing = false;
           renderFinish();
+          slowNote();
+          progress.textContent = '';
           finishHost.innerHTML = `<div class="notice notice-warn">The rest of this lesson could not be checked, so it is not shown.${enrollmentId ? ` <a class="notice-link" href="/session?enrollment=${enrollmentId}&ordinary=1">Do the standard session for this level</a>.` : ''}</div>`;
           return;
         }
