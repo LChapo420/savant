@@ -55,6 +55,7 @@ function pages() {
   check('the path sends a grade waiting on placement to its quiz', /status === 'placement_pending'\s*\n?\s*\? `<a class="btn btn-primary btn-lg" href="\/placement\?enrollment=/.test(read('public/js/path.js').replace(/\r/g, '')));
   check('a page that cannot load clears its spinner and offers a retry', /querySelectorAll\('\.loading'\)\.forEach/.test(read('public/js/app.js')) && read('public/js/app.js').includes("'Try again'"));
   check('the connection message goes when the connection is back', /No connection/.test(read('public/js/app.js').match(/toastHost\.querySelectorAll\('\.toast-stay'\)\.forEach[^\n]*/)[0]));
+  check('good news replaces a complaint that stays', read('public/js/app.js').includes("if (kind !== 'error') toastHost.querySelectorAll('.toast-stay')"));
   const css = read('public/css/style.css');
   check('a long chip wraps instead of pushing the page sideways', !/\.chip \{[^}]*white-space: nowrap/.test(css));
   check('a toast never takes the tap meant for what is under it', /\.toast-host \{[^}]*pointer-events: none/.test(css) && /body:has\(\.check-bar\) \.toast-host/.test(css));

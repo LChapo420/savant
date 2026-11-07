@@ -82,6 +82,8 @@
       : escapeHtml(text));
     if (stays) node.querySelector('.toast-close').addEventListener('click', () => node.remove());
     const add = () => {
+      // Good news replaces a complaint that stays: "Saved." under "The test date must be a real date" read as both being true.
+      if (kind !== 'error') toastHost.querySelectorAll('.toast-stay').forEach((n) => n.remove());
       // The same message is not stacked twice (checked here: the first toast waits a beat for the live region).
       if (stays && [...toastHost.querySelectorAll('.toast-stay')].some((n) => n.dataset.text === text)) return;
       toastHost.appendChild(node);
