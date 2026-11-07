@@ -54,3 +54,7 @@ Things put off or waiting for a decision. Nothing here is forgotten or solved. U
 - Copy ledger and DB backups off the server; run one backup restore on the server.
 - Move the server to SQLite before any big wave; JSON store fails near 512 MB.
 - Clean old worktrees.
+- `scripts/scorecard-real-test.js` fails about 1 run in 2 alone ("noise anchors are refused"): unseeded randomness. The feature is off; fix the test.
+- Turn on `COLD_FIRST_BLOCK` for the beta (recommended; gate passes pooled, one 3-learner run missed the median).
+- Resume the factuality build (branch fact-100, paused for pacing) after the 05:30 UTC reset.
+- Onboarding v2 agreement step is in progress on branch onboarding-v2; not merged. Giraffe chosen as direction; sketches in folderThing/design-refs/giraffes.
