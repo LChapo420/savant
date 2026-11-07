@@ -24,6 +24,7 @@ const courses = require('./course-builder');
 const materials = require('./materials');
 const adapt = require('./material-adapt');
 const retentionGoal = require('./retention-goal');
+const expand = require('./material-review-expand');
 
 const DAY = 24 * 60 * 60 * 1000;
 const MAX_CARDS = 400;
@@ -174,12 +175,25 @@ function review(userId, materialId, cardId, rating, now = Date.now()) {
   if (!c) return { error: 'No such card.', code: 'no_card' };
   const score = RATINGS[rating];
   const elapsed = c.last ? Math.max(0.1, (now - Date.parse(c.last)) / DAY) : 1;
-  if (c.last) r.forget_m = path.updateForgetting(r.forget_m || 0, elapsed, c.right, c.wrong, score);
+  if (c.last) r.forget_m = expand.on() ? expand.updateM(r.forget_m || 0, c, elapsed, score, { wrong: c.wrong }) : path.updateForgetting(r.forget_m || 0, elapsed, c.right, c.wrong, score);
   if (rating === 'again') c.wrong++; else c.right++;
   let days;
   if (rating === 'again') {
+    if (expand.on()) expand.afterLapse(c, now);
     c.due = new Date(now + 10 * 60 * 1000).toISOString();
     days = 0;
+  } else if (expand.on()) {
+    // UPLOAD_REVIEW_EXPAND: the card's own half-life, as the course's skills. "Hard" is a wobble and halves; "easy" stretches by half.
+    if (rating === 'hard') expand.afterShaky(c, now);
+    const prog0 = db.forUser('material_progress', userId).find((p) => p.material_id === Number(materialId));
+    const out = expand.plan(c, { eff: retentionGoal.forMaterial(userId, materialId, now), m: r.forget_m || 0, now, finishedOn: (prog0 && prog0.finished_on) || null, wrong: c.wrong, spec: require('./learning-spec').buildSpec(userId, {}), noGrow: rating === 'hard' }); // eslint-disable-line global-require
+    if (out.done) { c.goal_done = true; days = 3650; } else {
+      delete c.goal_done;
+      days = out.days;
+      if (rating === 'hard') days = Math.max(1, Math.floor(days / 2));
+      if (rating === 'easy' && !out.dayOf) days = Math.min(expand.PARAMS.MAX_DAYS, Math.ceil(days * 1.5));
+    }
+    c.due = new Date(now + days * DAY).toISOString();
   } else {
     days = path.intervalDays(c.right, c.wrong, r.forget_m || 0, require('./learning-spec').buildSpec(userId, {})); // eslint-disable-line global-require
     if (rating === 'hard') days = Math.max(1, Math.floor(days / 2));
