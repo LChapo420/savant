@@ -3,7 +3,9 @@
  * The load test: N scripted learners against a local server on a COPY of the data, models stubbed. Measured on this PC.
  *
  *   node scripts/beta-load/load-run.js --learners 100 --minutes 5 --think 8000 [--ramp 60] [--db <file>] [--port 7810] [--tag x]
- *        [--session sqlite] [--env KEY=VALUE ...] [--prof]
+ *        [--session sqlite] [--driver sqlite] [--env KEY=VALUE ...] [--prof]
+ *
+ * --driver sqlite moves the copy to SQLite first, as the switch-over would. MEASURED_ON names the machine in the report (the PC if unset).
  *
  * --ramp: seconds over which learners arrive (0 = all at once, the invite email). Writes report.json into its run folder and prints
  * a summary. Exit 0 whether or not it went well: the report says what happened.
@@ -32,6 +34,9 @@ args.forEach((a, i) => { if (a === '--env') { const [k, ...v] = args[i + 1].spli
   fs.copyFileSync(dbSrc, dbFile);
   h.copyLedgers(dir);
   const stub = h.startStub(stubPort, { latency: Number(flag('stub-latency', 1500)), jitter: Number(flag('stub-jitter', 2500)), dir });
+  const migrateStart = Date.now();
+  if (flag('driver') === 'sqlite') Object.assign(extras, h.migrateToSqlite(dbFile));
+  const migrateMs = flag('driver') === 'sqlite' ? Date.now() - migrateStart : null;
   const env = h.serverEnv({ dir, port, stubPort, dbFile, extra: extras });
   const nodeArgs = [];
   if (has('watch')) env.PROBE_WATCHDOG_FILE = path.join(dir, 'watchdog.jsonl');
@@ -63,7 +68,8 @@ args.forEach((a, i) => { if (a === '--env') { const [k, ...v] = args[i + 1].spli
   let stubStats = null;
   try { stubStats = await (await fetch(`http://127.0.0.1:${stubPort}/__stub/stats`)).json(); } catch { /* gone */ }
   await h.sleep(1500);
-  const dbNow = fs.existsSync(dbFile) ? fs.statSync(dbFile).size : null;
+  const sqliteFile = extras.DB_SQLITE_FILE;
+  const dbNow = sqliteFile ? fs.statSync(sqliteFile).size : (fs.existsSync(dbFile) ? fs.statSync(dbFile).size : null);
   const shut = Date.now();
   stopping = true;
   srv.child.kill('SIGTERM');
@@ -71,7 +77,7 @@ args.forEach((a, i) => { if (a === '--env') { const [k, ...v] = args[i + 1].spli
   const shutMs = Date.now() - shut;
   stub.kill();
   const report = {
-    measured_on: 'this PC (not the server)', learners, minutes, think_ms: thinkMs, ramp_s: ramp, dir, boot_ms: srv.bootMs, crashed, shutdown_ms: shutMs,
+    measured_on: process.env.MEASURED_ON || 'this PC (not the server)', driver: flag('driver', 'json'), migrate_ms: migrateMs, learners, minutes, think_ms: thinkMs, ramp_s: ramp, dir, boot_ms: srv.bootMs, crashed, shutdown_ms: shutMs,
     cpu_ms_per_request: null, overall: metrics.overall(), routes: metrics.table(), notes: Object.fromEntries(metrics.errors),
     probe: h.probeSummary(path.join(dir, 'probe.jsonl'), t0),
     db_bytes_start: fs.statSync(dbSrc).size, db_bytes_end: dbNow,

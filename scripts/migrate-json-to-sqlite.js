@@ -182,9 +182,15 @@ function reverse() {
   const out = { _counters: {} };
   for (const name of COLLECTIONS) { out[name] = s.store[name]; out._counters[name] = s.store._counters[name]; }
   t.mark('read_ms');
-  // Same layout the JSON driver writes (two-space indent), via a temp file.
-  fs.writeFileSync(`${to}.tmp`, JSON.stringify(out, null, 2), 'utf8');
-  fs.renameSync(`${to}.tmp`, to);
+  // One line, as the JSON driver writes it. A rollback can only go back this way while the text fits in one string (about 512 MB). Past that the JSON
+  // driver could not load it either: roll back to an earlier SQLite backup instead.
+  let text;
+  try { text = JSON.stringify(out); } catch (err) {
+    if (err.code === 'ERR_STRING_TOO_LONG' || /Invalid string length/.test(err.message)) throw new Error('this store is too big for the JSON driver (over about 512 MB): it cannot go back to JSON. Restore an earlier SQLite backup instead (docs/SQLITE-SWITCH.md).');
+    throw err;
+  }
+  fs.writeFileSync(`${to}.tmp`, text, 'utf8');
+  require('../services/durable-file').commit(`${to}.tmp`, to); // eslint-disable-line global-require
   t.mark('write_ms');
   const back = verify(normalise(readJson(to)).store, from);
   t.mark('verify_ms');

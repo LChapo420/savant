@@ -3,7 +3,9 @@
  * Build a store as it would look after N learners have studied for D days, by cloning the rows real scripted learners left behind.
  *
  *   node scripts/beta-load/grow-db.js --run <folder of a load run> --learners 250 --days 30 --minutes-in-run 3 --out <file>
- *        [--minutes-a-day 30] [--plans-a-day 4] [--print-rates]
+ *        [--minutes-a-day 30] [--plans-a-day 4] [--print-rates] [--sqlite <file>] [--base <store json>]
+ *
+ * --sqlite writes the grown store straight to SQLite: past about 512 MB it can't be a JSON file the app reads. --base is the store to grow (default data/db.json).
  *
  * Rates: rows per learner per active minute in each per-learner collection, from the run's own data. Writing tailored levels cannot be
  * measured with a stub (its levels fail the app's checks), so plans are added at --plans-a-day of real size (the store's average
@@ -23,7 +25,7 @@ const PER_DAY = Number(flag('minutes-a-day', 30));
 const PLANS = Number(flag('plans-a-day', 4));
 const OUT = flag('out');
 
-const base = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'db.json'), 'utf8'));
+const base = JSON.parse(fs.readFileSync(flag('base', path.join(ROOT, 'data', 'db.json')), 'utf8'));
 const run = JSON.parse(fs.readFileSync(path.join(RUN, 'db.json'), 'utf8'));
 const maxUser = Math.max(...base.users.map((u) => u.id));
 const learners = run.users.filter((u) => u.id > maxUser && u.email);
@@ -40,7 +42,7 @@ const planBytes = good.length ? JSON.stringify(good).length / good.length : 1500
 const bytesPerDay = Object.values(rates).reduce((a, r) => a + r.rows_per_learner_min * r.bytes_per_row * PER_DAY, 0) + PLANS * planBytes;
 const summary = { learners_in_run: learners.length, bytes_per_learner_day: Math.round(bytesPerDay), plan_bytes: Math.round(planBytes), top: Object.entries(rates).sort((a, b) => b[1].rows_per_learner_min * b[1].bytes_per_row - a[1].rows_per_learner_min * a[1].bytes_per_row).slice(0, 8).map(([k, v]) => `${k} ${(v.rows_per_learner_min * PER_DAY).toFixed(1)} rows/day ${Math.round(v.bytes_per_row)} B`) };
 console.log(JSON.stringify(summary));
-if (args.includes('--print-rates') || !OUT) process.exit(0);
+if (args.includes('--print-rates') || (!OUT && !flag('sqlite'))) process.exit(0);
 
 // The template: the learner who did the most.
 const score = (u) => run.items.filter((i) => i.user_id === u.id).length;
@@ -75,6 +77,25 @@ for (let n = 1; n <= N; n++) {
     const sample = good[n % good.length];
     for (let k = 0; k < PLANS * D; k++) out.block_plans.push({ ...sample, id: fresh('block_plans'), user_id: user.id, level: 1000 + k });
   }
+}
+if (flag('sqlite')) {
+  const { COLLECTIONS, open } = require('../../config/db-sqlite-schema');
+  const d = open(flag('sqlite'));
+  d.exec('PRAGMA synchronous = OFF');
+  const ins = d.prepare('INSERT INTO rows (coll, id, pos, doc) VALUES (?, ?, ?, ?)');
+  const cnt = d.prepare('INSERT INTO counters (coll, value) VALUES (?, ?)');
+  d.exec('BEGIN');
+  let rows = 0;
+  for (const name of COLLECTIONS) {
+    const list = Array.isArray(out[name]) ? out[name] : [];
+    list.forEach((row, i) => { ins.run(name, row.id, i + 1, JSON.stringify(row)); rows++; });
+    cnt.run(name, counters[name] || list.reduce((m, r) => Math.max(m, r.id || 0), 0));
+  }
+  d.exec('COMMIT');
+  d.exec('PRAGMA wal_checkpoint(TRUNCATE)');
+  d.close();
+  console.log(JSON.stringify({ out: flag('sqlite'), bytes: fs.statSync(flag('sqlite')).size, learners: N, days: D, rows }));
+  process.exit(0);
 }
 // One line, as the store now saves. Written in pieces so a big store does not hit the string limit here.
 const fd = fs.openSync(OUT, 'w');

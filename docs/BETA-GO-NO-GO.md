@@ -8,6 +8,8 @@ Measured on the build PC (Ryzen 9 6900HS), not the server, 6 Nov 2026, with scri
 | **250** | **Go, in waves, on SQLite** | All 250 online at once: no errors, 95% in 242 ms, app 53% busy. With other work holding the PC at 100%: 95% in 2.6 s, app at its limit. Without SQLite the store fails around day 8. Money: 28 days if learners crowd the same hours and every provider is extended; 8 or 9 if none is. |
 | **1000** | **No-go for now** | All 1000 online at once on a busy PC: half of requests wait 5 s, 28% dropped. Arriving over 5 minutes at a slower pace: 3.3 s, 3% dropped. The store grows 250 MB a day and would need 15 to 20 GB of memory by day 30. Money: 8 to 13 days at best, 2 to 4 if nothing is extended. Keep them on a waiting list and let them in as money and measurements allow. |
 
+**Update, 7 Nov, on the server itself (EPYC 7713, 12 vCPU, 48 GB).** At 100 and 250 online on today's store, JSON and SQLite were level: no errors, 95% within 104 to 302 ms. At a store as if 100 learners and 18 days (simulated), SQLite had no stalls and JSON had 34. At a store as if 250 learners and 30 days (simulated), 60 and 100 online held but 250 at once did not (95% over 28 s, 118 to 298 dropped). So: **waves stay necessary, and 250 at once on a 30-day store is a no-go.** Restore and backup: `docs/RESTORE.md`. Switching the store: `docs/SQLITE-SWITCH.md`. These replace steps 2 and 5 below.
+
 ## What broke first, in order
 1. **At 100 learners on today's code: the server itself.** 9 requests a second, half of them over 3 s, 284 failures. Fixed in this branch.
 2. **The free NVIDIA key, at 1 or 2 learners.** It allows 36 calls a minute for the whole app, and one new learner's first couple of minutes, with an upload, used 35. Past that, calls wait or pay.
