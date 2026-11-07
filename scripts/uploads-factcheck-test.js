@@ -6,6 +6,7 @@ process.env.NODE_ENV = 'test';
 process.env.DB_FILE = path.join(os.tmpdir(), `uploads-factcheck-test-${process.pid}.json`);
 try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none */ }
 process.env.UPLOAD_AUTOBUILD = 'off';
+process.env.UPLOAD_FACTCHECK_QUOTES = 'off'; // the scripted readers below do not quote; the quote rule has its own checks
 const F = require('../services/material-factcheck');
 const cb = require('../services/course-builder');
 const materials = require('../services/materials');
@@ -44,6 +45,14 @@ check('sentences keep e.g. and a.m. together', F.sentencesOf('Filing closes at 8
 
 (async () => {
   check('a sentence broken across PDF lines is one line', F.logicalLines('The Congress met in 1878 and it\ndefused an early crisis.\nIn 1904 they signed.\n- a bullet\n- another').length === 4, F.logicalLines('The Congress met in 1878 and it\ndefused an early crisis.\nIn 1904 they signed.\n- a bullet\n- another'));
+  // A reader must show its evidence.
+  const quoted = async (q) => F.check([{ id: 'a', text: 'The Nazca Plate subducts beneath South America at about 9 cm yearly in spring.' }], { idx, sourceText: SOURCE, needQuote: true, asker: async () => ({ res: { data: { verdicts: [{ n: 1, verdict: 'supported', quote: q }] } } }) });
+  check('no quote: not supported', !(await quoted('')).get('a').keep);
+  check('a quote not in the material: not supported', !(await quoted('The Nazca Plate moves at 9 cm per year in spring.')).get('a').keep);
+  check('a true quote that lacks the number: not supported', !(await quoted('The Nazca Plate subducts beneath South America at about 8 cm per year.')).get('a').keep);
+  const fine = await F.check([{ id: 'a', text: 'The Nazca Plate subducts beneath South America at about 8 cm yearly.' }], { idx, sourceText: SOURCE, needQuote: true, asker: async () => ({ res: { data: { verdicts: [{ n: 1, verdict: 'supported', quote: 'The Nazca Plate subducts beneath South America at about 8 cm per year.' }] } } }) });
+  check('a quote that carries it: supported', fine.get('a').keep);
+
   // A material in another language: translations are for the readers, not refused by spelling.
   const esIdx = F.indexSource('El lago Vostrin se formó hace unos catorce mil años cuando un glaciar represó el valle de Orlen. Su único desagüe es el río Tarmo, que drena hacia el norte hasta el mar de Sellen. La pesca del korrin plateado se prohibió en 1987 después de que la población cayera en dos tercios. Los núcleos de sedimento de la cuenca norte registran once capas de ceniza volcánica de las erupciones de Kovar. Recuerda que el lago se renueva dos veces al año, en abril y en noviembre. Este dato será parte del examen final de este curso y debes recordarlo bien.');
   check('a Spanish material is known as foreign', esIdx.foreign === true);

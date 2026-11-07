@@ -253,15 +253,34 @@ const CHECK_SYSTEM = 'You are a strict fact checker for a study app. The study m
   + '"supported": everything it states is said in the MATERIAL or follows directly by plain reading (rewording, shortening, writing out an abbreviation, counting a list, a worked step using only the material\'s own numbers, or a faithful translation of what the MATERIAL says).\n'
   + '"no_claim": it states no fact about the subject (a transition, or a clearly framed analogy such as "think of it like..." that adds no new claim about the subject).\n'
   + '"not_in_source": any part of it adds a fact, number, name, cause, consequence, reason, purpose, benefit ("this helps...", "this ensures...", "this is crucial for...") or generalisation the MATERIAL does not state, or contradicts it, EVEN IF it is true in the real world. Do not use your own knowledge to say a sentence is supported. When in doubt, it is not_in_source.\n'
+  + 'For "supported" also give `quote`: the exact words of the MATERIAL that say it, copied letter for letter; if it takes two places, join them with " ... ". A sentence you cannot quote for is not supported.\n'
   + 'For "not_in_source" also give `fixed`: the same sentence with only the unsupported part removed, adding no words of your own beyond what grammar needs. Give an empty string if nothing supported is left. Answer every number.';
-const CHECK_SCHEMA = { type: 'object', properties: { verdicts: { type: 'array', items: { type: 'object', properties: { n: { type: 'integer' }, verdict: { type: 'string', enum: ['supported', 'no_claim', 'not_in_source'] }, fixed: { type: 'string' } }, required: ['n', 'verdict'] } } }, required: ['verdicts'] };
+const CHECK_SCHEMA = { type: 'object', properties: { verdicts: { type: 'array', items: { type: 'object', properties: { n: { type: 'integer' }, verdict: { type: 'string', enum: ['supported', 'no_claim', 'not_in_source'] }, quote: { type: 'string' }, fixed: { type: 'string' } }, required: ['n', 'verdict'] } } }, required: ['verdicts'] };
 
 /**
  * Check a set of items: [{ id, text, extra? }]. Returns Map id -> { keep: bool, text?: string (the fixed form), reason, how }.
  * how: 'direct' (no model), 'model', 'fixed', 'hard', 'unchecked'. Also { unchecked, calls } on the returned map's `.stats`.
  * asker: async ({system, user, schema, schemaName, maxTokens, task, role, dataClass}) -> { res } | { stopped }.
  */
-async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = null, allow = null, allowStems = null, task = 'material_factcheck' }) {
+/** Does a reader's quote hold up: found in the material, with the sentence's numbers, and at least 60% of its content words (or all but two)? */
+function quoteHolds(it, quote, idx) {
+  const parts = String(quote || '').split(/\s*\.\.\.\s*|\s*…\s*/).map((p) => p.trim()).filter((p) => p.length >= 8);
+  if (!parts.length) return false;
+  const flat = (t) => fold(t).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');
+  if (!idx.flat) idx.flat = flat(idx.text);
+  if (!parts.every((p) => idx.flat.includes(flat(p)))) return false;
+  const q = parts.join(' ');
+  const qTerms = contentTerms(q);
+  const qNums = numbersOf(q).all;
+  const found = numbersOf(it.text);
+  // A count in words ("four phases") may be a fair count of a list; a figure has to be there.
+  for (const n of found.all) if (!qNums.has(n) && !(found.spelled.has(n) && /^\d+$/.test(n) && Number(n) <= SMALL_NUMBER_MAX)) return false;
+  const terms = contentTerms(it.text);
+  let held = 0; for (const t of terms) if (qTerms.has(t)) held++;
+  return !terms.size || held / terms.size >= 0.6 || terms.size - held <= 2;
+}
+
+async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = null, needQuote = false, allow = null, allowStems = null, task = 'material_factcheck' }) {
   const out = new Map();
   // A second reader that does not answer leaves the first reader's verdicts standing; a spent budget does not stop the build here.
   const stats = { sentences: items.length, direct: 0, model_ok: 0, fixed: 0, dropped: 0, hard: 0, unchecked: 0, calls: 0, stopped: false };
@@ -274,6 +293,7 @@ async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = 
     ask.push(it);
   }
   const answered = new Map();
+  const strong = new Set();
   /** One reader over a list of sentences, in batches, a second try for what it left unanswered. Calls `take` with each verdict. */
   const read = async (who, list, take) => {
     const batches = [];
@@ -299,6 +319,9 @@ async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = 
   if (ask.length && asker) {
     // Two readers from different families at once (no added wait): either one saying "not in the source" is enough.
     const take = (it, v) => {
+      // A reader has to show its evidence, and the code checks it: the quote is in the material and carries the sentence's numbers and most of its words.
+      if (needQuote && v.verdict === 'supported' && quoteHolds(it, v.quote, idx)) strong.add(it.id);
+      if (needQuote && v.verdict === 'no_claim' && !it.exam.hard.length && !/\d/.test(it.text) && !namesOf(it.text).size) strong.add(it.id);
       const had = answered.get(it.id);
       if (!had) { answered.set(it.id, v); return; }
       if (v.verdict === 'not_in_source' && had.verdict !== 'not_in_source') { answered.set(it.id, v); stats.second_caught = (stats.second_caught || 0) + 1; } else if (v.verdict === 'not_in_source' && !had.fixed && v.fixed) answered.set(it.id, v);
@@ -309,6 +332,8 @@ async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = 
     // Neither answered (a learner with no slot of those families, a busy minute): any reader will do.
     const still = ask.filter((x) => !answered.has(x.id));
     if (still.length && askerAny && !stats.stopped) await read(askerAny, still, take);
+    // Readers said yes but none could quote for it: not supported. A foreign material is exempt (the quote is in another language).
+    if (needQuote && !idx.foreign) for (const it of ask) { const v = answered.get(it.id); if (v && v.verdict !== 'not_in_source' && !strong.has(it.id)) { answered.set(it.id, { verdict: 'not_in_source', fixed: '' }); stats.no_quote = (stats.no_quote || 0) + 1; } }
   }
   for (const it of ask) {
     const e = it.exam;
@@ -353,7 +378,7 @@ async function check(items, { idx, sourceText, asker, asker2 = null, askerAny = 
  * Check a lesson: paragraphs and key points, sentence by sentence. Returns { paragraphs, keyPoints, report }.
  * `sourceText` is what the model is shown (the skill's passages); `idx` is the index of the whole material.
  */
-async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, sourceText, asker, asker2, askerAny, allow, allowStems, fallback, dropQuestions }) {
+async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, sourceText, asker, asker2, askerAny, needQuote, allow, allowStems, fallback, dropQuestions }) {
   const items = [];
   // A writer told to write a lesson sometimes ends it with questions; the practice questions are their own part.
   const paraSents = (paragraphs || []).map((p, i) => sentencesOf(p).filter((s) => !(dropQuestions && /\?\s*["'”)]*$/.test(s))).map((s, j) => { const id = `p${i}.${j}`; items.push({ id, text: s }); return id; }));
@@ -361,7 +386,7 @@ async function checkLesson({ paragraphs, keyPoints, summary, explanations, idx, 
   if (summary) items.push({ id: 's', text: summary });
   // A question's explanation may use the numbers and words of its own question (a worked case).
   (explanations || []).forEach((e, i) => sentencesOf(e.text).forEach((t, j) => items.push({ id: `e${i}.${j}`, text: t, extra: e.extra, exp: i })));
-  const got = await check(items, { idx, sourceText, asker, asker2, askerAny, allow, allowStems });
+  const got = await check(items, { idx, sourceText, asker, asker2, askerAny, needQuote, allow, allowStems });
   const byId = new Map(items.map((x) => [x.id, x]));
   const dropped = [];
   const textOf = (id) => {
@@ -441,11 +466,12 @@ function interestWords(spec) {
  * Measured against one reader: docs/UPLOADS-ANY-FORMAT.md section 17.
  */
 function readersFor(asker) {
-  if (String(process.env.UPLOAD_FACTCHECK_READERS || '2') === '1') return { asker };
+  if (String(process.env.UPLOAD_FACTCHECK_READERS || '2') === '1') return { asker, needQuote: String(process.env.UPLOAD_FACTCHECK_QUOTES || '').toLowerCase() !== 'off' };
   return {
     asker: (a) => asker({ ...a, task: 'material_factcheck_deepseek' }),
     asker2: (a) => asker({ ...a, task: 'material_factcheck_glm' }),
     askerAny: asker,
+    needQuote: String(process.env.UPLOAD_FACTCHECK_QUOTES || '').toLowerCase() !== 'off',
   };
 }
 

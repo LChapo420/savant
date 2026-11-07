@@ -146,7 +146,7 @@ async function recheck(fromTag, toTag, checkerFam) {
       const paragraphs = lines.filter((l) => l && !/^(## |Key: |Q: )/.test(l));
       const keys = lines.filter((l) => l.startsWith('Key: ')).map((l) => l.slice(5));
       const qs = lines.filter((l) => l.startsWith('Q: '));
-      const r = await F.checkLesson({ paragraphs, keyPoints: keys, idx, sourceText: src.plain, asker, asker2 });
+      const r = await F.checkLesson({ paragraphs, keyPoints: keys, idx, sourceText: src.plain, asker, asker2, needQuote: process.env.UPLOAD_FACTCHECK_QUOTES !== 'off' });
       for (const k of Object.keys(stats)) stats[k] += Number(r.report[k]) || 0;
       dropped.push(...r.report.dropped);
       out[i] = [head, ...r.paragraphs, ...r.keyPoints.map((k) => `Key: ${k}`), ...qs].join('\n');
