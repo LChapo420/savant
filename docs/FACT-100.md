@@ -81,7 +81,7 @@ Every flag is a suspicion. A policy decides when it may change anything. Unconfi
 
 I chose "contradicted or unsupported" after seeing held-out, so its 90% is not a clean read; the mode set on dev reads 77% with the token check. Clean twins flagged: 0 and 1 of 82. The 4 flagged sentences: 3 are a chess "cannot" list, 1 a quoted example. A plant is a wrong sentence in a lesson's own words, a stand-in for what a rewrite adds.
 
-**Token rejects are a separate false alarm:** 8 of 20 fresh rewrites fail the code check on first write, mostly math worked examples with new numbers outside the marks. Their numbers would need recomputing rather than rejecting, and that isn't built. The pilot's one retry took first-try passes from 10/29 to 15/29 under the older, stricter rule.
+**Code-check rejects are a separate false alarm:** 8 of 20 fresh rewrites fail the token or example check on first write, half of them math worked examples with new numbers outside the marks. Those numbers would need recomputing rather than rejecting, and that isn't built. The pilot's one retry took first-try passes from 10/29 to 15/29 under the older, stricter rule.
 
 ## 1. Frozen facts
 
@@ -121,7 +121,7 @@ I chose "contradicted or unsupported" after seeing held-out, so its 90% is not a
 | Piano | 0% | 6% | 6% |
 | Basketball | 0% | 0% | 0% |
 
-- Teaching sentences ("a fragment can be a stylistic choice") rarely appear in an encyclopedia. Definitions source best (36%), facts worst (13%).
+- Teaching sentences ("a fragment can be a stylistic choice") rarely appear in an encyclopedia. By type: word meanings 41%, definitions 36%, rules 25%, facts 13%, procedures 2%.
 - Compared with Wikipedia and textbooks, wrong and true twins look alike: 96 and 98 of 110 "silent", and 3 versus 12 "supported".
 - Contradictions are real but rare: 11 of 110 wrong twins and 0 of 110 true ones on dev. In the pilot bank, though, all 5 contradicted facts were bad retrievals.
 - **The same local models are far better against a verified bank**, where the true fact is present: 85-92% of wrong twins fall below threshold against 15-23% of true ones. That is why bank-then-compare works and encyclopedia-then-compare doesn't.
