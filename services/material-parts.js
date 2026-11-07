@@ -503,6 +503,8 @@ async function change(userId, materialId, ref, what, opts = {}) {
   }
   const leaves = { ...(leavesMade ? Object.fromEntries(leavesMade) : (old && old.data.leaves) || {}) };
   const data = { leaves, aside: leavesMade ? aside : ((old && old.data.aside) || []), example: exampleLine || (old && old.data.example) || null };
+  // A rewrite the learner did not ask for never lands on top of what they did in the meantime: their own change, or a put back.
+  if (origin === 'follow') { const nowRow = rowFor(userId, materialId, ref); if (nowRow && (nowRow.pinned || nowRow.origin === 'learner')) return { skipped: 'learner' }; }
   store(userId, materialId, ref, base, { data, asked, topic: useTopic, custom: useCustom, origin, checks, sig: opts.sig || null });
   db.saveSoon();
   return { changed: true, part: served(userId, materialId, ref), prefs };
@@ -753,7 +755,7 @@ async function followPart(userId, materialId, ref, opts = {}) {
 }
 /** Fire and forget from a route: follow these parts, one at a time, up to the day's limit. Never throws, never waits. */
 function maybeFollow(userId, materialId, refs) {
-  if (!followOn() || !refs || !refs.length) return;
+  if (!followOn() || String(process.env.UPLOAD_PARTS_FOLLOW_BG || 'on').toLowerCase() === 'off' || !refs || !refs.length) return;
   const key = `${userId}:${materialId}`;
   if (running.has(key)) return;
   running.add(key);

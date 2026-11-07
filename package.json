@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "check": "node scripts/check-content.js",
-    "test": "node scripts/run-tests.js",
+    "test": "node scripts/run-tests.js && node scripts/material-parts-test.js && node scripts/uploads-beta-e2e.js scripted",
     "test:spanish-path": "node scripts/spanish-path-test.js",
     "test:spanish-path:browser": "node scripts/spanish-path-browser-test.js",
     "test:security": "node scripts/security-test.js",
