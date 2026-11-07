@@ -18,7 +18,7 @@ const materialParts = require('../services/material-parts');
 const router = express.Router();
 const gated = (req, res, next) => (parts.on() ? next() : res.status(404).json({ error: 'No such endpoint.' }));
 
-router.get('/parts/prefs', requireAuth, (req, res) => res.json({ on: parts.on(), prefs: parts.on() ? parts.prefsOf(req.user.id) : {} }));
+router.get('/parts/prefs', requireAuth, (req, res) => res.json({ on: parts.on(), material: parts.on() && materialParts.on(), prefs: parts.on() ? parts.prefsOf(req.user.id) : {} }));
 router.delete('/parts/prefs', requireAuth, gated, (req, res) => res.json({ prefs: parts.clear(req.user.id) }));
 router.delete('/parts/prefs/:key', requireAuth, gated, (req, res) => res.json({ prefs: parts.clear(req.user.id, String(req.params.key)) }));
 

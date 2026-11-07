@@ -175,6 +175,15 @@ function nextStep(course, r, now) {
   return { kind: st.read && !st.remediate ? 'quiz' : 'lesson', skill: s.id, title: s.title, remediation: !!st.remediate };
 }
 
+/** What the goal makes of the first pass, in the learner's terms; null unless the optimizer is on. An estimate (services/material-optimize.js estimateMinutes), said to be one on the page. */
+function readingOf(course) {
+  const o = course.optimized;
+  if (!o) return null;
+  const est = require('./material-optimize').estimateMinutes(o, 1, course.skills.length); // eslint-disable-line global-require
+  const label = { full: 'Full depth', core: 'Core parts, fast', test: 'Ready for a test' }[o.goal] || 'Full depth';
+  return { goal: o.goal, label, minutes: Math.max(1, Math.round(est.total)), checks: est.questions, words: o.reading_words, aside: o.aside_words };
+}
+
 /** The map: units, every skill (level, tier, status, open, due), the next step and the learner's counts. */
 function state(userId, materialId, now = Date.now()) {
   const course = loadCourse(userId, materialId);
@@ -194,7 +203,7 @@ function state(userId, materialId, now = Date.now()) {
   return {
     course: { title: course.title, status: course.status, planned: course.status === 'building' ? (course.outline || []).length || null : null },
     units: course.units || [{ id: 'u1', title: course.title, skills: course.skills.map((s) => s.id) }],
-    placed: !!r.placed, skills, mastered: skills.filter((s) => s.status === 'mastered').length, total: skills.length,
+    reading: readingOf(course), placed: !!r.placed, skills, mastered: skills.filter((s) => s.status === 'mastered').length, total: skills.length,
     due_count: dues.length, next_due: dues.length ? 'now' : upcoming, next: nextStep(course, r, now),
     steps: r.steps, pace: Math.round((r.pace || 0) * 100) / 100,
   };

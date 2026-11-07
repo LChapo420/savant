@@ -9,7 +9,7 @@ Code: `services/fact-guard.js` (the check, and the one choke point in `services/
 ## Where it stands
 
 <!-- counts:start -->
-Paths that show model text: 39. Before: 4 checked, 7 checked in part, 28 not checked. Now, with the switch on: 39 of 39 pass a model check before they are shown or stored.
+Paths that show model text: 41. Before: 4 checked, 7 checked in part, 30 not checked. Now, with the switch on: 41 of 41 pass a model check before they are shown or stored.
 <!-- counts:end -->
 
 Switch: `FACT_CHECK_ALL`. On by default in this branch (`DEFAULT_ON` in `services/fact-guard.js`), because the owner decided the policy; `FACT_CHECK_ALL=0` restores the old behaviour exactly. `npm test` runs the older tests with it off, because they stub a single model answer that cannot also answer as the checker. `scripts/fact-coverage-test.js` turns it on and tests it.
@@ -59,6 +59,8 @@ Found by following `services/ai.js` call sites and every `task:` in `services/` 
 | Notes from an upload | `material_notes` | No check. A quote must exist, nothing reads whether the bullet says what the quote says | The guard, before it is stored: fact_live, mode material | the passages of the upload (each bullet also carries a word-for-word quote) | that bullet is dropped |
 | Study pack: summary, flashcards, quiz and practice test | `material_pack` | Part: multiple choice and fill-in by material_verify; summary, cards and written items a quote only | The guard, before it is stored: fact_live, mode material | the passages of the upload (questions also pass material_verify) | that line, card or question is dropped |
 | Podcast script from an upload | `material_podcast` | No check. A quote must exist | The guard, before it is stored: fact_live, mode material | the passages of the upload (a fact turn also carries a quote) | that turn is dropped; too few left and no podcast |
+| A part of an upload reworded because the learner asked or moved: lesson, question, card, notes, summary, podcast | `material_part_change` | new | services/material-parts.js checkAgainstMaterial: each changed sentence goes through the upload fact check (numbers and names first, then two families) before a row can be stored, and a row without the receipt is not served | the passages of the upload | that piece stays as it was; if nothing is left the learner is told and the stored text stays |
+| A made-up example or comparison the learner asked for, shown beside a part and labelled as not from their material | `material_part_example` | new | The guard, before it is stored: fact_live, mode general | general knowledge, with the part beside it; two more readings (part_gate_a, part_gate_b) ask whether it is wrong or shows another idea | no example is added; the part stays as it was |
 | Placement questions written for a subject | `placement_write` | No check when written live (the sets on disk went through their own pipeline judges) | The guard, before it is stored: fact_live, mode general | general knowledge, working the key out | that question is dropped; the set is built from what passed |
 | Wrong options of a placement question rewritten | `placement_repair` | No check | The guard, before it is stored: fact_live, mode general | general knowledge: a new wrong option must not be right | the question keeps its old options |
 | The sentence saying where to start after placement | `placement_recommend` | No check | The guard, before it is stored: fact_live, mode general | general knowledge; the placement scores are numbers from the code | the recommendation from the code, with no model sentence |
@@ -73,10 +75,15 @@ Found by following `services/ai.js` call sites and every `task:` in `services/` 
 ### Never shown to a learner (no check needed)
 
 <!-- internal:start -->
+- `part_gate_a`: First reading of a rewrite against its original (services/part-modify.js defaultGate). A verdict; nothing of it is shown.
+- `part_gate_b`: Second reading of a rewrite by another family. A verdict; nothing of it is shown.
 - `block_layout`: A plan of which blocks to use. No text of it is shown; what it leads to is block_fill.
 - `material_verify`: The support check on upload questions: its verdicts are read by code, never shown.
+- `material_factcheck_deepseek`: First reader in the upload fact check (services/material-factcheck.js): its verdicts are read by code, never shown.
+- `material_factcheck_glm`: Second reader in the upload fact check, another family: its verdicts are read by code, never shown.
 - `fact_live`: This is the check itself (services/fact-guard.js).
 - `fact_verify`: The level verifier.
+- `fact_gate`: The measured gate for shared levels (services/fact-gate.js), off by default.
 - `fact_read`: The level verifier.
 - `fact_claims`: The level verifier.
 - `fact_research`: The level verifier's research sheet: read by the verifier, not by a learner.

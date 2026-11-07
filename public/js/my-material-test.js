@@ -24,6 +24,7 @@ App.mount(async () => {
       ? `<div class="card" style="margin-top:16px"><h2>Your last tests</h2><ul style="list-style:none;padding:0;margin:0">${o.history.map((h) => `<li class="small" style="padding:4px 0">${esc(String(h.at).slice(0, 10))}: ${h.right} of ${h.total} right${h.timed ? (h.late ? ' (timed, handed in late)' : ' (timed)') : ''}</li>`).join('')}</ul></div>` : '';
     root.innerHTML = `${back}<h1>Practice test</h1>
       <p class="muted">Choose what to be tested on. The questions come from your own material. A test never changes which skills you have mastered, but it does update what Savant knows about you: a skill you had mastered comes back for review sooner if you miss it.</p>
+      <div data-part="test" data-changed="0"></div>
       <form id="setup" class="card">
         <fieldset style="border:0;padding:0;margin:0"><legend><strong>Skills</strong></legend>
           ${usable.map((s) => `<label class="field" style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="skill" value="${esc(s.id)}" checked> <span>${esc(s.title)} <span class="tiny muted">${s.questions} questions</span></span></label>`).join('')}
@@ -33,6 +34,7 @@ App.mount(async () => {
         <label class="field" style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="timed"> <span>Timed (about ${o.seconds_per_question} seconds a question)</span></label>
         <button class="btn btn-primary" type="submit">${o.open ? 'Start a new test' : 'Start the test'}</button>
       </form>${hist}`;
+    if (window.PartChange) window.PartChange.wire(root, id, () => { setup(); });
     document.getElementById('setup').addEventListener('submit', async (e) => {
       e.preventDefault();
       const f = e.target;
@@ -97,9 +99,10 @@ App.mount(async () => {
         <p class="small">${x.your_answer ? `You said: ${esc(x.your_answer)}. ` : 'No answer. '}<strong>Answer: ${esc(x.correct_answer)}</strong></p>
         <p class="small">${esc(x.explanation || '')}${x.misconception ? ` You may have thought: ${esc(x.misconception)}.` : ''}</p>
         ${x.feedback ? `<p class="small">${esc(x.feedback)}</p>` : ''}
-        <p class="tiny muted">From your material: “${esc(x.from_your_material)}”</p></div>`).join('')}
+        <p class="tiny muted">From your material: “${esc(x.from_your_material)}”</p><div data-part="q:${esc(x.skill)}:${esc(x.id)}" data-changed="0"></div></div>`).join('')}
       <p style="margin-top:16px"><button class="btn btn-primary" type="button" id="again">Take another test</button></p>`;
     document.getElementById('again').addEventListener('click', setup);
+    if (window.PartChange) window.PartChange.wire(root, id, (o, part, slot, note) => { if (o.part && o.part.explanation !== undefined && !note.textContent) note.textContent = o.part.explanation; });
   }
 
   setup();
