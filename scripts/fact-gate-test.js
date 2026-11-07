@@ -73,6 +73,7 @@ assert.strictEqual(gate.appliesTo({ userId: null }), true);
 assert.strictEqual(gate.appliesTo({ userId: 7 }), false, 'a learner keeps today\'s read');
 
 (async () => {
+  process.env.FACT_GATE_NO_WAIT = '1';
   process.env.FACT_GATE_READERS = 'a:glm-x,b:grok-x';
   process.env.FACT_GATE_DECIDER = 'b:grok-x';
   const context = { text: 'Subject: math.', trackId: 'math' };
@@ -97,6 +98,8 @@ assert.strictEqual(gate.appliesTo({ userId: 7 }), false, 'a learner keeps today\
   await gate.read({ context, blocks, checks: [], call, excludeFamilies: ['glm', 'grok'] });
   assert.ok(calls.includes('glm-x'));
 
+  // The first reader down: not read, even though another answered.
+  assert.strictEqual(await gate.read({ context, blocks, checks: [], call: async (slot, args) => { if (slot.provider === 'a') throw new Error('503'); return call(slot, args); } }), null);
   // No reader answered: not read.
   assert.strictEqual(await gate.read({ context, blocks, checks: [], call: async () => { throw new Error('down'); } }), null);
   console.log('fact-gate-test: ok');

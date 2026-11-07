@@ -9,8 +9,8 @@
  *      48 "certain" flags were all false alarms (now fixed), so a recomputation is not a verdict either;
  *   2. readers, each in its own model family, hunt for errors (only the errors, so a read costs a tenth of the claim-by-claim list). Families the writer belongs to are skipped;
  *   3. a decider rules on what the readers and the code's suspicions raised, so a false alarm does not cost a repair.
- * Readers and decider come from FACT_GATE_READERS and FACT_GATE_DECIDER as `provider:model,...`. The defaults are in DEFAULTS; a reader that cannot answer does not sink the read
- * unless all of them failed: then the level has not been read (null, no keep on no evidence). Every call goes through its provider's own ledger.
+ * Readers and decider come from FACT_GATE_READERS and FACT_GATE_DECIDER as `provider:model,...`, strongest reader first. The defaults are in DEFAULTS. Each call is tried three times (Lyceum and
+ * ZeroGPU fail often when busy). If the first reader still cannot answer, the level has not been read (null, no keep on a weaker read: grok-4.3 alone caught 73% against the pair's 96%). Every call goes through its provider's own ledger.
  */
 const code = require('./fact-code-checks');
 
@@ -101,7 +101,14 @@ async function read({ context, blocks, checks, excludeFamilies = null, call = de
   let cost = 0; const usage = { input_tokens: 0, output_tokens: 0 }; const models = [];
   const add = (r) => { cost += r.cost || 0; if (r.usage) { usage.input_tokens += r.usage.input_tokens || 0; usage.output_tokens += r.usage.output_tokens || 0; } if (r.model) models.push(r.model); };
   const seen = new Map();
-  const replies = await Promise.all(use.map((slot) => call(slot, { system: HUNT_SYSTEM, user, schema: HUNT_SCHEMA, schemaName: 'submit_errors', maxTokens: 12000 }).catch(() => null)));
+  const tries = async (slot, args) => {
+    for (let a = 0; a < 3; a++) {
+      try { return await call(slot, args); } catch (err) { if (err && err.status === 402) return null; if (a < 2 && !process.env.FACT_GATE_NO_WAIT) await new Promise((r) => { setTimeout(r, 4000 * (a + 1)); }); } // eslint-disable-line no-await-in-loop
+    }
+    return null;
+  };
+  const replies = await Promise.all(use.map((slot) => tries(slot, { system: HUNT_SYSTEM, user, schema: HUNT_SCHEMA, schemaName: 'submit_errors', maxTokens: 12000 })));
+  if (!replies[0] || !replies[0].data) return null;
   replies.forEach((r) => {
     if (!r || !r.data) { stages.failedReaders++; return; }
     stages.read++;
@@ -118,7 +125,7 @@ async function read({ context, blocks, checks, excludeFamilies = null, call = de
   let kept = raised;
   if (raised.length && decider) {
     const list = raised.map((f, i) => `FLAG ${i} at ${f.where}: "${f.claim.slice(0, 300)}" — ${f.why.slice(0, 300)} ${f.truth ? `(suggested truth: ${f.truth.slice(0, 200)})` : ''}`).join('\n');
-    const r = await call(decider, { system: DECIDE_SYSTEM, user: `${user}\n\nFLAGS\n${list}`, schema: DECIDE_SCHEMA, schemaName: 'submit_rulings', maxTokens: 12000 }).catch(() => null);
+    const r = await tries(decider, { system: DECIDE_SYSTEM, user: `${user}\n\nFLAGS\n${list}`, schema: DECIDE_SCHEMA, schemaName: 'submit_rulings', maxTokens: 12000 });
     if (r && r.data) {
       add(r);
       const rulings = r.data.rulings || [];
