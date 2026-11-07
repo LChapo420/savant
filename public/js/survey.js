@@ -39,6 +39,22 @@ App.mount(async () => {
   const next = rawNext && rawNext.startsWith('/') ? rawNext : '/profile';
   const fromSignup = !!rawNext;
 
+  // A child whose parent has not allowed outside AI: every box below is free text, which the server refuses to save (routes/consent.js, parent_opt_in_required).
+  // So no boxes, just what they can do. When a parent allows it the page is the ordinary one again.
+  const consent = user.consent || {};
+  if (!consent.ai_free_text && ['pending', 'active'].includes(consent.state)) {
+    root.innerHTML = `
+      <div class="ob-head">
+        <h1>About you</h1>
+        <p class="lede">Typing your own answers here is off until a parent or guardian says yes on the parent page. Your lessons still work, and so does everything with taps and buttons.</p>
+      </div>
+      <div class="row-wrap" style="margin-top:var(--s-5)">
+        <a class="btn btn-primary" href="${App.escapeHtml(next)}">Continue</a>
+        <a class="btn" href="/style-quiz?next=${encodeURIComponent(next)}">Show how you like to learn</a>
+      </div>`;
+    return;
+  }
+
   // In the sign-up chain this is step 2 of 4 (quiz, about you, subjects, placement).
   const total = fromSignup && next.startsWith('/onboarding') ? (ObSteps.total() || 4) : 0;
   if (total) document.body.classList.add('ob-focus');
