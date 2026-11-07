@@ -4,7 +4,7 @@
  *   node scripts/tutor-giraffe-sheet.js [--out=<dir>]     (default design-refs/tutor-giraffe-shots next to the app)
  *
  * Starts its own server on a temporary database with a synthetic learner (never real learner data) and every AI key blank; the chat's words are put in the page by this script
- * through a stub of the tutor's route, so the sheet costs nothing. The voice states are the giraffe's real states, driven through its own API. Needs Playwright (not an app dependency).
+ * through a stub of the tutor's route, so the sheet costs nothing. The voice states are set with the same attributes a call sets (the call itself is tested in scripts/tutor-giraffe-browser-test.js). Needs Playwright (not an app dependency).
  */
 const fs = require('fs');
 const os = require('os');
@@ -78,13 +78,14 @@ async function main() {
     await page.click('.s-top'); await delay(500);
     await snap(page, '04-chat-top', 'Chat from the top, the learner\'s choice (two small buttons, kept on the account).');
     await page.click('.tdock-close'); await delay(400);
-    await page.click('.s-top', { force: true, timeout: 500 }).catch(() => {});
     await state(page, 'listening', 'Listening'); await delay(200);
     await snap(page, '05-voice-listening', 'Voice call: listening. A quiet ring and the word; the ring moves with the voice.');
     await state(page, 'thinking', 'Thinking'); await delay(200);
     await snap(page, '06-voice-thinking', 'Voice call: thinking.');
     await state(page, 'talking', 'Talking'); await delay(170);
     await snap(page, '07-voice-talking', 'Voice call: talking. A simple mouth for now, with one place for synced shapes later.');
+    await state(page, '', 'It went quiet, so the call ended. Hold the giraffe to talk again.'); await delay(150);
+    await snap(page, '07b-voice-ended', 'A quiet call hangs up by itself and says so, aloud and in words.');
     await ctx.close();
 
     // Phone: dashboard with its tab bar.

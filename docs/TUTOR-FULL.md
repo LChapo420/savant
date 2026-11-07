@@ -194,3 +194,23 @@ Honest limits: the model-written replies on lesson and practice pages can still,
 
 ## Kimi K3.1 Pro (Lyceum, $2 / $10 per Mtok; evaluated in worktree tutor-full-kimi, not in this branch)
 On planted sets: as a fact checker (20 wrong facts, 20 correct replies) 20 of 20 caught, 0 false alarms, the same as today's checker; median 1.4 s, $0.002 a reply (139 output tokens), against today's 1.5 s. As a leak judge: 20 of 20 planted, 0 of 20 false alarms, 2 of 5 subtle (grok 1, GLM 3; today's checker 5 of 5 in-sample); median 1.8 s, max 4.7 s, $0.0032 a reply. It was hit by 503 capacity errors once. Verdict: no gain over what the tutor uses; at 1.4 to 1.8 s plus 503 risk it is too slow and unreliable to put in front of a waiting learner, and it adds cost. Useful, if at all, as a third offline judge.
+
+# How learners reach the tutor (7 Nov, branch tutor-giraffe)
+
+Owner: "you tap on the giraffe and the chat pops up"; on a phone the chat comes from the top or the bottom, the learner's choice, and the page stays scrollable in the window left over; press and hold starts a voice call with nothing to click; tap ends it; hold switches it to chat.
+
+| piece | file |
+|---|---|
+| The giraffe in the page's own top bar (a lesson's bar, the phone header, the desktop sidebar, a thin bar on pages with no header). Tap, hold, keyboard, screen reader. The one place later speech-synced mouth shapes plug in: `TutorGiraffe.mouthDriver` | `public/js/tutor-giraffe.js` |
+| The chat beside the page. Nothing is moved into a frame: the page gets room, and its fixed and sticky bars are moved clear and put back on close | `public/js/tutor-split.js` |
+| The voice call loop | `public/js/tutor-call.js` |
+| Who may call, limits, ledger, only-checked-words | `services/tutor-call.js`, `routes/tutor.js` (`/api/tutor/call/*`), `tutor_call_usage`, `tutor_call_log` |
+| Tests | `scripts/tutor-call-test.js` (npm suite), `scripts/tutor-giraffe-browser-test.js` (Playwright), `scripts/tutor-call-real-delay.js` (spends a few cents), `scripts/tutor-giraffe-sheet.js` (the design sheet) |
+
+Who may call: the microphone needs `access().camera_mic`; a call also needs `access().ai_free_text`, because the words go to a speech service or the browser's recognizer and to the models. Without them: no call, no Speak button, a plain sentence, the chat. Paid speech only for accounts on the gateway list (today one); everyone else who may call uses the browser's own speech. Voice replies are POST /api/tutor/dock like typed ones: same safety, same fact check, same memory; `/call/say` speaks only what that route returned, or a fixed notice.
+
+Cost, paid speech: eleven-flash-v2-5 $0.055 per 1K characters and grok-stt-1-0 $0.10 per hour, x1.15 in the ledger. About $0.053 per minute of the tutor talking, $0.0019 per minute of the learner talking; about $0.035 per minute of real call in the measured run. Limits: a call 10 minutes, a day 30 minutes and $0.50 of paid speech per learner (kept in the database), warning at 20 s of quiet, hang-up at 35 s. Past the dollars the call carries on with the browser's voice when there is one.
+
+The measured delay, last sound to first sound, real speech services and real models, a synthetic clip as the microphone, this PC busy with other builds (`scripts/tutor-call-real-delay.js`): see the numbers in the commit that closes this work. What is in it: 680 ms to be sure they stopped; speech to text about 0.2 s after that (it is sent early, at 260 ms of quiet); the reply with its checks 2 to 5 s, the largest part; the first sentence's voice 0.4 s. A reply answered with no model (a how-to, a crisis) is about 1.6 s. What was done: the fast voice (0.3 s against 1.5 s for eleven-v3, at half the price), early sending, one voice request per sentence, a 2 s hedge in a call, the pool's fast lane, the second fact check and the leak check run beside the fact guard instead of after it. What would take it lower and was not done: speaking before the check (not allowed), a filler sound while it thinks (the owner's call).
+
+Not verified: real phones, Safari or iOS at all, Firefox, real microphones, real echo in a real room, the on-screen keyboard (Chromium has none; the layout was tested by shrinking the viewport), VoiceOver and TalkBack. The browser's recognizer in Chrome sends audio to Google, as dictation in the dock always has; it could only be tested with a stand-in.

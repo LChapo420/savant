@@ -19,7 +19,7 @@ Things put off or waiting for a decision. Nothing here is forgotten or solved. U
 | Selling anonymized research data | "May be OK", maybe never for minors. Not settled. |
 | After design: study groups and leaderboards | Owner, 6 Nov: build once design is done. Study groups: chat online or offline and see what members are actively doing. Leaderboards: across friends and across study groups. |
 | Other languages, credentials | Put off. |
-| Voice tutor | Owner expects it to exist already; check it works end to end. |
+| Voice tutor | Built on branch tutor-giraffe (hold the giraffe); see docs/TUTOR-FULL.md. Needs a try on real phones and in Safari. Only accounts on the gateway list get the better voice. |
 | Free-skip rule | Exact rule not set. |
 | savant.edu or own accreditation | Owner, 6 Nov: name is Savant, domain savantedu.com. Plan: partner with a school to get savant.edu, or get accredited. |
 

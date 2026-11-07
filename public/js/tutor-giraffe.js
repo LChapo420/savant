@@ -123,7 +123,7 @@
       if (wrap && shown(wrap.parentElement)) {
         if (wide()) {
           const brand = wrap.querySelector('.brand');
-          if (brand) return { parent: wrap, before: brand.nextSibling };
+          if (brand) return { parent: wrap, before: brand.nextSibling === root ? root.nextSibling : brand.nextSibling };
         }
         const actions = wrap.querySelector('.header-actions');
         if (actions) return { parent: wrap, before: actions };

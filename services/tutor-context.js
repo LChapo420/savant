@@ -291,12 +291,26 @@ async function reply({ user, messages, page, inputMode, image }) {
   const methodFixed = fullOn && mode === 'method' && !!last;
   const facts = require('./tutor-facts'); // eslint-disable-line global-require
   facts.dockStarted(user.id);
+  // The two checks below read the same draft the fact guard is reading. They start when the draft exists, beside the guard, so the reply waits for the slowest check rather than for all of them in a row
+  // (measured 7 Nov on the voice call: about a second off every model-answered turn). If the guard's retry changes the words, they run again on the new words. Nothing changes in what gets checked.
+  const checkNotes = () => `${ctx.text}
+${howto.sheet()} What each feature does: ${howto.FEATURES.map((f) => `${f.title}: ${f.steps}`).join(' ')}
+${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')} (a count of wrong tries or quiet seconds that the page reports is true)`;
+  const runFactCheck = (draft) => full.factCheck({ ai, user, message: last ? last.content : '', text: draft, notes: checkNotes(), question: page && page.question });
+  const runLeakCheck = (draft, q) => full.leakCheck({ ai, user, question: q, message: last ? last.content : '', text: draft });
+  const earlyQuestion = () => (page && page.question ? page.question : (page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 600) : ''));
+  const drafted = {};
+  const onDraft = fullOn ? (draft) => {
+    drafted.text = draft;
+    if (mode === 'method' || (page && page.question)) { const t0 = Date.now(); drafted.leak = runLeakCheck(draft, earlyQuestion()).then((v) => { drafted.leakMs = Date.now() - t0; return v; }); }
+    if (mode === 'full') drafted.fact = runFactCheck(draft);
+  } : undefined;
   try {
     // A graded check with the switch on: the reply is fixed method coaching that contains nothing from the question (services/tutor-full.js methodReply); no model writes about it.
     if (methodFixed) text = full.methodReply({ user, message: last.content, name, brief: full.isBrief(user), age });
     else {
     const talkStart = Date.now();
-    const talking = ai.talk({
+    const talkArgs = {
       // The dock's own task ("dock_help"): its lineup entry (config/model-lineup.json) is Ultra with
       // reasoning off and nothing weaker behind it, without changing the other assist_help callers.
       role: 'fast', task: 'dock_help', system,
@@ -310,7 +324,11 @@ async function reply({ user, messages, page, inputMode, image }) {
       // What the fact check (services/fact-guard.js) reads beside the reply. On the learner's own material their text decides.
       factSource: page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 2500) : '',
       factMode: page && /^\/my-material/.test(cleanPath(page.path)) ? 'material' : undefined,
-    });
+      onDraft,
+    };
+    // In a voice call the learner is listening to silence: the pool's fast lane, the same one a level being written for a waiting learner uses. It may use a fast paid slot, for a
+    // learner cleared for one (the pool checks that, as for any request); the fact guard's own check rides this lane already.
+    const talking = heard === 'voice' ? require('./pool').runForeground(() => ai.talk(talkArgs), { fast: true }) : ai.talk(talkArgs); // eslint-disable-line global-require
     // With the switch on the reply path never waits past the deadline: a slow model gets an honest answer from the notes instead.
     text = fullOn ? await full.withDeadline(talking) : await talking;
     if (fullOn && !text) slow = Date.now() - talkStart >= full.DEADLINE_MS - 100;
@@ -351,15 +369,14 @@ Does the reply state the answer (to the question on the page, or to a question f
   let checkMs = null;
   if (fullOn && text && !held && (mode === 'method' || (page && page.question))) {
     const t0 = Date.now();
-    const v = await full.leakCheck({ ai, user, question: page && page.question ? page.question : question, message: last ? last.content : '', text });
-    checkMs = Date.now() - t0;
+    const same = drafted.leak && drafted.text === text;
+    const v = same ? await drafted.leak : await runLeakCheck(text, page && page.question ? page.question : question);
+    checkMs = same && drafted.leakMs != null ? drafted.leakMs : Date.now() - t0;
     // The fixed method reply cannot be about the question, so a check that cannot run does not hold it; a LEAK verdict still does.
     if (v === 'LEAK' || (v === '' && !methodFixed)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
   }
   // Round 2: a fast fact check before a reply is shown (services/tutor-full.js factCheck).
-  if (fullOn && text && !held && mode === 'full' && await full.factCheck({ ai, user, message: last ? last.content : '', text, notes: `${ctx.text}
-${howto.sheet()} What each feature does: ${howto.FEATURES.map((f) => `${f.title}: ${f.steps}`).join(' ')}
-${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')} (a count of wrong tries or quiet seconds that the page reports is true)`, question: page && page.question })) { text = full.NOT_SURE; held = true; }
+  if (fullOn && text && !held && mode === 'full' && await (drafted.fact && drafted.text === text ? drafted.fact : runFactCheck(text))) { text = full.NOT_SURE; held = true; }
   facts.dockEnded(user.id);
   let out = text || tutor.offlineReply(user.id);
   let feature;

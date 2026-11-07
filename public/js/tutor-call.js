@@ -163,6 +163,7 @@
       if (track) track.onended = () => { if (!stopped()) finish('The microphone stopped, so the call ended.', 'mic'); };
       if (!ac) ac = new AC({ latencyHint: 'interactive' });
       if (ac.state !== 'running') ac.resume().catch(() => {});
+      ac.onstatechange = () => { if (ac && !stopped() && ac.state !== 'running' && ac.state !== 'closed') ac.resume().catch(() => {}); }; // a phone call or a Siri prompt suspends it
       source = ac.createMediaStreamSource(stream);
       proc = ac.createScriptProcessor(2048, 1, 1);
       const mute = ac.createGain();
@@ -322,6 +323,7 @@
 
     /** The paid route said no: carry on with the browser's ears, or end the call and say why. */
     async function hearingFailed(err) {
+      if (err.status === 403 || err.status === 409) { finish('The call ended. You can keep going here.', 'server', true); return; } // the server closed it, or consent changed
       if (Recog) {
         listenWay = 'browser';
         noteSwitch();
@@ -548,7 +550,7 @@
         if (listenWay === 'browser') stopRecog();
         const at = quietSince;
         speak(info.notices.still_there).then(() => {
-          if (stopped()) return;
+          if (stopped() || inSpeech) return; // they answered it by talking over it
           // The warning does not restart the clock.
           resetSpeech();
           talkEndedAt = performance.now();
@@ -559,14 +561,14 @@
         });
       }
     }
-    async function hangUp(spoken, visible, reason) {
+    async function hangUp(spoken, visible, reason, toChat) {
       if (stopped() || hangUp.going) return;
       hangUp.going = true;
       stopRecog();
       turnToken += 1;
       giraffe.say(visible);
       try { await Promise.race([speak(spoken), new Promise((r) => setTimeout(r, 7000))]); } catch { /* the words are on screen */ }
-      finish(visible, reason);
+      finish(visible, reason, toChat);
     }
 
     // ── Start and finish ───────────────────────────────────────────────────
@@ -598,7 +600,7 @@
       }
       if (state !== 'starting') { endOnServer('cancelled'); closeMic(); return; }
       try { if (navigator.wakeLock) wake = await navigator.wakeLock.request('screen'); } catch { /* the screen may dim */ }
-      maxTimer = setTimeout(() => hangUp(info.notices.ending_limit, 'That is the limit for one call. You can keep going here.', 'limit').then(() => {}), (Number(info.max_s) || 600) * 1000);
+      maxTimer = setTimeout(() => hangUp(info.notices.ending_limit, 'That is the limit for one call. You can keep going here.', 'limit', true).then(() => {}), (Number(info.max_s) || 600) * 1000);
       watchTimer = setInterval(watch, 500);
       window.addEventListener('pagehide', onLeave);
       giraffe.setLabels('End the voice call', 'Switch the call to chat');

@@ -222,6 +222,26 @@ async function main() {
       await page.close();
       await ctx.close();
 
+      console.log('every kind of page');
+      ctx = await contextFor(PHONE, [MIC], paid);
+      for (const url of ['/path', '/review', '/profile', '/my-material', '/boosters', '/calendar', '/spanish/lab', '/spanish/learn', '/games/lab']) {
+        const pg = await ctx.newPage();
+        const pageErrs = [];
+        pg.on('pageerror', (er) => pageErrs.push(er.message));
+        const res = await pg.goto(BASE + url).catch(() => null);
+        if (!res || res.status() >= 400) { console.log(`       ${url}: not a page here (${res && res.status()}), skipped`); await pg.close(); continue; }
+        const found = await pg.waitForSelector('.tdock-g-btn', { timeout: 6000 }).then(() => true).catch(() => false);
+        if (!found) { console.log(`       ${url}: no giraffe (redirected to ${pg.url().replace(BASE, '')})`); await pg.close(); continue; }
+        await delay(300);
+        const r0 = await pg.evaluate(() => { const b = document.querySelector('.tdock-g-btn').getBoundingClientRect(); const hit = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2); return { top: b.top, ok: !!hit && !!hit.closest('.tdock-g-btn'), host: document.querySelector('.tdock-g').parentElement.className }; });
+        await touchTap(pg); await delay(400);
+        const r1 = await pg.evaluate(() => { const p = document.querySelector('.tdock-panel'); const r = p.getBoundingClientRect(); const over = document.documentElement.scrollWidth - innerWidth; window.scrollTo(0, document.documentElement.scrollHeight); return { open: p.dataset.open, top: r.top, over, doc: document.documentElement.scrollHeight, inner: innerHeight, y: 0 }; });
+        await delay(150);
+        check(`${url}: the giraffe is reachable in ${r0.host || 'the bar'}, the chat opens, no sideways scroll, no page error`, r0.ok && r1.open === 'true' && r1.over <= 1 && pageErrs.length === 0, { r0, r1, pageErrs });
+        await pg.close();
+      }
+      await ctx.close();
+
       console.log('sizes');
       ctx = await contextFor({ ...PHONE, viewport: { width: 320, height: 568 } }, [MIC], paid);
       page = await newPage(ctx, '/dashboard');
@@ -264,7 +284,7 @@ async function main() {
       await page.keyboard.press('Escape'); await delay(300);
       await page.evaluate(() => document.querySelector('.tdock-g-btn').focus());
       await page.keyboard.down('Enter'); await delay(650); await page.keyboard.up('Enter');
-      check('holding Enter on the giraffe starts the call too', await waitVoice(page, 'listening'));
+      check('holding Enter on the giraffe starts the call too', await waitVoice(page, 'listening'), await page.evaluate(() => ({ voice: document.querySelector('.tdock-g').dataset.voice, status: document.querySelector('.tdock-g-status').textContent, log: document.querySelector('.tdock-log').textContent.slice(-200), focus: document.activeElement.className })));
       await page.keyboard.press('Enter'); await delay(350);
       check('and Enter ends it', (await voice(page)) === '');
       await page.close();
@@ -411,10 +431,12 @@ async function main() {
       await hold(page);
       check('a call starts', await waitVoice(page, 'listening'));
       await delay(150);
-      await page.evaluate(() => window.__hear('how do fractions work'));
-      check('its words end the turn', await waitVoice(page, 'thinking', 3000));
-      check('and the browser speaks the reply', await waitVoice(page, 'talking', 6000));
-      check('and it listens again', await waitVoice(page, 'listening', 8000));
+      await page.evaluate(() => { window.__seq = []; new MutationObserver(() => window.__seq.push(document.querySelector('.tdock-g').dataset.voice)).observe(document.querySelector('.tdock-g'), { attributes: true, attributeFilter: ['data-voice'] }); window.__hear('how do fractions work'); });
+      await delay(1000);
+      await waitVoice(page, 'listening', 8000);
+      await delay(200);
+      const seq = (await page.evaluate(() => window.__seq)).join(' > ');
+      check('its words end the turn, the browser speaks the reply, and it listens again', /thinking.*talking.*listening/.test(seq), seq);
       check('no paid speech at all', gateway.tts.length === 0 && gateway.stt === 0);
       const spoken = await page.evaluate(() => window.__spoken.filter((x) => x.trim()).join(' '));
       const shown = await page.evaluate(() => [...document.querySelectorAll('.tdock-log .bot')].pop().textContent);
@@ -444,8 +466,9 @@ async function main() {
       ctx = await browser.newContext(PHONE);
       await ctx.addInitScript(MIC);
       await ctx.addInitScript(fakeBrowserSpeech);
-      const kid = await reg(ctx, 'kid@example.com', new Date().getFullYear() - 10);
-      check('the sign-up holds the child for a parent', kid.status === 201 || kid.status === 200, kid.status);
+      await api(ctx, 'POST', '/api/consent/age', { birth_year: new Date().getFullYear() - 10, birth_month: 1, country: 'US' });
+      const kid = await api(ctx, 'POST', '/api/auth/register', { username: 'kiddo_1', password: 'test-password-123', display_name: 'Kiddo', parent_email: 'parent.one@example.com' });
+      check('the sign-up holds the child for a parent', (kid.status === 201 || kid.status === 200) && kid.json.user, kid);
       page = await ctx.newPage();
       page.on('pageerror', (er) => errors.push(`kid: ${er.message}`));
       const resp = await page.goto(`${BASE}/dashboard`);
