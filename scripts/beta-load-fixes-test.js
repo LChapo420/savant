@@ -223,6 +223,11 @@ async function startApp(dbFile, port) {
   check('--write restores it, not below the copy, and says so', backNow.ok && backNow.committed_usd >= 0.5 && backNow.spent_usd <= spentBefore + 1 && /restored from/.test(fs.readFileSync(lfile, 'utf8')), backNow);
   delete process.env.LEDGER_BACKUP;
 
+  const zeroStore = path.join(dir, 'zero.sqlite');
+  fs.writeFileSync(zeroStore, '');
+  const zeroRun = spawnSync(process.execPath, ['-e', "require('./config/db'); console.log('LOADED');"], { cwd: path.join(__dirname, '..'), env: { ...process.env, DB_DRIVER: 'sqlite', DB_SQLITE_FILE: zeroStore, DB_FILE: emptyJson }, encoding: 'utf8' });
+  check('a zero-byte SQLite store refuses to start instead of opening empty', zeroRun.status === 1 && /is empty/.test(zeroRun.stderr), zeroRun.stderr);
+
   console.log('uploads in memory at once');
   const { uploadBudget, inFlightBytes } = require('../utils/upload-budget');
   const fakeRes = () => { const h = {}; const r = { code: 200, set() {}, status(c) { r.code = c; return { json() {} }; }, on(ev, fn) { h[ev] = fn; }, close() { h.close(); } }; return r; };

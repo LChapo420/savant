@@ -81,6 +81,20 @@ No ids repeated and no counters behind in any round.
 
 **Ledgers now have copies**, which they did not: every 10 minutes in `ledger-backups/` beside them, the last 12 plus one a day for 14 days, on the same disk (the nightly backup also takes them if `BACKUP_EXTRA` is left at its default: copy that off the box). A zero-byte or unreadable ledger still refuses every call, as it should. `node scripts/ledger-restore.js --dir data` says which are damaged, and `--write` puts back the newest good copy and adds an estimate of what was spent since, from the copy's last hour, so it errs toward stopping early.
 
+**What a power-off can leave** (`zero-files.js`, each damage made on a copy, then a start):
+| Left behind | What the app does |
+|---|---|
+| JSON store empty or cut short | Refuses to start, changes nothing, says how to restore |
+| SQLite store empty or garbage | Same. Before, an empty file opened as a new empty database, with every account gone |
+| Half-written temp file | Ignored; store sound |
+| Every ledger empty | Starts; a learner keeps tutor and lessons on NVIDIA; paid calls refused until `ledger-restore.js` runs |
+| Stale ledger lock | Starts, works; a lock older than 15 s is cleared |
+| Sessions file empty or garbage | Starts; learners sign in again |
+| Usage counter empty | Starts; the counter restarts from zero (these write in place, and only pace free keys) |
+| SQLite WAL deleted by hand | Starts on what was checkpointed: the last saves are gone. Not something a power-off does with `synchronous=FULL`; don't delete it |
+
+Also flushed before rename now: the mail state, sealed-test answers in `routes/spanish-study-tests.js`, and Spanish unit records. Left alone as re-creatable: the beta report, voice files, the usage counters above.
+
 **Restore drill** (`restore-drill.js`, on a copy): backup, test the backup, wreck the live file (the app refuses to start on it), restore, boot, compare rows. 15 MB: 10 s in all. 174 MB: 35 s. Rows matched both times.
 
 **Still open:** the server's daily backup is on the same disk (`onidel-server` note), so losing that disk loses the backups: copy them off. Nothing here cut the power: fsync before the rename is what protects against that, and it was added, but it wasn't tested.

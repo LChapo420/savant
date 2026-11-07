@@ -52,7 +52,20 @@ if (!fs.existsSync(DB_PATH)) {
   fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
 }
 
-const sql = open(DB_PATH, { readOnly: READONLY });
+// A power-off can leave the file with nothing in it, and SQLite opens that as a new, empty database: every account would seem to have gone. Refuse
+// instead, as config/db.js does for a damaged JSON store. DB_ALLOW_FRESH=1 starts empty.
+if (fs.existsSync(DB_PATH) && fs.statSync(DB_PATH).size === 0 && process.env.DB_ALLOW_FRESH !== '1') {
+  console.error(`Refusing to start: ${DB_PATH} is empty. Nothing was changed. Restore it from the newest backup: node scripts/backup-db.js --list, then --restore <file> --to ${DB_PATH} --force`);
+  process.exit(1);
+}
+
+let sql;
+try {
+  sql = open(DB_PATH, { readOnly: READONLY });
+} catch (err) {
+  console.error(`Refusing to start: ${DB_PATH} cannot be read (${err.message}). Nothing was changed. Restore it from the newest backup: node scripts/backup-db.js --list`);
+  process.exit(1);
+}
 
 const store = { _counters: {} };
 const written = new Map(); // coll -> Map(id -> hash of the JSON last written)
