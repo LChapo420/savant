@@ -3,9 +3,9 @@
  * js/dashboard.js runs untouched and draws today's page into #root, with every decision it always made: placement, checkpoints, a held Final, catch-ups, retake, the planner, the offers.
  * This file then shows that work two ways, on the one page:
  *
- *   Home        one task and one strong button, the day as a queue of dots. Read from GET /api/plan/today, the same reply and the same first step as today's "Start" button;
+ *   Home        one task and one strong button, the giraffe beside it. Read from GET /api/plan/today, the same reply and the same first step as today's "Start" button;
  *               with no step (nothing due, the plan unavailable) it falls back to the lead card js/dashboard.js drew, with that card's own wording and link.
- *   Everything  /dashboard#everything: the real subject cards, planner, recent sessions, offers and the rest, moved into one list. Moved, not copied, so their listeners keep working.
+ *   Everything  /dashboard#everything: the real subject cards, planner, recent sessions, offers and the rest, moved into one menu. Moved, not copied, so their listeners keep working.
  *               Other pages link here rather than keep a second copy of any of it.
  *
  * What it writes: PUT /api/plan/minutes from the minutes picker, the same call as today's. Nothing else.
@@ -42,20 +42,12 @@
     copy.querySelectorAll('.visually-hidden').forEach((n) => n.remove());
     return copy.textContent.replace(/\s+/g, ' ').trim();
   };
-  const row = (href, icon, title, sub, extra = '') => `
-    <a class="u2-row" href="${href}" ${extra}>
-      <span class="u2-tile">${ic(icon)}</span>
-      <span class="u2-row-t"><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</span>
-      ${ic('chev-r', 'u2-mute')}
-    </a>`;
-  const fold = (id, icon, title, sub) => `
-    <details class="u2-fold" id="${id}">
-      <summary class="u2-row"><span class="u2-tile">${ic(icon)}</span><span class="u2-row-t"><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</span>${ic('chev-d', 'u2-mute')}</summary>
-      <div class="u2-fold-body"></div>
-    </details>`;
+  const tile = (href, icon, title, extra = '', attrs = '') => `<a class="u2-opt" href="${href}" ${attrs}>${ic(icon)}<b>${esc(title)}</b>${extra}</a>`;
+  const tileBtn = (id, icon, title, attrs = '') => `<button type="button" class="u2-opt" id="${id}" ${attrs}>${ic(icon)}<b>${esc(title)}</b></button>`;
+  const opens = (panel) => `aria-expanded="false" aria-controls="${panel}" data-u2-panel="${panel}"`;
   const picker = () => `
     <div class="u2-picker" role="group" aria-label="Minutes you have today">
-      <span>I have</span>
+      <span class="u2-vh">I have</span>
       ${PRESETS.map((m) => `<button type="button" class="u2-chip${plan && m === plan.minutes ? ' on' : ''}" data-minutes="${m}" aria-pressed="${!!(plan && m === plan.minutes)}" aria-label="${m} minutes">${m}</button>`).join('')}
       <span>min</span>
     </div>`;
@@ -119,14 +111,12 @@
     }
     const sameAsLead = lead && lead.id === first.enrollmentId && e && e.current_level === first.level;
     const label = sameAsLead && lead.label ? lead.label : first.checkpoint && kind ? `Take the ${App.levelName(kind)}` : kind === 'lesson' ? `Start lesson ${first.level}` : `Start level ${first.level}`;
-    const total = e ? e.grade.pathLength : 0;
-    const kindWord = first.checkpoint ? 'A checkpoint' : kind === 'lesson' ? 'A lesson' : 'A level';
     const note = sameAsLead && lead.detail && !/^0 of /.test(lead.detail) ? ` ${lead.detail}` : '';
     return {
       icon: symbol,
-      eyebrow: `Up next, ${first.kind === 'catchup' ? 'catch-up ' : ''}level ${first.level}${total ? ` of ${total}` : ''}`,
+      eyebrow: `${e ? `${e.track.name}, ` : ''}${first.kind === 'catchup' ? 'catch-up ' : ''}level ${first.level}`,
       title,
-      detail: `${where} ${kindWord} of ${about}.${note}`.trim(),
+      detail: note.trim(),
       href: first.href,
       label,
       strong: true,
@@ -135,77 +125,55 @@
     };
   }
 
-  // ── today's sittings: what the queue has behind it ───────────────────────
-  function doneToday() {
-    const start = new Date(); start.setHours(0, 0, 0, 0);
-    return ((progress && progress.week) || []).filter((w) => new Date(w.ended_at) >= start).length;
-  }
-  function weekNumbers() {
-    const since = new Date(); since.setHours(0, 0, 0, 0); since.setDate(since.getDate() - 6);
-    const days = new Set();
-    let answered = 0;
-    for (const w of (progress && progress.week) || []) {
-      const t = new Date(w.ended_at);
-      if (t >= since) { days.add(t.toDateString()); answered += Number(w.answered) || 0; }
-    }
-    return { days: days.size, answered };
-  }
-
   // ── Home ─────────────────────────────────────────────────────────────────
+  /** The line under the button: what comes after, in the mockup's few words. */
+  const nextWords = (b) => {
+    const e = ((progress && progress.enrollments) || []).find((x) => x.id === b.enrollmentId);
+    return b.kind !== 'break' && b.kind !== 'review' && !b.enforcer && !b.placement && e ? e.track.name : stepName(b);
+  };
+  let homeGiraffe = null;
+  function giraffeInto(slot) {
+    if (!slot) return;
+    if (!homeGiraffe) {
+      homeGiraffe = document.createElement('button');
+      homeGiraffe.type = 'button';
+      homeGiraffe.id = 'u2-giraffe';
+      const host = document.createElement('span');
+      homeGiraffe.appendChild(host);
+      App.ui2.look.giraffe(host, { crop: 'full', mood: 'idle' });
+      App.ui2.look.bind(homeGiraffe);
+    }
+    slot.appendChild(homeGiraffe);
+    document.documentElement.classList.add('u2-has-guide');
+  }
   async function drawHome() {
     const host = document.getElementById('u2-home');
     if (!host) return;
     const req = ++focusReq;
     const focus = await focusOf();
     if (req !== focusReq) return;
-    const user = App.ui2.user || {};
-    const first = String(user.display_name || '').trim().split(/\s+/)[0];
-    const today = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
     const blocks = (plan && plan.blocks) || [];
-    const done = doneToday();
     const at = focus && focus.block ? blocks.indexOf(focus.block) : -1;
-    const all = done + blocks.length;
     const after = at >= 0 ? blocks.slice(at + 1) : [];
-    const before = at > 0 ? blocks.slice(0, at) : [];
-    const week = weekNumbers();
-    const subjects = ((progress && progress.enrollments) || []).filter((e) => e.status !== 'graduated');
-
-    const day = blocks.length ? `
-      <div class="u2-segs" aria-hidden="true">${Array.from({ length: all }, (_, i) => `<i class="${i < done ? 'on' : i === done ? 'now' : ''}"></i>`).join('')}</div>
-      <div class="u2-sb u2-m">
-        <span>${done} of ${all} done, about ${Math.round(plan.minutes_used)} min left</span>
-        <button type="button" class="u2-link-q" id="u2-minutes" aria-haspopup="dialog" aria-label="${plan.minutes} minutes today. Change">${plan.minutes} min ${ic('chev-d')}</button>
-      </div>` : (plan ? `
-      <div class="u2-sb u2-m"><span>Nothing is due today.</span><button type="button" class="u2-link-q" id="u2-minutes" aria-haspopup="dialog" aria-label="${plan.minutes} minutes today. Change">${plan.minutes} min ${ic('chev-d')}</button></div>` : '');
-
     const nextUp = after[0] || null;
+    const say = focus ? 'Ready when you are.' : 'Nothing is due today.';
     host.innerHTML = `
-      <div class="u2-day">
-        <div class="u2-m">${first ? `Hi, ${esc(first)}. ` : ''}${esc(today)}.</div>
-        ${day}
-      </div>
       <div class="u2-focus">
-        ${focus ? `
-          ${focus.icon || ''}
-          <div class="u2-m u2-eyebrow-line">${esc(focus.eyebrow)}</div>
-          <h1 class="u2-t1" tabindex="-1" id="u2-title">${esc(focus.title)}</h1>
-          ${focus.detail ? `<p class="u2-m u2-detail">${esc(focus.detail)}</p>` : ''}` : ''}
-        <div class="u2-go">
-          ${focus && focus.href ? `<a class="u2-btn${focus.strong ? '' : ' u2-btn-2'}" id="u2-start" href="${esc(focus.href)}">${esc(focus.label)}</a>` : ''}
-          ${focus && focus.path ? `<a class="u2-link" href="${esc(focus.path)}">See the whole path</a>` : ''}
+        <div class="u2-big" id="u2-big"></div>
+        <div class="u2-tx">
+          <div class="u2-bubble u2-down"><b>${esc(say)}</b></div>
+          ${focus ? `
+            <p class="u2-meta">${esc(focus.eyebrow)}</p>
+            <h1 class="u2-t1" tabindex="-1" id="u2-title">${esc(focus.title)}</h1>
+            ${focus.detail ? `<p class="u2-m u2-detail">${esc(focus.detail)}</p>` : ''}` : ''}
+          ${plan ? `<button type="button" class="u2-chip-t" id="u2-minutes" aria-haspopup="dialog" aria-label="${plan.minutes} minutes today. Change">${ic('clock')}${plan.minutes} min${ic('chev-d')}</button>` : ''}
+          <div class="u2-go">
+            ${focus && focus.href ? `<a class="${focus.strong ? 'u2-btn' : 'u2-btn2'}" id="u2-start" href="${esc(focus.href)}">${esc(focus.label)}</a>` : ''}
+            ${blocks.length ? `<button type="button" class="u2-next" id="u2-peek" aria-haspopup="dialog">${nextUp ? `Next: ${esc(nextWords(nextUp))}, ${mins(nextUp.estMinutes)}` : 'Nothing else planned today'}</button>` : ''}
+          </div>
         </div>
-      </div>
-      ${blocks.length ? `
-      <button type="button" class="u2-peek" id="u2-peek" aria-haspopup="dialog">
-        <span class="u2-m">${nextUp ? `<b>Then</b> ${esc(stepName(nextUp))}, ${mins(nextUp.estMinutes)}` : '<b>Today</b> Nothing else planned'}</span>
-        ${ic('chev-u', 'u2-mute')}
-      </button>` : ''}
-      <aside class="u2-side" aria-label="More about today">
-        <div><h2 class="u2-eyebrow">Then</h2><ul>${(after.length ? after : []).slice(0, 5).map((b) => `<li>${esc(stepName(b))}, ${mins(b.estMinutes)}</li>`).join('') || '<li>Nothing else today</li>'}</ul>${blocks.length ? '<button type="button" class="u2-link-q" id="u2-steps-wide" aria-haspopup="dialog">All of today\'s steps</button>' : ''}</div>
-        <div><h2 class="u2-eyebrow">This week</h2><ul><li>${week.days ? `${plural(week.days, 'day')} studied in the last 7` : 'No sessions in the last 7 days yet'}</li>${week.answered ? `<li>${plural(week.answered, 'question')} answered</li>` : ''}</ul></div>
-        <div><h2 class="u2-eyebrow">Your subjects</h2><ul>${subjects.slice(0, 5).map((e) => `<li><a href="/path?enrollment=${e.id}">${esc(e.track.name)}${e.status === 'placement_pending' ? ', not placed yet' : `, level ${e.current_level}`}</a></li>`).join('')}</ul></div>
-      </aside>`;
-    void before;
+      </div>`;
+    giraffeInto(document.getElementById('u2-big'));
   }
 
   // ── sheets: the day's steps, and the minutes ─────────────────────────────
@@ -260,7 +228,7 @@
     if (pick) { setMinutes(Number(pick.getAttribute('data-minutes')), pick.closest('dialog')); return; }
     const minutes = ev.target.closest('#u2-minutes');
     if (minutes) { const d = openSheet('Minutes you have today', picker(), minutes); d.dataset.kind = 'minutes'; return; }
-    const peek = ev.target.closest('#u2-peek, #u2-steps-wide');
+    const peek = ev.target.closest('#u2-peek');
     if (peek) { const d = openSheet('Today\'s plan', stepsBody(), peek); d.dataset.kind = 'steps'; }
   });
 
@@ -278,25 +246,32 @@
     const due = (progress && progress.due) || [];
     const reviewHref = leadHref('review') || (user.retention ? '/calendar' : null);
     const dark = document.documentElement.dataset.mode === 'dark';
+    const recent = !!(progress && progress.recent && progress.recent.length);
     all.innerHTML = `
       <h1 class="u2-vh" tabindex="-1" id="u2-all-title">Everything</h1>
-      <section id="u2-all-plan" ${plan ? '' : 'hidden'}><h2 class="u2-eyebrow">Today's plan</h2><div id="u2-all-picker"></div></section>
-      <section id="u2-all-subjects"><h2 class="u2-eyebrow">Your subjects</h2><div id="u2-subject-slot"></div>${row('/onboarding', 'plus', 'Add a subject', '')}</section>
-      <section id="u2-all-else">
-        <h2 class="u2-eyebrow">Everything else</h2>
-        ${reviewHref ? row(reviewHref, 'loop', 'Review', due.length ? `${plural(due.length, 'skill')} due` : '') : ''}
-        ${row('/my-material', 'note', 'My material', '', 'id="u2-row-material"')}
-        ${fold('u2-fold-calendar', 'calendar', user.retention ? 'Calendar and next study time' : 'Next study time', '')}
-        ${(progress && progress.recent && progress.recent.length) ? fold('u2-fold-recent', 'history', 'Recent sessions', '') : ''}
-        ${row('/profile', 'user', 'Profile and scorecard', '')}
-        ${user.can_browse ? row('/curriculum', 'book', 'Curriculum', 'Every subject, grade and level') : ''}
-        ${user.is_admin ? row('/game-lab', 'target', 'Game lab', '') + row('/admin', 'settings', 'Admin', '') : ''}
-        ${home ? fold('u2-fold-extras', 'chat', 'Your tutor and optional extras', 'What your tutor knows, and quick ways to fit lessons to you') : ''}
-      </section>
-      <section id="u2-all-account">
-        <button type="button" class="u2-row" id="u2-theme"><span class="u2-tile">${ic(dark ? 'sun' : 'moon')}</span><span class="u2-row-t"><b>${dark ? 'Light theme' : 'Dark theme'}</b></span></button>
-        <button type="button" class="u2-row" id="u2-signout"><span class="u2-tile">${ic('out')}</span><span class="u2-row-t"><b>Sign out</b></span></button>
-      </section>`;
+      <div class="u2-guide" id="u2-all-guide"><span id="u2-all-g"></span><div class="u2-tailwrap"><div class="u2-bubble">Where to next?</div></div></div>
+      <div class="u2-all-body">
+        <section id="u2-all-subjects"><h2 class="u2-vh">Your subjects</h2><div id="u2-subject-slot"></div><a class="u2-opt u2-all-add" href="/onboarding">${ic('plus')}<b>Add a subject</b></a></section>
+        <section id="u2-all-plan" ${plan ? '' : 'hidden'}><h2 class="u2-time-h">Time today</h2><div id="u2-all-picker"></div></section>
+        <section id="u2-all-else">
+          <h2 class="u2-vh">Everything else</h2>
+          <div class="u2-grid">
+            ${reviewHref ? tile(reviewHref, 'loop', 'Review', due.length ? `<span class="u2-count" aria-label="${plural(due.length, 'skill')} due">${due.length}</span>` : '') : ''}
+            ${tile('/my-material', 'note', 'My material', '', 'id="u2-row-material"')}
+            ${tileBtn('u2-t-calendar', 'calendar', 'Calendar', opens('u2-panel-calendar'))}
+            ${recent ? tileBtn('u2-t-recent', 'history', 'Sessions', opens('u2-panel-recent')) : ''}
+            ${tile('/profile', 'user', 'Profile')}
+            ${home ? tileBtn('u2-t-extras', 'chat', 'Tutor', opens('u2-panel-extras')) : ''}
+            ${user.can_browse ? tile('/curriculum', 'book', 'Curriculum') : ''}
+            ${user.is_admin ? tile('/game-lab', 'target', 'Game lab') + tile('/admin', 'settings', 'Admin') : ''}
+            <button type="button" class="u2-opt" id="u2-theme">${ic(dark ? 'sun' : 'moon')}<b>${dark ? 'Light theme' : 'Dark theme'}</b></button>
+            <button type="button" class="u2-opt" id="u2-signout">${ic('out')}<b>Sign out</b></button>
+          </div>
+          <div class="u2-panel" id="u2-panel-calendar" hidden></div>
+          ${recent ? '<div class="u2-panel" id="u2-panel-recent" hidden></div>' : ''}
+          ${home ? '<div class="u2-panel" id="u2-panel-extras" hidden></div>' : ''}
+        </section>
+      </div>`;
     root.appendChild(all);
     drawAllPicker();
 
@@ -307,22 +282,40 @@
         document.getElementById('u2-subject-slot').appendChild(cards);
         cards.querySelectorAll('.subject-card').forEach((c) => { c.insertAdjacentHTML('beforeend', ic('chev-r', 'u2-mute u2-card-chev')); });
       }
-      const calendarBody = all.querySelector('#u2-fold-calendar .u2-fold-body');
+      const calendarBody = all.querySelector('#u2-panel-calendar');
       if (calendarBody) {
         const planner = home.querySelector('#planner');
         if (planner) calendarBody.appendChild(planner);
-        if (user.retention) calendarBody.insertAdjacentHTML('beforeend', '<a class="u2-link u2-left" href="/calendar">Open the calendar</a>');
+        if (user.retention) calendarBody.insertAdjacentHTML('beforeend', '<a class="u2-a" href="/calendar">Open the calendar</a>');
       }
-      const recentBody = all.querySelector('#u2-fold-recent .u2-fold-body');
+      const recentBody = all.querySelector('#u2-panel-recent');
       if (recentBody) { const recent = home.querySelector('.recent-card'); if (recent) recentBody.appendChild(recent); }
-      const extras = all.querySelector('#u2-fold-extras .u2-fold-body');
+      const extras = all.querySelector('#u2-panel-extras');
+      extras.insertAdjacentHTML('afterbegin', '<button type="button" class="u2-a" id="u2-talk" style="background:none;border:0;cursor:pointer">Talk to your tutor</button>');
+      extras.querySelector('#u2-talk').addEventListener('click', () => { const d = document.querySelector('.tdock-g-btn'); if (d) d.click(); });
       const aside = home.querySelector('.home-aside');
       const tutorHost = home.querySelector('#tutor-host');
       if (aside) { while (aside.firstChild) extras.appendChild(aside.firstChild); }
       if (tutorHost) extras.appendChild(tutorHost);
-    } else {
-      document.getElementById('u2-all-subjects').querySelector('h2').hidden = true;
     }
+
+    // The menu's own giraffe. Tiles that hold more open a panel under the grid.
+    const gSlot = document.getElementById('u2-all-g');
+    const gBtn = document.createElement('button');
+    gBtn.type = 'button';
+    const gHost = document.createElement('span');
+    gBtn.appendChild(gHost);
+    gSlot.replaceWith(gBtn);
+    App.ui2.look.giraffe(gHost, { crop: window.matchMedia('(min-width: 768px) and (max-width: 1024px)').matches ? 'full' : 'bust' });
+    App.ui2.look.bind(gBtn);
+    all.querySelectorAll('[data-u2-panel]').forEach((t) => t.addEventListener('click', () => {
+      const open = t.getAttribute('aria-expanded') !== 'true';
+      all.querySelectorAll('[data-u2-panel]').forEach((o) => {
+        o.setAttribute('aria-expanded', String(o === t && open));
+        const p = document.getElementById(o.dataset.u2Panel);
+        if (p) p.hidden = !(o === t && open);
+      });
+    }));
 
     // What the old header did, in the one list.
     document.getElementById('u2-signout').addEventListener('click', () => { const b = document.getElementById('logout'); if (b) b.click(); });
@@ -332,7 +325,7 @@
       const b = document.getElementById('theme-toggle');
       if (b) b.click();
       const nowDark = document.documentElement.dataset.mode === 'dark';
-      theme.querySelector('.u2-tile').innerHTML = ic(nowDark ? 'sun' : 'moon');
+      theme.querySelector('svg').outerHTML = ic(nowDark ? 'sun' : 'moon');
       theme.querySelector('b').textContent = nowDark ? 'Light theme' : 'Dark theme';
     });
 
@@ -340,8 +333,8 @@
     App.api.get('/api/materials/review-due').then((d) => {
       if (!d || !(d.total || d.cards_total)) return;
       const line = [d.total ? plural(d.total, 'skill') : '', d.cards_total ? plural(d.cards_total, 'flashcard') : ''].filter(Boolean).join(' and ');
-      const t = document.querySelector('#u2-row-material .u2-row-t');
-      if (t) t.insertAdjacentHTML('beforeend', `<small>${esc(line)} due</small>`);
+      const t = document.querySelector('#u2-row-material');
+      if (t) { t.insertAdjacentHTML('beforeend', `<span class="u2-count" aria-hidden="true">${(d.total || 0) + (d.cards_total || 0)}</span>`); t.setAttribute('aria-label', `My material, ${line} due`); }
     }).catch(() => {});
   }
 
@@ -350,13 +343,11 @@
     const everything = location.hash === '#everything';
     document.documentElement.dataset.u2View = everything ? 'everything' : 'home';
     const menu = document.getElementById('u2-menu');
-    const title = document.getElementById('u2-tb-t');
     if (menu) {
       menu.innerHTML = ic(everything ? 'x' : 'menu');
       menu.setAttribute('aria-label', everything ? 'Close everything' : 'Open everything');
       menu.setAttribute('href', everything ? '/dashboard' : '/dashboard#everything');
     }
-    if (title) title.hidden = !everything;
     document.title = everything ? 'Everything | Savant' : 'Home | Savant';
     if (moveFocus) {
       window.scrollTo(0, 0);
@@ -398,6 +389,13 @@
       host.id = 'u2-home';
       root.insertBefore(host, root.firstChild);
       await drawHome();
+    } else {
+      const big = document.createElement('div');
+      big.className = 'u2-big';
+      empty.insertBefore(big, empty.firstChild);
+      giraffeInto(big);
+      const main = empty.querySelector('.btn-primary');
+      if (main) main.insertAdjacentHTML('afterend', '<a class="u2-btn2" href="/my-material">My material</a>');
     }
     buildAll();
     applyView(false);

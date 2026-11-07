@@ -1,38 +1,77 @@
 @import url(/css/styles/chunky.css); /* the base under the tokens below, in both modes: see js/ui2/boot.js */
-/* The new app's colours and shapes (docs/UI-V2.md). The same Sunny set as the onboarding at /start (css/screens/start.css), so going from one to the other feels like one product.
+/* The new app's colours and shapes (docs/UI-V2.md). The owner's approved look v4: design-refs/ui-v4-mockups/make.js. White pages, graphite text, Savant blue for action.
  *
- * Every colour on an app screen comes from here, so a learner can later pick all their own (the owner's wish; the picker comes last): css/ui2/app.css has no colour of its own.
- * The first block is the new tokens. The blocks under it point the older component tokens (css/style.css, css/styles/*) at them, so pages not yet rearranged get the same colours.
+ * Every colour on an app screen and on /start comes from here, so a learner can later pick all their own (the owner's wish; the picker comes last): css/ui2/look.css, app.css and start.css have no colour of their own.
+ * The first block is the mockup's tokens, then the names the first slice used, pointing at them. The block after that points the older component tokens (css/style.css, css/styles/*) at them, so pages not yet rearranged get the same colours.
  * :root[data-ui2][data-style] outranks the style files' :root[data-style] whatever the load order. data-mode is set by js/style-boot.js in every case: the sun/moon choice, or the system's.
  *
- * Contrast (WCAG AA, scripts/ui-v2-test.js checks these): body text pairs at least 4.5:1, the button's text 8:1, bars and selected borders at least 3:1, both modes.
+ * Contrast (WCAG AA, scripts/ui-v2-test.js checks these): body text pairs at least 4.5:1, the button's text 4.5:1, bars and selected borders at least 3:1, both modes.
  */
 :root[data-ui2][data-style], :root[data-ui2] {
   color-scheme: light;
-  --page: #fffbf3;
+  /* the mockup's tokens */
+  --page: #ffffff;
   --card: #ffffff;
-  --well: #fbefd9;
-  --well-2: #f4e5ca;
-  --line: #eadfca;
-  --line-strong: #d9c9ac;
-  --control: #8d7a60;
-  --ink: #3b2410;
-  --ink-2: #5c4631;
-  --ink-3: #6b5540;
-  --action: #f6b93b;
-  --action-hover: #f9c550;
-  --action-edge: #c98a14;
-  --on-action: #3b2410;
-  --sel: #fff1cf;
-  --sel-line: #a85f10;
-  --bar-track: #f1e6d2;
-  --bar-fill: #a85f10;
-  --good: #22663f;
-  --good-wash: #e8f4ec;
-  --bad: #b3261e;
-  --bad-wash: #fdecea;
-  --focus: #7a4a12;
-  --scrim: rgba(59, 36, 16, .32);
+  --well: #f4f5f7;
+  --well-2: #eaecf0;
+  --line: #e3e5e9;
+  --line-strong: #c8ccd3;
+  --opt-edge: #c8ccd3;
+  --ink: #15171b;
+  --ink-2: #4b5059;
+  --ink-3: #666b75;
+  --act: oklch(0.50 0.15 262);
+  --act-hover: oklch(0.46 0.15 262);
+  --act-edge: oklch(0.37 0.13 262);
+  --on-act: #ffffff;
+  --act-tint: oklch(0.965 0.025 262);
+  --act-text: oklch(0.42 0.14 262);
+  --right: oklch(0.52 0.13 150);
+  --right-tint: oklch(0.965 0.03 150);
+  --right-text: oklch(0.40 0.11 150);
+  --wrong: oklch(0.53 0.18 27);
+  --wrong-tint: oklch(0.965 0.02 27);
+  --wrong-text: oklch(0.43 0.16 27);
+  --sun-coat: #f6b93b;
+  --sun-shade: #e5a225;
+  --sun-spot: #b8691b;
+  --sun-light: #ffe7b0;
+  --sun-foot: #8a4e14;
+  --sun-eye: #ffffff;
+  --sun-pupil: #2a1c12;
+  --sun-mouth: #8e3b2e;
+  --sun-tongue: #f2857a;
+  --sun-shadow: rgba(59, 36, 16, .10);
+  --s-math: oklch(0.50 0.15 262);
+  --s-english: oklch(0.50 0.15 335);
+  --s-reading: oklch(0.50 0.15 200);
+  --s-iq: oklch(0.50 0.15 295);
+  --s-act: oklch(0.45 0.08 235);
+  --s-spanish: oklch(0.50 0.12 75);
+  --s-chess: oklch(0.38 0.02 60);
+  --s-piano: oklch(0.35 0.06 280);
+  --s-basketball: oklch(0.52 0.14 50);
+  --task-blue: #1f5fbf;
+  --on-task-blue: #ffffff;
+  --task-orange: #f59e0b;
+  --on-task-orange: #2a1c12;
+
+  /* the names the first slice used */
+  --control: var(--ink-3);
+  --action: var(--act);
+  --action-hover: var(--act-hover);
+  --action-edge: var(--act-edge);
+  --on-action: var(--on-act);
+  --sel: var(--act-tint);
+  --sel-line: var(--act);
+  --bar-track: var(--well-2);
+  --bar-fill: var(--act);
+  --good: var(--right-text);
+  --good-wash: var(--right-tint);
+  --bad: var(--wrong-text);
+  --bad-wash: var(--wrong-tint);
+  --focus: var(--act-text);
+  --scrim: rgba(21, 23, 27, .32);
   --on-mark: #ffffff;
 
   /* the older tokens */
@@ -90,12 +129,13 @@
 
   /* type and shape, as on /start */
   --font: "Atkinson Hyperlegible Next", ui-sans-serif, "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
-  --display: var(--font);
+  --serif: "DM Serif Display", Georgia, serif;
+  --display: var(--serif);
   --read-font: var(--font);
   --num: "Atkinson Hyperlegible Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   --w-body: 400;
   --w-strong: 700;
-  --w-head: 700;
+  --w-head: 400;
   --w-btn: 700;
   --w-label: 700;
   --tracking-head: -0.005em;
@@ -111,10 +151,10 @@
   --t-h3: 1.125rem;
   --t-h2: 1.5rem;
   --t-h1: 1.875rem;
-  --r-card: 16px;
-  --r-btn: 16px;
+  --r-card: 18px;
+  --r-btn: 999px;
   --r-input: 14px;
-  --r-choice: 14px;
+  --r-choice: 18px;
   --r-chip: 10px;
   --r-bar: 3px;
   --r-icon: 12px;
@@ -123,45 +163,54 @@
   --bw-control: 1.5px;
   --bw-nav: 1px;
   --btn1-bw: 0px;
-  --btn1-edge-w: 3px;
+  --btn1-edge-w: 6px;
   --btn2-bw: 1.5px;
   --btn2-edge-w: 1.5px;
-  --press: 2px;
-  --btn-h: 48px;
-  --btn-h-lg: 54px;
+  --press: 6px;
+  --btn-h: 56px;
+  --btn-h-lg: 56px;
   --btn-h-sm: 42px;
   --btn-size: 1rem;
   --btn-size-lg: 1.0625rem;
   --choice-h: 48px;
   --key-size: 26px;
-  --bar-h: 6px;
+  --bar-h: 8px;
   --bar-h-sm: 6px;
 }
 :root[data-ui2][data-mode="dark"][data-style], :root[data-ui2][data-mode="dark"] {
   color-scheme: dark;
-  --page: #1c1610;
-  --card: #2a2219;
-  --well: #3a3024;
-  --well-2: #43372a;
-  --line: #43372a;
-  --line-strong: #5e4f3d;
-  --control: #8f7d65;
-  --ink: #fff6e6;
-  --ink-2: #d8c9b2;
-  --ink-3: #b9a88f;
-  --action: #f6b93b;
-  --action-hover: #f9c550;
-  --action-edge: #a8761a;
-  --on-action: #2a1c12;
-  --sel: #3d2c12;
-  --sel-line: #f6b93b;
-  --bar-track: #3a3024;
-  --bar-fill: #f6b93b;
-  --good: #7fd3a1;
-  --good-wash: #1c3026;
-  --bad: #ff9c92;
-  --bad-wash: #3d1f1b;
-  --focus: #f6b93b;
+  --page: #14161a;
+  --card: #1c1f24;
+  --well: #23262c;
+  --well-2: #2c3037;
+  --line: #2f333b;
+  --line-strong: #454a54;
+  --opt-edge: #454a54;
+  --ink: #f2f3f5;
+  --ink-2: #c4c8cf;
+  --ink-3: #a0a5ae;
+  --act: oklch(0.72 0.12 262);
+  --act-hover: oklch(0.76 0.12 262);
+  --act-edge: oklch(0.52 0.13 262);
+  --on-act: #0d0f13;
+  --act-tint: oklch(0.30 0.06 262);
+  --act-text: oklch(0.86 0.08 262);
+  --right: oklch(0.72 0.14 150);
+  --right-tint: oklch(0.30 0.05 150);
+  --right-text: oklch(0.87 0.11 150);
+  --wrong: oklch(0.72 0.15 27);
+  --wrong-tint: oklch(0.30 0.06 27);
+  --wrong-text: oklch(0.88 0.08 27);
+  --sun-shadow: rgba(0, 0, 0, .4);
+  --s-math: oklch(0.76 0.12 262);
+  --s-english: oklch(0.76 0.12 335);
+  --s-reading: oklch(0.76 0.10 200);
+  --s-iq: oklch(0.76 0.12 295);
+  --s-act: oklch(0.76 0.08 235);
+  --s-spanish: oklch(0.78 0.11 75);
+  --s-chess: oklch(0.82 0.02 60);
+  --s-piano: oklch(0.78 0.08 280);
+  --s-basketball: oklch(0.76 0.13 50);
   --scrim: rgba(0, 0, 0, .5);
-  --on-mark: #2a1c12;
+  --on-mark: #0d0f13;
 }

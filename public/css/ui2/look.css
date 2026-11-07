@@ -1,0 +1,53 @@
+/* The parts every UI_V2 screen shares, app and /start alike: the serif, the giraffe's colours, the bubble and the guide row. From the approved mockup, design-refs/ui-v4-mockups/make.js.
+ * No colour of its own: every colour is a token from css/ui2/tokens.css. The giraffe is the original Sunny SVG from js/start-tutor.js; only its window and the source of its fills change, never its shapes.
+ */
+@font-face { font-family: "DM Serif Display"; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/dm-serif-display-400.woff2) format("woff2"); }
+@font-face { font-family: "DM Serif Display"; font-style: italic; font-weight: 400; font-display: swap; src: url(/fonts/dm-serif-display-400i.woff2) format("woff2"); }
+
+html[data-ui2] .t-shadow { fill: var(--sun-shadow); }
+html[data-ui2] .t-coat { fill: var(--sun-coat); }
+html[data-ui2] .t-shade { fill: var(--sun-shade); }
+html[data-ui2] .t-tail { fill: none; stroke: var(--sun-shade); stroke-width: 20; stroke-linecap: round; }
+html[data-ui2] .t-spot { fill: var(--sun-spot); }
+html[data-ui2] .t-light { fill: var(--sun-light); }
+html[data-ui2] .t-foot { fill: var(--sun-foot); }
+html[data-ui2] .t-eye, html[data-ui2] .t-glint { fill: var(--sun-eye); }
+html[data-ui2] .t-pupil { fill: var(--sun-pupil); }
+html[data-ui2] .t-mouth-in { fill: var(--sun-mouth); }
+html[data-ui2] .t-tongue { fill: var(--sun-tongue); }
+html[data-ui2] .t-eyes-happy path { fill: none; stroke: var(--sun-pupil); stroke-width: 10; stroke-linecap: round; }
+html[data-ui2] .t-eyes-happy, html[data-ui2] .t-mouth-happy { display: none; }
+html[data-ui2] .tutor[data-mood="happy"] .t-eyes, html[data-ui2] .tutor[data-mood="happy"] .t-mouth, html[data-ui2] .tutor[data-mood="cheer"] .t-eyes, html[data-ui2] .tutor[data-mood="cheer"] .t-mouth { display: none; }
+html[data-ui2] .tutor[data-mood="happy"] .t-eyes-happy, html[data-ui2] .tutor[data-mood="happy"] .t-mouth-happy, html[data-ui2] .tutor[data-mood="cheer"] .t-eyes-happy, html[data-ui2] .tutor[data-mood="cheer"] .t-mouth-happy { display: block; }
+html[data-ui2] .tutor[data-mood="think"] .t-pupils { transform: translate(6px, -9px); }
+
+/* A giraffe you can press: tap for the chat, hold for the voice call, wherever it stands (js/ui2/look.js passes the press to the top bar's giraffe). */
+html[data-ui2] .u2-g { display: block; flex: none; padding: 0; border: 0; background: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; user-select: none; transition: transform .1s ease-out; }
+html[data-ui2] .u2-g svg { display: block; pointer-events: none; }
+html[data-ui2] .u2-g.is-pressing { transform: scale(.97); }
+
+/* The speech bubble. */
+html[data-ui2] .u2-bubble { position: relative; color: var(--ink); background: var(--u2-b, var(--page)); border: 1.5px solid var(--u2-bl, var(--line)); border-radius: 18px; padding: 12px 15px; font-weight: 700; font-size: 20px; line-height: 1.26; text-align: left; }
+html[data-ui2] .u2-bubble b { display: block; font-weight: 700; }
+html[data-ui2] .u2-bubble span { display: block; font-weight: 400; font-size: 16.5px; line-height: 1.3; margin-top: 2px; color: var(--ink); }
+html[data-ui2] .u2-bubble::before { content: ""; position: absolute; width: 13px; height: 13px; background: var(--u2-b, var(--page)); transform: rotate(45deg); }
+html[data-ui2] .u2-bubble.u2-down { text-align: center; padding: 14px 22px; }
+html[data-ui2] .u2-bubble.u2-down::before { bottom: -7.5px; left: calc(50% - 6.5px); border-right: 1.5px solid var(--u2-bl, var(--line)); border-bottom: 1.5px solid var(--u2-bl, var(--line)); }
+html[data-ui2] .u2-ok { --u2-b: var(--right-tint); --u2-bl: var(--right); }
+html[data-ui2] .u2-no { --u2-b: var(--wrong-tint); --u2-bl: var(--wrong); }
+html[data-ui2] .u2-ok .u2-bubble b { color: var(--right-text); }
+html[data-ui2] .u2-no .u2-bubble b { color: var(--wrong-text); }
+html[data-ui2] .u2-bubble.u2-small { font-size: 17px; }
+
+/* The guide: the giraffe top left, cropped at the shoulders, the words beside it, with a tail that stays put when the words scroll. */
+html[data-ui2] .u2-guide { flex: none; display: flex; gap: 6px; padding: 0 20px 0 14px; border-bottom: 1px solid var(--line); align-items: flex-end; }
+html[data-ui2] .u2-guide .tutor { display: block; flex: none; width: 116px; height: 120px; }
+html[data-ui2] .u2-guide .tutor-svg { width: 116px; height: 120px; overflow: hidden; }
+html[data-ui2] .u2-tailwrap { position: relative; flex: 1; min-width: 0; align-self: center; margin: 6px 0 10px; }
+html[data-ui2] .u2-tailwrap .u2-bubble { min-height: 68px; display: flex; flex-direction: column; justify-content: center; overflow: auto; }
+html[data-ui2] .u2-tailwrap .u2-bubble::before { display: none; }
+html[data-ui2] .u2-tailwrap::before { content: ""; position: absolute; z-index: 1; left: -6.5px; top: calc(50% - 8px); width: 13px; height: 13px; background: var(--u2-b, var(--page)); border-left: 1.5px solid var(--u2-bl, var(--line)); border-bottom: 1.5px solid var(--u2-bl, var(--line)); transform: rotate(45deg); }
+
+/* The wordmark, in ink. */
+html[data-ui2] .u2-wm { display: block; flex: none; fill: var(--ink); }
+html[data-ui2] .u2-wm text { font-family: var(--serif); }

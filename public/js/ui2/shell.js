@@ -5,7 +5,9 @@
  *   - puts a menu or back button at the left of the top bar, and on a wide screen the "Everything" link
  *   - leaves the giraffe to js/tutor-giraffe.js, which finds its own place in .site-header .wrap, before .header-actions
  *   - moves the idle "Start session" of js/study.js up into the top bar; a running session stays in its own line under it
- * and it dresses the answer box of js/player.js (.verdict) as the sheet the CSS raises from the bottom: a mark, a flag for "Report a problem", and room under the page.
+ * and on a question it puts the guide under the player's top bar: the original giraffe, cropped at the shoulders on a phone, with the question in its speech bubble. When the answer comes, the
+ * words of js/player.js's .verdict show in that bubble, tinted, and the giraffe reacts; the box itself stays where the player put it and keeps the buttons. Nothing of the player's is moved:
+ * the bubble holds copies and the originals stay in place for screen readers, focus and every listener.
  */
 (function () {
   if (!window.App || !document.documentElement.hasAttribute('data-ui2')) return;
@@ -37,6 +39,7 @@
     ball: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3 12h18M12 3v18M5.8 5.5c2.5 2 3.8 4 3.8 6.5s-1.3 4.5-3.8 6.5M18.2 5.5c-2.5 2-3.8 4-3.8 6.5s1.3 4.5 3.8 6.5',
     pencil: 'M4 20l1-4.5L16.500 4a2 2 0 0 1 3 0l.5.5a2 2 0 0 1 0 3L8.500 19zM14.500 6l3.500 3.500',
     chat: 'M5.500 4.500h13A2 2 0 0 1 20.500 6.500v9a2 2 0 0 1-2 2H11l-4.500 3.500V17.500h-1a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z',
+    clock: 'M12 3.500a8.500 8.500 0 1 0 0 17 8.500 8.500 0 0 0 0-17zM12 7.500V12l3 2',
     settings: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19 12a7 7 0 0 0-.1-1.200l2-1.500-2-3.400-2.300 1a7 7 0 0 0-2.100-1.200L14 3.500h-4l-.4 2.200a7 7 0 0 0-2.100 1.200l-2.300-1-2 3.400 2 1.500a7 7 0 0 0 0 2.400l-2 1.500 2 3.400 2.300-1a7 7 0 0 0 2.100 1.200l.4 2.200h4l.4-2.200a7 7 0 0 0 2.100-1.200l2.300 1 2-3.400-2-1.500c.1-.4.1-.8.1-1.200z',
   };
   const ic = (name, cls) => `<svg class="u2-ic${cls ? ` ${cls}` : ''}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${PATHS[name]}"/></svg>`;
@@ -62,6 +65,7 @@
   };
 
   const HOME = /^\/dashboard(\.html)?$/.test(location.pathname);
+  const Look = window.U2Look;
 
   /** Where back goes: the page before it if that was ours and not a sitting left behind, otherwise up. */
   function upFrom(path) {
@@ -91,25 +95,11 @@
     const left = document.createElement('div');
     left.className = 'u2-left';
     left.innerHTML = HOME
-      ? `<a class="u2-ib u2-solid" id="u2-menu" href="/dashboard#everything" aria-label="Open everything">${ic('menu')}</a><b class="u2-tb-t" id="u2-tb-t" hidden>Everything</b>`
+      ? `<a class="u2-ib" id="u2-menu" href="/dashboard#everything" aria-label="Open everything">${ic('menu')}</a><a class="u2-tb-wm" href="/dashboard" aria-label="Savant, home">${Look.wordmark(22)}</a>`
       : `<a class="u2-ib" id="u2-back" href="${upFrom(location.pathname)}" aria-label="Back">${ic('back')}</a><b class="u2-tb-t" id="u2-tb-t">${App.escapeHtml(titleOf())}</b>`;
     wrap.insertBefore(left, brand ? brand.nextSibling : wrap.firstChild);
     const backBtn = left.querySelector('#u2-back');
     if (backBtn) backBtn.addEventListener('click', goBack);
-    if (brand) {
-      const all = document.createElement('a');
-      all.className = 'u2-all-link';
-      all.href = '/dashboard#everything';
-      all.innerHTML = `${ic('menu')}Everything`;
-      left.before(all);
-    }
-    const name = String((user && user.display_name) || '').trim();
-    const initial = document.createElement('a');
-    initial.className = 'u2-initial';
-    initial.href = '/profile';
-    initial.setAttribute('aria-label', 'Profile');
-    initial.textContent = (name.charAt(0) || '?').toUpperCase();
-    wrap.appendChild(initial);
     App.ui2.user = user;
     if (App.ui2.onBar) App.ui2.onBar();
   }
@@ -129,7 +119,7 @@
     }
   }
 
-  // ── The answer sheet ─────────────────────────────────────────────────────
+  // ── The answer box ───────────────────────────────────────────────────────
   let sheetSeen = null;
   let sheetWatch = null;
   function dressVerdict(box) {
@@ -139,13 +129,15 @@
     const good = box.classList.contains('verdict-correct');
     const bad = box.classList.contains('verdict-wrong');
     if (head) {
-      // The words in one span, so the mark sits beside them as one block however they wrap.
+      // The words in one span, so the mark sits beside them as one block however they wrap (a screen with no guide shows them here).
       const words = document.createElement('span');
       words.className = 'u2-vt';
       while (head.firstChild) words.appendChild(head.firstChild);
       head.appendChild(words);
       if (good || bad) head.insertAdjacentHTML('afterbegin', `<span class="u2-mk ${good ? 'u2-mk-good' : 'u2-mk-bad'}" aria-hidden="true">${ic(good ? 'check' : 'x')}</span>`);
     }
+    const ask = box.querySelector('[data-act="ask"]');
+    if (ask) ask.textContent = 'Why?';
     const report = box.querySelector('[data-act="report"]');
     if (report) {
       report.setAttribute('aria-label', 'Report a problem');
@@ -153,6 +145,101 @@
       report.innerHTML = ic('flag');
     }
   }
+
+  // ── The guide on a question ──────────────────────────────────────────────
+  const LONG_ASK = 170; // more than this stays in the page; the bubble can't hold it comfortably on a phone
+  let guide = null;
+  let reacted = null;
+  const wholeGiraffe = () => window.matchMedia('(min-width: 768px)').matches;
+  function buildGuide() {
+    const g = document.createElement('div');
+    g.className = 'u2-guide';
+    g.id = 'u2-qguide';
+    g.innerHTML = `<button type="button" class="u2-gh"></button>
+      <div class="u2-tailwrap"><div class="u2-bubble" id="u2-qb"></div><button type="button" id="u2-bflag" aria-label="Report a problem" title="Report a problem" hidden>${ic('flag')}</button></div>`;
+    const btn = g.querySelector('.u2-gh');
+    const host = document.createElement('span');
+    btn.appendChild(host);
+    Look.giraffe(host, { crop: wholeGiraffe() ? 'full' : 'bust' });
+    Look.bind(btn);
+    g.querySelector('#u2-bflag').addEventListener('click', () => {
+      const r = document.querySelector('.verdict [data-act="report"]');
+      if (r) r.click();
+    });
+    return g;
+  }
+  const mathText = (t) => App.escapeHtml(t).replace(/(^|[^a-zA-Z])([a-zA-Z])(?![a-zA-Z])/g, '$1<i>$2</i>');
+  /** "Simplify: 3x + 2x" is an instruction and an expression: the instruction in the bubble, the expression large on the page, as in the mockup. Anything else stays one piece. */
+  function splitAsk(text) {
+    const m = /^([^:]{2,60}):\s*([0-9a-zA-Z()+\-−×÷*/=^².\s]{3,28})$/.exec(text);
+    if (!m || !/\d/.test(m[2]) || /[a-zA-Z]{2,}/.test(m[2])) return null;
+    return { ask: `${m[1]}.`, sum: m[2].trim() };
+  }
+  function dressQuestion() {
+    const head = document.querySelector('.player-head');
+    const prompt = document.querySelector('.player .prompt, .session-player .prompt');
+    const answering = prompt && prompt.parentElement && prompt.parentElement.querySelector('.choices, .answer-row, .check-bar, .verdict');
+    const root = document.documentElement;
+    if (!head || !answering) {
+      if (guide && guide.isConnected) guide.remove();
+      root.classList.remove('u2-guided');
+      if (!HOME) root.classList.remove('u2-has-guide');
+      return;
+    }
+    if (!guide) guide = buildGuide();
+    if (head.nextElementSibling !== guide) head.after(guide);
+    root.classList.add('u2-guided', 'u2-has-guide');
+    Look.crop(guide.querySelector('.tutor'), wholeGiraffe() ? 'full' : 'bust');
+    const wrap = guide.querySelector('.u2-tailwrap');
+    const bubble = guide.querySelector('#u2-qb');
+    const flag = guide.querySelector('#u2-bflag');
+    const tutor = guide.querySelector('.tutor');
+    const box = document.querySelector('.player .verdict, .session-player .verdict');
+    const text = prompt.textContent.trim();
+    const hasPassage = !!prompt.parentElement.querySelector('.passage');
+    const short = text.length <= LONG_ASK && !hasPassage;
+    const parts = short ? splitAsk(text) : null;
+    prompt.classList.toggle('u2-asked', short);
+    // The big sum, between the giraffe and the answers.
+    let sum = prompt.parentElement.querySelector(':scope > .u2-sum');
+    if (parts && !sum) {
+      sum = document.createElement('div');
+      sum.className = 'u2-sum';
+      sum.setAttribute('aria-hidden', 'true');
+      prompt.after(sum);
+    }
+    if (sum) { if (parts) sum.innerHTML = mathText(parts.sum); else sum.remove(); }
+    let html;
+    let tone = '';
+    if (box && box.querySelector('.verdict-actions, h4')) {
+      const good = box.classList.contains('verdict-correct');
+      const bad = box.classList.contains('verdict-wrong');
+      tone = good ? 'u2-ok' : bad ? 'u2-no' : '';
+      const headText = box.querySelector('h4 .u2-vt') || box.querySelector('h4');
+      const more = [...box.querySelectorAll(':scope > .small, :scope > .rationale')].map((n) => n.textContent.trim()).filter(Boolean);
+      html = `<b>${headText ? App.escapeHtml(headText.textContent.trim()) : ''}</b>${more.map((t) => `<span>${App.escapeHtml(t)}</span>`).join('')}`;
+      const report = box.querySelector('[data-act="report"]');
+      flag.hidden = !report;
+      if (report) flag.disabled = report.disabled;
+      if (reacted !== box) {
+        reacted = box;
+        if (window.Tutor && (good || bad)) window.Tutor.mood(tutor, good ? 'happy' : 'think', good ? 1800 : 0);
+        else if (window.Tutor) window.Tutor.mood(tutor, 'think');
+        if (guide.getBoundingClientRect().top < 0 && guide.scrollIntoView) guide.scrollIntoView({ block: 'center' });
+      }
+    } else {
+      flag.hidden = true;
+      if (reacted && window.Tutor) window.Tutor.mood(tutor, 'idle');
+      reacted = null;
+      html = short ? App.escapeHtml(parts ? parts.ask : text) : 'Your turn.';
+    }
+    bubble.setAttribute('aria-hidden', box || short ? 'true' : 'false');
+    bubble.classList.toggle('u2-small', !box && (parts ? parts.ask : text).length > 60);
+    wrap.classList.toggle('u2-ok', tone === 'u2-ok');
+    wrap.classList.toggle('u2-no', tone === 'u2-no');
+    if (bubble.dataset.src !== html) { bubble.dataset.src = html; bubble.innerHTML = html; bubble.scrollTop = 0; }
+  }
+
   function dressPartChange() {
     document.querySelectorAll('.verdict [data-part-change]:not([data-u2])').forEach((row) => {
       row.dataset.u2 = '1';
@@ -182,16 +269,26 @@
     if (window.ResizeObserver) { sheetWatch = new ResizeObserver(size); sheetWatch.observe(box); }
   }
 
+  // A learner who came to upload from the onboarding gets one way on to Home.
+  function afterUpload() {
+    if (!/^\/my-material$/.test(location.pathname) || !/[?&]from=start\b/.test(location.search) || document.getElementById('u2-after-upload')) return;
+    const main = document.querySelector('main.page');
+    if (!main) return;
+    main.insertAdjacentHTML('beforeend', '<div id="u2-after-upload"><a class="u2-btn" href="/dashboard">Go to home</a></div>');
+  }
+
   let queued = false;
   function tick() {
     queued = false;
     placeStudy();
     watchSheet();
+    dressQuestion();
     dressPartChange();
+    afterUpload();
   }
   function queue() { if (!queued) { queued = true; requestAnimationFrame(tick); } }
 
-  App.ui2 = { ic, gets, home: HOME, user: null, onBar: null };
+  App.ui2 = { ic, gets, look: Look, home: HOME, user: null, onBar: null };
 
   const realHeader = App.header;
   App.header = function header(user, active) {

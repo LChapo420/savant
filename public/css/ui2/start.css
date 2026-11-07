@@ -1,0 +1,221 @@
+/* The onboarding at /start in the approved look, only when UI_V2 is on (js/ui2/start.js, design-refs/ui-v4-mockups/). Loaded after css/screens/start.css and wins over it; with the flag off this file isn't on the page.
+ * No colour of its own: every colour is a token from css/ui2/tokens.css. Phone first; tablet from 768 px, desktop from 1025 px, as in sheet-large.png: one centred column, buttons 260 to 360 px, options in a grid by width.
+ */
+:root[data-ui2] { --side: var(--page); --off-bg: var(--well-2); --off-ink: var(--ink-3); --sel-ink: var(--act-text); --tick: var(--act); --on-tick: var(--on-mark); --m: transparent; --m-ink: inherit; --error: var(--wrong); --error-wash: var(--wrong-tint); --t-shadow: var(--sun-shadow); --bubble: var(--page); }
+
+html[data-ui2] body { background: var(--page); color: var(--ink); font: 400 1rem/1.4 var(--font); }
+html[data-ui2] :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* ── the shell ─────────────────────────────────────────────── */
+html[data-ui2] .ob, html[data-ui2] .ob[data-layout="hero"] { display: flex; flex-direction: column; min-height: 100dvh; max-width: 560px; width: 100%; margin: 0 auto; padding: 0; column-gap: 0; }
+html[data-ui2] .ob .ob-top, html[data-ui2] .ob[data-layout="hero"] .ob-top { position: sticky; top: 0; z-index: 3; flex: none; display: flex; align-items: center; gap: 8px; width: 100%; max-width: none; height: 52px; margin: 0; padding: 8px 20px 0 12px; background: var(--page); }
+html[data-ui2] .ob .ob-back { display: grid; place-items: center; width: 40px; height: 40px; margin: 0; flex: none; border: 1.5px solid var(--line); border-radius: 50%; background: var(--page); color: var(--ink-2); }
+html[data-ui2] .ob .bar { flex: 1; height: 8px; border-radius: 99px; background: var(--well-2); }
+html[data-ui2] .ob .bar-fill { background: var(--act); border-radius: 99px; }
+html[data-ui2] #ob-count { flex: none; font-size: 14px; color: var(--ink-3); white-space: nowrap; }
+html[data-ui2] #ob-count:empty { display: none; }
+html[data-ui2] .t-left, html[data-ui2] #walk .ob-eyebrow { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0; }
+html[data-ui2] .ob .ob-brand { display: none; }
+
+/* ── the giraffe and its bubble ─────────────────────────────── */
+html[data-ui2] .ob .ob-side, html[data-ui2] .ob[data-layout="question"] .ob-side { position: static; flex: none; display: flex; flex-direction: row; align-items: flex-end; justify-content: flex-start; gap: 6px; width: 100%; height: auto; padding: 0 20px 0 14px; background: none; border-bottom: 1px solid var(--line); }
+html[data-ui2] .ob .tutor, html[data-ui2] .ob[data-screen="agree"] .tutor { order: 0; flex: none; width: 116px; height: 120px; }
+html[data-ui2] .ob .tutor-svg { display: block; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+html[data-ui2] .ob .bubble, html[data-ui2] .ob[data-screen="agree"] .bubble { order: 1; flex: 1; align-self: center; min-width: 0; width: auto; max-width: none; min-height: 68px; display: flex; flex-direction: column; justify-content: center; margin: 6px 0 10px; padding: 12px 15px; border: 1.5px solid var(--line); border-radius: 18px; background: var(--page); color: var(--ink); font-size: 20px; font-weight: 700; line-height: 1.26; text-align: left; }
+html[data-ui2] .ob .bubble::before { left: -7.5px; top: calc(50% - 8px); bottom: auto; width: 13px; height: 13px; margin: 0; border: 0; border-left: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line); border-bottom-left-radius: 0; background: var(--page); transform: rotate(45deg); }
+html[data-ui2] #bubble-q { display: block; font-weight: 700; }
+html[data-ui2] #bubble-q:empty { display: none; }
+html[data-ui2] #bubble-q.u2-long { font-size: 17px; }
+/* The question is in the bubble: the heading stays for screen readers and focus, and the giraffe's small talk steps back unless it has something to say that isn't on screen. */
+html[data-ui2] .ob[data-q] h1.ob-q, html[data-ui2] .q-prompt.u2-moved { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+html[data-ui2] .ob[data-q]:not([data-talk]) .bubble-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+html[data-ui2] .ob[data-q][data-talk] .bubble-text { margin-top: 4px; font-size: 16px; font-weight: 400; line-height: 1.3; }
+html[data-ui2] .ob .bubble-text { font-weight: 700; }
+html[data-ui2] .ob[data-talk] .bubble-text { font-weight: 400; font-size: 16px; }
+html[data-ui2] .ob .m { padding: 0; margin: 0; background: none; color: inherit; font-weight: 700; }
+
+/* ── big giraffe: welcome and hello ─────────────────────────── */
+html[data-ui2] .ob[data-layout="hero"] .ob-side { flex: 1 1 0; min-height: 200px; flex-direction: column-reverse; align-items: center; justify-content: flex-end; gap: 8px; padding: 12px 24px 0; border: 0; }
+html[data-ui2] .ob[data-layout="hero"] .tutor, html[data-ui2] .ob[data-screen="welcome"] .tutor { order: 0; flex: 1 1 0; width: 100%; height: auto; min-height: 0; display: flex; align-items: center; justify-content: center; container-type: size; pointer-events: none; }
+html[data-ui2] .ob[data-layout="hero"] .tutor-svg { width: auto; height: min(100cqh, 430px); aspect-ratio: 270 / 425; overflow: visible; pointer-events: auto; }
+html[data-ui2] .ob[data-layout="hero"] .bubble { flex: none; order: 0; align-self: center; width: auto; max-width: 300px; min-height: 0; margin: 12px 0 8px; padding: 14px 22px; text-align: center; font-size: 23px; }
+html[data-ui2] .ob[data-layout="hero"] .bubble::before { left: calc(50% - 6.5px); top: auto; bottom: -7.5px; border: 0; border-right: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line); }
+html[data-ui2] .ob[data-layout="hero"] .bubble .m { display: block; font-size: 23px; line-height: 1.26; }
+html[data-ui2] .ob[data-screen="hello"] .bubble-text { font-weight: 400; font-size: 18px; line-height: 1.3; }
+html[data-ui2] .ob[data-screen="welcome"] .ob-top { justify-content: center; height: 60px; padding-top: 22px; }
+html[data-ui2] .ob[data-screen="welcome"] .bubble { display: none; }
+html[data-ui2] .ob[data-screen="welcome"] .ob-side { padding-top: 16px; }
+html[data-ui2] .ob .ob-wordmark { display: block; }
+html[data-ui2] .ob[data-layout="hero"] .ob-panel { flex: none; padding: 0 24px; text-align: center; }
+html[data-ui2] .ob[data-screen="hello"] .ob-panel { padding: 0; min-height: 0; }
+html[data-ui2] .ob .ob-welcome h1 { margin: 12px 0 0; font: 400 36px/1.1 var(--serif); letter-spacing: -.005em; white-space: nowrap; }
+html[data-ui2] .ob-lead { margin: 6px 0 0; color: var(--ink-2); font-size: 18px; }
+
+/* ── the panel ──────────────────────────────────────────────── */
+html[data-ui2] .ob .ob-panel { flex: 1 0 auto; width: 100%; max-width: none; margin: 0; min-width: 0; padding: 16px 24px 12px; }
+html[data-ui2] h1.ob-q { font: 400 30px/1.12 var(--serif); letter-spacing: -.005em; }
+html[data-ui2] h2.ob-q2 { margin: 18px 0 8px; font-family: var(--font); font-size: 16px; font-weight: 700; letter-spacing: 0; }
+html[data-ui2] .ob-sub { margin: 0 0 10px; color: var(--ink-2); font-size: 16px; }
+html[data-ui2] .ob-body { margin-top: 0; }
+html[data-ui2] .ob-fine { margin-top: 14px; color: var(--ink-3); font-size: 14px; }
+html[data-ui2] .ob-error { border-left: 0; border: 1.5px solid var(--wrong); border-radius: 14px; background: var(--wrong-tint); color: var(--wrong-text); font-size: 15px; }
+
+/* ── options: raised on a 4 px edge, sinking when pressed or picked, tinted when picked ── */
+html[data-ui2] .opts { gap: 14px; }
+html[data-ui2] .opt, html[data-ui2] .t-opt, html[data-ui2] .mini, html[data-ui2] .t-chip { position: relative; border: 1.5px solid var(--line); border-radius: 18px; background: var(--page); color: var(--ink); box-shadow: 0 4px 0 var(--opt-edge); transition: transform .07s, box-shadow .07s; animation: none; }
+html[data-ui2] .opt:hover, html[data-ui2] .t-opt:hover, html[data-ui2] .mini:hover, html[data-ui2] .t-chip:hover { border-color: var(--line); }
+html[data-ui2] .opt:active, html[data-ui2] .t-opt:active, html[data-ui2] .mini:active, html[data-ui2] .t-chip:active { transform: translateY(4px); margin: 0; border-bottom-width: 1.5px; box-shadow: none; }
+html[data-ui2] .opt { display: flex; align-items: center; gap: 14px; min-height: 86px; padding: 18px 44px 18px 18px; }
+html[data-ui2] .opt-icon { width: auto; height: auto; border-radius: 0; background: none; color: var(--ink-2); transform: none !important; }
+html[data-ui2] .opt-icon svg { display: block; width: 26px; height: 26px; }
+html[data-ui2] .opt-title { font-weight: 700; font-size: 18px; }
+html[data-ui2] .opt-sub { color: var(--ink-2); font-size: 15px; }
+html[data-ui2] .opt-tick { display: none; position: absolute; right: 12px; top: 50%; margin-top: -12px; width: 24px; height: 24px; border: 0; border-radius: 50%; background: var(--act); transform: none !important; }
+html[data-ui2] .opt-tick svg { width: 15px; height: 15px; }
+html[data-ui2] .opt:has(input:checked), html[data-ui2] .opt.is-on { background: var(--act-tint); border-color: var(--act); color: var(--act-text); box-shadow: 0 0 0 .5px var(--act); transform: translateY(4px); animation: none; }
+html[data-ui2] .opt:has(input:checked) .opt-title, html[data-ui2] .opt.is-on .opt-title, html[data-ui2] .opt:has(input:checked) .opt-icon, html[data-ui2] .opt.is-on .opt-icon { color: var(--act-text); background: none; }
+html[data-ui2] .opt:has(input:checked) .opt-sub, html[data-ui2] .opt.is-on .opt-sub { color: var(--ink-2); }
+html[data-ui2] .opt:has(input:checked) .opt-tick, html[data-ui2] .opt.is-on .opt-tick { display: grid; place-items: center; background: var(--act); border: 0; }
+
+/* Subjects: two across. The tick; a number once there are several, because the first is where they start. */
+html[data-ui2] .subjects { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+html[data-ui2] .subject { gap: 10px; min-height: 56px; height: 56px; padding: 0 12px 0 14px; }
+html[data-ui2] .subject .opt-icon { width: auto; height: auto; color: var(--subject, var(--ink-2)); }
+html[data-ui2] .subject .opt-icon svg { width: 21px; height: 21px; }
+html[data-ui2] .subject .opt-title { font-size: 16.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html[data-ui2] .subject .opt-sub { display: none; }
+html[data-ui2] .subject .opt-tick { display: none; }
+html[data-ui2] .subject:has(input:checked), html[data-ui2] .subject.is-on { padding-right: 34px; }
+html[data-ui2] .subject:has(input:checked) .opt-tick, html[data-ui2] .subject.is-on .opt-tick { display: grid; place-items: center; }
+html[data-ui2] .subject[data-order]::after { display: none; }
+html[data-ui2] .u2-many .subject[data-order] .opt-tick { display: none; }
+html[data-ui2] .u2-many .subject[data-order]::after { content: attr(data-order); display: grid; place-items: center; position: absolute; top: 50%; right: 12px; margin-top: -12px; width: 24px; height: 24px; border-radius: 50%; background: var(--act); color: var(--on-mark); font: 700 13px/1 var(--font); animation: none; }
+
+/* Interests. */
+html[data-ui2] .tiles { gap: 10px; }
+html[data-ui2] .tile { min-height: 96px; padding: 12px 4px; gap: 6px; }
+html[data-ui2] .tile .opt-title { font-size: 14.5px; font-weight: 700; }
+html[data-ui2] .tile .opt-tick { top: 6px; right: 6px; margin: 0; width: 20px; height: 20px; }
+html[data-ui2] .tile .opt-tick svg { width: 12px; height: 12px; }
+
+/* Grade and placement rows, and lists of answers. */
+html[data-ui2] .way .opt { min-height: 86px; padding: 18px 44px 18px 18px; }
+html[data-ui2] .way .opt-icon { width: auto; height: auto; }
+html[data-ui2] .way .opt-icon svg { width: 26px; height: 26px; }
+html[data-ui2] .choice { min-height: 56px; padding: 12px 44px 12px 16px; }
+html[data-ui2] .choice .opt-title { font-size: 16.5px; }
+/* Short answers: the mockup's big tiles, with the mark in the corner. */
+html[data-ui2] .opts.u2-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 8px; }
+html[data-ui2] .u2-tiles .choice { min-height: 118px; padding: 12px 8px; justify-content: center; text-align: center; }
+html[data-ui2] .u2-tiles .opt-text { flex: none; }
+html[data-ui2] .u2-tiles .opt-title { font: 400 32px/1 var(--serif); }
+html[data-ui2] .u2-tiles .opt-tick { top: 10px; right: 10px; margin: 0; }
+html[data-ui2] .agree-opts { gap: 10px; margin-bottom: 12px; }
+html[data-ui2] .agree-opts .opt { min-height: 52px; padding: 6px 44px 6px 16px; }
+
+/* ── fields ─────────────────────────────────────────────────── */
+html[data-ui2] .field-label { font-weight: 700; font-size: 16px; }
+html[data-ui2] .input, html[data-ui2] .select { height: 56px; border: 1.5px solid var(--line-strong); border-radius: 16px; background-color: var(--page); color: var(--ink); font-size: 17px; }
+html[data-ui2] .input:hover, html[data-ui2] .select:hover { border-color: var(--ink-3); }
+html[data-ui2] .input:focus, html[data-ui2] .select:focus { border-color: var(--act); box-shadow: 0 0 0 1.5px var(--act); }
+html[data-ui2] .pw-toggle { top: 6px; }
+
+/* ── the foot: the main action, full pill, 6 px edge ───────── */
+html[data-ui2] .ob .ob-foot, html[data-ui2] .ob[data-layout="hero"] .ob-foot { position: sticky; bottom: 0; z-index: 3; flex: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; width: 100%; max-width: none; margin: 0; padding: 12px 24px max(20px, env(safe-area-inset-bottom)); background: var(--page); }
+html[data-ui2] .ob .btn, html[data-ui2] .ob .ob-foot .btn, html[data-ui2] .ob[data-layout="hero"] .ob-foot .btn, html[data-ui2] .t-go { display: flex; align-items: center; justify-content: center; width: 100%; min-width: 0; min-height: 56px; height: 56px; margin: 0 0 6px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--act); color: var(--on-act); box-shadow: 0 6px 0 var(--act-edge); font: 700 18px/1 var(--font); letter-spacing: 0; transition: transform .07s, box-shadow .07s; }
+html[data-ui2] .ob .btn:hover:not(:disabled) { background: var(--act-hover); }
+html[data-ui2] .ob .btn:active:not(:disabled) { transform: translateY(6px); box-shadow: none; }
+html[data-ui2] .ob .btn:disabled { background: var(--well-2); color: var(--ink-3); box-shadow: none; transform: none; }
+html[data-ui2] .ob .ob-foot .link-btn, html[data-ui2] .ob[data-layout="hero"] .ob-foot .link-btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 56px; margin: 0 0 6px; padding: 6px 14px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--page); color: var(--ink); font: 700 17px/1.1 var(--font); text-align: center; text-decoration: none; }
+html[data-ui2] .ob .ob-foot .link-btn:active { background: var(--well); }
+html[data-ui2] .ob .link-btn.quiet { width: auto; margin: 16px 0 0; padding: 8px 0; min-height: 40px; color: var(--ink-2); font-size: 15px; font-weight: 400; }
+html[data-ui2] .ob[data-foot="two"] .ob-foot { grid-template-columns: 116px minmax(0, 1fr); column-gap: 10px; }
+html[data-ui2] .ob[data-foot="two"] #err, html[data-ui2] .ob[data-foot="two"] #foot-extra { grid-column: 1 / -1; }
+html[data-ui2] .ob[data-foot="two"] #foot-extra:empty { display: none; }
+html[data-ui2] .ob[data-foot="two"] #alt { order: 1; }
+html[data-ui2] .ob[data-foot="two"] #next { order: 2; }
+html[data-ui2] #foot-extra:empty { display: none; }
+
+/* ── the short test ─────────────────────────────────────────── */
+html[data-ui2] .facts { gap: 16px; }
+html[data-ui2] .fact { font-weight: 400; }
+html[data-ui2] .fact .opt-icon { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; background: var(--well); }
+html[data-ui2] .fact .opt-icon svg { width: 20px; height: 20px; }
+html[data-ui2] .q-prompt { font-size: 22px; font-weight: 700; letter-spacing: 0; }
+html[data-ui2] .t-btns { gap: 14px; margin-top: 16px; }
+html[data-ui2] .t-opt { min-height: 72px; padding: 14px 18px; font-size: 16.5px; }
+html[data-ui2] .t-opt.is-picked, html[data-ui2] .t-opt[aria-pressed="true"] { background: var(--act-tint); border-color: var(--act); color: var(--act-text); box-shadow: 0 0 0 .5px var(--act); transform: translateY(4px); animation: none; }
+html[data-ui2] .t-btns.big .t-opt { min-height: 118px; font-size: 22px; }
+html[data-ui2] .t-btns.one .t-opt, html[data-ui2] .t-btns.go .t-opt { justify-content: center; min-height: 56px; height: 56px; margin-bottom: 6px; border: 0; border-radius: 999px; background: var(--act); color: var(--on-act); box-shadow: 0 6px 0 var(--act-edge); font: 700 18px/1 var(--font); }
+html[data-ui2] .t-btns.one .t-opt:hover, html[data-ui2] .t-btns.go .t-opt:hover { background: var(--act-hover); }
+html[data-ui2] .t-btns.one .t-opt:active, html[data-ui2] .t-btns.go .t-opt:active { transform: translateY(6px); box-shadow: none; }
+html[data-ui2] .t-key { background: var(--well); }
+html[data-ui2] .t-pair, html[data-ui2] .t-read, html[data-ui2] .t-side { background: var(--well); border-radius: 18px; }
+html[data-ui2] .t-box.is-blue { background: var(--task-blue); color: var(--on-task-blue); }
+html[data-ui2] .t-box.is-orange { background: var(--task-orange); color: var(--on-task-orange); }
+html[data-ui2] .t-time-track { background: var(--well-2); }
+html[data-ui2] .t-time-fill { background: var(--act); }
+html[data-ui2] .ob[data-focus] .ob-panel { padding-top: 8px; }
+
+/* ── result, building, first lesson ─────────────────────────── */
+html[data-ui2] .scale-line { background: var(--well-2); }
+html[data-ui2] .scale-fill { background: var(--act); }
+html[data-ui2] .scale-you b, html[data-ui2] .scale-you i { background: var(--act); color: var(--on-act); }
+html[data-ui2] .step { color: var(--ink-3); }
+html[data-ui2] .step-dot { border-width: 2px; border-color: var(--line-strong); }
+html[data-ui2] .step.is-now, html[data-ui2] .step.is-done { color: var(--ink); font-weight: 700; }
+html[data-ui2] .step.is-now .step-dot { border-color: var(--act); border-right-color: transparent; }
+html[data-ui2] .step.is-done .step-dot { background: var(--act); border-color: var(--act); }
+html[data-ui2] .step-dot svg { stroke: var(--on-mark); }
+html[data-ui2] .ob-view .lesson-card { margin-top: 0; padding: 20px; border: 1.5px solid var(--line); border-radius: 18px; background: var(--page); color: var(--ink); box-shadow: 0 4px 0 var(--opt-edge); animation: none; }
+html[data-ui2] .lesson-card .lc-tag { color: var(--ink-2); font-weight: 400; }
+html[data-ui2] .lesson-card .lc-tag span { width: auto; height: auto; border-radius: 0; background: none; color: var(--act); }
+html[data-ui2] .lesson-card h2 { font: 400 32px/1.1 var(--serif); letter-spacing: -.005em; }
+html[data-ui2] .parent-note { background: var(--well); border-radius: 16px; }
+html[data-ui2] .spots i, html[data-ui2] .spots i:nth-child(3n) { background: var(--act); }
+html[data-ui2] .spots i:nth-child(3n) { background: var(--sun-coat); }
+
+/* The tutor's own small bar and giraffe stay out of the way here: the big one takes the press. In a call, its word shows at the top. */
+html[data-ui2] .tdock-bar { position: fixed; top: 6px; right: 8px; z-index: 40; padding: 0; background: none; border: 0; }
+html[data-ui2]:not(.tdock-in-call) .tdock-bar { position: absolute; width: 0; height: 0; overflow: hidden; visibility: hidden; }
+
+/* ── tablet and desktop: one centred column ─────────────────── */
+@media (min-width: 768px) {
+  html[data-ui2] .ob, html[data-ui2] .ob[data-layout="hero"], html[data-ui2] .ob[data-layout="question"] { max-width: none; }
+  html[data-ui2] .ob .ob-side, html[data-ui2] .ob .ob-panel, html[data-ui2] .ob .ob-foot, html[data-ui2] .ob[data-layout="hero"] .ob-panel, html[data-ui2] .ob[data-layout="hero"] .ob-foot { width: 100%; max-width: 640px; margin-left: auto; margin-right: auto; }
+  html[data-ui2] .ob .bar { max-width: 420px; margin: 0 auto; }
+  html[data-ui2] .ob[data-layout="question"] .ob-top::after { content: ""; width: 40px; flex: none; }
+  html[data-ui2] #ob-count:not(:empty) { position: absolute; right: 20px; }
+  /* The block sits in the middle of the room, the button straight under the options. */
+  html[data-ui2] .ob[data-layout="question"] .ob-side { margin-top: auto; align-items: center; gap: 12px; padding: 0 24px 8px; border-bottom: 0; }
+  html[data-ui2] .ob .tutor, html[data-ui2] .ob[data-screen="agree"] .tutor { width: 140px; height: 220px; }
+  html[data-ui2] .ob[data-layout="question"] .bubble { flex: 0 1 auto; max-width: 420px; }
+  html[data-ui2] .ob[data-layout="question"] .ob-panel { flex: none; }
+  html[data-ui2] .ob .ob-foot, html[data-ui2] .ob[data-layout="hero"] .ob-foot { position: static; justify-items: center; margin-bottom: auto; padding-top: 4px; }
+  html[data-ui2] .ob .ob-foot .btn, html[data-ui2] .ob[data-layout="hero"] .ob-foot .btn, html[data-ui2] .ob .ob-foot .link-btn, html[data-ui2] .ob[data-layout="hero"] .ob-foot .link-btn { width: 100%; max-width: 360px; min-width: 260px; margin-left: auto; margin-right: auto; }
+  html[data-ui2] .ob[data-foot="two"] .ob-foot { grid-template-columns: 116px minmax(260px, 300px); justify-content: center; }
+  html[data-ui2] .ob[data-foot="two"] .ob-foot .link-btn { min-width: 0; }
+  html[data-ui2] .ob[data-layout="hero"] .ob-side { max-width: 640px; flex: 1 1 0; }
+  html[data-ui2] .ob[data-layout="hero"] .ob-foot { margin-bottom: 0; padding-bottom: 28px; }
+  html[data-ui2] .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  html[data-ui2] .t-btns.two, html[data-ui2] .t-btns.grid { max-width: 640px; }
+}
+@media (min-width: 1025px) {
+  html[data-ui2] .ob .ob-side, html[data-ui2] .ob .ob-panel, html[data-ui2] .ob .ob-foot, html[data-ui2] .ob[data-layout="hero"] .ob-panel, html[data-ui2] .ob[data-layout="hero"] .ob-foot { max-width: 960px; }
+  html[data-ui2] .ob[data-layout="hero"] .ob-side { max-width: 960px; }
+  html[data-ui2] .how { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  html[data-ui2] .how .opt { flex-direction: column; align-items: flex-start; min-height: 160px; padding: 22px 20px; }
+  html[data-ui2] .how .opt-tick { top: 12px; margin: 0; }
+  html[data-ui2] .subjects { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  html[data-ui2] .subject, html[data-ui2] .subject:has(input:checked), html[data-ui2] .subject.is-on { flex-direction: column; align-items: flex-start; justify-content: center; height: auto; min-height: 112px; padding: 16px; }
+  html[data-ui2] .subject .opt-title { font-size: 16px; white-space: normal; }
+  html[data-ui2] .subject .opt-tick, html[data-ui2] .u2-many .subject[data-order]::after { top: 10px; right: 10px; margin: 0; }
+  html[data-ui2] .opts.u2-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  html[data-ui2] .way { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html[data-ui2] .tiles { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  html[data-ui2] .ob .agree-opts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html[data-ui2] .ob .ob-welcome h1 { font-size: 52px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui2] .opt, html[data-ui2] .t-opt, html[data-ui2] .btn { transition: none; }
+}

@@ -60,6 +60,8 @@ function cleanAnswers(raw, { child = false } = {}) {
   const known = new Set(require('../config/curriculum').catalogue().map((t) => t.id));
   if (Array.isArray(r.tracks)) out.tracks = [...new Set(r.tracks.map(String).filter((t) => known.has(t)))].slice(0, MAX_TRACKS);
   if (typeof r.notes === 'boolean') out.notes = !child && r.notes;
+  // "How do you want to learn?" (UI_V2 only: docs/ONBOARDING-V2.md). A child account can't upload, so it never has an answer here.
+  if (!child && ['curriculum', 'own', 'both'].includes(r.how)) out.how = r.how;
   if (WHY.includes(r.why)) out.why = r.why;
   const goals = require('./retention-goal');
   if (goals.CHOICES.includes(r.horizon)) out.horizon = r.horizon;
@@ -200,7 +202,7 @@ function stateFor(req) {
       nickname: child ? user.display_name : null,
       consent: c.publicConsent(user).consent,
       answers: {
-        tracks: row.tracks || [], notes: !!row.notes, why: row.why || null, horizon: row.horizon || null, test_date: row.test_date || null, interest: row.interest || null, interests: row.interests || (row.interest ? [row.interest] : []), interest_text: row.interest_text || '', test_skipped: !!row.test_skipped,
+        tracks: row.tracks || [], notes: !!row.notes, how: row.how || null, why: row.why || null, horizon: row.horizon || null, test_date: row.test_date || null, interest: row.interest || null, interests: row.interests || (row.interest ? [row.interest] : []), interest_text: row.interest_text || '', test_skipped: !!row.test_skipped,
       },
       test: testState(user),
       enrollment: e && e.user_id === user.id ? enrollmentView(user, e) : null,
