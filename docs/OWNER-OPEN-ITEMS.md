@@ -17,9 +17,11 @@ Things put off or waiting for a decision. Nothing here is forgotten or solved. U
 | iOS and Play Store apps | At or soon after public launch, if funded. |
 | High-stakes subjects (medicine, law, finance) | Likely AI plus a disclaimer. Not settled. |
 | Selling anonymized research data | "May be OK", maybe never for minors. Not settled. |
-| Later features | Voice tutor, study groups, leaderboards, other languages, credentials. |
+| After design: study groups and leaderboards | Owner, 6 Nov: build once design is done. Study groups: chat online or offline and see what members are actively doing. Leaderboards: across friends and across study groups. |
+| Other languages, credentials | Put off. |
+| Voice tutor | Owner expects it to exist already; check it works end to end. |
 | Free-skip rule | Exact rule not set. |
-| Name | "Savant" was a leading candidate; savant.com is taken. |
+| savant.edu or own accreditation | Owner, 6 Nov: name is Savant, domain savantedu.com. Plan: partner with a school to get savant.edu, or get accredited. |
 
 ## Waiting on a decision
 | Decision | My recommendation |

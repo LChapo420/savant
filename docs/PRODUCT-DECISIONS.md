@@ -169,3 +169,6 @@ Every part of lessons and other material should be changeable and follow the lea
 
 ## Fact checking (owner, 2026-11-06)
 Everything Savant makes and puts out is 100% fact checked before it is shown. "100% fact checked" and "100% true" are different things: the first is the standard and may be claimed, the second may not.
+
+## Name, domain and after design (owner, 2026-11-06)
+The name is Savant; the domain is savantedu.com. Goal: savant.edu through a partner school, or Savant's own accreditation. After the design work: study groups (chat online or offline, see what members are actively doing) and leaderboards across friends and across study groups. Other languages and credentials are put off. The voice tutor should already exist.
