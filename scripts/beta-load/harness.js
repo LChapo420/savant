@@ -10,7 +10,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 const ROOT = path.join(__dirname, '..', '..');
-const LIVE_DATA = 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data';
+const LIVE_DATA = process.env.BETA_LOAD_LEDGER_SOURCE || 'C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data';
 const LEDGERS = ['anthropic', 'coral', 'gladia', 'gonka', 'grokified', 'lyceum', 'munito', 'standard-compute', 'zerogpu', 'llmgateway'];
 const STUBBED = ['GONKA', 'MUNITO', 'CORAL', 'GROKIFIED', 'LYCEUM', 'ZEROGPU'];
 

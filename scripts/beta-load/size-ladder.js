@@ -2,7 +2,9 @@
 /**
  * What a bigger store does: boot, memory, one save, and how requests feel with a few learners on it. Measured on this PC.
  *
- *   node scripts/beta-load/size-ladder.js --db <grown file> [--driver json|sqlite] [--learners 30] [--seconds 90] [--heap 4096] [--port 7910] [--think 8000]
+ *   node scripts/beta-load/size-ladder.js --db <grown file> [--driver json|sqlite] [--learners 30] [--seconds 90] [--heap 4096] [--port 7910] [--think 8000] [--sqlite-file <grown file>]
+ *
+ * --sqlite-file: a store already on SQLite, for sizes JSON cannot hold (grow-db.js --sqlite). --no-heap leaves Node's default heap limit.
  *
  * Prints one JSON line. A store too big to save, or to boot, says so.
  */
@@ -14,22 +16,28 @@ const { Learner } = require('./learner');
 
 const args = process.argv.slice(2);
 const flag = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : d; };
-const DB = path.resolve(flag('db'));
-const DRIVER = flag('driver', 'json');
+const SQLITE_FILE = flag('sqlite-file') ? path.resolve(flag('sqlite-file')) : null;
+const DB = SQLITE_FILE || path.resolve(flag('db'));
+const DRIVER = flag('sqlite-file') ? 'sqlite' : flag('driver', 'json');
 const N = Number(flag('learners', 30));
 const SECONDS = Number(flag('seconds', 90));
 const PORT = Number(flag('port', 7910));
 const THINK = Number(flag('think', 8000));
 const HEAP = flag('heap', '4096');
+const heapArgs = args.includes('--no-heap') ? [] : [`--max-old-space-size=${HEAP}`];
 
 (async () => {
   const dir = h.runDir(`ladder-${DRIVER}`);
   const dbFile = path.join(dir, 'db.json');
-  const out = { measured_on: 'this PC', driver: DRIVER, file_mb: Math.round(fs.statSync(DB).size / 1048576), learners_on_it: N };
-  fs.copyFileSync(DB, dbFile);
+  const out = { measured_on: process.env.MEASURED_ON || 'this PC', driver: DRIVER, file_mb: Math.round(fs.statSync(DB).size / 1048576), learners_on_it: N };
+  if (!SQLITE_FILE) fs.copyFileSync(DB, dbFile);
   h.copyLedgers(dir);
   const extra = { WRITE_AHEAD: 'off' };
-  if (DRIVER === 'sqlite') {
+  if (SQLITE_FILE) {
+    const sqlite = path.join(dir, 'db.sqlite');
+    fs.copyFileSync(SQLITE_FILE, sqlite);
+    Object.assign(extra, { DB_DRIVER: 'sqlite', DB_SQLITE_FILE: sqlite });
+  } else if (DRIVER === 'sqlite') {
     const sqlite = path.join(dir, 'db.sqlite');
     Object.assign(extra, { DB_DRIVER: 'sqlite', DB_SQLITE_FILE: sqlite });
     const t0 = Date.now();
@@ -40,7 +48,7 @@ const HEAP = flag('heap', '4096');
   const stub = h.startStub(PORT + 1, { latency: 800, jitter: 1200, dir });
   const env = h.serverEnv({ dir, port: PORT, stubPort: PORT + 1, dbFile, extra });
   const t0 = Date.now();
-  const srv = await h.startServer(env, { nodeArgs: [`--max-old-space-size=${HEAP}`], timeoutMs: 600000 }).catch((e) => ({ failed: e.message }));
+  const srv = await h.startServer(env, { nodeArgs: heapArgs, timeoutMs: 600000 }).catch((e) => ({ failed: e.message }));
   out.boot_ms = Date.now() - t0;
   if (srv.failed || srv.exited) {
     out.boot_failed = srv.failed || srv.exited;

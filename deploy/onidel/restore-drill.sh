@@ -162,7 +162,7 @@ step "compare counts after the instance stopped" "$T"
 # --- what a damaged, wrong-owner or missing ledger does. All on the copy, nothing is called: only the ledger's own check.
 ledger_check() { as_savant bash -c "cd '$DRILL/app' && MUNITO_LEDGER_FILE='$1' node --no-warnings -e \"
   const l=require('./services/munito-ledger');
-  try { const id=l.reserve({usd:0.01,task:'drill',model:'x'}); console.log('  a call would go ahead; settled so far \$'+l.status().settled_usd); } catch (e) { console.log('  refused: '+e.message.slice(0,110)); }\""; }
+  try { const id=l.reserve({usd:0.01,task:'drill',model:'x'}); console.log('  a call would go ahead; settled so far '+JSON.stringify(l.status()).slice(0,60)); } catch (e) { console.log('  refused: '+e.message.slice(0,110)); }\""; }
 if [ -f "$DRILL/app/data/munito-ledger.json" ]; then
   echo "ledger failure modes (munito, on the copy):"
   L="$DRILL/app/data/munito-ledger.json"; P="$DRILL/tmp/probe-ledger.json"
