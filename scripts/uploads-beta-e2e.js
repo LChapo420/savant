@@ -27,6 +27,7 @@ if (MODE === 'real') {
 }
 if (MODE !== 'report') {
   process.env.UPLOAD_PARTS = 'on'; process.env.UPLOAD_PARTS_FOLLOW = 'on'; process.env.UPLOAD_OPTIMIZE = 'on'; process.env.UPLOAD_GOALS = 'on';
+  process.env.UPLOAD_OWN_BUDGET = process.env.UPLOAD_OWN_BUDGET || 'on';
   process.env.UPLOAD_PARTS_FOLLOW_BG = 'off'; // the background rewrite is its own test (material-parts-test, learners gate): here each read must show only the change just asked for
   process.env.DB_FILE = path.join(os.tmpdir(), `uploads-beta-e2e-${process.pid}.json`);
   process.env.COST_TRACKER_DIR = path.join(os.tmpdir(), `uploads-beta-e2e-cost-${process.pid}`);
@@ -110,12 +111,23 @@ function newLearner(c, i) {
 async function readPart(uid, mid, ref, ctx) {
   const [kind, a, b] = ref.split(':');
   if (kind === 'lesson') { const r = await call('GET', `/api/materials/${mid}/study/lesson/${a}`, uid); const l = r.json.skill.lesson; return JSON.stringify([l.paragraphs, l.key_points]); }
-  if (kind === 'q') { const r = await call('POST', `/api/materials/${mid}/test`, uid, { skills: [a], length: 40 }); const q = (r.json.questions || []).find((x) => x.id === b); ctx.lastQ = q; return JSON.stringify(q ? [q.prompt, q.choices] : null); }
+  if (kind === 'q') {
+    // The wording from a test, and the explanation from that test's review of a miss: the routes a learner meets them on.
+    const r = await call('POST', `/api/materials/${mid}/test`, uid, { skills: [a], length: 40 });
+    const q = (r.json.questions || []).find((x) => x.id === b);
+    let exp = null;
+    if (r.json.test_id) { const s = await call('POST', `/api/materials/${mid}/test/submit`, uid, { test_id: r.json.test_id, answers: {} }); const m = (s.json.remediation || []).find((x) => x.id === b); exp = m ? m.explanation : null; }
+    ctx.lastQ = q; return JSON.stringify(q ? [q.prompt, q.choices, exp] : null);
+  }
   if (kind === 'card') { const r = await call('GET', `/api/materials/${mid}/cards`, uid); const c = r.json.cards.find((x) => x.id === a); return JSON.stringify(c ? [c.front, c.back] : null); }
   if (kind === 'note') { const r = await call('GET', `/api/materials/${mid}/notes`, uid); const s = r.json.notes.sections.find((x) => x.id === a); return JSON.stringify(s ? [s.heading, s.bullets.map((x) => x.text)] : null); }
   if (kind === 'summary') { const r = await call('GET', `/api/materials/${mid}/pack`, uid); return JSON.stringify(r.json.pack.summary); }
   if (kind === 'packcard') { const r = await call('GET', `/api/materials/${mid}/pack`, uid); const c = r.json.pack.cards.find((x) => x.id === a); return JSON.stringify(c ? [c.front, c.back] : null); }
-  if (kind === 'pack') { const r = await call('GET', `/api/materials/${mid}/pack`, uid); const q = (r.json.pack[a] || []).find((x) => x.id === b); return JSON.stringify(q ? [q.prompt, q.choices] : null); }
+  if (kind === 'pack') {
+    const r = await call('GET', `/api/materials/${mid}/pack`, uid); const q = (r.json.pack[a] || []).find((x) => x.id === b);
+    const g = await call('POST', `/api/materials/${mid}/pack/grade`, uid, { section: a, answers: {} }); const m = (g.json.results || []).find((x) => x.id === b);
+    return JSON.stringify(q ? [q.prompt, q.choices, m ? m.explanation : null] : null);
+  }
   if (kind === 'podcast') { const r = await call('GET', `/api/materials/${mid}/podcast`, uid); return JSON.stringify(((r.json[a] || {}).turns || []).map((t) => t.text)); }
   return '';
 }

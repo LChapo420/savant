@@ -803,7 +803,7 @@ async function followPart(userId, materialId, ref, opts = {}) {
   if (!base) return { skipped: 'no part' };
   const { asked, topic } = asksFromSpec(spec, base.kind);
   if (!asked.length) { if (row) lazy('../config/db').remove(COLLECTION, (r) => r.id === row.id); return { skipped: 'nothing to ask' }; }
-  if (!opts.llm) { try { if (!lazy('./ai').budgetShareLeft(userId, 0.5)) return { skipped: 'budget' }; } catch { return { skipped: 'budget' }; } }
+  if (!opts.llm) { try { if (!lazy('./ai').uploadShareLeft(userId, 0.5)) return { skipped: 'budget' }; } catch { return { skipped: 'budget' }; } }
   return change(userId, materialId, ref, asked[asked.length - 1], { ...opts, asked: asked.filter((a) => a !== 'worked' || asked.includes('examples')), topic, origin: 'follow', sig: now });
 }
 /** Fire and forget from a route: follow these parts, one at a time, up to the day's limit. Never throws, never waits. */
