@@ -32,7 +32,7 @@ const COMPUTED = new Set(['formula', 'computation']);
     const t1 = Date.now(); let cost = r.cost || 0;
     const facts = r.claims.filter((c) => FACT_TYPES.has(c.type));
     const res = [];
-    await L.runPool(facts, 3, async (c) => {
+    await L.runPool(facts, 2, async (c) => {
       const row = { text: c.text, type: c.type, where: c.where, status: 'read-only', source: null };
       try {
         const docs = [];
