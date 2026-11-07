@@ -3,6 +3,8 @@
  *
  *   FACT_GATE=on     a shared (base) level is read by this gate instead of the claim read; a level for a learner keeps today's read, so nobody waits on it
  *   FACT_GATE=off    (default) nothing changes
+ *   FACT_COMPUTE=on  (default off) adds the SymPy layer on math levels; FACT_COMPUTE_MODEL names its transcriber as provider:model
+ *   FACT_CONFIRM=on  (default off) a flag stands only if three model families believe it; the rest change nothing and go to the log (services/fact-confirm.js)
  *
  * One read, three stages:
  *   1. the code pass (services/fact-code-checks.js): free, 20 ms, recomputes what can be recomputed. Its findings go to the decider with the rest: on 6,346 unseen stored rows its first
@@ -13,6 +15,8 @@
  * ZeroGPU fail often when busy). If the first reader still cannot answer, the level has not been read (null, no keep on a weaker read: grok-4.3 alone caught 73% against the pair's 96%). Every call goes through its provider's own ledger.
  */
 const code = require('./fact-code-checks');
+const compute = require('./fact-compute');
+const confirm = require('./fact-confirm');
 
 const HUNT_SYSTEM = `You check a lesson for errors before it reaches a learner. You get the subject, grade and level, then every block and graded check as JSON. Many lessons have no errors at all, and a false alarm costs real money. Report only what is actually wrong.
 
@@ -109,21 +113,47 @@ async function read({ context, blocks, checks, excludeFamilies = null, call = de
   };
   const replies = await Promise.all(use.map((slot) => tries(slot, { system: HUNT_SYSTEM, user, schema: HUNT_SCHEMA, schemaName: 'submit_errors', maxTokens: 12000 })));
   if (!replies[0] || !replies[0].data) return null;
-  replies.forEach((r) => {
+  replies.forEach((r, n) => {
     if (!r || !r.data) { stages.failedReaders++; return; }
     stages.read++;
     add(r);
+    const family = FAMILY(use[n].model);
     for (const e of r.data.errors || []) {
-      const f = { where: String(e.where || ''), claim: String(e.quote || ''), why: String(e.why || ''), truth: String(e.truth || '') };
-      if (placeKey(f.where) && !retracted(f) && !seen.has(flagKey(f))) seen.set(flagKey(f), f);
+      const f = { where: String(e.where || ''), claim: String(e.quote || ''), why: String(e.why || ''), truth: String(e.truth || ''), raisers: [family] };
+      if (!placeKey(f.where) || retracted(f)) continue;
+      if (seen.has(flagKey(f))) { const had = seen.get(flagKey(f)); if (!had.raisers.includes(family)) had.raisers.push(family); } else seen.set(flagKey(f), f);
     }
   });
   if (!stages.read) return null;
+  // FACT_COMPUTE=on, math only: a cheap model transcribes the lesson's assertions and SymPy works them out (services/fact-compute.js). Its findings go to the decider with the rest; if it cannot run, the read stands without it.
+  if (compute.isOn() && (trackId || context.trackId) === 'math') {
+    const slot = parseSlots(process.env.FACT_COMPUTE_MODEL || 'coral:deepseek-v4.1-flash')[0];
+    try {
+      const c = await compute.check({ context, blocks, checks, call: async (system, u, schema, schemaName, maxTokens) => { const r = await tries(slot, { system, user: u, schema, schemaName, maxTokens }); if (!r || !r.data) throw new Error('compute model did not answer'); add(r); return { data: r.data, cost: 0 }; } });
+      stages.compute = c.flags.length;
+      suspects.push(...c.flags);
+    } catch { stages.compute = null; }
+  }
   for (const s of [...suspects, ...certain]) if (!seen.has(flagKey(s))) seen.set(flagKey(s), { where: s.where, claim: s.claim, why: `${s.rule}${s.certain ? ' (recomputed by code)' : ''}`, truth: s.truth, code: !!s.certain });
   const raised = [...seen.values()];
   stages.raised = raised.length;
   let kept = raised;
-  if (raised.length && decider) {
+  if (raised.length && confirm.isOn()) {
+    // FACT_CONFIRM=on (default off): a flag is a suspicion. It stands only if three model families believe it, counting those that raised it (docs/FACT-100.md: 70 of 71 planted catches kept, clean levels flagged 19% to 8%).
+    // A flag nothing confirms changes nothing: the part stays and the flag goes to the log. A ruler that cannot answer does not count, so a provider outage means more stays, never less.
+    const list = raised.map((f, i) => `FLAG ${i} at ${f.where}: "${f.claim.slice(0, 300)}" — ${f.why.slice(0, 300)} ${f.truth ? `(suggested truth: ${f.truth.slice(0, 200)})` : ''}`).join('\n');
+    const rulers = parseSlots(process.env.FACT_CONFIRM_RULERS || 'coral:deepseek-v4.1-flash,munito:zai-org/glm-5.3-flash,grokified:grok-4.3');
+    const answers = await Promise.all(rulers.map(async (slot) => { const r = await tries(slot, { system: DECIDE_SYSTEM, user: `${user}\n\nFLAGS\n${list}`, schema: DECIDE_SCHEMA, schemaName: 'submit_rulings', maxTokens: 6000 }); if (r && r.data) add(r); return { family: FAMILY(slot.model), rulings: (r && r.data && r.data.rulings) || [] }; }));
+    const raiserFamilies = use.map((slot) => FAMILY(slot.model));
+    kept = raised.filter((f, i) => {
+      const rulings = {};
+      for (const a of answers) { const q = a.rulings.find((x) => Number(x.flag) === i) || a.rulings[i]; if (q) rulings[a.family] = q.real !== false; }
+      const verdict = confirm.decide({ raisers: f.raisers && f.raisers.length ? f.raisers : (f.code ? ['code'] : raiserFamilies.slice(0, 1)), rulings, source: null, recompute: null }, 'three_families');
+      if (!verdict.act) { try { confirm.logFlag({ context: typeof context === 'string' ? context : context.text, where: f.where, claim: f.claim, why: f.why, rulings }); } catch { /* the log never stops a read */ } }
+      return verdict.act;
+    });
+    stages.unconfirmed = raised.length - kept.length;
+  } else if (raised.length && decider) {
     const list = raised.map((f, i) => `FLAG ${i} at ${f.where}: "${f.claim.slice(0, 300)}" — ${f.why.slice(0, 300)} ${f.truth ? `(suggested truth: ${f.truth.slice(0, 200)})` : ''}`).join('\n');
     const r = await tries(decider, { system: DECIDE_SYSTEM, user: `${user}\n\nFLAGS\n${list}`, schema: DECIDE_SCHEMA, schemaName: 'submit_rulings', maxTokens: 12000 });
     if (r && r.data) {

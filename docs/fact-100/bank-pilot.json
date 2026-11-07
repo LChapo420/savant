@@ -1,0 +1,3700 @@
+{
+ "built": "2026-11-07",
+ "note": "A pilot, not a shipped bank. AI-judged. Nothing here is used by the app.",
+ "levels": {
+  "math/algebra_1_part_a/380": {
+   "facts": 48,
+   "tally": {
+    "read-only": 27,
+    "computed": 13,
+    "sourced": 8
+   },
+   "computeFlags": 1,
+   "statementsTrue": 28,
+   "cost": 0.0077,
+   "seconds": 44,
+   "rows": [
+    {
+     "text": "Solving 3x + 2y = 16 for x gives x = (16 - 2y)/3, and substituting that fraction into the other equation works but requires a lot of fraction arithmetic.",
+     "type": "procedure",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In the system 3x + 2y = 16 and 5x - 2y = 8, the y-terms are +2y and -2y, so adding the equations cancels those terms and gives 8x = 24, so x = 3.",
+     "type": "computation",
+     "where": "block 0",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "If a = b and c = d, then a + c = b + d; adding two true equations gives another true equation.",
+     "type": "formula",
+     "where": "block 1",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "In the system 3x + 2y = 16 and 5x - 2y = 8, after x = 3, substituting gives 3(3) + 2y = 16, so y = 3.5.",
+     "type": "computation",
+     "where": "block 0",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "If a = b and c = d, then a - c = b - d; this is why adding or subtracting whole equations is a valid move when solving a system.",
+     "type": "formula",
+     "where": "block 1",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "A prerequisite for elimination is knowing that multiplying both sides of an equation by the same nonzero number gives an equivalent equation.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Add the equations when a variable's coefficients are opposites; subtract when they are equal; if neither happens, multiply one or both equations by a nonzero constant first so that one variable's coefficients become opposites.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Step 1: write both equations in standard form, one under the other, with x-terms above x-terms and y-terms above y-terms; 2x + 3y = 12 sits directly above 5x - 3y = 9.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The elimination procedure for the system 2x + 3y = 12 and 5x - 3y = 9 has six steps, in this order.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Step 2: compare the coefficients of x and of y; if one pair is opposite, add, and if one pair is equal, subtract; the y-coefficients +3 and -3 are opposites, so add.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Step 3: if no pair cancels, multiply one or both equations by a nonzero constant so that one variable's coefficients become opposites, multiplying every term including the constant; for 2x + 3y = 12 and 4x + y = 10 you could multiply the first equation by -2.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Elementary Algebra",
+      "quote": "if we multiply the first equation by -2, we will make the coefficients of x opposites. We must multiply every term on both sides of the equation by -2.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "Step 4: combine the two equations term by term; the chosen variable's terms cancel to zero, leaving one equation in one variable; (2x + 3y) + (5x - 3y) = 12 + 9 gives 7x = 21.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Step 5: solve the one-variable equation, then put that value into either original equation to find the other variable; x = 3, so 2(3) + 3y = 12 gives 3y = 6 and y = 2.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Step 6: write the solution as an ordered pair and substitute it into both original equations to confirm; (3, 2) checks because 2(3) + 3(2) = 12 and 5(3) - 3(2) = 9 both hold.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Intermediate Algebra",
+      "quote": "Step 6. Check that the ordered pair is a solution to both original equations.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "When you multiply an equation by a constant, every term must be multiplied, including the constant on the right; leaving the constant alone changes the equation into a different one with a different solution.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Multiplying 2x + 3y = 7 by 2 incorrectly as 4x + 6y = 7 is wrong; the correct result is 4x + 6y = 14.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Checking with (2, 1): the original 2x + 3y = 7 gives 4 + 3 = 7, but the wrong version 4x + 6y = 7 gives 8 + 6 = 14, not 7.",
+     "type": "computation",
+     "where": "block 4",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "If a variable's coefficients are equal and have the same sign, adding them gives twice the variable, not zero; subtract instead, and subtract every term on both sides.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "For 3x + 4y = 10 and 3x - y = 5, adding gives 6x + 3y = 15, which is wrong; subtracting gives 5y = 5.",
+     "type": "computation",
+     "where": "block 4",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Subtracting the second equation from the first in 3x + 4y = 10 and 3x - y = 5 gives (3x - 3x) + (4y - (-y)) = 10 - 5.",
+     "type": "computation",
+     "where": "block 4",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Finding x is only half the job; a system's solution is an ordered pair, so you must back-substitute to get y and then check both equations.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Intermediate Algebra",
+      "quote": "Write each solution as an ordered pair. Step 7. Check that each ordered pair is a solution to both original equations.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "An ordered pair such as (3, 2), not just x = 3, is the only complete answer for a system in two variables.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to matching 4x + 5y = 22 and 4x - 3y = 6 to its first move is: subtract the equations, because the x-coefficients are both 4, so subtracting removes x.",
+     "type": "key",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to matching 7x + 2y = 19 and 3x - 2y = 11 to its first move is: add the equations, because the y-coefficients are +2 and -2, so adding removes y.",
+     "type": "key",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to matching x + 3y = 9 and 2x + 5y = 16 to its first move is: multiply the first equation by -2, then add, because this turns x into -2x, opposite to 2x.",
+     "type": "key",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to matching 3x + 4y = 10 and 5x + 6y = 16 to its first move is: multiply the first by 3 and the second by -2, then add, because this makes the y-coefficients 12 and -12.",
+     "type": "key",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to solving 2x + y = 11 and 3x - 2y = 6 by elimination is (4, 3).",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Multiplying 2x + y = 11 by 2 gives 4x + 2y = 22, and adding that to 3x - 2y = 6 gives 7x = 28.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For 2x + y = 11 and 3x - 2y = 6: multiply the first equation by 2 to get 4x + 2y = 22, add it to 3x - 2y = 6 so the y-terms cancel and 7x = 28, so x = 4; then 2(4) + y = 11 gives y = 3; check in the second equation: 3(4) - 2(3) = 12 - 6 = 6.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "To solve 2x + y = 11 and 3x - 2y = 6, scale the first equation by 2, add the equations to eliminate y, solve for x, then back-substitute.",
+     "type": "procedure",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Elimination works because equal quantities added to equal quantities give equal sums, so the new equation is still true.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Elementary Algebra",
+      "quote": "when you add equal quantities to both sides of an equation, the results are equal",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "When coefficients are opposite, add the equations; for example, +3y and -3y cancel.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Elementary Algebra",
+      "quote": "To get opposite coefficients of f, multiply the top equation by -2. Simplify and add.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "When coefficients are equal, subtract the equations; for example, 4x and 4x cancel.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "When nothing cancels, multiply one or both equations by a nonzero constant to create opposite coefficients, then add.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Elementary Algebra",
+      "quote": "we cannot multiply just one equation by any constant to get opposite coefficients. So we will strategically multiply both equations by a constant to get the opposites",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "Scaling rule: multiply every term, including the constant; 2x + 3y = 7 becomes 4x + 6y = 14 when doubled.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "To finish, solve the one-variable equation, back-substitute for the other variable, and write an ordered pair.",
+     "type": "procedure",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Elementary Algebra",
+      "quote": "Then solve for the other Step 7. variable. Write the solution as an ordered pair.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "To check, substitute the pair into both original equations; both must be true.",
+     "type": "procedure",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Elementary Algebra",
+      "quote": "Check that the ordered pair is a solution to both original equations.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "The answer to why adding 4x + y = 13 and 2x - y = 5 is a valid step is: because 4x + y equals 13 and 2x - y equals 5, so adding equal quantities to equal quantities keeps the two sums equal.",
+     "type": "key",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Each left side of 4x + y = 13 and 2x - y = 5 equals its right side, so adding left to left and right to right keeps the totals equal: 6x = 18; this is the equal-plus-equal property.",
+     "type": "computation",
+     "where": "check 0",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The answer to which first move eliminates a variable in 6x + 5y = 20 and 2x + 5y = 12 is: subtract the second equation from the first, because the y-coefficients are both 5.",
+     "type": "key",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Equal coefficients with the same sign cancel only by subtracting, giving 4x = 8 for 6x + 5y = 20 and 2x + 5y = 12.",
+     "type": "computation",
+     "where": "check 1",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The answer to solving 3x + 2y = 16 and x - 2y = 8 by elimination is (6, -1).",
+     "type": "key",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "For 3x + 2y = 16 and x - 2y = 8, the y-coefficients are already opposites, so adding gives 4x = 24 and x = 6; back-substituting into x - 2y = 8 gives 6 - 2y = 8, so y = -1.",
+     "type": "computation",
+     "where": "check 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Opposite signs call for adding, while equal signs call for subtracting.",
+     "type": "rule",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "For 3x + 2y = 16 and x - 2y = 8, add the equations first because the y-terms are +2y and -2y, then substitute x back in.",
+     "type": "procedure",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to solving 2x + 3y = 12 and 3x + 4y = 17 by elimination is (3, 2).",
+     "type": "key",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "For 2x + 3y = 12 and 3x + 4y = 17, multiplying the first equation by 3 and the second by -2 makes the x-coefficients 6 and -6; adding gives y = 2, and back-substituting gives x = 3.",
+     "type": "computation",
+     "where": "check 3",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For 2x + 3y = 12 and 3x + 4y = 17, multiply the first equation by 3 and the second by -2 so the x-terms become opposites, then add.",
+     "type": "procedure",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    }
+   ]
+  },
+  "math/calculus_i/30": {
+   "facts": 64,
+   "tally": {
+    "read-only": 27,
+    "computed": 29,
+    "sourced": 8
+   },
+   "computeFlags": 0,
+   "statementsTrue": 33,
+   "cost": 0.0091,
+   "seconds": 53,
+   "rows": [
+    {
+     "text": "Every speed you can compute from data divides a change in position by a change in time, and that takes two times.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Squeezing the two times together makes the arithmetic collapse to 0/0.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The tangent line problem is the question of what the shrinking quotient is heading toward.",
+     "type": "definition",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Computing a speed the ordinary way needs 2 times.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The average rate uses two times and the instantaneous rate uses a limit, on the same curve at the same point.",
+     "type": "fact",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2 meters, the average velocity from t = 1 to t = 3 is (s(3) − s(1))/(3 − 1) = (9 − 1)/2 = 4 m/s.",
+     "type": "computation",
+     "where": "block 1",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The average rate uses two times: a and a + h.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The average rate needs two times and describes the whole stretch, not any single moment.",
+     "type": "fact",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The average rate equals the slope of the secant line through the two points.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The units of a rate are output per input, here m/s.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "The units on a rate of change are \"output units per input units.\"",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "At t = 1 the average velocity on [1, 1 + h] for s(t) = t^2 equals 2 + h.",
+     "type": "computation",
+     "where": "block 1",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "As h shrinks toward 0, the value 2 + h approaches 2, so the instantaneous velocity of s(t) = t^2 at t = 1 is 2 m/s, the slope of the tangent line there.",
+     "type": "computation",
+     "where": "block 1",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The instantaneous rate uses one time: the value the averages approach.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "difference quotient",
+      "quote": "As h approaches zero, the value of f ( a + h ) − f ( a ) h approaches the derivative or instantaneous rate of change of f ( x ) at x = a",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "The instantaneous rate equals the slope of the tangent line at that point.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Glossary of calculus",
+      "quote": "the derivative is often described as the \"instantaneous rate of change\" ... is the slope of the tangent line to the graph of the function at that point",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "The instantaneous rate needs a limit, because h = 0 alone gives 0/0.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "For position s(t) = t^2 in meters at time t in seconds, the position at t = 1.0 s is 1.000 m.",
+     "type": "computation",
+     "where": "block 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For position s(t) = t^2 in meters at time t in seconds, the position at t = 1.1 s is 1.210 m.",
+     "type": "computation",
+     "where": "block 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For position s(t) = t^2 in meters at time t in seconds, the position at t = 2.0 s is 4.000 m.",
+     "type": "computation",
+     "where": "block 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For position s(t) = t^2 in meters at time t in seconds, the position at t = 3.0 s is 9.000 m.",
+     "type": "computation",
+     "where": "block 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2, the average velocity from t = 1 over [1, 3] is (9 − 1)/2 = 4 m/s.",
+     "type": "computation",
+     "where": "block 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For position s(t) = t^2 in meters at time t in seconds, the position at t = 1.5 s is 2.250 m.",
+     "type": "computation",
+     "where": "block 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2, the average velocity from t = 1 over [1, 1.5] is 2.5 m/s.",
+     "type": "computation",
+     "where": "block 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2, the average velocity from t = 1 over [1, 2] is 3 m/s.",
+     "type": "computation",
+     "where": "block 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2, the average velocity from t = 1 over [1, 1.1] is 2.1 m/s.",
+     "type": "computation",
+     "where": "block 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The narrower the window around t = 1, the closer the average velocity of s(t) = t^2 sits to 2 m/s.",
+     "type": "fact",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to where the secant slopes on s(t) = t^2 will land as the second point slides toward t = 1 is: toward 2 m/s.",
+     "type": "key",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The average velocity on [1, 1 + h] for s(t) = t^2 is exactly 2 + h.",
+     "type": "computation",
+     "where": "block 4",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "With h = 2, 1, 0.5, 0.1 and 0.01 the secant slopes of s(t) = t^2 at t = 1 are 4, 3, 2.5, 2.1 and 2.01.",
+     "type": "computation",
+     "where": "block 4",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "As h shrinks, the secant slopes approach 2, the instantaneous velocity of s(t) = t^2 at t = 1.",
+     "type": "computation",
+     "where": "block 4",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Dividing by a tiny h does not blow up here, because the numerator shrinks along with it.",
+     "type": "fact",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The limit of these averages is the slope of the tangent at t = 1.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2, the average velocity from t = 1 to t = 1 + h works out to exactly 2 + h.",
+     "type": "computation",
+     "where": "block 5",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2, h = 0.01 gives an average velocity of 2.01 m/s, and the secant is almost lying on the tangent line.",
+     "type": "computation",
+     "where": "block 5",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Setting h equal to 0 is not allowed because that gives 0/0.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2, the average velocity on [2, 2 + h] is 4.5 m/s at h = 0.5, 4.1 m/s at h = 0.1 and 4.01 m/s at h = 0.01.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For a stone's height s(t) = t^2 meters after t seconds, the average velocity on [2, 2 + h] equals 4 + h.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The answer to the number the average velocities of s(t) = t^2 on [2, 2 + h] approach as h shrinks toward 0 is 4 m/s.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The averages 4.5, 4.1 and 4.01 close in on 4, and the tangent slope of s(t) = t^2 at t = 2 is 4.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "s(2 + h) − s(2) = (4 + 4h + h^2) − 4 = 4h + h^2, and dividing by h gives 4 + h whenever h is not 0.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "As h approaches 0, 4 + h approaches 4.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Check one row yourself: s(2.1) = 4.41 and s(2) = 4, so 0.41 divided by 0.1 is 4.1.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The averages all have the form 4 + h for h = 0.5, 0.1, 0.01.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The number 4 + h approaches as h shrinks is the constant 4.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Tangent slope equals the limit of average rates as the interval shrinks.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "Tangent",
+      "quote": "the slope of the tangent line to the graph as the limit of the difference quotients",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "A negative tangent slope means the output is falling as the input rises, so the quantity is decreasing there.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "For a decreasing function, the slope is negative. The output values decrease as the input values increase.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "The answer to whether a negative tangent slope at a moment means the quantity is decreasing at that moment is true.",
+     "type": "key",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether the slope of the tangent line to C(t), cost in dollars against time in hours, has units of dollars per hour is true.",
+     "type": "key",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A tangent slope always carries output units per input unit, so dollars over hours here.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "be miles per hour or dollars per day. Notice the units appear as a ratio of units for the output per units for the input.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "The answer to whether the average rate over [a, a + h] equals the instantaneous rate at x = a for every function is false.",
+     "type": "key",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Average and instantaneous rates agree only in special cases such as constant-rate (straight-line) functions.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2 at a = 1, the average over [1, 3] is 4 m/s while the instantaneous rate is 2 m/s.",
+     "type": "computation",
+     "where": "block 8",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The answer to whether the limit as h approaches 0 of the difference quotient asks what the quotient approaches for h near 0 but not equal to 0 is true.",
+     "type": "key",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The limit is about values near h = 0; at h = 0 itself the quotient is 0/0 and has no value.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which statement correctly reports the average velocity on [1, 3] and the instantaneous velocity at t = 1 for s(t) = t^2 + 1 is: the average velocity on [1, 3] is 4 m/s and the instantaneous velocity at t = 1 is 2 m/s.",
+     "type": "key",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2 + 1, the average velocity uses two times: (s(3) − s(1))/(3 − 1) = (10 − 2)/2 = 4 m/s.",
+     "type": "computation",
+     "where": "check 0",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "For s(t) = t^2 + 1, the instantaneous rate comes from the limit: ([s(1 + h) − s(1)])/h = (2h + h^2)/h = 2 + h, which approaches 2, so it is 2 m/s.",
+     "type": "computation",
+     "where": "check 0",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The answer to the average velocity of s(t) = t^2 on the interval [1, 3] is 4 m/s.",
+     "type": "key",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Average velocity is the change in position divided by the change in time: (9 − 1)/(3 − 1) = 8/2 = 4, and meters over seconds gives m/s.",
+     "type": "computation",
+     "where": "check 1",
+     "status": "sourced",
+     "source": {
+      "title": "velocity",
+      "quote": "A vector quantity that denotes the rate of change of position with respect to time",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "The answer to the instantaneous velocity at t = 1 that the estimates 2.5, 2.1 and 2.01 m/s for s(t) = t^2 approach is 2.",
+     "type": "key",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The limit is the instantaneous velocity, and a table alone only estimates it.",
+     "type": "rule",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Each average for s(t) = t^2 on [1, 1 + h] equals 2 + h, so shrinking h toward 0 moves the estimates 2.5, 2.1, 2.01 toward 2.",
+     "type": "computation",
+     "where": "check 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The answer to why you cannot simply set h = 0 in the difference quotient (f(a + h) − f(a))/h to get the instantaneous rate at x = a is: setting h = 0 makes the numerator and the denominator both zero, so the quotient becomes 0/0, which has no value.",
+     "type": "key",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "At h = 0, f(a + 0) − f(a) is 0 and the denominator is 0, producing the indeterminate form 0/0.",
+     "type": "computation",
+     "where": "check 3",
+     "status": "sourced",
+     "source": {
+      "title": "Zero to the power of zero",
+      "quote": "The division ( 0/0 ) then becomes meaningless. A case like this is known as an indeterminate form.",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "The limit asks what the quotient approaches for h near 0 but not equal to 0.",
+     "type": "rule",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    }
+   ]
+  },
+  "math/numbers_to_20_and_teen_numbers/20": {
+   "facts": 30,
+   "tally": {
+    "read-only": 28,
+    "computed": 1,
+    "sourced": 1
+   },
+   "computeFlags": 0,
+   "statementsTrue": 4,
+   "cost": 0.0044,
+   "seconds": 22,
+   "rows": [
+    {
+     "text": "To count collections to 20, organize objects in rows or a ten-frame, count each one, then count again to check.",
+     "type": "procedure",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A ten-frame holds exactly ten objects, one in each slot.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The first step of the counting routine is to gather the objects you want to count and put them in a pile.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "When a ten-frame is full you have a group of ten.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The second step of the counting routine is to place the objects into a ten-frame or straight rows, filling the top row first, then the next.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The third step of the counting routine is to touch each object and say the numbers in order, counting the full ten-frame as ten and then keeping counting.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The fourth step of the counting routine is to count the objects a second time to be sure, and if the numbers match you are done.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to where each of the six buttons goes is In Ten-Frame.",
+     "type": "key",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to where each of the two coins goes is Loose.",
+     "type": "key",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "10 plus 3 equals 13.",
+     "type": "computation",
+     "where": "block 5",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The answer to how many dots there are when a ten-frame is full with 10 dots and 3 more dots sit next to it is 13.",
+     "type": "key",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A ten-frame holds exactly ten objects.",
+     "type": "rule",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "You can count a pile without organizing it, but organizing helps you keep track.",
+     "type": "fact",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "You should not count only once; the rule says count again to check.",
+     "type": "rule",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "After filling a ten-frame, you keep counting from ten.",
+     "type": "rule",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Loose objects are counted after the frame, not left uncounted.",
+     "type": "rule",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether you can count a pile without organizing it is Valid.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether a ten-frame holds exactly ten objects is Valid.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether you only need to count once is Invalid.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether after filling a ten-frame you keep counting from ten is Valid.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether loose objects are not counted is Invalid.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The terms for this lesson are ten-frame, organize, and recount.",
+     "type": "definition",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to how many spaces are in a ten-frame is 10.",
+     "type": "key",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A ten-frame has ten slots, one for each object.",
+     "type": "rule",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to how many objects in total when a ten-frame shows a full frame of 10 and 4 more is 14.",
+     "type": "key",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "To find the total, add the ten from the full frame to the four extra.",
+     "type": "procedure",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to what you should do when you counted 16 buttons and recount 15 is to count a third time.",
+     "type": "key",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to how to show as tens and ones a full ten-frame of 10 dots with 3 more dots next to it is 1 ten and 3 ones.",
+     "type": "key",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "When counts differ, recount to verify.",
+     "type": "rule",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A full ten-frame holds 10 dots, so it is one ten, and the 3 extra dots are the ones, making 13 as 1 ten and 3 ones.",
+     "type": "computation",
+     "where": "check 3",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Prealgebra",
+      "quote": "We use 1 ten and 3 ones.",
+      "kind": "textbook"
+     }
+    }
+   ]
+  },
+  "math/algebra_1_part_a/254": {
+   "facts": 46,
+   "tally": {
+    "read-only": 19,
+    "sourced": 18,
+    "computed": 9
+   },
+   "computeFlags": 0,
+   "statementsTrue": 24,
+   "cost": 0.0068,
+   "seconds": 33,
+   "rows": [
+    {
+     "text": "The angle between every pair of perpendicular lines is exactly 90°.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "City blocks in Manhattan's grid meet at 90°, and so do the steel frames of most skyscrapers.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Builders need exact right angles, and the slope rule shows how to test for a right angle with coordinates.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Two non-vertical lines are perpendicular exactly when their slopes multiply to -1.",
+     "type": "rule",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A frame that is out of square can lean or put uneven stress on joints.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Parallel lines have equal slopes.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "The slopes of the lines are the same.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "Perpendicular lines have slopes that are negative reciprocals, so their product is -1.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Intermediate Algebra",
+      "quote": "perpendicular lines have slopes that are negative reciprocals",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "The slope of a line through two points is m = (y2 - y1)/(x2 - x1).",
+     "type": "formula",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Prealgebra",
+      "quote": "The slope of the line between two points (x1, y1) and (x2, y2) is y2 - y1",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "The reciprocal of a fraction is found by flipping it, so the reciprocal of 2/3 is 3/2.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Intermediate Algebra",
+      "quote": "The reciprocal of a fraction is found by inverting the fraction, placing the numerator in the denominator and the denominator in the numerator.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "Negating a number means changing its sign, so the negative of 3/2 is -3/2.",
+     "type": "definition",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Parallel lines need exactly equal slopes, and perpendicular lines need slopes that multiply to exactly -1.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "The slopes of the lines are the same",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "Two different lines with the same slope never meet.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Intermediate Algebra",
+      "quote": "Two lines that have the same slope and different y-intercepts are called parallel lines. ... Parallel lines have the same steepness and never intersect.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "All vertical lines are parallel to each other, and all horizontal lines are parallel to each other.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In the standard form Ax + By = C, the slope is -A/B, so equal A/B ratios mean parallel lines.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "To get a perpendicular slope, flip the slope and change its sign; the two slopes multiply to -1.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "We can show that two lines are perpendicular if the product of the two slopes is -1: m1 m2=-1",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "In the standard form Ax + By = C, perpendicular lines have slopes whose product is -1, which happens when the A/B ratios are negative reciprocals.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A vertical line (undefined slope) is perpendicular to a horizontal line (slope 0).",
+     "type": "rule",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "A horizontal line has a slope of zero and a vertical line has an undefined slope. These two lines are perpendicular",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "Different slopes alone do not make lines perpendicular; always multiply the slopes and confirm the product is exactly -1.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "We can show that two lines are perpendicular if the product of the two slopes is -1: m1 m2=-1.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "If a line has a nonzero slope m, a perpendicular line has slope -1/m.",
+     "type": "formula",
+     "where": "block 3",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "To find a perpendicular slope, flip the fraction and change its sign; when both slopes are defined, perpendicular lines have slopes that multiply to -1.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "We can show that two lines are perpendicular if the product of the two slopes is -1: m1 m2=-1",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "A horizontal line and a vertical line always meet at 90 degrees, a special case of perpendicular lines where the slopes cannot be multiplied because one is undefined.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "A horizontal line has a slope of zero and a vertical line has an undefined slope. These two lines are perpendicular, but the product of their slopes is not -1.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "To write the equation of a parallel or perpendicular line, follow the same four steps every time; only step 2 changes.",
+     "type": "procedure",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Step 1: Rewrite the given equation in slope-intercept form, y = mx + b, and read off m.",
+     "type": "procedure",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The equation 2x + 3y = 6 becomes y = -2/3 x + 2, so m = -2/3.",
+     "type": "computation",
+     "where": "block 4",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "From m = -2/3, parallel uses -2/3 and perpendicular uses 3/2.",
+     "type": "computation",
+     "where": "block 4",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Step 2: For parallel, keep the same slope; for perpendicular, flip it and change its sign.",
+     "type": "procedure",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Through (6, 1) with slope 3/2: y - 1 = 3/2 (x - 6).",
+     "type": "computation",
+     "where": "block 4",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Step 3: Substitute your new slope and the given point into y - y1 = m(x - x1).",
+     "type": "procedure",
+     "where": "block 4",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Elementary Algebra",
+      "quote": "Substitute the values into y - y1 = m(x - x1)",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "Step 4: Solve for y to get slope-intercept form, then plug the point back in to check.",
+     "type": "procedure",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "y = 3/2 x - 8, and 3/2(6) - 8 = 1, so the point (6, 1) checks out.",
+     "type": "computation",
+     "where": "block 4",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The answer to what is the slope of a line perpendicular to a line with slope 4/5 is -5/4.",
+     "type": "key",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Flip 4/5 to 5/4, then change the sign to get -5/4; check: (4/5)(-5/4) = -1.",
+     "type": "computation",
+     "where": "block 5",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The answer to writing the equation of the line through (4, 1) parallel to y = 2x - 3 is y = 2x - 7.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which slope is perpendicular to a line with slope 3/4 is -4/3.",
+     "type": "key",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "y - 1 = 2(x - 4) becomes y - 1 = 2x - 8, so y = 2x - 7; checking: 2(4) - 7 = 1.",
+     "type": "computation",
+     "where": "block 6",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Flip 3/4 to get 4/3, then change the sign to get -4/3; check the product: (3/4)(-4/3) = -12/12 = -1, so the lines are perpendicular.",
+     "type": "computation",
+     "where": "block 7",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "We can show that two lines are perpendicular if the product of the two slopes is -1: m1 m2=-1.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "The answer to what is the slope of a line parallel to a line with slope -3/7 is -3/7.",
+     "type": "key",
+     "where": "check 0",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Elementary Algebra",
+      "quote": "parallel lines have the same slope",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "The answer to what is the slope of a line perpendicular to a line with slope -2/5 is 5/2.",
+     "type": "key",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Flip -2/5 to -5/2, then change the sign to get 5/2; check: (-2/5)(5/2) = -1.",
+     "type": "computation",
+     "where": "check 1",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "Parallel lines have equal slopes, so the parallel line keeps the slope -3/7 unchanged.",
+     "type": "rule",
+     "where": "check 0",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax Elementary Algebra",
+      "quote": "The slopes of the lines are the same",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "The answer to writing the equation of the line through (2, 5) parallel to y = 3x + 1 is y = 3x - 1.",
+     "type": "key",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to writing the equation of the line through (4, 2) perpendicular to y = 2x + 3 is y = -1/2 x + 4.",
+     "type": "key",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The parallel line keeps slope 3; point-slope gives y - 5 = 3(x - 2), which simplifies to y = 3x - 1, and 3(2) - 1 = 5 checks the point.",
+     "type": "computation",
+     "where": "check 2",
+     "status": "computed",
+     "source": null
+    },
+    {
+     "text": "The perpendicular slope is the negative reciprocal of 2, which is -1/2; point-slope gives y - 2 = -1/2(x - 4), which simplifies to y = -1/2 x + 4, and -1/2(4) + 4 = 2 checks the point.",
+     "type": "computation",
+     "where": "check 3",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "The slope of the line is 2, and its negative reciprocal is -_1_.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "The answer to what is wrong with the claim that a line with slope 5/3 is perpendicular to a line with slope 3/5 is that the slopes were flipped but not negated, so their product is 1, not -1.",
+     "type": "key",
+     "where": "check 4",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "We can show that two lines are perpendicular if the product of the two slopes is -1: m1 m2=-1.",
+      "kind": "textbook"
+     }
+    },
+    {
+     "text": "Perpendicular slopes must multiply to -1; here (5/3)(3/5) = 1, so the student flipped without negating, and the correct perpendicular slope is -3/5.",
+     "type": "computation",
+     "where": "check 4",
+     "status": "sourced",
+     "source": {
+      "title": "OpenStax College Algebra",
+      "quote": "We can show that two lines are perpendicular if the product of the two slopes is -1: m1 m2=-1",
+      "kind": "textbook"
+     }
+    }
+   ]
+  },
+  "english/proficient/20": {
+   "facts": 51,
+   "tally": {
+    "needs-person": 1,
+    "read-only": 42,
+    "sourced": 8
+   },
+   "computeFlags": null,
+   "statementsTrue": null,
+   "cost": 0.0064,
+   "seconds": 47,
+   "rows": [
+    {
+     "text": "The two versions use the same words and the same meaning but a different order.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "needs-person",
+     "source": {
+      "title": "Bible translations into English",
+      "quote": "The earlier version (\"EV\") is characterised by a strong adherence to the word order of Latin... The later version (\"LV\") made more concessions to the native grammar of English.",
+      "kind": "wikipedia_en_all"
+     },
+     "why": "a passage contradicts it"
+    },
+    {
+     "text": "A sentence's pattern is a choice about what the reader gets first, and what the reader gets first is what they feel most.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Every sentence needs a subject and a verb, and that unit is called a main clause (or independent clause).",
+     "type": "definition",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Words that add detail — phrases and describing clauses — are called modifiers.",
+     "type": "definition",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "When two clauses or phrases share the same grammatical shape, the sentence is parallel.",
+     "type": "definition",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A pattern is not grammar-correct vs. incorrect; all three patterns are correct, but each creates a different rhythm and emphasis.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In a periodic sentence, modifiers and setup come first and the main clause waits until the very end, so the reader hangs on every word.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The effect of a periodic sentence is suspense and a strong final punch, and the reader cannot relax until the sentence finishes.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "periodic sentence",
+      "quote": "in order to create the effect of anticipation or suspense",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "The effect of a cumulative sentence is a clear, immediate point plus richness: the reader gets the news right away, then gets the texture.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In a cumulative sentence, the main clause opens the sentence and modifiers are added on afterward like freight cars behind the engine.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Neither the periodic nor the cumulative pattern is better: periodic builds suspense and lands the point at the end, while cumulative leads with the point and lets the detail pile up.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In a balanced sentence both halves have the same shape: subject + verb + object.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In a balanced sentence the reader hears the first half, then expects — and gets — the echo.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In a balanced sentence there is equal weight on both halves, which is why it feels fair and finished.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "To balance a sentence, rewrite each half in the same grammatical shape, then let the second half mirror the first.",
+     "type": "procedure",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A main clause is a group of words with its own subject and verb that could stand alone as a complete sentence, and it is the one the sentence is really about.",
+     "type": "definition",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Modifiers are words or phrases that add description or detail but cannot stand alone, like \"worn out but stubborn\" or \"in the last minute.\"",
+     "type": "definition",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Modifiers dress up the sentence; they are not the sentence's spine.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "An independent clause is a clause with a subject and a verb that expresses a complete thought and can be a sentence by itself.",
+     "type": "definition",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "If a clause starts with a word like \"because,\" \"when,\" or \"although,\" it cannot stand alone.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Parallelism is repeating the same grammatical shape in two or more parts of a sentence, so the parts mirror each other.",
+     "type": "definition",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Periodic sentences delay the main clause; cumulative sentences lead with it and keep adding; balanced sentences mirror two equal ideas.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to matching \"Exhausted, nervous, and out of time, Marcus finally handed in his essay.\" to its pattern is Periodic.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to matching \"Marcus handed in his essay, exhausted, nervous, and just under the deadline.\" to its pattern is Cumulative.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to matching \"Reading builds vocabulary, and vocabulary builds readers.\" to its pattern is Balanced.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A sentence in which the main clause waits until the very end, so the reader feels suspense until the final words land, is a periodic sentence.",
+     "type": "definition",
+     "where": "block 6",
+     "status": "sourced",
+     "source": {
+      "title": "periodic sentence",
+      "quote": "A complex sentence whose main clause is left unfinished until the end in order to create the effect of anticipation or suspense.",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "A sentence in which two equal ideas are written in the same grammatical shape, so the halves mirror each other, is a balanced sentence.",
+     "type": "definition",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A sentence in which the main clause comes first and detail after detail gets added on afterward is a cumulative sentence.",
+     "type": "definition",
+     "where": "block 6",
+     "status": "sourced",
+     "source": {
+      "title": "Loose sentence",
+      "quote": "A loose sentence (also called a cumulative sentence) is a type of sentence in which the main idea ( independent clause ) is elaborated by the successive addition of modifying clauses or phrases.",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "A sentence in which two complete sentences are jammed together with only a comma or nothing between them is a run-on or comma splice.",
+     "type": "definition",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to building a balanced sentence from the given phrases is \"Reading builds patience, patience builds attention — reading builds attention.\"",
+     "type": "key",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Two halves of a balanced sentence must share the same grammatical shape — subject + verb + object.",
+     "type": "rule",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Choice C is a true periodic sentence: the modifiers come first, and the main clause (\"he finally finished that last brutal mile\") lands last and completes the sentence.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "periodic sentence",
+      "quote": "A complex sentence whose main clause is left unfinished until the end in order to create the effect of anticipation or suspense.",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "The answer to which rewrite is a true periodic sentence about a runner finishing a race is \"Because he trained every day, running before school and after practice, he finally finished that last brutal mile.\"",
+     "type": "key",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "\"Because he trained every day before school and after practice, finally, that last brutal mile\" looks like a periodic setup, but there is no subject and verb at the end — just a dangling noun phrase.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "\"He finally finished the last brutal mile, because he trained every day, running before school and after practice\" is a fine sentence, but it is cumulative, not periodic, since the main clause comes first.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "\"He trained every day before school and after practice he finally finished the last brutal mile\" is a run-on: two complete thoughts are jammed together with only a comma.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "After writing, find your subject and verb: if they only appear at the very end and everything before them could not stand alone, you have a real periodic sentence; if they never appear in a complete clause, you have a fragment.",
+     "type": "procedure",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A periodic sentence puts modifiers first and the main clause last, with the effect of suspense and a punch at the end — \"Delay, delay, deliver.\"",
+     "type": "rule",
+     "where": "block 9",
+     "status": "sourced",
+     "source": {
+      "title": "periodic sentence",
+      "quote": "A complex sentence whose main clause is left unfinished until the end in order to create the effect of anticipation or suspense.",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "A cumulative sentence puts the main clause first and adds modifiers after, with the effect of a clear point immediately and then rich detail — \"Lead, then load.\"",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A balanced sentence puts two equal ideas in the same grammatical shape, with the effect of equal weight and a satisfying echo — \"Mirror, mirror.\"",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A fragment is missing a subject or a verb — it is not a complete sentence, even if it sounds stylish; the fix is to add a subject or verb, or attach it to a nearby complete sentence.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "sourced",
+     "source": {
+      "title": "sentence fragment",
+      "quote": "An incomplete sentence ; a phrase or clause that is punctuated and capitalized as a sentence but does not constitute a complete grammatical sentence. (It is often the result of failing to include a subject and a verb",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "A run-on or comma splice joins two independent clauses with nothing or only a comma; the fix is to use a period, semicolon, or a comma + FANBOYS word (and, but, so...).",
+     "type": "rule",
+     "where": "block 9",
+     "status": "sourced",
+     "source": {
+      "title": "comma splice",
+      "quote": "Two independent clauses combined into a run-on sentence with only a comma between them",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "When choosing a pattern, ask what you want the reader to feel first — suspense, clarity, or symmetry: periodic for suspense, cumulative for clarity plus detail, balanced for fairness and symmetry.",
+     "type": "procedure",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to what pattern \"Covered in mud, cheering wildly, barely able to breathe, the team finally lifted the trophy\" is, and why, is Periodic — the main clause lands at the end, building suspense.",
+     "type": "key",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The subject and verb of the main clause (the team lifted the trophy) appear only at the very end, which is the defining move of a periodic sentence.",
+     "type": "rule",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to why \"Writing clarifies thinking, and thinking sharpens writing\" is effective as a balanced sentence is that its two halves share the same grammatical shape, giving both ideas equal weight.",
+     "type": "key",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Both halves of \"Writing clarifies thinking, and thinking sharpens writing\" use subject + verb + object, so the parallel shape gives the two ideas equal weight, which is what balance means.",
+     "type": "rule",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to what is wrong with \"After weeks of rehearsals, nerves on edge, the curtain finally\" is that it is a fragment — it never delivers a subject and verb.",
+     "type": "key",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "No clause in \"After weeks of rehearsals, nerves on edge, the curtain finally\" has both a subject and a verb; the delaying material never pays off, so the sentence is a fragment.",
+     "type": "rule",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which sentence pattern makes the reader feel suspense and get the main point only at the very end is Periodic.",
+     "type": "key",
+     "where": "check 3",
+     "status": "sourced",
+     "source": {
+      "title": "periodic sentence",
+      "quote": "A complex sentence whose main clause is left unfinished until the end in order to create the effect of anticipation or suspense.",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "A periodic sentence withholds the main clause until the end, which is exactly what creates suspense and end-emphasis.",
+     "type": "rule",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    }
+   ]
+  },
+  "english/proficient/62": {
+   "facts": 56,
+   "tally": {
+    "read-only": 44,
+    "sourced": 12
+   },
+   "computeFlags": null,
+   "statementsTrue": null,
+   "cost": 0.007,
+   "seconds": 45,
+   "rows": [
+    {
+     "text": "A single punctuation mark, such as a dash instead of a comma, can turn a flat sentence into a dramatic one.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Punctuation is not just about correctness; it is the sheet music of a sentence.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The same words with different punctuation produce a different effect.",
+     "type": "fact",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "English punctuation",
+      "quote": "have greatly different meanings",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "Six punctuation marks (dash, colon, semicolon, comma, period, ellipsis) can reshape a sentence.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Dashes, colons, and semicolons are not decoration — each one tells the reader how long to pause and what to pay attention to.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A dash creates an abrupt, dramatic pause, like slamming on the brakes to make the reader notice what comes next.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A colon signals 'here it comes': it announces an explanation, a list, or a payoff after a complete sentence.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A semicolon joins two closely related complete sentences into one thought, tighter than a period but stronger than a comma.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "Semicolon",
+      "quote": "a semicolon is most commonly used to link (in a single sentence) two independent clauses that are closely related in thought",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "A comma alone cannot join two complete sentences, and that error is called a comma splice.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "Sentence clause structure",
+      "quote": "The use of a comma to separate two independent clauses without the addition of an appropriate conjunction is called a comma splice and is generally considered an error",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "The dash is a dramatic brake: an abrupt, sharp pause that yanks the reader forward and puts spotlight emphasis on whatever comes after it.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The colon follows a complete sentence and announces that a payoff — an explanation or list — is arriving next.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The semicolon welds two closely related complete sentences into one, keeping their connection tight without a full stop.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "sourced",
+     "source": {
+      "title": "Semicolon",
+      "quote": "a separation between two full sentences",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "Punctuation is sound made visible — you can hear it before you can name it.",
+     "type": "fact",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Each punctuation mark creates a different length and character of pause, which changes a sentence's rhythm and emphasis.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A semicolon is a legal join between two closely related complete sentences.",
+     "type": "definition",
+     "where": "block 5",
+     "status": "sourced",
+     "source": {
+      "title": "Semicolon",
+      "quote": "A semicolon is most commonly used to link (in a single sentence) two independent clauses that are closely related in thought.",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "A colon follows a complete sentence and then gives a payoff: an explanation or a list.",
+     "type": "definition",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A dash is an abrupt pause for drama or emphasis.",
+     "type": "definition",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A comma can not join two complete sentences on its own — that creates a run-on error called a comma splice.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "sourced",
+     "source": {
+      "title": "Sentence clause structure",
+      "quote": "The use of a comma to separate two independent clauses without the addition of an appropriate conjunction is called a comma splice and is generally considered an error",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "A comma is a light pause inside a sentence, or it separates items in a list.",
+     "type": "definition",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A colon must follow a complete sentence — it can not sit before a list that starts with 'such as', 'including', or 'like'.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A semicolon cannot be dropped in just anywhere; it needs two complete, closely related sentences on both sides.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "sourced",
+     "source": {
+      "title": "Semicolon",
+      "quote": "a semicolon is most commonly used to link (in a single sentence) two independent clauses that are closely related in thought",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "Not every pause in speech needs a comma — many belong to dashes, colons, or nothing at all.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The fix for two complete sentences meeting is to use a semicolon, a period, or a dash; a comma can't hold them together.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether 'We rehearsed for weeks, the show opened on Friday.' is correctly punctuated is: not correct, because two complete sentences joined by a comma make a comma splice.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether 'We rehearsed for weeks; the show opened on Friday.' is correctly punctuated is: correct, because the semicolon correctly joins two closely related complete sentences.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether 'I like board games such as: chess and checkers.' is correctly punctuated is: not correct, because the colon must follow a complete sentence and 'such as' should never come before a colon.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether 'The recipe needs three things: flour, eggs, and patience.' is correctly punctuated is: correct, because the colon follows a complete sentence and properly introduces the list.",
+     "type": "key",
+     "where": "block 6",
+     "status": "sourced",
+     "source": {
+      "title": "Colon (punctuation)",
+      "quote": "a complete sentence precedes a colon, while a list, description, explanation, or definition follows it",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "The answer to whether 'Then came the twist — nobody expected it.' is correctly punctuated is: correct, because the dash creates the dramatic, abrupt pause the sentence wants.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Both sides of a semicolon must be complete sentences, a colon must follow a complete sentence, and a dash is the tool for drama.",
+     "type": "rule",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to whether 'The bus was crowded; and late.' is correctly punctuated is: not correct, because a semicolon cannot go inside one sentence; both sides of a semicolon must be complete sentences.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The dash creates the abrupt pause that makes the reveal slam into place.",
+     "type": "rule",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which version of 'I turned the corner and stopped ... there it was.' achieves the biggest surprise and drama is: 'I turned the corner and stopped — there it was.'",
+     "type": "key",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A comma between two complete sentences creates a comma splice.",
+     "type": "rule",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A period would make the sentence flat and separate the reveal from the buildup.",
+     "type": "rule",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A colon needs a complete sentence before it, and it signals a calm payoff, not sudden emphasis.",
+     "type": "rule",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Both halves of 'The stage lights snapped on; the crowd went wild.' are complete sentences and they are closely related, so a semicolon is the correct tight join.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "Semicolon",
+      "quote": "A semicolon is most commonly used to link (in a single sentence) two independent clauses that are closely related in thought.",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "The answer to which version keeps 'The stage lights snapped on ... the crowd went wild.' joined smoothly with no drama and no full stop is: 'The stage lights snapped on; the crowd went wild.'",
+     "type": "key",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In 'The stage lights snapped on ... the crowd went wild.', a dash would add extra drama the sentence doesn't ask for, and a colon wouldn't fit the calm statement.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Using a comma between two complete sentences is a comma splice, the common error in this sentence.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The comma version sounds fine when read aloud because pauses often feel like commas, but two complete sentences can't legally be joined by a comma alone.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "sourced",
+     "source": {
+      "title": "Sentence clause structure",
+      "quote": "The clauses are joined by a coordinating conjunction, a semicolon that functions as a conjunction",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "To check for a comma splice, ask whether there are complete sentences on both sides of the comma; if yes, swap the comma for a semicolon, a period, or a dash.",
+     "type": "procedure",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Writing has stricter rules than speech: a comma alone can't hold two complete sentences together, and that error is the comma splice, the single most common punctuation mistake.",
+     "type": "fact",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A dash creates an abrupt pause and dramatic emphasis, like a slammed door that is sudden and dramatic with a spotlight on what follows.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A colon signals 'here it comes' — an explanation, list, or payoff — and must follow a complete sentence, like a drumroll after a complete sentence.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A semicolon joins two closely related complete sentences, like a balanced see-saw with two equal, connected halves.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "sourced",
+     "source": {
+      "title": "Semicolon",
+      "quote": "a semicolon is most commonly used to link (in a single sentence) two independent clauses that are closely related in thought ... those ideas are then given equal rank",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "A colon should never be used after an incomplete sentence, and never before 'such as', 'including', or 'like'.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A comma splice is the error a comma creates by joining two complete sentences; both halves must be complete sentences, and it is fixed with a semicolon, period, or dash.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A period is calm and final, a colon is a promised payoff, and a dash is drama; read aloud to feel the difference.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to what a dash's basic job is: it creates an abrupt pause and dramatic emphasis.",
+     "type": "key",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The dash is defined by its abrupt, dramatic pause; the other jobs belong to the colon, the semicolon, and the comma respectively.",
+     "type": "rule",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The comma splice is exactly the error a semicolon fixes: a semicolon legally joins two closely related complete sentences.",
+     "type": "rule",
+     "where": "check 1",
+     "status": "sourced",
+     "source": {
+      "title": "comma splice",
+      "quote": "the use of a comma splice is generally considered to be an error. It is better to separate two related sentences with a semicolon",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "The answer to which punctuation mark should replace the comma in 'The rain stopped, the game began.' if no dramatic pause is wanted is: semicolon.",
+     "type": "key",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which sentence is correctly punctuated is: 'I have one rule: never give up.'",
+     "type": "key",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Only 'I have one rule: never give up.' has a complete sentence before the colon; the other options are a colon after 'such as', a semicolon without two complete sentences, and a comma splice run-on.",
+     "type": "rule",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which version of a dramatic sports headline gives a sharp, sudden pause before the reveal is: 'The final whistle blew — we had won.'",
+     "type": "key",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The dash is the mark for abrupt dramatic emphasis; the other options are a fragment, an illegal semicolon, and a colon misused.",
+     "type": "rule",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    }
+   ]
+  },
+  "spanish/advanced/15": {
+   "facts": 34,
+   "tally": {
+    "read-only": 31,
+    "sourced": 2,
+    "needs-person": 1
+   },
+   "computeFlags": null,
+   "statementsTrue": null,
+   "cost": 0.0041,
+   "seconds": 38,
+   "rows": [
+    {
+     "text": "Every Spanish noun is masculine or feminine.",
+     "type": "rule",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Most Spanish nouns ending in -o are masculine and take el.",
+     "type": "rule",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Most Spanish nouns ending in -a are feminine and take la.",
+     "type": "rule",
+     "where": "block 0",
+     "status": "sourced",
+     "source": {
+      "title": "Grammatical gender",
+      "quote": "in Spanish, approximately 89% of nouns that end in -a or - á are classified as feminine",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "el libro, el carro and el amigo are masculine.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "la casa, la mesa and la amiga are feminine.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Grammatical gender is a grammar label, not a meaning: a table is not female.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Spanish nouns ending in letters other than -o or -a must be learned one by one, for example el café and la noche.",
+     "type": "rule",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "el amigo means a male friend and la amiga means a female friend.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "el niño means a boy and la niña means a girl.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "el hermano means brother and la hermana means sister.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "el libro and la casa are things, and each thing noun has one gender.",
+     "type": "fact",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "el vaso means glass and la taza means cup.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to sorting libro by its article is el (masculine).",
+     "type": "key",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to sorting casa by its article is la (feminine).",
+     "type": "key",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to sorting vaso by its article is el (masculine).",
+     "type": "key",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to sorting ventana by its article is la (feminine).",
+     "type": "key",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to sorting silla by its article is la (feminine).",
+     "type": "key",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to sorting cuaderno by its article is el (masculine).",
+     "type": "key",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to sorting abuelo by its article is el (masculine).",
+     "type": "key",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to sorting puerta by its article is la (feminine).",
+     "type": "key",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A table is la mesa and a book is el libro; nothing about the object is male or female, the word simply belongs to one group.",
+     "type": "fact",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Words ending in -e or a consonant can be either gender: el café, la noche, el papel, la ciudad.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "English links he and she to people, so it seems gender should depend on a person.",
+     "type": "fact",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "English only marks gender for people and some animals, so learners look for a reason in the meaning.",
+     "type": "fact",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which article goes with \"casa\" (house) is la.",
+     "type": "key",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Casa ends in -a and is feminine: la casa, always, whoever lives there.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which is correct for \"the notebook\" (cuaderno) is el cuaderno.",
+     "type": "key",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Most -o nouns are masculine (el libro) and most -a nouns are feminine (la casa), so learn every noun with its article.",
+     "type": "rule",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Cuaderno ends in -o and is masculine, so it takes el.",
+     "type": "rule",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which pair names a female friend correctly is la amiga.",
+     "type": "key",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A female friend is amiga, feminine, with la.",
+     "type": "rule",
+     "where": "check 1",
+     "status": "sourced",
+     "source": {
+      "title": "Grammatical gender",
+      "quote": "those that denote specifically female persons (or animals) are normally of feminine gender",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "Both the noun ending and the article change between masculine and feminine forms.",
+     "type": "rule",
+     "where": "check 1",
+     "status": "needs-person",
+     "source": {
+      "title": "Spanish nouns",
+      "quote": "the gender of the noun is marked only by the determiners or adjectives that agree with it. For instance, the feminine form of el soldado 'the (male) soldier' is la soldado 'the (female) soldier', with only the gender of the article ( el/la ",
+      "kind": "wikipedia_en_all"
+     },
+     "why": "a passage contradicts it"
+    },
+    {
+     "text": "The answer to the article that goes with \"ventana\" (window) is la.",
+     "type": "key",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Ventana ends in -a and is feminine: la ventana.",
+     "type": "rule",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    }
+   ]
+  },
+  "spanish/entry/80": {
+   "facts": 36,
+   "tally": {
+    "read-only": 26,
+    "sourced": 8,
+    "needs-person": 2
+   },
+   "computeFlags": null,
+   "statementsTrue": null,
+   "cost": 0.0046,
+   "seconds": 50,
+   "rows": [
+    {
+     "text": "To ask a friend's name, say \"¿Cómo te llamas?\".",
+     "type": "rule",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "To give your name in Spanish, say \"Me llamo ...\", which literally means \"I call myself\".",
+     "type": "rule",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "To ask someone you address formally for their name, say \"¿Cómo se llama usted?\".",
+     "type": "rule",
+     "where": "block 0",
+     "status": "sourced",
+     "source": {
+      "title": "llamar",
+      "quote": "¿Cómo se llama usted? ( formal ) ― What is your name?",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "Spanish names are pronounced with Spanish sounds.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In Spanish the letter j is a breathy h.",
+     "type": "rule",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "José is pronounced hoh-SEH.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Juan is pronounced hwahn.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Jorge is pronounced HOR-heh.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "sourced",
+     "source": {
+      "title": "Jorge",
+      "quote": "Spanish [ˈxoɾxe]",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "Spanish names are stressed where the accent mark says.",
+     "type": "rule",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "\"Mucho gusto\" means \"nice to meet you\".",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Mucho Gusto",
+      "quote": "Mucho gusto is Spanish for \"very nice (to meet you)\"",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "\"¿Y tú?\" means \"And you?\".",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "\"señor\" is abbreviated \"Sr.\" and means \"Mr.; sir\".",
+     "type": "vocab",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "\"señora\" is abbreviated \"Sra.\" and means \"Mrs.; ma'am\".",
+     "type": "vocab",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: señora",
+      "quote": "( abbreviation ) Sra. , Sra",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "\"señorita\" is abbreviated \"Srta.\" and means \"Miss (a young or unmarried woman)\".",
+     "type": "vocab",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The short forms of titles take a capital letter, as in \"Sr. Ruiz\".",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Written out in the middle of a sentence, a title is lowercase, as in \"el señor Ruiz\".",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Most Spanish speakers have two surnames.",
+     "type": "fact",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Traditionally the first surname comes from the father and the second from the mother.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "sourced",
+     "source": {
+      "title": "Double-barrelled name",
+      "quote": "the law requires them to take the first surname of the father and then the first surname of the mother",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "A person is called by their first surname: la señora García, not la señora López.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "needs-person",
+     "source": {
+      "title": "Spanish naming customs",
+      "quote": "It is not unusual, when the first surname is very common, like García in the example above, for a person to be referred to formally using both family names, or casually by their second surname only.",
+      "kind": "wikipedia_en_all"
+     },
+     "why": "a passage contradicts it"
+    },
+    {
+     "text": "Women usually keep their own surnames when they marry.",
+     "type": "fact",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Some countries now let parents choose which surname goes first.",
+     "type": "fact",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Each child takes the first surname of each parent.",
+     "type": "rule",
+     "where": "block 4",
+     "status": "sourced",
+     "source": {
+      "title": "Spanish naming customs",
+      "quote": "two surnames (the first surname of each parent)",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "The answer to how you politely address Carmen Torres Medina is Señora Torres.",
+     "type": "key",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "People are addressed by their first surname.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Medina is Carmen's second surname, usually from her mother, and it is not the one used with señora.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Señor is for a man.",
+     "type": "rule",
+     "where": "block 5",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: señor",
+      "quote": "señor (Spanish): mister , sir , lord ( title conferred on a married or older male )",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The answer to which surname Luis Ramírez Ortega most likely got from his father is Ramírez.",
+     "type": "key",
+     "where": "block 6",
+     "status": "needs-person",
+     "source": {
+      "title": "Luis Ortega Álvarez",
+      "quote": "the first or paternal surname is Ortega",
+      "kind": "wikipedia_en_all"
+     },
+     "why": "a passage contradicts it"
+    },
+    {
+     "text": "In English the last word of a name is the family name, so learners look at the end of a Spanish name.",
+     "type": "fact",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Traditionally the first surname, Ramírez, comes from the father, and the second, Ortega, from the mother.",
+     "type": "rule",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "\"apellido\" means surname.",
+     "type": "vocab",
+     "where": "block 7",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: apellido",
+      "quote": "apellido (Spanish): surname , last name",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The answer to how you formally greet your new boss Elena Vargas Soto is \"Buenos días, señora Vargas.\"",
+     "type": "key",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A person is addressed by the first surname, Vargas, and señora is the title for a woman.",
+     "type": "rule",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which sentence says \"My name is Daniel\" is \"Me llamo Daniel.\"",
+     "type": "key",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "\"Me llamo Daniel\" is the fixed way to say \"My name is Daniel\": it literally means \"I call myself Daniel\".",
+     "type": "rule",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to Pablo's two surnames, given parents Juan Pérez Ruiz and María García López, is Pérez García.",
+     "type": "key",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A child takes each parent's first surname, traditionally the father's first: Pérez García.",
+     "type": "rule",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    }
+   ]
+  },
+  "spanish/intermediate/112": {
+   "facts": 45,
+   "tally": {
+    "read-only": 18,
+    "sourced": 27
+   },
+   "computeFlags": null,
+   "statementsTrue": null,
+   "cost": 0.0058,
+   "seconds": 44,
+   "rows": [
+    {
+     "text": "Most look-alike words are real cognates, for example hotel is hotel.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A few look-alike words are false friends: they look like an English word and mean something different.",
+     "type": "definition",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A handful of false friends can turn a simple sentence into a very awkward one.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The Spanish word embarazada really means pregnant, not embarrassed.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "To say embarrassed in Spanish, say avergonzado or avergonzada, or me da vergüenza.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: avergonzado",
+      "quote": "avergonzado (Spanish): embarrassed , ashamed",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The Spanish word el éxito really means success, not exit.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: éxito",
+      "quote": "éxito (Spanish): success",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "To say exit in Spanish, say la salida.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: salida",
+      "quote": "salida (Spanish): exit , way out",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The Spanish word la librería really means bookstore, not library.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: librería",
+      "quote": "librería (Spanish): bookshop , bookstore",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "To say library in Spanish, say la biblioteca.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In Spain, constipado or constipada means having a cold; in parts of Latin America it means constipated.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "To say a cold in Spanish, say resfriado or resfriada; to say constipated, say estreñido or estreñida.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "To say carpet in Spanish, say la alfombra.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: alfombra",
+      "quote": "alfombra (Spanish): carpet , rug",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The Spanish word la carpeta really means folder, not carpet.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: carpeta",
+      "quote": "carpeta (Spanish): folder ( an organizer that papers are kept in )",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The Spanish word la ropa really means clothes, not rope.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: ropa",
+      "quote": "ropa (Spanish): garment , clothing , clothes , robes",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "To say rope in Spanish, say la cuerda.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: cuerda",
+      "quote": "cuerda (Spanish): feminine singular of cuerdo rope , cord , string",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The Spanish word la sopa really means soup, not soap.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: sopa",
+      "quote": "sopa (Spanish): soup",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "To say soap in Spanish, say el jabón.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: jabón",
+      "quote": "jabón (Spanish): soap",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "To say you have a cold, say estoy resfriado or estoy resfriada.",
+     "type": "vocab",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Constipado is a trap both ways: in Spain it means having a cold, while in parts of Latin America such as Paraguay and Argentina it is used for constipated.",
+     "type": "fact",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "In the word vergüenza, the ü makes the u heard.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "¡Qué vergüenza! (pronounced keh behr-GWEHN-sah) means \"How embarrassing!\"",
+     "type": "vocab",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: qué",
+      "quote": "( exclamative ) what a; such ¡ Qué lástima! ― What a pity!",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The answer to how you say you are embarrassed after spilling coffee on your boss is ¡Qué vergüenza!",
+     "type": "key",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Embarazada starts exactly like \"embarrass\", so the brain files it as a cognate.",
+     "type": "fact",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Embarazada means pregnant; to say you are embarrassed, say ¡Qué vergüenza! or estoy avergonzado or avergonzada.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "sourced",
+     "source": {
+      "title": "False friend",
+      "quote": "English embarrassed and Spanish embarazada ('pregnant')",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "The answer to matching éxito to its real meaning is success.",
+     "type": "key",
+     "where": "block 4",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: éxito",
+      "quote": "éxito (Spanish): success",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The answer to matching embarazada to its real meaning is pregnant.",
+     "type": "key",
+     "where": "block 4",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to matching librería to its real meaning is bookstore.",
+     "type": "key",
+     "where": "block 4",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: librería",
+      "quote": "librería (Spanish): bookshop , bookstore",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The answer to matching carpeta to its real meaning is folder.",
+     "type": "key",
+     "where": "block 4",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: carpeta",
+      "quote": "carpeta (Spanish): folder ( an organizer that papers are kept in )",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The answer to matching ropa to its real meaning is clothes.",
+     "type": "key",
+     "where": "block 4",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: ropa",
+      "quote": "ropa (Spanish): garment , clothing , clothes , robes",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The answer to matching sopa to its real meaning is soup.",
+     "type": "key",
+     "where": "block 4",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: sopa",
+      "quote": "sopa (Spanish): soup",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The answer to \"Where is the exit? ¿Dónde está la __?\" is salida.",
+     "type": "key",
+     "where": "block 5",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: salida",
+      "quote": "salida (Spanish): exit , way out",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The answer to \"I need to return a book to the library: Necesito ir a la __\" is biblioteca.",
+     "type": "key",
+     "where": "block 5",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: biblioteca",
+      "quote": "biblioteca (Spanish): library",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "The answer to \"The concert was a success: El concierto fue un __\" is éxito.",
+     "type": "key",
+     "where": "block 5",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: éxito",
+      "quote": "éxito (Spanish): success",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "To say embarrassed, say avergonzado or avergonzada, or ¡Qué vergüenza!, not embarazada, which means pregnant.",
+     "type": "vocab",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "To say exit, say la salida, not el éxito, which means success.",
+     "type": "vocab",
+     "where": "block 6",
+     "status": "sourced",
+     "source": {
+      "title": "éxito",
+      "quote": "The Spanish word for “exit” is salida",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "To say library, say la biblioteca, not la librería, which is a bookstore.",
+     "type": "vocab",
+     "where": "block 6",
+     "status": "sourced",
+     "source": {
+      "title": "librería",
+      "quote": "Librería is a false friend and does not mean library . The Spanish word for library is biblioteca .",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "To say constipated, say estreñido or estreñida, and avoid constipado, whose meaning changes by country.",
+     "type": "vocab",
+     "where": "block 6",
+     "status": "sourced",
+     "source": {
+      "title": "constipado",
+      "quote": "Constipado is a false friend and does not mean constipated . The Spanish word for constipated is estreñido or estreñida .",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "To say you have a cold, say estoy resfriado or resfriada, which is clear everywhere.",
+     "type": "vocab",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Embarazada is pregnant, éxito is success, librería is a bookstore, and constipado is best avoided; when a look-alike makes a strange sentence, check it.",
+     "type": "rule",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to what a coworker means by \"Mi hermana está embarazada\" is that her sister is pregnant.",
+     "type": "key",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Embarazada means pregnant; embarrassed is avergonzada.",
+     "type": "rule",
+     "where": "check 0",
+     "status": "sourced",
+     "source": {
+      "title": "False friend",
+      "quote": "Examples of false friends include English embarrassed and Spanish embarazada ('pregnant')",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "A library, where you borrow books, is la biblioteca; la librería is a bookstore where you buy them.",
+     "type": "rule",
+     "where": "check 1",
+     "status": "sourced",
+     "source": {
+      "title": "librería",
+      "quote": "Librería is a false friend and does not mean library . The Spanish word for library is biblioteca .",
+      "kind": "wiktionary_en_all"
+     }
+    },
+    {
+     "text": "The answer to where you go to borrow books for free is a la biblioteca.",
+     "type": "key",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to typing the Spanish word for \"exit\" is salida.",
+     "type": "key",
+     "where": "check 2",
+     "status": "sourced",
+     "source": {
+      "title": "Wiktionary: salida",
+      "quote": "salida (Spanish): exit , way out",
+      "kind": "wiktionary"
+     }
+    },
+    {
+     "text": "Exit is salida; éxito means success.",
+     "type": "rule",
+     "where": "check 2",
+     "status": "sourced",
+     "source": {
+      "title": "éxito",
+      "quote": "Éxito is a false friend of English exit . The Spanish word for “exit” is salida",
+      "kind": "wiktionary_en_all"
+     }
+    }
+   ]
+  },
+  "chess/chess_board_explorer/42": {
+   "facts": 40,
+   "tally": {
+    "read-only": 36,
+    "sourced": 3,
+    "needs-person": 1
+   },
+   "computeFlags": null,
+   "statementsTrue": null,
+   "cost": 0.0047,
+   "seconds": 32,
+   "rows": [
+    {
+     "text": "The rook moves in straight lines only.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The knight moves in a little L-shape and can hop over pieces.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "On an empty board, one of the rook and the knight can roll from one end of the board to the other end in a single move.",
+     "type": "fact",
+     "where": "block 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook can roll along any one lane as far as it likes in a single move, but only in these four directions, never a slanted one.",
+     "type": "rule",
+     "where": "block 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook is the straight-line piece.",
+     "type": "definition",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook can slide up, down, left or right, and it can go as far as it likes in one move, from one end of the board to the other end, along a straight line.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "Chesquerque",
+      "quote": "A rook can move orthogonally any number of points in a straight line, as in standard chess.",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "The rook never moves diagonally.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "A slanted move like e4 to f5 is not a rook move.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Slanted lines belong to the bishop and the queen, not the rook.",
+     "type": "fact",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook cannot jump.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "sourced",
+     "source": {
+      "title": "Rook (Chess)",
+      "quote": "The rook cannot jump over pieces.",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "If a piece stands in the rook's lane, the rook must stop.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Rook moves are written with the letter R.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "If a rook lands on an enemy piece, an x is written, like Rxd7, which means the rook captured something on d7.",
+     "type": "rule",
+     "where": "block 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook can go as far as it likes along a straight line in one move.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "sourced",
+     "source": {
+      "title": "Chesquerque",
+      "quote": "A rook can move orthogonally any number of points in a straight line, as in standard chess.",
+      "kind": "wikipedia_en_all"
+     }
+    },
+    {
+     "text": "The rook stops on the first enemy piece in its path and takes it.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook can travel the full length of a row or a column.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook stops right in front of its own piece and cannot pass it.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook cannot slide on a slanted line; diagonals belong to the bishop and queen.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook cannot hop over anything standing in its lane, friend or enemy.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook cannot end its move on a square where its own team already stands.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which squares a rook on e4 can reach in one move on an empty board is every square on the e-file and every square on row 4.",
+     "type": "key",
+     "where": "block 6",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook cannot change direction in the same move; it moves in straight lines only.",
+     "type": "rule",
+     "where": "block 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The player must roll the rook across the board and capture both black pawns before the moves run out.",
+     "type": "procedure",
+     "where": "block 7",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook only rolls along straight lines and stops at the first piece.",
+     "type": "rule",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Jumping is a knight-only trick, and slanted roads belong to the bishop and queen; the rook never slants and never leaps.",
+     "type": "fact",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Going left from e4, the first piece the rook meets is the black pawn on c4, so Rxc4 is legal: the rook stops right on that square and captures.",
+     "type": "computation",
+     "where": "block 8",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook moves up, down, left and right in straight lines only.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook never moves on diagonals; slanted lines belong to the bishop and the queen.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook can move any distance in one move, end to end.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook never jumps; it stops at the first piece in its path.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook captures by landing on the first enemy piece and taking it, written Rxd7.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook stops right before its own pieces and can never land on or pass them.",
+     "type": "rule",
+     "where": "block 9",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which sentence tells the true rule for how a rook moves is: it slides up, down, left or right, as far as it likes in one move.",
+     "type": "key",
+     "where": "check 0",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook moves only along straight lines — up, down, left or right — and can travel any distance in one move; diagonals and jumping are not rook moves.",
+     "type": "rule",
+     "where": "check 0",
+     "status": "needs-person",
+     "source": {
+      "title": "Chesquerque",
+      "quote": "On a point with diagonals, though, a rook can also move one step diagonally.",
+      "kind": "wikipedia_en_all"
+     },
+     "why": "a passage contradicts it"
+    },
+    {
+     "text": "The answer to rolling the rook up the d-file as far as it can go is Rd5.",
+     "type": "key",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to finding the rook's capture is Rxd7.",
+     "type": "key",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The rook rolls straight up from d4 through d5, but the white pawn on d6 blocks the lane, so d5 is the farthest square it can reach.",
+     "type": "computation",
+     "where": "check 1",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "Rolling straight up the d-file, the first piece the rook meets is the black pawn on d7, so it stops on that square and captures it.",
+     "type": "computation",
+     "where": "check 2",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "The answer to which move a rook on c3 is not allowed to make is rook to f6.",
+     "type": "key",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    },
+    {
+     "text": "From c3, the squares c6, g3 and a3 all sit on straight lines (same file or same row), but f6 is on a slanted diagonal, and the rook never moves diagonally.",
+     "type": "computation",
+     "where": "check 3",
+     "status": "read-only",
+     "source": null
+    }
+   ]
+  }
+ },
+ "seconds": 206
+}

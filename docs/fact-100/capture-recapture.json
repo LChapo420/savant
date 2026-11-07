@@ -1,0 +1,184 @@
+{
+ "calibration": {
+  "dev": {
+   "truth": 158,
+   "a": 151,
+   "b": 138,
+   "ab": 137,
+   "found": 152,
+   "n": 152.1014492753623,
+   "ratio": 1.039,
+   "catchUnion": 0.962,
+   "catchA": 0.956
+  },
+  "heldout": {
+   "truth": 82,
+   "a": 73,
+   "b": 67,
+   "ab": 66,
+   "found": 74,
+   "n": 74.1044776119403,
+   "ratio": 1.107,
+   "catchUnion": 0.902,
+   "catchA": 0.89
+  }
+ },
+ "groups": {
+  "english (no fact check before)": {
+   "levels": 29,
+   "confirmedRows": 94,
+   "clusters": 83,
+   "a": 76,
+   "b": 25,
+   "both": 18,
+   "chapman": 104.4,
+   "estimates": {
+    "dev": {
+     "chapmanCorrected": [
+      92.9,
+      108.3,
+      136.2
+     ],
+     "foundOverCatch": [
+      84.1,
+      86.3,
+      89.2
+     ],
+     "remainingPerLevelBeforeRepair": [
+      0.037,
+      0.871,
+      1.833
+     ]
+    },
+    "heldout": {
+     "chapmanCorrected": [
+      97.4,
+      114.5,
+      144.7
+     ],
+     "foundOverCatch": [
+      86.2,
+      92,
+      100.1
+     ],
+     "remainingPerLevelBeforeRepair": [
+      0.109,
+      1.087,
+      2.127
+     ]
+    }
+   }
+  },
+  "others (passed a check)": {
+   "levels": 64,
+   "confirmedRows": 7,
+   "clusters": 7,
+   "a": 5,
+   "b": 2,
+   "both": 0,
+   "chapman": 17,
+   "estimates": {
+    "dev": {
+     "chapmanCorrected": [
+      7.2,
+      17.6,
+      20.1
+     ],
+     "foundOverCatch": [
+      7.1,
+      7.3,
+      7.5
+     ],
+     "remainingPerLevelBeforeRepair": [
+      0.001,
+      0.165,
+      0.205
+     ]
+    },
+    "heldout": {
+     "chapmanCorrected": [
+      7.6,
+      18.6,
+      22.2
+     ],
+     "foundOverCatch": [
+      7.3,
+      7.8,
+      8.4
+     ],
+     "remainingPerLevelBeforeRepair": [
+      0.004,
+      0.181,
+      0.238
+     ]
+    }
+   }
+  },
+  "all": {
+   "levels": 93,
+   "confirmedRows": 101,
+   "clusters": 90,
+   "a": 81,
+   "b": 27,
+   "both": 18,
+   "chapman": 119.8,
+   "estimates": {
+    "dev": {
+     "chapmanCorrected": [
+      104.5,
+      124.5,
+      159.4
+     ],
+     "foundOverCatch": [
+      91.2,
+      93.6,
+      96.7
+     ],
+     "remainingPerLevelBeforeRepair": [
+      0.012,
+      0.371,
+      0.746
+     ]
+    },
+    "heldout": {
+     "chapmanCorrected": [
+      110.9,
+      132.4,
+      170.3
+     ],
+     "foundOverCatch": [
+      93.4,
+      99.7,
+      108.5
+     ],
+     "remainingPerLevelBeforeRepair": [
+      0.037,
+      0.455,
+      0.863
+     ]
+    }
+   }
+  }
+ },
+ "freshList": {
+  "auditErrors": 90,
+  "freshConfirmed": 23,
+  "inBoth": 20,
+  "auditRecall": 0.87,
+  "recallRange": [
+   0.739,
+   1
+  ],
+  "chapmanN": 103,
+  "nRange": [
+   90,
+   120.3
+  ],
+  "levels": 93,
+  "remainingPerLevelAfterAudit": [
+   0,
+   0.14,
+   0.326
+  ]
+ }
+}
