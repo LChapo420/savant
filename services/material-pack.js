@@ -323,7 +323,8 @@ async function build(userId, materialId, opts = {}) {
     const useful = all.cards.length || all.quiz.length || all.test.length;
     const status = !useful ? 'failed' : (stopped || ctx.unanswered || ctx.dropped.fact_unchecked ? 'partial' : 'ready');
     saved = db.update('material_packs', saved.id, {
-      ...all, status, spec_hash: ps.spec.isDefault ? null : learningSpec.specHash(ps.spec), dropped: ctx.dropped, models: [...ctx.models], tokens_used: ctx.budget.used,
+      ...all, status, spec_hash: ps.spec.isDefault ? null : learningSpec.specHash(ps.spec), spec_sig: ps.spec.isDefault ? null : require('./spec-sig').specSig(ps.spec), // eslint-disable-line global-require
+      dropped: ctx.dropped, models: [...ctx.models], tokens_used: ctx.budget.used,
       error: status === 'failed' ? (stopped ? 'token budget' : ctx.unanswered ? 'no_answer' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     db.saveSoon();

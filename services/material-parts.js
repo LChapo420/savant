@@ -765,9 +765,11 @@ async function followPart(userId, materialId, ref, opts = {}) {
   const sigs = lazy('./spec-sig');
   const now = sigs.specSig(spec);
   const course = courseRow(userId, materialId);
-  const was = (row && row.sig) || (course && course.lesson_sig) || null;
-  if (!opts.force && was && !sigs.driftedEnough(was, now)) return { skipped: 'no drift' };
-  if (!opts.force && !was) return { skipped: 'no signature' };
+  // What the part was written to: its last rewrite, or what its own build recorded. A build that recorded nothing was written to the default learner.
+  const kind = String(ref).split(':')[0];
+  const built = ['note'].includes(kind) ? rowOf('material_notes', userId, materialId) : ['summary', 'packcard', 'pack'].includes(kind) ? rowOf('material_packs', userId, materialId) : null;
+  const was = (row && row.sig) || (built && built.spec_sig) || (!built && course && course.lesson_sig) || sigs.specSig(ls.defaultSpec());
+  if (!opts.force && !sigs.driftedEnough(was, now)) return { skipped: 'no drift' };
   const base = baseOf(userId, materialId, ref);
   if (!base) return { skipped: 'no part' };
   const { asked, topic } = asksFromSpec(spec, base.kind);

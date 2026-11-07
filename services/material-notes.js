@@ -224,6 +224,7 @@ async function build(userId, materialId, opts = {}) {
     const coverage = passages.length ? Math.round((touched.size / passages.length) * 100) : 0;
     const status = !sections.length ? 'failed' : (stopped || unanswered || factUnchecked ? 'partial' : 'ready');
     saved = db.update('material_notes', saved.id, {
+      spec_sig: spec.isDefault ? null : require('./spec-sig').specSig(spec), // eslint-disable-line global-require
       fact_fixed: factFixed, fact_unchecked: factUnchecked, sections, dropped, trimmed_extras: trimmed, analogies_fixed: analogiesFixed, revised_parts: revisions, open_problems: [...open], coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
       error: status === 'failed' ? (stopped ? 'token budget' : unanswered ? 'no_answer' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });

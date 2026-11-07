@@ -241,7 +241,7 @@ async function realCases() {
     { id: 'txt-very-short', kind: 'txt', name: 'short.txt', bytes: Buffer.from('Water boils at 100 degrees Celsius at sea level. At higher altitude it boils at a lower temperature because the air pressure is lower.'), label: 'ordinary', short: true },
     { id: 'txt-long', kind: 'txt', name: 'long.txt', bytes: Buffer.from(longText), label: 'ordinary, about 15,000 words', buildMs: 1800000 },
     { id: 'pptx-slides', kind: 'pptx', name: 'book.pptx', bytes: await file('h3', 'pptx'), label: 'ordinary' },
-    { id: 'png-scan', kind: 'png', name: 'scan.png', bytes: await file('h6', 'png'), label: 'a page photographed, if OCR is installed' },
+    { id: 'pdf-scan', kind: 'scan', name: 'scan.pdf', bytes: await file('h6', 'pdf-scan'), label: 'messy: a scanned PDF of rough notes, if OCR is installed' },
     { id: 'spanish', kind: 'txt', name: 'es.txt', bytes: Buffer.from(require('./lib/real-files').SPANISH), label: 'not in English' },
     { id: 'junk', kind: 'bin', name: 'x.bin', bytes: Buffer.from(Array.from({ length: 3000 }, (_, i) => (i * 37) % 251)), label: 'random bytes', refuse: true },
   ];
