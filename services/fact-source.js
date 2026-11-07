@@ -78,20 +78,26 @@ async function sourceClaim(claim, { facts = null, topic = '', useOffline = true,
   return { status: supported(best) ? 'sourced' : 'unsourced', best, tried: docs.length };
 }
 
+const around = (text, sentence) => { const t = String(text); const i = t.indexOf(sentence.slice(0, 60)); return i < 0 ? '' : t.slice(Math.max(0, i - 220), i + sentence.length + 220); };
 const sentencesOf = (t) => String(t).replace(/\[\[eg\]\][\s\S]*?\[\[\/eg\]\]/g, ' ').split(/(?<=[.!?])\s+|\n+/).map((x) => x.trim()).filter((x) => x.length > 15 && /[a-z]{3}/i.test(x));
-const RULE_SYSTEM = 'You compare a sentence from a rewritten lesson with the verified facts it must rest on. A personal example is fine as long as what it teaches follows from the facts. Answer ONLY from the facts given, not from memory. supported: what the sentence teaches follows from the facts. unsupported: it states something the facts do not say, or the opposite of what they say.';
-const RULE_SCHEMA = { type: 'object', required: ['verdict'], properties: { verdict: { type: 'string', enum: ['supported', 'unsupported'] }, why: { type: 'string' } } };
+const RULE_SYSTEM = `You compare a sentence from a rewritten lesson with the verified facts it must rest on. Answer ONLY from the facts given, not from memory.
+contradicted: the sentence says the opposite of a fact, or something a fact rules out, or the wrong number, name or rule.
+unsupported: it states a new claim about the subject that the facts do not contain.
+fine: what it teaches follows from the facts, or it is only an explanation, an example, an analogy, a question, encouragement or a transition.
+Read CONTEXT, the text around the sentence: a sentence may be a question, a wrong option, a thing not to do, or a sample of a mistake. That is fine unless the context presents it as true.
+If contradicted, quote the fact.`;
+const RULE_SCHEMA = { type: 'object', required: ['verdict'], properties: { verdict: { type: 'string', enum: ['contradicted', 'unsupported', 'fine'] }, quote: { type: 'string' } } };
 
 /**
  * The check a rewrite passes before one learner sees it: errors added after the level was verified. Background or build time; it answers in seconds on a CPU, not instantly.
  *   text         the rewrite, personal examples between [[eg]] marks
  *   bank         verified facts and the verified lesson text, as strings
  *   interests    words of the learner's hobbies an example may use
- *   rule         optional (sentence, facts) => Promise<boolean unsupported>: a cheap ruling on what the local models flag
+ *   rule         optional (sentence, facts, context) => Promise<boolean>: true only when a cheap reader finds the sentence contradicted by the facts (RULE_SYSTEM). Without it a low score alone is a flag; measured, that fails every rewrite, so production passes a rule
  *   stage1Fn     for tests; defaults to the local checkers
  * Returns { status: 'pass'|'fail'|'not_checked', problems }. If the local checkers cannot answer it is 'not_checked', never 'pass'.
  */
-async function checkRewrite({ text, bank, track = '', interests = [], rule = null, stage1Fn = stage1, threshold = Number(process.env.FACT_REWRITE_THRESHOLD || 0.3) }) {
+async function checkRewrite({ text, bank, track = '', interests = [], rule = null, stage1Fn = stage1, threshold = Number(process.env.FACT_REWRITE_THRESHOLD || 0.5) }) {
   const B = require('./fact-bank'); // eslint-disable-line global-require
   const allowed = B.allowedFrom(bank, track, interests);
   const problems = [];
@@ -104,7 +110,7 @@ async function checkRewrite({ text, bank, track = '', interests = [], rule = nul
     const s = scores[i];
     if (!(s.factcg >= threshold && s.minicheck >= threshold)) {
       let keep = true;
-      if (rule) { try { keep = await rule(sents[i], fromBank(sents[i], bank, 6).map((x) => x.text)); } catch { keep = true; } } // eslint-disable-line no-await-in-loop
+      if (rule) { try { keep = await rule(sents[i], fromBank(sents[i], bank, 6).map((x) => x.text), around(text, sents[i])); } catch { keep = true; } } // eslint-disable-line no-await-in-loop
       if (keep) problems.push({ kind: 'unsupported', value: sents[i] });
     }
   }
