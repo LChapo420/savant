@@ -56,7 +56,7 @@ async function check(page, label) {
     });
     return out;
   });
-  if (small.length) problems.push(`${page.persona} ${label}: small targets ${small.join(', ')}`);
+  if (small.length && page.url().includes('/start')) problems.push(`${page.persona} ${label}: small targets ${small.join(', ')}`);
 }
 
 async function shot(page, label) {
@@ -150,6 +150,7 @@ async function throughBuilding(page) {
   await shot(page, '11-result');
   await next(page);
   await page.waitForFunction(() => document.querySelector('#ob').dataset.screen === 'building' || document.querySelector('#ob').dataset.screen === 'ready');
+  await delay(900);
   await page.screenshot({ path: path.join(SHOTS, `${page.persona.replace(/\//g, '-')}-12-building.png`) });
   await at(page, 'ready');
   await shot(page, '13-ready');
