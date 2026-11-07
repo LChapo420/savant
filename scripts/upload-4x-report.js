@@ -2,7 +2,8 @@
 /**
  * Report of scripts/upload-4x-sim.js: multiple per goal and baseline, worst individuals, and the interval gate. SIMULATED. docs/UPLOAD-4X.md.
  *   node scripts/upload-4x-report.js FILE [FILE2...]       (several files are pooled: different seeds, same settings)
- *   node scripts/upload-4x-report.js --gate MAIN.json --variant NAME=FILE ...   the gate (see gateLines)
+ *   node scripts/upload-4x-report.js --gate MAIN.json --noise A=B --variant NAME=FILE ...   the gate (see gateLines)
+ *   node scripts/upload-4x-report.js --sens NAME=FILE ...   one row per assumption moved
  */
 const fs = require('fs');
 
@@ -93,12 +94,28 @@ function gateLines(rows, name, main) {
 
 const argv = process.argv.slice(2);
 if (argv[0] === '--gate') {
-  const mainFiles = []; const variants = [];
+  const mainFiles = []; const variants = []; let noise = null;
   for (let i = 1; i < argv.length; i++) {
-    if (argv[i] === '--variant') { const [n, f] = argv[++i].split('='); variants.push([n, f]); } else mainFiles.push(argv[i]);
+    if (argv[i] === '--variant') { const [n, f] = argv[++i].split('='); variants.push([n, f]); } else if (argv[i] === '--noise') { noise = argv[++i].split('='); } else mainFiles.push(argv[i]);
   }
   const lines = gateLines(load(mainFiles), 'main', true);
+  if (noise) {
+    const a = load([noise[0]]); const b = load([noise[1]]);
+    for (const g of GOALS) { const d = a.map((r, i) => r.goals[g].lean.score - b[i].goals[g].lean.score); lines.push(`noise, today's intervals against themselves on another random stream, ${g}: worst 5/1% ${f1(100 * qLow(d, 0.05))}/${f1(100 * qLow(d, 0.01))} pts`); }
+  }
   for (const [n, f] of variants) lines.push(...gateLines(load([f]), n, false));
+  console.log(lines.join('\n'));
+} else if (argv[0] === '--sens') {
+  const lines = ['row | goal: expand minutes, exam; against careful mean x (n reaching); against reread mean x (n reaching)'];
+  for (const pair of argv.slice(1)) {
+    const [n, f] = pair.split('=');
+    const rows = load([f]);
+    for (const g of ['1 month', '1 year', 'no test day (3 y)', 'test in 1 year']) {
+      const c = multiples(rows, 'expand', 'careful').find((l) => l.g === g);
+      const r = multiples(rows, 'expand', 'reread').find((l) => l.g === g);
+      lines.push(`${n} | ${g}: ${f1(mean(rows.map((x) => x.goals[g].expand.min)))} min, exam ${f2(mean(rows.map((x) => x.goals[g].expand.score)))}; careful x${f2(c.mean)} (${c.n}/${c.of}, worst 1% x${f2(c.w1)}); reread x${f2(r.mean)} (${r.n}/${r.of}, at 4x ${r.at4})`);
+    }
+  }
   console.log(lines.join('\n'));
 } else {
   console.log(report(load(argv)));

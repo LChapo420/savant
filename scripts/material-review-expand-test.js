@@ -81,7 +81,7 @@ check('a horizon is not known until the course is finished', E.endInDays({ statu
 
 // ── the real scheduleReview ──
 const USER = 910001;
-const mat = db.insert('materials', { user_id: USER, title: 'Test', retention_goal: null, created_at: new Date(T0).toISOString() });
+const mat = db.insert('materials', { user_id: USER, title: 'Test', text: 'Mitochondria release usable energy.', retention_goal: null, created_at: new Date(T0).toISOString() });
 const row = () => ({ user_id: USER, material_id: mat.id, skills: {}, forget_m: 0, fresh: null });
 {
   const r = row(); const st = { status: 'mastered', right: 13, wrong_n: 0 };
@@ -97,7 +97,7 @@ process.env.UPLOAD_REVIEW_EXPAND = 'on';
   check('and writes a due date from it', Date.parse(st.due) === t - seq[8] * DAY + seq[8] * DAY);
 }
 {
-  db.update('materials', mat.id, { retention_goal: { horizon: 'month', set_on: '2026-06-01' } });
+  db.update('materials', mat.id, { retention_goal: { horizon: 'months', set_on: '2026-06-01' } });
   const row0 = db.byId('materials', mat.id).retention_goal;
   const horizonGoal = require('../services/retention-goal').forMaterial(USER, mat.id, T0); // eslint-disable-line global-require
   if (horizonGoal.status === 'horizon') {
@@ -108,7 +108,7 @@ process.env.UPLOAD_REVIEW_EXPAND = 'on';
     I.scheduleReview(r, st, T0);
     check('a horizon, finished, memory holds: no more reviews', st.due === null && st.goal_done === true, st);
   } else {
-    check('the month horizon reads as a horizon', false, [row0, horizonGoal]);
+    check('the months horizon reads as a horizon', false, [row0, horizonGoal]);
   }
   db.update('materials', mat.id, { retention_goal: null });
 }
@@ -130,12 +130,12 @@ process.env.UPLOAD_REVIEW_EXPAND = 'on';
 // ── a real card ──
 {
   const added = cards.add(USER, mat.id, { front: 'What is the powerhouse?', back: 'The mitochondrion.' }, T0);
-  const id = added && (added.id || (added.card && added.card.id));
-  if (id && typeof cards.rate === 'function') {
+  const id = added && added.card;
+  if (id && typeof cards.review === 'function') {
     let t = T0; let last = 0; let ok = true;
-    for (let i = 0; i < 12; i++) { const o = cards.rate(USER, mat.id, id, 'good', t); if (o.error) { ok = false; break; } last = o.next_in_days; t += o.next_in_days * DAY; }
+    for (let i = 0; i < 12; i++) { const o = cards.review(USER, mat.id, id, 'good', t); if (o.error) { ok = false; break; } last = o.next_in_days; t += o.next_in_days * DAY; }
     check('a card rated good twelve times passes the 15-day stop', ok && last > 15, last);
-    const miss = cards.rate(USER, mat.id, id, 'again', t);
+    const miss = cards.review(USER, mat.id, id, 'again', t);
     check('"again" comes back in minutes', miss.next_in_days === 0);
   } else {
     check('card helpers found', false, Object.keys(cards));
