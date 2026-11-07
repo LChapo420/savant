@@ -118,6 +118,26 @@ async function runInvented(ids) {
   });
 }
 
+/** Can a learner follow it? Fragments, things that dangle, order that makes no sense. 1 to 5, a blind read of each arm's reading, each on its own. */
+async function runCoherence(ids) {
+  const file = path.join(L.OUT_DIR, 'gate-coherence.json');
+  const store = L.load(file, { rows: [] });
+  const docs = docsOf().filter((d) => !ids.length || ids.includes(d));
+  const SCHEMA = { type: 'object', properties: { score: { type: 'integer' }, problems: { type: 'array', items: { type: 'string' } } }, required: ['score'] };
+  const SYS = 'You read a study text meant for one student working alone, section by section. Score from 1 to 5 how well it can be followed as teaching: 5 = reads clearly, each section hangs together; 3 = usable but with fragments, dangling references or odd order; 1 = a pile of scraps. Do not judge length or whether it is complete. List up to 3 concrete problems. Reply with JSON {"score": n, "problems": []}.';
+  await J.pool(docs, 3, async (id) => {
+    const c = L.load(path.join(L.OUT_DIR, 'courses', `${id}.json`));
+    const a = arms(c);
+    for (const name of ['today', 'full', 'lean', 'core']) for (const fam of JUDGES) {
+      if (store.rows.some((r) => r.doc === id && r.arm === name && r.fam === fam)) continue;
+      // eslint-disable-next-line no-await-in-loop
+      const j = await LJ.askJ(fam, { system: SYS, user: a[name].text.slice(0, 16000), schema: SCHEMA, schemaName: 'coherence', maxTokens: 2500 });
+      store.rows.push({ doc: id, arm: name, fam, score: j ? j.score : null, problems: j ? j.problems : null });
+      L.save(file, store);
+    }
+  });
+}
+
 function report() {
   const store = L.load(OUT, { rows: [] });
   const pct = (x) => (x == null ? '  -' : String(Math.round(x * 100)).padStart(3));
@@ -139,6 +159,11 @@ function report() {
       console.log(`  ${arm.padEnd(12)} ${share.toFixed(2)}x  emph ${pct(mean(rows.map((r) => r.emph)))}  plain ${pct(mean(rows.map((r) => r.plain)))}  n=${rows.length}  vs today whole: emph ${pct(mean(diffs.map((x) => x.e)))} (worst ${worstE ? `${pct(worstE.e)} ${worstE.d}` : '-'})  plain ${pct(mean(diffs.map((x) => x.p)))} (worst ${worstP ? `${pct(worstP.p)} ${worstP.d}` : '-'})`);
     }
   }
+  const coh = L.load(path.join(L.OUT_DIR, 'gate-coherence.json'), { rows: [] });
+  if (coh.rows.length) {
+    console.log('\ncan it be followed, 1 to 5, blind read');
+    for (const fam of JUDGES) console.log(`  ${fam} ${['today', 'full', 'lean', 'core'].map((arm) => { const v = coh.rows.filter((r) => r.fam === fam && r.arm === arm && r.score != null).map((r) => r.score); return `${arm} ${v.length ? (v.reduce((x, y) => x + y, 0) / v.length).toFixed(2) : '-'} (min ${v.length ? Math.min(...v) : '-'}, n ${v.length})`; }).join('; ')}`);
+  }
   const inv = L.load(INV, { rows: [] });
   if (inv.rows.length) {
     console.log('\ninvented facts per course, sentence-by-sentence judge');
@@ -155,6 +180,7 @@ function report() {
   const ids = process.argv.slice(3);
   if (cmd === 'exam') await runExam(ids);
   else if (cmd === 'invented') await runInvented(ids);
+  else if (cmd === 'coherence') await runCoherence(ids);
   else report();
   console.log('spend', JSON.stringify(J.spend));
   process.exit(0);

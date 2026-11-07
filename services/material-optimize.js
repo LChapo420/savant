@@ -182,8 +182,22 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
   const carries = new Map();
   const titles = new Map((course.skills || []).map((s) => [s.id, K.termSet(s.title)]));
   const ownedCount = new Map();
+  for (const f of facts) f.owner = ownerOf(f, course, passageOf, sents, idx, titles, ownedCount);
+  // What the material says side by side stays side by side: a sentence between two of another skill's joins them, and the rows of one table stay together.
+  for (let pass = 0; pass < 2; pass += 1) {
+    for (let i = 1; i < facts.length - 1; i += 1) if (facts[i - 1].owner === facts[i + 1].owner && facts[i].owner !== facts[i - 1].owner) facts[i].owner = facts[i - 1].owner;
+  }
+  const rowOf = (f) => /^[^:;]{1,60}: [^;]+, [^;]+(?:; [^;]+, [^;]+)*\.$/.test(f.text);
+  for (let i = 0; i < facts.length;) {
+    if (!rowOf(facts[i])) { i += 1; continue; }
+    let j = i; while (j + 1 < facts.length && rowOf(facts[j + 1])) j += 1;
+    const votes = new Map(); for (let k = i; k <= j; k += 1) votes.set(facts[k].owner, (votes.get(facts[k].owner) || 0) + 1);
+    const byTitle = (course.skills || []).map((s) => ({ id: s.id, v: overlap(titles.get(s.id), new Set(facts.slice(i, j + 1).flatMap((x) => [...x.terms]))) })).sort((a, b) => b.v - a.v)[0];
+    const owner = byTitle && byTitle.v >= 0.5 ? byTitle.id : [...votes.entries()].sort((a, b) => b[1] - a[1])[0][0];
+    for (let k = i; k <= j; k += 1) facts[k].owner = owner;
+    i = j + 1;
+  }
   for (const f of facts) {
-    f.owner = ownerOf(f, course, passageOf, sents, idx, titles, ownedCount);
     const ns = carriersOf(f, sents, idx);
     if (ns.length) carrier.set(f.i, ns[0]);
     for (const n of ns) { if (!carries.has(n)) carries.set(n, []); carries.get(n).push(f); }
