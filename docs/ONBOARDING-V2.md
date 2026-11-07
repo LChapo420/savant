@@ -13,7 +13,7 @@ Switch: `ONBOARDING_V2=on`. Off (the default) means today's flow, unchanged: `/s
 | Consent email, resend, correct the address | `requestConsent`, `POST /api/consent/child/request`, `/parent-needed` | `parental_consents` | parent pages | Same functions |
 | Parent's answer, opt-ins, revoke, parent account | `parent-*` pages, `routes/consent.js` | `parental_consents` | `access` | Untouched |
 | Limits on a child without consent: no camera or mic, no typed words to AI, no uploads | `routes/consent.js` `gate`, `permissionsGate`, `services/ai.js` | n/a | safety | Untouched. Guests get the same limits (section 4) |
-| Privacy agreement line | `register.html` | implied by creating the account | everything sent to outside AI | Step 9, same line. Nothing personal reaches outside AI before it |
+| Privacy agreement line | `register.html` | implied by creating the account | everything sent to outside AI | A real choice right after age, recorded in `learner_agreements`. Nothing personal reaches outside AI before it |
 | Friend's share link `?ref=` | `register`, `services/referrals.js` | `users.referred_by` | referral counts | Kept through the redirect, attached at claim |
 | Landing page subject `?track=` and `?next=` | `auth.js` | none | `/act` landing | `?track=` preselects the subject; `?next=` is honoured after claim |
 | ACT check result carries over | `services/act-check.js` `carry` | `subject_placements` | ACT applicants | Called at claim, as at register |
@@ -37,11 +37,13 @@ Should be there and was not: why they are learning; a retention goal at the star
 
 Approved order kept: Welcome, tutor, age, learn, why and by when, interests and the rewrite, level, first lesson, save, reminders.
 
+Added by the owner, 7 Nov: an agreement step right after age (section 4).
+
 Changes, each forced:
 
 1. **Under-consent-age learners give a nickname and a parent's email just before step 7, not at step 9.** The law and the code: today nothing past the age screen opens for a child until a parent's email is on file (`js/onboarding.js ageStep`), and the level check is the first thing stored against them on the server. Steps 4 to 6 stay on the device only, so nothing about the child reaches the server before the parent has been told. Username and password stay at step 9. No child email is ever asked for.
-2. **Own notes only: step 7 and 8 do not happen before the account.** Turning an upload into lessons sends it to outside AI, which needs consent first. So those learners go 1 to 6, save, then upload. Child accounts do not see this option (`CHILD_MEDIA_UPLOAD`).
-3. **The in-grade placement comes after the first lesson, as an offer, rather than before it.** Step 8 says the lesson opens right away, and the old chain asked a second quiz first. The learner starts at lesson 1 of the grade the walk found. The last screen links to the existing retake ("skip what you know in this grade").
+2. **Own notes only: step 7 and 8 do not happen before the account.** Uploads stay with an account, so those learners go 1 to 6, save, then upload. Child accounts do not see this option (`CHILD_MEDIA_UPLOAD`).
+3. **The in-grade placement comes after the first lesson, as an offer, rather than before it.** Step 8 says the lesson opens right away, and the old chain asked a second quiz first. The learner starts at the first teaching level of the grade the walk found (level 10 in most grades; levels 1 to 9 are practice, and nothing is marked cleared on the way, as with a placement). The last screen links to the existing retake ("skip what you know in this grade").
 4. **Only the Quick walk runs inside the flow.** Balanced and Accurate remain on `/subject-placement`.
 
 ## 3. Under-13s and other under-consent-age learners
@@ -53,17 +55,29 @@ Changes, each forced:
 - Step 9: username and password. If nobody answers in 14 days the existing sweep deletes the account, unchanged.
 - The chosen interest reaches `profiles.survey` only once `ai_free_text` is true; until then it stays in `onboarding_answers`, which export and deletion cover.
 
-## 4. Guest data
+## 4. Agreement and guest data
 
-A self-route visitor gets a real `users` row with `guest: true`, no email, no password, and `access().state === 'guest'`, created at step 7 and not before. Steps 3 to 6 live in the session and on the device.
+**Everyone agrees before they get access (owner, 7 Nov).** Right after age, a learner at or over their country's consent age sees the beta terms, privacy and outside AI services, and chooses `I agree to all three` or `I don't agree`. Neither is picked and Continue is off until one is. Declining stops with "You can't use the beta without this", the privacy link and a way to choose again; it creates nothing on the server. No step past it can be reached without agreeing. An under-consent-age learner never sees it: their parent decides, as today. There is no separate terms page yet, so the terms are the words on the screen (`AGREEMENT` in `public/js/start-content.js`). They need the owner's or a lawyer's reading.
 
-- Why a row and not a side table: the placement, enrollment, session and lesson code all key on a user id. Forking them is how progress gets lost. The ACT check's `guest:<id>` walk keeps one thing; here a whole lesson has to survive.
-- Carry-over: `POST /api/ob2/claim` adds credentials to the same row, so nothing moves and nothing can be lost. A failed claim changes nothing.
-- Limits: `ai_free_text: false`, `camera_mic: false`, uploads refused, no boosters, no beta arm or speed-proof draw, classed as non-real in metrics. `services/ai.js` sends a guest's calls only to local models.
-- Answers: `onboarding_answers`, in `KNOWN_COLLECTIONS` and `EXPORT_MORE`.
-- Expiry: a guest idle for `ONBOARDING_GUEST_DAYS` (30) is deleted by the consent sweep, the whole row set.
-- A guest who signs in to an existing account: the finished walk and the enrollment at that level go across when the account has none for that subject; lesson answers do not, because merging them would corrupt that account's scorecard. The screen says so before they sign in. The guest row is then deleted.
-- An existing account opening `/start` or `/register` is sent to its dashboard (or `/parent-needed`, or `/onboarding` if it has no subject), never through this flow.
+**Agreeing creates the guest:** a real `users` row with `guest: true`, no email and no password. `POST /api/ob2/agree` records one `learner_agreements` row (version, policy version, what it covers, when), in `KNOWN_COLLECTIONS` and `EXPORT_MORE`, and sets `users.agreed_at`. A change of wording needs a new `AGREEMENT_VERSION`.
+
+- **Consent:** `access()` then treats them as any consenting learner (`full`), so outside AI, their interests and their own first lesson are open. A guest row with no agreement stays limited (`state: 'guest'`). No other gate changed. Boosters, the beta arm and the speed proof still wait for the saved account.
+- **Tailoring:** `canEditLevels` needed an email, which alone would have made every guest's lesson generic. An agreed guest now counts.
+- **Why a row and not a side table:** the placement, enrollment, session and lesson code all key on a user id. Forking them is how progress gets lost.
+- **Carry-over:** `POST /api/ob2/claim` adds credentials to the same row, so nothing moves and nothing can be lost. A failed claim changes nothing.
+- **Answers:** `onboarding_answers`, in `KNOWN_COLLECTIONS` and `EXPORT_MORE`. The interest goes into `profiles.survey` as soon as it is given; changing it replaces it.
+- **Expiry:** a guest idle for `ONBOARDING_GUEST_DAYS` (30) is deleted by the consent sweep, the whole row set.
+- **A guest who signs in to an existing account:** the finished walk and the enrollment go across when the account has none for that subject; lesson answers do not, because merging them would corrupt that account's scorecard. The screen says so first. The guest row is then deleted.
+- **An existing account** opening `/start` or `/register` is sent to its dashboard (or `/parent-needed`, or `/onboarding` if it has no subject), never through this flow.
+
+**"Built around you", checked by running it** (7 Nov, 375 px, real models, copy of the store, `COLD_FIRST_BLOCK=on`, `CORAL_LEARNER=on`, math, n = 2 agreed guests, small sample, other agents on the same keys; simulated learners, not proof of learning):
+
+| Learner | Building screen waited | Lesson opened after | What the page said |
+| --- | --- | --- | --- |
+| soccer | 17 s | under 4 s | "A soccer coach has 3/4 metre of practice ribbon" |
+| rock climbing (typed in) | 24 s | under 4 s | "A climber has 3/4 of a chalk block left" (a check; the first block was not themed) |
+
+Four earlier runs were not true: the page gave up at 30 s and opened the generic standard lesson. The causes, all fixed: level 1 is practice, not a lesson; the session route started a background write of the same level, which the learner then waited on; and the page's wait is shorter than a cold write. So the building screen now really waits for the first checked part, up to 150 s, then says it is starting with the standard lesson. Both switches must be on in production, and without them the wait is longer or falls back.
 
 ## 5. Step 6 content
 
@@ -85,4 +99,5 @@ Not checked: Safari, Firefox and real phones (Chromium only); a real email reach
 
 - Reminders: none are sent today. Step 10 stores a plan and offers a calendar file. Email for adults would need building.
 - A guest signing in to an existing account keeps the level check but not lesson answers.
-- "Your first lesson is built around you" is the approved line. For a guest the first lesson is fitted to level and goal, not yet rewritten around interests, because that uses outside AI. The moment screen says this plainly.
+- The agreement's wording needs reading; there is no separate terms page.
+- Turn on `COLD_FIRST_BLOCK` and `CORAL_LEARNER` with `ONBOARDING_V2`: "built around you" depends on them.

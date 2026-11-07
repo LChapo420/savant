@@ -107,15 +107,28 @@ function accountHome(user) {
 /** Where the level the learner stands on opens: the same rule as the path page. */
 function lessonHref(user, e) {
   const base = require('../config/base-lessons');
+  const blocks = require('./block-levels');
   const at = e.current_level || 1;
-  if (base.canSeeBaseLessons(user) && (base.levelsFor(e.track_id, e.grade_id) || []).includes(at)) {
+  const grade = require('../config/curriculum').getGrade(e.track_id, e.grade_id);
+  // A learner's own lesson opens straight on its page: through the session route, a background prefetch of this same level would start first and the learner would wait on it.
+  const own = grade && blocks.kindFor(grade, at) === 'lesson' && blocks.visibleTo(user) && blocks.aiReady() && blocks.mayGenerate(user);
+  if (own || (base.canSeeBaseLessons(user) && (base.levelsFor(e.track_id, e.grade_id) || []).includes(at))) {
     return `/base-lesson?track=${encodeURIComponent(e.track_id)}&grade=${encodeURIComponent(e.grade_id)}&level=${at}&enrollment=${e.id}`;
   }
   return `/session?enrollment=${e.id}`;
 }
 
+/** The learner's own lesson is written when they get here, so the page can wait for it (null: nothing to wait for). */
+function ownLesson(user, e) {
+  const blocks = require('./block-levels');
+  const at = e.current_level || 1;
+  const grade = require('../config/curriculum').getGrade(e.track_id, e.grade_id);
+  if (!grade || blocks.kindFor(grade, at) !== 'lesson' || !blocks.visibleTo(user) || !blocks.aiReady() || !blocks.mayGenerate(user)) return null;
+  return { api: `/api/lessons/${encodeURIComponent(e.track_id)}/${encodeURIComponent(e.grade_id)}/${at}` };
+}
+
 function enrollmentView(user, e) {
-  return { id: e.id, track_id: e.track_id, grade_id: e.grade_id, grade_name: gradeNameOf(e.track_id, e.grade_id), href: lessonHref(user, e) };
+  return { id: e.id, track_id: e.track_id, grade_id: e.grade_id, grade_name: gradeNameOf(e.track_id, e.grade_id), href: lessonHref(user, e), own: ownLesson(user, e) };
 }
 
 /** What the page needs to pick up where the learner was, on any device state. */
@@ -169,6 +182,21 @@ function applyGoals(user, e, row) {
   return out;
 }
 
+/** The grade's first teaching level (a summary doesn't count), or null when it has none. */
+function firstLessonLevel(trackId, gradeId) {
+  const curriculum = require('../config/curriculum');
+  const LAYOUT = require('../config/level-layout');
+  const grade = curriculum.getGrade(trackId, gradeId);
+  if (!grade) return null;
+  for (let level = 1; level <= grade.pathLength; level += 1) {
+    if (curriculum.levelKind(level, grade.pathLength, grade) === 'lesson') {
+      const entry = LAYOUT.entryFor(grade, level) || {};
+      if (!/summary/i.test(String(entry.type || '')) && !/^summary:/i.test(String(entry.title || ''))) return level;
+    }
+  }
+  return null;
+}
+
 /**
  * Stand the learner on lesson 1 of the grade the walk found (or the one they picked), and set the goals they asked for at step 5.
  * Safe to call twice: a learner already on the enrollment stays where they are.
@@ -184,16 +212,14 @@ function firstLesson(user, { track, grade_id: gradeId }) {
   if (e.status === 'placement_pending') {
     const out = require('./owner-skips').skipPlacement({ userId: user.id, enrollment: e, level: 1 });
     if (out.error) return out;
-    e = out.enrollment;
+    // Like a placement, this lands on a lesson, not the practice before it, and clears nothing on the way (routes/placement.js finishByUnit).
+    const at = firstLessonLevel(trackId, e.grade_id);
+    e = at && at !== 1 ? db.update('enrollments', out.enrollment.id, { current_level: at, level_items: 0 }) : out.enrollment;
   }
   const row = saveAnswers(user, {});
   const goal = applyGoals(user, e, row);
   db.update(ANSWERS, row.id, { first_enrollment_id: e.id, first_at: row.first_at || iso() });
-  applyInterest(user);
-  // A learner who has agreed gets their first lesson started as soon as the level is known, as after any placement.
-  if (consent().access(user).ai_free_text) {
-    try { require('./write-ahead').trigger({ user, enrollment: e, reason: 'onboarding v2 first lesson' }); } catch (err) { console.warn(`onboarding-v2: write-ahead not started: ${err.message}`); }
-  }
+  applyInterest(user); // before the lesson opens, so it is written with it. No write-ahead here: the learner opens it next, and that write takes the fast lane.
   return { enrollment: enrollmentView(user, e), goal };
 }
 

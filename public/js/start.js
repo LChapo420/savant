@@ -623,7 +623,7 @@
           <ol class="steps" id="steps">
             <li class="step" data-s="grade"><span class="step-dot"><svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg></span>Setting your starting point</li>
             <li class="step" data-s="goal"><span class="step-dot"><svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg></span>Fitting reviews to "${esc((horizon ? horizon.title : 'For good').toLowerCase())}"</li>
-            <li class="step" data-s="lesson"><span class="step-dot"><svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg></span>Finding your first lesson</li>
+            <li class="step" data-s="lesson"><span class="step-dot"><svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg></span>${esc(buildLessonLine())}</li>
           </ol>`,
       };
     },
@@ -980,7 +980,25 @@
       await breath();
       mark('goal', 'is-done');
       mark('lesson', 'is-now');
-      await fetch(`/api/path/${out.enrollment.id}`, { credentials: 'same-origin' }).catch(() => {});
+      // The learner's own lesson: this really waits for its first part to be written and checked. A long wait hands over to the standard one, and says so.
+      const own = out.enrollment.own;
+      if (!own) {
+        const li = $('.step[data-s="lesson"]');
+        if (li) li.lastChild.textContent = 'Finding your first lesson';
+      }
+      if (own) {
+        say('Writing it for you now. **This can take a minute or two.**', 'think');
+        const started = Date.now();
+        let open = false;
+        while (!open && Date.now() - started < 150000 && current === 'building') {
+          const got = await api('GET', own.api).catch(() => null);
+          open = !!(got && !got.writing);
+          if (!open) await new Promise((r) => setTimeout(r, 3000));
+        }
+        if (!open) S.goalSummary = 'Your own version is still being written, so this starts with the standard lesson.';
+        S.ownReady = open;
+        keep();
+      }
       await breath();
       mark('lesson', 'is-done');
       await breath();
@@ -991,6 +1009,13 @@
       $('#next').textContent = 'Try again';
       view.next = () => { $('#next').hidden = true; return buildPath(); };
     }
+  }
+
+  function buildLessonLine() {
+    if (isChild()) return 'Finding your first lesson';
+    const known = C.INTERESTS.find((i) => i.id === S.a.interest);
+    const about = known ? known.title.toLowerCase() : (S.a.interest_text || '').trim();
+    return about ? `Writing your first lesson around ${about}` : 'Writing your first lesson';
   }
 
   /* ── start ──────────────────────────────────────────────── */
