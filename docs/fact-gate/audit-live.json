@@ -1,0 +1,1954 @@
+{
+ "built": "2026-11-06",
+ "method": "AI-judged on a copy; readers kimi k3.1 pro, grok-4.3, glm-5.3 flash; rulers sonnet 5.5 and glm-5.3; confirmed = both rulers say real; sample read by hand",
+ "groups": {
+  "english/proficient": {
+   "levels": 29,
+   "withConfirmed": 26,
+   "confirmed": 94,
+   "one": 12,
+   "checked": 2,
+   "live": true
+  },
+  "chess/chess_board_explorer": {
+   "levels": 1,
+   "withConfirmed": 0,
+   "confirmed": 0,
+   "one": 0,
+   "checked": 1,
+   "live": true
+  },
+  "piano/piano_keyboard_explorer": {
+   "levels": 1,
+   "withConfirmed": 0,
+   "confirmed": 0,
+   "one": 0,
+   "checked": 1,
+   "live": true
+  },
+  "basketball/basketball_junior_club_player": {
+   "levels": 1,
+   "withConfirmed": 0,
+   "confirmed": 0,
+   "one": 0,
+   "checked": 1,
+   "live": true
+  },
+  "spanish/entry": {
+   "levels": 11,
+   "withConfirmed": 2,
+   "confirmed": 2,
+   "one": 1,
+   "checked": 11,
+   "live": true
+  },
+  "spanish/intermediate": {
+   "levels": 9,
+   "withConfirmed": 1,
+   "confirmed": 1,
+   "one": 1,
+   "checked": 9,
+   "live": true
+  },
+  "spanish/advanced": {
+   "levels": 33,
+   "withConfirmed": 3,
+   "confirmed": 3,
+   "one": 2,
+   "checked": 33,
+   "live": true
+  },
+  "math/calculus_i": {
+   "levels": 7,
+   "withConfirmed": 0,
+   "confirmed": 0,
+   "one": 1,
+   "checked": 7,
+   "live": true
+  },
+  "math/numbers_to_20_and_teen_numbers": {
+   "levels": 1,
+   "withConfirmed": 1,
+   "confirmed": 1,
+   "one": 0,
+   "checked": 1,
+   "live": true
+  },
+  "math/algebra_1_part_a": {
+   "levels": 12,
+   "withConfirmed": 0,
+   "confirmed": 0,
+   "one": 3,
+   "checked": 12,
+   "live": false
+  }
+ },
+ "findings": [
+  {
+   "level": "chess/chess_board_explorer/42",
+   "where": "block 7",
+   "quote": "\"fen\":\"7k/8/8/1p3p2/8/8/8/R5K1 w - - 0 1\" ... \"Roll your rook across the board and capture both black pawns before your moves run out.\"",
+   "why": "In this FEN the rook is on a1 and the black pawns are on b4 and f4. A rook on a1 can only move along the a-file and the 1st rank; neither b4 nor f4 lies on either line, and the rook cannot turn a corner mid-move. The goal 'capture both black pawns' is impossible in this position no matter how many moves are allowed.",
+   "truth": "The pawns must be placed on the rook's lines, e.g. rook a1 with black pawns on a5 and h1 (or rook d4 with pawns on d7 and f4 as in other blocks), so that both captures are actually reachable.",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "The pawns are on b5 and f5, not b4 and f4, and the rook can capture both over several moves (e.g. Ra5 then Rxb5 and Rxf5 along rank 5, or Rb1 then Rxb5), so the goal within 12 moves is achievable.",
+   "status": "false alarm"
+  },
+  {
+   "level": "english/proficient/10",
+   "where": "block 4",
+   "quote": "For q4, \"Does a second full clause get glued on with no punctuation (or just a comma)?\", the edges are \"no\" to \"fix\" and \"yes\" to \"complete\".",
+   "why": "The branches are reversed. A yes answer identifies a fused run-on or comma splice, so the chunk needs a fix. A no answer means there is no such run-on; after passing the subject, finite-verb, and complete-thought checks, the sentence is complete.",
+   "truth": "Connect q4 \"yes\" to \"fix\" and q4 \"no\" to \"complete\".",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The q4 edges are reversed: a yes (second clause glued on) should lead to the run-on fix, and a no should lead to complete.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/10",
+   "where": "block 7",
+   "quote": "The chunk has one subject (the alarm) and one finite verb (didn't go off).",
+   "why": "The sentence contains two subject–verb pairs: \"the alarm\" with \"didn't go off\" and \"the power\" with \"had gone out.\" The second pair belongs to the dependent because-clause. The stated count is false and also conflicts with trapReasons, which correctly refers to two clauses.",
+   "truth": "The sentence has an independent clause, \"The alarm didn't go off,\" followed by the dependent clause \"because the power had gone out overnight,\" with its own subject and finite verb. It is complete because the independent clause can stand alone and the dependent clause is correctly attached.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The sentence has two subject-verb pairs (alarm/didn't go off, power/had gone out), so 'one subject and one finite verb' is inaccurate and conflicts with the trap reasons.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/10",
+   "where": "block 4",
+   "quote": "from q4 label \"no\" to \"fix\"; from q4 label \"yes\" to \"complete\"",
+   "why": "q4 asks whether a second full clause is glued on with no punctuation or only a comma. Answering yes means it is a run-on that needs fixing; answering no means it is complete. The listed edges reverse this logic.",
+   "truth": "from q4 label \"yes\" to \"fix\"; from q4 label \"no\" to \"complete\"",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Same reversed q4 branches as flag 0: yes should go to fix and no to complete.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/10",
+   "where": "block 5",
+   "quote": "a explained-by/but link",
+   "why": "Wrong article: 'a' cannot precede a word beginning with a vowel sound ('explained-by').",
+   "truth": "It should read 'an explained-by/but link'.",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "'a explained-by' should be 'an explained-by' because the word starts with a vowel sound.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/124",
+   "where": "block 1",
+   "quote": "‘duct’ (lead) + ‘or’ (agent) = conductor.",
+   "why": "The supplied solution [\"duct\",\"or\"] assembles only “ductor.” “Conductor” also requires the prefix “con-,” so the target word cannot be constructed from the specified solution.",
+   "truth": "Add a “con” chunk and set the solution to [\"con\",\"duct\",\"or\"]. The feedback should explain that con- + duct + -or assembles “conductor.”",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The solution [\"duct\",\"or\"] yields \"ductor\", not \"conductor\", and no \"con\" chunk exists, so the feedback's claim of assembling conductor is wrong.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/124",
+   "where": "block 4",
+   "quote": "Thermophilic bacteria thrive under extreme barometric pressure; they also synthesize novel enzymes.",
+   "why": "“Barometric pressure” is atmospheric pressure measured with a barometer. At a depth of 2,500 m, vent bacteria experience extreme hydrostatic pressure from the overlying seawater, not extreme barometric pressure. The model answer therefore misuses the scientific vocabulary while claiming root-based precision.",
+   "truth": "Use “Thermophilic bacteria survive extreme hydrostatic pressure; they also synthesize novel enzymes.” Revise the rationale accordingly. If a baro- word is desired, “barotolerant” can describe pressure tolerance, but “barometric” cannot describe this deep-sea pressure.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "\"Barometric pressure\" means atmospheric pressure, so it is the wrong term for deep-sea hydrostatic pressure, and the model answer teaches imprecise vocabulary in a lesson on precision.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/124",
+   "where": "block 4",
+   "quote": "Thermophilic bacteria thrive under extreme barometric pressure",
+   "why": "Barometric pressure specifically means atmospheric pressure (measured by a barometer). The pressure at 2,500 m depth in the ocean is hydrostatic pressure, not barometric, so the 'precise' target answer is itself imprecise.",
+   "truth": "The revision should use a term like 'hydrostatic pressure' (or simply 'extreme pressure'); the baro- root could be kept only if the context were atmospheric.",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Same issue: barometric means atmospheric pressure, so the model answer's claim of precision is itself imprecise for vent depth.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/125",
+   "where": "block 5",
+   "quote": "{\"id\":\"w4\",\"text\":\"commonplace\",\"detail\":\"The design felt commonplace.\",\"correctCategoryId\":\"neu\"}",
+   "why": "In the supplied sentence, 'commonplace' is not emotionally neutral: describing a design as commonplace criticizes it as unoriginal or unremarkable. That conveys disapproval, unlike the Neutral bucket's 'little emotional charge'.",
+   "truth": "The item's correctCategoryId should be \"neg\" (Negative).",
+   "by": [
+    "kimi31",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "\"Commonplace\" is generally treated as neutral, meaning ordinary, and it pairs with \"ordinary\" in the Neutral bucket. Its mild critical tone in the example sentence is a nuance, not a clear error in the key.",
+   "status": "false alarm"
+  },
+  {
+   "level": "english/proficient/18",
+   "where": "block 5",
+   "quote": "Two problems are hiding in it: a fused run-on, and a subordinate clause left standing alone.",
+   "why": "The Although-clause is not standing alone: it is already attached to the independent clause “the soloist found her spotlight.” The original actually contains a comma splice between “the soloist found her spotlight” and “she sang the final verse,” followed by a fused run-on at the boundary between “she sang the final verse” and “the audience fell silent.” It also needs a comma after the introductory Although-clause. The target rationale repeats the false claim that “Although the stage was crowded” is a fragment, while its statement that there are “three problems” also contradicts the scenario’s “Two problems.”",
+   "truth": "Identify a comma splice and a fused run-on, plus the missing comma after the introductory Although-clause if counting a third issue. Replace the fragment diagnosis with: “Although the stage was crowded” is already attached to “the soloist found her spotlight”; add a comma after “crowded” to mark the introductory clause. It is not a freestanding fragment.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The Although-clause is already attached to an independent clause, so it is not a standing-alone fragment. The real errors are a comma splice and a fused run-on, plus a missing comma. The lesson misdiagnoses this, and it also says two problems in the scenario but three in the rationale.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/19",
+   "where": "block 4",
+   "quote": "Add a subordinating word...",
+   "why": "The source fragment is already \"Because the bus was late.\" The keyed repair, \"Because the bus was late, we walked home,\" does not add a subordinating word; it adds the independent clause \"we walked home.\" Following the placeholder therefore cannot produce the keyed answer.",
+   "truth": "For this cell, prompt the learner to add a main or independent clause. Alternatively, replace the fragment and key if the required repair must specifically be adding a subordinating word.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The fragment row's source is already 'Because the bus was late.', so the placeholder 'Add a subordinating word...' can't yield the keyed answer, which actually adds a main clause.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/19",
+   "where": "block 5",
+   "quote": "the bake sale and the funds going to the science trip",
+   "why": "The scenario's two facts are that the annual bake sale is this Saturday and that volunteers are needed for two shifts. Neither funds nor a science trip appears in the source line.",
+   "truth": "Also check that your new sentence keeps both facts: the bake sale is this Saturday and volunteers are needed for two shifts.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The misconception detail mentions funds going to a science trip, which appears nowhere in the scenario; the facts are the Saturday bake sale and the need for volunteers.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/19",
+   "where": "block 5",
+   "quote": "The annual bake sale is this Saturday. We need volunteers for two shifts.",
+   "why": "This is listed as an \"Also correct\" decision, but it contains two sentences. The decisionPrompt explicitly requires a corrected one-sentence version.",
+   "truth": "Do not list this period repair as satisfying the stated one-sentence task; retain the semicolon and comma-plus-so alternatives, or change the prompt to allow two sentences.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The prompt asks for a one-sentence version, yet the 'Also correct' list includes a two-sentence period repair, which contradicts the task.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/19",
+   "where": "check 2",
+   "quote": "\"answer\":\"run-on\"",
+   "why": "\"The meeting ran long\" and \"we skipped lunch\" are independent clauses joined by a comma alone, so the sentence is a comma splice, not a fused run-on. The rationale itself states this. The accepts list also wrongly credits \"fragment,\" \"frag,\" and the run-on variants.",
+   "truth": "Set the answer to \"comma splice\" and accept only wording variants of \"comma splice.\"",
+   "by": [
+    "kimi31",
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The sentence is a comma splice, but the key says 'run-on' and the accepts list credits 'fragment', which contradicts the rationale.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/19",
+   "where": "check 4",
+   "quote": "\"accepts\":[\"semicolon\",\"period, semicolon\",\"a semicolon\",\"period or semicolon\",\"a period or a semicolon\"]",
+   "why": "The prompt asks for both punctuation-only repairs, but \"semicolon\" and \"a semicolon\" name only one repair and would be accepted as fully correct.",
+   "truth": "Remove those two incomplete accepted answers; require both the period and the semicolon, allowing wording variants that contain both.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The prompt asks for two repairs, but accepting 'semicolon' alone credits an incomplete answer.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/20",
+   "where": "block 0",
+   "quote": "Same words, same meaning — different order.",
+   "why": "The options are not reorderings of the same sentence. Option A includes dribbling past two defenders, practicing for months, and wanting the win; Option B says only \"She scored the winning goal.\" They therefore differ in wording, information, and structure, not merely order.",
+   "truth": "As written, describe the options as differing in wording, detail, and structure. To make the intended point about order, rewrite both options with the same content and use a note such as \"Same facts, different order.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The footer claims same words and meaning in different order, but the two options contain different content, so the claim is false as written.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/20",
+   "where": "block 0",
+   "quote": "Withheld, then delivered",
+   "why": "Option B, \"She scored the winning goal.\", immediately states its only clause. It contains no introductory setup or delayed main clause, so it does not demonstrate the withholding-and-delivery movement associated with a periodic sentence.",
+   "truth": "Either retitle the current option something like \"Short and direct,\" or replace its body with a periodic version such as \"After months of practice, wanting this more than anything, she dribbled past two defenders and finally scored the winning goal.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Option B is a single short direct clause with no delay, so labeling it \"Withheld, then delivered\" misrepresents it and misleads about periodic structure.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/20",
+   "where": "block 8",
+   "quote": "Choice D is a run-on: two complete thoughts are jammed together with only a comma.",
+   "why": "Choice D has no comma between its independent clauses. \"He trained every day before school and after practice\" runs directly into \"he finally finished the last brutal mile,\" making this a fused run-on rather than a comma splice.",
+   "truth": "Choice D is a run-on: two independent clauses are jammed together with no punctuation or coordinating conjunction between them.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Choice D has no comma at all, so it is a fused sentence; the explanation's \"only a comma\" contradicts the text.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/20",
+   "where": "block 9",
+   "quote": "Missing a subject or a verb — not a complete sentence, even if it sounds stylish.",
+   "why": "This definition is incomplete and contradicts the lesson's own analysis. A fragment can contain both a subject and a verb: \"Because he trained every day\" contains \"he trained,\" but it is still a dependent-clause fragment. Block 8's Choice A likewise contains \"he trained\" yet never supplies an independent main clause.",
+   "truth": "A fragment is a word group punctuated as a sentence that lacks a complete independent clause. It may be missing a subject or finite verb, or it may consist only of a dependent clause or phrase; complete it or attach it to an independent clause.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Fragments can contain a subject and verb (dependent clause, e.g. \"Because he trained\"), so the definition is incomplete and conflicts with block 8's reasoning about choice A.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/20",
+   "where": "block 4",
+   "quote": "key:\"mainClause\", definition:\"A group of words with its own subject and verb that could stand alone as a complete sentence. The main clause is the one the sentence is really about.\" key:\"independentClause\", definition:\"A clause with a subject and a verb that expresses a complete thought and can be a sentence by itself.\" hint:\"If it starts with a word like \\\"because,\\\" \\\"when,\\\" or \\\"although,\\\" it cannot stand alone.\"",
+   "why": "The definitions assigned to mainClause and independentClause are near-duplicates and misaligned with standard terminology and the lesson's own usage; the hint under independentClause actually describes dependent clauses.",
+   "truth": "mainClause should be defined as the independent clause carrying the sentence's core idea; independentClause should be defined as any clause that can stand alone, with the hint corrected to note that clauses starting with because/when/although are dependent.",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "Main clause and independent clause are essentially the same thing in standard usage, and the hint is a reasonable contrast; this is a stylistic overlap and not an error.",
+   "status": "false alarm"
+  },
+  {
+   "level": "english/proficient/28",
+   "where": "block 0",
+   "quote": "Round 4: three ways to fix a run-on",
+   "why": "The item requires four solution chunks: a period, a semicolon, a comma plus a FANBOYS conjunction, and a subordinating word. The explanation also lists four alternatives, while the label and completion feedback repeatedly say there are three.",
+   "truth": "Consistently call this four ways to fix a run-on and refer to all four fixes, or remove one required solution chunk if only three fixes are intended.",
+   "by": [
+    "kimi31",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The label and completion message say three fixes, but the solution and the rest of the lesson give four (period, semicolon, comma plus FANBOYS, subordinating word).",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/28",
+   "where": "block 2",
+   "quote": "Audit complete. One fragment, one comma splice, one fused run-on — every error found and the fixes known.",
+   "why": "There are four marked errors, not three: lines 2 and 7 are both fragments, line 4 is a comma splice, and line 6 is a fused run-on.",
+   "truth": "Audit complete. Two fragments, one comma splice, and one fused run-on — every error found and the fixes known.",
+   "by": [
+    "kimi31",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Two lines (l2 and l7) are fragments, so the completion message's 'one fragment' miscounts the errors.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/28",
+   "where": "block 2",
+   "quote": "No finite verb anywhere",
+   "why": "Line 7 contains the finite verb phrase \"will devour,\" with \"everyone\" as the subject of the relative clause. Its problem is the absence of an independent main clause, not the absence of a finite verb.",
+   "truth": "Line 7 is a fragment because \"which everyone will devour in about four minutes\" is a dependent relative clause standing alone. Attach it to an independent clause, for example: \"We are bringing lemon cake, which everyone will devour in about four minutes.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The line has the finite verb 'will devour' with subject 'everyone'; it is a fragment only because it is a dependent relative clause, so 'No finite verb anywhere' is factually wrong and contradicts the lesson's own teaching.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/28",
+   "where": "CHECK 4",
+   "quote": "We came to cheer, we stayed to sweat. Which pattern and effect does this show?",
+   "why": "The sentence contains a comma splice (two independent clauses joined only by a comma), making it a run-on rather than a correctly formed balanced sentence. The key marks 'Balanced' as correct and the rationale claims it shows symmetry, but the example violates the run-on rules taught throughout the lesson (period, semicolon, comma + FANBOYS, or subordinating word required).",
+   "truth": "The example must use correct punctuation (e.g., semicolon) to illustrate a balanced sentence, or the answer must identify it as broken.",
+   "by": [
+    "grok43",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The example 'We came to cheer, we stayed to sweat.' is a comma splice, which the lesson teaches is an error, so using it as a correct balanced-sentence model contradicts the lesson (it needs a semicolon or conjunction).",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/29",
+   "where": "block 3",
+   "quote": "Clean. One subject (the coach) and one verb (blew) — a complete sentence.",
+   "why": "The line contains no coach and does not have just one subject and verb. It has two independent clauses: “The whistle blew” (subject “whistle,” verb “blew”) and “the players froze at the line” (subject “players,” verb “froze”). The line is clean because those clauses are correctly joined by a comma plus “and.”",
+   "truth": "Clean. Two independent clauses — “The whistle blew” and “the players froze at the line” — are correctly joined by a comma plus the conjunction “and.”",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The explanation cites a coach who isn't in the sentence and says one subject and verb, but the line has two clauses (whistle blew / players froze).",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/29",
+   "where": "block 3",
+   "quote": "Clean. One independent clause with a compound predicate.",
+   "why": "“The gun went off” has one subject (“the gun”) and one predicate (“went off”). The particle “off” in the phrasal verb does not create a compound predicate; a compound predicate would require another predicate, such as “went off and echoed through the stadium.”",
+   "truth": "Clean. One independent clause with a single predicate: “The gun went off.”",
+   "by": [
+    "kimi31",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "\"The gun went off\" has a single predicate, so calling it a compound predicate is wrong.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/29",
+   "where": "block 5",
+   "quote": "Fix with a semicolon or 'and the'.",
+   "why": "Adding “and the” does not repair this run-on; inserted before the second clause, it would produce the ungrammatical “and the everyone groaned at once.” The comma splice can instead be fixed with a semicolon or with a comma plus a suitable conjunction.",
+   "truth": "Fix with a semicolon, or add “and” after the comma: “The wifi went down, and everyone groaned at once.”",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "\"Fix with ... 'and the'\" would give \"and the everyone groaned\"; the correct fix is a comma plus \"and\".",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/29",
+   "where": "block 2",
+   "quote": "Here the main clause sits in the middle: the setup comes before, the finisher after. The reader's eye lands on it either way.",
+   "why": "The independent clause is 'the crew pulled the boats ashore before nightfall'; 'before nightfall' is a modifier inside that clause, not a separate finisher outside it. The marked span therefore splits the main clause incorrectly.",
+   "truth": "The main clause is the full independent clause 'the crew pulled the boats ashore before nightfall'.",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": false,
+   "sonnet_reason": "\"Before nightfall\" is a modifier within the main clause, and the marked main clause is split, so the note about a finisher outside the clause misleads. The sentence is also not periodic or cumulative in the way the prompt implies.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/30",
+   "where": "block 2",
+   "quote": "'Silence, never again.'",
+   "why": "This does not illustrate the stated technique of moving a key phrase to the start of a sentence. It contains no complete clause or discernible underlying word order from which a phrase has been fronted; it reads as two fragments instead.",
+   "truth": "Use a complete example such as 'Never again will we be silent.' Here 'Never again' is fronted, with the required subject–auxiliary inversion.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "'Silence, never again.' is two fragments with no underlying clause, so it doesn't clearly show a fronted phrase and would mislead learners.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/30",
+   "where": "block 5",
+   "quote": "Wrinkled. Stained. Perfect anyway. (three fragments with no preceding full sentence)",
+   "why": "This is marked as a right example even though it explicitly lacks the setup that the rest of the lesson requires: blocks 6 and 8 say that a deliberate fragment follows and echoes a complete sentence, and block 9 says 'Use only after a complete sentence the fragment clearly echoes.' The lesson therefore gives contradictory tests.",
+   "truth": "Make the rule consistent. To retain the lesson's stated test, use a setup such as 'The coat was old. Wrinkled. Stained. Perfect anyway.' Alternatively, keep the standalone advertising example but revise the later 'only after' wording to explain that following and echoing a complete sentence is a reliable test, not an absolute requirement.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The 'right example' has no preceding full sentence, which contradicts the lesson's own rule that a deliberate fragment must follow and echo a complete sentence.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/30",
+   "where": "block 5",
+   "quote": "These three errors are the ways 'artistic license' turns into an actual mistake.",
+   "why": "The intro says 'three errors' but the cautions list contains four items (deliberate vs accidental fragments, run-ons, broken parallelism, and transferring 'stylistic' to every context).",
+   "truth": "It should say 'these four errors' (or the list should be reduced to three).",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The intro says 'three errors' but four cautions are listed.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/38",
+   "where": "block 0",
+   "quote": "Fix 4 of 3 — the three repairs",
+   "why": "The label numbers the final item as 4 of 3 after three prior definitions, which is internally inconsistent.",
+   "truth": "Fix 3 of 3 — the three repairs",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The label 'Fix 4 of 3' is internally inconsistent; it is the third of three items (and the fourth block item), so it should read 3 of 3.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/38",
+   "where": "block 0",
+   "quote": "missing a subject, a verb, or a complete thought",
+   "why": "The chunk text and solution use \"a verb\", but the opening context, the item's own correct feedback, and the explanation all specify \"a finite verb\".",
+   "truth": "missing a subject, a finite verb, or a complete thought",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "'a verb' versus 'finite verb' is a minor simplification in the chunk text and does not mislead at this level.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/39",
+   "where": "block 0",
+   "quote": "No verb anywhere — 'over the fence' has no action, so it cannot stand alone.",
+   "why": "“Flying” is a verb—a non-finite participle—and expresses an action. The item is a fragment because it has no finite main verb, not because it contains no verb.",
+   "truth": "'Flying' is a non-finite participle; the item has no finite main verb, so it cannot stand alone as a complete sentence.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The explanation says there is no verb anywhere, but 'flying' is a participle; the card is a fragment only because it lacks a finite verb, so the text is inaccurate (and inconsistent with c10's explanation).",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/39",
+   "where": "block 4",
+   "quote": "Clean parallelism: three matching verb phrases ('closing', 'moving', 'asking'). Rhythm and credibility intact.",
+   "why": "The line actually uses “close,” “update,” and “ask,” not “closing,” “moving,” and “asking.” Its parallelism consists of three base-form verb phrases governed by “should.”",
+   "truth": "Clean parallelism: three matching base-form verb phrases after 'should'—'close the achievement gap,' 'update the curriculum,' and 'ask the students themselves.'",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The explanation names 'closing', 'moving', 'asking', but the line actually reads 'close', 'update', 'ask', so the explanation misquotes the line.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/39",
+   "where": "check 0",
+   "quote": "three comma splices make this a run-on",
+   "why": "There are three complete clauses but only two comma-only junctions: one after “instantly” and one after “tickets.” Thus there are two comma splices, not three.",
+   "truth": "The three complete clauses are joined only by commas, creating two comma splices and making the whole item a run-on.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Three clauses joined by commas have only two comma junctions, so 'three comma splices' is a counting error.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/39",
+   "where": "check 3",
+   "quote": "The dependent clauses delay the main point",
+   "why": "There is only one dependent clause: “Although the storm knocked out the power and flooded the roads.” Within it, “knocked out” and “flooded” form a compound predicate; they do not create two separate dependent clauses.",
+   "truth": "The dependent clause 'Although the storm knocked out the power and flooded the roads' delays the main point until the end, so the order is periodic.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "'Dependent clauses' is a loose plural that refers to the one subordinate clause with its compound predicate, and it does not mislead the learner about the periodic order.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/40",
+   "where": "block 0",
+   "quote": "\"The steady version\" / \"The jolting version\"",
+   "why": "The labels are reversed. Option A begins with active imperatives, then shifts to the get-passive \"the beaker gets heated\" and to chatty commentary. Option B continues with the active imperative \"heat\" and maintains a matter-of-fact register.",
+   "truth": "Option A should be titled \"The jolting version\" with caution tone, and Option B should be titled \"The steady version\" with success tone.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Option A contains the passive shift and chatty aside, yet it is labeled steady; the labels are swapped.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/40",
+   "where": "block 6",
+   "quote": "\"Tap the words that create the inappropriate mood shift.\" / \"Slang that completely breaks the formal mood of the report.\"",
+   "why": "The e2 wording, including \"honestly,\" \"scary,\" and \"dudes,\" changes tone and register, not grammatical mood: \"the numbers are not that scary\" remains indicative. This contradicts block 2's explicit distinction between mood and tone. Only \"Do not panic\" introduces an imperative mood shift.",
+   "truth": "Either restrict the mood-shift task to \"Do not panic,\" or describe the task and e2 feedback as identifying an inappropriate tone/register shift alongside the mood shift.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Slang and chatty words like 'honestly' and 'dudes' are tone/register, not grammatical mood, which contradicts block 2's own distinction; the task is mislabeled.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/40",
+   "where": "block 6",
+   "quote": "\"because\" — \"Casual filler that turns a formal statement into chatty talk.\"",
+   "why": "\"Because\" is a neutral subordinating conjunction introducing a reason. It is not casual filler and does not create the chattiness, so marking this token as an error makes the highlighter key incorrect.",
+   "truth": "Remove the error marking and explanation from \"because.\" The informal wording can instead be identified in \"honestly,\" \"scary,\" and \"dudes.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "'Because' is a neutral conjunction and is wrongly keyed as an error with 'casual filler' explanation.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/40",
+   "where": "block 8",
+   "quote": "\"'Was written' keeps the passive voice going, since the same person was acted upon twice.\" / \"'Do not' makes this an imperative command, matching the previous instruction.\" / \"After 'insisted that,' the subjunctive needs the bare form 'return'.\"",
+   "why": "The feedback is assigned to the wrong blanks. Blank b1 offers \"was scored,\" not \"was written,\" and no person is acted upon. Blank b2 chooses between \"was begun\" and \"began,\" not \"Do not.\" Blank b3 chooses the imperative \"Keep,\" while the explanation about \"insisted that\" belongs to b4.",
+   "truth": "For b1, explain that \"was scored\" supplies the passive construction used with \"by Jenna.\" For b2, explain that the keyed \"was begun\" continues the passive construction. For b3, explain that \"Keep\" is the imperative form needed for the instruction. Move the bare-subjunctive \"return\" explanation to b4.",
+   "by": [
+    "kimi31",
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The per-blank feedback doesn't match the blanks' options (e.g. 'Was written', 'Do not' are not options), so it is misaligned.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/40",
+   "where": "block 0",
+   "quote": "title\":\"The steady version\"",
+   "why": "The left body contains the chatty clause 'honestly it's kind of fun to watch it bubble!' which breaks the required matter-of-fact lab-report voice, so it is the jolting version; the right body is steady.",
+   "truth": "title\":\"The jolting version\"",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Left option contains the chatty passive shift and is mislabeled steady.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/40",
+   "where": "block 0",
+   "quote": "title\":\"The jolting version\"",
+   "why": "The right body stays imperative and active throughout with consistent subject focus, so it is the steady version.",
+   "truth": "title\":\"The steady version\"",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Right option is consistent imperative and is mislabeled jolting.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/40",
+   "where": "block 8",
+   "quote": "'Do not' makes this an imperative command, matching the previous instruction.",
+   "why": "The feedback text refers to an imperative that does not exist in blank b2; blank b2 concerns the verb for 'celebration'.",
+   "truth": "'was begun' keeps the passive voice consistent with the preceding clause.",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "b2 feedback about 'Do not' doesn't correspond to the blank about the celebration's verb.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/40",
+   "where": "block 0",
+   "quote": "leftChoice: title 'The steady version' with the body 'Then the beaker gets heated... honestly it's kind of fun to watch it bubble!'; rightChoice: title 'The jolting version' with the steady body",
+   "why": "The titles and tones are swapped relative to the bodies. Option A's text is the one with the voice/mood jolt (passive 'gets heated' plus chatty 'honestly it's kind of fun'), yet it is labeled 'The steady version' with tone 'success'. Option B's text is the steady, consistent draft but is labeled 'The jolting version' with tone 'caution'.",
+   "truth": "Option A should be titled 'The jolting version' (tone caution) and Option B 'The steady version' (tone success).",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Titles and tones are swapped relative to the bodies of the two options.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/40",
+   "where": "block 8",
+   "quote": "blank b2: options ['was begun','began'], correctIndex 0",
+   "why": "The sentence reads 'the celebration ___ right away.' The correct form is the active 'began'; 'the celebration was begun right away' is unidiomatic and wrong. The key marks 'was begun' (index 0) as correct.",
+   "truth": "correctIndex should be 1 ('began'), keeping the active voice consistent with the passage.",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "'was begun' is awkward but keeps the passive parallel to the preceding clause, which fits the lesson's intent; 'began' would also be a defensible but the key is not clearly wrong... still the lesson's feedback intends passive consistency.",
+   "status": "false alarm"
+  },
+  {
+   "level": "english/proficient/40",
+   "where": "block 8",
+   "quote": "perBlankFeedback b2: \"'Do not' makes this an imperative command...\"; b3: \"After 'insisted that,' the subjunctive needs the bare form 'return'.\"",
+   "why": "The feedback strings are shifted by one blank: b2's feedback talks about 'Do not' (which belongs to b3's sentence 'Keep your notes factual' context) and b3's feedback explains the subjunctive 'return' (which belongs to b4). No feedback matches its own blank.",
+   "truth": "b2's feedback should explain the active 'began'; b3's feedback should explain the imperative 'Keep'; b4's feedback should explain the subjunctive 'return'.",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Feedback is shifted by one blank so none matches its own blank.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/48",
+   "where": "block 4 (passive-voice cell)",
+   "quote": "\"rowId\":\"voice\"",
+   "why": "The cell containing 'The subject receives the action (The onions were chopped by the chef)' is mapped to the active-voice row. Consequently, 'voice' has two cells while the declared 'voice_pass' row has none.",
+   "truth": "The passive-voice cell must have \"rowId\":\"voice_pass\".",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The passive cell is keyed to rowId 'voice' (the active row) instead of 'voice_pass', leaving the passive row empty and the active row duplicated.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/48",
+   "where": "block 5 (targetAnswer)",
+   "quote": "Students: before 7:30 a.m. on trip day, pack a lunch, sign your permission slip, and arrive ten minutes early — because the bus leaves at 7:30 sharp, and it will not wait.",
+   "why": "The model does not satisfy the stated one-mood requirement: 'pack,' 'sign,' and 'arrive' are imperative, while 'the bus leaves' and 'it will not wait' are indicative. Calling this an 'imperative-style directive wrapped in indicative statements' does not make the mood consistent. It also changes the required instruction to bring a signed permission slip into 'sign your permission slip,' omitting the instruction to bring it.",
+   "truth": "A valid model would be: 'Students should pack a lunch, bring a signed permission slip, and arrive ten minutes early, because the bus leaves at 7:30 a.m. sharp and will not wait.' This is active and indicative throughout, with a parallel list and end-focus on 'will not wait.'",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": false,
+   "sonnet_reason": "The model answer mixes imperatives with indicative clauses while claiming one consistent mood, so it contradicts the task's own one-mood rule.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/48",
+   "where": "check 3",
+   "quote": "'Turn in your form by Friday, and the office will file it that day.'",
+   "why": "The keyed answer begins with an active imperative ('Turn in') and then switches to an active indicative clause ('the office will file'), so it does not keep mood consistent. As written, the fourth option is the only choice with consistent voice and mood: both 'Turn in' and 'File' are active imperatives.",
+   "truth": "With the choices unchanged, key the fourth option: 'Turn in your form by Friday! File your form today!' Alternatively, retain the first option as the key only after rewriting it as something like 'You must turn in your form by Friday, and the office will file it that day,' which is active and indicative throughout.",
+   "by": [
+    "kimi31",
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": false,
+   "sonnet_reason": "The keyed option switches from imperative to indicative mid-sentence, while option 4 is the one with consistent active imperatives, so the key is wrong.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/48",
+   "where": "check 3",
+   "quote": "answer\":\"'Turn in your form by Friday, and the office will file it that day.'\"",
+   "why": "The chosen option is not consistent in mood. 'Turn in your form by Friday' is imperative, but 'the office will file it that day' is indicative — an unmarked mood shift mid-sentence, exactly what the lesson says is inappropriate. Option 4 ('Turn in your form by Friday! File your form today!') is the only choice that keeps one mood (imperative) and one voice (active) throughout.",
+   "truth": "The correct answer should be 'Turn in your form by Friday! File your form today!'",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": false,
+   "sonnet_reason": "The key has an unmarked imperative-to-indicative mood shift, which is exactly what the lesson calls inappropriate; option 4 is consistent.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/49",
+   "where": "block 1 (card s2)",
+   "quote": "the second goes passive (the ribbon was cut) for no reason",
+   "why": "The parenthetical misidentifies the second clause. “The ribbon was cut” would be a passive version of the first clause; the actual second clause concerns the library.",
+   "truth": "The first clause is active (“the mayor cut the ribbon”); the second is passive (“the new library was opened by the council”).",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The parenthetical quotes 'the ribbon was cut' but the second clause is 'the new library was opened by the council', so the explanation misdescribes the sentence.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/49",
+   "where": "block 1 (card s3)",
+   "quote": "Passive (was announced) flips to active (the principal announced it) mid-sentence.",
+   "why": "The active clause is misquoted. The sentence does not say that the principal announced it; that clause says that the principal handed her the trophy.",
+   "truth": "Passive (“the winner was announced”) flips to active (“the principal handed her the trophy”).",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The explanation says 'the principal announced it', but the active clause is 'the principal handed her the trophy'.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/49",
+   "where": "block 1 (card s4)",
+   "quote": "Mood flips: subjunctive to imperative",
+   "why": "“If you want a good seat” is not subjunctive: “want” is present indicative in an open conditional. The sentence is a standard conditional with an imperative main clause (“arrive early and watch…”), and the if-clause clearly establishes the condition. It is not an unmarked, inappropriate shift, so the “shift” key and its explanation are wrong.",
+   "truth": "Do not label this sentence an inappropriate shift. Explain that an indicative conditional if-clause is appropriately followed by an imperative main clause, or replace the card if the sort requires exactly one mood throughout.",
+   "by": [
+    "kimi31",
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "'If you want' is an indicative open condition followed by an imperative, which is a standard construction, so labeling it an unmarked inappropriate shift and calling it subjunctive is wrong.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/49",
+   "where": "block 2 (line l4)",
+   "quote": "Clean again: back to active voice. But the damage is done in line 3.",
+   "why": "Line 4 is not active throughout: “Everyone cheered” is active, but “the name was read aloud” is passive. Under the lesson’s own consistency test, this is another voice change, making the claim that line 3 is the sole error inconsistent.",
+   "truth": "Either acknowledge the additional passive construction or rewrite line 4 actively, for example: “Everyone cheered when the announcer read the name aloud.”",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Line 4 contains the passive 'was read aloud' yet is called clean and active, which contradicts the lesson's own test.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/49",
+   "where": "block 4 (option d feedback)",
+   "quote": "Tempting, because 'Now.' is a fragment. But a deliberate fragment after a dash is a common emphasis device",
+   "why": "There is no standalone “Now.” fragment in the sentence. “But act now” is a complete imperative clause with the understood subject “you” and the verb “act.” The feedback therefore rejects the option for the wrong reason; option a’s description of an “urgent fragment” has the same problem.",
+   "truth": "Reject option d because its premise is false: “act now” is an imperative clause, not a fragment. The marked indicative-to-imperative change is acceptable.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "'act now' is a complete imperative clause, so calling 'Now.' a fragment is wrong, and the feedback for option d rejects it for the wrong reason.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/49",
+   "where": "block 5 (targetAnswer.rationale)",
+   "quote": "The original shifts from passive to active and slides into imperative mood without marking the change",
+   "why": "The imperative “Arrive by 4:00” begins a new sentence, which the lesson’s own rule explicitly counts as marking a mood change. The clearest problem inside the original third sentence is instead the change from active imperative (“Arrive…”) to passive indicative (“water bottles should be brought by everyone”).",
+   "truth": "The original marks the imperative with a new sentence, but its third sentence awkwardly combines an active imperative with a passive indicative clause. The rewrite keeps the actors clear by using active constructions and giving the water-bottle instruction its own imperative sentence.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The imperative begins a new sentence, which the lesson counts as marking, so the rationale misdescribes the problem; the real issue is the active imperative joined to a passive clause in the same sentence.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/49",
+   "where": "check 2",
+   "quote": "\"accepts\":[\"were\",\"was\"]",
+   "why": "Accepting “was” marks as correct the very form that the answer and rationale reject (“were, not was”), contradicting the graded key.",
+   "truth": "For this exercise, accept “were” and do not include “was” in the accepted answers.",
+   "by": [
+    "kimi31",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Accepting 'was' contradicts the answer and rationale, which say 'were, not was'.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/49",
+   "where": "check 2",
+   "quote": "In subjunctive mood, plural subjects take the base plural verb form even for imaginary situations.",
+   "why": "This gives the wrong rule for the item. The subject “I” is singular, and “were” is not selected because of a plural-subject rule; standard formal English uses “were” with singular “I” in this hypothetical if-clause.",
+   "truth": "In an imaginary condition such as this, use “were” with “I”: “If I were the director, I would shoot the final scene in one take.”",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The hint's plural-subject rule is wrong because 'I' is singular and 'were' is used for the subjunctive.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/49",
+   "where": "block 1",
+   "quote": "Mood flips: subjunctive to imperative ... It starts by imagining (If you want...)",
+   "why": "'If you want a good seat' is not subjunctive — it's an ordinary indicative statement of fact/condition ('you want' is a real possibility, not a hypothetical like 'If I were'). The actual shift is from indicative to imperative.",
+   "truth": "The detail and explanation should say the mood flips from indicative ('If you want...') to imperative ('arrive early and watch...').",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "'If you want' is indicative, so the card's subjunctive-to-imperative explanation is inaccurate.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/49",
+   "where": "block 2",
+   "quote": "Clean again: back to active voice.",
+   "why": "Line 4 ('Everyone cheered when the name was read aloud.') contains a passive clause: 'the name was read aloud' — the subject 'name' receives the action. The line is correctly marked as not the shift, but the explanation misdescribes it as active voice.",
+   "truth": "Line 4's main clause is active ('Everyone cheered'), but the subordinate clause is passive ('was read aloud'); the explanation should not claim the line is fully back to active voice.",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "'the name was read aloud' is passive, so 'back to active voice' is inaccurate.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/50",
+   "where": "block 4",
+   "quote": "Two runs-on and a splice in one sentence.",
+   "why": "The before sentence has one fused junction and one comma splice. “The storm arrived when the lights went out” is properly connected by the subordinator “when”; that unit is then fused to “the players stopped” with no punctuation. The comma between “the players stopped” and “everyone watched the sky” creates the comma splice. There is not an additional fused run-on.",
+   "truth": "One fused run-on and one comma splice in one sentence.",
+   "by": [
+    "kimi31",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The sentence has only two errors, one fused join and one comma splice, because the when-clause is correctly subordinated, so the caption's count of 'two runs-on and a splice' is wrong.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/50",
+   "where": "block 5",
+   "quote": "\"Through the fog, under the floodlights, took the field.\" — no subject, no verb.",
+   "why": "The example has no subject, but it does have a verb: “took” is the finite past-tense verb in “took the field.” The following explanation also incorrectly says that this example has “the verb missing.”",
+   "truth": "Keep the example but change the annotation to “no subject” and explain that it is a fragment because its subject is missing. Alternatively, replace it with an example that genuinely lacks both a subject and a verb.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The example has the finite verb 'took', so 'no subject, no verb' and 'verb missing' are wrong.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/50",
+   "where": "block 7",
+   "quote": "The command jumps to \"you will\" in indicative. Keep the imperative: \"Finish your homework, and then call me.\"",
+   "why": "Item b3, “If you finish your homework, you will call me before dinner,” is a grammatically valid conditional. Both “finish” and “will call” are indicative, so there is no inappropriate mood shift. The proposed revision also changes the conditional relationship into two sequenced commands.",
+   "truth": "Do not key b3 left as an inappropriate mood shift. Mark it as acceptable/no shift or replace it with a genuine unmotivated mood shift. If a direct command is wanted, use “If you finish your homework, call me before dinner,” but present that as a change in tone rather than a required grammatical correction.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The sentence is a valid indicative conditional with no real mood shift, so keying it as inappropriate is wrong.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/50",
+   "where": "block 7",
+   "quote": "The subjunctive was is required after a wish: \"I wish I were going to the game.\"",
+   "why": "The feedback names “was” as the required subjunctive form while its own correction uses “were.” These two statements contradict each other.",
+   "truth": "For the formal present unreal wish in item b5, use “were”: “I wish I were going to the game.” The feedback should name “were,” not “was,” as the form being used.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The feedback names 'was' as the required subjunctive but then corrects to 'were', which is a contradiction.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/50",
+   "where": "block 7",
+   "quote": "Consistent active voice with the same doer throughout — no shift at all.",
+   "why": "Item b6 does stay in active voice, but it does not have the same doer throughout. Its three subjects and agents are “the band,” “the crowd,” and “the singer.”",
+   "truth": "Consistent active voice throughout — no voice shift. The subjects differ, but each subject performs its own action.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The doers differ across the clauses, so 'same doer throughout' is inaccurate.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/50",
+   "where": "block 9",
+   "quote": "It breaks the run-on but jumps from indicative to imperative in one breath.",
+   "why": "Neither the original sentence nor choice c1 is a run-on; both use a comma plus “and.” Choice c1 also changes the mood in the opposite direction from the one stated: “Wear gloves” is imperative, while “you should be careful” is indicative.",
+   "truth": "It keeps the sentence as one but shifts from imperative (“Wear gloves”) to indicative (“you should be careful”), so it does not keep the mood consistent. There is no run-on to fix.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "There is no run-on, and the mood change is described in the wrong direction; it goes imperative to indicative.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/50",
+   "where": "block 9",
+   "quote": "This fixes the shift, but the original did not need splitting — it can stay one sentence.",
+   "why": "The prompt explicitly states that the original has no voice shift, and both original clauses are active imperatives, so there is no mood shift either. Choice c3 cannot “fix” a nonexistent shift; its actual problem is that it violates the requirement to leave the sentence as one.",
+   "truth": "This keeps both clauses active imperatives, but it splits the original into two sentences, contrary to the prompt. No shift needed fixing.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The detail says the choice 'fixes the shift', but there was no shift; it is wrong because it splits the sentence, which the prompt rules out.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/50",
+   "where": "check 2",
+   "quote": "Which revision fixes the inappropriate mood shift in: \"If you finish your homework, you will call me before dinner.\"?",
+   "why": "The original is a valid conditional with no inappropriate mood shift: “finish” and “will call” are both indicative. The keyed revision, “If you finish your homework, call me before dinner,” usefully recasts it as a direct command, but that is not a necessary correction. The rationale is also inaccurate when it says this keeps one consistent mood: the revision has an indicative condition and an imperative main clause, which is an appropriate combination.",
+   "truth": "No revision is required on mood grounds. To preserve the keyed answer, ask “Which revision makes the instruction a direct command?” and explain that “call me” makes the main clause imperative while the if-clause remains indicative.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The original has no inappropriate mood shift, so the question's premise and the rationale are wrong.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/52",
+   "where": "block 4",
+   "quote": "If we win Friday's game, we would make the playoffs.",
+   "why": "The slot is keyed as a real, possible conditional, and its hint says \"It could actually happen,\" but the sentence mixes a present-tense real-condition clause with \"would.\" A real future condition normally takes \"will\" in the result clause; \"would\" pairs with the hypothetical past-form pattern. This also conflicts with block 2's example, \"If it rains, we will move the picnic indoors.\"",
+   "truth": "Use \"If we win Friday's game, we will make the playoffs.\" Alternatively, for a hypothetical version, use \"If we won Friday's game, we would make the playoffs.\"",
+   "by": [
+    "kimi31",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The sentence is keyed as a real, possible conditional, but present-tense \"win\" with \"would\" is a mismatched pairing. A real future condition takes \"will,\" and the lesson's own example uses \"will\" for this case.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/52",
+   "where": "block 6",
+   "quote": "There are 4 errors.",
+   "why": "The token key contains only three error groups: e1 (\"was planted by the\"), e2 (\"are picked by students\"), and e4 (\"was finished by everyone\"). No token has errorId e3, and every token in \"If I were taller, I would have reached the top shelf.\" is marked isError false. Thus a learner cannot select a fourth keyed error, despite the instruction and maxErrors value of 4.",
+   "truth": "Key the intended fourth error with e3 and provide its explanation—the conditional sentence is the only unmarked candidate—or change the stated error count and maxErrors to 3 if only three errors are intended.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The prompt says there are 4 errors and maxErrors is 4, but the key has only e1, e2 and e4. The error IDs skip e3, so the learner can never find a fourth error.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/52",
+   "where": "check 2",
+   "quote": "the tickets are collected by an usher",
+   "why": "The key merely repeats the original passive phrase; it does not fix anything. This contradicts the prompt's request for a fix and the rationale's statement that the second clause should remain active.",
+   "truth": "Key an active rewrite such as \"an usher collects it,\" producing: \"At the theater, you show your ticket, and then an usher collects it.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The key repeats the faulty passive phrase instead of fixing it, which contradicts the prompt's request for a fix and the rationale that the clause should be active.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/52",
+   "where": "block 4",
+   "quote": "correctChipId:\"conditional\" ... label:\"If we win Friday's game, we would make the playoffs.\"",
+   "why": "The slot assigns this sentence to conditional, whose definition and example use present + will for real possibility. The given sentence pairs present with would, which is the form reserved for hypothetical/unreal situations (second conditional or subjunctive territory).",
+   "truth": "The sentence should read \"If we win Friday's game, we will make the playoffs.\" to match the conditional definition, or be changed to past + would if intended as hypothetical.",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "This is the same defect as flag 0: the sentence is presented as a real conditional but pairs present tense with \"would.\"",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/61",
+   "where": "block 0",
+   "quote": "Conditional uses if + will/would",
+   "why": "As written, this makes will/would part of the if-clause and conflicts with the lesson's own first-conditional example. In \"If it rains tomorrow, the game will be moved indoors,\" the if-clause uses the present (\"rains\") and will occurs in the result clause; the standard pattern is not \"if it will rain.\"",
+   "truth": "Conditionals pair an if-clause with a result clause. First conditional: if + present, then will + base verb in the result clause. Second conditional: if + past/were, then would + base verb in the result clause.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "The hint is compressed shorthand for the two-clause conditional (if-clause plus will/would result), and the card's own explanation states the correct 'if + present / will' pattern, so it is unlikely to mislead.",
+   "status": "false alarm"
+  },
+  {
+   "level": "english/proficient/62",
+   "where": "check 3",
+   "quote": "the other options are a fragment, an illegal semicolon, and a colon misused.",
+   "why": "The first option, “The final whistle blew. we had won.”, is not a fragment: both “The final whistle blew” and “we had won” are complete independent clauses. Its mechanical error is the lowercase “we” after the period; the period also fails to create the requested sharp, dramatic pause.",
+   "truth": "The dash is the mark for abrupt dramatic emphasis; the other options contain a capitalization error and an undramatic period, an illegal semicolon, and a misused colon, respectively.",
+   "by": [
+    "kimi31",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The rationale calls 'The final whistle blew. we had won.' a fragment, but both parts are complete clauses and the real error is the lowercase 'we' after a period, so the explanation misnames it.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/70",
+   "where": "block 4",
+   "quote": "True — 'was' is the subjunctive form in this hypothetical.",
+   "why": "The statement and True key are correct, but the feedback names the wrong verb form. The hypothetical in 'If I were you' uses 'were,' not 'was.'",
+   "truth": "True — 'were' is the subjunctive form in this hypothetical.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The feedback says 'was' is the subjunctive form, which is wrong and contradicts the statement; it should be 'were'.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/70",
+   "where": "check 2",
+   "quote": "Which sentence uses a semicolon with a transition word correctly?",
+   "why": "The keyed sentence is correct, but it is not the only correct choice. 'I practiced every day; my serve improved, therefore.' also has two complete sentences correctly joined by a semicolon, with 'therefore' functioning as a parenthetical transition at the end of the second sentence. The prompt asks about correct usage generally, not only the specific pattern taught.",
+   "truth": "To preserve the single stated key, narrow the prompt to 'Which sentence follows the pattern “complete sentence; therefore, complete sentence”?' or replace the third choice with a genuinely incorrect sentence.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "The third choice, 'my serve improved, therefore.', is awkward but arguably grammatical; the lesson teaches the specific pattern ';therefore,' and the key matches it, so this is a minor quibble.",
+   "status": "false alarm"
+  },
+  {
+   "level": "english/proficient/70",
+   "where": "check 3",
+   "quote": "Sentence 1 is fine as a colon introducing a list, and Sentence 2 is passive but works because who arranged them doesn't matter.",
+   "why": "Sentence 1 is not fine as written: 'The storm knocked down three trees' sets up a list of three trees, but 'fences, shingles, and half the garden' are not trees and do not coherently explain that statement. Consequently, no choice correctly explains both sentences, although the explanation of Sentence 2 in the keyed choice is accurate.",
+   "truth": "Revise Sentence 1 so its setup and list agree, for example: 'The storm knocked down three trees: an oak, a maple, and a pine.' The existing keyed choice and rationale would then be accurate.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The colon list 'fences, shingles, and half the garden' doesn't match 'three trees', so the sentence is incoherent and the keyed 'fine' is misleading.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/70",
+   "where": "check 5",
+   "quote": "If I were in charge of the pep rally; therefore, I would move it to Friday.",
+   "why": "The words before the semicolon are only a subordinate 'if' clause, not a complete sentence, so the semicolon is incorrect. All three accepted alternatives repeat this error, and the hint compounds it by claiming that starting with 'If I were...' makes the first full sentence.",
+   "truth": "Use a model such as 'If I were in charge, I would schedule more scrimmages; therefore, the team would get more practice.' Here the part before the semicolon is a complete sentence containing the hypothetical if-clause, and the part after 'therefore' is also complete. The accepted answers and hint should require that structure.",
+   "by": [
+    "kimi31",
+    "grok43",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The text before the semicolon is a dependent if-clause, so the model answer, the accepted answers and the hint all teach an incorrect semicolon.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/71",
+   "where": "block 2",
+   "quote": "Its shows possession; it's or it is shows the contraction.",
+   "why": "“It is” is not a contraction; it is the uncontracted expansion of “it's.” As written, the feedback incorrectly groups “it is” with the contracted form.",
+   "truth": "Its shows possession; it's is the contraction of it is.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "The phrase \"it's or it is shows the contraction\" reads as the contraction meaning \"it is\"; it is loose wording but not misleading to a learner.",
+   "status": "false alarm"
+  },
+  {
+   "level": "english/proficient/71",
+   "where": "block 4",
+   "quote": "Caught it. The sentence before a colon must be complete; semicolons cannot introduce lists.",
+   "why": "The audit's only marked error is line 4, where “its” must be “it's” (“it is”). Every colon and semicolon in the artifact is used correctly, so this completion feedback describes an error that is not present instead of explaining the actual key.",
+   "truth": "Caught it. In line 4, 'its' should be 'it's' ('it is'); 'its' without an apostrophe shows possession.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The completion message describes colon and semicolon rules, but the only error is the its/it's mistake in line 4, so it doesn't match the key.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/71",
+   "where": "block 2",
+   "quote": "acceptedAnswers[]",
+   "why": "The cell for semicolon/its has an empty acceptedAnswers array, so the correct answer \"its\" would not be accepted by the key.",
+   "truth": "acceptedAnswers:[\"its\"]",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "The main answer field is \"its\" and is presumably matched already, so the empty acceptedAnswers array does not stop the correct answer from being accepted.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/72",
+   "where": "block 6",
+   "quote": "The dash is fine when you want a sharp aside, but here the plain period is the cleanest end mark — and the dash version still needs a period for the fragment.",
+   "why": "Option 3, \"Honestly, it was the best trip we ever took — no arguments.\", already ends with a period. Its em dash also correctly introduces an emphatic fragment. Consequently, both options 2 and 3 are correctly punctuated, despite the item claiming a single correct answer.",
+   "truth": "Acknowledge that option 3 is also correct, or revise the question to ask which option exactly reproduces the supplied two-sentence version. Alternatively, change option 3 so that it contains a genuine punctuation error.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Option 3 is also correctly punctuated and already ends with a period, so the single-answer key and its explanation are wrong.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/72",
+   "where": "block 7",
+   "quote": "Nothing was cut from this quotation, so the ellipsis is fake drama — the pause needs a comma.",
+   "why": "No comma belongs between \"told you\" and the infinitive complement \"to save me a spot\": the corrected sentence is \"I told you to save me a spot.\" Moreover, omission is not the only possible justification for the ellipsis; the lesson itself teaches that ellipses can mark hesitation.",
+   "truth": "If no hesitation or omission is intended, delete the ellipsis without replacing it: \"I told you to save me a spot.\" Do not instruct learners to insert a comma.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "The ellipsis is the intended error since nothing was cut; the comma advice is minor and the item is a deliberate distractor.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/72",
+   "where": "block 8",
+   "quote": "\"I wanted... to help.\" / \"Nothing is missing here — the sentence is complete and needs a period.\"",
+   "why": "The sentence already has a period after \"help.\" Its ellipsis can also correctly mark a hesitant pause, which this lesson explicitly teaches as a valid use. Marking it false therefore penalizes a valid reading, and the feedback falsely claims that a period is missing.",
+   "truth": "Either mark the sentence valid and explain that the ellipsis shows hesitation, or rewrite it to make the intended misuse unambiguous. In any case, remove the claim that it needs a period when one is already present.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "It is an intended distractor for a fake ellipsis, and the 'period' wording is only a minor imprecision.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/72",
+   "where": "block 8",
+   "quote": "\"I'll call you... I promise.\" / \"The omission ends a finished sentence, so it needs a fourth dot.\"",
+   "why": "Nothing in the sentence establishes that words were omitted. As written, it can be dialogue in which the ellipsis marks a hesitant pause between two statements, making the three-dot version correct. A fourth dot is required only under the lesson's rule for an omission at the end of a complete quoted sentence.",
+   "truth": "Either accept the sentence as a valid hesitation/pause or supply explicit omitted-words context before marking it false for lacking a fourth dot.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": false,
+   "sonnet_reason": "No omission is established, so a three-dot hesitation is valid and the 'needs a fourth dot' feedback is wrong.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/72",
+   "where": "check 2",
+   "quote": "\"I'll be there at six.... See you.",
+   "why": "This string is listed in \"accepts,\" but it begins a quotation and never supplies the closing quotation mark. A punctuation check should not accept unbalanced quotation marks as a correct answer.",
+   "truth": "Replace that accepted string with the fully punctuated quoted version, \"I'll be there at six.... See you.\", or accept the unquoted full sentence: I'll be there at six.... See you.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "The extra accepted string is a harmless lenient variant; the main answer is correct.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/80",
+   "where": "block 2",
+   "quote": "Question mark plus four dots: \"What do you...? ....\"",
+   "why": "The prompt's original \"What do you ...?\" already marks omitted words within the question with a three-dot ellipsis and retains the question mark. The keyed option adds a redundant second ellipsis and incorrectly places four dots after the question mark. A four-dot ellipsis is normally a period plus three dots in a declarative sentence; an omission following a complete question is marked with a question mark plus three dots, not four.",
+   "truth": "Do not mark opt_c correct. For the stated omission, use \"What do you ...?\". If an omission after a complete question must also be marked, use \"? ...\", not \"? ....\".",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The keyed option's \"?....\" is incorrect ellipsis punctuation; the prompt's own \"What do you ...?\" already correctly shows the omission, so the key is wrong or misleading, since the omission within the question needs no extra dots.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/80",
+   "where": "check 1",
+   "quote": "She asked, \"Are you coming...? ....\"",
+   "why": "No listed choice is correctly punctuated. The keyed answer has an unnecessary second ellipsis and an extra dot after the question mark. The rationale also overgeneralizes the four-dot rule: four dots represent a period plus an ellipsis in a declarative sentence, whereas a retained question mark is followed by three ellipsis dots when marking an omission after a complete question.",
+   "truth": "For omission within the question, use \"She asked, 'Are you coming ...?'\". If separately marking an omission after a complete question, use a question mark followed by three dots, never \"? ....\".",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "No choice is correctly punctuated, and the rationale wrongly says an omission ending a question turns into four dots after the question mark.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/80",
+   "where": "check 2",
+   "quote": "one needs a full sentence before it and a list after it",
+   "why": "This falsely says that a colon must be followed by a list. A colon can also introduce an explanation, as block 3 correctly teaches. Indeed, \"the goalie made eleven saves\" could explain the preceding complete clause after a colon. The dash is nevertheless the best answer because the writer specifically requests a sharp, emphatic break.",
+   "truth": "A colon generally follows a complete clause and can introduce a list or an explanation. Here, choose the dash for the requested sharp emphasis, not because a colon requires a list.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The hint says a colon needs a list after it, which contradicts block 3, where a colon introduces a list or an explanation.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/80",
+   "where": "check 3",
+   "quote": "the other options either keep the shift or create a fragment",
+   "why": "The third option, \"When the essay is being written, spelling should be checked by you,\" is a complete sentence with both clauses in passive voice. It therefore eliminates the voice shift rather than keeping it or creating a fragment, although it is wordy and less natural than the active revision.",
+   "truth": "The third option also fixes the shift by making both clauses passive, but it is awkward and less direct. The second option keeps the shift, and the fourth creates a fragment; the active revision remains the best fix.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Option three is all passive, so it removes the shift; the rationale wrongly says it keeps the shift or makes a fragment, though it is awkward and the keyed option is still better.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/81",
+   "where": "block 3",
+   "quote": "Clean. Commas set off the mild appositive.",
+   "why": "The clause \"who lives in Denver\" is a nonrestrictive relative clause modifying \"my cousin,\" not an appositive. An appositive is a noun or noun phrase that renames another noun, such as \"my cousin, a Denver resident.\"",
+   "truth": "Clean. Commas set off the nonrestrictive relative clause \"who lives in Denver.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "\"who lives in Denver\" is a nonrestrictive relative clause, not an appositive, so the explanation misnames it and could mislead at this level.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/81",
+   "where": "block 4",
+   "quote": "Missing a subject or verb — e.g., Because it was raining.",
+   "why": "\"Because it was raining\" has a subject (\"it\") and a verb (\"was raining\"). It is a fragment because \"because\" makes it a dependent clause that is not attached to an independent clause. The associated suggestion to \"give it a subject and verb\" would therefore not fix this example.",
+   "truth": "A dependent clause or incomplete thought presented as a sentence — e.g., \"Because it was raining.\" Fix this example by attaching it to an independent clause, as in \"We stayed inside because it was raining,\" or by removing \"because.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "\"Because it was raining\" has a subject and a verb, so \"missing a subject or verb\" and the fix \"give it a subject and verb\" are wrong for this example.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/81",
+   "where": "block 5",
+   "quote": "Same seven words, two completely different vibes — that's punctuation doing the talking.",
+   "why": "Round 1 produces \"You did that on purpose.\", which has five words. Round 2 produces \"You did that on purpose, did you?\", which has seven words because it adds \"did you.\" Thus the versions do not use the same seven words, and the prompt's claim that \"only the punctuation changes\" is also false.",
+   "truth": "The first version has five words; the second has seven because it adds the tag \"did you.\" Both the wording and the punctuation change. Alternatively, redesign the solutions so they use identical wording if only punctuation is meant to change.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Round 1 has five words and round 2 adds \"did you\", so the \"same seven words\" and \"only punctuation changes\" claims are false.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/81",
+   "where": "check 3",
+   "quote": "The sentence is a fragment because the dash leaves it without a complete subject and verb",
+   "why": "The dash does not cause the fragment. \"When we finally got to the theater\" already contains the subject \"we\" and the verb \"got,\" but \"when\" makes it a dependent clause. No independent clause follows. This wording also contradicts the rationale, which correctly says that the dash is fine and the sentence structure is the problem.",
+   "truth": "The sentence is a fragment because it contains a dependent clause and no independent clause; the dash is not the problem.",
+   "by": [
+    "kimi31",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The key says the fragment lacks a subject and verb, but the clause has \"we got\". It is a dependent clause, so the key contradicts its own rationale.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/82",
+   "where": "block 3",
+   "quote": "Chicago dropped its ban in 2014",
+   "why": "This chronology is false. Chicago was not maintaining a split-infinitive ban until 2014: its 14th edition (1993) already stated that there was no rule against splitting an infinitive, and later editions continued to recognize justified splits. No new Chicago edition appeared in 2014 to drop such a ban.",
+   "truth": "Say that Chicago had rejected a blanket ban by 1993 and that most modern guides allow a split infinitive when it improves clarity or avoids awkwardness. Remove the unsupported 2014 turning point.",
+   "by": [
+    "kimi31",
+    "grok43",
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Chicago rejected a blanket ban on split infinitives by 1993, so the 2014 date is wrong.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/82",
+   "where": "block 8",
+   "quote": "Once banned, now accepted: Chicago dropped its ban in 2014, AP never enforced it strictly.",
+   "why": "The cheat sheet repeats the incorrect Chicago date. Chicago had explicitly rejected a blanket prohibition by its 1993 edition, so 2014 was not when it dropped the ban.",
+   "truth": "Once widely condemned, split infinitives are now accepted: Chicago had rejected a blanket ban by 1993, and AP allows splitting when needed to avoid awkwardness or ambiguity.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The cheat sheet repeats the false 2014 Chicago date.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/82",
+   "where": "block 8",
+   "quote": "Chicago dropped its ban in 2014, AP never enforced it strictly.",
+   "why": "Repeats the same incorrect 2014 date for Chicago's treatment of split infinitives.",
+   "truth": "Chicago has long allowed split infinitives; no 2014 policy change occurred.",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The same incorrect 2014 claim appears again in the cheat sheet.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/82",
+   "where": "block 8",
+   "quote": "Chicago dropped its ban in 2014",
+   "why": "Same factual error as block 3: the Chicago Manual of Style fully accepted split infinitives in its 17th edition, published in 2017, not 2014.",
+   "truth": "Chicago dropped its ban in 2017.",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The 2014 date is indeed wrong, though the suggested 2017 replacement is also incorrect because Chicago accepted split infinitives much earlier.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/90",
+   "where": "block 4",
+   "quote": "Clean — a single dash for a sharp, emphatic close is fine.",
+   "why": "Line 5 contains no dash at all; it reads 'By August the whole yard looked completely different.' The audit-level explanation's reference to 'a lone dash' is also unsupported: the paragraph has six dashes, forming one pair in Line 3 and two pairs in Line 4.",
+   "truth": "For the text as written, Line 5's explanation should say that it is clean because no internal pause mark is needed. Remove the audit explanation's reference to a lone dash, or restore the intended dash in Line 5 and make the explanations consistent with it.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Line 5 has no dash, so its explanation about a single dash is wrong, and the audit's 'lone dash' reference is also unsupported.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/90",
+   "where": "block 5",
+   "quote": "The debate team, winners of three straight meets, will compete Saturday, and if they win again they'll head to the state finals.",
+   "why": "The target answer omits the comma after the introductory dependent clause 'if they win again.' That clause should be separated from the main clause 'they'll head to the state finals.' The rationale calls for removing the extra comma after 'and,' not the necessary comma after 'again.'",
+   "truth": "The debate team, winners of three straight meets, will compete Saturday, and if they win again, they'll head to the state finals.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "The comma after a short introductory clause following 'and' is optional, so the target answer is acceptable and matches its own rationale.",
+   "status": "one ruler"
+  },
+  {
+   "level": "english/proficient/91",
+   "where": "block 3",
+   "quote": "\"answer\":\"Not always. Real errors break grammar or confuse meaning; style-guide choices are defensible either way.\",\"colId\":\"word_pairs\",\"rowId\":\"affect_effect\"",
+   "why": "This final cell answers the misconception row, “‘Disputed rules are always errors’,” but it is mapped to the affect/effect row and Confused Words column. The grid already has an affect_effect/word_pairs cell containing the actual affect/effect answer, so this mapping duplicates that position and leaves the misconception row without its intended cell.",
+   "truth": "The final cell should have \"colId\":\"usage_debates\" and \"rowId\":\"misconception\".",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The 'Not always' answer belongs to the misconception row but is keyed to affect_effect, leaving the misconception row empty and duplicating a cell.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/91",
+   "where": "block 4",
+   "quote": "'Honestly' at the front is just an informal opener, not a mistake.",
+   "why": "This sentence appears in the explanation for line 5, but line 5 begins “In the morning,” and contains no “Honestly.” “Honestly” begins line 3, so the feedback does not describe the line it is supposed to explain.",
+   "truth": "Remove this sentence from line 5’s feedback, or move it to line 3. Line 5’s feedback should discuss that line itself, for example that it is correctly constructed and that “in their own words” is appropriately set off with commas.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Line 5's explanation mentions 'Honestly', which appears in line 3, not line 5, so the feedback doesn't match its line.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/91",
+   "where": "check 1",
+   "quote": "An introductory word writers may place a comma after in some guides",
+   "why": "This entry in \"accepts\" does not answer the question. It describes comma placement after an introductory word, neither identifying \"hopefully\" nor giving the required historical shift from criticism to acceptance. Treating it as a correct alternative would falsely accept an answer about a different usage issue.",
+   "truth": "Replace it with a genuine paraphrase of the keyed answer, such as \"Sentence-initial hopefully, once widely criticized and now widely accepted.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The accepted answer about commas after an introductory word doesn't match the keyed answer (hopefully) and would wrongly accept an unrelated response.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/91",
+   "where": "check 4",
+   "quote": "'She asked for the vote and every student raised a hand and the chair counted them.'",
+   "why": "The keyed sentence is not a run-on. It contains three independent clauses—“She asked for the vote,” “every student raised a hand,” and “the chair counted them”—connected by the coordinating conjunction \"and.\" There is no fused junction or comma splice; at most, a particular guide might recommend additional commas. The alternate accepted explanation also miscounts these as two clauses. Consequently, none of the options supplies the intended clear grammatical error.",
+   "truth": "Replace the keyed option with an actual run-on, such as \"She asked for the vote every student raised a hand,\" and explain that those two independent clauses are fused without punctuation or a conjunction. Alternatively, add another option containing a genuine grammatical error and key that option.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The keyed sentence is a polysyndetic run of clauses joined by 'and', which is grammatical though stylistically awkward, so it is not a clear run-on or genuine error under every guide.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/92",
+   "where": "block 5",
+   "quote": "The comma is the everyday default, but here it creates a comma splice — two independent ideas glued with too weak a mark.",
+   "why": "A comma splice joins two independent clauses with only a comma. Here, \"no trash talking allowed\" is not an independent clause or complete sentence, as the block's own whyIntuitionFailed correctly explains. The comma is nonstandard, but calling this a comma splice misdiagnoses the construction.",
+   "truth": "The comma is the everyday default, but here it does not properly introduce the explanation of the rule; use a colon. This is not a comma splice because \"no trash talking allowed\" is not an independent clause.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The second part is a fragment, so calling the comma version a comma splice misnames the error and contradicts the block's own whyIntuitionFailed.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/92",
+   "where": "block 5",
+   "quote": "here it creates a comma splice — two independent ideas glued with too weak a mark",
+   "why": "A comma splice is two independent clauses joined by only a comma, but 'no trash talking allowed' has no finite verb and is not a complete sentence. The lesson's own whyIntuitionFailed states exactly this: \"'no trash talking allowed' is not a complete sentence, so there is nothing to join.\" The trap feedback therefore mislabels the error and contradicts the lesson's own explanation.",
+   "truth": "The comma version is wrong because a comma is too weak a mark to introduce the explanation of the rule — a colon (or dash) is needed. It is not a comma splice, since the second part is not an independent clause.",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "This is the same issue as flag 0: the comma-splice label is wrong for a non-clause and conflicts with the lesson's statement that the second part is not a complete sentence.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/95",
+   "where": "block 2",
+   "quote": "Got appears three times — it could mean bought, received, found, or reached.",
+   "why": "The vague draft contains \"got\" only twice: \"I got some stuff\" and \"I got a lot done.\" The third occurrence is in the rewrite (\"got to bed\"), not the draft. Also, in \"got a lot done,\" got means accomplished or completed, not reached.",
+   "truth": "Got appears twice in the vague draft. In \"got some stuff,\" it could mean bought, received, or found; in \"got a lot done,\" it means accomplished or completed.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The vague draft has \"got\" only twice (\"got some stuff\", \"got a lot done\"), so \"three times\" is wrong; the third is in the rewrite.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/95",
+   "where": "block 7",
+   "quote": "When our fewer players showed up than we expected",
+   "why": "This is the sentence produced by the keyed answer \"fewer,\" but \"our fewer players showed up than we expected\" is not a grammatical comparative construction. The key is correct; the surrounding wording is not.",
+   "truth": "Use either \"When fewer players showed up than we expected\" or \"When fewer of our players showed up than we expected.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "\"When our fewer players showed up than we expected\" is ungrammatical as written, even though \"fewer\" is the correct key.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/95",
+   "where": "block 9",
+   "quote": "There are four.",
+   "why": "The key marks only the two instances of \"really,\" plus \"good\" and \"got.\" However, \"stuff\" is also vague—block 2 explicitly teaches this—and is incorrectly marked isError false. \"Bunch\" is also too casual for the stated formal book-report context. Thus the instruction to tap every weak word conflicts with the four-error key.",
+   "truth": "Either mark \"stuff\" as an additional error (and \"bunch\" too, if targeting the informal phrase \"a bunch of\") and update the count and maxErrors, or replace that phrase so the paragraph contains exactly the four intended targets.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "\"Stuff\" is taught as vague in block 2 and \"bunch of\" is casual, yet the task says tap every weak word and there are four, so the key conflicts with the lesson.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/95",
+   "where": "check 0",
+   "quote": "All four words could loosely describe checking work twice",
+   "why": "\"Lazy\" contradicts carefully checking every answer twice, and \"slow\" describes speed rather than effort. The hint likewise inaccurately says that lazy and slow both describe low effort. \"Diligent\" remains the correct answer, but this explanation is wrong.",
+   "truth": "Diligent fits because it means showing careful, persistent effort. Lazy contradicts Maya's behavior, slow concerns speed rather than effort, and picky suggests being hard to please rather than simply thorough.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The rationale and hint say lazy and slow loosely describe checking work twice or describe low effort, which is false, since lazy contradicts the behavior and slow is about speed.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/95",
+   "where": "check 3",
+   "quote": "A fragment is missing its subject or its verb.",
+   "why": "This definition conflicts with option A. Option A has a subject (\"the stadium lights\") and a verb (\"flickered\"), but it is still a fragment because \"Because\" makes it a dependent clause rather than a complete sentence.",
+   "truth": "A fragment fails to form a complete independent clause. It may lack a subject or main verb, or it may contain both while remaining only a dependent clause.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The hint's definition (missing subject or verb) doesn't cover option A, which has both but is a dependent clause, so it would mislead.",
+   "status": "confirmed"
+  },
+  {
+   "level": "english/proficient/95",
+   "where": "check 4",
+   "quote": "Type the letter of your choice.",
+   "why": "No A–D revised versions are supplied in the check, so the learner cannot determine what \"B\" refers to or work out the keyed answer from the prompt.",
+   "truth": "Provide the A–D revisions, with B being the precise version described in the rationale, or rewrite the check as a self-contained question whose answer can be typed.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The prompt refers to options A–D that are never shown, so the learner can't answer.",
+   "status": "confirmed"
+  },
+  {
+   "level": "math/algebra_1_part_a/254",
+   "where": "check 2",
+   "quote": "answer\":\"3x -1\"",
+   "why": "The prompt asks for the equation in slope-intercept form, which must include y =; the stored answer omits it while the accepts and rationale include it.",
+   "truth": "answer\":\"y = 3x -1\"",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "The answer's expression 3x - 1 is mathematically correct, and every 'y = ...' form a learner would type is in the accepts list, so this is only a formatting choice.",
+   "status": "one ruler"
+  },
+  {
+   "level": "math/algebra_1_part_a/254",
+   "where": "check 3",
+   "quote": "answer\":\"-1/2 x + 4\"",
+   "why": "The prompt asks for the equation in slope-intercept form, which must include y =; the stored answer omits it while the accepts and rationale include it.",
+   "truth": "answer\":\"y = -1/2 x + 4\"",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "The answer's expression -1/2 x + 4 is correct, and the full 'y = ...' forms are accepted, so omitting 'y =' in the stored answer would not mislead a learner.",
+   "status": "one ruler"
+  },
+  {
+   "level": "math/algebra_1_part_a/95",
+   "where": "block 8",
+   "quote": "10% + 20% is not 30%.",
+   "why": "As written, this is arithmetically false: 10% + 20% = 30%. It also contradicts block 6, which correctly says that adding 10% and 20% gives 30%, but that 30% cannot be the combined solution's concentration. Percents can be added when they refer to the same base; what is invalid is adding two solutions' concentrations directly to find the mixture's concentration. The row's blanket rule “Never add percents or concentrations directly” is therefore too broad.",
+   "truth": "Do not add concentrations directly to find a mixture's concentration. Mixing a 10% solution with a 20% solution does not generally produce a 30% solution; weight each concentration by its amount, then divide the total pure substance by the total amount.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "The line is shorthand in a trap row about not adding concentrations, and the surrounding text ('Weight each by its amount') makes the meaning clear; it isn't a real contradiction with block 6.",
+   "status": "one ruler"
+  },
+  {
+   "level": "math/calculus_i/10",
+   "where": "block 9",
+   "quote": "An average rate over an interval equals an instantaneous rate only when the rate stays constant.",
+   "why": "A varying rate can still equal the interval's average rate at a particular instant. For example, with s = t^2, the average rate over [0, 2] is (4 - 0)/(2 - 0) = 2. At t = 1, the instantaneous rate is the limit of ((1 + h)^2 - 1)/h = 2 + h, which is also 2, even though the instantaneous rate 2t is not constant. Constant rate is necessary for agreement at every instant, not for agreement at one instant.",
+   "truth": "An average rate over an interval does not determine the instantaneous rate at a particular instant. If the rate is constant, the average and instantaneous rates agree throughout; if the rate varies, they may still be equal at some instant.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": false,
+   "sonnet_reason": "As worded, 'only when the rate stays constant' is false, since a varying rate equals its interval average at some instant (e.g. s=t² at t=1 over [0,2]); it should say the average doesn't determine the instantaneous rate, or that they agree at every instant only if constant.",
+   "status": "one ruler"
+  },
+  {
+   "level": "math/numbers_to_20_and_teen_numbers/20",
+   "where": "block 4",
+   "quote": "Objects left over after the frame is full",
+   "why": "The sort has six one-button items keyed as inFrame and two one-coin items keyed as loose, only 8 objects altogether. Six buttons in a ten-frame leave 4 empty spaces, so the frame is not full and the two coins cannot be leftovers after it is full.",
+   "truth": "With only these 8 objects, all of them fit in the ten-frame and none are left over. To keep the two coins keyed as full-frame leftovers, provide 10 in-frame objects (12 objects total). Alternatively, if the coins are merely outside a partially filled frame, change the hint to \"Objects outside the ten-frame.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Only 6 objects are keyed as in the frame, so the frame is not full and the 2 coins would fit; this contradicts the 'left over after the frame is full' hint and the lesson's teaching.",
+   "status": "confirmed"
+  },
+  {
+   "level": "spanish/advanced/108",
+   "where": "block 5",
+   "quote": "Both muy and mucho translate as \"very much\" or \"a lot\", so they get swapped.",
+   "why": "This falsely gives muy the meanings of mucho. Muy means \"very\" and is used before an adjective, as in muy grande (\"very big\"). Mucho can mean \"much,\" \"a lot,\" or \"very much\" depending on context; before a noun it agrees, as in muchas casas.",
+   "truth": "Muy means \"very\" and is used before adjectives. Mucho means \"much\" or \"a lot\" and can also translate as \"very much\" in contexts such as Me gusta mucho. Learners may confuse the two words, but they do not both mean \"very much\" or \"a lot.\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The text says both muy and mucho translate as \"very much\" or \"a lot\", but muy only means \"very\", so the explanation gives a wrong fact about muy.",
+   "status": "confirmed"
+  },
+  {
+   "level": "spanish/advanced/162",
+   "where": "block 1",
+   "quote": "Ciudad de la Paz (named capital in 2026; before, Malabo)",
+   "why": "Malabo is the capital of Equatorial Guinea. Ciudad de la Paz, formerly Oyala, has been developed on the mainland as a planned replacement capital; it is not accurate to present it as the capital following a 2026 designation.",
+   "truth": "Guinea Ecuatorial — Malabo (Ciudad de la Paz is the planned future capital).",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "The lesson deliberately notes a 2026 capital designation with Malabo as the prior capital, which is consistent with a reported recent move to Ciudad de la Paz. The flag relies on older knowledge and does not show the text is wrong.",
+   "status": "one ruler"
+  },
+  {
+   "level": "spanish/advanced/162",
+   "where": "block 1",
+   "quote": "Guinea Ecuatorial,Ciudad de la Paz (named capital in 2026; before, Malabo)",
+   "why": "The table states that Ciudad de la Paz became the capital in 2026, replacing Malabo. In fact Malabo remains the capital of Equatorial Guinea; Ciudad de la Paz (Djibloho) is only a planned/proposed future capital and has not replaced Malabo.",
+   "truth": "Guinea Ecuatorial — Malabo (with Ciudad de la Paz as a planned future capital).",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "The lesson's specific, dated note that Ciudad de la Paz was named capital in 2026 is plausible: the capital move to Djibloho was announced, so the flag relies on older information and can't be shown wrong.",
+   "status": "one ruler"
+  },
+  {
+   "level": "spanish/advanced/163",
+   "where": "block 0",
+   "quote": "The pattern is always the same: Name + es + nationality. Es + profession, with no un or una.",
+   "why": "Block 0 states as an exceptionless rule that a profession after es never takes un/una, but block 5 teaches the opposite for the very same person: its correct answer is \"Shakira es una cantante colombiana\", and its correctReasoning says \"with an adjective added the article returns (una cantante)\". The two blocks contradict each other, and the flat \"always\" would lead a learner to reject the sentence the lesson itself marks correct.",
+   "truth": "The no-article rule applies only to a bare profession (es cantante). When the profession is modified by an adjective, the indefinite article is used and agrees: es una cantante colombiana. Block 0 should present the pattern for bare professions, not as an always-rule without exception.",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "Block 0's flat 'always... no un or una' for professions contradicts Block 5's correct answer 'es una cantante colombiana', where the article is required once the profession is modified by an adjective.",
+   "status": "confirmed"
+  },
+  {
+   "level": "spanish/advanced/19",
+   "where": "check 1",
+   "quote": "accepts:[\"luces\"]",
+   "why": "Prompt explicitly requires typing the plural \"with its article\", yet the accepts list only contains the bare noun form without article.",
+   "truth": "accepts should list full forms with article such as [\"las luces\"]",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "The answer field is \"las luces\" and the accepts list only adds a lenient bare-noun alternative. This doesn't make anything wrong or mislead a learner, so it is a minor leniency choice and not an error.",
+   "status": "false alarm"
+  },
+  {
+   "level": "spanish/advanced/80",
+   "where": "block 5",
+   "quote": "Only -o adjectives, consonant-ending nationalities and -or adjectives like trabajador change to -a.",
+   "why": "The exhaustive “Only” makes the rule false. Adjectives ending in -án, -ón and -ín also commonly form the feminine with -a: holgazán → holgazana, burlón → burlona and chiquitín → chiquitina. These fall outside the categories listed.",
+   "truth": "Use a non-exhaustive rule that includes all these patterns: adjectives in -o, consonant-ending nationality adjectives, many -or adjectives such as trabajador, and adjectives ending in -án, -ón or -ín can form the feminine with -a. Fácil itself remains invariable in gender.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The word 'Only' is too exhaustive, because adjectives in -án, -ón and -ín (holgazana, burlona) also take -a and are not in the listed categories.",
+   "status": "confirmed"
+  },
+  {
+   "level": "spanish/entry/16",
+   "where": "block 4",
+   "quote": "All five chunks are in the right place.",
+   "why": "The exercise has only four blanks. Their correct answers are Quiero, Puedo, voy and tengo; necesito is not used, so only four chunks are placed.",
+   "truth": "All four chunks are in the right place.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The exercise has four blanks (Quiero, Puedo, voy, tengo), so the feedback \"All five chunks\" is factually wrong and contradicts what the learner just did.",
+   "status": "confirmed"
+  },
+  {
+   "level": "spanish/entry/3",
+   "where": "block 1",
+   "quote": "Caribbean\",\"Cuba, República Dominicana, and Puerto Rico (a US territory)\"],[\"South America\",\"Colombia, Venezuela, Ecuador, Perú, Bolivia, Chile, Argentina, Uruguay, Paraguay\"],[\"Europe\",\"España (Spain)\"],[\"Africa\",\"Guinea Ecuatorial (Equatorial Guinea)\"],\"footnote\":\"7 + 2 + 9 + 1 + 1 = 20 countries, plus Puerto Rico.",
+   "why": "The Caribbean row lists three items (Cuba, República Dominicana, Puerto Rico) but the footnote's arithmetic (7 + 2 + 9 + 1 + 1) treats the Caribbean as only two countries and adds Puerto Rico separately; the table therefore contradicts its own footnote and the lesson's opening statement of 20 countries plus Puerto Rico.",
+   "truth": "Caribbean row should read: Cuba, República Dominicana",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "The row marks Puerto Rico as a US territory and the footnote counts 2 Caribbean countries plus Puerto Rico separately, so the total of 20 is consistent with the table and the intro.",
+   "status": "false alarm"
+  },
+  {
+   "level": "spanish/entry/4",
+   "where": "block 1",
+   "quote": "el rehs-tah-oo-RAHN-teh",
+   "why": "This pronunciation guide splits the Spanish diphthong au into two syllables, producing five syllables. Restaurante is syllabified res-tau-RAHN-te, with four syllables; block 2 also gives res-tau-RAN-te.",
+   "truth": "Use a guide such as \"el rehs-tau-RAHN-teh\" or \"el rehs-tow-RAHN-teh\", keeping au in one syllable.",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "\"rehs-tah-oo-RAHN-teh\" is an approximate respelling that sounds like au glided as ah-oo; stress is correctly on RAHN, and it doesn't mislead a beginner, though it's slightly syllable-heavy.",
+   "status": "one ruler"
+  },
+  {
+   "level": "spanish/entry/42",
+   "where": "check 1",
+   "quote": "\"accepts\":[\"diez y ocho\"]",
+   "why": "The prompt asks for 18 'as one Spanish word', and Block 2 explicitly teaches that the old form diez y seis is 'now written as one word' (dieciséis). The accepted alternative 'diez y ocho' is a two-word, outdated spelling, so the key accepts an answer the prompt rules out and the lesson's own pattern section contradicts.",
+   "truth": "The only accepted answer should be 'dieciocho' (common misspellings like 'dieciocho' variants aside, no two-word 'diez y ocho' variant should be accepted).",
+   "by": [
+    "glm_flash_zgpu"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The prompt asks for 18 \"as one Spanish word\", yet the key also accepts the two-word \"diez y ocho\", which contradicts the prompt and the lesson's one-word pattern.",
+   "status": "confirmed"
+  },
+  {
+   "level": "spanish/intermediate/81",
+   "where": "check 2",
+   "quote": "\"accepts\":[\"donde\"]",
+   "why": "The lesson teaches that the interrogative must be written \"dónde\" with an accent. Unaccented \"donde\" is the relative word used in statements, so accepting it as correct contradicts block 2 and lets a learner pass with the wrong spelling.",
+   "truth": "Remove \"donde\" from \"accepts\"; the accepted answer should be \"dónde\".",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": false,
+   "glm53": true,
+   "sonnet_reason": "Accepting the unaccented spelling in a type-in is a common lenient design choice, and typed accents are often hard to enter; it doesn't make the lesson text wrong.",
+   "status": "one ruler"
+  },
+  {
+   "level": "spanish/intermediate/97",
+   "where": "check 2",
+   "quote": "qué día es",
+   "why": "This entry in \"accepts\" omits \"hoy\", so it does not give the full requested question, \"What day is it today?\" It also contradicts the lesson's fixed question and the hint \"Qué + día + es + hoy.\" A learner could omit part of the required answer and still be marked correct.",
+   "truth": "Remove \"qué día es\" from \"accepts\". Accepted variants should retain \"hoy\", for example \"qué día es hoy\", alongside punctuation and capitalization variants of \"¿Qué día es hoy?\"",
+   "by": [
+    "kimi31"
+   ],
+   "sonnet": true,
+   "glm53": true,
+   "sonnet_reason": "The accepted variant \"qué día es\" omits \"hoy\", so an incomplete answer to \"What day is it today?\" would be marked correct.",
+   "status": "confirmed"
+  },
+  {
+   "level": "spanish/intermediate/97",
+   "where": "block 0",
+   "quote": "HWEH-behs",
+   "why": "The pronunciation guide for jueves is spelled incorrectly; the 'v' sound is /β/ (like English 'v' or soft 'b'), not 'b'.",
+   "truth": "HWEH-vehs",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "Spanish v is pronounced like b (a soft bilabial), so \"HWEH-behs\" is a standard, accurate respelling; \"vehs\" would teach an English v.",
+   "status": "false alarm"
+  },
+  {
+   "level": "spanish/intermediate/97",
+   "where": "block 1",
+   "quote": "HWEH-behs",
+   "why": "The pronunciation guide for jueves is spelled incorrectly; the 'v' sound is /β/ (like English 'v' or soft 'b'), not 'b'.",
+   "truth": "HWEH-vehs",
+   "by": [
+    "grok43"
+   ],
+   "sonnet": false,
+   "glm53": false,
+   "sonnet_reason": "Spanish v is pronounced like b, so \"HWEH-behs\" is correct, and the same respelling is used consistently with \"BYEHR-nehs\" in the table.",
+   "status": "false alarm"
+  }
+ ]
+}
