@@ -279,6 +279,8 @@ App.mount(async () => {
         const c = out.course || (out.activity && out.activity.queued ? { status: 'building', skills: [] } : out.course);
         if (c && out.activity) c.activity = out.activity;
         courseUi(id, c);
+        // The build ended before it made a course (no model could answer): say so, or the button just goes back with no word.
+        if (!c && out.build_error) { const note = document.getElementById(`course-note-${id}`); if (note) note.textContent = `${out.build_error} Your material is saved: try again in a while.`; }
         // Right after a start the server may not have flagged it yet: show it busy for the first looks.
         if (extending && c && tries < 2 && !c.extending) c.extending = true;
         extendUi(id, c);

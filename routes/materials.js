@@ -204,6 +204,9 @@ const activityOf = (userId, label, extra = {}) => {
   return { ...extra, ...(queued ? { queued: { behind: st.running || null, ahead: st.waiting.indexOf(label) } } : {}) };
 };
 
+// A build that ended before it made a course row (no model can answer) leaves nothing for the page to read: the button went back with no word
+// to the learner (beta load test, Nov 2026). The reason is kept here until the next try.
+const courseBuildErrors = new Map();
 router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1000), (req, res) => {
   const m = materials.get(req.user.id, req.params.id, false);
   if (!m) return res.status(404).json({ error: 'No such material.' });
@@ -212,14 +215,21 @@ router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1
   if (existing && existing.status === 'ready' && existing.version === courses.VERSION) return res.json({ course: courses.summary(existing), cached: true });
   if (courses.inflight.has(`${userId}:${m.id}`)) return res.status(202).json({ started: true, busy: true });
   // The learner is waiting on this: the waiting lane on the fast lane (paid fast slots first for a cleared learner, 8 s overflow to a paid slot otherwise).
-  queueBuild(userId, `course:${m.id}`, () => require('../services/material-autobuild').runWaiting(() => courses.build(userId, m.id, {})).then((out) => { if (out.error && out.code !== 'busy') console.warn(`course-builder: ${out.code}`); }));
+  courseBuildErrors.delete(`${userId}:${m.id}`);
+  queueBuild(userId, `course:${m.id}`, () => require('../services/material-autobuild').runWaiting(() => courses.build(userId, m.id, {})).then((out) => {
+    if (out.error && out.code !== 'busy') {
+      console.warn(`course-builder: ${out.code}`);
+      if (courseBuildErrors.size > 2000) courseBuildErrors.clear();
+      courseBuildErrors.set(`${userId}:${m.id}`, out.error);
+    }
+  }));
   res.status(202).json({ started: true });
 });
 
 router.get('/:id/course', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
   require('../services/part-modify').maybeRefreshCourse(req.user.id, req.params.id); // eslint-disable-line global-require
-  res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `course:${Number(req.params.id)}`) });
+  res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)), activity: activityOf(req.user.id, `course:${Number(req.params.id)}`), build_error: courseBuildErrors.get(`${req.user.id}:${Number(req.params.id)}`) || null });
 });
 
 router.post('/:id/course/retry', requireAuth, limit('materials-course-retry', 6, 60 * 60 * 1000), (req, res) => {

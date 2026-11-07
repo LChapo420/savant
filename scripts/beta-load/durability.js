@@ -121,7 +121,7 @@ async function round(kind, opts = {}) {
   const writers = Array.from({ length: WRITERS }, (_, i) => new Writer(i + 1, srv.url, Date.now() % 100000));
   await Promise.all(writers.map((w) => w.setup()));
   const runs = writers.map((w) => w.run().catch(() => {}));
-  await h.sleep(opts.warmMs || 6000 + Math.random() * 10000);
+  await h.sleep(opts.warmMs || Number(flag('warm-ms', 0)) || 6000 + Math.random() * 10000);
   let exited = false;
   srv.child.once('exit', () => { exited = true; });
 

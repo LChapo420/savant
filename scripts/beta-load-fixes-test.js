@@ -256,6 +256,8 @@ async function startApp(dbFile, port) {
   check('a second learner with a longer id sharing the start is not touched', clearFromSharedPlans(7) === 0 && !!db.byId('block_plans', sharedPlan.id).answers['78:c1'] && db.byId('block_plans', ownPlan.id).answers['78:c1'].answer === 'mine');
 
   console.log('over HTTP, in production mode');
+  const pageSource = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'my-material.js'), 'utf8');
+  check('the upload page shows why a course was not built', pageSource.includes('out.build_error'));
   const dbFile = path.join(dir, 'http.json');
   const port = 7900 + (process.pid % 90);
   let app = await startApp(dbFile, port);
@@ -279,6 +281,15 @@ async function startApp(dbFile, port) {
   let wrong = 0;
   for (let i = 0; i < 20; i++) if ((await http(app.base, 'POST', '/api/auth/login', { email: 'c0@example.test', password: 'wrong-wrong-wrong' }, null, `10.2.0.${i}`)).status === 429) wrong++;
   check('guessing one account is stopped even from many addresses', wrong >= 5, wrong);
+  // A course asked for when no model is set up: the reason reaches GET .../course.
+  const pasted = await http(app.base, 'POST', '/api/materials/paste', { title: 'x', text: 'Tides come from the pull of the moon and the sun on the sea, twice a day. '.repeat(40) }, cookies[0]);
+  const mat = pasted.json && pasted.json.material;
+  if (mat) {
+    await http(app.base, 'POST', `/api/materials/${mat.id}/course`, {}, cookies[0]);
+    let said = null;
+    for (let i = 0; i < 40 && !said; i++) { await sleep(250); const g = await http(app.base, 'GET', `/api/materials/${mat.id}/course`, null, cookies[0]); said = g.json && g.json.build_error; }
+    check('a course that could not start says why', /not available/.test(String(said)), said);
+  } else check('a course that could not start says why (paste failed)', false, pasted.status);
   await sleep(1500); // past the save
   app.child.kill('SIGKILL');
   await sleep(300);
