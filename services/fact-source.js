@@ -78,4 +78,37 @@ async function sourceClaim(claim, { facts = null, topic = '', useOffline = true,
   return { status: supported(best) ? 'sourced' : 'unsourced', best, tried: docs.length };
 }
 
-module.exports = { isOn, stage1, supported, strength, fromBank, fromOffline, sourceClaim, THRESHOLDS, post };
+const sentencesOf = (t) => String(t).replace(/\[\[eg\]\][\s\S]*?\[\[\/eg\]\]/g, ' ').split(/(?<=[.!?])\s+|\n+/).map((x) => x.trim()).filter((x) => x.length > 15 && /[a-z]{3}/i.test(x));
+const RULE_SYSTEM = 'You compare a sentence from a rewritten lesson with the verified facts it must rest on. A personal example is fine as long as what it teaches follows from the facts. Answer ONLY from the facts given, not from memory. supported: what the sentence teaches follows from the facts. unsupported: it states something the facts do not say, or the opposite of what they say.';
+const RULE_SCHEMA = { type: 'object', required: ['verdict'], properties: { verdict: { type: 'string', enum: ['supported', 'unsupported'] }, why: { type: 'string' } } };
+
+/**
+ * The check a rewrite passes before one learner sees it: errors added after the level was verified. Background or build time; it answers in seconds on a CPU, not instantly.
+ *   text         the rewrite, personal examples between [[eg]] marks
+ *   bank         verified facts and the verified lesson text, as strings
+ *   interests    words of the learner's hobbies an example may use
+ *   rule         optional (sentence, facts) => Promise<boolean unsupported>: a cheap ruling on what the local models flag
+ *   stage1Fn     for tests; defaults to the local checkers
+ * Returns { status: 'pass'|'fail'|'not_checked', problems }. If the local checkers cannot answer it is 'not_checked', never 'pass'.
+ */
+async function checkRewrite({ text, bank, track = '', interests = [], rule = null, stage1Fn = stage1, threshold = Number(process.env.FACT_REWRITE_THRESHOLD || 0.3) }) {
+  const B = require('./fact-bank'); // eslint-disable-line global-require
+  const allowed = B.allowedFrom(bank, track, interests);
+  const problems = [];
+  for (const m of B.mechanicalCheck(text, allowed, { track }).missing) problems.push({ kind: 'token', type: m.type, value: m.raw });
+  for (const p of B.illustrationCheck(text, { allowedNames: interests, allowed })) problems.push({ kind: 'illustration', value: p.problem, span: p.span });
+  const sents = sentencesOf(text);
+  let scores;
+  try { scores = await stage1Fn(sents.map((claim) => ({ doc: fromBank(claim, bank, 5).map((x) => x.text).join(' ') || 'none', claim }))); } catch { return { status: 'not_checked', problems }; }
+  for (let i = 0; i < sents.length; i++) {
+    const s = scores[i];
+    if (!(s.factcg >= threshold && s.minicheck >= threshold)) {
+      let keep = true;
+      if (rule) { try { keep = await rule(sents[i], fromBank(sents[i], bank, 6).map((x) => x.text)); } catch { keep = true; } } // eslint-disable-line no-await-in-loop
+      if (keep) problems.push({ kind: 'unsupported', value: sents[i] });
+    }
+  }
+  return { status: problems.length ? 'fail' : 'pass', problems };
+}
+
+module.exports = { isOn, stage1, supported, strength, fromBank, fromOffline, sourceClaim, checkRewrite, sentencesOf, RULE_SYSTEM, RULE_SCHEMA, THRESHOLDS, post };

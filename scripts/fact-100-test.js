@@ -1,0 +1,87 @@
+#!/usr/bin/env node
+/** Frozen facts, recomputation and the rewrite check, offline (no key, no network; Python with SymPy is used when present). Part of npm test. */
+const assert = require('assert');
+const { spawnSync } = require('child_process');
+const path = require('path');
+const B = require('../services/fact-bank');
+const F = require('../services/fact-compute');
+const S = require('../services/fact-source');
+const D = require('../services/fact-dictionary');
+
+// Everything here is off unless switched on.
+for (const k of ['FACT_BANK', 'FACT_COMPUTE', 'FACT_SOURCE', 'FACT_DICTIONARY']) delete process.env[k];
+assert.equal(B.isOn(), false); assert.equal(F.isOn(), false); assert.equal(S.isOn(), false); assert.equal(D.isOn(), false);
+
+// Tokens: numbers, years, names, formulas; a Spanish word only in a Spanish lesson.
+const tk = (t, track) => B.tokensOf(t, track).map((x) => `${x.type}:${x.value}`);
+assert.ok(tk('In 1846 Euclid wrote it.').includes('name:euclid') && tk('In 1846 Euclid wrote it.').includes('year:1846')); // a name opening a sentence is not seen: a known limit, the reader's job
+assert.ok(tk('It costs $12.50, or twelve dollars.').includes('number:12.50') && tk('It costs $12.50, or twelve dollars.').includes('number:12'));
+assert.ok(tk('The rule a(b + c) = ab + ac holds.').some((t) => t === 'formula:a(b+c)=ab+ac'), tk('The rule a(b + c) = ab + ac holds.').join());
+assert.ok(tk('¿Dónde está?', 'spanish').includes('foreign:dónde') && !tk('¿Dónde está?', 'english').includes('foreign:dónde'));
+// No regular expression blow-up on long text (a nested one hung on real lessons).
+const t0 = Date.now(); B.tokensOf('word 12 and more words, '.repeat(4000), 'math'); assert.ok(Date.now() - t0 < 3000, 'tokens must stay linear');
+
+// Mechanical: a new number or name is caught, a rephrase with the same tokens is not, a reversal with the same words is not (that is what the entailment read is for).
+const bank = ['The Spanish-American War ended in 1898.', 'A triangle has 3 sides.', 'Pressure rises when volume falls.'];
+const allowed = B.allowedFrom(bank, 'english');
+assert.equal(B.mechanicalCheck('A triangle has 4 sides.', allowed).missing[0].value, '4');
+assert.equal(B.mechanicalCheck('As Euclid said, a triangle has 3 sides.', allowed).missing[0].value, 'euclid');
+assert.equal(B.mechanicalCheck('Every triangle has exactly 3 sides.', allowed).missing.length, 0);
+assert.equal(B.mechanicalCheck('Volume rises when pressure falls.', allowed).missing.length, 0, 'mechanical cannot see a reversal');
+// A word the bank uses in lower case is not a name when it starts a title.
+assert.equal(B.mechanicalCheck('The Triangle has 3 Sides.', allowed).missing.length, 0);
+
+// Illustrations: made-up numbers are fine, claims are not.
+assert.equal(B.mechanicalCheck('[[eg]]Your 7 skateboards[[/eg]] A triangle has 3 sides.', allowed).missing.length, 0);
+const ill = (t) => B.illustrationCheck(t, { allowedNames: ['skateboards'], allowed }).map((p) => p.problem);
+assert.equal(ill('[[eg]]Your 7 skateboards[[/eg]]').length, 0);
+assert.ok(ill('[[eg]]Back in 1999 your 7 skateboards[[/eg]]').some((p) => /year/.test(p)));
+assert.ok(ill('[[eg]]As Tony Hawk showed, skateboards[[/eg]]').some((p) => /name/.test(p)));
+assert.ok(ill('[[eg]]Research shows skateboards always win[[/eg]]').some((p) => /general claim/.test(p)));
+
+(async () => {
+  // The rewrite check, with the local checkers stubbed: a fact the bank does not support fails; when the checkers are down it is not_checked, never a pass.
+  const high = async (ps) => ps.map(() => ({ factcg: 0.9, minicheck: 0.9 }));
+  const low = async (ps) => ps.map(() => ({ factcg: 0.1, minicheck: 0.1 }));
+  const down = async () => { throw new Error('down'); };
+  const ok = await S.checkRewrite({ text: 'A triangle has 3 sides.', bank, stage1Fn: high });
+  assert.equal(ok.status, 'pass');
+  const nums = await S.checkRewrite({ text: 'A triangle has 5 sides.', bank, stage1Fn: high });
+  assert.equal(nums.status, 'fail'); assert.equal(nums.problems[0].kind, 'token');
+  const unsupported = await S.checkRewrite({ text: 'Volume rises when pressure falls.', bank, stage1Fn: low });
+  assert.equal(unsupported.status, 'fail'); assert.equal(unsupported.problems[0].kind, 'unsupported');
+  const ruledFine = await S.checkRewrite({ text: 'Pressure goes up as volume goes down.', bank, stage1Fn: low, rule: async () => false });
+  assert.equal(ruledFine.status, 'pass');
+  const ruleDown = await S.checkRewrite({ text: 'Pressure goes up as volume goes down.', bank, stage1Fn: low, rule: async () => { throw new Error('x'); } });
+  assert.equal(ruleDown.status, 'fail', 'a ruling that cannot answer does not clear a flag');
+  const off = await S.checkRewrite({ text: 'A triangle has 3 sides.', bank, stage1Fn: down });
+  assert.equal(off.status, 'not_checked');
+
+  // SymPy decides; what it cannot parse is silent, and nothing outside the whitelist reaches its parser.
+  const py = spawnSync('python', ['-c', 'import sympy'], { encoding: 'utf8' });
+  if (py.status !== 0) { console.log('fact-100-test: ok (SymPy not on this machine: recomputation steps skipped)'); return; }
+  const v = async (st) => (await F.compute([{ id: 0, ...st }]))[0].verdict;
+  assert.equal(await v({ type: 'equal', lhs: '(9 - 1)/2', rhs: '4' }), 'true');
+  assert.equal(await v({ type: 'equal', lhs: '(9 - 1)/2', rhs: '5' }), 'false');
+  assert.equal(await v({ type: 'equal', lhs: '4*x - y', rhs: '7' }), 'unknown', 'an equation with letters is not claimed for every value');
+  assert.equal(await v({ type: 'identity', lhs: 'a(b + c)', rhs: 'a*b + a*c' }), 'true');
+  assert.equal(await v({ type: 'identity', lhs: 'a(b + c)', rhs: 'a*b + 2*a*c' }), 'false');
+  assert.equal(await v({ type: 'solve', equation: '3x + 5 = 20', var: 'x', solutions: ['5'] }), 'true');
+  assert.equal(await v({ type: 'inequality', inequality: '-2x > 4', var: 'x', solution: 'x > -2' }), 'false');
+  assert.equal(await v({ type: 'derivative', expr: 'x^3', var: 'x', result: '3x^2' }), 'true');
+  assert.equal(await v({ type: 'limit', expr: '(x^2 - 1)/(x - 1)', var: 'x', to: '1', result: '2' }), 'true');
+  assert.equal(await v({ type: 'compare', a: '19', op: '<=', b: '13', negated: true }), 'true', 'the lesson says it fails, and it does');
+  assert.equal(await v({ type: 'equivalent', a: '3x + 2y = 16', b: '8x = 24', var: 'x' }), 'unknown', 'two letters: not one set');
+  assert.equal(await v({ type: 'equal', lhs: "__import__('os').system('x')", rhs: '1' }), 'unknown');
+  assert.equal(await v({ type: 'equal', lhs: 'open.read', rhs: '1' }), 'unknown');
+
+  // The compute layer end to end, with the model stubbed: a transcribed wrong sum is flagged, a blind answer that fits another option flags the key.
+  const stub = async (system) => (system === F.TRANSCRIBE_SYSTEM
+    ? { data: { statements: [{ where: 'block 0', quote: '20 hours at $15 earns $250', type: 'equal', lhs: '20*15', rhs: '250' }, { where: 'block 0', quote: 'half of 8 is 4', type: 'equal', lhs: '8/2', rhs: '4' }] }, cost: 0.001 }
+    : { data: { answers: [{ check: 0, value: '27^(2/3)' }] }, cost: 0.001 });
+  const r = await F.check({ context: 'Subject: math.', blocks: [{ index: 0, block: 'Basic_TextBlock', data: { text: 'x' } }], checks: [{ index: 0, format: 'multiple_choice', prompt: 'Evaluate 27^(2/3)', choices: ['3', '9', '18'], answer: 2 }], call: stub });
+  assert.equal(r.flags.filter((f) => f.rule === 'compute_equal').length, 1);
+  assert.equal(r.flags.filter((f) => f.rule === 'blind_compute').length, 1);
+  assert.ok(path.basename(__filename));
+  console.log('fact-100-test: ok');
+})().catch((e) => { console.error(e); process.exit(1); });
