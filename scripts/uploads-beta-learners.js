@@ -114,6 +114,57 @@ async function runOne(L0, src, store, file) {
   console.log(`learner ${L0.i} [${L0.spoken.length} traits, age ${L0.age}${L0.esl ? ', ESL' : ''}${L0.testDate ? ', test' : ''}] build ${buildS}s follow ${followS}s (${results.lesson.changed}/${results.lesson.asked} lessons, ${results.q.changed}/${results.q.asked} questions) words ${row.source_words} -> ${row.base_lesson} -> ${row.served_lesson} | base ${f(row.base.C)} ${f(row.base.N)} | served ${f(row.served.C)} ${f(row.served.N)}`);
 }
 
+/**
+ * The fit gate of docs/MODIFICATION-MAP.md section 5, same blind judge, on whole courses: is this learner's served course picked as the one written for them, against the stored one and against another learner's served one?
+ * A and B are shuffled; planted identical pairs must come back SAME. p is one-sided against chance. Judges C (Coral DeepSeek) and G (Grok 4.3).
+ */
+const FIT_SYSTEM = 'You are a careful blind judge. You are shown the profile of ONE learner and two versions (A and B) of the same learner-facing text. Decide which version was written for THIS learner: the one whose length, wording, tone, level of detail and examples fit the profile, and which avoids what the learner dislikes. Ignore which is better written in general. Think briefly, then give your answer on the LAST line as exactly "ANSWER: A", "ANSWER: B" or "ANSWER: SAME" (SAME only if you truly cannot tell).';
+async function askFit(fam, profile, a, b) {
+  const user = `LEARNER PROFILE:\n${profile}\n\nVERSION A:\n${a.slice(0, 7000)}\n\nVERSION B:\n${b.slice(0, 7000)}`;
+  const schema = { type: 'object', properties: { reason: { type: 'string' }, answer: { type: 'string', enum: ['A', 'B', 'SAME'] } }, required: ['answer'] };
+  const sys = FIT_SYSTEM.replace(/Think briefly[\s\S]*$/, 'Think briefly, then give your answer as JSON {"reason": "...", "answer": "A" | "B" | "SAME"}.');
+  for (let i = 0; i < 4; i += 1) {
+    try {
+      let d = null;
+      if (fam === 'G') { const r = await require('../services/providers/grokified').grokified.structured({ model: 'grok-4.3', system: sys, user, schema, schemaName: 'pick', maxTokens: 3000, timeoutMs: 180000 }); d = r && r.data; } else d = await J.call(fam, { system: sys, user, schema, schemaName: 'pick', maxTokens: 3000 });
+      if (d && ['A', 'B', 'SAME'].includes(d.answer)) return d.answer;
+    } catch (e) { await new Promise((r) => setTimeout(r, 2000 * (i + 1))); }
+  }
+  return null;
+}
+async function runFit() {
+  const file = path.join(L.OUT_DIR, 'learners-fit.json');
+  const store = L.load(file, { rows: [] });
+  const rows = fs.readdirSync(DIR).filter((x) => x.endsWith('.json')).flatMap((x) => L.load(path.join(DIR, x)).rows).filter((r) => !r.error && r.base_text && r.served_text);
+  const r0 = rng(77011);
+  const pairs = [];
+  rows.forEach((r, i) => {
+    const profile = r.wants.join('; ');
+    const other = rows[(i + 1 + Math.floor(r0() * (rows.length - 1))) % rows.length];
+    pairs.push({ key: `${r.seed}.${r.i}.stored`, kind: 'stored', profile, mine: r.served_text, them: r.base_text });
+    if (other && other !== r) pairs.push({ key: `${r.seed}.${r.i}.other`, kind: 'other', profile, mine: r.served_text, them: other.served_text });
+    if (i % 3 === 0) pairs.push({ key: `${r.seed}.${r.i}.same`, kind: 'identical', profile, mine: r.served_text, them: r.served_text });
+  });
+  await J.pool(pairs.flatMap((p) => ['C', 'G'].map((fam) => ({ ...p, fam }))), 4, async (p) => {
+    if (store.rows.some((x) => x.key === p.key && x.fam === p.fam)) return;
+    const flip = r0() < 0.5;
+    const a = await askFit(p.fam, p.profile, flip ? p.them : p.mine, flip ? p.mine : p.them);
+    const picked = a == null ? null : a === 'SAME' ? 'same' : ((a === 'A') !== flip ? 'mine' : 'them');
+    store.rows.push({ key: p.key, kind: p.kind, fam: p.fam, picked }); L.save(file, store);
+  });
+  fitReport();
+}
+function fitReport() {
+  const store = L.load(path.join(L.OUT_DIR, 'learners-fit.json'), { rows: [] });
+  const binom = (k, n) => { let p = 0; const c = (a, b) => { let v = 1; for (let i = 1; i <= b; i += 1) v = (v * (a - b + i)) / i; return v; }; for (let i = k; i <= n; i += 1) p += c(n, i) * 0.5 ** n; return p; };
+  for (const kind of ['stored', 'other', 'identical']) for (const fam of ['C', 'G']) {
+    const v = store.rows.filter((x) => x.kind === kind && x.fam === fam && x.picked);
+    const d = v.filter((x) => x.picked !== 'same');
+    const w = d.filter((x) => x.picked === 'mine').length;
+    if (v.length) console.log(`  fit ${kind.padEnd(9)} ${fam}: picked ${w} of ${d.length} (${d.length ? Math.round((100 * w) / d.length) : '-'}%, p ${d.length ? binom(w, d.length).toExponential(1) : '-'}), SAME ${v.length - d.length}`);
+  }
+}
+
 function report() {
   const rows = fs.readdirSync(DIR).filter((f) => f.endsWith('.json')).flatMap((f) => L.load(path.join(DIR, f)).rows).filter((r) => !r.error);
   const mean = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
@@ -134,7 +185,8 @@ function report() {
 }
 
 (async () => {
-  if (process.argv[2] === 'report') { report(); process.exit(0); }
+  if (process.argv[2] === 'report') { report(); fitReport(); process.exit(0); }
+  if (process.argv[2] === 'fit') { await runFit(); console.log('spend', JSON.stringify(J.spend)); process.exit(0); }
   const n = Number(process.argv[3] || 6); const seed = Number(process.argv[4] || 7601);
   const file = path.join(DIR, `${seed}.json`);
   const store = L.load(file, { rows: [] });
