@@ -153,6 +153,8 @@ App.mount(async () => {
   document.getElementById('form').addEventListener('submit', async (event) => {
     event.preventDefault();
     clearError();
+    // An empty box goes to the invite check first, which then says the invite "belongs to a different email address".
+    if (!document.getElementById('email').value.trim()) return fail('Enter your email address: the one your invite was sent to.');
     submit.disabled = true;
     let out;
     try {

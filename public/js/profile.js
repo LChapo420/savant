@@ -290,7 +290,7 @@ App.mount(async () => {
       <span class="pf-avatar" aria-hidden="true">${esc(initial)}</span>
       <div class="pf-who">
         <h1>${esc(user.display_name)}</h1>
-        <p class="muted">${esc(user.email)}, joined ${joined}${actLine}</p>
+        <p class="muted">${user.email ? `${esc(user.email)}, joined` : 'Joined'} ${joined}${actLine}</p>
       </div>
     </header>
 

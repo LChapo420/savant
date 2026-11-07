@@ -278,7 +278,7 @@ App.mount(async () => {
       <div class="card result" style="text-align:center">
         <p class="lesson-meta">${App.escapeHtml(result.track_name)}, ${App.escapeHtml(App.gradeLabel(result.grade_name))}</p>
         <h1 style="margin:12px 0 4px">${back ? `Your placed unit is ${result.unit} of ${result.units}` : `You start at unit ${result.unit} of ${result.units}`}</h1>
-        <p class="muted">${result.title ? `${App.escapeHtml(result.title)}. ` : ''}Level ${result.placedLevel} of ${result.path_length}. ${lead}</p>
+        <p class="muted">${result.title ? `${App.escapeHtml(result.title.replace(/[.]+$/, ''))}. ` : ''}Level ${result.placedLevel} of ${result.path_length}. ${lead}</p>
         ${App.scale({ from: 1, to: result.path_length, you: startLevel, subject: enrollment.track.id, arriving: true,
           caption: `You start at level ${startLevel} of ${result.path_length}.` })}
         ${back ? `<p class="muted">You start with ${unitsText(gaps)} first, where a gap showed up, and then move on to unit ${result.unit}.</p>` : ''}
