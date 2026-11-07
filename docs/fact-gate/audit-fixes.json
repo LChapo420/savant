@@ -1,0 +1,4707 @@
+{
+ "built": "2026-11-06",
+ "not_applied": true,
+ "how": "Confirmed by two rulers; repaired with the production prompt on GLM-5.3 Flash; read again by Kimi K3.1 Pro. certain: same shape, re-read clean. Keyed by level and part. For review.",
+ "certain": [
+  {
+   "key": "english/proficient/10|block 4",
+   "reasons": [
+    "false: \"For q4, \"Does a second full clause get glued on with no punctuation (or just a comma)?\", the edges are \"no\" to \"fix\" and \"yes\" to \"complete\".\" → Connect q4 \"yes\" to \"fix\" and q4 \"no\" to \"complete\".",
+    "false: \"from q4 label \"no\" to \"fix\"; from q4 label \"yes\" to \"complete\"\" → from q4 label \"yes\" to \"fix\"; from q4 label \"no\" to \"complete\""
+   ],
+   "before": {
+    "edges": [
+     {
+      "from": "start",
+      "to": "q1"
+     },
+     {
+      "from": "q1",
+      "label": "no",
+      "to": "fragment"
+     },
+     {
+      "from": "q1",
+      "label": "yes",
+      "to": "q2"
+     },
+     {
+      "from": "q2",
+      "label": "no",
+      "to": "fragment"
+     },
+     {
+      "from": "q2",
+      "label": "yes",
+      "to": "q3"
+     },
+     {
+      "from": "q3",
+      "label": "no",
+      "to": "fragment"
+     },
+     {
+      "from": "q3",
+      "label": "yes",
+      "to": "q4"
+     },
+     {
+      "from": "q4",
+      "label": "no",
+      "to": "fix"
+     },
+     {
+      "from": "q4",
+      "label": "yes",
+      "to": "complete"
+     },
+     {
+      "from": "fix",
+      "to": "f1"
+     },
+     {
+      "from": "fix",
+      "to": "f2"
+     },
+     {
+      "from": "fix",
+      "to": "f3"
+     }
+    ],
+    "footer": "Read each chunk alone. If it doesn't finish the thought, or two thoughts collide, this chart gives you the fix.",
+    "legend": [
+     {
+      "label": "Decision point",
+      "tone": "accent"
+     },
+     {
+      "label": "Sentence is fine",
+      "tone": "success"
+     },
+     {
+      "label": "Needs a fix",
+      "tone": "caution"
+     }
+    ],
+    "nodes": [
+     {
+      "id": "start",
+      "kind": "start",
+      "label": "Start with the chunk of words"
+     },
+     {
+      "id": "q1",
+      "kind": "condition",
+      "label": "Does it have a subject?"
+     },
+     {
+      "id": "q2",
+      "kind": "condition",
+      "label": "Does it have a finite verb?"
+     },
+     {
+      "id": "q3",
+      "kind": "condition",
+      "label": "Does the thought finish?"
+     },
+     {
+      "id": "fragment",
+      "kind": "terminal",
+      "label": "FRAGMENT",
+      "tone": "caution"
+     },
+     {
+      "id": "q4",
+      "kind": "condition",
+      "label": "Does a second full clause get glued on with no punctuation (or just a comma)?"
+     },
+     {
+      "id": "complete",
+      "kind": "terminal",
+      "label": "COMPLETE SENTENCE",
+      "tone": "success"
+     },
+     {
+      "id": "fix",
+      "kind": "process",
+      "label": "RUN-ON — choose a fix",
+      "tone": "error"
+     },
+     {
+      "id": "f1",
+      "kind": "resolution",
+      "label": "Period or question mark",
+      "detail": "Two separate sentences."
+     },
+     {
+      "id": "f2",
+      "kind": "resolution",
+      "label": "Semicolon",
+      "detail": "For two closely related clauses."
+     },
+     {
+      "id": "f3",
+      "kind": "resolution",
+      "label": "Comma + FANBOYS or a subordinating word",
+      "detail": "and, but, so / because, when, although"
+     }
+    ],
+    "subtitle": "Run this test on any chunk of words.",
+    "title": "The Sentence Check Flowchart"
+   },
+   "after": {
+    "edges": [
+     {
+      "from": "start",
+      "to": "q1"
+     },
+     {
+      "from": "q1",
+      "label": "no",
+      "to": "fragment"
+     },
+     {
+      "from": "q1",
+      "label": "yes",
+      "to": "q2"
+     },
+     {
+      "from": "q2",
+      "label": "no",
+      "to": "fragment"
+     },
+     {
+      "from": "q2",
+      "label": "yes",
+      "to": "q3"
+     },
+     {
+      "from": "q3",
+      "label": "no",
+      "to": "fragment"
+     },
+     {
+      "from": "q3",
+      "label": "yes",
+      "to": "q4"
+     },
+     {
+      "from": "q4",
+      "label": "yes",
+      "to": "fix"
+     },
+     {
+      "from": "q4",
+      "label": "no",
+      "to": "complete"
+     },
+     {
+      "from": "fix",
+      "to": "f1"
+     },
+     {
+      "from": "fix",
+      "to": "f2"
+     },
+     {
+      "from": "fix",
+      "to": "f3"
+     }
+    ],
+    "footer": "Read each chunk alone. If it doesn't finish the thought, or two thoughts collide, this chart gives you the fix.",
+    "legend": [
+     {
+      "label": "Decision point",
+      "tone": "accent"
+     },
+     {
+      "label": "Sentence is fine",
+      "tone": "success"
+     },
+     {
+      "label": "Needs a fix",
+      "tone": "caution"
+     }
+    ],
+    "nodes": [
+     {
+      "id": "start",
+      "kind": "start",
+      "label": "Start with the chunk of words"
+     },
+     {
+      "id": "q1",
+      "kind": "condition",
+      "label": "Does it have a subject?"
+     },
+     {
+      "id": "q2",
+      "kind": "condition",
+      "label": "Does it have a finite verb?"
+     },
+     {
+      "id": "q3",
+      "kind": "condition",
+      "label": "Does the thought finish?"
+     },
+     {
+      "id": "fragment",
+      "kind": "terminal",
+      "label": "FRAGMENT",
+      "tone": "caution"
+     },
+     {
+      "id": "q4",
+      "kind": "condition",
+      "label": "Does a second full clause get glued on with no punctuation (or just a comma)?"
+     },
+     {
+      "id": "complete",
+      "kind": "terminal",
+      "label": "COMPLETE SENTENCE",
+      "tone": "success"
+     },
+     {
+      "id": "fix",
+      "kind": "process",
+      "label": "RUN-ON — choose a fix",
+      "tone": "error"
+     },
+     {
+      "id": "f1",
+      "kind": "resolution",
+      "label": "Period or question mark",
+      "detail": "Two separate sentences."
+     },
+     {
+      "id": "f2",
+      "kind": "resolution",
+      "label": "Semicolon",
+      "detail": "For two closely related clauses."
+     },
+     {
+      "id": "f3",
+      "kind": "resolution",
+      "label": "Comma + FANBOYS or a subordinating word",
+      "detail": "and, but, so / because, when, although"
+     }
+    ],
+    "subtitle": "Run this test on any chunk of words.",
+    "title": "The Sentence Check Flowchart"
+   }
+  },
+  {
+   "key": "english/proficient/10|block 5",
+   "reasons": [
+    "false: \"a explained-by/but link\" → It should read 'an explained-by/but link'."
+   ],
+   "before": {
+    "steps": [
+     {
+      "detail": "Example: 'We lost the game our bench was tired.' Clue: two subject-verb pairs with nothing (or only a comma) between them.",
+      "label": "1. Find the clauses",
+      "text": "Underline each subject-verb pair. If you find two or more independent clauses joined with no punctuation or only a comma, you have a run-on."
+     },
+     {
+      "detail": "The relationship decides the punctuation: a sharp break, a close link, or a explained-by/but link.",
+      "label": "2. Ask how the ideas relate",
+      "text": "Are they two separate statements, two closely related thoughts, or is one the cause, time, or contrast for the other?"
+     },
+     {
+      "detail": "'We lost the game. Our bench was tired.'",
+      "label": "3a. Sharp break → period",
+      "text": "Use a period (or question mark) to make two sentences when the ideas stand on their own."
+     },
+     {
+      "detail": "'We lost the game; our bench was tired.'",
+      "label": "3b. Close link → semicolon",
+      "text": "Use a semicolon when the second clause follows closely from the first and no connecting word fits."
+     },
+     {
+      "detail": "'We lost the game, and our bench was tired.' Or: 'Our bench was tired because we had no subs.'",
+      "label": "3c. Logical link → comma + FANBOYS or subordinating word",
+      "text": "Join with a comma plus and, but, or, nor, for, so, or yet — or use because, when, although, since, if, or that to make one clause depend on the other."
+     }
+    ],
+    "subtitle": "Use this every time you spot two full clauses colliding.",
+    "title": "How to Fix a Run-on in 5 Steps"
+   },
+   "after": {
+    "steps": [
+     {
+      "detail": "Example: 'We lost the game our bench was tired.' Clue: two subject-verb pairs with nothing (or only a comma) between them.",
+      "label": "1. Find the clauses",
+      "text": "Underline each subject-verb pair. If you find two or more independent clauses joined with no punctuation or only a comma, you have a run-on."
+     },
+     {
+      "detail": "The relationship decides the punctuation: a sharp break, a close link, or an explained-by/but link.",
+      "label": "2. Ask how the ideas relate",
+      "text": "Are they two separate statements, two closely related thoughts, or is one the cause, time, or contrast for the other?"
+     },
+     {
+      "detail": "'We lost the game. Our bench was tired.'",
+      "label": "3a. Sharp break → period",
+      "text": "Use a period (or question mark) to make two sentences when the ideas stand on their own."
+     },
+     {
+      "detail": "'We lost the game; our bench was tired.'",
+      "label": "3b. Close link → semicolon",
+      "text": "Use a semicolon when the second clause follows closely from the first and no connecting word fits."
+     },
+     {
+      "detail": "'We lost the game, and our bench was tired.' Or: 'Our bench was tired because we had no subs.'",
+      "label": "3c. Logical link → comma + FANBOYS or subordinating word",
+      "text": "Join with a comma plus and, but, or, nor, for, so, or yet — or use because, when, although, since, if, or that to make one clause depend on the other."
+     }
+    ],
+    "subtitle": "Use this every time you spot two full clauses colliding.",
+    "title": "How to Fix a Run-on in 5 Steps"
+   }
+  },
+  {
+   "key": "english/proficient/18|block 5",
+   "reasons": [
+    "false: \"Two problems are hiding in it: a fused run-on, and a subordinate clause left standing alone.\" → Identify a comma splice and a fused run-on, plus the missing comma after the introductory Although-clause if counting a third issue. Replace the fragment diagnosis with: “Although the stage was crowded” is already attached to “the soloist found her spotlight”; add a comma after “crowded” to mark the"
+   ],
+   "before": {
+    "contextItems": [
+     {
+      "label": "Source text",
+      "value": "Two drafts, both broken"
+     },
+     {
+      "label": "Goal",
+      "value": "One correct paragraph"
+     }
+    ],
+    "decisionKeywords": [
+     "although the stage was crowded",
+     "period",
+     "semicolon"
+    ],
+    "decisionPlaceholder": "Type your fixed sentence here.",
+    "decisionPrompt": "Rewrite the broken sentence so it is fully correct. You may add punctuation, a joining word (FANBOYS), or a subordinating word — and you may split it into more than one sentence if that is cleanest.",
+    "eyebrow": "ENGLISH — EDITOR'S DESK",
+    "misconception": {
+     "detail": "Fixing the fragment or the splice with only a comma does not work. A comma alone cannot join independent clauses (that creates a splice), and no punctuation can complete a dependent clause on its own. Use a period, semicolon, or comma + FANBOYS for the clauses, and attach the dependent clause to a complete sentence.",
+     "title": "The comma-only trap"
+    },
+    "nextLabel": "Print-ready",
+    "rationaleKeywords": [
+     "comma splice",
+     "fragment",
+     "semicolon"
+    ],
+    "rationalePlaceholder": "Explain the fixes you made.",
+    "rationalePrompt": "Which repair rules did you use? Name the problems you found and the fix for each.",
+    "referenceNote": "Fixes available: period, semicolon, comma + FANBOYS, or a subordinating word.",
+    "retryLabel": "Rewrite it",
+    "rule": {
+     "name": "The Repair Rules",
+     "statement": "A complete sentence needs a subject, a finite verb, and a complete thought. Fix a fused run-on with a period, a semicolon, a comma + FANBOYS, or a subordinating word. Never join two independent clauses with only a comma."
+    },
+    "scenarioBody": "A student submitted this sentence to the school paper: Although the stage was crowded the soloist found her spotlight, she sang the final verse the audience fell silent. Two problems are hiding in it: a fused run-on, and a subordinate clause left standing alone. Your job is to rebuild the sentence so it is fully correct — and say which repair rules you used.",
+    "scenarioTitle": "Fix the Yearbook Quote",
+    "submitLabel": "Lock in the fix",
+    "targetAnswer": {
+     "decision": "Although the stage was crowded, the soloist found her spotlight. She sang the final verse, and the audience fell silent. (Also correct: use a semicolon — 'She sang the final verse; the audience fell silent.')",
+     "rationale": "The original hides three problems. 'Although the stage was crowded' is a subordinate-clause fragment standing alone, so it must be attached to a complete sentence with a comma after 'crowded.' 'The soloist found her spotlight, she sang the final verse' is a comma splice: a comma alone cannot join two independent clauses. Fix it by starting a new sentence with a period, or keep it in one sentence with a semicolon or a comma + FANBOYS. Finally, 'the final verse the audience fell silent' is a fused run-on with no punctuation at all, so it needs a period, a semicolon, or a comma plus a FANBOYS conjunction (here 'and' works well)."
+    }
+   },
+   "after": {
+    "contextItems": [
+     {
+      "label": "Source text",
+      "value": "Two drafts, both broken"
+     },
+     {
+      "label": "Goal",
+      "value": "One correct paragraph"
+     }
+    ],
+    "decisionKeywords": [
+     "although the stage was crowded",
+     "period",
+     "semicolon"
+    ],
+    "decisionPlaceholder": "Type your fixed sentence here.",
+    "decisionPrompt": "Rewrite the broken sentence so it is fully correct. You may add punctuation, a joining word (FANBOYS), or a subordinating word — and you may split it into more than one sentence if that is cleanest.",
+    "eyebrow": "ENGLISH — EDITOR'S DESK",
+    "misconception": {
+     "detail": "Fixing the splice or the run-on with only a comma does not work. A comma alone cannot join independent clauses (that creates a splice), and leaving out the comma after an introductory dependent clause leaves the boundary unmarked. Use a period, semicolon, or comma + FANBOYS for the clauses, and add a comma after 'crowded' to mark the introductory 'Although' clause.",
+     "title": "The comma-only trap"
+    },
+    "nextLabel": "Print-ready",
+    "rationaleKeywords": [
+     "comma splice",
+     "missing comma",
+     "semicolon"
+    ],
+    "rationalePlaceholder": "Explain the fixes you made.",
+    "rationalePrompt": "Which repair rules did you use? Name the problems you found and the fix for each.",
+    "referenceNote": "Fixes available: period, semicolon, comma + FANBOYS, or a subordinating word.",
+    "retryLabel": "Rewrite it",
+    "rule": {
+     "name": "The Repair Rules",
+     "statement": "A complete sentence needs a subject, a finite verb, and a complete thought. Fix a fused run-on with a period, a semicolon, a comma + FANBOYS, or a subordinating word. Never join two independent clauses with only a comma."
+    },
+    "scenarioBody": "A student submitted this sentence to the school paper: Although the stage was crowded the soloist found her spotlight, she sang the final verse the audience fell silent. Two problems are hiding in it: a comma splice, and a fused run-on — plus a missing comma after the introductory 'Although' clause if you count a third. Your job is to rebuild the sentence so it is fully correct — and say which repair rules you used.",
+    "scenarioTitle": "Fix the Yearbook Quote",
+    "submitLabel": "Lock in the fix",
+    "targetAnswer": {
+     "decision": "Although the stage was crowded, the soloist found her spotlight. She sang the final verse, and the audience fell silent. (Also correct: use a semicolon — 'She sang the final verse; the audience fell silent.')",
+     "rationale": "The original hides three problems. 'Although the stage was crowded' is already attached to 'the soloist found her spotlight'; add a comma after 'crowded' to mark the introductory dependent clause. 'The soloist found her spotlight, she sang the final verse' is a comma splice: a comma alone cannot join two independent clauses. Fix it by starting a new sentence with a period, or keep it in one sentence with a semicolon or a comma + FANBOYS. Finally, 'the final verse the audience fell silent' is a fused run-on with no punctuation at all, so it needs a period, a semicolon, or a comma plus a FANBOYS conjunction (here 'and' works well)."
+    }
+   }
+  },
+  {
+   "key": "english/proficient/20|block 0",
+   "reasons": [
+    "false: \"Same words, same meaning — different order.\" → As written, describe the options as differing in wording, detail, and structure. To make the intended point about order, rewrite both options with the same content and use a note such as \"Same facts, different order.\"",
+    "false: \"Withheld, then delivered\" → Either retitle the current option something like \"Short and direct,\" or replace its body with a periodic version such as \"After months of practice, wanting this more than anything, she dribbled past two defenders and finally scored the winning goal.\""
+   ],
+   "before": {
+    "context": "Two sports reporters are covering the same moment in the game. Read each version and ask yourself which one makes you feel more suspense.",
+    "eyebrow": "Warm-Up Dilemma",
+    "footerNote": "Same words, same meaning — different order. Word order is a power tool, and this lesson shows you how to use it.",
+    "leftChoice": {
+     "body": "She dribbled past two defenders and scored the winning goal, she had practiced for months, she wanted this more than anything.",
+     "label": "OPTION A",
+     "title": "All at once",
+     "tone": "neutral"
+    },
+    "prompt": "Which version of this sentence sounds more powerful to you?",
+    "rightChoice": {
+     "body": "She scored the winning goal.",
+     "label": "OPTION B",
+     "title": "Withheld, then delivered",
+     "tone": "accent"
+    },
+    "versusLabel": "VS"
+   },
+   "after": {
+    "context": "Two sports reporters are covering the same moment in the game. Read each version and ask yourself which one makes you feel more suspense.",
+    "eyebrow": "Warm-Up Dilemma",
+    "footerNote": "Same facts, different order. Word order is a power tool, and this lesson shows you how to use it.",
+    "leftChoice": {
+     "body": "She dribbled past two defenders and scored the winning goal, she had practiced for months, she wanted this more than anything.",
+     "label": "OPTION A",
+     "title": "All at once",
+     "tone": "neutral"
+    },
+    "prompt": "Which version of this sentence sounds more powerful to you?",
+    "rightChoice": {
+     "body": "After months of practice, wanting this more than anything, she dribbled past two defenders and finally scored the winning goal.",
+     "label": "OPTION B",
+     "title": "Withheld, then delivered",
+     "tone": "accent"
+    },
+    "versusLabel": "VS"
+   }
+  },
+  {
+   "key": "english/proficient/20|block 8",
+   "reasons": [
+    "false: \"Choice D is a run-on: two complete thoughts are jammed together with only a comma.\" → Choice D is a run-on: two independent clauses are jammed together with no punctuation or coordinating conjunction between them."
+   ],
+   "before": {
+    "choices": [
+     "\"Because he trained every day before school and after practice, finally, that last brutal mile.\"",
+     "\"He finally finished the last brutal mile, because he trained every day, running before school and after practice.\"",
+     "\"Because he trained every day, running before school and after practice, he finally finished that last brutal mile.\"",
+     "\"He trained every day before school and after practice he finally finished the last brutal mile.\""
+    ],
+    "commonErrorLabel": "Breaking the sentence while trying to delay the payoff",
+    "correctIndex": 2,
+    "correctReasoning": "Choice C is a true periodic sentence: the modifiers come first, the main clause (\"he finally finished that last brutal mile\") lands last and completes the sentence. Choice B is a fine sentence too — but it is cumulative, not periodic, since the main clause comes first.",
+    "difficulty": "Trap",
+    "question": "A student wants a periodic sentence — modifiers first, main clause at the end — about a runner finishing a race. Which rewrite actually does that without breaking the sentence?",
+    "recoveryTip": "After writing, find your subject and verb. If they only appear at the very end and everything before them could not stand alone, you have a real periodic sentence. If they never appear in a complete clause, you have a fragment.",
+    "trapChoiceIndexes": [
+     0
+    ],
+    "trapReasons": {
+     "0": "It looks like a periodic setup, but there is no subject and verb at the end — just a dangling noun phrase."
+    },
+    "whyIntuitionFailed": "Choice A looks periodic because it puts the delaying material first. But it never delivers a main clause — there is no subject-verb unit at the end, so the whole thing is a fragment, not a periodic sentence. Choice D is a run-on: two complete thoughts are jammed together with only a comma."
+   },
+   "after": {
+    "choices": [
+     "\"Because he trained every day before school and after practice, finally, that last brutal mile.\"",
+     "\"He finally finished the last brutal mile, because he trained every day, running before school and after practice.\"",
+     "\"Because he trained every day, running before school and after practice, he finally finished that last brutal mile.\"",
+     "\"He trained every day before school and after practice he finally finished the last brutal mile.\""
+    ],
+    "commonErrorLabel": "Breaking the sentence while trying to delay the payoff",
+    "correctIndex": 2,
+    "correctReasoning": "Choice C is a true periodic sentence: the modifiers come first, the main clause (\"he finally finished that last brutal mile\") lands last and completes the sentence. Choice B is a fine sentence too — but it is cumulative, not periodic, since the main clause comes first.",
+    "difficulty": "Trap",
+    "question": "A student wants a periodic sentence — modifiers first, main clause at the end — about a runner finishing a race. Which rewrite actually does that without breaking the sentence?",
+    "recoveryTip": "After writing, find your subject and verb. If they only appear at the very end and everything before them could not stand alone, you have a real periodic sentence. If they never appear in a complete clause, you have a fragment.",
+    "trapChoiceIndexes": [
+     0
+    ],
+    "trapReasons": {
+     "0": "It looks like a periodic setup, but there is no subject and verb at the end — just a dangling noun phrase."
+    },
+    "whyIntuitionFailed": "Choice A looks periodic because it puts the delaying material first. But it never delivers a main clause — there is no subject-verb unit at the end, so the whole thing is a fragment, not a periodic sentence. Choice D is a run-on: two independent clauses are jammed together with no punctuation or coordinating conjunction between them."
+   }
+  },
+  {
+   "key": "english/proficient/20|block 9",
+   "reasons": [
+    "false: \"Missing a subject or a verb — not a complete sentence, even if it sounds stylish.\" → A fragment is a word group punctuated as a sentence that lacks a complete independent clause. It may be missing a subject or finite verb, or it may consist only of a dependent clause or phrase; complete it or attach it to an independent clause."
+   ],
+   "before": {
+    "rows": [
+     {
+      "detail": "Delay, delay, deliver.",
+      "key": "Periodic sentence",
+      "tone": "accent",
+      "value": "Modifiers first, main clause last. Effect: suspense and a punch at the end."
+     },
+     {
+      "detail": "Lead, then load.",
+      "key": "Cumulative sentence",
+      "tone": "accent",
+      "value": "Main clause first, modifiers added after. Effect: clear point immediately, then rich detail."
+     },
+     {
+      "detail": "Mirror, mirror.",
+      "key": "Balanced sentence",
+      "tone": "accent",
+      "value": "Two equal ideas in the same grammatical shape. Effect: equal weight, satisfying echo."
+     },
+     {
+      "detail": "Fix: add a subject or verb, or attach it to a nearby complete sentence.",
+      "key": "Fragment",
+      "tone": "caution",
+      "value": "Missing a subject or a verb — not a complete sentence, even if it sounds stylish."
+     },
+     {
+      "detail": "Fix: use a period, semicolon, or a comma + FANBOYS word (and, but, so...).",
+      "key": "Run-on / comma splice",
+      "tone": "error",
+      "value": "Two independent clauses joined with nothing or only a comma."
+     },
+     {
+      "detail": "Ask: what do I want the reader to feel first — suspense, clarity, or symmetry?",
+      "key": "Choosing a pattern",
+      "tone": "success",
+      "value": "Periodic for suspense, cumulative for clarity plus detail, balanced for fairness and symmetry."
+     }
+    ],
+    "subtitle": "Sentence craft at a glance — patterns, effects, and traps",
+    "title": "Pattern Cheat Sheet"
+   },
+   "after": {
+    "rows": [
+     {
+      "detail": "Delay, delay, deliver.",
+      "key": "Periodic sentence",
+      "tone": "accent",
+      "value": "Modifiers first, main clause last. Effect: suspense and a punch at the end."
+     },
+     {
+      "detail": "Lead, then load.",
+      "key": "Cumulative sentence",
+      "tone": "accent",
+      "value": "Main clause first, modifiers added after. Effect: clear point immediately, then rich detail."
+     },
+     {
+      "detail": "Mirror, mirror.",
+      "key": "Balanced sentence",
+      "tone": "accent",
+      "value": "Two equal ideas in the same grammatical shape. Effect: equal weight, satisfying echo."
+     },
+     {
+      "detail": "Fix: add a subject or verb, or attach it to a nearby complete sentence.",
+      "key": "Fragment",
+      "tone": "caution",
+      "value": "A word group punctuated as a sentence that lacks a complete independent clause. It may be missing a subject or finite verb, or it may consist only of a dependent clause or phrase."
+     },
+     {
+      "detail": "Fix: use a period, semicolon, or a comma + FANBOYS word (and, but, so...).",
+      "key": "Run-on / comma splice",
+      "tone": "error",
+      "value": "Two independent clauses joined with nothing or only a comma."
+     },
+     {
+      "detail": "Ask: what do I want the reader to feel first — suspense, clarity, or symmetry?",
+      "key": "Choosing a pattern",
+      "tone": "success",
+      "value": "Periodic for suspense, cumulative for clarity plus detail, balanced for fairness and symmetry."
+     }
+    ],
+    "subtitle": "Sentence craft at a glance — patterns, effects, and traps",
+    "title": "Pattern Cheat Sheet"
+   }
+  },
+  {
+   "key": "english/proficient/29|block 3",
+   "reasons": [
+    "false: \"Clean. One subject (the coach) and one verb (blew) — a complete sentence.\" → Clean. Two independent clauses — “The whistle blew” and “the players froze at the line” — are correctly joined by a comma plus the conjunction “and.”",
+    "false: \"Clean. One independent clause with a compound predicate.\" → Clean. One independent clause with a single predicate: “The gun went off.”"
+   ],
+   "before": {
+    "artifactLabel": "Student paragraph — first draft",
+    "artifactType": "essay",
+    "brief": "One line is a fragment and one is a run-on. Click both.",
+    "completionMessage": "Both errors found. Notice the fixes: attach the fragment to a real clause, and split or punctuate the two clauses in the run-on.",
+    "lines": [
+     {
+      "explanation": "Clean. One subject (the coach) and one verb (blew) — a complete sentence.",
+      "id": "l1",
+      "isError": false,
+      "label": "1",
+      "text": "The whistle blew, and the players froze at the line."
+     },
+     {
+      "explanation": "Fragment. 'Waiting for the signal' has no subject and no finite verb. Fix: attach it — 'The runners stood motionless, waiting for the signal.'",
+      "id": "l2",
+      "isError": true,
+      "label": "2",
+      "text": "Waiting for the signal, their muscles tight and their eyes forward."
+     },
+     {
+      "explanation": "Clean. One independent clause with a compound predicate.",
+      "id": "l3",
+      "isError": false,
+      "label": "3",
+      "text": "The gun went off."
+     },
+     {
+      "explanation": "Run-on. 'Lane three pulled ahead' and 'the crowd stood up' are two independent clauses joined only by a comma. Fix: use a semicolon, or a comma plus a conjunction — 'ahead, and the crowd stood up.'",
+      "id": "l4",
+      "isError": true,
+      "label": "4",
+      "text": "Lane three pulled ahead, the crowd stood up and roared."
+     },
+     {
+      "explanation": "Clean. Complete clause.",
+      "id": "l5",
+      "isError": false,
+      "label": "5",
+      "text": "By the final lap, every runner had something left to prove."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show the errors",
+    "title": "Forensic Audit: Find the Broken Sentences"
+   },
+   "after": {
+    "artifactLabel": "Student paragraph — first draft",
+    "artifactType": "essay",
+    "brief": "One line is a fragment and one is a run-on. Click both.",
+    "completionMessage": "Both errors found. Notice the fixes: attach the fragment to a real clause, and split or punctuate the two clauses in the run-on.",
+    "lines": [
+     {
+      "explanation": "Clean. Two independent clauses — “The whistle blew” and “the players froze at the line” — are correctly joined by a comma plus the conjunction “and.”",
+      "id": "l1",
+      "isError": false,
+      "label": "1",
+      "text": "The whistle blew, and the players froze at the line."
+     },
+     {
+      "explanation": "Fragment. 'Waiting for the signal' has no subject and no finite verb. Fix: attach it — 'The runners stood motionless, waiting for the signal.'",
+      "id": "l2",
+      "isError": true,
+      "label": "2",
+      "text": "Waiting for the signal, their muscles tight and their eyes forward."
+     },
+     {
+      "explanation": "Clean. One independent clause with a single predicate: “The gun went off.”",
+      "id": "l3",
+      "isError": false,
+      "label": "3",
+      "text": "The gun went off."
+     },
+     {
+      "explanation": "Run-on. 'Lane three pulled ahead' and 'the crowd stood up' are two independent clauses joined only by a comma. Fix: use a semicolon, or a comma plus a conjunction — 'ahead, and the crowd stood up.'",
+      "id": "l4",
+      "isError": true,
+      "label": "4",
+      "text": "Lane three pulled ahead, the crowd stood up and roared."
+     },
+     {
+      "explanation": "Clean. Complete clause.",
+      "id": "l5",
+      "isError": false,
+      "label": "5",
+      "text": "By the final lap, every runner had something left to prove."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show the errors",
+    "title": "Forensic Audit: Find the Broken Sentences"
+   }
+  },
+  {
+   "key": "english/proficient/28|block 0",
+   "reasons": [
+    "false: \"Round 4: three ways to fix a run-on\" → Consistently call this four ways to fix a run-on and refer to all four fixes, or remove one required solution chunk if only three fixes are intended."
+   ],
+   "before": {
+    "answerLabel": "Reconstructed definition",
+    "completeMessage": "All three definitions rebuilt and all three run-on fixes recalled. That is the whole toolkit from the last two units — now you will use it fast.",
+    "context": "No hints here. Pull the definitions straight from memory before you peek at anything else.",
+    "contextLabel": "From memory — no cues",
+    "items": [
+     {
+      "chunks": [
+       {
+        "text": "the main clause"
+       },
+       {
+        "text": "last"
+       },
+       {
+        "text": "builds suspense"
+       },
+       {
+        "text": "delivers a punch"
+       },
+       {
+        "text": "first"
+       },
+       {
+        "text": "then piles up"
+       },
+       {
+        "text": "detail"
+       },
+       {
+        "text": "parallel parts"
+       },
+       {
+        "text": "similar length"
+       },
+       {
+        "text": "a semicolon"
+       },
+       {
+        "text": "a comma plus a FANBOYS conjunction"
+       },
+       {
+        "text": "a subordinating word"
+       }
+      ],
+      "feedback": {
+       "correct": "Exactly right — main clause saved for the end, suspense built, punch delivered.",
+       "explanation": "A periodic sentence holds back the main clause until the end so the reader waits for the point.",
+       "incorrect": "Not matching yet. The key word is where the main clause sits: at the very end.",
+       "partial": "Close — but periodic is the one that saves the main clause for the very end."
+      },
+      "id": "periodic",
+      "label": "Definition 1 of 3: periodic",
+      "solution": [
+       "the main clause",
+       "last",
+       "builds suspense",
+       "delivers a punch"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "text": "the main clause"
+       },
+       {
+        "text": "first"
+       },
+       {
+        "text": "then piles up"
+       },
+       {
+        "text": "detail"
+       },
+       {
+        "text": "parallel parts"
+       },
+       {
+        "text": "similar length"
+       },
+       {
+        "text": "a semicolon"
+       },
+       {
+        "text": "a comma plus a FANBOYS conjunction"
+       },
+       {
+        "text": "a subordinating word"
+       },
+       {
+        "text": "last"
+       },
+       {
+        "text": "builds suspense"
+       },
+       {
+        "text": "delivers a punch"
+       }
+      ],
+      "feedback": {
+       "correct": "Right — main clause first, then the details pile on.",
+       "explanation": "A cumulative sentence leads with the main clause and adds phrases and modifiers that accumulate detail.",
+       "incorrect": "Try again: cumulative is the opposite of periodic — it starts with the main clause.",
+       "partial": "Good start — the key is what comes first."
+      },
+      "id": "cumulative",
+      "label": "Definition 2 of 3: cumulative",
+      "solution": [
+       "the main clause",
+       "first",
+       "then piles up",
+       "detail"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "text": "two or more parallel parts"
+       },
+       {
+        "text": "of similar length"
+       },
+       {
+        "text": "and structure"
+       },
+       {
+        "text": "creating symmetry"
+       },
+       {
+        "text": "a semicolon"
+       },
+       {
+        "text": "a comma plus a FANBOYS conjunction"
+       },
+       {
+        "text": "a subordinating word"
+       },
+       {
+        "text": "the main clause"
+       },
+       {
+        "text": "last"
+       },
+       {
+        "text": "builds suspense"
+       }
+      ],
+      "feedback": {
+       "correct": "Correct — two parallel parts, similar length and structure, symmetry created.",
+       "explanation": "A balanced sentence uses two or more parallel parts of similar length and structure to create symmetry.",
+       "incorrect": "Look for the words parallel, length, and structure.",
+       "partial": "You have the right idea — now the exact pairing."
+      },
+      "id": "balanced",
+      "label": "Definition 3 of 3: balanced",
+      "solution": [
+       "two or more parallel parts",
+       "of similar length",
+       "and structure",
+       "creating symmetry"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "text": "a period"
+       },
+       {
+        "text": "a semicolon"
+       },
+       {
+        "text": "a comma plus a FANBOYS conjunction"
+       },
+       {
+        "text": "a subordinating word"
+       },
+       {
+        "text": "an exclamation of joy"
+       },
+       {
+        "text": "a second comma"
+       },
+       {
+        "text": "a dash and a shrug"
+       }
+      ],
+      "feedback": {
+       "correct": "All three fixes recalled: period, semicolon, comma + FANBOYS (or a subordinating word).",
+       "explanation": "Fix a run-on with a period, a semicolon, a comma plus a coordinating conjunction, or a subordinating word.",
+       "incorrect": "Remember the three real fixes: a period, a semicolon, or a comma plus a FANBOYS conjunction (or a subordinating word).",
+       "partial": "Right track — but one of those choices is not a real fix."
+      },
+      "id": "fixes",
+      "label": "Round 4: three ways to fix a run-on",
+      "solution": [
+       "a period",
+       "a semicolon",
+       "a comma plus a FANBOYS conjunction",
+       "a subordinating word"
+      ]
+     }
+    ],
+    "placeholder": "Drag a chunk into each slot",
+    "prompt": "Rebuild each definition from the word bank. Nothing else will remind you what the words mean — trust what you remember from the last two units.",
+    "title": "Rebuild the Definitions From Memory"
+   },
+   "after": {
+    "answerLabel": "Reconstructed definition",
+    "completeMessage": "All three definitions rebuilt and all four run-on fixes recalled. That is the whole toolkit from the last two units — now you will use it fast.",
+    "context": "No hints here. Pull the definitions straight from memory before you peek at anything else.",
+    "contextLabel": "From memory — no cues",
+    "items": [
+     {
+      "chunks": [
+       {
+        "text": "the main clause"
+       },
+       {
+        "text": "last"
+       },
+       {
+        "text": "builds suspense"
+       },
+       {
+        "text": "delivers a punch"
+       },
+       {
+        "text": "first"
+       },
+       {
+        "text": "then piles up"
+       },
+       {
+        "text": "detail"
+       },
+       {
+        "text": "parallel parts"
+       },
+       {
+        "text": "similar length"
+       },
+       {
+        "text": "a semicolon"
+       },
+       {
+        "text": "a comma plus a FANBOYS conjunction"
+       },
+       {
+        "text": "a subordinating word"
+       }
+      ],
+      "feedback": {
+       "correct": "Exactly right — main clause saved for the end, suspense built, punch delivered.",
+       "explanation": "A periodic sentence holds back the main clause until the end so the reader waits for the point.",
+       "incorrect": "Not matching yet. The key word is where the main clause sits: at the very end.",
+       "partial": "Close — but periodic is the one that saves the main clause for the very end."
+      },
+      "id": "periodic",
+      "label": "Definition 1 of 3: periodic",
+      "solution": [
+       "the main clause",
+       "last",
+       "builds suspense",
+       "delivers a punch"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "text": "the main clause"
+       },
+       {
+        "text": "first"
+       },
+       {
+        "text": "then piles up"
+       },
+       {
+        "text": "detail"
+       },
+       {
+        "text": "parallel parts"
+       },
+       {
+        "text": "similar length"
+       },
+       {
+        "text": "a semicolon"
+       },
+       {
+        "text": "a comma plus a FANBOYS conjunction"
+       },
+       {
+        "text": "a subordinating word"
+       },
+       {
+        "text": "last"
+       },
+       {
+        "text": "builds suspense"
+       },
+       {
+        "text": "delivers a punch"
+       }
+      ],
+      "feedback": {
+       "correct": "Right — main clause first, then the details pile on.",
+       "explanation": "A cumulative sentence leads with the main clause and adds phrases and modifiers that accumulate detail.",
+       "incorrect": "Try again: cumulative is the opposite of periodic — it starts with the main clause.",
+       "partial": "Good start — the key is what comes first."
+      },
+      "id": "cumulative",
+      "label": "Definition 2 of 3: cumulative",
+      "solution": [
+       "the main clause",
+       "first",
+       "then piles up",
+       "detail"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "text": "two or more parallel parts"
+       },
+       {
+        "text": "of similar length"
+       },
+       {
+        "text": "and structure"
+       },
+       {
+        "text": "creating symmetry"
+       },
+       {
+        "text": "a semicolon"
+       },
+       {
+        "text": "a comma plus a FANBOYS conjunction"
+       },
+       {
+        "text": "a subordinating word"
+       },
+       {
+        "text": "the main clause"
+       },
+       {
+        "text": "last"
+       },
+       {
+        "text": "builds suspense"
+       }
+      ],
+      "feedback": {
+       "correct": "Correct — two parallel parts, similar length and structure, symmetry created.",
+       "explanation": "A balanced sentence uses two or more parallel parts of similar length and structure to create symmetry.",
+       "incorrect": "Look for the words parallel, length, and structure.",
+       "partial": "You have the right idea — now the exact pairing."
+      },
+      "id": "balanced",
+      "label": "Definition 3 of 3: balanced",
+      "solution": [
+       "two or more parallel parts",
+       "of similar length",
+       "and structure",
+       "creating symmetry"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "text": "a period"
+       },
+       {
+        "text": "a semicolon"
+       },
+       {
+        "text": "a comma plus a FANBOYS conjunction"
+       },
+       {
+        "text": "a subordinating word"
+       },
+       {
+        "text": "an exclamation of joy"
+       },
+       {
+        "text": "a second comma"
+       },
+       {
+        "text": "a dash and a shrug"
+       }
+      ],
+      "feedback": {
+       "correct": "All four fixes recalled: period, semicolon, comma + FANBOYS, and a subordinating word.",
+       "explanation": "Fix a run-on with a period, a semicolon, a comma plus a coordinating conjunction, or a subordinating word.",
+       "incorrect": "Remember the four real fixes: a period, a semicolon, a comma plus a FANBOYS conjunction, or a subordinating word.",
+       "partial": "Right track — but one of those choices is not a real fix."
+      },
+      "id": "fixes",
+      "label": "Round 4: four ways to fix a run-on",
+      "solution": [
+       "a period",
+       "a semicolon",
+       "a comma plus a FANBOYS conjunction",
+       "a subordinating word"
+      ]
+     }
+    ],
+    "placeholder": "Drag a chunk into each slot",
+    "prompt": "Rebuild each definition from the word bank. Nothing else will remind you what the words mean — trust what you remember from the last two units.",
+    "title": "Rebuild the Definitions From Memory"
+   }
+  },
+  {
+   "key": "english/proficient/28|block 2",
+   "reasons": [
+    "false: \"Audit complete. One fragment, one comma splice, one fused run-on — every error found and the fixes known.\" → Audit complete. Two fragments, one comma splice, and one fused run-on — every error found and the fixes known.",
+    "false: \"No finite verb anywhere\" → Line 7 is a fragment because \"which everyone will devour in about four minutes\" is a dependent relative clause standing alone. Attach it to an independent clause, for example: \"We are bringing lemon cake, which everyone will devour in about four minutes.\""
+   ],
+   "before": {
+    "artifactLabel": "Art club announcement — draft 1",
+    "artifactType": "essay",
+    "brief": "Click every line that contains a fragment, a comma splice, or a fused run-on. Lines that are complete and correctly punctuated are clean — do not click them.",
+    "completionMessage": "Audit complete. One fragment, one comma splice, one fused run-on — every error found and the fixes known.",
+    "lines": [
+     {
+      "explanation": "Clean. One independent clause with a subject (the art club), a finite verb (is meeting), and a complete thought.",
+      "id": "l1",
+      "label": "Line 1",
+      "isError": false,
+      "text": "The art club is meeting this Thursday after school in Room 12."
+     },
+     {
+      "explanation": "Fragment. 'Because the kiln finally works again' is a subordinate clause — it has a subject and verb but no complete thought, so it cannot stand alone.",
+      "id": "l2",
+      "label": "Line 2",
+      "isError": true,
+      "text": "Because the kiln finally works again."
+     },
+     {
+      "explanation": "Clean. Two independent clauses properly joined by a comma plus the coordinating conjunction 'so' — one of the legal fixes.",
+      "id": "l3",
+      "label": "Line 3",
+      "isError": false,
+      "text": "We will glaze our pots, so wear clothes you do not mind ruining."
+     },
+     {
+      "explanation": "Comma splice. Two independent clauses joined by only a comma; fix it with a period, a semicolon, a comma plus FANBOYS, or a subordinating word.",
+      "id": "l4",
+      "label": "Line 4",
+      "isError": true,
+      "text": "New members are always welcome, no experience is needed."
+     },
+     {
+      "explanation": "Clean. One complete sentence: subject 'it', finite verb 'costs', complete thought.",
+      "id": "l5",
+      "label": "Line 5",
+      "isError": false,
+      "text": "It costs nothing to join."
+     },
+     {
+      "explanation": "Fused run-on. Two independent clauses with no punctuation at all; a period before 'We' would fix it.",
+      "id": "l6",
+      "label": "Line 6",
+      "isError": true,
+      "text": "Snacks will be provided We are bringing lemon cake."
+     },
+     {
+      "explanation": "Fragment. No finite verb anywhere — 'which everyone will devour' is a relative clause glued to a noun phrase, not a sentence.",
+      "id": "l7",
+      "label": "Line 7",
+      "isError": true,
+      "text": "Which everyone will devour in about four minutes."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show me the errors",
+    "title": "Forensic Audit: The Club Announcement"
+   },
+   "after": {
+    "artifactLabel": "Art club announcement — draft 1",
+    "artifactType": "essay",
+    "brief": "Click every line that contains a fragment, a comma splice, or a fused run-on. Lines that are complete and correctly punctuated are clean — do not click them.",
+    "completionMessage": "Audit complete. Two fragments, one comma splice, and one fused run-on — every error found and the fixes known.",
+    "lines": [
+     {
+      "explanation": "Clean. One independent clause with a subject (the art club), a finite verb (is meeting), and a complete thought.",
+      "id": "l1",
+      "label": "Line 1",
+      "isError": false,
+      "text": "The art club is meeting this Thursday after school in Room 12."
+     },
+     {
+      "explanation": "Fragment. 'Because the kiln finally works again' is a subordinate clause — it has a subject and verb but no complete thought, so it cannot stand alone.",
+      "id": "l2",
+      "label": "Line 2",
+      "isError": true,
+      "text": "Because the kiln finally works again."
+     },
+     {
+      "explanation": "Clean. Two independent clauses properly joined by a comma plus the coordinating conjunction 'so' — one of the legal fixes.",
+      "id": "l3",
+      "label": "Line 3",
+      "isError": false,
+      "text": "We will glaze our pots, so wear clothes you do not mind ruining."
+     },
+     {
+      "explanation": "Comma splice. Two independent clauses joined by only a comma; fix it with a period, a semicolon, a comma plus FANBOYS, or a subordinating word.",
+      "id": "l4",
+      "label": "Line 4",
+      "isError": true,
+      "text": "New members are always welcome, no experience is needed."
+     },
+     {
+      "explanation": "Clean. One complete sentence: subject 'it', finite verb 'costs', complete thought.",
+      "id": "l5",
+      "label": "Line 5",
+      "isError": false,
+      "text": "It costs nothing to join."
+     },
+     {
+      "explanation": "Fused run-on. Two independent clauses with no punctuation at all; a period before 'We' would fix it.",
+      "id": "l6",
+      "label": "Line 6",
+      "isError": true,
+      "text": "Snacks will be provided We are bringing lemon cake."
+     },
+     {
+      "explanation": "Fragment. 'Which everyone will devour in about four minutes' is a dependent relative clause standing alone. Attach it to an independent clause, for example: 'We are bringing lemon cake, which everyone will devour in about four minutes.'",
+      "id": "l7",
+      "label": "Line 7",
+      "isError": true,
+      "text": "Which everyone will devour in about four minutes."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show me the errors",
+    "title": "Forensic Audit: The Club Announcement"
+   }
+  },
+  {
+   "key": "english/proficient/19|block 5",
+   "reasons": [
+    "false: \"the bake sale and the funds going to the science trip\" → Also check that your new sentence keeps both facts: the bake sale is this Saturday and volunteers are needed for two shifts.",
+    "false: \"The annual bake sale is this Saturday. We need volunteers for two shifts.\" → Do not list this period repair as satisfying the stated one-sentence task; retain the semicolon and comma-plus-so alternatives, or change the prompt to allow two sentences."
+   ],
+   "before": {
+    "contextItems": [
+     {
+      "label": "Rule for the column",
+      "value": "Under 30 words"
+     },
+     {
+      "label": "Deadline",
+      "value": "This Friday"
+     }
+    ],
+    "decisionPrompt": "Write a corrected one-sentence version of that line for the newsletter.",
+    "decisionPlaceholder": "Type your corrected sentence...",
+    "eyebrow": "REAL-WORLD EDITING",
+    "misconception": {
+     "detail": "If your version simply adds a comma between the two clauses, you have created a comma splice. To fix a fused run-on you need a period, a semicolon, a comma plus a FANBOYS conjunction, or a subordinating word — not just a comma. Also check that your new sentence keeps both facts: the bake sale and the funds going to the science trip.",
+     "title": "The comma-only fix"
+    },
+    "decisionKeywords": [
+     "period",
+     "semicolon",
+     "so",
+     "and",
+     "because",
+     "when"
+    ],
+    "rationaleKeywords": [
+     "two independent clauses",
+     "no punctuation",
+     "fused run-on",
+     "subordinating word",
+     "semicolon",
+     "conjunction"
+    ],
+    "nextLabel": "Print-ready",
+    "rationalePlaceholder": "Name the error and the rule you used...",
+    "retryLabel": "Revise the sentence",
+    "rule": {
+     "name": "The Complete-Sentence Checklist",
+     "statement": "A complete sentence needs a subject, a finite verb, and a complete thought. Two independent clauses must be separated by a period, a question mark, a semicolon, a comma plus a FANBOYS conjunction, or be joined with a subordinating word."
+    },
+    "scenarioBody": "You are the student editor of the Science Club newsletter. A volunteer wrote this line for the front page: \"The annual bake sale is this Saturday we need volunteers for two shifts.\" Your advisor says it reads fine out loud but breaks a grammar rule on paper, and the print deadline is Friday. The sentence must stay under 30 words and keep both facts.",
+    "scenarioTitle": "Editing the Science Club Newsletter",
+    "submitLabel": "Lock in the edit",
+    "targetAnswer": {
+     "decision": "The annual bake sale is this Saturday, so we need volunteers for two shifts. (Also correct: \"The annual bake sale is this Saturday; we need volunteers for two shifts.\" or \"The annual bake sale is this Saturday. We need volunteers for two shifts.\")",
+     "rationale": "The original line is a fused run-on: two independent clauses joined with no punctuation. I joined them with a comma plus the FANBOYS conjunction so, which is one of the four approved repairs."
+    }
+   },
+   "after": {
+    "contextItems": [
+     {
+      "label": "Rule for the column",
+      "value": "Under 30 words"
+     },
+     {
+      "label": "Deadline",
+      "value": "This Friday"
+     }
+    ],
+    "decisionPrompt": "Write a corrected one-sentence version of that line for the newsletter.",
+    "decisionPlaceholder": "Type your corrected sentence...",
+    "eyebrow": "REAL-WORLD EDITING",
+    "misconception": {
+     "detail": "If your version simply adds a comma between the two clauses, you have created a comma splice. To fix a fused run-on you need a period, a semicolon, a comma plus a FANBOYS conjunction, or a subordinating word — not just a comma. Also check that your new sentence keeps both facts: the bake sale is this Saturday and volunteers are needed for two shifts.",
+     "title": "The comma-only fix"
+    },
+    "decisionKeywords": [
+     "period",
+     "semicolon",
+     "so",
+     "and",
+     "because",
+     "when"
+    ],
+    "rationaleKeywords": [
+     "two independent clauses",
+     "no punctuation",
+     "fused run-on",
+     "subordinating word",
+     "semicolon",
+     "conjunction"
+    ],
+    "nextLabel": "Print-ready",
+    "rationalePlaceholder": "Name the error and the rule you used...",
+    "retryLabel": "Revise the sentence",
+    "rule": {
+     "name": "The Complete-Sentence Checklist",
+     "statement": "A complete sentence needs a subject, a finite verb, and a complete thought. Two independent clauses must be separated by a period, a question mark, a semicolon, a comma plus a FANBOYS conjunction, or be joined with a subordinating word."
+    },
+    "scenarioBody": "You are the student editor of the Science Club newsletter. A volunteer wrote this line for the front page: \"The annual bake sale is this Saturday we need volunteers for two shifts.\" Your advisor says it reads fine out loud but breaks a grammar rule on paper, and the print deadline is Friday. The sentence must stay under 30 words and keep both facts.",
+    "scenarioTitle": "Editing the Science Club Newsletter",
+    "submitLabel": "Lock in the edit",
+    "targetAnswer": {
+     "decision": "The annual bake sale is this Saturday, so we need volunteers for two shifts. (Also correct: \"The annual bake sale is this Saturday; we need volunteers for two shifts.\")",
+     "rationale": "The original line is a fused run-on: two independent clauses joined with no punctuation. I joined them with a comma plus the FANBOYS conjunction so, which is one of the four approved repairs."
+    }
+   }
+  },
+  {
+   "key": "english/proficient/30|block 2",
+   "reasons": [
+    "false: \"'Silence, never again.'\" → Use a complete example such as 'Never again will we be silent.' Here 'Never again' is fronted, with the required subject–auxiliary inversion."
+   ],
+   "before": {
+    "footnote": "Rhetorical grammar is a set of choices; a grammatical error is a choice you never meant to make.",
+    "leftColumn": {
+     "heading": "What it IS",
+     "items": [
+      {
+       "example": "'The research is clear. Plain and simple.' — short, deliberate, punchy.",
+       "label": "Deliberate fragment",
+       "text": "A short fragment used on purpose for punch, placed after a complete sentence that sets it up."
+      },
+      {
+       "example": "'If we do not act now, the forest will be gone.'",
+       "label": "Periodic build-up",
+       "text": "A sentence that delays the main point to the end so the reader leans forward waiting for it."
+      },
+      {
+       "example": "'Silence, never again.'",
+       "label": "Fronted phrase",
+       "text": "A key phrase moved to the start of the sentence so the reader meets it first."
+      },
+      {
+       "example": "'We came, we saw, we stayed.'",
+       "label": "Parallel structure",
+       "text": "Matching grammatical forms repeated to build rhythm and credibility."
+      }
+     ],
+     "tone": "success"
+    },
+    "rightColumn": {
+     "heading": "What it is NOT",
+     "items": [
+      {
+       "example": "'I missed the bus I was late for class.'",
+       "label": "Accidental fragment or run-on",
+       "text": "A fragment that drops a needed subject or verb by mistake, or a run-on that jams two sentences together without punctuation."
+      },
+      {
+       "example": "'The the result was very unique in every way.'",
+       "label": "Rule-breaking",
+       "text": "Breaking grammar rules without a purpose, which reads as carelessness rather than style."
+      },
+      {
+       "example": "'When considering the matter of the start time, the analysis that was conducted by the committee...' — padding, not power.",
+       "label": "Longer is stronger",
+       "text": "Adding clauses or words just to sound impressive; empty padding weakens persuasion."
+      },
+      {
+       "example": "Mixing 'she likes running, swimming, and to bike' breaks the pattern.",
+       "label": "Broken parallelism",
+       "text": "Structures that almost match but don't — the rhythm stumbles and the point wobbles."
+      }
+     ],
+     "tone": "caution"
+    },
+    "subtitle": "Same idea, two sentences — one flat, one built for effect.",
+    "title": "Flat Writing vs. Rhetorical Writing"
+   },
+   "after": {
+    "footnote": "Rhetorical grammar is a set of choices; a grammatical error is a choice you never meant to make.",
+    "leftColumn": {
+     "heading": "What it IS",
+     "items": [
+      {
+       "example": "'The research is clear. Plain and simple.' — short, deliberate, punchy.",
+       "label": "Deliberate fragment",
+       "text": "A short fragment used on purpose for punch, placed after a complete sentence that sets it up."
+      },
+      {
+       "example": "'If we do not act now, the forest will be gone.'",
+       "label": "Periodic build-up",
+       "text": "A sentence that delays the main point to the end so the reader leans forward waiting for it."
+      },
+      {
+       "example": "'Never again will we be silent.'",
+       "label": "Fronted phrase",
+       "text": "A key phrase moved to the start of the sentence so the reader meets it first."
+      },
+      {
+       "example": "'We came, we saw, we stayed.'",
+       "label": "Parallel structure",
+       "text": "Matching grammatical forms repeated to build rhythm and credibility."
+      }
+     ],
+     "tone": "success"
+    },
+    "rightColumn": {
+     "heading": "What it is NOT",
+     "items": [
+      {
+       "example": "'I missed the bus I was late for class.'",
+       "label": "Accidental fragment or run-on",
+       "text": "A fragment that drops a needed subject or verb by mistake, or a run-on that jams two sentences together without punctuation."
+      },
+      {
+       "example": "'The the result was very unique in every way.'",
+       "label": "Rule-breaking",
+       "text": "Breaking grammar rules without a purpose, which reads as carelessness rather than style."
+      },
+      {
+       "example": "'When considering the matter of the start time, the analysis that was conducted by the committee...' — padding, not power.",
+       "label": "Longer is stronger",
+       "text": "Adding clauses or words just to sound impressive; empty padding weakens persuasion."
+      },
+      {
+       "example": "Mixing 'she likes running, swimming, and to bike' breaks the pattern.",
+       "label": "Broken parallelism",
+       "text": "Structures that almost match but don't — the rhythm stumbles and the point wobbles."
+      }
+     ],
+     "tone": "caution"
+    },
+    "subtitle": "Same idea, two sentences — one flat, one built for effect.",
+    "title": "Flat Writing vs. Rhetorical Writing"
+   }
+  },
+  {
+   "key": "english/proficient/30|block 5",
+   "reasons": [
+    "false: \"Wrinkled. Stained. Perfect anyway. (three fragments with no preceding full sentence)\" → Make the rule consistent. To retain the lesson's stated test, use a setup such as 'The coat was old. Wrinkled. Stained. Perfect anyway.' Alternatively, keep the standalone advertising example but revise the later 'only after' wording to explain that following and echoing a complete sentence is a rel",
+    "false: \"These three errors are the ways 'artistic license' turns into an actual mistake.\" → It should say 'these four errors' (or the list should be reduced to three)."
+   ],
+   "before": {
+    "cautions": [
+     {
+      "detail": "A fragment only works as a rhetorical choice when the reader can tell it is deliberate — usually because it is very short, follows a complete sentence, and clearly echoes it. A stray phrase on its own just reads as a typo.",
+      "kind": "pitfall",
+      "rightExample": "The storm passed by morning. Then silence.",
+      "title": "Deliberate vs. accidental fragments",
+      "wrongExample": "Walking home because the bus was late.",
+      "exampleNote": "The right example is two words the reader instantly understands as deliberate. The wrong one looks like a missing piece."
+     },
+     {
+      "detail": "A run-on occurs when two or more complete sentences are joined with no punctuation or connector. Blurred structure blurs persuasion: the reader cannot tell which idea to weigh.",
+      "kind": "non_example",
+      "rightExample": "The plan was bold. It was also risky.",
+      "title": "Run-ons kill impact",
+      "wrongExample": "The plan was bold it was also risky.",
+      "exampleNote": "The run-on makes both ideas run together; the corrected version gives each its own punch."
+     },
+     {
+      "detail": "In a list, once you start a pattern (for example, all -ing verbs), every item must keep it. One mismatched item breaks the rhythm and the reader's trust.",
+      "kind": "pitfall",
+      "rightExample": "We came, we saw, we listened.",
+      "title": "Parallelism broken mid-list",
+      "wrongExample": "We came, we saw, listening to every word.",
+      "exampleNote": "Keep the same form for every item in the series."
+     },
+     {
+      "detail": "Rhetorical grammar bends conventions on purpose, not by accident. Before you break a rule, make sure you can build the plain, correct sentence first — then decide that the broken version works harder.",
+      "kind": "illegal_transfer",
+      "rightExample": "Wrinkled. Stained. Perfect anyway. (three fragments with no preceding full sentence)",
+      "title": "Don't transfer 'stylistic' to every context",
+      "wrongExample": "Using fragments in a lab report conclusion to sound dramatic.",
+      "exampleNote": "In formal reporting, complete sentences are the effect you want."
+     }
+    ],
+    "conceptLabel": "Rhetorical grammar",
+    "flagIntro": "Deliberate grammar choices work only when the reader senses they are deliberate. These three errors are the ways 'artistic license' turns into an actual mistake.",
+    "flagTitle": "When effect becomes error",
+    "footerNote": "Rule of thumb: a fragment is a choice only if the reader can tell. If a careful reader would call it an error, fix it."
+   },
+   "after": {
+    "cautions": [
+     {
+      "detail": "A fragment only works as a rhetorical choice when the reader can tell it is deliberate — usually because it is very short, follows a complete sentence, and clearly echoes it. A stray phrase on its own just reads as a typo.",
+      "kind": "pitfall",
+      "rightExample": "The storm passed by morning. Then silence.",
+      "title": "Deliberate vs. accidental fragments",
+      "wrongExample": "Walking home because the bus was late.",
+      "exampleNote": "The right example is two words the reader instantly understands as deliberate. The wrong one looks like a missing piece."
+     },
+     {
+      "detail": "A run-on occurs when two or more complete sentences are joined with no punctuation or connector. Blurred structure blurs persuasion: the reader cannot tell which idea to weigh.",
+      "kind": "non_example",
+      "rightExample": "The plan was bold. It was also risky.",
+      "title": "Run-ons kill impact",
+      "wrongExample": "The plan was bold it was also risky.",
+      "exampleNote": "The run-on makes both ideas run together; the corrected version gives each its own punch."
+     },
+     {
+      "detail": "In a list, once you start a pattern (for example, all -ing verbs), every item must keep it. One mismatched item breaks the rhythm and the reader's trust.",
+      "kind": "pitfall",
+      "rightExample": "We came, we saw, we listened.",
+      "title": "Parallelism broken mid-list",
+      "wrongExample": "We came, we saw, listening to every word.",
+      "exampleNote": "Keep the same form for every item in the series."
+     },
+     {
+      "detail": "Rhetorical grammar bends conventions on purpose, not by accident. Before you break a rule, make sure you can build the plain, correct sentence first — then decide that the broken version works harder.",
+      "kind": "illegal_transfer",
+      "rightExample": "The coat was old. Wrinkled. Stained. Perfect anyway.",
+      "title": "Don't transfer 'stylistic' to every context",
+      "wrongExample": "Using fragments in a lab report conclusion to sound dramatic.",
+      "exampleNote": "In formal reporting, complete sentences are the effect you want."
+     }
+    ],
+    "conceptLabel": "Rhetorical grammar",
+    "flagIntro": "Deliberate grammar choices work only when the reader senses they are deliberate. These four errors are the ways 'artistic license' turns into an actual mistake.",
+    "flagTitle": "When effect becomes error",
+    "footerNote": "Rule of thumb: a fragment is a choice only if the reader can tell. If a careful reader would call it an error, fix it."
+   }
+  },
+  {
+   "key": "english/proficient/39|block 0",
+   "reasons": [
+    "false: \"No verb anywhere — 'over the fence' has no action, so it cannot stand alone.\" → 'Flying' is a non-finite participle; the item has no finite main verb, so it cannot stand alone as a complete sentence."
+   ],
+   "before": {
+    "buckets": [
+     {
+      "color": "error",
+      "hint": "Missing a subject or verb",
+      "id": "fragment",
+      "label": "Fragment"
+     },
+     {
+      "color": "caution",
+      "hint": "Two sentences fused together",
+      "id": "runon",
+      "label": "Run-on"
+     },
+     {
+      "color": "success",
+      "hint": "Short on purpose, for punch",
+      "id": "deliberate",
+      "label": "Deliberate fragment"
+     }
+    ],
+    "cards": [
+     {
+      "correctBucket": "fragment",
+      "explanation": "No verb anywhere — 'over the fence' has no action, so it cannot stand alone.",
+      "id": "c1",
+      "text": "The ball flying over the fence."
+     },
+     {
+      "correctBucket": "runon",
+      "explanation": "Two complete sentences jammed together with no punctuation between them.",
+      "id": "c2",
+      "text": "She studied hard the test was easy."
+     },
+     {
+      "correctBucket": "deliberate",
+      "explanation": "Deliberate fragment: a two-word punch after a full sentence, for emphasis.",
+      "id": "c3",
+      "text": "No way."
+     },
+     {
+      "correctBucket": "deliberate",
+      "explanation": "Deliberate fragment — the speaker could have written a full sentence but chose punch instead.",
+      "id": "c4",
+      "text": "Absolutely not."
+     },
+     {
+      "correctBucket": "runon",
+      "explanation": "Complete sentence, then 'he didn't call' bolted on without punctuation or a connector.",
+      "id": "c5",
+      "text": "He promised to call he never did."
+     },
+     {
+      "correctBucket": "fragment",
+      "explanation": "The clause has a subject ('the store') and a verb ('was closed'), but it is an accidental fragment because the dependent clause stands alone.",
+      "id": "c6",
+      "text": "Because the store was closed."
+     },
+     {
+      "correctBucket": "deliberate",
+      "explanation": "A deliberate fragment used as a rhetorical answer to a question.",
+      "id": "c7",
+      "text": "Never."
+     },
+     {
+      "correctBucket": "fragment",
+      "explanation": "Just a subject with no verb — a mistake, not a style choice.",
+      "id": "c8",
+      "text": "The winning team at the regional finals last spring."
+     },
+     {
+      "correctBucket": "runon",
+      "explanation": "Comma splice: a comma can't join two full sentences on its own.",
+      "id": "c9",
+      "text": "The rain stopped we went outside, the game began."
+     },
+     {
+      "correctBucket": "fragment",
+      "explanation": "Here, 'Running' and 'skipping' are non-finite verbs, so the fragment has no finite main verb.",
+      "id": "c10",
+      "text": "Running late again and skipping breakfast."
+     }
+    ],
+    "prompt": "Sort each item into the right bucket as fast as you can. Trust your first instinct.",
+    "seconds": 75,
+    "showExplanations": true,
+    "title": "Rapid Sort: Fragment, Run-on, or Deliberate?"
+   },
+   "after": {
+    "buckets": [
+     {
+      "color": "error",
+      "hint": "Missing a subject or verb",
+      "id": "fragment",
+      "label": "Fragment"
+     },
+     {
+      "color": "caution",
+      "hint": "Two sentences fused together",
+      "id": "runon",
+      "label": "Run-on"
+     },
+     {
+      "color": "success",
+      "hint": "Short on purpose, for punch",
+      "id": "deliberate",
+      "label": "Deliberate fragment"
+     }
+    ],
+    "cards": [
+     {
+      "correctBucket": "fragment",
+      "explanation": "'Flying' is a non-finite participle, not a main verb, so the item has no finite verb and cannot stand alone as a complete sentence.",
+      "id": "c1",
+      "text": "The ball flying over the fence."
+     },
+     {
+      "correctBucket": "runon",
+      "explanation": "Two complete sentences jammed together with no punctuation between them.",
+      "id": "c2",
+      "text": "She studied hard the test was easy."
+     },
+     {
+      "correctBucket": "deliberate",
+      "explanation": "Deliberate fragment: a two-word punch after a full sentence, for emphasis.",
+      "id": "c3",
+      "text": "No way."
+     },
+     {
+      "correctBucket": "deliberate",
+      "explanation": "Deliberate fragment — the speaker could have written a full sentence but chose punch instead.",
+      "id": "c4",
+      "text": "Absolutely not."
+     },
+     {
+      "correctBucket": "runon",
+      "explanation": "Complete sentence, then 'he didn't call' bolted on without punctuation or a connector.",
+      "id": "c5",
+      "text": "He promised to call he never did."
+     },
+     {
+      "correctBucket": "fragment",
+      "explanation": "The clause has a subject ('the store') and a verb ('was closed'), but it is an accidental fragment because the dependent clause stands alone.",
+      "id": "c6",
+      "text": "Because the store was closed."
+     },
+     {
+      "correctBucket": "deliberate",
+      "explanation": "A deliberate fragment used as a rhetorical answer to a question.",
+      "id": "c7",
+      "text": "Never."
+     },
+     {
+      "correctBucket": "fragment",
+      "explanation": "Just a subject with no verb — a mistake, not a style choice.",
+      "id": "c8",
+      "text": "The winning team at the regional finals last spring."
+     },
+     {
+      "correctBucket": "runon",
+      "explanation": "Comma splice: a comma can't join two full sentences on its own.",
+      "id": "c9",
+      "text": "The rain stopped we went outside, the game began."
+     },
+     {
+      "correctBucket": "fragment",
+      "explanation": "Here, 'Running' and 'skipping' are non-finite verbs, so the fragment has no finite main verb.",
+      "id": "c10",
+      "text": "Running late again and skipping breakfast."
+     }
+    ],
+    "prompt": "Sort each item into the right bucket as fast as you can. Trust your first instinct.",
+    "seconds": 75,
+    "showExplanations": true,
+    "title": "Rapid Sort: Fragment, Run-on, or Deliberate?"
+   }
+  },
+  {
+   "key": "english/proficient/39|block 4",
+   "reasons": [
+    "false: \"Clean parallelism: three matching verb phrases ('closing', 'moving', 'asking'). Rhythm and credibility intact.\" → Clean parallelism: three matching base-form verb phrases after 'should'—'close the achievement gap,' 'update the curriculum,' and 'ask the students themselves.'"
+   ],
+   "before": {
+    "artifactLabel": "Persuasive paragraph — draft 1",
+    "artifactType": "essay",
+    "brief": "Click the single line that contains the run-on. Read for two complete sentences fused together with no punctuation or connector.",
+    "completionMessage": "Found it. Line 2 fuses two complete sentences — 'People assume longer school days mean more learning' and 'the studies show the opposite is often true' — with no punctuation or connector between them. Fix it with a period, semicolon, or a connector like 'but'.",
+    "id": "audit1",
+    "lines": [
+     {
+      "explanation": "Clean. One subject ('Students'), one verb ('demand'), one sentence.",
+      "id": "l1",
+      "isError": false,
+      "label": "1",
+      "text": "Students today demand more than grades from their schools."
+     },
+     {
+      "explanation": "Two complete sentences fused together: 'People assume longer school days mean more learning' and 'the studies show the opposite is often true' have no punctuation or connector joining them. This is a run-on.",
+      "id": "l2",
+      "isError": true,
+      "label": "2",
+      "text": "People assume longer school days mean more learning the studies show the opposite is often true."
+     },
+     {
+      "explanation": "Deliberate fragment. The paragraph already set up a full claim, so this short punch is a choice, not an error.",
+      "id": "l3",
+      "isError": false,
+      "label": "3",
+      "text": "Not always."
+     },
+     {
+      "explanation": "Clean sentence, ending on its strongest idea — good end-focus.",
+      "id": "l4",
+      "isError": false,
+      "label": "4",
+      "text": "In schools that tested shorter days, attention stayed sharper and test scores held steady."
+     },
+     {
+      "explanation": "Clean parallelism: three matching verb phrases ('closing', 'moving', 'asking'). Rhythm and credibility intact.",
+      "id": "l5",
+      "isError": false,
+      "label": "5",
+      "text": "Before changing the schedule, districts should close the achievement gap, update the curriculum, and ask the students themselves."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Reveal the run-on",
+    "title": "Forensic Audit: Find the Run-on"
+   },
+   "after": {
+    "artifactLabel": "Persuasive paragraph — draft 1",
+    "artifactType": "essay",
+    "brief": "Click the single line that contains the run-on. Read for two complete sentences fused together with no punctuation or connector.",
+    "completionMessage": "Found it. Line 2 fuses two complete sentences — 'People assume longer school days mean more learning' and 'the studies show the opposite is often true' — with no punctuation or connector between them. Fix it with a period, semicolon, or a connector like 'but'.",
+    "id": "audit1",
+    "lines": [
+     {
+      "explanation": "Clean. One subject ('Students'), one verb ('demand'), one sentence.",
+      "id": "l1",
+      "isError": false,
+      "label": "1",
+      "text": "Students today demand more than grades from their schools."
+     },
+     {
+      "explanation": "Two complete sentences fused together: 'People assume longer school days mean more learning' and 'the studies show the opposite is often true' have no punctuation or connector joining them. This is a run-on.",
+      "id": "l2",
+      "isError": true,
+      "label": "2",
+      "text": "People assume longer school days mean more learning the studies show the opposite is often true."
+     },
+     {
+      "explanation": "Deliberate fragment. The paragraph already set up a full claim, so this short punch is a choice, not an error.",
+      "id": "l3",
+      "isError": false,
+      "label": "3",
+      "text": "Not always."
+     },
+     {
+      "explanation": "Clean sentence, ending on its strongest idea — good end-focus.",
+      "id": "l4",
+      "isError": false,
+      "label": "4",
+      "text": "In schools that tested shorter days, attention stayed sharper and test scores held steady."
+     },
+     {
+      "explanation": "Clean parallelism: three matching base-form verb phrases after 'should'—'close the achievement gap,' 'update the curriculum,' and 'ask the students themselves.'",
+      "id": "l5",
+      "isError": false,
+      "label": "5",
+      "text": "Before changing the schedule, districts should close the achievement gap, update the curriculum, and ask the students themselves."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Reveal the run-on",
+    "title": "Forensic Audit: Find the Run-on"
+   }
+  },
+  {
+   "key": "english/proficient/38|block 0",
+   "reasons": [
+    "false: \"Fix 4 of 3 — the three repairs\" → Fix 3 of 3 — the three repairs"
+   ],
+   "before": {
+    "answerLabel": "Reconstructed definition",
+    "completeMessage": "You rebuilt the grammar toolkit from memory — fragments, run-ons, comma splices, and all three fixes.",
+    "contextLabel": "From the lesson",
+    "context": "This is a no-cues recall round: pull the definitions from memory, not from the notes.",
+    "feedback": {
+     "correct": "Exactly right — that is the definition from the lesson.",
+     "explanation": "A fragment is missing a subject, a finite verb, or a complete thought. A run-on fuses two independent clauses with no punctuation. A comma splice is a run-on joined only by a comma. Fix run-ons with a period, a semicolon, or a comma plus a FANBOYS conjunction or a subordinating word.",
+     "incorrect": "None of the pieces are in the right slot yet — think about what each term means.",
+     "partial": "Some pieces are in the right place — keep going."
+    },
+    "items": [
+     {
+      "chunks": [
+       {
+        "text": "A fragment is"
+       },
+       {
+        "text": "missing a subject, a verb, or a complete thought"
+       },
+       {
+        "text": "A run-on joins two independent clauses"
+       },
+       {
+        "text": "with no punctuation at all"
+       },
+       {
+        "text": "A comma splice joins two independent clauses"
+       },
+       {
+        "text": "with only a comma"
+       },
+       {
+        "ariaLabel": "because",
+        "text": "because"
+       },
+       {
+        "ariaLabel": "semicolon",
+        "text": "semicolon"
+       }
+      ],
+      "feedback": {
+       "correct": "That is the fragment definition, word for word.",
+       "explanation": "A fragment is not a complete sentence: it is missing a subject, a finite verb, or a complete thought.",
+       "incorrect": "Start with the term, then say what it is missing.",
+       "partial": "Getting closer — check which pieces belong in which slot."
+      },
+      "id": "def_fragment",
+      "label": "Definition 1 of 3",
+      "solution": [
+       "A fragment is",
+       "missing a subject, a verb, or a complete thought"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "text": "A fragment is"
+       },
+       {
+        "text": "missing a subject, a verb, or a complete thought"
+       },
+       {
+        "text": "A run-on joins two independent clauses"
+       },
+       {
+        "text": "with no punctuation at all"
+       },
+       {
+        "text": "with only a comma"
+       },
+       {
+        "ariaLabel": "period",
+        "text": "a period"
+       },
+       {
+        "text": "a comma"
+       }
+      ],
+      "feedback": {
+       "correct": "Correct — a fused sentence with no punctuation at all.",
+       "explanation": "A run-on (fused sentence) is two or more independent clauses joined with no punctuation between them.",
+       "incorrect": "Think about what is missing between the two clauses in a run-on.",
+       "partial": "You are on the right track — one piece may be swapped."
+      },
+      "id": "def_runon",
+      "label": "Definition 2 of 3",
+      "solution": [
+       "A run-on joins two independent clauses",
+       "with no punctuation at all"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "text": "with no punctuation at all"
+       },
+       {
+        "text": "with only a comma"
+       },
+       {
+        "text": "A comma splice joins two independent clauses"
+       },
+       {
+        "text": "A run-on joins two independent clauses"
+       },
+       {
+        "text": "a semicolon"
+       }
+      ],
+      "feedback": {
+       "correct": "Right — a comma is not strong enough to join two independent clauses on its own.",
+       "explanation": "A comma splice is a special kind of run-on: the only punctuation between the clauses is a comma.",
+       "incorrect": "Think about which punctuation mark is doing all the work in a splice.",
+       "partial": "Almost — check the second slot."
+      },
+      "id": "def_splice",
+      "label": "Definition 3 of 3",
+      "solution": [
+       "A comma splice joins two independent clauses",
+       "with only a comma"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "ariaLabel": "a period",
+        "text": "a period"
+       },
+       {
+        "text": "a semicolon"
+       },
+       {
+        "text": "a comma plus a FANBOYS conjunction or a subordinating word"
+       },
+       {
+        "text": "a comma"
+       },
+       {
+        "text": "an exclamation mark"
+       },
+       {
+        "text": "a rhetorical fragment"
+       }
+      ],
+      "feedback": {
+       "correct": "All three standard fixes, in order — nicely recalled.",
+       "explanation": "Any of these three repairs correctly separates two independent clauses: a full stop, a semicolon, or a comma plus a coordinating (FANBOYS) or subordinating word.",
+       "incorrect": "Recall the three tools from the lesson that can properly separate two independent clauses.",
+       "partial": "You have some of the fixes — one or two are still missing or out of place."
+      },
+      "id": "fixes",
+      "label": "Fix 4 of 3 — the three repairs",
+      "solution": [
+       "a period",
+       "a semicolon",
+       "a comma plus a FANBOYS conjunction or a subordinating word"
+      ]
+     }
+    ],
+    "placeholder": "Drag a piece here",
+    "prompt": "Using only the word bank, rebuild each definition and the three standard fixes from memory — no hints are shown in the slots.",
+    "title": "Rebuild It: Fragment, Run-On, Comma Splice"
+   },
+   "after": {
+    "answerLabel": "Reconstructed definition",
+    "completeMessage": "You rebuilt the grammar toolkit from memory — fragments, run-ons, comma splices, and all three fixes.",
+    "contextLabel": "From the lesson",
+    "context": "This is a no-cues recall round: pull the definitions from memory, not from the notes.",
+    "feedback": {
+     "correct": "Exactly right — that is the definition from the lesson.",
+     "explanation": "A fragment is missing a subject, a finite verb, or a complete thought. A run-on fuses two independent clauses with no punctuation. A comma splice is a run-on joined only by a comma. Fix run-ons with a period, a semicolon, or a comma plus a FANBOYS conjunction or a subordinating word.",
+     "incorrect": "None of the pieces are in the right slot yet — think about what each term means.",
+     "partial": "Some pieces are in the right place — keep going."
+    },
+    "items": [
+     {
+      "chunks": [
+       {
+        "text": "A fragment is"
+       },
+       {
+        "text": "missing a subject, a verb, or a complete thought"
+       },
+       {
+        "text": "A run-on joins two independent clauses"
+       },
+       {
+        "text": "with no punctuation at all"
+       },
+       {
+        "text": "A comma splice joins two independent clauses"
+       },
+       {
+        "text": "with only a comma"
+       },
+       {
+        "ariaLabel": "because",
+        "text": "because"
+       },
+       {
+        "ariaLabel": "semicolon",
+        "text": "semicolon"
+       }
+      ],
+      "feedback": {
+       "correct": "That is the fragment definition, word for word.",
+       "explanation": "A fragment is not a complete sentence: it is missing a subject, a finite verb, or a complete thought.",
+       "incorrect": "Start with the term, then say what it is missing.",
+       "partial": "Getting closer — check which pieces belong in which slot."
+      },
+      "id": "def_fragment",
+      "label": "Definition 1 of 3",
+      "solution": [
+       "A fragment is",
+       "missing a subject, a verb, or a complete thought"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "text": "A fragment is"
+       },
+       {
+        "text": "missing a subject, a verb, or a complete thought"
+       },
+       {
+        "text": "A run-on joins two independent clauses"
+       },
+       {
+        "text": "with no punctuation at all"
+       },
+       {
+        "text": "with only a comma"
+       },
+       {
+        "ariaLabel": "period",
+        "text": "a period"
+       },
+       {
+        "text": "a comma"
+       }
+      ],
+      "feedback": {
+       "correct": "Correct — a fused sentence with no punctuation at all.",
+       "explanation": "A run-on (fused sentence) is two or more independent clauses joined with no punctuation between them.",
+       "incorrect": "Think about what is missing between the two clauses in a run-on.",
+       "partial": "You are on the right track — one piece may be swapped."
+      },
+      "id": "def_runon",
+      "label": "Definition 2 of 3",
+      "solution": [
+       "A run-on joins two independent clauses",
+       "with no punctuation at all"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "text": "with no punctuation at all"
+       },
+       {
+        "text": "with only a comma"
+       },
+       {
+        "text": "A comma splice joins two independent clauses"
+       },
+       {
+        "text": "A run-on joins two independent clauses"
+       },
+       {
+        "text": "a semicolon"
+       }
+      ],
+      "feedback": {
+       "correct": "Right — a comma is not strong enough to join two independent clauses on its own.",
+       "explanation": "A comma splice is a special kind of run-on: the only punctuation between the clauses is a comma.",
+       "incorrect": "Think about which punctuation mark is doing all the work in a splice.",
+       "partial": "Almost — check the second slot."
+      },
+      "id": "def_splice",
+      "label": "Definition 3 of 3",
+      "solution": [
+       "A comma splice joins two independent clauses",
+       "with only a comma"
+      ]
+     },
+     {
+      "chunks": [
+       {
+        "ariaLabel": "a period",
+        "text": "a period"
+       },
+       {
+        "text": "a semicolon"
+       },
+       {
+        "text": "a comma plus a FANBOYS conjunction or a subordinating word"
+       },
+       {
+        "text": "a comma"
+       },
+       {
+        "text": "an exclamation mark"
+       },
+       {
+        "text": "a rhetorical fragment"
+       }
+      ],
+      "feedback": {
+       "correct": "All three standard fixes, in order — nicely recalled.",
+       "explanation": "Any of these three repairs correctly separates two independent clauses: a full stop, a semicolon, or a comma plus a coordinating (FANBOYS) or subordinating word.",
+       "incorrect": "Recall the three tools from the lesson that can properly separate two independent clauses.",
+       "partial": "You have some of the fixes — one or two are still missing or out of place."
+      },
+      "id": "fixes",
+      "label": "Fix 3 of 3 — the three repairs",
+      "solution": [
+       "a period",
+       "a semicolon",
+       "a comma plus a FANBOYS conjunction or a subordinating word"
+      ]
+     }
+    ],
+    "placeholder": "Drag a piece here",
+    "prompt": "Using only the word bank, rebuild each definition and the three standard fixes from memory — no hints are shown in the slots.",
+    "title": "Rebuild It: Fragment, Run-On, Comma Splice"
+   }
+  },
+  {
+   "key": "english/proficient/40|block 0",
+   "reasons": [
+    "false: \"\"The steady version\" / \"The jolting version\"\" → Option A should be titled \"The jolting version\" with caution tone, and Option B should be titled \"The steady version\" with success tone.",
+    "false: \"title\":\"The steady version\"\" → title\":\"The jolting version\"",
+    "false: \"title\":\"The jolting version\"\" → title\":\"The steady version\"",
+    "false: \"leftChoice: title 'The steady version' with the body 'Then the beaker gets heated... honestly it's kind of fun to watch it bubble!'; rightChoice: title 'The jolting version' with the steady body\" → Option A should be titled 'The jolting version' (tone caution) and Option B 'The steady version' (tone success)."
+   ],
+   "before": {
+    "context": "You are writing directions for your group's science lab report. The report should be clear and matter-of-fact. One teammate drafts these two openings. Which one keeps a steady voice and mood, and which one jolts the reader?",
+    "eyebrow": "Warm-Up Dilemma",
+    "footerNote": "A jarring change in voice or mood can happen inside a single sentence, too. That is what this lesson is about.",
+    "leftChoice": {
+     "body": "First, pour the liquid into the beaker. Record the starting temperature carefully. Then the beaker gets heated for two minutes by the person holding the tongs, and honestly it's kind of fun to watch it bubble!",
+     "label": "OPTION A",
+     "title": "The steady version",
+     "tone": "success"
+    },
+    "prompt": "Both drafts give the same instructions and facts. Which reads more smoothly?",
+    "rightChoice": {
+     "body": "First, pour the liquid into the beaker. Record the starting temperature carefully. Then heat the beaker for two minutes while holding the tongs steadily.",
+     "label": "OPTION B",
+     "title": "The jolting version",
+     "tone": "caution"
+    },
+    "versusLabel": "VS"
+   },
+   "after": {
+    "context": "You are writing directions for your group's science lab report. The report should be clear and matter-of-fact. One teammate drafts these two openings. Which one keeps a steady voice and mood, and which one jolts the reader?",
+    "eyebrow": "Warm-Up Dilemma",
+    "footerNote": "A jarring change in voice or mood can happen inside a single sentence, too. That is what this lesson is about.",
+    "leftChoice": {
+     "body": "First, pour the liquid into the beaker. Record the starting temperature carefully. Then the beaker gets heated for two minutes by the person holding the tongs, and honestly it's kind of fun to watch it bubble!",
+     "label": "OPTION A",
+     "title": "The jolting version",
+     "tone": "caution"
+    },
+    "prompt": "Both drafts give the same instructions and facts. Which reads more smoothly?",
+    "rightChoice": {
+     "body": "First, pour the liquid into the beaker. Record the starting temperature carefully. Then heat the beaker for two minutes while holding the tongs steadily.",
+     "label": "OPTION B",
+     "title": "The steady version",
+     "tone": "success"
+    },
+    "versusLabel": "VS"
+   }
+  },
+  {
+   "key": "english/proficient/52|block 4",
+   "reasons": [
+    "false: \"If we win Friday's game, we would make the playoffs.\" → Use \"If we win Friday's game, we will make the playoffs.\" Alternatively, for a hypothetical version, use \"If we won Friday's game, we would make the playoffs.\"",
+    "false: \"correctChipId:\"conditional\" ... label:\"If we win Friday's game, we would make the playoffs.\"\" → The sentence should read \"If we win Friday's game, we will make the playoffs.\" to match the conditional definition, or be changed to past + would if intended as hypothetical."
+   ],
+   "before": {
+    "chips": [
+     {
+      "id": "active",
+      "note": "Subject performs the action: clear, direct, emphasizes the doer.",
+      "text": "Active voice"
+     },
+     {
+      "id": "passive",
+      "note": "Subject receives the action: doer pushed to the end or left out.",
+      "text": "Passive voice"
+     },
+     {
+      "id": "imperative",
+      "note": "Command form; the subject is an unstated 'you.'",
+      "text": "Imperative"
+     },
+     {
+      "id": "conditional",
+      "note": "Imagined if/then situation that could happen.",
+      "text": "Conditional"
+     },
+     {
+      "id": "subjunctive",
+      "note": "Wish or unreal situation; were instead of was.",
+      "text": "Subjunctive"
+     }
+    ],
+    "feedbackCorrect": "Perfect match. You can now identify all four moods and both voices on sight.",
+    "feedbackTryAgain": "Not quite. Check whether the subject performs or receives the action — and whether the situation is real, commanded, imagined, or wished for.",
+    "instructions": "Drag each label onto the sentence it describes. Watch for the verb form and for whether the subject acts or receives.",
+    "slots": [
+     {
+      "correctChipId": "active",
+      "hint": "Who is doing the verb?",
+      "id": "s1",
+      "label": "The marching band practiced until sunset."
+     },
+     {
+      "correctChipId": "passive",
+      "hint": "The real doer is not the subject.",
+      "id": "s2",
+      "label": "The gym was repainted over the summer."
+     },
+     {
+      "correctChipId": "imperative",
+      "hint": "Who is being told to do something?",
+      "id": "s3",
+      "label": "Read the passage twice before answering."
+     },
+     {
+      "correctChipId": "conditional",
+      "hint": "It could actually happen.",
+      "id": "s4",
+      "label": "If we win Friday's game, we would make the playoffs."
+     },
+     {
+      "correctChipId": "subjunctive",
+      "hint": "Is this situation real or imagined?",
+      "id": "s5",
+      "label": "I wish my alarm were quieter."
+     }
+    ],
+    "subtitle": "Five labels, five sentences, one skill: identifying voice and mood on sight.",
+    "title": "Label the Sentence"
+   },
+   "after": {
+    "chips": [
+     {
+      "id": "active",
+      "note": "Subject performs the action: clear, direct, emphasizes the doer.",
+      "text": "Active voice"
+     },
+     {
+      "id": "passive",
+      "note": "Subject receives the action: doer pushed to the end or left out.",
+      "text": "Passive voice"
+     },
+     {
+      "id": "imperative",
+      "note": "Command form; the subject is an unstated 'you.'",
+      "text": "Imperative"
+     },
+     {
+      "id": "conditional",
+      "note": "Imagined if/then situation that could happen.",
+      "text": "Conditional"
+     },
+     {
+      "id": "subjunctive",
+      "note": "Wish or unreal situation; were instead of was.",
+      "text": "Subjunctive"
+     }
+    ],
+    "feedbackCorrect": "Perfect match. You can now identify all four moods and both voices on sight.",
+    "feedbackTryAgain": "Not quite. Check whether the subject performs or receives the action — and whether the situation is real, commanded, imagined, or wished for.",
+    "instructions": "Drag each label onto the sentence it describes. Watch for the verb form and for whether the subject acts or receives.",
+    "slots": [
+     {
+      "correctChipId": "active",
+      "hint": "Who is doing the verb?",
+      "id": "s1",
+      "label": "The marching band practiced until sunset."
+     },
+     {
+      "correctChipId": "passive",
+      "hint": "The real doer is not the subject.",
+      "id": "s2",
+      "label": "The gym was repainted over the summer."
+     },
+     {
+      "correctChipId": "imperative",
+      "hint": "Who is being told to do something?",
+      "id": "s3",
+      "label": "Read the passage twice before answering."
+     },
+     {
+      "correctChipId": "conditional",
+      "hint": "It could actually happen.",
+      "id": "s4",
+      "label": "If we win Friday's game, we will make the playoffs."
+     },
+     {
+      "correctChipId": "subjunctive",
+      "hint": "Is this situation real or imagined?",
+      "id": "s5",
+      "label": "I wish my alarm were quieter."
+     }
+    ],
+    "subtitle": "Five labels, five sentences, one skill: identifying voice and mood on sight.",
+    "title": "Label the Sentence"
+   }
+  },
+  {
+   "key": "english/proficient/50|block 4",
+   "reasons": [
+    "false: \"Two runs-on and a splice in one sentence.\" → One fused run-on and one comma splice in one sentence."
+   ],
+   "before": {
+    "after": {
+     "artData": [
+      0.3,
+      0.5,
+      0.7,
+      0.9
+     ],
+     "artKind": "lines",
+     "body": "The storm arrived. When the lights went out, the players stopped, and everyone watched the sky.",
+     "caption": "Same story — four clean clauses.",
+     "label": "Revised",
+     "points": [
+      "Each clause stands alone or is properly joined",
+      "The subordinating word when shows how the events connect",
+      "Voice stays consistent: players stopped, everyone watched"
+     ],
+     "title": "Punctuated and connected",
+     "tone": "success"
+    },
+    "before": {
+     "artData": [
+      0.9,
+      0.6,
+      0.4,
+      0.2
+     ],
+     "artKind": "lines",
+     "body": "The storm arrived when the lights went out the players stopped, everyone watched the sky.",
+     "caption": "Two runs-on and a splice in one sentence.",
+     "label": "Before",
+     "points": [
+      "Fused clauses: no punctuation between some pairs",
+      "Comma splice: a comma doing a job it is too weak for",
+      "The reader cannot tell which events caused which"
+     ],
+     "title": "Everything jammed together",
+     "tone": "error"
+    },
+    "conceptSubtitle": "Three ways to fix the same tangle — and what each one does to the reader.",
+    "conceptTitle": "Fixing a run-on, three ways",
+    "dividerStart": 50,
+    "footerNote": "Punctuation is not just correctness — it decides which moment lands first.",
+    "prompt": "Sweep the divider to compare. Watch what each fix does to the flow and the emphasis."
+   },
+   "after": {
+    "after": {
+     "artData": [
+      0.3,
+      0.5,
+      0.7,
+      0.9
+     ],
+     "artKind": "lines",
+     "body": "The storm arrived. When the lights went out, the players stopped, and everyone watched the sky.",
+     "caption": "Same story — four clean clauses.",
+     "label": "Revised",
+     "points": [
+      "Each clause stands alone or is properly joined",
+      "The subordinating word when shows how the events connect",
+      "Voice stays consistent: players stopped, everyone watched"
+     ],
+     "title": "Punctuated and connected",
+     "tone": "success"
+    },
+    "before": {
+     "artData": [
+      0.9,
+      0.6,
+      0.4,
+      0.2
+     ],
+     "artKind": "lines",
+     "body": "The storm arrived when the lights went out the players stopped, everyone watched the sky.",
+     "caption": "One fused run-on and one comma splice in one sentence.",
+     "label": "Before",
+     "points": [
+      "Fused clauses: no punctuation between some pairs",
+      "Comma splice: a comma doing a job it is too weak for",
+      "The reader cannot tell which events caused which"
+     ],
+     "title": "Everything jammed together",
+     "tone": "error"
+    },
+    "conceptSubtitle": "Three ways to fix the same tangle — and what each one does to the reader.",
+    "conceptTitle": "Fixing a run-on, three ways",
+    "dividerStart": 50,
+    "footerNote": "Punctuation is not just correctness — it decides which moment lands first.",
+    "prompt": "Sweep the divider to compare. Watch what each fix does to the flow and the emphasis."
+   }
+  },
+  {
+   "key": "english/proficient/50|block 5",
+   "reasons": [
+    "false: \"\"Through the fog, under the floodlights, took the field.\" — no subject, no verb.\" → Keep the example but change the annotation to “no subject” and explain that it is a fragment because its subject is missing. Alternatively, replace it with an example that genuinely lacks both a subject and a verb."
+   ],
+   "before": {
+    "footnote": "A fragment is a choice only when it is shaped, placed, and pointed at a thought the reader already holds. Everything else should be complete and connected.",
+    "leftColumn": {
+     "heading": "What it is",
+     "items": [
+      {
+       "example": "\"After the anthem, through the fog, under the floodlights, the team finally took the field.\"",
+       "label": "Periodic",
+       "text": "Saves the main clause for the end to build suspense and land a punch."
+      },
+      {
+       "example": "\"The team finally took the field, after the anthem, through the fog, under the floodlights.\"",
+       "label": "Cumulative",
+       "text": "Starts with the main clause, then piles on phrases that add detail and richness."
+      },
+      {
+       "example": "\"Ask not what your country can do for you; ask what you can do for your country.\"",
+       "label": "Balanced / antithesis",
+       "text": "Uses two or more parallel parts of similar length and structure; antithesis sets contrasting ideas against each other."
+      },
+      {
+       "example": "\"Which changed everything.\"",
+       "label": "Deliberate fragment",
+       "text": "A short, intentional fragment placed next to complete sentences to point back at a thought the reader already holds."
+      }
+     ],
+     "tone": "accent"
+    },
+    "rightColumn": {
+     "heading": "What it is NOT",
+     "items": [
+      {
+       "example": "\"Through the fog, under the floodlights, took the field.\" — no subject, no verb.",
+       "label": "Not a suspense tool",
+       "text": "A periodic sentence is not a sentence with the verb missing — every clause still needs its subject and finite verb."
+      },
+      {
+       "example": "\"The team took the field, which was exciting, they cheered.\" — that is a comma splice, not richness.",
+       "label": "Not a run-on",
+       "text": "A cumulative sentence is not an excuse to string clauses together without punctuation."
+      },
+      {
+       "example": "\"She was fast. The ball was caught by her. He hit it. \" — no structure, no symmetry, no reason.",
+       "label": "Not random mixing",
+       "text": "Balance is not just writing two sentences of any length; the parts must be parallel in structure and matched in weight."
+      },
+      {
+       "example": "\"Running late for practice.\" dropped into a body paragraph — a mistake, not a move.",
+       "label": "Not an accident",
+       "text": "A stylistic fragment is not a fragment that just shows up. If it has no deliberate placement or context, fix it."
+      }
+     ],
+     "tone": "caution"
+    },
+    "subtitle": "Four tools for matching sentence shape to purpose and tone — and the mistakes they get confused with.",
+    "title": "Periodic vs. cumulative vs. balanced — and the deliberate fragment"
+   },
+   "after": {
+    "footnote": "A fragment is a choice only when it is shaped, placed, and pointed at a thought the reader already holds. Everything else should be complete and connected.",
+    "leftColumn": {
+     "heading": "What it is",
+     "items": [
+      {
+       "example": "\"After the anthem, through the fog, under the floodlights, the team finally took the field.\"",
+       "label": "Periodic",
+       "text": "Saves the main clause for the end to build suspense and land a punch."
+      },
+      {
+       "example": "\"The team finally took the field, after the anthem, through the fog, under the floodlights.\"",
+       "label": "Cumulative",
+       "text": "Starts with the main clause, then piles on phrases that add detail and richness."
+      },
+      {
+       "example": "\"Ask not what your country can do for you; ask what you can do for your country.\"",
+       "label": "Balanced / antithesis",
+       "text": "Uses two or more parallel parts of similar length and structure; antithesis sets contrasting ideas against each other."
+      },
+      {
+       "example": "\"Which changed everything.\"",
+       "label": "Deliberate fragment",
+       "text": "A short, intentional fragment placed next to complete sentences to point back at a thought the reader already holds."
+      }
+     ],
+     "tone": "accent"
+    },
+    "rightColumn": {
+     "heading": "What it is NOT",
+     "items": [
+      {
+       "example": "\"Through the fog, under the floodlights, took the field.\" — no subject.",
+       "label": "Not a suspense tool",
+       "text": "A periodic sentence is not a sentence with the subject missing — this is a fragment because its subject is gone. Every clause still needs its subject and finite verb."
+      },
+      {
+       "example": "\"The team took the field, which was exciting, they cheered.\" — that is a comma splice, not richness.",
+       "label": "Not a run-on",
+       "text": "A cumulative sentence is not an excuse to string clauses together without punctuation."
+      },
+      {
+       "example": "\"She was fast. The ball was caught by her. He hit it. \" — no structure, no symmetry, no reason.",
+       "label": "Not random mixing",
+       "text": "Balance is not just writing two sentences of any length; the parts must be parallel in structure and matched in weight."
+      },
+      {
+       "example": "\"Running late for practice.\" dropped into a body paragraph — a mistake, not a move.",
+       "label": "Not an accident",
+       "text": "A stylistic fragment is not a fragment that just shows up. If it has no deliberate placement or context, fix it."
+      }
+     ],
+     "tone": "caution"
+    },
+    "subtitle": "Four tools for matching sentence shape to purpose and tone — and the mistakes they get confused with.",
+    "title": "Periodic vs. cumulative vs. balanced — and the deliberate fragment"
+   }
+  },
+  {
+   "key": "english/proficient/70|block 4",
+   "reasons": [
+    "false: \"True — 'was' is the subjunctive form in this hypothetical.\" → True — 'were' is the subjunctive form in this hypothetical."
+   ],
+   "before": {
+    "columns": [
+     "True",
+     "False"
+    ],
+    "prompt": "Mark each statement True or False.",
+    "rows": [
+     {
+      "correctIndex": 0,
+      "feedback": "It's true: whatever follows a colon rides on a complete sentence before it.",
+      "id": "r1",
+      "statement": "A colon must follow a complete sentence."
+     },
+     {
+      "correctIndex": 0,
+      "feedback": "True — that's the standard semicolon-plus-transition pattern.",
+      "id": "r2",
+      "statement": "A transition word like 'however' commonly comes right after a semicolon."
+     },
+     {
+      "correctIndex": 0,
+      "feedback": "True — 'was' is the subjunctive form in this hypothetical.",
+      "id": "r3",
+      "statement": "'If I were you' is correct because the subjunctive uses 'were' for wishes and hypotheticals."
+     },
+     {
+      "correctIndex": 1,
+      "feedback": "False — passive voice is a deliberate author choice when the receiver of the action deserves the emphasis.",
+      "id": "r4",
+      "statement": "Passive voice is always a grammar error and should be rewritten."
+     },
+     {
+      "correctIndex": 0,
+      "feedback": "True — 'be' is the subjunctive demand form.",
+      "id": "r5",
+      "statement": "'The judge demanded that the report be finished by Friday' uses the subjunctive mood for a demand."
+     },
+     {
+      "correctIndex": 0,
+      "feedback": "True — the dash is the loudest way to set off a side remark.",
+      "id": "r6",
+      "statement": "A dash sets off extra information more loudly than parentheses."
+     }
+    ],
+    "submitLabel": "Check answers",
+    "reviewTitle": "Review your calls",
+    "successMessage": "Six for six — the fine distinctions are sticking."
+   },
+   "after": {
+    "columns": [
+     "True",
+     "False"
+    ],
+    "prompt": "Mark each statement True or False.",
+    "rows": [
+     {
+      "correctIndex": 0,
+      "feedback": "It's true: whatever follows a colon rides on a complete sentence before it.",
+      "id": "r1",
+      "statement": "A colon must follow a complete sentence."
+     },
+     {
+      "correctIndex": 0,
+      "feedback": "True — that's the standard semicolon-plus-transition pattern.",
+      "id": "r2",
+      "statement": "A transition word like 'however' commonly comes right after a semicolon."
+     },
+     {
+      "correctIndex": 0,
+      "feedback": "True — 'were' is the subjunctive form in this hypothetical.",
+      "id": "r3",
+      "statement": "'If I were you' is correct because the subjunctive uses 'were' for wishes and hypotheticals."
+     },
+     {
+      "correctIndex": 1,
+      "feedback": "False — passive voice is a deliberate author choice when the receiver of the action deserves the emphasis.",
+      "id": "r4",
+      "statement": "Passive voice is always a grammar error and should be rewritten."
+     },
+     {
+      "correctIndex": 0,
+      "feedback": "True — 'be' is the subjunctive demand form.",
+      "id": "r5",
+      "statement": "'The judge demanded that the report be finished by Friday' uses the subjunctive mood for a demand."
+     },
+     {
+      "correctIndex": 0,
+      "feedback": "True — the dash is the loudest way to set off a side remark.",
+      "id": "r6",
+      "statement": "A dash sets off extra information more loudly than parentheses."
+     }
+    ],
+    "submitLabel": "Check answers",
+    "reviewTitle": "Review your calls",
+    "successMessage": "Six for six — the fine distinctions are sticking."
+   }
+  },
+  {
+   "key": "english/proficient/71|block 4",
+   "reasons": [
+    "false: \"Caught it. The sentence before a colon must be complete; semicolons cannot introduce lists.\" → Caught it. In line 4, 'its' should be 'it's' ('it is'); 'its' without an apostrophe shows possession."
+   ],
+   "before": {
+    "artifactLabel": "Draft column - unedited",
+    "artifactType": "essay",
+    "brief": "Click the one line that contains a punctuation or word-choice error. Only one line is wrong.",
+    "completionMessage": "Caught it. The sentence before a colon must be complete; semicolons cannot introduce lists.",
+    "id": "audit",
+    "lines": [
+     {
+      "explanation": "This is a complete sentence: one subject (nobody), one verb (knew), no fault.",
+      "id": "l1",
+      "isError": false,
+      "label": "1",
+      "text": "Nobody knew what was waiting for them in the gym basement."
+     },
+     {
+      "explanation": "Two complete, closely related sentences joined by a semicolon: correct.",
+      "id": "l2",
+      "isError": false,
+      "label": "2",
+      "text": "The scoreboard was older than the building; it still worked anyway."
+     },
+     {
+      "explanation": "Correct: the semicolon plus comma after the transition word however.",
+      "id": "l3",
+      "isError": false,
+      "label": "3",
+      "text": "Coach Diaz seemed calm; however, her whistle told a different story."
+     },
+     {
+      "explanation": "Error: 'its' should be \"it's\" (it is) here. Its with no apostrophe shows possession.",
+      "id": "l4",
+      "isError": true,
+      "label": "4",
+      "text": "The crowd assumed the worst, and its usually right."
+     },
+     {
+      "explanation": "Correct: a complete sentence before the colon introduces the list.",
+      "id": "l5",
+      "isError": false,
+      "label": "5",
+      "text": "Only three things were in the locked cabinet: a trophy, a whistle, and a note."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show the error line",
+    "title": "Forensic Audit: One Line Is Wrong"
+   },
+   "after": {
+    "artifactLabel": "Draft column - unedited",
+    "artifactType": "essay",
+    "brief": "Click the one line that contains a punctuation or word-choice error. Only one line is wrong.",
+    "completionMessage": "Caught it. In line 4, 'its' should be 'it's' ('it is'); 'its' without an apostrophe shows possession.",
+    "id": "audit",
+    "lines": [
+     {
+      "explanation": "This is a complete sentence: one subject (nobody), one verb (knew), no fault.",
+      "id": "l1",
+      "isError": false,
+      "label": "1",
+      "text": "Nobody knew what was waiting for them in the gym basement."
+     },
+     {
+      "explanation": "Two complete, closely related sentences joined by a semicolon: correct.",
+      "id": "l2",
+      "isError": false,
+      "label": "2",
+      "text": "The scoreboard was older than the building; it still worked anyway."
+     },
+     {
+      "explanation": "Correct: the semicolon plus comma after the transition word however.",
+      "id": "l3",
+      "isError": false,
+      "label": "3",
+      "text": "Coach Diaz seemed calm; however, her whistle told a different story."
+     },
+     {
+      "explanation": "Error: 'its' should be \"it's\" (it is) here. Its with no apostrophe shows possession.",
+      "id": "l4",
+      "isError": true,
+      "label": "4",
+      "text": "The crowd assumed the worst, and its usually right."
+     },
+     {
+      "explanation": "Correct: a complete sentence before the colon introduces the list.",
+      "id": "l5",
+      "isError": false,
+      "label": "5",
+      "text": "Only three things were in the locked cabinet: a trophy, a whistle, and a note."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show the error line",
+    "title": "Forensic Audit: One Line Is Wrong"
+   }
+  },
+  {
+   "key": "english/proficient/49|block 2",
+   "reasons": [
+    "false: \"Clean again: back to active voice. But the damage is done in line 3.\" → Either acknowledge the additional passive construction or rewrite line 4 actively, for example: “Everyone cheered when the announcer read the name aloud.”",
+    "false: \"Clean again: back to active voice.\" → Line 4's main clause is active ('Everyone cheered'), but the subordinate clause is passive ('was read aloud'); the explanation should not claim the line is fully back to active voice."
+   ],
+   "before": {
+    "artifactLabel": "Announcement draft — club bulletin",
+    "artifactType": "essay",
+    "brief": "Read the announcement. Tap the exact line where an inappropriate shift in voice or mood occurs — no earlier, no later.",
+    "completionMessage": "Found it. Line 3 is where the voice flips from active to passive with no signal to the reader.",
+    "lines": [
+     {
+      "explanation": "Clean: active voice, indicative mood, and it sets the scene.",
+      "id": "l1",
+      "isError": false,
+      "label": "1",
+      "text": "The robotics club finished its season strong this year."
+     },
+     {
+      "explanation": "Clean: still active voice and indicative — the builder performed the action.",
+      "id": "l2",
+      "isError": false,
+      "label": "2",
+      "text": "Our team built a climbing robot that scored every run."
+     },
+     {
+      "explanation": "This is the shift: the previous lines were active (the team built), but here the subject receives the action (the award was given) with no marker or reason for the change.",
+      "id": "l3",
+      "isError": true,
+      "label": "3",
+      "text": "A plaque was awarded to the team at the assembly."
+     },
+     {
+      "explanation": "Clean again: back to active voice. But the damage is done in line 3.",
+      "id": "l4",
+      "isError": false,
+      "label": "4",
+      "text": "Everyone cheered when the name was read aloud."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show me the line",
+    "title": "Forensic Audit: Find the Shift"
+   },
+   "after": {
+    "artifactLabel": "Announcement draft — club bulletin",
+    "artifactType": "essay",
+    "brief": "Read the announcement. Tap the exact line where an inappropriate shift in voice or mood occurs — no earlier, no later.",
+    "completionMessage": "Found it. Line 3 is where the voice flips from active to passive with no signal to the reader.",
+    "lines": [
+     {
+      "explanation": "Clean: active voice, indicative mood, and it sets the scene.",
+      "id": "l1",
+      "isError": false,
+      "label": "1",
+      "text": "The robotics club finished its season strong this year."
+     },
+     {
+      "explanation": "Clean: still active voice and indicative — the builder performed the action.",
+      "id": "l2",
+      "isError": false,
+      "label": "2",
+      "text": "Our team built a climbing robot that scored every run."
+     },
+     {
+      "explanation": "This is the shift: the previous lines were active (the team built), but here the subject receives the action (the award was given) with no marker or reason for the change.",
+      "id": "l3",
+      "isError": true,
+      "label": "3",
+      "text": "A plaque was awarded to the team at the assembly."
+     },
+     {
+      "explanation": "Clean again: back to active voice. But the damage is done in line 3.",
+      "id": "l4",
+      "isError": false,
+      "label": "4",
+      "text": "Everyone cheered when the announcer read the name aloud."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show me the line",
+    "title": "Forensic Audit: Find the Shift"
+   }
+  },
+  {
+   "key": "english/proficient/82|block 3",
+   "reasons": [
+    "false: \"Chicago dropped its ban in 2014\" → Say that Chicago had rejected a blanket ban by 1993 and that most modern guides allow a split infinitive when it improves clarity or avoids awkwardness. Remove the unsupported 2014 turning point."
+   ],
+   "before": {
+    "beforeAfter": {
+     "after": "Editors slowly gave up. Chicago dropped its ban in 2014, and most guides now accept split infinitives when splitting sounds better. Usage had already changed — the rules followed.",
+     "before": "Style guides and teachers banned split infinitives for over a century. Careful writers contorted sentences to keep \"to\" and its verb together, often making them clunkier."
+    },
+    "crisis": "English grammar handbooks copied Latin patterns, and in Latin an infinitive is one word that cannot be split. So 19th-century editors declared that English infinitives must never be split either — a rule with no real basis in how English works.",
+    "era": "London and New York, 1800s–2014",
+    "ruleName": "The split infinitive rule",
+    "story": [
+     "The rule made famous by Star Trek's \"to boldly go\" — with \"boldly\" wedged inside the infinitive \"to go\" — had been attacked since the 1800s. Grammar writers insisted the adverb belonged before the whole phrase: \"boldly to go.\"",
+     "But no English speaker actually talked that way. Famous writers kept splitting infinitives on purpose because the split version often sounds stronger and clearer. The ban survived mostly on habit and snobbery."
+    ],
+    "takeaway": "When everyday usage and a rule collide for long enough, usage usually wins — style guides update, and yesterday's \"error\" becomes a choice.",
+    "title": "The rule that took 150 years to die",
+    "tags": [
+     "usage debates",
+     "split infinitive",
+     "singular they"
+    ]
+   },
+   "after": {
+    "beforeAfter": {
+     "after": "Editors slowly gave up. Chicago had rejected a blanket ban by 1993, and most modern guides now allow a split infinitive when it improves clarity or avoids awkwardness. Usage had already changed — the rules followed.",
+     "before": "Style guides and teachers banned split infinitives for over a century. Careful writers contorted sentences to keep \"to\" and its verb together, often making them clunkier."
+    },
+    "crisis": "English grammar handbooks copied Latin patterns, and in Latin an infinitive is one word that cannot be split. So 19th-century editors declared that English infinitives must never be split either — a rule with no real basis in how English works.",
+    "era": "London and New York, 1800s–1993",
+    "ruleName": "The split infinitive rule",
+    "story": [
+     "The rule made famous by Star Trek's \"to boldly go\" — with \"boldly\" wedged inside the infinitive \"to go\" — had been attacked since the 1800s. Grammar writers insisted the adverb belonged before the whole phrase: \"boldly to go.\"",
+     "But no English speaker actually talked that way. Famous writers kept splitting infinitives on purpose because the split version often sounds stronger and clearer. The ban survived mostly on habit and snobbery."
+    ],
+    "takeaway": "When everyday usage and a rule collide for long enough, usage usually wins — style guides update, and yesterday's \"error\" becomes a choice.",
+    "title": "The rule that took 150 years to die",
+    "tags": [
+     "usage debates",
+     "split infinitive",
+     "singular they"
+    ]
+   }
+  },
+  {
+   "key": "english/proficient/82|block 8",
+   "reasons": [
+    "false: \"Once banned, now accepted: Chicago dropped its ban in 2014, AP never enforced it strictly.\" → Once widely condemned, split infinitives are now accepted: Chicago had rejected a blanket ban by 1993, and AP allows splitting when needed to avoid awkwardness or ambiguity.",
+    "false: \"Chicago dropped its ban in 2014, AP never enforced it strictly.\" → Chicago has long allowed split infinitives; no 2014 policy change occurred.",
+    "false: \"Chicago dropped its ban in 2014\" → Chicago dropped its ban in 2017."
+   ],
+   "before": {
+    "rows": [
+     {
+      "detail": "It settles disputed usage for one group of writers; it does not rewrite grammar.",
+      "key": "Style guide",
+      "tone": "success",
+      "value": "A rulebook a publication or organization follows so its writing stays consistent."
+     },
+     {
+      "detail": "AP drops it; Chicago keeps it. Both are right within their own system.",
+      "key": "Oxford comma",
+      "tone": "accent",
+      "value": "The comma before \"and\" in a list — a style choice, not a required or forbidden mark."
+     },
+     {
+      "detail": "Once banned, now accepted: Chicago dropped its ban in 2014, AP never enforced it strictly.",
+      "key": "Split infinitive",
+      "tone": "accent",
+      "value": "Splitting \"to\" from its verb (\"to boldly go\") — widely accepted today."
+     },
+     {
+      "detail": "AP accepted it in 2017; Chicago permits it. Real usage drove the change.",
+      "key": "Singular they",
+      "tone": "accent",
+      "value": "Using \"they\" for one person of unknown or nonbinary gender — now accepted by major guides."
+     },
+     {
+      "detail": "Once a banned \"error\"; now widely accepted when it is sincere.",
+      "key": "Hopefully as a sentence adverb",
+      "tone": "accent",
+      "value": "\"Hopefully, it will snow\" — long attacked, now standard in most guides."
+     },
+     {
+      "detail": "Follow your assigned guide; if none is assigned, never mix them.",
+      "key": "How to apply a guide",
+      "tone": "default",
+      "value": "Check whether a guide has been assigned; if not, pick one (AP or Chicago) and apply it consistently."
+     },
+     {
+      "detail": "Effect = noun (the result). Affect = verb (to change). Ask: thing or action?",
+      "key": "Affect / effect",
+      "tone": "default",
+      "value": "Most often affect is the verb (to influence); effect is the noun (a result)."
+     },
+     {
+      "detail": "Fragments, run-ons, and broken agreement fail under every guide. Disputed commas and word choices do not.",
+      "key": "Error vs. style choice",
+      "tone": "caution",
+      "value": "Real grammar errors break rules no guide allows; style choices are spots where guides disagree."
+     }
+    ],
+    "subtitle": "Usage Debates and Style Guides — unit quick reference",
+    "title": "Disputed rules cheat sheet"
+   },
+   "after": {
+    "rows": [
+     {
+      "detail": "It settles disputed usage for one group of writers; it does not rewrite grammar.",
+      "key": "Style guide",
+      "tone": "success",
+      "value": "A rulebook a publication or organization follows so its writing stays consistent."
+     },
+     {
+      "detail": "AP drops it; Chicago keeps it. Both are right within their own system.",
+      "key": "Oxford comma",
+      "tone": "accent",
+      "value": "The comma before \"and\" in a list — a style choice, not a required or forbidden mark."
+     },
+     {
+      "detail": "Once widely condemned, split infinitives are now accepted: Chicago had rejected a blanket ban by 1993, and AP allows splitting when needed to avoid awkwardness or ambiguity.",
+      "key": "Split infinitive",
+      "tone": "accent",
+      "value": "Splitting \"to\" from its verb (\"to boldly go\") — widely accepted today."
+     },
+     {
+      "detail": "AP accepted it in 2017; Chicago permits it. Real usage drove the change.",
+      "key": "Singular they",
+      "tone": "accent",
+      "value": "Using \"they\" for one person of unknown or nonbinary gender — now accepted by major guides."
+     },
+     {
+      "detail": "Once a banned \"error\"; now widely accepted when it is sincere.",
+      "key": "Hopefully as a sentence adverb",
+      "tone": "accent",
+      "value": "\"Hopefully, it will snow\" — long attacked, now standard in most guides."
+     },
+     {
+      "detail": "Follow your assigned guide; if none is assigned, never mix them.",
+      "key": "How to apply a guide",
+      "tone": "default",
+      "value": "Check whether a guide has been assigned; if not, pick one (AP or Chicago) and apply it consistently."
+     },
+     {
+      "detail": "Effect = noun (the result). Affect = verb (to change). Ask: thing or action?",
+      "key": "Affect / effect",
+      "tone": "default",
+      "value": "Most often affect is the verb (to influence); effect is the noun (a result)."
+     },
+     {
+      "detail": "Fragments, run-ons, and broken agreement fail under every guide. Disputed commas and word choices do not.",
+      "key": "Error vs. style choice",
+      "tone": "caution",
+      "value": "Real grammar errors break rules no guide allows; style choices are spots where guides disagree."
+     }
+    ],
+    "subtitle": "Usage Debates and Style Guides — unit quick reference",
+    "title": "Disputed rules cheat sheet"
+   }
+  },
+  {
+   "key": "english/proficient/81|block 3",
+   "reasons": [
+    "false: \"Clean. Commas set off the mild appositive.\" → Clean. Commas set off the nonrestrictive relative clause \"who lives in Denver.\""
+   ],
+   "before": {
+    "artifactLabel": "Student paragraph — draft 2",
+    "artifactType": "essay",
+    "brief": "One line has the wrong pause punctuation — a mark doing the wrong job at that pause point. Click the line that needs fixing.",
+    "completionMessage": "Caught it. The ellipsis there makes it look like words were left out, but nothing was omitted — that pause is a dash's job: a sharp break before the punchline.",
+    "id": "audit1",
+    "lines": [
+     {
+      "explanation": "Clean. Commas set off the mild appositive.",
+      "id": "l1",
+      "label": "1",
+      "isError": false,
+      "text": "My cousin, who lives in Denver, visits every summer."
+     },
+     {
+      "explanation": "Clean. The intro phrase takes a comma after it.",
+      "id": "l2",
+      "label": "2",
+      "isError": false,
+      "text": "This year, though, he showed up with a surprise."
+     },
+     {
+      "explanation": "Clean. A dash gives the strong aside real emphasis.",
+      "id": "l3",
+      "label": "3",
+      "isError": false,
+      "text": "He handed us a shoebox — a real, live hedgehog inside."
+     },
+     {
+      "explanation": "Nothing was omitted here, so an ellipsis is the wrong job. This sharp break for emphasis calls for a dash: \"He said it was a gift—and then he sneezed.\"",
+      "id": "l4",
+      "label": "4",
+      "isError": true,
+      "text": "He said it was a gift... and then he sneezed."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show me the wrong line",
+    "title": "Find the Punctuation That's Doing the Wrong Job"
+   },
+   "after": {
+    "artifactLabel": "Student paragraph — draft 2",
+    "artifactType": "essay",
+    "brief": "One line has the wrong pause punctuation — a mark doing the wrong job at that pause point. Click the line that needs fixing.",
+    "completionMessage": "Caught it. The ellipsis there makes it look like words were left out, but nothing was omitted — that pause is a dash's job: a sharp break before the punchline.",
+    "id": "audit1",
+    "lines": [
+     {
+      "explanation": "Clean. Commas set off the nonrestrictive relative clause \"who lives in Denver.\"",
+      "id": "l1",
+      "label": "1",
+      "isError": false,
+      "text": "My cousin, who lives in Denver, visits every summer."
+     },
+     {
+      "explanation": "Clean. The intro phrase takes a comma after it.",
+      "id": "l2",
+      "label": "2",
+      "isError": false,
+      "text": "This year, though, he showed up with a surprise."
+     },
+     {
+      "explanation": "Clean. A dash gives the strong aside real emphasis.",
+      "id": "l3",
+      "label": "3",
+      "isError": false,
+      "text": "He handed us a shoebox — a real, live hedgehog inside."
+     },
+     {
+      "explanation": "Nothing was omitted here, so an ellipsis is the wrong job. This sharp break for emphasis calls for a dash: \"He said it was a gift—and then he sneezed.\"",
+      "id": "l4",
+      "label": "4",
+      "isError": true,
+      "text": "He said it was a gift... and then he sneezed."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show me the wrong line",
+    "title": "Find the Punctuation That's Doing the Wrong Job"
+   }
+  },
+  {
+   "key": "english/proficient/81|block 4",
+   "reasons": [
+    "false: \"Missing a subject or verb — e.g., Because it was raining.\" → A dependent clause or incomplete thought presented as a sentence — e.g., \"Because it was raining.\" Fix this example by attaching it to an independent clause, as in \"We stayed inside because it was raining,\" or by removing \"because.\""
+   ],
+   "before": {
+    "cells": [
+     {
+      "answer": "A mild pause — series items, after an intro phrase, around a mild appositive",
+      "colId": "rule",
+      "feedback": "Commas are the everyday, gentle pause.",
+      "placeholder": "What kind of pause does it mark?",
+      "rowId": "comma",
+      "acceptedAnswers": [
+       "mild pause",
+       "a mild pause"
+      ]
+     },
+     {
+      "answer": "A sharp break — interruption, emphasis, or a strong aside",
+      "colId": "rule",
+      "feedback": "The dash is the loudest pause mark.",
+      "placeholder": "What kind of pause does it mark?",
+      "rowId": "dash",
+      "acceptedAnswers": [
+       "sharp break",
+       "a sharp break"
+      ]
+     },
+     {
+      "answer": "Missing a subject or verb — e.g., Because it was raining.",
+      "colId": "error",
+      "feedback": "Attach it to a full sentence or give it a subject and verb.",
+      "placeholder": "What's wrong, and one example?",
+      "rowId": "comma",
+      "sourceUnit": "Fragments and run-ons",
+      "acceptedAnswers": [
+       "fragment",
+       "missing a subject or verb",
+       "incomplete sentence"
+      ]
+     },
+     {
+      "answer": "Two or more sentences fused without correct punctuation — e.g., I ran home I was late.",
+      "colId": "error",
+      "feedback": "Fix with a period, semicolon, or comma plus conjunction.",
+      "placeholder": "What's wrong, and one example?",
+      "rowId": "dash",
+      "sourceUnit": "Fragments and run-ons",
+      "acceptedAnswers": [
+       "run-on",
+       "fused sentence",
+       "two sentences joined without punctuation"
+      ]
+     },
+     {
+      "answer": "It's / its — one shows possession, the other means it is",
+      "colId": "word",
+      "feedback": "Its = possessive; it's = it is.",
+      "placeholder": "Name one pair and the difference",
+      "rowId": "comma",
+      "sourceUnit": "Commonly confused words",
+      "acceptedAnswers": [
+       "its it's",
+       "its/it's",
+       "its / it's"
+      ]
+     },
+     {
+      "answer": "Then / than — then is time or sequence, than makes comparisons",
+      "colId": "word",
+      "feedback": "Then = time; than = comparison.",
+      "placeholder": "Name one pair and the difference",
+      "rowId": "dash",
+      "sourceUnit": "Commonly confused words",
+      "acceptedAnswers": [
+       "than then",
+       "than/then",
+       "than / then"
+      ]
+     }
+    ],
+    "columns": [
+     {
+      "id": "rule",
+      "label": "The rule"
+     },
+     {
+      "id": "error",
+      "label": "Common error to avoid"
+     },
+     {
+      "id": "word",
+      "label": "Word trap it relates to"
+     }
+    ],
+    "completionMessage": "Grid complete — you just pulled three units of English from memory. That's spaced recall doing its job.",
+    "matrixSubtitle": "Mixing today's pause marks with Fragments and Run-ons and Commonly Confused Words",
+    "matrixTitle": "Mixed Recall Grid",
+    "rows": [
+     {
+      "id": "comma",
+      "label": "Comma (,)",
+      "sourceUnit": "Pauses and Omissions"
+     },
+     {
+      "id": "dash",
+      "label": "Dash (—)",
+      "sourceUnit": "Pauses and Omissions"
+     }
+    ]
+   },
+   "after": {
+    "cells": [
+     {
+      "answer": "A mild pause — series items, after an intro phrase, around a mild appositive",
+      "colId": "rule",
+      "feedback": "Commas are the everyday, gentle pause.",
+      "placeholder": "What kind of pause does it mark?",
+      "rowId": "comma",
+      "acceptedAnswers": [
+       "mild pause",
+       "a mild pause"
+      ]
+     },
+     {
+      "answer": "A sharp break — interruption, emphasis, or a strong aside",
+      "colId": "rule",
+      "feedback": "The dash is the loudest pause mark.",
+      "placeholder": "What kind of pause does it mark?",
+      "rowId": "dash",
+      "acceptedAnswers": [
+       "sharp break",
+       "a sharp break"
+      ]
+     },
+     {
+      "answer": "A dependent clause or incomplete thought presented as a sentence — e.g., \"Because it was raining.\" Fix it by attaching it to an independent clause, as in \"We stayed inside because it was raining,\" or by removing \"because.\"",
+      "colId": "error",
+      "feedback": "Attach it to a full sentence or give it a subject and verb.",
+      "placeholder": "What's wrong, and one example?",
+      "rowId": "comma",
+      "sourceUnit": "Fragments and run-ons",
+      "acceptedAnswers": [
+       "fragment",
+       "missing a subject or verb",
+       "incomplete sentence"
+      ]
+     },
+     {
+      "answer": "Two or more sentences fused without correct punctuation — e.g., I ran home I was late.",
+      "colId": "error",
+      "feedback": "Fix with a period, semicolon, or comma plus conjunction.",
+      "placeholder": "What's wrong, and one example?",
+      "rowId": "dash",
+      "sourceUnit": "Fragments and run-ons",
+      "acceptedAnswers": [
+       "run-on",
+       "fused sentence",
+       "two sentences joined without punctuation"
+      ]
+     },
+     {
+      "answer": "It's / its — one shows possession, the other means it is",
+      "colId": "word",
+      "feedback": "Its = possessive; it's = it is.",
+      "placeholder": "Name one pair and the difference",
+      "rowId": "comma",
+      "sourceUnit": "Commonly confused words",
+      "acceptedAnswers": [
+       "its it's",
+       "its/it's",
+       "its / it's"
+      ]
+     },
+     {
+      "answer": "Then / than — then is time or sequence, than makes comparisons",
+      "colId": "word",
+      "feedback": "Then = time; than = comparison.",
+      "placeholder": "Name one pair and the difference",
+      "rowId": "dash",
+      "sourceUnit": "Commonly confused words",
+      "acceptedAnswers": [
+       "than then",
+       "than/then",
+       "than / then"
+      ]
+     }
+    ],
+    "columns": [
+     {
+      "id": "rule",
+      "label": "The rule"
+     },
+     {
+      "id": "error",
+      "label": "Common error to avoid"
+     },
+     {
+      "id": "word",
+      "label": "Word trap it relates to"
+     }
+    ],
+    "completionMessage": "Grid complete — you just pulled three units of English from memory. That's spaced recall doing its job.",
+    "matrixSubtitle": "Mixing today's pause marks with Fragments and Run-ons and Commonly Confused Words",
+    "matrixTitle": "Mixed Recall Grid",
+    "rows": [
+     {
+      "id": "comma",
+      "label": "Comma (,)",
+      "sourceUnit": "Pauses and Omissions"
+     },
+     {
+      "id": "dash",
+      "label": "Dash (—)",
+      "sourceUnit": "Pauses and Omissions"
+     }
+    ]
+   }
+  },
+  {
+   "key": "english/proficient/72|block 6",
+   "reasons": [
+    "false: \"The dash is fine when you want a sharp aside, but here the plain period is the cleanest end mark — and the dash version still needs a period for the fragment.\" → Acknowledge that option 3 is also correct, or revise the question to ask which option exactly reproduces the supplied two-sentence version. Alternatively, change option 3 so that it contains a genuine punctuation error."
+   ],
+   "before": {
+    "choices": [
+     "Honestly, it was the best trip we ever took...",
+     "Honestly, it was the best trip we ever took - no arguments.",
+     "Honestly, it was the best trip we ever took. No arguments.",
+     "Honestly, it was the best trip we ever took — no arguments."
+    ],
+    "commonErrorLabel": "Ellipsis standing in for a period",
+    "context": "A complete sentence is followed by a short, punchy fragment: \"Honestly, it was the best trip we ever took. No arguments.\"",
+    "correctIndex": 2,
+    "correctReasoning": "The first sentence is complete, so it ends with a period. \"No arguments.\" is a deliberate fragment with clean end punctuation. The dash version is a close second, but the plain period keeps the punch without a mid-sentence break, and only option 2 marks both sentence ends correctly.",
+    "difficulty": "Trap",
+    "question": "Which version punctuates this correctly?",
+    "recoveryTip": "Ask: is this a finished sentence? If yes, it needs a period or question mark — dots with three... cannot do that job.",
+    "trapChoiceIndexes": [
+     0
+    ],
+    "trapReasons": {
+     "0": "The ellipsis makes it look dramatic, but \"took\" is not missing words — the sentence is complete, so it needs a real period.",
+     "1": "The short hyphen (-) joins words; it cannot make a sharp break the way a dash (—) can.",
+     "3": "The dash is fine when you want a sharp aside, but here the plain period is the cleanest end mark — and the dash version still needs a period for the fragment."
+    },
+    "whyIntuitionFailed": "The ellipsis feels dramatic and 'modern,' so writers grab it when they want a beat of emphasis. But a complete sentence that is not fading out or missing words must end with a period or question mark. The dots are not doing a real job here — the sentence is finished."
+   },
+   "after": {
+    "choices": [
+     "Honestly, it was the best trip we ever took...",
+     "Honestly, it was the best trip we ever took - no arguments.",
+     "Honestly, it was the best trip we ever took. No arguments.",
+     "Honestly, it was the best trip we ever took — no arguments"
+    ],
+    "commonErrorLabel": "Ellipsis standing in for a period",
+    "context": "A complete sentence is followed by a short, punchy fragment: \"Honestly, it was the best trip we ever took. No arguments.\"",
+    "correctIndex": 2,
+    "correctReasoning": "The first sentence is complete, so it ends with a period. \"No arguments.\" is a deliberate fragment with clean end punctuation. The dash in option 3 would be a legitimate way to set off the aside, but that version drops the end mark after \"arguments,\" leaving the fragment hanging — only option 2 marks both sentence ends correctly.",
+    "difficulty": "Trap",
+    "question": "Which version punctuates this correctly?",
+    "recoveryTip": "Ask: is this a finished sentence? If yes, it needs a period or question mark — dots with three... cannot do that job.",
+    "trapChoiceIndexes": [
+     0
+    ],
+    "trapReasons": {
+     "0": "The ellipsis makes it look dramatic, but \"took\" is not missing words — the sentence is complete, so it needs a real period.",
+     "1": "The short hyphen (-) joins words; it cannot make a sharp break the way a dash (—) can.",
+     "3": "The dash itself is a fair way to set off a sharp aside, but this version drops the end mark — the fragment \"no arguments\" still needs its period, so the line is left hanging."
+    },
+    "whyIntuitionFailed": "The ellipsis feels dramatic and 'modern,' so writers grab it when they want a beat of emphasis. But a complete sentence that is not fading out or missing words must end with a period or question mark. The dots are not doing a real job here — the sentence is finished."
+   }
+  },
+  {
+   "key": "english/proficient/95|block 2",
+   "reasons": [
+    "false: \"Got appears three times — it could mean bought, received, found, or reached.\" → Got appears twice in the vague draft. In \"got some stuff,\" it could mean bought, received, or found; in \"got a lot done,\" it means accomplished or completed."
+   ],
+   "before": {
+    "conceptTitle": "Vague Draft vs. Precise Rewrite",
+    "conceptSubtitle": "Same event, same length — only the word choices changed.",
+    "prompt": "Slide the divider to compare. Look for the vague words: got, stuff, did things.",
+    "before": {
+     "label": "Before",
+     "title": "The Vague Draft",
+     "body": "Yesterday I got some stuff at the store and then I did things at home, and it was good because I got a lot done before I went to bed.",
+     "points": [
+      "Got appears three times — it could mean bought, received, found, or reached.",
+      "Stuff and things name nothing you can picture.",
+      "Good tells us a feeling, not a fact.",
+      "The reader finishes the paragraph knowing almost nothing."
+     ],
+     "tone": "error",
+     "artKind": "lines",
+     "artData": [
+      0.2,
+      0.35,
+      0.15,
+      0.5,
+      0.3,
+      0.25
+     ],
+     "caption": "Vague words make the reader guess."
+    },
+    "after": {
+     "label": "After",
+     "title": "The Precise Rewrite",
+     "body": "Yesterday I bought sketch pencils at the art store, then finished my history outline at the kitchen table, and I got to bed early feeling accomplished.",
+     "points": [
+      "Bought says exactly how the items were obtained.",
+      "Sketch pencils and history outline give the reader a picture.",
+      "Accomplished names the feeling with evidence behind it.",
+      "Notice: the rewrite is not longer than the draft."
+     ],
+     "tone": "success",
+     "artKind": "lines",
+     "artData": [
+      0.5,
+      0.65,
+      0.8,
+      0.75,
+      0.9,
+      0.95
+     ],
+     "caption": "Exact words sharpen meaning without adding bulk."
+    },
+    "dividerStart": 50,
+    "footerNote": "Precision beats vagueness. You rarely need more words — you need better ones."
+   },
+   "after": {
+    "conceptTitle": "Vague Draft vs. Precise Rewrite",
+    "conceptSubtitle": "Same event, same length — only the word choices changed.",
+    "prompt": "Slide the divider to compare. Look for the vague words: got, stuff, did things.",
+    "before": {
+     "label": "Before",
+     "title": "The Vague Draft",
+     "body": "Yesterday I got some stuff at the store and then I did things at home, and it was good because I got a lot done before I went to bed.",
+     "points": [
+      "Got appears twice in the vague draft. In \"got some stuff,\" it could mean bought, received, or found; in \"got a lot done,\" it means accomplished or completed.",
+      "Stuff and things name nothing you can picture.",
+      "Good tells us a feeling, not a fact.",
+      "The reader finishes the paragraph knowing almost nothing."
+     ],
+     "tone": "error",
+     "artKind": "lines",
+     "artData": [
+      0.2,
+      0.35,
+      0.15,
+      0.5,
+      0.3,
+      0.25
+     ],
+     "caption": "Vague words make the reader guess."
+    },
+    "after": {
+     "label": "After",
+     "title": "The Precise Rewrite",
+     "body": "Yesterday I bought sketch pencils at the art store, then finished my history outline at the kitchen table, and I got to bed early feeling accomplished.",
+     "points": [
+      "Bought says exactly how the items were obtained.",
+      "Sketch pencils and history outline give the reader a picture.",
+      "Accomplished names the feeling with evidence behind it.",
+      "Notice: the rewrite is not longer than the draft."
+     ],
+     "tone": "success",
+     "artKind": "lines",
+     "artData": [
+      0.5,
+      0.65,
+      0.8,
+      0.75,
+      0.9,
+      0.95
+     ],
+     "caption": "Exact words sharpen meaning without adding bulk."
+    },
+    "dividerStart": 50,
+    "footerNote": "Precision beats vagueness. You rarely need more words — you need better ones."
+   }
+  },
+  {
+   "key": "english/proficient/95|block 7",
+   "reasons": [
+    "false: \"When our fewer players showed up than we expected\" → Use either \"When fewer players showed up than we expected\" or \"When fewer of our players showed up than we expected.\""
+   ],
+   "before": {
+    "title": "Edit the Paragraph",
+    "instructions": "Choose the word that fits the meaning, the confused-word rule, and the audience in each blank.",
+    "passageId": "diction-edit-1",
+    "segments": [
+     {
+      "kind": "text",
+      "text": "Dear Coach Ramirez, I want to tell you how last night's game "
+     },
+     {
+      "kind": "blank",
+      "id": "b1",
+      "options": [
+       "affected",
+       "effected"
+      ],
+      "correctIndex": 0,
+      "placeholder": "— choose —"
+     },
+     {
+      "kind": "text",
+      "text": " me. When our "
+     },
+     {
+      "kind": "blank",
+      "id": "b2",
+      "options": [
+       "fewer",
+       "less"
+      ],
+      "correctIndex": 0,
+      "placeholder": "— choose —"
+     },
+     {
+      "kind": "text",
+      "text": " players showed up than we expected, we had to improvise. The scoreboard showed "
+     },
+     {
+      "kind": "blank",
+      "id": "b3",
+      "options": [
+       "less",
+       "fewer"
+      ],
+      "correctIndex": 1,
+      "placeholder": "— choose —"
+     },
+     {
+      "kind": "text",
+      "text": " points on our side, but I learned that a team can overcome its disadvantages if everyone "
+     },
+     {
+      "kind": "blank",
+      "id": "b4",
+      "options": [
+       "collaborates",
+       "pitches a vibe"
+      ],
+      "correctIndex": 0,
+      "placeholder": "— choose —"
+     },
+     {
+      "kind": "text",
+      "text": ". Thank you for a season that was truly "
+     },
+     {
+      "kind": "blank",
+      "id": "b5",
+      "options": [
+       "really cool",
+       "valuable"
+      ],
+      "correctIndex": 1,
+      "placeholder": "— choose —"
+     },
+     {
+      "kind": "text",
+      "text": ". Sincerely, Devon"
+     }
+    ],
+    "feedback": {
+     "correct": "Every word fits its meaning, rule, and audience — that is editing for precision.",
+     "incorrect": "Check each blank: one rule is fewer vs. less (countable things use fewer), one is affect vs. effect, and the rest are tone and precision choices for a formal letter."
+    },
+    "perBlankFeedback": {
+     "b1": "Affect is the verb meaning to influence; effect is usually the noun meaning a result.",
+     "b2": "Players are countable, so the rule is fewer players.",
+     "b3": "Points are countable, so the rule is fewer points.",
+     "b4": "Collaborates is exact and fits the formal register of a letter to a coach.",
+     "b5": "Valuable is precise and formal; really cool is vague and too casual."
+    }
+   },
+   "after": {
+    "title": "Edit the Paragraph",
+    "instructions": "Choose the word that fits the meaning, the confused-word rule, and the audience in each blank.",
+    "passageId": "diction-edit-1",
+    "segments": [
+     {
+      "kind": "text",
+      "text": "Dear Coach Ramirez, I want to tell you how last night's game "
+     },
+     {
+      "kind": "blank",
+      "id": "b1",
+      "options": [
+       "affected",
+       "effected"
+      ],
+      "correctIndex": 0,
+      "placeholder": "— choose —"
+     },
+     {
+      "kind": "text",
+      "text": " me. When "
+     },
+     {
+      "kind": "blank",
+      "id": "b2",
+      "options": [
+       "fewer",
+       "less"
+      ],
+      "correctIndex": 0,
+      "placeholder": "— choose —"
+     },
+     {
+      "kind": "text",
+      "text": " of our players showed up than we expected, we had to improvise. The scoreboard showed "
+     },
+     {
+      "kind": "blank",
+      "id": "b3",
+      "options": [
+       "less",
+       "fewer"
+      ],
+      "correctIndex": 1,
+      "placeholder": "— choose —"
+     },
+     {
+      "kind": "text",
+      "text": " points on our side, but I learned that a team can overcome its disadvantages if everyone "
+     },
+     {
+      "kind": "blank",
+      "id": "b4",
+      "options": [
+       "collaborates",
+       "pitches a vibe"
+      ],
+      "correctIndex": 0,
+      "placeholder": "— choose —"
+     },
+     {
+      "kind": "text",
+      "text": ". Thank you for a season that was truly "
+     },
+     {
+      "kind": "blank",
+      "id": "b5",
+      "options": [
+       "really cool",
+       "valuable"
+      ],
+      "correctIndex": 1,
+      "placeholder": "— choose —"
+     },
+     {
+      "kind": "text",
+      "text": ". Sincerely, Devon"
+     }
+    ],
+    "feedback": {
+     "correct": "Every word fits its meaning, rule, and audience — that is editing for precision.",
+     "incorrect": "Check each blank: one rule is fewer vs. less (countable things use fewer), one is affect vs. effect, and the rest are tone and precision choices for a formal letter."
+    },
+    "perBlankFeedback": {
+     "b1": "Affect is the verb meaning to influence; effect is usually the noun meaning a result.",
+     "b2": "Players are countable, so the rule is fewer players.",
+     "b3": "Points are countable, so the rule is fewer points.",
+     "b4": "Collaborates is exact and fits the formal register of a letter to a coach.",
+     "b5": "Valuable is precise and formal; really cool is vague and too casual."
+    }
+   }
+  },
+  {
+   "key": "english/proficient/95|block 9",
+   "reasons": [
+    "false: \"There are four.\" → Either mark \"stuff\" as an additional error (and \"bunch\" too, if targeting the informal phrase \"a bunch of\") and update the count and maxErrors, or replace that phrase so the paragraph contains exactly the four intended targets."
+   ],
+   "before": {
+    "title": "Find the Weak Words",
+    "instructions": "Tap every word that is too vague or wrongly toned for this formal book-report sentence. There are four.",
+    "paragraph": "The book was really good and the main character got really upset about a bunch of stuff that happened at her new school.",
+    "maxErrors": 4,
+    "tokens": [
+     {
+      "text": "The",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "book",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "was",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "really",
+      "isError": true,
+      "explanation": "Really is an empty intensifier — it adds no meaning in formal writing.",
+      "errorId": "e1"
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "good",
+      "isError": true,
+      "explanation": "Good is a vague catch-all: good how? Funny? Suspenseful? Name the quality.",
+      "errorId": "e2"
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "and",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "the",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "main",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "character",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "got",
+      "isError": true,
+      "explanation": "Got is imprecise — became upset or grew furious says exactly what happened.",
+      "errorId": "e3"
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "really",
+      "isError": true,
+      "explanation": "This second really is another empty intensifier.",
+      "errorId": "e4"
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "upset",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "about",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "a",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "bunch",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "of",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "stuff",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "that",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "happened",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "at",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "her",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "new",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "school",
+      "isError": false
+     },
+     {
+      "text": ".",
+      "isError": false
+     }
+    ],
+    "revealLabel": "Reveal errors",
+    "successMessage": "All four found. A precise rewrite: The novel was suspenseful, and the main character became furious about the bullying she faced at her new school.",
+    "incompleteMessage": "Some weak words are still hiding. Look for intensifiers, catch-alls like good, and vague verbs like got."
+   },
+   "after": {
+    "title": "Find the Weak Words",
+    "instructions": "Tap every word that is too vague or wrongly toned for this formal book-report sentence. There are four.",
+    "paragraph": "The book was really good and the main character got really upset about all of the changes at her new school.",
+    "maxErrors": 4,
+    "tokens": [
+     {
+      "text": "The",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "book",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "was",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "really",
+      "isError": true,
+      "explanation": "Really is an empty intensifier — it adds no meaning in formal writing.",
+      "errorId": "e1"
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "good",
+      "isError": true,
+      "explanation": "Good is a vague catch-all: good how? Funny? Suspenseful? Name the quality.",
+      "errorId": "e2"
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "and",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "the",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "main",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "character",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "got",
+      "isError": true,
+      "explanation": "Got is imprecise — became upset or grew furious says exactly what happened.",
+      "errorId": "e3"
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "really",
+      "isError": true,
+      "explanation": "This second really is another empty intensifier.",
+      "errorId": "e4"
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "upset",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "about",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "all",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "of",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "the",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "changes",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "that",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "happened",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "at",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "her",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "new",
+      "isError": false
+     },
+     {
+      "text": " ",
+      "isError": false
+     },
+     {
+      "text": "school",
+      "isError": false
+     },
+     {
+      "text": ".",
+      "isError": false
+     }
+    ],
+    "revealLabel": "Reveal errors",
+    "successMessage": "All four found. A precise rewrite: The novel was suspenseful, and the main character became furious about the changes she faced at her new school.",
+    "incompleteMessage": "Some weak words are still hiding. Look for intensifiers, catch-alls like good, and vague verbs like got."
+   }
+  },
+  {
+   "key": "english/proficient/91|block 4",
+   "reasons": [
+    "false: \"'Honestly' at the front is just an informal opener, not a mistake.\" → Remove this sentence from line 5’s feedback, or move it to line 3. Line 5’s feedback should discuss that line itself, for example that it is correctly constructed and that “in their own words” is appropriately set off with commas."
+   ],
+   "before": {
+    "artifactLabel": "Magazine draft — paragraph 1",
+    "artifactType": "essay",
+    "brief": "One sentence in this draft misuses a commonly confused word pair. Every other oddity is just a style-guide choice, not an error. Click the sentence that contains the genuine error.",
+    "completionMessage": "Caught it. 'effected' should be 'affected' — that is a real word-choice error, not a style-guide choice.",
+    "id": "audit1",
+    "lines": [
+     {
+      "explanation": "Clean. AP style spells out numbers under 10, so 'Eight' is correct here. Singular they is also accepted by major style guides, even though some older handbooks called it an error.",
+      "id": "l1",
+      "isError": false,
+      "label": "1",
+      "text": "Eight students signed up for the overnight trip, and one of them changed their mind at the last minute."
+     },
+     {
+      "explanation": "This is the genuine error: 'effected' should be 'affected'. Affect is the verb meaning to influence; effect is usually the noun meaning a result.",
+      "id": "l2",
+      "isError": true,
+      "label": "2",
+      "text": "The weather effected the whole schedule, forcing everyone inside by noon."
+     },
+     {
+      "explanation": "Clean. A dash setting off an abrupt break is standard punctuation, though some guides would prefer parentheses here.",
+      "id": "l3",
+      "isError": false,
+      "label": "3",
+      "text": "Honestly, the trip organizers had desperately wanted the schedule to hold, but the storm — which no one had predicted — changed everything."
+     },
+     {
+      "explanation": "Clean. This is a style-guide choice, not an error. Chicago would keep the Oxford comma; AP would drop it. Either is defensible.",
+      "id": "l4",
+      "isError": false,
+      "label": "4",
+      "text": "The students played cards, ate dinner, and finally went to sleep around midnight."
+     },
+     {
+      "explanation": "Clean. A run-on would smash two full sentences together; this one is correctly built. 'Honestly' at the front is just an informal opener, not a mistake.",
+      "id": "l5",
+      "isError": false,
+      "label": "5",
+      "text": "In the morning, everyone agreed that the trip had been, in their own words, an unforgettable success."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show me the line",
+    "title": "Forensic Audit: Real Error or Style Choice?"
+   },
+   "after": {
+    "artifactLabel": "Magazine draft — paragraph 1",
+    "artifactType": "essay",
+    "brief": "One sentence in this draft misuses a commonly confused word pair. Every other oddity is just a style-guide choice, not an error. Click the sentence that contains the genuine error.",
+    "completionMessage": "Caught it. 'effected' should be 'affected' — that is a real word-choice error, not a style-guide choice.",
+    "id": "audit1",
+    "lines": [
+     {
+      "explanation": "Clean. AP style spells out numbers under 10, so 'Eight' is correct here. Singular they is also accepted by major style guides, even though some older handbooks called it an error.",
+      "id": "l1",
+      "isError": false,
+      "label": "1",
+      "text": "Eight students signed up for the overnight trip, and one of them changed their mind at the last minute."
+     },
+     {
+      "explanation": "This is the genuine error: 'effected' should be 'affected'. Affect is the verb meaning to influence; effect is usually the noun meaning a result.",
+      "id": "l2",
+      "isError": true,
+      "label": "2",
+      "text": "The weather effected the whole schedule, forcing everyone inside by noon."
+     },
+     {
+      "explanation": "Clean. A dash setting off an abrupt break is standard punctuation, though some guides would prefer parentheses here. 'Honestly' at the front is just an informal opener, not a mistake.",
+      "id": "l3",
+      "isError": false,
+      "label": "3",
+      "text": "Honestly, the trip organizers had desperately wanted the schedule to hold, but the storm — which no one had predicted — changed everything."
+     },
+     {
+      "explanation": "Clean. This is a style-guide choice, not an error. Chicago would keep the Oxford comma; AP would drop it. Either is defensible.",
+      "id": "l4",
+      "isError": false,
+      "label": "4",
+      "text": "The students played cards, ate dinner, and finally went to sleep around midnight."
+     },
+     {
+      "explanation": "Clean. This sentence is correctly constructed, and the phrase 'in their own words' is appropriately set off with commas.",
+      "id": "l5",
+      "isError": false,
+      "label": "5",
+      "text": "In the morning, everyone agreed that the trip had been, in their own words, an unforgettable success."
+     }
+    ],
+    "maxMisses": 2,
+    "revealLabel": "Show me the line",
+    "title": "Forensic Audit: Real Error or Style Choice?"
+   }
+  },
+  {
+   "key": "spanish/advanced/108|block 5",
+   "reasons": [
+    "false: \"Both muy and mucho translate as \"very much\" or \"a lot\", so they get swapped.\" → Muy means \"very\" and is used before adjectives. Mucho means \"much\" or \"a lot\" and can also translate as \"very much\" in contexts such as Me gusta mucho. Learners may confuse the two words, but they do not both mean \"very much\" or \"a lot.\""
+   ],
+   "before": {
+    "question": "How do you say \"The house is very big\"?",
+    "choices": [
+     "La casa es mucho grande.",
+     "La casa es muy grandes.",
+     "La casa es grande muy.",
+     "La casa es muy grande."
+    ],
+    "correctIndex": 3,
+    "commonErrorLabel": "Mucho for \"very\"",
+    "trapChoiceIndexes": [
+     0
+    ],
+    "trapReasons": {
+     "0": "Mucho means a lot, which feels like very."
+    },
+    "whyIntuitionFailed": "Both muy and mucho translate as \"very much\" or \"a lot\", so they get swapped.",
+    "correctReasoning": "Before an adjective, use muy, which never changes: muy grande. Mucho goes with nouns: muchas casas.",
+    "recoveryTip": "Muy + adjective. Mucho + noun.",
+    "difficulty": "Trap"
+   },
+   "after": {
+    "question": "How do you say \"The house is very big\"?",
+    "choices": [
+     "La casa es mucho grande.",
+     "La casa es muy grandes.",
+     "La casa es grande muy.",
+     "La casa es muy grande."
+    ],
+    "correctIndex": 3,
+    "commonErrorLabel": "Mucho for \"very\"",
+    "trapChoiceIndexes": [
+     0
+    ],
+    "trapReasons": {
+     "0": "Mucho means a lot, which feels like very."
+    },
+    "whyIntuitionFailed": "Muy means \"very\" and is used before adjectives, while mucho means \"much\" or \"a lot\" and can also translate as \"very much\" in phrases like Me gusta mucho. Because the two words can feel interchangeable in English, learners swap them.",
+    "correctReasoning": "Before an adjective, use muy, which never changes: muy grande. Mucho goes with nouns: muchas casas.",
+    "recoveryTip": "Muy + adjective. Mucho + noun.",
+    "difficulty": "Trap"
+   }
+  },
+  {
+   "key": "spanish/advanced/163|block 0",
+   "reasons": [
+    "false: \"The pattern is always the same: Name + es + nationality. Es + profession, with no un or una.\" → The no-article rule applies only to a bare profession (es cantante). When the profession is modified by an adjective, the indefinite article is used and agrees: es una cantante colombiana. Block 0 should present the pattern for bare professions, not as an always-rule without exception."
+   ],
+   "before": {
+    "eyebrow": "Unit 3.13",
+    "title": "Famous Hispanic figures",
+    "sections": [
+     {
+      "paragraphs": [
+       "You can now say who someone is, where they are from and what they do, with every word agreeing. In this lesson you use those sentences on well-known people from music, sport, law, science and film.",
+       "The pattern is always the same: Name + es + nationality. Es + profession, with no un or una."
+      ]
+     }
+    ]
+   },
+   "after": {
+    "eyebrow": "Unit 3.13",
+    "title": "Famous Hispanic figures",
+    "sections": [
+     {
+      "paragraphs": [
+       "You can now say who someone is, where they are from and what they do, with every word agreeing. In this lesson you use those sentences on well-known people from music, sport, law, science and film.",
+       "The pattern is: Name + es + nationality. Es + profession, with no un or una when the profession stands alone: es cantante. When an adjective describes the profession, the indefinite article appears and agrees: es una cantante colombiana."
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "key": "spanish/entry/16|block 4",
+   "reasons": [
+    "false: \"All five chunks are in the right place.\" → All four chunks are in the right place."
+   ],
+   "before": {
+    "title": "At a café",
+    "instructions": "Choose the chunk that fits each gap.",
+    "segments": [
+     {
+      "kind": "text",
+      "text": "— "
+     },
+     {
+      "kind": "blank",
+      "id": "b1",
+      "options": [
+       "Puedo",
+       "Quiero",
+       "Voy"
+      ],
+      "correctIndex": 1
+     },
+     {
+      "kind": "text",
+      "text": " un café, por favor. — Muy bien. — ¿"
+     },
+     {
+      "kind": "blank",
+      "id": "b2",
+      "options": [
+       "Tengo",
+       "Puedo",
+       "Necesito"
+      ],
+      "correctIndex": 1
+     },
+     {
+      "kind": "text",
+      "text": " pagar con tarjeta? — Sí, claro. — Perdón, "
+     },
+     {
+      "kind": "blank",
+      "id": "b3",
+      "options": [
+       "tengo",
+       "voy",
+       "quiero"
+      ],
+      "correctIndex": 1
+     },
+     {
+      "kind": "text",
+      "text": " al baño. ¡Ah! Y "
+     },
+     {
+      "kind": "blank",
+      "id": "b4",
+      "options": [
+       "puedo",
+       "tengo",
+       "voy"
+      ],
+      "correctIndex": 1
+     },
+     {
+      "kind": "text",
+      "text": " una pregunta."
+     }
+    ],
+    "feedback": {
+     "correct": "All five chunks are in the right place.",
+     "incorrect": "At least one choice is off. Change it and check again."
+    },
+    "perBlankFeedback": {
+     "b1": "Quiero un café: I want a coffee.",
+     "b2": "¿Puedo pagar con tarjeta?: Can I pay by card?",
+     "b3": "Voy al baño: I am going to the bathroom.",
+     "b4": "Tengo una pregunta: I have a question."
+    }
+   },
+   "after": {
+    "title": "At a café",
+    "instructions": "Choose the chunk that fits each gap.",
+    "segments": [
+     {
+      "kind": "text",
+      "text": "— "
+     },
+     {
+      "kind": "blank",
+      "id": "b1",
+      "options": [
+       "Puedo",
+       "Quiero",
+       "Voy"
+      ],
+      "correctIndex": 1
+     },
+     {
+      "kind": "text",
+      "text": " un café, por favor. — Muy bien. — ¿"
+     },
+     {
+      "kind": "blank",
+      "id": "b2",
+      "options": [
+       "Tengo",
+       "Puedo",
+       "Necesito"
+      ],
+      "correctIndex": 1
+     },
+     {
+      "kind": "text",
+      "text": " pagar con tarjeta? — Sí, claro. — Perdón, "
+     },
+     {
+      "kind": "blank",
+      "id": "b3",
+      "options": [
+       "tengo",
+       "voy",
+       "quiero"
+      ],
+      "correctIndex": 1
+     },
+     {
+      "kind": "text",
+      "text": " al baño. ¡Ah! Y "
+     },
+     {
+      "kind": "blank",
+      "id": "b4",
+      "options": [
+       "puedo",
+       "tengo",
+       "voy"
+      ],
+      "correctIndex": 1
+     },
+     {
+      "kind": "text",
+      "text": " una pregunta."
+     }
+    ],
+    "feedback": {
+     "correct": "All four chunks are in the right place.",
+     "incorrect": "At least one choice is off. Change it and check again."
+    },
+    "perBlankFeedback": {
+     "b1": "Quiero un café: I want a coffee.",
+     "b2": "¿Puedo pagar con tarjeta?: Can I pay by card?",
+     "b3": "Voy al baño: I am going to the bathroom.",
+     "b4": "Tengo una pregunta: I have a question."
+    }
+   }
+  },
+  {
+   "key": "spanish/advanced/80|block 5",
+   "reasons": [
+    "false: \"Only -o adjectives, consonant-ending nationalities and -or adjectives like trabajador change to -a.\" → Use a non-exhaustive rule that includes all these patterns: adjectives in -o, consonant-ending nationality adjectives, many -or adjectives such as trabajador, and adjectives ending in -án, -ón or -ín can form the feminine with -a. Fácil itself remains invariable in gender."
+   ],
+   "before": {
+    "question": "Which is correct for \"an easy question\" (una pregunta)?",
+    "choices": [
+     "una pregunta fácila",
+     "una pregunta fáciles",
+     "una fácila pregunta",
+     "una pregunta fácil"
+    ],
+    "correctIndex": 3,
+    "commonErrorLabel": "Adding -a to every adjective",
+    "trapChoiceIndexes": [
+     0
+    ],
+    "trapReasons": {
+     "0": "Feminine nouns often take -a adjectives, so -a seems needed."
+    },
+    "whyIntuitionFailed": "After learning alto / alta, learners add -a everywhere.",
+    "correctReasoning": "Fácil ends in a consonant and has one singular form: una pregunta fácil. Plural: preguntas fáciles.",
+    "recoveryTip": "Only -o adjectives, consonant-ending nationalities and -or adjectives like trabajador change to -a.",
+    "difficulty": "Trap"
+   },
+   "after": {
+    "question": "Which is correct for \"an easy question\" (una pregunta)?",
+    "choices": [
+     "una pregunta fácila",
+     "una pregunta fáciles",
+     "una fácila pregunta",
+     "una pregunta fácil"
+    ],
+    "correctIndex": 3,
+    "commonErrorLabel": "Adding -a to every adjective",
+    "trapChoiceIndexes": [
+     0
+    ],
+    "trapReasons": {
+     "0": "Feminine nouns often take -a adjectives, so -a seems needed."
+    },
+    "whyIntuitionFailed": "After learning alto / alta, learners add -a everywhere.",
+    "correctReasoning": "Fácil ends in a consonant and has one singular form: una pregunta fácil. Plural: preguntas fáciles.",
+    "recoveryTip": "Many adjectives can form the feminine with -a: adjectives in -o, consonant-ending nationality adjectives, many -or adjectives such as trabajador, and adjectives ending in -án, -ón or -ín. Fácil itself stays the same for both genders.",
+    "difficulty": "Trap"
+   }
+  }
+ ],
+ "not_certain": [
+  {
+   "key": "english/proficient/10|block 7",
+   "why": "re-read flagged",
+   "reasons": [
+    "false: \"The chunk has one subject (the alarm) and one finite verb (didn't go off).\" → The sentence has an independent clause, \"The alarm didn't go off,\" followed by the dependent clause \"because the power had gone out overnight,\" with its own subject and finite verb. It is complete because the independent clause can stand alone and the dependent clause is correctly attached."
+   ],
+   "reread_flags": [
+    "After any sentence, ask: 'Is the listener waiting for more?' If the answer is no, it's complete — even if it's long or s :: Not waiting for more establishes only that the thought finishes; it does not establish that the sentence is error-free. For example, \"We lost the game our bench was tired\" leaves n"
+   ]
+  },
+  {
+   "key": "english/proficient/124|block 1",
+   "why": "shape changed",
+   "reasons": [
+    "false: \"‘duct’ (lead) + ‘or’ (agent) = conductor.\" → Add a “con” chunk and set the solution to [\"con\",\"duct\",\"or\"]. The feedback should explain that con- + duct + -or assembles “conductor.”"
+   ],
+   "reread_flags": []
+  },
+  {
+   "key": "english/proficient/124|block 4",
+   "why": "re-read flagged",
+   "reasons": [
+    "false: \"Thermophilic bacteria thrive under extreme barometric pressure; they also synthesize novel enzymes.\" → Use “Thermophilic bacteria survive extreme hydrostatic pressure; they also synthesize novel enzymes.” Revise the rationale accordingly. If a baro- word is desired, “barotolerant” can describe pressure tolerance, but “barometric” cannot describe this deep-sea pressure.",
+    "false: \"Thermophilic bacteria thrive under extreme barometric pressure\" → The revision should use a term like 'hydrostatic pressure' (or simply 'extreme pressure'); the baro- root could be kept only if the context were atmospheric."
+   ],
+   "reread_flags": [
+    "Replacing 'strong' with a vague adjective misses the precise root‑based term; choose thermophilic and barometric. :: At a deep-sea hydrothermal vent, the relevant water pressure is hydrostatic pressure; “barometric” refers to atmospheric pressure. This also contradicts the target answer and ratio"
+   ]
+  },
+  {
+   "key": "english/proficient/29|block 5",
+   "why": "re-read flagged",
+   "reasons": [
+    "false: \"Fix with a semicolon or 'and the'.\" → Fix with a semicolon, or add “and” after the comma: “The wifi went down, and everyone groaned at once.”"
+   ],
+   "reread_flags": [
+    "Fragment: no verb — 'racing toward the finish line' cannot stand alone. :: The card does contain verbs: “racing,” “burning,” and “screaming” are all non-finite verb forms. It is a fragment because it has no finite main verb and therefore no independent cl"
+   ]
+  },
+  {
+   "key": "english/proficient/40|block 6",
+   "why": "shape changed",
+   "reasons": [
+    "false: \"\"Tap the words that create the inappropriate mood shift.\" / \"Slang that completely breaks the formal mood of the report.\"\" → Either restrict the mood-shift task to \"Do not panic,\" or describe the task and e2 feedback as identifying an inappropriate tone/register shift alongside the mood shift.",
+    "false: \"\"because\" — \"Casual filler that turns a formal statement into chatty talk.\"\" → Remove the error marking and explanation from \"because.\" The informal wording can instead be identified in \"honestly,\" \"scary,\" and \"dudes.\""
+   ],
+   "reread_flags": []
+  },
+  {
+   "key": "english/proficient/40|block 8",
+   "why": "shape changed",
+   "reasons": [
+    "false: \"\"'Was written' keeps the passive voice going, since the same person was acted upon twice.\" / \"'Do not' makes this an imperative command, matching the previous instruction.\" / \"After 'insisted that,' the subjunctive needs the bare form 'return'.\"\" → For b1, explain that \"was scored\" supplies the passive construction used with \"by Jenna.\" For b2, explain that the keyed \"was begun\" continues the passive construction. For b3, explain that \"Keep\" is the imperative form needed for the instruction. Move the bare-subjunctive \"return\" explanation to b4",
+    "false: \"'Do not' makes this an imperative command, matching the previous instruction.\" → 'was begun' keeps the passive voice consistent with the preceding clause.",
+    "false: \"perBlankFeedback b2: \"'Do not' makes this an imperative command...\"; b3: \"After 'insisted that,' the subjunctive needs the bare form 'return'.\"\" → b2's feedback should explain the active 'began'; b3's feedback should explain the imperative 'Keep'; b4's feedback should explain the subjunctive 'return'."
+   ],
+   "reread_flags": []
+  },
+  {
+   "key": "english/proficient/48|block 4",
+   "why": "shape changed",
+   "reasons": [
+    "false: \"\"rowId\":\"voice\"\" → The passive-voice cell must have \"rowId\":\"voice_pass\"."
+   ],
+   "reread_flags": []
+  },
+  {
+   "key": "english/proficient/50|block 9",
+   "why": "shape changed",
+   "reasons": [
+    "false: \"It breaks the run-on but jumps from indicative to imperative in one breath.\" → It keeps the sentence as one but shifts from imperative (“Wear gloves”) to indicative (“you should be careful”), so it does not keep the mood consistent. There is no run-on to fix.",
+    "false: \"This fixes the shift, but the original did not need splitting — it can stay one sentence.\" → This keeps both clauses active imperatives, but it splits the original into two sentences, contrary to the prompt. No shift needed fixing."
+   ],
+   "reread_flags": []
+  },
+  {
+   "key": "english/proficient/49|block 4",
+   "why": "re-read flagged",
+   "reasons": [
+    "false: \"Tempting, because 'Now.' is a fragment. But a deliberate fragment after a dash is a common emphasis device\" → Reject option d because its premise is false: “act now” is an imperative clause, not a fragment. The marked indicative-to-imperative change is acceptable."
+   ],
+   "reread_flags": [
+    "But the writer marked it deliberately with a dash and an urgent fragment to grab the parent's attention :: \"Act now\" is not a fragment: \"act\" is a verb and its subject is an implied \"you,\" making it an imperative clause. Option d's feedback correctly states this, so the block also contr"
+   ]
+  },
+  {
+   "key": "english/proficient/49|check 2",
+   "why": "the repair changed nothing",
+   "reasons": [
+    "false: \"\"accepts\":[\"were\",\"was\"]\" → For this exercise, accept “were” and do not include “was” in the accepted answers.",
+    "false: \"In subjunctive mood, plural subjects take the base plural verb form even for imaginary situations.\" → In an imaginary condition such as this, use “were” with “I”: “If I were the director, I would shoot the final scene in one take.”"
+   ],
+   "reread_flags": [
+    "In subjunctive mood, plural subjects take the base plural verb form even for imaginary situations. :: The subject in the prompt is the singular \"I,\" so this hint gives an irrelevant and misleading rule. More generally, present subjunctive uses the base form for all subjects, while "
+   ]
+  },
+  {
+   "key": "english/proficient/81|block 5",
+   "why": "shape changed",
+   "reasons": [
+    "false: \"Same seven words, two completely different vibes — that's punctuation doing the talking.\" → The first version has five words; the second has seven because it adds the tag \"did you.\" Both the wording and the punctuation change. Alternatively, redesign the solutions so they use identical wording if only punctuation is meant to change."
+   ],
+   "reread_flags": [
+    "Same seven words, same wording — only the punctuation changes, and the tone flips entirely. :: Both solutions use “You did that on purpose,” followed by either a period or a question mark. That is five words: You (1), did (2), that (3), on (4), purpose (5). Seven is the numb"
+   ]
+  },
+  {
+   "key": "english/proficient/80|check 2",
+   "why": "the repair changed nothing",
+   "reasons": [
+    "false: \"one needs a full sentence before it and a list after it\" → A colon generally follows a complete clause and can introduce a list or an explanation. Here, choose the dash for the requested sharp emphasis, not because a colon requires a list."
+   ],
+   "reread_flags": [
+    "one needs a full sentence before it and a list after it. :: This describes the colon as requiring a list, but a colon can also introduce an explanation after a complete sentence, exactly as block 3 teaches. In this sentence, \"the goalie mad"
+   ]
+  },
+  {
+   "key": "english/proficient/80|check 3",
+   "why": "the repair changed nothing",
+   "reasons": [
+    "false: \"the other options either keep the shift or create a fragment\" → The third option also fixes the shift by making both clauses passive, but it is awkward and less direct. The second option keeps the shift, and the fourth creates a fragment; the active revision remains the best fix."
+   ],
+   "reread_flags": [
+    "Fix the shift to passive by writing 'When you write the essay, you should check your spelling carefully.' :: The quoted revision is active in both clauses (\"you write\" and \"you should check\"), so it does not fix anything \"to passive.\" It repairs the original active-to-passive shift by mak"
+   ]
+  },
+  {
+   "key": "english/proficient/92|block 5",
+   "why": "re-read flagged",
+   "reasons": [
+    "false: \"The comma is the everyday default, but here it creates a comma splice — two independent ideas glued with too weak a mark.\" → The comma is the everyday default, but here it does not properly introduce the explanation of the rule; use a colon. This is not a comma splice because \"no trash talking allowed\" is not an independent clause.",
+    "false: \"here it creates a comma splice — two independent ideas glued with too weak a mark\" → The comma version is wrong because a comma is too weak a mark to introduce the explanation of the rule — a colon (or dash) is needed. It is not a comma splice, since the second part is not an independent clause."
+   ],
+   "reread_flags": [
+    "But a semicolon's only job is to join two closely related complete sentences. :: Joining independent clauses is not a semicolon's only use. Semicolons also separate items in a series when the items contain internal commas, as in \"The speakers were Ana Ruiz, a d"
+   ]
+  },
+  {
+   "key": "english/proficient/95|check 0",
+   "why": "the repair changed nothing",
+   "reasons": [
+    "false: \"All four words could loosely describe checking work twice\" → Diligent fits because it means showing careful, persistent effort. Lazy contradicts Maya's behavior, slow concerns speed rather than effort, and picky suggests being hard to please rather than simply thorough."
+   ],
+   "reread_flags": [
+    "Both lazy and slow describe low effort. :: Slow describes speed, not necessarily effort; someone can work slowly while making careful, persistent effort. The hint therefore contradicts the rationale, which correctly says th"
+   ]
+  },
+  {
+   "key": "english/proficient/95|check 3",
+   "why": "the repair changed nothing",
+   "reasons": [
+    "false: \"A fragment is missing its subject or its verb.\" → A fragment fails to form a complete independent clause. It may lack a subject or main verb, or it may contain both while remaining only a dependent clause."
+   ],
+   "reread_flags": [
+    "A fragment is missing its subject or its verb. :: A fragment can contain both a subject and a verb. Option A has the subject \"the stadium lights\" and the verb \"flickered,\" but \"Because\" makes it a subordinate clause that cannot st"
+   ]
+  },
+  {
+   "key": "english/proficient/91|block 3",
+   "why": "shape changed",
+   "reasons": [
+    "false: \"\"answer\":\"Not always. Real errors break grammar or confuse meaning; style-guide choices are defensible either way.\",\"colId\":\"word_pairs\",\"rowId\":\"affect_effect\"\" → The final cell should have \"colId\":\"usage_debates\" and \"rowId\":\"misconception\"."
+   ],
+   "reread_flags": [
+    "It is a run-on (a comma splice) — fix it with a period, semicolon, or a joining word like 'and' or 'but'. :: This equates two different structures. A comma splice joins independent clauses with only a comma; a fused run-on joins them with no punctuation or conjunction, which is the struct"
+   ]
+  },
+  {
+   "key": "spanish/entry/42|check 1",
+   "why": "the repair changed nothing",
+   "reasons": [
+    "false: \"\"accepts\":[\"diez y ocho\"]\" → The only accepted answer should be 'dieciocho' (common misspellings like 'dieciocho' variants aside, no two-word 'diez y ocho' variant should be accepted)."
+   ],
+   "reread_flags": [
+    "\"accepts\":[\"diez y ocho\"] :: The prompt asks for 18 as one Spanish word, but \"diez y ocho\" is three words and is an outdated form, not a modern standard alternative. Accepting it also contradicts block 2, whic"
+   ]
+  },
+  {
+   "key": "spanish/intermediate/97|check 2",
+   "why": "the repair changed nothing",
+   "reasons": [
+    "false: \"qué día es\" → Remove \"qué día es\" from \"accepts\". Accepted variants should retain \"hoy\", for example \"qué día es hoy\", alongside punctuation and capitalization variants of \"¿Qué día es hoy?\""
+   ],
+   "reread_flags": [
+    "Accepted variants must keep all three words including hoy, allowing only differences in accents, capitalization, and pun :: “¿Qué día es hoy?” has four words: Qué, día, es, and hoy. Every accepted variant retains all four, and the hint also lists four components."
+   ]
+  }
+ ]
+}
