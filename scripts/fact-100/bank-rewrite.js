@@ -59,8 +59,9 @@ const joinP = (p) => p.map((x) => x.text).join('\n');
     const lv = levels.get(id); const cr = claimRows.get(id);
     if (!lv || !cr) { console.log('no level or claims', id); return; }
     const facts = cr.claims.filter((c) => !['illustration', 'pedagogy'].includes(c.type)).map((c) => c.text);
-    const allowed = B.allowedFrom(facts, lv.track, learner.interests);
     const passages = teaching(lv);
+    // The bank for a rewrite: the facts plus the verified lesson itself, since all of it passed. Rewrites may not add to it.
+    const allowed = B.allowedFrom([...facts, ...lv.blocks.map((b) => strings(b.data).join(' ')), ...lv.checks.map((c) => strings({ p: c.prompt, r: c.rationale }).join(' '))], lv.track, learner.interests);
     const base = `LEARNER: ${learner.text}\nLESSON: ${L.contextOf(lv)}\n\nPASSAGES\n${passages.map((p) => `[${p.index}] ${p.text}`).join('\n')}`;
     try {
       let cost = 0;
