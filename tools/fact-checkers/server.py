@@ -133,8 +133,9 @@ def load_stage2():
 
     threads = int(os.environ.get("FACT_CPU_THREADS") or max(2, (os.cpu_count() or 8) - 2))
     log("stage 2: loading Granite Guardian and HalluGuard in RAM,", threads, "threads")
-    granite = Llama(model_path=GRANITE_GGUF, n_ctx=8192, n_threads=threads, n_gpu_layers=0, verbose=False)
-    granite_tok = AutoTokenizer.from_pretrained(GRANITE_TOKENIZER)
+    no_granite = bool(os.environ.get("FACT_STAGE2_NO_GRANITE"))  # 8.7 GB: too much beside other work on a shared machine
+    granite = None if no_granite else Llama(model_path=GRANITE_GGUF, n_ctx=8192, n_threads=threads, n_gpu_layers=0, verbose=False)
+    granite_tok = None if no_granite else AutoTokenizer.from_pretrained(GRANITE_TOKENIZER)
     halluguard = Llama(model_path=HALLUGUARD_GGUF, n_ctx=8192, n_threads=threads, n_gpu_layers=0, verbose=False)
     _stage2 = {"granite": granite, "granite_tok": granite_tok, "halluguard": halluguard}
     log("stage 2: ready")
@@ -170,7 +171,7 @@ def stage2(pairs):
     out = []
     for p in pairs:
         t0 = time.time()
-        g = granite_grounded(s, p["doc"], p["claim"])
+        g = granite_grounded(s, p["doc"], p["claim"]) if s["granite"] is not None else "not_run"
         t1 = time.time()
         # A claim Granite already finds ungrounded goes to the judge either way, so
         # HalluGuard (the slow one: it reasons first) only gives its second opinion
