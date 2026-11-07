@@ -125,7 +125,7 @@ const DOC = `# Tides\n\nTides are the regular rise and fall of the sea. The Moon
 
   // ── notes
   await page.goto(`${B}/my-material-notes?id=${id}`);
-  await page.waitForSelector('[data-part^="note:"] [data-change]', { timeout: 15000 });
+  await page.waitForSelector('[data-part^="note:"] [data-part-toggle]', { timeout: 15000 });
   const notesBefore = await page.locator('section.card').first().textContent();
   await noSide('notes');
   check('notes: small parts start closed behind one button', await page.locator('[data-part^="note:"] [data-part-toggle]').count() > 0);
@@ -140,14 +140,14 @@ const DOC = `# Tides\n\nTides are the regular rise and fall of the sea. The Moon
   await page.goto(`${B}/my-material-cards?id=${id}`);
   await page.waitForSelector('[data-mode="deck"]', { timeout: 15000 });
   await page.click('[data-mode="deck"]');
-  await page.waitForSelector('[data-part^="card:"] [data-change]', { timeout: 10000 });
+  await page.waitForSelector('[data-part^="card:"] [data-part-toggle]', { timeout: 10000 });
   await noSide('cards');
   check('cards: each generated card has the row', await page.locator('[data-part^="card:"]').count() > 0);
   await shot('6-cards');
 
   // ── pack
   await page.goto(`${B}/my-material-pack?id=${id}`);
-  await page.waitForSelector('[data-part="summary"] [data-change]', { timeout: 15000 });
+  await page.waitForSelector('[data-part="summary"] [data-part-toggle]', { timeout: 15000 });
   await noSide('pack summary');
   check('pack: the summary has the row', true);
   await page.click('[data-tab="cards"]');
