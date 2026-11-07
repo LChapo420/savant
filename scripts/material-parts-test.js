@@ -281,7 +281,7 @@ function model({ rewrite = plain, facts = 'supported', example = 'Say two friend
   check('the lesson is rewritten for them', fp.changed, fp);
   const followed = study.lesson(follower, fm, 's1').skill.lesson;
   check('and that is what they read next', followed.paragraphs.join(' ') !== storedS1 && followed.origin === 'follow', followed);
-  for (const [label, ref, read] of [['a question', 'q:s2:s2_q2', () => study.internals.loadCourse(follower, fm).skills[1].questions[1].explanation], ['a card back', 'packcard:c1', () => packs.view(packs.get(follower, fm)).cards[0].back], ['notes', 'note:n1', () => notes.view(notes.get(follower, fm)).sections[0].bullets.map((b) => b.text).join(' ')]]) {
+  for (const [label, ref, read] of [['a question', 'q:s2:s2_q2', () => study.internals.qOf(study.internals.loadCourse(follower, fm).skills[1], 's2_q2').explanation], ['a card back', 'packcard:c1', () => packs.view(packs.get(follower, fm)).cards[0].back], ['notes', 'note:n1', () => notes.view(notes.get(follower, fm)).sections[0].bullets.map((b) => b.text).join(' ')]]) {
     const b4 = read();
     const f = await P.followPart(follower, fm, ref, { llm: model() });
     check(`${label} is refreshed on drift too, and served`, f.changed && read() !== b4, [f, read()]);
