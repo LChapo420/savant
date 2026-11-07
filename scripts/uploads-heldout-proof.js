@@ -170,13 +170,14 @@ async function runArms(reps, arms) {
 function rng(seed) { let s = seed >>> 0; return () => { s = (s + 0x6d2b79f5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 const TRAITS = {
   brevity_preference: ['wants the shortest version', 'wants it long and full'],
-  vocabulary_ceiling: ['needs very plain words', 'reads advanced vocabulary easily'],
-  attention_runway: ['loses focus fast: tiny chunks', 'holds focus a long time'],
+  // A high score on these three means MORE of the ability, so the low end is the one that needs help. Rounds 2 to 4 had them the other way round (docs/UPLOADS-ANY-FORMAT.md section 18).
+  vocabulary_ceiling: ['reads advanced vocabulary easily', 'needs very plain words'],
+  attention_runway: ['holds focus a long time', 'loses focus fast: tiny chunks'],
   evaluation_anxiety: ['very anxious when tested: no test language, low stakes', 'not anxious when tested'],
   worked_example_dependence: ['needs a worked example for everything', 'wants to work it out alone'],
   challenge_appetite: ['wants hard stretch questions', 'wants gentle easy questions'],
   interest_transfer: ['learns far better through their interests', 'ignores interests'],
-  text_density_tolerance: ['cannot take dense text', 'likes dense text'],
+  text_density_tolerance: ['likes dense text', 'cannot take dense text'],
 };
 const INTERESTS = ['falconry', 'K-pop dance', 'tractor repair', 'speedrunning Zelda', 'ballet', 'competitive baking', 'birdwatching', 'skateboarding', 'chess openings', 'beekeeping', 'drone racing', 'knitting', 'crypto trading', 'marching band', 'pottery'];
 const DISLIKES = ['sports', 'spiders', 'maths puzzles', 'cooking', 'war'];

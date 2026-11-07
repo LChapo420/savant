@@ -636,7 +636,14 @@ function viewCourse(userId, course) {
     const out = { ...s, lesson, summary, questions };
     if (here) {
       out.quiz_size = here.checks; out.stressed = here.stressed;
-      if ((view.goal === 'core' || here.lean) && here.focus.length >= 2) { out.all_questions = questions; out.questions = questions.filter((q) => here.focus.slice(0, here.lean ? Math.max(2, here.checks) : here.focus.length).includes(q.id)); }
+      if ((view.goal === 'core' || here.lean) && here.focus.length >= 1) {
+        // A lean learner meets about one question to every three facts, and the first sentence of its explanation (the rest stays on the question for anyone who asks for more).
+        const room = here.lean ? Math.max(1, Math.min(here.checks, Math.round(here.facts / 3))) : here.focus.length;
+        const firstSentence = (t) => (F.sentencesOf(t)[0] || t);
+        out.all_questions = questions;
+        out.questions = questions.filter((q) => here.focus.slice(0, room).includes(q.id)).map((q) => (here.lean && q.explanation ? { ...q, explanation: firstSentence(q.explanation) } : q));
+        out.quiz_size = Math.min(here.checks, Math.max(1, out.questions.length));
+      }
     }
     return followOn() && !pinned.has(lref) ? shapeForLearner(out, course, userId) : out;
   });
@@ -676,7 +683,11 @@ function shapeForLearner(skill, course, userId) {
   const ends = [];
   if (spec.difficulty && spec.difficulty.stretchShare >= 0.15 && spec.difficulty.stretchShare !== ((lazy('./learning-spec').defaultSpec ? lazy('./learning-spec').defaultSpec().difficulty : {}) || {}).stretchShare) ends.push('Stretch: explain this in your own words, then give one case from your material where it applies.');
   const out = { ...skill, lesson: { ...lesson, paragraphs: [...lines, ...paragraphs, ...ends], key_points } };
-  if (lowStakes) { const clean = (q) => ({ ...q, prompt: CF.deTest(q.prompt), explanation: q.explanation ? CF.deTest(q.explanation) : q.explanation, ...(q.choices ? { choices: q.choices.map(CF.deTest) } : {}) }); out.questions = (skill.questions || []).map(clean); if (skill.all_questions) out.all_questions = skill.all_questions.map(clean); }
+  // Gentle first or hard first, by what they want from a challenge. Only the order: the questions are the same questions.
+  const stretch = spec.difficulty ? spec.difficulty.stretchShare : null;
+  const tierSort = stretch >= 0.2 ? -1 : stretch !== null && stretch <= 0.08 ? 1 : 0;
+  if (tierSort) { out.questions = (skill.questions || []).slice().sort((a, b) => ((a.tier || 2) - (b.tier || 2)) * tierSort); }
+  if (lowStakes) { const clean = (q) => ({ ...q, prompt: CF.deTest(q.prompt), explanation: q.explanation ? CF.deTest(q.explanation) : q.explanation, ...(q.choices ? { choices: q.choices.map(CF.deTest) } : {}) }); out.questions = (out.questions || skill.questions || []).map(clean); if (skill.all_questions) out.all_questions = skill.all_questions.map(clean); }
   return out;
 }
 

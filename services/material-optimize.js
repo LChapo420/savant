@@ -316,6 +316,7 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
       key_points,
       aside: asideFor(asideOf.get(skill.id) || [], paragraphs),
       lean: useLean,
+      facts: myFacts.length,
       added: own.length,
       checks,
       stressed: stressedCount,

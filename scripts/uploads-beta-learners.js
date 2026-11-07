@@ -24,13 +24,14 @@ fs.mkdirSync(DIR, { recursive: true });
 const rng = (seed) => { let s = seed >>> 0; return () => { s = (s + 0x6d2b79f5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; };
 const TRAITS = {
   brevity_preference: ['wants the shortest version', 'wants it long and full'],
-  vocabulary_ceiling: ['needs very plain words', 'reads advanced vocabulary easily'],
-  attention_runway: ['loses focus fast: tiny chunks', 'holds focus a long time'],
+  // A high score on these three means MORE of the ability, so the low end is the one that needs help. Rounds 2 to 4 had them the other way round (docs/UPLOADS-ANY-FORMAT.md section 18).
+  vocabulary_ceiling: ['reads advanced vocabulary easily', 'needs very plain words'],
+  attention_runway: ['holds focus a long time', 'loses focus fast: tiny chunks'],
   evaluation_anxiety: ['very anxious when tested: no test language, low stakes', 'not anxious when tested'],
   worked_example_dependence: ['needs a worked example for everything', 'wants to work it out alone'],
   challenge_appetite: ['wants hard stretch questions', 'wants gentle easy questions'],
   interest_transfer: ['learns far better through their interests', 'ignores interests'],
-  text_density_tolerance: ['cannot take dense text', 'likes dense text'],
+  text_density_tolerance: ['likes dense text', 'cannot take dense text'],
 };
 const INTERESTS = ['falconry', 'K-pop dance', 'tractor repair', 'speedrunning Zelda', 'ballet', 'competitive baking', 'birdwatching', 'skateboarding', 'chess openings', 'beekeeping', 'drone racing', 'knitting', 'crypto trading', 'marching band', 'pottery'];
 const DISLIKES = ['sports', 'spiders', 'maths puzzles', 'cooking', 'war'];
@@ -54,7 +55,7 @@ const ym = (y) => `${new Date().getUTCFullYear() - y}-01`;
 /** Who writes what: the build and the rewrites on ZeroGPU GLM, the fact check's two readers at Gonka. */
 function writer() {
   return async (a) => {
-    const fam = a.task === 'material_factcheck_glm' ? 'Z' : a.task === 'material_factcheck_deepseek' ? 'M' : (process.env.UB_WRITER || 'Q');
+    const fam = a.task === 'material_factcheck_glm' ? (process.env.UB_GLM || 'Q') : a.task === 'material_factcheck_deepseek' ? (process.env.UB_DS || 'C') : (process.env.UB_WRITER || 'C');
     for (let i = 0; i < 4; i++) {
       try { const data = await J.call(fam, { system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: Math.max(a.maxTokens || 1500, 2500) }); return { data, model: fam }; } catch (e) { await new Promise((r) => setTimeout(r, 2000 * (i + 1))); }
     }
@@ -66,8 +67,16 @@ const lessonText = (skills) => skills.flatMap((s) => [...(s.lesson.paragraphs ||
 const SCHEMA = { type: 'object', properties: { traits: { type: 'array', items: { type: 'object', properties: { trait: { type: 'string' }, followed: { type: 'boolean' }, evidence: { type: 'string' } }, required: ['trait', 'followed'] } }, invented_facts: { type: 'array', items: { type: 'string' } } }, required: ['traits', 'invented_facts'] };
 const SYSTEM = 'You are a strict reviewer. A learner profile, the SOURCE the learner uploaded and the COURSE built from it are given. For EACH listed trait say whether the COURSE visibly follows it (followed true/false, with a short quote or measurable reason). Also list any specific factual claim in the COURSE that is not in the SOURCE (invented_facts; an analogy that borrows from an interest is fine if it makes no new claim about the subject). Be strict: generic text is not following the trait.';
 
+const JUDGE_FAMS = (process.env.UB_JUDGES || 'G,N').split(',');
+const askAny = async (fam, a) => {
+  if (fam !== 'G') return J.askJ(fam, a);
+  for (let i = 0; i < 4; i += 1) {
+    try { const r = await require('../services/providers/grokified').grokified.structured({ model: 'grok-4.3', ...a, timeoutMs: 240000 }); if (r && r.data) return r.data; } catch (e) { await new Promise((res) => setTimeout(res, 2500 * (i + 1))); }
+  }
+  return null;
+};
 async function judge(fam, wants, src, text) {
-  const j = await J.askJ(fam, { system: SYSTEM, user: `TRAITS:\n${wants.map((w, n) => `${n + 1}. ${w}`).join('\n')}\n\nSOURCE:\n${src.slice(0, 5000)}\n\nCOURSE:\n${text.slice(0, 14000)}`, schema: SCHEMA, schemaName: 'review', maxTokens: 6000 });
+  const j = await askAny(fam, { system: SYSTEM, user: `TRAITS:\n${wants.map((w, n) => `${n + 1}. ${w}`).join('\n')}\n\nSOURCE:\n${src.slice(0, 5000)}\n\nCOURSE:\n${text.slice(0, 14000)}`, schema: SCHEMA, schemaName: 'review', maxTokens: 6000 });
   if (!j || !Array.isArray(j.traits)) return null;
   return { followed: j.traits.filter((t) => t.followed).length, of: j.traits.length, invented: (j.invented_facts || []).length, invented_list: (j.invented_facts || []).slice(0, 12), misses: j.traits.filter((t) => !t.followed).map((t) => t.trait) };
 }
@@ -103,7 +112,7 @@ async function runOne(L0, src, store, file) {
   const followS = Math.round((Date.now() - t1) / 1000);
   const wants = [...L0.spoken, ...(L0.interests.length && !(L0.stats.interest_transfer < 50) ? [`likes ${L0.interests.join(' and ')} (examples and analogies may use them)`] : []), ...(L0.dislike ? [`dislikes ${L0.dislike} (must not appear)`] : []), ...(L0.esl ? ['English is a second language: plain syntax, no idioms'] : []), ...(L0.testDate ? [`has a test in ${Math.round((new Date(L0.testDate) - Date.now()) / 86400000)} days: exam-style wording, name the traps`] : []), `is ${L0.age} years old`];
   const row = { seed: L0.seed, i: L0.i, learner: L0, wants, status: built.course.status, skills: raw.length, build_s: buildS, follow_s: followS, results, source_words: L.words(src.plain), base_lesson: L.words(lessonText(raw)), base_whole: L.words(textOf(raw)), served_lesson: L.words(lessonText(served)), served_whole: L.words(textOf(served)), base: {}, served: {}, served_text: textOf(served), base_text: textOf(raw) };
-  for (const fam of (process.env.UB_JUDGES || 'C,N').split(',')) {
+  for (const fam of JUDGE_FAMS) {
     // eslint-disable-next-line no-await-in-loop
     row.base[fam] = await judge(fam, wants, src.plain, textOf(raw));
     // eslint-disable-next-line no-await-in-loop
@@ -111,7 +120,7 @@ async function runOne(L0, src, store, file) {
   }
   store.rows.push(row); L.save(file, store);
   const f = (x) => (x ? `${x.followed}/${x.of} inv ${x.invented}` : '-');
-  console.log(`learner ${L0.i} [${L0.spoken.length} traits, age ${L0.age}${L0.esl ? ', ESL' : ''}${L0.testDate ? ', test' : ''}] build ${buildS}s follow ${followS}s (${results.lesson.changed}/${results.lesson.asked} lessons, ${results.q.changed}/${results.q.asked} questions) words ${row.source_words} -> ${row.base_lesson} -> ${row.served_lesson} | base ${f(row.base.C)} ${f(row.base.N)} | served ${f(row.served.C)} ${f(row.served.N)}`);
+  console.log(`learner ${L0.i} [${L0.spoken.length} traits, age ${L0.age}${L0.esl ? ', ESL' : ''}${L0.testDate ? ', test' : ''}] build ${buildS}s follow ${followS}s (${results.lesson.changed}/${results.lesson.asked} lessons, ${results.q.changed}/${results.q.asked} questions) words ${row.source_words} -> ${row.base_lesson} -> ${row.served_lesson} | base ${JUDGE_FAMS.map((x) => f(row.base[x])).join(' ')} | served ${JUDGE_FAMS.map((x) => f(row.served[x])).join(' ')}`);
 }
 
 /**
@@ -170,14 +179,14 @@ function report() {
   const mean = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
   const q = (a, p) => { const s = a.slice().sort((x, y) => x - y); return s[Math.floor(p * s.length)]; };
   console.log(`${rows.length} learners`);
-  for (const arm of ['base', 'served']) for (const fam of ['C', 'N']) {
+  for (const arm of ['base', 'served']) for (const fam of ['G', 'N', 'C']) {
     const v = rows.map((r) => r[arm][fam]).filter(Boolean);
     const sh = v.map((x) => x.followed / x.of);
     if (!v.length) continue;
     console.log(`  ${arm.padEnd(6)} ${fam}: n ${v.length} followed ${Math.round(mean(sh) * 100)}% worst 1/5/10% ${[0.01, 0.05, 0.1].map((p) => Math.round(q(sh, p) * 100)).join(' / ')}% invented ${mean(v.map((x) => x.invented)).toFixed(2)} (none in ${v.filter((x) => !x.invented).length})`);
   }
   const miss = {};
-  for (const r of rows) for (const fam of ['C', 'N']) for (const t of (r.served[fam] || { misses: [] }).misses) { const k = t.replace(/\d+ days/, 'N days').replace(/likes .*/, 'likes their interests').replace(/dislikes .*/, 'dislikes X').replace(/is \d+ years old/, 'age'); miss[k] = (miss[k] || 0) + 1; }
+  for (const r of rows) for (const fam of ['G', 'N', 'C']) for (const t of (r.served[fam] || { misses: [] }).misses) { const k = t.replace(/\d+ days/, 'N days').replace(/likes .*/, 'likes their interests').replace(/dislikes .*/, 'dislikes X').replace(/is \d+ years old/, 'age'); miss[k] = (miss[k] || 0) + 1; }
   console.log('  most missed, served:', Object.entries(miss).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([k, v]) => `${k} ${v}`).join('; '));
   const brev = rows.filter((r) => r.wants.includes('wants the shortest version'));
   console.log(`  shortest-version learners ${brev.length}: lesson ${brev.map((r) => (r.served_lesson / r.source_words).toFixed(2)).join(', ')}; whole ${brev.map((r) => (r.served_whole / r.source_words).toFixed(2)).join(', ')} (base lesson ${brev.map((r) => (r.base_lesson / r.source_words).toFixed(2)).join(', ')})`);
