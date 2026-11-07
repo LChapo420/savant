@@ -85,6 +85,8 @@ def load_stage1():
     from transformers import AutoConfig, AutoModelForSeq2SeqLM, AutoModelForSequenceClassification, AutoTokenizer
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    if os.environ.get("FACT_CPU_THREADS"):
+        torch.set_num_threads(int(os.environ["FACT_CPU_THREADS"]))
     dtype = torch.float16 if device == "cuda" else torch.float32
     log("stage 1: loading on", device)
     config = AutoConfig.from_pretrained(FACTCG_DIR, num_labels=2, finetuning_task="text-classification")
@@ -129,7 +131,7 @@ def load_stage2():
     from llama_cpp import Llama
     from transformers import AutoTokenizer
 
-    threads = max(2, (os.cpu_count() or 8) - 2)
+    threads = int(os.environ.get("FACT_CPU_THREADS") or max(2, (os.cpu_count() or 8) - 2))
     log("stage 2: loading Granite Guardian and HalluGuard in RAM,", threads, "threads")
     granite = Llama(model_path=GRANITE_GGUF, n_ctx=8192, n_threads=threads, n_gpu_layers=0, verbose=False)
     granite_tok = AutoTokenizer.from_pretrained(GRANITE_TOKENIZER)

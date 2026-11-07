@@ -20,7 +20,7 @@ const SCHEMA = { type: 'object', required: ['verdict', 'quote'], properties: { v
 const docsFor = async (claim, track, topic) => {
   const out = [];
   if (MODE.includes('book')) out.push(...T.search(claim, { track, k: 3 }));
-  if (MODE.includes('wiki')) out.push(...await S.fromOffline(claim, { topic, k: 3 }));
+  if (MODE.includes('wiki')) { if (track === 'spanish') out.push(...await D.passagesFor(claim, 'Spanish', 2)); out.push(...await S.fromOffline(claim, { topic, k: 3 })); }
   return out;
 };
 const passageCheck = (text, docs) => docs.some((d) => d.text.toLowerCase().includes(String(text || '').toLowerCase().slice(0, 40)));
@@ -56,4 +56,3 @@ const passageCheck = (text, docs) => docs.some((d) => d.text.toLowerCase().inclu
   for (const th of [0.3, 0.5]) console.log(`local models both>=${th}: true twin sourced ${count((r) => r.t.nli && r.t.nli.factcg >= th && r.t.nli.minicheck >= th)}, wrong twin sourced ${count((r) => r.w.nli && r.w.nli.factcg >= th && r.w.nli.minicheck >= th)}`);
   process.exit(0);
 })();
-void D;

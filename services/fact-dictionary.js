@@ -86,6 +86,20 @@ async function checkForm({ noun, article }) {
   return { status: g === says ? 'supported' : 'gender_differs', dictionary: g, entry: entry.slice(0, 200) };
 }
 
+/** Dictionary entries for the foreign words of a sentence, as passages: the words that have an entry in that language, longest first. */
+async function passagesFor(sentence, language = 'Spanish', k = 3) {
+  const ws = [...new Set(String(sentence || '').match(/\p{L}{3,}/gu) || [])].sort((a, b) => b.length - a.length).slice(0, 10);
+  const out = [];
+  for (const w of ws) {
+    if (out.length >= k) break;
+    const low = w.toLowerCase();
+    let e = await lookup(low, language); // eslint-disable-line no-await-in-loop
+    if (e && e.length < 400 && /of\s+\p{L}+/u.test(e)) { const m = /of\s+(\p{L}+)/u.exec(e); const more = await lookup(m[1].toLowerCase(), language); if (more) e = `${e} ${more}`; } // eslint-disable-line no-await-in-loop
+    if (e) out.push({ source: 'wiktionary', title: `Wiktionary: ${low}`, text: `${low} (${language}): ${e.slice(0, 500)}`, score: 1 });
+  }
+  return out;
+}
+
 async function isUp() { const h = await get(`${KIWIX()}/catalog/v2/entries`); return !!h; }
 
-module.exports = { isOn, lookup, checkPair, checkForm, isUp };
+module.exports = { isOn, lookup, checkPair, checkForm, passagesFor, isUp };
