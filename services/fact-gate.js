@@ -3,6 +3,7 @@
  *
  *   FACT_GATE=on     a shared (base) level is read by this gate instead of the claim read; a level for a learner keeps today's read, so nobody waits on it
  *   FACT_GATE=off    (default) nothing changes
+ *   FACT_COMPUTE=on  (default off) adds the SymPy layer on math levels; FACT_COMPUTE_MODEL names its transcriber as provider:model
  *
  * One read, three stages:
  *   1. the code pass (services/fact-code-checks.js): free, 20 ms, recomputes what can be recomputed. Its findings go to the decider with the rest: on 6,346 unseen stored rows its first
@@ -13,6 +14,7 @@
  * ZeroGPU fail often when busy). If the first reader still cannot answer, the level has not been read (null, no keep on a weaker read: grok-4.3 alone caught 73% against the pair's 96%). Every call goes through its provider's own ledger.
  */
 const code = require('./fact-code-checks');
+const compute = require('./fact-compute');
 
 const HUNT_SYSTEM = `You check a lesson for errors before it reaches a learner. You get the subject, grade and level, then every block and graded check as JSON. Many lessons have no errors at all, and a false alarm costs real money. Report only what is actually wrong.
 
@@ -119,6 +121,15 @@ async function read({ context, blocks, checks, excludeFamilies = null, call = de
     }
   });
   if (!stages.read) return null;
+  // FACT_COMPUTE=on, math only: a cheap model transcribes the lesson's assertions and SymPy works them out (services/fact-compute.js). Its findings go to the decider with the rest; if it cannot run, the read stands without it.
+  if (compute.isOn() && (trackId || context.trackId) === 'math') {
+    const slot = parseSlots(process.env.FACT_COMPUTE_MODEL || 'coral:deepseek-v4.1-flash')[0];
+    try {
+      const c = await compute.check({ context, blocks, checks, call: async (system, u, schema, schemaName, maxTokens) => { const r = await tries(slot, { system, user: u, schema, schemaName, maxTokens }); if (!r || !r.data) throw new Error('compute model did not answer'); add(r); return { data: r.data, cost: 0 }; } });
+      stages.compute = c.flags.length;
+      suspects.push(...c.flags);
+    } catch { stages.compute = null; }
+  }
   for (const s of [...suspects, ...certain]) if (!seen.has(flagKey(s))) seen.set(flagKey(s), { where: s.where, claim: s.claim, why: `${s.rule}${s.certain ? ' (recomputed by code)' : ''}`, truth: s.truth, code: !!s.certain });
   const raised = [...seen.values()];
   stages.raised = raised.length;

@@ -83,5 +83,17 @@ assert.ok(ill('[[eg]]Research shows skateboards always win[[/eg]]').some((p) => 
   assert.equal(r.flags.filter((f) => f.rule === 'compute_equal').length, 1);
   assert.equal(r.flags.filter((f) => f.rule === 'blind_compute').length, 1);
   assert.ok(path.basename(__filename));
+  // The gate takes the layer only when switched on, and its findings go to the decider.
+  const gate = require('../services/fact-gate'); // eslint-disable-line global-require
+  process.env.FACT_GATE_READERS = 'x:r'; process.env.FACT_GATE_DECIDER = 'x:d'; process.env.FACT_GATE_NO_WAIT = '1';
+  const level = { context: { text: 'Subject: math.', trackId: 'math' }, trackId: 'math', blocks: [{ index: 0, block: 'Basic_TextBlock', data: { text: 'x' } }], checks: [] };
+  const seen = [];
+  const gcall = async (slot, args) => { seen.push(args.system.slice(0, 30)); if (args.system === F.TRANSCRIBE_SYSTEM) return stub(args.system); if (args.schemaName === 'submit_rulings') return { data: { rulings: [] }, cost: 0 }; return { data: { errors: [] }, cost: 0, model: 'r' }; };
+  const off2 = await gate.read({ ...level, call: gcall });
+  assert.equal(off2.claims.length, 0); assert.ok(!seen.some((x) => x.startsWith('You copy')), 'off: no transcription');
+  process.env.FACT_COMPUTE = 'on';
+  const on2 = await gate.read({ ...level, call: gcall });
+  delete process.env.FACT_COMPUTE;
+  assert.equal(on2.claims.length, 1); assert.equal(on2.stages.compute, 1);
   console.log('fact-100-test: ok');
 })().catch((e) => { console.error(e); process.exit(1); });
