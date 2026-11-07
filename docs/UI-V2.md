@@ -2,18 +2,20 @@
 
 The owner's chosen app structure, from `design-refs/ui-v2-mockups/` (`sheet.png`, `make.js`). Behind `UI_V2=on`, off by default. Testers arrive Nov 15.
 
+**The look is look v4**, approved by the owner: `design-refs/ui-v4-mockups/` (`sheet.png` for phones, `sheet-large.png` for tablet and desktop, `make.js` for its tokens and CSS). White pages, graphite text, Savant blue, DM Serif Display for headings and the wordmark, Atkinson Hyperlegible for the rest. Main actions are full pills on a 6 px edge; answers, options and tiles are raised on a 4 px edge and sink when pressed or picked. The giraffe is the original Sunny SVG from `js/start-tutor.js`, never redrawn: it guides each screen, holds the question in its bubble, and gives the answer there, tinted. On a screen where it stands, tapping it opens the chat and holding it starts the voice call, through the top bar's giraffe (`js/ui2/look.js` passes the press on, so the timing and every gate stay in `js/tutor-giraffe.js` and `js/tutor-dock.js`). Where it doesn't, the small one stays in the top bar. Sizes: phone first; tablet from 768 px, a 640 px column; desktop from 1025 px, a 960 px column, the menu a rail, the chat a panel beside the page; buttons 260 to 360 px there.
+
 ## How it is built
 
-- `services/ui-v2.js`: when the flag is on, adds to each listed page's HTML: `data-ui2="on"`, `css/ui2/tokens.css`, `css/ui2/app.css`, `js/ui2/boot.js`, `js/ui2/shell.js`, and on Home `js/ui2/home.js`. Off, it only calls `next()`, so every page is the same file as before. `scripts/ui-v2-test.js` checks the bytes.
+- `services/ui-v2.js`: when the flag is on, adds to each listed page's HTML: `data-ui2="on"`, `css/ui2/tokens.css`, `css/ui2/look.css`, `css/ui2/app.css`, `js/ui2/boot.js`, the giraffe, `js/ui2/look.js`, `js/ui2/shell.js`, and on Home `js/ui2/home.js`. On `/start` it adds `css/ui2/start.css` and `js/ui2/start.js`, and serves `/js/start.js` with three small hooks, each an exact-string replacement the test checks. Off, it only calls `next()`, so every page, `/start` and its script are the files as they are. `scripts/ui-v2-test.js` checks the bytes.
 - No existing file under `public/` is edited. The existing scripts still draw every page, with all their decisions, gating, consent rules, scoring, player and fact-check paths. The new files move and restyle what they drew.
-- Every colour is a token in `css/ui2/tokens.css`; `app.css` has none of its own (tested), so a colour picker can come last. The older component tokens point at the new ones, so pages not yet rearranged already have the Sunny colours.
+- Every colour is a token in `css/ui2/tokens.css`; `look.css`, `app.css` and `start.css` have none of their own (tested), so a colour picker can come last. The older component tokens point at the new ones, so pages not yet rearranged already have the new colours and buttons. They wait on the owner's look at the real screens.
 - Everything is a view of `/dashboard` (`/dashboard#everything`). It holds the real subject cards, planner, recent sessions and offers, moved rather than copied. Other pages link to it, so there is no second copy of any decision.
 
-Tests: `node scripts/ui-v2-test.js`, `node scripts/ui-v2-browser-test.js`. Owner's look: `node scripts/ui-v2-sheet.js`.
+Tests: `node scripts/ui-v2-test.js`, `node scripts/ui-v2-browser-test.js`. Owner's look: `node scripts/ui-v2-sheet.js` writes `design-refs/ui-v4-shots/contact-sheet.png` and `contact-sheet-large.png`.
 
 ## Slices
 
-1. Home, menu, top bar, question feedback. **Built. Stopped here for the owner's look.**
+1. Home, menu, top bar, question feedback, and the onboarding at `/start`, in look v4. **Built. Stopped here for the owner's look.**
 2. Subject page: level summary and the whole-grade view.
 3. Profile: scorecard first, streak and XP, sub-pages.
 4. Everything else in the table below.
@@ -125,9 +127,17 @@ Status: **done** is built and tested in structure A. **Colours** means the page 
 
 ### Left out on purpose
 
-Landing, sign-in, register, `/start` (already this look), privacy, the sealed Spanish tests, the ACT pages, parent pages, admin and owner tools. They do not get the flag. Parent pages may be worth doing last.
+Landing, sign-in, register, privacy, the sealed Spanish tests, the ACT pages, parent pages, admin and owner tools. They do not get the flag. Parent pages may be worth doing last.
 
 ## What cannot work as the mockup showed
+
+- **"Not sure" on a question:** the player has no such answer, and adding one is a change to scoring, so it isn't there. The placement inside `/start` has "I don't know", which is real.
+- **Check on every question:** the player grades on tap unless a question asks for Check, so most questions go straight to the answer.
+- **The big sum (3x + 2x):** a real question is one sentence. "Simplify: 3x + 2x" splits into the bubble and the big sum; anything else stays whole in the bubble. A question over 170 characters, or with a passage, stays on the page and the bubble says "Your turn."
+- **The "Start session" pill and the coach's "Help me work it out":** real features the mockup doesn't show. The first is a round clock button in the top bar, the second a thin pill under the answers. The running clock on a question is off the screen (still there for screen readers).
+- **"More" on the subjects and "Colours" in the menu:** neither exists yet. All the subjects show; the menu's tile is the dark and light switch. Several subjects show numbers rather than ticks, because the first is where the learner starts.
+- **Report a problem and "Change this":** a small flag in the corner of the bubble, and one small link over the buttons.
+- **Home's day dots, greeting and "This week":** gone, as in the mockup. The steps sheet still opens from the "Next" line.
 
 - **"1 of 6 done, about 36 min left":** the plan never empties. `services/daily-plan.js` does not take off what was already done today, so after each sitting it fills the chosen minutes again. Home shows today's finished sittings as filled dots, so the count is true, but the queue grows and there is no "done for today" screen. A placement counts as a sitting. Changing this needs a change to the plan, which this work leaves alone.
 - **"A lesson of about 13 minutes, then 3 questions":** the plan does not know the question count before the session opens, so Home says only the minutes.

@@ -107,7 +107,7 @@ async function main() {
       return false;
     };
 
-    await t('Home: one strong button, the same first step as GET /api/plan/today, no tab bar, no streak or XP, dots', async () => {
+    await t('Home: one strong button, the same first step as GET /api/plan/today, no tab bar, no streak or XP, the big giraffe, the approved look', async () => {
       const { ctx, page, errors } = await open(ada, PHONE, '/dashboard');
       await page.waitForSelector('#u2-start');
       const plan = await page.evaluate(() => fetch('/api/plan/today').then((r) => r.json()));
@@ -239,8 +239,13 @@ async function main() {
       const e1 = await eve(1);
       const { ctx, page } = await open(e1, PHONE, `/session?enrollment=${e1.enrollment}&ordinary=1`);
       await page.waitForSelector('.player-head');
+      // A sitting can open on a lesson; go on to its first question.
+      for (let i = 0; i < 30 && !(await page.$('.choice')); i++) { // eslint-disable-line no-await-in-loop
+        await delay(300); // eslint-disable-line no-await-in-loop
+        const go = await page.$('.player button.btn-primary'); // eslint-disable-line no-await-in-loop
+        if (go) await go.click().catch(() => {}); // eslint-disable-line no-await-in-loop
+      }
       await page.waitForSelector('#u2-qguide .tutor-svg');
-      await page.waitForSelector('.choice');
       const asked = await page.innerText('#u2-qb');
       assert(asked.length > 3, 'the question is in the bubble');
       assert.strictEqual(await page.evaluate(() => document.querySelector('#u2-qguide svg').getAttribute('viewBox')), '-135 -250 270 280', 'cropped at the shoulders');

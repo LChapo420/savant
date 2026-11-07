@@ -21,6 +21,8 @@ Off the path, kept in the data and APIs, so any of it can come back (the screens
 | "Same idea, your version" | Removed: it would need a subject before it, and it is a stop on the way to the real lesson. The owner asked for the flow to just ask. Its pre-written examples left `start-content.js` |
 | The optional baseline and "tell me more" links on the last screen | The test is now in the flow; a learner who skipped it gets the link back. `/survey` still works |
 
+**Under `UI_V2=on`** (`public/js/ui2/start.js`, docs/UI-V2.md) the flow has one more step, "How do you want to learn?", after interests and before subjects: Savant's curriculum, My own material, Both. It is stored in `onboarding_answers.how`; `notes` is true for the last two. Curriculum goes on to subjects as before. My own material goes to `/my-material`, then home, with no subject or grade. Both goes through subject and grade, then the first-lesson screen's button goes to upload. On the public flow a guest can't upload, so saving the account comes first and the last screen goes to upload. A child account can't upload (`CHILD_MEDIA_UPLOAD`), so it never sees the step, and the server never stores an answer for it. "My own notes" leaves the subjects under the switch. With the switch off, none of this exists.
+
 ## 1. Inventory: what the old flow did and collected (step numbers are from the first version)
 
 | What | Where today | Stored in | Depends on it | In v2 |

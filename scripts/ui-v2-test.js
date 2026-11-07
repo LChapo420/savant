@@ -106,7 +106,7 @@ async function main() {
   ok('no existing file under public/ or the sealed folders differs from main, apart from what the tutor-giraffe merge brought in: only new files', () => {
     const git = (cmd) => execSync(cmd, { cwd: ROOT, encoding: 'utf8' }).trim();
     const out = git(`git diff --name-status ${BASE_COMMIT()} -- public spanish-check spanish-check-lc spanish-dictation routes`);
-    const giraffe = new Set(git(`git diff --name-only ${TUTOR_GIRAFFE_MERGE}^1 ${TUTOR_GIRAFFE_MERGE}`).split(/\r?\n/));
+    const giraffe = new Set(git(`git diff --name-only ${TUTOR_GIRAFFE_MERGE}~1 ${TUTOR_GIRAFFE_MERGE}`).split(/\r?\n/));
     const changed = out ? out.split(/\r?\n/).filter((l) => !l.startsWith('A')).map((l) => l.split(/\s+/).pop()).filter((f) => !giraffe.has(f)) : [];
     assert.deepStrictEqual(changed, []);
     for (const f of ['public/start.html', 'public/js/start.js', 'public/js/start-tutor.js', 'public/css/screens/start.css']) assert(!out.includes(f), `${f} is untouched`);
