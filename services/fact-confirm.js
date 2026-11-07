@@ -38,7 +38,7 @@ const POLICIES = {
   independent_and_ruling: (f) => ({ act: f.recompute === 'false' || f.source === 'contradicted' || (independent(f) && yes(f) >= 1), by: ['independent and a ruling'] }),
 };
 
-function decide(flag, policy = 'hard_or_three_families') {
+function decide(flag, policy = 'three_families') {
   if (policy === 'any') return POLICIES.any(flag);
   if (policy === 'any') return POLICIES.any(flag);
   if (flag.recompute === 'true' && !(flag.source === 'contradicted')) return { act: false, by: ['recomputed: it holds'] };

@@ -1,5 +1,7 @@
 # The fact gate: how much a check catches (6 Nov 2026)
 
+**Next step: `docs/FACT-100.md`** (a harder held-out set, the confirm step for false alarms, frozen facts, what can be guaranteed).
+
 All numbers are AI-judged on planted errors and stored text. None of this is real-learner proof. Whether a check runs at all is `services/fact-guard.js` (docs/FACT-COVERAGE.md); when it runs belongs to branch `cold-write`.
 
 ## Verdict

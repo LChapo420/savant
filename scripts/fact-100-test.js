@@ -39,6 +39,27 @@ assert.ok(ill('[[eg]]Back in 1999 your 7 skateboards[[/eg]]').some((p) => /year/
 assert.ok(ill('[[eg]]As Tony Hawk showed, skateboards[[/eg]]').some((p) => /name/.test(p)));
 assert.ok(ill('[[eg]]Research shows skateboards always win[[/eg]]').some((p) => /general claim/.test(p)));
 
+// A flag is a suspicion. Nothing acts on it until a second step confirms it; a recomputation that holds clears it; an unconfirmed flag is logged and the block stays.
+const CF = require('../services/fact-confirm');
+const os = require('os');
+const fs = require('fs');
+
+assert.equal(CF.isOn(), false);
+const dp = (f, p) => CF.decide({ raisers: ['kimi31'], rulings: {}, source: null, recompute: null, ...f }, p).act;
+assert.equal(dp({}, 'three_families'), false, 'one reader alone confirms nothing');
+assert.equal(dp({ rulings: { grok43: true } }, 'three_families'), false);
+assert.equal(dp({ rulings: { grok43: true, ds41_coral: true } }, 'three_families'), true);
+assert.equal(dp({ raisers: ['ds41_coral'], rulings: { ds41_coral: true, grok43: false } }, 'three_families'), false, 'a raiser cannot rule on itself');
+assert.equal(dp({ raisers: ['kimi31', 'grok43'], rulings: { ds41_coral: true } }, 'three_families'), true);
+assert.equal(dp({ source: 'contradicted' }, 'hard_only'), true);
+assert.equal(dp({ recompute: 'false' }, 'hard_only'), true);
+assert.equal(dp({ recompute: 'true', rulings: { grok43: true, ds41_coral: true } }, 'three_families'), false, 'it recomputes as right: the flag is cleared');
+assert.equal(dp({ raisers: ['kimi31', 'grok43'] }, 'independent'), true);
+assert.equal(dp({ raisers: ['compute_ds41_coral', 'code'] }, 'independent'), false, 'two code paths are not two readers');
+const logFile = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'flag-')), 'log.jsonl');
+CF.logFlag({ level: 'math/x/1', claim: 'x' }, logFile);
+assert.equal(JSON.parse(fs.readFileSync(logFile, 'utf8').trim()).level, 'math/x/1');
+
 (async () => {
   // The rewrite check, with the local checkers stubbed: a fact the bank does not support fails; when the checkers are down it is not_checked, never a pass.
   const high = async (ps) => ps.map(() => ({ factcg: 0.9, minicheck: 0.9 }));
@@ -95,5 +116,16 @@ assert.ok(ill('[[eg]]Research shows skateboards always win[[/eg]]').some((p) => 
   const on2 = await gate.read({ ...level, call: gcall });
   delete process.env.FACT_COMPUTE;
   assert.equal(on2.claims.length, 1); assert.equal(on2.stages.compute, 1);
+  // FACT_CONFIRM: one family's flag is logged and changes nothing; two more families make it stand; a ruler that cannot answer does not count.
+  process.env.FACT_GATE_READERS = 'x:moonshotai/kimi'; process.env.FACT_CONFIRM_RULERS = 'x:deepseek-a,x:grok-b'; process.env.FACT_CONFIRM = 'on'; process.env.FACT_FLAG_LOG = logFile;
+  const flagging = (real) => async (slot, args) => { if (args.schemaName === 'submit_rulings') { if (real === null) throw new Error('down'); return { data: { rulings: [{ flag: 0, real: real === 'both' || (real === 'one' && slot.model === 'grok-b'), reason: 'r' }] }, cost: 0 }; } return { data: { errors: [{ where: 'block 0', quote: 'wrong words', why: 'w', truth: 't' }] }, cost: 0, model: slot.model }; };
+  const both = await gate.read({ ...level, call: flagging('both') });
+  assert.equal(both.claims.length, 1); assert.equal(both.stages.unconfirmed, 0);
+  const one = await gate.read({ ...level, call: flagging('one') });
+  assert.equal(one.claims.length, 0, 'two families are not enough'); assert.equal(one.stages.unconfirmed, 1);
+  const none = await gate.read({ ...level, call: flagging(null) });
+  assert.equal(none.claims.length, 0, 'rulers down: the part stays, the flag is logged');
+  assert.ok(fs.readFileSync(logFile, 'utf8').includes('wrong words'));
+  delete process.env.FACT_CONFIRM; delete process.env.FACT_CONFIRM_RULERS; delete process.env.FACT_FLAG_LOG;
   console.log('fact-100-test: ok');
 })().catch((e) => { console.error(e); process.exit(1); });
