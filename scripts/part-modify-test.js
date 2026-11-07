@@ -34,8 +34,17 @@ const SRC = { prompt: 'A prism is 3 long, 2 wide and 4 high. What is its volume?
 console.log('rules');
 const rb = pm.rulesFor(BRIEF, 'feedback').join(' | ');
 const rf = pm.rulesFor(FULL, 'feedback').join(' | ');
-check('a brief-feedback learner is told one or two sentences', /one or two sentences/.test(rb), rb);
-check('a detailed-feedback learner is told step by step', /step by step/.test(rf), rf);
+// Wording changed on purpose (modify-all): length now follows what the original has to say, so a writer is no longer told to fill three to six lines.
+check('a brief-feedback learner is told as short as the idea allows', /as short as the idea allows/.test(rb), rb);
+check('a detailed-feedback learner is told one step per line, only the steps it has', /one step per line/.test(rf) && /Never pad/.test(rf), rf);
+check('no rule asks for a clause about a wrong choice', !/why it fails/.test(rb + rf));
+const hintFor = (n) => pm.rulesFor(mk({ hint_dependence: n, productive_struggle: 100 - n, help_seeking: n, scaffolding_need: n }), 'hint').join(' ');
+check('hint size now follows the spec (it was always small)', ls.buildSpecFrom({ metrics: {} }).scaffolding.hintSize === 'partial' && /Hint size: (small|medium|large)/.test(hintFor(50)));
+check('the review line follows the goal without a model', /your test on 2026-12-01/.test(pm.reviewLine(FULL, { status: 'date', test_date: '2026-12-01' })) && /next week/.test(pm.reviewLine(FULL, null)));
+check('a learner we know nothing about keeps the fixed line', pm.reviewLineFor(null, {}) === pm.REVIEW_DEFAULT);
+check('an unreadable gate reply is not a pass', pm.readFactGate('sorry') === null && pm.readHintGate('{}') === null);
+check('a word the original already uses is not the rewrite bringing in a dislike', !pm.avoidedIn({ interests: { avoidDomains: ['food examples'] } }, { text: 'Plants make food.' }, 'Plants make their food, for example sugar.').length);
+check('a new word from the dislike is', pm.avoidedIn({ interests: { avoidDomains: ['food examples'] } }, { text: 'Plants grow.' }, 'Plants grow, like food in a pot.').length === 1);
 check('an anxious learner is told low stakes', /Low stakes/.test(rb));
 check('plain language for a low vocabulary ceiling', /plain everyday words/.test(rb));
 check('the two learners get different rules', rb !== rf);
@@ -72,11 +81,11 @@ check('a brief learner is refused a long rewrite', pm.check(BRIEF, 'feedback', S
   check('a learner we know nothing about is never rewritten', r5.source === 'stored');
 
   console.log('serving');
-  const item = { id: 1, rationale: 'stored', hint: 'stored hint', shaped: { rationale: 'for them', hint: 'their hint' } };
+  const item = { id: 1, rationale: 'stored', hint: 'stored hint', shaped: { rationale: 'for them', hint: 'their hint', fact_checked: true } };
   check('the rewrite is served when ready', pm.rationaleOf(item) === 'for them' && pm.hintOf(item) === 'their hint');
   check('the stored text is served when no rewrite is ready', pm.rationaleOf({ rationale: 'stored' }) === 'stored');
   delete process.env.PART_MODIFY_PARTS;
-  check('by default only the proven parts run (hint is not among them)', pm.partOn('feedback') && pm.partOn('lesson') && !pm.partOn('hint') && pm.hintOf(item) === 'stored hint');
+  check('by default only feedback and review run (hint, lesson and voice did not pass)', pm.partOn('feedback') && pm.partOn('review') && !pm.partOn('lesson') && !pm.partOn('voice') && !pm.partOn('hint') && pm.hintOf(item) === 'stored hint');
   process.env.PART_MODIFY_PARTS = 'feedback,hint,review,lesson';
   process.env.PART_MODIFY = 'off';
   check('PART_MODIFY=off serves the stored text', pm.rationaleOf(item) === 'stored' && pm.hintOf(item) === 'stored hint');
@@ -108,10 +117,18 @@ check('a brief learner is refused a long rewrite', pm.check(BRIEF, 'feedback', S
   check('not twice in a day', !pm.courseStale({ ...course, lessons_refreshed_at: new Date().toISOString() }, FULL));
   check('a course without a signature is left alone', !pm.courseStale({ status: 'ready' }, FULL));
   const skill = { title: 'Prisms', lesson: { paragraphs: ['A prism has 3 sides to multiply, 3 x 2 x 4 = 24.'], key_points: ['Multiply the sides.'] } };
-  const para = await pm.rewriteLesson({ spec: FULL, skill, llm: async () => ({ paragraphs: ['Multiply the sides: 3 x 2 x 4 = 24. Each side is one number in the product.'] }) });
-  check('a lesson rewrite that keeps the numbers is accepted', Array.isArray(para) && para.length === 1, para);
-  const bad = await pm.rewriteLesson({ spec: FULL, skill, llm: async () => ({ paragraphs: ['Multiply the sides: 3 x 2 x 5 = 30.'] }) });
-  check('a lesson rewrite that changes a number is refused', bad === null);
+  // The writer now answers sentence by sentence (see LESSON_SYSTEM): a sentence that loses a number goes back to the stored sentence, and nothing changed means nothing is served.
+  const para = await pm.rewriteLesson({ spec: FULL, skill, llm: async () => ({ sentences: [['Multiply the sides of the prism: it has 3 sides to multiply, 3 x 2 x 4 = 24.']] }) });
+  check('a lesson rewrite that keeps the numbers is accepted', Array.isArray(para) && /Multiply the sides of the prism/.test(para.join(' ')), para);
+  const bad = await pm.rewriteLesson({ spec: FULL, skill, llm: async () => ({ sentences: [['Multiply the sides: 3 x 2 x 5 = 30.']] }) });
+  check('a lesson rewrite that changes every number is refused', bad === null, bad);
+  const two = { title: 'Prisms', lesson: { paragraphs: ['A prism has 3 sides to multiply, 3 x 2 x 4 = 24. Volume is measured in cubes.'], key_points: [] } };
+  const mixed = await pm.rewriteLesson({ spec: FULL, skill: two, llm: async () => ({ sentences: [['It is 3 x 2 x 5 = 30.'], ['We measure volume in cubes.']] }) });
+  check('a sentence that loses a number goes back to the stored one', Array.isArray(mixed) && /3 x 2 x 4 = 24/.test(mixed.join(' ')) && /We measure volume/.test(mixed.join(' ')) && !/30/.test(mixed.join(' ')), mixed);
+  const gated = await pm.rewriteLessonDetail({ spec: FULL, skill: two, llm: async () => ({ sentences: [['A prism has 3 sides to multiply, 3 x 2 x 4 = 24.'], ['We measure volume in cubes.']], comparison: 'It is like stacking crates.' }), gate: async (part, source, text) => (/crates/.test(text) ? { ok: false, problems: ['new: crates'] } : { ok: true, problems: [] }) });
+  check('the comparison is dropped first when the gate objects', gated.paragraphs && !/crates/.test(gated.paragraphs.join(' ')), gated);
+  const never = await pm.rewriteLessonDetail({ spec: FULL, skill: two, llm: async () => ({ sentences: [['A prism has 3 sides to multiply, 3 x 2 x 4 = 24.'], ['We measure volume in cubes.']] }), gate: async () => ({ ok: false, problems: ['new: x'] }) });
+  check('a lesson the gate never passes is refused', never.paragraphs === null);
 
   try { fs.unlinkSync(process.env.DB_FILE); } catch { /* temp */ }
   console.log(failures ? `\n${failures} FAILED` : '\nall part-modify checks passed');

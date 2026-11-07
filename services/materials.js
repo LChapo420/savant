@@ -271,7 +271,7 @@ function pub(row, withText) {
 }
 
 function list(userId) {
-  return db.find('materials', (m) => m.user_id === userId).map((m) => pub(m, false));
+  return db.forUser('materials', userId).slice().map((m) => pub(m, false));
 }
 
 function get(userId, id, withText) {
@@ -317,7 +317,7 @@ function understandAsync(text, rich, kind) {
 }
 
 function add(userId, { title, text, rich, kind, pages, sourceName, ocr: viaOcr, files, warnings, understood }) {
-  const mine = db.find('materials', (m) => m.user_id === userId);
+  const mine = db.forUser('materials', userId).slice();
   if (mine.length >= MAX_ITEMS) return fail(`You can keep ${MAX_ITEMS} materials. Delete one first.`, 'limit');
   if (mine.reduce((s, m) => s + m.chars, 0) + text.length > MAX_TOTAL_CHARS) return fail('That would take you over your storage limit. Delete a material first.', 'limit');
   const row = db.insert('materials', {
@@ -438,7 +438,7 @@ function remove(userId, id) {
     require('./material-cards').removeForMaterial(userId, id); // eslint-disable-line global-require
     require('./material-podcast').removeForMaterial(userId, id); // eslint-disable-line global-require
     require('./material-notes').removeForMaterial(userId, id); // eslint-disable-line global-require
-    db.flush();
+    db.flush(); // a deleted upload's text leaves the disk now, not at the next save
   }
   return n > 0;
 }

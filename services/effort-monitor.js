@@ -76,21 +76,50 @@ function relKnobs() {
 let typicalCache = null;
 let typicalBuilds = 0; // how many times the map was built (tests: once per TTL, never per answer)
 /** itemKey -> median ms over every learner's timed answers (answered, not set aside); rebuilt every TTL. */
+function addTiming(lists, i) {
+  const ms = Number(i.ms);
+  if (!(ms > 0) || i.reserved || i.correct === null || i.correct === undefined) return;
+  const key = bank.itemKey(i);
+  if (!key) return;
+  if (!lists.has(key)) lists.set(key, []);
+  lists.get(key).push(ms);
+}
+
+// Past OBJ_RAPID_BIG_STORE rows (200,000) a rebuild reads the table a slice at a time between requests, and readers keep the last map until it is
+// done: on a big store this was a stop of over a second for everyone, every ten minutes (beta load test, Nov 2026). Under that, as it always was.
+let typicalRebuilding = false;
+function rebuildTypicalInSlices(rows) {
+  if (typicalRebuilding) return;
+  typicalRebuilding = true;
+  const lists = new Map();
+  const end = rows.length;
+  let at = 0;
+  const step = () => {
+    const until = Math.min(end, at + 20000);
+    for (; at < until; at++) if (rows[at]) addTiming(lists, rows[at]);
+    if (at < end) { setImmediate(step); return; }
+    typicalRebuilding = false;
+    finishTypical(lists);
+  };
+  setImmediate(step);
+}
+
 function typicalTimes() {
   // No environment read on a hit: process.env is slow on Windows, and this runs once per answer read.
   if (typicalCache && Date.now() - typicalCache.at < typicalCache.ttl) return typicalCache.map;
+  const rows = typeof db.all === 'function' ? db.all('items') : db.find('items', () => true);
+  if (typicalCache && rows.length > Number(process.env.OBJ_RAPID_BIG_STORE || 200000)) {
+    rebuildTypicalInSlices(rows);
+    return typicalCache.map;
+  }
+  const lists = new Map();
+  for (const i of rows) addTiming(lists, i);
+  return finishTypical(lists);
+}
+
+function finishTypical(lists) {
   const { TTL_MS } = relKnobs();
   typicalBuilds++;
-  const rows = typeof db.all === 'function' ? db.all('items') : db.find('items', () => true);
-  const lists = new Map();
-  for (const i of rows) {
-    const ms = Number(i.ms);
-    if (!(ms > 0) || i.reserved || i.correct === null || i.correct === undefined) continue;
-    const key = bank.itemKey(i);
-    if (!key) continue;
-    if (!lists.has(key)) lists.set(key, []);
-    lists.get(key).push(ms);
-  }
   // Only items with enough timed answers are kept: the rest use the fixed line,
   // and an empty map lets rapidLine() skip the item key entirely.
   const { MIN_N } = relKnobs();
@@ -141,7 +170,7 @@ function scored(session) {
  * has already been asked.
  */
 function parallel({ userId, session, item }) {
-  const avoid = new Set(db.find('items', (i) => i.user_id === userId && i.skill_id === item.skill_id)
+  const avoid = new Set(db.forUser('items', userId).filter((i) => i.skill_id === item.skill_id)
     .slice(-600).map((i) => bank.itemKey(i)));
   avoid.add(bank.itemKey(item));
   let any = null;

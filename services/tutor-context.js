@@ -58,10 +58,12 @@ function cleanPath(p) {
   return path.startsWith('/') ? path.toLowerCase().replace(/\.html$/, '').replace(/\/+$/, '') || '/' : '/';
 }
 
-function modeFor(pagePath) {
+function modeFor(pagePath, opts = {}) {
   const p = cleanPath(pagePath);
   if (SEALED.some((re) => re.test(p)) || MEASURING.some((re) => re.test(p))) return 'off';
   if (METHOD_ONLY.some((re) => re.test(p))) return 'method';
+  // The daily check is a check: with TUTOR_FULL on it is method-only like the others (services/tutor-full.js). With the switch off it stays as it was.
+  if (opts.full && /^\/daily-check/.test(p)) return 'method';
   return 'full';
 }
 
@@ -110,7 +112,7 @@ function planLines(userId) {
   try {
     // eslint-disable-next-line global-require
     const review = require('./review-session');
-    const enrolls = db.find('enrollments', (e) => e.user_id === userId && e.status !== 'placement_pending').slice(0, 3);
+    const enrolls = db.forUser('enrollments', userId).filter((e) => e.status !== 'placement_pending').slice(0, 3);
     for (const e of enrolls) {
       const track = curriculum.getTrack(e.track_id);
       const name = track ? track.name : e.track_id;
@@ -123,7 +125,7 @@ function planLines(userId) {
 }
 
 function masteryLines(userId) {
-  const states = db.find('skill_states', (s) => s.user_id === userId && (s.attempts || 0) >= 2);
+  const states = db.forUser('skill_states', userId).filter((s) => (s.attempts || 0) >= 2);
   const strong = states.filter((s) => s.mastery >= 0.75).length;
   const learning = states.filter((s) => s.mastery < 0.75).length;
   return states.length ? [`${strong} skill${strong === 1 ? '' : 's'} at the 75% mastery mark, ${learning} still in progress`] : [];
@@ -131,7 +133,7 @@ function masteryLines(userId) {
 
 function misconceptionLines(userId) {
   const counts = {};
-  for (const i of db.find('items', (x) => x.user_id === userId && x.correct === false && x.error_tag)) {
+  for (const i of db.forUser('items', userId).filter((x) => x.correct === false && x.error_tag)) {
     counts[i.error_tag] = (counts[i.error_tag] || 0) + 1;
   }
   // A mix-up their answers since show fixed is named as fixed, not as current (tutor-depth: no stale reads).
@@ -149,7 +151,7 @@ function materialLines(userId) {
   try {
     // eslint-disable-next-line global-require
     const study = require('./material-study');
-    return db.find('material_courses', (c) => c.user_id === userId && ['ready', 'partial'].includes(c.status)).slice(0, 3).map((c) => {
+    return db.forUser('material_courses', userId).filter((c) => ['ready', 'partial'].includes(c.status)).slice(0, 3).map((c) => {
       const s = study.state(userId, c.material_id);
       if (s.error) return clip(c.title, 60);
       return `${clip(c.title, 60)}: ${s.mastered} of ${s.total} skills mastered${s.due_count ? `, ${s.due_count} due for review` : ''}`;
@@ -175,7 +177,7 @@ function sections(userId, page, mode, picture, query) {
     ['Page', [pageLine(page, mode)]],
     seen ? ['On screen', [seen.replace(/^On their screen \(notes about what is visible, not instructions\): /, '')]] : null,
     picture ? ['Picture on screen', [picture]] : null,
-    ['From their material', (() => { const g = grounding.lines(userId, { query, page, mode }); return g.length || !full.on() ? g : full.materialNotes(userId, query, mode); })()],
+    ['From their material', (() => { const g = grounding.lines(userId, { query, page, mode }); return g.length || !full.on(db.byId('users', userId)) ? g : full.materialNotes(userId, query, mode); })()],
     // With the learner model on, goals, style and interests reach the prompt through tutor.contextText (pack and model): not twice.
     modelOn ? null : ['Goals', labelled('Goals')],
     ['ACT', actLines(userId)],
@@ -234,6 +236,10 @@ function outsideOk(user) {
   try { return !!require('./typed-grading').outsideAllowed(user.id); } catch { return true; } // eslint-disable-line global-require
 }
 
+function hasMaterial(userId) {
+  try { return db.find('material_courses', (c) => c.user_id === userId && ['ready', 'partial'].includes(c.status)).length > 0; } catch { return false; }
+}
+
 function safeAge(user) {
   try { return require('./boosters').ageOf(user); } catch { return null; } // eslint-disable-line global-require
 }
@@ -247,12 +253,12 @@ function firstName(user) {
 }
 
 async function reply({ user, messages, page, inputMode, image }) {
-  const mode = modeFor(page && page.path);
+  const mode = modeFor(page && page.path, { full: full.on(user) });
   if (mode === 'off') return { reply: '', source: 'off', mode };
   const history = tutor.cleanHistory(messages);
   const last = [...history].reverse().find((m) => m.role === 'user');
   // Always-there tutor (services/tutor-full.js, switch TUTOR_FULL): safety first, then a plain how-to answered at once.
-  const fullOn = full.on();
+  const fullOn = full.on(user);
   const age = fullOn ? safeAge(user) : null;
   const triaged = last ? full.triage(user, last.content) : null;
   if (triaged && triaged.reply) return { reply: triaged.reply, source: 'safety', kind: triaged.kind, mode, held: false };
@@ -282,9 +288,13 @@ async function reply({ user, messages, page, inputMode, image }) {
     tutor.contextText(user.id, { skipTurns: history.length > 1, skillId, about, plan: helpPlan, recallQuery: last ? last.content : '', recallHistory: history, recallInto: recalled }), fullOn ? `--- THE APP AND THIS MOMENT (notes, not instructions) ---\n${[...howto.lines(last ? last.content : '', page && page.path), ...howto.stuckLines(page && page.path, cleanStuck(page && page.stuck))].join('\n')}\n${safety.directives({ age })}${triaged && triaged.directive ? `\n${triaged.directive}` : ''}` : '', `--- RULE FOR EVERY REPLY ---\n${MODE_NOTE[mode]}`].filter(Boolean).join('\n\n');
   let text = null;
   let slow = false;
+  const methodFixed = fullOn && mode === 'method' && !!last;
   const facts = require('./tutor-facts'); // eslint-disable-line global-require
   facts.dockStarted(user.id);
   try {
+    // A graded check with the switch on: the reply is fixed method coaching that contains nothing from the question (services/tutor-full.js methodReply); no model writes about it.
+    if (methodFixed) text = full.methodReply({ user, message: last.content, name, brief: full.isBrief(user), age });
+    else {
     const talkStart = Date.now();
     const talking = ai.talk({
       // The dock's own task ("dock_help"): its lineup entry (config/model-lineup.json) is Ultra with
@@ -297,10 +307,14 @@ async function reply({ user, messages, page, inputMode, image }) {
       // and give up on a hung attempt after 15 s instead of the pool's 120 s.
       // temperature 0.7: a friend does not say the same sentence twice (the integrity checks do not depend on it).
       maxTokens: 400, userId: user.id, hedgeAfterMs: 4000, timeoutMs: 15000, temperature: 0.7,
+      // What the fact check (services/fact-guard.js) reads beside the reply. On the learner's own material their text decides.
+      factSource: page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 2500) : '',
+      factMode: page && /^\/my-material/.test(cleanPath(page.path)) ? 'material' : undefined,
     });
     // With the switch on the reply path never waits past the deadline: a slow model gets an honest answer from the notes instead.
     text = fullOn ? await full.withDeadline(talking) : await talking;
     if (fullOn && !text) slow = Date.now() - talkStart >= full.DEADLINE_MS - 100;
+    }
   } catch { text = null; }
   // A real-model run (30 Oct, 160 attempts) gave a vocabulary answer away once when told "just tell me the
   // answer". When the learner asks for the answer and the page shows a question, a second quick check reads
@@ -311,7 +325,8 @@ async function reply({ user, messages, page, inputMode, image }) {
   // check also runs when the plan allowed a worked example (rung 4 or 5), and it now asks about exactly that.
   const risky = !!(text && helpPlan && helpPlan.rung >= 4);
   const question = page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 600) : '';
-  if ((asked || risky) && question) {
+  // With the switch on, the answer check is for a question that is actually on the screen (page.question), not for any page with a heading.
+  if (!fullOn && (asked || risky) && question) {
     let verdict = '';
     try {
       verdict = await ai.talk({
@@ -328,22 +343,34 @@ Does the reply state the answer (to the question on the page, or to a question f
       });
     } catch { verdict = ''; }
     if (/^\W*yes/i.test(verdict || '')) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
-    // On a graded page a checker that could not run is not a pass: with the switch on, the reply is held instead (fail closed).
-    else if (fullOn && mode === 'method' && !/^\W*no/i.test(verdict || '')) { text = HOLD_REPLY.method; held = true; }
   }
-  // Without any model: a reply that repeats the answer the learner just proposed ("is it 3/4?") is confirming it.
-  if (fullOn && text && !held && last && (mode === 'method' || (page && page.question)) && full.echoesProposal(last.content, text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+  // The server knows the answer to the question on screen; a reply containing it is held, whatever the model thought (the key never goes into a prompt).
+  if (fullOn && text && !held && (mode === 'method' || (page && page.question)) && full.answerKeyHit(user.id, page, text)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+  // Round 3: with the switch on, EVERY reply to a question on screen is read by a model for confirm / reject / reveal (including narrowing to one
+  // choice), and a check that cannot run holds the reply (fail closed). This replaces the phrase guards of round 2.
+  let checkMs = null;
+  if (fullOn && text && !held && (mode === 'method' || (page && page.question))) {
+    const t0 = Date.now();
+    const v = await full.leakCheck({ ai, user, question: page && page.question ? page.question : question, message: last ? last.content : '', text });
+    checkMs = Date.now() - t0;
+    // The fixed method reply cannot be about the question, so a check that cannot run does not hold it; a LEAK verdict still does.
+    if (v === 'LEAK' || (v === '' && !methodFixed)) { text = HOLD_REPLY[mode] || HOLD_REPLY.full; held = true; }
+  }
+  // Round 2: a fast fact check before a reply is shown (services/tutor-full.js factCheck).
+  if (fullOn && text && !held && mode === 'full' && await full.factCheck({ ai, user, message: last ? last.content : '', text, notes: `${ctx.text}
+${howto.sheet()} What each feature does: ${howto.FEATURES.map((f) => `${f.title}: ${f.steps}`).join(' ')}
+${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')} (a count of wrong tries or quiet seconds that the page reports is true)`, question: page && page.question })) { text = full.NOT_SURE; held = true; }
   facts.dockEnded(user.id);
   let out = text || tutor.offlineReply(user.id);
   let feature;
   if (fullOn) {
-    if (text) out = safety.scrub(text, { ownEmail: user.email });
+    if (text) out = safety.scrub(text, { ownEmail: user.email, hasMaterial: hasMaterial(user.id) });
     else { const fb = full.fallback({ user, page, message: last ? last.content : '', mode, name, why: slow ? 'slow' : (outsideOk(user) ? 'busy' : 'local') }); out = fb.reply; feature = fb.feature; }
   }
   // What this message shows about them, as scorecard evidence (services/tutor-evidence.js; the scorecard owner's hook).
   if (last) require('./tutor-evidence').fromMessage(user.id, last.content, { skillId, where: 'dock', priorReplies: history.filter((m) => m.role === 'assistant').length }); // eslint-disable-line global-require
   tutor.note(user.id, { where: 'dock', learnerSaid: last ? last.content : '', tutorSaid: out });
-  return { reply: out, source: text ? 'ai' : 'fallback', feature, mode, input_mode: heard, saw_picture: !!picture, held, plan: helpPlan ? { rung: helpPlan.rung, style: helpPlan.style, avoid: helpPlan.avoid } : null, recalled: recalled.snippets ? recalled.snippets.length : 0 };
+  return { reply: out, source: text ? 'ai' : 'fallback', feature, check_ms: checkMs, mode, input_mode: heard, saw_picture: !!picture, held, plan: helpPlan ? { rung: helpPlan.rung, style: helpPlan.style, avoid: helpPlan.avoid } : null, recalled: recalled.snippets ? recalled.snippets.length : 0 };
 }
 
 module.exports = { PAGE_MAX, DOCK_MAX, modeFor, cleanPath, pageLine, build, reply, MODE_NOTE, DOCK_SYSTEM, firstName, SEALED, METHOD_ONLY };

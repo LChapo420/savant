@@ -79,7 +79,7 @@ function interestLine(userId) {
   try {
     /* eslint-disable global-require */
     const lm = require('./tutor-learner-model');
-    const t = lm.tastes(userId, require('./tutor-facts').list(userId), (db.findOne('learner_records', (r) => r.user_id === userId) || {}).facts || []);
+    const t = lm.tastes(userId, require('./tutor-facts').list(userId), ((db.forUser('learner_records', userId)[0] || null) || {}).facts || []);
     /* eslint-enable global-require */
     if (t.dropped.some((d) => d.from === 'survey')) return clip(t.interests.map((x) => x.text).join('; '), 240);
   } catch { /* keep the survey's words */ }
@@ -101,7 +101,7 @@ function scorecardLines(userId) {
 }
 
 function weakSkillLines(userId) {
-  return db.find('skill_states', (s) => s.user_id === userId && (s.attempts || 0) >= 3)
+  return db.forUser('skill_states', userId).filter((s) => (s.attempts || 0) >= 3)
     .sort((a, b) => a.mastery - b.mastery)
     .slice(0, 4)
     .filter((s) => s.mastery < 0.7)
@@ -109,7 +109,7 @@ function weakSkillLines(userId) {
 }
 
 function activeEnrollments(userId) {
-  return db.find('enrollments', (e) => e.user_id === userId && e.status !== 'placement_pending')
+  return db.forUser('enrollments', userId).filter((e) => e.status !== 'placement_pending')
     .sort((a, b) => String(b.last_session_at || '').localeCompare(String(a.last_session_at || '')))
     .slice(0, 3);
 }
@@ -117,7 +117,7 @@ function activeEnrollments(userId) {
 function topicLines(userId) {
   // eslint-disable-next-line global-require
   const topics = require('../content/topics');
-  const recent = db.find('lessons', (l) => l.user_id === userId).slice(-3).reverse().map((l) => clip(String(l.title || '').replace(/^lesson-\((.*)\)$/i, '$1'), 70)).filter(Boolean);
+  const recent = db.forUser('lessons', userId).slice().slice(-3).reverse().map((l) => clip(String(l.title || '').replace(/^lesson-\((.*)\)$/i, '$1'), 70)).filter(Boolean);
   const upcoming = [];
   for (const e of activeEnrollments(userId)) {
     const grade = curriculum.getGrade(e.track_id, e.grade_id);
@@ -139,7 +139,7 @@ function topicLines(userId) {
 
 /** Questions they got wrong lately: what was asked and what they said, never the key. */
 function mistakeLines(userId) {
-  return db.find('items', (i) => i.user_id === userId && i.correct === false && i.role !== 'placement')
+  return db.forUser('items', userId).filter((i) => i.correct === false && i.role !== 'placement')
     .slice(-4).reverse()
     .map((i) => `${curriculum.skillName(i.skill_id)}: "${clip(i.prompt, 90)}" they answered "${clip(i.user_answer, 40)}"${i.error_tag ? ` (${String(i.error_tag).replace(/_/g, ' ')})` : ''}`);
 }
@@ -152,6 +152,7 @@ function pack(userId) {
   const lines = [];
   const g = goalLines(userId);
   if (g.length) lines.push(`Goals they set: ${g.join(' | ')}`);
+  try { const sgl = require('./study-goal').tutorLines(userId); if (sgl.length) lines.push(`What they want from each subject (their choice): ${sgl.join(' | ')}`); } catch { /* no study goal */ } // eslint-disable-line global-require
   const interests = interestLine(userId);
   if (interests) lines.push(`Interests, in their words: ${interests}`);
   const how = scorecardLines(userId);
@@ -169,7 +170,7 @@ function pack(userId) {
 // ── memory ─────────────────────────────────────────────────────────────────
 
 function memoryOf(userId) {
-  return db.findOne('tutor_memory', (m) => m.user_id === userId) || null;
+  return (db.forUser('tutor_memory', userId)[0] || null) || null;
 }
 
 function view(userId) {

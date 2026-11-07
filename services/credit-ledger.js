@@ -112,7 +112,7 @@ function makeLedger(cfg) {
   function write(data) {
     const tmp = `${FILE()}.${process.pid}.tmp`;
     fs.writeFileSync(tmp, JSON.stringify(data, null, 1));
-    fs.renameSync(tmp, FILE());
+    require('./durable-file').commit(tmp, FILE(), { backup: true }); // eslint-disable-line global-require
   }
 
   const reservedUsd = (data) => Object.values(data.reservations || {}).reduce((a, r) => a + (Number(r.usd) || 0), 0);
@@ -143,7 +143,7 @@ function makeLedger(cfg) {
   /** The current state. Never throws. */
   function status() {
     try {
-      const data = read();
+      const data = require('./ledger-peek').peek(FILE(), read); // eslint-disable-line global-require
       return { ok: true, ...totals(data), calls: data.calls, refused_calls: data.refused_calls, file: FILE() };
     } catch (err) {
       return { ok: false, reason: err.message, cap_usd: capUsd(), headroom_usd: 0, file: FILE() };

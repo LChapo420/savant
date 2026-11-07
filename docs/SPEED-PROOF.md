@@ -5,6 +5,30 @@ Test: `node scripts/speed-proof-test.js` (synthetic data only; none of it says a
 
 Simulated and AI-judged results are never read by this report. Only rows written for real accounts are.
 
+## Changed 6 Nov 2026, after walking it as a tester (`scripts/speed-proof-walk.js`, and a browser at phone width on a database copy)
+- **Rows are per lesson stretch, not per coarse skill.** A grade has about 8 coarse skills over about 70 lessons. Per coarse skill a tester would have met a plain arm about once a grade, and a high coarse mastery called every later lesson "understood" on its third answer. Below, "skill" now means a lesson stretch. Old rows without `from` keep the old reading.
+- **Understood** is the app's own proof for that lesson's objective (`services/coverage.js`), the same rule in both arms, else the tracker on that stretch's answers.
+- **Total minutes.** `minutes_total` and `speedup_total` count every answer on the stretch, retention levels included, because the owner's claim counts the whole road. Reviews asked later under other levels are in neither number.
+- **Typed items can be checked.** 73% of items are typed and the check only took multiple choice, so many lessons could never be asked. A typed item now gets other answers the learner met on that skill as its choices.
+- **The memory check has its own dashboard card**, for learners with a plain arm. Before, it lived only inside the 10 minute daily check, behind the other delayed check. Plain lessons are asked first, since they are 1 in 8 and only 3 questions fit a day.
+- **No speed lever on a plain lesson**, and the learner can now switch: the consent wording promised a switch that had no button.
+
+## What this proof can and cannot show (read this first)
+**It cannot show 4x against normal studying, whatever the truth is.** The plain arm is the app itself: same questions, same proof rule, same retention levels, same reviews. It only leaves out tailoring and the levers. So it measures what tailoring and the levers add. With today's defaults (fast item only) the two arms run almost the same path, so expect a ratio near 1x to 1.3x. A student rereading a textbook is not in it.
+**The time cap also tops it out.** A plain lesson moves to Savant at max(30 min, 3x the median Savant lesson), so once that median passes about 10 minutes a learner's ratio cannot go far above 4x. The report counts how often this bit (`plain_skills_stopped_by_time_cap`). The gate is unchanged, and the cap protects learners.
+**It will not read on Nov 15.** The earliest retention result is 30 days on, about Dec 15.
+
+## What a real result would take
+Against the plain arm, from the table below: a true 5x to 6x, and 100 to 250 learners with both arms and checks. A learner meets about 1 plain lesson in 8 to 11, since a plain lesson stays open and holds back the next draw, so each needs about 20 lessons for 2 plain ones. A true 4x exactly can never show, because the lower end must reach 4.
+
+Against normal studying, a separate group is needed, and nothing in the app supplies one:
+- Same material, same unannounced delayed test at 30 days, one group in Savant and one studying their own way, timed by a plain timer page. Randomised, not self-selected.
+- Speed gate, assuming a between-person log SD of 0.7 (assumed, no real data yet), 80% power, lower end at or above 4: a true 6x needs about 47 per group, a true 5x about 155.
+- Retention gate, assuming an SD of 20 points: a 5-point margin needs about 250 per group, a 10-point margin about 63. **This is the slow gate.**
+- So about 250 per group, about 500 people, for a claim with these margins. About 50 per group gives an honest "at least Nx" and would catch a true 6x on speed, but says little on retention.
+
+Reading a result: if the group study shows 2x, that matches the best course-level study found (docs/speed-real/ROUND3.md). 4x would be beyond anything found in a controlled study.
+
 ## What is measured, per real learner and skill
 - **Active minutes to understanding.** A study session's active time (`study_sessions.active_ms`) is shared over the answers given in it, each answer taking the time since the previous sign of activity (capped at the 5 minute idle cap), so reading before an answer counts for the skill answered next. Answers outside any session count their own recorded time (`items.ms`, capped). Placement, test-out and game answers are not learning time. "Understanding" is the first answer after which the skill's mastery is 0.8 or more (`events.mastery_after`), reached by learning, with at least 3 answers. A skill not yet understood is counted as such and shown, never dropped.
 - **Delayed retention checks** at 1, 7 and 30 days after understanding, and at the learner's chosen horizon (`services/retention-goal.js`; none for "forever"). Same shape as the existing delayed check (`boosters.delayed`: about 30 seconds, up to 3 multiple-choice questions on an earlier right answer), offered inside the daily check when none of the existing ones is due. Windows: day 1 (2 days), 7 (4), 30 (10), horizon (14). A point not answered in its window is "missed" and counted per arm, so uneven drop-out shows.

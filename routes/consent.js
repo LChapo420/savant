@@ -360,7 +360,25 @@ function publicConsent(user) {
 // ── deletion ─────────────────────────────────────────────────────────────────
 
 /** Collections that hold no learner's rows (shared content), or are handled apart. */
-const SHARED = new Set(['users', 'content_cache', 'themed_items', 'themed_log', 'placement_question_sets', 'fact_pools', 'parents', 'parental_consents', 'beta_blocks']);
+const SHARED = new Set(['fact_guard_stats', 'fact_recheck_findings', 'fact_recheck_state', 'users', 'content_cache', 'themed_items', 'themed_log', 'placement_question_sets', 'fact_pools', 'parents', 'parental_consents', 'beta_blocks']);
+
+/**
+ * Accounts deleted in the last hour. A model call in flight when the account went (a chat, an after-level read, a build) finishes later and writes its rows
+ * under the old id: the learner's own words, in assist_chats and tutor_memory, came back after "deleted" (bug sweep 2, 6 Nov). The sweep takes them out again.
+ */
+const LATE_ROWS_MS = 60 * 60 * 1000;
+const deletedRecently = new Map();
+function rememberDeleted(userId, at = Date.now()) { deletedRecently.set(userId, at); }
+function sweepLateRows(now = Date.now()) {
+  let removed = 0;
+  for (const [userId, at] of deletedRecently) {
+    for (const name of collectionNames()) {
+      if (!SHARED.has(name)) removed += db.remove(name, (r) => r && r.user_id === userId);
+    }
+    if (now - at > LATE_ROWS_MS) deletedRecently.delete(userId);
+  }
+  return removed;
+}
 
 /**
  * Delete a child's account and every row tied to it, and reduce the consent
@@ -369,11 +387,14 @@ const SHARED = new Set(['users', 'content_cache', 'themed_items', 'themed_log', 
 function deleteChild(consent, reason, by) {
   const childId = consent.child_user_id;
   const removed = {};
+  require('../services/account-deletion').clearFromSharedPlans(childId); // eslint-disable-line global-require
   for (const name of collectionNames()) {
     if (SHARED.has(name)) continue;
     const n = db.remove(name, (r) => r && r.user_id === childId);
     if (n) removed[name] = n;
   }
+  require('../services/block-levels').forgetLearner(childId);
+  rememberDeleted(childId);
   const files = require('../services/upload-retention').removeForUser(childId);
   if (files) removed.spanish_upload_files = files;
   require('../services/spanish-study-tests').removeForUser(childId);
@@ -400,10 +421,12 @@ function deleteChild(consent, reason, by) {
  * scripts/consent-test.js fails when the store has one this list lacks.
  */
 const KNOWN_COLLECTIONS = [
+    'fact_recheck_findings', 'fact_recheck_state', // services/fact-recheck.js: references to stored rows, no learner in them
+    'fact_guard_stats', // counts only (services/fact-guard.js): no learner in it, so nothing to delete or export
     'users', 'enrollments', 'skill_states', 'profiles', 'sessions', 'items', 'events', 'content_cache', 'themed_items', 'themed_log', 'ai_usage',
     'reports', 'lessons', 'remediations', 'streaks', 'essays', 'level_feedback', 'level_edits', 'scorecards',
     'level_signals', 'learner_records', 'level_debriefs', 'placement_question_sets', 'subject_placements',
-    'game_payloads', 'block_plans', 'lesson_layers', 'assist_chats', 'level_logs', 'chess_ratings', 'chess_puzzle_attempts',
+    'game_payloads', 'block_plans', 'lesson_layers', 'part_changes', 'assist_chats', 'level_logs', 'chess_ratings', 'chess_puzzle_attempts',
   'chess_rush_runs', 'chess_drill_cards', 'chess_drill_runs', 'fact_pools', 'piano_song_results', 'parents', 'parental_consents',
   'skill_records', 'study_sessions', 'enforcers', 'learner_goals', 'tutor_memory', 'tutor_modes', 'es_path_runs', 'es_review',
   'act_profiles', 'act_scores', 'act_study', 'spanish_study', 'spanish_study_checkins', 'spanish_study_tests', 'materials', 'material_courses', 'material_progress', 'material_packs', 'material_cards', 'material_podcasts', 'material_audio_jobs',
@@ -465,7 +488,7 @@ async function sendConfirmation(consent) {
  * called directly by the tests with a later `now`.
  */
 async function sweep(now = Date.now()) {
-  const out = { expired: 0, confirmed: 0, revoked_deleted: 0 };
+  const out = { expired: 0, confirmed: 0, revoked_deleted: 0, late_rows: sweepLateRows(now) };
   for (const c of db.all('parental_consents').slice()) {
     if (c.status === 'pending' && c.expires_at && Date.parse(c.expires_at) <= now) {
       deleteChild(c, 'expired', 'system');
@@ -519,7 +542,7 @@ const TEXT_FIELDS = [
  * account, whatever the opt-ins say: the research doc (section 2, the upload
  * row) prefers uploads disabled for children until a lawyer approves them.
  */
-const CHILD_MEDIA_UPLOAD = /^\/(es\/(asr|upload)|materials(\/(paste|link|transcript))?)$/;
+const CHILD_MEDIA_UPLOAD = /^\/(es\/(asr|upload)|materials(\/(paste|link|transcript|youtube|video|audio))?)$/;
 /** What a locked account can still reach. */
 const LOCKED_ALLOW = /^\/(auth\/|consent\/|health$)/;
 
@@ -540,6 +563,16 @@ function routePath(req) {
   let p = String(req.path || '');
   try { p = decodeURIComponent(p); } catch { /* malformed escapes: match as sent */ }
   return p.toLowerCase().replace(/\/{2,}/g, '/').replace(/(.)\/+$/, '$1');
+}
+
+/** What the learner just typed into a chat route, read for a crisis (services/tutor-full.js). Null when there is nothing to say. */
+function crisisIn(req) {
+  const b = req.body || {};
+  const last = Array.isArray(b.messages) ? [...b.messages].reverse().find((m) => m && m.role !== 'assistant' && typeof m.content === 'string') : null;
+  const said = last ? last.content : (typeof b.question === 'string' ? b.question : '');
+  if (!said) return null;
+  const t = require('../services/tutor-full').triage(req.user, said); // eslint-disable-line global-require
+  return t && t.reply ? t : null;
 }
 
 /** Mounted on /api before every router. */
@@ -566,6 +599,9 @@ function gate(req, res, next) {
     const outside = OUTSIDE_AI.some((re) => re.test(reqPath))
       || TEXT_FIELDS.some((t) => t.re.test(reqPath) && hasText(req.body, t.fields));
     if (outside) {
+      // A crisis message gets its fixed reply, not "this uses an outside AI service": that reply is written here and no model or outside service is involved.
+      const crisis = crisisIn(req);
+      if (crisis) return res.json({ reply: crisis.reply, source: 'safety', kind: crisis.kind, coached: true });
       return res.status(403).json({
         error: a.state === 'needs_age'
           ? 'Answer the date-of-birth question first: open Subjects to see it.'
@@ -671,7 +707,7 @@ router.get('/config', (req, res) => {
  * stands for a day); for a signed-in account with no age on file it is stored on
  * the account at once. Answers `route: 'self' | 'parent'`, never the threshold.
  */
-router.post('/age', limit('age-screen', 30, 60 * 60 * 1000), (req, res) => {
+router.post('/age', limit('age-screen', 120, 60 * 60 * 1000), (req, res) => {
   if (req.user && req.user.age_check) {
     return res.json({ route: req.user.age_check.needs_parent ? 'parent' : 'self', locked: true });
   }
@@ -768,7 +804,7 @@ router.post('/request/:token', limit('consent-answer', 20, 60 * 60 * 1000), asyn
   const password = String(body.password || '');
   if (parent) {
     const signedIn = req.parent && req.parent.id === parent.id;
-    if (!signedIn && !(await bcrypt.compare(password, parent.password_hash))) {
+    if (!signedIn && !(await require('../services/passwords').compare(password, parent.password_hash))) {
       return res.status(401).json({ error: 'That password does not match your parent account.' });
     }
   } else {
@@ -821,7 +857,7 @@ router.post('/parent/login', limit('parent-login', 20, 15 * 60 * 1000), async (r
   const password = String(req.body.password || '');
   const parent = db.findOne('parents', (p) => p.email === email);
   const hash = parent ? parent.password_hash : DUMMY_HASH;
-  const ok = await bcrypt.compare(password, hash);
+  const ok = await require('../services/passwords').compare(password, hash);
   if (!parent || !ok) return res.status(401).json({ error: 'That email and password do not match a parent account.' });
   await startParentSession(req, parent);
   res.json({ ok: true });
@@ -1067,6 +1103,7 @@ module.exports = {
   deleteChild,
   collectionNames,
   SHARED,
+  rememberDeleted,
   minimumAge,
   CONSENT_AGE,
   DEFAULT_CONSENT_AGE,

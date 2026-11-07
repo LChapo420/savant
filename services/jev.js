@@ -74,7 +74,7 @@ function writeLedger(ledger) {
   const tmp = `${file}.${process.pid}.tmp`;
   ledger.log = (ledger.log || []).slice(-1000);
   fs.writeFileSync(tmp, JSON.stringify(ledger, null, 1));
-  fs.renameSync(tmp, file);
+  require('./durable-file').commit(tmp, file, { backup: true }); // eslint-disable-line global-require
 }
 
 /** Everything counted against the budget: settled spend plus every open reservation. */

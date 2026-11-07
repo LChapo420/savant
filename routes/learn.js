@@ -29,6 +29,7 @@ const gamePayloads = require('../services/game-payloads');
 const gameAssignments = require('../config/game-assignments');
 const grading = require('../services/grading');
 const ai = require('../services/ai');
+const factGuard = require('../services/fact-guard');
 const scorecardHooks = require('../services/scorecard/hooks');
 const scorecardFootprints = require('../services/scorecard/footprints');
 const learnerRecord = require('../services/learner-record');
@@ -177,7 +178,13 @@ function sessionShape(session) {
     enrollment_id: session.enrollment_id || null,
     // The speed levers (services/speed-levers.js). Not sent at all with them off; a learner who asked for feedback at the end keeps today's flow.
     ...speedShape(session),
+    ...plainShape(session),
   };
+}
+
+/** The speed proof's plain lesson: the learner can switch it to the Savant way, as the consent wording promises. Not sent otherwise. */
+function plainShape(session) {
+  try { const p = require('../services/speed-proof').plainHere(session.user_id, session, session.level); return p ? { plain_way: p } : {}; } catch { return {}; } // eslint-disable-line global-require
 }
 
 function speedShape(session) {
@@ -428,6 +435,8 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
   const { session, items, lesson, essay } = await sessions.createSession({
     userId: req.user.id, enrollment, grade, level: atLevel,
   });
+  // A session that could not be made must not take the whole server down (an async route's throw is an unhandled rejection).
+  if (!session) return res.status(503).json({ error: 'This level could not be started. Try again in a moment.' });
   res.status(201).json({
     ...sessionShape(session),
     resumed: false,
@@ -579,6 +588,7 @@ router.post('/sessions/:id/answer', requireAuth, async (req, res) => {
     rationale: result.rationale,
     feedback: result.feedback || null,
     error_tag: result.errorTag || null,
+    ...partModify.voiceFields(req.user.id),
     ...(result.speed ? { speed: result.speed } : {}),
   });
 });
@@ -650,6 +660,14 @@ router.post('/sessions/:id/block-finish', requireAuth, async (req, res) => {
  * { id, choice, level }. Scorecard evidence only; the lesson is the same either way. Quietly ignored for an account that may not be measured more
  * (age screen unanswered, or under the consent age without a parent's agreement) and for anything but a real level of this learner's own sitting.
  */
+// A worked example read (SPEED_WORKED): nothing is scored, the item is set aside and the level goes on.
+router.post('/sessions/:id/worked', requireAuth, limit('worked', 240, 60 * 60 * 1000), (req, res) => {
+  const session = db.byId('sessions', Number(req.params.id));
+  if (!session || session.user_id !== req.user.id) return res.status(404).json({ error: 'That session is not yours.' });
+  if (!sessions.workedSeen(req.user.id, session, req.body && req.body.item_id, req.body && req.body.ms)) return res.status(400).json({ error: 'That is not a worked example.' });
+  return res.json({ ok: true });
+});
+
 router.post('/sessions/:id/footprint', requireAuth, limit('footprint', 120, 60 * 60 * 1000), (req, res) => {
   const session = loadSession(req);
   if (!session) return res.status(404).json({ error: 'Session not found.' });
@@ -754,7 +772,7 @@ router.post('/sessions/:id/finish', requireAuth, async (req, res) => {
       format: 'short_answer',
       prompt: q.prompt,
       answer: q.answer,
-      rationale: q.why || partModify.REVIEW_DEFAULT,
+      rationale: q.why || partModify.reviewLineFor(req.user.id, { track_id: session.track_id, grade_id: session.grade_id }),
       source: 'ai',
       level: (outcome.retentionPlan[i] || {}).level || session.end_level || session.level,
     }));
@@ -845,7 +863,7 @@ function primesFor(user) {
   if (process.env.COACH_PRIME === 'off' || !user) return false;
   const windowSize = Number(process.env.COACH_PRIME_WINDOW || 30);
   const rate = Number(process.env.COACH_PRIME_RATE || 0.25);
-  const recent = db.find('items', (i) => i.user_id === user.id && i.correct !== null && i.role !== 'exam').slice(-windowSize);
+  const recent = db.forUser('items', user.id).filter((i) => i.correct !== null && i.role !== 'exam').slice(-windowSize);
   if (recent.length < 5) return false;
   return recent.filter((i) => i.coach_used).length / recent.length >= rate;
 }
@@ -889,7 +907,7 @@ router.post('/items/:id/coach', requireAuth, limit('coach', 120, 60 * 60 * 1000)
 
   // Opening the coach on a question we primed costs nothing: the question is
   // already written.
-  if (!cleaned.length && item.coach_opener) {
+  if (!cleaned.length && item.coach_opener && (item.coach_opener_checked || !factGuard.on())) {
     return res.json({ reply: item.coach_opener, source: 'ai', coached: true, primed: true, provider: ai.providerName() });
   }
 
@@ -939,7 +957,7 @@ router.post('/items/:id/coach/prime', requireAuth, limit('coach-prime', 200, 60 
 
   try {
     const opener = await ai.coachReply({ item, messages: [], userId: req.user.id });
-    if (opener) db.update('items', item.id, { coach_opener: opener });
+    if (opener && !factGuard.isHeld(opener)) db.update('items', item.id, { coach_opener: opener, coach_opener_checked: factGuard.on() });
   } catch (err) {
     console.warn(`ai: priming the coach failed: ${err.message}`);
   }
@@ -962,6 +980,15 @@ router.post('/items/:id/coach/stream', requireAuth, limit('coach', 120, 60 * 60 
   const cleaned = messages
     .filter((m) => m && typeof m.content === 'string' && m.content.trim())
     .map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content.trim().slice(0, 800) }));
+
+  // As on /coach: a crisis message gets the fixed reply, not a hint, and is not kept. This is the route the session page uses first.
+  const crisisSaid = [...cleaned].reverse().find((m) => m.role === 'user');
+  const crisis = crisisSaid ? require('../services/tutor-full').triage(req.user, crisisSaid.content) : null; // eslint-disable-line global-require
+  if (crisis && crisis.reply) {
+    res.set({ 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-cache, no-transform' });
+    res.write(`data: ${JSON.stringify({ replace: crisis.reply })}\n\n`);
+    return res.end(`data: ${JSON.stringify({ done: true, source: 'safety', kind: crisis.kind })}\n\n`);
+  }
 
   if (!item.coach_used) db.update('items', item.id, { coach_used: true, coach_started_at: new Date().toISOString() });
   // What the learner said while stuck, kept for the after-level read: it is the
@@ -986,7 +1013,7 @@ router.post('/items/:id/coach/stream', requireAuth, limit('coach', 120, 60 * 60 
   // A primed opener is already written (and was leak-checked when it was): the
   // page streams the coach, so this is where priming has to pay off. Before
   // this the stream wrote a second opener and every primed one went unused.
-  if (!cleaned.length && item.coach_opener) {
+  if (!cleaned.length && item.coach_opener && (item.coach_opener_checked || !factGuard.on())) {
     send({ delta: item.coach_opener });
     return res.end(`data: ${JSON.stringify({ done: true, source: 'ai', primed: true, provider: ai.providerName() })}\n\n`);
   }
@@ -1037,6 +1064,9 @@ router.post('/items/:id/ask', requireAuth, limit('tutor', 60, 60 * 60 * 1000), a
   }
   const question = String(req.body.question || '').trim().slice(0, 500);
   if (question.length < 3) return res.status(400).json({ error: 'Ask a question first.' });
+  // Asking after answering is the same tutor: a crisis message gets the fixed reply, not an explanation, and is not kept.
+  const crisis = require('../services/tutor-full').triage(req.user, question); // eslint-disable-line global-require
+  if (crisis && crisis.reply) return res.json({ reply: crisis.reply, source: 'safety', kind: crisis.kind });
   // What they asked after answering goes to the after-level read too: a question
   // about a question they got right is as telling as one they got wrong.
   db.update('items', item.id, { ask_log: [...(item.ask_log || []), question.slice(0, 300)].slice(-8) });
@@ -1519,7 +1549,7 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
     ...require('../services/speed-placement').pathView(req.user.id, enrollment, grade), // eslint-disable-line global-require
     ...(speedLevers.clientFlags(req.user.id, {}).testout ? {
       speed_testout: true,
-      skipped_pages: db.find('lessons', (l) => l.user_id === req.user.id && l.track_id === enrollment.track_id && l.grade_id === enrollment.grade_id && l.skipped_by_check_at).map((l) => ({ level: l.level, title: l.title })).sort((a, b) => a.level - b.level),
+      skipped_pages: db.forUser('lessons', req.user.id).filter((l) => l.track_id === enrollment.track_id && l.grade_id === enrollment.grade_id && l.skipped_by_check_at).map((l) => ({ level: l.level, title: l.title })).sort((a, b) => a.level - b.level),
     } : {}),
     progress,
     skills,
@@ -1581,7 +1611,7 @@ router.get('/curriculum', requireAuth, (req, res) => {
       // enrollment on this track, so the position shows whether or not the view
       // has been narrowed to one grade.
       const byGrade = new Map();
-      for (const e of db.find('enrollments', (x) => x.user_id === req.user.id && x.track_id === track.id)) {
+      for (const e of db.forUser('enrollments', req.user.id).filter((x) => x.track_id === track.id)) {
         byGrade.set(e.grade_id, e);
       }
 

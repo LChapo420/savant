@@ -454,7 +454,7 @@ function specBlockFor(userId, topic = null) {
 }
 
 /** For a learner with interests: a function from a skill's passage text to a check that an interest analogy adds no claim (else null). */
-function guardMaker(userId, topic = null) {
+function guardMaker(userId, topic = null, materialId = null) {
   // eslint-disable-next-line global-require
   const ls = require('./learning-spec');
   const spec = ls.buildSpec(userId, specCtx(topic));
@@ -584,7 +584,7 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
   const capShare = ctx.follow && ctx.follow.wordShare;
   const lessonCap = capShare ? Math.max(LESSON_FLOOR, Math.round(own * capShare * (extra ? 0.4 : 1))) : SHORT ? Math.max(LESSON_FLOOR, Math.round(own * LESSON_SHARE * (extra ? 0.4 : 1))) : Math.max(90, Math.round(srcWords * 0.75));
   const genArgs = {
-    role: 'fast', task: 'material_lesson', schema: SKILL_SCHEMA, schemaName: 'material_skill', maxTokens: 7000, dataClass: 'learner',
+    role: 'fast', task: 'material_lesson', schema: SKILL_SCHEMA, schemaName: 'material_skill', maxTokens: 7000, dataClass: 'learner', factSource: text, factMode: general ? 'general' : 'material',
     system: general
       ? `You write one short lesson and practice questions for a student on a topic their study material NAMES but does not explain (for example a syllabus line). ${UNTRUSTED} `
         + 'Teach exactly the topic as the material names it, at the level the material implies, from standard, uncontroversial knowledge; do not drift into other topics. Write 2 to 5 short lesson paragraphs in plain words. '
@@ -651,7 +651,7 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
   let paragraphs = paragraphs0; let keyPoints = keyPoints0;
   if ((SHORT || capShare) && !general && wordCount([...paragraphs, ...keyPoints]) > lessonCap * SHORTEN_OVER) {
     const cut = await ask(ctx.llm, ctx.budget, ctx.userId, {
-      role: 'fast', task: 'material_shorten', schema: SHORTEN_SCHEMA, schemaName: 'material_shorten', maxTokens: 1500, dataClass: 'learner',
+      role: 'fast', task: 'material_shorten', schema: SHORTEN_SCHEMA, schemaName: 'material_shorten', maxTokens: 1500, dataClass: 'learner', factSource: text,
       system: `You shorten a lesson. ${UNTRUSTED} Rewrite it in at most ${lessonCap} words in all (count them): keep every specific fact (names, numbers, dates, terms, definitions, causes), drop filler, repetition and transitions, and keep the more heavily stressed points in the most words. Do not add anything the lesson or the passages do not say.`,
       user: `Lesson:\n${paragraphs.join('\n')}${keyPoints.length ? `\nKey points:\n${keyPoints.join('\n')}` : ''}\n\nPassages (for checking facts):\n${text.slice(0, 3000)}`,
     });
@@ -674,7 +674,7 @@ async function buildSkill(skill, passageById, ctx, extra = null) {
       if (!probs.length) break;
       // eslint-disable-next-line no-await-in-loop
       const rw = await ask(ctx.llm, ctx.budget, ctx.userId, {
-        role: 'fast', task: 'material_follow', schema: FOLLOW_SCHEMA, schemaName: 'material_follow', maxTokens: 2500, dataClass: 'learner',
+        role: 'fast', task: 'material_follow', schema: FOLLOW_SCHEMA, schemaName: 'material_follow', maxTokens: 2500, dataClass: 'learner', factSource: text,
         system: `You rewrite one lesson for one learner. ${UNTRUSTED} Keep every fact, name, number and term of the passages that the lesson already states, and add none. Fix every problem listed and change nothing else. ${capShare ? `HARD LIMIT: ${lessonCap} words in all, paragraphs and key points together (count them); keep the facts that carry the most weight. ` : ''}${ctx.block}`,
         user: `Problems to fix:\n- ${probs.map((x) => x.detail).join('\n- ')}\n\nLesson:\n${paragraphs.join('\n')}${keyPoints.length ? `\nKey points:\n${keyPoints.join('\n')}` : ''}\n\nPassages (the only source of facts):\n${text.slice(0, 3500)}`,
       });
@@ -805,7 +805,7 @@ async function factSweep(skills, passageById, ctx, sourceWords) {
     const per = Math.max(15, Math.floor(room / jobs.length));
     await Promise.all(jobs.map(async ({ sk, miss }) => {
       const r = await ask(ctx.llm, ctx.budget, ctx.userId, {
-        role: 'fast', task: 'material_sweep', schema: SWEEP_SCHEMA, schemaName: 'material_sweep', maxTokens: 1200, dataClass: 'learner',
+        role: 'fast', task: 'material_sweep', schema: SWEEP_SCHEMA, schemaName: 'material_sweep', maxTokens: 1200, dataClass: 'learner', factSource: miss.map((m) => m.s).join('\n'),
         system: `You add missing facts to a lesson. ${UNTRUSTED} Each numbered sentence below comes from the student's material and states a fact the lesson lacks. For each, write the fact in the fewest words (at most 18), keeping every name, number and term exactly, using only words and facts of that sentence. Skip a sentence that only repeats another. In all, at most ${per} words.`,
         user: `Lesson so far (do not repeat it):\n${(sk.lesson.paragraphs || []).join(' ').slice(0, 2500)}\n\nMissing:\n${miss.map((m, i) => `${i + 1}. ${m.s}`).join('\n')}`,
       });
@@ -850,7 +850,7 @@ async function planWindow(ctx, mat, windows, win, planned, share) {
   for (let attempt = 0; attempt < 3 && !(out && out.res && out.res.data); attempt++) {
     // eslint-disable-next-line no-await-in-loop
     out = await ask(ctx.llm, ctx.budget, ctx.userId, {
-      role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 4000, dataClass: 'learner',
+      role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 4000, dataClass: 'learner', factSource: win.text,
       system: `You plan a course from a student's study material. ${UNTRUSTED} Split ${windows.length > 1 ? 'this part of it' : 'it'} into skills a student can learn one at a time (as many as it really covers, at most ${share}; a skill is a topic worth a short lesson and a few questions, not a single fact), grouped into units, both in the material's own order. Cover it from start to end: if it has more topics than that, merge neighbouring topics into one skill rather than stopping early. ${ctx.skillShare && ctx.skillShare < 0.8 ? 'This student wants the shortest version: prefer fewer, broader skills, and never plan a skill that only restates another. ' : ''}`
         + 'Use only topics the material itself covers or names; leave out course logistics (grading, dates, office hours, exams as events). '
         + 'For each skill: a short id, a title, a one-sentence summary, its unit (a short title shared by the skills of one unit), the ids of skills that must be learned first (prerequisites: only real dependencies), the passage ids that teach it (1 to 6), and taught: false when the material only names the topic (a syllabus or list line) without explaining it, otherwise true.',
@@ -892,7 +892,7 @@ function res_stopped(r) { return !!(r && r.stopped); }
 
 const materialExists = (userId, id) => { const m = db.byId('materials', id); return !!m && m.user_id === userId; };
 function row(userId, materialId) {
-  return db.findOne('material_courses', (c) => c.user_id === userId && c.material_id === Number(materialId));
+  return (db.forUser('material_courses', userId).find((c) => c.material_id === Number(materialId)) || null);
 }
 
 /**
@@ -908,7 +908,7 @@ async function build(userId, materialId, opts = {}) {
   const textHash = hash(mat.text);
   const prev = row(userId, mat.id);
   if (prev && prev.version === VERSION && prev.text_hash === textHash && prev.status === 'ready' && !opts.force) return { course: prev, cached: true };
-  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  if (!opts.llm && !require('./ai').canBuild()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
 
   inflight.add(key);
   try {
@@ -1072,8 +1072,8 @@ async function build(userId, materialId, opts = {}) {
       error: status === 'failed' ? (stopped ? 'token budget' : ctx.unanswered ? 'no_answer' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(), unanswered: ctx.unanswered || 0,
     });
     try { require('./part-modify').stampCourse(userId, done); } catch { /* signature only */ } // eslint-disable-line global-require
-    db.flush();
-    if (status === 'failed') return { error: 'No questions in that material passed the checks. Try a longer or clearer text.', code: 'nothing_verified' };
+    db.saveSoon();
+    if (status === 'failed') return { error: 'No questions in that material passed the checks. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     return { course: done, partial: status === 'partial' };
   } catch (err) {
     console.error('course-builder:', err.message);
@@ -1098,7 +1098,7 @@ async function retryMissed(userId, materialId, opts = {}) {
   if (course.text_hash !== hash(mat.text)) return { error: 'The material changed since the course was built. Build the learning path again.', code: 'stale' };
   const todoParts = (course.missed || []).filter((m) => m.reason !== 'too_long' && m.passage_ids && m.passage_ids.length);
   if (!todoParts.length) return { error: 'Nothing was left out of this course.', code: 'nothing_missed' };
-  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  if (!opts.llm && !require('./ai').canBuild()) return { error: 'The course builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
   inflight.add(key);
   try {
     const passages = chunk(mat.text).slice(0, MAX_PASSAGES);
@@ -1157,7 +1157,7 @@ async function retryMissed(userId, materialId, opts = {}) {
       tokens_used: (live.tokens_used || 0) + ctx.budget.used, models: [...new Set([...(live.models || []), ...ctx.models])],
       last_retry: { at: new Date().toISOString(), ok: add.length > 0, skills: add.length, remaining: stillMissed.length },
     });
-    db.flush();
+    db.saveSoon();
     if (!add.length) return { error: 'Those parts still could not be read into the course. Try again later.', code: 'still_missed', added: 0, remaining: stillMissed.length };
     return { added: add.length, remaining: stillMissed.length, course: done };
   } catch (err) {

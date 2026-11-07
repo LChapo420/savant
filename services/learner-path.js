@@ -348,7 +348,7 @@ function checkDeadline(enrollment, session, now = Date.now()) {
   const minutes = (from, to) => (Number.isFinite(from) && Number.isFinite(to) ? Math.max(0, (to - from) / 60000) : 0);
   const start = Date.parse(session.started_at);
   let used = minutes(start, Date.parse(session.ended_at || new Date(now).toISOString()));
-  const walk = db.findOne('subject_placements', (p) => p.user_id === enrollment.user_id && p.track_id === enrollment.track_id);
+  const walk = (db.forUser('subject_placements', enrollment.user_id).find((p) => p.track_id === enrollment.track_id) || null);
   const walkEnd = walk && Date.parse(walk.finished_at);
   if (walk && adaptive.MODES[walk.mode] && Number.isFinite(walkEnd) && Number.isFinite(start)
     && walkEnd <= start && start - walkEnd <= SITTING_HOURS * 3600 * 1000) {
@@ -584,7 +584,7 @@ function unitsToWork(plan, units, statuses, except = -1, enrollment = null) {
  */
 function nextLevelAfter(enrollment, grade, level) {
   const next = unitNextLevelAfter(enrollment, grade, level);
-  return goalFit(enrollment, grade, require('./speed-placement').stepOverSettled(enrollment, grade, compressProven(enrollment, grade, next))); // eslint-disable-line global-require
+  return studyFit(enrollment, grade, goalFit(enrollment, grade, require('./speed-placement').stepOverSettled(enrollment, grade, compressProven(enrollment, grade, next)))); // eslint-disable-line global-require
 }
 
 /**
@@ -594,6 +594,12 @@ function nextLevelAfter(enrollment, grade, level) {
  * docs/spanish-replica/GOAL-FIT.md). Never a checkpoint, a unit check or the
  * grade's last level.
  */
+/** The learner's study goal (services/study-goal.js): with core parts fast, the extra practice levels are stepped over and listed. */
+function studyFit(enrollment, grade, next) {
+  if (!enrollment || !enrollment.study_goal) return next;
+  return require('./study-goal').stepOver(enrollment, grade, next); // eslint-disable-line global-require
+}
+
 function goalFit(enrollment, grade, next) {
   if (!enrollment || enrollment.track_id !== 'spanish') return next;
   try {

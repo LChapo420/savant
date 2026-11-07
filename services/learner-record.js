@@ -99,7 +99,7 @@ function blank(userId) {
 }
 
 function get(userId) {
-  return db.findOne('learner_records', (r) => r.user_id === userId) || db.insert('learner_records', blank(userId));
+  return (db.forUser('learner_records', userId)[0] || null) || db.insert('learner_records', blank(userId));
 }
 
 function save(record) {
@@ -233,7 +233,7 @@ function levelEvidence(row) {
       if (did || outcome) lines.push(`- in ${b.block || 'the page'}: ${did || 'interacted'}${outcome}`);
     }
   }
-  for (const r of db.find('remediations', (x) => x.user_id === row.user_id && x.level === row.level).slice(-2)) {
+  for (const r of db.forUser('remediations', row.user_id).filter((x) => x.level === row.level).slice(-2)) {
     for (const area of r.areas || []) {
       const said = (area.messages || []).filter((m) => m.role === 'user').map((m) => `"${String(m.content).slice(0, 200)}"`);
       if (said.length) lines.push(`- with the tutor after the failed ${r.kind}, on ${area.skill_name || area.headline}: ${said.slice(-6).join(' / ')}`);
@@ -881,7 +881,7 @@ function start() {
  * recommendations are not here — only what the app is sure of reaches a page.
  */
 function briefLines(userId, where = {}, { recent: withRecent = true } = {}) {
-  const record = db.findOne('learner_records', (r) => r.user_id === userId);
+  const record = (db.forUser('learner_records', userId)[0] || null);
   if (!record) return [];
   const lines = [];
   const solid = record.facts.filter((f) => f.status === 'solid' && f.kind !== 'struggle');
@@ -911,7 +911,7 @@ function briefLines(userId, where = {}, { recent: withRecent = true } = {}) {
  * no conclusions, no recommendations: those stay with the level writer.
  */
 function tutorFacts(userId) {
-  const record = db.findOne('learner_records', (r) => r.user_id === userId);
+  const record = (db.forUser('learner_records', userId)[0] || null);
   if (!record) return [];
   return record.facts
     .filter((f) => f.status !== 'superseded' && (f.kind === 'struggle' ? f.support >= 2 : f.status === 'solid'))
@@ -923,7 +923,7 @@ function tutorFacts(userId) {
 
 /** What the after-level reads concluded about the last few levels: the part of the record that changes every level. */
 function recentConclusionLines(userId, where = {}, known = null) {
-  const record = known || db.findOne('learner_records', (r) => r.user_id === userId);
+  const record = known || (db.forUser('learner_records', userId)[0] || null);
   if (!record) return [];
   const lines = [];
   const recent = record.conclusions.filter((c) => (!where.trackId || c.track_id === where.trackId)).slice(-4);

@@ -1,0 +1,623 @@
+{
+ "tag": "pm3l3",
+ "seed": 7207,
+ "n": 30,
+ "generated_at": "2026-11-06T21:42:10.980Z",
+ "writer": "ZeroGPU GLM-5.3 Flash",
+ "judges": [
+  {
+   "id": "gonka-deepseek",
+   "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+   "family": "deepseek"
+  },
+  {
+   "id": "grokified-grok",
+   "model": "grok-4.3",
+   "family": "grok"
+  }
+ ],
+ "simulated": true,
+ "parts": {
+  "lesson": {
+   "part": "lesson",
+   "arms": {
+    "vs_stored": {
+     "real": {
+      "n": 48,
+      "verdicts": 41,
+      "empty": 0,
+      "same": 7,
+      "picks_vL": 19,
+      "share": 0.4634146341463415,
+      "p_above_chance": 0.733645372381943
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.5263157894736842,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": 0.4090909090909091,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.5263157894736842,
+       "verdicts": 19,
+       "p": 0.4999999999999992
+      },
+      "grok": {
+       "share": 0.4090909090909091,
+       "verdicts": 22,
+       "p": 0.8568606376647943
+      }
+     },
+     "individuals": {
+      "n": 23,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-8",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-2",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-4",
+        "share": 0,
+        "n": 2
+       }
+      ],
+      "below_half": 11
+     },
+     "by_kind": {
+      "random": {
+       "n": 10,
+       "share": 0.7
+      },
+      "all_hi": {
+       "n": 2,
+       "share": 0
+      },
+      "contradict": {
+       "n": 9,
+       "share": 0.3333333333333333
+      },
+      "tail_both": {
+       "n": 4,
+       "share": 0
+      },
+      "tail_hi": {
+       "n": 3,
+       "share": 0.3333333333333333
+      },
+      "tail_lo": {
+       "n": 4,
+       "share": 0.5
+      },
+      "age_old": {
+       "n": 1,
+       "share": 0
+      },
+      "ell": {
+       "n": 4,
+       "share": 1
+      },
+      "age_young": {
+       "n": 4,
+       "share": 0.5
+      }
+     }
+    },
+    "vs_other": {
+     "real": {
+      "n": 40,
+      "verdicts": 36,
+      "empty": 0,
+      "same": 4,
+      "picks_vL": 23,
+      "share": 0.6388888888888888,
+      "p_above_chance": 0.06624908198136886
+     },
+     "swap_fooled": {
+      "n": 40,
+      "verdicts": 34,
+      "empty": 0,
+      "same": 6,
+      "picks_vL": 14,
+      "share": 0.4117647058823529
+     },
+     "control_picks_vL": {
+      "n": 40,
+      "verdicts": 36,
+      "empty": 0,
+      "same": 4,
+      "picks_vL": 13,
+      "share": 0.3611111111111111
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.631578947368421,
+       "swap_fooled": 0.4666666666666667,
+       "control": 0.3
+      },
+      "grokified-grok": {
+       "real": 0.6470588235294118,
+       "swap_fooled": 0.3684210526315789,
+       "control": 0.4375
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.631578947368421,
+       "verdicts": 19,
+       "p": 0.17964172363281228
+      },
+      "grok": {
+       "share": 0.6470588235294118,
+       "verdicts": 17,
+       "p": 0.16615295410156267
+      }
+     },
+     "individuals": {
+      "n": 20,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-8",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-4",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-18",
+        "share": 0,
+        "n": 1
+       }
+      ],
+      "below_half": 6
+     },
+     "by_kind": {
+      "random": {
+       "n": 7,
+       "share": 0.7142857142857143
+      },
+      "all_hi": {
+       "n": 1,
+       "share": 0
+      },
+      "contradict": {
+       "n": 10,
+       "share": 0.7
+      },
+      "tail_both": {
+       "n": 4,
+       "share": 0
+      },
+      "tail_hi": {
+       "n": 4,
+       "share": 0.75
+      },
+      "age_old": {
+       "n": 1,
+       "share": 0
+      },
+      "tail_lo": {
+       "n": 1,
+       "share": 0
+      },
+      "ell": {
+       "n": 4,
+       "share": 1
+      },
+      "age_young": {
+       "n": 4,
+       "share": 1
+      }
+     }
+    },
+    "noise": {
+     "real": {
+      "n": 46,
+      "verdicts": 17,
+      "empty": 0,
+      "same": 29,
+      "picks_vL": 11,
+      "share": 0.6470588235294118,
+      "p_above_chance": 0.16615295410156267
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": 0.5714285714285714,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": 0.7,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": 0.5714285714285714,
+       "verdicts": 7,
+       "p": 0.5000000000000004
+      },
+      "grok": {
+       "share": 0.7,
+       "verdicts": 10,
+       "p": 0.17187500000000036
+      }
+     },
+     "individuals": {
+      "n": 12,
+      "worst_1pct": 0,
+      "worst_5pct": 0,
+      "worst_10pct": 0,
+      "lowest": [
+       {
+        "L": "x7207-11",
+        "share": 0,
+        "n": 1
+       },
+       {
+        "L": "x7207-26",
+        "share": 0,
+        "n": 2
+       },
+       {
+        "L": "x7207-25",
+        "share": 0,
+        "n": 1
+       }
+      ],
+      "below_half": 3
+     },
+     "by_kind": {
+      "random": {
+       "n": 3,
+       "share": 0.3333333333333333
+      },
+      "contradict": {
+       "n": 3,
+       "share": 0.6666666666666666
+      },
+      "tail_both": {
+       "n": 1,
+       "share": 1
+      },
+      "age_old": {
+       "n": 1,
+       "share": 1
+      },
+      "tail_lo": {
+       "n": 3,
+       "share": 0.6666666666666666
+      },
+      "tail_hi": {
+       "n": 2,
+       "share": 0.5
+      },
+      "age_young": {
+       "n": 4,
+       "share": 0.75
+      }
+     }
+    },
+    "identical": {
+     "real": {
+      "n": 14,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 14,
+      "picks_vL": 0,
+      "share": null,
+      "p_above_chance": null
+     },
+     "swap_fooled": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "control_picks_vL": {
+      "n": 0,
+      "verdicts": 0,
+      "empty": 0,
+      "same": 0,
+      "picks_vL": 0,
+      "share": null
+     },
+     "per_judge": {
+      "gonka-deepseek": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      },
+      "grokified-grok": {
+       "real": null,
+       "swap_fooled": null,
+       "control": null
+      }
+     },
+     "by_family": {
+      "glm": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "deepseek": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      },
+      "grok": {
+       "share": null,
+       "verdicts": 0,
+       "p": null
+      }
+     },
+     "individuals": {
+      "n": 0,
+      "worst_1pct": null,
+      "worst_5pct": null,
+      "worst_10pct": null,
+      "lowest": [],
+      "below_half": 0
+     },
+     "by_kind": {}
+    }
+   },
+   "facts": {
+    "conflict_yes": 0,
+    "conflict_asked": 10,
+    "declined_because": {
+     "these key points are missing or too thin: \"The mea": 1,
+     "dropped: tiny parts": 1,
+     "dropped: small openings": 1,
+     "dropped: tiny parts called chloroplasts": 1,
+     "dropped: from the air": 1,
+     "these key points are missing or too thin: \"Rulers ": 1,
+     "new: The principle established by the treaties was": 1,
+     "these key points are missing or too thin: \"Plants ": 1
+    },
+    "checked": 30,
+    "passed": 24,
+    "declined": 6,
+    "same_yes": 10,
+    "same_asked": 10,
+    "coverage_fail": 0,
+    "claims": {
+     "coral-deepseek": {
+      "asked": 24,
+      "ok": 23,
+      "unread": 0
+     },
+     "zerogpu-glm": {
+      "asked": 24,
+      "ok": 23,
+      "unread": 0
+     }
+    },
+    "strict": {
+     "coral-deepseek": {
+      "asked": 24,
+      "yes": 24
+     },
+     "zerogpu-glm": {
+      "asked": 24,
+      "yes": 24
+     }
+    },
+    "gate_attempts": {
+     "1": 16,
+     "2": 5,
+     "3": 3
+    },
+    "partial": 0,
+    "flagged": [
+     {
+      "L": "x7207-25",
+      "k": 0,
+      "judge": "coral-deepseek",
+      "problems": [
+       "dropped: oxygen is released into the air (the rewrite says oxygen is made and goes into the air, but does not state it is released)"
+      ],
+      "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses ",
+      "text": "1. Plants make their own food. It's called photosynthesis. It happens mostly in the leaves.\n\n2. Inside are tiny parts called chloroplasts. They hold a green pigment called chlorophyll. The plant takes in carbon dioxide from the air.\n\n3. That comes through small openings called stomata. It takes in water from the soil through its roots. Sunlight gives the energy that joins them.\n\n4. The result is glucose. That's a sugar the plant uses for energy and growth. Oxygen is also made.\n\n5. It goes into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose."
+     },
+     {
+      "L": "x7207-11",
+      "k": 0,
+      "judge": "zerogpu-glm",
+      "problems": [
+       "changed: The rewrite says historians see the treaties as 'the birth of state sovereignty', but the original says historians use them as the starting point of the idea of state sovereignty — dropping 'the idea "
+      ],
+      "stored": "The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire and started as a conflict between Catholic and Protestant states.\n\nThe peace was two treaties, signed in the cities of Osnabruck and Munster. About 109 delegations took part in the talks, which lasted around 5 years.\n\nEach ruler could now choose the religion of their own",
+      "text": "1. The Thirty Years War kicked off in 1618 and wrapped up in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire, starting as a clash between Catholic and Protestant states. The peace was two treaties, signed in Osnabruck and Munster.\n\n2. About 109 delegations showed up, and talks dragged on for around 5 years. Each ruler could now pick their own land's religion, and the treaties recognized the Dutch Republic and Switzerland as independent. Historians often see these treaties as the birth of state sovereignty."
+     }
+    ]
+   },
+   "goal": null,
+   "sources": 30,
+   "declined": 6,
+   "trials": 228
+  }
+ },
+ "samples": {
+  "lesson": [
+   {
+    "learner": "x7207-3",
+    "kind": "random",
+    "profile": "Age 59. Language: English. Interests: competitive baking shows. Dislikes (never wanted): none stated.",
+    "stored": "The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire and started as a conflict between Catholic and Protestant states.\n\nThe peace was two treaties, signed in the cities of Osnabruck and Munster. About 109 delegations took part in the talks, which lasted around 5 years.\n\nEach ruler could now choose the religion of their own land, and the treaties recognised the independence of the Dutch Republic and of Switzerland. Historians often use these treaties as the starting point of the idea of state sovereignty.",
+    "shaped": "The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire and started as a conflict between Catholic and Protestant states. The peace was two treaties, signed in the cities of Osnabruck and Munster. About 109 delegations took part in the talks, which lasted around 5 years. Each ruler could now choose the religion of their own land, and the treaties recognised the independence of the Dutch Republic and of Switzerland. Historians often use these treaties as the starting point of the idea of state sovereignty.",
+    "other_learner": "1. The Thirty Years War began in 1618 and concluded in 1648 with the Peace of Westphalia. The conflict was waged largely within the Holy Roman Empire, originating as a struggle between Catholic and Protestant states. The peace comprised two treaties, signed in the cities of Osnabruck and Munster. Approximately 109 delegations participated in the negotiations, which extended over roughly five years.\n\n2. Each ruler was thereafter permitted to determine the religion of their own territory, and the treaties acknowledged the independence of the Dutch Republic and of Switzerland. Scholars frequently regard these treaties as the foundational moment for the concept of state sovereignty.",
+    "diff": {
+     "stored_words": 100,
+     "shaped_words": 100,
+     "new_words": 0,
+     "dropped_words": 0
+    }
+   },
+   {
+    "learner": "x7207-6",
+    "kind": "random",
+    "profile": "Age 57. Language: English. Interests: none stated. Dislikes (never wanted): none stated.",
+    "stored": "Plants make their own food in a process called photosynthesis. It happens mostly in the leaves, inside tiny parts called chloroplasts that hold a green pigment called chlorophyll.\n\nThe plant takes in carbon dioxide from the air through small openings called stomata, and water from the soil through its roots. Sunlight gives the energy that joins them.\n\nThe result is glucose, a sugar the plant uses for energy and growth, and oxygen, which is released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose.",
+    "shaped": "1. Plants make their own food in a process called photosynthesis. This happens mostly in the leaves, inside tiny parts called chloroplasts. Chloroplasts hold a green pigment called chlorophyll.\n\n2. The plant takes in carbon dioxide from the air through small openings called stomata. It takes in water from the soil through its roots. Sunlight gives the energy that joins them.\n\n3. The result is glucose, a sugar the plant uses for energy and growth. Oxygen is also released into the air. About 6 molecules of carbon dioxide and 6 of water make 1 molecule of glucose.",
+    "other_learner": null,
+    "diff": {
+     "stored_words": 93,
+     "shaped_words": 97,
+     "new_words": 9,
+     "dropped_words": 4
+    }
+   },
+   {
+    "learner": "x7207-8",
+    "kind": "all_hi",
+    "profile": "Age 9. Language: English. Interests: aquarium keeping. Dislikes (never wanted): none stated.",
+    "stored": "The mean of a list of numbers is their sum divided by how many numbers there are. For 2, 4 and 9 the sum is 15, and 15 divided by 3 is 5.\n\nThe median is the middle value once the list is in order. In 1, 3, 7, 8, 20 the median is 7, and the very large 20 does not change it. That is why the median is often used for incomes.\n\nThe mode is the value that appears most often. In 2, 2, 5, 6 the mode is 2. A list can have more than one mode, or none at all.",
+    "shaped": "1. The mean of a list of numbers is their sum divided by how many numbers there are. For 2, 4 and 9 the sum is 15, and 15 divided by 3 is 5. The median is the middle value once the list is in order. In 1, 3, 7, 8, 20 the median is 7, and the very large 20 does not change it. That is why the median is often used for incomes. The mode is the value that appears most often.\n\n2. In 2, 2, 5, 6 the mode is 2. A list can have more than one mode, or none at all.",
+    "other_learner": "1. The mean of a list of numbers is their sum divided by how many numbers there are. For 2, 4 and 9 the sum is 15, and 15 divided by 3 is 5. The median is the middle value once the list is in order. In 1, 3, 7, 8, 20 the median is 7, and the very large 20 does not change it.\n\n2. That is why the median is often used for incomes. The mode is the value that appears most often. In 2, 2, 5, 6 the mode is 2. A list can have more than one mode, or none at all.",
+    "diff": {
+     "stored_words": 104,
+     "shaped_words": 106,
+     "new_words": 1,
+     "dropped_words": 0
+    }
+   },
+   {
+    "learner": "x7207-9",
+    "kind": "ell",
+    "profile": "Age 20. Language: English is a second language (first: Portuguese). Interests: Dungeons and Dragons, cosplay sewing, volunteering at a food bank. Dislikes (never wanted): repetition drills.",
+    "stored": "The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire and started as a conflict between Catholic and Protestant states.\n\nThe peace was two treaties, signed in the cities of Osnabruck and Munster. About 109 delegations took part in the talks, which lasted around 5 years.\n\nEach ruler could now choose the religion of their own land, and the treaties recognised the independence of the Dutch Republic and of Switzerland. Historians often use these treaties as the starting point of the idea of state sovereignty.",
+    "shaped": "1. The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire and started as a conflict between Catholic and Protestant states. The peace was two treaties, signed in the cities of Osnabruck and Munster. About 109 delegations took part in the talks, which lasted around 5 years.\n\n2. Each ruler could now choose the religion of their own land, and the treaties recognised the independence of the Dutch Republic and of Switzerland. Historians often use these treaties as the starting point of the idea of state sovereignty.",
+    "other_learner": "1. The Thirty Years War began in 1618 and ended in 1648 with the Peace of Westphalia. It was fought mostly in the Holy Roman Empire and started as a conflict between Catholic and Protestant states. The peace was two treaties, signed in the cities of Osnabruck and Munster. About 109 delegations took part in the talks, which lasted around 5 years.\n\n2. Each ruler could now choose the religion of their own land, and the treaties recognised the independence of the Dutch Republic and of Switzerland. Historians often use these treaties as the starting point of the idea of state sovereignty.",
+    "diff": {
+     "stored_words": 100,
+     "shaped_words": 102,
+     "new_words": 2,
+     "dropped_words": 0
+    }
+   }
+  ]
+ },
+ "stats": {
+  "calls": 652,
+  "empty": 0,
+  "errors": 12,
+  "seconds": 1023,
+  "cpu_load": 0,
+  "zerogpu_ledger": {
+   "ok": true,
+   "spent_usd": 12.316122,
+   "reserved_usd": 0.066589,
+   "committed_usd": 12.382711,
+   "cap_usd": 245,
+   "headroom_usd": 232.617289,
+   "calls": 15517,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/zerogpu-ledger.json"
+  },
+  "gonka_ledger": {
+   "ok": true,
+   "spent_usd": 12.310605,
+   "reserved_usd": 0.123068,
+   "committed_usd": 12.433673,
+   "cap_usd": 50,
+   "headroom_usd": 37.566327,
+   "calls": 22926,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/gonka-ledger.json"
+  },
+  "coral_ledger": {
+   "ok": true,
+   "spent_usd": 25.452597,
+   "reserved_usd": 0.05993,
+   "committed_usd": 25.512527,
+   "cap_usd": 100,
+   "headroom_usd": 74.487473,
+   "calls": 15625,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/coral-ledger.json"
+  },
+  "grokified_ledger": {
+   "ok": true,
+   "spent_usd": 24.964932,
+   "reserved_usd": 0.288623,
+   "committed_usd": 25.253555,
+   "cap_usd": 135,
+   "headroom_usd": 109.746445,
+   "calls": 13668,
+   "refused_calls": 0,
+   "file": "C:/coding/claudecommittdIq/folderThing/iq-max-repo-2-claude-adoring-mayer-woc9sq/data/grokified-ledger.json"
+  }
+ }
+}

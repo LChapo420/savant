@@ -9,6 +9,7 @@
  * Nothing real is called or spent: the Standard Compute fetch is a stand-in and its ledger a throwaway file.
  * The same behaviours with real models are in docs/TUTOR-V2-PROOF.md (scripts/tutor-v2-proof.js).
  */
+process.env.TUTOR_FULL = process.env.TUTOR_FULL || '0'; // this test pins the old tutor path, still there behind TUTOR_FULL=0; the full tutor is scripts/tutor-full-test.js
 const fs = require('fs');
 const os = require('os');
 const path = require('path');

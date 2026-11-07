@@ -202,7 +202,7 @@ function pretestSkips(results, prior = PRETEST.prior) {
 /** Is a pretest worth offering this learner now? Not after giveUpAfter failures in a row. */
 function pretestOffered(userId) {
   if (!enabled('pretest')) return false;
-  const rows = db.find('skill_states', (r) => r.user_id === userId && r.pretest_at)
+  const rows = db.forUser('skill_states', userId).filter((r) => r.pretest_at)
     .sort((a, b) => Date.parse(a.pretest_at) - Date.parse(b.pretest_at)).slice(-PRETEST.giveUpAfter);
   return !(rows.length >= PRETEST.giveUpAfter && rows.every((r) => !r.pretest_passed));
 }
@@ -217,7 +217,7 @@ function recordPretest(userId, skillId, passed) {
 }
 /** Did this learner skip this skill's page on a passed pretest? (Gap-only practice follows.) */
 function pretestPassed(userId, skillId) {
-  return enabled('pretest') && !!db.findOne('skill_states', (s) => s.user_id === userId && s.skill_id === skillId && s.pretest_passed);
+  return enabled('pretest') && !!(db.forUser('skill_states', userId).find((s) => s.skill_id === skillId && s.pretest_passed) || null);
 }
 /** Focus items for a level whose skill's page was skipped; `normal` otherwise. */
 function focusCount(normal, skipped) {

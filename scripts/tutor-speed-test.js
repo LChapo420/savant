@@ -6,6 +6,7 @@
  *
  *   node scripts/tutor-speed-test.js
  */
+process.env.TUTOR_FULL = process.env.TUTOR_FULL || '0'; // this test pins the old tutor path, still there behind TUTOR_FULL=0; the full tutor is scripts/tutor-full-test.js
 const fs = require('fs');
 const os = require('os');
 const path = require('path');

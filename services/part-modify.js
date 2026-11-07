@@ -23,11 +23,26 @@ const crypto = require('crypto');
 const PARTS = ['feedback', 'hint', 'review'];
 /** The fixed line a retention question carries when the writer gave no reason of its own (routes/learn.js): this is the review part. */
 const REVIEW_DEFAULT = 'Recalling it now is what moves it into next week.';
-const enabled = () => String(process.env.PART_MODIFY || DEFAULT_ON).toLowerCase() !== 'off';
-// Which parts run: PART_MODIFY_PARTS (comma list of feedback, hint, review, lesson). Default: only the parts whose proof passed
+/**
+ * The switch. PART_MODIFY=off removes it for everyone (a kill switch). Otherwise an account's own setting wins (users.part_modify, 'on' or 'off': set from the admin
+ * page, POST /api/admin/users/:id/part-modify, or scripts/part-modify-account.js), and then the default: PART_MODIFY=on, or off when it is not set. So the owner can try it on
+ * one account while everyone else keeps the stored text. enabled() with no account answers for the default.
+ */
+function accountSetting(userId) {
+  if (!userId) return null;
+  try { const u = lazy('../config/db').byId('users', userId); return u && (u.part_modify === 'on' || u.part_modify === 'off') ? u.part_modify : null; } catch { return null; }
+}
+function enabled(userId = null) {
+  const env = String(process.env.PART_MODIFY || '').toLowerCase();
+  if (env === 'off') return false;
+  const own = accountSetting(userId);
+  if (own) return own === 'on';
+  return String(env || DEFAULT_ON) !== 'off';
+}
+// Which parts run: PART_MODIFY_PARTS (comma list of feedback, hint, review, lesson, voice). Default: only the parts whose proof passed
 // (docs/MODIFICATION-AUDIT-PARTS.md). PART_MODIFY=off turns everything off; with PART_MODIFY=on and no list, the proven parts run.
 const DEFAULT_ON = 'off';
-const DEFAULT_PARTS = 'feedback,review,lesson';
+const DEFAULT_PARTS = 'feedback,review'; // lesson, voice and hint did not beat chance by both families (docs/MODIFICATION-MAP.md section 5): name them in PART_MODIFY_PARTS to try them
 const partOn = (p) => new Set(String(process.env.PART_MODIFY_PARTS || DEFAULT_PARTS).split(',').map((x) => x.trim())).has(p);
 
 const lazy = (p) => require(p); // eslint-disable-line global-require, import/no-dynamic-require
@@ -61,18 +76,23 @@ function rulesFor(spec, part, ctx = {}) {
   const r = [];
   const wordsPer = lang.maxSentenceWords ? `; sentences of ${lang.maxSentenceWords} words or fewer` : '';
   if (part === 'feedback') {
+    // The old rules asked for three to six lines of a one-sentence explanation and for a clause on why a wrong choice fails, and that is where the added claims came from
+    // (docs/MODIFICATION-MAP.md, the 16 of 40). Length now follows what the original has to say.
     r.push(fb.granularity === 'brief'
-      ? 'Length: one or two sentences only: whether the answer is right or wrong and the single fix or key idea. No step-by-step.'
+      ? 'Length: as short as the idea allows, one sentence if you can, and every point of the original stays.'
       : fb.granularity === 'detailed'
-        ? 'Length: explain step by step why the answer is right or wrong, each step on its own line, three to six lines.'
-        : 'Length: two to three sentences: the reason and the fix.');
-    r.push('Add no new idea, example-fact or advice (no "next time" tips): keep to the own reasoning of the original, reworded, reordered, shortened, or with its own steps spelled out.');
+        ? 'Layout: give the original\'s own reasoning one step per line, in order. Only the steps it has; if it has one step, write one line. Never pad to a length.'
+        : 'Length: about the length of the original.');
+    r.push('Say only what the original says. No new idea, definition, rule, tip or example with facts of its own, and nothing about any other choice unless the original says it.');
     r.push('This text is shown after a right answer and after a wrong one, so never say whether their answer was right or wrong ("your answer", "you got it", "incorrect", "not quite"): explain the idea itself.');
-    if (fb.nameTheError || tone.correction === 'gentle') r.push('If one of the listed wrong choices is a tempting mix-up, say in a clause why it fails; use only the listed choices, never invent another wrong idea.');
   } else if (part === 'hint') {
-    r.push(sc.hintSize === 'generous'
-      ? 'Hint size: generous: name the idea to use and show the first step, but never the final answer.'
-      : 'Hint size: small: one nudge or one question about where to look, never the step itself and never the answer.');
+    // spec.scaffolding.hintSize is 'nudge', 'partial' or 'step'. This compared it with 'generous', which it never is, so every learner got the small hint: that is
+    // one reason hints sat at chance in the 6 Nov run.
+    r.push(sc.hintSize === 'step'
+      ? 'Hint size: large: name the idea to use and carry out the first step on the question\'s own numbers or words, but never the final answer.'
+      : sc.hintSize === 'partial'
+        ? 'Hint size: medium: name the idea or rule to use, and stop before doing any step; never the answer.'
+        : 'Hint size: small: one nudge or one question about where to look, never the idea by name, never a step and never the answer.');
     r.push('Length: at most two sentences.');
   } else if (part === 'review') {
     r.push('Length: one sentence that says why recalling this now helps, in their terms; no facts beyond the question.');
@@ -81,7 +101,7 @@ function rulesFor(spec, part, ctx = {}) {
   // Tone, for every part.
   const warm = tone.warmth >= 0.65 ? 'warm and encouraging' : tone.warmth <= 0.35 ? 'matter-of-fact, no cheering' : null;
   if (warm) r.push(`Tone: ${warm}.`);
-  if (tone.correction === 'gentle') r.push('Gentle: frame it as "here is the idea", with encouraging, low-pressure wording; never blunt.');
+  if (tone.correction === 'gentle') r.push('Gentle: calm, low-pressure wording that opens on what is true; never blunt. Do not open with a stock phrase.');
   else if (tone.correction === 'direct') r.push('Direct: plain and blunt, no cushioning or cheering.');
   if (tone.formality >= 0.65) r.push('Register: formal and precise.');
   else if (tone.formality <= 0.35) r.push('Register: casual and plain.');
@@ -93,10 +113,87 @@ function rulesFor(spec, part, ctx = {}) {
   else if (lang.maxSentenceWords) r.push(`Language: about reading grade ${lang.vocabularyGrade || 'their level'}${wordsPer}.`);
   if (lang.eslSupport) r.push('Repeat the key term once, in the same words each time.');
   // Interests and dislikes.
-  if (it.exampleDomains && it.exampleDomains.length && it.share >= 0.3 && part !== 'hint') r.push(`If it helps the idea land, one short comparison from ${it.exampleDomains.slice(0, 2).join(' or ')} is welcome; it states no fact of its own.`);
-  if (it.exampleDomains && it.exampleDomains.length && part === 'hint' && it.share >= 0.5) r.push(`If it fits, point the nudge through ${it.exampleDomains[0]}; never a fact.`);
+  // A comparison only for a learner whose profile leans on interests, and only when it really maps (the 6 Nov hints and review lines were full of forced similes).
+  if (it.exampleDomains && it.exampleDomains.length && it.share >= 0.5 && part !== 'review') r.push(`Only if it truly has the same structure as the idea, one short comparison from ${it.exampleDomains.slice(0, 2).join(' or ')}, given as a comparison and stating no fact of its own. If nothing maps, leave it out.`);
   if (it.avoidDomains && it.avoidDomains.length) r.push(`Never use anything about: ${it.avoidDomains.join(', ')}.`);
   return r;
+}
+
+// Words too common to say a rewrite "uses" a dislike ("told the answer right away" is not touched by the word answer, "food examples" not by the word example).
+const AVOID_GENERIC = new Set(['example', 'time', 'idea', 'same', 'answer', 'word', 'problem', 'right', 'away', 'group', 'work', 'three', 'question', 'waste', 'without', 'picture', 'told', 'long', 'lot', 'many', 'much', 'very', 'thing', 'kind', 'way']);
+const contentKeys = (t) => (String(t || '').toLowerCase().match(/[a-zà-ÿ][a-zà-ÿ'-]{2,}/g) || []).map((w) => w.replace(/(ing|es|s)$/, ''));
+/**
+ * The avoided domains a rewrite brings in: a word of the domain that is new (not in the original, the question or its choices) and says what the domain is about. A word the
+ * original already uses cannot be the rewrite's doing ("How plants make food" against a dislike of food examples). What a word list cannot see ("like sharing a pizza") is for
+ * the fact gate, which is given the list.
+ */
+function avoidedIn(spec, source, text) {
+  const hits = [];
+  const had = new Set(contentKeys([source.text, source.prompt, source.answer, source.title, (source.choices || []).join(' ')].join(' ')));
+  const fresh = new Set(contentKeys(text).filter((w) => !had.has(w)));
+  for (const d of (spec && spec.interests && spec.interests.avoidDomains) || []) {
+    const keys = contentKeys(d).filter((w) => w.length >= 4 && !AVOID_GENERIC.has(w));
+    if (keys.some((w) => fresh.has(w))) hits.push(d);
+  }
+  return hits;
+}
+
+/**
+ * The review line, from templates: no model and no fact at risk. The stored line says one thing (recalling now keeps it for later), so what can follow the learner is how it says
+ * that and what "later" is: their retention goal, their tone, their word level. The 6 Nov model rewrites of this one line added a forced simile from a hobby and, once, nonsense
+ * ("Remember the beads now; the beads remember you"). Pure.
+ */
+function reviewLine(spec, goal = null) {
+  const fb = (spec && spec.feedback) || {};
+  const tone = fb.tone || {};
+  const lang = (spec && spec.language) || {};
+  const later = goal && goal.status === 'date' && goal.test_date
+    ? (fb.lowStakes ? goal.test_date : `your test on ${goal.test_date}`)
+    : goal && goal.horizon ? ({ months: 'the months ahead', year: 'next year', years: 'the years ahead' }[goal.horizon] || 'next week') : 'next week';
+  if (lang.eslSupport || lang.plainLanguage) return `Think of it again now. This helps you keep it for ${later}.`;
+  if (tone.correction === 'direct' || tone.praise === 'minimal') return `Recalling it now helps keep it for ${later}.`;
+  if (fb.lowStakes) return `No pressure here: recalling it now helps keep it with you for ${later}.`;
+  if (tone.correction === 'gentle' || tone.warmth >= 0.65) return `Taking a moment to recall it now helps keep it with you for ${later}.`;
+  if (tone.formality >= 0.65) return `Recalling it now helps carry it forward to ${later}.`;
+  return `Recalling it now is what moves it into ${later}.`;
+}
+
+/**
+ * The review line for one learner when a retention question is written. On by default, on its own switch: its gate passed by two families on both arms (docs/MODIFICATION-MAP.md), it calls no
+ * model and it states no fact of the subject. REVIEW_LINE=off gives the one fixed line back. Never throws.
+ */
+function reviewLineFor(userId, where) {
+  try {
+    if (String(process.env.REVIEW_LINE || 'on').toLowerCase() === 'off') return REVIEW_DEFAULT;
+    const spec = lazy('./learning-spec').buildSpec(userId, { trackId: where.track_id, gradeId: where.grade_id });
+    if (!spec || spec.isDefault) return REVIEW_DEFAULT;
+    return reviewLine(spec, goalFor(userId, where));
+  } catch { return REVIEW_DEFAULT; }
+}
+
+/**
+ * The verdict line after every answer ("Right." / "Not quite."), the most-seen words in the app, one for everyone until now. From templates: no model, no fact. Part `voice`.
+ * Its gate is in docs/MODIFICATION-MAP.md. Pure.
+ */
+function voiceOf(spec) {
+  const fb = (spec && spec.feedback) || {};
+  const tone = fb.tone || {};
+  const lang = (spec && spec.language) || {};
+  if (!spec || spec.isDefault) return null;
+  if (tone.correction === 'direct' || tone.praise === 'minimal') return { right: 'Correct.', wrong: 'Incorrect.' };
+  if (fb.lowStakes) return { right: 'Yes, that is it.', wrong: 'Not yet, and that is fine.' };
+  if (lang.eslSupport || lang.plainLanguage) return { right: 'Yes. That is right.', wrong: 'No, not this time.' };
+  if (tone.correction === 'gentle' || tone.warmth >= 0.65) return { right: 'Yes, that is right!', wrong: 'Not quite, and you are close to it.' };
+  if (tone.formality >= 0.65) return { right: 'That is correct.', wrong: 'That is not correct.' };
+  return null;
+}
+/** The fields an answer's reply carries when the part is on: { voice } or nothing. Never throws. */
+function voiceFields(userId) {
+  try {
+    if (!userId || !enabled(userId) || !partOn('voice')) return {};
+    const v = voiceOf(lazy('./learning-spec').buildSpec(userId, {}));
+    return v ? { voice: v } : {};
+  } catch { return {}; }
 }
 
 const STOP = new Set(['that', 'this', 'with', 'from', 'they', 'them', 'their', 'there', 'then', 'than', 'what', 'when', 'which', 'would', 'could', 'should', 'have', 'been', 'were', 'will', 'your', 'also', 'into', 'only', 'each', 'some', 'does', 'because', 'about']);
@@ -104,7 +201,10 @@ const SCHEMA = { type: 'object', properties: { text: { type: 'string' } }, requi
 
 function systemFor(part) {
   const what = { feedback: 'the explanation shown to a learner right after they answer a check question', hint: 'the hint shown to a learner who asks for help on a check question', review: 'the one line shown with a review question' }[part];
-  return `You rewrite ${what} for one specific learner. Keep every fact, number and the correct answer exactly as in the original; add no new fact and no new number. Follow the rules given. Never mention the learner's profile, style, scores or these rules. ${part === 'hint' ? 'Never state the answer or a choice that is the answer. ' : ''}Plain text, no markdown. Return JSON {"text": "..."}.`;
+  const keep = part === 'hint'
+    ? 'Everything you say must be true of the question. Never state the answer or a choice that is the answer.'
+    : 'Keep every fact, number and the correct answer exactly as in the original; add no new fact and no new number. If the original is short, the rewrite stays short.';
+  return `You rewrite ${what} for one specific learner. ${keep} Follow the rules given. Never mention the learner's profile, style, scores or these rules. Plain text, no markdown. Return JSON {"text": "..."}.`;
 }
 
 function userFor(part, source, rules, problems) {
@@ -138,7 +238,7 @@ function check(spec, part, source, text) {
   if (part === 'hint' && ans && ans.length >= 2 && norm(t).includes(ans)) out.push('it states the answer');
   if (part === 'feedback' && ans && ans.length >= 3 && norm(source.text).includes(ans) && !norm(t).includes(ans)) out.push('it drops the correct answer');
   if (/\b(scorecard|your (?:learning )?(?:style|profile|score)|according to your|as a (?:slow|fast) learner)\b/i.test(t)) out.push('it talks about the learner profile');
-  for (const d of (spec && spec.interests && spec.interests.avoidDomains) || []) if (lazy('./learning-spec').mentions(t, d)) out.push(`it uses ${d}, which the learner dislikes`);
+  for (const d of avoidedIn(spec, source, t)) out.push(`it uses ${d}, which the learner dislikes`);
   const fb = (spec && spec.feedback) || {};
   const n = words(t).length;
   const orig_n = words(source.text).length;
@@ -154,39 +254,117 @@ function check(spec, part, source, text) {
   return out;
 }
 
+// ── the fact gate: claim by claim, by a model, after the mechanical check ────
+const FACT_GATE_SYSTEM = 'You check a rewrite of a learner-facing text against its original. Only the delivery may change. List the problems:\n- "new": a claim about the subject in the REWRITE that the ORIGINAL does not state or directly imply. A statement about why another choice is wrong is new unless the ORIGINAL says it. A new definition, a new rule, a tip, or an example with facts of its own is new.\n- "dropped": a point the ORIGINAL makes that the REWRITE leaves out.\n- "changed": anything the REWRITE states differently from the ORIGINAL (a number, the answer, an order, which thing is which).\nThese are NOT problems: other words for the same thing, shorter sentences, a different order, one step per line, saying a term again, friendly words that claim nothing, naming a choice or topic from the question, and a comparison from another field given as a comparison ("like a ...") that claims nothing about the subject.\nReply with JSON only: {"new": ["..."], "dropped": ["..."], "changed": ["..."]}. Empty lists when there is nothing.';
+const AVOID_CLAUSE = '\n- "avoided": anything in the REWRITE, not already in the ORIGINAL, that comes from the AVOID list (a comparison or example from that area counts, even in other words). Add "avoided": [...] to the JSON.';
+function factGatePrompt(source, text, avoid = []) {
+  const ctx = [source.prompt ? `QUESTION: ${source.prompt}` : '', source.choices && source.choices.length ? `CHOICES: ${source.choices.join(' | ')}` : '', source.answer ? `CORRECT ANSWER: ${source.answer}` : ''].filter(Boolean).join('\n');
+  const list = avoid && avoid.length ? `AVOID: ${avoid.join('; ')}\n\n` : '';
+  return { system: list ? FACT_GATE_SYSTEM.replace('\nThese are NOT problems', `${AVOID_CLAUSE}\nThese are NOT problems`) : FACT_GATE_SYSTEM, user: `${list}${ctx ? `${ctx}\n\n` : ''}ORIGINAL:\n${source.text}\n\nREWRITE:\n${text}` };
+}
+// A hint is meant to say less than the explanation, so "same facts" is the wrong question for it (10 of the 14 hint verdicts behind the old figure): it must not give the answer away and must not say anything false.
+const HINT_GATE_SCHEMA = { type: 'object', properties: { gives_answer: { type: 'boolean' }, false_claims: { type: 'array', items: { type: 'string' } } }, required: ['gives_answer', 'false_claims'] };
+function hintGatePrompt(source, text) {
+  return {
+    system: 'You check a hint for a question before a learner sees it. "gives_answer": true if a learner could read off the correct answer or the correct choice from the hint alone, without any thinking of their own. "false_claims": anything the hint states that is false about the question or would lead away from the correct answer. A comparison from another field given as a comparison is not a false claim unless it misleads. Reply with JSON only: {"gives_answer": false, "false_claims": []}.',
+    user: `QUESTION: ${source.prompt || ''}\n${source.choices && source.choices.length ? `CHOICES: ${source.choices.join(' | ')}\n` : ''}CORRECT ANSWER: ${source.answer || ''}\n\nHINT:\n${text}`,
+  };
+}
+function readHintGate(reply) {
+  const j = firstJson(reply);
+  if (!j || typeof j.gives_answer !== 'boolean' || !Array.isArray(j.false_claims)) return null;
+  const problems = [...(j.gives_answer ? ['it gives the answer away'] : []), ...j.false_claims.filter(Boolean).map((x) => `false: ${String(x).slice(0, 200)}`)];
+  return { ok: problems.length === 0, problems };
+}
+/** The first whole JSON object in a reply: some models say it, then say it again, or add a note after it. null when there is none. */
+function firstJson(reply) {
+  const t = String(reply || '');
+  const start = t.indexOf('{');
+  if (start < 0) return null;
+  let depth = 0; let quoted = false;
+  for (let i = start; i < t.length; i += 1) {
+    const c = t[i];
+    if (quoted) { if (c === '\\') i += 1; else if (c === '"') quoted = false; continue; }
+    if (c === '"') quoted = true;
+    else if (c === '{') depth += 1;
+    else if (c === '}') { depth -= 1; if (!depth) { try { return JSON.parse(t.slice(start, i + 1)); } catch { return null; } } }
+  }
+  return null;
+}
+/** A judge's reply as { ok, problems } or null when it cannot be read (which is never a pass). */
+function readFactGate(reply) {
+  const j = firstJson(reply);
+  if (!j || typeof j !== 'object' || !['new', 'dropped', 'changed'].some((k) => Array.isArray(j[k]))) return null;
+  const problems = ['new', 'dropped', 'changed', 'avoided'].flatMap((k) => (Array.isArray(j[k]) ? j[k] : []).filter((x) => String(x || '').trim()).map((x) => `${k}: ${String(x).slice(0, 200)}`));
+  return { ok: problems.length === 0, problems };
+}
+
 /**
  * One rewrite and one revision. `llm({system, user, schema})` resolves { text } or null. Returns { text, source: 'ai'|'stored', problems }.
  * Never throws; a rewrite that still fails the check is not served (the stored text is).
  */
-async function modify({ spec, part, source, llm, goal = null }) {
+async function modify({ spec, part, source, llm, goal = null, gate = null }) {
   const stored = { text: source.text || '', source: 'stored', problems: [] };
   const rules = rulesFor(spec, part, { goal });
   if (!rules.length || !source.text) return stored;
   const ask = async (problems) => {
-    try { const r = await llm({ system: systemFor(part), user: userFor(part, source, rules, problems), schema: SCHEMA, schemaName: 'submit', maxTokens: 700 }); return r && typeof r.text === 'string' ? r.text.trim() : ''; } catch { return ''; }
+    try { const r = await llm({ system: systemFor(part), user: userFor(part, source, rules, problems), schema: SCHEMA, schemaName: 'submit', maxTokens: 700, factSource: [source.prompt ? `Question: ${source.prompt}` : '', source.choices && source.choices.length ? `Choices: ${source.choices.join(' | ')}` : '', source.answer ? `Correct answer: ${source.answer}` : '', `Stored text: ${source.text}`].filter(Boolean).join('\n') }); return r && typeof r.text === 'string' ? r.text.trim() : ''; } catch { return ''; }
   };
-  let text = await ask(null);
-  let problems = text ? check(spec, part, source, text) : ['empty'];
-  if (problems.length) {
-    const second = await ask(problems);
-    const p2 = second ? check(spec, part, source, second) : ['empty'];
-    if (!p2.length) { text = second; problems = []; } else problems = p2;
+  // The mechanical check, then the fact gate; two revisions at most, each told what was wrong; whatever still fails is refused and the stored text stays.
+  let problems = null;
+  let gated = 0;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    const text = await ask(problems);
+    problems = text ? check(spec, part, source, text) : ['empty'];
+    if (!problems.length && gate) {
+      gated += 1;
+      // eslint-disable-next-line no-await-in-loop
+      const v = await gate(part, source, text, spec);
+      // A verdict that cannot be read is not a pass: nothing is served on it.
+      if (!v) problems = ['the fact check could not be read'];
+      else if (!v.ok) problems = v.problems;
+    }
+    if (!problems.length) return { text, source: 'ai', problems: [], attempts: attempt + 1, gated };
   }
-  return problems.length ? { ...stored, problems } : { text, source: 'ai', problems: [] };
+  return { ...stored, problems, gated };
 }
 
 // ── serving: the stored text unless a rewrite for this learner is ready ──────
+/** A rewrite stored before the fact guard existed had rules only: with the guard on it is not served. */
+function shapedChecked(item) { return !lazy('./fact-guard').on() || !!item.shaped.fact_checked; }
+
 function rationaleOf(item) {
-  if (item && enabled() && item.shaped && item.shaped.rationale) return item.shaped.rationale;
-  return item ? item.rationale : item;
+  if (!item) return item;
+  // What the learner asked for themselves comes first (services/part-change.js); it has its own switch, and its own fact gate.
+  if (item.changed && item.changed.rationale && lazy('./part-change').on()) return item.changed.rationale;
+  if (enabled(item.user_id) && item.shaped && item.shaped.rationale && shapedChecked(item)) return item.shaped.rationale;
+  return item.rationale;
 }
 function hintOf(item) {
-  if (item && enabled() && partOn('hint') && item.shaped && item.shaped.hint) return item.shaped.hint;
+  if (item && enabled(item.user_id) && partOn('hint') && item.shaped && item.shaped.hint && shapedChecked(item)) return item.shaped.hint;
   return item ? item.hint : item;
 }
 
 const running = new Set();
 const defaultLlm = (userId) => (a) => lazy('./ai').structured({ role: 'fast', task: 'part_modify', ...a, userId, dataClass: 'learner', effort: 'low' });
+const GATE_SCHEMA = { type: 'object', properties: { new: { type: 'array', items: { type: 'string' } }, dropped: { type: 'array', items: { type: 'string' } }, changed: { type: 'array', items: { type: 'string' } }, avoided: { type: 'array', items: { type: 'string' } } }, required: ['new', 'dropped', 'changed'] };
+/**
+ * The live fact gate: the prompt the calibration measured, through services/ai.js (consent rule included), read by two families (pool tasks part_gate_a, Grok first; part_gate_b,
+ * DeepSeek first). One family alone let a dropped rule through ("Volume = 8 x 5 x 3" for "Volume is length x width x height": DeepSeek clean, Grok caught it). Both must pass; one that cannot be read is not a pass.
+ */
+const defaultGate = (userId) => async (part, source, text, spec) => {
+  try {
+    const q = part === 'hint' ? hintGatePrompt(source, text) : factGatePrompt(source, text, (spec && spec.interests && spec.interests.avoidDomains) || []);
+    for (const task of ['part_gate_a', 'part_gate_b']) {
+      // eslint-disable-next-line no-await-in-loop
+      const r = await lazy('./ai').structured({ role: 'fast', task, system: q.system, user: q.user, schema: part === 'hint' ? HINT_GATE_SCHEMA : GATE_SCHEMA, schemaName: 'submit', maxTokens: 600, userId, dataClass: 'learner', effort: 'low' });
+      const v = part === 'hint' ? readHintGate(JSON.stringify(r || null)) : readFactGate(JSON.stringify(r || null));
+      if (!v || !v.ok) return v;
+    }
+    return { ok: true, problems: [] };
+  } catch { return null; }
+};
 
 /** Where an item sits: its own track and grade, else its session's. */
 function placeOf(item) {
@@ -209,8 +387,10 @@ function goalFor(userId, item) {
 }
 
 /** Background: write `item.shaped` for this learner. Resolves when done; routes must not await it. */
-async function prepareItem(userId, item, { llm = null, spec = null } = {}) {
-  if (!enabled() || !userId || !item || !item.rationale) return null;
+async function prepareItem(userId, item, { llm = null, spec = null, gate = undefined } = {}) {
+  if (!enabled(userId) || !userId || !item || !item.rationale) return null;
+  // Each rewrite is a write and two gate readings on the learner's daily AI budget (120 calls): background rewrites stop at half of it, so they never cost the tutor its answers.
+  if (!llm) { try { if (!lazy('./ai').budgetShareLeft(userId, 0.5)) return null; } catch { return null; } }
   const key = `${userId}:${item.id}`;
   if (running.has(key)) return null;
   running.add(key);
@@ -223,12 +403,14 @@ async function prepareItem(userId, item, { llm = null, spec = null } = {}) {
     const hash = `${ls.specHash(sp)}${goalClause(goal) ? `:${hashOf(goalClause(goal))}` : ''}`;
     if (item.shaped && item.shaped.hash === hash) return item.shaped;
     const call = llm || defaultLlm(userId);
+    const verify = gate === undefined ? (llm ? null : defaultGate(userId)) : gate;
     const base = { prompt: item.prompt, choices: item.choices, answer: item.answer };
+    const isReview = item.rationale === REVIEW_DEFAULT;
     const [fb, hint] = await Promise.all([
-      partOn(item.rationale === REVIEW_DEFAULT ? 'review' : 'feedback') ? modify({ spec: sp, part: item.rationale === REVIEW_DEFAULT ? 'review' : 'feedback', source: { ...base, text: item.rationale }, llm: call, goal }) : Promise.resolve(null),
-      item.hint && partOn('hint') ? modify({ spec: sp, part: 'hint', source: { ...base, text: item.hint }, llm: call }) : Promise.resolve(null),
+      isReview && partOn('review') ? Promise.resolve({ source: 'ai', text: reviewLine(sp, goal) }) : !isReview && partOn('feedback') ? modify({ spec: sp, part: 'feedback', source: { ...base, text: item.rationale }, llm: call, goal, gate: verify }) : Promise.resolve(null),
+      item.hint && partOn('hint') ? modify({ spec: sp, part: 'hint', source: { ...base, text: item.hint }, llm: call, gate: verify }) : Promise.resolve(null),
     ]);
-    const shaped = { hash, at: new Date().toISOString(), rationale: fb && fb.source === 'ai' ? fb.text : null, hint: hint && hint.source === 'ai' ? hint.text : null };
+    const shaped = { hash, at: new Date().toISOString(), fact_checked: lazy('./fact-guard').on(), rationale: fb && fb.source === 'ai' ? fb.text : null, hint: hint && hint.source === 'ai' ? hint.text : null };
     db.update('items', item.id, { shaped });
     return shaped;
   } catch { return null; } finally { running.delete(key); }
@@ -236,7 +418,7 @@ async function prepareItem(userId, item, { llm = null, spec = null } = {}) {
 
 /** Fire and forget for a batch of items; never throws, never delays the caller. */
 function prepareItems(userId, items) {
-  if (!enabled() || !userId || !Array.isArray(items)) return;
+  if (!userId || !enabled(userId) || !Array.isArray(items)) return;
   const todo = items.filter((i) => i && i.rationale && !(i.shaped && i.shaped.hash));
   if (!todo.length) return;
   setImmediate(() => { (async () => { for (const i of todo.slice(0, 12)) await prepareItem(userId, i); })().catch(() => {}); });
@@ -248,7 +430,7 @@ const refreshing = new Set();
 
 /** Is the stored course lesson text out of date for this learner (spec drifted, at most once a day)? */
 function courseStale(course, spec, now = Date.now()) {
-  if (!enabled() || !course || course.status !== 'ready' || !spec || spec.isDefault) return false;
+  if (!enabled(course && course.user_id) || !course || course.status !== 'ready' || !spec || spec.isDefault) return false;
   const last = Date.parse(course.lessons_refreshed_at || '');
   if (Number.isFinite(last) && now - last < REFRESH_EVERY_MS) return false;
   const sig = lazy('./spec-sig');
@@ -259,45 +441,121 @@ function courseStale(course, spec, now = Date.now()) {
 /** A rewrite of one skill's paragraphs that keeps every number and the key points; null if it cannot be held to that. */
 async function rewriteLesson(args) { return (await rewriteLessonDetail(args)).paragraphs; }
 
-/** The same, with the problems the last draft still had: { paragraphs: [..] | null, problems: [..] }. */
-async function rewriteLessonDetail({ spec, skill, llm }) {
-  const orig = (skill.lesson.paragraphs || []).join('\n\n');
+/**
+ * A free rewrite of a lesson added facts whatever it was told (7 Nov, held-out: 25 of 30 refused, "Many towns and farms were damaged", "So the mean is 5"), so the writer no longer writes a lesson. It
+ * rewrites each sentence on its own, and code does the layout from the spec: how the text is cut into pieces and numbered. A sentence that loses a number goes back to the stored sentence, so a
+ * rewrite can be partial. One comparison may be offered apart from the text, and is dropped first when the gate objects.
+ */
+const LESSON_SYSTEM = 'You rewrite a lesson for one specific learner, sentence by sentence. You are given numbered sentences. For each one, write what that sentence says and nothing else, in the delivery asked for; you may split it into shorter sentences. The reader should feel this was written for them: reword every sentence to fit the delivery notes (its words, length, register, how it addresses the reader), and copy a sentence unchanged only when it already fits them. Keep every fact, number, name and term it has. Add nothing: no opener, no summary, no "key idea", no question, no step label, no example, no definition, no cause or consequence, even if you know it to be true. Never mention the learner. Return JSON {"sentences": [["..."], ["...", "..."]], "comparison": ""}: "sentences" has exactly one list per numbered sentence, in order. "comparison" is one short comparison only if the delivery notes offer one and it truly has the same structure as the idea, written as a comparison ("It is like ...") with no fact of its own; otherwise "".';
+
+// The levers a rewrite of a finished text can honestly follow. The full material block also asks for mistakes, a big picture, a hook, a recap and worked cases; a rewrite has nothing of its own
+// to put there, so writers made them up, and that is what the fact gate caught (7 Nov pilot: "A common wrong idea...", "It fits into the larger picture...").
+const DELIVERY = ['chunk', 'density', 'structure', 'warmth', 'formality', 'humor', 'praise', 'gentleness', 'pressure', 'ruleFirst', 'notation', 'instructions', 'length'];
+function lessonDeliveryLines(spec) {
+  const ls = lazy('./learning-spec');
+  const lang = spec.language || {};
+  const it = spec.interests || {};
+  const ranked = DELIVERY.map((l) => ({ l, lean: (spec.levers || {})[l] || 0 })).filter((x) => Math.abs(x.lean) >= ls.SHOW_AT && ls.PHRASES[x.l]).sort((a, b) => Math.abs(b.lean) - Math.abs(a.lean));
+  const tone = (spec.feedback && spec.feedback.tone) || {};
+  const out = [`Language: reading grade ${lang.vocabularyGrade || 'of the original'}; most sentences ${lang.maxSentenceWords || 20} words or fewer${lang.eslSupport ? '; everyday words, no idioms or phrasal verbs' : ''}.`];
+  if (tone.formality >= 0.65) out.push('Register: formal and precise; no contractions; never "you".');
+  else if (tone.formality <= 0.35) out.push('Register: casual, as one person talking to another: contractions, and "you" where the sentence allows it.');
+  if (tone.correction === 'gentle' || tone.warmth >= 0.65) out.push('Warm and unhurried wording, without any cheering or claim.');
+  else if (tone.correction === 'direct' || tone.warmth <= 0.35) out.push('Blunt, stripped wording: the fewest words that keep each point.');
+  for (const x of ranked) { const p = ls.PHRASES[x.l][x.lean > 0 ? 1 : 0]; if (p) out.push(p); }
+  if (it.exampleDomains && it.exampleDomains.length && it.share >= 0.3) out.push(`Only where it truly has the same structure as the idea, a short comparison from ${it.exampleDomains.slice(0, 2).join(' or ')}, given as a comparison and stating no fact of its own.`);
+  if (it.avoidDomains && it.avoidDomains.length) out.push(`Never use anything about: ${it.avoidDomains.join(', ')}.`);
+  return out.map((x, i) => `${i + 1}. ${x}`);
+}
+
+const sentencesIn = (t) => String(t || '').split(/(?<=[.!?])\s+(?=[A-Z0-9"'“(])/).map((x) => x.trim()).filter(Boolean);
+/** The pieces a learner reads, from the spec: how many sentences to a paragraph, and numbered when they follow numbered steps. Pure. */
+function layoutLesson(spec, groups, comparison) {
+  const size = Math.max(1, Math.min(6, Number((spec.lesson || {}).chunkSentences) || 4));
+  const flat = groups.flat();
+  const paragraphs = [];
+  for (let i = 0; i < flat.length; i += size) paragraphs.push(flat.slice(i, i + size).join(' '));
+  const numbered = spec.explain && spec.explain.numberedSteps && paragraphs.length >= 2 ? paragraphs.map((p, i) => `${i + 1}. ${p}`) : paragraphs;
+  return comparison ? [...numbered, comparison] : numbered;
+}
+
+/** The same, with the problems the last draft still had: { paragraphs: [..] | null, problems: [..], attempts, partial }. */
+async function rewriteLessonDetail({ spec, skill, llm, gate = null }) {
+  const stored = skill.lesson.paragraphs || [];
+  const orig = stored.join('\n\n');
   const keys = skill.lesson.key_points || [];
-  const block = lazy('./learning-spec').specToLines(spec, { surface: 'material' }).join('\n');
+  const units = stored.flatMap(sentencesIn);
+  const source = { text: orig, title: skill.title, prompt: `Lesson: ${skill.title}` };
+  const block = `How to deliver it for this learner:\n${lessonDeliveryLines(spec).join('\n')}`;
   const ask = async (note) => {
     try {
       const r = await llm({
-        system: 'You rewrite one lesson text for one specific learner. Keep every fact, number, definition and key point exactly as in the original; add no fact and no number. Only the delivery changes. Never mention the learner or their profile. Plain text paragraphs. Return JSON {"paragraphs": ["..."]}.',
-        user: `Lesson: ${skill.title}\n\nOriginal paragraphs:\n${orig}\n\nKey points that must stay:\n${keys.map((k) => `- ${k}`).join('\n') || '- (none listed)'}\n\n${block}${note ? `\n\nYour last draft had problems; fix them:\n${note}` : ''}`,
-        schema: { type: 'object', properties: { paragraphs: { type: 'array', items: { type: 'string' } } }, required: ['paragraphs'] }, schemaName: 'submit', maxTokens: 7000,
+        system: LESSON_SYSTEM,
+        user: `Lesson: ${skill.title}\n\nSentences:\n${units.map((u, i) => `${i + 1}. ${u}`).join('\n')}\n\n${block}${note ? `\n\nYour last draft had problems; fix them:\n${note}` : ''}`,
+        schema: { type: 'object', properties: { sentences: { type: 'array', items: { type: 'array', items: { type: 'string' } } }, comparison: { type: 'string' } }, required: ['sentences'] }, schemaName: 'submit', maxTokens: 7000, factSource: `Lesson: ${skill.title}\n\n${orig}`,
       });
-      return r && Array.isArray(r.paragraphs) ? r.paragraphs.map((p) => String(p).trim()).filter(Boolean).slice(0, 10) : null;
+      return r && Array.isArray(r.sentences) ? r : null;
     } catch { return null; }
   };
+  const keptNumbers = (from, to) => { const have = numbersShown(to); const known = numbersOf(`${from} ${skill.title}`); return [...numbersOf(from)].every((n) => have.has(n)) && [...numbersOf(to)].every((n) => known.has(n)); };
+  /** Sentence by sentence, against its own original: a sentence that fails goes back to the stored one. */
+  const assemble = (r) => {
+    let reverted = 0;
+    const groups = units.map((u, i) => {
+      const got = Array.isArray(r.sentences[i]) ? r.sentences[i].map((x) => String(x || '').trim()).filter(Boolean) : [];
+      const joined = got.join(' ');
+      const ok = got.length && keptNumbers(u, joined) && !avoidedIn(spec, { ...source, text: u }, joined).length && joined.split(/\s+/).length <= 3 * u.split(/\s+/).length + 8;
+      if (!ok) reverted += 1;
+      return ok ? got : [u];
+    });
+    return { groups, reverted, comparison: String(r.comparison || '').trim() };
+  };
   const problemsOf = (paras) => {
-    if (!paras || !paras.length) return ['empty'];
-    const text = paras.join(' ');
+    const body = paras.join(' ');
     const out = [];
-    const have = numbersShown(text);
-    for (const n of numbersOf(orig)) if (!have.has(n)) out.push(`the number ${n} is missing`);
-    for (const n of numbersOf(stripLayout(text))) if (!numbersOf(`${orig} ${skill.title}`).has(n)) out.push(`the number ${n} is not in the original`);
-    const c = lazy('./learning-spec').checkFollowed(text, spec, { keyFacts: keys, exempt: String(`${orig} ${skill.title}`).toLowerCase().match(/[a-zà-ÿ]{4,}/g) || [], minShare: 0.3, own: true, interestNeed: 0 });
-    for (const p of c.problems) if (['coverage', 'profile_leak', 'avoid_domain'].includes(p.id)) out.push(p.detail);
+    const c = lazy('./learning-spec').checkFollowed(body, spec, { keyFacts: keys, exempt: String(`${orig} ${skill.title}`).toLowerCase().match(/[a-zà-ÿ]{4,}/g) || [], minShare: 0.3, own: true, interestNeed: 0 });
+    for (const p of c.problems) if (['coverage', 'profile_leak'].includes(p.id)) out.push(p.detail);
+    for (const d of avoidedIn(spec, source, body)) out.push(`it uses ${d}, which this learner dislikes; use other examples`);
     return out;
   };
-  let paras = await ask(null);
-  let problems = problemsOf(paras);
-  if (problems.length) { paras = await ask(problems.join('\n')); problems = problemsOf(paras); }
-  return { paragraphs: problems.length ? null : paras, problems };
+  const gateOf = async (paras) => {
+    if (!gate) return [];
+    const v = await gate('lesson', source, paras.join('\n\n'), spec);
+    if (!v) return ['the fact check could not be read'];
+    return v.ok ? [] : v.problems;
+  };
+  let problems = null;
+  let attempts = 0;
+  for (; attempts < 3; attempts += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    const r = await ask(problems ? problems.join('\n') : null);
+    if (!r) { problems = ['empty']; continue; } // eslint-disable-line no-continue
+    const { groups, reverted, comparison } = assemble(r);
+    const offered = comparison && !numbersOf(comparison).size && !avoidedIn(spec, source, comparison).length ? comparison : '';
+    let paras = layoutLesson(spec, groups, offered);
+    problems = problemsOf(paras);
+    // eslint-disable-next-line no-await-in-loop
+    if (!problems.length) problems = await gateOf(paras);
+    if (problems.length && offered) {
+      // The comparison goes first: the text may still stand without it.
+      paras = layoutLesson(spec, groups, '');
+      const without = problemsOf(paras);
+      // eslint-disable-next-line no-await-in-loop
+      if (!without.length) { const g = await gateOf(paras); if (!g.length) problems = []; else problems = g; }
+    }
+    if (!problems.length && reverted >= units.length) problems = ['nothing could be rewritten'];
+    if (!problems.length) return { paragraphs: paras, problems: [], attempts: attempts + 1, partial: reverted > 0 };
+  }
+  return { paragraphs: null, problems, attempts, partial: false };
 }
 
 /**
  * Background: re-write the lesson paragraphs of a stored course for the learner's current profile. The questions are not touched. The old
  * paragraphs stay on the skill (`lesson.prev`) so nothing is lost. Resolves { refreshed, kept } or null.
  */
-async function refreshCourseLessons(userId, materialId, { llm = null, force = false } = {}) {
+async function refreshCourseLessons(userId, materialId, { llm = null, force = false, gate = undefined } = {}) {
   const key = `${userId}:${materialId}`;
-  if (!enabled() || !partOn('lesson') || refreshing.has(key)) return null;
+  if (!enabled(userId) || !partOn('lesson') || refreshing.has(key)) return null;
   const builder = lazy('./course-builder');
   const db = lazy('../config/db');
   const course = builder.get(userId, materialId);
@@ -309,11 +567,12 @@ async function refreshCourseLessons(userId, materialId, { llm = null, force = fa
   try {
     db.update('material_courses', course.id, { lessons_refreshed_at: new Date().toISOString() });
     const call = llm || defaultLlm(userId);
+    const verify = gate === undefined ? (llm ? null : defaultGate(userId)) : gate;
     let refreshed = 0; let kept = 0;
     const skills = [];
     for (const s of course.skills || []) {
       // eslint-disable-next-line no-await-in-loop
-      const paras = s.lesson && (s.lesson.paragraphs || []).length ? await rewriteLesson({ spec, skill: s, llm: call }) : null;
+      const paras = s.lesson && (s.lesson.paragraphs || []).length ? await rewriteLesson({ spec, skill: s, llm: call, gate: verify }) : null;
       if (paras) { skills.push({ ...s, lesson: { ...s.lesson, paragraphs: paras, prev: s.lesson.prev || s.lesson.paragraphs } }); refreshed += 1; } else { skills.push(s); kept += 1; }
     }
     // The course may have changed while we wrote: only skills still equal to what we read are replaced.
@@ -341,12 +600,12 @@ function stampCourse(userId, course) {
 
 /** Fire and forget from a route that serves a course. */
 function maybeRefreshCourse(userId, materialId) {
-  if (!enabled() || !partOn('lesson')) return;
+  if (!enabled(userId) || !partOn('lesson')) return;
   setImmediate(() => { refreshCourseLessons(userId, materialId).catch(() => {}); });
 }
 
 const hashOf = (s) => crypto.createHash('sha1').update(String(s)).digest('hex').slice(0, 10);
 
 module.exports = {
-  PARTS, REVIEW_DEFAULT, enabled, partOn, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, rewriteLessonDetail, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
+  PARTS, REVIEW_DEFAULT, factGatePrompt, readFactGate, hintGatePrompt, readHintGate, firstJson, lessonDeliveryLines, defaultGate, avoidedIn, reviewLine, reviewLineFor, voiceOf, voiceFields, accountSetting, enabled, partOn, rulesFor, check, modify, rationaleOf, hintOf, prepareItem, prepareItems, goalClause, courseStale, rewriteLesson, rewriteLessonDetail, refreshCourseLessons, stampCourse, maybeRefreshCourse, hashOf,
 };

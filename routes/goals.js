@@ -46,7 +46,7 @@ function fitOf(userId, t) {
     return { label: p.label, why: p.why };
   }
   if (!t.gradeId) return null;
-  const enrollment = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === t.trackId && e.grade_id === t.gradeId);
+  const enrollment = (db.forUser('enrollments', userId).find((e) => e.track_id === t.trackId && e.grade_id === t.gradeId) || null);
   const units = enrollment ? unitPlacement.unitsFor(t.trackId, t.gradeId) : null;
   const first = goalOrder.named(enrollment, units);
   if (!goals.applies(userId)) return null;

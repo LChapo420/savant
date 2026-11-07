@@ -81,7 +81,7 @@ const dueOf = (st, now) => st && st.status === 'mastered' && st.due && Date.pars
 function weakSkills(userId, materialId, now = Date.now()) {
   const course = courses.get(userId, materialId);
   if (!course || !Array.isArray(course.skills) || !course.skills.length) return [];
-  const prog = db.findOne('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
+  const prog = (db.forUser('material_progress', userId).find((p) => p.material_id === Number(materialId)) || null);
   if (!prog) return [];
   const rows = [];
   const known = new Set(adapt.plan(course, prog, now).skipped); // 07-M3/M9: known and not due is never a weak spot
@@ -261,7 +261,7 @@ function packChecks(userId, materialId, course, limit) {
   return out;
 }
 
-const row = (userId, materialId, kind) => db.findOne('material_podcasts', (c) => c.user_id === userId && c.material_id === Number(materialId) && c.kind === kind);
+const row = (userId, materialId, kind) => (db.forUser('material_podcasts', userId).find((c) => c.material_id === Number(materialId) && c.kind === kind) || null);
 
 /** A check-in of one of the learner's episodes, with its key, for grading on the server. Null when there is none. */
 function checkinOf(userId, materialId, qid) {
@@ -300,7 +300,7 @@ async function build(userId, materialId, opts = {}) {
   const sig = hash(JSON.stringify([mat.text.length, hash(mat.text), skills.map((s) => [s.id, (s.questions || []).length]), packQuiz.map((q) => q.pack_qid), weak && weak.map((w) => [w.skill.id, w.due, w.wrong, w.mis])]));
   const prev = row(userId, mat.id, kind);
   if (prev && prev.version === VERSION && prev.sig === sig && prev.status === 'ready' && !opts.force) return { episode: prev, cached: true };
-  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The podcast maker is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  if (!opts.llm && !require('./ai').canBuild()) return { error: 'The podcast maker is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
 
   inflight.add(key);
   let saved = null;
@@ -321,7 +321,7 @@ async function build(userId, materialId, opts = {}) {
     const spec = learningSpec.buildSpec(userId, { topic: mat.title, materialId: mat.id });
     const block = learningSpec.specToLines(spec, { surface: 'podcast' }).join('\n');
     const args = {
-      role: 'fast', task: 'material_podcast', schema: SCRIPT_SCHEMA, schemaName: 'material_podcast', maxTokens: 5000, dataClass: 'learner', userId,
+      role: 'fast', task: 'material_podcast', schema: SCRIPT_SCHEMA, schemaName: 'material_podcast', maxTokens: 5000, dataClass: 'learner', userId, factSource: text,
       system: `You write a short podcast script for a student: two friendly hosts, A and B, talking about the student's own study material. ${UNTRUSTED} `
         + 'Host A explains; host B asks the questions a student would ask, checks understanding and gives small examples that are in the text (and, where the block below asks for them, short framed analogies from the interests of the listener, never as facts). '
         + `Write ${MIN_TURNS * 2} to ${MAX_TURNS - 8} turns of one to three plain spoken sentences each: no markdown, no stage directions, no sound effects, nothing a speech voice would read badly. Start with a one-line welcome and end with a recap (one line unless the block below says otherwise). `
@@ -366,8 +366,8 @@ async function build(userId, materialId, opts = {}) {
     if (!data) {
       // A failed rebuild leaves the last good episode as it was.
       db.update('material_podcasts', saved.id, { status: prev && prev.turns && prev.turns.length ? prev.status : 'failed', error: used ? 'nothing passed the checks' : 'token budget' });
-      db.flush();
-      return { error: 'An episode could not be made from that material. Try a longer or clearer text.', code: 'nothing_verified' };
+      db.saveSoon();
+      return { error: 'An episode could not be made from that material. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     }
     // Nothing invented (services/material-factcheck.js): each turn is checked against the material; an unsupported sentence goes, and a turn with nothing left goes.
     if (require('./material-factcheck').onFor(opts)) { // eslint-disable-line global-require
@@ -384,7 +384,7 @@ async function build(userId, materialId, opts = {}) {
     saved = db.update('material_podcasts', saved.id, {
       title: data.title || mat.title, turns: data.turns, skills: weak ? weak.map((w) => ({ id: w.skill.id, title: w.skill.title })) : [], checkins, status: 'ready', models: model ? [model] : [], revised, open_problems: open, tokens_used: used, error: null, finished_at: new Date().toISOString(),
     });
-    db.flush();
+    db.saveSoon();
     return { episode: saved };
   } catch (err) {
     console.error('material-podcast:', err.message);

@@ -1,0 +1,621 @@
+{
+ "measured_on": "this PC (not the server)",
+ "learners": 1000,
+ "minutes": 5,
+ "think_ms": 8000,
+ "ramp_s": 60,
+ 
+ "boot_ms": 7670,
+ "crashed": false,
+ "shutdown_ms": 97,
+ "cpu_ms_per_request": 14,
+ "overall": {
+  "requests": 33764,
+  "rps": 65.8,
+  "p50": 3499,
+  "p95": 22291,
+  "p99": 41892,
+  "max": 192106,
+  "server_errors": 11727
+ },
+ "routes": [
+  {
+   "route": "(wait) lesson ready",
+   "n": 429,
+   "p50": 41237,
+   "p95": 131574,
+   "p99": 154142,
+   "max": 192106,
+   "statuses": {
+    "200": 23,
+    "202": 179,
+    "-1": 227
+   }
+  },
+  {
+   "route": "POST /api/tutor/dock",
+   "n": 316,
+   "p50": 4910,
+   "p95": 40849,
+   "p99": 44963,
+   "max": 74394,
+   "statuses": {
+    "200": 189,
+    "-1": 127
+   }
+  },
+  {
+   "route": "GET /api/tutor/dock",
+   "n": 2258,
+   "p50": 1390,
+   "p95": 30241,
+   "p99": 40111,
+   "max": 45008,
+   "statuses": {
+    "200": 1168,
+    "-1": 1090
+   }
+  },
+  {
+   "route": "GET /api/retention/state",
+   "n": 2258,
+   "p50": 2526,
+   "p95": 30108,
+   "p99": 39807,
+   "max": 45006,
+   "statuses": {
+    "200": 1223,
+    "-1": 1035
+   }
+  },
+  {
+   "route": "GET /api/materials/review-due",
+   "n": 2258,
+   "p50": 2844,
+   "p95": 30029,
+   "p99": 39801,
+   "max": 45001,
+   "statuses": {
+    "200": 1274,
+    "-1": 984
+   }
+  },
+  {
+   "route": "GET /api/review/:id",
+   "n": 1751,
+   "p50": 3729,
+   "p95": 29048,
+   "p99": 40883,
+   "max": 44953,
+   "statuses": {
+    "200": 1075,
+    "-1": 676
+   }
+  },
+  {
+   "route": "GET /api/placement/path/:id",
+   "n": 1751,
+   "p50": 4003,
+   "p95": 28885,
+   "p99": 40438,
+   "max": 44934,
+   "statuses": {
+    "200": 1143,
+    "-1": 608
+   }
+  },
+  {
+   "route": "GET /api/placement/paths",
+   "n": 2258,
+   "p50": 3159,
+   "p95": 27241,
+   "p99": 39176,
+   "max": 44999,
+   "statuses": {
+    "200": 1333,
+    "-1": 925
+   }
+  },
+  {
+   "route": "GET /api/plan/today",
+   "n": 2258,
+   "p50": 3551,
+   "p95": 24148,
+   "p99": 39117,
+   "max": 44996,
+   "statuses": {
+    "200": 1420,
+    "-1": 838
+   }
+  },
+  {
+   "route": "GET /api/path/:id",
+   "n": 1751,
+   "p50": 4277,
+   "p95": 20019,
+   "p99": 40426,
+   "max": 44965,
+   "statuses": {
+    "200": 1253,
+    "-1": 498
+   }
+  },
+  {
+   "route": "GET / (page)",
+   "n": 1000,
+   "p50": 11192,
+   "p95": 19702,
+   "p99": 43153,
+   "max": 51530,
+   "statuses": {
+    "200": 915,
+    "-1": 85
+   }
+  },
+  {
+   "route": "GET /api/lessons/:t/:g/:l",
+   "n": 1736,
+   "p50": 12432,
+   "p95": 16332,
+   "p99": 34163,
+   "max": 53090,
+   "statuses": {
+    "200": 23,
+    "202": 1486,
+    "-1": 227
+   }
+  },
+  {
+   "route": "POST /api/sessions",
+   "n": 1751,
+   "p50": 4220,
+   "p95": 15482,
+   "p99": 37347,
+   "max": 45013,
+   "statuses": {
+    "200": 436,
+    "201": 29,
+    "409": 803,
+    "-1": 483
+   }
+  },
+  {
+   "route": "POST /api/auth/register",
+   "n": 1000,
+   "p50": 2413,
+   "p95": 10802,
+   "p99": 25314,
+   "max": 45471,
+   "statuses": {
+    "201": 507,
+    "400": 13,
+    "-1": 480
+   }
+  },
+  {
+   "route": "POST /api/retention/study/start",
+   "n": 389,
+   "p50": 127,
+   "p95": 7726,
+   "p99": 36562,
+   "max": 39773,
+   "statuses": {
+    "201": 188,
+    "-1": 201
+   }
+  },
+  {
+   "route": "POST /api/placement/start",
+   "n": 389,
+   "p50": 3557,
+   "p95": 7221,
+   "p99": 40906,
+   "max": 44943,
+   "statuses": {
+    "201": 305,
+    "-1": 84
+   }
+  },
+  {
+   "route": "GET /api/progress",
+   "n": 2258,
+   "p50": 3936,
+   "p95": 7181,
+   "p99": 37310,
+   "max": 44969,
+   "statuses": {
+    "200": 1565,
+    "-1": 693
+   }
+  },
+  {
+   "route": "POST /api/sessions/:id/finish",
+   "n": 36,
+   "p50": 57,
+   "p95": 6731,
+   "p99": 6867,
+   "max": 6867,
+   "statuses": {
+    "200": 29,
+    "-1": 7
+   }
+  },
+  {
+   "route": "POST /api/placement/answer",
+   "n": 1727,
+   "p50": 3421,
+   "p95": 6713,
+   "p99": 36171,
+   "max": 44892,
+   "statuses": {
+    "200": 1088,
+    "-1": 639
+   }
+  },
+  {
+   "route": "POST /api/materials/:id/course",
+   "n": 139,
+   "p50": 3226,
+   "p95": 6671,
+   "p99": 28986,
+   "max": 34565,
+   "statuses": {
+    "202": 121,
+    "-1": 18
+   }
+  },
+  {
+   "route": "POST /api/placement/finish",
+   "n": 301,
+   "p50": 3005,
+   "p95": 6668,
+   "p99": 6932,
+   "max": 38548,
+   "statuses": {
+    "200": 195,
+    "400": 17,
+    "-1": 89
+   }
+  },
+  {
+   "route": "POST /api/sessions/:id/answer",
+   "n": 298,
+   "p50": 280,
+   "p95": 6631,
+   "p99": 37958,
+   "max": 42978,
+   "statuses": {
+    "200": 276,
+    "-1": 22
+   }
+  },
+  {
+   "route": "POST /api/sessions/:id/block-finish",
+   "n": 55,
+   "p50": 402,
+   "p95": 6593,
+   "p99": 7043,
+   "max": 7043,
+   "statuses": {
+    "200": 39,
+    "409": 10,
+    "-1": 6
+   }
+  },
+  {
+   "route": "GET /api/catalog",
+   "n": 1125,
+   "p50": 310,
+   "p95": 6591,
+   "p99": 30049,
+   "max": 40134,
+   "statuses": {
+    "200": 718,
+    "-1": 407
+   }
+  },
+  {
+   "route": "POST /api/enrollments",
+   "n": 507,
+   "p50": 2792,
+   "p95": 6567,
+   "p99": 6816,
+   "max": 40674,
+   "statuses": {
+    "201": 389,
+    "-1": 118
+   }
+  },
+  {
+   "route": "GET /api/auth/me",
+   "n": 507,
+   "p50": 2993,
+   "p95": 6467,
+   "p99": 6551,
+   "max": 33666,
+   "statuses": {
+    "200": 440,
+    "-1": 67
+   }
+  },
+  {
+   "route": "POST /api/materials/paste",
+   "n": 234,
+   "p50": 475,
+   "p95": 6420,
+   "p99": 30511,
+   "max": 38556,
+   "statuses": {
+    "201": 139,
+    "-1": 95
+   }
+  },
+  {
+   "route": "GET /api/consent/config",
+   "n": 1000,
+   "p50": 223,
+   "p95": 6413,
+   "p99": 6817,
+   "max": 23641,
+   "statuses": {
+    "200": 576,
+    "-1": 424
+   }
+  },
+  {
+   "route": "GET /api/materials/:id",
+   "n": 139,
+   "p50": 3420,
+   "p95": 6373,
+   "p99": 7024,
+   "max": 30054,
+   "statuses": {
+    "200": 126,
+    "-1": 13
+   }
+  },
+  {
+   "route": "GET /api/materials/:id/course",
+   "n": 139,
+   "p50": 836,
+   "p95": 6353,
+   "p99": 22567,
+   "max": 42807,
+   "statuses": {
+    "200": 125,
+    "-1": 14
+   }
+  },
+  {
+   "route": "GET /api/materials",
+   "n": 139,
+   "p50": 3696,
+   "p95": 6350,
+   "p99": 6765,
+   "max": 6806,
+   "statuses": {
+    "200": 131,
+    "-1": 8
+   }
+  },
+  {
+   "route": "POST /api/consent/age",
+   "n": 1000,
+   "p50": 109,
+   "p95": 6216,
+   "p99": 6737,
+   "max": 40905,
+   "statuses": {
+    "200": 483,
+    "-1": 517
+   }
+  },
+  {
+   "route": "POST /api/items/:id/coach",
+   "n": 23,
+   "p50": 419,
+   "p95": 6007,
+   "p99": 33081,
+   "max": 33081,
+   "statuses": {
+    "403": 22,
+    "-1": 1
+   }
+  },
+  {
+   "route": "GET /api/materials/:id/pack",
+   "n": 139,
+   "p50": 658,
+   "p95": 5966,
+   "p99": 6572,
+   "max": 7126,
+   "statuses": {
+    "200": 122,
+    "-1": 17
+   }
+  },
+  {
+   "route": "POST /api/sessions/:id/next-block",
+   "n": 21,
+   "p50": 2783,
+   "p95": 5567,
+   "p99": 6276,
+   "max": 6276,
+   "statuses": {
+    "201": 19,
+    "-1": 2
+   }
+  },
+  {
+   "route": "POST /api/retention/study/end",
+   "n": 389,
+   "p50": 208,
+   "p95": 4049,
+   "p99": 6353,
+   "max": 42666,
+   "statuses": {
+    "200": 193,
+    "409": 194,
+    "-1": 2
+   }
+  },
+  {
+   "route": "POST /api/retention/study/beat",
+   "n": 35,
+   "p50": 59,
+   "p95": 3258,
+   "p99": 5148,
+   "max": 5148,
+   "statuses": {
+    "200": 35
+   }
+  }
+ ],
+ "notes": {
+  "register -1": {
+   "n": 480,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "placement start -1": {
+   "n": 84,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "enrol -1": {
+   "n": 118,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "sessions 409": {
+   "n": 803,
+   "sample": {
+    "error": "Take the placement quiz for this subject first."
+   }
+  },
+  "sessions -1": {
+   "n": 483,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "placement finish -1": {
+   "n": 89,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "paste -1": {
+   "n": 95,
+   "sample": {
+    "error": "fetch failed"
+   }
+  },
+  "placement finish 400": {
+   "n": 17,
+   "sample": {
+    "error": "Answer at least one question first."
+   }
+  },
+  "register 400": {
+   "n": 13,
+   "sample": {
+    "error": "Enter a valid email address."
+   }
+  }
+ },
+ "probe": {
+  "secs": 338,
+  "wall_s": 512,
+  "cpu_s": 487,
+  "lag_p99_median_ms": 42,
+  "lag_p99_p95_ms": 1244,
+  "lag_max_ms": 2483,
+  "secs_with_stall_over_200ms": 94,
+  "secs_with_stall_over_1s": 27,
+  "loop_busy_median": 0.866,
+  "proc_cpu_median": 0.903,
+  "box_cpu_median": 1,
+  "rss_mb_end": 581,
+  "rss_mb_max": 833,
+  "heap_mb_end": 260,
+  "save_share_of_time": 0.12,
+  "save_stringify_ms_per_sec": 80,
+  "save_write_ms_per_sec": 39,
+  "db_bytes_end": 22779895,
+  "ledger_write_ms_per_sec": 19,
+  "ledger_writes_per_sec": 10
+ },
+ "db_bytes_start": 15164659,
+ "db_bytes_end": 22779895,
+ "stub": {
+  "calls": 1772,
+  "maxInflight": 36,
+  "byProvider": {
+   "nvidia": {
+    "calls": 283,
+    "in": 513554,
+    "out": 388154,
+    "failed": 0,
+    "models": {
+     "deepseek-ai/deepseek-v4.1-flash": 121,
+     "z-ai/glm-5.3-flash": 98,
+     "nvidia/nemotron-3-ultra-550b-a55b": 64
+    }
+   },
+   "coral": {
+    "calls": 209,
+    "in": 484288,
+    "out": 159660,
+    "failed": 0,
+    "models": {
+     "deepseek-v4.1-flash-fast": 93,
+     "deepseek-v4.1-flash": 116
+    }
+   },
+   "gonka": {
+    "calls": 469,
+    "in": 1298277,
+    "out": 639000,
+    "failed": 0,
+    "models": {
+     "zai-org/GLM-5.3-Flash": 267,
+     "deepseek-ai/DeepSeek-V4-Flash-0731": 202
+    }
+   },
+   "munito": {
+    "calls": 329,
+    "in": 1139440,
+    "out": 471000,
+    "failed": 0,
+    "models": {
+     "deepseek-ai/deepseek-v4-flash": 82,
+     "zai-org/glm-5.3-flash": 142,
+     "deepseek-ai/deepseek-v4.1-flash-1017": 105
+    }
+   },
+   "grokified": {
+    "calls": 429,
+    "in": 628753,
+    "out": 630000,
+    "failed": 0,
+    "models": {
+     "grok-4.7": 75,
+     "grok-4.3": 354
+    }
+   },
+   "zerogpu": {
+    "calls": 53,
+    "in": 54649,
+    "out": 79500,
+    "failed": 0,
+    "models": {
+     "z-ai/glm-5.3-flash": 53
+    }
+   }
+  }
+ }
+}

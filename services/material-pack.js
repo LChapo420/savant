@@ -194,7 +194,7 @@ async function buildPart(part, ctx) {
   const here = new Set(part.passages.map((p) => p.id));
   const stressHere = (ctx.keypoints || []).filter((k) => here.has(courses.passageOfKeypoint(k, ctx.passageList))).sort((a, b) => b.weight - a.weight).slice(0, 14);
   const args = {
-    role: 'fast', task: 'material_pack', schema: PART_SCHEMA, schemaName: 'material_pack', maxTokens: 6000, dataClass: 'learner',
+    role: 'fast', task: 'material_pack', schema: PART_SCHEMA, schemaName: 'material_pack', maxTokens: 6000, dataClass: 'learner', factSource: text,
     system: `You make study aids for a student from their own material. ${UNTRUSTED} `
       + `Write: summary (${ctx.limits.paragraphs} short paragraphs in plain words covering this part), `
       + `flashcards (up to ${ctx.limits.cards}: front is a term or question, back is a short answer of one or two sentences), `
@@ -269,7 +269,7 @@ async function buildPart(part, ctx) {
 }
 
 function row(userId, materialId) {
-  return db.findOne('material_packs', (c) => c.user_id === userId && c.material_id === Number(materialId));
+  return (db.forUser('material_packs', userId).find((c) => c.material_id === Number(materialId)) || null);
 }
 
 /**
@@ -285,7 +285,7 @@ async function build(userId, materialId, opts = {}) {
   const textHash = hash(mat.text);
   const prev = row(userId, mat.id);
   if (prev && prev.version === VERSION && prev.text_hash === textHash && prev.status === 'ready' && !opts.force) return { pack: prev, cached: true };
-  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The study pack builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  if (!opts.llm && !require('./ai').canBuild()) return { error: 'The study pack builder is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
 
   inflight.add(key);
   let saved = null;
@@ -326,13 +326,13 @@ async function build(userId, materialId, opts = {}) {
       ...all, status, spec_hash: ps.spec.isDefault ? null : learningSpec.specHash(ps.spec), dropped: ctx.dropped, models: [...ctx.models], tokens_used: ctx.budget.used,
       error: status === 'failed' ? (stopped ? 'token budget' : ctx.unanswered ? 'no_answer' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
-    db.flush();
+    db.saveSoon();
     // No model answered at all (busy or timed out): that is not the material's fault, so say so and let the caller retry.
     if (status === 'failed' && !stopped && ctx.unanswered) {
       db.update('material_packs', saved.id, { error: 'models_unavailable' });
       return { error: 'The models were busy, so the pack could not be built yet.', code: 'models_busy' };
     }
-    if (status === 'failed') return { error: 'Nothing in that material passed the checks. Try a longer or clearer text.', code: 'nothing_verified' };
+    if (status === 'failed') return { error: 'Nothing in that material passed the checks. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     return { pack: saved, partial: status === 'partial' };
   } catch (err) {
     console.error('material-pack:', err.message);
@@ -412,7 +412,7 @@ function forLearner(userId, materialId, now = Date.now()) {
   const p = row(userId, materialId);
   if (!p) return null;
   const course = courses.get(userId, materialId);
-  const prog = db.findOne('material_progress', (r) => r.user_id === userId && r.material_id === Number(materialId));
+  const prog = (db.forUser('material_progress', userId).find((r) => r.material_id === Number(materialId)) || null);
   const known = new Set(course ? adapt.plan(course, prog, now).skipped : []);
   const skillOf = (pid) => { const s = ((course && course.skills) || []).find((x) => (x.passage_ids || []).includes(pid)); return s ? s.id : null; };
   const ids = new Set();

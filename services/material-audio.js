@@ -218,7 +218,7 @@ function listJobs(userId) {
 
 function removeJob(userId, id) {
   const n = db.remove(JOBS, (j) => j.id === Number(id) && j.user_id === userId && !activeIds.has(j.id));
-  if (n) db.flush();
+  if (n) db.saveSoon();
   return n > 0;
 }
 

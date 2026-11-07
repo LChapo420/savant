@@ -120,7 +120,13 @@ function waitChange(ms) {
 let cfgCache = null;
 let cfgStamp = null;
 function lineupFile() { return process.env.MODEL_LINEUP_FILE || path.join(__dirname, '..', 'config', 'model-lineup.json'); }
+let cfgCheckedAt = 0;
 function poolConfig() {
+  // In production the file is looked at every POOL_CONFIG_CHECK_MS (5 s): this runs for every slot of every waiting call, and that stat was an
+  // eighth of the server's time at 100 learners (beta load test, Nov 2026). Elsewhere every call looks, as tests rewrite the file.
+  const every = Number(process.env.POOL_CONFIG_CHECK_MS || (process.env.NODE_ENV === 'production' ? 5000 : 0));
+  if (every && cfgCache && now() - cfgCheckedAt < every) return cfgCache;
+  cfgCheckedAt = now();
   const file = lineupFile();
   let stamp = null;
   try { stamp = `${file}:${fs.statSync(file).mtimeMs}`; } catch { stamp = `${file}:missing`; }
@@ -581,12 +587,16 @@ function refusal(slot, req, kind) {
   // MiniMax M3 as a fact verifier behind grok-4.3 is the owner's call (17/36 caught against 22): off until decided (FACT_VERIFY_MINIMAX=on).
   if (slot.id === 'lyceum:minimax/minimax-m3' && String(process.env.FACT_VERIFY_MINIMAX || '').toLowerCase() !== 'on') return 'switch: FACT_VERIFY_MINIMAX is off';
   const cls = reqClass(req);
+  // The check before text reaches a learner keeps to the owner's window for added providers (4 Nov: "up until november 14th"), Coral included,
+  // whose own learner switch has no end date: reading a learner's text is the same as writing it. CORAL_LEARNER_UNTIL moves it.
+  if (req.task === 'fact_live' && cls === 'learner' && slot.provider === 'coral' && Date.now() >= Date.parse(process.env.CORAL_LEARNER_UNTIL || '2026-11-14T06:00:00Z')) return 'data: the window for learner data on added providers has closed';
   if (slot.dataClass === 'pipeline' && cls !== 'pipeline' && !xkiroLearnerAllowed(slot, req) && !munitoLearnerAllowed(slot, req) && !coralLearnerAllowed(slot, req)) return 'data: a pipeline slot never gets learner data';
   if (!slot.supports.includes(kind)) return `does not do ${kind}`;
   // Coral Fast is for a learner who is waiting: background work (write-ahead, builds) never uses it.
   if (slot.fast && slotIsBackground(req)) return 'speed: a fast paid slot is for waiting learners, not background work';
   const t = taskConfig(req.task);
   if (req.excludeFamilies && slot.family && req.excludeFamilies.includes(slot.family)) return 'independence: family excluded for this request';
+  if (req.freeOnly && slot.paid) return 'budget: this request may use free slots only (the fact guard is at its spend cap)';
   if (matchesAny(slot.id, t.deny)) return 'quality: denied for this task';
   if (Array.isArray(t.only) && !matchesAny(slot.id, t.only)) return 'quality: not in this task\'s only-list';
   if (slot.extra && !matchesAny(slot.id, t.allow) && !matchesAny(slot.id, poolConfig().default_allow)) return 'quality: not listed as good enough for this task';
@@ -657,10 +667,14 @@ function candidatesFor(req, opts = {}) {
     // a busy free model first (a whole level's fact read took 109 to 312 s there; grok-4.3 answered one in 67 s, a block in about 24 s).
     const fastPaid = paid.filter((s) => s.fast);
     // POOL_FIRST_WRITER=<slot id>: an experiment switch (scripts/first-lesson-writer-ab.js): that slot writes the level first, Coral Fast next.
-    const want = process.env.POOL_FIRST_WRITER && (req.task === 'block_layout' || req.task === 'block_fill') ? paid.filter((s) => s.id === process.env.POOL_FIRST_WRITER) : [];
+    // The live fact check: Coral Standard first, for speed at about the same price (scripts/fact-guard-eval.js, 6 Nov: p50 0.3 s against ZeroGPU GLM's 1.2 to 6.7 s, the same catches).
+    const want = req.task === 'fact_live' ? paid.filter((s) => s.id === 'coral:deepseek-v4.1-flash')
+      : process.env.POOL_FIRST_WRITER && (req.task === 'block_layout' || req.task === 'block_fill') ? paid.filter((s) => s.id === process.env.POOL_FIRST_WRITER) : [];
     // A waiting learner's fact check never lands on a free model (a busy free NVIDIA took minutes while grok-4.3 was down, 5 Nov): if no paid
     // verifier answers in time the level is not served as checked, the standard session opens and the write finishes in the background.
     const tail = req.task === 'fact_verify' && paid.length ? [] : free;
+    // The check has seconds, not minutes: a preferred free slot in front of the paid readers used up the last-resort reader's time (2 of 30 replies held as "can't check", 6 Nov).
+    if (req.task === 'fact_live' && (want.length || fastPaid.length || paid.length)) return [...want, ...fastPaid.filter((s) => !want.includes(s)), ...paid.filter((s) => !s.fast && !want.includes(s)), ...first, ...free];
     if (fastPaid.length || paid.length) return [...first, ...want, ...fastPaid.filter((s) => !want.includes(s)), ...paid.filter((s) => !s.fast && !want.includes(s)), ...tail];
   }
   return [...first, ...free, ...paid];
@@ -831,6 +845,9 @@ async function callHedged(req, opts = {}) {
     const untriedFree = () => cands.some((s) => {
       if (s.paid || tried.has(s.id)) return false;
       const b = blocked(s, req, isBg(), isSpec());
+      // A free slot whose RPM window is far off (more than the 15 s pick() would wait) will not answer soon either: for a learner waiting, it does
+      // not hold the paid slot back. Otherwise the call ended at 0 s with "no slot available" (beta load test, Nov 2026). Background work still waits for free.
+      if (b && b.why === 'rpm' && b.waitMs > 15000 && !isBg()) return false;
       return !(b && (b.why === 'disabled' || b.why === 'breaker' || b.why === 'daily tokens'));
     });
 
@@ -846,7 +863,7 @@ async function callHedged(req, opts = {}) {
           // A preferred paid slot (the tutor's Standard Compute) starts first, as the primary, not as a last resort.
           // A hedge onto a paid slot is for speed, so never from background work. A foreground call that has waited fgHedgeMs with every free slot busy takes the paid slot as its primary.
           const fgLate = !isBg() && now() - t0 >= fgHedgeMs();
-          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && (anyFreeRunning() || untriedFree())) continue; // last resort: only when every free one has failed
+          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && !(req.task === 'fact_live' && !isBg()) && (anyFreeRunning() || untriedFree())) continue; /* a waiting learner's check starts on the paid readers it lists first: it has seconds */ // last resort: only when every free one has failed
           if (!budgetOk(s, req, opts, spent)) continue;
         }
         const b = blocked(s, req, isBg(), isSpec());

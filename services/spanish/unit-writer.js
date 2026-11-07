@@ -331,7 +331,7 @@ async function writeUnit(gradeId, unitLabel, opts = {}) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const record = { status: 'checked', written_at: new Date().toISOString(), checks: { blind_agreed: checks.agreed, blind_disagreed_dropped: checks.disagreed, unjudged_dropped: checks.unjudged, reviewed: checks.reviewed, dropped_ids: [...checks.drop] }, unit };
   fs.writeFileSync(`${file}.tmp`, JSON.stringify(record, null, 1));
-  fs.renameSync(`${file}.tmp`, file);
+  require('../durable-file').commit(`${file}.tmp`, file); // eslint-disable-line global-require
   return hydrate(unit);
 }
 

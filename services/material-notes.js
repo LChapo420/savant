@@ -113,7 +113,7 @@ function trimToLimit(sections, limit, { always = false, maxAnalogies = null, kee
 }
 
 function row(userId, materialId) {
-  return db.findOne('material_notes', (c) => c.user_id === userId && c.material_id === Number(materialId));
+  return (db.forUser('material_notes', userId).find((c) => c.material_id === Number(materialId)) || null);
 }
 
 /** Build (or return the cached) notes for one of the learner's materials. Resolves { notes } or { error, code }. Never throws. */
@@ -126,7 +126,7 @@ async function build(userId, materialId, opts = {}) {
   const textHash = hash(mat.text);
   const prev = row(userId, mat.id);
   if (prev && prev.version === VERSION && prev.text_hash === textHash && prev.status === 'ready' && !opts.force) return { notes: prev, cached: true };
-  if (!opts.llm && !require('./ai').isEnabled()) return { error: 'The notes maker is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
+  if (!opts.llm && !require('./ai').canBuild()) return { error: 'The notes maker is not available right now.', code: 'unavailable' }; // eslint-disable-line global-require
 
   inflight.add(key);
   let saved = null;
@@ -156,7 +156,7 @@ async function build(userId, materialId, opts = {}) {
       // A learner who needs less is held to a word limit that is below the plain outline (the speed proof found their notes 5% to 18% over it).
       const wordLimit = learningSpec.notesWordLimit(spec, partSource);
       const args = {
-        role: 'fast', task: 'material_notes', schema: NOTES_SCHEMA, schemaName: 'material_notes', maxTokens: 5000, dataClass: 'learner', userId,
+        role: 'fast', task: 'material_notes', schema: NOTES_SCHEMA, schemaName: 'material_notes', maxTokens: 5000, dataClass: 'learner', userId, factSource: partSource,
         system: `You write study notes for a student from their own material. ${UNTRUSTED} `
           + `Write up to ${MAX_SECTIONS_PART} sections in the order the text teaches them. Each has a short heading and 2 to ${maxBullets} bullets${guard ? ' of points of the text (analogy bullets, where the block below asks for them, come on top of that)' : ''}: one plain sentence each that keeps the text's own terms, numbers, names and definitions. Do not leave out a definition, formula or step the text gives. `
           + 'Every bullet needs passage_id (one of the ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows it. Leave out anything you cannot back with such a quote.'
@@ -227,8 +227,8 @@ async function build(userId, materialId, opts = {}) {
       fact_fixed: factFixed, fact_unchecked: factUnchecked, sections, dropped, trimmed_extras: trimmed, analogies_fixed: analogiesFixed, revised_parts: revisions, open_problems: [...open], coverage, status, tokens_used: used, spec_hash: spec.isDefault ? null : learningSpec.specHash(spec),
       error: status === 'failed' ? (stopped ? 'token budget' : unanswered ? 'no_answer' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
-    db.flush();
-    if (status === 'failed') return { error: 'Notes could not be made from that material. Try a longer or clearer text.', code: 'nothing_verified' };
+    db.saveSoon();
+    if (status === 'failed') return { error: 'Notes could not be made from that material. Try again in a minute, as the check may have been busy. If it keeps happening, try a longer or clearer text.', code: 'nothing_verified' };
     return { notes: saved, partial: status === 'partial' };
   } catch (err) {
     console.error('material-notes:', err.message);

@@ -30,7 +30,8 @@ function open(file, { readOnly = false } = {}) {
   const { DatabaseSync } = require('node:sqlite');
   const d = new DatabaseSync(file, readOnly ? { readOnly: true } : {});
   if (!readOnly) {
-    d.exec('PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL; PRAGMA busy_timeout = 5000;');
+    // FULL: a save is on the disk when it returns, so a power cut loses nothing already saved (NORMAL can lose the last few). DB_SQLITE_SYNC=NORMAL goes back.
+    d.exec(`PRAGMA journal_mode = WAL; PRAGMA synchronous = ${process.env.DB_SQLITE_SYNC === 'NORMAL' ? 'NORMAL' : 'FULL'}; PRAGMA busy_timeout = 5000;`);
     d.exec(SCHEMA);
   }
   return d;

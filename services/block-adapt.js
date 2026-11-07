@@ -105,6 +105,30 @@ function layoutLines(spec, kind) {
   return lines;
 }
 
+/**
+ * How the lesson is opened, ordered and explained (audit gap: the hook, story, recap, why-it-matters, big-picture, rule-or-case order,
+ * analogy and layout fields reached only the older lesson writer; the built-in block writer never said them). Never a fact: each line
+ * moves where a thing is said, not what is said. Lessons only. OFF by default (BLOCK_APPROACH=on turns it on): the 6 Nov blind proof did not
+ * beat chance (docs/MODIFICATION-AUDIT.md section 6), so by the sprint rule it is not on until its gate passes.
+ */
+function approachLines(spec, kind) {
+  if (kind !== 'lesson' || String(process.env.BLOCK_APPROACH || 'off').toLowerCase() !== 'on') return [];
+  const l = spec.lesson; const e = spec.explain; const out = [];
+  if (l.hook === 'question') out.push('Open the first block with one curiosity question that the lesson then answers.');
+  else if (l.hook === 'scenario') out.push('Open the first block with a two-sentence concrete scenario that the idea resolves.');
+  else out.push('Open the first block straight with the idea: no hook paragraph, no story.');
+  if (l.recapAtStart) out.push('Begin with one line that recalls the idea this one builds on.');
+  if (l.bigPictureFirst) out.push('Give the whole idea in one plain sentence before the parts.');
+  if (l.whyItMatters) out.push('Say in one sentence where this idea is used, before teaching it.');
+  if (l.recapAtEnd) out.push('End the last block with a one-line takeaway of the whole level.');
+  if (e.order === 'rule-first') out.push('In every block state the rule first, then the cases that show it.');
+  else if (e.order === 'cases-first') out.push('In every block show a concrete case first and name the rule only after it.');
+  if (e.analogy === 'prefer') out.push('Use one everyday analogy for the hardest idea and say where it stops fitting.');
+  else if (e.analogy === 'avoid') out.push('Use no analogies; explain the idea directly.');
+  if (e.visual) out.push('Where structure helps, lay it out as a small aligned table or a step list inside the block text.');
+  return out;
+}
+
 function fillLines(spec, kind, trackId) {
   const l = spec.lesson; const p = spec.practice; const lang = spec.language; const f = spec.feedback;
   const lines = [
@@ -117,6 +141,8 @@ function fillLines(spec, kind, trackId) {
   else lines.push('Leave every check\'s hint empty.');
   if (f.granularity === 'brief') lines.push('Every check\'s rationale is one short sentence.');
   if (kind === 'retention') lines.push('Every block makes the learner produce or recognise from memory; nothing re-teaches at length.');
+  lines.push(...approachLines(spec, kind));
+  if (kind === 'lesson') lines.push(...require('./study-goal').linesFor(spec)); // eslint-disable-line global-require
   lines.push(...subjectLines(spec, trackId, kind));
   const d = useDomains(spec);
   if (d && !ofTrack(trackId)) lines.push(`Use ${d} for the examples where it fits naturally; they add no fact of their own.`);
@@ -156,7 +182,7 @@ function goalLine(userId, where) {
   try {
     const rg = require('./retention-goal'); // eslint-disable-line global-require
     const db = require('../config/db'); // eslint-disable-line global-require
-    const e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === where.trackId && x.grade_id === where.gradeId);
+    const e = (db.forUser('enrollments', userId).find((x) => x.track_id === where.trackId && x.grade_id === where.gradeId) || null);
     if (!e) return null;
     const g = rg.forEnrollment(userId, e);
     if (g.status === 'date' && g.days_left <= 30) return `They have a test on ${g.test_date} (${g.days_left} days): after each idea give the one thing to be able to recall for it, and keep side points out; every fact stays.`;
@@ -225,4 +251,4 @@ async function revise(a, { generate, parts, keyFacts = [], topic = '', wordLimit
   return { result: run.result, revised: !!run.revised, problems: (run.problems || []).map((p) => p.id), before: (run.before || []).map((p) => p.id), checked: true, stats: run.stats || null };
 }
 
-module.exports = { begin, goalLine, revise, textOf, wordCount, specFor, subjectLines, layoutLines, fillLines, gameLines, checkpointLines, KINDS };
+module.exports = { approachLines, begin, goalLine, revise, textOf, wordCount, specFor, subjectLines, layoutLines, fillLines, gameLines, checkpointLines, KINDS };
