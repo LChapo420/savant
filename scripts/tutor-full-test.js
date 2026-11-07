@@ -55,6 +55,8 @@ const say = (text) => [{ role: 'user', content: text }];
   check('"where are settings" finds the profile', howto.match('where are the settings')[0].f.id === 'profile');
   check('a plain how-to is answered at once', !!howto.instant('how do I upload my class notes?'));
   check('a question about the work is never a how-to', howto.instant('how do I solve 3/4 + 1/8 on my fractions practice') === null);
+  for (const q of ['simple way to remember how to add fractions', 'simple way to remember how to spell necessary', 'how do I remember the causes of World War 1', 'how can I learn the periodic table', 'how to memorize verb endings', 'how do I review for my chemistry test', 'how should I study for a test on cells', 'how to get better at reading graphs']) check(`asking how to study goes to the tutor: ${q}`, howto.instant(q) === null);
+  for (const q of ['how do I upload my class notes?', 'how do I review', 'how do I practice', 'how do I study my uploaded course', 'how do I set how long to remember a subject on the calendar', 'where is the calendar', 'how do I delete my account']) check(`asking about the app stays instant: ${q}`, !!howto.instant(q), howto.instant(q));
   check('page purposes: checks are graded, lessons are not', howto.pageInfo('/review').graded && !howto.pageInfo('/session').graded);
 
   console.log('safety');

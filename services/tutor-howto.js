@@ -134,12 +134,22 @@ function match(q) {
 
 const HOWTO_ASK = /\b(how (do|can|could|would|should) (i|we|you)|how to|where (is|are|do|can|can't|did)|where's|can i|is there (a|any) way|what('s| is) the (button|page|way)|how does .* work|what does .* do|show me how|take me to|find the|help me (find|use|set)|how come|set up|where to)\b/i;
 // A question about the learner's own work is never a how-to, even with a feature word in it.
-const OWN_WORK = /\b(answer|solve|equation|fraction|what is \d|the question|this question|\d\s*[-+*/x]\s*\d|translate|essay|paragraph|why is|explain)\b/i;
+const OWN_WORK = /\b(answer|solve|equations?|fractions?|what is \d|the question|this question|\d\s*[-+*/x]\s*\d|translate|essay|paragraph|why is|explain)\b/i;
+// Asking how to study something is a question for the tutor, not about the page with a matching name ("simple way to remember how to add fractions" is not about Review).
+const HOW_ASK = /\b(how (do|can|could|would|should) (i|we|you)|how to|ways? to|tips? (on|for|to)|trick (to|for))\b/i;
+const STUDY_VERB = /\b(remember(ing)?|memori[sz](e|ing)|recall(ing)?|learn(ing)?|understand(ing)?|study(ing)?|revis(e|ing)|review(ing)?|practi[cs](e|ing)|master(ing)?|get better at|cram(ming)?)\b(.*)$/i;
+// ...unless it is about the app: the words after the verb name something Savant has, or there are none ("how do I practise", "how do I study my course", "how long to remember it").
+const ABOUT_APP = /\b(savant|the app|this app|tutor|how long|my (uploaded )?(course|material|upload|file|class notes|notes|cards|flash ?cards|podcast|plan|subjects?)|today|what'?s due|due|calendar|the page|button|settings?|style|path|on here|in here)\b/i;
+function studyQuestion(text) {
+  if (!HOW_ASK.test(text) || ABOUT_APP.test(text)) return false;
+  const m = STUDY_VERB.exec(text);
+  return !!m && m[m.length - 1].replace(/[^\p{L}\p{N}]/gu, '').length > 0;
+}
 
 /** A complete answer for a plain how-to question, with no model (instant and free). Null when it is not one. */
 function instant(q, { name, brief } = {}) {
   const text = String(q || '');
-  if (!HOWTO_ASK.test(text) || OWN_WORK.test(text) || text.length > 200) return null;
+  if (!HOWTO_ASK.test(text) || OWN_WORK.test(text) || studyQuestion(text) || text.length > 200) return null;
   const m = match(text);
   if (!m.length || m[0].score < 2) return null;
   if (m[1] && m[1].score === m[0].score && m[1].f.path !== m[0].f.path) return null; // two equally good readings: let the model ask
