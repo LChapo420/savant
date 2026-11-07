@@ -49,7 +49,7 @@ App.mount(async () => {
     } else if (r) {
       verdict = `<p class="small"><strong>${r.correct ? 'Right.' : `Not quite. The answer is: ${esc(r.correct_answer)}.`}</strong> ${esc(r.explanation || '')}</p><p class="tiny muted">From your material: “${esc(r.quote)}”</p><div data-part="pack:${esc(tabName)}:${esc(r.id)}" data-changed="0"></div>`;
     }
-    return `<li style="padding:10px 0"><p><strong>${i + 1}.</strong> ${esc(q.prompt)}</p>${input}${verdict}${r ? `<div data-part="pack:${esc(name)}:${esc(q.id)}" data-changed="${q.part_changed ? 1 : 0}"></div>` : ""}</li>`;
+    return `<li style="padding:10px 0"><p><strong>${i + 1}.</strong> ${esc(q.prompt)}</p>${input}${verdict}${r ? `<div data-part="pack:${esc(section)}:${esc(q.id)}" data-changed="${q.part_changed ? 1 : 0}"></div>` : ""}</li>`;
   }
 
   function section(name) {

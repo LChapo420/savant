@@ -190,8 +190,10 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
     const mine = (carries.get(n) || []).filter((f) => needed(f) && !coveredFacts.has(f.i));
     const talk = !(carries.get(n) || []).length;
     let keep = mine.length > 0;
+    // Where words are what is being saved, a sentence earns its place only if it is about as short as the material's own sentences for what it adds: otherwise those come in instead, by the sweep below.
+    if (keep && (useLean || goal === 'core') && s.kind === 'p' && wc(s.text) > 1.2 * mine.reduce((w, f) => w + wc(f.text), 0)) keep = false;
     if (!keep && goal !== 'core' && !useLean && talk && !repeats(s) && s.kind === 'p') keep = true; // teaching talk the ledger has no line for: it was fact-checked at build, and it stays unless it repeats
-    if (keep) { kept.add(n); addSaid(s); for (const f of mine) coveredFacts.add(f.i); } else if (s.kind === 'p' && !repeats(s)) put(s.skill, s.text);
+    if (keep) { kept.add(n); addSaid(s); for (const f of mine) coveredFacts.add(f.i); } else if (s.kind === 'p' && !repeats(s) && !mine.length) put(s.skill, s.text);
   });
 
   // What no kept sentence carries, in the material's own words, on the skill that owns it.
@@ -225,12 +227,13 @@ function optimize({ course, text, keyPoints = [], goal = 'full', spec = null, le
     const stressedCount = myFacts.filter(stressedFact).length;
     const distinct = goal === 'core' ? myFacts.filter((f) => coreFacts.has(f.i)).length : myFacts.length;
     const lowBound = goal === 'core' ? 2 : 3;
-    const checks = goal === 'test' ? Math.min(FULL_QUIZ + 2, Math.max(lowBound, distinct)) : Math.min(FULL_QUIZ, Math.max(lowBound, distinct));
+    const checks = goal === 'test' ? Math.min(FULL_QUIZ + 2, Math.max(lowBound, distinct)) : useLean ? Math.max(2, Math.min(3, distinct)) : Math.min(FULL_QUIZ, Math.max(lowBound, distinct));
     const focusFacts = goal === 'core' ? myFacts.filter((f) => coreFacts.has(f.i)) : myFacts;
     skills.set(skill.id, {
       paragraphs: paragraphs.length ? paragraphs : (skill.lesson && skill.lesson.paragraphs) || [],
       key_points,
       aside: [...new Set(asideOf.get(skill.id) || [])],
+      lean: useLean,
       added: own.length,
       checks,
       stressed: stressedCount,

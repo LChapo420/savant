@@ -44,6 +44,7 @@ const BUDGET_MS = Number(process.env.UPLOAD_PARTS_BUDGET_MS || 45000);
 const FOLLOW_PER_DAY = Number(process.env.UPLOAD_PARTS_FOLLOW_DAY || 40);
 const LABEL = 'Made-up example, not from your material:';
 const LABEL_LIKE = 'A comparison, not from your material:';
+const LABEL_WORKED = 'Worked example, made up and not from your material:';
 
 const hashOf = (x) => crypto.createHash('sha1').update(typeof x === 'string' ? x : JSON.stringify(x)).digest('hex').slice(0, 14);
 const wc = (t) => (String(t || '').match(/\S+/g) || []).length;
@@ -74,7 +75,9 @@ function viewOf(userId, course, materialId) {
     if (!mat || mat.user_id !== userId || !mat.text) return null;
     const goal = goalOf(userId, materialId);
     const restored = restoredOf(userId, materialId);
-    const goalNow = goal === 'core' && restored.includes('all') ? 'full' : goal;
+    // A test date on this material means the test's reading, unless the learner chose otherwise.
+    const dated = (() => { try { const rg = lazy('./retention-goal').forMaterial(userId, mat.id); return !!(rg && rg.status === 'date'); } catch { return false; } })();
+    const goalNow = goal === 'core' && restored.includes('all') ? 'full' : goal === 'full' && dated && lazy('./study-goal').uploadsOpen() ? 'test' : goal;
     let lean = false;
     try { const spec = lazy('./learning-spec').buildSpec(userId, { topic: course.title, materialId: mat.id }); lean = O.leanFor(spec); } catch { lean = false; }
     if (!lean) { try { lean = Number((lazy('./part-change').prefsOf(userId) || {}).shorter) > 0; } catch { /* no choice stored */ } }
@@ -279,7 +282,7 @@ async function verifyQuestion({ q, map, source, llm }) {
 function exampleRule(asked, topic, fallback) {
   const n = asked.filter((x) => x === 'examples').length;
   const where = topic || fallback;
-  if (n) return { label: LABEL, rule: `Write ${n > 1 ? 'two short examples' : 'one short example'} (at most 60 words) that shows the same idea with the same rule${where ? `, set in ${where}` : ''}. Every step and number must be correct. Make up the people and things in it; say nothing about the subject that the text does not say.` };
+  if (n) return { label: asked.includes('worked') ? LABEL_WORKED : LABEL, rule: `Write ${n > 1 ? 'two short examples' : 'one short example'} (at most 60 words) that shows the same idea with the same rule${where ? `, set in ${where}` : ''}. Every step and number must be correct. Make up the people and things in it; say nothing about the subject that the text does not say.` };
   if (asked.includes('topic') && where) return { label: LABEL_LIKE, rule: `Write one short comparison (at most 30 words) from ${where} that has the same structure as the idea, given as a comparison ("like ..."), stating no fact of its own about the subject.` };
   return null;
 }
@@ -466,7 +469,7 @@ async function change(userId, materialId, ref, what, opts = {}) {
       }
     }
   }
-  const forModel = asked.filter((a) => a !== 'topic' && a !== 'examples' && a !== 'fuller' && !(leavesMade && a === 'shorter'));
+  const forModel = asked.filter((a) => a !== 'topic' && a !== 'examples' && a !== 'worked' && a !== 'fuller' && !(leavesMade && a === 'shorter'));
   const wantsLine = asked.includes('examples') || asked.includes('topic');
   let refusedReport = null;
   if (forModel.length) {
@@ -540,8 +543,9 @@ function revert(userId, materialId, ref) {
   if (ref === 'test') { if (row) db.remove(COLLECTION, (r) => r.id === row.id); return { changed: false, part: { ref: 'test', scale: 1, tier: 0 } }; }
   const base = baseOf(userId, materialId, ref);
   if (!base) return { error: 'That part was not found.', status: 404 };
-  if (row && row.origin === 'follow') db.update(COLLECTION, row.id, { pinned: true, data: null, fact_checked: false, asked: [] });
-  else db.remove(COLLECTION, (r) => r.user_id === userId && r.material_id === Number(materialId) && r.ref === ref);
+  // Remembered: nothing rewrites or reshapes it again until the learner asks. A pin has no text, so what is served is what was stored.
+  if (row) db.update(COLLECTION, row.id, { pinned: true, data: null, fact_checked: false, asked: [], origin: 'learner' });
+  else db.insert(COLLECTION, { user_id: userId, material_id: Number(materialId), ref, pinned: true, data: null, fact_checked: false, asked: [], origin: 'learner', at: new Date().toISOString() });
   db.saveSoon();
   return { changed: false, part: served(userId, materialId, ref) };
 }
@@ -583,9 +587,10 @@ function viewCourse(userId, course) {
   if (!course || (!on() && !O.enabled())) return course;
   const materialId = course.material_id;
   const view = viewOf(userId, course, materialId);
-  const rows = on() ? lazy('../config/db').find(COLLECTION, (r) => r.user_id === userId && r.material_id === Number(materialId) && !r.pinned) : [];
-  if (!view && !rows.length) return course;
-  const byRef = new Map(rows.map((r) => [r.ref, r]));
+  const rows = on() ? lazy('../config/db').find(COLLECTION, (r) => r.user_id === userId && r.material_id === Number(materialId)) : [];
+  if (!view && !rows.length && !followOn()) return course;
+  const byRef = new Map(rows.filter((r) => !r.pinned).map((r) => [r.ref, r]));
+  const pinned = new Set(rows.filter((r) => r.pinned).map((r) => r.ref));
   const skills = (course.skills || []).map((s) => {
     const here = view && view.skills.get(s.id);
     let lesson = s.lesson;
@@ -618,11 +623,48 @@ function viewCourse(userId, course) {
     const out = { ...s, lesson, summary, questions };
     if (here) {
       out.quiz_size = here.checks; out.stressed = here.stressed;
-      if (view.goal === 'core' && here.focus.length >= 2) { out.all_questions = questions; out.questions = questions.filter((q) => here.focus.includes(q.id)); }
+      if ((view.goal === 'core' || here.lean) && here.focus.length >= 2) { out.all_questions = questions; out.questions = questions.filter((q) => here.focus.slice(0, here.lean ? Math.max(2, here.checks) : here.focus.length).includes(q.id)); }
     }
-    return out;
+    return followOn() && !pinned.has(lref) ? shapeForLearner(out, course, userId) : out;
   });
   return { ...course, skills, optimized: view ? { goal: view.goal, ...view.stats } : null };
+}
+
+/**
+ * What a learner's spec changes with no model and no new fact: how the lesson is cut into paragraphs, a learner's wish for no test words, and short labelled lines that hold no claim. Applied when the course is served,
+ * so it follows the learner the moment they move. (The lines come from course structure: "Why it matters" names the next skill that really does build on this one.)
+ */
+function shapeForLearner(skill, course, userId) {
+  const CF = lazy('./course-follow');
+  let spec = null;
+  try { spec = lazy('./learning-spec').buildSpec(userId, { topic: course.title, materialId: course.material_id }); } catch { return skill; }
+  if (!spec || spec.isDefault) return skill;
+  const mat = lazy('../config/db').byId('materials', Number(course.material_id));
+  const lesson = { ...skill.lesson };
+  let paragraphs = (lesson.paragraphs || []).slice();
+  let key_points = (lesson.key_points || []).slice();
+  // A labelled line stays its own paragraph, whatever happens to the rest.
+  const labelled = paragraphs.filter((p) => p.startsWith(LABEL) || p.startsWith(LABEL_LIKE) || p.startsWith(LABEL_WORKED));
+  paragraphs = paragraphs.filter((p) => !labelled.includes(p));
+  const density = lazy('./learning-spec').defaultSpec ? (lazy('./learning-spec').defaultSpec().lesson || {}).chunkSentences : null;
+  const moved = spec.lesson && spec.lesson.chunkSentences !== density;
+  if (moved && CF.wantsDense(spec)) { paragraphs = CF.mergeDense([...paragraphs, ...(key_points.length ? [key_points.join(' ')] : [])], spec); key_points = []; } else if (moved && (CF.needsSplit(spec) || CF.smallChunks(spec))) paragraphs = CF.splitDense(paragraphs, spec);
+  paragraphs = [...paragraphs, ...labelled];
+  // Test words go for a learner who is anxious when tested, unless the material is about tests ("a blood test"): a word it uses as its own subject is a fact, and stays.
+  const subject = (() => { const low = String((mat && mat.text) || '').toLowerCase(); return (low.match(/\b(?:tests?|exams?|quiz(?:zes)?)\b/g) || []).length >= 4; })();
+  const lowStakes = !!(spec.feedback && spec.feedback.lowStakes) && !subject;
+  if (lowStakes) { paragraphs = paragraphs.map(CF.deTest); key_points = key_points.map(CF.deTest); }
+  const next = (course.skills || []).find((s) => (s.prerequisites || []).includes(skill.id));
+  const ab = (spec.learner && spec.learner.ageBand) || 'unknown';
+  const pr = spec.practice || {};
+  const lines = [];
+  if (pr.workedToPractice != null && pr.workedToPractice <= 0.5 && pr.workedToPractice !== ((lazy('./learning-spec').defaultSpec ? lazy('./learning-spec').defaultSpec().practice : {}) || {}).workedToPractice) lines.push('Try first: before you read on, say what you already think this is about.');
+  if (/adult|older|^1[2-7]-/.test(ab) && next) lines.push(`Why it matters: "${next.title}" builds on this.`);
+  const ends = [];
+  if (spec.difficulty && spec.difficulty.stretchShare >= 0.15 && spec.difficulty.stretchShare !== ((lazy('./learning-spec').defaultSpec ? lazy('./learning-spec').defaultSpec().difficulty : {}) || {}).stretchShare) ends.push('Stretch: explain this in your own words, then give one case from your material where it applies.');
+  const out = { ...skill, lesson: { ...lesson, paragraphs: [...lines, ...paragraphs, ...ends], key_points } };
+  if (lowStakes) { const clean = (q) => ({ ...q, prompt: CF.deTest(q.prompt), explanation: q.explanation ? CF.deTest(q.explanation) : q.explanation, ...(q.choices ? { choices: q.choices.map(CF.deTest) } : {}) }); out.questions = (skill.questions || []).map(clean); if (skill.all_questions) out.all_questions = skill.all_questions.map(clean); }
+  return out;
 }
 
 /** Lay a part's changes over a list a page is about to get. `refOf(item)` names each one; `apply(item, servedPart)` returns the new item. */
@@ -663,7 +705,7 @@ function asksFromSpec(spec, kind) {
   const asked = [];
   if (O.leanFor(spec) && ['lesson', 'note', 'summary'].includes(kind)) asked.push('shorter');
   if (lang.plainLanguage || lang.eslSupport || (lang.vocabularyGrade && lang.vocabularyGrade <= 6)) asked.push('simpler');
-  if ((pr.workedExamples || 0) >= 2 && (pr.workedToPractice || 0) >= 1.2 && kind === 'lesson') asked.push('examples');
+  if ((pr.workedExamples || 0) >= 2 && (pr.workedToPractice || 0) >= 1.2 && kind === 'lesson') asked.push('examples', 'worked');
   let topic = null;
   if (it.exampleDomains && it.exampleDomains.length && it.share >= 0.5 && kind === 'lesson') { topic = it.exampleDomains[0]; if (!asked.includes('examples')) asked.push('topic'); }
   const tone = spec.feedback && spec.feedback.tone;
@@ -707,7 +749,7 @@ async function followPart(userId, materialId, ref, opts = {}) {
   const { asked, topic } = asksFromSpec(spec, base.kind);
   if (!asked.length) { if (row) lazy('../config/db').remove(COLLECTION, (r) => r.id === row.id); return { skipped: 'nothing to ask' }; }
   if (!opts.llm) { try { if (!lazy('./ai').budgetShareLeft(userId, 0.5)) return { skipped: 'budget' }; } catch { return { skipped: 'budget' }; } }
-  return change(userId, materialId, ref, asked[asked.length - 1], { ...opts, asked, topic, origin: 'follow', sig: now });
+  return change(userId, materialId, ref, asked[asked.length - 1], { ...opts, asked: asked.filter((a) => a !== 'worked' || asked.includes('examples')), topic, origin: 'follow', sig: now });
 }
 /** Fire and forget from a route: follow these parts, one at a time, up to the day's limit. Never throws, never waits. */
 function maybeFollow(userId, materialId, refs) {
@@ -727,6 +769,6 @@ function maybeFollow(userId, materialId, refs) {
 }
 
 module.exports = {
-  COLLECTION, CHANGES, TEST_CHANGES, on, followOn, change, revert, revertAll, removeForMaterial, listChanges, served, baseOf, viewCourse, viewOf, overlayCards, overlayPackCards, overlayPackItems, overlaySections, overlaySummary, overlayTurns,
+  LABEL_WORKED, COLLECTION, CHANGES, TEST_CHANGES, on, followOn, change, revert, revertAll, removeForMaterial, listChanges, served, baseOf, viewCourse, viewOf, overlayCards, overlayPackCards, overlayPackItems, overlaySections, overlaySummary, overlayTurns,
   goalKeeps, testPrefs, followPart, maybeFollow, asksFromSpec, leafProblems, lostPoints, carriedPoints, shorterFree, writeExample, usable, baseHash, LABEL, LABEL_LIKE, EXAMPLE_GATE, cleanAsk,
 };

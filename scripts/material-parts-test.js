@@ -232,10 +232,11 @@ function model({ rewrite = plain, facts = 'supported', example = 'Say two friend
   P.revertAll(uid, mid);
 
   console.log('the practice test');
+  pc.clear(uid);
   const tOpts = () => practiceTest.start(uid, mid, { skills: ['s1', 's2'] }).questions.length;
   const lenBefore = tOpts();
   for (let i = 0; i < 3; i += 1) await P.change(uid, mid, 'test', 'shorter', {}); // eslint-disable-line no-await-in-loop
-  check('shorter asks fewer', tOpts() < lenBefore || lenBefore <= 3, [tOpts(), lenBefore]);
+  check('shorter asks fewer', tOpts() < lenBefore && P.testPrefs(uid, mid).scale < 1, [tOpts(), lenBefore]);
   P.revert(uid, mid, 'test');
   check('put back restores the length', tOpts() === lenBefore);
   check('a test has its own changes', (await P.change(uid, mid, 'test', 'simpler', {})).status === 400);
@@ -257,7 +258,7 @@ function model({ rewrite = plain, facts = 'supported', example = 'Say two friend
   const coreText = study.internals.loadCourse(uid, mid).skills[1].lesson.paragraphs.join(' ');
   check('a change made under a goal is of that goal\'s text', /least strong|comes when/.test(coreText), coreText);
   goals.save(uid, 'material', mid, { goal: 'full' });
-  check('and does not leak into another goal\'s text', !/least strong|comes when/.test(study.internals.loadCourse(uid, mid).skills[1].lesson.paragraphs.join(' ')));
+  { const row = db.findOne(P.COLLECTION, (x) => x.user_id === uid && x.ref === 'lesson:s2'); const applies = row.source_hash === P.baseHash(P.baseOf(uid, mid, 'lesson:s2').leaves); check('a change applies under another goal only if that goal reads the same text', applies === /least strong|comes when/.test(study.internals.loadCourse(uid, mid).skills[1].lesson.paragraphs.join(' ')), applies); }
   P.revertAll(uid, mid);
 
   console.log('a part follows the learner when they move, and never overrides them');
@@ -288,7 +289,8 @@ function model({ rewrite = plain, facts = 'supported', example = 'Say two friend
   const putBack = P.revert(follower, fm, 'lesson:s1');
   check('put back works on a rewrite they did not ask for', !putBack.error && !study.lesson(follower, fm, 's1').skill.lesson.changed);
   fp = await P.followPart(follower, fm, 'lesson:s1', { llm: model() });
-  check('and it stays put back', !!fp.skipped, fp);
+  check('and it stays put back', !!fp.skipped && !study.lesson(follower, fm, 's1').skill.lesson.changed, fp);
+  check('served exactly as stored, nothing reshaped', study.lesson(follower, fm, 's1').skill.lesson.paragraphs.join(' ') === O.optimize({ course: require('../services/course-builder').get(follower, fm), text: TEXT, keyPoints: db.byId('materials', fm).key_points, goal: 'full', lean: true }).skills.get('s1').paragraphs.join(' '));
   await P.change(follower, fm, 'lesson:s2', 'simpler', { llm: model() });
   fp = await P.followPart(follower, fm, 'lesson:s2', { llm: model() });
   check('a part they changed themselves is never rewritten for them', fp.skipped === 'learner', fp);
