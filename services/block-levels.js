@@ -2616,7 +2616,7 @@ async function fillStream(x, st, { note = null, temperature = null, onBlock = nu
     user: `${fillPrompt({ context, learner: learnerFill, layout, factSheet })}${note ? `\n\n${note}` : ''}`,
     schema: fillSchema(), schemaName: 'submit_block_content', maxTokens: Number(process.env.BLOCK_FILL_MAX_TOKENS || 32000),
     userId: owner, dataClass: poolClass(owner), lane: process.env.BLOCK_LANE || 'background',
-    hedgeAfterMs: Number(process.env.COLD_FILL_HEDGE_MS || 25000), onText, ...(temperature != null ? { temperature } : {}),
+    hedgeAfterMs: Number(process.env.COLD_FILL_HEDGE_MS || 25000), timeoutMs: Number(process.env.COLD_FILL_TIMEOUT_MS || 45000), onText, ...(temperature != null ? { temperature } : {}),
   };
   const fillT0 = Date.now();
   const reply = await ai.structuredDetail(args).catch((err) => { console.warn(`blocks: a streamed fill failed (${String(err.message || err).slice(0, 120)})`); return null; });
@@ -2739,16 +2739,19 @@ async function writeInParts(x) {
     st.p0.promise = readPart(st.p0, { first: true }).catch((err) => { console.warn(`blocks: first part read failed (${err.message})`); st.p0.result = { passed: false }; }).then(publish);
   };
   const needFill = () => st.blocks.some((b) => !blockOk(b)) || !st.rawChecks;
+  const parkHead = () => firstBlock.park(key, { ...x, st }, () => { settle({ status: 'failed', reason: 'a prewritten first part nobody came to', partial: null, finished_at: new Date().toISOString() }); });
   for (let a = 0; a < 3 && needFill() && !st.stopped; a++) {
     const anyOk = st.blocks.some(blockOk);
     // eslint-disable-next-line no-await-in-loop
-    await fillStream(y, st, {
+    const filled = await fillStream(y, st, {
       note: anyOk ? remainderNote(st.blocks, !st.rawChecks) : null,
       temperature: a === 0 ? null : a === 1 ? 0.4 : 0.8,
       onBlock: startFirst,
       stopAfterFirst: speculativeNow() && !st.resumed,
     });
     if (st.stopped) break;
+    // A prewrite going on with a likely level, with no fast slot free: it waits parked for the learner, rather than holding a write open on a slow one.
+    if (!filled && st.resumed && speculativeNow() && st.p0 && st.p0.result && st.p0.result.passed) { parkHead(); return null; }
   }
   if (!st.blocks.some(blockOk) && !st.p0) {
     settle({ status: 'failed', reason: 'the fill-out call returned nothing', finished_at: new Date().toISOString() });
@@ -2758,7 +2761,7 @@ async function writeInParts(x) {
   // A head: the first part alone, until the learner lands here. Nothing more is spent on a guess that may be wrong.
   if (st.p0 && st.p0.promise) await st.p0.promise;
   if (st.stopped && speculativeNow() && st.p0 && st.p0.result && st.p0.result.passed) {
-    firstBlock.park(key, { ...x, st }, () => { settle({ status: 'failed', reason: 'a prewritten first part nobody came to', partial: null, finished_at: new Date().toISOString() }); });
+    parkHead();
     return null;
   }
   st.stopped = false;
