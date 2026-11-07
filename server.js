@@ -314,6 +314,8 @@ app.listen(PORT, () => {
   require('./services/learner-record').start();
   require('./services/fact-recheck').start(); // off unless FACT_RECHECK=1: reads old stored text, reports only
   require('./services/cost-tracker').start(); // process snapshots every minute (COST_TRACKER=off stops all tracking)
+  // Every spend ledger has a copy that is not older than it, and one whose file has gone comes back (services/durable-file.js).
+  require('./services/durable-file').startLedgerSweep(require('path').join(__dirname, 'data'));
   // The beta comparison (tailored vs base): writes data/beta-report.json once a day (services/beta-compare.js; BETA_REPORT_DAILY=off stops it).
   require('./services/beta-compare').startDaily();
   // The real-tester refit of the scorecard's read-out: checks once a day whether there is enough data, and writes a candidate and a report. Never switches itself on (SCORECARD_REFIT_AUTO=1 to run).

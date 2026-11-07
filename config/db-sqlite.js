@@ -135,45 +135,56 @@ function flush(all = false) {
   const started = Date.now();
   let changed = 0;
   const q = statements();
-  sql.exec('BEGIN IMMEDIATE');
+  // What this transaction will have written is only remembered once it has committed. Remembered sooner, a failed save (a full disk) left the rows
+  // marked as written: the retry skipped them, and they were lost at the next restart with no error anywhere. Same for counters: one left behind
+  // reissues ids after a restart.
+  const wroteRows = [];
+  const goneRows = [];
+  const wroteCounters = [];
   try {
+    sql.exec('BEGIN IMMEDIATE');
     for (const name of names) {
       const rows = store[name];
       const w = written.get(name);
       const p = position.get(name);
-      const writeRow = (row) => {
+      // `told`: the API said this row changed, so it is written whatever the hash says (32 bits can collide, and a skipped row would stay stale).
+      const writeRow = (row, told = false) => {
         const id = row.id;
         const doc = JSON.stringify(row);
         const h = hashOf(doc);
-        if (w.get(id) === h) return;
+        if (!told && w.get(id) === h) return;
         let pos = p.get(id);
         if (pos === undefined) { pos = maxPos.get(name) + 1; maxPos.set(name, pos); p.set(id, pos); }
         q.upsert.run(name, id, pos, doc);
-        w.set(id, h);
+        wroteRows.push([w, id, h]);
         changed++;
       };
       if (all) {
         const seen = new Set();
         for (const row of rows) { seen.add(row.id); writeRow(row); }
         for (const id of [...w.keys()]) {
-          if (!seen.has(id)) { q.del.run(name, id); w.delete(id); p.delete(id); changed++; }
+          if (!seen.has(id)) { q.del.run(name, id); goneRows.push([w, p, id]); changed++; }
         }
       } else {
         const gone = removedIds.get(name);
-        if (gone) for (const id of gone) { q.del.run(name, id); w.delete(id); p.delete(id); changed++; }
+        if (gone) for (const id of gone) { q.del.run(name, id); goneRows.push([w, p, id]); changed++; }
         const touched = changedRows.get(name);
-        if (touched) for (const row of touched.values()) writeRow(row);
+        if (touched) for (const row of touched.values()) writeRow(row, true);
       }
       if (store._counters[name] !== writtenCounters[name]) {
         q.counter.run(name, store._counters[name]);
-        writtenCounters[name] = store._counters[name];
+        wroteCounters.push([name, store._counters[name]]);
       }
     }
     sql.exec('COMMIT');
+    for (const [w, id, h] of wroteRows) w.set(id, h);
+    for (const [w, p, id] of goneRows) { w.delete(id); p.delete(id); }
+    for (const [name, value] of wroteCounters) writtenCounters[name] = value;
     for (const name of names) { changedRows.delete(name); removedIds.delete(name); }
     flushFailures = 0; firstFailureAt = null; lastSavedAt = Date.now();
   } catch (err) {
-    sql.exec('ROLLBACK');
+    // SQLite may have rolled it back itself, as it does on a full disk, and then ROLLBACK throws. That must not skip the lines after it.
+    try { sql.exec('ROLLBACK'); } catch { /* nothing left to roll back */ }
     // Put the names back so the next flush tries again. What was changed is still in changedRows and removedIds.
     for (const n of names) dirty.add(n);
     flushFailures++;
@@ -329,6 +340,8 @@ const db = {
   stats: () => ({ ...stats }),
   /** For the backup script: SQLite's online backup to a file. */
   backupTo: (dest) => require('node:sqlite').backup(sql, dest),
+  /** The open connection, for the drill that forces a full disk (scripts/beta-durable-test.js). */
+  _connection: () => sql,
 };
 
 module.exports = db;

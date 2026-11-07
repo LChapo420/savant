@@ -178,6 +178,15 @@ function flushDelay() {
 }
 
 
+// Past about 512 MB the store cannot be saved or read at all, and it can no longer be moved to SQLite either. Say so well before that, while it can.
+let warnedNearLimitAt = 0;
+function warnIfNearLimit(chars) {
+  const mb = Math.round(chars / 1048576);
+  if (mb < Number(process.env.DB_WARN_MB || 350) || Date.now() - warnedNearLimitAt < 600000) return;
+  warnedNearLimitAt = Date.now();
+  console.error(`db: the JSON store is ${mb} MB. It stops saving near 512 MB and can't be moved after that. Move it to SQLite now: docs/SQLITE-SWITCH.md`);
+}
+
 function flush() {
   flushTimer = null;
   if (!dirty) return;
@@ -187,7 +196,9 @@ function flush() {
   // half-written db.json behind.
   try {
     // One line (DB_PRETTY=1 for the indented form): a quarter smaller and quicker to write, and no script here reads it by eye.
-    fs.writeFileSync(TMP_PATH, process.env.DB_PRETTY === '1' ? JSON.stringify(store, null, 2) : JSON.stringify(store), 'utf8');
+    const text = process.env.DB_PRETTY === '1' ? JSON.stringify(store, null, 2) : JSON.stringify(store);
+    warnIfNearLimit(text.length);
+    fs.writeFileSync(TMP_PATH, text, 'utf8');
     // On the disk before it is the live file: a hard power-off left files of zero bytes on 6 Nov 2026 (services/durable-file.js).
     require('../services/durable-file').commit(TMP_PATH, DB_PATH); // eslint-disable-line global-require
     if (flushFailures) console.warn(`db: saved after ${flushFailures} failed attempt(s)`);
