@@ -2,6 +2,25 @@ SIMULATED. Held-out seeds 20261121, 20261122 (120 extreme + 40 ordinary each, 32
 noise control seed 20261121, the same arm on another random stream, worst 1%: horizon 1 week -2.5; horizon 1 month -1.5; horizon 6 months -1.9; horizon 1 year -1.9; no test day (3 y) -2.2; date 1 week -1.8; date 1 month -0.6; date 6 months -0.3; date 1 year -0.2
 noise control seed 20261122, the same arm on another random stream, worst 1%: horizon 1 week -2.8; horizon 1 month -1.0; horizon 6 months -2.4; horizon 1 year -1.9; no test day (3 y) -2.1; date 1 week -0.9; date 1 month -0.7; date 6 months -0.3; date 1 year -0.2
 
+== recommended, long goals only: space long + proof + recheck against off, fresh seed 20261124, 160 learners
+  horizon 1 week     14.2 > 14.2 h (saved ci 0.0 to 0.0); recall mean +0.0 worst 1/5/10% +0.0 +0.0 +0.0; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 1 month    14.8 > 14.8 h (saved ci 0.0 to 0.0); recall mean +0.0 worst 1/5/10% +0.0 +0.0 +0.0; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 6 months   15.8 > 9.1 h (saved ci 6.4 to 7.1); recall mean -0.2 worst 1/5/10% -3.2 -2.2 -1.9; knowledge w1 +0.0; reach +100.0 vs +100.0
+  horizon 1 year     16.4 > 9.7 h (saved ci 6.3 to 7.0); recall mean -0.2 worst 1/5/10% -4.2 -2.3 -1.8; knowledge w1 +0.0; reach +100.0 vs +100.0
+  no test day (3 y)  17.4 > 10.7 h (saved ci 6.3 to 7.0); recall mean -0.0 worst 1/5/10% -2.9 -1.7 -1.3; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 week        14.0 > 14.0 h (saved ci 0.0 to 0.0); recall mean +0.0 worst 1/5/10% +0.0 +0.0 +0.0; knowledge w1 +0.0; reach +91.3 vs +91.3
+  date 1 month       14.8 > 14.8 h (saved ci 0.0 to 0.0); recall mean +0.0 worst 1/5/10% +0.0 +0.0 +0.0; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 6 months      16.1 > 9.4 h (saved ci 6.3 to 7.0); recall mean -0.1 worst 1/5/10% -0.9 -0.8 -0.6; knowledge w1 +0.0; reach +100.0 vs +100.0
+  date 1 year        16.7 > 10.0 h (saved ci 6.3 to 7.0); recall mean -0.1 worst 1/5/10% -0.7 -0.5 -0.3; knowledge w1 +0.0; reach +100.0 vs +100.0
+  MAIN: PASS
+  adverse est15: pass
+  adverse estsd06: pass
+  adverse every3: pass
+  adverse forget05: pass
+  adverse guess50: pass
+  adverse kloss50: pass
+  adverse mass10: FAIL: recall at horizon 6 months: w1 -5.4
+
 == space, long goals only, + one prompt + tight page against off, fresh seed 20261123, 160 learners
   horizon 1 week     14.5 > 13.9 h (saved ci 0.6 to 0.6); recall mean -0.1 worst 1/5/10% -1.7 -0.9 -0.7; knowledge w1 +0.0; reach +100.0 vs +100.0
   horizon 1 month    15.1 > 14.6 h (saved ci 0.5 to 0.6); recall mean +0.0 worst 1/5/10% -0.7 -0.5 -0.3; knowledge w1 +0.0; reach +100.0 vs +100.0

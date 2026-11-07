@@ -1,145 +1,145 @@
-SIMULATED. Beta set against each baseline, mean x (hours to recall 0.70 with everything understood; a baseline that misses is not counted). One held-out seed, 80 learners a variant, costs "words". goal: careful | tutor .37 | tutor .79 | rereader (worst 5% in brackets for careful), then beta hours and recall.
+SIMULATED. The recommended set (space + proof + recheck, no tight page, no one-prompt) against each baseline, mean x (hours to recall 0.70 with everything understood; a baseline that misses is not counted). One held-out seed, 80 learners a variant, costs "words". goal: careful | tutor .37 | tutor .79 | rereader (worst 5% in brackets for careful), then beta hours and recall.
 
 (main run, 320 learners)
-  horizon 1 week     0.91 (w5 0.80, n 299) | 0.88 (n 306) | 0.85 (n 312) | 2.13 (n 223) | beta 6.8 h, recall 0.92, before 17.0 h
-  horizon 1 month    1.04 (w5 0.92, n 303) | 1.14 (n 320) | 1.10 (n 320) | 5.23 (n 315) | beta 7.6 h, recall 0.96, before 17.5 h
-  horizon 6 months   1.34 (w5 1.20, n 320) | 1.08 (n 82) | 1.03 (n 115) | 9.33 (n 250) | beta 8.7 h, recall 0.88, before 18.4 h
-  horizon 1 year     1.42 (w5 1.26, n 319) | n/a (n 0) | 1.08 (n 8) | 9.65 (n 169) | beta 9.3 h, recall 0.88, before 18.9 h
-  no test day (3 y)  1.52 (w5 1.35, n 319) | n/a (n 0) | n/a (n 0) | 10.15 (n 69) | beta 10.3 h, recall 0.92, before 19.8 h
+  horizon 1 week     0.85 (w5 0.75, n 299) | 0.82 (n 306) | 0.79 (n 312) | 1.97 (n 223) | beta 7.2 h, recall 0.93, before 17.0 h
+  horizon 1 month    0.97 (w5 0.87, n 303) | 1.07 (n 320) | 1.04 (n 320) | 4.90 (n 315) | beta 8.0 h, recall 0.96, before 17.5 h
+  horizon 6 months   1.27 (w5 1.14, n 320) | 1.02 (n 82) | 0.98 (n 115) | 8.83 (n 250) | beta 9.2 h, recall 0.88, before 18.4 h
+  horizon 1 year     1.35 (w5 1.20, n 319) | n/a (n 0) | 1.02 (n 8) | 9.18 (n 169) | beta 9.8 h, recall 0.88, before 18.9 h
+  no test day (3 y)  1.45 (w5 1.29, n 319) | n/a (n 0) | n/a (n 0) | 9.73 (n 69) | beta 10.7 h, recall 0.92, before 19.8 h
 
 careful-self-studier-stops-0-1-early
-  horizon 1 week     0.89 (w5 0.74, n 75) | 0.94 (n 80) | 0.92 (n 80) | 2.17 (n 54) | beta 7.0 h, recall 0.93, before 17.3 h
-  horizon 1 month    1.06 (w5 0.92, n 77) | 1.11 (n 80) | 1.09 (n 80) | 4.91 (n 79) | beta 7.8 h, recall 0.96, before 17.8 h
-  horizon 6 months   1.32 (w5 1.15, n 79) | 1.10 (n 18) | 1.04 (n 32) | 9.84 (n 56) | beta 9.0 h, recall 0.87, before 18.7 h
-  horizon 1 year     1.40 (w5 1.21, n 79) | n/a (n 0) | 1.08 (n 4) | 10.29 (n 39) | beta 9.6 h, recall 0.88, before 19.3 h
-  no test day (3 y)  1.49 (w5 1.32, n 79) | n/a (n 0) | n/a (n 0) | 10.77 (n 18) | beta 10.6 h, recall 0.92, before 20.2 h
+  horizon 1 week     0.83 (w5 0.71, n 75) | 0.88 (n 80) | 0.86 (n 80) | 2.02 (n 54) | beta 7.5 h, recall 0.93, before 17.3 h
+  horizon 1 month    1.00 (w5 0.86, n 77) | 1.05 (n 80) | 1.03 (n 80) | 4.63 (n 79) | beta 8.3 h, recall 0.96, before 17.8 h
+  horizon 6 months   1.25 (w5 1.09, n 79) | 1.04 (n 18) | 0.98 (n 32) | 9.35 (n 56) | beta 9.5 h, recall 0.87, before 18.7 h
+  horizon 1 year     1.33 (w5 1.17, n 79) | n/a (n 0) | 1.03 (n 4) | 9.79 (n 39) | beta 10.1 h, recall 0.88, before 19.3 h
+  no test day (3 y)  1.43 (w5 1.28, n 79) | n/a (n 0) | n/a (n 0) | 10.33 (n 18) | beta 11.1 h, recall 0.92, before 20.2 h
 
 deep-lapse-costs-half-of-understanding
-  horizon 1 week     0.94 (w5 0.84, n 73) | 0.97 (n 75) | 0.94 (n 75) | 2.16 (n 50) | beta 7.0 h, recall 0.93, before 17.3 h
-  horizon 1 month    1.19 (w5 1.05, n 79) | 1.15 (n 77) | 1.11 (n 79) | 4.91 (n 78) | beta 7.9 h, recall 0.96, before 17.8 h
-  horizon 6 months   1.36 (w5 1.21, n 77) | 1.09 (n 20) | 1.03 (n 33) | 9.82 (n 56) | beta 9.0 h, recall 0.87, before 18.7 h
-  horizon 1 year     1.44 (w5 1.27, n 77) | n/a (n 0) | 1.08 (n 4) | 10.29 (n 39) | beta 9.6 h, recall 0.88, before 19.3 h
-  no test day (3 y)  1.54 (w5 1.37, n 77) | n/a (n 0) | n/a (n 0) | 10.76 (n 18) | beta 10.7 h, recall 0.92, before 20.2 h
+  horizon 1 week     0.88 (w5 0.79, n 74) | 0.91 (n 76) | 0.88 (n 76) | 2.01 (n 51) | beta 7.5 h, recall 0.93, before 17.3 h
+  horizon 1 month    1.12 (w5 0.99, n 79) | 1.08 (n 77) | 1.05 (n 79) | 4.62 (n 78) | beta 8.3 h, recall 0.96, before 17.8 h
+  horizon 6 months   1.29 (w5 1.15, n 77) | 1.04 (n 20) | 0.98 (n 33) | 9.32 (n 56) | beta 9.5 h, recall 0.87, before 18.7 h
+  horizon 1 year     1.37 (w5 1.22, n 77) | n/a (n 0) | 1.03 (n 4) | 9.77 (n 39) | beta 10.1 h, recall 0.88, before 19.3 h
+  no test day (3 y)  1.47 (w5 1.32, n 77) | n/a (n 0) | n/a (n 0) | 10.30 (n 18) | beta 11.1 h, recall 0.92, before 20.2 h
 
 forget-half-as-fast
-  horizon 1 week     0.87 (w5 0.76, n 80) | 0.88 (n 80) | 0.76 (n 77) | 2.13 (n 62) | beta 6.8 h, recall 0.95, before 17.1 h
-  horizon 1 month    0.98 (w5 0.87, n 80) | 1.02 (n 80) | 0.99 (n 80) | 5.20 (n 80) | beta 7.4 h, recall 0.97, before 17.5 h
-  horizon 6 months   1.14 (w5 1.02, n 79) | 1.06 (n 65) | 1.03 (n 69) | 10.25 (n 61) | beta 8.4 h, recall 0.87, before 18.2 h
-  horizon 1 year     1.23 (w5 1.09, n 80) | 1.07 (n 22) | 1.03 (n 31) | 10.42 (n 48) | beta 9.0 h, recall 0.88, before 18.7 h
-  no test day (3 y)  1.19 (w5 1.07, n 79) | n/a (n 0) | n/a (n 0) | 11.02 (n 23) | beta 10.0 h, recall 0.92, before 19.7 h
+  horizon 1 week     0.81 (w5 0.71, n 80) | 0.83 (n 80) | 0.71 (n 77) | 1.98 (n 62) | beta 7.3 h, recall 0.94, before 17.1 h
+  horizon 1 month    0.92 (w5 0.82, n 80) | 0.96 (n 80) | 0.93 (n 80) | 4.88 (n 80) | beta 7.8 h, recall 0.97, before 17.5 h
+  horizon 6 months   1.07 (w5 0.96, n 79) | 1.00 (n 65) | 0.97 (n 69) | 9.68 (n 61) | beta 8.8 h, recall 0.87, before 18.2 h
+  horizon 1 year     1.17 (w5 1.04, n 80) | 1.01 (n 22) | 0.97 (n 31) | 9.88 (n 48) | beta 9.4 h, recall 0.88, before 18.7 h
+  no test day (3 y)  1.14 (w5 1.03, n 79) | n/a (n 0) | n/a (n 0) | 10.49 (n 23) | beta 10.4 h, recall 0.92, before 19.7 h
 
 forget-twice-as-fast
-  horizon 1 week     0.93 (w5 0.83, n 59) | 0.95 (n 80) | 0.92 (n 80) | 2.32 (n 37) | beta 7.4 h, recall 0.89, before 17.6 h
-  horizon 1 month    1.14 (w5 1.01, n 78) | 1.09 (n 76) | 1.06 (n 77) | 4.57 (n 77) | beta 8.5 h, recall 0.96, before 18.3 h
-  horizon 6 months   1.51 (w5 1.34, n 78) | n/a (n 0) | 1.09 (n 5) | 9.28 (n 51) | beta 9.8 h, recall 0.88, before 19.3 h
-  horizon 1 year     1.65 (w5 1.46, n 78) | n/a (n 0) | n/a (n 0) | 9.68 (n 35) | beta 10.4 h, recall 0.88, before 19.9 h
-  no test day (3 y)  1.80 (w5 1.60, n 78) | n/a (n 0) | n/a (n 0) | 10.14 (n 16) | beta 11.4 h, recall 0.92, before 20.9 h
+  horizon 1 week     0.87 (w5 0.77, n 59) | 0.89 (n 80) | 0.86 (n 80) | 2.16 (n 37) | beta 7.8 h, recall 0.89, before 17.6 h
+  horizon 1 month    1.07 (w5 0.96, n 78) | 1.02 (n 76) | 1.00 (n 77) | 4.31 (n 77) | beta 9.0 h, recall 0.96, before 18.3 h
+  horizon 6 months   1.44 (w5 1.28, n 78) | n/a (n 0) | 1.04 (n 5) | 8.85 (n 51) | beta 10.3 h, recall 0.88, before 19.3 h
+  horizon 1 year     1.58 (w5 1.40, n 78) | n/a (n 0) | n/a (n 0) | 9.23 (n 35) | beta 10.9 h, recall 0.88, before 19.9 h
+  no test day (3 y)  1.73 (w5 1.55, n 78) | n/a (n 0) | n/a (n 0) | 9.72 (n 16) | beta 11.9 h, recall 0.92, before 20.9 h
 
 item-25-s
-  horizon 1 week     0.86 (w5 0.75, n 79) | 0.88 (n 80) | 0.75 (n 79) | 1.54 (n 54) | beta 10.1 h, recall 0.93, before 27.2 h
-  horizon 1 month    0.95 (w5 0.85, n 79) | 1.07 (n 80) | 1.04 (n 80) | 3.44 (n 79) | beta 11.3 h, recall 0.96, before 28.0 h
-  horizon 6 months   1.09 (w5 0.96, n 71) | 1.00 (n 22) | 0.98 (n 28) | 6.80 (n 56) | beta 13.1 h, recall 0.87, before 29.4 h
-  horizon 1 year     1.21 (w5 1.06, n 80) | n/a (n 0) | 1.03 (n 4) | 7.07 (n 39) | beta 14.1 h, recall 0.88, before 30.2 h
-  no test day (3 y)  1.27 (w5 1.13, n 80) | n/a (n 0) | n/a (n 0) | 7.37 (n 18) | beta 15.7 h, recall 0.92, before 31.8 h
+  horizon 1 week     0.82 (w5 0.72, n 79) | 0.83 (n 80) | 0.71 (n 79) | 1.45 (n 54) | beta 10.6 h, recall 0.93, before 27.2 h
+  horizon 1 month    0.91 (w5 0.81, n 79) | 1.03 (n 80) | 1.00 (n 80) | 3.29 (n 79) | beta 11.8 h, recall 0.96, before 28.0 h
+  horizon 6 months   1.04 (w5 0.92, n 71) | 0.96 (n 22) | 0.94 (n 28) | 6.53 (n 56) | beta 13.6 h, recall 0.88, before 29.4 h
+  horizon 1 year     1.16 (w5 1.00, n 80) | n/a (n 0) | 1.00 (n 4) | 6.80 (n 39) | beta 14.6 h, recall 0.88, before 30.2 h
+  no test day (3 y)  1.23 (w5 1.08, n 80) | n/a (n 0) | n/a (n 0) | 7.12 (n 18) | beta 16.2 h, recall 0.92, before 31.8 h
 
 item-8-s
-  horizon 1 week     1.05 (w5 0.94, n 80) | 1.01 (n 77) | 0.98 (n 79) | 3.18 (n 54) | beta 4.6 h, recall 0.93, before 10.1 h
-  horizon 1 month    1.14 (w5 1.04, n 80) | 1.25 (n 80) | 1.22 (n 80) | 7.52 (n 79) | beta 5.0 h, recall 0.96, before 10.4 h
-  horizon 6 months   1.33 (w5 1.22, n 80) | 1.20 (n 22) | 1.16 (n 33) | 15.40 (n 56) | beta 5.6 h, recall 0.87, before 10.9 h
-  horizon 1 year     1.39 (w5 1.28, n 80) | n/a (n 0) | 1.21 (n 5) | 16.27 (n 39) | beta 6.0 h, recall 0.88, before 11.2 h
-  no test day (3 y)  1.46 (w5 1.34, n 80) | n/a (n 0) | n/a (n 0) | 17.41 (n 18) | beta 6.5 h, recall 0.92, before 11.7 h
+  horizon 1 week     0.94 (w5 0.87, n 80) | 0.91 (n 77) | 0.88 (n 79) | 2.85 (n 54) | beta 5.1 h, recall 0.93, before 10.1 h
+  horizon 1 month    1.04 (w5 0.94, n 80) | 1.13 (n 80) | 1.11 (n 80) | 6.81 (n 79) | beta 5.5 h, recall 0.96, before 10.4 h
+  horizon 6 months   1.22 (w5 1.13, n 80) | 1.09 (n 22) | 1.06 (n 33) | 14.14 (n 56) | beta 6.1 h, recall 0.87, before 10.9 h
+  horizon 1 year     1.29 (w5 1.19, n 80) | n/a (n 0) | 1.10 (n 5) | 15.00 (n 39) | beta 6.4 h, recall 0.88, before 11.2 h
+  no test day (3 y)  1.36 (w5 1.26, n 80) | n/a (n 0) | n/a (n 0) | 16.12 (n 18) | beta 7.0 h, recall 0.92, before 11.7 h
 
 learners-know-less-1-
-  horizon 1 week     0.92 (w5 0.79, n 80) | 0.92 (n 80) | 0.79 (n 77) | 2.40 (n 30) | beta 7.9 h, recall 0.93, before 17.9 h
-  horizon 1 month    1.01 (w5 0.89, n 77) | 1.08 (n 80) | 1.03 (n 80) | 4.78 (n 69) | beta 8.7 h, recall 0.97, before 18.4 h
-  horizon 6 months   1.19 (w5 1.05, n 76) | 1.04 (n 18) | 1.00 (n 30) | 9.22 (n 55) | beta 9.8 h, recall 0.87, before 19.3 h
-  horizon 1 year     1.25 (w5 1.11, n 75) | n/a (n 0) | n/a (n 0) | 9.75 (n 38) | beta 10.4 h, recall 0.88, before 19.9 h
-  no test day (3 y)  1.30 (w5 1.16, n 75) | n/a (n 0) | n/a (n 0) | 10.37 (n 17) | beta 11.4 h, recall 0.92, before 20.9 h
+  horizon 1 week     0.86 (w5 0.75, n 80) | 0.86 (n 80) | 0.74 (n 77) | 2.24 (n 30) | beta 8.4 h, recall 0.93, before 17.9 h
+  horizon 1 month    0.95 (w5 0.84, n 77) | 1.02 (n 80) | 0.98 (n 80) | 4.50 (n 69) | beta 9.2 h, recall 0.97, before 18.4 h
+  horizon 6 months   1.12 (w5 1.00, n 76) | 0.98 (n 18) | 0.94 (n 30) | 8.71 (n 55) | beta 10.3 h, recall 0.87, before 19.3 h
+  horizon 1 year     1.18 (w5 1.05, n 75) | n/a (n 0) | n/a (n 0) | 9.24 (n 38) | beta 10.9 h, recall 0.88, before 19.9 h
+  no test day (3 y)  1.24 (w5 1.11, n 75) | n/a (n 0) | n/a (n 0) | 9.93 (n 17) | beta 11.9 h, recall 0.92, before 20.9 h
 
 learners-know-more-1-
-  horizon 1 week     1.00 (w5 0.90, n 80) | 0.97 (n 80) | 0.95 (n 80) | 2.23 (n 75) | beta 5.8 h, recall 0.93, before 16.8 h
-  horizon 1 month    1.09 (w5 0.98, n 79) | 1.26 (n 80) | 1.24 (n 80) | 5.59 (n 80) | beta 6.7 h, recall 0.96, before 17.3 h
-  horizon 6 months   1.24 (w5 1.10, n 75) | 1.12 (n 38) | 1.09 (n 46) | 10.92 (n 57) | beta 7.8 h, recall 0.87, before 18.1 h
-  horizon 1 year     1.35 (w5 1.19, n 80) | 1.14 (n 5) | 1.13 (n 5) | 11.12 (n 41) | beta 8.5 h, recall 0.88, before 18.7 h
-  no test day (3 y)  1.40 (w5 1.26, n 80) | n/a (n 0) | n/a (n 0) | 11.66 (n 18) | beta 9.5 h, recall 0.92, before 19.7 h
+  horizon 1 week     0.92 (w5 0.83, n 80) | 0.89 (n 80) | 0.88 (n 80) | 2.06 (n 75) | beta 6.3 h, recall 0.93, before 16.8 h
+  horizon 1 month    1.02 (w5 0.92, n 79) | 1.18 (n 80) | 1.16 (n 80) | 5.23 (n 80) | beta 7.1 h, recall 0.96, before 17.3 h
+  horizon 6 months   1.17 (w5 1.05, n 75) | 1.05 (n 38) | 1.03 (n 46) | 10.28 (n 57) | beta 8.3 h, recall 0.87, before 18.1 h
+  horizon 1 year     1.28 (w5 1.13, n 80) | 1.07 (n 5) | 1.06 (n 5) | 10.50 (n 41) | beta 8.9 h, recall 0.88, before 18.7 h
+  no test day (3 y)  1.34 (w5 1.20, n 80) | n/a (n 0) | n/a (n 0) | 11.08 (n 18) | beta 9.9 h, recall 0.92, before 19.7 h
 
 massed-answers-worth-3x
-  horizon 1 week     0.91 (w5 0.82, n 77) | 0.88 (n 79) | 0.85 (n 78) | 2.18 (n 54) | beta 7.0 h, recall 0.93, before 16.9 h
-  horizon 1 month    1.04 (w5 0.94, n 79) | 1.15 (n 80) | 1.12 (n 80) | 4.97 (n 79) | beta 7.7 h, recall 0.97, before 17.2 h
-  horizon 6 months   1.24 (w5 1.12, n 77) | 1.09 (n 22) | 1.04 (n 34) | 10.00 (n 56) | beta 8.8 h, recall 0.87, before 17.7 h
-  horizon 1 year     1.30 (w5 1.19, n 79) | n/a (n 0) | 1.09 (n 4) | 10.43 (n 39) | beta 9.4 h, recall 0.87, before 18.1 h
-  no test day (3 y)  1.36 (w5 1.24, n 78) | n/a (n 0) | n/a (n 0) | 10.87 (n 18) | beta 10.5 h, recall 0.92, before 18.8 h
+  horizon 1 week     0.85 (w5 0.76, n 77) | 0.82 (n 79) | 0.79 (n 78) | 2.03 (n 54) | beta 7.4 h, recall 0.93, before 16.9 h
+  horizon 1 month    0.98 (w5 0.88, n 79) | 1.08 (n 80) | 1.05 (n 80) | 4.67 (n 79) | beta 8.2 h, recall 0.96, before 17.2 h
+  horizon 6 months   1.18 (w5 1.07, n 77) | 1.03 (n 22) | 0.99 (n 34) | 9.46 (n 56) | beta 9.3 h, recall 0.87, before 17.7 h
+  horizon 1 year     1.24 (w5 1.13, n 79) | n/a (n 0) | 1.03 (n 4) | 9.89 (n 39) | beta 9.9 h, recall 0.88, before 18.1 h
+  no test day (3 y)  1.30 (w5 1.19, n 78) | n/a (n 0) | n/a (n 0) | 10.39 (n 18) | beta 10.9 h, recall 0.92, before 18.8 h
 
 page-150-wpm
-  horizon 1 week     0.94 (w5 0.84, n 79) | 0.91 (n 77) | 0.88 (n 78) | 2.42 (n 37) | beta 7.7 h, recall 0.93, before 18.2 h
-  horizon 1 month    1.05 (w5 0.93, n 77) | 1.14 (n 80) | 1.11 (n 80) | 4.92 (n 72) | beta 8.5 h, recall 0.96, before 18.7 h
-  horizon 6 months   1.22 (w5 1.09, n 78) | 1.10 (n 20) | 1.04 (n 30) | 10.69 (n 37) | beta 9.7 h, recall 0.87, before 19.5 h
-  horizon 1 year     1.27 (w5 1.14, n 78) | n/a (n 0) | 1.09 (n 4) | 11.94 (n 16) | beta 10.3 h, recall 0.88, before 20.1 h
-  no test day (3 y)  1.33 (w5 1.20, n 77) | n/a (n 0) | n/a (n 0) | 12.46 (n 4) | beta 11.3 h, recall 0.92, before 21.1 h
+  horizon 1 week     0.86 (w5 0.78, n 79) | 0.83 (n 77) | 0.81 (n 78) | 2.21 (n 37) | beta 8.3 h, recall 0.93, before 18.2 h
+  horizon 1 month    0.98 (w5 0.86, n 77) | 1.06 (n 80) | 1.04 (n 80) | 4.57 (n 72) | beta 9.1 h, recall 0.96, before 18.7 h
+  horizon 6 months   1.14 (w5 1.03, n 78) | 1.02 (n 20) | 0.97 (n 30) | 10.00 (n 37) | beta 10.3 h, recall 0.87, before 19.5 h
+  horizon 1 year     1.20 (w5 1.08, n 78) | n/a (n 0) | 1.01 (n 4) | 11.17 (n 16) | beta 10.9 h, recall 0.88, before 20.1 h
+  no test day (3 y)  1.26 (w5 1.14, n 77) | n/a (n 0) | n/a (n 0) | 11.70 (n 4) | beta 11.9 h, recall 0.92, before 21.1 h
 
 page-238-wpm
-  horizon 1 week     0.92 (w5 0.81, n 80) | 0.86 (n 78) | 0.83 (n 80) | 2.05 (n 60) | beta 6.7 h, recall 0.93, before 16.9 h
-  horizon 1 month    1.02 (w5 0.90, n 79) | 1.14 (n 80) | 1.10 (n 80) | 4.89 (n 80) | beta 7.5 h, recall 0.96, before 17.5 h
-  horizon 6 months   1.22 (w5 1.09, n 78) | 1.06 (n 22) | 1.02 (n 35) | 8.99 (n 70) | beta 8.7 h, recall 0.87, before 18.3 h
-  horizon 1 year     1.42 (w5 1.26, n 80) | n/a (n 0) | 1.09 (n 5) | 9.43 (n 51) | beta 9.3 h, recall 0.88, before 18.9 h
-  no test day (3 y)  1.52 (w5 1.35, n 80) | n/a (n 0) | n/a (n 0) | 9.36 (n 33) | beta 10.3 h, recall 0.92, before 19.9 h
+  horizon 1 week     0.86 (w5 0.77, n 80) | 0.81 (n 78) | 0.77 (n 80) | 1.92 (n 60) | beta 7.1 h, recall 0.93, before 16.9 h
+  horizon 1 month    0.96 (w5 0.86, n 79) | 1.07 (n 80) | 1.04 (n 80) | 4.62 (n 80) | beta 7.9 h, recall 0.96, before 17.5 h
+  horizon 6 months   1.16 (w5 1.03, n 78) | 1.01 (n 22) | 0.96 (n 35) | 8.56 (n 70) | beta 9.1 h, recall 0.87, before 18.3 h
+  horizon 1 year     1.36 (w5 1.20, n 80) | n/a (n 0) | 1.03 (n 5) | 9.01 (n 51) | beta 9.7 h, recall 0.88, before 18.9 h
+  no test day (3 y)  1.46 (w5 1.30, n 80) | n/a (n 0) | n/a (n 0) | 8.95 (n 33) | beta 10.7 h, recall 0.92, before 19.9 h
 
 read-half-life-1-6-d
-  horizon 1 week     0.91 (w5 0.81, n 78) | 0.88 (n 78) | 0.85 (n 78) | 2.36 (n 41) | beta 7.0 h, recall 0.93, before 17.3 h
-  horizon 1 month    1.03 (w5 0.91, n 78) | 1.14 (n 80) | 1.11 (n 80) | 4.95 (n 78) | beta 7.8 h, recall 0.96, before 17.8 h
-  horizon 6 months   1.22 (w5 1.09, n 77) | 1.07 (n 22) | 1.03 (n 35) | 9.90 (n 55) | beta 9.0 h, recall 0.87, before 18.7 h
-  horizon 1 year     1.28 (w5 1.14, n 79) | n/a (n 0) | 1.08 (n 4) | 10.39 (n 37) | beta 9.6 h, recall 0.88, before 19.3 h
-  no test day (3 y)  1.51 (w5 1.34, n 80) | n/a (n 0) | n/a (n 0) | 11.06 (n 16) | beta 10.6 h, recall 0.92, before 20.2 h
+  horizon 1 week     0.85 (w5 0.76, n 78) | 0.82 (n 78) | 0.79 (n 78) | 2.19 (n 41) | beta 7.5 h, recall 0.93, before 17.3 h
+  horizon 1 month    0.97 (w5 0.85, n 78) | 1.07 (n 80) | 1.04 (n 80) | 4.66 (n 78) | beta 8.3 h, recall 0.96, before 17.8 h
+  horizon 6 months   1.16 (w5 1.05, n 77) | 1.02 (n 22) | 0.97 (n 35) | 9.41 (n 55) | beta 9.5 h, recall 0.87, before 18.7 h
+  horizon 1 year     1.22 (w5 1.10, n 79) | n/a (n 0) | 1.03 (n 4) | 9.89 (n 37) | beta 10.1 h, recall 0.88, before 19.3 h
+  no test day (3 y)  1.45 (w5 1.27, n 80) | n/a (n 0) | n/a (n 0) | 10.60 (n 16) | beta 11.1 h, recall 0.92, before 20.2 h
 
 read-half-life-7-d
-  horizon 1 week     0.91 (w5 0.81, n 78) | 0.88 (n 78) | 0.85 (n 78) | 2.05 (n 64) | beta 7.0 h, recall 0.93, before 17.3 h
-  horizon 1 month    1.03 (w5 0.91, n 78) | 1.14 (n 80) | 1.11 (n 80) | 4.89 (n 80) | beta 7.8 h, recall 0.96, before 17.8 h
-  horizon 6 months   1.22 (w5 1.09, n 77) | 1.07 (n 22) | 1.03 (n 35) | 9.00 (n 69) | beta 9.0 h, recall 0.87, before 18.7 h
-  horizon 1 year     1.28 (w5 1.14, n 79) | n/a (n 0) | 1.08 (n 4) | 9.47 (n 51) | beta 9.6 h, recall 0.88, before 19.3 h
-  no test day (3 y)  1.51 (w5 1.34, n 80) | n/a (n 0) | n/a (n 0) | 9.94 (n 26) | beta 10.6 h, recall 0.92, before 20.2 h
+  horizon 1 week     0.85 (w5 0.76, n 78) | 0.82 (n 78) | 0.79 (n 78) | 1.91 (n 64) | beta 7.5 h, recall 0.93, before 17.3 h
+  horizon 1 month    0.97 (w5 0.85, n 78) | 1.07 (n 80) | 1.04 (n 80) | 4.60 (n 80) | beta 8.3 h, recall 0.96, before 17.8 h
+  horizon 6 months   1.16 (w5 1.05, n 77) | 1.02 (n 22) | 0.97 (n 35) | 8.56 (n 69) | beta 9.5 h, recall 0.87, before 18.7 h
+  horizon 1 year     1.22 (w5 1.10, n 79) | n/a (n 0) | 1.03 (n 4) | 9.03 (n 51) | beta 10.1 h, recall 0.88, before 19.3 h
+  no test day (3 y)  1.45 (w5 1.27, n 80) | n/a (n 0) | n/a (n 0) | 9.53 (n 26) | beta 11.1 h, recall 0.92, before 20.2 h
 
 studies-every-third-day
-  horizon 1 week     0.88 (w5 0.73, n 14) | 0.72 (n 49) | 0.69 (n 51) | n/a (n 0) | beta 7.1 h, recall 0.88, before 17.6 h
-  horizon 1 month    n/a (w5 n/a, n 0) | n/a (n 0) | n/a (n 0) | 2.48 (n 52) | beta 7.9 h, recall 0.82, before 17.8 h
-  horizon 6 months   n/a (w5 n/a, n 0) | n/a (n 0) | n/a (n 0) | n/a (n 0) | beta 9.6 h, recall 0.88, before 19.0 h
-  horizon 1 year     n/a (w5 n/a, n 0) | n/a (n 0) | n/a (n 0) | n/a (n 0) | beta 10.2 h, recall 0.87, before 19.5 h
-  no test day (3 y)  n/a (w5 n/a, n 0) | n/a (n 0) | n/a (n 0) | n/a (n 0) | beta 11.3 h, recall 0.92, before 20.5 h
+  horizon 1 week     0.81 (w5 0.66, n 14) | 0.66 (n 49) | 0.64 (n 51) | n/a (n 0) | beta 7.6 h, recall 0.88, before 17.6 h
+  horizon 1 month    n/a (w5 n/a, n 0) | n/a (n 0) | n/a (n 0) | 2.33 (n 51) | beta 8.3 h, recall 0.82, before 17.8 h
+  horizon 6 months   n/a (w5 n/a, n 0) | n/a (n 0) | n/a (n 0) | n/a (n 0) | beta 10.0 h, recall 0.88, before 19.0 h
+  horizon 1 year     n/a (w5 n/a, n 0) | n/a (n 0) | n/a (n 0) | n/a (n 0) | beta 10.7 h, recall 0.87, before 19.5 h
+  no test day (3 y)  n/a (w5 n/a, n 0) | n/a (n 0) | n/a (n 0) | n/a (n 0) | beta 11.7 h, recall 0.92, before 20.5 h
 
 tight-page-teaches-0-85-as-much
-  horizon 1 week     0.86 (w5 0.76, n 78) | 0.83 (n 78) | 0.80 (n 78) | 2.05 (n 54) | beta 7.4 h, recall 0.93, before 17.3 h
-  horizon 1 month    0.99 (w5 0.88, n 78) | 1.09 (n 80) | 1.06 (n 80) | 4.70 (n 79) | beta 8.2 h, recall 0.96, before 17.8 h
-  horizon 6 months   1.18 (w5 1.06, n 77) | 1.03 (n 22) | 0.98 (n 35) | 9.48 (n 56) | beta 9.3 h, recall 0.87, before 18.7 h
-  horizon 1 year     1.23 (w5 1.11, n 79) | n/a (n 0) | 1.06 (n 4) | 9.92 (n 39) | beta 9.9 h, recall 0.88, before 19.3 h
-  no test day (3 y)  1.46 (w5 1.31, n 80) | n/a (n 0) | n/a (n 0) | 10.44 (n 18) | beta 11.0 h, recall 0.92, before 20.2 h
+  horizon 1 week     0.85 (w5 0.76, n 78) | 0.82 (n 78) | 0.79 (n 78) | 2.02 (n 54) | beta 7.5 h, recall 0.93, before 17.3 h
+  horizon 1 month    0.97 (w5 0.85, n 78) | 1.07 (n 80) | 1.04 (n 80) | 4.63 (n 79) | beta 8.3 h, recall 0.96, before 17.8 h
+  horizon 6 months   1.16 (w5 1.05, n 77) | 1.02 (n 22) | 0.97 (n 35) | 9.35 (n 56) | beta 9.5 h, recall 0.87, before 18.7 h
+  horizon 1 year     1.22 (w5 1.10, n 79) | n/a (n 0) | 1.03 (n 4) | 9.79 (n 39) | beta 10.1 h, recall 0.88, before 19.3 h
+  no test day (3 y)  1.45 (w5 1.27, n 80) | n/a (n 0) | n/a (n 0) | 10.33 (n 18) | beta 11.1 h, recall 0.92, before 20.2 h
 
-WHAT-IF, never a result: the beta set if each answer and page taught G times what the model says and each spaced right answer grew memory to the power M. Mean x against careful self-study; hours in brackets. Rows G, columns M. Learners 160, seed 20261121.
+WHAT-IF, never a result: the recommended set if each answer and page taught G times what the model says and each spaced right answer grew memory to the power M. Mean x against careful self-study; hours in brackets. Rows G, columns M. Learners 160, seed 20261121.
   horizon 1 week
-    G 1: 0.91 (6.9 h) | 0.93 (6.8 h) | 0.94 (6.7 h) | 0.95 (6.6 h)
-    G 1.5: 1.11 (5.6 h) | 1.13 (5.4 h) | 1.15 (5.4 h) | 1.16 (5.3 h)
-    G 2: 1.22 (5.0 h) | 1.25 (4.9 h) | 1.26 (4.8 h) | 1.27 (4.8 h)
-    G 3: 1.28 (4.8 h) | 1.30 (4.7 h) | 1.31 (4.7 h) | 1.32 (4.6 h)
-    G 5: 1.29 (4.8 h) | 1.31 (4.7 h) | 1.33 (4.6 h) | 1.33 (4.6 h)
+    G 1: 0.85 (7.4 h) | 0.86 (7.2 h) | 0.87 (7.1 h) | 0.88 (7.1 h)
+    G 1.5: 1.02 (6.0 h) | 1.05 (5.9 h) | 1.06 (5.8 h) | 1.07 (5.8 h)
+    G 2: 1.12 (5.5 h) | 1.15 (5.3 h) | 1.16 (5.3 h) | 1.17 (5.2 h)
+    G 3: 1.16 (5.3 h) | 1.19 (5.2 h) | 1.20 (5.1 h) | 1.21 (5.1 h)
+    G 5: 1.18 (5.2 h) | 1.20 (5.1 h) | 1.21 (5.1 h) | 1.22 (5.0 h)
   horizon 1 month
-    G 1: 1.04 (7.7 h) | 1.11 (7.2 h) | 1.15 (7.0 h) | 1.20 (6.7 h)
-    G 1.5: 1.24 (6.4 h) | 1.34 (5.9 h) | 1.39 (5.7 h) | 1.47 (5.4 h)
-    G 2: 1.35 (5.8 h) | 1.46 (5.3 h) | 1.52 (5.1 h) | 1.61 (4.9 h)
-    G 3: 1.41 (5.5 h) | 1.52 (5.1 h) | 1.57 (4.9 h) | 1.67 (4.7 h)
-    G 5: 1.43 (5.5 h) | 1.53 (5.1 h) | 1.58 (4.9 h) | 1.68 (4.6 h)
+    G 1: 0.97 (8.2 h) | 1.04 (7.7 h) | 1.07 (7.5 h) | 1.12 (7.2 h)
+    G 1.5: 1.16 (6.8 h) | 1.25 (6.4 h) | 1.29 (6.1 h) | 1.35 (5.8 h)
+    G 2: 1.25 (6.2 h) | 1.35 (5.8 h) | 1.40 (5.6 h) | 1.47 (5.3 h)
+    G 3: 1.30 (6.0 h) | 1.40 (5.6 h) | 1.44 (5.4 h) | 1.52 (5.1 h)
+    G 5: 1.32 (5.9 h) | 1.41 (5.5 h) | 1.45 (5.4 h) | 1.53 (5.1 h)
   horizon 6 months
-    G 1: 1.34 (8.9 h) | 1.53 (7.8 h) | 1.64 (7.3 h) | 1.76 (6.9 h)
-    G 1.5: 1.58 (7.5 h) | 1.83 (6.5 h) | 1.98 (6.0 h) | 2.14 (5.6 h)
-    G 2: 1.70 (6.9 h) | 1.98 (5.9 h) | 2.14 (5.5 h) | 2.34 (5.0 h)
-    G 3: 1.76 (6.7 h) | 2.05 (5.7 h) | 2.23 (5.2 h) | 2.43 (4.8 h)
-    G 5: 1.78 (6.6 h) | 2.07 (5.7 h) | 2.25 (5.2 h) | 2.45 (4.8 h)
+    G 1: 1.28 (9.3 h) | 1.44 (8.3 h) | 1.54 (7.8 h) | 1.64 (7.3 h)
+    G 1.5: 1.49 (7.9 h) | 1.70 (6.9 h) | 1.83 (6.5 h) | 1.97 (6.0 h)
+    G 2: 1.59 (7.4 h) | 1.84 (6.4 h) | 1.99 (5.9 h) | 2.15 (5.5 h)
+    G 3: 1.65 (7.1 h) | 1.91 (6.1 h) | 2.05 (5.7 h) | 2.22 (5.3 h)
+    G 5: 1.66 (7.0 h) | 1.92 (6.1 h) | 2.07 (5.7 h) | 2.24 (5.2 h)
   horizon 1 year
-    G 1: 1.42 (9.5 h) | 1.65 (8.2 h) | 1.79 (7.6 h) | 1.94 (7.0 h)
-    G 1.5: 1.65 (8.1 h) | 1.95 (6.8 h) | 2.14 (6.3 h) | 2.35 (5.7 h)
-    G 2: 1.76 (7.5 h) | 2.10 (6.3 h) | 2.31 (5.7 h) | 2.56 (5.2 h)
-    G 3: 1.82 (7.2 h) | 2.18 (6.1 h) | 2.39 (5.5 h) | 2.65 (5.0 h)
-    G 5: 1.84 (7.2 h) | 2.19 (6.0 h) | 2.41 (5.5 h) | 2.67 (4.9 h)
+    G 1: 1.35 (9.9 h) | 1.56 (8.6 h) | 1.68 (8.1 h) | 1.82 (7.5 h)
+    G 1.5: 1.56 (8.5 h) | 1.83 (7.3 h) | 1.99 (6.7 h) | 2.17 (6.2 h)
+    G 2: 1.66 (7.9 h) | 1.96 (6.7 h) | 2.15 (6.1 h) | 2.35 (5.6 h)
+    G 3: 1.72 (7.7 h) | 2.03 (6.5 h) | 2.22 (5.9 h) | 2.43 (5.4 h)
+    G 5: 1.73 (7.6 h) | 2.04 (6.4 h) | 2.23 (5.9 h) | 2.45 (5.4 h)
   no test day (3 y)
-    G 1: 1.51 (10.5 h) | 1.81 (8.8 h) | 1.99 (8.0 h) | 2.20 (7.3 h)
-    G 1.5: 1.73 (9.1 h) | 2.11 (7.5 h) | 2.36 (6.7 h) | 2.64 (6.0 h)
-    G 2: 1.84 (8.5 h) | 2.26 (6.9 h) | 2.53 (6.2 h) | 2.86 (5.5 h)
-    G 3: 1.89 (8.2 h) | 2.33 (6.7 h) | 2.62 (6.0 h) | 2.95 (5.3 h)
-    G 5: 1.91 (8.2 h) | 2.35 (6.6 h) | 2.63 (5.9 h) | 2.98 (5.2 h)
+    G 1: 1.45 (10.9 h) | 1.71 (9.3 h) | 1.88 (8.5 h) | 2.06 (7.8 h)
+    G 1.5: 1.65 (9.5 h) | 1.99 (7.9 h) | 2.20 (7.2 h) | 2.45 (6.5 h)
+    G 2: 1.75 (8.9 h) | 2.13 (7.3 h) | 2.37 (6.6 h) | 2.64 (5.9 h)
+    G 3: 1.80 (8.7 h) | 2.19 (7.1 h) | 2.44 (6.4 h) | 2.72 (5.7 h)
+    G 5: 1.81 (8.6 h) | 2.21 (7.1 h) | 2.45 (6.4 h) | 2.74 (5.7 h)

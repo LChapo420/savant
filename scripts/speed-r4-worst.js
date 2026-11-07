@@ -8,7 +8,7 @@ const path = require('path');
 const { ARMS, HELD } = require('./speed-r4-run');
 
 const OUT = process.argv[2]; const flag = (k, d) => { const m = process.argv.find((a) => a.startsWith(`--${k}=`)); return m ? m.split('=').slice(1).join('=') : d; };
-const ARM = ARMS[flag('arm', 'beta set: + one prompt + tight page')];
+const ARM = ARMS[flag('arm', 'space + proof + recheck')];
 const load = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 const D = load(path.join(OUT, 'words', 'base-design.json'));
 const Bs = HELD.map((_, i) => load(path.join(OUT, 'words', `base-h${i + 1}.json`)));

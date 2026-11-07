@@ -10,12 +10,12 @@ const { execFileSync } = require('child_process');
 const { ARMS, HELD } = require('./speed-r4-run');
 
 const OUT = process.argv[2];
-const beta = ARMS['beta set: + one prompt + tight page']; const before = ARMS['main before round 4'];
+const beta = ARMS['space + proof + recheck']; const before = ARMS['main before round 4'];
 const armArg = `before=${before};beta=${beta}`;
 const GOALS = ['horizon 1 week', 'horizon 1 month', 'horizon 6 months', 'horizon 1 year', 'no test day (3 y)'];
 const BASES = { careful: 'careful: self-study, wide schedule reaching 95%', 'tutor .37': 'tutor d = 0.37 (Nickow et al. 2020)', 'tutor .79': 'tutor d = 0.79 (VanLehn 2011)', rereader: 'rereader: read, reread, cram rereads' };
 const fx = (x) => (Number.isFinite(x) ? x.toFixed(2) : 'n/a');
-const lines = ['SIMULATED. Beta set against each baseline, mean x (hours to recall 0.70 with everything understood; a baseline that misses is not counted). One held-out seed, 80 learners a variant, costs "words". goal: careful | tutor .37 | tutor .79 | rereader (worst 5% in brackets for careful), then beta hours and recall.'];
+const lines = ['SIMULATED. The recommended set (space + proof + recheck, no tight page, no one-prompt) against each baseline, mean x (hours to recall 0.70 with everything understood; a baseline that misses is not counted). One held-out seed, 80 learners a variant, costs "words". goal: careful | tutor .37 | tutor .79 | rereader (worst 5% in brackets for careful), then beta hours and recall.'];
 const res = {};
 for (const name of ['(main run, 320 learners)', ...fs.readdirSync(path.join(OUT, 'sens'))]) {
   const dir = name.startsWith('(') ? path.join(OUT, 'words') : path.join(OUT, 'sens', name);
@@ -38,7 +38,7 @@ if (fs.existsSync(wf)) {
   const D = JSON.parse(fs.readFileSync(path.join(OUT, 'words', 'base-design.json'), 'utf8'));
   const mean = (a) => a.reduce((s, x) => s + x, 0) / Math.max(1, a.length);
   const pickR = (goal) => { const rs = Object.keys(D.rows[0].goals[goal].self_r).map(Number).sort((a, b) => b - a); let best = null; for (const r of rs) { const share = mean(D.rows.map((x) => (x.goals[goal].self_r[r].pass ? 1 : 0))); if (share >= 0.95) return r; if (!best || share > best.share) best = { r, share }; } return best.r; };
-  lines.push('\nWHAT-IF, never a result: the beta set if each answer and page taught G times what the model says and each spaced right answer grew memory to the power M. Mean x against careful self-study; hours in brackets. Rows G, columns M. Learners 160, seed 20261121.');
+  lines.push('\nWHAT-IF, never a result: the recommended set if each answer and page taught G times what the model says and each spaced right answer grew memory to the power M. Mean x against careful self-study; hours in brackets. Rows G, columns M. Learners 160, seed 20261121.');
   for (const g of GOALS) {
     const r = pickR(g); const bH = base.rows.map((x) => x.goals[g].self_r[r]);
     const rows = [];
