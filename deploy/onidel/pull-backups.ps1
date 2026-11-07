@@ -50,7 +50,12 @@ if ($Install) {
   if ($inGit -eq 'true') { throw "$Dest is inside a git repository. It must not be." }
   Restrict-Folder
   $target = Join-Path $Dest 'pull-backups.ps1'
-  if ($PSCommandPath -ne $target) { Copy-Item -Force $PSCommandPath $target; Copy-Item -Force (Join-Path $PSScriptRoot 'savant-backup.sh') (Join-Path $Dest 'savant-backup.sh') }
+  if ($PSCommandPath -ne $target) {
+    Copy-Item -Force $PSCommandPath $target
+    # bash on the server refuses CRLF, and a Windows checkout can make it so.
+    [System.IO.File]::WriteAllText((Join-Path $Dest 'savant-backup.sh'), [System.IO.File]::ReadAllText((Join-Path $PSScriptRoot 'savant-backup.sh')).Replace("`r`n", "`n"))
+  }
+  & icacls $Dest /inheritance:r /grant:r "$env:USERDOMAIN\${env:USERNAME}:(OI)(CI)F" /T /C /Q | Out-Null
   $action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$target`""
   $now = (Get-Date).Date.AddHours(1)
   $triggers = @(

@@ -13,3 +13,6 @@ public/spanish-listening.html -text
 public/js/spanish-listening.js -text
 # Shell scripts, systemd units and env files are copied to a Linux VM: always LF, even in a Windows checkout.
 deploy/beta/* text eol=lf
+
+# Sent to bash on the server as they are.
+deploy/onidel/*.sh text eol=lf

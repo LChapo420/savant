@@ -45,7 +45,8 @@ tar -C "$LIVE" --exclude=./.env --exclude=./data --exclude=./logs --exclude=./.g
 as_savant mkdir -p "$DRILL/app/data"
 ( cd "$LIVE/data" && find . -maxdepth 1 -type f \( -name '*.csv' -o -name '*.xlsx' -o -name holdout.json -o -name base-levels-report.json -o -name spanish-gateway-users.json \) -print0 | tar --null -T - -cf - models spanish-media spanish-run ) | as_savant tar -C "$DRILL/app/data" -xf -
 step "copy code and static data (not part of a restore)" "$T"
-for f in store-compare.js ledger-restore.js; do install -o savant -g savant -m 644 "$TOOLS/scripts/$f" "$DRILL/app/scripts/$f"; done
+# The tools of this branch, until it is deployed.
+for f in scripts/store-compare.js scripts/ledger-restore.js scripts/backup-db.js services/durable-file.js; do install -o savant -g savant -m 644 "$TOOLS/$f" "$DRILL/app/$f"; done
 
 # --- the restore itself starts here.
 T_RESTORE=$(now)
@@ -157,6 +158,20 @@ print("changed by collection:", {c['collection']:c['changed'] for c in r['by_col
 print("problems:", r['problems'])
 PY
 step "compare counts after the instance stopped" "$T"
+
+# --- what a damaged, wrong-owner or missing ledger does. All on the copy, nothing is called: only the ledger's own check.
+ledger_check() { as_savant bash -c "cd '$DRILL/app' && MUNITO_LEDGER_FILE='$1' node --no-warnings -e \"
+  const l=require('./services/munito-ledger');
+  try { const id=l.reserve({usd:0.01,task:'drill',model:'x'}); console.log('  a call would go ahead; settled so far \$'+l.status().settled_usd); } catch (e) { console.log('  refused: '+e.message.slice(0,110)); }\""; }
+if [ -f "$DRILL/app/data/munito-ledger.json" ]; then
+  echo "ledger failure modes (munito, on the copy):"
+  L="$DRILL/app/data/munito-ledger.json"; P="$DRILL/tmp/probe-ledger.json"
+  as_savant cp "$L" "$P"; echo " good:"; ledger_check "$P"
+  as_savant bash -c "echo not-json > '$P'"; echo " garbage:"; ledger_check "$P"
+  as_savant bash -c ": > '$P'"; echo " empty:"; ledger_check "$P"
+  cp "$L" "$P"; chown root:root "$P"; chmod 600 "$P"; echo " restored by root, mode 600:"; ledger_check "$P"; rm -f "$P"
+  echo " missing (no file at all):"; ledger_check "$P"; rm -f "$P"
+fi
 
 printf '%-46s %7.1f s\n' "RESTORE, first step to a checked instance" "$(python3 -c "print($T_READY-$T_RESTORE)")"
 printf '%-46s %7.1f s\n' "whole drill so far" "$(python3 -c "import time;print(time.time()-$T_ALL)")"
