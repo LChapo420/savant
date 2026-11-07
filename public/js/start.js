@@ -1,10 +1,15 @@
 /* The new onboarding (docs/ONBOARDING-V2.md). One page, one question per screen.
  *
- * Steps are named in the address (#why), so reload and the back button work. Answers live on this device until the level check needs the
- * server; then a guest row holds them (services/onboarding-v2.js), and saving adds credentials to that same row. The server keeps the age
- * answer and picks the route: this file knows no age threshold.
+ * The order: welcome, hello, age, then the agreement (or, under the consent age, the parent's email), then just the four things it asks: the short test, interests,
+ * subjects, grade. Then building, first lesson ready, the lesson, saving the account.
  *
- * The shell (tutor, bubble, ruler, Continue) stays on screen between steps; only the panel changes, so it reads as one conversation.
+ * In the private beta the state says `onboarding`: this learner already has an account, from the application. There is no agreement screen, no guest and nothing to save:
+ * welcome, hello, age only if the account has none on record, the same four things, the first lesson. The server decides this (services/onboarding-v2.js inFlow).
+ *
+ * Steps are named in the address (#into), so reload and the back button work. From the agreement on, a guest row on the server holds the answers
+ * (services/onboarding-v2.js), and saving adds credentials to that same row. The server keeps the age answer and picks the route: this file knows no age threshold.
+ *
+ * The shell (tutor, bubble, progress bar, Continue) stays on screen between steps; only the panel changes, so it reads as one conversation.
  */
 (function () {
   const C = window.ObContent;
@@ -13,7 +18,7 @@
   const root = document.getElementById('ob-root');
 
   /** Who the flow is about. `a` is what goes to the server; nothing else leaves this page. */
-  let S = { a: { tracks: [], notes: false, why: null, horizon: null, test_date: null, interest: null, interest_text: '' }, claimed: false };
+  let S = { a: { tracks: [], notes: false, interests: [], interest: null, interest_text: '', test_skipped: false }, claimed: false };
   let server = {}; // the last /api/ob2/state
   let catalog = [];
   let view = null; // the current step's definition
@@ -27,8 +32,9 @@
   const $ = (sel, from) => (from || root).querySelector(sel);
   const $$ = (sel, from) => [...(from || root).querySelectorAll(sel)];
   const load = () => { try { const v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && v.a) S = { ...S, ...v, a: { ...S.a, ...v.a } }; } catch (e) { /* a fresh start */ } };
-  const keep = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* the server holds it from the level check on */ } };
+  const keep = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* the server holds it from the agreement on */ } };
   const forget = () => { try { localStorage.removeItem(KEY); } catch (e) { /* nothing to do */ } };
+  const calm = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   async function api(method, path, body) {
     const res = await fetch(path, { method, credentials: 'same-origin', headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined });
@@ -40,12 +46,22 @@
   const firstTrack = () => S.a.tracks[0] || null;
   const trackName = () => { const t = trackOf(firstTrack()); return t ? t.name : 'this subject'; };
   const isChild = () => server.route === 'parent' || S.route === 'parent';
+  /** Beta: signed in, from the application. */
+  const signedIn = () => !!server.onboarding;
+  /** There is a row on the server to keep answers on. */
+  const hasRow = () => !!(server.guest || server.onboarding);
+  /** Under the consent age with no parent told yet: the parent's email comes next. */
+  const parentToAsk = () => isChild() && (signedIn() ? ((server.consent || {}).state === 'pending' && !(server.consent || {}).has_request) : !server.guest);
   const notesOnly = () => S.a.notes && !S.a.tracks.length;
   const gradeParts = (name) => String(name || '').split(/\s+[—–]\s+/);
+  /** Math, English and reading have school grades; the others have levels with their own names. */
+  const gradeWord = () => { const t = trackOf(firstTrack()); return t && t.grades.some((g) => /\bgrade\b/i.test(g.name)) ? 'grade' : 'level'; };
 
   /* ── the shell ──────────────────────────────────────────── */
-  const ORDER = ['welcome', 'hello', 'age', 'agree', 'declined', 'learn', 'why', 'when', 'into', 'moment', 'parent', 'intro', 'level', 'result', 'building', 'ready', 'save', 'remind', 'done'];
-  const RULED = ORDER.filter((s) => s !== 'welcome');
+  const ORDER = ['welcome', 'hello', 'age', 'agree', 'declined', 'parent', 'test', 'testing', 'into', 'learn', 'grade', 'pick', 'level', 'result', 'building', 'ready', 'save', 'done'];
+  /** How full the bar is on arrival at each step, by rough share of the time. `testing` and `level` fill as they go, up to the next value. */
+  const FILL = { welcome: 0, hello: 3, age: 7, agree: 11, declined: 11, parent: 11, test: 14, testing: 15, into: 58, learn: 64, grade: 70, pick: 74, level: 74, result: 88, building: 92, ready: 96, save: 98, done: 100 };
+  const SPAN = { testing: 43, level: 14 };
 
   function shell() {
     root.innerHTML = `
@@ -58,16 +74,14 @@
         <header class="ob-top">
           <button class="ob-back" id="back" type="button" aria-label="Back">${I.back}</button>
           <span class="ob-wordmark" id="wordmark" hidden>Savant</span>
-          <div class="ruler" id="ruler" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="How far through the setup you are">
-            <div class="ruler-line"></div>
-            ${RULED.filter((_, i) => i % 3 === 0).map((_, i, all) => `<i class="ruler-tick" style="left:${(i / (all.length)) * 100}%"></i>`).join('')}
-            <div class="ruler-fill" id="ruler-fill"></div>
-            <div class="ruler-marker" id="ruler-marker"></div>
+          <div class="bar" id="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="How far through the setup you are">
+            <div class="bar-fill" id="bar-fill"></div>
           </div>
         </header>
         <form class="ob-panel" id="panel" novalidate></form>
         <div class="ob-foot" id="foot">
           <p class="ob-error" id="err" role="alert" hidden></p>
+          <div id="foot-extra"></div>
           <button class="btn" id="next" type="submit" form="panel">Continue</button>
           <button class="link-btn" id="alt" type="button" hidden></button>
         </div>
@@ -75,17 +89,14 @@
     Tutor.mount($('#tutor'));
     $('#back').addEventListener('click', goBack);
     $('#panel').addEventListener('submit', (e) => { e.preventDefault(); submit(); });
-    $('#panel').addEventListener('change', syncOn);
+    root.addEventListener('change', syncOn);
     $('#alt').addEventListener('click', () => { if (view && view.alt && !busy) view.alt.run(); });
   }
 
-  function setRuler(step, within) {
-    const i = RULED.indexOf(step);
-    const pct = Math.max(2, Math.min(100, Math.round(((Math.max(i, 0) + (within || 0)) / (RULED.length - 1)) * 100)));
-    $('#ruler').setAttribute('aria-valuenow', String(pct));
-    $('#ruler-fill').style.width = `${pct}%`;
-    $('#ruler-marker').style.left = `${pct}%`;
-    $$('.ruler-tick').forEach((t) => t.classList.toggle('is-on', parseFloat(t.style.left) <= pct));
+  function setBar(step, within) {
+    const pct = Math.max(2, Math.min(100, Math.round((FILL[step] || 0) + (within || 0) * (SPAN[step] || 0))));
+    $('#bar').setAttribute('aria-valuenow', String(pct));
+    $('#bar-fill').style.width = `${pct}%`;
   }
 
   /** The tutor says something. A repeat of the same line does nothing, so a double tap doesn't flicker. */
@@ -126,7 +137,7 @@
     return history.back();
   }
   async function submit() {
-    if (busy || !view || $('#next').disabled) return;
+    if (busy || !view || $('#next').disabled || $('#next').hidden) return;
     busy = true;
     const btn = $('#next');
     btn.setAttribute('aria-busy', 'true');
@@ -143,30 +154,43 @@
     }
   }
 
+  /** The test has been dealt with: done, skipped, or only its last question (interests) is waiting. */
+  const testClear = () => !!(server.test && (server.test.done || server.test.pending)) || S.a.test_skipped;
+
   /** A step that needs something earlier goes there instead. */
   function guard(step) {
-    if (S.claimed) return ['remind', 'done'].includes(step) ? step : 'remind';
+    if (S.claimed) return 'done';
     const at = ORDER.indexOf(step);
+    const past = (name) => at > ORDER.indexOf(name);
     if (at < 0) return 'welcome';
-    if (at > ORDER.indexOf('age') && !server.route) return 'age';
-    if ((step === 'agree' || step === 'declined') && (isChild() || server.agreed)) return 'learn';
-    if (at > ORDER.indexOf('declined') && !isChild() && !server.agreed) return 'agree';
-    if (at > ORDER.indexOf('learn') && !S.a.tracks.length && !S.a.notes) return 'learn';
-    if (at > ORDER.indexOf('moment') && !S.a.interest) return 'into';
-    if (step === 'parent' && (!isChild() || server.guest)) return 'intro';
-    if (step === 'level' || step === 'intro' || step === 'result' || step === 'building') {
-      if (isChild() && !server.guest) return 'parent';
-      if (notesOnly()) return 'save';
+    if (past('age') && !server.route) return 'age';
+    if (step === 'age' && signedIn() && server.route) return parentToAsk() ? 'parent' : 'test';
+    if (step === 'agree' || step === 'declined') {
+      if (isChild()) return parentToAsk() ? 'parent' : 'test';
+      if (server.agreed) return 'test';
+      return step;
     }
-    if (step === 'ready' && !(server.enrollment || S.enrollment)) return server.guest ? 'intro' : 'moment';
-    if (step === 'save' && !server.guest && !notesOnly()) return 'intro';
-    if (step === 'remind' || step === 'done') return 'save';
+    if (past('declined') && !isChild() && !server.agreed) return 'agree';
+    if (step === 'parent') return parentToAsk() ? step : 'test';
+    if (past('parent') && parentToAsk()) return 'parent';
+    if (signedIn() && (step === 'save' || step === 'done')) return server.enrollment ? 'ready' : 'grade'; // nothing to save: the account exists
+    // Someone past the questions (out on a lesson, coming back to save) isn't sent round them again.
+    if (!server.enrollment) {
+      if (past('testing') && !testClear()) return 'test';
+      if (past('into') && !S.a.interests.length) return 'into';
+      if (past('learn') && !S.a.tracks.length && !S.a.notes) return 'learn';
+    }
+    if (['grade', 'pick', 'level', 'result', 'building'].includes(step) && notesOnly()) return signedIn() ? 'learn' : 'save';
+    if (step === 'result' && !S.result) return 'grade';
+    if (step === 'ready' && !(server.enrollment || S.enrollment)) return 'grade';
+    if (step === 'done') return 'save';
     return step;
   }
 
   function render(step, dir) {
     const safe = guard(step);
     if (safe !== step) { history.replaceState(null, '', `#${safe}`); step = safe; }
+    if (current === 'testing' && step !== 'testing') ObTest.cancel();
     current = step;
     S.step = step;
     keep();
@@ -174,12 +198,14 @@
     const ob = $('#ob');
     ob.dataset.screen = step;
     ob.dataset.layout = view.hero ? 'hero' : 'question';
+    delete ob.dataset.focus;
     $('#back').style.visibility = view.back === null ? 'hidden' : 'visible';
     $('#wordmark').hidden = step !== 'welcome';
-    setRuler(step, view.within);
+    setBar(step, view.within);
     say(view.bubble || '', view.mood || 'idle');
     const panel = $('#panel');
     panel.innerHTML = `<div class="ob-view" data-dir="${dir}">${view.html}</div>`;
+    $('#foot-extra').innerHTML = view.footHtml || '';
     showError('');
     const next = $('#next');
     next.textContent = view.cta || 'Continue';
@@ -200,7 +226,7 @@
   function syncOn() { $$('label.opt').forEach((l) => { const i = l.querySelector('input'); l.classList.toggle('is-on', !!(i && i.checked)); }); }
 
   /* ── pieces of markup ───────────────────────────────────── */
-  const TICK = '<svg class="opt-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg>';
+  const TICK = '<span class="opt-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.500 12.500l4.500 4.500L18.500 8"/></svg></span>';
   function opt({ type, name, value, checked, icon, title, sub, cls = '', leading }) {
     return `<label class="opt ${cls}">
       <input type="${type}" name="${name}" value="${esc(value)}"${checked ? ' checked' : ''}>
@@ -210,7 +236,18 @@
     </label>`;
   }
   const head = (q, sub) => `<h1 class="ob-q">${esc(q)}</h1>${sub ? `<p class="ob-sub">${marked(sub)}</p>` : ''}`;
-  const checkedVal = (name) => { const n = $(`input[name="${name}"]:checked`); return n ? n.value : null; };
+  const STEP_DOT = '<span class="step-dot"><svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg></span>';
+
+  /** A little burst of giraffe spots when the lesson is ready. Decorative; reduced motion shows none. */
+  function spots() {
+    if (calm()) return '';
+    const dots = Array.from({ length: 14 }, (_, i) => {
+      const a = (i / 14) * Math.PI * 2;
+      const d = 90 + (i % 3) * 34;
+      return `<i style="--x:${Math.round(Math.cos(a) * d)}px;--y:${Math.round(Math.sin(a) * d)}px;--s:${8 + (i % 4) * 3}px;animation-delay:${(i % 4) * 40}ms"></i>`;
+    }).join('');
+    return `<div class="spots" aria-hidden="true">${dots}</div>`;
+  }
 
   /* ── the steps ──────────────────────────────────────────── */
   const STEPS = {
@@ -220,7 +257,7 @@
       mood: 'idle',
       bubble: '',
       cta: 'Get started',
-      alt: { label: 'I already have an account', run: () => { location.href = '/login'; } },
+      alt: signedIn() ? null : { label: 'I already have an account', run: () => { location.href = '/login'; } },
       html: '<div class="ob-welcome"><h1>From zero to Savant, with lessons built around you.</h1></div>',
       next: () => go('hello'),
     }),
@@ -229,20 +266,21 @@
       hero: true,
       back: 'welcome',
       mood: 'wave',
-      bubble: `${Tutor.greeting()} A few questions, then your first lesson is **built around you.**`,
+      bubble: `${Tutor.greeting()} A short test, a few questions, then your first lesson, **built around you.**`,
       cta: 'Sounds good',
-      html: '<h1 class="hello-h">Let\'s get you set up.</h1><p class="hello-sub">It takes a few minutes, and you can stop any time.</p>',
+      html: '<h1 class="hello-h">Let\'s get you set up.</h1><p class="hello-sub">About 10 minutes. You can stop any time.</p>',
       next: () => go('age'),
     }),
 
     age: () => {
       const done = !!server.route;
+      const after = () => { if (isChild()) return parentToAsk() ? 'parent' : 'test'; return server.agreed ? 'test' : 'agree'; };
       if (done) {
         return {
           back: 'hello',
           bubble: 'You already answered this one, so **we\'ll keep that answer.**',
           html: `${head('When were you born?')}<p class="ob-sub">Your first answer stands. <a href="/privacy">Privacy policy</a></p>`,
-          next: () => go(isChild() || server.agreed ? 'learn' : 'agree'),
+          next: () => go(after()),
         };
       }
       return {
@@ -256,7 +294,7 @@
               <label><span class="sr">Year</span><select class="select" id="y" name="birth_year" required><option value="">Year</option></select></label>
             </div>
             <h2 class="ob-q2"><label for="c">Where do you live?</label></h2>
-            <select class="select" id="c" name="country" required style="margin-top:10px"><option value="">Choose a country</option></select>
+            <select class="select" id="c" name="country" required><option value="">Choose a country</option></select>
           </div>
           <p class="ob-fine">We keep the month and year with your account. It decides how your account is set up. <a href="/privacy">Privacy policy</a></p>`,
         bind: async () => {
@@ -278,12 +316,13 @@
           server.route = out.route;
           S.route = out.route;
           keep();
-          go(out.route === 'parent' ? 'learn' : 'agree');
+          if (signedIn()) server = await api('GET', '/api/ob2/state');
+          go(after());
         },
       };
     },
 
-    /* A real choice: neither answer is picked, and either one is one tap. A child never sees this; their parent decides (routes/consent.js). */
+    /* A real choice: neither answer is picked, and either one is one tap. The answers sit in the footer, so both show without scrolling on any phone. A child never sees this; their parent decides (routes/consent.js). */
     agree: () => {
       let pick = null;
       return {
@@ -293,21 +332,22 @@
         html: `${head('Do you agree to these?')}
           <div class="terms ob-body">
             ${C.AGREEMENT.items.map((t) => `<div class="term"><span class="opt-icon">${I[t.icon]}</span><div><h2>${esc(t.title)}</h2><p>${esc(t.text)}${t.link ? ` <a href="${esc(t.link.href)}">${esc(t.link.label)}</a>` : ''}</p></div></div>`).join('')}
-          </div>
-          <fieldset class="opts ob-body"><legend class="sr">Your answer</legend>
-            ${opt({ type: 'radio', name: 'agree', value: 'agree', title: 'I agree to all three', cls: 'choice' })}
-            ${opt({ type: 'radio', name: 'agree', value: 'decline', title: 'I don\'t agree', cls: 'choice' })}
+          </div>`,
+        footHtml: `<fieldset class="opts agree-opts"><legend class="sr">Your answer</legend>
+            ${['agree', 'decline'].map((v) => `<label class="opt choice"><input type="radio" form="panel" name="agree" value="${v}"><span class="opt-text"><span class="opt-title">${v === 'agree' ? 'I agree to all three' : 'I don\'t agree'}</span></span>${TICK}</label>`).join('')}
           </fieldset>`,
-        bind: () => $$('input[name="agree"]').forEach((r) => r.addEventListener('change', () => { pick = r.value; ready(true); })),
+        bind: () => $$('input[name="agree"]').forEach((r) => r.addEventListener('change', () => {
+          pick = r.value;
+          ready(true);
+          Tutor.mood($('#tutor'), pick === 'agree' ? 'happy' : 'idle', 1400);
+        })),
         next: async () => {
           if (pick !== 'agree') return go('declined');
           const out = await api('POST', '/api/ob2/agree', { decision: 'agree', version: C.AGREEMENT.version });
-          server.guest = true;
-          server.agreed = true;
-          server.route = 'self';
           S.user = out.user && out.user.id;
           keep();
-          return go('learn');
+          server = await api('GET', '/api/ob2/state');
+          return go('test');
         },
       };
     },
@@ -322,184 +362,16 @@
       next: () => { forget(); location.href = '/'; return new Promise(() => {}); },
     }),
 
-    learn: () => ({
-      back: 'hello',
-      bubble: S.a.tracks.length ? (C.TRACK_REPLY[S.a.tracks[S.a.tracks.length - 1]] || 'Good pick.') : 'Thanks. **Now the good part.**',
-      ok: () => S.a.tracks.length > 0 || S.a.notes,
-      html: `${head('What do you want to learn?', 'Pick one or a few. You start with the first, and the rest wait for you.')}
-        <fieldset class="opts two ob-body"><legend class="sr">Subjects</legend>
-          ${catalog.map((t) => opt({ type: 'checkbox', name: 'track', value: t.id, checked: S.a.tracks.includes(t.id), icon: I[t.id] || I.other, title: t.name, sub: C.TRACK_LINES[t.id] })).join('')}
-          ${isChild() ? '' : opt({ type: 'checkbox', name: 'notes', value: 'notes', checked: S.a.notes, icon: I.notes, title: 'My own notes', sub: 'Turn your files into lessons' })}
-        </fieldset>`,
-      bind: () => {
-        $$('input[name="track"]').forEach((box) => box.addEventListener('change', () => {
-          S.a.tracks = S.a.tracks.filter((t) => t !== box.value);
-          if (box.checked) { S.a.tracks.push(box.value); say(C.TRACK_REPLY[box.value] || `**${trackOf(box.value).name}.** Good pick.`, 'happy'); }
-          keep();
-          ready(S.a.tracks.length > 0 || S.a.notes);
-        }));
-        const notes = $('input[name="notes"]');
-        if (notes) notes.addEventListener('change', () => {
-          S.a.notes = notes.checked;
-          if (notes.checked) say(C.TRACK_REPLY.notes, 'happy');
-          keep();
-          ready(S.a.tracks.length > 0 || S.a.notes);
-        });
-      },
-      next: () => go('why'),
-    }),
-
-    why: () => {
-      const had = C.WHY.find((w) => w.id === S.a.why);
-      return {
-        back: 'learn',
-        bubble: had ? had.reply : 'Knowing why helps me **get the plan right.**',
-        ok: () => !!S.a.why,
-        html: `${head("What's this for?")}
-          <fieldset class="opts ob-body"><legend class="sr">Why you are learning this</legend>
-            ${C.WHY.map((w) => opt({ type: 'radio', name: 'why', value: w.id, checked: S.a.why === w.id, icon: I[w.icon], title: w.title })).join('')}
-          </fieldset>`,
-        bind: () => $$('input[name="why"]').forEach((r) => r.addEventListener('change', () => {
-          S.a.why = r.value;
-          keep();
-          say(C.WHY.find((w) => w.id === r.value).reply, 'happy');
-          ready(true);
-        })),
-        next: () => go('when'),
-      };
-    },
-
-    when: () => {
-      const list = S.a.why === 'test' ? C.HORIZONS : [...C.HORIZONS.slice(1), C.HORIZONS[0]];
-      const had = C.HORIZONS.find((h) => h.id === S.a.horizon);
-      const today = new Date();
-      const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      const max = new Date(today.getTime() + 1095 * 86400000);
-      const okNow = () => !!S.a.horizon && (S.a.horizon !== 'date' || (!!S.a.test_date && S.a.test_date > iso(today) && S.a.test_date <= iso(max)));
-      return {
-        back: 'why',
-        bubble: had ? had.reply : 'This one **changes your whole review schedule,** and you can change it later.',
-        ok: okNow,
-        html: `${head('How long do you want to remember it?')}
-          <fieldset class="opts ob-body"><legend class="sr">How long to remember it</legend>
-            ${list.map((h) => opt({
-              type: 'radio', name: 'horizon', value: h.id, checked: S.a.horizon === h.id, title: h.title, sub: h.sub,
-              leading: h.id === 'date' ? `<span class="opt-icon">${I.calendar}</span>` : `<span class="len"><i></i><b style="width:${Math.round(h.len * 0.28)}px"></b></span>`,
-            })).join('')}
-          </fieldset>
-          <label class="field" id="date-field"${S.a.horizon === 'date' ? '' : ' hidden'}><span class="field-label">The test date</span>
-            <input class="input" type="date" id="test-date" name="test_date" min="${iso(new Date(today.getTime() + 86400000))}" max="${iso(max)}" value="${esc(S.a.test_date || '')}"></label>`,
-        bind: () => {
-          $$('input[name="horizon"]').forEach((r) => r.addEventListener('change', () => {
-            S.a.horizon = r.value;
-            keep();
-            say(C.HORIZONS.find((h) => h.id === r.value).reply, 'happy');
-            $('#date-field').hidden = r.value !== 'date';
-            ready(okNow());
-            if (r.value === 'date') $('#test-date').focus();
-          }));
-          $('#test-date').addEventListener('input', (e) => { S.a.test_date = e.target.value; keep(); ready(okNow()); });
-        },
-        next: () => go('into'),
-      };
-    },
-
-    into: () => {
-      const had = C.INTERESTS.find((i) => i.id === S.a.interest);
-      const askText = () => S.a.interest === 'other' && !isChild();
-      const okNow = () => !!S.a.interest && (!askText() || S.a.interest_text.trim().length >= 2);
-      return {
-        back: 'when',
-        bubble: had ? had.reply : 'Last one before **I show you something.**',
-        cta: 'Show me',
-        ok: okNow,
-        html: `${head('What are you into?', 'Pick the one you could talk about for an hour.')}
-          <fieldset class="opts tiles ob-body"><legend class="sr">Your interests</legend>
-            ${C.INTERESTS.map((i) => opt({ type: 'radio', name: 'interest', value: i.id, checked: S.a.interest === i.id, icon: I[i.icon], title: i.title, cls: 'tile' })).join('')}
-            ${opt({ type: 'radio', name: 'interest', value: 'other', checked: S.a.interest === 'other', icon: I.other, title: 'Something else', cls: 'tile' })}
-          </fieldset>
-          ${isChild() ? '' : `<label class="field ob-other" id="other-field"${askText() ? '' : ' hidden'}><span class="field-label">What is it?</span>
-            <input class="input" id="other" name="interest_text" maxlength="80" autocomplete="off" value="${esc(S.a.interest_text)}" placeholder="Rock climbing, K-pop, baking bread"></label>`}`,
-        bind: () => {
-          $$('input[name="interest"]').forEach((r) => r.addEventListener('change', () => {
-            S.a.interest = r.value;
-            keep();
-            const pick = C.INTERESTS.find((i) => i.id === r.value);
-            say(pick ? pick.reply : (isChild() ? 'Fair enough. **I\'ll show you what I can.**' : 'Tell me. **I\'m listening.**'), 'happy');
-            const f = $('#other-field');
-            if (f) { f.hidden = r.value !== 'other'; if (r.value === 'other') $('#other').focus(); }
-            ready(okNow());
-          }));
-          const other = $('#other');
-          if (other) other.addEventListener('input', () => { S.a.interest_text = other.value; keep(); ready(okNow()); });
-        },
-        next: async () => {
-          if (server.guest && server.agreed) await api('POST', '/api/ob2/answers', S.a);
-          go('moment');
-        },
-      };
-    },
-
-    moment: () => {
-      const idea = C.ideaFor(firstTrack());
-      const known = C.INTERESTS.find((i) => i.id === S.a.interest);
-      const shownId = S.shown && C.INTERESTS.find((i) => i.id === S.shown) ? S.shown : (known ? known.id : 'soccer');
-      const said = S.a.interest === 'other' ? (S.a.interest_text || '').trim() : '';
-      const fallbackLine = said
-        ? `I haven't got one ready for ${said}, so here's soccer. **Your real lessons will use ${said}.**`
-        : "I haven't got one ready for that, so **here's soccer,** to show you what I mean.";
-      const others = C.INTERESTS.filter((i) => i.id !== shownId).slice(0, 2);
-      return {
-        back: 'into',
-        bubble: known ? 'Same idea. **Written for you.** Tap another one to see it change.' : fallbackLine,
-        mood: 'happy',
-        cta: notesOnly() ? 'Save my progress' : 'Find my level',
-        html: `${head('Same idea. Your version.')}
-          <div class="ex" id="ex"></div>
-          <p class="ob-fine ex-note">Written ahead of time for this screen. ${isChild()
-            ? 'Once a parent allows it, your lessons can use what you\'re into too.'
-            : 'Your real lessons are written around what you\'re into.'}</p>
-          <div class="ex-try"><span class="ex-try-label">Try another:</span>
-            ${[...C.INTERESTS.filter((i) => i.id === shownId), ...others].map((i) => `<button type="button" class="pill" data-id="${i.id}" aria-pressed="${i.id === shownId}">${I[i.icon]}${esc(i.title)}</button>`).join('')}
-          </div>`,
-        bind: () => {
-          const show = (id) => {
-            const pick = C.INTERESTS.find((i) => i.id === id);
-            $('#ex').innerHTML = `
-              <div class="ex-plain"><span class="ex-tag">${esc(idea.topic)}</span>${esc(idea.plain)}</div>
-              <span class="ex-link" aria-hidden="true"></span>
-              <div class="ex-yours swept" aria-live="polite">
-                <span class="ex-tag"><span>${I[pick.icon]}</span>With ${esc(pick.title.toLowerCase())}</span>
-                <p class="ex-text">${marked(idea.examples[id])}</p>
-                ${idea.viz === 'tokens' ? '<div class="ex-viz" aria-hidden="true"><i></i><i></i><i></i><i></i><b>3/4</b></div>' : ''}
-              </div>`;
-            S.shown = id;
-            keep();
-            $$('.pill').forEach((p) => p.setAttribute('aria-pressed', String(p.dataset.id === id)));
-          };
-          show(shownId);
-          $$('.pill').forEach((p) => p.addEventListener('click', () => { show(p.dataset.id); Tutor.mood($('#tutor'), 'happy', 1400); }));
-        },
-        next: async () => {
-          if (notesOnly()) {
-            await begin();
-            return go('save');
-          }
-          return go(isChild() && !server.guest ? 'parent' : 'intro');
-        },
-      };
-    },
-
-    /* An under-consent-age learner: the first thing stored about them is the level check, so a parent hears first (docs section 2). */
+    /* Under the consent age: the parent is told before anything is stored about the child, so this comes before the test, where the agreement would be. */
     parent: () => ({
-      back: 'moment',
+      back: signedIn() ? null : 'hello',
       bubble: 'You can **keep going while you wait** for them.',
       cta: 'Email my parent',
       ok: () => false,
       html: `${head('Time to tell a grown-up.', `A parent or guardian needs to agree before everything in your account opens. We'll send them one email. If nobody answers in ${esc(S.pendingDays || 14)} days, this account is deleted.`)}
         <div class="ob-body">
-          <label class="field"><span class="field-label">Your first name or a nickname</span>
-            <input class="input" name="nickname" autocomplete="nickname" minlength="2" maxlength="32" value="${esc(S.nickname || '')}"></label>
+          ${signedIn() ? '' : `<label class="field"><span class="field-label">Your first name or a nickname</span>
+            <input class="input" name="nickname" autocomplete="nickname" minlength="2" maxlength="32" value="${esc(S.nickname || '')}"></label>`}
           <label class="field"><span class="field-label">Your parent's or guardian's email</span>
             <input class="input" type="email" name="parent_email" autocomplete="off" inputmode="email"></label>
         </div>
@@ -507,45 +379,214 @@
       bind: () => {
         const n = $('input[name="nickname"]');
         const p = $('input[name="parent_email"]');
-        const check = () => ready(n.value.trim().length >= 2 && /.+@.+\..+/.test(p.value.trim()));
-        [n, p].forEach((x) => x.addEventListener('input', check));
+        const check = () => ready((!n || n.value.trim().length >= 2) && /.+@.+\..+/.test(p.value.trim()));
+        [n, p].filter(Boolean).forEach((x) => x.addEventListener('input', check));
         check();
       },
       next: async () => {
-        const nickname = $('input[name="nickname"]').value.trim();
+        const n = $('input[name="nickname"]');
+        const nickname = n ? n.value.trim() : undefined;
         S.nickname = nickname;
         keep();
-        const out = await begin({ nickname, parent_email: $('input[name="parent_email"]').value.trim() });
+        const out = await begin({ ...(n ? { nickname } : {}), parent_email: $('input[name="parent_email"]').value.trim() });
         if (out.user && out.user.consent && out.user.consent.locked) { location.href = '/parent-needed'; return; }
         S.emailFailed = out.consent_email_sent === false;
         keep();
-        go('intro');
+        server = await api('GET', '/api/ob2/state');
+        go('test');
       },
     }),
 
-    intro: () => ({
-      back: 'moment',
-      bubble: S.emailFailed
-        ? 'The email to your parent **didn\'t send.** You can try again when you save. Let\'s keep going.'
-        : (isChild() ? 'Email sent. **Now let\'s see what you know.**' : '"I don\'t know" is **a really useful answer.** Use it whenever it\'s true.'),
-      cta: 'Start',
-      alt: { label: 'I\'d rather pick my own starting point', run: () => go('pick') },
-      html: `${head(`Let's find your level in ${trackName()}.`, 'Short questions that change as you answer. About 5 minutes, and you can stop any time.')}
-        <p class="ob-fine">Nobody sees this but you. A wrong answer costs you nothing.</p>`,
-      next: async () => {
-        await begin();
-        go('level');
-      },
-    }),
+    /* The short test: the baseline's Quick tasks, or the style quiz where the baseline is closed to this learner. It says plainly what it is. */
+    test: () => {
+      const t = server.test || {};
+      if (t.done || t.pending) {
+        return {
+          back: 'hello',
+          bubble: 'You\'ve done this one. **Next.**',
+          mood: 'happy',
+          html: head('Test done.', 'Your answers are kept, and your lessons start from them.'),
+          next: () => go('into'),
+        };
+      }
+      const skip = { label: 'Skip for now', run: async () => { S.a.test_skipped = true; keep(); await saveAnswers(); go('into'); } };
+      if (!t.allowed) {
+        return {
+          back: 'hello',
+          bubble: S.emailFailed
+            ? 'The email to your parent **didn\'t send.** You can try again when you save. Let\'s keep going.'
+            : 'Email sent. **Now, a quick quiz.**',
+          mood: 'idle',
+          cta: 'Start the quiz',
+          alt: skip,
+          html: `${head('First, a short quiz.', '20 quick choices. **About 2 minutes.**')}
+            <div class="facts ob-body">
+              <div class="fact"><span class="opt-icon">${I.tap}</span><p>Tap the one that sounds more like you.</p></div>
+              <div class="fact"><span class="opt-icon">${I.curious}</span><p>There are no right answers. It helps set how your sessions run: how long they are, when you see feedback, how much gets explained.</p></div>
+            </div>`,
+          next: () => go('testing'),
+        };
+      }
+      return {
+        back: 'hello',
+        bubble: 'Just do your best. **This isn\'t a grade.**',
+        mood: 'idle',
+        cta: 'Start the test',
+        alt: skip,
+        html: `${head('First, a short test.', '**About 5 minutes.** You can stop early, and what you\'ve done still counts.')}
+          <div class="facts ob-body">
+            <div class="fact"><span class="opt-icon">${I.memory}</span><p>Remember some numbers.</p></div>
+            <div class="fact"><span class="opt-icon">${I.spot}</span><p>Spot which numbers match, fast.</p></div>
+            <div class="fact"><span class="opt-icon">${I.tap}</span><p>Tap what sounds more like you when you learn.</p></div>
+          </div>
+          <p class="ob-fine">It gives a rough first picture, not a score or a diagnosis. Your lessons start from it, and what you do in them keeps correcting it.</p>`,
+        next: () => go('testing'),
+      };
+    },
+
+    testing: () => {
+      const t = server.test || {};
+      const adult = !!t.allowed;
+      setTimeout(adult ? testRun : quizRun, 0);
+      return {
+        back: 'test',
+        within: 0,
+        noNext: true,
+        bubble: adult ? 'Go with your first thought.' : 'No right answers here.',
+        mood: 'think',
+        alt: { label: 'Stop here and keep what I\'ve done', run: adult ? testStop : quizStop },
+        html: '<h1 class="sr">The short test</h1><p class="t-left" id="t-left"></p><div id="task"><p class="ob-sub">Getting the first one.</p></div>',
+        next: () => {},
+      };
+    },
+
+    into: () => {
+      const count = () => S.a.interests.length;
+      const askText = () => S.a.interests.includes('other') && !isChild();
+      const okNow = () => count() > 0 && (!askText() || S.a.interest_text.trim().length >= 2);
+      const lastPick = C.INTERESTS.find((i) => i.id === S.a.interests[S.a.interests.length - 1]);
+      T.interestsShown = Date.now();
+      return {
+        back: 'test',
+        bubble: lastPick ? lastPick.reply : (testClear() && !S.a.test_skipped ? 'That\'s the test done. **Nice work.**' : 'Tell me **what you like.**'),
+        mood: lastPick ? 'idle' : 'happy',
+        ok: okNow,
+        html: `${head('What are you into?', 'Pick as many as you like. Your lessons will use them.')}
+          <fieldset class="opts tiles ob-body"><legend class="sr">Your interests</legend>
+            ${C.INTERESTS.map((i) => opt({ type: 'checkbox', name: 'interest', value: i.id, checked: S.a.interests.includes(i.id), icon: I[i.icon], title: i.title, cls: 'tile' })).join('')}
+            ${opt({ type: 'checkbox', name: 'interest', value: 'other', checked: S.a.interests.includes('other'), icon: I.other, title: 'Something else', cls: 'tile' })}
+          </fieldset>
+          ${isChild() ? '' : `<label class="field ob-other" id="other-field"${askText() ? '' : ' hidden'}><span class="field-label">What is it?</span>
+            <input class="input" id="other" name="interest_text" maxlength="80" autocomplete="off" value="${esc(S.a.interest_text)}" placeholder="Rock climbing, K-pop, baking bread"></label>`}`,
+        bind: () => {
+          $$('input[name="interest"]').forEach((r) => r.addEventListener('change', () => {
+            S.a.interests = S.a.interests.filter((i) => i !== r.value);
+            if (r.checked) S.a.interests.push(r.value);
+            S.a.interest = S.a.interests[0] || null;
+            keep();
+            if (r.checked) {
+              const pick = C.INTERESTS.find((i) => i.id === r.value);
+              say(pick ? pick.reply : (isChild() ? 'Fair enough. **I\'ll show you what I can.**' : 'Tell me. **I\'m listening.**'), 'happy');
+            }
+            const f = $('#other-field');
+            if (f) { f.hidden = !askText(); if (r.value === 'other' && r.checked) $('#other').focus(); }
+            ready(okNow());
+          }));
+          const other = $('#other');
+          if (other) other.addEventListener('input', () => { S.a.interest_text = other.value; keep(); ready(okNow()); });
+        },
+        next: async () => {
+          await saveAnswers();
+          await handInInterests();
+          go('learn');
+        },
+      };
+    },
+
+    learn: () => {
+      const okNow = () => S.a.tracks.length > 0 || S.a.notes;
+      const lastTrack = S.a.tracks[S.a.tracks.length - 1];
+      const order = () => {
+        $$('input[name="track"]').forEach((b) => {
+          const at = S.a.tracks.indexOf(b.value);
+          const label = b.closest('label');
+          if (at >= 0) label.dataset.order = String(at + 1); else delete label.dataset.order;
+        });
+      };
+      return {
+        back: 'into',
+        bubble: lastTrack ? (C.TRACK_REPLY[lastTrack] || 'Good pick.') : 'Thanks. **Now the good part.**',
+        ok: okNow,
+        html: `${head('What do you want to learn?', 'Pick one or a few. You start with number 1.')}
+          <fieldset class="opts subjects ob-body"><legend class="sr">Subjects</legend>
+            ${catalog.map((t) => opt({ type: 'checkbox', name: 'track', value: t.id, checked: S.a.tracks.includes(t.id), icon: I[t.id] || I.other, title: t.name, sub: C.TRACK_LINES[t.id], cls: 'subject' })).join('')}
+            ${isChild() ? '' : opt({ type: 'checkbox', name: 'notes', value: 'notes', checked: S.a.notes, icon: I.notes, title: 'My own notes', sub: 'Turn your files into lessons', cls: 'subject' })}
+          </fieldset>`,
+        bind: () => {
+          order();
+          $$('input[name="track"]').forEach((box) => box.addEventListener('change', () => {
+            S.a.tracks = S.a.tracks.filter((t) => t !== box.value);
+            if (box.checked) { S.a.tracks.push(box.value); say(C.TRACK_REPLY[box.value] || `**${trackOf(box.value).name}.** Good pick.`, 'happy'); }
+            keep();
+            order();
+            ready(okNow());
+          }));
+          const notes = $('input[name="notes"]');
+          if (notes) notes.addEventListener('change', () => {
+            S.a.notes = notes.checked;
+            if (notes.checked) say(C.TRACK_REPLY.notes, 'happy');
+            keep();
+            ready(okNow());
+          });
+        },
+        next: async () => {
+          await saveAnswers();
+          if (notesOnly() && signedIn()) {
+            // Only their own notes, and the account already exists: straight to uploading.
+            await api('POST', '/api/ob2/lesson-opened', {}).catch(() => {});
+            forget();
+            location.href = '/materials';
+            return new Promise(() => {});
+          }
+          return go(notesOnly() ? 'save' : 'grade');
+        },
+      };
+    },
+
+    /* The clear choice: pick it, or take the placement. Neither is picked for them. */
+    grade: () => {
+      const word = gradeWord();
+      const okNow = () => !!S.gradeWay;
+      return {
+        back: 'learn',
+        bubble: S.gradeWay === 'walk' ? 'Good call. **"I don\'t know" is a fine answer in there.**' : 'Where should **we start?**',
+        ok: okNow,
+        html: `${head(`Your ${word} in ${trackName()}?`)}
+          <fieldset class="opts ob-body way"><legend class="sr">How to choose your starting ${word}</legend>
+            ${opt({ type: 'radio', name: 'way', value: 'know', checked: S.gradeWay === 'know', icon: I.school, title: `I know my ${word}`, sub: 'Pick it from a list.' })}
+            ${opt({ type: 'radio', name: 'way', value: 'walk', checked: S.gradeWay === 'walk', icon: I.spot, title: 'Take the placement', sub: 'Short questions that change as you answer. About 5 minutes.' })}
+          </fieldset>`,
+        bind: () => $$('input[name="way"]').forEach((r) => r.addEventListener('change', () => {
+          S.gradeWay = r.value;
+          keep();
+          ready(true);
+          say(r.value === 'walk' ? 'Good call. **"I don\'t know" is a fine answer in there.**' : 'Easy. **You can change it later.**', 'happy');
+        })),
+        next: async () => {
+          await begin();
+          go(S.gradeWay === 'know' ? 'pick' : 'level');
+        },
+      };
+    },
 
     pick: () => {
       const t = trackOf(firstTrack());
       return {
-        back: 'intro',
+        back: 'grade',
         bubble: 'Sure. **You can change it later.**',
         cta: 'Start here',
         ok: () => !!S.pick,
-        html: `${head('Where do you want to start?')}
+        html: `${head(`Which ${gradeWord()}?`)}
           <fieldset class="opts ob-body"><legend class="sr">Starting grade in ${esc(t ? t.name : '')}</legend>
             ${(t ? t.grades : []).map((g) => { const [a, b] = gradeParts(g.name); return opt({ type: 'radio', name: 'grade', value: g.id, checked: S.pick === g.id, title: a, sub: b, cls: 'choice' }); }).join('')}
           </fieldset>`,
@@ -562,9 +603,9 @@
     level: () => {
       setTimeout(walkBoot, 0);
       return {
-        back: 'intro',
+        back: 'grade',
         within: 0,
-        bubble: 'Take your time.',
+        bubble: '"I don\'t know" is **a really useful answer.** Use it whenever it\'s true.',
         mood: 'think',
         ok: () => false,
         alt: { label: "I don't know", run: () => walkAnswer('') },
@@ -588,8 +629,7 @@
         cta: 'That works',
         html: `<span class="ob-eyebrow">${esc(trackName())}</span>${head(`Start at ${name || 'the beginning'}.`, band || '')}
           ${grades.length > 1 ? `<div class="scale" role="img" aria-label="Grade ${at + 1} of ${grades.length}">
-            <div class="scale-line"></div>
-            ${grades.map((_, i) => `<i class="scale-tick" style="left:${(i / (grades.length - 1)) * 100}%"></i>`).join('')}
+            <div class="scale-line"><div class="scale-fill" style="width:${pct}%"></div></div>
             <div class="scale-you" style="left:clamp(24px, ${pct}%, calc(100% - 24px))"><b>You</b><i></i></div>
           </div>
           <div class="scale-ends"><span>Grade 1</span><span>Grade ${grades.length}</span></div>` : ''}
@@ -615,7 +655,6 @@
     /* True to what is happening: each line ticks when the server has actually done it. */
     building: () => {
       setTimeout(buildPath, 0);
-      const horizon = C.HORIZONS.find((h) => h.id === S.a.horizon);
       return {
         back: null,
         noNext: true,
@@ -623,9 +662,8 @@
         mood: 'think',
         html: `${head('Building your path')}
           <ol class="steps" id="steps">
-            <li class="step" data-s="grade"><span class="step-dot"><svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg></span>Setting your starting point</li>
-            <li class="step" data-s="goal"><span class="step-dot"><svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg></span>Fitting reviews to "${esc((horizon ? horizon.title : 'For good').toLowerCase())}"</li>
-            <li class="step" data-s="lesson"><span class="step-dot"><svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg></span>${esc(buildLessonLine())}</li>
+            <li class="step" data-s="grade">${STEP_DOT}<span class="step-text">Setting your starting point</span></li>
+            <li class="step" data-s="lesson">${STEP_DOT}<span class="step-text">${esc(buildLessonLine())}</span></li>
           </ol>`,
       };
     },
@@ -635,19 +673,22 @@
       const [name, band] = gradeParts(e.grade_name);
       return {
         back: null,
-        bubble: 'Ready when you are. Your answers are **safe here** while you do it.',
-        mood: 'happy',
+        bubble: signedIn() ? 'Ready when you are. **Let\'s go.**' : 'Ready when you are. Your answers are **safe here** while you do it.',
+        mood: 'cheer',
         cta: 'Open my first lesson',
-        html: `${head('Your first lesson is ready.')}
+        html: `${spots()}${head('Your first lesson is ready.')}
           <div class="lesson-card">
             <div class="lc-tag"><span>${I[e.track_id] || I.other}</span>${esc((trackOf(e.track_id) || {}).name || '')}</div>
             <h2>${esc(name)}</h2>
             ${band ? `<p>${esc(band)}</p>` : ''}
-            ${S.goalSummary ? `<p>${esc(S.goalSummary)}</p>` : ''}
+            ${S.goalSummary ? `<p>${esc(S.goalSummary)} You can change this any time on your profile.</p>` : ''}
           </div>
-          <p class="ob-fine">${isChild() ? 'This browser keeps your progress while your account waits for a parent.' : 'This browser keeps your progress for 30 days.'} Save it after the lesson so it's yours for good.</p>`,
+          ${signedIn()
+            ? S.a.tracks.slice(1).map((id) => { const t = trackOf(id); return t ? `<p class="ob-fine">After this, <a href="/subject-placement?track=${encodeURIComponent(id)}">start ${esc(t.name)}</a>.</p>` : ''; }).join('')
+            : `<p class="ob-fine">${isChild() ? 'This browser keeps your progress while your account waits for a parent.' : 'This browser keeps your progress for 30 days.'} Save it after the lesson so it's yours for good.</p>`}`,
         next: async () => {
           await api('POST', '/api/ob2/lesson-opened', {}).catch(() => {});
+          if (signedIn()) forget();
           location.href = e.href;
           return new Promise(() => {}); // stays busy until the page goes, so a double tap does nothing
         },
@@ -656,58 +697,22 @@
 
     save: () => (isChild() ? saveChild() : saveSelf()),
 
-    remind: () => {
-      const days = [{ d: 1, t: 'Tomorrow' }, { d: 2, t: 'In 2 days' }, { d: 3, t: 'In 3 days' }];
-      return {
-        back: null,
-        bubble: 'A set time means **one less decision.** Your next step will be waiting.',
-        mood: 'happy',
-        cta: 'Set it',
-        ok: () => !!S.remindDay,
-        alt: { label: 'Not now', run: () => go('done') },
-        html: `${head('When will you come back?')}
-          <fieldset class="opts ob-body"><legend class="sr">Your next session</legend>
-            ${days.map((x) => opt({ type: 'radio', name: 'day', value: String(x.d), checked: Number(S.remindDay) === x.d, icon: I.calendar, title: x.t })).join('')}
-          </fieldset>
-          <label class="field"><span class="field-label">About what time?</span>
-            <select class="select" name="time">${['07:00', '12:00', '16:00', '18:00', '20:00'].map((t) => `<option value="${t}"${(S.remindTime || '16:00') === t ? ' selected' : ''}>${timeWords(t)}</option>`).join('')}</select></label>
-          <p class="ob-fine">I can't send emails or notifications yet. I'll keep this on your home page, and on the next screen you can add it to your calendar so your phone reminds you.</p>`,
-        bind: () => {
-          $$('input[name="day"]').forEach((r) => r.addEventListener('change', () => { S.remindDay = r.value; keep(); ready(true); }));
-          $('select[name="time"]').addEventListener('change', (e) => { S.remindTime = e.target.value; keep(); });
-        },
-        next: async () => {
-          const d = new Date(Date.now() + Number(S.remindDay) * 86400000);
-          S.remindDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-          S.remindTime = $('select[name="time"]').value;
-          keep();
-          await api('POST', '/api/prefs', { next_study: { date: S.remindDate, time: S.remindTime }, tz: Intl.DateTimeFormat().resolvedOptions().timeZone });
-          go('done');
-        },
-      };
-    },
-
     done: () => {
       const extra = [];
       const rest = S.a.tracks.slice(1);
       const e = S.enrollment || {};
-      if (S.remindDate) extra.push(`<button type="button" class="opt" id="ics"><span class="opt-icon">${I.calendar}</span><span class="opt-text"><span class="opt-title">Add to my calendar</span><span class="opt-sub">${esc(S.remindDate)}, ${esc(timeWords(S.remindTime))}</span></span></button>`);
       if (S.a.notes && !isChild()) extra.push(link('/materials', I.notes, 'Upload your notes', 'Turn your files into lessons'));
-      rest.forEach((id) => { const t = trackOf(id); if (t) extra.push(link(`/subject-placement?track=${encodeURIComponent(id)}`, I[id] || I.other, `Find your level in ${t.name}`, 'The subject you also picked')); });
+      rest.forEach((id) => { const t = trackOf(id); if (t) extra.push(link(`/subject-placement?track=${encodeURIComponent(id)}`, I[id] || I.other, `Start ${t.name}`, 'The subject you also picked')); });
       if (e.id) extra.push(link(`/placement?enrollment=${e.id}&retake=1`, I.arrow, 'Skip what you already know', 'A short check inside this grade'));
-      extra.push(link('/baseline?next=/dashboard&old=' + encodeURIComponent('/style-quiz?next=/dashboard'), I.iq, 'Help me fit lessons to you sooner', 'A few short tasks. Optional.'));
+      if (e.id) extra.push(link('/profile#retention-goals-card', I.calendar, 'How long do you want to remember it?', 'Set to for good. Change it any time.'));
+      if (S.a.test_skipped) extra.push(link(`/baseline?next=/dashboard&old=${encodeURIComponent('/style-quiz?next=/dashboard')}`, I.iq, 'Take the short test', 'You skipped it. About 5 minutes.'));
       extra.push(link('/reading-check', I.reading, 'Check your reading level', 'So the words fit you. Optional.'));
-      if (!isChild()) extra.push(link('/survey?next=/dashboard', I.love, 'Tell me more about you', 'What you do for fun, what hasn\'t worked before. Optional.'));
       return {
         back: null,
         bubble: 'Nice work. **See you soon.**',
-        mood: 'happy',
+        mood: 'cheer',
         cta: 'Go to my home',
         html: `${head('You\'re all set.')}<div class="done-list">${extra.join('')}</div>`,
-        bind: () => {
-          const ics = $('#ics');
-          if (ics) ics.addEventListener('click', downloadIcs);
-        },
         next: () => {
           forget();
           location.href = '/dashboard';
@@ -720,29 +725,135 @@
   function link(href, icon, title, sub) {
     return `<a class="opt" href="${esc(href)}"><span class="opt-icon">${icon}</span><span class="opt-text"><span class="opt-title">${esc(title)}</span><span class="opt-sub">${esc(sub)}</span></span></a>`;
   }
-  function timeWords(t) {
-    const h = Number(String(t || '16:00').slice(0, 2));
-    return `${h % 12 || 12}${h < 12 ? ' am' : ' pm'}`;
+
+  /* ── the short test: same API and same scoring as /baseline ──────────── */
+  const T = { run: 0, interestsShown: 0, seen: 0 };
+  const LINES = ['Got it.', 'Nice.', 'Good.', 'Okay.', 'Thanks.', 'Next one.'];
+  const taskCtx = {
+    host: () => (current === 'testing' ? $('#task') : null),
+    focus: (on) => { if (on) $('#ob').dataset.focus = '1'; else delete $('#ob').dataset.focus; },
+  };
+  function testShows(progress) {
+    const within = progress && progress.budget_minutes ? Math.min(0.98, progress.elapsed_minutes / progress.budget_minutes) : 0;
+    setBar('testing', within);
+    const left = $('#t-left');
+    if (left && progress) left.textContent = progress.minutes_left >= 1 ? `About ${Math.ceil(progress.minutes_left)} min left` : 'Nearly done';
+  }
+  function testResult(out) {
+    if (out && out.done) { server.test = { ...server.test, done: true, pending: false, open: false }; return; }
+    if (out && out.step && out.step.id === 'sv:interests') server.test = { ...server.test, pending: true };
+  }
+  async function testRun() {
+    if (current !== 'testing') return;
+    const run = (T.run += 1);
+    const alive = () => run === T.run && current === 'testing';
+    try {
+      let out = await api('POST', '/api/onboarding/start', { mode: 'quick', resume: true, interests_last: true });
+      const session = out.session;
+      while (out && !out.done && alive()) {
+        // The test's last question is the next screen's: same answer, same scoring.
+        if (out.step.id === 'sv:interests') break;
+        testShows(out.progress);
+        const t = Date.now();
+        const response = await ObTest.present(out.step, taskCtx);
+        if (!alive()) return;
+        T.seen += 1;
+        if (out.step.kind === 'forced') say(LINES[T.seen % LINES.length], 'happy');
+        else say('Nice. **On to the next one.**', 'happy');
+        const task = $('#task');
+        if (task) task.setAttribute('aria-busy', 'true');
+        out = await api('POST', '/api/onboarding/answer', { session, id: out.step.id, response, ms: Date.now() - t, skip: response === null ? true : undefined });
+      }
+      if (!alive()) return;
+      testResult(out);
+      go('into', { replace: true });
+    } catch (err) {
+      if (!alive()) return;
+      if (err.status === 409) { render('testing', 'none'); return; } // the session moved on elsewhere: pick up from where the server says
+      const task = $('#task');
+      if (task) task.innerHTML = '';
+      showError(err.message);
+    }
+  }
+  async function testStop() {
+    busy = true;
+    T.run += 1;
+    ObTest.cancel();
+    try {
+      const out = await api('POST', '/api/onboarding/stop', { interests_last: true });
+      testResult(out);
+    } catch (err) {
+      if (err.status !== 409) { showError(err.message); return; }
+      S.a.test_skipped = true; // nothing was open, so nothing was answered
+      keep();
+      await saveAnswers();
+    } finally { busy = false; }
+    go('into', { replace: true });
+  }
+  /** The last question of the test is the interests screen. Its words go through the same scoring as the box on /baseline. */
+  async function handInInterests() {
+    if (!server.test || !server.test.pending) return;
+    const words = S.a.interests.map((id) => {
+      if (id === 'other') return S.a.interest_text.trim();
+      const known = C.INTERESTS.find((i) => i.id === id);
+      return known ? known.title : '';
+    }).filter(Boolean).join(', ');
+    try {
+      const open = await api('POST', '/api/onboarding/start', { mode: 'quick', resume: true, interests_last: true });
+      if (open.step && open.step.id === 'sv:interests') {
+        const out = await api('POST', '/api/onboarding/answer', { session: open.session, id: 'sv:interests', response: { text: words }, ms: Date.now() - T.interestsShown });
+        testResult(out);
+      }
+    } catch (err) {
+      if (err.status !== 409) throw err;
+    }
+    server.test = { ...server.test, pending: false, done: true };
   }
 
-  /** A calendar file made here, on the device: the only reminder that really reaches a phone today. */
-  function downloadIcs() {
-    const stamp = `${S.remindDate.replace(/-/g, '')}T${S.remindTime.replace(':', '')}00`;
-    const body = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Savant//Onboarding//EN', 'BEGIN:VEVENT',
-      `UID:${Date.now()}@savantedu.com`, `DTSTAMP:${new Date().toISOString().replace(/[-:]|\.\d+/g, '')}`, `DTSTART:${stamp}`, 'DURATION:PT20M',
-      'SUMMARY:Savant: your next lesson', 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Time for your next Savant lesson', 'TRIGGER:-PT10M', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
-    const url = URL.createObjectURL(new Blob([body], { type: 'text/calendar' }));
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'savant-next-lesson.ics';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 2000);
-    say('Added. **Your calendar will do the reminding.**', 'happy');
+  /* The fallback: the style quiz, one question at a time, for an account the baseline is closed to. Same questions, same scale, same endpoint as /style-quiz. */
+  const Q = { questions: null, scale: null };
+  async function quizRun() {
+    if (current !== 'testing') return;
+    const run = (T.run += 1);
+    const alive = () => run === T.run && current === 'testing';
+    try {
+      if (!Q.questions) Object.assign(Q, await api('GET', '/api/style-quiz'));
+      S.quiz = S.quiz || {};
+      for (let i = 0; i < Q.questions.length; i += 1) {
+        const q = Q.questions[i];
+        if (S.quiz[q.id] == null) {
+          if (!alive()) return;
+          setBar('testing', i / Q.questions.length);
+          const left = $('#t-left');
+          if (left) left.textContent = `${i + 1} of ${Q.questions.length}`;
+          const value = await ObTest.choice(q, Q.scale, taskCtx);
+          if (!alive()) return;
+          S.quiz[q.id] = Number(value);
+          keep();
+          say(LINES[i % LINES.length], 'happy');
+        }
+      }
+      if (alive()) await quizHandIn();
+    } catch (err) {
+      if (alive()) showError(err.message);
+    }
+  }
+  async function quizHandIn() {
+    if (S.quiz && Object.keys(S.quiz).length) await api('POST', '/api/profile/style-quiz', { answers: S.quiz });
+    else { S.a.test_skipped = true; await saveAnswers(); }
+    S.quiz = null;
+    server.test = { ...server.test, done: true };
+    keep();
+    go('into', { replace: true });
+  }
+  async function quizStop() {
+    busy = true;
+    T.run += 1;
+    ObTest.cancel();
+    try { await quizHandIn(); } catch (err) { showError(err.message); } finally { busy = false; }
   }
 
-  /* ── steps 9: saving ────────────────────────────────────── */
+  /* ── saving ─────────────────────────────────────────────── */
   function passwordField() {
     return `<label class="field"><span class="field-label">Password</span>
       <span class="pw"><input class="input" type="password" name="password" autocomplete="new-password" minlength="8">
@@ -759,20 +870,20 @@
       t.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
     });
   }
-  function afterClaim(next) {
+  function afterClaim() {
     S.claimed = true;
     S.a.interest_text = '';
     keep();
-    Tutor.mood($('#tutor'), 'happy', 1800);
+    Tutor.mood($('#tutor'), 'cheer', 1800);
     const nextUrl = new URLSearchParams(location.search).get('next');
     if (nextUrl && nextUrl.startsWith('/') && !nextUrl.startsWith('//')) { forget(); location.href = nextUrl; return; }
-    go(next);
+    go('done');
   }
   function saveSelf() {
     const hasLesson = !!(server.enrollment || S.enrollment);
     const e = server.enrollment || S.enrollment;
     return {
-      back: hasLesson ? null : 'moment',
+      back: hasLesson ? null : 'learn',
       bubble: hasLesson ? 'Good work. Let\'s make sure it\'s **still here tomorrow.**' : 'Your notes stay with your account, so **save first,** then upload.',
       cta: 'Save my progress',
       ok: () => false,
@@ -784,7 +895,7 @@
           ${passwordField()}
         </div>
         <p class="ob-fine">What you agreed to stays the same. <a href="/privacy">Privacy policy</a></p>
-        ${hasLesson ? '<p class="ob-fine">Already have an account? <a href="/login?next=/start">Sign in</a>. Your level check comes with you, but this lesson\'s answers stay here and aren\'t added.</p>' : ''}`,
+        ${hasLesson ? '<p class="ob-fine">Already have an account? <a href="/login?next=/start">Sign in</a>. Your test and level check come with you, but this lesson\'s answers stay here and aren\'t added.</p>' : ''}`,
       bind: () => {
         bindPassword();
         const check = () => ready($('input[name="display_name"]').value.trim().length >= 2 && /.+@.+\..+/.test($('input[name="email"]').value.trim()) && $('input[name="password"]').value.length >= 8);
@@ -800,7 +911,7 @@
           password: $('input[name="password"]').value,
           ref: S.ref,
         });
-        afterClaim(notesOnly() ? 'done' : 'remind');
+        afterClaim();
       },
     };
   }
@@ -821,7 +932,7 @@
           ${passwordField()}
         </div>
         <div class="parent-note" id="parent-note">${c.has_request
-          ? `We emailed your parent or guardian${c.parent_email ? ` at ${esc(c.parent_email)}` : ''}. Ask them to check their inbox and spam folder. <button type="button" class="link-btn" id="resend" style="display:inline;width:auto;margin:0;padding:0;min-height:0">Send it again</button>`
+          ? `We emailed your parent or guardian${c.parent_email ? ` at ${esc(c.parent_email)}` : ''}. Ask them to check their inbox and spam folder. <button type="button" class="link-btn inline" id="resend">Send it again</button>`
           : (c.state === 'active' ? 'Your parent or guardian has agreed.' : '')}</div>`,
       bind: () => {
         bindPassword();
@@ -836,19 +947,23 @@
       },
       next: async () => {
         await api('POST', '/api/ob2/claim', { username: $('input[name="username"]').value.trim(), password: $('input[name="password"]').value });
-        afterClaim('remind');
+        afterClaim();
       },
     };
   }
 
-  /** Make the guest row if there isn't one, and bring it up to date. */
+  /** Make the guest row if there isn't one (under the consent age), and bring it up to date. */
   async function begin(extra) {
     const out = await api('POST', '/api/ob2/begin', { answers: S.a, ...(extra || {}) });
-    server.guest = true;
+    if (!signedIn()) server.guest = true;
     return out;
   }
+  /** Keep the answers on the guest row. */
+  async function saveAnswers() {
+    if (hasRow()) await api('POST', '/api/ob2/answers', S.a);
+  }
 
-  /* ── step 7: the adaptive walk, through the same API as the old page ───── */
+  /* ── the placement: the adaptive walk, through the same API as the old page ───── */
   const W = { questions: [], answers: [], i: 0, asked: 0, grade: null, pending: null };
   const walkPath = (rest) => `/api/subject-placement/${encodeURIComponent(firstTrack())}/${rest}`;
 
@@ -870,7 +985,7 @@
       if (current !== 'level') return;
       if (out.writing || (!out.ready && !out.questions.length)) {
         $('#walk').innerHTML = `<p class="ob-sub">The questions for this subject are being written for the first time. That can take a few minutes, so you can start at a grade you pick instead.</p>
-          <button class="mini" type="button" id="to-pick" style="margin-top:14px">Pick my starting point</button>`;
+          <button class="mini solo" type="button" id="to-pick">Pick my starting point</button>`;
         $('#to-pick').addEventListener('click', () => go('pick'));
         setTimeout(walkBoot, 6000);
         return;
@@ -890,7 +1005,7 @@
     const q = W.questions[W.i];
     const n = W.asked + W.i + 1;
     W.pending = null;
-    setRuler('level', Math.min(0.95, (n - 1) / 12));
+    setBar('level', Math.min(0.95, (n - 1) / 12));
     const walk = $('#walk');
     const choices = q.choices || null;
     const name = `q${n}`;
@@ -900,10 +1015,10 @@
       ${choices
         ? `<fieldset class="opts ob-body"><legend class="sr">Answer</legend>${choices.map((c) => opt({ type: 'radio', name, value: c, title: c, cls: 'choice' })).join('')}</fieldset>`
         : '<label class="field ob-body"><span class="field-label">Your answer</span><input class="input" id="typed" name="typed" autocomplete="off"></label>'}
-      <button class="link-btn" type="button" id="stop-walk" style="text-align:left;padding-left:0;margin-top:14px;font-weight:500;font-size:.9375rem">Stop here and see my level</button>
+      <button class="link-btn quiet" type="button" id="stop-walk">Stop here and see my level</button>
     </div>`;
     ready(false);
-    $$(`input[name="${name}"]`).forEach((r) => r.addEventListener('change', () => { W.pending = r.value; ready(true); }));
+    $$(`input[name="${name}"]`).forEach((r) => r.addEventListener('change', () => { W.pending = r.value; ready(true); Tutor.mood($('#tutor'), 'think'); }));
     const typed = $('#typed');
     if (typed) typed.addEventListener('input', () => { W.pending = typed.value; ready(!!typed.value.trim()); });
     $('#stop-walk').addEventListener('click', () => { if (!busy) walkQuit(); });
@@ -960,7 +1075,8 @@
   async function buildPath() {
     if (current !== 'building') return;
     const mark = (name, state) => { const li = $(`.step[data-s="${name}"]`); if (li) { li.classList.remove('is-now', 'is-done'); li.classList.add(state); } };
-    const breath = () => new Promise((r) => setTimeout(r, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 450));
+    const line = (name, text) => { const n = $(`.step[data-s="${name}"] .step-text`); if (n) n.textContent = text; };
+    const breath = () => new Promise((r) => setTimeout(r, calm() ? 0 : 450));
     try {
       await begin();
       mark('grade', 'is-now');
@@ -974,20 +1090,10 @@
       keep();
       await breath();
       mark('grade', 'is-done');
-      if (out.goal && out.goal.error) {
-        const li = $('.step[data-s="goal"]');
-        if (li) li.lastChild.textContent = 'Keeping the full review calendar for now';
-      }
-      mark('goal', 'is-now');
-      await breath();
-      mark('goal', 'is-done');
       mark('lesson', 'is-now');
       // The learner's own lesson: this really waits for its first part to be written and checked. A long wait hands over to the standard one, and says so.
       const own = out.enrollment.own;
-      if (!own) {
-        const li = $('.step[data-s="lesson"]');
-        if (li) li.lastChild.textContent = 'Finding your first lesson';
-      }
+      if (!own) line('lesson', 'Finding your first lesson');
       if (own) {
         say('Writing it for you now. **This can take a minute or two.**', 'think');
         const started = Date.now();
@@ -1003,6 +1109,7 @@
       }
       await breath();
       mark('lesson', 'is-done');
+      Tutor.mood($('#tutor'), 'happy', 1200);
       await breath();
       if (current === 'building') go('ready', { replace: true });
     } catch (err) {
@@ -1015,18 +1122,23 @@
 
   function buildLessonLine() {
     if (isChild()) return 'Finding your first lesson';
-    const known = C.INTERESTS.find((i) => i.id === S.a.interest);
+    const first = S.a.interests[0];
+    const known = C.INTERESTS.find((i) => i.id === first);
     const about = known ? known.title.toLowerCase() : (S.a.interest_text || '').trim();
     return about ? `Writing your first lesson around ${about}` : 'Writing your first lesson';
   }
 
   /* ── start ──────────────────────────────────────────────── */
   function firstStep() {
-    if (S.claimed) return 'remind';
+    if (S.claimed) return 'done';
+    if (signedIn()) {
+      if (server.enrollment) return 'ready';
+      return S.step && ORDER.includes(S.step) ? S.step : 'welcome';
+    }
     if (server.guest) {
       if (server.lesson_opened) return 'save';
       if (server.enrollment) return 'ready';
-      return S.step && ORDER.includes(S.step) ? S.step : 'learn';
+      return S.step && ORDER.includes(S.step) ? S.step : 'test';
     }
     return S.step && ORDER.includes(S.step) ? S.step : 'welcome';
   }
@@ -1040,15 +1152,22 @@
       root.innerHTML = '<div class="ob-loading">That did not load. Check your connection and reload.</div>';
       return;
     }
+    // The private beta, signed out: this flow is for accounts.
+    if (server.signed_out) { forget(); location.replace(server.go); return; }
     // A stored flag from a finished run must not outlive the account it belonged to.
     if (S.claimed && !server.account) S.claimed = false;
-    // An existing account is never sent through this again.
-    if (server.account && !S.claimed) { forget(); location.replace(server.go); return; }
-    if (server.guest) {
+    // An existing account is never sent through this again, unless it has no subject yet in the private beta.
+    if (server.account && !server.onboarding && !S.claimed) { forget(); location.replace(server.go); return; }
+    // This device's answers belong to one account.
+    if (signedIn() && S.who !== server.id) { forget(); S = { a: { tracks: [], notes: false, interests: [], interest: null, interest_text: '', test_skipped: false }, claimed: false, who: server.id }; }
+    if (server.guest || signedIn()) {
       // The server's copy wins where this device has lost its own.
       const a = server.answers || {};
-      if (!S.a.tracks.length && !S.a.notes) S.a = { ...S.a, ...a };
+      if (!S.a.tracks.length && !S.a.notes) { S.a.tracks = a.tracks || []; S.a.notes = !!a.notes; }
+      if (!S.a.interests.length) { S.a.interests = a.interests || []; S.a.interest = a.interest || null; S.a.interest_text = a.interest_text || ''; }
+      if (a.test_skipped) S.a.test_skipped = true;
       S.route = server.route;
+      if (signedIn() && server.enrollment) S.enrollment = server.enrollment;
     } else if (!server.route) {
       S.route = null; // the age answer has gone (a new session): the steps past it ask again
     }
@@ -1057,7 +1176,6 @@
     if (wanted && trackOf(wanted) && !S.a.tracks.includes(wanted)) S.a.tracks.unshift(wanted);
     keep();
     shell();
-    ORDER.splice(ORDER.indexOf('level'), 0, 'pick');
     window.addEventListener('popstate', () => { const s = location.hash.slice(1); if (s && s !== current) render(s, 'back'); });
     window.addEventListener('hashchange', () => { const s = location.hash.slice(1); if (s && s !== current) render(s, 'next'); });
     const hash = location.hash.slice(1);

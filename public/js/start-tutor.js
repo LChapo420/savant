@@ -3,7 +3,7 @@
  *
  * NAME stays null until the owner picks one. Copy never names the tutor; if NAME is set, Tutor.greeting() starts using it.
  *
- * Moods: idle, happy, think, wave. The look is in css/screens/start.css under .tutor; motion honours reduced-motion there. Decorative:
+ * Moods: idle, happy, cheer (happy, bouncing), think, wave. The look is in css/screens/start.css under .tutor; motion honours reduced-motion there. Decorative:
  * the speech bubble beside it carries the words, so the SVG is hidden from screen readers.
  */
 (function () {

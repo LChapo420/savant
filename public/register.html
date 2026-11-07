@@ -52,7 +52,7 @@
 
       <!-- Step 2a: at or over the country's age of digital consent. -->
       <section id="step-self" class="hidden">
-        <p class="auth-sub">Next you pick your subjects and take a short placement quiz for each one.</p>
+        <p class="auth-sub">Next comes a short test, then you pick your subjects.</p>
         <form id="form" novalidate>
           <label class="field"><span>Name</span>
             <input type="text" id="display_name" autocomplete="name" required minlength="2" maxlength="32">
@@ -66,7 +66,7 @@
           </label>
           <button class="btn btn-primary btn-block btn-lg" id="submit" type="submit">Create account</button>
         </form>
-        <p class="tiny muted age-why">By creating an account you agree to how Savant uses your data, set out in the <a href="/privacy">privacy policy</a>.</p>
+        <p class="tiny muted age-why" id="agreement-line" data-version="signup-2026-11-07.1">By creating an account you agree that this is a beta that can change or break, that lessons can still be wrong even when fact checked, and that what you tell Savant, your answers and your interests go to outside AI companies to write your lessons. <a href="/privacy">Privacy policy</a></p>
       </section>
 
       <!-- Step 2b: under the country's age of digital consent. No child email. -->

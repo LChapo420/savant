@@ -36,6 +36,11 @@ App.mount(async () => {
       window.location.href = '/parent-needed';
       return;
     }
+    // The private beta's onboarding (docs/ONBOARDING-V2.md): an account with no subject yet goes through /start. With the switch off this is a 404, and nothing changes.
+    try {
+      const flow = await App.api.get('/api/ob2/state');
+      if (flow && flow.onboarding) { window.location.href = wanted ? `/start?track=${wanted}` : '/start'; return; }
+    } catch { /* the usual way, below */ }
     if (user && user.age_needed) {
       window.location.href = onboarding;
       return;
@@ -155,6 +160,7 @@ App.mount(async () => {
         email: document.getElementById('email').value.trim(),
         password: document.getElementById('password').value,
         display_name: document.getElementById('display_name').value.trim(),
+        agreement: document.getElementById('agreement-line').dataset.version, // the line above the button
         ref: /^[a-z0-9]{8}$/.test(App.query('ref') || '') ? App.query('ref') : undefined, // a friend's share link
       });
     } catch (err) {

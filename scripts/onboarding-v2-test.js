@@ -5,8 +5,10 @@
  *
  * Checks: off means nothing new is reachable; a guest has no outside-AI, upload or boosters access; a walk, an enrollment and goals survive a
  * failed and then a good claim on the same row; a child gives no email and gets the consent request first; export and deletion cover the new
- * data; an existing account is not sent through the flow; the pre-written examples are complete; a level check with too little to go on starts a
- * teen or adult at their age, and real answers (and really young learners) keep the low level; the goal line is plain for every goal.
+ * data; an existing account is not sent through the flow; a level check with too little to go on starts a teen or adult at their age, and real answers
+ * (and really young learners) keep the low level; the goal line is plain for every goal; an agreed guest takes the short test and it stays on the saved
+ * account, with no other measurement channel opened; holding the interests question to the end of the test leaves the picture as it was (measured below);
+ * a child takes the style quiz instead; no goal asked means the default, forever, and the goal API still works.
  */
 const assert = require('node:assert/strict');
 const fs = require('fs');
@@ -64,25 +66,85 @@ function contentChecks() {
   process.env.CONSENT_SWEEP = 'off';
   const keys = Object.keys(require('../services/onboarding-v2').INTERESTS).sort(); // eslint-disable-line global-require
   assert.deepEqual([...C.INTERESTS.map((i) => i.id)].sort(), keys, 'the page and the server list the same interests');
-  for (const [name, idea] of Object.entries(C.IDEAS)) {
-    for (const k of keys) assert.ok(idea.examples[k], `${name} has ${k}`);
-    assert.equal(Object.keys(idea.examples).length, keys.length, `${name} has nothing extra`);
-  }
-  for (const k of keys) {
-    const t = C.IDEAS.fractions.examples[k];
-    assert.match(t, /\*\*4 /, `${k}: out of 4`);
-    assert.match(t, /\*\*3\*\*/, `${k}: 3 of them`);
-    assert.match(t, /\*\*3\/4\*\*/, `${k}: says 3/4`);
-  }
-  for (const k of keys) {
-    const t = C.IDEAS.endings.examples[k];
-    const [yo, tu] = [...t.matchAll(/\*\*(.+?)\*\*/g)].map((m) => m[1].toLowerCase());
-    assert.ok(yo.endsWith('o') && tu.endsWith('as') && yo.slice(0, -1) === tu.slice(0, -2), `${k}: regular -ar forms (${yo}, ${tu})`);
-  }
   assert.equal(C.AGREEMENT.version, ob2Version, 'the words and the version move together');
-  const all = JSON.stringify(C).toLowerCase();
-  assert.ok(!all.includes('learning style'), 'no "learning styles"');
-  ok('pre-written examples: every interest, every idea, the sums and the verb forms');
+  // Claims about the test: it isn't a learning-styles instrument, an IQ test or a diagnosis, and the page must not say so.
+  const words = [JSON.stringify(C), fs.readFileSync(path.join(ROOT, 'public/js/start.js'), 'utf8'), fs.readFileSync(path.join(ROOT, 'public/js/start-test.js'), 'utf8')].join(' ').toLowerCase();
+  for (const claim of ['learning style', 'how you learn best', 'never grades', 'your iq', 'measures your']) assert.ok(!words.includes(claim), `no "${claim}"`);
+  ok('the page and the server list the same interests; agreement version; no claim the test can\'t back');
+}
+
+/** What a scripted learner does on a step. `seed` makes a mixed but repeatable person; 1 and 0 are the extremes. */
+function respond(step, seed) {
+  const hash = (s) => { let h = 7; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) % 1000; return h / 1000; };
+  const high = seed === 1 || (seed !== 0 && hash(step.id + seed) < 0.5);
+  if (step.kind === 'forced') return { choice: high ? 'high' : 'low' };
+  if (step.kind === 'span') return { maxSpan: seed === 1 ? 9 : seed === 0 ? 3 : 4 + Math.round(hash(seed) * 4) };
+  if (step.kind === 'speed') return { correct: seed === 1 ? 30 : seed === 0 ? 3 : 8 + Math.round(hash(seed) * 16), wrong: seed === 0 ? 8 : 1, firstMs: 1500 + hash(seed) * 3000 };
+  if (step.kind === 'survey') return { text: 'soccer, music' };
+  return {};
+}
+
+/** The test over HTTP, as the page takes it. Stops `stop` steps in; holds the interests question for the next screen and hands it in. */
+async function takeTest(who, { stop = null, words = 'Soccer, Music', seed = 0.37 } = {}) {
+  let out = (await who('POST', '/api/onboarding/start', { mode: 'quick', resume: true, interests_last: true })).data;
+  assert.ok(out.step, `the test opens: ${JSON.stringify(out).slice(0, 120)}`);
+  assert.notEqual(out.step.id, 'sv:interests', 'interests are not asked first');
+  const { session } = out;
+  const seen = [];
+  while (!out.done && out.step.id !== 'sv:interests') {
+    if (stop != null && seen.length >= stop) { out = (await who('POST', '/api/onboarding/stop', { interests_last: true })).data; break; }
+    seen.push(out.step.id);
+    out = (await who('POST', '/api/onboarding/answer', { session, id: out.step.id, response: respond(out.step, seed), ms: 6000 })).data;
+    assert.ok(out.done || out.step, `the next step: ${JSON.stringify(out).slice(0, 160)}`);
+  }
+  assert.equal(out.step && out.step.id, 'sv:interests', 'the interests question comes last, even after stopping');
+  const pending = (await who('GET', '/api/ob2/state')).data.test;
+  assert.equal(pending.pending, true);
+  assert.equal(pending.done, false);
+  const done = (await who('POST', '/api/onboarding/answer', { session, id: 'sv:interests', response: { text: words }, ms: 9000 })).data;
+  assert.equal(done.done, true);
+  return { seen, summary: done.summary };
+}
+
+/**
+ * Holding the interests question to the end against asking it first, on the service itself: every learner answers the same way both times, with extreme and random
+ * learners, each taking each item's usual time. What matters is the first picture on the scorecard. Printed, and held to a tolerance. Simulated: scripted answers, not real people.
+ */
+function sameFirstPicture() {
+  const baseline = require('../services/onboarding'); // eslint-disable-line global-require
+  const model = require('../services/onboarding/model'); // eslint-disable-line global-require
+  const { STAT_IDS } = require('../services/onboarding/plan'); // eslint-disable-line global-require
+  const { byId } = require('../services/onboarding/pool'); // eslint-disable-line global-require
+  const db = require('../config/db'); // eslint-disable-line global-require
+  const person = () => db.insert('users', { email: null, display_name: 'sim', age_check: { country: 'US', needs_parent: false, under_13: false, birth_ym: '1990-01' } });
+  const finish = (user, seed, last) => {
+    let out = baseline.start(user, 'quick', { interests_last: last });
+    const seen = [];
+    while (!out.done) {
+      seen.push(out.step.id);
+      out = baseline.answer(user, { session: baseline.get(user.id).active.id, id: out.step.id, response: respond(out.step, seed), ms: byId[out.step.id].sec * 1000 });
+    }
+    return { seen, est: model.estimates(baseline.get(user.id).known.state, STAT_IDS) };
+  };
+  const seeds = [1, 0, 0.11, 0.23, 0.37, 0.41, 0.53, 0.67, 0.71, 0.83, 0.97, 0.05];
+  let sameTasks = 0; let sum = 0; let n = 0; let worst = 0; let worstFed = 0; const allDiffs = [];
+  for (const seed of seeds) {
+    const a = finish(person(), seed, false);
+    const b = finish(person(), seed, true);
+    if ([...a.seen].sort().join() === [...b.seen].sort().join()) sameTasks += 1;
+    for (const id of STAT_IDS) {
+      const x = a.est[id]; const y = b.est[id];
+      const d = Math.abs(x.dataValue - y.dataValue);
+      sum += d; n += 1; worst = Math.max(worst, d); allDiffs.push(d);
+      worstFed = Math.max(worstFed, Math.abs(x.P - y.P));
+    }
+  }
+  allDiffs.sort((p, q) => p - q);
+  const p99 = allDiffs[Math.floor(allDiffs.length * 0.99)];
+  console.log(`  first picture, interests first vs last, ${seeds.length} scripted learners (2 extreme, 10 mixed), ${STAT_IDS.length} measures, 0-100 scale: same items ${sameTasks}/${seeds.length}, mean difference ${(sum / n).toFixed(3)}, p99 ${p99.toFixed(3)}, worst ${worst.toFixed(3)}, worst weight difference ${worstFed.toFixed(4)}`);
+  assert.ok(sum / n < 0.01, 'the same picture');
+  assert.equal(sameTasks, seeds.length, 'the same items are asked');
+  ok('holding the interests question to the end leaves the first picture as it was');
 }
 
 /** A birth month and year that make this age today, in any month of the year. */
@@ -223,6 +285,172 @@ function goalWordingChecks() {
   ok('goal line: one plain sentence for every goal');
 }
 
+/** The private beta: accounts come from the application. The invite gate is the real way in; sign-in only allows no new account at all. */
+async function betaChecks() {
+  const invitesFile = path.join(dir, 'invites.json');
+  process.env.BETA_INVITES_FILE = invitesFile;
+  const invites = require('../services/beta-invites'); // eslint-disable-line global-require
+  const { SIGNUP_AGREEMENT } = require('../services/onboarding-v2'); // eslint-disable-line global-require
+  let child = await server(6894, { ONBOARDING_V2: 'on', BETA_GATE: 'invite', BETA_SIGNIN_ONLY: 'off', BETA_INVITES_FILE: invitesFile });
+  const base = 'http://localhost:6894';
+  const now = Date.now();
+  const invited = (who) => `${who}-${now}@example.test`;
+  const signUp = async (who, body, age) => {
+    const c = client(base);
+    if (age) await c('POST', '/api/consent/age', age);
+    const email = invited(who);
+    const { code } = invites.approve(email);
+    const out = await c('POST', '/api/auth/register', { invite_code: code, password: 'longenough1', display_name: 'Tess', ...(body.parent ? { username: `u${who}${now % 100000}`, parent_email: email } : { email }), ...(body.agreement ? { agreement: body.agreement } : {}) });
+    assert.equal(out.status, 201, `${who}: signed up: ${JSON.stringify(out.data).slice(0, 160)}`);
+    return { c, email, user: out.data.user };
+  };
+
+  // Signed out: no guest, whatever the request tries.
+  const out = client(base);
+  const state0 = (await out('GET', '/api/ob2/state')).data;
+  assert.equal(state0.signed_out, true);
+  assert.equal(state0.go, '/login?next=/start');
+  await out('POST', '/api/consent/age', { birth_month: 3, birth_year: 1990, country: 'US' });
+  assert.equal((await out('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version })).status, 403, 'no agreeing your way to a guest');
+  assert.equal((await out('POST', '/api/ob2/begin', { answers: {} })).status, 403, 'no guest row');
+  assert.equal((await out('GET', '/api/auth/me')).data.user, null);
+  const join = await out('GET', '/join?invite=ABCDE-12345');
+  assert.equal(join.status, 303);
+  assert.equal(join.headers.get('location'), '/register');
+  const page = await out('GET', '/register');
+  assert.equal(page.status, 200, 'the sign-up page is where an invited tester makes the account');
+  assert.ok(String(page.data).includes(SIGNUP_AGREEMENT.text), 'the page shows the words the server records');
+  assert.ok(String(page.data).includes(`data-version="${SIGNUP_AGREEMENT.version}"`), 'and their version');
+  assert.ok(String(page.data).includes('href="/privacy"'), 'and the privacy link');
+  ok('beta, signed out: no guest row can be made; /join and /register are the way in; the sign-up page carries the line');
+
+  // An approved applicant: agreement recorded at sign-up, and /start is theirs.
+  const adultAge = { birth_month: 3, birth_year: 1990, country: 'US' };
+  const a = await signUp('beta-adult', { agreement: SIGNUP_AGREEMENT.version }, adultAge);
+  assert.ok(!a.user.guest);
+  assert.equal(a.user.consent.state, 'full');
+  const signed = (await a.c('GET', '/api/account/export')).data.learner_agreements;
+  assert.equal(signed.length, 1, 'the agreement is on record from sign-up');
+  assert.equal(signed[0].version, SIGNUP_AGREEMENT.version);
+  assert.equal(signed[0].text, SIGNUP_AGREEMENT.text);
+  assert.equal(signed[0].via, 'sign_up');
+  assert.deepEqual(signed[0].covers, ['beta_terms', 'privacy_policy', 'outside_ai']);
+  assert.ok(signed[0].agreed_at);
+  const s1 = (await a.c('GET', '/api/ob2/state')).data;
+  assert.equal(s1.onboarding, true);
+  assert.equal(s1.account, true);
+  assert.equal(s1.guest, undefined, 'not a guest');
+  assert.equal(s1.route, 'self', 'the age from sign-up is known');
+  assert.equal(s1.agreed, true);
+  assert.equal(s1.test.allowed, true);
+  for (const door of ['/dashboard', '/onboarding']) {
+    const r = await a.c('GET', door);
+    assert.equal(r.status, 302, `${door} sends an account with no subject`);
+    assert.equal(r.headers.get('location'), '/start');
+  }
+  assert.equal((await a.c('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version })).status, 403, 'no agreement step for an account');
+  assert.equal((await a.c('POST', '/api/ob2/claim', { display_name: 'X Y', email: 'x@example.test', password: 'longenough1' })).status, 409, 'nothing to save');
+  const t = await takeTest(a.c);
+  assert.ok(t.summary.known > 0);
+  assert.equal((await a.c('POST', '/api/ob2/answers', { interests: ['space'], tracks: ['math', 'chess'] })).status, 200);
+  assert.ok((await a.c('GET', '/api/profile')).data.survey.interests.includes('space'), 'interests reach the lesson writers, with the agreement on record');
+  const g0 = (await a.c('GET', '/api/catalog?view=grades')).data.tracks.find((x) => x.id === 'math').grades;
+  const lesson = await a.c('POST', '/api/ob2/first-lesson', { track: 'math', grade_id: g0[4].id });
+  assert.equal(lesson.status, 200, JSON.stringify(lesson.data).slice(0, 200));
+  assert.equal(lesson.data.goal.summary, 'Your reviews keep coming back over time to help you remember this for good.');
+  const s2 = (await a.c('GET', '/api/ob2/state')).data;
+  assert.equal(s2.onboarding, true, 'a reload on the last screen stays on it');
+  assert.equal(s2.enrollment.id, lesson.data.enrollment.id);
+  assert.equal((await a.c('GET', '/dashboard')).status, 200, 'and the dashboard is open now');
+  assert.equal((await a.c('POST', '/api/ob2/lesson-opened', {})).status, 200);
+  const s3 = (await a.c('GET', '/api/ob2/state')).data;
+  assert.equal(s3.onboarding, undefined);
+  assert.equal(s3.go, '/dashboard', 'an account with a subject goes home');
+  assert.equal((await a.c('GET', '/api/account/export')).data.profile.onboarding.sessions.length, 1, 'with its test');
+  ok('beta, approved adult: agreement recorded at sign-up with its words, no agreement screen, no guest, test and first lesson on the account, then the dashboard');
+
+  // Without the line there is no row: an API client that never showed the words hasn't agreed to them. access() is not changed by any of this.
+  const noLine = await signUp('beta-noline', {}, adultAge);
+  assert.equal((await noLine.c('GET', '/api/account/export')).data.learner_agreements.length, 0);
+  assert.equal(noLine.user.consent.state, 'full', 'access() reads the age, as before');
+  ok('beta: a sign-up that never showed the line records nothing');
+
+  // An under-13 with the parent's address on the invite.
+  const kidAge = { ...bornAged(10), country: 'US' };
+  const k = await signUp('beta-kid', { parent: true }, kidAge);
+  assert.equal(k.user.email, null);
+  assert.equal(k.user.consent.state, 'pending');
+  const ks = (await k.c('GET', '/api/ob2/state')).data;
+  assert.equal(ks.onboarding, true);
+  assert.equal(ks.route, 'parent');
+  assert.equal(ks.consent.has_request, true, 'the parent was emailed at sign-up');
+  assert.equal(ks.test.allowed, false, 'the baseline stays closed until the parent agrees to measurement');
+  assert.equal((await k.c('POST', '/api/onboarding/start', { mode: 'quick' })).data.code, 'not_allowed');
+  assert.equal((await k.c('GET', '/api/account/export')).data.learner_agreements.length, 0, 'a child doesn\'t agree for themselves');
+  assert.equal((await k.c('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version })).status, 403);
+  await k.c('POST', '/api/ob2/answers', { interests: ['other'], interest_text: 'my school name', notes: true });
+  const ka = (await k.c('GET', '/api/ob2/state')).data.answers;
+  assert.equal(ka.interest_text, '', 'no typed words kept');
+  assert.equal(ka.notes, false, 'no uploads');
+  assert.equal((await k.c('POST', '/api/tutor/chat', { messages: [{ role: 'user', content: 'hi' }] })).data.code, 'parent_opt_in_required');
+  assert.equal((await k.c('POST', '/api/materials/paste', { text: 'x' })).data.code, 'child_upload_off');
+  const kg = (await k.c('GET', '/api/catalog?view=grades')).data.tracks.find((x) => x.id === 'math').grades;
+  const kl = await k.c('POST', '/api/ob2/first-lesson', { track: 'math', grade_id: kg[2].id });
+  assert.equal(kl.status, 200);
+  assert.equal(kl.data.enrollment.own, null, 'no lesson written by outside AI');
+  ok('beta, under 13: parent emailed at sign-up, no agreement of their own, style quiz not baseline, no typed words, no uploads, no AI, and still a first lesson');
+
+  // An account with no age on record: asked on /start, and it can turn out to be a child.
+  const old = await signUp('beta-noage', {}, null);
+  assert.equal(old.user.age_needed, true);
+  const os0 = (await old.c('GET', '/api/ob2/state')).data;
+  assert.equal(os0.onboarding, true);
+  assert.equal(os0.route, null, 'the page asks');
+  assert.equal(os0.test.allowed, false);
+  assert.equal((await old.c('POST', '/api/consent/age', adultAge)).data.route, 'self');
+  const os1 = (await old.c('GET', '/api/ob2/state')).data;
+  assert.equal(os1.route, 'self');
+  assert.equal(os1.test.allowed, true);
+  const oldKid = await signUp('beta-noage-kid', {}, null);
+  assert.equal((await oldKid.c('POST', '/api/consent/age', kidAge)).data.route, 'parent');
+  const oks = (await oldKid.c('GET', '/api/ob2/state')).data;
+  assert.equal(oks.route, 'parent');
+  assert.equal(oks.consent.has_request, false, 'nobody has been told yet');
+  assert.equal((await oldKid.c('POST', '/api/ob2/begin', { parent_email: 'nope' })).data.field, 'parent_email');
+  const told = await oldKid.c('POST', '/api/ob2/begin', { parent_email: 'parent@example.test' });
+  assert.equal(told.status, 200);
+  assert.equal(told.data.consent_email_sent, true);
+  assert.equal((await oldKid.c('GET', '/api/ob2/state')).data.consent.has_request, true);
+  ok('beta, no age on record: asked on /start; an under-13 then gives a parent\'s email before anything else, and the usual limits apply');
+  // A kill loses what hasn't been flushed: wait until the accounts are on disk.
+  for (let i = 0; i < 100 && !fs.readFileSync(dbFile, 'utf8').includes(invited('beta-noage-kid')); i += 1) await delay(300);
+  await delay(2500);
+  await stop(child);
+
+  // Sign-in only: no account can be made at all, and the same accounts carry on.
+  child = await server(6895, { ONBOARDING_V2: 'on', BETA_SIGNIN_ONLY: 'on', BETA_INVITES_FILE: invitesFile });
+  const b2 = 'http://localhost:6895';
+  const s = client(b2);
+  const st = await s('GET', '/start');
+  assert.equal(st.status, 302);
+  assert.match(st.headers.get('location'), /^\/login/);
+  assert.equal((await s('GET', '/register')).status, 302);
+  assert.equal((await s('POST', '/api/auth/register', { email: 'x@example.test', password: 'longenough1', display_name: 'Xx' })).status, 403);
+  await s('POST', '/api/consent/age', adultAge);
+  assert.equal((await s('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version })).status, 403);
+  assert.equal((await s('POST', '/api/ob2/begin', {})).status, 403);
+  const back = client(b2);
+  assert.equal((await back('POST', '/api/auth/login', { email: invited('beta-noage'), password: 'longenough1' })).status, 200);
+  assert.equal((await back('GET', '/api/ob2/state')).data.onboarding, true, 'an account with no subject comes through /start');
+  assert.equal((await back('GET', '/dashboard')).headers.get('location'), '/start');
+  const home = client(b2);
+  assert.equal((await home('POST', '/api/auth/login', { email: invited('beta-adult'), password: 'longenough1' })).status, 200);
+  assert.equal((await home('GET', '/api/ob2/state')).data.go, '/dashboard', 'one with a subject goes home');
+  assert.equal((await home('GET', '/dashboard')).status, 200);
+  ok('beta, sign-in only: /start needs sign-in; no sign-up, no guest; no subject comes through /start, a subject goes home');
+  await stop(child);
+}
+
 async function main() {
   if (fs.existsSync(path.join(ROOT, 'data', 'db.json'))) fs.copyFileSync(path.join(ROOT, 'data', 'db.json'), dbFile);
   contentChecks();
@@ -267,6 +495,27 @@ async function main() {
   assert.equal(agreed.data.user.guest, true);
   assert.equal(agreed.data.user.consent.state, 'full', 'an agreed guest counts as consenting');
   assert.equal(agreed.data.user.consent.ai_free_text, true);
+  // The short test, for an agreed guest. Nothing else that measures opens.
+  const stateAgreed = (await c('GET', '/api/ob2/state')).data.test;
+  assert.equal(stateAgreed.allowed, true);
+  assert.equal(stateAgreed.done, false);
+  assert.equal((await c('GET', '/api/onboarding/modes')).data.allowed, true, 'an agreed guest may take the test');
+  assert.equal((await c('GET', '/api/boosters')).data.allowed, false, 'and no other measurement channel');
+  assert.equal((await c('GET', '/api/daily-check')).data.offer, false, 'no daily check either');
+  const firstBlock = (await c('POST', '/api/onboarding/start', { mode: 'quick', resume: true, interests_last: true })).data;
+  const resumed = (await c('POST', '/api/onboarding/start', { mode: 'quick', resume: true, interests_last: true })).data;
+  assert.equal(resumed.session, firstBlock.session, 'a reload carries on the same session');
+  assert.equal(resumed.resumed, true);
+  assert.deepEqual(resumed.step, firstBlock.step, 'on the same step, drawn the same');
+  const test = await takeTest(c);
+  assert.ok(test.seen.includes('t:speed_q') && test.seen.includes('t:span_fwd'), `Quick has its two timed tasks: ${test.seen.join(' ')}`);
+  assert.ok(test.seen.length >= 10, 'and its choices');
+  assert.ok(test.summary.known > 0, 'and it reaches the scorecard');
+  const afterTest = (await c('GET', '/api/ob2/state')).data.test;
+  assert.equal(afterTest.done, true);
+  assert.equal(afterTest.open, false);
+  ok(`short test: an agreed guest takes Quick (${test.seen.length} steps, then interests), resumes after a reload, feeds ${test.summary.known} measures; boosters and the daily check stay closed`);
+
   const begun = await c('POST', '/api/ob2/begin', { answers: { tracks: ['math', 'chess'], why: 'test', horizon: 'year', interest: 'other', interest_text: 'pottery' } });
   assert.equal(begun.status, 200);
   const early = await c('GET', '/api/profile');
@@ -319,6 +568,12 @@ async function main() {
   const profile = await c('GET', '/api/profile');
   assert.ok(String(profile.data.survey.interests).includes('pottery'), 'the interest reaches the survey once they have saved');
   const exported = await c('GET', '/api/account/export');
+  assert.equal(exported.data.profile.onboarding.sessions.length, 1, 'the test is on the saved account');
+  assert.equal(exported.data.profile.onboarding.sessions[0].mode, 'quick');
+  assert.ok(exported.data.profile.onboarding.sessions[0].measures_fed > 0);
+  assert.equal(exported.data.profile.took_style_quiz, true);
+  assert.equal(exported.data.user.id, agreed.data.user.id, 'on the same row');
+  assert.equal((await c('GET', '/api/onboarding/modes')).data.done, 1, 'and the saved account knows it was done');
   assert.equal(exported.data.onboarding_answers.length, 1, 'export covers the answers');
   assert.equal(exported.data.learner_agreements.length, 1, 'export covers what was agreed');
   assert.equal(exported.data.learner_agreements[0].version, ob2Version);
@@ -341,6 +596,7 @@ async function main() {
   await g('POST', '/api/consent/age', { birth_month: 3, birth_year: 1991, country: 'US' });
   await g('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version });
   await g('POST', '/api/ob2/begin', { answers: { tracks: ['chess'] } });
+  await takeTest(g, { stop: 2 });
   await g('POST', '/api/ob2/first-lesson', { track: 'chess', grade_id: 'board_explorer' }).catch(() => {});
   const grades = (await g('GET', '/api/catalog?view=grades')).data.tracks.find((t) => t.id === 'chess').grades;
   const made = await g('POST', '/api/ob2/first-lesson', { track: 'chess', grade_id: grades[0].id });
@@ -349,7 +605,55 @@ async function main() {
   assert.equal(signed.status, 200);
   const list = (await g('GET', '/api/enrollments')).data.enrollments.map((e) => e.track.id).sort();
   assert.deepEqual(list, ['chess', 'math']);
-  ok('guest signing in to an existing account brings the subject across');
+  const kept = (await g('GET', '/api/account/export')).data.profile.onboarding.sessions;
+  assert.equal(kept.length, 1, 'an account that already took the test keeps its own');
+  ok('guest signing in to an existing account brings the subject across, and doesn\'t replace a test it already has');
+
+  // ...and an account with no test of its own takes the guest's, and its scorecard hears about it.
+  const plain = client(base);
+  const plainEmail = `plain-${Date.now()}@example.test`;
+  await plain('POST', '/api/consent/age', { birth_month: 1, birth_year: 1982, country: 'US' });
+  await plain('POST', '/api/auth/register', { email: plainEmail, password: 'longenough1', display_name: 'Plain' });
+  await plain('POST', '/api/auth/logout', {});
+  const g2 = client(base);
+  await g2('POST', '/api/consent/age', { birth_month: 3, birth_year: 1991, country: 'US' });
+  await g2('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version });
+  const moved = await takeTest(g2, { stop: 3 });
+  assert.equal((await g2('POST', '/api/auth/login', { email: plainEmail, password: 'longenough1' })).status, 200);
+  const plainNow = (await g2('GET', '/api/account/export')).data.profile;
+  assert.equal(plainNow.onboarding.sessions.length, 1, 'the test comes across');
+  assert.equal(plainNow.onboarding.sessions[0].items, moved.seen.length + 1);
+  assert.ok(plainNow.took_style_quiz);
+  ok('a guest signing in to an account with no test brings it across');
+
+  // ── no goal asked: the default ──
+  const d = client(base);
+  await d('POST', '/api/consent/age', { birth_month: 3, birth_year: 1992, country: 'US' });
+  await d('POST', '/api/ob2/agree', { decision: 'agree', version: ob2Version });
+  assert.equal((await d('POST', '/api/ob2/answers', { interests: ['soccer', 'other', 'nonsense'], interest_text: 'rock climbing', test_skipped: true, tracks: ['math'] })).status, 200);
+  const dState = (await d('GET', '/api/ob2/state')).data;
+  assert.deepEqual(dState.answers.interests, ['soccer', 'other'], 'several interests, known ones only');
+  assert.equal(dState.answers.interest, 'soccer', 'the first is the main one');
+  assert.equal(dState.answers.test_skipped, true);
+  assert.equal(dState.test.done, false, 'skipping isn\'t doing it');
+  const dSurvey = (await d('GET', '/api/profile')).data.survey.interests;
+  assert.ok(dSurvey.includes('soccer') && dSurvey.includes('rock climbing'), `both reach the lesson writers: ${dSurvey}`);
+  await d('POST', '/api/ob2/answers', { interests: ['music'], interest_text: '' });
+  const dSurvey2 = (await d('GET', '/api/profile')).data.survey.interests;
+  assert.ok(dSurvey2.includes('music') && !dSurvey2.includes('soccer'), `changing them replaces them: ${dSurvey2}`);
+  const mathGrades = (await d('GET', '/api/catalog?view=grades')).data.tracks.find((t) => t.id === 'math').grades;
+  const dFirst = await d('POST', '/api/ob2/first-lesson', { track: 'math', grade_id: mathGrades[4].id });
+  assert.equal(dFirst.status, 200);
+  assert.equal(dFirst.data.goal.horizon, undefined, 'no goal is set for them');
+  assert.equal(dFirst.data.goal.summary, 'Your reviews keep coming back over time to help you remember this for good.', 'and the line says what the default does');
+  const dGoals = (await d('GET', '/api/retention-goals')).data;
+  const dItem = dGoals.enrollments.find((i) => i.id === dFirst.data.enrollment.id);
+  assert.equal(dItem.goal.status, 'forever');
+  assert.equal(dItem.goal.is_default, true, 'forever, shown as the default');
+  const setLater = await d('PUT', '/api/retention-goals', { kind: 'enrollment', id: dFirst.data.enrollment.id, horizon: 'year' });
+  assert.equal(setLater.status, 200, 'the goal can still be set afterwards');
+  assert.equal((await d('GET', '/api/retention-goals')).data.enrollments.find((i) => i.id === dFirst.data.enrollment.id).goal.status, 'horizon');
+  ok('no goal asked: the default is forever, the line says so, and /api/retention-goals still sets one');
 
   // ── a child ──
   const k = client(base);
@@ -365,6 +669,14 @@ async function main() {
   assert.equal(kid.data.user.consent.has_request, true, 'the parent was asked before anything else was stored');
   assert.equal(kid.data.user.email, null);
   const kState = await k('GET', '/api/ob2/state');
+  assert.equal(kState.data.test.allowed, false, 'the baseline is closed to a child without the parent\'s measurement agreement');
+  assert.equal((await k('GET', '/api/onboarding/modes')).data.allowed, false);
+  assert.equal((await k('POST', '/api/onboarding/start', { mode: 'quick', interests_last: true })).data.code, 'not_allowed');
+  const quiz = (await k('GET', '/api/style-quiz')).data;
+  assert.equal(quiz.questions.length, 20);
+  const quizSaved = await k('POST', '/api/profile/style-quiz', { answers: Object.fromEntries(quiz.questions.map((q) => [q.id, 0.67])) });
+  assert.equal(quizSaved.status, 200, `the fallback quiz works for the limited child row: ${JSON.stringify(quizSaved.data).slice(0, 100)}`);
+  assert.equal((await k('GET', '/api/ob2/state')).data.test.done, true);
   assert.equal(kState.data.answers.interest_text, '', 'a child\'s typed words are not kept');
   assert.equal(kState.data.answers.notes, false, 'no uploads for a child');
   assert.equal((await k('POST', '/api/materials/paste', { text: 'x' })).data.code, 'child_upload_off');
@@ -373,11 +685,14 @@ async function main() {
   assert.equal(kClaim.status, 201);
   assert.equal(kClaim.data.user.email, null, 'a child email is never kept');
   assert.equal(kClaim.data.user.consent.state, 'pending');
-  ok('child: parent asked first, no email, no free text, gates hold before and after the login is made');
+  assert.equal((await k('GET', '/api/account/export')).data.profile.took_style_quiz, true, 'the quiz stays on the saved child account');
+  ok('child: parent asked first, the style quiz in place of the baseline, no email, no free text, gates hold before and after the login is made');
 
   await startingLevelChecks(base);
 
   await stop(child);
+
+  await betaChecks();
 
   // ── the sweep and deletion, in this process on the same file ──
   const db = require('../config/db'); // eslint-disable-line global-require
@@ -402,6 +717,8 @@ async function main() {
   assert.equal(db.find('learner_agreements', (r) => r.user_id === limited.id).length, 0, 'what was agreed goes with the guest');
   assert.equal(ob.rowOf(old.id) || null, null, 'the answers go with the guest');
   ok('sweep: an idle guest and its answers are deleted');
+
+  sameFirstPicture();
 
   console.log(`onboarding-v2-test: ${passed} groups passed`);
   process.exit(0);

@@ -23,6 +23,7 @@ const referrals = require('../services/referrals');
 const signinOnly = require('../middleware/signin-only');
 
 const router = express.Router();
+const onboardingV2 = () => require('../services/onboarding-v2'); // eslint-disable-line global-require
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const REMEMBER_MS = 365 * 24 * 3600 * 1000; // "Remember me": a year from the last visit, since the cookie rolls with every response
@@ -109,6 +110,12 @@ router.post('/register', signinOnly.refuseSignUp, limit('register', 60, 60 * 60 
     account_type: 'standard',
   });
   referrals.attach(user, req.body.ref); // a friend's share link; an unknown code is ignored
+  // The line on the sign-up page is the agreement (owner, 7 Nov: the application covers the terms, not the onboarding): recorded when the page that showed it says so, for a
+  // learner at or over the consent age. A child's parent answers for them, as ever.
+  if (screen && req.body.agreement === onboardingV2().SIGNUP_AGREEMENT.version) {
+    const { version, text } = onboardingV2().SIGNUP_AGREEMENT;
+    onboardingV2().recordAgreement(user, consent.POLICY_VERSION, { version, text, via: 'sign_up' });
+  }
   require('../services/act-check').carry(user); // an applicant from the free ACT level check brings their result along
 
   await startSession(req, user);

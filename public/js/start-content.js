@@ -1,9 +1,4 @@
-/* The words and pictures of the new onboarding. No logic beyond small lookups, so copy can be changed without touching the flow.
- *
- * Step 6's examples are written ahead of time, here, so the screen is instant and nothing a learner says goes to any outside service.
- * **double stars** mark what the marker highlights. They are made-up scenarios, not claims about the world; scripts/onboarding-v2-test.js
- * checks every interest has every idea, and that the fraction examples really are 3 of 4.
- */
+/* The words and pictures of the new onboarding. No logic, so copy can be changed without touching the flow. **double stars** mark what stands out in a line. */
 (function () {
   const line = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.700" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
 
@@ -39,6 +34,9 @@
     back: line('<path d="M15 5l-7 7 7 7"/>'),
     eye: line('<path d="M2.500 12S6 5.500 12 5.500 21.500 12 21.500 12 18 18.500 12 18.500 2.500 12 2.500 12Z"/><circle cx="12" cy="12" r="2.800"/>'),
     arrow: line('<path d="M5 12h14M13 6l6 6-6 6"/>'),
+    tap: line('<path d="M9 11V5.500a2 2 0 0 1 4 0V11l5.200 1.300a2 2 0 0 1 1.500 2.200l-.7 5H10l-4.500-5a1.800 1.800 0 0 1 2.600-2.400L9 13"/>'),
+    memory: line('<path d="M6 8.500h2.500V16M6 16h5M14 9.500a2.300 2.300 0 0 1 4.500.5c0 2-4.500 3.500-4.500 6h5"/>'),
+    spot: line('<circle cx="10.500" cy="10.500" r="6.500"/><path d="m15.500 15.500 5 5"/>'),
     chat: line('<path d="M4 5.500h16v11H10l-4.500 3.500v-3.500H4v-11Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/>'),
   };
 
@@ -78,23 +76,6 @@
     ],
   };
 
-  const WHY = [
-    { id: 'test', icon: 'test', title: 'A test or exam', reply: 'A test. Then **every review counts toward that day.**' },
-    { id: 'school', icon: 'school', title: 'School or a class', reply: 'School. I can **work alongside your class.**' },
-    { id: 'work', icon: 'work', title: 'My job or career', reply: 'For work. **Useful skills,** then.' },
-    { id: 'curious', icon: 'curious', title: 'I\'m just curious', reply: 'Curious is **my favorite kind of learner.**' },
-    { id: 'love', icon: 'love', title: 'Something I love', reply: 'The **best reason there is.**' },
-  ];
-
-  /** The retention goal's choices (services/retention-goal.js): the words say what the choice really does. `len` draws the small ruler. */
-  const HORIZONS = [
-    { id: 'date', title: 'Until a test date', sub: 'Pick the day', len: 0, reply: 'Your reviews get **packed in before that date,** right up to the day itself.' },
-    { id: 'months', title: 'A few months', sub: 'About 90 days', len: 20, reply: 'A few months. I\'ll **skip the reviews you\'d only need after that.**' },
-    { id: 'year', title: 'A year', sub: '365 days', len: 45, reply: 'A year. Your reviews **spread out to fit it.**' },
-    { id: 'years', title: 'Years', sub: 'About 3 years', len: 75, reply: 'Years. Reviews **keep coming back, further apart.**' },
-    { id: 'forever', title: 'For good', sub: 'The full review calendar', len: 100, reply: 'For good. You get **the full long-term review calendar.**' },
-  ];
-
   const INTERESTS = [
     { id: 'soccer', icon: 'soccer', title: 'Soccer', reply: 'Soccer! **Penalty kicks,** coming up.' },
     { id: 'basketball', icon: 'basketball', title: 'Basketball', reply: 'Basketball. **Free throws,** then.' },
@@ -110,89 +91,5 @@
     { id: 'coding', icon: 'coding', title: 'Coding', reply: 'Coding. **Tests first, then.**' },
   ];
 
-  /** Which idea a subject's sample uses. */
-  const IDEA_OF = { math: 'fractions', act: 'fractions', iq: 'fractions', english: 'mainidea', reading: 'mainidea', spanish: 'endings', chess: 'practice', piano: 'practice', basketball: 'practice' };
-
-  const IDEAS = {
-    fractions: {
-      topic: 'What 3/4 means',
-      plain: '3/4 means 3 out of 4 equal parts.',
-      viz: 'tokens',
-      examples: {
-        soccer: 'Your team takes **4 penalty kicks** and scores **3**. Three out of four is **3/4**.',
-        basketball: 'You shoot **4 free throws** and make **3**. That\'s **3/4** of your shots.',
-        music: 'A bar of music has **4 beats**. Clap on **3** of them. You clapped **3/4** of the bar.',
-        gaming: 'You start a level with **4 hearts** and finish with **3**. You kept **3/4** of your hearts.',
-        cooking: 'A recipe needs **4 eggs** and you\'ve cracked **3**. That\'s **3/4** of the eggs done.',
-        art: 'You split a canvas into **4 equal squares** and paint **3**. **3/4** of it is painted.',
-        animals: 'A dog has **4 paws** and **3** are muddy. **3/4** of its paws need a wash.',
-        space: 'A rocket has **4 equal fuel tanks** and **3** are full. **3/4** of the tanks are ready.',
-        movies: 'A series has **4 films** and you\'ve seen **3**. You\'ve watched **3/4** of them.',
-        cars: 'A car has **4 tires** and you\'ve changed **3**. **3/4** of the tires are new.',
-        fashion: 'You lay out **4 outfits** and **3** have sneakers. **3/4** of your outfits do.',
-        coding: 'You run **4 tests** and **3** pass. **3/4** of your tests pass.',
-      },
-    },
-    mainidea: {
-      topic: 'What a main idea is',
-      plain: 'The main idea is the one point everything else in a passage backs up.',
-      viz: null,
-      examples: {
-        soccer: 'A match report says the keeper made six saves and the defense blocked every cross. Those details back up one point: **the defense won this game.**',
-        basketball: 'A recap says the bench scored 40 points and the starters got to rest. Those details back up one point: **the bench won this game.**',
-        music: 'A review says the chorus sticks in your head and the beat never lets up. Those details back up one point: **this song is catchy.**',
-        gaming: 'A review says the menus are confusing and saves get lost. Those details back up one point: **this game is frustrating to use.**',
-        cooking: 'A recipe note says to use cold butter and not to overmix. Those details back up one point: **handle this dough gently.**',
-        art: 'A guide says to draw light lines first and darken them later. Those details back up one point: **start loose, finish firm.**',
-        animals: 'A guide says puppies need short walks, soft food and lots of naps. Those details back up one point: **puppies need gentle care.**',
-        space: 'A mission plan lists spare parts, backup radios and extra fuel. Those details back up one point: **this crew is planning for trouble.**',
-        movies: 'A review says the plot drags and the ending is rushed. Those details back up one point: **the pacing is off.**',
-        cars: 'A manual says to check the oil, tires and brakes before a long trip. Those details back up one point: **get the car checked before you go.**',
-        fashion: 'A style guide says to pick one bold piece and keep the rest simple. Those details back up one point: **let one thing stand out.**',
-        coding: 'A code review says the names are clear and every function is short. Those details back up one point: **this code is easy to read.**',
-      },
-    },
-    endings: {
-      topic: 'Verb endings in Spanish',
-      plain: 'A Spanish verb\'s ending tells you who is doing it. Hablo is I speak. Hablas is you speak.',
-      viz: null,
-      examples: {
-        soccer: '**Paso** el balón: I pass the ball. **Pasas** el balón: you pass the ball. The ending tells you who.',
-        basketball: '**Encesto**: I score a basket. **Encestas**: you score a basket. The ending tells you who.',
-        music: '**Canto** una canción: I sing a song. **Cantas** una canción: you sing a song. The ending tells you who.',
-        gaming: '**Gano** la partida: I win the game. **Ganas** la partida: you win the game. The ending tells you who.',
-        cooking: '**Cocino** la cena: I cook dinner. **Cocinas** la cena: you cook dinner. The ending tells you who.',
-        art: '**Dibujo** un gato: I draw a cat. **Dibujas** un gato: you draw a cat. The ending tells you who.',
-        animals: '**Cuido** al perro: I look after the dog. **Cuidas** al perro: you look after the dog. The ending tells you who.',
-        space: '**Miro** las estrellas: I look at the stars. **Miras** las estrellas: you look at the stars. The ending tells you who.',
-        movies: '**Grabo** una película: I film a movie. **Grabas** una película: you film a movie. The ending tells you who.',
-        cars: '**Manejo** el coche: I drive the car. **Manejas** el coche: you drive the car. The ending tells you who.',
-        fashion: '**Diseño** un vestido: I design a dress. **Diseñas** un vestido: you design a dress. The ending tells you who.',
-        coding: '**Programo** un juego: I code a game. **Programas** un juego: you code a game. The ending tells you who.',
-      },
-    },
-    practice: {
-      topic: 'Practising the hard part',
-      plain: 'When one part keeps going wrong, practise just that part slowly, then put it back into the whole.',
-      viz: null,
-      examples: {
-        soccer: 'Your penalties keep going wide. Don\'t play a whole match: **take ten slow kicks at one corner,** then try it at full speed.',
-        basketball: 'Your free throws keep hitting the rim. Don\'t scrimmage: **shoot ten slowly from the line,** then try them tired.',
-        music: 'One bar keeps tripping you up. Don\'t restart the song: **loop that bar slowly,** then play it in the song.',
-        gaming: 'One boss keeps beating you. Don\'t replay the level: **practise that one attack pattern,** then take on the whole fight.',
-        cooking: 'Your sauce keeps splitting. Don\'t cook the whole meal: **make just the sauce, slowly,** then bring it back to the plate.',
-        art: 'Hands keep looking wrong in your drawings. Don\'t redo the portrait: **sketch ten slow hands,** then put one back in.',
-        animals: 'Your dog runs off when you call. Don\'t go to the park yet: **practise the call at home,** then try it outside.',
-        space: 'A model rocket keeps tipping over. Don\'t rebuild it all: **test just the fins,** then launch the whole thing.',
-        movies: 'One scene in your short film isn\'t working. Don\'t reshoot it all: **redo that one shot slowly,** then cut it back in.',
-        cars: 'You keep stalling on hills. Don\'t drive across town: **practise hill starts on one quiet street,** then get back on the road.',
-        fashion: 'Your zippers keep coming out crooked. Don\'t sew a whole dress: **sew ten zippers on scraps,** then do it for real.',
-        coding: 'One function keeps breaking. Don\'t rewrite the app: **test that one function alone,** then run it all together.',
-      },
-    },
-  };
-
-  function ideaFor(trackId) { return IDEAS[IDEA_OF[trackId]] || IDEAS.fractions; }
-
-  window.ObContent = { AGREEMENT, ICONS, TRACK_LINES, TRACK_REPLY, WHY, HORIZONS, INTERESTS, IDEAS, IDEA_OF, ideaFor };
+  window.ObContent = { AGREEMENT, ICONS, TRACK_LINES, TRACK_REPLY, INTERESTS };
 }());

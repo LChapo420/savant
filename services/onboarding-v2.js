@@ -9,6 +9,10 @@
  * the age screen (terms, privacy, outside AI); the guest row is created by agreeing, and recordAgreement keeps what was agreed and when. From there
  * routes/consent.js access() treats them as any consenting learner. A row with no agreement stays limited. An under-consent-age learner cannot agree
  * for themselves: they are today's limited child account with the parent's request sent, and only the username and password wait.
+ *
+ * The private beta (owner, 7 Nov: "the sign up and beta terms and stuff aren't on the onboarding they're on the application"): with BETA_SIGNIN_ONLY on or BETA_GATE=invite
+ * no guest row is made and no agreement screen shows. /start is for an account that already exists and has no subject yet: age if it was never recorded, then the same
+ * four questions and the first lesson. The agreement is recorded where the account is made (routes/auth.js, SIGNUP_AGREEMENT). See docs/ONBOARDING-V2.md section 4.
  */
 const db = require('../config/db');
 
@@ -17,6 +21,11 @@ const AGREEMENTS = 'learner_agreements';
 /** Bump when the words on the agreement screen (public/js/start-content.js AGREEMENT) change. */
 const AGREEMENT_VERSION = '2026-11-07.1';
 const AGREEMENT_COVERS = ['beta_terms', 'privacy_policy', 'outside_ai'];
+/** The line on the sign-up page (public/register.html, which must show these same words). A change to these words needs a new version. */
+const SIGNUP_AGREEMENT = {
+  version: 'signup-2026-11-07.1',
+  text: 'By creating an account you agree that this is a beta that can change or break, that lessons can still be wrong even when fact checked, and that what you tell Savant, your answers and your interests go to outside AI companies to write your lessons.',
+};
 const DAY = 24 * 3600 * 1000;
 const GUEST_DAYS = () => Number(process.env.ONBOARDING_GUEST_DAYS || 30);
 
@@ -29,6 +38,10 @@ const WHY = ['test', 'school', 'work', 'curious', 'love'];
 const MAX_TRACKS = 6;
 
 const enabled = () => /^(1|on|true)$/i.test(String(process.env.ONBOARDING_V2 || ''));
+/** Invite or sign-in only: accounts come from the application, so nobody is a guest here. The public flow shows only with both off. */
+function privateBeta(req) {
+  return require('../middleware/signin-only').active(req) || require('../middleware/beta-gate').enabled();
+}
 /* eslint-disable global-require */
 const consent = () => require('../routes/consent');
 const iso = () => new Date().toISOString();
@@ -52,6 +65,11 @@ function cleanAnswers(raw, { child = false } = {}) {
   if (goals.CHOICES.includes(r.horizon)) out.horizon = r.horizon;
   if (typeof r.test_date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(r.test_date)) out.test_date = r.test_date;
   if (r.interest === 'other' || INTERESTS[r.interest]) out.interest = r.interest;
+  if (Array.isArray(r.interests)) {
+    out.interests = [...new Set(r.interests.map(String).filter((i) => i === 'other' || INTERESTS[i]))];
+    out.interest = out.interests[0] || null; // the first pick stays the main one
+  }
+  if (typeof r.test_skipped === 'boolean') out.test_skipped = r.test_skipped;
   if (typeof r.interest_text === 'string') out.interest_text = child ? '' : r.interest_text.trim().slice(0, 80);
   if (typeof r.ref === 'string' && /^[a-z0-9]{8}$/.test(r.ref)) out.ref = r.ref;
   return out;
@@ -89,11 +107,24 @@ function createGuest(screen, { nickname = null } = {}) {
 }
 
 /** Keep what was agreed and when. Exported and deleted with the account (routes/profile.js EXPORT_MORE, routes/consent.js KNOWN_COLLECTIONS). */
-function recordAgreement(user, policyVersion) {
+function recordAgreement(user, policyVersion, { version = AGREEMENT_VERSION, via = 'onboarding_v2', text = null } = {}) {
   if (user.agreed_at) return user;
   const at = iso();
-  db.insert(AGREEMENTS, { user_id: user.id, version: AGREEMENT_VERSION, policy_version: policyVersion, covers: AGREEMENT_COVERS, agreed_at: at, via: 'onboarding_v2' });
-  return db.update('users', user.id, { agreed_at: at, agreement_version: AGREEMENT_VERSION });
+  db.insert(AGREEMENTS, { user_id: user.id, version, policy_version: policyVersion, covers: AGREEMENT_COVERS, agreed_at: at, via, ...(text ? { text } : {}) });
+  return db.update('users', user.id, { agreed_at: at, agreement_version: version });
+}
+
+/**
+ * An account (not a guest) that /start is for: in the private beta, not locked, and either with no subject and not through the flow yet, or with the
+ * first lesson made and not opened yet (a reload on the last screen). Everyone else has a home to go to.
+ */
+function inFlow(req, user = req.user) {
+  if (!enabled() || !user || user.guest || !privateBeta(req)) return false;
+  if (consent().access(user).locked) return false;
+  const row = rowOf(user.id);
+  if (row && row.lesson_opened_at) return false;
+  if (row && row.first_enrollment_id) return !!db.byId('enrollments', row.first_enrollment_id);
+  return !db.findOne('enrollments', (e) => e.user_id === user.id);
 }
 
 /** Where an account (not a guest) belongs when it opens this flow: never through it again. */
@@ -131,34 +162,48 @@ function enrollmentView(user, e) {
   return { id: e.id, track_id: e.track_id, grade_id: e.grade_id, grade_name: gradeNameOf(e.track_id, e.grade_id), href: lessonHref(user, e), own: ownLesson(user, e) };
 }
 
+/** Where the learner stands on the short test (the baseline, or the style quiz where the baseline is closed to them). */
+function testState(user) {
+  const baseline = require('./onboarding');
+  const g = baseline.get(user.id);
+  const open = g.active;
+  return {
+    allowed: baseline.mayTake(user),
+    done: g.sessions.length > 0 || !!(require('./learner').getProfile(user.id) || {}).took_style_quiz,
+    open: !!open,
+    pending: !!(open && open.current && open.current.id === 'sv:interests'),
+  };
+}
+
 /** What the page needs to pick up where the learner was, on any device state. */
 function stateFor(req) {
   const c = consent();
   const user = req.user;
-  if (user && !user.guest) return { account: true, go: accountHome(user) };
+  if (user && !user.guest && !inFlow(req)) return { account: true, go: accountHome(user) };
   if (user) {
-    touch(user);
+    const account = !user.guest;
+    if (!account) touch(user);
     const row = rowOf(user.id) || {};
     const child = !!(user.age_check && user.age_check.needs_parent);
     const e = row.first_enrollment_id ? db.byId('enrollments', row.first_enrollment_id) : null;
     return {
-      guest: true,
-      route: child ? 'parent' : 'self',
-      agreed: !!user.agreed_at,
+      ...(account ? { account: true, onboarding: true, id: user.id, route: user.age_check ? (child ? 'parent' : 'self') : null, agreed: true } : { guest: true, route: child ? 'parent' : 'self', agreed: !!user.agreed_at }),
       nickname: child ? user.display_name : null,
       consent: c.publicConsent(user).consent,
       answers: {
-        tracks: row.tracks || [], notes: !!row.notes, why: row.why || null, horizon: row.horizon || null, test_date: row.test_date || null, interest: row.interest || null, interest_text: row.interest_text || '',
+        tracks: row.tracks || [], notes: !!row.notes, why: row.why || null, horizon: row.horizon || null, test_date: row.test_date || null, interest: row.interest || null, interests: row.interests || (row.interest ? [row.interest] : []), interest_text: row.interest_text || '', test_skipped: !!row.test_skipped,
       },
+      test: testState(user),
       enrollment: e && e.user_id === user.id ? enrollmentView(user, e) : null,
       lesson_opened: !!row.lesson_opened_at,
     };
   }
+  if (privateBeta(req)) return { signed_out: true, go: '/login?next=/start' };
   const screen = c.screenFromSession(req);
   return { route: screen ? (screen.needs_parent ? 'parent' : 'self') : null, age_answered: !!screen };
 }
 
-/** The retention and study goals from step 5, in the learner's words. A failure leaves the default (forever, full depth). */
+/** The retention and study goals, if any were given (the flow no longer asks). None given leaves the default, forever and full depth, and the line says so. */
 function applyGoals(user, e, row) {
   const out = { summary: null };
   try {
@@ -175,6 +220,7 @@ function applyGoals(user, e, row) {
       const saved = study.save(user.id, 'enrollment', e.id, { goal: 'test' });
       if (!saved.error) out.study = 'test';
     }
+    if (!out.summary) out.summary = goals.plainGoal(goals.forEnrollment(user.id, e));
   } catch (err) {
     console.warn(`onboarding-v2: goal not set: ${err.message}`);
     out.error = 'not set';
@@ -262,6 +308,7 @@ function firstLessonLevel(trackId, gradeId) {
  */
 function firstLesson(user, { track, grade_id: gradeId }) {
   const sp = require('./subject-placement');
+  try { require('./onboarding').closeOpen(user); } catch (err) { console.warn(`onboarding-v2: test not closed: ${err.message}`); }
   const trackId = String(track || '');
   const walk = sp.placementFor(user.id, trackId);
   const want = String(gradeId || (walk && (walk.chosen_grade_id || walk.recommended_grade_id)) || '');
@@ -282,13 +329,19 @@ function firstLesson(user, { track, grade_id: gradeId }) {
   return { enrollment: enrollmentView(user, e), goal };
 }
 
-/** The interest from step 6 goes into the survey the lesson writers read, only once this account's consent covers outside AI. Changing it replaces what this flow wrote. */
+/** What the learner said they're into, as words: the tiles' names and anything typed. */
+function interestWords(row) {
+  const ids = row.interests && row.interests.length ? row.interests : (row.interest ? [row.interest] : []);
+  return ids.map((i) => (i === 'other' ? String(row.interest_text || '').trim() : INTERESTS[i])).filter(Boolean).join(', ');
+}
+
+/** The interests go into the survey the lesson writers read, only once this account's consent covers outside AI. Changing them replaces what this flow wrote. */
 function applyInterest(user) {
   try {
     if (!user || !consent().access(user).ai_free_text) return false;
     const row = rowOf(user.id);
     if (!row || !row.interest) return false;
-    const said = row.interest === 'other' ? String(row.interest_text || '').trim() : INTERESTS[row.interest];
+    const said = interestWords(row);
     if (!said || row.interest_applied === said) return false;
     const learner = require('./learner');
     const survey = learner.cleanSurvey(learner.getProfile(user.id).survey || {});
@@ -323,6 +376,9 @@ function absorbGuest(guest, account) {
       const made = sp.chooseGrade(account.id, e.track_id, e.grade_id);
       if (made.enrollment) require('./owner-skips').skipPlacement({ userId: account.id, enrollment: made.enrollment, level: 1 });
     }
+    const baseline = require('./onboarding');
+    baseline.closeOpen(guest);
+    baseline.moveToAccount(guest, account);
     const row = rowOf(guest.id);
     if (row && !rowOf(account.id)) {
       const { id, user_id: _u, first_enrollment_id: _f, created_at: _c, updated_at: _up, ...rest } = row;
@@ -352,5 +408,5 @@ function sweep(now = Date.now()) {
 }
 
 module.exports = {
-  ANSWERS, AGREEMENTS, AGREEMENT_VERSION, recordAgreement, INTERESTS, WHY, enabled, cleanAnswers, saveAnswers, createGuest, stateFor, firstLesson, settleStart, gradeForAge, applyInterest, absorbGuest, sweep, accountHome, touch, rowOf,
+  ANSWERS, AGREEMENTS, AGREEMENT_VERSION, SIGNUP_AGREEMENT, privateBeta, inFlow, recordAgreement, INTERESTS, WHY, enabled, cleanAnswers, saveAnswers, createGuest, stateFor, firstLesson, settleStart, gradeForAge, applyInterest, absorbGuest, sweep, accountHome, touch, rowOf,
 };

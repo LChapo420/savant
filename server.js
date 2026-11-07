@@ -259,8 +259,18 @@ app.get(['/start', '/start.html'], (req, res, next) => {
   return res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 app.get(['/register', '/register.html'], (req, res, next) => {
-  if (!require('./services/onboarding-v2').enabled()) return next();
+  const ob = require('./services/onboarding-v2');
+  if (!ob.enabled() || ob.privateBeta(req)) return next(); // in the private beta this page is where an invited tester makes the account
   const at = req.originalUrl.indexOf('?');
+  return res.redirect(302, `/start${at >= 0 ? req.originalUrl.slice(at) : ''}`);
+});
+// In the private beta an account with no subject yet goes through /start, whatever door it comes in by. An admin keeps the dashboard.
+app.get(['/dashboard', '/dashboard.html', '/onboarding', '/onboarding.html'], (req, res, next) => {
+  const ob = require('./services/onboarding-v2');
+  if (!req.user || req.user.guest || !ob.enabled() || !ob.inFlow(req) || require('./middleware/auth').isAdmin(req.user)) return next();
+  if (ob.rowOf(req.user.id) && ob.rowOf(req.user.id).first_enrollment_id) return next(); // already has its subject
+  const at = req.originalUrl.indexOf('?');
+  res.setHeader('Cache-Control', 'no-store');
   return res.redirect(302, `/start${at >= 0 ? req.originalUrl.slice(at) : ''}`);
 });
 
