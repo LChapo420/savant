@@ -3,7 +3,7 @@
  * The new planted set for fact-100. Candidates from MiniMax M3 (plant2.js, two rounds) kept after a read, plus hand-written wrong-but-plausible facts and misleading simplifications inserted into real lessons.
  * Split by level, seeded: about a quarter "dev2" (thresholds may look at it), the rest "heldout" (run once, no change after). The author of the design read every plant while keeping them, so the split guards
  * against tuning on results, not against having seen the sentences: no rule in any checker names a plant's words.
- * Output: docs/fact-100/heldout.json. Clean controls: levels the 6 Nov audit found no confirmed error in.
+ * Output: docs/fact-100/heldout.json. Clean controls: levels the 6 Nov audit found no confirmed error in (a level with only a false alarm or one ruler stays in).
  */
 const L = require('../fact-gate/lib');
 
@@ -61,7 +61,8 @@ const inDev2 = (level) => parseInt(L.hash(`fact-100-split:${level}`), 16) % 4 ==
 plants.forEach((p, i) => { p.id = `n${String(i).padStart(3, '0')}`; p.split = inDev2(p.level) ? 'dev2' : 'heldout'; });
 
 const audit = L.readJson(L.path.join(L.DOCS, 'audit-live.json'));
-const confirmedLevels = new Set((audit.levels || audit.findings || audit.confirmed || []).filter((x) => (x.confirmed ? x.confirmed.length : x.errors ? x.errors.length : true)).map((x) => x.level || x.id));
+// Clean controls may not be chosen by what a reader flagged: that would hide its false alarms. A level is left out only for an error two rulers confirmed.
+const confirmedLevels = new Set(audit.findings.filter((x) => x.status === 'confirmed').map((x) => x.level));
 const clean = [...levels.keys()].filter((id) => !confirmedLevels.has(id)).map((level) => ({ level, split: inDev2(level) ? 'dev2' : 'heldout' }));
 L.fs.mkdirSync(L.path.join(L.DOCS, '..', 'fact-100'), { recursive: true });
 L.writeJson(L.path.join(L.DOCS, '..', 'fact-100', 'heldout.json'), { built: '2026-11-07', planted_by: 'MiniMax M3 on Lyceum, kept on reading; hand-written insertions', plants, clean });
