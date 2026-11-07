@@ -28,6 +28,7 @@ const seed = {
   block_plans: [
     { id: 3, user_id: null, status: 'ready', track_id: 'spanish', grade_id: 'e', level: 7, prewritten: { sha256: 'aaa' }, blocks: [{ index: 0, block: 'X', data: { title: 'old title', tokens: [{ text: 'a' }, { text: ' b' }], paragraph: 'a b' } }], checks: [{ id: 'c1', format: 'multiple_choice', prompt: 'P', choices: ['x', 'y'], answer: 'x', rationale: 'old', extra: 'keep' }] },
     { id: 4, user_id: 9, status: 'ready', track_id: 'spanish', grade_id: 'e', level: 7, blocks: [{ index: 0, block: 'X', data: { title: 'old title' } }], checks: [] },
+    { id: 5, user_id: null, status: 'ready', track_id: 'spanish', grade_id: 'e', level: 8, blocks: [], checks: [{ id: 'c1', format: 'type_in', prompt: 'P', answer: 'x', accepts: ['bad'] }] },
   ],
 };
 const write = () => fs.writeFileSync(dbFile, JSON.stringify(seed));
@@ -45,6 +46,7 @@ const R = {
   part: { id: 'plan:part', store: 'block_plans', track_id: 'spanish', grade_id: 'e', level: 7, part: 'block', index: 0, edits: [{ path: ['title'], old: 'old title', new: 'new title' }], row_edits: [{ path: ['prewritten', 'sha256'], old: 'aaa', new: 'bbb' }] },
   tokens: { id: 'plan:tokens', store: 'block_plans', track_id: 'spanish', grade_id: 'e', level: 7, part: 'block', index: 0, edits: [{ path: ['paragraph'], old: 'a b', new: 'a c' }] },
   check: { id: 'plan:check', store: 'block_plans', track_id: 'spanish', grade_id: 'e', level: 7, part: 'check', index: 0, edits: [{ path: ['rationale'], old: 'old', new: 'new' }, { path: ['accepts'], old: null, new: ['x'] }] },
+  drop: { id: 'plan:drop', store: 'block_plans', track_id: 'spanish', grade_id: 'e', level: 8, part: 'check', index: 0, edits: [{ path: ['accepts'], old: ['bad'] }] },
   checkBad: { id: 'plan:checkbad', store: 'block_plans', track_id: 'spanish', grade_id: 'e', level: 7, part: 'check', index: 0, edits: [{ path: ['answer'], old: 'x', new: 'z' }] },
 };
 fs.writeFileSync(fixFile, JSON.stringify({ records: Object.values(R) }));
@@ -54,7 +56,7 @@ const before = fs.readFileSync(dbFile, 'utf8');
 let r = run();
 check('dry run is the default and writes nothing', r.status === 0 && fs.readFileSync(dbFile, 'utf8') === before && !backups().length && /DRY RUN/.test(r.stdout), r.stdout + r.stderr);
 let rep = report().counts;
-check('dry run counts', rep.apply === 4 && rep.mismatch === 1 && rep.missing === 1 && rep.invalid === 3, rep);
+check('dry run counts', rep.apply === 5 && rep.mismatch === 1 && rep.missing === 1 && rep.invalid === 3, rep);
 
 r = run('--write');
 check('write reports a backup and a journal', r.status === 0 && backups().length === 1 && /journal/.test(r.stdout), r.stdout + r.stderr);
@@ -70,11 +72,12 @@ check('block, check and row edits applied; the rest of the check kept', a.block_
 check('tokens that no longer spell the paragraph are refused', a.block_plans[0].blocks[0].data.paragraph === 'a b');
 check('an answer outside the options is refused', a.block_plans[0].checks[0].answer === 'x');
 
+check('an edit with no new value removes the field', !('accepts' in a.block_plans[2].checks[0]));
 const afterFirst = fs.readFileSync(dbFile, 'utf8');
 const journal = report().journal;
 r = run('--write');
 rep = report().counts;
-check('second run: already applied, no write, no new backup', fs.readFileSync(dbFile, 'utf8') === afterFirst && backups().length === 1 && rep.already === 4 && !rep.apply, rep);
+check('second run: already applied, no write, no new backup', fs.readFileSync(dbFile, 'utf8') === afterFirst && backups().length === 1 && rep.already === 5 && !rep.apply, rep);
 
 r = spawnSync(process.execPath, [SCRIPT, '--db', dbFile, '--revert', journal, '--backup-dir', dir], { encoding: 'utf8', env: { ...process.env, PORT: '1' } });
 check('revert is a dry run too', fs.readFileSync(dbFile, 'utf8') === afterFirst && /DRY RUN/.test(r.stdout), r.stdout);

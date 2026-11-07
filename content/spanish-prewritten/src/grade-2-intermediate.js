@@ -582,7 +582,7 @@ module.exports = [
       typed('es_questions', {
         prompt: 'Type the question "What day is it today?" in Spanish.',
         answer: '¿Qué día es hoy?',
-        accepts: ['que dia es hoy', 'qué día es'],
+        accepts: ['que dia es hoy'],
         rationale: 'The fixed question is ¿Qué día es hoy? and the answer is Hoy es plus a day.',
         hint: 'Qué + día + es + hoy.',
         focus: 'asking the day',

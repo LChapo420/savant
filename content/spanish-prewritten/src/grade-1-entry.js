@@ -349,7 +349,7 @@ module.exports = [
           { options: ['voy', 'quiero', 'tengo'], correct: 0, note: 'Voy al baño: I am going to the bathroom.' }, ' al baño. ¡Ah! Y ',
           { options: ['puedo', 'tengo', 'voy'], correct: 1, note: 'Tengo una pregunta: I have a question.' }, ' una pregunta.',
         ],
-        correctMsg: 'All five chunks are in the right place.',
+        correctMsg: 'All four chunks are in the right place.',
       }),
       trap('Targets the most common slip with voy: writing a el instead of al.', {
         question: 'How do you say "I am going to the bathroom"?',
@@ -738,8 +738,7 @@ module.exports = [
       typed('es_numbers', {
         prompt: 'Type the number 18 as one Spanish word.',
         answer: 'dieciocho',
-        accepts: ['diez y ocho'],
-        rationale: 'Eighteen is ten and eight: dieci + ocho = dieciocho.',
+        rationale: 'Eighteen is ten and eight: dieci + ocho = dieciocho, written as a single word.',
         hint: 'dieci + the word for 8.',
         focus: 'building a dieci- number',
         after: 4,
