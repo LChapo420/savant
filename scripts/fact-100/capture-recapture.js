@@ -89,6 +89,28 @@ for (const [name, g] of Object.entries(groups)) {
   console.log(name, JSON.stringify({ levels: out.levels, clusters: out.clusters, a: e.a, b: e.b, both: e.ab, chapman: out.chapman }));
   for (const [s, v] of Object.entries(out.estimates)) console.log(' ', s, JSON.stringify(v));
 }
+// A list that made no part of the audit: DeepSeek V4.1 Flash, read fresh on the levels holding confirmed errors. A flag of it counts as a real error only if grok-4.3 and GLM-5.3 Flash, the other families, both rule it real.
+// Of those, the share the audit already holds is the audit's recall on real errors, with no reader judging its own work.
+{
+  const part = (w) => { const m = /(block|check)s*#?s*(d+)/i.exec(w || ''); return m ? `${m[1].toLowerCase()}${m[2]}` : '?'; };
+  const rows = L.readJsonl(L.path.join(C.RAW, 'confirm.real.jsonl'));
+  const hist = [];
+  for (const r of rows) {
+    for (const f of r.flags) {
+      if (!(f.rulings.grok43 && f.rulings.glm_flash_munito)) continue;
+      const w = words(`${f.claim} ${f.why}`);
+      const inAudit = conf.some((c) => c.level === r.level && part(c.where) === part(f.where) && overlap(words(`${c.quote} ${c.why}`), w) >= 0.25);
+      hist.push({ level: r.level, inAudit });
+    }
+  }
+  const n1 = clusters(conf.filter((f) => !f.level.includes('algebra_1_part_a'))).length;
+  const n2 = hist.length; const m = hist.filter((h) => h.inAudit).length;
+  const boots = []; const recalls = [];
+  for (let i = 0; i < 4000; i++) { const re = hist.map(() => hist[Math.floor(rand() * hist.length)]); const mm = re.filter((h) => h.inAudit).length; boots.push(chapman(n1, re.length, mm)); recalls.push(mm / re.length); }
+  res.freshList = { auditErrors: n1, freshConfirmed: n2, inBoth: m, auditRecall: +(m / n2).toFixed(3), recallRange: [+quant(recalls, 0.025).toFixed(3), +quant(recalls, 0.975).toFixed(3)], chapmanN: +chapman(n1, n2, m).toFixed(1), nRange: [+quant(boots, 0.025).toFixed(1), +quant(boots, 0.975).toFixed(1)], levels: 93 };
+  res.freshList.remainingPerLevelAfterAudit = [+((res.freshList.nRange[0] - n1) / 93).toFixed(3), +((res.freshList.chapmanN - n1) / 93).toFixed(3), +((res.freshList.nRange[1] - n1) / 93).toFixed(3)];
+  console.log('fresh list', JSON.stringify(res.freshList));
+}
 for (const s of Object.keys(res.calibration)) delete res.calibration[s].rows;
 L.writeJson(L.path.join(L.DOCS, '..', 'fact-100', 'capture-recapture.json'), res);
 process.exit(0);
