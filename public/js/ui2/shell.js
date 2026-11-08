@@ -8,6 +8,7 @@
  * On a phone (under 768 px) the four destinations are a fixed bar at the bottom, safe-area aware: Home, Upload your own, Leaderboard and stats, Menu (/dashboard#menu, which is
  * Everything dressed as a list). It takes the place of the menu button. Home's top bar is the wordmark and the streak; the idle "Start session" leaves the bar (the Menu
  * has a quiet "Time a session" row that presses it), so no round clock competes with the lesson. The bar steps away in a sitting (a question, a lesson, a placement) and while the chat is open.
+ * On a tablet or desktop the menu is a swappable part (DESK_NAV, DESK_NAVS, DESK_NAV_NOW): today's top bar until the owner picks one of design-refs/home-clean/side-menu.png.
  * and on a question it puts the guide under the player's top bar: the original giraffe, cropped at the shoulders on a phone, with the question in its speech bubble. When the answer comes, the
  * words of js/player.js's .verdict show in that bubble, tinted, and the giraffe reacts; the box itself stays where the player put it and keeps the buttons. Nothing of the player's is moved:
  * the bubble holds copies and the originals stay in place for screen readers, focus and every listener.
@@ -126,6 +127,7 @@
       wrap.insertBefore(s, wrap.querySelector('.header-actions'));
     }
     drawTabs(user);
+    drawDeskNav(user);
     const backBtn = left.querySelector('#u2-back');
     if (backBtn) backBtn.addEventListener('click', goBack);
     App.ui2.user = user;
@@ -139,6 +141,28 @@
     ['stats', '/stats', 'bars', 'Stats', 'Leaderboard and stats'],
     ['menu', '/dashboard#menu', 'menu', 'Menu', 'Menu'],
   ];
+
+  // ── The desktop menu: the seam for the owner's pick ──────────────────────
+  /**
+   * The desktop menu's destinations (owner, 7 Nov: more than the phone's four), grouped, for whichever of design-refs/home-clean/side-menu.png's three the owner picks
+   * (A compact rail, B calm sidebar, C top bar). Not drawn yet: tablet and desktop keep the current top bar, whose menu button opens Everything.
+   * To swap one in: add its draw function to DESK_NAVS, built from this list, set DESK_NAV_NOW to its name, and give it CSS under html[data-u2-nav="<name>"]. Home needs
+   * no change: its two columns follow its own width (css/ui2/app.css, the u2home container), so a sidebar or a rail simply takes its share.
+   * Each item is [key, href, icon, name, short name]; a group named null is the foot (Profile, Settings).
+   */
+  const DESK_NAV = [
+    ['Learn', [['home', '/dashboard', 'home', 'Home', 'Home'], ['subjects', '/dashboard#everything', 'book', 'Subjects', 'Subjects'], ['review', '/calendar', 'loop', 'Review', 'Review']]],
+    ['Your material', [['upload', '/my-material', 'tray', 'Upload your own', 'Upload'], ['material', '/my-material', 'note', 'My material', 'Material'], ['past', '/dashboard#past', 'history', 'Past', 'Past']]],
+    ['Progress', [['calendar', '/calendar', 'calendar', 'Calendar', 'Calendar'], ['stats', '/stats', 'bars', 'Leaderboard and stats', 'Stats']]],
+    [null, [['profile', '/profile', 'user', 'Profile', 'Profile'], ['settings', '/dashboard#menu', 'settings', 'Settings', 'Settings']]],
+  ];
+  /** The desktop menus by name. 'bar' is today's: drawBar's top bar and its menu button to Everything (js/ui2/home.js); it adds nothing. Not called on a phone. */
+  const DESK_NAVS = { bar: () => {} };
+  const DESK_NAV_NOW = 'bar';
+  function drawDeskNav(user) {
+    document.documentElement.dataset.u2Nav = DESK_NAV_NOW;
+    if (!PHONE.matches && !FLOW.test(PATH)) DESK_NAVS[DESK_NAV_NOW](user, DESK_NAV);
+  }
   function tabNow() {
     if (HOME) return /^#(everything|menu)$/.test(location.hash) ? 'menu' : 'home';
     if (/^\/my-material/.test(PATH)) return 'upload';
@@ -375,7 +399,7 @@
     if (b) b.click();
     return !!b;
   }
-  App.ui2 = { ic, gets, look: Look, home: HOME, user: null, onBar: null, phone: PHONE, startStudy };
+  App.ui2 = { ic, gets, look: Look, home: HOME, user: null, onBar: null, phone: PHONE, startStudy, deskNav: { now: DESK_NAV_NOW, items: DESK_NAV } };
 
   const realHeader = App.header;
   App.header = function header(user, active) {
