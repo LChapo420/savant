@@ -224,3 +224,9 @@ Desktop home is D1 (lesson first, today beside). Desktop side menu is B, the cal
 - Learners do not pick the voice in the chat: "later on we'll probably make more characters with different voices". The picker stays in code, off (TUTOR_VOICE_PICKER).
 - Coral Fast writes short voice replies (TUTOR_VOICE_FAST on); owner: "we might keep it on even for the beta".
 - Adaptive enforcer timing is ON for beta (owner, 8 Nov: "Turn it on"); ENFORCER_ADAPTIVE=on in savant.service.d/voice.conf.
+
+## Learning modes (8 Nov 2026)
+Owner: "you can either choose one or the other, or balanced". Learner chooses, measured against normal studying:
+- Fastest: 4x faster with equal or higher understanding and retention.
+- Balanced: 2x faster and higher understanding and retention at the same time.
+- Highest: the most understanding and retention.
