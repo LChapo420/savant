@@ -90,7 +90,10 @@ function start(userId, materialId, { agree, horizonDays }, deps) {
     const s = course.skills.find((k) => k.id === id);
     const qs = (s.questions || []).slice().sort((a, b) => h(seed, id, a.id) - h(seed, id, b.id));
     if (qs.length < TEST_Q + 2) return false; // leave at least two questions for the study itself
-    reserved[id] = qs.slice(0, TEST_Q).map((q) => q.id);
+    // one of the two is a tier-3 question (combine or transfer: a new situation) when the part has one, so the test measures understanding as well as recall
+    const hard = qs.find((q) => (q.tier || 2) >= 3);
+    const picked = hard ? [hard, ...qs.filter((q) => q !== hard).slice(0, TEST_Q - 1)] : qs.slice(0, TEST_Q);
+    reserved[id] = picked.map((q) => q.id);
     return true;
   };
   const testS = rank(halves.savant).filter(reserve).slice(0, MAX_PER_HALF);
@@ -211,12 +214,14 @@ function testNext(userId, materialId, course, now = Date.now()) {
 function testSubmit(userId, materialId, course, answers, isCorrect, now = Date.now()) {
   const r = rowOf(userId, materialId);
   if (status(userId, materialId, now).phase !== 'test_due') return { error: 'The test is not due yet.', code: 'not_due' };
-  const score = { savant: { right: 0, n: 0 }, normal: { right: 0, n: 0 } };
+  const score = { savant: { right: 0, n: 0, tr: 0, trn: 0 }, normal: { right: 0, n: 0, tr: 0, trn: 0 } };
   for (const arm of ['savant', 'normal']) {
     for (const id of r.test_parts[arm]) {
       for (const qid of r.reserved[id]) {
         const q = qById(course, id, qid);
-        score[arm].n++; if (q && isCorrect(q, (answers || {})[qid])) score[arm].right++;
+        const ok = !!(q && isCorrect(q, (answers || {})[qid]));
+        score[arm].n++; if (ok) score[arm].right++;
+        if (q && (q.tier || 2) >= 3) { score[arm].trn++; if (ok) score[arm].tr++; }
       }
     }
   }
@@ -224,6 +229,7 @@ function testSubmit(userId, materialId, course, answers, isCorrect, now = Date.n
   const words = (arm) => r.halves[arm].reduce((a, id) => a + (r.words[id] || 0), 0);
   const result = {
     horizon_days: r.consent.horizon_days, score_savant: score.savant.right / score.savant.n, score_normal: score.normal.right / score.normal.n,
+    transfer_savant: score.savant.trn ? score.savant.tr / score.savant.trn : null, transfer_normal: score.normal.trn ? score.normal.tr / score.normal.trn : null,
     ms_savant: t.savant, ms_normal: t.normal, words_savant: words('savant'), words_normal: words('normal'), n_test: score.savant.n, gap: r.halves.gap,
   };
   db().update(COLLECTION, r.id, { test: { at: now, score }, result });
@@ -239,6 +245,7 @@ function analyse(rows, { margin = 5, minN = 30, seed = 1, boots = 2000 } = {}) {
   const ok = rows.filter((x) => x && x.ms_savant > 0 && x.ms_normal > 0 && x.words_savant > 0 && x.words_normal > 0);
   const ratio = ok.map((x) => (x.ms_normal / x.words_normal) / (x.ms_savant / x.words_savant));
   const diff = ok.map((x) => 100 * (x.score_savant - x.score_normal));
+  const tdiff = ok.filter((x) => x.transfer_savant != null && x.transfer_normal != null).map((x) => 100 * (x.transfer_savant - x.transfer_normal));
   const n = ok.length;
   const mean = (a) => (a.length ? a.reduce((s, v) => s + v, 0) / a.length : null);
   const q = (a, p) => { const s = a.slice().sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.floor(p * s.length))] : null; };
@@ -259,6 +266,7 @@ function analyse(rows, { margin = 5, minN = 30, seed = 1, boots = 2000 } = {}) {
   else claim = rlo >= 4 ? 'at least 4x with equal or better recall' : `equal or better recall; time ratio ${rlo.toFixed(2)} to ${rhi.toFixed(2)}`;
   return {
     n, excluded: rows.length - n, ratio_geo: n ? Math.exp(mean(ratio.map(Math.log))) : null, ratio_ci: [rlo, rhi], diff_mean: mean(diff), diff_ci: [lo, hi],
+    transfer: { n: tdiff.length, diff_mean: mean(tdiff), worst: tdiff.length ? Math.min(...tdiff) : null, claim: tdiff.length < minN ? 'too few transfer answers: no claim' : (q(tdiff, 0.5) >= 0 ? 'transfer equal or higher (median)' : 'transfer is lower') },
     at_4x_equal_or_better: at4, worst_ratio: n ? Math.min(...ratio) : null, worst_diff: n ? Math.min(...diff) : null, margin, claim,
   };
 }

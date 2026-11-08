@@ -37,6 +37,7 @@
           </select>
           <label class="visually-hidden" for="${id}-d">Test date</label>
           <input id="${id}-d" type="date" class="input rg-d" min="${box.min}" max="${box.max}" value="${esc(g.status === 'date' ? g.test_date : '')}" style="${current === 'date' ? '' : 'display:none'}">
+          ${state.modes ? `<label class="visually-hidden" for="${id}-m">How to study ${esc(item.title)}</label><select id="${id}-m" class="input rg-m" aria-label="Learning mode">${state.modes.map((m) => `<option value="${esc(m.id)}"${item.mode === m.id ? ' selected' : ''} title="${esc(m.blurb)}">${esc(m.label)}</option>`).join('')}</select>` : ''}
           <button type="button" class="btn btn-sm rg-save">Save</button>
           <span class="small muted rg-msg" role="status"></span>
         </div>
@@ -70,7 +71,7 @@
       const h = node.querySelector('.rg-h');
       const d = node.querySelector('.rg-d');
       h.addEventListener('change', () => { d.style.display = h.value === 'date' ? '' : 'none'; });
-      node.querySelector('.rg-save').addEventListener('click', () => send(node, { horizon: h.value, test_date: h.value === 'date' ? d.value : undefined }));
+      node.querySelector('.rg-save').addEventListener('click', () => send(node, { horizon: h.value, test_date: h.value === 'date' ? d.value : undefined, ...(node.querySelector('.rg-m') ? { mode: node.querySelector('.rg-m').value } : {}) }));
       node.querySelectorAll('.rg-after').forEach((b) => b.addEventListener('click', () => send(node, { keep_after: b.dataset.after })));
     });
   }

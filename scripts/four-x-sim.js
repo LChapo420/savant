@@ -41,7 +41,7 @@ const WORDS_MULT = DENSITY === 'textbook' ? 3 : 1;
 const LEAN_MULT = DENSITY === 'textbook' ? 1.5 : 1; // ASSUMED: a less dense source needs a somewhat longer lean page
 
 const MODES = {};
-for (const id of M.LIST) MODES[id] = { ...M.MODES[id], ...(OVERRIDE[id] || {}) };
+for (const id of M.LIST) MODES[id] = { ...M.MODES[id], ...(args.design === 'full' && id === 'fastest' ? M.FASTEST_FULL_DESIGN : {}), ...(OVERRIDE[id] || {}) };
 
 const HORIZONS = [['1 week', 7], ['1 month', 30], ['3 months', 90], ['1 year', 365], ['test in 1 week', 7, 1], ['test in 1 month', 30, 1], ['test in 3 months', 90, 1]];
 
@@ -175,7 +175,7 @@ function savant(L, P, doc, rep, modeId, H, dated) {
   const short = !!m.shortFormat;
   const fmtMult = short ? FMT_MULT : 1;                // Schneid et al. 2014: 3-option items 36 s against 41 s
   const guess = short ? 1 / 3 : B.learning.guess;
-  const wrongS = short ? SHORT_WRONG_S : WRONG_S;      // ASSUMED: a one-line why reads in under half the time of a long explanation
+  const wrongS = short || m.shortFeedback ? SHORT_WRONG_S : WRONG_S;      // ASSUMED: a one-line why reads in under half the time of a long explanation
   const retryS = short ? Math.min(RETRY_S, 30) : RETRY_S;
   const addQ = (bucket, right, secs = Q_S) => { w.minutes[bucket] += ((secs * fmtMult + (right ? RIGHT_S : wrongS)) / 60) * P.timeMult; };
   const askM = (p, t, key, strengthMult = 1) => ask(p, P, t, 'mcq', key, rnd, strengthMult, guess);

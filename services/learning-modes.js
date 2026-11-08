@@ -32,7 +32,7 @@ const on = () => /^(1|on|true)$/i.test(process.env.LEARNING_MODES || '');
 const MODES = Object.freeze({
   fastest: Object.freeze({
     id: 'fastest', label: 'Fastest', blurb: 'The essentials, checked once and spaced just enough. Aims for 4x faster than normal study with at least the same understanding and memory.',
-    diagnose: 'none', page: 'core', firstQs: 'pair', explain: true, transferQs: 0, worked: false, gapTarget: 0.65, horizonFloor: [[60, 0.55], [180, 0.5], [Infinity, 0.40]], pairReviews: true, shortFormat: true,
+    diagnose: 'none', page: 'core', firstQs: 1, explain: true, transferQs: 0, worked: false, gapTarget: 0.6, horizonFloor: [[60, 0.55], [180, 0.5], [Infinity, 0.40]], pairReviews: false, shortFormat: false, shortFeedback: true,
   }),
   balanced: Object.freeze({
     id: 'balanced', label: 'Balanced', blurb: 'Lean lessons, two checks and an application question on each part. Aims for 2x faster than normal study with more understanding and memory.',
@@ -43,6 +43,9 @@ const MODES = Object.freeze({
     diagnose: 'two', page: 'full', firstQs: 'criterion', explain: true, transferQs: 2, worked: true, gapTarget: 0.88, horizonFloor: [[Infinity, 0.93]], pairReviews: false, shortFormat: false,
   }),
 });
+
+/** Fastest with the two parts of its design that are not built in the app yet: one question covering two parts, and three-option questions (docs/FOUR-X.md). Simulated as a separate row only. */
+const FASTEST_FULL_DESIGN = Object.freeze({ firstQs: 'pair', pairReviews: true, shortFormat: true });
 
 const DEFAULT = 'balanced';
 const LIST = Object.freeze(['fastest', 'balanced', 'highest']);
@@ -126,4 +129,33 @@ function leftOutNote(mode, n, reason) {
   return `${mode === 'fastest' ? 'Fastest' : 'This path'} leaves out ${n} ${n === 1 ? 'part' : 'parts'} because ${why}. Tap to read them.`;
 }
 
-module.exports = { on, MODES, LIST, DEFAULT, get, normalize, planFor, recall, gapDays, nextReview, floorFor, omissionCheck, leftOutNote, DECAY, FACTOR, clamp };
+/** The first sentence of an explanation, for Fastest's one-line why. The full text is always returned beside it. */
+function oneLine(text) {
+  const t = String(text || '').trim();
+  const m = t.match(/^(.{20,}?[.!?])(\s|$)/);
+  return m ? m[1] : t;
+}
+
+/**
+ * The page a mode shows. Fastest and Balanced show the key statements; the full text moves under "More from your material", one tap away.
+ * A key statement must not hide something a question tests: each question's answer is checked against the statements, and any point not
+ * covered is added to the page, so nothing testable is cut. Returns the lesson unchanged for Highest or no mode, or when the lesson has no key points.
+ */
+function lessonView(lesson, questions, modeId, correctTextOf = (q) => q.answer) {
+  const m = MODES[modeId];
+  if (!m || m.page === 'full' || !lesson || !Array.isArray(lesson.key_points) || !lesson.key_points.length) return lesson;
+  const check = omissionCheck((questions || []).map((q) => { try { return correctTextOf(q); } catch { return ''; } }).filter(Boolean), lesson.key_points);
+  const also = check.missing.slice(0, 6);
+  const keys = [...lesson.key_points, ...also];
+  return {
+    ...lesson,
+    paragraphs: [],
+    key_points: keys,
+    aside: [...(lesson.paragraphs || []), ...(lesson.aside || [])],
+    core_only: true,
+    core_note: 'This mode shows the key points only. The full text is one tap away under "More from your material", and every point a question asks is on the page.',
+    omission: { questions: check.total, covered: check.covered, added: also.length },
+  };
+}
+
+module.exports = { oneLine, lessonView, FASTEST_FULL_DESIGN, on, MODES, LIST, DEFAULT, get, normalize, planFor, recall, gapDays, nextReview, floorFor, omissionCheck, leftOutNote, DECAY, FACTOR, clamp };
