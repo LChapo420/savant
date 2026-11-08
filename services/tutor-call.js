@@ -223,7 +223,8 @@ function noteReply(userId, text) {
 function maySay(userId, text) {
   const n = norm(text);
   if (!n) return false;
-  if (Object.values(NOTICES).some((x) => norm(x) === n)) return true;
+  // A notice is spoken sentence by sentence (owner, 8 Nov: "It has gone quiet, so I will hang up." was refused alone, and the call fell back to the phone's voice).
+  if (Object.values(NOTICES).some((x) => norm(x) === n || sentences(x).some((s) => norm(s) === n))) return true;
   return (said.get(userId) || []).some((r) => r.includes(n));
 }
 

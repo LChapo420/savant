@@ -95,7 +95,8 @@
       const topH = vvTop > 0 ? 0 : barH;
       const tabH = tabs ? tabs.offsetHeight : 0;
       const room = vvH - topH - tabH;
-      const wanted = keyboard ? room * 0.62 : room * 0.5;
+      // Owner, 8 Nov: a medium message didn't fit. The chat gets a little more of the screen; the page keeps the rest.
+      const wanted = keyboard ? room * 0.66 : room * 0.6;
       let chat = Math.round(Math.max(MIN_CHAT, Math.min(wanted, room - MIN_WINDOW)));
       if (room < MIN_CHAT + MIN_WINDOW) chat = Math.round(room); // a tiny screen: the chat gets it all while it needs it
       chat = Math.min(chat, Math.round(room));

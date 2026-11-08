@@ -58,6 +58,9 @@
   const Recog = window.SpeechRecognition || window.webkitSpeechRecognition;
   const AC = window.AudioContext || window.webkitAudioContext;
   const synthOk = () => 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+  // Asking the tutor to wait. The quiet clock (20 s warning, 35 s hang-up) starts again only after HOLD_S seconds; the call's own time limit still applies.
+  const HOLD_S = 300;
+  const HOLD_RE = /\b(brb|b r b|be right back|right back|hold on|hang on|one sec(ond)?|a sec(ond)?|one moment|a moment|give me a (minute|min|sec|second|moment)|just a (minute|min|sec|second|moment)|wait for me|don'?t hang up|i'?ll be back|back in a (minute|min|sec|bit))\b/i;
 
   const words = (t) => String(t || '').toLowerCase().replace(/[^\p{L}\p{N}\s]+/gu, ' ').split(/\s+/).filter(Boolean);
 
@@ -126,6 +129,7 @@
     let watchTimer = null;
     let quietSince = 0;
     let warned = false;
+    let holdUntil = 0; // the learner asked for a moment ("brb", "hold on"): the quiet clock waits until then
     let hiddenAt = 0;
     const turns = [];
     let notedPaidEnd = false;
@@ -375,6 +379,8 @@
     }
 
     async function reply(text, me, t, stopAt) {
+      // Owner, 8 Nov: "BRB" got "I'll wait", then the quiet clock hung up anyway. Asking for a moment holds the call (HOLD_MS); anything else they say ends the hold.
+      holdUntil = HOLD_RE.test(text) ? performance.now() + (Number(info.hold_s) || HOLD_S) * 1000 : 0;
       if (streamOn()) {
         const how = await replyStream(text, me, t, stopAt);
         if (how !== 'plain') return;
@@ -674,6 +680,8 @@
             buf = await get(i);
           } catch (err) {
             if (token !== speakToken) return;
+            // Owner, 8 Nov: a refused sentence switched the call to the phone's own voice mid-call. Words the server won't speak are shown, never read in another voice.
+            if (err && err.status === 403) { line('tdock-note', parts[i]); continue; }
             if (synthOk()) {
               speakWay = 'browser';
               noteSwitch();
@@ -804,6 +812,12 @@
         if (now - hiddenAt > 15000) { finish('The page was in the background, so the call ended.', 'hidden'); return; }
       } else hiddenAt = 0;
       if (state !== 'listening' || inSpeech) return;
+      if (holdUntil) {
+        if (now < holdUntil) return;
+        quietSince = Math.max(quietSince, holdUntil); // the hold is over: the usual clock from here
+        holdUntil = 0;
+        warned = false;
+      }
       const quiet = (now - quietSince) / 1000;
       if (quiet >= (Number(info.silence_end_s) || 35)) { hangUp(info.notices.ending_quiet, 'It went quiet, so the call ended.', 'quiet'); return; }
       if (!warned && quiet >= (Number(info.silence_warn_s) || 20)) {
