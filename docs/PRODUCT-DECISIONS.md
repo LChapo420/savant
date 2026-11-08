@@ -223,3 +223,4 @@ Desktop home is D1 (lesson first, today beside). Desktop side menu is B, the cal
 - The tutor speaks as Will (ElevenLabs) for everyone, "for now at least" (TUTOR_VOICE_DEFAULT can name another).
 - Learners do not pick the voice in the chat: "later on we'll probably make more characters with different voices". The picker stays in code, off (TUTOR_VOICE_PICKER).
 - Coral Fast writes short voice replies (TUTOR_VOICE_FAST on); owner: "we might keep it on even for the beta".
+- Adaptive enforcer timing is ON for beta (owner, 8 Nov: "Turn it on"); ENFORCER_ADAPTIVE=on in savant.service.d/voice.conf.
